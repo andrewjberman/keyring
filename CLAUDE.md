@@ -38,7 +38,7 @@ stable, citations resolve there. DS/AE seats read their sections before touching
     `.tools/to-pipeline-gate.py` LIMB 6 REFUSES a **NEWLY-ADDED** task order against a PRD with a half
     not SIGNED. ⛔ **IT DOES NOT FIRE ON A MODIFICATION, AND THIS LINE USED TO SAY SO WITHOUT THE
     QUALIFIER -- SO THE LAW READ STRONGER THAN THE TOOL BEHAVES AND THREE SEATS INHERITED THE BELIEF
-    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1015` @cd399d339d) is explicit, AND
+    FROM IT IN ONE EVENING.** The gate's own docstring (`_newly_added`, `:1702-1710` @942e4ff992) is explicit, AND
     IT NAMES THE EXCEPTION ITSELF: *"A rename (R) counts as added at its new path ... A
     modification (M) does not: no limb that reads THIS set refuses an existing TO. The ONE limb
     that grades a modification -- GATE (viii) ... -- reads its own set, `_staged_modified()`, so
@@ -313,6 +313,17 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     location), TRUST (5 coverage + denominator, 6 key/identity space, 7 failure mode distinguishable from
     a genuine negative). **Every row carries its OWNER** (remedies do not move together). Binds only when the resource becomes LOAD-BEARING;
     never card what you merely consult. Contract: `org/standards/SUBSTRATE_CARD.schema.json`. Annex §28.
+30. **EVERY NEW PIPELINE IS BUILT TO LGIC — its homes, tenancy and names come from the canon and its
+    builders, never from a seat's judgment.** Andrew-direct 2026-09-15 ~14:2xZ: *"all future pipelines must
+    abide by lgic structures patterns"*. Tier homes and tenancy: `infra/logic/02_DOCTRINE.md` R1–R21
+    (bronze + silver in `opal-data-assets`; firm-attributable gold, platinum and `state/` in the FIRM bucket;
+    composites and pipeline code in the PRODUCT bucket). Every S3 address is `lib/opal_naming.py address()`
+    output and every resource name is `name()` output; ⛔ **a builder REFUSAL is a missing registry row to
+    add (`infra/logic/registry/`), never a hand-typed workaround**; a deliberate departure is an R20 register
+    entry Andrew acknowledges. Mechanism: the L4 PRD cites builder output for every new address and name, and
+    the CTO refuses a PRD that types one; the commit-time naming gate grades names (WARN today, LGIC_ENFORCE).
+    COST: one builder call per new resource. NON-APPLICATION: existing pipelines — each reaches conformance
+    through its own migration project (R19), never as a rider on unrelated work.
 - **NEVER** trust a producer's self-report or rc=0 — verify against the SERVED artifact / live state.
 
 ## 5. HARD STOPS (NEVER)

@@ -1,0 +1,99 @@
+{
+ "schema_version": "1.0",
+ "project": "LGIC_NAMING",
+ "round": 3,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-15T15:2xZ",
+ "trigger": "2.0.0_SA_COO~G's LATE L8 hand-off, msg 97122 (2026-09-15T14:54:19Z), addressed to 3.0.0_SA_CVO with a copy to 1.0.0_SA_CTO: 6 of 6 round-3 orders drained, 28 of 28 in the project. It repeats the drain-end read msg 97005 (2026-09-15T09:11:00Z), which was addressed to 1.0.0_SA_CTO ONLY and never reached this seat, so this round's L8 began about 5 h 45 min after the drain. 2.0.0_SA_COO~G states the defect as its own in 97122; Andrew found it at ~14:2xZ. Carrier: org/mcp/inbox/3.0.0_SA_CVO/read/20260915T145419Z_2.0.0_SA_COO_G_L8_hand-off__LATE__LGIC_NAMING_round_3_d.md. It is an UNTRACKED device-local file (org/mcp/inbox/* is gitignored), so NO commit vintage exists for it.",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-15T14:5xZ",
+   "ended_utc": "2026-09-15T15:0xZ",
+   "act": "Compiled round 3's channel. The new rows are the investigation rows at HEAD absent at the issuance commit 60350c4a04: 48 minus 42 = 6 (S17, W1-S7, W2-S6, W3-S5, W3-S6, S18), with 0 lost. Every JSON fence was parsed. The carrier-less census at HEAD was exactly those 6, with a difference of 0 either way. There were no between-rounds rows, and no commit touches the channel after its pin 219f006130. By class: 0 BLOCKING, 6 OBSERVATION, 0 ARMED. The 8 rows 97122 lists as still ARMED were each checked for a disarm by exact id; all 8 have one, and a disposition.",
+   "inputs": [
+    {"kind": "MESSAGE", "ref": "97122"},
+    {"kind": "MESSAGE", "ref": "97005 (to 1.0.0_SA_CTO only; read at org/mcp/inbox/1.0.0_SA_CTO/read/)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md@60350c4a04 and @219f006130"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v1.md..v3.md at HEAD"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND3_L8_L9_20260915.md sections 1 and 5"}
+   ],
+   "spine_clause": "L8: input is the new investigation rows and no others",
+   "gate_or_notifier_touched": "none -- a read-only compile",
+   "note": "The start time is bounded below by 97122's delivery (14:54:19Z). The late hand-off's vintage is recorded as the COO asked, so the delay is on the record rather than hidden. Times are taken from tool-call order to the ten-minute grain."
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-15T15:0xZ",
+   "ended_utc": "2026-09-15T15:10:15Z",
+   "act": "Graded the round's criteria and outcomes. Re-ran all 17 machine criteria with check_ln_r3.py on the SHARED tree, a different checkout from every writing worktree: 17 of 17 printed their expected VERDICT. proof-of-spec-check.py read VALID on 6 of 6 round-3 instances, each BOUND with --governing-order. Graded G1T-J1 PASS, with two named qualifications (W3-S5, W3-S6), from the git diff of GRADING_RULE.md across the round. Graded the outcomes from this seat's own reads. FWD-1 REALIZED: 18 of 18 identical, each the ruled name, and i05 disclosed. FWD-2 REALIZED: 18 of 18 against the key, 0 clashes. FWD-3 REALIZED on canonical forms: 0 of 68 by this seat's recount. Exercised S17's fix in a linked worktree under a hook's variables: pre-fix [], HEAD 3 of 3. Checked S18's 5 overwritten records by git objects: all 5 round-2 records resolve at their proofs' commits, and 5 round-2 proofs re-run VALID. Read the prior rounds' OPEN remediation rows against this round's evidence; the standing census found S3 without a row.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the 6 round-3 proof instances under org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~{1,2,3,5,6}/ at HEAD"},
+    {"kind": "ARTIFACT", "ref": "deliverables/exercises/r3/n3-namer-{a,b}.tsv, n3-reader.tsv; fixed_inputs/r2/N3_KEY_R2.json; exercises/r2/n4-firm-patterns.md@a4480344e3; GRADING_RULE.md@3cc090827f; NAMING_SCHEMA.json v1.7; ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md s.2; ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md@02f08322af"},
+    {"kind": "ARTIFACT", "ref": ".tools/prd_signoff_lib.py@0801a7d48c and @0801a7d48c^; .worktrees/wk-lgic-naming-3-6 at cd86d91a55"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND3_L8_L9_20260915.md sections 2-4 and 6"}
+   ],
+   "spine_clause": "L9: JUDGMENT criteria are graded here and never self-graded",
+   "gate_or_notifier_touched": "none -- reads and re-runs only",
+   "note": "ended_utc is the carriers' surfaced_at stamp."
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-15T15:10:15Z",
+   "ended_utc": "2026-09-15T15:16:44Z",
+   "act": "Carried every disposition, the grade and the remediation-state read on the channel as C-S18..C-S23, in a NEW file ADJUDICATION_v4.md. C-S19 GRADUATED S17, REMEDIATED in the round. C-S20 GRADUATED S18, W1-S7 and W2-S6. C-S21 GRADUATED W3-S5. C-S22 GRADUATED W3-S6. C-S18 (the grade record) and C-S23 (the remediation-state read) are DISMISSED_WITH_REASON. Closing count: carrier-less 0 of 48.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the record's sections 1-6"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v4.md@7c2dec2be1"}
+   ],
+   "spine_clause": "L10 precondition: every row dispositioned",
+   "gate_or_notifier_touched": "The surprise-row-gate admitted 6 new rows with 0 violations and no override. missions-tree-check read 0 violations.",
+   "note": "0 jsonschema violations against investigation_item.schema.json before the commit."
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-15T15:16:44Z",
+   "ended_utc": "2026-09-15T15:20:59Z",
+   "act": "Landed REMEDIATION_v3.md with 7 rows: S17 REMEDIATED, and S18, W1-S7, W2-S6, W3-S5, W3-S6 and the S3 backfill OPEN. In the same commit, advanced five REMEDIATION_v2 rows (C-S14, W6-S4, W4-S2, S14, S15) OPEN -> REMEDIATED, closed false -> true, byte-surgically; the gate's own _monotone_advance predicate was called on each before the commit and returned True for all 5. The gate's L10 limb admitted every new row: 28 orders at HEAD, 0 open; 48 items across 8 channel files, 0 undispositioned. REMEDIATION_v2 read '0 new of 6 (6 pre-existing, NOT re-graded)', with no mutation refusal. Standing census at HEAD, by a raw-text instrument different from the fork's JSON walk: 32 latest-GRADUATED ids minus 33 remediation ids = 0 missing.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/task-orders/*.md at HEAD (28 of 28 complete)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v4.md@7c2dec2be1"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/remediations/REMEDIATION_v3.md@40cb839387"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/remediations/REMEDIATION_v2.md@40cb839387 (5 rows advanced)"}
+   ],
+   "spine_clause": "L10 precondition: every TO terminal and every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate L10 limb ADMITTED 7 of 7 new rows; the monotone-advance limb admitted 5 in-place advances. No override.",
+   "note": "The slug is drafted, not sent. The parent session re-verifies with its own instrument, re-measures push state, and sends it; that act is seq 5, recorded by the parent."
+  },
+  {
+   "seq": 5,
+   "limb": "L10",
+   "started_utc": "2026-09-15T15:3xZ",
+   "ended_utc": "2026-09-15T15:40:40Z",
+   "act": "The parent session re-verified before sending, with its own reads, which differ from the fork's. Carrier-less 0 of 48, ids 48 distinct. Standing census: 32 graduated investigation ids, 0 missing a remediation row, 33 rows. n3-namer-a.tsv against n3-namer-b.tsv at HEAD, CRLF-normalised: 18 of 18 items identical, and the two seat ids differ. It read the gate's _monotone_advance rule behind the watcher's five MUTATED warnings on REMEDIATION_v2 and re-measured push state: LOCAL (ls-remote 15:39Z, origin/CLOUD 2033ff3ea6, none of the three commits an ancestor). It then sent ONE slug to 1.0.0_SA_CTO.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/{investigations,adjudications,remediations}/*.md at HEAD"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r3/n3-namer-{a,b}.tsv at HEAD"},
+    {"kind": "ARTIFACT", "ref": ".tools/surprise-row-gate.py:1374-1391 (_monotone_advance)"}
+   ],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "the L10 slug to 1.0.0_SA_CTO, delivered 2026-09-15T15:40:40Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T154040Z_3.0.0_SA_CVO__L10_SLUG__LGIC_NAMING_round_3__FWD-1_2_.md, 3787 bytes by wc -c on the delivered file"}
+   ],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "send_message's L8 correspondence guard (the CVO's one send goes to the CTO): delivered, no override",
+   "note": "The delivered file is untracked and device-local (org/mcp/inbox/* is gitignored), so its vintage is the delivery time and byte count, not a commit."
+  }
+ ]
+}

@@ -906,7 +906,8 @@ lanes:
     permitted_agents:
     - 4.0.0_SA_CRO
     - 3.0.0_SA_CVO
-    description: "Project tree, prd/signoff/ (L4-R, spine v3.14; Andrew-direct 2026-09-10 ~21:2xZ 'CRO and CVO should have to sign off on PRD before COO gets it'). The two reviewers' version-bound sign-off files, <serial>.json. SoD: the PRD's author (ANY_CTO on prd/**) CANNOT write here, and this longest-match rule DISPLACES prd/** for the signoff/ subtree; the L6 gate (to-pipeline-gate.py LIMB 6) and the L4 notifier read these files, nobody else writes them. Tilde lanes of each reviewer carry it."
+    - 2.0.0_SA_COO
+    description: "Project tree, prd/signoff/ (L4-R, spine v3.14; Andrew-direct 2026-09-10 ~21:2xZ 'CRO and CVO should have to sign off on PRD before COO gets it'). The two reviewers' version-bound sign-off files, <serial>.json. SoD: the PRD's author (ANY_CTO on prd/**) CANNOT write here, and this longest-match rule DISPLACES prd/** for the signoff/ subtree; the L6 gate (to-pipeline-gate.py LIMB 6) and the L4 notifier read these files, nobody else writes them. Tilde lanes of each reviewer carry it. 2.0.0_SA_COO ADDED 2026-09-14 by 0.0.0_AB_MSTR AS REGISTRY GRANTOR (SoD), LD-0565, on 1.0.0_SA_CTO msg 96643: the lane now admits the class CLAUDE.md Rule 27 L4-R and prd_signoff_lib.REVIEWERS already name for the brief half (4.0.0_SA_CRO, or a live 2.0.0_SA_COO not holding the round in its stead; Andrew-direct 2026-09-11 ~05:3xZ 'If CRO is not online, can do COO in their stead'). This lane is the coarse gate; the fine rule stays in prd_signoff_lib.permitted_signer, which refuses the COO lane holding the project's round unless the project row designates it."
   TREE_PRD_STAMP:
     permitted_agents:
     - 1.0.0_SA_CTO

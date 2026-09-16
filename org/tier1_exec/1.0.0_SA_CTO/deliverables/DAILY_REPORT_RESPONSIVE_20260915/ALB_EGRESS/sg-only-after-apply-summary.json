@@ -1,0 +1,67 @@
+{
+  "measured_at_utc": "2026-09-15T04:04:12.774331+00:00",
+  "terraform_exit_code": 0,
+  "targeting": true,
+  "managed_changes": [],
+  "resource_drift": [],
+  "plan_sha256": "25e91520277fe2d1e99949d961b31d0a1c0feca88fa9b403fded84507edfe61f",
+  "alb_group_id": "sg-02571ff2f33d2f9d4",
+  "before_egress": [
+    {
+      "cidr_blocks": [
+        "0.0.0.0/0"
+      ],
+      "description": "HTTPS to the OIDC IdP token and userinfo endpoints (authenticate-oidc calls them from the ALB)",
+      "from_port": 443,
+      "ipv6_cidr_blocks": [],
+      "prefix_list_ids": [],
+      "protocol": "tcp",
+      "security_groups": [],
+      "self": false,
+      "to_port": 443
+    },
+    {
+      "cidr_blocks": [
+        "172.31.0.0/16"
+      ],
+      "description": "To the gateway port inside the VPC",
+      "from_port": 8080,
+      "ipv6_cidr_blocks": [],
+      "prefix_list_ids": [],
+      "protocol": "tcp",
+      "security_groups": [],
+      "self": false,
+      "to_port": 8080
+    }
+  ],
+  "after_egress": [
+    {
+      "cidr_blocks": [
+        "0.0.0.0/0"
+      ],
+      "description": "HTTPS to the OIDC IdP token and userinfo endpoints (authenticate-oidc calls them from the ALB)",
+      "from_port": 443,
+      "ipv6_cidr_blocks": [],
+      "prefix_list_ids": [],
+      "protocol": "tcp",
+      "security_groups": [],
+      "self": false,
+      "to_port": 443
+    },
+    {
+      "cidr_blocks": [
+        "172.31.0.0/16"
+      ],
+      "description": "To the gateway port inside the VPC",
+      "from_port": 8080,
+      "ipv6_cidr_blocks": [],
+      "prefix_list_ids": [],
+      "protocol": "tcp",
+      "security_groups": [],
+      "self": false,
+      "to_port": 8080
+    }
+  ],
+  "changed_attributes": [],
+  "stop_condition_clear": false
+}

@@ -1,0 +1,66 @@
+aws_security_group.alb: Modifying... [id=sg-02571ff2f33d2f9d4]
+aws_security_group.alb: Modifications complete after 1s [id=sg-02571ff2f33d2f9d4]
+
+Warning: Applied changes may be incomplete
+
+The plan was created with the -target option in effect, so some changes
+requested in the configuration may have been ignored and the output values
+may not be fully updated. Run the following command to verify that no other
+changes are pending:
+    terraform plan
+
+Note that the -target option is not suitable for routine use, and is provided
+only for exceptional situations such as recovering from errors or mistakes,
+or when Terraform specifically suggests to use it as part of an error
+message.
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+alb_arn = "arn:aws:elasticloadbalancing:us-east-1:313476888478:loadbalancer/app/opal-gateway/89166a68f337e5a4"
+alb_dns_name = "opal-gateway-616252801.us-east-1.elb.amazonaws.com"
+audit_athena_workgroup = "opal_mcp"
+audit_lake_bucket = "opal-mcp-audit"
+coo_critical_alerts_queue_arn = "arn:aws:sqs:us-east-1:313476888478:opal-critical-surface-alerts-coo"
+coo_critical_alerts_queue_url = "https://sqs.us-east-1.amazonaws.com/313476888478/opal-critical-surface-alerts-coo"
+gateway_sg_id = "sg-00e3eb040efab5577"
+gateway_url = "https://mcp.opalinvest.dev"
+https_listener_arn = "arn:aws:elasticloadbalancing:us-east-1:313476888478:listener/app/opal-gateway/89166a68f337e5a4/2904a0140214f982"
+instance_id = "i-07dccb1615503ac99"
+instance_role_name = "opal-gateway-role"
+ms_ingest_liveness_function = "opal-ms-ingest-liveness"
+opal_mcp_emp_alyssa_onboard_role_arn = "arn:aws:iam::313476888478:role/opal-mcp-emp-alyssa-onboard"
+opal_mcp_emp_alyssa_read_role_arn = "arn:aws:iam::313476888478:role/opal-mcp-emp-alyssa-read"
+otp_liveness_function = "opal-otp-liveness"
+target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:313476888478:targetgroup/opal-gateway-tg/00997fc81f087cb8"
+
+======================================================================
+HALT-GATE: 2 pending message(s) -- review before proceeding (safe-apply)
+======================================================================
+  from 1.0.0_SA_CTO
+       GO: apply the approved ALB egress rule now (Andrew "Yes to 1." @cfcb13e03f) -- you own it end to end
+       (21m ago)
+  from 1.0.0_SA_CTO
+       GO: apply the saved SG-only plan (00715c0d...) now; leave the WAF description drift alone
+       (5m ago)
+HALT-GATE: HALT_ACK set -- messages acknowledged. Proceeding.
+safe-apply: infra/aws/terraform/opal-gateway sets default_tags -- running the comp-tagauthz pre-apply authorization gate.
+------------------------------------------------------------------------------
+SWEPT (derived from the account, one call: iam get-account-authorization-details):
+  roles 252   local+attached policies 56   users 7   groups 1
+  SCPs: NOT APPLICABLE -- account is not in an AWS Organization (AWSOrganizationsNotInUseException). Stated, not implied.
+NOT SWEPT (named, not implied): S3 bucket policies, KMS key policies,
+  permission boundaries, session policies, resource policies generally.
+tag-conditioned statements found: 9 (4 ours, 5 AWS service-linked)
+------------------------------------------------------------------------------
+
+default_tags keys in infra/aws/terraform/opal-gateway: ['Environment', 'ManagedBy', 'Project', 'System']
+  *** KEY COLLISION: ['Project', 'System'] are BOTH default_tags keys AND authorization keys.
+
+MODE: GATE. Scoped to 0 candidate resource(s) this tree would manage.
+
+RESULT: none of the 0 candidate(s) carries a tag that infra/aws/terraform/opal-gateway's default_tags ['Environment', 'ManagedBy', 'Project', 'System'] would overwrite.
+safe-apply: comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag.
+[tombstone-gate] checked 0 create(s) in this plan against 7 tombstone(s)
+[tombstone-gate] CLEAN: no planned create matches a tombstoned resource.

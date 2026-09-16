@@ -1,0 +1,111 @@
+{
+  "measured_utc": "2026-09-15T14:45:31.703447+00:00",
+  "head": "f589a22a4ee5df81e026c0049c1c4cad22d6297f",
+  "contract_sha256": "5adfb0c5c001f42fc3591d08d5819a7d990f7b9baaf58af232bd2fe892bf7d9a",
+  "builder_calls": 7,
+  "artifacts": [
+    {
+      "artifact": "workbook_snapshot",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "bronze",
+        "taxsma_workbook",
+        "date={knowledge_date}",
+        "{snapshot_id}.json"
+      ],
+      "output": "s3://opal-data-assets/mdpf/49financial/bronze/taxsma_workbook/date={knowledge_date}/{snapshot_id}.json"
+    },
+    {
+      "artifact": "membership_dispositions",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "state",
+        "taxsma_membership",
+        "dispositions.json"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/state/taxsma_membership/dispositions.json"
+    },
+    {
+      "artifact": "operational_control",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "state",
+        "taxsma_control",
+        "current.json"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/state/taxsma_control/current.json"
+    },
+    {
+      "artifact": "taxsma_assets",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "gold",
+        "taxsma_assets",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/gold/taxsma_assets/date={knowledge_date}/data.parquet"
+    },
+    {
+      "artifact": "firm_category",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "gold",
+        "category_views",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/gold/category_views/date={knowledge_date}/data.parquet"
+    },
+    {
+      "artifact": "global_category",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "global",
+        "gold",
+        "category_views",
+        "date={knowledge_date}",
+        "data.parquet"
+      ],
+      "output": "s3://opal-data-mdpf/mdpf/global/gold/category_views/date={knowledge_date}/data.parquet"
+    },
+    {
+      "artifact": "firm_served",
+      "builder": "address",
+      "args": [
+        "mdpf",
+        "49financial",
+        "platinum",
+        "category_views",
+        "category-views.json"
+      ],
+      "output": "s3://opal-data-49financial/mdpf/49financial/platinum/category_views/category-views.json"
+    },
+    {
+      "artifact": "global_served",
+      "historical_address": "s3://opal-data-portal-v2/platinum/mdpf/global/category-views.json",
+      "not_builder_probed": true
+    }
+  ],
+  "runtime_role": {
+    "args": [
+      "mdpf",
+      "49financial",
+      "taxsma",
+      "role"
+    ],
+    "output": "mdpf-49f-taxsma-role"
+  },
+  "boundary": "Pure constructor calls with exactly declared symbolic partitions; no AWS data or implementation validation. Corrects the claim that the declared v0.2 snapshot call fails; guessed sharepoint/ms failures did not test that call."
+}

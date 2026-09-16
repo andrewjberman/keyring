@@ -1,11 +1,11 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "8ad762f7bfb1a0609d2f133934104af726dafdff",
+  "prd_version": "v0.10",
+  "prd_pin": "f3f726763ddef55c563e0e5858b8dcee456f766b",
   "half": "ratified-text",
-  "half_hash": "1a4cc291f538dd4cccc525672ddce423613d44b6b76924ec47fad2350c19d905",
+  "half_hash": "7b6618975e82ee53f993513ceffe8a710e2b17208ea3c0942a90ec860a4b9b6b",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_L4R_CORRECTION_REVIEW_20260911.md@b96f670a76cd8727827cfdc73a1e2e9f4828743b",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_DSGN_REBRND_v0.10_RATIFIED_TEXT_HALF_20260914.md@cca19c6867",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-11T08:44:47Z"
+  "signed_at": "2026-09-14T19:38:41Z"
 }

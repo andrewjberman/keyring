@@ -1,0 +1,11 @@
+{
+  "prd": "ADVI_FIRMBKTS_PRD.md",
+  "prd_version": "v1.2",
+  "prd_pin": "4289847ccfea840e2b55a395d33f1096f12bd560",
+  "half": "ratified-text",
+  "half_hash": "27be69a5dca435c400e37edfd688d77eb92f95784fc1fa9e80c34aaebadf739d",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_ADVI_FIRMBKTS_v1.2_RATIFIED_TEXT_HALF_20260914.md@077a0aa97a",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-09-14T10:28:47Z"
+}

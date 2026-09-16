@@ -206,13 +206,38 @@ across two fabrics is NEVER#7 and a non-conflicting rebase result is luck, not c
 ⛔ **NEVER resolve another fabric's law text unilaterally.** Union what composes; route genuine
 same-row collisions to the law owners with both versions quoted.
 
-### ⛔ IDENTICAL BASE-SIDE RANGES = ONE DEFECT CORRECTED TWICE. **PICK, NEVER UNION.**
+### ⛔ IDENTICAL **NONZERO-COUNT** BASE-SIDE RANGES = ONE DEFECT CORRECTED TWICE. **PICK, NEVER UNION.**
+
+⛔⛔ **READ THE COUNT BEFORE YOU READ THE POSITION. THIS HEADING SAID ONLY "IDENTICAL" UNTIL
+2026-09-16 AND ON A ZERO-COUNT RANGE THAT RULE DELETES ONE FABRIC'S ROWS.** A `--unified=0` header
+carries BOTH: `-41,3` consumes three base rows, `-463,0` consumes **none**. Identical POSITION with a
+**ZERO** count is not two renderings of one sentence — it is a **PURE APPEND COLLISION**, two fabrics
+inserting DIFFERENT content at the same point, neither having touched a base row. **PICK there is not
+a choice between two edits of one region; it is a silent DELETION of whichever side loses**, and it
+leaves no conflict, no error and no diff to review.
+
+```
+-N,0  (ZERO count)     -> APPEND COLLISION      -> MECHANICAL UNION, keep both sides' rows
+-N,M  (M >= 1)         -> same rows replaced    -> PICK one whole, per the rest of this section
+```
+
+**Found by `0.0.0_AB_MSTR~Z` on the 2026-09-15/16 assessment, against its own live conflict set:
+`org/XXX.md -463,0` on both sides, where the two fabrics had each appended a DIFFERENT Step 1b-F
+loop-authorization row. PICK would have dropped one — and Step 1b-F is the ONLY source of truth for
+live loop arming, so the failure mode is a fabric that reads clean and arms nothing.** ⚠ The peer
+found it; `0.0.0_AB_MSTR` (laptop) re-derived the MECHANISM on a throwaway two-branch repo rather
+than taking the finding on report, with both arms: identical `-3,0` on each side, PICK dropped the
+other side's row; the NEGATIVE control, identical `-2,1`, was a genuine same-row replacement where
+PICK is right. **The instance is the peer's, the mechanism is independently measured, and the two
+arms are what separate the cases.** COST: read the `,N` you already printed in Step 3. NON-APPLICATION:
+disjoint ranges (already union) and any range pair where either count is nonzero.
 
 The classification table above splits conflicts into *disjoint ranges -> mechanical union* and
 *overlapping -> read the content*. **There is a third case it did not name, and the union default
 produces VISIBLE GARBAGE on it.** When both sides' `--unified=0` BASE-side ranges are not merely
-overlapping but **IDENTICAL**, the two fabrics did not add rules blind to each other — **they
-independently CORRECTED THE SAME SENTENCE.** Union stacks two corrections of one defect.
+overlapping but **IDENTICAL — and NONZERO-count, per the block above** — the two fabrics did not add
+rules blind to each other; **they independently CORRECTED THE SAME SENTENCE.** Union stacks two
+corrections of one defect.
 
 **And it usually needs NO law-owner adjudication**, which the bullet above would otherwise send it
 to: there is no disagreement about substance, only two renderings. **Read both, pick the better one
@@ -256,6 +281,26 @@ YOUR BLAST RADIUS, AND THE UNIT UNDER TEST IS THE DOCUMENT, NOT THE EDIT.** A co
 LOCALLY TRUE AND GLOBALLY WRONG: neither paragraph is wrong alone, the defect exists only in their
 composition, it is CREATED BY THE FIX, and it is invisible to the author because the author only
 diffs what they wrote.
+
+#### ⛔⛔ A VINTAGE MOVE CAN ADD A CONFLICTED PATH, NOT ONLY CHANGE THE CONTENT OF KNOWN ONES — SO RE-RUN THE WHOLE ASSESSMENT, NEVER THE CHEAP PARTIAL
+
+**THE INTUITION THAT A RE-BASE "PROBABLY HOLDS" IS AN INTUITION ABOUT THE FILES ALREADY IN THE
+OVERLAP SET. IT IS SILENT ABOUT MEMBERSHIP.** Re-checking only the known conflicts is the obvious
+economy and it is the one that fails: **the cheap partial re-run returns CLEAN and is WRONG**, because
+the set itself grew while you were not looking.
+
+*Measured 2026-09-16, CLOUD<->SITEZ, and it is the reason this block exists. `0.0.0_AB_MSTR` pushed
+220 commits, disclosed the vintage move per the step below, and said in terms "I do not expect the
+SHAPE to change" — correctly labelled as expectation, not measurement. `0.0.0_AB_MSTR~Z` re-ran the
+WHOLE assessment at the new head and the shape HAD changed: overlap 6 of 2281 -> **7 of 2567**,
+conflicts **two became three**, and the new member was the **`portal` GITLINK** — whose pointer had
+moved during a DEV->PROD promote entirely inside the window between the two measurements. The overlap
+set gained the one member whose type has its own failure mode: **a gitlink is where a merge reads
+clean and moves nothing real.*** (`is-ancestor` settled it as a fast-forward, and it was still left
+to the pointer's owner.)
+
+COST: one full re-run instead of a targeted re-check. NON-APPLICATION: none on a live fabric — if
+neither side has committed since the assessment, there is no vintage move to re-run against.
 
 #### ⛔ WHAT TRIGGERS THAT AUDIT: **DISCLOSE A VINTAGE MOVE. IT IS NOT COURTESY.**
 

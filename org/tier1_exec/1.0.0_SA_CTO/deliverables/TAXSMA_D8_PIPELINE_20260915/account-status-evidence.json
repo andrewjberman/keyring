@@ -1,0 +1,441 @@
+{
+  "schema_version": "1.0",
+  "measured_at_utc": "2026-09-15T04:58:27.849734+00:00",
+  "business_date": "2026-09-11",
+  "identity_rule": "All comparisons use complete normalized identifiers; suffixes are display labels only. No historical exact-identity diff is possible from masked August workbook cells.",
+  "population": {
+    "workbook_traded_yes": 8,
+    "workbook_numbered_traded_no": 2,
+    "workbook_awaiting_opening": 3,
+    "traded_corroborated_in_latest_0833": 6,
+    "traded_missing_in_latest_0833": 2,
+    "custodian_only_tax_strategy_candidates": 3,
+    "custodian_only_candidates_with_positions": 0,
+    "registry_active_among_traded": 3,
+    "registry_pending_among_traded": 2,
+    "registry_absent_among_traded": 3,
+    "workbook_numbered_matches_in_0824": 0
+  },
+  "accounts": [
+    {
+      "account_suffix": "5115",
+      "excel_index": "1",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "4/8/2026",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 200"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "active",
+      "registry_has_bd_id": true,
+      "balance_exact_rows": 1,
+      "position_rows": 374,
+      "xref_exact_rows": 1,
+      "position_long_short": {
+        "S": 196,
+        "L": 178
+      },
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "4282",
+      "excel_index": null,
+      "in_current_excel": false,
+      "excel_ready": null,
+      "excel_traded": null,
+      "excel_strategy": null,
+      "excel_leverage": null,
+      "excel_inception": null,
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 0,
+      "xref_exact_rows": 0,
+      "position_long_short": {},
+      "valuation_eligibility": "CUSTODIAN_CANDIDATE_BUSINESS_STATUS_UNCONFIRMED",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "5591",
+      "excel_index": "8",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "9/10/2026",
+      "acc_exact_rows": 0,
+      "acc_statuses": [],
+      "acc_strategies": [],
+      "acc_money_managers": [],
+      "acc_master_values": [],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 0,
+      "position_rows": 0,
+      "xref_exact_rows": 0,
+      "position_long_short": {},
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 0,
+      "canonical_matches_balance_to_cent": null
+    },
+    {
+      "account_suffix": "4702",
+      "excel_index": "10",
+      "in_current_excel": true,
+      "excel_ready": "No",
+      "excel_traded": "No",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 0,
+      "xref_exact_rows": 0,
+      "position_long_short": {},
+      "valuation_eligibility": "SALES_PIPELINE_NOT_TRADED",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "0058",
+      "excel_index": "3",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "4/8/2026",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "pending_resolution",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 367,
+      "xref_exact_rows": 0,
+      "position_long_short": {
+        "S": 196,
+        "L": 171
+      },
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "8743",
+      "excel_index": "6",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 200",
+      "excel_leverage": "100%",
+      "excel_inception": "9/1/2026",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 200"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 432,
+      "xref_exact_rows": 0,
+      "position_long_short": {
+        "L": 222,
+        "S": 210
+      },
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "0650",
+      "excel_index": null,
+      "in_current_excel": false,
+      "excel_ready": null,
+      "excel_traded": null,
+      "excel_strategy": null,
+      "excel_leverage": null,
+      "excel_inception": null,
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 0,
+      "xref_exact_rows": 0,
+      "position_long_short": {},
+      "valuation_eligibility": "CUSTODIAN_CANDIDATE_BUSINESS_STATUS_UNCONFIRMED",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "9710",
+      "excel_index": "4",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "8/5/2026",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "active",
+      "registry_has_bd_id": true,
+      "balance_exact_rows": 1,
+      "position_rows": 357,
+      "xref_exact_rows": 0,
+      "position_long_short": {
+        "S": 182,
+        "L": 175
+      },
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "4809",
+      "excel_index": "7",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 200",
+      "excel_leverage": "100%",
+      "excel_inception": "9/10/2026",
+      "acc_exact_rows": 0,
+      "acc_statuses": [],
+      "acc_strategies": [],
+      "acc_money_managers": [],
+      "acc_master_values": [],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 0,
+      "position_rows": 0,
+      "xref_exact_rows": 0,
+      "position_long_short": {},
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 0,
+      "canonical_matches_balance_to_cent": null
+    },
+    {
+      "account_suffix": "3310",
+      "excel_index": "2",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "8/5/2026",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 200"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "active",
+      "registry_has_bd_id": true,
+      "balance_exact_rows": 1,
+      "position_rows": 349,
+      "xref_exact_rows": 0,
+      "position_long_short": {
+        "S": 177,
+        "L": 172
+      },
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "4992",
+      "excel_index": null,
+      "in_current_excel": false,
+      "excel_ready": null,
+      "excel_traded": null,
+      "excel_strategy": null,
+      "excel_leverage": null,
+      "excel_inception": null,
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 0,
+      "xref_exact_rows": 0,
+      "position_long_short": {},
+      "valuation_eligibility": "CUSTODIAN_CANDIDATE_BUSINESS_STATUS_UNCONFIRMED",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "4632",
+      "excel_index": "9",
+      "in_current_excel": true,
+      "excel_ready": "No",
+      "excel_traded": "No",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "ABSENT",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 1,
+      "xref_exact_rows": 0,
+      "position_long_short": {
+        "L": 1
+      },
+      "valuation_eligibility": "SALES_PIPELINE_NOT_TRADED",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    },
+    {
+      "account_suffix": "9812",
+      "excel_index": "5",
+      "in_current_excel": true,
+      "excel_ready": "Yes",
+      "excel_traded": "Yes",
+      "excel_strategy": "SMA 145",
+      "excel_leverage": "45%",
+      "excel_inception": "6/5/2026",
+      "acc_exact_rows": 1,
+      "acc_statuses": [
+        "O"
+      ],
+      "acc_strategies": [
+        "Opal Tax SMA 145"
+      ],
+      "acc_money_managers": [
+        "Opal Capital LLC"
+      ],
+      "acc_master_values": [
+        "0008335338"
+      ],
+      "registry_status": "pending_resolution",
+      "registry_has_bd_id": false,
+      "balance_exact_rows": 1,
+      "position_rows": 354,
+      "xref_exact_rows": 0,
+      "position_long_short": {
+        "S": 186,
+        "L": 168
+      },
+      "valuation_eligibility": "WORKBOOK_TRADED_YES_REQUIRES_RECONCILIATION",
+      "canonical_valuation_rows": 1,
+      "canonical_matches_balance_to_cent": true
+    }
+  ]
+}

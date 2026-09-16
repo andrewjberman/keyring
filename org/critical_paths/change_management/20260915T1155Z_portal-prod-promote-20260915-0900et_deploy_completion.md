@@ -1,0 +1,44 @@
+# Deploy Completion Record
+**Date opened:** 2026-09-15T11:55:06.157327+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260915T124458Z
+**Deploy:** Portal DEV to PROD 9adad7ce under MSTR GO97048; deadline 13:00Z; characteristics vintage qualifier
+**Authored by:** 1.0.0_SA_CTO~A
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 1.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | verify | Candidate admission and preflight CTO-A | GO97048 authority pins live DEV9adad7ce clean candidate main tracked clean gate ancestry IR guards and zero-error typecheck | MSTR explicit GO97048 preserved at5c51e9ff3b with authority4524cc2466/02e9cb858c and named vintage qualifier; 11:53:52Z live DEV9adad7ce and PROD b1389c85; fresh portal-candidate-20260915T115803Z HEAD9adad7ce/tree d3db406c all-files clean, main DEV tracked clean; required10c2f07d ancestor rc0/bogus128; IR routes2/2 nav1/1 partner exclusions3/3; main bun run typecheck rc0. Deliberate TS2322 control failed rc1 under Bun, corrected control rc0; no repo source altered. | CLOSED 20260915T120637Z |
+| L2 | git | Portal PROD no-ff merge and push CTO-A | remote PROD merge SHA with DEV9adad7ce second parent and tree d3db406c plus empty diff and clean build tree | Authorized portal PROD push rc0 and live ls-remote edf85ce503aad961b84b5ea3b2074eb84d416a16. Required second parent9adad7ce750742e9806c373a71f7ce900f3e22b2, tree d3db406c198b325fee48790a84205f0695c6d7c2, empty diff/all-files clean before push. Base/rollback b1389c85759511e65ec5d5b26ee96d63c91984c2. Bun1.3.9 frozen install rc0, typecheck rc0, build rc0; pre-push provenance guard OK, VALGATE D-1 PASS no-op, typecheck PASS. Same-command Andrew override cites02e9cb858c/GO97048. | CLOSED 20260915T121033Z |
+| L3 | activation | Portal CI deployment and annotated tag CTO-A verifies | every exact-PROD-SHA required workflow success per-step deploy receipt and tag peeled to deployed SHA | Exact-head run enumeration: one workflow Deploy to Production, run 34967303352, head edf85ce503aad961b84b5ea3b2074eb84d416a16, terminal success. Build/typecheck/artifact upload, S3 static/index/JSON deploy, CloudFront invalidation, annotated tag jobs all success; completed 12:12:00Z. Remote portal-v2.1.178 tag object 968e6ab7e058e974cdc92a279cdb7a5ef5d1d63e peels to exact pushed edf85ce503aad961b84b5ea3b2074eb84d416a16. | CLOSED 20260915T121643Z |
+| L4 | verify | Served portal artifact and affected behavior CTO-A | served artifact matches deployed build and live IR access and Positioning presentation evidence with accepted vintage qualifier | At12:16Z all54 live files (index plus every53 root JS/CSS assets) match exact run34967303352 production-build bytes; manifest at6bafe30998. Actual served client gate: internal admin IR opens; partner admin main and print routes redirect /market; internal non-admin main redirects with IR nav absent. Synthetic auth is explicitly not data proof. MSTR97057 relays Andrew authenticated phone check verbatim: Just Checked promote on my cell phone it all looks good with the data. Accepted GO97048/97051 same-code Positioning presentation544/544 and272/272x2 remains qualified by dated characteristics. | CLOSED 20260915T122400Z |
+| L5 | git | Workspace portal pointer and publication MSTR | MSTR pointer commit and publication or integration receipt tied to DEV and live PROD | MSTR97069 publication receipt: push rc0 fast-forward6a5b276f8b..0b7ecdde1f (551 commits); independent ls-remote confirms refs/heads/CLOUD0b7ecdde1fced656bfc686b0714c8379730f7d20. Independent ancestry check confirms pointer8e5780daf6 included; git ls-tree published head portal=9adad7ce750742e9806c373a71f7ce900f3e22b2, the DEV tree served by PRODedf85ce5. Published head includes closeout record and LD0568 outcome is attributed toMSTR. MSTR safe-deploy reports2 deployed+verified, IRPT bundle minted md5ec26d1d1d2f820c221f3cdf250ef9bad,4 loud skips; matches CTO ruled3-object write set. SITEZ integration separately owned byMSTR/MSTR~Z. | CLOSED 20260915T124457Z |
+| L6 | verify | Cleanup report freeze release and log CTO-A with MSTR | exact worktree cleanup main DEV root cwd session log and MSTR freeze-release receipt | Both owned deployment worktrees deregistered after verified .runtmp-only clean cleanup; candidate removed rc0, PROD physical residue permitted by documented Windows long-path note after prune. Repair worktree removed rc0. Main portal DEV9ad and workspace-root CWD verified. MSTR97051 explicitly released freeze12:19:50Z, confirmed deadline met and release report. Canonical exact-seat log112a616b5c at org/tier1_exec/1.0.0_SA_CTO/logs/2026-09-15/taxsma_hotfix_portal_promote_0425-1225Z.md. Reports delivered12:17,12:21,12:23,12:28; L5 remains independently OPEN for MSTR CLOUD publication under CTO97056. | CLOSED 20260915T122911Z |
+| L7 | verify | Characteristics vintage follow-up MSTR | MSTR receipt for post-promote characteristics re-serve VersionId and resolved or explicitly retained dated vintage | SUPERCEDES retained-dated-vintage proof: MSTR97063 measured head-object plus full parsed get for s3://opal-data-cot/platinum/satellites/characteristics.json, VersionId02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh LastModified2026-09-15T12:30:54Z, bbg_run_class scheduled. positioning_data_as_of and bbg_as_of2026-09-14;25 tickers =23 positioning_data +1 BBG(GLD) all T-1 +1 intentionally unsourced CASH. All24/24 sourced holdings T-1. No non-null measure lost vs08:10 baseline; duration coverage9 to10. MSTR declares vintage qualifier CLEARED. This is owner-attributed data-plane proof, not a newly observed authenticated rerender or an unstated unrounded-value census. | CLOSED 20260915T123543Z |
+
+## Log
+
+- 20260915T115506Z OPENED by 1.0.0_SA_CTO~A with 7 leg(s)
+- 20260915T120637Z LEG L1 closed: MSTR explicit GO97048 preserved at5c51e9ff3b with authority4524cc2466/02e9cb858c and named vintage qualifier; 11:53:52Z 
+- 20260915T121033Z LEG L2 closed: Authorized portal PROD push rc0 and live ls-remote edf85ce503aad961b84b5ea3b2074eb84d416a16. Required second parent9adad
+- 20260915T121643Z LEG L3 closed: Exact-head run enumeration: one workflow Deploy to Production, run 34967303352, head edf85ce503aad961b84b5ea3b2074eb84d4
+- 20260915T122400Z LEG L4 closed: At12:16Z all54 live files (index plus every53 root JS/CSS assets) match exact run34967303352 production-build bytes; man
+- 20260915T122400Z LEG L7 closed: MSTR owner receipt97051 explicitly RETAINS DATED vintage per GO: at12:17Z characteristics VersionId prefix PXyBGaqn stil
+- 20260915T122911Z LEG L6 closed: Both owned deployment worktrees deregistered after verified .runtmp-only clean cleanup; candidate removed rc0, PROD phys
+- 20260915T123543Z LEG L7 closed: SUPERCEDES retained-dated-vintage proof: MSTR97063 measured head-object plus full parsed get for s3://opal-data-cot/plat
+- 20260915T124457Z LEG L5 closed: MSTR97069 publication receipt: push rc0 fast-forward6a5b276f8b..0b7ecdde1f (551 commits); independent ls-remote confirms
+- 20260915T124458Z CLOSED -- all 7 legs proven
+
+## Additional independent evidence, received 2026-09-15T13:24:22Z
+
+MSTR **97085** relays Site Z's bus receipt `a792ad47` at13:21Z, measured there at13:15-13:19Z. This is attributed second-instrument evidence beside this seat's97064 read and MSTR97063; it does not change the seven closed legs or their closure time.
+
+- Same characteristics VersionId `02SGBCPDoeVPy7JBJcEHxUw4J0.nQneh` (12:30:54Z):24/24 sourced holdings T-1, CASH intentionally unsourced. Site Z reports345 Yang-sourced cells compared with positioning_data VersionId prefix `aJ7nhw`, zero mismatches.
+- Site Z rebuilt fixtures from six served keys at their current VersionIds and rendered Satellite15 and80 on `9adad7ce`, tree `d3db406c`, equal to PROD's tree:272/272 cells each, both views, zero values with three or more decimals. The full six VersionIds were not supplied in97085; these counts are Site Z's measurement, not a new local test.
+- Site Z independently reports PROD tree parity, POSN and d13 present, AMGT absent, and deploy34967303352 green. Its third driven run never fired; B6's scheduled12:30Z rule superseded it and its ledger is closed9/9.
+
+Full received carrier is preserved in `org/tier1_exec/1.0.0_SA_CTO/deliverables/PORTAL_PROMOTION_20260915_CTO_A/OWNER_RECEIPTS.md`. CLOUD/SITEZ integration and the CLAUDE.md pick remain with the named law owners; this evidence note performs no merge, push or deployment.

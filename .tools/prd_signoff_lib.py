@@ -283,18 +283,59 @@ def build_doc(prd_basename, prd_text, prd_pin, half, verdict, review_ref, signed
     return doc
 
 
-def read_signoff_files(signoff_dir):
-    """{basename: parsed-json-or-None} for every *.json in the dir (missing dir -> {})."""
+def read_signoff_files(signoff_dir, ref="HEAD"):
+    """{basename: parsed-json-or-None} for every *.json in the signoff dir AS COMMITTED AT `ref` (default HEAD).
+
+    A SIGNATURE IS A COMMITTED FILE, NEVER A WORKING COPY (row LGIC_NAMING-S14, carried by C-S11 into REMEDIATION_v2).
+    This used to list and open the worktree. When `prd-signoff.py refuse` exited rc=1 because a foreign commit landed
+    16 s after the review commit, the new signoff JSON stayed written but uncommitted, and `status` read it: the brief
+    half read REFUSED while HEAD still held the v1.4 SIGNED record. The same read serves all four callers, so each of them
+    now reads the record: `prd-signoff.py` status (and its post-commit re-read after a stamp), `to-pipeline-gate.py`
+    LIMB 6, `prd-header-notify.py` and `prd-stamp.py`. Their call shapes are unchanged.
+
+    The dir is placed in its repository BY GIT: `git rev-parse --show-prefix`, run from its parent (the PRD's own dir),
+    gives the repository-relative path, never os.path.relpath. A Windows 8.3 short path (`ANDREW~1`) against git's
+    long `--show-toplevel` made relpath climb out of the repo, and the read silently came back empty (measured by this
+    function's own self-test in a tempdir). It is then listed with `git ls-tree` and read with `git show <ref>:<path>`
+    from the toplevel. A missing dir at `ref` reads {}. When git cannot
+    answer, the read also returns {} -- no signature -- so it fails toward the law, never toward admission. An entry git
+    lists but cannot show, or that does not parse, reads None, which evaluate() already refuses as not readable."""
+    import subprocess
     files = {}
-    if not os.path.isdir(signoff_dir):
+    parent = os.path.dirname(os.path.abspath(signoff_dir))
+    if not os.path.isdir(parent):
         return files
-    for n in sorted(os.listdir(signoff_dir)):
+
+    # A GIT HOOK EXPORTS ITS REPOSITORY, AND THAT MUST NOT STEER THIS READ. Inside a commit hook, git sets GIT_DIR (and
+    # GIT_INDEX_FILE, and sometimes GIT_WORK_TREE), and a child git honours them over its cwd. In a LINKED worktree that
+    # made --show-prefix answer for the wrong tree, and the read came back empty: to-pipeline-gate LIMB 6 refused a tree
+    # issuance with "PRD has NO sign-off" while status in the same worktree read ADMITTED (2.0.0_SA_COO~G, 2026-09-15).
+    # So the repository is found from the PRD's own directory, and git's location variables are removed for these reads.
+    _env = {k: v for k, v in os.environ.items()
+            if k not in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_PREFIX", "GIT_COMMON_DIR")}
+
+    def _git(args, cwd):
+        return subprocess.run(["git"] + args, cwd=cwd, capture_output=True, text=True, encoding="utf-8",
+                              errors="replace", timeout=60, env=_env)
+    try:
+        top = _git(["rev-parse", "--show-toplevel"], parent)
+        pre = _git(["rev-parse", "--show-prefix"], parent)
+        if top.returncode != 0 or not top.stdout.strip() or pre.returncode != 0:
+            return files
+        root = top.stdout.strip()
+        rel = pre.stdout.strip() + os.path.basename(os.path.normpath(signoff_dir))
+        ls = _git(["ls-tree", "--name-only", ref, "--", rel + "/"], root)
+    except Exception:  # noqa: BLE001
+        return files
+    if ls.returncode != 0:
+        return files
+    for p in sorted(x.strip() for x in ls.stdout.splitlines() if x.strip()):
+        n = p.rsplit("/", 1)[-1]
         if not n.endswith(".json"):
             continue
-        p = os.path.join(signoff_dir, n)
         try:
-            with open(p, "r", encoding="utf-8") as fh:
-                files[n] = json.load(fh)
+            r = _git(["show", "%s:%s" % (ref, p)], root)
+            files[n] = json.loads(r.stdout) if r.returncode == 0 else None
         except Exception:  # noqa: BLE001
             files[n] = None
     return files
@@ -357,13 +398,58 @@ def live_serials(root, now=None):
     return {s for s, info in data.items() if isinstance(info, dict) and now - float(info.get("last_seen_epoch", 0) or 0) < LIVE_SECONDS}
 
 
-def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=None):
+def review_lane_suffix(root, prd_rel, project_doc=None):
+    """The lane FAMILY a PRD's sign-off requests prefer: one upper-case letter, or None.
+
+    WHY NOT THE PROJECT'S `fabric` (row AMGT_RESAPP-Z-S102, second measurement by 0.0.0_AB_MSTR~Z): `fabric`
+    separates DEVICES, not lane families. Both the ~Z and the ~W families run on the site-Z device, and Andrew split
+    them by project, verbatim: "Please make sure that the ~W agents are only working on AMGT_RESAPP. I spawned the ~W
+    fabric explicitly to work on RESAPP while the ~Z agents work on POSN_ASTTAX." Both rows read fabric=site-z, so a
+    fabric key sent AMGT_RESAPP to ~Z, the reverse of his word (f9820aee7b, corrected here).
+
+    ORDER:
+    (1) an explicit `reviewer_lane_suffix` on the project row, when present. It is absent on every row today, and
+        adding it is a schema act.
+    (2) else the suffix of the PRD's LAST 1.0.0_SA_CTO-lane author. The CTO lane that writes a project's PRD is the
+        family that runs it: POSN_ASTTAX by 1.0.0_SA_CTO~Z, AMGT_RESAPP by 1.0.0_SA_CTO~W since the split. This is a
+        PROXY -- one edit by another CTO lane flips it -- so (1) is the robust binding when Andrew wants one.
+    (3) else None, which gives the old base-then-alphabetical order.
+    The family is the suffix's first letter, so ~Z, ~ZZ and ~ZZZ are one family."""
+    doc = project_doc or {}
+    explicit = str(doc.get("reviewer_lane_suffix") or "").strip().lstrip("~")
+    if explicit:
+        return explicit[0].upper()
+    import subprocess
+    env = {k: v for k, v in os.environ.items()
+           if k not in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_PREFIX", "GIT_COMMON_DIR")}
+    try:
+        r = subprocess.run(["git", "log", "--format=%an", "--", prd_rel], cwd=root, capture_output=True, text=True,
+                           encoding="utf-8", errors="replace", timeout=60, env=env)
+    except Exception:  # noqa: BLE001
+        return None
+    for who in r.stdout.splitlines():
+        who = who.strip()
+        if who.split("~")[0] == "1.0.0_SA_CTO":
+            return who.split("~", 1)[1][:1].upper() if "~" in who and who.split("~", 1)[1] else None
+    return None
+
+
+def route_half(half, live, coo_lane_of_project=None, overdue=False, designated=None, prefer_suffix=None):
     """(serial, reason) -- who is ASKED to sign `half` right now. The ratified-text half always goes to the
     CVO (base or its live lane). The brief half goes to the CRO when a CRO base/lane is live; else, or when the
     CRO is OVERDUE on it, to a live 2.0.0_SA_COO instance that is NOT this project's round holder; else to the
-    CRO base anyway (a message to a dead base is a hole, so the reason says so and the notifier keeps re-offering)."""
+    CRO base anyway (a message to a dead base is a hole, so the reason says so and the notifier keeps re-offering).
+
+    AMONG LIVE LANES, THE PROJECT'S LANE FAMILY GOES FIRST (`prefer_suffix`, from review_lane_suffix()). The order
+    is: lanes of that family, then the base, then alphabetical. With prefer_suffix None it is the old
+    base-then-alphabetical order, unchanged."""
+    fam = str(prefer_suffix or "").strip().lstrip("~")[:1].upper()
+
+    def _in_family(s):
+        return bool(fam) and ("~" in s) and s.split("~", 1)[1][:1].upper() == fam
+
     def live_of(base):
-        return sorted([s for s in live if base_serial(s) == base], key=lambda x: (x != base, x))
+        return sorted([s for s in live if base_serial(s) == base], key=lambda x: (not _in_family(x), x != base, x))
     if half == "ratified-text":
         c = live_of("3.0.0_SA_CVO")
         return (c[0] if c else "3.0.0_SA_CVO"), ("live" if c else "no live CVO session; the base is addressed, which is a hole until a session is live; re-offer continues")
@@ -458,6 +544,80 @@ def self_test():
     arm("route: ratified-text ignores the designation", route_half("ratified-text", live, designated="2.0.0_SA_COO~D")[0].startswith("3.0.0_SA_CVO"))
     arm("route: nobody live -> the primary base, with the hole named", route_half("brief", set())[0] == "4.0.0_SA_CRO" and "hole" in route_half("brief", set())[1])
     arm("route: the CVO is never substituted", route_half("ratified-text", {"2.0.0_SA_COO"})[0] == "3.0.0_SA_CVO")
+    # LANE FAMILY (row AMGT_RESAPP-Z-S102, both measurements): with ~W and ~Z lanes both live on one device, a PRD whose
+    # family is W goes to ~W (AMGT_RESAPP, Andrew's split) and one whose family is Z goes to ~Z (POSN_ASTTAX); no family
+    # keeps the old order. The fabric key f9820aee7b used is GONE -- it inverted AMGT_RESAPP.
+    two = {"4.0.0_SA_CRO~W", "4.0.0_SA_CRO~Z", "3.0.0_SA_CVO~W", "3.0.0_SA_CVO~Z"}
+    arm("route FAMILY: a W-family PRD (AMGT_RESAPP) -> CRO~W and CVO~W, never ~Z",
+        route_half("brief", two, prefer_suffix="W")[0] == "4.0.0_SA_CRO~W" and route_half("ratified-text", two, prefer_suffix="W")[0] == "3.0.0_SA_CVO~W")
+    arm("route FAMILY: a Z-family PRD (POSN_ASTTAX) -> CRO~Z and CVO~Z, never ~W",
+        route_half("brief", two, prefer_suffix="Z")[0] == "4.0.0_SA_CRO~Z" and route_half("ratified-text", two, prefer_suffix="Z")[0] == "3.0.0_SA_CVO~Z")
+    arm("route FAMILY: no family -> the old base-then-alphabetical order, unchanged", route_half("brief", two)[0] == "4.0.0_SA_CRO~W")
+    arm("route FAMILY: ~Z, ~ZZ, ~ZZZ are one family -- a Z-family COO fallback picks ~ZZZ, never its own round holder ~ZZ",
+        route_half("brief", {"2.0.0_SA_COO~A", "2.0.0_SA_COO~ZZZ", "2.0.0_SA_COO~ZZ"}, coo_lane_of_project="2.0.0_SA_COO~ZZ", prefer_suffix="Z")[0] == "2.0.0_SA_COO~ZZZ")
+    arm("route FAMILY: an explicit project-row reviewer_lane_suffix beats the author proxy",
+        review_lane_suffix(".", "no/such/prd.md", {"reviewer_lane_suffix": "~W"}) == "W")
+    arm("route FAMILY: a PRD with no CTO-lane author -> None (the old order)", review_lane_suffix(".", "no/such/prd.md", {}) is None)
+    # A SIGNATURE IS A COMMITTED FILE (row LGIC_NAMING-S14). The doctored pair runs in a THROWAWAY repo, so no real signoff
+    # dir is touched: a committed SIGNED file is read, the same SIGNED content left uncommitted is not, and a worktree edit
+    # to a committed file is not read either.
+    import shutil
+    import subprocess
+    import tempfile
+    tmp, bare = tempfile.mkdtemp(prefix="signoff-head-"), tempfile.mkdtemp(prefix="signoff-norepo-")
+    try:
+        def g(*a):
+            return subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "-c", "core.autocrlf=false"] + list(a),
+                                  cwd=tmp, capture_output=True, text=True)
+        g("init", "-q")
+        sd = os.path.join(tmp, "prd", SIGNOFF_DIR)
+        os.makedirs(sd)
+        os.makedirs(os.path.join(tmp, "prd2"))
+        with open(os.path.join(sd, "3.0.0_SA_CVO.json"), "w", encoding="utf-8") as fh:
+            json.dump(cvo, fh)
+        g("add", "-A")
+        committed = g("commit", "-q", "-m", "the committed signoff").returncode == 0
+        with open(os.path.join(sd, "4.0.0_SA_CRO.json"), "w", encoding="utf-8") as fh:
+            json.dump(cro, fh)
+        at_head = read_signoff_files(sd)
+        in_worktree = {n: json.load(open(os.path.join(sd, n), encoding="utf-8")) for n in sorted(os.listdir(sd))}
+        arm("S14 positive control: a COMMITTED signoff is read at HEAD", committed and (at_head.get("3.0.0_SA_CVO.json") or {}).get("verdict") == "SIGNED")
+        arm("S14 doctored pair: the same SIGNED content left UNCOMMITTED is NOT read", "4.0.0_SA_CRO.json" not in at_head and "4.0.0_SA_CRO.json" in in_worktree)
+        arm("S14 discrimination: the HEAD read WITHHOLDS (brief owed) where the old worktree read would ADMIT",
+            not evaluate(prd, at_head)["admitted"] and evaluate(prd, in_worktree)["admitted"])
+        with open(os.path.join(sd, "3.0.0_SA_CVO.json"), "w", encoding="utf-8") as fh:
+            json.dump(dict(cvo, verdict="REFUSED"), fh)
+        arm("S14: a worktree EDIT to a committed signoff is not read -- HEAD's bytes win", (read_signoff_files(sd).get("3.0.0_SA_CVO.json") or {}).get("verdict") == "SIGNED")
+        arm("S14: a signoff dir absent at HEAD reads {}", read_signoff_files(os.path.join(tmp, "prd2", SIGNOFF_DIR)) == {})
+        os.makedirs(os.path.join(bare, "prd"))
+        arm("S14: a dir outside any repository reads {} (no signature: fails toward the law)", read_signoff_files(os.path.join(bare, "prd", SIGNOFF_DIR)) == {})
+        # THE HOOK ENVIRONMENT (2.0.0_SA_COO~G, 2026-09-15): a commit hook exports GIT_DIR/GIT_INDEX_FILE, and in a
+        # LINKED worktree the read came back empty, so LIMB 6 refused a signed PRD. Both arms set the variables a hook
+        # sets, pointing somewhere else, and the read must still find the PRD's own committed signoff.
+        wt = os.path.join(tmp, "linked")
+        g("worktree", "add", "-q", wt, "HEAD")
+        wt_sd = os.path.join(wt, "prd", SIGNOFF_DIR)
+        saved = {k: os.environ.get(k) for k in ("GIT_DIR", "GIT_INDEX_FILE", "GIT_WORK_TREE")}
+        try:
+            os.environ["GIT_DIR"] = os.path.join(bare, "not-a-repo.git")
+            os.environ["GIT_INDEX_FILE"] = os.path.join(bare, "not-an-index")
+            arm("S14 HOOK ENV: GIT_DIR/GIT_INDEX_FILE exported elsewhere -> the primary checkout still reads its committed signoff",
+                "3.0.0_SA_CVO.json" in read_signoff_files(sd))
+            arm("S14 HOOK ENV, LINKED WORKTREE: the same variables -> the linked worktree reads its committed signoff",
+                "3.0.0_SA_CVO.json" in read_signoff_files(wt_sd))
+        finally:
+            for k, v in saved.items():
+                if v is None:
+                    os.environ.pop(k, None)
+                else:
+                    os.environ[k] = v
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+        shutil.rmtree(bare, ignore_errors=True)
+    live = read_signoff_files(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                           "org", "missions", "D14", "LGIC", "LGIC_NAMING", "prd", SIGNOFF_DIR))
+    arm("S14 LIVE: LGIC_NAMING's real signoff dir reads its committed files at HEAD (>= 2, every one parsed)",
+        len(live) >= 2 and all(v is not None for v in live.values()))
     print("prd_signoff_lib self-test: %d defect(s)" % fails)
     return fails
 

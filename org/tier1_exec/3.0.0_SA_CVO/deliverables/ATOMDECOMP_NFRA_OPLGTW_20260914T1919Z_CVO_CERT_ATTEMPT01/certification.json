@@ -1,0 +1,90 @@
+{
+  "run_id": "nfra-oplgtw__20260914T1919Z",
+  "attempt": 1,
+  "certifier": "3.0.0_SA_CVO",
+  "certified_utc": "2026-09-14T23:21:20Z",
+  "packet_vintage": "e0171ca5851d04b5a82d46658b0fb76560833d0f",
+  "author": "1.0.0_SA_CTO~A",
+  "certifier_prior_read_disclosed": true,
+  "_what_this_is": "The standing certifier's signed outcome for attempt 01. The pre-open outputs (SIGNED_ASSESSMENT.md, semantic_refusal.patch.json, K2_RECONSTRUCTION_ATTESTATION.md) were committed @4931f059f8 at 2026-09-14T22:54:13Z. That is BEFORE 1.0.0_SA_CTO~A released the private seal at 2026-09-14T23:06:10Z (message of 23:06:16Z), and the ordering can be checked against the commit graph. At the author's request this record is held in the certifier's own deliverable directory until closure, preserving the packet boundary. At closure it is copied into the run home as certification.json, beside the author's published withheld trail.",
+
+  "verdict": "PASS",
+  "verdict_basis": "The frozen nomination equals the sealed plant coordinate exactly, and the certifier files no refusal. The only certifier patch reverts the plant. Outcome vocabulary per docs/architecture/OPAL_ANALYST_PRD.md:1136 (binding F). Had the nomination missed, the whole attempt would be VOID (:1586-1589).",
+
+  "plant_nomination": {
+    "frozen_at": "4931f059f8 (SIGNED_ASSESSMENT.md section 1)",
+    "coordinate": {"entity_id": "S3-data", "field": "recorded_observation", "value_path": ["footer_objects", 1, "columns"], "reads": 40, "source_reads": 39},
+    "discriminators": [
+      "The cited observed-metadata.json @39a8c5eeca /parquet_footers/objects/1 (08242234/dim_balance, key at :459) records columns 39.",
+      "34 vendor columns plus 5 provenance columns makes 39.",
+      "In the same cell, the sibling 08335338/dim_balance reads 39.",
+      "The cell's own schema_comparison asserts parity with source, which 40 contradicts."
+    ],
+    "found_by": "Substantive assessment of all 18 cells. check_c.py printed 2 MISMATCH of 50, both at this coordinate, and a fresh raw JSON walk confirmed it. It was NOT found by replay, diff or positional inference."
+  },
+
+  "seal_open": {
+    "seal_file_sha256_raw": "283c323ac5448973301289310fbd6600d6ad84f6050d5562d3708bfd83054ca6",
+    "equals_public_commitment": "YES. The hash appears in MUTANT_SEALED.md @e0171ca585, which records 'Sealed at: 2026-09-14T21:50:51Z', before the packet commit.",
+    "dry_sha256_raw": "f1d659f8ba4fb17232de007c045b586317aa25bb4b8e9dba9bf49048b3ace0b8 (equals the seal's dry_sha256)",
+    "plant_patch_sha256_raw": "d5adf83e3e2627cce72fb26a719264cdbba4a38103e4968a0e3ccef91073c0ea (equals the seal's plant_patch_sha256)",
+    "sealed_coordinate": {"entity_id": "S3-data", "field": "recorded_observation", "value_path": ["footer_objects", 1, "columns"], "old": 39, "new": 40},
+    "dry_vs_final": "A JSON-level diff of rectangle.dry.json against rectangle.final.json @e0171ca585 reads exactly 1 difference: /entities/2/cells/recorded_observation/value/footer_objects/1/columns, 39 -> 40.",
+    "match": "EXACT. The entity, field, value_path and both values equal the frozen nomination.",
+    "instrument": "The certifier hashed the three released files with python hashlib over raw bytes, from the author's scratch path. It did not rely on the author's integrity statement."
+  },
+
+  "k2_reconstruction_attestation": {
+    "signed_before_seal_opened": true,
+    "ref": "K2_RECONSTRUCTION_ATTESTATION.md @4931f059f8 (git-record sha256 d166f08f20f2236714f43446a6cd44ef1ef9d8e8b3036f9308b0907e13269a0e, equal to the author's quoted value)",
+    "did_i_derive_the_plant_by_any_non_assessment_route": "NO.",
+    "present_in_context_not_used_to_locate": [
+      "R1: the certifier's prior full read of the original c1, in precondition review @619dec559f. This context carried 'columns 39 = 34 + 5' for this footer. It is disclosed, and the nomination rests on the cited source, not on that memory."
+    ],
+    "used_as_assessment_only": [
+      "R2: check_c.py, the certifier's own instrument from the precondition review. It was green on c1, so a mismatch on final also implies a change from c1. That inference is declared and was not relied on."
+    ],
+    "routes_AVAILABLE_AND_DECLINED": [
+      "R3: replaying the pre-dry patches through the validator and diffing against final.",
+      "R4: diffing c1 against final.",
+      "R5: a content diff of git history (only the commit list was read).",
+      "R6: reading the c2-c7 correction patches positionally (run.json's notes and the reviewed_at stamps were encountered and declared).",
+      "R7: the author's scratch space and conversation before seal-open."
+    ]
+  },
+
+  "independent_re_grounding": {
+    "ref": "SIGNED_ASSESSMENT.md @4931f059f8 (git-record sha256 66010ee7e5c3cd652554e2822b9dd5d3c81c2e49d3ab87040503b686df7656e3)",
+    "denominator": 18,
+    "result": "17 COHERENT, 1 CONTRADICTED (the nomination), 0 EVIDENCE_NONDISCRIMINATING",
+    "parent_re_verification": "The certifier's parent session re-read the raw line rectangle.final.json:472, the source object and the sibling, and confirmed the patch differs from final by exactly one integer, before sending the pre-open outputs (msg 96776)."
+  },
+
+  "findings": {
+    "precondition_defects_D1_D4": "All closed, each quoted at @e0171ca585 in SIGNED_ASSESSMENT.md. D1: onboarding owned (S1-auth :128, :133; S6 :1075). D2: A12 owned with a probe (S2 :336). D3: domain_bar_ref reads domain_bar.md, tracked, with seed_metadata_correction.json. D4: re-hashed to git record bytes with a negative control.",
+    "pin_census": "57 of 57 match git record bytes; 0 match CRLF only.",
+    "packet_boundary": "29 of 29 allowlisted files at the packet commit, at HEAD and on disk. 0 unexpected, untracked or modified files. No commit touches the run dir after e0171ca585.",
+    "non_blocking_notes": "N-a..N-d in SIGNED_ASSESSMENT.md section 6: compound boundary owners on S3/S4; S5's boundary count; S4.recorded_observation's vintage label; positional hints in run.json and reviewed_at."
+  },
+
+  "certified_patch_derivation": {
+    "rule": "DRY-DERIVES-CERTIFIED, OPAL_ANALYST_PRD.md:1188-1192 (binding K): the consumable comes from rectangle.dry.json plus the semantics patch plus any certifier-refusal corrections, all validator-merged, never from final.json.",
+    "certified_patches": ["semantic_refusal.patch.json @4931f059f8 (sha256 d1c0f1c9d377d8ce33be0a591ef2fae01cd006b745a6d49963857ec57f8d9b03)"],
+    "exercised": "projects/ATOM_DECOMP/skill/atomic-decomposition/references/ssot_validate.py patch <rectangle.dry.json> <semantic_refusal.patch.json> --out <scratch> read rc=0, 'applied 1 cell change(s) + 0 structural change(s)'. The merged document equals rectangle.dry.json whole-document (python JSON equality).",
+    "consequence": "The certified consumable rectangle.final.certified.json, which the author derives at closure through the canonical validator, will equal rectangle.dry.json. The certifier's patch reverts the plant and changes nothing else."
+  },
+
+  "method_assessment": {
+    "rule_14d_dry": "MET. run.json @e0171ca585 reads status DRY with cycles (6,0) and (7,0), two consecutive zero-change cycles under distinct lenses (complete journey and negative cases; constraints, provenance and clocks).",
+    "rule_14e_author_plant": "MET. The seal commitment is dated 21:50:51Z, before verifier_packet.json. The dry state and the plant patch were kept outside the shared tree until seal-open.",
+    "separation_of_duties": "The certifier wrote no rectangle, dry or plant file. Its verifier outputs are confined to this directory."
+  },
+
+  "scope_and_limits": [
+    "This certifies the documentation-only PRD ground-truth rectangle (6 surfaces x 3 evidence fields) at @e0171ca585. It certifies no live, deployed or authenticated behaviour; the run excludes that.",
+    "It authorizes no decomposition, implementation, deployment, grant or push. PRD NFRA_OPLGTW v0.2 remains DRAFT with both L4-R halves signed.",
+    "No vendor documentation or external egress was used."
+  ],
+
+  "seal_state_at_signature": "OPENED. The seal was released by 1.0.0_SA_CTO~A at 2026-09-14T23:06:10Z, after the pre-open outputs @4931f059f8. This record was written after seal-open, and its nomination is the one frozen before it."
+}

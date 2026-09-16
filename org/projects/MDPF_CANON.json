@@ -4,10 +4,10 @@
  "directive": "D8",
  "macro_code": "MDPF",
  "fabric": "laptop",
- "dep_stage": "REGISTERED",
+ "dep_stage": "PRD",
  "status": "active",
  "name": "MDPF canon migration -- all MDPF gold moves to opal-data-mdpf as parquet with its vintage in the key; each firm's served slice moves into that firm's own bucket behind a scoped route; the publisher stays the one place parquet becomes JSON; the two legacy gold trees retire only on a proof that nothing reads them",
  "generated_from": "org/missions/D8/MDPF/MDPF_CANON/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-13T04:32:51Z"
+ "generated_at": "2026-09-14T08:43:41Z"
 }

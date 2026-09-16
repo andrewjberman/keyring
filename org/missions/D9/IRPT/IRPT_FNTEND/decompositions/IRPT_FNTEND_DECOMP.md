@@ -1,4 +1,4 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 4 -- v0.4
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 8 -- v0.8
 
 ```json
 {
@@ -6,7 +6,7 @@
  "directive": "D9",
  "fabric": "laptop",
  "round": 2,
- "decomp_version": "v0.4",
+ "decomp_version": "v0.8",
  "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0",
  "prd_version": "v0.4",
@@ -1287,3 +1287,582 @@ Every wave-B edge on FE-s-29 is a SEQUENCING edge, not a data edge: ruling M req
 ## R5.8 HOLDS
 
 **None blocking.** One owed act, recorded so it is not lost: when FE-s-29 lands card 6, CLAUDE.md Rule 27's "widening it is HIS call and is carded" and the gate's own docstring go stale, so a LAW EDIT is owed at FE-s-29's drain (1.0.0_SA_CTO 96394). FE-s-29 updates the gate's docstring inside its grant; the CLAUDE.md edit is this seat's at the drain, as a three-surface law edit.
+
+---
+
+# ROUND 6 -- v0.6 -- the recut on the CTO's ROUND-5 ANALYSIS
+
+```json
+{
+ "round": 6,
+ "decomp_version": "v0.6",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; the analysis owes no addendum (s.1), so no L4-R half re-opens",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND5_20260914.md@942e4ff992 (one citation corrected @727c4e7c2b); s.5 RULINGS S, U, V, T (renderer half), W",
+ "slug_ref": "3.0.0_SA_CVO msg 96576, record org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 -- 8 judgment criteria graded, 7 MET (6 qualified), F29-AC15 NOT MET on clause 3",
+ "round5_cells": "FE-s-29..FE-s-36 ALL COMPLETE and drained (last: FE-s-31 @6462e98cc6, portal DEV 741bb54b)",
+ "cells": 5,
+ "cell_id_shape": "FE-s-<n> continuing from 37",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @741bb54b, measured)",
+ "record_repo": "workspace (branch CLOUD)"
+}
+```
+
+Round 5's finding, in the CTO's words: **the checker can be steered by the party it grades.** Limbs 2 and 3 of
+proof-of-spec-check read their NEW/LEGACY boundary from the governing order, and the governing order came from
+`decomp_ref.to_ref`, a field the worker writes; the flip gate passed the checker neither the flipped order nor a
+criterion list (row S61, F29-AC15 NOT MET). Round 6 binds that first, then closes the environment, business-date,
+window and fixture gaps the slug graduated. The header of this document reads v0.6 from this recut (analysis s.1:
+it read v0.4 through round 5).
+
+## R6.1 THE RECTANGLE -- five cells, the checker binding first
+
+| cell | ruling | write surface (portal unless stated) | serves | rows | wave | slot |
+|---|---|---|---|---|---|---|
+| `FE-s-37` | S -- the governing order is the order being flipped | **workspace** `.tools/to-pipeline-gate.py`; `.tools/proof-of-spec-check.py`; `.tools/tests/` | the evidence plane | S61, C-S84 | A | ~4 |
+| `FE-s-38` | U -- one server per worktree, every browser verdict names it | `vite.config.ts`; `tsconfig.app.json`; `tsconfig.node.json`; `.gitignore`; `__tests__/fe-s-27/`; `__tests__/fe-s-38/` | FWD-1, FWD-6 (evidence) | C-S81, W1-S56, W1-S57, W5-S1, W5-S4, F35-AC6's browser arm | B | ~1 |
+| `FE-s-39` | V + W's W2-S29 -- the adapter never substitutes a value the document did not state | `contracts/adapt.ts`; `contracts/index.ts`; `state/status.ts` (wording); `tabs/holdings/`; `__tests__/fe-s-21/source-age.test.ts`; `__tests__/fe-s-39/` | FWD-5, FWD-6 | C-S83 (W3-S22, W3-S25, W3-S26), W2-S29 | B | ~3 |
+| `FE-s-40` | T (renderer half) + W's W2-S31 -- the window by trading day, the band's code as the contract names it | `render/performance/MethodsAndSources.tsx`; `tabs/reporting/PeriodControls.tsx`; `tabs/reporting/AnswerStatus.tsx`; `render/Page.tsx`; `tabs/StatusPanel.tsx`; `state/tradingCalendar.ts` (NEW); `__tests__/fe-s-40/` | FWD-3, FWD-6, FWD-8, FWD-12 | S62, W2-S31 | B | ~2 |
+| `FE-s-41` | W -- one writer per fixture map, the narrative bound to its own revision | `__tests__/fe-s-14/gen-maps.ts`; `__tests__/fe-s-33/gen-global-holdings.ts`; `__tests__/fe-s-18/gen-fixtures.ts`; `fixtures/smoke/fe-s-14-global.json`; `fixtures/smoke/fe-s-18-frozen.json`; the three `fixtures/smoke/fe-s-18-holdings-*.json`; `__tests__/fe-s-41/` | FWD-3, FWD-11 (evidence) | W2-S24, W2-S27 | B | ~5 |
+
+**Coverage by subtraction, three domains.**
+(1) The analysis's round-6 inputs, s.5, taken to their sub-items (denominator 17): S {binding}; U {helper refuses
+a default, cacheDir in the worktree, tsbuildinfo in the worktree, every browser run records port and worktree,
+F35-AC6's browser arm carried}; V {W3-S22, W3-S25, W3-S26}; T {trading-day comparator, the calendar named and 01-01
+proved, an unnamed code verbatim and flagged}; W {W2-S24, W2-S27, W2-S31, W2-S29}; and the header bump. MINUS the
+cells: S=37; U=38 (5 of 5); V=39 (W3-S25 is ALREADY MET at portal DEV 741bb54b, `state/availability.ts:108` keys on
+producerState since FE-s-34 amendment 3 @c6ee044e, so FE-s-39 carries only its guarding test); T=40 (3 of 3);
+W2-S24 and W2-S27=41; W2-S31=40 (the band is FE-s-40's file); W2-S29=39 (the mapping is in `contracts/adapt.ts`,
+FE-s-39's file); the header bump = this L5 commit. **0 uncovered.**
+(2) The PRD header's outcomes (denominator 8: FWD-1, 3, 4, 5, 6, 8, 11, 12) MINUS those round 6 moves: FWD-1 {38},
+FWD-3 {40, 41}, FWD-5 {39}, FWD-6 {38, 39, 40}, FWD-8 {40}, FWD-11 {41}, FWD-12 {40 -- W2-S31, the band at 390} =
+**1 NOT MOVED AND NAMED: FWD-4** (its cells landed in round 5; nothing this round's rulings name touches the
+analysis tab's own surfaces).
+(3) The rows the analysis routes to round 6 MINUS their carrying cell: S61 -> 37; C-S81 (with W1-S56, W1-S57,
+W5-S1, W5-S4) -> 38; C-S83 (W3-S22, W3-S25, W3-S26) -> 39; S62 (renderer half) -> 40; C-S82's frontend rows W2-S24,
+W2-S27 -> 41, W2-S31 -> 40, W2-S29 -> 39 = **0 uncovered.**
+
+**NOT ROUND 6's (analysis s.5, s.6):** the five contract gaps -- window reason codes, report_title and the
+analysis-POST schema (W5-S2), scope node_kind (W2-S25), Global's second firm (W2-S23), the ADVISORY enum -- carried by
+row IRPT_BCKEND-S52 @d4fe023415; W4-S12 (AMGT_RESAPP's issuer); W4-S9 (fixed by 1.0.0_SA_CTO @727c4e7c2b).
+
+## R6.2 BOUNDS -- ALL ROUND-6 CELLS (rounds 1-5 bounds stand)
+
+```
+checker    RULING S's SEQUENCING. FE-s-37 lands before any other round-6 proof is checked: every wave-B
+first      worktree is cut AFTER FE-s-37 drains, so the checker a worker validates with is the bound one.
+           Until it drains, 3.0.0_SA_CVO reads each instance's to_ref against its own order at L9 (the
+           analysis's interim control), and no order the checker grades flips on the unbound checker.
+census     THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD (W4-S11, adopted by 1.0.0_SA_CTO in the analysis
+           s.3): every cell that changes behaviour runs the whole affected suite ONCE with its change applied
+           (the InvestorReporting suite for portal cells; every .tools battery that calls either tool for
+           FE-s-37), IRPT_FE_DEV_PORT exported to a measured-closed port. A failure OUTSIDE the grant is a
+           BLOCKING row with the list, never an edit. A grep can seed a grant; it cannot close it.
+servers    Until FE-s-38 drains, every browser criterion in a wave-B cell other than FE-s-38 runs vite on a
+           worktree-local cache through a `.mjs` override LOADED at runtime inside the cell's own __tests__
+           folder (rows W1-S59, W2-S28: a `.ts` under src/ breaks the portal typecheck), and exports
+           IRPT_FE_DEV_PORT on EVERY bun test run -- never unset (W1-S57, W5-S1). Kill the server before the
+           report.
+drives     every criterion declares drives="network" or drives="none" (the checker refuses a new instance
+           otherwise); a drives="network" PASS must not be satisfied by seeding initial* props.
+anchors    count bars left `(?<![0-9])`, right `(?![0-9])`, never `\b`; one line per bar with `[^\n]*` where a
+           bar spans words; output_evidence carries the deciding run only (the count-bar limb refuses a
+           contradicting count).
+rows       round-6 rows go to INVESTIGATION_v2.md; read the WHOLE plane (v1 and v2) before minting; an INERT
+           row OMITS the disarm_owner key (a null is refused by the corpus pass); write with newline='\n'
+           and read the diffstat.
+gitlink    never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R6.3 THE CELLS
+
+### `FE-s-37` -- the governing order is the order being flipped (WORKSPACE cell)
+`check_complete_flip` (`.tools/to-pipeline-gate.py:2469` at CLOUD) runs `subprocess.run(["python", chk, inst])` --
+the instance and nothing else. The checker resolves its governing order from `decomp_ref.to_ref` when present
+(`.tools/proof-of-spec-check.py:614-641`, "An explicit decomp_ref.to_ref wins when present"; `_governing_rel`
+`:1300`). RULING S: the gate hands the checker the flipped order's path, the checker takes THAT as the governing
+order, and an instance whose `to_ref` names a different order is refused before any limb runs, by a violation naming
+both paths; `to_ref` is a cross-check only. The battery doctors `to_ref` to a real round-4 order through the gate's
+own flip path, keeps FE-s-29's committed instance VALID, and reads limb 1's frame on the doctored arm.
+
+### `FE-s-38` -- one server per worktree
+The fe-s-27 helper defaults to port `'5181'` (`__tests__/fe-s-27/_dev-server.ts:40`), and its own
+`precondition.test.ts` pins that default (`:40`, `:216`, `:251`). vite sets no cacheDir (`vite.config.ts`), so its
+cache is `node_modules/.vite` -- through the junction, the main checkout's; `.gitignore:17` already ignores `.vite`.
+Both tsconfigs write `tsBuildInfoFile` to `./node_modules/.tmp/` (`tsconfig.app.json:3`, `tsconfig.node.json:3`),
+through the same junction. RULING U: the helper refuses without IRPT_FE_DEV_PORT or a worktree-derived port;
+cacheDir and tsbuildinfo live inside the worktree by CONFIG; every browser run's precondition line names its port
+AND its worktree. F35-AC6's browser arm is carried here and re-run on this worktree's own server (its round-5
+deciding run met no server and SKIPPED F19-AC4/AC5 by name).
+
+### `FE-s-39` -- the adapter never substitutes a value the document did not state
+One axis for three findings. W3-S26: `readingFromValue(null)` returns fact NULL (`contracts/adapt.ts:161`), and
+`carryDocumentReading` (`:316`) applies it to VIEW documents, where the view contract defines a null
+`businessAsOf` as "no clock" (`contracts/index.ts:147`), so 3 of 134 view documents (all in
+`smoke/fe-s-3-loading.json`) read "Source date malformed" (`state/status.ts:332`, `:476`); on the WIRE plane a null
+stays a producer defect. W3-S22: `__tests__/fe-s-21/source-age.test.ts` builds its envelope from the status's
+`sourceAsOf` (`panelFor`, `:77-81`) and grades that instant under the business-date label (`:171`). W2-S29:
+`ADVISORY_FOR_WIRE[...] ?? 'unknown'` (`contracts/adapt.ts:558`, `:865`) maps an out-of-enum `advisory_status`
+(`'ADVISORY'`, emitted by `__tests__/fe-s-18/gen-fixtures.ts:317`) to "unknown" -- on the READY observed answer, 3
+of 3 rows, with nothing qualifying it (F32-AC9's qualification). RULING W: shown verbatim and flagged. W3-S25 is
+already met at DEV (above); this cell guards it with a test.
+
+### `FE-s-40` -- the window by trading day, the band's code as the contract names it
+`MethodsAndSources.tsx:58` decides "the same window" by calendar strings; `tabs/reporting/PeriodControls.tsx` prints
+the same sentence on screen. So the frozen READY print (fe-s-31_print_frozen-as-committed_1440.png) says "a different
+window" on page 3 -- a request starting 2026-01-01, a market holiday, answered from 2026-01-02 -- while its band says
+REQUESTED_WINDOW_ANSWERED (row S62). The portal has no trading calendar (a census of `src/`: `ModelPortfolios.tsx`
+keeps a render-axis holiday list that names `lib/trading_calendar.py` as the canonical one; `BenchmarkHeatmap.tsx`
+counts weekdays). RULING T: compare by trading day, name the calendar, prove 01-01; the table is DERIVED from the
+estate's one frontier, `lib/trading_calendar.py`, never hand-typed. REQUESTED_WINDOW_ANSWERED is defined nowhere
+(0 hits in `docs/contracts/investor-reporting/v1`), so until the contract names its codes a code it does not name is
+shown verbatim and flagged, on the band surfaces this cell owns (`AnswerStatus.tsx`, which Holdings also uses;
+`render/Page.tsx`; `tabs/StatusPanel.tsx`; `MethodsAndSources.tsx`). W2-S31: the band fits its reason code at 390.
+
+### `FE-s-41` -- one writer per fixture map
+`fe-s-14-global.json` has two writers: `__tests__/fe-s-14/gen-maps.ts:94` rewrites it whole with no holdings, and
+`__tests__/fe-s-33/gen-global-holdings.ts:57` adds them; run alone, the first strips the second's envelopes (W2-S24;
+S59 disarmed it by detection only, which the CTO calls the defect). W2-S27: the frozen map's narrative names `perf-9`
+while the frozen report is `rev-49f-000091`. RULING W: one writer; the narrative re-bound to its own performance
+fixture. The three Holdings maps are generated from the frozen map (`gen-fixtures.ts`, W2-S26), so the narrative's
+re-binding reaches them through the one generator.
+
+## R6.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-37 <- (none)          READY ROOT   workspace .tools/
+  FE-s-38 <- FE-s-37         wave B       portal root config + fe-s-27/
+  FE-s-39 <- FE-s-37         wave B       contracts/adapt.ts, contracts/index.ts, tabs/holdings/, fe-s-21 test
+  FE-s-40 <- FE-s-37         wave B       the band surfaces, the window comparator, the calendar
+  FE-s-41 <- FE-s-37         wave B       the generators and the maps they write
+
+  weakly connected components: M = 1     ready roots at issuance: R = 1
+  waves: A={37}  B={38,39,40,41}      max concurrent width: 4
+  ~4 FE-s-37   ~1 FE-s-38   ~3 FE-s-39   ~2 FE-s-40   ~5 FE-s-41
+```
+
+Every wave-B edge on FE-s-37 is a SEQUENCING edge (RULING S: nothing the checker grades flips on the unbound
+checker). Wave B is disjoint by FILE: FE-s-39 holds `contracts/adapt.ts` (both its V half and the advisory mapping);
+FE-s-40 holds every band surface, including `AnswerStatus.tsx`, which Holdings renders; FE-s-41 holds the generators
+and the maps; FE-s-38 holds the portal root config and the fe-s-27 helper. Cells READ each other's surfaces at their
+base (FE-s-39 and FE-s-40 read the Holdings maps FE-s-41 regenerates; the rows those two assert on do not move).
+
+**Fan-out: `1 of 1 chains, cap 8, reason: RULING S puts the checker binding ahead of every other round-6 proof, so
+the graph is one component with one ready root; it widens to 4 of 4 at wave B, disjoint by file`.**
+
+## R6.5 RULE 24 RECORD (round 6)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R6.1: inputs 17-17=0 (W3-S25 already met, guarded not rebuilt); outcomes 8-7=1 NOT MOVED AND NAMED (FWD-4); routed rows 0 uncovered. Cells partition by FILE; no two wave-B cells share a written path. |
+| (ii) same grain | (write region, ruling) per cell; FE-s-37 at the FABRIC grain, stated as such. |
+| (iii) intent | FE-s-37: the grader cannot be steered by the graded. FE-s-38: a verdict names the server it hit. FE-s-39: the adapter never substitutes a value the document did not state. FE-s-40: the page never contradicts itself about its window or presents an undefined code as a known one. FE-s-41: one writer per map. |
+| (iv) state | moves FWD-1/3/5/6/8/11/12 toward EXERCISABLE. Does NOT move: any grade to REALIZED (fixture-bound evidence; seven outcomes need IRPT_BCKEND); FWD-4; FWD-11's second firm (W2-S23, the producer's); the contract's code list and enums (IRPT_BCKEND-S52); the portal freeze. |
+
+## R6.6 BATTERY DISPOSITION (round 6)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED) | carried; PRD unchanged (analysis s.1) |
+| the checker's governing order | RUN | `check_complete_flip` passes only the instance (`subprocess.run(["python", chk, inst])`); `to_ref` wins at `proof-of-spec-check.py:614-641`; 3 of 63 `.tools/tests` files reference `to_ref` (count-bar, alignment, seeded) |
+| the dev-server environment | RUN | helper default `'5181'` (`:40`) pinned by its own test (`:40`, `:216`, `:251`); vite cacheDir absent; `.gitignore:17` `.vite`; tsBuildInfoFile `./node_modules/.tmp/` in both tsconfigs |
+| the business-date plane | RUN | `availability.ts:108` keys on producerState at DEV (W3-S25 met); `readingFromValue(null)` NULL at `adapt.ts:161`; `fe-s-21` `panelFor` `:77-81`, `:171` |
+| the advisory mapping | RUN | `adapt.ts:558`, `:865` `?? 'unknown'`; `'ADVISORY'` at `gen-fixtures.ts:317` |
+| the window and the codes | RUN | `MethodsAndSources.tsx:58` calendar-string comparator; no trading calendar in `src/` (3 files mention holidays; none is the canonical one); reason codes render in `AnswerStatus.tsx`, `render/Page.tsx`, `tabs/StatusPanel.tsx`, `MethodsAndSources.tsx` |
+| the fixture writers | RUN | `gen-maps.ts:94` and `gen-global-holdings.ts:57` both write `fe-s-14-global.json`; `perf-9` 1 and `rev-49f-000091` 1 in the frozen map |
+| instruments at the cut | RUN | to-pipeline-gate --self-test 0 of 70 failed; proof-of-spec-check --self-test 32 of 32 (CLOUD 6462e98cc6) |
+
+## R6.7 REFUSES TO ASSUME (round 6)
+
+1. That a boundary the grader reads is the grader's. S61: the graded party wrote the field that decided ENFORCE or LEGACY, and every battery was green.
+2. That a census by grep closes a grant. Three misses on one cell in round 5; the whole-suite run is the census of record.
+3. That a verdict names the server it graded. W5-S1: another project's page answered on the default port and was graded.
+4. That a null means the same thing on two planes. The view contract's null is "no clock"; the wire's is a producer defect.
+5. That two calendar strings that differ are two windows. 2026-01-01 is not a trading day.
+6. That detection is a disarm. S59 made the two-writer map loud; RULING W removes the second writer.
+
+## R6.8 HOLDS
+
+**None blocking.** Interim control while FE-s-37 runs, stated so nobody reads it as a gap: every round-6 wave-B cut
+waits on FE-s-37's drain, and 3.0.0_SA_CVO reads each instance's to_ref against its own order at L9.
+
+# ROUND 7 -- v0.7 -- the recut on the CTO's ROUND-6 ANALYSIS
+
+```json
+{
+ "round": 7,
+ "decomp_version": "v0.7",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; the analysis owes no addendum (s.1), so no L4-R half re-opens",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND6_20260914.md@4713211d87 (msg 96739); s.3 RULINGS X, Y, Z, AA, AB, AC and RULING U's residuals",
+ "slug_ref": "3.0.0_SA_CVO msg 96737, record org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND6_L8_L9_20260914.md@3d8fda2d73, carriers C-S87..C-S92 @158e88fbac, remediation rows @74d8d21a09 -- 5 judgment criteria graded, 4 MET (3 qualified), F39-AC10 NOT MET",
+ "round6_cells": "FE-s-37..FE-s-41 ALL COMPLETE and drained (last: FE-s-41 amendment 2 @999f08609b, portal DEV 35797660)",
+ "cells": 4,
+ "cell_id_shape": "FE-s-<n> continuing from 42",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @35797660, measured)",
+ "record_repo": "workspace (branch CLOUD @edac45e48c, measured)"
+}
+```
+
+Round 6's lesson, in the CTO's words: **the cut's reach is a subtraction, never a recall.** Twice running, tests and
+fixtures carrying a ruling's removed behaviour sat outside the cut (W3-S27, W3-S28, W5-S5), and an issuer's re-run in
+the worker's own worktree let a checkout-dependent red into DEV (S64). RULINGS X, Y and AC make those remedies bounds on
+this cut (R7.2). The four cells close the ten rows the slug graduated: RULING W reaching every site it names, the
+receiving route's binding, the red battery, and RULING U's residuals.
+
+## R7.1 THE RECTANGLE -- four cells, one wave, disjoint by file
+
+| cell | ruling | write surface | serves | rows | slot |
+|---|---|---|---|---|---|
+| `FE-s-42` | Z -- RULING W at every site it names | portal `contracts/adapt.ts` (`:585`); `contracts/index.ts` (`CohortValue`); `contracts/validate.ts`; `header/ScopeSummary.tsx`; `export/ReceiptPanel.tsx`; the capture writers `__tests__/fe-s-32/{holdings-in-a-browser.test.ts,holdings-driver.mjs}` and `__tests__/fe-s-40/{band-at-390.test.ts,band-driver.mjs}`; the census-named tests `__tests__/fe-s-1/fixtures.test.ts`, `__tests__/fe-s-9/receipt.test.ts`, `__tests__/fe-s-16/mounted-states.test.ts`; `__tests__/fe-s-42/` | FWD-5, FWD-6 | C-S92 (W3-S29 = F39-AC10, W3-S30, W2-S33, W3-S31) | ~3 |
+| `FE-s-43` | AA -- the L7->L8 receiving route binds the order | workspace `.tools/receiving-check.py`; `.tools/tests/test_receiving_binding.py` (NEW) | the evidence plane | C-S90 (W4-S14) | ~4 |
+| `FE-s-44` | AB -- the red battery diagnosed, not inherited | workspace `org/standards/test_artifact_coverage_both_grammars.py`; `.tools/proof-of-spec-check.py` ONLY if the checker is the wrong side | the evidence plane | C-S90 (W4-S15) | ~6 |
+| `FE-s-45` | U's residuals + AC's instance | portal `package.json` (the `dev` line only); `__tests__/fe-s-19/mounted-from-wire.test.ts` (`:56`); the four overrides `__tests__/fe-s-{31,39,40}/vite.worktree.config.mjs` and `__tests__/fe-s-32/vite.worktree.config.ts` (retired); `__tests__/fe-s-41/one-writer.test.ts` (F41-AC5's read); `__tests__/fe-s-45/` | FWD-1, FWD-11 (evidence) | C-S91 (W1-S63, W1-S64, W1-S65), C-S90 (W5-S7) | ~1 |
+
+**Coverage by subtraction, three domains.**
+(1) The analysis's round-7 inputs, s.3 (denominator 7: X, Y, Z, AA, AB, AC, U's residuals) MINUS where each lands:
+X, Y and AC are bounds on the cut and on the issuer (R7.2); Z = 42; AA = 43; AB = 44; U's residuals and AC's instance
+W5-S7 = 45. **0 uncovered.**
+(2) The rows the slug graduated (denominator 10: C-S90's W4-S14, W4-S15, W5-S7; C-S91's W1-S63, W1-S64, W1-S65;
+C-S92's W3-S29, W3-S30, W2-S33, W3-S31) MINUS their carrying cell: W3-S29, W3-S30, W2-S33, W3-S31 -> 42; W4-S14 -> 43;
+W4-S15 -> 44; W1-S63, W1-S64, W1-S65, W5-S7 -> 45. **0 uncovered.** The 11 dismissed rows (C-S88, C-S89) are closed and
+not re-cut.
+(3) The PRD header's outcomes (denominator 8: FWD-1, 3, 4, 5, 6, 8, 11, 12) MINUS those round 7 moves: FWD-5 and FWD-6
+{42}; FWD-1 and FWD-11 {45, evidence}. **4 NOT MOVED AND NAMED: FWD-3, FWD-4, FWD-8, FWD-12.** Nothing in this round's
+rulings touches their surfaces, and no FWD is uncovered (analysis s.1).
+
+**RULING X's census, run at this cut over the corpus, not a folder** (portal DEV 35797660, workspace CLOUD edac45e48c):
+- `CohortFact` values outside `__tests__/`: 2 consumers, `validate.ts:164-171` and `ScopeSummary.tsx:79`. Both are in
+  42's surface.
+- "cohort" under `__tests__/`: 2 files, a netlog and `fe-s-32/holdings-no-answer.json`. Neither asserts the directory
+  advisory, so no existing test is turned red by 42's directory change.
+- Tests importing `validate`: 1, `fe-s-1/fixtures.test.ts`.
+- Tests rendering ReceiptPanel: 2, `fe-s-9/receipt.test.ts` and `fe-s-16/mounted-states.test.ts`.
+- Tests naming a deliverables folder: 6. Minus the 2 writer pairs (fe-s-32, fe-s-40) = 4 readers, which are not
+  granted.
+- `cacheDir` under `__tests__/`: 6 files. Minus FE-s-38's 2 readers = **4 overrides, not the row's 2**.
+- `receiving-check` across `.tools/`, `.claude/` and 3.0.0_SA_CVO's folder: the tool, one mention in
+  `prd-manifest-gate.py`, the canonical-flow skill's documented call, and historical records. **0 batteries.**
+- The battery: a script, invoked `python <file>`. Under pytest it collects zero.
+
+Every census-named test is granted BY NAME for the ruling's claims only. The whole-suite run stays each cell's census of
+record, because a read census seeds a grant and the run closes it.
+
+## R7.2 BOUNDS -- ALL ROUND-7 CELLS (rounds 1-6 bounds stand)
+
+```
+X  reach     the cut's reach is a subtraction over the corpus (R7.1's census); every test, fixture and map a
+             ruling's change turns red is granted BY NAME; the domain is the corpus, never a folder.
+Y  re-run    the issuer never re-runs a worker's bars in the worker's worktree: a branch synced with DEV or an
+             untouched pair (workspace + nested portal, so cross-repo paths resolve), with `git ls-files --eol`
+             printed beside any byte-compare.
+AC reads     a criterion that reads a file reads `git cat-file blob HEAD:<path>` (or the committed tree), or its
+             bound says why it reads the working copy (42's AC7/AC8 and 45's AC2 do, by design).
+census       the whole-suite run is the census of record for every behaviour-changing cell (the InvestorReporting
+             suite for 42 and 45; FE-s-37's .tools census battery for 43 and 44).
+servers      FE-s-38 has drained: vite caches inside the worktree by config; `bun run dev --port <p> --strictPort`
+             directly; IRPT_FE_DEV_PORT on EVERY bun test run; 42 on 5263, 45 on 5261.
+drives       every criterion declares drives="network" or drives="none".
+anchors      count bars left `(?<![0-9])`, right `(?![0-9])`, never `\b`.
+rows         round-7 rows go to INVESTIGATION_v2.md; read the WHOLE plane (v1 and v2) before minting; an INERT row
+             OMITS disarm_owner. Row starts at the cut: W3-S33, W4-S16, W6-S1, W1-S67.
+gitlink      never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R7.3 THE CELLS
+
+### `FE-s-42` -- RULING W at every site it names (RULING Z)
+The directory cohort renames an out-of-enum advisory onto 'unknown' (`adapt.ts:585`), and the Holdings path does not
+(`:464-466`). `CohortValue` is shared by three axes, and its two consumers are validate and ScopeSummary. validate pins
+three values (`:448`). ReceiptPanel prints an unnamed code bare (`:47`), beside FE-s-40's one rule in `render/Page.tsx`
+(`:95`), which is imported and never copied. Two browser tests write committed captures on every run. The bar:
+verbatim and flagged at every use site, F39-AC10's clause re-graded at the directory site, and captures outside every
+committed deliverables folder by default.
+
+### `FE-s-43` -- the receiving route binds the governing order (RULING AA)
+`receiving-check.py:71` builds `[instance]`. The checker already takes `--governing-order` (FE-s-37). The route
+passes the order the receiving seat is handed; an unbound instance reads NOT-BOUND, never ACCEPT; the other five routes
+keep their current behaviour. The canonical-flow skill documents the call; the change it needs is named for its owner,
+not edited.
+
+### `FE-s-44` -- the red battery, diagnosed (RULING AB)
+3/6 at the cut: A, B and E are refused where rc=0 is owed, and C, D and F "pass" only as blanket refusals. The worker
+diagnoses which limb refuses and which side is wrong before fixing, keeps every correct limb, and proves with a mutant
+that the controls can fail again.
+
+### `FE-s-45` -- RULING U's residuals and AC's instance
+The dev script loads the config without writing through the junction (W1-S63); fe-s-19's comment follows the helper
+(W1-S64); four overrides are retired (W1-S65, a census of 4); F41-AC5 reads the committed blob (W5-S7).
+
+## R7.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-42 <- (none)   READY ROOT   portal: contracts, header, ReceiptPanel, the two capture writers
+  FE-s-43 <- (none)   READY ROOT   workspace: .tools/receiving-check.py + its new battery
+  FE-s-44 <- (none)   READY ROOT   workspace: the org/standards battery (+ the checker only if wrong)
+  FE-s-45 <- (none)   READY ROOT   portal: package.json dev line, fe-s-19 comment, four overrides, fe-s-41 AC5
+
+  weakly connected components: M = 4     ready roots at issuance: R = 4
+  waves: A={42,43,44,45}      max concurrent width: 4
+  ~3 FE-s-42   ~4 FE-s-43   ~6 FE-s-44   ~1 FE-s-45
+```
+
+The cells are disjoint by FILE. 42 and 45 share folders, but no file: 42 writes fe-s-32's and fe-s-40's tests and
+drivers, and 45 deletes their `vite.worktree.config` files. 43 and 44 share `.tools/`, but no file: 43 writes
+`receiving-check.py` and a new battery; 44 writes the org/standards battery and, only if it is the wrong side, the
+checker. 43 CALLS the checker and never edits it. So if 44 changes the checker, 43's branch is synced with CLOUD before
+43 drains.
+
+**Fan-out: `4 of 4 chains, cap 8, reason: the round-6 analysis's four cells have no dependency edge between them and
+no shared file, so each is its own chain and its own ready root`.**
+
+## R7.5 RULE 24 RECORD (round 7)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R7.1: inputs 7-7=0; graduated rows 10-10=0; outcomes 8-4=4 NOT MOVED AND NAMED. RULING X's census is itself a subtraction over the corpus, with denominators printed (R7.1). Cells partition by FILE. |
+| (ii) same grain | (write region, ruling) per cell; 43 and 44 are at the FABRIC grain, stated as such. |
+| (iii) intent | 42: the adapter and every surface state what the document states, and no test rewrites committed evidence. 43: the receiver grades against the order it was handed. 44: a battery that cannot fail is repaired so it can. 45: one server per worktree leaves nothing behind, and a committed read reads what is committed. |
+| (iv) state | moves FWD-5, FWD-6, and FWD-1/FWD-11 (evidence) toward EXERCISABLE, and the evidence plane. Does NOT move: any grade to REALIZED (fixture-bound evidence; the EXERCISED proofs need IRPT_BCKEND, last in SEQUENCE.yaml); FWD-3, 4, 8 and 12; FWD-11's second firm (W2-S23); the contract's reason-code list (W2-S32, IRPT_BCKEND's); 3.0.0_SA_CVO's own intake scripts (that seat binds its own); the portal freeze. |
+
+## R7.6 BATTERY DISPOSITION (round 7)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED) | carried; PRD unchanged (analysis s.1) |
+| the advisory sites | RUN | `adapt.ts:585`, `:464-466`; `CohortValue` at `index.ts:310`; `validate.ts:448`, `:164-171`; `ScopeSummary.tsx:79`; `ReceiptPanel.tsx:47`; `render/Page.tsx:95` |
+| RULING X's census | RUN | R7.1: the cohort consumers 2; "cohort" in tests 2; validate importers 1; ReceiptPanel renderers 2; deliverables-naming tests 6 (2 writer pairs); cacheDir files 6 (4 overrides) |
+| the receiving route | RUN | `receiving-check.py:71` `[instance]`; `--governing-order` in the checker since 13a3e28b95; 0 batteries call receiving-check |
+| the battery | RUN | 3/6 rc=1 at 8f4106a7f2; a script (`sys.exit` at `:128`) |
+| the dev script and the drain | RUN | `package.json:13` `"dev": "vite"`; the main portal checkout's uncommitted overrides-block edit (+2/-1, another seat's) |
+| instruments at the cut | RUN | to-pipeline-gate --self-test 0 of 72 failed; proof-of-spec-check --self-test 42 of 42 (CLOUD edac45e48c) |
+
+## R7.7 REFUSES TO ASSUME (round 7)
+
+1. That a folder is the corpus. W4-S15 sat red in `org/standards/`, where no folder-scoped census of the checker's batteries looked.
+2. That a row's own count is the population. W1-S65 named two overrides and there are four, and W3-S31 named one capture writer and there are two.
+3. That a re-run in the worker's tree corroborates the worker. S64 was green there, and red on every fresh checkout.
+4. That a battery whose controls pass is discriminating. W4-S15's controls pass because everything is refused.
+5. That the working copy is the committed state. W5-S7 and S64 read the working copy; the bars now read the blob.
+6. That a drain touching a file another seat has modified will merge. git refuses, cleanly, and the owner is a seat, not a tool.
+
+## R7.8 HOLDS
+
+- **FE-s-45's PORTAL DRAIN** waits on the main portal checkout's uncommitted `package.json` edit, which is another
+  seat's. git refuses a merge that touches a locally modified file. If the edit still stands when FE-s-45 is ready, the
+  drain is surfaced to 0.0.0_AB_MSTR to find the edit's owner; this seat never touches it. Everything else in round 7
+  drains without it.
+- **The seat question is at Andrew, not ruled** (analysis s.5). The CTO's rec is to free this seat after round 7
+  drains. Until he answers, round 7 proceeds.
+
+# ROUND 8 -- v0.8 -- the recut on the CTO's ROUND-7 ANALYSIS
+
+```json
+{
+ "round": 8,
+ "decomp_version": "v0.8",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@d1479bc5f0",
+ "prd_version": "v0.6 -- UNCHANGED; the analysis owes no addendum, so no L4-R half re-opens",
+ "analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_IRPT_FNTEND_ROUND7_20260915.md (msg 96865; the CTO commits it when the shared index frees and said 'do not wait for the hash')",
+ "slug_ref": "3.0.0_SA_CVO msg 96838, record org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND7_L8_L9_20260915.md@ac41c29ce1, carriers C-S93..C-S98 @aba71991f0, REMEDIATION_v3.md @2d42ebd1b0 -- 4 judgment criteria graded PASS (3 qualified), 5 rows graduated",
+ "round7_cells": "FE-s-42..FE-s-45 ALL COMPLETE and drained (last: FE-s-45 @32855486f0, portal DEV 1f3ce9f0)",
+ "cells": 3,
+ "cell_id_shape": "FE-s-<n> continuing from 46",
+ "code_repo": "portal (gitlink in the workspace; branch DEV @1f3ce9f0, measured)",
+ "record_repo": "workspace (branch CLOUD, measured at this commit)",
+ "seat": "Andrew-direct ~03:2xZ 'both recs approved' (@9e0ee4b49c): 2.0.0_SA_COO~F holds IRPT_FNTEND through round 8, then the seat frees"
+}
+```
+
+Round 7's lesson, from the CTO's own W1-S69: **a bar that names a reading must name one that DIFFERS in the world it
+rules out.** Round 8 closes the slug's three cuttable items as three small cells: timeouts sized to measured cost, the
+adapter's reason on the no-status path, and "withheld" for a cohort the producer does not assert. The CTO fixed W6-S1
+and W4-S16 in its own surfaces, landing with its analysis commit, so no cell is cut for them.
+
+## R8.1 THE RECTANGLE -- three cells, one wave, disjoint by file
+
+| cell | ruling | write surface | serves | rows | slot |
+|---|---|---|---|---|---|
+| `FE-s-46` | W3-S33 -- per-test timeouts sized to measured cost | portal `__tests__/fe-s-40/window.test.ts` and `__tests__/fe-s-41/one-writer.test.ts` (timeout arguments ONLY); `__tests__/fe-s-46/` | FWD-1, FWD-11 (evidence) | C-S96 (W3-S33) | ~1 |
+| `FE-s-47` | W3-S35 -- the ADAPTER supplies the reason; validate unchanged | portal `contracts/adapt.ts` (the explicit-unknown sites + one constant); `__tests__/fe-s-47/` | FWD-5, FWD-6 | C-S97 (W3-S35) | ~3 |
+| `FE-s-48` | F42-AC10's qualification -- a non-authoritative cohort reads "withheld" | portal `header/ScopeSummary.tsx` (the withheld word and its comment); `__tests__/fe-s-48/` | FWD-5, FWD-6 | C-S93 (F42-AC10 qualified) | ~4 |
+
+**Coverage by subtraction, three domains.**
+(1) The analysis's items (denominator 7: W1-S69, W1-S70, W6-S1, W4-S16, W3-S35, F42-AC10, W3-S33) MINUS where each lands:
+W1-S69 is a bound on every criterion cut from now on (R8.2 "runtime"); W1-S70 is taken with no cell, because RULING (B)
+stands on its other two reasons; W6-S1 and W4-S16 are fixed by 1.0.0_SA_CTO in its own surfaces; W3-S35 = 47;
+F42-AC10 = 48; W3-S33 = 46. **0 uncovered.**
+(2) REMEDIATION_v3's OPEN rows (denominator 5: W1-S69, W3-S33, W6-S1, W3-S35, W4-S16) MINUS their disposition: W3-S33 -> 46;
+W3-S35 -> 47; W1-S69 -> bound R8.2; W6-S1 and W4-S16 -> 1.0.0_SA_CTO's own fixes. **0 uncovered.** The 5 dismissed rows
+(C-S94, C-S95) are closed and not re-cut.
+(3) The PRD header's outcomes (denominator 8: FWD-1, 3, 4, 5, 6, 8, 11, 12) MINUS those round 8 moves: FWD-5 and FWD-6
+{47, 48}; FWD-1 and FWD-11 {46, evidence}. **4 NOT MOVED AND NAMED: FWD-3, FWD-4, FWD-8, FWD-12.** No FWD is uncovered.
+
+**RULING X's census, run at this cut BY WHOLE-SUITE PROBE, not by grep.** It used a detached probe pair: workspace at
+CLOUD HEAD and portal at DEV 1f3ce9f0, with its own junction. Each ruling's minimal change was applied alone, the
+InvestorReporting suite was run on a measured-closed port, and the change was reverted:
+- **Run A, "withheld" at `ScopeSummary.tsx:118`: 559 pass, 18 skip, 1 fail of 578.**
+- **Run B, the carry supplying a reason when no status or no stated state arrived (`adapt.ts:292`): 559 pass, 18 skip,
+  1 fail of 578.**
+- **The 1 fail is the SAME test both times, and it is caused by neither change.** It is F41-AC5's control
+  (`fe-s-41/one-writer.test.ts:791`, added by FE-s-45 in round 7), timing out at 5859 ms and 5812 ms under load.
+  - That makes it a THIRD member of W3-S33's class, which the row did not name, and it goes into FE-s-46 by name.
+  - So 47's and 48's changes each turn **0** existing tests red, and neither needs a census-named test grant.
+- A read census of `partialReason`, `: unknown` and `not asserted` under `__tests__/` finds 84 hits in 44 files. The run,
+  not the read, closes the grant; the read is too wide to grant from.
+- `EXPLICIT_UNKNOWN_STATE` into an Availability: `adapt.ts:228` (`wireEnvelope`) and `:290` (`carryAvailabilityFromStatus`,
+  whose `:292` carries the DOCUMENT's partialReason). `envelope.ts:233` is `IrParsedEnvelope.state`, which is not an
+  Availability.
+- Status-optional operations: 11 of 12 (`contracts/wire/responses.ts:236-249`). `envelope.ts:231` says ten, which is stale by
+  one and named in 47, not edited.
+- `partialReason` renderers: `render/Page.tsx:160`, `tabs/reporting/AnswerStatus.tsx:56`,
+  `render/performance/MethodsAndSources.tsx:173` and `:242`. The reason reaches the screen with no UI grant.
+- `CohortFact` render sites: `ScopeSummary.tsx` only; `validate.ts:164-171` checks and does not render (round 7's census).
+
+The whole-suite run stays each cell's census of record, because a probe seeds a grant and the worker's run closes it.
+
+## R8.2 BOUNDS -- ALL ROUND-8 CELLS (rounds 1-7 bounds stand)
+
+```
+X  reach     the cut's reach is a subtraction over the corpus; R8.1's whole-suite probe is this cut's census; every
+             test a ruling's change turns red is granted BY NAME (0 this round).
+Y  re-run    the issuer never re-runs a worker's bars in the worker's worktree: an untouched detached pair (workspace
+             + nested portal + junction), with `git ls-files --eol` printed beside any byte-compare.
+AC reads     a criterion that reads a file reads the committed blob or tree, or its bound says why it reads the
+             working copy (46's load runs do, by design).
+runtime      (W1-S69) a criterion that names a runtime names a reading that DIFFERS under the other runtime: the
+             listener's image name, and process.versions.bun absent. Never process.release.name alone. No round-8
+             criterion names a runtime.
+census       the whole-suite run is the census of record for every cell; F41-AC5's control timing out under load is
+             46's row, so 47 and 48 report it and re-run, never edit it.
+servers      no dev server this round; IRPT_FE_DEV_PORT on EVERY bun test run to a measured-closed port: 46 on 5261,
+             47 on 5263, 48 on 5265.
+timeouts     per-test only; no bunfig.toml or global timeout, because a global value would hide every other slow test.
+drives       every criterion declares drives="network" or drives="none" (all "none" this round).
+anchors      count bars left `(?<![0-9])`, right `(?![0-9])`, never `\b`.
+rows         round-8 rows go to INVESTIGATION_v2.md; read the WHOLE plane (v1 and v2) before minting; an INERT row
+             OMITS disarm_owner. Row starts at the cut: W1-S71, W3-S36, W4-S18.
+gitlink      never stage `portal` in the workspace repo. PORTAL IS FROZEN: local DEV commits only.
+```
+
+## R8.3 THE CELLS
+
+### `FE-s-46` -- timeouts sized to measured cost (W3-S33)
+Three tests pass on their content, but their loaded cost (5172 to 5875 ms) is past bun's 5000 ms default while their
+unloaded cost is under it. So a later cell's census reads red for a reason that cell cannot fix. Each test in the two
+files that can reach the default gets its own third `test()` argument, at least 3 times its highest recorded cost and
+at most 60000 ms. A seeded 1 ms timeout shows bun honours the argument.
+
+### `FE-s-47` -- a response with no status says why its state is unknown (W3-S35; the CTO's RULING)
+With no status, `carryAvailabilityFromStatus` leaves the document UNCERTAIN with no reason. validate refuses that, and
+the screen shows UNCERTAIN with nothing to explain it. The adapter supplies ONE named reason on that path only. A
+stated state never carries it (the `:292` hazard), and validate is unchanged. The class runs over every status-optional
+operation that carries an availability, not the one instance.
+
+### `FE-s-48` -- a non-authoritative cohort reads "withheld" (F42-AC10's qualification; the CTO's RULING)
+`ScopeSummary.tsx:118` renders every withheld axis as `<axis>: unknown`. It becomes `<axis>: withheld`, and the comment
+follows. The assertable path, including a producer's own UNKNOWN token, is unchanged. Text only, so no contrast
+surface moves.
+
+## R8.4 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-46 <- (none)   READY ROOT   portal: fe-s-40/window.test.ts + fe-s-41/one-writer.test.ts (timeouts only)
+  FE-s-47 <- (none)   READY ROOT   portal: contracts/adapt.ts (explicit-unknown sites + one constant)
+  FE-s-48 <- (none)   READY ROOT   portal: header/ScopeSummary.tsx (the withheld word + comment)
+
+  weakly connected components: M = 3     ready roots at issuance: R = 3
+  waves: A={46,47,48}      max concurrent width: 3
+  ~1 FE-s-46   ~3 FE-s-47   ~4 FE-s-48
+```
+
+The cells are disjoint by FILE: no two cells write the same file, and each new test folder is its cell's own. 47's
+tests read `ScopeSummary`'s neighbours only through the adapter, and 48's tests read no adapter file 47 writes. The
+three drain in any order.
+
+**Fan-out: `3 of 3 chains, cap 8, reason: the round-7 analysis's three cells have no dependency edge between them and
+no shared file, so each is its own chain and its own ready root`.**
+
+## R8.5 RULE 24 RECORD (round 8)
+
+| postulate | how |
+|---|---|
+| (i) MECE | three domains by subtraction in R8.1: analysis items 7-7=0; open remediation rows 5-5=0; outcomes 8-4=4 NOT MOVED AND NAMED. RULING X's census is a whole-suite probe per ruling, with its denominators printed (578 tests, 102 files). Cells partition by FILE. |
+| (ii) same grain | (write region, ruling) per cell; all three are portal cells at the file grain. |
+| (iii) intent | 46: a test's pass depends on its content, never on the box's load. 47: a state the wire did not send carries the reason it is unknown. 48: a value the panel declines to assert says so. |
+| (iv) state | moves FWD-5 and FWD-6 toward EXERCISABLE, and the evidence plane. Does NOT move: any grade to REALIZED (fixture-bound evidence; the EXERCISED proofs need IRPT_BCKEND, last in SEQUENCE.yaml); FWD-3, 4, 8 and 12; the `.tools` census bound (W6-S1, the CTO's); the canonical-flow skill (W4-S16, the CTO's); 3.0.0_SA_CVO's backfill question (at Andrew); the portal freeze. |
+
+## R8.6 BATTERY DISPOSITION (round 8)
+
+| lens | disposition | denominator / reason |
+|---|---|---|
+| comp-schedule / comp-iam | DECLARED-NOT-APPLICABLE | no scheduled producer, no IAM-gated resource |
+| comp-adversary | RUN at L4 on v0.6 (both halves SIGNED) | carried; PRD unchanged (no addendum) |
+| the slow tests | RUN | `window.test.ts:253`, `one-writer.test.ts:424` and `:791`, no timeout argument; unloaded file totals 2.20 s and 7.19 s (3 of 3 runs green); loaded 5172, 5735, 5875, 5859 and 5812 ms |
+| the no-status path | RUN | `validate.ts:95-96`; `adapt.ts:167`, `:228`, `:290`, `:292`; `envelope.ts:219`, `:233`; `responses.ts:236-249` (11 of 12 optional); the reason renderers (4 sites) |
+| the withheld site | RUN | `ScopeSummary.tsx:67-68`, `:117-119`, `:9-12`; `fixtures/directory.unknown-cohort.json` |
+| RULING X's census | RUN | two whole-suite probe runs, 559/18/1 of 578 each, the 1 fail the same unrelated timeout |
+
+## R8.7 REFUSES TO ASSUME (round 8)
+
+1. That a row's own list is the population. W3-S33 named two slow tests; the probe found a third, in the same file.
+2. That a grep of a word sizes a grant. 84 hits in 44 files; the whole-suite probe says 0 tests turn red.
+3. That a fix to one site is safe at the seam. `:292` carries the document's reason forward, so a reason placed in
+   `wireEnvelope` would ride onto a stated state; 47's control arm reads it.
+4. That a named reading discriminates. W1-S69: `process.release.name` reads "node" under bun too.
+5. That a comment's count is the count. `envelope.ts:231` says ten status-optional operations; the table holds 11.
+
+## R8.8 HOLDS
+
+- **The seat.** Andrew-direct ~03:2xZ, "both recs approved" (@9e0ee4b49c): this seat holds IRPT_FNTEND through round 8,
+  then frees. His ~18:2xZ word, relayed, gives the next freed seat to LGIC_CANON.
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push and no SITEZ merge until Andrew's word (0.0.0_AB_MSTR's).
+
+## R8.9 THE ADDED CELL -- round 8's one added order (1.0.0_SA_CTO rulings, msgs 96904, 96915 and 96924)
+
+| cell | ruling | write surface | serves | rows | slot |
+|---|---|---|---|---|---|
+| `FE-s-49` | the Opal-admin gate: role admin AND firmId opal-capital (Andrew's prod-deploy condition 2) | portal `src/App.tsx` (the two `/investor-reporting` route lines and the nav item line, made byte-identical to 2.0.0_SA_COO~D's rendering); `src/lib/firmAccess.ts` (`'/investor-reporting'` out of 3 partner sets, only if the suite stays green); `__tests__/fe-s-49/` | FWD-1, FWD-12 (PRD F1: route, page identity, navigation entry) | S66 | ~2 |
+
+**Why mid-round.**
+- Andrew-direct ~04:4xZ, relayed by 0.0.0_AB_MSTR (msg 96903): *"Investor Reporting must remain Opal Admin gated, no
+  clients are allowed to see that."* This is a condition of his full /prod-deploy.
+- To 2.0.0_SA_COO~D (msg 96914): *"that page needs to be listed for Opal Admins only in the tsx for that page."*
+- 1.0.0_SA_CTO ruled it into round 8 as its ONE added order (96904), with the stricter predicate (96915).
+- It then ruled this seat's recommendation (96924): copy 2.0.0_SA_COO~D's rendering byte-for-byte, so identical edits on
+  both branches merge clean, and take the partner allowlist entries out.
+- Andrew confirmed: "we need those admin guards" (96906).
+
+**The issuer's census at portal DEV 1f3ce9f0** (`git show` at the ref):
+- `App.tsx:421` and `:573` wrap the page in `<ProtectedRoute>` with no `requireAdmin` or `requireInternal`, and the nav item at
+  `:94` carries no `requiresAdmin` or `requiresTier`.
+- `ProtectedRoute.tsx`:
+  - `:39-40` `requireAdmin` tests role only;
+  - `:44-45` `requireInternal` tests `firmId === 'opal-capital'`;
+  - `:57` applies the firm allowlist.
+- `firmAccess.ts` `FIRM_ALLOWED_PATHS` lists `/investor-reporting` for **three partner firms**: 49financial, inflection and
+  cottonwood.
+- `hasAccess('internal')` = `firmId === 'opal-capital'` (`AuthContext.tsx:758-760`).
+- `origin/PROD` has 0 investor-reporting route lines, against 3 at DEV.
+- 2.0.0_SA_COO~D's feature working copy carries the exact three target lines, quoted in FE-s-49's cell. Its commit hash
+  follows, and the issuer byte-compares the drain against it.
+- The whole-suite probe of the admin-only change: 559/18/1 of 578, and the 1 fail is the same unrelated load timeout
+  (FE-s-46's). Every browser driver signs in as role admin with firmId opal-capital. So 0 tests turn red; the allowlist
+  change is decided by the worker's own whole-suite run, as the CTO ruled.
+
+**Coverage by subtraction, the added input:**
+- the CTO's cell 4 (denominator 1) -> 49;
+- row S66 -> 49;
+- **0 uncovered.**
+
+**Disjoint by FILE:** `App.tsx` and `firmAccess.ts` are none of 46's, 47's or 48's.
+
+**Fan-out now:** `4 of 4 chains, cap 8, reason: the added cell has no dependency edge with 46, 47 or 48 and no shared file,
+so it is its own chain and ready root`. Max width 4.
+
+**Rule 24 (iv):**
+- Moves: the page's access plane toward EXERCISABLE.
+- Does NOT move: the backend's own admin gating (read-only census in F49-AC9); the d13 branch (2.0.0_SA_COO~D's own
+  commit, identical lines); every other `FIRM_ALLOWED_PATHS` entry; the portal freeze.

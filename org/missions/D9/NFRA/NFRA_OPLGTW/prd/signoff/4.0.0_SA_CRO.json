@@ -1,0 +1,11 @@
+{
+  "prd": "NFRA_OPLGTW_PRD.md",
+  "prd_version": "v0.2",
+  "prd_pin": "059526828b2d0393c181b1294f64bb6e5205333f",
+  "half": "brief",
+  "half_hash": "04461a4925dc40dcbe06c85962f6cd200dd819bacdf1a6c2251885281c798dc1",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/NFRA_OPLGTW_L4_BRIEF_REVIEW_v0_2_20260914.md@afb7d65af443e8f9a50ad75fbacbbcd492e0254a",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-14T20:15:08Z"
+}

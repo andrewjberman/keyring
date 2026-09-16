@@ -1,0 +1,11 @@
+{
+  "measured_at": "2026-09-15T13:51:37.672104+00:00",
+  "pre_hotfix_manifest_key": "platinum/mdpf/_manifests/2026-09-14/20260914T135046Z-73976a4c.json",
+  "version_id": "cURl8lJGs2WTyRoLn2NBxps2kBsNkmfy",
+  "process_start": "2026-09-14T13:50:46Z",
+  "prior_pointer_note": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: User: arn:aws:sts::313476888478:assumed-role/opal-assets-mdpf-egress-publisher-role/opal-assets-mdpf-portal-publisher is not authorized to perform: s3:GetObject on resource: \"arn:aws:s3:::opal-data-portal-v2/platinum/mdpf/_manifests/latest.json\" because no identity-based policy allows the s3:GetObject action",
+  "all_present": true,
+  "row_status_counts": {
+    "published": 18
+  }
+}

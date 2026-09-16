@@ -1,0 +1,196 @@
+{
+  "patch_meta": {
+    "agent": "3.0.0_SA_CVO",
+    "mission": "VERIFY_MEASURED",
+    "cycle": 8,
+    "cells_examined": 18,
+    "cells_in_scope": 18
+  },
+  "changes": [
+    {
+      "entity_id": "S3-data",
+      "field": "recorded_observation",
+      "from_status": "MEASURED",
+      "to_status": "MEASURED",
+      "value": {
+        "kind": "Record of earlier metadata observations; not independently repeated AWS observations",
+        "bucket": "Recorded versioning Enabled, AES256 default encryption, all four public access blocks true, policy IsPublic false.",
+        "partition": "2026-09-11 in all six initial dataset footer records. Business date is separate from object write time; no staleness judgment made.",
+        "footer_objects": [
+          {
+            "master": "08242234",
+            "dataset": "dim_position",
+            "rows": 102421,
+            "object_bytes": 2454862,
+            "columns": 30,
+            "version_id": "m4p_6SDMvtk4DlsgatENWhcaNQpf6njX"
+          },
+          {
+            "master": "08242234",
+            "dataset": "dim_balance",
+            "rows": 7384,
+            "object_bytes": 562805,
+            "columns": 39,
+            "version_id": "J4XXsxZk6Uoxpf3jRazBvR7qPf33BMYP"
+          },
+          {
+            "master": "08242234",
+            "dataset": "dim_asset",
+            "rows": 2068,
+            "object_bytes": 159443,
+            "columns": 29,
+            "version_id": "xZI9h.BV1dNCKXGRaj_WqtVCivjaA6kQ"
+          },
+          {
+            "master": "08335338",
+            "dataset": "dim_position",
+            "rows": 105074,
+            "object_bytes": 2577219,
+            "columns": 30,
+            "version_id": "AoVdTCF3AoStbEFKMTWMmHMqBysTI_Y2"
+          },
+          {
+            "master": "08335338",
+            "dataset": "dim_balance",
+            "rows": 7469,
+            "object_bytes": 568417,
+            "columns": 39,
+            "version_id": "H26RF_kg9ITWbmMrH1YAckBctzDdgDAO"
+          },
+          {
+            "master": "08335338",
+            "dataset": "dim_asset",
+            "rows": 2381,
+            "object_bytes": 183620,
+            "columns": 29,
+            "version_id": "iMVqo43h8wTDyPRLtfhQ_KbuHdmgeEgp"
+          }
+        ],
+        "schema_comparison": "All six recorded ordered column-name and type arrays equal the checked-in source projection/schema pins. This is record-to-source schema parity, not live producer/version parity."
+      },
+      "evidence": {
+        "instrument": "JSON parsing of recorded footer inventory plus AST schema extraction; no row groups loaded",
+        "locator": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MENACHEM_SCHWAB_CLAUDE_ACCESS_20260914/observed-metadata.json#/bucket,#/inventory_and_gateway/datasets,#/parquet_footers/objects",
+        "vintage": "2026-09-14T18:11:31.722065+00:00 recorded footer measurement; reviewed 2026-09-14",
+        "denominator": [
+          {
+            "n": 6,
+            "of_what": "initial dataset footer records",
+            "unit": "objects"
+          },
+          {
+            "n": 2,
+            "of_what": "masters in footer records",
+            "unit": "masters"
+          }
+        ],
+        "count_grain": "INSTANCE",
+        "limitation": "One partition date, metadata only. No value, complete-day, metric, current serving or deployed producer claim.",
+        "source_pins": [
+          {
+            "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MENACHEM_SCHWAB_CLAUDE_ACCESS_20260914/observed-metadata.json",
+            "sha256": "d6243d70ac3952b1771b6bb21eb45acebe3d61b9975057526cdce4ac910a0821"
+          },
+          {
+            "path": "data/assets/scripts/silver/schwab_schemas.py",
+            "sha256": "369f1cb7be78a2145ec91c1356dff7207f041a9637fc834754a32b13730d0db8"
+          },
+          {
+            "path": "data/assets/scripts/silver/schwab_projections.py",
+            "sha256": "f6e6270718d95e2811d21ceada8c56716093b2a60646c2c64f96855451de914a"
+          }
+        ],
+        "reviewed_at": "2026-09-14T19:32:37.039133+00:00",
+        "checkout_head_at_review": "c9a44aa89643c0e2f9068e015bedc69301f01bbd"
+      },
+      "basis": "VERIFY_MEASURED, CONTRADICTED, corrected. DISCRIMINATOR: rectangle.final.json:472 records footer 08242234/dim_balance columns=40. The cited artifact org/tier2_senior/0.7.0_AE_CloudOps/deliverables/MENACHEM_SCHWAB_CLAUDE_ACCESS_20260914/observed-metadata.json@39a8c5eeca #/parquet_footers/objects (key schwab/08242234/silver/dim_balance/date=2026-09-11/data.parquet, line 459) records 39 columns with 39 distinct names. Necessary equality: dim_balance = SPECS[(RPS,2)] 34 vendor columns + PROVENANCE_COLS 5 (schwab_schemas.py@c9a44aa896) = 39. Internal coherence: the sibling 08335338/dim_balance (rectangle.final.json:496) carries 39 for the same projection, and this cell's own schema_comparison asserts record-to-source parity for all six arrays, which 40 contradicts. Instruments: check_c.py (AST + artifact parse) and an independent raw JSON walk with a regex provenance read; both give 39. Only this one integer changes; rows, object_bytes, version_id and every other key are unchanged."
+    }
+  ],
+  "unchanged_examined": [
+    {
+      "entity_id": "S1-auth",
+      "field": "source_contract",
+      "why_unchanged": "COHERENT. oauth_as.py@5dd24300f7 :352-371 loopback-only redirect URIs; :108,:131,:134 RS256 and jti; server.py :106 raises insufficient_scope 403 while :87 renders 401; :54-58 GATEWAY_WORKERS must be 1; identity.py :62 ES256 with verify_aud False, :65 email; context.py :6-14 email-only ContextVar."
+    },
+    {
+      "entity_id": "S1-auth",
+      "field": "recorded_observation",
+      "why_unchanged": "COHERENT. check_c.py: 3 of 3 HTTP records (path, status, elapsed_ms) and measured_at equal requirements-review-evidence.json@39a8c5eeca."
+    },
+    {
+      "entity_id": "S1-auth",
+      "field": "unverified_boundary",
+      "why_unchanged": "COHERENT. 6 questions = denominator 6, each with one seat owner and a next_probe; capability UNKNOWN; none used as an expected value (constraint S2). The D1 rows are present and owned: owner add/reuse, member enable and A20, logout and reconnect."
+    },
+    {
+      "entity_id": "S2-authorization",
+      "field": "source_contract",
+      "why_unchanged": "COHERENT. check_c.py AST: 35 @mcp.tool functions, 35 call _run (= denominators; contained_in holds). identity_scope.py@5dd24300f7 :43-84 seed fallback on a missing or unreadable file."
+    },
+    {
+      "entity_id": "S2-authorization",
+      "field": "recorded_observation",
+      "why_unchanged": "COHERENT. check_c.py: status proposed_disabled, policy_revision 2, null tenant/object ids, 5 tools, 2 masters and 3 datasets equal menachem-entitlement.proposed.json@39a8c5eeca; simulation 41 cases / 41 passed equals iam-simulation-results.json."
+    },
+    {
+      "entity_id": "S2-authorization",
+      "field": "unverified_boundary",
+      "why_unchanged": "COHERENT. 4 questions = denominator 4, each with one seat owner and a probe. The A12 prompt-like-data question (D2) is present and owned by 0.7.0_AE_CloudOps; no expected value asserted."
+    },
+    {
+      "entity_id": "S3-data",
+      "field": "source_contract",
+      "why_unchanged": "COHERENT. schwab_schemas.py@c9a44aa896: decimal tuples (dec 15,5 / 17,4 / 16,5 / 15,2) at :198-251; business_date and maturity_date 'd'; opt_expr_date 's' at :438; PROVENANCE_COLS 5. conversion_manifest.py: :158 opal.silver.complete/v1; :163 schwab/{master}/meta/complete/date={date}.json; :166 declared_tables. schwab_runtime.py :92 and :188: the no-failed gate."
+    },
+    {
+      "entity_id": "S3-data",
+      "field": "unverified_boundary",
+      "why_unchanged": "COHERENT. 3 questions = denominator 3, with owners and probes. reader-role-policy.proposed.json@39a8c5eeca allows GetObject on exactly the 6 silver dim prefixes and no meta/ prefix, consistent with the metadata-only-role question. Non-blocking: the owners are compound multi-seat strings."
+    },
+    {
+      "entity_id": "S4-query",
+      "field": "source_contract",
+      "why_unchanged": "COHERENT. integrations/base.py@5dd24300f7 :41-44 AuthKind delegated_user/shared_secret/none, with no assumed-role kind; query_v0.py :52-54 MAX_ROWS 1000, MAX_SECONDS 10.0, MAX_BYTES 4 MiB."
+    },
+    {
+      "entity_id": "S4-query",
+      "field": "recorded_observation",
+      "why_unchanged": "COHERENT. check_c.py: 8 of 8 proposed limits equal menachem-entitlement.proposed.json#/limits. Non-blocking: the vintage label names the network-probe record time, while the values come from the entitlement JSON (prior note N4)."
+    },
+    {
+      "entity_id": "S4-query",
+      "field": "unverified_boundary",
+      "why_unchanged": "COHERENT. 3 questions = denominator 3. main.tf@c9a44aa896 :167 is t4g.nano; query_v0.py :143 wait_for(to_thread) makes the cancellation question apt; requirements.txt pins mcp==1.28.0 and declares no pyarrow or duckdb."
+    },
+    {
+      "entity_id": "S5-download",
+      "field": "source_contract",
+      "why_unchanged": "COHERENT. check_c.py AST: 27 Route/Mount declarations = the denominator and the value prose; 0 schwab/export/ticket/download paths = the contained_in denominator."
+    },
+    {
+      "entity_id": "S5-download",
+      "field": "recorded_observation",
+      "why_unchanged": "COHERENT. ANDREW_DIRECT.md@39a8c5eeca :41 'Filtered CSVs initially; expand original-file access later'. Entitlement: :38, :62 and :87 download_original false x3; download.ticket_ttl_seconds 300; raw_s3_presigned_urls false; export_max_rows 250000; 52428800 bytes = 50 MiB."
+    },
+    {
+      "entity_id": "S5-download",
+      "field": "unverified_boundary",
+      "why_unchanged": "COHERENT. requirements-review-evidence.json@39a8c5eeca load_balancers attributes idle_timeout.timeout_seconds '60', recorded as historical and not as an expected value (constraint S2). Non-blocking: denominator n=1 architectural_surfaces over 3 unresolved items and a compound owner string (prior note N1 persists here only)."
+    },
+    {
+      "entity_id": "S6-operations",
+      "field": "source_contract",
+      "why_unchanged": "COHERENT. taxsma_gateway_iam.tf@c9a44aa896 :47 opal-mcp-taxsma-pt2, with AssumeRole conditioned on it at :56-57 and :142-144. opal-gateway.service :16 --workers 1, :20-23 hardening. audit.py :130 detail[:500]. deploy-to-ec2.sh :213-214 prints the /mcp status and asserts nothing. monolith.tf :131-180 versioning, AES256 and 4 public-access blocks. silver.tf :244 cron(15 12 * * ? *), :654 concurrency 2."
+    },
+    {
+      "entity_id": "S6-operations",
+      "field": "recorded_observation",
+      "why_unchanged": "COHERENT. check_c.py: 41 cases / 41 passes; 13 positives including ONE GetObjectVersion; the EC2_MANIFEST opal-gateway tokens (instance id, t4g.nano, deployed commit and time) all present at c9a44aa896. The D4 pins now hash the git record bytes."
+    },
+    {
+      "entity_id": "S6-operations",
+      "field": "unverified_boundary",
+      "why_unchanged": "COHERENT. 5 questions = denominator 5, each owned by 0.7.0_AE_CloudOps with a probe. The A20 runbook question (D1) is present. SPEC.md@39a8c5eeca :123 carries the Anthropic egress range the probe says to reverify."
+    }
+  ]
+}

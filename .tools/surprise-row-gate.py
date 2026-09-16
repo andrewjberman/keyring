@@ -784,9 +784,106 @@ def _investigations_precondition_violations(rel, row, code, route_word, disposit
     return out
 
 
+def _proof_verdict(root, inst, rel, _run=None):
+    """(True, note) when proof-of-spec-check reads the instance `inst` VALID with `rel` bound as its governing order.
+
+    THE INVOCATION IS THE FLIP LIMB'S, NOT A COPY OF ITS RULE: to-pipeline-gate.py's terminal-flip limb runs exactly
+    `python .tools/proof-of-spec-check.py <instance> --governing-order <order>` before it admits a flip to complete.
+    So "terminal by proof" here means "the gate that grades flips would admit this order's flip right now". `_run` is
+    injectable for the self-test. Anything but rc=0, including a checker that raises, leaves the order OPEN: when the
+    proof cannot be read, the status word still governs, as it did before this limb existed."""
+    chk = os.path.join(root, ".tools", "proof-of-spec-check.py")
+    if not os.path.isfile(chk):
+        return False, "proof-of-spec-check.py is missing"
+    run = _run or (lambda argv: subprocess.run(argv, cwd=root, capture_output=True, text=True, encoding="utf-8",
+                                               errors="replace", timeout=180))
+    try:
+        r = run(["python", chk, os.path.join(root, inst), "--governing-order", rel])
+    except Exception as exc:  # noqa: BLE001
+        return False, "the checker raised %s" % exc
+    if r.returncode == 0:
+        return True, "%s VALID with --governing-order %s" % (inst, rel)
+    lines = (r.stdout or r.stderr or "").strip().splitlines()
+    return False, "%s: checker rc=%d (%s)" % (inst, r.returncode, lines[-1][:120] if lines else "no output")
+
+
+def _proof_terminal(root, rel, order_text, merging=False, _run=None):
+    """(True, note) when the order at `rel` is terminal BY ITS PROOF although its <status> word is not terminal.
+
+    THE SPINE READS TERMINALITY FROM THE PROOF, NEVER FROM THE STATUS FIELD (CANONICAL_FABRIC_WORKFLOW_20260901.md
+    :436, the L10 precondition, "each finished with a valid proof-of-spec instance"; :487-488, "from the proof-of-spec
+    instances at HEAD and never from a `<status>` field"). This gate read only the status word, so an order whose
+    criterion FAILED on a VALID proof, a measurement the round exists to take, stayed `pending` and refused every
+    remediation row of its project (LGIC_NAMING round 1: LN-e-3, LN-e-5 and LN-l-3 held 20 rows until the issuer flipped
+    them by 1.0.0_SA_CTO's RULING T). Parked by 1.0.0_SA_CTO until LGIC_NAMING's round-2 recut was issued; it was.
+
+    ONLY WIDENS: this runs only for an order whose status word is NOT terminal. An order whose word IS terminal reads
+    terminal exactly as before, even with no instance. The spine says that case is not terminal; tightening it
+    would strand rows across every project that closed orders by the word, so it is a named residual, not done here.
+
+    The instance lookup is the flip limb's naming (to-pipeline-gate.py: <stem>.proof_of_spec.json or
+    <stem>_PROOF_OF_SPEC.json; tree `deliverables/*/`, flat `task_orders` -> `deliverables`), restricted to TRACKED
+    files present at the read ref (HEAD, or the merged index at a merge). More than one candidate is ambiguous and
+    leaves the order OPEN. THE CHECKER READS THE WORKTREE, so both the instance and the order must match the read ref
+    (line endings normalised); otherwise the verdict would describe the worktree, not the record, and the order
+    stays OPEN."""
+    ref = "" if merging else "HEAD"
+    where = "the merged index" if merging else "HEAD"
+    stem = os.path.basename(rel).rsplit(".md", 1)[0]
+    names = (stem + ".proof_of_spec.json", stem + "_PROOF_OF_SPEC.json")
+    to_dir = os.path.dirname(rel).replace("\\", "/")
+    if to_dir.endswith("/task-orders"):
+        specs = ["%s/deliverables/*/%s" % (to_dir[:-len("/task-orders")], n) for n in names]
+    else:
+        specs = ["%s/%s" % (to_dir.replace("task_orders", "deliverables"), n) for n in names]
+    try:
+        ls = subprocess.run(["git", "ls-files", "--"] + specs, cwd=root, capture_output=True, text=True,
+                            encoding="utf-8", errors="replace", timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return False, "instance census raised %s" % exc
+    if ls.returncode != 0:
+        return False, "instance census rc=%d" % ls.returncode
+    cands = sorted({p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()})
+    if not cands:
+        return False, "no proof-of-spec instance tracked"
+    if len(cands) > 1:
+        return False, "%d instances (%s) -- ambiguous, the status word governs" % (len(cands), ", ".join(cands))
+    inst = cands[0]
+    st, itext = _blob(root, ref, inst)
+    if st != "OK":
+        return False, "%s not readable at %s (%s)" % (inst, where, st)
+    for p, blob_text in ((inst, itext), (rel, order_text)):
+        try:
+            with open(os.path.join(root, p), "r", encoding="utf-8", errors="surrogateescape", newline="") as fh:
+                wt = fh.read()
+        except OSError as exc:
+            return False, "%s unreadable in the worktree (%s)" % (p, exc)
+        if wt.replace("\r\n", "\n") != (blob_text or "").replace("\r\n", "\n"):
+            return False, "%s in the worktree differs from %s -- the checker would grade the worktree" % (p, where)
+    return _proof_verdict(root, inst, rel, _run=_run)
+
+
+_OPEN_TOS_CACHE = {}
+
+
 def _open_tos_for_project(root, code, merging=False):
-    """(open_ids, total, note): the project's task orders on BOTH roots (tracked at HEAD) whose <status>
-    is not terminal. open_ids is None when the census could not run -- the caller fails closed."""
+    """The census below, read ONCE per (root, code, merging) per gate run. The caller asks per NEW remediation row
+    plus once for its notes, so a 20-row slug would otherwise re-run the same proof-of-spec checks up to 40 times.
+    HEAD and the index do not move inside one gate process, so the first answer is the answer."""
+    key = (root, code, bool(merging))
+    if key not in _OPEN_TOS_CACHE:
+        _OPEN_TOS_CACHE[key] = _open_tos_census(root, code, merging=merging)
+    return _OPEN_TOS_CACHE[key]
+
+
+def _open_tos_census(root, code, merging=False):
+    """(open_ids, total, note): the project's task orders on BOTH roots (tracked at HEAD) that are not terminal.
+
+    An order is terminal when its <status> word is terminal, OR when its proof-of-spec instance reads VALID bound to
+    it (_proof_terminal: the spine's rule, widening only). `note` names every order admitted by the second path, so
+    the widening is visible wherever the census is reported. open_ids is None when the census could not run -- the
+    caller fails closed. The open_ids label shape `<basename> [<word>]` is unchanged (the POSN_ASTTAX round-2
+    exception matches on it)."""
     try:
         ls = subprocess.run(["git", "ls-files", "--", "*/task_orders/%s.*.md" % code,
                              "org/missions/D*/*/%s/task-orders/*.md" % code],
@@ -796,7 +893,7 @@ def _open_tos_for_project(root, code, merging=False):
     if ls.returncode != 0:
         return None, 0, "git ls-files rc=%d: %s" % (ls.returncode, ls.stderr.strip()[:120])
     paths = [p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()]
-    open_ids = []
+    open_ids, proven = [], []
     for p in paths:
         # (c) THE READ (3.0.0_SA_CVO 94299): at a merge the record is the MERGED INDEX, not HEAD. A
         # task order arriving IN this commit is present at stage 0 and ABSENT at HEAD, so the HEAD read
@@ -810,8 +907,15 @@ def _open_tos_for_project(root, code, merging=False):
         m = TO_STATUS_RE.search(text)
         word = m.group(1).lower() if m else "<no status tag>"
         if word not in TERMINAL_TO_WORDS:
-            open_ids.append("%s [%s]" % (os.path.basename(p), word))
-    return open_ids, len(paths), ""
+            label = "%s [%s]" % (os.path.basename(p), word)
+            ok, _why = _proof_terminal(root, p, text, merging=merging)
+            (proven if ok else open_ids).append(label)
+    note = ""
+    if proven:
+        note = ("%d order(s) terminal by a VALID proof-of-spec instance at %s although the status word is not "
+                "terminal (spine :436, :487-488): %s" % (len(proven), "the merged index" if merging else "HEAD",
+                                                         ", ".join(proven)))
+    return open_ids, len(paths), note
 
 
 # Andrew's call 1 YES, relayed by CTO 21533: POSN round 2 ONLY may route with
@@ -938,7 +1042,8 @@ def _route_precondition_violations(root, rel, row, code, open_tos=None, route_wo
         return ["%s: NEW remediation row (%s) while %d of %d task order(s) under %s are NOT "
                 "terminal at HEAD: %s. The slug waits until every task order is complete "
                 "(Andrew-direct 2026-09-03, @716a9bc7ce call 3, LD-0521: 'We do not route until the job "
-                "is over')." % (rid, route_word, len(open_ids), total, code, ", ".join(open_ids))]
+                "is over')." % (rid, route_word, len(open_ids), total, code, ", ".join(open_ids))
+                + (" Already terminal by proof: %s." % note if note else "")]
     return []
 
 
@@ -1480,7 +1585,7 @@ def check_file(root, rel):
                 else:
                     notes.append("%s: L10 precondition for %s -- %d task order(s) at HEAD on both roots, 0 open; %d "
                              "investigation item(s) across %d channel file(s) in the index, 0 undispositioned; "
-                             "route admitted" % (rel, rid, _t, len(_l or {}), _nf))
+                             "route admitted%s" % (rel, rid, _t, len(_l or {}), _nf, ("; " + _n) if _n else ""))
     notes.append("%s: %d new row(s) of %d total checked (%d pre-existing, NOT re-graded)"
                  % (rel, len(added), len(new_rows), len(old_ids)))
     return (v, notes)
@@ -1498,6 +1603,22 @@ _S34_ADJ = "org/missions/D11/NFRA/NFRA_COMPEFFICACY/surprise-channel/adjudicatio
 def _self_test(root):
     """The battery of gate (iii)'s second limb: five injected arms (pure) and one live census. Red and green."""
     row = {"id": "X_PRJ-S9", "route": "SPEC_ERROR"}
+    # PROOF TERMINALITY fixtures: LGIC_NAMING's real round-2 orders (status `pending` at HEAD b02fdaa849, proofs VALID).
+    _ln = "org/missions/D14/LGIC/LGIC_NAMING/"
+    _LN_E3 = _ln + "task-orders/LGIC_NAMING.TO-LN-e-3-r2.namer-comparison.md"
+    _LN_E5 = _ln + "task-orders/LGIC_NAMING.TO-LN-e-5-r2.reader-scoring.md"
+    _LN_E3_INST = _ln + "deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-3-r2.namer-comparison.proof_of_spec.json"
+    _LN_E5_INST = _ln + "deliverables/0.9.0_WK_LGIC_NAMING~6/LGIC_NAMING.TO-LN-e-5-r2.reader-scoring.proof_of_spec.json"
+
+    def _head_text(r, rel):
+        return _blob(r, "HEAD", rel)[1]
+
+    class _FakeRun(object):
+        def __init__(self, rc):
+            self.returncode, self.stdout, self.stderr = rc, "INVALID (rc=%d)" % rc, ""
+
+    def _raise(argv):
+        raise RuntimeError("injected")
     import tempfile as _tf
     _tmpd = _tf.mkdtemp(prefix="srg-honour-")
     _tlog = os.path.join(_tmpd, "audit.log")
@@ -1598,7 +1719,7 @@ def _self_test(root):
         # (c) THE READ. Structural, and read from the FUNCTION not the module -- a checker that greps its
         # module finds its own occurrence first (learned twice tonight in to-pipeline-gate).
         ("(c) read: _open_tos_for_project takes the ref from `merging`, not always HEAD",
-         lambda: '_blob(root, "" if merging else "HEAD", p)' in inspect.getsource(_open_tos_for_project)),
+         lambda: '_blob(root, "" if merging else "HEAD", p)' in inspect.getsource(_open_tos_census)),
         ("(c) read: the production caller passes merging through",
          lambda: "_open_tos_for_project(root, code, merging=merging)"
          in inspect.getsource(_route_precondition_violations)),
@@ -1962,6 +2083,32 @@ def _self_test(root):
         ("identity half: X_PRJ-W2-S1 with project X_PRJ agrees; X_PRJ-Z-W2-S1 reads site-z",
          lambda: not any("project=" in x for x in _check_row({"id": "X_PRJ-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))
          and any("site-z" in x for x in _check_row({"id": "X_PRJ-Z-W2-S1", "project": "X_PRJ", "fabric": "laptop"}, "INVESTIGATION", {"properties": {"id": {}, "project": {}, "fabric": {}}, "required": []}))),
+        # PROOF TERMINALITY (1.0.0_SA_CTO 2026-09-15; spine :436, :487-488). RED-FIRST: every arm below FAILS on the
+        # pre-change module, which has neither _proof_terminal nor _proof_verdict. The LIVE arms read real bytes.
+        ("proof terminality LIVE: LGIC_NAMING LN-e-3-r2 (VALID proof, its FAIL the round's measurement) reads terminal by proof",
+         lambda: _proof_terminal(root, _LN_E3, _head_text(root, _LN_E3))[0] is True),
+        ("proof terminality DOCTORED PAIR, real bytes: LN-e-3-r2's instance bound to LN-e-5-r2's order -> NOT terminal "
+         "(the checker's binding limb refuses), while LN-e-5-r2's own instance bound to it -> terminal",
+         lambda: _proof_verdict(root, _LN_E3_INST, _LN_E5)[0] is False
+         and _proof_verdict(root, _LN_E5_INST, _LN_E5)[0] is True),
+        ("proof terminality: a checker verdict of rc=1 (INVALID) keeps the order OPEN",
+         lambda: _proof_terminal(root, _LN_E3, _head_text(root, _LN_E3), _run=lambda a: _FakeRun(1))[0] is False),
+        ("proof terminality: a checker that could not answer (rc=2) or that RAISES keeps the order OPEN",
+         lambda: _proof_terminal(root, _LN_E3, _head_text(root, _LN_E3), _run=lambda a: _FakeRun(2))[0] is False
+         and _proof_terminal(root, _LN_E3, _head_text(root, _LN_E3), _run=_raise)[0] is False),
+        ("proof terminality: no tracked instance -> OPEN, and the checker is never run",
+         lambda: _proof_terminal(root, "org/missions/D0/XXXX/X_NONE/task-orders/X_NONE.TO-z-1.none.md", "",
+                                 _run=_raise) == (False, "no proof-of-spec instance tracked")),
+        ("proof terminality GRAIN GUARD: an order whose text at the read ref differs from the worktree -> OPEN, before the checker runs",
+         lambda: (lambda r: r[0] is False and "differs from" in r[1])(
+             _proof_terminal(root, _LN_E3, "<status>pending</status>\n", _run=_raise))),
+        ("proof terminality READ: the census consults the proof only past a non-terminal word, and keeps the "
+         "`<basename> [<word>]` label the POSN_ASTTAX exception matches on",
+         lambda: "_proof_terminal(root, p, text, merging=merging)" in inspect.getsource(_open_tos_census)
+         and 'label = "%s [%s]" % (os.path.basename(p), word)' in inspect.getsource(_open_tos_census)
+         and "if word not in TERMINAL_TO_WORDS:" in inspect.getsource(_open_tos_census)),
+        ("proof terminality READ: the invocation is the flip limb's (python <checker> <instance> --governing-order <order>)",
+         lambda: '"--governing-order", rel]' in inspect.getsource(_proof_verdict)),
     ]
     failed = 0
     for name, fn in arms:

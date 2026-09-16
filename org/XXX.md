@@ -354,6 +354,35 @@ file -- that legibility is the condition the delegation was accepted on. `paired
 lanes are already driving their own rounds event-driven; this loop dispatches nothing and gates nobody).
 STOP-CONDITION: every scoped project `status: complete` per §4, or HELD-AT-STOP, or his stand-down. A successor
 re-arms ONLY off this line.
+`1.0.0_SA_CTO` **`/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` ARMED 2026-09-15 ~19:4xZ by
+Andrew-direct at the CTO terminal**, VERBATIM: *"i need each of the COOs to have a /goal written for them and they
+must implement it. The goal is to see their various projects through to completion. After those are incorporated, I
+need you to run /self-drive on the associated workstreams so that if open-calls come up, YOU ADJUDICATE THEM."* and
+*"Use sequence.yaml as a guide if needed, it will assist with chronology. again for all client pipeline backend, must
+abide by LGIC patterns."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
+- SCOPE: the five projects the three live COO lanes hold. 2.0.0_SA_COO~G holds LGIC_NAMING, LGIC_ENFORCE and
+  LGIC_CANON; 2.0.0_SA_COO~T holds MDPF_TAXSMA; 2.0.0_SA_COO~O holds NFRA_OPLGTW. A project 0.0.0_AB_MSTR seats from
+  the sequence's NEXT COO SLOT joins the scope on seating.
+- Cadence 30 minutes, via CronCreate.
+- `paired_with`: each lane's `/goal-set` loop on the goal in the record (not `/drive`).
+- **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch.** RESERVED is unchanged from the
+  2026-09-12 clause above: vendor egress, unrecoverable acts, money, and the holds he set by name.
+- Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and
+  name.
+- The 2026-09-12 fabric clause above is NOT struck: this clause is the scoped drive his new word directs, and the
+  fabric clause stays the standing authority for the rest.
+- STOP-CONDITION: all five read `status: complete` per §4, HELD-AT-STOP, or his stand-down. A successor RE-ARMS ONLY off
+  this line while the scope is not DONE, and asks each COO lane to re-arm its `/goal-set` loop.
+- ⛔ **PAUSED 2026-09-15 ~23:3xZ BY THE MANAGED WIND-DOWN, NOT STRUCK.** Andrew-direct at the `0.0.0_AB_MSTR` terminal,
+  VERBATIM: *"we need a managed winddown, computer is moving too slow"* (relayed 97265). His own word is that the
+  ~19:3xZ goals and loops are *"PAUSED, not cancelled: every one resumes from your written resume point when he brings
+  the box back"*, so this clause STAYS as the resume authority and the strike waits for DONE or a stand-down of the
+  scope itself. Cron e5ff987a is deleted; the three `/goal-set` loops are each lane's to stop.
+- RESUME POINT (2026-09-16 ~00:0xZ): re-arm this clause's loop, then ask 2.0.0_SA_COO~G, ~T and ~O to re-arm their
+  `/goal-set` loops. Owed to this seat on resume: the LGIC_CANON round-1 ANALYSIS, once `3.0.0_SA_CVO` sends the L10
+  slug (its L8 hand-off is 2.0.0_SA_COO~G's 97264: 12 of 12 terminal, FWD-1 and FWD-5 both measured SHORT, 3 BLOCKING
+  rows, and ARMED row W8-S1 whose disarm this seat owes). Nothing else in the scope waits on this seat.
 
 ⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
 a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**
@@ -484,6 +513,48 @@ authority, never the churning artifact). Landed by `1.0.0_SA_CTO~W` (the CTO lan
 its own). POSN_ASTTAX is outside that lane's scope (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md`
 @9dfee40ce0).
+
+⛔ **SET DOWN 2026-09-15 ~17:4xZ -- THE ROW BELOW IS HISTORY, NOT A LIVE ARM.** Andrew-direct at the
+`2.0.0_SA_COO~G` terminal, VERBATIM: *"Don't get involved in other COO work"* / *"you need to be focused on the LGIC
+work"* (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_174xZ_LGIC_ONLY_NO_OTHER_COO_WORK~G.md`).
+`2.0.0_SA_COO~G` is LGIC-only (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON), its 20-minute SEQUENCE tick is deleted, and no
+seat inherits the drive. A sequenced project with a seated COO drives itself at that seat; an unseated one moves when a
+COO slot frees, and `0.0.0_AB_MSTR` seats it (97172). SEQUENCE.yaml's order and stages stay `1.0.0_SA_CTO`'s.
+
+`2.0.0_SA_COO~G` **`/canonical-drive` DIRECTED over THE SEQUENCE: every project under `projects:` in
+`org/missions/SEQUENCE.yaml`, READ AT HEAD EACH TICK** (at the arm: LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON, ADVI_FIRMBKTS,
+MDPF_CANON, IRPT_BCKEND; `parked:` and `pending_placement:` are OUT). Andrew-direct 2026-09-14 ~16:3xZ at the
+`1.0.0_SA_CTO` terminal, VERBATIM: *"The issue I need from you is to handle the larger scale work of sequence.yaml, which
+COO~G is going to be leading. So you essentially neded to review the sequence.yaml, and instruct COO~G to essentially run
+/canonical-drive on those sequence.yaml sequenced projects, which you will collaborate with them on to oversee."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_163xZ_SEQUENCE_LED_BY_COO_G_ON_CANONICAL_DRIVE_CTO_OVERSEES.md`.
+The skill sets the cadence: 10m on its own active project, 20m on any other in-scope project at DECOMP/EXECUTING/ROUND_CLOSE,
+60m when none. **The sequence's gates bind every limb** (`python .tools/sequence-check.py --project <CODE>`: WAITING does
+not start, HELD does not pass its cap, and the NEXT COO SLOT order stands). `1.0.0_SA_CTO` oversees: spec/scope pitches
+(skill obligation 7) and the SEQUENCE.yaml gates are that seat's. STOP-CONDITION: every sequenced project `status:
+complete` per the register, or his stand-down. ⚠ Open at Andrew, and NOT a hold: how this meets his 2026-09-10
+*"One project per COO/seat."* and the ~16:1xZ `2.0.0_SA_COO~D`-seat event for LGIC_ENFORCE (both in the record). The seat event was RETIRED at
+~18:2xZ: `2.0.0_SA_COO~G` keeps LGIC_ENFORCE (record @9240af5974). The "One project per COO/seat." question stays open.
+
+`2.0.0_SA_COO~F` **`/canonical-drive` DIRECTED over IRPT_FNTEND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
+`2.0.0_SA_COO~F` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on IRPT_FNTEND.
+Once establishing state, and your last log on the subject, you will run /canonical-drive IRPT_FNTEND."* Record:
+`org/tier1_exec/2.0.0_SA_COO~F/deliverables/ANDREW_DIRECT_20260914_163xZ_COOF_CANONICAL_DRIVE_IRPT_FNTEND.md` @`428b4019e9`
+(relayed as 96634; the same words also reached the `1.0.0_SA_CTO` terminal, in the ~G row's record). 10m (own active
+project). STOP-CONDITION: IRPT_FNTEND `status: complete`, the project leaving DECOMP/EXECUTING/ROUND_CLOSE, or his
+stand-down.
+
+`2.0.0_SA_COO~D` **`/canonical-drive` DIRECTED over DSGN_REBRND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
+`2.0.0_SA_COO~D` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on DSGN_REBRND.
+Once establishing state, and your last log on the subject, you will run /canonical-drive DSGN_REBRND."* Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_163xZ_COO_D_CANONICAL_DRIVE_DSGN_REBRND.md` @`d54876b585`
+(relayed as 96624; landed here by `1.0.0_SA_CTO` because a seat does not write its own row). 10m. STOP-CONDITION:
+DSGN_REBRND drained to its L10 slug, or his stand-down. (The ~16:1xZ seating event this row once named, giving the freed
+seat to LGIC_ENFORCE, was RETIRED at ~18:2xZ: LGIC_CANON takes the next freed seat, record @9240af5974.)
+⛔ **STOPPED 2026-09-14 ~21:2xZ BY HIS STAND-DOWN, VERBATIM: *"kill cron will address this shortly"*** (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_212xZ_DSGN_REBRND_KILL_THE_DRIVE_CRON_HE_ADDRESSES_THE_CALLS_SHORTLY.md`
+@`31f728cea4`). `2.0.0_SA_COO~D` cancelled its cron. **THIS ROW ARMS NOTHING:** a successor does not re-arm from it.
+DSGN_REBRND itself is not closed; the page-by-page work goes on without the loop.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 

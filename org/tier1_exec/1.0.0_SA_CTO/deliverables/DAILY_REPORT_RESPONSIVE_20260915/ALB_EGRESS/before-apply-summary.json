@@ -1,0 +1,94 @@
+{
+  "measured_at_utc": "2026-09-15T03:47:34.082303+00:00",
+  "terraform_exit_code": 2,
+  "targeting": false,
+  "managed_changes": [
+    {
+      "address": "aws_security_group.alb",
+      "actions": [
+        "update"
+      ]
+    },
+    {
+      "address": "aws_wafv2_ip_set.opal_blocked_ips_regional_v4",
+      "actions": [
+        "update"
+      ]
+    },
+    {
+      "address": "aws_wafv2_ip_set.opal_blocked_ips_regional_v6",
+      "actions": [
+        "update"
+      ]
+    }
+  ],
+  "resource_drift": [
+    {
+      "address": "aws_iam_role.gw",
+      "actions": [
+        "update"
+      ]
+    },
+    {
+      "address": "aws_wafv2_ip_set.opal_blocked_ips_regional_v4",
+      "actions": [
+        "update"
+      ]
+    },
+    {
+      "address": "aws_wafv2_ip_set.opal_blocked_ips_regional_v6",
+      "actions": [
+        "update"
+      ]
+    }
+  ],
+  "plan_sha256": "ae3764f6b0cb8c4d98909ba68cf83e3e5438c1d2b579ebf5b60b4683705d2a9b",
+  "alb_group_id": "sg-02571ff2f33d2f9d4",
+  "before_egress": [
+    {
+      "cidr_blocks": [
+        "172.31.0.0/16"
+      ],
+      "description": "To the gateway port inside the VPC",
+      "from_port": 8080,
+      "ipv6_cidr_blocks": [],
+      "prefix_list_ids": [],
+      "protocol": "tcp",
+      "security_groups": [],
+      "self": false,
+      "to_port": 8080
+    }
+  ],
+  "after_egress": [
+    {
+      "cidr_blocks": [
+        "0.0.0.0/0"
+      ],
+      "description": "HTTPS to the OIDC IdP token and userinfo endpoints (authenticate-oidc calls them from the ALB)",
+      "from_port": 443,
+      "ipv6_cidr_blocks": [],
+      "prefix_list_ids": [],
+      "protocol": "tcp",
+      "security_groups": [],
+      "self": false,
+      "to_port": 443
+    },
+    {
+      "cidr_blocks": [
+        "172.31.0.0/16"
+      ],
+      "description": "To the gateway port inside the VPC",
+      "from_port": 8080,
+      "ipv6_cidr_blocks": [],
+      "prefix_list_ids": [],
+      "protocol": "tcp",
+      "security_groups": [],
+      "self": false,
+      "to_port": 8080
+    }
+  ],
+  "changed_attributes": [
+    "egress"
+  ],
+  "stop_condition_clear": false
+}

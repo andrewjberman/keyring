@@ -5,7 +5,7 @@
  "project": "LGIC_CANON",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.1",
+ "prd_version": "v1.3",
  "step": 4,
  "brief_ref": "docs/briefs/d14-pipeline-canon-brief-20260912.md@a4cc0cb681",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -56,6 +56,14 @@ inside the section. This is the precedent `3.0.0_SA_CVO` accepted on LGIC_NAMING
   C1, C2).
 
 Both halves are owed again.
+
+**v1.2 (2026-09-14) restates DEC-2's tree criterion in the conformance ledger's own vocabulary.** It answers
+`2.0.0_SA_COO~G`'s L5 decomposition, §8 choice 3. DEC-2 chooses the tree "from the ledger"
+(`infra/logic/06_CONFORMANCE_LEDGER.md`), whose values are CONFORMANT, MIGRATE, RETIRE, DECLARED EXCEPTION and
+AWAITING. "CONTRADICTS" is the contradiction reports' word, and it names no ledger row, so v1.1's "at least one
+CONTRADICTS" could not be met from the ledger as written. DEC-2 now asks for a row where the tree breaks a canon
+rule (MIGRATE or RETIRE), plus a DECLARED EXCEPTION. Its purpose line is unchanged: "A tree that conforms everywhere
+proves nothing." v1.2 left CELL CANDIDATES C2's inputs column on the old wording, and said "nothing else moved"; `4.0.0_SA_CRO` refused the brief half on that line (review `docs/briefs/sources/LGIC_CANON_L4_BRIEF_REVIEW_v1_2_20260914.md` @`ae94166ac2`). **v1.3 (2026-09-14)** restates C2 in DEC-2's words. With that, every carrier of the tree criterion agrees: the census of CONTRADICT in this file finds the criterion only in DEC-2 and C2.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -160,7 +168,9 @@ Both halves are owed again.
 - **DEC-2 FWD-1 is proved blind.** Two workers who did not write the canon, briefed with the canon alone, each judge
   the same real pipeline tree. They must give the same verdict per axis and the same rule citations, and a
   disagreement returns to C1 as a canon defect.
-  - The tree is chosen from the ledger so that it carries at least one CONTRADICTS and one DECLARED EXCEPTION.
+  - The tree is chosen from the conformance ledger so that it carries at least one row where the tree breaks a canon
+    rule (a MIGRATE or RETIRE row; the ledger has no CONTRADICTS value, which is the contradiction reports' word) and
+    one DECLARED EXCEPTION.
     A tree that conforms everywhere proves nothing.
   - **It includes naming cases that need the generated section** (`4.0.0_SA_CRO` R2): at least one conforming and one
     non-conforming name or key whose verdict turns on the schema's content, such as a per-slot firm form, a refused
@@ -259,7 +269,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | cell | serves | brief sections consumed | contracts consumed (C) / produced (P) | paths: reuse | paths: new home | fixtures / evidence | acceptance clause draft |
 |---|---|---|---|---|---|---|---|
 | C1 the canon at v1.0 | FWD-1, FWD-6 | O1; IV.1, IV.7, IV.9, IV.11; Part V bullets 1, 6, 8 | P the canon; C `NAMING_SCHEMA.json`, the folded D10 s.2 and s.6 | `infra/logic/02_DOCTRINE.md` v0.3 | the same path; `infra/logic/render_naming_section.py` | every rule with its authority, census tag and non-application; s.6 with no unmarked open item; the naming axis's generated section, carrying the schema's version and content hash; D10 s.2 and s.6 absorbed | a census of the canon's rules prints its denominator and finds every rule with all three parts; the naming section's bytes equal a fresh render of the stamped schema, and no naming enumeration appears outside it; every s.6 item is closed or names its decider |
-| C2 the blind judging exercise | FWD-1 | O1; Part III O1 | C the canon | a real pipeline tree chosen from the ledger with at least one CONTRADICTS and one DECLARED EXCEPTION | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | two workers who did not write the canon, briefed with it alone; each judges every axis of the same tree, including a conforming and a non-conforming naming case whose verdict turns on the schema's content | the same verdict per axis and the same rule citations from both, with the naming cases resolved from the canon's generated section and no second document; a disagreement returns to C1 |
+| C2 the blind judging exercise | FWD-1 | O1; Part III O1 | C the canon | a real pipeline tree chosen from the conformance ledger with at least one row where the tree breaks a canon rule (a MIGRATE or RETIRE row) and one DECLARED EXCEPTION | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | two workers who did not write the canon, briefed with it alone; each judges every axis of the same tree, including a conforming and a non-conforming naming case whose verdict turns on the schema's content | the same verdict per axis and the same rule citations from both, with the naming cases resolved from the canon's generated section and no second document; a disagreement returns to C1 |
 | C3 FWD-2 from the record | FWD-2 | O2; Part III O2 | C `04_SCOPE_TICKLIST.md` v0.2; the nine-calls record | the table, the record | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | each clause of the ACCEPT line beside its evidence line | one sitting, enough evidence beside every row, and the pre-decided rows pre-filled, each shown from the record |
 | C4 FWD-3 from the record | FWD-3 | O3; IV.12; Part III O3 | C the two contradiction reports; the nine-calls record; both IRPT PRDs | `infra/logic/03_CONTRADICTION_REPORTS/` | `org/missions/D14/LGIC/LGIC_CANON/deliverables/` | per project: what ended its pause and which of the three branches it took | each project's pause-ending row is cited with its branch; for IRPT_BCKEND, whether its PRD has absorbed the three CONTRADICTS is stated as measured, and it is open at v0.14 |
 | C5 the onboarding checklist | FWD-5 | O5; IV.4; Part III O5; Part V bullet 2 | C the registry, `key()`, `address()`, `name()`, the fence; P the checklist | -- | `infra/logic/10_ONBOARDING_CHECKLIST.md` | every step naming its rule and its builder or gate; a reviewer marks each step mechanical or judgement | ordered from the identity row to the served dashboard; zero steps marked judgement |

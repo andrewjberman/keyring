@@ -3110,6 +3110,1527 @@
     "spec_asserts": "FE-s-33 face: 'fe-s-14-global.json carries 2 keys and no holdings key ... Add Holdings envelopes for both firms the map already names.' The map remains FE-s-14's evidence.",
     "world_is": "The added envelopes survive only as long as nobody regenerates the map with FE-s-14's generator. That act is in no round-5 order, and if it happens the fe-s-33 folder turns red rather than passing on a stripped map. What is NOT closed: the two-writer shape itself, and row W2-S23's finding that the page reaches 1 of the 2 envelopes (one resolve-scope answer), so FWD-11's second firm is still not visible. Both go to the round-5 drain-end packet.",
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S19",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "F34-AC5 and F34-AC6 cannot both pass under TO-FE-s-34's <paths> grant: two committed tests OUTSIDE the grant assert that a business-date age STARTS WITH 'Updated ' -- fe-s-21/source-age.test.ts:166 and fe-s-25/source-age-field.test.ts:65 -- so the relabel ruling K requires turns both red, and F34-AC6 reads 59 pass / 2 fail.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 (the cut): src/pages/InvestorReporting/__tests__/fe-s-21/source-age.test.ts:165-171 builds `ok = pure.startsWith('Updated ') && ...` over formatSourceAgeForState(...) for the five answer-bearing states and :174 expects all five to pass; src/pages/InvestorReporting/__tests__/fe-s-25/source-age-field.test.ts:65 is `expect(pure.startsWith('Updated ')).toBe(true)`. Found by the native Grep tool for the literal 'Updated' over src/pages/InvestorReporting/: 7 hits, 5 in state/status.ts:280-287 (the labels) and these 2 in tests.",
+        "MEASURED after the FE-s-34 edit (portal@944499a9b4, LOCAL on wk-irpt_fntend-5-3-fe-s-34), the F34-AC6 invocation as the order writes it: `59 pass / 2 fail`, the failures being `F21-AC3 -- an answer-bearing state still renders a real age` (source-age.test.ts:174) and `F25-AC4 -- a READY envelope carrying business_date renders an age` (source-age-field.test.ts:65, Expected: true, Received: false). Before the edit the same four pre-existing folders ran 57 pass / 0 fail.",
+        "THE CONTRADICTION IS STRUCTURAL, NOT A CHOICE OF WORDING: F34-AC5 requires zero 'Updated' on any rendered business-date age, and both failing lines require formatSourceAgeForState's output for a PRESENT business date to begin with 'Updated '. No label satisfies both, and the grant names neither file."
+      ]
+    },
+    "spec_asserts": "The worker face, F34-AC6: 'FE-s-21 and FE-s-25 compute their expected strings through formatSourceAge itself, so the label flows through them rather than breaking them (measured at the cut: no test asserts the literal \"Updated\")'. The <paths> grant names neither __tests__/fe-s-21/ nor __tests__/fe-s-25/.",
+    "world_is": "Two tests assert the literal prefix, one in each folder. The label DOES flow through fe-s-25:66 (`toBe(expected)`, expected computed via formatSourceAge) exactly as the face says, but :65 and fe-s-21:166 name the old word directly. The remedy is a two-line edit in files this order does not grant -- replace each `startsWith('Updated ')` with a check that does not spell the label (for instance equality with formatSourceAge of the same date and clock) -- and it was NOT made here, per BOUNDS: 'A path you need that is not named is a BLOCKING row; never an override.' The FE-s-34 portal commit turns both suites red if it is drained without that edit.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S20",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "Ruling O's premise that StageDisplay and VariantSelector 'age the as_of instant, not the business_date' holds only where no status arrived: on an envelope carrying a reading, formatSourceAge(envelope.sourceAsOf) ALREADY aged business_date, because both formatters take their basis from sourceAgeBasis. The re-route changed the ABSENCE wording, not the field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 src/pages/InvestorReporting/state/status.ts:71-75: sourceAgeBasis returns slot[GOVERNED_SOURCE_DATE.view] (businessAsOf) for a reading and the slot itself for a bare instant; formatSourceAge (:275) and formatSourceAgeForState (:460) both call it, so on a reading the two cannot age different fields.",
+        "MEASURED, fe-s-34/label.test.ts run against the UNMODIFIED source (portal@c2eb8eb4 plus the new test file only): with source_dates.business_date=2026-09-10 and as_of=2026-09-05T00:00:00Z on a READY status, StageDisplay rendered 'Ready -- Updated 2d ago (STATE_REPORTED)' and VariantSelector 'Ready -- Updated 2d ago' -- the business-date age (the as_of age is 7d). In the same run both absence arms FAILED: QUEUED with business_date ABSENT rendered 'Loading -- Source time unknown' where StatusPanel says 'No source age yet', and READY with business_date null rendered 'Ready -- Source time unknown' where StatusPanel says 'Source date malformed'. Printed: 'ANALYSIS PANELS AGE THE BUSINESS DATE: 0 of 2'.",
+        "CONSEQUENCE FOR THE GRADE: F34-AC3 is therefore built with THREE arms per panel and a panel counts only if all three hold -- the age arm alone passes before any edit and would certify nothing. After the edit (portal@944499a9b4): 'ANALYSIS PANELS AGE THE BUSINESS DATE: 2 of 2', every arm yes."
+      ]
+    },
+    "spec_asserts": "THE CELL, ruling O: the call sites tabs/analysis/StageDisplay.tsx:51 and tabs/analysis/VariantSelector.tsx:61 'still call formatSourceAge(envelope.sourceAsOf): they age the as_of instant, not the business_date the clause governs.'",
+    "world_is": "On the status path they already aged business_date; what differed from StatusPanel was the absent-state and null wording, which the re-route does fix. On the no-status path they age the document's availability instant, and they still do after the re-route, because formatSourceAgeForState ages whatever slot it is handed (row IRPT_FNTEND-W3-S21). The outcome 1.0.0_SA_CTO named is met; the mechanism the premise describes is not the one the edit moved.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S21",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T02:52:00Z",
+    "one_line": "On the path the analysis tab renders today -- fixture documents that carry no status -- the panel envelope holds availability.sourceAsOf (an instant), not the business date, and after ruling K's relabel that instant's age is SHOWN as 'Business date age'. fixtures/fe-s-6/request.overview.json at 2026-09-12T00:00Z: 'Business date age: 1d' (from 2026-09-10T18:05:00Z) while the document's own businessAsOf 2026-09-08 is 4d old.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c2eb8eb4 src/pages/InvestorReporting/state/status.ts:222, envelopeFromAvailability: `sourceAsOf: availability.sourceDate === undefined ? availability.sourceAsOf : availability.sourceDate` -- with no status the slot is the Availability instant. __tests__/fe-s-25/source-age-field.test.ts:121 pins that exact expression by regex. contracts/envelope.ts:225-230's own comment: status_required is false on ten of the twelve response contracts, 'so this branch is the COMMON one, not an edge'.",
+        "portal@c2eb8eb4: the network 'analysis-requests' adapter, contracts/adapt.ts:1006-1017 adaptAnalysisSubmission, returns a view with NO availability, so carryAvailabilityFromStatus (adapt.ts:280-281) returns it unchanged. The analysis tab's only renderable AnalysisRequest today is therefore a fixture document; fixtures/fe-s-6/*.json carry availability.sourceAsOf and sourceTimestamps.businessAsOf, and no sourceDate.",
+        "MEASURED BEFORE THE EDIT, a scratch probe at a pinned 2026-09-12T12:00:00Z: request.overview.json and request.uncertain.json give the slot '2026-09-10T18:05:00Z' / '2026-09-10T18:09:00Z'; formatSourceAge AND formatSourceAgeForState both said 'Updated 2d ago'; businessAsOf 2026-09-08 would have said 5d. So the re-route cannot move this path.",
+        "MEASURED AFTER THE EDIT (portal@944499a9b4), printed and NOT graded by fe-s-34/label.test.ts: 'the same fixture with NO status hands the panels availability.sourceAsOf=2026-09-10T18:05:00Z, not sourceTimestamps.businessAsOf=2026-09-08 -> StageDisplay \"Ready -- Business date age: 1d\"'."
+      ]
+    },
+    "spec_asserts": "Ruling K: 'the figure now measures a business-date age. Relabel it to name the business date and its age.' BOUNDS: 'Where the business date is absent, render its absence the way formatSourceAgeForState already does -- never an as_of fallback' and 'isCompleteState, the state labels, STATE_FOR_WIRE and every other function in that file stay as they are.'",
+    "world_is": "The figure measures a business date only when a status carried one. Otherwise envelopeFromAvailability hands the formatter the document's instant -- the fallback the bound forbids -- in a function the same bound forbids this order to touch, and which fe-s-25 pins by regex. Before FE-s-34 that misread was labelled 'Updated', which at least described an instant; after it the label asserts a business date. The remedy is a ruling, not a worker's edit: either the no-status envelope carries the document's own sourceTimestamps.businessAsOf as a reading (one is already built at contracts/adapt.ts:231 and then dropped), or a bare instant is labelled as what it is.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S22",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T03:20:00Z",
+    "one_line": "fe-s-21's F21-AC3 grades an age computed from the as_of INSTANT, not the business date: its panelFor builds the envelope from StatusEnvelope.sourceAsOf (source_dates.as_of), so after ruling K it prints 'business_date=2026-09-11 -> \"Business date age: 1d\"' where the business date's own age on that clock is 2d. The amended check therefore equals formatSourceAge of AS_OF -- the date `pure` is actually computed from -- not of the business date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, fe-s-21/source-age.test.ts run after the FE-s-34 relabel and before the amendment edit (portal@944499a9): '  WIRE READY -> view READY business_date=2026-09-11 -> \"Business date age: 1d\" (kind=age: true)', the same for all five answer-bearing states, then 'ANSWER-BEARING STATES: 0 of 5'. On the file's clock 2026-09-12T12:00:00Z the business date 2026-09-11 is 36h old (formatSourceAge rounds it to 2d) and AS_OF 2026-09-11T12:00:00Z is 24h old (1d).",
+        "portal@c2eb8eb4 __tests__/fe-s-21/source-age.test.ts:80: panelFor sets the envelope's `sourceAsOf: status.sourceAsOf`; contracts/adapt.ts:471 `const asOf = wire.source_dates.as_of ?? null` and :489 `sourceAsOf: asOf`; the test's `pure` at :156 is formatSourceAgeForState(status.state, status.sourceAsOf, now). The file's own header discloses the as_of basis (rows W1-S42 / W1-S43)."
+      ]
+    },
+    "spec_asserts": "Amendment bound (2.0.0_SA_COO~F, TO-FE-s-34 @12eef1910c): replace fe-s-21:166 'with a check that does not spell the label (for instance equality with formatSourceAge of the same date and clock)' -- read naturally as the business date, the field ruling K says the figure measures.",
+    "world_is": "In fe-s-21 'the same date' is AS_OF. Equality with formatSourceAge(BUSINESS_DATE, now) reads false there (2d vs 1d) and would have kept F21-AC3 red, so the replacement compares with formatSourceAge(AS_OF, now) and says why beside it. The test's printed line now puts a business-date label on an as_of age -- the shape of row IRPT_FNTEND-W3-S21, here confined to a test-built envelope rather than a production path. Nothing else in the file was changed: the bound grants the one check only. INERT: no production path reads this envelope.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S23",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T04:10:00Z",
+    "one_line": "F34-AC8's fixture cannot exist as written: on the v1 plane a no-status document's availability.sourceAsOf is always null (its only writer is a status's as_of), and the instant/business-date pair the criterion names (2026-09-10T18:05:00Z / 2026-09-08) is the fe-s-6 VIEW fixture, which the FixtureAdapter serves as it stands and ruling R's adapter remedy never reaches. After ruling R that view fixture's panels name an absence ('Ready -- Source time unknown') although the fixture carries businessAsOf 2026-09-08.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@c18a2aab src/pages/InvestorReporting/contracts/adapt.ts: `availabilitySourceAsOf` occurs 3 times -- the type member :190, the read :227 in wireEnvelope (`sourceAsOf: parts.availabilitySourceAsOf ?? null`), and its ONE write, :482 in adaptStatusEnvelope, from `wire.source_dates.as_of`; carryAvailabilityFromStatus :284 is `sourceAsOf: status?.sourceAsOf ?? current.sourceAsOf`. So without a status the availability instant is null on every v1 document.",
+        "portal@c18a2aab contracts/wire/responses.ts:240 `'analysis-requests': true` (status required; envelope.ts:187 refuses a body without one), so no AnalysisRequest can be the no-status document. src/api/endpoints/investor-reporting.ts:1256-1260, FixtureAdapter.serve: a producer fixture goes through adaptWireInstance; 'A round-1 VIEW fixture is already in view shape and is served as it stands.'",
+        "MEASURED before the ruling-R source edit (portal@c18a2aab plus the new tests): fe-s-34/no-status.test.ts printed 'StageDisplay -> \"Uncertain -- Source time unknown\"' on the v1 path (a null slot, no age of anything) and, for the VIEW fixture request.overview.json (availability.sourceAsOf=2026-09-10T18:05:00Z, no reading, businessAsOf 2026-09-08), 'StageDisplay \"Ready -- Business date age: 1d\"'. After it (portal@fa9cbee21b): the v1 path reads 'Uncertain -- Business date age: 4d' on both panels, and the view fixture 'Ready -- Source time unknown'."
+      ]
+    },
+    "spec_asserts": "F34-AC8: 'a document with NO status whose availability instant is 2026-09-10T18:05:00Z and whose own business date is 2026-09-08, parsed from a whole v1 body through the real adapter (never a hand-built envelope)'. AMENDMENT 2: the no-status document's own reading is 'built today in contracts/adapt.ts from sourceTimestamps.businessAsOf and then dropped'.",
+    "world_is": "There are two no-status paths and the criterion joins them. (1) The v1 plane -- parseIrEnvelope, IR_DATA_ADAPTER, wireEnvelope -- where the reading is indeed built and dropped (adapt.ts:231). Ruling R's remedy lands there, and F34-AC8 is graded there, on the committed no-status Holdings body with its own instant (clocks.as_of_timestamp, carried as sourceTimestamps.sourceAsOf) set to 2026-09-10T18:05:00Z and its business date to 2026-09-08; its availability.sourceAsOf is null, as on every no-status v1 document. (2) The VIEW-fixture plane, where the criterion's dates come from: the availability carries the instant and no reading, and nothing between it and the panel can see its sourceTimestamps. Ruling R's bound now holds there -- envelopeFromAvailability hands the stated absence, so no instant is aged -- but outcome (a), ageing the document's own business date, does not reach it; that needs the FixtureAdapter or the fixtures, neither granted. ARMED: in fixture mode every view-fixture Analysis request now reads 'Source time unknown', the anomaly wording, for a document that has a business date.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S24",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T04:10:00Z",
+    "one_line": "F34-AC6 reads 84 pass / 2 skip / 1 fail after ruling R: __tests__/fe-s-3/status.test.ts:121 asserts that envelopeFromAvailability hands an availability's INSTANT through as the panel slot (`expect(built.sourceAsOf).toBe('2026-09-10T10:00:00Z')`) -- the exact behaviour ruling R ends ('never an instant, on any path') -- and __tests__/fe-s-3/ is not in the order's <paths> grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, F34-AC6 as the order writes it, with IRPT_FE_DEV_PORT=54034 (measured closed on localhost, 127.0.0.1 and [::1]), at portal@fa9cbee21b: the failure is 'envelopeFromAvailability carries state, sourceAsOf and reason through, and derives actions' at fe-s-3/status.test.ts:121:30, 'Expected: \"2026-09-10T10:00:00Z\"', 'Received: { fact: \"ABSENT\", businessAsOf: null }'; totals ' 84 pass', ' 2 skip' (fe-s-30's two dev-server tests, precondition absent), ' 1 fail', 'Ran 87 tests across 19 files.'",
+        "Before the ruling-R source edit (portal@c18a2aab) the same battery ran 83 pass / 2 skip / 0 fail across 18 files, and the whole InvestorReporting suite 509 pass / 6 skip / 0 fail across 89 files. After it: 510 / 6 / 1 across 90 (the new no-status.test.ts adds a file) -- this one line is the only failure anywhere in the suite."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2: \"`state/status.ts`'s `envelopeFromAvailability` is yours for its no-status branch too\" and 'Nothing labelled a business date may measure an instant, on any path.' F34-AC6: 'the folders that render or compute source ages stay green.' The <paths> grant names fe-s-21/source-age.test.ts, __tests__/fe-s-25/ and __tests__/fe-s-34/, not __tests__/fe-s-3/.",
+    "world_is": "fe-s-3/status.test.ts:114-125 builds an availability with an instant and no reading and asserts at :121 that the envelope's sourceAsOf IS that instant. Under ruling R the builder hands the stated absence ({fact:'ABSENT', businessAsOf:null}), so that one assertion fails; the test's other assertions (:120 state, :122 reason, :123-124 actions) are unaffected. Keeping :121 green would mean leaving the no-reading branch handing the instant, so every view fixture's instant is aged under 'Business date age', which is what the bound forbids. The other in-tree alternative, a formatter that refuses to age a bare instant, turns fe-s-21's F21-AC3 red instead, because its envelope is built from status.sourceAsOf (row IRPT_FNTEND-W3-S22). The remedy is a one-line edit in a file this order does not grant: make :121 assert the ABSENT reading, or assert that no instant is handed, citing ruling R. Not made here. ARMED: the FE-s-34 portal commit turns that suite red if drained without it.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S25",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T04:10:00Z",
+    "one_line": "FE-s-30's businessDateOf (state/availability.ts:102-104) reads ANY availability.sourceDate as the STATUS's reading. Under ruling R a no-status document now carries its own reading there, so businessDateOf reports from:'status' for a document date and passes a document null through as fact NULL, where FE-s-30 reads the document plane's null as ABSENT. Measured. It is latent today: the gate sends every no-status wire payload to the panel, not to AnswerStatus.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, scratch probe on the portal@fa9cbee21b bytes, whole no-status Holdings v1 bodies through parseIrEnvelope: business_date 2026-09-08 -> availability.producerState=undefined, availability.sourceDate={fact:PRESENT, businessAsOf:2026-09-08} -> businessDateOf {fact:PRESENT, businessDate:2026-09-08, from:status}; business_date null -> sourceDate {fact:NULL, businessAsOf:null} -> businessDateOf {fact:NULL, businessDate:null, from:status}. Read from state/availability.ts:103-108, the same bodies took the document branch before ruling R (they carried no sourceDate): from:'document', with a null read as ABSENT.",
+        "One consumer, found with the native Grep tool for businessDateOf and `.from` across the non-test tree: tabs/reporting/AnswerStatus.tsx:24, :45 and :75 (`data-source-date-from={date.from}`); the definition is availability.ts:102. The full InvestorReporting suite after the edit has no failure in fe-s-30 or anywhere else except row W3-S24's line."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 2 names the carrier: 'the no-status document's availability carries that reading (Availability.sourceDate, typed SourceDateReading at contracts/index.ts:133)'. FE-s-30, state/availability.ts:92-100: 'When a status arrived, its reading rides on availability.sourceDate ... Only when NO status arrived ... is the view document's sourceTimestamps.businessAsOf read.'",
+    "world_is": "The two carriers now disagree about what the presence of availability.sourceDate means. It is INERT today: every no-status wire document arrives as EXPLICIT_UNKNOWN_STATE with no producer token, and isAnswerBearing (availability.ts:64-68) sends it to the status panel, so AnswerStatus never renders one and no test fails. It becomes a provenance mislabel the day a no-status document can be answer-bearing. availability.ts is not in this order's grant. The discriminator FE-s-30's own gate already uses is producerState, not the presence of sourceDate.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S26",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T05:05:00Z",
+    "one_line": "The one reading rule amendment 3 mandates for VIEW fixtures (adapt.ts readingFromValue) turns a view document's null businessAsOf into fact NULL, shown as 'Source date malformed'. But the view contract defines that null as 'no clock' (contracts/index.ts:147), and FE-s-30's businessDateOf reads it as ABSENT. Census: 3 of 134 view documents carry a null, all in smoke/fe-s-3-loading.json; no FixtureAdapter default fixture does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED, a census over every JSON file under portal src/pages/InvestorReporting/fixtures/ (125 files): 134 VIEW documents (an availability object, not a producer `instance`); businessAsOf present on 131, null on 3, missing on 0. The three nulls: smoke/fe-s-3-loading.json at investor-reporting/performance-report, analysis-requests[0] and holdings-snapshot. No file in the portal outside node_modules names fe-s-3-loading (native Grep, 0 matches); smoke maps are handed to scripts/ui-smoke.mjs by `--fixtures`.",
+        "portal@c18a2aab contracts/adapt.ts:159-163 readingFromValue: undefined -> ABSENT, null -> NULL, a value -> PRESENT. contracts/index.ts:147 on SourceTimestamps: 'Source clocks. A missing clock is null, never a synthesised `now`.' state/availability.ts:98-100: 'On that plane a null means \"no clock\" ... so it is reported as ABSENT, never as the wire's NULL'.",
+        "MEASURED at portal@c6ee044e7a, fe-s-34/no-status.test.ts, F34-AC9 path 1: a fe-s-6-ready view document with businessAsOf set to null renders 'Ready -- Source date malformed' on both panels, as the one rule dictates; with businessAsOf removed it renders 'Ready -- Source time unknown'."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 3: FixtureAdapter's VIEW-fixture branch gives a served document's availability 'the SAME business-date reading contracts/adapt.ts builds on the wire path, from the document's own sourceTimestamps.businessAsOf, through adapt.ts's own reading builder (one rule, never a second copy)'.",
+    "world_is": "On the wire path readingFromValue sees a producer field, where a null IS the defect the NULL fact names. On the view plane the same null is the contract's ordinary missing clock. So under one rule, a view document with no clock is named a producer defect: a LOADING document from fe-s-3-loading.json would read 'Source date malformed' rather than 'No source age yet'. Built as ordered, with no second rule. INERT: no FixtureAdapter default fixture carries a null, no test fails, and the three nulls sit in a smoke map only ui-smoke serves. A ruling is needed only if a view null should read as absence, and that would be a second rule, which the amendment forbids.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S28",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:27:13Z",
+    "one_line": "FE-s-32's worktree-cache override cannot take the amendment's literal shape: a vite.worktree.config.ts under src/ that statically imports vite and vite.config.ts breaks the WHOLE-portal typecheck (F32-AC1 rc=2). It loads the portal config through vite's own loadConfigFromFile at runtime instead, still merging only cacheDir.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baseline, before any edit: cd <WS>/portal && bun run typecheck -> rc=0 at portal e85498be.",
+        "First form, as the amendment words it: `import { defineConfig, mergeConfig } from 'vite'` + `import portalConfig from '../../../../../vite.config'` in src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts. The same typecheck -> rc=2: src/pages/PortfolioManagement/hooks/useAutoSave.ts(31,5) and useOptimizationAutoSave.ts(67,5) error TS2322 Type 'Timeout' is not assignable to type 'number'. Neither file was touched. The file sits in tsconfig.app.json's include (src), and the vite/vite.config imports bring @types/node into the app program, which changes setTimeout's return type.",
+        "Committed form, portal 7df6b4a2: vite is imported at runtime through a string variable (the type checker does not follow it), and the portal config is loaded by vite.loadConfigFromFile(env, <portal>/vite.config.ts) and merged with { cacheDir: <WS>/.scratch/vite-cache-fe-s-32 } only. Typecheck rc=0 at 7df6b4a2.",
+        "Vite accepted the override in both forms: `bun run dev --port 5213 --strictPort --config ...` printed VITE v7.3.5 ready and later \"config changed, restarting server... server restarted\", and <WS>/.scratch/vite-cache-fe-s-32/deps was created. The main checkout node_modules/.vite was not the cache."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-32 BOUNDS, dev server (AMENDMENT on rows W1-S56 and W1-S57, 2.0.0_SA_COO~F): write __tests__/fe-s-32/vite.worktree.config.ts, 'which imports the portal's vite.config.ts and mergeConfigs ONLY cacheDir'; 'If vite refuses the override, file a row with the measurement and launch without it.'",
+    "world_is": "Vite did not refuse the override. The portal typechecker refused the static-import form: a .ts file under src/ joins the app program, and importing vite or vite.config.ts there pulls in node types. That breaks F32-AC1 in two files this order does not own. The config is loaded by vite's own loader at runtime instead of a static import, and only cacheDir is merged. Any later cell told to write the same override under src/ will hit the same refusal. It fails loud (rc=2), not silently.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S29",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:27:13Z",
+    "one_line": "The observed and target Holdings maps carry advisory_status 'ADVISORY', which is outside the contract enum (ADVISED | RESIDUAL | UNKNOWN). The adapter silently maps it to 'unknown' and keeps authoritative=true, so the READY render shows advisory 'unknown' on every row, and nothing on the page tells it apart from a real classification gap.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json @workspace 073973ff93: advisory_status enum [ADVISED, RESIDUAL, UNKNOWN].",
+        "src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json and fe-s-18-holdings-target.json @portal e85498be: 4 of 4 nodes each carry classification.advisory_status 'ADVISORY' with authoritative true.",
+        "src/pages/InvestorReporting/contracts/adapt.ts @portal e85498be: ADVISORY_FOR_WIRE = { ADVISED, RESIDUAL, UNKNOWN }, read as `ADVISORY_FOR_WIRE[node.classification.advisory_status] ?? 'unknown'` beside `authoritative: node.classification.authoritative`.",
+        "F32 browser run at portal 7df6b4a2 (<WS>/.scratch/fe-s-32/ac2-6-deciding.txt): CONTROL observed@390 rows = Models/SMA/Client supervision=opal-supervised advisory=unknown authoritative=true, 3 of 3. The missing-attribution map reads unknown/unknown with authoritative=false, which is the actual gap."
+      ]
+    },
+    "spec_asserts": "FE-s-22's claims model (__tests__/fe-s-22/round-2-holdings.claims.json) claims 'classification' for F18-AC9 (observed) and F18-AC10 (target). The FE-s-32 cell asks that 'a reader can tell a qualified holdings answer from a complete one' (F32-AC9).",
+    "world_is": "On the complete (READY) observed answer, the advisory partition renders 'unknown' on 3 of 3 rows. The cause is an out-of-enum fixture token, not a missing classification, and the shipped parser does not check the enum. F32-AC5 still reads classification FOUND, because 'unknown' is a legal partition value. A reader of the observed capture sees advisory unknown under an authoritative classification. FE-s-32 does not fix this: the fixtures and contracts/adapt.ts are outside this order's paths.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S30",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:27:13Z",
+    "one_line": "At 390 the Holdings classification is in the DOM but not visible in a full-page capture. The slice table scrolls sideways (min-w-[640px] in an 855-879px table, shown through a 240-260px box), so Supervision and Advisory sit outside the box in 3 of 3 captures while Basis is inside. FE-s-32 adds a second real capture per render with the table scrolled to those columns.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/tabs/holdings/SliceTable.tsx @portal e85498be (FE-s-18 layout): `overflow-x-auto` wrapper around `<table className=\"w-full min-w-[640px] ...\">`, nine columns; Supervision and Advisory are the 7th and 8th.",
+        "F32 browser run at portal 7df6b4a2: at 390 the table box is 260px of 879px wide (observed), 240px of 855px (target) and 240px of 876px (missing-attribution). Basis is visible in 3 of 3, supervision in 0 of 3, advisory in 0 of 3. Scrolled to the classification columns, supervision and advisory are visible in 3 of 3. At 1440 all three columns are visible without scrolling, 3 of 3.",
+        "F32-AC5 grades the DOM and reads 6 of 6 claimed fields present at 390. Visibility is printed beside it as recorded, not graded."
+      ]
+    },
+    "spec_asserts": "TO-FE-s-32 cell (a): 'does each Holdings capture render the field its claim declares -- read from a REAL render'. The claims model (F18-AC9..AC11) claims basis AND classification 'at 390'. F32-AC9 is graded at L9 from the captures.",
+    "world_is": "One 390 full-page capture cannot show both claimed fields: basis is visible, and the classification columns are reachable only by scrolling the table sideways. FE-s-32 did not change the table layout, which is FE-s-18's. Instead the driver writes fe-s-32_holdings_<map>_390_table_scrolled.png beside each full-page 390 capture, a real render scrolled to the classification columns. The 390 classification claim is therefore met in the DOM and in the second capture, not in the full-page capture alone.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S31",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T07:32:51Z",
+    "one_line": "At 390, AnswerStatus's reason code line appears to run to or past the right border of its amber band when the code is one long unbroken token (TARGET_BLEND_MODEL_REVISION_UNNAMED, on the Holdings target capture). Read by eye from the capture, not measured.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "Capture org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-32_holdings_target_390.png (sha256 446581c0365d7f6390599634e1dbf3571d2bf3e319ac784051530fc89f58fa0b, portal 7df6b4a2): the reason line ends at about the band's right border. NO bounding box was measured; the dev server had already been stopped when this was seen.",
+        "src/pages/InvestorReporting/tabs/reporting/AnswerStatus.tsx @portal e85498be (FE-s-30): the reason is `<p className=\"mt-1 text-xs\" data-slot=\"answer-reason\">` with no break-all or overflow rule. FE-s-32 imports it unedited. The file is outside FE-s-32's paths."
+      ]
+    },
+    "spec_asserts": "F32-AC9: 'a reader can tell a qualified holdings answer from a complete one', graded at L9 from FE-s-32's captures. FE-s-32 reuses FE-s-30's AnswerStatus unedited.",
+    "world_is": "The qualified band, its state and its qualifier read clearly at 390. The one long reason code may touch or cross the band's edge. The same component renders Reporting's answers, so any Reporting reason code of that length would do the same. Not measured and not changed here.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S60",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T08:41:00Z",
+    "one_line": "RESOLUTION RECORD for the four ARMED rows on IRPT_FNTEND.TO-FE-s-34 whose disarm owner is 2.0.0_SA_COO~F -- W3-S19, W3-S21, W3-S23, W3-S24 -- each closed by an amendment on the worker's branch and drained at workspace de65e2d559 / portal DEV 0b41bb2f, re-verified by this seat before the drain. Disposition stays 3.0.0_SA_CVO's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S19 (BLOCKING): amendment 1 @12eef1910c granted __tests__/fe-s-21/source-age.test.ts:166 and __tests__/fe-s-25/source-age-field.test.ts:65, one purpose each (the literal 'Updated ' prefix ruling K removes); replaced at portal f7b2d986. My cut-time claim 'no test asserts the literal Updated' was false.",
+        "W3-S21: 1.0.0_SA_CTO RULING R (96485, round-4 analysis s.8 @3f3b5337a1), option (1) -- on the no-status path the panel ages the document's own business date, never an instant. Built by amendment 2 @1df5ac405f (portal fa9cbee2).",
+        "W3-S23 and W3-S24: amendment 3 @7fd807ab76, confirmed within ruling R by 1.0.0_SA_CTO (96523) -- FixtureAdapter's view-fixture branch carries the document's own reading through adapt.ts's builder (carryDocumentReading), __tests__/fe-s-3/status.test.ts:121 asserts no timestamp is handed over, businessDateOf keys provenance on producerState (W3-S25). Portal c6ee044e.",
+        "Issuer re-verification before the drain, on the worker's tree: grant 4 of 4 workspace and 13 of 13 portal paths IN; investor-reporting.ts diff = FixtureAdapter serve branch + one import only; typecheck rc=0; F34-AC2..AC5 and AC8..AC11 lines reproduced; whole InvestorReporting suite with IRPT_FE_DEV_PORT=5259 (closed): 512 pass / 6 skip / 0 fail across 90 files; proof-of-spec-check VALID rc=0 on eleven ids."
+      ]
+    },
+    "spec_asserts": "Each of the four rows names 2.0.0_SA_COO~F as disarm owner: W3-S19 and W3-S24 as BLOCKING refusals of F34-AC6 under the grant as cut; W3-S21 as a false label on the no-status path; W3-S23 as F34-AC8's premise failing on the path the tab renders.",
+    "world_is": "All four are closed in the drained code: the order met ten of ten mechanical criteria after three amendments, each committed on the worker's branch before the worker resumed. NOT closed here: W3-S22 (fe-s-21's test-built as_of envelope carries the new label) and W3-S26 (a view document's null businessAsOf now reads 'Source date malformed'; 3 of 134 view documents, all in the smoke-only fe-s-3-loading map) -- both INERT and carried to the drain-end packet.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S58",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "F31-AC8 cannot be satisfied inside FE-s-31's grant: submitExport can only return what LiveClient.submitExport returns, and LiveClient takes the envelope's status half and drops the ExportReceipt in data -- in api/endpoints/investor-reporting.ts, which is not in the order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-31 WORKER FACE, W2-S12 / W3-S5: \"export/submit.ts:87 types submitExport to return the StatusEnvelope ack ... Type it to what the producer returns.\" F31-AC8: \"through LiveClient and a transport serving an ExportReceipt envelope: submitExport returns the receipt, and the test prints the fields it read.\" The <paths> grant names export/submit.ts and not the typed client.",
+    "world_is": "The receipt never reaches submit.ts. LiveClient.submitExport calls send('submit-export', {body}, adaptStatusEnvelope, ..., 'status') and send returns parsed.status for take='status' -- the adapted data (parseIrEnvelope already runs adaptExportReceipt on it) is discarded. InvestorReportingApi.submitExport is typed Promise<StatusEnvelope>. So retyping submit.ts's wrapper alone would make its type claim a receipt the runtime never delivers; this worker left the wrapper typed to the ack and did not reach into the client. Measured through LiveClient and a transport serving the committed receipt (EXP-1) in data and an ack in status: submitExport returned exportRef=(absent) jobState=(absent) authorizedDownloadRoute=(absent) | operation=submit-export state=LOADING producerState=QUEUED. The F31-AC8 arm is committed as test.failing: it prints that reading, keeps the suite green while the defect stands, and turns red when the client returns the receipt.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 src/api/endpoints/investor-reporting.ts:765 `submitExport(req: SubmitExportRequest): Promise<StatusEnvelope>` (interface); :1063-1076 LiveClient.submitExport -> send(..., 'status'); :926-932 send returns parsed.status when take === 'status', parsed.data otherwise",
+        "portal fd91bea1 src/pages/InvestorReporting/contracts/envelope.ts:147 IR_DATA_ADAPTER['submit-export'] = adaptExportReceipt -- the receipt IS adapted, then dropped by the take",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-31.export-under-the-gate.md@a2060c08b5 <paths>: seven source files + __tests__/fe-s-31/ + INVESTIGATION_v2.md; no api/endpoints/",
+        "portal 1f7d84b2 __tests__/fe-s-31/submit.test.ts, deciding run: 'SUBMIT RETURNS THE EXPORT RECEIPT: no', 2 pass / 0 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S59",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "The dev-server amendment's override file, written as the __tests__/fe-s-31/vite.worktree.config.ts it names, broke F31-AC1: tsc -b --noEmit rc=2 on two files nobody edited. The same override as vite.worktree.config.mjs in the same folder keeps rc=0 and vite honours it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-31 BOUNDS, Dev server (amendment on rows W1-S56 / W1-S57): \"write __tests__/fe-s-31/vite.worktree.config.ts, which imports the portal's vite.config.ts and mergeConfigs ONLY cacheDir ... launch ... --config src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.ts ... If vite refuses the override, file a row with the measurement and launch without it.\"",
+    "world_is": "Vite did not refuse the override; the TYPECHECK did. The file sits under src/, which tsconfig.app.json includes, and importing vite (or ../vite.config) brings vite's Node typings into the APP program, where setTimeout then returns NodeJS.Timeout: with the .ts present `tsc -b --noEmit` printed src/pages/PortfolioManagement/hooks/useAutoSave.ts(31,5) and useOptimizationAutoSave.ts(67,5) \"error TS2322: Type 'Timeout' is not assignable to type 'number'\", rc=2 (rc=0 at base and with the source changes alone). This worker deleted its uncommitted .ts and committed the identical override as vite.worktree.config.mjs: tsconfig.app.json has no allowJs, so tsc never reads it (rc=0), and vite loaded it -- the server on 5237 wrote <WS>/.scratch/vite-cache-fe-s-31/deps at 02:00:57 local while the main checkout's node_modules/.vite/deps kept its 00:56:58 mtime. So the override works; only its FILE NAME in the amendment is unbuildable, and the launch line in BOUNDS names the .ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 tsconfig.app.json: \"include\": [\"src\"], \"types\": [\"vite/client\"], no allowJs",
+        "tsc -b --noEmit with __tests__/fe-s-31/vite.worktree.config.ts present: 2 x TS2322 (useAutoSave.ts:31, useOptimizationAutoSave.ts:67), rc=2; after replacing it with the .mjs: rc=0 (F31-AC1 deciding run at portal 1f7d84b2)",
+        "portal 1f7d84b2 src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs (mergeConfig(portalConfig, { cacheDir }) with cacheDir from import.meta.url)",
+        "ls --full-time: <WS>/.scratch/vite-cache-fe-s-31/deps 2026-09-14 02:00:57 -0400; portal/node_modules/.vite/deps (junction to main) 2026-09-14 00:56:58 -0400"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S60",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "Page 3 of every exported performance document still prints the COMPOSED bundle's own envelope as facts -- \"Bundle availability READY\" and a Bundle scope line naming no accounts -- beside the report's PARTIAL and its two accounts, from render/performance/MethodsAndSources.tsx, which is not in FE-s-31's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Ruling J (TO-FE-s-31 face): \"the report's scope line and the bundle's scope line must agree.\" Ruling H: the five answer-bearing states export \"never styled as complete\". The face also says the chrome renders in exactly three places (Page.tsx, PerformanceDocument.tsx, AnalysisDocument.tsx).",
+    "world_is": "FE-s-31 fixed what its grant reaches: every page's band reads the report's state, and the HEADER's count reads the report's scope (2 account(s) in scope, agreeing with the A-0001/A-0002 table). But the body of page 3 is not chrome: MethodsAndSources.tsx prints Row \"Bundle availability\" = the composed bundle's envelope state (READY by construction, composeExportBundle) and Row \"Bundle scope\" = bundle.scope.accountIds.join(', ') (empty for every composed bundle), under the Report availability PARTIAL and Report scope A-0001, A-0002 rows. So on the frozen-fixture print the page-3 bundle and report scope lines still disagree, and a qualified report's page 3 carries the word READY. This worker did not edit the file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 src/pages/InvestorReporting/render/performance/MethodsAndSources.tsx:120-121 (Report scope row), :171-172 (Bundle scope row, accounts {bundle.scope.accountIds.join(', ')})",
+        "portal fd91bea1 src/pages/InvestorReporting/export/resolveBundle.ts:137 composeExportBundle -> wireEnvelope({..., state: 'READY'}), no accountIds",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-31_print_partial_1440.png (F31-AC6 capture at portal 1f7d84b2) page 3: \"Bundle availability READY\", \"Bundle scope ... accounts\" (empty), beside \"Report availability PARTIAL ...\" and \"Report scope ... accounts A-0001, A-0002\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S61",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T06:31:22Z",
+    "one_line": "Under the export gate the print route REFUSES the committed frozen map (fixtures/smoke/fe-s-18-frozen.json): its performance envelope carries no status, so the report is the explicit unknown and not answer-bearing -- C-S68's disarm (\"the frozen print's header agrees with its own account table\") can no longer be observed by re-capturing that print as committed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND-C-S68 disarm_owner (ADJUDICATION_v2.md): \"DISARMS when the frozen print's header agrees with its own account table.\" TO-FE-s-31 face, ruling J: \"(C-S68 disarms when the frozen print's header agrees with its own account table.)\"; F31-AC4 grades it \"on the frozen print fixture\".",
+    "world_is": "The committed map's /api/scoped/investor-reporting/performance/ entry has keys contract_version, operation, firm_id, data -- no status. Through LiveClient the report arrives with availability.state UNCERTAIN and no producerState, which FE-s-30's isAnswerBearing (row W1-S55) sends to the panel; FE-s-31's PrintEntry now produces no document for it. So the frozen print, as FE-s-18 captured it, cannot be re-captured with a header at all. F31-AC4 therefore reads the DOCUMENT the print route's own path renders from that map (composeExportBundle -> resolveBundle through LiveClient), both as committed and with a PARTIAL status added: \"2 account(s) in scope\" on all 3 pages against a table of A-0001, A-0002, and the round-4 rule on the same bundle reads \"0 account(s) in scope\". Whoever grades C-S68 needs a capture with a status carrier, as F31-AC6 serves.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal fd91bea1 src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json: performance entry keys [contract_version, data, firm_id, operation]",
+        "portal fd91bea1 src/pages/InvestorReporting/state/availability.ts:64-69 isAnswerBearing: no producerState and view UNCERTAIN -> false",
+        "portal 1f7d84b2 __tests__/fe-s-31/every-page.test.ts F31-AC4 run: \"report state UNCERTAIN, answer-bearing=false -- the print route REFUSES this report\"; \"REPORT SCOPE AND BUNDLE SCOPE AGREE: yes (2 / 2 renders ...)\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S62",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T07:49:41Z",
+    "one_line": "The amendment's W2-S12 fix, made in exactly its three granted regions of investor-reporting.ts, returns the receipt (F31-AC8 read yes) but turns F31-AC1 and F31-AC9 red in tests OUTSIDE the grant that assert the old contract, and FixtureAdapter cannot serve a receipt in-region because IR_FIXTURE_PLAN names the ack for submit-export. Withdrawn; F31-AC8 refused again.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-31 BOUNDS, amendment @261a0c923f: \"(1) src/api/endpoints/investor-reporting.ts, for W2-S12/W3-S5 ONLY: submitExport returns the ExportReceipt the producer answers in data ... in the InvestorReportingApi interface, in LiveClient.submitExport and in FixtureAdapter.submitExport, and nowhere else in that file. FE-s-34 holds FixtureAdapter's VIEW-fixture serving branch (serve) ... touch no other region. Your test.failing arm for F31-AC8 becomes an ordinary test.\" Also F31-AC1 \"the whole portal typechecks\" and F31-AC9 \"(?<![0-9])0 fail\" over fe-s-4/8/9/16/31.",
+    "world_is": "Measured with the three regions changed (interface -> Promise<ExportReceipt>; LiveClient.submitExport -> send(..., adaptExportReceipt) taking data; FixtureAdapter.submitExport -> serve('export-receipt')): F31-AC8 printed \"SUBMIT RETURNS THE EXPORT RECEIPT: yes\". But tsc -b --noEmit rc=2 at src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts(82,3) \"TS2740: Type 'ExportReceipt' is missing the following properties from type 'StatusEnvelope': operation, state, sourceAsOf, safeActions, and 4 more\" -- statusFromWire (:79-87) is typed Promise<StatusEnvelope>, points FixtureAdapter's submit-export at a STATUS wire fixture, and uses the result as the ack at :148 and :262. At runtime fe-s-16 F16-AC2 (:201) failed with data-reason-code=\"undefined\", and fe-s-1/adapter.test.ts:137 (call log) failed with \"/api/scoped/investor-reporting/export-receipt\" in submit-export's slot. That second failure is the in-region FixtureAdapter route; the honest one needs IR_FIXTURE_PLAN['submit-export'] (:1178, contract StatusEnvelope) to name ExportReceipt, which is outside the three regions and inside FE-s-34's. Every in-region option leaves AC1 red because fe-s-16:82 is typed to the ack. So this worker reverted the three regions (0 diff lines), kept submitExport typed to the ack and kept the AC8 arm as test.failing. The measured patch is reproduced in the FE-s-31 result file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 364dc0d1 src/api/endpoints/investor-reporting.ts:1178 `'submit-export': { contract: 'StatusEnvelope', shape: 'one' }` (IR_FIXTURE_PLAN); :1305-1307 FixtureAdapter.submitExport -> this.serve('submit-export', ...)",
+        "portal 364dc0d1 src/pages/InvestorReporting/__tests__/fe-s-16/mounted-states.test.ts:79-87 `async function statusFromWire(fileName: string): Promise<StatusEnvelope>` returning `adapter.submitExport(...)` after `useFixture('submit-export', HERE + fileName)`; uses at :148 and :262",
+        "tsc -b --noEmit with the three regions changed: mounted-states.test.ts(82,3) TS2740 and export/submit.ts(111,3) TS2322 (the latter this worker's own wrapper), rc=2",
+        "bun test fe-s-1* + fe-s-16 + fe-s-31 static files with the change: 279 pass / 2 skip / 3 fail; failing: \"call log > the adapter records EVERY call with method, url and timestamp\" (fe-s-1/adapter.test.ts:137) and \"F16-AC2 -- the five states, on the mounted flow > five wire-fixture states render on the mounted body\" (fe-s-16/mounted-states.test.ts:201)",
+        "after the revert: tsc -b rc=0; git diff -- src/api/endpoints/investor-reporting.ts = 0 lines"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S61",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "THE GRADED PARTY WRITES THE CHECKER'S NEW/LEGACY BOUNDARY. Limbs 2 and 3 of proof-of-spec-check decide ENFORCE vs ANNOUNCE from the governing order's add commit, and the governing order is read from the instance's decomp_ref.to_ref -- a field the worker writes. Naming a real pre-ruling order moves both limbs to LEGACY with no violation naming the mismatch.",
+    "class": "OBSERVATION",
+    "spec_asserts": "F29-AC15 (TO-FE-s-29): none of the four limbs can be satisfied by the party it grades. checker-limbs.result.md:30-31 @6ad371c88e: 'a worker cannot reach it through anything written in the instance'.",
+    "world_is": "proof-of-spec-check.py:614-641 @9e6ed6c236 resolves the governing order from decomp_ref.to_ref when present ('An explicit decomp_ref.to_ref wins'). to-pipeline-gate.py check_complete_flip (:2525-2531 @8aa00e60fb) finds the instance beside the flipped order and runs the checker on it alone -- it passes neither the flipped order nor a criterion list, so nothing binds to_ref to the order being flipped. Measured on FE-s-29's own instance, by the CLI: as committed VALID (rc=0), limbs 2/3 ENFORCE/NEW; to_ref -> a missing order: INVALID (the unresolved citation is refused); to_ref -> TO-FE-s-28 (a real round-4 order): count-bar-frame and drives-frame both ANNOUNCE/LEGACY, the alignment frame raised no violation for F29 criteria under an F28 order, and the one violation was a PENDING-THIS-COMMIT artifact sentinel of the copy -- which a real flip that stages its result file would not raise (inferred, not exercised through a gated commit). The legacy arm ran inside the workspace; its temporary file was removed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json@6ad371c88e",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/checker-limbs.result.md@6ad371c88e :30-31, :107-122 (named weakness 4)",
+        ".tools/proof-of-spec-check.py@9e6ed6c236 :614-641",
+        ".tools/to-pipeline-gate.py@8aa00e60fb :2469-2531 (check_complete_flip)",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 3, F29-AC15"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO, as owner of the checker limbs (C-S56): DISARMS when the governing order is bound to the order being flipped -- check_complete_flip passes the flipped order to the checker and the checker refuses an instance whose declared to_ref or to_id names a different order -- with a battery arm that doctors to_ref to a real legacy order and reads REFUSED."
+  },
+  {
+    "id": "IRPT_FNTEND-S62",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-09-14T11:26:58Z",
+    "one_line": "THE FROZEN READY PRINT CONTRADICTS ITSELF ABOUT ITS WINDOW. Its band states reason REQUESTED_WINDOW_ANSWERED while its own page 3 says 'The source answered a different window from the one requested'. The reason code is defined nowhere, and the renderer compares windows as calendar strings.",
+    "class": "OBSERVATION",
+    "spec_asserts": "FE-s-33 (F33-AC8's material): the frozen performance report is READY / REQUESTED_WINDOW_ANSWERED, because actual_start 2026-01-02 differs from requested_start 2026-01-01 only by an NYSE holiday.",
+    "world_is": "REQUESTED_WINDOW_ANSWERED: 0 hits in docs/contracts/investor-reporting/v1/ (StatusEnvelope public_reason_code is a free pattern ^[A-Z0-9_]+$) and 0 in the portal's non-test code at DEV 741bb54b. The renderer's comparator is windowNarrowed = actualDates.start !== requestedDates.start || actualDates.end !== requestedDates.end (render/performance/MethodsAndSources.tsx:58), a calendar-string comparison with no trading calendar; tabs/reporting/PeriodControls.tsx:122 prints the same sentence on screen. So fe-s-31_print_frozen-as-committed_1440.png shows 'Reason: REQUESTED_WINDOW_ANSWERED' on every page band and 'The source answered a different window' in page 3's Limitations. Either the contract names what each reason code means, or the comparator counts trading days, or the fixture carries a narrowed reason -- three different fixes, the CTO's to choose.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json (public_reason_code: pattern only)",
+        "portal 741bb54b:src/pages/InvestorReporting/render/performance/MethodsAndSources.tsx:58, :103-104",
+        "portal 741bb54b:src/pages/InvestorReporting/tabs/reporting/PeriodControls.tsx:122",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/fe-s-31_print_frozen-as-committed_1440.png@09c82ae177",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-33.fixture-reach.proof_of_spec.json@e46121f301",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 section 3, F33-AC8"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S13",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T14:28:50Z",
+    "one_line": "THE to_id CROSS-CHECK CANNOT BE EXACT. The binding refuses an instance whose to_ref or to_id names another order; to_ref has one exact form estate-wide, to_id does not -- matched exactly against the flipped order's <to_id>, it would refuse 119 of 337 committed instances whose to_ref names their own order.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 THE BINDING: 'An instance whose decomp_ref.to_ref (or to_id) names a DIFFERENT order is REFUSED, before any limb runs'; BOUNDS: 'The binding must not refuse an instance whose to_ref names its own order.' The order does not say which spellings of a to_id name the same order.",
+    "world_is": "Census at CLOUD 62f3adb8ca over every tracked *.proof_of_spec.json whose sibling order exists where check_complete_flip looks (337 of 576 tracked instances): to_ref equals that order in 336, is absent in 1, names another order in 0. to_id equals the order's <to_id> tag in 218 and does not in 119 -- a '.'-delimited slug on one side (instance NFRA_CLDGRPH.TO-CG-I-2 vs order tag NFRA_CLDGRPH.TO-CG-I-2.edge-side-drop-and-the-blind-check; instance NFRA_COMPEFFICACY.TO-CE-T-1.comp-find-s4-audit vs tag NFRA_COMPEFFICACY.TO-CE-T-1; the NFRA_OUTSET orders), or an order that carries no <to_id> tag at all (the NFRA_IAMROLES202609 and NFRA_REPORT orders). An exact to_id cross-check would have refused those 119 flips. So the binding keeps to_ref EXACT and matches to_id slug-tolerantly: equal to the order's <to_id> tag, its filename stem or an id=\"...\" declaration, or one is the other plus a '.'-delimited suffix with '.TO' in the shorter (IRPT_FNTEND.TO-FE-s-2 never matches ...FE-s-29; a bare project code matches nothing). Measured after: the binding's cross-check refuses 0 of the estate's orders that have an instance beside them (test_governing_binding.py, ESTATE line). Residual, stated: a to_id that differs from its order only by a slug is admitted, so to_id is a weaker cross-check than to_ref -- and the governing order no longer comes from either field, so neither can steer a limb.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py (the commit carrying this row): the GOVERNING-ORDER BINDING block, _same_order_id, _order_id_forms, governing_binding_check",
+        "census at 62f3adb8ca: git ls-files *.proof_of_spec.json -> 576; sibling order exists -> 337; to_ref == order 336, absent 1, another 0; to_id exact against the <to_id> tag: 218 match, 119 do not",
+        "org/missions/D0/NFRA/NFRA_CLDGRPH/deliverables/0.9.0_WK_NFRA_CLDGRPH~2/NFRA_CLDGRPH.TO-CG-I-2.edge-side-drop-and-the-blind-check.proof_of_spec.json@62f3adb8ca",
+        "org/missions/D12/NFRA/NFRA_REPORT/deliverables/0.9.0_WK_NFRA_REPORT~1/NFRA_REPORT.TO-RP-s-1.state-model-two-axis-vocabulary.proof_of_spec.json@62f3adb8ca"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S14",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T15:08:44Z",
+    "one_line": "THE L8 RECEIVING SIDE STILL GRADES A PROOF UNBOUND. After FE-s-37 the complete flip is bound, but every other executing caller of proof-of-spec-check.py passes the instance alone -- receiving-check.py's L7->L8 route and 3.0.0_SA_CVO's own intake/audit scripts -- so their verdicts are still resolved from the instance's own to_ref.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 THE CELL: 'the checker can be steered by the party it grades, and this cell binds it'; F37-AC9 re-grades F29-AC15 clause 3, 'no limb of the checker can be steered by the party it grades'. The face binds check_complete_flip and grants .tools/to-pipeline-gate.py, .tools/proof-of-spec-check.py and .tools/tests/ only.",
+    "world_is": "Unscoped caller census at da3e61889d (Grep for 'proof-of-spec-check.py' over *.py, *.sh, *.ps1, *.js, *.mjs, *.ts, *.cmd, *.bat in the worktree: 64 files; 17 are this worker's own .scratch; 47 in the corpus -- 15 under .tools/, 22 under workflows/, 10 under org/). EXECUTING callers: .tools/to-pipeline-gate.py check_complete_flip (BOUND by FE-s-37); .tools/receiving-check.py -- .tools/receiving-check.py:71 @adfbe65590 routes every proof_of_spec*.json to the checker with argv [p], and run_one runs [sys.executable, tp] + argv (:117); 3.0.0_SA_CVO's intake/audit scripts -- org/tier1_exec/3.0.0_SA_CVO/deliverables/amgt_round5_cvo_audit.py:54 and :84, amgt_round6_cvo_audit.py:41, amgt_round7_cvo_intake.py:80, amgt_round8_cvo_intake.py:107, posn_round3_cvo_intake.py:47, each [sys.executable, '.tools/proof-of-spec-check.py', <instance>, <ids>]; and org/standards/test_artifact_coverage_both_grammars.py:67 (a battery). None passes --governing-order, so each prints 'governing-binding: UNBOUND' and its verdict can still be moved by the instance's to_ref -- including on an instance edited AFTER its flip, because check_complete_flip grades only a commit that stages the order (to-pipeline-gate.py main: flip_targets are the dispatched task-order paths). The 22 workflows/ files and the other 4 org/ files name the checker in comments, docstrings or emitted face text. A .tools-scoped census (19 files) had found receiving-check.py alone; the unscoped read found the CVO's scripts. Not exercised: no committed instance names another order (the binding's estate cross-check refuses 0 of 335). Remedy: each caller derives the sibling order from the instance path (the inverse of check_complete_flip's search) and passes --governing-order -- outside this order's grant (receiving-check.py) or another seat's own deliverables (the CVO's scripts).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/receiving-check.py:71 and :117 @adfbe65590",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/amgt_round5_cvo_audit.py:54,:84; amgt_round6_cvo_audit.py:41; amgt_round7_cvo_intake.py:80; amgt_round8_cvo_intake.py:107; posn_round3_cvo_intake.py:47 @da3e61889d",
+        "org/standards/test_artifact_coverage_both_grammars.py:30,:67 @da3e61889d",
+        ".tools/to-pipeline-gate.py check_complete_flip and main (flip_targets) @da3e61889d"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S15",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T15:08:45Z",
+    "one_line": "A CHECKER BATTERY OUTSIDE .tools/tests/ IS RED AT THE CUT. org/standards/test_artifact_coverage_both_grammars.py runs proof-of-spec-check.py and reads 3/6 PASS (rc=1) both at CLOUD 62f3adb8ca and with FE-s-37 applied -- the same failing arms (A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES) -- a pre-existing red that F37-AC8's census domain cannot see.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-37 F37-AC8: 'every file under .tools/tests/ that calls proof-of-spec-check.py or to-pipeline-gate.py is run once with your change applied' -- the census domain is .tools/tests/.",
+    "world_is": "org/standards/test_artifact_coverage_both_grammars.py (last touched @ba59c67ada) runs the checker at :67 ([sys.executable, str(CHECKER), str(f)]; CHECKER = .tools/proof-of-spec-check.py at :30). Found by this worker's unscoped caller census (row W4-S14). Run once with FE-s-37 applied (da3e61889d): 'ARTIFACT-COVERAGE BATTERY: 3/6 PASS', rc=1, failing A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES. Run once against the cut's checker in a borrowed-objects scratch repo at 62f3adb8ca: the same 3/6, rc=1, the same arms. So FE-s-37 neither caused nor changed it. The failing arms are the ones whose fixture must read VALID (A: the DS grammar, no regression; B: the WP1-N grammar; E: an explicit artifact_covered_by field); the passing arms are its must-FAIL controls, so the battery now reads as a rule that refuses everything. Not diagnosed -- outside this order's grant and not its question.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/test_artifact_coverage_both_grammars.py:30,:67 @ba59c67ada",
+        "run with FE-s-37 applied (checker at da3e61889d): rc=1, 3/6 PASS, FAIL A-DS-GRAMMAR-STILL-PASSES, B-WP1-GRAMMAR-FLIPS, E-EXPLICIT-FIELD-PASSES",
+        "run against the checker at 62f3adb8ca (borrowed-objects scratch repo at the cut): rc=1, the same arms"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S63",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "vite's config loader still writes through the node_modules junction: every dev-server start and every resolveConfig bundles vite.config.ts into the MAIN checkout's portal/node_modules/.vite-temp. That is a third junction write, which RULING U's remedy (cacheDir + tsBuildInfoFile) does not reach and no config key can move.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 THE REMEDY: 'vite's cacheDir and tsbuildinfo live inside the worktree by config, never through the junction, so no cell needs a per-cell override again.'",
+    "world_is": "With cacheDir (<portal>/.vite) and both tsBuildInfoFile (<portal>/.tsbuild/) inside the worktree at portal ac13f8ab, vite 7.3.5's default 'bundle' config loader still mkdirs node_modules/.vite-temp/ and writes '<config>.timestamp-<ms>-<rand>.mjs' there (vite/dist/node/chunks/config.js:35985-35993). In a linked worktree node_modules is the junction, so the file lands in C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/.vite-temp. That directory's mtime moved with this worker's own acts: 13:03 -0400 (this worker's server start) and 13:07:03 -0400 (this worker's resolveConfig run). It was empty afterwards, because the loader unlinks the file after import. The 'runner' loader writes no temp file but fails on this config: ERR_AMBIGUOUS_MODULE_SYNTAX on __dirname at vite.config.ts:17. __dirname is used by the pre-existing '@' alias and by the new cacheDir. configLoader is a CLI/inline option, not a config key, so moving it means changing package.json's 'dev' script ('vite'), which is outside this order's grant. The file is uniquely named and deleted after load, so no worktree reads another's. It is a transient write through the junction, not a shared cache.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/vite/dist/node/chunks/config.js:35985-35993 (vite 7.3.5): nodeModulesDir = findNearestNodeModules(...); mkdir .vite-temp/; tempFileName under it",
+        "ls --time-style=full-iso .../portal/node_modules/.vite-temp: 2026-09-14 13:03 -0400 after this worker's dev-server start, 13:07:03.534 -0400 after its resolveConfig (bundle) run; empty both times",
+        "node resolveConfig({configLoader:'runner'}) on portal vite.config.ts @ac13f8ab: ReferenceError ERR_AMBIGUOUS_MODULE_SYNTAX at vite.config.ts:17 (__dirname)",
+        "portal/package.json scripts.dev = 'vite' @741bb54b"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S64",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "fe-s-19/mounted-from-wire.test.ts's header still says the port comes from the helper 'environment first, documented default second'. After RULING U the helper has no default (env, else derived from the worktree, else REFUSED), so the comment now misdescribes it, and the file is outside this order's grant.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 THE REMEDY: 'the helper refuses without IRPT_FE_DEV_PORT or a port derived from its own worktree -- never a fixed default.' BOUNDS: a path outside <paths> is never edited.",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-19/mounted-from-wire.test.ts:55-56 @741bb54b reads 'It now comes from `../fe-s-27/_dev-server.ts` -- environment first, documented default second.' From portal ac13f8ab, fe-s-27/_dev-server.ts has no default: choosePort() returns IRPT_FE_DEV_PORT, else portForWorktree(<git worktree>), else throws 'REFUSED: ...'. The comment is prose only; the file's behaviour is correct under the new helper (F38-AC5/AC6/AC7 PASS on it). Not edited: fe-s-19/ is not in this order's <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-19/mounted-from-wire.test.ts:55-56 @741bb54b",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts choosePort() @ac13f8ab"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S65",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "Two per-cell vite overrides survive RULING U: fe-s-31/vite.worktree.config.mjs and fe-s-32/vite.worktree.config.ts still merge cacheDir onto <workspace>/.scratch/vite-cache-fe-s-3x. A server started through either one caches in the workspace worktree's .scratch, not in <portal>/.vite where the portal config now puts it, so one worktree can hold two cache homes.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 THE REMEDY: 'vite's cacheDir and tsbuildinfo live inside the worktree by config, never through the junction, so no cell needs a per-cell override again.'",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs:39 (mergeConfig(portalConfig, { cacheDir: WORKTREE_CACHE_DIR })) and fe-s-32/vite.worktree.config.ts:50 (vite.mergeConfig(loaded.config, { cacheDir: WORKTREE_CACHE_DIR })) @741bb54b. The comments in both (fe-s-31 :5-8, fe-s-32 :5-10) give the reason as 'vite.config.ts sets no cacheDir'. From portal ac13f8ab it does (<portal>/.vite, read from vite's resolveConfig in F38-AC3). The overrides are no longer needed, but they are not harmless: they still redirect the cache when used. No test in the whole-suite run starts a server through them (0 fail either way). Not edited: fe-s-31/ and fe-s-32/ are outside this order's <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs:5-8,:39 @741bb54b",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts:5-10,:50 @741bb54b",
+        "F38-AC3 at portal ac13f8ab: resolveConfig cacheDir = C:/tmp/wk-irpt_fntend-6-1-fe-s-38/portal/.vite"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S66",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T17:34:21Z",
+    "one_line": "A closed loopback port on this box REFUSED in well under a second (ECONNREFUSED, 304-464 ms including node start), not the ~2 s the order's BOUNDS state. The probe's own header says a closed port 'does not refuse the connection -- it hangs'. Both premises read otherwise this session.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-38 BOUNDS: 'A closed loopback port answers after ~2 s on this box, so any probe timeout must exceed 2 s.' Also portal/src/pages/InvestorReporting/__tests__/fe-s-27/dev-server-probe.mjs header @741bb54b: 'On this box a CLOSED loopback port does not refuse the connection -- it hangs until something times out.'",
+    "world_is": "node fe-s-27/dev-server-probe.mjs <port> 4000 (asks http://localhost:<port>/) on 2026-09-14: port 5261 -> 'PROBE UNREACHABLE ECONNREFUSED' in 464 ms wall (node start included); 5271 -> ECONNREFUSED in 304 ms. 5805 (the derived port), 54021 and 5261 after the server was killed also returned ECONNREFUSED inside the test runs. None timed out. The 4000 ms bound exceeds either behaviour, so no verdict changes. The ~2 s may belong to another name (127.0.0.1 vs ::1) or another moment; this session did not measure that. Kept the probe's comment as found: it is not a claim RULING U changes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node dev-server-probe.mjs 5261 4000 -> PROBE UNREACHABLE ECONNREFUSED from http://localhost:5261/, ms=464 (before the server started)",
+        "node dev-server-probe.mjs 5271 4000 -> PROBE UNREACHABLE ECONNREFUSED from http://localhost:5271/, ms=304",
+        "F38-AC2 deciding run: 'DERIVED PORT measured before the child run: 5805 -> ABSENT (ECONNREFUSED from http://localhost:5805/)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S32",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T17:41:16Z",
+    "one_line": "THE CONTRACT'S NAMED REASON-CODE SET HAS NO GRANTED HOME IN THE PORTAL. The order derives it 'from the contract files, not typed' for four surfaces but grants one new module, state/tradingCalendar.ts, named for the calendar; the set was generated into a marked region of render/Page.tsx instead.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-40 THE REMEDY: 'The contract's named set is read from the contract files, not typed'; BOUNDS: 'THE CONTRACT'S NAMED SET IS READ, NEVER TYPED'. <paths> grants MethodsAndSources.tsx, PeriodControls.tsx, AnswerStatus.tsx, render/Page.tsx, tabs/StatusPanel.tsx, state/tradingCalendar.ts and __tests__/fe-s-40/ -- one new portal module, and it is the calendar's. The order states no rule for which contract text 'names' a code.",
+    "world_is": "The renderer needs the set at runtime and cannot read docs/contracts/ (outside the portal repo). The portal already carries a TYPED copy, contracts/envelope.ts:115 IR_REFUSAL_REASON_CODES = ['CONTRACT_VERSION', 'ROUTE_UNKNOWN'] (outside this grant, and typed). The contract has no structured list of codes: StatusEnvelope.schema.json leaves public_reason_code the free pattern ^[A-Z0-9_]+$ and the codes appear only in prose. Done: __tests__/fe-s-40/gen-named-codes.mjs reads all 25 files under docs/contracts/investor-reporting/v1/ and admits a code-shaped token written directly after 'public_reason_code', 'return(s)' or 'refused with' -> CONTRACT_VERSION (CONTRACT.md:45, routes.json:170) and ROUTE_UNKNOWN (CONTRACT.md:98, routes.json:176); 39 distinct code-shaped tokens in those files, 37 not admitted. It writes the set between BEGIN/END GENERATED markers in render/Page.tsx beside the flag helpers, and tabs/reporting/AnswerStatus.tsx and tabs/StatusPanel.tsx now import from render/Page.tsx. reason-codes.test.ts (F40-AC7) re-reads the contract and requires equality; the set also equals the typed IR_REFUSAL_REASON_CODES. The admission rule is this worker's reading, not the contract's; the contract naming its codes (IRPT_BCKEND-S52) would replace it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/contracts/envelope.ts:115 @741bb54b (IR_REFUSAL_REASON_CODES, typed)",
+        "docs/contracts/investor-reporting/v1/CONTRACT.md:45 and :98, routes.json:170 and :176 @58e387b454",
+        "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json properties.public_reason_code, pattern ^[A-Z0-9_]+$ @58e387b454",
+        "portal src/pages/InvestorReporting/render/Page.tsx GENERATED region, written by __tests__/fe-s-40/gen-named-codes.mjs on portal branch wk-irpt_fntend-6-2-fe-s-40 (this order's portal commit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S33",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-14T17:41:16Z",
+    "one_line": "ONE EXPORT SCREEN CAN SHOW THE SAME CODE FLAGGED AND UNFLAGGED. tabs/StatusPanel.tsx, granted and now flagging every code the contract does not name, is rendered inside export/ReceiptPanel.tsx, whose own 'Reason: <code>' line the order puts outside this cell.",
+    "class": "OBSERVATION",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-40 BOUNDS: 'THE BAND SURFACES ARE YOURS FOR THIS PURPOSE ONLY ... The other surfaces that print a code (TabShell, StageDisplay, RequestList, AnalysisTab, ReceiptPanel, AnalysisDocument, GenerateComposer) are NOT in this cell -- RULING T names the band.' The order treats tabs/StatusPanel.tsx and ReceiptPanel as separate surfaces.",
+    "world_is": "export/ReceiptPanel.tsx:44 renders <StatusPanel tabId=\"export\" envelope={envelopeFromReceipt(receipt)} /> and :45-48 prints its own 'Reason: <span>{reasonCode}</span>' (data-slot public-reason-code) from publicReasonCodeFor(receipt, status). After this order StatusPanel prints any code outside {CONTRACT_VERSION, ROUTE_UNKNOWN} with '[code not defined by the v1 contract]' beside it, so where the panel's envelope carries the code the Reason line also prints, the receipt shows it flagged once and bare once. StatusPanel has three callers at portal 741bb54b: tabs/reporting/ReportingTab.tsx:231, tabs/holdings/HoldingsTab.tsx:163, export/ReceiptPanel.tsx:44. The panel also now flags the portal's own transport code IR-REQUEST-FAILED (state/status.ts REQUEST_FAILED_ENVELOPE), which the contract does not name either. Not changed here: ReceiptPanel is outside the grant; whether envelopeFromReceipt carries the same code as publicReasonCodeFor was not measured.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/export/ReceiptPanel.tsx:44-48 @741bb54b",
+        "portal src/pages/InvestorReporting/tabs/reporting/ReportingTab.tsx:231, tabs/holdings/HoldingsTab.tsx:163 @741bb54b (the other StatusPanel callers)",
+        "portal src/pages/InvestorReporting/state/status.ts REQUEST_FAILED_ENVELOPE (publicReasonCode 'IR-REQUEST-FAILED') @741bb54b"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "hazard_standing": "INERT"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T17:30:59Z",
+    "one_line": "F41-AC7 is red, 1 fail of 546. Re-binding the frozen narrative (W2-S27) reaches a FIFTH descendant of the frozen map that the order did not name: __tests__/fe-s-32/holdings-no-answer.json. It is a hand-copied child of fe-s-18-holdings-observed.json with no generator, and it still carries the perf-9 narrative, so fe-s-32/holdings-in-a-browser.test.ts:256 fails. That file is outside the grant, so F41-AC7 is refused and the order stays open.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "TO-FE-s-41 WORKER FACE: \"The Holdings maps inherit from the frozen map. __tests__/fe-s-18/gen-fixtures.ts builds each fe-s-18-holdings-*.json from the whole frozen map (row W2-S26), so a change to the frozen map reaches them through that one generator\". F41-AC7: whole suite \"(?<![0-9])0 fail\". BOUNDS: \"NOT YOURS: ... every other map under fixtures/\" and \"Any test outside your grant that your change turns red is a BLOCKING row with the list, never an edit.\"",
+    "world_is": "The inheritance set is FIVE maps, not four. Census by content: 145 JSON files under portal/src, and 5 whose performance member equals fe-s-18-frozen.json's. Four are in the grant and were regenerated by gen-fixtures.ts; each now names rev-49f-000091. The fifth, __tests__/fe-s-32/holdings-no-answer.json, was written at portal 7df6b4a2 by 0.9.0_WK_IRPT_FNTEND~2 (FE-s-32). Its test header calls it \"the observed map with its holdings status replaced by UNAVAILABLE and nothing else changed\". No generator writes it. It still names perf-9. holdings-in-a-browser.test.ts:242-259 asserts that it differs from the observed map in exactly one member. Against the observed map at HEAD 741bb54b it differs in 1 of 9 members (holdings). Against the regenerated observed map at portal 0ebc6b20 it differs in 2 of 9 (holdings and narrative). Whole suite at 0ebc6b20, IRPT_FE_DEV_PORT=5265 measured closed: 532 pass, 13 skip, 1 fail across 546 tests in 95 files. Baseline at 741bb54b: 523 pass, 13 skip, 0 fail across 536 tests in 94 files. The one failure is :256, expect(differing).toEqual([HOLDINGS_KEY]). There is no repair inside the grant. F41-AC5 requires the Holdings maps to carry the re-bound narrative, and the only edit that makes the test agree is to holdings-no-answer.json (re-copy its narrative member, or generate it from the observed map), which is not in <paths>. This worker made no edit there. Hazard: portal 0ebc6b20 is LOCAL on wk-irpt_fntend-6-5-fe-s-41, and a drain of it as-is turns the shared suite red by exactly this test. Disarm: grant holdings-no-answer.json to a cell (it is the same hand-copy shape as W2-S24, with no generator), or drain FE-s-41 together with its re-derivation.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:242-259 @portal 741bb54b: \"expect(differing).toEqual([HOLDINGS_KEY])\" at :256",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json @portal 7df6b4a2 (0.9.0_WK_IRPT_FNTEND~2): narrative performance_report_revision \"perf-9\"",
+        "descendant census @portal 0ebc6b20: 5 of 145 JSON files under portal/src carry the frozen performance member; 4 name rev-49f-000091, holdings-no-answer.json names perf-9",
+        "bun test src/pages/InvestorReporting/__tests__ @portal 0ebc6b20, IRPT_FE_DEV_PORT=5265: \"532 pass / 13 skip / 1 fail / Ran 546 tests across 95 files\", rc=1; failing test \"the four scenario maps > the NO-ANSWER map is the observed map with ONE member changed: the holdings status\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S6",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T17:30:59Z",
+    "one_line": "The two generators the order names write NINE maps; the grant names five. Running them as ordered rewrote four maps outside <paths>: fe-s-14-49financial/-inflection/-cottonwood.json (gen-maps.ts) and fe-s-16-print-prehistory.json (gen-fixtures.ts). All four were measured byte-identical to HEAD and none was staged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-41 BOUNDS: \"The Holdings maps come from __tests__/fe-s-18/gen-fixtures.ts: run it after the frozen map's re-binding and commit what it writes.\" and \"NOT YOURS: ... every other map under fixtures/\". The <paths> block names five maps: fe-s-14-global.json, fe-s-18-frozen.json and the three fe-s-18-holdings-*.json.",
+    "world_is": "gen-fixtures.ts writes five maps: the frozen map, the three Holdings maps and fe-s-16-print-prehistory.json (its own header says so). gen-maps.ts writes four: the three per-firm maps and the Global map. Both were run from the portal root, gen-fixtures.ts first, then gen-maps.ts. The four maps outside <paths> were then compared byte for byte with `git show HEAD:<path>`: fe-s-14-49financial.json 2967 B, fe-s-14-inflection.json 2967 B, fe-s-14-cottonwood.json 2965 B and fe-s-16-print-prehistory.json 4007 B, each equal=True with 0 CRLF, and `git diff --quiet` rc=0 on each. `git status` still lists them as M (stat-dirty, autocrlf=true, i/lf w/lf). They were not staged; portal 0ebc6b20 carries 12 named files. So \"commit what it writes\" was satisfiable only because those outputs did not change. A future change to either generator that moves one of them would need a grant this cell does not hold.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-18/gen-fixtures.ts header lines 9-19 @portal 741bb54b: five maps incl. fe-s-16-print-prehistory.json",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-14/gen-maps.ts generate() @portal 0ebc6b20: writes fe-s-14-${firm.registry}.json x3 and fe-s-14-global.json",
+        "byte comparison vs git show HEAD: 4 of 4 out-of-grant outputs equal (sha256 equal), git diff --quiet rc=0 x4",
+        "git -C portal show --stat 0ebc6b20: 12 files, none of the four"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S27",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:24:00Z",
+    "one_line": "RULING V turns a test outside FE-s-39's grant red. fe-s-34/no-status.test.ts F34-AC9 path 1 requires a VIEW document whose businessAsOf is null to render 'Source date malformed', which is exactly what RULING V removes. With FE-s-39 applied it reads 'Ready -- Source time unknown' on both panels, so F34-AC9 reads 0 of 2 and the whole suite has 1 fail (F39-AC9).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b src/pages/InvestorReporting/__tests__/fe-s-34/no-status.test.ts: the path 1 NULL arm serves the fe-s-6-ready view document with businessAsOf set to null (setBusinessAsOf(null), :235), renders it (:250), and at :271 requires text.includes(SOURCE_DATE_MALFORMED) on every NULL arm.",
+        "Whole-suite run, portal@794d4899 (FE-s-39 applied), IRPT_FE_DEV_PORT=5273 measured closed: 527 pass, 13 skip, 1 fail, 541 tests across 95 files, rc=1. The one fail is 'F34-AC9 -- a no-status document without a business date: the absence is named and no age is shown' at no-status.test.ts:280. Its lines: 'StageDisplay path 1 NULL -> \"Ready -- Source time unknown\" [named as \"Source date malformed\", no age: NO]', the same for VariantSelector, then 'NO-STATUS DOCUMENT WITHOUT A BUSINESS DATE -> ABSENCE NAMED, NO AGE: 0 of 2'.",
+        "Baseline: the same invocation at portal@741bb54b, before any FE-s-39 edit: 523 pass, 13 skip, 0 fail, 536 tests across 94 files, rc=0.",
+        "The same F34-AC9 run shows path 2 (the WIRE plane: a no-status v1 Holdings body with clocks.business_date null) still reading 'Uncertain -- Source date malformed' on both panels. RULING V's wire half holds; only the view arm flips."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 W3-S26: 'RULING V: it renders as \"no clock\" -- the panel names the absence (RULING R), never \"malformed\". On the WIRE plane a null business date stays a producer defect and keeps reading malformed.' BOUNDS: 'Any test outside your grant that your change turns red is a BLOCKING row with the list, never an edit.' The grant does not name __tests__/fe-s-34/.",
+    "world_is": "fe-s-34/no-status.test.ts F34-AC9 was written by FE-s-34 amendment 3, before RULING V, and it asserts the behaviour RULING V removes. Its 'path 1 NULL' arm cannot pass under RULING V without a second rule, and the order forbids a second rule. Tests turned red, 1: fe-s-34/no-status.test.ts, 'F34-AC9 ... both paths, the business date ABSENT and, separately, NULL'. Not edited. The remedy is outside this grant: the path 1 NULL arm expects the absence wording and no age ('Source time unknown' on this READY document), citing RULING V, and path 2 NULL keeps its malformed expectation. ARMED: if the FE-s-39 portal commit drains without that amendment, the suite goes red.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S28",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:24:30Z",
+    "one_line": "RULING W turns FE-s-32's browser arm red in F39-AC8's own run. F32-AC5's classification reader (fe-s-32/holdings-in-a-browser.test.ts:388, :401-407) accepts an Advisory cell only if its text is advised, residual or unknown, so the verbatim, flagged ADVISORY on the observed and target maps reads NOT FOUND: claimed fields 4 of 6, 1 fail, rc=1.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:388 ADVISORY = ['advised', 'residual', 'unknown']. :401-407 CLAIM_READERS.classification finds a claim only when every row's advisory text is in that list. The driver reads the text of [data-slot=\"slice-advisory\"] (holdings-driver.mjs:100).",
+        "F39-AC8 run, portal@794d4899, against this worker's own server on 5263 (worktree-local cache .scratch/vite-cache-fe-s-39), PRECONDITION MET. Passing lines: 'HOLDINGS UNDER THE GATE, IN A BROWSER: 4 of 4', 'PARTIAL: CLASSIFICATION GAP SHOWN AS UNKNOWN', 'UNCERTAIN: MODEL REVISION STATED AS UNNAMED', 'PIE LABELS INSIDE THE CHART: 18 of 18'. Failing: F18-AC9 and F18-AC10 read 'classification: NOT FOUND [opal-supervised/ADVISORY (not a contract advisory value -- shown as sent) | ...]', while F18-AC11 reads FOUND [unknown/unknown ...]. 'CLAIMED FIELD PRESENT IN THE RENDERED DOM: 4 of 6'. 6 pass, 1 fail (F32-AC5), rc=1.",
+        "portal@741bb54b fixtures/smoke/fe-s-18-holdings-observed.json and -target.json each carry advisory_status 'ADVISORY' on 4 of 4 nodes, authoritative true. -missing-attribution.json carries no classification. The producer enum in docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json is ADVISED, RESIDUAL, UNKNOWN."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 F39-AC8: 'FE-s-32's browser arm still holds with the advisory rendered verbatim, in a real browser on your own server'. W2-S29: 'RULING W: an out-of-enum value on a READY answer is shown VERBATIM and FLAGGED, never as \"unknown\"'. BOUNDS: the 'ADVISORY' token stays in the maps (FE-s-41's), and __tests__/fe-s-32/ is not in the grant.",
+    "world_is": "F32-AC2, AC3, AC4 and AC6 hold, and the F39-AC8 anchor line prints 4 of 4. F32-AC5 is red: its classification reader pins the Advisory text to the view's three partitions, and RULING W puts a fourth, flagged verbatim token in that cell on two of the three claimed captures. On these maps RULING W and that reader cannot both hold. Tests turned red, 1: fe-s-32/holdings-in-a-browser.test.ts, 'F32-AC5 ... FE-s-22 claims model (unedited), joined by criterion through the round-2 manifest'. It shows only when a dev server is up: with the port closed it SKIPS under ruling C, so the whole-suite census cannot see it. Not edited. The remedy is outside this grant: the reader accepts a flagged out-of-enum cell (data-advisory-out-of-enum=\"true\" with a verbatim span) as a classification that IS stated, citing RULING W. ARMED: the next browser run of FE-s-32 is red.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S29",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:25:00Z",
+    "one_line": "RULING W is applied at ONE of the two ADVISORY_FOR_WIRE use sites. The DirectoryEntry cohort (contracts/adapt.ts:558 at 741bb54b) still maps an out-of-enum advisory_status to 'unknown'. Its view type is CohortValue, which the supervision, billing and advisory axes share and which is not 'the advisory view type', and it is displayed by header/ScopeSummary.tsx, outside the grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b contracts/adapt.ts:558 'value: ADVISORY_FOR_WIRE[wire.cohort.advisory_status] ?? \"unknown\"' fills CohortFact.value, typed CohortValue (contracts/index.ts:310-326), one union for the supervision, billing and advisory axes. header/ScopeSummary.tsx renders '{c.axis}: {c.value}'. contracts/validate.ts:167 checks a cohort value against COHORT_VALUES.",
+        "Measured at the FE-s-39 edit: typing the advisory view value as AdvisoryPartition | OutOfEnumAdvisory through ADVISORY_FOR_WIRE failed the typecheck at this site: 'adapt.ts(583,7): error TS2322: Type AdvisoryValue is not assignable to type CohortValue', rc=2. The table is now typed to its partition members (portal@794d4899), so the directory site behaves as before. Typecheck rc=0 after.",
+        "INERT: DirectoryEntryWire.cohort.advisory_status is the closed enum (contracts/wire/DirectoryEntry.ts:42), and no committed fixture or generator emits an out-of-enum directory advisory. The one 'ADVISORY' emitter is __tests__/fe-s-18/gen-fixtures.ts:317, and it writes Holdings nodes only."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 W2-S29 names both use sites: 'ADVISORY_FOR_WIRE[...] ?? \"unknown\" (contracts/adapt.ts:558, :865)'. BOUNDS: 'contracts/index.ts: the advisory view type, so a verbatim value can travel -- nothing else.'",
+    "world_is": "Carrying the verbatim token at :558 would need CohortFact.value (CohortValue, a type three axes share) to hold it, and a flag in ScopeSummary.tsx, which the grant does not name. So the Holdings site (:865 at 741bb54b) carries the token verbatim and flagged, and the Directory site (:558) is left as it was. Nothing emits an out-of-enum directory advisory today.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S30",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:25:30Z",
+    "one_line": "A second carrier of the Holdings advisory contract disagrees with the new view type. contracts/validate.ts:448 (validateHoldingsSnapshot) refuses any classification.advisory outside advised, residual and unknown, so validateContract would refuse an adapted snapshot that carries a flagged verbatim token. Its only caller validates committed VIEW fixtures, not adapted output.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b contracts/validate.ts:448 \"oneOf(c, cp, 'advisory', ['advised', 'residual', 'unknown'], p)\"; :627 validateContract.",
+        "Native Grep for imports of contracts/validate across portal/src at portal@794d4899: 1 importer, __tests__/fe-s-1/fixtures.test.ts:23. The whole-suite run with FE-s-39 applied has no failure in fe-s-1."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 BOUNDS: 'contracts/index.ts: the advisory view type, so a verbatim value can travel'. The grant does not name contracts/validate.ts.",
+    "world_is": "contracts/index.ts HoldingsClassification.advisory is now AdvisoryValue (a partition, or { outOfEnum }), while validate.ts keeps the three-value list. INERT today: no view fixture carries an out-of-enum value, and nothing validates an adapted document. It bites the first time an adapted Holdings view is passed to validateContract.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S31",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T17:26:00Z",
+    "one_line": "F39-AC8's invocation writes outside this order's grant. The fe-s-32 browser test's driver writes its PNGs and manifest to deliverables/0.9.0_WK_IRPT_FNTEND~2/ (holdings-in-a-browser.test.ts:66-68), so the deciding run modified 9 files in another worker's deliverables folder in this worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@741bb54b src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:68 CAPTURES = DELIVERABLES + '0.9.0_WK_IRPT_FNTEND~2/'; :204 hands it to holdings-driver.mjs.",
+        "git status after the run, workspace worktree on 1f5d387e17: modified org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/fe-s-32_captures.manifest.json and 8 PNGs, fe-s-32_holdings_{observed,target}_{390,1440}.png and the same four with _table_scrolled."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 BOUNDS: 'Grant. The <paths> block below, plus org/missions/D9/IRPT/IRPT_FNTEND/deliverables/<your serial>/ and this order's own file.' F39-AC8's invocation is 'bun test src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts'.",
+    "world_is": "Running the criterion as written rewrites FE-s-32's captures in ~2's folder with renders of FE-s-39's code, which show the flagged advisory. This worker has not staged or committed any of the 9. They are left modified in the worktree and not restored, because restoring them would also be a write outside the grant.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S32",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T18:08:00Z",
+    "one_line": "AMENDMENT 1 grants fe-s-32/holdings-in-a-browser.test.ts for F32-AC5's classification reader only ('Change nothing else in that file'), but the reader can recognise the RULING W flag only by its words, and the order's 'ONE RULE, NEVER A SECOND COPY' bound forbids re-typing them. So the worker added one name, ADVISORY_OUT_OF_ENUM_WORDS, to the file's existing import from tabs/holdings/slices. That import line is outside the two elements named.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-39.adapter-states-what-the-document-states.md:79 @0294183b65: 'F32-AC5's classification reader only (the ADVISORY list and CLAIM_READERS.classification) ... Change nothing else in that file.'",
+        "same order :66 @0294183b65: 'ONE RULE, NEVER A SECOND COPY.'",
+        "portal@20545436 src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:56 imports only HOLDINGS_BASIS_LABELS from '../../tabs/holdings/slices'; portal@794d4899 tabs/holdings/slices.ts:98 exports ADVISORY_OUT_OF_ENUM_WORDS, the words SliceTable.tsx:38 renders as the flag.",
+        "holdings-driver.mjs:84,100 @portal 20545436 reads the Advisory cell as whitespace-collapsed textContent only, so the flag's words in the text are the only flag the reader receives."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-39 AMENDMENT 1: in __tests__/fe-s-32/holdings-in-a-browser.test.ts, change F32-AC5's classification reader only (the ADVISORY list and CLAIM_READERS.classification) and nothing else in the file; BOUNDS: one rule, never a second copy.",
+    "world_is": "The two instructions cannot both hold literally. Recognising a flagged cell needs the flag's text, and the file did not import it. The worker kept the rule single by importing it, and changed one import line beside the two named elements. The alternative, a typed copy of the words in the test, would be a second copy that drifts silently if slices.ts changes. Nothing else in the file changed: the portal diff touches only the import line and CLAIM_READERS.classification.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S64",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T18:30:00Z",
+    "one_line": "F41-AC4 and its CONTROL (fe-s-41/one-writer.test.ts) byte-compare the regenerated fe-s-14-global.json with the CHECKED-OUT map, not the committed one. On this core.autocrlf=true box every fresh checkout renders the map CRLF, so both tests fail. That puts portal DEV's InvestorReporting suite 2 red on any fresh checkout. It passed at the worker and at the issuer only because the cell's own generator had rewritten the map LF in that one worktree.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files --eol for src/pages/InvestorReporting/fixtures/smoke/fe-s-14-global.json: FE-s-39's worktree @66dee38b and the main portal checkout @0b44e610 both read i/lf w/crlf, 637 CR bytes. FE-s-41's worktree @79455478 reads i/lf w/lf, 0 CR bytes. core.autocrlf=true; portal/.gitattributes does not exist.",
+        "fe-s-41/one-writer.test.ts in the main portal checkout at DEV 0b44e610, which does NOT contain FE-s-39: 8 pass / 2 fail. The failing tests are 'F41-AC4 -- the regenerated Global map equals the committed map, byte for byte' and 'CONTROL -- the comparison is not a constant'; the run prints 'REGENERATED MAP EQUALS THE COMMITTED MAP: no'. The same 2 fail in FE-s-39's integrated whole suite (547/16/2 of 565).",
+        "The generators import only node:fs, node:process, node:url and fe-s-33/gen-global-holdings; nothing FE-s-39 changed reaches them.",
+        "The first run's worker called the 5 maps 'stat-dirty, byte-identical to HEAD': the generator had rewritten CRLF checkouts as LF, which is exactly the state that masks this."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-41 F41-AC4: 'the one writer's output, compared byte for byte with the committed fe-s-14-global.json'.",
+    "world_is": "The test compares with the checkout's bytes, which differ from the committed bytes wherever git renders LF as CRLF, so the criterion's PASS held in one worktree only. The issuer's pre-drain re-run of FE-s-41 ran in that same worktree -- the worker's own environment -- so it repeated the worker's instrument rather than corroborating it, and the defect reached portal DEV at 0b44e610. Remedy: FE-s-41 reopened with amendment 2 and re-run by a fresh worker on a FRESH worktree. The row disarms when that re-run reads 0 fail on a fresh checkout and drains.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S63",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T18:35:00Z",
+    "one_line": "RESOLUTION RECORD for the three round-6 ARMED rows whose disarm owner is 2.0.0_SA_COO~F -- W3-S27, W3-S28 (IRPT_FNTEND.TO-FE-s-39) and W5-S5 (IRPT_FNTEND.TO-FE-s-41). Each was closed by a one-purpose amendment on the worker's branch, run by a FRESH worker and drained after the issuer's re-run. Disposition stays 3.0.0_SA_CVO's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S27 (fe-s-34/no-status.test.ts F34-AC9 path 1 asserted the view-null 'malformed' wording RULING V removes) and W3-S28 (fe-s-32 F32-AC5's classification reader rejected the verbatim-flagged advisory RULING W requires): FE-s-39 amendment 1 @0294183b65 granted both tests one purpose each. Built at portal 45d5c1de. Drained at workspace 4dc4b4583c and portal DEV 87f83b86.",
+        "W5-S5 (__tests__/fe-s-32/holdings-no-answer.json, a fifth inheriting map hand-copied and still naming perf-9, turned fe-s-32/holdings-in-a-browser.test.ts:256 red): FE-s-41 amendment 1 @069344053b made it generated by gen-fixtures.ts. Built at portal 05bfc442. Drained at workspace 6ef8aa8a84 and portal DEV 0b44e610.",
+        "Issuer re-run before each drain, on the worker's tree synced with portal DEV. FE-s-39 (synced with FE-s-38, 40 and 41): typecheck rc=0; F39-AC8 on the issuer's own server 5284 read HOLDINGS UNDER THE GATE, IN A BROWSER: 4 of 4 and CLAIMED FIELD PRESENT IN THE RENDERED DOM: 6 of 6, 7 pass / 0 fail. FE-s-41 (synced with FE-s-38 and 40): typecheck rc=0; FE-s-40's band-at-390 over the regenerated maps read 16 of 16 on server 5283; whole suite 544/16/0 of 560.",
+        "All three misses were the cut's: the tests and the fifth map were enumerated by recall, not by subtraction from the corpus (Rule 24). Each was caught by the worker's whole-suite census before any drain, as the round-6 census bound was written to do."
+      ]
+    },
+    "spec_asserts": "W3-S27, W3-S28 and W5-S5 each name 2.0.0_SA_COO~F as disarm owner, as BLOCKING refusals of the whole-suite census under the grant as cut.",
+    "world_is": "All three are closed in the drained code. F39-AC9's suite, run on FE-s-39's own branch, read 532/14/0. NOT closed here: row S64, a checkout line-ending defect in F41-AC4 found by the same integrated re-run. It is ARMED and owned by this seat.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S7",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-14T18:53:00Z",
+    "one_line": "F41-AC5 says it reads the COMMITTED frozen map, but its test reads the five frozen-map descendants AS CHECKED OUT (loadJson of the working copy). This is the same gap between the working copy and the committed object that row S64 found in F41-AC4, on a second criterion. JSON.parse ignores line endings, so a CRLF checkout cannot turn it red. An UNCOMMITTED in-place edit of those maps is read as if it were committed. Amendment 2 scoped the fix to F41-AC4 and its CONTROL, so AC5 was left as it is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-41 F41-AC5: 'W2-S27, read from the committed frozen map and from each Holdings map generated from it.' AMENDMENT 2 (on row S64): 'F41-AC4 and its CONTROL compare against the COMMITTED bytes, whatever the checkout's line endings.' AC5 is not named.",
+    "world_is": "__tests__/fe-s-41/one-writer.test.ts reads every map in FROZEN_MAPS with loadJson(`${SMOKE}${name}`), i.e. readFileSync of the working copy (:71-73, called at :600 @portal 87f83b86; unchanged by this run's commit, which touches F41-AC4 and its CONTROL only). On this worktree all 5 paths read i/lf w/crlf and git status reports none of them modified, so the working copy parses equal to the committed blob and AC5's verdict (rev-49f-000091, 5 of 5) is also the committed maps' verdict. The path where the two differ is a map rewritten in place and not yet committed. The generators write in place by default, and the order tells a worker to run gen-fixtures.ts and commit what it writes. On that path AC5 grades the uncommitted bytes. Left as found: widening the fix to AC5 is outside Amendment 2.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-41/one-writer.test.ts @portal 87f83b86: loadJson = JSON.parse(readFileSync(path, 'utf8')) at :71-73; the AC5 BOUND test maps FROZEN_MAPS through loadJson(`${SMOKE}${name}`) at :600; SMOKE is fixtures/smoke/ of the checkout (:50).",
+        "git -C portal ls-files --eol over fixtures/smoke/ and __tests__/fe-s-32/holdings-no-answer.json on this worktree: every map reads i/lf w/crlf, the five FROZEN_MAPS among them; core.autocrlf=true; portal/.gitattributes absent.",
+        "git -C portal status --short before and after this run's whole suite: only fe-s-41/one-writer.test.ts and fe-s-41/ambient-shims.d.ts modified; no map modified.",
+        "IRPT_FNTEND.TO-FE-s-41 AMENDMENT 2 (workspace 78b011df6a): the fix is scoped to 'F41-AC4 and its CONTROL'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S65",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-14T19:20:00Z",
+    "one_line": "RESOLUTION RECORD for row S64, whose disarm owner is 2.0.0_SA_COO~F. F41-AC4 and its CONTROL now compare with the COMMITTED blob, so they hold on a fresh CRLF checkout. Closed by IRPT_FNTEND.TO-FE-s-41 amendment 2, drained at workspace 999f08609b and portal DEV 35797660, and measured green in the main portal checkout, where S64 was measured red. Disposition stays 3.0.0_SA_CVO's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Amendment 2 @78b011df6a reopened FE-s-41 (status complete -> pending in the same commit) and required the proof on a FRESH worktree before any generator writes a map in place.",
+        "Worker 0.9.0_WK_IRPT_FNTEND~5 on the fresh pair wk-irpt_fntend-6-5b-fe-s-41 (map i/lf w/crlf): before the fix, portal 87f83b86, REGENERATED MAP EQUALS THE COMMITTED MAP: no, one-writer 8 pass / 2 fail. After the fix, portal 39be77ec, which reads the committed side with git cat-file blob HEAD:<path>: yes, 10 pass / 0 fail. Two in-memory negative controls (a one-byte content change; the committed map rendered CRLF) read not-equal. Whole suite 549/16/0 of 565.",
+        "Issuer re-run on an UNTOUCHED detached pair (workspace 9be439f616 with portal 39be77ec nested inside it; map i/lf w/crlf before and after; 0 status lines): F41-AC4 yes, one-writer 10/0, typecheck rc=0, whole suite 549/16/0 of 565 on closed port 5297.",
+        "Disclosed: this seat's FIRST independent re-run used a bare portal checkout with no enclosing workspace. Its cross-repo tests (component-census.json, the live contract, copied producer fixtures) could not resolve their paths, so that run is discarded as a wrong-grain instrument, not counted as evidence either way. The checkout was removed junction-first, and the main node_modules held 312 entries before and after.",
+        "Post-drain, main portal checkout at DEV 35797660, map i/lf w/crlf: REGENERATED MAP EQUALS THE COMMITTED MAP: yes, one-writer 10 pass / 0 fail."
+      ]
+    },
+    "spec_asserts": "Row S64 names 2.0.0_SA_COO~F as disarm owner, to disarm when FE-s-41's amended re-run reads 0 fail on a fresh checkout and drains.",
+    "world_is": "Met: the fresh-checkout re-run read 0 fail at the worker and at the issuer's untouched pair, and DEV's own checkout reads green after the drain. NOT closed here: row W5-S7 (INERT), where F41-AC5 reads the working copy where its criterion says committed. JSON parsing ignores line endings, so no checkout can turn AC5 red, but it would grade an uncommitted in-place edit as committed. Carried to the drain-end packet.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S16",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T22:46:42Z",
+    "one_line": "THE CANONICAL-FLOW SKILL STILL DOCUMENTS THE ONE-ARGUMENT RECEIVING CALL AND THREE VERDICTS. After FE-s-43 (e21a8c6116) a proof-of-spec instance received that way reads NOT-BOUND (rc 1) and nothing runs; the skill needs the --governing-order form for L7->L8 and a NOT-BOUND verdict row. Exact change below, for the skill's owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".claude/skills/canonical-flow/SKILL.md:352-354 @4d11c008c2 -- the one documented call, `.tools/receiving-check.py <the artifact your limb consumes>`",
+        ".claude/skills/canonical-flow/SKILL.md:368-374 @4d11c008c2 -- 'THE THREE VERDICTS', table rows ACCEPT / HAND BACK / UNCHECKED",
+        ".tools/receiving-check.py run_one @e21a8c6116 -- a BOUND_TOOLS route with no governing order returns NOT-BOUND without running anything",
+        "python .tools/tests/test_receiving_binding.py @e21a8c6116: 'UNBOUND INSTANCE THROUGH THE RECEIVING ROUTE: NOT-BOUND'; 'receiving-binding battery: 11 of 11 arm(s) as expected'"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-43 BOUNDS: '.claude/skills/canonical-flow/SKILL.md: it documents the receiving call. Put the exact change it needs in the result file and in ONE row, for that skill's owner.' The skill (Step 3b, :352-354 @4d11c008c2) prescribes `.tools/receiving-check.py <the artifact your limb consumes>` for every handoff, and :368 names 'THE THREE VERDICTS'.",
+    "world_is": "At e21a8c6116 the L7->L8 route takes the order the instance was handed with, and the skill's call on a proof-of-spec instance reads NOT-BOUND, rc 1, with a re-run line (fail-closed: never a false ACCEPT, so INERT). THE EXACT CHANGE, three edits in Step 3b: (1) in the bash block at :352-354, add a second line `.tools/receiving-check.py <instance.proof_of_spec.json> --governing-order <the task order it closes>   # L7 -> L8`; (2) in the verdict table after the HAND BACK row (:373), add `| NOT-BOUND | a proof-of-spec instance was handed over WITHOUT the order it closes. Nothing ran -- its own to_ref would have steered the verdict. Re-run with --governing-order <that order>; never build on it. |`; (3) at :368, 'THE THREE VERDICTS' -> 'THE FOUR VERDICTS'. Not made here: the skill is NOT YOURS in this order.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S17",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-14T22:46:42Z",
+    "one_line": "THE RECEIVING REPORTER CUT EVERY OWNING-TOOL LINE AT 150 CHARACTERS, SO THE PRINTED HAND-BACK COULD NOT NAME BOTH PATHS. receiving-check.py:133 @edac45e48c printed line[:150]; the binding violation is ~500 chars and FE-s-28's path sits past the cut. FE-s-43 wraps instead (e21a8c6116), with a ':' continuation gutter -- a change the order did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/receiving-check.py:131-133 @edac45e48c -- `for line in body.split(\"\\n\"): print(\"      | %s\" % line[:150])`",
+        ".tools/receiving-check.py _print_body @e21a8c6116 -- textwrap.wrap(line, 150, break_long_words=False), continuation gutter '      :   '",
+        "python .tools/tests/test_receiving_binding.py @e21a8c6116: 'THE HAND-BACK NAMES BOTH PATHS: yes' (the printed violation rejoined from its wrapped lines)"
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-43 F43-AC4: 'the printed hand-back carries the checker's violation naming the order handed over and the order to_ref declared'. The cell names the route's argv (:71) and run_one's verdict, not the reporter.",
+    "world_is": "The cut's reporter truncated each line of the owning tool's output at 150 characters. The checker's governing-binding violation names the bound order first and the to_ref order about 250 characters in, so the printed hand-back dropped the second path. F43-AC4 could not pass without changing the reporter. The fix wraps on whitespace; paths carry none, so each prints whole. It needed a distinct continuation gutter: the checker indents its own lines by two spaces, so a '|' continuation read the same as an indented line (measured on this worker's first battery run, where the parser took the indented VIOLATION line for a continuation). Every other route's classification and argv is unchanged (5 of 5); only the display of long lines differs, for every route.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S33",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T23:08:10Z",
+    "one_line": "Two tests outside FE-s-42's grant sometimes run past bun's 5000 ms default test timeout: F40-AC5 (fe-s-40/window.test.ts) and F41-AC2 (fe-s-41/one-writer.test.ts). Their content passes, but a cell's whole-suite census can then read 1 or 2 fail that it cannot fix inside its own grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baseline whole suite at workspace 4d11c008c2 with portal 35797660 unmodified, IRPT_FE_DEV_PORT=5269 measured closed: 547 pass, 16 skip, 2 fail of 565, in 49.91 s. The two fails: 'F40-AC5 -- the portal calendar agrees with lib/trading_calendar.py, day by day > every day of the covered years, re-derived from the frontier with is_trading_day [5172.00ms] ^ this test timed out after 5000ms.' and 'F41-AC2 -- the Global map has one writer > CONTROL -- a seeded second writer is found, directly and through a wrapper; a seeded reader is not [5875.00ms] ^ this test timed out after 5000ms.' Each first printed a passing reading: 'TRADING CALENDAR AGREES WITH lib/trading_calendar.py: 1461 of 1461 days (2024-2027)', and the seeded controls found 2 of 149 writers.",
+        "Same base, the two files run on their own: 14 pass, 1 fail of 15. F40-AC5 timed out again, at 5735 ms. F41-AC2 passed.",
+        "Census of record at portal e028fb4d (FE-s-42's change), IRPT_FE_DEV_PORT=5263 measured closed: 553 pass, 18 skip, 0 fail of 571 across 101 files, in 11.66 s. Both tests passed, with neither file edited.",
+        "At the base, the F40-AC5 run also printed 'frontier now: blob  (DIFFERS from the blob the module names)', with an empty blob id. Recorded, not investigated."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-42 F42-AC9: the whole-suite run is the census of record and reads 0 fail. BOUNDS: a red test outside the grant is a BLOCKING row with the list, never an edit.",
+    "world_is": "The census of record read 0 fail, so nothing blocked this order. The same suite at the base read 2 fail, and both were timeouts at the 5000 ms default, in files outside this grant. F40-AC5 also timed out when run alone. The verdict depends on run time, not on the code under test, so a later cell's census can go red on either test with nothing it is allowed to change.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S34",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T23:08:10Z",
+    "one_line": "RULING X granted three tests 'for the claims RULING Z changes': fe-s-1/fixtures.test.ts, fe-s-9/receipt.test.ts and fe-s-16/mounted-states.test.ts. None of their claims changed, so none was edited, and the whole suite passes with all three as committed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IRPT_FNTEND.TO-FE-s-42 BOUNDS, RULING X @4d11c008c2: 'THE CUT'S CENSUS NAMED THESE TESTS, EACH YOURS FOR THE CLAIMS RULING Z CHANGES ONLY ... Cite RULING Z beside each change and show it both ways.'",
+        "fe-s-1/fixtures.test.ts validates the committed view fixtures, and none of them carries the flagged { outOfEnum } shape. Census at portal e028fb4d: 'FIXTURES PARSED AS THEIR CONTRACT: 31 of 31', the same line as the baseline at 35797660.",
+        "fe-s-9/receipt.test.ts renders ReceiptPanel from fixtures/fe-s-9/receipt.ready.json and receipt.running.json, whose publicReasonCode (:24) and reasonCode (:38) are null. So the reason line never renders there, and neither can its flag. Census: 'READY MARKUP: has the download link' and 'RUNNING MARKUP: missing the download link'.",
+        "fe-s-16/mounted-states.test.ts:204 asserts the substring data-reason-code=\"<code>\" on the failed state. The flag is a sibling span after the code, so that substring is unchanged. Census: 'STATES RENDERED: 5 of 5', the same as the baseline.",
+        "Whole suite at portal e028fb4d: 553 pass, 18 skip, 0 fail of 571."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-42 RULING X: the cut's census named these three tests as the ones whose claims RULING Z changes, and granted each for those claims only.",
+    "world_is": "Every claim in the three tests holds under RULING Z as committed. The changes to the directory cohort, to validate's advisory pin and to ReceiptPanel's reason line reach none of the values they assert. The grant went unused. The both-ways evidence for the three sites is in __tests__/fe-s-42/every-site.test.ts instead.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S35",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-14T23:08:10Z",
+    "one_line": "A whole v1 directory-search body with NO status member, parsed by the real parseIrEnvelope, yields a DirectoryEntry that the portal's own validateContract refuses: 'availability: state UNCERTAIN carries NEITHER partialReason NOR publicReasonCode'. status is optional on this route, so this is the common path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The first draft of __tests__/fe-s-42/every-site.test.ts built its directory body with no status. Run at workspace 4d11c008c2 with portal 35797660, on the committed wire instance fixtures/wire/DirectoryEntry.valid.json['instance'] with only advisory_status changed, validateContract('DirectoryEntry', <adapted entry>) returned [\"DirectoryEntry.availability: state 'UNCERTAIN' carries NEITHER partialReason NOR publicReasonCode\"].",
+        "portal@35797660 contracts/adapt.ts:167 EXPLICIT_UNKNOWN_STATE = 'UNCERTAIN'. :228-231 wireEnvelope sets state: parts.state ?? EXPLICIT_UNKNOWN_STATE, with partialReason and publicReasonCode ?? null. contracts/envelope.ts:187 reads statusRequired from RESPONSE_STATUS_REQUIRED, and the comment at :229-232 says '`status_required` is false on ten of the twelve response contracts, so this branch is the COMMON one'.",
+        "portal@35797660 contracts/validate.ts:76-79, checkAvailability: a state that is neither READY nor LOADING and carries neither reason is a problem.",
+        "The same body with statusWire('READY') validates with 0 problems: census at portal e028fb4d, F42-AC4's first arm, 'problems []'."
+      ]
+    },
+    "spec_asserts": "contracts/validate.ts:76 @35797660: 'A non-READY state without a reason is a payload a screen cannot explain.' contracts/envelope.ts:225-232 @35797660: a response with no status gets the explicit unknown, never READY.",
+    "world_is": "The two rules disagree on the no-status path. The adapter's explicit unknown (UNCERTAIN, with no reason) is exactly what validate's availability check refuses, so a no-status directory body run through the real adapter makes a document the portal's own validator calls invalid. Whether any production path runs validateContract on an adapted document was not read. FE-s-42's test gives its directory body a READY status, so that F42-AC4 grades the cohort and nothing else. Outside the grant; not investigated further.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W6-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~6",
+    "surfaced_at": "2026-09-14T23:02:00Z",
+    "one_line": "At base 4d11c008c2 the census of record (F44-AC5, FE-s-37's test_governing_binding.py) read 11 of 12 green. test_seeded_limb.py hit the census's own 560 s per-battery bound (rc=124) while the box was shared. Run alone on 051379eac7, the same battery took 275 s and the census read 12 of 12, with neither tool changed. A load timeout prints RED in the same row shape as a regression.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-44 F44-AC5: 'the whole-suite census of record ... run once with your change applied', expect 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: (\\d+) of \\1 green'. The worker definition: a timeout (rc 124) IS the recorded output, retried once at most.",
+    "world_is": "At base, with the checker and the gate as this cell leaves them (checker blob 7e324c78c2 at both commits): 'RED rc=124 560 s test_seeded_limb.py TIMEOUT after 560 s', 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: 11 of 12 green', governing-binding 18 of 19, 621 s wall. That run was concurrent with this worker's own checker runs (a 373-blob census, both self-tests) and with sibling round-7 workers. At 051379eac7, alone on this worker: 'GREEN rc=0 275 s test_seeded_limb.py', 12 of 12, 19 of 19, 277 s wall. FE-s-29 recorded the same battery at 137 s. The 560 s bound is about 2x its lone runtime here, so a loaded box can turn the census red with no change to either tool. The row shape does not separate load from regression; rc=124 is the only tell. Nothing to disarm: a re-run on a quiet box reads green, and the timeout is loud.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/tests/test_governing_binding.py @4d11c008c2 :272 bat_futs = [(p, pool.submit(_run, [sys.executable, str(p)], WORKSPACE, 560)) for p in run] -- the per-battery bound; :85 returns 124, 'TIMEOUT after %d s'.",
+        "base run at 4d11c008c2, concurrent: '  RED   rc=124  560 s  test_seeded_limb.py   TIMEOUT after 560 s' / 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: 11 of 12 green' / 'governing-binding battery: 18 of 19 arm(s) as expected (621 s wall)', rc=1.",
+        "committed-bytes run at 051379eac7, 22:54:43Z-22:59:20Z, alone: '  GREEN rc=0    275 s  test_seeded_limb.py   seeded-limb battery: 18 of 18 arm(s) as expected' / 'EVERY .tools BATTERY THAT CALLS EITHER TOOL: 12 of 12 green' / 'governing-binding battery: 19 of 19 arm(s) as expected (277 s wall)', rc=0.",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-29.checker-limbs.proof_of_spec.json @9e6ed6c236 F29-AC8 status_reason: 'rc=0, 137 s of the 300 s bound (run beside seven other criterion runs)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S67",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T23:00:46Z",
+    "one_line": "The dev line alone cannot stop vite's config write under NODE. The installed vite has three config loaders. The default writes the temp file through the junction, and runner and native both FAIL on the committed vite.config.ts, because it uses __dirname. The one mechanism inside the granted line that works runs vite under the BUN runtime (`bun --bun vite --configLoader native`). So FE-s-45 moves every `bun run dev` user's dev server from node to bun, a consequence the order did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-45 THE CELL, W1-S63: 'No config setting moves it. package.json:13 reads \"dev\": \"vite\", and the dev script is the one lever, so it is granted.' BOUNDS: 'Choose the mechanism from the vite that is installed (node_modules/vite, its --help and its own docs), and say which one and why.'",
+    "world_is": "vite 7.3.5 `--help`: --configLoader bundle (default) | runner (experimental) | native (experimental). bundle: loadConfigFromBundledFile writes node_modules/.vite-temp/vite.config.ts.timestamp-*.mjs, imports it, unlinks it (3-4 watch events per start, a listing before and after reads [] either way). runner: ReferenceError on __dirname. native under node: 'ReferenceError: __dirname is not defined in ES module scope' at vite.config.ts:13, no server. portal/vite.config.ts @35797660 uses __dirname at :13 (cacheDir, FE-s-38) and :16 (alias). Only the bundle loader injects it. Under bun, native imports the config with bun's own loader, which defines __dirname in ES modules: HTTP 200, 0 .vite-temp writes, the dependency cache written under the worktree's portal/.vite (node_modules/.vite untouched since 18:19Z). Chosen: `bun --bun vite --configLoader native` (portal df3a3353, local on wk-irpt_fntend-7-1-fe-s-45). Costs the order did not name: (1) `bun run dev` now runs the dev server under bun for every user. The /api proxy entries (http-proxy under bun) are exercised by no FE-s-45 criterion. F45-AC6 drives the served page with routed maps. (2) Startup measured 1.7-14.7 s under bun (the first, cold start 14.7 s) against 0.5-2.7 s under node. (3) native returns no config dependencies, so an edit to vite.config.ts no longer restarts the server. The alternative that keeps node is `__dirname` -> `import.meta.dirname` at vite.config.ts:13 and :16 plus `vite --configLoader runner` or `native`; vite.config.ts is not in this order's grant. Across the whole node_modules tree during two new-script starts: 0 files created or deleted; 5 `change` events on 3 packages (@tailwindcss/postcss, autoprefixer, @esbuild/win32-x64) that a read-only control could not attribute either way (it produced 0 events).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "node node_modules/vite/bin/vite.js --help -> vite/7.3.5, '--configLoader <loader> ... bundle ... runner (experimental) ... native (experimental) ... (default: bundle)'",
+        "node_modules/vite/dist/node/chunks/config.js:35983-35999 (vite 7.3.5): loadConfigFromBundledFile -> fsp.writeFile(path.resolve(nodeModulesDir, '.vite-temp/<name>.timestamp-*.mjs')), import, fs.unlink",
+        "loadConfigFromFile(..., 'runner') on portal/vite.config.ts @35797660 -> ReferenceError 'Cannot determine intended module format because both __dirname and top-level await are present' (ERR_AMBIGUOUS_MODULE_SYNTAX)",
+        "bun run vite --configLoader native --port 5292 --strictPort -> 'failed to load config ... ReferenceError: __dirname is not defined in ES module scope at .../vite.config.ts?t=...:13:26'; port 5292 stayed ECONNREFUSED; .vite-temp events 0",
+        "bun --bun vite --configLoader native --port 5293 -> HTTP 200 after 16056 ms ('VITE v7.3.5 ready in 14714 ms'); .vite-temp events 0",
+        "bun run vite --port 5291 (the old script) -> HTTP 200 after 2716 ms; .vite-temp events 3 (rename/change/rename of vite.config.ts.timestamp-1789423207054-c8a9eb6413fef.mjs)",
+        "F45-AC2 debug run: new script on 5900 'ready in 1986 ms', 0 writes, PROBE REACHABLE served from this worktree; old script on 5901, 4 writes",
+        "nm-classify, server on 5296: EVENTS 5: rename 0, change 5 (@tailwindcss/postcss 2, autoprefixer 2, @esbuild/win32-x64 1); read-only control: EVENTS 0",
+        "bun dev on 5295: portal/.vite 191 events, BABEL note naming C:\\tmp\\wk-irpt_fntend-7-1-fe-s-45\\portal\\.vite\\deps\\react-dom_client.js; node_modules/.vite/deps/_metadata.json mtime 2026-09-14 14:19:48 -0400"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S68",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-14T23:00:46Z",
+    "one_line": "FE-s-38's resolve-config.mjs loads vite.config.ts with vite's default bundle loader. So every run of fe-s-38/isolation.test.ts, and so every whole-suite census, still writes a temp file through the junction into the main checkout's node_modules/.vite-temp. After FE-s-45 the reason its header gives ('the loader the dev server uses') is no longer true.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-45 THE REMEDY: 'The dev script loads vite's config without writing through the junction.' F45-AC8: 'RULING U leaves no residual.' portal/src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs:5-7 @portal 35797660: \"`resolveConfig(...)` with the portal's own vite.config.ts, the default (bundle) loader -- the loader the dev server uses\".",
+    "world_is": "node src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs <portal> under an fs.watch of node_modules/.vite-temp, which resolves through the junction to the main checkout: 3 events (rename/change/rename of vite.config.ts.timestamp-1789423987503-59798768beba6.mjs), the same write the old dev script made. From FE-s-45 the dev script loads with `native` under bun and writes nothing there (F45-AC2). The resolver is therefore the one writer of it that the suite still drives, once per run of isolation.test.ts. The cacheDir it resolves (portal/.vite) is also where the bun server put its cache, so F38-AC3's verdict does not move. Only its stated reason does. fe-s-38/ is outside FE-s-45's grant (BOUNDS, NOT YOURS), so it is left as found.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "watch-run of `node .../fe-s-38/resolve-config.mjs C:/tmp/wk-irpt_fntend-7-1-fe-s-45/portal` -> rc 0; VITE-TEMP events 3 [rename, change, rename of vite.config.ts.timestamp-1789423987503-59798768beba6.mjs]",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs:59-63 @portal 35797660: resolveConfig({ root, configFile: vite.config.ts, logLevel: 'silent' }, 'serve', 'development') -- no configLoader, so the default 'bundle'",
+        "the same run's RESOLVED_JSON: cacheDir C:/tmp/wk-irpt_fntend-7-1-fe-s-45/portal/.vite inside=yes; the bun dev server's optimizer wrote portal/.vite/deps (react-dom_client.js named by the BABEL note on port 5295)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S69",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T00:28:36Z",
+    "one_line": "F45-AC10 names `process.release.name` = `node` as the proof that the dev server runs on node, but bun reports `process.release.name` = \"node\" too. The named field reads the same under both runtimes, so by itself it cannot tell the two apart; the test had to add a discriminator the order did not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-45 F45-AC10 (AMENDMENT 1, RULING (B)): 'the dev script's server reports `process.release.name` = `node`, and the test prints it.' expect: 'THE DEV SERVER RUNS ON NODE: yes'.",
+    "world_is": "bun 1.3.9 `bun -e \"console.log(process.release.name, process.versions.bun)\"` -> release \"node\", bun \"1.3.9\"; node v26.8.2 -> release \"node\", no versions.bun. The bun:test process that runs residuals.test.ts prints 'process.release.name \"node\", process.versions.bun \"1.3.9\"'. So a grade on the named field alone would read node for the first run's rejected `bun --bun vite --configLoader native` server as well. The fe-s-45 test therefore grades node on three readings together: the pid LISTENING on the server's port (netstat -ano); that pid's image name (tasklist), node.exe; and a record written INSIDE that pid by a NODE_OPTIONS=--require preload (fe-s-45/runtime-probe.cjs): release \"node\", versions.bun absent. It runs the first run's dev line, read from portal df3a3353, as the negative control: listener bun.exe and no record, because bun ignores NODE_OPTIONS --require (measured: `NODE_OPTIONS='--require <probe>' bun -e 1` printed nothing, rc 0). The criterion's verdict line and its printed `process.release.name` stand as the order wrote them; the discriminator is added beside them, not in place of them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/AndrewBerman/.bun/bin/bun -e (process.release.name, process.versions.bun) -> {\"rel\":\"node\",\"bun\":\"1.3.9\",\"exec\":\"C:\\\\Users\\\\AndrewBerman\\\\.bun\\\\bin\\\\bun.exe\"}; node -e the same -> {\"rel\":\"node\",\"exec\":\"C:\\\\Program Files\\\\nodejs\\\\node.exe\"}",
+        "NODE_OPTIONS='--require \"<WS>/.scratch/rtprobe.cjs\"' node -e 1 -> 'FE45_RUNTIME {...\"release\":\"node\",\"bun\":null...}'; the same under bun -e 1 -> no line, rc 0",
+        "fe-s-45/residuals.test.ts debug run (portal worktree wk-irpt_fntend-7-1-fe-s-45, pre-commit): dev on 5900 'listening on 5900: pid 21712 node.exe', record {\"pid\":21712,\"release\":\"node\",\"bun\":null}; the first run's line on 5901 'listening on 5901: pid 25336 bun.exe', 'runtime record of the listener: NONE'; 'this test process: process.release.name \"node\", process.versions.bun \"1.3.9\"'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S70",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T00:28:36Z",
+    "one_line": "Correction to this worker's own row IRPT_FNTEND-W1-S67, cost (3). S67 says the native loader's empty dependency list means an edit to vite.config.ts no longer restarts the dev server. vite 7.3.5 restarts on an edit to the config file itself, whatever the loader's dependency list holds, so that cost does not follow from what S67 measured. S67 stands as filed; this row records the correction beside it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND-W1-S67 world_is (INVESTIGATION_v2.md, as filed at workspace a050d7b5ec): '(3) native returns no config dependencies, so an edit to vite.config.ts no longer restarts the server.'",
+    "world_is": "portal/node_modules/vite/dist/node/chunks/config.js (vite 7.3.5) :26032 `const isConfig = file === config$2.configFile;` and :26033 `const isConfigDependency = config$2.configFileDependencies.some((name) => file === name);`. The server restarts on either, so the config file triggers a restart through `isConfig` whether or not the loader lists it as a dependency. What S67 measured is the dependency list, not a restart: loadConfigFromFile on the FE-s-45 vite.config.ts returns dependencies [\"vite.config.ts\"] under bundle and [] under runner and native (this config imports only packages). A restart on an edit was NOT exercised; this correction is a source reading. It matters for the amended mechanism too: `vite --configLoader runner` has the same empty list.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/node_modules/vite/dist/node/chunks/config.js:26032-26033 (vite 7.3.5): isConfig = file === config.configFile; isConfigDependency = config.configFileDependencies.some(...)",
+        "portal/node_modules/vite/dist/node/chunks/config.js:35504 (vite 7.3.5): configFileDependencies = loadResult.dependencies",
+        "<WS>/.scratch/loader-probe.mjs under node on the amended portal/vite.config.ts: bundle deps [\"vite.config.ts\"], 3 .vite-temp events; runner deps [], 0 events; native deps [], 0 events; cacheDir portal/.vite and 13 proxy keys under all three"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S66",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-15T05:10:00Z",
+    "one_line": "Investor Reporting is not Opal-admin gated in the portal at DEV. Both routes and the nav item admit any signed-in user the firm allowlist passes, and FIRM_ALLOWED_PATHS lists /investor-reporting for three partner firms (49financial, inflection, cottonwood). ProtectedRoute's requireAdmin tests role only, so an admin-only gate would still admit a partner firm's admin. Andrew's prod-deploy condition 2 ('Opal Admin gated, no clients') fails until round 8's added cell FE-s-49 lands.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Andrew-direct ~04:4xZ, relayed by 0.0.0_AB_MSTR (msg 96903), prod-deploy condition 2: 'Investor Reporting must remain Opal Admin gated, no clients are allowed to see that.' Andrew-direct to 2.0.0_SA_COO~D (msg 96914): 'that page needs to be listed for Opal Admins only in the tsx for that page.' 1.0.0_SA_CTO's ruling (msg 96915): Opal admin = role admin AND the internal tier.",
+    "world_is": "At portal DEV 1f3ce9f0, App.tsx:421 (/investor-reporting) and :573 (/investor-reporting/print) are <ProtectedRoute> with no requireAdmin and no requireInternal, and the nav item :94 has no requiresAdmin and no requiresTier. ProtectedRoute.tsx:39-40 tests role only; :44-45 tests firmId opal-capital; :57 applies the firm allowlist, which admits /investor-reporting for 3 partner firms. So at DEV any signed-in user of those firms reaches the page and sees the nav item, and requireAdmin alone would admit such a firm's admin. INERT, not ARMED: origin/PROD's App.tsx carries 0 investor-reporting lines, and 0.0.0_AB_MSTR holds the full /prod-deploy until condition 2 reads on the merged tree. Remedy: round 8's added order FE-s-49, which puts the CTO's predicate on both routes (<ProtectedRoute requireAdmin requireInternal>) and the nav item (requiresAdmin, requiresTier 'internal'), and prints a read-only census of whether each backend endpoint is admin-only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show DEV:src/App.tsx (portal DEV 1f3ce9f0): :94 { path: '/investor-reporting', label: 'Investor Reporting', icon: FileText }; :421 <Route path=\"/investor-reporting\" element={<ProtectedRoute><InvestorReporting /></ProtectedRoute>} />; :573 the print route, same shape; :482 <ProtectedRoute requireAdmin> (the admin form); :128 /data-refresh carries requiresAdmin: true; :305-320 the nav filter: firm allowlist, requiresDev, requiresAdmin (role), requiresTier via hasAccess.",
+        "git show DEV:src/components/ProtectedRoute.tsx: :19 requireAdmin = false by default; :39-40 if (requireAdmin && user?.role !== 'admin') -> Navigate /market; :44-45 if (requireInternal && claims?.firmId !== 'opal-capital') -> Navigate /market; :57 isPathAllowedForFirm.",
+        "git show DEV:src/lib/firmAccess.ts: FIRM_ALLOWED_PATHS entries '49financial', 'inflection' and 'cottonwood' each list '/investor-reporting'. src/contexts/AuthContext.tsx:758-760 hasAccess('internal') returns claims.firmId === 'opal-capital'.",
+        "git show origin/PROD:src/App.tsx | grep -c investor-reporting = 0; the same count at DEV = 3 (positive control).",
+        "The issuer's whole-suite probe of the admin-only change on a detached pair at portal 1f3ce9f0: 559 pass, 18 skip, 1 fail of 578; the 1 fail is F41-AC5's control timing out at 5641 ms (FE-s-46's class). Every browser driver signs in as role 'admin', firmId 'opal-capital' (fe-s-19, 30, 31, 32, 40)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S18",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-15T05:33:22Z",
+    "one_line": "TO-FE-s-48's census premise places the CohortFact check at `contracts/validate.ts:164-171`. At portal DEV 1f3ce9f0 those lines are the termination and access checks; the per-cohort check is at :178-192. The file is right and the lines are not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9, THE CELL: \"Round 7's census of `CohortFact` values outside `__tests__/` finds two consumers: `contracts/validate.ts:164-171`, which checks and does not render, and `header/ScopeSummary.tsx`, which renders. Re-run it at your vintage.\"",
+    "world_is": "`git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/contracts/validate.ts`, lines 160-192. Lines :160-162 are the termination checks, :165-173 the access checks, and :175-176 the termination/access separation. The cohort loop is at :178-192, and :188 is `req(c, cp, 'authoritative', 'boolean', p)`. The re-run census (F48-AC5, fe-s-48/withheld.test.ts) classifies validate.ts by path, not by line: it CHECKS a CohortFact and renders nothing. So the verdict is unchanged and only the citation drifted. INERT: a line citation in an order's premise moves no artifact.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/contracts/validate.ts (portal) :164-171 = `const a = req(v, path, 'access', 'object', p)` ... `req(a, `${path}.access`, 'entitlementRevision', 'string', p)`; :178 `const cohorts = req(v, path, 'cohorts', 'array', p)` through :192",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9 THE CELL and <preflight> 'the render census' both cite validate.ts:164-171"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S19",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-15T05:33:22Z",
+    "one_line": "The ruling's reach, one surface over: Holdings renders a NON-AUTHORITATIVE classification's supervision and advisory partitions as 'unknown' (tabs/holdings/slices.ts:100-102 @1f3ce9f0). That is the same withheld-by-authority shape the header now words as 'withheld'. It is not a CohortFact, this order excludes slices.ts, and the contract's own comment mandates 'unknown' there, so it is left as it is and placed here for the ruling's owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9: `1.0.0_SA_CTO` round-7 analysis (msg 96865, item 6), 'a non-authoritative cohort's axes read \"withheld\", never \"unknown\". RULING W keeps \"unknown\" out of any state that has a truer word'; F48-AC7 (judgment): 'a cohort value the panel declines to assert reads \"withheld\" at every render site, never \"unknown\"'. BOUNDS: `tabs/holdings/slices.ts` is NOT YOURS.",
+    "world_is": "slices.ts @1f3ce9f0 :100-102 `renderedClassification`: `if (!classification.authoritative) { return { supervision: 'unknown', advisory: 'unknown', authoritative: false } }`. Its header comment (:21-25) cites the contract: 'False => render every partition above as unknown'. At 1f3ce9f0 that comment is contracts/index.ts:708; slices.ts cites :598. SliceTable.tsx renders those partitions as cell text and marks `data-classification-authoritative` so a reader can tell a gap from a producer's own 'unknown'. F48-AC5's census (committed tree) SUBTRACTS slices.ts, SliceTable.tsx and HoldingsTab.tsx as holding no CohortFact: they name none of CohortFact, cohorts, DirectoryEntry or SearchOptionRow. That is correct by TYPE. Whether RULING W's 'truer word' reaches a Holdings classification the producer does not assert is a ruling question for `1.0.0_SA_CTO`, not a worker's. INERT: text rendering only, and nothing about the Holdings surface moved in this order.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/tabs/holdings/slices.ts :100 `export function renderedClassification(...)`, :102 `return { supervision: 'unknown', advisory: 'unknown', authoritative: false }`",
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/contracts/index.ts :708 `/** False => render every partition above as unknown. */`",
+        "fe-s-48/withheld.test.ts F48-AC5 census line: 'src/pages/InvestorReporting/tabs/holdings/slices.ts -- holds no CohortFact (names none of CohortFact/cohorts/DirectoryEntry/SearchOptionRow); its 8 \"authoritative\" hit(s) belong to another fact or to prose'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S20",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-15T05:33:22Z",
+    "one_line": "The fixture registry still describes directory.unknown-cohort.json as 'a non-authoritative cohort fact -- unknown renders as unknown, never as false and never as Client' (fixtures/index.ts:77). After FE-s-48 the header renders that fixture's three axes as 'withheld'. The prose is stale, and fixtures are outside this order's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-48.non-authoritative-cohort-reads-withheld.md @e2d9f703e9 BOUNDS: 'NOT YOURS: ... every fixture'; THE REMEDY: 'The \"Cohort (not asserted)\" fact renders each withheld axis as `<axis>: withheld`'.",
+    "world_is": "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/fixtures/index.ts :75 `file: 'directory.unknown-cohort.json'`, :77 `proves: 'a non-authoritative cohort fact -- unknown renders as unknown, never as false and never as Client'`. The registry renders nothing, and neither does anything that reads it. `proves` lives only on the exported `NAMED_NEGATIVES` list (fixtures/index.ts:37-48). F48-AC5's census finds `NAMED_NEGATIVES` named by 0 non-test files other than the registry. The one non-test importer of the registry, src/api/endpoints/investor-reporting.ts:80, takes only FIXTURE_FOR_CONTRACT and loadFixtureJson. And `git grep -E '.proves([^A-Za-z0-9_]|$)' HEAD -- src` returns rc 1 even with the tests included. The fact's own values ARE 'unknown', so the prose is right about the value and wrong about the render. F48-AC2 renders this fixture's fact as 'supervision: withheld, billing: withheld, advisory: withheld'. INERT: descriptive metadata no screen shows. The wording change belongs to whoever owns fixtures/index.ts.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file blob 1f3ce9f0:src/pages/InvestorReporting/fixtures/index.ts :77 (the proves string, verbatim above)",
+        "fe-s-48/withheld.test.ts F48-AC2 arm 1: RENDERED \"Cohort (not asserted)\": \"supervision: withheld, billing: withheld, advisory: withheld\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S67",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-15T07:34:00Z",
+    "one_line": "FE-s-49's backend-census test (F49-AC10) timed out at bun's default 5000 ms in 2 runs of 2 on this seat's untouched RULING Y pair (6703 ms alone, 5938 ms in the whole suite). Its bar still printed '12 of 12', so the worker's proof reads AC10 and AC11 PASS while the file is red on another checkout. The census test carries no timeout sized to its cost: the W1-S74 class, and this seat's cut gap. FE-s-49 is held from drain; amendment 1 sizes the timeout.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-49 F49-AC11: 'THE WHOLE-SUITE RUN IS THE CENSUS OF RECORD' with 0 fail; F49-AC10's bar 'EVERY ENDPOINT INVESTOR REPORTING CALLS HAS A PRINTED ADMIN-ONLY ANSWER: 12 of 12'. The round-8 lesson of W1-S74: a test added to the census must not be load-dependent.",
+    "world_is": "On C:/tmp/verify-fe-s-49-pair (workspace d0a5ad368d, portal 640379b8, detached, node_modules junction, IRPT_FE_DEV_PORT=5289 measured ECONNREFUSED on v4 and v6): (1) bun test __tests__/fe-s-49/admin-gate.test.ts: 8 pass / 1 fail, F49-AC10 'this test timed out after 5000ms' [6703.00ms], the bar line printed 12 of 12 before the timeout; (2) bun test src/pages/InvestorReporting/__tests__: 567 pass / 18 skip / 2 fail of 587, F49-AC10 timed out [5938.00ms] and F41-AC5's control timed out [5422.00ms] (W3-S40, FE-s-46's). admin-gate.test.ts:608 declares F49-AC10 with no timeout argument; its census runs git grep over the workspace repository (:687). The beforeAll at :366 carries 120000. A third run, the cell file at this seat's throwaway integration merge c727df7b (640379b8 + 3e84bce6), passed 9/0: the census's cost straddles the default, which is the defect, not a mitigation. The worker's run read 569/18/0. Proof and typecheck are clean on the pair (VALID bound, rc=0). INERT, not ARMED: nothing of FE-s-49 has drained, and the drain is held until an amended re-run passes on an untouched pair.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scratchpad v49.admin-gate.test (the cell file on the untouched pair): 'F49-AC10 -- every endpoint Investor Reporting calls has a printed admin-only answer (READ-ONLY census) [6703.00ms]', '^ this test timed out after 5000ms.', '8 pass', '1 fail'",
+        "scratchpad v49.suite (the whole suite on the untouched pair): '567 pass', '18 skip', '2 fail', 'Ran 587 tests across 103 files. [81.41s]'; the fails are F41-AC5 CONTROL [5422.00ms] and F49-AC10 [5938.00ms], each 'timed out after 5000ms'",
+        "portal 640379b8:src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts:608 test('F49-AC10 ...', () => { with no timeout argument; :366 }, 120000) on the beforeAll; :687 the git grep census"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S36",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "The committed wire instances that F47-AC2 and F47-AC7 name have no status member to remove: each is a producer DOCUMENT, not a v1 response envelope. The test wraps the instance in the envelope, sets status to the committed StatusEnvelope instance, then removes status.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@1f3ce9f0 fixtures/wire/DirectoryEntry.valid.json['instance'], read with python: its top-level members are ids, display_name, masked_discriminator, permitted_scope, permitted_capabilities, termination, access, revision and cohort. None is status. The instances in the other ten fixtures/wire/*.valid.json files are documents too.",
+        "portal@8243b44b contracts/envelope.ts:7: a v1 body is { contract_version, operation, firm_id, data, status? }.",
+        "F47-AC2 run at portal 8243b44b: \"F47-AC2 BODY: committed fixtures/wire/DirectoryEntry.valid.json['instance'] in a v1 envelope, 'status' in body: false\"."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC2: 'Build the body from the committed wire instance fixtures/wire/DirectoryEntry.valid.json['instance'] with its status member removed'. F47-AC7: 'from its committed wire instance with status removed'.",
+    "world_is": "The instance has no status member, so there is nothing to remove from it. __tests__/fe-s-47/no-status-reason.test.ts builds the v1 envelope around the committed instance, with data shaped as the committed contracts/wire/responses.ts declares it (a list for directory-search). It sets status to the committed StatusEnvelope.valid.json instance, then deletes status. It prints that the body has no status member.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S37",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "If a response's status member omits its REQUIRED state, the status's OWN availability keeps wireEnvelope's explicit unknown with no partialReason, and parsed.status.state is undefined. The carry gives the DOCUMENT the reason. The status member is outside FE-s-47's grant, and the F47-AC6 census subtracts this site with the residue printed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "F47-AC6 at portal 8243b44b: \"F47-AC6 RESIDUE (off-contract) a status with no state: parsed.status.state undefined; parsed.status.availability {\\\"state\\\":\\\"UNCERTAIN\\\",\\\"partialReason\\\":null,\\\"publicReasonCode\\\":\\\"SOURCE_PARTITION_INCOMPLETE\\\"}\".",
+        "portal@8243b44b contracts/envelope.ts:191 adapts ANY record status with adaptStatusEnvelope. adapt.ts:552 passes wireEnvelope state: STATE_FOR_WIRE[wire.state], and adapt.ts:559 sets the top-level state from the same lookup. wireEnvelope's default is adapt.ts:237.",
+        "F47-AC6 at portal 8243b44b: \"OVERWRITE (1) documents: a READY status replaces the document's explicit unknown on 9 of 9 operations whose document carries an availability\" and \"OVERWRITE (2) the status member: 9 of 9 contract states map to a stated view state\".",
+        "portal@8243b44b contracts/wire/StatusEnvelope.ts:18: state is a required member of StatusEnvelopeWire."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC6 subtracts 'the sites that are not an Availability' and 'the sites whose output is always overwritten on a response path before it is read (wireEnvelope's, if it is)'. BOUNDS: adapt.ts is the worker's for 'the explicit-unknown sites your F47-AC6 census keeps' and the one constant. 'Nothing else in the file.'",
+    "world_is": "wireEnvelope's default reaches a response in two ways. Through a document adapter it is always overwritten: parseIrEnvelope's carry (envelope.ts:219) replaces the state. Through the status member, an in-contract status never takes it. A status record without state does take it, and that residue fits neither category the order names. The test subtracts the site as 'OVERWRITTEN on every in-contract response' and prints the residue beside it. A reason there needs a change to adaptStatusEnvelope, which the grant excludes. If the status also omits public_reason_code, validate.ts:95 would call that availability reasonless; that arm was not run.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S38",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "On status-summary and status-job with no envelope status, the carry replaces the StatusEnvelope document's own state on its availability with UNCERTAIN. validateContract then reports \"state 'PARTIAL' disagrees with availability.state 'UNCERTAIN'\". The no-status reason now sits on a document whose own data says PARTIAL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "F47-AC7 at portal 8243b44b, for both operations: \"OTHER PROBLEMS (printed, not graded; row IRPT_FNTEND-W3-S38): [\\\"StatusEnvelope[0]: state 'PARTIAL' disagrees with availability.state 'UNCERTAIN'\\\"]\". The availability's partialReason is NO_STATUS_REASON, and its publicReasonCode is SOURCE_PARTITION_INCOMPLETE.",
+        "portal@1f3ce9f0 contracts/adapt.ts:290: 'state: status?.state ?? EXPLICIT_UNKNOWN_STATE' replaced availability.state for every operation before FE-s-47, including status-summary and status-job (envelope.ts:147-148). FE-s-47 did not change that state rule (adapt.ts:299-301 @8243b44b).",
+        "portal@1f3ce9f0 contracts/validate.ts:618-621: the StatusEnvelope check refuses a top-level state that disagrees with availability.state."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC7: 'Any OTHER problem an instance shows is printed, not graded, and is a surprise row.' THE REMEDY: 'A response whose status states a state never carries that reason.'",
+    "world_is": "For these two operations the data IS a status document, and it states PARTIAL; the envelope's own status member is absent. The ruling's trigger, no status on the response, holds. So the carry supplies the explicit unknown and now its reason too, while the document says PARTIAL at the top level. The disagreement predates FE-s-47 and is outside the grant. Not read: whether a production consumer renders a status-summary document's availability or its top-level state.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S39",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:41:00Z",
+    "one_line": "With no status, a resolve-scope document's own partial_reason no longer rides on its availability: the carry puts NO_STATUS_REASON there instead. The order does not say which reason wins when the document already states one. The top-level ResolvedScope.partialReason still carries it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal@8243b44b contracts/adapt.ts:674 (partialReason: wire.partial_reason into wireEnvelope) and :690 (top-level partialReason). adaptResolvedScope is the one document adapter that passes a reason into wireEnvelope; the F47-AC6 census over the committed tree found no other.",
+        "F47-AC6 at portal 8243b44b: \"REACH resolve-scope, no status: state UNCERTAIN, partialReason \\\"The response carried no status stating its state, so its state is unknown.\\\" -> CARRIES\".",
+        "F47-AC3 at portal 8243b44b: under a READY or PARTIAL status, both resolve-scope arms carry the document's own \"one account of four is outside the advisor's grant\" and are HELD."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 THE REMEDY: 'When the adapter supplies its explicit unknown because the response carried no status, or a status with no state, it also supplies a partialReason saying so.' Under a stated state, F47-AC3 says the carried partialReason 'is exactly what the status and document state'.",
+    "world_is": "Before FE-s-47, a no-status resolve-scope carried UNCERTAIN with the document's own reason on its availability. Now it carries UNCERTAIN with NO_STATUS_REASON. The adapter supplies the reason every time it supplies the explicit unknown, which follows the ruling's wording, and so the reason explains the state the adapter supplied. Keeping the document's reason when one is present was the other reading, and the order does not choose between them. The document's reason is still in ResolvedScope.partialReason, and under a stated state it rides on availability exactly as before.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S40",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T05:50:00Z",
+    "one_line": "F41-AC5's CONTROL (__tests__/fe-s-41/one-writer.test.ts:791) timed F47-AC9's whole-suite census out at bun's 5000 ms default on 3 of 4 runs, and again when fe-s-41 ran alone. Run 4, at the final portal HEAD f4b9ce89, read 0 fail. Whether a whole-suite census on this base passes depends on the box's load, and fixing that is FE-s-46's cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.9.0_WK_IRPT_FNTEND~1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Every run below used IRPT_FE_DEV_PORT=5263, measured closed (ECONNREFUSED) before the run.",
+        "Run 1, portal 8243b44b: 564 pass, 18 skip, 3 fail of 585. The three were F41-AC5's CONTROL [6000 ms]; fe-s-13 'producer fixtures' [5265 ms]; and F47-AC6 [10828 ms]. F47-AC6 is this order's own test and is fixed at fffb8454, which reads each committed blob once.",
+        "Run 2, portal fffb8454: '566 pass', '18 skip', '1 fail', 'Ran 585 tests across 103 files. [103.53s]'. The one fail was F41-AC5's CONTROL [6609.00ms], which timed out after 5000ms.",
+        "Run 3, the re-run F47-AC9 grants, portal fffb8454: '566 pass', '18 skip', '1 fail', 'Ran 585 tests across 103 files. [79.59s]'. The same test failed [6641.00ms].",
+        "__tests__/fe-s-41/one-writer.test.ts run alone at portal fffb8454: '10 pass', '1 fail', 'Ran 11 tests across 1 file. [9.11s]'. The control took [5625.00ms] and timed out after 5000ms.",
+        "Run 4, portal f4b9ce89 (the final HEAD; its only change since fffb8454 is one output label in the FE-s-47 test): '567 pass', '18 skip', '0 fail', 'Ran 585 tests across 103 files. [75.61s]'.",
+        "IRPT_FNTEND.TO-FE-s-46 @716a9f4f6c, issued to 0.9.0_WK_IRPT_FNTEND~1, names this test ('__tests__/fe-s-41/one-writer.test.ts:791 ... CONTROL -- an UNCOMMITTED in-place edit naming perf-9 ...'). Its remedy is an explicit per-test timeout sized from the test's measured loaded cost."
+      ]
+    },
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-47 F47-AC9: the whole suite, expect '(?<![0-9])0 fail'. 'If F41-AC5's control times out under load (FE-s-46's row, not yours), report it and re-run; never edit it.' BOUNDS: 'A red test outside your grant is a BLOCKING row with the list, never an edit.'",
+    "world_is": "The bar was met on the deciding run at the final HEAD (run 4), and F47-AC9 is recorded PASS on that run, with runs 1 to 3 disclosed in its status_reason. When the census was red, the red list outside the grant had one member: F41-AC5's CONTROL. It ran past 5000 ms on runs 1, 2 and 3 and alone, and under it on run 4; FE-s-47 did not edit it. fe-s-13's 'producer fixtures' timed out on run 1 only. Until FE-s-46's timeouts land, any cell's whole-suite census on this base passes or fails with the box's load, for a reason that cell's grant cannot fix.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S41",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-15T06:05:00Z",
+    "one_line": "proof-of-spec-check's COUNT-BAR limb reads the digit that ends a criterion id as a count. The printed line 'F47-AC2 PROBLEMS: []' matched as the nonzero count '2 PROBLEMS' beside F47-AC2's zero-count bar, and the instance was refused. The test's output label now puts no digit before the noun.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Checker run at workspace e2d9f703e9, checker-vintage da3e61889d, bound with --governing-order to the FE-s-47 order: \"VIOLATION: count-bar[F47-AC2]: the bar 'A NO-STATUS DIRECTORY BODY THROUGH parseIrEnvelope AND validateContract READS 0 PROBLEMS: yes' asserts ZERO of 'problem' and its own search DOES match the evidence -- but the evidence also carries a NONZERO count for that noun: '2 PROBLEMS'.\" Verdict: INVALID (rc=1).",
+        ".tools/proof-of-spec-check.py:1529 @e2d9f703e9: pat = re.compile(r\"(?<![0-9.])(?<!of )([0-9]+)[ \\t]+\" + re.escape(stem) + r\"[A-Za-z_()]*\", re.I). A letter before the digit passes both lookbehinds, so 'AC2 PROBLEMS' yields the count '2'.",
+        "The evidence line was verbatim output of __tests__/fe-s-47/no-status-reason.test.ts at portal fffb8454: 'F47-AC2 PROBLEMS: []', an empty problems list."
+      ]
+    },
+    "spec_asserts": "The COUNT-BAR limb (.tools/proof-of-spec-check.py:1497-1498): 'For a PASS row whose bar asserts ZERO of a noun ... the evidence may carry no NONZERO count of that noun.' IRPT_FNTEND.TO-FE-s-47 F47-AC2: 'Print the problems list (empty), the carried state and the carried partialReason.'",
+    "world_is": "The limb treats any digit directly before the noun as a count, including a digit that ends a criterion id in a label, so an empty problems list read as '2 PROBLEMS'. The refusal is loud rather than silent. It will refuse any later instance that prints '<ID ending in a digit> <noun>' beside a zero-count bar for that noun. FE-s-47 relabelled its own line, 'F47-AC2 VALIDATE -> problems list: []', and edited nothing in .tools/.",
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S71",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:24:12Z",
+    "one_line": "The portal's type shim for bun:test declares test(label, fn) with two parameters, so bun's third argument, the per-test timeout the order adds, has no declared overload for F46-AC1's typecheck. The order names no type declaration; a type-only overload was added inside the grant as fe-s-46/ambient-shims.d.ts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO FE-s-46, THE REMEDY: 'every test in those two files whose measured cost can reach the default carries an explicit per-test timeout (bun's third test() argument)'. F46-AC1: 'the whole portal typechecks' (bun run typecheck, rc=0). The grant is the two files for timeout arguments only, plus fe-s-46/.",
+    "world_is": "portal/src/pages/InvestorReporting/__tests__/fe-s-1/bun-test.d.ts:14 @ portal 1f3ce9f0 declares `export function test(label: string, fn: () => void | Promise<void>): void`. No other shim in the program adds a third parameter to test; fe-s-19 adds one to beforeAll only. tsconfig.app.json sets types ['vite/client'], so bun-types is not in the program. A three-argument test() call therefore matches no declared overload. That consequence is a reading of the declarations: the typecheck was NOT run without the overload. fe-s-46/ambient-shims.d.ts @ portal 01e5cf3d adds `export function test(label: string, fn: () => void | Promise<void>, timeoutMs?: number): void` to the merged 'bun:test' module, in fe-s-19's beforeAll form. fe-s-1's file is not edited. bun run typecheck read rc=0 at 01e5cf3d, 904b6c4f and a93275c8.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-1/bun-test.d.ts:14 @ portal 1f3ce9f0: export function test(label: string, fn: () => void | Promise<void>): void",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-19/ambient-shims.d.ts:28 @ portal 1f3ce9f0: export function beforeAll(fn: () => void | Promise<void>, timeoutMs?: number): void -- the only shim member with a timeout parameter",
+        "portal/tsconfig.app.json @ portal 1f3ce9f0: \"types\": [\"vite/client\"]; node_modules has no bun-types",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-46/ambient-shims.d.ts @ portal 01e5cf3d; cd <WS>/portal && bun run typecheck -> '$ tsc -b --noEmit', rc=0 at 01e5cf3d, 904b6c4f and a93275c8"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S72",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:24:12Z",
+    "one_line": "The bounds ask for each file's diff to 'touch only test( lines', but the third argument of a multi-line test( call sits on the line that closes the call, not on the line that carries 'test('. Every changed line is a closing line '})' becoming '}, <ms>)', and 0 changed lines carry 'test('.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO FE-s-46 BOUNDS: 'Add or change the third argument of a `test(...)` call, and nothing else. No assertion, no printed line, no helper and no constant changes. Paste the diff of each file into the result file, and show that it touches only `test(` lines.'",
+    "world_is": "All 16 test( calls in fe-s-40/window.test.ts and fe-s-41/one-writer.test.ts span several lines: the label and callback open on the test( line, and the callback closes on its own line. Bun's third argument is written after the callback, on that closing line. git diff -U0 1f3ce9f0 at portal a93275c8 changes 8 lines, each '  })' -> '  }, <ms>)': window.test.ts:302 and one-writer.test.ts:436, 452, 590, 626, 764, 779 and 869. None of them carries 'test('. So the bound is shown the other way, by fe-s-46/timeouts.test.ts's BOUNDS test. It parses both blobs with the TypeScript compiler and prints '8 of 8 changed lines close a test( call; 2 of 2 files equal DEV once the third arguments are removed' (HEAD with every third argument cut is the DEV blob, byte for byte).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && git diff -U0 1f3ce9f0 -- the two files, at portal a93275c8: 8 hunks, each '-  })' / '+  }, <ms>)'",
+        "fe-s-46/timeouts.test.ts BOUNDS at portal 904b6c4f: 'THE DIFF AGAINST DEV 1f3ce9f0 TOUCHES ONLY THE THIRD ARGUMENT OF test( CALLS: yes -- 8 of 8 changed lines close a test( call; 2 of 2 files equal DEV once the third arguments are removed'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S73",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:24:12Z",
+    "one_line": "The cell names three tests that can run past bun's 5000 ms default on a loaded box. On this box, under loads of the order's own kind, 8 of the 16 tests in the two files recorded at least 2500 ms. Five tests the cell does not name ran past 5000 ms, and one of them failed a run at the default.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO FE-s-46 THE CELL: 'three tests pass on their content but can run past bun's 5000 ms default test timeout on a loaded box' -- F40-AC5 (window.test.ts:253), F41-AC2's control (one-writer.test.ts:424) and F41-AC5's control (one-writer.test.ts:791). THE REMEDY: 'every test in those two files whose measured cost can reach the default carries an explicit per-test timeout'.",
+    "world_is": "The costs come from junit per-test times: 43 sizing processes on the DEV 1f3ce9f0 blobs (K=3, 3, 5, 8, 12 and 12 at once) and the first run of fe-s-46/timeouts.test.ts at portal 01e5cf3d. Besides the three named tests, five more recorded at least 2500 ms: F41-AC4 (:568, 6969 ms), F41-AC5 BOUND (:751, 7000 ms), the CONTROL at :592 (5046 ms), the CONTROL at :766 (6422 ms) and HISTORY at :438 (3671 ms). Four of the five ran past 5000 ms. In that first run, F46-AC2's single run of one-writer.test.ts FAILED :766 at 6422 ms against bun's default, since it then had no timeout argument. In AFTER run 3, two load processes (p1, p4) each read 1 fail 'timed out after 5000ms', and none of the three named tests was the failing one; :592's 5046 ms was recorded in p1. All 8 carry a timeout at portal a93275c8, each 3 times its highest recorded cost.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/before-sizing.txt and size-k12.txt (loadrun.mjs, junit per-test ms on the DEV blobs): :568 3078 ms and :751 3828 ms at K=12",
+        "fe-s-46/timeouts.test.ts first run at portal 01e5cf3d (<WS>/.scratch/ac-run-1.txt): ':766  6422 ms FAILED  timeout none (bun default 5000)'; AFTER RUN 3 'p1 (load)  : tests 16 fail 1; ... timed out after 5000ms', 'p4 (load)  : tests 16 fail 1; ... timed out after 5000ms'; F46-AC3 print 'IN THE SET :592 ... highest 5046 ms (F46-AC5 AFTER run 3 p1)', ':568 ... 6969 ms', ':751 ... 7000 ms', ':438 ... 3671 ms'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S74",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T06:26:22Z",
+    "one_line": "F46-AC3's bar can be met only while every recorded cost of a test stays at or under 20000 ms: the timeout must be at least 3 times that cost and at most 60000 ms. On this box F41-AC5's control recorded 8375, then 15234, then 18891 ms, so its timeout (56673 ms) is 3327 ms under the cap. fe-s-46/timeouts.test.ts counts every run it makes as recorded and is itself in every later whole-suite census. A heavier load can therefore read F46-AC3 red there with no file changed, the load-dependent red W3-S33 removes from the two files.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F46-AC3: '\"Can reach the default\" means a measured cost of at least 2500 ms (half of 5000) on ANY recorded run ... Each such test's third argument is at least 3 times its highest recorded cost, and at most 60000 ms'. F46-AC5: 'The two files are run 3 times, each time concurrently with a load you generate', invoked through fe-s-46/timeouts.test.ts. F46-AC6: 'the whole-suite census of record' over src/pages/InvestorReporting/__tests__, which includes fe-s-46/. F46-AC7: 'a loaded box can no longer turn a later cell's census red through these two files'.",
+    "world_is": "F41-AC5's control (one-writer.test.ts:791) has recorded 8375 ms (sizing: 43 processes on the DEV 1f3ce9f0 blobs, up to 12 at once), 15234 ms (first run of timeouts.test.ts, portal 01e5cf3d, AC5 AFTER run 3 p0) and 18891 ms (second run, portal 904b6c4f, AC5 BEFORE run 1 p4). Each rise failed F46-AC3 in the run that recorded it: 1 of 8, then 7 of 8. Each was answered by re-sizing from the measurement: 25125, then 45702, then 56673. The deciding run at a93275c8 read 8 of 8, with that test's costs at 3015-6094 ms on a quieter box. 3 x 18891 = 56673 leaves 3327 ms under the cap, and a recorded cost above 20000 ms has no timeout that meets both bounds. The file measured 228 s, 141 s and 74 s over its three invocations here, starting 5 bun test processes at once 4 to 6 times. Between runs the box also carried 23 python, 16 node and 7 claude processes that were not this file's. It sits under __tests__/, so every later whole-suite census runs it, and its F46-AC3 test counts that census's own load runs as recorded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/ac-run-1.txt (timeouts.test.ts at portal 01e5cf3d, rc=1, 228 s): 'IN THE SET :791 ... highest 15234 ms (F46-AC5 AFTER run 3 p0); timeout 25125 ms against floor 45702 ms ... NOT SIZED'; 'EXPLICIT TIMEOUT ON EVERY TEST THAT CAN REACH THE DEFAULT: 1 of 8'",
+        "<WS>/.scratch/ac-run-2.txt (portal 904b6c4f, rc=1, 141 s): 'IN THE SET :791 ... highest 18891 ms (F46-AC5 BEFORE run 1 p4); timeout 45702 ms against floor 56673 ms ... NOT SIZED'; '7 of 8'",
+        "<WS>/.scratch/ac-run-3.txt (portal a93275c8, rc=0, 74 s): ':791 ... timeout 56673 ms against floor 56673 ms and cap 60000 ms -> SIZED'; 'EXPLICIT TIMEOUT ON EVERY TEST THAT CAN REACH THE DEFAULT: 8 of 8'",
+        "tasklist between runs: python.exe 23, node.exe 16, claude.exe 7, bun.exe 2 processes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S75",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-15T07:16:06Z",
+    "one_line": "Amendment 1 says the cost ledger is produced only by the IRPT_FE_TIMEOUT_LOAD=1 path, and also that the ledger records F41-AC5's control at 18891 ms, a cost measured before the ledger existed. The load path's LEDGER arm therefore carries the 30 pre-amendment costs in from a BOOTSTRAP table (runs B01-B12), each with its run's date, load and source; two of those runs have a day-only date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-46 F46-AC2: 'The ledger is produced only by the IRPT_FE_TIMEOUT_LOAD=1 path (F46-AC5), with a reporter that records per-test time, and then committed.' AMENDMENT 1: 'The ledger holds each test's recorded costs, each with its run: date, load and source.' and 'The ledger records F41-AC5's control at 18891 ms, so its timeout is 56673 ms.' and 'Your eight committed timeouts stand unless a ledger cost changes one. Each value stays 3 times a ledger cost.'",
+    "world_is": "Seven of the eight committed timeouts are 3 times a cost recorded BEFORE amendment 1 (6984, 3671, 6969, 5046, 7000, 6422 and 18891 ms), and the eighth is the named floor 3 x 5875 ms from row W3-S33; none of these came from a run of the load path as it now stands. If the ledger held only costs the load path measures, those timeouts would stand on no ledger cost. The load path's LEDGER arm reads the working-tree ledger, else the one at HEAD, else a BOOTSTRAP table in timeouts.test.ts holding the 30 costs of the RECORDED table at portal a93275c8 as runs B01-B12. So the committed ledger is written by the load path, and its first 12 runs are carried, not measured, by it. Dates: B01 and B02 (row W3-S33's runs) read '2026-09-14 (before 23:08:10Z)'; B03 and B04 (the issuer's round-8 probes) read '2026-09-15 (day only; the order does not give the time)'; B05 to B12 carry the mtime of the scratch output that recorded them. The census run never reads BOOTSTRAP.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 09e9431a src/pages/InvestorReporting/__tests__/fe-s-46/timeouts.test.ts: the BOOTSTRAP table (12 runs, 30 costs) and the LEDGER arm, which reads it only when no ledger exists in the working tree or at HEAD",
+        "<WS>/.scratch/a1-load-1.txt (IRPT_FE_TIMEOUT_LOAD=1 at portal 09e9431a, 65 s): 'LEDGER WRITTEN: ... from BOOTSTRAP (no ledger in the working tree or at HEAD): 12 runs recorded before amendment 1; 6 run(s) and 336 cost(s) appended; 18 run(s) in all'",
+        "the ledger it wrote: 18 runs, 371 costs, 16 of 16 tests, 0 unresolved run references; every test's highest cost is a B-run cost, so no committed timeout moved"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S34",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-15T07:05:46Z",
+    "one_line": "FE-s-49's allowlist arm cannot land inside its grant: src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts asserts that 49financial, inflection and cottonwood list /investor-reporting in FIRM_ALLOWED_PATHS, so removing the three entries turned the whole suite red (3 fail, all in that file). Under 1.0.0_SA_CTO's ruling (96924) the entries are kept and F49-AC9 is REFUSED. The route gate (requireAdmin requireInternal) and the nav predicate still refuse every partner-firm user.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-49, THE REMEDY (1.0.0_SA_CTO's ruling, 96924): \"'/investor-reporting' removed from the 49financial, inflection and cottonwood sets in FIRM_ALLOWED_PATHS, so no allowlist grants what the gate refuses. ONLY if the whole suite stays as green as the probe: 0 fail beyond the known F41-AC5 load timeout. If a test depends on those entries, keep them, file a BLOCKING row naming the test, and REFUSE F49-AC9 with the measurement.\" BOUNDS: a red test outside the grant is never an edit.",
+    "world_is": "The test is src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts (portal 1f3ce9f0, unchanged at 640379b8), outside FE-s-49's <paths>. With the three entries removed in the working copy over the committed gate (portal 61f5c76b), the whole suite read 566 pass / 18 skip / 3 fail of 587, and all three fails are that file's: F14-AC2 'ALLOWED -- isPathAllowedForFirm is true for each granted firm' (:52 expect(allowed).toBe(3), received 0); F14-AC2 'the grant is in the MATRIX, not in some other branch of the guard' (:62 FIRM_ALLOWED_PATHS[firm].has(ROUTE) toBe(true), received false); F14-AC3 'FIRMACCESS DIFF -- exactly three added lines, none removed, since the baseline' (:96 added toBe(3), received 0 against baseline edab15b5). F41-AC5 did not time out on that run. The entries were restored (firmAccess.ts equals HEAD, never committed removed) and the re-run read 569 pass / 18 skip / 0 fail of 587. INERT, not ARMED: at portal 640379b8 every partner-firm identity is refused by ProtectedRoute requireInternal on both routes (6 of 6 admins, and 8 of 8 non-admins with opal-capital's), and the nav filter hides the item from all of them (shown to 1 of 8 identities, the opal-capital admin), so the three remaining entries grant nothing the gate passes. Landing the removal needs an order whose grant includes fe-s-14/allowlist.test.ts, whose F14-AC2 and F14-AC3 assertions encode the grant the CTO's ruling retires.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "<WS>/.scratch/suite_removed.log: bun test src/pages/InvestorReporting/__tests__ with IRPT_FE_DEV_PORT=5267 (measured closed), firmAccess.ts entries removed in the working copy, portal HEAD 61f5c76b: '566 pass', '18 skip', '3 fail', 'Ran 587 tests across 103 files'; the three failing cases are the three fe-s-14 allowlist cases named in world_is",
+        "<WS>/.scratch/fe14_removed.log: the same file alone: 'ALLOWED: 0 of 3', 'FIRMACCESS DIFF: +0 -0', 2 pass, 3 fail",
+        "portal 1f3ce9f0:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:39 GRANTED = ['49financial', 'inflection', 'cottonwood']; :52, :62 and :96 the three failing assertions",
+        "<WS>/.scratch/ac11.log: after the restore, portal HEAD 640379b8, port 5267 CLOSED ECONNREFUSED: '569 pass', '18 skip', '0 fail', 'Ran 587 tests across 103 files'",
+        "<WS>/.scratch/ag_final.log (admin-gate.test.ts at 640379b8): 'A PARTNER-FIRM ADMIN IS REFUSED ON BOTH ROUTES: 6 of 6', 'A NON-ADMIN IS REFUSED ON BOTH ROUTES: 8 of 8', 'THE NAV SHOWS INVESTOR REPORTING ONLY TO THE OPAL INTERNAL ADMIN: yes', 'PARTNER ALLOWLIST ENTRIES GRANTING /investor-reporting: 3 of 3 REMAIN'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W2-S35",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~2",
+    "surfaced_at": "2026-09-15T08:29:30Z",
+    "one_line": "FE-s-49 amendment 1 keeps fe-s-14's F14-AC3 positive control unchanged, but that control still refuses only the RETIRED expectation (a numstat of '3<TAB>0' against edab15b5), so it no longer bounds the re-pointed diff test, which expects +0 -3 between 1f3ce9f0 and HEAD: a numstat reader stuck at '0<TAB>3' would pass both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-49, amendment 1 bound: 'F14-AC3's diff test measures +0 -3 against 1f3ce9f0 (F49-AC12) ... The demo / unknown-id refusal test and the positive control stay unchanged.' F49-AC12: 'Its positive control, and its demo and unknown-id refusal arm, stay as they are.' The control's own comment states its purpose: 'A reader that returned +3 -0 for anything would make the test above a decoration.'",
+    "world_is": "Kept byte-unchanged as ordered, the control (portal 0f674aa9, src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:120) runs `git diff --numstat edab15b5 -- src/pages/InvestorReporting/index.tsx`, a working-copy diff against FE-s-14's old baseline, and at :126 refuses only an answer starting '3<TAB>0<TAB>', the expectation the re-pointed test no longer has. The re-pointed test (:102) runs a different git form, `git diff --numstat 1f3ce9f0 HEAD -- src/lib/firmAccess.ts` (committed trees), and asserts added 0 (:112) and removed 3 (:113). A reader constant at '0<TAB>3' passes the re-pointed test and the control alike, so the control no longer discriminates the arm it sits beside. INERT: the re-pointed test's reading is confirmed by instruments other than its own reader -- the worker's own `git diff --numstat 1f3ce9f0 0f674aa9 -- src/lib/firmAccess.ts` reads '0<TAB>3', and admin-gate.test.ts F49-AC9 reads each firm's set from the committed firmAccess.ts blobs (0 of 3 remain). Re-pointing the control's refusal value is a one-line edit this order withholds from the worker.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 0f674aa9:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:126 expect(line.startsWith('3\\t0\\t')).toBe(false) -- the same line as 1f3ce9f0:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:110",
+        "portal 0f674aa9:src/pages/InvestorReporting/__tests__/fe-s-14/allowlist.test.ts:102 the re-pointed test's git form (1f3ce9f0 HEAD, committed trees), against the control's :120 (edab15b5, working copy)",
+        "cd <WS>/portal && git diff --numstat 1f3ce9f0 0f674aa9 -- src/lib/firmAccess.ts -> '0<TAB>3<TAB>src/lib/firmAccess.ts' (the worker's read, a different instrument from the test's reader)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S68",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-15T09:38:00Z",
+    "one_line": "F25-AC8 (fe-s-25/generator.test.ts:79) grades the CHECKOUT'S LINE ENDINGS, not the contract. gen-wire.ts hashes the raw worktree text of the schema, and the committed wire header carries the hash of a CRLF checkout (c83ce02d). So the test passes on a CRLF checkout (this seat's untouched pair, 4/0) and fails on an LF one (the main workspace worktree; 0.0.0_AB_MSTR's promote runs, msg 97009), with identical contract content and identical generated types.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "fe-s-25/generator.test.ts:75-79: 'The committed wire file is the SAME bytes this render produces, so the arm grades the artifact the portal actually compiles against.' fe-s-13/gen-wire.ts header: the generated block CITES its source sha256 so a re-run can be checked against its source.",
+    "world_is": "docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json, the same blob in two checkouts: this seat's pair C:/tmp/verify-fe-s-49-pair (workspace 85276ca76a) reads ls-files --eol 'i/lf w/crlf', raw sha256 c83ce02d14c1, LF-normalized f06c0029cd20; the main workspace worktree reads 'i/lf w/lf', raw sha256 f06c0029cd20, LF-normalized f06c0029cd20. Portal 10c2f07d's committed contracts/wire/StatusEnvelope.ts:5 reads 'Source sha256: c83ce02d14c12044b7d627181ae8ef3fd07f96fe5c6ac7e2cfb0366d7deed380'. gen-wire.ts:107 sha256Of(text) = createHash('sha256').update(text) over readFileSync(..., 'utf8') with no line-ending normalization, and :293 renders it into the header. bun test fe-s-25/generator.test.ts on the pair (portal tree 1e1a8591, equal to DEV 10c2f07d's) read 4 pass / 0 fail; 0.0.0_AB_MSTR reports the same test failing on unmerged DEV 10c2f07d inside the main workspace (586/21/1). 58e387b454, the last schema change, is in every checkout involved, so it is not the difference. INERT: the generated TYPES do not change with line endings; only a comment line differs, and no served behaviour reads it. It reads red on any LF runner, including a Linux CI checkout.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sha256sum of the schema in both checkouts, and tr -d '\\r' | sha256sum: pair c83ce02d14c1 raw / f06c0029cd20 normalized; main worktree f06c0029cd20 / f06c0029cd20; git ls-files --eol: pair 'i/lf w/crlf', main 'i/lf w/lf'",
+        "git show 10c2f07d:src/pages/InvestorReporting/contracts/wire/StatusEnvelope.ts:5 'Source sha256: c83ce02d14c1...'",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts:107-108 sha256Of; :293 const digest = sha256Of(schemaText); :300 the header line",
+        "scratchpad f25_now.log: bun test fe-s-25/generator.test.ts on the pair, IRPT_FE_DEV_PORT=5289: '4 pass', '0 fail'",
+        "0.0.0_AB_MSTR msg 97009: F25-AC8 fails on unmerged DEV 10c2f07d inside the workspace, 586 / 21 / 1 fail"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

@@ -1,12 +1,11 @@
 {
   "prd": "LGIC_CANON_PRD.md",
-  "prd_version": "v1.0",
-  "prd_pin": "4d65f28d36293eaf80a1aea46e08928ead1e4b40",
+  "prd_version": "v1.3",
+  "prd_pin": "5b2336a5e40f165a916dabf68af8fc45def633bb",
   "half": "brief",
-  "half_hash": "61402c6dffbc0082b3a9cbfed04e117aba226646e7eae18f162a42112ba32f82",
-  "verdict": "REFUSED",
-  "review_ref": "docs/briefs/sources/LGIC_CANON_L4_BRIEF_REVIEW_20260914.md@24da87ce56c45d741abdd865a59ba9f5b4e50902",
+  "half_hash": "8336e1f07e9e93ffe0948442d4b27b749bbb37d7f5694136ba360c1de484a180",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/LGIC_CANON_L4_BRIEF_REVIEW_v1_3_20260914.md@57e35a8b93fb3b51895f058f5a4c40a0e638f142",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-14T07:04:47Z",
-  "reason": "R1: C7 bans sanctioned firm forms; R2: C1 removes naming content while C2 requires one-document judging. Correct DEC-1/2/5 and C1/C2/C7 per the pinned review."
+  "signed_at": "2026-09-14T18:51:46Z"
 }

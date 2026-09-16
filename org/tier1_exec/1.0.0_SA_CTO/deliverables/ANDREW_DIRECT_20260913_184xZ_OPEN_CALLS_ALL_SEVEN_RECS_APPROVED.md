@@ -134,3 +134,33 @@ It answered these two questions, put to him verbatim:
   not a push of named hashes only.
 
 Relayed to `0.0.0_AB_MSTR` the same turn.
+
+---
+
+## FOLLOW-ON ANDREW-DIRECT ~20:1xZ -- WHAT IS "IN CONTENTION" FOR SEATING
+
+**Context:** `0.0.0_AB_MSTR`'s 96398 corrected its pre-flight -- the base serial `0.7.0_AE_CloudOps` holds three
+pending task orders (MDPF_GLOBAL T2C, NFRA_SUBSTRATECARDING TO-CARD-R-W4-COX, WSE_COTMDL WS5) -- and warned that the
+seating check might refuse card 3's order. While this seat was measuring that, Andrew said, **verbatim and entire,
+two messages in order:**
+
+> "we're not doing substratecarding why are you focused on that?"
+
+> "if its not registered to a fabric in directives its not in contention"
+
+**What it rules, and no wider:** a project not registered to a fabric in `DIRECTIVES.yaml` is not in contention
+for a seat. Stated for this seating question; not converted here into any gate change.
+
+**MEASURED against the register this turn** (`org/missions/DIRECTIVES.yaml`, 15 directives parsed):
+- `MDPF_GLOBAL` and `WSE_COTMDL` -- **members of no directive.** Not in contention, by his rule.
+- `NFRA_SUBSTRATECARDING` -- **listed as a member of D11**, whose placement is LAPTOP. By the register it is
+  registered to this fabric; by his word "we're not doing substratecarding". **That is a register discrepancy,
+  surfaced and NOT acted on:** a members-line edit off one line of his would widen his word.
+- Operationally moot for card 3 either way: the NFRA_SUBSTRATECARDING order carries **no addressee field** (no
+  `<issued_to>`), so `to-decomp-ref-lint.py`'s seating index (`_open_to_index`, which skips an order whose
+  `ISSUED_TO_RE` does not match) cannot count it against the base seat. And the lint's seating scope keys on
+  `dep_stage` (pipeline registration), not on directive membership -- a DIFFERENT population from his rule,
+  recorded, not changed.
+
+**So card 3's order goes to the live base seat `0.7.0_AE_CloudOps`**, as a non-pipeline order (the lint's
+seating check runs only on orders for `dep_stage`-registered projects, `main()` at `:369-373`).

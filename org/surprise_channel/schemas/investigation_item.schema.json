@@ -123,8 +123,8 @@
     "properties": {
      "criterion": {
       "type": "string",
-      "pattern": "^[A-Za-z0-9]+-AC[0-9]+$",
-      "description": "the criterion id as the task order names it (T6-AC7, B2-AC6): the same string the proof-of-spec instance's acceptance row carries, so the grade and the row it grades resolve to one id."
+      "pattern": "^[A-Za-z0-9]+-(AC|J)[0-9]+R?$",
+      "description": "the criterion id as the task order names it (T6-AC7, B2-AC6, the judgment form F1-J1, and an amended criterion's R suffix, RB5-AC5R): the same string the proof-of-spec instance's acceptance row carries, so the grade and the row it grades resolve to one id."
      },
      "instance": {
       "type": "string",

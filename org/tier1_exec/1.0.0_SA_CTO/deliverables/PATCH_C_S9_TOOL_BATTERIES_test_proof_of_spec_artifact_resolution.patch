@@ -1,0 +1,67 @@
+diff --git a/.tools/tests/test_proof_of_spec_artifact_resolution.py b/.tools/tests/test_proof_of_spec_artifact_resolution.py
+index fdc9986aef..33c80eedab 100644
+--- a/.tools/tests/test_proof_of_spec_artifact_resolution.py
++++ b/.tools/tests/test_proof_of_spec_artifact_resolution.py
+@@ -69,3 +69,62 @@ def test_commit_not_in_local_store_is_announced_not_asserted():
+     v, frames = posc.artifact_resolution_check(m)
+     assert v == [], v
+     assert "1 UNRESOLVED-HERE" in frames[0]
++
++
++# ---- DRY RUN, a TRACKED artifact modified in place (row LGIC_ENFORCE-C-S9, 1.0.0_SA_CTO). Rule 14a forbids pre-staging
++# the artifact, so a worker's dry run meets it modified and unstaged; it rides safe-commit's pathspec. The checker is
++# pointed at a THROWAWAY repository (its git helpers read _REPO_ROOT at call time), never at the shared tree.
++import os  # noqa: E402
++import subprocess  # noqa: E402
++
++
++def _git(repo, *a):
++    env = {k: v for k, v in os.environ.items() if not k.startswith("GIT_")}
++    subprocess.run(["git", *a], cwd=str(repo), check=True, capture_output=True, env=env)
++
++
++def _dry_run_fixture(repo, modify, stage_instance=False):
++    _git(repo, "init", "-q")
++    _git(repo, "config", "user.email", "t@example.invalid")
++    _git(repo, "config", "user.name", "t")
++    _git(repo, "config", "core.autocrlf", "false")
++    (repo / "a.txt").write_bytes(b"one\n")
++    _git(repo, "add", "a.txt")
++    _git(repo, "commit", "-q", "-m", "base")
++    if modify:
++        (repo / "a.txt").write_bytes(b"one\ntwo\n")
++    inst = {"artifacts_produced": [{"path_or_key": "a.txt", "commit_or_etag": posc.PENDING_SENTINEL, "kind": "script",
++                                    "deployed_state": "not-deployed", "deploy_evidence": "n/a"}]}
++    inst_path = repo / "inst.json"
++    inst_path.write_text(json.dumps(inst), encoding="utf-8")
++    if stage_instance:
++        _git(repo, "add", "inst.json")
++    return inst, inst_path
++
++
++def _check_in(repo, inst, inst_path):
++    old = posc._REPO_ROOT
++    posc._REPO_ROOT = repo.resolve()
++    try:
++        return posc.artifact_resolution_check(inst, inst_path)
++    finally:
++        posc._REPO_ROOT = old
++
++
++def test_dry_run_tracked_artifact_modified_in_place_is_pending(tmp_path):
++    inst, inst_path = _dry_run_fixture(tmp_path, modify=True)
++    v, frames = _check_in(tmp_path, inst, inst_path)
++    assert [x for x in v if x.startswith("artifact-resolution:")] == [], v
++    assert "1 pending-on-worktree" in frames[0], frames
++
++
++def test_dry_run_tracked_artifact_unchanged_is_still_ccx(tmp_path):
++    inst, inst_path = _dry_run_fixture(tmp_path, modify=False)
++    v, _ = _check_in(tmp_path, inst, inst_path)
++    assert any("ALREADY COMMITTED at HEAD" in x for x in v), v
++
++
++def test_hook_run_tracked_artifact_modified_but_unstaged_is_refused(tmp_path):
++    inst, inst_path = _dry_run_fixture(tmp_path, modify=True, stage_instance=True)
++    v, _ = _check_in(tmp_path, inst, inst_path)
++    assert any("ALREADY COMMITTED at HEAD" in x for x in v), v

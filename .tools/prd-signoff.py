@@ -114,7 +114,7 @@ def cmd_status(lib, code=None):
             if st["state"] == "SIGNED":
                 owed = ""
             else:
-                who, reason = lib.route_half(half, live, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0])
+                who, reason = lib.route_half(half, live, coo_lane_of_project=doc.get("coo_lane"), designated=lib.designated_brief_signer(doc)[0], prefer_suffix=lib.review_lane_suffix(ROOT, prd_rel, doc))
                 owed = "   OWED BY %s (%s)" % (who, reason)
             print("    %-14s %-13s %-22s %s%s" % (half, st["state"], st["by"] or "-", st["detail"][:90], owed))
         for n in r["unreadable"]:
@@ -226,7 +226,9 @@ def cmd_stamp(lib, verdict, code, half, review, reason, substitute_for, expect_h
         return 2
     sc = subprocess.run([bash, os.path.join(ROOT, ".tools", "safe-commit.sh"), "--author", author, "-F", mpath, "--", out_rel],
                         cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace")
-    tail = (sc.stdout + sc.stderr).strip().splitlines()[-6:]
+    lines = (sc.stdout + sc.stderr).strip().splitlines()
+    # a refusal prints every line: safe-commit's closing reminder alone is six lines and pushed the reason out of a tail
+    tail = lines if sc.returncode != 0 else lines[-6:]
     for ln in tail:
         print("  " + ln[:200])
     if sc.returncode != 0:

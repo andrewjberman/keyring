@@ -1,0 +1,615 @@
+{
+  "measured_at": "2026-09-15T13:50:59.645628+00:00",
+  "pointer": {
+    "bucket": "opal-data-portal-v2",
+    "key": "platinum/mdpf/_manifests/latest.json",
+    "version_id": "OYZAoC41ljhPth_NI_kDd.SGOVFDKzNC",
+    "last_modified": "2026-09-15T13:50:51+00:00",
+    "sha256": "47632aaf445707bdd7872f59b197698bbffc1d099fb909a080c52ba1724767a2",
+    "bytes": 4073
+  },
+  "manifest_object": {
+    "bucket": "opal-data-portal-v2",
+    "key": "platinum/mdpf/_manifests/2026-09-15/20260915T135046Z-eeb9afc8.json",
+    "version_id": "5V421LndwWVL.XvYyXdwhSfX61dR6goe",
+    "last_modified": "2026-09-15T13:50:51+00:00",
+    "sha256": "d495ab3b5d771e6ef27511f18fd9aa85cb6c9af7d2df3abbd713b30f3c83e166",
+    "bytes": 10081
+  },
+  "manifest": {
+    "schema_version": "1",
+    "run_id": "20260915T135046Z-eeb9afc8",
+    "trigger": {
+      "source": "",
+      "detail": {}
+    },
+    "process_start": "2026-09-15T13:50:46Z",
+    "process_end": "2026-09-15T13:50:50Z",
+    "publisher_commit": "c0902245b07438eb0be65cf5e28241d4be56aa38",
+    "config_hashes": {
+      "partner_roster_sha256": "4c104d9bb8509b89456ad46f41dc07bec1eb39c5caa045149d26a20e33ff64a6",
+      "artifact_types_sha256": "4a53d7a5065a30afb5e17b9911436557a40836099933583b1427effb7b862ae1",
+      "route_bindings_sha256": "c9e54ce28351752a382cc14ac17c380ccea471da9191aa1170cf834cbf971fcd",
+      "extra_expected_scopes": {
+        "value": [
+          "global"
+        ],
+        "sha256": "8001c27439650c5c5a6b4ed94163b5ddeb4476362c71380e613fa20dfffcef50"
+      }
+    },
+    "expected_scopes": [
+      "49financial",
+      "cottonwood",
+      "global",
+      "inflection"
+    ],
+    "expected_artifact_types": [
+      "account-distribution",
+      "aggregate-aua-timeseries",
+      "aum-metrics",
+      "category-views"
+    ],
+    "artifact_type_axis_source": {
+      "commit": "dc14d649bb3e8e7853ed9f648b08f7ca7017b7c8",
+      "repo_path": "data/mdpf/scripts/gold/mdpf_gold_consolidator.py",
+      "source_sha256": "65486d9d0436a56b0e7019c03618233dfc8be061917581d4c0f4bb6392230584",
+      "symbol": "ARTIFACT_TYPE_SCOPE_SET"
+    },
+    "completeness": "ROSTER-DERIVED",
+    "missing_pairs": [],
+    "unexpected_pairs": [],
+    "unrecognized_gold_keys": [
+      "portal/gold/mdpf/_code/mdpf-accrual-bridge.tar.gz",
+      "portal/gold/mdpf/_code/mdpf-gold-lambda.zip"
+    ],
+    "prior_pointer_note": "AccessDenied: An error occurred (AccessDenied) when calling the GetObject operation: User: arn:aws:sts::313476888478:assumed-role/opal-assets-mdpf-egress-publisher-role/opal-assets-mdpf-portal-publisher is not authorized to perform: s3:GetObject on resource: \"arn:aws:s3:::opal-data-portal-v2/platinum/mdpf/_manifests/latest.json\" because no identity-based policy allows the s3:GetObject action",
+    "all_present": true
+  },
+  "checks": [
+    {
+      "pair": "cottonwood/category-views",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/cottonwood/category-views.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/cottonwood/category-views/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "ea5dfc65537033c7680abcfec25dea092e6432ba985eac15f87367f74cd2f9bb",
+        "size": 4543,
+        "etag": "\"9c3aa9f446b6f93b98087eed2f5b32f2\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/category-views/2026-09-14.json",
+        "version_id": "cc8U_aZn4.odcErE5QRNci3snuMeCVhf",
+        "last_modified": "2026-09-15T13:31:11+00:00",
+        "sha256": "ea5dfc65537033c7680abcfec25dea092e6432ba985eac15f87367f74cd2f9bb",
+        "bytes": 4725
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/cottonwood/category-views.json",
+        "version_id": "p9DVOUR2rwiYp9j6S1lTCzSK3bhVx7YN",
+        "last_modified": "2026-09-15T13:50:50+00:00",
+        "sha256": "6074148a21ec49f9d8f9d85d94d91db0a19cdfc9e50522a851efbad0dc357066",
+        "bytes": 4543
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "as_of": "2026-09-14"
+      }
+    },
+    {
+      "pair": "cottonwood/aum-metrics",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/cottonwood/aum-metrics.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/cottonwood/aum-metrics/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "ed7a5c601c64dacd0062441d78fd29cf4fec1ce33b9c22ca28af90d667ca75d2",
+        "size": 5373,
+        "etag": "\"df3ab09dad1e2ca2688487034edc793f\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/aum-metrics/2026-09-14.json",
+        "version_id": "hbFLNCiC1eicFieMAeQc_r7A9UXacuBZ",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "ed7a5c601c64dacd0062441d78fd29cf4fec1ce33b9c22ca28af90d667ca75d2",
+        "bytes": 5558
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/cottonwood/aum-metrics.json",
+        "version_id": ".tPWjQfsefVcn7qsHSKbBzUHHehb7Kvt",
+        "last_modified": "2026-09-15T13:50:50+00:00",
+        "sha256": "40201d73c56d963a6c9bbce50cde1e73da91b6278f98f22f2e1e16184a76baa0",
+        "bytes": 5373
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-14"
+      }
+    },
+    {
+      "pair": "cottonwood/account-distribution",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/cottonwood/account-distribution.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/cottonwood/account-distribution/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "500eac87963c94c06a95f8db78744572b4d8f9f6c04b8ffd3deca50410e31329",
+        "size": 9727,
+        "etag": "\"c8ec0cb65a48ee963520169ecd1a36a4\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/account-distribution/2026-09-14.json",
+        "version_id": "lpVjHE96eb.C8zcPoDIVk1ZmbANcqKqX",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "500eac87963c94c06a95f8db78744572b4d8f9f6c04b8ffd3deca50410e31329",
+        "bytes": 9903
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/cottonwood/account-distribution.json",
+        "version_id": "T80a.B7oDqkAvXO9q9cxlaGPhJwp.q_5",
+        "last_modified": "2026-09-15T13:50:50+00:00",
+        "sha256": "eb26e706994efd61e353a23cbc30ec576b59394c469215f2fc50cc56a9fa8cbc",
+        "bytes": 9727
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-14"
+      }
+    },
+    {
+      "pair": "global/category-views",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/global/category-views.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/global/category-views/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "0eeb79b2d666faab52583cd7ca50b2dc8f99f3b19dca7f01022aff9adc1266c1",
+        "size": 4330,
+        "etag": "\"7af9411960a9549c0a72770adfc0f2fe\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/global/category-views/2026-09-14.json",
+        "version_id": "0cubL4UwvVnP2iWezzq1VKR3nRmCFgeZ",
+        "last_modified": "2026-09-15T13:31:11+00:00",
+        "sha256": "0eeb79b2d666faab52583cd7ca50b2dc8f99f3b19dca7f01022aff9adc1266c1",
+        "bytes": 4516
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/global/category-views.json",
+        "version_id": "SImWn5XJ5opzUoQraNunob2Iy1gGbVQW",
+        "last_modified": "2026-09-15T13:50:51+00:00",
+        "sha256": "da8e8e2cdc7266e60426d3fe3fbefafae65538037151f5c0062483dafc8d2d15",
+        "bytes": 4330
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "as_of": "2026-09-14"
+      }
+    },
+    {
+      "pair": "global/aum-metrics",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/global/aum-metrics.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/global/aum-metrics/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "1f6a5c7d2c7c0bac1b5f64765b68d5d6f7dec1b56f896511fa3c7412727195c1",
+        "size": 6791,
+        "etag": "\"045afe736f337fa1a8b893ed8951dac2\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/global/aum-metrics/2026-09-14.json",
+        "version_id": "8fwtCN7MtiC8rrFo0eRMmrP6ZCXNswu2",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "1f6a5c7d2c7c0bac1b5f64765b68d5d6f7dec1b56f896511fa3c7412727195c1",
+        "bytes": 6980
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/global/aum-metrics.json",
+        "version_id": "OVcFBOpgjFywfYJGYjowX2VSVwLdiyez",
+        "last_modified": "2026-09-15T13:50:50+00:00",
+        "sha256": "d7b433fc0304dde278829b1c15f5a84e8e597647c4aa0eceaf5d1afb06337a48",
+        "bytes": 6791
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-14"
+      }
+    },
+    {
+      "pair": "global/account-distribution",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/global/account-distribution.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/global/account-distribution/2026-09-15.json",
+        "source_date": "2026-09-15",
+        "source_sha256": "28d00739ea37568740465ee1a72836d1b6f0e62a066a446ba538f7f7e8d2ba2a",
+        "size": 9081,
+        "etag": "\"37bebc17e00b711a1664682e375bcb25\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/global/account-distribution/2026-09-15.json",
+        "version_id": "Iyn2yXKW3IpJ9JAbItUC3PKlctt_R31o",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "28d00739ea37568740465ee1a72836d1b6f0e62a066a446ba538f7f7e8d2ba2a",
+        "bytes": 9261
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/global/account-distribution.json",
+        "version_id": "9HmcbNX8B4IDSRgXHWpfiEKJDxIXuyWt",
+        "last_modified": "2026-09-15T13:50:50+00:00",
+        "sha256": "93050378220fed5175e043b014203bdd42a77be7be06305c020aecb6bb6c14e7",
+        "bytes": 9081
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-15"
+      }
+    },
+    {
+      "pair": "49financial/category-views",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/49financial/category-views.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/49financial/category-views/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "06f817d0857c7e5a583d1d4b7d53947971c41d7e14be760dc7c0729442a2bc92",
+        "size": 4346,
+        "etag": "\"166473e3e56f04b3ef989b54c4c72caa\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/49financial/category-views/2026-09-14.json",
+        "version_id": "5DAMdpqyNh.cJL3CmUXpPbPR7HwLww4p",
+        "last_modified": "2026-09-15T13:31:11+00:00",
+        "sha256": "06f817d0857c7e5a583d1d4b7d53947971c41d7e14be760dc7c0729442a2bc92",
+        "bytes": 4527
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/49financial/category-views.json",
+        "version_id": "I3.leHi_SZFkikM9W6754oFuR6vxsEmG",
+        "last_modified": "2026-09-15T13:50:50+00:00",
+        "sha256": "c907a9fac921c96c620a38e4920fbe08495813ede6de36db7e70b4f32db9b0d9",
+        "bytes": 4346
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "as_of": "2026-09-14"
+      }
+    },
+    {
+      "pair": "49financial/aum-metrics",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/49financial/aum-metrics.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/49financial/aum-metrics/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "e6b1e29a364abda84a3ab45cb97b536408967b60e3e7c42c42e4ae37f4b68f5c",
+        "size": 4160,
+        "etag": "\"d5e883e9c8f80ffe8bcea2ef429416b7\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/49financial/aum-metrics/2026-09-14.json",
+        "version_id": "arVcvgAGVbdA8Troe6AdYJKZqbVnkcDO",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "e6b1e29a364abda84a3ab45cb97b536408967b60e3e7c42c42e4ae37f4b68f5c",
+        "bytes": 4344
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/49financial/aum-metrics.json",
+        "version_id": "Sh4NGPTUvnZKH3Sn4KLOYjjQBTUULbtj",
+        "last_modified": "2026-09-15T13:50:49+00:00",
+        "sha256": "cbf2bab0007cd58d962b50de11674b0e1548e655ebf1f5ea14d072ff4a087f47",
+        "bytes": 4160
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-14"
+      }
+    },
+    {
+      "pair": "49financial/account-distribution",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/49financial/account-distribution.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/49financial/account-distribution/2026-09-15.json",
+        "source_date": "2026-09-15",
+        "source_sha256": "13806fbcbb21b1981baa0482691b2da7f5e3b05587cc6d7729a34fb3cd9e9e54",
+        "size": 6084,
+        "etag": "\"5b6144a0c12a769e9b8234af1389da5a\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/49financial/account-distribution/2026-09-15.json",
+        "version_id": "_UCDLGg1vd7fE6OsIDJ.IOGwBPX7PBkQ",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "13806fbcbb21b1981baa0482691b2da7f5e3b05587cc6d7729a34fb3cd9e9e54",
+        "bytes": 6259
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/49financial/account-distribution.json",
+        "version_id": "F9lXYWZWUSD8uc0jHws2ev0C0TZzGtOp",
+        "last_modified": "2026-09-15T13:50:49+00:00",
+        "sha256": "05971a60f45cb02420303e22c7d866d59d6fddf86fe8367640b5911cfbc78c33",
+        "bytes": 6084
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-15"
+      }
+    },
+    {
+      "pair": "inflection/category-views",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/inflection/category-views.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/inflection/category-views/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "602d69c0e901b68a01ef069dbb0732d5b365cd9d87824c25051da1a99695e3d7",
+        "size": 4532,
+        "etag": "\"70767b65da8c6be17c2be2014e2ee8ca\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/inflection/category-views/2026-09-14.json",
+        "version_id": "SVTuTxXJUOYJeNEjecl.C33VGyWyJVqP",
+        "last_modified": "2026-09-15T13:31:11+00:00",
+        "sha256": "602d69c0e901b68a01ef069dbb0732d5b365cd9d87824c25051da1a99695e3d7",
+        "bytes": 4714
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/inflection/category-views.json",
+        "version_id": "i80kiRnK3Z77YyPHeywAJfO1DqVtxqXX",
+        "last_modified": "2026-09-15T13:50:51+00:00",
+        "sha256": "daf03f3a72b60dd80d424cc7528a546ce56daa8666882c21aac9adf0f95f3428",
+        "bytes": 4532
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "as_of": "2026-09-14"
+      }
+    },
+    {
+      "pair": "inflection/aum-metrics",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/inflection/aum-metrics.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/inflection/aum-metrics/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "025ec11b4c491e0f0c04b48889037030f4f3e515aeb214836a4b82ddf551ecf8",
+        "size": 4339,
+        "etag": "\"d1adf7cca28e58546048393dec29275f\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/inflection/aum-metrics/2026-09-14.json",
+        "version_id": "dnJsRiswcKm.7XihJBrGtWpPfjS.RIDg",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "025ec11b4c491e0f0c04b48889037030f4f3e515aeb214836a4b82ddf551ecf8",
+        "bytes": 4524
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/inflection/aum-metrics.json",
+        "version_id": "qnp07nfNKCUA7le.bEVizEGO9FL0BQP9",
+        "last_modified": "2026-09-15T13:50:51+00:00",
+        "sha256": "6f4ef4f039159d39093df4058e28801ff9a4233bf08d2bbcd50f78812bef41e7",
+        "bytes": 4339
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-14"
+      }
+    },
+    {
+      "pair": "inflection/account-distribution",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/inflection/account-distribution.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/inflection/account-distribution/2026-09-15.json",
+        "source_date": "2026-09-15",
+        "source_sha256": "4de2e4aa382e79302bdf312cebb0696512b154d9c0fe0afd7473c6e3f355cfe7",
+        "size": 7549,
+        "etag": "\"712afa78d4689e0d6879388769872e40\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/inflection/account-distribution/2026-09-15.json",
+        "version_id": "piGvxOs4RzFXGZOXEq.f94pTAB2tMN3R",
+        "last_modified": "2026-09-15T13:31:10+00:00",
+        "sha256": "4de2e4aa382e79302bdf312cebb0696512b154d9c0fe0afd7473c6e3f355cfe7",
+        "bytes": 7725
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/inflection/account-distribution.json",
+        "version_id": "ULn2XrZlbC4vGrC5rU2PCr.aR4FaHRrz",
+        "last_modified": "2026-09-15T13:50:51+00:00",
+        "sha256": "73b2d3e25336e0b587e79dbe78ed08f9a8b318fc24b61f645b27b034f5fbf307",
+        "bytes": 7549
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "period": "2026-09-15"
+      }
+    },
+    {
+      "pair": "cottonwood/account-units",
+      "manifest_row": {
+        "serve_key": "platinum/mdpf/cottonwood/account-units.json",
+        "status": "published",
+        "published": true,
+        "source_key": "portal/gold/mdpf/cottonwood/account-units/2026-09-14.json",
+        "source_date": "2026-09-14",
+        "source_sha256": "52440d2deeadf357222fcce6ef38dfbeb80fe37d0910e8c85672a097e8a30dc7",
+        "size": 8540,
+        "etag": "\"fcb2c2480147172f1103339f7c908bb4\""
+      },
+      "gold": {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/account-units/2026-09-14.json",
+        "version_id": "hlds5dRH99I1xsqel.N4xnuG7tCDlU78",
+        "last_modified": "2026-09-15T13:40:28+00:00",
+        "sha256": "52440d2deeadf357222fcce6ef38dfbeb80fe37d0910e8c85672a097e8a30dc7",
+        "bytes": 8281
+      },
+      "platinum": {
+        "bucket": "opal-data-portal-v2",
+        "key": "platinum/mdpf/cottonwood/account-units.json",
+        "version_id": "lJo2_8Q9bYwo0gI9aaU8estPv80gb40l",
+        "last_modified": "2026-09-15T13:50:50+00:00",
+        "sha256": "4422df7540b17344273fed162d2fc4905cf3e5a66e15d43c58fe96d2877ae547",
+        "bytes": 8540
+      },
+      "content_equals_gold_except_publisher_provenance": true,
+      "gold_hash_matches_manifest": true,
+      "served_source_key_matches": true,
+      "served_source_vintage_matches": true,
+      "served_declared_dates": {
+        "assignment_date": "2026-09-15",
+        "value_date": "2026-09-14"
+      }
+    }
+  ],
+  "production_mutations": 0,
+  "manual_invocations": 0,
+  "result": "EXERCISED_7_OF_7_TARGETS; 6_OF_6_OTHER_FIRM_SOURCE_EQUALITY_CONTROLS",
+  "retention": {
+    "measured_at": "2026-09-15T13:51:40.708501+00:00",
+    "prior_gold_versions": [
+      {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/category-views/2026-09-10.json",
+        "before_version_id": "6ZKekgVAxczvbDAhoqUpomC73nwAqKo2",
+        "current_version_id": "6ZKekgVAxczvbDAhoqUpomC73nwAqKo2",
+        "unchanged_version": true
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/aum-metrics/2026-09-10.json",
+        "before_version_id": "eFGUm3tsGo2zt5qy54Rn735a79.MPnDE",
+        "current_version_id": "eFGUm3tsGo2zt5qy54Rn735a79.MPnDE",
+        "unchanged_version": true
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/account-distribution/2026-09-10.json",
+        "before_version_id": "M3qynhnmuYYRke9AZW1M7dUxEpatp.Fr",
+        "current_version_id": "M3qynhnmuYYRke9AZW1M7dUxEpatp.Fr",
+        "unchanged_version": true
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/cottonwood/account-units/2026-09-10.json",
+        "before_version_id": "PcL.mgEtxy5TFwIHP9ZRJI4jBfTAd1b2",
+        "current_version_id": "PcL.mgEtxy5TFwIHP9ZRJI4jBfTAd1b2",
+        "unchanged_version": true
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/global/category-views/2026-09-10.json",
+        "before_version_id": "b3Z.3ubbhOYiRhhGSuEMfvAOdQs7F7Sj",
+        "current_version_id": "b3Z.3ubbhOYiRhhGSuEMfvAOdQs7F7Sj",
+        "unchanged_version": true
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/global/aum-metrics/2026-09-10.json",
+        "before_version_id": "CkJhCySnNrbsm.pAmv2BWxDksL4aEROV",
+        "current_version_id": "CkJhCySnNrbsm.pAmv2BWxDksL4aEROV",
+        "unchanged_version": true
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "portal/gold/mdpf/global/account-distribution/2026-09-11.json",
+        "before_version_id": "xkIym0YddsnF90nZ92SAUVzEfd6ilKuW",
+        "current_version_id": "xkIym0YddsnF90nZ92SAUVzEfd6ilKuW",
+        "unchanged_version": true
+      }
+    ],
+    "global_account_units": [
+      {
+        "bucket": "opal-data-assets",
+        "key_or_prefix": "portal/gold/mdpf/global/account-units/",
+        "state": "ABSENT"
+      },
+      {
+        "bucket": "opal-data-portal-v2",
+        "key_or_prefix": "platinum/mdpf/global/account-units.json",
+        "state": "ABSENT"
+      }
+    ],
+    "production_mutations": 0
+  },
+  "scope_notes": [
+    "The13:31 missing-writer inference was superseded by CTO97089 and independently verified13:40 accrual. No expectation was narrowed.",
+    "Other-firm comparisons prove served content equals their current Gold, not unchanged daily bytes or a same-input counterfactual.",
+    "Manifest trigger source is empty; the observed13:50:46-50Z run aligns with the live enabled13:50 UTC Scheduler. This seat made no manual invocation.",
+    "Prior-pointer read AccessDenied also exists in the09-14 pre-hotfix manifest; it is a distinct republish warning reported to CTO."
+  ]
+}

@@ -81,6 +81,14 @@ def utc_now() -> str:
 
 
 def content_pin(md_bytes: bytes) -> str:
+    """The pin of the PRD's RECORDED bytes: CRLF is normalised to LF before hashing, so a stamp written from an
+    autocrlf checkout pins the committed record -- the same pin every checkout computes (LGIC_NAMING-S5)."""
+    return hashlib.sha256(md_bytes.replace(b"\r\n", b"\n")).hexdigest()[:PIN_LEN]
+
+
+def raw_pin(md_bytes: bytes) -> str:
+    """The pre-S5 pin: the hash of the checked-out bytes as read. `status` still accepts it, so a stamp written
+    before the normalisation does not read STALE on a checkout like the one that wrote it."""
     return hashlib.sha256(md_bytes).hexdigest()[:PIN_LEN]
 
 
@@ -212,8 +220,12 @@ def cmd_stamp(args) -> int:
             print("WARN: predecessor %s (%s) is not stamped yet -- proceeding, but the ladder is out of order."
                   % (pred, want))
     if stage == "L5":
-        signed = _signed_reviewers(_load_json_dir(signoff_dir), header["prd_version"])
-        missing = [r for r in SIGNOFF_REVIEWERS if r not in signed]
+        halves = _signoff_halves(prd_abs, signoff_dir, header.get("project"))
+        if halves is not None:
+            missing = [h + " half" for h in sorted(halves) if (halves[h] or {}).get("state") != "SIGNED"]
+        else:
+            signed = _signed_reviewers(_load_json_dir(signoff_dir), header["prd_version"])
+            missing = [r for r in SIGNOFF_REVIEWERS if r not in signed]
         if missing:
             print("WARN: L4-R sign-off not complete at %s (missing %s) -- the L6 gate will still refuse a "
                   "task order until both sign; proceeding to record the L5 stamp." % (header["prd_version"], ", ".join(missing)))
@@ -289,7 +301,9 @@ def cmd_sign(args) -> int:
 
 
 def _signed_reviewers(signoff_files: dict, prd_version: str) -> set:
-    """The base serials that SIGNED this exact prd_version (mirrors LIMB 6 / the notifier's predicate)."""
+    """LEGACY FALLBACK ONLY: the base serials that SIGNED this exact prd_version. LIMB 6 and the notifier moved to
+    hash-bound halves (prd_signoff_lib, spine v3.15); status and the L5 warning use _signoff_halves and fall back
+    here only when the lib cannot be read (LGIC_NAMING-S9)."""
     out = set()
     for _name, doc in signoff_files.items():
         if not isinstance(doc, dict):
@@ -301,7 +315,35 @@ def _signed_reviewers(signoff_files: dict, prd_version: str) -> set:
     return out
 
 
-def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
+def _signoff_halves(prd_abs: str, signoff_dir: str, code):
+    """The L4-R halves exactly as prd-signoff.py / LIMB 6 read them: prd_signoff_lib.evaluate over the PRD text
+    with the project row's coo_lane and designated brief signer (prd-signoff.py _evaluate). HASH-bound, so a half
+    carried across a version bump reads SIGNED. None when the lib or the row cannot be read -- the caller then
+    falls back to the legacy version-bound view and says so (LGIC_NAMING-S9)."""
+    try:
+        here = os.path.dirname(os.path.abspath(__file__))
+        if here not in sys.path:
+            sys.path.insert(0, here)
+        import prd_signoff_lib as lib
+        with open(prd_abs, "r", encoding="utf-8", errors="replace") as fh:
+            text = fh.read()
+        doc = {}
+        cands = [os.path.join(os.path.dirname(os.path.dirname(prd_abs)), "project.json")]
+        if code:
+            cands.append(os.path.join(_root(), "org", "projects", "%s.json" % code))
+        for cand in cands:
+            if os.path.isfile(cand):
+                with open(cand, "r", encoding="utf-8") as fh:
+                    doc = json.load(fh)
+                break
+        r = lib.evaluate(text, lib.read_signoff_files(signoff_dir), coo_lane_of_project=doc.get("coo_lane"),
+                         designated=lib.designated_brief_signer(doc)[0])
+        return r["halves"]
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def render_status(header, cur_pin, stamps, signoffs, dep_stage=None, alt_pins=(), halves=None):
     """PURE. -> (lines, next_stage_or_None). `stamps`/`signoffs` = {basename: doc}. `cur_pin` is the
     PRD's current content pin; a stamp whose prd_pin != cur_pin is STALE (PRD changed after stamping).
     `dep_stage` is the register's own state (REGISTERED/EXECUTING/CLOSED) -- an instrument the stamp
@@ -340,7 +382,8 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
             if not doc:
                 continue
             shown = True
-            stale = doc.get("prd_pin") and doc.get("prd_pin") != cur_pin
+            # alt_pins: pre-S5 raw-byte pins of the same PRD bytes, accepted so no old stamp reads falsely STALE
+            stale = doc.get("prd_pin") and doc.get("prd_pin") != cur_pin and doc.get("prd_pin") not in alt_pins
             rlabel = " r%d" % key[1] if key[1] is not None else ""
             lines.append("  %-4s%-3s %-11s %-18s %s  %s  %s"
                          % (stage, rlabel, STAGE_LABEL[stage], doc.get("signed_by"), doc.get("utc"),
@@ -353,7 +396,12 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
             lines.append("  %-7s %-11s -- no stamp, below the %s high-water (predates the mechanism or already "
                          "past; NOT pending)" % (stage, STAGE_LABEL[stage], STAGE_ORDER[high_water]))
         # sign-off ladder sits right after L4
-        if stage == "L4":
+        if stage == "L4" and halves is not None:
+            # hash-bound, exactly as prd-signoff / LIMB 6 read it (LGIC_NAMING-S9)
+            for half in sorted(halves):
+                st = halves[half] or {}
+                lines.append("  sign-off %-14s %-18s %s -- %s" % (half, st.get("by") or "-", st.get("state"), st.get("detail")))
+        elif stage == "L4":
             for who in SIGNOFF_REVIEWERS:
                 got = [d for d in signoffs.values() if isinstance(d, dict) and base_serial(d.get("signed_by")) == who]
                 cur = [d for d in got if str(d.get("prd_version")) == str(ver)]
@@ -385,7 +433,10 @@ def render_status(header, cur_pin, stamps, signoffs, dep_stage=None):
         lines.append("  register: EXECUTING but ZERO stamps -- this PRD predates the stamp mechanism; the ladder "
                      "state before the first stamp is NOT CAPTURED (consult the register / dispatch, not this NEXT)")
     waits = ""
-    if next_stage == "L5":
+    if next_stage == "L5" and halves is not None:
+        missing_h = [h for h in sorted(halves) if (halves[h] or {}).get("state") != "SIGNED"]
+        waits = (" -- waiting on the %s half" % " and ".join(missing_h)) if missing_h else " -- sign-offs complete; COO may decompose"
+    elif next_stage == "L5":
         missing = [r for r in SIGNOFF_REVIEWERS if r not in signed_now]
         waits = (" -- waiting on sign-off from %s" % ", ".join(missing)) if missing else " -- sign-offs complete; COO may decompose"
     if next_stage:
@@ -407,13 +458,15 @@ def cmd_status(args) -> int:
     stamps = _load_json_dir(stamps_dir)
     signoffs = _load_json_dir(signoff_dir)
     cur_pin = content_pin(raw)
+    alt_pins = {raw_pin(raw)} - {cur_pin}   # a pre-S5 stamp pinned the checkout's bytes; accept it
     dep = _dep_stage(_root(), (header or {}).get("project"))
-    lines, nxt = render_status(header or {}, cur_pin, stamps, signoffs, dep)
+    halves = _signoff_halves(prd_abs, signoff_dir, (header or {}).get("project"))
+    lines, nxt = render_status(header or {}, cur_pin, stamps, signoffs, dep, alt_pins, halves)
     if args.json:
         print(json.dumps({"project": (header or {}).get("project"),
                           "prd_version": (header or {}).get("prd_version"),
                           "current_pin": cur_pin, "next_stage": nxt, "dep_stage": dep,
-                          "stamps": stamps, "signoffs": signoffs}, indent=1, sort_keys=True))
+                          "stamps": stamps, "signoffs": signoffs, "signoff_halves": halves}, indent=1, sort_keys=True))
     else:
         print("\n".join(lines))
     return 0
@@ -439,6 +492,8 @@ def _self_test() -> int:
     check("content_pin is deterministic and 12 hex", lambda: content_pin(b"abc") == content_pin(b"abc")
           and len(content_pin(b"abc")) == 12 and re.match(r"^[0-9a-f]{12}$", content_pin(b"abc")))
     check("content_pin moves with the bytes", lambda: content_pin(b"abc") != content_pin(b"abd"))
+    check("content_pin normalises CRLF, so two checkouts of one record agree (LGIC_NAMING-S5)",
+          lambda: content_pin(b"a\r\nb\r\n") == content_pin(b"a\nb\n") and raw_pin(b"a\r\nb\r\n") != raw_pin(b"a\nb\n"))
     check("stamp_name: recurring stage carries the round", lambda: stamp_name("L10", 3) == "L10.r3.json")
     check("stamp_name: per-version stage has no round", lambda: stamp_name("L4", None) == "L4.json")
     check("predecessor: L4 has none, L5<-L4, L8<-L6, L10<-L9",
@@ -465,6 +520,20 @@ def _self_test() -> int:
     lines, nxt = render_status(hdr, pin, {"L4.json": l4}, {})
     check("render_status: only L4 stamped, no sign-offs -> NEXT L5 waiting on both reviewers",
           lambda: nxt == "L5" and any("waiting on sign-off from 4.0.0_SA_CRO, 3.0.0_SA_CVO" in x for x in lines))
+    # LGIC_NAMING-S9: hash-bound halves drive the sign-off lines and the L5 waits
+    hv = {"ratified-text": {"state": "SIGNED", "by": "3.0.0_SA_CVO", "detail": "current"},
+          "brief": {"state": "SIGNED", "by": "4.0.0_SA_CRO", "detail": "current"}}
+    lines4, nxt4 = render_status(dict(hdr, prd_version="v0.5"), pin, {"L4.json": l4}, {}, None, (), hv)
+    check("render_status: both halves SIGNED (hash-bound) at a new version -> no 'not signed', sign-offs complete",
+          lambda: nxt4 == "L5" and not any("not signed" in x for x in lines4) and any("sign-offs complete" in x for x in lines4))
+    hv2 = dict(hv, brief={"state": "STALE", "by": "4.0.0_SA_CRO", "detail": "bytes moved"})
+    lines5, _ = render_status(hdr, pin, {"L4.json": l4}, {}, None, (), hv2)
+    check("render_status: a STALE half -> waiting on the brief half",
+          lambda: any("waiting on the brief half" in x for x in lines5))
+    # a pre-S5 raw pin passed as an alt pin is accepted, not flagged
+    lines3, _ = render_status(hdr, "deadbeefdead", {"L4.json": l4}, {}, None, {pin})
+    check("render_status: a stamp whose pin is in alt_pins -> pin OK, not STALE-PIN",
+          lambda: any("pin OK" in x for x in lines3) and not any("STALE-PIN" in x for x in lines3))
     # a stale pin is flagged
     lines2, _ = render_status(hdr, "deadbeefdead", {"L4.json": l4}, {})
     check("render_status: a stamp whose pin != current -> STALE-PIN",

@@ -1,0 +1,80 @@
+{
+ "schema_version": "1.0",
+ "project": "LGIC_NAMING",
+ "round": 1,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-14T19:00Z",
+ "trigger": "The round-1 L10 slug to 1.0.0_SA_CTO, delivered 2026-09-14T18:54:36Z as org/mcp/inbox/1.0.0_SA_CTO/read/20260914T185436Z_3.0.0_SA_CVO__L10_SLUG__LGIC_NAMING_round_1__23_rows_.md (3632 bytes, read from the recipient's read/ folder; UNTRACKED device-local file: org/mcp/inbox/* is gitignored, so NO commit vintage exists for this carrier). It cites the record @810ecf6cf2, the carriers @2c07f8dee3 and the held remediation document @d1470296de. Written minutes after the slug.",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-14T18:17Z",
+   "ended_utc": "2026-09-14T18:24Z",
+   "act": "Compiled round 1's channel. The new rows are those at HEAD absent at the issuance commit 777770e6aa: 33 minus 10 = 23, with 0 lost. Over ADJUDICATION_v1 (10 ids carried) exactly those 23 were carrier-less, and no older row was. The count is 23, not the 22 in 96660/96661: the pre-issuance intake carried S1..S10, so S11 was carrier-less too. 5 BLOCKING; 1 ARMED (W6-S1), disarmed by S12. The watcher's banner read parent-tied: pid 618390.",
+   "inputs": [
+    {"kind": "MESSAGE", "ref": "96661"},
+    {"kind": "MESSAGE", "ref": "96664"},
+    {"kind": "MESSAGE", "ref": "96660 (read in 1.0.0_SA_CTO's read/ folder, as inspection)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md@777770e6aa and @d292bca3ba"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v1.md@3e426a0574"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND1_L8_L9_20260914.md@810ecf6cf2 sections 1-2"}
+   ],
+   "spine_clause": "L8: input is the new investigation rows and no others; the stall clause :395-397 (1.0.0_SA_CTO's re-arm)",
+   "gate_or_notifier_touched": "none -- a read-only compile",
+   "note": "started_utc is the first compile read, taken from tool-call order, not recorded by an instrument. The watcher had been armed at load, so the re-arm found it live."
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-14T18:24Z",
+   "ended_utc": "2026-09-14T18:35:07Z",
+   "act": "Graded the four JUDGMENT criteria. F1-J1: 12 of 69 attributions re-derived by hand from GRADING_RULE R1-R9 and V1-V4, and 12 match. G1-J1: the two graders' result files were read and compared, and the answer files' sha256 and commit parents checked. H3-J1: every cited GRADING_RULE line was read at 51b0952d71 (= HEAD). T1-J1: TENSION_RANKING's ten cost lines were read. Result: 4 PASS, 3 with a named qualification. W1-S2 was routed to LGIC_ENFORCE by reading its PRD (:150, :163-168, :349) and LGIC_CANON_PRD :27.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the four instances: TO-LN-f-1 @d9ccd9babd, TO-LN-g-1 @51b0952d71, TO-LN-h-3 @f829fdb1fc, TO-LN-t-1 @36afc955ba"},
+    {"kind": "ARTIFACT", "ref": "deliverables/GRADING_RULE.md@51b0952d71; exercises/n4-firm-patterns.md; exercises/n6-compare.md; exercises/n6-grader-{a,b}.tsv (388b07f486, 40f445d92c); grader-{a,b}.result.md; TENSION_RANKING.md; LEGACY_SERVED_PATHS.json"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND1_L8_L9_20260914.md@810ecf6cf2 sections 3-5"}
+   ],
+   "spine_clause": "L9: JUDGMENT criteria are graded here and never self-graded",
+   "gate_or_notifier_touched": "safe-commit gates passed on 810ecf6cf2",
+   "note": "ended_utc is the generator run's stamp (the rows' surfaced_at). The record was committed after it."
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-14T18:35:07Z",
+   "ended_utc": "2026-09-14T18:4xZ",
+   "act": "Carried every disposition and the four grades on the channel as C-S3..C-S10 in ADJUDICATION_v2.md: 3 DISMISSED_WITH_REASON, 20 GRADUATED, and C-S10 this seat's own observation. Closing count: carrier-less 0 of 33.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the record @810ecf6cf2"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v2.md@2c07f8dee3"}
+   ],
+   "spine_clause": "L10 precondition: every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate REFUSED the first attempt on grades[].criterion's -AC pattern (F1-J1, G1-J1, H3-J1, T1-J1). Measured with two instruments that each showed exactly those 4 violations and no other: jsonschema Draft 7 over the 8 rows, and the gate's own no-override run. Landed by the audited override, with the reason in the commit body; row C-S10 routes the fix to 1.0.0_SA_CTO. missions-tree-check read 0 violations.",
+   "note": "ended_utc is shown to the ten-minute grain only; the commit hash carries the exact time."
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-14T18:4xZ",
+   "ended_utc": "2026-09-14T18:54:36Z",
+   "act": "Attempted the remediation document (20 rows, one per graduated item) at surprise-channel/remediations/REMEDIATION_v1.md. The gate refused all 20: 3 of 14 orders (LN-e-3, LN-e-5, LN-l-3) read <status>pending, and the gate reads the status word (:787-814) for every remediation row (:1391-1397), while 1.0.0_SA_CTO's 96664 reads terminality from the VALID proof instances. The rows were moved off the channel path at once and parked byte-for-byte in the held document. The ONE slug was then sent to 1.0.0_SA_CTO with the refusal quoted and both remedies named.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/task-orders/*.md at HEAD (14; 11 complete, 3 pending)"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND1_REMEDIATION_HELD_BY_GATE_20260914.md@d1470296de"},
+    {"kind": "MESSAGE", "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260914T185436Z_3.0.0_SA_CVO__L10_SLUG__LGIC_NAMING_round_1__23_rows_.md (3632 bytes; untracked carrier)"}
+   ],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate REFUSED the remediation rows (terminal limb, 20 of 20). The L8 correspondence guard (the CVO's one send goes to the CTO) passed with no override.",
+   "note": "The remediation rows land at the channel path unchanged once the three orders read terminal at HEAD, with no second message from this seat. Push state at send: LOCAL; origin/CLOUD 6a5b276f8b (2.0.0_SA_COO~G's and 2.0.0_SA_COO~D's ls-remote reads, 18:16Z-18:50Z; not re-read by this seat at send)."
+  }
+ ]
+}

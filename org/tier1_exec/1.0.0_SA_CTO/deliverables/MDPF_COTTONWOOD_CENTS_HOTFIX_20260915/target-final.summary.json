@@ -1,0 +1,31 @@
+{
+  "plan": "target-final",
+  "plan_sha256": "5f1314843b60e35e5b331327a0f057a551a75bd27690191c358c29f512c51dcd",
+  "managed_changes": [
+    {
+      "address": "aws_lambda_function.mdpf_gold",
+      "actions": [
+        "update"
+      ],
+      "changed_attributes": [
+        "environment",
+        "last_modified",
+        "s3_object_version",
+        "source_code_hash"
+      ]
+    }
+  ],
+  "function_only": true,
+  "unrelated_drift_held": "aws_s3_object.mdpf_route_bindings, per 96942",
+  "code_before": {
+    "s3_key": "portal/gold/mdpf/_code/mdpf-gold-lambda.zip",
+    "s3_object_version": "Mpv.veBsx7I42MEiMhWUkttFFfvBaqL1",
+    "source_code_hash": "53ff3b33534103fc46f7c910dd96a29393b68e01ff198f0fb36768211ccb7210"
+  },
+  "code_after": {
+    "s3_key": "portal/gold/mdpf/_code/mdpf-gold-lambda.zip",
+    "s3_object_version": "9GsracvIPvfBMzF1dttMpew0TkQtt.qg",
+    "source_code_hash": "7af218097511a2be15fbe0a2e07b20c04f3320f66f6bf0402fe20268b2488801"
+  },
+  "declared_commit_after": "48b8671569b72efb4eca64ef41ded4de9c54e84c"
+}

@@ -1,0 +1,50 @@
+{
+  "checked_at_utc": "2026-09-15T03:16:45.766151+00:00",
+  "browser": "Microsoft Edge via Playwright",
+  "sources": [
+    "live presigned entry",
+    "live Desktop object",
+    "live Mobile object"
+  ],
+  "check_count": 498,
+  "script_errors": [],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+    "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+  ],
+  "all_layout_diagram_checks_pass": true,
+  "gateway": {
+    "unauthenticated_status": 302,
+    "redirect_host": "login.microsoftonline.com",
+    "authenticated_sign_in": "not exercised; separate base CTO ALB work"
+  },
+  "widths": [
+    390,
+    768,
+    844,
+    900,
+    1024,
+    1280
+  ],
+  "note": "Uses the actual published bytes and signed entry; mouse/touch and both initial widths. No signed URLs stored here.",
+  "resource_error_diagnostic": {
+    "observed": [
+      {
+        "message": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+        "host": "opal-data-portal-v2.s3.amazonaws.com",
+        "path": "/favicon.ico"
+      }
+    ],
+    "explanation": "Unsigned browser favicon request is denied by the private S3 bucket; report documents and scripts succeeded. Diagnostic repeats one entry navigation."
+  }
+}

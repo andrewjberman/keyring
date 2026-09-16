@@ -252,7 +252,8 @@ def _render_entry(state: dict) -> str:
     advi-breaks-to3-49f-431167-unrealized-facts-restore sat falsely RED for 214h behind exactly
     that belief. A comment that over-claims an invariant is a detector that lies to its reader.
     Layer 3 (_entry_prose_drift) DETECTS the drift this function cannot prevent.
-    Never hand-edit an entry.
+    Never hand-edit an entry -- except its `## Sign-off` section, which _write_entry carries through every
+    re-render (LGIC_ENFORCE-W1-S17).
     """
     lines = [
         "# Deploy Completion Record",
@@ -286,9 +287,34 @@ def _render_entry(state: dict) -> str:
     return "\n".join(lines)
 
 
+_SIGNOFF_HEAD_RE = re.compile(r"^## Sign-?off\b.*$", re.M | re.I)
+
+
+def _carried_signoff(old_text: str) -> str:
+    """The entry's `## Sign-off` section, verbatim, from its heading to the next `## ` heading or the end; "" if none.
+
+    THE ONE HAND-WRITTEN SECTION A RE-RENDER KEEPS (LGIC_ENFORCE-W1-S17). A never-widen sign-off is written on the
+    entry by its signers, and every `close-leg` re-rendered the entry from the sentinel and erased it -- so the step
+    that records an apply erased the record that authorized it, and the reader of those lines found zero."""
+    m = _SIGNOFF_HEAD_RE.search(old_text or "")
+    if not m:
+        return ""
+    nxt = re.search(r"^## ", old_text[m.end():], re.M)
+    end = m.end() + nxt.start() if nxt else len(old_text)
+    return old_text[m.start():end].rstrip("\n") + "\n"
+
+
 def _write_entry(state: dict) -> None:
-    Path(WORKSPACE / state["entry_path"]).write_text(
-        _render_entry(state), encoding="utf-8", newline="\n")
+    path = Path(WORKSPACE / state["entry_path"])
+    try:
+        old = path.read_text(encoding="utf-8")
+    except OSError:
+        old = ""
+    body = _render_entry(state)
+    keep = _carried_signoff(old)
+    if keep:
+        body = body.rstrip("\n") + "\n\n" + keep
+    path.write_text(body, encoding="utf-8", newline="\n")
 
 
 def _canonical_pipeline_legs(pipeline_dir: str) -> list[dict]:

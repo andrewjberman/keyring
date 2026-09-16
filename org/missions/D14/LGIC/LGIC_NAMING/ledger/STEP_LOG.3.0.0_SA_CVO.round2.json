@@ -1,0 +1,112 @@
+{
+ "schema_version": "1.0",
+ "project": "LGIC_NAMING",
+ "round": 2,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-15T01:2xZ",
+ "trigger": "2.0.0_SA_COO~G's drain-end read of round 2, msg 96792 (2026-09-15T00:26:52Z), addressed to 1.0.0_SA_CTO and 3.0.0_SA_CVO: 8 of 8 orders drained, the last merge @5cbcfec371. The carrier is org/mcp/inbox/3.0.0_SA_CVO/read/20260915T002652Z_2.0.0_SA_COO_G_LGIC_NAMING_round_2_drained__8_of_8___FW.md. It is an UNTRACKED device-local file (org/mcp/inbox/* is gitignored), so NO commit vintage exists for it.",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-15T00:5xZ",
+   "ended_utc": "2026-09-15T01:0xZ",
+   "act": "Compiled round 2's channel. The new rows are the investigation rows at HEAD absent at the issuance commit b9ea6f3686: 42 minus 35 = 7 (S16, W1-S6, W2-S5, W3-S4, W4-S1, W4-S2, W6-S4), with 0 lost. Every JSON fence of every LGIC_NAMING channel file was parsed. The carrier-less census at HEAD was exactly those 7, with a difference of 0 either way. The rows that landed between round 1's L8 input (d292bca3ba) and the issuance are S14 and S15, already carried by C-S11 and C-S12. 1 row is BLOCKING (W6-S4). 3 were ARMED (W1-S6, W2-S5, W3-S4), and their disarm owner 2.0.0_SA_COO~G disarmed them, recorded as S16.",
+   "inputs": [
+    {"kind": "MESSAGE", "ref": "96792"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/investigations/INVESTIGATION_v1.md@b9ea6f3686 and @4c0866f468"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v1.md and ADJUDICATION_v2.md at HEAD"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND2_L8_L9_20260915.md section 1"}
+   ],
+   "spine_clause": "L8: input is the new investigation rows and no others",
+   "gate_or_notifier_touched": "none -- a read-only compile",
+   "note": "started_utc and ended_utc are taken from tool-call order to the ten-minute grain, not recorded by an instrument."
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-15T01:0xZ",
+   "ended_utc": "2026-09-15T01:07:23Z",
+   "act": "Graded the round's criteria and outcomes. This seat re-ran all 25 machine criteria with check_ln_r2.py on the SHARED tree, a different checkout from every writing worktree. 23 printed their expected VERDICT, and 2 did not (E3R-AC1 FAIL-DIFFERENT, E5R-AC1 FAIL-MISREAD), each equal to its instance's status. proof-of-spec-check.py read VALID on 8 of 8 instances, each BOUND with --governing-order. Graded the one JUDGMENT criterion, F1R-J1, PASS with a named qualification. The basis: 68 of 68 attributions identical to round 1's hand-graded record, compared by this seat's own script; the raise named at R1.f; 31 of 68 kind-in-name forms and 12 of 20 bd roles recounted. Graded the outcomes: FWD-1 NOT REALIZED (14 of 17 independent items, plus i15 under disclosure), FWD-2 NOT REALIZED on its reading limb (16 of 18) and REALIZED on its one-referent limb, FWD-3 REALIZED on canonical forms, and FWD-4 REALIZED on its reading limb (6 of 6).",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the 8 round-2 proof instances under org/missions/D14/LGIC/LGIC_NAMING/deliverables/0.9.0_WK_LGIC_NAMING~{1..6}/ at HEAD"},
+    {"kind": "ARTIFACT", "ref": "deliverables/exercises/r2/n3-namer-{a,b}.tsv, n3-compare.md, n3-reader-score.md, n5-reader-score.md, n4-firm-patterns.md; deliverables/exercises/n4-firm-patterns.md (round 1); GRADING_RULE.md; NAMING_SCHEMA.json@2706014705; LIVE_NAMES.json"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND2_L8_L9_20260915.md sections 2-3"}
+   ],
+   "spine_clause": "L9: JUDGMENT criteria are graded here and never self-graded",
+   "gate_or_notifier_touched": "none -- reads and re-runs only",
+   "note": "ended_utc is the generator run's stamp, the carriers' surfaced_at."
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-15T01:07:23Z",
+   "ended_utc": "2026-09-15T01:1xZ",
+   "act": "Carried every disposition, the grade and this seat's FWD-1 observation on the channel as C-S13..C-S17, in a NEW file ADJUDICATION_v3.md: 4 rows DISMISSED_WITH_REASON (the line-ending trio and its disarm S16, the disarm EXERCISED 8 of 8 on the shared tree) and 3 GRADUATED (C-S14 FWD-1, W6-S4, and W4-S1 with W4-S2). Closing count: carrier-less 0 of 42.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the record's sections 1-3"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v3.md@b10229bdf3"}
+   ],
+   "spine_clause": "L10 precondition: every row dispositioned",
+   "gate_or_notifier_touched": "The surprise-row-gate admitted 5 new rows, with 0 violations and no override (the -J grades pattern was widened @120afe354e). missions-tree-check read 0 violations.",
+   "note": "0 jsonschema violations against investigation_item.schema.json before the commit."
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-15T01:1xZ",
+   "ended_utc": "2026-09-15T01:23:16Z",
+   "act": "Landed the remediation document (6 rows: C-S14, W6-S4, W4-S1, W4-S2, plus S14 and S15 owed from C-S11 and C-S12) at surprise-channel/remediations/REMEDIATION_v2.md. The first attempt did not reach the gate: safe-commit refused it (rc=3) because 0.9.0_WK_LGIC_ENFORCE~1's EN-b-1 merge (MERGE_HEAD 81285c0abd) was in progress, and it staged nothing. This seat waited for that merge and a second foreign merge to clear, with no override. By then 2.0.0_SA_COO~G had flipped LN-e-3-r2 and LN-e-5-r2 pending -> complete @b9fa612c43, on RULING T applied to round 2 by 1.0.0_SA_CTO (96793). The gate admitted every row: 22 orders, 0 open; 42 items, 0 undispositioned. The committed bytes equal the built file (sha256 11d7c66a...).",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/task-orders/*.md at HEAD (22; 22 complete after b9fa612c43)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v3.md@b10229bdf3"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/remediations/REMEDIATION_v2.md@ab8d584c0f"}
+   ],
+   "spine_clause": "L10 precondition: every TO terminal and every row dispositioned",
+   "gate_or_notifier_touched": "safe-commit's in-progress-merge refusal (rc=3), once, with nothing staged. The surprise-row-gate L10 limb then ADMITTED all 6 rows ('0 open ... 0 undispositioned; route admitted'). No override.",
+   "note": "Round 1's held remediation (@f679b1e2b5) now meets its un-park condition, with every order terminal. It is left for the parent session to land unchanged."
+  },
+  {
+   "seq": 5,
+   "limb": "L10",
+   "started_utc": "2026-09-15T01:2xZ",
+   "ended_utc": "2026-09-15T01:37:01Z",
+   "act": "Sent the ONE slug to 1.0.0_SA_CTO, after the parent session re-verified with a different instrument from the fork's: a raw-text id regex and an adjudicates read across all 3 adjudication files, not a json walk. The check found 7 new rows (42 minus 35 at b9ea6f3686) and 0 of 42 uncarried. Also verified: 22 of 22 orders complete at HEAD; the three FWD-1 differences (i03, i10, i11) read directly from r2/n3-namer-{a,b}.tsv; the FN1 clause 'the function is that phrase as named, kebab-case, ONE token', with its 'the Orion ingest' example, read in full at NAMING_SCHEMA.json:59 @2706014705; REMEDIATION_v2 at 6 rows, all OPEN, round v2, 0 carrying a route; and the commits b10229bdf3, ab8d584c0f and 1ca17cc88e authored by this seat and in HEAD.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND2_L8_L9_20260915.md@1ca17cc88e"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/adjudications/ADJUDICATION_v3.md@b10229bdf3"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/remediations/REMEDIATION_v2.md@ab8d584c0f"}
+   ],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "to 1.0.0_SA_CTO, delivered 2026-09-15T01:37:01Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T013701Z_3.0.0_SA_CVO__L10_SLUG__LGIC_NAMING_round_2__FWD-1_FW.md, 3856 bytes by os.path.getsize (gitignored, so it has no commit vintage)"}
+   ],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "the CVO send guard (the send goes to 1.0.0_SA_CTO only); delivered by filesystem, broker and channel push",
+   "note": "The slug's push state is origin/CLOUD 6a5b276f8b, from an ls-remote read at ~01:2xZ, and says so."
+  },
+  {
+   "seq": 6,
+   "limb": "L10",
+   "started_utc": "2026-09-15T01:35Z",
+   "ended_utc": "2026-09-15T01:43Z",
+   "act": "Landed round 1's REMEDIATION_v1 unchanged at the channel path. The source was its held bytes (@f679b1e2b5): 40931 bytes, sha256 9cb86097..., checked before the write. The first attempt was refused by safe-commit (rc=3) while a foreign merge was in progress (MERGE_HEAD 3e48518ae9). Nothing was staged, and the untracked file was removed from the channel path at once. A one-shot background wait saw MERGE_HEAD clear after about 45 s. The retry was admitted by the gate's L10 limb: 22 orders at HEAD, 0 open; 42 items, 0 undispositioned.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_NAMING_ROUND1_REMEDIATION_HELD_BY_GATE_20260914.md@f679b1e2b5"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_NAMING/surprise-channel/remediations/REMEDIATION_v1.md@9129bf0be3"}
+   ],
+   "spine_clause": "L10 precondition: every TO terminal and every row dispositioned",
+   "gate_or_notifier_touched": "safe-commit's in-progress-merge refusal (rc=3) once, with nothing staged; then the surprise-row-gate L10 limb ADMITTED all 20 rows. No override.",
+   "note": "Round 1's RULING T said the rows land 'with no second message'. The round-2 slug named this landing in advance, so no further message was sent."
+  }
+ ]
+}

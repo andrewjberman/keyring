@@ -1,0 +1,95 @@
+{
+ "schema_version": "1.0",
+ "project": "LGIC_ENFORCE",
+ "round": 1,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-15T15:40Z",
+ "trigger": "The L8 hand-off reached this seat LATE. 2.0.0_SA_COO~G's round-1 drain-end read went to 1.0.0_SA_CTO only as msg 97047 (2026-09-15T11:32:58Z), so this seat's L8 did not begin. The hand-off to this seat is msg 97124 (2026-09-15T14:54:45Z), read at org/mcp/inbox/3.0.0_SA_CVO/read/20260915T145445Z_2.0.0_SA_COO_G_L8_hand-off__LATE__LGIC_ENFORCE_round_1_.md (UNTRACKED device-local file: org/mcp/inbox/* is gitignored, so NO commit vintage exists for this carrier). This seat began L8 from 97047 read in 1.0.0_SA_CTO's read/ folder, as inspection, shortly before 97124 arrived; 97124 is the cited input. 2.0.0_SA_COO~G's drive loops are stopped on Andrew's word until this seat answers (97124).",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-15T14:5xZ",
+   "ended_utc": "2026-09-15T15:0xZ",
+   "act": "Compiled round 1's channel at its pin 47f1045854: 73 rows in 1 json fence, 73 distinct ids and 73 distinct row contents (S9's renumbering holds). At the issuance commit fd9c9ca174 the channel held 1 row (S1), so 72 rows are new at this L8 and 0 are lost; with no adjudication file in the project, all 73 were carrier-less and all 73 are compiled. 18 rows read ARMED, every one with disarm_owner 2.0.0_SA_COO~G. No row landed after the pin before either carrier commit (the channel's last commit read 47f1045854 before each).",
+   "inputs": [
+    {"kind": "MESSAGE", "ref": "97124 (this seat's read/ folder)"},
+    {"kind": "MESSAGE", "ref": "97047 (read in 1.0.0_SA_CTO's read/ folder, as inspection)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@fd9c9ca174 and @47f1045854"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v1.md@43ad6e9b2b row C-S1 world_is"}
+   ],
+   "spine_clause": "L8: input is the new investigation rows and no others",
+   "gate_or_notifier_touched": "none -- a read-only compile",
+   "note": "started_utc and ended_utc are read from tool-call order to the ten-minute grain, not recorded by an instrument."
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-15T15:0xZ",
+   "ended_utc": "2026-09-15T15:2xZ",
+   "act": "Graded the round's three JUDGMENT criteria: C1-J1 FAIL (a seeded sample of 59 excluded lines, 2 per each of the 30 reason strings, read at the census vintage fd9c9ca174: 55 hold, 4 lines in 2 strata do not; immaterial to the census's answer), F1-J1 PASS (qualified), S2-J1 PASS on its letter over a census that judged 3 names. Also, each by this seat's own instrument: proof-of-spec-check bound by --governing-order read 22 of 22 VALID at HEAD; EN-f-2's drain read against the branch (9 branch paths, 2 recorded by merge c6d652a6dc, all 8 non-channel paths byte-equal to the tip at HEAD 6a2beed8d2, and the channel keeping all 66 tip rows); D2-AC2's control re-run by planting into the committed pipeline at 92bc3b51bf (0 hits unplanted, 1 planted); and every ARMED row checked for a disarm by exact id against rows and commit subjects.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the three instances: TO-EN-c-1 @c7a45c08bf, TO-EN-f-1 @78236378e0, TO-EN-s-2 @cff2155fd7"},
+    {"kind": "ARTIFACT", "ref": "deliverables/CARRIER_CENSUS.md@c7a45c08bf; FENCE_PLAN.md@887cf01419; NAMING_CENSUS_COMPARISON.md@e6ffd3a2a0; NAMING_CENSUS_REPORT.md@f64b6f35cb; EXERCISE_FWD1_SEARCH.md@948fe90fe3"},
+    {"kind": "ARTIFACT", "ref": "task-orders/*.md at HEAD (22; 19 complete, 3 pending) and their 22 proof-of-spec instances"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v1.md@43ad6e9b2b row C-S1 grades"}
+   ],
+   "spine_clause": "L9: JUDGMENT criteria are graded here and never self-graded",
+   "gate_or_notifier_touched": "proof-of-spec-check, read-only, 22 runs bound",
+   "note": "No separate record file: the grades and each carrier's reading live in ADJUDICATION_v1.md, where the graduated rows' remediation evidence cites them."
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-15T15:2xZ",
+   "ended_utc": "2026-09-15T15:26:24Z",
+   "act": "Carried every row on the channel as C-S2..C-S15 in ADJUDICATION_v1.md, with C-S1 the grade record: 29 DISMISSED_WITH_REASON (C-S2 the issuer's eleven disarm and disposition rows, C-S3 six ARMED rows remedied in round, C-S4 twelve form-only rows) and 44 GRADUATED to 1.0.0_SA_CTO (C-S5..C-S15). Closing count: carrier-less 0 of 73.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the channel @47f1045854 and the readings of seq 2"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v1.md@43ad6e9b2b"}
+   ],
+   "spine_clause": "L10 precondition: every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate on 43ad6e9b2b: 15 new rows of 15 checked, OK; missions-tree-check 0 violations. No override.",
+   "note": "ended_utc is the commit's committer time."
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-15T15:26:24Z",
+   "ended_utc": "2026-09-15T15:33:29Z",
+   "act": "Landed the remediation document at surprise-channel/remediations/REMEDIATION_v1.md: 44 rows, one per graduated item, round v1, no route. W1-S20 reads REMEDIATED; of the 12 ARMED rows, 8 carry disarm DISARMED at the owner's act and 4 stay ARMED (W1-S19, W1-S21, W1-S22, W3-S8); closed false on every row. Standing census: 44 graduated ids minus 44 remediation ids = 0 missing.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "ADJUDICATION_v1.md@43ad6e9b2b"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v1.md@7748cc5df7"}
+   ],
+   "spine_clause": "L10: ONE remediation row per GRADUATED item",
+   "gate_or_notifier_touched": "surprise-row-gate's L10 limb on 7748cc5df7 admitted all 44 rows: '22 task order(s) at HEAD on both roots, 0 open; 73 investigation item(s)'. missions-tree-check 0 violations. No override.",
+   "note": "ended_utc is the commit's committer time."
+  },
+  {
+   "seq": 5,
+   "limb": "L10",
+   "started_utc": "2026-09-15T15:33:29Z",
+   "ended_utc": "2026-09-15T15:47:02Z",
+   "act": "The fork drafted the ONE slug to 1.0.0_SA_CTO. This seat's main session re-verified it with its own reads before sending, which differ from the fork's. Its python census read 73 rows, 73 distinct ids and contents, carrier-less 0 of 73, and 44 graduated against 44 remediation rows (0 missing, 0 extra). proof-of-spec-check, bound by --governing-order, read VALID on EN-s-1, EN-v-1 and EN-x-1. A merge-base diff of c6d652a6dc^2 read 9 branch paths, 2 in the merge commit, and all 8 non-channel paths OK at HEAD. Push state was re-measured as LOCAL (ls-remote 15:46Z, origin/CLOUD 2033ff3ea6, none of the three commits an ancestor). Then it sent the slug.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "ADJUDICATION_v1.md@43ad6e9b2b and REMEDIATION_v1.md@7748cc5df7"},
+    {"kind": "ARTIFACT", "ref": "the 3 pending orders' proof-of-spec instances at HEAD; c6d652a6dc and its parents"}
+   ],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "the L10 slug to 1.0.0_SA_CTO, delivered 2026-09-15T15:47:02Z: org/mcp/inbox/1.0.0_SA_CTO/read/20260915T154702Z_3.0.0_SA_CVO__L10_SLUG__LGIC_ENFORCE_round_1__73_rows.md, 4017 bytes by wc -c on the delivered file"}
+   ],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "send_message's L8 correspondence guard (the CVO's one send goes to the CTO): delivered, no override",
+   "note": "ended_utc is the delivery stamp read back from the recipient's inbox. The delivered file is untracked and device-local (org/mcp/inbox/* is gitignored)."
+  }
+ ]
+}

@@ -27,23 +27,53 @@
 # waits_on  -- the project may not START (reach PRD) until every gate is met.
 # hold      -- the project may advance up to max_dep_stage while the hold's gates are unmet; past that is OUT OF SEQUENCE.
 #
+# CAPACITY: at most N COO sessions run their projects and subagents at once on a box (capacity.coo_sessions, per
+# fabric). Andrew-direct 2026-09-14 ~07:0xZ: "We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources." (record org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290).
+# The reader counts the live COO lanes on the box and flags NEEDS-SLOT on a project whose PRD is admitted, whose next
+# step is a COO's, and which has no lane. At the cap, the next slot goes to the first NEEDS-SLOT project in this
+# file's order. 0.0.0_AB_MSTR seats lanes; no driver asks for a lane past the cap; Andrew's word overrides the order.
+#
 # ENFORCEMENT: TRACK. Andrew ~01:xxZ card 1: the reader flags and the CTO raises. A task-order gate limb refusing new
 # orders for a project whose stage is not open is approved to follow once this order has held about a week; it is
 # announced before it is armed.
 
-version: 1
+version: 4
 owners: ["1.0.0_SA_CTO", "1.0.0_SA_CTO~Z"]
 enforcement: TRACK
 
+capacity:
+  coo_sessions:
+    laptop: 3
+  why: "Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): 'We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.' Site Z's cap is not ruled."
+
 stages:
+  - id: 0
+    name: "Andrew's seat priority -- MDPF_TAXSMA, then NFRA_OPLGTW"
+    why: "Andrew-direct 2026-09-15 ~12:5xZ at the 1.0.0_SA_CTO terminal, answering the seat conflict LD-0567 carried to him (his 09-14 ~18:2xZ word gave 2.0.0_SA_COO~F's next free slot to LGIC_CANON): 'If push mdpf_taxsma as the next one followed by nfra_oplgtw'. It confirms his ~07:5xZ capacity order (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260915_075xZ_LAPTOP_CAPACITY_ORDER_TAXSMA_THEN_OPLGTW_THEN_IRPT_BCKEND.md @4524cc2466, LD-0567): 'If laptop has capacity let's get mdpf_Taxsma going; then nfra_opalgt or whatever the mcp hook up new nfra project was, then IPRT_BCKND if the lgic work is in proper position and we can address backend canonically now'. This stage orders SEATS, not dependencies: the reader queues NEEDS-SLOT by stage, so stage 0 puts these two ahead of every other project for a COO slot."
   - id: 1
     name: "Platform Logic -- the naming schema, the enforcement layer, the canon"
     why: "Andrew-direct 2026-09-13 ~19:2xZ (relayed 4.0.0_SA_CRO~D 96400): 'I want to proceed with the Logic projects into the MDPF and so on'."
   - id: 2
     name: "The D8 migrations built on Platform Logic"
     why: "The same word: the Logic projects first, then MDPF and the migrations. The new firm buckets must be minted with LGIC_ENFORCE's rebuilt fence (Andrew ~18:4xZ card 1)."
+  - id: 3
+    name: "Projects whose outcomes land in the migrated firm buckets"
+    why: "Placed after everything already ordered so that no existing order moves (Andrew-direct 2026-09-14 ~13:4xZ, 'recs + sequence approved', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md). Moving a stage-3 project ahead of Platform Logic is a reorder, and a reorder is Andrew's word. ASKED AND ANSWERED for IRPT_BCKEND, ~14:5xZ: 'No, we need the logic projects done first because that will establish the patterns for the new backend properly' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md)."
 
 projects:
+  MDPF_TAXSMA:
+    fabric: laptop
+    stage: 0
+    waits_on: []
+    why: "Andrew's next COO seat (~12:5xZ, 'If push mdpf_taxsma as the next one followed by nfra_oplgtw'). PRD v0.2 is ADMITTED on both halves (60c722fe64); L5 is next and is a COO's. 0.0.0_AB_MSTR seats the lane; the project's coo_lane is recorded in its project.json when seated."
+    notes: "Resolves LD-0567's carried conflict: this seat, not LGIC_CANON, takes 2.0.0_SA_COO~F's next free slot. The tail placement proposed @8c70cabc48 was never adopted."
+
+  NFRA_OPLGTW:
+    fabric: laptop
+    stage: 0
+    waits_on: []
+    why: "Second in Andrew's seat order, the same word. In flight at EXECUTING under 2.0.0_SA_COO~O, so it takes no new slot now; placed here so it is next for a seat if that lane goes dark."
+
   LGIC_NAMING:
     fabric: laptop
     stage: 1
@@ -62,6 +92,7 @@ projects:
     stage: 1
     waits_on: []
     why: "In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate."
+    notes: "Seated on 2.0.0_SA_COO~G alongside LGIC_NAMING and LGIC_ENFORCE: Andrew-direct ~16:1xZ 2026-09-15 at the 2.0.0_SA_COO~G terminal, 'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_161xZ_PARALLELIZE_HARDER_ENFORCE_AND_CANON~G.md @2373f96073). No new COO session; the laptop stays at 3 of 3; no other project's seat order moves."
 
   ADVI_FIRMBKTS:
     fabric: laptop
@@ -71,9 +102,9 @@ projects:
       max_dep_stage: DECOMP
       until:
         - {project: LGIC_ENFORCE, prd_admitted: true}
-        - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from"}
+        - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from", confirmed: "1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied; its drain completed @d482e58ecf (merge c6d652a6dc landed 2 of the branch's 8 paths, row LGIC_ENFORCE-S18; the other 6 landed @5ee8e068fd, @8c77a1400a, @d482e58ecf); 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial"}
     why: "The legacy firm buckets (opal-data-bd, -inf, -cot) move into opal-data-49financial and the two new buckets. The new buckets must be minted with the rebuilt fence, and FWD-3 needs LGIC_ENFORCE's registry. Its PRD and decomposition may proceed; execution waits."
-    notes: "Card 3 (read logging on the legacy buckets, order 4db66568a6) ran ahead of this stage on Andrew's own words (~18:4xZ card 3, ~19:0xZ, ~21:3xZ): it starts FWD-6's 45-day clock and touches no naming."
+    notes: "Card 3 (read logging on the legacy buckets, order 4db66568a6) ran ahead of this stage on Andrew's own words (~18:4xZ card 3, ~19:0xZ, ~21:3xZ): it starts FWD-6's 45-day clock and touches no naming. CARRIES for this project's L4 (1.0.0_SA_CTO ruling 97031, 2026-09-15). They are acceptance lines when the project is seated, not holds. (C1) irpt-directory-refresh-role carries no firm token and reads/writes the served IRPT directory. When its grants repoint to opal-data-inflection or opal-data-cottonwood, it needs an exemption row on EACH new bucket, under never-widen sign-off, BEFORE the repoint, or the fence denies it and the trading-weekday 09:00 ET directory refresh breaks. The writer census re-runs PER NEW BUCKET; the 49financial census does not cover them. (C2) That per-bucket census includes service-principal delivery (access logs, inventory, replication). If it is non-empty for a new bucket, a registry-generated aws:PrincipalServiceName arm is built before that bucket is fenced."
 
   MDPF_CANON:
     fabric: laptop
@@ -85,14 +116,19 @@ projects:
         - {project: LGIC_ENFORCE, prd_admitted: true}
     why: "Andrew's priority word puts MDPF after the Logic projects, and its keys come from LGIC_NAMING's schema. Its FWD-2 and FWD-6 also need ADVI_FIRMBKTS's firm buckets -- added as a gate on its execution when its PRD cuts cells."
 
+  IRPT_BCKEND:
+    fabric: laptop
+    stage: 3
+    waits_on: []
+    why: "Investor Reporting's backend. Its per-firm platinum lands in the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover), and IRPT_FNTEND cannot close without it. Round 2 is in flight with its COO lane dark, so it needs a seat to finish. It follows Platform Logic by Andrew's word, which also binds what it becomes: its next revision is built on the patterns the Logic projects establish (~14:5xZ, 'No, we need the logic projects done first because that will establish the patterns for the new backend properly')."
+    notes: "No hold: the round in flight is not ordered against anything, and a hold would mark it out of sequence. The row-11 dependency is a gate on that OUTCOME, added when its next PRD revision cuts the cell (the MDPF_CANON pattern), not on the project. BACKEND ADMIN WALL, Andrew-direct 2026-09-15 ~14:2xZ at the 1.0.0_SA_CTO terminal, 'recs approved', on /open-calls card 2: before ANY IRPT_BCKEND route serves, the backend refuses a caller who is not role admin AND firm opal-capital (the portal predicate, enforced server-side, not only in the UI). It lands as an IRPT_BCKEND FWD at its next PRD revision. That FWD first answers _scope/resolve.py:186-187's note that the injected header set cannot separate an Opal admin from a partner-firm admin. It carries row IRPT_FNTEND-S66."
+
 parked:
   NFRA_SUBSTRATECARDING:
     fabric: laptop
     why: "Andrew-direct 2026-09-14 ~00:0xZ: 'it is just not a priority at this time.' Not ordered; recorded so no driver takes it up ahead of the sequence."
 
 pending_placement:
-  - subject: "IRPT_BCKEND"
-    question: "It writes per-firm platinum into the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover). Is that a stage-2 dependency, and on which of its outcomes?"
   - subject: "the projects behind the 07-28 sequence"
     question: "'MDPF COMPLETION', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?"
   - subject: "the rest of both registers"
@@ -105,3 +141,31 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v1 -- the sequence created. Stage 1 Platform Logic (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON); stage 2 the D8 migrations on it (ADVI_FIRMBKTS held at DECOMP, MDPF_CANON held at REGISTERED, until LGIC_ENFORCE's PRD is admitted and its fence is on the template). NFRA_SUBSTRATECARDING parked."
     word: "'recs approved' and the three words that followed it (record @cc79b6191a)"
+  - at: "2026-09-14"
+    by: "1.0.0_SA_CTO"
+    change: "v2 -- capacity: at most three COO sessions on the laptop at once. The reader flags NEEDS-SLOT and names the next COO slot in this file's order. No order changed."
+    word: "'We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.' (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290)"
+  - at: "2026-09-14"
+    by: "1.0.0_SA_CTO"
+    change: "v3 -- IRPT_BCKEND placed, answering its pending_placement question: stage 3, after everything already ordered, fifth for a free COO seat. The row-11 dependency on ADVI_FIRMBKTS's cutover binds that outcome, not the project. No existing order changed."
+    word: "'recs + sequence approved' (Andrew-direct ~13:4xZ, answering 1.0.0_SA_CTO's /next-calls OPTION 1, 'place the backend in the sequence'; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md)"
+  - at: "2026-09-14"
+    by: "1.0.0_SA_CTO"
+    change: "v3 note -- Andrew answered whether IRPT_BCKEND moves ahead of Platform Logic: no. The stage-3 why and IRPT_BCKEND's why now cite his word and its reason. No order changed."
+    word: "'No, we need the logic projects done first because that will establish the patterns for the new backend properly' (Andrew-direct ~14:5xZ; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md)"
+  - at: "2026-09-15"
+    by: "1.0.0_SA_CTO"
+    change: "v3 gate -- ADVI_FIRMBKTS's manual hold (the fence applied on the s3-49financial.tf template) confirmed MET on ruling 97031; carries C1 and C2 added to its notes for its L4. No order changed."
+    word: "none needed: a gate confirmation that changes no order (header: 'A gate or a note may be corrected by either CTO without his word when it changes no order')."
+  - at: "2026-09-15"
+    by: "1.0.0_SA_CTO"
+    change: "v4 -- ORDER CHANGED. New stage 0, Andrew's seat priority: MDPF_TAXSMA, then NFRA_OPLGTW. MDPF_TAXSMA now takes the next COO slot, ahead of LGIC_CANON. NFRA_OPLGTW keeps 2.0.0_SA_COO~O and is next if that lane goes dark. Resolves LD-0567's carried conflict with the 09-14 ~18:2xZ LGIC_CANON word. Stages 1-3 are unchanged."
+    word: "'If push mdpf_taxsma as the next one followed by nfra_oplgtw' (Andrew-direct ~12:5xZ at the 1.0.0_SA_CTO terminal), confirming his ~07:5xZ 'If laptop has capacity let's get mdpf_Taxsma going; then nfra_opalgt or whatever the mcp hook up new nfra project was, then IPRT_BCKND if the lgic work is in proper position and we can address backend canonically now' (LD-0567 @4524cc2466)"
+  - at: "2026-09-15"
+    by: "1.0.0_SA_CTO"
+    change: "v4 note -- IRPT_BCKEND's notes carry Andrew's backend admin wall (/open-calls card 2): before any route serves, the backend refuses a caller who is not role admin AND firm opal-capital; it lands as an IRPT_BCKEND FWD at its next PRD revision. No order changed."
+    word: "'recs approved aand all future pipelines must abide by lgic structures patterns' (Andrew-direct ~14:2xZ at the 1.0.0_SA_CTO terminal, answering /open-calls cards 1-3)"
+  - at: "2026-09-15"
+    by: "1.0.0_SA_CTO"
+    change: "v4 note -- LGIC_CANON seated on 2.0.0_SA_COO~G (coo_lane on its project row); its NEEDS-SLOT clears. No order changed, and no COO session was added."
+    word: "'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (Andrew-direct ~16:1xZ at the 2.0.0_SA_COO~G terminal, record @2373f96073)"

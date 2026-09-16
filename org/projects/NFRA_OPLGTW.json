@@ -1,0 +1,13 @@
+{
+ "project_code": "NFRA_OPLGTW",
+ "home": "org/missions/D9/NFRA/NFRA_OPLGTW",
+ "directive": "D9",
+ "macro_code": "NFRA",
+ "fabric": "laptop",
+ "dep_stage": "EXECUTING",
+ "status": "scoping",
+ "name": "Opal Gateway: authorized Schwab questions and CSV downloads in Claude",
+ "generated_from": "org/missions/D9/NFRA/NFRA_OPLGTW/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-15T09:49:38Z"
+}

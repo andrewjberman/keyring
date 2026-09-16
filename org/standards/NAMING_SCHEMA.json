@@ -1,11 +1,17 @@
 {
  "title": "NAMING_SCHEMA -- the D14 Platform Logic naming schema's CLOSED ENUMERATIONS, as data",
- "version": "v1.2",
- "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.2 (L4, 1.0.0_SA_CTO). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
+ "version": "v1.8",
+ "ratified_by": "org/missions/D14/LGIC/LGIC_NAMING/prd/LGIC_NAMING_PRD.md v1.8 (L4, 1.0.0_SA_CTO; v1.5 through v1.8 at L10). Spine L4: a decision that is an enumeration is closed as data in org/standards/ and cited.",
  "changelog": [
   "v1.0 -- first issue with LGIC_NAMING_PRD v1.0 @c65a169ba0.",
   "v1.1 -- on 4.0.0_SA_CRO~D's REFUSED brief half (review @1e4e3e10fd): kind.by_type keys are the live plane's node_type strings (CODEBUILD -> CODEBUILD_PROJECT, ECS_TASK -> ECS_TASK_DEFINITION); every node type not graded by kind is enumerated by subtraction; lb and cluster added for the two minted types that had no kind.",
-  "v1.2 -- on 3.0.0_SA_CVO's ratified-text review (@48eab96ed5): key.grammar is the ruled five-segment string verbatim; the bucket (container) and the object (leaf) are separate fields, so a key builder never writes a bucket name into a key."
+  "v1.2 -- on 3.0.0_SA_CVO's ratified-text review (@48eab96ed5): key.grammar is the ruled five-segment string verbatim; the bucket (container) and the object (leaf) are separate fields, so a key builder never writes a bucket name into a key.",
+  "v1.3 -- on 1.0.0_SA_CTO's adjudication of rows LGIC_NAMING-S6, S7 and S8 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_LGIC_NAMING_20260914T103xZ_S6_S7_S8_ENTITY_PARTITION_CODE_TIER_LEGACY_SERVED_PATHS.md): key.partition gains the entity partition; key.table_case bounds kebab-case to NEW served leaves; key.legacy_served_path and key.code are new. The five ruled segments are unchanged.",
+  "v1.4 -- on 1.0.0_SA_CTO's adjudication of row LGIC_NAMING-S10 (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_LGIC_NAMING_20260914T113xZ_S10_LEGACY_MEMBERSHIP_IS_DATA.md): legacy-served membership is data -- key.legacy_served_paths names its home, its producer (cell LN-g-1) and its claim, and grade() RAISES on a key whose verdict turns on it until the list lands, so the grade stays (name, type) over this file; key.code gives a legacy root code/ key its verdict (OUT-OF-PATTERN, the code-tier canonical form).",
+  "v1.5 -- at L10, on 1.0.0_SA_CTO's ROUND-1 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND1_20260914.md), ruling the four slots round 1 measured as unruled (carrier C-S5) and two FWD-5 gaps (C-S8): resource.function (FN1), resource.qualifier (FN2, FN3), secret.purpose and iam_policy.purpose_slot (FN4), key.partition's {entity} (P1), key.scope_rule (SC1), system.vendor_through_tiers (SY1), grade.placeholder (PH1) and aws_fixed (AW1). The five ruled key segments are unchanged.",
+  "v1.6 -- on 4.0.0_SA_CRO's refusal of PRD v1.5's brief half (@3a9a0c2f91, R3): key.scope_rule states the vendor MASTER case. A master keeps its own scope under doctrine R3 (two masters of one firm are two scopes, never commingled), and the audience rule decides FIRM or global for every other key. v1.5 had put a Schwab master under its firm.",
+  "v1.7 -- at L10, on 1.0.0_SA_CTO's ROUND-2 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND2_20260915.md): resource.function -- a noun-phrase function drops every token already written in the system or scope slot (FN1b, row C-S14), and only the resource's OWN kind is barred from its function (FN1c, row W4-S2); both bind the grade as well as the namer, while FN1's word-choice clauses bind the namer only. firm_forms.demo cites the registry row that defines it (RULING DM, row W6-S4). rows_owner: the registry now exists and governs where it and the seed differ. system.vendor_through_tiers' worked example is a name outside every naming-exercise item set (RULING EX1, row S15). The five ruled key segments, the grade signature and its verdicts are unchanged.",
+  "v1.8 -- at L10, on 1.0.0_SA_CTO's ROUND-3 ANALYSIS (org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_LGIC_NAMING_ROUND3_20260915.md): resource.function -- FN1b and FN1c are ONE subtraction, and a function it empties RAISES whichever rule removed the last token (FN1d, row W3-S5), so a grade never depends on the order of two steps. The five ruled key segments, the grade signature and its verdicts are unchanged."
  ],
  "authority": [
   "SOURCE-FIRST key string -- Andrew-direct 2026-09-13 ~03:2xZ card 1, 'all recs approved' (relayed 4.0.0_SA_CRO~D 96332)",
@@ -13,7 +19,7 @@
   "Remediation shape (a): D14 owns the rule, registry, builders and flagger; every fix goes where the resource lives -- Andrew-direct 2026-09-13 ~03:5xZ",
   "WHERE each form is used (the per-slot split) -- RATIFIED AT L4 by 1.0.0_SA_CTO in LGIC_NAMING_PRD, revertible on Andrew's word; it narrows nothing he ruled"
  ],
- "rows_owner": "The ROWS (which firms, products, vendors and platform subsystems exist, with their keys and aliases) belong to the identity registry, which LGIC_ENFORCE owns under ruling (a). Seed until that registry exists: infra/logic/05_IDENTITY_SPINE.md. This file fixes the SHAPE and the closed lists; it mints no row.",
+ "rows_owner": "The ROWS (which firms, products, vendors and platform subsystems exist, with their keys and aliases) belong to the identity registry, which LGIC_ENFORCE owns under ruling (a): infra/logic/registry/ (LGIC_ENFORCE EN-r-1 @a925c8a642). The seed infra/logic/05_IDENTITY_SPINE.md served until the registry existed; where the two differ, the registry governs (v1.7). This file fixes the SHAPE and the closed lists; it mints no row.",
  "node_type_vocabulary": {
   "owner": "the live-plane CloudNode graph read by comp-find --corpus aws. Every type key in this file (kind.by_type and types_not_graded_by_kind) IS a node_type value that instrument returns, spelled exactly as it returns it.",
   "measured": "comp-find --corpus aws '.' --budget 600 by 1.0.0_SA_CTO 2026-09-13 ~22:4xZ; graph vintage 'Built from the estate as of 2026-09-13 12:15:54 UTC', manifest 48bf196564e6; 2,531 nodes, 33 node types",
@@ -29,11 +35,15 @@
   "same_string_in_every_bucket": true,
   "source": "a registry VENDOR key (a feed) or, for derived tiers, a PRODUCT or SYSTEM key",
   "scope_classes": ["FIRM", "PRODUCT", "MASTER", "GLOBAL"],
+  "scope_rule": "a vendor MASTER keeps its own scope (doctrine R3: two masters of one firm are two scopes, never commingled -- schwab/08242234/, never schwab/49financial/). For every other key the scope is its AUDIENCE: a FIRM when the data is one firm's; global when every firm shares it. A PRODUCT key is a scope only beneath a VENDOR source (a feed for the product: pathfinder/etfs), never beneath itself as the source -- mdpf/global/..., never mdpf/mdpf/... (SC1, v1.5; the master case written at v1.6)",
   "scope_form": "LONG",
   "entity_id_in_scope": "REFUSED (doctrine R2)",
   "tier": ["bronze", "silver", "gold", "platinum", "state", "code"],
-  "table_case": "snake_case; a platinum leaf is a kebab-case .json file (the served names)",
-  "partition": ["date=YYYY-MM-DD", "a named leaf"]
+  "table_case": "snake_case; a NEW platinum leaf is a kebab-case .json file (the served names); see legacy_served_path",
+  "legacy_served_path": "below {source}/{scope}/platinum/, a LEGACY served path keeps its bytes -- the table, a bare entity-id segment in the partition slot, and the file name -- because the frozen portal requests it by path; the kebab-case and hive forms bind NEW served families only (LGIC_NAMING v1.3, rows S6 and S8). MEMBERSHIP is data, never a name's shape: a path is legacy only if legacy_served_paths lists it (LGIC_NAMING v1.4, row S10)",
+  "legacy_served_paths": {"home": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json", "producer": "LGIC_NAMING cell LN-g-1: every served path below {source}/{scope}/platinum/ that the frozen portal requests, with the portal vintage it read and the denominator printed. A CLOSED list: a frozen portal adds no request.", "claim": "absent until LN-g-1 lands it", "until_present": "grade() RAISES on a platinum key whose verdict turns on legacy membership -- a defect in this file, fixed here (grade.unplaceable), never guessed CONFORMANT or OUT-OF-PATTERN"},
+  "code": "tier code is a pipeline's code home (R16), beside its data: {source}/{scope}/code/{built_tier}/{file} -- the table slot carries the tier the code builds (bronze, silver or gold) and the file or bundle is a named leaf; Lambda deployment artifacts take the same form (R16 does not reach them; R1 grades their key). Legacy root code/ homes stay until their pipelines move (LGIC_NAMING v1.3, row S7; the canon's carve-out narrowed as LGIC_CANON-S1). A legacy root code/ key grades OUT-OF-PATTERN, its canonical_form the code-tier key; a verdict is not a mandate to move, so MDPF_CANON's frozen rollback objects keep that verdict and stay (LGIC_NAMING v1.4, row S10)",
+  "partition": ["date=YYYY-MM-DD", "a named leaf", "{entity}={id} -- an entity partition; {entity} is the KEY COLUMN's name as the table carries it (advisor_id=A123), as date is the column in date=YYYY-MM-DD; the file is the object under it (doctrine R2; P1, v1.5)"]
  },
  "bucket": {
   "data_bucket": "opal-data-{scope}",
@@ -48,8 +58,8 @@
   "scope_form": "SHORT",
   "scope_when_shared": "OMITTED -- a shared resource carries no scope token, never a placeholder",
   "last_slot": {"default": "kind", "EVENT_RULE": "cadence", "SCHEDULE": "cadence"},
-  "function": "one or more kebab tokens naming what it does; a compound such as silver-chain is ONE function token",
-  "qualifier": "optional narrowing: a table, a leg, or an environment (dev | prod)"
+  "function": "names what the resource does. Where the item DESCRIBES the action with a verb, the function is that verb in its base form (publish, fetch, read, build, download); an agent noun describing the resource ITSELF is written as its verb (publisher -> publish, exporter -> export, scanner -> scan), because the kind names the thing. Where the item NAMES the process or subject as a noun phrase (the SmartX platform export, the Orion ingest, the price-refresh queue, pipeline alerts, delivery status), the function is that phrase as named, kebab-case, ONE token (as silver-chain), LESS every token already written in the system or scope slot: Inflection's Orion ingest is orion-inf-ingest, never orion-inf-orion-ingest; a subtraction that leaves no function token RAISES (grade.unplaceable) (FN1b, v1.7). The resource's OWN kind (kind.by_type for its type) is never written in its function; another type's kind that names the subject the resource serves is part of that phrase and stays (mdpf-gold-lambda-role is the role the gold lambda assumes) (FN1c, v1.7). FN1b and FN1c are ONE subtraction, never two ordered steps: remove from the function, in one pass, every token written in the system or scope slot AND every token that is the resource's own kind; if that leaves no function token, the grade RAISES (grade.unplaceable) whichever rule removed the last token, so the result never depends on an order (a LAMBDA mdpf-lambda-lambda RAISES; so does a LAMBDA whose system is orion and whose function is [orion, lambda]) (FN1d, v1.8). FN1b and FN1c bind the GRADE as well as the namer, because both are read from the name alone; the word-choice clauses before them bind the NAMER, who has the item's description, and a grade keeps a function's words as written (FN1, v1.5; v1.7)",
+  "qualifier": "optional narrowing, written after the function: the TIER (bronze, silver, gold, platinum) or the named TABLE the action acts on, when the item names one -- any other object (figures, files, data, session data) is not written (FN2); a leg; or an environment (dev | prod). A CW_ALARM's qualifier is its condition noun (failure, error, latency), always written (FN3, v1.5)"
  },
  "kind": {
   "values": ["lambda", "role", "policy", "profile", "sg", "api", "table", "queue", "dlq", "topic", "alerts", "alarm", "layer", "runner", "build", "document", "task", "sfn", "lb", "cluster"],
@@ -73,7 +83,7 @@
    "LOAD_BALANCER": ["lb"],
    "ECS_CLUSTER": ["cluster"]
   },
-  "closed_at_l4": "By subtraction from the live plane's 33 node types: ECS_TASK_DEFINITION, STATE_MACHINE, LOAD_BALANCER and ECS_CLUSTER had no kind in the brief's list -- added as task, sfn, lb and cluster (the last two each have one live node, opal-gateway and opal-globgrph, and are resources this estate mints). secret was DROPPED: secrets keep their own slash-path grammar, where a kind suffix would repeat the type. The brief's measured suffixes trigger, publisher, scanner are FUNCTION tokens, not kinds."
+  "closed_at_l4": "By subtraction from the live plane's 33 node types: ECS_TASK_DEFINITION, STATE_MACHINE, LOAD_BALANCER and ECS_CLUSTER had no kind in the brief's list -- added as task, sfn, lb and cluster (the last two each have one live node, opal-gateway and opal-globgrph, and are resources this estate mints). secret was DROPPED: secrets keep their own slash-path grammar, where a kind suffix would repeat the type. The brief's measured suffixes trigger, publisher, scanner are FUNCTION tokens, not kinds; their canonical spellings are the verbs trigger, publish and scan (FN1, v1.5)."
  },
  "types_not_graded_by_kind": {
   "EVENT_RULE": "resource grammar with a CADENCE as the last slot (resource.last_slot)",
@@ -97,14 +107,14 @@
   "event_form": "on-{event}",
   "event_token_regex": "^[a-z0-9]+(-[a-z0-9]+)*$"
  },
- "secret": {"grammar": "{system}/{scope}/{purpose}", "scope_form": "SHORT", "case": "lowercase, ASCII, slash-separated"},
+ "secret": {"grammar": "{system}/{scope}/{purpose}", "scope_form": "SHORT", "case": "lowercase, ASCII, slash-separated", "purpose": "the credential's kind (credentials, token, key, password, certificate), preceded by the interface it opens when the item names one: api-credentials (FN4, v1.5)"},
  "log_group": {"grammar": "/aws/{service}/{resource-name}", "derived": true},
- "iam_policy": {"grammar": "{system}-{scope}-{purpose}-policy", "purpose_slot": "function", "duplicate_name": "REFUSED"},
+ "iam_policy": {"grammar": "{system}-{scope}-{purpose}-policy", "purpose_slot": "function -- FN1 and FN2 apply, written as one compound token (read-gold) (FN4, v1.5)", "duplicate_name": "REFUSED"},
  "firm_forms": [
   {"key": "49financial", "short": "49f"},
   {"key": "inflection", "short": "inf"},
   {"key": "cottonwood", "short": "cot"},
-  {"key": "demo", "short": "demo", "note": "one token; the long and short forms are the same string"}
+  {"key": "demo", "short": "demo", "note": "one token; the long and short forms are the same string. The identity registry defines it: infra/logic/registry/scopes.json row demo reads class FIRM, tenancy FIRM, tenant kind demo, so in every naming slot demo reads as a firm (RULING DM, row W6-S4, v1.7)"}
  ],
  "global_scope": {"key": "global", "short": "global"},
  "refused_tokens": {
@@ -114,6 +124,7 @@
  "system": {
   "classes": ["PRODUCT", "PLATFORM_SUBSYSTEM", "VENDOR"],
   "vendor_as_system_only_when": "the resource IS the vendor integration",
+  "vendor_through_tiers": "a resource that builds a firm's data from ONE vendor's feed IS that vendor's integration at every tier it builds (blackdiamond-cot-build-silver-profile); a resource that combines feeds takes the PRODUCT or PLATFORM_SUBSYSTEM that owns the combination (SY1, v1.5). A worked example here is kept outside every naming-exercise item set, so a briefing that carries this file never spells an item's answer (RULING EX1, row S15, v1.7)",
   "never_a_system": ["a firm", "a project code", "a workstream code", "a cadence", "a generic noun"],
   "reserved": {"opal": "account-level platform resources only; never a null prefix before a real system"}
  },
@@ -123,6 +134,7 @@
   "ALIAS": "the grammar holds but a slot carries a registry alias spelling (for example inflection or bd in a resource name's scope slot); canonical_form is printed",
   "OUT-OF-PATTERN": "the grammar fails (order, separator, case, a missing or unknown kind, a firm in the system slot); canonical_form is printed",
   "not_graded": "a type marked NOT GRADED in types_not_graded_by_kind returns no verdict and is outside the grade's domain -- it is excluded, not a fourth verdict",
+  "placeholder": "a canonical_form may carry {system}, {source}, {scope} or {cadence} ONLY for a slot the name does not carry. Each is a typed gap, never a guess, filled from its source: {system} from the identity registry's resource-to-system rows (LGIC_ENFORCE), {source}/{scope} from the bucket, {cadence} from the schedule. The verdict stays exact, and the signature stays (name, type). FWD-5's correct name is complete for a name only when no placeholder remains (PH1, v1.5)",
   "unplaceable": "RAISES. A name the tokeniser cannot place, a node_type absent from this file, or a token no registry row resolves, is a defect in the tokeniser, this file or the registry and is fixed there -- it is never filed under one of the three verdicts, and there is no fourth"
  },
  "not_covered": [
@@ -133,5 +145,11 @@
   "event-source expressions and service names",
   "API route grammar (a served contract; infra/logic/07_ROUTING_REDERIVATION.md)"
  ],
+ "aws_fixed": {
+  "rule": "names AWS fixes are OUTSIDE the grade's domain, like the NOT GRADED types: excluded, never a fourth verdict. Extended when a new AWS-fixed name is measured (AW1, v1.5)",
+  "by_arn": "an IAM_POLICY whose ARN's account field is aws (arn:aws:iam::aws:policy/...) is AWS-managed -- read from the node's ARN, never from the name (ReadOnlyAccess carries no prefix)",
+  "by_name": {"SECURITY_GROUP": ["default"], "LOG_GROUP": ["RDSOSMetrics", "prefix: aws-waf-logs-", "prefix: /aws/ecs/containerinsights/"]},
+  "measured": "row LGIC_NAMING-W1-S4 over LIVE_NAMES.json (vintage 2026-09-14 12:13:53 UTC): SECURITY_GROUP 1 of 26; IAM_POLICY 9 of 417 by prefix, plus ReadOnlyAccess; LOG_GROUP 4 of 264"
+ },
  "renames_authorized": "NONE. This schema grades; it moves no live name. Each remediation is minted where the resource lives, cites a row of the tension ranking, and carries its own sign-off."
 }

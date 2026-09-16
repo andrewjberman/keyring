@@ -59,6 +59,9 @@ order by way of dependencies or design, across BOTH fabrics, with the gates betw
    Print its header line and every flag for the projects in scope. A `DRIFT` or `UNREADABLE` line is a finding the tick
    prints and raises to the owning CTO (`1.0.0_SA_CTO` laptop, `1.0.0_SA_CTO~Z` site Z) — never silently absorbed. If the
    file is unreadable or uncommitted, the tick reads the sequence as UNKNOWN and drives nothing the sequence places.
+   Every `--project` code resolves to PLACED, PARKED, PENDING-PLACEMENT, UNPLACED or UNKNOWN. **UNKNOWN (exit 3) means
+   neither the sequence nor the register holds the code -- almost always a typo -- and the tick drives nothing for that
+   project until it resolves.** A wrong code must never read as a clean pass (`1.0.0_SA_CTO~Z` msg 22541).
 2. **Drive in the sequence's order.** A project the sequence places is driven only while it carries no `WAITING` flag
    and stays within any hold: `HELD` means it may advance up to its cap (`max_dep_stage`), not past it. Work that would
    start a `WAITING` project or take a `HELD` one past its cap is NOT driven; the tick names it and raises it. An
@@ -72,6 +75,11 @@ order by way of dependencies or design, across BOTH fabrics, with the gates betw
    no status, so a gate flip never requires editing it; only an order change does, and only on Andrew's word, by either CTO.
 5. **TRACK, not a gate** (Andrew ~01:xxZ card 1): the driver raises; it refuses nothing. A task-order gate limb is
    approved to follow once the order has held about a week, announced before it is armed.
+6. **COO CAPACITY** (Andrew-direct 2026-09-14 ~07:0xZ: *"We can only have 3 COOs running their respective
+   projects/subagents at any one time ... This is why the sequence function is important, so that chronology is
+   managed in line with available resources."*). The reader's CAPACITY line counts the live COO lanes on this box
+   against the file's cap. A tick never asks for a COO lane past the cap. When a slot frees, the next one goes to the
+   first `NEEDS-SLOT` project in the sequence's order, and the tick names that project to `0.0.0_AB_MSTR`, who seats it.
 
 ## Step 1 — `/open-calls`, restricted to the scope
 

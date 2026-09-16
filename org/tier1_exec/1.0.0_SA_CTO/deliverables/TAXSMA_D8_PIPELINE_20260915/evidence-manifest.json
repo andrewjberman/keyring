@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.0",
+  "author": "1.0.0_SA_CTO~A",
+  "generated_at_utc": "2026-09-15T04:58:33.723535+00:00",
+  "purpose": "Read-only source audit preceding commissioned L1 brief; no production certification.",
+  "private_receipt_home": "%LOCALAPPDATA%/CodexSeatScratch/1.0.0_SA_CTO~A/taxsma-20260915",
+  "private_content_boundary": "Raw identities, workbook rows, account values, source tables and auth remain private. Authentication files are not included in this manifest.",
+  "sharepoint_method": "Opal Gateway MCP at https://mcp.opalinvest.dev/mcp/ using existing authorized OAuth; no direct Graph substitute.",
+  "business_date": "2026-09-11",
+  "receipts": [
+    {
+      "private_receipt_basename": "20260915T043521166266Z_find_sharepoint_site.json",
+      "bytes": 1593,
+      "sha256": "cae58dab7f8c3305e7e434b18171acbaf971d47444e1f8af4bd5e09eec55d727",
+      "measured_at_utc": "2026-09-15T04:35:21.166266+00:00",
+      "mcp_tool": "find_sharepoint_site"
+    },
+    {
+      "private_receipt_basename": "20260915T043608571777Z_list_site_files.json",
+      "bytes": 4594,
+      "sha256": "91c3d3ca9b54b90c9689915bef51d657d5f2e776e36cf6d3f0d7ffd790ad6cb1",
+      "measured_at_utc": "2026-09-15T04:36:08.571777+00:00",
+      "mcp_tool": "list_site_files"
+    },
+    {
+      "private_receipt_basename": "20260915T043608577604Z_search_site_files.json",
+      "bytes": 89146,
+      "sha256": "bf8c7a8e98af18f8bc3cfad13ab77ac0974793a123905d66eae8cb02c7281bed",
+      "measured_at_utc": "2026-09-15T04:36:08.577604+00:00",
+      "mcp_tool": "search_site_files"
+    },
+    {
+      "private_receipt_basename": "20260915T043608579614Z_search_site_files.json",
+      "bytes": 86415,
+      "sha256": "54de444656f86ec1ff0b5e563050212c32e4cebadaabc5613580e8dc69945171",
+      "measured_at_utc": "2026-09-15T04:36:08.579614+00:00",
+      "mcp_tool": "search_site_files"
+    },
+    {
+      "private_receipt_basename": "20260915T043655891945Z_list_site_files.json",
+      "bytes": 4570,
+      "sha256": "162503de2110aeda249e780b87db6fcf8a483ae54be759e616921a4be6dcc7e8",
+      "measured_at_utc": "2026-09-15T04:36:55.891945+00:00",
+      "mcp_tool": "list_site_files"
+    },
+    {
+      "private_receipt_basename": "20260915T043655996141Z_read_site_workbook.json",
+      "bytes": 6402,
+      "sha256": "0ac8a6d43fa82fbb6b48417e2736f843890f753ed45d8960415c830d6a2a5ca1",
+      "measured_at_utc": "2026-09-15T04:36:55.996141+00:00",
+      "mcp_tool": "read_site_workbook"
+    },
+    {
+      "private_receipt_basename": "20260915T043656006325Z_list_site_files.json",
+      "bytes": 1920,
+      "sha256": "d478ee34579dae63a49e1c3f3fcd0eadf7c2a9f70683b0edcc556b6697b6174b",
+      "measured_at_utc": "2026-09-15T04:36:56.006325+00:00",
+      "mcp_tool": "list_site_files"
+    },
+    {
+      "private_receipt_basename": "20260915T043656080950Z_read_document.json",
+      "bytes": 137572,
+      "sha256": "19c2fb2cacd34f0cd8d83722e8f278339237767f3f493d9f4cac8540fc634b8f",
+      "measured_at_utc": "2026-09-15T04:36:56.082483+00:00",
+      "mcp_tool": "read_document"
+    },
+    {
+      "private_receipt_basename": "20260915T043656529929Z_list_site_files.json",
+      "bytes": 1095,
+      "sha256": "f6b37c943043aba9d1a59b72dbdd5181bbb6c35d8cbc7dee7df1d3c4f02f3ccb",
+      "measured_at_utc": "2026-09-15T04:36:56.529929+00:00",
+      "mcp_tool": "list_site_files"
+    },
+    {
+      "private_receipt_basename": "20260915T043849399539Z_read_site_workbook.json",
+      "bytes": 3938,
+      "sha256": "9b60c2e8e30bfdf73f8864f7e7b1edcea1f5a86555896eaf4a94f39453e310df",
+      "measured_at_utc": "2026-09-15T04:38:49.399539+00:00",
+      "mcp_tool": "read_site_workbook"
+    },
+    {
+      "private_receipt_basename": "20260915T043849407393Z_read_document.json",
+      "bytes": 272808,
+      "sha256": "4faaa0d19b6b001545ee633ddd62ff37a8aa687f43992a7734cf7e050543d83c",
+      "measured_at_utc": "2026-09-15T04:38:49.407393+00:00",
+      "mcp_tool": "read_document"
+    },
+    {
+      "private_receipt_basename": "20260915T043849410660Z_read_site_file.json",
+      "bytes": 11372,
+      "sha256": "348896f38bebf7e2de29f249230a38eb9fa74e4b7dc9e363707050bb2b08771d",
+      "measured_at_utc": "2026-09-15T04:38:49.410660+00:00",
+      "mcp_tool": "read_site_file"
+    },
+    {
+      "private_receipt_basename": "live-source-inventory.json",
+      "bytes": 12162,
+      "sha256": "10185ca39a44baa18bda7ff9c6ec84350cda8d19b2d083462ec50605d8406b04"
+    },
+    {
+      "private_receipt_basename": "account-reconciliation.json",
+      "bytes": 17927,
+      "sha256": "85423b81dbd38af2e4d8c044437668a69fbfe7b40f15972c7196e6d5d1e22fb6"
+    },
+    {
+      "private_receipt_basename": "0824-cohort-check.json",
+      "bytes": 527,
+      "sha256": "620e20d99982001fbddefc4317304cb7cf81154f7a80b63e2b1169db02f2e68f"
+    },
+    {
+      "private_receipt_basename": "producer-live-wiring.json",
+      "bytes": 824,
+      "sha256": "4a0617482ad02a191b739f6acc5978f83d60bc4293705a9589b7833038c24086"
+    },
+    {
+      "private_receipt_basename": "canonical-value-check.json",
+      "bytes": 8120,
+      "sha256": "0180b452a230d8cfed70f25a5157ef7cc25f4374e3b533d89c28d5d77166a0d2"
+    },
+    {
+      "private_receipt_basename": "0833_fact_acc.parquet",
+      "bytes": 759078,
+      "sha256": "2adaf9425cce4b93197abc3193337eac6daa09ec39a2858408107352be4131fb"
+    },
+    {
+      "private_receipt_basename": "0833_fact_rps.parquet",
+      "bytes": 2967723,
+      "sha256": "e449bd430540999768af0a2f88c11470072fa9b57b0addd5e439bf6466e42737"
+    },
+    {
+      "private_receipt_basename": "0833_dim_balance.parquet",
+      "bytes": 568417,
+      "sha256": "576bb7e3d40442c97914e30f6d8fc016226ea4aee99d3819b3735e8898b55c01"
+    },
+    {
+      "private_receipt_basename": "0824_fact_acc.parquet",
+      "bytes": 801242,
+      "sha256": "7c1110b0236c5e82ac541c8735e6208adb108b99f4a5185597fe7cbf50ad9d32"
+    },
+    {
+      "private_receipt_basename": "bd_xref.parquet",
+      "bytes": 228116,
+      "sha256": "731965fb7417a5da5b397bafbc17cb3397467f0e5cd32b8733960185f6b75eef"
+    },
+    {
+      "private_receipt_basename": "taxsma_gold.parquet",
+      "bytes": 31900,
+      "sha256": "e9a8005084a917c06fa5fc71a8b974c9ed8dbabcc26fe0e0e4a13adec6eff9a8"
+    },
+    {
+      "private_receipt_basename": "canonical_valuation.parquet",
+      "bytes": 391769,
+      "sha256": "899133db30f5cf66f631a5fee6b77c03b3927c19650811d32c4219caba1df170"
+    },
+    {
+      "private_receipt_basename": "live-roster.private.json",
+      "bytes": 3615,
+      "sha256": "41c93b0b953e1b25c4c299e906eb99bba3feb2d840d6c91e57353575b0c2d187"
+    }
+  ],
+  "repository_sources": [
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/BRIEF_TAXSMA_49F_INTO_ASSET_CATEGORY_VIEWS_20260915.md",
+      "bytes": 9500,
+      "sha256": "a0500fb07d61abac32f9375757f53f023574419d64640bb0f9c1f87975a7b5a5",
+      "last_commit_at_measurement": "18d5d82d47442b02e23df9394f92f6ca483dc948"
+    },
+    {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_030xZ_TAX_SMA_BRIEF_FOR_CTO_ADDITIVE_TO_TOTAL.md",
+      "bytes": 2052,
+      "sha256": "6f1b0d279371514fb6d0ded408fc5f7279ad870cce23ac930a8e908f921d4273",
+      "last_commit_at_measurement": "5681ed54304aa57394ba9f7c32e70649d22d16c6"
+    },
+    {
+      "path": "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/taxsma_registry.py",
+      "bytes": 7581,
+      "sha256": "8db082274b7e05cf571fad41d2bc350ef3330e8510f10c873890b92531bf4444",
+      "last_commit_at_measurement": "7d97a8bed29327fe7664c2f63cf368ac37b95cec"
+    },
+    {
+      "path": "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/taxsma_resolver.py",
+      "bytes": 6845,
+      "sha256": "6ad354b02db27a6e2c5f1b359b0b0942b5a8b10c7c1c4b5bdaa7aeb03d988db9",
+      "last_commit_at_measurement": "0ac99a72cbc873234865075685a18dbf9cda3c73"
+    },
+    {
+      "path": "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py",
+      "bytes": 28533,
+      "sha256": "c1278acb257e05b9f18b4ba194c6cae754976dbb55b149b4eaa79985ad483fb6",
+      "last_commit_at_measurement": "49a851ea2e123da650abc105a6def96213bc3286"
+    },
+    {
+      "path": "data/assets/scripts/gold/build_dim_taxsma_report.py",
+      "bytes": 17177,
+      "sha256": "c54c599ee1a4fcf8909c95ef8f97266e76413aef676e841111e4e9b7b8766489",
+      "last_commit_at_measurement": "1ba779e0b73fbdcbe0a6c8596f2023b0d087a64f"
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/b00_canonical_valuation.py",
+      "bytes": 5651,
+      "sha256": "bff084e65621b5927737dd44963c0420fd6ce3fc36af48175fb53fad1fb4d864",
+      "last_commit_at_measurement": "f29d9e3358110053ea32e6b9e335704db9161cc1"
+    },
+    {
+      "path": "data/assets/scripts/gold/runners_49f/runner_common.py",
+      "bytes": 27112,
+      "sha256": "6176c7c61a8d0c06a13778ab49bfef9425f7c025e734399dff25fd43d24b2888",
+      "last_commit_at_measurement": "f89177687597c122466ba67c357b001593afe322"
+    },
+    {
+      "path": "data/mdpf/scripts/gold/mdpf_category_registry.py",
+      "bytes": 75096,
+      "sha256": "5cd48e054d9237953c0e186926a589dea15303f099cbf8485b89e2ea50d833a3",
+      "last_commit_at_measurement": "b6e97e9685466476536424bf45b77a2a8081a1c8"
+    },
+    {
+      "path": "data/mdpf/scripts/gold/mdpf_gold_consolidator.py",
+      "bytes": 99253,
+      "sha256": "90d8a1c6b2332e9150661629b0225f1ecd9762135f98ab46a068703d69d93c2b",
+      "last_commit_at_measurement": "1465fd3f7dba7dedbb2e566ffd13917b55778ec9"
+    }
+  ],
+  "verification": {
+    "full_identity_matrix_order_checked": true,
+    "canonical_to_balance_equality": "All matched matrix accounts agree to cents at the observed business date.",
+    "counts_asserted": {
+      "workbook_traded_yes": 8,
+      "workbook_numbered_traded_no": 2,
+      "workbook_awaiting_opening": 3,
+      "traded_corroborated_in_latest_0833": 6,
+      "traded_missing_in_latest_0833": 2,
+      "custodian_only_tax_strategy_candidates": 3,
+      "custodian_only_candidates_with_positions": 0,
+      "registry_active_among_traded": 3,
+      "registry_pending_among_traded": 2,
+      "registry_absent_among_traded": 3,
+      "workbook_numbered_matches_in_0824": 0
+    },
+    "not_tested": [
+      "production workbook ingestion",
+      "new enrollment or lifecycle change",
+      "source-gap repair",
+      "new daily Tax SMA rollup",
+      "consumer display",
+      "recovery or deployment"
+    ]
+  }
+}

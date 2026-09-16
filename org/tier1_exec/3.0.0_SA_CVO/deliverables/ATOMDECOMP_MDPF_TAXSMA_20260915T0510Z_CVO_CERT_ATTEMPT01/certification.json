@@ -1,0 +1,86 @@
+{
+  "run_id": "mdpf-taxsma__20260915T0510Z",
+  "attempt": 1,
+  "certifier": "3.0.0_SA_CVO",
+  "certified_utc": "2026-09-15T07:03:14Z",
+  "packet_vintage": "d97ae3f905",
+  "seal_commit": "b7848ae964",
+  "author": "1.0.0_SA_CTO~A",
+  "certifier_prior_read_disclosed": false,
+  "_what_this_is": "The standing certifier's signed outcome for attempt 01. The pre-open outputs (SIGNED_ASSESSMENT.md, semantic_refusal.patch.json, K2_RECONSTRUCTION_ATTESTATION.md) were committed @f6c4cd256c at 2026-09-15T06:52:16Z. That is BEFORE 1.0.0_SA_CTO~A opened the seal, in its message of 06:59:33Z, and the ordering can be checked against the commit graph. At the author's request this record is held in the certifier's own deliverable directory until closure, and it is copied into the run home as certification.json afterwards.",
+
+  "verdict": "PASS",
+  "verdict_basis": "The frozen nomination equals the sealed plant exactly, and no certifier refusal is filed. The outcome vocabulary is OPAL_ANALYST_PRD.md:1136 (binding F). Had the nomination missed, the whole attempt would be VOID (:1586-1589).",
+
+  "plant_nomination": {
+    "frozen_at": "f6c4cd256c (SIGNED_ASSESSMENT.md section 1)",
+    "coordinate": {"entity_id": "S4-valuation", "field": "recorded_observation", "value_path": ["interpretation"]},
+    "reads": "The six matched traded values establish the complete eight-account Tax SMA total; the two unmatched traded claims may be omitted from the total without reducing completeness.",
+    "discriminators": [
+      "Constraint C3: 'No incomplete or stale account cohort can be asserted as a complete current Tax SMA total.'",
+      "The same cell's own fields: traded_missing_canonical_matches 2, missing_endings 4809 and 5591.",
+      "S4-valuation.unverified_boundary: 'two of eight traded claims lack canonical/0833 coverage'.",
+      "S2-identities' interpretation: 'Two missing traded claims stay unverified'.",
+      "RESEARCH.md@8e8afed454 :11 (the canonical valuation is usable for 'the six matched accounts') and :114 ('No live asset total is asserted for an incomplete cohort').",
+      "canonical-value-check.json, a manifest-named receipt: 6 of 8 traded entries carry canonical rows."
+    ],
+    "found_by": "A coherence read of all 24 cells against the constraints and their sibling cells. Every source check came after it. It was NOT found by replay, diff or positional inference. The parent session re-read each discriminator above before the seal request (msg 96948)."
+  },
+
+  "seal_open": {
+    "seal_file": "attempt01.seal.private.json",
+    "seal_sha256_raw": "a051d35492de208ad0069236bdb2b26d1e89ee37d838c5b382fce5f28da3b691",
+    "equals_public_commitment": "YES. The hash appears in MUTANT_SEALED.md @d97ae3f905, sealed 2026-09-15T05:53:32Z, before the packet, and seal commit b7848ae964 is an ancestor of packet commit d97ae3f905.",
+    "artifact_hashes_equal_seal_fields": "YES, for rectangle.dry.private.json (4a90496a...), attempt01.plant.private.patch.json (3b8ef5f1...) and attempt01.rectangle.verifier.private.json (0b7933e2...).",
+    "sealed_coordinate": {"entity_id": "S4-valuation", "field": "recorded_observation", "property": "value.interpretation", "violates": ["C3", "C4"]},
+    "sealed_before": "Dated account-value evidence covers six of eight traded claims; no sum of six is asserted as the complete cohort value.",
+    "sealed_after": "The six matched traded values establish the complete eight-account Tax SMA total; the two unmatched traded claims may be omitted from the total without reducing completeness.",
+    "verifier_equals_public_final": "YES, byte-identical to rectangle.final.json @d97ae3f905.",
+    "dry_vs_final": "A JSON-level diff reads exactly 1 difference: /entities/3/cells/recorded_observation/value/interpretation.",
+    "match": "EXACT. The entity, field and property equal the frozen nomination, and the sealed 'after' text is the nominated sentence verbatim.",
+    "instrument": "The certifier hashed the four released files with python hashlib over raw bytes, and diffed them as JSON. It did not rely on the author's integrity receipt (attempt01.preopen-return-check.json, not opened)."
+  },
+
+  "k2_reconstruction_attestation": {
+    "signed_before_seal_opened": true,
+    "ref": "K2_RECONSTRUCTION_ATTESTATION.md @f6c4cd256c",
+    "did_i_derive_the_plant_by_any_non_assessment_route": "NO.",
+    "certifier_prior_read": "None. This seat had not read this run's cells before the packet.",
+    "routes_AVAILABLE_AND_DECLINED": ["the run dir's commit history", "replaying C0 plus the fill patches and diffing against final", "reading the fill patches or findings notes", "the identity-bearing helper files", "listing the author's scratch", "any dry, plant, seal, crossreview or credential file"],
+    "seen_and_declared_not_used": "The two cells marked CORRECTED in cycle 2."
+  },
+
+  "independent_re_grounding": {
+    "ref": "SIGNED_ASSESSMENT.md @f6c4cd256c",
+    "denominator": 24,
+    "result": "23 COHERENT, 1 CONTRADICTED (the nomination). The canonical validator reads 0 violations; all 18 cross-cell equalities hold."
+  },
+
+  "method_assessment": {
+    "rule_14d_dry": "MET. run.json @d97ae3f905 reads status DRY, with cycles (3,0) and (4,0) at zero change over 24 of 24.",
+    "binding_c_distinct_lenses": "NOT VERIFIABLE from the packet. run.json records no lens per cycle, so it rests on the author's claim (note N-a in SIGNED_ASSESSMENT.md section 6). This does not change the verdict: the plant was found.",
+    "rule_14e_author_plant": "MET. The seal commit is an ancestor of the packet commit, and the seal predates the packet.",
+    "separation_of_duties": "The certifier wrote no rectangle, dry or plant file. Its outputs are confined to this directory."
+  },
+
+  "certified_patch_derivation": {
+    "rule": "DRY-DERIVES-CERTIFIED, OPAL_ANALYST_PRD.md:1188-1192 (binding K): the consumable is derived from rectangle.dry.json plus the semantics patch plus any certifier-refusal corrections, all validator-merged.",
+    "certifier_patch_status": "WITHDRAWN FROM DERIVATION.",
+    "why": [
+      "semantic_refusal.patch.json @f6c4cd256c has one change, which targets the planted cell. Its purpose was to revert the plant.",
+      "The dry value is already true and coherent with C3 and C4: 'Dated account-value evidence covers six of eight traded claims; no sum of six is asserted as the complete cohort value.'",
+      "Merged onto dry, the patch would replace that author-measured sentence with this seat's paraphrase. It is also true, but it is not a correction. Measured: ssot_validate.py patch dry + semantic_refusal.patch.json reads rc=0 and differs from dry at exactly 1 path, the interpretation text.",
+      "Binding K makes mutant removal STRUCTURAL through the dry source, so no certifier text is needed in the consumable."
+    ],
+    "certified_patches_for_derivation": [],
+    "consequence": "rectangle.final.certified.json is dry, validator-passed with no patch applied. No certifier refusal is filed."
+  },
+
+  "scope_and_limits": [
+    "This certifies the documentary PRD ground-truth rectangle (8 surfaces x 3 fields) at @d97ae3f905. It certifies no implemented pipeline, and none was requested.",
+    "Not evaluated: live or deployed behaviour; the identity helpers (the S2 strategy identities and the S3 cross-reference match are carried, not re-derived); the SOP and margin PDFs; S3's empty-roster branch; the crossreview receipt, which the README excludes.",
+    "It authorizes no decomposition, implementation, deployment, grant or push. rectangle.final.json is not PRD ground truth; only the dry-derived rectangle.final.certified.json may be consumed."
+  ],
+
+  "seal_state_at_signature": "OPENED. The seal was released by 1.0.0_SA_CTO~A at 2026-09-15T06:59:33Z, after the pre-open outputs @f6c4cd256c. This record was written after seal-open, and its nomination is the one frozen before it."
+}

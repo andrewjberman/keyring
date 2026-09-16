@@ -1,0 +1,19 @@
+{
+  "verified_at": "2026-09-15T06:11:36.112348+00:00",
+  "postapply_managed_changes": [],
+  "postapply_target": "aws_lambda_function.mdpf_gold",
+  "existing_output_objects_checked": 14,
+  "unchanged_output_versions": 14,
+  "changed_output_keys": [],
+  "route_bindings_sha256_unchanged": "c9e54ce28351752a382cc14ac17c380ccea471da9191aa1170cf834cbf971fcd",
+  "route_bindings_known_drift_held": true,
+  "scheduled_verification": "PENDING 2026-09-15 13:30Z gold, then 13:50Z publisher; no manual invoke",
+  "safe_apply_returncode": 0,
+  "resources_added": 0,
+  "resources_changed": 1,
+  "resources_destroyed": 0,
+  "safe_apply_log_sha256": "dcff0aafb4a992e6b20426db2cb215acfb6077f00267997d0c8fd5a228a0e883",
+  "safe_apply_terraform": "1.14.5, same binary as plan/init through documented SAFE_APPLY_TERRAFORM; wrapper default 1.9.8 was not compatible with that backend initialization",
+  "halt_ack": "Six exact routine messages read and acknowledged before HALT_ACK=1; no STOP-class bypass",
+  "tag_authz_gate": "Executed and passed: 0 candidate resources with overwritten authorization tags; naming WARN window and tombstone checks ran"
+}

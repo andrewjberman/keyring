@@ -1,0 +1,78 @@
+{
+ "schema_version": "1.0",
+ "project": "IRPT_FNTEND",
+ "round": 5,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-14T11:33Z",
+ "trigger": "The round-5 L10 slug to 1.0.0_SA_CTO, delivered 2026-09-14T11:30:57Z as org/mcp/inbox/1.0.0_SA_CTO/20260914T113057Z_3.0.0_SA_CVO_L10_SLUG_IRPT_FNTEND_round_5_--_37_rows_.md (4741 bytes, read from the recipient's read/ folder; UNTRACKED device-local file: org/mcp/inbox/* is gitignored, so NO commit vintage exists for this carrier), citing the L8/L9 record at 366a0b4103 and the carriers at d50d0e6d87. Written minutes after the slug.",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-14T10:31Z",
+   "ended_utc": "2026-09-14T10:40Z",
+   "act": "Compiled round 5's channel: the new rows are those at HEAD absent at the issuance commit b4d1b8bfef -- 194 minus 157 = 37, 0 lost, 8 ARMED all with an owner, 4 BLOCKING; over BOTH adjudication files exactly those 37 were carrier-less, and no older row was",
+   "inputs": [
+    {"kind": "MESSAGE", "ref": "96556"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v{1,2}.md@b4d1b8bfef and @6462e98cc6"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v{1,2}.md@80a38e0008"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 sections 1-2"}
+   ],
+   "spine_clause": "L8: input is the new investigation rows and no others; the CVO's engagement with the project begins here",
+   "gate_or_notifier_touched": "none -- read-only compile; sequence-check --project IRPT_FNTEND read no flags",
+   "note": "The packet arrived 09:35:11Z. This seat first closed three L4-R deliveries that gate other seats' COO delivery (MDPF_CANON v2.1/v2.2, ADVI_FIRMBKTS v1.0-v1.2). started_utc is the first compile read, taken from tool-call order, not recorded by an instrument."
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-14T10:40Z",
+   "ended_utc": "2026-09-14T11:25:01Z",
+   "act": "Graded the eight JUDGMENT criteria from their evidence: 18 captures viewed, the result files and portal DEV 741bb54b read, both checker self-tests run at HEAD 26774b2cdc (32 of 32; 0 of 70 failed), and FE-s-29's instance doctored in three arms (as committed VALID; missing order INVALID; a real legacy order moved limbs 2 and 3 to ANNOUNCE/LEGACY with no violation naming it). 7 PASS (6 qualified), 1 FAIL (F29-AC15, third clause)",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the eight round-5 proof_of_spec instances, @6ad371c88e, @71d47eb8cf, @09c82ae177, @c271e0d702, @e46121f301, @af28a2e3d2, @6cd734e28f, @534051a974"},
+    {"kind": "ARTIFACT", "ref": ".tools/proof-of-spec-check.py@9e6ed6c236 and .tools/to-pipeline-gate.py@8aa00e60fb"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103 sections 3-6"}
+   ],
+   "spine_clause": "L9: JUDGMENT criteria are graded here and never self-graded",
+   "gate_or_notifier_touched": "safe-commit gates passed on 366a0b4103 (commit-gate read 0 of 1 files: a .md is outside its suffixes)",
+   "note": "The doctored instance's legacy arm first ran from the scratchpad and was confounded by CHECKER-SCOPE; it was re-run inside the workspace (.scratch/, untracked) and the temporary file removed. No gated commit was made with a doctored instance."
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-14T11:26:58Z",
+   "ended_utc": "2026-09-14T11:27:54Z",
+   "act": "Carried every disposition and grade on the channel: rows S61 and S62 (this seat's findings) and adjudication rows C-S78..C-S85 -- 20 DISMISSED_WITH_REASON, 19 GRADUATED, 8 grades; closing count carrier-less 0 of 196",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND5_L8_L9_20260914.md@366a0b4103"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d50d0e6d87 (S61, S62)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v2.md@d50d0e6d87 (C-S78..C-S85)"}
+   ],
+   "spine_clause": "L10 precondition: every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate: 2 new rows of 155 checked, OK; missions-tree-check 0 violations",
+   "note": "started_utc is the rows' surfaced_at, stamped by the append script; ended_utc is the commit time."
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-14T11:30:15Z",
+   "ended_utc": "2026-09-14T11:30:57Z",
+   "act": "Read the precondition (36 of 36 IRPT_FNTEND orders complete; 0 of 196 rows carrier-less) and sent the ONE slug to 1.0.0_SA_CTO",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/*.md at HEAD bfa97aa693"}
+   ],
+   "outputs": [
+    {"kind": "MESSAGE", "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260914T113057Z_3.0.0_SA_CVO_L10_SLUG_IRPT_FNTEND_round_5_--_37_rows_.md (4741 bytes; untracked carrier)"}
+   ],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "the L8 correspondence guard (the CVO's one send goes to the CTO) -- passed, no override",
+   "note": "Push state at send: LOCAL @bfa97aa693, origin/CLOUD 56608aadd4 (ls-remote 11:30:15Z)."
+  }
+ ]
+}

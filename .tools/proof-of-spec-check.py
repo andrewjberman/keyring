@@ -5,7 +5,13 @@ Andrew-direct 2026-08-11 ~0815Z: build TOs carry machine-readable JSON deliverab
 expectations the Tier-2 assignee fills to PROVE work was done to spec. This is the
 mechanical gate: a TO is not complete until its instance passes here.
 
-Usage: proof-of-spec-check <instance.json> [expected_criterion_ids]
+Usage: proof-of-spec-check <instance.json> [expected_criterion_ids] [--governing-order <order.md>]
+  --governing-order <order.md>  BIND the governing order (FE-s-37, RULING S, row S61): that order -- the one
+                            being closed -- is the governing order for EVERY limb, and an instance whose
+                            decomp_ref.to_ref or to_id names a DIFFERENT order is REFUSED before any limb runs,
+                            by a violation naming both. to-pipeline-gate.py's complete-flip path always passes
+                            it. WITHOUT it the run is UNBOUND: the order is resolved from the instance's own
+                            to_ref / to_id exactly as before, and a `governing-binding: UNBOUND` frame says so.
   expected_criterion_ids: comma-separated list OR a path to a file (one id per line) --
   the TO's embedded criterion set. When given, COVERAGE is checked BEFORE quality:
   an instance valid on every row it carries can still silently OMIT a criterion
@@ -299,8 +305,10 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
     # NOT COVERED. It is covered now, in both contexts the checker runs in, by reading the INDEX or the RECORD:
     #   PRE-COMMIT  (the instance file is staged or untracked): the artifact must be STAGED in this same commit
     #               (`git diff --cached --name-only -- <path>` non-empty) -> CO-COMMITTED. Already committed at
-    #               HEAD and not staged -> the CCX violation (pin the commit that carried it). In the worktree but
-    #               not staged -> a violation (it cannot ride this commit).
+    #               HEAD and not staged -> the CCX violation (pin the commit that carried it), EXCEPT in a DRY RUN
+    #               (the instance unstaged) where git reports the tracked artifact MODIFIED IN PLACE -> PENDING: Rule
+    #               14a forbids pre-staging it and safe-commit stages the pathspec, so it rides (row LGIC_ENFORCE-C-S9).
+    #               In the worktree but not staged -> a violation (it cannot ride this commit).
     #   POST-COMMIT (the instance is tracked and unstaged; a certifier's re-run): the artifact must be TOUCHED
     #               by the instance's own commit (`git diff-tree --name-only <c> -- <path>` non-empty) ->
     #               CO-COMMITTED at <c>. Present at <c> but not touched by it -> the CCX violation. Absent -> a
@@ -375,9 +383,20 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
                     n_cocommit += 1
                     here, parent, where = _blob(f":{path}"), _blob(f"HEAD:{path}"), "the index (co-committed)"
                 elif _git_ok("ls-files", "--error-unmatch", "--", path):
-                    v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and "
-                             "NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)")
-                    continue
+                    # A TRACKED artifact MODIFIED IN PLACE in a DRY RUN is honestly PENDING (row LGIC_ENFORCE-C-S9): Rule
+                    # 14a forbids pre-staging it, and safe-commit stages the pathspec, so it rides the commit that carries
+                    # the proof. "Modified" is git's own answer (`diff --quiet` exits 1), never a byte compare, so a CRLF
+                    # checkout of an unchanged file on an autocrlf box does not read as modified. An UNCHANGED tracked
+                    # artifact is still the CCX class -- nothing of it can ride this commit -- and the hook run (not a dry
+                    # run) keeps refusing an unstaged artifact, because by then it will not ride.
+                    if dry_run and not _git_ok("diff", "--quiet", "--", path):
+                        n_pending += 1
+                        here, parent, where = ((_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"),
+                                               "the worktree (dry run; tracked, modified in place, rides the commit if staged with the proof)")
+                    else:
+                        v.append(f"artifact-resolution: {path!r} is PENDING-THIS-COMMIT but is ALREADY COMMITTED at HEAD and "
+                                 "NOT staged -- it will not ride this commit; pin the row to the commit that carried it (CCX class)")
+                        continue
                 elif dry_run:
                     n_pending += 1
                     here, parent, where = (_REPO_ROOT / path).read_bytes(), _blob(f"HEAD:{path}"), "the worktree (dry run; untracked, rides the commit if staged with the proof)"
@@ -430,10 +449,11 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
                      "the row names a (commit, path) pair git refutes")
     frames = [f"artifact-resolution: {n_resolved} resolved at pin / {n_cocommit} PENDING co-committed "
               f"({ctx}: {'staged in this commit' if ctx == 'PRE-COMMIT' else 'touched by the instance commit ' + (inst_commit or '')[:10] if ctx == 'POST-COMMIT' else 'n/a'}) / "
-              f"{n_pending} pending-on-worktree ({'dry run: untracked artifacts that ride the commit if staged with the proof; the hook run decides' if dry_run else 'instance path unknown; presence only'}) / "
+              f"{n_pending} pending-on-worktree ({'dry run: untracked artifacts, or tracked ones git reports modified in place, that ride the commit if staged with the proof; the hook run decides' if dry_run else 'instance path unknown; presence only'}) / "
               f"{n_unresolved} UNRESOLVED-HERE (commit not in local store; announced, not asserted) / "
               f"{n_s3} s3_object (not a git ref; skipped) -- denominator {len(rows)} row(s); "
-              "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known",
+              "a PENDING row whose artifact is ALREADY committed (CCX class) is REFUSED here whenever the instance path is known, "
+              "unless a dry run finds that tracked artifact modified in place (it rides the commit)",
               f"artifact-resolution/content: {n_content} row(s) CONTENT-resolved (`introduces` tokens present at the "
               f"pin, absent at its parent) / {n_presence_only} row(s) PRESENCE-ONLY (no `introduces`; the pin exists "
               "and carries the path, nothing here says it carries the CHANGE) -- 88109 class. LIMIT (0.4.0_DS_"
@@ -611,11 +631,119 @@ def _dep_stage(code: str) -> str | None:
         return None
 
 
+# ---------------------------------------------------------------------------
+# GOVERNING-ORDER BINDING (2026-09-14, FE-s-37; 1.0.0_SA_CTO RULING S @942e4ff992 s.2; row IRPT_FNTEND-S61).
+# THE CLASS. Every limb that decides ENFORCE vs ANNOUNCE -- alignment, surprises, invocation, count-bar, drives --
+# reads its governing order through _resolve_governing_to, and that resolver took decomp_ref.to_ref, a field the
+# graded party writes, as the SOURCE. 3.0.0_SA_CVO measured it on FE-s-29's own instance: to_ref pointed at the real
+# round-4 order TO-FE-s-28 moved the count-bar and drives limbs to ANNOUNCE/LEGACY and no violation named the mismatch.
+# THE BINDING. A caller that KNOWS the order -- to-pipeline-gate.py check_complete_flip, which is closing it -- passes
+# --governing-order <path>. Then (a) BEFORE any limb runs, an instance whose decomp_ref.to_ref or to_id names a
+# DIFFERENT order is refused by a violation naming both; and (b) that path IS the governing order for every limb, so
+# the limbs read the flipped order whatever the instance says. to_ref and to_id stay CROSS-CHECKS, never the source.
+# THE to_id CROSS-CHECK IS SLUG-TOLERANT, MEASURED BEFORE IT WAS WRITTEN: of 337 committed estate instances whose
+# sibling order exists, 336 carry to_ref == that order (0 name another), and an EXACT to_id match would refuse 119 of
+# them (a slug on one side -- `X.TO-CG-I-2` vs `X.TO-CG-I-2.edge-side-drop` -- or an order with no <to_id> tag). So an
+# id matches the order when it equals the order's <to_id>, its filename stem, or an `id="..."` declaration, or when
+# one is the other plus a `.`-delimited suffix and the shorter carries `.TO`. A bare `X` never matches `X.TO-1`, and
+# `...FE-s-2` never matches `...FE-s-29`.
+# UNBOUND (the CLI without --governing-order): resolution is exactly what it was, and a frame says the run is UNBOUND.
+# No verdict is looser than before the binding existed; an unbound run is simply not protected from its own to_ref.
+_BOUND_ORDER: Path | None = None   # set once by main() from --governing-order; None = UNBOUND
+_TO_ID_TAG_RE = re.compile(r"<to_id>\s*([^<\s]+)\s*</to_id>")
+
+
+def _ws_rel(p: str) -> str:
+    """`p` as a repo-relative posix path when it lies inside WORKSPACE, else its absolute posix form -- so a to_ref
+    written absolute, with backslashes or with `./` compares equal to the same file written plainly."""
+    q = Path(str(p).strip())
+    if not q.is_absolute():
+        q = WORKSPACE / q
+    try:
+        return q.resolve().relative_to(WORKSPACE.resolve()).as_posix()
+    except ValueError:
+        return q.resolve().as_posix()
+
+
+def _same_order_id(a: str, b: str) -> bool:
+    """True when two TO ids name the same order: equal, or one is the other plus a `.`-delimited slug and the
+    shorter carries `.TO` (the block above: 119 of 337 committed instances need the slug tolerance)."""
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    short, long_ = (a, b) if len(a) < len(b) else (b, a)
+    return ".TO" in short and long_.startswith(short + ".")
+
+
+def _order_id_forms(rel: str, text: str) -> list:
+    """The ids an order answers to: its <to_id> tag (first 8000 chars, where the header lives) and its filename stem."""
+    forms = []
+    m = _TO_ID_TAG_RE.search(text[:8000])
+    if m:
+        forms.append(_canonical_to_id(m.group(1)))
+    name = rel.rsplit("/", 1)[-1]
+    if name.endswith(".md"):
+        forms.append(name[:-3])
+    return [f for f in forms if f]
+
+
+def governing_binding_check(inst: dict, bound_rel: str | None, bound_text: str | None = None) -> tuple[list, list]:
+    """(violations, frames). The binding's cross-check, run by main() BEFORE any limb. `bound_text` is injectable so
+    the self-test exercises it without a repo; left None it is read from WORKSPACE/bound_rel."""
+    if bound_rel is None:
+        return [], ["governing-binding: UNBOUND -- no --governing-order was given, so the governing order below is "
+                    "resolved from the instance's OWN decomp_ref.to_ref (else its to_id), fields the graded party "
+                    "writes. to-pipeline-gate.py's complete-flip path binds it to the order being flipped (FE-s-37); "
+                    "this run's verdict is exactly what it was before the binding existed."]
+    v: list = []
+    if bound_text is None:
+        try:
+            bound_text = (WORKSPACE / bound_rel).read_text(encoding="utf-8", errors="replace")
+        except Exception as exc:  # noqa: BLE001
+            return ([f"governing-binding: the order being flipped, '{bound_rel}', cannot be read ({exc}) -- every "
+                     f"limb is bound to it, so none can be graded; fail-closed"],
+                    [f"governing-binding: BOUND to '{bound_rel}' (--governing-order) -- UNREADABLE"])
+    dref = inst.get("decomp_ref")
+    declared = str(dref.get("to_ref", "") or "").strip() if isinstance(dref, dict) else ""
+    ref_state = "absent"
+    if declared:
+        drel = _ws_rel(declared)
+        if drel == bound_rel:
+            ref_state = "names it"
+        else:
+            ref_state = "names ANOTHER order"
+            v.append(f"governing-binding: the order being flipped is '{bound_rel}' but the instance's "
+                     f"decomp_ref.to_ref names '{drel}' -- REFUSED before any limb runs. The governing order is the "
+                     f"order being closed, never a field the graded party writes (1.0.0_SA_CTO RULING S, row "
+                     f"IRPT_FNTEND-S61); point to_ref at '{bound_rel}' or close the order it names.")
+    cid = _canonical_to_id(str(inst.get("to_id", "") or ""))
+    id_state = "absent"
+    if cid:
+        forms = _order_id_forms(bound_rel, bound_text)
+        if any(_same_order_id(cid, f) for f in forms) or ('id="' + cid + '"') in bound_text[:8000]:
+            id_state = "names it"
+        else:
+            id_state = "names ANOTHER order"
+            others = sorted(t for t in _tracked_task_orders()
+                            if t != bound_rel and _same_order_id(cid, t.rsplit("/", 1)[-1][:-3]))
+            where = ("'%s'" % "', '".join(others[:3])) if others else "no tracked order whose filename carries it"
+            v.append(f"governing-binding: the order being flipped is '{bound_rel}' (it answers to {forms}) but the "
+                     f"instance's to_id is '{cid}', which names {where} -- REFUSED before any limb runs "
+                     f"(1.0.0_SA_CTO RULING S, row IRPT_FNTEND-S61).")
+    frames = [f"governing-binding: BOUND to '{bound_rel}' (--governing-order: the order being flipped) -- every limb "
+              f"below reads THIS order; decomp_ref.to_ref {ref_state}; to_id {id_state}. The instance's own fields "
+              f"are cross-checks, never the source."]
+    return v, frames
+
+
 def _resolve_governing_to(inst: dict) -> tuple[Path | None, str, int]:
     """(path, note, scanned). Resolution is CONTENT-based: a TO is the file that
     DECLARES id="<canonical>", never the file whose NAME looks right (Rule 22a -- a
     filename-resolved check reports drift where there is none and reads CLEAN where two
-    copies have silently diverged). An explicit decomp_ref.to_ref wins when present."""
+    copies have silently diverged). An explicit decomp_ref.to_ref wins when present --
+    UNLESS the run is BOUND (--governing-order, FE-s-37): then the bound order is the
+    answer and to_ref / to_id are never consulted here."""
     _dref = inst.get("decomp_ref", {})
     if not isinstance(_dref, dict):
         # SHAPE ERROR, NOT A VERDICT. decomp_ref must be the OBJECT form
@@ -625,6 +753,16 @@ def _resolve_governing_to(inst: dict) -> tuple[Path | None, str, int]:
         raise TypeError(
             f"decomp_ref must be an OBJECT (doc/vintage_commit/to_ref), got {type(_dref).__name__}"
         )
+    if _BOUND_ORDER is not None:
+        # BOUND (FE-s-37). The order being flipped IS the governing order for every limb; governing_binding_check
+        # (main, before any limb) has already cross-checked to_ref and to_id against it.
+        rel = _ws_rel(str(_BOUND_ORDER))
+        if not _BOUND_ORDER.is_file():
+            return None, f"the bound governing order '{rel}' (--governing-order) does not resolve to a file", 0
+        if not _is_tracked(rel):
+            return None, (f"the bound governing order '{rel}' (--governing-order) resolves to an UNTRACKED file "
+                          f"-- committed state is required to enforce against it"), 0
+        return _BOUND_ORDER, "BOUND via --governing-order: the order being flipped", 0
     declared = str(_dref.get("to_ref", "")).strip()
     if declared:
         p = Path(declared)
@@ -1373,10 +1511,13 @@ def _cut_after(rel, ruling: str):
 # THE RULE. For a PASS row whose bar asserts ZERO of a noun (`0 fail`, `0 arm\(s\) failed`, `0 errors`)
 # and whose bar DOES match its evidence, the evidence may carry no NONZERO count of that noun.
 # REFUSE for a NEW instance, ANNOUNCE for a LEGACY one (the boundary above).
-# ANCHORING. A count in the evidence is left-anchored with (?<![0-9.]) and NEVER with \b -- a \b anchor
+# ANCHORING. A count in the evidence is left-anchored with (?<![0-9.A-Za-z_]) and NEVER with \b -- a \b anchor
 # false-fails `\x1b[1m4 passed`, because the ANSI code puts a word character before the count (1.0.0_SA_CTO
-# 96370, tested with the grader's own call). ANSI escapes are stripped before counting, and a count
-# preceded by `of ` is a DENOMINATOR (`0 of 487 fail`), not a count of the noun.
+# 96370, tested with the grader's own call). A digit directly after a letter or underscore ENDS an identifier
+# (`F47-AC2 PROBLEMS` is criterion F47-AC2's label, not 2 problems -- row IRPT_FNTEND-W3-S41, 1.0.0_SA_CTO
+# round-8 analysis). ANSI escapes are replaced by a SPACE before counting, never removed: removal would glue a
+# real count to the word before it (`pass\x1b[0m4 fail` -> `pass4 fail`), and the identifier rule would then hide
+# it. A count preceded by `of ` is a DENOMINATOR (`0 of 487 fail`), not a count of the noun.
 # NON-APPLICATION: a bar with no zero-count noun; a bar that does NOT match its evidence (conditional_checks
 # already refuses that PASS); key=value bars (`rc=0`, `LEAKS: 0`) -- the ruling names count nouns, and a
 # `rc=0` bar beside an honest `rc=1` inside a test's own printed arms would be refused for the wrong reason.
@@ -1401,8 +1542,8 @@ def _zero_count_nouns(expect: str) -> list:
 
 def _nonzero_counts(evidence: str, stem: str) -> list:
     """Every NONZERO count of `stem` in the ANSI-stripped evidence, as the printed fragment."""
-    clean = _ANSI_RE.sub("", evidence or "")
-    pat = re.compile(r"(?<![0-9.])(?<!of )([0-9]+)[ \t]+" + re.escape(stem) + r"[A-Za-z_()]*", re.I)
+    clean = _ANSI_RE.sub(" ", evidence or "")
+    pat = re.compile(r"(?<![0-9.A-Za-z_])(?<!of )([0-9]+)[ \t]+" + re.escape(stem) + r"[A-Za-z_()]*", re.I)
     return [m.group(0) for m in pat.finditer(clean) if int(m.group(1)) != 0]
 
 
@@ -1907,6 +2048,10 @@ def _self_test() -> int:
         " 486 pass\n 0 fail\n0 of 487 fail", True, 0)
     _cb("Y count-bar: ENFORCE, an ANSI-coloured contradicting ' 10 fail' -> 1 violation (stripped, then counted)",
         "\x1b[0m\x1b[31m 10 fail\x1b[0m\n", True, 1, "NONZERO count")
+    _cb("Y2 count-bar: ENFORCE, an id's trailing digit before the noun ('F47-AC2 PROBLEMS') is NOT a count -> 0 "
+        "violations (row W3-S41)", "F47-AC2 PROBLEMS list: []\nVALIDATE -> 0 problems\n", True, 0, bar="0 problems")
+    _cb("Y3 count-bar: ENFORCE, a real count an ANSI escape glues to a word ('pass\\x1b[0m4 fail') -> 1 violation "
+        "(the escape reads as a space)", " 0 fail\n5 pass\x1b[0m4 fail\n", True, 1, "4 fail")
 
     # ---- FE-s-29 limb 3: the DRIVES limb (RULING Q + the CTO's condition). Pure: the order text, the mode
     # and the file reader are injected; the real-bytes arms (the six seeded suites, F19's browser suite,
@@ -1939,8 +2084,48 @@ def _self_test() -> int:
     _dr("Z7 drives: ENFORCE, an explicit drives=none over a seeding test -> 0 violations (declared, not network)",
         ' drives="none"', seeded, True, 0)
 
+    # ---- FE-s-37: the GOVERNING-ORDER BINDING (RULING S, row S61). Pure: the bound order's text is injected; the
+    # real-shape arms (FE-s-29 doctored to FE-s-28 through check_complete_flip in a real index, the positive control,
+    # the committed corpus, the tools S61 measured) live in .tools/tests/test_governing_binding.py.
+    import inspect
+    _b29 = "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-29.checker-limbs.md"
+    _b28 = "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-28.mandatory-placeholders.md"
+    _t29 = "<to_id>IRPT_FNTEND.TO-FE-s-29</to_id>\n<status>complete</status>\n"
+
+    def _bi(ref=None, tid="IRPT_FNTEND.TO-FE-s-29"):
+        return dict({"to_id": tid}, **({"decomp_ref": {"to_ref": ref}} if ref is not None else {}))
+
+    def _bd(name, inst_, bound, expect_v, needles=(), text=_t29):
+        got, fr = governing_binding_check(inst_, bound, bound_text=text)
+        ok = len(got) == expect_v and all(n in " ".join(got + fr) for n in needles)
+        arms.append((name, ok, len(got), expect_v, (got[0] if got else (fr[-1] if fr else ""))[:110]))
+
+    _bd("B1 binding: BOUND, to_ref names the flipped order -> 0 violations, frame BOUND", _bi(_b29), _b29, 0,
+        ("BOUND to",))
+    _bd("B2 binding: BOUND, to_ref names ANOTHER real order (FE-s-28) -> 1 violation naming BOTH paths", _bi(_b28),
+        _b29, 1, (_b29, _b28))
+    _bd("B3 binding: BOUND, to_ref written absolute with backslashes, same file -> 0 violations",
+        _bi(str(WORKSPACE / _b29).replace("/", "\\")), _b29, 0)
+    _bd("B4 binding: BOUND, no to_ref, to_id names ANOTHER order -> 1 violation", _bi(None, "IRPT_FNTEND.TO-FE-s-28"),
+        _b29, 1, ("to_id",))
+    _bd("B5 binding: BOUND, to_id carries the order's slug (the 119-instance shape) -> 0 violations",
+        _bi(_b29, "IRPT_FNTEND.TO-FE-s-29.checker-limbs"), _b29, 0)
+    _bd("B6 binding: BOUND, `...FE-s-2` is not `...FE-s-29` (no `.` boundary) -> 1 violation",
+        _bi(_b29, "IRPT_FNTEND.TO-FE-s-2"), _b29, 1)
+    _bd("B7 binding: BOUND, a bare project code names no order -> 1 violation", _bi(_b29, "IRPT_FNTEND"), _b29, 1)
+    _bd("B8 binding: BOUND, an order with NO <to_id> tag answers to its filename stem -> 0 violations",
+        _bi(_b29, "IRPT_FNTEND.TO-FE-s-29"), _b29, 0, text="# an order without a header tag\n")
+    _bd("B9 binding: UNBOUND -> 0 violations, and the frame SAYS the run is unbound", _bi(_b28), None, 0, ("UNBOUND",))
+    _msrc, _rsrc = inspect.getsource(main), inspect.getsource(_resolve_governing_to)
+    _order_ok = (_msrc.index("governing_binding_check(") < min(_msrc.index("conditional_checks(inst)"),
+                                                               _msrc.index("alignment_check(inst)"))
+                 and _rsrc.index("_BOUND_ORDER is not None") < _rsrc.index('_dref.get("to_ref"'))
+    arms.append(("B10 binding: main() runs the binding before every limb; the resolver reads the bound order before "
+                 "to_ref", _order_ok, 0, 0, "source order"))
+
     passed = sum(1 for a in arms if a[1])
-    print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4 + invocation alignment + count-bar + drives)")
+    print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4 + invocation alignment + count-bar + drives "
+          "+ governing-order binding)")
     for name, ok, got, exp, tail in arms:
         print("  %s  %s  (violations got=%d expected=%d)  %s" % ("PASS" if ok else "FAIL", name, got, exp, tail))
     print("  RESULT: %d of %d arm(s) behaved" % (passed, len(arms)))
@@ -2004,22 +2189,52 @@ def iso_offset_to_utc_z(ci: str) -> str:
 
 
 def main() -> int:
+    global _BOUND_ORDER
     if len(sys.argv) == 2 and sys.argv[1] == "--self-test":
         return _self_test()
-    if len(sys.argv) not in (2, 3):
+    # --governing-order <order.md> (FE-s-37) is lifted out of argv FIRST, so the positional contract below -- one
+    # instance path, then an optional id list -- is exactly what it was.
+    args: list[str] = []
+    bound_arg = None
+    i = 1
+    while i < len(sys.argv):
+        a = sys.argv[i]
+        if a == "--governing-order" or a.startswith("--governing-order="):
+            val = a.split("=", 1)[1] if "=" in a else (sys.argv[i + 1] if i + 1 < len(sys.argv) else "")
+            i += 1 if "=" in a else 2
+            if not val.strip():
+                print("USAGE-ERROR (rc=2): --governing-order needs the path of the order being closed")
+                return 2
+            bound_arg = val
+            continue
+        args.append(a)
+        i += 1
+    if len(args) not in (1, 2):
         print(__doc__)
-        print("USAGE-ERROR (rc=2): expected <instance.json> [expected_criterion_ids]")
+        print("USAGE-ERROR (rc=2): expected <instance.json> [expected_criterion_ids] [--governing-order <order.md>]")
         return 2
+    bound_rel = None
+    if bound_arg is not None:
+        bound_rel = _ws_rel(bound_arg)
+        if Path(bound_rel).is_absolute() or bound_rel.startswith("../"):
+            print(f"USAGE-ERROR (rc=2): --governing-order '{bound_arg}' lies OUTSIDE this checker's tree "
+                  f"({WORKSPACE}) -- run that tree's own .tools/proof-of-spec-check.py")
+            return 2
+        _BOUND_ORDER = WORKSPACE / bound_rel
     try:
-        inst = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+        inst = json.loads(Path(args[0]).read_text(encoding="utf-8"))
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001
         print(f"READ-ERROR (rc=2): {exc}")
         return 2
 
     violations: list[str] = []
-    if len(sys.argv) == 3:
-        violations.extend(coverage_check(inst, sys.argv[2]))
+    # THE BINDING RUNS FIRST (FE-s-37): an instance naming a different order than the one being closed is refused
+    # before any limb runs, and every limb below then reads the bound order. Unbound, this only prints its frame.
+    bind_violations, bind_frames = governing_binding_check(inst, bound_rel)
+    violations.extend(bind_violations)
+    if len(args) == 2:
+        violations.extend(coverage_check(inst, args[1]))
     else:
         print("NOTE: no expected_criterion_ids given -- COVERAGE UNCHECKED (row quality only; "
               "an omitted criterion is invisible to this run). The cert consumer runs step-zero.")
@@ -2045,9 +2260,9 @@ def main() -> int:
     violations.extend(align_violations)
     # ARTIFACT ROW RESOLUTION (2026-08-30): runs on every instance; its frame prints its denominator
     # and names the class it does NOT cover, so a clean line cannot be read wider than it is.
-    res_violations, res_frames = artifact_resolution_check(inst, inst_path=Path(sys.argv[1]))
+    res_violations, res_frames = artifact_resolution_check(inst, inst_path=Path(args[0]))
     violations.extend(res_violations)
-    align_frames = list(align_frames) + res_frames
+    align_frames = list(bind_frames) + list(align_frames) + res_frames
     # SURPRISES LIMB (2026-09-03): runs on every instance; ENFORCE vs ANNOUNCE is derived from the
     # governing TO's root, never from a caller-side flag -- the same one-discriminator rule as layer 1.
     sur_violations, sur_frames = surprises_check(inst)

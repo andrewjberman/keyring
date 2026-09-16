@@ -1,0 +1,11 @@
+{
+  "prd": "MDPF_CANON_PRD.md",
+  "prd_version": "v2.3",
+  "prd_pin": "8d12b77adbcb871c6d267ce7ae501b260b2ae727",
+  "half": "brief",
+  "half_hash": "a0737dee535255486d712a49b3e5643a26d55f718197ed7a4b90009196cb60cf",
+  "verdict": "SIGNED",
+  "review_ref": "docs/briefs/sources/MDPF_CANON_L4_BRIEF_REVIEW_v2_3_20260914.md@b31eb1ebdce3f3bc10d206a3f61ac73de48682e4",
+  "signed_by": "4.0.0_SA_CRO",
+  "signed_at": "2026-09-14T10:25:30Z"
+}
