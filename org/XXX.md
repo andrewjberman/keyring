@@ -370,6 +370,11 @@ have a great PRD and forget to actually produce some material part of the end pr
   REALIZED against exercised artifacts, `python .tools/missions-tree-index.py check` admitting the CLOSED row, with `/verify`
   SOUND; or HELD-AT-STOP with the reserved card at Andrew; or his stand-down. **A successor at THIS lane RE-ARMS OFF THIS ROW
   while the scope is not DONE**, and re-sends the goal text to `2.0.0_SA_COO~Z` if that seat restarted.
+- ⛔ **STOPPED 2026-09-16 ~20:1xZ BY HIS STAND-DOWN, VERBATIM AND ENTIRE: *"kill cron"*** -- Andrew-direct at the `1.0.0_SA_CTO~Z`
+  terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_201xZ_KILL_CRON_SELF_DRIVE_AMGT_RESAPP.md`).
+  `1.0.0_SA_CTO~Z` deleted its cron (then `884c0211`) and `CronList` read empty after. **THIS ROW ARMS NOTHING: a successor does
+  not re-arm from it.** Read exactly as narrow as the word: the TIMER is stopped; AMGT_RESAPP is not closed, no seat's work is
+  stopped, and this lane stays event-driven on its inbox Monitor like every zero-cron serial.
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
