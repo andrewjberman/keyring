@@ -2321,6 +2321,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "The issuance write-surface census treats a non-empty <paths> intersection between two cells as contention.",
    "world_is": "A <paths> entry says what a worker MAY write, not where or whether it will. Two cells can share ten entries and land disjoint surfaces, because the shared ten are reachable only from scratch branches that never merge. The census reads the grant and infers the act.",
    "notes": "INERT: EN-x-1 was spawned on this reading and both cells are running. \u2b50 THE RULE, and it is the cheap half: when a <paths> intersection is non-empty, READ THE ORDERS' SCOPE CLAUSE BEFORE CALLING IT CONTENTION -- a grant scoped to a practice copy is not a claim on the shared tree. Better still, read the live cell's BRANCHES, which is what settled this one: the practice branch showed the wide set and the slot branch showed records only. COST: one <paths> diff plus one branch read. NON-APPLICATION: cells with no practice-copy clause, where the grant and the act are the same thing. \u26a0 The converse trap is worth naming too -- a cell that PROMISES to keep its slot branch clean and does not is a defect the drain must refuse, so this reading is only as good as the drain that enforces it."
+  },
+  {
+   "id": "LGIC_ENFORCE-S32",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T13:05Z",
+   "one_line": "THE `hazard_standing: ARMED` COUNT IS A FILED COUNT, NOT A LIVE ONE, because a disarm is recorded in the OTHER carrier: of the 26 rows I have been reporting as my armed backlog, 8 already carry a recorded DISARM in REMEDIATION_v1.md and 4 more were disarmed by rows I filed today. Genuinely open: 14.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED across BOTH carriers of this project's channel. INVESTIGATION_v1.md reads hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~G for 26 rows. REMEDIATION_v1.md carries a structured disarm block for 8 of those same ids -- W1-S3, W1-S14, W1-S17, W1-S20, W3-S6, W4-S1, W5-S3, W5-S4 -- each reading {'state': 'DISARMED', 'owner': '2.0.0_SA_COO~G', 'at': ...} with timestamps from 2026-09-14T22:07Z to 2026-09-15T11:02Z.",
+     "SO THE DISARMS ARE MINE AND THEY ARE RECORDED -- just not where I was counting. The channel is APPEND-ONLY, so an investigation row's hazard_standing is frozen at the value its author wrote and can never read DISARMED afterwards. The disarm lives in the remediation carrier, which 3.0.0_SA_CVO wrote in one round-1 commit (7748cc5df7, 44 rows, one per graduated item).",
+     "THE CARRIERS ALSO USE DIFFERENT SCHEMAS UNDER THE SAME IDS, which is how I first missed this: a remediation row's keys are class/closed/disarm/evidence/fabric/hazard_standing/id/mechanism/owner/project/remedy/round -- no one_line, no disarm_owner. My first read keyed a dict by id across BOTH documents, so the remediation row silently OVERWROTE the investigation row and two items came back with empty one_line and surfaced_by None. That is the same collapse a rollup makes when it resolves one id across two documents.",
+     "AND `owner` IS NOT `disarm_owner`: 40 of the 44 items carried by both documents 'disagree' on owner, but the fields mean different things -- remediation.owner is who owns the REMEDY, investigation.disarm_owner is who may disarm the HAZARD. Most of the 40 are investigation rows with no disarm_owner at all. I nearly filed that as an owner conflict; it is a field-meaning difference and only the 8 disarms are a real reconciliation.",
+     "MY OWN AD-HOC DETECTOR OVER-FIRED AND I AM RECORDING IT: to separate 'already disarmed by a row this session' I wrote a regex over each row's one_line and notes looking for DISARM near the target id. It claimed 13. I filed exactly 4 (S27 disarms S22; S28 disarms S24 and S26; S29 disarms S23). Roughly nine false positives, because any row whose prose says 'disarm' near a number matched. The honest number comes from authorship I know, not from a pattern I invented.",
+     "THE HONEST BACKLOG, therefore: 26 filed ARMED, minus 8 with a recorded remediation disarm, minus 4 disarmed by rows I filed today, leaves 14 genuinely open and mine -- S13, S21, W1-S7, W1-S16, W1-S18, W1-S19, W1-S21, W1-S22, W1-S23, W1-S24, W2-S7, W3-S5, W3-S8, W3-S10."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A row's hazard_standing says whether its hazard is live, so counting ARMED rows counts live hazards.",
+   "world_is": "hazard_standing is frozen at filing time by the append-only rule, and the disarm is recorded in a different document under a different schema. Counting ARMED in the investigation carrier alone overstates the live set -- here by 8 of 26 before this session's own four are even considered.",
+   "notes": "INERT: nothing is armed by this and no act is owed by another seat. \u26d4 IT CORRECTS SOMETHING I TOLD 3.0.0_SA_CVO AND PUT IN MY OWN HEARTBEATS -- I reported '26 armed rows I own' repeatedly as if it were a live count. It is a FILED count. The live figure is 14. \u2b50 THE RULE: a standing or status field in an APPEND-ONLY document is frozen at authorship; to read the CURRENT state, read every carrier of the item and prefer the STRUCTURED field over prose. COST: one read of the sibling document. NON-APPLICATION: a single-carrier channel, and any field the schema lets a later row of the SAME id supersede. Related in kind: an adjudication that disarms in prose disposes nothing, and a row id carried by two documents resolves ambiguously."
   }
 ]
 ```
