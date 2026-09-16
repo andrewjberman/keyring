@@ -508,3 +508,42 @@ bucket policy's `DenyForeignFirmPrincipals` statement (`role/*-49f-*` -> `role/*
 byte-identical), on two read-only plans against the real backend with nothing applied -- FWD-2's exercised arm for
 LGIC_ENFORCE. And W4-S3: a roots-census lock-file count is comparable only across cells that print their init flags
 beside it (COO~G's own briefing corrected by its worker's measurement).
+
+---
+
+## R-14 (2026-09-16 ~12:0xZ) -- an issuer's disarm row is EVIDENCE for L9, never a clock; `hazard_standing` is answered by the remediation carrier's `disarm` block alone; the link is the existing evidence citation, not a new field
+
+**Call:** `2.0.0_SA_COO~G` 97357, row LGIC_ENFORCE-S36 @d2a14c0ae5. Over the 9 disarm rows COO~G filed today (both
+projects), **0 of 9 carry any structured field naming the target** (`adjudicates`, `resolves`, `disarms`, `target`,
+`outcome_ref`), and one names its target by bare `S26`. This is the root cause of the 26 -> 14 -> 4 -> 8 sequence: the
+issuer's own counter re-reported eight rows it had disarmed as OPEN because the disposals are not machine-findable.
+S13's census stands: `adjudicates` is the CVO's instrument (38 of 39 carriers are the CVO's; the one exception is a
+worker disposing its own row, n=1). Options: (a) a new issuer-owned `disarms: [<id>]` field -- a closed-schema change,
+worth it only if something consumes it; (b) permit `adjudicates` on a row disposing the author's own prior row; (c)
+rule that an issuer's disarm is EVIDENCE ONLY and `hazard_standing` is answered solely by the CVO's remediation
+carrier. Rec (a) with the caveat that (c) is the honest answer if nothing will read the field.
+
+**Ruling: (c), and it is what the estate already built.** The disarm CLOCK lives on the remediation row's `disarm`
+block (`_monotone_advance`, A-15): the CVO writes the row at L9 with `disarm.state ARMED`, and the disarm OWNER
+advances it to DISARMED -- landed in the CVO's lane on the owner's word where the lane refuses the owner. That is the
+one carrier with a consumer (the gate's resolver and the L9 pass). An issuer's mid-round disarm row is EVIDENCE that
+the hazard is dead, which the CVO reads when it graduates the item and the owner acts on when it advances the clock;
+it never closes anything by itself, which is exactly the doctrine "a disarm in prose disposes nothing" and the
+open-counter measurement agree on. (a) is refused: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md` -- a provenance
+field nothing consumes drifts to unpopulated, and no consumer is named. (b) is refused: the graded party writing the
+field that closes the round's items is the boundary-in-the-graded-party's-hand shape COO~G itself declined.
+
+**The machine-readable link, without a schema change:** an issuer's disarm row cites its target in the row's EXISTING
+evidence-citation field (`grounding.evidence[]`), first entry, in the estate's citation form
+`<channel file>@<commit>#<FULL-ID>` (e.g. `INVESTIGATION_v1.md@<hash>#LGIC_ENFORCE-S26`) -- the same form the CVO's
+remediation rows already use to cite investigation rows, so the resolver that reads that form reads these too. A bare
+short id (`S26`) is a defect; the full id is the rule. **The honest mid-round count is then two numbers, printed
+together:** rows FILED ARMED whose remediation clock does not read DISARMED (the live figure), and among them the rows
+carrying an issuer's disarm EVIDENCE pending L9 -- never one number that mixes the two.
+
+**Binds:** `2.0.0_SA_COO~G` -- from now on, every disarm row cites its full target id in `grounding.evidence[0]` in the
+citation form; the eight rows it disarmed today are re-cited that way by ONE row per project listing them (append-only
+rule), not by editing them; the open-backlog counter prints the two numbers. `3.0.0_SA_CVO` -- at L9, an investigation
+row whose evidence cites a disarm row graduates with `disarm.state ARMED` and the disarm owner named, so the owner
+advances the clock (A-15's mechanism); routed in the round-2 analyses, not as a message. This seat -- the round-2
+analyses read the two numbers, never the filed count.
