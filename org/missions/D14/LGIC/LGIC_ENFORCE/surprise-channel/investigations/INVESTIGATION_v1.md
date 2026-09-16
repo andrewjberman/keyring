@@ -2100,6 +2100,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "INERT, not ARMED: the defect surfaces as a VISIBLE placeholder token inside the canonical, which no consumer can mistake for a name -- it cannot silently produce a wrong rename target. SCOPE: whether 18 uncovered gaps is itself a defect belongs to EN-r-4's own criterion r4-gaps-covered (check_en_r2.py@5e908a4929) and is NOT graded here; this row records only what the EN-s-1 census output carries. No remedy is available to this worker -- infra/logic/registry/resources.json is outside this order's <paths> grant."
+  },
+  {
+   "id": "LGIC_ENFORCE-S26",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T10:15Z",
+   "one_line": "EN-d-1's S24 hold is CLEARED and the cell is STILL not spawned, for a second and different reason: it needs a PRACTICE-COPY worktree, and spawning it now would leave only about 1.5 GB above the 10 GB stop line EN-t-3 is running under -- so it could trip a sibling's own safety stop mid-census.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S24's condition is MET: it held EN-d-1 until EN-s-1 drained, because EN-d-1 WRITES the two registry files EN-s-1's census READS. EN-s-1 drained at 99c34fb574. That hold is over and this row does not re-argue it.",
+     "THE NEW CONSTRAINT, measured: df -h /c reads 13 GB free. EN-d-1's cell text orders a SECOND worktree -- 'git worktree add -b prac-lgic-enforce-d1-r2 <WS>/../prac-lgic-enforce-d1-r2 HEAD' -- because its evidence is commit hashes on a scratch branch. A fresh worktree of this repo measures about 1.5 GB (du -sh on a live one). 13 - 1.5 leaves about 11.5 GB.",
+     "AND A SIBLING IS RUNNING UNDER A 10 GB STOP LINE: EN-t-3's BOUNDS say 'the 10G stop line binds', and the S22 correction has it re-measure free space every ten roots and stop with a BLOCKING row below that line. So spawning EN-d-1 now leaves roughly 1.5 GB of margin between a sibling's working set and its own abort threshold.",
+     "THE COST OF BEING WRONG IS ASYMMETRIC, which is what decides it: EN-d-1 delayed costs a wait. EN-t-3 tripping its stop line mid-run aborts a 73-root census that is most of an hour of terraform init/plan work, and the abort would be CORRECT behaviour by a guard I wrote, triggered by a spawn I chose. Waiting is cheaper than the thing I would be gambling on.",
+     "EN-t-3's FOOTPRINT IS BEHAVING AS THE S22 CORRECTION INTENDED, measured in its worktree: exactly ONE .terraform directory present (served-guard-inf), infra/aws/terraform totalling 711M, worktree 2.2G overall. So the per-root cleanup is working and the steady state is about one root -- but 'about one root' is an observation over the roots seen so far, not a bound on the largest provider set still to come."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "A cell whose declared dependencies are met and whose write surface is clear is ready to spawn.",
+   "world_is": "Readiness is not only dependency and write surface. This cell also needs DISK that a live sibling is already budgeting against, and the two cells' needs are invisible to each other -- neither order mentions the other, and no gate compares a spawn's footprint against a running cell's stop line.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. EN-d-1 spawns when EN-t-3 drains and its worktree is removed, which returns about 2.2 GB. Its slot worktree (wk-lgic-enforce-2d-5) is ALREADY provisioned and is deliberately being kept rather than reclaimed -- removing and rebuilding it would cost two minutes and the same 1.5 GB on the way back in. \u2b50 THE GENERAL SHAPE, and it is the third variant of one blindness this round: S23 was instrument-vs-output, S24 was input-vs-output, and this is CAPACITY-vs-capacity. All three are cells whose <paths> do not intersect and which still cannot safely run at the same time. A write-surface census answers none of them."
   }
 ]
 ```
