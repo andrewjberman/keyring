@@ -1659,6 +1659,50 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-c-2 THE CELL: 'Find the build that writes that artifact from the vendored directory, and use it.'",
     "world_is": "The build as written cannot produce this package's zip: it stops rc=1 silently at the manifest-declaration probe, which is also how a non-declaring package reached the dead branch for every build since dbbbfb89b2. The override BAU_MANIFEST_SKIP=1 (documented at :286 'Override per-build ... justify in the commit message') skips only that probe, whose designed outcome for this manifest is SKIP; import-closure still runs. The worker used it for this one build and records it here and in the ledger commit.",
     "notes": "INERT for this order (the override reaches the designed branch). Estate-wide it is a latent build break for 13 of 14 packages per the script's own count at :278; that repair is the script owner's, not a rider on this order."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-16T19:20:00Z",
+    "one_line": "To name 'every date=D key' that G-B condition 5 asks for, this worker had to LIST prefixes under s3://opal-data-49financial/gold/advi/ (5 delimiter listings per pass returning CommonPrefixes: gold/advi/, canonical/, dimensions/, insurance/, reference/) before reading the date=2026-09-15 keys; ruling R-OG-4 as carried in the order admits read-only access on exactly gold/advi/_logs/ and the named date=D keys, and no carrier names the date=D keys themselves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ORDER at CLOUD 68bd819cd8 (amended @7c44a2cf82), BOUNDS Cross-firm law: 'admitted read-only (list, head, get) on exactly s3://opal-data-49financial/gold/advi/_logs/ and the date=D keys those conditions name, with every key read printed and nothing else in that bucket'.",
+        "SIGNOFF at CLOUD 68bd819cd8, Half 2 s.E condition 5: 'For W and W-partial it also names the before and after VersionIds of every date=D key'; s.A lists areas (dimensions/, reference/ref_txn_classification/, canonical/, insurance/) but no key list.",
+        "READS: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~4/replay/gold49f_date_d_before.json and _after.json, field 'reads' -- 29 calls each pass: 5 delimiter listings (CommonPrefixes only, no object keys outside date=D) and 24 list-object-versions on <table>/date=2026-09-15/. Result: 31 keys; also reference/bd_legacy_* tables, which Half 2 s.B names as another writer's keys."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cross-firm law as amended: only _logs/ and the date=D keys the conditions name, nothing else in that bucket.",
+    "world_is": "The date=D key set is not enumerated in any carrier, so meeting condition 5 needed 5 prefix listings one level above the admitted keys on each of 2 passes (before, after). No object outside _logs/ and date=2026-09-15/ was read; nothing was written.",
+    "notes": "INERT: read-only listings, every call printed in the evidence files. For a later replay: name the date=D table prefixes in the sign-off, or admit the prefix listing."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-16T19:21:00Z",
+    "one_line": "The replay-caused 49F dispatch ran a full chain that ends CHAIN OK date=2026-09-15, but advi-49f-gold-dispatch logged 'ERROR: chain terminal within poll window, signature=UNKNOWN(first_line=Completed 1.5 KiB/1.1 MiB ... with 84 file(s) remaining)' for the same command -- the dispatcher classifies the SSM output by its first line, which was an aws s3 progress line.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DISPATCHER: CloudWatch /aws/lambda/advi-49f-gold-dispatch filter-log-events from 2026-09-16T19:09Z (8 events, no nextToken): 19:11:45 'dispatched: doc=advi-49f-chain-dispatch command_id=8e7e7614-e014-4342-ae4a-47b8bb7ac0d1 started_by_dispatcher=True'; 19:14:15 'ERROR: chain terminal within poll window, signature=UNKNOWN(first_line='Completed 1.5 KiB/1.1 MiB (5.8 KiB/s) with 84 file(s) remaining') {\"statusCode\": 200, \"dispatched\": true, ...'.",
+        "SSM: get-command-invocation 8e7e7614-e014-4342-ae4a-47b8bb7ac0d1 on i-01003b035d2988dfb -> Success (19:14:31Z).",
+        "CHAIN LOG: s3://opal-data-49financial/gold/advi/_logs/chain_20260916T191146Z.log VersionId v46i6VrCC8vcbd4.1l49c88tS1GtV7aK, 145 lines: first 'CHAIN START date=2026-09-15 mode=production ... stages=18', last 'CHAIN OK date=2026-09-15 wall=144.6s'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "G-B sign-off Half 2 s.C: each dispatch branch (R, A, W, W-partial) is distinguishable from what the chain writes and logs.",
+    "world_is": "The dispatcher's own verdict line for a successful branch-W run reads ERROR with signature UNKNOWN, so the dispatcher log cannot be used to classify a dispatch's branch; the chain log and the SSM status can. Not caused by this order's code.",
+    "notes": "INERT for this order: branch W was classified from the chain log and SSM status. Owner of advi-49f-gold-dispatch decides."
   }
 ]
 ```
