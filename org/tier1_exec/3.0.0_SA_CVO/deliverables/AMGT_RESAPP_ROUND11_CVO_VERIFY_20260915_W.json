@@ -1,0 +1,127 @@
+{
+  "reviewed_head": "a35563e19749c07c23d2859dea46c74b5ab93a97",
+  "checked_at": "2026-09-15T22:20:45Z",
+  "method": "Independent local read of committed captures, proof instances, browser records and source; saved screenshots visually inspected. No new live calls or browser run.",
+  "captures": {
+    "coverage.BA_US_Equity.deployed.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/coverage.BA_US_Equity.deployed.json",
+      "sha256": "9e3fea0c18caf02fe1598160eb9596b345ae6f25abca739d8f84d1a03210979e",
+      "body_sha256": "020305685ab766e467471f330e5219e45b2bcfd7e5cff311ec6a09825901a1f6",
+      "statusCode": 200
+    },
+    "overlay.BA_US_Equity.deployed.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/overlay.BA_US_Equity.deployed.json",
+      "sha256": "ef49d9044643252a3d1b24b0eac6a26f9182f749a333fa865059b5c20fd8cf80",
+      "body_sha256": "612e3c8757280dca1f0e186ab7f9b03a9e7022e2e58b35f0c38418604707bb2e",
+      "statusCode": 200
+    },
+    "peers.BA_US_Equity.deployed.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/peers.BA_US_Equity.deployed.json",
+      "sha256": "70ab1f4b4815dd486604687e55ab0f791fd5623ed6fe761bcc530296227bbb2e",
+      "body_sha256": "af0a2fb95819adeb79f373f10e64a46cb8d4293cef0048230287b8c185b765e1",
+      "statusCode": 200
+    },
+    "rankings.breakout.chatter.deployed.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/rankings.breakout.chatter.deployed.json",
+      "sha256": "c8dbee611bc50f56544f25bb6446381325fa68b5afccde288196cd1af09c86f1",
+      "body_sha256": "fc91b464583c6433b255bab49c2204dfe25b88a284e4246c3e6c6e2675b4c1f4",
+      "statusCode": 200
+    },
+    "rankings.trending.chatter.asof20260913.deployed.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/rankings.trending.chatter.asof20260913.deployed.json",
+      "sha256": "488f8ba3ab9ab2952339363cbbfb65274d72e5f59899e268003519efbb5bfb67",
+      "body_sha256": "4baed77698017cc04400ee93e6ac84bbbe05ee178d7c6b44dc4926e75682ab12",
+      "statusCode": 200
+    },
+    "rankings.trending.chatter.response.2026-09-15.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/rankings.trending.chatter.response.2026-09-15.json",
+      "sha256": "698c391592a41a213365b147136194494f08fb4c06eb72e6ed613c9ac651ef5d",
+      "body_sha256": "5b81dffe323fea0ad65297ae632d49324b136de2b25d4482deebb056bb158816",
+      "statusCode": 200
+    },
+    "thesis.BA_US_Equity.response.2026-09-15.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/thesis.BA_US_Equity.response.2026-09-15.json",
+      "sha256": "f2e7c040727195a1ba4a2775d19eac0eb551dc3382902eb014ad4b465aed5cad",
+      "body_sha256": "d319e849e9b67d1d1b1bb76d45c625fa55eb138ab8565d30f24c13a454bcb720",
+      "statusCode": 200
+    },
+    "timeseries.trending.chatter.deployed.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/timeseries.trending.chatter.deployed.json",
+      "sha256": "96187ef6dbf003f3a158b4209ed398890066a8ac191123a0cce9ecf27cf67b72",
+      "body_sha256": "36ad654977281de81d36ad5110b32b498c5299b4fb7b8474892d8ce64b5b125c",
+      "statusCode": 200
+    },
+    "watchlist.deployed.json": {
+      "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/payloads/watchlist.deployed.json",
+      "sha256": "9d0138cd1960639933b4e5cc147e4f6e208306343d401f7dc09a56f0b910614e",
+      "body_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "statusCode": 200
+    }
+  },
+  "browser_artifact_hashes": {
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/arm0.STALE.record.json": "1742bd50e2ff455f05cbf588f68f09ea630a5ce89a7d7616b9b9562dd4fb2384",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/arm1.populated.record.json": "b75164f8ecb5160c4cc4ee3bebb3f005e13bc8c12d09891f596056e1c6192e1d",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/arm2.navigation.record.json": "291f19414978fca2952e475c25689332582db7058cd209bef477d6ed80467dab",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/arm2b.tabs.record.json": "9404e560c10526290f53540daf2d0d51c61a00c59e8f8e65bd7e11eafcde6983",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/arm3.controls.record.json": "d143599b9d27f15cf944e4c05ca8ad10ce9178064caf8c47a9fd571f191acb95",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/pw_arm1_fresh_core.js": "4847af85399643db458ade3efdcec6bbaa4e66403e2215e625dc48168bf59b61",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/pw_arm2b_tabs_directkey.js": "d7148e6dbff5b1ad6bc77651366cec9cbfc06b5dff944d452b61072aa5677e16",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/pw_arm2_navigate_tabs.js": "41ffd3fe5e6282bb89a8cbfa78e5119df2b258fbeb109dbeb4c59170094e637d",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/pw_arm3_controls.js": "6d1906edf620d6c15798773118abf550a8b65382437a84471cca903d5c4d25c3",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm-absent-no-pointer.png": "54c16b4f0d8a0045c0179c7b92f7a5373fba1859d053318c77d728608204ee4f",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm-empty-breakout.png": "f40fceb60c4b3d1f8e13cf78daa1d526d489085a2721263e75808e815015edae",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm-error-503.png": "d943b8daf0b0efc876b251254a457474ae6a0bfcc8e5514b0418de2b0fc1a4bb",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm0-STALE-persisted-cache.png": "f743b2a74a394d726bbadc7eacd2bb80807a916edb260cf7fb6f637d483e387d",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm1-populated.png": "719a1f08cf7c2bfb764324b9adb8342cf3762bb1a672dfbb3ab9916bda361beb",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm2b-tab-exec-management.png": "cf35963cae991abc40c99debef8e7c63415b072890bbc1a66ffd45eb5b8608be",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm2b-tab-model.png": "6342ed721f52e197f9130419c56faab85122946a775d2b07941643c0ceed3cb3",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm2b-tab-peers.png": "9d4454d20932b52e6f79739ba94553a326d790543cd595ac103a86d187f909ee",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm2b-tab-posture.png": "6aafd96c568a11d01c9c7084a13e036ef60c01d1ea9c89a5419a113c0a90e35b",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/round11_browser/ROUND11_BROWSER_arm2b-tab-thesis.png": "3ccfd73216018e391cbcf85415595adf16d63d6c80d824e54e25266bad58e5d5"
+  },
+  "facts": {
+    "ranked_rows": 10,
+    "ranked_rows_with_key": 10,
+    "row_order_equals_browser_record": true,
+    "ranked_click_and_direct_key": "BA_US_Equity",
+    "drafted_sentences": 38,
+    "visible_evidence_passages_recorded": 48,
+    "evidence_tooltips_recorded": 0,
+    "model_fiscal_figures": 0,
+    "model_header_figures": 0,
+    "generation": "20260915T200841Z-adf383740a9e",
+    "thesis_as_of_date_present": false,
+    "thesis_generated_at": "2026-09-15T20:10Z",
+    "crosswalk_vintage": "2026-09-15",
+    "cold_run_seconds": {
+      "BA": 125.6,
+      "COST": 110.2,
+      "SAP": 123.3,
+      "HD": 107.0,
+      "BABA": 137.8
+    },
+    "cold_runs_over_115": 3,
+    "credit_ledger_total": 12,
+    "credit_bound_total": 10,
+    "BA_credits": 4,
+    "BA_credit_bound": 2
+  },
+  "browser_limits": [
+    "Captured deployed responses fulfilled into local Chromium; no live edge, authenticated person session or promotion.",
+    "Arm 0 discarded for stale cache; arm 1 fresh context, empty local/session storage.",
+    "Arm 2 tab locator failed; arm 2b supplies the five-tab evidence.",
+    "Arm 3 four prewritten phrase flags are false and are not accepted as passing assertions; rendered text and screenshots discriminate ERROR, EMPTY, ABSENT.",
+    "Comparable bundles were not captured; missing comparable reads do not establish a live endpoint failure."
+  ],
+  "source_facts": {
+    "model_root": "lib/research/api/scoped_amgt.py:135 defaults to repo-relative deliverables absent from Lambda; deployed payload contains no model figures.",
+    "point_read": "read_point_record preserves exact ticker case in the generation key; current source repairs W18-S6.",
+    "posture": "read_posture now carries packs/comparable_name and original reason; deployed capture predates this source change (S107)."
+  },
+  "targeted_regression": {
+    "command": "python -m pytest -q lib/research/api/tests/test_generation_and_pool_routes.py",
+    "rc": 0,
+    "result": "23 passed in 1.79s",
+    "purpose": "Generation reads, mixed-case point keys, and pool routes at the reviewed source vintage."
+  }
+}
