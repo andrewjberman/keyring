@@ -124,7 +124,7 @@ worker:
   RED-FIRST self-test arm exercised ALONE.
 - `SUBJECT_CONTROL.json` -- the hand-built composition of the first subject, taken from the ADVI_FIRMBKTS
   brief's IV.1-IV.9, so `LT-e-1`'s walk is graded against a control it cannot edit.
-- `FORK_CONTROLS.json` -- IV.5's **FIVE** POSITIVE forks and the ONE NEGATIVE control (the SmartX
+- `FORK_CONTROLS.json` -- **FOUR** POSITIVE forks and the ONE NEGATIVE control (the SmartX
   platform/account pair). The negative control is the whole discriminator: a fork detector that fires on
   everything that looks alike passes every positive arm and is worthless, so the SmartX pair NOT appearing is
   a criterion in its own right, never a clause inside the fork criterion.
@@ -136,6 +136,16 @@ worker:
   > and checked neither: the exact forward-list shape Rule 24(i) refuses. The enumerating carrier wins, and the
   > fifth member (the `bd` / `49f` / `49financial` spellings) is carried with its own dispute noted, being the
   > only one of the five that is not a pair of paths.
+
+  > **THEN FOUR, ON THE MEASUREMENT (R-24 clause 3).** R-24 ruled five but required the fifth to be ONE
+  > MEASURED PAIR, not the spelling class, because the class splits into one fork and many A3 tensions. The
+  > pair was measured on both planes and does not exist at this vintage: on the live plane 0 of 113 names
+  > begin with `49f-` (every occurrence is compound, e.g. `bd-49f-auto-login`, one resource carrying both
+  > spellings), and on the repo plane every `49f-` string is an identifier with no `bd-` twin. A positive
+  > control fired the pair-finder on a planted `49f-fees` beside the real `bd-fees` (1 pair) and on the
+  > real names alone it returns 0, so the zero is an absence. **FORK-5 is withdrawn to the tension set; the
+  > count is FOUR.** PRD v1.3's DEC-5 states the controls by reference and re-reads the count from this
+  > fixture, so it stays true without an edit; T4 still names five and is the one carrier left to match.
 
 ---
 
