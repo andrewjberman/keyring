@@ -5,7 +5,7 @@
  "project": "LGIC_LGCTFM",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.0",
+ "prd_version": "v1.1",
  "step": 4,
  "brief_ref": "docs/briefs/d14-legacy-transform-brief-20260916.md@d1f867b0ce",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -207,7 +207,8 @@ rows of shapes LGIC_ENFORCE's DEC-1 already defines.
   `name()` for a resource name, the bucket grammar for a bucket, `grade()` for the verdict; the run stamps
   `registry_hash()` and the schema version. A RAISE is a row whose desired half is the refusal verbatim and whose
   `missing_registry_row` names the row Rule 30 requires (a `{system}` not in `systems.json`, a scope not in
-  `scopes.json`); it is UNRESOLVED, never graded OUT-OF-PATTERN on a placeholder (IV.13b; PH1). A disagreement between
+  `scopes.json`); it is a RAISE row (`desired.verdict = RAISE`, `missing_registry_row` populated), never graded
+  OUT-OF-PATTERN on a placeholder (IV.13b; PH1; the record's own vocabulary, no `unresolved` token minted). A disagreement between
   a D8 brief's hand-written canonical string and the builder's output is a finding the run returns, not a choice.
 - **DEC-5 A fork is two current resources whose DESIRED canonical form is ONE string.** Detected from the desired twin,
   never from name patterns. The FORK row names the members, the one job, and the canonical member: the conformant one
@@ -218,7 +219,10 @@ rows of shapes LGIC_ENFORCE's DEC-1 already defines.
   types. Negative control: `smartx/platform/` beside `smartx/account/{uuid}/` -- a tension, not a fork.
 - **DEC-6 A tension is one row's halves disagreeing, typed on a closed set and ranked by the printed rule; no weighting
   is added.** Type = (axis A1-A5 plus process and identity) x (the R-ids the desired half's refusal names) x (kind:
-  departure / fork / orphan / undeclared). Rank = the tension map's rule, printed at the top of the set: LIVE x
+  WHAT MOVES to close it: HOME | FORMAT | GRAMMAR | COMPUTE | DECLARATION | PROCESS | IDENTITY -- the record's section
+  4, the first three adopted from the ledger's MIGRATE kinds). A FORK is a ROW kind (DEC-5; `RESOURCE | PLANE | FORK`),
+  never a tension kind, and an undeclared resource is a measured cell, `current.drift_class = LIVE-no-DECLARED`, never
+  a kind of its own. Rank = the tension map's rule, printed at the top of the set: LIVE x
   CLIENT-FACING x RULES-COLLIDING x IRREVERSIBLE, object count as tiebreak (Andrew: *"These work i like it"*). Each
   factor is a MEASURED cell with its instrument: LIVE from `LastModified` against `lib/trading_calendar.py`'s frontier
   (never a calendar day); CLIENT-FACING from `07_ROUTING_REDERIVATION.md`'s associations or `LEGACY_SERVED_PATHS.json`;
@@ -297,7 +301,7 @@ Every acceptance clause is one criterion per clause at the cut; a LIVE-plane cla
 | T1 the contract schema and its Rule 24 record | FWD-1, FWD-3 | Part II OWNS; IV.8; IV.11; V.1 | C `NAMING_SCHEMA.json`, ATOM_DECOMP `ssot_establishment.schema.json`; P the schema | `projects/ATOM_DECOMP/skill/atomic-decomposition/references/` | `org/standards/LGCTFM_CONTRACT.schema.json`; `org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/CONTRACT_SCHEMA_RULE24.md` | the class list derived by subtraction with the vocabulary's denominator printed; the token census over the enums | the schema validates a planted contract and refuses one with a bare value, one whose trigger denominator names one API, and one with a row lacking `evidence.instrument`; the Rule 24 record names the uncovered member it hunted for and the cells a rename does not move |
 | T2 the receiving checker | FWD-1, FWD-6 | IV.12; V.9 | C the schema; P the `lgctfm-contract` artifact type | `.tools/receiving-check.py` | -- | a valid contract and three planted invalid ones | ACCEPT on the valid one; REFUSE naming the defect on each planted one; UNCHECKED is never ACCEPT |
 | T3 the walk | FWD-1 | IV.2, IV.3, IV.6, IV.8, IV.9; V.3, V.4, V.13 | C the ledger's plane rows, `comp-trigger`, `comp-kuzu`, `comp-iam`, `comp-lambdamap`, the two declared planes, the Terraform tree, `07_ROUTING_REDERIVATION.md`; P the CURRENT half | the instruments as they exist | `lib/opal_lgctfm.py`; `infra/logic/10_LEGACY_TRANSFORM.md` | a subject with a known composition (the ADVI_FIRMBKTS brief's IV.1-IV.9 as the hand-built control) | every resource the brief lists is a row; the trigger denominator prints both APIs' counts; every row carries its instrument and blind spot; a resource the instruments cannot see is an UNMEASURED row, shown by planting one outside every instrument's scope |
-| T4 the desired oracle and the fork test | FWD-2, FWD-3 | IV.4, IV.5, IV.13b; V.2 | C `address()`, `name()`, `grade()`, `registry_hash()`; P the DESIRED half and the FORK rows | `lib/opal_naming.py` | `lib/opal_lgctfm.py` | IV.5's four positive forks and the SmartX negative; a planted name whose system has no registry row | every desired string equals the builder called with the row's own arguments, by a second worker; the four forks appear as FORK rows with the canonical member marked and the SmartX pair does not; the planted rowless name is an UNRESOLVED row naming its missing registry row, never OUT-OF-PATTERN |
+| T4 the desired oracle and the fork test | FWD-2, FWD-3 | IV.4, IV.5, IV.13b; V.2 | C `address()`, `name()`, `grade()`, `registry_hash()`; P the DESIRED half and the FORK rows | `lib/opal_naming.py` | `lib/opal_lgctfm.py` | IV.5's four positive forks and the SmartX negative; a planted name whose system has no registry row | every desired string equals the builder called with the row's own arguments, by a second worker; the four forks appear as FORK rows with the canonical member marked and the SmartX pair does not; the planted rowless name is a RAISE row (`desired.verdict = RAISE`) naming its missing registry row, never OUT-OF-PATTERN |
 | T5 tensions | FWD-4 | IV.10, IV.12; Part III O4 | C `08_TENSION_MAP.md` s.0, `trading_calendar.py`, `LEGACY_SERVED_PATHS.json`; P the tension set | -- | `lib/opal_lgctfm.py` | a subject with at least one row per factor value; a planted resource no type fits | every tension carries four measured factor cells with instruments; the rule is printed at the top; the set's order is reproducible from the cells by a second worker; the planted untypeable resource is a schema-defect row, not a silent grade |
 | T6 the plan | FWD-6 | IV.11; V.8 | C ATOM_DECOMP's package schema, R19; P `plan.json`, `plan.md` | `projects/ATOM_DECOMP/...` | the run directory | the first subject's tension set | every package carries the eight fields; the order is R19's six steps; every served key a package moves carries `never_widen_signoff_owed: true` with the owners named; no package is executed |
 | T7 the renderer | FWD-5 | O5; V.7 | C the contract; P the two diagrams | `.claude/skills/draw/SKILL.md` | `lib/lgctfm_render.py` | one contract; the same contract with one row edited | the two renders differ exactly where the row changed; a hand-edited diagram fails `--check`; two renders of one contract are byte-identical |
@@ -358,8 +362,8 @@ carries `NOT CONSUMED` with its reason.
 | 23 | IV.9 the walk instruments and their holes | DEC-14; T3 | FWD-1 |
 | 24 | IV.10 the ranking rule and its factors | DEC-6; T5 | FWD-4 |
 | 25 | IV.11 ATOM_DECOMP's grammar, gates and package | DEC-1, DEC-8; T1, T6 | FWD-1, FWD-6 |
-| 26 | IV.12 /canonical-flow's shape; the receiving check | DEC-6 (the closed type set), DEC-11; T2, T5 | FWD-1, FWD-4 |
-| 27 | IV.13 determinism; the default branch that grades what nobody declared | DEC-10, DEC-4 (UNRESOLVED, never guessed); T4, T9 | FWD-3, FWD-9 |
+| 26 | IV.12 /canonical-flow's shape; the receiving check | DEC-6 (the closed tension type: axis x deciding rules x kind, the kind enum from `11_LGCTFM_CONTRACT_SCHEMA_RECORD.md` section 4 -- IV.12's own "fork/orphan/undeclared" wording is superseded by the record, as Part V.1 said it would be), DEC-11; T2, T5 | FWD-1, FWD-4 |
+| 27 | IV.13 determinism; the default branch that grades what nobody declared | DEC-10, DEC-4 (a RAISE row with its missing registry row, never guessed); T4, T9 | FWD-3, FWD-9 |
 | 28 | IV.14 the register word | DEC-16; the L3 edit beside this PRD | -- |
 | 29 | IV.15 the first subjects and the run order | DEC-15; T10 | FWD-1, FWD-6 |
 | 30 | PART V what must be true | V.1 DEC-1/T1; V.2 DEC-4/T4; V.3 DEC-3/T3; V.4 DEC-14/T3; V.5 DEC-10/T9; V.6 DEC-9/T10; V.7 DEC-7/T7; V.8 DEC-8/T6; V.9 DEC-11/T2; V.10 DEC-12/T8; V.11 DEC-15/T10; V.12 T11 (practice worktree with `--enforce`, the estate flag untouched); V.13 DEC-13/T10 | all |
