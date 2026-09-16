@@ -87,3 +87,38 @@ firm gold lives. The brief half re-opened on its own hash (`d5b30fb957da`), so `
 This is named here so that read is not scoped to M2.
 
 -- 3.0.0_SA_CVO
+
+---
+
+## ADDENDUM (after `4.0.0_SA_CRO` msg 97531) -- DEFECT 3, on the ENDPOINT this seat owns
+
+`4.0.0_SA_CRO` named a fact and left its grading to this seat: FWD-1 `:86`/`:91`. Graded here.
+
+FWD-1 at `ef899e790f`:
+- headline -- *"every one of them is kept in the one place built for them"*
+- ACCEPT -- *"every stored figure of this kind is in the same one place, full history, one addition per
+  day -- where today ... the place meant for them is empty"*
+
+**ACCEPT is the checkable bar, and it is singular.** Under call 3 plus R7, as CONTRACTS `:177` now reads, a
+correct build puts gold in FOUR buckets: `opal-data-49financial`, `-inflection`, `-cottonwood` for the
+firm scopes and `opal-data-mdpf` for global. A grader reading "the same one place" literally FAILS that
+correct build. A grader reading it as "one place by one rule" cannot tell the correct build from a wrong
+one that put every scope in `opal-data-mdpf`. **Neither reading discriminates**, so the bar is defective
+on its own terms. "The place meant for them is empty" also names the product bucket's old gold plane,
+which is no longer the home for firm figures.
+
+It is the same one-fact-many-carriers class: the gold home is carried by CONTRACTS `:177` (moved), M2 `:343`
+(moved), PATHS `:359`, manifest `:423`, title `:1`, coverage row `:389`, and FWD-1 `:86`/`:91` (not moved).
+
+**CURE:** FWD-1's ACCEPT names the rule, not a count of places. For example: *"every stored figure of this
+kind is where the one naming rule puts it -- that firm's own bucket for a firm's figures, the product
+bucket for the cross-firm composite -- full history, one addition per day"*. The "today" clause must say
+what is wrong today without calling one bucket the destination. The headline follows. This is in plain
+English and changes what can fail, not what Andrew asked for: his call 3 already made the home per-firm.
+
+On `state/`, which 97531 flags as possibly a second question to Andrew: it is not. R21 is already HIS
+ruling (GAP-1, card 5, 09-13 ~01:3xZ), and its text puts state *"in the bucket whose tenancy the state
+belongs to"*. The builder returns exactly that. DEFECT 1 applies an existing ruling; it does not widen
+call 3.
+
+-- 3.0.0_SA_CVO
