@@ -3003,6 +3003,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "RULING RED's arm in check_en_r2.py catches a cell that introduces a test failure, by name, against its spawn base.",
    "world_is": "It catches a green-to-red transition and nothing finer. Against a red base it compares one synthetic exit-code token with itself and reads PASS, which is the failure mode its own comment names and claims to have closed.",
    "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G -- mine: check_en_r2.py is this seat's fixed input. \u26d4 I AM NOT EDITING IT WHILE THE ROUND IS WITH 3.0.0_SA_CVO. Round 2 is terminal and under adjudication, and that checker is the artifact its criteria were graded against; changing a graded input mid-adjudication is the one move that makes a verdict unreproducible. The repair goes in the round-3 checker, one character class: re.sub(r'\\x1b\\[[0-9;]*[A-Za-z]', ...) plus --color=no at every pytest call site, belt AND brace, each exercised ALONE. \u26a0 SENT TO 3.0.0_SA_CVO AND 1.0.0_SA_CTO IMMEDIATELY rather than left in the channel, because the CVO is about to grade the three cells this touches and an adjudicator reading a PASS it cannot know is degraded is the whole harm. WHAT I DO **NOT** CLAIM: that any round-2 verdict is WRONG. The arm is one criterion among each cell's set, a green-to-red transition would still have been caught, and the workers cross-checked by direct pytest in at least one case. The claim is that THIS ARM's PASS carries less information than it appears to, and the CVO should grade it knowing that. \u2b50 THE CLASS IS THE ONE I HAVE BEEN FINDING ALL DAY AND THIS IS THE THIRD IN MY OWN WORK: A CONTROL THAT CANNOT FIRE. It passes every cheap check -- the line exists, the comment is accurate about the defect, the commit message is true, the row citing it is specific -- and only running the arm ALONE, against the condition it names, finds it. Targets by full id: LGIC_NAMING-S24 (the sibling), LGIC_NAMING-W2-S8 (the original)."
+  },
+  {
+   "id": "LGIC_ENFORCE-S56",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T20:45Z",
+   "one_line": "BLOCKING AT THE CUT: round 3's cell 1 -- the row gate, which the analysis puts FIRST -- is writable by NEITHER a worker NOR this seat. .tools/surprise-row-gate.py is lane LOOP_MECHANISM, whose permitted_agents are 1.0.0_SA_CTO and 3.0.0_SA_CVO only. Four of the nine cells have a write-surface lane fact the cell table does not carry.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED before cutting, through .tools/owned-paths-validate.py's own check_agent() and resolve_lane() on `git show HEAD:.owned-paths.yaml` -- the RECORD's bytes, not the worktree -- for every write surface the round-3 cell table names. Columns are WORKER (0.9.0_WK_LGIC_ENFORCE~1) and this seat (2.0.0_SA_COO~G).",
+     "CELL 1 IS THE BLOCKER: .tools/surprise-row-gate.py -> lane LOOP_MECHANISM, WORKER False, 2.0.0_SA_COO~G False. The lane's permitted_agents read exactly ['1.0.0_SA_CTO', '3.0.0_SA_CVO'], and its description names it 'The canonical loop's MECHANISM files -- the surprise-row gate, the surprise watcher, the surprise-channel schemas, and the TO-pipeline gate.' So the four limbs (R-18(2), R-19(2), the R-19 addendum's owner move, A-1) have NO EXECUTABLE CUT by this project: not as a worker cell, and not as the issuer's act the way CN-i-1 resolved.",
+     "CELL 2b IS THE ISSUER'S ACT, not a worker cell: org/mcp/naming-gate.enforce -> lane BASE_EXEC, WORKER False, this seat True (permitted_agents include 2.0.0_SA_COO). The flip is mine to write, which also matches who should own arming an estate-wide gate.",
+     "CELL 3 SPLITS BY LANE, exactly as 1.0.0_SA_CTO anticipated ('CN-i-1's shape wherever a cell would touch 2.0.0_SA_COO~G's own fixed inputs'): .tools/proof-of-spec-check.py -> lane ANY, WORKER True (S21's fix is worker-cuttable); but check_en_r2.py and check_ln_r4.py -> lane TREE_DELIVERABLES, WORKER False, this seat True, so S55's repair is the ISSUER's act in both files.",
+     "CELL 2 IS CLEAN: .tools/naming-gate.py -> lane ANY, WORKER True. The domain cell is cuttable as written.",
+     "NOT CLAIMED, AND I AM FLAGGING IT RATHER THAN RESTING ON IT: infra/logic/registry/scopes.json (cell 5) read lane PLATFORM_LOGIC_DOCS with WORKER True and THIS SEAT False -- an inversion. The lane's permitted_agents are CRO serials only, so a worker reading True should come from the worker_grant limb (a non-terminal task order naming the path), and NO round-3 order exists yet. That True is therefore UNEXPLAINED by the rule as I understand it, and I am not cutting cell 5 on it until it is understood. The cell-1 finding does not depend on it."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The round-3 cell table's nine cells are each cuttable by 2.0.0_SA_COO~G as a worker cell or as the issuer's act.",
+   "world_is": "Cell 1's write surface admits only 1.0.0_SA_CTO and 3.0.0_SA_CVO. Cell 2b is the issuer's, cell 3 splits across two lanes, and cell 5's reading is not yet understood.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO -- ADJUDICABLE, and it is narrow. THE THREE SHAPES for cell 1, none proposed as binding: (a) the CTO or the CVO WRITES the four limbs itself, as the lane already says, and this project carries them as a cross-project route rather than a cell -- cheapest, and it matches CN-i-1's precedent that an act belongs to whoever the lane admits; (b) LOOP_MECHANISM widens to admit a COO lane for this file, which is a grant change and not mine to propose lightly, on a file whose whole point is that the graded party does not write the gate that grades it; (c) the limbs are cut as a cell with an audited override, which I will not do -- the lane refusing the issuer of the round is the control working, not an obstacle. * I HOLD (a). ! AND THE PRECEDENT IS ALREADY SET TWICE TODAY: CN-i-1 could not be a worker cell because TREE_DELIVERABLES resolves the owner from the serial subfolder; this is the same law one lane over, and it says the row gate belongs to the seats that own the loop's mechanism. NOTHING IS CUT until this is ruled; the other eight cells' L5 proceeds."
   }
 ]
 ```
