@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v1.4 (s.20 = round 12; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.5 (s.20 = round 12, amended s.20h; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -1968,7 +1968,7 @@ not schedule; rj-13 builds no feed).
 Andrew-direct ~04:5xZ, *"yeah we also need COO~Z and CVO~Z for full tier1 on this project"* (record `c05a41c0f4`).
 **Rounds 1-11 are FROZEN and unchanged**; rounds 10-11 were held by `2.0.0_SA_COO~W` and that record stands.
 
-**THIRTEEN cells, ids `AMGT-rk-1` .. `AMGT-rk-13`** -- the analysis's A-M, remapped into dependency order. The letters
+**FOURTEEN cells, ids `AMGT-rk-1` .. `AMGT-rk-14`** (thirteen at v1.4; `AMGT-rk-14` added at v1.5, s.20h) -- the analysis's A-M, remapped into dependency order. The letters
 are the CTO's (WHAT); the ids, chains and fan-out are this seat's (HOW), per s.5's own division.
 
 ### 20a. THE SUBTRACTION (Rule 24) -- over the PRD's OUTCOMES against the SERVED PLANE
@@ -2125,3 +2125,50 @@ thing that caught a page serving nothing behind 83 passing mechanical criteria.
 ⚠ **THE BATTERY'S OWN LIMIT, STATED:** `comp-iam` and `comp-routes` are **DESIRED-plane** (parsed Terraform and
 committed source). Neither can tell a declared grant or behavior from a deployed one. Every bar in this round that
 asserts a grant or a route is therefore graded on a **live read or an invoke**, never on a battery figure.
+### 20h. AMENDMENT v1.4 -> v1.5 -- CELL `AMGT-rk-14` (the FIT), from ADDENDUM 3 @`e2ff09a835`
+
+**Amended BEFORE issuance, so nothing is frozen and no order is re-cut.** `1.0.0_SA_CTO~Z`'s self-drive
+tick 2 sent cell **N** deliberately early *because* this seat was mid-L5; that is the round-N analysis
+reaching the decomposition before the cut rather than after it, which is the whole point of the loop.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-14`** | **N** | **THE FIT, BOTH ENDS IN ONE CELL.** The presets carry counts and weights instead of factor-code lists (DIVZ names 7 of 13, PFOE 0 of 16, so **22 of 29 preset slots have no code to read**), and R-1's rows carry **no scanner factor values at all** because the ranker's loader keeps the 284-code set and DROPS THE NUMBERS BY DESIGN. Ruled: (1) the presets name EVERY code they score under, 13 of 13 DIVZ and 16 of 16 PFOE, **printed denominator beside each**; (2) the loader RETAINS values for exactly those codes on the R-1 rows -- bounded by the presets, never by the scanner's width; (3) ABSENT carries a CLASSED reason where a named code has no value; (4) the criterion asserts a **NONZERO FACTOR COUNT ON A REAL NAME**. ⛔ **NOT retiring the fit** -- it is part of the surface Andrew approved (PRD s.3b), so retirement is an ENDPOINT change and a card at Andrew, never a quiet drop | W20-S9, W20-S10 | `AMGT-rk-4`, `AMGT-rk-13` |
+
+⭐ **WHY IT IS ONE CELL AND NOT TWO, CARRIED HERE BECAUSE IT IS A CUTTING RULE AND NOT A DETAIL:** the fit
+needs **a code to read AND a value to read for it**, and repairing either end alone moves nothing while
+grading as progress. Name the 22 codes against rows carrying no values and the score is still ABSENT;
+retain values for codes the preset never names and the score is still ABSENT. **A cell that fixes one end
+and passes its criterion is the failure mode here** -- which is `AMGT-rk-9`'s criteria-that-cannot-fail
+class, applied BEFORE the cut instead of found after it.
+
+**FAN-OUT, RESTATED WITH `AMGT-rk-14` (this supersedes the block in s.20e):**
+
+```
+fanout:
+  cap: 8                      # the default; still not raised
+  waves: 3
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8, AMGT-rk-14]                                                            # 2
+  max_open_width: 7           # UNCHANGED -- rk-14 lands in wave 3, which was the narrowest
+  deferred_for_width: []      # still empty, and still stated
+```
+
+⚠ **THE FOURTEENTH CELL COST NOTHING IN WIDTH.** `AMGT-rk-14` chains after `AMGT-rk-4` and `AMGT-rk-13`,
+so it falls into wave 3 beside `AMGT-rk-8` -- the narrowest wave. Max open width stays **7 of 8** and
+`deferred_for_width` stays empty. Recorded because "we added a cell and the fan-out did not move" is the
+kind of claim that should carry its arithmetic.
+
+**WHAT THIS AMENDMENT DOES TO s.20a's UNCOVERED PARTITION -- it CLOSES part of U3 and leaves the rest:**
+
+| was | now |
+|---|---|
+| **U3** `W20-S9` / `W20-S10` (the fit inputs) | **COVERED by `AMGT-rk-14`.** ⭐ Two seats reached this independently on DIFFERENT instruments -- this seat by counting row ids over the analysis text and finding `W20-S10` in no cell, `1.0.0_SA_CTO~Z` by reading the slug's obligation 2 against the cell set on a self-drive tick. That is corroboration in Rule 22's sense, and it is worth contrasting with msg 23371's pair, which was NOT |
+| **U3** `W18-S13` / `W21-S6` (CSC values and horizons), `W21-S5` (currency and vintage comparability) | **STILL UNCOVERED.** Named in the slug's obligation 2, in no cell's text |
+| **U1** `FWD-18`'s one chart (`W18-S12`) | **STILL UNCOVERED** |
+| **U2** `FWD-6`'s compare surface | **STILL UNCOVERED** |
+
+**ROUND 12 IS FOURTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-14`.** Every other clause of s.20 stands unchanged,
+including the bounds in s.20f and the battery in s.20g -- the battery was run against the cut and adding a
+cell that reads existing pool prefixes moves none of its denominators.
