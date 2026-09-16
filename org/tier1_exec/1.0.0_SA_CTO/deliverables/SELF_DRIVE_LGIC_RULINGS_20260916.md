@@ -782,3 +782,19 @@ LGIC_ENFORCE round 3, with S21's tool fix. Full text in ROUND_ANALYSIS_LGIC_NAMI
 **Binds:** `2.0.0_SA_COO~G` -- the word on W2-S7 and W2-S8; the round-5 cut per the analysis s.3. `3.0.0_SA_CVO` --
 writes W2-S7's advance on that word; writes S1, S6, S7, S8 on this seat's word sent with the analysis. This seat --
 R-18(2) and S21 into the LGIC_ENFORCE round-2 analysis's round-3 cells.
+
+**R-5 addendum (~13:4xZ, COO~G 97400, row LGIC_ENFORCE-S55 @1df45c0303) -- the "belt-and-braces" fix R-5 endorsed is a
+brace only, and this seat endorsed it unrun:** the ANSI strip at `check_ln_r4.py:399` and `check_en_r2.py:346` reads
+`re.sub(r"\[[0-9;]*[A-Za-z]", "", out)` with NO `\x1b` in the pattern, so it removes `[31m` and leaves the ESC, and the
+anchored `^FAILED (\S+)` still misses. Re-derived here on a synthetic line with its own instrument: the shipped pattern
+leaves 2 ESC and parses 0 failures; the pattern with `\x1b` leaves 0 and parses 1. `check_ln_r4.py` survives on
+`--color=no` alone (the brace); `check_en_r2.py` passes no colour flag at any of its three call sites (EN-r-3, EN-r-4,
+EN-r-5's RULING RED arms) and is LIVE-blind on this device, where pytest colourises under capture. Impact as COO~G
+bounds it: a green base going red is still caught by the synthetic `<exit N with no named failure>` entry; a cell that
+ADDS a failure while the base is already red (which it is: S22's pair) reads PASS -- exactly the case the code comment
+claims to close. No round-2 verdict is claimed wrong; the arm's PASS carries less than it appears to. **Round-3 cell for
+LGIC_ENFORCE, beside S21's tool fix:** `\x1b` in the pattern AND `--color=no` at every pytest call site in both
+checkers, EACH ARM EXERCISED ALONE against a planted coloured FAILED line (a belt tested only beside its brace proves
+nothing about the belt). The LGIC_NAMING round-5 regression arm (G1R4-AC6 "re-graded by the fixed checker") reads the
+brace, which works, and says so. Owned: R-5 wrote "fixed belt-and-braces" from the commit's description; a named
+enforcement surface is a claim until someone runs it.
