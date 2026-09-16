@@ -192,3 +192,102 @@ line rather than assuming the send.
 `2.0.0_SA_COO~Z` alone cuts round 12.
 
 Push state: **LOCAL on SITEZ.** LD-0522 puts the push with `0.0.0_AB_MSTR~Z` and none is requested.
+
+---
+
+# ADDENDUM 1 -- 2026-09-16 ~05:1xZ: FOUR CELLS THIS ANALYSIS MISSED, and why the miss was structural
+
+**Author:** `1.0.0_SA_CTO~Z`. **Trigger:** `4.0.0_SA_CRO~Z`'s product-existence audit (msg 23383), record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RESAPP_PRODUCT_EXISTENCE_AUDIT_20260916_Z.md` **@`a10eece02e`**,
+answering Andrew's item 5. **Appended rather than rewritten:** s.1-s.8 were delivered to `2.0.0_SA_COO~Z` at msg 23373
+and a delivered analysis is not edited underneath its reader.
+
+## A1.1 WHY THE MISS WAS STRUCTURAL, NOT CARELESS -- and it is the same defect this file warns about in s.5 F
+
+s.5's eight cells were subtracted from two enumerations: the round-11 slug's six obligations and the packet's section 5.
+Both are **round-11 artifacts**, and round 11 never looked at the DEV branch or invoked the print route. **So the domain
+was wrong, and a subtraction over the wrong domain arrives with a printed denominator and reads as MEASURED.** That is
+Rule 24's own named failure mode, committed by this seat in the same file that cites it, and caught only because a
+SEPARATE SEAT was pointed at the product rather than at the record.
+
+The two enumerations agreed with each other (`2.0.0_SA_COO~Z` differenced them at msg 23371: 24 ids each, 15 shared).
+⛔ **THEIR AGREEMENT PROVED NOTHING ABOUT COVERAGE** -- they share a dependency, the round-11 evidence base, and Rule 22
+says a check scoped to the members cannot see a defect in what the members share. Two instruments reading the same
+blind spot agree precisely because they are blind in the same place.
+
+⭐ **THE GENERAL LESSON: a round's own artifacts cannot enumerate what the round never looked at.** The round-N analysis
+must subtract from the PRD's outcomes against the SERVED PLANE, never from the previous round's findings. That is now a
+standing instruction for every later round of this project.
+
+## A1.2 THE FOUR MATERIAL GAPS, as measured by `4.0.0_SA_CRO~Z` on the served plane
+
+| gap | measured | in the round-11 record? |
+|---|---|---|
+| **G1 the page is not on DEV** | the 48 SecurityAnalysis files and the `/security-analysis` route exist ONLY at portal `refs/drains/rj-portal` `b616b759`; DEV `be8cf218` carries **0 of 48** and no route; PROD v2.1.179 has no such page. `merge-tree` DEV x `b616b759` = **0 conflicts** | **NO** |
+| **G2 the model block serves 0 figures** | deployed adapter env carries no `AMGT_MODEL_BLOCK_ROOT`; direct GET thesis 200 with `model_status ABSENT`, 0 header and 0 fiscal figures; the pool holds 4 keys against 89 covered names | yes -- packet 8b, s.5 A |
+| **G3 the print pack 500s** | direct GET of the print route -> **500 internal error**; the deployed zip (747,396 B, 183 entries) carries no matplotlib, no pypdf, no numpy, and `render_pack.py` imports matplotlib at module level and reads a local folder plus a OneDrive template path | **NO** |
+| **G4 on-demand pull is unwired** | page Refresh -> adapter **501** "refresh has no queue carrier declared"; the enqueue Lambda sits on a route the page never calls; queue 0 visible / 0 in flight with **no event-source mapping**; the consumer is "a poller a person starts" and none runs | **NO** |
+
+Plus **three outcomes with NO product surface at all** -- `FWD-7` coverage freshness, `FWD-12` input ledger with re-run,
+`FWD-14` list register and rot signal -- each a Python module a person runs by hand: 0 of the 11 mounted routes, 0 page
+components, 0 adapter references, against a positive control (`peers/v1` = 2) that fired.
+
+## A1.3 RULINGS -- these are L2/L4 contract calls and they are this seat's
+
+**R1. G1 IS IN SCOPE AND IT IS THE ROUND'S FIRST CELL.** Andrew's word is *"complete the full project end to end,
+including front-end"*, and *"No portal promote necessary"* removes the **PROD promote** from done -- it does not remove
+the **DEV integration**. A page that exists only on a drain ref is a page nobody opens, and calling that a front-end
+would be exactly the self-deception he described. The merge into portal DEV is a COMMIT-class act and the portal freeze
+reads **COMMIT YES / PROMOTE NO**, so it is permitted.
+⚠ **THE PUSH OF PORTAL DEV IS RESERVED AND IS NOT TAKEN BY ANY CELL** -- a shared branch moves only under LD-0367/0368,
+by `0.0.0_AB_MSTR~Z` or `0.0.0_AB_MSTR`, on Andrew's word at the terminal. The cell merges and commits LOCALLY and
+**states its push state as LOCAL**. That is a card at Andrew, never a self-adjudication.
+⚠ **AND `merge-tree` MEASURES CONFLICTS, NOT TYPESCRIPT.** DEV is 212 commits past the merge-base; the cell runs
+`tsc -b` on the merged tree and reads a render, because zero conflicts is not zero breakage.
+
+**R2. G3 IS A PACKAGING CALL, RULED: PACKAGE IT SERVER-SIDE.** The print pack is `FWD-5`, the brief's own displacement
+test -- the artifact Adam forwards without reformatting. Ruled: matplotlib, pypdf and numpy ship in the deployed archive
+or a layer; the template moves off the OneDrive path into the pool; `render_pack.py` stops reading a worker-local
+deliverables folder and stops importing matplotlib at module level. **NOT ruled as a browser act:** the displacement
+test is that a person forwards the output as produced, and a browser-rendered print is the analyst's own reformatting
+under another name.
+
+**R3. G4 IS RULED WIRE, NOT RETIRE.** `FWD-2` is a ratified outcome. The three pieces exist and none is connected: the
+page's Refresh route, the enqueue Lambda's route, and the queue's missing event-source mapping. Ruled: the adapter
+declares the queue carrier, the enqueue route becomes the one the page actually calls, and the consumer becomes an
+event-source-mapped Lambda rather than a poller a person starts. ⛔ **No alarm, monitor or freshness machinery rides
+along** -- the standing moratorium binds, and a wired queue is not a monitor.
+
+**R4. FWD-7, FWD-12 AND FWD-14 GET SURFACES; THEY ARE NOT SILENTLY DROPPED.** Each is a ratified outcome whose only
+implementation is a module a person runs by hand. Ruled: each gets a served route and a page surface. **They are named
+as required coverage and sequenced LAST in the round** -- if `2.0.0_SA_COO~Z`'s fan-out cannot carry them inside round
+12's cap, they are the cells that move to round 13, and that decision is **stated as data in the issuance** rather than
+taken by omission. ⛔ **Narrowing the outcome set is not available to either seat.**
+
+**R5. THE COLLECTION PLANE STAYS OFF.** Three Windows tasks DISABLED and one AWS job enabled over a seven-body pool is
+the **measured consequence of a RESERVED decision**, not a defect to fix. The harvest mechanism and cadence are
+Andrew's by name (`@9db2a36cdc`). ⛔ **No cell enables collection**, and the seven-body pool is the honest denominator
+every count bar in round 12 is cut against -- **read the pool AT THE CUT**, which is the defect round 11 filed as
+W19-S8.
+
+## A1.4 THE ROUND-12 CELL SET, RESTATED WHOLE
+
+s.5's eight stand unchanged: **A** deployed plane (model block read plus the posture redeploy under a fresh never-widen
+co-sign), **B** Price producer, **C** identity and union universe, **D** tab scores, **E** five-route exercise surface,
+**F** criteria repair at the issuer, **G** social source classified, **H** preserved breaches.
+
+Four are ADDED: **I** the DEV integration of the page (R1, FIRST), **J** the print pack packaged so `FWD-5` serves
+(R2), **K** the on-demand pull wired (R3), **L** surfaces for `FWD-7` / `FWD-12` / `FWD-14` (R4, sequenced last).
+
+⭐ **AND CELL I CHANGES WHAT CELL E CAN EVEN MEAN:** round 11's browser half exercised a **local vite serve** of portal
+`0e153399`. Once the page is on DEV, the exercise runs against the integrated branch, and that is the first time the
+front-end and the deployed adapter are read together on the plane a person would actually use. **Cell E is therefore
+chained after cell I, not beside it.**
+
+## A1.5 WHAT IS REAL, recorded so the gaps are not read as "nothing works"
+
+The adapter is deployed, edge-authorized and answering: identity MEASURED, description SERVED from D-1, a publisher feed
+SERVED, on `4.0.0_SA_CRO~Z`'s own GET invoke. The daily chatter ranking serves keyed rows. The pool carries the
+crosswalk, the union universe (256 names), filings 5, drafting 5, peers 33, management 5, posture 2. **The page code is
+whole** -- header, five tabs, print action, harnesses -- **and merges into DEV with zero conflicts.** The distance from
+here to a product a person opens is real work, and it is a great deal less than the distance already travelled.
