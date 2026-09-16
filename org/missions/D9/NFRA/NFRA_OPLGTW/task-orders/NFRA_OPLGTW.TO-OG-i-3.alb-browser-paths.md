@@ -32,6 +32,34 @@ page and its exchange, from `OG-x-1`). If either is absent at HEAD, that is a BL
 The baseline you compare against is `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json`
 (`OG-p-1`'s ALB rule readback and WAF association).
 
+**FIRST ACT -- rename three applied names to the builder's output (amended by `2.0.0_SA_COO~O` before hand-off, per
+`1.0.0_SA_CTO` ruling R-OG-7, msg 97548, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md`
+@af1cd9f7d6; rows W1-S9 and W1-S11).** `OG-i-2` applied three names that the naming grammar grades OUT-OF-PATTERN. No
+registry row can make the builder emit a person's name, so they are renamed in this apply, before any runtime consumer
+binds an ARN.
+- **The three names.** Re-derive each with `lib/opal_naming.py`, print it, and use the printed value (never type it):
+  - `opal-mcp-emp-menachem-schwab-read` -> `name("gateway", None, "schwab-read", "role")`, ruled as `gateway-schwab-read-role`;
+  - `opal-mcp-schwab-catalog-read` -> `name("gateway", None, "schwab-catalog-read", "role")`, ruled as `gateway-schwab-catalog-read-role`;
+  - `opal-gateway-assume-schwab-readers` -> `name("gateway", None, "assume-schwab-readers", "policy")`, ruled as `gateway-assume-schwab-readers-policy`.
+  - If a printed value differs from the ruled one, that is a BLOCKING row and no apply.
+- **Where the person binding goes.** The person a grant belongs to lives in each role's trust-policy ExternalId, in the
+  application's entitlement record and in the role's tags, never in a name.
+- **Move every consumer in this order, with no occurrence left behind.** At the ruling's measurement those are:
+  - `infra/aws/terraform/opal-gateway/schwab_reader_iam.tf` (6 occurrences);
+  - `infra/aws/ec2/opal-gateway/app/integrations/schwab/aws_roles.py` (1);
+  - `org/standards/NFRA_OPLGTW_CONTRACT.json` (2), bumped to version 1.1 with `reader_role`, `catalog_role` and the
+    policy name as builder output;
+  - `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/SCHWAB_IDENTITIES.json`, rewritten with the new ARNs.
+  - Re-count at your HEAD with an unscoped search of the three old strings, and print the denominator. Every hit outside
+    this project's historical records (evidence, result files, rows, rulings, logs) is moved here or filed as a BLOCKING row.
+  - Run the existing module `tests/test_schwab_catalog.py` after the `aws_roles.py` change; it must stay green.
+- **Blast radius of the rename.** At most the destroy and create of the ten resources `OG-i-2` added (the two roles,
+  their policies and trust, the Gateway statement, and the two secrets' resource policies where they name a role). The
+  trust and ExternalId pairs re-key at create. No served key, no source object, no other resource.
+  - The plan must show only those rows plus this cell's own.
+  - Re-run the OG-i-2 live denial and assume arms against the new ARNs, and record them in this cell's result file.
+    OG-i-2's proof and evidence stand at their vintage under the old names; do not edit them.
+
 **The read-only host-command document (amended by `2.0.0_SA_COO~O` before hand-off, per `1.0.0_SA_CTO` ruling R-OG-6,
 msg 97522, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @f81896bae3, extending
 R-OG-2).** From this cell onward, every host read uses `ssm:SendCommand` only on a NAMED SSM document whose content is a
@@ -88,7 +116,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
 - **Deploy discipline (spine L7).** Open the entry with `py -3.12 .tools/deploy_ledger.py open --slug nfra-oplgtw-og-i-3-alb-paths ...` and COMMIT its sentinel `org/critical_paths/.open_deploys/nfra-oplgtw-og-i-3-alb-paths.json` and entry BEFORE the apply; close the legs and the entry and COMMIT BEFORE the grading reads.
 - **Terraform.** Only through `.tools/safe-apply.sh`, never bare `terraform apply`, never `-target`. `.tools/terraform.exe` provisioned by the issuer; if absent, a BLOCKING row. One state, one slot.
-- **Blast radius.** Only new listener rules at the named paths, the one read-only `aws_ssm_document`, and the one statement pinning `opal-gateway-access-admin`'s `ssm:SendCommand` to that document and the Gateway instance (ruling R-OG-6). The default action, every existing rule, the WAF association, the listener certificates and the security groups stay unchanged. Any other plan row is a BLOCKING row and no apply.
+- **Blast radius.** The R-OG-7 rename's replacement of `OG-i-2`'s ten resources (see FIRST ACT), new listener rules at the named paths, the one read-only `aws_ssm_document`, and the one statement pinning `opal-gateway-access-admin`'s `ssm:SendCommand` to that document and the Gateway instance (ruling R-OG-6). The default action, every existing rule, the WAF association, the listener certificates and the security groups stay unchanged. Any other plan row is a BLOCKING row and no apply.
 - **No egress off Opal infrastructure.** Unauthenticated GETs to `https://mcp.opalinvest.dev` are Opal infrastructure; no call to Claude, Anthropic, an interactive Entra sign-in or any vendor API.
 - **No secret in evidence.**
 - **Commits.** `.tools/safe-commit.sh` under your serial; every `.py` you touch passes `.tools/commit-gate.sh`.
@@ -100,6 +128,9 @@ taking the short id, printing its measurement with vintage and denominator, then
 <paths>
 infra/aws/terraform/opal-gateway/alb.tf
 infra/aws/terraform/opal-gateway/ssm_readonly_host.tf
+infra/aws/terraform/opal-gateway/schwab_reader_iam.tf
+infra/aws/ec2/opal-gateway/app/integrations/schwab/aws_roles.py
+org/standards/NFRA_OPLGTW_CONTRACT.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-i-3-alb-paths.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
