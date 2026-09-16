@@ -4,10 +4,10 @@
  "directive": "D14",
  "macro_code": "LGIC",
  "fabric": "laptop",
- "dep_stage": "PRD",
+ "dep_stage": "DECOMP",
  "status": "active",
  "name": "Legacy Transform -- one workflow that takes an existing product, walks every resource composing it, renders its canonical LGIC form beside the current one, marks it, and hands back a structured contract, a flow diagram, the typed tensions and a remediation plan",
  "generated_from": "org/missions/D14/LGIC/LGIC_LGCTFM/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-16T14:06:54Z"
+ "generated_at": "2026-09-16T17:15:08Z"
 }

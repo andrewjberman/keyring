@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-09-16",
   "registered_under_tree": "2026-09-16",
   "placement": "LAPTOP",
@@ -29,8 +29,12 @@
     "org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md v1.0 -- authored by 1.0.0_SA_CTO 2026-09-16 ~14:0xZ, the first PRD of this project, on Andrew's DONE WHEN confirmation of FWD-1..FWD-10 (~13:5xZ at the 4.0.0_SA_CRO terminal, 'All recs approved, options also approved 1-3, all RCG work we will return to later', relayed 97408). Sixteen decisions closed at L4 (DEC-1..DEC-16); thirteen cell candidates T1..T13; 33 brief entries covered; no applied-plane change.",
     "org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md v1.1 -- 2026-09-16 ~14:2xZ, 1.0.0_SA_CTO, on 4.0.0_SA_CRO's REFUSED brief half (review docs/briefs/sources/LGIC_LGCTFM_L4_BRIEF_REVIEW_v1_0_20260916.md @8ae73f6b31, stamp @8505b8eada, R1): DEC-6's tension kind enum and DEC-4's RAISE-row wording take the absorbed record's own vocabulary (11_LGCTFM_CONTRACT_SCHEMA_RECORD.md section 4: HOME | FORMAT | GRAMMAR | COMPUTE | DECLARATION | PROCESS | IDENTITY; FORK is a ROW kind; an undeclared resource is current.drift_class = LIVE-no-DECLARED; a builder refusal is a RAISE row). ENDPOINT and CONTRACTS byte-unchanged; the ratified-text half signed by 3.0.0_SA_CVO carries; only the brief half re-opens."
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md"
+  ],
+  "decomposition_lineage": [
+    "v1 2026-09-16 2.0.0_SA_COO~G -- L5 on PRD v1.1 @92154e0b63 (ADMITTED, both halves current by prd-signoff.py status). 13 cells, 13 of 13 PRD candidates, none dropped and none deferred. 10 of 10 outcomes carry a serving cell. Two write-surface constraints measured at the cut: lib/opal_lgctfm.py has three writers (LT-e-1/e-2/e-3) and workflows/legacy_transform/ overlaps four cells at the GRANT level, each collapsed to one workers queue. fanout 3 of 1 chain, cap 8 -- one connected edge set, 7 levels deep and 3 wide."
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~G",
