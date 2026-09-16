@@ -6027,6 +6027,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT_RESAPP-Z-S108, quoted: 'The next AMGT_RESAPP PRD addendum that a CVO signature closes IS that exercise, and the seat that lands it should read the tool's printed line rather than assume the send.' And its re-arm condition, quoted: 'any AMGT_RESAPP COO release that reads UNSENT with attempts=0 after both halves are SIGNED.'",
     "world_is": "A CVO signature closed a PRD addendum on this project and NO COO release was composed, so there was no printed line to read and no row that could read UNSENT. The release branch is gated on dep_stage being REGISTERED or PRD; AMGT_RESAPP is at DECOMP and every later stage is further from that gate, so the condition is unreachable on this project for the remainder of its life.",
     "notes": "WHAT THIS ROW DOES AND DOES NOT CHANGE. Z-S102 STAYS DISARMED and S108 stands as written: the repair is present at HEAD, verified BY CONTENT with a discriminating negative control, and an UNREACHABLE TEST IS NOT EVIDENCE OF A LIVE HAZARD. What is corrected is only S108's claim about WHERE its own exercise would come from. THE EXERCISE NOW BELONGS TO THE NEXT PROJECT THAT REACHES L4-R WHILE STILL AT REGISTERED OR PRD STAGE -- not to this one -- and any seat wanting to close Z-S102 as EXERCISED must look there. RE-ARM CONDITION, restated so it is observable somewhere: a COO release on ANY project that reads UNSENT with attempts=0, or that reads `from` equal to the STAMPING seat rather than the PRD's author, after both halves are SIGNED. LESSON, and it is the transferable half: A DISARM ROW THAT NAMES ITS OWN FUTURE EXERCISE MUST CHECK THAT THE EXERCISE IS REACHABLE, because an unreachable test reads exactly like a pending one -- both are simply 'not yet observed' -- and a successor cannot tell them apart without re-deriving the gate. S108 named a test that its own project had already made impossible, and nothing would have refused it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W28-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~28",
+    "surfaced_at": "2026-09-16T06:49:13Z",
+    "one_line": "AMGT-rk-10's own <paths> block omits its own task-orders file, unlike sibling AMGT-rj-13's <paths> block which names itself explicitly, so the worker cannot flip <status> to complete or commit that flip under --only -- <paths> without exceeding its granted write surface.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-10.the-social-source-classified.md @2726497094, section 3 <paths>: 'org/missions/D5/AMGT/AMGT_RESAPP/ledger/', 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~28/', 'org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md' -- three entries, none of them org/missions/D5/AMGT/AMGT_RESAPP/task-orders/.",
+        "The same file's section 6 'WHEN YOU ARE DONE' reads: 'flip <status> to complete; commit with --only -- <paths>.' -- the completion mechanic assumes the order's own file is inside that grant.",
+        "Sibling order org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-13.the-social-source-measured.md, section 3, lists 'org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rj-13.the-social-source-measured.md' as its own last <paths> entry; its assignee 0.9.0_WK_AMGT_RESAPP~22 committed the status flip directly at 8432a05c6d under that grant.",
+        "The worker operating contract states: 'a path you need that it lacks is a BLOCKING row on that criterion, never an override' and '<paths> IS your write grant'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 6: 'flip <status> to complete; commit with --only -- <paths>. Report once.'",
+    "world_is": "The order's own <paths> grant (section 3) does not name org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-10.the-social-source-classified.md, so a commit touching that file is outside the write surface this order names. The worker edited the <status> line locally to verify the gap, then reverted it byte-for-byte (confirmed by an empty git diff) rather than commit outside the grant.",
+    "notes": "All three mechanical criteria (AC1, AC2, AC3) PASS-by-output and the committed proof-of-spec instance (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~28/AMGT_RESAPP.TO-AMGT-rk-10.the-social-source-classified.proof_of_spec.json) is VALID (rc=0) against .tools/proof-of-spec-check.py. Only the terminal <status> flip is blocked by the missing write grant. The order is left at status=pending pending either an amendment to its <paths> (adding its own task-orders path, as rj-13's carries) or a direct flip by 2.0.0_SA_COO~Z/1.0.0_SA_CTO~Z."
   }
 ]
 ```
