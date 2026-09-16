@@ -600,6 +600,59 @@ not a message.
    "spec_asserts": "Order text: '\u26db A PRINTED NOT REACHED IS A CORRECT ANSWER'; check_canon_r2.py j_reach docstring: 'A-13: the cell PRINTS which of the seven rules the tree reaches... A printed NOT REACHED is a legitimate outcome'.",
    "world_is": "The checker's own stdout for j5-reach (and the identical j4-reach/j6-reach shape) cannot distinguish 'this rule is reached' from 'this rule is named while explaining it is not reached', so its printed REACHED/NOT REACHED partition is not evidence of what a judge actually determined -- only the judge's own row content is. A reader (a CN-j-7 preparer, or the L9 adjudicator) who trusts the checker's stdout instead of reading judge-d.tsv's own reach column and why-text would conclude judge D found all seven rules reached, which is the opposite of what this row's own analysis states for R3, R8, R15 and R21.",
    "notes": "ARMED, disarm_owner 3.0.0_SA_CVO: J5-J1 is graded at L9 from the file's content, not from this checker's summary line, so the disarm is reading judge-d.tsv itself (the per-row reach column plus the last row's tree-wide summary) rather than the j5-reach stdout when grading J5-J1 and when CN-j-7 compiles the union across judges C/D/E. I have not touched the checker (fixed input, read-only) and my own criteria (J5-AC1..AC3) all pass as committed; this is filed as FORM on the instrument, not a defect in my row. Judged the row's form, not its significance."
+  },
+  {
+   "id": "LGIC_CANON-S8",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T09:05Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_CANON-S7: the three round-2 judges' spawn bases and drain order, measured from git alone -- all three branches created from ONE base at which no judge output existed, and no judge drained until all three had produced.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "S7 established that j7-blind tests CITATION (does one judge's output name another's filename) and cannot see the realistic leak, which is a judge READING a sibling's verdicts. It named the real control as WORKTREE ISOLATION plus SPAWN ORDER, and set the disarm as recording the three spawn bases and the drain order in the drain-end read. This row is that record.",
+     "SPAWN BASES, read from each branch's own reflog creation entry (git reflog show <branch> --date=iso, oldest entry 'branch: Created from HEAD'): wk-lgic-canon-2-4 (judge C) 49b4a5b74a at 2026-09-16 04:13:48 -0400; wk-lgic-canon-2-5 (judge D) 49b4a5b74a at 04:14:29; wk-lgic-canon-2-6 (judge E) 49b4a5b74a at 04:15:13. ONE base, all three, inside 85 seconds.",
+     "THE BLINDNESS DISCRIMINATOR, at that base: git ls-tree -r --name-only 49b4a5b74a -- .../deliverables/exercises/r2/ returns ZERO paths, so no judge's checkout could have carried a sibling's verdicts however it behaved.",
+     "POSITIVE CONTROL on that same read, same command, same commit: git ls-tree -r --name-only 49b4a5b74a -- .../deliverables/exercises/ returns SIX paths (judge-a.tsv, judge-b.tsv, judge-compare.md, naming-a.tsv, naming-b.tsv, naming-compare.md), which is round 1's output. The empty r2 read is a TRUE ABSENCE, not a broken pathspec -- and round 1's files are the negative-arm proof S7 cited, that a judge spawned after a sibling's drain WOULD have found its verdicts in its base.",
+     "DRAIN ORDER, and every drain is AFTER all three judges had written their output: judge E 3af1944705, judge D 77db118b74 (merge of wk-lgic-canon-2-5), judge C 44265c6e77 (merge of wk-lgic-canon-2-4). Before the first drain this seat measured that all three worktrees carried their own TSV, which is the condition S7 committed to.",
+     "The commitment S7 made, quoted from the channel: 'the three judges CN-j-4, CN-j-5 and CN-j-6 are spawned from bases that predate ANY judge drain, and none of the three is drained until all three have produced their output.' Both halves are measured above and both hold."
+    ]
+   },
+   "disposition": "DISMISSED_WITH_REASON",
+   "dismissal_reason": "S7's own disarm condition is met and measured: the three judge branches were created from the single base 49b4a5b74a within 85 seconds, git ls-tree over exercises/r2/ at that base returns ZERO paths while the identical command one directory up returns SIX (the positive control that makes the empty read a true absence rather than a broken pathspec), and all three drains (E 3af1944705, D 77db118b74, C 44265c6e77) landed after all three judges had produced output. S7 asked for the spawn bases and the drain order recorded in the drain-end read; this is that record. Dismissed as the DISARM of S7, not as a judgement that j7-blind measures blindness -- it does not, and J7-AC3 stays in the cut as a bar on citation only.",
+   "spec_asserts": "LGIC_CANON-S7: blindness between the round-2 judges is enforced by worktree isolation and spawn order, not by the j7-blind criterion, and the disarm is recording the three spawn bases and the drain order.",
+   "world_is": "All three judge branches were created from the single base 49b4a5b74a within 85 seconds, that base carries no file under exercises/r2/ while carrying six files under exercises/ on the identical command, and the three drains all landed after all three judges had produced their output. The sequencing commitment held as written.",
+   "notes": "INERT. This disarms S7 and nothing else. J7-AC3 (j7-blind) is NOT removed and is still a cheap bar on a copied filename; it is simply not a measurement of blindness, and nobody at L9 should read its PASS as more than citation hygiene. Judged the row's form, not its significance."
+  },
+  {
+   "id": "LGIC_CANON-S9",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T09:07Z",
+   "one_line": "ISSUER'S REPAIR of the defect worker row LGIC_CANON-W5-S2 found in MY fixed input: j_reach scanned the WHOLE judge row for rule ids, so it counted a rule a judge NAMED while explaining it is NOT reached -- and it manufactured a 7-versus-3 disagreement between judges C and D who in fact agree exactly.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE DEFECT, as W5-S2 stated it: check_canon_r2.py j_reach built blob = every cell of every judge row joined, then tested each of A-13's seven rule ids with a whole-word regex over that blob. The 'why' column is in the blob, so a judge explaining WHY R21 is not reached made R21 read as reached.",
+     "THE DISCRIMINATING PAIR, measured across the three drained judges before touching anything -- whole-row scan versus the TSV's own named 'reach' column: judge C 3 [R14,R17,R19] vs 3 [R14,R17,R19] (agrees); judge D 7 [R3,R8,R14,R15,R17,R19,R21] vs 3 [R14,R17,R19] (DIFFERS); judge E 3 [R8,R14,R19] vs 2 [R14,R19] (DIFFERS, though no j6-reach subcommand exists so E is not graded on reach).",
+     "WHY THE DIFFERENCE IS NOT ABOUT THE JUDGES: C and D judged the same tree and reached the SAME determination. The instrument read them differently only because judge D spelled out the not-reached rule ids in its why-text and judge C did not. The reading was a property of each judge's PROSE STYLE, not of what it determined.",
+     "THE HARM THIS BLOCKS, and it is the reason the repair happens now rather than at L9: CN-j-7 is the cell that traces DISAGREEMENTS between the judges. Run against the old instrument it would have traced a 7-versus-3 reach disagreement between C and D that does not exist, and an agreement between the two briefed judges is precisely the evidence this round wants.",
+     "THE REPAIR: a new column(path, name) helper reads a column by the TSV's OWN HEADER rather than by position (an index breaks silently when a column is inserted; a name refuses loudly), and j_reach now scans only the 'reach' column. When the whole-row scan would differ, the criterion PRINTS that it differs and by how much, so the evidence carries its own discriminator instead of hiding the old reading.",
+     "RETROACTIVELY VERDICT-NEUTRAL, MEASURED BEFORE THE EDIT, which is why no drained cell re-opens: j_reach's verdict is PASS if reached is non-empty, and the scoped read is non-empty for every judge (C 3, D 3, E 2). J4-AC3 and J5-AC3 read PASS under BOTH the old and the new instrument. No proof instance is invalidated -- each one's expect is the verdict token, which does not move.",
+     "NEGATIVE CONTROLS, because a criterion that now passes must still be able to fail. Run on a COPY of judge-d.tsv: untouched -> PASS (positive control); reach column blanked to '-' -> REACHED (0), FAIL-J5-REACH-PRINTED; reach column deleted entirely -> 'the judge file carries no reach column', FAIL. The artifact was then restored and the restore PROVEN by byte equality against the pre-control bytes (6923 == 6923), not by re-running the checker.",
+     "The file compiles under python -W error::SyntaxWarning, stays pure LF (0 CRLF) and keeps its 6 non-ASCII characters -- per CLAUDE.md s.4, a subset removal converts a loud failure into silent mojibake, so the count is held constant deliberately."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "j_reach's docstring: 'A-13: the cell PRINTS which of the seven rules the tree reaches. A printed NOT REACHED is a legitimate outcome.'",
+   "world_is": "Until this repair the printed partition was not a reading of what any judge determined -- it was a reading of which rule ids happened to appear anywhere in the judge's row text, including inside prose arguing the opposite. It now reads the judge's own reach column and discloses where the old reading differed.",
+   "notes": "INERT: the instrument is fixed and exercised both ways, and no drained cell's verdict moves. THIS DOES NOT DISPOSE W5-S2 -- that row's disarm_owner is 3.0.0_SA_CVO and its disposition is the CVO's at L9, not this seat's; an issuer cannot close a worker's row by repairing the thing it reported. FOURTH defect of mine in a fixed input this session, and the fourth found by a worker rather than by me: 0.9.0_WK_LGIC_CANON~5 filed it, left its order on the evidence, and did not degrade its own file to fit my checker. A worker's measured claim that disagrees with my instrument is evidence about my instrument."
   }
 ]
 ```
