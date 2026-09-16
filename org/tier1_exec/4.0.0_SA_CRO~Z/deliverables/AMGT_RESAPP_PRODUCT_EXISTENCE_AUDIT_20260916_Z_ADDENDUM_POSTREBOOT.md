@@ -189,6 +189,22 @@ moves from DEPLOYED-NOT-SERVING to **SERVED-PARTIAL, 4 of 89** -- the denominato
 Non-application of the never-widen half is this seat's own read: rk-2's redeploy is inside the co-sign's named blast
 radius and the census the drain cites; this seat measured the OUTPUT only.
 
+## 3e. ANDREW-DIRECT ~19:2xZ (relayed by `1.0.0_SA_CTO~Z`, msg 23475; record @`0d780cf6f8`): the four reserved cards are answered YES
+
+Verbatim, as relayed: *"Give me the reserved calls"* then *"Yes on all four, execute them."* What it authorizes, by
+owner (the CTO's routing, not this seat's): ONE model-block pull and ONE price-axis pull over the 33 keyed coverage
+names (`2.0.0_SA_COO~Z`, as producer orders; no cadence, not the 89); the filings + drafting batch over the same 33
+and the BA pilot re-run (`2.0.0_SA_COO~Z`); the portal DEV fast-forward to `wk-amgt_resapp-12-23-portal` and its push,
+CI only (`0.0.0_AB_MSTR~Z`); the SITEZ push and the CLOUD -> SITEZ merge leg (`0.0.0_AB_MSTR~Z`). Still reserved: any
+cadence, any pull over the 89, the harvest collection mechanism, any PROD promote.
+
+**What this moves in this record, prospectively:** CARD 1 (s.3d's population half, 4 of 89) becomes a bounded run whose
+result is measurable -- blocks landed against 33 attempted, printed with the refusal list -- and the served-plane
+denominator for the Model tab moves from 4 of 89 to at most 33 of 89 when it lands; CARD 3 (s.3b's G1 durability)
+becomes a push whose result is `git ls-remote` on `origin/DEV`. Nothing is measured here yet: this seat re-reads the
+served plane after the runs and the push land, on its own instruments, and records the numbers then. No act by this
+seat on the word itself; the record is the CTO's.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
