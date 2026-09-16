@@ -198,3 +198,47 @@ while tests failed -- the one direction a grading checker must never fail in. Fi
 is the control working as designed.
 
 **Binds:** `2.0.0_SA_COO~G` -- the round-5 cell as above; S22's disarm rides its drain. Nothing at the CVO until L9.
+
+---
+
+## R-6 (2026-09-16 ~07:3xZ) -- the six UNDECIDED registry tokens EN-r-2 routed to this seat: one RETIRED on Andrew's card, one a project code, four measured live and owed a cell, not a guess
+
+**Call:** LGIC_ENFORCE EN-r-2 (drained @901f48b1e0; result `registry-rows.r2.result.md` item 6) left `astn`, `trade`,
+`news`, `find`, `harvest`, `imo` under `systems.json` `unresolved` "for 1.0.0_SA_CTO". The registry's own contract
+(`_about.row_fields`): a SYSTEM row needs `class` (PRODUCT | VENDOR | PLATFORM_SUBSYSTEM), `owner_directive` resolving
+in DIRECTIVES.yaml, and `owner_claim` measured or inferred WITH a basis. **Measured before ruling:**
+- `imo`: tick-list row 18 (`opal-data-imo`, 304 per-company planes, 103d dead at census) was RESOLVED by Andrew's
+  card 9 as RETIRE (`04_SCOPE_TICKLIST.md:15`, `:66`); bucket first page of 1000 objects, newest on that page
+  2026-06-01 (`IsTruncated` true; not a bucket-wide max, and not needed: his card decides).
+- `harvest`: `opal-data-harvest` 132 objects, newest `social/v1/_measurement/2026-09-15.json` at 2026-09-15T16:56Z --
+  LIVE, written the previous day. Not row 18's object.
+- `find`: FIND is a legacy macro/project code (FIND_INSURE .001-.029 orders under `0.7.0_AE_CloudOps`; `data/find/`),
+  not a MACROS.yaml macro; 21 live resource names carry it (census s.3 V1).
+- `astn` 14, `news` 34, `trade` 22 live resource names (census s.3 V1, "PRODUCTS and VENDORS/FEEDS"); none has a
+  DIRECTIVES.yaml line or a mission-tree project naming an owner (W1-S6, as EN-r-2 found). `trade` is plausibly the
+  TRADEOPS second fabric's product (its own root and broker), i.e. possibly not this register's row at all.
+
+**Ruling, per token:**
+1. **`imo` -- RETIRED**, on Andrew's card 9. Not a system. Mechanism: the LGIC_ENFORCE round-2 registry cell adds a
+   `refused_keys.retired` class (its Rule 24 record travels with it: axis = a token Andrew retired by card; disjoint from
+   workstream_code / generic_noun / purpose_word; one intent), `imo` its first member, basis the tick-list row and card 9.
+   Its resources grade as class (d) rule gaps until the R19 retirement project removes them -- loud, as designed.
+2. **`find` -- REFUSED as a project code** (`refused_keys.workstream_code`; V3: a project code is never a system), basis
+   the FIND_* orders and `data/find/`. Its 21 resources become class (d) gaps that the insurance-prospecting product's
+   owner resolves, not the naming rule.
+3. **`harvest`, `astn`, `news`, `trade` -- PRODUCT-shaped and LIVE; the OWNER is MEASURED by a cell, never inferred
+   here.** The same LGIC_ENFORCE round-2 registry cell reads, per token, its live resources' DECLARED sources
+   (`lambda-source-map.json` `source_dir`/`tf_file`, `EC2_MANIFEST.json` `source_path`, the repo tree the resources
+   deploy from, and for `trade` the tradeops root) and mints a PRODUCT row with `owner_claim: inferred` and the
+   citation as `owner_basis` where the tree links to a directive or a mission-tree project. A token whose resources
+   link to NO directive stays `unresolved` with the MEASURED fact written into its `why`, and the cell returns ONE card
+   to Andrew naming the owner question per such token. `trade` whose resources deploy from the tradeops root is that
+   fabric's row and is recorded as such, not minted here.
+   This seat does not write the four owners from recall: an inferred owner without a citation is the guess the
+   registry's `owner_claim` field exists to refuse.
+
+**Why not a card at Andrew now:** no NEVER line or standing hold names the class; the delegation makes it adjudicable,
+and three of the four have a measurable answer in the declared planes. The cell's residue, if any, is the card.
+**Binds:** `2.0.0_SA_COO~G` -- one registry cell in LGIC_ENFORCE round 2 carrying items 1-3 (the EN-s-1 census stays
+STOPPED on class (d) meanwhile, as decomposition v2 s.0b rules). Nothing at Andrew unless the cell's measurement leaves a
+token ownerless.
