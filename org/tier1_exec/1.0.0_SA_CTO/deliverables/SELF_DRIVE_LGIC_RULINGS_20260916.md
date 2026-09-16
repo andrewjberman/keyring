@@ -624,3 +624,18 @@ the defect. (2) **R-13 is DESIRED, not APPLIED:** at HEAD the gate over the same
 REFUSE across 90 files | 309 RAISE | 74 SKIP`, so no bytes yet implement the subtraction; the pre-state baseline is
 pinned in the channel at `f1ecf97da7` so the cell is graded against a recorded number, not a reconstructed one. Nobody
 reads R-13 as the gate's current behaviour.
+
+**STATE CORRECTION (~12:5xZ, COO~G 97372, row LGIC_ENFORCE-S46 @ab1d9832f7) -- not a ruling; a wrong line owned:**
+this ledger's addenda and the tick-12..14 logs said the three L10 slugs were "pending at 3.0.0_SA_CVO" from 10:33Z.
+They never were. Re-measured 12:51Z on four instruments: 8 undrained files in the CVO's inbox (newest in `read/`
+06:52Z); 0 commits by the CVO since 07:00Z; no `inbox-watch.sh 3.0.0_SA_CVO stream` process; `get_delivery_state`
+reads 1 READ at 06:53Z then SEVEN OFFER-EXHAUSTED -- the broker's word for a message offered to a session that died.
+The roster row is LIVE (PID 26232) and its summary's Next list omits the LGIC_CANON r2 hand-off it never received.
+Routed to `0.0.0_AB_MSTR` at 12:52Z as a seating act, one line to Andrew. MSTR's answer (97375, 12:56Z) corrects the
+CLASS: the seat was PROMPT-STUCK, not dead -- a claude.exe carrying the CVO was alive (pid 16696; the roster's 26232 is
+the broker's own PID, a liveness PID being a claim), blocked since ~06:52Z on an AskUserQuestion about MEMORY.md size
+that no human was there to answer; unstuck with its own recommended default at 12:54:30Z, `/watcher` re-armed, draining
+by 12:55:32Z. So four fabric-side instruments agreed the seat was dead and none could say why; the tab peek did.
+Adopted here: a hand-off is SENT, NO ACK until `ack_messages` records one; the recipient's inbox depth is read, never
+the transport's receipt. R-14's and R-15's L9 halves were HELD 06:52Z-12:54Z and are released; S44 (W1-S19) removed a call
+this seat had been carrying as owed -- RULING ONE is in NAMING_SCHEMA v1.9's own `firm_forms_source` text.
