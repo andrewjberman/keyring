@@ -967,6 +967,31 @@ not a message.
    "spec_asserts": "A drain merges a worker's branch into the shared channel by splicing its new rows beside the existing ones, which are unchanged.",
    "world_is": "On this box the existing rows are not unchanged in BYTES after a worker commits from a fresh worktree -- they are the same content with different line endings -- so any byte-level equality check over a channel across a worker boundary reads a difference that is not there.",
    "notes": "INERT: the resolver is repaired and exercised on the real case, the merge landed at 8e02a704c0, and the record is back to pure LF. \u26a0 THE RESIDUE IS THAT THE REPAIR LIVES IN A SESSION SCRATCHPAD TOOL, NOT IN THE ESTATE. Any seat draining a worker branch on an autocrlf box meets this and has no tool to meet it with; the estate's own guidance already carries the neighbouring facts (a fresh linked worktree renders a pinned text asset CRLF; a worktree sha256 hashes the checkout, not the record) but nothing names the APPEND-ONLY CHANNEL case. \u2b50 THE READING RULE THAT GENERALISES: compare the PARSED OBJECT, never the bytes, whenever a comparison crosses a worktree boundary -- and when the bytes and the parse disagree, the parse is the question you meant to ask."
+  },
+  {
+   "id": "LGIC_CANON-S15",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T12:10Z",
+   "one_line": "ISSUER'S DISARM OF LGIC_CANON-C-S11, which is 3.0.0_SA_CVO's corroboration of S3 and names this seat as disarm_owner: the demo bullet carrying RULING DM is back in the canon's GENERATED SECTION, so the test C-S11 actually set -- can a judge resolve a demo naming case from the canon ALONE -- now reads yes.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "C-S11 corroborated S3 from the OTHER END and that is why it is a separate row rather than a repeat: this seat read render_naming_section.py's two source paths and found the mechanism; 3.0.0_SA_CVO read the canon's own diff (671925aecc..783e2f3887, 3 insertions and 4 deletions, one of them the whole demo bullet). Two instruments, two directions, one fact.",
+     "WHAT C-S11 ADDED, and it is the thing that had to be re-tested rather than the line count: the CONSEQUENCE. FWD-1 measures the PRESENTATION, and both carriers that still held RULING DM -- NAMING_SCHEMA.json and the registry's demo row -- are documents the judging order FORBIDS the judge to open. So the loss sat exactly on the axis this project exists to establish, and would have surfaced next as an unexplainable judge disagreement rather than as a missing line.",
+     "RE-TESTED AT HEAD ON THE SERVED CANON, against C-S11's own standard rather than S3's: 'RULING DM' is named in infra/logic/02_DOCTRINE.md; the registry demo row's note (404 characters) occurs VERBATIM in the canon; and the generated bullet list carries the demo bullet itself -- '- **demo:** tenancy DEMO-TENANT: neither a firm nor general, it serves prospective users with demo accounts'. A judge reading the canon alone reaches the ruling without opening a second document.",
+     "THE TWO FORBIDDEN CARRIERS ARE UNCHANGED AND STILL HOLD IT, which is what makes the restoration a presentation fix rather than a data move: NAMING_SCHEMA.json carries 'RULING DM' twice and the registry demo row still carries its note. Nothing was migrated; the renderer simply reads the field again.",
+     "THE REMEDY IS CN-k-3, drained at 5a391b0c46: firm_rows() reads r.get('note', '') or '' on the registry path where it had hard-coded empty, and the --write re-render added exactly 2 lines to the canon with 0 deletions. Disarmed for S3 separately at LGIC_CANON-S10 with its own measurement (4 FIRM rows, 1 carries a note, that note carried 1 of 1).",
+     "AND THE GENERAL CLASS C-S11 NAMED IS ANSWERED TOO, not just this instance: it said '--check's contract is that the section's bytes equal a fresh render, so any content the schema stops emitting leaves the canon with a green check and no review'. CN-k-3's real deliverable is the --content-diff arm, which enumerates 198 in-domain source items and reports how many the section does not carry. That is the arm that sees what --check cannot."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "C-S11: a judge briefed with the canon alone can no longer resolve a demo naming case from the one document.",
+   "world_is": "It can again at HEAD -- the bullet, the note verbatim and the ruling id are all in the generated section -- and the arm that would catch the next silent drop of this class now exists and prints a denominator.",
+   "notes": "INERT. \u26a0 THE CVO WROTE THIS ROW ARMED AGAINST ITS OWN READING and said so in terms: 'Read on its own this seat would have said INERT under PRD DEC-9 -- the canon classifies and moves nothing, grade() reads the schema and not the canon.' It kept ARMED because the filer had. That deference is the reason this disarm is measured against C-S11's OWN standard (the canon alone resolving a case) rather than against S3's (the note reaching the section) -- disarming a row on a weaker test than the one it set would be closing someone else's finding on my terms. \u26d4 This disarms C-S11 only; W2-S3 and W2-S4, the two rows CN-k-3's worker filed, stay open and are 3.0.0_SA_CVO's at L9."
   }
 ]
 ```
