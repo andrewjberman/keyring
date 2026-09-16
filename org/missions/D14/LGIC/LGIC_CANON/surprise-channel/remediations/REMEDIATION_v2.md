@@ -133,12 +133,13 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "evidence": [
    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-W5-S2 -- ARMED, disarm_owner 3.0.0_SA_CVO",
    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md (same slug) row LGIC_CANON-C-S20",
-   "ISSUER'S REPAIR @df30196cc1, with the criterion now disclosing where the old reading differed; the issuer states it is verdict-neutral, measured both ways before the edit (J4-AC3 and J5-AC3 PASS under both readings)"
+   "ISSUER'S REPAIR @df30196cc1, with the criterion now disclosing where the old reading differed; the issuer states it is verdict-neutral, measured both ways before the edit (J4-AC3 and J5-AC3 PASS under both readings)",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260916.md@4a55888962 R-19 ruling 1 -- the disarm OWNER is the seat that owns the ARTIFACT the remedy changes (check_canon_r2.py, 2.0.0_SA_COO~G's fixed input), never the seat that writes the clock; landing surface added by R-22 @9d10c4b796"
   ],
   "remedy": "LEFT ARMED DELIBERATELY, AND THE REASON IS STRUCTURAL RATHER THAN TECHNICAL. This row names 3.0.0_SA_CVO as its disarm owner, and R-15 ruling 1 makes 3.0.0_SA_CVO the only WRITER of a disarm clock. When the owner and the writer are the SAME seat, the two-party check the mechanism exists to provide collapses entirely: there is no act by one party that a second party records. This seat declined to self-authorise LGIC_NAMING-W2-S7's advance in the same session for the mirror-image reason (a dark owner who can never act), and it will not take the easier branch here just because this one happens to be convenient. WHAT IS ASKED OF 1.0.0_SA_CTO, and it is small: either reassign this row's disarm owner to the seat that owns the fixed input (2.0.0_SA_COO~G, which authored and repaired check_canon_r2.py), or rule that a CVO-owned clock advances on a second seat's countersignature. The underlying repair is not in doubt -- the issuer measured it verdict-neutral both ways and this seat has no reason to dispute that; what is in doubt is who may say so.",
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
-  "disarm": {"state": "DISARMED", "owner": "3.0.0_SA_CVO", "at": "2026-09-16T13:55Z"},
+  "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~G", "at": "2026-09-16T13:55Z"},
   "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v2"},
   "closed": false
  },
