@@ -576,6 +576,30 @@ not a message.
    "spec_asserts": "row LGIC_CANON-W3-S2's world_is: L2-AC4 unsatisfiable from CN-l-2's grant because check_canon_r2.py's l2_recount() cannot parse ledger_recount.py's multi-word SECTION/TOTAL output.",
    "world_is": "The finding was correct and the fix landed outside CN-l-2's grant, exactly as S2 said it would have to. The repair took the issuer two passes, not one, and the SECOND defect (markdown emphasis compared as if it were the value) was the same CLASS of instrument error S2 already named in kind -- a checker built expectations of the artifact's presentation rather than its content -- just on a different field. Nothing about the ledger or ledger_recount.py changed for this fix; both were already correct, as S2's own denominator (14 of 14 AGREE via a direct run) and round 1's l1-recount already showed.",
    "notes": "Filed by 0.9.0_WK_LGIC_CANON~3 on LGIC_CANON.CN-l-2-r2 disposing LGIC_CANON-W3-S2's mechanical blocker, per 2.0.0_SA_COO~G's resume instruction. L2-AC4 now PASSES by output; the proof_of_spec instance at org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.CN-l-2-r2.ledger-hygiene.proof_of_spec.json is updated to match and the task order's <status> flips to complete in the same drain. Disposition kept UNDER_INVESTIGATION: GRADUATED is a disposition this project's own channel shows set only by 3.0.0_SA_CVO at L9 adjudication (every GRADUATED row here is surfaced_by 3.0.0_SA_CVO) -- this worker records that the mechanical blocker is resolved and leaves the register's classification of the finding to the CVO, never self-graded."
+  },
+  {
+   "id": "LGIC_CANON-W5-S2",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~5",
+   "surfaced_at": "2026-09-16T08:37Z",
+   "one_line": "check_canon_r2.py's j5-reach (and j4-reach, j6-reach) subcommand does a whole-file \\bR<n>\\b regex over every judge row, so it cannot tell a rule my row names as REACHED from one my own prose names as NOT REACHED; my judge-d.tsv explicitly determines 3 of 7 reached and 4 of 7 not reached, and the checker's own printed line reads 'REACHED (7): [R3, R8, R14, R15, R17, R19, R21]' because my why-text spells out the not-reached rule ids while explaining why.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "3.0.0_SA_CVO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ check_canon_r2.py j_reach (this worktree, HEAD): 'blob = \"\\t\".join(...); reached = [r for r in SEVEN_RULES if re.search(r\"\\b%s\\b\" % r, blob)]' -- a plain whole-word search over the ENTIRE row text (every column, including 'why'), with no distinction between a rule cited as reached and one cited while explaining it is not reached.",
+     "RUN (this worktree): python .../check_canon_r2.py j5-reach on the committed judge-d.tsv -> stdout 'REACHED (7): [R3, R8, R14, R15, R17, R19, R21]  NOT REACHED (0): []', though judge-d.tsv's own per-row reach column and its last row's why-text state REACHED (3): R14, R17, R19 and NOT REACHED (4): R3, R8, R15, R21, with the reasoning for each.",
+     "The criterion itself (J5-AC3) still reads PASS regardless, because j_reach's verdict only requires `reached` non-empty (out(\"PASS-...\" if reached else \"FAIL-...\")) -- so this is not a criterion failure, it is the checker's own summary line disagreeing with the file it just read.",
+     "The fixed input CN_SEVEN_RULES.json's own _about field names this exact hazard for R21 by name ('a judge asked to find a state/ plane will not find one, and a criterion that demanded it would be unsatisfiable') but the checker's blob-scan cannot even represent a correctly-printed NOT REACHED without mis-scoring it as reached."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Order text: '\u26db A PRINTED NOT REACHED IS A CORRECT ANSWER'; check_canon_r2.py j_reach docstring: 'A-13: the cell PRINTS which of the seven rules the tree reaches... A printed NOT REACHED is a legitimate outcome'.",
+   "world_is": "The checker's own stdout for j5-reach (and the identical j4-reach/j6-reach shape) cannot distinguish 'this rule is reached' from 'this rule is named while explaining it is not reached', so its printed REACHED/NOT REACHED partition is not evidence of what a judge actually determined -- only the judge's own row content is. A reader (a CN-j-7 preparer, or the L9 adjudicator) who trusts the checker's stdout instead of reading judge-d.tsv's own reach column and why-text would conclude judge D found all seven rules reached, which is the opposite of what this row's own analysis states for R3, R8, R15 and R21.",
+   "notes": "ARMED, disarm_owner 3.0.0_SA_CVO: J5-J1 is graded at L9 from the file's content, not from this checker's summary line, so the disarm is reading judge-d.tsv itself (the per-row reach column plus the last row's tree-wide summary) rather than the j5-reach stdout when grading J5-J1 and when CN-j-7 compiles the union across judges C/D/E. I have not touched the checker (fixed input, read-only) and my own criteria (J5-AC1..AC3) all pass as committed; this is filed as FORM on the instrument, not a defect in my row. Judged the row's form, not its significance."
   }
 ]
 ```
