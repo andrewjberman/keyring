@@ -6725,6 +6725,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-3 AC3 as written: the default served route (today) serves keyed Price rows the way the chatter control does.",
     "world_is": "The default route asks for a today-dated generation that only a reserved Bloomberg pull can produce; at the latest committed generation's own date the whole chain serves 32 rows. The bar sums the reader's work with a producer run the cell may not perform.",
     "notes": "The act is 2.0.0_SA_COO~Z's as issuer: re-cut rk-3 AC3 (respawn proves AC3 only), add the fallback criterion on rk-7 with cell_refs=\"AMGT-rk-3\", carry the HELD half in the issuance data and the L8 packet. Dispositions of W26-S4 and this row are 3.0.0_SA_CVO~Z's at L9. The card restatement (one Bloomberg-gated card covering the model-block pull and the price pull) is this seat's at the round-12 L10. Broadcast: 2.0.0_SA_COO~Z and 3.0.0_SA_CVO~Z, same turn."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S126",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T15:20:49Z",
+    "one_line": "The issuer's ONE SHAPE for cell K under ruling S124 condition (1): the page's Refresh calls POST /api/private/research/pull (the enqueue Lambda's existing route), and the adapter's /refresh only DECLARES that carrier -- because the adapter role holds no SQS grant and condition (5) forbids adding one; and the retired rk-7 AC3's literal count was itself non-discriminating.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/harvest/scoped-amgt-api.tf carries no sqs, SendMessage or opal-research-pull-requests line (read at ~15:2xZ), so an adapter that enqueues would need a grant widening.",
+        "infra/aws/terraform/harvest/api-gateway.tf:104-109: aws_apigatewayv2_route harvest_enqueue, route_key POST /api/private/research/pull, api_id local.portal_api_id, authorization_type CUSTOM, authorizer_id local.portal_authorizer_id -- the shared portal API and authorizer the page already uses.",
+        "Deployed adapter POST /api/scoped/amgt/refresh at ~15:3xZ: 501, refused true, reason 'refresh has no queue carrier declared ...'.",
+        "Chain A's merged page, wk-amgt_resapp-12-23-portal @2453a7b4: requestRefresh (amgt-lead-panel.ts:114-115) calls apiRequest with the template BASE plus /refresh. The retired AC3 counted the literal /api/scoped/amgt/refresh and read 0 on a page that DOES call /refresh.",
+        "Price route at the latest generation date 2026-09-10: 32 rows, 31 with security_key, 1 without a key but with identity_status, 0 unclassed; the original rk-3 AC3 bar 'price_rows_with_security_key equal to rows' would have failed on an honest unresolved identity, so the re-cut requires every row keyed OR classed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "1.0.0_SA_CTO~Z's ruling row AMGT_RESAPP-Z-S124, conditions (1) one shape stated identically on both faces and (5) no grant widens; row AMGT_RESAPP-Z-S125 on the rk-3 re-cut and the dated fallback.",
+    "world_is": "Two shapes satisfied cell K's words. Only the enqueue shape keeps every grant unchanged, because the enqueue Lambda already holds the queue grant and the adapter does not.",
+    "notes": "Applied in ISSUER AMENDMENT 7, the same commit as this row, on AMGT-rk-3 AC3, AMGT-rk-7 AC3 and AC4, and AMGT-rk-12 AC4. Every new or re-cut criterion was dry-run before the write: rk-3 AC3 reads met today (the reader works at its own date), and the other three read NOT met, their correct pre-state. rk-7's note requires a fresh never-widen co-sign naming both adapter behaviours before its deploy. The L9 dispositions of S124, S125 and this row are 3.0.0_SA_CVO~Z's."
   }
 ]
 ```
