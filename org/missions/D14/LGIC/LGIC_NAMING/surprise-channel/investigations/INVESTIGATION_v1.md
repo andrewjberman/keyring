@@ -1283,6 +1283,32 @@ new row on 3.0.0_SA_CVO's ask 96495), both 1.0.0_SA_CTO; `LGIC_NAMING-S3`, `LGIC
     "spec_asserts": "check_ln_r4.py@ac82ad2331:390-404, g2_suite()'s own comment and this order's G2R4-AC6: 'the suite, which carries the FN1d tests, fails nothing the base did not' -- implying a real failure on the graded tree would read FAIL-SUITE-RED-OR-NO-FN1D.",
     "world_is": "On this device, g2-suite's FAIL branch is unreachable through its own instrument: a tree with 18 genuine new test failures (this worker's own mutant) still prints PASS-SUITE-NO-NEW-FAILURE, because the FAILED-line regex never matches pytest's ANSI-coloured captured output. This worker's own submission is unaffected (82 passed, 0 failed, confirmed by both check_ln_r4.py g2-suite AND a direct pytest run), so G2R4-AC6's PASS verdict for THIS instance is independently correct -- but a future worker's genuinely broken tree could read the same false PASS.",
     "notes": "OBSERVATION, not BLOCKING: this worker's own AC6 evidence is corroborated by a second instrument (direct pytest, 82 passed/0 failed) that does not share the defect, so the deliverable's own acceptance row is sound. ARMED because nothing in the estate strips ANSI before the regex, and the next tree graded through g2-suite alone (no direct-pytest cross-check) would inherit the same false-PASS exposure."
+  },
+  {
+   "id": "LGIC_NAMING-S22",
+   "project": "LGIC_NAMING",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T07:25Z",
+   "one_line": "The test suite is RED at CLOUD: two grade() worked cases assert RaiseDefect on globgrph names BECAUSE the registry row was owed, and LGIC_ENFORCE EN-r-2 has now minted that row, so grade() correctly no longer raises. Both cells did exactly what they were asked; each passed every criterion on its own branch; their UNION is red because a worked case outlived the condition it encoded. Found only after the issuer fixed its own checker's ANSI-blind FAILED regex, which had been reading the failures as an EMPTY failure set.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "RUN at CLOUD 901f48b1e0: python -m pytest lib/tests/test_opal_naming.py --color=no -> 2 failed, 43 passed in this parametrised test; the whole suite reads 80 passed, 2 failed against a base failing set of 0 (7b5331c8c0: 75 passed, 0 failed).",
+     "THE TWO CASES, read from the failure output rather than summarised: test_grade_agrees_with_every_worked_case[globgrph-serving|ECS_TASK_DEFINITION] and [opal-globgrph|ECS_CLUSTER]. Each asserts pytest.raises(RaiseDefect) and each now reads DID NOT RAISE.",
+     "THE CASES' OWN why FIELD NAMES THE CONDITION THEY ENCODE: 'globgrph is in V2 ... a platform subsystem (a system) or a project code (never a system, S6); THE REGISTRY ROW IS OWED (row LGIC_NAMING-W1-S2)'. The case asserts a RAISE because no row existed.",
+     "THE ROW NOW EXISTS. git log -S'globgrph' -- infra/logic/registry/systems.json names 72d636db4f, 0.9.0_WK_LGIC_ENFORCE~1's EN-r-2 build commit, which classed globgrph class (a) PLATFORM_SUBSYSTEM and minted its row. EN-r-2's own criterion R2-AC4 is that every class (a) example NO LONGER RAISES -- so grade() ceasing to raise is that cell SUCCEEDING, not failing.",
+     "NEITHER CELL WAS WRONG ON ITS OWN BRANCH: LN-g-2 reported 82 of 82 passed at its tip and EN-r-2 reported 152 of 152 groups classed with 6 of 6 criteria PASS at its own. The red appears only in the union on CLOUD, which no criterion of either cell grades.",
+     "THE DEFECT WAS INVISIBLE UNTIL THE INSTRUMENT WAS FIXED: check_ln_r4.py's g2_suite matched failures with re.findall(r'^FAILED (\\S+)', out, re.M) while pytest COLOURISES on this device, so a colourised FAILED line begins with an escape sequence and the anchored pattern never matched. MEASURED: a probe for the escape sequence in pytest's own output reads True. The failed set therefore read EMPTY while tests failed -- a FALSE PASS. Row LGIC_NAMING-W2-S8 named the blindness; this row is what the blindness was hiding."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_NAMING GRADING_RULE.md's worked cases are the rule's own examples and lib/tests/test_opal_naming.py asserts every one of them. LGIC_ENFORCE TO-EN-r-2-r2 R2-AC4: every example of a class (a), (b) or (c) group no longer raises on that group.",
+   "world_is": "A worked case encoded a fact about the ESTATE -- that no registry row existed for globgrph -- as an assertion about the CODE. When the estate changed, by another project's cell doing precisely its job, the assertion became false while the code stayed correct. Two criteria that each grade their own branch cannot see this; only the union can, and nothing grades the union.",
+   "notes": "ARMED, disarm_owner 1.0.0_SA_CTO, because the fix is a SPEC question across two projects and is not this seat's to take: either GRADING_RULE.md's two globgrph worked cases are re-verdicted now that the row exists (LGIC_NAMING's artifact, LN-g-1's), or the registration is wrong (LGIC_ENFORCE's). This seat has NOT edited either, and has not touched the failing tests -- editing a test to match the code is how a real regression would be buried, and the discriminator between the two is a ruling rather than a measurement. NOT A RE-CUT: both orders are complete and correct as written. For 3.0.0_SA_CVO at L9: both cells' verdicts stand at their own tips. \u26a0 The suite is RED at HEAD in the meantime, so any later cell taking a green suite as its base condition must re-measure rather than assume. The general class is LGIC_ENFORCE-S21 one level up: a criterion scoped to its own branch cannot see a defect that only the union creates."
   }
 ]
 ```
