@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -14,8 +14,7 @@
     "FWD-5",
     "FWD-6",
     "FWD-7",
-    "FWD-8",
-    "FWD-9"
+    "FWD-8"
   ],
   "status": "RATIFIED"
 }
@@ -123,16 +122,6 @@ PROOF: An operator follows the onboarding, troubleshooting, audit-read, and roll
 
 SOURCE: supplied brief lines 149–179, 181–219.
 
-FWD-9  — The Schwab transactions a named person is approved to see arrive in a SharePoint folder on a schedule, without anyone running a report
-
-DONE WHEN: EXERCISED — a named person opens one scheduled file in the agreed folder and its totals match what the Gateway answers for the same question.
-
-ACCEPT: The people Andrew names find, in the SharePoint folder he names, a spreadsheet of the Schwab transactions they are approved to see, refreshed on the schedule he sets; a person not on that list cannot open it; its totals agree with the Gateway's answer to the same question for the same day; and nothing in Schwab's own data is changed by producing it.
-
-PROOF: One scheduled delivery opened by a named person and compared with a Gateway answer for the same master and day; one attempted open by a person not on the list; the source tree's object count and newest write unchanged before and after.
-
-SOURCE: Andrew-direct 2026-09-16, verbatim: "One part of doing this is also figuring out the completion of the Schwab to Sharepoint solution which you should be able to find some prior art on because its something we were working on yesterday as well. I'd like that work to be folded into this, even if it is sequenced at the end of the MCP implementation." Prior art: `org/tier1_exec/2.0.0_SA_COO~O/logs/2026-09-15/session_1215-2015Z~O_nfra_oplgtw_l7.md` :37-39 (the 2026-09-15 read-only count of `dim_transaction` and `fact_trn` for masters 08242234 and 08335338, May-Sep; the two masters' TRN rows matching 100% / 98.3% on 10 fields in August). QUALIFIED, expressly (Rule 27): the destination site and folder, the dataset(s), the cadence, the recipients, and whether this is an interim bridge or a standing output are Andrew's inputs; this outcome is SEQUENCED LAST (after OG-x-1 and OG-r-1) and its cell is not cut until his word supplies them.
-
 ## CONTRACTS
 
 The enumeration authority is `org/standards/NFRA_OPLGTW_CONTRACT.json`, version 1.0. All tools, fields, states, error codes, limits and surface IDs are closed there as data. Its `activation=DESIGN_ONLY_NOT_A_GRANT` is intentional: implementations consume its contract, never treat the proposed profile as an authorization record. Unknown enum values and extra request properties fail closed. No counterpart PRD exists; all interfaces below have one owner in this project.
@@ -194,8 +183,6 @@ Run the same projection/filter/decimal rules as the query. Generate and validate
 ### C6 - AWS boundaries, state and rollback
 
 All silver reads use the dedicated assumed role `opal-mcp-emp-menachem-schwab-read` with trust restricted to opal-gateway-role plus its dedicated ExternalId. Allow GetObject/GetObjectVersion on the six exact prefixes and ListBucket only for those approved prefix forms. Attach explicit denies for other data paths/actions to this reader, not to the operational Gateway role. No fallback to Gateway instance credentials, broad opal-assets-read role, role selected by model, or role chaining. Application policy enforces the narrower dates/accounts/fields because IAM's prefix scope admits more.
-
-FWD-9's export reads `dim_transaction` and `fact_trn` for the two masters — prefixes OUTSIDE the six above — through a SEPARATE Gateway-assumable reader role scoped to exactly those prefixes, with its own trust and ExternalId and the same deny-outside shape; the six-prefix data role and the catalog-read role are NOT widened, and `OG-i-2`'s reader is built to the six as before. FWD-9's export surface — its reader role, its two prefixes and its SharePoint delivery — is OUTSIDE `NFRA_OPLGTW_CONTRACT.json` v1.0's enumeration and is enumerated into the contract at FWD-9's cell, with the role name from builder output, before any code consumes it. The export reuses the Gateway's existing SharePoint upload path, `OG-z-1`'s entitlement guard and `OG-z-3`'s account_ref; every new resource name and address is builder output (Rule 30). Delivery is a scheduled write to the named SharePoint folder only; no source write, no bucket-policy change.
 
 Use a separate Gateway-assumable `opal-mcp-schwab-catalog-read` role for the two exact completion prefixes, with its own exact trust/ExternalId and deny-outside policy. Catalog metadata remains server-side. The data role does not gain metadata access. Current AES256 observations do not justify a new KMS grant; if deployment discovers another encryption mode, prove an exact-key permission and return the changed condition through the normal workflow. Existing wildcard employee-role trust uses the Tax SMA ExternalId and must not be broadened or reused.
 

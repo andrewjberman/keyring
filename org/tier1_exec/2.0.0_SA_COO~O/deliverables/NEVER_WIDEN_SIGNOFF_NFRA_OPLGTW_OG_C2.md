@@ -177,3 +177,9 @@ partition was produced exactly that way, before either act.
 - The lock holder that did run hung after `twr_daily` until the 3600 s timeout (above).
 
 **Signed:** `1.0.0_SA_CTO`, with conditions 4-7. With Half 1 present, G-B is satisfied for `OG-c-2` on these terms.
+
+### E. Amendment 2026-09-16 ~18:3xZ -- RULING R-OG-5 on row W4-S9; this half is RE-SIGNED on these terms by `1.0.0_SA_CTO`
+
+- **A2's write set is FOUR objects, not two:** per master, the run manifest `schwab/{master}/meta/conversions/{run_id}.json` (written BEFORE the marker; `schwab_runtime.py:207-213`, `conversion_manifest.py:53-56` @1f03a3f209) and the completion marker `schwab/{master}/meta/complete/date=D_r.json`. Rollback = `delete-object` with each of the four VersionIds, read back as delete markers.
+- **Precondition, a STOP if it fails:** a read-only dry run of `convert_object` for `D_r` on each master, run before the replay, prints ZERO silver writes AND ZERO missing projection dims (the skip needs the fact and every dim; a missing dim would widen the write set to silver, which this half does not cover). Any non-zero count is a stop and a row, never a wider replay.
+- **The replay stays HELD** in TO-OG-c-2 until Half 1 carries the same four-object write set and the same precondition; the deploy leg A1 runs meanwhile under this half's existing coverage. The four conditions of this half stand unchanged.
