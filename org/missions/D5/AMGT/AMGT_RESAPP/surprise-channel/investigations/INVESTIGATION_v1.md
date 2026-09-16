@@ -6537,6 +6537,75 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Every round-12 order's BOUNDS: COLLECTION STAYS OFF -- three Windows tasks are DISABLED; no cell enables collection.",
     "world_is": "Something produced a chatter ranking generation at 10:00Z with no seat live. A ranking computed over already-collected metrics is not collection, so this may be a legitimate scheduled metrics job; its trigger is not measured here.",
     "notes": "NO ACTION by this seat, per the surprise-channel imperative: recorded and not chased. It matters to the round only because the chatter axis is rk-3's positive control, and a control fed by an unknown trigger should be known."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W24-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~24",
+    "surfaced_at": "2026-09-16T15:42:58Z",
+    "one_line": "rk-2's OWN redeploy (rules AC1-AC3 pass) newly exposes a pre-existing latent FileNotFoundError in lib/research/rules/peer.py -- a file outside this cell's <paths> -- crashing /overlay and /thesis with 500 for every security whose model block now resolves, so AC4 and AC5 cannot pass as written.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/opal-amgt-scoped-api, 2026-09-16 ~15:1xZ-15:3xZ, two independent request ids: ERROR: unhandled exception in opal-amgt-scoped-api ... type=FileNotFoundError detail=[Errno 2] No such file or directory: '/var/task/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~8/distributions/peer_overlap.json'.",
+        "lib/research/rules/peer.py:14-23 opens exactly that literal path at MODULE import time via os.path.join(_REPO_ROOT, ...); comp-find over the whole repo finds that literal path referenced nowhere but this one file (3 hits, all in peer.py).",
+        "Discriminating pair, same redeployed Lambda, invoked directly: GET .../security/BA_US_Equity/thesis (model block covered, per this cell's own AC6 denominator) -> 500; GET .../security/AAPL_US_Equity/thesis (no model block) -> 200 model_status ABSENT. Same pair on /overlay: BA -> 500, AAPL -> 200. The crash is conditioned on model_block being truthy, which was NEVER true in production before this cell's redeploy (AC3: LastModified moved from 2026-09-15T19:01:10Z, at which every covered name still read model_status ABSENT per the pre-act capture, to 2026-09-16T15:19:34Z).",
+        "build-and-upload-scoped-amgt.sh's package closure (SEED_PKG_DIRS + AST closure + named DATA_MEMBERS) packages lib.research and lib.opal_data_harvest .py/.json members only; the deliverables JSON peer.py opens is not a packaged member, so the FileNotFoundError is deterministic in Lambda and does not reproduce when the same call is made locally in this worktree (repo-relative path exists on disk here).",
+        "Import chain from this cell's own owned file to the crashing module runs through files none of which are in AMGT-rk-2's <paths> grant: lib/research/api/scoped_amgt.py:1871 (in-grant) 'from lib.research.checkface.run_checks import check_block' (deferred, only when model_block is truthy) -> lib/research/checkface/run_checks.py:25 'from lib.research.rules import RULES' -> lib/research/rules/peer.py's module-level open(); a second, not-yet-isolated chain reaches the same package from read_security_overlay's call tree (/overlay crashes on BA with no check_block call in scoped_amgt.py itself)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-2 AC4: 'status 200 and header_figures NONZERO and fiscal_year_figures NONZERON for BA_US_Equity, read from the DEPLOYED plane'; AC5: 'status 200, comparable_name present ... packs present'.",
+    "world_is": "Both AC4 and AC5 measure 500/404 on the deployed plane after a co-signed, correctly-scoped redeploy that did exactly what its two-limb grant and blast radius described (0 add, 2 change, 0 destroy). AC4 fails on a 500 caused by a defect in a file (lib/research/rules/peer.py) this cell has no grant to touch. AC5 fails on 404 because '/security/{key}/posture' is not a declared route leaf at all (scoped_amgt.py:2547-2559 recognizes only overlay/thesis/peers/coverage/print); comparable_name and packs are served nested at overlay.posture.comparable_name / overlay.posture.packs, and that route now ALSO 500s on BA for the same peer.py cause. This is a REGRESSION for the 3 already-covered names (BA, BABA, SAP): before this act they served 200 with model_status/posture ABSENT; after this act's own correct grant and redeploy they 500 whenever the covered branch is exercised.",
+    "notes": "NOT REPAIRED by this worker: lib/research/rules/, lib/research/checkface/ and lib/research/provenance/ are outside AMGT-rk-2's <paths> (only lib/research/api/scoped_amgt.py, lib/research/api/tests/, lib/research/print/ and infra/aws/terraform/harvest/ are granted). AC4 and AC5 are graded FAIL as measured, per the order's own refusal clause. This is the SAME DEFECT CLASS the CTO/COO co-sign's own text calls out for MODEL_BLOCK_ROOT (a worker-deliverables-relative default absent in Lambda) recurring in a second, sibling file the writer census did not name (peer.py is not one of the three named-writer properties in either half; it is not a WRITER of a named property, it is a READER of an unrelated worker's stale deliverable, imported transitively through this cell's own served response). Fixing it needs a task order granting lib/research/rules/peer.py (and, to stop it recurring, an audit of every module-level open() under lib/research/ against a worker-deliverables path)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W24-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~24",
+    "surfaced_at": "2026-09-16T15:42:58Z",
+    "one_line": "AMGT-rk-2 section 1 item 1 instructs opening an org/critical_paths/change_management/ ledger entry before the live act, but org/critical_paths/change_management/ is not among this order's <paths>, so the write is a wall (RULING 1).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-rk-2.the-deployed-plane-and-the-model-block-read.md section 1 item 1: 'Open a org/critical_paths/change_management/ ledger entry at the start and close it at completion.'",
+        "The same file's section 3 <paths> block lists exactly: lib/research/api/scoped_amgt.py, lib/research/api/tests/, lib/research/print/, infra/aws/terraform/harvest/, org/missions/D5/AMGT/AMGT_RESAPP/ledger/, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~24/, org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md, org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-2.the-deployed-plane-and-the-model-block-read.md -- org/critical_paths/change_management/ is not among them.",
+        "This slot's prior spawn (residue proof instance at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~24/AMGT_RESAPP.TO-AMGT-rk-2....proof_of_spec.json, declared_exclusions) recorded the identical gap before this spawn began."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 1 item 1: a change_management ledger entry opened at the start of the live act and closed at completion.",
+    "world_is": "No write was made under org/critical_paths/change_management/ by this worker; the live act (terraform apply of the co-signed grant + redeploy) is instead recorded in this deliverable's own proof-of-spec instance and this investigation file, both inside the granted paths.",
+    "notes": "No criterion in this order's proof_of_spec block reads org/critical_paths/change_management/, so no acceptance row is blocked by this gap. Recorded per the surprise-channel imperative and not chased; the fix is a <paths> grant, not this worker's act."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W24-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~24",
+    "surfaced_at": "2026-09-16T15:42:58Z",
+    "one_line": "AC1's own <expect> regex ('writer-census [2-9]\\d*') cannot match any true writer-census count whose leading digit is 0 or 1 (10-19, 100-199, ...), so a criterion that is substantively satisfied (17 >= 2) mechanically FAILs the checker's regex-decides rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rk-2 AC1 <expect>: 'halves 2\\\\n[\\\\s\\\\S]*blast-radius [2-9]\\\\d* rollback [2-9]\\\\d* writer-census [2-9]\\\\d*'.",
+        "Live invocation output at this cut: 'blast-radius 6 rollback 22 writer-census 17'. python re.search of the exact <expect> pattern against that exact string returns None (verified directly): [2-9] requires the FIRST digit of the count to be 2-9, and '17' leads with '1', which the class excludes.",
+        ".tools/proof-of-spec-check.py:128-130: 'status=PASS but output_evidence does NOT match expect ... the match decides a mechanical criterion, not the worker (spine v3 L7); INVALID' -- confirmed by running the checker against a PASS-graded draft of this instance (rc=1, this exact violation)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 criterion_verbatim: 'writer-census at least 2 ... One half, or a half with no writer census, is NOT met' -- the plain-English bar is 'at least 2', and 17 satisfies it.",
+    "world_is": "The written regex is stricter than the stated bar: it accepts 2-9, 20-29, 200-299, ... but rejects every count in 10-19, 100-199, 1000-1999, etc. This is the same character-class leading-digit trap as writing [1-9]\\d* to mean 'nonzero' and missing that a MULTI-digit number can legitimately start with a digit outside the class. Graded AC1 FAIL per the checker's own regex-decides rule in this cell's proof-of-spec instance, with the true count (17) and this explanation recorded in status_reason -- not silently re-graded PASS against the plain-English intent.",
+    "notes": "Not this cell's to fix (the criterion text lives in the task order, and mid-round the spec is frozen); recorded so a future <expect> author avoids [2-9]\\d*-style classes for an 'at least N' bar (\\d*[2-9]\\d*|[1-9]\\d+ or simply int(...)>=2 read by a comparator would not have this failure mode). No other criterion in this cell's battery uses a leading-digit-restricted class."
   }
 ]
 ```
