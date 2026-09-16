@@ -612,3 +612,15 @@ reads by name in `sequence-check` (stage 1, gates MET, no PRD): REACHABLE 4 of 4
 **Binds:** `2.0.0_SA_COO~G` -- nothing new beyond the R-13 cell's criteria above; the disarm-by-act form from here.
 `3.0.0_SA_CVO` -- writes every disarm advance in its lane on the owner's evidence row and word (as it did for W8-S1);
 carried in the round-2 analyses. This seat -- R-14's text and A-15's remedy line corrected on the record here.
+
+**R-15 addendum (~12:5xZ, COO~G 97369, row LGIC_ENFORCE-S45 @f1ecf97da7), two properties of the adopted arm, both
+accepted:** (1) *"the 955-record frame grades 0 REFUSE under R-13's domain"* PASSES VACUOUSLY BY CONSTRUCTION -- a file
+outside the domain is not graded, so the zero is 0 of 0 and would read PASS against a deleted gate. The arm stays (it
+is the only one that measures what the flip is for) but it cannot carry its own discrimination: the negative control
+(a `.tf` resource name / `.py` constructor with the same literal still REFUSES) and the printed denominator (`graded N of
+M tracked files; record trees excluded: org/** (n) docs/** (n)`) travel as SEPARATE criteria under the
+one-clause-per-criterion grammar, never compounded with it; a cut that copies the first clause and drops the others is
+the defect. (2) **R-13 is DESIRED, not APPLIED:** at HEAD the gate over the same frame reads `WARN 3815 graded | 2917
+REFUSE across 90 files | 309 RAISE | 74 SKIP`, so no bytes yet implement the subtraction; the pre-state baseline is
+pinned in the channel at `f1ecf97da7` so the cell is graded against a recorded number, not a reconstructed one. Nobody
+reads R-13 as the gate's current behaviour.
