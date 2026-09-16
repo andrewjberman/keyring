@@ -31,8 +31,15 @@ Write `org/missions/D14/LGIC/LGIC_CANON/deliverables/exercises/r2/judge-e.tsv`:
 Use whatever axis verdict words the CANON itself gives you. If the canon leaves a plane undecided on an axis, say so in
 the canon's own words.
 
-⛔ **DO NOT GO LOOKING FOR A SEVERITY ORDER.** If you find one in a file this order does not name, stop and file a
-surprise row -- that is a leak into this arm and it destroys the control. Do not read the other judges' files.
+⛔ **WHAT IS WITHHELD FROM YOU IS A BRIEF, NOT THE CANON** (1.0.0_SA_CTO RULING R-8, row `LGIC_CANON-S6`; the
+issuer's earlier wording here was wrong and this replaces it). No brief, no order text and no example given to you
+states how the verdicts rank. **The CANON IS WHERE THE SCALE LEGITIMATELY LIVES, and reading it there is the point of
+this cell** -- the question the arm answers is whether the canon ALONE now supplies what round 1's ORDERS supplied.
+So if `infra/logic/02_DOCTRINE.md` carries a severity order, USE IT and cite it like any other rule.
+
+⛔ **The surprise-row guard covers a scale you meet in a file this order does NOT name.** If one reaches you from
+anywhere other than the canon or your tree, stop and file a row -- that is a leak and it destroys the control. Do not
+read the other judges' files.
 
 **Read:** `org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/CN_TREE_MDPF.md`; `infra/logic/02_DOCTRINE.md`.
 

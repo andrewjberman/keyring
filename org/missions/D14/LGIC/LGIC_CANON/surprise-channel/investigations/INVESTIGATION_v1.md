@@ -457,6 +457,31 @@ not a message.
    "spec_asserts": "Round-1 analysis ruling A-1 and the s.3 cell table: 'CN-j-6 judge E: the MDPF tree again, briefed WITHOUT the severity order -- the negative arm', depends_on CN-k-2. The CVO's C-S9: round 1's five-of-five agreement may have come from a scale THE CANON DID NOT CARRY.",
    "world_is": "There are TWO coherent readings of what the arm measures and the cut does not choose between them. READING ONE, the arm as I wrote its prose: E must meet no severity order at all, so it has to judge a canon from BEFORE CN-k-2 -- and then its dependency is backwards and the cell should be pinned to a pre-CN-k-2 vintage or run first. READING TWO, and the one the dependency actually implies: what is withheld from E is a BRIEF stating the scale, while the CANON is exactly where E is supposed to find it -- and if E then agrees with C and D, that is the direct evidence that CN-k-2 made the canon carry what the brief used to supply, which answers C-S9 better than reading one does. Under reading two the cell is sound and only its warning text is wrong.",
    "notes": "ARMED, disarm_owner 1.0.0_SA_CTO: choosing between the two readings is a ruling about what A-1's arm measures, not a measurement I can take, and it decides whether the fix is a vintage pin plus a re-ordered dependency or a two-sentence correction to the warning. I have NOT edited the order -- R-7 ruled an hour ago that adding new work to an unspawned order cuts a cell the decomposition does not name, and while I read this as correcting an instruction that contradicts its own cell rather than as new work, that distinction is the one R-7 just drew and it is the CTO's to draw again. CN-j-6 stays HELD either way; it was held on CN-k-2 already, so this costs no time. MY REC: reading two, and correct CN-j-6's warning to say the canon is where the scale legitimately lives and what is withheld is a brief -- plus widen j6-noseverity, or accept that it grades the brief and not the arm, and say which."
+  },
+  {
+   "id": "LGIC_CANON-S7",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T08:07Z",
+   "one_line": "j7-blind tests whether one judge's OUTPUT FILE names another's filename. Blindness is a property of what the WORKER READ, and a judge that read a sibling's file without citing it passes cleanly. What actually enforces the blind is WORKTREE ISOLATION plus SPAWN ORDER: the three judges write into ONE directory, so a judge spawned after a sibling's DRAIN has that sibling's output in its own base and the blind is broken silently. Nothing in the cut states that ordering and no criterion can see it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "READ check_canon_r2.py j7_blind at CLOUD 225e7e52b5: it reads each judge TSV and flags a pair only where one file contains the literal string 'judge-<other>'. It tests CITATION, not READING.",
+     "MEASURED, the three judges' write surfaces from their own <paths>: CN-j-4 -> exercises/r2/judge-c.tsv, CN-j-5 -> judge-d.tsv, CN-j-6 -> judge-e.tsv. ONE directory, three files.",
+     "MEASURED at CLOUD: git ls-tree over exercises/r2/ is EMPTY, so no judge output is on CLOUD yet and every judge spawned from today's HEAD starts blind by construction.",
+     "NEGATIVE CONTROL that the path shape is real, not hypothetical: round 1's exercises/ carries judge-a.tsv, judge-b.tsv and judge-compare.md at HEAD. A round-1 judge spawned after its sibling's drain would have had the sibling's verdicts in its base.",
+     "THE ENFORCEMENT IS STRUCTURAL AND NOT A CHECK: each worker has its own linked worktree and its own branch, so a sibling's UNDRAINED output is not present in it. That property holds only while no sibling has drained. It is a fact about spawn ordering, which is the ISSUER's to control, and the issuer's alone."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Round-1 analysis ruling A-13 and decomposition v4 s.0d: the judges are blind to each other and to CN-k-2's author; a scorer never scores its own work. Criterion J7-AC3 (j7-blind) is the round's only mechanical bar on that property.",
+   "world_is": "A blindness bar that greps output files can only catch a judge careless enough to name the file it copied. The realistic leak -- reading a sibling's verdicts and writing your own prose -- leaves no trace in the artifact, so the criterion cannot go non-zero on it. The property is real and is genuinely enforced, just not by the thing that claims to enforce it: it is enforced by worktree isolation, which holds until the first judge drains.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G, and the disarm is a SEQUENCING COMMITMENT rather than an edit, because the control is mine: the three judges CN-j-4, CN-j-5 and CN-j-6 are spawned from bases that predate ANY judge drain, and none of the three is drained until all three have produced their output. That keeps the blind structurally true for the whole arm. It disarms when all three have reported and the issuer records the three spawn bases and the drain order in the drain-end read. \u26a0 THE CRITERION IS NOT REMOVED and is not useless -- it still catches a copied filename, which is the careless case. It is re-read as what it is: a cheap bar on citation, not a measurement of blindness. For 3.0.0_SA_CVO at L9: J7-AC3 passing means no judge file names another, and nothing more; the blindness itself rests on the spawn bases recorded at the drain. Round 1's judges were run before this was noticed and their ordering is not re-litigated here."
   }
 ]
 ```

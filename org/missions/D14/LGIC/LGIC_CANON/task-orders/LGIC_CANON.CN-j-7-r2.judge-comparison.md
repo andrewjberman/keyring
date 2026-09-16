@@ -48,7 +48,10 @@ adjudication is `3.0.0_SA_CVO`'s at L9.
 <criterion id="J7-J1" cell_refs="CN-j-7" judgment="true"/>
 `J7-J1` -- graded at L9 by 3.0.0_SA_CVO: the arm's answer follows from the rows shown, and a no-divergence finding is not read as proof of agreement it did not test. RECORD; NO VERDICT.
 
-<expected_criteria>J7-AC1, J7-AC2, J7-AC3, J7-J1</expected_criteria>
+<criterion id="J7-AC4" cell_refs="CN-j-7"><invocation>cd <WS> && timeout 120 python org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_canon_r2.py j7-e-vocab</invocation><expect>PASS-J7-E-VOCAB-FROM-CANON</expect></criterion>
+`J7-AC4` -- every verdict value judge E used OCCURS in the canon E read, by a whole-word census with its denominator printed. THIS IS THE NEGATIVE ARM'S OWN MEASUREMENT and it lives here because a control must never self-grade (RULING R-8 c, row `LGIC_CANON-S6`): E was briefed with NO severity order, so a verdict value E used that the canon does not carry means E got it somewhere else, and that is the finding rather than a failure of E.
+
+<expected_criteria>J7-AC1, J7-AC2, J7-AC3, J7-AC4, J7-J1</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -74,10 +77,10 @@ org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `J7-AC1`, `J7-AC2`, `J7-AC3`, `J7-J1`. Instance at
+Criterion ids: `J7-AC1`, `J7-AC2`, `J7-AC3`, `J7-AC4`, `J7-J1`. Instance at
 `org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~7/LGIC_CANON.CN-j-7-r2.judge-comparison.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> J7-AC1,J7-AC2,J7-AC3,J7-J1` BEFORE the `complete` flip.
+`python .tools/proof-of-spec-check.py <instance> J7-AC1,J7-AC2,J7-AC3,J7-AC4,J7-J1` BEFORE the `complete` flip.
 Every `judgment="true"` criterion is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` at L9 -- **a `PASS` or `FAIL` on a judgment row is INVALID.**
 Result file `judge-comparison.r2.result.md` beside it. **Flip `complete` only when every MECHANICAL criterion PASSES by output** -- a flip while a row is FAIL withdraws your own grant.
 </proof_of_spec>
