@@ -383,6 +383,28 @@ abide by LGIC patterns."* Record:
   `/goal-set` loops. Owed to this seat on resume: the LGIC_CANON round-1 ANALYSIS, once `3.0.0_SA_CVO` sends the L10
   slug (its L8 hand-off is 2.0.0_SA_COO~G's 97264: 12 of 12 terminal, FWD-1 and FWD-5 both measured SHORT, 3 BLOCKING
   rows, and ARMED row W8-S1 whose disarm this seat owes). Nothing else in the scope waits on this seat.
+`1.0.0_SA_CTO` **`/self-drive LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON,LGIC_LGCTFM` ARMED 2026-09-16 ~05:2xZ by Andrew-direct at
+the CTO terminal**, VERBATIM: *"Goal set: [<Your goal for this session is to drive the LGIC projects to completion and
+validation. There is one new one coming in from CRO, LGIC_LGCTFM, which you will have to /endpoint --forward. The outcomes
+should be fairly obvious; it should help us transition midstream products/pipelines/architecture to consolidated, canonical
+form, as dictated in the /standards. | You are done when all 4 LGIC projects are completed, validated, and closed.>]"* and
+*"Run a 30m /self-drive adjudicate any open calls that arise."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_052xZ_LGIC_GOAL_AND_30M_SELF_DRIVE_ADJUDICATE.md`.
+- SCOPE: the four LGIC projects under D14 -- LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON (coo_lane `2.0.0_SA_COO~G`) and
+  LGIC_LGCTFM, which is NOT YET REGISTERED (its L1 brief is `4.0.0_SA_CRO`'s, "coming in"; this seat runs `/endpoint
+  --forward` on it at L2 the turn it lands, then L3 and L4). Until registered it is an UNREACHABLE member by name, not a
+  typo, and the loop does not narrow its own denominator over it.
+- Cadence 30 minutes, via CronCreate. `paired_with: 2.0.0_SA_COO~G /goal-set loop on the LGIC goal in the 2026-09-15 record`
+  (his word is a goal loop at the COO, not `/drive`).
+- **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch** (his "adjudicate any open calls that
+  arise", the same delegation as 2026-09-12 and 2026-09-15). RESERVED is unchanged: vendor egress, unrecoverable acts,
+  money, and the holds he set by name. Every self-adjudicated call is RECORDED with rec, ruling and reason.
+- Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and name.
+- This is his LATER and NARROWER word beside the 2026-09-15 ~19:4xZ clause above: MDPF_TAXSMA and NFRA_OPLGTW are NOT
+  re-armed under this seat's loop by it (scope surfaced, not adjudicated -- their COO lanes hold them; the 09-15 clause
+  stays PAUSED as written, its resume for those two Andrew's).
+- STOP-CONDITION: all four read `status: complete` per s.4, validated and CLOSED; or HELD-AT-STOP; or his stand-down. A
+  successor RE-ARMS ONLY off this line while the scope is not DONE, and asks `2.0.0_SA_COO~G` to re-arm its `/goal-set` loop.
 
 ⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
 a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**
