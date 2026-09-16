@@ -6865,6 +6865,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "W24-S3's own disarm_owner 2.0.0_SA_COO~Z; CLAUDE.md s.5 NEVER leave a confirmed deploy half-landed; 1.0.0_SA_CTO~Z's ruling msg 23463 (rollback first, fix-forward packaging, AC7/AC8, grants).",
     "world_is": "The hazard W24-S3 names is no longer live on the served plane, and the repair it needs is now inside a granted order with a non-regression bar and a packaging bar that a code-only fix cannot pass.",
     "notes": "Disarmed by a NEW citing row, never an in-place flip; W24-S3's hazard_standing stays ARMED at-surfacing. W24-S4 (change_management wall): rk-2's grant now names org/critical_paths/change_management/ and org/critical_paths/.open_deploys/. W24-S5 (AC1's count pattern): AC1's expect now states a count bar reads over the whole integer; the instance's regex rejected 17, the bar did not. Issuer defects owned in this amendment: rk-2 AC5 named a /posture route amendment 2 called a correct pre-state, and rk-2's face ordered a ledger entry its grant never carried. Dispositions of W24-S3/S4/S5 at L9 are 3.0.0_SA_CVO~Z's."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S129",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-16T17:39:05Z",
+    "one_line": "AMGT_RESAPP-Z-S119's unmeasured trigger is MEASURED: the 10:00Z chatter ranking generation comes from an EventBridge schedule amgt-resapp-chatter-axis-daily, ENABLED at cron(0 10 * * ? *) UTC, which fires the amgt-resapp-chatter-axis Lambda daily.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scheduler.get_schedule('amgt-resapp-chatter-axis-daily') at 17:37:27Z: State ENABLED, ScheduleExpression cron(0 10 * * ? *), timezone UTC, target amgt-resapp-chatter-axis.",
+        "Corroborated on a second instrument: the harvest Terraform root's own apply output prints chatter_axis_schedule_state = ENABLED (worker ~24's apply-rk2.out, 15:19:40Z, and again on this seat's rollback apply at 16:19Z).",
+        "The served chatter route at ~14:3xZ carried generation_id 20260916T100027Z-efd7e544dd59 with run_id R20260916T100010Z, which the 10:00Z UTC cron explains exactly.",
+        "1.0.0_SA_CTO~Z msg 23463 s.0: the schedule was NOT changed by rk-2's apply -- chatter_axis_schedule_state is an OUTPUT line, not a modified resource -- so its ENABLED state pre-exists round 12's acts."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every round-12 order's BOUNDS: COLLECTION STAYS OFF, and no cell enables collection.",
+    "world_is": "A ranking schedule over metrics already collected is not collection, and nothing in round 12 armed it. Whether this schedule should be enabled at all is a bounds question, carried by 1.0.0_SA_CTO~Z to the round-12 L10 (msg 23463 s.6), not a cell's act.",
+    "notes": "Filed as a NEW citing row rather than an edit of S119, which stands as surfaced with its trigger unmeasured. No act is taken and none is asked: this row exists so the round's one live positive control (the chatter axis, which rk-3's AC1 and AC3 lean on) has a known trigger. The L9 disposition is 3.0.0_SA_CVO~Z's."
   }
 ]
 ```
