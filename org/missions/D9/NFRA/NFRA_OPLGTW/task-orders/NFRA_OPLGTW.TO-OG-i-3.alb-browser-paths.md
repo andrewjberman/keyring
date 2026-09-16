@@ -32,6 +32,21 @@ page and its exchange, from `OG-x-1`). If either is absent at HEAD, that is a BL
 The baseline you compare against is `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json`
 (`OG-p-1`'s ALB rule readback and WAF association).
 
+**The read-only host-command document (amended by `2.0.0_SA_COO~O` before hand-off, per `1.0.0_SA_CTO` ruling R-OG-6,
+msg 97522, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @f81896bae3, extending
+R-OG-2).** From this cell onward, every host read uses `ssm:SendCommand` only on a NAMED SSM document whose content is a
+fixed set of read-only commands. Never use `AWS-RunShellScript`.
+- **The document:** this cell creates it as ONE `aws_ssm_document` resource (document type `Command`) in the new file
+  `infra/aws/terraform/opal-gateway/ssm_readonly_host.tf`, in the same apply as the listener rules.
+- **Its name:** the output of `lib/opal_naming.py name()`, never typed. A builder refusal is a BLOCKING row naming the
+  missing registry row.
+- **Its content:** only the read commands later cells need (file digests under the Gateway app directory, the systemd
+  unit's status, process RSS, and installed package versions), with no shell interpolation of a caller string.
+- **The pin:** in the same file, the operator role `opal-gateway-access-admin` gains `ssm:SendCommand` pinned to exactly
+  that document's ARN plus the Gateway instance's ARN. Nothing else is added to that role.
+- **Disclosure:** a probe that still runs as the IAM user rather than assuming that role discloses the run as unpinned.
+- **Record:** the document's name and ARN go in `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/SCHWAB_IDENTITIES.json`.
+
 **Read:** the PRD's "C1" and "Operator journey, audit and release"; `infra/aws/terraform/opal-gateway/alb.tf` and
 `waf.tf`; the two path records and the baseline above.
 
@@ -73,7 +88,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
 - **Deploy discipline (spine L7).** Open the entry with `py -3.12 .tools/deploy_ledger.py open --slug nfra-oplgtw-og-i-3-alb-paths ...` and COMMIT its sentinel `org/critical_paths/.open_deploys/nfra-oplgtw-og-i-3-alb-paths.json` and entry BEFORE the apply; close the legs and the entry and COMMIT BEFORE the grading reads.
 - **Terraform.** Only through `.tools/safe-apply.sh`, never bare `terraform apply`, never `-target`. `.tools/terraform.exe` provisioned by the issuer; if absent, a BLOCKING row. One state, one slot.
-- **Blast radius.** Only new listener rules at the named paths. The default action, every existing rule, the WAF association, the listener certificates and the security groups stay unchanged. Any other plan row is a BLOCKING row and no apply.
+- **Blast radius.** Only new listener rules at the named paths, the one read-only `aws_ssm_document`, and the one statement pinning `opal-gateway-access-admin`'s `ssm:SendCommand` to that document and the Gateway instance (ruling R-OG-6). The default action, every existing rule, the WAF association, the listener certificates and the security groups stay unchanged. Any other plan row is a BLOCKING row and no apply.
 - **No egress off Opal infrastructure.** Unauthenticated GETs to `https://mcp.opalinvest.dev` are Opal infrastructure; no call to Claude, Anthropic, an interactive Entra sign-in or any vendor API.
 - **No secret in evidence.**
 - **Commits.** `.tools/safe-commit.sh` under your serial; every `.py` you touch passes `.tools/commit-gate.sh`.
@@ -84,6 +99,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 
 <paths>
 infra/aws/terraform/opal-gateway/alb.tf
+infra/aws/terraform/opal-gateway/ssm_readonly_host.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-i-3-alb-paths.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
