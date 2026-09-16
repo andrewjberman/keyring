@@ -67,6 +67,17 @@ orders carried the defect and 0 of 13 round-11 orders did** -- the issuer's gene
 it was built from already had. The own-file entry is ADDED above. **NOTHING ELSE IN THE GRANT MOVES:** no new
 surface, no widened directory, no change to any criterion, bound or cell text.
 
+
+**ISSUER AMENDMENT 2 (2026-09-16 ~07:4xZ, `2.0.0_SA_COO~Z`, issuer) -- THE ROUTE SHAPE WAS WRONG AND THE
+CRITERION COULD NOT PASS.** The invocation named a bare `rawPath` with no `/api/scoped/amgt` prefix and no
+edge header, so the deployed router refused it **404 "not an /api/scoped/amgt route"** BEFORE ANY CELL LOGIC
+RAN. Adding the prefix alone returns **401 "missing edge-injected X-Firm-Id"**. Measured at this cut, the
+shape that actually reaches the route is **the prefix PLUS an `x-firm-id` header -> 200**. ⛔ **A criterion
+that 404s before the logic runs cannot discriminate a working route from a broken one -- it is the mirror of
+a criterion that cannot fail: THIS ONE COULD NOT PASS.** The property asserted is UNCHANGED; only the object
+it is asserted against is corrected. Found by the issuer's dry run after `0.9.0_WK_AMGT_RESAPP~24` and `~26`
+each refused their own as written and filed rows (`W24-*`, `W26-S3`).
+
 ## 4. BOUNDS
 
 PORTAL FROZEN both fabrics: COMMIT YES / PROMOTE NO. Andrew's "No portal promote necessary" removes the PROD promote from the
@@ -91,7 +102,7 @@ edit an existing row. **Found something off-task? APPEND ONE ROW AND KEEP WORKIN
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-rk-6"><invocation>python -c "import io; s=io.open('lib/research/print/render_pack.py',encoding='utf-8').read(); head=s[:s.find(chr(10)+'def ') if chr(10)+'def ' in s else 2000]; print('module-level-matplotlib', head.count('import matplotlib')); print('onedrive-path', s.lower().count('onedrive')); print('worker-deliverables', s.count('0.9.0_WK_AMGT_RESAPP~'))"</invocation><expect>module-level-matplotlib 0, onedrive-path 0, worker-deliverables 0. All three were nonzero at the cut (render_pack.py:40-44 and :53-57); any surviving nonzero is NOT met</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rk-6"><invocation>python -c "import boto3,zipfile,io as _i; s=boto3.client('s3'); import json,subprocess; c=boto3.client('lambda'); f=c.get_function(FunctionName='opal-amgt-scoped-api'); import urllib.request; d=urllib.request.urlopen(f['Code']['Location']).read(); z=zipfile.ZipFile(_i.BytesIO(d)); names=z.namelist(); print('zip-bytes', len(d), 'entries', len(names)); [print('PKG', p, sum(1 for n in names if n.startswith(p))) for p in ('matplotlib','pypdf','numpy')]"</invocation><expect>each of PKG matplotlib, PKG pypdf and PKG numpy is NONZERO in the DEPLOYED archive (or, if a layer is used, the layer is listed and its contents printed by the same invocation). At the cut all three read 0 against 183 entries / 747,396 B, so a 0 on any of the three is NOT met</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-rk-6"><invocation>python -c "import boto3,json,base64; c=boto3.client('lambda'); r=c.invoke(FunctionName='opal-amgt-scoped-api', Payload=json.dumps({'rawPath':'/security/BA_US_Equity/print','requestContext':{'http':{'method':'GET'}}}).encode()); b=json.loads(r['Payload'].read()); print('status', b.get('statusCode')); body=b.get('body') or ''; print('isBase64', b.get('isBase64Encoded')); raw=base64.b64decode(body) if b.get('isBase64Encoded') else body.encode(); print('body-bytes', len(raw)); print('pdf-magic', raw[:5])"</invocation><expect>status 200 and body-bytes NONZERO, with pdf-magic reading the PDF header bytes. At the cut this route returned 500, so any 5xx is NOT met -- and a 200 carrying zero bytes is NOT met either, because a route that answers with nothing has not produced a pack</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-rk-6"><invocation>python -c "import boto3,json,base64; c=boto3.client('lambda'); r=c.invoke(FunctionName='opal-amgt-scoped-api', Payload=json.dumps({'rawPath':'/api/scoped/amgt/security/BA_US_Equity/print','headers':{'x-firm-id':'bd'},'requestContext':{'http':{'method':'GET'}}}).encode()); b=json.loads(r['Payload'].read()); print('status', b.get('statusCode')); body=b.get('body') or ''; print('isBase64', b.get('isBase64Encoded')); raw=base64.b64decode(body) if b.get('isBase64Encoded') else body.encode(); print('body-bytes', len(raw)); print('pdf-magic', raw[:5])"</invocation><expect>status 200 and body-bytes NONZERO, with pdf-magic reading the PDF header bytes. At the cut this route returned 500, so any 5xx is NOT met -- and a 200 carrying zero bytes is NOT met either, because a route that answers with nothing has not produced a pack</expect></criterion>
 </proof_of_spec>
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR, not a paraphrase.** No judgment criterion on this order.
