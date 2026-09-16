@@ -1636,6 +1636,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Validate the instance, then flip <status> and commit the instance, the deliverables and the flip together.",
     "world_is": "The two acts cannot both hold for an artifact the RUN creates: the checker resolves PENDING against the instance's LAST commit, so a file first written after that commit reads ABSENT and the instance is INVALID until the file is committed separately. Splitting the evidence file into its own prior commit is what makes the validation the bound requires possible at all; the flip still rides one commit with the instance and the deliverables.",
     "notes": "INERT and FORM ONLY. It costs one extra commit per run-created evidence file and nothing else; no criterion's measurement changes. The general shape is the known PENDING one-shot: the sentinel names 'this commit' but is read against the commit the instance already has."
+  },
+  {
+    "id": "NFRA_OPLGTW-W4-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~4",
+    "surfaced_at": "2026-09-16T18:42:00Z",
+    "one_line": "The estate build for this Lambda (infra/aws/lambda/ci/build-and-upload.sh opal-assets opal-assets-silver-schwab) exits rc=1 with no error line, before the zip, on every package whose BUILD_MANIFEST.json declares no declared_blobs: its manifest probe exits 1 by design for 'declares nothing', but the script runs under set -e, so the shell aborts before MANIFEST_DECL=$? can route that to the SKIP branch. The worker re-ran with the script's own documented per-build override BAU_MANIFEST_SKIP=1, which reaches the same state the SKIP branch was written to reach.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: TMPDIR=<ws>/.scratch bash infra/aws/lambda/ci/build-and-upload.sh opal-assets opal-assets-silver-schwab at worktree HEAD 58a95125c1, 2026-09-16T18:38:31Z -> last line 'OK: import-closure -- 12 packaged .py file(s) ...', then rc=1; no SHA256 line, no upload, source map unchanged (git status clean under infra/). Log: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~4/deploy/build.log.",
+        "SOURCE: infra/aws/lambda/ci/build-and-upload.sh @58a95125c1 -- :33 'set -e'; :300-310 the unguarded 'python - \"$PY_SOURCE\" <<PYEOF ... sys.exit(0 if m.get(\"declared_blobs\") else 1)'; :311 'MANIFEST_DECL=$?'; :346-349 the SKIP branch ('this BUILD_MANIFEST declares no declared_blobs ... (not a pass)'). Last touched by dbbbfb89b2 (2026-08-30 05:43 -0400), after the schwab pin's build 5c7b2a9a6b (2026-08-29 22:26 -0400).",
+        "MANIFEST: py -3.12 json.load of infra/aws/lambda/opal-assets/opal-assets-silver-schwab/BUILD_MANIFEST.json @58a95125c1 -> keys [function, vendored_modules, vendoring, layer_dependencies, memory_mb, timeout_s, sizing_basis, contract]; declared_blobs False.",
+        "REPRODUCTION (different instrument, no repo file): bash -c 'set -e; python - <<PYEOF / import sys; sys.exit(1) / PYEOF; X=$?; echo reached' -> prints nothing, outer rc=1."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-c-2 THE CELL: 'Find the build that writes that artifact from the vendored directory, and use it.'",
+    "world_is": "The build as written cannot produce this package's zip: it stops rc=1 silently at the manifest-declaration probe, which is also how a non-declaring package reached the dead branch for every build since dbbbfb89b2. The override BAU_MANIFEST_SKIP=1 (documented at :286 'Override per-build ... justify in the commit message') skips only that probe, whose designed outcome for this manifest is SKIP; import-closure still runs. The worker used it for this one build and records it here and in the ledger commit.",
+    "notes": "INERT for this order (the override reaches the designed branch). Estate-wide it is a latent build break for 13 of 14 packages per the script's own count at :278; that repair is the script owner's, not a rider on this order."
   }
 ]
 ```
