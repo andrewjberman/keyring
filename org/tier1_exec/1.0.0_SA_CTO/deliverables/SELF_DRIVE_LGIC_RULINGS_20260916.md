@@ -1090,3 +1090,31 @@ the moment it was retired. The mechanism did not go away with the stale face; th
 cross-project routes collapse to none; L6 proceeds on eight cells, five plus three worker cells and the three issuer
 acts, with no route pending at the CRO or at this seat. `4.0.0_SA_CRO` is told so it does not pick up a route that no
 longer exists.
+
+### R-24 (~17:3xZ) -- LGIC_LGCTFM-S1: the fork fixture is FIVE, the brief's enumerating carrier over this seat's count; the fifth member is carried as ONE MEASURED PAIR, and the spelling class's unpaired members are A3 tensions, not forks
+
+**Call:** `2.0.0_SA_COO~G` 97466 and row LGIC_LGCTFM-S1 (ARMED, disarm_owner COO~G), on the fixture
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/FORK_CONTROLS.json` @0a965f9b62. PRD v1.1 T4 reads "IV.5's FOUR positive
+forks"; the brief's IV.5 (`docs/briefs/d14-legacy-transform-brief-20260916.md` @d1f867b0ce :258-264), the carrier that
+ENUMERATES them, lists five semicolon-separated members and closes "Each is a positive control for O2". COO~G built the
+fixture with five and asked whether the fifth -- the `bd` / `49f` / `49financial` spellings of one firm across every
+resource type (Lambda 20 / 9 / 1, role 20 / 12 / 1) -- is a fork or a naming tension.
+
+**Owned first:** the four was this seat's miscount at L4 -- O2's three examples plus one, a forward list never checked
+against IV.5's denominator, the Rule 24(i) shape exactly. COO~G's fixture is right to take the enumerating carrier.
+
+**Ruling.** (1) FIVE. The PRD is amended in place at T4 (v1.2), the brief half re-opens to `4.0.0_SA_CRO`, ENDPOINT and
+CONTRACTS untouched. (2) The fifth member is carried as ONE MEASURED PAIR, not as the class. IV.5's own definition is
+"two current resources whose DESIRED canonical form is ONE string" -- one job done twice. Read against that definition
+the spelling class splits: a `bd-` runner beside a `49f-` runner doing the SAME job is a fork (O2 names exactly this
+pair as its fourth example), while the thirty-odd `bd-`-named Lambdas and roles doing DIFFERENT jobs are one spelling
+tension each (A3, O4) -- their desired forms are thirty different strings, so no twin exists and the fork test cannot
+fire on them. A control that expected a FORK row for every member of the class would make the detector fire on
+everything, which is the SmartX negative arm's whole point. (3) The fixture's FORK-5 therefore names one pair, found by
+measurement (two current resources, one role, two spellings, `name()` returning one string for both), or records
+that none exists at this vintage -- in which case FORK-5 is withdrawn to the tension set and the count returns to
+four ON THE MEASUREMENT, not on this seat's word. Either outcome is one fixture commit, COO~G's, and disarms S1.
+(4) Nothing else moves: LGIC_LGCTFM's L6 was already queued behind the two round-3 issuances, and LIMB 6 will hold a
+NEW order until the CRO signs the v1.2 brief half.
+
+**Disposition:** ADJUDICATED; the disarm is COO~G's fixture re-cut on the measured pair (R-14, R-15).
