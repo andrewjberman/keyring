@@ -75,6 +75,50 @@ VIEWS = (
     (".tools/ds-precommit-check.py", "py", ("_CROSS_FIRM_FOREIGN_BUCKETS", "_CROSS_FIRM_FOREIGN_KEY_PREFIXES")),
 )
 
+# Which registry file(s) each generated target's renderer reads (LGIC_ENFORCE EN-r-6; row W1-S14): one
+# global hash re-marked every view regardless of what it read, so a view's mark could not say whether its
+# OWN inputs moved. Every mark's `over <file>[,<file>...]` clause and its h16 are computed from this table
+# (registry_hash(only=...)), never typed per generated file -- a file this table omits for a target must
+# leave that target's bytes unchanged (check_en_r2.py r6-undeclared-inert), and a file it names must move
+# that target's mark (r6-declared-moves). Verified by _render_view/_gen_locals/_gen_tftest's actual reg
+# access, key by key, against every renderer below:
+#   FIRM_CONFIG, firm_bucket_map (both files), _CROSS_FIRM_FOREIGN_* -- _tenants()/_routed_bucket()/
+#     _separations(), scopes.json only
+#   FIRM_TREES -- _home_bucket() also reads tiers.json (tier homes)
+#   generated_locals.tf -- fence_patterns() also reads exemptions.json (the account id)
+#   vectors.json, opal_name.tftest.hcl -- build_vectors() calls name(), which resolves systems.json (the
+#     system vocabulary) and, through grade()'s _Vocab, exemptions.json and resources.json too; the tftest
+#     file itself adds nothing further (it holds a vector COUNT and two scopes.json-only negative arms)
+#   bucket_for -- its own block reads no registry row at all (a comment inside the block says so): it is
+#     parametric on an environment variable Terraform sets from local.firm_bucket_map, itself derived from
+#     data/firm_registry.json. scopes.json is carried here as that documented trust anchor, not a literal
+#     dict access this file's renderer makes -- see row LGIC_ENFORCE-W1-S28 (this tension is not
+#     mechanically resolvable: the mark format requires at least one file, and the true read set is empty).
+TARGET_REGISTRY_KEYS = {
+    "data/firm_registry.json": ("scopes",),
+    "infra/aws/lambda-edge/_shared/firm-config.mjs": ("scopes",),
+    "data/assets/scripts/gold/investor_reporting/directory_runner.py": ("scopes",),
+    "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py": ("scopes",),
+    "infra/aws/lambda/investor-reporting/_authz/loaders.py": ("scopes",),
+    "data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py": ("scopes", "tiers"),
+    ".tools/ds-precommit-check.py": ("scopes",),
+    LOCALS_PATH: ("scopes", "exemptions"),
+    VECTORS_PATH: ("scopes", "systems", "exemptions", "resources"),
+    TFTEST_PATH: ("scopes", "systems", "exemptions", "resources"),
+}
+
+
+def _target_registry_files(target):
+    """The registry file names `target`'s renderer reads (TARGET_REGISTRY_KEYS), sorted -- the set the
+    generated file's mark declares and its per-view hash covers, and nothing more."""
+    return tuple(sorted(k + ".json" for k in TARGET_REGISTRY_KEYS[target]))
+
+
+def _view_mark(h16, target):
+    """MARK + h16 + ' over <file>[,<file>...]' for `target` (EN-r-6's mark, exactly)."""
+    return "%s%s over %s" % (MARK, h16, ",".join(_target_registry_files(target)))
+
+
 _KEY_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 _DCODE_RE = re.compile(r"^D[0-9]+$")
 
@@ -97,12 +141,14 @@ def _read_json(path):
     return json.loads(_read_text(path))
 
 
-def registry_hash(reg_dir=None):
+def registry_hash(reg_dir=None, only=None):
     """sha256 over each *.json in the registry directory in name order, fed as name + newline + bytes,
-    CRLF read as LF. Hex."""
+    CRLF read as LF. Hex. `only`, when given, restricts the feeding to exactly those file names (still name
+    order) -- the per-view hash EN-r-6 stamps each generated file with (row W1-S14)."""
     reg_dir = reg_dir or REGISTRY_DIR
+    names = sorted(only) if only is not None else sorted(n for n in os.listdir(reg_dir) if n.endswith(".json"))
     h = hashlib.sha256()
-    for fname in sorted(n for n in os.listdir(reg_dir) if n.endswith(".json")):
+    for fname in names:
         h.update(fname.encode("utf-8") + b"\n")
         with open(os.path.join(reg_dir, fname), "rb") as fh:
             h.update(fh.read().replace(b"\r\n", b"\n"))
@@ -601,8 +647,8 @@ def _js_str(s):
 
 
 def _begin(tag, h16, comment, path):
-    return "%s %s%s [%s] -- do not edit by hand; regenerate with: python lib/opal_naming.py generate --out <dir> --target %s" % (
-        comment, MARK, h16, tag, path)
+    return "%s %s [%s] -- do not edit by hand; regenerate with: python lib/opal_naming.py generate --out <dir> --target %s" % (
+        comment, _view_mark(h16, path), tag, path)
 
 
 def _end(tag, comment):
@@ -728,8 +774,8 @@ def _render_view(path, syntax, tags, reg, h16):
     if syntax == "json":
         obj = json.loads(base)
         firms, pseudo = _firm_registry_rows(reg)
-        out = {"_generated": "%s%s -- do not edit by hand; regenerate with: python lib/opal_naming.py generate"
-                             " --out <dir> --target %s" % (MARK, h16, path)}
+        out = {"_generated": "%s -- do not edit by hand; regenerate with: python lib/opal_naming.py generate"
+                             " --out <dir> --target %s" % (_view_mark(h16, path), path)}
         for k, v in obj.items():
             if k != "_generated":
                 out[k] = firms if k == "firms" else pseudo if k == "pseudo" else v
@@ -764,7 +810,7 @@ def _gen_locals(reg, h16):
         for sp in _spellings(s):
             scope_long[sp] = s["long"]
     parts = [
-        "# %s%s -- do not edit by hand; regenerate with:" % (MARK, h16),
+        "# %s -- do not edit by hand; regenerate with:" % _view_mark(h16, LOCALS_PATH),
         "#   python lib/opal_naming.py generate --out <dir> --target %s" % LOCALS_PATH,
         "locals {",
         "  # every scope: long form -> short form (NAMING_SCHEMA.json resource.scope_form SHORT)",
@@ -799,7 +845,7 @@ def _gen_tftest(reg, h16, vectors):
         "# opal_name's terraform test (LGIC_ENFORCE EN-m-1; generated since EN-r-3). Run from the module directory:",
         "#   terraform init -backend=false && terraform test",
         "#",
-        "# %s%s -- do not edit by hand; regenerate with:" % (MARK, h16),
+        "# %s -- do not edit by hand; regenerate with:" % _view_mark(h16, TFTEST_PATH),
         "#   python lib/opal_naming.py generate --out <dir> --target %s" % TFTEST_PATH,
         "#",
         "# Every vector in tests/vectors.json -- lib/opal_naming.py name()'s own output, generated from the same",
@@ -1601,7 +1647,6 @@ def generate(out_dir, targets=None):
     if refusals:
         raise RegistryError("the registry is refused (%d refusal(s)); run: python lib/opal_naming.py validate" % len(refusals))
     reg = load_registry()
-    h16 = registry_hash()[:16]
     views = {v[0]: v for v in VIEWS}
     known = [v[0] for v in VIEWS] + [LOCALS_PATH, VECTORS_PATH, TFTEST_PATH]
     wanted = [_norm_target(t) for t in targets] if targets else known
@@ -1610,6 +1655,9 @@ def generate(out_dir, targets=None):
         raise RegistryError("not a generated file: %s (known: %s)" % (", ".join(unknown), ", ".join(known)))
     results = []
     for t in wanted:
+        # Per-target hash (EN-r-6, row W1-S14): restricted to exactly the files TARGET_REGISTRY_KEYS names
+        # for t, so a registry file this target does not read cannot move its mark.
+        h16 = registry_hash(only=_target_registry_files(t))[:16]
         if t in (VECTORS_PATH, TFTEST_PATH):
             try:
                 vectors = build_vectors(reg)
@@ -1617,7 +1665,7 @@ def generate(out_dir, targets=None):
                 results.append(("SKIP", t, str(exc)))
                 continue
             if t == VECTORS_PATH:
-                text = json.dumps(dict({"_generated": MARK + h16}, vectors=vectors), indent=2) + "\n"
+                text = json.dumps(dict({"_generated": _view_mark(h16, VECTORS_PATH)}, vectors=vectors), indent=2) + "\n"
             else:
                 text = _gen_tftest(reg, h16, vectors)
         elif t == LOCALS_PATH:

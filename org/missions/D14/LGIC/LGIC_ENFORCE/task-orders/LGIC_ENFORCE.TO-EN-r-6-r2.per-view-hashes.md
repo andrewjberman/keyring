@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>complete -- 10 of 10 mechanical criteria PASS by output (0.9.0_WK_LGIC_ENFORCE~1, artifact @39cbad4214, surprise row @fab704bdc4); proof-of-spec-check.py VALID rc=0; result at org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/per-view-hashes.r2.result.md</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.2 @09bde3126c (ADMITTED; brief half re-signed by 4.0.0_SA_CRO @e848967b3f) | **Decomp cell:** `EN-r-6` (round 2) | **outcome_ref:** FWD-7, FWD-3 | **depends_on:** EN-r-4 round 2 (merged) | **slot:** ~1, queue position 4
 
