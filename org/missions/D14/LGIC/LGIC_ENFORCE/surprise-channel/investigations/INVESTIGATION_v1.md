@@ -2296,6 +2296,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "The order issues S2R-AC1 and S2R-AC2 as this cell's mechanical acceptance ('the totals are set beside N2, N6 and IV7, each with its denominator'; 'every disagreement names the name and both verdicts'), and instructs the worker to REWRITE NAMING_CENSUS_COMPARISON.md against the round-2 census report.",
     "world_is": "Both criteria are already satisfied at the base commit by round 1's file, which this cell replaces. They grade the SHAPE of whatever file sits at that path, never its vintage or its subject, so a cell that did nothing would print the same two PASS lines. The content this round actually turns on -- that the comparison reads the round-2 report at registry 254d4e9ece847acb, that N2's worked cases moved 43 -> 45, and what the stopped census did not reach -- has no mechanical reader; it is carried only by S2R-J1, which 3.0.0_SA_CVO grades at L9.",
     "notes": "Filed for form, not significance, and nothing was worked around: the rewrite was done as ordered and the two criteria are recorded PASS-by-output with their deciding lines, as the proof instance requires. The durable question for whoever recuts or adjudicates: a re-run cell whose criteria are inherited unchanged from the round it is redoing cannot be graded mechanically on the redo. A cheap discriminator exists in the shape the order already mandates -- the json's 'census' object names the report by path@commit, so a round-2 checker could require that pin to equal the report's own last-changing commit (db7eac8f1d) and refuse a comparison rebuilt against a stale census. This worker did not build that checker: fixed inputs are read-only in this order, and the criterion set is frozen mid-round."
+  },
+{
+    "id": "LGIC_ENFORCE-W4-S3",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-16T11:27Z",
+    "one_line": "terraform init did NOT write the tracked .terraform.lock.hcl on shared-infra: with -lockfile=readonly and the provider already in the local plugin cache at the pinned version, the working tree stayed clean of every tracked path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: terraform init -input=false -lockfile=readonly in .worktrees/prac-lgic-enforce-x1-r2/infra/aws/terraform/shared-infra, rc 0, printing 'Reusing previous version of hashicorp/aws from the dependency lock file' and 'Using hashicorp/aws v5.100.0 from the shared cache directory'.",
+        "AFTER the init, git status --porcelain in that worktree printed exactly one line, '?? infra/aws/terraform/shared-infra/lgic-enforce-fwd2-resource.tf' -- the untracked .tf this cell had just written. No ' M .terraform.lock.hcl' and no other tracked path.",
+        "The pinned version and the cached version are the same object: infra/aws/terraform/shared-infra/.terraform.lock.hcl @7377655ef7 carries version = \"5.100.0\" for registry.terraform.io/hashicorp/aws, and C:/Users/AndrewBerman/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/aws holds exactly one directory, 5.100.0.",
+        "The cache is configured, not incidental: C:/Users/AndrewBerman/AppData/Roaming/terraform.rc carries plugin_cache_dir = \"C:/Users/AndrewBerman/.terraform.d/plugin-cache\", and the environment also carries TF_PLUGIN_CACHE_DIR at the same path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The issuer's briefing to this worker states that terraform init writes a TRACKED file -- EN-t-3 measured init rewriting .terraform.lock.hcl on 2 of 72 roots, a write OUTSIDE its <paths> produced by an invocation its order prescribed -- and instructs this cell to leave any such file modified-and-unstaged and to file an OBSERVATION row.",
+    "world_is": "On shared-infra, the one root this cell inits, the write did not happen: after a successful init the practice copy's only dirty path was the untracked .tf this cell authored. The write is therefore CONDITIONAL, not a property of init, and the two conditions this run held are visible in the invocation itself -- -lockfile=readonly, and a plugin cache already holding the exact version the lock pins. No file outside <paths> was written and nothing had to be left unstaged.",
+    "notes": "Filed for form: the briefing asserted a write this cell did not observe, so the mismatch is recorded rather than silently absorbed. Nothing was worked around and no criterion depends on it. The row does NOT contradict EN-t-3: its 2-of-72 is a measurement over a different root population under whatever flags that cell ran, and this row measures one root under named flags. The durable question for whoever recuts a roots census: the lock rewrite is a function of (flag, cache contents, lock contents), so '2 of 72' is only comparable across cells that print the init flags beside the count. This worker did not re-run EN-t-3's roots -- its extracts are fixed inputs and its order is another cell's."
   }
 ]
 ```
