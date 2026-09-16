@@ -5,7 +5,7 @@
  "fabric": "site-z",
  "pipeline": null,
  "status": "closed",
- "dep_stage": "ROUND_CLOSE",
+ "dep_stage": "CLOSED",
  "created": "2026-09-15",
  "registered_under_tree": "2026-09-15",
  "last_updated": "2026-09-16",
@@ -45,7 +45,7 @@
   "L4-R ADMITTED 2026-09-15 ~18:02Z at PRD v0.2 @cbd85e5cff: ratified-text SIGNED by 3.0.0_SA_CVO~Z @57438abd0e (half_hash 33458b1d30..., unchanged since v0.1), brief SIGNED by 4.0.0_SA_CRO~Z @b523c21086 (half_hash a05dfcec3a..., review @f51af104e4) after its v0.1 refusal @7ffc16301a was answered in v0.2. RELEASE TO L5: broker message 23197 '[PRD LANDED] POSN_AGGFIX v0.2 @b523c21086', sent 18:02:08Z by the notifier in 4.0.0_SA_CRO~Z's sign-off commit and READ by 2.0.0_SA_COO~Z at 18:02:52Z (get_delivery_state, read by 1.0.0_SA_CTO~Z). CARRIED TO L5 as a design fact, not a PRD change: under v0.2 the aggregate's total no longer equals the five books' aum summed (books carry their own rows, the aggregate folds the blends); which total the aggregate shows is settled in the cell serving FWD-6 (4.0.0_SA_CRO~Z v0.2 review, 'ONE NEW NOTE')."
  ],
  "phase": "L6 ISSUED 2026-09-15 ~19:1xZ by 2.0.0_SA_COO~Z: ONE issuance, 7 task orders over 17 of 17 cells (decomposition @605c03f81f), slots ~1 (TO-A1-1 -> TO-A2-1 -> TO-A3-1), ~2 (TO-C1-1), ~3 (TO-B1-1 -> TO-B2-1 -> TO-B3-1); fanout 3 of 3 chains, cap 8. L7 executing on worker subagents.",
- "blocking": "CLOSED 2026-09-16 on Andrew-direct ~01:0xZ (\"i want it marked complete now, please wrap it up and mark closed in the various registries\"), record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260916_010xZ_POSN_AGGFIX_MARK_COMPLETE_AND_CLOSE_REGISTRIES.md. Round 1 L7-TERMINAL: 7 of 7 task orders complete, 7 of 7 proof instances VALID, COMPLETION_REPORT.round1 @f7105b10da. Portal promoted: portal-v2.1.179 LIVE on PROD @ff542d0a, ledger @8753758c53. || dep_stage stays ROUND_CLOSE until COMPLETION_GRADES.round1.json lands from 1.0.0_SA_CTO~Z: R6 refuses a CLOSED dep_stage without it and .git/hooks/pre-commit:109 DENIES on that refusal, which would block every seat's tree/register commit. Status is read by no gate; dep_stage is. || NOT DISCHARGED: round 1's un-run L8/L9/L10 and the 28 unwatermarked UNDER_INVESTIGATION rows.",
+ "blocking": "CLOSED 2026-09-16 on Andrew-direct ~01:0xZ and ~01:2xZ. Round 1 L7-TERMINAL and R6-CLOSED: 7 of 7 task orders complete, 7 of 7 proof instances VALID, COMPLETION_REPORT.round1 @f7105b10da (8 of 8 outcomes COVERED, 17 of 17 cells), COMPLETION_GRADES.round1 @0beaa930d8 (8 of 8 REALIZED at EXERCISED, graded by 1.0.0_SA_CTO~Z against each card's own artifact). Portal portal-v2.1.179 LIVE on PROD @ff542d0a, deploy ledger @8753758c53. || L8 compile, L9 adjudication and the L10 slug were STOOD DOWN UNPERFORMED on Andrew-direct ~01:1xZ at the 3.0.0_SA_CVO~Z terminal (\"not needed just wrap up whatever you need to, mark closed on anything in your purview\"), record bd1358c39e, relayed by 1.0.0_SA_CTO~Z msg 23333. No CVO watermark and no REMEDIATION_v1.Z.md exist or are coming; nothing waits on one. The 28 surprise-channel rows stay UNDER_INVESTIGATION; Z-S1, Z-S2, W1-S1, W2-S4 are not reached by the stand-down and remain available.",
  "threads": [],
  "thread_counter": 0
 }
