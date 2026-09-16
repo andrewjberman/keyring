@@ -1135,3 +1135,17 @@ intake at L8 dispositions it, with <commit> as the issuer's evidence", and it ca
 by path. Reading trap the CVO caught beside it, worth carrying: an inline PRD change note repeats the superseded number
 (v1.2's "FIVE" at :29) and a grep that stops at its first hit reads the note as the carrier -- the operative cell is
 the only carrier, and the by-reference form is what keeps it unambiguous.
+
+### R-23 correction (~18:0xZ, on `2.0.0_SA_COO~G` 97497 / row LGIC_ENFORCE-S58 @b3885d4e87) -- `infra/logic/registry/refused_keys.json` is NOT A FILE; the refused keys are the `refused_keys` dict inside `systems.json`, and the cells' `<paths>` grant names `systems.json`
+
+R-23 s.1 repeated a file name from S57's act-census script without testing that the file exists (the registry directory
+holds exactly six: exemptions, remediations, resources, scopes, systems, tiers). A `<paths>` grant is exact, so an order cut
+from that sentence would have granted a nonexistent file and REFUSED the worker the one file cell 5 must edit. Corrected:
+cells 5 and 7's registry paths are `infra/logic/registry/scopes.json`, `infra/logic/registry/systems.json` (its
+`refused_keys` dict) and `infra/logic/registry/exemptions.json`. **The reusable part, COO~G's:** `resolve_lane()` and
+`--check-agent` resolve by PREFIX and never test existence -- an invented path prints a lane exactly as a real one does,
+so R-23 s.3's cut-time control (pipe each `<paths>` entry to `--check-agent`, read PERMIT) is BLIND to a typo; the cut
+adds an existence check beside it (`git ls-files --error-unmatch <path>` or a plain `test -f` on the checkout). Also
+noted from the same message: S19's stale `scopes.json` sentence was already removed in round 2 (@22e86e55f5, EN-r-3-r2),
+so round 3 cuts no criterion on it; the round-2 analysis table's cell-5 row that lists S19 is stale on that point and is
+not re-issued -- the decomposition, not the analysis, is the cut's source.
