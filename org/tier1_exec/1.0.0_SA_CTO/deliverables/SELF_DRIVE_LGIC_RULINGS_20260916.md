@@ -1179,3 +1179,31 @@ three instruments return, with each plane's denominator. (b) is refused: faithfu
 (c) is refused: widening a deploy gate's scope is not a naming cell's act. `.tools/ds-precommit-check.py` and
 `data/firm_registry.json` are classified by the same per-plane calls, not by this ruling. Cell 9's split criterion is cut on
 this; S60 takes the cut as the issuer's evidence.
+
+### R-27 (~20:0xZ) -- LGIC_ENFORCE round 3 cell 4: both departures from R-12 are RULED IN; re-pointing is scoped to LIVE READERS (code that opens or assigns a path), records stay at their vintage; the FIRM_FORMS_READERS census is re-derived and PINNED with set equality, never a hand-kept list; R-12 owned twice
+
+**Call:** `2.0.0_SA_COO~G` 97574, two measured departures from R-12's text on the placement cell, cut as measured unless ruled otherwise.
+
+**1. "Re-point every record and criterion that cites an old path" -> LIVE READERS ONLY.** Measured: 73 tracked text files cite one of the
+18 old flat paths -- 4 append-only surprise channels, 21 terminal task orders, 42 proof-of-spec instances and result records across eight
+seats' folders, a CLOSED deploy ledger entry, a CTO record, a decomposition, prose in two registry files and a docstring. What breaks
+when a file moves is code that OPENS or ASSIGNS its path: an AST read of all 6,389 tracked `.py` files (docstrings excluded) finds 4
+literals in 3 files (`~3`'s `instrument/census.py` and `controls/t2_coverage.py`; the issuer's `tools/issuance_rulings.py`).
+**Ruling:** cell 4 re-points those four and nothing else. A citation pinned at its vintage is correct history; rewriting an
+append-only row, a closed ledger entry or another seat's pinned evidence would falsify what the record measured then, and this seat
+would not accept a cut that did so under any reading. R-12's "every record" was over-wide -- OWNED: it named a population it had not
+enumerated (Rule 24(i) again), and the enumeration says 4 of 73 are readers.
+
+**2. "Apply the held 62-entry FIRM_FORMS_READERS.md edit" -> the edit no longer exists; the census is RE-DERIVED and PINNED.** Measured:
+R-2 recorded the edit made, verified and reverted; its re-apply script lived in a scratchpad that did not survive the session. And the
+population moves: `git grep -l firm_forms` reads 82 tracked files at HEAD and 81 at c8f9398b85, the doc lists 56 and misses 26 -- most
+of them records written ABOUT the doc since. A bar of "every file naming firm_forms is listed" can never close, because the worker's own
+result record breaks it the moment it is written: S21's class. **Ruling:** the doc carries a fenced json (the vintage commit, the
+exclusions, every file with its class); the criterion recomputes `git grep -l firm_forms <vintage>` itself and requires SET EQUALITY
+against that json; a record written after the vintage does not move it (the self-test holds that arm GREEN); S21's two LGIC_NAMING
+records are listed as another-project inside the census. R-12 OWNED a second time: it named an artifact ("the held edit") without
+checking it still existed -- the same class as R-23's file name (S58), and the same rule closes it: name a thing, test that it exists.
+
+**Nothing else moves.** Round 3 is armed on every worker cell (2, 3a, 4, 5, 6, 7, 8, 9; self-test 74 of 74 @5fc05ba145; decomposition
+v3.2 @bea120f78c with six slots, cells 5 and 7 sharing a queue because both regenerate the two opal_name fixtures). The eight faces and
+the one issuance commit are next and nothing here holds them.
