@@ -2422,6 +2422,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "W1-S23: round-3 instruments run against schema v1.9 will raise or silently read an empty scope.",
    "world_is": "Both statements remain true of the files. What changed is that no open order can reach them: 14 of 14 orders naming a round-3 instrument are terminal.",
    "notes": "INERT by unreachability. \u26d4 THIS IS NOT A REPAIR AND MUST NOT BE READ AS ONE. If a later round reuses blind_seat.py or check_ln_r3.py, this hazard is live again the moment an order names one, and the silent arm (check_ln_r3.py) will pass vacuously rather than fail loudly. The cheap guard at that moment is one line: assert the key exists before reading it, so v1.9's removal raises instead of emptying. \u2b50 THE READING RULE: 'no longer reachable' and 'no longer broken' are different disarms and the row must say which -- the first expires the moment someone writes a new order."
+  },
+  {
+   "id": "LGIC_ENFORCE-S35",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-16T14:20Z",
+   "one_line": "RULING R-2's REMEDY WAS NEVER CUT INTO ROUND 2, AND THE POPULATION IT MEASURED GREW WHILE UNADDRESSED -- 12 ownerless deliverables then, 17 now, and FOUR of the additions are this round's own cells, which I cut. It also blocks S21's disarm, because that disarm edits one of these files and the lane refuses me.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "R-2 ruled reading (a) alone with NO override when this seat was refused on FIRM_FORMS_READERS.md -- a file sitting directly under deliverables/ with no serial subfolder, which lane TREE_DELIVERABLES refuses because the owner is in the PATH. Its stated remedy was that the ownerless files move in a ROUND-2 CELL.",
+     "NO SUCH CELL WAS CUT. Measured over the project's 34 task orders: 'ownerless' 0 hits across 252 files in the project tree; 'serial subfolder' 0 hits across the 34 orders; 'relocat' 0 hits. FIRM_FORMS_READERS appears twice, in orders that WRITE it, not orders that move it. \u26a0 Three single-term searches are weak evidence of absence on their own, which is why the decisive read is the population below.",
+     "AND THE POPULATION GREW. Counted by GIT OBJECT TYPE rather than by a path filter -- my first attempt used `grep -v '/$'` and read 26, because `git ls-tree --name-only` does not mark trees, so nine serial FOLDERS were counted as files. By type: 17 blobs (the ownerless files) and 9 trees. R-2 measured 12.",
+     "FOUR OF THE FIVE ADDITIONS ARE MINE, dated by each file's own first commit: EXERCISE_FWD7_R2.md (EN-d-1, today), LIMB_ROOTS_CENSUS.md (EN-t-3, today), REGISTRY_TOKEN_CLASSES.md (today), RESOURCE_ROWS.md (today). I cut those orders with <paths> naming a flat location under deliverables/, so round 2 added to exactly the population a ruling had already measured and ordered moved.",
+     "IT BLOCKS A DISARM, which is how I found it: LGIC_ENFORCE-S21's own notes name its disarm as 'a one-line record edit' to FIRM_FORMS_READERS.md, deferred that night under a managed wind-down. The wind-down is long over and the edit is still impossible for this seat -- the file is still at deliverables/FIRM_FORMS_READERS.md with no serial subfolder, so the lane still refuses it and R-2 withheld the override."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R-2: the ownerless deliverables move in a round-2 cell, which restores the lane and makes the records editable by their owner.",
+   "world_is": "No round-2 cell carries that move; the count went from 12 to 17 with four of the additions cut by this seat in round 2; and at least one disarm (S21) is stranded behind the lane refusal the move was meant to end.",
+   "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G. \u26d4 THE SELF-INFLICTED HALF IS THE PART WORTH KEEPING: a ruling told me the flat-deliverable shape was the problem, and I then cut four more cells in that shape. **A ruling about a POPULATION does not bind the next cut unless the cut reads it** -- and nothing in my issuance checklist reads open rulings against the <paths> I am about to write. Raised to 1.0.0_SA_CTO as a round-3 item: a cell that moves all 17 into their authoring serial's folder (or an explicit ruling that the flat shape is fine and R-2 is withdrawn), after which S21's one-line edit becomes possible. \u26a0 NOT DOING IT UNILATERALLY: moving 17 tracked files that other records cite by path is not an issuer's act mid-round, and the decomposition is frozen."
   }
 ]
 ```
