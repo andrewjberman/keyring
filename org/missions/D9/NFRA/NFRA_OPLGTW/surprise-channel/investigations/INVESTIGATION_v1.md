@@ -1906,6 +1906,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGZ2-AC8: no registered MCP tool writes a POLICY# record, over all tools, denominator printed -- with the schwab integration inside 'all tools' once it is registered.",
     "world_is": "The census's file set excludes the schwab integration's modules and trips by design now that OG-q-2 registered them, so the criterion is unmet at CLOUD HEAD though no tool writes POLICY# by either cell's evidence. Remedy by this seat within L6: TO-OG-z-2 is re-opened (status pending) with an amendment widening AC8's census to the schwab integration's modules, and cold re-handed to 0.9.0_WK_NFRA_OPLGTW~3.",
     "notes": "No served surface; nothing deployed. This seat is the disarm owner and the re-opened OG-z-2's drain is the disarming act."
+  },
+  {
+    "id": "NFRA_OPLGTW-S22",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-17T13:06Z",
+    "one_line": "Ruling R-OG-10(a) adds `access` to the contract's `operations` enum, but that enum is the GRANTABLE scope-operation set: ops/schwab_entitlement_admin.py:163 builds its allowed set from it, while app/data_entitlement.py:61 OPERATIONS (checked at :214) would refuse a grant naming `access` as Malformed. The ruling's 'one mapping line' is also short by one: allowed_tools() at :282 admits a tool only when `op is None or op in grant.scope.operations`, so mapping schwab_get_access to 'access' alone denies it to every grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ @4c179f1826: infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py:163 `ops_allowed = set(contract.get(\"operations\") or de.OPERATIONS)`.",
+        "READ @4c179f1826: infra/aws/ec2/opal-gateway/app/data_entitlement.py:61 `OPERATIONS = (\"list\", \"describe\", \"query\", \"download_filtered\")`; :214 `if not operations <= set(OPERATIONS): raise Malformed(...)`; :76 `\"schwab_get_access\": None`; :282 `if op is None or op in grant.scope.operations`.",
+        "RULING: 1.0.0_SA_CTO msg 97578 (R-OG-10): (a) `access` added to NFRA_OPLGTW_CONTRACT.json `operations` enum in v1.1 and to SCHWAB_TOOLS; (b) AC26 re-cut as 'the file unchanged against the cut base except the one mapping line'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-OG-10: one mapping line in app/data_entitlement.py and one `access` entry in the contract `operations` enum make schwab_get_access's class explicit, granted iff the grant is active.",
+    "world_is": "Applied as written, the enum entry makes `access` grantable by the admin command yet refused by the guard's parser (a grant the admin writes denies its principal everything), and the mapping line without the :282 predicate change denies schwab_get_access to every principal. Not applied: TO-OG-q-2 is NOT amended until 1.0.0_SA_CTO rules call 11; its re-hand is queued after OG-q-3 on slot ~5, so no worker waits.",
+    "notes": "No served surface; nothing deployed. REC sent as call 11: carry `access` as a tool class outside the grantable `operations` enum (a separate contract key naming each tool's class), leave OPERATIONS and the admin set unchanged, and let AC26 admit exactly two lines: the :76 mapping and the :282 predicate `op == \"access\" or op in grant.scope.operations`."
   }
 ]
 ```
