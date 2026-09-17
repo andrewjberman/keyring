@@ -2068,6 +2068,51 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "PRD C5's pending-ticket sentence, verbatim above.",
     "world_is": "The user must re-issue a Claude call to schwab_prepare_download for a new ticket after completing sign-in; the pending cookie is retained only as a defensive/anti-fixation artifact (evidence that this browser session held this ticket hash before login), never as a resumption key. Declared as a declared_exclusion in this cell's proof-of-spec instance rather than left implicit.",
     "notes": "INERT: a reasoned interpretation of underspecified text, not a defect against a stated requirement. Recorded for L9 to confirm the reading or direct a different one on a future round."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T15:20:00Z",
+    "one_line": "OGV2-AC2's independent A8-refusals check (schwab_query aggregate mode) FAILS against the real, unmocked app: app/integrations/schwab/semantics.py's assert_sum_allowed / assert_quantity_sum_grouped / assert_field_summable are never imported or called from app/integrations/schwab/query.py or integration.py, so SUM(closing_price) (nonadditive, contract's own additive_fields excludes it) and SUM(quantity_settled_unsettled) with no group_by cusip/l_s both SUCCEED instead of refusing INVALID_REQUEST.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: infra/aws/ec2/opal-gateway/tests/acceptance/test_local_acceptance.py::test_ogv2_a08 against the real app.server + real SchwabService (moto S3/DynamoDB/STS, real catalog, real entitlement grant) -- both refusal requests return 200 with rendered aggregate rows, not the 5xx-shaped INVALID_REQUEST error_result the contract's error_codes and A_ROWS.json's A8-refusals independent expectation (expect_independent.py, never re-derived) name.",
+        "comp-find 'assert_quantity_sum_grouped|assert_field_summable|assert_single_balance_metric' over infra/aws/ec2/opal-gateway/app -- 3 DEF hits (semantics.py:243,250,260) and 3 SURFACED hits, all three INSIDE semantics.py's own assert_sum_allowed (semantics.py:273-279); zero hits in query.py or integration.py.",
+        "comp-find 'quantity_sum_required_groups' over infra/aws/ec2/opal-gateway/app -- the only app/ consumers are integration.py:467-468 (describe_dataset's DESCRIPTIVE metrics.quantity_sum_required_groups field, read-only) and semantics.py's own declaration; query.py's check_against_grant (query.py:438-484) checks field-kind/scope/alias-collision only, never additivity or required grouping.",
+        "grep across infra/aws/ec2/opal-gateway/app and tests for 'asset_policy' shows the SAME shape one level up: integration.py accepts an asset_policy constructor arg and gates dim_asset on its mere presence (':535,:717,:790'), but no caller anywhere (production wiring in build_default_service(), or any existing test) ever passes one -- a second, adjacent instance of a declared-but-unwired dependency in the same module."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C4 (query.py's own docstring, quoting it): 'No expressions, SQL fragments... are accepted'; contract additive_fields excludes closing_price from every dataset; contract quantity_sum_required_groups = [cusip, l_s]; A_ROWS.json A8's machine half: 'every request in A8-refusals is refused with its listed code'.",
+    "world_is": "query.py's check_against_grant enforces field existence, grant visibility, decimal-kind-for-sum and alias collisions, but not additivity or the quantity/cusip+l_s grouping rule; those checks exist, are correct in isolation (test_schwab_semantics.py, OG-q-3's own acceptance), and are simply never called from the one place (SchwabService.query, integration.py:523-673) that would need to call them before build_plan()/run_query(). The gap is NOT this cell's to fix (query.py and integration.py are outside this task order's <paths> grant; BOUNDS: 'You grade; you do not fix').",
+    "notes": "ARMED: a live query surface accepts and answers a request the contract's own closed grammar and A_ROWS.json's independent fixture both say must be refused, on the deployed-shape code path (real catalog, real entitlement, real DuckDB job) -- not a mock artifact. disarm_owner: 1.0.0_SA_CTO (the cell whose surface this lands on, OG-q-2/OG-q-3, is a CTO-ruled boundary per this project's msg-97078 pattern). Recorded in this order's proof_of_spec.json under criterion OGV2-AC2 and in local-acceptance-run.result.md; OGV2-AC2 is graded FAIL by this row, not silently passed."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T15:25:00Z",
+    "one_line": "TO-OG-v-2's cell text reads 'each A-row that A_ROWS.json marks operated_by: machine and whose instrument is the local harness becomes one test' (13 rows: A2,A3,A4,A5,A6,A8,A9,A10,A11,A12,A14,A17,A18); within this order's single-turn budget this worker built 6 of those 13 as real tests against the real app (A2 as OGV2-AC3, A4, A5, A8, A11) plus the S3 call-set assertion (OGV2-AC5) -- A3, A6, A9, A10, A12, A14, A17, A18 are NOT built and are not exercised here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/tests/acceptance/test_local_acceptance.py -- grep for 'def test_ogv2_' lists exactly test_ogv2_ac01, test_ogv2_a08, test_ogv2_a11, test_ogv2_a04, test_ogv2_a05, test_ogv2_ac03, test_ogv2_ac05; no test_ogv2_a03/a06/a09/a10/a12/a14/a17/a18 exists.",
+        "A_ROWS.json rows A2..A18 (excluding A1/A7/A13/A15/A16/A19/A20, which are person/OG-i/OG-r graded and correctly out of this cell's scope): 13 machine-and-OG-v-2 rows named in this order's own worker-face text."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "'Each A-row that A_ROWS.json marks operated_by: machine and whose instrument is the local harness becomes one test test_ogv2_a<nn>' (this order's WORKER FACE, THE CELL paragraph).",
+    "world_is": "Building the full harness (real moto S3/DynamoDB/STS, real Catalog/AssumedRole/entitlement/account_ref/envelope/audit, an in-process query-engine substitute, real OAuth) and one genuinely correct test per remaining row (A3's forged-header/tid-oid-mismatch matrix, A6's grant-revision-and-cache-warming sequence, A9's twelve closure variants, A10's two-browser-session ticket redemption via OG-a-3's separate cookie-session mechanism, A12's CSV formula-escaping export, A14's joint OG-v-2/OG-r-2 memory-and-deadline measurement, A17's concurrent-refresh-race and family-revocation semantics, A18's Unicode/paging byte-exact measurement) each individually approaches or exceeds the single-turn budget already spent reaching 6 rows + AC5; this order's own text says nothing about a per-row time bound, so the reduction is this worker's own scope call, not a spec reading.",
+    "notes": "INERT: no served surface, nothing deployed. OGV2-AC2 is already graded FAIL on NFRA_OPLGTW-W6-S6 regardless of this reduction, so this row's own disposition does not change this round's AC2 outcome; it is filed so a re-cut task order (or the same worker resumed) has the exact denominator of what remains, rather than a diff against the full 13."
   }
 ]
 ```
