@@ -91,7 +91,7 @@ LOCAL; LD-0522 puts the push with `0.0.0_AB_MSTR~Z`.
 **THE REFUSAL CLAUSE:** a criterion you cannot satisfy AS WRITTEN is REFUSED with its measurement and a row;
 never repaired, widened, or satisfied by a route this order did not name.
 **A COUNT BAR IS READ FROM THE LIVE STORE AT THE CUT and PRINTS its denominator.**
-**BEFORE YOU DEPLOY:** confirm chain FP's `AMGT-rk-19` producer order has drained and BA's stored analysis
+**BEFORE YOU DEPLOY:** confirm chain FP-A's `AMGT-rk-19` producer order has drained and BA's stored analysis
 object carries the corrected, verified `thesis_driver.points` -- if it has not, STOP and file a row rather
 than deploying against unverified upstream data.
 **SURPRISE ROWS:** your row is `AMGT_RESAPP-Z-W27-S<k>`, `<k>` restarting at 1; `"project": "AMGT_RESAPP"` and

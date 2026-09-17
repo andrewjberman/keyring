@@ -39,7 +39,7 @@ delegates to) or immediately after `bundle.update(read_drafted_sections(resolved
 carrying no filing, `as_of_date` must NOT be invented or carry a stale value -- it stays absent/null,
 matching the drafting object's own state for that name.
 
-**Sequencing note:** this order and chain FP's/chain B's `AMGT-rk-24` (adapter half) both touch the SAME
+**Sequencing note:** this order and chain B's `AMGT-rk-24` (adapter half) both touch the SAME
 function region (`read_thesis_bundle()`'s drafting merge). You already drained `AMGT-rk-24`'s adapter half
 before reaching this order in your queue -- read the CURRENT state of that region (post-`rk-24` edit) before
 adding this line, so your edit composes with it rather than reverting it.
