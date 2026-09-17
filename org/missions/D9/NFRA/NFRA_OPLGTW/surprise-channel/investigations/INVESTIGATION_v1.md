@@ -2137,6 +2137,30 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGQ4-AC5, verbatim above: the three named modules all pass, unchanged, in the same round that OGQ4-AC1/AC2 require the exact refusal that breaks two of test_schwab_query.py's own cases.",
     "world_is": "OG-q-2's test_ogq2_ac07 and test_ogq2_ac15 were written and merged before any caller enforced the contract's quantity-sum-grouping rule (C3), so their own 'control'/'complete scan' cases sum a quantity field (quantity_settled) with no group_by and expect success -- exactly the shape OGQ4-AC2 requires this cell to refuse. Wiring the call site correctly therefore makes those two OG-q-2 tests fail; nothing else in the three named modules regresses (test_schwab_semantics.py and test_schwab_export.py are unaffected, and test_schwab_query.py's other 23 tests still pass). test_schwab_query.py is not in this order's <paths> grant and OG-q-2's cell is merged and closed, so this worker refuses to edit it (BOUNDS: 'never widen the order or fix a neighbouring defect'; 'a path you need that is not named is a BLOCKING surprise row on that criterion -- never an override'). OGQ4-AC5 is graded FAIL by this row's own measurement, not silently passed or worked around.",
     "notes": "INERT: nothing deploys in this order; the two failing assertions are pytest-local and no served behaviour changes as a result of this row. BLOCKING: OGQ4-AC5 stays FAIL and this order stays open on that criterion until an issuer either updates test_ogq2_ac07/test_ogq2_ac15 to group their quantity sums (or otherwise re-scopes AC5), which is outside this cell's grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-17T18:30:00Z",
+    "one_line": "TO-OG-i-3's FIRST ACT text asks this cell to 're-run the OG-i-2 live denial and assume arms against the new ARNs' -- but OG-i-2's arms run entirely on-host via SSM AWS-RunShellScript (host_arm(), a dynamic script parameterized by role ARN/ExternalId/S3 key), and R-OG-6 (binding 'from OG-i-3 onward') forbids AWS-RunShellScript and permits only the one named, FIXED, parameterless document this same cell creates. That document's content is scoped to 'exactly the reads later cells need' (file digests, systemd status, RSS, package versions) and deliberately carries no caller-supplied interpolation, so it cannot express an assume-role/GetObject diagnostic without becoming exactly the parameterized-script shape R-OG-6 exists to close off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "og_i2.py host_arm()/ac6()/ac7()/ac8(): each builds a per-call shell body (role ARN, ExternalId env var, S3 bucket/key literals) and sends it via ssm send-command --document-name AWS-RunShellScript (og_p1.py's ssm_read() is the same shape OG-i-2 inherited).",
+        "RULINGS_NFRA_OPLGTW_20260916.md R-OG-6: 'the limb binds from OG-i-3: one aws_ssm_document resource in OG-i-3's order ... whose content is the fixed read-only commands ... AWS-RunShellScript with caller-supplied parameters is not that document.'",
+        "This order's own text (the read-only host-command document paragraph): 'Its content: only the read commands later cells need (file digests ... systemd unit's status, process RSS, and installed package versions), with no shell interpolation of a caller string.'",
+        "infra/aws/terraform/opal-gateway/ssm_readonly_host.tf (this commit): mainSteps.runCommand is a fixed literal list, parameters={} -- no role ARN, ExternalId or S3 key can reach it as a caller argument.",
+        "Substitute performed instead (declared, not host-exercised): iam get-role/get-role-policy on both new roles confirm the trust Principal (opal-gateway-role only), the two distinct re-keyed ExternalIds (91b31fde... for gateway-schwab-read-role, a2d39502... for gateway-schwab-catalog-read-role), and the unchanged six-statement deny/allow Sid shape on each role's inline policy -- recorded in this cell's result file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-i-3 FIRST ACT: 'Re-run the OG-i-2 live denial and assume arms against the new ARNs, and record them in this cell's result file.'",
+    "world_is": "The mechanism this same cell is required to install (R-OG-6's one fixed, parameterless document) cannot carry a dynamic assume-role/GetObject diagnostic without reopening the caller-supplied-interpolation hole R-OG-6 exists to close; AWS-RunShellScript, the mechanism OG-i-2's arms actually use, is the thing this cell forbids from itself onward. This worker refused the live re-run as written and substituted a declared-level check (trust policy + inline policy readback via iam get-role/get-role-policy, no host execution) against the new ARNs, disclosed as a weaker instrument than a host-exercised assume/deny arm.",
+    "notes": "INERT: no served surface exercised by either the refused act or its substitute; both are reads. Recorded for L9 to rule whether a host-exercised re-run belongs to a LATER cell (its own document, or an audited AWS-RunShellScript exception) rather than OG-i-3."
   }
 ]
 ```

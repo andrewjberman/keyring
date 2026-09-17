@@ -224,8 +224,9 @@
     },
     "runtime_policy_access": "strong read only; write actions require all LeadingKeys match RUNTIME#*"
   },
-  "reader_role": "opal-mcp-emp-menachem-schwab-read",
-  "catalog_role": "opal-mcp-schwab-catalog-read",
+  "reader_role": "gateway-schwab-read-role",
+  "catalog_role": "gateway-schwab-catalog-read-role",
+  "assume_readers_policy": "gateway-assume-schwab-readers-policy",
   "source_bucket": "opal-data-assets",
   "data_prefixes": [
     "schwab/08242234/silver/dim_position/",
