@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Opened** | 2026-09-17T19:06Z |
-| **State** | OPEN |
+| **State** | CLOSED -- COMPLETE 2026-09-17T23:5xZ (one item carried, stated at the end: no real SMS delivered yet) |
 | **Seat** | `0.4.0_DT_ClientPlatform` (site Z, branch SITEZ) |
 | **Authority** | Andrew-direct at this terminal, 2026-09-17 ~19:0xZ, VERBATIM: *"What I want you focused on is end to end wiring the Text OTP setup for opalinvest.dev MFA. Our request for AWS Text Messaging was approved, and we should have all the wiring in place, so we should get that incorporated and live."* |
 | **Pipeline** | `infra/aws/terraform/portal-auth` (backend) + `portal/` DEV -> PROD (frontend) |
@@ -154,5 +154,23 @@ any real enrolment also resets that user's channel to `email`.
       this seat had worded as promoting ONE commit; a first production release of another project's
       in-flight surface is a different act and is not inferred from it. **Until a promote lands no user
       can SEE the enrolment card**, so the live backend still changes nothing for anyone.
-- [ ] first real SMS delivered end to end -- needs a real handset; the one step a fixture cannot stand in for
-- [ ] CLOSED
+- [x] **PROMOTE RESOLVED BY ANDREW, ~23:1xZ, VERBATIM:** *"just make the security analysis page appear as dev
+      only admin only, make that change on the frontend and then /prod-deploy"*. Gate built as portal
+      `d8135e0a` -- three lines in `src/App.tsx` on the EXISTING mechanism (`requiresDev`+`requiresAdmin`
+      on the nav item, `requireDev requireAdmin` on both routes); typecheck + eslint clean; rendered on a
+      dev server of that exact tree under three identities (Dev+admin lands; 49financial advisor
+      bounced; Dev-but-not-admin bounced). Built in a worktree off `origin/DEV`, pushed BY SHA from the
+      main tree (GATE 5 admits a DT only with HEAD on DEV/PROD), so the push carried ONLY that commit.
+- [x] **/prod-deploy COMPLETE -- portal-v2.1.180.**
+      | PROD commit | `a580bbb4` (merge of the PINNED DEV sha `d8135e0a`; base/rollback `ff542d0a`) |
+      | Parity gate | 0 bytes vs the pinned sha AND vs `origin/DEV` (DEV did not move during the window) |
+      | CI | run 35287760232 `Deploy to Production` completed / **success** on `a580bbb4`; 1 of 1 workflows on that sha |
+      | Tag | `portal-v2.1.180` peels to `a580bbb4` = PROD head |
+      | Served | `assets/index-EGumIplW.js` (346,165 B) carries "Text-message login codes", the consent text and the "In Settings" badge; the old "Unavailable" badge is ABSENT (negative control) |
+      | Gate on PROD | rendered on opalinvest.dev: 49financial advisor bounced to `/market`, nav item absent; Dev+admin lands on `/security-analysis` |
+      | Main tree | back on DEV, clean; promote worktree pruned (physical dir persists -- Windows long path, gitignored, inert) |
+      | Pointer | **NOT bumped, deliberately.** The workspace records portal `2453a7b4` (published). The main tree's checkout is `c069db75`, the integrator's UNPUBLISHED round-13 commit; a bump now would record a sha no other device can resolve. The bump to `d8135e0a`+ belongs with `0.0.0_AB_MSTR~Z`'s push of local DEV (`c069db75`, `6cbd3049`). |
+- [ ] first real SMS delivered end to end -- CARRIED OPEN AS THE ONE UNEXERCISED STEP. Everything a fixture can
+      prove is proven; a real handset is the only remaining instrument. Andrew can now do it on
+      opalinvest.dev: Settings -> Verification -> enter a mobile number -> Send code.
+- [x] CLOSED
