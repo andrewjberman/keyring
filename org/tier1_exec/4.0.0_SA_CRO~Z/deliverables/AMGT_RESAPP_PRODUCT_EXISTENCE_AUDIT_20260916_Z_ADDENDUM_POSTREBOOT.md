@@ -310,6 +310,16 @@ resolves if the objects land before the drain. Unchanged: adapter `x3KrEBvZ`, `/
 drained COMPLETE 5 of 5 (@`52dd9a8c37`) with Z-S137 still open, per `3.0.0_SA_CVO~Z`'s L9 record s.7 @`4ace3fa7e1`.
 Round 12 at 11 of 18.
 
+**CORRECTION 06:5xZ -- the heading's "without a reason carrier" and the "can read MET on the log" sentence above are
+WRONG; corrected by row `AMGT_RESAPP-Z-S146` @`8193fad4dd`.** The store does carry a named no-CIK marker for all 21:
+`universe/v1/2026-09-16.json` gives each `filing_identity {cik: null, form_expected: none, source: none}` (21 of 21), and
+rk-18's proof graded AC2/AC3's named-reason arm on exactly that, through the batch module's own `plan()` (reason
+"filing_identity.source is 'none': no cik and expected form to fetch by"); the L8 packet s.5 @`7c492e6545` says the same.
+What survives: the planned per-name `UNRESOLVED-SOURCE.source.json` objects were never written, and the page's thesis
+`drafting_reason` shows the generic NoSuchKey rather than the no-CIK reason the store holds -- a small presentation gap.
+The error was this seat's census domain: one prefix (`filings/v1/`) searched for a carrier that lives in the universe
+object the grading path reads.
+
 ## 3i. ADDENDUM 03:2xZ 2026-09-17 -- rk-12 COMPLETE is the CLIENT half of FWD-7/12/14; the served half is rk-6 AC4 and the three routes answer 404
 
 rk-12 drained COMPLETE @`43d24c39d0` (round 12 at 12 of 18); its drain subject reads *"three unsurfaced outcomes get served
