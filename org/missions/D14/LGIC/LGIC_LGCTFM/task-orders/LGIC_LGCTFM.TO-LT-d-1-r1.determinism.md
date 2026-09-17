@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>complete -- D1R1-AC1 PASS-D1-DETERMINISM-SUITE-PASSES, D1R1-AC2 PASS-D1-NEGATIVE-ARM-FIRED-FIRST, D1R1-AC3 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9); proof VALID rc=0 at org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-d-1-r1.determinism.proof_of_spec.json; 0.9.0_WK_LGIC_LGCTFM~3</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves current) | **Decomp cell:** `LT-d-1` (decomposition v1.1) | **outcome_ref:** FWD-9 | **depends_on:** LT-e-2 (drained on slot ~1; determinism is measured on an engine that produces something) and LT-r-1 (same slot)
 
