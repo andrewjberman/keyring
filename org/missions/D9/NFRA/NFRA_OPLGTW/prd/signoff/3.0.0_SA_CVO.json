@@ -1,11 +1,12 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v0.7",
-  "prd_pin": "79a1fd4a476253ce412397e4d579c6da4f03d885",
+  "prd_version": "v0.8",
+  "prd_pin": "c858a5f23965f73dbc29af7f11395728f059345e",
   "half": "ratified-text",
-  "half_hash": "8fc9c2558601300d2e0e1471726266de8fd35881ffe08c60a1045b7b5b2a3a5d",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_OPLGTW_v0.7_RATIFIED_TEXT_HALF_20260916.md@13ca2e8aa3",
+  "half_hash": "cce6fd280cb86504ec5e43c6a15068a06f66fb0bddb4c0b2a3dc062b5bf32b99",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_OPLGTW_v0.8_RATIFIED_TEXT_HALF_20260917.md@8f3634d66d",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-16T19:37:46Z"
+  "signed_at": "2026-09-17T13:49:31Z",
+  "reason": "CONTRACTS embeds a (R-OG-11) ruling-id citation inline in the section text -- the annotation-inside-the-section defect refused at v0.6, cured at v0.7, now back"
 }
