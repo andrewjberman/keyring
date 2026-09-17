@@ -49,6 +49,15 @@ adopts `3.0.0_SA_CVO`'s two notes as R-OG-8's own constraints).**
   - Also show that the old table's per-item digests are unchanged between the copy's start and the post-cutover re-check.
   - If a live writer is found, that is a BLOCKING row and a stop. Stopping or pausing the Gateway service is not granted
     to this cell.
+  - **The maintenance window, stated (msg 97556: "its length and the Gateway's behaviour during it (refuse with a retry
+    hint, never a silent 500) are stated in the order and in the ledger entry").** The window runs from the copy's start
+    to the post-cutover re-check (AC13), and is bounded at 60 minutes. Past that bound, stop, file a row, and roll back
+    per the deploy discipline. The Gateway's behaviour during the window: the live host runs the pre-project build, which
+    reads and writes neither table (AC12 proves it), so existing users see no change and there is nothing to refuse.
+    - No build that writes the table is deployed until `OG-r-1`, after this order.
+    - If AC12 finds that premise false, there is no window: stop at a BLOCKING row. A live writer would need its
+      refuse-with-retry-hint behaviour built and deployed first, which this cell is not granted.
+    - Write the window's start, end, length and this behaviour statement into the ledger entry's `copy` leg.
 - **The old table is removed only AFTER the rollback window has closed; inside the window it is the rollback target and
   is not touched.** For this order the window closes when all of these are recorded PASS: the post-cutover count and
   item-by-item re-check (AC13), the reference move (AC7), the module runs (AC8) and the on-host exercise against the
