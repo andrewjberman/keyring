@@ -7267,6 +7267,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CLAUDE.md HARD STOPS: 'NEVER leave a confirmed deploy half-landed -- finish in-session or roll back + escalate loud; ledger entry in org/critical_paths/change_management/ opened at start, closed at completion.' Both never-widen halves' final section restate this as an instruction to the worker.",
     "world_is": "This worker cannot open that ledger entry without writing outside its granted <paths>, so it does not. The deploy proceeds under the two on-file never-widen co-signs (the actual authorization mechanism CLAUDE.md Rule 22/NEVER-2 names) with the pre-act and post-act served census recorded instead in this worker's own proof-of-spec instance and deliverable, which ARE inside the grant. No write was attempted outside <paths>; no override was taken.",
     "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~24 before the combined rk-6+rk-7 deploy, per the channel's ANY lane. Not blocking: neither AC1-AC5 on rk-6 nor AC1-AC5 on rk-7 names the change-management ledger as an invocation, so this gap does not fail a criterion; it is recorded so the issuer can amend future orders' <paths> blocks or open the entry itself. Remedy is structural (widen the <paths> template the same way W24-S4's amendment widened rk-2's), owned by 2.0.0_SA_COO~Z. Instruments: direct read of both orders' section 3 at HEAD, direct read of both rk-6 and rk-7 never-widen halves, comp-find over .tools/safe-commit.sh. HEAD at filing 9fd6b07fee."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W24-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~24",
+    "surfaced_at": "2026-09-17T03:02Z",
+    "one_line": ".tools/halt-gate-check.sh, run as a worker (no own inbox, so it scans its issuer 2.0.0_SA_COO~Z's), does not return an exit code within any budget tried (30s, 30s retry, 115s, 240s) -- one run DID complete the surface print at 240s (182 pending items, all routine deploy_ledger.py sentinel notices, all 35-41 days old, all addressed to OTHER agents' OTHER projects, none STOP-class and none naming AMGT_RESAPP), but the run itself still hit rc=124 rather than exiting 1 (routine, unacked) as its own docstring states; a second run WITH HALT_ACK=1 did not even reach the print step inside 115s.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "INVOCATION 1: `timeout 30 bash .tools/halt-gate-check.sh AMGT-rk-6-rk-7-deploy` -> rc=124, no output. Retried once per this worker's own protocol: same rc=124, no output.",
+        "INVOCATION 2: `timeout 115 bash .tools/halt-gate-check.sh AMGT-rk-6-rk-7-deploy` -> printed exactly one line ('HALT-GATE: worker 0.9.0_WK_AMGT_RESAPP~24 has no inbox; scanning its issuer 2.0.0_SA_COO~Z ...') then rc=124.",
+        "INVOCATION 3 (background, timeout 240): completed the surface -- 'HALT-GATE: 182 pending message(s) -- review before proceeding (AMGT-rk-6-rk-7-deploy)' followed by 182 dated entries, every one 'from deploy_ledger.py', newest 35d ago, oldest 41d ago, addressed 'on behalf of' 0.7.0_AE_CloudOps / 0.7.0_AE_CloudOps~A / 0.7.0_AE_CloudOps~B / 0.6.0_AE_PartnerETL on projects named cot-pair-tolerance-recal, emitter-wo4a/wo4c, inf-bronze-ac5-legA-20260724, inf-nna-excusals-stage-20260724, mdpf-trigger-d2-event-log, wo2-publisher-repoint-schedule, bd-49f-empty-stub-asof-lag-root-fix, freshguard-leg4/leg5, scty-premcp-p1-layer2-phase1-readonly-scope -- zero mention AMGT_RESAPP, AMGT-rk-6, AMGT-rk-7 or this deploy. The trailing line was rc=124 (the outer `timeout 240` still fired after the print completed), not a clean exit 1.",
+        "INVOCATION 4: same command WITH `HALT_ACK=1` exported, timeout 115 -> printed only the one-line issuer-scan banner, no surface, rc=124 -- slower than invocation 2 on the identical unacked path, so the variance tracks filesystem/scan cost, not the ack flag.",
+        "SCOPE CHECK: `find org/mcp/inbox -type f | wc -l` on the shared checkout = 24098 files across all agents' inboxes; the script's own docstring says it scans only the resolved serial's (here, the issuer's) subtree, not the whole 24098."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "halt-gate-check.sh's own docstring exit-code contract: 'Routine message(s) pending -> SURFACE (sender/subject/age), exit 1. Re-invoke with HALT_ACK=1 to pass (exit 0).' Both rk-6 and rk-7 never-widen COO halves ask the worker to read the halt surface and acknowledge it before Terraform-only apply.",
+    "world_is": "The tool never delivered its documented exit code (1 or 0) in four tries across ~500s of combined budget; the one run that printed the full surface still ended rc=124. On the CONTENT it did surface, no STOP-class or AMGT_RESAPP-addressed message exists in the issuer's inbox at this vintage -- the substantive question the gate exists to answer reads NO -- but the mechanism itself did not certify that with its own contract's exit code, so this worker is relying on a manual read of one run's printed output rather than the gate's pass/fail signal.",
+    "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~24 immediately before proceeding with the combined rk-6+rk-7 deploy. Not blocking: the halt gate is an operational precaution named in the never-widen halves' worker-instructions section, not a proof-of-spec criterion on either order, and its own docstring already concedes (per Rule 18, cited there) that 'a HALTGT pass is not evidence you were not halted' -- the inverse gap here is a HALTGT NON-PASS that is not evidence of a live STOP either, given the surfaced content. Deploy proceeds on the two on-file never-widen co-signs. Remedy, if any, is the gate's own performance/exit-path on a worker-resolves-to-issuer scan; owned by whoever owns ADHC_HALTGT (not named in this worker's face). Instruments: four direct bash invocations of .tools/halt-gate-check.sh under `timeout`, one `find | wc -l` census of org/mcp/inbox. HEAD at filing 7e4d116116."
   }
 ]
 ```
