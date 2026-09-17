@@ -88,3 +88,24 @@ Reading:
    16 September; the mailbox scan measured $10.04 on 26 August and, on three independent queries, nothing between
    7 and 17 September. His figure is treated as authoritative because he reads Ramp directly; whether the August
    charge is a separate fourth row is his call and is asked, not assumed.
+
+## Follow-on words, ~18:5xZ, mid-turn (verbatim, in order)
+
+> use my edit disregard mstr, i know things they dont
+
+> dont touch that
+
+> This is a good layout but the issue with it is that it only covers the bloomberg sitez box. this deck needs to
+> cover ALL WORK DONE IN THE PERIOD, both boxes.
+
+Reading, and the correction this seat made to its own first reading:
+- The first two words were read as "change nothing at all", and the MSTR asks were stood down whole. That was too
+  wide. The third word says the scope is BOTH machines. What Andrew set aside is the PAYMENT evidence -- he holds
+  Ramp facts the mail record does not carry -- so his $1,110 paid, his $110.04 extra-usage row and his charges
+  table stand as written and are never rewritten. The USAGE side had to grow to both machines.
+- MSTR re-engaged for the laptop's project split; the laptop's commits are in the SAME git history, so the
+  fabric-wide output counts were measured here without waiting: 13,829 commits by agent seats and 348 completed
+  task orders in the window, against site Z's own 4,872 and 187.
+- Per-project cost across both machines: site Z per seat (measured here), the laptop's $34,953 split by its own
+  commit pattern (weaker, and labelled). Top four: investor reporting $5,381, cloud systems map $4,645,
+  performance reporting $2,389, naming enforcement $2,188.
