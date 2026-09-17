@@ -267,7 +267,8 @@ Measured 2026-09-17 from the repo only; no AWS reads were made for this brief.
 1. **The address is SETTLED, not open: `mcp.opalinvest.dev`**, on his word (quoted above). Listed here only so a
    reader who saw `.com` in the original ask finds the correction.
 2. **Demo exclusion in analytics.** He said "Include Opal and Clients"; this seat read demo users as excluded by
-   default. Unconfirmed.
+   default. Asked directly ("should demo users stay out of the User Analytics charts by default?"), he answered
+   *"Sure"* -- SETTLED: demo users are excluded from the charts by default.
 3. No AWS state was read: whether session retention is actually enforced, whether the block lists are
    Terraform-managed, whether the website has firewall logging, and the size of any log or table are all unmeasured.
 4. Which of his vendors bypass Ramp is unknown to this seat.
