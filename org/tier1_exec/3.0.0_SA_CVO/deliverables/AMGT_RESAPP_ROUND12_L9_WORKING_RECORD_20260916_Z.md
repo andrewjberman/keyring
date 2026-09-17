@@ -178,4 +178,40 @@ the live world at the cut, before issuance.
   reads plus a control), remedy holder the issuer (commit the 2026-09-15 rows as a generation, or route the pull
   through the rk-3 writer; and re-cut the store-existence bar to the served route). S136 moves to group A with it.
 
+## 8. rk-14 AC4 -- MET on computability, with two recorded limits (added 2026-09-17 ~03:4xZ)
+
+Round state: rk-12 drained 03:05Z (`43d24c39d0`), rk-14 03:20Z (`2c0561c0b7`), rk-18 03:27Z (`09513c860d`); 14 of 18
+terminal; open rk-6, rk-7, rk-15, rk-16. Numbered ISSUER AMENDMENTS now run 1 to 18 (S138 = 16, S140 = 18).
+
+The question: is the fit COMPUTABLE for a real name (a nonzero factor count on a real subject), or honestly ABSENT with
+a CLASSED reason for every name. Contract: ROUND_ANALYSIS.round11.md A3.1 items 1-4.
+
+**Census at this seat, a different instrument from the worker's** (the worker counted member rows from the store;
+this seat ran the fixed `lib/research/posture/fit.py` `fit()` over the latest `peers/v1` object of every subject):
+
+| | count |
+|---|---|
+| subjects with a peers/v1 object | 191 |
+| subject block SCORED (either preset) | 110 |
+| subject block ABSENT, reason "no R-1 row for this name" | 47 |
+| subject block ABSENT, reason "the ranker's loader keeps the code set and drops the numbers" | 34 |
+| member rows scored | 1,657 of 1,658 |
+
+- **MET, A3.1 item 4:** 110 of 191 subjects score on their own row (values_carried 23-26, e.g. full 13 of 13 and
+  16 of 16 denominators on member rows). A one-subject read of BA_US_Equity alone would have graded this FAILED --
+  BA is one of the 81; the census is the grade.
+- **LIMIT 1, A3.1 item 3 not fully met:** every ABSENT carries a reason, but not a CLASSED one. The 34 subject reasons
+  name the loader defect this very cell repaired, so they state a cause that is no longer true; and the per-factor
+  reason `the row carries no value for <code>` (`fit.py:341`) does not class "the source lacks it" against "our pull
+  missed it", which A3.1 item 3 requires. Planned for the slug as a remediation on the fit's reason classing.
+- **LIMIT 2, served plane:** a person does not see the repaired fit. The adapter serves `document.get("fit")` from the
+  stored posture document (`scoped_amgt.py:2247`); only 2 posture objects exist (BA_US_Equity, BABA_US_Equity, both
+  `2026-09-15`, LastModified 2026-09-15T16:56:06Z), and read-only `/overlay` at 03:33Z serves their pre-fix fit
+  (DIVZ absent reasons "code not named in card 3"). COST_US_Equity serves posture ABSENT. The repair reaches the page
+  only when the posture document is regenerated, a bounded model run -- the issuer's or the CTO's call, not graded
+  here.
+- **For the L10, not a grade:** DIVZ member scores range -10,032.4 to 7,470.0 (median -155.7) because the score is a
+  weight-oriented mean of RAW factor values across mixed units; `fit.py` METHOD discloses "not a percentile", and A3.1
+  sets no scale, so this is not a contract breach. Whether a person can read such a number is a PRD question.
+
 -- 3.0.0_SA_CVO
