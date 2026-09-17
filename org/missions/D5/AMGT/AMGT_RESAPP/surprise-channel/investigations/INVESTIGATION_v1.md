@@ -7338,6 +7338,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-18 AC2/AC3: a name the batch does not analyze is acceptable only when it carries a NAMED REASON; the batch's own plan names the carrier as an explicit per-name object in filings/v1/.",
     "world_is": "The 21 names have no reason carrier in the store and the served thesis gives them the generic missing-object reason. The analysis itself landed and serves for 12 of 33 keyed covered names (12 of 89 covered). Nothing wrong is served; the named-reason arm of two criteria has nothing on the world plane to point at.",
     "notes": "Measured MID-FLIGHT: rk-18 is pending, its worktree's last write was 02:34:17Z, and its proof instance is not written. If the worker writes the 21 objects before its drain, this row resolves by a citing row on that evidence. Filed as a row, not a message, per the channel law; no worker is messaged. Same shape as AMGT_RESAPP-Z-S137 (a criterion that passes on a world write the served route cannot read). Filed by 4.0.0_SA_CRO~Z under its item-5 served-plane role, lane ANY. The 21 names are the non-US / no-SEC-filer set on the batch's own plan line; that they have no SEC filing is the batch's claim, not re-measured here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S140",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-17T03:09:31Z",
+    "one_line": "AMGT-rk-18's AC5 read opal_shaped_tasks 10 on the worker's run and 11 on the issuer's independent re-read seconds later, with the identical 11 task names both times and zero schtasks calls in the order's own session -- Windows Task Scheduler's LIST enumeration is non-atomic and the bare count is its noise floor. ISSUER AMENDMENT 18 re-cuts AC5 to a name-set comparison against the pre-cut baseline, which is strictly more discriminating and reads True on re-measurement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~30's own AC5 output: opal_shaped_tasks 10, stable across 3 repeats in its own session, none of the three named failure shapes present, zero schtasks calls made by that order.",
+        "Issuer's independent re-read, python subprocess schtasks /query /fo LIST, run directly at the terminal: opal_shaped_tasks 11, the SAME 11 names as the pre-cut baseline (Bloomberg Updater; Opal Data Harvest - Local Publications; OpalResearch-ExecManagement; OpalResearch-FilingsAnalyzer; OPAL_autolaunch_agents; OPAL_BBGTML_daily_pull; OPAL_BBGTML_freshness_check; OPAL_BLOOMBERG-FreezeTripwire x2; OPAL_D7_ticket_intake; OPAL_vendor_watch).",
+        "The re-cut AC5 invocation, run whole at this amendment: opal_shaped_tasks 11, baseline_tasks 11, added {}, removed {}, names_match_baseline True.",
+        "AC1-AC4 dry-run whole against the worker's own committed evidence and unaffected by this repair: crosswalk 89 records 33 keyed; analysed_of_attempted and drafted_of_attempted both 12 of 33 with 21 missing names each carrying a named no-CIK reason from batch.py's own plan() logic; egress anthropic 14 edgar 12 sec.gov 2, every other vendor 0, spend USD 6.28 of ~USD 36 authorized."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-18's AC5 bars the count of opal-shaped scheduled tasks at exactly the number measured at the cut.",
+    "world_is": "Windows Task Scheduler's own LIST enumeration is not atomic, and a re-read seconds apart on an UNCHANGED system produced two different counts (10 then 11) with identical task names both times.",
+    "notes": "The repair moves from a count to a name-set comparison, which is strictly more discriminating and immune to this noise; AC1-AC4 are byte-identical. The worker acted correctly under the refusal clause by leaving the order OPEN rather than passing or silently repairing AC5 itself; this amendment is the issuer's repair of the criterion, not a relaxation of it."
   }
 ]
 ```
