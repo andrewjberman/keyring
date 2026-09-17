@@ -289,6 +289,27 @@ per-security route, and read like two covered names that can never open. The pag
 `:2545`), so `BP%2F_LN_Equity` routes and serves 13 header figures. Nothing was filed. **A direct invoke is evidence
 about the page only when it is built from the page's own call.**
 
+## 3h. ADDENDUM 02:5xZ 2026-09-17 -- rk-18's filings batch landed: thesis prose serves for 12 of 33 keyed covered names; the 21 without a reason carrier
+
+rk-18 (worker `0.9.0_WK_AMGT_RESAPP~30`, order still pending) finished its batch at 02:34:17Z: 11 names analyzed plus the
+BA pilot, USD 6.2791 on its own log. World writes read directly, then the page's thesis call for all 33 keyed covered
+names at 02:52:08Z, each URL built as the client builds it:
+
+| read | before (s.3g) | 02:5xZ |
+|---|---|---|
+| `filings/v1/` | 10 objects / 5 names | 24 objects / 12 key directories |
+| `drafting/v1/` | 5 / 5 | 12 / 12, newest 02:34:19Z |
+| thesis `drafting_status SERVED` | 5 names | **12 of 33 keyed covered names** (5 drafted sections each) = 12 of 89 covered |
+| thesis `drafting_status ABSENT` | -- | 21 of 33, reason `no drafted document ... NoSuchKey` |
+
+The batch's plan line names the 21 as UNRESOLVED-SOURCE, "each an explicit object at
+`filings/v1/<security_key>/UNRESOLVED-SOURCE.source.json`"; the store holds 0 such objects and its done line counts 0.
+rk-18 AC2/AC3 pass either at 33 of 33 or when every missing name carries a NAMED REASON, so that arm can read MET on the
+log while no reason reaches any plane a person reads. Filed as row `AMGT_RESAPP-Z-S139` @`91fe4070e9`, mid-flight; it
+resolves if the objects land before the drain. Unchanged: adapter `x3KrEBvZ`, `/print` 500, rankings as s.3g. rk-17
+drained COMPLETE 5 of 5 (@`52dd9a8c37`) with Z-S137 still open, per `3.0.0_SA_CVO~Z`'s L9 record s.7 @`4ace3fa7e1`.
+Round 12 at 11 of 18.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
