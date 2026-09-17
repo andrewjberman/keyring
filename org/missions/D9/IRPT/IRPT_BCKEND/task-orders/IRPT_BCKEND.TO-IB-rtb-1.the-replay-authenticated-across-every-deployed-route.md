@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>staged -- assigned to slot ~1; becomes pending when the COO hands it over after IB-rt-1, IB-rt-2, IB-rt-4, IB-rt-6, IB-rt-7 and IB-rt-8 are terminal and merged.</status>
+<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-17T22:20Z to slot ~1, COLD-STARTED (the round-1 subagent died with its session; nothing in this face is changed). Its gate ('after IB-rt-1, IB-rt-2, IB-rt-4, IB-rt-6, IB-rt-7 and IB-rt-8 are terminal and merged') is SATISFIED on six of six, read from the proof-of-spec instances at HEAD by the L10 limb's own function and never from a status word: IB-rt-6 is terminal by its VALID instance with RT6-AC1 recorded FAIL (row IRPT_BCKEND-S53).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 2 (the proof) | **Slug rows this cell closes:** W1-S10 (the measurement), the six-guard proof of FWD-2's EXERCISED bar | **Decomp cell:** `IB-rtb-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-2 (own), FWD-11, FWD-1, FWD-5, FWD-8 | **PRD candidate:** B3
 
