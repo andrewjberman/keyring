@@ -3123,6 +3123,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "R-16: the SHIP / REPO-ONLY split is derived by CALLING the deploy gate's own scope classifier, .tools/safe_deploy_core.py, over the generator's target list; its provenance reads measured: safe_deploy_core.",
     "world_is": "safe_deploy_core decides the S3/DS plane only (3 of 10 targets). The Lambda and Terraform planes ship through safe-apply and their own declared records, so one classifier call leaves at least 5 shipping targets reading as REPO-ONLY.",
     "notes": "INERT: nothing is built on it yet -- cell 9 is not cut. Routed to 1.0.0_SA_CTO as a call (97550-series) because it is R-16's mechanism, and cell 9 is not cut until it is ruled. The shape this seat holds, not binding: the split names its PLANE per target and calls each plane's own record -- safe_deploy_core for S3/DS, lambda-source-map.json for Lambda, the root that consumes the module for Terraform -- with provenance per row (measured: <instrument>), and a target no plane claims prints UNCLASSIFIED and refuses the print, which is R-16's own negative control generalised from one plane to all."
+  },
+  {
+    "id": "LGIC_ENFORCE-W4-S5",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-17T14:12Z",
+    "one_line": "Round 3's census-to-the-end run reproduces the SAME RAISE that stopped round 1 (W7-S1) and round 2 (W2-S10's context): live API_GW sentiment-query-api still RAISES R1.f ('sentiment' is in no vocabulary), and the 3rd row still carries a live {system} placeholder (inf-otp-relay-api) -- three rounds apart, systems.json and resources.json carry no new row for either token, so S6R3-AC1/AC2/AC3 FAIL exactly as the order anticipated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN, this worktree, HEAD b54636545d (base CLOUD): 'python lib/opal_naming.py census --live --repo --report .../deliverables/0.9.0_WK_LGIC_ENFORCE~4/NAMING_CENSUS_REPORT.r3.md' rc=3. Log: 'CENSUS LIVE: 2191 node(s) at VINTAGE Built from the estate as of 2026-09-17 13:49:55 UTC ... manifest: 0dd53f50b7da; 346 of NOT GRADED types, 16 aws_fixed; 1829 to judge', 'CENSUS REPO: 1878 name(s) ...', 'CENSUS RAISE live API_GW sentiment-query-api -- R1.f: ...', 'CENSUS: STOPPED on the first RAISE after 3 judged'.",
+        "SAME TOKEN, THREE ROUNDS: round 1 (LGIC_ENFORCE-W7-S1, 2026-09-15T02:20Z) measured the identical stop at 'sentiment-query-api, R1.f' with live_nameable 1805; round 3 (this row) measures live_nameable 1829, judged_live still 3, judged_repo still 0 -- the denominators moved with the live estate but the stop token and step did not.",
+        "MEASURED, this worktree, over infra/logic/registry/systems.json@23980d3fbe: 'sentiment' is a key of neither `systems` nor `refused_keys` (workstream_code/generic_noun/purpose_word/retired) nor `unresolved` (which carries only astn, trade, news) -- it is absent from every carrier the registry defines, not merely unresolved. Over infra/logic/registry/resources.json@b15ed01ee6: no row of (name='inf-otp-relay-api', type='API_GW') exists (the sibling IAM_ROLE row is the one W2-S10 already names), so grade() still fills '{system}-inf-otp-relay-api' verbatim in this round's report's 1st row.",
+        "REPORT: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/NAMING_CENSUS_REPORT.r3.md, fenced json: denominators judged_live 3, live_nameable 1829, judged_repo 0, repo 1878; stopped.plane live, stopped.type API_GW, stopped.current sentiment-query-api; rows[0].canonical '{system}-inf-otp-relay-api'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-s-6-r3.census-to-the-end.md THE CELL: 'Run the census on BOTH planes to the end ... A RAISE FAILS the criterion ... If the run stops, record where and why, and file a row -- the RAISE is a defect in the rule, the schema or the registry.'",
+    "world_is": "The run still stops at the same name and step it stopped at in round 1, two rounds and multiple registry commits later; neither infra/logic/registry/systems.json nor resources.json carries a row that would place 'sentiment' or resolve inf-otp-relay-api's system. The order's own <paths> for this cell do not include the registry, and BOUNDS forbids editing it here, so this row is filed rather than fixed, exactly as row LGIC_ENFORCE-W7-S1 already was for two rounds.",
+    "notes": "Form only. This is a NEW measurement (fresh grade()/census run at this round's HEAD and vintage), not a restatement of W7-S1 or W2-S10 -- it is filed to keep the channel's record of the defect's persistence current across rounds, per this order's own instruction to file a row on a stop. No criterion this worker owns changes verdict on it: S6R3-AC1/AC2/AC3 already read FAIL for exactly this reason, as the order's ACCEPTANCE section states in advance."
   }
 ]
 ```
