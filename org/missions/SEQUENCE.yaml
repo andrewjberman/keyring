@@ -214,9 +214,9 @@ change_log:
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-17T23:42:56Z",
-    "head": "1525cb72e7",
-    "sequence_file_last_commit": "0f40e4cfac 2026-09-17T19:03:02-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-09-17T23:49:59Z",
+    "head": "9635e8f16c",
+    "sequence_file_last_commit": "326eaadad6 2026-09-17T19:43:10-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
@@ -237,7 +237,6 @@ compiled:
       "denominator": 10,
       "counts": {
         "LANE-DARK": 1,
-        "WAITING": 1,
         "NEEDS-SLOT": 2
       }
     },
@@ -275,8 +274,8 @@ compiled:
           "NFRA_MCPINDEX": {
             "dep_stage": "PRD",
             "status": "active",
-            "prd": "v0.3 WITHHELD (brief SIGNED, ratified-text REFUSED)",
-            "last_activity": "3dbdb084c7 2026-09-17T19:35:54-04:00",
+            "prd": "v0.4 WITHHELD (brief STALE, ratified-text STALE)",
+            "last_activity": "9635e8f16c 2026-09-17T19:49:00-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -331,8 +330,8 @@ compiled:
           "LGIC_CANON": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v1.7 WITHHELD (brief SIGNED, ratified-text STALE)",
-            "last_activity": "1bd1963781 2026-09-17T19:34:29-04:00",
+            "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "6fd50d6cfb 2026-09-17T19:44:58-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -344,9 +343,7 @@ compiled:
             "status": "active",
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
             "last_activity": "60aac06844 2026-09-17T19:08:46-04:00",
-            "flags": [
-              "WAITING"
-            ],
+            "flags": [],
             "notes": [],
             "gates": [
               {
@@ -361,8 +358,8 @@ compiled:
               },
               {
                 "kind": "waits_on",
-                "state": "UNMET",
-                "detail": "LGIC_CANON PRD admitted? v1.7 WITHHELD (brief SIGNED, ratified-text STALE)"
+                "state": "MET",
+                "detail": "LGIC_CANON PRD admitted? v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)"
               }
             ],
             "coo_lane": "2.0.0_SA_COO~G",
