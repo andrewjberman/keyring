@@ -29,6 +29,13 @@
     "schwab_query",
     "schwab_prepare_download"
   ],
+  "tool_operations": {
+    "schwab_get_access": null,
+    "schwab_list_files": "list",
+    "schwab_describe_dataset": "describe",
+    "schwab_query": "query",
+    "schwab_prepare_download": "download_filtered"
+  },
   "principal_key": [
     "tid",
     "oid"
