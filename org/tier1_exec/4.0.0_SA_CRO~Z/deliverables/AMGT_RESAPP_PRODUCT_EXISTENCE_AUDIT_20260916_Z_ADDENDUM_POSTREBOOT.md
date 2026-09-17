@@ -328,6 +328,36 @@ criterion that measures exactly the served plane. Recorded because the drain sub
 reader of `complete` would count three surfaces that answer 404. FWD-7, FWD-12 and FWD-14 remain no-surface on the
 served plane until rk-6 deploys, and the panels on the branch would render refusals against today's adapter.
 
+## 3j. ADDENDUM 03:4x-04:0xZ 2026-09-17 -- THE rk-6/rk-7 REDEPLOY: print serves, the three no-surface outcomes serve, the compare surface serves, the Lead Panel serves on the page's own call
+
+The adapter was redeployed at **2026-09-17T03:27:57Z**: CodeSha `zHmPoWu9`, 781,832 B, **layer `opal-amgt-print-deps:1`**
+(the first layer), built from AMGT-rk-6's worker branch (`wk-amgt_resapp-12-24` @`8fcb2e0e26`, 16 route entries against
+HEAD's 11; rk-6 and rk-7 pending, not drained at read time). Pre-deploy state, the rollback target: `x3KrEBvZ`,
+2026-09-16T17:23:29Z, 754,470 B, 0 layers. Every invoke below is built from the page client's own call.
+
+| outcome / gap | before (s.3g-s.3i) | 03:47-03:55Z |
+|---|---|---|
+| **G3 / FWD-5 print** | 500 for every name | **valid PDF for 31 of 33 keyed covered names** (BA 76,184 B / 8 page objects, COST 79,887 B / 9, each `%PDF-` ... `%%EOF`); **500 on exactly the two slash keys** BP/_LN_Equity, NG/_LN_Equity -- log: `FileNotFoundError ... '/tmp/pack_NG/_LN_Equity.pdf'` (row **Z-S141**) |
+| FWD-7 coverage freshness | `/freshness` 404, no route | **200**, rows per covered name |
+| FWD-12 input ledger | `/security/<key>/ledger` 404 | **200** for BA, per-class sources |
+| FWD-14 list register | `/lists` 404 | **200**, owners carried as UNASSIGNED with the reason |
+| FWD-6 compare two versions | no surface | `/security/BA_US_Equity/versions` **200**, `/compare` **200** (model-block stamps) |
+| FWD-15 Lead Panel, the page's no-date call | ABSENT on both axes overnight | **SERVED**: chatter as_of 2026-09-16, 10 rows; price as_of **2026-09-10**, 32 rows -- rk-7's dated fallback. As Z-S137 predicted, the price panel's "latest" is 2026-09-10 while 2026-09-15 rows sit unreadable beside it |
+| non-regression | -- | Model SERVED 33 of 33 keyed covered; drafting SERVED 12 / ABSENT 21 (unchanged); overlay, peers, coverage 200 for BA |
+
+**Read against the audit's four gaps:** G3 CLOSED on the served plane for 31 of 33 keyed covered names. G2's plane half
+closed at s.3d, population 33 of 89 (identity ceiling). G1 durability closed at s.3f, existence still per the capture
+class. G4: the refresh carrier is declared and the client posts to the enqueue route on the chain-23 branch; the consumer
+side is not re-read here. **Three of the three no-surface outcomes now answer on the deployed adapter** -- but the panels
+that read them live on `wk-amgt_resapp-12-23-portal` `f276d732`, one commit past `origin/DEV`, so a capture of the built
+page would come from that branch, not from DEV.
+
+**The record half of the deploy is missing:** no change-management entry exists for this deploy on either tree
+(`org/critical_paths/change_management/`: 0 files touched since 00:00Z; the worker's worktree: none for AMGT), which is
+the gap the worker's row W24-S7 raised before the deploy (its grant does not name that directory). Filed as row
+**Z-S142** with the rollback sha, since nothing else records it; the entry is the issuer's to write. Both rows
+@`13ff9bccc9`.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
