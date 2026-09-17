@@ -58,6 +58,30 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "Decomposition v1 s.5 CONSTRAINT 1: three writers of lib/opal_lgctfm.py, one queue on slot ~1.",
    "world_is": "Four writers across two slots, sequenced by the existing edge set; LT-p-1's order grants lib/opal_lgctfm.py and says it starts after LT-e-3 drains. v1.1 s.10 records it.",
    "notes": "INERT: the count, not a cell or an edge, was wrong, and it was caught at the cut before any worker read it. The same seat wrote v1; a writer census taken from the cells' 'writes' column inherited that column's omission rather than re-reading the PRD's PATHS table."
+  },
+  {
+   "id": "LGIC_LGCTFM-W1-S1",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+   "surfaced_at": "2026-09-17T14:30Z",
+   "one_line": "LT-e-2's OWN GRADED CRITERION E2R1-AC1 (check_lt_r1.py e2-reproduce) NOW FAILS ON A RE-RUN AGAINST THIS ROUND'S WALK OUTPUT, THOUGH NOTHING IN LT-e-2's CELL CHANGED. This round (LT-e-3) plants a third resource whose node_type fits no type in NAMING_SCHEMA.json's 33-type vocabulary at all (COGNITO_USER_POOL, WORKER FACE's own requirement), and lib/opal_lgctfm.py now returns desired.verdict = NOT_COVERED for it per 11_LGCTFM_CONTRACT_SCHEMA_RECORD.md s.3.1's six-value verdict enum. check_lt_r1.py's core_reproduce (built for e2-reproduce, LT-e-2's own arm) treats ANY raising builder call as correct ONLY when desired.verdict == 'RAISE' -- it has no branch for NOT_COVERED, a verdict this round's own WORKER FACE mints. Re-running e2-reproduce now: 'rows with a builder call the checker can make: 278; reproduced: 277' and 'VERDICT: FAIL-E2-DESIRED-EQUALS-BUILDER'.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py core_reproduce() (:585-610): 'good = cell_value(d.get(\"verdict\")) == \"RAISE\" and bool(...)' on any raised exception -- no NOT_COVERED branch.",
+     "infra/logic/11_LGCTFM_CONTRACT_SCHEMA_RECORD.md s.3.1: 'desired.verdict | NAMING_SCHEMA.json grade.verdicts CONFORMANT | ALIAS | OUT-OF-PATTERN + RAISE (grade.unplaceable) + NOT_GRADED (grade.not_graded) + NOT_COVERED (not_covered) | adopted whole; no fourth verdict (brief IV.6)' -- NOT_COVERED is a SIXTH value, distinct from RAISE, and this order's own WORKER FACE requires it: 'its row carries desired.verdict = NOT_COVERED and no tension names it.'",
+     "Measured this run: `python check_lt_r1.py e2-reproduce` against the regenerated org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/contract.json prints 'R-0278 grade([...COGNITO_USER_POOL]) -> RAISE G1.1: ... ; contract form=None verdict='NOT_COVERED'' and 'VERDICT: FAIL-E2-DESIRED-EQUALS-BUILDER', where the prior round's own re-run at commit 9b628270a1 recorded '277 of 277 builder calls reproduced'.",
+     "This is not this order's own criterion (E2R1-AC1 belongs to the DRAINED, MERGED order LGIC_LGCTFM.TO-LT-e-2-r1, whose <status> already reads complete); this row is filed because a later re-run of that criterion -- by an issuer, the CVO at L9, or a future round's regression sweep -- would read a FAIL that is not a defect in LT-e-2's own code, but a fixed-input checker's assumption (any raise = RAISE) this round's own spec supersedes for one verdict."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "check_lt_r1.py's core_reproduce (LT-e-2's E2R1-AC1 arm) asserts a raising grade() call is correctly reported only when desired.verdict == RAISE.",
+   "world_is": "11_LGCTFM_CONTRACT_SCHEMA_RECORD.md s.3.1 and this order's WORKER FACE both require a G1.1 raise (no type fits) to read desired.verdict = NOT_COVERED, not RAISE; e2-reproduce has no branch for it and reads FAIL when re-run against a walk contract carrying the LT-e-3 untypeable plant.",
+   "notes": "ARMED because e2-reproduce is a mechanical, re-runnable checker and nothing marks it superseded; disarm_owner is 2.0.0_SA_COO~G because check_lt_r1.py under fixed_inputs/r1/ is this seat's own artifact and this worker's BOUNDS forbid editing a fixed input even to fix its own assumption. THE FIX, for the disarm owner: add a NOT_COVERED branch to core_reproduce (good = verdict in (RAISE, NOT_COVERED) with the appropriate paired field check), or accept the one-row miss as a known, superseded-by-spec exception the issuer records rather than re-grades. Not routed as BLOCKING: it blocks no criterion of THIS order (E3R1-AC1..AC6 all read PASS against the same regenerated contract), and LT-e-2's order is already complete and merged."
   }
 ]
 ```
