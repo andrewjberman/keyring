@@ -7698,6 +7698,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-5 delivers three tab scores for the page, with DIVERGENCE D shown ABSENT with its reason until FWD-20's house forecast serves; FWD-20 (bar EXERCISED) is Divergence on the Model tab, ABSENT with a reason where the forecast does not serve.",
     "world_is": "The scores exist as a tested library only. A person opening the page sees no Robustness, no Peers V and no Divergence -- not even a classed ABSENT -- and no cell of round 12 wires them to a route or a component. FWD-20 has no served surface of any kind.",
     "notes": "Filed after the round-12 slug (@9f220eb13f) by 4.0.0_SA_CRO~Z under its item-5 role, for the round-12 L10 read and the next round's L8. Same shape as S137/S139/S141: a COMPLETE order whose criteria grade the code, not the served plane. Whether FWD-17's scores and FWD-20's D belong on the served plane this round or the next is the L10 reader's call; this row asserts only what is and is not served."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S150",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-17T07:38Z",
+    "one_line": "CORRECTION to the premise of AMGT_RESAPP-Z-S148 and a hazard in the gate ruled at Z-S147: all three BA_US_Equity thesis-driver points (2025=600, 2024=348, 2023=528) ARE literal values in the filing excerpt the analyzer was given -- the BCA deliveries table's Total column -- but that table is not segmented into any of the 276 passage_map passages and the 400-character citation window cuts its 2023 row, so a producer gate that keeps a point only when ONE PASSAGE holds its period and value would drop every genuine point BA has, and R13-A would serve ABSENT where the filing carries the series.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/filings/v1/BA_US_Equity/000162828026004357.source.json field `excerpt` (138,692 chars, read at this seat 07:3xZ): 'BCA deliveries, including intercompany deliveries, as of December 31 were as follows: 737 * 747 767 * 777 787 Total / 2025 ... Deliveries 447 (7) 30 (15) 35 88 600 / 2024 ... Deliveries 265 (5) 18 (8) 14 51 348 / 2023 Cumulative deliveries 8,528 ... Deliveries 396 (9) 1 32 (14) 26 73 528' -- the Total column carries 600, 348 and 528 for exactly the periods the analysis labels.",
+        "same filing's .analysis.json (LastModified 2026-09-17T05:18:47Z): thesis_driver points [2025:600, 2024:348, 2023:528]; passage_map 276 entries; a boundary-anchored search for 600, 348 and 528 over passage_map text returns 0, 0 and 0 -- agreeing with Z-S148's passage counts; the table text reaches the object only as citations[25].cited_text, whose length is 400, the maximum across all 103 citations, and which ends at 'Deliveries 396 (9)' before the 2023 total.",
+        "Z-S147 ruling text: 'each thesis_driver point is kept only when one passage of the submitted excerpt contains both its period and its value as literals, and carries that passage_id'; Z-S148: 'points that are not in the filing excerpt it was given'.",
+        "instrument note: a first walk over every text-like field of the analysis object (368 strings) found 600 and 348 once each; re-reading passage_map alone reproduced Z-S148's zeros, and the table was then located in the source excerpt -- the object-wide and passage-only reads disagree because the passage map is narrower than the excerpt."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S148: the analyzer emits points 'not in the filing excerpt it was given'; Z-S147 refuses option 1 'on measurement' and rules a producer gate keyed to one passage of the submitted excerpt containing both the period and the value.",
+    "world_is": "The values are in the excerpt; what is missing is (a) any check that ties a value to the text -- Z-S148's mechanism point stands -- and (b) a passage segmentation that includes tables. A value check scoped to passage_map would reject all three true points; a check scoped to the excerpt itself would pass them. Whether option 1 was refused on a measurement that holds is the ruling seat's to re-read, not this row's.",
+    "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane at round-13 intake, before R13-A is cut, so the issuer can read it first. NOT RULED HERE. For the gate's shape: the verification domain is the submitted excerpt (or a passage map that segments tables), a period and its value may sit on different lines of one table block, and a 400-character citation window cannot carry a whole table row. Same narrow-domain error this seat made and caught on Z-S139 at round-12 L9 (recorded in ADJUDICATION_v12). Instruments: boto3 s3 get on the analysis and source objects, python boundary-anchored regex over passage_map and over the excerpt. HEAD at filing @c3842a487a."
   }
 ]
 ```
