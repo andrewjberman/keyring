@@ -8218,6 +8218,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The literal invocation performs no TypeScript build whatsoever on this device for this bun-managed, npm-lockfile-less portal/ tree -- it is a DISCRIMINATION failure under CLAUDE.md Rule 22 (the evidence could not differ whether or not this order's edits carried a type error, since the decoy package never reads this tree's source at all), so it is recorded as its own genuine result rather than silently swapped for the direct-binary reading. The direct-binary reading (`./node_modules/.bin/tsc.exe -b`, rc=0, no output) is preserved in this row as corroborating evidence about actual code health only, per this order's own dispatch instructions, and does not resolve AC2's grade on its literal terms.",
     "notes": "This is a device/tooling defect class, distinct from a code defect: the same literal invocation would misreport on ANY future portal order in a purely-bun-installed worktree on this device until either (a) portal/package.json pins a `packageManager`/engines constraint npm respects, (b) a committed lockfile npm trusts is restored, or (c) the estate's task-order authoring convention for portal TypeScript checks moves off bare `npx tsc -b` per the portal CLAUDE.md's own existing typecheck-law precedent (`bun run typecheck` / `tsc -b` directly, never bare `tsc --noEmit`) toward the same non-npx form for `-b` too. Not repaired here -- outside this order's <paths> (no package.json/.npmrc write granted) and outside the REFUSAL CLAUSE's remit to route around a named invocation. disarm_owner named as the portal-owning frontend seat by estate convention; not confirmed live by this worker."
   }
-
+,
+  {
+    "id": "AMGT_RESAPP-Z-S160",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-17T22:33Z",
+    "one_line": "SIGNER'S POST-ACT VERIFICATION of the 22:29:31Z drafting/v1/BA_US_Equity.json rebuild (STOP 6's own pair: CTO half @a9c6cc924c, COO half @75d97c813e, BOTH on file and read before this verdict). THE ACT SUCCEEDED ON ITS OWN BAR: the served /thesis chart for BA_US_Equity now reads status SERVED, source filing, points_count 3, held_uncited_count 0, each point carrying its character span and passage id (2025=600 span 87536-87539 P0276, 2024=348 span 87629-87632 P0277, 2023=528 span 87725-87728 P0278), on the already-live adapter zuWM8IZziI with NO redeploy. Exactly one key moved: 12 keys under drafting/v1/ and only BA_US_Equity.json modified after 22:00Z, its new version 106588 bytes beside the 05:18:48Z pre-act version. NO ROLLBACK -- the rollback branch this half named (an ABSENT chart after the write) did not fire. FWD-18's one chart is serving filing-derived numbers with click-through for the first time, and it is serving VERIFIED ones: the same three values that row Z-S148 had wrongly called invented and row Z-S151 corrected.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GET /api/scoped/amgt/security/BA_US_Equity/thesis via direct invoke at 22:3xZ: 200; thesis_driver_chart {status SERVED, source filing, points_count 3, held_uncited_count 0}; the three points printed above with span and passage_id each",
+        "lambda get_function_configuration at the same read: CodeSha256 zuWM8IZziI, LastModified 2026-09-17T19:23:42Z -- UNCHANGED by this act, so the chart moved on DATA alone",
+        "s3 list_object_versions drafting/v1/BA_US_Equity.json: 05:18:48Z 106285 B (pre-act), 09:37:53Z 109540 B, 22:29:31Z 106588 B IsLatest",
+        "s3 list_objects_v2 drafting/v1/: 12 keys, exactly one modified after 22:00Z (BA_US_Equity.json) -- the one-key discriminator of the CTO half",
+        "BOTH HALVES READ BEFORE THIS VERDICT (the Z-S159 lesson): ledger/NEVER_WIDEN_ROUND13_DRAFTING_CACHE_REBUILD_CTO_HALF.md @a9c6cc924c and the COO half @75d97c813e",
+        "lib/research/filings/drafting_build.py:239 at HEAD: build_drafting_document copies analysis['thesis_driver'] WHOLE, which is why the spans survived the transform"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CTO half @a9c6cc924c: one key only; no vendor call; a matching digest is a legal NO-OP; a new version must move the served chart to SERVED/source filing/3 points with spans; an ABSENT chart after the write is a FAILED act that ROLLS BACK to the pre-act VersionId; the discriminator is exactly one key's VersionId moving.",
+    "world_is": "Every limb held and the success branch fired. One key moved, the served chart shows three verified filing points with spans and passage ids, and the deployed adapter is unchanged.",
+    "notes": "NOT YET SERVING, and out of this act's scope: the thesis bundle's own as_of_date reads None, because rk-25 is in batch B and not yet deployed. The other 11 drafting/v1 objects still carry the pre-verification shape; rebuilding them is a POPULATION act, not this one-key act, and it rides the filings batch under its own pair. 3.0.0_SA_CVO~Z's L9 grades rk-19 adapter AC2 on this served read. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
+  }
 ]
 ```
