@@ -3308,6 +3308,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "LGIC_ENFORCE.TO-EN-c-23-r4 WORKER FACE instruction 1: 'A row's owner is read, never guessed' -- implicitly one owner per systems.json key.",
    "world_is": "One live token ('security') genuinely serves two unrelated, differently-owned resource families; the registry's one-key-one-owner vocabulary has no row shape for that, so both stay carded rather than one being minted onto the other's owner.",
    "notes": "Non-blocking: this cell carded both groups correctly (Cards 5 and 6) and no criterion here turns on it. Surfaced for whoever next designs a per-resource (not per-token) mint path, since Card 6 shows resources.json cannot reach either group today (row LGIC_ENFORCE-W1-S29's finding 3). disarm_owner 1.0.0_SA_CTO as the naming-rule owner (CLAUDE.md Rule 30 / LGIC canon)."
+  },
+  {
+   "id": "LGIC_ENFORCE-W2-S13",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+   "surfaced_at": "2026-09-17T18:30Z",
+   "one_line": "BLOCKING: round 4's completed census (S25R4-AC3) FAILS -- 1411 of 3237 judged rows carry a literal `{` placeholder in canonical, because EN-c-23-r4/EN-h-24-r4 closed the RAISE population (351 triples) but never saw the much larger, non-RAISE-producing placeholder population (round 3's early stop only exposed 8 of it).",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED, this worktree: `python lib/opal_naming.py census --live --repo --not-judged org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/NOT_JUDGED_R4.json --report org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_REPORT.r4.md` (registry@4f192e91bd64ee70) prints `CENSUS: COMPLETE 3237 judged + 467 carded (live 1690+136 of 1826 nameable, repo 1547+331 of 1878)` -- both planes close, `stopped: null`. Of the 3237 rows in the fenced json, 1411 carry `{` in `canonical` (`r.get('canonical')` substring check, W2-S10's own test), led by IAM_POLICY (live 309 + repo 266), repo S3Key 106, live LOG_GROUP 87, EVENT_RULE (live 84 + repo 76), live LAMBDA 71, IAM_ROLE (repo 57 + live 56), SECRET (repo 34 + live 33), live EC2_INSTANCE 21, CW_ALARM (live 20 + repo 18), repo S3_BUCKET 20, and 20+ further (plane,type) pairs at smaller counts.",
+     "MEASURED: none of the 1411 leaked rows are CARDED (carding removes an item from `rows` entirely, `lib/opal_naming.py census_judge` :2310-2317 `continue`s past a not_judged match before `grade()` ever runs) -- they are ordinary grade() output for a name whose system/scope/cadence token is placeholder-eligible (V3) rather than unresolved (V2, which RAISEs and IS carded/carried on RAISE_POPULATION_S6.r3.md). `EN-h-24-r4`'s task order (`LGIC_ENFORCE.TO-EN-h-24-r4.placeholders.md:20`) names its own scope precisely: 'Round 3's census report carries 8 rows whose canonical form contains a literal `{system}` placeholder' -- the 8 rows round 3's early-stopped 21-row report exposed, not the population round 4's completed run now reveals.",
+     "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_REPORT.r4.md (this commit) and NAMING_CENSUS_COMPARISON.r4.md Section 1 carry the full breakdown."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_ENFORCE.TO-EN-s-25-r4 WORKER FACE THE CELL item 4: 'NO PLACEHOLDER reaches a report row (W2-S10's rule): no row's `canonical` may contain `{`.'",
+   "world_is": "1411 of the round's 3237 judged rows carry a `{` placeholder in canonical. The registry is outside this worker's grant (BOUNDS: 'The registry is not yours this round'), so S25R4-AC3 is reported FAIL with this measured evidence rather than worked around; nothing is minted or carded by this worker.",
+   "notes": "AC1 and AC2 (both planes complete, stopped null, vintage stated) PASS on the same run. Closing this bar needs a round-5-scale mint/card campaign over the placeholder population (a DIFFERENT, larger set than RAISE_POPULATION_S6.r3.md, since a placeholder-eligible token never raises and so was never captured there) -- sized and owned by the round's issuer/analysis, not this cell. disarm_owner 2.0.0_SA_COO~G as round 4's issuer, matching row LGIC_ENFORCE-W1-S29's convention."
   }
 ]
 ```
