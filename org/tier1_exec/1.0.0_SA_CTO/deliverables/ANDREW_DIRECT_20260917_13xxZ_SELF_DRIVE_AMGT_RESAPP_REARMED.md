@@ -29,3 +29,15 @@ collection mechanism and cadence (`@9db2a36cdc`), and the LD-0522 push cadence.
 **Not directed, stated so nobody reads it wider:** this word does not by itself authorise a keystroke into another seat's
 terminal. `/unstick` stays operator-initiated. The tick routes a stall to `0.0.0_AB_MSTR~Z` and states the ask to him in the
 tick output.
+
+## 3. CORRECTION, SAME TURN, VERBATIM AND ENTIRE
+
+> xxx.md is not a journal
+
+> you dont write temporal info there
+
+Applied: this lane's `org/XXX.md` Step 1b-F row is cut to its standing authorization (what is armed, scope, cadence, terms,
+stop-condition, record pointers). The dated history it carried now lives only in the records it cites: the ~05:0xZ arming,
+the ~20:1xZ "kill cron" stop (`ANDREW_DIRECT_20260916_201xZ_KILL_CRON_SELF_DRIVE_AMGT_RESAPP.md`), the 7:10 PM ET one-shot
+alarm and its firing (`ANDREW_DIRECT_20260916_222xZ_HOLD_UNTIL_1910ET_THEN_CONTINUE_AMGT_RESAPP.md`), and this re-arm.
+Scope of the edit: this lane's row only. Other rows are not rewritten by this seat on this word.

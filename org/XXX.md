@@ -366,57 +366,19 @@ superseded is restored by the NEW row below, which is the live arm. ⚠ **THE RO
 by the `~W` lanes and that record stands; what is set down is the ARM and the supersession, never the work. Nothing re-arms
 from this row. Ruled and landed by `1.0.0_SA_CTO~Z` (its own carrier), broadcast same turn, push state LOCAL.
 
-`1.0.0_SA_CTO~Z` **[FABRIC: SITE-Z -- arm ONLY on site z]** **`/self-drive AMGT_RESAPP` + a `/goal-set` GOAL, ARMED
-2026-09-16 ~05:0xZ by Andrew-direct at the `0.0.0_AB_MSTR~Z` terminal**, VERBATIM AND ENTIRE: *"bring CTO~Z online, it is time
-to get back on AMGT_RESAPP. That is going to be the sole focus of your fabric tonight. I want CTO~Z to have a /self-drive loop
-on to adjudicate any open-calls that come up, proceeding the /canonical-flow workflow. CTO~Z should have a /goal to complete
-the full project end to end, including front-end. No portal promote necessary. the role of CRO~Z in this equation is to be
-referring back to the PRD and assesing if we actally have a product or if there is some crucial gap in the development of the
-application (e.g. data pipeline doesnt exist, frontend doesnt exist, etc., have seen scenarios in building where the agents
-have a great PRD and forget to actually produce some material part of the end product)."* Typos his, preserved. Records:
-`afc02ead18` (the word) and ADDENDUM 1 `c05a41c0f4` (full Tier-1 seating); this lane's own goal + ruling record is
+`1.0.0_SA_CTO~Z` **[FABRIC: SITE-Z -- arm ONLY on site z]** **`/self-drive AMGT_RESAPP` -- ARMED.** Authority:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_SELF_DRIVE_AMGT_RESAPP_REARMED.md`, with terms from
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_043xZ_CTOZ_GOAL_AND_SELF_DRIVE_AMGT_RESAPP.md`.
-- **CLASS: DIRECTED.** **SCOPE: AMGT_RESAPP only** (D5, site-Z). **CADENCE: 30 minutes**, off-minute, via CronCreate.
-- ⛔ **THIS LANE IS THE ADJUDICATOR** (his "you adjudicate ... open-calls"): every adjudicable call in scope is RULED here,
-  recorded and broadcast. **RESERVED and still Andrew's**, because a broad delegation does not repeal a specific prohibition:
-  vendor / egress off Opal infrastructure; unrecoverable acts (recursive deletion, S3 object or version deletes, dropping
-  tables, stopping EC2, destructive git); money and contracts; the PORTAL FREEZE and any promote; recurring harvest
-  COLLECTION mechanism and cadence (`@9db2a36cdc`); and the LD-0522 push cadence. A reserved call is a card at Andrew with
-  its citation, never self-adjudicated.
-- **THE TICK IS THE GOAL LOOP** -- one timer, not two. The goal text is in the record above and is engaged through
-  `/goal-set` at this lane. `paired_with`: `2.0.0_SA_COO~Z` on the same goal text (his ~04:5xZ seating put that lane on this
-  project), `3.0.0_SA_CVO~Z` at L8/L9, `4.0.0_SA_CRO~Z` on his item-5 existence audit.
-- ⚠ **"No portal promote necessary" is read EXACTLY as narrow as it is:** it removes a promote from the goal's DEFINITION OF
-  DONE. It does not license a promote, does not lift the portal freeze, and says nothing about committing portal code.
-- **STOP-CONDITION:** AMGT_RESAPP CLOSED -- `COMPLETION_REPORT` and `COMPLETION_GRADES` covering the SAME outcomes, all
-  REALIZED against exercised artifacts, `python .tools/missions-tree-index.py check` admitting the CLOSED row, with `/verify`
-  SOUND; or HELD-AT-STOP with the reserved card at Andrew; or his stand-down. **A successor at THIS lane RE-ARMS OFF THIS ROW
-  while the scope is not DONE**, and re-sends the goal text to `2.0.0_SA_COO~Z` if that seat restarted.
-- ⛔ **STOPPED 2026-09-16 ~20:1xZ BY HIS STAND-DOWN, VERBATIM AND ENTIRE: *"kill cron"*** -- Andrew-direct at the `1.0.0_SA_CTO~Z`
-  terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_201xZ_KILL_CRON_SELF_DRIVE_AMGT_RESAPP.md`).
-  `1.0.0_SA_CTO~Z` deleted its cron (then `884c0211`) and `CronList` read empty after. **THIS ROW ARMS NOTHING: a successor does
-  not re-arm from it.** Read exactly as narrow as the word: the TIMER is stopped; AMGT_RESAPP is not closed, no seat's work is
-  stopped, and this lane stays event-driven on its inbox Monitor like every zero-cron serial.
-- **ONE-SHOT ALARM, DIRECTED 2026-09-16 ~22:2xZ** at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"we will hold meaningful work
-  until 7:10p Eastern, so i will need you to set a cron alarm for that time. At that time, the fabric should be directed to
-  continue efforts on the assigned project."* (record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_222xZ_HOLD_UNTIL_1910ET_THEN_CONTINUE_AMGT_RESAPP.md`).
-  Fires ONCE at **7:10 PM ET = 23:10Z on 2026-09-16** and directs `2.0.0_SA_COO~Z`, `3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z` and
-  `0.0.0_AB_MSTR~Z` to continue `/canonical-flow AMGT_RESAPP` at their limbs. **Not a loop; it does not re-arm the stopped
-  `/self-drive` above.** A successor session re-arms it ONLY if it starts before 23:10Z that day; once that time has passed
-  and the direction is sent, this line arms nothing.
-  **FIRED 2026-09-16 23:10Z (7:10 PM ET).** Seats measured LIVE (`2.0.0_SA_COO~Z`, `3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z`,
-  `0.0.0_AB_MSTR~Z`); the one direction was sent at 23:11Z as msgs 23490-23493, DELIVERED 4 of 4. The cron auto-deleted.
-  **THIS LINE NOW ARMS NOTHING.**
-- **RE-ARMED 2026-09-17 ~13:xxZ BY ANDREW-DIRECT at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"/self-drive AMGT_RESAPP"***,
-  given right after he asked *"why the /self-drive i asked you to do has not resulted in you driving"* (record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_SELF_DRIVE_AMGT_RESAPP_REARMED.md`). **This
-  sub-clause ARMS the loop again; the STOPPED line above is history.** Terms are this row's ~05:0xZ clause: scope
-  AMGT_RESAPP only; cadence 30 minutes via CronCreate; this lane ADJUDICATES adjudicable calls; RESERVED as listed above.
-  `paired_with`: `2.0.0_SA_COO~Z` at its own `/canonical-flow` limb (not `/drive`). Every tick also measures whether each
-  seat that OWES the next limb is moving, and routes a stalled owing seat to `0.0.0_AB_MSTR~Z` the same tick. A keystroke
-  into another seat stays operator-initiated. STOP-CONDITION unchanged: AMGT_RESAPP CLOSED, HELD-AT-STOP, or his stand-down.
-  **A successor at this lane RE-ARMS OFF THIS SUB-CLAUSE while the scope is not DONE.**
+- **SCOPE:** AMGT_RESAPP only (D5, site-Z). **CADENCE:** 30 minutes via CronCreate.
+- **THIS LANE ADJUDICATES** every adjudicable call in scope. **RESERVED to Andrew:** vendor or egress off Opal
+  infrastructure; unrecoverable acts; money and contracts; the portal freeze and any promote; the harvest collection
+  mechanism and cadence (`@9db2a36cdc`); the LD-0522 push cadence.
+- **Each tick** also checks that the seat owing the next limb is moving, and routes a stalled owing seat to
+  `0.0.0_AB_MSTR~Z`. A keystroke into another seat stays operator-initiated.
+- `paired_with`: `2.0.0_SA_COO~Z` at its own `/canonical-flow` limb.
+- **STOP-CONDITION:** AMGT_RESAPP CLOSED (COMPLETION_REPORT and COMPLETION_GRADES on the same outcomes, all REALIZED,
+  tree check admitting the CLOSED row); or HELD-AT-STOP; or Andrew's stand-down. A successor at this lane re-arms off
+  this row while the scope is not DONE.
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
