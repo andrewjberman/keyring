@@ -7601,6 +7601,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-15 AC4's own expect text: 'this clause cannot pass until BA's filings document is regenerated UNDER THIS cell's own producer change' -- asserting the re-run, within this cell's lib/research/filings/ write surface, is a sufficient act to move the served points_count off zero.",
     "world_is": "The served points_count is governed exclusively by scoped_amgt.py's thesis_driver_chart(), which never reads the fields this cell's producer change added. It independently re-derives points by matching the driver's series NAME against the model block's 19 standard fiscal-statement mnemonics -- a set an operating KPI like aircraft deliveries structurally cannot belong to. So the re-run is NOT sufficient by itself, regardless of what the producer emits, until scoped_amgt.py is changed to consume thesis_driver.points/.absent_reason -- a file this order's ISSUER AMENDMENT 8 explicitly removed from this cell's grant.",
     "notes": "AC4 is left NOT MET in this worker's proof-of-spec instance, citing this row; AC2 and AC3 (this cell's own write surface) both measure PASS. The pilot re-run authorized by ISSUER AMENDMENT 16 / ANDREW-DIRECT 2026-09-16 ~19:2xZ was executed exactly once, as bound ('ONE name, ONE re-run, no cadence'); its world-writes (S3 filings/v1 and drafting/v1 pool keys) are disclosed above and no second re-run was made after this finding. Instruments: py_compile + pytest on lib/research/filings/, AC2/AC3's own literal invocations, two direct boto3 lambda.invoke() calls against opal-amgt-scoped-api (before and after the pool write), one comp-secrets read, two `python -m lib.research.filings.analyze` invocations. HEAD at filing (worktree wk-amgt_resapp-12-23, tip 5c97d7dfee before this worker's commit)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S146",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-17T06:58:00Z",
+    "one_line": "CORRECTION of this seat's own row AMGT_RESAPP-Z-S139, narrowed: the store DOES carry a named no-CIK marker for all 21 unfiled names (universe/v1/2026-09-16.json filing_identity {cik: null, form_expected: none, source: none}), and rk-18 AC2/AC3 graded their named-reason arm on THAT carrier through the batch module's own plan(), not on a log line. What survives of S139: the planned per-name UNRESOLVED-SOURCE.source.json objects were never written, and the page's thesis drafting_reason for those names is the generic 'NoSuchKey' rather than the no-CIK reason the store already holds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/universe/v1/2026-09-16.json read at 06:5xZ: 33 keyed covered names; 12 have a filings/v1 directory; the 21 without one ALL carry filing_identity {\"cik\": null, \"form_expected\": \"none\", \"source\": \"none\"} (21 of 21, one shape); a filed name carries e.g. {\"source\": \"edgar\", \"cik\": 937966, \"form_expected\": \"20-F\"}.",
+        "rk-18 proof_of_spec (deliverables/0.9.0_WK_AMGT_RESAPP~30) AC2 PASS output_evidence: 'analysed_of_attempted 12 of 33 | missing_count 21 | ... SUPPLEMENTARY, from the batch module's OWN plan() function (lib/research/filings/batch.py) ... every one of the 21 missing names carries the SAME named reason -- \"filing_identity.source is 'none': no cik and expected form to fetch by\"'. AC3 PASS: identical missing list, tracing to the same reason.",
+        "ROUND12_L8_PACKET_20260917.md s.5 @7c492e6545: '12 of 33 filings/drafting fetchable, the other 21 correctly unfetchable non-US listings each carrying a named no-CIK reason' -- consistent with the two reads above.",
+        "Still true at 06:5xZ: filings/v1 holds 0 objects whose key contains UNRESOLVED; ENEL_IM_Equity thesis drafting_reason (02:5xZ read) 'no drafted document at s3://opal-data-harvest/drafting/v1/ENEL_IM_Equity.json: NoSuchKey ...'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S139 asserted 'the 21 names have no reason carrier in the store' and that the named-reason arm 'can read MET on the log line'.",
+    "world_is": "Both assertions were wrong: the reason carrier is the universe object's filing_identity, and the criteria graded on it correctly. The residual is presentational and small: the served drafting_reason does not surface the classed no-CIK reason, and the batch's plan line promised per-name objects that do not exist.",
+    "notes": "Filed by the seat that filed S139, as a new citing row rather than an in-place edit. Cause of the error, stated so it is not repeated: this seat searched ONE prefix (filings/v1/) for the reason carrier and read the batch log's plan line as the carrier, instead of reading every object the grading path reads (the universe's filing_identity and the proof instance) -- the domain of the absence census was narrower than the claim. S139's disposition and this row's are 3.0.0_SA_CVO~Z's at L9."
   }
 ]
 ```
