@@ -3260,6 +3260,77 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "LGIC_ENFORCE.TO-EN-s-6-r3.census-to-the-end.md, AMENDMENT 1 (THE CELL item 4): 'Timebox: if more than 25 distinct RAISEs appear, stop minting, file the full list as one row, and FWD-5 goes to round 4 on that list.'",
     "world_is": "The live+repo estate carries hundreds of names under tokens (astn/news/trade, and dozens of S3-key path segments unrelated to the system vocabulary at all) that the registry's mint mechanism cannot resolve one RAISE at a time within one cell's budget: 3 tokens already measured unresolved by EN-r-5-r3 alone account for 199 of the 462 occurrences (news 114 + trade 50 + astn 35), and the remaining ~260 are mostly S3Key path segments (json/jwt/security/cache/...) that AMENDMENT 1's mint standard was never built to resolve (a key segment is not a system token). One worker cannot, within this cell's scope and the timebox it was given, mint or card a path through all of them; the mechanism the order itself specifies for exactly this case is invoked here rather than worked around.",
     "notes": "Form only, per THE CELL's own instruction on crossing the timebox. This does not change S6R3-AC1/AC2/AC3/AC4's verdicts (already FAIL, anticipated by ACCEPTANCE) and closes no other row. The `inf-otp-relay-api` mint and the two owner cards stand as this cell's registry work; RAISE_POPULATION_S6.r3.md is the full list THE CELL asks be filed."
+  },
+  {
+   "id": "LGIC_ENFORCE-W1-S29",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+   "surfaced_at": "2026-09-17T16:40Z",
+   "one_line": "BLOCKING: round 4's C23R4-AC2 (c23-mint-basis) is unsatisfiable by any registry write in <paths> -- the one file that can actually resolve any of this population's 351 raises (systems.json) is invisible to the arm's added-row detector, and the one file the arm can see (resources.json) is schema-closed against the owner_claim/owner_basis fields the arm requires.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED, this worktree, HEAD (unstaged systems.json/resources.json): `python check_en_r4.py c23-mint-basis` prints `infra/logic/registry/systems.json: 0 row(s) at the worktree, 0 added since af8d694cce` although the SAME tree's `python lib/opal_naming.py validate` prints `VALIDATE: OK 25 system row(s), 9 scope row(s)`. check_en_r4.py's `_added_rows` (:239-262) computes `rows = cur.get(\"resources\") if isinstance(cur, dict) and \"resources\" in cur else cur; rows = rows if isinstance(rows, list) else []` -- systems.json's top-level list key is `\"systems\"`, not `\"resources\"`, so `\"resources\" in cur` is False, `rows` falls through to the whole dict object, `isinstance(rows, list)` is False, and `rows` becomes `[]` UNCONDITIONALLY, regardless of systems.json's actual content. This is not a base/diff artifact: it reads 0 total rows, not 0 added rows.",
+     "MEASURED, this worktree: added `{\"name\": \"test-probe-role\", \"type\": \"IAM_ROLE\", \"system\": \"advi\", \"evidence\": \"infra/aws/terraform/inf-pipeline/lambda-otp-relay.tf:1-3\", \"owner_claim\": \"inferred\", \"owner_basis\": \"infra/aws/terraform/inf-pipeline/lambda-otp-relay.tf:1\"}` to resources.json's `resources` array (the exact shape C23R4-AC2/c23_mint_basis requires: `owner_claim` in (measured,inferred) + a resolving `owner_basis`), then ran `python lib/opal_naming.py validate`: `REFUSED resources.json[31].row: carries field(s) outside name, type, system, evidence: ['owner_basis', 'owner_claim']` / `VALIDATE: REFUSED 1 refusal(s), 17 warning(s)`. Reverted (`git checkout -- infra/logic/registry/resources.json`), confirmed clean, re-ran validate: OK. `lib/opal_naming.py:59`: `RES_FIELDS = (\"name\", \"type\", \"system\", \"evidence\")`, a CLOSED set `validate()` enforces at `:504-506`.",
+     "MEASURED (code trace, not a run): `lib/opal_naming.py` `_slots` (:1113-1164) consults `resources.json` (`v.resources.get((nm, typ))`, :1147) in exactly one branch -- `t1 in v.v3 or typ == \"LAMBDA_LAYER\"` (:1135) AND no later token resolves a system AND no v2-token conflict was hit first (the R1.d raise at :1141 fires INSIDE that same loop, before the resources.json read). Every one of this population's 351 triples was captured BECAUSE grade() raised (RAISE_POPULATION_S6.r3.md :6-7): for the 9 R1.d rows, the v2 conflict that raises R1.d is, by definition, hit before the resources.json fallback; for the 2 LAMBDA_LAYER rows (`news-trending-deps`), `t1='news'` is checked against `v.v2` (:1133) BEFORE the v3/LAMBDA_LAYER branch (:1135) and raises R1.c there, never reaching :1147; every remaining row's `t1` (or, for S3Key/K-grammar, its segment 1) is not in v1/v2/v3 at all and raises R1.f/B2/K1/K3/K4a/R8/L2 through branches that never read resources.json (:1150-1151, :1301-1313, :1399-1478, :1204-1217, :1281-1283). So resources.json cannot change grade()'s outcome for ANY of the 351 -- systems.json is the only file capable of it, and finding 1 above shows the arm cannot see it.",
+     "Full reasoning and per-token research recorded in `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/OWNER_CARDS_R4.md`, section 'Why this campaign mints nothing'."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_ENFORCE.TO-EN-c-23-r4 WORKER FACE instruction 1: a mint carries `owner_claim` and a resolving `owner_basis`; ACCEPTANCE C23R4-AC2/check_en_r4.py `c23_mint_basis`: every row this round ADDS to systems.json OR resources.json must carry those two fields with a resolving citation, and >=1 row must be added.",
+   "world_is": "No registry write inside <paths> can satisfy C23R4-AC2 together with C23R4-AC4 (validate OK, which the order requires to STILL pass): the only file whose contents can resolve any of this round's 351 raises (systems.json) is never detected as having ANY rows by the arm's added-row logic (measured: reads 0 total rows against an actual 25); the only file the arm's added-row logic DOES read (resources.json) refuses, via the registry's own validator, the exact two fields (owner_claim, owner_basis) the arm requires on an added row. This cell's proof-of-spec instance records C23R4-AC2 as FAIL, citing this row.",
+   "notes": "Filed same-turn, work continued: this cell carded all 351 triples (0 minted; AC1/AC3/AC4 measured PASS this tree). disarm_owner 2.0.0_SA_COO~G as the fixed input's author (round 4's issuer); the repair is either (a) `_added_rows` reading systems.json's `\"systems\"` key the same way it reads resources.json's `\"resources\"` key, or (b) the arm reading a field resources.json's closed schema actually allows (e.g. citing `evidence` instead of requiring new `owner_claim`/`owner_basis` keys) -- a fixed input this worker does not edit."
+  },
+  {
+   "id": "LGIC_ENFORCE-W1-S30",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+   "surfaced_at": "2026-09-17T16:42Z",
+   "one_line": "The 'security' token names TWO different, differently-owned live systems (D12's NFRA_OPSEC202609 evidence/access-log buckets vs. the CLOSED, unregistered NFRA_TERRAFORM security-sweep tooling) that grade()'s flat per-token systems.json vocabulary cannot both carry -- opal-data-security[-access-logs] stays carded even though its OWN bucket has a genuine, citable directive owner, because minting the shared token would misattribute the other system.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "infra/aws/terraform/opsec/s3_evidence.tf:1-3 (cell OP-s-17, PRD v0.10) and infra/aws/terraform/opsec/s3_access_logs.tf:1-3 (cell OP-s-27, PRD s.7.6 C-15) declare opal-security-evidence and opal-data-security-access-logs under project NFRA_OPSEC202609, a CURRENT org/missions/DIRECTIVES.yaml member (D12 'Platform Operations', :485).",
+     "infra/aws/terraform/security-ops/main.tf:1-8 declares security-sweep-comprehensive 'adopted under NFRA_TERRAFORM-P2'; org/projects/NFRA_TERRAFORM.json: status closed, phase 'closed 2026-08-25 -- SPRING CLEAN ... a project not attached to org/missions/DIRECTIVES.yaml is closed'; 0 hits for NFRA_TERRAFORM in org/missions/DIRECTIVES.yaml.",
+     "lib/opal_naming.py `_system_of` (:1087-1093) and the v1 membership test (:1089, `t in v.v1`) key purely on the token `t`, with no per-resource-type or per-context split -- a systems.json row for key='security' would resolve BOTH the opal-data-security* B2 raises (via v.products, :1304) AND the security-sweep-* R1.f raises (via v.v1, :1089), attributing the second group to whichever owner the row names, which the evidence above shows is wrong for one of the two groups regardless of which owner is chosen.",
+     "Full detail: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/OWNER_CARDS_R4.md, Cards 5 and 6."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_ENFORCE.TO-EN-c-23-r4 WORKER FACE instruction 1: 'A row's owner is read, never guessed' -- implicitly one owner per systems.json key.",
+   "world_is": "One live token ('security') genuinely serves two unrelated, differently-owned resource families; the registry's one-key-one-owner vocabulary has no row shape for that, so both stay carded rather than one being minted onto the other's owner.",
+   "notes": "Non-blocking: this cell carded both groups correctly (Cards 5 and 6) and no criterion here turns on it. Surfaced for whoever next designs a per-resource (not per-token) mint path, since Card 6 shows resources.json cannot reach either group today (row LGIC_ENFORCE-W1-S29's finding 3). disarm_owner 1.0.0_SA_CTO as the naming-rule owner (CLAUDE.md Rule 30 / LGIC canon)."
+  },
+  {
+   "id": "LGIC_ENFORCE-W2-S13",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+   "surfaced_at": "2026-09-17T18:30Z",
+   "one_line": "BLOCKING: round 4's completed census (S25R4-AC3) FAILS -- 1411 of 3237 judged rows carry a literal `{` placeholder in canonical, because EN-c-23-r4/EN-h-24-r4 closed the RAISE population (351 triples) but never saw the much larger, non-RAISE-producing placeholder population (round 3's early stop only exposed 8 of it).",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED, this worktree: `python lib/opal_naming.py census --live --repo --not-judged org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/NOT_JUDGED_R4.json --report org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_REPORT.r4.md` (registry@4f192e91bd64ee70) prints `CENSUS: COMPLETE 3237 judged + 467 carded (live 1690+136 of 1826 nameable, repo 1547+331 of 1878)` -- both planes close, `stopped: null`. Of the 3237 rows in the fenced json, 1411 carry `{` in `canonical` (`r.get('canonical')` substring check, W2-S10's own test), led by IAM_POLICY (live 309 + repo 266), repo S3Key 106, live LOG_GROUP 87, EVENT_RULE (live 84 + repo 76), live LAMBDA 71, IAM_ROLE (repo 57 + live 56), SECRET (repo 34 + live 33), live EC2_INSTANCE 21, CW_ALARM (live 20 + repo 18), repo S3_BUCKET 20, and 20+ further (plane,type) pairs at smaller counts.",
+     "MEASURED: none of the 1411 leaked rows are CARDED (carding removes an item from `rows` entirely, `lib/opal_naming.py census_judge` :2310-2317 `continue`s past a not_judged match before `grade()` ever runs) -- they are ordinary grade() output for a name whose system/scope/cadence token is placeholder-eligible (V3) rather than unresolved (V2, which RAISEs and IS carded/carried on RAISE_POPULATION_S6.r3.md). `EN-h-24-r4`'s task order (`LGIC_ENFORCE.TO-EN-h-24-r4.placeholders.md:20`) names its own scope precisely: 'Round 3's census report carries 8 rows whose canonical form contains a literal `{system}` placeholder' -- the 8 rows round 3's early-stopped 21-row report exposed, not the population round 4's completed run now reveals.",
+     "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_REPORT.r4.md (this commit) and NAMING_CENSUS_COMPARISON.r4.md Section 1 carry the full breakdown."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_ENFORCE.TO-EN-s-25-r4 WORKER FACE THE CELL item 4: 'NO PLACEHOLDER reaches a report row (W2-S10's rule): no row's `canonical` may contain `{`.'",
+   "world_is": "1411 of the round's 3237 judged rows carry a `{` placeholder in canonical. The registry is outside this worker's grant (BOUNDS: 'The registry is not yours this round'), so S25R4-AC3 is reported FAIL with this measured evidence rather than worked around; nothing is minted or carded by this worker.",
+   "notes": "AC1 and AC2 (both planes complete, stopped null, vintage stated) PASS on the same run. Closing this bar needs a round-5-scale mint/card campaign over the placeholder population (a DIFFERENT, larger set than RAISE_POPULATION_S6.r3.md, since a placeholder-eligible token never raises and so was never captured there) -- sized and owned by the round's issuer/analysis, not this cell. disarm_owner 2.0.0_SA_COO~G as round 4's issuer, matching row LGIC_ENFORCE-W1-S29's convention."
   }
 ]
 ```

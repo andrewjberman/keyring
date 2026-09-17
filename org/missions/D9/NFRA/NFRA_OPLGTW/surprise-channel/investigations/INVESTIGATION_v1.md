@@ -2115,30 +2115,6 @@ name the one known failure instead of silently inheriting it.
     "notes": "INERT: no served surface, nothing deployed. OGV2-AC2 is already graded FAIL on NFRA_OPLGTW-W6-S6 regardless of this reduction, so this row's own disposition does not change this round's AC2 outcome; it is filed so a re-cut task order (or the same worker resumed) has the exact denominator of what remains, rather than a diff against the full 13."
   },
   {
-    "id": "NFRA_OPLGTW-W5-S10",
-    "project": "NFRA_OPLGTW",
-    "fabric": "laptop",
-    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
-    "surfaced_at": "2026-09-17T19:17:17Z",
-    "one_line": "OGQ4-AC5 requires tests/test_schwab_query.py, tests/test_schwab_semantics.py and tests/test_schwab_export.py to all pass unchanged, but wiring semantics.assert_quantity_sum_grouped into query.py's check_against_grant (this cell's own OGQ4-AC2) breaks two pre-existing OG-q-2 tests that treat an ungrouped quantity sum as legal; test_schwab_query.py is outside this order's <paths> grant, so it cannot be fixed here.",
-    "class": "BLOCKING",
-    "hazard_standing": "INERT",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-4.semantics-wiring.md OGQ4-AC5: 'the probe runs tests/test_schwab_query.py, tests/test_schwab_semantics.py and tests/test_schwab_export.py, ONE pytest process per module, and every module passes' -- no test in any of the three is named as an exception.",
-        "GRANT: the same order's <paths> block names only app/integrations/schwab/query.py, app/integrations/schwab/integration.py, tests/test_schwab_wiring.py and this investigation file -- tests/test_schwab_query.py is not granted.",
-        "BUILD: app/integrations/schwab/query.py check_against_grant, this worker's commit -- calls semantics.assert_field_summable and semantics.assert_quantity_sum_grouped on every sum aggregate, exactly OGQ4-AC1/AC2's own requirement (dataset's own datasets.json quantity_fields.dim_position includes quantity_settled; quantity_sum_required_groups = [cusip, l_s]).",
-        "RUN: '.venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_query.py -q -p no:cacheprovider --color=no' at this worker's commit: '2 failed, 23 passed in 6.64s' -- FAILED test_ogq2_ac07 (tests/test_schwab_query.py:491-497, its own 'control' case sums quantity_settled with no group_by and asserts success) and FAILED test_ogq2_ac15 (tests/test_schwab_query.py:743-750, a second query summing quantity_settled with no group_by, now refused INVALID_REQUEST quantity_sum_ungrouped before the engine's deadline-kill path it means to exercise ever runs); tests/test_schwab_semantics.py '14 passed in 1.22s' and tests/test_schwab_export.py '27 passed in 6.41s' both clean.",
-        "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py AC5 prints exactly this per-module result with the denominator 3 and returns VERDICT: FAIL-OGQ4-AC5 2 of 3 module(s) passed."
-      ]
-    },
-    "disposition": "UNDER_INVESTIGATION",
-    "spec_asserts": "OGQ4-AC5, verbatim above: the three named modules all pass, unchanged, in the same round that OGQ4-AC1/AC2 require the exact refusal that breaks two of test_schwab_query.py's own cases.",
-    "world_is": "OG-q-2's test_ogq2_ac07 and test_ogq2_ac15 were written and merged before any caller enforced the contract's quantity-sum-grouping rule (C3), so their own 'control'/'complete scan' cases sum a quantity field (quantity_settled) with no group_by and expect success -- exactly the shape OGQ4-AC2 requires this cell to refuse. Wiring the call site correctly therefore makes those two OG-q-2 tests fail; nothing else in the three named modules regresses (test_schwab_semantics.py and test_schwab_export.py are unaffected, and test_schwab_query.py's other 23 tests still pass). test_schwab_query.py is not in this order's <paths> grant and OG-q-2's cell is merged and closed, so this worker refuses to edit it (BOUNDS: 'never widen the order or fix a neighbouring defect'; 'a path you need that is not named is a BLOCKING surprise row on that criterion -- never an override'). OGQ4-AC5 is graded FAIL by this row's own measurement, not silently passed or worked around.",
-    "notes": "INERT: nothing deploys in this order; the two failing assertions are pytest-local and no served behaviour changes as a result of this row. BLOCKING: OGQ4-AC5 stays FAIL and this order stays open on that criterion until an issuer either updates test_ogq2_ac07/test_ogq2_ac15 to group their quantity sums (or otherwise re-scopes AC5), which is outside this cell's grant."
-  },
-  {
     "id": "NFRA_OPLGTW-W1-S13",
     "project": "NFRA_OPLGTW",
     "fabric": "laptop",
@@ -2161,6 +2137,100 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-i-3 FIRST ACT: 'Re-run the OG-i-2 live denial and assume arms against the new ARNs, and record them in this cell's result file.'",
     "world_is": "The mechanism this same cell is required to install (R-OG-6's one fixed, parameterless document) cannot carry a dynamic assume-role/GetObject diagnostic without reopening the caller-supplied-interpolation hole R-OG-6 exists to close; AWS-RunShellScript, the mechanism OG-i-2's arms actually use, is the thing this cell forbids from itself onward. This worker refused the live re-run as written and substituted a declared-level check (trust policy + inline policy readback via iam get-role/get-role-policy, no host execution) against the new ARNs, disclosed as a weaker instrument than a host-exercised assume/deny arm.",
     "notes": "INERT: no served surface exercised by either the refused act or its substitute; both are reads. Recorded for L9 to rule whether a host-exercised re-run belongs to a LATER cell (its own document, or an audited AWS-RunShellScript exception) rather than OG-i-3."
+  },
+  {
+    "id": "NFRA_OPLGTW-S24",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-17T20:30Z",
+    "one_line": "OG-i-3's rename drain left CLOUD's acceptance harness RED: tests/acceptance/conftest.py:87-88 hardcodes the pre-rename reader ARNs, aws_roles.role_config() refuses them against the renamed contract, and integration.py swallows it as UNAVAILABLE. Measured on the shared tree, not in a worktree: tests/acceptance/test_local_acceptance.py reads 5 failed, 2 passed. The issuer's cut of OG-i-3 carried R-OG-7's rename with no census of the old names' consumers.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN on the shared tree @033f152e5d (not a worker worktree): `pytest -q tests/acceptance/test_local_acceptance.py` -> `5 failed, 2 passed in 6.56s`, failures include test_ogv2_a05 and test_ogv2_ac05.",
+        "READ @033f152e5d: tests/acceptance/conftest.py:87-88 READER_ARN and CATALOG_ARN are the pre-rename names `opal-mcp-emp-menachem-schwab-read` and `opal-mcp-schwab-catalog-read`; both roles return NoSuchEntity live and the contract now names gateway-schwab-read-role / gateway-schwab-catalog-read-role (OG-i-5/OG-i-3 @258d786fbd).",
+        "CAUSE CHAIN, read: app/integrations/schwab/aws_roles.py role_config() refuses an ARN that does not match the contract's configured role; app/integrations/schwab/integration.py returns UNAVAILABLE / schwab_integration_unavailable rather than surfacing it.",
+        "INDEPENDENT CORROBORATION: 0.9.0_WK_NFRA_OPLGTW~5 hit the same failure inside OG-q-4's worktree after the issuer merged CLOUD into its branch, and filed NFRA_OPLGTW-W5-S11 naming the same two lines. Two instruments, two checkouts, one cause.",
+        "SCOPE: tests/acceptance/conftest.py is in TO-OG-v-2's <paths> and OG-v-2 is OPEN, so no grant widening is needed to repair it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-i-3 carried R-OG-7's rename of the three identities to builder output, and OG-v-2's harness constructs the Schwab roles from their ARNs.",
+    "world_is": "The rename moved the contract's role names and left the acceptance harness's hardcoded ARNs behind, so five of seven acceptance tests fail on CLOUD and OG-q-4's live-path criteria AC1-AC4 cannot be exercised at all (the integration refuses to construct before the wiring runs). Nothing is deployed and nothing served is wrong; the red is in the test harness, not the product. Remedy routed: OG-v-2's re-hand re-keys the two fixture ARNs to the builder's names inside its own grant, then OG-q-4 re-grades AC1-AC4.",
+    "notes": "ARMED because CLOUD carries a red module until the re-hand lands. This seat is the disarm owner and OG-v-2's drain is the disarming act. The issuer's cut is the cause: R-OG-7's rename was carried into OG-i-3 with no census of consumers of the old ARNs, which is the same shape as W6-S6 (a check proven where nothing calls it) one level out."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T22:05:00Z",
+    "one_line": "OGV2-AC2's independent A6-partial-grant-asset-cusips check FAILS against the real, unmocked app: a partial-account grant on dim_asset (accounts={99000002}) returns all four fixture CUSIPs (SYN000001/2/3/9) instead of the two held by that account (SYN000001/2) -- PRD C3's 'restrict its CUSIPs to holdings of the authorized accounts for that same master/date' is not wired on any live query path, the same class of gap W6-S6 already named for additivity/grouping, one level over (dim_asset's account-scoping rather than the quantity-sum grammar).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: infra/aws/ec2/opal-gateway/tests/acceptance/test_local_acceptance.py::test_ogv2_a06 (this order's re-hand, W6-S7's own denominator) against the real app.server + real SchwabService -- a dim_asset rows query under a grant scoped to account 99000002 alone returns rows for all four ASSET_SEED CUSIPs, matching neither EXPECTED['A6-partial-grant-asset-cusips']['expect']['dim_asset_cusips'] (['SYN000001','SYN000002']) nor its 'excluded' list.",
+        "READ: app/integrations/schwab/integration.py:535,717,790 -- the ONLY dim_asset gate is `if q.dataset == 'dim_asset' and self._asset_policy is None: raise ServiceError(UNAVAILABLE, ...)`; the CONSTRUCTOR ARGUMENT's VALUE is never read again anywhere in the module or elsewhere in app/ (comp-find 'self._asset_policy' over app/ -- 4 hits, all three raise-sites plus the assignment; comp-find 'asset_policy' over app/ -- zero callers of build_default_service() ever pass one, confirmed by direct read of build_default_service()).",
+        "READ: tests/acceptance/conftest.py:322-328's own disclosed-seam-3 comment (already on CLOUD before this row, filed by a prior worker against a DIFFERENT criterion, W6-S6): 'nothing in the shipped code ever reads its VALUE ... a non-None sentinel is this harness's only way to reach dim_asset at all' -- this row is that same disclosed gap surfacing on ITS OWN acceptance criterion (A6) rather than as supporting evidence for A8's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C3 (semantics.py's own docstring, quoting it): 'For a partial-account grant restrict its CUSIPs to holdings of the authorized accounts for that same master/date, using a qualified position snapshot solely for policy selection.' A_ROWS.json A6's machine half: 'a partial-account grant limits dim_asset to the CUSIPs its accounts hold'.",
+    "world_is": "app/integrations/schwab/integration.py's `asset_policy` constructor argument gates dim_asset access by mere PRESENCE (is None / is not None) and nothing ever reads its value to compute a CUSIP restriction; no qualified-position-snapshot policy-selection code exists on the dim_asset query path at all. query.py and integration.py are outside this order's <paths> grant (BOUNDS: 'you grade; you do not fix').",
+    "notes": "ARMED: a live dim_asset query surface answers with every CUSIP under a partial-account grant instead of the PRD-stated subset, on the deployed-shape code path (real catalog, real entitlement, real DuckDB job) -- not a mock artifact. disarm_owner: 1.0.0_SA_CTO, matching W6-S6's routing (the OG-q cell surface this lands on is a CTO-ruled boundary). Recorded in this order's proof_of_spec.json under criterion OGV2-AC2 and in local-acceptance-run.result.md; OGV2-AC2 is graded FAIL by this row AND by W6-S6 independently, so disarming either alone does not flip AC2 green."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T22:20:00Z",
+    "one_line": "OGV2-AC4's per-module sweep of infra/aws/ec2/opal-gateway/tests/test_*.py (the one named red test S1 already deselects) is itself non-deterministic: two consecutive runs of the literal invocation each failed exactly one module, a DIFFERENT module each time, on causes unrelated to any NFRA_OPLGTW cell -- an event-loop-latency timing assertion (test_schwab_engine.py::test_ogq1_ac02, threshold 0.25s, measured 0.446s) and a random-secret substring collision (test_schwab_export.py::test_ogx1_ac01 asserting 's3'/'amazonaws'/'?' are absent from a base64url-random ticket, which occasionally contains them by chance).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN 1 (this worker, first pass): the AC4 loop over 21 modules -> 'FAIL(1): infra/aws/ec2/opal-gateway/tests/test_schwab_engine.py' / 'MODULES: 21 FAILED-MODULES: 1'; the module's own failure: test_ogq1_ac02 asserts child_lag < 0.25, measured 0.446s over 193 samples (a probe of event-loop responsiveness while a child process runs a CPU-bound job) -- re-run of that SAME module ALONE immediately after: '13 passed in 58.49s', no failure.",
+        "RUN 2 (this worker, second pass, ~10 minutes later, box otherwise busy): the SAME AC4 loop -> 'FAIL(1): infra/aws/ec2/opal-gateway/tests/test_schwab_export.py' / 'MODULES: 21 FAILED-MODULES: 1'; the module's own failure: test_ogx1_ac01 asserts '?' not in url and 'amazonaws' not in url.lower() and 's3' not in url.lower() on a schwab_prepare_download URL whose fragment is secrets.token_urlsafe(32) -- this run's random secret happened to contain the substring 's3' (inside a longer run of characters), tripping the check on pure chance.",
+        "Neither failing test imports or exercises tests/acceptance/conftest.py or test_local_acceptance.py; both are pre-existing modules this order's <paths> grant does not include and this worker did not touch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGV2-AC4's own invocation and expect: '^MODULES: [1-9][0-9]* FAILED-MODULES: 0$' -- a single deterministic-looking pass/fail line.",
+    "world_is": "The line is not deterministic: at least two modules outside this project's write surface carry their own flakiness (a hardcoded wall-clock timing threshold sensitive to box load, and a fixed-length random-token substring check with a nonzero collision probability per run), so AC4 as literally invoked can fail on an UNRELATED module on any given run regardless of NFRA_OPLGTW's own code. This is IN ADDITION to NFRA_OPLGTW-S1's already-known, already-deselected red test -- these two are neither named nor deselected by the criterion's own -k filter.",
+    "notes": "INERT: no NFRA_OPLGTW cell is implicated, and the flake rate/root cause is fully characterized in evidence above (not merely asserted). Recorded because OGV2-AC4's literal invocation is graded on this run's actual output (RUN 2, FAILED-MODULES:1, itself a FAIL against the criterion's regex) and a reader of that FAIL should not conclude an OG-v-2 regression caused it. Repair (fixing the threshold or the substring check, or widening the -k deselect) is outside this order's <paths> grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T19:17:17Z",
+    "one_line": "OGQ4-AC5 requires tests/test_schwab_query.py, tests/test_schwab_semantics.py and tests/test_schwab_export.py to all pass unchanged, but wiring semantics.assert_quantity_sum_grouped into query.py's check_against_grant (this cell's own OGQ4-AC2) breaks two pre-existing OG-q-2 tests that treat an ungrouped quantity sum as legal; test_schwab_query.py is outside this order's <paths> grant, so it cannot be fixed here.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-4.semantics-wiring.md OGQ4-AC5: 'the probe runs tests/test_schwab_query.py, tests/test_schwab_semantics.py and tests/test_schwab_export.py, ONE pytest process per module, and every module passes' -- no test in any of the three is named as an exception.",
+        "GRANT: the same order's <paths> block names only app/integrations/schwab/query.py, app/integrations/schwab/integration.py, tests/test_schwab_wiring.py and this investigation file -- tests/test_schwab_query.py is not granted.",
+        "BUILD: app/integrations/schwab/query.py check_against_grant, this worker's commit -- calls semantics.assert_field_summable and semantics.assert_quantity_sum_grouped on every sum aggregate, exactly OGQ4-AC1/AC2's own requirement (dataset's own datasets.json quantity_fields.dim_position includes quantity_settled; quantity_sum_required_groups = [cusip, l_s]).",
+        "RUN: '.venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_query.py -q -p no:cacheprovider --color=no' at this worker's commit: '2 failed, 23 passed in 6.64s' -- FAILED test_ogq2_ac07 (tests/test_schwab_query.py:491-497, its own 'control' case sums quantity_settled with no group_by and asserts success) and FAILED test_ogq2_ac15 (tests/test_schwab_query.py:743-750, a second query summing quantity_settled with no group_by, now refused INVALID_REQUEST quantity_sum_ungrouped before the engine's deadline-kill path it means to exercise ever runs); tests/test_schwab_semantics.py '14 passed in 1.22s' and tests/test_schwab_export.py '27 passed in 6.41s' both clean.",
+        "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py AC5 prints exactly this per-module result with the denominator 3 and returns VERDICT: FAIL-OGQ4-AC5 2 of 3 module(s) passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGQ4-AC5, verbatim above: the three named modules all pass, unchanged, in the same round that OGQ4-AC1/AC2 require the exact refusal that breaks two of test_schwab_query.py's own cases.",
+    "world_is": "OG-q-2's test_ogq2_ac07 and test_ogq2_ac15 were written and merged before any caller enforced the contract's quantity-sum-grouping rule (C3), so their own 'control'/'complete scan' cases sum a quantity field (quantity_settled) with no group_by and expect success -- exactly the shape OGQ4-AC2 requires this cell to refuse. Wiring the call site correctly therefore makes those two OG-q-2 tests fail; nothing else in the three named modules regresses (test_schwab_semantics.py and test_schwab_export.py are unaffected, and test_schwab_query.py's other 23 tests still pass). test_schwab_query.py is not in this order's <paths> grant and OG-q-2's cell is merged and closed, so this worker refuses to edit it (BOUNDS: 'never widen the order or fix a neighbouring defect'; 'a path you need that is not named is a BLOCKING surprise row on that criterion -- never an override'). OGQ4-AC5 is graded FAIL by this row's own measurement, not silently passed or worked around.",
+    "notes": "INERT: nothing deploys in this order; the two failing assertions are pytest-local and no served behaviour changes as a result of this row. BLOCKING: OGQ4-AC5 stays FAIL and this order stays open on that criterion until an issuer either updates test_ogq2_ac07/test_ogq2_ac15 to group their quantity sums (or otherwise re-scopes AC5), which is outside this cell's grant."
   },
   {
     "id": "NFRA_OPLGTW-W5-S11",

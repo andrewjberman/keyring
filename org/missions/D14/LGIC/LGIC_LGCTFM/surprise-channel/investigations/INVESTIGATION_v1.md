@@ -82,6 +82,54 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "check_lt_r1.py's core_reproduce (LT-e-2's E2R1-AC1 arm) asserts a raising grade() call is correctly reported only when desired.verdict == RAISE.",
    "world_is": "11_LGCTFM_CONTRACT_SCHEMA_RECORD.md s.3.1 and this order's WORKER FACE both require a G1.1 raise (no type fits) to read desired.verdict = NOT_COVERED, not RAISE; e2-reproduce has no branch for it and reads FAIL when re-run against a walk contract carrying the LT-e-3 untypeable plant.",
    "notes": "ARMED because e2-reproduce is a mechanical, re-runnable checker and nothing marks it superseded; disarm_owner is 2.0.0_SA_COO~G because check_lt_r1.py under fixed_inputs/r1/ is this seat's own artifact and this worker's BOUNDS forbid editing a fixed input even to fix its own assumption. THE FIX, for the disarm owner: add a NOT_COVERED branch to core_reproduce (good = verdict in (RAISE, NOT_COVERED) with the appropriate paired field check), or accept the one-row miss as a known, superseded-by-spec exception the issuer records rather than re-grades. Not routed as BLOCKING: it blocks no criterion of THIS order (E3R1-AC1..AC6 all read PASS against the same regenerated contract), and LT-e-2's order is already complete and merged."
+  },
+  {
+   "id": "LGIC_LGCTFM-W2-S1",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+   "surfaced_at": "2026-09-17T20:40Z",
+   "one_line": "DEC-9's MARK COMMIT AND THE ENGINE'S OWN RUN ARTIFACTS ARE NOT COMMITTABLE AT DEC-12's RUN HOME: .tools/naming-gate.py (ENFORCE mode) REFUSES contract.json, plan.json, PLANT.json, PLANT_UNTYPEABLE.json and MARK.json wholesale (1719 REFUSE + 49 RAISE lines on the first real run) because workflows/legacy_transform/ is covered by none of the gate's three exemptions, and the walk's own MEASURED current-state values are exactly the legacy tokens (opal-data-bd, 49financial, 49f, blackdiamond/49f/session-trigger-mode.json, ...) the gate's carrier rule refuses as a NEW hand-kept literal. Never exercised before this cell: every prior graded round wrote to org/missions/.../deliverables/, which IS exempt.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     ".tools/naming-gate.py:83 RECORD_TREE_PREFIXES = (\"org/\", \"docs/\"); :77 REGISTRY_PREFIX = \"infra/logic/registry/\"; :904-905 'if path.startswith(REGISTRY_PREFIX): return rows  # the registry files: every token is permitted there'; :906 '/tests/ fixtures are not graded'. workflows/legacy_transform/blackdiamond-49financial/ (DEC-12's run home, LGIC_LGCTFM_PRD.md v1.4) matches none of the three, so every new file there is fully graded.",
+     "MEASURED this run: `bash .tools/safe-commit.sh --author \"0.9.0_WK_LGIC_LGCTFM~2 <...>\" -F .scratch/commit_msg_1.txt -- infra/logic/registry/remediations.json workflows/legacy_transform/blackdiamond-49financial/` against the run directory written by `python lib/opal_lgctfm.py run --subject 49financial --seed opal-data-bd --seed opal-data-49financial --run-home-subject blackdiamond-49financial --root workflows/legacy_transform` printed 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with 1719 'NAMING REFUSE' + 49 'NAMING RAISE' lines against exactly 5 of the run's files: contract.json, plan.json, PLANT.json, PLANT_UNTYPEABLE.json, MARK.json (the sixth JSON file, VINTAGE.json, and the four .md files carried no graded literal and committed clean on the second attempt).",
+     "infra/logic/registry/remediations.json itself -- an EXISTING file under REGISTRY_PREFIX -- committed a new surface ({\"kind\": \"s3-prefix\", \"bucket\": \"opal-data-bd\", \"prefix\": \"gold/\"}) with ZERO naming-gate lines: the registry exemption (naming-gate.py:904-905) is real and working; it is workflows/ that carries no equivalent.",
+     "lib/opal_lgctfm.py's own docstring (module header, LT-e-1) states the walk's purpose as recording current-state resources verbatim, including ones no instrument can place ('planted deliberately and returned as an UNMEASURED row, never silently dropped'); the engine is not mine to edit (WORKER FACE: 'You edit no code: an engine defect is a BLOCKING row') and neither is .tools/naming-gate.py (outside this order's <paths> grant)."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_LGCTFM_PRD.md DEC-9: 'the mark act appends to the three existing registries only ... in the run's own commit, through safe-commit and the naming gate.' DEC-12: the run home is workflows/legacy_transform/.",
+   "world_is": ".tools/naming-gate.py's exemption set (RECORD_TREE_PREFIXES, REGISTRY_PREFIX, /tests/) does not reach workflows/legacy_transform/, so the run's own contract.json/plan.json/PLANT.json/PLANT_UNTYPEABLE.json and any MARK.json naming a legacy bucket-alias or s3-prefix are refused by the same gate DEC-9 says the mark commit runs through -- the two ratified decisions (DEC-9/DEC-12 here, LGIC_ENFORCE's gate exemptions) were never checked against each other outside org/, and this cell is the first to leave that exemption.",
+   "notes": "BLOCKING because it stops the run's own core deliverable (contract.json) and the DEC-9 mark commit from ever landing on git, not just one criterion; ARMED because every future LGCTFM run at this same home refires it identically. disarm_owner 1.0.0_SA_CTO: this is a naming-gate.py exemption-set change (LGIC_ENFORCE's file, this worker's <paths> does not include it) or a DEC-12 run-home change (a PRD decision only the CTO amends) -- either repair is an L4 act. THIS WORKER'S ACT, inside its own grant: commit everything the gate accepts (the run's .md files, VINTAGE.json, and the registry mark) and leave the five refused files PRESENT, UNTRACKED, on disk in the run directory so the disk-reading criteria can still grade them; recorded, not worked around."
+  },
+  {
+   "id": "LGIC_LGCTFM-W2-S2",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+   "surfaced_at": "2026-09-17T21:05Z",
+   "one_line": "EVERY WALK EMITS A ROW WHOSE node_type (COGNITO_USER_POOL) IS OUTSIDE org/standards/LGCTFM_CONTRACT.schema.json's 33-value node_type ENUM, SO NO REAL CONTRACT lib/opal_lgctfm.py PRODUCES CAN EVER VALIDATE AGAINST ITS OWN SCHEMA. The row is LT-e-3's own unconditional plant (cmd_walk() always injects name 'opal-blackdiamond-49financial-legacy-user-pool', node_type COGNITO_USER_POOL, PLANT_UNTYPEABLE.json), built to prove the walk returns an untypeable resource NOT_COVERED rather than dropping it silently -- but the schema's resource_or_plane_row.node_type enum (record s.1.1, 'the 33 node types BY SUBTRACTION from NAMING_SCHEMA.json') has no 34th 'untypeable' value, so the plant row fails 'row' oneOf, and this run's X1R1-AC1 (`check_lt_r1.py x1-run-dir`) reads FAIL on schema errors: 1 for exactly this reason.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED this run: `python check_lt_r1.py x1-run-dir` against workflows/legacy_transform/blackdiamond-49financial/20260917T202556Z-bb29248/contract.json prints 'schema errors on its contract: 1' and 'VERDICT: FAIL-X1-RUN-DIRECTORY-COMPLETE'; the single jsonschema error's path is ['rows', 184] (row_id R-0185, node_type 'COGNITO_USER_POOL', message ends '... is not valid under any of the given schemas', schema_path ['properties','rows','items','oneOf']).",
+     "org/standards/LGCTFM_CONTRACT.schema.json:70-78 $defs.node_type.enum lists 33 values and does not include COGNITO_USER_POOL; $defs.resource_or_plane_row (:122-149) requires node_type to match that ref, so no oneOf branch admits this row.",
+     "workflows/legacy_transform/blackdiamond-49financial/20260917T202556Z-bb29248/PLANT_UNTYPEABLE.json and org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/PLANT_UNTYPEABLE.json are byte-identical ({\"name\": \"opal-blackdiamond-49financial-legacy-user-pool\"}) across two different subjects/seed sets and two different engine writers (LT-e-3 planted it, LT-p-1's cmd_walk() self-invocation of walk still emits it) -- the plant is unconditional, not seed-dependent, so this fires on every future real run identically.",
+     "row LGIC_LGCTFM-W1-S1 (this same channel) already names a RELATED but DISTINCT defect on the same plant -- check_lt_r1.py's own core_reproduce (LT-e-2's arm) has no NOT_COVERED branch. That row is about a FIXED-INPUT CHECKER's assumption; this row is about the CONTRACT SCHEMA's own enum never having grown to admit the type LT-e-3 chose to plant, which is a defect in the shipped standard, not in a checker."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "org/standards/LGCTFM_CONTRACT.schema.json validates every contract lib/opal_lgctfm.py walk produces (X1R1-AC1's own bar; DEC-11's receiving-check gains artifact type lgctfm-contract on the same premise).",
+   "world_is": "The schema's node_type enum (33 values, record s.1.1) does not include COGNITO_USER_POOL, the node_type of LT-e-3's own unconditional untypeable plant, so every real contract this engine writes fails schema validation on exactly that one row.",
+   "notes": "BLOCKING because it fails this order's own X1R1-AC1 and will fail it on every future real run identically; ARMED for the same reason. disarm_owner 2.0.0_SA_COO~G as the LT-e-3/LT-p-1 issuer and the seat that authored 11_LGCTFM_CONTRACT_SCHEMA_RECORD.md's node_type subtraction -- the repair is either a 34th enum value naming the untypeable case (schema, org/standards/, L4-adjacent) or excluding NOT_COVERED-verdict rows from the row oneOf's requirement that node_type be typed. THIS WORKER'S ACT: none available inside <paths> (the schema and the engine are both outside this order's write grant, and 'you edit no code' forbids the engine fix regardless); X1R1-AC1 is graded FAIL on the measured output, verbatim."
   }
 ]
 ```
