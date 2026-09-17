@@ -7576,6 +7576,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The order's closing instruction names exactly the criteria the worktree's own checker must grade before the status flip.",
     "world_is": "It named only AC2 and AC3, one amendment behind the proof block's actual three criteria.",
     "notes": "Found and fixed by pre-spawn review, before any worker reached this order. No criterion, grant, bound or cell text moves."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W23-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~23",
+    "surfaced_at": "2026-09-17T05:21:29Z",
+    "one_line": "AC4 (BA_US_Equity served thesis_driver_chart) cannot be moved by this cell's producer change alone: the deployed adapter's thesis_driver_chart() (lib/research/api/scoped_amgt.py:1953-2013) reads only thesis_driver.series/.unit and matches them against the model block's 19 fiscal mnemonics; it never reads thesis_driver.points or .absent_reason, the fields AC3 required this cell to add.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "the chain-B owner of lib/research/api/scoped_amgt.py (AMGT-rk-7 AC5 per ISSUER AMENDMENT 8; scoped_amgt.py is explicitly removed from this cell's grant) -- thesis_driver_chart() must read thesis_driver.points/.absent_reason before any filings-analyzer re-run can move the served chart",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:1953-2013 thesis_driver_chart(thesis_driver, fiscal_figures) reads only thesis_driver.get('series') and .get('unit'); its ONLY join to a numeric series is exact equality between the driver's series text and a fiscal_year_figures entry's mnemonic or basis.definition (fiscal_year_figures itself comes from bundle['model']['fiscal_year_figures'] at line 1920 -- the company's financial model block, a different store than the filings pool this cell writes to). git grep for thesis_driver.get(\"points\" and thesis_driver.get(\"absent_reason\" over lib/research/api/scoped_amgt.py returns 0 hits.",
+        "AC4 measured BEFORE this worker's pilot re-run (2026-09-17 ~04:5xZ, per ISSUER AMENDMENT 16's own text): status 200, driver_series 'BCA commercial aircraft deliveries (with 737 monthly production rate)', points_count 0, chart_status ABSENT, chart_reason 'the driver's series is not one of the model block's 19 fiscal series by exact mnemonic or definition, and INTERFACE F-1 ...'.",
+        "This worker's producer change landed in lib/research/filings/analyze.py (PASS_1_PROMPT POINTS line, PASS_2_SCHEMA points/absent_reason, resolve_driver()/_normalize_points()/fallback_driver_from_notes()); all 20 pre-existing lib/research/filings/tests/test_filings.py tests still pass, and AC3's own invocation over lib/research/filings/*.py reads points-emitted 6, units-emitted 3, absent-reason-emitted 12 across 6 modules (all bars >=1 met).",
+        "The BA_US_Equity pilot re-run was executed exactly ONCE (python -m lib.research.filings.analyze --security-key BA_US_Equity --write-pool, ANTHROPIC_API_KEY exported from comp-secrets get anthropic-api-key --reveal): pass 1 cached separately first (66.9s, USD 0.4484) then the full run (pass 2 62.9s, USD 0.2104; total USD 0.6588, 129.8s), uploading and read-back-verifying s3://opal-data-harvest/filings/v1/BA_US_Equity/000162828026004357.{source,analysis}.json and s3://opal-data-harvest/drafting/v1/BA_US_Equity.json. The new analysis's thesis_driver carries 3 numeric points and a renamed series 'Commercial Airplanes (BCA) aircraft deliveries'.",
+        "AC4 re-measured AFTER the write, same live opal-amgt-scoped-api Lambda invocation: status 200, driver_series now shows the NEW name (proving the pool write was picked up by the served path), but points_count is STILL 0 and chart_reason is BYTE-IDENTICAL to the pre-run text -- the served chart did not change."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-15 AC4's own expect text: 'this clause cannot pass until BA's filings document is regenerated UNDER THIS cell's own producer change' -- asserting the re-run, within this cell's lib/research/filings/ write surface, is a sufficient act to move the served points_count off zero.",
+    "world_is": "The served points_count is governed exclusively by scoped_amgt.py's thesis_driver_chart(), which never reads the fields this cell's producer change added. It independently re-derives points by matching the driver's series NAME against the model block's 19 standard fiscal-statement mnemonics -- a set an operating KPI like aircraft deliveries structurally cannot belong to. So the re-run is NOT sufficient by itself, regardless of what the producer emits, until scoped_amgt.py is changed to consume thesis_driver.points/.absent_reason -- a file this order's ISSUER AMENDMENT 8 explicitly removed from this cell's grant.",
+    "notes": "AC4 is left NOT MET in this worker's proof-of-spec instance, citing this row; AC2 and AC3 (this cell's own write surface) both measure PASS. The pilot re-run authorized by ISSUER AMENDMENT 16 / ANDREW-DIRECT 2026-09-16 ~19:2xZ was executed exactly once, as bound ('ONE name, ONE re-run, no cadence'); its world-writes (S3 filings/v1 and drafting/v1 pool keys) are disclosed above and no second re-run was made after this finding. Instruments: py_compile + pytest on lib/research/filings/, AC2/AC3's own literal invocations, two direct boto3 lambda.invoke() calls against opal-amgt-scoped-api (before and after the pool write), one comp-secrets read, two `python -m lib.research.filings.analyze` invocations. HEAD at filing (worktree wk-amgt_resapp-12-23, tip 5c97d7dfee before this worker's commit)."
   }
 ]
 ```
