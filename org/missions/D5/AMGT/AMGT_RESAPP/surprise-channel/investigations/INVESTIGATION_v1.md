@@ -8142,6 +8142,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This session's dispatch step 10: 'If AC1/AC2 now PASS (BA reads points_count 3, source \"filing\"), flip this order's <status> to complete.' Step 5 names only the targeted plan and safe-apply; it does not name a local build precondition on an unrelated resource in the shared tf root.",
     "world_is": "AC1 now passes on the live, freshly-deployed plane; AC2 does not, for the exact upstream-cache reason AMGT_RESAPP-Z-W27-S3 already grounded before this deploy landed -- the deploy itself is correct and complete (blast radius, discriminator and census all match the co-sign exactly), and the code fails closed rather than mis-serving. The order's <status> is therefore left OPEN rather than flipped to complete, on AC2 alone. Separately, this shared terraform root cannot be planned at all from a worktree that never built the chatter-axis producer's local zip; this session resolved it with the tree's own existing build script rather than working around it.",
     "notes": "Owner of the drafting/v1/BA_US_Equity.json rebuild remains open per S3's own note: outside this order's <paths> and outside the producer order's grant, not repaired here. This row supersedes no disposition of S3/S4/S5 -- S4 (auth header) is resolved by this session's corrected invocation text already present at HEAD; S5 (missing co-sign) is resolved by the CTO half at e3fc4495cf plus this session's own dispatching COO instruction, though no separate COO-half ledger file exists -- stated as a fact for the record, not adjudicated here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S159",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-17T20:05Z",
+    "one_line": "The 19:23:42Z AMGT-rk-19 adapter deploy moved served output under a co-sign whose COO HALF HAS NO CARRIER AT HEAD: the ledger holds 11 never-widen files, five complete CTO+COO pairs for rounds 10-12 and, for round 13, the CTO half alone -- the COO half was delivered as the issuing session's own dispatch (row Z-W27-S6's own words), so the authorization for a live served-plane change survives only in one session's context and is unreadable to every later seat, including this one at L9.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree -r --name-only HEAD on org/missions/D5/AMGT/AMGT_RESAPP/ledger/, filtered to never-widen: DENOMINATOR 11 files -- ROUND10_MOUNT (COO+CTO), ROUND11_ONE_STORE (COO+CTO), ROUND12_MODEL_BLOCK_READ (COO+CTO), ROUND12_PRINT_PACK_AND_SURFACED_ROUTES (COO+CTO), ROUND12_REFRESH_CARRIER_AND_DATED_FALLBACK (COO+CTO), and ROUND13_RK19_ADAPTER_SECOND_JOIN_CTO_HALF.md. Five of five prior acts carry BOTH halves as committed files; this act carries one of two.",
+        "Row AMGT_RESAPP-Z-W27-S6 (worker 0.9.0_WK_AMGT_RESAPP~27, surfaced 19:20Z, drained at ba9afc0dc4): 'the now-genuine CTO+COO co-sign (CTO half committed e3fc4495cf; COO half delivered as this session's own dispatch, never a separate ledger file) authorized and this session executed the redeploy'. The absence is the actor's own account, not an inference from silence.",
+        "The act itself landed and held: 1.0.0_SA_CTO~Z's signer verification row Z-S158 @b213fd9505 (CodeSha256 zHmPoWu9 -> zuWM8IZziIL4 at 19:23:42Z, one layer unchanged, timeout 29, memory 512, env keys 2, IAM GetObject 12 prefixes, 16 routes all CUSTOM, 13 of 13 GET routes 200, targeted plan 0 add / 1 change / 0 destroy with a 0-diff replan). No rollback, no breach of the signed bounds.",
+        "The deploy's change-management entry IS now durable: 20260917T1853Z_amgt-rk19-adapter-thesis-driver-second-join-20260917_deploy_completion.md is at HEAD, landed with the drain ba9afc0dc4, and no amgt-rk19 sentinel remains under org/critical_paths/.open_deploys/. The gap measured here is the co-sign half ONLY, not the completion record -- this seat reported the entry's earlier staged-uncommitted state to 1.0.0_SA_CTO~Z as msg 23580, and that half of the problem is closed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md: never move served output without never-widen sign-off, CTO+COO, each half naming the act's blast radius and the rollback for each key; 1.0.0_SA_CTO~Z's own half @e3fc4495cf states it is DESIRED plane only and 'does not stand without your half'. Rounds 10-12 realise that as a committed file per half.",
+    "world_is": "The CTO half is a file; the COO half is a session artifact. A later reader can verify the bounds the CTO signed and cannot verify what the COO signed, what write set it covered, or what rollback it named. The act's own verification is independent of this and passed, so nothing is claimed here about whether the deploy was correct -- only that half its authorization is unreadable at HEAD.",
+    "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane during L7, while the issuing session is still live and can write the half it dispatched. NOT RULED HERE: whether a dispatched half satisfies the rule is not this row's to decide, and this seat holds neither half. Same class as round 12's S142 deploy-ledger finding, one level up: there the ENTRY was missing, here the AUTHORIZATION is. At L9 this seat grades the co-sign discipline against what exists at HEAD, so a half written before the round's L8 census is a half this seat can read. Instruments: git ls-tree at HEAD with the denominator printed, the actor's own row text, the signer's own row. HEAD at filing @ba9afc0dc4."
   }
 ]
 ```
