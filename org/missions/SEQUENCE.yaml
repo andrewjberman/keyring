@@ -57,7 +57,7 @@ capacity:
 
 stages:
   - id: 0
-    name: "Andrew's seat priority -- IRPT_BCKEND, then NFRA_MCPINDEX, then MDPF_TAXSMA"
+    name: "Andrew's seat priority -- IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX"
     why: "Andrew-direct 2026-09-17 ~19:0xZ at the 1.0.0_SA_CTO terminal, answering this seat's /open-calls card 6, VERBATIM: 'there should be a sequence for this, id do investor reporting backend, tool index, and tax sma in that order.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md). SUPERSEDES his 2026-09-15 ~12:5xZ seat order ('If push mdpf_taxsma as the next one followed by nfra_oplgtw'), which is kept in the change_log. This stage orders SEATS, not dependencies: the reader queues NEEDS-SLOT by stage, so stage 0 puts these three ahead of every other project for a COO slot, in the order he named. NARROW READ, stated: he named THREE projects, not a general re-order -- every other row keeps its place."
   - id: 1
     name: "Platform Logic -- the naming schema, the enforcement layer, the canon"
@@ -75,17 +75,17 @@ projects:
     stage: 0
     waits_on: []
     why: "Investor Reporting's backend. Its per-firm platinum lands in the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover), and IRPT_FNTEND cannot close without it. It follows Platform Logic by Andrew's word, which also binds what it becomes: its next revision is built on the patterns the Logic projects establish (~14:5xZ, 'No, we need the logic projects done first because that will establish the patterns for the new backend properly'). No hold: its row-11 dependency is a gate on that OUTCOME, added when its next PRD revision cuts the cell, not on the project."
-  NFRA_MCPINDEX:
-    fabric: laptop
-    stage: 0
-    waits_on: []
-    why: "SECOND in Andrew's seat order of 2026-09-17 ~19:0xZ ('investor reporting backend, tool index, and tax sma in that order'). The Opal MCP tool index, registered under D9 on his word the same day; its ten outcomes are confirmed and its PRD is the CTO's next act."
-
   MDPF_TAXSMA:
     fabric: laptop
     stage: 0
     waits_on: []
-    why: "THIRD in Andrew's seat order of 2026-09-17 ~19:0xZ ('investor reporting backend, tool index, and tax sma in that order'). His 2026-09-16 hold ('No we'll wait for now before getting into TAXSMA; we are moving fast and I don't want to clog up system') stands until its turn comes."
+    why: "SECOND for a seat on Andrew-direct 2026-09-17 ~23:3xZ, VERBATIM: 'I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX.' That SUPERSEDES his ~19:0xZ ordering of these two and nothing else -- IRPT_BCKEND is first in both. Its lane 2.0.0_SA_COO~T is named on its tree row, so the word returns a lane rather than choosing one. His 2026-09-16 hold ('No we'll wait for now before getting into TAXSMA; we are moving fast and I don't want to clog up system') is LIFTED by that word. Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_233xZ_THREE_COO_DRIVE_LOOPS_30M_AND_SEAT_ORDER_TAXSMA_THEN_MCPINDEX.md"
+
+  NFRA_MCPINDEX:
+    fabric: laptop
+    stage: 0
+    waits_on: []
+    why: "THIRD for a seat, on the same ~23:3xZ word, which moved it behind MDPF_TAXSMA and left IRPT_BCKEND first. The Opal MCP tool index, registered under D9 on his 2026-09-17 word; its ten outcomes are confirmed. Whoever seats 2.0.0_SA_COO~M reads the compiled block first: L5 cannot start against a PRD both halves have not admitted, and that is a compiled fact, not a handwritten one."
 
   NFRA_OPLGTW:
     fabric: laptop
@@ -206,13 +206,17 @@ change_log:
     change: "v4 ORDER CHANGED -- stage 0 is now Andrew's seat order of this date: IRPT_BCKEND, then NFRA_MCPINDEX, then MDPF_TAXSMA. IRPT_BCKEND moves stage 3 -> 0; NFRA_MCPINDEX is placed (new, registered the same day); MDPF_TAXSMA stays stage 0 but third, its hold standing until its turn; NFRA_OPLGTW keeps stage 0 with its lane live. Stages 1-3 and every other row are unchanged: he named three projects, not a general re-order."
     word: "'there should be a sequence for this, id do investor reporting backend, tool index, and tax sma in that order.' (Andrew-direct ~19:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal, answering /open-calls card 6; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md)"
 
+  - at: "2026-09-17"
+    by: "1.0.0_SA_CTO"
+    change: "stage 0 re-ordered: IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX. His ~23:3xZ word reverses the ~19:0xZ ordering of TAXSMA and MCPINDEX and touches nothing else; IRPT_BCKEND is first in both. The blocks are PHYSICALLY moved because the reader queues NEEDS-SLOT by file order. Recorded at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_233xZ_THREE_COO_DRIVE_LOOPS_30M_AND_SEAT_ORDER_TAXSMA_THEN_MCPINDEX.md. Also lifts his 2026-09-16 TAXSMA hold, which that row carried."
+    word: "'Give each of the COO's a 30m /drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX.'"
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-17T23:01:17Z",
-    "head": "1586ebdefe",
-    "sequence_file_last_commit": "57a15b2bbe 2026-09-17T15:02:03-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-09-17T23:42:56Z",
+    "head": "1525cb72e7",
+    "sequence_file_last_commit": "0f40e4cfac 2026-09-17T19:03:02-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
@@ -240,28 +244,17 @@ compiled:
     "stages": [
       {
         "id": 0,
-        "name": "Andrew's seat priority -- IRPT_BCKEND, then NFRA_MCPINDEX, then MDPF_TAXSMA",
+        "name": "Andrew's seat priority -- IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX",
         "projects": {
           "IRPT_BCKEND": {
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.14 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "cd3bf01fcd 2026-09-17T18:18:04-04:00",
+            "last_activity": "58e8ce74ce 2026-09-17T19:29:53-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
             "coo_lane": "2.0.0_SA_COO~B",
-            "phase": null
-          },
-          "NFRA_MCPINDEX": {
-            "dep_stage": "PRD",
-            "status": "active",
-            "prd": "v0.2 WITHHELD (brief STALE, ratified-text MISSING)",
-            "last_activity": "59f6f001b1 2026-09-17T18:53:36-04:00",
-            "flags": [],
-            "notes": [],
-            "gates": [],
-            "coo_lane": null,
             "phase": null
           },
           "MDPF_TAXSMA": {
@@ -279,11 +272,22 @@ compiled:
             "coo_lane": "2.0.0_SA_COO~T",
             "phase": null
           },
+          "NFRA_MCPINDEX": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v0.3 WITHHELD (brief SIGNED, ratified-text REFUSED)",
+            "last_activity": "3dbdb084c7 2026-09-17T19:35:54-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [],
+            "coo_lane": null,
+            "phase": null
+          },
           "NFRA_OPLGTW": {
             "dep_stage": "EXECUTING",
             "status": "scoping",
             "prd": "v0.9 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "c4b78ef2c4 2026-09-17T18:38:57-04:00",
+            "last_activity": "7b70dfb910 2026-09-17T19:20:03-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -327,8 +331,8 @@ compiled:
           "LGIC_CANON": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v1.6 WITHHELD (brief SIGNED, ratified-text STALE)",
-            "last_activity": "1d25dbba91 2026-09-17T15:12:05-04:00",
+            "prd": "v1.7 WITHHELD (brief SIGNED, ratified-text STALE)",
+            "last_activity": "1bd1963781 2026-09-17T19:34:29-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -339,7 +343,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "c8a3e6f712 2026-09-17T17:29:20-04:00",
+            "last_activity": "60aac06844 2026-09-17T19:08:46-04:00",
             "flags": [
               "WAITING"
             ],
@@ -358,7 +362,7 @@ compiled:
               {
                 "kind": "waits_on",
                 "state": "UNMET",
-                "detail": "LGIC_CANON PRD admitted? v1.6 WITHHELD (brief SIGNED, ratified-text STALE)"
+                "detail": "LGIC_CANON PRD admitted? v1.7 WITHHELD (brief SIGNED, ratified-text STALE)"
               }
             ],
             "coo_lane": "2.0.0_SA_COO~G",
