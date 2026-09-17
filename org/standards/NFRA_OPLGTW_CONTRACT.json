@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "project": "NFRA_OPLGTW",
   "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#contracts",
   "activation": "DESIGN_ONLY_NOT_A_GRANT",
@@ -195,7 +195,7 @@
   ],
   "state_store": {
     "service": "dynamodb",
-    "table": "opal-gateway-access-state",
+    "table": "gateway-access-state-table",
     "region": "us-east-1",
     "account": "313476888478",
     "record_types": [
