@@ -1,0 +1,7 @@
+LGIC_ENFORCE issuer act 2b (round-1 RULING ADD, G-F), flipped by 2.0.0_SA_COO~G on 2026-09-17.
+Preconditions, measured before the flip:
+- cell 2 (EN-n-1, the gate's domain) drained @1f9b7ea157, 9 of 9 mechanical criteria re-run PASS by the issuer.
+- plan-mode limb, --enforce, over the 68 planned roots of LIMB_ROOTS_CENSUS.r3.md (72 roots, 4 not planned):
+  61 PERMIT, 7 REFUSE; 1590 names graded; 16 names refused, 16 of 16 on a create/update action,
+  0 refusals of an existing resource. Positive control: a root's no-ops flipped to create -> REFUSE (rc 1).
+Remove this file to return the naming limbs to WARN.
