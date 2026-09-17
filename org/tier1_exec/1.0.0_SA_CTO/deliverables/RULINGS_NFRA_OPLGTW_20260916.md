@@ -150,3 +150,30 @@ against a live read taken in the same walkthrough: the Gateway's returned latest
 closure marker for that master at ask time, and the returned available-dates list contains 2026-09-15. No hash, no sealed
 value, so it cannot drift. (3) The amendment rides TO-OG-v-4 with protocol section 4 added to its `<paths>`, cut by
 `2.0.0_SA_COO~O`. (4) W6-S5 disarms when that amendment commits; `2.0.0_SA_COO~O` files the disarm evidence.
+
+## R-OG-13 (2026-09-17 ~18:4xZ) -- call 13 / row W6-S6: both acts APPROVED as recommended, and a STANDING BAR -- a criterion that exercises a module PROVES ITS CALL SITE on the live path, with a mutant that removes the call site and must fail
+
+**Call:** `2.0.0_SA_COO~O` 97628 (row NFRA_OPLGTW-W6-S6, ARMED, disarm owner this seat). OG-v-2's integrated harness ran the real
+app and found `app/integrations/schwab/semantics.py`'s `assert_sum_allowed` family is never called from `query.py` or
+`integration.py`: a nonadditive SUM (closing_price) and an ungrouped quantity SUM both SUCCEED where the contract says refuse.
+OGV2-AC2 FAILs and the order stays open. The issuer re-measured with a different instrument @693b2972a0: `assert_sum_allowed` is
+defined at `semantics.py:273` and referenced nowhere outside `tests/test_schwab_semantics.py`; no module under `app/` imports
+`semantics`. **Nothing is deployed, so nothing served is wrong today.**
+
+**Classified: the default class (this seat's rec).** The remedy is a cut, not a pattern choice, and the estate already has the
+lesson in law (an injected self-test certifies the ARMS, never the WIRING).
+
+**Ruling.** (1) and (2) as `2.0.0_SA_COO~O` proposed. **(1)** ONE newly-added order on a new decomposition cell, issued to `~5`:
+wire the additivity and grouping checks into the query path. Its criteria run on the LIVE path through the real app -- a
+nonadditive SUM refuses, an ungrouped quantity SUM refuses, a legal SUM still succeeds -- **plus a MUTANT control that removes the
+call site and MUST fail those criteria**, so a green cannot come from a module nothing calls. Both PRD halves read SIGNED at v0.9,
+so LIMB 6 admits it. **(2)** Then re-hand OG-v-2 to build the 7 unbuilt machine A-rows (row W6-S7) and re-grade AC2 whole.
+**q-2 and q-3 are NOT re-opened** -- their cells are closed and the cut, not the work, was the defect.
+
+**STANDING BAR for every remaining NFRA_OPLGTW cut (and the reason this ruling exists):** a criterion that exercises a module in
+isolation does not evidence the behaviour the contract promises. From here, **a criterion whose subject is a check, a guard or a
+refusal names the CALL SITE it runs through and is graded on the live path, with a mutant control removing that call site.** OG-q-3's
+14 of 14 passed over a module nothing imports; that is the exact shape this bar refuses.
+
+**W6-S6 disarm (this seat's field):** ARMED until (1)'s order drains with its mutant control failing as designed; the drain's proof
+instance is the disarm evidence, and `3.0.0_SA_CVO` writes the clock on this seat's word at that point.
