@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_REBRND~1</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-14` | **outcome_ref:** FWD-1 | **depends_on:** `RB-s-2`, `RB-s-3`, `RB-s-4`, `RB-s-5`, `RB-s-6`, `RB-s-9`, `RB-s-10`, `RB-s-13` | **slot:** ~1, queue position 11
 
@@ -21,7 +21,18 @@
 
 **The bar: every dimension of the brief's IV.3 table reads the SAME on both sides, or the difference is an enumerated inverted band with its reason.** The IV.3 dimensions are: typeface, numerals, canvas, navy's role, status colours, chart colours, loudest colour, radius, shadows, focus ring, `color-scheme`.
 
-**⛔ The `taste` extractor is THIRD-PARTY, GITIGNORED and PINNED** in `design/SKILLS_MANIFEST.md` (`senlindesign/taste-skill`, no licence, SHA `6dce223f2f`). **Do not vendor it, do not commit it, do not edit it.** Run it in place. If it is absent, re-pull at the pinned SHA per the manifest's procedure.
+**⛔ The `taste` extractor is THIRD-PARTY, GITIGNORED and PINNED** in `design/SKILLS_MANIFEST.md` (`senlindesign/taste-skill`, no licence, SHA `6dce223f2f`). **Do not vendor it, do not commit it, do not edit it.** Run it in place.
+
+**AMENDMENT 1, 2026-09-14, issuer `2.0.0_SA_COO~D` -- WHERE THE EXTRACTOR IS AND HOW YOU RUN IT. The sentence this
+replaces told you to re-pull it if absent; that is EGRESS off Opal infrastructure and needs Andrew's per-use word,
+which this order does not carry -- so it is struck.** Being gitignored, the skill is ABSENT from every fresh worktree
+and PRESENT only in the main workspace. The extractor is ONE browser-side script:
+`C:/Users/AndrewBerman/Desktop/ajb_workspace/.claude/skills/taste/references/extract.js` (its method is
+`references/step1-measure.md` beside it). The skill itself expects a Playwright MCP server, which you do not have;
+drive the SAME script with the Playwright library already installed in `<WS>/portal/node_modules` (the one
+`scripts/ui-smoke.mjs` uses), from a harness in `<WS>/.scratch/`, READING `extract.js` from that absolute path and
+evaluating it in the page at 1440x900 exactly as step 1 describes. **Never copy it into the repo, never commit it,**
+**never edit it, never fetch it.** If that path is absent on this box, that is a BLOCKING row -- not a re-pull.
 
 **The human half.** One person who has never seen the portal is walked from `opalinvest.com` into a portal route and names capability differences and no visual ones, on record. **You cannot produce that walk.** Produce the ON-DEMAND half -- the two JSON files and a side-by-side render pair -- and record it. The walk is a judgment criterion the CVO grades at L9.
 

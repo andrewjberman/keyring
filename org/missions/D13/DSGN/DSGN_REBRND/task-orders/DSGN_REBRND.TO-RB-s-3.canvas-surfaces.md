@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_REBRND~1</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-3` | **outcome_ref:** FWD-1, FWD-10 | **depends_on:** `RB-s-1` | **slot:** ~1, queue position 3
 
@@ -30,6 +30,42 @@
 **`color-scheme` follows the canvas.** `:132` sets `color-scheme: dark` on a light page, which is what renders the unstyled native `<select>` with an OS chevron on `/portfolio-management`. Style every native control.
 
 **Grade the DEFAULT LIGHT MODE, and exercise the retained dark toggle** light -> dark -> light (CVO correction C5). Contrast is computed for text-on-canvas, text-on-band AND in the selected dark mode, against **WCAG 2.1 SC 1.4.3 / 1.4.11** as CONTRACTS pins it -- the brief computed none (VII.4).
+
+**AMENDED BY THE ISSUER on Andrew's word, 2026-09-11 ~13:4xZ, VERBATIM: "Yes fetch lato".**
+
+RB-s-2 shipped Lato 400 and 600 and served `font-weight: 700` from the **SemiBold**, because the
+700 face was not on this box (row `DSGN_REBRND-W1-S8`). **It is now.** The CTO performed the one
+authorized fetch on Andrew's word; this lane verified the bytes before handing them to you.
+
+`.runtime/codex-seats/4.0.0_SA_CRO/performance-export-recon/fonts/Lato-Bold.ttf` is **already staged
+in your worktree** (`.runtime/` is gitignored and absent from fresh worktrees, so a path grant alone
+would have pointed at nothing — that trap already cost you one cycle).
+
+| | |
+|---|---|
+| sha256 | `8a0aace75d33794eece4b28187bfc1df0bbd2888b5d8a56e01788c8d65d16be1` |
+| name table | family `Lato`, subfamily `Bold`, full `Lato Bold` |
+| OS/2 | `usWeightClass` **700**, `fsType` 0, 3023 glyphs (same count as the 400 and 600 you shipped) |
+
+**DO THIS, and it is small:**
+1. Convert or copy the Bold into `portal/public/fonts/` the same way you did the others, and
+   **record its sha256** in `public/fonts/README.md` beside the existing two.
+2. Point the `@font-face` rule for `font-weight: 700` at the **real 700 face**, not the 600.
+3. **Delete the substitution line** from `public/fonts/README.md`. It is no longer true, and a
+   README that describes a retired workaround is worse than one that says nothing.
+4. Keep the 600 face if a `font-weight: 600` rule uses it; drop it if nothing references it. Say
+   which, and why, in the result file.
+
+⛔ **NO FETCH. NO NETWORK.** Andrew's word authorized exactly one egress act and the CTO already
+performed it. Nothing in this cell may reach off this box.
+
+⚠ **`portal/public/fonts/` is added to your `<paths>` for this.** Row `DSGN_REBRND-W1-S8` is
+SUPERSEDED by Andrew's ruling, not deleted — the channel is append-only; note the supersession in
+your result file rather than editing the row.
+
+⛔ **AND A HOLD YOU MUST NOT STEP OVER.** The same ruling says **"wait on DEV"**. Portal `DEV` is
+held. Nothing in this cell promotes, merges toward, or bumps a gitlink into `DEV` — your branch is
+`wk-dsgn_rebrnd-1d` off `feature/d13-visual-elevation` and it stays there.
 
 ### ACCEPTANCE
 
@@ -69,6 +105,8 @@
 
 <paths>
 portal/src/index.css
+portal/public/fonts/
+.runtime/codex-seats/4.0.0_SA_CRO/performance-export-recon/fonts/
 portal/src/ui/components/panels/
 portal/src/ui/
 portal/src/components/

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_REBRND~1</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-9` | **outcome_ref:** FWD-10 | **depends_on:** `RB-s-3`, `RB-s-7` | **slot:** ~1, queue position 9
 
@@ -29,6 +29,43 @@
 
 **Use populated fixtures.** `portal/.frontend-dev/testing/` carries fixtures; mint new JSON where none exists. **The brief's own captures ran against a failing data plane (401s, empty sets) and are evidence of nothing for this cell.**
 
+**AMENDED BY THE ISSUER on row `DSGN_REBRND-S1`, found by ANDREW on `/attribution`.**
+
+**A DATA LABEL IS NEVER PAINTED OVER BY A CHART ORNAMENT.** On the
+`STYLE VS BENCHMARK POSITIONING` panel the divergence bar's value label is overlapped and visually
+truncated by the centre target icon — the underweight label reads `-8.7` with the percent sign cut,
+the overweight label's leading `+` is hidden.
+
+**The mechanism, read from source** (`portal/src/pages/Attribution/components/StylePolicyComparison.tsx`):
+the ornament at `:337-341` is `absolute left-1/2 -translate-x-1/2 z-20` around a `px-3 rounded-full`
+pill — about **15px of half-width either side of the axis**. Each bar container (`:298`, `:316`)
+stops `pr-2` / `pl-2` — **8px** — short of that axis. **15 > 8**, so the ornament's footprint sits
+over each bar's inner edge and `z-20` paints it above the label. The labels (`:301`, `:319`) are
+placed bar-relative (`justify-start pl-4` / `justify-end pr-4`) inside a bar of `width: barWidth%`,
+so a **small tilt gives a narrow bar** the `text-lg` label cannot fit inside, and the overflow runs
+toward the axis and under the ornament.
+
+⛔ **BOTH HALVES MUST CHANGE OR IT IS NOT FIXED.** The ornament must **reserve its footprint** (the
+bars' gap from the axis must exceed the ornament's half-width), **and** the label must be placed
+with **awareness of the ornament** — when the bar is too narrow to hold the label, the label goes
+OUTSIDE the bar, away from the axis, where there is room.
+
+⛔ **RAISING OR LOWERING A Z-INDEX IS NOT A FIX.** It only chooses which of the two is hidden.
+
+⚠ **This defect renders ONLY with data.** This lane's own render of `/attribution` returned
+skeleton loaders and could not reproduce it — the diagnosis above is from source. **Your populated
+fixtures are what make it visible**, which is why it lands in this cell and not another.
+
+⚠ **Scope bound:** this is a LAYOUT fix inside an existing component. You do not change what the
+panel shows, what it computes, or which figures appear. Information architecture stays out of scope.
+
+**ALSO -- ONE BOUNDED ACT FOLDED IN BY THE ISSUER (2026-09-14, row `DSGN_REBRND-W1-S24`).** RB-s-6 rewrote four
+stale source comments onto the C3 law and found a FIFTH it was not granted: `src/pages/TicketCenter/TicketCenter.tsx:174`
+still calls the canvas "silver". Rewrite THAT COMMENT so it states the light canvas `#F4F6FA` and points at
+`portal/DESIGN.md` clause C3 as the law. **Comment only -- change no code and no value.** Your `<paths>` already grant
+`portal/src/pages/`. Evidence: a census of `silver` (case-insensitive) over that one file, before and after, the after
+count printed.
+
 ### ACCEPTANCE
 
 <criterion id="RB9-AC1" cell_refs="RB-s-9"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0</expect></criterion>
@@ -49,7 +86,10 @@
 <criterion id="RB9-AC6" cell_refs="RB-s-9" judgment="true"/>
 `RB9-AC6` -- graded at L9: between-section spacing is less than inside-container spacing on the render, read against the contract clause. RECORD; NO VERDICT.
 
-<expected_criteria>RB9-AC1, RB9-AC2, RB9-AC3, RB9-AC4, RB9-AC5, RB9-AC6</expected_criteria>
+<criterion id="RB9-AC7" cell_refs="RB-s-9"><invocation>cd <WS>/portal && timeout 120 python -c "import json,sys,os; p='.scratch/rb-s-9-label-collision.json'; d=json.load(open(p,encoding='utf-8')) if os.path.exists(p) else None; pairs=(d or {}).get('pairs',[]); bad=[x for x in pairs if x.get('overlap_px',0)>0]; print('LABEL/ORNAMENT PAIRS MEASURED:',len(pairs)); print('OVERLAPPING:',len(bad),[x.get('label') for x in bad][:6]); print('VERDICT:','NO-COLLISION' if (pairs and not bad) else 'COLLIDES-OR-UNMEASURED')"</invocation><expect>VERDICT: NO-COLLISION</expect></criterion>
+`RB9-AC7` -- **row `DSGN_REBRND-S1`.** Render `/attribution` with a POPULATED fixture, and for every divergence bar measure the label's bounding box against the centre ornament's, writing each pair and its `overlap_px` to `.scratch/rb-s-9-label-collision.json`. **Every pair must read `overlap_px: 0`, and the pair set must be NON-EMPTY** -- an empty set would pass vacuously, and a skeleton render produces exactly that. Measure both a small tilt (narrow bar, the failing case) and a large one.
+
+<expected_criteria>RB9-AC1, RB9-AC2, RB9-AC3, RB9-AC4, RB9-AC5, RB9-AC6, RB9-AC7</expected_criteria>
 
 ## BOUNDS
 
@@ -62,6 +102,7 @@
 - ⛔ **Adding a panel or a row to fill space is a FAILURE, not a pass.** Information architecture is out of scope (brief Part II).
 
 <paths>
+portal/src/pages/Attribution/components/StylePolicyComparison.tsx
 portal/src/ui/components/panels/
 portal/src/pages/
 portal/.frontend-dev/testing/
@@ -74,10 +115,11 @@ org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `RB9-AC1` .. `RB9-AC6`. Instance at
+Criterion ids (corrected 2026-09-14 by the issuer -- the row-S1 amendment added `RB9-AC7` to `<expected_criteria>`
+but not here, so the collision criterion would never have been graded): `RB9-AC1` .. `RB9-AC7`. Instance at
 `org/missions/D13/DSGN/DSGN_REBRND/deliverables/0.9.0_WK_DSGN_REBRND~1/DSGN_REBRND.TO-RB-s-9.density.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> RB9-AC1,RB9-AC2,RB9-AC3,RB9-AC4,RB9-AC5,RB9-AC6` BEFORE the `complete` flip.
+`python .tools/proof-of-spec-check.py <instance> RB9-AC1,RB9-AC2,RB9-AC3,RB9-AC4,RB9-AC5,RB9-AC6,RB9-AC7` BEFORE the `complete` flip.
 Every `judgment="true"` criterion is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` at L9 -- **a `PASS` or `FAIL` on a judgment row is INVALID.**
 Result file `density.result.md` beside it. **Flip `complete` only when every MECHANICAL criterion PASSES by output** -- a flip while a row is FAIL withdraws your own grant.
 </proof_of_spec>
