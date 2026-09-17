@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPLGTW~1</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v0.7 @79a1fd4a47 | **Contract:** `org/standards/NFRA_OPLGTW_CONTRACT.json` v1.0 -> v1.1 | **Decomp cell:** `OG-i-5` | **outcome_ref:** FWD-1, FWD-3, FWD-4, FWD-6, FWD-7 | **depends_on:** `OG-i-2` (the same Terraform state); precedes `OG-i-3` and `OG-r-1` | **slot:** ~1
 
