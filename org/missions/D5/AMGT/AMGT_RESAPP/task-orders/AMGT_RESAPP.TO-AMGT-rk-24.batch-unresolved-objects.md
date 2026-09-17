@@ -53,6 +53,39 @@ line naming how many `UNRESOLVED-SOURCE` objects were written this run.
 **No new vendor call** -- writing these objects touches no external API; `plan()`'s classification logic is
 already correct and is NOT edited by this order.
 
+---
+
+**ISSUER AMENDMENT 1 (found by the worker, `0.9.0_WK_AMGT_RESAPP~33`, row `AMGT_RESAPP-Z-W33-S1`/`S2`;
+independently re-confirmed by `2.0.0_SA_COO~Z` against the live `universe/v1/2026-09-16.json` before this
+amendment was written).** Two real defects in the RULED text above, neither a defect in the worker's own
+code, which correctly implemented what was written:
+
+1. **The population is 237 unresolved, not 21** -- `universe/v1/2026-09-16.json` carries 250 names today
+   (this project's universe has grown well past round 12's 33-keyed pilot scope; this order's original text
+   assumed the smaller figure without re-measuring). **Of those 237, 59 carry `security_key: null` --
+   NO IDENTITY WAS EVER MINTED for these names at all** (`resolution: "UNRESOLVED"`,
+   `resolution_reason: "the coverage row's bloomberg_ticker status is 'UNRESOLVED' ... the identifier is NOT
+   guessed from the folder name"`). **This is a DIFFERENT, upstream absence class from "no CIK"** -- it is
+   exactly the identity gap `AMGT-rk-21` (chain ID, this same round) is resolving, not this cell's. Writing
+   `fetch.pool_key(None, None, "source")` for these 59 produces the LITERAL key
+   `filings/v1/None/UNRESOLVED-SOURCE.source.json` for every one of them -- **a real collision bug**, verified:
+   `pool_key(security_key, accession, suffix) -> "%s%s/%s.%s.json" % (POOL_PREFIX, security_key, ...)` string-
+   interpolates `security_key` with no null guard. **The write loop is RE-CUT: it skips (never writes) any
+   `entry` whose `security_key` is falsy, counting them separately and printing that count named
+   `"no-identity, out of scope (see AMGT-rk-21)"` rather than silently attempting the write.** The true target
+   population for THIS cell is the 178 unresolved entries that DO carry a `security_key` but no CIK.
+2. **The 120s worker timeout cannot accommodate the pre-existing fetchable loop (13 real EDGAR+LLM calls,
+   itself already slow at this population size, unrelated to this order) plus the new unresolved-write loop
+   placed after it** -- confirmed: 2 of 2 attempts hit `rc=124` with only 1 of 13 fetchable entries processed,
+   never reaching the new loop. **Fix: `main()` gains a `--skip-fetch` flag that runs ONLY the unresolved-write
+   loop** (a pure S3 write path, no vendor call, genuinely fast), independent of the fetchable loop's own
+   runtime. The CRITERION invokes with `--skip-fetch`; a full, unbounded production run (fetchable AND
+   unresolved) is the worker's own follow-through act, reported but not itself a timed criterion (per the
+   dispatch skill's own rule: "never name a whole-corpus sweep as a criterion's invocation").
+
+**Criteria AC1-AC3 below are RE-CUT to these corrected denominators and the `--skip-fetch` invocation. Nothing
+else in this order's grant, paths, or bounds moves.**
+
 ## 2. WHERE THIS CAME FROM
 
 **ROUND 13**, decomposition v1.7 s.21c, on `1.0.0_SA_CTO~Z`'s L10 round-12 analysis s.4's `R13-F` row @`9419550eb1`,
@@ -93,18 +126,28 @@ textual splice inside the one fenced JSON array (never re-serialize it) and neve
 ## 5. PROOF OF SPEC -- one clause per criterion (every invocation is LITERAL; record it byte-for-byte; each runs under timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rk-24"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.filings.batch --universe universe/v1/2026-09-16.json --dry-run 2>&1 | grep -E "BATCH:|UNRESOLVED-SOURCE:"</invocation><expect>the printed BATCH line's unresolved_source count and the UNRESOLVED-SOURCE line's name(s) count agree with each other and are both nonzero (21 at this cut, re-measured live, never assumed) -- this is the pre-fix denominator this order must not silently change</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rk-24"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
+from lib.research.filings import batch
+document, source = batch.load_universe('universe/v1/2026-09-16.json')
+planned = batch.plan(document)
+unresolved = planned['unresolved']
+no_identity = [e for e in unresolved if not e.get('security_key')]
+in_scope = [e for e in unresolved if e.get('security_key')]
+print('unresolved_total', len(unresolved))
+print('no_identity_out_of_scope', len(no_identity))
+print('in_scope_target', len(in_scope))
+"</invocation><expect>unresolved_total, no_identity_out_of_scope and in_scope_target sum correctly (no_identity_out_of_scope + in_scope_target == unresolved_total) and are all printed fresh, never cited from this document as a constant -- at this amendment's own cut these read 237/59/178, but this order's PASS does not depend on those exact numbers matching, only on the split being computed and printed</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rk-24"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import boto3
 from lib.research.filings import batch, fetch
 document, source = batch.load_universe('universe/v1/2026-09-16.json')
 planned = batch.plan(document)
-unresolved = planned['unresolved']
-print('unresolved_count', len(unresolved))
+in_scope = [e for e in planned['unresolved'] if e.get('security_key')]
+print('in_scope_count', len(in_scope))
 s3 = boto3.client('s3')
 found = 0
 missing = []
-for entry in unresolved:
+for entry in in_scope:
     key = fetch.pool_key(entry['security_key'], None, 'source')
     try:
         s3.head_object(Bucket='opal-data-harvest', Key=key)
@@ -112,9 +155,16 @@ for entry in unresolved:
     except Exception:
         missing.append(entry['security_key'])
 print('objects_found', found)
-print('objects_missing', missing)
-"</invocation><expect>after this order's fix runs the batch for real (write-pool, not dry-run), objects_found equals unresolved_count and objects_missing is empty -- before the fix, objects_found reads 0 (the planted-negative baseline this order must move to nonzero); the worker records BOTH the before and after run of this same invocation</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-rk-24"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.filings.batch --universe universe/v1/2026-09-16.json --write-pool 2>&1 | tail -5</invocation><expect>a real (non-dry-run) batch run prints a summary line naming how many UNRESOLVED-SOURCE objects were written this pass, and that count matches AC1's printed denominator -- run this ONCE only, after AC1 and AC2's before-state are recorded, since it is the act that changes the store</expect></criterion>
+print('objects_missing', missing[:10], '... (%d more)' % max(0, len(missing) - 10) if len(missing) > 10 else '')
+none_key_object_exists = False
+try:
+    s3.head_object(Bucket='opal-data-harvest', Key='filings/v1/None/UNRESOLVED-SOURCE.source.json')
+    none_key_object_exists = True
+except Exception:
+    pass
+print('none_key_collision_object_exists', none_key_object_exists)
+"</invocation><expect>objects_found equals in_scope_count and objects_missing is empty AFTER the fix runs; none_key_collision_object_exists is False both before and after (the re-cut write loop must never produce this literal key) -- before the fix, objects_found reads 0 (the planted-negative baseline); the worker records both the before and after run</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-rk-24"><invocation>cd "$(git rev-parse --show-toplevel)" && timeout 100 python -m lib.research.filings.batch --universe universe/v1/2026-09-16.json --write-pool --skip-fetch 2>&1 | tail -5</invocation><expect>a `--skip-fetch` run (the unresolved-write loop only, no vendor call, independent of the slow fetchable loop) completes within the bound and prints a summary line naming how many UNRESOLVED-SOURCE objects were written this pass, matching AC1's `in_scope_target` denominator -- if `--skip-fetch` does not exist as a flag, the worker names the actual flag/mechanism it built to achieve the same isolation and re-runs this exact invocation against it</expect></criterion>
 </proof_of_spec>
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR, not a paraphrase.** No judgment criterion on
