@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_SPMOVE_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "46dce14101d5f0a49fce2bf691787e70fbdef67b",
+  "prd_version": "v0.3",
+  "prd_pin": "55fc495febae4bffba6c0254c4ddd3fe5f03b96f",
   "half": "brief",
-  "half_hash": "83d29f363092891447aefbdea46e43bdfb8ead57ddfc0d2c33f40c7460f56567",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_SPMOVE_v0.2_BRIEF_HALF_20260917.md@95fa197cc7",
+  "half_hash": "39e3efe5befda0209ade6611aae591e422c2093a68a4dbe9f8373e8d0e900fac",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_SPMOVE_v0.3_BRIEF_HALF_20260917.md@00f68af7a0",
   "signed_by": "2.0.0_SA_COO~B",
-  "signed_at": "2026-09-17T22:31:51Z",
-  "substitute_for": "4.0.0_SA_CRO",
-  "reason": "content carriage inside three rows marked CARRIED: the no-row-id and 97-exact-duplicates fact (A1 has no key without it), the opal-data-assets source and marker addresses (S7 states no scope), and the exercised builder output with its 49 Financial tenancy each have 0 hits in the PRD -- additive, brief-half-only; the heading split at :184 measures 1+10+11 not 1+15+6"
+  "signed_at": "2026-09-17T22:53:41Z",
+  "substitute_for": "4.0.0_SA_CRO"
 }
