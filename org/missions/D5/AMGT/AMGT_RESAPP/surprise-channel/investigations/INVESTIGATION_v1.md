@@ -7244,6 +7244,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Ruling AMGT_RESAPP-Z-S125 (1.0.0_SA_CTO~Z): the Price axis serves 'through the same pointer and reader at the LATEST COMMITTED price generation', and the held today-dated Price list resolves on this pull (msg 23474: 'the held partitions ... S125 (the today-dated Price list) ... all resolve on exactly these runs'). The spine's L6 handoff clause: 'A SEAM PROVED TO DELIVER ITS INPUT IS NOT A SEAM PROVED TO HAVE AN EFFECT. A criterion NAMES THE OUTCOME, never only the mechanism.'",
     "world_is": "The pull landed real 2026-09-15 Price rows, but in the pre-rk-3 shape the deployed reader no longer follows, so the outcome the pull was authorized to resolve -- a served Price ranking newer than 2026-09-10 -- is not reached: the Lead Panel still serves only 2026-09-10, and the dated fallback ruled onto AMGT-rk-7 would serve that 2026-09-10 generation as 'latest' while fresher rows sit unreadable beside it. Nothing wrong is served (every ABSENT carries its classed reason); the gap is between a world write and the served plane, and the one criterion that grades the pull cannot see it.",
     "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane at L8 intake, before AMGT-rk-17's proof instance lands, so its issuer can read it first. NOT RULED HERE, named for the owners: whether the 2026-09-15 rows are committed as a generation (the rk-3 writer over the landed rows) or the pull re-routed through that writer is the issuer's cut (2.0.0_SA_COO~Z) and, if it moves a served surface, the CTO's never-widen half; whether rk-17 AC4 is re-cut to the served route is the issuer's under the repair test at 23434 (same property, right object). Bears on this seat's L9 grade of AMGT-rk-3 AC4, which stays NOT MET at this vintage. Instruments: boto3 dynamodb scan (full, denominator printed), boto3 lambda invoke GET-only on three dates plus a control, comp-read --enumerate on the pull's source, python over the order text. HEAD at filing @7e84705c7a."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S138",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-17T01:42:44Z",
+    "one_line": "AMGT-rk-15's AC2 barred driver-chart-refs and points-consumed at least 1 each, and both ALREADY READ 8 and 7 on chain A's portal branch because the chart component is built and the page reads the series by NAME; points-consumed summed thesis_driver (7) with driver.points (0), so it could not tell a page reading the POINTS from one reading only the NAME -- the exact distinction its expect demanded. ISSUER AMENDMENT 16 keeps the one real page bar, demotes the rest to CONTEXT, and adds AC4 grading points_count on the SERVED body, where the BA_US_Equity pilot re-run (S127) is also placed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2 as issued, computed on wk-amgt_resapp-12-23-portal @2453a7b4 through git show (the running chain-A worktree was not touched): components 19, driver-chart-refs 8, points-consumed 7, absent-reason-rendered 0. Split per token: ThesisDriverChart 8, thesis_driver 7, driver.points 0, and .points 5 of which 3 are in RankedChart.tsx, a different chart.",
+        "The deployed adapter, GET /api/scoped/amgt/security/BA_US_Equity/thesis, 200 at 203953 bytes: thesis_driver_chart carries driver_series 'BCA commercial aircraft deliveries (with 737 monthly production rate)' and driver_unit 'aircraft delivered per year (and per month)' but points is an EMPTY LIST, chart_status ABSENT, and chart_reason states the driver's series is not one of the model block's 19 fiscal series by exact mnemonic or definition.",
+        "So the NAME and the UNIT already serve and the POINTS do not, which is FWD-18's gap exactly, and it is visible only on the served body -- no page-source token count can see it.",
+        "AC3 dry-run whole at the same amendment, rc=0 and discriminating: filings-modules 6, points-emitted 0, units-emitted 0, absent-reason-emitted 0.",
+        "ANDREW-DIRECT 2026-09-16 ~19:2xZ, VERBATIM 'Yes on all four, execute them.' (record @0d780cf6f8) authorizes the one-name BA_US_Equity pilot re-run that row AMGT_RESAPP-Z-S127 asked the issuer to place."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-15's AC2 asserts the Thesis tab draws the driver as a NUMERIC SERIES and renders a classed reason where there is none, and its expect states that a component reading only the series NAME is NOT met.",
+    "world_is": "Two of its three bars were already met before any work, and the bar meant to separate points from name summed a token that reads 0 with a token that reads 7, so it could not make that separation at all. The property is only decidable on the served body, where points_count reads 0 against a driver_series and driver_unit that already serve.",
+    "notes": "Sixth criterion defect found by issuer dry run today and the fourth SILENT PASS of the family (AMENDMENT 11 rk-8, 13 rk-14, 14 rk-12, and this one; AMENDMENT 12 was the opposite sign and 15 was a malformed block). The repair does not weaken the cell: the page keeps its one real bar and the points half moves to AC4 on the SERVED plane, which is strictly harder. The BA_US_Equity re-run lands on this order because the served points cannot move until BA's document is regenerated under THIS cell's producer change; AMGT-rk-18 carries an explicit instruction not to run it. AC3 is byte-identical; no grant, bound or cell text moves."
   }
 ]
 ```
