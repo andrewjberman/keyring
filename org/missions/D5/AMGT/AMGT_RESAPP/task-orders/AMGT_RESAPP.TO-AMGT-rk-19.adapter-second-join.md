@@ -91,7 +91,7 @@ LOCAL; LD-0522 puts the push with `0.0.0_AB_MSTR~Z`.
 **THE REFUSAL CLAUSE:** a criterion you cannot satisfy AS WRITTEN is REFUSED with its measurement and a row;
 never repaired, widened, or satisfied by a route this order did not name.
 **A COUNT BAR IS READ FROM THE LIVE STORE AT THE CUT and PRINTS its denominator.**
-**BEFORE YOU DEPLOY:** confirm chain FP's `AMGT-rk-19` producer order has drained and BA's stored analysis
+**BEFORE YOU DEPLOY:** confirm chain FP-A's `AMGT-rk-19` producer order has drained and BA's stored analysis
 object carries the corrected, verified `thesis_driver.points` -- if it has not, STOP and file a row rather
 than deploying against unverified upstream data.
 **SURPRISE ROWS:** your row is `AMGT_RESAPP-Z-W27-S<k>`, `<k>` restarting at 1; `"project": "AMGT_RESAPP"` and
@@ -105,7 +105,7 @@ WORKING.**
   <criterion id="AC1" cell_refs="AMGT-rk-19"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import json, boto3
 lam = boto3.client('lambda')
-payload = json.dumps({'httpMethod': 'GET', 'path': '/api/scoped/amgt/security/HOLLOW_NONEXISTENT_KEY_Equity/thesis', 'headers': {}, 'queryStringParameters': None}).encode()
+payload = json.dumps({'rawPath': '/api/scoped/amgt/security/HOLLOW_NONEXISTENT_KEY_Equity/thesis', 'headers': {'x-firm-id': 'bd'}, 'requestContext': {'http': {'method': 'GET'}}}).encode()
 resp = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
 body = json.loads(resp['Payload'].read())
 print('statusCode', body.get('statusCode'))
@@ -116,7 +116,7 @@ print('points_count', tdc.get('points_count'))
   <criterion id="AC2" cell_refs="AMGT-rk-19"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import json, boto3
 lam = boto3.client('lambda')
-payload = json.dumps({'httpMethod': 'GET', 'path': '/api/scoped/amgt/security/BA_US_Equity/thesis', 'headers': {}, 'queryStringParameters': None}).encode()
+payload = json.dumps({'rawPath': '/api/scoped/amgt/security/BA_US_Equity/thesis', 'headers': {'x-firm-id': 'bd'}, 'requestContext': {'http': {'method': 'GET'}}}).encode()
 resp = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
 body = json.loads(resp['Payload'].read())
 inner = json.loads(body.get('body', '{}')) if isinstance(body.get('body'), str) else body.get('body', {})
