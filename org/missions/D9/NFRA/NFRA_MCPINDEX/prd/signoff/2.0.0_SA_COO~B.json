@@ -1,12 +1,12 @@
 {
   "prd": "NFRA_MCPINDEX_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "a89fd61a0baab2c11f98a28e5a94312db46af6a7",
+  "prd_version": "v0.4",
+  "prd_pin": "9635e8f16c63c6729d28bce977c3528b57399c68",
   "half": "brief",
-  "half_hash": "b0296fd7e58871bc5cba2015d713d194b3db4e97495a5f86d08fc28de7c05964",
+  "half_hash": "62489f248c308a63e794267e84c326c9fe0494e0155a650c28e4f4b5dfe5f10c",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.3_BRIEF_HALF_20260917.md@aa18708d3f",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.4_BRIEF_HALF_20260917.md@d1e13ff452",
   "signed_by": "2.0.0_SA_COO~B",
-  "signed_at": "2026-09-17T23:17:54Z",
+  "signed_at": "2026-09-17T23:52:28Z",
   "substitute_for": "4.0.0_SA_CRO"
 }
