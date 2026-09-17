@@ -2068,6 +2068,30 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "PRD C5's pending-ticket sentence, verbatim above.",
     "world_is": "The user must re-issue a Claude call to schwab_prepare_download for a new ticket after completing sign-in; the pending cookie is retained only as a defensive/anti-fixation artifact (evidence that this browser session held this ticket hash before login), never as a resumption key. Declared as a declared_exclusion in this cell's proof-of-spec instance rather than left implicit.",
     "notes": "INERT: a reasoned interpretation of underspecified text, not a defect against a stated requirement. Recorded for L9 to confirm the reading or direct a different one on a future round."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-17T18:30:00Z",
+    "one_line": "TO-OG-i-3's FIRST ACT text asks this cell to 're-run the OG-i-2 live denial and assume arms against the new ARNs' -- but OG-i-2's arms run entirely on-host via SSM AWS-RunShellScript (host_arm(), a dynamic script parameterized by role ARN/ExternalId/S3 key), and R-OG-6 (binding 'from OG-i-3 onward') forbids AWS-RunShellScript and permits only the one named, FIXED, parameterless document this same cell creates. That document's content is scoped to 'exactly the reads later cells need' (file digests, systemd status, RSS, package versions) and deliberately carries no caller-supplied interpolation, so it cannot express an assume-role/GetObject diagnostic without becoming exactly the parameterized-script shape R-OG-6 exists to close off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "og_i2.py host_arm()/ac6()/ac7()/ac8(): each builds a per-call shell body (role ARN, ExternalId env var, S3 bucket/key literals) and sends it via ssm send-command --document-name AWS-RunShellScript (og_p1.py's ssm_read() is the same shape OG-i-2 inherited).",
+        "RULINGS_NFRA_OPLGTW_20260916.md R-OG-6: 'the limb binds from OG-i-3: one aws_ssm_document resource in OG-i-3's order ... whose content is the fixed read-only commands ... AWS-RunShellScript with caller-supplied parameters is not that document.'",
+        "This order's own text (the read-only host-command document paragraph): 'Its content: only the read commands later cells need (file digests ... systemd unit's status, process RSS, and installed package versions), with no shell interpolation of a caller string.'",
+        "infra/aws/terraform/opal-gateway/ssm_readonly_host.tf (this commit): mainSteps.runCommand is a fixed literal list, parameters={} -- no role ARN, ExternalId or S3 key can reach it as a caller argument.",
+        "Substitute performed instead (declared, not host-exercised): iam get-role/get-role-policy on both new roles confirm the trust Principal (opal-gateway-role only), the two distinct re-keyed ExternalIds (91b31fde... for gateway-schwab-read-role, a2d39502... for gateway-schwab-catalog-read-role), and the unchanged six-statement deny/allow Sid shape on each role's inline policy -- recorded in this cell's result file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-i-3 FIRST ACT: 'Re-run the OG-i-2 live denial and assume arms against the new ARNs, and record them in this cell's result file.'",
+    "world_is": "The mechanism this same cell is required to install (R-OG-6's one fixed, parameterless document) cannot carry a dynamic assume-role/GetObject diagnostic without reopening the caller-supplied-interpolation hole R-OG-6 exists to close; AWS-RunShellScript, the mechanism OG-i-2's arms actually use, is the thing this cell forbids from itself onward. This worker refused the live re-run as written and substituted a declared-level check (trust policy + inline policy readback via iam get-role/get-role-policy, no host execution) against the new ARNs, disclosed as a weaker instrument than a host-exercised assume/deny arm.",
+    "notes": "INERT: no served surface exercised by either the refused act or its substitute; both are reads. Recorded for L9 to rule whether a host-exercised re-run belongs to a LATER cell (its own document, or an audited AWS-RunShellScript exception) rather than OG-i-3."
   }
 ]
 ```
