@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.8",
+  "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -124,7 +124,7 @@ SOURCE: supplied brief lines 149–179, 181–219.
 
 ## CONTRACTS
 
-The enumeration authority is `org/standards/NFRA_OPLGTW_CONTRACT.json`, version 1.0; its four typed names (the two reader roles, the Gateway's assume policy and the access-state table) move to builder output as version 1.1 in the rename applies below, with the Terraform declarations and the application's references moved in the same orders, before any further consumer binds. Version 1.1 also adds `tool_operations`, a total map from each of the five tools to a member of `operations` or `null`, where `null` means carried by every active grant, never grantable and reading no data object (R-OG-11); `operations` stays the grantable set, and both code copies of the mapping are tested equal to it. All tools, fields, states, error codes, limits and surface IDs are closed there as data. Its `activation=DESIGN_ONLY_NOT_A_GRANT` is intentional: implementations consume its contract, never treat the proposed profile as an authorization record. Unknown enum values and extra request properties fail closed. No counterpart PRD exists; all interfaces below have one owner in this project.
+The enumeration authority is `org/standards/NFRA_OPLGTW_CONTRACT.json`, version 1.0; its four typed names (the two reader roles, the Gateway's assume policy and the access-state table) move to builder output as version 1.1 in the rename applies below, with the Terraform declarations and the application's references moved in the same orders, before any further consumer binds. Version 1.1 also adds `tool_operations`, a total map from each of the five tools to a member of `operations` or `null`, where `null` means carried by every active grant, never grantable and reading no data object; `operations` stays the grantable set, and both code copies of the mapping are tested equal to it. All tools, fields, states, error codes, limits and surface IDs are closed there as data. Its `activation=DESIGN_ONLY_NOT_A_GRANT` is intentional: implementations consume its contract, never treat the proposed profile as an authorization record. Unknown enum values and extra request properties fail closed. No counterpart PRD exists; all interfaces below have one owner in this project.
 
 ### C1 - identity, OAuth and migration
 
