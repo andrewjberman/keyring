@@ -3214,6 +3214,52 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "LGIC_ENFORCE.TO-EN-w-7-r3: a NOT_A_PRINCIPAL disposition's evidence comes 'from the CloudTrail data events live on those buckets (DEC-4(ii))', stating the query, window and result count, for each of the four legacy-writer buckets including opal-data-demo.",
     "world_is": "No CloudTrail data-event selector -- read or write -- is configured on opal-data-demo anywhere in this estate's Terraform, so a query against it can only ever return zero for the trivial reason that nothing is recorded, never because the instrument observed an absence. A future worker asked to disposition a different role NOT_A_PRINCIPAL on opal-data-demo would read a clean zero-count and could not tell it apart from a true negative.",
     "notes": "ARMED because the hazard is in the process's FUTURE normal operation (a later legacy-writer cell touching opal-data-demo), not in this round's own cells, which is exactly the case the schema's class/hazard_standing split exists for. disarm_owner 0.7.0_AE_CloudOps: the org trail and the served-write trail are both its Terraform (cloudtrail-organization-trail.tf's own header; item2e_served_write_trail.tf's own header names the observability/globgrph lane), so adding opal-data-demo to one or both buckets lists is the act that disarms this -- not proposed as a change here, only surfaced."
+  },
+  {
+    "id": "LGIC_ENFORCE-W4-S5",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-17T14:12Z",
+    "one_line": "Round 3's census-to-the-end run reproduces the SAME RAISE that stopped round 1 (W7-S1) and round 2 (W2-S10's context): live API_GW sentiment-query-api still RAISES R1.f ('sentiment' is in no vocabulary), and the 3rd row still carries a live {system} placeholder (inf-otp-relay-api) -- three rounds apart, systems.json and resources.json carry no new row for either token, so S6R3-AC1/AC2/AC3 FAIL exactly as the order anticipated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN, this worktree, HEAD b54636545d (base CLOUD): 'python lib/opal_naming.py census --live --repo --report .../deliverables/0.9.0_WK_LGIC_ENFORCE~4/NAMING_CENSUS_REPORT.r3.md' rc=3. Log: 'CENSUS LIVE: 2191 node(s) at VINTAGE Built from the estate as of 2026-09-17 13:49:55 UTC ... manifest: 0dd53f50b7da; 346 of NOT GRADED types, 16 aws_fixed; 1829 to judge', 'CENSUS REPO: 1878 name(s) ...', 'CENSUS RAISE live API_GW sentiment-query-api -- R1.f: ...', 'CENSUS: STOPPED on the first RAISE after 3 judged'.",
+        "SAME TOKEN, THREE ROUNDS: round 1 (LGIC_ENFORCE-W7-S1, 2026-09-15T02:20Z) measured the identical stop at 'sentiment-query-api, R1.f' with live_nameable 1805; round 3 (this row) measures live_nameable 1829, judged_live still 3, judged_repo still 0 -- the denominators moved with the live estate but the stop token and step did not.",
+        "MEASURED, this worktree, over infra/logic/registry/systems.json@23980d3fbe: 'sentiment' is a key of neither `systems` nor `refused_keys` (workstream_code/generic_noun/purpose_word/retired) nor `unresolved` (which carries only astn, trade, news) -- it is absent from every carrier the registry defines, not merely unresolved. Over infra/logic/registry/resources.json@b15ed01ee6: no row of (name='inf-otp-relay-api', type='API_GW') exists (the sibling IAM_ROLE row is the one W2-S10 already names), so grade() still fills '{system}-inf-otp-relay-api' verbatim in this round's report's 1st row.",
+        "REPORT: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/NAMING_CENSUS_REPORT.r3.md, fenced json: denominators judged_live 3, live_nameable 1829, judged_repo 0, repo 1878; stopped.plane live, stopped.type API_GW, stopped.current sentiment-query-api; rows[0].canonical '{system}-inf-otp-relay-api'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-s-6-r3.census-to-the-end.md THE CELL: 'Run the census on BOTH planes to the end ... A RAISE FAILS the criterion ... If the run stops, record where and why, and file a row -- the RAISE is a defect in the rule, the schema or the registry.'",
+    "world_is": "The run still stops at the same name and step it stopped at in round 1, two rounds and multiple registry commits later; neither infra/logic/registry/systems.json nor resources.json carries a row that would place 'sentiment' or resolve inf-otp-relay-api's system. The order's own <paths> for this cell do not include the registry, and BOUNDS forbids editing it here, so this row is filed rather than fixed, exactly as row LGIC_ENFORCE-W7-S1 already was for two rounds.",
+    "notes": "Form only. This is a NEW measurement (fresh grade()/census run at this round's HEAD and vintage), not a restatement of W7-S1 or W2-S10 -- it is filed to keep the channel's record of the defect's persistence current across rounds, per this order's own instruction to file a row on a stop. No criterion this worker owns changes verdict on it: S6R3-AC1/AC2/AC3 already read FAIL for exactly this reason, as the order's ACCEPTANCE section states in advance."
+  },
+  {
+    "id": "LGIC_ENFORCE-W4-S6",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~4",
+    "surfaced_at": "2026-09-17T15:05Z",
+    "one_line": "AMENDMENT 1's own 25-distinct-RAISE timebox fires on the FIRST re-run past this cell's original stop: this worker minted resources.json's inf-otp-relay-api row (measured owner advi) and carded 2 further RAISEs (sentiment-query-api, trade-submission-api, owner unmeasurable -- OWNER_CARDS_S6.r3.md), then re-ran and hit a THIRD RAISE on the already-unresolved token astn; a direct-library sweep over every live+repo nameable item (not a sequential CLI loop) measures 462 RAISE occurrences / 351 distinct (plane,type,name) triples / 248 distinct names still ahead, dominated by the SAME already-unresolved tokens (news 114, trade 50, astn 35) plus unrelated S3-key path segments (json 69, jwt 22, security 18, ...) -- so per THE CELL's own clause this worker stops minting/carding here; FWD-5 goes to round 4 on the full list, RAISE_POPULATION_S6.r3.md.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REGISTRY MINT, this worktree, infra/logic/registry/resources.json (staged, this commit): added {\"name\": \"inf-otp-relay-api\", \"type\": \"API_GW\", \"system\": \"advi\", \"evidence\": \"infra/aws/terraform/inf-pipeline/api-gateway.tf:24-38 @422a3c724c ...\"} -- measured from a declared Terraform source (aws_apigatewayv2_api.inf_otp_relay, tags System='InflectionPipeline'), same standard as EN-r-4's existing advi rows in the same file. `python lib/opal_naming.py validate` -> 'VALIDATE: OK 25 system row(s), 9 scope row(s), 17 warning(s) at registry@26623a452ff8583d' (rc=0).",
+        "RE-RUN, this worktree: 'python lib/opal_naming.py census --live --repo --not-judged .../NOT_JUDGED_S6.r3.json --report .../NAMING_CENSUS_REPORT.r3.md' (NOT_JUDGED_S6.r3.json carrying sentiment-query-api and trade-submission-api, each with an OWNER_CARDS_S6.r3.md card measuring that no declared source -- lambda-source-map.json tf_file/source_dir, Terraform tree -- resolves an owner). Output: 'CENSUS CARDED live API_GW sentiment-query-api -- NOT-JUDGED (R-29)', 'CENSUS CARDED live API_GW trade-submission-api -- NOT-JUDGED (R-29)', 'CENSUS RAISE live CW_ALARM astn-wsjft-orchestrator-errors -- R1.c: 'astn' is an unresolved token (V2)', 'CENSUS: STOPPED on the first RAISE after 21 judged (2 carded)'.",
+        "DIRECT-LIBRARY SWEEP (not the CLI, which stops at the first RAISE): this worker called census_live()+census_repo() then grade() on every one of the 3706 collected items (1828 live nameable + 1878 repo) without stopping on RaiseDefect, at registry@26623a452ff8583d (after the inf-otp-relay-api mint). Result: 462 RAISE occurrences, 351 distinct (plane,type,name) triples, 248 distinct names -- written in full to org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/RAISE_POPULATION_S6.r3.md (token breakdown table + all 351 rows). Top tokens: news 114, json 69, trade 50, astn 35, jwt 22, security 18 -- news/trade/astn are the SAME three tokens EN-r-5-r3 already measured unresolved (systems.json unresolved[]); most of the rest (json, jwt, security, cache, consolidated, benchmarks, ...) are S3 KEY path segments (S3Key RAISEs, K1/K3), not system tokens a systems.json row could resolve at all.",
+        "THE CELL item 4 (task order text, this worktree): 'Timebox: if more than 25 distinct RAISEs appear, stop minting, file the full list as one row, and FWD-5 goes to round 4 on that list.' 462 > 25 by more than an order of magnitude, measured on the FIRST re-run past the original stop (not after extensive minting)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-s-6-r3.census-to-the-end.md, AMENDMENT 1 (THE CELL item 4): 'Timebox: if more than 25 distinct RAISEs appear, stop minting, file the full list as one row, and FWD-5 goes to round 4 on that list.'",
+    "world_is": "The live+repo estate carries hundreds of names under tokens (astn/news/trade, and dozens of S3-key path segments unrelated to the system vocabulary at all) that the registry's mint mechanism cannot resolve one RAISE at a time within one cell's budget: 3 tokens already measured unresolved by EN-r-5-r3 alone account for 199 of the 462 occurrences (news 114 + trade 50 + astn 35), and the remaining ~260 are mostly S3Key path segments (json/jwt/security/cache/...) that AMENDMENT 1's mint standard was never built to resolve (a key segment is not a system token). One worker cannot, within this cell's scope and the timebox it was given, mint or card a path through all of them; the mechanism the order itself specifies for exactly this case is invoked here rather than worked around.",
+    "notes": "Form only, per THE CELL's own instruction on crossing the timebox. This does not change S6R3-AC1/AC2/AC3/AC4's verdicts (already FAIL, anticipated by ACCEPTANCE) and closes no other row. The `inf-otp-relay-api` mint and the two owner cards stand as this cell's registry work; RAISE_POPULATION_S6.r3.md is the full list THE CELL asks be filed."
   }
 ]
 ```
