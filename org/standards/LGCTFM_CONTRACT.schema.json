@@ -1,0 +1,212 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "org/standards/LGCTFM_CONTRACT.schema.json",
+ "title": "LGCTFM_CONTRACT -- one LGIC legacy-transform run's contract, one file per run",
+ "description": "Authored FROM infra/logic/11_LGCTFM_CONTRACT_SCHEMA_RECORD.md (the Rule 24 four-postulate record and its token census for this schema; LGIC_LGCTFM PRD DEC-1, cell LT-s-1). Every enum below cites the record section that adopts or mints it; this schema mints no enum value the record does not name. A run's contract is one row per resource that composes ONE SUBJECT (record s.0): RESOURCE and PLANE rows carry a CURRENT half (measured) and a DESIRED half (built by lib/opal_naming.py, never typed); FORK rows carry resources that do one job twice; TENSION rows carry one disagreement between the halves each.",
+ "type": "object",
+ "required": ["schema_version", "subject", "trigger_denominator", "ranking_rule", "rows", "edges", "tensions", "plan"],
+ "additionalProperties": false,
+ "properties": {
+  "_about": {"type": "string", "description": "free-text provenance note on a fixed-input or planted file; not part of the contract's own fields"},
+  "schema_version": {"type": "string"},
+  "subject": {"$ref": "#/$defs/subject"},
+  "trigger_denominator": {"$ref": "#/$defs/trigger_denominator"},
+  "ranking_rule": {
+   "type": "string",
+   "description": "PRINTED, not a score (record s.4): order by irreversible, then client_facing, then live, then rules_colliding, object_count as tiebreak (08_TENSION_MAP.md s.0)"
+  },
+  "rows": {
+   "type": "array",
+   "items": {"$ref": "#/$defs/row"}
+  },
+  "edges": {
+   "type": "array",
+   "items": {"$ref": "#/$defs/edge"}
+  },
+  "tensions": {
+   "type": "array",
+   "items": {"$ref": "#/$defs/tension"}
+  },
+  "plan": {
+   "type": "array",
+   "description": "derived from the contract, not part of it (record s.0); the run's plan packages, when emitted"
+  }
+ },
+ "$defs": {
+  "cell": {
+   "description": "One fact-slot: {value, status, evidence}, no bare values (ATOM_DECOMP Rule 14's rectangle; ssot_establishment.schema.json $defs.cell, adopted -- record s.3, s.6). evidence's minimum-viable form here is {instrument, blind_spot} at least (record s.3: 'evidence = {instrument, locator, vintage, denominator}, its minimum-viable form'; blind_spot is this contract's own addition, carried on every planted cell).",
+   "type": "object",
+   "required": ["value", "status", "evidence"],
+   "additionalProperties": false,
+   "properties": {
+    "value": {},
+    "status": {"$ref": "#/$defs/cell_status"},
+    "evidence": {
+     "type": "object",
+     "required": ["instrument", "blind_spot"],
+     "properties": {
+      "instrument": {"type": "string"},
+      "blind_spot": {"type": "string"},
+      "locator": {"type": "string"},
+      "vintage": {"type": "string"},
+      "denominator": {}
+     }
+    }
+   }
+  },
+  "cell_status": {
+   "description": "record s.3, adopted whole from ssot_establishment.schema.json $defs.cell.status",
+   "type": "string",
+   "enum": ["MEASURED", "UNMEASURED", "INFERRED", "NOT_MEASURABLE"]
+  },
+  "row_kind": {
+   "description": "record s.1.2 -- RESOURCE (default, one node of one of the 33 types), PLANE (one tier plane prefix), FORK (the one token this record mints -- a relation on resources whose DESIRED form is one string)",
+   "type": "string",
+   "enum": ["RESOURCE", "PLANE", "FORK"]
+  },
+  "node_type": {
+   "description": "record s.1.1 -- the 33 node types BY SUBTRACTION from org/standards/NAMING_SCHEMA.json: kind.by_type keys (18, graded by kind) union types_not_graded_by_kind keys (15, disjoint), = 33, 0 uncovered.",
+   "type": "string",
+   "enum": [
+    "API_GW", "API_ROUTE", "CLOUDFRONT_DISTRIBUTION", "CODEBUILD_PROJECT", "CW_ALARM",
+    "DYNAMODB_TABLE", "EC2_INSTANCE", "ECS_CLUSTER", "ECS_TASK_DEFINITION", "EVENT_RULE",
+    "EVENT_SOURCE", "IAM_POLICY", "IAM_ROLE", "IAM_USER", "INSTANCE_PROFILE", "KMS_KEY",
+    "LAMBDA", "LAMBDA_LAYER", "LOAD_BALANCER", "LOG_GROUP", "ROUTE53_RECORD", "S3Key",
+    "S3_BUCKET", "S3_BUCKET_POLICY", "SCHEDULE", "SECRET", "SECURITY_GROUP",
+    "SERVICE_PRINCIPAL", "SNS_TOPIC", "SQS_QUEUE", "SSM_DOCUMENT", "STATE_MACHINE",
+    "VPC_ENDPOINT"
+   ]
+  },
+  "axis": {
+   "description": "record s.4 -- WHICH RULE FAMILY a tension departs on (02_DOCTRINE.md sect. 2: A1-A5 with their rules; PROCESS = R18-R20; IDENTITY = the spine, 05_)",
+   "type": "string",
+   "enum": ["A1", "A2", "A3", "A4", "A5", "PROCESS", "IDENTITY"]
+  },
+  "tension_kind": {
+   "description": "record s.4 -- WHAT MOVES to close a tension: HOME/FORMAT/GRAMMAR are 06_CONFORMANCE_LEDGER.md sect. 7's MIGRATE kinds, adopted; COMPUTE/DECLARATION/PROCESS/IDENTITY name the remaining move classes the canon's rules imply. FORK is a row kind (row_kind) and never a tension kind.",
+   "type": "string",
+   "enum": ["HOME", "FORMAT", "GRAMMAR", "COMPUTE", "DECLARATION", "PROCESS", "IDENTITY"]
+  },
+  "edge_type": {
+   "description": "record s.6, adopted whole from evidence-model.md's edge vocabulary (the diagram renderer's), for the flow diagram",
+   "type": "string",
+   "enum": ["CALLS", "READS", "WRITES", "TRIGGERS", "INVOKES", "STARTS", "PUBLISHES", "SERVES",
+            "AUTHORIZES", "MONITORS", "REPLACES"]
+  },
+  "subject": {
+   "description": "record s.0, s.3.1 -- the run's registry key (a scopes.json or systems.json key, never a spelling), with its vintage. These fields are the run's OWN vintage/identity stamp and are plain strings, not cells: they are not a measured fact about a resource, they are the coordinate every row's measurement is taken against.",
+   "type": "object",
+   "required": ["kind", "key", "vintage"],
+   "additionalProperties": false,
+   "properties": {
+    "kind": {"type": "string"},
+    "key": {"type": "string"},
+    "vintage": {
+     "type": "object",
+     "required": ["repo_head", "graph_built", "registry_hash"],
+     "additionalProperties": false,
+     "properties": {
+      "repo_head": {"type": "string"},
+      "graph_built": {"type": "string"},
+      "registry_hash": {"type": "string"}
+     }
+    }
+   }
+  },
+  "trigger_denominator": {
+   "description": "record s.1.3 -- both trigger APIs measured (EVENT_RULE + SCHEDULE are two AWS services, both read; a one-API denominator undercounts silently). Each cell.",
+   "type": "object",
+   "required": ["list_rules", "list_schedules"],
+   "additionalProperties": {"$ref": "#/$defs/cell"}
+  },
+  "resource_or_plane_row": {
+   "description": "record s.1.2, s.3.1 -- a RESOURCE (one node of one of the 33 types) or PLANE (one tier-plane prefix) row: a CURRENT half (measured) and a DESIRED half (built, never typed), every field a cell.",
+   "type": "object",
+   "required": ["row_id", "kind", "node_type", "subject", "current", "desired", "mark"],
+   "additionalProperties": false,
+   "properties": {
+    "row_id": {"type": "string"},
+    "kind": {"type": "string", "enum": ["RESOURCE", "PLANE"]},
+    "node_type": {"$ref": "#/$defs/node_type"},
+    "subject": {"type": "string"},
+    "current": {
+     "description": "record s.3.1 -- current.name, current.arn_or_path, current.drift_class, current.declaration, current.live, current.client_facing on every row, plus s.3.2's per-class extras; every field a cell.",
+     "type": "object",
+     "required": ["name", "arn_or_path", "drift_class", "declaration", "live", "client_facing"],
+     "additionalProperties": {"$ref": "#/$defs/cell"}
+    },
+    "desired": {
+     "description": "record s.3.1 -- desired.form (NEVER typed), desired.builder (the call verbatim), desired.verdict (NAMING_SCHEMA.json grade.verdicts + RAISE + NOT_GRADED + NOT_COVERED), desired.missing_registry_row (populated only on RAISE); every field a cell.",
+     "type": "object",
+     "required": ["form", "builder", "verdict"],
+     "additionalProperties": {"$ref": "#/$defs/cell"}
+    },
+    "mark": {
+     "description": "record s.3.1 -- which of the three existing marks carries this row (remediations.json surface | LEGACY_SERVED_PATHS.json path | scopes.json alias bucket), or none. Not a cell: it names WHICH carrier, not a measured fact.",
+     "type": ["string", "null"]
+    }
+   }
+  },
+  "fork_row": {
+   "description": "record s.1.2, s.3.2 -- a set of >= 2 rows whose DESIRED form is ONE string, carried as a row so it has its own status, evidence and canonical member.",
+   "type": "object",
+   "required": ["row_id", "kind", "subject", "members", "one_job", "canonical_member"],
+   "additionalProperties": false,
+   "properties": {
+    "row_id": {"type": "string"},
+    "kind": {"const": "FORK"},
+    "subject": {"type": "string"},
+    "members": {
+     "type": "array",
+     "minItems": 2,
+     "items": {"type": "string"}
+    },
+    "one_job": {"$ref": "#/$defs/cell"},
+    "canonical_member": {
+     "description": "record s.3.2 -- a member row_id, or RULING-OWED with the decider named",
+     "$ref": "#/$defs/cell"
+    }
+   }
+  },
+  "row": {
+   "oneOf": [
+    {"$ref": "#/$defs/resource_or_plane_row"},
+    {"$ref": "#/$defs/fork_row"}
+   ]
+  },
+  "edge": {
+   "type": "object",
+   "required": ["from", "to", "type"],
+   "additionalProperties": false,
+   "properties": {
+    "from": {"type": "string"},
+    "to": {"type": "string"},
+    "type": {"$ref": "#/$defs/edge_type"}
+   }
+  },
+  "tension": {
+   "description": "record s.4 -- one disagreement between a row's halves, three fields with three intents (axis, deciding_rules, kind) plus factors (four MEASURED cells).",
+   "type": "object",
+   "required": ["tension_id", "row_id", "axis", "deciding_rules", "kind", "object_count", "factors"],
+   "additionalProperties": false,
+   "properties": {
+    "tension_id": {"type": "string"},
+    "row_id": {"type": "string"},
+    "axis": {"$ref": "#/$defs/axis"},
+    "deciding_rules": {
+     "description": "record s.4 -- WHICH RULE'S TEST the facts failed; cite the DECIDING rule, never the axis's whole list",
+     "type": "array",
+     "minItems": 1,
+     "items": {"type": "string", "pattern": "^R[0-9]+$"}
+    },
+    "kind": {"$ref": "#/$defs/tension_kind"},
+    "object_count": {"type": "integer"},
+    "factors": {
+     "type": "object",
+     "required": ["irreversible", "client_facing", "live", "rules_colliding"],
+     "additionalProperties": {"$ref": "#/$defs/cell"}
+    }
+   }
+  }
+ }
+}
