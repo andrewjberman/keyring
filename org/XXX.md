@@ -423,6 +423,33 @@ have a great PRD and forget to actually produce some material part of the end pr
   `0.0.0_AB_MSTR~Z`); the one direction was sent at 23:11Z as msgs 23490-23493, DELIVERED 4 of 4. The cron auto-deleted.
   **THIS LINE NOW ARMS NOTHING.**
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
+`2.0.0_SA_COO~G` **`/drive` LGIC_ENFORCE + LGIC_LGCTFM, ARMED 2026-09-17 ~23:3xZ by Andrew-direct at the
+`1.0.0_SA_CTO` terminal**, relayed to this lane as msg 97708, VERBATIM AND ENTIRE: *"Give each of the COO's a 30m
+/drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up
+tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA,
+then COO~M for MCPINDEX."* Typos his, preserved.
+- **CLASS: DIRECTED. SCOPE: this lane's two projects, LGIC_ENFORCE (D14) and LGIC_LGCTFM (D14)** -- one loop covering
+  the pair, per the relay's own routing line. LGIC_CANON is NOT in scope: its round 3 is graded and its only open
+  outcome waits on LGIC_LGCTFM giving C6 a subject. **CADENCE: 30 minutes**, off-minute, via CronCreate.
+- **THIS CARRIER IS COMMITTED BEFORE TICK 1**, which is the relay's own gate: a cron dies with its session, so an arm
+  whose only carrier is a cron is a sovereign instruction stored in RAM. A successor at THIS lane re-arms off THIS
+  line while the scope is not DONE, and arms nothing from it once the stop condition is met.
+- **WHAT A TICK DOES:** measure both projects from the register and the orders, never from recollection; drain any
+  terminal worker (re-run its criteria at the branch tip, then `safe-merge.sh`); spawn the next unblocked cell;
+  send any open call to `1.0.0_SA_CTO` WITH this seat's recommendation the same tick (the 2026-09-17 ~13:0xZ routing
+  law) and keep moving on everything else meanwhile; and read the ARTIFACT, never a worker's silence, as evidence.
+- ⛔ **ORDERING THAT SURVIVES THE LOOP:** LGIC_ENFORCE round 5 (R-38, the 1411-row placeholder population) is cut
+  ONLY AFTER round 4's slug and this seat's round-4 analysis -- LD-0521's refuser counts open orders PER PROJECT, so a
+  round-5 issuance opened beside round 4 deadlocks round 4's L10 until round 5 fully drains.
+- **RESERVED and still Andrew's**, because a scoped arm does not repeal a specific prohibition: vendor or egress off
+  Opal infrastructure; unrecoverable acts (recursive deletion, S3 object or version deletes, dropping tables, stopping
+  EC2, destructive git); money and contracts; the portal freeze and any promote; and any never-widen sign-off on an
+  applied policy, which stays a two-signature act.
+- **STOP-CONDITION:** both projects DONE on the register per the skill's completion test -- read, never declared -- or
+  Andrew's stand-down. On DONE this lane writes its final log, DELETES its cron, strikes this clause and says so,
+  because the freed slot is what `2.0.0_SA_COO~T` (MDPF_TAXSMA) and then `2.0.0_SA_COO~M` (NFRA_MCPINDEX) are waiting
+  on under his succession order above.
+
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
 them with your rec"*. Record:
@@ -672,6 +699,27 @@ seat to LGIC_ENFORCE, was RETIRED at ~18:2xZ: LGIC_CANON takes the next freed se
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_212xZ_DSGN_REBRND_KILL_THE_DRIVE_CRON_HE_ADDRESSES_THE_CALLS_SHORTLY.md`
 @`31f728cea4`). `2.0.0_SA_COO~D` cancelled its cron. **THIS ROW ARMS NOTHING:** a successor does not re-arm from it.
 DSGN_REBRND itself is not closed; the page-by-page work goes on without the loop.
+
+`2.0.0_SA_COO~O` **`/canonical-drive NFRA_OPLGTW` ARMED 2026-09-17 ~23:4xZ by Andrew-direct at the `1.0.0_SA_CTO`
+terminal ~23:3xZ, relayed as 97709**, VERBATIM: *"Give each of the COO's a 30m /drive loop for their respective project,
+i want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is
+the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX."* The relay's own words:
+one lane, one loop, cadence 30m, and `2.0.0_SA_COO~O -> /drive NFRA_OPLGTW`.
+- SCOPE: `NFRA_OPLGTW` ONLY -- this lane's single project, 31 cells in round 1. It is a SCOPE STATEMENT and an arming
+  word, never a re-tasking: no other project enters this loop, and this lane pitches no call it can close itself.
+- CADENCE: 30 minutes, via CronCreate, prompt `/canonical-drive NFRA_OPLGTW`. A cron dies with its session, which is
+  why this clause -- not the cron -- is the carrier, and why it is committed BEFORE tick 1 (the relay's own bar: *"No
+  carrier commit hash in hand, no tick"*, after the estate lost 3.5 hours and 29 ticks to a loop whose only carrier was
+  a cron).
+- STOP-CONDITION: `NFRA_OPLGTW` reads `status: complete` in the register per the skill's completion test -- READ, never
+  declared -- or Andrew's stand-down. On DONE this lane writes its final log, deletes its cron, STRIKES this clause and
+  says so loudly, because the freed slot is what `2.0.0_SA_COO~T` (MDPF_TAXSMA) is waiting on, then `2.0.0_SA_COO~M`
+  (NFRA_MCPINDEX), in that order and by his word.
+- CALL ROUTING is the 2026-09-17 ~13:0xZ law, unchanged by this clause: every call this lane holds is closed on its own
+  recommendation the same tick; a call that genuinely belongs to `1.0.0_SA_CTO` goes there WITH a recommendation and
+  the lane keeps working meanwhile. A call is not a stall unless it is parked.
+- A successor RE-ARMS ONLY off this line while the scope is not DONE, and re-reads the project's open orders before its
+  first tick rather than trusting a count in a log.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 
