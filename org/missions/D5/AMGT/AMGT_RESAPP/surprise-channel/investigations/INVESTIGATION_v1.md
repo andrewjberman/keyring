@@ -7409,6 +7409,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-18 AC5 asserts opal_shaped_tasks reads EXACTLY 11 at the cut with the given filter, and states that a count of 12, a new trigger, or a previously-DISABLED task found ENABLED are the NOT-met, BLOCKING shapes.",
     "world_is": "The count at grading reads 10, not 11, with no new task, no new trigger and no re-enabled task found -- a shape the criterion's own named failure modes do not cover, so AC5 is REFUSED as written (per this order's own REFUSAL CLAUSE) rather than silently read as PASS or silently repaired. The one-fewer count most plausibly traces to the ephemeral 'One Time Only' trigger tasks (OPAL_D7_ticket_intake, OPAL_vendor_watch) whose Next Run Time already lapsed by query time, but that mechanism is UNMEASURED, not concluded.",
     "notes": "Filed because this order's own bounds forbid repairing, widening, or silently satisfying a criterion by a route the order did not name; AC5 is graded FAIL/status_reason in this worker's proof_of_spec instance and the order is left OPEN on that criterion. This worker made zero schtasks calls in its whole session (confirmed by its own commit diff, s3 writes only), so the 11-to-10 drift predates and is independent of AMGT-rk-18's work. Instrument: python subprocess schtasks /query /fo LIST (3 repeats) and /fo LIST /V (block-level detail), both at 2026-09-17 ~02:3xZ-02:4xZ."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S141",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-17T03:56:00Z",
+    "one_line": "The print pack now serves a valid PDF for 31 of 33 keyed covered names on the redeployed adapter, and the two that return 500 are EXACTLY the two keys containing a slash (BP/_LN_Equity, NG/_LN_Equity): the renderer writes the security key into a file path, so NG's pack fails FileNotFoundError on '/tmp/pack_NG/_LN_Equity.pdf' -- AMGT_RESAPP-Z-W19-S5's filename class, now on the served plane for FWD-5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "opal-amgt-scoped-api LastModified 2026-09-17T03:27:57Z, CodeSha zHmPoWu9jZqU, 781,832 B, layer opal-amgt-print-deps:1 (boto3 get_function_configuration, 03:47Z).",
+        "Direct GET /api/scoped/amgt/security/<encodeURIComponent(key)>/print for all 33 keyed covered names (universe/v1/2026-09-16.json, source coverage or both, resolution MEASURED) at 03:55:10Z: 31 return 200 isBase64Encoded with a body decoding to %PDF-; 2 return 500 -- BP/_LN_Equity and NG/_LN_Equity. BA 76,184 B 8 page objects and COST 79,887 B 9 page objects, each ending %%EOF.",
+        "Discrimination: WALMEX*_MM_Equity (a key with '*', not '/') prints 200; the 21 names with drafting_status ABSENT include 19 that print 200, so the failing set is not the drafting class. BP and NG serve thesis and overlay 200 on the same encoded key (s.3g of this seat's audit addendum).",
+        "CloudWatch /aws/lambda/opal-amgt-scoped-api, request_id a82f1f37-dd2b-432d-9e7d-f6fbc6a086a5 (NG print, 03:53:57Z): 'ERROR: unhandled exception ... type=FileNotFoundError detail=[Errno 2] No such file or directory: /tmp/pack_NG/_LN_Equity.pdf'.",
+        "AMGT_RESAPP-Z-W19-S5 (UNDER_INVESTIGATION at HEAD): 'Three of the 33 canonical security keys contain a character that is illegal in a Windows filename or ambiguous in an S3 key path -- BP/_LN_Equity, NG/_LN_Equity and WALMEX*_MM_Equity -- and the estate's model-artifact convention writes the key straight into a filename.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-5 (the print pack, the brief's displacement test) serves for a covered name that opens on the page; W19-S5 names the filename hazard for exactly these keys.",
+    "world_is": "FWD-5 serves for 31 of 33 keyed covered names; two covered names that open on every other tab return 500 on Print because the key becomes a path. The 500 carries the generic refusal, not a classed reason.",
+    "notes": "Measured on the deployed build from AMGT-rk-6's worker branch (commit 8fcb2e0e26, not drained at read time; rk-6 pending). No worker is messaged. The mechanism line is the Lambda's own log, one request; the fix site is not read here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S142",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-17T04:02:00Z",
+    "one_line": "The rk-6/rk-7 adapter + layer deploy LANDED at 2026-09-17T03:27:57Z (sha zHmPoWu9, new layer opal-amgt-print-deps:1, 5 new routes serving) with NO change-management entry on any plane read: 0 files touched since 00:00Z in org/critical_paths/change_management/ in the shared tree or in the worker's worktree, and 0 hits for the sha or the layer name there -- the gap the worker's own row W24-S7 raised prospectively at 02:38Z is now a landed deploy with no ledger entry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "boto3 get_function_configuration opal-amgt-scoped-api at 03:47Z: LastModified 2026-09-17T03:27:57Z, CodeSha zHmPoWu9jZqU, 781,832 B, Layers [opal-amgt-print-deps:1]. The PRE-DEPLOY state this seat read at 01:18Z and 02:47Z: CodeSha x3KrEBvZVFmZ, LastModified 2026-09-16T17:23:29Z, 754,470 B, 0 layers -- the rollback target, recorded here because no ledger entry records it.",
+        "os.listdir + getmtime at 03:5xZ: org/critical_paths/change_management/ 816 files, 0 touched since 2026-09-17T00:00Z; C:/tmp/wk-amgt-12-24/org/critical_paths/change_management/ 814 files, the 5 touched since 00:00Z are other projects' 2026-09-15/16 entries (checkout mtimes), none AMGT.",
+        "comp-find 'zHmPoWu9|opal-amgt-print-deps|rk-6.*deploy|print-pack.*deploy' over change_management + the project ledger: 10 hits in 847 files, all in the project ledger's four NEVER_WIDEN_ROUND12 half files (PRINT_PACK_AND_SURFACED_ROUTES, REFRESH_CARRIER_AND_DATED_FALLBACK), none in change_management.",
+        "AMGT_RESAPP-Z-W24-S7 on branch wk-amgt_resapp-12-24 (commit 7e4d116116, not at HEAD at read time): 'Both never-widen halves for AMGT-rk-6 and AMGT-rk-7 ask the worker to open/close an entry in org/critical_paths/change_management/ around the combined deploy, but NEITHER order's <paths> grant names that directory'.",
+        "CLAUDE.md s.5 HARD STOPS: 'NEVER leave a confirmed deploy half-landed ... ledger entry in org/critical_paths/change_management/ opened at start, closed at completion.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A deploy's change-management entry is opened at start and closed at completion (CLAUDE.md s.5), and both never-widen halves for rk-6/rk-7 name that entry.",
+    "world_is": "The deploy is live and serving (print 31 of 33, freshness/ledger/lists/versions/compare 200, dated fallback serving), and it is recorded nowhere a successor reads for rollback: the prior sha x3KrEBvZ is in this row and in this seat's audit record, not in the ledger.",
+    "notes": "Not a functional hazard -- nothing is half-landed on the served plane. The entry is the issuer's to write at or before the drain (2.0.0_SA_COO~Z wrote the rk-2 rollback and fix-forward entries on 2026-09-16); this seat has no lane there and writes nothing. No worker is messaged. If an entry exists on a plane this seat did not read, a citing row resolves this."
   }
 ]
 ```
