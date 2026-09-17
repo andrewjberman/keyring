@@ -57,6 +57,7 @@ import glob
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -70,7 +71,24 @@ TOP_KEYS = {"version", "owners", "enforcement", "capacity", "stages", "projects"
 COMPILED_BEGIN = "# >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,"
 COMPILED_BEGIN_2 = "# stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it."
 COMPILED_END = "# <<< COMPILED STATE"
-PROJECT_KEYS = {"fabric", "stage", "waits_on", "hold", "why", "notes"}
+# HANDWRITTEN vs COMPILED (Andrew-direct 2026-09-17 ~15:0xZ): "the list of included projects and intended order can be
+# handwritten because thats the nature of a human picking projects to sequence, but the rest should all be compiled."
+# A project row carries only its placement (fabric, stage), its ordering constraints (waits_on, hold) and the human
+# reason for them (why). Every STATE fact -- stage reached, sign-off, seat, lane, version -- is compiled, so `notes` is
+# retired and a `why` that states one is refused.
+PROJECT_KEYS = {"fabric", "stage", "waits_on", "hold", "why"}
+_STATE_TOKENS = re.compile(r"\b(REGISTERED|DECOMP|EXECUTING|ROUND_CLOSE|CLOSED|ADMITTED|WITHHELD|SIGNED|LANE-DARK|NEEDS-SLOT"
+                           r"|HELD|WAITING|OUT-OF-SEQUENCE)\b")
+_STATE_PHRASES = re.compile(r"\bin flight\b|\bseated\b|\bcoo_lane\b|\blane (?:is |goes )?dark\b|\bv\d+\.\d+\b|"
+                            r"\bround \d+ (?:is|in)\b|\bis (?:complete|closed|live)\b", re.I)
+
+
+def state_violations(code, text):
+    """PURE. The state facts a handwritten `why` states -- each is a compiled field's job, never prose's."""
+    t = str(text or "")
+    hits = [m.group(0) for m in _STATE_TOKENS.finditer(t)] + [m.group(0) for m in _STATE_PHRASES.finditer(t)]
+    return ["%s: `why` states project state (%s) -- state is compiled, never handwritten"
+            % (code, ", ".join(sorted(set(hits))))] if hits else []
 GATE_FORMS = ("prd_admitted", "dep_stage_at_least", "status", "manual")
 LIVE_SECONDS = 120          # org/mcp/server.py STALE_THRESHOLD: a registration older than this is not LIVE
 COO_BASE = "2.0.0_SA_COO"
@@ -226,7 +244,9 @@ def validate(doc):
             continue
         for k in p:
             if k not in PROJECT_KEYS:
-                errs.append("%s: unknown key %r" % (code, k))
+                errs.append("%s: unknown key %r%s" % (code, k, " (retired: state is compiled -- see --compile)"
+                                                      if k == "notes" else ""))
+        errs.extend(state_violations(code, p.get("why")))
         if p.get("stage") not in stage_ids:
             errs.append("%s: stage %r is not a declared stage" % (code, p.get("stage")))
         hold = p.get("hold")
@@ -250,7 +270,9 @@ def evaluate(doc, reader, idle_days=IDLE_DAYS, now=None):
             notes.append(rnote)
             rows.append(entry)
             continue
-        entry.update({"dep_stage": row.get("dep_stage"), "status": row.get("status")})
+        entry.update({"dep_stage": row.get("dep_stage"), "status": row.get("status"), "phase": row.get("phase")})
+        _trow, _tn = reader.tree_row(row)
+        entry["coo_lane"] = (_trow or {}).get("coo_lane")
         if row.get("fabric") and p.get("fabric") and str(row.get("fabric")).lower() != str(p.get("fabric")).lower():
             flags.append("DRIFT")
             notes.append("fabric: the file says %r, the register row says %r" % (p.get("fabric"), row.get("fabric")))
@@ -400,6 +422,8 @@ def compile_state(doc, rows, cap, head, seq_commit, now=None):
                 continue
             r = by_code.get(code, {})
             projects[code] = {k: r.get(k) for k in ("dep_stage", "status", "prd", "last_activity", "flags", "notes", "gates")}
+            projects[code]["coo_lane"] = r.get("coo_lane")
+            projects[code]["phase"] = r.get("phase")
             if p.get("hold"):
                 projects[code]["hold_max_dep_stage"] = p["hold"].get("max_dep_stage")
         stages.append({"id": s.get("id"), "name": s.get("name"), "projects": projects})
@@ -586,6 +610,15 @@ def self_test():
         ("compile: a BEGIN marker with no END refuses rather than guessing",
          _raises(lambda: splice_compiled(_base + COMPILED_BEGIN + "\ncompiled: {}\n", _d1))),
         ("validate: the `compiled` key is admitted", validate({"compiled": {}, "projects": {}}) == []),
+        # HANDWRITTEN = placement + order + reason; STATE = compiled (Andrew-direct 2026-09-17 ~15:0xZ).
+        ("handwritten: a project row with `notes` is refused (retired, state is compiled)",
+         any("retired" in e for e in validate({"stages": [{"id": 0}], "projects": {"X": {"stage": 0, "notes": "n"}}}))),
+        ("handwritten: a `why` stating state (ADMITTED / in flight / v0.2) is refused, each named",
+         (lambda e: len(e) == 1 and all(t in e[0] for t in ("ADMITTED", "in flight", "v0.2")))(
+             state_violations("X", "PRD v0.2 is ADMITTED; in flight under a lane"))),
+        ("handwritten: a `why` giving only a reason and a quoted word passes (no false positive on 'admitted' prose)",
+         state_violations("X", "Its PRD cannot be written before those three are admitted (Andrew ~05:2xZ, 'the Logic "
+                               "projects first').") == []),
     ]
     fails = 0
     for name, ok in cases:

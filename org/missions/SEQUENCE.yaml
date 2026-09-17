@@ -1,4 +1,4 @@
-# >>> CURRENT STATE: run `python .tools/sequence-check.py --compile` -- it recompiles the nested `compiled:` JSON at the
+# >>> CURRENT STATE: run `/sequence` (= `python .tools/sequence-check.py --compile`) -- it recompiles the nested `compiled:` JSON at the
 # >>> BOTTOM of this file from the live project register, PRD sign-offs, git and the COO roster, and prints it. The block
 # >>> already there is a SNAPSHOT as of its own compiled_at + head, never authority: recompile before acting on it.
 #
@@ -17,8 +17,11 @@
 #
 # WHAT IT HOLDS -- only what the register cannot answer: which projects are ordered, what each waits on, and why.
 # WHAT IT NEVER HOLDS AS AUTHORITY -- STATUS. dep_stage, status, PRD sign-off and last activity are read live by
-#   .tools/sequence-check.py every time it runs. The one exception is the `compiled:` block at the bottom, which the
-#   script alone writes (Andrew-direct 2026-09-17 ~14:0xZ: "nested json which is compiled at viewtime that is tied to
+#   .tools/sequence-check.py every time it runs. HANDWRITTEN, per project, is ONLY placement (fabric, stage), ordering
+#   constraints (waits_on, hold) and the human reason (why) -- Andrew-direct 2026-09-17 ~15:0xZ: "the list of included
+#   projects and intended order can be handwritten ... but the rest should all be compiled." The validator REFUSES a
+#   `notes` key and a `why` that states project state. The compiled state lives in the `compiled:` block at the bottom,
+#   which the script alone writes (Andrew-direct 2026-09-17 ~14:0xZ: "nested json which is compiled at viewtime that is tied to
 #   the underlying projects"); it is stamped with compiled_at + head, the reader never evaluates it, and nobody edits it.
 # WHAT IS NOT HERE -- a project with no ordering constraint. Its own directive's rules govern it; it is not placed.
 #
@@ -71,14 +74,13 @@ projects:
     fabric: laptop
     stage: 0
     waits_on: []
-    why: "Andrew's next COO seat (~12:5xZ, 'If push mdpf_taxsma as the next one followed by nfra_oplgtw'). PRD v0.2 is ADMITTED on both halves (60c722fe64); L5 is next and is a COO's. 0.0.0_AB_MSTR seats the lane; the project's coo_lane is recorded in its project.json when seated."
-    notes: "Resolves LD-0567's carried conflict: this seat, not LGIC_CANON, takes 2.0.0_SA_COO~F's next free slot. The tail placement proposed @8c70cabc48 was never adopted."
+    why: "Andrew's next COO seat (~12:5xZ 2026-09-15, 'If push mdpf_taxsma as the next one followed by nfra_oplgtw'), confirming his ~07:5xZ capacity order (LD-0567 @4524cc2466). It resolves LD-0567's carried conflict: this project, not LGIC_CANON, takes the next free COO slot."
 
   NFRA_OPLGTW:
     fabric: laptop
     stage: 0
     waits_on: []
-    why: "Second in Andrew's seat order, the same word. In flight at EXECUTING under 2.0.0_SA_COO~O, so it takes no new slot now; placed here so it is next for a seat if that lane goes dark."
+    why: "Second in Andrew's seat order, the same word."
 
   LGIC_NAMING:
     fabric: laptop
@@ -98,7 +100,6 @@ projects:
     stage: 1
     waits_on: []
     why: "In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate."
-    notes: "Seated on 2.0.0_SA_COO~G alongside LGIC_NAMING and LGIC_ENFORCE: Andrew-direct ~16:1xZ 2026-09-15 at the 2.0.0_SA_COO~G terminal, 'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260915_161xZ_PARALLELIZE_HARDER_ENFORCE_AND_CANON~G.md @2373f96073). No new COO session; the laptop stays at 3 of 3; no other project's seat order moves."
 
   LGIC_LGCTFM:
     fabric: laptop
@@ -107,8 +108,7 @@ projects:
       - {project: LGIC_NAMING, prd_admitted: true}
       - {project: LGIC_ENFORCE, prd_admitted: true}
       - {project: LGIC_CANON, prd_admitted: true}
-    why: "The Legacy Transform is the LENS the D14 canon, schema and builders are read through: its DESIRED half is computed by LGIC_ENFORCE's address()/name()/grade() against LGIC_NAMING's schema and graded against LGIC_CANON's rules (brief IV.1, IV.4), so its PRD cannot be written before those three are admitted. All three are admitted at placement, so the gates are met and nothing waits. Fourth in the Platform Logic stage by Andrew's ~05:2xZ 2026-09-16 word naming the four LGIC projects together; last of the four for a COO seat, behind the three already seated on 2.0.0_SA_COO~G."
-    notes: "Placed at L3 (REGISTERED, 2026-09-16 @5ae9383901) so the goal loops' 'drive in the sequence's order' covers the set Andrew named (2.0.0_SA_COO~G 97315). Its first real subjects are stage-2 projects (ADVI_FIRMBKTS, MDPF_CANON; brief IV.15, O6): that is a CONSUMER relation, recorded on those rows' notes when their L5 cuts the cell, never a gate on this row. Stage-2 holds are unchanged by this placement."
+    why: "The Legacy Transform is the LENS the D14 canon, schema and builders are read through: its DESIRED half is computed by LGIC_ENFORCE's address()/name()/grade() against LGIC_NAMING's schema and graded against LGIC_CANON's rules (brief IV.1, IV.4), so its PRD cannot be written before those three are admitted. Fourth in the Platform Logic stage by Andrew's ~05:2xZ 2026-09-16 word naming the four LGIC projects together. Its first real subjects are stage-2 projects (ADVI_FIRMBKTS, MDPF_CANON; brief IV.15, O6): a CONSUMER relation, never a gate on this row."
 
   ADVI_FIRMBKTS:
     fabric: laptop
@@ -120,7 +120,6 @@ projects:
         - {project: LGIC_ENFORCE, prd_admitted: true}
         - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from", confirmed: "1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied; its drain completed @d482e58ecf (merge c6d652a6dc landed 2 of the branch's 8 paths, row LGIC_ENFORCE-S18; the other 6 landed @5ee8e068fd, @8c77a1400a, @d482e58ecf); 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial"}
     why: "The legacy firm buckets (opal-data-bd, -inf, -cot) move into opal-data-49financial and the two new buckets. The new buckets must be minted with the rebuilt fence, and FWD-3 needs LGIC_ENFORCE's registry. Its PRD and decomposition may proceed; execution waits."
-    notes: "Card 3 (read logging on the legacy buckets, order 4db66568a6) ran ahead of this stage on Andrew's own words (~18:4xZ card 3, ~19:0xZ, ~21:3xZ): it starts FWD-6's 45-day clock and touches no naming. CARRIES for this project's L4 (1.0.0_SA_CTO ruling 97031, 2026-09-15). They are acceptance lines when the project is seated, not holds. (C1) irpt-directory-refresh-role carries no firm token and reads/writes the served IRPT directory. When its grants repoint to opal-data-inflection or opal-data-cottonwood, it needs an exemption row on EACH new bucket, under never-widen sign-off, BEFORE the repoint, or the fence denies it and the trading-weekday 09:00 ET directory refresh breaks. The writer census re-runs PER NEW BUCKET; the 49financial census does not cover them. (C2) That per-bucket census includes service-principal delivery (access logs, inventory, replication). If it is non-empty for a new bucket, a registry-generated aws:PrincipalServiceName arm is built before that bucket is fenced."
 
   MDPF_CANON:
     fabric: laptop
@@ -136,8 +135,7 @@ projects:
     fabric: laptop
     stage: 3
     waits_on: []
-    why: "Investor Reporting's backend. Its per-firm platinum lands in the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover), and IRPT_FNTEND cannot close without it. Round 2 is in flight with its COO lane dark, so it needs a seat to finish. It follows Platform Logic by Andrew's word, which also binds what it becomes: its next revision is built on the patterns the Logic projects establish (~14:5xZ, 'No, we need the logic projects done first because that will establish the patterns for the new backend properly')."
-    notes: "No hold: the round in flight is not ordered against anything, and a hold would mark it out of sequence. The row-11 dependency is a gate on that OUTCOME, added when its next PRD revision cuts the cell (the MDPF_CANON pattern), not on the project. BACKEND ADMIN WALL, Andrew-direct 2026-09-15 ~14:2xZ at the 1.0.0_SA_CTO terminal, 'recs approved', on /open-calls card 2: before ANY IRPT_BCKEND route serves, the backend refuses a caller who is not role admin AND firm opal-capital (the portal predicate, enforced server-side, not only in the UI). It lands as an IRPT_BCKEND FWD at its next PRD revision. That FWD first answers _scope/resolve.py:186-187's note that the injected header set cannot separate an Opal admin from a partner-firm admin. It carries row IRPT_FNTEND-S66."
+    why: "Investor Reporting's backend. Its per-firm platinum lands in the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover), and IRPT_FNTEND cannot close without it. It follows Platform Logic by Andrew's word, which also binds what it becomes: its next revision is built on the patterns the Logic projects establish (~14:5xZ, 'No, we need the logic projects done first because that will establish the patterns for the new backend properly'). No hold: its row-11 dependency is a gate on that OUTCOME, added when its next PRD revision cuts the cell, not on the project."
 
 parked:
   NFRA_SUBSTRATECARDING:
@@ -193,14 +191,18 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v4 format -- a view-time compiled `compiled:` block at the bottom of the file (nested JSON: stage -> project -> live dep_stage, status, PRD sign-off, last activity, flags, gates; plus capacity and flag counts), written only by `python .tools/sequence-check.py --compile` between marker lines and stamped compiled_at + head; a header line at the top names the command. The reader never evaluates the block. No order changed."
     word: "'Edit it so that there is nested json which is compiled at viewtime that is tied to the underlying projects. maybe theres a line at the top that says run the script to recompile, so when agents go look at it they can see that line, get the ref to the script, run it, and get current state fast.' (Andrew-direct ~14:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal)"
+  - at: "2026-09-17"
+    by: "1.0.0_SA_CTO"
+    change: "v4 format -- state is COMPILE-ONLY. A project row now carries only fabric, stage, waits_on, hold and why; `notes` is retired and every `why` stripped of state, and the validator refuses both. coo_lane and phase join the compiled block. The removed text (incl. ADVI_FIRMBKTS C1/C2 and IRPT_BCKEND's admin wall, which are those projects' next-PRD obligations) is preserved verbatim at org/tier1_exec/1.0.0_SA_CTO/deliverables/SEQUENCE_HANDWRITTEN_STATE_REMOVED_20260917.md. The /sequence skill runs the recompile. No order changed."
+    word: "'let's make a skill called /sequence which runs the recompile. All state data on projects in sequence.yaml should be compile-only. the list of included projects and intended order can be handwritten because thats the nature of a human picking projects to sequence, but the rest should all be compiled.' (Andrew-direct ~15:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal)"
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-17T14:10:00Z",
-    "head": "2bb51e2cd0",
-    "sequence_file_last_commit": "14936be222 2026-09-16T02:23:53-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-09-17T15:04:14Z",
+    "head": "069cf830cb",
+    "sequence_file_last_commit": "6b390affa9 2026-09-17T10:10:11-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
@@ -240,16 +242,20 @@ compiled:
             "notes": [
               "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~T is not live on this box, so its round waits for a COO seat"
             ],
-            "gates": []
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~T",
+            "phase": null
           },
           "NFRA_OPLGTW": {
             "dep_stage": "EXECUTING",
             "status": "scoping",
             "prd": "v0.9 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "2bb51e2cd0 2026-09-17T10:00:34-04:00",
+            "last_activity": "069cf830cb 2026-09-17T11:01:21-04:00",
             "flags": [],
             "notes": [],
-            "gates": []
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~O",
+            "phase": null
           }
         }
       },
@@ -264,13 +270,15 @@ compiled:
             "last_activity": "40773deb8b 2026-09-16T12:48:30-04:00",
             "flags": [],
             "notes": [],
-            "gates": []
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~G",
+            "phase": null
           },
           "LGIC_ENFORCE": {
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "c8a140654b 2026-09-17T09:55:34-04:00",
+            "last_activity": "d7d1fdc5a5 2026-09-17T10:52:57-04:00",
             "flags": [],
             "notes": [],
             "gates": [
@@ -279,22 +287,26 @@ compiled:
                 "state": "MET",
                 "detail": "LGIC_NAMING PRD admitted? v1.10 ADMITTED (brief SIGNED, ratified-text SIGNED)"
               }
-            ]
+            ],
+            "coo_lane": "2.0.0_SA_COO~G",
+            "phase": null
           },
           "LGIC_CANON": {
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "503160fc58 2026-09-17T09:26:46-04:00",
+            "last_activity": "3da3b4204f 2026-09-17T10:42:31-04:00",
             "flags": [],
             "notes": [],
-            "gates": []
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~G",
+            "phase": null
           },
           "LGIC_LGCTFM": {
-            "dep_stage": "DECOMP",
+            "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "5503d92f88 2026-09-16T13:47:21-04:00",
+            "last_activity": "ef8197ed07 2026-09-17T10:28:59-04:00",
             "flags": [],
             "notes": [],
             "gates": [
@@ -313,7 +325,9 @@ compiled:
                 "state": "MET",
                 "detail": "LGIC_CANON PRD admitted? v1.5 ADMITTED (brief SIGNED, ratified-text SIGNED)"
               }
-            ]
+            ],
+            "coo_lane": "2.0.0_SA_COO~G",
+            "phase": null
           }
         }
       },
@@ -344,6 +358,8 @@ compiled:
                 "detail": "manual, CONFIRMED: 1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied; its drain completed @d482e58ecf (merge c6d652a6dc landed 2 of the branch's 8 paths, row LGIC_ENFORCE-S18; the other 6 landed @5ee8e068fd, @8c77a1400a, @d482e58ecf); 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial"
               }
             ],
+            "coo_lane": null,
+            "phase": null,
             "hold_max_dep_stage": "DECOMP"
           },
           "MDPF_CANON": {
@@ -364,6 +380,8 @@ compiled:
                 "detail": "LGIC_ENFORCE PRD admitted? v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)"
               }
             ],
+            "coo_lane": null,
+            "phase": null,
             "hold_max_dep_stage": "REGISTERED"
           }
         }
@@ -383,7 +401,9 @@ compiled:
             "notes": [
               "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~B is not live on this box, so its round waits for a COO seat"
             ],
-            "gates": []
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~B",
+            "phase": null
           }
         }
       }
