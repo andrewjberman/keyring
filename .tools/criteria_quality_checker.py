@@ -4,7 +4,7 @@ the issuer). Andrew-direct via the round-11 slug's obligation 5, cut as a cell b
 graded rather than promised: an issuer's criteria can carry shapes that CANNOT FAIL, and no
 product surface can deliver a remedy to that -- only a checker over the issuer's own text can.
 
-REFUSES a criterion carrying one of FIVE shapes, over either object:
+REFUSES a criterion carrying one of SIX shapes, over either object:
   (a) a PROOF-OF-SPEC instance (JSON, schema org/standards/PROOF_OF_SPEC.schema.json)
       whose acceptance[] rows are ALREADY EXECUTED (output_evidence, denominator, status); or
   (b) a TASK-ORDER .md file whose <proof_of_spec> block carries <criterion id=".."
@@ -16,7 +16,8 @@ Each shape is a HEURISTIC over the criterion's own text. A criterion this checke
 flag is ADMITTED, never CERTIFIED -- this tool proves the presence of a named defect shape,
 not the absence of every possible one.
 
-FIVE SHAPES (verbatim from AMGT-rk-9's DELIVER list):
+SIX SHAPES (five verbatim from AMGT-rk-9's DELIVER list, sixth added by rk-28 off round-12's
+`rk-15` AC3 measured instance):
   1. ZERO-COLLECTED   -- a test-suite-shaped criterion whose printed/expected collected
                           count is 0 (or a denominator reading "0 of 0").
   2. RC-SWALLOWED     -- a piped test/build runner whose own exit status is never read
@@ -27,13 +28,19 @@ FIVE SHAPES (verbatim from AMGT-rk-9's DELIVER list):
                           carrying a glob wildcard (*, ?, [ ) instead of an exact name.
   5. NO-TIMEOUT       -- a command/live_read/test_suite criterion whose invocation carries
                           no literal `timeout <N>` bound at all.
+  6. DATA-VACUITY     -- an invocation that counts the bare OCCURRENCE of a field-name token
+                          (`.count(`, `grep -c`, `wc -l`, "occurrences of") while `expect`
+                          asserts only that count against a number, never checking what any
+                          counted item actually HOLDS (no value comparison, no match against
+                          a source excerpt) -- the count proves the field's PRESENCE, never
+                          its VALUE.
 
 USAGE:
   python criteria_quality_checker.py --self-test
-      Runs FIVE SEALED PLANTED MUTANTS (one per shape above, synthetic, embedded in this
-      file -- never read from the estate) plus ONE CLEAN CONTROL, and prints, for each,
+      Runs SIX SEALED PLANTED MUTANTS (one per shape above, synthetic, embedded in this
+      file -- never read from the estate) plus TWO CLEAN CONTROLS, and prints, for each,
       REFUSED or ADMITTED. Prints the counts as its denominator. rc 0 always: this is the
-      checker reporting on ITSELF, graded by the caller against "5 refusals, >=1 admission".
+      checker reporting on ITSELF, graded by the caller against "6 refusals, >=1 admission".
 
   python criteria_quality_checker.py <order.md-or-instance.json> [more ...]
       Scans each file. A .json file is read as a PROOF-OF-SPEC instance (acceptance[]
@@ -80,6 +87,15 @@ CAPTURE_CONTEXT_RE = re.compile(
     re.I,
 )
 FILE_TOKEN_RE = re.compile(r"[\w./\-*?\[\]]+\.(?:json|txt|log|py|md|csv)\b")
+COUNT_METHOD_RE = re.compile(
+    r"\.count\(|\bgrep\s+-c\b|\bwc\s+-l\b|\boccurrences?\s+of\b|\bcounts?\s+of\b", re.I
+)
+FIELD_COUNT_EXPECT_RE = re.compile(r"\b[A-Za-z][\w-]*\s*(?:>=|<=|==|=|>|<)\s*\d+\b")
+VALUE_CHECK_RE = re.compile(
+    r"\b(equals?|matches?|matched\s+against|compared?\s+(?:to|against)|source\s+excerpt|"
+    r"specific\s+value|expected\s+value|per-?item)\b",
+    re.I,
+)
 CRITERION_RE = re.compile(
     r'<criterion\s+id="([^"]+)"[^>]*>\s*<invocation>(.*?)</invocation>\s*'
     r"<expect>(.*?)</expect>\s*</criterion>",
@@ -192,12 +208,38 @@ def shape5_no_timeout(c):
     return "NO-TIMEOUT: invocation carries no literal `timeout <N>` bound"
 
 
+def shape6_data_vacuity(c):
+    """Sibling of shape1 (which flags a ZERO count): this flags a NONZERO count that
+    proves only a field's PRESENCE, never its VALUE. Accepts either a _norm()-shaped dict
+    or a bare {"id", "invocation", "expect"} dict (the checker's own self-test and its
+    external callers construct criteria both ways), so every field is read with .get()
+    rather than indexing -- unlike the other five shapes, which assume _norm() already ran."""
+    inv = c.get("invocation") or ""
+    expect = c.get("expect") or ""
+    verbatim = c.get("verbatim") or ""
+    if not (COUNT_METHOD_RE.search(inv) and FIELD_COUNT_EXPECT_RE.search(expect)):
+        return None
+    blob = inv + " " + expect + " " + verbatim
+    if VALUE_CHECK_RE.search(blob):
+        return None
+    return (
+        "DATA-VACUITY: invocation counts a bare field-name token occurrence but expect "
+        f"asserts only the count, never the counted items' value/content -- '{expect.strip()[:140]}'"
+    )
+
+
 def evaluate(criteria):
     """Returns {criterion_id: [reason, ...]} for every flagged criterion."""
     flags = {}
     for c in criteria:
         reasons = []
-        for fn in (shape1_zero_collected, shape2_rc_swallowed, shape4_inexact_capture, shape5_no_timeout):
+        for fn in (
+            shape1_zero_collected,
+            shape2_rc_swallowed,
+            shape4_inexact_capture,
+            shape5_no_timeout,
+            shape6_data_vacuity,
+        ):
             r = fn(c)
             if r:
                 reasons.append(r)
@@ -285,7 +327,30 @@ def _self_test():
     flagged = evaluate([m5])
     results.append(("shape5-no-timeout", "MUT-5", bool(flagged.get("MUT-5"))))
 
-    # CLEAN CONTROL: an honest criterion carrying NONE of the five shapes -- bounded,
+    # SHAPE 6 mutant: round-12's rk-15 AC3 defect, mirrored verbatim -- the invocation
+    # counts a bare OCCURRENCE of a field-name token in source text, and expect asserts
+    # only that count against a number. The count proves the field is PRESENT; it proves
+    # NOTHING about what any counted item actually holds.
+    m6 = _mk(
+        "MUT-6",
+        invocation="timeout 30 python -c \"print(open('artifact.json').read().count('points_emitted'))\"",
+        expect="points-emitted >= 6",
+    )
+    flagged = evaluate([m6])
+    results.append(("shape6-data-vacuity", "MUT-6", bool(flagged.get("MUT-6"))))
+
+    # SHAPE 6 clean control: same field, but the invocation reads the actual VALUE and
+    # expect checks it against a specific number matched to the source excerpt -- never a
+    # bare token count.
+    c6 = _mk(
+        "CTRL-6",
+        invocation="timeout 30 python -c \"import json; d=json.load(open('artifact.json')); print(d['points_emitted'])\"",
+        expect="points_emitted equals 6, matched against the source excerpt",
+    )
+    flagged = evaluate([c6])
+    results.append(("shape6-clean-control", "CTRL-6", bool(flagged.get("CTRL-6"))))
+
+    # CLEAN CONTROL: an honest criterion carrying NONE of the six shapes -- bounded,
     # rc genuinely read, nonzero collected count, one exact filename, no pre/post pairing.
     control = _mk(
         "CTRL-1",
@@ -300,9 +365,14 @@ def _self_test():
 
     refused = 0
     admitted = 0
-    print("SELF-TEST -- five sealed planted mutants (one per shape) plus one clean control:")
+    n_mutants = sum(1 for _, mid, _ in results if not mid.startswith("CTRL"))
+    n_controls = sum(1 for _, mid, _ in results if mid.startswith("CTRL"))
+    print(
+        f"SELF-TEST -- {n_mutants} sealed planted mutants (one per shape) plus "
+        f"{n_controls} clean control(s):"
+    )
     for shape_name, mid, was_flagged in results:
-        if mid == "CTRL-1":
+        if mid.startswith("CTRL"):
             verdict = "ADMITTED" if not was_flagged else "REFUSED (WRONG -- control should be clean)"
             if not was_flagged:
                 admitted += 1
@@ -311,9 +381,12 @@ def _self_test():
             if was_flagged:
                 refused += 1
         print(f"  {shape_name:24s} {mid:14s} -> {verdict}")
-    print(f"DENOMINATOR: mutants-refused {refused} of 5; controls-admitted {admitted} of 1")
-    if refused == 5 and admitted == 1:
-        print("SELF-TEST RESULT: DISCRIMINATES (5 of 5 mutants refused, 1 of 1 control admitted)")
+    print(f"DENOMINATOR: mutants-refused {refused} of {n_mutants}; controls-admitted {admitted} of {n_controls}")
+    if refused == n_mutants and admitted == n_controls:
+        print(
+            f"SELF-TEST RESULT: DISCRIMINATES ({refused} of {n_mutants} mutants refused, "
+            f"{admitted} of {n_controls} controls admitted)"
+        )
     else:
         print("SELF-TEST RESULT: DOES NOT DISCRIMINATE -- see counts above")
     return 0
