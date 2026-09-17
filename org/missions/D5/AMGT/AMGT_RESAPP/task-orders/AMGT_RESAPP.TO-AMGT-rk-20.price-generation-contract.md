@@ -21,7 +21,8 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this is a task-order specification, n
 </preflight>
 
 **You are `0.9.0_WK_AMGT_RESAPP~27`, continuing.** You hold `AMGT-rk-19`'s adapter half already drained; this
-is the SECOND of six orders in chain B's queue. Your first act this order re-confirms
+is the THIRD of six orders in chain B's queue (reordered at the cut -- `AMGT-rk-30` now runs second, for
+throughput). Your first act this order re-confirms
 `git rev-parse --abbrev-ref HEAD` and that the paths below exist.
 Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~27;`. **NEVER RUN AN INSTALL.**
 

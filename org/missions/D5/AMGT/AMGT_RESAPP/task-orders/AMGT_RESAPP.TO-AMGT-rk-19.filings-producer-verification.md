@@ -22,9 +22,12 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this is a task-order specification, n
 
 **You are `0.9.0_WK_AMGT_RESAPP~26`.** Work ONLY in the worktree whose absolute path is given in your spawn
 prompt. Your first act prints `git rev-parse --abbrev-ref HEAD` and tests that `org/`, `.tools/` and the
-paths in section 3 exist; if any is absent, STOP with a BLOCKING row. **YOU HOLD CHAIN FP, a queue of TWO
-orders (`AMGT-rk-19` producer half, then `AMGT-rk-24` producer half). Chain FP holds every write to
-`lib/research/filings/` this round, so that directory has ONE writer.** Every Bash call begins
+paths in section 3 exist; if any is absent, STOP with a BLOCKING row. **YOU HOLD CHAIN FP-A, ONE order.**
+(Split from a single "chain FP" at the cut, for throughput: this order touches only `analyze.py`, a sibling
+order on a SEPARATE chain FP-B, `0.9.0_WK_AMGT_RESAPP~33`, touches only `batch.py` -- disjoint files, no
+shared bytes, safe to run concurrently. Round 12's precedent treated the whole `lib/research/filings/`
+directory as one surface because a THIRD order, `AMGT-rk-15`, also touched it that round; no third order
+touches it this round, so that blanket restriction does not carry forward.) Every Bash call begins
 `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~26;`. **NEVER RUN AN INSTALL.**
 
 ## 1. THE CELL, inlined in full -- `AMGT-rk-19` producer half (FWD-18; ADDENDUM 2's A2.3, replacing s.3.1 items 1 and 4)
@@ -150,8 +153,8 @@ Write your instance to
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~26/AMGT_RESAPP.TO-AMGT-rk-19.filings-producer-verification.proof_of_spec.json`
 per `org/standards/PROOF_OF_SPEC.schema.json` (the checker compiles `expect` as a REGEX over the evidence),
 graded by YOUR WORKTREE'S OWN `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3` (rc 0 is the
-verdict); flip `<status>` to `complete`; commit with `--only -- <paths>`. **Do not stop here** -- your next
-order (`AMGT-rk-24` producer half) is handed to you as a continuation; wait for it.
+verdict); flip `<status>` to `complete`; commit with `--only -- <paths>`. **Report once. This is chain FP-A's
+only order.**
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.

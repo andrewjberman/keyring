@@ -20,7 +20,8 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this is a task-order specification, n
   specifies it.
 </preflight>
 
-**You are `0.9.0_WK_AMGT_RESAPP~27`, continuing.** Fourth of six orders in chain B's queue. First act:
+**You are `0.9.0_WK_AMGT_RESAPP~27`, continuing.** Fifth of six orders in chain B's queue (reordered at the
+cut -- `AMGT-rk-30` now runs second, for throughput). First act:
 re-confirm `git rev-parse --abbrev-ref HEAD` and that the paths below exist.
 Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~27;`. **NEVER RUN AN INSTALL.**
 
@@ -31,7 +32,7 @@ zero occurrences of `UNRESOLVED-SOURCE` or `filing_identity` anywhere in `scoped
 `read_thesis_bundle()` (`:1897-1949`) never reads the security's `filings/v1/<key>/` source object at all --
 it only reads the model block, drafting sections, management and posture. For a name with no CIK, the page's
 `drafting_reason` reads the generic S3 `NoSuchKey`, even though the store (per this cell's sibling producer
-order, chain FP's `AMGT-rk-24`) now carries an explicit, named no-CIK reason for every one of the 21 unfiled
+order, chain FP-B's `AMGT-rk-24`) now carries an explicit, named no-CIK reason for every one of the 21 unfiled
 names.
 
 **RULED:** inside `read_thesis_bundle()`, where the drafting merge happens
@@ -46,9 +47,9 @@ correct; this order only makes its result visible on the served route.
 
 **ROUND 13**, decomposition v1.7 s.21c, on `1.0.0_SA_CTO~Z`'s L10 round-12 analysis s.4's `R13-F` row @`9419550eb1`,
 rows `AMGT_RESAPP-Z-S139`/`S146` (`4.0.0_SA_CRO~Z`). The producer half of this same cell (writing the
-`UNRESOLVED-SOURCE.source.json` objects this order reads) is a SEPARATE order on chain FP,
+`UNRESOLVED-SOURCE.source.json` objects this order reads) is a SEPARATE order on chain FP-B,
 `AMGT_RESAPP.TO-AMGT-rk-24.batch-unresolved-objects.md`, and must drain BEFORE this order's criteria can pass
-for the 21-name population (do not spawn/run this order's criteria before confirming chain FP's queue has
+for the 21-name population (do not spawn/run this order's criteria before confirming chain FP-B's order has
 reached that order).
 
 ## 3. SURFACES -- what you may read and write
@@ -99,7 +100,7 @@ resp = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
 body = json.loads(resp['Payload'].read())
 inner = json.loads(body.get('body', '{}')) if isinstance(body.get('body'), str) else body.get('body', {})
 print('drafting_reason', inner.get('drafting_reason'))
-"</invocation><expect>BEFORE this order lands, drafting_reason reads a generic NoSuchKey-shaped string; AFTER (and after chain FP's sibling order has written the pool objects), drafting_reason for the sampled unfiled name reads the store's own no-CIK reason text (matching `filing_identity.source is None: no cik and expected form to fetch by`, or the equivalent corrected wording) -- the worker records both runs and names which unresolved name it sampled</expect></criterion>
+"</invocation><expect>BEFORE this order lands, drafting_reason reads a generic NoSuchKey-shaped string; AFTER (and after chain FP-B's order has written the pool objects), drafting_reason for the sampled unfiled name reads the store's own no-CIK reason text (matching `filing_identity.source is None: no cik and expected form to fetch by`, or the equivalent corrected wording) -- the worker records both runs and names which unresolved name it sampled</expect></criterion>
 </proof_of_spec>
 
 **Record the ACTUAL OUTPUT and DENOMINATOR, not a paraphrase.** No judgment criterion on this order.

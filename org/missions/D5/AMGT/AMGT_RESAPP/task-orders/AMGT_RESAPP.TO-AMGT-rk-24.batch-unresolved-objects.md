@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
 <owned_cells>AMGT-rk-24</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_AMGT_RESAPP~26</issued_to>
+<issued_to>0.9.0_WK_AMGT_RESAPP~33</issued_to>
 <issued_by>2.0.0_SA_COO~Z</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -20,10 +20,13 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this is a task-order specification, n
   specifies it.
 </preflight>
 
-**You are `0.9.0_WK_AMGT_RESAPP~26`, continuing.** You already hold `AMGT-rk-19`'s producer half; this is the
-SECOND and LAST order in chain FP's queue. Your first act this order re-prints
-`git rev-parse --abbrev-ref HEAD` and confirms `lib/research/filings/batch.py` exists at the path below.
-Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~26;`. **NEVER RUN AN INSTALL.**
+**You are `0.9.0_WK_AMGT_RESAPP~33`.** Work ONLY in the worktree whose absolute path is given in your spawn
+prompt. **YOU HOLD CHAIN FP-B, ONE order.** (Split from a single "chain FP" at the cut, for throughput: this
+order touches only `batch.py`; a sibling order on a SEPARATE chain FP-A, `0.9.0_WK_AMGT_RESAPP~26`, touches
+only `analyze.py` -- disjoint files, safe to run concurrently.) Your first act prints
+`git rev-parse --abbrev-ref HEAD` and confirms `org/`, `.tools/` and `lib/research/filings/batch.py` exist at
+the paths below; if any is absent, STOP with a BLOCKING row.
+Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~33;`. **NEVER RUN AN INSTALL.**
 
 ## 1. THE CELL, inlined in full -- `AMGT-rk-24` producer half (FWD-18; S139 corrected by S146)
 
@@ -62,7 +65,7 @@ this order.**
 
 <paths>
 lib/research/filings/batch.py
-org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~26/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~33/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-24.batch-unresolved-objects.md
 </paths>
@@ -71,7 +74,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-24.batch-unr
   `crosswalk.py` freely (reuse their existing helpers) but WRITE only `batch.py` among repo files. The S3
   pool write (`filings/v1/<key>/UNRESOLVED-SOURCE.source.json`, 21 objects) is not a repo path and needs no
   `<paths>` entry. Scratch is `<your worktree>/.scratch/` only.
-- **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~26 <0.9.0_WK_AMGT_RESAPP~26@opal.agent>" -F <msgfile> -- <paths>`.
+- **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~33 <0.9.0_WK_AMGT_RESAPP~33@opal.agent>" -F <msgfile> -- <paths>`.
   Never push, merge, rebase, `checkout --`, `stash` or `clean`.
 
 ## 4. BOUNDS
@@ -82,7 +85,7 @@ anything you write; **PUSH: never**. **THE REFUSAL CLAUSE:** a criterion you can
 REFUSED with its measurement and a row; never repaired, widened, or satisfied by a route this order did not
 name. **A COUNT BAR IS READ FROM THE LIVE STORE AT THE CUT and PRINTS its denominator** -- re-count the 21
 yourself against `universe/v1/2026-09-16.json` (or its current latest, named) rather than trusting this
-document's number. **SURPRISE ROWS:** your row continues `AMGT_RESAPP-Z-W26-S<k>` from wherever your prior
+document's number. **SURPRISE ROWS:** your row continues `AMGT_RESAPP-Z-W33-S<k>` from wherever your prior
 order's `<k>` left off; `"project": "AMGT_RESAPP"` and `"fabric": "site-z"` on every new row; append by
 textual splice inside the one fenced JSON array (never re-serialize it) and never edit an existing row.
 **Found something off-task? APPEND ONE ROW AND KEEP WORKING.**
@@ -120,11 +123,11 @@ this order.
 ## 6. WHEN YOU ARE DONE
 
 Write your instance to
-`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~26/AMGT_RESAPP.TO-AMGT-rk-24.batch-unresolved-objects.proof_of_spec.json`
+`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~33/AMGT_RESAPP.TO-AMGT-rk-24.batch-unresolved-objects.proof_of_spec.json`
 per `org/standards/PROOF_OF_SPEC.schema.json` (the checker compiles `expect` as a REGEX over the evidence),
 graded by YOUR WORKTREE'S OWN `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3` (rc 0 is the
-verdict); flip `<status>` to `complete`; commit with `--only -- <paths>`. **Report once. This is chain FP's
-last order** -- your queue is complete after this drains.
+verdict); flip `<status>` to `complete`; commit with `--only -- <paths>`. **Report once. This is chain FP-B's
+only order.**
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.

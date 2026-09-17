@@ -23,8 +23,11 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this is a task-order specification, n
 **You are `0.9.0_WK_AMGT_RESAPP~27`.** Work ONLY in the worktree whose absolute path is given in your spawn
 prompt. Your first act prints `git rev-parse --abbrev-ref HEAD` and tests that `org/`, `.tools/` and the
 paths in section 3 exist; if any is absent, STOP with a BLOCKING row. **YOU HOLD CHAIN B, a queue of SIX
-orders, in this order: `AMGT-rk-19` (this one, adapter half), `AMGT-rk-20`, `AMGT-rk-23`, `AMGT-rk-24`
-(adapter half), `AMGT-rk-25`, `AMGT-rk-30` (adapter half). Chain B holds `lib/research/api/scoped_amgt.py`
+orders, in this REORDERED sequence (reordered at the cut for throughput -- `AMGT-rk-30`'s adapter half has no
+dependency on `AMGT-rk-20`/`AMGT-rk-23`/`AMGT-rk-24`/`AMGT-rk-25`, only on chain SP's producer, so it moves
+to position 2 rather than sitting last and blocking chain A's second page for the whole queue's length):
+`AMGT-rk-19` (this one, adapter half), `AMGT-rk-30` (adapter half), `AMGT-rk-20`, `AMGT-rk-23`, `AMGT-rk-24`
+(adapter half), `AMGT-rk-25`. Chain B holds `lib/research/api/scoped_amgt.py`
 WHOLE-FILE plus every live AWS act that moves served output this round, so that surface has ONE writer, and
 EACH deploy in your queue is sequenced strictly after the one before it.** Every Bash call begins
 `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~27;`. **NEVER RUN AN INSTALL.**
@@ -133,8 +136,8 @@ Write your instance to
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~27/AMGT_RESAPP.TO-AMGT-rk-19.adapter-second-join.proof_of_spec.json`
 per `org/standards/PROOF_OF_SPEC.schema.json`, graded by YOUR WORKTREE'S OWN
 `python .tools/proof-of-spec-check.py <instance> AC1,AC2` (rc 0 is the verdict); flip `<status>` to
-`complete`; commit with `--only -- <paths>`. **Do not stop here** -- `AMGT-rk-20` is handed to you next as a
-continuation; wait for it.
+`complete`; commit with `--only -- <paths>`. **Do not stop here** -- `AMGT-rk-30` (adapter half) is handed to
+you next as a continuation (moved to position 2 for throughput); wait for it.
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.

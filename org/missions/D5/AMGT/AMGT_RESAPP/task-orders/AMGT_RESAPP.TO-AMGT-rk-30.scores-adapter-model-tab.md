@@ -20,11 +20,15 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this is a task-order specification, n
   specifies it.
 </preflight>
 
-**You are `0.9.0_WK_AMGT_RESAPP~27`, continuing.** LAST of six orders in chain B's queue. First act:
+**You are `0.9.0_WK_AMGT_RESAPP~27`, continuing.** SECOND of six orders in chain B's queue (moved up from
+position 6 at the cut, for throughput -- this order has no dependency on `AMGT-rk-20`/`AMGT-rk-23`/
+`AMGT-rk-24`/`AMGT-rk-25`, only on chain SP, so it does not need to sit behind them). First act:
 re-confirm `git rev-parse --abbrev-ref HEAD` and that the paths below exist. **BEFORE YOU BEGIN, confirm
 chain SP's `AMGT-rk-30` producer order (a separate chain, `0.9.0_WK_AMGT_RESAPP~29`) has drained and the
-scores pool carries real records** -- if it has not, STOP and file a row rather than wiring a route to data
-that does not exist yet.
+scores pool carries real records.** Chain SP is a single-order chain running in parallel with you, so an
+ordinary short wait here is EXPECTED, not a problem -- **wait for it rather than filing a blocking row**;
+only file a row if chain SP itself reports a failure or the wait becomes clearly unreasonable (your judgment,
+stated in your report either way).
 Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~27;`. **NEVER RUN AN INSTALL.**
 
 ## 1. THE CELL, inlined in full -- `AMGT-rk-30` adapter half (ADDENDUM 1: cell R13-L, not deferrable with R13-K)
@@ -75,8 +79,11 @@ org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-30.scores-ad
   a new `read_scores()` function. Scratch is `<your worktree>/.scratch/` only.
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~27 <0.9.0_WK_AMGT_RESAPP~27@opal.agent>" -F <msgfile> -- <paths>`.
   Never push, merge, rebase, `checkout --`, `stash` or `clean`.
-- **DEPLOY:** redeploy the Lambda from HEAD, Terraform only. This is chain B's LAST deploy this round --
-  after it lands, chain B's queue is complete.
+- **DEPLOY:** redeploy the Lambda from HEAD, Terraform only. **You may combine this deploy with
+  `AMGT-rk-19` adapter half's redeploy into ONE act if both land in the same session** (matching round 12's
+  own rk-6/rk-7 combined-deploy precedent) -- if you do, name BOTH cells in the SAME change-management entry
+  and say so explicitly; if you deploy separately, open a fresh entry for this act with its own live pre-act
+  hash.
 
 ## 4. BOUNDS
 
@@ -127,8 +134,8 @@ Write your instance to
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~27/AMGT_RESAPP.TO-AMGT-rk-30.scores-adapter-model-tab.proof_of_spec.json`
 per `org/standards/PROOF_OF_SPEC.schema.json`, graded by YOUR WORKTREE'S OWN
 `python .tools/proof-of-spec-check.py <instance> AC1` (rc 0 is the verdict); flip `<status>` to `complete`;
-commit with `--only -- <paths>`. **Report once. This is chain B's last order** -- your queue is complete
-after this drains.
+commit with `--only -- <paths>`. **Do not stop here** -- `AMGT-rk-20` is handed to you next as a
+continuation; wait for it.
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.

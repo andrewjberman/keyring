@@ -20,7 +20,8 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- this is a task-order specification, n
   specifies it.
 </preflight>
 
-**You are `0.9.0_WK_AMGT_RESAPP~27`, continuing.** Fifth of six orders in chain B's queue. First act:
+**You are `0.9.0_WK_AMGT_RESAPP~27`, continuing.** LAST (sixth) of six orders in chain B's queue (reordered
+at the cut -- `AMGT-rk-30` now runs second, for throughput). First act:
 re-confirm `git rev-parse --abbrev-ref HEAD` and that the paths below exist.
 Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_RESAPP~27;`. **NEVER RUN AN INSTALL.**
 
@@ -114,8 +115,8 @@ Write your instance to
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~27/AMGT_RESAPP.TO-AMGT-rk-25.thesis-bundle-as-of-date.proof_of_spec.json`
 per `org/standards/PROOF_OF_SPEC.schema.json`, graded by YOUR WORKTREE'S OWN
 `python .tools/proof-of-spec-check.py <instance> AC1,AC2` (rc 0 is the verdict); flip `<status>` to
-`complete`; commit with `--only -- <paths>`. **Do not stop here** -- `AMGT-rk-30` (adapter half) is handed to
-you next as a continuation; wait for it. **This is chain B's second-to-last order.**
+`complete`; commit with `--only -- <paths>`. **Report once. This is chain B's last order** -- your queue is
+complete after this drains.
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.
