@@ -42,6 +42,9 @@ Usage:
   sequence-check.py --flags      only projects carrying a flag
   sequence-check.py --project X  one project (repeatable)
   sequence-check.py --json       machine-readable
+  sequence-check.py --compile    recompile the nested `compiled:` JSON block inside SEQUENCE.yaml (live state per stage and
+                                 project, stamped compiled_at + git HEAD) and print it; a SNAPSHOT for fast reading, never
+                                 authority, stale the moment it is written (Andrew-direct 2026-09-17 ~14:0xZ)
   sequence-check.py --self-test  the evaluator against planted cases (no repo read)
 """
 from __future__ import annotations
@@ -62,7 +65,11 @@ SEQ_REL = "org/missions/SEQUENCE.yaml"
 IDLE_DAYS = 7
 STAGES = ("REGISTERED", "PRD", "DECOMP", "EXECUTING", "ROUND_CLOSE", "CLOSED")
 TOP_KEYS = {"version", "owners", "enforcement", "capacity", "stages", "projects", "parked", "pending_placement",
-            "supersedes", "change_log"}
+            "supersedes", "change_log", "compiled"}
+# The compiled block (--compile). Written only between these two marker lines; the evaluator never reads `compiled`.
+COMPILED_BEGIN = "# >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,"
+COMPILED_BEGIN_2 = "# stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it."
+COMPILED_END = "# <<< COMPILED STATE"
 PROJECT_KEYS = {"fabric", "stage", "waits_on", "hold", "why", "notes"}
 GATE_FORMS = ("prd_admitted", "dep_stage_at_least", "status", "manual")
 LIVE_SECONDS = 120          # org/mcp/server.py STALE_THRESHOLD: a registration older than this is not LIVE
@@ -367,6 +374,71 @@ def render_capacity(c):
         print("  NEXT COO SLOT, in the sequence's order: %s" % " -> ".join(c["queue"]))
 
 
+def _raises(fn):
+    try:
+        fn()
+    except Exception:  # noqa: BLE001
+        return True
+    return False
+
+
+def compile_state(doc, rows, cap, head, seq_commit, now=None):
+    """The nested snapshot: stage -> project -> the sequence's own gates plus the live state read this run."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    by_code = {r["project"]: r for r in rows}
+    counts = {}
+    for r in rows:
+        for f in r["flags"]:
+            counts[f] = counts.get(f, 0) + 1
+    stages = []
+    for s in doc.get("stages") or []:
+        if not isinstance(s, dict):
+            continue
+        projects = {}
+        for code, p in (doc.get("projects") or {}).items():
+            if p.get("stage") != s.get("id"):
+                continue
+            r = by_code.get(code, {})
+            projects[code] = {k: r.get(k) for k in ("dep_stage", "status", "prd", "last_activity", "flags", "notes", "gates")}
+            if p.get("hold"):
+                projects[code]["hold_max_dep_stage"] = p["hold"].get("max_dep_stage")
+        stages.append({"id": s.get("id"), "name": s.get("name"), "projects": projects})
+    live = cap.get("live")
+    return {
+        "compiled_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "head": head,
+        "sequence_file_last_commit": seq_commit or "UNCOMMITTED",
+        "recompile": "python .tools/sequence-check.py --compile",
+        "capacity": {"box_fabric": cap.get("box_fabric"), "cap": cap.get("cap"),
+                     "live_coo_lanes": live if live is not None else "UNREADABLE",
+                     "free": (cap["cap"] - len(live)) if (live is not None and cap.get("cap") is not None) else None,
+                     "next_slot_order": cap.get("queue")},
+        "flags": {"denominator": len(rows), "counts": counts},
+        "stages": stages,
+        "parked": sorted((doc.get("parked") or {}).keys()),
+        "pending_placement": len(doc.get("pending_placement") or []),
+    }
+
+
+def splice_compiled(text, data):
+    """Replace (or append) the marker-bounded `compiled:` block. JSON is YAML; every line is indented so the flow
+    mapping continues under its key. Anything outside the markers is returned byte-identical."""
+    body = "\n".join("  " + ln for ln in json.dumps(data, indent=2, sort_keys=False).splitlines())
+    block = "%s\n%s\ncompiled:\n%s\n%s\n" % (COMPILED_BEGIN, COMPILED_BEGIN_2, body, COMPILED_END)
+    nl = "\r\n" if "\r\n" in text else "\n"
+    if nl != "\n":
+        block = block.replace("\n", nl)
+    b = text.find(COMPILED_BEGIN)
+    if b == -1:
+        return text.rstrip("\r\n") + nl + nl + block
+    e = text.find(COMPILED_END, b)
+    if e == -1:
+        raise ValueError("compiled block BEGIN marker without END marker -- refusing to guess its extent")
+    e = text.find(nl, e)
+    e = len(text) if e == -1 else e + len(nl)
+    return text[:b] + block + text[e:]
+
+
 def render(doc, rows, only_flags=False):
     stages = {s["id"]: s for s in doc.get("stages") or [] if isinstance(s, dict)}
     for sid in sorted(stages):
@@ -497,6 +569,24 @@ def self_test():
         ("resolve: a register code the file does not list -> UNPLACED, never zero rows", resolve_codes(rdoc, ["AMGT_RESAPP"], rreg)[0][1] == "UNPLACED"),
         ("resolve: parked and pending-placement codes say which", [s for _, s, _ in resolve_codes(rdoc, ["NFRA_X", "IRPT_BCKEND"], rreg)] == ["PARKED", "PENDING-PLACEMENT"]),
     ]
+    # --compile: the splice round-trips, replaces rather than duplicates, and leaves the rest of the file byte-identical.
+    import yaml as _y
+    _base = "version: 4\n# a comment the splice must keep\nprojects: {}\n"
+    _d1, _d2 = {"compiled_at": "T1", "stages": [{"id": 0, "projects": {"X": {"flags": []}}}]}, {"compiled_at": "T2", "stages": []}
+    _s1 = splice_compiled(_base, _d1)
+    _s2 = splice_compiled(_s1, _d2)
+    cases += [
+        ("compile: the spliced block parses back to the same data", _y.safe_load(_s1).get("compiled") == _d1),
+        ("compile: a second compile REPLACES the block (one BEGIN marker, the new data)",
+         _s2.count(COMPILED_BEGIN) == 1 and _y.safe_load(_s2).get("compiled") == _d2),
+        ("compile: everything outside the markers is byte-identical", _s2[:_s2.find(COMPILED_BEGIN)].rstrip("\n") == _base.rstrip("\n")),
+        ("compile: CRLF file keeps CRLF and still round-trips",
+         "\r\n" in splice_compiled(_base.replace("\n", "\r\n"), _d1) and "\n" not in splice_compiled(_base.replace("\n", "\r\n"), _d1).replace("\r\n", "")
+         and _y.safe_load(splice_compiled(_base.replace("\n", "\r\n"), _d1)).get("compiled") == _d1),
+        ("compile: a BEGIN marker with no END refuses rather than guessing",
+         _raises(lambda: splice_compiled(_base + COMPILED_BEGIN + "\ncompiled: {}\n", _d1))),
+        ("validate: the `compiled` key is admitted", validate({"compiled": {}, "projects": {}}) == []),
+    ]
     fails = 0
     for name, ok in cases:
         print("  %s  %s" % ("PASS" if ok else "FAIL", name))
@@ -510,6 +600,7 @@ def main():
     ap.add_argument("--flags", action="store_true")
     ap.add_argument("--project", action="append")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--compile", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
@@ -534,6 +625,21 @@ def main():
     rows = evaluate(doc, reader)
     cap = capacity(doc, reader, rows)
     res = resolve_codes(doc, a.project, _register_codes(ROOT)) if a.project else []
+    if a.compile:
+        h = subprocess.run(["git", "rev-parse", "--short=10", "HEAD"], cwd=ROOT, capture_output=True, text=True)
+        data = compile_state(doc, rows, cap, h.stdout.strip() or None, r.stdout.strip() or None)
+        raw = open(path, "rb").read().decode("utf-8")
+        new = splice_compiled(raw, data)
+        back = yaml.safe_load(new)
+        if back.get("compiled") != data or {k: v for k, v in back.items() if k != "compiled"} != \
+                {k: v for k, v in doc.items() if k != "compiled"}:
+            print("ERROR: the spliced file does not round-trip (compiled block or the rest of the file changed) -- NOT written")
+            return 1
+        open(path, "wb").write(new.encode("utf-8"))
+        print(json.dumps(data, indent=2))
+        print("OK: compiled block written to %s (compiled_at %s, head %s); recompile before acting on it"
+              % (SEQ_REL, data["compiled_at"], data["head"]))
+        return 0
     if a.project:
         rows = [x for x in rows if x["project"] in set(a.project)]
     if a.json:

@@ -1,3 +1,7 @@
+# >>> CURRENT STATE: run `python .tools/sequence-check.py --compile` -- it recompiles the nested `compiled:` JSON at the
+# >>> BOTTOM of this file from the live project register, PRD sign-offs, git and the COO roster, and prints it. The block
+# >>> already there is a SNAPSHOT as of its own compiled_at + head, never authority: recompile before acting on it.
+#
 # org/missions/SEQUENCE.yaml -- THE SEQUENCE: the projects that must run in order, and the gates between them.
 #
 # AUTHORITY: Andrew-direct 2026-09-14 ~01:xxZ at the 1.0.0_SA_CTO terminal. Record, every word verbatim:
@@ -12,8 +16,10 @@
 # changes no order; the change_log still records it.
 #
 # WHAT IT HOLDS -- only what the register cannot answer: which projects are ordered, what each waits on, and why.
-# WHAT IT NEVER HOLDS -- STATUS. dep_stage, status, PRD sign-off and last activity are read live by
-#   .tools/sequence-check.py every time it runs. A status written here would be a second carrier and would go stale.
+# WHAT IT NEVER HOLDS AS AUTHORITY -- STATUS. dep_stage, status, PRD sign-off and last activity are read live by
+#   .tools/sequence-check.py every time it runs. The one exception is the `compiled:` block at the bottom, which the
+#   script alone writes (Andrew-direct 2026-09-17 ~14:0xZ: "nested json which is compiled at viewtime that is tied to
+#   the underlying projects"); it is stamped with compiled_at + head, the reader never evaluates it, and nobody edits it.
 # WHAT IS NOT HERE -- a project with no ordering constraint. Its own directive's rules govern it; it is not placed.
 #
 # GATE VOCABULARY (the reader evaluates each form; any other form is refused as UNREADABLE):
@@ -183,3 +189,208 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "v4 placement -- LGIC_LGCTFM placed in stage 1, fourth of the Platform Logic projects, waits_on the three D14 PRDs admitted (all met at placement). Answers 2.0.0_SA_COO~G's open call R-3 (97315): a register member the goal loops drive 'in the sequence's order' was unplaced. No existing order changed; stage-2 holds unchanged; last of the four for a COO seat."
     word: "'Your goal for this session is to drive the LGIC projects to completion and validation. There is one new one coming in from CRO, LGIC_LGCTFM, which you will have to /endpoint --forward ... You are done when all 4 LGIC projects are completed, validated, and closed.' (Andrew-direct ~05:2xZ 2026-09-16 at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_052xZ_LGIC_GOAL_AND_30M_SELF_DRIVE_ADJUDICATE.md @a6e628fb89)"
+  - at: "2026-09-17"
+    by: "1.0.0_SA_CTO"
+    change: "v4 format -- a view-time compiled `compiled:` block at the bottom of the file (nested JSON: stage -> project -> live dep_stage, status, PRD sign-off, last activity, flags, gates; plus capacity and flag counts), written only by `python .tools/sequence-check.py --compile` between marker lines and stamped compiled_at + head; a header line at the top names the command. The reader never evaluates the block. No order changed."
+    word: "'Edit it so that there is nested json which is compiled at viewtime that is tied to the underlying projects. maybe theres a line at the top that says run the script to recompile, so when agents go look at it they can see that line, get the ref to the script, run it, and get current state fast.' (Andrew-direct ~14:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal)"
+
+# >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
+# stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
+compiled:
+  {
+    "compiled_at": "2026-09-17T14:10:00Z",
+    "head": "2bb51e2cd0",
+    "sequence_file_last_commit": "14936be222 2026-09-16T02:23:53-04:00 1.0.0_SA_CTO",
+    "recompile": "python .tools/sequence-check.py --compile",
+    "capacity": {
+      "box_fabric": "laptop",
+      "cap": 3,
+      "live_coo_lanes": [
+        "2.0.0_SA_COO~G",
+        "2.0.0_SA_COO~O"
+      ],
+      "free": 1,
+      "next_slot_order": [
+        "MDPF_TAXSMA",
+        "ADVI_FIRMBKTS",
+        "MDPF_CANON",
+        "IRPT_BCKEND"
+      ]
+    },
+    "flags": {
+      "denominator": 9,
+      "counts": {
+        "LANE-DARK": 2,
+        "NEEDS-SLOT": 2
+      }
+    },
+    "stages": [
+      {
+        "id": 0,
+        "name": "Andrew's seat priority -- MDPF_TAXSMA, then NFRA_OPLGTW",
+        "projects": {
+          "MDPF_TAXSMA": {
+            "dep_stage": "EXECUTING",
+            "status": "scoping",
+            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "3dcb249826 2026-09-15T20:01:05-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~T is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": []
+          },
+          "NFRA_OPLGTW": {
+            "dep_stage": "EXECUTING",
+            "status": "scoping",
+            "prd": "v0.9 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "2bb51e2cd0 2026-09-17T10:00:34-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": []
+          }
+        }
+      },
+      {
+        "id": 1,
+        "name": "Platform Logic -- the naming schema, the enforcement layer, the canon",
+        "projects": {
+          "LGIC_NAMING": {
+            "dep_stage": "CLOSED",
+            "status": "complete",
+            "prd": "v1.10 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "40773deb8b 2026-09-16T12:48:30-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": []
+          },
+          "LGIC_ENFORCE": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "c8a140654b 2026-09-17T09:55:34-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [
+              {
+                "kind": "waits_on",
+                "state": "MET",
+                "detail": "LGIC_NAMING PRD admitted? v1.10 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+              }
+            ]
+          },
+          "LGIC_CANON": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v1.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "503160fc58 2026-09-17T09:26:46-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": []
+          },
+          "LGIC_LGCTFM": {
+            "dep_stage": "DECOMP",
+            "status": "active",
+            "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "5503d92f88 2026-09-16T13:47:21-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [
+              {
+                "kind": "waits_on",
+                "state": "MET",
+                "detail": "LGIC_NAMING PRD admitted? v1.10 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+              },
+              {
+                "kind": "waits_on",
+                "state": "MET",
+                "detail": "LGIC_ENFORCE PRD admitted? v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+              },
+              {
+                "kind": "waits_on",
+                "state": "MET",
+                "detail": "LGIC_CANON PRD admitted? v1.5 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 2,
+        "name": "The D8 migrations built on Platform Logic",
+        "projects": {
+          "ADVI_FIRMBKTS": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v1.2 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "0d3ad7d496 2026-09-14T09:54:46-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [
+              {
+                "kind": "hold",
+                "state": "MET",
+                "detail": "LGIC_ENFORCE PRD admitted? v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+              },
+              {
+                "kind": "hold",
+                "state": "MET",
+                "detail": "manual, CONFIRMED: 1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied; its drain completed @d482e58ecf (merge c6d652a6dc landed 2 of the branch's 8 paths, row LGIC_ENFORCE-S18; the other 6 landed @5ee8e068fd, @8c77a1400a, @d482e58ecf); 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial"
+              }
+            ],
+            "hold_max_dep_stage": "DECOMP"
+          },
+          "MDPF_CANON": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v2.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "881c16d426 2026-09-16T15:20:10-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [
+              {
+                "kind": "hold",
+                "state": "MET",
+                "detail": "LGIC_ENFORCE PRD admitted? v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+              }
+            ],
+            "hold_max_dep_stage": "REGISTERED"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "Projects whose outcomes land in the migrated firm buckets",
+        "projects": {
+          "IRPT_BCKEND": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.14 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "0d3ad7d496 2026-09-14T09:54:46-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~B is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": []
+          }
+        }
+      }
+    ],
+    "parked": [
+      "NFRA_SUBSTRATECARDING"
+    ],
+    "pending_placement": 2
+  }
+# <<< COMPILED STATE
