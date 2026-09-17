@@ -7744,6 +7744,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Z-S148: the points are 'not in the filing excerpt it was given'. Z-S147: 'each thesis_driver point is kept only when one passage of the submitted excerpt contains both its period and its value as literals'.",
     "world_is": "The values are genuine and in the excerpt; the passage map is narrower than the excerpt. A passage-scoped gate would hold all three true points. The gate is re-keyed to the excerpt's period-labelled block, and planted negative and wrong-period controls prove it still refuses.",
     "notes": "Owner of the cut text: 2.0.0_SA_COO~Z at R13-A, reading ADDENDUM 2 rather than s.3.1 alone. No round-13 order existed at 09:25Z (msg 23517), so nothing issued carries the superseded gate. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S152",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-17T15:06Z",
+    "one_line": "Round 13 is executing in the five worker worktrees cut from the FIRST issuance (base da2c3c479a, which carries f0cbb2d813 but not the re-cut 62e9cfbf60/7acf65b08b), while six of the seven worktrees cut after the re-cut (bases 67168eba8c/013f755c74) sit clean and the seventh, chain CK's, has begun editing the same `.tools/criteria_quality_checker.py` the first-issuance CK worktree already edited and has since filed a proof instance against -- so the round's live edits are being made against pre-re-cut task-order bytes, AMGT-rk-28 now has two diverging copies of its one write surface, and the re-cut moved AMGT-rk-24's producer half from 0.9.0_WK_AMGT_RESAPP~26 to 0.9.0_WK_AMGT_RESAPP~33 and reordered chain B; at L8 a proof instance filed under the pre-re-cut assignee or sequence will not match the order at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git merge-base --is-ancestor at this seat 14:5xZ: 62e9cfbf60 and 7acf65b08b are NOT ancestors of da2c3c479a and ARE ancestors of 67168eba8c; f0cbb2d813 IS an ancestor of da2c3c479a (positive control).",
+        "git worktree list: first set wk-amgt-13-26/27/28/29/30 under the user Temp dir, all at da2c3c479a; second set .claude/worktrees/wk-amgt-13-26-fpA, -27-chainB, -28-id, -33-fpB at 67168eba8c and -29-sp, -30-ck, -31-portal at 013f755c74.",
+        "git status --porcelain read twice, 14:45Z and 14:54Z: second set 0 dirty paths in all 7 both times and 0 commits past its base; first set dirty in all 5 (untracked expanded: ~26 2, ~27 4, ~28 10, ~29 1, ~30 6 paths; 0 commits on any branch), newest mtimes 14:54:06Z (~26), 14:50:52Z (~27), 14:46:00Z (~28), 14:40:25Z (~29), 14:53:10Z (~30) -- writes continuing past the re-cut commit 7acf65b08b (14:18:08Z).",
+        "git show 7acf65b08b on task-orders/ (8 files): AMGT-rk-24 batch-unresolved-objects <issued_to> ~26 -> ~33 with deliverables path and row prefix W26 -> W33; chain B sequence rk-19, rk-20, rk-23, rk-24, rk-25, rk-30 -> rk-19, rk-30, rk-20, rk-23, rk-24, rk-25; rk-19 producer half's worker face 'chain FP, a queue of TWO orders' -> 'chain FP-A, ONE order'.",
+        "third read, 15:08Z-15:12Z: second set still 0 dirty in 6 of 7; .claude/worktrees/wk-amgt-13-30-ck dirty 2 -- .scratch/criteria_quality_checker.py.orig (15,309 bytes, 14:58:16Z) and .tools/criteria_quality_checker.py (18,828 bytes, 15:00:27Z); the first-set wk-amgt-13-30 carries its own edit of that file (18,851 bytes, 14:15:54Z) and wrote deliverables/0.9.0_WK_AMGT_RESAPP~30/AMGT_RESAPP.TO-AMGT-rk-28.checker-data-vacuity-shape.proof_of_spec.json at 15:08:40Z, after the second copy's edit; 0 commits on either branch. The second-set chain B worktree (-27-chainB, the chain with live deploys) is clean at this read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "7acf65b08b: 'ONE L6 issuance, fifteen task orders across seven active chains ... Chain ID (rk-21), chain SP (rk-30-producer), chain CK (rk-28), chain A ... are spawned now', with chain FP split into FP-A (~26) and FP-B (~33) and chain B reordered; spine L7 gives each worker one worktree.",
+    "world_is": "Seven worktrees exist for the re-cut chains; six had no changed path 23-45 minutes after their base commits, and the five worktrees doing the work predate the re-cut and hold the first issuance's order bytes. Chain CK is written in BOTH its worktrees, with overlapping windows (14:58-15:00Z in the second, 15:08Z in the first), to one file of different sizes. What this seat cannot see is the worker face the issuer handed each live worker in its own session, so whether the two CK copies are one agent or two, whether ~26 still holds AMGT-rk-24's producer half, and whether ~27 runs rk-30's adapter half second are not measurable here.",
+    "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane during L7, because the working-tree state is perishable and is gone at the drain. INERT, and the reason is narrow: the only chain with two written worktrees (CK) edits a repo tool with no deploy, so two copies of one file meet at the drain, where the merge refuser grades them, not in any served surface; chain B, which deploys, had one written worktree at all three reads. What it bears on is L8: each round-13 proof instance will be read against the order at HEAD (issued_to, deliverables path, W-prefix), so an instance filed at deliverables/0.9.0_WK_AMGT_RESAPP~26/ for AMGT-rk-24 would not receive against an order issued to ~33. NOT RULED HERE. Instruments: git worktree list, git merge-base --is-ancestor with a positive control, git status --porcelain and file mtimes read three times 14:45Z-15:12Z, git show on the re-cut. HEAD at filing @0c8440cc7e."
   }
 ]
 ```
