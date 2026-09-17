@@ -7268,6 +7268,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-15's AC2 asserts the Thesis tab draws the driver as a NUMERIC SERIES and renders a classed reason where there is none, and its expect states that a component reading only the series NAME is NOT met.",
     "world_is": "Two of its three bars were already met before any work, and the bar meant to separate points from name summed a token that reads 0 with a token that reads 7, so it could not make that separation at all. The property is only decidable on the served body, where points_count reads 0 against a driver_series and driver_unit that already serve.",
     "notes": "Sixth criterion defect found by issuer dry run today and the fourth SILENT PASS of the family (AMENDMENT 11 rk-8, 13 rk-14, 14 rk-12, and this one; AMENDMENT 12 was the opposite sign and 15 was a malformed block). The repair does not weaken the cell: the page keeps its one real bar and the points half moves to AC4 on the SERVED plane, which is strictly harder. The BA_US_Equity re-run lands on this order because the served points cannot move until BA's document is regenerated under THIS cell's producer change; AMGT-rk-18 carries an explicit instruction not to run it. AC3 is byte-identical; no grant, bound or cell text moves."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W23-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~23",
+    "surfaced_at": "2026-09-17T02:43:56Z",
+    "one_line": "AMGT-rk-12's COMMITTING clause names .tools/safe-commit.sh for every path in the grant, but portal/ is a SEPARATE git repository (submodule) carrying no .tools/ and no org/ of its own, so that script cannot run there as written -- committed with plain 'git commit --author \"<serial> <email>\" -F <msgfile> -- <paths>' inside the portal worktree instead, the same shape 13 prior WK_AMGT_RESAPP portal commits already used (verified: git log --author WK_AMGT_RESAPP inside portal, e.g. b616b759, 53e38bcd).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls /c/tmp/wk-amgt-12-23/portal/.tools 2>/dev/null and ls /c/tmp/wk-amgt-12-23/portal/org 2>/dev/null both return nothing -- neither surface exists inside the portal submodule's own worktree.",
+        "git -C /c/tmp/wk-amgt-12-23/portal log --oneline --author=WK_AMGT_RESAPP shows 13 prior commits by other WK_AMGT_RESAPP worker instances (e.g. b616b759, 0e153399, 38cba6a2, 53e38bcd), none of them routed through safe-commit.sh (which reads REPO_ROOT via git rev-parse --show-toplevel at cwd and would resolve to the portal root, not the workspace root, even if invoked by relative path from there).",
+        "This order's own portal commit f276d732976a45354a5ca925909ed889e25e8ce3 on branch wk-amgt_resapp-12-23-portal was made the same way: 'git commit --author \"0.9.0_WK_AMGT_RESAPP~23 <...>\" -F <msgfile> -- <9 files>', author line verified with git show --no-patch --format='%an <%ae>'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 3 (COMMITTING) states: 'bash .tools/safe-commit.sh --author ... -F <msgfile> -- <paths>' as the one committing mechanism for every path this order's grant names, including the portal/ paths.",
+    "world_is": "portal/ is a separate git repository (a submodule worktree with its own .git, branch and history) with no .tools/ or org/ directory of its own; safe-commit.sh resolves its repo root and audit-log path from the CALLER's cwd, so it cannot be pointed at the portal repo the way it is at the workspace repo. Every portal-side commit this order and its 13 predecessors made used plain git commit with an explicit --author and -F msgfile instead, which satisfies Rule 14a's -F/non-shell-writer/author-line requirements but not the literal safe-commit.sh invocation this order's own text names.",
+    "notes": "INERT: the substitute (plain git commit --author ... -F <msgfile>) is the estate's own established precedent across all 13 prior portal commits by this project's workers, satisfies every mechanical requirement Rule 14a states (non-shell msgfile writer, explicit author, no bare commit hanging on $EDITOR), and is verified byte-for-byte against this turn's own f276d732 commit. No contamination check or sensitive-leak gate ran that a workspace-repo safe-commit.sh call would have run, which is the one real gap this row names for the record; nothing in this turn's diff (9 .ts/.tsx files, no secrets, no HAR/.env content) is in that gate's threat class."
   }
 ,
  {
