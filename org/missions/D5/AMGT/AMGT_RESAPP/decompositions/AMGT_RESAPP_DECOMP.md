@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v1.6 (s.20 = round 12, amended s.20h + s.20i; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.7 (s.21 = round 13; s.20 = round 12, amended s.20h + s.20i; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -2301,3 +2301,290 @@ the bounds in s.20f and the battery in s.20g -- and s.20f's COLLECTION-STAYS-OFF
 cells hardest, because they are the only cells of the round that call a vendor at all: **Andrew's word
 authorizes the RUNS and says nothing about their recurrence, so a cadence for either pull remains
 RESERVED and neither order arms a schedule.**
+
+## 21. ROUND 13 -- FROM THE L10 ROUND-12 ANALYSIS @`9419550eb1` (`1.0.0_SA_CTO~Z`), ADDENDUM 1 @`509f3f7335` AND ADDENDUM 2 @`9419550eb1`
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 12 is FROZEN at 18 of 18 terminal, ACCEPTED (s.1 of the analysis). LD-0521
+authorizes this issuance from the analysis alone; LD-0522 leaves the push with `0.0.0_AB_MSTR~Z`, none
+requested. Recon for every cell's exact code surface was read fresh at this cut (branch `SITEZ`, HEAD
+`090beb09a5` at the read, no drift onto any surface this round grants -- the two commits between
+`9419550eb1` and `090beb09a5` are `1.0.0_SA_CTO~Z`'s own `org/XXX.md` housekeeping, disjoint from every
+path below).
+
+**TWELVE obligations, R13-A..R13-L. This seat's HOW: fourteen cell ids (`AMGT-rk-19`..`AMGT-rk-30`, two
+obligations -- R13-A and R13-L -- realized as a three-order battery under one id each, per the CTO's own
+producer/adapter/page/criteria framing), sixteen task orders, six chains.**
+
+### 21a. THE MAPPING -- CTO letter -> COO id(s), and why an id sometimes carries more than one order
+
+| letter | id(s) | why |
+|---|---|---|
+| R13-A | `AMGT-rk-19` (3 orders: producer, adapter, page) | s.3.1/A2.3's own four-part shape (producer / passage-map / adapter+page / criteria); producer is `lib/research/filings/`, adapter is `scoped_amgt.py` (chain B), page is the portal (chain A) -- three surfaces, one obligation, per RULING 1 the same discipline round 12 arrived at ONE CRITERION AT A TIME (moved-criterion map) is applied here FROM THE CUT instead |
+| R13-B | `AMGT-rk-20` | one obligation, one order; its live-AWS-act still sequences on chain B per s.4's own discipline line, even though its file is not `scoped_amgt.py` |
+| R13-C | `AMGT-rk-21` | one obligation, pool writes only, standalone chain |
+| R13-D | `AMGT-rk-22` | one obligation; CUT, its worker NOT SPAWNED -- gated on CARD 5 |
+| R13-E | `AMGT-rk-23` | one obligation, two files (`render_pack.py` uncontended; one `scoped_amgt.py` line contended) -- the whole order sits on chain B because `scoped_amgt.py` is chain B's surface WHOLE-FILE, not per-function (round 12's own ruling, rows `S124`/`S127`) |
+| R13-F | `AMGT-rk-24` (2 orders: batch/producer, adapter) | the no-CIK reason has a producer half (`lib/research/filings/batch.py`, uncontended) and an adapter half (`scoped_amgt.py`'s `read_thesis_bundle`, chain B) |
+| R13-G | `AMGT-rk-25` | one obligation, one order, chain B (same function region as R13-F's adapter half) |
+| R13-H | `AMGT-rk-26` | one obligation; CUT, held at the tail of chain A -- runs only after R13-A and R13-D both deploy |
+| R13-I | `AMGT-rk-27` | **DEFERRED to round 14** (s.21f) |
+| R13-J | `AMGT-rk-28` | one obligation, one order, standalone chain (`.tools/criteria_quality_checker.py`, uncontended by any other cell) |
+| R13-K | `AMGT-rk-29` | **DEFERRED to round 14** (s.21f) |
+| R13-L | `AMGT-rk-30` (3 orders: producer, adapter, page) | same three-surface shape as R13-A: producer is `lib/research/scores/` (uncontended, new runner), adapter is `scoped_amgt.py` tail (chain B), page is the portal Model tab (chain A) |
+
+⛔ **THE FULL ID IS WRITTEN IN EVERY HEADING AND EVERY TASK ORDER** (round 12's own banked lesson, s.20c) --
+validated: `AMGT-rk-19` .. `AMGT-rk-30` all fullmatch `CELL_ID_RE`; none collides with round 12's `AMGT-rk-1`
+.. `AMGT-rk-18` (a fresh, disjoint number range, never reused).
+
+### 21b. THE SURFACE CENSUS -- what each order may touch, read fresh at the cut (no assumption carried from the analysis)
+
+| surface | contended by | resolution |
+|---|---|---|
+| `lib/research/api/scoped_amgt.py` (whole file, per round-12 ruling `S124`/`S127`) | rk-19-adapter, rk-23, rk-24-adapter, rk-25, rk-30-adapter | **chain B, sequential queue of 6**, one worktree, one worker |
+| live AWS acts (Lambda redeploy, DynamoDB/S3 writes that move served output) | rk-19-adapter, rk-20, rk-23, rk-24-adapter, rk-25, rk-30-adapter | same chain B queue (s.4's express sequencing rule: "each deploy follows the one before it") |
+| `lib/research/filings/` (whole dir, round-12 ruling on the same dir) | rk-19-producer (`analyze.py`), rk-24-producer (`batch.py`) | **chain "Filings-producer", sequential queue of 2** |
+| `lib/research/identity/` | rk-21 only | standalone chain |
+| `lib/research/scores/` + a new runner | rk-30-producer only | standalone chain |
+| `.tools/criteria_quality_checker.py` | rk-28 only | standalone chain |
+| `portal/src/pages/SecurityAnalysis/` | rk-19-page, rk-30-page, rk-26 (held) | **chain A, queue fed in dependency order**, not file order |
+| `lib/research/management/`, `lib/research/posture/`, a new batch driver | rk-22 only | its own chain; CUT, not spawned |
+
+**No two chains write the same surface concurrently. Verified, not assumed**, against the fresh reads of
+`render_pack.py`, `read_thesis_bundle()` (`scoped_amgt.py:1897-1949`), `batch.py`, `analyze.py`,
+`price_axis_pull.py`/`generation.py`/`backfill_legacy_generation.py`, `classify.py`/`robustness.py`/`peers_v.py`
+/`divergence.py`, `enrich.py`/`judge.py`/`packs.py`, and `criteria_quality_checker.py` at HEAD `090beb09a5`.
+
+### 21c. THE CELLS, ONE POSTULATE RECORD PER OBLIGATION (Rule 24: MECE / SAME GRAIN / INTENT COHERENCE / STATE COHERENCE)
+
+**`AMGT-rk-19` (R13-A, FWD-18) -- MECE:** three disjoint surfaces (producer text-verification / adapter second
+join / page label), none overlapping a sibling cell's grant. **GRAIN:** every criterion asserts a real served
+VALUE against its source (s.3.6's new instance), never a token count. **INTENT:** one axis -- a filing-sourced
+number is verifiable or it is held, never displayed unverified. **STATE:** does not move `thesis_driver_chart`'s
+existing exact-mnemonic branch; only ADDS a second branch that fires on its miss.
+- *Producer* (`lib/research/filings/analyze.py`): re-key the verification domain from `passage_map` (which
+  never segmented tables) to `excerpt.text`/`excerpt_sha256` per A2.3 item 1 -- a point is kept only when its
+  value occurs as a whole number (thousands-normalised) inside the table-or-paragraph block carrying its
+  matching period label, recording a character span and the excerpt hash; an unlocated point moves to
+  `held_uncited`. A2.3 item 2: the analyzer additionally segments TABLE blocks into `passage_map` so a
+  verified point also carries a `passage_id`. **NO NEW VENDOR CALL:** this is a pure re-verification pass over
+  the ALREADY-STORED `source.json`/`analysis.json` objects (Python text matching, no LLM re-invoke) -- it
+  both fixes the code for future analyzer runs AND is re-applied once to BA's existing analysis object to
+  correct it in place.
+- *Adapter* (`scoped_amgt.py`, `thesis_driver_chart()` around `:1953-2013`, called from `read_thesis_bundle()`
+  `:1897-1949`): the exact-mnemonic join keeps precedence, unedited. A second branch runs ONLY on its miss:
+  serve the verified filing points with `source: "filing"` and each `passage_id`, needing at least 2 verified
+  points, else ABSENT with emitted/verified counts printed.
+- *Page* (`portal/src/pages/SecurityAnalysis/`, the thesis driver chart component): label a filing-sourced
+  series "from the filing, not the model" and link each point to its passage.
+- *Criteria (A2.3 item 4):* (a) a planted negative -- a point whose value occurs in no block of the excerpt --
+  MUST be held; (b) a planted wrong-period point -- a real value under another year -- MUST be held; (c) BA
+  reads **SERVED with 3 verified points**, each with span and passage (Addendum 2 reverses the original
+  ABSENT expectation).
+
+**`AMGT-rk-20` (R13-B, FWD-15) -- MECE:** producer-only; the reader contract is explicitly NOT touched (s.3.2:
+"the reader does not loosen"). **GRAIN:** the criterion reads the page's own Price call
+(`read_rankings()`, `scoped_amgt.py:535`), never store existence. **INTENT:** one axis, completeness. **STATE:**
+moves the served `as_of_date` from 2026-09-10 to 2026-09-15; does not touch any other rankings date.
+- `integrations/bloomberg/research/price_axis_pull.py` routes its writes through
+  `lib.research.price.generation.compute_price_axis()` (replacing `build_movement_rows()` + the direct
+  `put_item` loop at `:167-231`/`:337-346`), mirroring `lib/research/metrics/chatter_axis.py`'s own working
+  chain (`build_generation` `:656`, `default_write_generation` `:704`, wired at `:1006-1010`) -- **NOT**
+  `model_block_pull.py`, which does not use this mechanism at all (a correction of an earlier assumption made
+  and caught fresh at this cut, not carried forward wrong).
+- The landed 2026-09-15 rows are REPUBLISHED, not re-pulled: a NEW function (not the existing lossy
+  recompute path in `backfill_legacy_generation.py`, which would demote already-good `BREAKOUT_PRICE#` rows
+  below `min_breakout_observations`) reads the bare `TRENDING_PRICE#2026-09-15`/`BREAKOUT_PRICE#2026-09-15`
+  partitions verbatim, attaches `security_key`/`identity_status` via `build_identity_index()`, hand-builds a
+  generation dict matching `build_generation()`'s shape, and calls `default_write_generation()` directly. No
+  vendor call.
+- This republish moves the Lead Panel's served date -- served output, **never-widen co-sign**.
+
+**`AMGT-rk-21` (R13-C, FWD-1/FWD-13) -- MECE:** pool writes only, no adapter or portal touch. **GRAIN:** every
+residue name is CLASSED (what is missing), never converted to a silent false. **INTENT:** one axis, identity
+resolution reusing the chain that feeds the consumer. **STATE:** the held-holdings partition is measured FRESH
+on the CURRENT resolution (158/161), never cited from the stale 47.
+- Reuses `lib/research/identity/positioning_chain.py`'s `resolve_one()`/`build_positioning_identities()`
+  (CUSIP check-digit -> FIGI-shaped -> SEDOL+domicile -> BBG-characteristics-confirmed, in that order, never a
+  guessed ticker+"US" append) and `crosswalk.py`'s `_record_for()`/`_parse_bloomberg()` against the 56 unkeyed
+  `crosswalk/v1/<date>.json` records.
+- **First criterion:** re-run `build_universe.py:832-835`'s own denominator line fresh and print it (never cite
+  158/161 from this document).
+- **Core act:** cross-reference the 56 against already-resolved holding identities by name/root (an
+  already-held-data check per Rule "build ladder" step 2, before anything is classed as needing a vendor
+  lookup); every record that still needs a genuine Bloomberg lookup is classed CARD-BOUND residue, named, not
+  silently dropped.
+
+**`AMGT-rk-22` (R13-D, FWD-17/FWD-19) -- CUT, WORKER NOT SPAWNED, gated on CARD 5.**
+- Producers: `lib/research/management/enrich.py::build_document()` (`:417`), `lib/research/posture/judge.py::run()`
+  (`:362`, calls Anthropic) + `lib/research/posture/packs.py::build_pack()` (`:85`). Neither has a CLI batch
+  driver today (unlike `model_block_pull.py`/`price_axis_pull.py`) -- one is net-new work inside this order.
+  **Served today: management 5 names (BABA, BA, COST, HD, SAP_GY), posture 2 names (BABA, BA)** -- measured
+  live at the cut, matching the obligation text exactly.
+- A3.1 item 3's source-lacks/pull-missed classification is a NEW binary layer over existing free-text reasons
+  that already exist (`enrich.py:424-427`'s `domain_for()`; `judge.py:337`'s `_absent_document()` and its call
+  sites `:372-384`) -- not built from nothing.
+- **This cell may be cut and its task order committed. Its worker MUST NOT be spawned until Andrew answers
+  CARD 5** (s.21e).
+
+**`AMGT-rk-23` (R13-E, FWD-5) -- MECE:** a census, not a single fix -- every artifact name built from a raw
+security key. **GRAIN:** each site is named by file:line, not inferred. **INTENT:** one axis, path-safety.
+**STATE:** does not touch S3 keys (which already tolerate `/`), only local filesystem joins.
+- `lib/research/print/render_pack.py:243-244` (`pdf_path`/`txt_path`, from `security_key()` at `:147-148`,
+  which only replaces spaces) and `scoped_amgt.py:1403` (`AMGT_DRAFTING_ROOT` offline/test reader) are the two
+  sites CENSUSED at this cut. No existing path-safe-encode helper (`lib/opal_naming.py`'s `address()`/`name()`
+  mint S3/resource addresses, not sanitize an existing key) -- a one-line encode at both sites (e.g.
+  `sec_key.replace("/", "-")`), no new module (YAGNI).
+- **Criterion:** print serves a valid PDF for **33 of 33** keyed names, printed with the denominator at the
+  cut, including a planted case using `BP/_LN_Equity` or `NG/_LN_Equity` literally.
+
+**`AMGT-rk-24` (R13-F, FWD-18) -- MECE:** producer half (`batch.py`, the promised object never written) and
+adapter half (`scoped_amgt.py`, the reason never surfaced) are genuinely disjoint files -- two orders, same id.
+**GRAIN:** the criterion reads the SERVED thesis route's `drafting_reason` for an unfiled name, never the log
+line (S139's own corrected reading, S146). **INTENT:** one axis, that a classed absence is visible where a
+person reads it. **STATE:** does not change `fetch.build_source_object()`'s classification logic, which is
+already correct -- only makes its result durable (written) and visible (served).
+- *Producer* (`lib/research/filings/batch.py`, `main()`): today `plan()` computes `unresolved` (`:80-111`)
+  correctly, but `main()` (`:159-202`) only ever iterates `planned["fetchable"]`, NEVER `planned["unresolved"]`
+  -- so the log's own promised
+  `"UNRESOLVED-SOURCE: %d name(s), each an explicit object at .../UNRESOLVED-SOURCE.source.json"` line is a
+  promise the same run never keeps. Fix: iterate `planned["unresolved"]` and write each one's object via
+  `fetch`'s existing `unresolved_source_object()` shape + `crosswalk.write_pool()` (reusing `run_one()`'s
+  existing write pattern for the resolved branch, `:130-152`).
+- *Adapter* (`scoped_amgt.py`, `read_thesis_bundle()`'s drafting merge around `:1938`): read the security's
+  `filings/v1/<key>/` object and merge its `status`/`reason` through when `UNRESOLVED-SOURCE`, replacing the
+  generic `NoSuchKey` drafting_reason with the store's own no-CIK reason.
+- **Criterion:** all 21 previously-unfiled names now carry a written `UNRESOLVED-SOURCE.source.json` object
+  AND the thesis route's `drafting_reason` for each reads the no-CIK text, not `NoSuchKey` -- printed with the
+  21-name denominator.
+
+**`AMGT-rk-25` (R13-G, FWD-3) -- MECE:** one field, one function, no producer change (the value already exists
+upstream). **GRAIN:** the served body, not the drafting object alone. **INTENT:** one axis, provenance date.
+**STATE:** adds one key; moves nothing else in the bundle.
+- `analyze.py:697` already sets `filing_date` on the analysis object, and `drafting_build.py:229` already
+  forwards it into the drafting object (`"filing_date": analysis["filing_date"]`). `read_thesis_bundle()`
+  (`scoped_amgt.py:1897-1949`) never re-exposes it as `as_of_date` on the outer bundle (confirmed absent from
+  the dict literal `:1918-1934` and every subsequent `bundle.update()`/assignment). Fix: one line, either
+  inside `_drafting_block()` (`read_drafted_sections()` at `:1581` delegates to it) or immediately after the
+  `bundle.update(read_drafted_sections(...))` call at `:1938` -- `bundle["as_of_date"] = <the same filing_date
+  already read>`. No new read, no new producer call.
+- **Criterion:** the served thesis bundle for a name carrying a filing (BA) has `as_of_date` equal to that
+  filing's `filing_date`, printed against a planted negative (a name with NO filing must NOT carry a stale or
+  invented date).
+
+**`AMGT-rk-26` (R13-H, judgment grades) -- CUT, HELD at chain A's tail, runs only after `AMGT-rk-19`'s page AND
+`AMGT-rk-22` both deploy.**
+- No dedicated capture tool exists. Extends `.tools/frontend-dev.py`'s Playwright harness (already screenshots
+  via `system-Edge`/pinned chromium, writes `results.json` + `.png`) with a network-log capture
+  (`page.on("response")` or a CDP `Network.enable` listener -- neither existing tool captures this today).
+- Captures the five tabs -- **`ThesisTab`, `ModelTab`, `PeersTab`, `PostureTab`, `ExecManagementTab`**
+  (`portal/src/pages/SecurityAnalysis/tabs/`) -- plus the header, for `BA_US_Equity` and one other keyed
+  non-pilot name, from a DEV build pointed at the deployed adapter.
+- Two JUDGMENT criteria (`rk-2` AC6 / `rk-8` AC4's closure class), graded by the CVO at L9, never self-graded.
+
+**`AMGT-rk-27` (R13-I, FWD-12) -- DEFERRED TO ROUND 14, named here, not omitted.** "Ledger stages bound where
+they exist, or a visible refusal with a named reason (A2.2 C2: 0 of 6 bound today)." Not decomposed further
+this round; s.4's own sequential-deploy list names it alongside A/B/E/F/G, and Addendum 1's correction is what
+licenses moving it (never R13-L) when the cap binds.
+
+**`AMGT-rk-28` (R13-J, S121) -- MECE:** one file, uncontended by any other cell. **GRAIN:** the new shape
+mirrors an EXISTING sealed-mutant pattern exactly, not a new style. **INTENT:** one axis, the data-vacuity
+class. **STATE:** adds a shape, moves none of the existing five.
+- `.tools/criteria_quality_checker.py` (358 ln, built by `AMGT-rk-9`): `evaluate()` (`:195-208`) currently
+  refuses five shapes (`shape1_zero_collected` `:128`, `shape2_rc_swallowed` `:139`, `shape3_grain_mismatch`
+  `:151`, `shape4_inexact_capture` `:179`, `shape5_no_timeout` `:187`), each sealed in `_self_test()`
+  (`:228-320`) with a planted-mutant/clean-control pair.
+- Add `shape6_data_vacuity(c)` following `shape1`'s exact pattern (`:128-136`): detects an invocation counting
+  a field-name token whose `expect`/`invocation` never asserts anything about the counted items' VALUES (the
+  exact class of `rk-15` AC3's bug, s.3.6's instance). Wire it into `evaluate()`'s per-criterion loop (`:200`).
+  Add one sealed mutant + clean control to `_self_test()` mirroring `rk-15` AC3 VERBATIM as the planted mutant.
+
+**`AMGT-rk-29` (R13-K, FWD-20) -- DEFERRED TO ROUND 14, named here, not omitted.** "The house forecast
+producer: seeded from filings and history, the degeneracy gate at the producer." `divergence.py`'s
+`check_degeneracy()` (`:94`) is the gate this producer must pass before `AMGT-rk-30`'s Divergence D score can
+ever read non-ABSENT -- so R13-K's absence this round is why R13-L's D stays ABSENT on 33 of 33 by design, not
+by omission.
+
+**`AMGT-rk-30` (R13-L, addendum 1) -- MECE:** three disjoint surfaces, same shape as `AMGT-rk-19`. **GRAIN:**
+Robustness and Peers V assert a real MEASURED value against `classify.py`'s record shape; Divergence D asserts
+ABSENT with its reason, never a placeholder. **INTENT:** one axis -- rk-5's built scores reach a served surface.
+**STATE:** adds one bundle key and one portal render block; moves nothing already served.
+- *Producer* (`lib/research/scores/`, new runner -- none of the three modules is wired into any pipeline
+  today, confirmed by an empty runner-script census): a QA/ad-hoc run over the 33 keyed names writes each
+  name's Robustness (ANNUAL variant only -- `score_robustness_annual_variant()` `:385`, model-block inputs
+  only, no vendor call; the QUARTERLY variant needs a live Bloomberg pull and STAYS A CARD, never this cell's
+  act), Peers V (`score_peers_v()` `:211`, over `rk-14`'s repaired peer rows), and Divergence D (ABSENT for
+  every name, reason "house forecast does not serve", via `classify.py`'s `absent()` `:39`) to the pool through
+  `classify.py`'s record shape (`measured()` `:32`, `absent()` `:39`, `is_measured()` `:50`).
+- *Adapter* (`scoped_amgt.py`, `read_thesis_bundle()`, immediately after the existing `bundle["posture"] =
+  read_posture(...)` line near `:1939-1940`): add `bundle["scores"] = read_scores(resolved_key,
+  identity=identity)`, `read_scores()` written to mirror `read_management()`'s exact shape (`:2184-2251`:
+  resolve identity -> `read_pool_object(SCORES_PREFIX, key)` -> `POOL_ABSENT`/`POOL_SERVED`).
+- *Page* (`portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx`): a new render block for the three score
+  fields, each value or its ABSENT reason -- **a score that renders nothing because its field is missing is
+  not met.**
+- **Criteria:** served count of MEASURED Robustness and Peers V over 33, printed with ABSENT reason codes
+  beside it; D reads ABSENT on 33 of 33 with its reason; one planted negative per score (an input with a
+  missing value MUST class ABSENT, never 0).
+
+### 21d. CHAINS AND QUEUES
+
+```
+Chain B        (adapter + every live AWS act; ONE worktree, ONE worker, SEQUENTIAL, 6 orders):
+               AMGT-rk-19 (adapter) -> AMGT-rk-20 -> AMGT-rk-23 -> AMGT-rk-24 (adapter) -> AMGT-rk-25 -> AMGT-rk-30 (adapter)
+Chain FP       (lib/research/filings/, ONE worktree, ONE worker, SEQUENTIAL, 2 orders):
+               AMGT-rk-19 (producer) -> AMGT-rk-24 (producer)
+Chain ID       (lib/research/identity/, standalone, 1 order):
+               AMGT-rk-21
+Chain SP       (lib/research/scores/ + new runner, standalone, 1 order):
+               AMGT-rk-30 (producer)
+Chain CK       (.tools/criteria_quality_checker.py, standalone, 1 order):
+               AMGT-rk-28
+Chain A        (portal; ONE worktree, ONE worker, fed in DEPENDENCY order, not file order):
+               AMGT-rk-19 (page) [after Chain B's rk-19-adapter lands]
+               -> AMGT-rk-30 (page) [after Chain B's rk-30-adapter AND Chain SP land]
+               -> AMGT-rk-26 [HELD -- after Chain A's own rk-19-page AND AMGT-rk-22 (CARD 5) both deploy]
+Chain D        (management/posture producers; CUT, NOT SPAWNED -- gated on CARD 5):
+               AMGT-rk-22
+```
+
+**Cross-chain dependency notes (textual, per round-12's own precedent -- "spawn only after X has drained"),
+never a mechanical gate between chains:**
+- Chain A's `AMGT-rk-19` page order is fed to the worker only once Chain B's `AMGT-rk-19` adapter order has
+  drained and its deploy is confirmed live.
+- Chain A's `AMGT-rk-30` page order is fed only once BOTH Chain B's `AMGT-rk-30` adapter order AND Chain SP's
+  producer order have drained.
+- `AMGT-rk-26` is never fed. It is re-evaluated only after Andrew answers CARD 5 and `AMGT-rk-22` is spawned
+  and drains.
+
+### 21e. CARD 5, THE COST LINE (owed before Andrew answers, s.5 of the analysis)
+
+Management is capped at the 12 names carrying a filing; posture can reach the 33 keyed. Today: management 5,
+posture 2 -- so the ask is roughly 7 more management names and 31 more posture names, measured live at the
+cut (s.21c `AMGT-rk-22`). **Per-name cost, from this round's own receipts (no other data exists yet for
+either producer specifically, so this is the best available proxy, stated as such):** `AMGT-rk-18`'s 11-name
+filings/drafting batch cost USD 6.2791 (USD 0.571/name); `AMGT-rk-15`'s single BA re-run cost USD 0.6588.
+**Neither receipt is FROM the management or posture producer itself** (no run of either has happened yet at
+any Bloomberg/LLM cost) -- the true per-name figure for `enrich.py`/`judge.py` specifically will only be
+measured on CARD 5's own first batch, and this seat says so rather than presenting a filings-pipeline number
+as a management/posture one. **REC: YES**, per the CTO's own s.5 recommendation, with the caveat above stated
+on the card, not smoothed over.
+
+### 21f. FAN-OUT
+
+```
+fanout:
+  cap: 8                        # unchanged, not raised
+  chains_total: 7               # B, FP, ID, SP, CK, A, D
+  chains_spawned_now: 6         # B, FP, ID, SP, CK, A -- D withheld
+  waves: not applicable this round -- six chains start together, no wave gate
+  deferred_to_round_14: [AMGT-rk-27, AMGT-rk-29]   # R13-I, R13-K, per Addendum 1's correction (R13-L never defers)
+  held_pending_card_5: [AMGT-rk-22]                # R13-D -- cut, not spawned
+  held_pending_upstream_deploy: [AMGT-rk-26]       # R13-H -- cut, tail of chain A, fed only after rk-19-page and rk-22 both land
+  reason: "twelve obligations named by the CTO; ten decomposed and issued this round (A,B,C,D,E,F,G,H,J,L);
+           two deferred to round 14 by explicit CTO license (I,K); D cut but held on Andrew's word (CARD 5);
+           H cut but held on its own upstream dependency. Nothing moved by silent omission -- every one of
+           the twelve is named in s.21a's table with its disposition."
+```
+
+**No cell is left for a later round by this seat's own choice** -- I and K move only because the CTO's own
+ADDENDUM 1 licenses exactly that pair, by name, under the cap. Everything else this seat can issue, it issues.
