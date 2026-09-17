@@ -134,7 +134,25 @@ any real enrolment also resets that user's channel to `email`.
       fail (mutant rc=2); eslint rc=0; five rendered states READ against DESIGN.md C3/C12; sms and
       email accounts both exercised pre-login with every `/auth/*` call intercepted.
 - [x] ACT 2: portal DEV commit `03a3bf8f` (LOCAL -- DEV is a shared branch; the push is the integrator's)
-- [ ] portal DEV push + DEV -> PROD promote -- **until this lands no user can SEE the enrolment card**, so
-      the backend being live changes nothing for anyone yet
+- [x] **THE TERRAFORM IS COMMITTED -- `5f4d14637a`**, under the audited lane override, on Andrew-direct
+      ~22:4xZ VERBATIM *"youre authorized, for both of the above, override and then /prod-deploy"*
+      (audit line `2026-09-17T22:53:13Z OVERRIDE 0.4.0_DT_ClientPlatform 2`). Bytes verified identical to
+      the preserved patch immediately before. A targeted plan afterwards reads **"No changes. Your
+      infrastructure matches the configuration"** -- the clean-checkout REMOVE hazard above is CLOSED.
+      (First attempt 22:47Z was MERGE-REFUSED: `2.0.0_SA_COO~Z` had a drain in flight, MERGE_HEAD
+      `8045a47be57d`. Waited it out; no override exists for that and none was wanted.)
+- [x] portal DEV push -- `origin/DEV` = `03a3bf8f` (ls-remote read). Pushed BY EXACT SHA
+      (`git push origin 03a3bf8f:DEV`) because local DEV had gained two commits that are NOT this seat's
+      (`c069db75` integrator merge, `6cbd3049` worker `~31`); /prod-deploy Step 1a forbids publishing them
+      under this push. They remain local and unpublished, the integrator's to push.
+- [ ] **DEV -> PROD promote -- HELD AT ANDREW, NOT EXECUTED.** /prod-deploy merges ALL of DEV, and
+      `origin/PROD..03a3bf8f` is 17 commits / 55 files / +20,336: this seat's ONE commit (6 files) plus
+      **15 AMGT_RESAPP commits = the whole Security Analysis surface, 47 files, which has NEVER been on
+      PROD** (0 files under `src/pages/SecurityAnalysis` on `origin/PROD`, no route). At `03a3bf8f` it is
+      in the sidebar nav and guarded by plain `ProtectedRoute` -- any signed-in user, not admin- or
+      internal-gated -- and AMGT_RESAPP is mid-round 13, not CLOSED. His authorization answered a call
+      this seat had worded as promoting ONE commit; a first production release of another project's
+      in-flight surface is a different act and is not inferred from it. **Until a promote lands no user
+      can SEE the enrolment card**, so the live backend still changes nothing for anyone.
 - [ ] first real SMS delivered end to end -- needs a real handset; the one step a fixture cannot stand in for
 - [ ] CLOSED
