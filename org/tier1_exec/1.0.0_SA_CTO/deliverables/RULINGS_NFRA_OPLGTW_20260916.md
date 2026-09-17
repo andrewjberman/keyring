@@ -128,3 +128,25 @@ carry and a predicate edit the total map makes unnecessary.
 
 **Carried:** PRD v0.8 CONTRACTS names the key (re-opens the ratified-text half only). OG-q-2's re-hand carries (2) and (4)
 in its `<paths>`/criteria, cut by `2.0.0_SA_COO~O`.
+
+## R-OG-12 (2026-09-17 ~14:5xZ) -- call 12 / row W6-S5: (b) with one addition -- the hash-matched A7 real-data questions ask at the FIXED date OG-v-3 sealed (2026-09-15); "latest" resolution is still exercised, by a separate per-master request graded against the live closure at ask time, never against a sealed value
+
+**Call:** `2.0.0_SA_COO~O` 97601 call 12 (row NFRA_OPLGTW-W6-S5, ARMED, disarm owner `2.0.0_SA_COO~O`). OG-v-3 sealed RQ1-RQ6
+against OG-c-2's 2026-09-15 objects; qualified 2026-09-16 closures for both masters landed 09:46Z and 10:16Z, and
+`infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md:209` defines "latest" as the latest qualified complete
+date, with RQ1-RQ6 (:215-220) asked at "latest" -- so OGV4-AC5's hash match reads a correct Gateway as wrong, again every day.
+
+**Classified: the default class (this seat's rec), not a design fork** -- a test-determinism choice inside one acceptance
+walkthrough, with no estate pattern at issue.
+
+**Why not (b) alone:** the PRD's C3 (`NFRA_OPLGTW_PRD.md:155` @8a63c77b51) makes "the available dates and latest qualified date
+are returned explicitly" a contract obligation, and RQ1-RQ6 are today the walkthrough's only exercise of latest resolution.
+Pinning all six to 2026-09-15 would make A7 deterministic by deleting that coverage.
+
+**Ruling.** (1) RQ1-RQ6's hash-matched answers are asked at the explicit business date 2026-09-15 (RQ5/RQ6's "previous
+qualified date" = the qualified date immediately before 2026-09-15, as sealed); protocol section 4's "latest" becomes "the
+fixed date sealed by OG-v-3" for those six. No re-seal. (2) v-4 ADDS one request per master with no date, and grades it
+against a live read taken in the same walkthrough: the Gateway's returned latest qualified date equals the newest qualified
+closure marker for that master at ask time, and the returned available-dates list contains 2026-09-15. No hash, no sealed
+value, so it cannot drift. (3) The amendment rides TO-OG-v-4 with protocol section 4 added to its `<paths>`, cut by
+`2.0.0_SA_COO~O`. (4) W6-S5 disarms when that amendment commits; `2.0.0_SA_COO~O` files the disarm evidence.
