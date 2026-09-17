@@ -1042,6 +1042,28 @@ not a message.
    "spec_asserts": "CN-i-1 repairs four instrument defects in this seat's round-2 fixed inputs.",
    "world_is": "Two of the four are already repaired at HEAD. CN-i-1 repairs two, and carries the other two forward as regression arms rather than re-fixing what is not broken.",
    "notes": "INERT: adds no hazard. It NARROWS the cut rather than widening it, which is the direction that needs evidence, so both live defects are reproduced above from the current bytes rather than cited from the rows. * WHAT CN-i-1 NOW BUILDS: the two repairs (a k3-contentdiff that PLANTS the removal it claims, and an o3-sovereign that counts MARKED ROWS with its denominator printed), plus A-23's negative self-test per subcommand with EACH ARM EXERCISED ALONE, plus regression arms holding the two already-repaired readings in place so a later round cannot quietly undo them. ! AND THE REGRESSION ARMS ARE NOT OPTIONAL: a repair with no arm is a repair that can be reverted without anything failing, which is how W5-S2's class got into two checkers at once in the first place."
+  },
+  {
+   "id": "LGIC_CANON-S18",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-17T13:21Z",
+   "one_line": "DECOMPOSITION v5's ROUND-3 SUBTRACTION READS 6 CELLS AND THE ROUND RUNS 7: it omits CN-l-3, which the same section's LEVELS paragraph and the CTO's round-2 analysis both carry; and 'CN-j-8/9/10' wrote three ids as one token, so CN-j-9 and CN-j-10 resolved to no cell of the decomposition by the L6 gate's grammar. Found at the round-3 cut, before any order existed; v5.1 declares all seven by id.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "LGIC_CANON_DECOMP.md s.0e @a27616f46f -- the subtraction block: 'cells at v4 12, minus 5 REALIZED, minus C6 1 = 6', listing CN-k-4-r3, CN-k-5, CN-j-8/9/10, CN-j-11. The LEVELS paragraph immediately below: 'Level 0: CN-k-4-r3, CN-k-5, CN-l-3'.",
+     "LGIC_CANON_ROUND2_ANALYSIS.md s.3 @4a55888962 -- the direction table carries CN-l-3 (A-21, FWD-6) as a round-3 cell.",
+     "to-pipeline-gate.py _cell_refs_violations at a27616f46f: cell ids are read with CELL_ID_RE over the decomposition text; measured over v5 the id set carries CN-j-8 and CN-j-11 but not CN-j-9 or CN-j-10, and 'CN-k-4-r3' is not a cell id by the grammar (CN-k-4 is)."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Decomposition v5 s.0e: 'cells round 3 runs ... 6'.",
+   "world_is": "Seven cells run: CN-k-4 (round-3 re-cut), CN-k-5, CN-l-3, CN-j-8, CN-j-9, CN-j-10, CN-j-11. The issuance covers all seven and v5.1 declares them by id in a table.",
+   "notes": "INERT: the count, not a cell, was wrong, and it was caught before any order was cut, so no worker read it. The same seat wrote v5; a subtraction whose listed members were not re-counted against its own levels paragraph is Rule 24's forward-list failure inside a subtraction's clothes."
   }
 ]
 ```
