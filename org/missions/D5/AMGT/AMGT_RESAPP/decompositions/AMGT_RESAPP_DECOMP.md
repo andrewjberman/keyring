@@ -2531,11 +2531,23 @@ ABSENT with its reason, never a placeholder. **INTENT:** one axis -- rk-5's buil
 
 ### 21d. CHAINS AND QUEUES
 
+⛔ **REVISED AT THE CUT, before issuance, on Andrew's own throughput question.** The original cut put chain
+FP's two orders on one sequential worker and chain B's `AMGT-rk-30` adapter half LAST in its queue. Neither
+was required: FP's two orders touch DISJOINT FILES (`analyze.py` vs `batch.py` -- the whole-directory
+single-writer rule was inherited from round 12, where a THIRD order, `AMGT-rk-15`, also touched that
+directory; no third order touches it this round), and `AMGT-rk-30`'s adapter half depends on NOTHING in
+chain B's queue except chain SP's producer, so queuing it last forced chain A's second page to wait for all
+six of chain B's steps instead of two. **Chain B's own internal sequencing (six deploys, one at a time) is
+UNCHANGED and stays sequential -- that is a Terraform-state-safety and rollback-hash-anchoring constraint
+from s.4's own ruling, not a throughput choice, and is not loosened for speed.**
+
 ```
-Chain B        (adapter + every live AWS act; ONE worktree, ONE worker, SEQUENTIAL, 6 orders):
-               AMGT-rk-19 (adapter) -> AMGT-rk-20 -> AMGT-rk-23 -> AMGT-rk-24 (adapter) -> AMGT-rk-25 -> AMGT-rk-30 (adapter)
-Chain FP       (lib/research/filings/, ONE worktree, ONE worker, SEQUENTIAL, 2 orders):
-               AMGT-rk-19 (producer) -> AMGT-rk-24 (producer)
+Chain B        (adapter + every live AWS act; ONE worktree, ONE worker, SEQUENTIAL, 6 orders, REORDERED):
+               AMGT-rk-19 (adapter) -> AMGT-rk-30 (adapter) -> AMGT-rk-20 -> AMGT-rk-23 -> AMGT-rk-24 (adapter) -> AMGT-rk-25
+Chain FP-A     (lib/research/filings/analyze.py only, standalone, 1 order):
+               AMGT-rk-19 (producer)
+Chain FP-B     (lib/research/filings/batch.py only, standalone, 1 order):
+               AMGT-rk-24 (producer)
 Chain ID       (lib/research/identity/, standalone, 1 order):
                AMGT-rk-21
 Chain SP       (lib/research/scores/ + new runner, standalone, 1 order):
@@ -2543,19 +2555,23 @@ Chain SP       (lib/research/scores/ + new runner, standalone, 1 order):
 Chain CK       (.tools/criteria_quality_checker.py, standalone, 1 order):
                AMGT-rk-28
 Chain A        (portal; ONE worktree, ONE worker, fed in DEPENDENCY order, not file order):
-               AMGT-rk-19 (page) [after Chain B's rk-19-adapter lands]
-               -> AMGT-rk-30 (page) [after Chain B's rk-30-adapter AND Chain SP land]
+               AMGT-rk-19 (page) [after Chain B's rk-19-adapter lands -- Chain B's step 1]
+               -> AMGT-rk-30 (page) [after Chain B's rk-30-adapter AND Chain SP land -- Chain B's step 2, not step 6]
                -> AMGT-rk-26 [HELD -- after Chain A's own rk-19-page AND AMGT-rk-22 (CARD 5) both deploy]
 Chain D        (management/posture producers; CUT, NOT SPAWNED -- gated on CARD 5):
                AMGT-rk-22
 ```
 
+**Seven chains now (was six), still one worker each; N of M stays comfortably under the cap of 8** (7 spawned
+now -- B, FP-A, FP-B, ID, SP, CK, A -- plus chain D cut-and-held).
+
 **Cross-chain dependency notes (textual, per round-12's own precedent -- "spawn only after X has drained"),
 never a mechanical gate between chains:**
-- Chain A's `AMGT-rk-19` page order is fed to the worker only once Chain B's `AMGT-rk-19` adapter order has
-  drained and its deploy is confirmed live.
-- Chain A's `AMGT-rk-30` page order is fed only once BOTH Chain B's `AMGT-rk-30` adapter order AND Chain SP's
-  producer order have drained.
+- Chain A's `AMGT-rk-19` page order is fed to the worker only once Chain B's `AMGT-rk-19` adapter order (step
+  1) has drained and its deploy is confirmed live.
+- Chain A's `AMGT-rk-30` page order is fed only once BOTH Chain B's `AMGT-rk-30` adapter order (step 2, moved
+  up from step 6) AND Chain SP's producer order have drained -- an ordinary short cross-chain wait if Chain SP
+  is not yet done, not a blocking condition to file a row over.
 - `AMGT-rk-26` is never fed. It is re-evaluated only after Andrew answers CARD 5 and `AMGT-rk-22` is spawned
   and drains.
 
@@ -2577,9 +2593,9 @@ on the card, not smoothed over.
 ```
 fanout:
   cap: 8                        # unchanged, not raised
-  chains_total: 7               # B, FP, ID, SP, CK, A, D
-  chains_spawned_now: 6         # B, FP, ID, SP, CK, A -- D withheld
-  waves: not applicable this round -- six chains start together, no wave gate
+  chains_total: 8               # B, FP-A, FP-B, ID, SP, CK, A, D (FP split into FP-A/FP-B at the cut, for throughput)
+  chains_spawned_now: 7         # B, FP-A, FP-B, ID, SP, CK, A -- D withheld
+  waves: not applicable this round -- seven chains start together, no wave gate
   deferred_to_round_14: [AMGT-rk-27, AMGT-rk-29]   # R13-I, R13-K, per Addendum 1's correction (R13-L never defers)
   held_pending_card_5: [AMGT-rk-22]                # R13-D -- cut, not spawned
   held_pending_upstream_deploy: [AMGT-rk-26]       # R13-H -- cut, tail of chain A, fed only after rk-19-page and rk-22 both land
