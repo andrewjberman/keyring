@@ -7361,6 +7361,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-18's AC5 bars the count of opal-shaped scheduled tasks at exactly the number measured at the cut.",
     "world_is": "Windows Task Scheduler's own LIST enumeration is not atomic, and a re-read seconds apart on an UNCHANGED system produced two different counts (10 then 11) with identical task names both times.",
     "notes": "The repair moves from a count to a name-set comparison, which is strictly more discriminating and immune to this noise; AC1-AC4 are byte-identical. The worker acted correctly under the refusal clause by leaving the order OPEN rather than passing or silently repairing AC5 itself; this amendment is the issuer's repair of the criterion, not a relaxation of it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S10",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-17T02:47:38Z",
+    "one_line": "AMGT-rk-14's fit.py PRESET_SOURCE and its module docstring cited the WRONG portal gitlink commit for the DIVZ/PFOE preset codes (be8cf218743af0c04a4d57b908b28cf7435e119d), while this tree's HEAD actually records portal at 2453a7b4c6b7ff91ea89db499890a9486265d1a0 -- content-identical at both commits for this one file, so no code VALUE was wrong, but the provenance citation was.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD portal in the worktree (/c/tmp/wk-amgt-12-25) and in the main workspace both read commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0; the main workspace's own portal/ checkout is at HEAD 2453a7b4c6b7ff91ea89db499890a9486265d1a0 too.",
+        "git cat-file -e confirms be8cf218743af0c04a4d57b908b28cf7435e119d exists in the portal history (a real ancestor commit, 'Merge commit b616b759 into wk-amgt_resapp-12-23-portal'), just not the one this tree's HEAD points at.",
+        "diff of portal/src/pages/SecurityScanner/constants.ts between the two commits: EMPTY (byte-identical), so the 13 DIVZ / 16 PFOE codes and weights fit.py carries are unaffected -- this is a citation defect, not a data defect.",
+        "grep for the wrong hash across lib/research/ found exactly one file, lib/research/posture/fit.py, at two lines (module docstring line 20, PRESET_SOURCE line 67)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Corrected in the same commit that filed this row (both citations in lib/research/posture/fit.py rewritten to 2453a7b4c6b7ff91ea89db499890a9486265d1a0, with a note recording the correction); byte-identical content at both commits means no code VALUE was ever wrong, only the provenance citation, so hazard_standing is INERT (never carried a future-operation risk) rather than ARMED, and no disarm_owner is owed.",
+    "spec_asserts": "fit.py's own comment claimed 'be8cf218743af0c04a4d57b908b28cf7435e119d -- the commit THIS tree's HEAD records for the portal gitlink'.",
+    "world_is": "This tree's HEAD records 2453a7b4c6b7ff91ea89db499890a9486265d1a0 for the portal gitlink, not be8cf218743a. The claim was false about WHICH commit, though the bytes read from either commit are identical for this file, so PRESETS/PRESET_VALUE_CODES/the fit scores are unaffected.",
+    "notes": "Found while re-grounding AC2 on resuming this cell (a citation-aging check per CLAUDE.md Rule 27's own warning that a quoted/cited commit can go stale silently). Fixed same-turn by this worker (0.9.0_WK_AMGT_RESAPP~25) in the same commit that lands this row; all posture and peers unit tests re-run clean (48 of 48) after the edit."
   }
 ]
 ```
