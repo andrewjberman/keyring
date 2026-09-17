@@ -995,4 +995,46 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
 ]
 ```
 
+---
+
+## Round 3
+
+Author: `3.0.0_SA_CVO`. Round: v3. Fabric: laptop. Recorded: 2026-09-17T18:39Z.
+
+ONE FRESH ENTRY: `W2-S12` -- owner `1.0.0_SA_CTO` and `disarm.state: DISARMED` set directly on first write
+(no prior remediation-plane row existed for this id), per RULING R-30, which supplies both the owner
+reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ruling.
+
+```json
+[
+{
+ "id": "LGIC_ENFORCE-W2-S12",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "DEC-4(ii)'s one prescribed NOT_A_PRINCIPAL evidence path (CloudTrail data events live on the bucket) cannot answer for opal-data-demo, which is in neither CloudTrail data-event trail set -- silence in a trail that never covered the bucket is not evidence either way.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S12",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md Round 3, row LGIC_ENFORCE-C-S31",
+  "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260916.md:1258-1275 (RULING R-30, @eda81ff5c6)"
+ ],
+ "remedy": "1.0.0_SA_CTO, RULING R-30: on a bucket that is not a member of a live CloudTrail data-event selector, a NOT_A_PRINCIPAL disposition is REFUSED; the principal is instead dispositioned from a direct IAM-grant read or carded NOT-JUDGED. Binds DEC-4(ii)'s criterion text at round 4's cut. Instrumenting opal-data-demo is NOT ordered.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v3",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-17T18:39Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v3"
+ },
+ "closed": true
+}
+]
+```
+
 -- 3.0.0_SA_CVO

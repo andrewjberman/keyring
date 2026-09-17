@@ -314,4 +314,265 @@ JUDGMENT CRITERIA: **5** -- R2-J1, R3-J1, R4-J1, S2R-J1, T3R-J1.
 ]
 ```
 
+---
+
+## Round 3
+
+Round 3 of `LGIC_ENFORCE`, compiled and adjudicated by `3.0.0_SA_CVO` on `2.0.0_SA_COO~G`'s L8 hand-off (via
+`1.0.0_SA_CTO`, msg 97621, routing 97620), recorded 2026-09-17T18:39Z.
+
+THE COMPILE POPULATION IS **11**, THE GATE'S OWN NUMBER (`_latest_dispositions`): S56, S57, S58, S59, S60,
+W2-S12, W3-S14, W3-S15, W3-S16, W4-S5, W4-S6.
+
+ORDERS: 8 of 8 drained (one, EN-s-6, stays `pending` by design under R-29's timebox -- its S6R3-AC5
+judgment is graded regardless). All 8 proof-of-spec instances independently spot-verified by this seat
+against their own cited artifacts.
+
+JUDGMENT: 7 of 7 PASS -- N1R3-AC10, G9R3-AC7, R5R3-AC5, T8R3-AC4, W7R3-AC3, S6R3-AC5, P4R3-AC5.
+
+W2-S12 DISARMS under RULING R-30, owner reassigned CloudOps -> CTO in the same write (R-30 supplies
+both the owner move and the disarm word in one ruling, so both land together here -- see C-S31).
+
+```json
+[
+ {
+  "id": "LGIC_ENFORCE-C-S25",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "S56/S57 GRADUATED: both correctly named a real lane-permission wall (LOOP_MECHANISM, PLATFORM_LOGIC_DOCS) that refuses a SEAT writing those paths directly -- but a spine-v3 worker is enumerated in NO lane at all and is admitted purely by its task order's own <paths> grant (.tools/owned-paths-validate.py:115-121). EN-r-5-r3's worker committed infra/logic/registry/systems.json directly (23980d3fbe) under its TO's grant, and the round drained 8 of 8 clean through every gate -- confirming the mechanism, not contradicting the finding.",
+  "class": "OBSERVATION",
+  "spec_asserts": "S56/S57: 'round 3's cell 1 ... is writable by NEITHER a worker nor this seat' / 'those writes are refused to a worker, to this seat AND to 1.0.0_SA_CTO.'",
+  "world_is": "Independently verified: .tools/owned-paths-validate.py:115-121's own comment states a worker is 'admitted to exactly the paths that a NON-TERMINAL task order under <CODE>, issued_to that serial, names in its <paths> block AT HEAD -- and to nothing else,' a mechanism wholly separate from and additive to the static lane table S56/S57 correctly read. Commit 23980d3fbe (0.9.0_WK_LGIC_ENFORCE~2, EN-r-5-r3) writes infra/logic/registry/systems.json directly and merges clean at b54636545d. The concern was real and worth raising before the cut; it did not block the round because the worker-grant path is the one that actually governs a worker's write surface.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md rows LGIC_ENFORCE-S56, -S57",
+    ".tools/owned-paths-validate.py:115-121, read directly at HEAD",
+    "commit 23980d3fbe (worker, registry write) and b54636545d (clean drain)"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_ENFORCE-S56",
+   "LGIC_ENFORCE-S57"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_ENFORCE-C-S26",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "S58 GRADUATED: a self-caught defect (this seat's own S57 typed a nonexistent registry path, and RULING R-23 repeated it) -- corrected before the actual TO was cut, since EN-r-5-r3's real <paths> grant and commit both target the real file, infra/logic/registry/systems.json.",
+  "class": "OBSERVATION",
+  "spec_asserts": "S58: 'a <paths> grant is EXACT, so an order cut from either text would grant the worker a nonexistent file.'",
+  "world_is": "Verified: EN-r-5-r3's own <paths> block and its worker's actual commit (23980d3fbe) both write infra/logic/registry/systems.json, never the nonexistent refused_keys.json path S57/R-23 named. The defect was real and self-identified before it could reach an order; no downstream harm.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_ENFORCE-S58",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-r-5-r3.registry-tokens.md <paths> block",
+    "commit 23980d3fbe"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_ENFORCE-S58"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_ENFORCE-C-S27",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "S59 GRADUATED: round 2's EN-t-8 wording asked for a re-plan hash-equal to a document that structurally can never repeat (plan_sha256 embeds a run timestamp) -- a real defect in the round-2 cell text, corrected in round 3's actual cut, which compares canonically against the reduced extract instead and passed (T8R3-AC1, graded above).",
+  "class": "OBSERVATION",
+  "spec_asserts": "S59: 'A-12 asks for a re-plan of one root with plan_sha256 equal to the extract's ... a PERFECT reproduction would FAIL.'",
+  "world_is": "Verified: round 3's EN-t-8-r3 order text (read at HEAD) compares resource_changes canonically against the committed round-2 extract, not a raw hash -- exactly the corrected bar S59 recommended. T8R3-AC1 passed on this corrected text.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_ENFORCE-S59",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-t-8-r3.roots-evaluated.md AC1 text"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_ENFORCE-S59"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_ENFORCE-C-S28",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "S60 GRADUATED as a standing finding, not resolved by this round: R-16's ship/repo-only classifier (safe_deploy_core.py) only decides 3 of 10 sample targets, leaving at least 5 of the 7 undetermined ones shipping through a different gate entirely (Lambda@Edge, an investor-reporting Lambda, the opal_name Terraform module) -- exactly the understatement R-16 exists to prevent. No round-3 cell touched this classifier; carried to the CTO's attention for R-16's own refinement.",
+  "class": "OBSERVATION",
+  "spec_asserts": "R-16 derives the ship/repo-only split from safe_deploy_core.py's classification.",
+  "world_is": "Independently plausible from the cited call sites and return values; not re-run by this seat (a broader estate classifier, not scoped to this round's <paths>). Real and worth the CTO's attention, not a round-3 defect.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_ENFORCE-S60"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_ENFORCE-S60"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_ENFORCE-C-S29",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "W3-S14/S15/S16 GRADUATED: three real instrument-wording imprecisions in EN-t-8-r3's cell text (a flag invalid on the actual terraform version; AC1's 'full document' is actually the reduced round-2 extract; a throwaway root clone needs its out-of-root relative sibling copied too) -- none blocked the round, each correctly worked around by the worker and confirmed passing on the real bar.",
+  "class": "OBSERVATION",
+  "spec_asserts": "N/A -- these rows document cell-text imprecisions the worker correctly navigated.",
+  "world_is": "T8R3-AC1/AC3/AC4 all PASS on the actual (correct) behaviour; each finding is a wording note for future cells in this shape, not a defect in what was delivered.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md rows LGIC_ENFORCE-W3-S14, -W3-S15, -W3-S16",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-8-r3.roots-evaluated.proof_of_spec.json -- T8R3-AC1/AC3/AC4 PASS"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_ENFORCE-W3-S14",
+   "LGIC_ENFORCE-W3-S15",
+   "LGIC_ENFORCE-W3-S16"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_ENFORCE-C-S30",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "W4-S5/S6 GRADUATED: EN-s-6-r3's census-to-the-end correctly reproduced the same RAISE that stopped rounds 1 and 2 (a live API_GW naming no vocabulary; a live {system} placeholder), then measured the FULL remaining population directly (462 occurrences / 351 distinct triples / 248 distinct names) rather than looping the CLI -- confirming AMENDMENT 1's 25-distinct-RAISE timebox correctly fired on first re-run, exactly as R-29 anticipated. This is the evidentiary basis for FWD-5 moving to round 4 on the full list (RAISE_POPULATION_S6.r3.md), not a defect.",
+  "class": "OBSERVATION",
+  "spec_asserts": "EN-s-6-r3's own text anticipates the timebox firing and names RAISE_POPULATION_S6.r3.md as the carry mechanism.",
+  "world_is": "S6R3-AC1..AC4 correctly FAIL by design (graded above under S6R3-AC5's judgment); the population measurement (462/351/248) is real, direct-library-swept (not a sequential CLI loop, which would have undercounted), and dominated by the same three already-unresolved tokens (news, trade, astn) already carded in prior rounds.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md rows LGIC_ENFORCE-W4-S5, -W4-S6",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/.../RAISE_POPULATION_S6.r3.md"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_ENFORCE-W4-S5",
+   "LGIC_ENFORCE-W4-S6"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_ENFORCE-C-S31",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "W2-S12 GRADUATED and DISARMED under RULING R-30: opal-data-demo carries no CloudTrail data-event selector, so DEC-4(ii)'s prescribed NOT_A_PRINCIPAL evidence path can never answer for it -- a real gap in the ruling's text, not a defect in EN-w-7-r3's work (which correctly resolved its one writer EXEMPTED from a direct IAM-grant read instead). R-30 rules the general fix (a NOT_A_PRINCIPAL claim off a trail that never covered the bucket is REFUSED by default; disposition instead from a direct grant read or NOT-JUDGED) and reassigns this row's disarm owner to 1.0.0_SA_CTO, the owner of the evidence rule the remedy changes (R-19). This seat writes the owner move and the disarm together only because R-30 supplies both in one ruling -- there is no live prior remediation-plane row for this id to advance separately.",
+  "class": "OBSERVATION",
+  "spec_asserts": "W2-S12: 'the ONE prescribed NOT_A_PRINCIPAL evidence path ... can never answer true or false for that bucket.'",
+  "world_is": "R-30 (SELF_DRIVE_LGIC_RULINGS_20260916.md:1258-1275) is the CTO's own ruling, read directly, citing the row's grounding at b54636545d (opal-data-demo absent from both CloudTrail trail sets, live bucket) and confirming the round was not blocked (EN-w-7's one writer resolved EXEMPTED from a direct IAM-grant read). Ruling text: 'W2-S12's disarm owner moves to 1.0.0_SA_CTO ... 3.0.0_SA_CVO writes the owner move and the DISARMED clock citing this ruling.'",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260916.md:1258-1275 (R-30), read directly",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_ENFORCE-W2-S12"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_ENFORCE-W2-S12"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO"
+ },
+ {
+  "id": "LGIC_ENFORCE-C-S32",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:39Z",
+  "one_line": "L9 GRADE RECORD, round 3: seven JUDGMENT criteria, all PASS -- baseline reproduction exact (N1R3-AC10), SHIP rows backed by real consumer counts (G9R3-AC7), registry owner_basis citations resolve (R5R3-AC5), CloudTrail evidence names query/window/count (W7R3-AC3), the full uncompared population carries a stated reason (S6R3-AC5), the re-plan footprint and CRLF non-issue both measured directly (T8R3-AC4), and the placement census (82 of 82, two classes) independently re-verified against FIRM_FORMS_READERS.md's own content, including the S21 disarm (P4R3-AC5).",
+  "class": "OBSERVATION",
+  "spec_asserts": "N/A -- a grade record.",
+  "world_is": "N1R3-AC10 PASS: baseline figures (3815/2917/90) reproduced exactly against the pin f1ecf97da7; post-state PASS 0 graded. G9R3-AC7 PASS: each SHIP row cites a real consumer count from lambda-source-map.json or a git grep for the consuming Terraform root, not an assertion. R5R3-AC5 PASS: owner_basis citations resolve to named Terraform/task-order/DIRECTIVES.yaml sources; the retired-class subtraction is a genuine 102-member census; astn/news/trade carry owner cards. W7R3-AC3 PASS: NOT_A_PRINCIPAL rows name query/window/count precisely (2 events, 0 AssumeRole) with a corroborating IAM-grant read; correctly omits a BLOCKING row since no opal-data-49financial exemption landed this round. S6R3-AC5 PASS: all 124 uncompared rows (42+82) carry one of two stated, disclosed reasons -- a canon silence recorded as one, not filled. T8R3-AC4 PASS: disk footprint measured directly (7.9GB->7.3GB, one root's .terraform only) and the CRLF question correctly resolved as moot (no .tf file was actually modified; the re-plan ran off an unedited throwaway copy). P4R3-AC5 PASS: independently read FIRM_FORMS_READERS.md's own fenced json directly -- 82 files, two classes (record 46, another-project 36), and the two named LGIC_NAMING records (LN-g-1-r4's proof and task order) both correctly read another-project, confirmed by this seat's own read of the file, not merely the worker's claim.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-n-1-r3.gate-domain.proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-g-9-r3.target-split.proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-r-5-r3.registry-tokens.proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-w-7-r3.writer-disposition.proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-s-6-r3.census-to-the-end.proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-8-r3.roots-evaluated.proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~6/placement.r3.result.md and org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/FIRM_FORMS_READERS.md, both read directly"
+   ]
+  },
+  "grades": [
+   {
+    "criterion": "N1R3-AC10",
+    "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-n-1-r3.gate-domain.proof_of_spec.json@1f9b7ea157",
+    "verdict": "PASS",
+    "reason": "Pre-state baseline (3815/2917/90) reproduced exactly against the pin; post-state PASS 0 graded, both printed with denominators."
+   },
+   {
+    "criterion": "G9R3-AC7",
+    "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-g-9-r3.target-split.proof_of_spec.json@87dd1d2383",
+    "verdict": "PASS",
+    "reason": "Each SHIP row names a real consumer count or consuming root, not an assertion."
+   },
+   {
+    "criterion": "R5R3-AC5",
+    "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-r-5-r3.registry-tokens.proof_of_spec.json@b54636545d",
+    "verdict": "PASS",
+    "reason": "owner_basis citations resolve to named sources; retired-class subtraction is a genuine census; unresolved tokens carry owner cards."
+   },
+   {
+    "criterion": "W7R3-AC3",
+    "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-w-7-r3.writer-disposition.proof_of_spec.json@df40c2cf1f",
+    "verdict": "PASS",
+    "reason": "CloudTrail evidence names query/window/count; no BLOCKING row owed since no exemption landed."
+   },
+   {
+    "criterion": "S6R3-AC5",
+    "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-s-6-r3.census-to-the-end.proof_of_spec.json@cc3d46ab63",
+    "verdict": "PASS",
+    "reason": "Every uncompared row carries a stated, disclosed reason; a canon silence recorded as one, not filled."
+   },
+   {
+    "criterion": "T8R3-AC4",
+    "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-8-r3.roots-evaluated.proof_of_spec.json@d7d1fdc5a5",
+    "verdict": "PASS",
+    "reason": "Footprint measured directly; CRLF question correctly resolved as moot since nothing under infra/aws/terraform/ was modified."
+   },
+   {
+    "criterion": "P4R3-AC5",
+    "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~6/LGIC_ENFORCE.TO-EN-p-4-r3.placement.proof_of_spec.json@e405b6d942",
+    "verdict": "PASS",
+    "reason": "Independently read FIRM_FORMS_READERS.md directly: 82 files, two classes, S21's two LGIC_NAMING records both read another-project."
+   }
+  ],
+  "dismissal_reason": "This row grades seven judgment criteria and adjudicates no investigation item; it is a grade record, per the schema's own note for this shape.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT"
+ }
+]
+```
+
 -- 3.0.0_SA_CVO
