@@ -318,3 +318,57 @@ measured that section 5 did not say:
 
 **Slot plan (unchanged from section 5):** ~1 `LT-s-1 -> LT-e-1 -> LT-e-2 -> LT-e-3`; ~2 `LT-h-1 -> LT-p-1 -> LT-x-1 ->
 LT-x-3`; ~3 `LT-s-2 -> LT-r-1 -> LT-d-1 -> LT-x-2 -> LT-v-1`.
+
+---
+
+## 11. v1.2 -- THE ROUND-1 AMENDMENT (2026-09-17, `2.0.0_SA_COO~G`), on `1.0.0_SA_CTO`'s RULING R-36
+
+**ONE cell is ADDED: `LT-e-4`. The other 13 are unchanged -- nothing is dropped, deferred or re-scoped.** The
+count is 14.
+
+**Why the cell exists.** `LT-x-1`'s `X1R1-AC1` FAILED on one row, and the cause was a contradiction between two
+DRAINED cells rather than a defect in either: `LT-s-1`'s schema built `$defs.node_type.enum` as EXACTLY
+`NAMING_SCHEMA.json`'s 33 graded types BY SUBTRACTION, which its own order required, and `LT-e-3`'s untypeable
+plant emits a row whose `node_type` is `COGNITO_USER_POOL`, outside those 33 -- unconditionally, in `cmd_walk()`,
+on every subject. So every contract the engine writes failed validation on that row. Row `LGIC_LGCTFM-W2-S2`.
+R-36 ruled REC (A) and REFUSED the sentinel alternative: the enum's equality by subtraction is the invariant that
+lets the contract say a type is ungraded at all (Rule 24(i)), and a schema that can absorb an ungraded type stops
+being able to say so.
+
+**Why `LT-e-4`, and why the `e` series.** The substantive change is ENGINE behaviour -- the plant becomes opt-in
+and an untypeable node is carried instead of written -- so it belongs with `LT-e-1..LT-e-3`, and 4 is the next free
+number in that series. The one non-engine byte it needs (the contract's count field) is the ISSUER's, landed with
+this amendment rather than left to the cell: a criterion that cannot be satisfied by any write inside the cell's
+own grant is the exact defect class R-36 exists to close, and the schema is `LT-s-1`'s drained deliverable.
+
+| cell | PRD row | what it is | outcomes | write surface |
+|---|---|---|---|---|
+| `LT-e-4` | T5 (amends), T10 (unblocks) | the untypeable plant becomes OPT-IN; an ungraded node is CARRIED in the run's own `PLANT_UNTYPEABLE.json` with `NOT_COVERED` and COUNTED in the contract; two real runs prove both halves | FWD-1, FWD-4 | `lib/opal_lgctfm.py`, the run home |
+
+**Seating: slot ~2, level 5.** `depends_on`: `LT-p-1` (the `run` verb that assembles a run directory, drained on
+this slot) and `LT-e-3` (the plant this cell makes opt-in, drained on slot ~1). It is the FIFTH writer of
+`lib/opal_lgctfm.py` and the LAST, and CONSTRAINT 1's queue still holds: slot ~1's engine queue drained before
+`LT-p-1`, and this cell is after `LT-p-1` on the same slot, so no two writers are ever concurrent. Section 10's
+count of four writers becomes FIVE with this cell.
+
+**What the ISSUER landed with this amendment, so the cell's criteria are satisfiable inside its grant:**
+
+1. `org/standards/LGCTFM_CONTRACT.schema.json` gains ONE property, `untypeable`, a `$defs/cell` whose value is the
+   count, and it is added to `required`. **Required is the mechanism, not decoration:** R-36's words are that an
+   empty carrier must not be readable as "the walk met none" -- a printed zero is a measurement and an absent one
+   is silence -- and `required` is what makes absence impossible rather than merely discouraged. `$defs.node_type`
+   is NOT touched, so `LT-s-1`'s subtraction invariant is untouched and `s1-node-types` still grades it.
+2. `fixed_inputs/r1/PLANTED_CONTRACT.json` gains that cell with `value: 0`, because the schema's top level is
+   `additionalProperties: false` and a new required property would otherwise make the planted fixture -- the one
+   input `LT-s-1`'s and `LT-s-2`'s criteria validate -- INVALID at the cut. Measured after: `s1-valid`,
+   `s1-bare-value`, `s1-one-api`, `s1-no-instrument`, `s1-node-types`, `s1-enums`, `s2-accept-valid`,
+   `s2-refuse-bare`, `s2-unchecked`, `s2-selftest`, `r1-identical`, `r1-edit`, `r1-hand-edit`, `r1-fresh`,
+   `e2-reproduce` and `e3-untypeable` all still PASS.
+3. `fixed_inputs/r1/check_lt_r1.py` gains five arms (`a4-plant-off`, `a4-flag-on`, `a4-count-typed`,
+   `a4-schema-valid`, `a4-e3-exercised`) and `core_untypeable` now grades EITHER carrier shape, so the historical
+   walk artifact keeps its verdict while the amendment's runs are graded on what they actually write. Self-test 70
+   of 70, each new arm's GREEN fixture and DOCTORED twin driven alone.
+
+**`LT-x-1` is NOT reopened by the cell.** Its order stays `pending` until this amendment drains; the worker
+re-runs `x1-run-dir` as its own criterion, and the ISSUER re-opens and flips `LT-x-1` at the drain. A worker never
+flips another cell's order.
