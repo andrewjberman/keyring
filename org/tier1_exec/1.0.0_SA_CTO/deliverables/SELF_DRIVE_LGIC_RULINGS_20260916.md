@@ -1273,3 +1273,29 @@ NOT-JUDGED with the missing-instrument reason. Silence in a trail that never cov
 DEC-4(ii)'s criterion text at ENFORCE round 4's cut. (3) W2-S12's disarm owner moves to 1.0.0_SA_CTO (the owner of the evidence
 rule the remedy changes, R-19), under the R-19 addendum's fourth move; `3.0.0_SA_CVO` writes the owner move and the DISARMED clock
 citing this ruling. (4) Instrumenting opal-data-demo is NOT ordered; if a later project needs trail evidence there, it cuts that cell.
+
+### R-34 (2026-09-17 ~19:1xZ) -- LGIC_CANON FWD-5: no step of the checklist's first run waits on ADVI_FIRMBKTS; an unreachable step is CARDED, and the outcome grades `reached + carded == steps`. CORRECTS this seat's round-3 analysis, which named a gate Andrew had already lifted
+
+**Andrew-direct 2026-09-17 ~19:0xZ, VERBATIM:** *"2 doesnt matter right now this should not be a holdup if its a fwd it should not be"*
+(record `ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md` @57a15b2bbe). It is
+Rule 27's own law in his words: **NO FWD IS A WAIT.**
+
+**OWNED, TWICE, AND BOTH BY THIS SEAT.**
+1. **The round-3 analysis @d60e80f68c said FWD-5 waits on "Andrew's word (gate G-N)". IT DOES NOT.** He lifted G-N on
+   2026-09-16 ~18:2xZ, and the PRD's own DEC-6 records it: *"Yes we can do something like this (b), but I think it would
+   really be in a context of LGIC_LGCTFM, because we don't have a new firm to test and I don't feel like messing around
+   making demo cruft."* I read the round-2 analysis's gate list and did not re-read DEC-6 at HEAD -- a stale citation
+   inside my own project, exactly the class CLAUDE.md Rule 27 names (a citation ages separately from the text it quotes).
+2. **The `/open-calls` card 2 I put to him therefore asked him to re-decide a settled question, and proposed a
+   DEMONSTRATION FIRM -- the very thing his 09-16 word refused.** He answered it anyway, and his answer was the rule, not
+   the re-decision.
+
+**Ruling.** FWD-5's bar is unchanged in substance: the `LGIC_LGCTFM` practice wave over an EXISTING firm's subject, on that
+subject's own plane. What changes is that **no step of it waits on `ADVI_FIRMBKTS`**: a step that cannot complete because a
+firm bucket has not been minted yet is CARDED with its owner and reason, the run continues, and the card is re-run when
+that bucket lands. The outcome grades `reached + carded == steps`, denominators printed -- never "zero carded", which
+would re-create the wait this ruling removes. The fence guard and the never-widen sign-off bar are untouched.
+
+**Carried:** PRD v1.6 (ENDPOINT FWD-5 ACCEPT + DEC-6 addendum) re-opens BOTH halves -- `3.0.0_SA_CVO` on the
+ratified-text half, and the brief half to `2.0.0_SA_COO~O` in the CRO's stead (no live CRO session), per Andrew's
+2026-09-11 ~05:3xZ rule. C6 stays `2.0.0_SA_COO~G`'s cell, cut after `LGIC_LGCTFM` round 1 gives it its subject.
