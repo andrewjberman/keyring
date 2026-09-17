@@ -1906,6 +1906,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGZ2-AC8: no registered MCP tool writes a POLICY# record, over all tools, denominator printed -- with the schwab integration inside 'all tools' once it is registered.",
     "world_is": "The census's file set excludes the schwab integration's modules and trips by design now that OG-q-2 registered them, so the criterion is unmet at CLOUD HEAD though no tool writes POLICY# by either cell's evidence. Remedy by this seat within L6: TO-OG-z-2 is re-opened (status pending) with an amendment widening AC8's census to the schwab integration's modules, and cold re-handed to 0.9.0_WK_NFRA_OPLGTW~3.",
     "notes": "No served surface; nothing deployed. This seat is the disarm owner and the re-opened OG-z-2's drain is the disarming act."
+  },
+  {
+    "id": "NFRA_OPLGTW-W1-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+    "surfaced_at": "2026-09-17T14:10:00Z",
+    "one_line": "OG-i-5's OGI5-AC7 parenthetical ('the project's historical records: its deliverables, surprise channel, rulings, logs and change-management entries') does not literally name task-orders/, prd/ or decompositions/ -- but an unscoped git grep -F opal-gateway-access-state at HEAD hits all three (frozen, out-of-<paths>-grant documents describing already-issued/already-completed cells OG-i-1/a-1/d-1/p-1/v-5 truthfully under the name that was correct when each was written). A literal reading of the parenthetical as closed/exhaustive makes AC7 mechanically unsatisfiable by any worker, since this cell has no write grant over task-orders/, prd/ or decompositions/ and BOUNDS itself calls the decomposition and spec FROZEN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: git grep -F -n opal-gateway-access-state at wk-nfra_oplgtw-1h HEAD (post reference-move commit 63f0ccec7d) -- 74 hit lines across 27 files; org/missions/D9/NFRA/NFRA_OPLGTW/decompositions/NFRA_OPLGTW_DECOMP.md (3 hits), org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md (1 hit) and org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-{a-1,d-1,i-1,i-5,p-1,v-5}.*.md (7 hits) match none of AC7's five named categories.",
+        "ORDER: NFRA_OPLGTW.TO-OG-i-5.access-state-rename.md BOUNDS -- 'Spec frozen ... Mid-round the spec AND the decomposition are FROZEN'; <paths> block names only schwab_access_state.tf, access_state.py, oauth_as.py, the contract JSON, change_management/, the sentinel and this order's own surprise-channel file -- no task-orders/, prd/ or decompositions/ path.",
+        "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/probes/og_i5.py ac7() widens its historical-marker set to '/task-orders/', '/prd/', '/decompositions/' beyond the criterion's literal parenthetical, with this reasoning inlined as a comment beside the marker list."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGI5-AC7's parenthetical names exactly five historical categories (deliverables, surprise channel, rulings, logs, change-management) as the full set excluded from the zero-live-hits requirement.",
+    "world_is": "Three more categories -- task orders, the PRD and the decomposition doc -- are equally frozen project history, equally outside this cell's write grant, and equally correct as written (each named the table under the name that was live when it was authored). This worker's probe treats them as historical too, on that reasoning, rather than reporting a false FAIL it has no path to fix.",
+    "notes": "INERT: no served surface, nothing deployed by this row. The judgment is disclosed in the probe's own output (per-hit HISTORICAL/LIVE tag) so a reviewer can re-narrow the set without re-deriving the reasoning."
   }
 ]
 ```
