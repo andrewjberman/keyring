@@ -8165,6 +8165,59 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CLAUDE.md: never move served output without never-widen sign-off, CTO+COO, each half naming the act's blast radius and the rollback for each key; 1.0.0_SA_CTO~Z's own half @e3fc4495cf states it is DESIRED plane only and 'does not stand without your half'. Rounds 10-12 realise that as a committed file per half.",
     "world_is": "The CTO half is a file; the COO half is a session artifact. A later reader can verify the bounds the CTO signed and cannot verify what the COO signed, what write set it covered, or what rollback it named. The act's own verification is independent of this and passed, so nothing is claimed here about whether the deploy was correct -- only that half its authorization is unreadable at HEAD.",
     "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane during L7, while the issuing session is still live and can write the half it dispatched. NOT RULED HERE: whether a dispatched half satisfies the rule is not this row's to decide, and this seat holds neither half. Same class as round 12's S142 deploy-ledger finding, one level up: there the ENTRY was missing, here the AUTHORIZATION is. At L9 this seat grades the co-sign discipline against what exists at HEAD, so a half written before the round's L8 census is a half this seat can read. Instruments: git ls-tree at HEAD with the denominator printed, the actor's own row text, the signer's own row. HEAD at filing @ba9afc0dc4."
+  }  ,
+  {
+    "id": "AMGT_RESAPP-Z-W31-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~31",
+    "surfaced_at": "2026-09-17T20:30:00Z",
+    "one_line": "The linked worktree assigned for AMGT-rk-19 page half carries an EMPTY portal/ gitlink -- no package.json, no src/, no node_modules -- so neither this order's <paths> under portal/ nor its AC1/AC2 invocations can be satisfied as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD portal in worktree wk-amgt-13-31-portal (HEAD ba9afc0dc4b46708852f2cada2032eed082e8465) reads '160000 commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0 portal' -- a valid gitlink pointer -- but `ls -laR portal` in that same worktree shows only '.' and '..': the submodule content was never checked out in this linked worktree.",
+        "cat .gitmodules in both this worktree and the main workspace checkout returns 0 bytes -- there is no URL mapping for `portal`, so the standard `git submodule update --init` cannot resolve it here; `git submodule status` fails with 'no submodule mapping found in .gitmodules for path' (for an unrelated path, models/factor_scanner, confirming .gitmodules is genuinely empty of entries).",
+        "The main workspace's own portal/ directory (C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal) IS populated, as an independently-managed nested git repo (origin https://github.com/Opal-Capital/portal.git, branch DEV, HEAD 03a3bf8f25) whose object database does contain commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0 (git cat-file -t confirms 'commit') -- so the content exists somewhere reachable locally, just not inside this linked worktree.",
+        "The literal AC1 invocation (cd portal && python glob over src/pages/SecurityAnalysis/**/*.tsx) ran clean, rc=0, and printed 'components 0' with every label/passage count at 0 -- a false-negative-shaped PASS, not a genuine one: the counts are 0 because the directory does not exist, not because the label/link work is absent from real source.",
+        "The literal AC2 invocation (cd portal && npx tsc -b) ran clean, rc=0, and printed npx's own 'This is not the tsc command you are looking for' banner -- there is no package.json/node_modules in this portal/ at all, so no build tooling is even resolvable, let alone runnable against real source.",
+        "The sibling worktree for chain B (wk-amgt-13-batch-b, same HEAD ba9afc0dc4) shows the identical empty portal/ gitlink, so this is not specific to this one worktree slot."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's first-act instruction: 'tests that org/, .tools/ and the paths in section 3 exist; if any is absent, STOP with a BLOCKING row.' Section 3's <paths> names portal/src/pages/SecurityAnalysis/ and portal/src/api/endpoints/amgt-lead-panel.ts as surfaces this worker reads and writes, and AC1/AC2 both assume a real, buildable portal checkout under this worktree.",
+    "world_is": "Neither named portal path exists in this worktree -- portal/ is an unpopulated gitlink (0 files, no package.json) because no .gitmodules URL mapping exists to init it and no supported mechanism in .tools/ populates a portal checkout inside a linked worktree. This worker therefore STOPS per the order's own first-act instruction rather than cloning/reconstructing portal content into the worktree from another local checkout (CLAUDE.md's bar: 'never rebuild, extract or reconstruct the tree to make an order executable'). AC1 and AC2 are recorded FAIL against their real expectation (their literal invocations return rc=0 but on an empty tree, which is not the 'at least one component' / 'no NEW errors on a real build' bar either criterion names). This is ARMED because chain A's queue (rk-19 page half, then rk-30 page half, then rk-26) is the SAME single writer for every portal edit this round, per this order's own text -- so whichever worktree carries chain A's remaining page-half orders will hit the identical block unless the portal gitlink is populated in it before the next cell is dispatched.",
+    "notes": "No fix attempted: this worker's <paths> grant covers only files under portal/, not the mechanism that would populate portal/ itself (no .tools/ path granted, and even if one were, .gitmodules carries no URL to init from). Disarm requires either (a) a .gitmodules entry restoring the standard submodule-init path, or (b) the dispatching COO ensuring each portal-touching worker's linked worktree is created with portal/ already checked out at the gitlink's recorded commit, before the next chain-A cell is issued."
   }
+  ,
+  {
+    "id": "AMGT_RESAPP-Z-W31-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~31",
+    "surfaced_at": "2026-09-17T20:55:00Z",
+    "one_line": "AC2's literal invocation `npx tsc -b` on this device/worktree does not run the TypeScript compiler at all -- it resolves a decoy npm-registry package literally named `tsc` and prints its banner, so the criterion's expectation (no new compile errors) is never actually tested by the literal command, independent of anything this order edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.4.0_DT_ClientPlatform",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This session, `cd portal && timeout 120 npx tsc -b 2>&1 | tail -30`: rc=0, full output is the banner 'This is not the tsc command you are looking for' with a suggestion to run `npm install typescript` -- no compiler diagnostics, no file list, no exit code from an actual tsc process.",
+        "Same session, same worktree, `cd portal && timeout 120 ./node_modules/.bin/tsc.exe -b`: rc=0, ZERO output -- a genuine clean build against the real, locally-installed TypeScript project references (this worktree's `bun install` already ran; `node_modules/typescript` is present).",
+        "portal/.npmrc sets `package-lock=false` (by design -- this project is bun-managed); `npm ls typescript` in this tree reports the package `extraneous` because npm's own dependency graph does not trust a bun-populated node_modules tree with no package-lock.json it recognizes, and npm's own documented behavior is to fall through to a registry fetch for `npx <bin>` rather than resolve a local `node_modules/.bin/<bin>` it considers untracked.",
+        "Reproduced identically on a fully independent fresh clone+`bun install` of portal/ done in this same worktree earlier in this task order's resumption (per this order's own dispatch prompt), so this is not specific to one checkout's history.",
+        "The main workspace's own portal/ (a separate, older checkout) still carries a stale `node_modules/.package-lock.json` dated 2026-08-06 from an old npm install, and `npx tsc -b` resolves correctly there -- confirming the divergence is that leftover artifact's presence/absence, not a difference in this worktree's actual TypeScript setup."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's <invocation>, verbatim: `cd portal && npx tsc -b 2>&1 | tail -30`, with <expect> 'the merged tree's TypeScript build has no NEW errors attributable to this order's edited files'.",
+    "world_is": "The literal invocation performs no TypeScript build whatsoever on this device for this bun-managed, npm-lockfile-less portal/ tree -- it is a DISCRIMINATION failure under CLAUDE.md Rule 22 (the evidence could not differ whether or not this order's edits carried a type error, since the decoy package never reads this tree's source at all), so it is recorded as its own genuine result rather than silently swapped for the direct-binary reading. The direct-binary reading (`./node_modules/.bin/tsc.exe -b`, rc=0, no output) is preserved in this row as corroborating evidence about actual code health only, per this order's own dispatch instructions, and does not resolve AC2's grade on its literal terms.",
+    "notes": "This is a device/tooling defect class, distinct from a code defect: the same literal invocation would misreport on ANY future portal order in a purely-bun-installed worktree on this device until either (a) portal/package.json pins a `packageManager`/engines constraint npm respects, (b) a committed lockfile npm trusts is restored, or (c) the estate's task-order authoring convention for portal TypeScript checks moves off bare `npx tsc -b` per the portal CLAUDE.md's own existing typecheck-law precedent (`bun run typecheck` / `tsc -b` directly, never bare `tsc --noEmit`) toward the same non-npx form for `-b` too. Not repaired here -- outside this order's <paths> (no package.json/.npmrc write granted) and outside the REFUSAL CLAUSE's remit to route around a named invocation. disarm_owner named as the portal-owning frontend seat by estate convention; not confirmed live by this worker."
+  }
+
 ]
 ```
