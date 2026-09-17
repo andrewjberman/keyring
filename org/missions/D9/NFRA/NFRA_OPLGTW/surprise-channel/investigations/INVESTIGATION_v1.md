@@ -2137,6 +2137,31 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-i-3 FIRST ACT: 'Re-run the OG-i-2 live denial and assume arms against the new ARNs, and record them in this cell's result file.'",
     "world_is": "The mechanism this same cell is required to install (R-OG-6's one fixed, parameterless document) cannot carry a dynamic assume-role/GetObject diagnostic without reopening the caller-supplied-interpolation hole R-OG-6 exists to close; AWS-RunShellScript, the mechanism OG-i-2's arms actually use, is the thing this cell forbids from itself onward. This worker refused the live re-run as written and substituted a declared-level check (trust policy + inline policy readback via iam get-role/get-role-policy, no host execution) against the new ARNs, disclosed as a weaker instrument than a host-exercised assume/deny arm.",
     "notes": "INERT: no served surface exercised by either the refused act or its substitute; both are reads. Recorded for L9 to rule whether a host-exercised re-run belongs to a LATER cell (its own document, or an audited AWS-RunShellScript exception) rather than OG-i-3."
+  },
+  {
+    "id": "NFRA_OPLGTW-S24",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-17T20:30Z",
+    "one_line": "OG-i-3's rename drain left CLOUD's acceptance harness RED: tests/acceptance/conftest.py:87-88 hardcodes the pre-rename reader ARNs, aws_roles.role_config() refuses them against the renamed contract, and integration.py swallows it as UNAVAILABLE. Measured on the shared tree, not in a worktree: tests/acceptance/test_local_acceptance.py reads 5 failed, 2 passed. The issuer's cut of OG-i-3 carried R-OG-7's rename with no census of the old names' consumers.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN on the shared tree @033f152e5d (not a worker worktree): `pytest -q tests/acceptance/test_local_acceptance.py` -> `5 failed, 2 passed in 6.56s`, failures include test_ogv2_a05 and test_ogv2_ac05.",
+        "READ @033f152e5d: tests/acceptance/conftest.py:87-88 READER_ARN and CATALOG_ARN are the pre-rename names `opal-mcp-emp-menachem-schwab-read` and `opal-mcp-schwab-catalog-read`; both roles return NoSuchEntity live and the contract now names gateway-schwab-read-role / gateway-schwab-catalog-read-role (OG-i-5/OG-i-3 @258d786fbd).",
+        "CAUSE CHAIN, read: app/integrations/schwab/aws_roles.py role_config() refuses an ARN that does not match the contract's configured role; app/integrations/schwab/integration.py returns UNAVAILABLE / schwab_integration_unavailable rather than surfacing it.",
+        "INDEPENDENT CORROBORATION: 0.9.0_WK_NFRA_OPLGTW~5 hit the same failure inside OG-q-4's worktree after the issuer merged CLOUD into its branch, and filed NFRA_OPLGTW-W5-S11 naming the same two lines. Two instruments, two checkouts, one cause.",
+        "SCOPE: tests/acceptance/conftest.py is in TO-OG-v-2's <paths> and OG-v-2 is OPEN, so no grant widening is needed to repair it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OG-i-3 carried R-OG-7's rename of the three identities to builder output, and OG-v-2's harness constructs the Schwab roles from their ARNs.",
+    "world_is": "The rename moved the contract's role names and left the acceptance harness's hardcoded ARNs behind, so five of seven acceptance tests fail on CLOUD and OG-q-4's live-path criteria AC1-AC4 cannot be exercised at all (the integration refuses to construct before the wiring runs). Nothing is deployed and nothing served is wrong; the red is in the test harness, not the product. Remedy routed: OG-v-2's re-hand re-keys the two fixture ARNs to the builder's names inside its own grant, then OG-q-4 re-grades AC1-AC4.",
+    "notes": "ARMED because CLOUD carries a red module until the re-hand lands. This seat is the disarm owner and OG-v-2's drain is the disarming act. The issuer's cut is the cause: R-OG-7's rename was carried into OG-i-3 with no census of consumers of the old ARNs, which is the same shape as W6-S6 (a check proven where nothing calls it) one level out."
   }
 ]
 ```
