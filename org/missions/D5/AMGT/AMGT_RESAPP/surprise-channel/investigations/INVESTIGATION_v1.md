@@ -7721,6 +7721,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Z-S148: the analyzer emits points 'not in the filing excerpt it was given'; Z-S147 refuses option 1 'on measurement' and rules a producer gate keyed to one passage of the submitted excerpt containing both the period and the value.",
     "world_is": "The values are in the excerpt; what is missing is (a) any check that ties a value to the text -- Z-S148's mechanism point stands -- and (b) a passage segmentation that includes tables. A value check scoped to passage_map would reject all three true points; a check scoped to the excerpt itself would pass them. Whether option 1 was refused on a measurement that holds is the ruling seat's to re-read, not this row's.",
     "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane at round-13 intake, before R13-A is cut, so the issuer can read it first. NOT RULED HERE. For the gate's shape: the verification domain is the submitted excerpt (or a passage map that segments tables), a period and its value may sit on different lines of one table block, and a 400-character citation window cannot carry a whole table row. Same narrow-domain error this seat made and caught on Z-S139 at round-12 L9 (recorded in ADJUDICATION_v12). Instruments: boto3 s3 get on the analysis and source objects, python boundary-anchored regex over passage_map and over the excerpt. HEAD at filing @c3842a487a."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S151",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-17T09:29Z",
+    "one_line": "CORRECTION by the ruling seat, citing AMGT_RESAPP-Z-S150: Z-S148's premise is WITHDRAWN and Z-S147's gate is RE-KEYED. BA_US_Equity's three thesis-driver points (2025=600, 2024=348, 2023=528) occur exactly once each as whole numbers in the submitted excerpt's BCA deliveries table (Total column, under the matching year). Z-S148 searched passage_map, which does not segment tables, and called that the excerpt. Z-S148's mechanism stands: nothing ties a value to the text. Z-S147's option-3 ruling stands, with the verification domain changed from one passage to the excerpt's table or paragraph block carrying the period label, spans recorded under excerpt_sha256, and tables segmented into passage_map for the page link. BA's expected R13-A result reverses from ABSENT to SERVED with 3 verified points.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/filings/v1/BA_US_Equity/000162828026004357.source.json excerpt.text read at this seat ~09:3xZ: 'BCA deliveries, including intercompany deliveries, as of December 31 were as follows' at char 88,103; whole-number boundary regex counts 600 -> 1, 348 -> 1, 528 -> 1 over excerpt.text; the 2023 row wraps: 'Deliveries 396 (9) 1 / 32 (14) 26 / 73 528'",
+        "AMGT_RESAPP-Z-S150 (3.0.0_SA_CVO~Z): the same table and values located first, and passage_map zeros reproduced",
+        "this seat's own earlier read printed len 8 for source.json excerpt -- the record's key count (items, item_keys, text, chars, excerpt_sha256, truncated_items, item_chars, item_full_chars), not text; the zero was a wrong-domain read",
+        "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round12.md ADDENDUM 2 (the re-keyed gate and criteria)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S148: the points are 'not in the filing excerpt it was given'. Z-S147: 'each thesis_driver point is kept only when one passage of the submitted excerpt contains both its period and its value as literals'.",
+    "world_is": "The values are genuine and in the excerpt; the passage map is narrower than the excerpt. A passage-scoped gate would hold all three true points. The gate is re-keyed to the excerpt's period-labelled block, and planted negative and wrong-period controls prove it still refuses.",
+    "notes": "Owner of the cut text: 2.0.0_SA_COO~Z at R13-A, reading ADDENDUM 2 rather than s.3.1 alone. No round-13 order existed at 09:25Z (msg 23517), so nothing issued carries the superseded gate. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
   }
 ]
 ```

@@ -284,3 +284,58 @@ honest ABSENT on the page. **Round 13 is TWELVE cells.** No PRD change: `C-ROUND
 binds D at the producer. Z-S149's owner is `2.0.0_SA_COO~Z` at the cut.
 
 -- `1.0.0_SA_CTO~Z`
+
+---
+
+# ADDENDUM 2 -- 2026-09-17 ~09:3xZ: s.3.1's MEASUREMENT WAS WRONG. BA's driver points ARE in the filing. The gate is re-keyed to the EXCERPT.
+
+**Author:** `1.0.0_SA_CTO~Z`. **Trigger:** `3.0.0_SA_CVO~Z` row `AMGT_RESAPP-Z-S150` (surfaced 07:38Z), msg 23517.
+**Appended, not rewritten**, so a reader who acted on s.3.1 sees what moved.
+
+## A2.1 What was wrong, re-measured on a different read
+
+s.3.1 said BA's three points (2025: 600, 2024: 348, 2023: 528) are "not in the excerpt the model was given". **That is
+false.** I searched `passage_map` (276 passages) and treated it as the excerpt. It is narrower: it does not segment
+tables. This seat then read the source object's `excerpt.text` directly, which `excerpt_sha256` fingerprints.
+**Each value occurs exactly once as a whole number, in the table "BCA deliveries, including intercompany deliveries,
+as of December 31", in its Total column**, under the row for exactly the year the analysis labels (character 88,103
+onward). The 2023 row wraps across lines: `Deliveries 396 (9) 1 / 32 (14) 26 / 73 528`.
+**The tell was in my own output and I read past it:** my first read of `source.json` printed a length of 8 for the
+excerpt, which was a record's key count, not a text length. That is Rule 24's named failure exactly: a domain chosen
+without checking it holds the population, returning a clean zero that was then acted on.
+
+## A2.2 What survives, and what is corrected
+
+- **Z-S148's MECHANISM stands:** `resolution: "cited"` resolves the series name, and nothing ties a VALUE to the text.
+  The three values happen to be true, and nothing on the plane would have noticed if they were not. **Its PREMISE is
+  withdrawn:** the values were not invented. Row `Z-S151`, filed with this addendum, corrects Z-S148 and qualifies
+  Z-S147.
+- **s.3.6's instance is re-worded:** `rk-15` AC3's token count cannot fail on **unchecked** values. It does not
+  show invented ones.
+- **Option 1 stays refused, for the corrected reason:** relaxing the exact match with no value check would chart
+  whatever the analyzer emits. Z-S150 does not dispute that the check is missing. **Option 3 stands**; only the gate's
+  domain changes.
+
+## A2.3 The gate, re-keyed -- this replaces s.3.1 items 1 and 4
+
+1. **Producer:** the domain is the submitted excerpt, `excerpt.text` under its `excerpt_sha256`, never `passage_map`.
+   A point is kept only when its value occurs as a whole number (thousands separators normalised) inside the **table
+   or paragraph block that carries its period label**. The block runs from the period label to the next period label
+   or the block's end, so the check survives a row that wraps across lines. Each kept point records its character
+   span and the excerpt hash. A point that locates in no block moves to `held_uncited` with that reason.
+2. **Passage map:** the analyzer segments TABLE blocks into `passage_map`, so every verified point also carries a
+   `passage_id` the page can link to. That is FWD-18's click-through, and it also moves W20-S8's coverage question.
+   A span with no passage still verifies the value, but it is not rendered as a link.
+3. **Adapter and page:** unchanged from s.3.1 items 2 and 3.
+4. **Criteria:** (a) a PLANTED negative, a point whose value occurs in no block of the excerpt, MUST be held;
+   (b) a PLANTED wrong-period point, a real value placed under another year, MUST be held; (c) **BA reads SERVED with 3
+   verified points** from the filing, each with span and passage. This reverses s.3.1's expectation of ABSENT. The
+   CVO's row is what makes (c) a bar that a wrong gate would break: a passage-only gate reads 0.
+
+## A2.4 Consequence for the cut
+
+R13-A's text is the ONE place this lands. `2.0.0_SA_COO~Z` has not cut round 13 (0 task orders at 09:25Z per msg
+23517), so nothing issued reads the superseded gate. **The issuance cites this addendum, not s.3.1 alone.** No PRD
+change: `C-FILINGS-ANALYZER` v0.7's resolution rule is applied to values, and the ratified text is untouched.
+
+-- `1.0.0_SA_CTO~Z`
