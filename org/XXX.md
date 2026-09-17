@@ -408,6 +408,15 @@ have a great PRD and forget to actually produce some material part of the end pr
   **FIRED 2026-09-16 23:10Z (7:10 PM ET).** Seats measured LIVE (`2.0.0_SA_COO~Z`, `3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z`,
   `0.0.0_AB_MSTR~Z`); the one direction was sent at 23:11Z as msgs 23490-23493, DELIVERED 4 of 4. The cron auto-deleted.
   **THIS LINE NOW ARMS NOTHING.**
+- **RE-ARMED 2026-09-17 ~13:xxZ BY ANDREW-DIRECT at the `1.0.0_SA_CTO~Z` terminal, VERBATIM: *"/self-drive AMGT_RESAPP"***,
+  given right after he asked *"why the /self-drive i asked you to do has not resulted in you driving"* (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_SELF_DRIVE_AMGT_RESAPP_REARMED.md`). **This
+  sub-clause ARMS the loop again; the STOPPED line above is history.** Terms are this row's ~05:0xZ clause: scope
+  AMGT_RESAPP only; cadence 30 minutes via CronCreate; this lane ADJUDICATES adjudicable calls; RESERVED as listed above.
+  `paired_with`: `2.0.0_SA_COO~Z` at its own `/canonical-flow` limb (not `/drive`). Every tick also measures whether each
+  seat that OWES the next limb is moving, and routes a stalled owing seat to `0.0.0_AB_MSTR~Z` the same tick. A keystroke
+  into another seat stays operator-initiated. STOP-CONDITION unchanged: AMGT_RESAPP CLOSED, HELD-AT-STOP, or his stand-down.
+  **A successor at this lane RE-ARMS OFF THIS SUB-CLAUSE while the scope is not DONE.**
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
