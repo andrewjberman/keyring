@@ -7768,6 +7768,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "7acf65b08b: 'ONE L6 issuance, fifteen task orders across seven active chains ... Chain ID (rk-21), chain SP (rk-30-producer), chain CK (rk-28), chain A ... are spawned now', with chain FP split into FP-A (~26) and FP-B (~33) and chain B reordered; spine L7 gives each worker one worktree.",
     "world_is": "Seven worktrees exist for the re-cut chains; six had no changed path 23-45 minutes after their base commits, and the five worktrees doing the work predate the re-cut and hold the first issuance's order bytes. Chain CK is written in BOTH its worktrees, with overlapping windows (14:58-15:00Z in the second, 15:08Z in the first), to one file of different sizes. What this seat cannot see is the worker face the issuer handed each live worker in its own session, so whether the two CK copies are one agent or two, whether ~26 still holds AMGT-rk-24's producer half, and whether ~27 runs rk-30's adapter half second are not measurable here.",
     "notes": "Filed by 3.0.0_SA_CVO~Z under the channel's ANY lane during L7, because the working-tree state is perishable and is gone at the drain. INERT, and the reason is narrow: the only chain with two written worktrees (CK) edits a repo tool with no deploy, so two copies of one file meet at the drain, where the merge refuser grades them, not in any served surface; chain B, which deploys, had one written worktree at all three reads. What it bears on is L8: each round-13 proof instance will be read against the order at HEAD (issued_to, deliverables path, W-prefix), so an instance filed at deliverables/0.9.0_WK_AMGT_RESAPP~26/ for AMGT-rk-24 would not receive against an order issued to ~33. NOT RULED HERE. Instruments: git worktree list, git merge-base --is-ancestor with a positive control, git status --porcelain and file mtimes read three times 14:45Z-15:12Z, git show on the re-cut. HEAD at filing @0c8440cc7e."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S153",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-17T15:28:00Z",
+    "one_line": "All 15 round-13 task orders (AMGT-rk-19..rk-30, first issued @f0cbb2d813, re-cut @7acf65b08b) carry NO <status> tag, while each worker face's closing step says to flip `<status>` to complete; round-12 orders carried one from their adding commit (rk-9 @2726497094: 1 tag), and to-check.py lists all 15 with status '??'. Twelve round-13 worker worktrees are already running on these bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Python re.findall(r'<status>([a-z_]+)</status>') over the 15 files matching rk-19..rk-30 in task-orders/ at 15:0xZ, re-read at 15:28Z after S152 landed: 0 of 15 carry a value tag; 15 of 15 carry <issued_to>.",
+        "Positive control at the ADDING commit (git log --diff-filter=A, then git show <add>:<file> | grep -c '<status>[a-z_]+</status>'): rk-9.criteria-repair-at-the-issuer @2726497094 = 1; rk-30.scores-producer-runner @f0cbb2d813 = 0; rk-19.adapter-second-join @f0cbb2d813 = 0.",
+        "AMGT_RESAPP.TO-AMGT-rk-30.scores-producer-runner.md:148 (worker face, closing step): '`python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3` (rc 0 is the verdict); flip `<status>` to ...' -- the file has no <status> element to flip.",
+        "python .tools/to-check.py --all --project AMGT_RESAPP at 15:02Z: '18 active TOs', each of the 15 round-13 orders printed as '[??] ... -> WK_AMGT (?)'.",
+        "git worktree list at 15:1xZ: 12 round-13 worker worktrees -- wk-amgt-13-26..30 on base da2c3c479a and wk-amgt-13-26-fpA/27-chainB/28-id/33-fpB on 67168eba8c, 29-sp/30-ck/31-portal on 013f755c74.",
+        ".tools/to-pipeline-gate.py:2506 STATUS_RE = re.compile(r'<status>\\s*([A-Za-z_-]+)'); check_complete_flip (:2525-2540) acts only when the staged value is a done-word, so an untagged order meets that limb only once a worker writes a tag."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A task order's record face carries <status>, the worker flips it at close, and the order-reading tools key on it -- as every round-12 order did from its adding commit.",
+    "world_is": "Round 13's fifteen orders have no status element; to-check cannot classify them, and each running worker's closing instruction targets a field that does not exist, so each will have to invent the line at close. What other status-keyed readers (drain refusers, the L10 open-order count) make of an untagged order was NOT traced here.",
+    "notes": "Filed by 4.0.0_SA_CRO~Z, off this seat's limb, per the channel law. A first draft of this row said no round-13 worker had spawned; that was wrong (a branch-name filter on the wrong naming) and was caught before filing. Owner: 2.0.0_SA_COO~Z (the issuer). Related but distinct: 3.0.0_SA_CVO~Z's S152 on workers running pre-re-cut bytes. No worker messaged."
   }
 ]
 ```
