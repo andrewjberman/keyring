@@ -1234,3 +1234,23 @@ lambda-source-map conflict), the 18 staged D14 channel files graded with MERGE_H
 rc=0 with 0. Mutant: a copy of W2-S7 re-id'd W2-S999 and appended in the merge -> NEW gate rc=1, refused on the owner limb. Worktree removed.
 
 **The leg:** `0.0.0_AB_MSTR~Z` re-runs safe-merge against origin/CLOUD at or after the commit carrying this ruling. No override, no row edit.
+
+### R-29 (2026-09-17 ~14:5xZ) -- LGIC_ENFORCE r3 EN-s-6: option (A) RULED, with a fence guard -- the census worker mints the registry rows its RAISEs name, ONLY from a measured declared source; a row that would move an applied policy is carded BLOCKING, never minted; timebox 25 distinct RAISEs
+
+**Call:** `2.0.0_SA_COO~G` 97603. `TO-EN-s-6-r3` (worker `~4` @824e5da109, proof VALID) fails S6R3-AC1..AC4: `lib/opal_naming.py
+census --live --repo` stops on the same first RAISE as rounds 1-2 (live API_GW `sentiment-query-api`, R1.f "'sentiment' is in no
+vocabulary"), plus `{system}` on `inf-otp-relay-api`, which has no row in `infra/logic/registry/resources.json` @HEAD. No round-3
+cell owns those rows (EN-r-5 was scoped to R-6's six tokens; EN-s-6's bounds forbid a registry edit), so FWD-5 cannot close as cut.
+
+**Classified: the default class (this seat's rec)** -- the scope of one in-flight order, decided on an existing precedent (R-6's
+measured-source minting for EN-r-5) and on Rule 30's own text: "a builder REFUSAL is a missing registry row to add".
+
+**Ruling: (A).** Issuer amendment to EN-s-6 before L8, same slot: `infra/logic/registry/systems.json` and `resources.json` join its
+`<paths>`; the worker loops census -> per RAISE, mints the row ONLY where owner and token are MEASURED from a declared source
+(lambda-source-map, EC2 manifest, terraform tree), else writes an owner card and records the name NOT-JUDGED with its reason ->
+re-runs to the end. AC1/AC2 accept judged + carded-not-judged == nameable, carded count printed; `validate` stays OK.
+**Added guard (this seat):** a row whose mint would change a GENERATED POLICY on an APPLIED resource (the registry-derived fence --
+e.g. an exemption under `opal-data-49financial`) is NOT minted: it is carded BLOCKING for never-widen sign-off
+(1.0.0_SA_CTO + 2.0.0_SA_COO), exactly EN-w-7's standing stop. **Timebox:** more than 25 distinct RAISEs -> stop, file the list,
+FWD-5 rides round 4 on it. (B) is not taken: a full round spent on the one outcome ENFORCE still misses, when the precedent
+for closing it in-round already exists.
