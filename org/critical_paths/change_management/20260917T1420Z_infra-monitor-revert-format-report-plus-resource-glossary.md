@@ -1,7 +1,10 @@
 # DEPLOY LEDGER -- opal-infrastructure-monitor: revert to format_report + add RESOURCE REFERENCE table
 
 **Opened:** 2026-09-17T14:20:00Z by `4.0.0_SA_CRO~N` (deploy-start; NEVER-2)
-**Status:** OPEN
+**Status:** CLOSED 2026-09-17T14:54:07Z -- deployed and VERIFIED LIVE (not from the apply's own output
+alone; `aws lambda get-function-configuration` re-read after the apply, and the deployed package itself
+downloaded from `Code.Location` and its entries enumerated directly -- see sections below). Nothing
+stranded: the function moved cleanly from the pre-state to the post-state in this same session.
 
 **GO:** Andrew-direct (via `1.0.0_SA_CTO~Z` relay, msg 23534, same-hour record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_NFRA_REPORT_SPAWN_CRO_N_RESEARCH.md`
@@ -65,4 +68,41 @@ CodeSize     54009
 ```
 (unchanged since the round-4 deploy one week ago -- confirmed by this seat's own earlier drift check.)
 
-**Post-deploy state:** TO BE FILLED after `safe-apply`, read live, never from the apply's own rc alone.
+**Post-deploy state (measured live, `aws lambda get-function-configuration`, after `safe-apply`):**
+```
+CodeSha256   iU6tKUas0Q0SjxzoxlP6IYzRWAIRyPsdP8ee38HzpKg=
+LastModified 2026-09-17T14:54:07.000+0000
+CodeSize     43125
+```
+Both `CodeSha256` and `LastModified` differ from the pre-deploy state above -- a real deploy, not a
+no-op. Scoped plan (`-target=aws_lambda_function.infra_monitor`) showed 0 add / 0 destroy throughout --
+no alarm, topic, subscription, schedule or notification was ever part of this change. `terraform
+apply` output: `Apply complete! Resources: 0 added, 1 changed, 0 destroyed.`
+
+**Deployed-package verification (independent of the apply's own report):** the S3 upload was verified
+via `head-object` before the apply (`ContentLength: 43125`, `Metadata.content-sha256:
+iU6tKUas0Q0SjxzoxlP6IYzRWAIRyPsdP8ee38HzpKg=` -- matches the local zip exactly). After the apply, the
+DEPLOYED package was downloaded from AWS's own `Code.Location` (not read from the repo or the S3 put)
+and its entries enumerated directly: `ENTRIES=2 NAMES=['lambda_function.py',
+'openai_cost_tracker.py']` -- exactly the two modules this change ships, `edition.py`/`edition_rows.py`
+absent from what is served (the round-4 state-table renderer is not merely unwired in source, it does
+not exist in the artifact AWS is running).
+
+**Local dry-render, before this deploy:** `format_report()` + `build_resource_glossary()` run against
+TODAY's real archived collector output (`s3://opal-data-portal-v2/infrastructure/reports/2026-09-17/13-00-09.json`
+-- the actual 13:00Z scheduled run's own data, not a synthetic fixture) -- rendered cleanly, 38,088
+chars / 534 lines; AWS COSTS, COST DEPTH, OPENAI COST and the new RESOURCE REFERENCE table all present;
+zero QUOTED/COMPUTED/GENERATED state-table artifacts. `import-closure-check.py` run against the exact
+2-file package (not the zip) before packaging: `OK -- every top-level import satisfied`.
+
+**Not done in this session, deliberately:** a MANUAL invocation of the live function (which would send
+a real email to Andrew). Andrew's word this round authorized building, deploying and verifying the
+spec -- it did not, this time, ask to see the output before the scheduled fire (contrast RP-s-23/24's
+round, where "run a manual trigger so i can see the output" was explicit). The verification above
+(real archived data through the actual new code, plus the deployed package's own contents) is the
+evidence this seat has; the scheduled fire at 2026-09-18T13:00Z remains the acceptance, per this
+estate's own standing rule that the scheduled fire -- not an ad-hoc test -- is what counts. If Andrew
+wants to see it sooner, a manual trigger is one call away and is flagged to him as an option, not taken
+unasked.
+
+**CLOSED.** Deploy landed cleanly in this session; nothing half-landed.
