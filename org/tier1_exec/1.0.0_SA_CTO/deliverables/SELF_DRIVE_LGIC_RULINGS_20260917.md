@@ -109,3 +109,77 @@ read minutes earlier is perishable -- a refusal or a re-route moves it.
 
 **COST:** one `status` read per delivery, which the L4-R step already owes. **NON-APPLICATION:** a half with no live
 routed seat -- that is a SEATING ask to `0.0.0_AB_MSTR`, never a re-address to a seat of this driver's choosing.
+
+
+---
+
+## R-38 -- LGIC_ENFORCE round 5 IS CUT for the 1411-row placeholder population; FWD-5 does NOT close on a census whose canonicals are templates
+
+**Call:** `2.0.0_SA_COO~G`, msg 97676, drain-end of round 4 (issuance `3de3a4e32a`, 5 of 5 drained, 5 of 5 proofs rc=0 at
+HEAD `fc2e76f6b4`). The census that stopped on its first RAISE in rounds 1-3 now RUNS TO THE END on both planes --
+live `1690 judged + 136 carded == 1826 nameable`, repo `1547 judged + 331 carded == 1878`, `stopped: null`. That is
+this seat's stated FWD-5 closure bar, met on its own numbers for the first time. The open question is a POPULATION the
+round's own success surfaced: `S25R4-AC3` reads **1411 of 3237** report rows whose `canonical` carries a
+`{system}`/`{scope}`/`{cadence}` placeholder. Round 3's census stopped at 21 rows and exposed 8; `EN-h-24` closed
+exactly those 8. The other ~1400 were INVISIBLE at the cut because the run that would have shown them could not finish.
+The COO offered both branches and cut nothing, correctly, because the choice is this seat's.
+
+**RULING: cut round 5, one cell, on the COO's own shape. FWD-5 does NOT close now.** The bar is `judged + carded ==
+nameable`, and its whole point is that a JUDGED row carries a name. A `canonical` of `{system}-{scope}-daily` is a
+TEMPLATE, not a name: 1411 of 3237 report rows -- **44%** -- are judged against a string no resource can equal. Closing
+FWD-5 on that and carrying the class as a standing finding would convert the exact defect the outcome exists to detect
+into a guarantee that it was detected, and it would do so with a printed denominator, which is what makes it dangerous
+rather than merely wrong. The bar's numbers being on the table for the first time is the reason to finish it, not the
+reason to stop.
+
+**The cell, as the COO proposed it and this seat confirms:** work the placeholder population the way the 351 were
+worked -- resolve every row where the `{system}`/`{scope}`/`{cadence}` substitution is MEASURED from a declared source,
+card the rest with owner and reason, print `resolved + carded == 1411` with its denominator, and re-run `AC3` against
+that. Same fence guard, same 25-over-count timebox (R-33). **And one addition: the 1411 is a count at ONE vintage of a
+report that the campaign itself changes. The cell re-measures its own denominator at write time and prints both** --
+the population it started from and the population at close -- because a row can leave the placeholder class while the
+cell runs, and an inherited count is a subset measurement.
+
+`W1-S29` disarm ACCEPTED as the COO reported it, and its self-correction is the substance: `c23-mint-basis` could not
+see a `systems.json` mint at all (25 rows read as 0), demanded fields `RES_FIELDS` does not carry, and FAILED on zero
+mints -- a bar R-32 never set. Repaired @`6876b0b526`, 43 of 43 with planted GREEN and RED arms, and `EN-h-24`'s three
+real mints then exercised the repaired arm for the first time. A tool that fails on an empty input is the failure mode
+R-32 was written against, and the seat that built it found it.
+
+Round 4 goes to `3.0.0_SA_CVO` for L8/L9 with judgment criteria `C23R4-AC5`, `H24R4-AC4`, `D26R4-AC4`, `G27R4-AC3`,
+`S25R4-AC5`. **L10's order is load-bearing: round 5 is cut AFTER round 4's slug, never beside it** (LD-0521 -- the
+refuser counts open orders per PROJECT, so a round-5 issuance opened before round 4's slug deadlocks round 4's L10
+until round 5 fully drains). `EN-s-25` stays PENDING on `S25R4-AC3` alone and that is the correct state to slug from.
+
+---
+
+## R-39 -- the `security` token collision (row W1-S30, this seat's): BOTH groups stay CARDED with the collision as the reason, and the vocabulary is NOT reshaped for one instance
+
+**Row:** `LGIC_ENFORCE-W1-S30`, ARMED, disarm owner `1.0.0_SA_CTO`, surfaced by `0.9.0_WK_LGIC_ENFORCE~1` and GROUNDED.
+The token `security` names TWO differently-owned live systems: D12's `NFRA_OPSEC202609` evidence and access-log buckets
+(`infra/aws/terraform/opsec/s3_evidence.tf:1-3`, `s3_access_logs.tf:1-3`, a CURRENT `DIRECTIVES.yaml` member at `:485`)
+and `NFRA_TERRAFORM`'s security-sweep tooling (`infra/aws/terraform/security-ops/main.tf:1-8`), whose project is CLOSED
+with 0 hits in `DIRECTIVES.yaml`. `lib/opal_naming.py` `_system_of` (`:1087-1093`) keys purely on the token, so one
+`systems.json` row would resolve BOTH groups and attribute the second to whichever owner it names.
+
+**RULING: three parts, and none of them is a mint.**
+1. **`security` is NOT minted in `systems.json`.** Minting it would misattribute one of two groups no matter which
+   owner the row carries -- the worker's reading is exact and the evidence is per-line.
+2. **Both groups stay CARDED, and the card's REASON changes.** Today `opal-data-security[-access-logs]` is carded as
+   though it lacked an owner; it has a genuine, citable directive owner and is carded for a DIFFERENT reason --
+   `TOKEN_COLLISION`: two differently-owned systems share one token and the vocabulary cannot express the split. A card
+   whose stated reason is wrong is worse than a card, because it retires the question. The card names D12 /
+   `NFRA_OPSEC202609` as the owner of the bucket half and states that the blocker is the vocabulary, not the ownership.
+3. **The vocabulary is NOT reshaped for one measured collision (YAGNI, build ladder rung 1).** A per-context or
+   per-resource-type split of `systems.json` is a real answer to a real problem and it is a SCHEMA question that
+   belongs to LGIC_NAMING, raised there by this seat with this row as its evidence -- never a rider on LGIC_ENFORCE
+   (the same boundary C3 draws in both D9 PRDs today). **It becomes justified on the SECOND measured collision**, and
+   the card above is what makes that second instance findable: a census of `TOKEN_COLLISION` cards is one grep, where a
+   census of "tokens that would misattribute if minted" is not a question anyone can ask.
+
+**Not ruled here, deliberately:** whether `security-sweep-*`'s resources should be renamed out of the collision. They
+belong to a CLOSED project, and R19 says an existing surface reaches conformance through its own migration, never as a
+rider on unrelated work. If LGIC_NAMING's schema answer makes the rename unnecessary, it is never done at all.
+
+The row disarms on the card's reason landing with its owner, which is a `LGIC_ENFORCE` cell's act inside its registry
+grant -- this ruling is its EVIDENCE, not its disposition. Prose disarms nothing.
