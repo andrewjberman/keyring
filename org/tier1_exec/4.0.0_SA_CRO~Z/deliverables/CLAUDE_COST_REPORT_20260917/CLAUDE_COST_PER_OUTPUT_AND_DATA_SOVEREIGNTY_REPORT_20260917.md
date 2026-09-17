@@ -1,7 +1,8 @@
 # The true cost of Claude at Opal -- and what our subscription setup trades away
 
-**Prepared by** `4.0.0_SA_CRO~Z` for Andrew, 2026-09-17. **Scope:** site Z (the Bloomberg-terminal computer and every
-Claude Code seat that ran on it) over the 30 days its local session records cover, 18 Aug to 17 Sep 2026.
+**Prepared by** `4.0.0_SA_CRO~Z` for Andrew, 2026-09-17. **Scope:** both machines that run agents over the 30 days their
+local session records cover, 18 Aug to 17 Sep 2026: the Bloomberg-terminal computer (site Z), measured here, and the
+laptop, measured there with these same instruments. Sections 2 to 4 are site Z; section 4a is both.
 **Requests:** records `ANDREW_DIRECT_20260917_160xZ_CLAUDE_COST_PER_OUTPUT_REPORT_AND_DECK.md` and
 `ANDREW_DIRECT_20260917_174xZ_DECK_FOR_NONTECHNICAL_MANAGERS_AND_AUGUST_PAID_VS_COST.md` (the second asks for the
 deck, and this report's framing, to be written for managers with no technical background, and for Anthropic's
@@ -34,27 +35,31 @@ terms. *Pay-as-you-go through the API* is metered per token on business terms, w
 subscriptions. This report prices our work at the pay-as-you-go rates to show what the same work would cost billed
 by the token, and calls that the standard price.
 
-**The answer.** In 30 days on the Bloomberg terminal computer we paid about $1,010 for work that would cost
-$8,330 at standard prices: roughly $8 of work for every $1 paid. The laptop's work is extra and not counted here.
-Nothing is trained on our data, on any of the options, with sharing off. What the subscription setup gives up is
-company control: a contract in Opal's name, defined deletion, admin controls and audit records.
+**The answer.** In 30 days we paid about $1,110 for work that would cost $43,283 at standard prices across both
+machines: roughly $39 of work for every $1 paid. Of that standard price, $8,330 is the Bloomberg terminal
+computer and $34,953 the laptop. Nothing is trained on our data, on any of the options, with sharing off. What
+the subscription setup gives up is company control: a contract in Opal's name, defined deletion, admin controls
+and audit records.
 
 ---
 
 ## 1. The answer
 
-1. **Site Z consumed $8,329.75 of Claude at API list prices in 30 days** (MEASURED, repriced at REFERENCE rates).
-2. **We paid about $1,010 for it:** five Max accounts at $200 (STATED) plus $10.04 of extra usage (MEASURED from the
-   payment notices). That is 8.2x, or 88% below the standard price.
-3. **Per unit of output, at standard prices:** $1.72 per commit, $44.54 per completed task order, $297 per active
-   day. On what we actually pay those are about $0.21, $5.40 and $36.
+1. **The two machines consumed $43,282.97 of Claude at API list prices in 30 days** (MEASURED on each, repriced at
+   REFERENCE rates): $8,329.75 here and $34,953.22 on the laptop.
+2. **We paid about $1,110 for it:** five Max accounts at $200 (STATED) plus $110.04 of extra usage. That is 39x,
+   or 97% below the standard price. The extra-usage figure is Andrew's own record; section 3 gives the mailbox
+   evidence, which disagrees with it and is not reconciled here.
+3. **Per unit of output across both machines, at standard prices:** $3.13 per commit, $124 per completed task
+   order, $1,546 per working day. On what we actually pay those are about $0.08, $3.19 and $40.
+3a. **On the Bloomberg terminal computer alone,** the same units are $1.72, $44.54 and $297 at standard prices.
 4. **Almost three-quarters of the bill is re-reading context.** The average response re-read about 453,000 tokens.
    Context size, not prompt length, is what drives Claude Code's cost.
 5. **Training is not the exposure; retention and governance are.** With usage sharing off, the supplied policy says
    sessions are not used for training. What the subscription setup gives up is a commercial contract, defined
    deletion, zero-retention options, admin control and audit.
 6. **Buying that governance means paying for the tokens.** Enterprise is a seat fee plus 100% of usage at API rates
-   (SUPPLIED), which at site Z's measured usage is at least $8,330 a month before the seat fee.
+   (SUPPLIED), which at both machines' measured usage is at least $43,283 a month before the seat fee.
 
 ---
 
@@ -93,18 +98,26 @@ a measured absence rather than a failed search.
 
 **Why the window total is not the run rate.** The five accounts renew on different dates, so only two renewals fall
 inside these 30 days; four more $200 notices sit just before the window (07-31 x2, 08-06, 08-07). This report uses
-Andrew's stated five-account rate, $1,000 a month, plus the measured $10.04 = **$1,010**. **Open item for Andrew:**
-two of the five accounts show no renewal notice inside the window on either side of it being due, so either those
-accounts bill on another instrument or the count has changed; the notices alone cannot tell which.
+Andrew's stated five-account rate, $1,000 a month, plus $110.04 of extra usage = **$1,110**.
+
+**TWO PAYMENT FACTS THAT DISAGREE, AND NEITHER IS DISCARDED.** The mailbox scan measured $10.04 on 26 August and,
+on three independent queries, nothing between 7 and 17 September. Andrew's own record, written into his edit of
+the deck, is $110.04 dated 16 September. His figure is the one the deck and this report carry, because he reads
+the card statement directly and the mail record is only a notice stream. Whether the 26 August charge is a
+separate fourth payment, which would make extra usage $120.08, is HIS call and is not assumed here.
+**Open item for Andrew:** two of the five accounts show no renewal notice inside the window on either side of it
+being due, so either those accounts bill on another instrument or the count has changed; the notices alone cannot
+tell which.
 
 ### The comparison
 
 | what | 30 days |
 |---|---|
-| what we paid | $1,010 (STATED rate + MEASURED extra usage) |
-| the same work at API list prices | $8,329.75 (MEASURED) |
-| multiple | 8.2x |
-| effective discount | 88% |
+| what we paid | $1,110 (STATED rate + Andrew's extra-usage record) |
+| the same work at API list prices, both machines | $43,282.97 (MEASURED) |
+| of which the Bloomberg terminal computer | $8,329.75 (MEASURED) |
+| multiple | 39x |
+| effective discount | 97% |
 
 The last 7 days (2026-09-11 to 2026-09-17) alone come to $2,187.97 at standard prices. (MEASURED)
 
@@ -134,12 +147,12 @@ that must pass set checks.
 
 | output (site Z, same window) | count | at API list price | at what we paid | label |
 |---|---|---|---|---|
-| commit authored by a site-Z seat or site-Z worker | 4,843 | $1.72 | $0.21 | MEASURED |
-| task order completed on a site-Z project | 187 | $44.54 | $5.40 | MEASURED |
-| active day | 28 | $297.49 | $36.07 | MEASURED |
+| commit authored by a site-Z seat or site-Z worker | 4,843 | $1.72 | $0.04 | MEASURED |
+| task order completed on a site-Z project | 187 | $44.54 | $1.14 | MEASURED |
+| active day | 28 | $297.49 | $7.63 | MEASURED |
 
-The "what we paid" column charges the whole $1,010 to this one computer's work, so it is an upper bound: the same
-accounts also serve the laptop fabric.
+The "what we paid" column now prices each unit at 2.6% of its standard price, which is what we pay across both
+machines ($1,110 of $43,283). Section 4a gives the same units counted fabric-wide.
 
 **What counts as a site-Z commit.** Lane serials recorded in this computer's session map, the terminal seat, and
 worker subagents of the six site-Z projects (AMGT_RESAPP, POSN_ASTTAX, POSN_AGGFIX, NFRA_REPORT,
@@ -149,6 +162,57 @@ Worker commits are 396 of the 4,843. **A task order counts** when a diff inside 
 
 **Why per-output is the right unit.** A cheaper request that needs more turns is not cheaper. The fabric's real
 product is merged, verified work, so dollars per commit and per completed order are the numbers to manage.
+
+---
+
+## 4a. Both machines, and what each project cost
+
+The figures above are site Z alone. The deck covers ALL work in the window (Andrew-direct ~18:5xZ), which means both
+machines that run agents. The laptop's half was measured on the laptop, by `0.0.0_AB_MSTR~Z`'s relay, running THIS
+folder's own `measure_claude_usage.py` and `per_project_cost.py` unmodified, so one instrument produced both halves.
+
+| | Bloomberg terminal computer | laptop | both |
+|---|---|---|---|
+| standard price, 30 days | $8,329.75 | $34,953.22 | **$43,282.97** |
+| responses | 28,259 | 96,626 | 124,885 |
+| tokens | 13.0B | 45.5B | 58.4B |
+| projects with attributed spend | 18 | 52 | -- |
+
+(MEASURED on each machine. The laptop's per-project run totals $35,001.18 rather than $34,953.22: the two runs bound
+the window by calendar date and by exact timestamp. The difference is 0.1% and is not a second measurement.)
+
+**Fabric-wide output, one rule over the shared git history** (`fabric_outputs.py`, this folder): 13,829 commits
+authored by agent seats in the window, of which 4,872 match the site-Z rule, and 348 task orders completed across
+every project. **WARN: the laptop counts the same history by a different rule and gets 13,999 commits (10,004 laptop /
+3,995 site Z) and 363 task orders (183 + 180).** Neither count is asserted over the other; the deck carries this
+seat's, and both are recorded here. The gap is the attribution rule, not the history.
+
+### Attributed cost per project
+
+Method: price every response, total per SEAT, then split each seat's spend across the projects that seat committed to
+in the window, in proportion to those commits. Project code from the commit subject prefix `type(CODE, ...)`, else
+from an `org/missions/D*/<MACRO>/<CODE>/` path. Seats with spend and no commits are held on their own line, never
+spread. "What it cost us" is the attributed standard price times (what we paid / the combined standard price).
+
+| grouped product | standard price | what it cost us |
+|---|---|---|
+| ETF work: positioning, ownership guardrail, the data behind them | $3,612 | $93 |
+| Investor reporting product (both halves) | $3,450 | $88 |
+| Cloud map of our systems | $3,029 | $78 |
+| Analyst tooling: research pack, Bloomberg dashboard | $2,705 | $69 |
+| everything else, both machines | $30,488 | $782 |
+
+Largest single projects behind those groups -- laptop: NFRA_CLDGRPH $2,828, NFRA_C3MATERIALIZ $2,728,
+NFRA_SUBSTRATECAR $2,464, NFRA_COMPEFFICACY $2,117, IRPT_BCKEND $2,003, ETFS_GUARDRAIL $1,965, IRPT_FNTEND $1,447,
+LGIC_NAMING $1,312, with $3,560 in seats that committed nothing. Site Z: OPAL_BGFALLBACK $1,409, ETFS_POSITIONING
+$1,325, AMGT_RESAPP $1,296, NFRA_OPSEC202609 $1,083, POSN_ASTTAX $812, with $652 uncommitted.
+
+**Three qualifiers on this table, none of them small.** (1) Commits are a PROXY for effort, not a measure of it: a
+seat that thinks for an hour and commits once is charged like a seat that commits ten times. (2) Some codes
+(NFRA_C3MATERIALIZ, NFRA_SUBSTRATECAR, AUTH_SELFHEAL, ADVI_PERFRP, ADVI_49FSRC) are retired or predate the current
+register; they appear because attribution reads the commit message, not registry membership. (3) Exactly one commit
+crosses fabrics, inside NFRA_CLDGRPH's history, authored by `0.0.0_AB_MSTR~Z`; every other project on both sides is
+clean, so double-counting is one commit wide.
 
 ---
 
@@ -262,8 +326,9 @@ Fable 5 and 5.1 carried $1,402.81 (16.8%) of site Z's month (MEASURED) and requi
 
 | option | monthly cost at site Z's measured usage | label |
 |---|---|---|
-| today's subscriptions | $1,000 stated, plus $10.04 of measured extra usage | STATED / MEASURED |
-| API organization, list price | $8,329.75 | MEASURED |
+| today's subscriptions | $1,000 stated, plus $110.04 of extra usage (Andrew's record) | STATED |
+| API organization, list price, both machines | $43,282.97 | MEASURED |
+| API organization, list price, this computer only | $8,329.75 | MEASURED |
 | API with the 1-hour writes moved to 5-minute where it fits | from $7,798.70 | MEASURED what-if |
 | Claude Enterprise | $8,329.75 plus the seat fee | SUPPLIED billing model |
 | Enterprise with US-only processing | about $9,162.73 plus the seat fee, at 1.1x | SUPPLIED multiplier |
@@ -292,7 +357,9 @@ become the budget.
   another instrument or no longer exist.
 - **List price is not Anthropic's cost** and not what Opal would spend on the API: metered billing would change how
   the fabric works.
-- **Site Z only.** The laptop fabric's transcripts are on the other device; its measurement is pending.
+- **Two machines, measured separately.** The laptop's transcripts live on the other device and were measured
+  there with this folder's own instruments; no third machine is on record, which is absence of evidence
+  rather than evidence of absence.
 - **Seat attribution is approximate.** Session-serial files are last-writer-wins, and 1,289 responses ($208.80) map
   to no seat.
 - **SUPPLIED claims are unverified.** Checking the retention, Enterprise billing and US-only figures against
