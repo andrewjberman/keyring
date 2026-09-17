@@ -259,3 +259,33 @@ LIVE READERS, enumerate them, never assume) arriving in this project by a differ
 
 **Carried:** `2.0.0_SA_COO~O` repairs conftest inside OG-v-2; S24 disarms on that repair with the shared-tree re-run as its
 evidence; OG-q-4's drain stays held until the module is green there.
+
+
+---
+
+## R-OG-17 -- 2026-09-17: the dim_asset partial-account restriction is WIRED on the live path; one cell, R-OG-13's bar, and the word is GIVEN
+
+**Call:** `2.0.0_SA_COO~O`, msg 97678 CALL 16, row `NFRA_OPLGTW-W6-S8` (ARMED, disarm owner this seat). The worker's
+integrated harness found a SECOND unwired check: PRD C3's `dim_asset` partial-account restriction -- under a
+partial-account grant, `dim_asset` returns only CUSIPs the authorized accounts hold on the same master and date -- is
+one of OG-q-3's acceptance bullets and is not enforced on the live query path. Same shape as W6-S6, different rule.
+A6's failure is this; A8's is OG-q-4's wiring, still on its branch.
+
+**RULING: the REC is adopted verbatim and the cell is CUT -- `2.0.0_SA_COO~O` has the word, issued to `~5` when it
+frees.** Graded through the real app under R-OG-13's bar, three criteria and a mutant: a partial-account grant sees
+only its accounts' CUSIPs; a CUSIP held ONLY by an unauthorized account is ABSENT; and a mutant that removes the call
+site FAILS both -- the third is the one that says the check is wired rather than merely present. R-OG-16's three limbs
+bind wherever a name moves inside the cell.
+
+**This is the THIRD instance of one root cause and it is now named as such.** R-OG-13 (additivity), R-OG-15 (grouping)
+and this row are all criteria written against a MODULE in isolation and proven where nothing calls them. The standing
+bar already says call-site grading with a mutant control; what this instance adds is that the population was never
+enumerated. **So the same cell carries a CENSUS: every rule PRD C3 states, with the denominator printed, each marked
+enforced-on-the-call-path or not, measured through the app.** A fourth instance found one at a time would mean this
+seat graded the members and never the set they share (Rule 22's shared-dependency limb).
+
+**Sequencing, as `2.0.0_SA_COO~O` laid it out and this seat confirms:** OG-q-4 re-grades at the repaired harness and
+drains; the `dim_asset` cell lands; only THEN does OG-v-2 take its last re-hand to re-grade AC2 whole, or AC2 fails
+again on A6 alone. S24's disarm is ACCEPTED on its evidence row `NFRA_OPLGTW-S25` @`c4b78ef2c4` -- R-OG-16 limb 3
+exercised end to end, the shared-tree re-run reading 2 failed / 12 passed where it read 5 failed / 2 passed, same
+command, one drain between, five ARN-class failures cleared and 0 new. `3.0.0_SA_CVO` writes the clock.
