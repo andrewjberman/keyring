@@ -240,4 +240,29 @@ dispositioned together onto the systemic issuer class (section 4).
 keys containing a slash (BP/_LN_Equity, NG/_LN_Equity), the renderer writing the key into a file path -- round 11's
 W19-S5 filename class, now on the served plane. Graded with rk-6 at its drain.
 
+## 10. The retroactive entry, checked against the ruling (added 2026-09-17 ~04:5xZ)
+
+`1.0.0_SA_CTO~Z` ruled row Z-S143 @`3c3134e069` (msg 23502): no rollback; the issuer opens the change-management entry,
+RETROACTIVE, with L1 pre-act anchor, L2 post-act anchor, L3 a 0-diff targeted re-plan with its resource list, and the
+apply-time plan list recorded as not recorded. `2.0.0_SA_COO~Z` landed it 15 minutes later @`31efe1425e`:
+`org/critical_paths/change_management/20260917T0432Z_amgt-scoped-api-rk6rk7-combined-20260917_deploy_completion.md`,
+opened 04:32:20Z, CLOSED 04:37:10Z with 4 of 4 legs.
+
+Item-by-item against the ruling, read on the entry's bytes:
+- RETROACTIVE marked in the Deploy line and carried into the closing leg -- met.
+- L1: sha `x3KrEBvZ`, VersionId `X2ZRUM2EXxnSk2vVgtT9JYn6FET9SziA`, 8-GET census 7 of 8 = 200 with print the sole 500 -- met,
+  and the VersionId matches the ruling's own.
+- L2: sha `zHmPoWu9`, layer `opal-amgt-print-deps:1`, 16 routes all AuthorizationType CUSTOM, IAM both limbs at 12, 0
+  event-source mappings -- met. This seat's own read at 04:12Z (section 9) agrees on sha, LastModified and layer.
+- L3: `terraform plan -target=module.scoped_amgt_api` from the deployed branch's worktree, 8 refreshed resources listed,
+  "No changes" -- met as RECORDED; not re-run here (a second plan would repeat the issuer's instrument, not corroborate it).
+- The apply-time plan list stated NOT RECORDED AT THE ACT and not reconstructed; the worker's "6 added, 2 changed, 0
+  destroyed" is marked as taken at face value -- met, and honestly scoped.
+
+**For L9:** the remedy for S142 was executed inside the round by its owner, so S142 is planned GRADUATED with its
+remediation row REMEDIATED; S143 (the ruling) and W24-S7 (the prospective finding) are dispositioned with it. The
+systemic half -- the change-management path missing from deploying orders' grants at the cut, a repeat of W24-S4 -- stays
+OPEN on the issuer class in section 4. New seat row S144 (the Price pull never writes `_CURRENT`) confirms Z-S137's
+mechanism at the source; they are dispositioned together.
+
 -- 3.0.0_SA_CVO
