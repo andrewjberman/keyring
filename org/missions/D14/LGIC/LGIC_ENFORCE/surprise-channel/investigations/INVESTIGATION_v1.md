@@ -3123,6 +3123,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "R-16: the SHIP / REPO-ONLY split is derived by CALLING the deploy gate's own scope classifier, .tools/safe_deploy_core.py, over the generator's target list; its provenance reads measured: safe_deploy_core.",
     "world_is": "safe_deploy_core decides the S3/DS plane only (3 of 10 targets). The Lambda and Terraform planes ship through safe-apply and their own declared records, so one classifier call leaves at least 5 shipping targets reading as REPO-ONLY.",
     "notes": "INERT: nothing is built on it yet -- cell 9 is not cut. Routed to 1.0.0_SA_CTO as a call (97550-series) because it is R-16's mechanism, and cell 9 is not cut until it is ruled. The shape this seat holds, not binding: the split names its PLANE per target and calls each plane's own record -- safe_deploy_core for S3/DS, lambda-source-map.json for Lambda, the root that consumes the module for Terraform -- with provenance per row (measured: <instrument>), and a target no plane claims prints UNCLASSIFIED and refuses the print, which is R-16's own negative control generalised from one plane to all."
+  },
+  {
+    "id": "LGIC_ENFORCE-W2-S12",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "surfaced_at": "2026-09-17T00:00Z",
+    "one_line": "opal-data-demo carries NO CloudTrail data-event selector at all, so the ONE prescribed NOT_A_PRINCIPAL evidence path (DEC-4 ii, CloudTrail data events live on the bucket) can never answer true or false for that bucket.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/shared-infra/cloudtrail-organization-trail.tf:46-51 @b54636545d: local.org_trail_read_logged_buckets = [\"opal-data-49financial\", \"opal-data-bd\", \"opal-data-cot\", \"opal-data-inf\"] -- opal-data-demo is not a member, so the org trail's ReadOnly S3 data-event selector (event_selector data_resource at :73-79) never logs a read on it.",
+        "infra/aws/terraform/globgrph/item2e_served_write_trail.tf:30 @b54636545d: local.served_write_trail_buckets = [\"opal-data-inf\", \"opal-data-bd\", \"opal-data-cot\"] -- opal-data-demo is absent here too, so the account's only WriteOnly S3 data-event trail never logs a write on it either.",
+        "MEASURED LIVE, not just in Terraform: `.tools/aws.cmd s3api head-bucket --bucket opal-data-demo` returns BucketArn arn:aws:s3:::opal-data-demo rc=0 -- the bucket is real and reachable, so the absence above is a genuine instrumentation gap on a live bucket, not a moot point about an unprovisioned one.",
+        "DID NOT BLOCK THIS ROW'S OWN CELL: demo-transform-runner-ec2-role, the one legacy writer this order maps to opal-data-demo, resolved EXEMPTED from a direct IAM-grant read (demo-transform.tf:99-104 Sid=ReadWriteDestPlatinumDemo, Allow s3:GetObject/s3:PutObject on arn:aws:s3:::opal-data-demo/platinum/*), never from CloudTrail, so W7R3-AC1/AC2 pass without needing this instrument. The gap only bites a FUTURE NOT_A_PRINCIPAL claim on this bucket."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "spec_asserts": "LGIC_ENFORCE.TO-EN-w-7-r3: a NOT_A_PRINCIPAL disposition's evidence comes 'from the CloudTrail data events live on those buckets (DEC-4(ii))', stating the query, window and result count, for each of the four legacy-writer buckets including opal-data-demo.",
+    "world_is": "No CloudTrail data-event selector -- read or write -- is configured on opal-data-demo anywhere in this estate's Terraform, so a query against it can only ever return zero for the trivial reason that nothing is recorded, never because the instrument observed an absence. A future worker asked to disposition a different role NOT_A_PRINCIPAL on opal-data-demo would read a clean zero-count and could not tell it apart from a true negative.",
+    "notes": "ARMED because the hazard is in the process's FUTURE normal operation (a later legacy-writer cell touching opal-data-demo), not in this round's own cells, which is exactly the case the schema's class/hazard_standing split exists for. disarm_owner 0.7.0_AE_CloudOps: the org trail and the served-write trail are both its Terraform (cloudtrail-organization-trail.tf's own header; item2e_served_write_trail.tf's own header names the observability/globgrph lane), so adding opal-data-demo to one or both buckets lists is the act that disarms this -- not proposed as a change here, only surfaced."
   }
 ]
 ```
