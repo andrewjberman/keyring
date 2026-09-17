@@ -109,3 +109,19 @@ Reading, and the correction this seat made to its own first reading:
 - Per-project cost across both machines: site Z per seat (measured here), the laptop's $34,953 split by its own
   commit pattern (weaker, and labelled). Top four: investor reporting $5,381, cloud systems map $4,645,
   performance reporting $2,389, naming enforcement $2,188.
+
+## Laptop half, measured (msg 23576, 19:07Z)
+
+`0.0.0_AB_MSTR~Z` had the laptop run THIS seat's own `per_project_cost.py` @`120ef31c6a` unmodified, so both halves
+now use one instrument. Laptop priced total $35,001.18 across 52 projects (the earlier $34,953.22 differs only by
+calendar-window vs exact-timestamp bounds). Top: NFRA_CLDGRPH $2,828, NFRA_C3MATERIALIZ $2,728, NFRA_SUBSTRATECAR
+$2,464, NFRA_COMPEFFICACY $2,117, IRPT_BCKEND $2,003, ETFS_GUARDRAIL $1,965, IRPT_FNTEND $1,447; $3,560 in seats
+with spend and no commits. One cross-fabric commit exists, inside NFRA_CLDGRPH, authored by `0.0.0_AB_MSTR~Z`; no
+other project on either side crosses, so double-counting is one commit wide.
+
+TWO COUNTS THAT DISAGREE, both disclosed rather than reconciled by force:
+- Commits: this seat counts 13,829 agent commits in the window (site Z 4,872 by the cost-report rule); the laptop
+  counts 13,999 total with a 10,004 / 3,995 split by a different rule (author suffix + project fabric). The deck
+  carries 13,829, measured here under one rule over one history.
+- Task orders: this seat counts 348 across every project; the laptop counts 183 laptop-side plus 180 site-Z-side,
+  363 in total. The deck carries 348. Neither count is asserted over the other.
