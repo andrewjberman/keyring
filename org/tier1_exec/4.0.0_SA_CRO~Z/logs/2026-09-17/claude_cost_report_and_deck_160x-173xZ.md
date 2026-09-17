@@ -73,3 +73,31 @@ Desktop. Inbox Monitor re-armed (task `bw48bm7ew`) after the 30-minute expiry.
 
 - Merge the branch back when the shared tree's MERGE_HEAD clears; then remove the worktree.
 - Andrew's review of the report and deck.
+
+---
+
+## Second pass, 17:4x-18:2xZ -- rewritten for nontechnical managers, with the payments measured
+
+Andrew-direct (record `ANDREW_DIRECT_20260917_174xZ_...`): the deck reads as if written for a technical audience and
+must be spelled out for nontechnical managers; five Claude Max accounts at $200 are the real subscription cost; open
+on what was paid against what the work costs at standard prices; include Anthropic's extra-usage charges, read from
+the Ramp notices in andrew@opalinvest.com; "last 30 days are fine".
+
+- Deck rebuilt 17 -> 23 slides, all copy rewritten in plain language: a basics slide, a six-term glossary, a
+  subscription-vs-API explainer, a method slide, a plain-language data-sovereignty section and a data-journey flow.
+  Gate: 23 slides, 0 lint violations, 23/23 coverage. Visual QA over COM renders, fixed and re-rendered until clean
+  (cards into the footer bar on two slides, half-empty cards on four, a pie label collision, a 72/73 title mismatch).
+- PAYMENTS MEASURED, not assumed: both site-Z gateway identities are `opalbloomberg@opalinvest.com` and the
+  allowlist refuses `search_email`, so the mailbox scan was routed to `0.0.0_AB_MSTR~Z` (msgs 23551, 23552) and run
+  by the main-fabric seat holding Andrew's mailbox identity. Result (msg 23553): three Anthropic payment notices in
+  the window -- $10.04 on 08-26 (extra usage), $200.00 on 08-30, $200.00 on 09-06; $410.04 charged in-window, with
+  four more $200 notices just before it. No gateway allowlist was widened and none was requested.
+- "What we paid" is therefore $1,010: Andrew's stated five-account rate plus the measured $10.04. Multiple 8.2x,
+  discount 88%. An open item is named in the report and on the slide: two of the five accounts show no renewal
+  notice inside the window.
+- Report rewritten to match: a plain-terms section 0, the payments table, the new per-unit figures, and the laptop
+  measurement named as pending.
+- Main-fabric token usage requested at 17:45:20Z; the laptop is running the same script and `0.0.0_AB_MSTR~Z` will
+  relay. Not folded in yet, and the deck says so.
+
+**Blocked, named:** the laptop's share of the 30 days; the two unexplained subscription renewals.
