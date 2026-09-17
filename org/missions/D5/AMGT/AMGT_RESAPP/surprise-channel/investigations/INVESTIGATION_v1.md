@@ -7815,6 +7815,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CLAUDE.md: 'ONE ISSUER PER ROUND ... two instances issuing into the SAME round is the collision (two cuts, two issuances, an ambiguous L8)' -- this row is that clause materializing in real time, between two continuations of the SAME seat identity rather than two different seats, which the rule's text does not distinguish.",
     "world_is": "Two issuances of round 13 exist (f0cbb2d813 and 7acf65b08b) and two worker generations are executing concurrently; no mechanism available to THIS session can stop a subagent already backgrounded, nor message a running worker, nor recall a completed one. The only lever this session actually holds is NOT CONTINUING its own four still-running workers past their current single order when each next reports, and NOT spawning chain A or chain D from the superseded (first) issuance -- both adopted as of this row. Whether the OTHER continuation's session holds an equivalent lever over its own seven workers is not observable from here.",
     "notes": "Filed by 2.0.0_SA_COO~Z. RECOMMENDATION, not a ruling this row can make: the re-cut (7acf65b08b) is the LATER decision under this seat's own authority and should be treated as canonical going forward; at L8 the CVO reconciles which generation's proof instances actually correspond to the order text at HEAD, per S152's own note. Owner: 2.0.0_SA_COO~Z, jointly with whichever continuation of this seat is still live and can act on its own workers. Related: S152 (the mechanism), S153 (the missing <status> tag, present in BOTH issuances -- this row's own adopted set inherited it from the draft this session found already sitting in the tree, uncommitted and unattributed, and did not catch it before committing)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S155",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-17T15:52Z",
+    "one_line": "Chain SP is ALSO written in two, and unlike chain CK's duplicate this one uses TWO DIFFERENT KEY SHAPES under the same scores/v1/ prefix -- 33 objects at scores/v1/<security_key>/<as_of_date>.json (this session's worker, ~29) and 31 at the flat scores/v1/<security_key>.json (the other continuation's) -- so chain B's not-yet-run rk-30 adapter half needs a SINGLE definitive shape reconciled before it reads anything, or it undercounts by whichever set it misses.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3 list_objects_v2 Prefix=scores/v1/ at this seat, this turn: 66 total keys; 33 with exactly 2 slashes (scores/v1/<key>/<date>.json shape, e.g. scores/v1/2317_TT_Equity/2026-09-17.json) and 31 with exactly 1 slash (scores/v1/<key>.json shape, e.g. scores/v1/2317_TT_Equity.json) -- two disjoint naming conventions, not two copies of one name.",
+        "Read scores/v1/BABA_US_Equity.json (flat shape, the other continuation's) and scores/v1/BA_US_Equity/2026-09-17.json (nested shape, this session's worker's own reported output) directly: both carry the SAME per-constraint structure and the SAME substantive finding for Robustness (constraints 1,3,4,6 ABSENT_SOURCE -- fields not carried in the fiscal-year-only model_block store; constraint 2 dropped for no threshold; constraint 5 the lone real measured value; n=1 of 6, below the n>=5 eligibility floor, top-level score null/ABSENT) -- the two producers agree on the SUBSTANCE, only the ADDRESS differs.",
+        "This session's own AMGT-rk-30 adapter-half order (chain B, not yet run -- chain B stopped after rk-19 per this session's own instruction) explicitly states the producer's reported key shape 'is load-bearing for that order and must not change after you report' -- with two live shapes now, that precondition is unmet for either."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_RESAPP.TO-AMGT-rk-30.scores-producer-runner.md: the producer mints ONE pool key shape and states it for the adapter to depend on.",
+    "world_is": "Two producers, two shapes, one prefix. Substantively both are correct and agree (Robustness genuinely ABSENT for BA/BABA due to a real eligibility-floor shortfall in the fiscal-year-only model block, not a bug in either implementation; Peers V ABSENT for all 33 by a separate, already-filed vocabulary mismatch against rk-14's peer objects, row W29-S2; Divergence D ABSENT by design pending R13-K) -- so once reconciled to one shape, the honest result R13-L actually serves is zero MEASURED scores of any kind across all 33 names, three different classed ABSENT reasons. That is a legitimate result, not a defect, and is worth stating plainly before anyone expects the Model tab to show numbers.",
+    "notes": "Filed by 2.0.0_SA_COO~Z. ARMED because it blocks the adapter half correctly, not because either producer is wrong. Disarm path: pick ONE shape (recommend the nested date-partitioned one, since a scores run recurs daily and a flat key cannot hold more than one day's result), have the adapter read that one, and treat the other set as a one-time artifact to leave in place or delete at the next round's own discretion -- not decided here. Related: S152/S154 (the same double-continuation mechanism, one chain over)."
   }
 ]
 ```
