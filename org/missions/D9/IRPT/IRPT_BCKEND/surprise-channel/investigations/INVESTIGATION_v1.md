@@ -4664,6 +4664,51 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "RT8-g_synthetic_delete_record.md s.III, verbatim: 'a delete-object without a --version-id on a versioned bucket does NOT destroy bytes: it writes a DELETE MARKER, after which head-object returns 404 and every ordinary read stops finding the object, while the four noncurrent versions listed above remain retrievable by their VersionId... So \"deleted\" here means \"removed from every ordinary read\", not \"the bytes are gone.\"' IB-rtb-1's own face (IB-sb-3's arm (e), inherited): 'the download... against four REAL synthetic objects, never a client artifact.'",
     "world_is": "Six days after that delete, none of the four objects has ANY entry in list-object-versions -- not even the noncurrent version RT8-g's own record names by VersionId, which now reads NoSuchVersion. The bytes are gone by every S3-side read this turn, contradicting RT8-g's own stated recoverability, and no substitute real rendered PDF export exists anywhere else in the estate at this vintage (GENRT8PROOF/ carries only two bundle.json metadata objects; IB-rt-8's render never got past SESSION_ABSENT so no report.pdf was ever produced there). IB-rtb-1's download arm therefore measures its REAUTHORIZATION MECHANISM against a real Enforcer/guard()/download() dispatcher with a labelled FIXTURE artifact-metadata record standing in for the storage boundary (the same pattern bound 1 sanctions for the other eleven routes' Entry.deps), printing the real-object gap as BLOCKED rather than silently substituting a fixture for a claim about a currently-existing object (bound 12).",
     "notes": "Not this cell's to fix: no delete was authorized by this order and none is proposed. Candidate remedies (the CTO's/COO's to choose): correct RT8-g's own recoverability claim now that it has been falsified by a later read (an S3 lifecycle rule on this bucket most likely expired the noncurrent version -- not checked here, and not this cell's call to make); and, if a real PDF export fixture is needed for a future replay, mint one fresh under its own generation id with Andrew's word, the way IB-s-14 first did. ARMED because a future reader who trusts RT8-g's 'retrievable by VersionId' sentence without re-checking will believe a recovery path exists that does not. INERT would require the bytes to still be recoverable; they are not, by two independent reads (ordinary GetObject and list-object-versions)."
+  },
+  {
+    "id": "IRPT_BCKEND-S54",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-17T23:48:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S17 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~B), at the drain of IB-rtb-1. The hazard was a future fresh-worktree re-run of IB-rt-2's terminal battery reading 'arm (e) 3 of 7' and being chased as a production regression. It is disarmed by naming the discriminator on the carrier every such reader consults first: the three-way sha256 chain (declared, S3, live CodeSha256) reads EQUAL on 7 of 7 in the SAME run that prints 3 of 7, so the 3 of 7 is the verifier's local layer-zip cache (gitignored .scratch/layer/, absent in every fresh worktree), never the served bytes. The remedy is a cell for the round-2 recut and is carried to 1.0.0_SA_CTO's L10 read, not executed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row IRPT_BCKEND-W1-S17 @8cb0364800 (worker 0.9.0_WK_IRPT_BCKEND~1, merged by this seat): the fresh-worktree re-run of deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py at the same HEAD reads 3 of 7 on arm (e) with rt2_verify_deployed.py's own WARN naming the absent .scratch/layer/ cache of irpt-common:5, while the three-way sha256 chain reads EQUAL on 7 of 7 in that run.",
+        "IB-rt-2 is terminal (complete, VALID instance under deliverables/0.9.0_WK_IRPT_BCKEND~2/) and its record is not re-opened; the spec and decomposition are frozen mid-round (Rule 27), so the remedy cannot be a cell of this round.",
+        "IB-rtb-1 does not consume rt2_verify_deployed.py's strict reimport check (W1-S17 notes); the issuer's own re-run of battery_ib_rtb_1.py on the SHARED checkout (a different tree from the worker's) at 8cb0364800 printed IBRTB1-REPLAY-AUTHENTICATED, rc=0, overall_pass true -- 12 of 12 routes, 36 of 36 plus 6 of 6 swaps refused, unguarded 0 of 12 with the control at 1 of 12, key census 0 of 16."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-2's terminal result prints 'arm (e) 7 of 7 VERIFIED' as a property of the deployed functions.",
+    "world_is": "That reading depends on a gitignored local cache as well as on the deployed bytes; without the cache the same instrument prints 3 of 7 while the sha256 chain still proves the served bytes equal on 7 of 7. The served bytes are right; the instrument's VERIFIED word is under-specified.",
+    "notes": "CARRIED TO THE ROUND-2 L10 READ as a recut candidate, the CTO's to place: rt2_verify_deployed.py downloads the layer zip when its local cache is absent instead of WARNing and printing NOT VERIFIED (W1-S17's own candidate remedy). DISARMED, NOT REMEDIATED: the false FAIL can still be printed; what no longer happens is a reader taking it for a regression, because this row and W1-S17 sit on the channel that reader consults and both name the discriminator."
+  },
+  {
+    "id": "IRPT_BCKEND-S55",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-17T23:49:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S18 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~B), at the drain of IB-rtb-1. The four synthetic export PDFs are gone from opal-data-ycharts by an AUTHORIZED, LEDGERED act this seat performed on 2026-09-12 -- row S43: Andrew-direct ~01:5xZ 'Approved all 9' on the corrected count, nine per-version deletes, ledger opened before and closed after with 8 of 8 legs, post-act head-object 404 on 9 of 9 with a positive control. The cold-started worker could not know this and read RT8-g's older 'retrievable by VersionId' sentence as live; that sentence was true when RT8-g wrote it (2026-09-11) and was falsified by the 09-12 act, which S43 already records. No unauthorized delete happened and no lifecycle rule did it: get-bucket-lifecycle-configuration on opal-data-ycharts returns NoSuchLifecycleConfiguration (read by this seat 2026-09-17 ~23:4xZ).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row IRPT_BCKEND-S43 (2.0.0_SA_COO~B, 2026-09-12T02:45Z): the nine noncurrent versions deleted permanently and verified gone by VersionId; ledger org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_deploy_completion.md CLOSED 8 of 8; Andrew-direct record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_015xZ_ALL_NINE_NONCURRENT_VERSIONS_APPROVED.md.",
+        "row IRPT_BCKEND-W1-S18 @8cb0364800: 0 of 4 by ordinary read and 0 of 4 in list-object-versions, NoSuchVersion on RT8-g's named VersionId -- consistent with S43, not contradicting it.",
+        ".tools/aws s3api get-bucket-lifecycle-configuration --bucket opal-data-ycharts -> NoSuchLifecycleConfiguration (rc=255), so expiry by lifecycle is excluded and the act in S43 is the one explanation.",
+        "STALE CARRIER NAMED: org/missions/D9/IRPT/IRPT_BCKEND/project.json `blocking` at 0d3ad7d496 (2026-09-14) still says the four versions 'are deleted too ... by the lane holding this project, with a human confirming at the delete', as a pending act; it had already been done two days earlier under S43. The row is 1.0.0_SA_CTO's (TREE_PROJECT_ROW) and is carried to the L10 read for correction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT8-g_synthetic_delete_record.md (IB-rt-8, 2026-09-11): the four synthetic PDFs remain retrievable by VersionId after the marker delete; project.json `blocking` (2026-09-14): the per-version delete is still to be done with a human confirming.",
+    "world_is": "Both sentences are dated before or across the 09-12 act: the versions were deleted on Andrew's word on 2026-09-12 (S43), nothing recoverable remains, and no lifecycle rule exists on the bucket. IB-rtb-1's download arm correctly measured its reauthorization mechanism against a labelled fixture record and printed the real-object gap as BLOCKED rather than substituting a fixture for a claim.",
+    "notes": "DISARMED: the recovery path the hazard promised never existed after 09-12, and the reader who would have trusted RT8-g now finds S43 and this row beside W1-S18. NOT REMEDIATED here: RT8-g's record is worker ~4's terminal deliverable and stays as written; if a real rendered PDF export is ever needed for a replay it is minted fresh under its own generation id on Andrew's word (W1-S18's candidate), a cell for a later round. Also corrected on this seat's own account: this seat told its terminal earlier tonight that the version deletion 'waits on Andrew'; S43 shows it was executed 09-12 on his word. The stale project.json sentence is what misled the re-read."
   }
 ]
 ```
