@@ -120,15 +120,15 @@ Stamp boundary: L8/L9/L10 round-10 stamps are this seat's. The canonical tool wa
     "owner": "2.0.0_SA_COO~W",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~W",
       "round": "v10"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~W",
-      "at": null
+      "at": "2026-09-15T22:21:34Z"
     }
   },
   {
@@ -308,16 +308,20 @@ Stamp boundary: L8/L9/L10 round-10 stamps are this seat's. The canonical tool wa
     "owner": "2.0.0_SA_COO~W",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~W",
       "round": "v10"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~W",
-      "at": null
+      "at": "2026-09-15T22:21:34Z"
     }
   }
 ]
 ```
+
+## Round-11 monotone clock update
+
+S95 and C-S196 close on the COO packet at `155105b850` and the CVO round-11 capture audit: ten of ten ranked keys, click/direct-key equivalence, 38 machine sentences and 48 visible evidence passages. S95 closes the identity seam only; the missing Model figures remain in S72/W19-S13, and no portal promotion is claimed. The round-10 paragraphs and counts above are historical. S96's source/store mechanism is repaired by rj-5/rj-10; its CTO-owned clock is retained pending that owner's disposition, rather than asserting the old reader is still deployed.

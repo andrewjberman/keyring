@@ -1,0 +1,966 @@
+diff --git a/src/api/endpoints/amgt-lead-panel.ts b/src/api/endpoints/amgt-lead-panel.ts
+index 73aef92c..fd72ac6e 100644
+--- a/src/api/endpoints/amgt-lead-panel.ts
++++ b/src/api/endpoints/amgt-lead-panel.ts
+@@ -4,8 +4,16 @@
+  *
+  * THE SERVER HALF IS `lib/research/api/scoped_amgt.py`. Every function below has a
+  * route in that module's `scoped_amgt_route_table()`, and that table is the
+- * DENOMINATOR the two halves are diffed against: ten call functions here, eleven
+- * routes there (`setStarred` is star-or-unstar).
++ * DENOMINATOR the two halves are diffed against.
++ *
++ * THAT SENTENCE USED TO READ "ten call functions here, eleven routes there
++ * (`setStarred` is star-or-unstar)" and it is no longer true of this file, so it is
++ * corrected rather than left to age. AMGT-rk-12 adds THREE calls whose routes are
++ * chain B's to declare (`getCoverageFreshness`, `getInputLedger`, `getListRegister` --
++ * the served halves of FWD-7, FWD-12 and FWD-14), and AMGT-rk-7 moves `requestRefresh`
++ * OFF the adapter entirely onto the enqueue carrier, so it no longer diffs against that
++ * table at all. Count the functions here and the routes there at the vintage you read
++ * them; a number typed into a comment is a claim about a vintage.
+  *
+  * PRIVATE DATA, AUTH-GATED ON THE ESTATE'S OWN PATTERN, NOT A NEW ONE. `/api/scoped/*`
+  * sits behind the CloudFront `auth-validator-edge` viewer-request Lambda@Edge, which
+@@ -42,6 +50,10 @@ import type {
+   ThesisBundle,
+   PeerSet,
+   CoverageSet,
++  CoverageFreshnessView,
++  InputLedgerView,
++  ListRegisterView,
++  ResearchPullAck,
+ } from '@/pages/SecurityAnalysis/types'
+ 
+ const BASE = '/api/scoped/amgt'
+@@ -107,14 +119,44 @@ export async function setStarred(ticker: string, starred: boolean): Promise<void
+   })
+ }
+ 
+-/** Explicit Refresh action (queues the harvesters for one shown name). NOT wired to
+- * starring -- Andrew-direct 2026-09-11 ~07:2xZ reversed the earlier star-triggers-
+- * refresh design. The adapter refuses this route with a stated reason until a queue
+- * carrier is declared; the button surfaces that refusal rather than pretending. */
+-export async function requestRefresh(securityKey: string): Promise<{ queued: boolean }> {
+-  return apiRequest<{ queued: boolean }>(`${BASE}/refresh`, {
++/**
++ * Explicit Refresh action -- ONE SHAPE (AMGT-rk-7, ruling row AMGT_RESAPP-Z-S124; this
++ * order AMGT-rk-12 AC4, which measures it on this branch).
++ *
++ * WHAT IT USED TO DO AND WHY THAT WAS NOT A CONTROL. This call posted to the adapter's
++ * own refresh path, which the adapter answered with a STATED REFUSAL because no queue
++ * carrier was declared. The button surfaced that refusal honestly -- but its only
++ * possible outcome was its own refusal, and an outcome whose control can never act is
++ * not realized. NOT wired to starring either: Andrew-direct 2026-09-11 ~07:2xZ reversed
++ * the earlier star-triggers-refresh design, and that separation is unchanged here.
++ *
++ * WHAT IT DOES NOW. The carrier has existed since AMGT-s-2: the enqueue Lambda
++ * `opal-research-pull-enqueue`, mounted at POST /api/private/research/pull on THIS SAME
++ * portal API, behind THIS SAME portal authorizer as every call above. The page calls
++ * the carrier directly. The adapter route DECLARES that carrier instead of answering
++ * 501; that half is AMGT-rk-7's cell, not this file's, and no grant widens on either.
++ *
++ * THE BODY IS THE CARRIER'S OWN CONTRACT, READ FROM ITS SOURCE RATHER THAN GUESSED.
++ * `_extract_ticker` in `infra/aws/lambda/research/pull_enqueue/lambda_function.py` takes
++ * `ticker` and nothing else -- a body without it is answered 400 -- and derives the
++ * security key from it as `ticker.strip().replace(' ', '_')`. The box-side consumer then
++ * hands that SAME `ticker` straight to the Bloomberg pull
++ * (`integrations/bloomberg/research/pull_consumer.py` -> `mbp.stage_pull(blp, s3, ticker, ...)`),
++ * so the value it needs is the Bloomberg security string WITH its spaces --
++ * 'BA US Equity', not the page's key 'BA_US_Equity'. This function inverts the key back
++ * into that string, which is precisely the inverse of the `security_key()` both sides
++ * already agree on. Sending the underscored key instead would land the same status key
++ * and then fail at the terminal, one hop too late to be visible here.
++ *
++ * NOTHING IS PULLED FROM THE CLOUD. The Lambda writes packs/<key>/status.json (state
++ * REQUESTED, so the page's "fetching now" is DATA from the first instant) and sends ONE
++ * SQS message; Bloomberg is reachable only box-side, which is why the consumer is there.
++ */
++export async function requestRefresh(securityKey: string): Promise<ResearchPullAck> {
++  const ticker = securityKey.split('_').join(' ')
++  return apiRequest<ResearchPullAck>('/api/private/research/pull', {
+     method: 'POST',
+-    body: JSON.stringify({ security_key: securityKey }),
++    body: JSON.stringify({ ticker }),
+   })
+ }
+ 
+@@ -145,6 +187,47 @@ export async function getCoverageSet(securityKey: string): Promise<CoverageSet>
+   return apiRequest<CoverageSet>(`${BASE}/security/${encodeURIComponent(securityKey)}/coverage`)
+ }
+ 
++/**
++ * FWD-7 -- COVERAGE FRESHNESS, SERVED (AMGT-rk-12).
++ *
++ * `lib/research/freshness/build_view.py` is the DATA FACE and its own docstring calls it
++ * "the generator a person runs by hand"; it wrote a JSON nobody served. This is the
++ * client half of the route that serves that view. UNIVERSE-WIDE, not per name: one row
++ * per covered name, `NEVER` carried as a VALUE rather than a blank, and the register's
++ * one rot line repeated on every row because the register tracks LISTS, not names.
++ */
++export async function getCoverageFreshness(): Promise<CoverageFreshnessView> {
++  return apiRequest<CoverageFreshnessView>(`${BASE}/freshness`)
++}
++
++/**
++ * FWD-12 -- THE INPUT LEDGER, SERVED (AMGT-rk-12). Per security, per input class:
++ * source, last run, outcome -- FWD-12's own bar.
++ *
++ * READ-ONLY THIS ROUND, and the view says so in its own `rerun_reason` field rather
++ * than leaving the page to invent one. `ledger.py`'s closed CLASSES set carries
++ * `stage: None` for every member at this vintage, so a re-run control built over it
++ * would record SKIPPED every time; the acting control that DOES exist is `requestRefresh`
++ * above, which enqueues a box-side pull. ADDENDUM 2 C2 is the ruling: never a button
++ * that does nothing.
++ */
++export async function getInputLedger(securityKey: string): Promise<InputLedgerView> {
++  return apiRequest<InputLedgerView>(`${BASE}/security/${encodeURIComponent(securityKey)}/ledger`)
++}
++
++/**
++ * FWD-14 -- THE LIST REGISTER AND ITS ROT SIGNAL, SERVED (AMGT-rk-12).
++ *
++ * `lib/research/lists/rot.py` is "a script a PERSON runs", and its register was rendered
++ * only by the FWD-7 view, which was itself unserved -- so the signal reached nobody. This
++ * is the client half of its own route. The register's grain is PER LIST (the publisher
++ * allowlist, the company-to-social-account map), which is why this returns lists and not
++ * a per-name breakdown it does not have.
++ */
++export async function getListRegister(): Promise<ListRegisterView> {
++  return apiRequest<ListRegisterView>(`${BASE}/lists`)
++}
++
+ /** The print route this action calls -- exported so the render check can assert the
+  * REAL action hits the REAL path, rather than re-typing the string beside it. */
+ export function printPackPath(securityKey: string): string {
+diff --git a/src/pages/SecurityAnalysis/SecurityAnalysis.tsx b/src/pages/SecurityAnalysis/SecurityAnalysis.tsx
+index 03e98954..2a77533a 100644
+--- a/src/pages/SecurityAnalysis/SecurityAnalysis.tsx
++++ b/src/pages/SecurityAnalysis/SecurityAnalysis.tsx
+@@ -19,6 +19,14 @@
+  *
+  * The Lead Panel is mounted once here, outside `TabNavigation`'s content area, so it survives
+  * every tab change beneath it.
++ *
++ * BELOW THE TAB CONTENT: `ResearchInputsPanel` (AMGT-rk-12), the ONE mount for the three
++ * outcomes this round surfaced -- FWD-7, FWD-12 and FWD-14. Each had a Python module a person
++ * ran by hand as its whole implementation and no page surface at all; an outcome whose only
++ * implementation is a hand-run module is NOT REALIZED whatever its rows say. It is mounted here
++ * rather than added to `SECURITY_ANALYSIS_TABS` because C-PAGE-LAYOUT is ratified at ONE HEADER
++ * and FIVE TABS, and it takes the selected key because one of its three halves is per name. See
++ * that component for what each half reads, and for what each says when it cannot act.
+  */
+ 
+ import { type FC } from 'react'
+@@ -30,6 +38,7 @@ import { useTabNavigation } from '@/hooks/useTabNavigation'
+ import { TabNavigation } from '@/components/TabNavigation'
+ import { LeadPanel } from './components/LeadPanel'
+ import { PrintExportAction } from './components/PrintExportAction'
++import { ResearchInputsPanel } from './components/ResearchInputsPanel'
+ import { ThesisTab } from './tabs/ThesisTab'
+ import { ExecManagementTab } from './tabs/ExecManagementTab'
+ import { PeersTab } from './tabs/PeersTab'
+@@ -87,6 +96,10 @@ export const SecurityAnalysis: FC = () => {
+           {activeTab === 'model' && <ModelTab securityKey={state.selectedSecurityKey} />}
+           {activeTab === 'posture' && <PostureTab securityKey={state.selectedSecurityKey} />}
+         </div>
++
++        {/* AMGT-rk-12: FWD-7, FWD-12 and FWD-14, surfaced. Outside the tab content, so it is
++            not a sixth tab and does not move the ratified five. */}
++        <ResearchInputsPanel securityKey={state.selectedSecurityKey} />
+       </div>
+     </PageThemeProvider>
+   )
+diff --git a/src/pages/SecurityAnalysis/constants.ts b/src/pages/SecurityAnalysis/constants.ts
+index 80ad0e35..8171f9f5 100644
+--- a/src/pages/SecurityAnalysis/constants.ts
++++ b/src/pages/SecurityAnalysis/constants.ts
+@@ -47,6 +47,14 @@ export const AMGT_QUERY_KEYS = {
+   thesis: (securityKey: string) => ['amgt-lead', 'thesis', securityKey] as const,
+   peers: (securityKey: string) => ['amgt-lead', 'peers', securityKey] as const,
+   coverage: (securityKey: string) => ['amgt-lead', 'coverage', securityKey] as const,
++  /** AMGT-rk-12, FWD-7. UNIVERSE-WIDE, so no key segment: one view over every
++   * covered name, not a per-name read. */
++  coverageFreshness: () => ['amgt-lead', 'coverage-freshness'] as const,
++  /** AMGT-rk-12, FWD-12. PER NAME -- the ledger is per security, per input class. */
++  inputLedger: (securityKey: string) => ['amgt-lead', 'input-ledger', securityKey] as const,
++  /** AMGT-rk-12, FWD-14. The register's grain is PER LIST, not per name, so this
++   * key carries no security segment either. */
++  listRegister: () => ['amgt-lead', 'list-register'] as const,
+ } as const
+ 
+ /** List-view row cap. The GSI is already rank-ordered (producer side); this is a
+diff --git a/src/pages/SecurityAnalysis/hooks/useLeadPanelApi.ts b/src/pages/SecurityAnalysis/hooks/useLeadPanelApi.ts
+index 2460fe33..f3cc802a 100644
+--- a/src/pages/SecurityAnalysis/hooks/useLeadPanelApi.ts
++++ b/src/pages/SecurityAnalysis/hooks/useLeadPanelApi.ts
+@@ -23,6 +23,9 @@ import {
+   getThesisBundle,
+   getPeerSet,
+   getCoverageSet,
++  getCoverageFreshness,
++  getInputLedger,
++  getListRegister,
+ } from '@/api/endpoints/amgt-lead-panel'
+ import {
+   AMGT_QUERY_KEYS,
+@@ -132,6 +135,58 @@ export function usePeerSet(securityKey: string | null) {
+   })
+ }
+ 
++// ---------------------------------------------------------------------------
++// AMGT-rk-12 -- THE THREE SURFACED OUTCOMES (FWD-7, FWD-12, FWD-14)
++//
++// Each of these three was a hand-run Python module writing a JSON nobody served.
++// These are the page's reads of their served routes.
++//
++// THE STALE TIME IS DELIBERATELY LONGER THAN THE PAGE'S FIVE MINUTES. All three
++// views are produced by an ON-DEMAND generator, not a live feed: build_view.py
++// "reads the store once, writes the JSON once, and returns", and the list register
++// carries a review interval of 30 and 90 DAYS. Re-asking every five minutes would
++// spend reads to re-read an artifact that does not move -- so these use a 30-minute
++// window, and the number is stated here rather than inherited by accident.
++//
++// NONE OF THESE IS A WATCHER. No interval, no polling, no refetch on focus -- a
++// mounted query with a stale window is a read, and the standing moratorium on
++// monitors and freshness checkers is not touched by any of them.
++// ---------------------------------------------------------------------------
++
++const SURFACED_STALE_TIME_MS = 30 * 60 * 1000 // an on-demand generator, not a feed
++
++/** FWD-7. UNIVERSE-WIDE: no security key, so it is enabled unconditionally. */
++export function useCoverageFreshness() {
++  return useQuery({
++    queryKey: AMGT_QUERY_KEYS.coverageFreshness(),
++    queryFn: () => getCoverageFreshness(),
++    staleTime: SURFACED_STALE_TIME_MS,
++    retry: 1,
++  })
++}
++
++/** FWD-12. PER NAME, so it is disabled until a name is selected -- the panel prints
++ * the reason for the empty rather than firing a read it knows cannot be answered. */
++export function useInputLedger(securityKey: string | null) {
++  return useQuery({
++    queryKey: AMGT_QUERY_KEYS.inputLedger(securityKey ?? ''),
++    queryFn: () => getInputLedger(securityKey as string),
++    staleTime: SURFACED_STALE_TIME_MS,
++    retry: 1,
++    enabled: !!securityKey,
++  })
++}
++
++/** FWD-14. The register's grain is PER LIST, so this takes no key either. */
++export function useListRegister() {
++  return useQuery({
++    queryKey: AMGT_QUERY_KEYS.listRegister(),
++    queryFn: () => getListRegister(),
++    staleTime: SURFACED_STALE_TIME_MS,
++    retry: 1,
++  })
++}
++
+ export function useCoverageSet(securityKey: string | null) {
+   return useQuery({
+     queryKey: AMGT_QUERY_KEYS.coverage(securityKey ?? ''),
+diff --git a/src/pages/SecurityAnalysis/types.ts b/src/pages/SecurityAnalysis/types.ts
+index a24b6cf9..7fe2cb43 100644
+--- a/src/pages/SecurityAnalysis/types.ts
++++ b/src/pages/SecurityAnalysis/types.ts
+@@ -924,3 +924,142 @@ export interface SecurityOverlayBundle {
+ // ---------------------------------------------------------------------------
+ 
+ export type SecurityAnalysisTabId = 'thesis' | 'exec_management' | 'peers' | 'model' | 'posture'
++
++// ---------------------------------------------------------------------------
++// AMGT-rk-12 -- THE THREE SURFACED OUTCOMES (FWD-7, FWD-12, FWD-14)
++//
++// Each of these three outcomes was a Python module a person ran by hand, writing
++// a JSON nobody served. The cell's ruling: each gets a served route and a page
++// surface, because an outcome whose only implementation is a hand-run module is
++// NOT REALIZED whatever its rows say.
++//
++// TRANSCRIBED FROM THE LANDED ARTIFACTS, NEVER INVENTED, same discipline as every
++// other shape in this file:
++//   - CoverageFreshnessView: AMGT-s-7's own output, read at
++//     deliverables/0.9.0_WK_AMGT_RESAPP~7/coverage_freshness.json -- 89 rows, keys
++//     {rows, rot_signal_path, generated_at}, each row {name, security_key,
++//     last_refreshed, per_input{bloomberg,seekingalpha,serp}, rot}. NEVER is a
++//     VALUE on the row, never a blank and never a dropped name
++//     (lib/research/freshness/build_view.py).
++//   - InputLedgerView: AMGT-s-14's read_ledger() return (latest entry PER CLASS)
++//     plus the CLASSES registry that read_ledger does not carry -- the class set,
++//     its source labels, and whether a stage is bound. lib/research/ledger/ledger.py.
++//   - ListRegisterView: AMGT-s-15's own output, read at
++//     deliverables/0.9.0_WK_AMGT_RESAPP~5/lists/rot_signal.json -- {computed_at,
++//     lists{<name>{entries_stale, entries_total, list_stale, owner, owner_status,
++//     review_interval_days, reviewed_at, unresolvable_count, unresolvable_domains}}}.
++//     The register carries a rot signal PER LIST, never per covered name.
++//
++// THE THREE STATUS FIELDS ARE THE POINT. A served read that cannot answer says
++// WHICH absence it is, in its own field, so the panel can print the reason rather
++// than an empty table (the same discipline `PeerSet.basis === 'absent'` already
++// carries on this page). A control that cannot act SAYS WHY -- contract
++// C-ROUND12-SURFACED-OUTCOMES.
++// ---------------------------------------------------------------------------
++
++/** Why a surfaced read has no rows. SERVED = the route answered with the view.
++ * ABSENT = the route answered and said the artifact is not there. The THIRD
++ * state -- the route did not answer at all -- is the query's own error and is
++ * never folded into this enum (AMGT-ri-1: a failed request and a genuinely empty
++ * one must not arrive as the same empty array). */
++export type SurfacedReadStatus = 'SERVED' | 'ABSENT'
++
++// ---- FWD-7: coverage freshness -------------------------------------------
++
++export interface CoverageFreshnessRow {
++  name: string
++  /** null when the identity layer could form no key for this folder (AMGT-s-12
++   * UNRESOLVED) -- stated, never guessed from the folder text. */
++  security_key: string | null
++  /** A stamp, or the literal 'NEVER'. */
++  last_refreshed: string
++  /** vendor -> stamp or 'NEVER'. Key order is the view's own `vendors`. */
++  per_input: Record<string, string>
++  /** The register's ONE summary line, the same string on every row -- the
++   * register tracks lists, not covered names. */
++  rot: string
++}
++
++export interface CoverageFreshnessView {
++  rows: CoverageFreshnessRow[]
++  /** build_view.py's VENDOR_INPUTS, carried so the table's columns are the
++   * producer's list rather than a set re-derived from the first row. */
++  vendors: string[]
++  rot_signal_path: string | null
++  generated_at: string | null
++  view_status: SurfacedReadStatus
++  view_reason?: string | null
++}
++
++// ---- FWD-12: the input ledger --------------------------------------------
++
++export type InputLedgerOutcome = 'OK' | 'FAILED' | 'SKIPPED'
++
++/** One row per member of ledger.py's CLOSED class set -- a class with no run
++ * yet still appears, saying so, never dropped from the set. */
++export interface InputLedgerClassRow {
++  input_class: string
++  /** The registry's label ('where did this come from'), null when the class has
++   * no established vendor at this vintage. */
++  source: string | null
++  outcome: InputLedgerOutcome | null
++  /** The latest run's UTC stamp for THIS class, or null for a class never run. */
++  stamp: string | null
++  detail: string | null
++  /** ledger.py's `stage` for this class: false when it is None, which is what
++   * makes a re-run control over this class a decoration. */
++  stage_bound: boolean
++}
++
++export interface InputLedgerView {
++  security_key: string | null
++  classes: InputLedgerClassRow[]
++  /** The DENOMINATOR, printed on the surface: the size of the closed class set. */
++  classes_total: number
++  /** How many of them carry a bound stage. */
++  stage_bound_total: number
++  /** READ_ONLY is the only value this round ships. A re-run control over classes
++   * whose stage is None records SKIPPED every time, so it would be a button that
++   * does nothing -- and the acting control that DOES exist is the Lead Panel's
++   * Refresh, which enqueues a box-side pull. */
++  rerun_control: 'READ_ONLY'
++  /** Why the re-run control is read-only, in the producer's own terms. Printed
++   * verbatim by the panel -- a control that cannot act SAYS WHY. */
++  rerun_reason: string
++  ledger_status: SurfacedReadStatus
++  ledger_reason?: string | null
++}
++
++// ---- FWD-14: the list register and its rot signal ------------------------
++
++export interface ListRegisterEntry {
++  list_name: string
++  entries_total: number
++  entries_stale: number
++  list_stale: boolean
++  owner: string
++  owner_status: string
++  review_interval_days: number
++  reviewed_at: string
++  unresolvable_count: number
++  unresolvable_domains: string[]
++}
++
++export interface ListRegisterView {
++  lists: ListRegisterEntry[]
++  computed_at: string | null
++  register_status: SurfacedReadStatus
++  register_reason?: string | null
++}
++
++// ---- The on-demand pull acknowledgement (AMGT-rk-7's ONE SHAPE) ----------
++
++/** What `POST /api/private/research/pull` returns: the enqueue Lambda's own 202
++ * body (`infra/aws/lambda/research/pull_enqueue/lambda_function.py`), not a
++ * shape this client invented. `state` is the value it writes to
++ * packs/<security_key>/status.json in the same call, BEFORE the queue send. */
++export interface ResearchPullAck {
++  state: string
++  security_key: string
++  requested_at: string
++}
+diff --git a/src/pages/SecurityAnalysis/components/CoverageFreshnessPanel.tsx b/src/pages/SecurityAnalysis/components/CoverageFreshnessPanel.tsx
+new file mode 100644
+--- /dev/null
++++ b/src/pages/SecurityAnalysis/components/CoverageFreshnessPanel.tsx
+@@ -0,0 +1,152 @@
++/**
++ * CoverageFreshnessPanel -- FWD-7's PAGE SURFACE (AMGT_RESAPP AMGT-rk-12).
++ *
++ * THE MEASURED STATE THIS CELL CORRECTS. FWD-7 -- "Adam can see which covered companies
++ * have gone stale" -- was ratified with a Python module as its whole implementation:
++ * `lib/research/freshness/build_view.py`, whose own docstring calls it "the generator a
++ * person runs by hand", writing a coverage_freshness.json nobody served. Measured at the
++ * round-12 cut: 0 of the 11 mounted routes, 0 page components, 0 adapter references,
++ * against a positive control (peers/v1 = 2) that fired. An outcome whose only
++ * implementation is a hand-run module is NOT REALIZED whatever its rows say.
++ *
++ * WHAT IT RENDERS. One row per name in the covered universe, in the view's own order --
++ * nothing here sorts or re-ranks. `NEVER` is a VALUE, printed as NEVER, never a blank
++ * and never a dropped name: a folder with no research still appears, saying so plainly,
++ * which is the module's own rule carried onto the page. The per-input columns are the
++ * view's own `vendors` list (build_view.py's VENDOR_INPUTS), so a fourth vendor appears
++ * here the moment the producer names it, with no change on this side.
++ *
++ * WHAT IT DOES WHEN IT CANNOT ACT -- contract C-ROUND12-SURFACED-OUTCOMES. There are
++ * THREE distinct empties and this panel never collapses them into one blank table:
++ *   - the read did not answer at all (the route is not mounted yet, or it 4xx/5xx'd):
++ *     REFUSED, with the route and the error the client actually got;
++ *   - the route answered and said the artifact is not there: the server's own
++ *     `view_reason`, printed verbatim;
++ *   - the route answered with a view carrying zero rows: that is stated as zero rows
++ *     against its printed denominator, which is a different fact from either refusal.
++ *
++ * THIS PANEL READS. It has no button, because it has nothing to act on -- the coverage
++ * view is regenerated by its own producer, and the one acting control on this page is
++ * the Lead Panel's Refresh, which enqueues a box-side pull for ONE name.
++ *
++ * The route declaration that mounts the server half is chain B's cell (AMGT-rk-6 AC4),
++ * a separate surface with a separate owner -- the same relationship this page's own
++ * `amgt-lead-panel.ts` already documents for every other call it makes. Until it lands
++ * this panel renders the first state above, which is the honest one.
++ */
++
++import { type FC } from 'react'
++import { Panel, PanelHeader, PanelContent } from '@/ui/components/panels'
++import { useCoverageFreshness } from '../hooks/useLeadPanelApi'
++import type { CoverageFreshnessRow } from '../types'
++
++/** The module's own sentinel, carried rather than re-spelled as a blank. */
++const NEVER = 'NEVER'
++
++export const COVERAGE_FRESHNESS_ROUTE = '/api/scoped/amgt/freshness'
++
++/** The refusal text, in one place so the panel and any exercise of it cannot drift
++ * into two different sentences for one state. Always begins REFUSED. */
++export function freshnessRefusalReason(detail: string): string {
++  return (
++    'REFUSED: the coverage-freshness read did not answer -- ' +
++    detail +
++    '. This panel shows no rows rather than inventing them. The view is produced by ' +
++    'lib/research/freshness/build_view.py and served on GET ' +
++    COVERAGE_FRESHNESS_ROUTE +
++    '; until that route answers there is nothing here to show, and that is a ' +
++    'different fact from a universe with nothing stale.'
++  )
++}
++
++function staleCount(rows: CoverageFreshnessRow[]): number {
++  return rows.filter((row) => row.last_refreshed === NEVER).length
++}
++
++export const CoverageFreshnessPanel: FC = () => {
++  const { data, isLoading, isError, error } = useCoverageFreshness()
++  const rows = data?.rows ?? []
++  const vendors = data?.vendors ?? []
++
++  return (
++    <Panel variant="mixed">
++      <PanelHeader
++        title="Coverage freshness"
++        subtitle="FWD-7 -- which covered names have gone stale, one row per name, NEVER carried as a value"
++      />
++      <PanelContent>
++        <div data-surfaced-outcome="freshness" className="space-y-2">
++          {isLoading && <p className="text-sm text-white/50">Loading...</p>}
++
++          {!isLoading && isError && (
++            <p data-freshness-state="refused" className="text-sm text-amber-300">
++              {freshnessRefusalReason((error as Error)?.message ?? 'no error message was carried')}
++            </p>
++          )}
++
++          {!isLoading && !isError && data && data.view_status === 'ABSENT' && (
++            <p data-freshness-state="absent" className="text-sm text-white/70">
++              {data.view_reason ??
++                'not available because the server reported the view ABSENT and carried no reason'}
++            </p>
++          )}
++
++          {!isLoading && !isError && data && data.view_status === 'SERVED' && (
++            <>
++              <div className="overflow-x-auto">
++                <table data-freshness-table className="w-full text-[11px]">
++                  <thead>
++                    <tr>
++                      <th className="text-left text-white/50 font-normal pr-2">Name</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Key</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Last refreshed</th>
++                      {vendors.map((vendor) => (
++                        <th key={vendor} className="text-left text-white/50 font-normal px-1">
++                          {vendor}
++                        </th>
++                      ))}
++                    </tr>
++                  </thead>
++                  <tbody>
++                    {rows.map((row) => (
++                      <tr key={row.name} className="border-t border-white/5">
++                        <td className="pr-2 text-white">{row.name}</td>
++                        <td className="pr-2 text-white/60">{row.security_key ?? 'UNRESOLVED'}</td>
++                        <td
++                          className={
++                            row.last_refreshed === NEVER
++                              ? 'pr-2 text-amber-300 tabular-nums'
++                              : 'pr-2 text-white/70 tabular-nums'
++                          }
++                        >
++                          {row.last_refreshed}
++                        </td>
++                        {vendors.map((vendor) => (
++                          <td key={vendor} className="px-1 text-white/60 tabular-nums">
++                            {row.per_input?.[vendor] ?? NEVER}
++                          </td>
++                        ))}
++                      </tr>
++                    ))}
++                  </tbody>
++                </table>
++              </div>
++              <p data-freshness-counts className="text-[10px] text-white/40">
++                {staleCount(rows)} of {rows.length} covered name(s) read NEVER across{' '}
++                {vendors.length} vendor input(s). Generated {data.generated_at ?? 'unstated'}. Rot
++                signal read from {data.rot_signal_path ?? 'no register at this vintage'}.
++              </p>
++              {rows.length === 0 && (
++                <p data-freshness-state="empty" className="text-sm text-white/70">
++                  The route answered and carried 0 rows against a universe denominator of 0. That is
++                  the view being empty, not a refusal and not a universe with nothing stale.
++                </p>
++              )}
++              {rows.length > 0 && <p className="text-[10px] text-white/40">{rows[0].rot}</p>}
++            </>
++          )}
++        </div>
++      </PanelContent>
++    </Panel>
++  )
++}
+diff --git a/src/pages/SecurityAnalysis/components/InputLedgerPanel.tsx b/src/pages/SecurityAnalysis/components/InputLedgerPanel.tsx
+new file mode 100644
+--- /dev/null
++++ b/src/pages/SecurityAnalysis/components/InputLedgerPanel.tsx
+@@ -0,0 +1,171 @@
++/**
++ * InputLedgerPanel -- FWD-12's PAGE SURFACE (AMGT_RESAPP AMGT-rk-12).
++ *
++ * THE MEASURED STATE THIS CELL CORRECTS. FWD-12 -- "an analyst can see where each input
++ * came from and re-run any one alone" -- was ratified with a Python module as its whole
++ * implementation: `lib/research/ledger/ledger.py`, where `rerun()` is a FUNCTION, not a
++ * button. Measured at the round-12 cut: 0 of the 11 mounted routes, 0 page components,
++ * 0 adapter references. An outcome whose only implementation is a hand-run module is NOT
++ * REALIZED whatever its rows say, so FWD-12 gets a served route and this surface.
++ *
++ * THE HALF THAT IS REALIZED HERE, AND THE HALF THAT IS NOT. "SEE WHERE EACH INPUT CAME
++ * FROM" is realized: one row per member of ledger.py's CLOSED class set -- market_data,
++ * filings, news, social, web, sa -- carrying its source label, its latest run stamp and
++ * that run's outcome, with a class that has never run still present and saying so rather
++ * than dropped from the set. "RE-RUN ANY ONE ALONE" is NOT realized this round, and this
++ * panel is READ-ONLY. It says why, in the server view's own words, beside the count that
++ * decides it.
++ *
++ * WHY READ-ONLY IS THE CORRECT SHIP AND NOT A SHORTFALL (ADDENDUM 2 C2, the cell's own
++ * correction; contract C-ROUND12-SURFACED-OUTCOMES: a control that cannot act SAYS WHY):
++ *   - `ledger.py`'s CLASSES carries `stage: None` for 6 of 6 classes at this vintage, by
++ *     design -- "a class registers itself only when a real stage exists to run it, never
++ *     a stub left in production code". `rerun()` raises RuntimeError on a None stage.
++ *     A re-run button over that set would record SKIPPED every time; it would be a
++ *     decoration, and NEVER A BUTTON THAT DOES NOTHING is the ruling.
++ *   - `register_stage()` has no production caller at all (census: 1 caller in 32,971
++ *     files, and it is a worker exercise script binding a stub).
++ *   - The retrofit modules the ledger names carry no callable of the stage shape either:
++ *     `stage_pull(blp, s3, security, pull_log)` needs a live BLPAPI client, and
++ *     `run_ticker(config, session, ...)` a live authenticated vendor session. Neither is
++ *     reachable from a served route: the cloud plane cannot reach Bloomberg at all.
++ *   - AND THE RE-RUN CARRIER ALREADY EXISTS ELSEWHERE, WHICH IS WHY BINDING A STAGE HERE
++ *     WOULD BE THE WRONG MECHANISM. The acting control on this page is the Lead Panel's
++ *     Refresh, which POSTs the on-demand pull route; that enqueues ONE message the
++ *     box-side consumer drains, where the vendor IS reachable. Activation of a per-class
++ *     re-run is round 13's, stated as such rather than shipped as a dead button here.
++ *
++ * WHAT IT DOES WHEN IT CANNOT ACT. Four distinct states, never collapsed: no name
++ * selected (the ledger is per security); the read did not answer (REFUSED, with the
++ * route and the client's own error); the route answered ABSENT (the server's reason,
++ * verbatim); the route answered with the class set and a read-only re-run (the reason
++ * printed beside the bound-stage count that produced it).
++ */
++
++import { type FC } from 'react'
++import { Panel, PanelHeader, PanelContent } from '@/ui/components/panels'
++import { useInputLedger } from '../hooks/useLeadPanelApi'
++import type { InputLedgerClassRow } from '../types'
++
++export const INPUT_LEDGER_ROUTE = '/api/scoped/amgt/security/{security_key}/ledger'
++
++/** The refusal text, in one place. Always begins REFUSED. */
++export function ledgerRefusalReason(detail: string): string {
++  return (
++    'REFUSED: the input-ledger read did not answer -- ' +
++    detail +
++    '. This panel shows no class rows rather than inventing them. The ledger is produced ' +
++    'by lib/research/ledger/ledger.py and served on GET ' +
++    INPUT_LEDGER_ROUTE +
++    '; a name whose ledger cannot be read is a different fact from a name with no runs.'
++  )
++}
++
++/** The read-only reason this page falls back to when the served view carries none. The
++ * server owns this sentence; this is the floor, not the source. */
++export const RERUN_READ_ONLY_FALLBACK =
++  'Re-run is not available because no input class carries a bound stage at this vintage ' +
++  '(ledger.py CLASSES: stage is None for every member), so a re-run would record SKIPPED ' +
++  'every time. The acting control is the Lead Panel Refresh, which enqueues one box-side ' +
++  'pull for this name; per-class activation is round 13.'
++
++function outcomeClass(row: InputLedgerClassRow): string {
++  if (row.outcome === 'FAILED') return 'pr-2 text-rose-300'
++  if (row.outcome === 'SKIPPED') return 'pr-2 text-amber-300'
++  if (row.outcome === 'OK') return 'pr-2 text-emerald-300'
++  return 'pr-2 text-white/40'
++}
++
++export interface InputLedgerPanelProps {
++  securityKey: string | null
++}
++
++export const InputLedgerPanel: FC<InputLedgerPanelProps> = ({ securityKey }) => {
++  const { data, isLoading, isError, error } = useInputLedger(securityKey)
++  const classes = data?.classes ?? []
++
++  return (
++    <Panel variant="mixed">
++      <PanelHeader
++        title="Input ledger"
++        subtitle="FWD-12 -- per input class: where it came from, when it last ran, and how that run ended"
++      />
++      <PanelContent>
++        <div data-surfaced-outcome="ledger" className="space-y-2">
++          {!securityKey && (
++            <p data-ledger-state="no-name" className="text-sm text-white/70">
++              The ledger is per security, so it is not available because no name is selected. Pick a
++              name in the Lead Panel above and this reads that name only.
++            </p>
++          )}
++
++          {securityKey && isLoading && <p className="text-sm text-white/50">Loading...</p>}
++
++          {securityKey && !isLoading && isError && (
++            <p data-ledger-state="refused" className="text-sm text-amber-300">
++              {ledgerRefusalReason((error as Error)?.message ?? 'no error message was carried')}
++            </p>
++          )}
++
++          {securityKey && !isLoading && !isError && data && data.ledger_status === 'ABSENT' && (
++            <p data-ledger-state="absent" className="text-sm text-white/70">
++              {data.ledger_reason ??
++                'not available because the server reported the ledger ABSENT and carried no reason'}
++            </p>
++          )}
++
++          {securityKey && !isLoading && !isError && data && data.ledger_status === 'SERVED' && (
++            <>
++              <table data-ledger-table className="w-full text-[11px]">
++                <thead>
++                  <tr>
++                    <th className="text-left text-white/50 font-normal pr-2">Input class</th>
++                    <th className="text-left text-white/50 font-normal pr-2">Source</th>
++                    <th className="text-left text-white/50 font-normal pr-2">Last run</th>
++                    <th className="text-left text-white/50 font-normal pr-2">Outcome</th>
++                    <th className="text-left text-white/50 font-normal pr-2">Re-run</th>
++                    <th className="text-left text-white/50 font-normal pr-2">Detail</th>
++                  </tr>
++                </thead>
++                <tbody>
++                  {classes.map((row) => (
++                    <tr
++                      key={row.input_class}
++                      data-ledger-class={row.input_class}
++                      data-ledger-stage-bound={row.stage_bound ? 'yes' : 'no'}
++                      className="border-t border-white/5"
++                    >
++                      <td className="pr-2 text-white">{row.input_class}</td>
++                      <td className="pr-2 text-white/60">{row.source ?? 'none at this vintage'}</td>
++                      <td className="pr-2 text-white/70 tabular-nums">{row.stamp ?? 'NEVER'}</td>
++                      <td className={outcomeClass(row)}>{row.outcome ?? 'no run recorded'}</td>
++                      <td className="pr-2 text-white/40">
++                        {row.stage_bound ? 'stage bound' : 'no stage bound'}
++                      </td>
++                      <td className="pr-2 text-white/50">{row.detail ?? ''}</td>
++                    </tr>
++                  ))}
++                </tbody>
++              </table>
++
++              <p data-ledger-counts className="text-[10px] text-white/40">
++                {data.stage_bound_total} of {data.classes_total} input class(es) carry a bound
++                stage. The class set is CLOSED -- a class with no stage is registered here with no
++                stage, honestly, never dropped from the set.
++              </p>
++
++              {/* THE CONTROL THAT CANNOT ACT, SAYING WHY. No button is rendered: a re-run over
++                  classes whose stage is None records SKIPPED every time (ADDENDUM 2 C2). */}
++              <p
++                data-ledger-rerun={data.rerun_control}
++                className="text-[10px] text-amber-300/80 border-t border-white/10 pt-2"
++              >
++                {data.rerun_reason || RERUN_READ_ONLY_FALLBACK}
++              </p>
++            </>
++          )}
++        </div>
++      </PanelContent>
++    </Panel>
++  )
++}
+diff --git a/src/pages/SecurityAnalysis/components/ListRegisterPanel.tsx b/src/pages/SecurityAnalysis/components/ListRegisterPanel.tsx
+new file mode 100644
+--- /dev/null
++++ b/src/pages/SecurityAnalysis/components/ListRegisterPanel.tsx
+@@ -0,0 +1,159 @@
++/**
++ * ListRegisterPanel -- FWD-14's PAGE SURFACE (AMGT_RESAPP AMGT-rk-12).
++ *
++ * THE MEASURED STATE THIS CELL CORRECTS. FWD-14 -- the register of owned lists with a
++ * rot signal -- was ratified with a Python module as its whole implementation:
++ * `lib/research/lists/rot.py`, whose own docstring calls it "a script a PERSON runs".
++ * Its register was RENDERED only by the FWD-7 coverage view, which was itself unserved,
++ * so the rot signal reached nobody. Measured at the round-12 cut: 0 of the 11 mounted
++ * routes, 0 page components, 0 adapter references, against a positive control that
++ * fired. An outcome whose only implementation is a hand-run module is NOT REALIZED
++ * whatever its rows say.
++ *
++ * THE GRAIN, STATED BECAUSE IT IS THE THING MOST EASILY GOT WRONG. The register carries
++ * a rot signal PER LIST -- the publisher allowlist, the company-to-social-account map --
++ * and has NO company-keyed breakdown at all. So this panel renders lists, never covered
++ * names, and never manufactures a per-name rot value the register does not hold. The
++ * coverage-freshness view beside it repeats ONE summary line of this same register on
++ * every row for exactly that reason.
++ *
++ * WHAT IT RENDERS. One row per owned list: its stale count against its own entries
++ * denominator, whether the list as a whole is stale, its review interval, when it was
++ * last reviewed, its owner and owner status, and its unresolvable count. An owner that
++ * is UNASSIGNED is shown as UNASSIGNED -- C-NO-CONTACT reserves naming the owner to
++ * Andrew, and an unassigned owner is a fact to show, not a blank to hide.
++ *
++ * WHAT IT DOES WHEN IT CANNOT ACT -- contract C-ROUND12-SURFACED-OUTCOMES. The read did
++ * not answer (REFUSED, with the route and the client error); the route answered ABSENT
++ * (the server reason, verbatim); the route answered with zero lists (stated against its
++ * printed denominator, a different fact from either refusal).
++ *
++ * THIS PANEL READS AND HAS NO BUTTON. Recomputing the rot signal is the producer's act,
++ * and marking a list reviewed is an OWNER's act by a person Andrew has not yet named --
++ * so there is nothing here this page is entitled to trigger, and it does not pretend
++ * otherwise. It is also not a watcher: nothing here polls, schedules or alerts.
++ */
++
++import { type FC } from 'react'
++import { Panel, PanelHeader, PanelContent } from '@/ui/components/panels'
++import { useListRegister } from '../hooks/useLeadPanelApi'
++
++export const LIST_REGISTER_ROUTE = '/api/scoped/amgt/lists'
++
++/** The refusal text, in one place. Always begins REFUSED. */
++export function listRegisterRefusalReason(detail: string): string {
++  return (
++    'REFUSED: the list-register read did not answer -- ' +
++    detail +
++    '. This panel shows no lists rather than inventing them. The register and its rot ' +
++    'signal are produced by lib/research/lists/rot.py and served on GET ' +
++    LIST_REGISTER_ROUTE +
++    '; a register that cannot be read is a different fact from a register with nothing stale.'
++  )
++}
++
++export const ListRegisterPanel: FC = () => {
++  const { data, isLoading, isError, error } = useListRegister()
++  const lists = data?.lists ?? []
++  const staleLists = lists.filter((entry) => entry.list_stale).length
++
++  return (
++    <Panel variant="mixed">
++      <PanelHeader
++        title="Owned lists and rot signal"
++        subtitle="FWD-14 -- the register of owned lists, each with its own rot signal; the grain is per list, never per name"
++      />
++      <PanelContent>
++        <div data-surfaced-outcome="rot-signal" className="space-y-2">
++          {isLoading && <p className="text-sm text-white/50">Loading...</p>}
++
++          {!isLoading && isError && (
++            <p data-rot-signal-state="refused" className="text-sm text-amber-300">
++              {listRegisterRefusalReason(
++                (error as Error)?.message ?? 'no error message was carried'
++              )}
++            </p>
++          )}
++
++          {!isLoading && !isError && data && data.register_status === 'ABSENT' && (
++            <p data-rot-signal-state="absent" className="text-sm text-white/70">
++              {data.register_reason ??
++                'not available because the server reported the register ABSENT and carried no reason'}
++            </p>
++          )}
++
++          {!isLoading && !isError && data && data.register_status === 'SERVED' && (
++            <>
++              <div className="overflow-x-auto">
++                <table data-rot-signal-table className="w-full text-[11px]">
++                  <thead>
++                    <tr>
++                      <th className="text-left text-white/50 font-normal pr-2">List</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Rot signal</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Stale entries</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Reviewed</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Interval</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Owner</th>
++                      <th className="text-left text-white/50 font-normal pr-2">Unresolvable</th>
++                    </tr>
++                  </thead>
++                  <tbody>
++                    {lists.map((entry) => (
++                      <tr
++                        key={entry.list_name}
++                        data-rot-signal-list={entry.list_name}
++                        data-rot-signal-stale={entry.list_stale ? 'yes' : 'no'}
++                        className="border-t border-white/5"
++                      >
++                        <td className="pr-2 text-white">{entry.list_name}</td>
++                        <td
++                          className={
++                            entry.list_stale ? 'pr-2 text-amber-300' : 'pr-2 text-emerald-300'
++                          }
++                        >
++                          {entry.list_stale ? 'STALE' : 'not stale'}
++                        </td>
++                        <td className="pr-2 text-white/70 tabular-nums">
++                          {entry.entries_stale} of {entry.entries_total}
++                        </td>
++                        <td className="pr-2 text-white/70 tabular-nums">{entry.reviewed_at}</td>
++                        <td className="pr-2 text-white/60 tabular-nums">
++                          {entry.review_interval_days} day(s)
++                        </td>
++                        <td className="pr-2 text-white/60">{entry.owner_status}</td>
++                        <td className="pr-2 text-white/60 tabular-nums">
++                          {entry.unresolvable_count}
++                        </td>
++                      </tr>
++                    ))}
++                  </tbody>
++                </table>
++              </div>
++
++              <p data-rot-signal-counts className="text-[10px] text-white/40">
++                {staleLists} of {lists.length} owned list(s) carry a STALE rot signal. Computed{' '}
++                {data.computed_at ?? 'unstated'}. The register tracks lists, not covered names, so
++                there is no per-name rot value to show here and none is invented.
++              </p>
++
++              {lists.length === 0 && (
++                <p data-rot-signal-state="empty" className="text-sm text-white/70">
++                  The route answered and carried 0 lists against a register denominator of 0. That
++                  is an empty register, not a refusal and not a register with nothing stale.
++                </p>
++              )}
++
++              {lists.some((entry) => entry.owner_status === 'UNASSIGNED') && (
++                <p className="text-[10px] text-white/40">
++                  One or more lists have no named owner. Marking a list reviewed is that
++                  owner&apos;s act, so no control for it is offered here: C-NO-CONTACT reserves
++                  naming the owner to Andrew.
++                </p>
++              )}
++            </>
++          )}
++        </div>
++      </PanelContent>
++    </Panel>
++  )
++}
+diff --git a/src/pages/SecurityAnalysis/components/ResearchInputsPanel.tsx b/src/pages/SecurityAnalysis/components/ResearchInputsPanel.tsx
+new file mode 100644
+--- /dev/null
++++ b/src/pages/SecurityAnalysis/components/ResearchInputsPanel.tsx
+@@ -0,0 +1,53 @@
++/**
++ * ResearchInputsPanel -- the ONE mount for AMGT-rk-12's three surfaced outcomes.
++ *
++ * WHY THIS EXISTS AS A CONTAINER RATHER THAN THREE MOUNTS IN THE PAGE SHELL. The three
++ * outcomes share one question -- what has this research actually been fed, and when --
++ * and two of the three are UNIVERSE-WIDE while one is PER NAME. Keeping them together
++ * puts that asymmetry in one place: this component owns the security key, hands it to
++ * the per-name surface, and says why the per-name half is empty when no name is chosen,
++ * so no child has to re-derive that state.
++ *
++ * WHY IT IS NOT A SIXTH TAB. C-PAGE-LAYOUT is ratified at ONE HEADER and FIVE TABS
++ * (Thesis, Exec Management, Peers, Model, Posture -- `SECURITY_ANALYSIS_TABS`, the one
++ * declaration). Adding a tab would change a layout Andrew fixed, which is not this
++ * cell's to change. This sits BELOW the tab content instead: it is about the inputs the
++ * whole page rests on, not one more per-name view competing with the five.
++ *
++ * THE THREE CHILDREN, each carrying its own read, its own denominator and its own
++ * refusal reason:
++ *   - CoverageFreshnessPanel -- FWD-7, universe-wide.
++ *   - InputLedgerPanel       -- FWD-12, per name (the key below).
++ *   - ListRegisterPanel      -- FWD-14, per list.
++ *
++ * NOTHING HERE ACTS. No button, no poll, no schedule, no alert. The one acting control
++ * on this page stays where it already is -- the Lead Panel Refresh -- and each child
++ * states, in its own words, what it cannot do and why: a control that cannot act SAYS
++ * WHY (contract C-ROUND12-SURFACED-OUTCOMES).
++ */
++
++import { type FC } from 'react'
++import { CoverageFreshnessPanel } from './CoverageFreshnessPanel'
++import { InputLedgerPanel } from './InputLedgerPanel'
++import { ListRegisterPanel } from './ListRegisterPanel'
++
++export interface ResearchInputsPanelProps {
++  securityKey: string | null
++}
++
++export const ResearchInputsPanel: FC<ResearchInputsPanelProps> = ({ securityKey }) => {
++  return (
++    <div data-research-inputs className="space-y-4">
++      {!securityKey && (
++        <p data-research-inputs-scope="universe-only" className="text-[10px] text-white/40">
++          Two of these three read the whole covered universe and are shown below. The per-name
++          half is not available because no name is selected -- pick one in the Lead Panel and it
++          fills in for that name only.
++        </p>
++      )}
++      <CoverageFreshnessPanel />
++      <InputLedgerPanel securityKey={securityKey} />
++      <ListRegisterPanel />
++    </div>
++  )
++}

@@ -1,4 +1,4 @@
-# AMGT_RESAPP -- L5 decomposition (COO) -- v1.3 (s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
+# AMGT_RESAPP -- L5 decomposition (COO) -- v1.6 (s.20 = round 12, amended s.20h + s.20i; s.18 = round 10; the header read v0.6 through v1.0 and is corrected here)
 
 **Seat:** `2.0.0_SA_COO~ZZZ`, spawned by Andrew 2026-09-10 ~17:4xZ at the `1.0.0_SA_CTO~Z` terminal for this
 project (seating brief msg 21003; `project.json` `seats.coo`). **Directive:** D5 Alternative Research.
@@ -1960,3 +1960,344 @@ proof instance; the pool prefixes are one object per (key, as_of); a generation 
 rj-10 is the ONLY cell that moves the live plane; a cell's QA one-shot writes pool objects and nothing else; the values one remedy
 does not move are named in each cell (rj-1 does not deploy; rj-6 does not run the batch; rj-8 does not start the loop; rj-11 does
 not schedule; rj-13 builds no feed).
+---
+
+## 20. ROUND 12 (v1.4) -- FROM THE L10 ROUND-11 ANALYSIS @`c708914c50`, ADDENDUM 1 @`1db70c8e87` AND ADDENDUM 2 @`06378dd3bd`
+
+**Cut by `2.0.0_SA_COO~Z`**, the first round this lane holds. Continuity ruled by `1.0.0_SA_CTO~Z` (msg 23365) on
+Andrew-direct ~04:5xZ, *"yeah we also need COO~Z and CVO~Z for full tier1 on this project"* (record `c05a41c0f4`).
+**Rounds 1-11 are FROZEN and unchanged**; rounds 10-11 were held by `2.0.0_SA_COO~W` and that record stands.
+
+**SIXTEEN cells, ids `AMGT-rk-1` .. `AMGT-rk-16`** (thirteen at v1.4; `AMGT-rk-14` at v1.5 s.20h; `AMGT-rk-15` and `AMGT-rk-16` at v1.6 s.20i) -- the analysis's A-M, remapped into dependency order. The letters
+are the CTO's (WHAT); the ids, chains and fan-out are this seat's (HOW), per s.5's own division.
+
+### 20a. THE SUBTRACTION (Rule 24) -- over the PRD's OUTCOMES against the SERVED PLANE
+
+⛔ **THE DOMAIN IS THE PRD'S OUTCOMES, NOT THE PREVIOUS ROUND'S FINDINGS.** This is the standing instruction
+Addendum 1 A1.1 minted for every later round of this project, and it exists because this seat got the domain wrong
+first: at msg 23371 it differenced the packet's section 5 against the slug's six obligations, got 24 ids each with 15
+shared, and reported the agreement as corroboration. ⛔ **IT WAS NOT.** Both are round-11 artifacts and round 11 never
+looked at the DEV branch or invoked the print route, so the two instruments were blind in the same place and agreed
+*because* they were blind in the same place -- Rule 22's shared-dependency blindness, which this seat named in its own
+message and then did not apply to its own pair. What caught it was a SEPARATE SEAT pointed at the product
+(`4.0.0_SA_CRO~Z` @`a10eece02e`). **The instrument correction is recorded rather than quietly dropped.**
+
+**DENOMINATOR: 20 outcomes**, `FWD-1..FWD-20`, PRD **v0.9 @`44269d0515`** (FWD-20 appended at v0.9; ids permanent,
+never reused). **SERVED-PLANE STATE** from `4.0.0_SA_CRO~Z`'s product-existence audit @`a10eece02e` -- an independent
+seat on a different instrument (direct Lambda invoke, zip listing, `git ls-tree` on the portal, Task Scheduler, boto3
+pool inventory), never this lane's own read.
+
+**THE SUBTRACTION = 20 outcomes MINUS those a cell in `A`..`M` covers = the UNCOVERED PARTITION.** Written as a
+subtraction from the printed denominator, never as a forward list of what was thought of.
+
+⛔ **AND THE ANSWER IS NOT ZERO. THREE ITEMS SURVIVE THE SUBTRACTION, AND THIS SEAT IS SURFACING THEM, NOT CUTTING
+THEM** -- adding a cell the analysis did not name would be this lane re-scoping WHAT, which is the CTO's. Each is an
+OPEN CALL routed to `1.0.0_SA_CTO~Z`:
+
+| # | uncovered | measured | instrument |
+|---|---|---|---|
+| U1 | **`FWD-18`'s one chart** -- *"the one chart that matters is drawn from them"* | the thesis driver chart is **ABSENT 5 of 5**; no numeric driver series exists, segments are prose. `W18-S12` occurs **ONCE** in the whole 400-line analysis -- in s.3's "what does not serve today" table -- and **ZERO times** in the cell text of s.5 A-H or either addendum | count over the analysis text, cell-section scoped and then unscoped |
+| U2 | **`FWD-6`'s compare surface** -- *"naming the earlier version that shows it"* | the version STORE exists (bucket versioning Enabled, timestamped `derived/model_block/<key>/<stamp>/`); the **compare-two-versions surface is ABSENT**, 0 hits for version / earlier / compare in the page components. `FWD-6` occurs **ZERO** times in the analysis | CRO audit s.1 row S6; count over the analysis |
+| U3 | **the slug's obligation-2 residue** | `W18-S13` / `W21-S6` (CSC values and horizons), `W21-S5` (currency and vintage comparability), `W20-S10` (fit inputs) are named in the round-11 slug's obligation 2 and in **no** cell's text. `W20-S9` is `1.0.0_SA_CTO~Z`'s own row | the same count, run over each id |
+
+⚠ **U1 AND U2 ARE THE SAME CLASS ADDENDUM 1 ALREADY CAUGHT ONE LEVEL DOWN** -- an outcome whose *record* is healthy and
+whose *surface* was never built. They are offered in exactly that spirit and with no claim that the cell set is
+otherwise incomplete: `FWD-3`, `FWD-10` and `FWD-11` also occur zero times in the analysis, and each is correctly
+covered anyway -- provenance and the check face ride the page cell, and the social source is `G`'s classify-only
+mandate by ruling. **Absence from the analysis text is not by itself a gap; U1-U3 are named because their SURFACE is
+absent on the served plane as well.**
+
+⭐ **AND ONE AXIS SITS ABOVE ALL THIRTEEN CELLS**, found by `1.0.0_SA_CTO~Z` from `4.0.0_SA_CRO~Z`'s projection and
+recorded here because it governs how this round's bars are written: **cells A-M repair the PLANE, never the
+POPULATION.** 10 of 19 outcomes stay ABSENT for a non-pilot covered name after every cell lands. **No count bar in
+this round may be cut as though the population were the coverage list.** The two cards that would move it (the
+model-block pull over the 33 keyed names; the filings batch) are **RESERVED at Andrew** and are not cells.
+
+### 20b. PLANE, GRAIN, DENOMINATOR -- the three that decide whether a criterion can fail
+
+1. **EVERY BAR READS THE DEPLOYED PLANE, NEVER HEAD.** Round 11 passed 83 of 83 explicit criteria while the product's
+   central page served zero model figures; the one JUDGMENT criterion is what caught it. A capture from source is not
+   evidence about what a person opens.
+2. **THE HONEST DENOMINATORS, READ AT THE CUT AND NOT ASSUMED** (Addendum 1 R5, and `W19-S8` is the round-11 row filed
+   for exactly this): the article pool is **7 bodies over 3 names**; `derived/model_block/` holds **3 covered keys of
+   89 coverage / 256 universe** plus NVDA, which is not covered (`4.0.0_SA_CRO~Z`'s own correction against its first
+   figure of 4); filings and drafting are **5 pilot names**; `peers/v1` is 33 objects with **10** carrying members;
+   `posture/v1` is **2** keys. ⛔ **A cell that writes a count bar re-reads its store AT THE CUT and PRINTS the
+   denominator beside the number** -- a bar of "80% of covered names" against a 3-key store is a refused criterion.
+3. **GRAIN:** a criterion names the exact route, the exact capture filename, and the exact key. `W20-S1`'s defect was a
+   grain mismatch between a pre-census and a post-census; `F` is the cell that repairs the class at the issuer.
+
+### 20c. THE CELLS -- thirteen, ids `AMGT-rk-1` .. `AMGT-rk-13`
+
+⛔ **THE FULL ID IS WRITTEN IN EVERY HEADING AND IN EVERY TASK ORDER.** The L6 gate resolves cell ids by REGEX over
+this file's text (`CELL_ID_RE`, `to-pipeline-gate.py:262`), so a bare `rk-1` in the decomposition against `AMGT-rk-1`
+in the order is a refusal. Validated at the cut with controls: `AMGT-rk-1`, `AMGT-rk-9`, `AMGT-rk-12` and
+`AMGT-rk-13` all fullmatch; `rk-1`, `AMGT-rk1`, `amgt-rk-1`, `AMGT-RK-1` and `AMGT-rkkkkk-1` are all refused.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-1`** | **I** | **FIRST.** Merge the page into portal **DEV** and read a render. 48 SecurityAnalysis files and the `/security-analysis` route exist only at `refs/drains/rj-portal` `b616b759`; DEV `be8cf218` carries 0 of 48. COMMIT-class, freeze reads COMMIT YES / PROMOTE NO. ⛔ **The DEV PUSH is RESERVED (LD-0367/0368) and no cell takes it** -- the cell commits LOCALLY and states push state LOCAL. `merge-tree` measures conflicts, not TypeScript: DEV is 212 commits past the merge-base, so the cell runs `tsc -b` on the merged tree | G1 | root |
+| **`AMGT-rk-2`** | **A** | Redeploy the adapter from HEAD and grant the adapter role `derived/model_block/` READ under a **FRESH never-widen co-sign** (CTO half + COO half, each naming blast radius and per-key rollback, each COUNTING THE WRITERS of every named property). Assert from a **deployed-plane capture**: nonzero model figures, `packs` present, `comparable_name` present, classed ABSENT reasons elsewhere. **JUDGMENT CRITERION, as corrected by Addendum 2 C3:** it names the page (`BA_US_Equity`) and prints the `derived/model_block/` key count at the cut beside the verdict -- a judgment criterion still carries a printed denominator | W19-S13, Z-S107; moves FWD-8, FWD-19 | root |
+| **`AMGT-rk-3`** | **B** | Build the Price generation writer. Every Price list today is ABSENT **by absence, not by measurement** -- the producer has never written a generation | W18-S11 (ARMED), Z-S105 | root |
+| **`AMGT-rk-4`** | **C** | Resolve holdings **without converting unknown to false** (167 of 170 unresolved because the plane carries a bare ticker and the contract rightly forbids guessing `US`). The Positioning chain already resolves **164 of 164** by CUSIP/FIGI/SEDOL/Bloomberg security -- **that chain is the input, never a bare-ticker join.** Repair company-FIGI deduplication and the 23 empty peer subjects | W19-S6, W20-S13, W21-S3 (ARMED), W21-S4 | root |
+| **`AMGT-rk-5`** | **D** | Tab scores: a Bloomberg **quarterly** pull for Robustness's six inputs on the 8-point TTM window at `FUND_PER=Q`; Peers V with subject cap and member guards; Divergence D on the ruled CFPS/EPS dispersion proxy. **Every ABSENT CLASSED before it counts.** ⛔ `integrations/bloomberg/READ_HERE.md` is read FIRST; `BEST_*` defaults to the next QUARTER and a bare identifier resolves to the WRONG security, so `BEST_FPERIOD_OVERRIDE` is set and `NAME` is checked before any measure is read | FWD-17, FWD-20's reporting side | `AMGT-rk-4` |
+| **`AMGT-rk-6`** | **J** | Package the print pack **server-side** so `FWD-5` serves. Today the route returns **500**: the deployed archive (747,396 B, 183 entries) carries no matplotlib, no pypdf, no numpy, `render_pack.py` imports matplotlib at module level and reads a worker-local deliverables folder plus a OneDrive template path. Ruled NOT a browser act -- the displacement test is that a person forwards the output AS PRODUCED | G3, FWD-5 | `AMGT-rk-2` |
+| **`AMGT-rk-7`** | **K** | Wire the on-demand pull: the adapter declares the queue carrier (today `/refresh` answers **501**) and the page calls the enqueue route it never calls today. ⛔ **CORRECTED BY ADDENDUM 2 C1 -- THE CONSUMER STAYS ON THE BOX AND NO LAMBDA CONSUMER IS BUILT:** `pull_consumer.py` calls the Bloomberg DAPI at `127.0.0.1:8194`, so a Lambda would drain the queue and fail every message at `bloomberg_health`. FWD-2 has already worked end to end once (`packs/NVDA_US_Equity/status.json` LANDED). Cadence is a card, not a cell. ⛔ No alarm, monitor or freshness machinery rides along | G4, FWD-2 | `AMGT-rk-2` |
+| **`AMGT-rk-8`** | **E** | Both the mechanical and the browser exercise take the **same five routes** captured from the deployed adapter (`/overlay`, `/peers`, rankings, thesis, posture). Round 11 captured two, so the header description, the feed and the whole Peers panel were outside what could be exercised at all. ⭐ Chained after `AMGT-rk-1` because round 11's browser half exercised a LOCAL vite serve -- only after the DEV integration do the front-end and the deployed adapter meet on the plane a person would use | W18-S20, W18-S5 | `AMGT-rk-1`, `AMGT-rk-2` |
+| **`AMGT-rk-9`** | **F** | **Criteria repair AT THE ISSUER.** Every test criterion asserts a **nonzero collected denominator**; upstream exit status is read; pre/post censuses use an identical grain; capture filenames are exact; staged and cold timeout bounds are stated. ⭐ **A criterion that cannot fail is not a criterion** -- round 11 shipped two (a suite over an empty collection, a verbatim gate over input carrying no quotation marks) | W18-S1, W20-S1 | root |
+| **`AMGT-rk-10`** | **G** | **NOT a build cell.** Classify the social source -- source absence versus failed primitive -- and report: 48 records, 0 admitted, a 713-second job, cost unmeasurable with that key. ⛔ **Recurring collection stays RESERVED to Andrew by name (@`9db2a36cdc`) and nothing here enables it** | W22-S3/S6/S7/S8 | root |
+| **`AMGT-rk-11`** | **H** | **Record the preserved breaches, do NOT replay them:** BA's 4-versus-2 Lusha credits, ten off-order legacy writes after a blocked deploy, the late per-act rollback receipt, two Posture writes under a one-write bound. Future cells carry cumulative budget checks and fail-closed sequencing. ⛔ **Do NOT replay world acts or restore unknown prior contents to improve a receipt** | W22-S2, W19-S16, W19-S19, W20-S14 | root |
+| **`AMGT-rk-12`** | **L** | Served route + page surface for `FWD-7`, `FWD-12`, `FWD-14` -- each today a Python module a person runs by hand, 0 of 11 mounted routes, 0 page components. ⛔ **CORRECTED BY ADDENDUM 2 C2:** `ledger.py`'s CLASSES carries `stage: None` for 6 of 6, so a re-run control over it records SKIPPED every time. The control **REFUSES WITH A NAMED REASON** where activation is reserved, or ships READ-ONLY with the re-run stated as round 13 **in the issuance data**. ⛔ **Never a button that does nothing** | FWD-7, FWD-12, FWD-14 | `AMGT-rk-1`, `AMGT-rk-2` |
+| **`AMGT-rk-13`** | **M** | Re-run the **similarity ranker** over the names `AMGT-rk-4` newly resolves. Without it `C` yields a better crosswalk feeding the same ten populated peer sets | FWD-8's population | `AMGT-rk-4` |
+
+### 20d. INTERFACES -- what one chain writes and another reads
+
+- `AMGT-rk-2` publishes the **deployed adapter vintage**; `AMGT-rk-6`, `AMGT-rk-7`, `AMGT-rk-8` and `AMGT-rk-12` all
+  read a capture from THAT deployment. A cell that captures before `AMGT-rk-2` lands is capturing the old bytes --
+  which is precisely `Z-S107`, the defect round 11 shipped.
+- `AMGT-rk-4` publishes the **resolved identity set**; `AMGT-rk-5` and `AMGT-rk-13` read it. The pool prefixes are the
+  contract: `crosswalk/v1/`, `universe/v1/`, `peers/v1/`.
+- `AMGT-rk-1` publishes the **portal DEV branch state**; `AMGT-rk-8` and `AMGT-rk-12` render against it.
+- `AMGT-rk-9` publishes the **criteria shape** the drain grades every other cell against; it is a root so that its
+  output exists before the first proof instance is graded.
+
+### 20e. EDGES, FAN-OUT, AND THE DRAIN CONTRACT
+
+**FAN-OUT, STATED AS DATA (it goes into the L6 issuance commit verbatim):**
+
+```
+fanout:
+  cap: 8                      # the default; not raised
+  waves: 3
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8]                                                                        # 1
+  max_open_width: 7           # 7 <= 8, so NOTHING is deferred for width
+  deferred_for_width: []      # empty, and stated rather than omitted
+```
+
+⭐ **THE WHOLE ROUND FITS INSIDE THE DEFAULT CAP.** Addendum 1 R4 said that if fan-out could not carry `L`, `L` moves
+to round 13 **stated as data rather than taken by omission**. Measured here: max open width is **7 against a cap of
+8**, so `AMGT-rk-12` is carried in round 12 and `deferred_for_width` is **empty**. The empty list is written down
+precisely so a later reader can tell "nothing was deferred" from "nobody looked".
+
+**WORKER SLOTS.** Branches are `wk-amgt_resapp-12-<n>`, directories `/c/tmp/wk-amgt-12-<n>`. ⛔ **THE DIRECTORY NAME
+AND THE BRANCH NAME DIFFER AND ALWAYS HAVE** -- `git branch --list 'wk-amgt-*'` returns ZERO and reads exactly like
+"no branches exist". Measured at the cut: 0 `wk-amgt_resapp-12-*` branches and 0 `/c/tmp/wk-amgt-12-*` directories,
+so round 12's names are free. The 13 round-11 worktrees stay in place -- removal is on Andrew's word
+(ROUND11_PACKET.md s.6).
+
+**DRAIN CONTRACT.** Every order drains with its proof instance graded at HEAD; a JUDGMENT criterion is graded at L9
+and never self-graded; a compound criterion is refused at the cut, one clause per criterion with its invocation and
+its expectation. **At least one judgment criterion per chain**, because round 11's single judgment clause is the only
+thing that caught a page serving nothing behind 83 passing mechanical criteria.
+
+### 20f. BOUNDS -- the round's, verbatim where they are Andrew's
+
+- **PORTAL: COMMIT YES / PROMOTE NO.** *"No portal promote necessary"* (~04:3xZ) removes the PROD promote from the
+  goal's definition of done. ⛔ It does **not** license a promote, does **not** lift the freeze, and says nothing
+  about committing portal code. The portal DEV **push** is RESERVED under LD-0367/0368 and is a card at Andrew.
+- **COLLECTION STAYS OFF.** Three Windows tasks DISABLED over a seven-body pool is the **measured consequence of a
+  RESERVED decision, not a defect to fix**. The harvest mechanism and cadence are Andrew's by name (@`9db2a36cdc`).
+- **THE TWO CARDS ARE ANDREW'S AND ARE NOT CELLS:** the model-block pull over the 33 keyed names, and the filings
+  batch (~USD 1.1 per filing). ⛔ **Vendor use is never authorized by availability.** Without them the finished
+  product is FIVE NAMES, and the completion report must say so rather than let the register imply otherwise.
+- **NO ALARM, MONITOR, SNS/SES-SEND, NOTIFICATION OR FRESHNESS CHECKER** -- standing moratorium. A wired queue is not
+  a monitor.
+- **THE ETF PLANE IS READ-ONLY.** Secrets through `comp-secrets` only. **Lusha: the one authorized enrich stays
+  UNUSED** under the documented contract (the endpoint returns emails and phones when `reveal` is omitted and carries
+  no dates), and contact data is never stored.
+- **MID-ROUND THE SPEC AND THIS DECOMPOSITION ARE FROZEN.** The only off-spec act is a surprise ROW appended to
+  `surprise-channel/investigations/INVESTIGATION_v{N}.md`, and the worker keeps working.
+- **PUSH:** LOCAL on SITEZ for every act in this round; LD-0522 puts the push with `0.0.0_AB_MSTR~Z`.
+
+### 20g. BATTERY DISPOSITION -- mandatory core ALL THREE RUN, plus the COO minimum, denominators printed
+
+| lens | verdict | denominator measured at this cut |
+|---|---|---|
+| `comp-schedule` | **RUN** | 5 of 5 carriers scanned in 16.25 s of a 90 s budget; **0 gates ARMED** for this scope. C1 sentinel 23, C2 deploy-ledger 7 open, C3 moratoria **12 standing NEVER clauses**, C4 scope-guard 21 (SEMI-DECIDABLE, listed never counted), C5 project-blocking 334 (NOT-DECIDABLE, a reading list). The 12 moratoria are what s.20f binds onto cells |
+| `comp-iam` | **RUN** | 214 roles, 190 services, 1114 operations, **321 permission gaps**; 3 trees / 478 `.tf`; 407 policy blocks attached, **27 NOT ATTACHED**, 13 standalone. ⛔ **AND THE INSTRUMENT IS BLIND WHERE `AMGT-rk-2` NEEDS IT:** `comp-iam service opal-amgt-scoped-api` returns **3 operations, all `UNRESOLVED-RESOURCE`** (DynamoDB `Table()` via an untraced helper) and **no S3 row at all**. Its own banner says the list is a FLOOR and never a deletion warrant. **So the never-widen co-sign for `derived/model_block/` reads the Terraform directly and does not rest on this tool's silence**, and the DESIRED plane is not the APPLIED one |
+| `comp-adversary` | **RUN** | declaration carried in the L5 commit message |
+| `comp-routes` (COO minimum) | **RUN** | 7 origins, 29 behaviors, 14 rewrites, 22 API GW routes, 163 frontend endpoints (66 with URLs), **24 component bindings**, 66 resolved routes; 50 of 66 edge-auth, 24 of 66 API-GW auth. ⭐ **AN INDEPENDENT CORROBORATION OF G1 ON A DIFFERENT INSTRUMENT:** this tool parses `portal/src` at the working tree, which is DEV -- and **none of the 24 component bindings is a SecurityAnalysis component.** `4.0.0_SA_CRO~Z` reached the same conclusion by `git ls-tree` and `merge-tree` on the portal repo. Two instruments, two seats, one answer: the page is not on the branch a person is served from |
+| `comp-cache` (COO minimum) | **RUN** | 646 of 646 portal source files scanned, 120 of 120 `useQuery` call sites captured, 0 unparseable; **17 shared keys, 0 with a TYPE MISMATCH** (the bug class). No round-12 cell inherits a cache-key collision |
+| `comp-blast` | **DNA** | no served-output MOVE in this round's cells; `AMGT-rk-2`'s deploy is covered by the never-widen co-sign, which is the narrower and correct instrument |
+
+⚠ **THE BATTERY'S OWN LIMIT, STATED:** `comp-iam` and `comp-routes` are **DESIRED-plane** (parsed Terraform and
+committed source). Neither can tell a declared grant or behavior from a deployed one. Every bar in this round that
+asserts a grant or a route is therefore graded on a **live read or an invoke**, never on a battery figure.
+### 20h. AMENDMENT v1.4 -> v1.5 -- CELL `AMGT-rk-14` (the FIT), from ADDENDUM 3 @`e2ff09a835`
+
+**Amended BEFORE issuance, so nothing is frozen and no order is re-cut.** `1.0.0_SA_CTO~Z`'s self-drive
+tick 2 sent cell **N** deliberately early *because* this seat was mid-L5; that is the round-N analysis
+reaching the decomposition before the cut rather than after it, which is the whole point of the loop.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-14`** | **N** | **THE FIT, BOTH ENDS IN ONE CELL.** The presets carry counts and weights instead of factor-code lists (DIVZ names 7 of 13, PFOE 0 of 16, so **22 of 29 preset slots have no code to read**), and R-1's rows carry **no scanner factor values at all** because the ranker's loader keeps the 284-code set and DROPS THE NUMBERS BY DESIGN. Ruled: (1) the presets name EVERY code they score under, 13 of 13 DIVZ and 16 of 16 PFOE, **printed denominator beside each**; (2) the loader RETAINS values for exactly those codes on the R-1 rows -- bounded by the presets, never by the scanner's width; (3) ABSENT carries a CLASSED reason where a named code has no value; (4) the criterion asserts a **NONZERO FACTOR COUNT ON A REAL NAME**. ⛔ **NOT retiring the fit** -- it is part of the surface Andrew approved (PRD s.3b), so retirement is an ENDPOINT change and a card at Andrew, never a quiet drop | W20-S9, W20-S10 | `AMGT-rk-4`, `AMGT-rk-13` |
+
+⭐ **WHY IT IS ONE CELL AND NOT TWO, CARRIED HERE BECAUSE IT IS A CUTTING RULE AND NOT A DETAIL:** the fit
+needs **a code to read AND a value to read for it**, and repairing either end alone moves nothing while
+grading as progress. Name the 22 codes against rows carrying no values and the score is still ABSENT;
+retain values for codes the preset never names and the score is still ABSENT. **A cell that fixes one end
+and passes its criterion is the failure mode here** -- which is `AMGT-rk-9`'s criteria-that-cannot-fail
+class, applied BEFORE the cut instead of found after it.
+
+**FAN-OUT, RESTATED WITH `AMGT-rk-14` (this supersedes the block in s.20e):**
+
+```
+fanout:
+  cap: 8                      # the default; still not raised
+  waves: 3
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8, AMGT-rk-14]                                                            # 2
+  max_open_width: 7           # UNCHANGED -- rk-14 lands in wave 3, which was the narrowest
+  deferred_for_width: []      # still empty, and still stated
+```
+
+⚠ **THE FOURTEENTH CELL COST NOTHING IN WIDTH.** `AMGT-rk-14` chains after `AMGT-rk-4` and `AMGT-rk-13`,
+so it falls into wave 3 beside `AMGT-rk-8` -- the narrowest wave. Max open width stays **7 of 8** and
+`deferred_for_width` stays empty. Recorded because "we added a cell and the fan-out did not move" is the
+kind of claim that should carry its arithmetic.
+
+**WHAT THIS AMENDMENT DOES TO s.20a's UNCOVERED PARTITION -- it CLOSES part of U3 and leaves the rest:**
+
+| was | now |
+|---|---|
+| **U3** `W20-S9` / `W20-S10` (the fit inputs) | **COVERED by `AMGT-rk-14`.** ⭐ Two seats reached this independently on DIFFERENT instruments -- this seat by counting row ids over the analysis text and finding `W20-S10` in no cell, `1.0.0_SA_CTO~Z` by reading the slug's obligation 2 against the cell set on a self-drive tick. That is corroboration in Rule 22's sense, and it is worth contrasting with msg 23371's pair, which was NOT |
+| **U3** `W18-S13` / `W21-S6` (CSC values and horizons), `W21-S5` (currency and vintage comparability) | **STILL UNCOVERED.** Named in the slug's obligation 2, in no cell's text |
+| **U1** `FWD-18`'s one chart (`W18-S12`) | **STILL UNCOVERED** |
+| **U2** `FWD-6`'s compare surface | **STILL UNCOVERED** |
+
+**ROUND 12 IS FOURTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-14`.** Every other clause of s.20 stands unchanged,
+including the bounds in s.20f and the battery in s.20g -- the battery was run against the cut and adding a
+cell that reads existing pool prefixes moves none of its denominators.
+### 20i. AMENDMENT v1.5 -> v1.6 -- CELLS `AMGT-rk-15` and `AMGT-rk-16`, and `AMGT-rk-14` EXTENDED, from ADDENDUM 4 @`4055200e2f`
+
+**Amended BEFORE issuance again, so nothing is frozen and no order is re-cut.** These are the three open
+calls s.20a raised (U1, U2, the U3 remainder), ruled by `1.0.0_SA_CTO~Z`. **Two became cells; one was
+folded into an existing cell rather than given its own**, and the folding argument is the interesting half.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-15`** | **O** | **`FWD-18`'s ONE CHART.** The ACCEPT promises "one chart, chosen for that company, of the thing it lives or dies on". Measured: the driver chart is ABSENT 5 of 5 and `thesis_driver` is a **NAMED SERIES WITH NO NUMERIC POINTS**. Ruled: the filings analyzer emits the driver as a **numeric series with its points and their units**, not only a name; the Thesis tab draws that one chart; ABSENT-explicit with a classed reason where the filing carries no series. ⛔ **THE CRITERION ASSERTS A NONZERO POINT COUNT ON A REAL NAME, never the presence of the field** -- a named series with no points is the same shape as a control that cannot act: it satisfies "the field is populated" and renders nothing | W18-S12, FWD-18 | `AMGT-rk-1`, `AMGT-rk-2` |
+| **`AMGT-rk-16`** | **P** | **`FWD-6`'s COMPARE SURFACE.** The outcome promises an analyst can say what changed, **NAMING the earlier version**. Measured: the STORE EXISTS (versioning Enabled, four timestamped stamps for BA) and the SURFACE IS ABSENT (0 hits for version / earlier / compare in the page components). Ruled: the page gets a compare-two-versions surface reading the store that already serves -- current beside earlier, what moved, the earlier version NAMED | FWD-6 | `AMGT-rk-1`, `AMGT-rk-2` |
+
+**`AMGT-rk-14` (N) IS EXTENDED, NOT SPLIT.** It now also carries the CSC columns carrying values **with
+their horizon labelled** (trailing vs NTM, never a fiscal-year label over an NTM figure) and the size band
+**comparable across currencies and vintages** with the FX basis and vintage named, or ABSENT with that
+reason. ⛔ **ITS CRITERION PRINTS FOUR DENOMINATORS PER NAME** -- codes named, values present, horizons
+labelled, FX basis stated -- **and is not a boolean.**
+
+⭐ **WHY THE U3 REMAINDER FOLDED INSTEAD OF BECOMING ITS OWN CELL, kept because it is a CUTTING RULE:**
+`W18-S13` / `W21-S6` / `W21-S5` are **the same rows, the same loader and the same property** as the fit --
+a value that is present AND comparable. Giving them their own cell would repeat, one layer up, the exact
+both-ends error `AMGT-rk-14` was created to prevent: **a cell could retain values that are not comparable
+and still pass its criterion.** The fold is the same argument as the cell, applied to the cell's own scope.
+
+⚠ **AND `AMGT-rk-16` IS THE ONE TO NOTICE:** the hard half -- immutable versioned history -- is already
+built and serving; only the reading surface is missing. **That is exactly why it went unnoticed, because
+every PRODUCER census says this outcome is fine.** An outcome can be complete at the producer and absent
+at the person.
+
+**FAN-OUT, RESTATED WITH ALL SIXTEEN (this supersedes s.20e and s.20h):**
+
+```
+fanout:
+  cap: 8                      # the default; still not raised
+  waves: 3
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8, AMGT-rk-14, AMGT-rk-15, AMGT-rk-16]                                    # 4
+  max_open_width: 7           # UNCHANGED across three amendments -- wave 1 is still the widest
+  deferred_for_width: []      # EMPTY. Nothing moves to round 13.
+```
+
+⛔ **NEITHER NEW CELL IS DEFERRED, AND THAT IS A MEASUREMENT RATHER THAN A PREFERENCE.** Addendum 1 R4 and
+Addendum 4 s.6 both require that a cell which does not fit the cap move to round 13 **as data stated in the
+issuance, never by omission**. Measured: `AMGT-rk-15` and `AMGT-rk-16` both chain after `AMGT-rk-1` and
+`AMGT-rk-2`, so they land in **wave 3**, which was the narrowest wave at 1. Wave 3 goes 1 -> 4 and
+**max_open_width stays 7 of 8** because wave 1 is and remains the binding wave. `deferred_for_width` stays
+EMPTY, written down rather than omitted, so a later reader can tell "nothing was deferred" from "nobody
+looked".
+
+**CHAINING NOTE, BECAUSE IT DEPARTS FROM THE ANALYSIS'S WORD AND THE DEPARTURE IS THIS SEAT'S TO MAKE.**
+Addendum 4 calls `AMGT-rk-16` "independent". Chaining is the COO's (s.5's own division, restated at
+Addendum 4 s.6), and this seat chains it after `AMGT-rk-1` and `AMGT-rk-2` because **a page surface needs a
+page to sit on and a deployed adapter to read through**: the compare surface is a page component, and until
+`AMGT-rk-1` puts the page on DEV there is no branch to add a component to, and until `AMGT-rk-2` redeploys
+there is no served route for it to read. Cutting it as a root would produce a cell that can be BUILT but
+not EXERCISED, and this round's bars are exercised on the deployed plane. The same reasoning places
+`AMGT-rk-15`. **It costs nothing: neither is deferred and the width does not move.**
+
+**ROUND 12 IS SIXTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-16`.** s.20a's uncovered partition is now EMPTY --
+U1 -> `AMGT-rk-15`, U2 -> `AMGT-rk-16`, U3 -> `AMGT-rk-14` (the fit half at v1.5, the remainder here.)
+Every other clause of s.20 stands, including the bounds in s.20f and the battery in s.20g.
+
+### 20j. AMENDMENT v1.6 -> v1.7 -- CELLS `AMGT-rk-17` and `AMGT-rk-18`, from ANDREW-DIRECT 2026-09-16 ~19:2xZ
+
+⛔ **THIS ONE IS DIFFERENT FROM 20h AND 20i AND THE DIFFERENCE IS STATED RATHER THAN GLOSSED.** Both earlier
+amendments say *"amended BEFORE issuance, so nothing is frozen and no order is re-cut."* **THIS AMENDMENT IS
+AFTER ISSUANCE.** Round 12 is at L7 with ten of sixteen orders terminal and three workers live. The
+mid-round freeze on the decomposition is real and it binds a SEAT'S OWN JUDGMENT; it is moved here by the
+only two things above it: **Andrew's own word, and the adjudicator's routing of that word.**
+
+**THE AUTHORITY, VERBATIM AND ENTIRE.** Andrew, 2026-09-16 ~19:2xZ at the `1.0.0_SA_CTO~Z` terminal, first
+*"Give me the reserved calls"*, then, after the four cards were presented: **"Yes on all four, execute
+them."** Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_192xZ_YES_ON_ALL_FOUR_RESERVED_CARDS_EXECUTE.md`
+@`0d780cf6f8`. `1.0.0_SA_CTO~Z`, as adjudicator (msg 23473), routed the two COO items and ruled that both
+**enter as PRODUCER ORDERS by ONE issuer amendment to round 12 now, or as round 13's first cells -- the
+issuer's call, stated in the amendment.**
+
+**THE ISSUER'S CALL, AND ITS REASON: ROUND 12, NOW.** Round 13 was rejected on a MECHANISM, not a
+preference. **LD-0521: a round N+1 issuance cut before round N's slug DEADLOCKS round N's L10 until N+1
+fully drains**, because the refuser counts open orders PER PROJECT and never per round. Cutting these as
+round 13 cells today would therefore stall the round-12 L10 behind two Bloomberg-gated producer runs. The
+opposite reason points the same way: the three partitions these runs resolve -- `S120` (the names with no
+landed block), `S125` (the today-dated Price list) and the filings population -- are **named in the
+round-12 L8 packet**, so resolving them inside round 12 is what lets L9 and L10 grade the outcomes against
+a populated store instead of carrying three HELD halves forward.
+
+| id | letter | what it must cover | closes | chained after |
+|---|---|---|---|---|
+| **`AMGT-rk-17`** | **Q** | **THE TWO BUDGETED PULLS.** ONE run of the model-block pull over the **33 KEYED COVERAGE NAMES** and ONE run of the price-axis pull, both on the budgeted two-phase Bloomberg sign-in, box-side. Measured pre-state: `derived/model_block/` **4 keys** of which only **3 are in the 33**, `raw/bloomberg/` **4 keys**, and `TRENDING_PRICE` **one axis date, 2026-09-10**. ⛔ **ITS BAR IS LANDED-AGAINST-ATTEMPTED WITH THE REFUSAL LIST PRINTED** -- 33 attempted and 20 landed with no list of the 13 is the one result this cell exists to make impossible | `S120`, `S125` | nothing -- it is a ROOT |
+| **`AMGT-rk-18`** | **R** | **THE FILINGS AND DRAFTING BATCH** over the same 33, at approximately USD 36. Measured pre-state: `filings/v1/` **5 names, 10 objects**; `drafting/v1/` **5 names**. ⛔ **THE EGRESS IS BOUNDED AND MEASURED, NOT ASSERTED:** the analyzer calls Anthropic and the fetcher calls SEC EDGAR (censused: anthropic 14, edgar 12, sec.gov 2 across 11 modules), and **every other vendor token reads 0** -- a RECORD, not a gate: Andrew authorized egress as needed on 2026-09-16, so a further vendor the run needs is allowed and NAMED | the filings population | nothing -- it is a ROOT |
+
+⛔ **NEITHER CELL TOUCHES A SURFACE AN OPEN ORDER HOLDS, AND THAT WAS CHECKED RATHER THAN ASSUMED.**
+`AMGT-rk-17` writes only `raw/bloomberg/`, `derived/model_block/` and the price axis table; `AMGT-rk-18`
+writes only `filings/v1/` and `drafting/v1/`. Chain A holds the portal, chain B the adapter and every live
+AWS act on the Lambda, chain C the identity set and `peers/v1/`. **The one overlap is a REPO path, not a
+world one:** `lib/research/filings/` is also `AMGT-rk-15`'s surface, and `AMGT-rk-15` is CUT BUT UNSPAWNED,
+so the file has one writer at a time and the order says so in its own bounds.
+
+⭐ **AND ONE THING IS DELIBERATELY NOT IN EITHER CELL.** The `BA_US_Equity` pilot re-run (`S127`) regenerates
+BA's filings document **under `AMGT-rk-15`'s producer change**, so running it from `AMGT-rk-18` would spend
+the vendor call and produce the OLD shape. It stays with chain A and is added to `AMGT-rk-15` by issuer
+amendment before that order spawns. **A cell that can run something at the wrong time is told not to, in
+its own text, rather than being trusted to notice.**
+
+**FAN-OUT, RESTATED WITH ALL EIGHTEEN (this supersedes s.20i):**
+
+```
+fanout:
+  cap: 8                      # the default; still not raised
+  waves: 4
+  wave_1_roots: [AMGT-rk-1, AMGT-rk-2, AMGT-rk-3, AMGT-rk-4, AMGT-rk-9, AMGT-rk-10, AMGT-rk-11]   # 7
+  wave_2:       [AMGT-rk-5, AMGT-rk-6, AMGT-rk-7, AMGT-rk-12, AMGT-rk-13]                          # 5
+  wave_3:       [AMGT-rk-8, AMGT-rk-14, AMGT-rk-15, AMGT-rk-16]                                    # 4
+  wave_4_roots: [AMGT-rk-17, AMGT-rk-18]                                                           # 2, ANDREW-DIRECT
+  max_open_width: 7           # UNCHANGED across four amendments -- wave 1 is still the widest
+  deferred_for_width: []      # EMPTY. Nothing moves to round 13.
+```
+
+⛔ **THE TWO NEW CELLS ARE ROOTS AND THEY DO NOT WIDEN THE ROUND PAST ITS CAP, WHICH IS A MEASUREMENT.**
+They depend on no cell, so they could have gone in wave 1; they are wave 4 only because Andrew's word
+arrived at 19:2xZ. **Concurrent width at the moment they are issued: three live workers (`~23` on
+`AMGT-rk-12`, `~24` on `AMGT-rk-6`, `~25` on `AMGT-rk-14`) plus these two is FIVE, against a cap of 8.**
+Nothing is deferred and nothing is dropped.
+
+**ROUND 12 IS EIGHTEEN CELLS: `AMGT-rk-1` .. `AMGT-rk-18`.** Every other clause of s.20 stands, including
+the bounds in s.20f and the battery in s.20g -- and s.20f's COLLECTION-STAYS-OFF clause binds these two
+cells hardest, because they are the only cells of the round that call a vendor at all: **Andrew's word
+authorizes the RUNS and says nothing about their recurrence, so a cadence for either pull remains
+RESERVED and neither order arms a schedule.**

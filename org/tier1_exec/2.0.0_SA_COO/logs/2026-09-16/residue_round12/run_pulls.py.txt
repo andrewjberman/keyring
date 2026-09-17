@@ -1,0 +1,57 @@
+"""AMGT-rk-17 driver: ONE model-block pull + derive over the 33 keyed names (in batches of 3, the
+producer's own per-invocation cap), then ONE price-axis pull. Logs everything; never retries a name."""
+import boto3, json, subprocess, sys, os, datetime
+
+WS = r'C:\Users\Opal Bloomberg\Desktop\ajb_workspace'
+LOG = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pulls.log')
+os.chdir(WS)
+
+def log(*a):
+    line = ' '.join(str(x) for x in a)
+    with open(LOG, 'a', encoding='utf-8') as f:
+        f.write(line + '\n')
+    print(line, flush=True)
+
+def run(args, timeout):
+    t0 = datetime.datetime.now(datetime.timezone.utc)
+    try:
+        r = subprocess.run([sys.executable] + args, capture_output=True, text=True, encoding='utf-8',
+                           errors='replace', timeout=timeout)
+        rc, out = r.returncode, (r.stdout or '') + (r.stderr or '')
+    except subprocess.TimeoutExpired as e:
+        rc, out = 'TIMEOUT', str(e)
+    secs = (datetime.datetime.now(datetime.timezone.utc) - t0).total_seconds()
+    return rc, out, secs
+
+s3 = boto3.client('s3')
+B = 'opal-data-harvest'
+ks = sorted(o['Key'] for pg in s3.get_paginator('list_objects_v2').paginate(Bucket=B, Prefix='crosswalk/v1/')
+            for o in pg.get('Contents', []))
+recs = json.loads(s3.get_object(Bucket=B, Key=ks[-1])['Body'].read())['records']
+keyed = sorted((r for r in recs if r.get('security_key')), key=lambda r: r['security_key'])
+ids = []
+for r in keyed:
+    ident = r['bloomberg'] + ' Equity'
+    assert ident.replace(' ', '_') == r['security_key'], (ident, r['security_key'])
+    ids.append(ident)
+log('START', datetime.datetime.now(datetime.timezone.utc).isoformat(), 'crosswalk', ks[-1],
+    'records', len(recs), 'keyed', len(ids))
+
+batches = [ids[i:i + 3] for i in range(0, len(ids), 3)]
+for n, b in enumerate(batches, 1):
+    for stage in ('pull', 'derive'):
+        rc, out, secs = run(['integrations/bloomberg/research/model_block_pull.py', stage, '--securities'] + b, 900)
+        log('BATCH %d/%d %s rc=%s %.0fs %s' % (n, len(batches), stage, rc, secs, b))
+        for line in out.splitlines():
+            if line.strip():
+                log('   | ' + line[:300])
+        if stage == 'pull' and rc != 0:
+            log('   derive SKIPPED for this batch: the pull did not exit 0')
+            break
+
+rc, out, secs = run(['integrations/bloomberg/research/price_axis_pull.py'], 1800)
+log('PRICE_AXIS rc=%s %.0fs' % (rc, secs))
+for line in out.splitlines()[-60:]:
+    if line.strip():
+        log('   | ' + line[:300])
+log('END', datetime.datetime.now(datetime.timezone.utc).isoformat())

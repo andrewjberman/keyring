@@ -1,0 +1,10 @@
+{
+ "note": "CVO round11: 250/250 dispositions; 62/62 proofs checker-valid; rj3 AC5 FAIL; ADJUDICATION_v11 and REMEDIATION_v11 with audit/verify. L10 single CTO handoff prepared.",
+ "prd_pin": "303427dfdf7b",
+ "prd_version": "v0.8",
+ "project": "AMGT_RESAPP",
+ "round": 11,
+ "signed_by": "3.0.0_SA_CVO~W",
+ "stage": "L10",
+ "utc": "2026-09-15T22:23Z"
+}

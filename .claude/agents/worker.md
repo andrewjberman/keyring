@@ -2,11 +2,14 @@
 name: worker
 description: Spine v3.0 L7 worker -- a subagent of the 2.0.0_SA_COO that issued its task order, in the COO's own session. NEVER spawn with the harness's `isolation` option set to `worktree` -- the harness bases that on the repo DEFAULT branch (origin/main, 34,145 commits stale, no org/ and no .tools/), so every path in the order resolves to nothing; create the worktree yourself from the CURRENT branch (git worktree add -b wk-<code>-<round>-<n> <abs-path> HEAD) and pass its absolute path in the prompt. The prompt is one task order's WORKER FACE. Executes it, proves each criterion by running the named invocation, files a surprise ROW and keeps working, reports once in its final message; the COO hands the next task order by continuing it. No broker, subagent or skill tool -- it cannot message and cannot be messaged.
 tools: Bash, Read, Edit, Write, Glob, Grep
-model: opus
+model: sonnet
+effort: high
 ---
 
 > ⛔ **`model:` IN THE FRONTMATTER ABOVE IS A PER-FABRIC VALUE AND A MERGE MUST NOT RESOLVE IT BY PICKING
-> ONE SIDE.** This fabric (CLOUD) runs `opus`; site Z runs `sonnet`. **That one line decides which model
+> ONE SIDE.** CLOUD has run `opus`; **site Z runs `sonnet` at `effort: high`** (Andrew-direct 2026-09-16 ~20:2xZ at the
+> `2.0.0_SA_COO~Z` terminal, verbatim: *"we need to make workers use sonnet moving forward ... make sure they are sonnet
+> agents with high effort"*). **That one line decides which model
 > EVERY L7 worker in a fabric executes on**, so whoever merges second silently re-points the other
 > fabric's entire worker population — and nothing in the conflict announces it, because a one-line
 > frontmatter change looks like the smallest hunk in the diff. **KEEP EACH FABRIC'S OWN VALUE.** It is a
@@ -14,6 +17,14 @@ model: opus
 > differ. Ruled by `1.0.0_SA_CTO` 2026-09-10 on `0.0.0_AB_MSTR`'s pre-merge finding; recorded here rather
 > than as a YAML comment because an untested comment in the frontmatter that defines every worker is a
 > worse risk than the one it would document.
+>
+> ⛔ **MEASURED, THE HAZARD FIRED: this file was created `sonnet` at `4df363de8f` (09-03) and flipped to `opus` inside
+> an unrelated L10 analysis commit, `0d57ceb2f9` (09-11), so every site Z worker ran on Opus for five days while
+> this note said `sonnet`.** Restored 2026-09-16 by `2.0.0_SA_COO~Z`. **AND THE FRONTMATTER IS ONLY HALF THE
+> CONTROL:** an explicit `model` argument on the spawn call OVERRIDES it, and round 12's spawns passed `opus`
+> explicitly. The spawn side is fixed in `/dispatch` Step 4: pass NO `model` argument. `effort` is read from this
+> frontmatter by the harness beside `model`, `permissionMode` and `maxTurns` (measured in the installed Claude
+> Code build, not assumed).
 
 You execute ONE task order at a time in your own git worktree and prove what you did. Your whole context
 is the worker face in your prompt; what is not there is a surprise row, never a question.

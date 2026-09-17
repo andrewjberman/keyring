@@ -1,0 +1,373 @@
+<title>AMGT_RESAPP Session Outcomes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --bg:#F4F6F7; --surface:#FFFFFF; --ink:#15202B; --muted:#56636F; --faint:#8793A0;
+  --rule:#DCE2E7; --rule-strong:#C3CCD4;
+  --accent:#1D6B73; --accent-soft:#E1EFF0;
+  --ok:#2B7649; --ok-soft:#E2F1E8;
+  --warn:#9E5C07; --warn-soft:#F6EBDB;
+  --fail:#B1291F; --fail-soft:#F7E3E1;
+  --on-mark:#FFFFFF;
+  --sans:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --cond:"IBM Plex Sans Condensed", "IBM Plex Sans", "Arial Narrow", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1419; --surface:#141C23; --ink:#E3E8ED; --muted:#9BA7B3; --faint:#6E7B87;
+    --rule:#232F39; --rule-strong:#34424E;
+    --accent:#63B5BC; --accent-soft:#15303A;
+    --ok:#6DC294; --ok-soft:#14302A;
+    --warn:#E0A04A; --warn-soft:#33281A;
+    --fail:#EF8577; --fail-soft:#3A1F1D;
+    --on-mark:#0E1419;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1419; --surface:#141C23; --ink:#E3E8ED; --muted:#9BA7B3; --faint:#6E7B87;
+  --rule:#232F39; --rule-strong:#34424E;
+  --accent:#63B5BC; --accent-soft:#15303A;
+  --ok:#6DC294; --ok-soft:#14302A;
+  --warn:#E0A04A; --warn-soft:#33281A;
+  --fail:#EF8577; --fail-soft:#3A1F1D;
+  --on-mark:#0E1419;
+}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;}
+.wrap{max-width:820px;margin:0 auto;padding-inline:20px;padding-block:36px 72px;}
+
+.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 12px;}
+h1{font-family:var(--cond);font-weight:600;font-size:clamp(28px,4.6vw,40px);line-height:1.12;letter-spacing:-.005em;margin:0 0 14px;text-wrap:balance;}
+.lede{color:var(--muted);max-width:64ch;margin:0 0 26px;}
+h2{font-family:var(--cond);font-weight:600;font-size:24px;line-height:1.2;margin:0 0 6px;text-wrap:balance;}
+h3{font-size:15.5px;font-weight:600;margin:0;line-height:1.4;text-wrap:balance;}
+h4{font:500 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:30px 0 10px;}
+p{margin:0 0 12px;max-width:68ch;}
+code,.mono{font-family:var(--mono);font-size:.88em;}
+
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0 0 28px;border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule);}
+.facts div{padding:14px 14px 14px 0;}
+.facts div + div{padding-left:14px;border-left:1px solid var(--rule);}
+.facts dt{font-size:12.5px;color:var(--muted);margin:0 0 4px;line-height:1.35;}
+.facts dd{margin:0;font-family:var(--cond);font-weight:600;font-size:26px;line-height:1.1;font-variant-numeric:tabular-nums;}
+.facts dd small{display:block;font-family:var(--sans);font-weight:400;font-size:12.5px;color:var(--muted);margin-top:3px;}
+
+figure{margin:0 0 8px;}
+.chart{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:12px 12px 4px;}
+.chart svg{display:block;width:100%;min-width:700px;height:auto;}
+.grid{stroke:var(--rule);stroke-width:1;}
+.guide{stroke:var(--rule-strong);stroke-width:1;stroke-dasharray:2 4;}
+.base{stroke:var(--rule-strong);stroke-width:1.5;}
+.nowline{stroke:var(--accent);stroke-width:1;stroke-dasharray:3 3;}
+.axis{fill:var(--muted);font:500 11px var(--mono);}
+.lane{fill:var(--ink);font:600 11.5px var(--sans);}
+.lane2{fill:var(--muted);font:400 11px var(--sans);}
+.band{fill:var(--fail);fill-opacity:.2;}
+.bandlabel{fill:var(--fail);font:500 10.5px var(--mono);}
+.mk circle{stroke:var(--surface);stroke-width:2;}
+.mk text{fill:var(--on-mark);font:600 9.5px var(--sans);text-anchor:middle;}
+.mk.ok circle{fill:var(--ok);} .mk.fail circle{fill:var(--fail);} .mk.warn circle{fill:var(--warn);} .mk.acc circle{fill:var(--accent);}
+figcaption{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--muted);padding:10px 2px 0;}
+.key{display:inline-flex;align-items:center;gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+.dot.ok{background:var(--ok);} .dot.fail{background:var(--fail);} .dot.warn{background:var(--warn);} .dot.acc{background:var(--accent);}
+
+section{margin-top:48px;}
+.sub{color:var(--muted);margin:0 0 18px;}
+
+ol.steps{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--rule);}
+ol.steps li{display:grid;grid-template-columns:78px 26px minmax(0,1fr);grid-template-areas:"t n b";column-gap:12px;padding:15px 0;border-top:1px solid var(--rule);}
+.st{grid-area:t;font:500 13px/1.5 var(--mono);color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px;}
+.sn{grid-area:n;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:600 11.5px/1 var(--sans);color:var(--on-mark);}
+.sn.ok{background:var(--ok);} .sn.fail{background:var(--fail);} .sn.warn{background:var(--warn);} .sn.acc{background:var(--accent);}
+.sb{grid-area:b;}
+.sb p{margin:4px 0 6px;}
+.ev{font:400 12px/1.5 var(--mono);color:var(--faint);overflow-wrap:anywhere;}
+
+.tblwrap{overflow-x:auto;margin:0 0 6px;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th{text-align:left;font:500 11.5px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:0 14px 8px 0;border-bottom:1px solid var(--rule-strong);vertical-align:bottom;}
+td{padding:11px 14px 11px 0;border-bottom:1px solid var(--rule);vertical-align:top;}
+td:last-child,th:last-child{padding-right:0;}
+.ba td:first-child{color:var(--muted);width:32%;}
+.ba .now{font-weight:500;}
+.res{min-width:720px;}
+.res td:first-child{width:27%;}
+.res td:nth-child(2){width:17%;color:var(--muted);font-size:13px;}
+.rname{font-family:var(--mono);font-size:12.5px;overflow-wrap:anywhere;}
+.pill{display:inline-block;font:500 11.5px/1.7 var(--mono);padding:0 7px;border-radius:4px;margin:0 0 4px;white-space:nowrap;}
+.pill.chg{background:var(--warn-soft);color:var(--warn);}
+.pill.wr{background:var(--accent-soft);color:var(--accent);}
+.pill.rd{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1px var(--rule-strong);}
+.pill.ok{background:var(--ok-soft);color:var(--ok);}
+.pill.fail{background:var(--fail-soft);color:var(--fail);}
+
+ul.open{margin:0;padding:0;list-style:none;}
+ul.open li{position:relative;padding:8px 0 8px 18px;border-top:1px solid var(--rule);max-width:70ch;}
+ul.open li:first-child{border-top:0;}
+ul.open li::before{content:"";position:absolute;left:0;top:16px;width:7px;height:7px;border-radius:50%;background:var(--warn);}
+
+.effort{display:grid;gap:7px;margin:4px 0 10px;}
+.erow{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr) 36px;gap:12px;align-items:center;font-size:13.5px;}
+.erow .lbl{color:var(--ink);}
+.track{height:10px;background:var(--rule);border-radius:2px;overflow:hidden;}
+.fill{display:block;height:100%;background:var(--accent);}
+.fill.code{background:var(--ok);}
+.fill.fix{background:var(--warn);}
+.erow .num{text-align:right;font:500 13px var(--mono);font-variant-numeric:tabular-nums;color:var(--muted);}
+
+.method{margin-top:48px;padding-top:16px;border-top:1px solid var(--rule-strong);font-size:13px;color:var(--muted);}
+.method p{max-width:76ch;}
+
+@media (max-width:620px){
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .facts div:nth-child(3){padding-left:0;border-left:0;}
+  .facts div:nth-child(n+3){border-top:1px solid var(--rule);}
+  ol.steps li{grid-template-columns:26px minmax(0,1fr);grid-template-areas:"n t" "n b";row-gap:2px;}
+  .erow{grid-template-columns:minmax(0,1fr) 36px;}
+  .erow .track{grid-column:1 / -1;grid-row:2;}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;}}
+</style>
+
+<main class="wrap">
+  <p class="eyebrow">Outcome check &middot; AMGT_RESAPP &middot; Site Z fabric</p>
+  <h1>The analysis API now serves real model figures and full peer sets. No user can open the page yet.</h1>
+  <p class="lede">Wednesday, September 16, 2026, from the 9:33 AM relaunch to 4:16 PM US Eastern. Every figure below was measured at 4:16 PM from git history, live API reads and AWS, not taken from status reports.</p>
+
+  <dl class="facts">
+    <div><dt>Work orders closed this session</dt><dd>7<small>10 of 18 overall</small></dd></div>
+    <div><dt>Live API reads answering 200</dt><dd>7 of 8<small>print pack still fails</small></dd></div>
+    <div><dt>Peer sets populated</dt><dd>121<small>up from 10</small></dd></div>
+    <div><dt>Code and data changed</dt><dd>3,123<small>lines across 17 files</small></dd></div>
+  </dl>
+
+  <figure>
+    <div class="chart">
+      <svg viewBox="0 0 760 236" role="img" aria-label="Timeline of the session from 9:33 AM to 4:16 PM Eastern across three lanes: delivered outcomes, the live API, and decisions and pushes. Seven outcomes delivered between 10:53 AM and 3:15 PM; the live API was partly down from 11:19 AM to 12:18 PM; four decisions and pushes at 9:33 AM, 3:22 PM, 3:41 PM and 4:13 PM.">
+        <line class="grid" x1="155" y1="26" x2="155" y2="204"/>
+        <line class="grid" x1="245" y1="26" x2="245" y2="204"/>
+        <line class="grid" x1="335" y1="26" x2="335" y2="204"/>
+        <line class="grid" x1="425" y1="26" x2="425" y2="204"/>
+        <line class="grid" x1="515" y1="26" x2="515" y2="204"/>
+        <line class="grid" x1="605" y1="26" x2="605" y2="204"/>
+        <line class="grid" x1="695" y1="26" x2="695" y2="204"/>
+        <text class="axis" x="155" y="222" text-anchor="middle">10 AM</text>
+        <text class="axis" x="245" y="222" text-anchor="middle">11 AM</text>
+        <text class="axis" x="335" y="222" text-anchor="middle">12 PM</text>
+        <text class="axis" x="425" y="222" text-anchor="middle">1 PM</text>
+        <text class="axis" x="515" y="222" text-anchor="middle">2 PM</text>
+        <text class="axis" x="605" y="222" text-anchor="middle">3 PM</text>
+        <text class="axis" x="695" y="222" text-anchor="middle">4 PM</text>
+        <line class="base" x1="114.5" y1="204" x2="719" y2="204"/>
+
+        <text class="axis" x="114.5" y="16" text-anchor="start">relaunch 9:33 AM</text>
+        <line class="nowline" x1="719" y1="22" x2="719" y2="204"/>
+        <text class="axis" x="719" y="16" text-anchor="end">measured 4:16 PM</text>
+
+        <text class="lane" x="12" y="64">Delivered</text>
+        <text class="lane" x="12" y="124">Live API</text>
+        <text class="lane" x="12" y="182">Decisions</text>
+        <text class="lane2" x="12" y="196">and pushes</text>
+        <line class="guide" x1="110" y1="60" x2="740" y2="60"/>
+        <line class="guide" x1="110" y1="120" x2="740" y2="120"/>
+        <line class="guide" x1="110" y1="186" x2="740" y2="186"/>
+
+        <rect class="band" x="273.5" y="112" width="88.5" height="16"/>
+        <text class="bandlabel" x="318" y="102" text-anchor="middle">2 reads down 59 min</text>
+
+        <g class="mk ok"><circle cx="234.5" cy="51" r="8"/><text x="234.5" y="54.5">2</text></g>
+        <g class="mk ok"><circle cx="245" cy="69" r="8"/><text x="245" y="72.5">3</text></g>
+        <g class="mk ok"><circle cx="312.5" cy="51" r="8"/><text x="312.5" y="54.5">5</text></g>
+        <g class="mk ok"><circle cx="338" cy="69" r="8"/><text x="338" y="72.5">6</text></g>
+        <g class="mk ok"><circle cx="512" cy="60" r="8"/><text x="512" y="63.5">9</text></g>
+        <g class="mk ok"><circle cx="624.5" cy="51" r="8"/><text x="624.5" y="54.5">10</text></g>
+        <g class="mk ok"><circle cx="627.5" cy="69" r="8"/><text x="627.5" y="72.5">11</text></g>
+
+        <g class="mk fail"><circle cx="273.5" cy="120" r="8"/><text x="273.5" y="123.5">4</text></g>
+        <g class="mk warn"><circle cx="362" cy="120" r="8"/><text x="362" y="123.5">7</text></g>
+        <g class="mk ok"><circle cx="459.5" cy="120" r="8"/><text x="459.5" y="123.5">8</text></g>
+
+        <g class="mk acc"><circle cx="114.5" cy="186" r="8"/><text x="114.5" y="189.5">1</text></g>
+        <g class="mk acc"><circle cx="638" cy="186" r="8"/><text x="638" y="189.5">12</text></g>
+        <g class="mk acc"><circle cx="666.5" cy="186" r="8"/><text x="666.5" y="189.5">13</text></g>
+        <g class="mk acc"><circle cx="714.5" cy="186" r="8"/><text x="714.5" y="189.5">14</text></g>
+      </svg>
+    </div>
+    <figcaption>
+      <span class="key"><span class="dot ok"></span>delivered or restored</span>
+      <span class="key"><span class="dot fail"></span>regression</span>
+      <span class="key"><span class="dot warn"></span>rollback</span>
+      <span class="key"><span class="dot acc"></span>decision or push</span>
+      <span>Numbers match the steps below.</span>
+    </figcaption>
+  </figure>
+
+  <section aria-labelledby="seq">
+    <h2 id="seq">Sequence of outcomes</h2>
+    <p class="sub">In the order they landed on the shared branch or the live system.</p>
+    <ol class="steps">
+      <li><span class="st">9:33 AM</span><span class="sn acc">1</span><div class="sb">
+        <h3>Fabric relaunched and its state recovered</h3>
+        <p>After the 3:56 AM reboot, the four lead seats came back, merged the one worker branch left stranded, and restored two unsaved records without losing work.</p>
+        <div class="ev">relaunch record 933a40dab2 &middot; stranded branch merged a8be8b7452</div></div></li>
+      <li><span class="st">10:53 AM</span><span class="sn ok">2</span><div class="sb">
+        <h3>Security Analysis page integrated with current portal code</h3>
+        <p>The page, built in earlier rounds, was merged with the portal's DEV code on a branch and builds cleanly: 0 TypeScript errors and a 53-asset Vite bundle.</p>
+        <div class="ev">order rk-1 &middot; b5882d4481</div></div></li>
+      <li><span class="st">11:00 AM</span><span class="sn ok">3</span><div class="sb">
+        <h3>Holdings identity resolution accepted</h3>
+        <p>191 of 250 universe rows now resolve to a measured security identity, up from 33 of 256. The data itself was written just before the reboot; this session repaired the acceptance tests and re-proved it.</p>
+        <div class="ev">order rk-4 &middot; 17ee73c1d8</div></div></li>
+      <li><span class="st">11:19 AM</span><span class="sn fail">4</span><div class="sb">
+        <h3>A redeploy broke two live API reads</h3>
+        <p>Redeploying the analysis API to add the model-block read made the thesis and overlay reads return HTTP 500. Two rule modules loaded data files at startup that were not in the deployment package.</p>
+        <div class="ev">function last modified 11:19:34 AM &middot; order rk-2</div></div></li>
+      <li><span class="st">11:45 AM</span><span class="sn ok">5</span><div class="sb">
+        <h3>Price trending list serves ranked rows</h3>
+        <p>The list returns 32 keyed rows at its most recent generation date, September 10. A dated fallback for later dates was specified and assigned.</p>
+        <div class="ev">order rk-3 &middot; ecd7db9874</div></div></li>
+      <li><span class="st">12:02 PM</span><span class="sn ok">6</span><div class="sb">
+        <h3>New scoring package</h3>
+        <p>Robustness, divergence, peer valuation and classification scores landed as a new library with 40 tests.</p>
+        <div class="ev">order rk-5 &middot; b57d3ac097 &middot; lib/research/scores/</div></div></li>
+      <li><span class="st">12:18 PM</span><span class="sn warn">7</span><div class="sb">
+        <h3>Regression rolled back</h3>
+        <p>The API was restored to the approved pre-deploy build from the versioned artifact and its access policy returned to nine prefixes. Both reads answered 200 again, and the change record closed with five verified steps.</p>
+        <div class="ev">change record 20260916T1606Z &middot; 817d827e39</div></div></li>
+      <li><span class="st">1:23 PM</span><span class="sn ok">8</span><div class="sb">
+        <h3>Fix redeployed without losing a route</h3>
+        <p>The data files were packaged with the code and their loads made fault-tolerant. A census of every read before and after the deploy showed no route lost.</p>
+        <div class="ev">change record 20260916T1715Z &middot; f1998f3945</div></div></li>
+      <li><span class="st">1:58 PM</span><span class="sn ok">9</span><div class="sb">
+        <h3>Thesis read serves real model figures</h3>
+        <p>For BA, the thesis read now returns 14 header figures and 165 fiscal-year figures from the Bloomberg model block. At 9:50 AM it returned none.</p>
+        <div class="ev">order rk-2 &middot; 2b6be09533 &middot; re-read live at 4:16 PM</div></div></li>
+      <li><span class="st">3:13 PM</span><span class="sn ok">10</span><div class="sb">
+        <h3>Peer comparison sets populated</h3>
+        <p>The similarity ranker re-ran over the wider identity set. All 121 eligible subjects now have peers (previously 10), with 1,406 members and no self-matches once share-class siblings such as GOOGL and GOOG are excluded.</p>
+        <div class="ev">order rk-13 &middot; 996230fc6e &middot; 382 pool objects rewritten</div></div></li>
+      <li><span class="st">3:15 PM</span><span class="sn ok">11</span><div class="sb">
+        <h3>Page exercise widened to five live reads</h3>
+        <p>The page's browser exercise now drives five API reads against the deployed API, all answering 200, up from two.</p>
+        <div class="ev">order rk-8 &middot; 128d2ad67d</div></div></li>
+      <li><span class="st">3:22 PM</span><span class="sn acc">12</span><div class="sb">
+        <h3>Four held decisions approved</h3>
+        <p>You approved the Bloomberg pulls, the filings batch, the portal DEV push and the workspace push.</p>
+        <div class="ev">decision record 0d780cf6f8</div></div></li>
+      <li><span class="st">~3:41 PM</span><span class="sn acc">13</span><div class="sb">
+        <h3>Work pushed off this machine</h3>
+        <p>The workspace branch reached origin, and portal DEV was fast-forwarded to the page's 47 files. The DEV CI run failed on five lint errors in other pages that were already failing before the push.</p>
+        <div class="ev">portal DEV 2453a7b4 &middot; CI run 35142029002 &middot; workspace 6f46ed0703</div></div></li>
+      <li><span class="st">4:13 PM</span><span class="sn acc">14</span><div class="sb">
+        <h3>Data runs issued as one-time orders</h3>
+        <p>The Bloomberg pulls and the filings batch went out as bounded single-run orders for 33 names, each with a check that no recurring schedule is created. Neither has run yet.</p>
+        <div class="ev">orders rk-17, rk-18 &middot; 8270e72c9e</div></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="ach">
+    <h2 id="ach">What was achieved</h2>
+    <p class="sub">The same outcomes in standard technical terms, with what remains.</p>
+
+    <p>The session's real product gain is on the analysis API, the serverless backend the Security Analysis page reads from. At the start, its thesis endpoint answered but carried no model data, and its peer endpoint returned populated comparison sets for only 10 subjects. By the end, the thesis endpoint serves Bloomberg model-block figures for the covered names, and every eligible subject has a peer set. Both changes are live on the deployed API and were re-read at 4:16 PM.</p>
+    <p>Getting there took one production regression. A deploy that added read access to the model-block store also shipped a package missing two data files, which crashed two endpoints at startup for 59 minutes. The fabric rolled back to the signed pre-deploy build, then redeployed with the files packaged and a before-and-after census of every endpoint as the release check. That census is now a standing requirement for any redeploy of this function.</p>
+    <p>On the frontend, the page was integrated with current portal code, builds without type errors, and is now on the shared DEV branch instead of a single machine. DEV builds only; nothing deploys from it, so no user can open the page yet. On the library side, a new scoring package and wider identity resolution feed the page's scores and peer tabs.</p>
+
+    <h4>Before and after</h4>
+    <div class="tblwrap">
+      <table class="ba">
+        <thead><tr><th scope="col">Measure</th><th scope="col">9:50 AM</th><th scope="col">4:16 PM</th></tr></thead>
+        <tbody>
+          <tr><td>Thesis read for BA</td><td>200, model absent, 0 header figures</td><td class="now">200, model served, 14 header figures</td></tr>
+          <tr><td>Overlay read for BA</td><td>200</td><td class="now">200</td></tr>
+          <tr><td>Print pack for BA</td><td><span class="pill fail">500</span></td><td class="now"><span class="pill fail">500</span></td></tr>
+          <tr><td>Peer sets populated</td><td>10</td><td class="now">121 of 121 eligible</td></tr>
+          <tr><td>Names with Bloomberg model blocks</td><td>4 of 89</td><td class="now">4 of 89 (pull approved, not run)</td></tr>
+          <tr><td>Price list for today's date</td><td>no generation for today</td><td class="now">no generation for today (pull approved, not run)</td></tr>
+          <tr><td>Page files on portal DEV</td><td>0 of 47 (one local branch)</td><td class="now">47 of 47 on origin</td></tr>
+          <tr><td>Work orders complete</td><td>3 of 16</td><td class="now">10 of 18</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Still open</h4>
+    <ul class="open">
+      <li>The print pack still returns 500. Its fix, packaging the PDF libraries and a template, is signed off by both reviewers, but the deploy has not run.</li>
+      <li>Five build orders remain: refresh wiring, version compare, the chart series, three unsurfaced outcomes, and fit presets.</li>
+      <li>The Bloomberg pulls and filings batch are approved and issued but have not run, so model coverage is still 4 of 89 names.</li>
+      <li>Independent grading of the completed orders has not started this session, so none is yet scored against the product's stated outcomes.</li>
+      <li>No user can open the page. DEV deploys nothing, and a production promote was out of scope by your instruction.</li>
+      <li>Portal CI on DEV is red on five pre-existing lint errors in other pages. The Security Analysis files add no errors and 11 warnings.</li>
+      <li>The CLOUD-to-SITEZ branch merge has not run.</li>
+    </ul>
+
+    <h4>Where the effort went</h4>
+    <p>74 commits across the session. Seven changed application code or its build; thirteen repaired acceptance tests that could not pass or could not fail as written.</p>
+    <div class="effort" role="list">
+      <div class="erow" role="listitem"><span class="lbl">Session logs</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="num">14</span></div>
+      <div class="erow" role="listitem"><span class="lbl">Acceptance-test repairs</span><span class="track"><span class="fill fix" style="width:92.9%"></span></span><span class="num">13</span></div>
+      <div class="erow" role="listitem"><span class="lbl">Worker builds and proofs</span><span class="track"><span class="fill code" style="width:92.9%"></span></span><span class="num">13</span></div>
+      <div class="erow" role="listitem"><span class="lbl">Branch merges</span><span class="track"><span class="fill" style="width:78.6%"></span></span><span class="num">11</span></div>
+      <div class="erow" role="listitem"><span class="lbl">Rulings, sign-offs, records</span><span class="track"><span class="fill" style="width:78.6%"></span></span><span class="num">11</span></div>
+      <div class="erow" role="listitem"><span class="lbl">Product-existence audits</span><span class="track"><span class="fill" style="width:64.3%"></span></span><span class="num">9</span></div>
+      <div class="erow" role="listitem"><span class="lbl">Issuance, integration, deploy record</span><span class="track"><span class="fill" style="width:21.4%"></span></span><span class="num">3</span></div>
+    </div>
+    <p class="sub">By seat: COO 30, CTO 15, CRO 12, workers 13, CVO 2, MSTR 2.</p>
+  </section>
+
+  <section aria-labelledby="cloud">
+    <h2 id="cloud">Cloud resources involved</h2>
+    <p class="sub">Every AWS and GitHub resource the session changed, wrote or read, with its state at 4:16 PM.</p>
+    <div class="tblwrap">
+      <table class="res">
+        <thead><tr><th scope="col">Resource</th><th scope="col">Service</th><th scope="col">This session</th><th scope="col">State at 4:16 PM</th></tr></thead>
+        <tbody>
+          <tr><td class="rname">opal-amgt-scoped-api</td><td>AWS Lambda, Python 3.11, 512 MB, 29 s</td>
+            <td><span class="pill chg">changed 3 times</span><br>Redeployed at 11:19 AM (regressed), rolled back at 12:18 PM, fixed forward at 1:23 PM.</td>
+            <td>Build <span class="mono">x3KrEBvZ</span>, 754,470 bytes. Environment unchanged, no layers. 7 of 8 GET reads answer 200.</td></tr>
+          <tr><td class="rname">opal-313476888478-lambda-artifacts / research/opal-amgt-scoped-api.zip</td><td>Amazon S3, versioned</td>
+            <td><span class="pill wr">written 3 times</span><br>New versions at 10:42 AM, 12:07 PM (the signed rollback bytes) and 1:16 PM.</td>
+            <td>7 versions on the key; the pre-session build is still recoverable.</td></tr>
+          <tr><td class="rname">opal-amgt-scoped-api-role / opal-amgt-scoped-api-grants</td><td>AWS IAM, inline policy</td>
+            <td><span class="pill chg">changed</span><br>Read access to <span class="mono">derived/model_block/</span> added to both the object-read and list statements, removed during the rollback, then re-added.</td>
+            <td>10 read-only prefixes. No write, delete or wildcard access.</td></tr>
+          <tr><td class="rname">/api/scoped/amgt/* routes</td><td>API Gateway HTTP API, shared portal API with custom authorizer</td>
+            <td><span class="pill rd">read only</span><br>Route set not modified; every endpoint census ran through it.</td>
+            <td>11 routes, 8 of them GET.</td></tr>
+          <tr><td class="rname">opal-data-harvest</td><td>Amazon S3, research data pool</td>
+            <td><span class="pill wr">written</span><br>382 objects rewritten under <span class="mono">peers/v1/</span> by the peer re-rank. Read only under <span class="mono">derived/model_block/</span>, <span class="mono">universe/v1/</span> and <span class="mono">crosswalk/v1/</span>.</td>
+            <td>415 objects under <span class="mono">peers/v1/</span>; 4 model-block names.</td></tr>
+          <tr><td class="rname">opal-harvest-security-metrics</td><td>Amazon DynamoDB</td>
+            <td><span class="pill rd">read only</span><br>Price and chatter rankings read by the API. No price generation written.</td>
+            <td>Latest price generation still dated September 10.</td></tr>
+          <tr><td class="rname">opal-harvest-articles</td><td>Amazon DynamoDB</td>
+            <td><span class="pill rd">read only</span><br>Read by the coverage endpoint.</td>
+            <td>Unchanged.</td></tr>
+          <tr><td class="rname">amgt-resapp-chatter-axis</td><td>Amazon EventBridge schedule</td>
+            <td><span class="pill rd">read only</span><br>Found enabled in the deploy output and recorded for review. Not modified.</td>
+            <td>Daily at 10:00 UTC; today's ranking landed at 6:00 AM ET, before the session.</td></tr>
+          <tr><td class="rname">Opal-Capital/portal, DEV branch</td><td>GitHub and GitHub Actions</td>
+            <td><span class="pill wr">pushed</span><br>Fast-forwarded to the page branch around 3:41 PM. CI run 35142029002 failed at the lint step.</td>
+            <td>DEV carries all 47 page files. CI red on 5 errors, the same 5 as the previous DEV run.</td></tr>
+          <tr><td class="rname">Workspace repository, SITEZ branch</td><td>GitHub</td>
+            <td><span class="pill wr">pushed</span><br>Pushed to <span class="mono">6f46ed0703</span> around 3:40 PM.</td>
+            <td>Later commits are local only until the next push.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Approved but not yet used</h4>
+    <ul class="open">
+      <li>Bloomberg Terminal API on the site Z machine: one budgeted pull of model blocks and prices for 33 names.</li>
+      <li>Anthropic API and SEC EDGAR: one filings and drafting batch for the same 33 names, about USD 36.</li>
+      <li>Referenced but unchanged: the <span class="mono">opal-research-pull-requests</span> queue and <span class="mono">opal-research-pull-enqueue</span> function, targets of the refresh wiring still to be built.</li>
+    </ul>
+  </section>
+
+  <div class="method">
+    <p><strong>How this was measured.</strong> Git history on the SITEZ branch since 9:33 AM (74 commits, classified by type and author); a live invocation of each of the 8 GET endpoints; AWS reads of the function configuration, artifact versions, IAM policy, S3 listings and DynamoDB generation dates; and the GitHub Actions record for both DEV runs. The 9:50 AM column is the product-existence audit taken just after the relaunch. All times are US Eastern.</p>
+  </div>
+</main>
