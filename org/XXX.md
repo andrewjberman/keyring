@@ -337,6 +337,20 @@ Andrew's word
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260904_170xZ_COOB_GOAL_AND_DRIVE_LOOP_ETFS_GUARDRAIL_DISPATCH_DRAIN.md`,
 Andrew-direct at the CTO terminal 2026-09-04 ~17:0xZ, relayed as 94224/94225). NOTHING ARMS FROM THIS ROW; `~B` and
 `~F` on the two IRPT projects are EVENT-DRIVEN with zero crons until Andrew arms a loop by name;
+`2.0.0_SA_COO~B` **`/canonical-drive IRPT_BCKEND` DIRECTED 30m, ARMED 2026-09-17 ~23:4xZ by Andrew-direct at the
+`1.0.0_SA_CTO` terminal ~23:3xZ**, VERBATIM: *"Give each of the COO's a 30m /drive loop for their respective project, i
+want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is
+the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX."* Relayed as 97707 (one
+lane one loop: `~B` IRPT_BCKEND, `~G` LGIC_ENFORCE+LGIC_LGCTFM, `~O` NFRA_OPLGTW). CLASS: DIRECTED. SCOPE: IRPT_BCKEND
+only. CADENCE: 30 minutes via CronCreate, the canonical name `/canonical-drive` (never the alias). This clause is the
+CARRIER and is committed BEFORE tick 1 (97707: "no carrier commit hash in hand, no tick"); the cron id is session-local
+and is NOT recorded here. Every tick runs the `/canonical-flow` stage check; a call this lane holds is closed on its own
+recommendation the same tick, or goes to `1.0.0_SA_CTO` WITH a recommendation while the lane keeps moving.
+STOP-CONDITION: IRPT_BCKEND DONE per the skill's completion test read from the register (never declared), or Andrew's
+stand-down; on DONE this lane writes its final log, deletes its cron, strikes this clause and says so. A successor at
+THIS lane re-arms ONLY off this clause while the scope is not DONE. Landed by the lane itself on 97707's instruction
+that each lane commits its own clause before its first tick; the state at the arm: round 2 drained 12 of 12 @8cb0364800,
+L8 handed to `3.0.0_SA_CVO` at 23:36Z, the round-2 L10 read owed by `1.0.0_SA_CTO`;
 `3.0.0_SA_CVO~Z` the SYSPARITY cron (`org/tier0/ledger/LD-0318.md`) and the parity-first duty (`LD-0319.md`);
 `2.0.0_SA_COO~Z` `/drive` STANDING 20m over NFRA_OPSEC202609 -- ⛔ **STOP-CONDITION MET 2026-09-11, ARMS NOTHING:
 `NFRA_OPSEC202609` measures `dep_stage=CLOSED`, which IS this arm's own stop condition, so `2.0.0_SA_COO~Z` armed
