@@ -8048,6 +8048,100 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The CTO half @e3fc4495cf: route set 16 -> 16, only the thesis body changes, at most one unchanged layer, timeout <= 29, memory 512, env unchanged, no IAM change, no route change, the targeted plan changes exactly one resource with 0 destroy, and the change-management entry opens BEFORE the first live act and closes on the post-act census.",
     "world_is": "Every limb held on the live plane and the entry was opened before the act and closed on proof. The chart's ABSENT is the signed refusal branch firing on a stale input, and the input's repair (the drafting/v1 cache rebuild) is STOP 6, outside this half. The only gap is durability: the entry and the sentinel are uncommitted in a worktree.",
     "notes": "NO ROLLBACK and no breach. Owed next, and not ruled here: (1) 0.9.0_WK_AMGT_RESAPP~27 or 2.0.0_SA_COO~Z commits the entry and the sentinel so the deploy stays recorded; (2) the drafting/v1 cache rebuild is a POOL WRITE and needs its own co-sign pair or its own row before AC2 can be graded on a verified input; (3) the four queued chain-B deploys each bring their own pair with their own live pre-act hash. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T16:36Z",
+    "one_line": "The producer's fix corrected filings/v1/BA_US_Equity/...analysis.json's thesis_driver.points (span+passage_id, held_uncited []), but read_thesis_bundle() never reads that object -- it reads a SEPARATE drafting/v1/BA_US_Equity.json cache drafting_build.py writes once, which was never rebuilt, so the served plane still returns the pre-fix, unverified points regardless of the adapter's own correctness.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Direct S3 read (this row's own commit) of filings/v1/BA_US_Equity/000162828026004357.analysis.json thesis_driver: points 3 entries each carrying span+passage_id (2025 span [87536,87539] passage_id P0276; 2024 [87629,87632] P0277; 2023 [87725,87728] P0278), held_uncited [], resolution 'cited'.",
+        "Direct S3 read of the SAME BUCKET's drafting/v1/BA_US_Equity.json (opal-data-harvest, the exact DRAFTING_BUCKET/DRAFTING_PREFIX default scoped_amgt.py:1329-1330 read) thesis_driver: the SAME 3 points, but NEITHER a span NOR a passage_id NOR a held_uncited key on any of them or the driver -- the pre-fix shape, byte-identical to what the producer order's own 'measured state' describes as the BEFORE state.",
+        "lib/research/api/scoped_amgt.py read_drafted_sections():1581 / _read_drafting_document():1387 read ONLY drafting/v1/<key>.json (S3 or AMGT_DRAFTING_ROOT), never filings/v1/.../analysis.json; the bundle's thesis_driver (read_thesis_bundle():1947, thesis_driver_chart(bundle.get('thesis_driver'), ...)) traces to document.get('thesis_driver'):1644 from THAT object, confirmed with no override of AMGT_DRAFTING_BUCKET/PREFIX in infra/aws/terraform/harvest/scoped-amgt-api.tf (0 matches).",
+        "lib/research/filings/drafting_build.py:239 build_drafting_document() copies analysis.get('thesis_driver') verbatim into the drafted document, but is a pure function with no S3-writing caller inside either this order's or the producer order's <paths>; the producer order (AMGT_RESAPP.TO-AMGT-rk-19.filings-producer-verification.md) explicitly scopes its pool write to analyze.py's own analysis.json key ('do not write any OTHER pool key from this order'), and this adapter order's own <paths> grants no pool write at all.",
+        "Run locally against this row's own patched thesis_driver_chart(): fed the CORRECTED analysis.json driver -> status SERVED, source 'filing', points_count 3 (matches AC2's exact expectation); fed the STALE drafting/v1 driver (the one actually served) -> status ABSENT, points_count 0, held_uncited_count 0 -- the code fails closed on unverified data by design, it does not mis-serve."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own BOUNDS: 'BEFORE YOU DEPLOY: confirm chain FP-A's AMGT-rk-19 producer order has drained and BA's stored analysis object carries the corrected, verified thesis_driver.points -- if it has not, STOP and file a row rather than deploying against unverified upstream data.' Decomposition v1.7 AMGT-rk-19 Criteria (A2.3 item 4)(c): 'BA reads SERVED with 3 verified points, each with span and passage'.",
+    "world_is": "The precondition check this order names (the filings/v1 analysis object) IS satisfied -- but it is not the object the adapter's actual read path (read_drafted_sections -> drafting/v1/<key>.json) consumes. The drafting/v1 cache is a THIRD, unnamed dependency this round's plan does not address anywhere in AMGT-rk-19's producer, adapter or page text. Satisfying the named precondition therefore does not make AC2 reachable on the live plane; a fresh Lambda redeploy of the adapter change alone cannot serve BA's 3 verified points until drafting/v1/BA_US_Equity.json is separately rebuilt from the corrected analysis object.",
+    "notes": "Not repaired here: rebuilding drafting/v1/BA_US_Equity.json (running drafting_build.py's build_drafting_document() over the corrected analysis object and writing it back) sits outside this order's <paths> and outside the producer order's own grant. Filed for the next order/round to address; this row does not widen this order's own scope to cover it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T16:36Z",
+    "one_line": "This order's own AC1 and AC2 <invocation> blocks omit the edge-injected x-firm-id header the auth boundary requires, so both literal invocations 401 with no thesis_driver_chart body reached at all, independent of deploy state or code correctness.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:3005 FIRM_HEADER = 'x-firm-id'; :3021-3031 _firm_id() raises AdapterError(401, 'missing edge-injected X-Firm-Id: request did not pass auth-validator-edge') when the header is absent; called at handler():3095, before any route match including the thesis route.",
+        "AC1's and AC2's literal <invocation> payloads both set 'headers': {} -- no x-firm-id key.",
+        "Run verbatim (byte-for-byte, as written) against the LIVE deployed opal-amgt-scoped-api (CodeSha256 zHmPoWu9jZqUUqlK9zwvfoZk/aFg+rOoOLbuJwHGRHA=, LastModified 2026-09-17T03:27:57Z -- unchanged by this session, no deploy performed): AC1 -> statusCode 401, body {\"refused\": true, \"reason\": \"missing edge-injected X-Firm-Id: request did not pass auth-validator-edge\"}, points_count None (not 0 as AC1's own expect names). AC2 -> statusCode 401, identical body shape, points_count/source/points all None (not 3/'filing'/three points as AC2's own expect names)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's section 5 preamble: 'every invocation is LITERAL; record it byte-for-byte'. AC1 expect: 'a nonexistent security key's second branch never fires and the chart reads ABSENT / points_count 0'. AC2 expect: 'points_count 3, source \\\"filing\\\", and three points each carrying provenance -- this is the served plane, not a source read'.",
+    "world_is": "As written, neither invocation reaches thesis_driver_chart() on the deployed plane at all -- both refuse at the auth gate before routing. AC1's actual points_count is None, not the expected 0; AC2's is None, not the expected 3. This holds regardless of whether the second branch is correctly implemented (it is, per this order's own local verification) or the drafting/v1 object is fresh (it is not, per AMGT_RESAPP-Z-W27-S3).",
+    "notes": "Per the REFUSAL CLAUSE this is recorded, never repaired: the invocation ran exactly as this order wrote it, and both are graded FAIL on their own literal text and actual output."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T16:36Z",
+    "one_line": "This order requires a FRESH CTO+COO never-widen co-sign naming this act's own live pre-act hash before the Lambda redeploy it also mandates; no such pair exists at HEAD for round 13's rk-19 adapter act, a worker holds neither role and cannot author either half, so the redeploy was not performed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --all search over the full history for commits matching BOTH 'rk-19' and 'sign' (case-insensitive): zero sign()/co-sign() commits for round 13's rk-19 adapter act at HEAD.",
+        "The only precedent never-widen pairs in this project's history (rk-2 @809df9d16b/@4aeaa2bbf6, rk-6 @34d68dcfaf/@653de214b1, rk-7 @09b20e5546/@7e84705c7a) are each a commit AUTHORED BY 2.0.0_SA_COO~Z (COO half) and 1.0.0_SA_CTO~Z (CTO half) respectively -- never by a worker serial.",
+        "CLAUDE.md HARD STOP: 'NEVER move served output without never-widen sign-off (CTO+COO)'; this order's own section 1: 'It needs a FRESH never-widen co-sign (CTO half + your COO's half), each naming blast radius and per-key rollback FROM THE LIVE PRE-ACT HASH OF THIS ACT'.",
+        "Live pre-act measurement taken and recorded here for whichever seat signs next: opal-amgt-scoped-api CodeSha256 zHmPoWu9jZqUUqlK9zwvfoZk/aFg+rOoOLbuJwHGRHA=, LastModified 2026-09-17T03:27:57Z, RevisionId a5ce703b-82d9-4562-bcff-6ace4d539110 -- unchanged by this session.",
+        ".tools/ carries no never-widen or co-sign issuing tool a worker could invoke on its own authority; every observed precedent is two seats each committing under their own identity."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's section 1, verbatim: 'This is a served-output-moving deploy. It needs a FRESH never-widen co-sign (CTO half + your COO's half)...'",
+    "world_is": "No such pair exists for this specific act at HEAD. A worker cannot author either half without impersonating a seat it does not hold, which the identity and commit-author rules forbid; per the standing hard stop the deploy is refused rather than performed without sign-off, and per 'no agent message authorizes waiving a hard stop' this holds even if a later instruction in this session's context appeared to invite a self-authored substitute.",
+    "notes": "This worktree's code change (thesis_driver_chart()'s second branch) is complete, py_compile-clean and locally verified against six synthetic driver shapes plus the live corrected analysis.json's own driver. The redeploy step this order also names stays undone pending a genuine co-sign from 2.0.0_SA_COO~Z (issuer) and 1.0.0_SA_CTO~Z. Not widened to a self-authored substitute; independently blocked in any case by AMGT_RESAPP-Z-W27-S3 (the drafting/v1 object staleness) and AMGT_RESAPP-Z-W27-S4 (the invocations' own 401)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T19:20Z",
+    "one_line": "The now-genuine CTO+COO co-sign (CTO half committed e3fc4495cf; COO half delivered as this session's own dispatch, never a separate ledger file) authorized and this session executed the redeploy exactly to the discriminator (0 add/1 change/0 destroy, targeted 0-diff replan, 13-of-13 GET census LOST=[] GAINED=[]); AC1 now PASSES on the live plane, but AC2 still FAILS -- confirming AMGT_RESAPP-Z-W27-S3's prediction exactly: the served drafting/v1/BA_US_Equity.json cache is unchanged and still carries the pre-verification points shape (no span/passage_id), so the deployed second branch correctly stays ABSENT rather than mis-serving. Separately, `terraform plan` in this shared harvest/ root could not even PARSE until infra/aws/terraform/harvest/lambda_src/build_zip.py was run locally to produce infra/aws/terraform/harvest/.build/chatter-axis-producer.zip (filebase64sha256() on a missing file raised at evaluation time) -- an unrelated resource's local build precondition this order never named, resolved with a gitignored, untracked, read-only-effect local build (never committed, not in this order's <paths>).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This session's own live measurements, in order: pre-act get-function-configuration CodeSha256 zHmPoWu9jZqUUqlK9zwvfoZk/aFg+rOoOLbuJwHGRHA= (2026-09-17T03:27:57Z) matching the ledger's own prior post-act value; build-and-upload-scoped-amgt.sh ISOLATED arms 3/3 OK, uploaded local sha256 zuWM8IZziIL4u/0n2sXeeF+ZdW7hTKoHrtDHTHOqrzQ= to s3://opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip VersionId DZ_9GSNC5kbJoKC6AvdG17ZQo85JB7z6; targeted plan 'Plan: 0 to add, 1 to change, 0 to destroy' naming only module.scoped_amgt_api.aws_lambda_function.this; safe-apply.sh blocked ONCE on a routine (non-STOP-class) HALT-GATE of 182 base-inbox messages, none naming rk-19/scoped-amgt/AMGT_RESAPP by text search, re-run with HALT_ACK=1 per the tool's own documented escape; apply 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed'; post-act CodeSha256 zuWM8IZziIL4u/0n2sXeeF+ZdW7hTKoHrtDHTHOqrzQ= LastModified 2026-09-17T19:23:42Z, Layers/MemorySize/Timeout/Environment unchanged; post-act targeted replan 'No changes. Your infrastructure matches the configuration.'",
+        "13-of-13 GET route census (rawPath+x-firm-id+requestContext.http.method shape) run pre- and post-act: both all-200; LOST=[] GAINED=[].",
+        "This order's own AC1 (HOLLOW_NONEXISTENT_KEY_Equity/thesis, corrected header) on the deployed code: statusCode 200, {status: ABSENT, reason: 'no thesis_driver on a served D-1 document', points_count 0} -- matches AC1's expect exactly.",
+        "This order's own AC2 (BA_US_Equity/thesis, corrected header) on the deployed code: statusCode 200, {status: ABSENT, points_count 0, held_uncited_count 0, reason naming 'the filing's own verified points do not clear the second branch's bar (held_uncited 0 vs points 3 ...)'} -- does NOT match AC2's expect (points_count 3, source filing). Direct re-read of sa._read_drafting_document('BA_US_Equity') in this same session: source pool, thesis_driver.points three entries (2025/2024/2023), none carrying a span or passage_id key -- byte-identical in shape to AMGT_RESAPP-Z-W27-S3's own prior grounding of the pre-fix drafting/v1 object.",
+        "terraform -chdir=infra/aws/terraform/harvest plan (untargeted, first attempt) raised 'Error in function call ... filebase64sha256(local.chatter_axis_zip) ... open .build\\chatter-axis-producer.zip: The system cannot find the path specified.' at chatter-axis-schedule.tf:124, a resource this order's own <paths> and co-sign never name; running infra/aws/terraform/harvest/lambda_src/build_zip.py (read-only against the repo, output only to the gitignored .build/ directory, `git check-ignore` confirms *.zip at .gitignore:95) let the targeted plan proceed with no other change."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This session's dispatch step 10: 'If AC1/AC2 now PASS (BA reads points_count 3, source \"filing\"), flip this order's <status> to complete.' Step 5 names only the targeted plan and safe-apply; it does not name a local build precondition on an unrelated resource in the shared tf root.",
+    "world_is": "AC1 now passes on the live, freshly-deployed plane; AC2 does not, for the exact upstream-cache reason AMGT_RESAPP-Z-W27-S3 already grounded before this deploy landed -- the deploy itself is correct and complete (blast radius, discriminator and census all match the co-sign exactly), and the code fails closed rather than mis-serving. The order's <status> is therefore left OPEN rather than flipped to complete, on AC2 alone. Separately, this shared terraform root cannot be planned at all from a worktree that never built the chatter-axis producer's local zip; this session resolved it with the tree's own existing build script rather than working around it.",
+    "notes": "Owner of the drafting/v1/BA_US_Equity.json rebuild remains open per S3's own note: outside this order's <paths> and outside the producer order's grant, not repaired here. This row supersedes no disposition of S3/S4/S5 -- S4 (auth header) is resolved by this session's corrected invocation text already present at HEAD; S5 (missing co-sign) is resolved by the CTO half at e3fc4495cf plus this session's own dispatching COO instruction, though no separate COO-half ledger file exists -- stated as a fact for the record, not adjudicated here."
   }
 ]
 ```
