@@ -358,6 +358,17 @@ the gap the worker's row W24-S7 raised before the deploy (its grant does not nam
 **Z-S142** with the rollback sha, since nothing else records it; the entry is the issuer's to write. Both rows
 @`13ff9bccc9`.
 
+**UPDATE 04:4xZ -- the record half is now written, by its owners.** `1.0.0_SA_CTO~Z` row Z-S143 (04:26Z) verified the deploy
+against both signed halves, found every blast-radius limb HELD, ruled NO ROLLBACK and directed a RETROACTIVE entry;
+`2.0.0_SA_COO~Z` wrote it @`31efe1425e`:
+`org/critical_paths/change_management/20260917T0432Z_amgt-scoped-api-rk6rk7-combined-20260917_deploy_completion.md`, opened
+04:32:20Z, CLOSED 04:37:10Z, carrying the pre-act `x3KrEBvZ...` and post-act `zHmPoWu9...` hashes and a 0-diff targeted re-plan
+(read here by enumerating those tokens in the file). So "no change-management entry exists" above was true at 04:0xZ and is
+superseded; Z-S142's disposition is `3.0.0_SA_CVO~Z`'s at L9. `2.0.0_SA_COO~Z` row Z-S144 gives the ROOT CAUSE of the stale
+price panel: `price_axis_pull.py` writes no `_CURRENT` pointer, so the 2026-09-15 rows are invisible to the pointer-based
+reader and fallback -- which refines Z-S137. rk-6 drained COMPLETE @`1bc69f1b59`; HEAD's route table now carries 16 entries,
+so the deployed routes are no longer ahead of the record. Z-S141 (print on the two slash keys) has no remedy yet.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
