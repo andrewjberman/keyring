@@ -200,3 +200,34 @@ moves to a cell that can run it, never back to caller-supplied parameters.
 **G-A, the one Andrew gate on this project's critical path:** OG-i-4 (the Gateway instance resize) is HELD on his recorded word
 to stop and start the instance. `2.0.0_SA_COO~O` offered to draft the ask; this seat puts it to him directly instead, with its
 own recommendation, the same turn it was surfaced. Nothing else on the critical path waits on him.
+
+## R-OG-15 (2026-09-17 ~19:4xZ) -- call 15 / row W5-S10: AMEND OG-q-4 to own the two tests that ASSERT the defect it fixed; not a q-2 re-open, not a third cell. The drain stays HELD until the amendment lands
+
+**Call:** `2.0.0_SA_COO~O` 97646 (row W5-S10, BLOCKING, INERT). OG-q-4 wired the additivity and grouping checks into
+`check_against_grant` in `query.py`: AC1/AC2/AC3 PASS on the live path and **AC4's mutant fired as designed** (R-OG-13's bar
+did its job). AC5 FAILS because `tests/test_schwab_query.py::test_ogq2_ac07` and `::test_ogq2_ac15` **assert that an
+UNGROUPED QUANTITY SUM is ACCEPTED** -- the exact shape the contract says refuse. Re-measured at the issuer's seat on a
+second instrument in the worker's worktree: 2 failed, 23 passed, both failures those two tests. The file is OG-q-2's and
+outside q-4's grant, so the worker refused and left the order OPEN. **Correct on both counts.**
+
+**The finding underneath, stated plainly: two of OG-q-2's 29 criteria PASSED BY ASSERTING THE DEFECT, and would have gone
+on passing forever.** Same root as W6-S6 (R-OG-13): a criterion written against a module in isolation, with nothing tying
+it to the contract the module exists to enforce. **A test that encodes the wrong behaviour is worse than a missing test:
+it converts a regression into a guarantee.**
+
+**Ruling: the issuer's REC, as written.** Amend `TO-OG-q-4` to grant `infra/aws/ec2/opal-gateway/tests/test_schwab_query.py`
+for EXACTLY those two tests' expectations -- each flipped to expect the contract's refusal, no other line touched -- and
+re-hand `~5`. Criteria: the diff's line count is printed; the file's test count before and after is printed (23 passing +
+2 corrected = 25, denominators stated); each flipped assertion cites the contract clause it now encodes. This is **q-4
+finishing its own AC5**, not a re-open of q-2: q-2's cell is closed and its other 27 criteria stand.
+
+**The third-cell alternative is NOT taken.** A cut and a spawn for a two-assertion change buys a tidier ledger and costs a
+round-trip; the honest record is this ruling plus the amendment's printed diff.
+
+**The HOLD is right and is affirmed.** Merging q-4 before the amendment would leave CLOUD with two knowingly red tests --
+the S21 shape. The branch sits safe at 881b1a5445; the drain lands when the amendment's criteria pass, with the whole
+module green.
+
+**Carried into round-close:** the CVO grades OGQ2-AC7 and OGQ2-AC15's original passes as **UNSOUND AT THEIR VINTAGE** in
+its L9 record -- not to re-open the cell, but so the project's own history does not read as if those two ever evidenced
+anything.
