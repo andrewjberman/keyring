@@ -2313,7 +2313,10 @@ path below).
 
 **TWELVE obligations, R13-A..R13-L. This seat's HOW: fourteen cell ids (`AMGT-rk-19`..`AMGT-rk-30`, two
 obligations -- R13-A and R13-L -- realized as a three-order battery under one id each, per the CTO's own
-producer/adapter/page/criteria framing), sixteen task orders, six chains.**
+producer/adapter/page/criteria framing), TWO obligations decomposed no further and deferred (R13-I, R13-K,
+s.21f), and TEN obligations issued as FIFTEEN task orders this round (self-corrected at this same cut: a
+first count read sixteen by double-counting; the true sum is A=3, B=1, C=1, D=1, E=1, F=2, G=1, H=1, J=1,
+L=3 = 15), across six active chains plus one held (chain D).
 
 ### 21a. THE MAPPING -- CTO letter -> COO id(s), and why an id sometimes carries more than one order
 
