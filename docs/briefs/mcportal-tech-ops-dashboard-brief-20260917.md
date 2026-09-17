@@ -58,6 +58,11 @@ Management and User Analytics, then MCP Server, then Health Check, Cost Manageme
 - Home and Operations Report: *"recs approved for all except locking up daily sprint, any Opal MS user should have
   access to it"*
 
+**The address, corrected by him:** *"Sorry this is definitely the .dev domain, lets make sure that is cleared up."*
+**THE DASHBOARD'S ADDRESS IS `mcp.opalinvest.dev`.** The `mcp.opalinvest.com` in his original ask above is kept
+only because it is a verbatim quote; it names no deliverable. `opalinvest.com` (the marketing site) is not touched
+by this project.
+
 ---
 
 ## PART I -- THE OUTCOME TERRITORY
@@ -259,8 +264,8 @@ Measured 2026-09-17 from the repo only; no AWS reads were made for this brief.
 
 ## PART VII -- WHAT THIS BRIEF DOES NOT CLAIM
 
-1. **The address.** Andrew wrote `mcp.opalinvest.com`; the Gateway is at `mcp.opalinvest.dev`. This brief assumes
-   `.dev`. He was told twice and did not object, but he has not said the word.
+1. **The address is SETTLED, not open: `mcp.opalinvest.dev`**, on his word (quoted above). Listed here only so a
+   reader who saw `.com` in the original ask finds the correction.
 2. **Demo exclusion in analytics.** He said "Include Opal and Clients"; this seat read demo users as excluded by
    default. Unconfirmed.
 3. No AWS state was read: whether session retention is actually enforced, whether the block lists are
