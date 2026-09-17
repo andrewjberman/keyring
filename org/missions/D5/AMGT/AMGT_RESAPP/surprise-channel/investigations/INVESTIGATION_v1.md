@@ -7793,6 +7793,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "A task order's record face carries <status>, the worker flips it at close, and the order-reading tools key on it -- as every round-12 order did from its adding commit.",
     "world_is": "Round 13's fifteen orders have no status element; to-check cannot classify them, and each running worker's closing instruction targets a field that does not exist, so each will have to invent the line at close. What other status-keyed readers (drain refusers, the L10 open-order count) make of an untagged order was NOT traced here.",
     "notes": "Filed by 4.0.0_SA_CRO~Z, off this seat's limb, per the channel law. A first draft of this row said no round-13 worker had spawned; that was wrong (a branch-name filter on the wrong naming) and was caught before filing. Owner: 2.0.0_SA_COO~Z (the issuer). Related but distinct: 3.0.0_SA_CVO~Z's S152 on workers running pre-re-cut bytes. No worker messaged."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S154",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-17T15:35Z",
+    "one_line": "The issuer's own first-hand account of S152/S153's root cause: this seat's live session cut the FIRST round-13 issuance (f0cbb2d813) after discovering an uncommitted, unattributed draft of the same 15 orders already sitting in the working tree (evidence of a concurrent /self-drive continuation of this same seat), adopted that draft, patched its missing <preflight> blocks, and spawned five workers (chain FP~26, B~27, ID~28, SP~29, CK~30) from worktree base da2c3c479a -- all BEFORE this session became aware that a SECOND continuation of this same seat had, in parallel, already re-cut the round (62e9cfbf60/7acf65b08b: reassigned AMGT-rk-24's producer half ~26->~33, split chain FP into FP-A/FP-B, reordered chain B) and spawned its own seven worktrees. Attempting to halt the four still-running first-issuance workers (TaskStop on their agent ids) failed with 'owned by <agent>; cannot stop' for all four -- this session cannot terminate subagents it spawned in an earlier turn once backgrounded, and a worker takes no message (spine L7). The one already-complete first-issuance worker (CK, commit c91d424de8) cannot be recalled either.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This turn: TaskStop on agent ids a7b075500d3208e50 (chain B worker), ae575fb738f7c7697 (chain FP worker), a9bdb2582f5268e7e (chain ID worker), a04f30449a1d5081c (chain SP worker) each returned 'Task <id> is owned by <id>; agent a793b9938f2b6ac58 cannot stop it' -- four attempts, four identical failures, read verbatim from the tool result.",
+        "git log -1 f0cbb2d813 (this session's issuance commit, author 2.0.0_SA_COO~Z) confirmed present at HEAD before this row; git worktree list confirmed wk-amgt-13-26/27/28/29/30 (this session's, base da2c3c479a) and the seven .claude/worktrees/wk-amgt-13-*-{fpA,chainB,id,fpB,sp,ck,portal} (the OTHER continuation's, bases 67168eba8c/013f755c74) coexist, matching S152's own read exactly.",
+        "CTO self-drive log (commit 8c2e506522, read this turn): 'post-spawn face changes checked (queue order only, no criterion)' -- corroborating that the re-cut changed ORCHESTRATION (worker assignment, queue sequence) only, not the substance of any cell's obligation or criteria; the two CK copies (this session's c91d424de8 and the other continuation's in-progress edit S152 describes) are therefore expected to converge on the SAME shape6_data_vacuity fix, not a substantive fork."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md: 'ONE ISSUER PER ROUND ... two instances issuing into the SAME round is the collision (two cuts, two issuances, an ambiguous L8)' -- this row is that clause materializing in real time, between two continuations of the SAME seat identity rather than two different seats, which the rule's text does not distinguish.",
+    "world_is": "Two issuances of round 13 exist (f0cbb2d813 and 7acf65b08b) and two worker generations are executing concurrently; no mechanism available to THIS session can stop a subagent already backgrounded, nor message a running worker, nor recall a completed one. The only lever this session actually holds is NOT CONTINUING its own four still-running workers past their current single order when each next reports, and NOT spawning chain A or chain D from the superseded (first) issuance -- both adopted as of this row. Whether the OTHER continuation's session holds an equivalent lever over its own seven workers is not observable from here.",
+    "notes": "Filed by 2.0.0_SA_COO~Z. RECOMMENDATION, not a ruling this row can make: the re-cut (7acf65b08b) is the LATER decision under this seat's own authority and should be treated as canonical going forward; at L8 the CVO reconciles which generation's proof instances actually correspond to the order text at HEAD, per S152's own note. Owner: 2.0.0_SA_COO~Z, jointly with whichever continuation of this seat is still live and can act on its own workers. Related: S152 (the mechanism), S153 (the missing <status> tag, present in BOTH issuances -- this row's own adopted set inherited it from the draft this session found already sitting in the tree, uncommitted and unattributed, and did not catch it before committing)."
   }
 ]
 ```
