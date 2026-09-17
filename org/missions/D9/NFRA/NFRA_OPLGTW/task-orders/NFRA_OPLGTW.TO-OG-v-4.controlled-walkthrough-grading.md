@@ -58,7 +58,13 @@ taking the short id, printing its measurement with its denominator, then exactly
 `OGV4-AC4` -- the source-bucket readbacks after grant change, revocation and rollback equal `OG-p-1`'s baseline.
 
 <criterion id="OGV4-AC5" cell_refs="OG-v-4"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py AC5</invocation><expect>(?m)^VERDICT: PASS-OGV4-AC5(?![0-9])</expect></criterion>
-`OGV4-AC5` -- the actual answers to the chosen real-data questions hash-match `OG-v-3`'s sealed expectations.
+`OGV4-AC5` -- the actual answers to RQ1-RQ6, each asked at the fixed business date `2026-09-15` per the protocol's section 4, hash-match `OG-v-3`'s sealed expectations, denominator 6 printed.
+
+<criterion id="OGV4-AC6" cell_refs="OG-v-4"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py AC6</invocation><expect>(?m)^VERDICT: PASS-OGV4-AC6(?![0-9])</expect></criterion>
+`OGV4-AC6` -- for each master (`08242234`, `08335338`), the latest qualified date the record shows returned by A7's no-date request equals the newest `schwab/<master>/meta/complete/date=*.json` marker in `opal-data-assets` whose `closure.status` is `qualified` and whose LastModified precedes the recorded ask time, read-only, denominator 2 printed.
+
+<criterion id="OGV4-AC7" cell_refs="OG-v-4"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py AC7</invocation><expect>(?m)^VERDICT: PASS-OGV4-AC7(?![0-9])</expect></criterion>
+`OGV4-AC7` -- for each master, the available-dates list the record shows returned by A7's no-date request contains `2026-09-15`, denominator 2 printed.
 
 <criterion id="OGV4-J1" cell_refs="OG-v-4" judgment="true"/>
 `OGV4-J1` -- graded at L9 by 3.0.0_SA_CVO: each walkthrough step's observation matches the protocol's expected observation. RECORD; NO VERDICT.
@@ -66,7 +72,7 @@ taking the short id, printing its measurement with its denominator, then exactly
 <criterion id="OGV4-J2" cell_refs="OG-v-4" judgment="true"/>
 `OGV4-J2` -- graded at L9 by 3.0.0_SA_CVO: the record meets the ACCEPT clauses of FWD-3, FWD-4, FWD-5, FWD-6, FWD-7 and FWD-8. RECORD; NO VERDICT.
 
-<expected_criteria>OGV4-AC1, OGV4-AC2, OGV4-AC3, OGV4-AC4, OGV4-AC5, OGV4-J1, OGV4-J2</expected_criteria>
+<expected_criteria>OGV4-AC1, OGV4-AC2, OGV4-AC3, OGV4-AC4, OGV4-AC5, OGV4-AC6, OGV4-AC7, OGV4-J1, OGV4-J2</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -74,7 +80,7 @@ taking the short id, printing its measurement with its denominator, then exactly
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **G-C and G-D.** Both records at HEAD, or a BLOCKING row and a stop.
-- **You grade; you do not operate.** No sign-in, no connector act, no grant change, no rollback, no call to the Gateway as a user. Reads only: the records, the audit sink, the bucket settings.
+- **You grade; you do not operate.** No sign-in, no connector act, no grant change, no rollback, no call to the Gateway as a user. Reads only: the records, the audit sink, the bucket settings, and (AC6) the closure markers under `schwab/<master>/meta/complete/` in `opal-data-assets`.
 - **Customer data stays out of the repository.** Answers are compared by hash; no value is committed or printed.
 - **Branch.** You work in the worktree named in your identity line, cut from `CLOUD` at hand-off. Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
@@ -95,11 +101,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGV4-AC1` .. `OGV4-AC5`, `OGV4-J1`, `OGV4-J2` (7). Instance at
+Criterion ids: `OGV4-AC1` .. `OGV4-AC7`, `OGV4-J1`, `OGV4-J2` (9). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/NFRA_OPLGTW.TO-OG-v-4.controlled-walkthrough-grading.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGV4-AC1,OGV4-AC2,OGV4-AC3,OGV4-AC4,OGV4-AC5,OGV4-J1,OGV4-J2` BEFORE the
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGV4-AC1,OGV4-AC2,OGV4-AC3,OGV4-AC4,OGV4-AC5,OGV4-AC6,OGV4-AC7,OGV4-J1,OGV4-J2` BEFORE the
 `complete` flip. Every `judgment="true"` criterion is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming
 `3.0.0_SA_CVO` at L9 -- **a `PASS` or `FAIL` on a judgment row is INVALID.** Result file
 `controlled-walkthrough-grading.result.md` beside it. **Flip `complete` only when every MECHANICAL criterion PASSES by
@@ -122,3 +128,8 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 Seating: slot ~6, queue position 4, handed after `OG-r-2`, `OG-o-2`, `OG-i-3` and `OG-v-3` merge AND the G-C and G-D
 records are at HEAD. Round 1 of NFRA_OPLGTW, issued by `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1
 @8768f46770. After this cell drains, the COO removes `C:/tmp/nfra-oplgtw-sealed/` (the retention `OG-v-3` states).
+
+Amended 2026-09-17 ~15:0xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-12 (msg 97602
+@df750f1e26; row `NFRA_OPLGTW-W6-S5`): AC5 grades RQ1-RQ6 at the fixed date `2026-09-15`; AC6 and AC7 grade one live,
+unsealed no-date request per master, so PRD C3's explicit-latest coverage stays in the walkthrough and cannot drift. The
+protocol edit rides `TO-OG-o-2`, which precedes this cell (see that order's record). No criterion removed.
