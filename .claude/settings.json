@@ -138,16 +138,6 @@
         ]
       },
       {
-        "matcher": "Bash|PowerShell|Write|Edit|NotebookEdit|mcp__bloomberg__.*|mcp__opal-gateway__.*|mcp__opal-gateway-bbg__.*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.tools/hooks/bg-concierge-gate.sh\"",
-            "timeout": 10
-          }
-        ]
-      },
-      {
         "matcher": "mcp__opal-agent-comms__send_message",
         "hooks": [
           {
