@@ -74,6 +74,20 @@ classification lives.
 - The five tool names are the contract's exact names; `OG-z-1`'s test stand-ins already carry them.
 AC25 runs the guard module; AC26 checks the file's diff.
 
+**The tool-operation map (amended on re-hand, on `1.0.0_SA_CTO` ruling R-OG-11, msg 97596, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @c858a5f239; row `NFRA_OPLGTW-S22`).** Your
+code, evidence and AC1-AC25 were merged @6a7e9f6caf; AC26 read FAIL as first written (row W5-S4) because the cut base
+already classified the five tools. The ruling vacates R-OG-10 and sets:
+- `app/data_entitlement.py` is NOT edited. `SCHWAB_TOOLS` keeps `"schwab_get_access": None`; `OPERATIONS`, the
+  `allowed_tools()` predicate and the admin command's allowed set do not change.
+- The contract gains ONE key, `tool_operations`: its keys are exactly the five `tools`, each value a member of
+  `operations` or null. null means "carried by every ACTIVE grant; never grantable; reads no data object" -- today
+  `schwab_get_access` only. Add that key and nothing else to the contract: `contract_version` is set to 1.1 by
+  `OG-i-5`, never by you, and a merge conflict there is the issuer's.
+- A test holds both code copies (`data_entitlement.SCHWAB_TOOLS`, `integrations/schwab/integration.py`
+  `TOOL_OPERATION`) equal to that key, and a mutant of either copy fails it (AC27-AC29).
+- Re-run AC1-AC25 at your HEAD; nothing in them changes.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
@@ -154,9 +168,18 @@ AC25 runs the guard module; AC26 checks the file's diff.
 `OGQ2-AC25` -- `tests/test_data_entitlement_guard.py` passes with your five tools classified.
 
 <criterion id="OGQ2-AC26" cell_refs="OG-q-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q2.py AC26</invocation><expect>(?m)^VERDICT: PASS-OGQ2-AC26(?![0-9])</expect></criterion>
-`OGQ2-AC26` -- (discriminating) the diff of `app/data_entitlement.py` against your cut base is exactly five added entries, one per contract tool name, each with an operation class from the contract, and no other line; the probe prints each tool with its class and `VERDICT: PASS-OGQ2-AC26` or `VERDICT: FAIL-OGQ2-AC26 <reason>`.
+`OGQ2-AC26` -- (re-cut on R-OG-11) `app/data_entitlement.py` at your HEAD is byte-identical to its blob at `d88cd32d0c` (`OG-z-1`'s commit, which already classifies the five tools with `schwab_get_access` as `None`); the probe prints both blob ids and `VERDICT: PASS-OGQ2-AC26` or `VERDICT: FAIL-OGQ2-AC26 <reason>`.
 
-<expected_criteria>OGQ2-AC1, OGQ2-AC2, OGQ2-AC3, OGQ2-AC4, OGQ2-AC5, OGQ2-AC6, OGQ2-AC7, OGQ2-AC8, OGQ2-AC9, OGQ2-AC10, OGQ2-AC11, OGQ2-AC12, OGQ2-AC13, OGQ2-AC14, OGQ2-AC15, OGQ2-AC16, OGQ2-AC17, OGQ2-AC18, OGQ2-AC19, OGQ2-AC20, OGQ2-AC21, OGQ2-AC22, OGQ2-AC23, OGQ2-AC24, OGQ2-AC25, OGQ2-AC26</expected_criteria>
+<criterion id="OGQ2-AC27" cell_refs="OG-q-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q2.py AC27</invocation><expect>(?m)^VERDICT: PASS-OGQ2-AC27(?![0-9])</expect></criterion>
+`OGQ2-AC27` -- `org/standards/NFRA_OPLGTW_CONTRACT.json` carries the key `tool_operations`, whose keys are exactly the contract's `tools` (denominator 5 printed) and whose values are each a member of `operations` or JSON null, with null on `schwab_get_access` only; `operations` and `disabled_operations` equal their blobs at your cut base.
+
+<criterion id="OGQ2-AC28" cell_refs="OG-q-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_query.py::test_ogq2_ac28 -q -p no:cacheprovider --color=no -s</invocation><expect>(?m)^1 passed(?![^\n]*(failed|error))</expect></criterion>
+`OGQ2-AC28` (`test_ogq2_ac28`) -- `data_entitlement.SCHWAB_TOOLS` and `integrations.schwab.integration.TOOL_OPERATION` each equal the contract's `tool_operations` in keys and values (null read as `None`), and the test prints the denominator 5.
+
+<criterion id="OGQ2-AC29" cell_refs="OG-q-2"><invocation>cd <WS> && timeout 180 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q2.py AC29</invocation><expect>(?m)^VERDICT: PASS-OGQ2-AC29(?![0-9])</expect></criterion>
+`OGQ2-AC29` -- (mutant control) the probe runs `test_ogq2_ac28` once with one value of `TOOL_OPERATION` changed and once with one value of `SCHWAB_TOOLS` changed, never writing either source file, and passes only if both runs FAIL while an unmutated run passes; it prints the three outcomes.
+
+<expected_criteria>OGQ2-AC1, OGQ2-AC2, OGQ2-AC3, OGQ2-AC4, OGQ2-AC5, OGQ2-AC6, OGQ2-AC7, OGQ2-AC8, OGQ2-AC9, OGQ2-AC10, OGQ2-AC11, OGQ2-AC12, OGQ2-AC13, OGQ2-AC14, OGQ2-AC15, OGQ2-AC16, OGQ2-AC17, OGQ2-AC18, OGQ2-AC19, OGQ2-AC20, OGQ2-AC21, OGQ2-AC22, OGQ2-AC23, OGQ2-AC24, OGQ2-AC25, OGQ2-AC26, OGQ2-AC27, OGQ2-AC28, OGQ2-AC29</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -186,6 +209,7 @@ infra/aws/ec2/opal-gateway/app/integrations/schwab/__init__.py
 infra/aws/ec2/opal-gateway/app/integrations/registry.py
 infra/aws/ec2/opal-gateway/app/data_entitlement.py
 infra/aws/ec2/opal-gateway/tests/test_schwab_query.py
+org/standards/NFRA_OPLGTW_CONTRACT.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -195,11 +219,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGQ2-AC1` .. `OGQ2-AC26` (26). Instance at
+Criterion ids: `OGQ2-AC1` .. `OGQ2-AC29` (29). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/NFRA_OPLGTW.TO-OG-q-2.tools-and-validation.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ2-AC1,OGQ2-AC2,OGQ2-AC3,OGQ2-AC4,OGQ2-AC5,OGQ2-AC6,OGQ2-AC7,OGQ2-AC8,OGQ2-AC9,OGQ2-AC10,OGQ2-AC11,OGQ2-AC12,OGQ2-AC13,OGQ2-AC14,OGQ2-AC15,OGQ2-AC16,OGQ2-AC17,OGQ2-AC18,OGQ2-AC19,OGQ2-AC20,OGQ2-AC21,OGQ2-AC22,OGQ2-AC23,OGQ2-AC24,OGQ2-AC25,OGQ2-AC26`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ2-AC1,OGQ2-AC2,OGQ2-AC3,OGQ2-AC4,OGQ2-AC5,OGQ2-AC6,OGQ2-AC7,OGQ2-AC8,OGQ2-AC9,OGQ2-AC10,OGQ2-AC11,OGQ2-AC12,OGQ2-AC13,OGQ2-AC14,OGQ2-AC15,OGQ2-AC16,OGQ2-AC17,OGQ2-AC18,OGQ2-AC19,OGQ2-AC20,OGQ2-AC21,OGQ2-AC22,OGQ2-AC23,OGQ2-AC24,OGQ2-AC25,OGQ2-AC26,OGQ2-AC27,OGQ2-AC28,OGQ2-AC29`
 BEFORE the `complete` flip. Result file `tools-and-validation.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -227,3 +251,9 @@ Amended 2026-09-15 ~22:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CT
   (rows W3-S23, W3-S24);
 - AC25 and AC26 are added.
 The same grant stands for any later round-1 cell that adds a tool. No criterion was removed.
+
+Amended 2026-09-17 ~13:5xZ, before re-hand, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-11 (msg 97596
+@c858a5f239, closing call 11 on row S22; R-OG-10 vacated). AC26 re-cut in place (row W5-S4); AC27-AC29 added;
+`org/standards/NFRA_OPLGTW_CONTRACT.json` added to `<paths>` for the `tool_operations` key only. The PRD is v0.8 at the
+ruling, and its CONTRACTS half is owed to `3.0.0_SA_CVO`; this is a MODIFICATION, which LIMB 6 does not grade, cut on the
+ruling's own instruction. No criterion removed. Re-hand queued on slot ~5 after `OG-q-3`.
