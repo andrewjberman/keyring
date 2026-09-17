@@ -2303,6 +2303,31 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGQ4-AC4 (ruling R-OG-13's standing bar): 'passes only if AC1 and AC2 FAIL while AC3 still passes' -- a control that DISCRIMINATES the call site's removal, never one whose own scratch-copy plumbing fails independently of the mutation.",
     "world_is": "The probe's scratch-copy depth did not match the real tree's depth, so `tests/acceptance/conftest.py`'s own hardcoded parent-count derivation of the repo root (never contract-path-aware via an env var) walked one directory too high and crashed at import for every one of AC1/AC2/AC3 run against the mutant copy, independent of whether the call site was present or absent -- a probe defect, not a measurement of the wiring or of NFRA_OPLGTW-W5-S11's stale-ARN harness bug (which this same mutant copy also carries, and which is separately REPAIRED at this HEAD per the issuer's OG-v-2 drain @65fa11a5ba). Fixed within this worker's own deliverables grant (the probe file), never touching `tests/acceptance/conftest.py` or any file outside grant.",
     "notes": "INERT: the probe never wrote a tracked file (git status --porcelain identical before/after, both before and after this fix); no served surface is touched. Recorded because a prior round's AC4 FAIL verdict (composited with NFRA_OPLGTW-W5-S11's real, separate cause) partly reflected THIS probe bug rather than only the harness ARN mismatch -- a reader of that earlier FAIL should not conclude the wiring's mutant control was ever proven sound before this fix."
+  },
+  {
+    "id": "NFRA_OPLGTW-S26",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-17T23:44Z",
+    "one_line": "FOURTH instance of the one root cause, found by the shared-tree re-run after OG-q-4's drain: tests/acceptance/test_local_acceptance.py::test_ogv2_a18 asserts an ungrouped quantity sum is ACCEPTED, so OG-q-4's now-live refusal (reason quantity_sum_ungrouped) fails it. A08 went green with that drain as predicted; A18 went red in the same run. R-OG-15 corrected the two OG-q-2 tests of this shape but the population was never enumerated past that module.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN on the SHARED TREE after the drain @791faecfc1: `pytest -q tests/acceptance/test_local_acceptance.py` -> `2 failed, 12 passed`; FAILED test_ogv2_a18 with `{'error': {'code': 'INVALID_REQUEST', 'reason': 'quantity_sum_ungrouped', 'where': 'aggregates[1].field'}}` at test_local_acceptance.py:909 -- the refusal is CORRECT and the assertion is stale.",
+        "SAME RUN: test_ogv2_a08 now PASSES, which is the arm OG-q-4's wiring was predicted to turn green (row W6-S6). So this drain cleared one acceptance failure and exposed another in the same module.",
+        "READ: the other failure in that run, test_ogv2_a06 at :477, is the dim_asset partial-account restriction -- row W6-S8, already cut as cell OG-q-5 @321de65374. Two failures, two different causes, neither this row's twin.",
+        "GREEN ELSEWHERE at the same vintage, one module per process: tests/test_schwab_wiring.py 3 passed; tests/test_schwab_query.py 25 passed (the two tests R-OG-15 corrected).",
+        "WHY OG-q-4 DID NOT CATCH IT: this issuer wrote OGQ4-AC5 over three modules -- query, semantics, wiring -- and left the acceptance module out of that set, so a stale expectation there could not fail q-4's own gate. TO-OG-q-5's AC6 names four modules including tests/acceptance/test_local_acceptance.py."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGV2-AC2: every machine A-row of OG-v-1's protocol passes on the integrated local harness, A18 among them.",
+    "world_is": "A18 encodes the pre-wiring behaviour the contract forbids, so it fails now that the refusal is live on CLOUD. The file is tests/acceptance/test_local_acceptance.py, which is in TO-OG-v-2's own <paths> and that order is OPEN, so no grant widening is needed: the correction rides OG-v-2's last re-hand, flipping A18 to expect the refusal with its contract clause cited, exactly as R-OG-15 had OG-q-4 correct the two OG-q-2 tests. Nothing deployed; nothing served is wrong.",
+    "notes": "ARMED because CLOUD carries a red module until that re-hand lands. This seat is the disarm owner and OG-v-2's drain is the disarming act, with a shared-tree re-run as its evidence per R-OG-16 limb 3. The issuer's own module-set choice is the cause and is named above rather than left to inference; R-OG-17's C3 census is the wider remedy already in flight on OG-q-5."
   }
 ]
 ```
