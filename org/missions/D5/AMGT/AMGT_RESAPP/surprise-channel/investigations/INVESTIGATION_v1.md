@@ -8188,6 +8188,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-20 (task order text): 'routes its writes through lib.research.price.generation.compute_price_axis() (replacing build_movement_rows() and the :337-346 write loop)'.",
     "world_is": "'Replacing' the write loop is correct and done; 'replacing build_movement_rows()' as a function to delete would have broken an registry+test dependency the order's own text does not mention. This session preserved the function definition and only changed what main() calls, which is the narrower and correct reading -- filed as OBSERVATION/INERT since the commit already reflects the safe reading, recorded so a later reviewer does not 'clean up' the now-uncalled-from-main() function as dead code.",
     "notes": "None outstanding; this is a documentation-of-reasoning row, not a defect."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S9",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T22:28Z",
+    "one_line": "AMGT-rk-20 AC1's own <expect> clause names a BEFORE/AFTER shape (BEFORE as_of_date 2026-09-10 dated true; AFTER as_of_date 2026-09-15 dated false) that the live measured state does not match at either end -- BEFORE was genuinely ABSENT/undated (the only pointer in the 14-day lookback window, BREAKOUT_PRICE#2026-09-10, carries state EMPTY, which _find_latest_served_pointer's own docstring says is deliberately never promoted as a fallback), and AFTER read dated=true, not false, because the requested_as_of defaults to today (2026-09-17) and the served date (2026-09-15) differs from it by design.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live pre-act call, read_rankings('BREAKOUT','PRICE',None,20): as_of_date=2026-09-17, dated=False, ranking_status=ABSENT, row_count=0 -- not the order's assumed 'as_of_date 2026-09-10, dated true'.",
+        "Live read_generation_pointer('BREAKOUT_PRICE','2026-09-10') returned a pointer with state='EMPTY' (generation_id 20260916T065449Z-4f53cda18c2b, row_count 0) -- an EMPTY pointer, which lib/research/api/scoped_amgt.py's _find_latest_served_pointer docstring (:523-526) states is deliberately never used as a fallback ('ONLY a COMPLETE pointer counts ... walking past one keeps looking'), explaining the ABSENT/undated BEFORE result mechanically rather than as a bug.",
+        "Live post-act call after republish_crossed_generation(as_of_date='2026-09-15') wrote both axes COMPLETE (32 rows each): read_rankings('BREAKOUT','PRICE',None,20) then returned as_of_date=2026-09-15, dated=True (not the order's assumed dated=False) -- dated=True is the read_rankings docstring's own correct behaviour (':550-553') whenever the requested date (defaulting to _today()=2026-09-17) differs from the date actually served (2026-09-15).",
+        "AC2's own check (pointer_exists/generation_id/state on BREAKOUT_PRICE#2026-09-15) passed exactly as specified: generation_id 20260917T222505Z-45dc4b07af48, state COMPLETE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-20 AC1 <expect>: 'BEFORE: as_of_date 2026-09-10, dated true. AFTER: as_of_date 2026-09-15, dated false. Record both runs.'",
+    "world_is": "BEFORE was as_of_date 2026-09-17 (today, the default), dated false, ranking_status ABSENT (no COMPLETE pointer anywhere in the 14-day lookback -- the nearest candidate, 2026-09-10, is EMPTY and is correctly skipped). AFTER republish, as_of_date 2026-09-15, dated TRUE (the served date is earlier than the default requested date, which is exactly what triggers dated=true in this reader's own contract). The underlying FIX -- moving BREAKOUT_PRICE from ABSENT/unservable to SERVED with a genuine COMPLETE generation and 32 real rows -- is achieved and is the act's actual intent; only the order's own literal <expect> numbers for this non-judgment criterion do not hold. Graded FAIL on AC1's literal text in this session's proof-of-spec instance, with this row as the record of why, rather than silently substituting a passing narrative for a stated criterion.",
+    "notes": "AC2 passes cleanly and is not affected by this mismatch. Not filed as BLOCKING because the act itself proceeded correctly and the mismatch is confined to the specific literal wording of one non-judgment expectation clause."
   }
 ]
 ```
