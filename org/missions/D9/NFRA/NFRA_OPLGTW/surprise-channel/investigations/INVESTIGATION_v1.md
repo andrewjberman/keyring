@@ -1954,6 +1954,74 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-v-3 worker face: 'compute the expected answer from the qualified silver objects OG-c-2 produced'; the inherited (unverified, superseded) handoff concluded '2026-09-15 is the only qualified closure that exists for either master as of this seal. No previous qualified date exists to compare against for RQ5/RQ6.'",
     "world_is": "As of this row's timestamp (2026-09-17T13:57:35Z), both masters carry a second qualified closure for date=2026-09-16 (status qualified, 0 findings), produced by the live production Schwab pipeline independently of OG-c-2. This cell deliberately seals its RQ1-RQ6 expected answers against OG-c-2's 2026-09-15 objects only, exactly as the order instructs, and does not use the 2026-09-16 closure or its silver objects. If the Gateway's catalog construction (OG-c-1/OG-k-1) runs before OG-v-4's A7 walkthrough and reports 2026-09-16 as the latest qualified date, the real answers to RQ1, RQ3, RQ4's SmartX/BlackDiamond legs and RQ5/RQ6's 'latest' leg would be computed over 2026-09-16 data and would not hash-match these 2026-09-15-based sealed values; RQ5/RQ6 would also gain a real previous-qualified-date (2026-09-15) where this seal says NONE_QUALIFIED.",
     "notes": "ARMED because a hash mismatch at OG-v-4/A7 time is not cosmetic -- it would read as the Gateway giving a wrong answer when the real cause is this seal using a superseded 'latest'. Nothing served or deployed by this row. Disarm: the issuer (2.0.0_SA_COO~O) either re-seals OG-v-3 against whatever is qualified-latest immediately before OG-v-4 runs A7, or fixes 2026-09-15 as the walkthrough's authorized business date for A7 (a fixed-date grant per PRD C3) so the comparison is apples-to-apples; either is the issuer's call, not this cell's to make unilaterally mid-round."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T17:40:00Z",
+    "one_line": "OG-x-1's first server.py route declarations used a two-level attribute reference (download_routes.export.DOWNLOAD_PAGE_PATH), which broke test_browser_oidc.py's AST route-table reader (outside this cell's <paths> grant) with AttributeError: 'Attribute' object has no attribute 'id'; fixed by using literal string paths, the same form that reader's ast.Constant branch already accepts.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_browser_oidc.py -q before the fix -> 'FAILED ...::test_oga3_ac07 - AttributeError: 'Attribute' object has no attribute 'id'', 1 failed, 6 passed.",
+        "tests/test_browser_oidc.py:374 (_declared_routes): 'path = first.value if isinstance(first, ast.Constant) else getattr(names[first.value.id], first.attr)' -- names={'oauth_as': oauth_as, 'browser_oidc': browser_oidc} only; a two-level chain's first.value is itself an ast.Attribute, which has no .id.",
+        "FIX (this cell's own file, app/server.py): Route(\"/schwab/download\", ...) and Route(\"/schwab/download/exchange\", ...) as literal strings, not download_routes.export.DOWNLOAD_PAGE_PATH/EXCHANGE_PATH.",
+        "RE-RUN after the fix: timeout 120 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_browser_oidc.py tests/test_data_entitlement_guard.py tests/test_principal_cutover.py -q -> 7 passed, 12 passed, 11 passed (three separate module runs; each starts its own MCP lifespan)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The route-table rule (ruling 97203 C, cited in this order's worker face) grants OG-x-1 ROUTE_CLASS entries only and says nothing about the FORM of the Route() path argument in app/server.py.",
+    "world_is": "A sibling test file this cell cannot edit (test_browser_oidc.py) parses app/server.py by AST and only understands a path argument that is a string literal or a ONE-level module.attribute reference bound in its own hardcoded names={'oauth_as':..,'browser_oidc':..} map. OG-a-3's own two routes fit that map; OG-x-1's new module (download_routes / its export submodule) does not and cannot be added to that map without editing a file outside every route-adding cell's grant. Resolved here by declaring the two new paths as literal strings in server.py, which the SAME reader already accepts via its ast.Constant branch -- no foreign file touched, no new grant needed.",
+    "notes": "INERT: caught and fixed before any commit; re-verified green (test_browser_oidc.py 7/7, test_data_entitlement_guard.py 12/12, test_principal_cutover.py 11/11). Flagged as an OBSERVATION for any LATER route-adding cell under ruling 97203 C's standing grant: a module.attribute path form silently breaks this reader unless the module is a literal in that fixed map; a literal string path is the portable choice."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T17:41:00Z",
+    "one_line": "OG-x-1 classes its two new routes (/schwab/download, /schwab/download/exchange) 'public' in ROUTE_CLASS -- a reasoned choice, not a default: neither route consults the Authorization-bearer or ALB access-layer axes ROUTE_CLASS grades at all, the SAME reasoning ruling 97203 A already gave OG-a-3's login/callback (NFRA_OPLGTW-S14); the REAL guard (session cookie + ticket checks) is independent and is graded by OGX1-AC1..AC16, never by ROUTE_CLASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-OG-x-1 worker face, the route-table rule: 'each entry carries the route's REAL guard class, as your code enforces it, never a default \"public\"... A route whose class is genuinely unclear is a surprise row, not an entry.'",
+        "app/download_routes.py: neither download_page nor download_exchange reads request.headers['Authorization'] or any ALB identity header; both consult only browser_oidc.session_principal(request) (a cookie) and, for the exchange, the ticket itself.",
+        "tests/test_principal_cutover.py:551-557 (the 'public' arm of test_oga2_ac04) and tests/test_data_entitlement_guard.py's else-branch (test_ogz1_ac08) both grade EXACTLY Bearer/legacy-token invariance for a 'public' route, never 'reachable with no guard at all' -- verified by running both suites green with the two new routes classed 'public' (7/7 and 12/12 including the OGZ1-AC8/OGA2-AC4 rows naming /schwab/download and /schwab/download/exchange by path)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The route-table rule: a genuinely unclear class is a row, not an entry; a lazy default to 'public' is exactly what the rule forbids.",
+    "world_is": "No class in the existing ROUTE_CLASS taxonomy (access / capability / static-exchange / static / access-layer / public) names 'gated by this cell's own cookie+ticket mechanism, no Bearer, no ALB header' as a distinct value -- the taxonomy's only axis is which OF THE GATEWAY'S OWN SCHEMES (if any) gates a route. On that axis, 'public' is the only class both routes are correctly members of, and it is also OG-a-3's own precedent for the exact same cookie family. Recorded here so L9 can independently confirm or overturn the reasoning rather than infer it from the diff alone.",
+    "notes": "INERT: entries only, mechanically verified against both consuming test suites. Not a request to widen the taxonomy -- YAGNI holds unless a future consumer branches on a class this taxonomy cannot express."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T17:42:00Z",
+    "one_line": "PRD C5's 'if login is needed, retain only a hashed pending ticket bound to the secure browser session while the separate OIDC flow completes' does not specify a resumption protocol; this cell reads it as a one-way, non-resumable retention (the exchange's pending:true action retains only the ticket's own SHA-256, already its storage key, in a session-scoped cookie) rather than inventing an auto-resume mechanism the literal text does not promise.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRD C5 quoted in the worker face: 'If login is needed, retain only a hashed pending ticket bound to the secure browser session while the separate OIDC flow completes.' No further text describes what happens after the OIDC flow completes.",
+        "app/download_routes.py download_exchange, pending branch: reads the ticket record by its hash (export._read), sets cookie __Secure-og_dl_pending = export._hash(secret) (Path=/schwab/download, HttpOnly, Secure), returns login_url; the raw secret is discarded client-side once the browser navigates away (the static page never persists it to storage).",
+        "A SHA-256 hash is one-way by construction: the retained cookie value cannot be used to recover the raw ticket after login, so no code path in this cell attempts to auto-resume the SAME download once the OIDC round trip returns.",
+        "Test OGX1-AC6 (tests/test_schwab_export.py::test_ogx1_ac06) verifies the retained value is the ticket's SHA-256 and is never the raw secret, and that an unknown ticket in pending mode is refused."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C5's pending-ticket sentence, verbatim above.",
+    "world_is": "The user must re-issue a Claude call to schwab_prepare_download for a new ticket after completing sign-in; the pending cookie is retained only as a defensive/anti-fixation artifact (evidence that this browser session held this ticket hash before login), never as a resumption key. Declared as a declared_exclusion in this cell's proof-of-spec instance rather than left implicit.",
+    "notes": "INERT: a reasoned interpretation of underspecified text, not a defect against a stated requirement. Recorded for L9 to confirm the reading or direct a different one on a future round."
   }
 ]
 ```
