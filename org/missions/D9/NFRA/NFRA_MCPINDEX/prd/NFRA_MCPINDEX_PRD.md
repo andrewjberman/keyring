@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.1",
+  "prd_version": "v0.2",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -42,14 +42,20 @@ his words: the official plugins are poorly indexed, and we will not have that pr
 
 The header stays DRAFT until both halves are signed at L4-R. The author signs neither half.
 
+**v0.2 (2026-09-17 ~23:0xZ)** answers `2.0.0_SA_COO~G`'s L4-R brief-half refusal @`acb5fc61cc`: C1's named single
+writer disclaims the live catalog in its own bytes, so C1 is re-cut to make identifying the live writer S1's first act
+with a census bar rather than a reading. Also, the ten outcome cards are now carried in the form the step-4 gate's own
+matcher reads -- v0.1 carried them as a markdown TABLE, which that matcher cannot see, so the outcomes were invisible
+to the consumer while looking complete to a reader.
+
 ## Scope and evidence boundary
 
 **This project owns:** the catalog (its schema, its versioned S3 home, its generation into the Gateway), the discover
 family, the per-property purpose-built tools, the generalisation of the typed query engine beyond Schwab, one fenced read
 role per property, and the per-property analysis that decides which questions become tools.
 
-**It relies on and does not change:** the Gateway's sign-in, tiers, guard and audit; `app/refs/DATA_CATALOG.yaml` and its
-one writer; the Schwab query engine and grant model built by NFRA_OPLGTW; the silver tables and their producers; the
+**It relies on and does not change:** the Gateway's sign-in, tiers, guard and audit; `app/refs/DATA_CATALOG.yaml` itself
+(its CONTENT is extended by this project; whether it has a live writer at all is C1's open question, not an assumption); the Schwab query engine and grant model built by NFRA_OPLGTW; the silver tables and their producers; the
 portal's precomputed tables and their publishers; the naming canon and registry.
 
 **Explicitly NOT this project's:** enabling the five Schwab tools in deployment (NFRA_OPLGTW's act); the admin screen that
@@ -68,26 +74,62 @@ The ten outcomes are `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MCPINDEX_END
 confirmed by Andrew ~19:0xZ. They are carried here unchanged, in one line each; the endpoint document is the text that
 governs.
 
-| id | the outcome, in one line | bar |
-|---|---|---|
-| FWD-1 | a staff member who does not know which system holds a fact is routed correctly on the first try | EXERCISED, cold, by a non-author |
-| FWD-2 | for any figure the portal displays, Claude returns the portal's own number and as-of date | EXERCISED per surface |
-| FWD-3 | positions, balances and transactions at either Schwab master, from silver | EXERCISED by a granted person |
-| FWD-4 | the same question classes for Black Diamond, Orion, Eclipse and SmartX | EXERCISED per property, after its analysis |
-| FWD-5 | the ETFs -- holdings, net assets, daily NAV -- per fund | EXERCISED per fund |
-| FWD-6 | an uncatalogued question still gets a safe typed answer, and routing prefers the purpose-built tool | EXERCISED, both halves |
-| FWD-7 | one client or household seen across custodian and platform | EXERCISED on one real client |
-| FWD-8 | long history and live market data on demand | EXERCISED, one answer per half |
-| FWD-9 | Andrew admits staff one at a time; each sees only what he granted | EXERCISED: one admission, one removal |
-| FWD-10 | adding the next property is one catalog entry plus a tool | EXERCISED on the next property, timed |
+  FWD-1   a staff member who does not know which system holds a fact is routed correctly
+          on the first try
+          DONE WHEN  EXERCISED, cold, by a non-author
+
+  FWD-2   for any figure the portal displays, Claude returns the portal's own number and
+          its as-of date
+          DONE WHEN  EXERCISED per surface
+
+  FWD-3   positions, balances and transactions at either Schwab master, from silver
+          DONE WHEN  EXERCISED by a granted person
+
+  FWD-4   the same question classes for Black Diamond, Orion, Eclipse and SmartX
+          DONE WHEN  EXERCISED per property, after that property's analysis
+
+  FWD-5   the ETFs -- holdings, net assets, daily NAV -- per fund
+          DONE WHEN  EXERCISED per fund
+
+  FWD-6   an uncatalogued question still gets a safe typed answer, and routing prefers the
+          purpose-built tool
+          DONE WHEN  EXERCISED, both halves
+
+  FWD-7   one client or household seen across custodian and platform
+          DONE WHEN  EXERCISED on one real client
+
+  FWD-8   long history and live market data on demand
+          DONE WHEN  EXERCISED, one answer per half
+
+  FWD-9   Andrew admits staff one at a time; each sees only what he granted
+          DONE WHEN  EXERCISED: one admission, one removal
+
+  FWD-10  adding the next property is one catalog entry plus a tool
+          DONE WHEN  EXERCISED on the next property, timed
 
 ## CONTRACTS
 
-**C1 -- ONE catalog, versioned, one writer.** The catalog extends `app/refs/DATA_CATALOG.yaml` (v0.3, 36 served-data rows)
-and keeps its single writer `emit_catalog_v02.py`. A second catalog is forbidden, which is the D6 PRD's standing bar
-(`D6_OPAL_ANALYST_GRAPHQL_PRD.md:57,102`). Its versioned home is an S3 address produced by `lib/opal_naming.py address()`
-and never typed (Rule 30). Each entry carries: business meaning, example questions, grain, freshness field, firm-scope
-rule, never-sum rules, producer, and the tools that serve it.
+**C1 -- ONE catalog, versioned, EXACTLY ONE writer -- and naming that writer is S1's FIRST ACT, because today nothing
+does.** The catalog extends `app/refs/DATA_CATALOG.yaml` (v0.3, 36 served-data rows). A second catalog is forbidden,
+which is the D6 PRD's standing bar (`D6_OPAL_ANALYST_GRAPHQL_PRD.md:57,102`). Its versioned home is an S3 address
+produced by `lib/opal_naming.py address()` and never typed (Rule 30). Each entry carries: business meaning, example
+questions, grain, freshness field, firm-scope rule, never-sum rules, producer, and the tools that serve it.
+
+**v0.1 named `emit_catalog_v02.py` as that single writer and it is NOT one.** Found by `2.0.0_SA_COO~G` at L4-R
+(refusal @`acb5fc61cc`) and CONFIRMED at the bytes by this seat: `DATA_CATALOG.yaml:3` says `BUILT BY:
+workflows/atom_decomposition/emit_catalog_v02.py at git HEAD a4f1686a28`, and that script's own docstring says
+`THE LIVE refs/DATA_CATALOG.yaml IS NEVER TOUCHED BY THIS SCRIPT` (`:5`) -- it writes a STAGED artifact that becomes the
+live catalog only at a certified port, at which point the staged copy is deleted. `DESIGN.md:67` repeats the header's
+version and calls that script "the ONLY writer". So **two carriers of one claim disagree, a third repeats the wrong one,
+and the live file's actual writer is UNNAMED** -- the catalog's last commit is `96dcb4a66a` (2026-08-20,
+`0.5.0_AE_OpalETL~Z`), which is a PORT ACT, not a standing writer.
+
+The contract is therefore stated as an obligation, never as a fact: **S1's first cell IDENTIFIES the live writer and
+either names it in the catalog's own header or mints one, and no catalog entry is added by this project until that
+answer exists.** The bar is a census, not a reading: every candidate writer enumerated with its denominator, each one's
+own bytes checked for a disclaimer of the live file (the discriminator that caught this), and the surviving writer
+exercised once -- a change it makes must appear in the served file. A header's claim about its own builder is the
+author's claim, not a measurement, and this PRD will not inherit a second one.
 
 **C2 -- a tool ships only with a catalog entry and a safety classification.** A tool with neither does not ship, and the
 mechanism is a refusal, not a review note. The live defect this closes is named in the brief: `read_teams_attachment` is
