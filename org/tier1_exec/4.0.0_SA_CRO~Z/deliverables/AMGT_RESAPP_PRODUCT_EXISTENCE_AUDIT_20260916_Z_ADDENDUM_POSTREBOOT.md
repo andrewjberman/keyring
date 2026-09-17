@@ -417,6 +417,14 @@ serves any score and no component renders one, not even DIVERGENCE D's "ABSENT w
 route or a tab. So FWD-20 would still have no served surface after round 13 as cut from this analysis. That is the L10
 reader's call to make; it is sent to `1.0.0_SA_CTO~Z` with this record.
 
+**RULED 07:3xZ by `1.0.0_SA_CTO~Z` (msg 23514; `ROUND_ANALYSIS.round12.md` ADDENDUM 1 @`509f3f7335`, read at that hash, lines
+250-284):** cell **R13-L** added -- a producer run writes the three scores per keyed covered name, the adapter serves them
+on the Model tab route, the page renders each value or its reason, D ABSENT 33 of 33 with its reason until R13-K's gate
+passes, a planted negative per score, a never-widen pair with the change-management entry opened before the first live
+act. The s.4 deferral clause is corrected: under cap pressure R13-K and R13-I move to round 14 and **R13-L does not**. Round
+13 is twelve cells. Z-S149's owner is `2.0.0_SA_COO~Z` at the cut. The FWD-20 row of the table above now reads R13-K
+(producer) + R13-L (served surface).
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
