@@ -132,7 +132,7 @@ its cell reads it.
 
 ---
 
-## 3. THE CELLS -- 29 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8)
+## 3. THE CELLS -- 30 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8; `OG-q-4` added 2026-09-17 on ruling R-OG-13)
 
 Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1, prefix `OG`. Axes: `p` parity and baseline, `i` AWS
 infrastructure (Terraform, one state), `d` durable state, `a` authentication, `z` authorization, `c` completion closure,
@@ -456,6 +456,7 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 | `OG-q-1` | the bounded execution engine | FWD-5, 7 | `GW/app/integrations/schwab/engine.py` (new), `GW/requirements.txt`, `GW/tests/test_schwab_engine.py` (new) | OPEN |
 | `OG-q-2` | the five tools, request validation, the response envelope, cursors | FWD-2, 3, 5 | `GW/app/integrations/schwab/integration.py` (new), `GW/app/integrations/schwab/query.py` (new), `GW/app/integrations/schwab/envelope.py` (new), `GW/app/integrations/schwab/cursor.py` (new), `GW/app/integrations/registry.py`, `GW/tests/test_schwab_query.py` (new) | OPEN |
 | `OG-q-3` | snapshot and metric semantics | FWD-2, 5 | `GW/app/integrations/schwab/semantics.py` (new), `GW/app/integrations/schwab/datasets.json` (new), `GW/tests/test_schwab_semantics.py` (new) | OPEN |
+| `OG-q-4` | the semantics checks wired into the live query path (added 2026-09-17 on ruling R-OG-13) | FWD-2, 5 | `GW/app/integrations/schwab/query.py`, `GW/app/integrations/schwab/integration.py`, `GW/tests/test_schwab_wiring.py` (new) | OPEN |
 
 **`OG-q-1` acceptance**
 - each job runs in a child process outside the event loop
@@ -497,6 +498,13 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 - (difference) a revision change during a job discards the result, and an unchanged revision releases it
 - prompt-like text inside data comes back as data and invokes no tool, widens no filter and changes no grant (A12)
 - every tool call writes its audit event through `OG-o-1` before release
+
+**`OG-q-4` acceptance** (added 2026-09-17 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-13, msg 97629 @9798d9dda5, closing call 13 on row `NFRA_OPLGTW-W6-S6`. A cell added mid-round on the L4 owner's ruling, not a re-decomposition. Cause: `OG-q-3`'s criteria exercised `semantics.py` in isolation and named no call site, so 14 of 14 passed over a module nothing imports; `OG-q-2`'s query path predates it. Edges: `OG-q-2 -> OG-q-4`, `OG-q-3 -> OG-q-4`, `OG-q-4 -> OG-v-2` (re-hand). Slot ~5. Every criterion here is graded on the LIVE path through the real app and carries a mutant control, per R-OG-13's standing bar.)
+- a nonadditive field's SUM through the registered `schwab_query` tool is refused, with the refusal's contract error code printed
+- a quantity SUM not grouped by `cusip` and `l_s` through the same tool is refused
+- a legal named-balance SUM through the same tool still succeeds and returns its total
+- (mutant control) with the call site removed in a scratch copy, the two refusal criteria FAIL and the legal SUM still passes
+- `OG-q-2`'s and `OG-q-3`'s own test modules still pass, one pytest process per module
 
 **`OG-q-3` acceptance**
 - grouping never drops master or date identity
