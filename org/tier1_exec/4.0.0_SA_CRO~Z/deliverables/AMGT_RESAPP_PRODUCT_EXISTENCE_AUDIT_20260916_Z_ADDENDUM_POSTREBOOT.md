@@ -41,7 +41,7 @@ The corrected contract `C-ROUND12-PULL-WIRED` (no Lambda consumer) matches this 
 | G2 model block does not reach the page | `/thesis` 200 `model_status ABSENT`, 0 figures | **same**: 200, `ABSENT`, `header_figures 0`. Adapter `opal-amgt-scoped-api` LastModified `2026-09-15T19:01:10Z`, CodeSha `9ubWPnhz`, env 2 keys (no `MODEL_BLOCK_ROOT`) -- unchanged. `derived/model_block` 14 objects / 4 keys, newest 2026-09-11 -- unchanged | rk-2 (`~24`) | pending; the never-widen halves for the model-block read are landed (`ledger/NEVER_WIDEN_ROUND12_MODEL_BLOCK_READ_{COO,CTO}_HALF.md`) |
 | G3 print 500 | `/print` 500 | **same**: 500 | rk-6 (`~24`) | pending |
 | G4 on-demand pull disconnected | `/refresh` 501; enqueue Lambda unwired; 0 consumers | enqueue Lambda `opal-research-pull-enqueue` unchanged (2026-09-11); **0** consumer processes on the box; queue not re-read (no change signal) | rk-7 (`~24`) | pending |
-| posture route | cited Z-S107 (adapter predates the route) | **now MEASURED**: `/posture` **404** on the deployed adapter -- CODE-AHEAD-OF-DEPLOY confirmed by direct invoke | rk-2 / rk-8 | pending |
+| posture route | cited Z-S107 (adapter predates the route) | **now MEASURED**: `/posture` **404** on the deployed adapter -- CODE-AHEAD-OF-DEPLOY confirmed by direct invoke **[WRONG -- CORRECTED in s.3g: no `/posture` route exists in any route table by design; posture rides the thesis and overlay bundles]** | rk-2 / rk-8 | pending |
 | box collection plane | 3 of 3 Opal research tasks DISABLED | **same**: `Opal Data Harvest - Local Publications`, `OpalResearch-ExecManagement`, `OpalResearch-FilingsAnalyzer` all Disabled after the reboot (6 other `OPAL_*` tasks Ready) | reserved to Andrew (@`9db2a36cdc`) | -- |
 
 **Why the served plane could not have moved:** the three round-12 orders that are complete (rk-9 criteria repair at
@@ -123,7 +123,7 @@ durability and CI, never a promote; (b) **G1's CLOSURE CLASS for the round-12 L1
 BUILT page renders the header and the five tabs against the DEPLOYED adapter and that render is CAPTURED** (the goal's
 DONE item 4); a local build against the deployed adapter reaches it with no push; which cell carries the capture is
 carried to the L10. **What this seat will measure G1 against from here** is therefore the capture: its existence, that it
-was taken against the deployed adapter (not a local one), and its vintage against the branch tip. ⚠ Read beside the
+was taken against the deployed adapter (not a local one), and its vintage against the branch tip. WARN: Read beside the
 rest of this record: the deployed adapter today answers the Model tab with `model_status ABSENT` (G2) and print with 500
 (G3), so a capture that satisfies (b) will show a header and five tabs with an empty Model tab and a refused print --
 FWD-15..19 can grade REALIZED while FWD-1 and FWD-5 stay ABSENT. That is consistent with the PRD's outcome grain (the
@@ -184,7 +184,7 @@ a folder that is not in Lambda") is closed -- the rules data travels in the arch
 POPULATION half ("4 of 89 covered names have a block") is untouched and reads exactly as the residual projection
 @`1d5454312a` said it would: a non-pilot covered name still opens to an empty Model tab, and that is CARD 1 at Andrew
 (the model-block pull over the keyed names, reserved by the DAPI dependency), not a cell. G3 (print 500) and the
-posture route (404, still absent from the deployed router at this sha) are unchanged. The audit's component row for S1
+posture route (404, still absent from the deployed router at this sha **[MISREAD -- CORRECTED in s.3g: absent by design, not by deploy lag]**) are unchanged. The audit's component row for S1
 moves from DEPLOYED-NOT-SERVING to **SERVED-PARTIAL, 4 of 89** -- the denominator is the product's remaining gap.
 Non-application of the never-widen half is this seat's own read: rk-2's redeploy is inside the co-sign's named blast
 radius and the census the drain cites; this seat measured the OUTPUT only.
@@ -223,6 +223,71 @@ workflow on that push, on more than one disk. G1's EXISTENCE half is unchanged b
 nothing, s.3b correction) and closes on the ruled class: a CAPTURED render of the built page against the deployed
 adapter (msg 23459). Round 12 at 10 of 16 terminal (rk-8, rk-13 joined), no slug. Next re-read: when the 33-name
 pull lands in `derived/model_block/` (the population half of G2) and when rk-6's print redeploy lands (G3).
+
+## 3g. ADDENDUM 01:1x-01:2xZ 2026-09-17 -- after the 7:10 PM ET hold: the Model tab serves 33 of 89 covered names; the ceiling moved from the PULL to IDENTITY; the Lead Panel is empty on the page's own call every night; one correction
+
+Direction: `1.0.0_SA_CTO~Z` msg 23492 (23:11Z), per Andrew-direct ~22:2xZ (record @`2eb6bec53a`): *"4.0.0_SA_CRO~Z -- re-read
+the served plane now: rk-17's 33-name model-block pull landed ... and the 2026-09-15 price generation exists."* Read at HEAD
+`c0aa291a17` (= `origin/SITEZ` by ls-remote). Round 12 at 10 of 18 terminal. Adapter UNCHANGED: `x3KrEBvZ`, LastModified
+`2026-09-16T17:23:29Z`, 754,470 B, 0 layers.
+
+### The Model tab (FWD-1's carrier) -- the population
+
+| read | value |
+|---|---|
+| `universe/v1/2026-09-16.json` | 250 rows. COVERED = `source` coverage 83 + both 6 = **89**. Of those, keyed (`resolution MEASURED`) **33** = 27 + 6; **56 UNRESOLVED, no `security_key` at all** |
+| pool `derived/model_block/` | 47 objects, **34 keys**, newest `2026-09-16T20:20:18Z` = the 33 pulled + `NVDA_US_Equity` (uncovered, 2026-09-11) |
+| `/thesis` over the 33 keyed covered names, each invoked as the page's client builds the URL | **33 of 33 `200 model_status SERVED`**, header figures 9-15 per name |
+| served-plane population | **33 of 89 covered names** open to a filled Model tab (at 18:11Z: 3 of 89 covered plus uncovered NVDA -- s.3d's "4 of 89" counted NVDA, which is not covered) |
+| `NVDA_US_Equity` | `200 ABSENT` despite its 2026-09-11 block; outside the covered denominator; recorded, not chased |
+
+**CARD 1 did exactly what it was carded to do, and it exhausts what a pull can do.** The remaining 56 covered names
+have no canonical key, so no pull over "keyed names" reaches them: the population ceiling on FWD-1 is now the
+IDENTITY layer, not the model-block producer. That partition is already carried at `1.0.0_SA_CTO~Z` (rows W25-S2,
+S117, S120; the ADR-to-home-line join ruled un-guessable in W25-S2) and is not adjudicated here. Whether FWD-1's bar
+reads against 89 covered names or against the keyed ones is a PRD question for the round-12 L10.
+
+### The Lead Panel (FWD-15)
+
+| request | `ranking_status` | rows | generation |
+|---|---|---|---|
+| TRENDING CHATTER, **no date** (as the page sends it), 01:19Z -> `as_of_date` 2026-09-17 | **ABSENT** "no generation pointer ... not an empty membership" | 0 | -- |
+| TRENDING PRICE, **no date**, 01:19Z | **ABSENT**, same reason | 0 | -- |
+| TRENDING CHATTER, `as_of=2026-09-16` | SERVED | 10 | `20260916T100027Z-efd7e544dd59` |
+| TRENDING PRICE, `as_of=2026-09-16` / `2026-09-15` | ABSENT / ABSENT | 0 / 0 | -- |
+| TRENDING PRICE, `as_of=2026-09-10` | SERVED | 32 | `20260916T065448Z-9b7ffda3dcdc` |
+
+**The page's own call cannot reach any served ranking for most of every day.** `getLeadPanelRankings` on DEV `2453a7b4`
+sends only `?limit` (`src/api/endpoints/amgt-lead-panel.ts:67-69`), and the adapter defaults the date to UTC today
+(`lib/research/api/scoped_amgt.py:522` @`c0aa291a17`). The chatter generation writes at its 10:00Z schedule, so from
+00:00Z to ~10:00Z (8 PM to 6 AM Eastern) the chatter panel is empty; the price panel is empty on every default read,
+because no generation is written for the current date and the one that exists is dated 2026-09-10. The rows under
+2026-09-15 are unreachable on a dated read too, which corroborates `3.0.0_SA_CVO~Z`'s row Z-S137 on a DIFFERENT
+instrument (a direct invoke of the served route, against that row's store read). **Both are already OWNED:** the
+default-date gap is the "dated fallback" ruled onto AMGT-rk-7 (CTO never-widen half @`7e84705c7a`, rk-7 pending), and the
+price rows' shape is Z-S137. Recorded as the served-plane measurement, not re-filed.
+
+### Unchanged since s.3f
+`/print` 500 for BA (rk-6 pending). `filings/v1` 10 objects / 5 names and `drafting/v1` 5 / 5 (rk-18 not run).
+`peers/v1` grew to 415 objects / 191 keys (newest 18:23Z; was 33). Portal `DEV` = `origin/DEV` = `2453a7b4` (s.3f).
+
+### CORRECTION -- posture, three lines above
+s.1 said `/posture` 404 was "CODE-AHEAD-OF-DEPLOY confirmed by direct invoke", s.3d said the route was "still absent
+from the deployed router at this sha", and s.3c/s.3f tabulated it beside `/print` as an open gap. **All three are
+wrong.** No `/posture` route exists in the adapter's route table at HEAD (`scoped_amgt_route_table()`,
+`scoped_amgt.py:2615-2631`, eleven routes) or in the page's client, whose own comment reads *"O-1 posture (AMGT-rj-9).
+No route was added for them."* (`amgt-lead-panel.ts:128-130`). Posture rides the thesis and overlay bundles: at 01:2xZ
+both carry `posture` with `status SERVED` for `BA_US_Equity` (verdict `hold`, comparable `DE_US_Equity`). The 404 measured
+a route nobody calls, so it could never have confirmed a deploy lag. Whether the earlier `9ubWPnhz` build carried posture
+in its bundles was not read and can no longer be (that build is not deployed). The same claim went to `1.0.0_SA_CTO~Z`
+in this seat's 14:07Z message and is corrected there.
+
+**And a near-miss on this same read, recorded because it is the same instrument error:** a first pass invoked the two
+keys that contain a slash (`BP/_LN_Equity`, `NG/_LN_Equity`) with the slash raw in the path, got 404 on every
+per-security route, and read like two covered names that can never open. The page URL-encodes the key
+(`encodeURIComponent`, `amgt-lead-panel.ts:125-151`) and the adapter splits on `/` before `unquote` (`scoped_amgt.py:2503`,
+`:2545`), so `BP%2F_LN_Equity` routes and serves 13 header figures. Nothing was filed. **A direct invoke is evidence
+about the page only when it is built from the page's own call.**
 
 ## 4. INSTRUMENTS AND VINTAGES
 
