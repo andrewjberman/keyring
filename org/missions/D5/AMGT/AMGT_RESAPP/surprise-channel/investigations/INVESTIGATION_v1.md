@@ -7744,6 +7744,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Z-S148: the points are 'not in the filing excerpt it was given'. Z-S147: 'each thesis_driver point is kept only when one passage of the submitted excerpt contains both its period and its value as literals'.",
     "world_is": "The values are genuine and in the excerpt; the passage map is narrower than the excerpt. A passage-scoped gate would hold all three true points. The gate is re-keyed to the excerpt's period-labelled block, and planted negative and wrong-period controls prove it still refuses.",
     "notes": "Owner of the cut text: 2.0.0_SA_COO~Z at R13-A, reading ADDENDUM 2 rather than s.3.1 alone. No round-13 order existed at 09:25Z (msg 23517), so nothing issued carries the superseded gate. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W26-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~26",
+    "surfaced_at": "2026-09-17T16:28:08Z",
+    "one_line": "AMGT-rk-19 producer half: at read time BA's live pool object already carried the CORRECTED thesis_driver (3 points span+passage_id, held_uncited empty, 282-entry passage_map) that this order's section-1 MEASURED STATE describes as the OLD, wrong, 276-passage/unverified state -- and a transient bad write of mine reverted to the correct state without any write of my own in between.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/filings/v1/BA_US_Equity/000162828026004357.analysis.json read fresh at this seat before any edit: thesis_driver.points carried 3 entries (2025/600, 2024/348, 2023/528) EACH ALREADY with a `span` and a `passage_id` (P0276/P0277/P0278), `held_uncited: []`, `passage_map` length 282 -- not the order's stated 276/unverified state; a fresh `build_passage_map(excerpt.text, excerpt.items)` re-run this seat with the CURRENT, unmodified passages.py returns 276, matching the order's own figure and confirming the extra 6 were added by some prior process, not by passages.py itself.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md rows AMGT_RESAPP-Z-S150 (3.0.0_SA_CVO~Z) and AMGT_RESAPP-Z-S151 (1.0.0_SA_CTO~Z), filed 2026-09-17 09:2x-09:3xZ, already establish exactly this correction (the excerpt-domain re-key, the wrapped 2023 row, R13-A's expected reversal to SERVED) BEFORE any round-13 order existed (S151's own notes: 'No round-13 order existed at 09:25Z') -- consistent with one of those seats (or a process run under their authority) having already applied an equivalent fix to this exact live object ahead of this order's issuance.",
+        "this worker's OWN first (pre-anchor-fix) --reverify-stored run at 2026-09-17T16:05Z overwrote the object to a WRONG state (points 1 [2023 only], held_uncited 2 [2025, 2024] -- read back and printed verbatim in this session); a SUBSEQUENT read moments later, before this worker performed any further write, showed the object back at 3 points / 0 held_uncited with the SAME spans and passage ids (P0276/P0277/P0278) as the original pre-edit read -- i.e. the object reverted to the pre-existing correct state without this worker's involvement.",
+        "this worker's corrected --reverify-stored run (anchor-based period-label location, run once more at 2026-09-17T16:0xZ) independently reproduces that identical 3-points/0-held/P0276-8 result from first principles (verified twice by direct read-back), so the coincidence is a MATCH ON THE ANSWER, not evidence this worker's write is what is now live -- which of the two writes (this worker's, or the unidentified prior/concurrent one) the object currently reflects cannot be distinguished from content alone."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's section 1 MEASURED STATE: 'BA's analysis object carries thesis_driver.points = {2025: 600, 2024: 348, 2023: 528}' with no span/passage_id, 'A prior read searched all 276 passages ... and found none, and reported the values as unverifiable' -- i.e. the object is asserted to be in the OLD, broken state at this order's cut.",
+    "world_is": "The live object was already in the NEW, corrected state (3 verified points with span+passage_id, held_uncited empty, 282-passage passage_map) before this worker made any edit or any S3 write -- someone or something already applied an equivalent fix to this exact pool key ahead of this order, most plausibly the CVO/CTO diagnostic pair (Z-S150/Z-S151) that authored ADDENDUM 2's ruling. This does not change what this order required this worker to BUILD (analyze.py's own verify_points_against_excerpt/reverify_thesis_driver functions did not exist in code and were the real gap AC1/AC2 close), but it means AC3's bar was already met by the live object at cut time, independent of this worker's code.",
+    "notes": "Not investigated further per the channel's own rule (append and keep working). Flagged for COO/CVO attention as a possible CONCURRENT WRITER to a single pool key shared across this round's filings-analyzer chains (FP-A/FP-B split at the cut, plus the adapter/page sibling orders on rk-19 itself, plus whatever process produced Z-S150/Z-S151's own measurements) -- a write race on filings/v1/BA_US_Equity/000162828026004357.analysis.json would not be visible to any single worker's own before/after read. This worker's own final state (verified twice, stable across two reads at 16:1xZ) matches AC3 exactly: points 3 (span+passage_id each), held_uncited 0, resolution 'cited'."
   }
 ]
 ```
