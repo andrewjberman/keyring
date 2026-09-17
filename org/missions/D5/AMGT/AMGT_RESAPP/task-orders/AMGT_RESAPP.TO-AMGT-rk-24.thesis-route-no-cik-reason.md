@@ -95,7 +95,7 @@ unresolved = [r['security_key'] for r in doc.get('names', []) if not (r.get('fil
 print('unresolved_count', len(unresolved))
 lam = boto3.client('lambda')
 name = unresolved[0]
-payload = json.dumps({'httpMethod': 'GET', 'path': f'/api/scoped/amgt/security/{name}/thesis', 'headers': {}, 'queryStringParameters': None}).encode()
+payload = json.dumps({'rawPath': f'/api/scoped/amgt/security/{name}/thesis', 'headers': {'x-firm-id': 'bd'}, 'requestContext': {'http': {'method': 'GET'}}}).encode()
 resp = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
 body = json.loads(resp['Payload'].read())
 inner = json.loads(body.get('body', '{}')) if isinstance(body.get('body'), str) else body.get('body', {})

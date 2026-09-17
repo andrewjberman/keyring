@@ -89,7 +89,7 @@ textual splice inside the one fenced JSON array (never re-serialize it) and neve
   <criterion id="AC1" cell_refs="AMGT-rk-25"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import json, boto3
 lam = boto3.client('lambda')
-payload = json.dumps({'httpMethod': 'GET', 'path': '/api/scoped/amgt/security/BA_US_Equity/thesis', 'headers': {}, 'queryStringParameters': None}).encode()
+payload = json.dumps({'rawPath': '/api/scoped/amgt/security/BA_US_Equity/thesis', 'headers': {'x-firm-id': 'bd'}, 'requestContext': {'http': {'method': 'GET'}}}).encode()
 resp = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
 body = json.loads(resp['Payload'].read())
 inner = json.loads(body.get('body', '{}')) if isinstance(body.get('body'), str) else body.get('body', {})
@@ -99,7 +99,7 @@ print('drafting_filing_date', (inner.get('drafted_sections') or {}).get('filing_
   <criterion id="AC2" cell_refs="AMGT-rk-25"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import json, boto3
 lam = boto3.client('lambda')
-payload = json.dumps({'httpMethod': 'GET', 'path': '/api/scoped/amgt/security/HOLLOW_NONEXISTENT_KEY_Equity/thesis', 'headers': {}, 'queryStringParameters': None}).encode()
+payload = json.dumps({'rawPath': '/api/scoped/amgt/security/HOLLOW_NONEXISTENT_KEY_Equity/thesis', 'headers': {'x-firm-id': 'bd'}, 'requestContext': {'http': {'method': 'GET'}}}).encode()
 resp = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
 body = json.loads(resp['Payload'].read())
 inner = json.loads(body.get('body', '{}')) if isinstance(body.get('body'), str) else body.get('body', {})

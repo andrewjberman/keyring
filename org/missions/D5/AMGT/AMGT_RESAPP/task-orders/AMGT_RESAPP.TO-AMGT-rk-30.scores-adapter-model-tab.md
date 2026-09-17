@@ -112,7 +112,7 @@ print('keyed_count', len(keyed))
 lam = boto3.client('lambda')
 measured_rob = measured_pv = absent_div = 0
 for k in keyed:
-    payload = json.dumps({'httpMethod': 'GET', 'path': f'/api/scoped/amgt/security/{k}/thesis', 'headers': {}, 'queryStringParameters': None}).encode()
+    payload = json.dumps({'rawPath': f'/api/scoped/amgt/security/{k}/thesis', 'headers': {'x-firm-id': 'bd'}, 'requestContext': {'http': {'method': 'GET'}}}).encode()
     resp2 = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
     body = json.loads(resp2['Payload'].read())
     inner = json.loads(body.get('body', '{}')) if isinstance(body.get('body'), str) else body.get('body', {})

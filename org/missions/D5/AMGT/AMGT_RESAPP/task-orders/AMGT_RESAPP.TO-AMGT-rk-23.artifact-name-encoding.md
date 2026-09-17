@@ -103,7 +103,7 @@ print('slash_bearing', [k for k in keyed if '/' in k])
 lam = boto3.client('lambda')
 results = {}
 for k in keyed:
-    payload = json.dumps({'httpMethod': 'GET', 'path': f'/api/scoped/amgt/security/{k}/print', 'headers': {}, 'queryStringParameters': None}).encode()
+    payload = json.dumps({'rawPath': f'/api/scoped/amgt/security/{k}/print', 'headers': {'x-firm-id': 'bd'}, 'requestContext': {'http': {'method': 'GET'}}}).encode()
     resp2 = lam.invoke(FunctionName='opal-amgt-scoped-api', Payload=payload)
     body = json.loads(resp2['Payload'].read())
     results[k] = body.get('statusCode')
