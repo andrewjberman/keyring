@@ -530,6 +530,79 @@ regenerated fixtures and one queue; cell 4 is last because it moves what 6, 7 an
 > The first draft of this line read "6 of 4 chains", which the queue rule it cites forbids (N is bounded by M). By
 > the edges there are 3 components, not 4, and the parallelism is the level width inside the largest, stated above.
 
+## 0d. v3.3 -- THE ROUND-4 RECUT (L10: 1.0.0_SA_CTO's round-3 analysis)
+
+**Input.** The analysis `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/1.0.0_SA_CTO/LGIC_ENFORCE_ROUND3_ANALYSIS.md`
+@`969f89b0e7`, on `3.0.0_SA_CVO`'s round-3 slug (97630) over this seat's drain-end (97620). Its **R-32** names round 4's
+five cells and **R-33** gives the campaign cell its own bound. Rulings carried into the faces: R-29 (the mint rule and
+its fence guard, verbatim), R-30 (DEC-4(ii)'s criterion text), R-32, R-33.
+
+**Round 3 graded REALIZED 6 of 7.** FWD-5 is the only outcome left, and it does NOT close by another census run: round
+3 measured the population behind it -- **351 distinct (plane, type, name) RAISE triples** plus **8 `{system}`
+placeholder rows**, the first from `RAISE_POPULATION_S6.r3.md`, the second from round 3's own census report. Round 4 is
+the campaign that works that measured list, and then the run that reads the closed population.
+
+**THE CELL COUNT.** This decomposition's section 3 lists 22 cells. Round 4 adds five, numbered 23 to 27, and no earlier
+cell is re-opened:
+
+```
+  cells at v3.2 ......................................................... 22
+  plus round 4's five, from R-32's table ................................. +5
+  = cells in this decomposition ......................................... 27
+  round 4 runs exactly the five: 23, 24, 25, 26, 27
+```
+
+| cell | id | what it does | rulings | serves |
+|---|---|---|---|---|
+| 23 | `EN-c-23` | **the campaign.** Work the 351-triple population: mint the registry row where owner and token are MEASURED from a declared source (`lambda-source-map.json` `source_dir`/`tf_file`, `EC2_MANIFEST.json` `source_path`, the Terraform tree that declares it), `owner_claim: inferred` with the citation as `owner_basis`; otherwise ONE owner card with the reason and the name recorded NOT-JUDGED. R-29's fence guard verbatim: a row whose mint would change a GENERATED POLICY on an APPLIED resource is NOT minted -- it is carded BLOCKING for never-widen sign-off (`1.0.0_SA_CTO` + `2.0.0_SA_COO`). R-33's bound: past 351 + 25 measured, stop, file the delta, the remainder rides round 5 | R-29, R-32, R-33 | FWD-5 |
+| 24 | `EN-h-24` | **the placeholders.** The 8 `{system}` rows of round 3's report (W2-S10's class, which is a `(name, type)` gap in `resources.json`, not a RAISE) resolved or carded | R-32, W2-S10 | FWD-5 |
+| 25 | `EN-s-25` | **the run to the end.** `census --live --repo` to completion: `judged + carded == nameable` on BOTH planes, denominators printed, the live plane's `built:` vintage stated | R-32 | FWD-5 |
+| 26 | `EN-d-26` | **DEC-4(ii)'s criterion text.** The amended text -- a NOT_A_PRINCIPAL claim on a bucket no live CloudTrail data-event selector covers is REFUSED; the disposition comes from a direct IAM-grant read or a NOT-JUDGED card -- and a validator that refuses a planted claim on such a bucket while still accepting one on a covered bucket | R-30 | FWD-2 (its evidence rule) |
+| 27 | `EN-g-27` | **S60's disposition.** The ship classifier's undercount, graduated as a standing finding in round 3: FIXED with its measurement, or CARDED with owner and reason | R-16, R-26 | FWD-3 |
+
+**THE CLOSURE BAR, as the analysis states it (s.4).** FWD-5 is REALIZED when `judged + carded == nameable` on both
+planes with denominators printed -- **NOT "zero carded"**. A carded name is a named gap with an owner, which is what the
+outcome promises; a run that stops early is not. Cell 25 is cut against that bar and no other.
+
+**THE PRD IS NOT A WORKER SURFACE.** R-32's row for cell 26 reads "the amended text is in the round-4 cut". L4 is
+`1.0.0_SA_CTO`'s alone, so cell 26 does NOT edit `prd/LGIC_ENFORCE_PRD.md`: it lands the amended criterion text as its
+own deliverable, which the CTO lifts into DEC-4(ii) at its own hand, and it lands the mechanical guard that makes the
+rule refuse rather than merely read.
+
+**WRITE SURFACES, MEASURED, AND THE ONE CROSS-PROJECT COLLISION.** Per v3.2's stamping table a `scopes` edit re-stamps
+the 7 VIEWS and `generated_locals.tf`; a `systems`/`resources` edit re-stamps `tests/vectors.json` and
+`tests/opal_name.tftest.hcl`. **LGIC_LGCTFM round 1's open `LT-x-1` writes `infra/logic/registry/scopes.json` and
+`remediations.json`** (censused at this cut from every non-terminal order's `<paths>` in both projects). Cells 23 and 24
+write `systems.json` and `resources.json` only, and **no round-4 cell runs `generate`** -- so the two rounds' write sets
+are disjoint at the file level and neither re-stamps a fixture the other is mid-edit. **Stated residue:** the two
+`opal_name` test fixtures therefore sit at their round-3 stamp until someone re-renders. `validate` does not read them,
+so nothing grades stale; the re-render is an ISSUER act (`4b`) for `2.0.0_SA_COO~G` after BOTH this round's registry
+cells and LGIC_LGCTFM's `LT-x-1` have drained, and it is recorded here so it is not discovered later as drift.
+
+**THE NAMING GATE IS ENFORCING, AND IT DOES NOT REFUSE THESE MINTS.** Measured at this cut, not assumed: a correctly
+formed unified diff adding a `resources.json` row with a real name literal (`opal-news-articles`, DYNAMODB_TABLE) reads
+`NAMING-GATE: PASS 0 graded` under `--enforce` -- the commit limb's graded set covers declaration-tree name MINTS
+(`.tf` resource names, `.py` constructors), not registry rows. So the campaign's mints pass the gate this seat flipped
+at 2b, and a worker does not meet a refusal it was not warned about.
+
+**EDGES AND THE SLOT PLAN.** `23 -> 24` (both mint `resources.json`, so they are ONE worker's queue, 23 then 24);
+`23, 24 -> 25` (the run reads the population the campaign closes); `26` and `27` independent.
+
+```
+  slot ~1  EN-c-23-r4 -> EN-h-24-r4    systems.json + resources.json (one queue, one file in common)
+  slot ~2  EN-s-25-r4                  the round-4 census report and its comparison
+  slot ~3  EN-d-26-r4                  the amended DEC-4(ii) text + the disposition validator
+  slot ~4  EN-g-27-r4                  S60's disposition record
+```
+
+`fanout: 4 slots over 3 connected components, cap 8, reason: components {23, 24, 25}, {26} and {27}; levels L0 = {23, 26, 27}, L1 = {24}, L2 = {25}; 23 and 24 share resources.json so they are one queue rather than two workers, and 25 is a separate slot spawned after that queue drains because it re-reads the registry those cells land (the same shape round 3 used for cells 5 -> 6).`
+
+**THE FIXED INPUTS L6 CUTS INTO THE FACES.** `deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_en_r4.py` (12
+subcommands, one per mechanical criterion; `selftest-arms` reads 40 of 40 with every arm driven ALONE against a
+doctored input, A-23) and `R4_BASE.json`, which PINS the cut's HEAD. The added-row arms read the registry at that pin
+with `git show <base>:<path>` and never at `git merge-base HEAD CLOUD`, which moves under a drain and would grade a
+different set on an issuer re-run.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 ```
