@@ -210,20 +210,20 @@ change_log:
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-17T19:01:27Z",
-    "head": "5c4b5b0499",
-    "sequence_file_last_commit": "b7b5657894 2026-09-17T11:05:06-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-09-17T23:01:17Z",
+    "head": "1586ebdefe",
+    "sequence_file_last_commit": "57a15b2bbe 2026-09-17T15:02:03-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
       "cap": 3,
       "live_coo_lanes": [
+        "2.0.0_SA_COO~B",
         "2.0.0_SA_COO~G",
         "2.0.0_SA_COO~O"
       ],
-      "free": 1,
+      "free": 0,
       "next_slot_order": [
-        "IRPT_BCKEND",
         "MDPF_TAXSMA",
         "ADVI_FIRMBKTS",
         "MDPF_CANON"
@@ -232,7 +232,8 @@ compiled:
     "flags": {
       "denominator": 10,
       "counts": {
-        "LANE-DARK": 2,
+        "LANE-DARK": 1,
+        "WAITING": 1,
         "NEEDS-SLOT": 2
       }
     },
@@ -245,22 +246,18 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.14 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "0d3ad7d496 2026-09-14T09:54:46-04:00",
-            "flags": [
-              "LANE-DARK"
-            ],
-            "notes": [
-              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~B is not live on this box, so its round waits for a COO seat"
-            ],
+            "last_activity": "cd3bf01fcd 2026-09-17T18:18:04-04:00",
+            "flags": [],
+            "notes": [],
             "gates": [],
             "coo_lane": "2.0.0_SA_COO~B",
             "phase": null
           },
           "NFRA_MCPINDEX": {
-            "dep_stage": "REGISTERED",
+            "dep_stage": "PRD",
             "status": "active",
-            "prd": "no PRD at org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md",
-            "last_activity": "9da61cab00 2026-09-17T14:16:32-04:00",
+            "prd": "v0.2 WITHHELD (brief STALE, ratified-text MISSING)",
+            "last_activity": "59f6f001b1 2026-09-17T18:53:36-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -286,7 +283,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "scoping",
             "prd": "v0.9 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6a4df76f02 2026-09-17T14:52:03-04:00",
+            "last_activity": "c4b78ef2c4 2026-09-17T18:38:57-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -314,7 +311,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "969f89b0e7 2026-09-17T14:49:47-04:00",
+            "last_activity": "0e10fea7fe 2026-09-17T18:18:59-04:00",
             "flags": [],
             "notes": [],
             "gates": [
@@ -330,8 +327,8 @@ compiled:
           "LGIC_CANON": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v1.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "a92cf2f08d 2026-09-17T14:54:43-04:00",
+            "prd": "v1.6 WITHHELD (brief SIGNED, ratified-text STALE)",
+            "last_activity": "1d25dbba91 2026-09-17T15:12:05-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -342,8 +339,10 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "cd058652cd 2026-09-17T14:42:36-04:00",
-            "flags": [],
+            "last_activity": "c8a3e6f712 2026-09-17T17:29:20-04:00",
+            "flags": [
+              "WAITING"
+            ],
             "notes": [],
             "gates": [
               {
@@ -358,8 +357,8 @@ compiled:
               },
               {
                 "kind": "waits_on",
-                "state": "MET",
-                "detail": "LGIC_CANON PRD admitted? v1.5 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+                "state": "UNMET",
+                "detail": "LGIC_CANON PRD admitted? v1.6 WITHHELD (brief SIGNED, ratified-text STALE)"
               }
             ],
             "coo_lane": "2.0.0_SA_COO~G",
