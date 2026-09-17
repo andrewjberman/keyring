@@ -214,4 +214,30 @@ this seat ran the fixed `lib/research/posture/fit.py` `fit()` over the latest `p
   weight-oriented mean of RAW factor values across mixed units; `fit.py` METHOD discloses "not a percentile", and A3.1
   sets no scale, so this is not a contract breach. Whether a person can read such a number is a PRD question.
 
+## 9. The rk-6/rk-7 deploy landed with no change-management entry (added 2026-09-17 ~04:2xZ)
+
+Row `AMGT_RESAPP-Z-S142` (4.0.0_SA_CRO~Z) VERIFIED at this seat on instruments that row did not use:
+- Live adapter, `get_function_configuration` at 04:12Z: LastModified `2026-09-17T03:27:57Z`, CodeSha256 `zHmPoWu9...`,
+  layer `opal-amgt-print-deps:1`. Prior sha `x3KrEBvZ` (LastModified 2026-09-16T17:23:29Z) is recorded in section 2 of
+  this file and in S142.
+- `org/critical_paths/change_management/`, shared tree AND worker ~24's worktree `C:/tmp/wk-amgt-12-24`: no entry named
+  for any time after `20260916T1906Z` (that one is NFRA_OPLGTW's); worktree porcelain on `org/critical_paths` empty.
+- `.tools/deploy_ledger.py list`: no open entry naming AMGT, scoped or print; `org/critical_paths/.open_deploys/` holds
+  no AMGT sentinel (newest file 2026-09-10).
+- The worker's own proof instances say so plainly, both for rk-6 and rk-7: "The org/critical_paths/change_management/
+  ledger entry the never-widen halves ask the worker to open/close was not opened", because neither order's `<paths>`
+  grant names that directory (row W24-S7, raised before the act).
+
+**Why it matters for the slug:** it is a CLAUDE.md hard-stop line (a confirmed deploy's ledger entry opened at start,
+closed at completion), and it REPEATS a defect already ruled this round: 1.0.0_SA_CTO~Z's msg 23464 widened rk-2's
+grant by `org/critical_paths/change_management/` for exactly this reason (W24-S4), and rk-6 and rk-7 were cut and
+spawned without that widening. Not a live harm: the signed never-widen halves in `ledger/` carry the blast radius and
+rollback for this act. Remedy holder: the issuer -- the late entry recorded as late (the shape the rk-2 rollback entry
+used), and the change-management path in every deploying order's grant at the cut. Planned: W24-S4, W24-S7 and S142
+dispositioned together onto the systemic issuer class (section 4).
+
+**Row S141 (same seat):** print serves a valid PDF for 31 of 33 keyed covered names; the two 500s are exactly the two
+keys containing a slash (BP/_LN_Equity, NG/_LN_Equity), the renderer writing the key into a file path -- round 11's
+W19-S5 filename class, now on the served plane. Graded with rk-6 at its drain.
+
 -- 3.0.0_SA_CVO
