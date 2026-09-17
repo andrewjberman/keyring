@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~1 2026-09-17: H24R4-AC1..AC3 PASS-by-output at commit f039acf201e0d4f65be32b5d9caa0ad2da8b27f1 (3 minted + 5 carded == 8; c23-mint-basis PASS, 3/3 added rows carry a resolving basis; c23-validate PASS). H24R4-AC4 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. proof-of-spec-check rc=0.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-h-24` = round-4 cell 24 (decomposition v3.3, section 0d) | **outcome_ref:** FWD-5 | **depends_on:** EN-c-23-r4 (same slot, queue position 2 -- both write `resources.json`)
 
