@@ -7887,6 +7887,118 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "S154's own recommendation: \"the re-cut (7acf65b08b) is the LATER decision under this seat's own authority and should be treated as canonical going forward.\"",
     "world_is": "Adopted without qualification: 7acf65b08b (the reordered/split re-cut) is canonical. Two of the six affected cells are now cleanly drained with independently-reverified results (rk-19 producer, rk-28). Two carry real, substantive open findings that are NOT artifacts of the collision and need a future session's attention regardless of which continuation had cut them (rk-19 adapter's stale drafting cache; rk-24's null-identity collision, now amended). One is resolved by a shape ruling that costs nothing to adopt now (rk-30 producer). rk-21's duplicate is simply superseded, no further act needed. No cell's SERVED output moved without its own proper co-sign; no criterion was declared PASS that a fresh instrument did not independently confirm.",
     "notes": "Filed by 2.0.0_SA_COO~Z per Andrew-direct: prepare remediation with the CVO, prepare (do not issue) the L10-style slug, then a managed wind-down of SITEZ ahead of a device reboot. Chain A and chain D are NOT spawned by this seat (chain D remains explicitly gated on CARD 5; chain A's own upstream, a genuine co-signed rk-19-adapter deploy, does not exist yet). Related: S152, S153, S154, S155 (all read in full before this row was written)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W33-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~33",
+    "surfaced_at": "2026-09-17T15:46Z",
+    "one_line": "AMGT-rk-24's write-per-name assumption fails for 59 of 237 unresolved names: their `security_key` is null, so batch.py's new unresolved-writer loop (as ruled) collapses all 59 into ONE shared pool key, each write silently overwriting the last.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python read of s3://opal-data-harvest/universe/v1/2026-09-16.json at this seat 2026-09-17: names=250, unresolved (no edgar cik+form)=237; of those, 59 rows carry `security_key: null` (e.g. name 'Adobe ADBE US', `resolution: UNRESOLVED`, `resolution_reason`: \"the coverage row's bloomberg_ticker status is 'UNRESOLVED', so no canonical identity is minted\").",
+        "lib/research/filings/fetch.py:451-452 @67168eba8c `pool_key(security_key, accession, suffix='source')` returns `filings/v1/%s/UNRESOLVED-SOURCE.%s.json % (security_key, suffix)` -- with security_key=None this renders the literal string 'filings/v1/None/UNRESOLVED-SOURCE.source.json' for all 59 rows, not 59 distinct keys.",
+        "the AC2 boto3 read this order ran (before-state) enumerated `objects_missing` and it contains 59 literal `None` entries alongside the 178 named security_keys -- the collision is present in the plan() output this order consumes, not manufactured by this row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z (next decomposition touching batch.py's unresolved-writer loop or fetch.pool_key -- needs a non-null key for the 59 names with no canonical identity before a real, non-timed-out --write-pool run executes against this universe)",
+    "spec_asserts": "AMGT-rk-24's cell text: 'For each entry, build the SAME shape ... and write it via crosswalk.write_pool() to fetch.pool_key(entry[\"security_key\"], None, \"source\")' -- one object per unresolved entry, 237 objects for 237 names.",
+    "world_is": "178 entries carry a distinct security_key and get a distinct object as ruled. 59 entries carry security_key=null (names never assigned a canonical identity at all) and all 59 write to the SAME pool key, so at most one of the 59 names' UNRESOLVED-SOURCE reasoning survives after a real run -- the other 58 are overwritten, not written. Not a criterion failure today (AC3's write never completed within its bound, S2 below), but a defect the code carries forward the next time it runs to completion.",
+    "notes": "Cell AMGT-rk-24 and its cited source rows (S139/S146) do not mention rows with no security_key at all; `plan()`'s classification (out of scope for this order) is what produces `unresolved` entries carrying security_key=None, and the fix's literal write pattern was named by the order with no null-key handling. Not repaired here per the refusal clause (not named by this order, and widening the write-key scheme is a design call for the cell that owns identity minting, not this one). disarm_owner: whichever seat next decomposes/edits pool_key or the unresolved-writer loop for these 59 names needs a non-security_key-null key (e.g. a stable hash of `name`) before a real (non-timed-out) --write-pool run executes against this universe."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W33-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~33",
+    "surfaced_at": "2026-09-17T15:46Z",
+    "one_line": "AC3's literal invocation ('... --write-pool') cannot complete inside this order's own mandated 120s bound: the pre-existing fetchable loop (13 real EDGAR fetch + Claude-analyze calls, unedited by this order) alone takes well over 120s, so the new unresolved-writer loop placed 'after the fetchable loop' per the cell's own instruction is never reached within the bound.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 120 python -m lib.research.filings.batch --universe universe/v1/2026-09-16.json --write-pool, run TWICE (initial + the one permitted retry, per policy) at this seat: both exits rc=124. The unbuffered retry's captured stdout shows exactly ONE 'RAN: {\"security_key\": \"ASML_NA_Equity\", ...}' line (of 13 fetchable entries) before the bound killed the process -- i.e. under 1/13 of the fetchable loop alone completed in 120s.",
+        "the after-state boto3 read (this order's AC2 invocation, re-run after the second AC3 attempt) still reports objects_found=0 of unresolved_count=237, identical to the before-state read -- confirming the unresolved-writer loop never executed on either attempt.",
+        "AMGT_RESAPP.TO-AMGT-rk-24.batch-unresolved-objects.md section 5 preamble: 'every invocation is LITERAL; record it byte-for-byte; each runs under timeout 120' -- no --limit or other narrowing is named for AC3's invocation."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "the cell's ruled fix places the new unresolved-writer loop AFTER the existing fetchable loop in main(), and AC3 grades a real (non-dry-run, non-limited) '--write-pool' run of that same main() under a 120s bound.",
+    "world_is": "the fetchable loop's per-entry cost (a live EDGAR fetch plus a live Claude analysis call) is roughly 100+ seconds for a single entry, unrelated to and unedited by this order; with 13 fetchable entries run sequentially before the new loop, the 120s bound is exhausted inside the FIRST loop every time, so this order's own producer fix, though present in the code and structurally correct, cannot be exercised to a written result via the named invocation under the named bound.",
+    "notes": "Per the refusal clause this criterion is recorded as measured (rc=124, retried once) and REFUSED-AS-WRITTEN rather than satisfied via an unnamed route (e.g. adding --limit, which this order does not name and which would change which entries plan() ever reaches). hazard_standing INERT: this is a criterion/bound mismatch, not a defect that harms the process's own future normal operation -- a longer-running or --limit-scoped exercise of the same code (by whichever seat is authorized to widen the invocation) would very likely reach and execute the unresolved loop cleanly, per the code read at lib/research/filings/batch.py (this order's own diff)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W33-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~33",
+    "surfaced_at": "2026-09-17T15:46Z",
+    "one_line": "AMGT_RESAPP.TO-AMGT-rk-24.batch-unresolved-objects.md carries no literal `<status>` tag anywhere in the file, though section 6 instructs the worker to 'flip `<status>` to `complete`'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "full read of org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-24.batch-unresolved-objects.md (134 lines) at this seat: the string '<status>' occurs 0 times; the only occurrence of the word 'status' is the prose instruction at line 129.",
+        "for contrast, sibling task orders in the same deliverables set DO carry the literal tag: 'status' in AMGT_RESAPP.TO-AMGT-rk-5.the-tab-scores-on-quarterly-inputs.md and AMGT_RESAPP.TO-AMGT-rk-4.identity-and-the-union-universe.md both return True for '<status>' in text."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "section 6: 'flip `<status>` to `complete`; commit with `--only -- <paths>`' -- implying the order's carrier already holds a `<status>` element to flip.",
+    "world_is": "No such element exists in this order file at any commit reachable from this worktree's HEAD; there is nothing to flip. Moot for this instance regardless, since AC2 and AC3 do not both grade PASS this run (see AMGT_RESAPP-Z-W33-S1/S2) and the top-level bar withholds a `complete` flip unless every mechanical criterion is PASS-by-output.",
+    "notes": "Not repaired here: adding a `<status>` element to a task order is the issuer's carrier to write (Rule 27, L6), not a worker's, and the refusal clause governs unmet criteria, not a missing mechanical hook this worker has no standing to invent."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W33-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~33",
+    "surfaced_at": "2026-09-17T18:50Z",
+    "one_line": "AMGT_RESAPP-Z-W33-S1's collision hazard is DISARMED at this commit: ISSUER AMENDMENT 1 re-cuts batch.py's unresolved-write loop to SKIP (never write) any entry whose security_key is falsy, so the literal write pattern that produced the shared `filings/v1/None/UNRESOLVED-SOURCE.source.json` key no longer executes for any of the 59 no-identity names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/filings/batch.py (this order's own diff, worktree HEAD): the unresolved-write loop now opens with `if not entry.get('security_key'): no_identity_skipped += 1; continue` before any pool_key()/write_pool() call is reached for that entry -- the collision-prone write is structurally unreachable for a null security_key.",
+        "post-fix AC2 live read (org/.../AMGT-rk-24.AC2.after.txt, this delivery): `none_key_collision_object_exists` reads False after a real --write-pool run touched all 178 in-scope entries -- the object this row warned about was never created.",
+        "the 59 no-identity names remain genuinely unresolved for THIS cell (no UNRESOLVED-SOURCE object of their own is written) -- that gap is explicitly named AMGT-rk-21's identity-minting scope, not re-opened or claimed fixed by this row."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "AMGT_RESAPP-Z-W33-S1's ARMED hazard is disarmed at this commit: the issuer (2.0.0_SA_COO~Z, ISSUER AMENDMENT 1) resolved it at the decomposition/order level by ruling SKIP-AND-COUNT over MINT-A-KEY -- the 59 no-identity names are routed to AMGT-rk-21's identity gap rather than given a synthetic pool key here. A real --write-pool run against this universe (this delivery) completes with 0 collisions and 178/178 correct distinct objects, satisfying S1's disarm condition's OUTCOME (no collision on a real run) via a different MECHANISM than S1's disarm_owner note anticipated (a null-key guard, not a null-key fix). Not a CVO-level GRADUATED transfer -- this worker dismisses its own prior row against the amended order's own text and the measured post-fix state; the CVO's own L9 compile is unaffected by this dismissal and may still review it.",
+    "spec_asserts": "AMGT_RESAPP-Z-W33-S1's disarm_owner: 'whichever seat next decomposes/edits pool_key or the unresolved-writer loop for these 59 names needs a non-security_key-null key ... before a real (non-timed-out) --write-pool run executes against this universe.'",
+    "world_is": "The issuer (2.0.0_SA_COO~Z) resolved this at the decomposition/order level (ISSUER AMENDMENT 1) by choosing SKIP-AND-COUNT over MINT-A-KEY -- the 59 names are routed to AMGT-rk-21's identity gap rather than given a synthetic pool key here. A real --write-pool run against this universe (this delivery) now completes with 0 collisions and 178/178 correct distinct objects, satisfying the disarm condition's OUTCOME (no collision on a real run) via a different MECHANISM than the disarm_owner note anticipated (a null-key guard, not a null-key fix).",
+    "notes": "Filed by the same worker that filed S1, same commit family (round 13 chain FP-B). Not a contradiction of S1 -- S1's grounding and hazard stand as a correct read of the code AT THAT COMMIT; this row records that the NEXT commit (this order's amended fix) removed the hazard by a route the issuer chose."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W33-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~33",
+    "surfaced_at": "2026-09-17T18:50Z",
+    "one_line": "AC3's amended invocation ('--write-pool --skip-fetch') STILL missed the 100s bound on its first two measured attempts (rc=124 both times, 0 of 178 written) because `crosswalk.write_pool()` is called with no shared client, so `boto3.client('s3', ...)` is constructed FRESH inside every one of the 178 calls (~0.4-0.5s of pure client-construction overhead per call, ~3 network round trips per call on top) -- the order's own text asserting this loop is 'a pure S3 write path ... genuinely fast' held for CORRECTNESS but not, as first implemented, for the stated speed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timed local measurement at this seat: 5x `boto3.client('s3', region_name='us-east-1')` + `head_object` averaged 0.553s/call; the SAME 5 `head_object` calls reusing one pre-built client averaged 0.119s/call -- client construction is the dominant cost, not the network round trip.",
+        "AC3 attempt 1 (timeout 100, tail -5 piped, per this order's literal invocation): rc=124, no per-entry progress line exists in this loop to show partial completion. Attempt 2 (timeout 100, unbuffered, saved to .scratch/AC3.attempt2.out): rc=124, stdout stops after the 4 pre-loop summary lines -- the unresolved-write loop (178 sequential write_pool() calls, each opening its own client via `crosswalk.write_pool(key, payload)` with no client kwarg) never printed its 'UNRESOLVED-SOURCE DONE' completion line within the bound.",
+        "lib/research/identity/crosswalk.py:609 `write_pool(key, payload, bucket=POOL_BUCKET, client=None)` already accepts a caller-supplied client -- the fix used here (batch.py builds ONE `boto3.client` before the loop and passes it to every write_pool() call) uses that existing parameter, changes no write behaviour, and measured at 35.5s wall-clock for the full 178-entry write (attempt 3, this delivery, .scratch/AC3.attempt3_clientreuse.out) -- comfortably inside the 100s bound."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Fixed by this worker within this order's own file (lib/research/filings/batch.py): the unresolved-write loop now reuses one boto3 client across all 178 write_pool() calls via that function's own existing client= parameter, measured at 35.5s wall-clock (comfortably inside the 100s bound) with the same 178 objects written to the same keys, verified by the same read-back. Not a CVO-level GRADUATED transfer -- this worker dismisses its own row having already applied the fix and measured the result in this same delivery.",
+    "spec_asserts": "the cell's own text (section 1): 'writing these objects touches no external API' and 'a pure S3 write path, no vendor call, genuinely fast' (ISSUER AMENDMENT 1).",
+    "world_is": "No external (non-AWS) vendor call is made -- that half of the claim holds. The 'genuinely fast' half did not hold for the loop AS FIRST WRITTEN per this order's own text (mirroring run_one()'s RESOLVED-branch pattern exactly, which also builds a fresh client per write_pool() call) at this population size (178 in-scope entries); it holds once the loop reuses one client, which this worker did as an in-scope implementation choice within batch.py (the file this order grants) rather than a widened route -- the same 178 objects are written, to the same keys, verified by the same read-back inside write_pool(), only faster.",
+    "notes": "Not filed as ARMED: the fetchable loop (run_one(), unedited by this order) still constructs a fresh client per RESOLVED-branch write, but that loop's own per-entry cost (a live EDGAR fetch + Claude analysis, ~100+s/entry) makes the ~0.4s client-construction overhead immaterial there -- this row's disarm_owner note would only bind if a future cell scales the FETCHABLE loop's population past the point where client-construction overhead becomes comparable to its own per-entry cost, which is not this order's population (13 fetchable names)."
   }
 ]
 ```
