@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_CANON~1 @abf00c6c15: K5R3-AC1..AC6 PASS-by-output, K5R3-AC7 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9); proof_of_spec instance VALID (rc=0, python .tools/proof-of-spec-check.py ... K5R3-AC1..AC7); no BLOCKING row filed -- all four R-9(iii) coordinates traced to already-ruled text</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.5 (ADMITTED; both halves current) | **Decomp cell:** `CN-k-5` (decomposition v5.1, section 0e) | **outcome_ref:** FWD-1 | **depends_on:** CN-k-4 (same slot, continues after its drain) -- level 0; CN-j-8, CN-j-9, CN-j-10 wait on this drain
 
