@@ -8142,6 +8142,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This session's dispatch step 10: 'If AC1/AC2 now PASS (BA reads points_count 3, source \"filing\"), flip this order's <status> to complete.' Step 5 names only the targeted plan and safe-apply; it does not name a local build precondition on an unrelated resource in the shared tf root.",
     "world_is": "AC1 now passes on the live, freshly-deployed plane; AC2 does not, for the exact upstream-cache reason AMGT_RESAPP-Z-W27-S3 already grounded before this deploy landed -- the deploy itself is correct and complete (blast radius, discriminator and census all match the co-sign exactly), and the code fails closed rather than mis-serving. The order's <status> is therefore left OPEN rather than flipped to complete, on AC2 alone. Separately, this shared terraform root cannot be planned at all from a worktree that never built the chatter-axis producer's local zip; this session resolved it with the tree's own existing build script rather than working around it.",
     "notes": "Owner of the drafting/v1/BA_US_Equity.json rebuild remains open per S3's own note: outside this order's <paths> and outside the producer order's grant, not repaired here. This row supersedes no disposition of S3/S4/S5 -- S4 (auth header) is resolved by this session's corrected invocation text already present at HEAD; S5 (missing co-sign) is resolved by the CTO half at e3fc4495cf plus this session's own dispatching COO instruction, though no separate COO-half ledger file exists -- stated as a fact for the record, not adjudicated here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T20:15Z",
+    "one_line": "AMGT-rk-23's literal fix ('a one-line path-safe encode... applied IDENTICALLY at both sites') would have broken the S3 pool read for both slash-containing names if applied to the shared `filename` variable in `_read_drafting_document()`, because that ONE variable also builds the S3 GET key, and the filings/drafting producers (analyze.py:1215, batch.py:150) write their pool objects at the RAW (unsanitized) security_key -- a real literal slash in the key, which S3 tolerates as an ordinary key character.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py _read_drafting_document() (pre-fix, this session's own read at HEAD before editing): `filename = \"{0}.json\".format(security_key)` is used BOTH for the local AMGT_DRAFTING_ROOT join (`os.path.join(root, filename)`) and, unconditionally after, for the S3 key (`key = \"{0}{1}\".format(DRAFTING_PREFIX, filename)`) -- one variable, two consumers with different path semantics.",
+        "lib/research/filings/analyze.py:1215 and lib/research/filings/batch.py:150 both write `\"drafting/v1/%s.json\" % analysis[\"security_key\"]` verbatim -- no slash sanitization at the producer, so a name like `BP/_LN_Equity` lands at the literal S3 key `drafting/v1/BP/_LN_Equity.json`.",
+        "This session's own unit test (monkeypatched S3 client asserting the exact Key argument) confirms `_read_drafting_document('BP/_LN_Equity')` must request Key `drafting/v1/BP/_LN_Equity.json` (unsanitized) to reach the real object; sanitizing the shared `filename` variable to `BP-_LN_Equity.json` would 404 against a real landed object.",
+        "The task order's own text says both sites are 'local-filesystem joins (S3 keys already tolerate `/` fine -- this is never an S3 problem)', naming the S3 read as out of scope for the fix, but its worked example (`sec_key.replace(\"/\", \"-\"), ... applied IDENTICALLY at both sites`) does not itself name the shared-variable coupling that a literal identical-replace would trip."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-23 (task order text): 'a one-line path-safe encode at BOTH sites ... applied IDENTICALLY at both sites so a name's on-disk artifact name is the same string everywhere' -- and, separately, 'S3 keys already tolerate `/` fine -- this is never an S3 problem'.",
+    "world_is": "The two clauses are only jointly satisfiable by sanitizing a NEW, locally-scoped filename used only inside the `if root:` branch -- never the shared `filename` variable the S3 key also reads. This session implemented it that way (see the commit touching lib/research/api/scoped_amgt.py's `_read_drafting_document`) and verified both branches independently: the local-root read finds a slash-sanitized fixture file, and a monkeypatched S3 client still receives the exact unsanitized key. Filed as OBSERVATION/INERT because the actual commit already carries the correct, narrower fix -- this row records the coupling a less careful literal reading of the order's own worked example would have missed.",
+    "notes": "No remediation owed elsewhere: render_pack.py's own `security_key()` has no S3 consumer at all (build_pack() takes an already-read model block, never re-reads by key), so its fix has no equivalent coupling to guard against."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T20:25Z",
+    "one_line": "AMGT-rk-20's instruction to route price_axis_pull.py's writes through lib.research.price.generation.compute_price_axis(), 'replacing build_movement_rows() and the :337-346 write loop', must NOT be read as deleting or renaming build_movement_rows() itself: lib/research/metrics/movement_gate.py's own producer axis registry names it BY STRING (module path + function name) as the PRICE subject's declared writer, and lib/research/metrics/tests/test_producer_axis_registry.py calls it directly by that name to prove the registry's claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/metrics/movement_gate.py:198: `\"PRICE\": (\"integrations.bloomberg.research.price_axis_pull\", \"build_movement_rows\")` -- a string-keyed registry entry, not an import, so nothing would raise an ImportError if the function were removed; the coupling is silent.",
+        "lib/research/metrics/tests/test_producer_axis_registry.py:140 and :169 both call `price_axis_pull.build_movement_rows(...)` directly to exercise the registry's claim against the real function.",
+        "This session's own build kept build_movement_rows() byte-for-byte unchanged (main() simply stopped calling it, routing instead through compute_price_axis()) and re-ran the full lib/research/ suite post-edit: 490 passed, including test_producer_axis_registry.py, plus a standalone synthetic-series call to build_movement_rows() directly confirming it still executes and returns the same two-product shape.",
+        "The scoped_amgt.py adapter's own big docstring (READ THE CROSS section, this file, ~line 22-49) explicitly relies on this registry for its CROSSED vs SUBJECT_ONLY_FALLBACK resolution -- a silently-broken registry entry would degrade the read adapter's PRICE axis to the fallback branch without any test in this session's own paths catching it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-20 (task order text): 'routes its writes through lib.research.price.generation.compute_price_axis() (replacing build_movement_rows() and the :337-346 write loop)'.",
+    "world_is": "'Replacing' the write loop is correct and done; 'replacing build_movement_rows()' as a function to delete would have broken an registry+test dependency the order's own text does not mention. This session preserved the function definition and only changed what main() calls, which is the narrower and correct reading -- filed as OBSERVATION/INERT since the commit already reflects the safe reading, recorded so a later reviewer does not 'clean up' the now-uncalled-from-main() function as dead code.",
+    "notes": "None outstanding; this is a documentation-of-reasoning row, not a defect."
   }
 ]
 ```
