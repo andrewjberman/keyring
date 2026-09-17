@@ -3,7 +3,7 @@
   "project": "NFRA_SPMOVE",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/schwab-trn-sharepoint-export-brief-20260916.md@d5e870fed2",
   "endpoint_outcomes": [
@@ -40,6 +40,17 @@ The header stays DRAFT until both halves are signed at L4-R. The author signs ne
 over the brief's 22 headings; the Part V precondition map; the Part VII non-claims carried as this PRD's own open items;
 and PART IV.5's measured sizes carried into C4 labelled MEASURED-vs-INFERRED so they decide something. Nothing in v0.1's
 ENDPOINT or CONTRACTS text was deleted; C4 gained a paragraph, so the ratified-text half is re-opened at C4 only.
+
+**v0.3 (2026-09-17 ~22:5xZ)** answers `2.0.0_SA_COO~B`'s refusal of the v0.2 brief half @d480765ea8 (review
+`org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_SPMOVE_v0.2_BRIEF_HALF_20260917.md` @95fa197cc7). Its three
+items were CONTENT CARRIAGE inside rows this PRD had already marked CARRIED -- the coverage table named the heading and
+the content was not in the document, which is the precise failure a coverage table exists to make visible, and it took a
+reader who checked each row's claim against the bytes to catch it. All three are fixed in the brief half alone: C1 now
+carries the missing row key and the 97 measured duplicates and makes them decide the comparison rule; C3 now CITES the
+builder's exercised output with the placeholder words and open tier labelled, and carries the 49 Financial tenancy;
+S7 now NAMES the read scope instead of saying "scoped to exactly" and stating no scope. Its correction is also taken:
+the 22-heading split is 1 H1 + 10 H2 + 11 H3, not 1 + 15 + 6. CONTRACTS changed at C1 and C3, so the ratified-text half
+is re-opened there.
 
 ## Scope and evidence boundary
 
@@ -130,8 +141,16 @@ CARRIED here, not pointed at -- transcribed from that pin, ids permanent, none a
 ## CONTRACTS
 
 **C1 -- the workbook.** One file per master per month, holding every transaction of that month with all 140 source
-columns from `fact_trn`, rebuilt from silver and never hand-assembled. A row in the workbook matches its source row field
-for field. Masters are never merged and nothing is de-duplicated.
+columns from `fact_trn`, rebuilt from silver and never hand-assembled. Masters are never merged and nothing is
+de-duplicated.
+
+**There is NO UNIQUE ROW ID in the source, and the source itself carries exact duplicates** -- 97 exact same-day
+duplicate rows per master in August 2026, MEASURED by the brief (:114-115). Both facts are contract, not trivia: they
+decide what "matches its source row" can mean. A workbook row matches its source row on the FULL 140-column tuple, and
+where that tuple is non-unique the check is a MULTISET equality -- a tuple occurring n times in the month's source
+occurs exactly n times in the workbook. The producer never de-duplicates and never adds a synthetic key; a duplicate in
+silver is a duplicate in the workbook, because the workbook's claim is that it reproduces the source, not that it
+improves it.
 
 **C2 -- the trigger is the MARKER, never a clock.** The rebuild fires on the completion marker
 `schwab/{master}/meta/complete/date=YYYY-MM-DD.json`, about fifteen minutes after it lands. A late pull means a late
@@ -140,9 +159,32 @@ arrives on the SECOND fire of the day (2026-09-11), and a marker REWRITTEN later
 (2026-09-15).** A rewritten or zero-table marker never produces a half-written workbook: the run either rebuilds the whole
 month or leaves the previous object in place and records why.
 
-**C3 -- the address is builder output.** The S3 home is `address(...)` output and the resource names are `name(...)`
-output, never typed (Rule 30). The SharePoint path is `AWS/` + the builder's key, then the object -- the mirror rule
-Andrew confirmed. **`NAMING_SCHEMA.json` carries no SharePoint grammar today; adding it is this project's own cell,
+**C3 -- the address is builder output, and here is the output.** The S3 home is `address(...)` output and the resource
+names are `name(...)` output, never typed (Rule 30). Rule 30 requires this PRD to CITE the builder's output rather than
+promise it, so the brief's exercised calls are carried verbatim (:129-135, run against `lib/opal_naming.py` 2026-09-16):
+
+```
+address("schwab","08242234","platinum","trn-export","month=2026-09")
+  -> s3://opal-data-49financial/schwab/08242234/platinum/trn-export/month=2026-09
+same call with "gold"
+  -> s3://opal-data-49financial/schwab/08242234/gold/trn-export/month=2026-09
+name("schwab", None, "trn-export", kind="lambda") -> schwab-trn-export-lambda
+name("schwab", None, "trn-export", kind="daily")  -> schwab-trn-export-daily
+name("schwab", None, "trn-export", kind="role")   -> schwab-trn-export-role
+```
+
+Two qualifiers travel with that output and neither is settled here. **`table` and the function word `trn-export` are the
+CRO seat's PLACEHOLDERS** -- the builder accepted them, which proves the call shape, not the word; the word is chosen at
+L5 and re-run through the builder. **The TIER is open** (platinum vs gold is a Doctrine R1-R21 question answered at L5,
+not assumed). What the output DOES settle is tenancy: the registry places both masters in the **49 Financial** tenancy,
+so this project's output lands in a FIRM bucket (`opal-data-49financial`), not in `opal-data-assets` where its source
+sits -- a fact that reaches the read role, the write role and the Gateway's grant, and one no seat may re-type by hand.
+Measured beside it by `2.0.0_SA_COO~B` and carried as supporting evidence, not as a claim of this PRD:
+`opal-data-49financial`'s bucket policy `DenyForeignFirmPrincipals` denies `role/cot-*`, `role/inf-*`, `role/mdpf-*`
+and `role/opal-assets-mdpf-*` (`infra/.../iam.tf:598-603`), and `schwab-trn-export-role` matches none of them -- so the
+builder's name is also a name that works.
+
+The SharePoint path is `AWS/` + the builder's key, then the object -- the mirror rule Andrew confirmed. **`NAMING_SCHEMA.json` carries no SharePoint grammar today; adding it is this project's own cell,
 ratified through LGIC_NAMING's schema bump, never a rider on LGIC_ENFORCE.** The tier (platinum vs gold) is a canon
 question answered at L5 against `infra/logic/02_DOCTRINE.md`, not assumed here.
 
@@ -181,7 +223,8 @@ configuration change with no new build, and FWD-6 is what proves it.
 ## BRIEF COVERAGE
 
 Denominator: **22 headings** in `docs/briefs/schwab-trn-sharepoint-export-brief-20260916.md` @d5e870fed2, counted as every
-line matching `^#` at that pin (1 H1 + 15 H2 + 6 H3). The same 22 was measured independently by `2.0.0_SA_COO~G` and
+line matching `^#` at that pin (1 H1 + 10 H2 + 11 H3 -- v0.2 printed the split as 1 + 15 + 6, which was written from
+recall rather than re-measured; the TOTAL was right and the split was wrong, caught by `2.0.0_SA_COO~B` at L4-R). The same 22 was measured independently by `2.0.0_SA_COO~G` and
 `2.0.0_SA_COO~O` at L4-R. Each heading lands in exactly one of: CARRIED (a contract, surface, acceptance line or scope
 clause holds it), CARRIED-AS-OPEN (this PRD holds it as a named L5 precondition or non-claim, not as a settled value), or
 NOT CARRIED (with the reason, on this line).
@@ -200,9 +243,9 @@ NOT CARRIED (with the reason, on this line).
 | 10 | PART II -- WHERE THE BOUNDARY SITS | CARRIED | Scope section: owns / relies-on / explicitly-out, including NFRA_OPLGTW is NOT a home for this and its reader role is never widened |
 | 11 | PART III -- THE QUALITATIVE BAR | CARRIED, one item deliberately left to Andrew | A1 (uses it instead of asking for a pull), C1 (field-for-field), C5 (tells a missed morning from the record). **Open time at 45.4 MB is HIS judgment on real use** - the brief says so and this PRD sets no number for it (C4, second paragraph) |
 | 12 | PART IV -- THE SUBSTRATE | CARRIED | the four subsections below; PART IV's own header carries no claim of its own |
-| 13 | 4.1 The data (`fact_trn`, 140 columns, two masters, 99.98% overlap) | CARRIED | C1, and the overlap named as expected-not-a-defect in Scope |
+| 13 | 4.1 The data (`fact_trn`, 140 columns, two masters, 99.98% overlap, **no unique row id, 97 exact same-day duplicates per master**) | CARRIED | C1 -- the missing key and the measured duplicates now DECIDE the comparison rule (full-tuple match, multiset count where the tuple repeats); A1; the overlap named as expected-not-a-defect in Scope; S7 names the source prefixes |
 | 14 | 4.2 The trigger (completion markers; the two irregularities) | CARRIED | C2; A7 |
-| 15 | 4.3 The address -- builder output, not hand-typed | CARRIED | C3; A3; S3 |
+| 15 | 4.3 The address -- builder output, not hand-typed (**the exercised `address()`/`name()` output, and the 49 Financial tenancy it revealed**) | CARRIED | C3 CITES the builder's output verbatim per Rule 30, with the placeholder words and the open tier labelled, and carries the FIRM-bucket tenancy into the role and grant surfaces; A3; S3; S7 |
 | 16 | 4.4 The destination and the write path | CARRIED-AS-OPEN | C4 for the bounded replace; **the site choice is this seat's reading, CONFIRMED at L5** (Scope, evidence boundary) |
 | 17 | 4.5 Measured file size | CARRIED | C4's table - 45.4 MB and 158 s MEASURED, ~72 MB INFERRED, each deciding a stated value |
 | 18 | PART V -- WHAT MUST BE TRUE | CARRIED, item by item | the **BRIEF PRECONDITIONS** map below, all 10 |
@@ -221,7 +264,7 @@ where it lands. None is assumed true.
 | V.3 | the Gateway can replace a large binary file inside `AWS/` and only there | this project (S2) | C4; A8 is the refusal outside `AWS/` |
 | V.4 | the producer rebuilds the whole month on each trigger (the brief RECOMMENDS rebuild as the mechanism for Andrew's word "append") | **the CTO, here** | **RULED: rebuild.** C1 says rebuilt from silver and never hand-assembled; C2 says the run rebuilds the whole month or leaves the object in place. Andrew's word "append new rows" names the EFFECT and is satisfied by a rebuild, which also heals a late or corrected day |
 | V.5 | the trigger fires off the marker plus ~15 minutes and tolerates a second-fire or rewritten marker | this project (S1) | C2; A7 |
-| V.6 | a read role scoped to exactly the two masters' `fact_trn` and the output prefix, never a widening of an existing role | this project (S7) | Scope ("never widened for this") and S7 |
+| V.6 | a read role scoped to exactly the two masters' `fact_trn` and the output prefix, never a widening of an existing role | this project (S7) | Scope and S7, which now NAME the prefixes. **One ADDITION to the brief's wording, and it is deliberate:** the run must also read `schwab/{master}/meta/complete/` or C2's trigger cannot fire -- the brief's own 4.2 measures that path, and V.6 simply did not restate it |
 | V.7 | a run record per run where Andrew can read it | this project (S4) | C5; A4 |
 | V.8 | the Menachem recipient switch exists and is OFF | this project (S5) | C6; A5 |
 | V.9 | a backfill decision -- which past months get built on first run (history from 2024) | **Andrew** | OPEN, and it is a card at him, not a value set here. The first run builds the CURRENT month only unless he says otherwise; C7 makes a backfill a configuration change, so his answer costs no rebuild |
@@ -250,13 +293,13 @@ none is closed here by assertion.
 | S4 | the run record | per-run days read, rows written, vintage, outcome | FWD-4 |
 | S5 | the recipient switch | off by default; refusal before the word; recorded enablement | FWD-5 |
 | S6 | the configuration surface | dataset, masters, period and columns as inputs | FWD-6 |
-| S7 | the read role | scoped to exactly the two masters' `fact_trn` and this project's output prefix | all |
+| S7 | the read role | scoped to exactly `s3://opal-data-assets/schwab/08242234/silver/fact_trn/`, `s3://opal-data-assets/schwab/08335338/silver/fact_trn/`, the two masters' marker prefix `schwab/{master}/meta/complete/`, and this project's own output prefix under `opal-data-49financial` -- and NOTHING else; never a widening of an existing role | all |
 
 ## Acceptance matrix
 
 | id | acceptance | outcome |
 |---|---|---|
-| A1 | one month's workbook opened by Andrew; one row compared field-for-field with its source row; his word that he used it instead of asking for a pull | FWD-1 |
+| A1 | one month's workbook opened by Andrew; one row compared with its source row on the FULL 140-column tuple, and -- because no unique row id exists -- a MULTISET count check on a tuple known to repeat (the 97 measured August duplicates are the fixture); his word that he used it instead of asking for a pull | FWD-1 |
 | A2 | two consecutive mornings' files and run records, one of them following a pull that completed on its second fire | FWD-2 |
 | A3 | the SharePoint path of a delivered object equals `AWS/` + the builder's key, shown for two different inputs; the rule is IN the naming schema | FWD-3 |
 | A4 | two run records read side by side -- a quiet day and a failed/short day -- distinguishable without opening the workbook | FWD-4 |
