@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.3",
+  "prd_version": "v0.4",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -41,6 +41,16 @@ indexes everything else, so the model is never guessing which tool to call. **Th
 his words: the official plugins are poorly indexed, and we will not have that problem.**
 
 The header stays DRAFT until both halves are signed at L4-R. The author signs neither half.
+
+**v0.4 (2026-09-17 ~23:5xZ)** answers `3.0.0_SA_CVO`'s refusal of the v0.3 ratified-text half @`7fef989e77`. The ten
+outcome cards are now TRANSCRIBED from the ratified pin verbatim -- statement, DONE WHEN, ACCEPT and PROOF -- with only
+SOURCE dropped, in the shape NFRA_SPMOVE already uses. v0.2 and v0.3 carried a COMPRESSED paraphrase, and the
+compression was collateral from the v0.2 repair: fixing the markdown-table defect, this seat rebuilt the cards from the
+TABLE'S one-line summaries instead of re-reading the endpoint document, so a formatting fix silently became a content
+loss. What went missing were the operative constraints -- FWD-3's "transactions are reachable, not only the three
+`dim_*` tables", FWD-8's "no new vendor egress beyond Andrew's standing per-use word", FWD-9's "removal takes effect
+without a redeploy". The gate never asked for the compression: `FWD_DEF_RE` reads the `FWD-N <text>` line alone, so
+carrying ACCEPT and PROOF costs it nothing.
 
 **v0.3 (2026-09-17 ~23:3xZ)** answers `2.0.0_SA_COO~B`'s refusal of the v0.2 brief half @`980007578e` (review
 `org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.2_BRIEF_HALF_20260917.md` @`1586ebdefe`). Its
@@ -83,42 +93,109 @@ measurement.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
-The ten outcomes are `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MCPINDEX_ENDPOINT_FORWARD_20260917.md` @9da61cab00,
-confirmed by Andrew ~19:0xZ. They are carried here unchanged, in one line each; the endpoint document is the text that
-governs.
+The ten outcomes are `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MCPINDEX_ENDPOINT_FORWARD_20260917.md` @`9da61cab00`,
+confirmed by Andrew ~19:0xZ. **They are TRANSCRIBED from that pin verbatim below -- statement, DONE WHEN, ACCEPT
+and PROOF -- and only the SOURCE line is dropped.** v0.2 and v0.3 carried a COMPRESSED paraphrase of each card,
+which `3.0.0_SA_CVO` refused at the ratified-text half (@`7fef989e77`): a reworded ACCEPT is a different bar, and
+the operative constraints were the ones that went missing -- FWD-3's "transactions are reachable, not only the
+three `dim_*` tables", FWD-8's "no new vendor egress beyond Andrew's standing per-use word", FWD-9's "removal
+takes effect without a redeploy". The endpoint document remains the text that governs.
 
-  FWD-1   a staff member who does not know which system holds a fact is routed correctly
-          on the first try
-          DONE WHEN  EXERCISED, cold, by a non-author
+  FWD-1  A staff member who does not know which system holds a fact asks Claude and is
+         pointed to the right tool, with the data's freshness and scope, on the first try
+         DONE WHEN  EXERCISED -- a set of real questions, asked cold by someone who did not
+                    build the index, routes correctly
+         ACCEPT     a discover family is loaded in every session and answers from ONE catalog
+                    (never a second): which property and dataset holds the fact, its freshness,
+                    its firm scope, its caveats, and the next tool to call; a question about a
+                    property that is not catalogued says so and names nothing
+         PROOF      a named question set run in a live session by a non-author, with the count
+                    routed correctly over the count asked, and every wrong route listed
 
-  FWD-2   for any figure the portal displays, Claude returns the portal's own number and
-          its as-of date
-          DONE WHEN  EXERCISED per surface
+  FWD-2  For any figure the portal displays, Claude returns the portal's own number with the
+         same as-of date
+         DONE WHEN  EXERCISED -- a side-by-side read on live data, per surface
+         ACCEPT     the tools read the SAME precomputed tables the portal points at; for each
+                    surface in scope (model AUM and account distribution, ETF positioning,
+                    market and macro, advisor intelligence) the figure and the as-of date match
+                    the portal exactly; a disagreement is this project's defect, never a caveat
+         PROOF      one comparison per surface, each naming the portal page, the tool call and
+                    both values; zero disagreements, denominators printed
 
-  FWD-3   positions, balances and transactions at either Schwab master, from silver
-          DONE WHEN  EXERCISED by a granted person
+  FWD-3  A staff member asks about positions, balances and transactions at either Schwab
+         master and gets an answer from silver, without opening the custodian's site
+         DONE WHEN  EXERCISED -- a granted person asks and reads the answer
+         ACCEPT     one master and one date per answer, never summed across masters; the
+                    answer states its date and completeness; transactions are reachable, not
+                    only the three `dim_*` tables
+         PROOF      a live session transcript for each question class, with the row counts
+                    reproduced from the same silver objects by a second instrument
 
-  FWD-4   the same question classes for Black Diamond, Orion, Eclipse and SmartX
-          DONE WHEN  EXERCISED per property, after that property's analysis
+  FWD-4  The same question classes work for Black Diamond, Orion, Eclipse and SmartX
+         DONE WHEN  EXERCISED -- per property, on that property's real silver tables
+         ACCEPT     each property was ANALYSED first (its common questions written down) and
+                    its purpose-built tools cut from that analysis; each answer states date,
+                    scope and completeness; a property with no analysis ships no tool
+         PROOF      per property: the analysis record, the tool list it produced, and a live
+                    answer per tool class with its denominators
 
-  FWD-5   the ETFs -- holdings, net assets, daily NAV -- per fund
-          DONE WHEN  EXERCISED per fund
+  FWD-5  A staff member asks about the ETFs -- holdings, net assets, daily NAV -- per fund
+         DONE WHEN  EXERCISED -- per fund, against the served tables
+         ACCEPT     the same ladder as FWD-4, per fund (TrueShares, Pathfinder); NAV and net
+                    assets carry their date; a fund with no data for a date says so
+         PROOF      one live answer per fund per question class, compared with the served
+                    artifact
 
-  FWD-6   an uncatalogued question still gets a safe typed answer, and routing prefers the
-          purpose-built tool
-          DONE WHEN  EXERCISED, both halves
+  FWD-6  A question that fits no purpose-built tool still gets a safe answer, and the index
+         never sends Claude to that path for a common question
+         DONE WHEN  EXERCISED -- both halves: the fallback answers, and the routing prefers
+                    the purpose-built tool
+         ACCEPT     a TYPED query (filters, group-bys, aggregates as a structured object,
+                    never raw SQL) over any catalogued dataset, with hard caps and a response
+                    stating date, completeness and whether it was cut short; for the routing
+                    half, a named set of common questions reaches its purpose-built tool
+                    without being told to
+         PROOF      the typed-query transcript including a refused unsafe shape and a
+                    cut-short response; the routing count over the same question set as FWD-1
 
-  FWD-7   one client or household seen across custodian and platform
-          DONE WHEN  EXERCISED on one real client
+  FWD-7  A staff member asks for one client or household and sees them across custodian and
+         platform
+         DONE WHEN  EXERCISED -- one real client answered across at least two systems
+         ACCEPT     the match is made by a stated rule, and every unmatched record is REPORTED
+                    rather than dropped; an answer never merges two people; the rule's
+                    precision and recall are printed on a named sample
+         PROOF      one client's cross-system answer with the match rule, the sample's
+                    precision and recall, and the unmatched list
 
-  FWD-8   long history and live market data on demand
-          DONE WHEN  EXERCISED, one answer per half
+  FWD-8  A staff member asks for long history or live market data and gets it on demand
+         DONE WHEN  EXERCISED -- one long-history answer and one market-data answer
+         ACCEPT     the long-history path returns a bounded answer over a span the Gateway's
+                    in-process engine cannot hold, and says which substrate served it; the
+                    vendor reads (YCharts; Bloomberg where its own standing word allows)
+                    appear in the SAME index rather than as a separate world; no new vendor
+                    egress beyond Andrew's standing per-use word
+         PROOF      one answer per half with its substrate named and its cost/time recorded
 
-  FWD-9   Andrew admits staff one at a time; each sees only what he granted
-          DONE WHEN  EXERCISED: one admission, one removal
+  FWD-9  Andrew admits staff to the beta one person at a time, and each person sees only the
+         tools and data he granted
+         DONE WHEN  EXERCISED -- one admission and one removal, both observed
+         ACCEPT     a person not admitted sees NO data tools; an admitted person sees exactly
+                    their granted set, and a phrasing that asks for another firm's or master's
+                    data is refused; removal takes effect without a redeploy
+         PROOF      two sessions (admitted, not admitted) with the tool lists each sees, one
+                    refusal transcript, and the roster change with its timestamp
 
-  FWD-10  adding the next property is one catalog entry plus a tool
-          DONE WHEN  EXERCISED on the next property, timed
+ FWD-10  Adding the next property or tool is one catalog entry plus a tool, and the index
+         describes it with nobody writing the description twice
+         DONE WHEN  EXERCISED -- the NEXT property after the first three is added this way and
+                    the addition is timed
+         ACCEPT     the catalog entry (business meaning, example questions, grain, freshness
+                    field, firm-scope rule, never-sum rules, producer, tools) is what Claude
+                    reads; a tool with no catalog entry or no safety classification DOES NOT
+                    SHIP -- proven by a planted unclassified tool being refused; the catalog is
+                    versioned in S3 at a builder-named address and has ONE writer
+         PROOF      the added property's diff (catalog entry + tool, nothing else), the refusal
+                    of the planted unclassified tool, and the elapsed time
 
 ## CONTRACTS
 
