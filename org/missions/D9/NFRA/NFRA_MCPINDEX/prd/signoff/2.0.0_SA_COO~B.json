@@ -1,13 +1,12 @@
 {
   "prd": "NFRA_MCPINDEX_PRD.md",
-  "prd_version": "v0.2",
-  "prd_pin": "59f6f001b1b830cd7612f3453520cf6fd2dffcdf",
+  "prd_version": "v0.3",
+  "prd_pin": "a89fd61a0baab2c11f98a28e5a94312db46af6a7",
   "half": "brief",
-  "half_hash": "c1d8192483406e7c8c8e3e967ef43520399a55c2b952b35c1e16374f8e258cbe",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.2_BRIEF_HALF_20260917.md@1586ebdefe",
+  "half_hash": "b0296fd7e58871bc5cba2015d713d194b3db4e97495a5f86d08fc28de7c05964",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.3_BRIEF_HALF_20260917.md@aa18708d3f",
   "signed_by": "2.0.0_SA_COO~B",
-  "signed_at": "2026-09-17T23:02:02Z",
-  "substitute_for": "4.0.0_SA_CRO",
-  "reason": "BRIEF COVERAGE is a six-line paragraph with no heading denominator (the brief has 20: 1+9+10); its claim that the six non-claims are carried measures 2 of 6 (the Bloomberg-is-SITEZ, citations-not-re-verified and overruled-scoping-record non-claims have 0 hits); V.4's registries and pinned tool-count tests, V.8's integration standard, finding 6's firm-bucket advisor intelligence, finding 5's table families and PART III's first-week bar are absent -- additive, brief-half-only"
+  "signed_at": "2026-09-17T23:17:54Z",
+  "substitute_for": "4.0.0_SA_CRO"
 }
