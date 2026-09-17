@@ -8169,6 +8169,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Neither named portal path exists in this worktree -- portal/ is an unpopulated gitlink (0 files, no package.json) because no .gitmodules URL mapping exists to init it and no supported mechanism in .tools/ populates a portal checkout inside a linked worktree. This worker therefore STOPS per the order's own first-act instruction rather than cloning/reconstructing portal content into the worktree from another local checkout (CLAUDE.md's bar: 'never rebuild, extract or reconstruct the tree to make an order executable'). AC1 and AC2 are recorded FAIL against their real expectation (their literal invocations return rc=0 but on an empty tree, which is not the 'at least one component' / 'no NEW errors on a real build' bar either criterion names). This is ARMED because chain A's queue (rk-19 page half, then rk-30 page half, then rk-26) is the SAME single writer for every portal edit this round, per this order's own text -- so whichever worktree carries chain A's remaining page-half orders will hit the identical block unless the portal gitlink is populated in it before the next cell is dispatched.",
     "notes": "No fix attempted: this worker's <paths> grant covers only files under portal/, not the mechanism that would populate portal/ itself (no .tools/ path granted, and even if one were, .gitmodules carries no URL to init from). Disarm requires either (a) a .gitmodules entry restoring the standard submodule-init path, or (b) the dispatching COO ensuring each portal-touching worker's linked worktree is created with portal/ already checked out at the gitlink's recorded commit, before the next chain-A cell is issued."
   }
+  ,
+  {
+    "id": "AMGT_RESAPP-Z-W31-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~31",
+    "surfaced_at": "2026-09-17T20:55:00Z",
+    "one_line": "AC2's literal invocation `npx tsc -b` on this device/worktree does not run the TypeScript compiler at all -- it resolves a decoy npm-registry package literally named `tsc` and prints its banner, so the criterion's expectation (no new compile errors) is never actually tested by the literal command, independent of anything this order edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.4.0_DT_ClientPlatform",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This session, `cd portal && timeout 120 npx tsc -b 2>&1 | tail -30`: rc=0, full output is the banner 'This is not the tsc command you are looking for' with a suggestion to run `npm install typescript` -- no compiler diagnostics, no file list, no exit code from an actual tsc process.",
+        "Same session, same worktree, `cd portal && timeout 120 ./node_modules/.bin/tsc.exe -b`: rc=0, ZERO output -- a genuine clean build against the real, locally-installed TypeScript project references (this worktree's `bun install` already ran; `node_modules/typescript` is present).",
+        "portal/.npmrc sets `package-lock=false` (by design -- this project is bun-managed); `npm ls typescript` in this tree reports the package `extraneous` because npm's own dependency graph does not trust a bun-populated node_modules tree with no package-lock.json it recognizes, and npm's own documented behavior is to fall through to a registry fetch for `npx <bin>` rather than resolve a local `node_modules/.bin/<bin>` it considers untracked.",
+        "Reproduced identically on a fully independent fresh clone+`bun install` of portal/ done in this same worktree earlier in this task order's resumption (per this order's own dispatch prompt), so this is not specific to one checkout's history.",
+        "The main workspace's own portal/ (a separate, older checkout) still carries a stale `node_modules/.package-lock.json` dated 2026-08-06 from an old npm install, and `npx tsc -b` resolves correctly there -- confirming the divergence is that leftover artifact's presence/absence, not a difference in this worktree's actual TypeScript setup."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's <invocation>, verbatim: `cd portal && npx tsc -b 2>&1 | tail -30`, with <expect> 'the merged tree's TypeScript build has no NEW errors attributable to this order's edited files'.",
+    "world_is": "The literal invocation performs no TypeScript build whatsoever on this device for this bun-managed, npm-lockfile-less portal/ tree -- it is a DISCRIMINATION failure under CLAUDE.md Rule 22 (the evidence could not differ whether or not this order's edits carried a type error, since the decoy package never reads this tree's source at all), so it is recorded as its own genuine result rather than silently swapped for the direct-binary reading. The direct-binary reading (`./node_modules/.bin/tsc.exe -b`, rc=0, no output) is preserved in this row as corroborating evidence about actual code health only, per this order's own dispatch instructions, and does not resolve AC2's grade on its literal terms.",
+    "notes": "This is a device/tooling defect class, distinct from a code defect: the same literal invocation would misreport on ANY future portal order in a purely-bun-installed worktree on this device until either (a) portal/package.json pins a `packageManager`/engines constraint npm respects, (b) a committed lockfile npm trusts is restored, or (c) the estate's task-order authoring convention for portal TypeScript checks moves off bare `npx tsc -b` per the portal CLAUDE.md's own existing typecheck-law precedent (`bun run typecheck` / `tsc -b` directly, never bare `tsc --noEmit`) toward the same non-npx form for `-b` too. Not repaired here -- outside this order's <paths> (no package.json/.npmrc write granted) and outside the REFUSAL CLAUSE's remit to route around a named invocation. disarm_owner named as the portal-owning frontend seat by estate convention; not confirmed live by this worker."
+  }
 
 ]
 ```
