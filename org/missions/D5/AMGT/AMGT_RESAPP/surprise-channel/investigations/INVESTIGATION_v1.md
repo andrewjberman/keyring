@@ -7999,6 +7999,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "the cell's own text (section 1): 'writing these objects touches no external API' and 'a pure S3 write path, no vendor call, genuinely fast' (ISSUER AMENDMENT 1).",
     "world_is": "No external (non-AWS) vendor call is made -- that half of the claim holds. The 'genuinely fast' half did not hold for the loop AS FIRST WRITTEN per this order's own text (mirroring run_one()'s RESOLVED-branch pattern exactly, which also builds a fresh client per write_pool() call) at this population size (178 in-scope entries); it holds once the loop reuses one client, which this worker did as an in-scope implementation choice within batch.py (the file this order grants) rather than a widened route -- the same 178 objects are written, to the same keys, verified by the same read-back inside write_pool(), only faster.",
     "notes": "Not filed as ARMED: the fetchable loop (run_one(), unedited by this order) still constructs a fresh client per RESOLVED-branch write, but that loop's own per-entry cost (a live EDGAR fetch + Claude analysis, ~100+s/entry) makes the ~0.4s client-construction overhead immaterial there -- this row's disarm_owner note would only bind if a future cell scales the FETCHABLE loop's population past the point where client-construction overhead becomes comparable to its own per-entry cost, which is not this order's population (13 fetchable names)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S157",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-17T18:45Z",
+    "one_line": "CORRECTION to row Z-S156 and this seat's own msg 23565 to the CTO: AMGT-rk-21's branch (wk-amgt-13-28-id, 0ebf8a54b8) was NOT already an ancestor of HEAD as both stated -- git log --all had been misread as git log HEAD. The branch sat unmerged the whole time. Now actually drained at 339473fab4, independently re-verified fresh before landing; the SUBSTANCE of S156's claim (34/56 resolved, this generation canonical) was correct, only the mechanism/timing claim was premature.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git merge-base --is-ancestor 0ebf8a54b8 HEAD, run at the moment S156 was written: NOT checked -- the claim was inferred from git log --all --since=... output, which lists commits reachable from ANY ref, not HEAD's own ancestry.",
+        "Re-measured directly before this row: git merge-base --is-ancestor 0ebf8a54b8 HEAD returned false; git branch --contains 0ebf8a54b8 returned only wk-amgt-13-28-id.",
+        "Drained cleanly (no conflict on INVESTIGATION_v1.md this time -- this worker filed no rows) at 339473fab4, after independently re-running the resolution module and re-confirming 34 newly_resolved + 22 card_bound_residue = 56 and the proof instance grading VALID from its own worktree."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "Row Z-S156's own evidence line: \"AMGT-rk-21: this seat's branch (wk-amgt-13-28-id, worker ~28) landed at 0ebf8a54b8 ... already an ancestor of HEAD -- this is the canonical result.\"",
+    "world_is": "It is the canonical result NOW, as of 339473fab4 -- it was not yet landed when S156 was written. The lesson: git log --all is a poor substitute for git merge-base --is-ancestor when the claim is specifically about HEAD's own history, exactly the class of error this project's own doctrine already names elsewhere for a different instrument pair.",
+    "notes": "Filed by 2.0.0_SA_COO~Z on finding the discrepancy while adding the <status> record face this cell's own drain earns. No other claim in Z-S156 is affected -- the other five cells' drain/supersession claims were each verified against merge-base or a direct git show at the time, not git log --all."
   }
 ]
 ```
