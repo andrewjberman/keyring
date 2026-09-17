@@ -2207,6 +2207,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGV2-AC4's own invocation and expect: '^MODULES: [1-9][0-9]* FAILED-MODULES: 0$' -- a single deterministic-looking pass/fail line.",
     "world_is": "The line is not deterministic: at least two modules outside this project's write surface carry their own flakiness (a hardcoded wall-clock timing threshold sensitive to box load, and a fixed-length random-token substring check with a nonzero collision probability per run), so AC4 as literally invoked can fail on an UNRELATED module on any given run regardless of NFRA_OPLGTW's own code. This is IN ADDITION to NFRA_OPLGTW-S1's already-known, already-deselected red test -- these two are neither named nor deselected by the criterion's own -k filter.",
     "notes": "INERT: no NFRA_OPLGTW cell is implicated, and the flake rate/root cause is fully characterized in evidence above (not merely asserted). Recorded because OGV2-AC4's literal invocation is graded on this run's actual output (RUN 2, FAILED-MODULES:1, itself a FAIL against the criterion's regex) and a reader of that FAIL should not conclude an OG-v-2 regression caused it. Repair (fixing the threshold or the substring check, or widening the -k deselect) is outside this order's <paths> grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-S25",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-17T22:38Z",
+    "one_line": "Disarm evidence for NFRA_OPLGTW-S24 (ARMED, disarm owner 2.0.0_SA_COO~O): OG-v-2's drain @65fa11a5ba re-keys both Schwab role names in tests/acceptance/conftest.py FROM THE CONTRACT instead of hardcoded pre-rename ARNs, and the SHARED-TREE re-run R-OG-16 limb 3 requires reads 2 failed, 12 passed where it read 5 failed, 2 passed before. All five ARN-class failures are gone; the two that remain have different causes and their own rows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN on the SHARED TREE after the drain (R-OG-16 limb 3), @65fa11a5ba: `pytest -q tests/acceptance/test_local_acceptance.py` -> `2 failed, 12 passed in 43.00s`. BEFORE, at @033f152e5d: `5 failed, 2 passed in 6.56s`. Same command, same interpreter, one drain between them.",
+        "READ @65fa11a5ba: conftest.py now sets READER_ROLE_NAME and CATALOG_ROLE_NAME from org/standards/NFRA_OPLGTW_CONTRACT.json's `reader_role` and `catalog_role`; the two hardcoded `opal-mcp-*` ARN literals are gone. The repair reads the name rather than typing it, so the next rename cannot reintroduce this row.",
+        "DISCRIMINATION: the two remaining failures are NOT this row's class. test_ogv2_a08 waits on OG-q-4's wiring, which is still on branch wk-nfra_oplgtw-5e and not at CLOUD (row W6-S6); test_ogv2_a06 is the dim_asset partial-account restriction, unwired on the live path (row W6-S8, ARMED, owner 1.0.0_SA_CTO). Neither is the UNAVAILABLE construction error S24 named.",
+        "DENOMINATOR: 14 tests in the module at both vintages; the delta is 5 failures cleared, 0 new."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S24: the acceptance harness's hardcoded pre-rename ARNs make the module red on CLOUD and block OG-q-4's live-path criteria from constructing at all.",
+    "world_is": "Repaired at CLOUD. The harness derives both role names from the contract, the five ARN-class failures are cleared on the shared tree, and OG-q-4's criteria can now reach the wiring (its re-grade is running at this write). S24's hazard is spent; this seat gives the word as its disarm owner.",
+    "notes": "Evidence only; this row does not adjudicate S24, whose L9 disposition is 3.0.0_SA_CVO's, and R-OG-16 leaves the clock to that seat. The rename bar R-OG-16 states -- census, repoint, shared-tree re-run -- is what this row exercises end to end for the first time."
   }
 ]
 ```
