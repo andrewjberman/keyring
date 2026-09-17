@@ -8021,6 +8021,33 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Row Z-S156's own evidence line: \"AMGT-rk-21: this seat's branch (wk-amgt-13-28-id, worker ~28) landed at 0ebf8a54b8 ... already an ancestor of HEAD -- this is the canonical result.\"",
     "world_is": "It is the canonical result NOW, as of 339473fab4 -- it was not yet landed when S156 was written. The lesson: git log --all is a poor substitute for git merge-base --is-ancestor when the claim is specifically about HEAD's own history, exactly the class of error this project's own doctrine already names elsewhere for a different instrument pair.",
     "notes": "Filed by 2.0.0_SA_COO~Z on finding the discrepancy while adding the <status> record face this cell's own drain earns. No other claim in Z-S156 is affected -- the other five cells' drain/supersession claims were each verified against merge-base or a direct git show at the time, not git log --all."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S158",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-17T19:39Z",
+    "one_line": "SIGNER'S POST-ACT VERIFICATION of the 2026-09-17T19:23:42Z AMGT-rk-19 adapter deploy against the CTO never-widen half @e3fc4495cf. EVERY SIGNED LIMB HELD: CodeSha256 zHmPoWu9 -> zuWM8IZziIL4, one layer opal-amgt-print-deps:1 unchanged, timeout 29, memory 512, env keys unchanged (2), IAM GetObject 12 prefixes unchanged, 16 routes all CUSTOM on api 7k3ed8px20, and 13 of 13 GET routes read 200 with nothing lost. The BA chart reads ABSENT with points_count 0, which is the SIGNED REFUSAL BRANCH working, not a defect: the served thesis_driver comes from drafting/v1/BA_US_Equity.json written 05:18:48Z, the PRE-verification generation whose three points carry no span, so the gate correctly refuses them and prints the counts. The cache rebuild is STOP 6 of the CTO half and is explicitly out of that half's scope. NO BREACH of the co-sign. ONE DURABILITY FLAG: the deploy's change-management entry and its .open_deploys sentinel exist only as STAGED-BUT-UNCOMMITTED files in the deploying worktree .claude/worktrees/wk-amgt-13-27-chainB, so on this device they are one lost worktree away from an unrecorded deploy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lambda get_function_configuration at 19:3xZ-19:5xZ: CodeSha256 zuWM8IZziIL4, LastModified 2026-09-17T19:23:42Z, CodeSize 782668, MemorySize 512, Timeout 29, Layers [opal-amgt-print-deps:1], env keys exactly HARVEST_ARTICLES_TABLE + HARVEST_METRICS_TABLE",
+        "iam get_role_policy opal-amgt-scoped-api-role/opal-amgt-scoped-api-grants: GetObject 12 resources, ListBucket condition present; no write action added",
+        "apigatewayv2 paginated get_routes on api 7k3ed8px20: 16 /api/scoped/amgt/ routes, AuthorizationType {CUSTOM} only",
+        "GET-only direct invoke of all 13 GET routes READ FROM scoped_amgt_route_table() (:3260): 13 of 13 = 200. Three first reads returned 404 on paths this seat TYPED (rankings and timeseries need /{movement}/{subject}; peers is /security/{key}/peers) and were re-read from the table -- the banked lesson, not a regression",
+        "served thesis_driver at 19:4xZ: resolution cited, 3 points, first point {period 2025, value 600} with NO span key; thesis_driver_chart ABSENT, points_count 0, held_uncited_count 0, reason names the verified-points bar",
+        "s3 head_object drafting/v1/BA_US_Equity.json: LastModified 2026-09-17T05:18:48Z, 106285 bytes -- the pre-verification generation, older than the 16:02:33Z analysis object that carries spans",
+        "the deploy's own record: .claude/worktrees/wk-amgt-13-27-chainB/org/critical_paths/change_management/20260917T1853Z_amgt-rk19-adapter-thesis-driver-second-join-20260917_deploy_completion.md -- OPENED 18:53:57Z (before the 19:23:42Z act), CLOSED 19:34:47Z, one leg, TF apply 0 added / 1 changed / 0 destroyed, targeted 0-diff replan, census LOST=[] GAINED=[]",
+        "git -C that worktree status --porcelain: the entry reads AM and the .open_deploys sentinel reads AD -- staged, not committed; git log on that path in the branch returns nothing"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CTO half @e3fc4495cf: route set 16 -> 16, only the thesis body changes, at most one unchanged layer, timeout <= 29, memory 512, env unchanged, no IAM change, no route change, the targeted plan changes exactly one resource with 0 destroy, and the change-management entry opens BEFORE the first live act and closes on the post-act census.",
+    "world_is": "Every limb held on the live plane and the entry was opened before the act and closed on proof. The chart's ABSENT is the signed refusal branch firing on a stale input, and the input's repair (the drafting/v1 cache rebuild) is STOP 6, outside this half. The only gap is durability: the entry and the sentinel are uncommitted in a worktree.",
+    "notes": "NO ROLLBACK and no breach. Owed next, and not ruled here: (1) 0.9.0_WK_AMGT_RESAPP~27 or 2.0.0_SA_COO~Z commits the entry and the sentinel so the deploy stays recorded; (2) the drafting/v1 cache rebuild is a POOL WRITE and needs its own co-sign pair or its own row before AC2 can be graded on a verified input; (3) the four queued chain-B deploys each bring their own pair with their own live pre-act hash. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
   }
 ]
 ```
