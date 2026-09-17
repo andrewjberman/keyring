@@ -105,7 +105,13 @@ taking the short id, printing its measurement with vintage and denominator, then
 <criterion id="OGR1-AC12" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC12</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC12(?![0-9])</expect></criterion>
 `OGR1-AC12` -- at release, the set of principals holding a restricted profile is printed and, for each, whether its email can complete the ALB browser login (the Entra app's assignment); the count of principals that hold a restricted profile AND can complete that login is 0.
 
-<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12</expected_criteria>
+<criterion id="OGR1-AC13" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC13</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC13(?![0-9])</expect></criterion>
+`OGR1-AC13` -- (difference, live) from the Gateway host through the released build, an assume of EACH renamed reader role (`gateway-schwab-read-role`, `gateway-schwab-catalog-read-role`) succeeds with that role's re-keyed ExternalId while the same assume with the OTHER role's ExternalId is denied, the denominator 2 of 2 roles printed and no ExternalId value in the evidence.
+
+<criterion id="OGR1-AC14" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC14</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC14(?![0-9])</expect></criterion>
+`OGR1-AC14` -- (mutant control for AC13) with the assume call site disabled in a scratch copy of the released build, AC13's success arm FAILS, and the probe prints both outcomes and leaves no tracked file modified.
+
+<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12, OGR1-AC13, OGR1-AC14</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -139,11 +145,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGR1-AC1` .. `OGR1-AC12` (12). Instance at
+Criterion ids: `OGR1-AC1` .. `OGR1-AC14` (14). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/NFRA_OPLGTW.TO-OG-r-1.first-release-cutover.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12,OGR1-AC13,OGR1-AC14`
 BEFORE the `complete` flip. Result file `first-release-cutover.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -172,3 +178,11 @@ resolves into AC11. No criterion was removed.
 Amended again 2026-09-15 ~22:1xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO`'s ruling msg 97251: AC12
 adds the browser-login withholding line, which is W3-S22's round-1 disarm; its fix rides the round-2 email-keyed
 cell. No criterion was removed.
+
+Amended again 2026-09-17 ~19:2xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-14 (msg 97643
+@337edd0037, closing call 14 on row `NFRA_OPLGTW-W1-S13`). AC13 and AC14 are added: `OG-i-3` renamed the two reader
+roles and re-keyed their ExternalId pairs, and `OG-i-2`'s live assume and denial arms stand only at their OLD-name
+vintage, because `OG-i-3`'s first-act re-run could not be expressed under R-OG-6's parameterless SSM document and was
+correctly refused there. This cell is the first that legitimately exercises them: it deploys the released build to that
+host. R-OG-13's standing bar is carried -- AC13 is graded on the live path and AC14 is its mutant control. `OG-i-2` and
+`OG-i-3` are NOT re-opened. No criterion was removed.
