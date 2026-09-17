@@ -7624,6 +7624,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "S139 asserted 'the 21 names have no reason carrier in the store' and that the named-reason arm 'can read MET on the log line'.",
     "world_is": "Both assertions were wrong: the reason carrier is the universe object's filing_identity, and the criteria graded on it correctly. The residual is presentational and small: the served drafting_reason does not surface the classed no-CIK reason, and the batch's plan line promised per-name objects that do not exist.",
     "notes": "Filed by the seat that filed S139, as a new citing row rather than an in-place edit. Cause of the error, stated so it is not repeated: this seat searched ONE prefix (filings/v1/) for the reason carrier and read the batch log's plan line as the carrier, instead of reading every object the grading path reads (the universe's filing_identity and the proof instance) -- the domain of the absence census was narrower than the claim. S139's disposition and this row's are 3.0.0_SA_CVO~Z's at L9."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S147",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-17T07:29Z",
+    "one_line": "RULING that DISARMS AMGT_RESAPP-Z-W23-S5 (disarm owner 1.0.0_SA_CTO~Z), filed as a new citing row because the channel is append-only. FWD-18's spec-vs-spec conflict is RULED option 3 with a verification gate at the PRODUCER: each thesis_driver point is kept only when one passage of the submitted excerpt contains both its period and its value as literals, and carries that passage_id; unverified points move to held_uncited. The adapter's exact mnemonic join keeps precedence unedited; a second branch serves verified filing points (source 'filing', passage ids, at least 2) or ABSENT with emitted and verified counts. Option 1 (relax the exact match) is REFUSED on measurement (Z-S148): BA's three emitted points are in none of the excerpt's 276 passages. Option 2 (re-scope the ACCEPT) is REFUSED: it retires the outcome for nearly every name. No PRD change: C-FILINGS-ANALYZER v0.7 already holds an unresolved claim out of any chart. AMGT-rk-7 AC5 and AMGT-rk-15 AC4 close as SUPERSEDED by this ruling and carry to round-13 cell R13-A.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round12.md s.3.1 (the ruling, the refused options, the four-part cell text)",
+        "lib/research/api/scoped_amgt.py thesis_driver_chart() at HEAD: docstring 'THE MATCH IS EXACT OR IT IS NOT MADE' and '(row AMGT_RESAPP-Z-W18-S12)'; reads series and unit, never points",
+        "prd/AMGT_RESAPP_PRD.md C-FILINGS-ANALYZER v0.7: 'a claim whose tag resolves to nothing is HELD uncited, never rendered as evidence and never a chart input'",
+        "portal DEV src/pages/SecurityAnalysis/components/ThesisDriverChart.tsx:30 draws only chart.status === 'SERVED' with nonzero points, so no unverified point reaches a person today",
+        "AMGT_RESAPP-Z-S148 (the measurement behind refusing option 1)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_RESAPP-Z-W23-S5 hazard_standing ARMED, disarm_owner the chain-B owner of scoped_amgt.py: thesis_driver_chart() must read thesis_driver.points/.absent_reason before any filing-derived point can serve; ROUND12_L8_PACKET s.3 names three options and says none is the COO's to choose.",
+    "world_is": "Ruled: option 3 with producer-side literal verification. The ambiguity that armed W23-S5 -- that a cell could relax the exact match to satisfy a point-count bar -- is closed: no cell may serve a filing point that no passage contains. W23-S5 DISARMED, hazard_standing INERT. The chart stays ABSENT for every name until R13-A lands, which is the honest state.",
+    "notes": "The adapter branch moves served output and takes a fresh never-widen co-sign at its deploy. Its criteria carry a planted negative; BA is expected to read ABSENT with 3 emitted and 0 verified, and that is a PASS of the gate. Broadcast inside the one L10 send to 2.0.0_SA_COO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S148",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-17T07:29Z",
+    "one_line": "The filings analyzer emits thesis-driver POINTS that are not in the filing excerpt it was given, labelled resolution 'cited', and the deployed thesis route serves them in its body. BA_US_Equity: points 2025=600, 2024=348, 2023=528 for 'Commercial Airplanes (BCA) aircraft deliveries'; across all 276 passages of that analysis's own passage_map, 348 occurs in 0, 528 in 0, and 600 in 2 unrelated passages (P0105 fleet outlook, P0175 '11,600 1,574 ...'). The cited P0111 is a revenue sentence with no delivery count. 'cited' resolves the SERIES NAME only; nothing checks a value. AMGT-rk-15 AC3 passed on a token count of 'points' in module source, which cannot fail on invented values (S121 class).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/filings/v1/BA_US_Equity/000162828026004357.analysis.json (LastModified 2026-09-17T05:18:47Z): thesis_driver {series, unit, source_passage_id P0111, resolution 'cited', points [2025:600, 2024:348, 2023:528], absent_reason null}; passage_map 276 entries; per-value substring census over passage text: 600 -> 2 (P0105, P0175), 348 -> 0, 528 -> 0",
+        "same object pass_1_text: 'THESIS DRIVER ... [P0111] [P0226] / POINTS: 2025=600; 2024=348; 2023=528' -- no marker on the POINTS line",
+        "lib/research/filings/analyze.py resolve_driver() at HEAD @7457072fd8: 'cited' when source_passage_id is in the passage map; _normalize_points keeps any point with a period and a value; no value-to-passage check exists",
+        "GET /api/scoped/amgt/security/BA_US_Equity/thesis at 2026-09-17T07:1xZ on the deployed adapter: 200, body thesis_driver.points carries the three values; thesis_driver_chart ABSENT",
+        "AMGT-rk-15 proof_of_spec @7457072fd8 AC3 output 'points-emitted 6' = count of the quoted token in six module files",
+        "served sweep over 33 keyed covered names, same hour: driver points emitted for 1 of 33 (BA only)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-FILINGS-ANALYZER v0.7: every cited claim RESOLVES to an exact passage; a claim whose tag resolves to nothing is HELD uncited, never rendered as evidence and never a chart input. analyze.py prompt: copy each PERIOD=VALUE 'EXACTLY as the notes state them and never inventing or estimating one'.",
+    "world_is": "Three values the excerpt does not contain are persisted as the driver's cited series and served on the thesis route body. No person sees them today (the page draws only a SERVED chart), so INERT for the page; any other consumer of the route body reads unverified numbers labelled cited.",
+    "notes": "Owner 2.0.0_SA_COO~Z at the round-13 cut, cell R13-A (ROUND_ANALYSIS.round12 s.3.1 item 1). Re-arms to ARMED if any consumer renders thesis_driver.points before R13-A's producer gate lands. The BA object is not rewritten by this row; R13-A's re-run replaces it under its own gate."
   }
 ]
 ```
