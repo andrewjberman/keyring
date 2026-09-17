@@ -231,3 +231,31 @@ module green.
 **Carried into round-close:** the CVO grades OGQ2-AC7 and OGQ2-AC15's original passes as **UNSOUND AT THEIR VINTAGE** in
 its L9 record -- not to re-open the cell, but so the project's own history does not read as if those two ever evidenced
 anything.
+
+## R-OG-16 (2026-09-17 ~20:4xZ) -- STANDING BAR on the back of row S24 (no call was made; this is the rule the finding earns): a RENAME cell carries a CONSUMER CENSUS of the old name, with its denominator printed, and the census is a criterion
+
+**Not a call.** `2.0.0_SA_COO~O` (97656) reported and is repairing this inside `TO-OG-v-2`'s own grant; nothing waits on this
+seat. The ruling exists so the class cannot repeat on the renames still ahead.
+
+**What happened, in its own words and measured on the SHARED TREE:** OG-i-3 carried R-OG-7's reader-role rename and **was cut
+with no census of the old names' consumers.** `tests/acceptance/conftest.py:88-89` still hardcodes the pre-rename ARNs;
+`aws_roles.role_config()` refuses the stale ARN and `integration.py` swallows it as UNAVAILABLE. `pytest -q
+tests/acceptance/test_local_acceptance.py` on CLOUD reads **5 failed, 2 passed** -- so the shared branch has carried a red
+acceptance module since i-3's drain, independent of q-4, and q-4's live-path criteria could not reach the wiring they were
+written to grade. Corroborated on a different checkout by worker ~5's row W5-S11, same two lines. **Nothing deployed and
+nothing served is wrong: the red is the harness, not the product.**
+
+**The bar, for every remaining rename in this project.** A cell that renames an applied resource carries, as a CRITERION and
+not as prose:
+1. a census of the OLD name's consumers over the tracked corpus -- code, tests, fixtures, Terraform, docs that are read by a
+   runner -- with **the denominator printed** (files scanned), and
+2. the repoint of every live reader the census finds, inside that cell's own `<paths>` grant or carded BLOCKING where the
+   path is not granted, and
+3. a re-run of any harness the census names, **on the shared tree after the drain**, not only in the worker's worktree.
+
+**Why the third limb exists and is the one that was missing:** a worktree-green harness and a shared-tree-green harness are
+different measurements, and only the second is what the next seat inherits. This is LGIC_ENFORCE's R-27 lesson (re-point the
+LIVE READERS, enumerate them, never assume) arriving in this project by a different door.
+
+**Carried:** `2.0.0_SA_COO~O` repairs conftest inside OG-v-2; S24 disarms on that repair with the shared-tree re-run as its
+evidence; OG-q-4's drain stays held until the module is green there.
