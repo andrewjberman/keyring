@@ -8243,6 +8243,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The CTO half @a9c6cc924c: one key only; no vendor call; a matching digest is a legal NO-OP; a new version must move the served chart to SERVED/source filing/3 points with spans; an ABSENT chart after the write is a FAILED act that ROLLS BACK to the pre-act VersionId; the discriminator is exactly one key's VersionId moving.",
     "world_is": "Every limb held and the success branch fired. One key moved, the served chart shows three verified filing points with spans and passage ids, and the deployed adapter is unchanged.",
     "notes": "NOT YET SERVING, and out of this act's scope: the thesis bundle's own as_of_date reads None, because rk-25 is in batch B and not yet deployed. The other 11 drafting/v1 objects still carry the pre-verification shape; rebuilding them is a POPULATION act, not this one-key act, and it rides the filings batch under its own pair. 3.0.0_SA_CVO~Z's L9 grades rk-19 adapter AC2 on this served read. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-17T22:35:00Z",
+    "one_line": "A bare `python <script>.py` invocation of the literal import path the CTO/COO halves and dispatch prompt name (`from lib.research.filings import analyze`, `from lib.research.identity import crosswalk`) fails with `ModuleNotFoundError: No module named 'lib.research'` in this worktree -- the script's own directory is added to sys.path, not the worktree root, so an ad-hoc script needs `PYTHONPATH=<worktree root>` (or an explicit sys.path insert) to resolve the estate's implicit-namespace `lib` package; neither half nor the dispatch text names this.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`cd <worktree> && python .scratch/build_check.py` with the script opening `from lib.research.filings import analyze`: rc=1, traceback `ModuleNotFoundError: No module named 'lib.research'`.",
+        "`lib/__init__.py` and `lib/research/__init__.py` are both absent (`test -f` on each, this session) -- `lib` and `lib.research` are implicit namespace packages, resolvable only when the worktree root is itself on sys.path.",
+        "Re-running the identical script unmodified with `PYTHONPATH=\"$(pwd)\" python .scratch/build_check.py` (cwd = worktree root): rc=0, imports succeed, `build_drafting_document` and `write_pool`/`serialise` all resolve and run correctly this same session."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's PROCEDURE names the import path verbatim (`from lib.research.filings import analyze`) as something to \"verify with comp-read or a direct import check before running\" but does not name PYTHONPATH or a working-directory/sys.path requirement for that import to succeed from an ad-hoc script.",
+    "world_is": "The named import path is correct at HEAD (confirmed by comp-read-style inspection of `lib/research/filings/analyze.py:56` and `lib/research/filings/drafting_build.py:239`) but only resolves when the worktree root is on sys.path; a bare `python <scratch-script>.py` run does not put it there on this device/Python (3.11), because the interpreter adds the SCRIPT's own directory, not cwd, to sys.path by default. This worker worked around it (`PYTHONPATH=\"$(pwd)\"`) rather than treating it as a blocker, since the fix is a read-only invocation detail, not a code or path-grant change.",
+    "notes": "No fix attempted in `lib/` (out of this order's <paths> and not a defect in the library, which correctly uses implicit namespace packages). Filed as OBSERVATION/INERT because it cost one extra invocation this session and did not block or alter the act; a future worker following this order's PROCEDURE literally as a copy-pasted script (rather than via a REPL/tool with the worktree root already on sys.path) would hit the identical ModuleNotFoundError on the first try."
   }
 ]
 ```
