@@ -1680,6 +1680,186 @@ def generate(out_dir, targets=None):
     return results
 
 
+# --------------------------------------------------------------------------- targets (EN-g-9, R-16/R-26)
+# The generator's TARGET LIST and its SHIP / REPO-ONLY split, one row per plane's OWN record (R-26): never
+# a re-derived rule. `python lib/opal_naming.py targets` is READ-ONLY -- it classifies, it never renders,
+# because a re-render re-stamps every SHIP view and some of those views SHIP (R-16).
+
+LAMBDA_SOURCE_MAP_PATH = "infra/aws/lambda/ci/lambda-source-map.json"
+TF_ROOT = "infra/aws/terraform"
+_HASH_PIN_MARKERS = ("sha_metadata_key", "index_md5")
+
+
+def _sdc():
+    """The S3/DS plane's own module (`.tools/safe_deploy_core.py`), loaded by path -- its answer is called,
+    never re-derived."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "safe_deploy_core_en_g9", os.path.join(REPO, ".tools", "safe_deploy_core.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _lambda_source_map():
+    """The Lambda plane's own record: infra/aws/lambda/ci/lambda-source-map.json's `functions` dict."""
+    with open(os.path.join(REPO, *LAMBDA_SOURCE_MAP_PATH.split("/")), encoding="utf-8") as fh:
+        return json.load(fh).get("functions", {})
+
+
+_JS_SOURCE_EXT = (".mjs", ".js", ".cjs", ".ts")
+
+
+def _import_hit(rel, text, stem):
+    """True only when `stem` sits inside an actual import/require statement in `text` -- a bare substring
+    match also fires on a COMMENT or a docstring MENTION (measured: `.tools/ds-precommit-check.py` false-
+    matched three functions this way, each hit a Rule-14 comment, none an import), so this discriminates
+    a live reader from a citation the way p4_citations already does one project cell over."""
+    esc = re.escape(stem)
+    if rel.endswith(".py"):
+        pat = re.compile(r"(?m)^[ \t]*(?:from[ \t]+\S*\b%s\b\S*[ \t]+import\b|import[ \t]+\S*\b%s\b\S*)"
+                          % (esc, esc))
+    elif rel.endswith(_JS_SOURCE_EXT):
+        pat = re.compile(r"""(?:from\s+['"][^'"]*\b%s\b[^'"]*['"]|require\(\s*['"][^'"]*\b%s\b[^'"]*['"]\s*\))"""
+                          % (esc, esc))
+    else:
+        return False
+    return bool(pat.search(text))
+
+
+def lambda_plane_consumers(t):
+    """Functions declaring `t` as a build input, resolved from lambda-source-map.json alone (R-26): a
+    basename the function's OWN source_dir does not itself hold on disk (a shared import packaged FLAT --
+    e.g. _authz/loaders.py lands in seven functions' `files` lists though no loaders.py sits beside any of
+    them), OR a declared source file that IMPORTS `t`'s stem (an esbuild-bundled shared import -- e.g.
+    lambda-edge index.mjs importing _shared/firm-config.mjs; `_import_hit` above, never a bare substring)."""
+    bn = os.path.basename(t)
+    stem = os.path.splitext(bn)[0]
+    target_abs = os.path.normpath(os.path.join(REPO, *t.split("/")))
+    consumers = []
+    for fname, f in sorted(_lambda_source_map().items()):
+        sd = f.get("source_dir") or ""
+        if not sd:
+            continue
+        files = f.get("files") or []
+        own = os.path.normpath(os.path.join(REPO, *sd.split("/"), bn))
+        if own == target_abs:
+            continue  # the function IS the shared file's own location, not a consumer
+        if bn in files and not os.path.isfile(own):
+            consumers.append(fname)
+            continue
+        for rel in files:
+            if rel == bn:
+                continue
+            fp = os.path.join(REPO, *sd.split("/"), *rel.split("/"))
+            if not os.path.isfile(fp):
+                continue
+            try:
+                with open(fp, encoding="utf-8", errors="replace") as fh:
+                    text = fh.read()
+            except OSError:
+                continue
+            if stem and _import_hit(rel, text, stem):
+                consumers.append(fname)
+                break
+    return consumers
+
+
+def terraform_plane_consumers(t):
+    """Terraform roots consuming the module `t` lives under, measured (R-26): every tracked .tf file
+    outside that module directory naming `modules/<name>` -- git grep IS the Terraform plane's own record,
+    there is no separate manifest to read instead."""
+    import subprocess
+    parts = t.split("/")
+    if "modules" not in parts:
+        return []
+    i = parts.index("modules")
+    if i + 1 >= len(parts):
+        return []
+    module_dir = "/".join(parts[:i + 2])
+    needle = "modules/%s" % parts[i + 1]
+    p = subprocess.run(["git", "grep", "-l", needle, "--", TF_ROOT], capture_output=True, text=True, cwd=REPO)
+    if p.returncode not in (0, 1):
+        return []
+    roots = set()
+    for ln in p.stdout.splitlines():
+        f = ln.strip().replace("\\", "/")
+        if f and not f.startswith(module_dir + "/"):
+            roots.add(f.rsplit("/", 1)[0])
+    return sorted(roots)
+
+
+def hash_pinned_census():
+    """(n, m): instruments in .tools/*.py keying a verification on a shipping bundle's per-member sha256
+    (`sha_metadata_key`, safe_deploy_core's bundle path) or a solo file's md5/ETag (`index_md5`, its
+    single-file path) -- m is the scanned corpus, never UNKNOWN, never a bare zero."""
+    import glob
+    files = sorted(glob.glob(os.path.join(REPO, ".tools", "*.py")))
+    n = 0
+    for fp in files:
+        try:
+            with open(fp, encoding="utf-8", errors="replace") as fh:
+                text = fh.read()
+        except OSError:
+            continue
+        if any(marker in text for marker in _HASH_PIN_MARKERS):
+            n += 1
+    return n, len(files)
+
+
+def targets_report(extra_targets=None):
+    """[(status, plane, path, measured)] over generate()'s own target list (the 7 VIEWS plus LOCALS_PATH,
+    VECTORS_PATH, TFTEST_PATH) and any extra_targets appended: each plane's OWN record decides SHIP (S3/DS
+    via safe_deploy_core, Lambda via lambda-source-map.json, Terraform via the consuming root); the two
+    opal_name test fixtures print REPO-ONLY (fixtures beside a shipping module are not a deploy); a .tools/
+    script no deploy plane claims prints REPO-ONLY (repo-local tooling); a target NO plane claims at all
+    prints UNCLASSIFIED. Never calls generate() and writes nothing (R-16)."""
+    known = [v[0] for v in VIEWS] + [LOCALS_PATH, VECTORS_PATH, TFTEST_PATH]
+    wanted = list(known) + list(extra_targets or [])
+    sdc = _sdc()
+    rows = []
+    for t in wanted:
+        if t in (VECTORS_PATH, TFTEST_PATH):
+            rows.append(("REPO-ONLY", "terraform", t,
+                         "comp-find root census (test fixture beside the module, not a deploy)"))
+            continue
+        if sdc.file_to_s3_target(t) or sdc.bundle_for_member(t):
+            rows.append(("SHIP", "s3", t, "safe_deploy_core (file_to_s3_target/bundle_for_member)"))
+            continue
+        lam = lambda_plane_consumers(t)
+        if lam:
+            rows.append(("SHIP", "lambda", t,
+                         "lambda-source-map.json (%d consumer(s): %s)" % (len(lam), ", ".join(lam[:5]))))
+            continue
+        tfc = terraform_plane_consumers(t)
+        if tfc:
+            rows.append(("SHIP", "terraform", t,
+                         "consuming root(s) %s (git grep modules/<name>)" % ", ".join(tfc)))
+            continue
+        if t.startswith(".tools/"):
+            rows.append(("REPO-ONLY", "tools", t,
+                         "no S3/Lambda/Terraform claim (repo-local gate script, never packaged)"))
+            continue
+        rows.append(("UNCLASSIFIED", "-", t, "no plane claims it"))
+    return rows
+
+
+def cmd_targets(extra_target=None):
+    """The `targets` subcommand: print the TARGETS count, one classified row per target, a PLANE count per
+    plane and the hash-pinned-consumer census; exit non-zero if any row is UNCLASSIFIED."""
+    rows = targets_report([extra_target] if extra_target else None)
+    print("TARGETS: %d" % len(rows))
+    planes = {}
+    for status, plane, path, measured in rows:
+        print("%s %s %s measured: %s" % (status, plane, path, measured))
+        planes[plane] = planes.get(plane, 0) + 1
+    for plane in sorted(planes):
+        print("PLANE %s: %d" % (plane, planes[plane]))
+    n, m = hash_pinned_census()
+    print("HASH-PINNED CONSUMERS: %d of %d scanned" % (n, m))
+    return 1 if any(r[0] == "UNCLASSIFIED" for r in rows) else 0
+
+
 # --------------------------------------------------------------------------- census (EN-s-1, DEC-7)
 # Census mode judges every nameable name of two planes with grade(), and a RAISE stops the run with the string
 # printed: it is never filed under a verdict (NAMING_SCHEMA.json grade.unplaceable).
@@ -2284,6 +2464,8 @@ def main(argv=None):
     g.add_argument("--out", required=True)
     g.add_argument("--target", action="append")
     sub.add_parser("vectors", help="print the name() vector JSON (cell EN-b-1)")
+    t2 = sub.add_parser("targets", help="print the target list and its SHIP/REPO-ONLY split (cell EN-g-9)")
+    t2.add_argument("--extra-target", help="one extra path to classify alongside the known targets")
     c = sub.add_parser("census", help="grade names (DEC-7, cell EN-s-1)")
     c.add_argument("--names")
     c.add_argument("--live", action="store_true")
@@ -2325,6 +2507,8 @@ def main(argv=None):
         except NotBuilt as exc:
             print("ERROR: %s" % exc)
             return 2
+    if a.cmd == "targets":
+        return cmd_targets(a.extra_target)
     if a.cmd == "census":
         live, repo = a.live, a.repo
         if not (a.names or live or repo):
