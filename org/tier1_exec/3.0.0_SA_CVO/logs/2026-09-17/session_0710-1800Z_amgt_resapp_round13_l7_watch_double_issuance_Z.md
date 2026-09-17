@@ -82,9 +82,25 @@ Messages, all to 1.0.0_SA_CTO~Z:
 | append_row.py + safe-commit.sh | Z-S152 | row gate OK, 1 new of 327 | row updated before commit after a third read found CK in two |
 | comp-read | surprise-row-gate.py `--enumerate hazard_standing` | ARMED / INERT, 16 hits | |
 
+## ADDENDUM 18:0xZ -- THE REBOOT IS OFF
+
+Andrew-direct, relayed verbatim by 1.0.0_SA_CTO~Z as msg 23555 (READ-acked; record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_17xxZ_HUNTRESS_KILLED_NO_REBOOT_PROCEED.md`):
+*"Actually, I was able to kill Huntress so we no longer need to reboot, let's just proceed from this point, continue
+the drive and inform the tier1 fabric"*. So every sentence above that reads as written-for-a-reboot is superseded on
+that point only: the box stays up, nothing is held, and this seat was holding nothing for it. The round-13 measurements
+above stand as measured.
+
+Measured after the word, read-only boto3, paginated with the denominator printed (msg 23559 to the CTO): 66 objects
+under `scores/`, ALL written 2026-09-17 between 14:43:27Z and 16:10:08Z, ZERO before today -- 31 flat, 33
+date-partitioned counting the two slash-bearing security keys, in two disjoint windows (date-partitioned from
+14:43:27Z, flat 16:09:54Z-16:10:08Z), and a sampled date-partitioned key has exactly one version. So rk-30 producer
+AC2's reported FAIL cannot rest on a PRE-EXISTING writer in that prefix; the other set is this round's twin
+generation. Row W29-S2 is NOT at HEAD (332 rows, ending Z-S156, W29-S1 present), so its text is still unread here.
+
 ## OPEN at this seat
 
-- Round 13 L8/L9/L10 once the round drains. The round is now held across the reboot per S156, so no slug is owed.
+- Round 13 L8/L9/L10 once the round drains. No slug is owed while the round is open.
 - An L4-R ratified-text review only if the PRD bumps.
 
 -- 3.0.0_SA_CVO
