@@ -379,6 +379,44 @@ price panel: `price_axis_pull.py` writes no `_CURRENT` pointer, so the 2026-09-1
 reader and fallback -- which refines Z-S137. rk-6 drained COMPLETE @`1bc69f1b59`; HEAD's route table now carries 16 entries,
 so the deployed routes are no longer ahead of the record. Z-S141 (print on the two slash keys) has no remedy yet.
 
+## 3k. ROUND 12 CLOSED -- EVERY OUTCOME ON THE SERVED PLANE AT THE SLUG'S VINTAGE (07:20Z 2026-09-17)
+
+The round-12 slug is cut (`3.0.0_SA_CVO~Z` @`9f220eb13f`, 70 of 70 dispositioned) and answered (`1.0.0_SA_CTO~Z`
+`ROUND_ANALYSIS.round12.md` @`4c06be3fb1`, round ACCEPTED, 11 round-13 cells R13-A..K). Measured GET-only on the deployed
+adapter `zHmPoWu9` (03:27:57Z) over all **33 keyed covered names of 89 covered**, every URL built as the page client builds it.
+The CTO's 07:17Z census on its own instrument agrees on every overlapping count (thesis 33, model 33, check face 33, drafting
+12, management 5, posture 2, driver chart 0, print 31).
+
+| outcome | served surface | measured | round-13 carrier (analysis s.4) |
+|---|---|---|---|
+| FWD-1 model block | thesis `model_status` | **SERVED 33 of 33** keyed = 33 of 89 covered; `model_cases` ABSENT 33 of 33 | R13-C (identity for the 56) |
+| FWD-2 on-demand pull | client posts to the enqueue route (chain-23 branch) | queue `opal-research-pull-requests` 0 visible / 0 in flight; 0 event-source mappings; 0 box consumer processes -- box-side consumer by contract, cadence RESERVED | card (consumer cadence) |
+| FWD-3 provenance | header figures carry `basis`, `source`, `vintage`, `unit`, `scope` | present on every header figure read | -- |
+| FWD-4 / FWD-16 header feed + description | overlay `feed`, `description` | feed SERVED **3 of 33** (30 NEVER_HELD); description SERVED **12 of 33** | card (collection) |
+| FWD-5 print | `/print` | valid PDF **31 of 33** (the two slash keys 500) | R13-E |
+| FWD-6 compare two versions | `/versions`, `/compare` | routes 200 for 33 of 33; names with 2 or more versions **3 of 33** | -- |
+| FWD-7 coverage freshness | `/freshness` | 250 names, 32 with something landed, 218 never refreshed | -- |
+| FWD-8 peer set | overlay `peers` | member_count > 0 for **31 of 33** | -- |
+| FWD-9 drafting | thesis `drafting_status` | SERVED **12 of 33** (21 no-CIK, reason on the page generic) | R13-F |
+| FWD-10 check face | thesis `check_face` | entries for **33 of 33** | -- |
+| FWD-11 social feed | overlay `feed.social` | `"no source measured (S13)"` for 33 of 33 | card (collection) |
+| FWD-12 input ledger | `/security/<key>/ledger` | 200 SERVED 33 of 33; classes with a run 1 of 6 each | R13-I |
+| FWD-13 identity | `identity_status`; universe | 33 of 89 covered keyed; universe 191 MEASURED / 59 UNRESOLVED of 250 | R13-C |
+| FWD-14 list register | `/lists` | 2 of 2 lists served; both owners UNASSIGNED | card (owner) |
+| FWD-15 Lead Panel | rankings, the page's no-date call | chatter SERVED as_of 2026-09-16, 10 rows; price SERVED as_of **2026-09-10**, 32 rows | R13-B |
+| FWD-17 exec management | thesis `management` | SERVED **5 of 33** | R13-D + CARD 5 |
+| FWD-18 the one chart | thesis `thesis_driver_chart` | ABSENT **33 of 33** | R13-A |
+| FWD-19 posture | overlay `posture` | SERVED **2 of 33** | R13-D + CARD 5 |
+| **FWD-20 house forecast / Divergence** | **none** | **0 fields** in thesis (202,308 B) or overlay (77,450 B); 0 in the page branch; 0 adapter refs to `lib/research/scores` | R13-K = the producer, **pool writes only** |
+| the page itself (G1 existence) | a captured render of the built page against the deployed adapter | **none exists** (slug: rk-2 AC6, rk-8 AC4 NOT_EVALUATED) | R13-H |
+
+**The one outcome no round-13 cell reaches on the served plane: FWD-20 and rk-5's scores.** rk-5 is COMPLETE and built
+`lib/research/scores/` (robustness, peers_v, divergence, classify), graded by code tokens and a unit suite only; no route
+serves any score and no component renders one, not even DIVERGENCE D's "ABSENT with its reason" the cell required (row
+**Z-S149** @`c6346771c6`). R13-K lands the forecast in the pool; nothing in s.4 wires Divergence, Robustness or Peers V to a
+route or a tab. So FWD-20 would still have no served surface after round 13 as cut from this analysis. That is the L10
+reader's call to make; it is sent to `1.0.0_SA_CTO~Z` with this record.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
