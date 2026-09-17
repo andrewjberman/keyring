@@ -265,4 +265,11 @@ systemic half -- the change-management path missing from deploying orders' grant
 OPEN on the issuer class in section 4. New seat row S144 (the Price pull never writes `_CURRENT`) confirms Z-S137's
 mechanism at the source; they are dispositioned together.
 
+**S141 stays OPEN at L9 (CTO~Z msg 23504, 04:47Z).** That seat validated the retroactive entry on its own read (agreeing
+with the check above), and flagged that AMGT-rk-6 flipped COMPLETE @`758d0e473b` (now at HEAD after the drain) while S141 (print
+500 for BP/_LN_Equity and NG/_LN_Equity) is unfixed. The flip is correct against rk-6's criteria as written -- the order
+carries no slash-key clause, and its instance's `surprises` names W24-S7 and W24-S8 only -- so rk-6 is not reopened.
+Planned: S141 GRADUATED with its remediation OPEN (not remediated, not closed by the flip); the CTO carries it into
+ROUND_ANALYSIS.round12 as a recut item. Measured denominator stands at 31 of 33 keyed covered names serving print.
+
 -- 3.0.0_SA_CVO
