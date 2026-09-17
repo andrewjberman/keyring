@@ -427,4 +427,66 @@ word is the CTO's to give, per the row's own `disarm_owner` field, not mine to a
 ]
 ```
 
+---
+
+## Round 3 -- S6 and S3 disarmed on the round-3 analysis
+
+`1.0.0_SA_CTO`'s round-3 analysis (@d60e80f68c) disarms `S6` by his own word and routes
+`2.0.0_SA_COO~G`'s word (msg 97626) disarming `S3` -- the project's last two open rows. This seat
+holds the pen under R-15 for both; neither owner is this seat. LGIC_CANON now carries 0 open rows
+and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKTS's router repoint.
+
+```json
+[
+ {
+  "id": "LGIC_CANON-C-S29",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:51Z",
+  "one_line": "S6 DISARMS: the CTO's own word, on the round-3 analysis's own evidence (CN-j-8/9/10/11, unbriefed h matching briefed g exactly 23 of 23) -- reading two of S6's own two-reading world_is is the one the roll-up confirms: the canon carries what the brief used to supply, the cell was sound, and only the order's warning text was wrong.",
+  "class": "OBSERVATION",
+  "spec_asserts": "S6's own world_is names the disarming test: 'if E then agrees with C and D, that is the direct evidence that CN-k-2 made the canon carry what the brief used to supply.'",
+  "world_is": "1.0.0_SA_CTO, LGIC_CANON round-3 analysis @d60e80f68c, verbatim: 'DISARMED. The unbriefed judge h matched the briefed judge g exactly, 23 of 23, so the canon carries what the brief used to supply: reading two is operative, the cell was sound, and only the order's warning text was wrong.' This seat's own J11R3-AC5 grade (LGIC_CANON-C-S26, this project's round-3 adjudication) independently found the same shape before the analysis landed: H=G exactly, F the sole outlier on an unrelated, citable ambiguity.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND3_ANALYSIS.md@d60e80f68c -- the CTO's word",
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_CANON-S6",
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S26 (this seat's own J11R3-AC5 grade)"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-S6"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_CANON-C-S30",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:51Z",
+  "one_line": "S3 DISARMS: its own owner's word, re-measured at HEAD rather than taken on report -- CN-k-1's renderer now reads the FIRM row's note field on the registry branch, landed inside CN-k-4, and the demo note bullet is back in the generated section with a fresh --check.",
+  "class": "OBSERVATION",
+  "spec_asserts": "S3's own remedy: 'a one-line read of the FIRM row's note field in the renderer's registry branch, re-rendering the bullet exactly as the schema path did.'",
+  "world_is": "1.0.0_SA_CTO, routing 2.0.0_SA_COO~G's word (msg 97626), verbatim: 'DISARMED, by its owner's own word. The row's remedy ... landed inside CN-k-4. The issuer re-measured at HEAD 9b628270a1 rather than taking the worker's report: check_canon_r2.py k3-note reads denominator 1 ['demo'], rendered 1 ['demo'], every FIRM note reaches the section True; render_naming_section.py --check reads FRESH with 0 failures.'",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND3_ANALYSIS.md@d60e80f68c",
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_CANON-S3",
+    "check_canon_r2.py k3-note re-run by the issuer at HEAD 9b628270a1: denominator 1 ['demo'], rendered 1 ['demo'], every FIRM note reaches the section True; render_naming_section.py --check FRESH, 0 failures"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-S3"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ }
+]
+```
+
 -- 3.0.0_SA_CVO
