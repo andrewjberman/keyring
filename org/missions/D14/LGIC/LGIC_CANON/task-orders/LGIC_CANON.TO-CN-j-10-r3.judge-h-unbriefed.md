@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~5</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.5 (ADMITTED; both halves current) | **Decomp cell:** `CN-j-10` (decomposition v5.1, section 0e) | **outcome_ref:** FWD-1 | **depends_on:** CN-k-5 (the canon at v1.1) -- level 1; CN-j-11 waits on all three judges
 
