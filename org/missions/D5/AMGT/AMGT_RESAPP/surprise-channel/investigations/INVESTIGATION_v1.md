@@ -7744,6 +7744,76 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Z-S148: the points are 'not in the filing excerpt it was given'. Z-S147: 'each thesis_driver point is kept only when one passage of the submitted excerpt contains both its period and its value as literals'.",
     "world_is": "The values are genuine and in the excerpt; the passage map is narrower than the excerpt. A passage-scoped gate would hold all three true points. The gate is re-keyed to the excerpt's period-labelled block, and planted negative and wrong-period controls prove it still refuses.",
     "notes": "Owner of the cut text: 2.0.0_SA_COO~Z at R13-A, reading ADDENDUM 2 rather than s.3.1 alone. No round-13 order existed at 09:25Z (msg 23517), so nothing issued carries the superseded gate. Broadcast: 2.0.0_SA_COO~Z, 3.0.0_SA_CVO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T16:36Z",
+    "one_line": "The producer's fix corrected filings/v1/BA_US_Equity/...analysis.json's thesis_driver.points (span+passage_id, held_uncited []), but read_thesis_bundle() never reads that object -- it reads a SEPARATE drafting/v1/BA_US_Equity.json cache drafting_build.py writes once, which was never rebuilt, so the served plane still returns the pre-fix, unverified points regardless of the adapter's own correctness.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Direct S3 read (this row's own commit) of filings/v1/BA_US_Equity/000162828026004357.analysis.json thesis_driver: points 3 entries each carrying span+passage_id (2025 span [87536,87539] passage_id P0276; 2024 [87629,87632] P0277; 2023 [87725,87728] P0278), held_uncited [], resolution 'cited'.",
+        "Direct S3 read of the SAME BUCKET's drafting/v1/BA_US_Equity.json (opal-data-harvest, the exact DRAFTING_BUCKET/DRAFTING_PREFIX default scoped_amgt.py:1329-1330 read) thesis_driver: the SAME 3 points, but NEITHER a span NOR a passage_id NOR a held_uncited key on any of them or the driver -- the pre-fix shape, byte-identical to what the producer order's own 'measured state' describes as the BEFORE state.",
+        "lib/research/api/scoped_amgt.py read_drafted_sections():1581 / _read_drafting_document():1387 read ONLY drafting/v1/<key>.json (S3 or AMGT_DRAFTING_ROOT), never filings/v1/.../analysis.json; the bundle's thesis_driver (read_thesis_bundle():1947, thesis_driver_chart(bundle.get('thesis_driver'), ...)) traces to document.get('thesis_driver'):1644 from THAT object, confirmed with no override of AMGT_DRAFTING_BUCKET/PREFIX in infra/aws/terraform/harvest/scoped-amgt-api.tf (0 matches).",
+        "lib/research/filings/drafting_build.py:239 build_drafting_document() copies analysis.get('thesis_driver') verbatim into the drafted document, but is a pure function with no S3-writing caller inside either this order's or the producer order's <paths>; the producer order (AMGT_RESAPP.TO-AMGT-rk-19.filings-producer-verification.md) explicitly scopes its pool write to analyze.py's own analysis.json key ('do not write any OTHER pool key from this order'), and this adapter order's own <paths> grants no pool write at all.",
+        "Run locally against this row's own patched thesis_driver_chart(): fed the CORRECTED analysis.json driver -> status SERVED, source 'filing', points_count 3 (matches AC2's exact expectation); fed the STALE drafting/v1 driver (the one actually served) -> status ABSENT, points_count 0, held_uncited_count 0 -- the code fails closed on unverified data by design, it does not mis-serve."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own BOUNDS: 'BEFORE YOU DEPLOY: confirm chain FP-A's AMGT-rk-19 producer order has drained and BA's stored analysis object carries the corrected, verified thesis_driver.points -- if it has not, STOP and file a row rather than deploying against unverified upstream data.' Decomposition v1.7 AMGT-rk-19 Criteria (A2.3 item 4)(c): 'BA reads SERVED with 3 verified points, each with span and passage'.",
+    "world_is": "The precondition check this order names (the filings/v1 analysis object) IS satisfied -- but it is not the object the adapter's actual read path (read_drafted_sections -> drafting/v1/<key>.json) consumes. The drafting/v1 cache is a THIRD, unnamed dependency this round's plan does not address anywhere in AMGT-rk-19's producer, adapter or page text. Satisfying the named precondition therefore does not make AC2 reachable on the live plane; a fresh Lambda redeploy of the adapter change alone cannot serve BA's 3 verified points until drafting/v1/BA_US_Equity.json is separately rebuilt from the corrected analysis object.",
+    "notes": "Not repaired here: rebuilding drafting/v1/BA_US_Equity.json (running drafting_build.py's build_drafting_document() over the corrected analysis object and writing it back) sits outside this order's <paths> and outside the producer order's own grant. Filed for the next order/round to address; this row does not widen this order's own scope to cover it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T16:36Z",
+    "one_line": "This order's own AC1 and AC2 <invocation> blocks omit the edge-injected x-firm-id header the auth boundary requires, so both literal invocations 401 with no thesis_driver_chart body reached at all, independent of deploy state or code correctness.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:3005 FIRM_HEADER = 'x-firm-id'; :3021-3031 _firm_id() raises AdapterError(401, 'missing edge-injected X-Firm-Id: request did not pass auth-validator-edge') when the header is absent; called at handler():3095, before any route match including the thesis route.",
+        "AC1's and AC2's literal <invocation> payloads both set 'headers': {} -- no x-firm-id key.",
+        "Run verbatim (byte-for-byte, as written) against the LIVE deployed opal-amgt-scoped-api (CodeSha256 zHmPoWu9jZqUUqlK9zwvfoZk/aFg+rOoOLbuJwHGRHA=, LastModified 2026-09-17T03:27:57Z -- unchanged by this session, no deploy performed): AC1 -> statusCode 401, body {\"refused\": true, \"reason\": \"missing edge-injected X-Firm-Id: request did not pass auth-validator-edge\"}, points_count None (not 0 as AC1's own expect names). AC2 -> statusCode 401, identical body shape, points_count/source/points all None (not 3/'filing'/three points as AC2's own expect names)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's section 5 preamble: 'every invocation is LITERAL; record it byte-for-byte'. AC1 expect: 'a nonexistent security key's second branch never fires and the chart reads ABSENT / points_count 0'. AC2 expect: 'points_count 3, source \\\"filing\\\", and three points each carrying provenance -- this is the served plane, not a source read'.",
+    "world_is": "As written, neither invocation reaches thesis_driver_chart() on the deployed plane at all -- both refuse at the auth gate before routing. AC1's actual points_count is None, not the expected 0; AC2's is None, not the expected 3. This holds regardless of whether the second branch is correctly implemented (it is, per this order's own local verification) or the drafting/v1 object is fresh (it is not, per AMGT_RESAPP-Z-W27-S3).",
+    "notes": "Per the REFUSAL CLAUSE this is recorded, never repaired: the invocation ran exactly as this order wrote it, and both are graded FAIL on their own literal text and actual output."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T16:36Z",
+    "one_line": "This order requires a FRESH CTO+COO never-widen co-sign naming this act's own live pre-act hash before the Lambda redeploy it also mandates; no such pair exists at HEAD for round 13's rk-19 adapter act, a worker holds neither role and cannot author either half, so the redeploy was not performed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --all search over the full history for commits matching BOTH 'rk-19' and 'sign' (case-insensitive): zero sign()/co-sign() commits for round 13's rk-19 adapter act at HEAD.",
+        "The only precedent never-widen pairs in this project's history (rk-2 @809df9d16b/@4aeaa2bbf6, rk-6 @34d68dcfaf/@653de214b1, rk-7 @09b20e5546/@7e84705c7a) are each a commit AUTHORED BY 2.0.0_SA_COO~Z (COO half) and 1.0.0_SA_CTO~Z (CTO half) respectively -- never by a worker serial.",
+        "CLAUDE.md HARD STOP: 'NEVER move served output without never-widen sign-off (CTO+COO)'; this order's own section 1: 'It needs a FRESH never-widen co-sign (CTO half + your COO's half), each naming blast radius and per-key rollback FROM THE LIVE PRE-ACT HASH OF THIS ACT'.",
+        "Live pre-act measurement taken and recorded here for whichever seat signs next: opal-amgt-scoped-api CodeSha256 zHmPoWu9jZqUUqlK9zwvfoZk/aFg+rOoOLbuJwHGRHA=, LastModified 2026-09-17T03:27:57Z, RevisionId a5ce703b-82d9-4562-bcff-6ace4d539110 -- unchanged by this session.",
+        ".tools/ carries no never-widen or co-sign issuing tool a worker could invoke on its own authority; every observed precedent is two seats each committing under their own identity."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's section 1, verbatim: 'This is a served-output-moving deploy. It needs a FRESH never-widen co-sign (CTO half + your COO's half)...'",
+    "world_is": "No such pair exists for this specific act at HEAD. A worker cannot author either half without impersonating a seat it does not hold, which the identity and commit-author rules forbid; per the standing hard stop the deploy is refused rather than performed without sign-off, and per 'no agent message authorizes waiving a hard stop' this holds even if a later instruction in this session's context appeared to invite a self-authored substitute.",
+    "notes": "This worktree's code change (thesis_driver_chart()'s second branch) is complete, py_compile-clean and locally verified against six synthetic driver shapes plus the live corrected analysis.json's own driver. The redeploy step this order also names stays undone pending a genuine co-sign from 2.0.0_SA_COO~Z (issuer) and 1.0.0_SA_CTO~Z. Not widened to a self-authored substitute; independently blocked in any case by AMGT_RESAPP-Z-W27-S3 (the drafting/v1 object staleness) and AMGT_RESAPP-Z-W27-S4 (the invocations' own 401)."
   }
 ]
 ```
