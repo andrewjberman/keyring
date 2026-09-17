@@ -74,6 +74,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # (pattern, artifact label, tool, argv-builder, the handoff it sits on)
 # ---------------------------------------------------------------------------
 ROUTES = [
+    (re.compile(r"workflows/legacy_transform/[^/]+/[^/]+/contract\.json$|\.lgctfm-contract\.json$", re.I),
+     "lgctfm-contract", "lgctfm-contract-check.py", lambda p: [p],
+     "L5 input (a COO lane decomposes from a run's contract)"),
     (re.compile(r"/prd/[^/]*_PRD_ADDENDUM[^/]*\.md$", re.I),
      "PRD addendum", "prd-manifest-gate.py", lambda p: [p],
      "L4 -> L5  (CTO hands an amended spec to the COO)"),
@@ -247,11 +250,14 @@ def self_test():
          "surprise-channel row set"),
         ("org/missions/D5/AMGT/X/project.json", "register row"),
         ("org/projects/AMGT_RESAPP.json", "register row"),
+        ("workflows/legacy_transform/49financial/run-0001/contract.json", "lgctfm-contract"),
+        ("org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/W~3/planted.lgctfm-contract.json", "lgctfm-contract"),
         # MUST NOT CLASSIFY -- silence here is the whole hazard, so it is asserted explicitly
         ("org/missions/D5/AMGT/X/decompositions/X_DECOMP.md", None),
         ("docs/briefs/some-brief.md", None),
         ("docs/architecture/SOMETHING_PRD.md", None),   # not under a tree prd/ folder
         ("README.md", None),
+        ("workflows/legacy_transform/49financial/run-0001/other.json", None),
     ]
     ok = True
     for path, expect in cases:
