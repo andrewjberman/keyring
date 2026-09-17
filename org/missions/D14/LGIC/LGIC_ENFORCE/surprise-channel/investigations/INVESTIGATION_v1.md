@@ -3123,6 +3123,73 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "spec_asserts": "R-16: the SHIP / REPO-ONLY split is derived by CALLING the deploy gate's own scope classifier, .tools/safe_deploy_core.py, over the generator's target list; its provenance reads measured: safe_deploy_core.",
     "world_is": "safe_deploy_core decides the S3/DS plane only (3 of 10 targets). The Lambda and Terraform planes ship through safe-apply and their own declared records, so one classifier call leaves at least 5 shipping targets reading as REPO-ONLY.",
     "notes": "INERT: nothing is built on it yet -- cell 9 is not cut. Routed to 1.0.0_SA_CTO as a call (97550-series) because it is R-16's mechanism, and cell 9 is not cut until it is ruled. The shape this seat holds, not binding: the split names its PLANE per target and calls each plane's own record -- safe_deploy_core for S3/DS, lambda-source-map.json for Lambda, the root that consumes the module for Terraform -- with provenance per row (measured: <instrument>), and a target no plane claims prints UNCLASSIFIED and refuses the print, which is R-16's own negative control generalised from one plane to all."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S14",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-17T14:20Z",
+    "one_line": "The cell text's own invocation, terraform plan -lockfile=readonly, is not a valid command on terraform v1.9.8 (the round-2 instrument): -lockfile is an init-only flag and plan -help does not list it, so running the literal words errors 'flag provided but not defined: -lockfile'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: .tools/terraform.exe plan -lockfile=readonly -lock=false -input=false -out=plan.tfplan in a fresh init'd root (infra/aws/terraform/49f-value-parity, copied to .scratch/) fails closed: 'Error: Failed to parse command-line flags | flag provided but not defined: -lockfile', rc!=0.",
+        "MEASURED: .tools/terraform.exe plan -help output lists Plan Customization Options and Other Options; -lockfile appears in neither. .tools/terraform.exe init -help DOES list it: '-lockfile=MODE  Set a dependency lockfile mode.'",
+        "-lockfile=readonly IS valid on init and behaves as documented there: terraform init -input=false -lockfile=readonly succeeded once a .terraform.lock.hcl existed (created by a prior plain init), reusing the locked provider versions without rewriting the lock file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "T8R3 cell text, step 1: re-plan ONE planned root in a throwaway clone, with terraform init flags you record and terraform plan -lockfile=readonly, then terraform show -json. AC1 requires the literal substring -lockfile=readonly present in the recorded command field.",
+    "world_is": "No terraform 1.9.8 plan invocation can carry -lockfile=readonly and succeed; the flag is real but belongs to init. This worker's recorded command field states the actual sequence run (terraform init -input=false -lockfile=readonly && terraform plan -lock=false -input=false -out=plan.tfplan && terraform show -json plan.tfplan), which is truthful, executable, and carries the required substring, but is not literally 'terraform plan -lockfile=readonly' as the cell text names it.",
+    "notes": "Filed for form: AC1's checker only substring-matches the recorded command field and never re-executes it, so this gap is invisible to the mechanical grade. A future round citing this cell's text as a literal invocation would fail closed on the first try; the fix is either the cell text names init -lockfile=readonly (where the flag lives) or the checker states it accepts the flag anywhere in the recorded sequence, which it already does by construction (substring match)."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S15",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-17T14:20Z",
+    "one_line": "T8R3-AC1's checker canonically compares my re-plan's resource_changes directly against the committed round-2 EXTRACT, which is a deliberately-reduced document (round 2's own task order, T3R step 1: keep only address/mode/type/name/change.actions and the own-name attribute of before/after) -- a genuinely raw, unreduced terraform show -json document can never satisfy AC1, though the cell text calls the artifact 'the full document'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/roots/infra__aws__terraform__49f-value-parity.r2.json (the committed round-2 extract) carries only format_version, terraform_version and resource_changes rows shaped {address, mode, type, name, change:{actions, before, after}} with after trimmed to one key (e.g. {name: opal-49f-value-parity-hourly} for the event rule, {function_name: ...} for the lambda, {} for aws_cloudwatch_event_target and aws_lambda_permission, neither of which carries a graded own-name attribute per .tools/naming-gate.py TF_NODE).",
+        "MEASURED: this worker's genuine terraform show -json of a fresh plan on the same root (.scratch/throwaway_49f-value-parity/.../full_plan.json) carries the SAME 8 addresses/actions but each after fully populated (e.g. the event rule's after carries description, event_bus_name, event_pattern, force_destroy, is_enabled, name, role_arn, schedule_expression, state, tags, tags_all -- 11 keys, not 1). Canonical JSON comparison of the raw resource_changes against the committed extract: NOT EQUAL.",
+        "check_en_r3.py t8_replan_reproduces_extract (:1085-1147) performs a literal canonical comparison of full.get('resource_changes') against committed.get('resource_changes') with NO reduction step of its own -- so the 'full document' this worker writes under full_plan must already carry resource_changes in the round-2-reduced shape, or AC1 fails regardless of whether the re-plan is a faithful, fresh, correctly-configured run.",
+        "RESOLVED by applying round 2's own documented reduction rule (its task order LGIC_ENFORCE.TO-EN-t-3-r2.roots-census.md:22) to this worker's raw show -json output, keyed off the same per-type own-name map naming-apply-gate.py reads (dict(naming-gate.TF_NODE)), producing a document that canonically equals the committed extract (AC1 measured PASS, rc=0) while still carrying its own timestamp (2026-09-17T14:06:38Z, after the round-2 census vintage 2026-09-16T10:15:18Z) for the freshness check."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "T8R3 cell text: Write the full document to your folder ... full_plan: <repo path of the full document>. The bar paragraph: a spot re-plan of any planned root reproduces its EXTRACT and what a re-plan CAN reproduce is the committed EXTRACT (resource_changes, which carries no timestamp).",
+    "world_is": "The artifact AC1 actually grades under the name 'full document' is round 2's REDUCED shape plus a timestamp, never a raw, unreduced terraform show -json output -- 'full' names only that it carries a timestamp the extract lacks, not that it is unreduced. A worker who writes a genuinely raw show -json as full_plan fails AC1 even with a perfectly faithful, fresh re-plan of a planned root.",
+    "notes": "Filed for form: the ambiguity cost one extra reduction pass, resolved by reading round 2's own task order for its exact reduction rule (address/mode/type/name/change.actions/own-name-attribute) and the schema map it draws from (.tools/naming-gate.py TF_NODE, loaded directly to avoid hand-typing the per-type map). Durable question for a future round: name the reduction explicitly in the cell text, or rename the field away from 'full document' to avoid the same misread."
+  },
+  {
+    "id": "LGIC_ENFORCE-W3-S16",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+    "surfaced_at": "2026-09-17T14:20Z",
+    "one_line": "A 'throwaway clone' of one root is not self-contained by directory alone: infra/aws/terraform/49f-value-parity's data.archive_file reads source_dir = ${path.module}/../../compdiff, a sibling tree two levels up, so copying only the root's two .tf files into an isolated scratch directory fails plan with 'could not archive missing directory: ./../../compdiff' until the relative-path sibling is copied at the matching depth too.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: first attempt copied only infra/aws/terraform/49f-value-parity/*.tf into .scratch/throwaway_49f-value-parity/ (flat); terraform plan computed the diff for 5 of 8 resources then errored: 'Error: Archive creation error ... error creating archive: error archiving directory: could not archive missing directory: ./../../compdiff', rc!=0, no plan file written.",
+        "READ: infra/aws/terraform/49f-value-parity/49f_value_parity.tf:39 source_dir = \"${path.module}/../../compdiff\" -- relative to the root's own directory, two levels up then into compdiff, which resolves to infra/aws/compdiff in the real tree.",
+        "RESOLVED by mirroring the real repo's directory depth inside the throwaway location (.scratch/throwaway_49f-value-parity/infra/aws/terraform/49f-value-parity/ + .scratch/throwaway_49f-value-parity/infra/aws/compdiff/, the latter copied from the worktree) rather than a flat copy of the root directory alone; the re-plan then succeeded and reproduced the committed extract (AC1 PASS)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "T8R3 cell text step 1: Re-plan ONE planned root in a throwaway clone -- names no minimum scope for the clone.",
+    "world_is": "Whether a flat copy of the root directory suffices depends on the specific root: 49f-value-parity references a source two directory levels above the terraform root itself, so the achievable minimum clone for THIS root is not just the root directory. A worker picking a different planned root with no out-of-root relative reference would not hit this at all -- the order's silence on clone scope is real but its bite is root-dependent.",
+    "notes": "Filed for form, low stakes: caught on the first attempt and fixed within the same turn by widening the copy; no wrong artifact was produced or graded."
   }
 ]
 ```
