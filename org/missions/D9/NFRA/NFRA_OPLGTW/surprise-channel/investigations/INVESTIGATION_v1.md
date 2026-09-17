@@ -2230,6 +2230,79 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "S24: the acceptance harness's hardcoded pre-rename ARNs make the module red on CLOUD and block OG-q-4's live-path criteria from constructing at all.",
     "world_is": "Repaired at CLOUD. The harness derives both role names from the contract, the five ARN-class failures are cleared on the shared tree, and OG-q-4's criteria can now reach the wiring (its re-grade is running at this write). S24's hazard is spent; this seat gives the word as its disarm owner.",
     "notes": "Evidence only; this row does not adjudicate S24, whose L9 disposition is 3.0.0_SA_CVO's, and R-OG-16 leaves the clock to that seat. The rename bar R-OG-16 states -- census, repoint, shared-tree re-run -- is what this row exercises end to end for the first time."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T19:17:17Z",
+    "one_line": "OGQ4-AC5 requires tests/test_schwab_query.py, tests/test_schwab_semantics.py and tests/test_schwab_export.py to all pass unchanged, but wiring semantics.assert_quantity_sum_grouped into query.py's check_against_grant (this cell's own OGQ4-AC2) breaks two pre-existing OG-q-2 tests that treat an ungrouped quantity sum as legal; test_schwab_query.py is outside this order's <paths> grant, so it cannot be fixed here.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-4.semantics-wiring.md OGQ4-AC5: 'the probe runs tests/test_schwab_query.py, tests/test_schwab_semantics.py and tests/test_schwab_export.py, ONE pytest process per module, and every module passes' -- no test in any of the three is named as an exception.",
+        "GRANT: the same order's <paths> block names only app/integrations/schwab/query.py, app/integrations/schwab/integration.py, tests/test_schwab_wiring.py and this investigation file -- tests/test_schwab_query.py is not granted.",
+        "BUILD: app/integrations/schwab/query.py check_against_grant, this worker's commit -- calls semantics.assert_field_summable and semantics.assert_quantity_sum_grouped on every sum aggregate, exactly OGQ4-AC1/AC2's own requirement (dataset's own datasets.json quantity_fields.dim_position includes quantity_settled; quantity_sum_required_groups = [cusip, l_s]).",
+        "RUN: '.venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_query.py -q -p no:cacheprovider --color=no' at this worker's commit: '2 failed, 23 passed in 6.64s' -- FAILED test_ogq2_ac07 (tests/test_schwab_query.py:491-497, its own 'control' case sums quantity_settled with no group_by and asserts success) and FAILED test_ogq2_ac15 (tests/test_schwab_query.py:743-750, a second query summing quantity_settled with no group_by, now refused INVALID_REQUEST quantity_sum_ungrouped before the engine's deadline-kill path it means to exercise ever runs); tests/test_schwab_semantics.py '14 passed in 1.22s' and tests/test_schwab_export.py '27 passed in 6.41s' both clean.",
+        "PROBE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py AC5 prints exactly this per-module result with the denominator 3 and returns VERDICT: FAIL-OGQ4-AC5 2 of 3 module(s) passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGQ4-AC5, verbatim above: the three named modules all pass, unchanged, in the same round that OGQ4-AC1/AC2 require the exact refusal that breaks two of test_schwab_query.py's own cases.",
+    "world_is": "OG-q-2's test_ogq2_ac07 and test_ogq2_ac15 were written and merged before any caller enforced the contract's quantity-sum-grouping rule (C3), so their own 'control'/'complete scan' cases sum a quantity field (quantity_settled) with no group_by and expect success -- exactly the shape OGQ4-AC2 requires this cell to refuse. Wiring the call site correctly therefore makes those two OG-q-2 tests fail; nothing else in the three named modules regresses (test_schwab_semantics.py and test_schwab_export.py are unaffected, and test_schwab_query.py's other 23 tests still pass). test_schwab_query.py is not in this order's <paths> grant and OG-q-2's cell is merged and closed, so this worker refuses to edit it (BOUNDS: 'never widen the order or fix a neighbouring defect'; 'a path you need that is not named is a BLOCKING surprise row on that criterion -- never an override'). OGQ4-AC5 is graded FAIL by this row's own measurement, not silently passed or worked around.",
+    "notes": "INERT: nothing deploys in this order; the two failing assertions are pytest-local and no served behaviour changes as a result of this row. BLOCKING: OGQ4-AC5 stays FAIL and this order stays open on that criterion until an issuer either updates test_ogq2_ac07/test_ogq2_ac15 to group their quantity sums (or otherwise re-scopes AC5), which is outside this cell's grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T20:10:00Z",
+    "one_line": "OGQ4-AC1/AC2/AC3 (and AC4's mutant, which copies the same tree) all run through tests/acceptance/conftest.py's og_v2 fixture, which hardcodes the PRE-rename role ARNs (opal-mcp-emp-menachem-schwab-read / opal-mcp-schwab-catalog-read); commit b2e4a10678 (merged into this branch via the issuer's CLOUD merge, R-OG-7) renamed the contract's reader_role/catalog_role to gateway-schwab-read-role/gateway-schwab-catalog-read-role, so aws_roles.role_config now refuses the fixture's own ARNs at construction, every og_v2-based test returns UNAVAILABLE/schwab_integration_unavailable, and tests/acceptance/conftest.py is not in this order's <paths> grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: 'timeout 180 .venv-og/Scripts/python -m pytest infra/aws/ec2/opal-gateway/tests/test_schwab_wiring.py::test_ogq4_ac01 -q -p no:cacheprovider --color=no' at this worker's HEAD (2392d6f9fb) -- FAILED, payload {'error': {'code': 'UNAVAILABLE', 'reason': 'schwab_integration_unavailable'}}, not the expected INVALID_REQUEST.",
+        "FIXTURE: infra/aws/ec2/opal-gateway/tests/acceptance/conftest.py:88-91 @2392d6f9fb -- READER_ARN='arn:aws:iam::313476888478:role/opal-mcp-emp-menachem-schwab-read', CATALOG_ARN='arn:aws:iam::313476888478:role/opal-mcp-schwab-catalog-read'; :262-269 sets SCHWAB_READER_ROLE_ARN/SCHWAB_CATALOG_ROLE_ARN to those two constants for every og_v2-fixtured test.",
+        "CONTRACT: org/standards/NFRA_OPLGTW_CONTRACT.json reader_role='gateway-schwab-read-role', catalog_role='gateway-schwab-catalog-read-role' at this worker's HEAD; git diff 881b1a5445 HEAD -- org/standards/NFRA_OPLGTW_CONTRACT.json shows exactly this rename, landed by commit b2e4a10678 (in the 881b1a5445..d91629cfd8 range the issuer's CLOUD merge brought into this branch as HEAD's second parent) -- 'git log --oneline 881b1a5445..d91629cfd8 -- org/standards/NFRA_OPLGTW_CONTRACT.json' names only that one commit, and the same range for tests/acceptance/conftest.py is empty (the fixture was never updated to match).",
+        "CODE: app/integrations/schwab/aws_roles.py:116-135 role_config() -- 'if matched.group(2) != declared: raise RoleConfigError(...)'; this validation is UNCHANGED between 881b1a5445 and HEAD (git diff shows only a docstring update to that file), so the discriminator is the contract's renamed value, not new code.",
+        "REPRO: direct call to app.integrations.schwab.aws_roles.role_configs(contract.raw, env) with the fixture's exact env values raises 'RoleConfigError: SCHWAB_READER_ROLE_ARN names role opal-mcp-emp-menachem-schwab-read; the contract's reader_role is gateway-schwab-read-role -- refusing a role the contract does not name'; app/integrations/schwab/integration.py:917-920 swallows this as bare Exception and returns the generic UNAVAILABLE/schwab_integration_unavailable this worker's test run measured.",
+        "GRANT: this order's <paths> block names infra/aws/ec2/opal-gateway/app/integrations/schwab/{query.py,integration.py}, tests/test_schwab_{wiring,query}.py and this investigation file only -- tests/acceptance/conftest.py is not granted, and it is OG-v-2's harness, not this cell's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGQ4-AC1/AC2/AC3 (and AC4's mutant control, which runs the same three against a copy of the same tree): each is graded 'through the registered schwab_query tool on OG-v-2's live-app harness' and is expected to reach the semantic refusal/legal-sum outcome this cell wired, not a harness-configuration error.",
+    "world_is": "The og_v2 fixture's hardcoded role ARNs are stale against org/standards/NFRA_OPLGTW_CONTRACT.json's v1.1 rename (reader_role/catalog_role, landed by b2e4a10678 and merged into this branch by the issuer to deliver R-OG-15's amendment), so every test built on og_v2 -- test_ogq4_ac01/02/03 and AC4's mutant copies of the same three -- now fails at role construction with UNAVAILABLE/schwab_integration_unavailable before this cell's own wiring is ever exercised. Fixing tests/acceptance/conftest.py is outside this order's <paths> grant (BOUNDS: 'a path you need that is not named is a BLOCKING surprise row on that criterion -- never an override'; 'never widen the order or fix a neighbouring defect'), so this worker did not edit it. OGQ4-AC1, AC2, AC3 and AC4 are measured and reported FAIL by this row's own evidence, not silently patched around.",
+    "notes": "INERT: nothing deploys or is served differently as a result of this row; the break is entirely test-fixture configuration. AC5 (test_schwab_query.py/test_schwab_semantics.py/test_schwab_export.py, none of which use og_v2/aws_roles) and AC6/AC7 (pure diff/collection-count measurements on test_schwab_query.py) are UNAFFECTED by this row and are graded independently. BLOCKING: AC1/AC2/AC3/AC4 stay FAIL and this order stays open on them until an issuer either updates tests/acceptance/conftest.py's READER_ARN/CATALOG_ARN to the builder names or grants this cell that path."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S12",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T22:40:00Z",
+    "one_line": "OGQ4-AC4's mutant control read as FAIL on every re-hand (including the round that measured NFRA_OPLGTW-W5-S11) for a SECOND, unrelated reason: the probe's scratch copy sat one directory level SHALLOWER than the real tree, so tests/acceptance/conftest.py's own hardcoded `_GATEWAY.parents[3]` resolved one level ABOVE the real repo root and raised FileNotFoundError on import against every one of AC1/AC2/AC3 run against the mutant -- masking the intended AC1-FAIL/AC2-FAIL/AC3-PASS discriminator as a uniform collection error. Fixed in the probe itself (in this worker's own deliverables grant): the scratch copy now mirrors the real relative depth and carries a copy of the real, unmutated contract file at the matching path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ @e51ef17b11^ (before this fix): org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py ac4() built `dst_gateway = scratch_root / \"opal-gateway\"` -- one level shallower than the real `<repo_root>/infra/aws/ec2/opal-gateway`.",
+        "READ: infra/aws/ec2/opal-gateway/tests/acceptance/conftest.py:52-57 -- `_GATEWAY = _TESTS.parent`, `_REPO = _GATEWAY.parents[3]`, `_CONTRACT_PATH = _REPO / \"org\" / \"standards\" / \"NFRA_OPLGTW_CONTRACT.json\"` -- a hardcoded depth with NO `NFRA_OPLGTW_CONTRACT_PATH` (or any env) fallback; only `app/integrations/schwab/catalog.py`'s `load_contract` reads that variable, and `test_schwab_wiring.py` imports `acceptance.conftest` directly, before catalog.py's own loader ever runs.",
+        "RUN (before the fix, this worker, this HEAD's predecessor state): `timeout 300 .venv-og/Scripts/python .../probes/og_q4.py AC4` -> mutant runs AC1/AC2/AC3 each `rc=4 last-line='1 error in ...s'`; manual repro isolating the import: `pytest tests/test_schwab_wiring.py::test_ogq4_ac03` against a same-shape shallow copy raised `FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\tmp\\\\org\\\\standards\\\\NFRA_OPLGTW_CONTRACT.json'` (one level above the real repo root `C:\\\\tmp\\\\wk-oplgtw-5e`) at `tests/acceptance/conftest.py:95` (`_CONTRACT_RAW = json.loads(_CONTRACT_PATH.read_text(...))`), confirming the depth math, not the wiring, was the failure's cause.",
+        "FIX committed at e51ef17b11 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py, this worker's own deliverables grant, not the order's <paths>): `dst_gateway = scratch_root / \"infra\" / \"aws\" / \"ec2\" / \"opal-gateway\"`, plus a copy of the real `org/standards/NFRA_OPLGTW_CONTRACT.json` mirrored to `scratch_root/org/standards/NFRA_OPLGTW_CONTRACT.json`.",
+        "RUN (after the fix, same HEAD 35c7b4b274 plus e51ef17b11): `timeout 300 .venv-og/Scripts/python .../probes/og_q4.py AC4` -> `mutant run AC1 ... outcome=FAIL`, `mutant run AC2 ... outcome=FAIL`, `mutant run AC3 ... rc=0 last-line='1 passed in 3.45s' outcome=PASS`, `git status --porcelain` before==after, `VERDICT: PASS-OGQ4-AC4`."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGQ4-AC4 (ruling R-OG-13's standing bar): 'passes only if AC1 and AC2 FAIL while AC3 still passes' -- a control that DISCRIMINATES the call site's removal, never one whose own scratch-copy plumbing fails independently of the mutation.",
+    "world_is": "The probe's scratch-copy depth did not match the real tree's depth, so `tests/acceptance/conftest.py`'s own hardcoded parent-count derivation of the repo root (never contract-path-aware via an env var) walked one directory too high and crashed at import for every one of AC1/AC2/AC3 run against the mutant copy, independent of whether the call site was present or absent -- a probe defect, not a measurement of the wiring or of NFRA_OPLGTW-W5-S11's stale-ARN harness bug (which this same mutant copy also carries, and which is separately REPAIRED at this HEAD per the issuer's OG-v-2 drain @65fa11a5ba). Fixed within this worker's own deliverables grant (the probe file), never touching `tests/acceptance/conftest.py` or any file outside grant.",
+    "notes": "INERT: the probe never wrote a tracked file (git status --porcelain identical before/after, both before and after this fix); no served surface is touched. Recorded because a prior round's AC4 FAIL verdict (composited with NFRA_OPLGTW-W5-S11's real, separate cause) partly reflected THIS probe bug rather than only the harness ARN mismatch -- a reader of that earlier FAIL should not conclude the wiring's mutant control was ever proven sound before this fix."
   }
 ]
 ```
