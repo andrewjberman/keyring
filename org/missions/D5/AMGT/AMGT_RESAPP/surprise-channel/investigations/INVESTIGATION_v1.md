@@ -7385,6 +7385,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "fit.py's own comment claimed 'be8cf218743af0c04a4d57b908b28cf7435e119d -- the commit THIS tree's HEAD records for the portal gitlink'.",
     "world_is": "This tree's HEAD records 2453a7b4c6b7ff91ea89db499890a9486265d1a0 for the portal gitlink, not be8cf218743a. The claim was false about WHICH commit, though the bytes read from either commit are identical for this file, so PRESETS/PRESET_VALUE_CODES/the fit scores are unaffected.",
     "notes": "Found while re-grounding AC2 on resuming this cell (a citation-aging check per CLAUDE.md Rule 27's own warning that a quoted/cited commit can go stale silently). Fixed same-turn by this worker (0.9.0_WK_AMGT_RESAPP~25) in the same commit that lands this row; all posture and peers unit tests re-run clean (48 of 48) after the edit."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W30-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~30",
+    "surfaced_at": "2026-09-17T02:45:11Z",
+    "one_line": "AMGT-rk-18 AC5's literal bar (opal_shaped_tasks EXACTLY 11, the issuer's own measurement at the cut) is NOT met at grading: the identical invocation, run three times for stability, reads 10 -- yet none of the three named failure shapes (a count of 12, a new trigger, a previously-DISABLED task found ENABLED) occurred, and this order's own run made zero schtasks calls.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python subprocess.run(['schtasks','/query','/fo','LIST']) filtered exactly as AC5's own invocation, run 3 times in succession at ~02:3xZ-02:4xZ 2026-09-17: opal_shaped_tasks reads 10 all three times (stable, not a transient artifact).",
+        "The 10 lines resolve to 9 DISTINCT task names, not 10: 'schtasks /query /fo LIST /V' shows OPAL_BLOOMBERG-FreezeTripwire alone produces 2 LIST blocks (one per trigger -- 'At logon time' and 'One Time Only, Minute', both Ready/Enabled), which the simple line-count filter counts as 2. The other 8 names (Opal Data Harvest - Local Publications, OpalResearch-ExecManagement, OpalResearch-FilingsAnalyzer, OPAL_autolaunch_agents, OPAL_BBGTML_daily_pull, OPAL_BBGTML_freshness_check, OPAL_D7_ticket_intake, OPAL_vendor_watch) each produce exactly 1 block.",
+        "Every previously-DISABLED task named in this order's own text still reads Disabled/Disabled at /V: 'Opal Data Harvest - Local Publications', 'OpalResearch-ExecManagement', 'OpalResearch-FilingsAnalyzer' (the last is the analyzer this order runs BY HAND, per its own bound, and it was never enabled).",
+        "No task name outside this same 9-name set appears anywhere in the /V output filtered the same way; nothing this order did calls schtasks, /Create, /Change or /Delete at any point in its session (the order's only writes are s3 PUTs under filings/v1/ and drafting/v1/, verified by this same worker's commit diff).",
+        "OPAL_D7_ticket_intake and OPAL_vendor_watch both carry 'One Time Only, Minute'/'One Time Only, Hourly' schedule types with Next Run Time values already in the past relative to the query (9/16/2026 10:44:45 PM and 11:09:00 PM against a query run 2026-09-17 ~02:4xZ UTC) -- consistent with a one-time trigger that some other mechanism recreates or retires on its own cadence, an UNMEASURED candidate cause for the count moving between the issuer's cut and this grading."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-18 AC5 asserts opal_shaped_tasks reads EXACTLY 11 at the cut with the given filter, and states that a count of 12, a new trigger, or a previously-DISABLED task found ENABLED are the NOT-met, BLOCKING shapes.",
+    "world_is": "The count at grading reads 10, not 11, with no new task, no new trigger and no re-enabled task found -- a shape the criterion's own named failure modes do not cover, so AC5 is REFUSED as written (per this order's own REFUSAL CLAUSE) rather than silently read as PASS or silently repaired. The one-fewer count most plausibly traces to the ephemeral 'One Time Only' trigger tasks (OPAL_D7_ticket_intake, OPAL_vendor_watch) whose Next Run Time already lapsed by query time, but that mechanism is UNMEASURED, not concluded.",
+    "notes": "Filed because this order's own bounds forbid repairing, widening, or silently satisfying a criterion by a route the order did not name; AC5 is graded FAIL/status_reason in this worker's proof_of_spec instance and the order is left OPEN on that criterion. This worker made zero schtasks calls in its whole session (confirmed by its own commit diff, s3 writes only), so the 11-to-10 drift predates and is independent of AMGT-rk-18's work. Instrument: python subprocess schtasks /query /fo LIST (3 repeats) and /fo LIST /V (block-level detail), both at 2026-09-17 ~02:3xZ-02:4xZ."
   }
 ]
 ```
