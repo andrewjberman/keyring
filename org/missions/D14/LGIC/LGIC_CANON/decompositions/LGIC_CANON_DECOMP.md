@@ -365,6 +365,45 @@ when it is cut it is driven with a DEMONSTRATION firm on the served DEV plane un
 items route to **LGIC_ENFORCE round 3** and are not cells of this project: R-19's gate limb, R-18(2), and W8-S1's
 `grade()` fix.
 
+### v5.1 -- THE ROUND-3 CUT'S OWN READ (2026-09-17, `2.0.0_SA_COO~G`, before any round-3 order existed)
+
+**The PRD moved under v5 and the cell set was re-read against it.** v5 was cut on v1.3; at this cut
+`prd-signoff.py status LGIC_CANON` reads `v1.5 @312400d7df -> ADMITTED`, both halves SIGNED and current. v1.4 and v1.5
+changed ONLY C6's subject (FWD-5 is exercised on a `LGIC_LGCTFM` practice wave; C6 is cut after that project's round 1).
+No round-3 cell serves FWD-5, so the set below holds unchanged.
+
+**The subtraction above reads 6 and the round runs 7.** `12 - 5 - 1 = 6` counts `CN-k-4-r3`, `CN-k-5`, `CN-j-8/9/10`
+and `CN-j-11` and omits `CN-l-3`, which this section's own LEVELS paragraph, the analysis's s.3 table and A-21 all
+carry. The defect is the count, not the cell (row `LGIC_CANON-S18`). And `CN-j-8/9/10` wrote three ids as one token, so
+two of them resolved to no cell id by the L6 gate's grammar. The table below declares all seven by id.
+
+| cell | what | rulings | serves | level | slot |
+|---|---|---|---|---|---|
+| CN-k-4 | round-3 re-cut: re-render after `alias_adjacency`; content-diff with a PLANTED removal; the `producer` exclusion printing its no-consumer predicate | A-18, A-20 | FWD-1 | 0 | ~1, queue 1 |
+| CN-k-5 | the canon: the four coordinates; title v1.1 and the section-0 count by recount; R1's census vintage; A-6 restated in the checklist's INPUTS | R-9 (iii), A-19, A-4, A-6 | FWD-1 | 0 (after CN-k-4 on the same slot) | ~1, queue 2 |
+| CN-l-3 | the ledger's state plane: a row, or the sentence narrowed, stated which | A-21 | FWD-6 | 0 | ~2, queue 1 |
+| CN-j-8 | judge F, BRIEFED (given `CN_SEVERITY.md`) | R-9 (i), A-17, A-22, A-13 | FWD-1 | 1 | ~3 |
+| CN-j-9 | judge G, BRIEFED | R-9 (i), A-17, A-22, A-13 | FWD-1 | 1 | ~4 |
+| CN-j-10 | judge H, UNBRIEFED (no severity file; the order carries no ordered chain) | R-9 (i), A-17, A-22 | FWD-1 | 1 | ~5 |
+| CN-j-11 | the comparison: intersection + positive control first, the roll-up recounted, divergences traced, reach | R-9 (ii), A-17 | FWD-1 | 2 | ~2, queue 2 |
+
+**Why `CN-k-4` and `CN-k-5` share slot ~1.** Both write `infra/logic/02_DOCTRINE.md`, and `k3-contentdiff` refuses on
+a canon modified in its own tree; one queue removes the conflict rather than merging it. The judges then run on three
+further slots, none of them ~1, so no judge wrote the canon it judges. **Why `CN-j-11` takes slot ~2 after `CN-l-3`:**
+the comparison is not blind, and reusing a drained slot saves a cold worker and a worktree.
+
+**The tree (R-9 iv), chosen by reading, recorded here and not in the judges' input.** Candidates were the families the
+ledger rows whole. The 49financial family carries TWO Schwab masters for one firm (`scopes.json` `masters`), a move in
+flight (`opal-data-bd` live, MIGRATE), state prefixes inside its tier planes (the canon's own R21 census names bd), a
+multi-tier chain from raw to served, and platinum served both from its firm bucket and the shared bucket. No firm family
+carries GENERAL data, so the estate's one general-data product bucket (`opal-data-etfs`, the ledger's R8 case) is added
+beside it; a firm-only tree cannot reach R8 (`CN_SEVEN_RULES.json`). Round 2's inflection tree reached R14, R17 and R19 and
+none of R3, R8, R15, R21 (`judge-compare-r2.md` s.2). `CN_TREE_R3.md`, 23 planes.
+
+**Fixed inputs, issuer-written at the cut** (`deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/`): `check_canon_r3.py` v2
+(the cell arms, a GREEN and a DOCTORED fixture per core, 35 of 35 arms behaved) and `CN_TREE_R3.md`. Round 2's
+`CN_SEVERITY.md` and `CN_SEVEN_RULES.json` are read in place.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 ```

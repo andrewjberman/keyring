@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~5</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~5 @c966ff460f (lib/opal_naming.py, lib/tests/test_opal_naming.py); proof org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~5/LGIC_ENFORCE.TO-EN-g-9-r3.target-split.proof_of_spec.json validated VALID rc=0; G9R3-AC1..AC6 PASS-by-output, G9R3-AC7 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-g-9` = round-3 cell 9 (decomposition v3.2, section 0c) | **outcome_ref:** FWD-3 | **depends_on:** none -- level 0
 

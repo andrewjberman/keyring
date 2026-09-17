@@ -96,3 +96,35 @@ Andrew-direct ~18:2xZ (record `ANDREW_DIRECT_20260916_182xZ_RESERVED_GROUP_FOUR_
 **Measured:** `data_entitlement.py` :164-166 already uses `None` from `classify()` to mean "a tool nobody has classified, denied to everyone"; SCHWAB_TOOLS's `None` means "needs no data operation, any active grant carries it" (:73-74). Two `None`s with two meanings in one module is Rule 24(iii)'s intent-coherence defect, and a reader of the contract cannot see the second meaning at all.
 
 **Ruling: (a) an explicit class.** `schwab_get_access`'s operation is `access` -- "read the caller's own grant and revision; requires an ACTIVE grant carrying at least one other operation; reads no data object" -- added to the contract JSON's `operations` enum in the v1.1 the rename orders are already producing, and to SCHWAB_TOOLS as the string `"access"`; `None` is reserved for the unclassified-and-denied meaning `classify()` already gives it. The entitlement check for `access` grants it iff the grant is active, which is the behaviour the comment describes, now stated as data. **(b) AC26 re-cut** as COO~O proposes: the file is unchanged against the cut base except the one mapping line, and classifies exactly the five contract tools, four with their operation class and `get_access` as `access`; the probe prints each tool and its class and the denominator 5. One mapping line and one enum entry ride the re-hand to `~5` after OG-q-3.
+
+## R-OG-11 (2026-09-17 ~13:4xZ) -- call 11 / row S22: R-OG-10(a) is VACATED; contract v1.1 carries a TOTAL `tool_operations` map, `null` = carried by every active grant and never grantable; `operations` enum, OPERATIONS, the admin set and the :282 predicate unchanged
+
+**Call:** `2.0.0_SA_COO~O` 97589 call 11 (row NFRA_OPLGTW-S22 @1bd2afeec1). R-OG-10(a) breaks the grant path: the contract's
+`operations` enum is the GRANTABLE set -- `ops/schwab_entitlement_admin.py:163` builds its allowed set from it while
+`app/data_entitlement.py:61` OPERATIONS and the guard at :214 refuse any other op -- so `access` there lets the admin write a
+grant that denies its principal everything; and mapping :76 to `access` alone denies `schwab_get_access` to every grant,
+because :282 admits a tool only on `op is None or op in grant.scope.operations`. Both confirmed at `d88cd32d0c`
+(`data_entitlement.py`) by this seat. **OWNED:** R-OG-10 amended a grantable enum without reading who consumes it.
+
+**Routed as a DESIGN FORK** (Andrew-direct 2026-09-17 ~13:0xZ routing record @809a8b4090): `4.0.0_SA_CRO` spawned for
+precedent research; findings 97594 at HEAD a27616f46f. Operative findings: (P1) this contract already partitions named
+but non-grantable members into a SIBLING key (`operations` :15 vs `disabled_operations` :21; code :61-62; guard :213-216;
+admin :163-164) -- nothing non-grantable ever sits in the grantable enum; (P2) the estate's null-sentinel "ungated" shape in a
+TOTAL map (`portal/src/pages/Positioning/shared/modeAccess.ts:106/:116/:194` @be8cf218), which the gateway already follows
+at :76/:282 -- in code only; two independent code copies of the mapping exist and nothing ties them
+(`app/data_entitlement.py:76` SCHWAB_TOOLS, `app/integrations/schwab/integration.py:70` TOOL_OPERATION @c3728d6bdb).
+
+**Ruling.** (1) R-OG-10(a) and its AC26 re-cut are VACATED. (2) Contract v1.1 adds one key, `tool_operations`: an object
+with EXACTLY the five `tools` as keys, each value a member of `operations` or `null`; `null` is documented in the contract
+as "carried by every ACTIVE grant; never grantable; reads no data object" (today: `schwab_get_access` only). This is P2's
+shape given a contract carrier and P1's partition respected. (3) `operations`, `disabled_operations`, OPERATIONS, the
+admin's allowed set and the :282 predicate do NOT change; :76 stays `None`. (4) The drift the research found is closed by a
+test, not prose: both code copies (SCHWAB_TOOLS, TOOL_OPERATION) must equal the contract's `tool_operations` exactly, keys
+and values, denominator 5 printed -- a positive control mutating one copy must fail it. (5) R-OG-10's Rule 24(iii)
+observation (classify()'s `None` = unclassified-and-denied beside SCHWAB_TOOLS's `None` = implicit) is NOT re-opened: in the
+contract the map is total, so `null` has one meaning there; the code-side ambiguity is pre-existing and unchanged.
+COO~O's option (a) (a class vocabulary + a :282 change) is not taken: it adds a vocabulary the estate's contracts do not
+carry and a predicate edit the total map makes unnecessary.
+
+**Carried:** PRD v0.8 CONTRACTS names the key (re-opens the ratified-text half only). OG-q-2's re-hand carries (2) and (4)
+in its `<paths>`/criteria, cut by `2.0.0_SA_COO~O`.
