@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~2, W7R3-AC1/AC2 PASS-by-output at ea5edd1fe4, W7R3-AC3 judgment for 3.0.0_SA_CVO; proof org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-w-7-r3.writer-disposition.proof_of_spec.json VALID rc=0; row LGIC_ENFORCE-W2-S12 filed</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-w-7` = round-3 cell 7 (decomposition v3.2, section 0c) | **outcome_ref:** FWD-2 | **depends_on:** EN-r-5-r3 (same slot, runs after it)
 
