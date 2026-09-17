@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.2",
+  "prd_version": "v0.3",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -41,6 +41,19 @@ indexes everything else, so the model is never guessing which tool to call. **Th
 his words: the official plugins are poorly indexed, and we will not have that problem.**
 
 The header stays DRAFT until both halves are signed at L4-R. The author signs neither half.
+
+**v0.3 (2026-09-17 ~23:3xZ)** answers `2.0.0_SA_COO~B`'s refusal of the v0.2 brief half @`980007578e` (review
+`org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.2_BRIEF_HALF_20260917.md` @`1586ebdefe`). Its
+finding was that BRIEF COVERAGE was a six-line PARAGRAPH with no denominator, claiming six non-claims were carried where
+two were -- so the section that exists to make carriage checkable was itself unfalsifiable. v0.3 replaces it with the
+table shape `NFRA_SPMOVE` v0.3 was held to an hour earlier: 20 headings with the denominator re-measured at the brief's
+own pin, PART V mapped 9 of 9 with holders, PART VII carried 6 of 6. The items it named as absent are now IN the
+document and each decides something: VII.4 (Bloomberg is the SITEZ read) becomes a SCOPE LIMIT on S10 and A8; VII.5
+binds L5 to print the bytes at a cited line; VII.6 marks the scoping record as research and names the overrule; V.4's
+two registries and the pinned tool-count movement are in C2 and A11; V.8 names
+`NFRA_INTEGRATIONS_STANDARD.md` s.6/8.1; IV.5's table families give A2 its denominator; IV.6's firm-bucket advisor
+intelligence is a separate grant in C5 and C7; PART III's beta bar is S8's standing input; and S4 records that the
+`fact_*` tables are unexposed while FWD-3 promises transactions. CONTRACTS changed at C2, C3, C5 and C7.
 
 **v0.2 (2026-09-17 ~23:0xZ)** answers `2.0.0_SA_COO~G`'s L4-R brief-half refusal @`acb5fc61cc`: C1's named single
 writer disclaims the live catalog in its own bytes, so C1 is re-cut to make identifying the live writer S1's first act
@@ -133,9 +146,15 @@ author's claim, not a measurement, and this PRD will not inherit a second one.
 
 **C2 -- a tool ships only with a catalog entry and a safety classification.** A tool with neither does not ship, and the
 mechanism is a refusal, not a review note. The live defect this closes is named in the brief: `read_teams_attachment` is
-enabled today and denied to every tier because it has no classification.
+enabled today and denied to every tier because it has no classification. **The classification is not a word in a review:
+every new tool is entered in `destructive_ops` and `data_entitlement` (brief V.4), and the PINNED TOOL-COUNT TESTS MOVE
+WITH EACH TOOL** -- a pinned count that is not moved is how a tool ships unregistered while every test stays green, so
+the count's movement is part of the tool's own cell and A11 grades both registries by name, not the presence of a label.
 
-**C3 -- tool naming.** `{system}_{function}[_{qualifier}]`, `system` a key of `infra/logic/registry/systems.json`,
+**C3 -- tool naming (the rule is the CRO seat's READING of Andrew's answer, and is labelled as such).** Andrew's word
+was "Refer to LGIC naming"; the brief resolved it against the canon and says so (VII.3), and the canon does NOT grade
+tool names today. So this rule is a reading that binds by criterion here, never a canon quotation:
+`{system}_{function}[_{qualifier}]`, `system` a key of `infra/logic/registry/systems.json`,
 `function` a base-form verb, **scope (firm or master) always an explicit argument validated against `scopes.json`, never
 folded into the name**; the cross-property discover tools sit under the reserved `opal` system. **The schema-grading call:
 `NAMING_SCHEMA.json` v1.10 does not grade MCP tool names (`not_covered` is silent on tools). This PRD RULES that the rule
@@ -148,7 +167,11 @@ across, in any phrasing.
 
 **C5 -- portal parity.** A portal-backed tool reads the same precomputed table the portal reads. A disagreement between
 Claude and the portal on the same figure and date is a DEFECT of this project, not a caveat, and its acceptance is a
-side-by-side read per surface.
+side-by-side read per surface. **The surfaces are enumerable and their families are the denominator: `platinum/mdpf`,
+`platinum/etfs`, `platinum/advi` and `json/*` (brief IV.5).** ONE of them does not live where the others do: **served
+advisor intelligence for Inflection and Cottonwood sits in FIRM buckets, not the portal bucket (brief IV.6), so a
+parity read there crosses a different grant than C7's silver fence** -- that grant is named and scoped in its own cell
+before any advisor-intelligence tool is cut, and it is never obtained by widening a silver role.
 
 **C6 -- the typed query.** Filters, group-bys and aggregates as a structured object; never raw SQL from a caller; hard
 caps on scanned bytes, rows and time; the response states date, completeness and truncation. Its additivity and grouping
@@ -156,7 +179,9 @@ rules are enforced ON THE CALL PATH, with a mutant control -- the standing bar t
 R-OG-15) after two criteria there passed against a module nothing called, and two tests asserted the defect.
 
 **C7 -- isolation.** One read role per property, fenced to exact silver prefixes, generated from the registry under
-LGIC_ENFORCE's builders. A staff member granted one master or firm cannot be shown another by any phrasing; the grant
+LGIC_ENFORCE's builders. **Silver holds every firm in ONE bucket split only by key prefix (brief IV.6), so the fence IS
+the isolation and there is no bucket boundary behind it;** a firm-bucket read (C5's advisor intelligence) is a separate
+role with its own prefixes and is never folded into a silver role. A staff member granted one master or firm cannot be shown another by any phrasing; the grant
 model extends NFRA_OPLGTW's rather than forking it.
 
 **C8 -- the beta roster.** Admission is one person at a time, Opal staff only, controlled by Andrew. Until the mcportal
@@ -169,13 +194,13 @@ Entitlements screen exists, the operator command is the path. Removal takes effe
 | S1 | the catalog | the extended schema, its S3 versioned home, its generation into the Gateway | `DATA_CATALOG.yaml`, `address()` | FWD-1, FWD-10 |
 | S2 | discover tools | the small always-loaded family that answers "what do we have, how fresh, which tool next" | S1 | FWD-1 |
 | S3 | portal tools | per-surface readers over the portal's precomputed tables | S1, the publishers | FWD-2 |
-| S4 | custodian and platform tools | per-property purpose-built tools over silver (Schwab, Black Diamond, Orion, Eclipse, SmartX) | S1, S6, S7 | FWD-3, FWD-4 |
+| S4 | custodian and platform tools | per-property purpose-built tools over silver (Schwab, Black Diamond, Orion, Eclipse, SmartX). **NFRA_OPLGTW's engine exposes three `dim_*` tables only; the `fact_*` tables are NOT exposed (brief IV.3), and FWD-3 promises TRANSACTIONS -- so exposing `fact_trn` is this project's own cell, not an inherited capability** | S1, S6, S7 | FWD-3, FWD-4 |
 | S5 | ETF tools | per-fund holdings, net assets, NAV | S1, S7 | FWD-5 |
 | S6 | the typed query engine | generalised beyond Schwab, capped, enforced on the call path | NFRA_OPLGTW's engine | FWD-6 |
 | S7 | read roles and grants | one fenced role per property; the grant model extended | LGIC_ENFORCE's registry and builders | FWD-3..FWD-5, FWD-9 |
-| S8 | the per-property analysis | the written record of what people actually ask, per property | -- | FWD-4, FWD-5, FWD-10 |
+| S8 | the per-property analysis | the written record of what people actually ask, per property. **Its standing input is PART III's beta bar: each admitted person's first week produces the list of questions the index could not route, and that list is the next round's analysis input** -- which is also how VII.2 (the common questions are not enumerated anywhere yet) closes by measurement rather than by guesswork | -- | FWD-4, FWD-5, FWD-10 |
 | S9 | entity resolution | the stated matching rule, its precision and recall, its unmatched list | S4 | FWD-7 |
-| S10 | on-demand paths | the long-history substrate and the vendor reads in the same index | S1, S6 | FWD-8 |
+| S10 | on-demand paths | the long-history substrate and the vendor reads in the same index. **SCOPE LIMIT, from brief VII.4: Bloomberg on-demand is the SITEZ standing read and is NOT claimed reachable from the laptop fabric. This is a LAPTOP project, work is never routed across fabrics, so FWD-8's market-data half is served by the Gateway's YCharts tools on Andrew's per-use word -- Bloomberg is out of scope here and a cross-fabric reach is a re-cut, not a cell** | S1, S6 | FWD-8 |
 | S11 | the beta roster | admission, removal, per-person tool lists | S7, the Gateway's identity | FWD-9 |
 
 ## Ground truth measured at authorship (2026-09-17, repository only)
@@ -193,23 +218,71 @@ questions.
 
 ## BRIEF COVERAGE
 
-All ten of the brief's outcomes map to FWD-1..FWD-10 one-to-one. Its nine preconditions (Part V) land as: C1 (catalog
-schema and writer), S8 (per-property analysis), C7 (roles and grants), C2 (classification), the NFRA_OPLGTW dependency
-named at FWD-3, S9 (entity resolution), S10 (long-history substrate), the standing integration checklist, and C8 (the
-roster). Its six non-claims (Part VII) are carried into the evidence boundary above rather than silently dropped.
+Denominator: **20 headings** in `docs/briefs/opal-mcp-tool-index-brief-20260917.md` @826ac6925a, counted as every line
+matching `^#` at that pin (1 H1 + 9 H2 + 10 H3), re-measured here rather than recalled. Each heading is CARRIED (a
+contract, surface or acceptance line holds it), CARRIED-AS-OPEN (held as a named precondition or non-claim, not as a
+settled value), or NOT CARRIED with the reason on its own line.
+
+| # | brief heading | disposition | where |
+|---|---|---|---|
+| 1 | H1 title -- every data property answerable in Claude, indexed from ONE catalog | CARRIED | C1; this PRD's title |
+| 2 | ANDREW'S WORDS, VERBATIM | CARRIED | Authority and project arc restates his five card answers; the verbatim text stays in the brief and is never re-typed here. His problem statement (the official plugins are poorly indexed and we will not have that problem) is why C1 and S2 exist at all |
+| 3 | PART I -- THE OUTCOME TERRITORY | CARRIED | ENDPOINT; O1-O10 map one-to-one onto FWD-1..FWD-10, none added, none dropped |
+| 4 | O1 what data do we have on X, and how fresh | CARRIED | S2; A1 |
+| 5 | O2 anything the portal shows, the portal's own number | CARRIED | C5; A2 |
+| 6 | O3 positions, balances and transactions at either Schwab master | CARRIED | S4; A3 -- and S4 now names that `fact_*` is NOT exposed today, so transactions are a cell here |
+| 7 | O4 the same question classes for the four platforms | CARRIED | S4, S8; A4 |
+| 8 | O5 the ETFs, per fund | CARRIED | S5; A5 |
+| 9 | O6 a question that fits no tool still gets a safe answer | CARRIED | C6; A6 |
+| 10 | O7 one client or household across custodian and platform | CARRIED-AS-OPEN | S9; A7 -- entity resolution is PARKED (IV.8) and V.6 is its precondition, so this outcome's substrate does not exist yet and the PRD says so rather than scheduling it |
+| 11 | O8 long history and live market data on demand | CARRIED-AS-OPEN | S10; A8 -- no Glue or Athena sits over silver or gold (IV.7), so the long-history half has NO substrate today, and the market-data half is scoped to YCharts on this fabric (VII.4) |
+| 12 | O9 admission one person at a time | CARRIED | C8, S11; A9 |
+| 13 | O10 the next property is a catalog entry plus a tool | CARRIED | C1, C2; A10 |
+| 14 | PART II -- WHERE THE BOUNDARY SITS | CARRIED | Scope: owns / relies-on / explicitly-out, including that enabling NFRA_OPLGTW's Schwab tools is that project's act and never this one's |
+| 15 | PART III -- THE QUALITATIVE BAR (7 bullets) | CARRIED, 7 of 7 | discover S2/A1; portal parity C5; silver-without-a-vendor-site S4; index quality C6/A6 (routing prefers the purpose-built tool); honesty C4; isolation C7; **beta -- the first week's unrouted questions feed the next analysis, now carried in S8** |
+| 16 | PART IV -- THE SUBSTRATE (9 findings) | CARRIED, 9 of 9 | IV.1 Ground truth (44 enabled, none answers an Opal-data question); IV.2 C1 and Ground truth (the parked business tools and `catalog_gate.py`, which S1 REUSES rather than rebuilds); IV.3 S4/S6 (the `fact_*` gap); IV.4 C3; IV.5 C5's enumerated table families; IV.6 C5 and C7 (advisor intelligence in FIRM buckets is a different grant); IV.7 S10; IV.8 S9; IV.9 C2 |
+| 17 | PART V -- WHAT MUST BE TRUE (9 items) | CARRIED, item by item | the **BRIEF PRECONDITIONS** map below |
+| 18 | PART VI -- STATUS (declared NOT outcome-bearing by the brief) | NOT CARRIED, by the brief's own instruction | a repo-only status snapshot carries no contract; the figures inside it that DO bear on design are in IV.1-IV.9 and are carried there, and the D9 member list is the register's, not this PRD's |
+| 19 | PART VII -- WHAT THIS BRIEF DOES NOT CLAIM (6) | CARRIED-AS-OPEN, 6 of 6 | the **BRIEF NON-CLAIMS CARRIED** map below |
+| 20 | REFS | CARRIED | the `brief_ref` pin in the header; the scoping record and prior art are L5's reading list under VII.6's qualifier |
+
+**BRIEF PRECONDITIONS (PART V, 9 of 9).** None is assumed true.
+
+| V | precondition | held by | this PRD |
+|---|---|---|---|
+| V.1 | catalog schema extended to silver datasets, ONE writer, versioned S3 home from the naming builder | this project (S1) | C1 -- which now says the live writer is UNIDENTIFIED and that naming it is S1's first act |
+| V.2 | a per-property analysis pass before that property's tools are cut | this project (S8) | S8; A4 makes the analysis record part of the acceptance, so a tool cut without one cannot grade |
+| V.3 | one read role per property fenced to exact prefixes; the grant model extended beyond Schwab's two masters and three datasets | this project (S7) | C7; the extension is explicit and EXTENDS NFRA_OPLGTW's model rather than forking it |
+| V.4 | every new tool classified in `destructive_ops` and `data_entitlement`; **the pinned tool-count tests move with each tool** | this project (C2) | C2 names both registries and the pinned-count movement; A11 grades them by name |
+| V.5 | NFRA_OPLGTW's Schwab tools ENABLED in deployment before O3 can be exercised | **NFRA_OPLGTW** (`2.0.0_SA_COO~O`), not this project | Canonical handoff and the project row's `blocking`; it gates FWD-3's EXERCISE, never this PRD's halves, and this project never enables them itself |
+| V.6 | a way to match one person across systems before O7 | this project (S9), on a parked prerequisite | S9 -- entity resolution is parked (IV.8) and its D6-addendum gate on D3's residual enum is named; FWD-7 is the outcome that waits on it |
+| V.7 | a query substrate over long history before O8's first half | this project (S10) | S10 -- no Glue or Athena exists today (IV.7); the substrate choice is an L5 cell with its own measurement, never a value set here |
+| V.8 | each new integration goes through the standing enablement checklist | this project, per integration | **`docs/architecture/NFRA_INTEGRATIONS_STANDARD.md` s.6 and s.8.1**, named here so the obligation points at a document rather than at itself; every property's enablement cell cites it |
+| V.9 | a beta roster Andrew controls, one person at a time | this project (S11) | C8; the operator command is the path until the mcportal Entitlements screen exists, and that screen is the mcportal brief's, not this project's |
+
+**BRIEF NON-CLAIMS CARRIED (PART VII, 6 of 6).** Each is inherited as an open item; a cell closes it by MEASURING it.
+
+| VII | the brief does not claim | this PRD's disposition |
+|---|---|---|
+| VII.1 | no AWS state was read; table sizes, object counts and query timings over silver are unmeasured | OPEN and stated in the evidence boundary: **every capacity claim here is DESIRED until a cell exercises it**, and each property's first analysis cell carries the measurement |
+| VII.2 | the per-property common questions are not enumerated anywhere | OPEN, and it CLOSES BY MEASUREMENT: S8's analysis pass plus PART III's beta bar -- the first week's unrouted questions are the next round's input, so the enumeration is produced by use rather than guessed |
+| VII.3 | the tool-naming rule is the CRO seat's READING of Andrew's answer; the canon does not grade tool names | CARRIED EXPLICITLY -- C3 now says so in its own first line, binds the rule by criterion, and routes the GRADING question to LGIC_NAMING as a schema bump |
+| VII.4 | **Bloomberg on-demand is the SITEZ standing read; NOT claimed reachable from the laptop fabric** | CARRIED AS A SCOPE LIMIT in S10 and A8. This is a LAPTOP project and work is never routed across fabrics, so FWD-8's market-data half is exercised through YCharts on Andrew's per-use word and Bloomberg is OUT of scope. Reaching for it later is a re-cut of FWD-8, never a cell |
+| VII.5 | citations are the research passes' reads at the stated vintage, not re-verified line by line | OPEN and it BINDS L5: the first cell of each surface re-verifies the citations it relies on by PRINTING THE BYTES at the cited line, never by grepping for the quote -- a citation ages separately from the text it quotes, and this PRD's own v0.1 defect was exactly a claim inherited from a header nobody re-read |
+| VII.6 | the earlier scoping record recommended D6 and business-first names; both were OVERRULED by Andrew, and the record is kept unedited as research | CARRIED: the record is on L5's reading list AS RESEARCH, never as direction. Its D6 placement and its business-first naming are superseded by his 2026-09-17 words (D9 Opal Workflows; Refer to LGIC naming), and a cell that cites it cites the overrule beside it |
 
 ## Acceptance matrix
 
 | id | acceptance | outcome |
 |---|---|---|
 | A1 | a named cold question set, asked by a non-author, routes correctly; the count routed over the count asked is printed, every wrong route listed | FWD-1 |
-| A2 | per portal surface, one side-by-side read: figure and as-of date identical, zero disagreements, denominators printed | FWD-2 |
+| A2 | per portal surface, one side-by-side read: figure and as-of date identical, zero disagreements, denominators printed -- the DENOMINATOR being the enumerated table families `platinum/mdpf`, `platinum/etfs`, `platinum/advi`, `json/*` (brief IV.5), so "per surface" has a countable population rather than a reviewer's list | FWD-2 |
 | A3 | per Schwab question class, a live transcript with row counts reproduced by a second instrument | FWD-3 |
 | A4 | per property: the analysis record, the tool list it produced, one live answer per tool class | FWD-4 |
 | A5 | per fund: one live answer per question class compared with the served artifact | FWD-5 |
 | A6 | the typed query refuses an unsafe shape, states truncation, and the routing set prefers purpose-built tools | FWD-6 |
 | A7 | one client answered across two systems, with the match rule, its precision and recall on a named sample, and the unmatched list | FWD-7 |
-| A8 | one long-history answer and one market-data answer, each naming its substrate and its cost | FWD-8 |
+| A8 | one long-history answer and one market-data answer, each naming its substrate and its cost; the market-data half is exercised through the Gateway's YCharts path on this fabric, with Bloomberg NAMED as the SITEZ read this project does not claim (brief VII.4) | FWD-8 |
 | A9 | two sessions (admitted, not admitted) with their tool lists, one refusal transcript, one removal with its timestamp | FWD-9 |
 | A10 | the next property added as one catalog entry plus a tool, timed; a planted unclassified tool is REFUSED | FWD-10 |
 | A11 | every tool that ships carries its catalog entry and classification; the count of tools without either is zero, denominator printed | C2 |
