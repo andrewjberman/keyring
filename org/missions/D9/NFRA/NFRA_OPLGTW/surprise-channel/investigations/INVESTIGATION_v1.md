@@ -1906,6 +1906,32 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGZ2-AC8: no registered MCP tool writes a POLICY# record, over all tools, denominator printed -- with the schwab integration inside 'all tools' once it is registered.",
     "world_is": "The census's file set excludes the schwab integration's modules and trips by design now that OG-q-2 registered them, so the criterion is unmet at CLOUD HEAD though no tool writes POLICY# by either cell's evidence. Remedy by this seat within L6: TO-OG-z-2 is re-opened (status pending) with an amendment widening AC8's census to the schwab integration's modules, and cold re-handed to 0.9.0_WK_NFRA_OPLGTW~3.",
     "notes": "No served surface; nothing deployed. This seat is the disarm owner and the re-opened OG-z-2's drain is the disarming act."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T13:57:35Z",
+    "one_line": "A newer qualified closure now exists live in AWS for date=2026-09-16 (both masters, status qualified, 0 findings), produced independently of OG-c-2's replay after this cell's inherited premise ('2026-09-15 is the only qualified closure that exists') was written; the sealed hashes this cell commits still use only OG-c-2's 2026-09-15 silver objects, per the order's own explicit VersionId source, so the Gateway's live catalog at OG-v-4/A7 time may report 2026-09-16 as the true 'latest' business date while these sealed hashes assume 2026-09-15.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN (read-only, this worker's worktree): '.tools/aws s3api head-object --bucket opal-data-assets --key schwab/08242234/meta/complete/date=2026-09-16.json' -> LastModified 'Thu, 17 Sep 2026 10:16:23 GMT', VersionId TJRM3DcNtwtdAUWd2jU0JlrjRX_z508x, ContentLength 15650 -- absent at the 2026-09-16 16:20 local vintage the inherited handoff (C:/tmp/nfra-oplgtw-handoff/og-v-3-partial/scripts/QUALIFIED_VERSIONS.json) sealed against.",
+        "RUN: the same for 08335338/meta/complete/date=2026-09-16.json -> LastModified 'Thu, 17 Sep 2026 09:46:56 GMT', VersionId KGvM5aTswwqrJe6tHImICkdyU2Q5WyyS.",
+        "RUN: GetObject of the 08242234 record -> schema opal.silver.completion (new C3-extended shape), closure.status='qualified', closure.findings=[], closure.day_disposition='DATA', closure.date='2026-09-16'.",
+        "RUN: '.tools/aws s3api head-object ... date=2026-09-17.json' for both masters -> 404 Not Found, so 2026-09-16 is the latest closure as of this row's timestamp, not 2026-09-15.",
+        "The order's own worker face (NFRA_OPLGTW.TO-OG-v-3.sealed-real-expectations.md) directs: 'compute the expected answer from the qualified silver objects OG-c-2 produced' and 'The qualified object keys and VersionIds are in OG-c-2's result file' -- OG-c-2 replayed and closed only 2026-09-15 (deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 1); this cell follows that instruction literally and does not re-derive 'latest' from AWS at seal time.",
+        "WALKTHROUGH_PROTOCOL.md section 4 (infra/aws/ec2/opal-gateway/tests/acceptance/) defines 'latest' as 'the latest qualified complete business date the catalog reports for that master and dataset at the time OG-v-3 seals' -- a live-clock definition the order's OG-c-2-scoped instruction does not literally match now that a later qualified date exists."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-v-3 worker face: 'compute the expected answer from the qualified silver objects OG-c-2 produced'; the inherited (unverified, superseded) handoff concluded '2026-09-15 is the only qualified closure that exists for either master as of this seal. No previous qualified date exists to compare against for RQ5/RQ6.'",
+    "world_is": "As of this row's timestamp (2026-09-17T13:57:35Z), both masters carry a second qualified closure for date=2026-09-16 (status qualified, 0 findings), produced by the live production Schwab pipeline independently of OG-c-2. This cell deliberately seals its RQ1-RQ6 expected answers against OG-c-2's 2026-09-15 objects only, exactly as the order instructs, and does not use the 2026-09-16 closure or its silver objects. If the Gateway's catalog construction (OG-c-1/OG-k-1) runs before OG-v-4's A7 walkthrough and reports 2026-09-16 as the latest qualified date, the real answers to RQ1, RQ3, RQ4's SmartX/BlackDiamond legs and RQ5/RQ6's 'latest' leg would be computed over 2026-09-16 data and would not hash-match these 2026-09-15-based sealed values; RQ5/RQ6 would also gain a real previous-qualified-date (2026-09-15) where this seal says NONE_QUALIFIED.",
+    "notes": "ARMED because a hash mismatch at OG-v-4/A7 time is not cosmetic -- it would read as the Gateway giving a wrong answer when the real cause is this seal using a superseded 'latest'. Nothing served or deployed by this row. Disarm: the issuer (2.0.0_SA_COO~O) either re-seals OG-v-3 against whatever is qualified-latest immediately before OG-v-4 runs A7, or fixes 2026-09-15 as the walkthrough's authorized business date for A7 (a fixed-date grant per PRD C3) so the comparison is apples-to-apples; either is the issuer's call, not this cell's to make unilaterally mid-round."
   }
 ]
 ```
