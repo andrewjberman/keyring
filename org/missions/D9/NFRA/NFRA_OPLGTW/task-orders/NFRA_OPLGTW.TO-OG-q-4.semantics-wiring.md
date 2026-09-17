@@ -38,6 +38,17 @@ What this cell does, and nothing else:
   export is a BLOCKING surprise row on that criterion, never a local re-implementation and never an edit there.
 - No cache, cursor, envelope, audit or engine behaviour changes. Nothing deploys.
 
+**The two defect-asserting tests (amended on re-hand, on `1.0.0_SA_CTO` ruling R-OG-15, msg 97648, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @f3309bc39d; row
+`NFRA_OPLGTW-W5-S10`).** Your first hand-off wired the checks and its mutant fired as designed, but AC5 refused:
+`tests/test_schwab_query.py::test_ogq2_ac07` and `::test_ogq2_ac15` ASSERT that an ungrouped quantity sum is
+accepted -- the shape the contract forbids and your AC2 now refuses. Those two tests are yours for exactly this:
+- Flip each of the two to expect the contract's refusal. NO OTHER LINE of that file is touched, and no other test's
+  expectation changes.
+- Each flipped assertion cites, in a comment on the assertion, the contract clause it now encodes.
+- This is NOT a re-open of `OG-q-2`: its cell is closed and its other 27 criteria stand. AC6 and AC7 grade the
+  correction; AC5 then reads the module green.
+
 **Read:** `app/integrations/schwab/semantics.py` (its exported checks and their signatures);
 `app/integrations/schwab/query.py` (the validation path); `app/integrations/schwab/integration.py` (the tool
 registration and `export_query`); `org/standards/NFRA_OPLGTW_CONTRACT.json` (`error_codes`, `aggregate_operators`,
@@ -67,7 +78,13 @@ taking the short id, printing its measurement with its denominator, then exactly
 <criterion id="OGQ4-AC5" cell_refs="OG-q-4"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py AC5</invocation><expect>(?m)^VERDICT: PASS-OGQ4-AC5(?![0-9])</expect></criterion>
 `OGQ4-AC5` -- the probe runs `tests/test_schwab_query.py`, `tests/test_schwab_semantics.py` and `tests/test_schwab_export.py`, ONE pytest process per module, and every module passes, each module's pass count and the denominator 3 printed.
 
-<expected_criteria>OGQ4-AC1, OGQ4-AC2, OGQ4-AC3, OGQ4-AC4, OGQ4-AC5</expected_criteria>
+<criterion id="OGQ4-AC6" cell_refs="OG-q-4"><invocation>cd <WS> && timeout 180 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py AC6</invocation><expect>(?m)^VERDICT: PASS-OGQ4-AC6(?![0-9])</expect></criterion>
+`OGQ4-AC6` -- the probe prints the diff of `tests/test_schwab_query.py` against your cut base with its LINE COUNT, and passes only if every changed line lies inside `test_ogq2_ac07` or `test_ogq2_ac15`.
+
+<criterion id="OGQ4-AC7" cell_refs="OG-q-4"><invocation>cd <WS> && timeout 180 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q4.py AC7</invocation><expect>(?m)^VERDICT: PASS-OGQ4-AC7(?![0-9])</expect></criterion>
+`OGQ4-AC7` -- the probe prints `tests/test_schwab_query.py`'s collected test count before and after the correction, both denominators stated (25 at the cut base, 25 after: 23 untouched plus the 2 corrected), and passes only if the two corrected tests each carry a comment citing the contract clause their new expectation encodes.
+
+<expected_criteria>OGQ4-AC1, OGQ4-AC2, OGQ4-AC3, OGQ4-AC4, OGQ4-AC5, OGQ4-AC6, OGQ4-AC7</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -75,6 +92,7 @@ taking the short id, printing its measurement with its denominator, then exactly
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **`semantics.py` and `datasets.json` are not yours.** They are `OG-q-3`'s, merged and closed. A missing export is a BLOCKING row.
+- **`tests/test_schwab_query.py` is yours for EXACTLY `test_ogq2_ac07` and `test_ogq2_ac15`.** Any other line in that file is outside your grant and is a BLOCKING row, never an edit.
 - **Branch.** You work in the worktree named in your identity line, on its branch, cut from `CLOUD` at hand-off. Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` serves every invocation; if absent, rebuild it as `cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`. Never commit `.venv-og/` or `.scratch/`.
 - **One module per pytest process.** Two test modules in one process collide on the MCP session manager (`StreamableHTTPSessionManager .run() can only be called once per instance`); that is a harness fact, not a defect to fix here.
@@ -94,6 +112,7 @@ taking the short id, printing its measurement with its denominator, then exactly
 infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py
 infra/aws/ec2/opal-gateway/tests/test_schwab_wiring.py
+infra/aws/ec2/opal-gateway/tests/test_schwab_query.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -103,11 +122,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGQ4-AC1` .. `OGQ4-AC5` (5). Instance at
+Criterion ids: `OGQ4-AC1` .. `OGQ4-AC7` (7). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/NFRA_OPLGTW.TO-OG-q-4.semantics-wiring.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @e09219470f, decomp_ref.doc the
 decomposition as amended, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ4-AC1,OGQ4-AC2,OGQ4-AC3,OGQ4-AC4,OGQ4-AC5`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ4-AC1,OGQ4-AC2,OGQ4-AC3,OGQ4-AC4,OGQ4-AC5,OGQ4-AC6,OGQ4-AC7`
 BEFORE the `complete` flip. Result file `semantics-wiring.result.md` beside it, naming the call site by
 `file:line`. **Flip `complete` only when every MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -131,3 +150,11 @@ was empty. `OG-q-2` and `OG-q-3` are NOT re-opened: the ruling placed the defect
 seat authored that cut. `OG-v-2` is re-handed after this order drains, to build its 7 unbuilt machine A-rows (row
 `NFRA_OPLGTW-W6-S7`) and re-grade its AC2 whole. W6-S6 stays ARMED, owner `1.0.0_SA_CTO`, until this drain lands with
 AC4's mutant failing as designed; that drain's proof instance is the disarm evidence.
+
+Amended 2026-09-17 ~19:4xZ, before the re-hand, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-15 (msg 97648
+@f3309bc39d, closing call 15 on row `NFRA_OPLGTW-W5-S10`). The first hand-off passed AC1-AC4 with the mutant firing
+and refused AC5 on two `OG-q-2` tests that assert the defect. `tests/test_schwab_query.py` is granted for exactly
+those two tests; AC6 and AC7 grade the correction's tightness (changed lines inside the two functions only; the test
+count and the contract citation). The drain was HELD at branch tip 881b1a5445 rather than land two knowingly red
+tests on CLOUD, and the ruling affirmed the hold. `3.0.0_SA_CVO` grades OGQ2-AC7's and OGQ2-AC15's original passes
+UNSOUND AT THEIR VINTAGE at round close, which is a record act, not a re-open. No criterion removed.
