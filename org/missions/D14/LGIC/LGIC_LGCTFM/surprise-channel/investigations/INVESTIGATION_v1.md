@@ -36,6 +36,28 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "PRD v1.1 T4: the fork fixture is IV.5's FOUR positive forks plus the SmartX negative.",
     "world_is": "The brief's IV.5 enumerates FIVE positive members and states that each is a positive control. Four would omit one.",
     "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G -- this seat's, because the artifact that carries the defect is this seat's own decomposition and the fixed input that has not been written yet. NOT ADJUDICABLE and not routed: nothing in the PRD's RATIFIED text is touched, the cell-candidate table is explicitly the COO lane's to split, merge and re-sequence, and no other seat is blocked. THE ACT: FORK_CONTROLS.json is built with FIVE positives and the one negative, its denominator printed and this row cited, and the decomposition's section 3a is amended to five in the same commit. DISARM WHEN both land. * If 1.0.0_SA_CTO reads IV.5's fifth member -- the bd/49f/49financial spelling set -- as a NAMING tension rather than a fork, the count returns to four and this row disarms the other way; on the bytes it satisfies IV.5's own rule (several current spellings whose desired canonical form is one string) and IV.5 makes no exception for it, so five is what the carrier says. I am recording that reading rather than resolving it silently, because the fifth member is the only one of the five that is not a pair of PATHS."
+  },
+  {
+   "id": "LGIC_LGCTFM-S2",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-17T14:15Z",
+   "one_line": "DECOMPOSITION v1's CONSTRAINT 1 COUNTS THREE WRITERS OF lib/opal_lgctfm.py AND THE ROUND-1 CUT HAS FOUR: T6's plan is engine code (the PRD's PATHS row names lib/opal_lgctfm.py for T3-T9), so LT-p-1 on slot ~2 writes the engine after slot ~1's LT-e-1/e-2/e-3. Found at the L6 cut, before any order existed; v1.1 s.10 states it and the edge LT-e-3 -> LT-p-1 already sequences it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "LGIC_LGCTFM_DECOMP.md s.5 CONSTRAINT 1 @686d196fa1: 'LT-e-1, LT-e-2 and LT-e-3 all write lib/opal_lgctfm.py ... this is the ONE file more than one cell writes'; s.3's table gives LT-p-1's write surface as 'the run directory' only.",
+     "LGIC_LGCTFM_PRD.md v1.4 PATHS: 'new | lib/opal_lgctfm.py, lib/lgctfm_render.py, lib/tests/test_opal_lgctfm.py | T3-T9'; T6 (the plan) is inside that range and CONTRACTS names plan.json and plan.md as produced by the run, i.e. by engine code.",
+     "LGIC_LGCTFM_DECOMP.md s.5 edges: 'LT-e-3 -> LT-p-1' -- so the fourth writer starts only after the third drains; no two open orders edit the engine at once."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Decomposition v1 s.5 CONSTRAINT 1: three writers of lib/opal_lgctfm.py, one queue on slot ~1.",
+   "world_is": "Four writers across two slots, sequenced by the existing edge set; LT-p-1's order grants lib/opal_lgctfm.py and says it starts after LT-e-3 drains. v1.1 s.10 records it.",
+   "notes": "INERT: the count, not a cell or an edge, was wrong, and it was caught at the cut before any worker read it. The same seat wrote v1; a writer census taken from the cells' 'writes' column inherited that column's omission rather than re-reading the PRD's PATHS table."
   }
 ]
 ```

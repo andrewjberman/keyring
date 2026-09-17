@@ -294,3 +294,27 @@ engine's author.`
   drives the card to him; it does not let a report stand in for his read.
 - It does not grade anything. Every verdict here is a bar to be measured, and the cells' own criteria, not
   this document, are what a worker satisfies.
+
+---
+
+## 10. v1.1 -- THE ADDENDUM AT THE L6 CUT (2026-09-17, `2.0.0_SA_COO~G`), before any round-1 order existed
+
+**The cell set is unchanged: 13 cells, the table in section 3, nothing added, dropped or deferred.** PRD v1.4 is
+ADMITTED (`prd-signoff.py status LGIC_LGCTFM`: both halves SIGNED, current); v1.2-v1.4 moved only T4's fork count and
+DEC-5's wording, which FORK_CONTROLS.json v1.1 already carries (four positives, one negative). Three things the cut
+measured that section 5 did not say:
+
+1. **CONSTRAINT 1 COUNTED THREE WRITERS OF `lib/opal_lgctfm.py`; THE CUT HAS FOUR.** T6's plan is engine code (the
+   PRD's PATHS row names `lib/opal_lgctfm.py` for T3-T9, and the plan is T6), so `LT-p-1` writes the engine too, on
+   slot ~2. It is not a concurrency hazard: the edge `LT-e-3 -> LT-p-1` already forces it after slot ~1's queue drains,
+   and the face says so. `LT-p-1` also carries the `run` verb that assembles a run directory, so `LT-x-1` and
+   `LT-x-3` run the instrument and edit no code. Row `LGIC_LGCTFM-S2`.
+2. **`LT-h-1`'s code has a home that is not the engine:** `workflows/legacy_transform/run_home.py` (`new`, `manifest`,
+   `diff`). `LT-h-1` sits at level 0 beside `LT-e-1`, which holds the engine, so the run home cannot live in it.
+3. **The interfaces every criterion reads are fixed in the faces** -- the contract's field names (from
+   `infra/logic/11_LGCTFM_CONTRACT_SCHEMA_RECORD.md`), the CLI verbs, the artifact paths -- and the checker
+   `fixed_inputs/r1/check_lt_r1.py` reads exactly those. `PLANTED_CONTRACT.json` is the one planted contract the
+   schema, the receiving check, the renderer and the diff are exercised on.
+
+**Slot plan (unchanged from section 5):** ~1 `LT-s-1 -> LT-e-1 -> LT-e-2 -> LT-e-3`; ~2 `LT-h-1 -> LT-p-1 -> LT-x-1 ->
+LT-x-3`; ~3 `LT-s-2 -> LT-r-1 -> LT-d-1 -> LT-x-2 -> LT-v-1`.
