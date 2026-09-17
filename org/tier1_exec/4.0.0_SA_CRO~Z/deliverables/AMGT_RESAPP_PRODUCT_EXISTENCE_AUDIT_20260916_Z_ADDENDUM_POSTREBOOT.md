@@ -310,6 +310,24 @@ resolves if the objects land before the drain. Unchanged: adapter `x3KrEBvZ`, `/
 drained COMPLETE 5 of 5 (@`52dd9a8c37`) with Z-S137 still open, per `3.0.0_SA_CVO~Z`'s L9 record s.7 @`4ace3fa7e1`.
 Round 12 at 11 of 18.
 
+## 3i. ADDENDUM 03:2xZ 2026-09-17 -- rk-12 COMPLETE is the CLIENT half of FWD-7/12/14; the served half is rk-6 AC4 and the three routes answer 404
+
+rk-12 drained COMPLETE @`43d24c39d0` (round 12 at 12 of 18); its drain subject reads *"three unsurfaced outcomes get served
+routes and page panels"*. Measured at 03:21:44Z:
+
+| read | value |
+|---|---|
+| portal `wk-amgt_resapp-12-23-portal` `f276d732` | 1 commit past `origin/DEV` `2453a7b4`: `CoverageFreshnessPanel`, `InputLedgerPanel`, `ListRegisterPanel`, `ResearchInputsPanel`, and client calls `GET {BASE}/freshness`, `GET {BASE}/security/<key>/ledger`, `GET {BASE}/lists`; `requestRefresh` now posts to `/api/private/research/pull` |
+| adapter route table (`scoped_amgt_route_table()`) at HEAD as of 03:2xZ (after `e916462c65`) and on rk-6's branch `wk-amgt_resapp-12-24` | 11 entries each, **none** naming freshness, ledger or lists; the one HEAD file matching a freshness pattern is a moratorium comment in `infra/aws/terraform/harvest/dynamodb.tf:146` |
+| deployed adapter `x3KrEBvZ`, the three GET routes | **404** each, "no /api/scoped/amgt route for GET ..." |
+| rk-12's proof (3 criteria, all PASS) | AC2 surface tokens and reasons in the page components; AC3 the ledger classes READ-ONLY; AC4 the refresh call re-pointed on the chain's own portal branch -- **no criterion invokes a served route** |
+| rk-6 AC4 (ISSUER AMENDMENT 8 moved rk-12 AC1 here) | routes naming freshness, ledger and lists in the table AND each GET answering 200 on the DEPLOYED adapter; rk-6 pending |
+
+So the cut is correct and nothing is filed: the page half is built on a branch and the served half is a pending
+criterion that measures exactly the served plane. Recorded because the drain subject says "served routes" and a
+reader of `complete` would count three surfaces that answer 404. FWD-7, FWD-12 and FWD-14 remain no-surface on the
+served plane until rk-6 deploys, and the panels on the branch would render refusals against today's adapter.
+
 ## 4. INSTRUMENTS AND VINTAGES
 
 | instrument | observes | vintage |
