@@ -115,9 +115,9 @@ closed is for the round-12 analysis to read against the served plane.
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
-      "at": null
+      "at": "2026-09-17T07:29Z"
     }
   },
   {
