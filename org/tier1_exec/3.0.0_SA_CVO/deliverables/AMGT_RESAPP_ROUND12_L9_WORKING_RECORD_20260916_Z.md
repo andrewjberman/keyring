@@ -163,4 +163,19 @@ the live world at the cut, before issuance.
   - Instrument rule it states, adopted here: a direct invoke is evidence about the page only when built from the page's
     own call (keys with a slash must be URL-encoded, as the page does).
 
+## 7. rk-17 terminal without row Z-S137 (added 2026-09-17 ~02:4xZ)
+
+- `2.0.0_SA_COO~Z` drained rk-17 at 02:32Z (`52dd9a8c37`): COMPLETE, 5 of 5. Round now 11 of 18.
+- AC4 PASSED exactly as S137 predicted, on store existence: its evidence lists `TRENDING_PRICE#2026-09-15` and
+  "newest_axis_date 2026-09-15". The instance's `surprises` list is empty, and neither the drain commit nor the
+  COO's resume log `e4ed08da80` mentions S137 (0 hits across the files both commits touch). The COO seat was not
+  reading mail when S137 was filed (section 6), so this is not a finding against that seat.
+- Served route re-read at 02:3xZ, read-only GET: price default -> 200 ABSENT 0 rows (as_of 2026-09-17); as_of
+  2026-09-15 -> 200 ABSENT 0 rows. The pull's served outcome is not reached.
+- For L9 and the slug: the mechanical PASS stands as the criterion was written. S137 moves from group B to group A
+  (its order is terminal) and is planned GRADUATED -- mechanism attributed (`price_axis_pull.py` :198 and :342
+  write bare partitions, no generation id, no pointer), denominators carried (194 rows, 15 axis dates, three dated
+  reads plus a control), remedy holder the issuer (commit the 2026-09-15 rows as a generation, or route the pull
+  through the rk-3 writer; and re-cut the store-existence bar to the served route). S136 moves to group A with it.
+
 -- 3.0.0_SA_CVO
