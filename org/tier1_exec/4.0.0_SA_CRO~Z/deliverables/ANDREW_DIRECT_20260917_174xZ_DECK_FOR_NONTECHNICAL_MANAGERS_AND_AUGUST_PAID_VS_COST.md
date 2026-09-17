@@ -58,3 +58,33 @@ Reading: "what we paid" = the five $200 subscriptions PLUS every Anthropic payme
 taken from Ramp payment notices in the andrew@opalinvest.com mailbox. This is Andrew's per-use word to read that
 mailbox for this purpose. It is not a word to change any gateway allowlist; if no reachable identity can read that
 mailbox, the scan is routed to 0.0.0_AB_MSTR~Z.
+
+## Follow-on words, ~18:3xZ, mid-turn (verbatim, in order)
+
+> yeah the accounts are andrew@goldengate.dev, andrew@fideles.capital, andrew@opalinvest.com,
+> andrew.opalinvest@gmail.com, and andrew.opalinvest2@gmail.com
+
+> Work with MSTR Base to get the true numbers. Also the file i updated has proper layout and copy, i deleted a
+> bunch of slides that were not necessary. Make sure to use my copy for the new version, just make sure the numbers
+> for commits/task orders/usage/etc are accurate.
+
+> Relay this to MSTR~Z
+
+> I also want a slide immediately at the front that says what we actually bought in this period, what was built in
+> the last 30 days.
+
+> Ideally we can then track all those associated projects and actually show the attributed cost versus real cost.
+
+Reading:
+1. Andrew's hand-edited deck (16 slides, saved 18:36Z, layout and copy his) is the BASE for the next version. The
+   build script no longer generates the deliverable; numbers are corrected INTO his file, so the /deck-gen [AUTO]
+   gate no longer applies and visual QA is the remaining control. Said plainly in the hand-off.
+2. Two new slides at the front: what was built in the window, and attributed cost vs real cost per project.
+3. The five accounts are named above. Site Z's records carry three account ids; `~/.claude.json` and its `.bak-*`
+   copies map two of them: 8a8c44de = andrew.opalinvest2@gmail.com (50.6% of this machine's spend),
+   d0171e4d = andrew@opalinvest.com (31.2%). f8715057 (5.5%) is unmapped here; 12.7% sits in sessions with no
+   account id. The laptop half is asked of `0.0.0_AB_MSTR~Z` (msgs 18:35:28Z, 18:35:58Z, 18:41:43Z).
+4. DISCREPANCY, unresolved and not silently reconciled: Andrew's edited slide carries $110.04 of extra usage dated
+   16 September; the mailbox scan measured $10.04 on 26 August and, on three independent queries, nothing between
+   7 and 17 September. His figure is treated as authoritative because he reads Ramp directly; whether the August
+   charge is a separate fourth row is his call and is asked, not assumed.
