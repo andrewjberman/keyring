@@ -2162,6 +2162,51 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OG-i-3 carried R-OG-7's rename of the three identities to builder output, and OG-v-2's harness constructs the Schwab roles from their ARNs.",
     "world_is": "The rename moved the contract's role names and left the acceptance harness's hardcoded ARNs behind, so five of seven acceptance tests fail on CLOUD and OG-q-4's live-path criteria AC1-AC4 cannot be exercised at all (the integration refuses to construct before the wiring runs). Nothing is deployed and nothing served is wrong; the red is in the test harness, not the product. Remedy routed: OG-v-2's re-hand re-keys the two fixture ARNs to the builder's names inside its own grant, then OG-q-4 re-grades AC1-AC4.",
     "notes": "ARMED because CLOUD carries a red module until the re-hand lands. This seat is the disarm owner and OG-v-2's drain is the disarming act. The issuer's cut is the cause: R-OG-7's rename was carried into OG-i-3 with no census of consumers of the old ARNs, which is the same shape as W6-S6 (a check proven where nothing calls it) one level out."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T22:05:00Z",
+    "one_line": "OGV2-AC2's independent A6-partial-grant-asset-cusips check FAILS against the real, unmocked app: a partial-account grant on dim_asset (accounts={99000002}) returns all four fixture CUSIPs (SYN000001/2/3/9) instead of the two held by that account (SYN000001/2) -- PRD C3's 'restrict its CUSIPs to holdings of the authorized accounts for that same master/date' is not wired on any live query path, the same class of gap W6-S6 already named for additivity/grouping, one level over (dim_asset's account-scoping rather than the quantity-sum grammar).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: infra/aws/ec2/opal-gateway/tests/acceptance/test_local_acceptance.py::test_ogv2_a06 (this order's re-hand, W6-S7's own denominator) against the real app.server + real SchwabService -- a dim_asset rows query under a grant scoped to account 99000002 alone returns rows for all four ASSET_SEED CUSIPs, matching neither EXPECTED['A6-partial-grant-asset-cusips']['expect']['dim_asset_cusips'] (['SYN000001','SYN000002']) nor its 'excluded' list.",
+        "READ: app/integrations/schwab/integration.py:535,717,790 -- the ONLY dim_asset gate is `if q.dataset == 'dim_asset' and self._asset_policy is None: raise ServiceError(UNAVAILABLE, ...)`; the CONSTRUCTOR ARGUMENT's VALUE is never read again anywhere in the module or elsewhere in app/ (comp-find 'self._asset_policy' over app/ -- 4 hits, all three raise-sites plus the assignment; comp-find 'asset_policy' over app/ -- zero callers of build_default_service() ever pass one, confirmed by direct read of build_default_service()).",
+        "READ: tests/acceptance/conftest.py:322-328's own disclosed-seam-3 comment (already on CLOUD before this row, filed by a prior worker against a DIFFERENT criterion, W6-S6): 'nothing in the shipped code ever reads its VALUE ... a non-None sentinel is this harness's only way to reach dim_asset at all' -- this row is that same disclosed gap surfacing on ITS OWN acceptance criterion (A6) rather than as supporting evidence for A8's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C3 (semantics.py's own docstring, quoting it): 'For a partial-account grant restrict its CUSIPs to holdings of the authorized accounts for that same master/date, using a qualified position snapshot solely for policy selection.' A_ROWS.json A6's machine half: 'a partial-account grant limits dim_asset to the CUSIPs its accounts hold'.",
+    "world_is": "app/integrations/schwab/integration.py's `asset_policy` constructor argument gates dim_asset access by mere PRESENCE (is None / is not None) and nothing ever reads its value to compute a CUSIP restriction; no qualified-position-snapshot policy-selection code exists on the dim_asset query path at all. query.py and integration.py are outside this order's <paths> grant (BOUNDS: 'you grade; you do not fix').",
+    "notes": "ARMED: a live dim_asset query surface answers with every CUSIP under a partial-account grant instead of the PRD-stated subset, on the deployed-shape code path (real catalog, real entitlement, real DuckDB job) -- not a mock artifact. disarm_owner: 1.0.0_SA_CTO, matching W6-S6's routing (the OG-q cell surface this lands on is a CTO-ruled boundary). Recorded in this order's proof_of_spec.json under criterion OGV2-AC2 and in local-acceptance-run.result.md; OGV2-AC2 is graded FAIL by this row AND by W6-S6 independently, so disarming either alone does not flip AC2 green."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S9",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T22:20:00Z",
+    "one_line": "OGV2-AC4's per-module sweep of infra/aws/ec2/opal-gateway/tests/test_*.py (the one named red test S1 already deselects) is itself non-deterministic: two consecutive runs of the literal invocation each failed exactly one module, a DIFFERENT module each time, on causes unrelated to any NFRA_OPLGTW cell -- an event-loop-latency timing assertion (test_schwab_engine.py::test_ogq1_ac02, threshold 0.25s, measured 0.446s) and a random-secret substring collision (test_schwab_export.py::test_ogx1_ac01 asserting 's3'/'amazonaws'/'?' are absent from a base64url-random ticket, which occasionally contains them by chance).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN 1 (this worker, first pass): the AC4 loop over 21 modules -> 'FAIL(1): infra/aws/ec2/opal-gateway/tests/test_schwab_engine.py' / 'MODULES: 21 FAILED-MODULES: 1'; the module's own failure: test_ogq1_ac02 asserts child_lag < 0.25, measured 0.446s over 193 samples (a probe of event-loop responsiveness while a child process runs a CPU-bound job) -- re-run of that SAME module ALONE immediately after: '13 passed in 58.49s', no failure.",
+        "RUN 2 (this worker, second pass, ~10 minutes later, box otherwise busy): the SAME AC4 loop -> 'FAIL(1): infra/aws/ec2/opal-gateway/tests/test_schwab_export.py' / 'MODULES: 21 FAILED-MODULES: 1'; the module's own failure: test_ogx1_ac01 asserts '?' not in url and 'amazonaws' not in url.lower() and 's3' not in url.lower() on a schwab_prepare_download URL whose fragment is secrets.token_urlsafe(32) -- this run's random secret happened to contain the substring 's3' (inside a longer run of characters), tripping the check on pure chance.",
+        "Neither failing test imports or exercises tests/acceptance/conftest.py or test_local_acceptance.py; both are pre-existing modules this order's <paths> grant does not include and this worker did not touch."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGV2-AC4's own invocation and expect: '^MODULES: [1-9][0-9]* FAILED-MODULES: 0$' -- a single deterministic-looking pass/fail line.",
+    "world_is": "The line is not deterministic: at least two modules outside this project's write surface carry their own flakiness (a hardcoded wall-clock timing threshold sensitive to box load, and a fixed-length random-token substring check with a nonzero collision probability per run), so AC4 as literally invoked can fail on an UNRELATED module on any given run regardless of NFRA_OPLGTW's own code. This is IN ADDITION to NFRA_OPLGTW-S1's already-known, already-deselected red test -- these two are neither named nor deselected by the criterion's own -k filter.",
+    "notes": "INERT: no NFRA_OPLGTW cell is implicated, and the flake rate/root cause is fully characterized in evidence above (not merely asserted). Recorded because OGV2-AC4's literal invocation is graded on this run's actual output (RUN 2, FAILED-MODULES:1, itself a FAIL against the criterion's regex) and a reader of that FAIL should not conclude an OG-v-2 regression caused it. Repair (fixing the threshold or the substring check, or widening the -k deselect) is outside this order's <paths> grant."
   }
 ]
 ```
