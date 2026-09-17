@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_REBRND~1</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-6` | **outcome_ref:** FWD-5 | **depends_on:** `RB-s-1` | **slot:** ~1, queue position 6
 
@@ -26,6 +26,23 @@
 **`prefers-reduced-motion` is respected**, as the live site does [3/3].
 
 **Evidence is a keyboard walk with a screenshot at every stop**, over the three routes AND every touched interactive surface in RB-s-12's inventory. The walk also carries III.9: the system survives a raised browser default font size.
+
+**ALSO -- ONE BOUNDED ACT FOLDED IN BY THE ISSUER (2026-09-14, row `DSGN_REBRND-W2-S15`).** RB-s-8 rewrote the standing
+colour law onto `portal/DESIGN.md`, but four source COMMENTS outside its grant still state the superseded 2026-07-15
+silver-canvas law as current, and a builder reading them learns the wrong law: `src/ui/components/panels/README.md:5`,
+`src/pages/TicketCenter/TicketCenter.tsx:11`, `src/lib/designTokens.ts:10` and `:40`. Rewrite those four COMMENTS so
+they state the light canvas `#F4F6FA` and point at `portal/DESIGN.md` (clause C3) as the law, saying the 2026-09-11
+ruling supersedes the 2026-07-15 archetype. **Comments only -- change no code, no token, no value.** Evidence: the
+same census the row used, re-run after the edit, printing zero hits.
+
+**ALSO -- A SECOND BOUNDED ACT FOLDED IN BY THE ISSUER (2026-09-14, row `DSGN_REBRND-W1-S19`, BLOCKING at RB-s-5).** The
+app shell spends the accent on every route, so no view can reach contract clause C8's ONE persistent primary action:
+`src/App.tsx:189` fills the ACTIVE SIDEBAR ITEM with the accent and gives it `shadow-md` (a drop shadow, which C11
+bans), and `src/App.tsx:382` fills the AVATAR with the accent. Move the active nav item to WEIGHT AND RULE in the
+band's ink -- the same active-state grammar RB-s-5 shipped in `src/ui/components/Controls.tsx` -- and drop its
+shadow; take the avatar off the accent. **Those two class edits only** -- no layout, no route, no behaviour. Evidence:
+on the three routes, the count of accent-filled elements contributed by the shell is printed before and after (after
+must read 0), and the `/positioning` capture is read.
 
 ### ACCEPTANCE
 
@@ -62,6 +79,9 @@
 <paths>
 portal/src/index.css
 portal/src/ui/
+portal/src/lib/designTokens.ts
+portal/src/pages/TicketCenter/TicketCenter.tsx
+portal/src/App.tsx
 org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

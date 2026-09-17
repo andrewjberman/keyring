@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_REBRND~2</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-11` | **outcome_ref:** FWD-8 | **depends_on:** -- (chain head, chain B) | **slot:** ~2, queue position 1
 
@@ -27,6 +27,23 @@
 
 **`ag-grid` is a GRID, not a renderer**, and is explicitly OUT of this census. Do not touch it.
 
+**AMENDED BY THE ISSUER at the RB-s-11 drain, on row `DSGN_REBRND-W2-S1`.**
+**`@visx/wordcloud` and `@visx/text` are OUT of this census too, for the same reason `ag-grid` is.**
+`portal/src/components/market-performance/TopicCloud.tsx` draws a WORD CLOUD. recharts has no word
+cloud, so migrating it would change WHAT THE CHART SHOWS -- which this cell forbids. The worker
+filed the row and stopped on the criterion, which was the correct act; **the defect was in the
+criterion, which named `visx` in the retired set unconditionally.**
+
+A word-cloud primitive carries **no axis, no tick, no tooltip and no legend**, so it is not in the
+population FWD-8 grades. `@visx/scale` stays retired (it IS chart scaffolding and is already gone).
+
+⛔ **The carve-out is BOUNDED so it cannot creep:** `visx` must appear in **exactly one** file, and
+that file must be `TopicCloud.tsx`. A second visx importer re-opens this.
+
+**Also now in scope (row `DSGN_REBRND-W2-S2`):** `portal/vite.config.ts`'s `manualChunks` still names
+`apexcharts` and `nivo` chunks for packages that no longer exist. Dead build config; remove those
+entries.
+
 **One shared axis / tick / tooltip / legend treatment** is applied to every chart, read from RB-s-7's contract. **This cell consumes the contract; it does not define the treatment itself.**
 
 **Enumerate the migrated files** in the result file -- the list is the evidence, not the count.
@@ -36,11 +53,11 @@
 <criterion id="RB11-AC1" cell_refs="RB-s-11"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0</expect></criterion>
 `RB11-AC1` -- typecheck clean -- the change compiles.
 
-<criterion id="RB11-AC2" cell_refs="RB-s-11"><invocation>cd <WS> && timeout 120 python -c "import pathlib,collections; libs=['recharts','apexcharts','@nivo','visx','lucide-react','phosphor-react','framer-motion']; c=collections.Counter(); [ [c.__setitem__(l,c[l]+1) for l in libs if l in t] for t in [p.read_text(encoding='utf-8',errors='replace') for p in pathlib.Path('portal/src').rglob('*.tsx')] ]; retired=sum(c[l] for l in ['apexcharts','@nivo','visx','phosphor-react']); print('LIB-FILE-COUNTS:',dict(c),'RETIRED-IMPORTS:',retired); print('VERDICT:','ONE-RENDERER' if retired==0 else 'MULTI-RENDERER')"</invocation><expect>VERDICT: ONE-RENDERER</expect></criterion>
-`RB11-AC2` -- apexcharts, @nivo, visx and phosphor-react all read ZERO importing files while recharts and lucide survive. **At issuance the retired set totals 6 files**, so the verdict moves only when the migration happens.
+<criterion id="RB11-AC2" cell_refs="RB-s-11"><invocation>cd <WS> && timeout 120 python -c "import pathlib,collections; libs=['recharts','apexcharts','@nivo','visx','lucide-react','phosphor-react','framer-motion']; c=collections.Counter(); files={}; [ [ (c.__setitem__(l,c[l]+1), files.setdefault(l,[]).append(str(p))) for l in libs if l in p.read_text(encoding='utf-8',errors='replace') ] for p in pathlib.Path('portal/src').rglob('*.tsx') ]; retired=sum(c[l] for l in ['apexcharts','@nivo','phosphor-react']); vx=files.get('visx',[]); wc=(len(vx)<=1 and all('TopicCloud' in f for f in vx)); print('LIB-FILE-COUNTS:',dict(c),'RETIRED-IMPORTS:',retired,'VISX-FILES:',vx); print('VERDICT:','ONE-RENDERER' if (retired==0 and wc) else 'MULTI-RENDERER')"</invocation><expect>VERDICT: ONE-RENDERER</expect></criterion>
+`RB11-AC2` -- apexcharts, @nivo and phosphor-react all read ZERO importing files, AND `visx` is confined to AT MOST ONE file which must be `TopicCloud.tsx` (the word cloud carved out above). A second visx importer fails this criterion. The per-library counts and the visx file list print beside the verdict.
 
-<criterion id="RB11-AC3" cell_refs="RB-s-11"><invocation>cd <WS> && timeout 120 python -c "import json,io; d=json.load(io.open('portal/package.json',encoding='utf-8')).get('dependencies',{}); r=[k for k in ['apexcharts','react-apexcharts','@nivo/core','@nivo/radar','@visx/scale','@visx/text','@visx/wordcloud','phosphor-react'] if k in d]; print('RETIRED-STILL-PRESENT:',len(r),r); print('VERDICT:','REMOVED' if len(r)==0 else 'STILL-DECLARED')"</invocation><expect>VERDICT: REMOVED</expect></criterion>
-`RB11-AC3` -- the retired packages are removed from `package.json`, not merely unimported. **At issuance this reads 8.**
+<criterion id="RB11-AC3" cell_refs="RB-s-11"><invocation>cd <WS> && timeout 120 python -c "import json,io; d=json.load(io.open('portal/package.json',encoding='utf-8')).get('dependencies',{}); r=[k for k in ['apexcharts','react-apexcharts','@nivo/core','@nivo/radar','@visx/scale','phosphor-react'] if k in d]; print('RETIRED-STILL-PRESENT:',len(r),r); print('VERDICT:','REMOVED' if len(r)==0 else 'STILL-DECLARED')"</invocation><expect>VERDICT: REMOVED</expect></criterion>
+`RB11-AC3` -- the retired packages are removed from `package.json`, not merely unimported. **AMENDED: `@visx/text` and `@visx/wordcloud` are no longer in the retired set** -- they are the word cloud's, carved out above. `@visx/scale` stays retired. The list now names SIX packages.
 
 <criterion id="RB11-AC4" cell_refs="RB-s-11"><invocation>cd <WS> && timeout 120 python -c "import json,io; d=json.load(io.open('portal/package.json',encoding='utf-8')).get('dependencies',{}); a=[k for k in ['framer-motion','motion'] if k in d]; print('ANIMATION-LIBS:',len(a),a); print('VERDICT:','SINGLE' if len(a)==1 else 'DUPLICATED')"</invocation><expect>VERDICT: SINGLE</expect></criterion>
 `RB11-AC4` -- exactly one animation library remains. **At issuance this reads 2** (`framer-motion` and `motion` both declared).
@@ -67,6 +84,7 @@
 
 <paths>
 portal/package.json
+portal/vite.config.ts
 portal/src/
 portal/bun.lock
 org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/investigations/INVESTIGATION_v1.md

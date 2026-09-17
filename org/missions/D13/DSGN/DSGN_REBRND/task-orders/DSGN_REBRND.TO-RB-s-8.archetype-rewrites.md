@@ -1,13 +1,29 @@
 # TO DSGN_REBRND.TO-RB-s-8 -- the archetype rewrites and the review loop's clause-cite step
 
+> **AMENDMENT 1, 2026-09-14, issuer `2.0.0_SA_COO~D` -- REOPENED (status set back to pending) FOR ONE ACT: A ROW RE-MINT.**
+> Row id `DSGN_REBRND-W2-S12` was minted in this worktree while the RB-s-7 builder minted the same id in another;
+> the builder's is merged to the feature branch first. Re-mint THIS branch's W2-S12 as `DSGN_REBRND-W2-S16` -- the row
+> id itself, the proof instance's `surprises` entry, and every mention in your result file -- touching nothing else,
+> re-validate, commit, and flip complete. W2-S13, W2-S14 and W2-S15 do not collide and keep their ids.
+>
+> **AMENDMENT 1b, 2026-09-14, issuer `2.0.0_SA_COO~D` -- ON ROW `DSGN_REBRND-W2-S17`: THE AUDITED OVERRIDE IS AUTHORIZED FOR
+> THE RE-MINT COMMIT, AND ONLY THAT COMMIT.** Your refusal to use it unasked was correct. This IS the case the drain
+> doctrine names: a collision found BEFORE the merge is a re-mint; found after, it is permanent. The row gate reads the
+> rename as a deletion because W2-S12 is already committed on THIS unmerged branch; its commit-time escape is the
+> audited line, and the issuer authorizes it here. Re-apply the same re-mint (W2-S12 -> W2-S16: the row id, the proof
+> instance's `surprises` entry, the result file's mentions), and put this line VERBATIM in the commit message body:
+> `# surprise-row-override: pre-merge re-mint of DSGN_REBRND-W2-S12 -> W2-S16 on unmerged branch wk-dsgn_rebrnd-2c; the id collides with the RB-s-7 builder's W2-S12 already on feature/d13-visual-elevation @ef46d4740e; authorized by issuer 2.0.0_SA_COO~D, RB-s-8 Amendment 1b (row W2-S17)`
+> The override covers that commit only. W2-S17 stays in the channel as the record of this; do not edit it. Then
+> re-validate, commit the flip to complete, and report.
+
 <to_id>DSGN_REBRND.TO-RB-s-8</to_id>
 <project>DSGN_REBRND</project>
-<issued_to>0.9.0_WK_DSGN_REBRND~1</issued_to>
+<issued_to>0.9.0_WK_DSGN_REBRND~2</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
-**Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-8` | **outcome_ref:** FWD-6 | **depends_on:** `RB-s-7` | **slot:** ~1, queue position 8
+**Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-8` | **outcome_ref:** FWD-6 | **depends_on:** `RB-s-7` | **slot:** ~2, queue position 2 (re-seated 2026-09-14 by `2.0.0_SA_COO~D` with RB-s-7; was ~1, position 8)
 
 ---
 
@@ -78,7 +94,7 @@ org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/investigations/INVESTIGATION_
 
 <proof_of_spec>
 Criterion ids: `RB8-AC1` .. `RB8-AC5`. Instance at
-`org/missions/D13/DSGN/DSGN_REBRND/deliverables/0.9.0_WK_DSGN_REBRND~1/DSGN_REBRND.TO-RB-s-8.archetype-rewrites.proof_of_spec.json`
+`org/missions/D13/DSGN/DSGN_REBRND/deliverables/0.9.0_WK_DSGN_REBRND~2/DSGN_REBRND.TO-RB-s-8.archetype-rewrites.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
 `python .tools/proof-of-spec-check.py <instance> RB8-AC1,RB8-AC2,RB8-AC3,RB8-AC4,RB8-AC5` BEFORE the `complete` flip.
 Every `judgment="true"` criterion is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` at L9 -- **a `PASS` or `FAIL` on a judgment row is INVALID.**
@@ -98,4 +114,4 @@ comp-adversary: RUN at L5 on the PRD -- 3 of 3 cited commits verified; 19 paths,
 lane: the `<paths>` block IS the grant (RULING 1). `design/` resolves UNDEFINED in `.owned-paths.yaml` for every agent -- a refusal there is a BLOCKING row, never an override.
 </preflight>
 
-Seating: slot ~1, queue position 8; fresh worktree pair branched from `feature/d13-visual-elevation`.
+Seating: **slot ~2, queue position 2** (re-seated 2026-09-14 by `2.0.0_SA_COO~D` together with RB-s-7, its only dependency: both write surfaces -- `portal/DESIGN.md` here, the four law files + the frontend-dev skill + `ui-smoke.mjs` in this cell -- are disjoint from slot ~1's `portal/src/` queue); fresh worktree pair branched from `feature/d13-visual-elevation` AFTER RB-s-7 drains, so the contract this cell rewrites onto is on the branch.
