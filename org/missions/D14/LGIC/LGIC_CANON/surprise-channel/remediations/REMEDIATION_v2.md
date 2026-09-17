@@ -85,8 +85,8 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "The criterion plants the removal its docstring promises -- on a scratch copy, asserting CONTENT-DIFF: 1 and the dropped item's path, then asserting CONTENT-DIFF: 0 on the clean copy. Until it does, K3-J1 is the only thing certifying that arm, which is why this seat ran the pair by hand rather than grading a reading. THE ARM ITSELF IS SOUND -- that is the finding, and it was NOT knowable from the criterion.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W3-S2",
@@ -103,8 +103,8 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "Repaired in round, and the remediation owed is not the fix but the LESSON: the first repair left a second instance of its own defect class, which is the signature of patching the instance rather than the class. A checker that parses another tool's human-readable output should assert on a FIXTURE of that output with every label shape present, so the class is closed once. Graduated rather than dismissed for that reason -- W3-S3 closes the instance, not the class.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W8-S4",
@@ -120,8 +120,8 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "Count the ROWS of the inputs table whose sovereign column is set, not the occurrences of a token. Same class as W2-S3, W3-S2 and W5-S2: the printed sentence names one object and the code counts another, and the number looks measured either way.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W5-S2",
@@ -158,9 +158,9 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "What actually enforces a blind is the order's read-list plus the worker's own attestation, and the round should say so where it currently implies the check does it. A stronger instrument exists and is cheap: have each judge state its base commit and assert that the sibling's answer file does not EXIST at that commit -- which is what round 1's blindness check did, and it observes the world rather than the output. This seat notes that round 1's version was the better one and round 2's is a regression in instrument quality, though not in outcome.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~G", "at": null},
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~G", "at": "2026-09-17T17:49Z"},
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-S11",
@@ -178,9 +178,9 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "The withdrawal is the right disposition and this seat endorses it: holding a round open on another project's edit is worse than withdrawing the order, PROVIDED the obligation travels -- and it does, verbatim in the status note and in this row. What is owed is the CARRY, not a repair: round 3 re-cuts CN-k-4 once the adjacency test lands in NAMING_SCHEMA.json (LGIC_NAMING's cell, under ruling A-3), and until then THE CANON AND THE SCHEMA MAY DISAGREE AT HEAD -- which is a live state of the estate and should be stated as such in the round-2 analysis rather than left inside a withdrawn order's status note.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~G", "at": null},
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~G", "at": "2026-09-17T17:49Z"},
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W9-S1",
