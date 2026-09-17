@@ -7268,6 +7268,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-15's AC2 asserts the Thesis tab draws the driver as a NUMERIC SERIES and renders a classed reason where there is none, and its expect states that a component reading only the series NAME is NOT met.",
     "world_is": "Two of its three bars were already met before any work, and the bar meant to separate points from name summed a token that reads 0 with a token that reads 7, so it could not make that separation at all. The property is only decidable on the served body, where points_count reads 0 against a driver_series and driver_unit that already serve.",
     "notes": "Sixth criterion defect found by issuer dry run today and the fourth SILENT PASS of the family (AMENDMENT 11 rk-8, 13 rk-14, 14 rk-12, and this one; AMENDMENT 12 was the opposite sign and 15 was a malformed block). The repair does not weaken the cell: the page keeps its one real bar and the points half moves to AC4 on the SERVED plane, which is strictly harder. The BA_US_Equity re-run lands on this order because the served points cannot move until BA's document is regenerated under THIS cell's producer change; AMGT-rk-18 carries an explicit instruction not to run it. AC3 is byte-identical; no grant, bound or cell text moves."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W25-S10",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~25",
+    "surfaced_at": "2026-09-17T02:47:38Z",
+    "one_line": "AMGT-rk-14's fit.py PRESET_SOURCE and its module docstring cited the WRONG portal gitlink commit for the DIVZ/PFOE preset codes (be8cf218743af0c04a4d57b908b28cf7435e119d), while this tree's HEAD actually records portal at 2453a7b4c6b7ff91ea89db499890a9486265d1a0 -- content-identical at both commits for this one file, so no code VALUE was wrong, but the provenance citation was.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD portal in the worktree (/c/tmp/wk-amgt-12-25) and in the main workspace both read commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0; the main workspace's own portal/ checkout is at HEAD 2453a7b4c6b7ff91ea89db499890a9486265d1a0 too.",
+        "git cat-file -e confirms be8cf218743af0c04a4d57b908b28cf7435e119d exists in the portal history (a real ancestor commit, 'Merge commit b616b759 into wk-amgt_resapp-12-23-portal'), just not the one this tree's HEAD points at.",
+        "diff of portal/src/pages/SecurityScanner/constants.ts between the two commits: EMPTY (byte-identical), so the 13 DIVZ / 16 PFOE codes and weights fit.py carries are unaffected -- this is a citation defect, not a data defect.",
+        "grep for the wrong hash across lib/research/ found exactly one file, lib/research/posture/fit.py, at two lines (module docstring line 20, PRESET_SOURCE line 67)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Corrected in the same commit that filed this row (both citations in lib/research/posture/fit.py rewritten to 2453a7b4c6b7ff91ea89db499890a9486265d1a0, with a note recording the correction); byte-identical content at both commits means no code VALUE was ever wrong, only the provenance citation, so hazard_standing is INERT (never carried a future-operation risk) rather than ARMED, and no disarm_owner is owed.",
+    "spec_asserts": "fit.py's own comment claimed 'be8cf218743af0c04a4d57b908b28cf7435e119d -- the commit THIS tree's HEAD records for the portal gitlink'.",
+    "world_is": "This tree's HEAD records 2453a7b4c6b7ff91ea89db499890a9486265d1a0 for the portal gitlink, not be8cf218743a. The claim was false about WHICH commit, though the bytes read from either commit are identical for this file, so PRESETS/PRESET_VALUE_CODES/the fit scores are unaffected.",
+    "notes": "Found while re-grounding AC2 on resuming this cell (a citation-aging check per CLAUDE.md Rule 27's own warning that a quoted/cited commit can go stale silently). Fixed same-turn by this worker (0.9.0_WK_AMGT_RESAPP~25) in the same commit that lands this row; all posture and peers unit tests re-run clean (48 of 48) after the edit."
   }
 ]
 ```
