@@ -445,6 +445,13 @@ then COO~M for MCPINDEX."* Typos his, preserved.
   Opal infrastructure; unrecoverable acts (recursive deletion, S3 object or version deletes, dropping tables, stopping
   EC2, destructive git); money and contracts; the portal freeze and any promote; and any never-widen sign-off on an
   applied policy, which stays a two-signature act.
+- **THE ONE CARD, AND ITS FALLBACK -- Andrew-direct 2026-09-17 ~23:5xZ at THIS terminal, VERBATIM AND ENTIRE:**
+  *"Have CTO adjudicate the ANDREW_CARD.md if I'm not available."* LGIC_LGCTFM cell `LT-v-1` produces
+  `ANDREW_CARD.md`, a worker cannot deliver it, and FWD-4 stays APPLIED until it is read. So: this seat carries the
+  card to ANDREW FIRST; if he is not available, the SAME card goes to `1.0.0_SA_CTO`, which adjudicates it, and the
+  outcome is graded against that answer -- never against silence and never self-graded here. Read exactly as narrow
+  as the sentence: ONE artifact, and the other reserved classes above are untouched. Record:
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md`.
 - **STOP-CONDITION:** both projects DONE on the register per the skill's completion test -- read, never declared -- or
   Andrew's stand-down. On DONE this lane writes its final log, DELETES its cron, strikes this clause and says so,
   because the freed slot is what `2.0.0_SA_COO~T` (MDPF_TAXSMA) and then `2.0.0_SA_COO~M` (NFRA_MCPINDEX) are waiting
