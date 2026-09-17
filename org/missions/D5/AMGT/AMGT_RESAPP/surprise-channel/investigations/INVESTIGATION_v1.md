@@ -7483,6 +7483,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Both never-widen halves: the change-management entry opens before the first live act and closes on the post-act census, carrying the targeted plan's resource list; the act stays inside each half's blast radius.",
     "world_is": "The act stayed inside both blast radii on every limb measured, and no route regressed; but it landed with no change-management entry, no recorded plan list and no recorded census, so a successor has no ledger rollback anchor.",
     "notes": "The retroactive entry is 2.0.0_SA_COO~Z's act as issuer (the worker cannot be messaged; that seat wrote the rk-2 rollback and fix-forward entries). The apply-time plan list is NOT reconstructed -- it is recorded as not recorded, and the 0-diff re-plan stands beside it as the present-tense proof. Dispositions of S141, S142 and this row are 3.0.0_SA_CVO~Z's at L9. Broadcast: 2.0.0_SA_COO~Z and 3.0.0_SA_CVO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S144",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-17T04:38:34Z",
+    "one_line": "ROOT CAUSE of row S143's fallback observation ('today serves 2026-09-10 dated true'): integrations/bloomberg/research/price_axis_pull.py never writes the _CURRENT pointer item read_generation_pointer()/_find_latest_served_pointer() require -- 0 occurrences of '_CURRENT', 'generation_id' or 'GENERATION_COMPLETE' in that producer's source. TRENDING_PRICE#2026-09-15 carries 32 real, complete per-ticker rows (verified) but no pointer, so it is INVISIBLE to any pointer-based reader; TRENDING_PRICE#2026-09-10 carries exactly one item, ticker=_CURRENT, which is why the dated fallback can see 2026-09-10 and nothing newer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "DynamoDB opal-harvest-security-metrics, Query axis_date='TRENDING_PRICE#2026-09-15': 32 items, all real per-ticker rows (2317 TT, 9433 JP, ..., ZURN SW) with px_end, score, rank, computed_at 2026-09-16T20:20Z. ProjectionExpression ticker over the same partition: 32 distinct tickers, ZERO '_CURRENT' sort key.",
+        "Same query on axis_date='TRENDING_PRICE#2026-09-10': exactly ONE item, ticker='_CURRENT' -- the pointer, with no per-ticker rows under that date at all.",
+        "lib/research/api/scoped_amgt.py:read_generation_pointer(axis, as_of_date), on the deployed branch (wk-amgt_resapp-12-24 @89f6a35e46): GetItem(axis_date=f'{axis}#{date}', ticker='_CURRENT'), returns None if absent -- read as ABSENT, never as an empty membership.",
+        "_find_latest_served_pointer walks backward day by day calling read_generation_pointer and requires pointer.get('state')==GENERATION_COMPLETE and pointer.get('generation_id') truthy to count a date as a valid fallback target.",
+        "Direct invoke of the deployed adapter, GET .../lead-panel/rankings/trending/price?as_of=2026-09-16 (the day after the true latest data, 2026-09-15): as_of_date returned 2026-09-10, dated true -- confirming the fallback walks straight past the real 2026-09-15 data because it carries no pointer, and lands on the one historic 2026-09-10 pointer instead.",
+        "price_axis_pull.py (integrations/bloomberg/research/): grep for '_CURRENT', 'generation_id', 'GENERATION_COMPLETE' -- 0, 0, 0 occurrences. The producer writes bare per-ticker rows under the date partition and never writes a completion pointer at all."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The dated fallback (AMGT-rk-7 AC4) is meant to serve the LATEST generation an axis actually has, so a consumer sees the freshest data the pool holds rather than a stale or empty result.",
+    "world_is": "For TRENDING_PRICE specifically, the freshest real data (2026-09-15, landed by AMGT-rk-17 this round) is structurally invisible to the fallback, because its producer's write contract and the reader's read contract disagree on what marks a generation COMPLETE. The fallback is not misbehaving; it is correctly finding the newest generation ITS CONTRACT recognizes, which happens to be five days stale.",
+    "notes": "Not a regression and not a defect in AMGT-rk-7's own deploy: AC4 as written and graded passes honestly by its own logic, and row S143 (the signer's independent verification) already confirms the fallback is inside its signed bound. This row is the ROOT CAUSE behind that observation, for L9/L10: closing the gap needs either price_axis_pull.py writing a _CURRENT/generation_id pointer on completion, or the fallback accepting TRENDING_PRICE's bare-row convention as a second valid COMPLETE shape -- a producer or reader-contract change outside any order's grant this round, and a round-13 candidate."
   }
 ]
 ```
