@@ -99,7 +99,17 @@ WORKING.**
 ## 5. PROOF OF SPEC -- one clause per criterion (every invocation is LITERAL; record it byte-for-byte; each runs under timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-rk-21"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.identity.build_universe --print-denominators 2>&1 | grep -i "POSITIONING CHAIN"</invocation><expect>a fresh POSITIONING CHAIN line prints holdings_input, resolved and unresolved counts, all nonzero and internally consistent (resolved + unresolved == holdings_input) -- if `build_universe.py` has no such CLI flag, the worker imports and calls the module's own denominator-printing function directly, names the actual invocation used, and re-runs this exact substitute</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rk-21"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
+from lib.research.identity import build_universe, positioning_chain
+plane = build_universe.read_etf_plane()
+non_cash = {}
+for row in plane['rows']:
+    if row.get('is_cash') is True or not row.get('ticker'):
+        continue
+    non_cash.setdefault(str(row['ticker']).upper(), {'ticker': row['ticker'], 'cusip': row.get('cusip'), 'domicile': row.get('domicile')})
+identities, denom = positioning_chain.build_positioning_identities(list(non_cash.values()), as_of=None)
+print('POSITIONING CHAIN: holdings_input=%d resolved=%d unresolved=%d id_kind_counts=%s bbg=%s classifications=%s trade_ids=%s' % (denom['holdings_input'], denom['resolved'], denom['unresolved'], denom['id_kind_counts'], denom['bbg_characteristics'], denom['etf_classifications'], denom['trade_security_identifiers']))
+"</invocation><expect>SUBSTITUTE recorded here per this criterion's own text: `python -m lib.research.identity.build_universe --print-denominators` is CONFIRMED ABSENT (no such CLI flag exists; `argparse` requires `--as-of` and errors rc=2) -- this is `build_universe.py`'s own denominator-printing logic (`read_etf_plane()`, `positioning_chain.build_positioning_identities()`, the identical print format at `build_universe.py:829-835`), called directly. Expect: a fresh POSITIONING CHAIN line prints holdings_input, resolved and unresolved counts, all nonzero and internally consistent (resolved + unresolved == holdings_input)</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rk-21"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import boto3, json
 s3 = boto3.client('s3')
@@ -127,3 +137,11 @@ per `org/standards/PROOF_OF_SPEC.schema.json`, graded by YOUR WORKTREE'S OWN
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+<status>complete</status>
+<round>13</round>
+<slot>~28</slot>
+<fabric>site-z</fabric>
+
