@@ -7673,6 +7673,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD C-FILINGS-ANALYZER v0.7: every cited claim RESOLVES to an exact passage; a claim whose tag resolves to nothing is HELD uncited, never rendered as evidence and never a chart input. analyze.py prompt: copy each PERIOD=VALUE 'EXACTLY as the notes state them and never inventing or estimating one'.",
     "world_is": "Three values the excerpt does not contain are persisted as the driver's cited series and served on the thesis route body. No person sees them today (the page draws only a SERVED chart), so INERT for the page; any other consumer of the route body reads unverified numbers labelled cited.",
     "notes": "Owner 2.0.0_SA_COO~Z at the round-13 cut, cell R13-A (ROUND_ANALYSIS.round12 s.3.1 item 1). Re-arms to ARMED if any consumer renders thesis_driver.points before R13-A's producer gate lands. The BA object is not rewritten by this row; R13-A's re-run replaces it under its own gate."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S149",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-17T07:30Z",
+    "one_line": "AMGT-rk-5 is COMPLETE and its three tab scores (ROBUSTNESS, PEERS V, DIVERGENCE D -- FWD-17 and FWD-20's reporting side) reach NO served surface: lib/research/scores/ exists at HEAD, but the adapter source references it 0 times, the deployed thesis and overlay bodies carry 0 score or divergence fields (not even D's 'ABSENT with its reason' the cell requires), the page on the chain-23 portal branch carries 0, and rk-5's three criteria test only code tokens and a unit suite. No other round-12 order carries the wiring and neither the L8 packet nor the round-12 slug names it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-rk-5 cell s.1: 'DELIVER THREE SCORES, each on inputs that exist: ROBUSTNESS (Thesis/Risk) ... PEERS V ... DIVERGENCE D ... FWD-20's house forecast does not serve yet, so D stays ABSENT with its reason'. <status> complete.",
+        "rk-5 criteria: AC1 token counts over lib/research/scores/*.py (fund-per-q, best-fperiod-override, name-check, classed-absent); AC2 guard tokens in the same files; AC3 a unittest discover over lib/research/api/tests -p 'test_*score*.py' with a nonzero collected count. No criterion invokes a route or reads the page.",
+        "git ls-tree HEAD lib/research/scores: __init__.py, classify.py, divergence.py, peers_v.py, robustness.py. git show HEAD:lib/research/api/scoped_amgt.py: 0 matches for 'diverg|lib.research.scores' (case-insensitive).",
+        "Deployed opal-amgt-scoped-api zHmPoWu9 (2026-09-17T03:27:57Z), direct GET of BA_US_Equity thesis (202,308 B) and overlay (77,450 B) at 07:2xZ: 0 matches each for 'diverg', 'house forecast', 'house_forecast', 'consensus'; a key walk for score/robust/diverg/forecast finds only posture.packs.*.counts.fit_scores and peers factor fields.",
+        "git -C portal grep -c -i diverg wk-amgt_resapp-12-23-portal -- src/pages/SecurityAnalysis src/api/endpoints/amgt-lead-panel.ts: no matching file.",
+        "comp-find 'lib/research/scores|ROBUSTNESS|PEERS V|DIVERGENCE D|divergence' over task-orders/: 10 hits in 82 files -- rk-5 itself plus prose mentions in rk-4, rk-13, rk-14 (none a served criterion). comp-find 'rk-5|scores' over ROUND12_L8_PACKET_20260917.md and REMEDIATION_v12.md: 0 hits in 2 files."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "rk-5 delivers three tab scores for the page, with DIVERGENCE D shown ABSENT with its reason until FWD-20's house forecast serves; FWD-20 (bar EXERCISED) is Divergence on the Model tab, ABSENT with a reason where the forecast does not serve.",
+    "world_is": "The scores exist as a tested library only. A person opening the page sees no Robustness, no Peers V and no Divergence -- not even a classed ABSENT -- and no cell of round 12 wires them to a route or a component. FWD-20 has no served surface of any kind.",
+    "notes": "Filed after the round-12 slug (@9f220eb13f) by 4.0.0_SA_CRO~Z under its item-5 role, for the round-12 L10 read and the next round's L8. Same shape as S137/S139/S141: a COMPLETE order whose criteria grade the code, not the served plane. Whether FWD-17's scores and FWD-20's D belong on the served plane this round or the next is the L10 reader's call; this row asserts only what is and is not served."
   }
 ]
 ```
