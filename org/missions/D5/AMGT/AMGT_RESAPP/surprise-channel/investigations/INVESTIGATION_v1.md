@@ -8142,6 +8142,33 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This session's dispatch step 10: 'If AC1/AC2 now PASS (BA reads points_count 3, source \"filing\"), flip this order's <status> to complete.' Step 5 names only the targeted plan and safe-apply; it does not name a local build precondition on an unrelated resource in the shared tf root.",
     "world_is": "AC1 now passes on the live, freshly-deployed plane; AC2 does not, for the exact upstream-cache reason AMGT_RESAPP-Z-W27-S3 already grounded before this deploy landed -- the deploy itself is correct and complete (blast radius, discriminator and census all match the co-sign exactly), and the code fails closed rather than mis-serving. The order's <status> is therefore left OPEN rather than flipped to complete, on AC2 alone. Separately, this shared terraform root cannot be planned at all from a worktree that never built the chatter-axis producer's local zip; this session resolved it with the tree's own existing build script rather than working around it.",
     "notes": "Owner of the drafting/v1/BA_US_Equity.json rebuild remains open per S3's own note: outside this order's <paths> and outside the producer order's grant, not repaired here. This row supersedes no disposition of S3/S4/S5 -- S4 (auth header) is resolved by this session's corrected invocation text already present at HEAD; S5 (missing co-sign) is resolved by the CTO half at e3fc4495cf plus this session's own dispatching COO instruction, though no separate COO-half ledger file exists -- stated as a fact for the record, not adjudicated here."
+  }  ,
+  {
+    "id": "AMGT_RESAPP-Z-W31-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~31",
+    "surfaced_at": "2026-09-17T20:30:00Z",
+    "one_line": "The linked worktree assigned for AMGT-rk-19 page half carries an EMPTY portal/ gitlink -- no package.json, no src/, no node_modules -- so neither this order's <paths> under portal/ nor its AC1/AC2 invocations can be satisfied as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD portal in worktree wk-amgt-13-31-portal (HEAD ba9afc0dc4b46708852f2cada2032eed082e8465) reads '160000 commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0 portal' -- a valid gitlink pointer -- but `ls -laR portal` in that same worktree shows only '.' and '..': the submodule content was never checked out in this linked worktree.",
+        "cat .gitmodules in both this worktree and the main workspace checkout returns 0 bytes -- there is no URL mapping for `portal`, so the standard `git submodule update --init` cannot resolve it here; `git submodule status` fails with 'no submodule mapping found in .gitmodules for path' (for an unrelated path, models/factor_scanner, confirming .gitmodules is genuinely empty of entries).",
+        "The main workspace's own portal/ directory (C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal) IS populated, as an independently-managed nested git repo (origin https://github.com/Opal-Capital/portal.git, branch DEV, HEAD 03a3bf8f25) whose object database does contain commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0 (git cat-file -t confirms 'commit') -- so the content exists somewhere reachable locally, just not inside this linked worktree.",
+        "The literal AC1 invocation (cd portal && python glob over src/pages/SecurityAnalysis/**/*.tsx) ran clean, rc=0, and printed 'components 0' with every label/passage count at 0 -- a false-negative-shaped PASS, not a genuine one: the counts are 0 because the directory does not exist, not because the label/link work is absent from real source.",
+        "The literal AC2 invocation (cd portal && npx tsc -b) ran clean, rc=0, and printed npx's own 'This is not the tsc command you are looking for' banner -- there is no package.json/node_modules in this portal/ at all, so no build tooling is even resolvable, let alone runnable against real source.",
+        "The sibling worktree for chain B (wk-amgt-13-batch-b, same HEAD ba9afc0dc4) shows the identical empty portal/ gitlink, so this is not specific to this one worktree slot."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's first-act instruction: 'tests that org/, .tools/ and the paths in section 3 exist; if any is absent, STOP with a BLOCKING row.' Section 3's <paths> names portal/src/pages/SecurityAnalysis/ and portal/src/api/endpoints/amgt-lead-panel.ts as surfaces this worker reads and writes, and AC1/AC2 both assume a real, buildable portal checkout under this worktree.",
+    "world_is": "Neither named portal path exists in this worktree -- portal/ is an unpopulated gitlink (0 files, no package.json) because no .gitmodules URL mapping exists to init it and no supported mechanism in .tools/ populates a portal checkout inside a linked worktree. This worker therefore STOPS per the order's own first-act instruction rather than cloning/reconstructing portal content into the worktree from another local checkout (CLAUDE.md's bar: 'never rebuild, extract or reconstruct the tree to make an order executable'). AC1 and AC2 are recorded FAIL against their real expectation (their literal invocations return rc=0 but on an empty tree, which is not the 'at least one component' / 'no NEW errors on a real build' bar either criterion names). This is ARMED because chain A's queue (rk-19 page half, then rk-30 page half, then rk-26) is the SAME single writer for every portal edit this round, per this order's own text -- so whichever worktree carries chain A's remaining page-half orders will hit the identical block unless the portal gitlink is populated in it before the next cell is dispatched.",
+    "notes": "No fix attempted: this worker's <paths> grant covers only files under portal/, not the mechanism that would populate portal/ itself (no .tools/ path granted, and even if one were, .gitmodules carries no URL to init from). Disarm requires either (a) a .gitmodules entry restoring the standard submodule-init path, or (b) the dispatching COO ensuring each portal-touching worker's linked worktree is created with portal/ already checked out at the gitlink's recorded commit, before the next chain-A cell is issued."
   }
+
 ]
 ```
