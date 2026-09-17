@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~1, 2026-09-17: S1R1-AC1..AC6 PASS-by-output (check_lt_r1.py s1-valid/s1-bare-value/s1-one-api/s1-no-instrument/s1-node-types/s1-enums, rc=0 each); S1R1-AC7 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9). proof_of_spec.json VALID (proof-of-spec-check.py rc=0) at commit a8fa9e1f8d. No surprise row filed.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves current) | **Decomp cell:** `LT-s-1` (decomposition v1.1) | **outcome_ref:** FWD-1, FWD-3 | **depends_on:** none -- level 0; LT-e-1 continues on this slot
 
