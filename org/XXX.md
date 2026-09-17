@@ -366,19 +366,6 @@ superseded is restored by the NEW row below, which is the live arm. ⚠ **THE RO
 by the `~W` lanes and that record stands; what is set down is the ARM and the supersession, never the work. Nothing re-arms
 from this row. Ruled and landed by `1.0.0_SA_CTO~Z` (its own carrier), broadcast same turn, push state LOCAL.
 
-`1.0.0_SA_CTO~Z` **[FABRIC: SITE-Z -- arm ONLY on site z]** **`/self-drive AMGT_RESAPP` -- ARMED.** Authority:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_13xxZ_SELF_DRIVE_AMGT_RESAPP_REARMED.md`, with terms from
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_043xZ_CTOZ_GOAL_AND_SELF_DRIVE_AMGT_RESAPP.md`.
-- **SCOPE:** AMGT_RESAPP only (D5, site-Z). **CADENCE:** 30 minutes via CronCreate.
-- **THIS LANE ADJUDICATES** every adjudicable call in scope. **RESERVED to Andrew:** vendor or egress off Opal
-  infrastructure; unrecoverable acts; money and contracts; the portal freeze and any promote; the harvest collection
-  mechanism and cadence (`@9db2a36cdc`); the LD-0522 push cadence.
-- **Each tick** also checks that the seat owing the next limb is moving, and routes a stalled owing seat to
-  `0.0.0_AB_MSTR~Z`. A keystroke into another seat stays operator-initiated.
-- `paired_with`: `2.0.0_SA_COO~Z` at its own `/canonical-flow` limb.
-- **STOP-CONDITION:** AMGT_RESAPP CLOSED (COMPLETION_REPORT and COMPLETION_GRADES on the same outcomes, all REALIZED,
-  tree check admitting the CLOSED row); or HELD-AT-STOP; or Andrew's stand-down. A successor at this lane re-arms off
-  this row while the scope is not DONE.
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
