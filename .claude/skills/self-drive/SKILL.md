@@ -1,6 +1,6 @@
 ---
 name: self-drive
-description: Drive ONE scope of the directive register to completion on a self-ending loop: `/self-drive D4`, `/self-drive <CODE>`, `/self-drive sitez directives`. Each tick runs /open-calls restricted to the scope, pitches every adjudicable call with this seat's rec to the CVO lane, and proceeds on the verdicts; persists until the register reads the scope done, then turns itself off; delta-driven log. While armed, the scope is the only work. Operator-initiated; NOT /drive.
+description: Drive ONE scope of the directive register to completion on a self-ending loop: `/self-drive D4`, `/self-drive <CODE>`, `/self-drive sitez directives`. Each tick runs /open-calls restricted to the scope and closes every call the same tick -- on this seat's own rec by default, after CRO pattern research for a DESIGN fork, by CVO verdict for a GOVERNANCE fork -- spawning any needed seat that is not live; persists until the register reads the scope done, then turns itself off; delta-driven log. While armed, the scope is the only work. Operator-initiated; NOT /drive.
 ---
 
 # /self-drive — drive a DIRECTIVES.yaml scope to DONE: open-calls -> CVO adjudicates -> proceed, on a loop that ends itself
@@ -80,6 +80,25 @@ order by way of dependencies or design, across BOTH fabrics, with the gates betw
    managed in line with available resources."*). The reader's CAPACITY line counts the live COO lanes on this box
    against the file's cap. A tick never asks for a COO lane past the cap. When a slot frees, the next one goes to the
    first `NEEDS-SLOT` project in the sequence's order, and the tick names that project to `0.0.0_AB_MSTR`, who seats it.
+
+## ⛔ CALL ROUTING — SUPERSEDES STEPS 1-2 WHEREVER THEY DIFFER (Andrew-direct 2026-09-17 ~13:0xZ)
+
+VERBATIM: *"if there is an open-call (of any kind) you use your recommendation. If the call specifically is a design fork,
+then you reach out to CRO agent to do research on past patterns and provide more information and then make the call with
+that info. If it is a governance fork, then reach out to CVO agent to adjudicate. If you need a new agent, you spawn them."*
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_130xZ_SELF_DRIVE_CALL_ROUTING_REC_CRO_DESIGN_CVO_GOVERNANCE_SPAWN.md`.
+Given the day he measured ~15h of no work because a driver parked a seat call at another seat.
+
+| the call is... | who closes it | how |
+|---|---|---|
+| **any open call** (the DEFAULT) | the DRIVER | decide on your own REC the SAME tick; record rec, ruling, reason |
+| a **DESIGN FORK** (which technical design, architecture or pattern) | the DRIVER, after research | ask this fabric's CRO (`4.0.0_SA_CRO` / `4.0.0_SA_CRO~Z`) to research past patterns in the estate; decide the tick the research lands |
+| a **GOVERNANCE FORK** (process, authority, lane, gate, law, record, who may act) | this fabric's CVO (`3.0.0_SA_CVO` / `3.0.0_SA_CVO~Z`) | pitch with your REC; execute the verdict |
+
+- **A needed agent that is not live is SPAWNED by the driver**, same tick: `.tools/spawn-agent.ps1 -Model claude-opus-5 -Effort high <serial> "<direction>"`, then confirm it registered. Never "CVO DARK -- held", never a spawn ask parked at another seat.
+- **No RESERVED class for calls.** CLAUDE.md's NEVER lines and hard stops are LAW, not calls: an act they bind still goes through its law's mechanism (never-widen sign-off, vendor-egress word). This routing never repeals one.
+- **Waiting on CRO research or a CVO verdict never idles the loop**; the rest of the scope keeps moving.
+- Steps 1-2's classification and pitch mechanics below still apply to GOVERNANCE forks only.
 
 ## Step 1 — `/open-calls`, restricted to the scope
 

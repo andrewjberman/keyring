@@ -472,6 +472,14 @@ form, as dictated in the /standards. | You are done when all 4 LGIC projects are
 - **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch** (his "adjudicate any open calls that
   arise", the same delegation as 2026-09-12 and 2026-09-15). RESERVED is unchanged: vendor egress, unrecoverable acts,
   money, and the holds he set by name. Every self-adjudicated call is RECORDED with rec, ruling and reason.
+  **ROUTING AMENDED 2026-09-17 ~13:0xZ, Andrew-direct at the CTO terminal** (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_130xZ_SELF_DRIVE_CALL_ROUTING_REC_CRO_DESIGN_CVO_GOVERNANCE_SPAWN.md`),
+  VERBATIM: *"if there is an open-call (of any kind) you use your recommendation. If the call specifically is a design
+  fork, then you reach out to CRO agent to do research on past patterns and provide more information and then make the
+  call with that info. If it is a governance fork, then reach out to CVO agent to adjudicate. If you need a new agent,
+  you spawn them."* -- any call: this seat's rec, same tick; DESIGN fork: `4.0.0_SA_CRO` researches, this seat decides;
+  GOVERNANCE fork: `3.0.0_SA_CVO` adjudicates; a needed seat not live is SPAWNED by this seat. RE-ARMED 2026-09-17
+  ~12:3xZ by `1.0.0_SA_CTO` off this line (cron session-only).
 - Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and name.
 - This is his LATER and NARROWER word beside the 2026-09-15 ~19:4xZ clause above: MDPF_TAXSMA and NFRA_OPLGTW are NOT
   re-armed under this seat's loop by it (scope surfaced, not adjudicated -- their COO lanes hold them; the 09-15 clause
