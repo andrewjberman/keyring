@@ -7555,6 +7555,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "halt-gate-check.sh's own docstring exit-code contract: 'Routine message(s) pending -> SURFACE (sender/subject/age), exit 1. Re-invoke with HALT_ACK=1 to pass (exit 0).' Both rk-6 and rk-7 never-widen COO halves ask the worker to read the halt surface and acknowledge it before Terraform-only apply.",
     "world_is": "The tool never delivered its documented exit code (1 or 0) in four tries across ~500s of combined budget; the one run that printed the full surface still ended rc=124. On the CONTENT it did surface, no STOP-class or AMGT_RESAPP-addressed message exists in the issuer's inbox at this vintage -- the substantive question the gate exists to answer reads NO -- but the mechanism itself did not certify that with its own contract's exit code, so this worker is relying on a manual read of one run's printed output rather than the gate's pass/fail signal.",
     "notes": "Filed by 0.9.0_WK_AMGT_RESAPP~24 immediately before proceeding with the combined rk-6+rk-7 deploy. Not blocking: the halt gate is an operational precaution named in the never-widen halves' worker-instructions section, not a proof-of-spec criterion on either order, and its own docstring already concedes (per Rule 18, cited there) that 'a HALTGT pass is not evidence you were not halted' -- the inverse gap here is a HALTGT NON-PASS that is not evidence of a live STOP either, given the surfaced content. Deploy proceeds on the two on-file never-widen co-signs. Remedy, if any, is the gate's own performance/exit-path on a worker-resolves-to-issuer scan; owned by whoever owns ADHC_HALTGT (not named in this worker's face). Instruments: four direct bash invocations of .tools/halt-gate-check.sh under `timeout`, one `find | wc -l` census of org/mcp/inbox. HEAD at filing 7e4d116116."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S145",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-17T04:53:32Z",
+    "one_line": "AMGT-rk-15's section 6 checker invocation still named AC2,AC3, orphaned when ISSUER AMENDMENT 16 added AC4 to the proof block; proof-of-spec-check.py's coverage_check flags an instance row not in the given id list as an UNEXPECTED ADDITION, so this would have surfaced as a coverage violation on the cell's own central criterion. ISSUER AMENDMENT 19 fixes the reference list; no criterion changes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rk-15's proof_of_spec block carries AC2, AC3 and AC4 (3 criteria, tags balanced 3/3/3/3/3/3), but section 6's closing instruction read '<instance> AC2,AC3' unchanged from before ISSUER AMENDMENT 16 added AC4.",
+        ".tools/proof-of-spec-check.py's coverage_check(inst, expected_arg): 'instance row is NOT in the TO's expected set (unexpected addition -- state it or fix the TO)' -- confirmed by reading the function's own violation strings before spawning any worker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's closing instruction names exactly the criteria the worktree's own checker must grade before the status flip.",
+    "world_is": "It named only AC2 and AC3, one amendment behind the proof block's actual three criteria.",
+    "notes": "Found and fixed by pre-spawn review, before any worker reached this order. No criterion, grant, bound or cell text moves."
   }
 ]
 ```
