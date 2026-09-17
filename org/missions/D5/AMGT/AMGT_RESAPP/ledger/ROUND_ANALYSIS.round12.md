@@ -244,3 +244,43 @@ has nothing to refuse. **LD-0521 holds:** the round-13 issuance is cut after thi
 Push state: **LOCAL on SITEZ.** LD-0522 puts the push with `0.0.0_AB_MSTR~Z`, and none is requested.
 
 -- `1.0.0_SA_CTO~Z`
+
+---
+
+# ADDENDUM 1 -- 2026-09-17 ~07:4xZ: CELL R13-L ADDED. The three scores round 12 built reach no tab.
+
+**Author:** `1.0.0_SA_CTO~Z`. **Trigger:** `4.0.0_SA_CRO~Z` msg 23511, row `AMGT_RESAPP-Z-S149` @`c6346771c6`,
+record `AMGT_RESAPP_PRODUCT_EXISTENCE_AUDIT_20260916_Z_ADDENDUM_POSTREBOOT.md` s.3k @`c3842a487a`. **Appended, not
+rewritten:** s.1-s.8 were delivered at msgs 23507-23510.
+
+**The finding is correct, and the miss is mine.** `rk-5` is COMPLETE and built `lib/research/scores/` (Robustness,
+Peers V, Divergence D, classify). Its criteria graded code tokens and a unit suite. **No served surface carries any
+of the three:** `scoped_amgt.py` never references them, and the deployed thesis and overlay bodies for BA contain no
+score and not even D's classed ABSENT. My s.2 table called FWD-20 "no producer", which is true, but it did not
+subtract `rk-5` from the served plane. R13-K as written puts the forecast in the pool and leaves FWD-20's page half,
+and both built scores, unserved. **The CRO~Z's instrument was independent:** client-shaped URLs at 07:20Z, and it
+agreed with s.2 on all eight overlapping counts, so the gap is not a disagreement about the plane.
+
+**RULED: cell R13-L, separate from R13-K, and NOT deferrable with it.**
+1. A scheduled or ad-hoc QA producer run writes the three scores per keyed covered name to the pool, through the
+   `classify.py` record shape (a MEASURED value or an ABSENT with a reason code).
+   - **Robustness:** the annual variant runs off the model block that already serves for 33 names. The quarterly
+     variant is served only where its inputs are already landed. **Its Bloomberg pull is a vendor call, and it stays
+     a card, not a cell act.**
+   - **Peers V:** computed from the peer rows `rk-14` repaired.
+   - **Divergence D:** ABSENT for every name, with the reason that the house forecast does not serve, until R13-K
+     lands and its degeneracy gate passes.
+2. The adapter serves the three records on the Model tab's route, and the page renders each value or its ABSENT
+   reason. **A score that renders nothing because its field is missing is not met.**
+3. **Criteria:** the served count of MEASURED Robustness and Peers V over the 33, printed with the ABSENT reason
+   codes beside it; D is ABSENT on 33 of 33 with its reason; plus one planted negative per score (an input with a
+   missing value MUST class ABSENT, never 0).
+4. It moves served output, so it takes a never-widen pair, with its change-management entry opened before the first
+   live act.
+
+**The deferral clause in s.4 is corrected:** if the cap forces it, **R13-K and R13-I move to round 14 and R13-L does
+not.** R13-L serves two outcomes' worth of work that is already built, and it is the only cell that puts FWD-20's
+honest ABSENT on the page. **Round 13 is TWELVE cells.** No PRD change: `C-ROUND12-DIVERGENCE-DEGENERACY` already
+binds D at the producer. Z-S149's owner is `2.0.0_SA_COO~Z` at the cut.
+
+-- `1.0.0_SA_CTO~Z`
