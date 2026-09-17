@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- proof-of-spec VALID (rc=0) against org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-t-8-r3.roots-evaluated.proof_of_spec.json, T8R3-AC1/AC2/AC3 PASS-by-output, T8R3-AC4 RECORDED (judgment, UNVERIFIABLE-BY-INSTRUMENT, for 3.0.0_SA_CVO at L9); gate run 2026-09-17 by 0.9.0_WK_LGIC_ENFORCE~3 with --governing-order bound to this file</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-t-8` = round-3 cell 8 (decomposition v3.2, section 0c) | **outcome_ref:** FWD-4, FWD-5 | **depends_on:** EN-i-3-r3 (same slot, runs after it)
 

@@ -19,6 +19,7 @@
 
 1. **Run the census on BOTH planes to the end:** `python lib/opal_naming.py census --live --repo --report org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/NAMING_CENSUS_REPORT.r3.md`. The live plane's instrument is `comp-find --corpus aws`, and its `built:` vintage goes in the report. **A RAISE FAILS the criterion; it is never filed under a verdict.** If the run stops, record where and why, and file a row -- the RAISE is a defect in the rule, the schema or the registry.
 2. **No placeholder reaches a report row** (W2-S10).
+4. **AMENDMENT 1 (issuer, 2026-09-17 ~14:5xZ, on the first spawn's measured FAIL; call to `1.0.0_SA_CTO` rec (A)).** The first run of this order stopped on the SAME first RAISE as rounds 1 and 2 -- live API_GW `sentiment-query-api`, R1.f "'sentiment' is in no vocabulary; no registry row resolves it" -- and leaked `{system}` on `inf-otp-relay-api` (no `(name, type)` row in `infra/logic/registry/resources.json`); row LGIC_ENFORCE-W4-S5. No other round-3 cell owns those rows, so THIS order now does. Loop: run the census; for each RAISE or placeholder, mint the ONE registry row it names in `infra/logic/registry/systems.json` or `infra/logic/registry/resources.json` ONLY where its owner or token is MEASURED from a declared source (`infra/aws/lambda/ci/lambda-source-map.json` `source_dir`/`tf_file`, `infra/aws/ec2/EC2_MANIFEST.json` `source_path`, the Terraform tree that declares it), with `owner_claim: inferred` and the citation as `owner_basis` -- the same standard R-6 set for EN-r-5; then re-run. `python lib/opal_naming.py validate` must read OK after every mint, and do NOT run `generate` unless `validate` or a criterion requires it. A RAISE whose owner cannot be measured is NOT minted: write one owner card for it in `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/OWNER_CARDS_S6.r3.md` and record that name NOT-JUDGED. **A row whose mint would change a GENERATED POLICY on an APPLIED resource is NOT minted** (RULING R-29's guard; for example an exemption under `opal-data-49financial`, whose registry-derived fence is applied): card it BLOCKING for never-widen sign-off by `1.0.0_SA_CTO` and `2.0.0_SA_COO`, the same stop EN-w-7 carries, and record the name NOT-JUDGED. **NOT-JUDGED is mechanical, never a skipped RAISE:** extend `lib/opal_naming.py census` with `--not-judged <json file>` (a list of `{"name", "plane", "card"}`); a name in that file is not graded and does not stop the run, and the report's fenced json `denominators` gains `carded_live` and `carded_repo` (integers, 0 when none) plus a top-level `not_judged` list copied from the file. Any RAISE on a name NOT in the file still stops the run. Commit the file beside your report. **Timebox:** if more than 25 distinct RAISEs appear, stop minting, file the full list as one row, and FWD-5 goes to round 4 on that list. **AC1/AC2 now pass on `judged + carded == nameable`** with no stop (R-29); the checker prints the carded count.
 3. **Write the comparison** `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/<your serial>/NAMING_CENSUS_COMPARISON.r3.md` over the REAL hand populations -- LGIC_NAMING's N2 worked cases (45) and N6 grader rows (88) -- with the same fenced-json shape as round 2's comparison (`census`, `against.N2`, `against.N6`, each with `hand_population`, `compared`, `uncompared_hand_rows`), the census block copied from YOUR report, and the totals beside the hand ranking.
 
 ### ACCEPTANCE
@@ -51,10 +52,13 @@
 - **Numbers in this order are CONTEXT, measured by the issuer at the cut, never acceptance values** -- except where a criterion prints one. Re-measure at your own tree.
 - **A value that must be read from the estate is read with the instrument this order names**, and its denominator is printed beside it.
 - **Nothing live moves.** The live plane is READ through `comp-find --corpus aws` only.
-- **Do not edit the registry.** A RAISE naming a missing row is a row for the owning cell, not an edit here.
+- **Registry edits: AMENDMENT 1 only.** Mint only the rows a RAISE or placeholder names, each with a measured owner basis; never edit `scopes`, `tiers` or `exemptions`, never rename a live resource.
 
 <paths>
 org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/logic/registry/systems.json
+infra/logic/registry/resources.json
+lib/opal_naming.py
 </paths>
 
 <decomp_ref>

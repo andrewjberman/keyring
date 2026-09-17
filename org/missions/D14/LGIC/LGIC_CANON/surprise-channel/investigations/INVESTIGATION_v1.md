@@ -1064,6 +1064,28 @@ not a message.
    "spec_asserts": "Decomposition v5 s.0e: 'cells round 3 runs ... 6'.",
    "world_is": "Seven cells run: CN-k-4 (round-3 re-cut), CN-k-5, CN-l-3, CN-j-8, CN-j-9, CN-j-10, CN-j-11. The issuance covers all seven and v5.1 declares them by id in a table.",
    "notes": "INERT: the count, not a cell, was wrong, and it was caught before any order was cut, so no worker read it. The same seat wrote v5; a subtraction whose listed members were not re-counted against its own levels paragraph is Rule 24's forward-list failure inside a subtraction's clothes."
+  },
+  {
+   "id": "LGIC_CANON-W1-S5",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-09-17T21:00Z",
+   "one_line": "A-20's producer census does NOT read 0: LGIC_NAMING's own grading-exercise fixtures embed the whole NAMING_SCHEMA.json verbatim, so /key/legacy_served_paths/producer's value text is already reproduced elsewhere in the tree -- the exclusion the task order's framing assumed ('absent until LN-g-1 lands it') does not hold today.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/seats/e1.prompt.txt:50 @881b419753 -- the exercise dumps NAMING_SCHEMA.json's `key` block verbatim, including `\"producer\": \"LGIC_NAMING cell LN-g-1: every served path below {source}/{scope}/platinum/ that the frozen portal requests...\"` byte-for-byte; the same string recurs in e2.prompt.txt under r2 and both seats' prompts under r3 (4 files total).",
+     "infra/logic/render_naming_section.py producer_consumer_census() -- run against the tree at this commit: EXCLUSION-PREDICATE producer: 4 consumer(s) of 36940 file(s) scanned, all four the exercise prompts (document arm: the field's own value text found verbatim); zero code-arm matches.",
+     "A same-line co-occurrence of the two words 'legacy_served_paths' and 'producer' was tried first and read WORSE: 13 consumers, including check_canon_r3.py's own `PRODUCER = \"/key/legacy_served_paths/producer\"` line, which greps the RENDERER's OUTPUT and never opens the schema -- a mention, not a read, and a fixed (un-editable) input, so that rule could never reach n=0."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-CN-k-4-r3 frames the producer field as consumed by nothing yet ('provenance...names the cell that will mint the list', schema note 'absent until LN-g-1 lands it'), implying the census would read 0 and the exclusion would hold.",
+   "world_is": "The census's honest, mechanical answer (two-arm predicate: code-shaped access chain in a code file, OR the value text reproduced verbatim anywhere) is 4, not 0 -- LGIC_NAMING's own grading fixtures already embed the schema whole. So this cell's render() now carries the producer note in N1 UNCONDITIONALLY (not gated on the exclusion), which keeps CONTENT-DIFF at 0 whichever way a later run's census reads; the EXCLUSION-PREDICATE line and the (absent) EXCLUDED line still report the true, current count for A-20's own purpose.",
+   "notes": "INERT: no live artifact moves and the task order's own instruction covers this exact branch ('When n is above 0 the exclusion drops and the item is compared like any other') -- this row records that the branch taken was the measured one, not the assumed one, for 3.0.0_SA_CVO at L9. Filed because the task order's framing differed from the mechanical result, not because anything is broken."
   }
 ]
 ```

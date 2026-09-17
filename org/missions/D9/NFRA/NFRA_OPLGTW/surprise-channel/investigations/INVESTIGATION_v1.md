@@ -1928,6 +1928,56 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "R-OG-10: one mapping line in app/data_entitlement.py and one `access` entry in the contract `operations` enum make schwab_get_access's class explicit, granted iff the grant is active.",
     "world_is": "Applied as written, the enum entry makes `access` grantable by the admin command yet refused by the guard's parser (a grant the admin writes denies its principal everything), and the mapping line without the :282 predicate change denies schwab_get_access to every principal. Not applied: TO-OG-q-2 is NOT amended until 1.0.0_SA_CTO rules call 11; its re-hand is queued after OG-q-3 on slot ~5, so no worker waits.",
     "notes": "No served surface; nothing deployed. REC sent as call 11: carry `access` as a tool class outside the grantable `operations` enum (a separate contract key naming each tool's class), leave OPERATIONS and the admin set unchanged, and let AC26 admit exactly two lines: the :76 mapping and the :282 predicate `op == \"access\" or op in grant.scope.operations`."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-17T13:57:35Z",
+    "one_line": "A newer qualified closure now exists live in AWS for date=2026-09-16 (both masters, status qualified, 0 findings), produced independently of OG-c-2's replay after this cell's inherited premise ('2026-09-15 is the only qualified closure that exists') was written; the sealed hashes this cell commits still use only OG-c-2's 2026-09-15 silver objects, per the order's own explicit VersionId source, so the Gateway's live catalog at OG-v-4/A7 time may report 2026-09-16 as the true 'latest' business date while these sealed hashes assume 2026-09-15.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN (read-only, this worker's worktree): '.tools/aws s3api head-object --bucket opal-data-assets --key schwab/08242234/meta/complete/date=2026-09-16.json' -> LastModified 'Thu, 17 Sep 2026 10:16:23 GMT', VersionId TJRM3DcNtwtdAUWd2jU0JlrjRX_z508x, ContentLength 15650 -- absent at the 2026-09-16 16:20 local vintage the inherited handoff (C:/tmp/nfra-oplgtw-handoff/og-v-3-partial/scripts/QUALIFIED_VERSIONS.json) sealed against.",
+        "RUN: the same for 08335338/meta/complete/date=2026-09-16.json -> LastModified 'Thu, 17 Sep 2026 09:46:56 GMT', VersionId KGvM5aTswwqrJe6tHImICkdyU2Q5WyyS.",
+        "RUN: GetObject of the 08242234 record -> schema opal.silver.completion (new C3-extended shape), closure.status='qualified', closure.findings=[], closure.day_disposition='DATA', closure.date='2026-09-16'.",
+        "RUN: '.tools/aws s3api head-object ... date=2026-09-17.json' for both masters -> 404 Not Found, so 2026-09-16 is the latest closure as of this row's timestamp, not 2026-09-15.",
+        "The order's own worker face (NFRA_OPLGTW.TO-OG-v-3.sealed-real-expectations.md) directs: 'compute the expected answer from the qualified silver objects OG-c-2 produced' and 'The qualified object keys and VersionIds are in OG-c-2's result file' -- OG-c-2 replayed and closed only 2026-09-15 (deliverables/0.9.0_WK_NFRA_OPLGTW~4/producer-deploy-replay.result.md section 1); this cell follows that instruction literally and does not re-derive 'latest' from AWS at seal time.",
+        "WALKTHROUGH_PROTOCOL.md section 4 (infra/aws/ec2/opal-gateway/tests/acceptance/) defines 'latest' as 'the latest qualified complete business date the catalog reports for that master and dataset at the time OG-v-3 seals' -- a live-clock definition the order's OG-c-2-scoped instruction does not literally match now that a later qualified date exists."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-v-3 worker face: 'compute the expected answer from the qualified silver objects OG-c-2 produced'; the inherited (unverified, superseded) handoff concluded '2026-09-15 is the only qualified closure that exists for either master as of this seal. No previous qualified date exists to compare against for RQ5/RQ6.'",
+    "world_is": "As of this row's timestamp (2026-09-17T13:57:35Z), both masters carry a second qualified closure for date=2026-09-16 (status qualified, 0 findings), produced by the live production Schwab pipeline independently of OG-c-2. This cell deliberately seals its RQ1-RQ6 expected answers against OG-c-2's 2026-09-15 objects only, exactly as the order instructs, and does not use the 2026-09-16 closure or its silver objects. If the Gateway's catalog construction (OG-c-1/OG-k-1) runs before OG-v-4's A7 walkthrough and reports 2026-09-16 as the latest qualified date, the real answers to RQ1, RQ3, RQ4's SmartX/BlackDiamond legs and RQ5/RQ6's 'latest' leg would be computed over 2026-09-16 data and would not hash-match these 2026-09-15-based sealed values; RQ5/RQ6 would also gain a real previous-qualified-date (2026-09-15) where this seal says NONE_QUALIFIED.",
+    "notes": "ARMED because a hash mismatch at OG-v-4/A7 time is not cosmetic -- it would read as the Gateway giving a wrong answer when the real cause is this seal using a superseded 'latest'. Nothing served or deployed by this row. Disarm: the issuer (2.0.0_SA_COO~O) either re-seals OG-v-3 against whatever is qualified-latest immediately before OG-v-4 runs A7, or fixes 2026-09-15 as the walkthrough's authorized business date for A7 (a fixed-date grant per PRD C3) so the comparison is apples-to-apples; either is the issuer's call, not this cell's to make unilaterally mid-round."
+  },
+  {
+    "id": "NFRA_OPLGTW-S23",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-17T14:59Z",
+    "one_line": "Disarm evidence for NFRA_OPLGTW-W6-S5 (ARMED, disarm owner 2.0.0_SA_COO~O): ruling R-OG-12 is carried into TO-OG-o-2 and TO-OG-v-4 @71bc5b82ed, before either is handed. RQ1-RQ6 are fixed to business date 2026-09-15 (the date OG-v-3 sealed), and one live, unsealed no-date request per master grades the explicit latest date. A daily qualified closure can no longer make a correct Gateway fail OGV4-AC5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RULING: 1.0.0_SA_CTO msg 97602, R-OG-12 @df750f1e26 (item 4: W6-S5 disarms when the amendment commits; this seat files the disarm evidence).",
+        "COMMIT 71bc5b82ed: TO-OG-o-2 grants infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md for section 4's dates and one A7 step, and adds AC10/AC11. TO-OG-v-4's AC5 is re-worded to the fixed date 2026-09-15, and AC6 (the returned latest equals the newest qualified closure marker before the ask time) and AC7 (the available dates contain 2026-09-15) are added.",
+        "PLACEMENT: the ruling's item 3 put the protocol in TO-OG-v-4's <paths>. v-4 spawns only after the G-D walkthrough record exists, so the protocol edit rides TO-OG-o-2, which v-4 depends on and which is not yet handed. Stated in both orders' records.",
+        "GRANT CHECK @71bc5b82ed: `owned-paths-validate.py --check-agent 0.9.0_WK_NFRA_OPLGTW~5 .owned-paths.yaml` on the protocol path -> rc=0; the same path for 2.0.0_SA_COO~O -> VIOLATION (lane CLOUD_OPS_OR_ETL), which is why a worker carries the edit.",
+        "HELD: TO-OG-v-4 stays HELD on gates G-C and G-D, so no grading could run against the old wording before this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row W6-S5: the sealed RQ1-RQ6 hashes assume 2026-09-15 while the protocol's 'latest' tracks the live newest qualified date.",
+    "world_is": "The protocol amendment is ordered on TO-OG-o-2 and the grading on TO-OG-v-4, both committed @71bc5b82ed. The protocol text itself changes when OG-o-2's worker lands it, before any walkthrough.",
+    "notes": "Evidence only. This row does not adjudicate W6-S5; its L9 disposition is 3.0.0_SA_CVO's."
   }
 ]
 ```

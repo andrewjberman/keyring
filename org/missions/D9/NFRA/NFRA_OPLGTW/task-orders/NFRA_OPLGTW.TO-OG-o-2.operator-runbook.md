@@ -45,6 +45,21 @@ The PRD's "Operator journey, audit and release", verbatim where it binds:
 The grant commands are `OG-z-2`'s (`GW/ops/schwab_entitlement_admin.py`), the download journey `OG-x-1`'s, the audit
 fields `OG-o-1`'s -- all merged at your hand-off. Every command the runbook names must exist at HEAD (AC2).
 
+**The walkthrough's real-data dates (amended before hand-off, on `1.0.0_SA_CTO` ruling R-OG-12, msg 97602, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/RULINGS_NFRA_OPLGTW_20260916.md` @df750f1e26; row `NFRA_OPLGTW-W6-S5`).**
+`OG-v-3` sealed RQ1-RQ6 against the 2026-09-15 qualified objects, and a newer qualified closure (2026-09-16) already
+exists, so "latest" in the protocol no longer names what was sealed. The walkthrough follows your runbook and the protocol,
+so you carry this edit to `infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md`, touching only these two places:
+- **Section 4.** Its definition of "latest" becomes: RQ1-RQ6 ask at the fixed business date `2026-09-15`, the date
+  `OG-v-3` sealed; for RQ5 and RQ6 the previous qualified date is the qualified date immediately before `2026-09-15`, as
+  sealed. The `dates` column of RQ1-RQ6 names `2026-09-15` in place of "latest".
+- **A7.** Add one step: for each master (`08242234`, `08335338`), ask once with NO business date for its latest qualified
+  date and its available dates. The expected observation is that the returned latest qualified date equals the newest
+  qualified closure marker for that master at ask time, and that the available dates include `2026-09-15`. The evidence
+  to record is the UTC ask time, the returned latest date and the returned available-dates list. Dates are not customer
+  values.
+Nothing else in the protocol changes. `OG-v-4` grades both (its AC5-AC7).
+
 **Read:** the PRD's "Operator journey, audit and release" and "C6"; `GW/ops/schwab_entitlement_admin.py`,
 `app/schwab_audit.py`, `app/download_routes.py`; `infra/aws/ec2/safe-ec2-deploy.sh` (the rollback's release path).
 
@@ -83,10 +98,16 @@ taking the short id, printing its measurement with its denominator, then exactly
 <criterion id="OGO2-AC9" cell_refs="OG-o-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_o2.py AC9</invocation><expect>(?m)^VERDICT: PASS-OGO2-AC9(?![0-9])</expect></criterion>
 `OGO2-AC9` -- the status summary prints health, closure and error summaries with no customer value (the probe runs it against moto fixtures and scans the output).
 
+<criterion id="OGO2-AC10" cell_refs="OG-o-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_o2.py AC10</invocation><expect>(?m)^VERDICT: PASS-OGO2-AC10(?![0-9])</expect></criterion>
+`OGO2-AC10` -- `WALKTHROUGH_PROTOCOL.md` section 4 names `2026-09-15` in the dates of all six questions RQ1-RQ6 and no longer contains the word "latest" in those rows or in its date definition, denominator 6 printed.
+
+<criterion id="OGO2-AC11" cell_refs="OG-o-2"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_o2.py AC11</invocation><expect>(?m)^VERDICT: PASS-OGO2-AC11(?![0-9])</expect></criterion>
+`OGO2-AC11` -- `WALKTHROUGH_PROTOCOL.md` A7 carries one no-date request per master for both `08242234` and `08335338`, with the expected observation and evidence stated in the amendment, denominator 2 printed.
+
 <criterion id="OGO2-J1" cell_refs="OG-o-2" judgment="true"/>
 `OGO2-J1` -- graded at L9 by 3.0.0_SA_CVO: an operator can execute each section at its named moment without other context. RECORD; NO VERDICT.
 
-<expected_criteria>OGO2-AC1, OGO2-AC2, OGO2-AC3, OGO2-AC4, OGO2-AC5, OGO2-AC6, OGO2-AC7, OGO2-AC8, OGO2-AC9, OGO2-J1</expected_criteria>
+<expected_criteria>OGO2-AC1, OGO2-AC2, OGO2-AC3, OGO2-AC4, OGO2-AC5, OGO2-AC6, OGO2-AC7, OGO2-AC8, OGO2-AC9, OGO2-AC10, OGO2-AC11, OGO2-J1</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -109,6 +130,7 @@ taking the short id, printing its measurement with its denominator, then exactly
 <paths>
 infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md
 infra/aws/ec2/opal-gateway/ops/schwab_status.py
+infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -118,11 +140,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGO2-AC1` .. `OGO2-AC9`, `OGO2-J1` (10). Instance at
+Criterion ids: `OGO2-AC1` .. `OGO2-AC11`, `OGO2-J1` (12). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/NFRA_OPLGTW.TO-OG-o-2.operator-runbook.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGO2-AC1,OGO2-AC2,OGO2-AC3,OGO2-AC4,OGO2-AC5,OGO2-AC6,OGO2-AC7,OGO2-AC8,OGO2-AC9,OGO2-J1`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGO2-AC1,OGO2-AC2,OGO2-AC3,OGO2-AC4,OGO2-AC5,OGO2-AC6,OGO2-AC7,OGO2-AC8,OGO2-AC9,OGO2-AC10,OGO2-AC11,OGO2-J1`
 BEFORE the `complete` flip. Every `judgment="true"` criterion is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a
 `status_reason` naming `3.0.0_SA_CVO` at L9 -- **a `PASS` or `FAIL` on a judgment row is INVALID.** Result file
 `operator-runbook.result.md` beside it. **Flip `complete` only when every MECHANICAL criterion PASSES by output.**
@@ -143,3 +165,10 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 
 Seating: slot ~5, queue position 7, handed after `OG-x-1` drains and `OG-z-2` merges. Round 1 of NFRA_OPLGTW, issued by
 `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1 @8768f46770.
+
+Amended 2026-09-17 ~15:0xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-12 (msg 97602
+@df750f1e26, closing call 12 on row W6-S5). The ruling placed the protocol's section 4 in `TO-OG-v-4`'s `<paths>`; this
+seat carries the protocol edit HERE instead, because the walkthrough is performed from the protocol BEFORE `OG-v-4` is
+spawned (v-4's G-D input is the record of it), so an edit granted to v-4 would land after the walkthrough it governs.
+`OG-o-2` precedes v-4 and is not yet handed. v-4 receives the grading half (its AC5 re-worded, AC6-AC7 added). AC10 and
+AC11 added; the protocol path added to `<paths>`; no criterion removed. Reported to `1.0.0_SA_CTO` with the disarm.
