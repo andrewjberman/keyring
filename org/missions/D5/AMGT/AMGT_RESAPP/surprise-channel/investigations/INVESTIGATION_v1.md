@@ -7292,6 +7292,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "spec_asserts": "The WORKER FACE inlined in this worker's spawn prompt purports to be the task order 'in full' / 'verbatim', so a criterion's <invocation> as relayed should be byte-identical to the same criterion's <invocation> in the governing task-order file at the cited commit.",
    "world_is": "For AC3 specifically it was not: the relayed text read 'import boto3,json' where the file at ed8d4fe3de:121 reads 'import boto3,json,io'. The divergence was harmless here (the extra import is unused and the output is identical either way, so no PASS/FAIL flipped), but it is exactly the shape IRPT_FNTEND-S31 already named -- a correction or transcription step between the file and the prompt leaves the prompt's copy ungoverned by the file the CVO grades against.",
    "notes": "Caught mechanically by proof-of-spec-check.py's invocation-alignment limb (rc=1 on first pass), not by manual inspection; corrected by substituting the file-literal invocation string and re-running it (same live objects, identical output) before the instance was finalized. No cell text, grant or bound was touched; this is filed as OBSERVATION/INERT because the discrepancy was self-resolving inside this same worker's single-cell queue and cost one extra proof-of-spec-check cycle, not a blocked criterion."
- }
+ },
+  {
+    "id": "AMGT_RESAPP-Z-S139",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~Z",
+    "surfaced_at": "2026-09-17T02:55:00Z",
+    "one_line": "AMGT-rk-18's filings batch finished at 02:34:17Z with 11 names analyzed (12 with the BA pilot) and its log PLANS 21 UNRESOLVED-SOURCE names 'each an explicit object at filings/v1/<security_key>/UNRESOLVED-SOURCE.source.json' -- the store holds 0 such objects, and the page's thesis call for those 21 names returns drafting_status ABSENT with a generic NoSuchKey reason, so rk-18 AC2/AC3's 'every missing name carries a NAMED REASON' arm can read MET on the log line while no named reason exists on any plane a person reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/wk-amgt-12-30/.scratch/batch_run.log (15 lines, rk-18 worker 0.9.0_WK_AMGT_RESAPP~30's worktree, mtime 02:34:17Z): line 1 'BATCH: ... names 32 with_filing_identity 11 would_fetch 11 unresolved_source 21'; line 3 'UNRESOLVED-SOURCE: 21 name(s), each an explicit object at filings/v1/<security_key>/UNRESOLVED-SOURCE.source.json'; line 15 'BATCH DONE: 11 of 11 analyzed, 0 UNRESOLVED-SOURCE, USD 6.2791'. Lines 1-3 are the pre-run plan; line 15 counts 0.",
+        "boto3 list_objects_v2 paginated, s3://opal-data-harvest/filings/v1/ at 02:52Z: 24 objects under 12 key directories, and 0 of 12 directories hold any object whose name contains UNRESOLVED. drafting/v1/: 12 objects, newest 02:34:19Z.",
+        "Direct GET invokes of opal-amgt-scoped-api /api/scoped/amgt/security/<encodeURIComponent(key)>/thesis for all 33 keyed covered names (universe/v1/2026-09-16.json, source coverage or both, resolution MEASURED) at 02:52:08Z: 12 of 33 drafting_status SERVED (5 drafted sections each), 21 of 33 ABSENT.",
+        "ENEL_IM_Equity thesis at 02:5xZ: drafting_status ABSENT, drafting_source none, drafting_reason 'no drafted document at s3://opal-data-harvest/drafting/v1/ENEL_IM_Equity.json: NoSuchKey ...' -- a missing-object reason, not 'no SEC filer'.",
+        "AMGT_RESAPP.TO-AMGT-rk-18 AC2 <expect>: 'MET when analysed_of_attempted reads 33 of 33, OR when every missing name carries a NAMED ...'; AC3 the same for drafting. rk-18 <status> pending, issued_to 0.9.0_WK_AMGT_RESAPP~30, at read time."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "rk-18 AC2/AC3: a name the batch does not analyze is acceptable only when it carries a NAMED REASON; the batch's own plan names the carrier as an explicit per-name object in filings/v1/.",
+    "world_is": "The 21 names have no reason carrier in the store and the served thesis gives them the generic missing-object reason. The analysis itself landed and serves for 12 of 33 keyed covered names (12 of 89 covered). Nothing wrong is served; the named-reason arm of two criteria has nothing on the world plane to point at.",
+    "notes": "Measured MID-FLIGHT: rk-18 is pending, its worktree's last write was 02:34:17Z, and its proof instance is not written. If the worker writes the 21 objects before its drain, this row resolves by a citing row on that evidence. Filed as a row, not a message, per the channel law; no worker is messaged. Same shape as AMGT_RESAPP-Z-S137 (a criterion that passes on a world write the served route cannot read). Filed by 4.0.0_SA_CRO~Z under its item-5 served-plane role, lane ANY. The 21 names are the non-US / no-SEC-filer set on the batch's own plan line; that they have no SEC filing is the batch's claim, not re-measured here."
+  }
 ]
 ```
