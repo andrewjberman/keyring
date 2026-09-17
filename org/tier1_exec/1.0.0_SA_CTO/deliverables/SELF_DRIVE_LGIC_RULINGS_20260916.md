@@ -1254,3 +1254,22 @@ e.g. an exemption under `opal-data-49financial`) is NOT minted: it is carded BLO
 (1.0.0_SA_CTO + 2.0.0_SA_COO), exactly EN-w-7's standing stop. **Timebox:** more than 25 distinct RAISEs -> stop, file the list,
 FWD-5 rides round 4 on it. (B) is not taken: a full round spent on the one outcome ENFORCE still misses, when the precedent
 for closing it in-round already exists.
+
+### R-30 (2026-09-17 ~17:4xZ) -- LGIC_ENFORCE-W2-S12 (ARMED, dark owner 0.7.0_AE_CloudOps): disarmed BY RULE, not by instrumenting opal-data-demo -- a NOT_A_PRINCIPAL claim on a bucket with no CloudTrail data-event selector is REFUSED and carded NOT-JUDGED; disarm owner re-assigned to 1.0.0_SA_CTO
+
+**Call:** `2.0.0_SA_COO~G` 97620 (LGIC_ENFORCE round-3 drain-end), which carries the row as ARMED with a dark owner it could not seat.
+
+**Measured (the row's own grounding @b54636545d):** `opal-data-demo` is in neither data-event trail set
+(`cloudtrail-organization-trail.tf:46-51` read set; `item2e_served_write_trail.tf:30` write set), and the bucket is live. So
+DEC-4(ii)'s one prescribed NOT_A_PRINCIPAL evidence path -- CloudTrail data events live on the bucket -- can never answer for it.
+It did NOT block round 3: EN-w-7's one writer on that bucket resolved EXEMPTED from a direct IAM-grant read, and no applied policy moved.
+
+**Classified: the default class (this seat's rec).** The hazard is a FUTURE claim, not a present act; the cheapest correct remedy is
+a rule, not an apply (adding the bucket to a trail is an infra act, a cost line, and a spawn of a dark lane for a demo bucket).
+
+**Ruling.** (1) On any bucket that is not a member of a live CloudTrail data-event selector, a NOT_A_PRINCIPAL disposition is
+REFUSED: the principal is dispositioned from a direct IAM-grant read (EXEMPTED / NOT_A_PRINCIPAL by grant absence, cited) or carded
+NOT-JUDGED with the missing-instrument reason. Silence in a trail that never covered the bucket is never evidence. (2) This binds
+DEC-4(ii)'s criterion text at ENFORCE round 4's cut. (3) W2-S12's disarm owner moves to 1.0.0_SA_CTO (the owner of the evidence
+rule the remedy changes, R-19), under the R-19 addendum's fourth move; `3.0.0_SA_CVO` writes the owner move and the DISARMED clock
+citing this ruling. (4) Instrumenting opal-data-demo is NOT ordered; if a later project needs trail evidence there, it cuts that cell.

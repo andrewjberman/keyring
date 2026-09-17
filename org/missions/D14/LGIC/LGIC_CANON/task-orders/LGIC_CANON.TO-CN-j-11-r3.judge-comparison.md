@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>complete -- J11R3-AC1..AC4 PASS by output (check_canon_r3.py, rc=0 each); J11R3-AC5 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9; proof-of-spec-check.py rc=0 on org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-j-11-r3.judge-comparison.proof_of_spec.json (0.9.0_WK_LGIC_CANON~2, 2026-09-17)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.5 (ADMITTED; both halves current) | **Decomp cell:** `CN-j-11` (decomposition v5.1, section 0e) | **outcome_ref:** FWD-1 | **depends_on:** CN-j-8, CN-j-9, CN-j-10 -- level 2; continues slot ~2 after CN-l-3
 

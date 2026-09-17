@@ -1,0 +1,79 @@
+{
+ "schema_version": "1.0",
+ "project": "DSGN_REBRND",
+ "round": 1,
+ "seat": "3.0.0_SA_CVO",
+ "written_utc": "2026-09-14T19:15Z",
+ "branch": "feature/d13-visual-elevation",
+ "trigger": "The round-1 L10 slug to 1.0.0_SA_CTO, delivered 2026-09-14T19:09:48Z as org/mcp/inbox/1.0.0_SA_CTO/read/20260914T190948Z_3.0.0_SA_CVO__L10_SLUG__DSGN_REBRND_round_1__67_rows_.md (3234 bytes, read from the recipient's read/ folder; UNTRACKED device-local file: org/mcp/inbox/* is gitignored, so NO commit vintage exists for this carrier). It cites the record @77a5acbf40, the adjudications @baeeff2654 and the remediations @14ca97a535, all on feature/d13-visual-elevation, which has no origin ref. Routed here by 1.0.0_SA_CTO msg 96664 item 2; confined off CLOUD by the 2026-09-11 feature-branch ruling.",
+ "rows": [
+  {
+   "seq": 1,
+   "limb": "L8",
+   "started_utc": "2026-09-14T18:2xZ",
+   "ended_utc": "2026-09-14T18:50:44Z",
+   "act": "Compiled round 1's channel inside the feature worktree. POSITIVE CONTROL first: comp-surprise --project DSGN_REBRND, run in the worktree, read 67 items, not 0. A parse of every JSON fence read 67 rows with 67 unique ids, and an independent id count also read 67. The channel did not exist at the issuance commit 845cb2b6ac (git show rc 128; the PRD at the same commit read rc 0 as the control), so all 67 rows are new and 0 were lost. By class and hazard: 36 OBSERVATION/INERT, 24 OBSERVATION/ARMED, 7 BLOCKING/ARMED. All 67 were carrier-less.",
+   "inputs": [
+    {"kind": "MESSAGE", "ref": "96663 (2.0.0_SA_COO~D's drain-end)"},
+    {"kind": "MESSAGE", "ref": "96664 item 2 (1.0.0_SA_CTO's routing)"},
+    {"kind": "ARTIFACT", "ref": "org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/investigations/INVESTIGATION_v1.md@a1d0a7451c (feature/d13-visual-elevation)"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND1_L8_L9_20260914.md@77a5acbf40 sections 1-2 (feature/d13-visual-elevation)"}
+   ],
+   "spine_clause": "L8: input is the new investigation rows and no others; the stall clause :395-397 (1.0.0_SA_CTO's routing, since surprise-watch.sh in the main tree cannot see this channel)",
+   "gate_or_notifier_touched": "none -- a read-only compile",
+   "note": "The compile and grading ran in a background FORK of this seat's session (same serial, same model), launched ~18:2xZ while the parent session did LGIC_NAMING round 1. started_utc is approximate, from tool-call order; ended_utc is the record's commit time."
+  },
+  {
+   "seq": 2,
+   "limb": "L9",
+   "started_utc": "2026-09-14T18:2xZ",
+   "ended_utc": "2026-09-14T18:50:44Z",
+   "act": "Graded the 22 JUDGMENT criteria across the 15 orders against PRD v0.5 @01378b0a5b, the spec that issued the round: 10 PASS, 9 FAIL, 3 NOT_EVALUATED. The FAILs are RB1-AC6, RB3-AC7, RB4-AC5, RB5-AC5R, RB7-AC5, RB9-AC5, RB10-AC5, RB13-AC4 and RB14-AC4; the NOT_EVALUATED are RB2-AC6, RB11-AC6 and RB14-AC5. The rail edge was graded as a named qualification (Andrew's ~18:3xZ KEEP), not a violation. The captures were viewed where a criterion is visual.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the 16 proof instances under DSGN_REBRND/deliverables (15 governing VALID; the superseded original RB-s-5 instance INVALID only against the reopened order's criterion list)"},
+    {"kind": "ARTIFACT", "ref": "the feature portal at 086371dd (the drained AFTER) and the RB-s-15 pack"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND1_L8_L9_20260914.md@77a5acbf40 section 3"}
+   ],
+   "spine_clause": "L9: JUDGMENT criteria are graded here and never self-graded",
+   "gate_or_notifier_touched": "safe-commit gates passed on 77a5acbf40",
+   "note": "The grading ran in parallel with row 1, inside the same fork."
+  },
+  {
+   "seq": 3,
+   "limb": "L9",
+   "started_utc": "2026-09-14T18:50:44Z",
+   "ended_utc": "2026-09-14T18:51:38Z",
+   "act": "Carried every disposition and grade on the channel as C-S1..C-S14 in ADJUDICATION_v1.md: 26 DISMISSED_WITH_REASON (W2-S19 on Andrew's ~18:3xZ KEEP, @0e0e97f75a), 8 DECOMP_INVALIDATING (C-S4, Option A's page inversion, ARMED), 33 GRADUATED, and 4 rows of this seat's own (C-S11..C-S14). RB5-AC5R's FAIL is written in C-S14's world_is, not in `grades`, because the schema's criterion pattern refuses an amended id. It was not renamed, and C-S14 routes the widening to 1.0.0_SA_CTO. Closing count: carrier-less 0 of 67.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "the record @77a5acbf40"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/adjudications/ADJUDICATION_v1.md@baeeff2654"}
+   ],
+   "spine_clause": "L10 precondition: every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate admitted the document with no override. A local jsonschema check read 0 errors.",
+   "note": "ended_utc is the commit time."
+  },
+  {
+   "seq": 4,
+   "limb": "L10",
+   "started_utc": "2026-09-14T18:51:38Z",
+   "ended_utc": "2026-09-14T19:09:48Z",
+   "act": "Wrote REMEDIATION_v1.md: 37 rows, all OPEN, none carrying a route. The gate admitted it: 15 of 15 orders read terminal at HEAD, and every item is dispositioned. Before the slug, the PARENT session re-verified the fork's report with a different instrument. It confirmed the three commits and their authorship. It re-counted, from `git show` of the branch's channel files, 67 rows, 0 without a carrier, 26/8/33 dispositions, 37 remediation rows with no route, and 21 grades plus RB5-AC5R. It re-read RB4-AC5 at RSIBars.tsx `getGradientColors`: four hue families over an ordered 0-100 scale. It re-read RB1-AC6 by an untruncated census: `dark-mode` appears 3 times in src at portal 086371dd, all in index.css, with a positive control. The ONE slug was then sent to 1.0.0_SA_CTO.",
+   "inputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D13/DSGN/DSGN_REBRND/task-orders/*.md on feature/d13-visual-elevation (15 of 15 terminal)"}
+   ],
+   "outputs": [
+    {"kind": "ARTIFACT", "ref": "org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/remediations/REMEDIATION_v1.md@14ca97a535"},
+    {"kind": "MESSAGE", "ref": "org/mcp/inbox/1.0.0_SA_CTO/read/20260914T190948Z_3.0.0_SA_CVO__L10_SLUG__DSGN_REBRND_round_1__67_rows_.md (3234 bytes; untracked carrier)"}
+   ],
+   "spine_clause": "L10: ONE slug to the CTO, only after every TO is terminal and every row dispositioned",
+   "gate_or_notifier_touched": "surprise-row-gate admitted the remediation rows on 14ca97a535. The L8 correspondence guard (the CVO's one send goes to the CTO) passed with no override.",
+   "note": "Push state: the branch has no origin ref (ls-remote empty); every commit named here is LOCAL. The feature portal's HEAD had moved on to 0aefb3c5 (2.0.0_SA_COO~D's interactive round-2 edits) by the time of the parent's verification; round 1 was graded and verified at 086371dd."
+  }
+ ]
+}

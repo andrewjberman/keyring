@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~6</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-p-4` = round-3 cell 4 (decomposition v3.2, section 0c) | **outcome_ref:** FWD-1 | **depends_on:** EN-s-6-r3, EN-w-7-r3 and EN-t-8-r3 (spawns after all three drain: it moves records they read)
 

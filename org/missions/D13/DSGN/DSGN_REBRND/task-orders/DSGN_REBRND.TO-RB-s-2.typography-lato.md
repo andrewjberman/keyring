@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_REBRND~1</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-2` | **outcome_ref:** FWD-2, FWD-1 | **depends_on:** `RB-s-1` | **slot:** ~1, queue position 2
 
@@ -18,6 +18,26 @@
 `RB-s-2` -- typography.
 
 **Lato, self-hosted.** `portal/src/index.css:16` imports **Inter** from Google Fonts and `:142` sets it as the body face. Both go. Ship Lato woff2 at **400 and 700 only** under `portal/public/fonts/`, with the OFL text beside them. The brand licences six weights and both the brand book and `opalinvest.com` ship two: restricting to two forces SIZE and WHITESPACE to carry hierarchy, which survives a reader who has raised their default font size.
+
+**AMENDED BY THE ISSUER, disarming rows `DSGN_REBRND-W1-S5` (BLOCKING) and `DSGN_REBRND-W1-S6`.**
+
+⛔ **THE FONTS ARE ALREADY ON THIS BOX. DO NOT FETCH ANYTHING.** Three Lato faces sit at
+`.runtime/codex-seats/4.0.0_SA_CRO/performance-export-recon/fonts/` -- `Lato-Regular.ttf` (400),
+`Lato-Light.ttf` (300) and `Lato-SemiBold.ttf` (600) -- captured by another seat on 2026-09-10 with
+the licence committed at `docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt`.
+**Verified by the issuer from the TTF NAME TABLE, not the filename:** family `Lato`, subfamilies
+`Regular` / `Light` / `SemiBold`.
+
+**Copy them into `portal/public/fonts/`, record each file's sha256 in the result file**, and keep
+`OFL.txt` beside them. The SIL OFL 1.1 permits bundling and web serving. `fontTools` 4.63.0 and
+`brotli` are installed, so a `.ttf` -> `.woff2` conversion is a **LOCAL** act; if you convert,
+record both hashes. Serving the `.ttf` directly through `@font-face` is equally acceptable. **Either
+way NO NETWORK REQUEST IS MADE, and none is authorized.**
+
+**The 700 weight is not on this box.** Do NOT fetch it. Map `font-weight: 700` onto the 600
+(SemiBold) face and **say so in `portal/public/fonts/README.md`** with one line naming the
+substitution and why. A weight the box lacks is a surprise row's `world_is`, not a stop. The 700
+fetch is carried to Andrew as a reserved call by the CTO's loop and **does not block this cell**.
 
 **The licence is already in the estate** -- `docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt` is Lato's SIL Open Font License 1.1 (`Reserved Font Name "Lato"`). Confirm the woff2 files you ship are covered by it and copy that text beside them. Brief V.1's "not verified" is closed by that file.
 
@@ -38,8 +58,8 @@
 <criterion id="RB2-AC3" cell_refs="RB-s-2"><invocation>cd <WS> && timeout 120 python -c "import io; s=io.open('portal/src/index.css',encoding='utf-8').read(); low=s.lower(); g=low.count('fonts.googleapis.com'); i=low.count(chr(39)+'inter'+chr(39)); print('GOOGLE-FONTS:',g,'INTER-REFS:',i); print('VERDICT:','SELF-HOSTED' if (g==0 and i==0) else 'EXTERNAL-OR-INTER')"</invocation><expect>VERDICT: SELF-HOSTED</expect></criterion>
 `RB2-AC3` -- no external font request AND no Inter reference remains. **At issuance this reads 1 and 1**; one verdict over both so removing only the import cannot pass.
 
-<criterion id="RB2-AC4" cell_refs="RB-s-2"><invocation>cd <WS>/portal && timeout 120 sh -c 'ls public/fonts/ | head -20; echo rc=$?'</invocation><expect>rc=0</expect></criterion>
-`RB2-AC4` -- the self-hosted Lato files and the OFL text are present under `portal/public/fonts/`.
+<criterion id="RB2-AC4" cell_refs="RB-s-2"><invocation>cd <WS> && timeout 120 python -c "import os,hashlib; d='portal/public/fonts'; fs=sorted(os.listdir(d)) if os.path.isdir(d) else []; faces=[f for f in fs if f.lower().endswith(('.woff2','.ttf','.woff'))]; lic=[f for f in fs if 'OFL' in f.upper() or 'LICENSE' in f.upper()]; h={f: hashlib.sha256(open(os.path.join(d,f),'rb').read()).hexdigest()[:16] for f in faces}; print('FACES:',faces); print('HASHES:',h); print('LICENCE:',lic); print('VERDICT:','SELF-HOSTED-ON-BOX' if (len(faces)>=1 and lic) else 'NO-FACES-OR-NO-LICENCE')"</invocation><expect>VERDICT: SELF-HOSTED-ON-BOX</expect></criterion>
+`RB2-AC4` -- **AMENDED.** At least one real font FACE and the licence are present in `portal/public/fonts/`, and every face prints its sha256. **The old invocation was `ls public/fonts/ | head -20; echo rc=$?` -- a PIPELINE, whose exit status is `head`'s, so it returned rc=0 with the directory ABSENT OR EMPTY** (row `DSGN_REBRND-W1-S6`, proved empirically by the worker, which graded by direct enumeration instead of trusting the rc I told it to trust). This form enumerates, and the hashes make the artifact identifiable rather than merely counted.
 
 <criterion id="RB2-AC5" cell_refs="RB-s-2"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs market <WS>/org/missions/D13/DSGN/DSGN_REBRND/deliverables/<SERIAL>/rb-s-2_market_1440.png --port <PORT>; echo rc=$?</invocation><expect>rc=0</expect></criterion>
 `RB2-AC5` -- the `/market` route renders at 1440 and the script prints the RESOLVED CANVAS -- that printed value is the evidence, not a reading of the CSS. READ the PNG before the flip.
@@ -61,6 +81,8 @@
 
 <paths>
 portal/src/index.css
+.runtime/codex-seats/4.0.0_SA_CRO/performance-export-recon/fonts/
+docs/research/investor_reporting_export_20260910/FONT_LICENSE.txt
 portal/public/fonts/
 portal/src/**/*.tsx
 portal/src/**/*.css
