@@ -7269,5 +7269,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "Two of its three bars were already met before any work, and the bar meant to separate points from name summed a token that reads 0 with a token that reads 7, so it could not make that separation at all. The property is only decidable on the served body, where points_count reads 0 against a driver_series and driver_unit that already serve.",
     "notes": "Sixth criterion defect found by issuer dry run today and the fourth SILENT PASS of the family (AMENDMENT 11 rk-8, 13 rk-14, 14 rk-12, and this one; AMENDMENT 12 was the opposite sign and 15 was a malformed block). The repair does not weaken the cell: the page keeps its one real bar and the points half moves to AC4 on the SERVED plane, which is strictly harder. The BA_US_Equity re-run lands on this order because the served points cannot move until BA's document is regenerated under THIS cell's producer change; AMGT-rk-18 carries an explicit instruction not to run it. AC3 is byte-identical; no grant, bound or cell text moves."
   }
+,
+ {
+   "id": "AMGT_RESAPP-Z-W29-S1",
+   "project": "AMGT_RESAPP",
+   "fabric": "site-z",
+   "surfaced_by": "0.9.0_WK_AMGT_RESAPP~29",
+   "surfaced_at": "2026-09-17T02:12:30Z",
+   "one_line": "AC3's <invocation> as inlined verbatim in this worker's WORKER FACE (spawn prompt) omitted an `io` import present in the governing task-order FILE on disk at the same cut -- the checker's own invocation-alignment limb caught the divergence.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+     "status": "GROUNDED",
+     "evidence": [
+       "WORKER FACE text relayed to 0.9.0_WK_AMGT_RESAPP~29 in its spawn prompt gave AC3's invocation opening as 'python -c \"import boto3,json; s=boto3.client(...' (no io).",
+       "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-17.the-two-budgeted-pulls.md:121 @ed8d4fe3de reads 'python -c \"import boto3,json,io; s=boto3.client(...' -- the FILE carries an extra, unused `io` import the relayed prompt text did not.",
+       "python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5 run against the worker's first-draft instance (using the prompt's paraphrase) returned rc=1 with VIOLATION invocation-alignment[AC3]: 'the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) <none>', printing both strings side by side and citing IRPT_FNTEND-S31's own warning that 'a correction that reaches the spawn prompt and never the task-order FILE leaves the record ungoverned'.",
+       "Re-running the exact file-literal invocation (with `io` restored) against the same live S3 objects produced byte-identical output to the paraphrase (attempted 33, blocks_landed 34, landed_of_attempted 33 of 33, missing 0) -- the divergence was textual only, not a difference in what either invocation actually reads; the instance was corrected to the file-literal string and proof-of-spec-check.py then returned rc=0, violations=0."
+     ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The WORKER FACE inlined in this worker's spawn prompt purports to be the task order 'in full' / 'verbatim', so a criterion's <invocation> as relayed should be byte-identical to the same criterion's <invocation> in the governing task-order file at the cited commit.",
+   "world_is": "For AC3 specifically it was not: the relayed text read 'import boto3,json' where the file at ed8d4fe3de:121 reads 'import boto3,json,io'. The divergence was harmless here (the extra import is unused and the output is identical either way, so no PASS/FAIL flipped), but it is exactly the shape IRPT_FNTEND-S31 already named -- a correction or transcription step between the file and the prompt leaves the prompt's copy ungoverned by the file the CVO grades against.",
+   "notes": "Caught mechanically by proof-of-spec-check.py's invocation-alignment limb (rc=1 on first pass), not by manual inspection; corrected by substituting the file-literal invocation string and re-running it (same live objects, identical output) before the instance was finalized. No cell text, grant or bound was touched; this is filed as OBSERVATION/INERT because the discrepancy was self-resolving inside this same worker's single-cell queue and cost one extra proof-of-spec-check cycle, not a blocked criterion."
+ }
 ]
 ```
