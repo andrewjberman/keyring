@@ -8217,7 +8217,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC2's <invocation>, verbatim: `cd portal && npx tsc -b 2>&1 | tail -30`, with <expect> 'the merged tree's TypeScript build has no NEW errors attributable to this order's edited files'.",
     "world_is": "The literal invocation performs no TypeScript build whatsoever on this device for this bun-managed, npm-lockfile-less portal/ tree -- it is a DISCRIMINATION failure under CLAUDE.md Rule 22 (the evidence could not differ whether or not this order's edits carried a type error, since the decoy package never reads this tree's source at all), so it is recorded as its own genuine result rather than silently swapped for the direct-binary reading. The direct-binary reading (`./node_modules/.bin/tsc.exe -b`, rc=0, no output) is preserved in this row as corroborating evidence about actual code health only, per this order's own dispatch instructions, and does not resolve AC2's grade on its literal terms.",
     "notes": "This is a device/tooling defect class, distinct from a code defect: the same literal invocation would misreport on ANY future portal order in a purely-bun-installed worktree on this device until either (a) portal/package.json pins a `packageManager`/engines constraint npm respects, (b) a committed lockfile npm trusts is restored, or (c) the estate's task-order authoring convention for portal TypeScript checks moves off bare `npx tsc -b` per the portal CLAUDE.md's own existing typecheck-law precedent (`bun run typecheck` / `tsc -b` directly, never bare `tsc --noEmit`) toward the same non-npx form for `-b` too. Not repaired here -- outside this order's <paths> (no package.json/.npmrc write granted) and outside the REFUSAL CLAUSE's remit to route around a named invocation. disarm_owner named as the portal-owning frontend seat by estate convention; not confirmed live by this worker."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-17T22:35:00Z",
+    "one_line": "A bare `python <script>.py` invocation of the literal import path the CTO/COO halves and dispatch prompt name (`from lib.research.filings import analyze`, `from lib.research.identity import crosswalk`) fails with `ModuleNotFoundError: No module named 'lib.research'` in this worktree -- the script's own directory is added to sys.path, not the worktree root, so an ad-hoc script needs `PYTHONPATH=<worktree root>` (or an explicit sys.path insert) to resolve the estate's implicit-namespace `lib` package; neither half nor the dispatch text names this.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`cd <worktree> && python .scratch/build_check.py` with the script opening `from lib.research.filings import analyze`: rc=1, traceback `ModuleNotFoundError: No module named 'lib.research'`.",
+        "`lib/__init__.py` and `lib/research/__init__.py` are both absent (`test -f` on each, this session) -- `lib` and `lib.research` are implicit namespace packages, resolvable only when the worktree root is itself on sys.path.",
+        "Re-running the identical script unmodified with `PYTHONPATH=\"$(pwd)\" python .scratch/build_check.py` (cwd = worktree root): rc=0, imports succeed, `build_drafting_document` and `write_pool`/`serialise` all resolve and run correctly this same session."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's PROCEDURE names the import path verbatim (`from lib.research.filings import analyze`) as something to \"verify with comp-read or a direct import check before running\" but does not name PYTHONPATH or a working-directory/sys.path requirement for that import to succeed from an ad-hoc script.",
+    "world_is": "The named import path is correct at HEAD (confirmed by comp-read-style inspection of `lib/research/filings/analyze.py:56` and `lib/research/filings/drafting_build.py:239`) but only resolves when the worktree root is on sys.path; a bare `python <scratch-script>.py` run does not put it there on this device/Python (3.11), because the interpreter adds the SCRIPT's own directory, not cwd, to sys.path by default. This worker worked around it (`PYTHONPATH=\"$(pwd)\"`) rather than treating it as a blocker, since the fix is a read-only invocation detail, not a code or path-grant change.",
+    "notes": "No fix attempted in `lib/` (out of this order's <paths> and not a defect in the library, which correctly uses implicit namespace packages). Filed as OBSERVATION/INERT because it cost one extra invocation this session and did not block or alter the act; a future worker following this order's PROCEDURE literally as a copy-pasted script (rather than via a REPL/tool with the worktree root already on sys.path) would hit the identical ModuleNotFoundError on the first try."
   }
+
 
 ]
 ```
