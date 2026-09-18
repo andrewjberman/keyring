@@ -8837,6 +8837,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This order's <paths> names lib/research/management/, lib/research/posture/, integrations/bloomberg/research/ and this worker's own deliverables/investigation/task-order paths -- nothing under 0.9.0_WK_AMGT_RESAPP~21/.",
     "world_is": "Exercising the mandated posture producer transitively calls a shared library cache whose DEFAULT PATH sits inside a different worker's deliverables folder, and that library correctly rebuilds a cache it finds stale. This worker did not choose that path, cannot fix its default from inside this cell's <paths> (lib/research/peers/ is not granted here), and does not commit the resulting file -- it is left as an uncommitted working-tree diff so no write lands outside the grant. A future run by ANY seat (worker or not) reaches the identical rebuilt bytes, since the staleness is in the COMMITTED file, not in this run.",
     "notes": "Remedy holder: whoever next touches lib/research/peers/universe.py or AMGT-rk-14's own follow-on -- CACHE_DIR_DEFAULT should not default into a WORKER-NUMBERED deliverables folder at all (a worker slot is not a durable cache home). Not fixed here: out of this cell's <paths> and out of its ruling."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W31-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~31",
+    "surfaced_at": "2026-09-18T16:45:37Z",
+    "one_line": "Mandatory two-step MFA now gates EVERY login attempt (measured on both michael@opalinvest.com admin/internal and alex.bright@49financial.com), so AMGT-rk-26's headless Playwright capture cannot reach an authenticated session at all -- and the same credential is the one every .frontend-dev/testing/*.json constitution and .frontend-dev/auth/credentials.json documents as the estate's automation login.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured this session, port 5173 (per this order's own mid-task correction) and 5185 alike: POST /api/auth/login returns 200, but the DOM renders 'One more step / Two-step verification / This account uses a one-time code' (screenshot org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~31/00-login-failed.png) and localStorage carries no accessToken -- do_login()'s own success check (page.url no longer /login, or a >20-char token) never fires",
+        "network log org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~31/pre-auth-network-log.json: the literal POST http://localhost:5173/api/auth/login 200 followed by no navigation and two prior POST /api/auth/refresh 401s -- a settled 200 that still does not authenticate",
+        "infra/aws/opalinvest_dev/lambda/auth-handler/src/index.ts:240-250: 'A trusted device for THIS account skips the MFA branch ... D12 WS-1 cell 2.1: MFA-enabled account -> the login STOPS here ... NO accessToken and NO refresh cookie', and mfa.ts/deviceTrust.ts/index.ts carry no test-account, QA-mode or headless bypass (grepped for bypass/automation/headless/test.*account/skip.*mfa across all three plus auth.ts: zero hits besides a device_trust_skipped_mfa LOG LINE, which requires a PRIOR successful trusted-device cookie this fresh Playwright context never has)",
+        "portal/.frontend-dev/auth/credentials.json and login-constitution.json name michael@opalinvest.com as the ONLY admin/internal credential and the ~27 testing constitutions' shared login block (per .frontend-dev/testing/README.md's own count) -- and alex.bright@49financial.com (the only other documented cred) hits the identical 'One more step' screen, so this is not admin-specific"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order directs extending .tools/frontend-dev.py's Playwright harness (already screenshots via system-Edge/pinned chromium) to reach the deployed SecurityAnalysis page authenticated as an admin+Dev user and capture all five tabs plus header for two names -- implicitly assuming the harness's documented login flow (portal/.frontend-dev/auth) still reaches an authenticated session headlessly, as every other frontend-dev constitution in this repo assumes.",
+    "world_is": "It does not. A mandatory two-step MFA challenge (D12_PHONE_OTP_ALL_AWS) now intercepts every login before any accessToken or refresh cookie is issued, with no automation-safe path in the auth-handler source (no test bypass, no logged code, and the persisted code hash is deliberately not sufficient alone to recover the code -- recovery would also need opal/auth/jwt-private-key, and this order grants no such read and declares comp-iam DECLARED-NOT-APPLICABLE). This worker did not attempt to read the MFA DynamoDB table or any signing secret to recover a one-time code -- that would be a live authentication-control circumvention this order never asked for and never scoped IAM for, not a missing capability to route around. AC1 (the captured screenshots + network logs) is REFUSED on this measurement: the harness reaches the login form and the MFA challenge, and nothing past it, for BOTH names, because the block precedes name selection entirely.",
+    "notes": "This is very likely NOT specific to AMGT_RESAPP: the same michael@opalinvest.com login underlies roughly 27 other .frontend-dev/testing/*.json constitutions per that directory's own README, all of which would hit this identical wall if re-run today. Disarm needs either (a) a documented, sanctioned automation credential/bypass for headless visual-gate testing that the D12 MFA rollout did not carry forward, or (b) an explicit ruling that headless authenticated capture is retired as a class and JUDGMENT criteria of this shape are graded by a human (Andrew eyeball), matching the ADVI Distribution precedent already recorded in portal/.frontend-dev/auth/README.md's 'Open gap' section. Not this worker's call -- named as a row, not resolved."
   }
 ]
 ```
