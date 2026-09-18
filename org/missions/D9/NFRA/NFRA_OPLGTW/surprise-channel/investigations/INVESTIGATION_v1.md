@@ -2328,6 +2328,122 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGV2-AC2: every machine A-row of OG-v-1's protocol passes on the integrated local harness, A18 among them.",
     "world_is": "A18 encodes the pre-wiring behaviour the contract forbids, so it fails now that the refusal is live on CLOUD. The file is tests/acceptance/test_local_acceptance.py, which is in TO-OG-v-2's own <paths> and that order is OPEN, so no grant widening is needed: the correction rides OG-v-2's last re-hand, flipping A18 to expect the refusal with its contract clause cited, exactly as R-OG-15 had OG-q-4 correct the two OG-q-2 tests. Nothing deployed; nothing served is wrong.",
     "notes": "ARMED because CLOUD carries a red module until that re-hand lands. This seat is the disarm owner and OG-v-2's drain is the disarming act, with a shared-tree re-run as its evidence per R-OG-16 limb 3. The issuer's own module-set choice is the cause and is named above rather than left to inference; R-OG-17's C3 census is the wider remedy already in flight on OG-q-5."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S13",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-17T23:59:00Z",
+    "one_line": "TO-OG-q-5's HALF ONE (the live-path dim_asset CUSIP restriction) cannot be wired inside this order's <paths> grant: the only call site that can orchestrate it -- app/integrations/schwab/integration.py SchwabService.query()/prepare_download()/export_query() -- is not a granted path, so OGQ5-AC1/AC2/AC3/AC4 cannot be satisfied as written and OGQ5-AC6 cannot reach a clean tests/acceptance/test_local_acceptance.py while test_ogv2_a06 stays red for this same reason.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:535-536,717-718,790-791 @3dbdb084c7 -- the ONLY three call sites that gate dim_asset all read `if q.dataset == \"dim_asset\" and self._asset_policy is None: raise ServiceError(UNAVAILABLE, \"asset_policy_selection_unavailable\")`; the value of `self._asset_policy` is never read anywhere else in the file (a non-None-only sentinel), matching tests/acceptance/conftest.py:324-328's own disclosed-seam-3 comment ('zero consumers, zero other tests passing one either').",
+        "READ infra/aws/ec2/opal-gateway/app/integrations/schwab/semantics.py:330-360 @3dbdb084c7 -- `qualify_asset_plan(asset_plan, position_sources, position_cusips)` is ALREADY BUILT (labelled AC11/AC12/AC13 in its own docstring, the exact PRD C3 mechanism: appends `eng.PolicyFilter(\"cusip\", sorted(position_cusips))` to the asset plan, re-tags the position SourceObjects role=\"policy\" so they count toward the same object/byte/deadline caps per engine.py's own SOURCE_ROLES contract at :112,213-218, and raises ENTITLEMENT_DENIED/asset_read_denied_unqualified when `position_cusips` is empty or `position_sources` is empty) -- but a corpus scan for its name found ZERO production callers: comp-find 'qualify_asset_plan' infra/aws/ec2/opal-gateway --all -> DENOMINATOR 5 hit(s) across 135 file(s) scanned, 1 DEF (semantics.py:330) and 4 TEST (tests/test_schwab_semantics.py:357,378,409,416, its own unit tests calling it directly against synthetic parquet, never through a tool).",
+        "TRACED why only integration.py can supply qualify_asset_plan's inputs: `position_sources`/`position_cusips` need (a) the catalog's qualified snapshot for (master, business_date) on dim_position -- `self._catalog.snapshot`/`self._entries`, only reachable with the request's `policy_check` closure built in `SchwabService._policy_check` (integration.py:246-247); (b) the S3 fetch of those sources -- `self._fetch` (integration.py:150-192, `S3SourceFetcher`); (c) a small engine job filtering those sources to `scope.accounts[q.master]` and projecting `cusip` -- `self._engine.run_query` (integration.py:588); and (d) `scope.accounts`, read from the caller's OWN grant (`access.grant.scope`, integration.py:530). None of query.py or catalog.py (this order's granted app files) has access to (a)+(c) together with a specific caller's account grant: query.py does no I/O by its own docstring ('Nothing here knows the caller's grant') and catalog.py's `Catalog` class is never handed `scope.accounts`, the engine, or `qry.build_plan` -- confirmed by re-reading both files in full at this HEAD, granted here, no I/O-plus-grant seam exists in either.",
+        "TRACED the actual read path for `_plan_job` (engine.py:630-696) to rule out a naive fear that concatenating a dim_position source with a dim_asset source would break on schema mismatch: `_plan_job`'s `paths` argument is already filtered to `role == \"data\"` sources ONLY by its caller (conftest.py:131-132 InProcessEngine.run_query, the same pattern production ExecutionEngine.submit uses) BEFORE `_plan_job` ever runs, so a `role=\"policy\"` position source is read only by the SEPARATE `ExecutionEngine.check_sources` budget check (engine.py:951, exercised at tests/test_schwab_semantics.py:380-389 OGQ3-AC12) and never concatenated into the asset table -- the mechanism is sound and does not require touching engine.py or semantics.py, only wiring the orchestration in integration.py's `query()`/`prepare_download()`/`export_query()`, none of which is a granted path.",
+        "GRANT: this order's <paths> block (org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-5.asset-policy-and-c3-census.md:109-114 @3dbdb084c7) names exactly infra/aws/ec2/opal-gateway/app/integrations/schwab/{query.py,catalog.py}, tests/test_schwab_asset_policy.py and this investigation file -- app/integrations/schwab/integration.py is absent from it and from the BOUNDS paragraph's explicit not-mine list alike (that list names semantics.py/datasets.json/data_entitlement.py/test_schwab_query.py but is silent on integration.py, so its exclusion is read from <paths> itself, the stated grant, per the order's own text: '<paths> IS your write grant')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGQ5-AC1/AC2/AC3 each require exercising 'the registered schwab_query tool on OG-v-2's live-app harness' and observing the PRD C3 partial-account dim_asset CUSIP restriction; OGQ5-AC4 mutates and re-measures the same call site; OGQ5-AC6 requires tests/acceptance/test_local_acceptance.py (which carries test_ogv2_a06, the arm this half must turn green per the cell's own READ paragraph) to show 0 failures.",
+    "world_is": "The call site that must be edited to wire PRD C3's dim_asset restriction on the live path is app/integrations/schwab/integration.py's SchwabService.query() (and, for parity, prepare_download()/export_query()), which this order's <paths> grant does not name. query.py and catalog.py -- the two files this order DOES grant -- cannot supply the orchestration (catalog access plus the caller's own account grant plus a small engine job) that semantics.py's already-built qualify_asset_plan needs as input, so HALF ONE cannot be wired inside this cell's write surface as cut. This worker did not edit integration.py (BOUNDS: 'a path you need that is not named is a BLOCKING surprise row on that criterion -- never an override'; 'Nothing else' write surface) and did not widen the order to reach it.",
+    "notes": "INERT: nothing deploys in this order and no served behaviour changes; the gap is a decomposition/grant mismatch, not a production incident. OGQ5-AC1, AC2, AC3, AC4 and AC6 are measured and reported FAIL by this worker's own runs, not silently patched around or satisfied by a route this order does not name. OGQ5-AC5 (the C3 census, HALF TWO) does not depend on integration.py and is completed and reported separately by this same worker. BLOCKING: this order stays open on AC1/AC2/AC3/AC4/AC6 until an issuer either grants app/integrations/schwab/integration.py to this cell (or a re-hand) or re-scopes HALF ONE's mechanism to a file this cell already owns."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S14",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-18T00:30:00Z",
+    "one_line": "C3 census finding (row R20): PRD C3's 'grouping never removes master/date identity' has a built, unit-tested guard -- semantics.py assert_grouping_preserves_identity() -- with ZERO production callers, so a live schwab_query aggregate can group_by business_date today, unrefused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'assert_grouping_preserves_identity' infra/aws/ec2/opal-gateway/app --all @3dbdb084c7 -> DENOMINATOR 1 hit across 65 file(s) scanned, 1 DEF (semantics.py:173), 0 SURFACED -- no call site anywhere in app/.",
+        "MEASURED this turn, direct call against the shipped, unedited app/integrations/schwab/query.py check_against_grant() with the real org/standards/NFRA_OPLGTW_CONTRACT.json: parse_query({...,'dataset':'dim_balance','mode':'aggregate','group_by':['business_date'],'aggregates':[{'function':'count','field':None,'alias':'c'}]}) then check_against_grant(q, granted, rules) -> 'NO REFUSAL: group_by business_date accepted' (business_date is a real contract field of dim_balance, per query.py DATASET_SCHEMAS).",
+        "READ semantics.py:173-181 assert_grouping_preserves_identity() and its own docstring: 'business_date IS a contract field of dim_position/dim_balance, and grouping by it inside a query already bound to one business_date is a no-op that can only mislead a caller ... Refused outright, independent of query.py's own grammar check (which allows business_date as an ordinary groupable field)' -- the function exists BECAUSE query.py's own grammar does not refuse this, and nothing calls the function that would.",
+        "Full C3 census: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/C3_CALL_PATH_CENSUS.md row R28 [P4.S2] @this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C3 (v0.9 @e09219470f, paragraph 4, sentence 2): 'Grouping never removes master/date identity and never sums snapshots across dates.'",
+    "world_is": "A caller can request group_by=[\"business_date\"] on dim_position or dim_balance through the live schwab_query tool today and it succeeds, because the one function built to refuse it (semantics.assert_grouping_preserves_identity) is never called from query.py's check_against_grant or from integration.py's query(). Nothing is deployed (decomposition bound 9, ENABLED_INTEGRATIONS default empty), so nothing served is wrong today; this is a finding, not a fix, per this cell's own bound ('the census FINDS; it does not FIX').",
+    "notes": "INERT: pre-deployment gap, same standing as NFRA_OPLGTW-W6-S8. The remedy (wiring the one-line call in query.py's check_against_grant, the same shape OG-q-4 already used for R-OG-13/R-OG-15) is the issuer's to place; this cell's <paths> grant does include query.py, but widening this cell to fix a SECOND rule is exactly the re-cut this project's own ruling (R-OG-17) says it keeps paying for, so this worker did not fix it here."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S15",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-18T00:31:00Z",
+    "one_line": "C3 census finding (row R22): PRD C3's 'never construct a cash/AUA total by adding different balance fields' has a built guard -- semantics.py assert_single_balance_metric(), reached only via assert_sum_allowed() -- and assert_sum_allowed() itself has ZERO production callers, so a live schwab_query aggregate can SUM two distinct dim_balance fields in one request today, unrefused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'sem.describe_field|sem.describe_dataset|assert_single_balance_metric' infra/aws/ec2/opal-gateway/app --all @3dbdb084c7 -> assert_single_balance_metric: 1 DEF (semantics.py:260) + 1 internal call from assert_sum_allowed (semantics.py:279); assert_sum_allowed itself: no hit outside its own def -- zero external callers of either.",
+        "READ app/integrations/schwab/query.py check_against_grant():464-478 @3dbdb084c7 -- calls only sem.assert_field_summable(query.dataset, agg.field) and sem.assert_quantity_sum_grouped(query.dataset, agg.field, query.group_by) per aggregate, never sem.assert_sum_allowed or sem.assert_single_balance_metric, which would need to see ALL summed fields across the request at once.",
+        "MEASURED this turn, direct call against the shipped, unedited query.py check_against_grant() with the real contract: an aggregate query on dim_balance with aggregates=[{'function':'sum','field':'mkt_value_long','alias':'a'},{'function':'sum','field':'mkt_value_short','alias':'b'}] -> 'NO REFUSAL: summing two different dim_balance fields in one query accepted'.",
+        "Full C3 census: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/C3_CALL_PATH_CENSUS.md row R22 [P4.S4] @this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C3 (v0.9 @e09219470f, paragraph 4, sentence 4): 'Vendor balance fields overlap: permit a named field's sum across approved accounts, never construct a cash/AUA total by adding different balance fields.'",
+    "world_is": "A caller can request SUM(mkt_value_long) and SUM(mkt_value_short) (or any two distinct additive dim_balance fields) in one aggregate query today and add the two returned numbers back together outside the Gateway, approximating exactly the combined total C3 forbids -- semantics.py's own docstring names this as the residual risk assert_single_balance_metric exists to close (':261-265'), but the function that closes it is never called. Nothing is deployed, so nothing served is wrong today; a finding, not a fix.",
+    "notes": "INERT: pre-deployment gap. The remedy is a second call inside query.py's check_against_grant (collecting summed_fields per dataset across the whole aggregates list and calling sem.assert_single_balance_metric once) -- the issuer's to place, not fixed here per this cell's own bound against widening to a second rule."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S16",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-18T00:32:00Z",
+    "one_line": "C3 census finding (row R24): PRD C3's 'duplicate/conflicting source grains produce unavailable, not silent deduplication' has a built guard -- semantics.py assert_unique_grain() -- with ZERO production callers anywhere, and engine.py's own DuckDB execution has no grain-uniqueness check of its own either, so a duplicate/conflicting grain is served (rows mode) or silently folded into a SUM (aggregate mode) instead of refusing the read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'assert_unique_grain' infra/aws/ec2/opal-gateway/app --all @3dbdb084c7 -> DENOMINATOR 1 hit across 65 file(s) scanned, 1 DEF (semantics.py:285), 0 SURFACED.",
+        "READ app/integrations/schwab/engine.py _plan_job():630-696 @3dbdb084c7 in full -- reads the parquet columns, applies PolicyFilter(s), projects, renames to positional columns and runs the generated DuckDB statement; no grain-uniqueness check of any kind exists in this function or anywhere else in engine.py (confirmed by reading engine.py's full public surface, __all__ at :52-74, which names no grain-related symbol).",
+        "READ app/integrations/schwab/query.py and app/integrations/schwab/integration.py in full @3dbdb084c7 -- neither calls semantics.assert_unique_grain at any point after a job's rows are returned (integration.py's query() renders rows straight from job.value['rows'] into the response, integration.py:609-632).",
+        "Full C3 census: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/C3_CALL_PATH_CENSUS.md row R24 [P4.S6] @this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C3 (v0.9 @e09219470f, paragraph 4, sentence 6): 'Duplicate/conflicting source grains produce unavailable, not silent deduplication.'",
+    "world_is": "Two rows sharing one grain key (the same account/cusip/long-short for dim_position, for example) are never detected by the live query path: in rows mode both rows are simply returned; in aggregate mode both are folded into the same SUM/COUNT like any other pair of rows, the opposite of the contract's 'produce unavailable'. semantics.assert_unique_grain exists and is unit-tested (OGQ3-AC9 per its own comment) but is never called. Nothing is deployed, so nothing served is wrong today; a finding, not a fix.",
+    "notes": "INERT: pre-deployment gap. Wiring this needs a call site AFTER a job's rows return but BEFORE they render (integration.py, not this cell's <paths>) -- named here as a finding, not repaired, per this cell's bound against fixing a rule beyond HALF ONE and against editing integration.py (see NFRA_OPLGTW-W5-S13)."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S17",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-18T00:33:00Z",
+    "one_line": "C3 census finding (row R25): PRD C3's dataset-description rule requires grain/type/unit/sign/null-semantics; the live schwab_describe_dataset tool exposes grain/type/unit only -- sign and null_semantics, present in datasets.json and served by semantics.py's own describe_field()/describe_dataset() (zero production callers), are never returned to a caller.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'sem.describe_field|sem.describe_dataset' infra/aws/ec2/opal-gateway/app --all @3dbdb084c7 -> 0 hits outside semantics.py's own definitions (describe_field :151-156, describe_dataset :159-163) -- neither is called from app/integrations/schwab/integration.py or anywhere else.",
+        "READ app/integrations/schwab/integration.py describe_dataset():438-477 @3dbdb084c7 in full -- builds `described` from qry.DATASET_SCHEMAS directly: {'name','type'} always, plus 'precision'/'scale'/'unit'/'representation' for KIND_DECIMAL fields only, plus a special 'representation' string for account_ref; no 'sign' key and no 'null_semantics' key appear anywhere in the built doc.",
+        "READ app/integrations/schwab/semantics.py:81 @3dbdb084c7 -- _FIELD_DESCRIPTION_KEYS = ('type','unit','sign','grain','null_semantics','source'); _validate_datasets() (:91-135) asserts datasets.json carries exactly these six keys for every field of every dataset, cross-checked against query.py's DATASET_SCHEMAS at import time -- so 'sign' and 'null_semantics' data DOES exist for every field, it is simply never read by the live tool.",
+        "Full C3 census: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/C3_CALL_PATH_CENSUS.md row R25 [P4.S7] @this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C3 (v0.9 @e09219470f, paragraph 4, sentence 7): 'Dataset description records grain, field type, unit, sign and null semantics from measured source plus independent fixtures.'",
+    "world_is": "A caller of the registered schwab_describe_dataset tool receives name/type/grain/unit/precision/scale but never a field's sign or null semantics, even though datasets.json (validated against query.py's own schema at import time) carries both for every field -- integration.py's describe_dataset() builds its response from qry.DATASET_SCHEMAS (which has no sign/null_semantics attributes at all) instead of from semantics.describe_dataset(), which does. Nothing is deployed, so nothing served is wrong today; a finding, not a fix.",
+    "notes": "INERT: pre-deployment gap. The remedy (integration.py's describe_dataset() reading semantics.describe_field()/describe_dataset() instead of, or alongside, qry.DATASET_SCHEMAS) touches integration.py, which is not this cell's <paths> grant (see NFRA_OPLGTW-W5-S13's same boundary) and is a second rule beyond this cell's HALF ONE; named here, not repaired."
   }
 ]
 ```
