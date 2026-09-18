@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T12:0xZ to slot ~1 (cold start) on row W1-S16 (carried through S57 as the first round-4 cut) and the issuer's Rule-22 census that found the branch duplicated.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~1, 2026-09-18. R48-AC1 PASS-by-output (battery_ib_rtd_8.py rc=0, token IBR48-FIRM-CHECK-RESTORED-ON-BOTH-ENFORCERS, 9 of 9 arm-checks); R48-AC2 judgment RECORDED for 3.0.0_SA_CVO, no verdict taken. The issuer's Rule-22 census was itself stale (row IRPT_BCKEND-W1-S19): `_authz/enforce.py` was already fixed at 49035683d1 (round 2), an ancestor of the cited pin; `holdings/enforce.py` is a PINNED, COMMITTED-BLOB mirror of it (holdings/stage.py), stale at a pre-fix pin -- re-staged to the fixed content, deployed under ledger `irpt-bckend-rtd8-holdings-advisor-fix` (CLOSED), and proven live (7 of 7 functions serve the fix; 0 of 7 routes reach the branch, VACUOUS-measured). proof-of-spec-check rc=0 VALID. Second row filed: IRPT_BCKEND-W1-S20 (untracked served.py/loaders.py gap, worked around, not repaired).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 4 (the CTO's round-3 analysis @5c59f68d70, msg 97944) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 3) | **Round-3 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md` @5c59f68d70 | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar (analysis s.4, ADOPTED) | **Decomp cell:** `IB-rtd-8` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.4, s.R4) | **outcome_ref:** FWD-2, FWD-11
 
