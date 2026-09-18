@@ -5390,6 +5390,97 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not this cell's to fix, per bound (\"refresh.py and its tests are the ONLY code touched\"). Filed rather than repaired, per the surprise-channel bound (a capability I lack: I cannot commit new tracked source files outside my declared scope even to close a gap I needed to work around). The workaround (copy-from-canonical-source, build, remove) is recorded in this order's own deploy-ledger commit message (05c0322989) rather than left silent. ARMED for the same reason W1-S20 is: every future rebuild of irpt-directory-refresh hits the SAME refusal until directory/'s own file provenance is fixed in-tree; routed to the same owner as W1-S20."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S21",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:40:00Z",
+    "one_line": "The task face for IB-rte-1 asserts the test advisor's id must be 'an ISSUED opaque id per bound 13, minted by the same instrument the directory uses' -- measured: no such instrument or kind exists anywhere in the estate for an advisor id.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-1 face (b): \"the advisor id it maps to (an ISSUED opaque id per bound 13, minted by the same instrument the directory uses, never a display name)\".",
+    "world_is": "infra/aws/lambda/investor-reporting/_ids/ids.py KINDS = {\"account\": \"acc_\", \"relationship\": \"rel_\", \"client\": \"cli_\", \"firm\": \"fir_\"} -- there is no \"advisor\" kind, and CLAUDE.md bound 13's own enumerated list of typed identifiers (\"Firm, client, relationship, account, report, export and job ids\") also excludes advisor. The real advisor id in this estate is a raw string minted by the identity plane itself: the ownership map's own key (e.g. \"abby_horton\", read live this run from platinum/49financial/ownership_map.json), matched 1:1 to the JWT's advisorKey/advisorId claim (RT2_test_principal_human_gated.md's own citation, auth-handler/src/jwt.ts:167-187) and to the trusted X-Advisor-Id header _scope/resolve.py:95 reads. This cell used the real (raw-string) shape in its packet rather than the face's assumed (opaque-minted) one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_ids/ids.py:69-74 @391e4ad948869b8972bf6d96d5cc54392b351d5e (KINDS dict, four members, no 'advisor')",
+        "CLAUDE.md bound 13 (s.8, decomposition v0.2) verbatim: \"Firm, client, relationship, account, report, export and job ids cross a function boundary as ISSUED opaque ids of a declared type\" -- advisor absent",
+        "platinum/49financial/ownership_map.json (live, this run, sha256 0864a3a716a8502edf31f110c0f409edb31fdde62172961a08947e12a8568adf): advisor keys are raw strings such as 'abby_horton', not acc_/rel_/cli_/fir_-shaped"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a defect to fix -- the estate simply never typed advisor ids this way. Filed so IB-rte-2 (or any later cell) does not try to mint an opaque advisor id that has no minter. Folded into NEVER_WIDEN_SIGNOFF_PACKET_IB-rte-1.md."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S22",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:45:00Z",
+    "one_line": "The bounded test principal round 5 was cut to build (round-4 analysis s.6(a): 'THIS IS WHAT MAKES FWD-1 / FWD-2 / FWD-5 / FWD-11 GRADABLE AT ALL') does NOT by itself make FWD-1/2/5's SERVED path exercisable: every live entry point constructs its Enforcer with id_projection=None, so every real FIRM_ADVISOR request against a real ownership map is refused UNPROJECTED_GRANT before the empty-grant branch is ever reached.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "CTO round-4 analysis s.6(a) @561d6e1cc9: the test principal \"is therefore round 5's highest-value cell ... THIS IS WHAT MAKES FWD-1 / FWD-2 / FWD-5 / FWD-11 GRADABLE AT ALL\" -- read as: minting the principal is sufficient to make these outcomes exercisable.",
+    "world_is": "Measured live this run by running the REAL infra/aws/lambda/investor-reporting/_authz/enforce.py Enforcer, wired EXACTLY as directory/entry.py constructs it in production (deps=_loaders.deps, id_projection NOT passed): a real request for advisor 'abby_horton'/'49financial' against the LIVE directory + LIVE ownership map is refused code=UNPROJECTED_GRANT, reason '43 of 43 ownership grants carry ids in a key space this directory cannot be joined on'. Re-measured firm-wide: 0 of 22,646 ownership-map account grants (all 179 advisors) join the live directory even WITH _ids.projection_for('49financial') applied by hand (the ownership map's raw custodian keys, 'z0819594401'-shaped, are not the raw key _ids/raw_keys.json declares 49financial's directory mints from: 'the crosswalk's account id, zero-padded to 10 digits'). And separately: a census of every entry.py/handler.py/dispatch.py under infra/aws/lambda/investor-reporting/ (13 files, denominator printed) shows 0 of 13 ever pass id_projection to Enforcer/Entry. So the refusal is not a property of which advisor or firm this cell chooses -- it fires for every live FIRM_ADVISOR request today, and the bounded test principal alone does not unblock FWD-1/2/5's SERVED (200) path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rte_1.py arm_b_principal_shaped(), IB-rte-1_R51-AC1_battery_output.txt (this run): LIVE_PRODUCTION_WIRING_RESULT = {served: false, code: UNPROJECTED_GRANT, granted_denominator: 43, gap_reason_histogram: {UNPROJECTED-ID: 43}}",
+        "same output: ownership_to_directory_join_WITH_projection = '0 of 22646'",
+        "same output: id_projection_wiring_census = {entry_points_denominator: 13, wired: [], verdict: '0 of 13 live entry/handler/dispatch modules ever set id_projection'}",
+        "infra/aws/lambda/investor-reporting/_ids/raw_keys.json:9-16 @391e4ad948869b8972bf6d96d5cc54392b351d5e (49financial's declared account raw key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix (bound: READ-ONLY, creates nothing, and the entry-point wiring is outside a single test-principal cell's charge). Named prominently in R51-AC2's judgment record and in NEVER_WIDEN_SIGNOFF_PACKET_IB-rte-1.md so IB-rte-2 does not spend its own round discovering this after the principal is created."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S23",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:47:00Z",
+    "one_line": "The task face's example directory prefix (s3://opal-data-bd/investor-reporting/directory/2026-09-16/) is one day stale against every firm's live latest.json pointer at this cell's cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-1 face (b): \"read the three landed directories under s3://opal-data-bd/investor-reporting/directory/2026-09-16/\".",
+    "world_is": "Measured live this run: opal-data-bd, opal-data-inf and opal-data-cot's own investor-reporting/directory/latest.json each point to .../2026-09-17/directory.json (generated_at 2026-09-18T16:41:04Z for bd and cot, 2026-09-18T09:02:13Z for inf), not .../2026-09-16/. An older object still exists at the 2026-09-16 prefix in opal-data-bd, but it is not what the enforcer's own load_directory (which follows latest.json) reads. Does not change which firm this cell chose (49financial, by measured TERMINATED count).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3 cp s3://opal-data-bd/investor-reporting/directory/latest.json - (this run): key '2026-09-17/directory.json'",
+        "aws s3 cp s3://opal-data-inf/investor-reporting/directory/latest.json - (this run): key '2026-09-17/directory.json'",
+        "aws s3 cp s3://opal-data-cot/investor-reporting/directory/latest.json - (this run): key '2026-09-17/directory.json'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Trivial drift (the task order's own cut vintage is behind a producer's daily refresh); no action needed."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S24",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:49:00Z",
+    "one_line": "Cottonwood's live directory carries termination.indicator = UNKNOWN for 260 of 260 entries -- none ACTIVE, none TERMINATED -- so cottonwood cannot currently exhibit FWD-1's terminated-client-stays-visible behaviour at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The DirectoryEntry contract's termination.indicator is described (infra/aws/lambda/investor-reporting/_authz/tests/fixtures.py:53 '\"termination\": {\"indicator\": \"ACTIVE\", ...}'; PRD FWD-1 CONSTRAINT 'terminated clients STAY VISIBLE, marked terminated') as distinguishing ACTIVE from TERMINATED so the capability-gap behaviour can be exercised per firm.",
+    "world_is": "Measured live this run (battery_ib_rte_1.py arm_b_principal_shaped, per_firm.cottonwood.termination_histogram): {\"UNKNOWN\": 260} -- 0 ACTIVE, 0 TERMINATED, out of 260 entries. 49financial and inflection carry ACTIVE/TERMINATED correctly in the same run ({\"ACTIVE\": 4505, \"TERMINATED\": 71} and {\"ACTIVE\": 291}). Cottonwood's directory producer is not yet populating a real termination status at this vintage.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IB-rte-1_R51-AC1_battery_output.txt (this run): arm_b_principal_shaped.per_firm.cottonwood.termination_histogram = {\"UNKNOWN\": 260}",
+        "same output: per_firm.49financial.termination_histogram = {\"ACTIVE\": 4505, \"TERMINATED\": 71}; per_firm.inflection.termination_histogram = {\"ACTIVE\": 291}"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix (read-only, no directory annotation authorized). Does not change this cell's firm choice (49financial already has the required TERMINATED entries), but a later cell exercising cottonwood specifically should know its termination field is not populated yet."
   }
 ]
 ```
