@@ -332,6 +332,19 @@ CODE_TREES: dict[str, dict] = {
                         "repo_path": "data/firm_registry.json",
                         "sha_metadata_key": "firm-registry-sha256",
                     },
+                    # THE HOLDINGS RUNNER'S CONTRACT (cell IB-rtd-3, row IRPT_BCKEND-S71).
+                    # `holdings_snapshot.py` reads `docs/contracts/investor-reporting/v1/`, NOT the
+                    # `_contracts/` copy the directory runner reads, and a no-network probe shows it is
+                    # the ONLY file that runner opens which the bundle lacked -- so without this member
+                    # `load_contract()` raises FileNotFoundError on the host. BUNDLE-ONLY: a contract has
+                    # no per-file S3 target, so it carries NO "distribution" flag (a flagged member must
+                    # own a loose leg); a commit to it re-mints this bundle through the member detector.
+                    # Which of the two HoldingsSnapshot schemas is THE contract is L4's call; this member
+                    # declares the file the runner reads today and edits neither.
+                    "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json": {
+                        "repo_path": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+                        "sha_metadata_key": "holdings-snapshot-schema-sha256",
+                    },
                     # DISTRIBUTION members: each keeps its own firm's loose leg (advi / inf / cot) AND
                     # a commit to it re-mints this bundle. Distinct sha keys, per the rule above,
                     # NUMBERED in sorted repo-path order (1 = runners_49f, 2 = runners_cot,
