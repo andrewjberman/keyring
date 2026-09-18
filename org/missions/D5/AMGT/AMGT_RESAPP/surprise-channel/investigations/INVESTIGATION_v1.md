@@ -8461,6 +8461,123 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The CTO half HALF 5 @533f216c74: covered = SCORES_PREFIX, read_scores() reading the newest dated object under scores/v1/<key>/, and bundle['scores'] with classify's record shape carried through, in one Lambda code deploy; STOPs on any write to scores/v1/, any computation of a score in the adapter, any Divergence served as MEASURED while the house forecast does not serve, and any Bloomberg call for the quarterly Robustness inputs; the reader must read the DATE-PARTITIONED shape only and a silent fallback to the flat shape is the half REFUSED; both branches -- where the producer's object exists the three records serve with their MEASURED or ABSENT classing and Divergence D is ABSENT with its reason on every name; where no object has landed, scores_status is the pool absence with reason naming WHICH absence, and AN INCOMPLETE READ SAYS SO rather than reading as 'no scores exist'.",
     "world_is": "The producer's objects DO exist (66 under scores/v1/), so the half's FIRST branch is the one that applies -- and it is NOT met: no record serves a MEASURED or ABSENT classing, because the read cannot complete. The half's incomplete-read clause IS met, precisely and with the full AccessDenied text. So the act's DISCLOSURE limb passed and its SERVE limb did not, and the cause is an absent IAM grant that this act was forbidden to add.",
     "notes": "\u2b50 THE SAFEGUARD IS THE FINDING. HALF 5 required that an incomplete read SAY SO rather than read as 'no scores exist'. That clause fired. Without it the page would today show three blank scores on every name, and every seat -- including this one, which ruled on exactly this question an hour ago -- would have attributed it to the Peers V vocabulary gap and cut a round-14 cell against the wrong defect. \u26d4 AND THAT IS A CORRECTION THIS SEAT OWES AGAINST ITS OWN RULING Z-S164. That ruling said the 'scores absent' symptom had TWO independent causes and that closing the contract gap alone would surface the Peers V gap as three ABSENT scores on every name. MEASURED NOW, THERE ARE THREE, AND THE ORDER MATTERS: (1) NO IAM GRANT for scores/v1/ on either limb -- upstream, and it MASKS everything below it; (2) the bundle's missing scores field -- CLOSED by this act, the key is present on 33 of 33; (3) the Peers V vocabulary mismatch -- CURRENTLY UNOBSERVABLE, because the read never reaches the scoring records. So the prediction in Z-S164 is not yet testable, and anyone reading today's three ABSENT scores as evidence of the Peers V gap would be reading cause (1) and calling it cause (3). THE REMEDY IS ITS OWN ACT, NOT AN AMENDMENT TO THIS ONE: adding scores/v1/ needs BOTH limbs written per the banked two-limb rule -- a GetObject ARN 'arn:aws:s3:::opal-data-harvest/scores/v1/*' and a ListBucket s3:prefix 'scores/v1/*' -- with the trailing slash form only, since the no-slash form would widen onto any sibling sharing the stem. That is an IAM act, HALF 5 explicitly does not cover it, and this seat will not treat this row as authority for it: it needs its own co-signed pair before anything is applied. Routed to 2.0.0_SA_COO~Z (disarm owner, and it grades the order) and 3.0.0_SA_CVO~Z (which grades AC at L9)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T20:15Z",
+    "one_line": "AMGT-rk-23's literal fix ('a one-line path-safe encode... applied IDENTICALLY at both sites') would have broken the S3 pool read for both slash-containing names if applied to the shared `filename` variable in `_read_drafting_document()`, because that ONE variable also builds the S3 GET key, and the filings/drafting producers (analyze.py:1215, batch.py:150) write their pool objects at the RAW (unsanitized) security_key -- a real literal slash in the key, which S3 tolerates as an ordinary key character.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py _read_drafting_document() (pre-fix, this session's own read at HEAD before editing): `filename = \"{0}.json\".format(security_key)` is used BOTH for the local AMGT_DRAFTING_ROOT join (`os.path.join(root, filename)`) and, unconditionally after, for the S3 key (`key = \"{0}{1}\".format(DRAFTING_PREFIX, filename)`) -- one variable, two consumers with different path semantics.",
+        "lib/research/filings/analyze.py:1215 and lib/research/filings/batch.py:150 both write `\"drafting/v1/%s.json\" % analysis[\"security_key\"]` verbatim -- no slash sanitization at the producer, so a name like `BP/_LN_Equity` lands at the literal S3 key `drafting/v1/BP/_LN_Equity.json`.",
+        "This session's own unit test (monkeypatched S3 client asserting the exact Key argument) confirms `_read_drafting_document('BP/_LN_Equity')` must request Key `drafting/v1/BP/_LN_Equity.json` (unsanitized) to reach the real object; sanitizing the shared `filename` variable to `BP-_LN_Equity.json` would 404 against a real landed object.",
+        "The task order's own text says both sites are 'local-filesystem joins (S3 keys already tolerate `/` fine -- this is never an S3 problem)', naming the S3 read as out of scope for the fix, but its worked example (`sec_key.replace(\"/\", \"-\"), ... applied IDENTICALLY at both sites`) does not itself name the shared-variable coupling that a literal identical-replace would trip."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-23 (task order text): 'a one-line path-safe encode at BOTH sites ... applied IDENTICALLY at both sites so a name's on-disk artifact name is the same string everywhere' -- and, separately, 'S3 keys already tolerate `/` fine -- this is never an S3 problem'.",
+    "world_is": "The two clauses are only jointly satisfiable by sanitizing a NEW, locally-scoped filename used only inside the `if root:` branch -- never the shared `filename` variable the S3 key also reads. This session implemented it that way (see the commit touching lib/research/api/scoped_amgt.py's `_read_drafting_document`) and verified both branches independently: the local-root read finds a slash-sanitized fixture file, and a monkeypatched S3 client still receives the exact unsanitized key. Filed as OBSERVATION/INERT because the actual commit already carries the correct, narrower fix -- this row records the coupling a less careful literal reading of the order's own worked example would have missed.",
+    "notes": "No remediation owed elsewhere: render_pack.py's own `security_key()` has no S3 consumer at all (build_pack() takes an already-read model block, never re-reads by key), so its fix has no equivalent coupling to guard against."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S8",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T20:25Z",
+    "one_line": "AMGT-rk-20's instruction to route price_axis_pull.py's writes through lib.research.price.generation.compute_price_axis(), 'replacing build_movement_rows() and the :337-346 write loop', must NOT be read as deleting or renaming build_movement_rows() itself: lib/research/metrics/movement_gate.py's own producer axis registry names it BY STRING (module path + function name) as the PRICE subject's declared writer, and lib/research/metrics/tests/test_producer_axis_registry.py calls it directly by that name to prove the registry's claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/metrics/movement_gate.py:198: `\"PRICE\": (\"integrations.bloomberg.research.price_axis_pull\", \"build_movement_rows\")` -- a string-keyed registry entry, not an import, so nothing would raise an ImportError if the function were removed; the coupling is silent.",
+        "lib/research/metrics/tests/test_producer_axis_registry.py:140 and :169 both call `price_axis_pull.build_movement_rows(...)` directly to exercise the registry's claim against the real function.",
+        "This session's own build kept build_movement_rows() byte-for-byte unchanged (main() simply stopped calling it, routing instead through compute_price_axis()) and re-ran the full lib/research/ suite post-edit: 490 passed, including test_producer_axis_registry.py, plus a standalone synthetic-series call to build_movement_rows() directly confirming it still executes and returns the same two-product shape.",
+        "The scoped_amgt.py adapter's own big docstring (READ THE CROSS section, this file, ~line 22-49) explicitly relies on this registry for its CROSSED vs SUBJECT_ONLY_FALLBACK resolution -- a silently-broken registry entry would degrade the read adapter's PRICE axis to the fallback branch without any test in this session's own paths catching it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-20 (task order text): 'routes its writes through lib.research.price.generation.compute_price_axis() (replacing build_movement_rows() and the :337-346 write loop)'.",
+    "world_is": "'Replacing' the write loop is correct and done; 'replacing build_movement_rows()' as a function to delete would have broken an registry+test dependency the order's own text does not mention. This session preserved the function definition and only changed what main() calls, which is the narrower and correct reading -- filed as OBSERVATION/INERT since the commit already reflects the safe reading, recorded so a later reviewer does not 'clean up' the now-uncalled-from-main() function as dead code.",
+    "notes": "None outstanding; this is a documentation-of-reasoning row, not a defect."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S9",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T22:28Z",
+    "one_line": "AMGT-rk-20 AC1's own <expect> clause names a BEFORE/AFTER shape (BEFORE as_of_date 2026-09-10 dated true; AFTER as_of_date 2026-09-15 dated false) that the live measured state does not match at either end -- BEFORE was genuinely ABSENT/undated (the only pointer in the 14-day lookback window, BREAKOUT_PRICE#2026-09-10, carries state EMPTY, which _find_latest_served_pointer's own docstring says is deliberately never promoted as a fallback), and AFTER read dated=true, not false, because the requested_as_of defaults to today (2026-09-17) and the served date (2026-09-15) differs from it by design.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live pre-act call, read_rankings('BREAKOUT','PRICE',None,20): as_of_date=2026-09-17, dated=False, ranking_status=ABSENT, row_count=0 -- not the order's assumed 'as_of_date 2026-09-10, dated true'.",
+        "Live read_generation_pointer('BREAKOUT_PRICE','2026-09-10') returned a pointer with state='EMPTY' (generation_id 20260916T065449Z-4f53cda18c2b, row_count 0) -- an EMPTY pointer, which lib/research/api/scoped_amgt.py's _find_latest_served_pointer docstring (:523-526) states is deliberately never used as a fallback ('ONLY a COMPLETE pointer counts ... walking past one keeps looking'), explaining the ABSENT/undated BEFORE result mechanically rather than as a bug.",
+        "Live post-act call after republish_crossed_generation(as_of_date='2026-09-15') wrote both axes COMPLETE (32 rows each): read_rankings('BREAKOUT','PRICE',None,20) then returned as_of_date=2026-09-15, dated=True (not the order's assumed dated=False) -- dated=True is the read_rankings docstring's own correct behaviour (':550-553') whenever the requested date (defaulting to _today()=2026-09-17) differs from the date actually served (2026-09-15).",
+        "AC2's own check (pointer_exists/generation_id/state on BREAKOUT_PRICE#2026-09-15) passed exactly as specified: generation_id 20260917T222505Z-45dc4b07af48, state COMPLETE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-20 AC1 <expect>: 'BEFORE: as_of_date 2026-09-10, dated true. AFTER: as_of_date 2026-09-15, dated false. Record both runs.'",
+    "world_is": "BEFORE was as_of_date 2026-09-17 (today, the default), dated false, ranking_status ABSENT (no COMPLETE pointer anywhere in the 14-day lookback -- the nearest candidate, 2026-09-10, is EMPTY and is correctly skipped). AFTER republish, as_of_date 2026-09-15, dated TRUE (the served date is earlier than the default requested date, which is exactly what triggers dated=true in this reader's own contract). The underlying FIX -- moving BREAKOUT_PRICE from ABSENT/unservable to SERVED with a genuine COMPLETE generation and 32 real rows -- is achieved and is the act's actual intent; only the order's own literal <expect> numbers for this non-judgment criterion do not hold. Graded FAIL on AC1's literal text in this session's proof-of-spec instance, with this row as the record of why, rather than silently substituting a passing narrative for a stated criterion.",
+    "notes": "AC2 passes cleanly and is not affected by this mismatch. Not filed as BLOCKING because the act itself proceeded correctly and the mismatch is confined to the specific literal wording of one non-judgment expectation clause."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S10",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-17T23:48Z",
+    "one_line": "AMGT-rk-23's own root-cause premise is wrong: the live, deployed, correct fix (path-safe LOCAL artifact names in render_pack.py and scoped_amgt.py's _read_drafting_document) does NOT and CANNOT reach either slash-bearing key, because the router itself (handler()'s `rest = path[len(ROUTE_PREFIX):].split(\"/\")` positional match, requiring len(rest)==3 for every /security/{key}/{leaf} route) treats the raw `/` inside `BP/_LN_Equity` and `NG/_LN_Equity` as an EXTRA PATH SEGMENT, so the request 404s at ROUTING, before render_pack.py, _read_drafting_document, or any leaf handler ever runs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z / 2.0.0_SA_COO~Z -- a NEW cell scoping the router-level fix (handler()'s /security/{key}/* positional segment match must resolve a multi-segment raw key back into one token, or every caller must percent-encode the key end-to-end); no existing cell in AMGT_RESAPP_DECOMP.md covers this and it is outside this order's <paths>.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live, post-deploy (this act's own artifact, CodeSha256 iGmDkRbA6ZenF0CHAgU7nwNZkmdUEzMKRdBEJsDlbP0=, deployed 2026-09-17T23:33:34Z): GET /api/scoped/amgt/security/BP/_LN_Equity/print -> 404 {\"refused\": true, \"reason\": \"no /api/scoped/amgt route for GET /api/scoped/amgt/security/BP/_LN_Equity/print\"} -- the router's OWN refusal message, not a render_pack.py or filesystem error.",
+        "The SAME live post-deploy call against the other three leaf routes on the same key -- /thesis, /overlay, /peers, /coverage -- ALL 404 with the identical router-refusal shape, confirming this is not a /print-specific or render_pack.py-specific defect: it blocks EVERY /security/{key}/* route for a slash-bearing key.",
+        "lib/research/api/scoped_amgt.py:3157 `rest = [segment for segment in path[len(ROUTE_PREFIX):].split(\"/\") if segment]` and :3189 `if rest[:1] == [\"security\"] and len(rest) == 3:` -- for rawPath /api/scoped/amgt/security/BP/_LN_Equity/print, this yields rest=['security','BP','_LN_Equity','print'], len(rest)==4, so the security-route arm's own length guard never matches and control falls through to the final `raise AdapterError(404, ...)` at :3273.",
+        "BEFORE this act's deploy, the SAME two keys already read 404 (not 500) on /print with the identical router-refusal body -- measured in this same session's own AC1 BEFORE run -- so the router-level block PRE-EXISTS this act and is not introduced by it; the order's own text names a 500 from an unsafe local path join as the failure mode, which is not what either the BEFORE or the AFTER live read shows."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-23 (task order text): 'Print pack 500s on the two slash-bearing keys (BP/_LN_Equity, NG/_LN_Equity) because the renderer writes the raw security key into a local file path' and AC1's <expect>: 'served_ok equals keyed_count ... Both slash keys now 200. failures empty.'",
+    "world_is": "Both BEFORE and AFTER this act's live deploy, both slash keys read 404 with the ROUTER's own refusal reason, never a 500, and never reach render_pack.py or _read_drafting_document at all -- the request is refused by handler()'s positional segment-count match before any leaf branch runs. The deployed fix (this act's own artifact, live-verified correct and complete against its own narrower, covered claim) is necessary but cannot be sufficient: a raw `/` in a security_key breaks ROUTING itself, upstream of every fix this act's <paths> or the co-sign's HALF 2 scope permits. AC1 is graded FAIL on its own literal terms (served_ok 31 of 33, failures={'BP/_LN_Equity': 404, 'NG/_LN_Equity': 404}, unchanged before/after). Fixing the router (e.g. joining rest[1:-1] back into one key token for the /security/ arm, or requiring percent-encoding end-to-end so a raw `/` never reaches path-splitting) is OUT OF SCOPE for this order's <paths> (render_pack.py + scoped_amgt.py's _read_drafting_document only) and for the CTO half's HALF 2 (a LOCAL filesystem join, explicitly not a routing or S3 concern) -- not attempted here.",
+    "notes": "ARMED: every current and future slash-bearing security_key 404s on EVERY /security/{key}/* leaf route, silently, in normal serving, until the router's positional split is fixed or every caller is required to pre-encode the key end-to-end. disarm_owner named as the next round's issuer, since no existing cell in this decomp covers a router-level fix and this worker's <paths> does not grant infra/aws/terraform or the handler()'s routing body beyond the two named local-join sites."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W27-S11",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~27",
+    "surfaced_at": "2026-09-18T01:06Z",
+    "one_line": "AMGT-rk-30 adapter's AC1 cannot ever read MEASURED (or a genuine ABSENT_SOURCE) for any name: the Lambda's execution role has NO s3:GetObject/s3:ListBucket grant on `scores/v1/*` (it is not in `scoped_amgt_pool_prefixes`, infra/aws/terraform/harvest/scoped-amgt-api.tf:117-150, a NEW top-level prefix this cell's own comp-iam preflight wrongly declared NOT-APPLICABLE against), so read_pool_object() gets AccessDenied on ListObjectsV2 and the adapter classifies every name READ_FAILED/ABSENT_PULL. SEPARATELY, AC1's own literal invocation checks the WRONG record shape (`.get(\"status\") == \"ABSENT\"`) against classify.py's real shape (`.get(\"state\")`, values MEASURED/ABSENT_SOURCE/ABSENT_PULL, never a bare \"ABSENT\"), so even after the IAM gap is fixed this exact invocation would still print absent_divergence=0 for every genuinely-ABSENT_SOURCE name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z / 2.0.0_SA_COO~Z -- a NEW cell adding \"scores/v1/\" to `local.scoped_amgt_pool_prefixes` (both the GetObject and the ListBucket-conditioned statements in scoped-amgt-api.tf) under its own never-widen co-sign; a second, smaller fix corrects AC1's own invocation to read `.get(\"state\")` against MEASURED/ABSENT_SOURCE/ABSENT_PULL instead of `.get(\"status\")`/\"ABSENT\". Neither is in this order's <paths> (no infra/aws/terraform surface, and the invocation text is the order's own governed string).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live, post-deploy (CodeSha256 0l7f4YGikexrP7INF7q8r5k11+0J0BBxpJ6sYqP8Uyo=, deployed 2026-09-18T00:59:50Z), GET /api/scoped/amgt/security/BA_US_Equity/thesis -> scores.scores_status='READ_FAILED', scores.robustness={'state': 'ABSENT_PULL', 'value': None, 'absent_reason': \"the scores read did not complete -- not evidence that no scores exist\"}, scores.scores_read.reason = \"the read of s3://opal-data-harvest/scores/v1/BA_US_Equity/ did not complete: AccessDenied: ... User: arn:aws:sts::313476888478:assumed-role/opal-amgt-scoped-api-role/opal-amgt-scoped-api is not authorized to perform: s3:ListBucket on resource: 'arn:aws:s3:::opal-data-harvest' because no identity-based policy allows the s3:ListBucket action\" -- the AccessDenied message itself, not an inference.",
+        "infra/aws/terraform/harvest/scoped-amgt-api.tf:117-150 `local.scoped_amgt_pool_prefixes` enumerates 10 explicit prefixes (publication-links/v1/, publications/v1/, universe/v1/, crosswalk/v1/, filings/v1/, drafting/v1/, peers/v1/, management/v1/, posture/v1/, derived/model_block/) plus packs/ and raw/ (12 total); its own comment states '14 top-level prefixes' existed at the 2026-09-16 measurement with 4 deliberately ungranted (lib/, packs/, raw/, social/) -- `scores/v1/` appears in NEITHER the granted list NOR the deliberately-ungranted list, confirming it is a prefix that postdates this comment's own census and was never added.",
+        "lib/research/scores/classify.py:26-27,50-51 defines exactly `ABSENT_SOURCE`/`ABSENT_PULL` as the two absent codes and `is_measured()` reads `record.get('state') == MEASURED` -- there is no code path anywhere in classify.py that produces a bare 'ABSENT' string or a 'status' key on one of these three records.",
+        "Full 33-key live sweep against the deployed adapter (this act's own AC1 invocation, run literally): measured_robustness=0 of 33, measured_peers_v=0 of 33, absent_divergence=0 of 33 -- all three read zero, which the criterion's own <expect> ('measured_robustness and measured_peers_v both nonzero') calls a failure, but the true cause is IAM, not the adapter's read_scores() logic, which is exercised correctly (READ_FAILED is the record read_pool_object() is DOCUMENTED to return on precisely this input: 'the read did not complete -- NOT evidence that nothing exists')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-30 adapter's comp-iam preflight: 'this order writes only to already-provisioned resources ... under the existing Lambda execution role; it grants no new permission and provisions no new resource' (i.e. the existing role already covers scores/v1/ reads). AC1's own invocation: 'if (scores.get(\"divergence\") or {}).get(\"status\") == \"ABSENT\": absent_div += 1' and the equivalent for robustness/peers_v MEASURED.",
+    "world_is": "The existing role does NOT cover scores/v1/ -- every read AccessDenied's at ListObjectsV2, live-confirmed on the deployed adapter. AC1 is genuinely, unavoidably FAIL as issued: no code change inside this order's <paths> can make measured_robustness or measured_peers_v nonzero without an IAM grant this order neither names nor authorizes, and even a hypothetical world where scores/v1/ objects exist and ARE read would still print absent_divergence=0 under this exact invocation's key/value mismatch. Both defects are structural to the order's own text, not to the deployed code, which behaves exactly as read_pool_object()'s own documented contract requires (fail closed, disclose, never invent).",
+    "notes": "The deployed code (SCORES_PREFIX, read_scores(), the bundle['scores'] wiring) is independently correct: it always returns all three score keys, degrades to a disclosed ABSENT/READ_FAILED record rather than a 500, and never silently falls back to the superseded flat shape (Z-S155's own STOP). ARMED because every future caller of the Model tab route gets a permanently wrong/misleading scores block until the IAM grant lands, and a naive re-run of this exact AC1 invocation after an eventual object-landing would STILL misreport absent_divergence unless the invocation itself is also corrected."
   }
 ]
 ```
