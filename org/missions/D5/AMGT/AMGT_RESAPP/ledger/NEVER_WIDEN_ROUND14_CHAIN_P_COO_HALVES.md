@@ -22,11 +22,17 @@ object to `opal-data-assets` is covered by NO half. Pool objects stay at their `
 
 **THE ACT.** ONE Bloomberg refdata pull for the V fields on the three keys, landed raw at
 the builder's address for `bloomberg` / `global` (or `amgt`) / `bronze` / `peers-v-fields` / `<key>`, whose bucket MUST print `opal-data-harvest` (registry-gated), then
-`run_scores` writing `s3://opal-data-harvest/scores/v1/{CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity}/<as_of>.json` --
-three NEW dated keys.
+`run_scores --security-key <K>` writing `s3://opal-data-harvest/scores/v1/{CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity}/<as_of>.json` --
+three NEW dated keys. THE KEY FILTER IS A SOURCE CHANGE THIS CELL MAKES (order step 3b, on CTO msg 23830): at HEAD
+`run_scores.run()` (`:216-238`) iterates EVERY keyed name of the newest crosswalk (33 now, 36 once `rk-31` lands) and
+`main()` takes only `--as-of`/`--dry-run`; the cell adds `security_keys` + a repeatable `--security-key`, and a bare run
+REFUSES unless `--all-keyed` (never passed by this order). Until that change is built and its unit test passes, no live
+run is authorized by this half.
 
 **BLAST RADIUS.** 3 raw bronze stamps + 3 NEW `scores/v1` dated keys. The 33 covered names' `scores/v1` objects are NOT
-rewritten (AC5 lists the prefix before and after: the 33 keys' newest objects unchanged by ETag). Served: the scores
+rewritten (AC5's discriminator: `rerun_of_covered_today 0 of 33` -- NO covered name gains a today-dated key; the ETag of an old
+newest object is NOT the discriminator, because the reader takes the NEWEST dated key and the served value would move
+without a deploy -- CTO msg 23830). Served: the scores
 route serves a key the crosswalk carries -- the three are served the moment `rk-31`'s crosswalk lands; the 33 do not
 move. NO Lambda, NO Terraform, NO IAM, NO schedule.
 

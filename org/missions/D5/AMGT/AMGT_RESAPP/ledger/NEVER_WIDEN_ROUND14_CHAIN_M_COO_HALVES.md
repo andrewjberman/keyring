@@ -92,8 +92,10 @@ a re-pull. The PLANTED NEGATIVE (a hollow key): `model_status ABSENT`, `has_fore
 The 13-route census: 13 of 13 `200` pre AND post, `LOST=[] GAINED=[]`.
 
 **PER-KEY ROLLBACK.** Code: the pre-act `CodeSha256` and the artifact's pre-act `VersionId` (measured by the worker
-immediately before the build; `list-object-versions` on the key), rollback = re-point the function at that VersionId
-through the same Terraform resource (the rk-2 record's form). Pool: delete the new stamps (as `rk-35`). Order of
+immediately before the build; `list-object-versions` on the key), rollback = RESTORE THE PRE-ACT BYTES AS THE CURRENT VERSION -- `s3api copy-object` from the pre-act VersionId onto the
+same key (bucket versioning MEASURED Enabled 2026-09-18 ~22:4xZ; re-measured by the worker into the entry), then the SAME
+targeted `safe-apply`; the module (`yang-lambda/main.tf:17-20`, `:38`) resolves the CURRENT artifact version and is NEVER
+edited (CTO msg 23830 -- the earlier "re-point at that VersionId through the resource" named a move the module cannot make). Pool: delete the new stamps (as `rk-35`). Order of
 rollback if both moved: code first (the served plane), then pool.
 
 **NOT COVERED:** a pull on any covered name; a fallback call on a name whose Bloomberg forecast is present; an IAM or

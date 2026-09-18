@@ -22,9 +22,12 @@ name, not stamped -- the one served prefix in this round whose rollback is a RE-
 one -- the thesis/drafting routes serve these objects for every crosswalk name that has one. Nothing else moves: no
 analysis object, no filings source object, no adapter.
 
-**WRITER CENSUS of `drafting/v1/<key>`: N = 1 writer at HEAD** -- `drafting_build.py`'s writer (the rk-19/rk-22-era
-one writer; `pipeline.py` composes, `drafting_build.py` puts). No schedule writes it (`OpalResearch-FilingsAnalyzer`
-is DISABLED and writes analysis objects, not drafting; `comp-schedule` at the cut: 0 on `drafting`). Rule read: a
+**WRITER CENSUS of `drafting/v1/<key>`: N = 2 writers at HEAD** -- `analyze.py:1215` and `batch.py:150` (PRD v0.13 :918
+names both; CTO msg 23830 re-verified). `drafting_build.py` is the COMPOSER, not a writer: at HEAD it has no `main()`, no
+argparse, no `__main__` guard and no S3 write. `AMGT-rk-42` (sequenced BEFORE this cell) collapses the two writers into ONE,
+`analyze.write_outputs(...)`, and `rk-41`'s new CLI (its step 3) writes ONLY through that function -- so at the time of THIS
+act N = 1, and the order's AC8 proves the entry point exists and refuses a bad call before any pool read. No schedule
+writes the prefix (`OpalResearch-FilingsAnalyzer` is DISABLED; `comp-schedule` at the cut: 0 on `drafting`). Rule read: a
 rebuild replaces the whole object for a key from its analysis object under the current gate.
 
 **EXPECTED OUTCOME, both branches (read from the HOLD rule as the order inlines it, section 1).** A sentence with a

@@ -45,7 +45,9 @@ as today, `empty_reason` absent, member count as denominator. A product with NO 
 product and the ranked list for the other; a JUDGMENT criterion grades the render at L9.
 
 **PER-KEY ROLLBACK.** Code: pre-act `CodeSha256` + artifact `VersionId` of `amgt-resapp-chatter-axis`, measured by the
-COO immediately before the apply; rollback = re-point through the same Terraform resource. Data: the pre-act `_CURRENT`
+COO immediately before the apply; rollback = restore the pre-act artifact bytes as the current version (`s3api copy-object` from the pre-act VersionId;
+versioning MEASURED Enabled) then the same targeted `safe-apply` -- the module resolves the CURRENT version and is never
+edited (CTO msg 23830). Data: the pre-act `_CURRENT`
 pointer value per product (GetItem, recorded in the entry); rollback = re-put those pointer items (the prior generations
 are never deleted, so the re-put restores the served set exactly). Order if both moved: code first, then pointers.
 

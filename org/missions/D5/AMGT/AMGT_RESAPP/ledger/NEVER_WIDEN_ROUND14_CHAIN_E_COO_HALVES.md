@@ -37,7 +37,9 @@ whose Item-6 cut is EMPTY (ASML_NA_Equity, reads SERVED today -- the round-13 de
 GAINED=[]`. AC4 reads only already-served names; no producer runs.
 
 **PER-KEY ROLLBACK.** Pre-act `CodeSha256` + artifact `VersionId` measured fresh by this worker immediately before the
-build; rollback = re-point at that VersionId through the same Terraform resource. No pool key to restore.
+build; rollback = restore the pre-act bytes as the current artifact version (`s3api copy-object` from the pre-act VersionId onto
+the same key; versioning MEASURED Enabled, re-measured into the entry) then the same targeted `safe-apply` -- the module
+resolves the CURRENT version and is never edited (CTO msg 23830). No pool key to restore.
 
 **NOT COVERED:** any producer run; any pool write; a portal push or promote; a second redeploy.
 
@@ -69,7 +71,7 @@ BA and NU both serve null CONSISTENTLY, and the criterion is recorded as such; t
 
 **PER-KEY ROLLBACK.** Pool: pre-act `get_object` bytes of `_pool/<today>.json` saved to `.scratch/` with sha256 in the
 entry BEFORE the put; rollback = re-put + read-back. Code: pre-act `CodeSha256` + `VersionId` measured fresh by THIS
-worker (never `rk-43`'s); rollback = re-point. Order if both moved: code first, then pool.
+worker (never `rk-43`'s); rollback = the same copy-object restore + targeted apply as `rk-43`. Order if both moved: code first, then pool.
 
 **NOT COVERED:** a producer run over the 33 (`enrich.main --write-pool` on the population); any per-name key; a
 second redeploy; the E5/E6/E7 pool writes (their own sections / their own entries).
