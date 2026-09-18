@@ -132,7 +132,7 @@ its cell reads it.
 
 ---
 
-## 3. THE CELLS -- 31 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8; `OG-q-4` added 2026-09-17 on ruling R-OG-13; `OG-q-5` added 2026-09-17 on ruling R-OG-17)
+## 3. THE CELLS -- 32 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8; `OG-q-4` added 2026-09-17 on ruling R-OG-13; `OG-q-5` added 2026-09-17 on ruling R-OG-17; `OG-q-6` added 2026-09-18 on ruling R-OG-18)
 
 Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1, prefix `OG`. Axes: `p` parity and baseline, `i` AWS
 infrastructure (Terraform, one state), `d` durable state, `a` authentication, `z` authorization, `c` completion closure,
@@ -458,6 +458,7 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 | `OG-q-3` | snapshot and metric semantics | FWD-2, 5 | `GW/app/integrations/schwab/semantics.py` (new), `GW/app/integrations/schwab/datasets.json` (new), `GW/tests/test_schwab_semantics.py` (new) | OPEN |
 | `OG-q-4` | the semantics checks wired into the live query path (added 2026-09-17 on ruling R-OG-13) | FWD-2, 5 | `GW/app/integrations/schwab/query.py`, `GW/app/integrations/schwab/integration.py`, `GW/tests/test_schwab_wiring.py` (new) | OPEN |
 | `OG-q-5` | the dim_asset partial-account restriction wired on the live path, and a CENSUS of every C3 rule against its call path (added 2026-09-17 on ruling R-OG-17) | FWD-2, 5 | `GW/app/integrations/schwab/query.py`, `GW/app/integrations/schwab/catalog.py`, `GW/tests/test_schwab_asset_policy.py` (new) | OPEN |
+| `OG-q-6` | the FOUR remaining NOT-ENFORCED C3 rules the census found, wired on the live path under ONE mutant (added 2026-09-18 on ruling R-OG-18) | FWD-2, 5 | `GW/app/integrations/schwab/query.py`, `GW/tests/test_schwab_c3_rules.py` (new) | OPEN |
 
 **`OG-q-1` acceptance**
 - each job runs in a child process outside the event loop
@@ -499,6 +500,14 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 - (difference) a revision change during a job discards the result, and an unchanged revision releases it
 - prompt-like text inside data comes back as data and invokes no tool, widens no filter and changes no grant (A12)
 - every tool call writes its audit event through `OG-o-1` before release
+
+**`OG-q-6` acceptance** (added 2026-09-18 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-18, msg 97749 @d6466d7697, closing call 17 on rows `NFRA_OPLGTW-W5-S14`..`W5-S17`. A cell added mid-round on the L4 owner's ruling, not a re-decomposition. Edges: `OG-q-4 -> OG-q-6`, `OG-q-5 -> OG-q-6`, `OG-q-6 -> OG-v-2` (its last re-hand). Slot ~5. ONE cell for all four because they share one call site, one harness and one mutant -- and the ruling made that premise FALSIFIABLE BY THE CELL: the mutant must fail ALL FOUR, and fewer than four is the finding, not an anomaly.)
+- R20: a grouping that drops master or date identity is refused on the live path, the refusal's contract code printed
+- R22: a total built by adding DIFFERENT balance fields is refused on the live path, while a named field's sum across approved accounts still succeeds
+- R24: a duplicate or conflicting source grain returns unavailable rather than a silently de-duplicated answer
+- R25: the dataset description carries sign and null semantics for every authorized field, denominator printed
+- (ONE mutant control, and the one-cell premise rests on it) removing the SHARED call site fails ALL FOUR criteria above; fewer than four FAILS this criterion and the cell splits on that evidence
+- (closing) the C3 census is re-read and its NOT-ENFORCED count falls to 0, WITH ITS DENOMINATOR RE-PRINTED at re-read time rather than inherited from the 29 measured at the earlier vintage
 
 **`OG-q-5` acceptance** (added 2026-09-17 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-17, msg 97682 @70570f36b9, on row `NFRA_OPLGTW-W6-S8`, which `OG-v-2`'s integrated harness measured. A cell added mid-round on the L4 owner's ruling, not a re-decomposition. Edges: `OG-q-2 -> OG-q-5`, `OG-q-3 -> OG-q-5`, `OG-q-5 -> OG-v-2` (its last re-hand). Slot ~5, after `OG-q-4`.)
 - under a partial-account grant, `dim_asset` returns only the CUSIPs the authorized accounts hold on that master and date, graded through the real app
