@@ -5115,6 +5115,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "IN LANE AND NOT WORKED AROUND: directory_runner.py is outside this order's <paths> (it is lane IB-rtc-2's own bundle source), and a jsonschema version pin or a Draft7Validator/best-available-validator fallback is a change to the RUNNER's own validation code, not to the Lambda's dispatch semantics this cell (AMENDMENT 2) was cut for -- fixing it would be the neighbouring-defect violation bound 8/12 forbids a second time in this same cell. RECOMMENDATION FOR THE NEXT CUT, stated and not acted on: either pin the host's installed jsonschema to >=4.18 (an environment/AMI change, likely NFRA_CLDGRPH's or the mdpf daily-runner's own lane) or have directory_runner.py select a validator class conditionally (`getattr(jsonschema, 'Draft202012Validator', jsonschema.Draft7Validator)` or equivalent) so the runtime's actual jsonschema version is honoured rather than assumed. WHY THIS COULD NOT HAVE BEEN SEEN BEFORE THIS CELL: every prior fire in this project's history failed EARLIER -- at the flat-unpack FileNotFoundError, at HAND_OVER_RUNNER_OFFLINE, or at the W2-S55 business-date refusal -- so no fire before this one had ever reached validate_entries() at all. AMENDMENT 2's own fix is PROVEN CORRECT AND WORKING as far as it goes: the business-date refusal it targeted is gone, confirmed by its own absence in the stdout of both firms, and each firm's build now fails at a strictly later point than before."
+  },
+  {
+    "id": "IRPT_BCKEND-S71",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T08:05:00Z",
+    "one_line": "THE HOLDINGS RUNNER READS A DIFFERENT CONTRACT FILE THAN THE FACE CENSUSED, AND THAT FILE IS NOT IN THE BUNDLE. holdings_snapshot.py's CONTRACT_PATH is docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json (blob 9ec70af2, 34577 bytes), not infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json (blob 95e4d500, 26022 bytes). The draft-7 claim still holds for it: all 11 docs/contracts/v1 schemas use no 2019-09/2020-12-only keyword, no $ref and no array-form items. But the bundle's 9 members do not include it, so holdings_snapshot.py run from the bundle on the host raises FileNotFoundError at load_contract(), with or without this cell's fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-9 THE CELL: 'The eleven _contracts/*.schema.json all declare $schema 2020-12 and NONE uses a 2019-09/2020-12-only keyword ... so a draft-7 validator grades the same set of entries the 2020-12 one does'; and (d) runs validate_snapshot() on the host from the extracted tarball.",
+    "world_is": "holdings_snapshot.py:109-110 @de4e176cc3 sets CONTRACT_PATH = _REPO/docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json. The two HoldingsSnapshot schemas are different files: 391 vs 295 keys walked. A no-network open/import probe of holdings_snapshot.py (import, then load_contract, firm_bucket_map and client_firms) opens 4 repo files. 3 are bundle members (firm_registry.json, _ids/ids.py, lib/trading_calendar.py); 1 is not (the docs/contracts/v1 schema). The guard's investor_reporting declaration names 9 members, and the only contract among them is DirectoryEntry.schema.json. The irpt-holdings-snapshot schedule is DISABLED, so no fire reaches this today.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git rev-parse HEAD:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json = 9ec70af2ba0c71ea589dab48bd14407e111694a8; HEAD:infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json = 95e4d500747c75da27eebbde783c82edf242cbe0",
+        "contract keyword census over docs/contracts/investor-reporting/v1/*.schema.json: 11 files, 0 2020-only keywords, 0 $ref, 0 array-form items",
+        "safe_deploy_core.find_bundle('investor_reporting') members: 9 repo paths, no HoldingsSnapshot schema"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed here: adding a bundle member is a guard edit (.tools/safe_deploy_core.py), outside this order's paths, and the holdings build is not in this cell. This cell's host arm (d) places the real docs/contracts/v1 schema bytes (sha256-bound to blob 9ec70af2) in the extracted tree, both beside the new tarball and beside the pre-cell one, so validate_snapshot() can be exercised. It says so in its output."
   }
 ]
 ```
