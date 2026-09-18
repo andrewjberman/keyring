@@ -31,3 +31,16 @@
    one-off.
 
 Not a canonical-flow project and no new gate.
+
+## Follow-on, ~15:3xZ -- CARD 5 CONFIRMED in plain words
+
+Put back to him in plain words -- the 13:09Z question as `2.0.0_SA_COO~Z` actually asked it, "Run the
+management/posture producers over the full 33-name keyed population?", with the result (management 5 -> 14 names,
+posture 2 -> 33, low single-digit dollars). His answer, verbatim:
+
+> yes that's what I meant, make sure that your brief is updated as needed, and then let's move on to the next panel,
+> THESIS
+
+Reading: the 13:09Z approval stands as given; the scope question raised at ~15:0xZ is CLOSED. The label "CARD 5" did
+not land, the act did. `2.0.0_SA_COO~Z` was holding round 13's L10 slug on this answer (msg 23682) and is told the
+same turn. Next in the panel series: THESIS.

@@ -187,7 +187,7 @@ why. Card B below closes this.
 |---|---|---|
 | **A. Price cadence** | "Yes we should just get prices as of prior day on the existing BBG job." | APPROVED. Price joins `scheduled_daily_pull.cmd` as an isolated leg, as-of T-1 by `lib/trading_calendar`. Build item 1 is unblocked; `1.0.0_SA_CTO~Z` sequences it. |
 | **B. Price floor** | "go with your rec here." | APPROVED AT THIS SEAT'S RECOMMENDATION, stated here at the moment of adoption: **a price Breakout requires a POSITIVE move of at least +5% above the trailing 30-day mean; anything smaller or negative is excluded, and a day where nothing clears it is an honest EMPTY.** On the one measured day (15 Sep) that leaves 3 of 32 names, at +7.2%, +9.9% and +10.9%, and removes all 23 declines. It lands in `movement_gate.py` as the price entry of `MIN_ABSOLUTE_JUMP`, basis RATIFIED citing the decision record. It is one constant: two weeks of daily price runs will show whether +5% is too tight. |
-| **C. CARD 5** | "Card 5 I still don't know what that refrs to." | **NOT RECOGNISED -- put back to him, not treated as confirmed.** CARD 5 is: run the two producers that write management commentary and the posture read across all 33 covered names (today 5 and 2). It makes model calls, estimated in the low single digits of dollars. `2.0.0_SA_COO~Z` recorded a "yes do it" at 13:09Z as the answer and `AMGT-rk-22` began producing on it. Whether that yes was meant for this is his to say. |
+| **C. CARD 5** | "Card 5 I still don't know what that refrs to." -- then, asked in plain words: **"yes that's what I meant"** | **CONFIRMED ~15:3xZ.** The 13:09Z approval stands; the scope question is closed. Originally recorded here as: NOT RECOGNISED -- put back to him, not treated as confirmed. CARD 5 is: run the two producers that write management commentary and the posture read across all 33 covered names (today 5 and 2). It makes model calls, estimated in the low single digits of dollars. `2.0.0_SA_COO~Z` recorded a "yes do it" at 13:09Z as the answer and `AMGT-rk-22` began producing on it. Whether that yes was meant for this is his to say. |
 | **D. Promote** | "the Promote can wait." | DEFERRED. Nothing is prepared toward it. |
 
 ### 8.3 What the build list becomes
@@ -251,3 +251,41 @@ The label "CARD 5" was fabric shorthand; Andrew met it first in this brief and d
 label that did not land rather than an approval not given, and says so as a reading; this seat agrees and still
 treats it as his to confirm. **Lesson carried forward in this series: every card is named by its QUESTION, never by
 its number, in anything Andrew reads.**
+
+---
+
+## 10. UPDATE 3, ~15:3xZ -- CARD 5 confirmed; state at hand-off to the next panel
+
+Andrew confirmed in plain words that the 13:09Z "yes do it" meant exactly the management/posture run across the
+covered names. That run is complete: management 5 -> 14 names, posture 2 -> 33, verified by `2.0.0_SA_COO~Z` on a
+fresh instrument (msg 23682). Round 13 now waits only on `AMGT-rk-26` landing. The posture and management lines in
+section 9.1 should be re-read on the SERVED plane once rk-22 drains; they are pool counts here.
+
+**Open on this panel, carried forward:** card A (prices daily) with `1.0.0_SA_CTO~Z` to sequence; card B's floor to
+land in round 14; the chatter/feed SOURCE question at L4; the `CIE_DES` field; Trending must not rank a zero; the
+Refresh queue at L4; the promote deferred. The series moves to the THESIS panel at Andrew's word.
+
+### 10.1 Cards A and B, as sequenced by `1.0.0_SA_CTO~Z` (msg 23684) -- this corrects section 8.3
+
+Section 8.3 called card B round-14 material. **`1.0.0_SA_CTO~Z` takes the opposite view and is right:** both A and B
+are direct Andrew words on the same message, neither is a round-13 cell, and LD-0521 bars cutting round N+1 before
+round N's slug -- it does not bar a sovereign-authorized direct act. The reason A cannot go first is measured, not
+procedural: the price puller writes BOTH price lists from one pull, and `movement_gate.py` returns
+`(True, "NO_RATIFIED_ABSOLUTE_FLOOR")` for every name when the price floor is `None`, with no sign test. **A alone
+would turn a stale wrong list into a fresh wrong one every trading morning, and freshness lends a wrong list
+credibility it did not have when it was three days old.**
+
+The act, in order, as one sequence:
+1. **B first:** `MIN_ABSOLUTE_JUMP["PRICE"]` set to the +5% rule with its basis flipped to RATIFIED -- and a SIGN test
+   added, because the gate tests magnitude today, so "positive only" is a new clause, not just a number.
+2. **The leg:** `:price_leg` after `:cons_leg`, its own `RC_PRICE` that never touches `%RC%`, interpreter `PY_AWS`,
+   and **exit codes remapped to 80-83** -- the script's 0-3 collide with the models chain, which owns `1`. The as-of is
+   already T-1 via `lib.trading_calendar.prev_trading_day`.
+3. **A never-widen CTO+COO pair**, because both halves move served output (rows and the `_CURRENT` pointer).
+4. **A change-management entry opened before the edit touches disk** -- on site Z the edit IS the deploy.
+
+The executor is `2.0.0_SA_COO~Z`'s to name; the CTO half is written against the exact diff, not before it.
+
+**One figure carried into round 13's drain:** management went 5 -> 14, posture 2 -> 33. Management may stop short for a
+real reason -- it needs officer data not every name has -- but the drain should record WHY the other 19 stayed absent
+rather than close the round reading "done".
