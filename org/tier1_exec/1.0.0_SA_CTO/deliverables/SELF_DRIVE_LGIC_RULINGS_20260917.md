@@ -1705,3 +1705,65 @@ of 33 into 31 of 33.
 format that looks like output and costs nothing to re-emit. **The tick template asked for a measurement and received
 a constant.** ⛔ **COST: one read of the blocking owners per member per log-writing tick -- NOT per tick.
 NON-APPLICATION: a member with an open order, which is reachable by definition.**
+
+---
+
+## R-64 -- R-59 IS TOO NARROW. `0.0.0_AB_MSTR` **HAS** A TICK AND IS DEAF ANYWAY: THE MONITOR AND THE MCP INBOX ARE **INDEPENDENT QUEUES**. And R-59's own remedy was routed to a seat that could not receive it
+
+⛔ **MEASURED, AND IT IS A CASCADE:** `get_delivery_state("0.0.0_AB_MSTR")` reads **4 of 4 OFFER-EXHAUSTED, READ 0 of
+4**, oldest `97845` SENT **05:46:05Z -- 3h45m**. `get_agent_status` reads **LIVE, 1s heartbeat, and an INBOX OF 23
+MESSAGES.**
+
+**The four include:**
+
+| id | what | sent | state |
+|---|---|---|---|
+| `97886` | **the SEATING ASK -- R-59's OWN REMEDY for the CVO's deafness** | 08:04Z | **never delivered** |
+| `97885` | `2.0.0_SA_COO~G`'s report of the CVO's second deafness | 08:00Z | never delivered |
+| `97878` | CLAUDE.md law-edit broadcast (the detector) | 07:48Z | never delivered |
+| `97845` | **CLAUDE.md NEVER-2 law-edit broadcast** | 05:46Z | never delivered |
+
+⛔ **SO THE FIX FOR THE CVO'S UNREACHABILITY WAS ROUTED TO A SEAT THAT IS ITSELF UNREACHABLE, AND SAT THERE 88
+MINUTES.** ⭐ **"Routed same-tick, not parked" was TRUE AS AN ACT AND FALSE AS AN OUTCOME** -- R-55's own distinction,
+arriving on the remedy R-59 prescribed. **A REMEDY ROUTED TO AN UNREACHABLE SEAT IS NOT ROUTED.**
+
+### Why R-59's diagnosis was right and its MECHANISM was too narrow
+
+R-59 said: *an event-driven seat with no tick is structurally unreachable, and the fix is a tick.* ⛔ **`0.0.0_AB_MSTR`
+HAS A TICK AND IS DEAF ANYWAY.**
+
+**The PEEK is what shows it** -- a completed turn (*"Brewed for 6s, done 5:28 AM"*), an EMPTY composer, and above it a
+repeating cycle: **`Monitor event: "agentbus consumer (laptop inbound)"` -> a 6-to-45-second turn -> `Re-armed. Steady
+state.`** ⭐ **THE SEAT IS WAKING REPEATEDLY AND CORRECTLY. Its monitor fires, it works, it re-arms.** And its MCP
+inbox grows to 23.
+
+⛔ **THE ASYMMETRY IS NOT TICK-VERSUS-NO-TICK. IT IS WHETHER THE WAKING EVENT CAUSES AN INBOX READ.** The agentbus
+monitor and the MCP inbox are **two independent queues**, and a seat can be perfectly reachable on one while deaf on
+the other, **with a healthy heartbeat and a live monitor the whole time.**
+
+⭐ **THAT IS WHY "give it a tick" WOULD NOT HAVE FIXED MSTR** -- and it is why R-59's remedy needs restating: **the
+fix is not a timer, it is a WAKE THAT DRAINS THE INBOX.** A tick only fixes the CVO because the CVO's turns read mail
+when they happen; MSTR's do not.
+
+### What this seat did, and its limit
+
+**PEEKED first** (read-only, no keystrokes) and found the BENIGN shape -- idle-at-input, empty composer, not
+prompt-stuck. **Then nudged with a PROMPT BODY naming the four queued obligations, never `1`**, which into a healthy
+composer types a stray character. **The nudge also tells that seat the thing it cannot see about itself: its monitor
+and its inbox are independent queues.**
+
+⚠ **THE KEYSTROKE PROVES DELIVERY, NOT SUBMISSION** -- `2.0.0_SA_COO~G`'s discipline, adopted. **Recovery is claimed
+only on the queue flipping or a second peek, and it is NOT claimed here.**
+
+### The generalisation, and it is the sharpest one tonight
+
+⛔ **EVERY "ROUTED TO X" IN THIS SESSION IS AN UNVERIFIED CLAIM UNTIL X's QUEUE IS MEASURED.** I wrote R-55 to bar
+exactly that for obligation-bearing SENDS, then made the same error one level up on a ROUTING -- **and the routing in
+question was the remedy for the very condition R-55 describes.**
+
+**THE BAR, extending R-55 rather than replacing it:** ⛔ **a ROUTED REMEDY -- a seating ask, an escalation, a
+hand-off that another seat must act on -- is reported as ROUTED only when `get_delivery_state` shows READ at the
+recipient. Until then it is "routed, undelivered", with the state named.** **COST: one `get_delivery_state` per
+routed remedy. NON-APPLICATION: a remedy also parked on a durable carrier the recipient reads independently** --
+which is exactly why Andrew's two cards are COMMITTED FILES and not messages, and why they are unaffected by any of
+this.
