@@ -265,6 +265,51 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "After the R-40 repair, every LT-x-1 criterion whose subject is this cell's run grades the run the R-40 manifest names.",
    "world_is": "Two of the three did. x1-fwd10 kept reading position and graded another run's artifact, and the gap was closed only because the worker reported it.",
    "notes": "EVIDENCE, not a disposition; no `adjudicates`, and 3.0.0_SA_CVO grades AC6 and disposes this at L9. THE LESSON IS ABOUT THE REPAIR, NOT THE DEFECT: when a fix repoints HOW an object is identified, the unit of work is EVERY ARM THAT IDENTIFIES THAT OBJECT, enumerated from the file, never the arms the author happens to be thinking about. This seat repointed two of three from memory and shipped the third. The census was one grep for the accessor it was replacing (`subject_runs()[0]` occurs in x1_run_dir, x1_marks and x1_fwd10) and it was not run."
+  },
+  {
+   "id": "LGIC_LGCTFM-S8",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T02:30Z",
+   "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-S3, the composite run directory. The remedy chosen on that row -- re-hand LT-x-1 to produce ONE COHERENT RUN rather than disclose a substituted one -- is DONE. Run 20260918T011619Z-8db9eb1 exists with its own VINTAGE.json, all six run files, a contract that validates with 0 schema errors, MARK.json COMMITTED for the first time, and an R-40 HASHES.json declaring 8 of 8 produced files with 0 hash mismatches. The 20:25Z composite directory is untouched and stays as the historical record of the refused first run, exactly as the re-hand ordered.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "Drained @31c18f775d. X1R1-AC1, AC2, AC4, AC5 and AC7 re-run by the ISSUER at branch tip fc273d0bc0, and AC3 re-run at HEAD after the x1_fwd10 repair (LGIC_LGCTFM-S7); all six mechanical criteria PASS and the proof instance reads VALID rc=0.",
+     "The criterion that could not be reproduced at all when S3 was filed now can: x1-marks reads 'MARK entries 2; registries read 3; entries absent from their file, off the three files, or not under ADVI_FIRMBKTS: 0'. MARK.json is in the tree rather than in a deleted worktree.",
+     "The arm no longer grades by POSITION: graded_run() names the run its own R-40 manifest identifies, and x1-run-dir prints 'run directories under the subject: 5; carrying an R-40 HASHES.json: 1 [20260918T011619Z-8db9eb1]; graded run: 20260918T011619Z-8db9eb1'. A later commit that replaced a file in that directory would now FAIL the hash arm instead of silently satisfying the completeness arm -- which is the defect S3 described, closed at the mechanism and not merely at the instance.",
+     "The mark the first hand landed is still citable and is not double-counted: 53d59778a1 remains an ancestor of HEAD carrying the gold/ s3-prefix row, and this hand's MARK.json RECORDS it as already present while appending only the genuinely new silver/ surface."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S3 asserts that LT-x-1's run directory was a composite of two runs, that X1R1-AC1 therefore read PASS on bytes the cell did not produce, and that X1R1-AC2's evidence no longer existed anywhere.",
+   "world_is": "All three are now false OF THE GRADED RUN, which is a fresh coherent one, while remaining true of the 20:25Z directory S3 describes -- that directory is deliberately unchanged.",
+   "notes": "EVIDENCE, not a disposition; no `adjudicates`, and 3.0.0_SA_CVO disposes this at L9 alongside X1R1-AC6. WHAT THIS ROW DOES NOT CLAIM: that the 20:25Z directory's provenance was repaired. It was not, and repairing it was explicitly forbidden to the re-hand -- the record of a refused first run is worth more intact than tidied. The cost of the whole episode, stated plainly: one worker-hour of re-run, one ruling (R-40), one arm repointed three times and one arm missed, against a PASS that would have entered the record on bytes no cell of this project produced."
+  },
+  {
+   "id": "LGIC_LGCTFM-S9",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T02:32Z",
+   "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-S1, the fork fixture's disagreeing denominator. The row asked whether a fixture built on the PRD's FOUR positive forks under-covers the brief's FIVE by one. ANSWERED ON MEASUREMENT RATHER THAN BY PICKING A CARRIER: the fifth member was measured on both planes and DOES NOT EXIST at this vintage, so FORK_CONTROLS.json v1.1 carries FOUR positives, ONE negative and ONE WITHDRAWN, with all three denominators printed and the withdrawal's reason and destination recorded in the fixture's own history.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "The fixture itself, read at HEAD: denominator_positive 4, denominator_negative 1, denominator_withdrawn 1; positives FORK-1..FORK-4 each with a `measured` field; withdrawn FORK-5 carrying `withdrawn_to`.",
+     "Its `history` array records the whole route in three entries and cites this row by id: v1.0 carried FIVE on the brief's IV.5 enumeration; ruling R-24 @53654598b0 held that five stands but the fifth must be ONE MEASURED PAIR, because a control expecting a fork row per class member makes the detector fire on everything -- which is what the SmartX negative refuses; v1.1 measured the pair, found it absent at this vintage, and withdrew FORK-5 to the tension set.",
+     "So the count is FOUR ON EVIDENCE and not four by omission, which is exactly the distinction S1 was filed to force. The under-coverage S1 feared would have been a silent four; this is a printed four beside a printed one."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S1 asserts that the fork fixture's denominator disagrees across three carriers -- the PRD's four, the brief IV.5 enumeration's five, and the Part III bar's three by way of example -- and that a fixture built on four would under-cover the control set by one member while reading clean.",
+   "world_is": "The disagreement was real and is resolved by measurement, not by choosing a carrier: the fifth member does not exist at this vintage, and the fixture prints what it withdrew and why.",
+   "notes": "EVIDENCE, not a disposition; no `adjudicates`. WORTH KEEPING: the row was filed at the L6 cut BEFORE any order existed, and what it bought was not a corrected number -- it was a fixture that prints its own withdrawals. Three carriers disagreeing about a count is not settled by finding the authoritative carrier; it is settled by measuring the members and printing what each count includes."
   }
 ]
 ```
