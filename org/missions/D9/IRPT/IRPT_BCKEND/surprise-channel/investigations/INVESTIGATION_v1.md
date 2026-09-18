@@ -4958,6 +4958,118 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "IN LANE AND NOT WORKED AROUND: fixing how the dispatch selects/passes a business date is a change to the LAMBDA's dispatch semantics, not to 'the unpack recipe becomes repo-shaped' this cell was cut for, and directory_runner.py's own WALK logic (used by every OTHER caller of select_business_date) is outside this order's <paths> in spirit even where a path might technically be writable -- fixing a neighbouring defect is the one thing bound 8/12 forbids. RECOMMENDATION FOR THE NEXT CUT, stated and not acted on: either drop the explicit --as-of from runner_script() and let directory_runner.py's own trading-day WALK select each firm's newest completed date (the same design already used when refresh.py calls it with no explicit date), or have refresh.py compute a per-firm-aware date before dispatch. WHY THIS COULD NOT HAVE BEEN SEEN BEFORE THIS CELL: every prior fire (IB-rt-6 through the last scheduled 09-17 fire) failed EARLIER, either at the flat-unpack FileNotFoundError or at HAND_OVER_RUNNER_OFFLINE (host stopped) -- this is the first fire in the project's history to reach directory_runner.py's own business-date logic at all."
+  },
+  {
+    "id": "IRPT_BCKEND-S65",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE 49 FINANCIAL PRINCIPAL IS DECLARED IN THE REFRESH LAMBDA'S OWN DEPLOY ROOT, SO THE NEXT APPLY OF THAT ROOT -- FOR ANY REASON -- CREATES IT WITHOUT THE NEVER-WIDEN SIGN-OFF. principal_49f.tf sits in infra/aws/terraform/investor-reporting/directory/, the root every refresh.py or schedule change deploys through; once this branch merges, an apply of that root from any tree carrying the file creates a role that can read 49 Financial's five dimension tables, before the CTO and COO halves exist. The same holds for mdpf-pipeline/'s one AssumeRole statement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "R-44 condition 2: 'The IAM apply is a never-widen-class act. The sign-off names the BLAST RADIUS ... not the producer's intention.' TO-IB-rtc-6: 'it DECLARES, PLANS and WRITES THE PACKET; it does NOT apply. The apply and the negative control on the LIVE principal are IB-rtc-7's, after both sign-off halves exist at HEAD.'",
+    "world_is": "Measured 2026-09-18 ~05:4xZ: the directory root plans 2 to add (the role and its policy) + 1 to change (the Lambda env), 0 to destroy; mdpf-pipeline plans the host-policy statement + an unrelated config object (row IRPT_BCKEND-S68). IB-rtc-3 applied the directory root at ~05:23Z from its own worktree cut before this declaration, so it did not carry it; a later apply from a tree that has merged this branch would. Neither root takes variables and safe-apply has no -var passthrough, so an inert-by-default flag would itself change what IB-rtc-7's face says to do; the declaration is plain, as the face asks.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan (vendored 1.9.8) of infra/aws/terraform/investor-reporting/directory at 05:41:30Z: 'Plan: 2 to add, 1 to change, 0 to destroy.'",
+        "aws lambda get-function-configuration irpt-directory-refresh: LastModified 2026-09-18T05:23:55Z (IB-rtc-3's deploy); IB-rtc-3's branch wk-irpt_bckend-3-2 is cut at 7b2f8fe9bf, before this declaration",
+        "IRPT_BCKEND.TO-IB-rtc-7's face (b): 'APPLY under ledger ... the directory/ root then the mdpf-pipeline/ root' -- no flag to flip"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: hold every apply of the directory/ and mdpf-pipeline/ roots from a tree carrying this declaration until IB-rtc-7 runs with both halves at HEAD, or sequence IB-rtc-7 as the next apply of both. The packet (NEVER_WIDEN_SIGNOFF_PACKET_IB-rtc-6.md) states the same condition."
+  },
+  {
+    "id": "IRPT_BCKEND-S66",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE FACE'S NAME-PREFIX CHECK NAMES THE OLD DENY LIST; THE LIVE CONTROL IS NOW THE OPPOSITE SHAPE. opal-data-49financial's bucket policy no longer denies four named prefixes (role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*): LGIC_ENFORCE EN-f-1 replaced it with ArnNotLike [role/*-49f-*] plus 16 named exemptions. The builder's name irpt-49f-directory-read-role matches 0 of the 4 old prefixes AND matches the fence's admit pattern -- and it is the second that makes the grant work.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-6 (f): 'the name-prefix check (the builder's name matches none of role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*)'; mdpf-pipeline/iam.tf :598-600 still describes the Deny as 'ArnLike aws:PrincipalArn [role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*]'.",
+    "world_is": "aws s3api get-bucket-policy --bucket opal-data-49financial at 2026-09-18 ~05:1xZ: ONE statement, DenyForeignFirmPrincipals, Effect Deny, Action s3:*, Condition ArnNotLike aws:PrincipalArn = [arn:aws:iam::313476888478:role/*-49f-*, plus 16 exempted principal ARNs]. lib/opal_naming.py fence_patterns('49financial') returns exactly ['arn:aws:iam::313476888478:role/*-49f-*']. shared-infra/s3-49financial.tf carries the REPLACED comment (LGIC_ENFORCE EN-f-1, DEC-4). So a principal is now admitted by carrying the 49f scope slot, not by avoiding four prefixes; mdpf-daily-runner-ec2-role is still denied (it carries no scope slot), which is why the host cannot read the tables itself.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get-bucket-policy opal-data-49financial: DenyForeignFirmPrincipals ArnNotLike [role/*-49f-*, 16 exemptions]",
+        "py lib/opal_naming.py fence_patterns('49financial') -> ['arn:aws:iam::313476888478:role/*-49f-*']",
+        "name('irpt','49financial','directory-read','role') -> 'irpt-49f-directory-read-role'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The packet reports both checks. The :598-600 comment in mdpf-pipeline/iam.tf is now stale about the mechanism (it still describes the four-prefix Deny); a neighbouring tidy-up, not touched here beyond the new statement's own comment, which states the current fence."
+  },
+  {
+    "id": "IRPT_BCKEND-S67",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE NAMING GATE REFUSED THE LEGACY 49 FINANCIAL DIMENSIONS ADDRESS TYPED INTO A NEW FILE ('gold/advi/dimensions' -> canonical 'advi/{scope}/gold/dimensions', NEW and OUT-OF-PATTERN). The data lives only at the legacy address, so the builder's canonical form would grant reads on an empty prefix. Resolved by DERIVING the root from the producer's own runner_common.OUT_ROOT -- the same constant directory_runner reads -- with the producer file cited by its repo-relative path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "CLAUDE.md Rule 30: 'Every S3 address is lib/opal_naming.py address() output ... a builder REFUSAL is a missing registry row to add ... never a hand-typed workaround'; NON-APPLICATION: 'existing pipelines -- each reaches conformance through its own migration project (R19)'. The five tables are an existing pipeline's output.",
+    "world_is": ".tools/naming-gate.py --diff --enforce on this branch's diff: 'NAMING REFUSE infra/aws/terraform/investor-reporting/directory/principal_49f.tf:68 gold/advi/dimensions -> advi/{scope}/gold/dimensions; why: NEW and OUT-OF-PATTERN as S3Key'. A new file makes every string NEW, and remediations.json cannot admit a NEW string (it makes an EXISTING one stricter). The five tables exist only at opal-data-49financial/gold/advi/dimensions/ (KeyCount 5,5,5,2,2 on --max-keys 5). The declaration now reads OUT_ROOT = \"gold/advi\" from data/assets/scripts/gold/runners_49f/runner_common.py (cited by repo-relative path, which the gate treats as a citation, R-11) and builds '<OUT_ROOT>/dimensions'. The gate then reads 'NAMING-GATE: PASS'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch naming-gate output (first run) with the REFUSE line quoted above; final run 'NAMING-GATE: PASS 0 graded', rc=0",
+        "data/assets/scripts/gold/runners_49f/runner_common.py:39 'OUT_ROOT = \"gold/advi\"  # GOLDHOME re-point 2026-08-18'",
+        "directory_runner.py Firm49F: f\"{self.rc.OUT_ROOT}/dimensions/{table}\" -- the same constant"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The derivation is kept because it is better than the literal, not because it passes the gate: a migration of the 49 Financial gold root (R19) moves the grant with the producer and the reader. For the LGIC owner: the gate has no way to admit an EXISTING-estate address in a NEW declaration file other than deriving it; a pipeline that must name a legacy address it does not produce will meet the same refusal."
+  },
+  {
+    "id": "IRPT_BCKEND-S68",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "AN UNTARGETED APPLY OF mdpf-pipeline/ WOULD ALSO PUSH AN UNRELATED CONFIG OBJECT -- AND, FROM A WINDOWS CHECKOUT, CRLF BYTES. The plan is 0 to add, 2 to change: the host policy's one new statement, and aws_s3_object.mdpf_route_bindings, whose deployed hash matches neither the committed blob nor this worktree's CRLF copy. The never-widen sign-off covers the statement only, so IB-rtc-7's mdpf-pipeline apply must be -target=aws_iam_role_policy.mdpf_runner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "TO-IB-rtc-6 (e): 'terraform plan on BOTH roots ... printed N to add, 0 to change, 0 to destroy (or the exact non-zero explained)'. TO-IB-rtc-7 (b): 'the directory/ root then the mdpf-pipeline/ root, .tools/safe-apply.sh' -- untargeted.",
+    "world_is": "terraform plan of mdpf-pipeline (vendored 1.9.8, 2026-09-18 ~05:3xZ): '0 to add, 2 to change, 0 to destroy'. aws_s3_object.mdpf_route_bindings: source_hash 56a03a1410848f88b006f1f98b69dced -> f94e8e4c5d7c56d93f6ab16af227721d, metadata content-sha256 c9e54ce2... -> 37eb8451.... data/mdpf/config/route_bindings.yaml has no eol attribute: this worktree's copy is CRLF (185 CR, md5 f94e8e4c...), the committed blob is LF (md5 650f893a...), and the deployed object is neither (56a03a14...). So the committed file has moved since that object was last applied (someone's unapplied change), and an apply from this box would upload the CRLF rendering. .tools/safe-apply.sh passes every argument through to terraform, so -target is available.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "plan text IB-rtc-6_plan_mdpf-pipeline.txt: the aws_s3_object.mdpf_route_bindings in-place update with the two hashes",
+        "md5 of data/mdpf/config/route_bindings.yaml: worktree f94e8e4c... (CR=185) vs git show HEAD: 650f893a... (CR=0)",
+        ".tools/safe-apply.sh header: 'delegates via exec to the real terraform binary with every argument passed through unchanged'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: IB-rtc-7 applies mdpf-pipeline with -target=aws_iam_role_policy.mdpf_runner (the packet prescribes it), or the route_bindings owner reconciles that object first from an LF checkout. Not this cell's object; not touched."
+  },
+  {
+    "id": "IRPT_BCKEND-S69",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE FACE ASSUMED IB-rtc-3 HAD MERGED BEFORE THIS CELL STARTED; IT HAD NOT. Both cells edit infra/aws/lambda/investor-reporting/directory/refresh.py: IB-rtc-3 rewrites runner_script's unpack, this cell adds the source-principal hand-off in dispatch() and one env reader. This cell's edit avoids runner_script and the import block so the two are likely to merge cleanly; the drain checks that. And refresh.py reaches the Lambda only through a rebuilt artifact, so IB-rtc-7's directory apply must carry a rebuild that includes this edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-6 (c): 'refresh.py (IB-rtc-3's surface, merged before you start) passes the role ARN into the runner's environment for the 49f firm only'.",
+    "world_is": "At hand-off (msg 97834, 04:48Z) IB-rtc-3 was 'handed to slot ~2 this minute'; its branch wk-irpt_bckend-3-2 then carried 0 commits past 7b2f8fe9bf, and by ~05:4xZ carried 4 (ca2a8d5b11 'refresh.py's unpack recipe becomes repo-shaped', 661d2a9240, 315524e62d zip rebuilt, fbd23a9314), with the Lambda redeployed at 05:23:55Z. This cell's refresh.py change touches dispatch() (the export line before send_command) and adds _firm_source_roles_from_env() beside _firm_ids_from_env(); runner_script() and the imports are untouched.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log 7b2f8fe9bf..wk-irpt_bckend-3-2: 4 commits by 0.9.0_WK_IRPT_BCKEND~2, including ca2a8d5b11 on refresh.py",
+        "get-function-configuration irpt-directory-refresh LastModified 2026-09-18T05:23:55Z",
+        "this branch's refresh.py diff: dispatch() + _firm_source_roles_from_env(); 37 of 37 directory tests pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A trial merge of the two branches is recorded in this cell's result. The packet names the Lambda artifact rebuild as part of IB-rtc-7's directory apply; without it the env map is set and the running refresh.py ignores it (harmless, and the 49 Financial build keeps failing at the fence)."
   }
 ]
 ```
