@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v2.1",
+ "decomp_version": "v3.4",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -602,6 +602,110 @@ subcommands, one per mechanical criterion; `selftest-arms` reads 40 of 40 with e
 doctored input, A-23) and `R4_BASE.json`, which PINS the cut's HEAD. The added-row arms read the registry at that pin
 with `git show <base>:<path>` and never at `git merge-base HEAD CLOUD`, which moves under a drain and would grade a
 different set on an issuer re-run.
+
+## 0e. v3.4 -- THE ROUND-5 RECUT (L10: 1.0.0_SA_CTO's round-4 analysis)
+
+**Input.** The analysis `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/1.0.0_SA_CTO/LGIC_ENFORCE_ROUND4_ANALYSIS.md`
+@`b74ffb43ae`, on `3.0.0_SA_CVO`'s round-4 slug (97735 @`66a07704fe`), released to this seat as msg 97738. Rulings
+carried into the faces: **R-38** (the placeholder population), **R-39** (`security` is NOT minted), **R-33** (the
+campaign's timebox, unchanged), **R-29** (the fence guard, verbatim) and the standing bar **R-40** (a criterion whose
+subject is a produced artifact binds to that artifact's content, not to its label).
+
+**Round 4 graded REALIZED 6 of 7 and FWD-5 is again the only outcome left** -- but for a different reason than round
+3's, and the difference is the whole cut. The census that stopped on its first RAISE in rounds 1, 2 and 3 now RUNS TO
+THE END on both planes (live 1690 judged + 136 carded == 1826 nameable; repo 1547 + 331 == 1878; `stopped` null). That
+is the CTO's stated closure bar met on its own numbers for the first time in four rounds. **The completed census
+bought the finding:** the same run showed `1411 of 3237` judged rows carrying a literal `{system}`/`{scope}`/
+`{cadence}` placeholder in `canonical` -- 44% of the judged population graded against a string no resource can ever
+equal. Closing there would have turned the defect FWD-5 exists to detect into a guarantee that it was detected, and it
+would have arrived with a printed denominator, which is what would make it dangerous rather than merely wrong.
+
+**THE CELL COUNT.** Section 3 lists 22 cells; round 4 added five (23-27); round 5 adds four, numbered 28 to 31, and no
+earlier cell is re-opened:
+
+```
+  cells at v3.3 ......................................................... 27
+  plus round 5's four, from the round-4 analysis ......................... +4
+  = cells in this decomposition ......................................... 31
+  round 5 runs exactly the four: 28, 29, 30, 31
+```
+
+| cell | id | what it does | rulings | serves |
+|---|---|---|---|---|
+| 28 | `EN-c-28` | **the placeholder campaign.** Resolve every row whose `{system}`/`{scope}`/`{cadence}` substitution is MEASURED from a declared source; card the rest with owner and reason; print `resolved + carded == the start population` with its denominator; **re-measure the OWN denominator at WRITE time and print BOTH populations**; then re-run the census and re-grade round 4's AC3 against the closed population. R-29's fence guard verbatim; R-33's timebox unchanged | R-38, R-29, R-33 | FWD-5 |
+| 29 | `EN-h-29` | **S61's remedy.** ONE corrected evidence string in `resources.json`'s `Inflection-HistBackfill-FailureSpike` row, then the basis re-graded against the corrected bytes. Not a re-cut of `EN-h-24` and not a new conclusion -- `system=advi` is right, only the basis is wrong | S61 (`C-S36`) | FWD-5 |
+| 30 | `EN-g-30` | **S62's remedy.** The reason split re-counted FROM the comparison's own table and reconciled against its own 42, **with the SPLIT PRINTED BESIDE THE TOTAL** so the next reader can check the parts rather than the sum; and Section 3's stale count word corrected | S62 (`C-S36`) | FWD-3 |
+| 31 | `EN-c-31` | **W1-S30's disarm.** The TOKEN_COLLISION card landing with `D12` / `NFRA_OPSEC202609` named as the bucket half's owner, on BOTH Card 5 and Card 6. `security` is NOT minted and the vocabulary is not reshaped for one measured collision | R-39 | FWD-5 |
+
+**THE CLOSURE BAR IS UNCHANGED AND IS STILL NOT "ZERO CARDED".** FWD-5 is REALIZED when `judged + carded ==
+nameable` on both planes with denominators printed AND no judged row is graded against a template. A carded name is a
+named gap with an owner, which is what the outcome promises; a canonical of `{system}-{scope}-daily` is not a name at
+all, which is what cell 28 closes.
+
+**THE START POPULATION IS 1411 AND THAT NUMBER IS DELIBERATELY NOT AN ACCEPTANCE VALUE.** It is a count at ONE vintage
+of a report the campaign itself replaces, and a row can leave the placeholder class while the cell runs. So the cell
+MEASURES its start from the r4 report's own rows (arm `c28-population` refuses a declared start that disagrees with a
+fresh parse) and prints `population_at_start` AND `population_at_close` with the instrument named (arm
+`c28-redenominator`), and a difference between them needs a note saying why. **An inherited count is a subset
+measurement until you ask what population it enumerated.**
+
+**WRITE SURFACES, MEASURED AT THIS CUT, AND THE TWO COLLISIONS THAT SET THE SLOT PLAN.** Read from the four cells'
+target artifacts, not from the cell names:
+
+```
+  EN-c-28  infra/logic/registry/{systems,resources}.json + its own PLACEHOLDER_CAMPAIGN_R5.json,
+           OWNER_CARDS_R5.md and NAMING_CENSUS_REPORT.r5.md        -> deliverables/0.9.0_WK_LGIC_ENFORCE~1/
+  EN-h-29  infra/logic/registry/resources.json                      COLLIDES with 28 on resources.json
+  EN-c-31  deliverables/0.9.0_WK_LGIC_ENFORCE~1/OWNER_CARDS_R4.md   COLLIDES with 28 on that FOLDER's lane grant
+  EN-g-30  deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md   disjoint from all three
+```
+
+**THE FOLDER IS THE GRANT AND IT DECIDES THE SEATING, not a preference.** `.tools/owned-paths-validate.py` clause 4
+(`ADHC_OWNPTH.004`, lane `TREE_DELIVERABLES`) permits exactly the serial named by the `deliverables/<SERIAL>/`
+sub-folder. `OWNER_CARDS_R4.md` is `0.9.0_WK_LGIC_ENFORCE~1`'s and `NAMING_CENSUS_COMPARISON.r4.md` is
+`~2`'s, so cells 28 and 31 are `~1`'s and cell 30 is `~2`'s and no other seating is legal. **This was MEASURED by
+running the gate, not predicted:** the same clause refused this seat's own attempt to correct a worker's delivered
+file on LGIC_LGCTFM the same night, and the refusal was right.
+
+**EDGES AND THE SLOT PLAN.** `29 -> 31 -> 28` (one queue: 29 and 28 both write `resources.json`, 31 and 28 both write
+inside `~1`'s folder, and 28's census must read the registry AFTER 29's correction lands or it grades a report built
+on bytes the round is repairing); `30` independent.
+
+```
+  slot ~1  EN-h-29-r5 -> EN-c-31-r5 -> EN-c-28-r5   resources.json -> OWNER_CARDS_R4.md -> the campaign + the re-run census
+  slot ~2  EN-g-30-r5                                NAMING_CENSUS_COMPARISON.r4.md only
+```
+
+`fanout: 2 slots over 2 connected components, cap 8, reason: components {29, 31, 28} and {30}; levels L0 = {29, 30},
+L1 = {31}, L2 = {28}. The big component is ONE QUEUE rather than three workers because every pair in it shares a write
+surface -- resources.json or ~1's deliverables folder -- so parallelism there would buy a merge conflict, not
+wall-clock. The two small remedies run FIRST inside that queue so the campaign's census reads corrected bytes.`
+
+**THE FIXED INPUTS L6 CUTS INTO THE FACES.** `deliverables/2.0.0_SA_COO~G/fixed_inputs/r5/check_en_r5.py` (12
+subcommands, one per mechanical criterion; `selftest-arms` drives 20 arms, each ALONE against a doctored input) and
+`R5_BASE.json`, which PINS the cut's HEAD at `95fb561677`. Arms that must tell "this round changed it" from "it was
+already like that" read at that pin with `git show <base>:<path>` and never at `git merge-base HEAD CLOUD`, which
+moves under a drain.
+
+**THREE CRITERIA PASS AT THE CUT BY DESIGN AND ARE GUARDS, NOT TARGETS**, stated here because a criterion that already
+passes proves nothing about a cell's work unless it is labelled: `c28-fence` (the applied fence must STAY unchanged),
+`h29-conclusion` (the repaired row's conclusion must NOT move) and `c31-not-minted` (R-39's bar: `security` must STAY
+unminted). The other nine read FAIL at the cut, each naming the live defect it grades.
+
+**ONE DEFECT WAS FOUND IN THIS ROUND'S OWN CHECKER BEFORE ANY WORKER SAW IT, and it is recorded because the class
+repeats.** `g30-split`'s table-counting helper first counted EVERY uppercase token in every table cell. Run for real
+against the comparison document it returned 36 keys summing to 149 -- resource types, verdicts, even two CloudFront
+distribution ids -- of which only 4 are reason keys. Because the comparison walks the UNION of both key sets, **a
+correctly corrected fence carrying 4 keys would have disagreed with 32 phantom ones and FAILED: the arm was
+unsatisfiable by a correct fix.** Its injected self-test passed anyway, because the fixture handed both sides the same
+key set. **An injected self-test certifies the ARMS, never the WIRING.** Repaired by scoping the count to the fence's
+own declared keys, then re-run against the real document on three branches -- the live defective fence (FAIL, naming
+S62's shape), a simulated correct fence (PASS), and a self-consistent fence that disagrees with the table (FAIL) --
+and the table independently reproduced the CVO's own remedy split, 20/2/10/10 = 42.
+
+**A STALE FIELD IN THIS DOCUMENT'S OWN HEADER, corrected in this commit and disclosed rather than quietly fixed:** the
+header json read `"decomp_version": "v2.1"` while this document's section headings had reached v3.3 across two
+recuts. It is set to `v3.4` here, matching this section.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
