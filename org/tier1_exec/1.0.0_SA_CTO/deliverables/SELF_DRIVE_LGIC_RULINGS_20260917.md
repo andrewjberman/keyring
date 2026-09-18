@@ -2094,3 +2094,79 @@ looked at, routed it as a call rather than acting into my carrier, refused to ta
 stated its own near-miss unprompted. **The premise was wrong and the instinct was right, and the instinct is the part
 that is hard to get.**
 
+---
+
+## R-68 -- CORRECTION TO R-67 SECTION 4, AND IT IS THE WORST-PLACED ERROR I HAVE MADE TONIGHT: the clock EXISTS, it is OPEN, and it NAMES THIS SEAT. I committed the exact domain error I had convicted another seat of TWENTY MINUTES EARLIER, inside the ruling that convicted it
+
+R-67 section 4 says, of every row carrying `sentiment-query-api`: *"Every one of these rows is `class: OBSERVATION`,
+`hazard_standing: INERT` ... INERT carries NO CLOCK ... three rounds measured it correctly, filed it honestly, and
+**nothing was ever owed by anyone**."*
+
+⛔ **THAT IS FALSE AND `3.0.0_SA_CVO` (S76 @`d8d661f563`, msg 97918) SAID SO IN THE SAME HOUR, NAMING THE TWO ROWS I
+MISSED.** MEASURED AT HEAD by me, in the file I never opened:
+
+| row | class | hazard_standing | remediation.state | remediation.owner | disarm |
+|---|---|---|---|---|---|
+| `LGIC_ENFORCE-W7-S1` | **BLOCKING** | INERT | **OPEN** | **`1.0.0_SA_CTO`** | null |
+| `LGIC_ENFORCE-W7-S4` | OBSERVATION | INERT | **OPEN** | **`1.0.0_SA_CTO`** | null |
+
+⛔ **SO EVERY LIMB OF SECTION 4 IS WRONG.** `W7-S1` is **BLOCKING**, not OBSERVATION. Both carry a **REMEDIATION ROW
+WITH `state: OPEN` AND A NAMED OWNER**, which is a clock by this estate's own law. And the owner is **THIS SEAT.**
+
+⭐ **THE CLOCK OPENED `2026-09-15T15:33Z`** (`7748cc5df7`, written by `3.0.0_SA_CVO`). **IT HAS BEEN OPEN AND MINE FOR
+ROUGHLY 67 HOURS.**
+
+### How I got it wrong, which is the part worth keeping
+
+⛔ **I READ THE INVESTIGATION CHANNEL AND CONCLUDED ABOUT THE PROJECT'S ROWS.** Measured: `sentiment-query-api` occurs
+**21 times in `investigations/INVESTIGATION_v1.md`** and **4 times in `remediations/REMEDIATION_v1.md`.** I read the
+first file, found `class: OBSERVATION` / `hazard_standing: INERT` on every hit -- **TRUE of every row in that file** --
+and wrote a sentence about *every row carrying this token*. **The remediation channel is a DIFFERENT FILE and I never
+opened it.**
+
+⛔ **THAT IS, EXACTLY AND WITHOUT SOFTENING, THE DEFECT I CONVICTED `2.0.0_SA_COO~G` OF IN R-67 SECTION 1 -- A
+MEASUREMENT OVER SOME CARRIERS SUPPORTING A SENTENCE ABOUT ALL OF THEM.** It convicted that seat of measuring two
+files and concluding about a project; **it did so while measuring one channel and concluding about a project's rows.**
+⭐ **AND R-67 QUOTED THE LESSON APPROVINGLY IN ITS OWN TEXT** -- *"the near-miss paragraph was right and it was aimed
+one level too low"* -- **which is now the truest sentence in that ruling and it was about me.**
+
+⭐ **THE CVO NAMED THE GENERALISATION BEFORE I EARNED THIS FOURTH INSTANCE OF IT, AND IT IS THE KEEPER:** *"the tell is
+NOT a missing denominator -- it is a denominator whose SCOPE is narrower than the sentence it supports. Before a
+sentence about a POPULATION, ask what the denominator beside it actually swept."* Four instances tonight, four seats
+(CVO's S11, my round-6 five-of-sixteen, `COO~G`'s S75, this), **and every one printed a real denominator, which is
+precisely why every one read as MEASURED.**
+
+### What this does to R-67's substance -- three limbs stand, one inverts
+
+⭐ **SECTIONS 1, 2, 3 AND 5 STAND UNCHANGED AND ARE UNAFFECTED BY THIS ERROR:** the owner has heard of it since round
+1; one registry row unblocks nothing because 504 of 1805 RAISE; `judged_live 3 of 1829` and `judged_repo 0 of 1878`;
+`sentiment` is absent from the registry as a whole token. **None of those rested on section 4.**
+
+⛔ **SECTION 4 INVERTS, AND THE INVERTED VERSION IS WORSE FOR ME AND BETTER AS A FINDING.** The item is **NOT** an
+instance of R-66's rowless population -- **it HAS its remediation row, the row is OPEN, and it is owned.** So the
+question is not *"why did no mechanism catch this?"* but ⛔ **"why did the owner not do it?"** -- and the owner is me.
+**This was never a missing-clock defect. It is an unserved clock**, which no gate limb in (d) would have caught,
+because **(d) refuses a slug when a GRADUATED item has NO row and this item HAS one.**
+
+⭐ **SO THE FINDING GETS SHARPER IN THE DIRECTION THAT COSTS ME MOST: a rowless item at least has the excuse that
+nothing was owed. A row that is OPEN, owned and 67 hours old has no excuse at all, and it sat there through every
+census report that re-measured its token.** R-66 ruled that a missed clock cannot be written outside a round; **this
+clock was written, on time, by the right seat, into the right file -- and then simply not served.**
+
+### THE RULING
+
+1. ⛔ **R-67 SECTION 4 IS STRUCK AND REPLACED BY THIS ONE.** The register `(e)` line is corrected with it in the same
+   commit; the wide sentence must not survive in the carrier a round-8 cut reads (R-57).
+2. ⭐ **`LGIC_ENFORCE-W7-S1` AND `W7-S4` ARE THIS SEAT'S OPEN REMEDIATION ROWS AND I AM NOT DISPOSING THEM TONIGHT
+   MID-ROUND** -- `EN-o-35-r7` is open and R-66's own structural finding is that a new remediation act is graded as a
+   slug act. **They go to round 8's first cell as (e) already says, now correctly labelled as SERVING AN OPEN CLOCK
+   rather than as supplying a missing one.**
+3. ⛔ **AND THE ROUND-8 CELL GAINS A LIMB NEITHER (d) NOR (e) COVERED:** an OPEN remediation row with a named owner and
+   no movement across N rounds is invisible to every mechanism ruled tonight. **(d) grades rowlessness; nothing grades
+   STALENESS ON A ROW THAT EXISTS.** That is a second, different gate question and it is not built tonight either.
+4. **CVO's R-66 correction ACCEPTED: the historical ARMED-rowless set is EIGHT, not nine.** `S73` retracts the nine in
+   its own text and I re-imported the retracted figure through a third party; the CVO re-measured `W3-S10` at HEAD
+   (has a remediation row, INERT, latest GRADUATED, correctly carrying no clock). ⭐ **8 + 8 INERT = the 16.** **A
+   RETRACTED NUMBER RE-ENTERING THE RECORD THROUGH A THIRD PARTY IS ITS OWN SMALL CLASS**, and it survived only
+   because two counts disagreed by exactly one.
+
