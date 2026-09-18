@@ -581,3 +581,45 @@ The first rec rested on a **14-day SUM**. The correction read the same metric **
 The call says two such children reach **562,036,736** against a reserve computed at 375,753,728. But **2 x 282,021,888 = 564,043,776**, not 562,036,736 -- a difference of **2,007,040**, which means the two figures rest on DIFFERENT child values (562,036,736 is the double of 281,018,368, not of 282,021,888). **Neither is necessarily wrong** -- one may be the measured maximum and the other a different run's peak -- **but the doubling must print its own input.** ⛔ **The conclusion is unaffected: on either figure two children exceed the 375,753,728 reserve by more than 185 MB**, so the admission finding stands and this is a provenance repair, not a reversal.
 
 **Nothing here re-grades a criterion or moves a cap.** AC2 becomes a disclosed FAIL and joins AC4 as the second input to R-OG-22's revision; the `cap_respected` repair and its consumer census are `2.0.0_SA_COO~O`'s to place in a cell.
+
+---
+
+## R-OG-25 -- THE LOST SALT (row `S42`): the RE-SEAL IS ORDERED NOW and **`G-C` IS NOT SCHEDULED UNTIL IT LANDS** -- plus the falsifiable ordering test, because a late re-seal and an honest one look identical in the record
+
+**The finding (`2.0.0_SA_COO~O`, row `NFRA_OPLGTW-S42` @`28f12de3b0`, ARMED and BLOCKING):** `SEALED_EXPECTED.json` is committed at HEAD and names its own missing input -- `sha256(salt || canonical_json(answer))`, salt at `C:/tmp/nfra-oplgtw-sealed/expected/SALT.txt`, **outside the repository. The tree does not exist.** Measured on two independent path planes (bash `test -d` ABSENT, PowerShell `Test-Path` False) while `C:\tmp` itself holds 36 children, none matching `nfra*`. `OG-v-3` put the values and the salt there and nowhere else, with retention *"until OG-v-4 has graded"*; `OG-v-4` has not graded, **so the tree went EARLY -- before the clause governing it allowed.**
+
+Blast radius **ONE criterion** -- `OGV4-AC5` -- after `2.0.0_SA_COO~O` corrected its own sweep from 2 to 1 (the `OGV4-J2` hit was its own regex catching a trailing `<expected_criteria>` list). ⭐ **The correction is in the right direction: it made the finding SMALLER, which is the direction a seat has no incentive to move its own number.**
+
+### 1. THE RULING ON THE PART THAT IS MINE -- `G-C`'s TIMING
+
+⛔ **THE RE-SEAL IS ORDERED, AND `G-C` IS NOT SCHEDULED UNTIL THE RE-SEAL COMMIT HAS LANDED.**
+
+The reasoning is entirely `2.0.0_SA_COO~O`'s and I adopt it without dilution: the seal exists so the grader cannot tune expectations to the result. **A re-seal TODAY preserves that property exactly, because the walkthrough has not happened** -- `G-C`, `G-D`, `G-E` and `G-F` are all absent at HEAD, verified this tick, all four owning deliverables directories at 0 files. **The same re-seal AFTER the walkthrough would be worthless.**
+
+⚠ **THIS IS A SEQUENCING ORDER ON TWO ACTS THIS SEAT ALREADY OWNS, NOT A NEW APPROVAL GATE.** CLAUDE.md forbids implementing an approval gate Andrew did not ask for. Nothing here adds a permission step: `G-C`'s timing was already mine, the re-seal was already owed, and I am stating which comes first. No seat needs anyone's sign-off that it did not need yesterday.
+
+⛔ **AND IF THE ROUND'S ARITHMETIC CANNOT DRAIN IN TIME, `G-C` IS WHAT MOVES, NOT THE RE-SEAL.** `2.0.0_SA_COO~O` declined to cut the cell in-round on LD-0521's arithmetic -- *"I am not going to argue the exception into existence for my own finding"* -- and that restraint is correct and is not to be undone by me. **The window is protected from the other end: I hold `G-C`, so I delay `G-C`.**
+
+### 2. ⛔ IT IS A RE-SEAL, NOT A RECOVERY, AND THE RECORD MUST NEVER READ OTHERWISE
+
+`SEALED_EXPECTED.json` records key AND `version_id` for every source object plus the exact instrument, so **the ANSWERS recompute from identical versioned objects.** ⛔ **THE COMMITTED HASHES CAN NEVER BE MATCHED** -- a new salt yields different digests. Any repair produces **NEW hashes**.
+
+So: the new artifact **supersedes** the old and says so in its own bytes, naming the old digests as **RETIRED, never as "verified"**. ⚠ **A future reader who finds two sets of digests and no supersession note will assume the first set was checked.** The retirement line is the only thing standing between this incident and that misreading.
+
+### 3. ⭐ THE ORDERING TEST -- because "we re-sealed before the walkthrough" is a CLAIM, and the whole point is that it cannot be taken on trust
+
+An honest early re-seal and a worthless late one **look identical in the record**, which is exactly the property the seal was built to deny. So the re-seal carries a discriminator a later reader can run without trusting anyone:
+
+**The re-seal commit MUST be a git ANCESTOR of the first commit in `G-C`'s deliverables directory, and the row cites BOTH hashes.** Falsifiable in one command (`git merge-base --is-ancestor <reseal> <first G-C artifact>`), by any seat, at any later date, on an ordering **no party to the grading can back-date.** ⛔ **A DATE TYPED INTO THE ARTIFACT IS NOT THIS TEST** -- the artifact is written by the party that benefits; the ancestry is not.
+
+### 4. THE STANDING BAR THIS EARNS -- `2.0.0_SA_COO~O`'s carry, sharpened
+
+Its generalisation is right and is the durable part: ⭐ ***"AN OUT-OF-REPO INPUT SITS OUTSIDE EVERY GUARD THIS ESTATE HAS."*** No gate, no freeze, no worktree and no commit protects `C:/tmp`, **and a held cell depending on one is trusting a path nothing defends for exactly as long as it stays held** -- which is longest precisely when a cell is blocked, i.e. when nobody is looking.
+
+⛔ **BAR: AN INPUT A HELD OR SEALED CELL WILL NEED AT GRADING TIME LIVES IN A DEFENDED STORE WITH A NAMED RETENTION OWNER -- NEVER A TEMP PATH.**
+
+⚠ **AND THE OBVIOUS REMEDY IS WRONG HERE, WHICH IS WHY THE BAR NAMES A STORE RATHER THAN "COMMIT IT":** committing the salt in clear would destroy what the salt buys. The hashes' integrity comes from the COMMIT (they were fixed before the answers were known), but **the SALT's secrecy is what stops a low-entropy answer being brute-forced out of its own digest** -- and this seal's answers are business-date-shaped, i.e. low entropy. A published salt would let a party recover the expected answer from the committed hash and then build to return it, which inverts the threat rather than closing it. **So: an Opal-owned defended store (SSM SecureString / Secrets Manager), never the repo in clear and never `/tmp`.** COST: one parameter write per seal. NON-APPLICATION: an input a cell consumes and grades in the same act, which is never held.
+
+### 5. WHAT IS NOT CLAIMED
+
+**Nothing about WHAT removed the tree.** A temp sweep, a reboot, a cleanup -- unmeasured, and `2.0.0_SA_COO~O` declines to claim it. ⭐ **The remedy does not depend on the cause, which is why the ruling does not wait for it.** And per Rule 22's negative mirror: this is an **EXPOSURE that FIRED** -- the guard was missing AND the loss occurred -- so it is an INCIDENT, and the re-opening it requires is exactly `OGV4-AC5`'s re-seal. Nothing else was admitted by the gap, because `OG-v-4` never graded.
