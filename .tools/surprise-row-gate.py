@@ -1529,20 +1529,29 @@ def _monotone_advance(old, new):
     # `remediation.owner` half ALONE and BOTH-TOGETHER, and reported the ruling as DESIRED-NOT-APPLIED rather than
     # attempting a write the gate would refuse. That is the SAME "a ruling had no landing surface" shape the R-19
     # addendum was written to fix, one field over.
-    # ⛔ EXACTLY ONE OWNER FIELD PER ADMITTED MOVE. Both-at-once stays REFUSED -- not an oversight carried forward but
-    # the property that makes each reassignment separately inspectable, which is the whole point of requiring a
-    # ruling citation. Two fields moving under one citation cannot be told apart afterwards.
+    # THE ADDRESSEE SET IS THREE FIELDS, not one, and the third was found by `3.0.0_SA_CVO` reading the SCHEMA rather
+    # than the code (97793): `remediation_row.schema.json` describes the TOP-LEVEL `owner` in its own words as "the lane
+    # that builds the remediation" -- which names who must ACT, so R-42's principle makes it an addressee too. There is
+    # no who-filed field on the remediation plane at all; PROVENANCE for a finding lives on the INVESTIGATION row as
+    # `surfaced_by`, which this move never touches. So all three of `owner`, `disarm.owner` and `remediation.owner` are
+    # addressees and all three must be able to follow a ruling.
+    # ⛔ AND A SUBSET MAY MOVE IN ONE WRITE. This seat first admitted exactly ONE field per move and argued that kept
+    # each reassignment inspectable -- that reasoning does not survive the three-field fact: it would force THREE
+    # writes to relocate ONE row, each citing the same ruling, for no added discrimination, since the diff already
+    # shows which fields moved and to what while the citation records why. The constraints that make the move safe are
+    # unchanged and neither is loosened: EXACTLY ONE appended evidence entry citing a ruling by id and vintage, and NO
+    # clock may move in the same write. Only the FIELD SET widened.
     owner_moved = False
-    _owner_pairs = [(od, nd), (o.get("remediation"), n.get("remediation"))]
-    _changed = [(a, b) for a, b in _owner_pairs
+    _owner_holders = [(o, n), (od, nd), (o.get("remediation"), n.get("remediation"))]
+    _changed = [(a, b) for a, b in _owner_holders
                 if isinstance(a, dict) and isinstance(b, dict) and a.get("owner") != b.get("owner")]
-    if len(_changed) == 1:
+    if _changed:
         oe, ne = o.get("evidence"), n.get("evidence")
         if (isinstance(oe, list) and isinstance(ne, list) and len(ne) == len(oe) + 1 and ne[:len(oe)] == oe
                 and RULING_CITATION_RE.search(str(ne[-1]))):
             owner_moved = True
-            _a, _b = _changed[0]
-            _b["owner"] = _a.get("owner")
+            for _a, _b in _changed:
+                _b["owner"] = _a.get("owner")
             n["evidence"] = oe
     if owner_moved:
         return (not moved) and o == n
@@ -2020,6 +2029,7 @@ def _self_test(root):
     ]
     # monotone state advance on an existing remediation row (93695 item 4)
     base_row = {"id": "X-S1", "remedy": "fix the thing", "evidence": ["a@b"], "hazard_standing": "ARMED", "closed": False,
+                "owner": "x",
                 "disarm": {"state": "ARMED", "owner": "x", "at": None}, "remediation": {"state": "OPEN", "owner": "x", "round": "v1"}}
     def adv(**over):
         r = json.loads(json.dumps(base_row))
@@ -2059,10 +2069,21 @@ def _self_test(root):
                                                  evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
         ("advance OWNER R-42 MUTANT: remediation.owner changes with NO citation -> refused",
          lambda: not _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B"}))),
-        ("advance OWNER R-42 MUTANT: BOTH owners move under one citation -> refused (one field per move, so each "
-         "reassignment stays separately inspectable)",
-         lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"}, remediation={"owner": "2.0.0_SA_COO~B"},
-                                                     evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42: BOTH nested owners move under ONE citation -> ADMITTED (a subset of the addressee set "
+         "relocates in one write; the diff shows which fields moved, the citation says why)",
+         lambda: _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~B"}, remediation={"owner": "2.0.0_SA_COO~B"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42: the TOP-LEVEL owner ('the lane that builds the remediation', an ADDRESSEE per the schema) "
+         "moves under one citation -> ADMITTED",
+         lambda: _monotone_advance(base_row, adv(owner="2.0.0_SA_COO~B",
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42: ALL THREE addressee owners relocate in one write -> ADMITTED",
+         lambda: _monotone_advance(base_row, adv(owner="2.0.0_SA_COO~B", disarm={"owner": "2.0.0_SA_COO~B"},
+                                                 remediation={"owner": "2.0.0_SA_COO~B"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42 MUTANT: all three move with NO citation -> refused",
+         lambda: not _monotone_advance(base_row, adv(owner="2.0.0_SA_COO~B", disarm={"owner": "2.0.0_SA_COO~B"},
+                                                     remediation={"owner": "2.0.0_SA_COO~B"}))),
         ("advance OWNER R-42 MUTANT: remediation.owner moves AND a clock moves in the same write -> refused",
          lambda: not _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B", "state": "REMEDIATED"},
                                                      evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
