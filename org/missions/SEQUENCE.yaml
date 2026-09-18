@@ -57,7 +57,7 @@ capacity:
 
 stages:
   - id: 0
-    name: "Andrew's seat priority -- IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX"
+    name: "Andrew's seat priority -- MDPF_CANON, then IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX"
     why: "Andrew-direct 2026-09-17 ~19:0xZ at the 1.0.0_SA_CTO terminal, answering this seat's /open-calls card 6, VERBATIM: 'there should be a sequence for this, id do investor reporting backend, tool index, and tax sma in that order.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md). SUPERSEDES his 2026-09-15 ~12:5xZ seat order ('If push mdpf_taxsma as the next one followed by nfra_oplgtw'), which is kept in the change_log. This stage orders SEATS, not dependencies: the reader queues NEEDS-SLOT by stage, so stage 0 puts these three ahead of every other project for a COO slot, in the order he named. NARROW READ, stated: he named THREE projects, not a general re-order -- every other row keeps its place."
   - id: 1
     name: "Platform Logic -- the naming schema, the enforcement layer, the canon"
@@ -70,6 +70,16 @@ stages:
     why: "Placed after everything already ordered so that no existing order moves (Andrew-direct 2026-09-14 ~13:4xZ, 'recs + sequence approved', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md). Moving a stage-3 project ahead of Platform Logic is a reorder, and a reorder is Andrew's word. ASKED AND ANSWERED for IRPT_BCKEND, ~14:5xZ: 'No, we need the logic projects done first because that will establish the patterns for the new backend properly' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md)."
 
 projects:
+  MDPF_CANON:
+    fabric: laptop
+    stage: 0
+    waits_on: []
+    hold:
+      max_dep_stage: REGISTERED
+      until:
+        - {project: LGIC_ENFORCE, prd_admitted: true}
+    why: "FIRST for a COO seat on Andrew's 2026-09-18 ~22:3xZ word, which REVERSED this seat's own rec that ADVI_FIRMBKTS take the next slot and named this project instead, as the test run for the LGIC legacy transform. Moved stage 2 -> 0 on the same precedent as IRPT_BCKEND's ~19:0xZ move: stage 0 orders SEATS, not dependencies, and the row's hold travels with it unchanged. NARROW READ, stated: he named ONE project and ONE position -- ADVI_FIRMBKTS and every other row keep their place, and this project's FWD-2/FWD-6 dependency on ADVI_FIRMBKTS's firm buckets is a gate on its EXECUTION, not on its seat. Its keys come from LGIC_NAMING's schema."
+
   IRPT_BCKEND:
     fabric: laptop
     stage: 0
@@ -131,16 +141,6 @@ projects:
         - {project: LGIC_ENFORCE, prd_admitted: true}
         - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from", confirmed: "1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied; its drain completed @d482e58ecf (merge c6d652a6dc landed 2 of the branch's 8 paths, row LGIC_ENFORCE-S18; the other 6 landed @5ee8e068fd, @8c77a1400a, @d482e58ecf); 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial"}
     why: "The legacy firm buckets (opal-data-bd, -inf, -cot) move into opal-data-49financial and the two new buckets. The new buckets must be minted with the rebuilt fence, and FWD-3 needs LGIC_ENFORCE's registry. Its PRD and decomposition may proceed; execution waits."
-
-  MDPF_CANON:
-    fabric: laptop
-    stage: 2
-    waits_on: []
-    hold:
-      max_dep_stage: REGISTERED
-      until:
-        - {project: LGIC_ENFORCE, prd_admitted: true}
-    why: "Andrew's priority word puts MDPF after the Logic projects, and its keys come from LGIC_NAMING's schema. Its FWD-2 and FWD-6 also need ADVI_FIRMBKTS's firm buckets -- added as a gate on its execution when its PRD cuts cells."
 
 
 parked:
@@ -210,13 +210,17 @@ change_log:
     by: "1.0.0_SA_CTO"
     change: "stage 0 re-ordered: IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX. His ~23:3xZ word reverses the ~19:0xZ ordering of TAXSMA and MCPINDEX and touches nothing else; IRPT_BCKEND is first in both. The blocks are PHYSICALLY moved because the reader queues NEEDS-SLOT by file order. Recorded at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_233xZ_THREE_COO_DRIVE_LOOPS_30M_AND_SEAT_ORDER_TAXSMA_THEN_MCPINDEX.md. Also lifts his 2026-09-16 TAXSMA hold, which that row carried."
     word: "'Give each of the COO's a 30m /drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX.'"
+  - at: "2026-09-18"
+    by: "1.0.0_SA_CTO"
+    change: "ORDER CHANGED -- MDPF_CANON takes the NEXT COO slot. Moved stage 2 -> 0 and placed FIRST in the file, because the reader queues by stage then file order and printed NEXT COO SLOT: MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS -> MDPF_CANON immediately before this edit -- his pick was LAST of four, so the file contradicted his word. It REVERSES this seat's own rec (/open-calls card 1 recommended ADVI_FIRMBKTS). Nothing else moves: ADVI_FIRMBKTS keeps its stage-2 place, MDPF_CANON's hold travels with the row unchanged, and the ~23:3xZ ordering of IRPT_BCKEND / MDPF_TAXSMA / NFRA_MCPINDEX is undisturbed beneath it. Capacity read AT CAP 3/3 at the edit, so this SEATS NOTHING today -- it sets the order; seating stays 0.0.0_AB_MSTR's. Precedent for a stage move on a seat word: the ~19:0xZ IRPT_BCKEND move, stage 3 -> 0."
+    word: "'1.) No MDPF CANON first as test run. 2 and onward yes to all approved' (Andrew-direct ~22:3xZ 2026-09-18 at the 1.0.0_SA_CTO terminal, answering /open-calls card 1; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_223xZ_FIVE_CARDS_MDPF_CANON_FIRST_AS_TEST_RUN.md @8a44134dab)"
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-18T01:33:16Z",
-    "head": "b21c2b5db4",
-    "sequence_file_last_commit": "304d4a6024 2026-09-17T19:50:38-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-09-18T22:55:43Z",
+    "head": "94b0c19f27",
+    "sequence_file_last_commit": "3ce018566e 2026-09-17T21:34:10-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
@@ -228,29 +232,51 @@ compiled:
       ],
       "free": 0,
       "next_slot_order": [
+        "MDPF_CANON",
         "MDPF_TAXSMA",
         "NFRA_MCPINDEX",
-        "ADVI_FIRMBKTS",
-        "MDPF_CANON"
+        "ADVI_FIRMBKTS"
       ]
     },
     "flags": {
       "denominator": 10,
       "counts": {
-        "LANE-DARK": 1,
-        "NEEDS-SLOT": 3
+        "NEEDS-SLOT": 3,
+        "LANE-DARK": 1
       }
     },
     "stages": [
       {
         "id": 0,
-        "name": "Andrew's seat priority -- IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX",
+        "name": "Andrew's seat priority -- MDPF_CANON, then IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX",
         "projects": {
+          "MDPF_CANON": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v2.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "881c16d426 2026-09-16T15:20:10-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [
+              {
+                "kind": "hold",
+                "state": "MET",
+                "detail": "LGIC_ENFORCE PRD admitted? v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)"
+              }
+            ],
+            "coo_lane": null,
+            "phase": null,
+            "hold_max_dep_stage": "REGISTERED"
+          },
           "IRPT_BCKEND": {
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.14 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "c5f965ab7e 2026-09-17T21:31:13-04:00",
+            "last_activity": "589610f663 2026-09-18T18:11:53-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -276,7 +302,7 @@ compiled:
             "dep_stage": "PRD",
             "status": "active",
             "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "77c0786e7b 2026-09-17T21:26:35-04:00",
+            "last_activity": "3ce018566e 2026-09-17T21:34:10-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -291,7 +317,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.9 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "35377638d7 2026-09-17T20:49:06-04:00",
+            "last_activity": "6acc95cba2 2026-09-18T18:46:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -319,7 +345,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "2befae9891 2026-09-17T21:25:06-04:00",
+            "last_activity": "1cbc91d66a 2026-09-18T17:09:05-04:00",
             "flags": [],
             "notes": [],
             "gates": [
@@ -336,7 +362,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6b6a7ef0dd 2026-09-17T20:00:22-04:00",
+            "last_activity": "1c05ea5d95 2026-09-18T13:29:23-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -347,7 +373,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "8db9eb1bd9 2026-09-17T20:59:28-04:00",
+            "last_activity": "94f5d0b4b5 2026-09-18T18:06:04-04:00",
             "flags": [],
             "notes": [],
             "gates": [
@@ -402,28 +428,6 @@ compiled:
             "coo_lane": null,
             "phase": null,
             "hold_max_dep_stage": "DECOMP"
-          },
-          "MDPF_CANON": {
-            "dep_stage": "PRD",
-            "status": "active",
-            "prd": "v2.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "881c16d426 2026-09-16T15:20:10-04:00",
-            "flags": [
-              "NEEDS-SLOT"
-            ],
-            "notes": [
-              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
-            ],
-            "gates": [
-              {
-                "kind": "hold",
-                "state": "MET",
-                "detail": "LGIC_ENFORCE PRD admitted? v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)"
-              }
-            ],
-            "coo_lane": null,
-            "phase": null,
-            "hold_max_dep_stage": "REGISTERED"
           }
         }
       },
