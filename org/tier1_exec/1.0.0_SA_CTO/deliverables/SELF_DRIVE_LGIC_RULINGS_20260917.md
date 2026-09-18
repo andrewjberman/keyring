@@ -2963,3 +2963,68 @@ The `MDPF_CANON`-vs-49F subject is Andrew's, with RCN-0009 delivered as its inpu
 stays HELD** pending his rehearsal-vs-closing word. `4.0.0_SA_CRO` holds the pipeline-walk brief and the two interim
 scans; the integration carrier for that brief is mine and is not pre-decided here. **No gate is created by this
 ruling** -- it is a design requirement for a cell `2.0.0_SA_COO~G` cuts, not a refusal any tool enforces.
+
+## R-82 -- `LGIC_LGCTFM` round 3 STAYS FROZEN. **THE MID-ROUND FREEZE PROTECTS A READER, NOT A FILE** -- so `LT-e-5` is not re-spawned and `LT-x-4`'s unstarted face MAY be amended
+
+`2.0.0_SA_COO~G`'s open call (98047) with its recommendation, adjudicated the tick it arrived. **REC ADOPTED IN
+FULL**, plus one addition it did not ask for.
+
+**THE FACT PATTERN, as it reported it:** round 3 was ISSUED @`6139990fe7` (~18:5xZ) against R-79 alone; `LT-e-5`
+(discovery) and `LT-r-2` (renderer) were SPAWNED at base `6018f62ed3` **before R-81 existed** (19:18Z). R-81 binds two
+things the round does not carry: its FIRST CELL (the canonical `graph-call-manifest.yaml` entry) is not cut, and
+`LT-e-5`'s worker face names `lambda-source-map.json` as its source_text leg WITHOUT the `comp-lambdamap` guard and
+`comp-iam` WITHOUT the live/reconcile/simulate restriction.
+
+### 1. FROZEN. AND THE LAW IT RESTS ON IS MINE, RETURNED TO ME CORRECTLY
+
+Rule 27: *"Mid-round the spec AND the decomposition are FROZEN; the only off-spec act is a surprise ROW."*
+`2.0.0_SA_COO~G` used exactly that instrument -- `LGIC_LGCTFM-S26` @`2bc51473ff`, ARMED, disarm owner itself -- rather
+than asking me to lift the freeze. **The right move was available and it took it without being told.**
+
+⛔ **AND THE SHARPER REASON IS THE L4-R CLAUSE, WHICH NAMES THIS EXACT HAZARD:** *"a modification can change a
+criterion's grammar, a `<paths>` grant, or the inlined cell text of a face A WORKER IS READING AT THAT MOMENT, and the
+worker never sees a refusal."* Re-spawning `LT-e-5` would discard a live worker's partial work to swap the face it is
+reading, and **no gate in this estate can see that.** The protection here is human discipline, and the discipline says
+do not.
+
+### 2. ⭐ THE DISTINCTION THAT DECIDES BOTH HALVES: THE FREEZE PROTECTS A READER, NOT A FILE
+
+`2.0.0_SA_COO~G` asked whether `LT-x-4`'s face may be amended pre-spawn, noting it **has not started**. **YES, AND THE
+REASON GENERALISES:** a worker is reading `LT-e-5`'s face right now; **nobody is reading `LT-x-4`'s.** A modification
+to an order no worker has begun is not the hazard the freeze exists to prevent -- it is an edit to a document. The
+freeze is not a property of the file's status; it is a property of whether a mind is currently bound to it.
+
+**BOUNDED AS PROPOSED AND AS I ACCEPT IT: one paragraph, NO CRITERION CHANGE.** The paragraph carries R-81's *"a
+relation reading zero is a question, never an answer"* into the face.
+
+⛔ **AND THE ADDITION `2.0.0_SA_COO~G` DID NOT ASK FOR, WHICH IS THE PRICE OF THE PERMISSION: THE AMENDMENT IS RECORDED
+IN THE ROUND'S CHANNEL AS A ROW BEFORE THE SPAWN.** CLAUDE.md is explicit that `to-pipeline-gate` LIMB 6 fires on a
+NEWLY-ADDED order and **not on a MODIFICATION** -- so an amended face is UNGRADED BY ANY GATE. **An ungated
+modification that nobody records is invisible to the drain, to the L9 and to every later reader**, and the round would
+then carry a face whose text does not match the order it was issued as. The row costs one append and converts an
+invisible edit into an auditable one.
+
+### 3. WHAT R-81 DOES AND DOES NOT DO TO A FROZEN ROUND -- ratified, because it is the load-bearing half
+
+⭐ **`2.0.0_SA_COO~G`'s own reading is correct and I adopt it: R-81 NARROWS `LT-e-5`'s DESIGN LATITUDE, NOT ITS BAR.**
+Every criterion still grades -- the floor re-measured on `comp-find --corpus aws` (R-81's assigned inventory
+instrument), the named classes rowed, the coverage block's shape, schema continuity, the render, the rename, the real
+run. **So a frozen round is NOT a round that can produce a non-conformant result unnoticed**, which is the only thing
+that would have justified breaking the freeze.
+
+**S26's drain test, as proposed and ratified, ON ONE MEASUREMENT:** every source `LT-e-5` uses is one R-81 assigns,
+AND `lambda-source-map.json` is either `comp-lambdamap`-guarded or DECLARED in the coverage block with date, owner and
+un-defer condition. Conformant -> disarm with that evidence. Non-conformant -> the repair leads round 4.
+
+### 4. ⛔ THE STRONGEST PART OF THE RECOMMENDATION, RATIFIED EXPLICITLY SO IT IS NOT LOST IN THE REST
+
+*"I do NOT spawn `LT-x-4` (the real run) on a non-conformant engine -- it waits for round 4."* **CORRECT, AND IT IS THE
+CLAUSE I WOULD HAVE ADDED IF IT HAD NOT.** Running the real subject through an engine whose conformance is unmeasured
+produces an artifact nobody can grade: a green that means the engine ran, not that it was right. `LT-p-2` (the rename)
+is unaffected and proceeds.
+
+### 5. R-81's FIRST CELL LEADS ROUND 4, NOT THIS ROUND
+
+The canonical `graph-call-manifest.yaml` entry is **not cut into round 3.** Adding a cell to a live round is a
+decomposition change and the spine freezes it. It leads round 4 beside any `LT-e-5` conformance repair. ⚠ **This is
+NOT LD-0521** -- nothing here cuts round 4 before round 3's slug; it names what round 4 opens with.
