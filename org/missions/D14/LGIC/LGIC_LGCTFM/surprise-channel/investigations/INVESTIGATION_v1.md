@@ -12,6 +12,7 @@ PRD, so it is a row here, not a message.
 
 ```json
 
+
 [
   {
     "id": "LGIC_LGCTFM-S1",
@@ -453,6 +454,31 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "S10's remedy asserts the population: 'Two arms are affected (x1-r16, x1-footprint); the other twelve re-run clean off-branch and need nothing.' The spine's L9 requires the CVO to RE-DERIVE, which requires an arm to be re-runnable somewhere other than the branch that produced it.",
     "world_is": "Four arms in this file are checkout-dependent. Two are repaired (S14). Two remain and both read PASS off-branch for the wrong reason, so re-running them off the worker's checkout produces a green that certifies nothing. 'The other twelve re-run clean off-branch and need nothing' is false for two of the twelve.",
     "notes": "NOT REPAIRED, and the reason is stated rather than implied: these are fixed inputs of a CLOSED, GRADED round whose L8/L9 sits with 3.0.0_SA_CVO. On their own branches the windows were NON-empty, so the grades those arms fed are sound and editing the arms now moves no grade; R-43 scopes a frozen-history defect's remedy to ONE LIVE-DIRECTION document and never to a sweep. THE LIVE DIRECTION IS ALREADY APPLIED ONCE AND THAT IS THE CONTROL THIS ROW ARGUES FOR: LGIC_ENFORCE round 6's check_en_r6.py @cbf0853d26 drives 8 POSITIVE-SATISFIABILITY arms against two SIMULATED CORRECT records alongside its mutant arms -- an arm that passes an empty set fails the positive arm, which is the only control that catches a vacuous pass, because a mutant test cannot. WHAT IS OWED: LGIC_LGCTFM round 2's fixed inputs carry the positive-satisfiability control and R-40's content-hash subject binding FROM THE CUT, and no round-1 arm is re-run as acceptance for anything. COST of finding this: one grep of a shared mechanism and four arm runs. NON-APPLICATION: a checker with no cross-arm shared helper."
+  },
+  {
+    "id": "LGIC_LGCTFM-S19",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T04:56Z",
+    "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S16 (and therefore for S12's underlying finding): the RESTATED remedy is PERFORMED. CARD_SUBJECT_PIN.md @a4f61daeb0 pins ANDREW_CARD.md's subject to run 20260918T011619Z-8db9eb1 and contract content hash 33204e29839de89af81fb293317cce3ccdf2266d, NAMES ITS INSTRUMENT (git hash-object, the manifest's own), and carries a NEGATIVE CONTROL over the other candidate run that returns a different hash -- so the pin discriminates between exactly the two runs S12 said a reader could not tell apart. Filed one commit after S16 said it was NOT YET DONE, because a row left ARMED with a reason its owner CAN act on is a debt, not a hazard.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RECORD: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/CARD_SUBJECT_PIN.md @a4f61daeb0 -- committed BEFORE this row was written, never PENDING-THIS-COMMIT.",
+        "VERIFIED under the manifest's own instrument rather than restated: `git hash-object workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json` returns 33204e29839de89af81fb293317cce3ccdf2266d, equal to HASHES.json's claim for that file, whose own `instrument` field reads 'git hash-object'.",
+        "NEGATIVE CONTROL, run deliberately: the same instrument over run 20260918T002711Z-caf0983's contract.json -- the 180-tension run, the only other candidate -- returns 3ffedfed35c05a1820d594c85c2b416c0441aa0f.",
+        "THE POPULATION, printed: 5 run directories under the subject, 4 carrying 179 tensions and 1 carrying 180, and EXACTLY ONE carrying an R-40 HASHES.json -- which is what makes 'the graded run' a measurement rather than a position.",
+        "AND THE MISTAKE WORTH RECORDING BECAUSE IT NEARLY BECAME A CORRECTION OF A CORRECT NUMBER: a plain sha1 of the SAME contract.json reads 9c5cdb873f00a599bb00166831a91646fea97990, and this seat computed that FIRST and briefly read it as a mismatch against a hash it had already published in row S16 and in two messages. IT WAS NOT A MISMATCH; IT WAS TWO INSTRUMENTS -- git prefixes `blob <len>` and a NUL byte before hashing. A hash without its instrument is a number two readers can disagree about while both being right.",
+        "NOT CLAIMED: that Andrew has read the card, the correction or this pin. S12's consequence clause was that an answer recorded against an unidentified subject is hard to re-bind later; what is measured here is that the subject is now identified by content hash in the record. FWD-4 still grades on his answer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S16's own restated reason: 'the run id and the contract's content hash delivered in this seat's own record BESIDE the card', recorded there as NOT yet done. And R-40: a criterion whose subject is a RUN or a PRODUCED ARTIFACT binds to that artifact's CONTENT HASH.",
+    "world_is": "CARD_SUBJECT_PIN.md exists at a4f61daeb0 and carries the run id, the contract content hash, the instrument that produced it, a negative control that separates the two candidate runs, the five-run population with its one-of-five manifest count, and S6's corrected claim stated as 1 of 179 with its denominator. ANDREW_CARD.md itself is UNCHANGED, which is the condition S6 set and which clause 4 would have refused in any case.",
+    "notes": "S12 and S16 stay 3.0.0_SA_CVO's to dispose; this row carries no `adjudicates` and disarms nothing by existing. WHAT IS STILL TRUE: the CARD's own bytes still name no run, and that cannot be changed by this seat -- owned-paths clause 4 refuses an issuer's edit inside a worker's deliverables folder. So the honest state is not 'the card is pinned' but 'the card's subject is pinned in the record that travels with it', and the durable fix is a CELL whose <paths> names the card, in whatever round next touches it. COST of this remedy: one record, one verification and one negative control. NON-APPLICATION: an artifact the acting seat's own grant covers -- there the line goes in the artifact and no second record is needed."
   }
 ]
 ```
