@@ -424,3 +424,35 @@ Closing count: carrier-less **0 of 1**.
  "disarm_owner": "2.0.0_SA_COO~G on W1-S21, as the row names; W1-S22's clock closes with this write on that seat's own corrective act"
 }
 ```
+
+## Out-of-round disposition -- S24 (0 open orders, no carrier)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S11",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T13:20Z",
+ "one_line": "S24 DISMISSED, AND IT IS RIGHT ON EVERY LIMB -- I verified it at the PRD's own bytes and the decisive evidence is a NEGATIVE with a denominator: `C6` occurs ZERO times in 397 lines of the PRD. The register's stated mechanism for FWD-6 is FALSE; the VERDICT (UNREACHABLE) is unchanged; and the corrected mechanism points at ADVI_FIRMBKTS, which is the same project R-75 names as the only queued one that unblocks D14.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "DISPOSED OUTSIDE A ROUND DELIBERATELY: LGIC_LGCTFM reads 0 open orders and this was its only undispositioned row, so it had NO CARRIER and would have decayed until some future round had a reason to look -- the exact condition this seat's own tick checks for. VERIFIED AT THE BYTES BEFORE ACCEPTING, because 2.0.0_SA_COO~G's row corrects that seat's OWN project register and a correcting seat gets the least scrutiny exactly when it has earned some. FWD-6's ACCEPT at PRD :119-120 reads 'the 49 Financial migration's decomposition starts from the run's plan instead of rebuilding the inventory from scratch' -- S24 quotes it correctly. The PLAN row at :177 names its consumer verbatim: 'consumed by the subject's migration project at L5 (`ADVI_FIRMBKTS` first)' -- also correct. AND THE DECISIVE ONE IS THE NEGATIVE, WITH ITS DENOMINATOR: the token `C6` occurs ZERO TIMES across all 397 lines of LGIC_LGCTFM_PRD.md, and while `LGIC_CANON` occurs on 4 lines, none of them is in FWD-6's region (:116-120). So the register's claim that FWD-6 'closes when a real migration's decomposition is cut from the plan -- WHICH IS LGIC_CANON's C6 PRACTICE WAVE' has no basis in the PRD at all, and under R-51 DONE resolves on the PRD's outcome array rather than on a register's gloss of it. S24's own discriminator is the stronger argument and it is empirical rather than textual: C6 ALREADY RAN at LGIC_CANON round 4 -- this seat graded C6R4-AC8 PASS itself, reached 12 + carded 4 -- AND FWD-6 DID NOT MOVE. If the register's mechanism were right, FWD-6 would have closed then. A stated mechanism that has already been exercised without producing its stated effect is falsified by its own best case. WHAT THIS CHANGES AND WHAT IT DOES NOT: the VERDICT does not move -- FWD-6 remains UNREACHABLE by any act of this fabric, exactly as R-75 classified it, so nothing about D14's stop-condition loosens. What moves is the ROUTE, and it matters: FWD-6 terminates at ADVI_FIRMBKTS, not at a sibling project's practice wave. R-75 measured that LGIC_CANON's FWD-5 also terminates at ADVI_FIRMBKTS (carded steps 10 and 16) and that ADVI_FIRMBKTS sits THIRD in the next-COO-slot queue while being the only one of the four that unblocks anything in D14. THIS ROW ADDS A SECOND, INDEPENDENT ROUTE TO THAT SAME CONCLUSION, reached from a different project's PRD by a different seat. Two of D14's four members now demonstrably bar on one unseated project, and one of the two was barring on it through a mechanism nobody had stated correctly until now -- which means the dependency was real while the written reason for it was wrong, and a reader trusting the register would have looked to LGIC_CANON to unblock it. That strengthens R-75's card 6 rather than changing it, and card 6 is Andrew's to answer; I am recording evidence, not re-ordering a sequence.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S24 -- 2.0.0_SA_COO~G's row, read in full",
+   "VERIFIED BY THIS SEAT at the bytes: org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md :119-120 (FWD-6 ACCEPT) and :177 (the PLAN row naming ADVI_FIRMBKTS as L5 consumer)",
+   "VERIFIED BY THIS SEAT, denominator printed: `C6` occurs 0 times across 397 lines of that PRD; `LGIC_CANON` occurs on 4 lines, none in :116-120",
+   "This seat's own LGIC_CANON round-4 L9: C6R4-AC8 graded PASS, reached 12 + carded 4 == 16 of 16 -- C6 ran and FWD-6 did not move",
+   "R-75 @f28bf76f81: LGIC_CANON and LGIC_LGCTFM both classified UNREACHABLE; ADVI_FIRMBKTS third in the next-COO-slot queue and the only one of four that unblocks D14"
+  ]
+ },
+ "adjudicates": [
+  "LGIC_LGCTFM-S24"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "dismissal_reason": "An INERT evidence row carrying no `adjudicates` of its own, correcting a register's stated mechanism. Verified correct at the PRD's bytes on every limb, including a negative with its denominator. No residue is owed inside this project's engine -- the verdict it examines does not move -- and its substance is carried into the D14 stop-condition record as a second independent route to ADVI_FIRMBKTS."
+}
+```
