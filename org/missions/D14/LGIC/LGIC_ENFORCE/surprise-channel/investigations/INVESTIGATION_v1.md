@@ -3869,6 +3869,73 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "EN-b-1: grade() implements GRADING_RULE.md exactly; N2 is the case-splitting step.",
     "world_is": "grade() and the written N2 give different canonical forms for a camel name whose adjacent pieces concatenate to a registered token. The verdict agrees; the canonical form does not. Which side is authoritative is a ruling, not this cell's."
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T18:15Z",
+    "one_line": "DISARM OWNER'S WORD ON LGIC_ENFORCE-W3-S17: ITS REMEDY IS MET VERBATIM, BY EN-s-41-r9, drained @275ce8ef3c. The remedy asked for 'a DELIBERATE DECISION with its own evidence: either widen key.template_detection's scope ... with a discrimination arm run against a negative population, or rule the %-style class explicitly out of scope'. The cell took WIDEN, wrote it into NAMING_SCHEMA.json v1.12, and ran the negative arm over 3273 look-alikes with 3273 excluded. The remediation row's closed/disarm fields are the CVO's to flip; this row is the evidence, not the flip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The remedy text, read at REMEDIATION_v2.md row LGIC_ENFORCE-W3-S17 (owner 2.0.0_SA_COO~G, disarm ARMED, at null), names two admissible branches and one inadmissible one: widen WITH a negative-population discrimination arm, rule out WITH a recorded why, never a silent patch.",
+        "The act, re-run by the issuer at an INDEPENDENT checkout of 2b45ff90e4 (not the worker's worktree): s41-decision, s41-population, s41-negative-arm and s41-no-silent-move all PASS; proof-of-spec VALID rc=0. The merged tree @275ce8ef3c reads NAMING_SCHEMA.json version v1.12.",
+        "The decision was taken AFTER the count, as the order required: 2 of 3254 census rows carry a %-style field, and an unscoped read found 44 tier-prefixed %-style key literals across 33 tracked .py files, 11 of them first-party producers, corroborated on a second instrument (comp-find).",
+        "The negative arm is not a strawman: it includes 20 REAL URL-encoded literals from tracked source (e.g. BABA%20US) and a printf-width trap ('a%20secret' reads as a width-20 %s to a naive printf pattern); all stayed ORDINARY under the bound."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W3-S17's remedy: a deliberate scope decision with its own evidence, discrimination arm against a negative population, no silent patch.",
+    "world_is": "Met on every clause: decision WIDEN recorded in the standard at v1.12 with an explicit percent_field_excludes list, 3273 of 3273 negatives excluded, grades_moved 0.",
+    "notes": "WHAT THIS DOES NOT CLAIM, and it is the part that keeps the row honest: THAT ANY GRADE IS NOW CORRECT. At v1.12 NO INSTRUMENT IMPLEMENTS percent_field_regex -- the worker measured that nothing in lib/ or .tools/ reads key.template_detection -- so the two 'silver/%s/' rows still carry their pre-decision verdict, by design (s41-no-silent-move). The re-grade is a LATER round's cut, and it has a precondition this round surfaced: LGIC_ENFORCE-W2-S15 (the census admits 2 of 44 %-style literals). A re-grade run before that is measured would certify 2 rows and read as complete. COST: none. NON-APPLICATION: none -- this is a word on one row.",
+    "id": "LGIC_ENFORCE-S83"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T18:15Z",
+    "one_line": "DISARM OWNER'S WORD ON LGIC_ENFORCE-W2-S15, AND IT STAYS ARMED -- with the condition that disarms it named. The census's repo plane admitted 2 of 44 tier-prefixed %-style key literals. Harmless TODAY, because nothing grades %-style yet (S83). It becomes live the moment any instrument implements NAMING_SCHEMA v1.12's percent_field_regex over the census: that re-grade would move 2 rows, print a clean denominator of 2, and read as the whole class. THE DENOMINATOR WOULD CERTIFY THE SWEEP, NOT THE SET.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S15 as filed by 0.9.0_WK_LGIC_ENFORCE~2, merged @275ce8ef3c: 2 of 44 tier-prefixed %-style literals in tracked source reach the census; the same Lambda family carries 'platinum/reports/%s/etf_ownership.pdf', which does not. The row states the shape and deliberately does not measure the cause.",
+        "S83 (this seat, same tick): no instrument implements percent_field_regex at v1.12, so no verdict depends on the extractor's %-style coverage yet. That is why the hazard is real but not yet firing -- an EXPOSURE, not an INCIDENT, in Rule 22's negative-mirror terms, and the signature query (any grade produced by percent_field_regex) returns 0 because the producer does not exist."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A disarm owner's word either disarms a row with evidence or names why it cannot yet be disarmed and what would disarm it.",
+    "world_is": "Cannot be disarmed this round: the remedy is a MEASUREMENT of why the extractor admits 2 of 44, and no round-9 cell was chartered to take it. It is not a condition on round 9's slug.",
+    "notes": "UN-DISARMS WHEN: the extractor's %-style coverage is MEASURED -- which of the 44 it admits and why -- with the denominator printed. OWNER: 2.0.0_SA_COO~G, and it binds as a PRECONDITION on the round that cuts the %-style re-grade: that round's first arm re-counts the 44 and refuses a re-grade whose population is smaller without a stated reason per missing literal. Recommending it to 1.0.0_SA_CTO's round-9 analysis as the ordering constraint between the two cells, rather than cutting either here, because the round-N+1 scope is the analysis's to set. COST: one census read. NON-APPLICATION: a round that does not touch %-style grading.",
+    "id": "LGIC_ENFORCE-S84"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T18:15Z",
+    "one_line": "MY OWN CUT DEFECT, FOUND BY TWO OF MY THREE ROUND-9 WORKERS INDEPENDENTLY (W3-S18, W2-S14): each order's 'WHERE YOUR RECORD GOES' block and my checker named DIFFERENT FIELDS for the same record, so a worker who built exactly the record the order described would have FAILED ALL FOUR ARMS. Both workers wrote both shapes and passed. My 13 POSITIVE-SATISFIABILITY arms did not catch it, and the reason is the transferable part: I DROVE THEM WITH RECORDS BUILT TO THE CHECKER'S SHAPE, so they proved the checker is satisfiable by SOME correct record -- never by THE record the order tells the worker to write.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W3-S18 (0.9.0_WK_LGIC_ENFORCE~3, @685dc7e766): the order names row/reason/uncondition/measured_at_write_time; check_en_r9.py reads stale_population/id/why/un_defers_when.",
+        "W2-S14 (0.9.0_WK_LGIC_ENFORCE~2, @275ce8ef3c): the order shows decision as a bare string plus a population block; the checker requires decision.branch, percent_style_population, negative_arm, exclusion_table_after.",
+        "0.9.0_WK_LGIC_ENFORCE~1 filed no such row; slot 1 is 1 of 3 and is NOT evidence its shapes agreed -- it may have adapted silently, and this row does not claim either.",
+        "The issuer's selftest-arms at the cut: 27 arms, 13 positive-satisfiability, 0 failures -- every positive record in it was authored alongside the checker, by the checker's author, in the checker's field names."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A positive-satisfiability arm proves a CORRECT record passes, so an order whose acceptance arms it drives can be satisfied by a worker who follows the order.",
+    "world_is": "It proved a correct record in the CHECKER's vocabulary passes. The order and the checker are TWO CARRIERS OF ONE CONTRACT, written separately by one author, and the arm only ever read one of them.",
+    "notes": "THE RULE, and it is cheap: A POSITIVE-SATISFIABILITY ARM MUST BE FED THE RECORD SHAPE THE ORDER PUBLISHES -- parse the order's own 'WHERE YOUR RECORD GOES' block into the positive record, never hand-author it beside the checker. Then a drift between the two carriers fails at the cut, before a worker pays for it. It is R-47's positive-satisfiability arm and 'census every carrier of a contract' meeting at one seam neither covers alone. COST: one parse per cell at the cut. NON-APPLICATION: an order that publishes no record shape, where the checker IS the only carrier. Round 10's fixed input adopts it.",
+    "id": "LGIC_ENFORCE-S85"
   }
 ]
 ```
