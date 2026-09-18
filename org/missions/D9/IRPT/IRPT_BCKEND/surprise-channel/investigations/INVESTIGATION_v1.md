@@ -5320,6 +5320,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "lambda-source-map.json's irpt-holdings entry: files[] names served.py and loaders.py as packaged members of source_dir infra/aws/lambda/investor-reporting/holdings.",
     "world_is": "Both files are served in production and neither exists in the repository at any commit for that path. This cell's OWN deploy (irpt-holdings, this order) could only proceed by extracting both, unchanged, from the currently-deployed zip and placing them in the worktree FOR THE DURATION OF THE BUILD ONLY -- removed again immediately after, and never committed, because materializing them permanently is a holdings/-scoped code change this order's bound does not authorize. The fix (mint them properly in-tree, or determine loaders.py is meant to diverge and document why) is the next cell to touch this directory's to take.",
     "notes": "Not this cell's to fix, per bound (\"The two enforce.py files and their tests are the ONLY code touched\"). Filed rather than repaired, per the surprise-channel bound (a capability I lack: I cannot commit new tracked source files outside my declared scope even to close a gap I needed to work around). The workaround (extract-build-remove) is recorded in this order's own deploy-ledger proof rows rather than left silent."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T15:55:00Z",
+    "one_line": "CONDITION (3)'s literal wording ('the UNTARGETED root plan reads 0 to add / 0 to change / 0 to destroy') assumes terraform prints a 'Plan:' summary line; when the ONLY thing stale after a -target apply is a derived OUTPUT value (not a resource), terraform prints NO 'Plan:' line at all (0 resource actions -- no add/change/destroy block for any resource) but still emits a 'Changes to Outputs:' section, and -detailed-exitcode reads 2 (changes present), not 0. On this act, post-apply, the untargeted plan showed ZERO resource actions (aws_s3_object.mdpf_route_bindings itself did NOT reappear in the diff) and ONE stale output (mdpf_route_bindings_sha256, still c9e54ce2... in state because a -target apply/plan does not recompute outputs -- exactly what terraform's own apply-time warning predicted: 'output values may not be fully updated'). This is a state-bookkeeping artifact of the targeted apply, not a second drifted resource, and applying anything further (even untargeted) to clear it would violate this order's BOUNDS ('nothing else on that root is applied').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this commit: post-apply untargeted `terraform plan -input=false -no-color` on infra/aws/terraform/mdpf-pipeline (LF-materialized source, matching the act's own sourcing) prints NO 'Plan: N to add, N to change, N to destroy' line and NO '~ resource \"aws_s3_object\" \"mdpf_route_bindings\"' block -- only 'Changes to Outputs: ~ mdpf_route_bindings_sha256 = \"c9e54ce2...\" -> \"98f5e9c5...\"' followed by 'You can apply this plan to save these new output values to the Terraform state, without changing any real infrastructure.'",
+        "the same plan re-run with `-detailed-exitcode`: rc=2 (Terraform's own contract: 0=no changes, 1=error, 2=changes present) -- so a literal rc-based or 'Plan:' substring check would read this as non-zero even though 0 resources are scheduled to change",
+        "the targeted apply's own stdout, this run (.scratch/tf_apply4.txt, not committed -- scratch): 'Warning: Applied changes may be incomplete ... some changes requested in the configuration may have been ignored and the output values may not be fully updated. Run the following command to verify that no other changes are pending: terraform plan' -- the tool foretold exactly this output staleness at apply time",
+        "head-object on the served key post-apply reads content-sha256=98f5e9c51d016d5283562e525b53088292576d86752c6cf0449865fbf328d923 (the committed hash) -- the RESOURCE itself is converged; only the root's cached OUTPUT value in state lags"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtd-5 (b) and both never-widen halves, verbatim shape: 'the post-apply UNTARGETED plan reads 0 to add, 0 to change, 0 to destroy on the root ... a non-zero untargeted plan means that measurement was wrong and S68 STAYS ARMED.'",
+    "world_is": "The root's RESOURCES read 0 to add / 0 to change / 0 to destroy (no 'Plan:' line at all, because Terraform omits it when nothing resource-level differs); the root's OUTPUTS read non-zero via -detailed-exitcode because -target skips output recomputation, exactly as Terraform's own apply-time warning said it would. Read strictly by resource-level convergence (what S68 is about -- the SERVED OBJECT'S content), the root IS converged. Read by a literal rc/'Plan:' grep with no resource-vs-output distinction, this act would misfire ARMED on a state-bookkeeping artifact that carries zero infrastructure meaning and that this order's own BOUNDS forbid clearing by any further apply on this root.",
+    "notes": "Not this cell's to fix further: the BOUNDS forbid applying anything beyond the one targeted resource, so the output-staleness resolves itself (with zero infra effect) the next time ANY untargeted plan/apply touches this root for an unrelated reason. Routed for R45-AC2's judgment (whether S68 reads fully closed or the CVO wants the distinction made explicit in the sign-off language for future never-widen packets using -target)."
   }
 ]
 ```
