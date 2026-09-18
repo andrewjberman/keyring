@@ -59,9 +59,153 @@
   "untypeable": {
    "$ref": "#/$defs/cell",
    "description": "R-36: the COUNT of nodes this run met whose node_type the naming schema does not grade. Such a node is NOT written into rows -- the enum's equality with NAMING_SCHEMA.json by subtraction is what lets this contract say a type is ungraded (Rule 24(i)) -- and is NOT discarded: it is carried in the run's own PLANT_UNTYPEABLE.json with verdict NOT_COVERED. The count is REQUIRED so that an empty carrier cannot be read as 'the walk met none': a printed zero is a measurement, an absent one is silence."
+  },
+  "coverage": {
+   "$ref": "#/$defs/coverage"
   }
  },
+ "allOf": [
+  {
+   "description": "LT-e-5 (round 3, R-79): schema_version 1.1 REQUIRES the coverage block. A 1.0 contract -- every run written before round 3, frozen history under R-43 -- is graded exactly as it was: the block is neither required of it nor admitted on it, so no frozen run changes verdict and no 1.1 run can drop its coverage by claiming the old version.",
+   "if": {
+    "properties": {
+     "schema_version": {
+      "const": "1.1"
+     }
+    },
+    "required": [
+     "schema_version"
+    ]
+   },
+   "then": {
+    "required": [
+     "coverage"
+    ]
+   },
+   "else": {
+    "not": {
+     "required": [
+      "coverage"
+     ]
+    }
+   }
+  }
+ ],
  "$defs": {
+  "coverage": {
+   "description": "LT-e-5 (round 3): what the run's 'involved' instrument reached, per node_type, against a token FLOOR re-measurable by a different instrument. The one carrier of this shape is org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/R3_BASE.json coverage_block_shape; the definition of 'involved' is written in `instrument` and in infra/logic/10_LEGACY_TRANSFORM.md s.9. Arithmetic the schema cannot express and the round-3 checker grades: per node_type involved == rows + len(not_covered); `rows` counts contract rows of that type whose node is involved; `excluded` holds FLOOR nodes judged NOT involved; a NAMED class (LAMBDA, EC2_INSTANCE, EVENT_RULE, SCHEDULE, DYNAMODB_TABLE, IAM_ROLE, S3_BUCKET) carries neither an exclusion nor a not_covered entry.",
+   "type": "object",
+   "required": [
+    "instrument",
+    "legs",
+    "vintage",
+    "token_floor",
+    "by_node_type"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "instrument": {
+     "type": "string",
+     "minLength": 1,
+     "description": "the run's definition of 'involved', in words"
+    },
+    "legs": {
+     "type": "array",
+     "minItems": 1,
+     "uniqueItems": true,
+     "items": {
+      "enum": [
+       "token",
+       "trigger_target",
+       "iam_grant",
+       "source_text"
+      ]
+     }
+    },
+    "vintage": {
+     "type": "string",
+     "minLength": 1,
+     "description": "the graph's own 'Built from the estate as of ...' line"
+    },
+    "token_floor": {
+     "type": "object",
+     "required": [
+      "pattern",
+      "hits",
+      "scanned"
+     ],
+     "additionalProperties": false,
+     "properties": {
+      "pattern": {
+       "type": "string",
+       "minLength": 1
+      },
+      "hits": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "scanned": {
+       "type": "integer",
+       "minimum": 1
+      }
+     }
+    },
+    "by_node_type": {
+     "type": "object",
+     "description": "keyed by node_type; deliberately NOT bound to $defs.node_type: an involved node of a type outside that enum is exactly what a not_covered entry must be able to name",
+     "additionalProperties": {
+      "type": "object",
+      "required": [
+       "involved",
+       "rows",
+       "excluded",
+       "not_covered"
+      ],
+      "additionalProperties": false,
+      "properties": {
+       "involved": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "rows": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "excluded": {
+        "type": "array",
+        "items": {
+         "$ref": "#/$defs/coverage_entry"
+        }
+       },
+       "not_covered": {
+        "type": "array",
+        "items": {
+         "$ref": "#/$defs/coverage_entry"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "coverage_entry": {
+   "type": "object",
+   "required": [
+    "name",
+    "reason"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "name": {
+     "type": "string",
+     "minLength": 1
+    },
+    "reason": {
+     "type": "string",
+     "minLength": 1
+    }
+   }
+  },
   "cell": {
    "description": "One fact-slot: {value, status, evidence}, no bare values (ATOM_DECOMP Rule 14's rectangle; ssot_establishment.schema.json $defs.cell, adopted -- record s.3, s.6). evidence's minimum-viable form here is {instrument, blind_spot} at least (record s.3: 'evidence = {instrument, locator, vintage, denominator}, its minimum-viable form'; blind_spot is this contract's own addition, carried on every planted cell).",
    "type": "object",
