@@ -5225,6 +5225,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "S71's key-count comparison (391 vs 295 keys walked) is unaffected, since it parsed the JSON. The rendering in (2) applies to this mint only. A later mint from a default autocrlf worktree packs the member CRLF again, until the packer reads the blob (S63, the guard owner's). The other two JSON members are left exactly as every mint packs them."
+  },
+  {
+    "id": "IRPT_BCKEND-S76",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T12:45:00Z",
+    "one_line": "ENABLING irpt-holdings-snapshot WOULD NOT RUN THE BUNDLED HOLDINGS RUNNER, so S71 does not arm 'the moment anyone enables it'. The schedule's target is the SQS queue irpt-generation, with the input 'REGISTERED SLOT, DISABLED -- not a live trigger; no compute target deployed'. That queue has 0 event-source mappings, so an enable today enqueues a message nothing consumes. The trigger test guards a NECESSARY condition, ENABLED with a member missing. A second precondition, a compute target that dispatches the bundled runner, does not exist yet and is not what the test reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtd-3 THE CELL: 'The irpt-holdings-snapshot schedule is DISABLED, so no fire reaches it today -- and it ARMS the moment anyone enables it.'",
+    "world_is": "scheduler get-schedule irpt-holdings-snapshot (12:4xZ): State DISABLED, cron(30 12 ? * MON-FRI *) UTC, Target Arn arn:aws:sqs:us-east-1:313476888478:irpt-generation, Input kind irpt_holdings_snapshot_trigger_slot. lambda list-event-source-mappings --event-source-arn on that queue: 0. sqs get-queue-attributes: 0 visible and 0 in-flight messages. The declaration states the same: infra/aws/terraform/investor-reporting/directory/schedule.tf:6-13 @fb4dcbc8ac ('It is NOT wired to a live compute target ... nothing currently consumes that message'), :71 @fb4dcbc8ac (state DISABLED), :79-83 @fb4dcbc8ac (target is the generation queue).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws scheduler get-schedule --name irpt-holdings-snapshot: Target.Arn = the irpt-generation queue",
+        "aws lambda list-event-source-mappings --event-source-arn arn:aws:sqs:us-east-1:313476888478:irpt-generation: 0 mappings",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf:6-13,:71,:79-83 @fb4dcbc8ac"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Nothing is broken: the slot is DISABLED and says it is unwired. The guard this cell built is still right for its condition. S71 would arm only if BOTH the schedule is enabled AND a compute target is wired to run the bundled runner. The trigger test reads the first; the second is recorded for R43-AC2 and is not this cell's to build."
   }
 ]
 ```
