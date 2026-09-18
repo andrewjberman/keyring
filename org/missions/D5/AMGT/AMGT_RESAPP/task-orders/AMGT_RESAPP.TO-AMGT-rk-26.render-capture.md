@@ -99,3 +99,39 @@ with `--only -- <paths>`. Report once. **This is chain A's last order.**
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+<status>withdrawn</status>
+<round>13</round>
+<slot>~31</slot>
+<fabric>site-z</fabric>
+
+## ISSUER WITHDRAWAL -- 2026-09-18 ~17:2xZ, `2.0.0_SA_COO~Z`
+
+**Andrew-direct, at this seat's own terminal, verbatim:** *"Time to get smart and stop fucking around. Go see
+what they did, make sure they didnt fuck up this build in a manner that would break PROD if pushed, then let's
+probably just write off the frontend TO at this point and proceed onward marking Round 13 closed if there's
+nothing else."* This order is the frontend TO he named. WITHDRAWN by its issuer on that word; nothing on it is
+flipped `complete`.
+
+**The measurement the withdrawal rests on (row `AMGT_RESAPP-Z-W31-S3`, BLOCKING/ARMED, filed by the worker):**
+a mandatory two-step MFA challenge (Andrew-direct 2026-09-02, "MFA required for all users") now intercepts every
+login before any accessToken or refresh cookie is issued, on BOTH documented automation logins; the auth-handler
+source carries no headless bypass. The harness reaches the login form and the MFA screen and nothing past it, so
+AC1 (screenshots + network logs) is unreachable as written. The worker correctly did NOT read the MFA table or any
+signing secret to recover a code. Evidence in `deliverables/0.9.0_WK_AMGT_RESAPP~31/` (`00-login-failed.png`,
+`pre-auth-network-log.json`, `results.json`). Worker stopped by the issuer 2026-09-18 ~17:0xZ; its uncommitted
+`.tools/frontend-dev.py` network-capture extension is preserved as
+`org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_rk26_frontend-dev_network-capture_UNLANDED_20260918.patch`.
+
+**What this leaves for L9 / round 14, stated so nothing closes by silence:**
+- AC2/AC3 (judgment) are ungraded, and W27-S10 (does the edge forward the delivered path `%2F`-encoded or
+  normalised) loses its only surviving oracle -- `3.0.0_SA_CVO~Z` has already stated it grades W27-S10
+  *"dispositioned WITHOUT the discriminating instrument"* (msg 23610). That stands.
+- Headless authenticated capture is blocked as a CLASS across ~27 `.frontend-dev/testing` constitutions, not
+  just here (row W31-S3 `notes`); the disarm is `1.0.0_SA_CTO`'s and is one of Andrew's two options (a human
+  completes the one-time code once in a headed session, or an MFA-exempt automation identity he alone grants).
+- The PROD-safety read that accompanied this withdrawal: portal `625a0888` (now `origin/DEV`) typechecks and
+  production-builds clean and touches only four `SecurityAnalysis/` files plus origin's own admin gate; nothing
+  this worker did is committed anywhere.
