@@ -158,8 +158,18 @@ Each finding is measured, and several are found by more than one seat.
     no branch of origin (tick 64). This seat's verdict was push DEV and hold PROD. The PROD promote needs a
     co-signed pair that does not exist.
 11. **W32-S2: the vendor call Andrew authorized at CARD 5 enriched zero of the seven new names,** because
-    `domains.json` declares only the original five. rk-22 still reads AC1/AC2 PASS. Before grading, read the
-    criterion text to see whether it tests enrichment at all.
+    `domains.json` declares only the original five. rk-22 still reads AC1/AC2 PASS.
+    **RESOLVED 16:3xZ -- the criteria do not test enrichment.** Read from the order at HEAD:
+    - AC1 expects both counts to rise toward the fixable ceiling, with every non-measured name carrying a
+      source-lacks or pull-missed reason and never a silent skip. The instance shows management 14 objects
+      (12 of 12 filing-ceiling names) against a before-count of 6, and posture 33 of 33.
+    - AC2 expects a two-value classification on a sampled absent document.
+    - The order text never names the vendor service or `domains.json`.
+
+    So both PASSes stand against the criterion text. The gap is between the AUTHORIZATION and its effect: a
+    vendor spend was approved, and for the added names it did nothing, because of one config list. That makes
+    it a remediation item for the producer's domain list, graduated with the row, and **not** a criterion
+    FAIL. Grading it as a FAIL would grade the order against text it never carried.
 
 ## 6. This seat's own corrections tonight
 
