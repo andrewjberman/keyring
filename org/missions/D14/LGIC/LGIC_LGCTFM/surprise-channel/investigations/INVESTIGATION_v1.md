@@ -313,3 +313,85 @@ PRD, so it is a row here, not a message.
   }
 ]
 ```
+
+## Round 1 -- three findings of the CVO's own L9 read
+
+```json
+{
+ "id": "LGIC_LGCTFM-S10",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T02:05Z",
+ "one_line": "TWO OF LT-x-1's OWN ARMS ARE BRANCH-RELATIVE AND READ FALSE FAIL FOR ANY SEAT THAT RE-RUNS THEM OFF THE WORKER'S CHECKOUT. x1-r16 and x1-footprint measure a branch against its own merge base, so on the shared tree they print FAIL with 'paths changed on this branch: 0' and 'commits touching the three registries: 0' -- artifacts of WHERE they ran, not findings.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO at HEAD on the shared checkout: check_lt_r1.py x1-r16 -> FAIL-X1-MARK-COMMIT-PRINTS-TARGETS, 'commits touching the three registries: 0'; x1-footprint -> FAIL-X1-REPO-FOOTPRINT-BOUNDED, 'base 43ed12c300; paths changed on this branch: 0'.",
+   "MEASURED, the control: the other twelve x1/v1/x2 arms re-run at HEAD reproduce the instance's own verdicts exactly, so the two failures are not a broken checker or a wrong tree.",
+   "The instance's recorded values for the same two arms: PASS at base 8db9eb1bd9, paths changed 14, registry-touching commits 1.",
+   "This is the INVERSE of the known trap that an issuer re-running a cell inside the worker's own worktree is repetition rather than corroboration: here the arm can ONLY be made to pass in the place that makes it repetition."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The spine's L9: a judgment criterion is graded by the CVO against the cell's evidence, and the CVO re-derives rather than restating -- which requires the arms to be re-runnable somewhere other than the branch that produced them.",
+ "world_is": "The instance records both PASS at base 8db9eb1bd9 with 'paths changed: 14' and 'commits touching the three registries: 1'. Re-run at HEAD on the shared checkout they print FAIL-X1-REPO-FOOTPRINT-BOUNDED (base 43ed12c300, paths changed 0) and FAIL-X1-MARK-COMMIT-PRINTS-TARGETS (0 commits). Both verdicts are true of the shared tree and say nothing about the cell. The other twelve x1/v1/x2 arms reproduce identically off-branch, so the defect is these two and not the checker.",
+ "notes": "NOT a mark against LT-x-1: the arms are correct about their subject on the branch they were built for, and the cell's other evidence is independently re-derivable. What is owed is that an arm whose verdict depends on the checkout prints that dependence -- or resolves its base from the run's own recorded base rather than from the ambient branch -- so a grader can tell a finding from a location. disarm_owner 2.0.0_SA_COO~G as the checker's author."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S11",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T02:05Z",
+ "one_line": "THREE NUMBERS IN THIS ROUND'S JUDGMENT RECORDS NAME NO RUN, AND TWO OF THEM DISAGREE WITH EACH OTHER. P1R1-AC6 cites plan.json's 1626 packages; X1R1-AC6 cites 'its atomic package plan (1074 packages)'. E3R1-AC6 grades 271 tensions and 1084 factor cells, and the contract at HEAD carries 179 tensions -- that population no longer exists anywhere.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO: P1R1-AC6's evidence names 1626 packages; X1R1-AC6's names 1074; neither sentence carries a run id.",
+   "MEASURED: E3R1-AC6's evidence reads 'every one of the 271 tensions' and '1084 of 1084'; contract.json at the graded run 20260918T011619Z-8db9eb1 carries 179 tensions, and so does every other run directory under the subject except 20260918T002711Z-caf0983, which carries 180.",
+   "NOT A DEFECT IN THE GRADES: all three cells' reasoning is checkable at their own vintages, and this seat graded each on that basis. The defect is that the numbers are unpinned, which is exactly what R-40 was issued to stop."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "R-40's bar, issued this same evening: any criterion whose subject is a RUN or a PRODUCED ARTIFACT records that artifact's CONTENT HASH beside the run id and is graded against it.",
+ "world_is": "Each number was true of the run its cell read. None of the three sentences carries a run id, so none resolves against any current artifact, and the two package counts cannot both be true of one plan. E3's case is the sharpest: its judgment is SOUND AT ITS OWN VINTAGE (it ran before LT-e-4 made the untypeable plant opt-in, which is what moved the population) and is unreproducible now, so a later reader can neither confirm nor refute it.",
+ "notes": "Filed as ONE row because the class is the finding, not the three instances. R-40 binds prospectively and this is its first measured population inside this project; the remedy is a run id (and, per R-40, a content hash) beside any number a judgment record cites. This is the same class as IRPT_BCKEND-S56 and LGIC_ENFORCE-S61 filed by this seat tonight in two other projects."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S12",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T02:05Z",
+ "one_line": "ANDREW_CARD.md NAMES NO RUN AT ALL. A regex for a run id over the card returns ZERO matches: it identifies its own subject only as 'graph built 2026-09-17 18:16 UTC'. The card is with Andrew now, and the one thing pinning it away from a DIFFERENT run in the same subject directory is that its order happens to be 179 rows long.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO: a search for the run-id shape over ANDREW_CARD.md returns 0 matches; its only self-identification is a build timestamp.",
+   "MEASURED across all five run directories under workflows/legacy_transform/blackdiamond-49financial/, reading factor values at their nested path factors.<name>.value: four runs carry 179 tensions with client_facing 1 / live 1 / irreversible 0; 20260918T002711Z-caf0983 carries 180 with live 2.",
+   "MEASURED, the wrong-reader control run deliberately: reading the same factors at the TOP level of each tension returns 0 for client_facing and 0 for live on EVERY run -- a confident zero that would contradict the card entirely.",
+   "The card's table and its analysis sentence are both correct; row LGIC_LGCTFM-S6 carries the separate defect in its RECOMMENDATION line."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "R-40: a criterion whose subject is a RUN or a PRODUCED ARTIFACT records that artifact's content hash beside the run id, so a later commit that replaces the directory FAILS rather than silently satisfying it.",
+ "world_is": "Five run directories exist under the subject. Four carry 179 tensions and one carries 180, and the 180-tension run reads live == 2 where the others read live == 1. The card ranks a 179-row order, so it is not that run -- but nothing IN the card says so. A reader cannot tell from the card which artifact it ranks, and under R-40 that is precisely a subject named by a label something else could satisfy.",
+ "notes": "The remedy is one line in the card naming the run id and its contract's content hash. It matters more than usual because the artifact is in a decision-maker's hands right now and because FWD-4 will be graded against his answer to it -- an answer recorded against an unidentified subject is hard to re-bind later. Not urgent enough to interrupt his read: the card's substance is sound and this seat is not asking for it to be withdrawn."
+}
+```
