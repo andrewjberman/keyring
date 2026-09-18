@@ -4781,6 +4781,93 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO IB-rtc-4 arm (a): build the deployment zip 'exactly as its Terraform root builds it' and compare CodeSha256; row W4-S28's disarm_owner: the fix 'reaches a running function only at the irpt-ycharts-generate package's next build'.",
     "world_is": "The Terraform root's documented build mechanism (build-and-upload.sh) cannot build this function at all from a literal source_dir read -- it only succeeds via a shared-root convention a LATER cell (IB-rt-2) invented and that the canonical script does not implement. Two legitimate, deterministic recipes both disagree with the served bytes and with EACH OTHER, so this arm cannot certify what source produced the live artifact. Separately and more consequentially for W4-S28: extract/certify.py -- where the actual date-provenance fix (56a6e07e8f) lives -- is not part of ANY deployed Lambda's declared build, so W4-S28's own remedy path ('rides the generate package's next build') rests on a premise this cell's census does not confirm. Neither an EQUAL nor a DIFFER reading of this arm could, by itself, tell an adjudicator whether the certify.py fix is aboard any deployed function, because no build this cell could construct ever includes that file.",
     "notes": "Not this cell's to resolve further: TO IB-rtc-4 bounds this order to a bytes comparison, read-only against the deployed plane, and forbid re-minting anything. Candidate next acts (the CTO's/COO's to choose, not carded here): (1) determine whether ANY deployed function is supposed to import extract/certify.py at runtime, and if so wire it into that function's declared files and rebuild via a byte-verified recipe; (2) if no function should import it, correct W4-S28's disarm_owner text so it does not point at a build that can never carry the fix; (3) separately, pin the exact recipe (member list, zip tool, timestamp, compression settings) that produced CJ6aBh7BWJFcT2Vv0/cJFSXHaH5cs1LvqXvJRfkXHm8= -- e.g. the S3 object's own version history -- before any FUTURE bytes comparison on this function can be trusted. Full transcript: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtc-4_R34-AC1_battery_output.txt."
+  },
+  {
+    "id": "IRPT_BCKEND-S62",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "DECLARING THE THREE per-firm runner_common.py AS MEMBERS OF THE investor_reporting BUNDLE -- WHICH THE RUNNER'S CLOSURE REQUIRES -- WOULD FREEZE THREE LIVE PRODUCTION DEPLOY LEGS. The guard routes ANY bundle member out of its per-file (loose) leg and scans every tree to do it, and all three files are served today on their own firms' loose legs with ETag equal to the repo md5. Not declared by IB-rtc-2: choosing between freezing three firms' runner deploys and changing the X-iii routing contract is above this order.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-2 L5 note: 'Each member is declared in .tools/safe_deploy_core.py CODE_TREES bundle investor_reporting exactly as IB-rt-5 declared the first members ... copy its shape, not its list', over a closure that includes the three per-firm runner_common.py modules (row W2-S51). The face's own admission rule treats data/*/scripts/gold/** as declarable.",
+    "world_is": "MEASURED at e9dc18f302 with the guard's OWN functions (battery_ib_rtc_2.py arm (g)). file_to_s3_target gives each module a live per-file target: data/assets/scripts/gold/runners_49f/runner_common.py -> s3://opal-data-49financial/_code/runner_common.py [advi]; data/inf/scripts/gold/runners_inf/runner_common.py -> s3://opal-data-inf/code/gold/runners_inf/runner_common.py [inf]; data/cot/scripts/gold/runners_cot/runner_common.py -> s3://opal-data-cot/code/gold/runners_cot/runner_common.py [cot]. head-object on each reads ETag == md5 of the repo file, so all three are SERVED and CURRENT on their own legs. With each module added to a deep COPY of CODE_TREES, bundle_for_member() returns investor_reporting for 3 of 3. The deploy flow's X-iii loop (safe_deploy_core.py:1272-1303 @e9dc18f302) puts a routed file in `triggered` and NOT in `loose`, and bundle_for_member (:731-738) scans every tree, so a declaration in the mdpf tree's bundle captures a file of the advi, inf and cot trees. CONSEQUENCE: the next DS commit to any of the three modules would re-mint the IRPT tarball and leave that firm's served runner_common.py at its pre-commit bytes -- the 49F advi chain, the INF runners and the COT runners would run stale code while the push reads BUNDLE-ROUTED and green. IB-rt-5's members were safe to declare because their loose keys 404'd (a first-mint); these three are the opposite case.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (g): 'undeclared closure members with a LIVE loose leg: 3; that a declaration would route out of it: 3'; the guard's real declaration untouched by the probe (git diff --stat empty)",
+        "aws s3api head-object: s3://opal-data-49financial/_code/runner_common.py ETag 5221d6b5d73157ce9728807a7a6b9c80 (LastModified 2026-08-19T19:01:27Z) == md5 of the repo file; s3://opal-data-inf/code/gold/runners_inf/runner_common.py d974c587f379592905a3c38b03bf3da4 (2026-08-12) == repo md5; s3://opal-data-cot/code/gold/runners_cot/runner_common.py 384920cf9eb601ea7a344493d1a09d6a (2026-08-12) == repo md5",
+        ".tools/safe_deploy_core.py:1279-1287 @e9dc18f302: hit = bundle_for_member(rel_path); if hit is not None -> triggered[bname], print 'BUNDLE-ROUTED ... (loose leg frozen 2026-08-11, X-iii)'; else loose.append(rel_path). Header :186-193: 'A member script listed in a bundle EXITS the loose per-file leg'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE SHAPES THAT WOULD CLEAR IT, for 1.0.0_SA_CTO's L10 read (this seat does not choose): (1) a member-level DISTRIBUTION flag in the guard -- the member keeps its own loose leg AND a commit to it also re-mints the bundle -- which is amendment H3's 'distribution, not a second definition' reading (ids.py, trading_calendar.py) extended to a file that ALSO has a loose leg; it changes the CTO-blessed X-iii routing contract, so it is a ruling, not a CODE_TREES edit; (2) the host fetches each firm's runner_common.py from its own SERVED loose key at build time -- which has the mdpf principal read opal-data-49financial/_code/ and so meets the cross-firm bound first; (3) a repo checkout on the host at the depth the runner derives (row W2-S51: 'THE REMEDY IS A SHAPE DECISION, NOT A MEMBER LIST'). This seat's rec, stated once: (1), because it keeps one authority per file and one routing mechanism. Row IRPT_BCKEND-S59 shows no declaration clears IB-rtc-3 on the deployed dispatch, so this choice and the dispatch's unpack are one decision."
+  },
+  {
+    "id": "IRPT_BCKEND-S58",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "TWO CLOSURE MEMBERS FALL OUTSIDE THE GLOBS THIS ORDER ADMITS FOR A MEMBER, SO BY THE FACE'S OWN RULE EACH IS A BLOCKING ROW: data/firm_registry.json and infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json. Both are loaded on the runner's own path (the registry by client_firms() and by ids.py's registry walk, the contract by validate_entries()), so the closure cannot be completed inside this order.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-2 L5 note: 'A member the closure needs that is NOT under a data/*/scripts/gold/** or lib/** path this order's <paths> admits is a BLOCKING row, not an override.'",
+    "world_is": "The closure DERIVED at e9dc18f302 by two instruments that agree (a static AST sweep of 6 modules, and a dynamic open/import audit of the runner's no-S3 entry points -- battery arm (a)) is 8 files: directory_runner.py, lib/trading_calendar.py, infra/aws/lambda/investor-reporting/_ids/ids.py, the three runner_common.py, data/firm_registry.json and infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json. 3 of 8 are declared. Of the 5 missing, the three runner_common.py are under data/*/scripts/gold/** (row IRPT_BCKEND-S62 carries why they are still not declared) and TWO are outside both globs. For the reader weighing the rule: the bundle already carries one member outside it -- infra/aws/lambda/investor-reporting/_ids/ids.py, declared by IB-rt-6 under amendment H3 -- so whether the rule stands for a JSON contract and the firm registry is the issuer's call, not this seat's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (a): 'CLOSURE N = 8' and 'DECLARED: 3 of 8 closure members'; static sweep 8 USED references, dynamic probe rc=0 opening the same 8",
+        "directory_runner.py @e9dc18f302: FIRM_REGISTRY_PATH :122 read at :186 in client_firms(), called by main() :877; CONTRACT_PATH :120-121 read at :746 in load_contract(), called by validate_entries() :751 from run_firm() :831",
+        "infra/aws/lambda/investor-reporting/_ids/ids.py @e9dc18f302: _find_registry() :113-139 walks up from its own directory to data/firm_registry.json; reached by opaque() -> _mint() -> _check_firm() -> firm_ids() (:249-254, :214-218, :183-194, :145-156)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The closure differs from row W2-S51's list by ONE path at this tip: infra/aws/lambda-edge/_shared/firm-config.mjs is no longer loaded -- FIRM_CONFIG_PATH is still bound at directory_runner.py:123 with zero loads since firm_bucket_map() became a generated literal (LGIC_ENFORCE DEC-5, @45187da290). infra/aws/lambda/investor-reporting/_ids/raw_keys.json is named by ids.py:64 but opened only by raw_keys()/raw_key_for(), which no runner path calls, so it is outside the closure. The dead constant, and the unused _FIRM_CFG_RE at :166, are a neighbouring tidy-up, not touched here."
+  },
+  {
+    "id": "IRPT_BCKEND-S59",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "EVEN A COMPLETE CLOSURE ABOARD THE BUNDLE CANNOT REACH THE RUNNER THROUGH THE DEPLOYED DISPATCH. refresh.runner_script unpacks the tarball into the runner's own directory and relocates exactly three FLAT member names; the runner derives each firm's runner_common.py and the firm registry OUTSIDE that directory, and the only member name that could climb there (a '..' path) makes GNU tar exit 2, which trips the dispatch's '|| exit 91'. So IB-rtc-3 -- which writes no code home and exercises the dispatch AS DEPLOYED -- cannot land an inf or cot directory whatever IB-rtc-2 mints.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition v0.3 s.R3.2: 'edges (1): IB-rtc-2 -> IB-rtc-3 (the closure must be aboard the bundle before any build)'. TO-IB-rtc-3 DELIVERABLE: 'No code home is written; the dispatch and the runner are exercised AS DEPLOYED.' Its context line: 'IB-rtc-2 carries the closure.'",
+    "world_is": "MEASURED LOCALLY on ONE payload built by the guard's own build_bundle_payload with the full closure (the 4 declared members plus the 5 missing, named by repo path; 9 members). Placed at each member's declared repo path: directory_runner imports and SourceSet instantiates 3 of 3 (49financial, cottonwood, inflection IMPORT-OK). Put through refresh.runner_script's own unpack lines (infra/aws/lambda/investor-reporting/directory/refresh.py:430-443 @e9dc18f302, cut before its build, its aws s3 cp replaced by a local cp): 0 of 3, each firm 'RuntimeError: REFUSE: identity runner module absent: .../data/<firm tree>/scripts/gold/runners_*/runner_common.py'. The recipe extracts into $W/data/assets/scripts/gold/investor_reporting/ and moves only ids.py, trading_calendar.py and a FLAT DirectoryEntry.schema.json (:440-443); the runner resolves runner_common via _REPO / rel_dir (directory_runner.py:216) and the registry via _REPO/data (:122), both outside that directory. A member named '../runners_inf/runner_common.py' is refused by GNU tar 1.35 ('Member name contains ..', rc=2). The contract IS placeable today under a flat member name; the registry and the three runner_common.py are not.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (h): 'DECLARED placement (unpack rc=0): IMPORT-OK 3 of 3' and 'DEPLOYED placement ...: IMPORT-OK 0 of 3' with three REFUSE lines; dot-dot probe rc=2",
+        "refresh.py:436 @e9dc18f302: tar -xzf $W/bundle.tar.gz -C $W/data/assets/scripts/gold/investor_reporting/ || exit 91; :440-443 the three '[ -f $R/<flat> ] && mv' relocations",
+        "TO-IB-rtc-3 face BOUNDS: 'No IAM, no Terraform apply, no bundle mint'; decomposition v0.3 s.R3.1 gives IB-rtc-3 write surface 'none'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not measured on the host: the host was STOPPED and no re-mint happened, so the one admitted StartInstances was not spent on an unchanged object. The instrument is Git Bash GNU tar 1.35 and Windows Python 3.12; the host runs Python 3.9.25 (row W2-S49), and the refusal is a file-existence check (directory_runner.py:217-218), which is not version-sensitive. The remedy is a refresh.py change -- unpack repo-shaped, for instance member names that ARE repo paths extracted at $W -- that the next cut must own. It is one decision with row IRPT_BCKEND-S62's."
+  },
+  {
+    "id": "IRPT_BCKEND-S60",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "THE FACE'S NEGATIVE CONTROL NAMES THE WRONG PRIOR: IB-rt-5's ETag (cd188f6e...) carried TWO members, not three, and it is not the object this cell would replace -- the key has since held six further distinct objects (nine uploads), and the object served when this cell began is 7791109b... with FOUR members. A re-mint is told from a no-op against THAT object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "R32-AC1 (f): 'the NEGATIVE CONTROL: the PREVIOUS tarball (its ETag from IB-rt-5's instance) is shown to have carried 3 members, so the arm can tell a re-mint from a no-op.'",
+    "world_is": "list-object-versions on s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz returns 19 versions. ETag cd188f6edb7270300a7409d66f9a3432 (IB-rt-5, 10 versions on 2026-09-11) carries 2 members (directory_runner.py, holdings_snapshot.py); 964b4eef... (2026-09-11T18:48Z) 2 members; a35420ac... (2026-09-12T06:56Z) 3 members, ids.py added by IB-rt-6 -- the three-member tarball row W2-S49 listed on the host; c596538e... (2026-09-12T08:58Z) 4 members, trading_calendar.py added; then ec26d1d1... (09-15), a787eb49... (09-16, two versions) and 7791109b... (09-16, two versions), each 4 members -- re-mints by pushes that touched a member file, the X-iii routing working as designed. Served at 2026-09-18T02:2xZ: ETag 7791109bada2dbb44c5ac742b65671ee, VersionId AxKzxFHuxAP7TTIJsmkxtWZxxgEgVJDC, sha256 3441f09d6fafe077a64254c76d9f3ce300ce882c5f3dcbceaa0ba9b32aaf7159, 4 members, every sha stamp equal to the repo at e9dc18f302.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (f): 'IB-rt-5 ETag cd188f6edb7270300a7409d66f9a3432: 10 version(s) carry it; members 2 [...] (the face says 3)'",
+        "tar -tzf over six downloaded versions (VersionIds BAv6hA9I..., oEuOF3So..., yusulz6a..., DU0ppTu2..., r2kGjt0T..., AxKzxFHu...): 2, 2, 3, 4, 4, 4 members"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The battery grades (f) against the PRE-CELL object (a new VersionId, a new ETag and strictly more members) and prints the face's IB-rt-5 comparison beside it, so both readings stay visible. No re-mint happened in this cell, so (f) reads NO-OP."
   }
 ]
 ```
