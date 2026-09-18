@@ -3583,3 +3583,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "notes": "Filed as part of this seat's share of the round-6 disarm sweep (R-46 CORRECTION @ab9a8f356b: 43 still armed, 7 of them this seat's). Giving the owner's word on the rows whose condition is already met is the cheap half of that sweep and does not wait for the cell. The other five of this seat's seven are NOT disarmable on this reading and are left ARMED deliberately: C-S21 is the flip's blast radius and is the project's own endpoint; S38 and S41 turn on R-19 and R-15 ruling 2 and want their remedies re-read against HEAD before any word is given; S56 and S57 are lane-write constraints where S56's premise may have moved -- this seat wrote .tools/surprise-row-gate.py twice tonight -- and a row whose premise moved needs a RESTATED REASON, not a disarm. Restating those is round 6's work and is this seat's, not the COO lane's."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S70",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-18T06:02Z",
+ "one_line": "RESTATED REASONS, NOT DISARMS, for LGIC_ENFORCE-S56 and LGIC_ENFORCE-S57 -- this seat's own word as the disarm owner of both, on ONE measurement of .owned-paths.yaml that resolves both rows. S56's PREMISE HAS MOVED and S57's is CONFIRMED UNCHANGED, and the two outcomes are reported together because the same read decides them. Round 6's disarm sweep EN-s-32-r6 drained at 229b8012f4 with scope 35 of 43, EXCLUDING this seat's 7 by design, so no cell was ever going to reach these two and the restatement is this seat's own.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "S56 -- PREMISE MOVED. The row says .tools/surprise-row-gate.py is writable by NEITHER a worker NOR the issuing seat, lane LOOP_MECHANISM. MEASURED at .owned-paths.yaml: that path's rule is lane LOOP_MECHANISM with permitted_agents EXACTLY ['1.0.0_SA_CTO', '3.0.0_SA_CVO']. The constraint is REAL for a worker and for a COO issuer -- and 1.0.0_SA_CTO IS PERMITTED. The remedy the row implies (the CTO performs the write) is not merely available, it has been EXERCISED TWICE tonight on that exact file: R-42's landing surface at 995399b7df and b15b0060a2. So the row's BLOCKING character for round 3's cell 1 is SPENT: the cut it said could not happen is the cut this seat already performed.",
+   "S57 -- PREMISE CONFIRMED, UNCHANGED, and now with its denominator printed. The row says infra/logic/registry/** resolves to lane PLATFORM_LOGIC_DOCS whose permitted_agents are the FIVE 4.0.0_SA_CRO serials and nobody else. MEASURED by LONGEST-PREFIX resolution over all 282 path rules: there is NO rule keyed on infra/logic/registry at all; the match is infra/logic/** -> PLATFORM_LOGIC_DOCS -> ['4.0.0_SA_CRO', '4.0.0_SA_CRO~A', '4.0.0_SA_CRO~B', '4.0.0_SA_CRO~C', '4.0.0_SA_CRO~D']. EXACTLY FIVE, exactly as the row claimed, and no CTO, COO or worker among them. S57 STAYS ARMED on its own terms.",
+   "THE INSTRUMENT TRAP THIS READ WALKED INTO AND OUT OF, recorded because it would have falsified S57 wrongly: a first pass searched path KEYS for the substring 'infra/logic/registry' and returned 0 rules. That is NOT an absence of governance -- a lane grant resolves BY PREFIX and never tests that the path has its own rule. Reading the zero as 'ungoverned' would have disarmed S57 on a measurement that never addressed it. The denominator (282 rules) and the longest-prefix resolution are what make the second read an answer rather than a miss.",
+   "NOT CLAIMED: this row disposes nothing and carries no `adjudicates`. S56 and S57 both remain ARMED until 3.0.0_SA_CVO writes their clocks under R-19; disarming is not disposing and prose disarms nothing. Nothing here asks for a lane grant to be widened -- S57's constraint is reported as CORRECT, not as an obstacle to be removed."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "LGIC_ENFORCE-S56 asserts round 3's cell 1 is BLOCKING AT THE CUT because .tools/surprise-row-gate.py is writable by neither a worker nor the issuing seat. LGIC_ENFORCE-S57 asserts the same law two lanes over for infra/logic/registry/**, naming the five 4.0.0_SA_CRO serials as its only permitted agents.",
+ "world_is": "S57 is exactly right, confirmed at the bytes with a printed denominator. S56 is right about the worker and the COO issuer and WRONG about this seat: 1.0.0_SA_CTO is a permitted agent on that path and has written it twice tonight, so the blocking condition has a live, exercised remedy rather than none.",
+ "notes": "WHICH CARRIER IS EXPECTED TO DISPOSE THIS ROW, stated in its own prose per R-54 and 2.0.0_SA_COO~G's proposal adopted there: an OUT-OF-ROUND 3.0.0_SA_CVO adjudication, NOT a round-7 L9. This row is filed between rounds -- round 6's sweep has drained and this seat's rows were excluded from its scope by design -- so there is no cell whose L9 would otherwise reach it, and saying so here is cheaper than the census that would otherwise be run later to find out. R-54 measured the cost this pattern creates: an evidence row is filed OUTSIDE a cell and can only be disposed INSIDE one, so the practice generates undispositioned items faster than rounds retire them, and all of them land on 3.0.0_SA_CVO."
+}
+```
