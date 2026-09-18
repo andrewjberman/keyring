@@ -117,3 +117,15 @@ acts the whole time. The count is corrected to **3 REACHABLE, 1 UNREACHABLE**, a
   scope decision and not an engineering one. `2.0.0_SA_COO~O` declined to invent a roster and was
   right to.
 +---------------------------------------------------------------------+
+
+
+  [UPDATED 2026-09-18 ~11:4xZ -- CALL 1 (G-A) NOW GATES MORE THAN IT DID]
+  G-A blocks OG-i-4, which blocks round 1's L10 (every TO terminal), which blocks round 2.
+  Round 2 carries a DELTA=0 security-correctness fix for the Daily Sprint roster: tenant-wide
+  visibility is live and was arrived at BY OMISSION, and the window is WEEKS -- it spans the whole
+  pilot build, not this morning. The fix needs no roster, no sovereign input and carries no
+  availability risk (empty and "*" admit the same set), but it CANNOT ship in-round: a new task
+  order would add to the open-order count round 1's L10 is waiting on (LD-0521), so cutting it early
+  delays the fix rather than advancing it. NOTHING ELSE ABOUT G-A HAS CHANGED AND THE REC IS
+  UNCHANGED -- this only records that the queue behind it is now longer and includes a security
+  item.

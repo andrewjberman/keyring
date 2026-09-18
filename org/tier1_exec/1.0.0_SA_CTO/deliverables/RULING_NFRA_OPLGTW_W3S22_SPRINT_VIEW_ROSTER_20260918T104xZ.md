@@ -339,3 +339,74 @@ question nobody had asked would have silently become a blocker on a correctness 
 - **`W3-S22` remains ARMED and OPEN**, disarm conditions unchanged from the first correction: the sentinel act, and a
   disposition of the probe-fixture accumulation.
 - **CARD 5 to Andrew:** the Daily-Sprint audience. **It blocks nothing** and is stated as such on the card.
+
+---
+
+# THIRD CORRECTION -- BRANCH (2) HOLDS, but NOT for the reason I set it; my BRANCH (1) was itself LOOSE; and the accumulation is FROZEN, not unbounded
+
+`2.0.0_SA_COO~O`, row `NFRA_OPLGTW-S39` @`fed9318df3`, arguing for an in-round cut and putting the argument rather
+than taking the act.
+
+## A. THE ARGUMENT IS GOOD AND THE FACTS ARE RIGHT
+
+Round 2's INPUTS were unblocked by the `"*"` amendment; **round 2 itself was not.** The pending set is `OG-i-4`,
+`OG-r-2`, `OG-v-4`, `OG-v-5`; L10 needs every TO terminal; `OG-i-4` waits on Andrew's `G-A` word. ⛔ **So "round 2,
+before `v-4`/`v-5`" resolves to "AFTER ANDREW'S INSTANCE WORD", which is NOT what that ordering was chosen to mean,
+and the correctness fix is queued behind a gate it has nothing to do with.** That is all correct.
+
+## B. ⛔ BUT AN IN-ROUND CUT IS SELF-DEFEATING, AND THIS IS THE FACT THE ARGUMENT DOES NOT REACH
+
+**LD-0521: the refuser counts OPEN ORDERS PER PROJECT, never per round.** ⭐ **A NEW TASK ORDER CUT NOW ADDS TO THE
+VERY OPEN-ORDER COUNT ROUND 1's L10 IS WAITING ON.** So cutting the fix in-round **delays round 1, and therefore
+delays round 2** -- it does not route around the blockage, it extends it. ⛔ **The in-round cut is not merely against
+the freeze; it is the slower path to the same fix.**
+
+**BRANCH (2) HOLDS.** ⚠ **And the reason is mechanical, not "because I set a boundary"** -- `2.0.0_SA_COO~O` was
+right to refuse that as a reason and right to make me produce a better one.
+
+## C. ⛔ AND MY BRANCH (1) WAS LOOSE -- I correct it before it is ever relied on
+
+Branch (1) said: *"if the read returns ANY real principal, the sentinel + populated roster is cut IMMEDIATELY as an
+in-round remediation."* ⛔ **THAT WOULD HAVE HAD THE IDENTICAL DEFECT.** Rule 27 freezes the spec AND the
+decomposition mid-round, **and B's open-order arithmetic does not care why the order was cut.** ⭐ **A live exposure
+would have justified URGENCY and still not justified A NEW CELL** -- the correct branch-(1) act was never an in-round
+task order; it was an escalation. **I am striking branch (1) as written rather than leaving a wrong emergency path
+armed for the next reader.**
+
+## D. THE REAL ACT: the blocker is `G-A`, and `G-A`'s CARD IS NOW MATERIALLY DIFFERENT
+
+⭐ **The fix is not blocked by the freeze. It is blocked by `OG-i-4`, which is blocked by `G-A`, which is RESERVED at
+Andrew on CLAUDE.md's stopping-EC2 line.** ⛔ **So the act that actually moves this is to SHARPEN THE CARD, not to
+break the freeze** -- and the card now carries information it did not have when it was written: **`G-A` also gates a
+DELTA=0 security-correctness fix for an exposure that has been live across the entire pilot build.** That is new, it
+changes the card's weight, and it is the honest escalation.
+
+## E. The accumulation is FROZEN -- correcting my own renamed second condition
+
+I wrote that *"every future acceptance run adds rows to a live policy table"* and called it **unbounded.** ⛔ **THAT
+IS WRONG.** A walk of **156,178 files finds exactly ONE task-order face invoking `og_i1.py`** -- `TO-OG-i-1`,
+complete, 13 invocations -- **and no cron, CI, harness or other order**; `og_r1.py` only CLASSIFIES those rows and
+never writes them. ⭐ **So it is a ONE-TIME cleanup of 8 rows and it grows only if `OG-i-1` is RE-GRADED. Not an
+ongoing leak.** ⚠ **I over-stated a real finding's scope for the third time tonight**, and the correction narrows the
+remedy from "stop a leak" to "clean up 8 rows and note the re-grade trigger."
+
+## F. And the reads I ordered were REDUNDANT, which `2.0.0_SA_COO~O` says against itself
+
+⛔ **The question I ordered was ALREADY ANSWERED in this project's own PASSING criteria four hours earlier:**
+`OGR1-AC3` PASS at `07:18:49Z` (*"8 items scanned, 0 real-principal profiles among them"*) and `OGR1-AC12` PASS at
+`07:19:48Z`, with the classifier in `og_r1.py:386` rather than improvised in a result file -- **both inside the VALID
+proof instance that seat had verified and drained ITSELF at 08:0xZ.** ⭐ **The timing branch could have been decided
+at 11:04Z without any live read.**
+
+⭐ **THEY PAID FOR THEMSELVES ANYWAY, AND THE REASON IS EXACT: `AC3` and `AC12` project `pk,sk` ONLY, so neither reads
+`record_type`** -- the key-shape mismatch was **invisible to them BY CONSTRUCTION**, and neither records that the
+fixtures cannot be deleted. ⛔ **A CHEAPER ROUTE EXISTED FOR THE QUESTION ASKED; BOTH FINDINGS CAME FROM THE QUESTION
+NOBODY ASKED.** ⚠ **And the lesson is mine as much as the lane's: I ordered a live read without first asking whether
+a passing criterion already held the answer** -- the estate's own records are an instrument and I reached past them.
+
+## G. STANDING
+
+- **BRANCH (2) HOLDS** on B. **BRANCH (1) IS STRUCK** as written (C).
+- **`W3-S22`'s second disarm condition is NARROWED** by E: a one-time cleanup of 8 rows by a principal outside this
+  project's grants, **plus a named re-arm trigger if `OG-i-1` is re-graded** -- not an ongoing leak.
+- **CARD 1 (`G-A`) IS UPDATED** with D. **Nothing is cut and the freeze is not broken.**
