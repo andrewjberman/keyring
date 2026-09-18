@@ -305,6 +305,36 @@ round-13 slug rows naming it as remedy owner become cells.
 
 ---
 
+## 2E. The three-name INSTANTIATION VALIDATION -- `INSTANTIATION_VALIDATION_REPORT_20260918.md` @`b527b93214` (msg 23730)
+
+Andrew-authorized ~16:5xZ. Caterpillar (US 10-K), CSL (English, company site only), Keyence (Japanese Yuho only), run through
+every stage AS IT EXISTS by a subagent of `4.0.0_SA_CRO~Z`, no pool writes, $2.45. **This is the instantiation table MEASURED,
+not inferred -- it outranks s.2.1's T16 wherever they differ.**
+
+**Headline: every stage except the chatter Lambda needs a person to run it, and every reader keys on the POOL crosswalk and
+universe -- so a name produced end to end still renders nothing until its identity lands in the pool.**
+
+| # | finding | disp. |
+|---|---|---|
+| V1 | **One "add a security" step that lands identity in the pool.** One Bloomberg call returns every key the battery needs (name, exchange, LEI, SEC id). Four corpus folders are already unregistered (Alphabet, Eli Lilly, Quanta Services, UnitedHealth) | **ADD -- the instantiation entry point** |
+| V2 | **Battery step 1 is broken for new US names (D1).** `build_universe.py:503-507` looks the ticker up in a 33-ticker SEC cache and REPORTS a miss as absence from the full 10,422-row table (**verified at source here** -- the message cites the full table's row count while the lookup reads the cache's rows). So the estate misses CATERPILLAR. The live table with the existing name guard resolves CAT and correctly refuses CSL (Carlisle). **Corrects the Thesis brief s.3** | **FIX -- a denominator that certifies the sweep, not the set** |
+| V3 | A document layer for non-EDGAR reports: PDF reflow lifts coverage 9.3% / 1.8% -> 91.6% / 92.4%. The 20-F "riskfactors" fallback cut a 70,000-character WRONG-OBJECT excerpt from CSL's report (D9) | **ADD** |
+| V4 | ⭐ **Translation design A HELD on Keyence**: 70 of 71 findings carry a 12+ character verbatim run inside their one cited passage; neighbour-passage and one-character-mutation controls refused 70/70 and 68/68; 0 of 71 translations relocate in the original. $0.32 a name. Needs Unicode passages (`passages.py:67-79` keeps 6.8% of Japanese), pre-cut citation blocks, and a character-level verbatim rule | **MEASURED -- the T13 design, validated** |
+| V5 | The roster accepts a TITLE as a name (D20: CSL "RESOLVED" with 6 "officers" named "Executive Vice" / "Senior Vice"); CAT's standard "Name (age) Role (year)" table unparsed (D21); Kanji names erased (D22) | **ADD -- joins E2/E3** |
+| V6 | ⛔ **Drafting's verbatim check passes VACUOUSLY (D18)**: a sentence with no quoted span passes -- 17 of 39 for CAT, 16 of 40 for CSL. **That qualifies the "389 of 389 PASS" figure every brief quoted -- including this intake's T2, which is RESTATE no longer** | **FIX-ART -- `C-FILINGS-ANALYZER`'s verbatim gate has a hole** |
+| V7 | ⛔ **D24, ARMED for ANY seat**: `peers/universe.py:576-578` rewrites the TRACKED `0.9.0_WK_AMGT_RESAPP~21/candidate_universe.json` even under `--dry-run` (**verified at source here**). This is what dirtied the shared tree at this seat's tick 71 (14:03 ET). The CRO restored it and re-verified `git diff` empty | **EXEC -- a dry run that writes** |
+| V8 | Cross-references: Model D4 (FY2026 excluded, `HIST_END`), D6 (`CIE_DES` not pulled); Lead Panel D23 (the description line serves a segment-sales sentence), D25 (zero-article new names rank on Trending -- Keyence #2, CAT #10); Posture D7 (posture reads model blocks from a REPO folder, not the pool); filings D27 (the dry run announces 243 unresolved objects, the real run writes 23) | filed by panel |
+
+### ⭐ The pattern V2, V7 and M1 share -- one cross-cutting remedy
+
+**Three production code paths read or write a WORKER'S deliverables folder:** the unit map (M1, `~1/field_map.json`), the SEC
+ticker cache (V2, `~19`), and the peer candidate universe (V7 / W32-S4, `~21`). A worker's folder is a proof artifact of one task
+order, not a production home -- so production silently depends on whatever one worker happened to build, for whichever names
+that worker covered. **That is exactly why each defect covers the pilot names and misses everyone else.** The addendum should
+name ONE production-artifact home and move all three there, rather than fixing them one at a time.
+
+---
+
 ## Cross-panel: items that are ONE question, not two
 
 | question | panels | why one |
