@@ -25,3 +25,21 @@
    should exercise Lusha on its names. The validation's recorded scope excludes both, and stays that way until he says
    otherwise.
 4. Nothing here authorizes a fleet run; his "no run until validated end to end" stands.
+
+## Addendum ~17:2xZ -- the CEO search, answered and redesigned
+
+Asked whether his yes covered the CEO-profile web search (Bright Data), and whether the running validation should do
+the Lusha lookups. Verbatim:
+
+> We should also do that, search the CEO's name with Bright Data SERP, and have an agent go through it and
+> pull/organize the relevant results.
+
+**Reading, narrow:**
+1. **The CEO search is part of instantiation, and its design changes.** It becomes a Bright Data SERP search on the
+   CEO's NAME, not today's single query scoped to the company's own IR domain, followed by an agent (a model step)
+   that goes through the results and pulls and organizes the relevant ones. This replaces contract C-EXEC-MANAGEMENT's
+   "ONE targeted SERP query on the company's own IR domain ... capped at one page" (`enrich.py:13-15`), so it joins
+   the same amendment as cards 1 and 2.
+2. **The CEO only**, as he said; other officers are not widened into it.
+3. **Whether the running three-name validation should call Lusha or Bright Data now is NOT answered by this.** Its
+   recorded scope still excludes both.

@@ -233,3 +233,60 @@ the roster.
   It stays undecided, and section 4 item 1's honesty fix applies to it either way.
 - **Whether the running three-name validation should exercise Lusha** (about 6 credits). Its recorded scope excludes
   Lusha and stays that way until he says otherwise.
+
+---
+
+## 9. UPDATE 2, 2026-09-18 ~17:2xZ -- the CEO search: search the name, then an agent pulls and organizes
+
+Andrew-direct, recorded verbatim in the addendum to `ANDREW_DIRECT_20260918_17xxZ_EXEC_MANAGEMENT_CARDS.md`: *"We should
+also do that, search the CEO's name with Bright Data SERP, and have an agent go through it and pull/organize the
+relevant results."* This answers s.8.3's first question: the CEO search is IN, and it is redesigned. The second
+question (whether the running validation exercises Lusha or Bright Data) stays open.
+
+### 9.1 Today versus the new design
+
+| | today (`enrich.py:404-455`) | Andrew's design |
+|---|---|---|
+| query | ONE query, `site:<declared IR domain> "<CEO name>"`, one page | the CEO's NAME, not scoped to one site |
+| who reads the results | a host test: is any url on the IR domain? | an agent reads the results, keeps the relevant ones, pulls them, organizes them |
+| output | one url or ABSENT (`ceo_public_profile`) | an organized set of cited results about the CEO |
+| measured outcome | 1 of 12 CONFIRMED; 4 searched and unconfirmed; 7 never searched | -- |
+
+### 9.2 What the new step needs -- for `1.0.0_SA_CTO~Z`'s L4
+
+1. **The search primitive must return what an agent can read.** `serp_brightdata` (`data/find/dualbiz/scripts/serp.py:245-286`)
+   returns URLS ONLY -- it drops each result's title and snippet from Bright Data's `organic[]` -- and an agent cannot
+   judge relevance from a bare link. It must return the full organic record.
+2. **A failed search must not read as an empty one.** The same function `break`s silently on a request error (`:267-268`)
+   or an unparseable body (`:271-272`) and returns an empty list, which `enrich.py:438` then records as NOTHING_FOUND.
+   Measured in source, not in a run. The new step keeps FAILED distinct from EMPTY -- the same rule as the four honest
+   CEO states in s.4 item 1.
+3. **The unreadable links.** The 4 searches that ran all returned links the module could not place on the IR host
+   (2-10 per name). The module's own label calls them opaque redirect wrappers; **this seat did not verify that.** The
+   L4 first measures what the zone returns on one query; if the links are wrapped, they are unwrapped before an agent
+   sees them.
+4. **Right person first.** The query becomes `"<CEO name>" "<company>"`, and the agent's first test is identity: this
+   person, at this company, in this role. CEO names collide across companies, and a result about a namesake is the
+   management version of the subsidiary-report trap in the Thesis battery.
+5. **"Pull and organize" is verified the way Thesis drafting is.** The agent fetches each relevant page, and **every
+   fact it organizes carries its url and a quote that re-locates VERBATIM in the fetched page.** A fact with no quote is
+   held, never shown. The agent adds nothing from its own knowledge. This is the panel's trust story, carried over from
+   the 389-of-389 verbatim check on Thesis.
+6. **A proposed organization, for the L4 to settle:** official biography (company site); professional profile (e.g.
+   LinkedIn); prior roles and tenure; board and outside roles; interviews and talks; news profiles. Each item keeps its
+   url, host, title, category, why the agent kept it, and its verified quotes.
+7. **No contact data, ever.** The module's forbidden set (no email, phone or mobile stored at any level, `enrich.py`
+   CONTACT_STEMS / CONTACT_KEYS) carries over to everything the agent pulls.
+8. **Where it lands.** A `ceo_profile` block replacing `ceo_public_profile` on the management object; the adapter
+   serves it verbatim; the tab shows the organized results with links, and when the step did not run, why.
+9. **Cost is measured before any scale:** SERP requests plus fetches plus one model call per CEO, on the validation
+   names first.
+10. **Contract.** It replaces C-EXEC-MANAGEMENT's "ONE targeted SERP query on the company's own IR domain ... capped at
+    one page" (`enrich.py:13-15`), in the same amendment as cards 1 and 2.
+
+### 9.3 What it changes in section 4
+
+Item 1's honest CEO states still land first: they fix what the page says about the 12 objects served today. The new
+CEO step is added after item 6 as **item 8**: the structured search primitive with FAILED distinct from EMPTY (9.2 items
+1-3), then the agent step (items 4-8) proven on the validation names, all behind the contract amendment. It depends on
+card 1's roster (a CEO name to search) and on s.8.2's verified domain only for the official-biography category.
