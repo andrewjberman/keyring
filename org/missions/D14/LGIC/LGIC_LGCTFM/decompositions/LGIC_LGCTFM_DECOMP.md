@@ -372,3 +372,126 @@ count of four writers becomes FIVE with this cell.
 **`LT-x-1` is NOT reopened by the cell.** Its order stays `pending` until this amendment drains; the worker
 re-runs `x1-run-dir` as its own criterion, and the ISSUER re-opens and flips `LT-x-1` at the drain. A worker never
 flips another cell's order.
+
+---
+
+## 12. v1.3 -- THE ROUND-2 RECUT (2026-09-18, `2.0.0_SA_COO~G`), on `1.0.0_SA_CTO`'s round-1 analysis
+
+**Input, and the two carriers DISAGREE on one point so the fresher one governs.**
+`LGIC_LGCTFM_ROUND1_ANALYSIS.md` @`fe2d71cb2a`-era, section "WHAT ROUND 2 CARRIES", items 1-5; and
+`project.json`'s `blocking` as `1.0.0_SA_CTO` corrected it at `last_updated 2026-09-18T06:55:00Z`. The
+analysis item 1 says *"S10's TWO branch-relative arms"*; the register says **FOUR**, citing row `S18` and
+`3.0.0_SA_CVO`'s independent confirmation @`98f7074714`. **THE REGISTER IS FRESHER AND IS RIGHT, AND THE
+ANALYSIS IS THE CARRIER THAT WENT STALE** -- which is this evening's own R-51 class, read in the direction
+that matters: a cut that took the analysis at face value would have scoped this round to HALF its
+population.
+
+Round 1 graded **REALIZED 8 of 10**. `FWD-4` is APPLIED-not-realized and `FWD-6` NOT REALIZED, and
+[HARD] **NEITHER CAN BE CLOSED BY AN ENGINE CELL** -- `FWD-4` closes on Andrew's own read of `ANDREW_CARD.md`,
+`FWD-6` when a REAL migration's decomposition is cut from the plan, which is `LGIC_CANON`'s C6 practice
+wave. **So round 2 is a HARDENING round and says so rather than implying progress toward an outcome it
+cannot move.** Its job is to leave the instrument TRUSTWORTHY for the R19 migrations that will consume it.
+
+### 12.1 THE CELLS -- 3, and no earlier cell is re-opened
+
+```
+  cells at v1.2 ......................................................... 14
+  plus round 2's three .................................................. +3
+  = cells in this decomposition ......................................... 17
+  round 2 runs exactly the three: LT-a-2, LT-n-2, LT-c-2
+```
+
+| cell | id | what it does | serves | rows it answers |
+|---|---|---|---|---|
+| 15 | `LT-a-2` | **THE RE-DERIVATION RECORD.** Takes round 1's FOURTEEN judgment claims and re-derives each from a THIRD POSITION -- neither the branch that produced it nor the checkout that graded it -- recording per claim RE-DERIVED or NOT-RE-DERIVABLE **with its mechanism**. The four checkout-dependent arms are EXPECTED in the second class; a partition that finds fewer than four has not looked | FWD-3, FWD-9 | `S10`, `S18` |
+| 16 | `LT-n-2` | **RUN IDS AND CONTENT HASHES ON EVERY NUMBER** a round-1 judgment record cites, enumerated BY SUBTRACTION from the records and never as a forward list, with `E3` EXCLUDED BY NAME and its reason stated | FWD-3 | `S11` |
+| 17 | `LT-c-2` | **THE CARD NAMES ITS SUBJECT ON ITS FACE** -- run id plus contract content hash plus the INSTRUMENT that produced the hash, and a pointer to the adjudication. [HARD] **IT DOES NOT TOUCH THE RANKING OR THE RECOMMENDATION** | FWD-4's readability, not its closure | `S12`, `S16` |
+
+### 12.2 WHY `LT-a-2` IS A RECORD AND NOT A REPAIR, WHICH IS THE OPPOSITE OF WHAT THE ITEM SOUNDS LIKE
+
+The obvious reading of *"re-cut to run where the claim is consumed"* is **repair round 1's checker**. That
+is REFUSED here, on this lane's own filed position and on `R-43`: `check_lt_r1.py` is a FIXED INPUT of a
+CLOSED, GRADED round. On their own branches those arms' windows were NON-EMPTY, so the grades they fed are
+SOUND and an edit now moves no grade. R-43 scopes a frozen-history defect's remedy to ONE LIVE-DIRECTION
+document, never a sweep over rounds already closed.
+
+[KEY] **WHAT IS ACTUALLY MISSING IS THE THING NOBODY HAS: A STATEMENT OF WHICH OF ROUND 1's CLAIMS A LATER
+SEAT CAN CHECK.** A claim that can only be verified in the place that makes verification repetition is not
+a claim a migration can rely on. So the cell produces the partition, and the four known members are its
+FLOOR rather than its answer -- `S18` found two of them only by an UNSCOPED read of the shared mechanism,
+and the cell is told to do the same rather than to work from the list.
+
+### 12.3 `LT-c-2` IS HOW `S16` IS RESOLVED, AND THE RESOLUTION IS A GRANT
+
+`S12`'s named remedy is one line in `ANDREW_CARD.md`. `S16` recorded that **this remedy could never be
+performed by its own disarm owner**: `.tools/owned-paths-validate.py` clause 4 refuses an ISSUER's edit
+inside a worker's deliverables folder, measured twice on that exact file. The remedy is not impossible --
+**it needs a CELL whose `<paths>` names the card**, which is a worker's grant and not an issuer's.
+
+[HARD] **AND THE CELL IS DELIBERATELY NARROWER THAN THE ROW.** `S6`'s condition was that the card's correction
+reach the decision-maker BESIDE it *"rather than as a silent rewrite"*, and it did, by
+`1.0.0_SA_CTO`'s adjudication @`662d53b793`. So this cell ADDS the subject pin and a pointer, and a graded
+arm REFUSES any change to the ranking table or the recommendation line -- byte-identity on the 179-row
+order is an acceptance criterion, not a courtesy. A round that quietly rewrote a card sitting with a
+decision-maker would be the exact act `S6` exists to prevent.
+
+### 12.4 WRITE SURFACES, AND THE ONE CROSS-WORKER GRANT
+
+```
+  LT-a-2   deliverables/<its own serial>/ + the project's surprise channel
+  LT-n-2   deliverables/<its own serial>/ + the project's surprise channel
+  LT-c-2   deliverables/0.9.0_WK_LGIC_LGCTFM~3/ANDREW_CARD.md   <- CROSS-WORKER, granted explicitly
+           + deliverables/<its own serial>/ + the project's surprise channel
+```
+
+### 12.5 THE FAN-OUT, AND THIS ROUND CARRIES A STATED EXPERIMENT
+
+```
+  slot ~1   LT-a-2  ->  LT-c-2
+  slot ~2   LT-n-2
+```
+
+`fanout: 2 slots over 2 connected components, cap 8, reason: the three cells share ONLY the surprise
+channel and no cell reads another's output; levels L0 = {LT-a-2, LT-n-2}, L1 = {LT-c-2}. LT-c-2 queues
+behind LT-a-2 because the card's pin should cite the re-derivation record if that record contradicts it.`
+
+[CAUTION] **ROUND 6 OF `LGIC_ENFORCE` PUT BOTH ITS CELLS ON ONE QUEUE on the rule that two worker branches
+appending to one channel is a GUARANTEED conflict** -- measured 3 of 3 on a sibling project's round-4
+drains. **THIS ROUND TAKES TWO SLOTS, AND THE REASON IS A MEASUREMENT THAT CUTS THE OTHER WAY.** At round
+6's second drain, `1.0.0_SA_CTO` had appended `LGIC_ENFORCE-S70` to the channel in the shared tree while
+this lane's worker appended `W1-S70` on its branch -- a genuine concurrent append at the same array end --
+and `safe-merge` merged it **with NO conflict**: the union test over every document read 190 ids expected
+and 190 merged, nothing missing, nothing extra, both rows present.
+
+[KEY] **THE HYPOTHESIS THIS ROUND TESTS, STATED SO IT CAN BE REFUTED: a TEXTUAL SPLICE merges where a
+WHOLE-ARRAY RE-DUMP conflicts.** A splice touches only the bytes between the last row and the closing
+bracket, which is a 3-way merge git resolves; a re-dump rewrites every line of the array, which conflicts
+with any other change to it. The 3-of-3 conflicts and this 1-of-1 clean merge are then not contradictory
+-- they are two different write methods. **BOTH ORDERS THEREFORE MANDATE A TEXTUAL SPLICE AND FORBID A
+RE-DUMP**, and if the second drain conflicts anyway the hypothesis is refuted and recorded as such rather
+than quietly forgotten. n=1 is not a result; it is a reason to run the test with the cost bounded to one
+union merge.
+
+### 12.6 THE FIXED INPUT, AND WHAT IT CARRIES FROM THE ROUND-1 HEADLINE
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_lt_r2.py`. Round 1's own headline is adopted as a
+construction rule rather than a lesson: **three of this lane's arms were UNSATISFIABLE BY A CORRECT FIX
+and all three passed their INJECTED self-tests**, because a fixture written by the arm's author shares the
+arm's assumption. So every core in this checker is driven against a **SIMULATED CORRECT RECORD and must
+PASS**, as well as against a doctored one and must FAIL. [HARD] **A MUTANT TEST CANNOT CATCH A VACUOUS PASS**
+(`R-47`): the mutant proves an arm CAN fail, and a vacuous arm fails it happily while passing everything
+real. Both controls exist here or the arm is not cut.
+
+**AND EVERY ARM IS POSITION-INDEPENDENT BY CONSTRUCTION, WHICH IS THE WHOLE POINT OF THE ROUND:** no arm
+resolves its subject by position in a directory, and none reads `git merge-base HEAD CLOUD`. A cell's
+commits are found by AUTHOR plus its order id in the message; a run is found by its own `HASHES.json`
+manifest (`R-40`); and any arm whose verdict could depend on the checkout PRINTS that dependence.
+
+### 12.7 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** move `FWD-4` or `FWD-6`. Both bar on acts outside this engine and the round says so.
+- It does **not** re-grade `E3`. `S11`'s remedy is the CONVENTION, and `E3`'s judgment was SOUND AT ITS
+  OWN VINTAGE -- it ran before `LT-e-4` made the untypeable plant opt-in, which is what moved the
+  population. Re-grading it would falsify a correct grade.
+- It does **not** repair round 1's checker, and 12.2 says why.
+- It does **not** touch the card's ranking or recommendation, and 12.3 makes that a graded refusal.
