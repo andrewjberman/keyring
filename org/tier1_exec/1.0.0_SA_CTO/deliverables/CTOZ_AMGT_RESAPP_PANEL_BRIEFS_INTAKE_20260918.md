@@ -157,6 +157,24 @@ It confirms every figure above on a re-read with no change, and adds:
 - *"Should Lusha profile links be part of instantiating a new security?"* -- billed per use; CRO rec: decide after the
   three-name validation reports. **This seat concurs.**
 
+**ANSWERED ~17:1xZ -- both YES**, verbatim *"1.) Yes. 2.) Yes they should."* (record
+`ANDREW_DIRECT_20260918_17xxZ_EXEC_MANAGEMENT_CARDS.md`, brief UPDATE 1 @`f45a7c551e`, msg 23708). Card 1 in the recommended
+form; card 2 AHEAD of the recommended timing -- he chose not to wait for the validation.
+
+⭐ **So the `C-EXEC-MANAGEMENT` amendment is now OWED BY THIS SEAT at L4, and the CVO signs it.** It must carry, per brief s.8:
+- `roster_source` on every object (FILING / BLOOMBERG_FALLBACK);
+- **the filing roster's own failure reason travels WITH the fallback** -- otherwise the fallback hides the five broken filing
+  rosters that the cut and shape fixes exist for. ⛔ This is the clause to get right: a fallback that erases the reason it
+  exists is the same status-over-content defect as E1, moved one layer down;
+- the filing WINS when it arrives;
+- the field rides an existing Bloomberg pull beside `CIE_DES` / `CIE_DES_BULK`;
+- censuses print FILING and BLOOMBERG_FALLBACK separately;
+- Lusha enrichment is a step of instantiation, its domain from the battery's VERIFIED site only, NOT ATTEMPTED with its reason
+  when there is none, Bloomberg-fallback officers enrichable, credits measured on the validation names before any scale.
+
+**Put back to Andrew, NOT decided:** the Bright Data CEO-profile search (card 2 did not name it), and whether the running
+three-name validation should exercise Lusha. His "no fleet run until validated end to end" stands over both cards.
+
 **Owed by THIS seat when round 14 cuts it:** build item 1 (the honest CEO line and empty-roster rendering) changes what the
 adapter and page serve for every one of the 12 served names, so it needs a **CTO+COO never-widen pair** -- this seat writes the
 CTO half against the exact diff.
