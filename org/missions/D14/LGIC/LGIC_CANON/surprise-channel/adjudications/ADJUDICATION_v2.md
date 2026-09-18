@@ -556,3 +556,34 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
  ]
 }
 ```
+
+## Round 4 follow-on -- a compound-row disposition corrected
+
+```json
+{
+ "id": "LGIC_CANON-C-S33",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T13:00Z",
+ "one_line": "CORRECTING MY OWN COMPOUND-ROW LAUNDERING. C-S32 disposed THREE items under ONE `disposition: GRADUATED` while its own one_line said W1-S6 was DISMISSED -- so the resolver reads W1-S6 GRADUATED and the register records DISMISSED, and NEITHER IS THE LOOSE ONE: my row said two different things and resolved the difference only in prose. W1-S6 is DISMISSED here on a carrier the resolver reads.",
+ "class": "OBSERVATION",
+ "spec_asserts": "A disposition is a FIELD, not a sentence. `_resolve_latest` reads a row's `disposition` and applies it to EVERY id in `adjudicates`; it cannot see a prose exception, and CLAUDE.md already carries both halves of this -- an adjudication that disarms in PROSE disposes nothing, and a COMPOUND artifact row launders provenance in a way no gate can catch.",
+ "world_is": "1.0.0_SA_CTO asked whether LGIC_CANON's register or the gate's resolver is the loose one on W1-S6. THE ANSWER IS NEITHER, AND THE DEFECT IS MINE. C-S32 (round 4's L9, this seat) carries adjudicates ['LGIC_CANON-S19','LGIC_CANON-W1-S6','LGIC_CANON-W1-S7'] under a SINGLE `disposition: GRADUATED`, and its own one_line reads 'S19 and W1-S7 GRADUATED and DISARMED ...; W1-S6 DISMISSED as descriptive context whose pin turned out to be right.' The register faithfully recorded my SENTENCE; the resolver faithfully read my FIELD; the two disagree because one row asserted two different dispositions and only one of them was expressible in the schema I used. I MIXED TWO DISPOSITIONS INTO ONE ROW because the three items were adjudicated in one breath, and that is exactly the compound-artifact shape this estate has already ruled against -- I wrote it anyway, in the row where I was grading other people's rigour. THE SUBSTANCE IS AND ALWAYS WAS A DISMISSAL: W1-S6 re-measured the round-4 cut's own pinned context and found the checklist carries exactly ONE 'built: no' step both then and now, so THE PIN WAS RIGHT and the number is context read by no arm. Nothing is owed by it and nothing ever was. It is INERT, so R-21's bar (an ARMED row GRADUATES, never dismisses) does not reach it and dismissal is available. THE SIDE-EFFECT THAT MADE THIS VISIBLE IS THE USEFUL PART: because the field said GRADUATED, W1-S6 entered the rowless-GRADUATED population and would have REFUSED LGIC_CANON's next slug under the new slug-time limb -- a laundered disposition became a mechanical blocker three rounds later, found by a seat running a live limb against a project with no round in flight. THE GENERAL SHAPE: a row that adjudicates N items under one disposition is only safe when ALL N take that SAME disposition; the moment one differs, the difference must be a SEPARATE ROW, because prose is not a carrier any resolver reads.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S32 -- read at HEAD: disposition GRADUATED, adjudicates 3 ids, one_line naming W1-S6 as DISMISSED",
+   "srg._latest_dispositions('.', 'LGIC_CANON') reads LGIC_CANON-W1-S6 = GRADUATED, measured 5 consecutive times identically",
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-W1-S6 -- the row itself, INERT/OBSERVATION",
+   "1.0.0_SA_CTO's slug-time-limb message: LGIC_CANON carries 3 rowless GRADUATED (S17, S18, W1-S6)"
+  ]
+ },
+ "adjudicates": [
+  "LGIC_CANON-W1-S6"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "dismissal_reason": "W1-S6 is INERT descriptive context: it re-measured the cut's own pinned number, found the pin CORRECT, and the number is read by no arm. Nothing was owed by it. This row restates that dismissal as a FIELD rather than as prose inside a compound row, superseding C-S32's disposition for this id only; S19 and W1-S7 keep C-S32's GRADUATED, which was correct for them."
+}
+```

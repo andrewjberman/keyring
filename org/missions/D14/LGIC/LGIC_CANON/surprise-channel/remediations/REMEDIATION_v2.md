@@ -386,3 +386,65 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
  "closed": true
 }
 ```
+
+## Round 4 follow-on -- two census-gap carriers
+
+```json
+{
+ "id": "LGIC_CANON-S17",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "S17 measured, BEFORE the cell was built, that the four instrument defects CN-i-1 was cut to repair are TWO at HEAD: W2-S3 and W8-S4 reproduce in current bytes, while W3-S2 and W5-S2 were already repaired and their rows describe a PRE-REPAIR state. A cell cut at four would have 'repaired' two things that were not broken.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S17",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md round 4 disposition rows",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S33"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The row was INERT at filing and GRADUATED by C-S23 because reading before building is the practice working, not a defect to fix: the cut was made at what was actually broken. The row exists so the slug-time limb has the carrier it requires and so a later reader is not left to infer from silence whether anything was owed. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed; an ARMED item's row carries a real clock. Eight rows of this shape satisfy the limb without any of them pretending there is work behind it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T13:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-S18",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "S18 found that DECOMPOSITION v5's round-3 subtraction reads 6 cells while the round runs 7 -- it omits CN-l-3, which the same section's LEVELS paragraph and the CTO's round-2 analysis both carry -- and that 'CN-j-8/9/10' wrote three ids as ONE TOKEN, so CN-j-9 and CN-j-10 resolved to no cell of the decomposition under the L6 gate's grammar.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S18",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md round 4 disposition rows",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S33"
+ ],
+ "remedy": "NO REMEDIATION OWED BY THIS ROW -- a CENSUS GAP carrier. The finding was real and was taken at the round it was found in; what this row adds is the carrier the slug-time limb requires, with the distinction R-66 protected living in the CONTENT: INERT, nothing owed, closed. The transferable half is recorded rather than lost: a THREE-ID TOKEN written as one string resolves to NO CELL under a grammar that splits on whitespace, so a decomposition can name work the gate cannot see, and the subtraction that would have caught it read 6 against a round of 7.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T13:00Z"
+ }
+}
+```
