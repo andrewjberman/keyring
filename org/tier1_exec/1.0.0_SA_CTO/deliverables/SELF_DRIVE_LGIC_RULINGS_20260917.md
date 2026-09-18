@@ -2637,3 +2637,78 @@ is blocked today, **but its next slug is refused until those three carry rows.**
 R-21 an ARMED row GRADUATES and never dismisses, **so either the register's word or the resolver's read is the loose
 one. Not measured, and not ruled from a count.**
 
+---
+
+## R-78 -- **(e) IS DELIVERED: the census runs to the end on both planes, `judged_live` 3 -> 1707.** Plus three corrections that are not mine, and one convention that bit two seats in one hour
+
+### A. THE CONFORMANCE DENOMINATOR EXISTS
+
+⭐ **VERIFIED AT `NAMING_CENSUS_REPORT.r8.md`'s OWN FENCED DENOMINATORS, not from the drain report:**
+`judged_live` **1707** (was 3), `judged_repo` **1547** (was 0), **`stopped: None` on both planes**; `repo` 1878,
+`live` 2205, `live_nameable` 1838, `carded_live` 131, `carded_repo` 331, `live_not_graded_types` 351.
+
+⛔ **SO R-67's LINE -- "no conformance claim over this estate has a denominator above 3" -- IS RETIRED BY
+MEASUREMENT, NOT BY ARGUMENT.** The three names still `not_judged` carry cards with governing findings reused from
+round 4 and **corroborated rather than re-derived**, each ending *"Zero registry mints follow from this."* ⭐ **That is
+`(e)` closed: the thing I named as round 8's first priority, delivered inside round 8.**
+
+### B. THE `LGIC_CANON` 3-vs-0 IS RESOLVED AND **NEITHER READ WAS WRONG**
+
+I measured **3** (five identical runs). `2.0.0_SA_COO~G` measured **0** and offered, explicitly as a hypothesis and
+not a measurement, that my read had been PARTIAL -- a versioned channel read at one file. ⭐ **`3.0.0_SA_CVO`'s
+account is the discriminator: it independently measured 3, repeated five times per my own method note, AND THEN
+WROTE the census-gap carriers for `S17`/`S18` and corrected `W1-S6`.**
+
+⛔ **THE CHANNEL MOVED BECAUSE THE CVO MOVED IT, BETWEEN MY READ AND `COO~G`'s.** ⭐ **`COO~G`'s own stated
+alternative -- "the channel moved between your read and mine" -- IS THE CORRECT ONE, and it named it rather than
+asserting the hypothesis that would have convicted my method.** ⚠ **Recorded because an unresolved "was the CTO's
+read partial?" would otherwise sit in the record as a standing doubt about the instrument, and it is false.**
+
+### C. `W1-S6`: the loose carrier was THE CVO's OWN ROW, and the limb is what surfaced it
+
+⛔ **`C-S32` carries `adjudicates ['S19','W1-S6','W1-S7']` under a SINGLE `disposition: GRADUATED`, while its own
+`one_line` says `W1-S6` was DISMISSED.** ⭐ **ONE ROW ASSERTED TWO DIFFERENT DISPOSITIONS AND ONLY ONE OF THEM WAS
+EXPRESSIBLE IN THE SCHEMA IT USED.** The register recorded the SENTENCE; `_resolve_latest` read the FIELD; they
+disagreed because the row was compound. ⭐ **The transferable shape, that seat's own: a row adjudicating N items under
+one disposition is safe ONLY when all N take the SAME disposition -- the moment one differs, the difference is a
+SEPARATE ROW.**
+
+⭐ **AND THE LIMB EARNED ITS KEEP BEFORE GRADING A SINGLE SLUG.** Because the FIELD said GRADUATED, `W1-S6` sat in the
+rowless population and **would have refused `LGIC_CANON`'s next slug** -- *"a laundered disposition became a
+mechanical blocker three rounds later, found only because you ran a live limb against a project with no round in
+flight."* ⚠ **R-21 never applied to it:** `W1-S6`'s investigation row is `INERT`, not ARMED, and R-21 forbids
+dismissing an ARMED row. **So my "either the register or the resolver is loose" framing had the right suspicion and
+the wrong pair -- the third possibility, that the ROW was loose, is the one that held.**
+
+### D. ⛔ THE TUPLE CONVENTION BIT TWO SEATS IN ONE HOUR, AND THE DIFFERENCE BETWEEN US WAS LUCK
+
+**Mine:** I passed `_latest_dispositions`'s 4-tuple to the pure core -> `AttributeError`, immediate, unmissable.
+**`2.0.0_SA_COO~G`'s:** it passed `_remediation_ids_for_project`'s `(ids, note)` tuple in as the id SET ->
+**109 rowless of 109 GRADUATED.** ⛔ **THAT NUMBER IS PERFECTLY PLAUSIBLE for a project nobody had swept, and the
+headline could never have falsified it.**
+
+⭐ **WHAT CAUGHT IT WAS THE INTERMEDIATE DENOMINATOR PRINTED BESIDE THE ANSWER: `remediation ids 2` on a project that
+seat had measured at 102 earlier the same session. THE INSTRUMENT'S OWN INTERNAL INCONSISTENCY FALSIFIED IT.** It did
+not publish the 109.
+
+⛔ **A CRASH IS THE LUCKY FAILURE AND A PLAUSIBLE NUMBER IS THE UNLUCKY ONE** -- same helper family, same convention
+error, one hour apart, and only one of the two was self-announcing. ⭐ **The single control that worked is printing
+the intermediate denominators beside the result**, which is this estate's own rule arriving from the direction where
+it actually pays.
+
+### E. R-75's CHAIN IS FALSIFIED IN ONE LINK, AND THE VERDICT GETS STRONGER
+
+`2.0.0_SA_COO~G` (`LGIC_LGCTFM-S24` @`d36a32f76b`): ⛔ **FWD-6 does NOT close on `LGIC_CANON`'s C6 practice wave.**
+The PRD's own bytes -- ACCEPT is *"the 49 Financial migration's decomposition starts from the run's plan"*, and
+`PRD:177`'s PLAN row names its consumer verbatim as *"consumed by the subject's migration project at L5
+(`ADVI_FIRMBKTS` first)"*.
+
+⭐ **THE DISCRIMINATOR IS THAT C6 ALREADY RAN -- round 4, reached 12 + carded 4, `C6R4-AC8` PASS -- AND FWD-6 DID NOT
+MOVE.** *"An outcome whose stated closing event has occurred and which has not moved is an outcome whose stated
+closing event is not its closing event."*
+
+⛔ **UNREACHABLE STANDS AND THE CHAIN IS SHORTER: FWD-6 terminates DIRECTLY on `ADVI_FIRMBKTS` with no C6
+intermediary, so ONE UNSEATED PROJECT BLOCKS THREE THREADS ACROSS TWO PROJECTS rather than two through a chain.**
+⭐ **Card 6's rec is strengthened and the card is corrected**, because a card at Andrew carrying a falsified
+dependency is worse than no card.
+

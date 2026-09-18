@@ -52,18 +52,24 @@ one Andrew reads first.**
   MDPF_TAXSMA and NFRA_MCPINDEX?  (a) yes  (b) no, leave it**
   D14 has FOUR members. LGIC_NAMING is complete; LGIC_ENFORCE is
   reachable and in round 8. LGIC_CANON and LGIC_LGCTFM are BOTH
-  UNREACHABLE by any act of this fabric: CANON's FWD-5 "closes when the
-  firm's people can see their dashboard", needing ADVI_FIRMBKTS (carded
-  steps 10 and 16) plus YOUR portal-paths word (CALL 3); LGCTFM's FWD-6
-  then closes on CANON's C6 practice wave. COO capacity is AT CAP (3 of
-  3); the queue is MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS ->
+  UNREACHABLE by any act of this fabric, and BOTH END ON THE SAME
+  UNSEATED PROJECT: CANON's FWD-5 "closes when the firm's people can see
+  their dashboard", needing ADVI_FIRMBKTS (carded steps 10 and 16) plus
+  YOUR portal-paths word (CALL 3); and LGCTFM's FWD-6 terminates DIRECTLY
+  on ADVI_FIRMBKTS too, its PRD naming the consumer as "the subject's
+  migration project at L5 (ADVI_FIRMBKTS first)". COO capacity is AT CAP
+  (3 of 3); the queue is MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS ->
   MDPF_CANON.
   ----------------------------------------------------------------------
-  **REC --** (a). ADVI_FIRMBKTS is THIRD and is the ONLY one of the four
-  that unblocks anything in D14; the two ahead of it unblock nothing
-  here. No document said this, because the sequence orders by DEPENDENCY
-  and nobody had read it against D14's own stop-condition. The order is
-  YOURS and I have not touched it.
+  **REC --** (a), and the case got STRONGER after this card was written.
+  ADVI_FIRMBKTS is THIRD and is the ONLY one of the four that unblocks
+  anything in D14; the two ahead of it unblock nothing here. No document
+  said this, because the sequence orders by DEPENDENCY and nobody had
+  read it against D14's own stop-condition. ONE UNSEATED PROJECT NOW
+  BLOCKS THREE SEPARATE THREADS ACROSS TWO PROJECTS: an earlier version
+  of this card routed one of them through a middle step, and that was
+  falsified from the PRD's own bytes -- the middle step ALREADY RAN and
+  the outcome did not move. The order is YOURS and I have not touched it.
   ----------------------------------------------------------------------
   **THIS IS THE D14 STOP-CONDITION ITSELF.** When LGIC_ENFORCE reaches
   complete, only UNREACHABLE members remain and the /self-drive loop
