@@ -36,7 +36,12 @@ The two inputs, both required at HEAD before you are spawned:
   walkthrough record, in `OG-v-1`'s template.
 
 If either is absent, file a BLOCKING row and stop. The active profile is read, read-only, from the live
-`opal-gateway-access-state` table's `POLICY#` record and its `operator_audit`.
+`gateway-access-state-table` table's `POLICY#` record and its `operator_audit`. **THE TABLE NAME IN THIS
+SENTENCE WAS `opal-gateway-access-state` UNTIL 2026-09-18 ~12:0xZ AND THAT TABLE NO LONGER EXISTS** -- `OG-i-5`
+renamed it and this pending order was never carried forward. The name here is the CONTRACT's
+(`org/standards/NFRA_OPLGTW_CONTRACT.json` `state_store.table`), and a `dynamodb list-tables` at amendment time
+returned 44 tables of which `gateway-access-state-table` is one and `opal-gateway-access-state` is NOT.
+If this name and the contract ever disagree again, the CONTRACT wins and the disagreement is a BLOCKING row.
 
 **The probe** for every mechanical criterion is `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v5.py`,
 taking the short id, printing its measurement with its denominator, then exactly one line `VERDICT: PASS-OGV5-AC<n>` or
@@ -112,6 +117,15 @@ comp-iam: DECLARED-NOT-APPLICABLE -- this cell reads records, one table record a
 comp-adversary: RUN at L5 on the PRD v0.2 (@f0aa50dbc0) -- 4 of 4 cited commits verified; 7 cited paths, 6 stable, 1 GONE (an external RFC URL parsed as a repo path). Blindness stated: T11, filesystem adjacency stands as its neighborhood.
 lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
 </preflight>
+
+Amended 2026-09-18 ~12:0xZ by `2.0.0_SA_COO~O`, its issuer, while this order is still PENDING and BEFORE any
+worker is spawned on it. ONE CHANGE, a stale live-resource name: the cell text named the access-state table
+`opal-gateway-access-state`, which `OG-i-5` renamed. A worker handed this face would have read a table that does
+not exist, on the one read that establishes the pilot's active profile, and the failure would have surfaced only
+once a person's walkthrough was already done and waiting to be graded. **No criterion was added, removed or
+re-cut; no grant changed; the open-order count is unchanged (a modification, never a new order).** Found by this
+lane's own gate-precondition check while both walkthrough cells were held -- the check that asks whether a cell's
+inputs still resolve, rather than whether its gate is still shut.
 
 Seating: slot ~6, queue position 5, handed after `OG-v-4` merges AND the G-E and G-F records are at HEAD. Round 1 of
 NFRA_OPLGTW, issued by `2.0.0_SA_COO~O` (seated msg 96971, LD-0567). Decomposition v1 @8768f46770.
