@@ -2517,6 +2517,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "This order's own BOUNDS text: 'tests/test_schwab_query.py ... are NOT yours -- other cells', merged or open. A needed change there is a BLOCKING row.'",
     "world_is": "test_schwab_query.py::test_ogq2_ac20 now fails because its 'one_page_dup' case asserts success for a duplicated source grain merely because pagination is not needed; C3 R24 requires UNAVAILABLE regardless of page size. This cell cannot edit test_schwab_query.py (not its <paths>), so the test stays red until its owner updates that assertion to expect a refusal (or narrows the fixture so the duplicate-grain row is not among the requested/grain-visible columns).",
     "notes": "ARMED: a real, committed test-suite regression (not a dormant-feature latent risk) -- whoever next runs the full opal-gateway suite sees this red. Not this cell's defect to fix (file outside <paths>); this cell's own AC1..AC6 are unaffected and all PASS. Remedy: update test_ogq2_ac20's one-page duplicate-grain expectation to a refusal, the issuer's or that file's owning cell's call."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-18T03:35:00Z",
+    "one_line": "OGV2-AC4's module sweep, re-run fresh at this order's HEAD (CLOUD @1529bcd131, after TO-OG-q-6's reopen+amend commit), measures MODULES: 25 FAILED-MODULES: 1 -- test_schwab_query.py::test_ogq2_ac06 and ::test_ogq2_ac20 are still red, the same defect rows W5-S19/W5-S20 already named and ARMED against disarm_owner 2.0.0_SA_COO~O; the reopen commit re-grants the file, it has not yet drained a fix.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN at this worker's HEAD: `cd /c/tmp/wk-oplgtw-6f && n=0; f=0; for m in infra/aws/ec2/opal-gateway/tests/test_*.py; do n=$((n+1)); timeout 300 .venv-og/Scripts/python -m pytest \"$m\" -q -p no:cacheprovider --color=no -m \"not live\" -k \"not test_scoped_deny_by_default\" || [ $? = 5 ] || f=$((f+1)); done; echo \"MODULES: $n FAILED-MODULES: $f\"` -> `MODULES: 25 FAILED-MODULES: 1`, the one failing module printing `FAILED infra/aws/ec2/opal-gateway/tests/test_schwab_query.py::test_ogq2_ac06` and `FAILED infra/aws/ec2/opal-gateway/tests/test_schwab_query.py::test_ogq2_ac20` (`2 failed, 23 passed in 10.72s`) -- OGV2-AC4's own `<expect>` (`^MODULES: [1-9][0-9]* FAILED-MODULES: 0$`) does not match this output.",
+        "READ this worktree's commit log: HEAD @1529bcd131 is `reopen+amend(NFRA_OPLGTW.TO-OG-q-6, 2.0.0_SA_COO~O): test_schwab_query.py granted for EXACTLY test_ogq2_ac06 and test_ogq2_ac20 -- the R20/R24 wiring turns both red because each asserts the pre-wiring shape the contract forbids (rows W5-S19, W5-S20); AC7-AC9 grade the correction` -- so the re-grant to fix this exact pair is already cut and owned; the fix itself has not landed at this HEAD.",
+        "This is the SAME defect rows NFRA_OPLGTW-W5-S19 and NFRA_OPLGTW-W5-S20 (this file, `disarm_owner: 2.0.0_SA_COO~O`) already ground -- not a new class, a re-measurement at a later HEAD confirming it is still open and still blocks a criterion that reads the whole `test_*.py` glob (OGV2-AC4), where W5-S19/S20's own cell (TO-OG-q-6) only needed its own AC7-AC9 clean."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGV2-AC4's invocation and `<expect>`: every module the glob `infra/aws/ec2/opal-gateway/tests/test_*.py` derives passes in its own process, `MODULES: [1-9][0-9]* FAILED-MODULES: 0`, with only the one named row-S1 test deselected.",
+    "world_is": "test_schwab_query.py carries two tests (test_ogq2_ac06, test_ogq2_ac20) asserting the pre-R20/R24 shape C3 now forbids; they fail, so FAILED-MODULES reads 1, not 0. This cell's <paths> grant is `tests/acceptance/test_local_acceptance.py`, `tests/acceptance/conftest.py` and this investigation file -- it cannot edit test_schwab_query.py to close this, and the order that can (TO-OG-q-6) is already reopened for exactly this pair but not yet drained at this HEAD.",
+    "notes": "BLOCKING for THIS order's OGV2-AC4 (a whole-glob criterion, unlike TO-OG-q-6's own narrower AC7-AC9); not a new hazard -- re-measured against the already-ARMED W5-S19/W5-S20 rows at a later commit to confirm they are still open. OGV2-AC4 is recorded FAIL by this measurement; no repair attempted outside this cell's grant."
   }
 ]
 ```
