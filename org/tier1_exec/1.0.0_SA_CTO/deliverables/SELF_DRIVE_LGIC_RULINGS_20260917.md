@@ -3028,3 +3028,101 @@ is unaffected and proceeds.
 The canonical `graph-call-manifest.yaml` entry is **not cut into round 3.** Adding a cell to a live round is a
 decomposition change and the spine freezes it. It leads round 4 beside any `LT-e-5` conformance repair. ⚠ **This is
 NOT LD-0521** -- nothing here cuts round 4 before round 3's slug; it names what round 4 opens with.
+
+## R-83 -- THE RECORD-VS-LIVE RECONCILIATION IS RATIFIED AS `LGIC_LGCTFM`'s WORKFLOW. **Its DELTA ENUM is a Rule 24 schema and it is MISSING TWO MEMBERS I MEASURED TODAY** -- and the ADVI_FIRMBKTS binding is FOUR carriers on TWO buckets, stalling not stopping
+
+**Andrew-direct ~19:5xZ at the `4.0.0_SA_CRO` terminal** (record @`b36edd606e`, relayed 98052), VERBATIM on the
+workflow half: *"I think there is something here that we can work into the workflow where we essentially run the
+various repo scan (change management, logs), coalesce to whatever the newest truth seems to indicate, then cross
+reference that with the comp-tool scans on confirmed live/derived-from-live surfaces. Any delta gets specific
+investigation/remediation, which leads to a validated 'current state' table."*
+
+### 1. RATIFIED AS THE WORKFLOW, AND IT COMPLETES R-81 RATHER THAN COMPETING WITH IT
+
+R-81 assigned the MEASURED side (which instrument answers which question, and which sources are refused). **This word
+adds the CLAIMED side and the JOIN.** Together they are the whole of `FWD-1`'s repair: R-81 says what may be measured;
+R-83 says a run is not done until every CLAIM has been reconciled against that measurement and every DELTA has an
+owner. ⭐ **A "current state" table is VALIDATED only when every delta is dispositioned** -- which is the CRO's O9 and
+I adopt it.
+
+### 2. ⛔ THE DELTA ENUM IS A TYPED-RESULT SET, SO RULE 24 BINDS IT -- AND BY SUBTRACTION IT IS NOT MECE
+
+CLAUDE.md Rule 24: *"Outcome arrays, typed-result sets and predicates ARE schemas."* The proposed closed set is
+**AGREE / RECORD-NEWER-THAN-LIVE / LIVE-NEWER-THAN-RECORD / DECLARATION-STALE / UNMEASURED-EITHER-SIDE**.
+
+**HUNTED BY SUBTRACTION FROM A PRINTED DENOMINATOR, NEVER BY RECALL** (Rule 24 (i)). The domain is: for each
+resource, a CLAIMED side and a MEASURED side, each either PRESENT or ABSENT. That is four cells, and the enum covers
+the both-present cell in three ways and collapses the rest into one:
+
+| claimed | measured | enum member | |
+|---|---|---|---|
+| present | present, equal | `AGREE` | covered |
+| present | present, differ | `RECORD-NEWER` / `LIVE-NEWER` / `DECLARATION-STALE` | covered |
+| **ABSENT** | **present** | -- | ⛔ **UNCOVERED** |
+| present | **ABSENT** | -- | ⛔ **UNCOVERED** |
+
+⛔ **BOTH UNCOVERED CELLS ARE POPULATED TODAY, MEASURED BY THIS SEAT THIS SESSION, SO THEY ARE NOT HYPOTHETICAL:**
+
+- **`LIVE-UNCLAIMED`** -- live exists and NOTHING claims it. `comp-find --corpus aws` already carries this as a FIELD:
+  `drift_class = LIVE-no-DECLARED`, **15 of 217 Lambdas today**. ⚠ **This is NOT `UNMEASURED-EITHER-SIDE`: unmeasured
+  means nobody looked; unclaimed means someone looked and found no claim.** Folding them loses the distinction
+  between a gap in the sweep and a gap in the estate's records -- and they have different owners and different
+  remedies.
+- **`CLAIMED-ABSENT`** -- a record claims a resource that is not live. **9 of 216 `lambda-source-map.json` entries
+  today** (`bd-client-detail`, four `find-insure-serving-*`, `smartx-*`). A reconciliation that cannot say this leaves
+  a record asserting a resource nobody can find, and **that is the direction that produces confident wrong answers**,
+  because the claim reads as knowledge.
+
+### 3. ⛔ AND (iii) INTENT COHERENCE FAILS: THE SET MIXES THREE AXES
+
+`RECORD-NEWER-THAN-LIVE` / `LIVE-NEWER-THAN-RECORD` are a **TIME** axis. `DECLARATION-STALE` is an **ARTIFACT-KIND**
+axis (a comment or a `.tf` declaration is wrong, regardless of dates). `UNMEASURED-EITHER-SIDE` is a **COVERAGE**
+axis. **Rule 24 (iii) wants one axis and one intent per enum**, and a value can currently be true on two axes at once
+-- a stale declaration that is also older than live is both `DECLARATION-STALE` and `RECORD-NEWER-THAN-LIVE`, and
+nothing says which a grader picks.
+
+**THE AMENDED SHAPE -- TWO FIELDS, NOT ONE ENUM, WHICH IS THE CHEAPEST FIX AND KEEPS EVERY MEMBER THE CRO NAMED:**
+
+1. **`coverage`** -- `BOTH-PRESENT` | `LIVE-UNCLAIMED` | `CLAIMED-ABSENT` | `UNMEASURED-EITHER-SIDE`. **MECE over the
+   four-cell domain by construction**, which is why it is written as the subtraction above rather than a list.
+2. **`delta`** (populated only when `coverage = BOTH-PRESENT`) -- `AGREE` | `RECORD-NEWER-THAN-LIVE` |
+   `LIVE-NEWER-THAN-RECORD`.
+3. **`claim_kind`** on the claimed side -- `RECORD` | `DECLARATION`. `DECLARATION-STALE` then falls out as
+   `claim_kind=DECLARATION` AND `delta≠AGREE`, **which is where it belonged: it was never a delta value, it was a
+   property of the CLAIMANT.**
+
+⭐ **(iv) STATE COHERENCE, NAMED AS RULE 24 REQUIRES: re-running the sweep moves `coverage` and `delta`. IT DOES NOT
+MOVE `claim_kind`, AND IT DOES NOT MOVE AN OWNER.** A delta whose remedy is a comment fix is still owed after the
+next run reproduces it -- which is exactly the CRO's own `ec2.tf` instance.
+
+### 4. THE ADVI_FIRMBKTS BINDING -- and it sharpens the seating call already at Andrew
+
+`4.0.0_SA_CRO` verified Andrew's cross-system sentence and **corrected it in three places rather than confirming it**,
+which is the behaviour that makes the correction usable:
+
+- **UNDERCOUNTED: not one resource -- FOUR carriers on TWO legacy buckets** (`opal-data-inf`, `opal-data-bd`), both
+  `ADVI_FIRMBKTS`'s to retire: the rule's pattern (dead), **the feeder Lambda's `INF_BUCKET` env gate (BINDING)**, the
+  same Lambda's `BD_BUCKET`, and the script's wait.
+- **FALSE: "the dispatch waits on the same key"** -- it waits on a different key, bounded 30 min, non-fatal.
+- ⛔ **OVERSTATED: "silently stops MDPF". THE TRUE SHAPE IS WORSE IN THE WAY THAT MATTERS: absent gate key ->
+  `NOT-YET`, status 200, "NOT an error", no dispatch, no DLQ, NO ALARM. The floor and the publisher keep running, so
+  the portal keeps serving a daily platinum from the last feeds that landed.** Accurate sentence, adopted verbatim:
+  **an unrepointed move of `opal-data-inf` silently STALLS the feeders and silently STALES the served artifacts;
+  nothing stops, nothing alarms.**
+- ⚠ **AND THE ACCELERATOR HAS BEEN DEAD 13 DAYS ALREADY** -- last fired 2026-09-05; the INF chain has written
+  `pipeline-failed.json` daily since. MDPF has been publishing on the Scheduler backstop. **A trigger can be LIVE and
+  DEAD at once, and the sentinel's `LastModified` is the positive control** -- which is the CRO's own ruleset lesson
+  and I adopt it into R-81's instrument assignment.
+
+⭐ **THIS IS THE THIRD INDEPENDENT PATH TO THE SAME CONCLUSION TODAY: `ADVI_FIRMBKTS` is the binding constraint.** It
+gates `LGIC_CANON` FWD-5 (carded steps 10 and 16), `LGIC_LGCTFM` FWD-6 (the 49F migration), and now the MDPF feeder
+chain through four carriers on two buckets. **Its seating is CALL 2, open at Andrew since ~08:4xZ.** ⛔ **I am not
+re-asking it; I am recording that the cost of leaving it unseated is now measured rather than argued.**
+
+### 5. WHAT THIS DOES NOT DO
+
+**No gate is created.** The amended schema binds the round-3/round-4 cell that builds the reconciliation, not any tool
+today. `LGIC_LGCTFM-S21` (the INF chain's daily `pipeline-failed.json` since 09-06) is FILED, NOT CHASED, and whose
+finding it is remains the owner's -- `3.0.0_SA_CVO` may re-home it. **The un-censused readers of that completion
+marker (39 hits / 13,057 files) are named as UNMEASURED, which under section 2's amended schema is now a value the
+table can carry rather than a silence.**
