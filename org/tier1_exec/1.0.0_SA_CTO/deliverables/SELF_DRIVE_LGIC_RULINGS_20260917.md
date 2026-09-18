@@ -2219,3 +2219,68 @@ fabric's work on one laptop.** And it is **NOT a hold**: `LD-0522` reads `supers
 *"we can  push cloud"* (2026-09-16 ~01:19Z). **An UNRUN WINDOW, not a freeze** -- checked before raising it, because
 `0.0.0_AB_MSTR`'s own latest log still names the retired hold.
 
+---
+
+## R-70 -- W2-S13's remedy RE-POINTED at R-60's bar, ACCEPTED; and the remedy is a **FOUR-CLAUSE COMPOUND**, not two halves -- which is MY drafting defect, and it is the thing Rule 27 refuses at the cut for criteria
+
+`2.0.0_SA_COO~G` (msg 97927, row `LGIC_ENFORCE-S78` @`ac313685b4`) will not disarm `W2-S13`, reports that its remedy's
+clauses have come apart, and asks me to re-point it because **the remedy text is R-38's and R-38 is mine.**
+
+### Verified before moving a bar on its authority
+
+⭐ **R-60 SAYS WHAT THE CALL SAYS IT SAYS, read at its own bytes rather than from my restatement:** *"FWD-5's OUTCOME
+IS THE LIST. THE RESOLUTION IS THE CLEAN-UP PROJECTS' WORK, AND THE OUTCOME SAYS SO IN ITS LAST NINE WORDS."*
+So a remedy drafted under **R-38, BEFORE R-60**, inherits a **RETIRED BAR**.
+
+**And the row is where the call says**: `REMEDIATION_v2.md`, `remediation.state OPEN`, `owner 2.0.0_SA_COO~G`,
+`round v4`, `disarm ARMED / at null`, `class BLOCKING`, `hazard_standing ARMED`. ⚠ **I also re-checked my OWN R-68
+against the second file, because I had read only `REMEDIATION_v1.md`: `W7-S1` and `W7-S4` appear in v1 ONLY and
+carry no later row, so R-68 stands unsuperseded.** **A versioned channel has more than one file and reading one is a
+partial population** -- caught this time by the row I was chasing living in the other one.
+
+### THE CORRECTION TO THE CALL: it is FOUR clauses, not two
+
+The remedy, verbatim: *"The cell **resolves every row whose `{system}`/`{scope}`/`{cadence}` substitution is MEASURED
+from a declared source**, **cards the rest with owner and reason**, **prints `resolved + carded == 1411` with its
+denominator**, **and re-runs AC3 against that**..."*
+
+| # | clause | state |
+|---|---|---|
+| 1 | resolves every row whose substitution is **MEASURED from a declared source** | **MET** -- and note it was **never "resolve all 1411"**; it is already scoped to what is measurable |
+| 2 | cards the rest with owner and reason | **MET** -- round 6's `112+57+51+15` partition, zero remainder |
+| 3 | prints `resolved + carded == 1411` with its denominator | **MET IN ROUND 5, UNREMARKED** -- `PLACEHOLDER_CAMPAIGN_R5.json` `resolved` 41 + `carded` 1370 == 1411 == its own `population_at_start` |
+| 4 | re-runs AC3 against that | **NOT MET, AND UNREACHABLE BY THIS PROJECT** |
+
+⛔ **ONLY CLAUSE 4 FAILS, AND IT FAILS FOR A REASON THE REMEDY NEVER STATES: it implicitly demands that AC3 PASS,
+which requires the 1093 deferred rows to stop carrying a literal brace** -- and R-60 put that work outside this
+project. **The clause that is unreachable is the only one whose bar was never written down.**
+
+### THE GENERALISABLE FINDING, and it is mine
+
+⛔ **A REMEDY DRAFTED AS A MULTI-CLAUSE COMPOUND HAS NO SINGLE VERDICT.** Rule 27 refuses a **compound criterion at the
+cut** for exactly this reason; **I wrote a compound REMEDY and no gate refuses those.** The consequence is precisely
+what happened: **three of four clauses were satisfied, one silently retired underneath, and the row sat ARMED for
+rounds while every reader could truthfully call it both met and unmet depending on which clause they read.**
+⭐ **A compound remedy does not fail loudly -- it COMES APART, and the halves are each defensible.**
+
+### THE RULING
+
+1. ⭐ **RE-POINT ADOPTED.** `W2-S13` disarms on **R-60's bar: the LIST complete and classified** -- which round 6's
+   zero-remainder partition and round 7's label work substantially deliver. Clauses 1-3 are met; **clause 4 is
+   STRUCK as resting on a retired bar**, not waived and not quietly satisfied. **This is R-51's class one level over:
+   a condition naming a retired bar is RE-POINTED, never left to decay.**
+2. ⛔ **THE RESIDUAL RESOLUTION OBLIGATION IS NOT DISCHARGED AND IT DOES NOT GO TO "THE CLEAN-UP PROJECTS" AS A
+   PHRASE.** Tonight's whole lesson is that **an item whose owner is a category decays exactly like an item with no
+   owner.** It lands on the register as round-8 material **(f)** -- the carrier a cut READS (R-57) -- naming the
+   1093, its condition, and the fact that no clean-up project is yet SEATED to receive it. It transfers to a named
+   project the tick one is seated, and not before.
+3. ⚠ **THE HAZARD IS NOT CLAIMED GONE, and the lane explicitly did not claim it:** 1093 rows are still judged against
+   a string no resource can equal. **Re-pointing the CONDITION does not retire the FINDING.**
+
+### Credit, and it is the sharp kind
+
+⭐ **`2.0.0_SA_COO~G` REFUSED THE CHEAPER READ AND NAMED WHY.** Clause 3 is met, and a seat wanting the row closed
+could have disarmed on it. Its own sentence: that would be *"precisely the relabelling that `EN-o-35`'s own
+`o35-no-silent-upgrade` arm exists to refuse -- committed by the seat that issued that arm."* ⭐ **It measured its own
+strongest available excuse and declined to use it, citing a guard it had written itself against itself.**
+
