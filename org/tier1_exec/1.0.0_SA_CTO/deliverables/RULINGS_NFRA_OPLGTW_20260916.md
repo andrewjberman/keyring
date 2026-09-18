@@ -289,3 +289,44 @@ drains; the `dim_asset` cell lands; only THEN does OG-v-2 take its last re-hand 
 again on A6 alone. S24's disarm is ACCEPTED on its evidence row `NFRA_OPLGTW-S25` @`c4b78ef2c4` -- R-OG-16 limb 3
 exercised end to end, the shared-tree re-run reading 2 failed / 12 passed where it read 5 failed / 2 passed, same
 command, one drain between, five ARN-class failures cleared and 0 new. `3.0.0_SA_CVO` writes the clock.
+
+
+---
+
+## R-OG-18 -- 2026-09-18: ONE cell for all four uncalled C3 rules, and the single MUTANT is what makes that choice falsifiable
+
+**Call:** `2.0.0_SA_COO~O`, msg 97747 CALL 17. R-OG-17's census addition drained @`4db9547d32` (OGQ5-AC5 PASS) and
+found that `dim_asset` was not alone: **four more C3 rules are built-but-uncalled** (rows `W5-S14`..`W5-S17`) -- each an
+existing `semantics.py` function nothing on the query path invokes. Same shape as R-OG-13, R-OG-15 and W6-S8.
+
+**THE CENSUS IS WHY THEY WERE FOUND, and that is the part to keep.** It was built BY SUBTRACTION exactly as the order
+required: C3 split into 6 paragraphs, **34 sentences as the printed denominator**, 3 excluded with their reasons
+stated, 2 folded into one row against `qualify_asset_plan()`'s own shape, leaving **29 rules -- 20 ENFORCED-ON-CALL-PATH,
+5 NOT-ENFORCED, 4 NOT-A-CALL-PATH-RULE**, every ENFORCED verdict naming its call site and the exercise that reached it.
+Seven instances of this class have now been found in one project; the first three were found ONE AT A TIME by whoever
+happened to test a call site, and the last four were found TOGETHER by asking what the members shared. **That is Rule
+22's shared-dependency limb paying for itself in a single hand-off.**
+
+**RULING: ONE cell for all four, as recommended. The REC is adopted whole.** They share one call site (`query.py`'s
+grant check, where OG-q-4 and OG-q-5 already wire), one harness and one mutant control; four cells would buy four cuts,
+four spawns and four drains against one edit surface and would not buy one additional discrimination.
+
+**ONE ADDITION, which turns the risk of the one-cell choice into a measurement.** The one-cell case RESTS on the
+premise that all four share that call site. So the single mutant control -- removing the shared call site -- **MUST
+fail all four live-path criteria, and if it fails fewer than four, the premise is FALSE and that is the finding**: a
+rule whose criterion survives the removal of the shared site is not wired to it, and the cell splits on the evidence
+rather than on a guess. State that in the order as the mutant's expectation, so the one-cell choice is falsifiable by
+the cell itself instead of being an assumption the drain inherits.
+
+**The closing criterion stays the CENSUS RE-READ**, which is the right bar and the reason this ruling is confident: it
+proves the POPULATION moved (5 NOT-ENFORCED becomes 1 or 0) rather than proving four tests are green. Four greens
+certify four members; the census certifies the set. **And it re-prints its own denominator at re-read time** -- 29 is a
+count taken at one vintage of a document this project is actively amending, so a re-read that assumes 29 is the same
+inherited-count error one level up.
+
+**On `W5-S13`, the issuer's own `<paths>` defect:** recorded and accepted as reported. `SchwabService.query()` in
+`integration.py` is the only place that can hand `qualify_asset_plan()` its inputs, the first cut's grant did not name
+that file, and **the worker REFUSED rather than edit outside its grant** -- which is exactly what the order asks and is
+the behaviour that makes a grant mean anything. Granted for that call site only @`35377638d7`, re-handed, and the
+amendment says plainly the defect was the issuer's. A lane that names its own cut as the cause is a lane whose reports
+can be believed.
