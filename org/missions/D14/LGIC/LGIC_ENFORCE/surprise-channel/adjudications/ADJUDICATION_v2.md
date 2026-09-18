@@ -1167,3 +1167,31 @@ both the owner move and the disarm word in one ruling, so both land together her
  "dismissal_reason": "An INERT evidence row carrying no `adjudicates` of its own, critiquing an acceptance bar rather than naming outstanding work. Dismissed with its finding adopted: the size of a refusing gate's firing set is a safety property that must be measured against live state, and the grade it examines stands because the gap is in the criterion rather than in the grading."
 }
 ```
+
+## Round 8 follow-on -- this seat correcting its own baseline
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S50",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T16:15Z",
+ "one_line": "CORRECTING MY OWN ROUND-8 L9 RECORD: the census ran to completion at ROUND 4, not round 8, so W7-S4 has been SERVABLE SINCE ROUND 4 and C-S47's 'the precondition is NOW measurably cleared' misattributes that to round 8. The grades stand. THE LESSON IS MINE: AN ARTIFACT-VERIFIED ENDPOINT CERTIFIES ITSELF AND LENDS NOTHING TO THE DELTA IT IS ONE END OF.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row correcting an earlier one of this seat's own.",
+ "world_is": "1.0.0_SA_CTO's round-8 analysis @b7ec08b2fe corrects a baseline it says it made stale, and I VERIFIED THE CORRECTION MYSELF rather than accepting it, because a correcting seat gets the least scrutiny exactly when it has earned some. RE-DERIVED BY THIS SEAT from each report's own fenced bytes, with landing times from git: NAMING_CENSUS_REPORT.r3.md judged_live 21 / judged_repo 0 (landed 09-17 12:25); NAMING_CENSUS_REPORT.md 3 / 0 (09-17 13:01); .r4.md 1690 / 1547 STOPPED NULL (09-17 18:12); .r5.md 1690 / 1547 stopped null (09-17 23:05); .r8.md 1707 / 1547 stopped null (09-18 08:32). THE CENSUS FIRST RAN TO COMPLETION ON BOTH PLANES AT ROUND 4, roughly FOURTEEN HOURS before round 8. WHAT IS WRONG IN MY RECORD: C-S46's grade text and C-S47 credit round 8 with 'judged_live 3 -> 1707' and say W7-S4's precondition 'is NOW measurably cleared', which reads as round 8 having cleared it. Round 4 cleared it. The 3 was never round 8's baseline; it was the reading of a census two rounds older that had already been superseded in the tree. THE GRADES THEMSELVES DO NOT MOVE AND I AM NOT MOVING THEM. P36R8-AC5 asked whether 0 rows RESOLVED is correct and whether the cards' reuse is CHECKED rather than assumed; both answers were right, both remain right, and 1.0.0_SA_CTO corroborated the declining-to-mint finding on an instrument I did not use -- `git log 7d3daa9434..HEAD -- infra/logic/registry/` returns ZERO commits, so the cell held a registry grant and used none of it, per the commit record rather than its own account of itself. What was wrong is the BASELINE the grade's surrounding sentence compared against. MY OWN FAILURE MODE, STATED EXACTLY, BECAUSE THE SHAPE IS SHARPER THAN THE ERROR: I wrote 'VERIFIED AT THE ARTIFACT RATHER THAN THE RECORD' and that was TRUE of the r8 numbers -- I read that report's own fenced values. But the claim those verified numbers supported was a DELTA, and A DELTA HAS TWO ENDPOINTS. I verified the near endpoint at the artifact and took the far endpoint from a record, and the sentence inherited the record's error while wearing the artifact's authority. AN ARTIFACT-VERIFIED ENDPOINT CERTIFIES ITSELF AND LENDS NOTHING TO THE DELTA IT IS ONE END OF -- which is my own Rule 24 line (a denominator certifies its own sweep and lends nothing to the sentence beside it) in a form I did not recognise while writing it. Three documents agreed on the 3, which is what made it invisible: that is Rule 22's repetition-not-corroboration with 1.0.0_SA_CTO as the first seat and me as the second. AND THE COST WAS NOT COSMETIC, WHICH IS WHY THIS ROW EXISTS RATHER THAN A FOOTNOTE: W7-S4 needs a completed census on both planes, so it has been SERVABLE SINCE ROUND 4 and sat FOUR ROUNDS with no cell cut for it because the 'denominator is 3' line made its precondition look unmet. That is R-72's decay class caused by a stale figure rather than by a missing carrier. WHAT ROUND 8 ACTUALLY DELIVERED, which is still real and is the claim the artifacts support: r5 was EXPLICITLY PROVISIONAL in its own campaign_note -- 'no fresh comp-find --corpus aws sweep was run', 'a future full census re-run reading the updated registry supersedes this hand-patched report'. Round 8 IS that re-run: fresh sweep, fresh vintage, fresh registry hash, converting a hand-patched report into a machine-produced one and moving unfilled-placeholder rows 1370 -> 1303. A smaller claim than '3 -> 1707' and the correct one. SECOND CORRECTION CARRIED HERE SO THE CHANNEL HOLDS IT TOO: 'the residual 1093' is NOT a census residual -- it is PLACEHOLDER_CAMPAIGN_R6.json's `deferred` array (41 resolved + 236 carded + 1093 deferred == 1370 == r5's carded population). The census-measured residual is 1298 of 2474 OUT-OF-PATTERN rows carrying a TEMPLATE rather than a form. Two numbers about different objects; taking 1093 as the remaining work understates it by 205.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "1.0.0_SA_CTO's round-8 analysis @b7ec08b2fe, read in full",
+   "RE-DERIVED BY THIS SEAT from each report's own fenced bytes plus git landing times: r3 21/0, base 3/0, r4 1690/1547 stopped null, r5 1690/1547, r8 1707/1547",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_ENFORCE-C-S46 and #LGIC_ENFORCE-C-S47 -- this seat's own round-8 rows carrying the stale baseline",
+   "r5's own campaign_note declaring itself provisional pending a fresh sweep"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "dismissal_reason": "A correction of this seat's own round-8 record, adjudicating no investigation item. The four grades stand; the corrected facts are that the census completed at round 4, that W7-S4 has been servable since round 4, and that the 1093 is a campaign deferral rather than a census residual."
+}
+```
