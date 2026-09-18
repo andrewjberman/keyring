@@ -129,3 +129,23 @@ acts the whole time. The count is corrected to **3 REACHABLE, 1 UNREACHABLE**, a
   delays the fix rather than advancing it. NOTHING ELSE ABOUT G-A HAS CHANGED AND THE REC IS
   UNCHANGED -- this only records that the queue behind it is now longer and includes a security
   item.
+
+
++-- CALL 6 of 6 (BLOCKING -- it is the D14 stop-condition) -----------+
+  **Re-order the COO seating queue to put ADVI_FIRMBKTS ahead of MDPF_TAXSMA and
+  NFRA_MCPINDEX? (a) yes, (b) no, leave the order as it is.**
+  D14 has FOUR members. LGIC_NAMING is complete; LGIC_ENFORCE is reachable and in round 8.
+  LGIC_CANON and LGIC_LGCTFM are BOTH UNREACHABLE by any act of this fabric: CANON's FWD-5
+  "closes when the firm's people can see their dashboard", which needs ADVI_FIRMBKTS (carded
+  steps 10 and 16) plus YOUR portal-paths word (step 14); LGCTFM's FWD-6 then closes on CANON's
+  C6 practice wave. COO capacity is AT CAP (3 of 3) and the queue order is
+  MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS -> MDPF_CANON.
+  --------------------------------------------------------------------
+  **REC --** (a). ADVI_FIRMBKTS is THIRD in the queue and is the ONLY one of the four that
+  unblocks anything in D14; the two ahead of it unblock nothing here. No document says this,
+  because the sequence orders by dependency and nobody had read it against D14's own
+  stop-condition. The order is YOURS and I have not touched it. This card also DISCHARGES
+  /self-drive s.4's requirement to surface each UNREACHABLE member once -- it names both,
+  because they are one decision. Card 5 (the Daily-Sprint audience) is separate and still
+  blocks nothing.
++---------------------------------------------------------------------+
