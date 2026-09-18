@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 4,
-  "decomp_version": "0.4",
+  "round": 5,
+  "decomp_version": "0.5",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -44,13 +44,44 @@
   "counterpart_decomp": "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md",
   "round3_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md @5c59f68d70",
   "cells_round4": 8,
-  "cell_id_shape_round4": "IB-rtd-<n>"
+  "cell_id_shape_round4": "IB-rtd-<n>",
+  "round4_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND4_ANALYSIS.md @561d6e1cc9",
+  "cells_round5": 5,
+  "cell_id_shape_round5": "IB-rte-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R5. ROUND 5 -- THE RECUT ON THE ROUND-4 ANALYSIS (@561d6e1cc9, msg 98036) AND ANDREW'S 17:3xZ APPROVAL (@af794c77e3)
+
+**Input:** seven judgment PASS, zero of ten FWDs REALIZED (all ten advisor-facing; the structural blocker is that no principal has ever existed to exercise them), S56 and S68 CLOSED, no PRD amendment; s.8 names six owed items; Andrew's verbatim *"Approved"* adopts the two `/open-calls` RECs (the two LGIC firm buckets NOW, creation only; a bounded test principal under both halves). The CTO's correction on W1-S20/W2-S59 changes the remedy: declare the true source in `files[]` / stage from a pinned blob, never a third copy.
+
+### R5.1 The rectangle (5 cells, id shape `IB-rte-<n>`)
+
+| cell | owes | assignee | serves |
+|---|---|---|---|
+| IB-rte-1 | s.8 item 1 / Andrew call 2: the bounded test principal DECLARED -- identity plane measured, keys, exercise plan, never-widen packet; creates nothing | WK~1 | FWD-1, 2, 5, 11 |
+| IB-rte-2 | the principal CREATED under both halves, the four outcomes EXERCISED at a live session by artifact hash, DELETED as the cell's last arm | WK~1 (after rte-1 + halves) | FWD-1, 2, 5, 11 |
+| IB-rte-3 | s.8 item 2 / Andrew call 1: `opal-data-inflection` + `opal-data-cottonwood` CREATED EMPTY via `name()`, in the 49 Financial bucket's shape, gate enumerations regenerated, fence proven; no objects, no cut-over | WK~3 | FWD-1, 7, 10 |
+| IB-rte-4 | s.8 item 4 / W1-S20, W2-S59: the served members declared from their TRUE sources (no third copy), served zips verified member-for-member, clean-checkout builds with 0 manual steps | WK~4 | provenance of every served function |
+| IB-rte-5 | s.8 item 6 / W2-S57 residual: the manifest-history census (rtd-2's Q2), FWD-7's FIVE arms on the controlled clock against the deployed code, the fresh-dispatch case named or driven | WK~2 | FWD-7 |
+
+**Not cells of this project:** s.8 item 3 (S68's cause, the `.gitattributes eol=lf` act) is MDPF's owner's -- the CTO's own, by its word. s.8 item 5 (IRPT_FNTEND's per-firm as-of consequence) is a CARRY: sent to `2.0.0_SA_COO~F` 11:55Z (QUEUED, no live session) and now escalated to `1.0.0_SA_CTO` to land in FNTEND's PRD at L4, which is the only carrier that does not decay. IB-rtd-7 (the port) stays SUPERSEDED until rte-3's buckets, both halves and the FNTEND reader cell exist -- re-cut then, not now.
+
+### R5.2 Edges and fanout
+
+Chains: A `rte-1 -> rte-2`; B `rte-3`; C `rte-4`; D `rte-5`. **fanout: 4 of 4 chains, cap 8.** Handed now: rte-1, rte-3, rte-4, rte-5. rte-2 on rte-1's merge + both halves at HEAD (the COO half is this seat's on the packet; the CTO half is asked the same tick the packet drains). The DS lane holds no round-5 order (nothing Rule-13-shaped is cut); it stays seated for the port's bundle work.
+
+### R5.3 Bounds carried
+
+R-40, R-42, R-44, R-45; the forward-looking-criterion bar and S56's vintage pins on every face; Rule 30 on every name (builder output or a drafted registry row); NEVER-1 on the principal (both halves before creation; deletion inside the same order); creation-only on the buckets (no object, no cut-over, no legacy retirement -- Andrew's prior word stands); no third copy of a served member; read-only on every served bucket in rte-5 (a reconciliation is declared, never performed).
+
+### R5.4 Not decided here
+
+Whether one bounded identity serves FWD-11 or a second is needed (rte-1's judgment); whether `_authz/` becomes a shared package (rte-4's judgment, L4's); whether the D14 register already names the two buckets (rte-3's judgment); the fresh-dispatch design (rte-5's judgment).
 
 ## R4. ROUND 4 -- THE RECUT ON THE ROUND-3 ANALYSIS (@5c59f68d70, msg 97944)
 
