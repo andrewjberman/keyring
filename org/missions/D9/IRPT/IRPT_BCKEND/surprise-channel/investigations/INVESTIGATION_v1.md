@@ -5320,6 +5320,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "lambda-source-map.json's irpt-holdings entry: files[] names served.py and loaders.py as packaged members of source_dir infra/aws/lambda/investor-reporting/holdings.",
     "world_is": "Both files are served in production and neither exists in the repository at any commit for that path. This cell's OWN deploy (irpt-holdings, this order) could only proceed by extracting both, unchanged, from the currently-deployed zip and placing them in the worktree FOR THE DURATION OF THE BUILD ONLY -- removed again immediately after, and never committed, because materializing them permanently is a holdings/-scoped code change this order's bound does not authorize. The fix (mint them properly in-tree, or determine loaders.py is meant to diverge and document why) is the next cell to touch this directory's to take.",
     "notes": "Not this cell's to fix, per bound (\"The two enforce.py files and their tests are the ONLY code touched\"). Filed rather than repaired, per the surprise-channel bound (a capability I lack: I cannot commit new tracked source files outside my declared scope even to close a gap I needed to work around). The workaround (extract-build-remove) is recorded in this order's own deploy-ledger proof rows rather than left silent."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S58",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T15:05:00Z",
+    "one_line": "build-and-upload.sh's ADHC_DRIFTD.002 parity check is scoped PER-FUNCTION over a source_dir TWO functions share (irpt-directory-refresh and irpt-directory-search both build from infra/aws/lambda/investor-reporting/directory/), so it falsely flags entry.py -- a file that belongs ONLY to the sibling irpt-directory-search's own files[] -- as an unregistered extra when building irpt-directory-refresh alone; the sanctioned BAU_PARITY_SKIP=1 override was used and justified in the deploy commit message.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rtd-2 face (b): \"DEPLOY the directory root under a change-management ledger entry (python .tools/deploy_ledger.py open ...) ... plan 0 to destroy, exactly the artifact change; served CodeSha256 == built\".",
+    "world_is": "`bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-refresh` (this run, before any override) failed with 'ERROR: ADHC_DRIFTD.002 parity check failed -- Files present in source_dir but NOT in lambda-source-map.json files[]: + entry.py'. infra/aws/lambda/ci/lambda-source-map.json's own irpt-directory-search entry (same source_dir) DOES declare entry.py in its files[]; the currently-served irpt-directory-refresh zip (fetched this run) has NEVER carried entry.py (5 members: refresh.py, expiry.py, handler.py, errors.py, trading_calendar.py). Re-run with BAU_PARITY_SKIP=1 (the script's own documented override, 'use only when an explicit ignore is justified -- log reason in the commit message') succeeded: import-closure OK, 5 members, uploaded, sha256 verified. This gate would refuse EVERY future single-function build of irpt-directory-refresh (or irpt-directory-search) in this shared source_dir, not just this one -- a structural gap in the tool for a multi-function shared source_dir, a different symptom of the same directory/holdings sharing-source-trees-across-functions class row IRPT_BCKEND-W1-S20 already named.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "build_upload.txt (this run, before override): 'ERROR: ADHC_DRIFTD.002 parity check failed ... + entry.py'",
+        "infra/aws/lambda/ci/lambda-source-map.json: functions['irpt-directory-search'].files includes 'entry.py'; functions['irpt-directory-refresh'].files does not (and never has)",
+        "the currently-served irpt-directory-refresh.zip (downloaded this run, s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-directory-refresh.zip): 5 members, entry.py absent",
+        "infra/aws/lambda/ci/build-and-upload.sh:220-245 (this worktree, HEAD): the parity check scopes PARITY_EXTRAS to $FN_FILES_PADDED, this function's own files[] only, against every top-level *.py in $ABS_SOURCE -- it cannot see that a sibling function in the same source_dir owns a file this one does not"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix: build-and-upload.sh is outside this order's <paths> grant (only infra/aws/lambda/ci/lambda-source-map.json is named). The sanctioned override (BAU_PARITY_SKIP=1, justified in the deploy commit message 05c0322989) unblocked THIS deploy correctly and safely -- entry.py's absence from irpt-directory-refresh's files[] and from its served zip was independently confirmed before the override was used. Left UNDER_INVESTIGATION because the underlying gap (the parity check has no notion of a MULTI-FUNCTION shared source_dir) will refuse the next single-function build of either sibling the same way."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S59",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T15:07:00Z",
+    "one_line": "THE SAME untracked-production-source-file class row IRPT_BCKEND-W1-S20 named for holdings/served.py+loaders.py exists for directory/'s OWN declared files[]: errors.py and trading_calendar.py are declared in lambda-source-map.json's irpt-directory-refresh.files[] and genuinely served in the currently-deployed zip, but neither has ever been committed anywhere under infra/aws/lambda/investor-reporting/directory/ -- build-and-upload.sh refused with 'File not found' for both until they were present on disk.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route",
+    "spec_asserts": "TO IB-rtd-2 face (b): \"DEPLOY the directory root under a change-management ledger entry ... served CodeSha256 == built; lambda-source-map.json re-pointed\".",
+    "world_is": "`bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-refresh` (this run, first attempt) failed: 'ERROR: File not found: infra/aws/lambda/investor-reporting/directory/errors.py' and the same for trading_calendar.py. `git log --oneline --all --diff-filter=D -- infra/aws/lambda/investor-reporting/directory/errors.py infra/aws/lambda/investor-reporting/directory/trading_calendar.py` (this run): 0 commits at any point in this repo's history for either path -- never committed, so not a deletion either, matching W1-S20's own finding for the sibling holdings/ root. The currently-deployed irpt-directory-refresh zip (fetched this run) DOES carry both, and both are BYTE-IDENTICAL (sha256 confirmed) to their own canonical in-repo sources: errors.py to infra/aws/lambda/investor-reporting/_authz/errors.py (10652 bytes, sha256 784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2, both sides), trading_calendar.py to lib/trading_calendar.py (6979 bytes). This cell's own deploy could only proceed by populating both, unchanged, from those CANONICAL sources (not the opaque zip, since a grounded in-repo source was available) FOR THE DURATION OF THE BUILD ONLY -- removed again immediately after, and never committed, because materializing them permanently is a directory/-scoped file-provenance fix this order's bound does not authorize (\"refresh.py and its tests are the ONLY code touched\").",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "build_upload.txt (this run, first attempt): 'ERROR: File not found: infra/aws/lambda/investor-reporting/directory/errors.py' and 'trading_calendar.py'",
+        "`git log --oneline --all --diff-filter=D -- .../directory/errors.py .../directory/trading_calendar.py` (this run): 0 commits",
+        "downloaded the LIVE deployed irpt-directory-refresh zip fresh this run: errors.py and trading_calendar.py both present, sha256-identical to infra/aws/lambda/investor-reporting/_authz/errors.py and lib/trading_calendar.py respectively",
+        "lambda-source-map.json functions['irpt-directory-refresh'].files: ['refresh.py','expiry.py','handler.py','errors.py','trading_calendar.py'] -- both names declared"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix, per bound (\"refresh.py and its tests are the ONLY code touched\"). Filed rather than repaired, per the surprise-channel bound (a capability I lack: I cannot commit new tracked source files outside my declared scope even to close a gap I needed to work around). The workaround (copy-from-canonical-source, build, remove) is recorded in this order's own deploy-ledger commit message (05c0322989) rather than left silent. ARMED for the same reason W1-S20 is: every future rebuild of irpt-directory-refresh hits the SAME refusal until directory/'s own file provenance is fixed in-tree; routed to the same owner as W1-S20."
   }
 ]
 ```
