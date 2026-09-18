@@ -97,3 +97,43 @@ parser over `06_CONFORMANCE_LEDGER.md` (102 rows / 73 DECIDED), `json` shape rea
 `ack_messages` x3, `ls-remote` for push state.
 
 **PUSH STATE: everything LOCAL. `origin/CLOUD` read at `88b80ac07d` by `ls-remote` this tick.**
+
+---
+
+## CORRECTION TO THIS LOG, SAME NIGHT, BY ITS OWN AUTHOR -- I ASSERTED A DEBT AGAINST `3.0.0_SA_CVO` THAT DOES NOT EXIST
+
+The OPEN CALLS section above says `3.0.0_SA_CVO` *"still owes: LGCTFM round 1's L9 grades (14 criteria),
+`LGIC_ENFORCE` rounds 4/5 and `LGIC_CANON` round 4 judgment criteria, and the clocks on `S65`, `S20` and `W1-S30` /
+`C-S34`."*
+
+⛔ **THE GRADES LIMB IS FALSE ON ALL THREE PROJECTS. MEASURED over every adjudication row in each channel:**
+
+| project | grade entries | rows | author |
+|---|---|---|---|
+| `LGIC_ENFORCE` | **20** | `C-S1` (3), `C-S16` (5), `C-S32` (7), `C-S36` (5) | `3.0.0_SA_CVO` |
+| `LGIC_CANON` | **22** | `C-S1` (6), `C-S17` (9), `C-S26` (7) | `3.0.0_SA_CVO` |
+| `LGIC_LGCTFM` | **14** | `C-S5` (14, all PASS) | `3.0.0_SA_CVO` |
+
+**56 of 56 grade entries are `3.0.0_SA_CVO`'s, and the LGCTFM count is EXACTLY the 14 I claimed were owed.** That
+seat's own roster summary reads *"3 L8/L9/L10 rounds closed tonight ... Nothing owed"* -- **it is accurate and this
+log contradicted it.**
+
+**THE CLOCKS LIMB IS TRUE and is the only part that stands.** Measured at HEAD: `W1-S30` (`REMEDIATION_v2.md`)
+`remediation.state` OPEN / `disarm.at` null, `C-S34` ARMED, and `W2-S3` (`REMEDIATION_v1.md`) still OPEN after this
+seat's owner-word row `S20`. `S65` and `S20` are INERT evidence rows and correctly carry no clock of their own.
+
+⛔ **WHAT THIS IS: R-51's DEFECT, COMMITTED BY THE SEAT THAT RULED R-51, ABOUT TWENTY MINUTES LATER, IN THE LOG THAT
+RECORDS THE RULING.** R-51 says a register row asserting an answer that did not happen is worse than a stale block. The
+mirror image is a log asserting a DEBT that was already paid -- and it is worse in the same direction, because
+**a false "X owes Y" is exactly the shape that makes a seat look blocked when it is not** (R-48), and it was written
+against the one seat in this fabric whose summary correctly said it owed nothing.
+
+⭐ **AND THE MECHANISM IS THE ONE I KEEP NAMING AND KEEP REPEATING: I carried the debt list forward from an earlier
+tick's recollection instead of re-measuring it at write time.** Every other claim in this log was measured. This one
+was remembered, and it read exactly like the measured ones because it sat in the same sentence shape. **The memory
+rule "re-count the denominator at WRITE time -- a handed count is perishable" applies to a HANDED-FORWARD DEBT LIST
+identically, and nothing in my own process distinguished the two.**
+
+**R-43 disposition: the original sentence above is NOT rewritten.** It stands as filed with this correction beside it,
+the same disposition applied to row `S20` and to `W1-S6`. **Nothing is owed by `3.0.0_SA_CVO` on the grades, and this
+correction is broadcast to that seat rather than only committed.**
