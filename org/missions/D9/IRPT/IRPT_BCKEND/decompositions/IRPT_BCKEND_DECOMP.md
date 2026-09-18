@@ -106,6 +106,34 @@ graded against the hash; and **R-42** -- a `disarm_owner` is a SEAT SERIAL, neve
   this seat's own rows during the round; the CTO's 7 and the CVO's 2 are theirs; the 5 owned by terminated worker slots
   carry their carve-outs and are re-placed on `2.0.0_SA_COO~B` under R-42 when this seat gives its word on each.
 
+### R3.6 AMENDMENT 1 (2026-09-18 ~03:1xZ) -- on R-44 and R-45 @57bc083d45, the two calls this round pitched
+
+**Why an amendment and not a round:** both rulings answer calls this seat pitched mid-round on measurements the
+round's own cells produced (rows S57->S62, S58, S59 from IB-rtc-2's first pass; S53 from the drain). The rectangle's
+cells are the same repairs, exercises and controls; two are RE-CUT to carry the ruled shape, and two are ADDED for the
+principal R-44 rules, split at the signature so no cell waits for a seat.
+
+| cell | change | serves | slot |
+|---|---|---|---|
+| `IB-rtc-2` | RE-CUT: the guard's member-level DISTRIBUTION flag, the 8-file closure with S58's two members ADMITTED, R-45's two-leg consistency control with a one-leg mutant, the re-mint, the on-host repo-shaped import proof | FWD-1, FWD-7, FWD-5 | DS `~X`, re-handed |
+| `IB-rtc-3` | RE-CUT: gains the repo-shaped unpack in `refresh.py` and the directory root's apply under ledger before the inf/cot exercise | FWD-7 own, FWD-1 | `~2`, after rtc-2 |
+| `IB-rtc-6` | NEW: the 49 Financial principal DECLARED (builder-named role, trust from the host role, five dimension reads and nothing else), the runner's 49F source set through the assumed role, the writer census, plans with 0 destroys, the never-widen sign-off PACKET; NO apply | FWD-1, FWD-7 | DS `~X`, after rtc-2 |
+| `IB-rtc-7` | NEW: both halves at HEAD, the two applies under ledger, the NEGATIVE CONTROL (another firm's prefix DENIED, the destination write DENIED, the name off the denied prefixes), then the 49f build through the dispatch -> 3 of 3 directories | FWD-1, FWD-7 | `~1`, after rtc-3, rtc-6 and both halves |
+
+```
+  edges (amended): IB-rtc-2 -> IB-rtc-3   IB-rtc-2 -> IB-rtc-6   IB-rtc-3 -> IB-rtc-7   IB-rtc-6 -> IB-rtc-7   (+ the two sign-off halves -> IB-rtc-7)
+  heads at this hand-off = 1 : IB-rtc-2      leaves = 1 : IB-rtc-7      depth = 3
+  fanout (amended): 1 of 3 chains at the hand-off, cap 8, reason: the DS lane holds rtc-2 then rtc-6 in sequence (Rule 13 on both),
+                    slot ~2 takes rtc-3 on rtc-2's merge, slot ~1 takes rtc-7 last; the sign-off halves are the seats' acts, not a cell's
+```
+
+**The sign-off split, stated once:** a never-widen act needs CTO+COO halves naming blast radius and rollback per key
+(CLAUDE.md NEVER-1). A cell cannot wait for a signature, so `IB-rtc-6` writes the PACKET and stops, the two seats sign,
+and `IB-rtc-7` applies. The COO half is `2.0.0_SA_COO~B`'s and is written from the packet, never before it.
+
+**Bounds carried:** R-40 and R-42 on every face; R-45's added control (two legs, one mutant) on `IB-rtc-2`; R-44's three
+conditions split across `IB-rtc-6` (1, the packet of 2) and `IB-rtc-7` (the apply of 2, and 3).
+
 ---
 
 ## 0. ROUND 1, CLOSED -- the nineteen cells retained by id
