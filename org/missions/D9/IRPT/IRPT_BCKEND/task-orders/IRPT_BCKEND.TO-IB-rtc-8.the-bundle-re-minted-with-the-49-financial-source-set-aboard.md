@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~X</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T06:4xZ to the DS lane, third in its queue, after IB-rtc-6 merged @119fda050a; a head (IB-rtc-3's dispatch fix is a Lambda change and does not gate a bundle mint). Its merge is one of IB-rtc-7's three cell preconditions.</status>
+<status>complete -- 0.4.0_DS_ClientPlatform~X, 2026-09-18: R38-AC1 PASS 4 of 4 (token printed, fresh detached checkout at f5005ea933); R38-AC2 recorded for 3.0.0_SA_CVO, not self-graded; the bundle minted at VersionId q8myxeHdNw48w1uDb7YTcBh8DHV9TzU2 / ETag 479af04c under the ledger entry irpt-bckend-rtc8-k5-mint (opened a1f09a51dd, closed 84349a3a19); row IRPT_BCKEND-S70 (INERT). Its merge is one of IB-rtc-7's three cell preconditions.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 3 (AMENDMENT 1 on R-44/R-45 @57bc083d45; this cell added ~06:4xZ on the packet's step 5) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d | **Rulings:** R-44 / R-45 @57bc083d45 | **Decomp cell:** `IB-rtc-8` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.3, s.R3.6) | **outcome_ref:** FWD-1, FWD-7 (the 49 Financial third)
 

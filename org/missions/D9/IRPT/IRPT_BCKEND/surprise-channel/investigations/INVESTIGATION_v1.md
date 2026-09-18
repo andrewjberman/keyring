@@ -5070,6 +5070,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "A trial merge of the two branches is recorded in this cell's result. The packet names the Lambda artifact rebuild as part of IB-rtc-7's directory apply; without it the env map is set and the running refresh.py ignores it (harmless, and the 49 Financial build keeps failing at the fence)."
+  },
+  {
+    "id": "IRPT_BCKEND-S70",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T06:42:00Z",
+    "one_line": "THE FACE READS THE K5 WARN AS PRINTED AT CONSTRUCTION WITH 0 NETWORK EVENTS; IT IS PRINTED ONE STEP LATER. Firm49F.__init__ builds no client and appends no note; the WARN is appended by the lazy seam _gold() the first time a client is needed. Opening that seam with the variable unset builds the host's S3 client, and on the host that makes 6 calls to the EC2 instance-metadata endpoint for credentials and 0 to any service endpoint. Construction itself makes 0 of either, with the variable set or unset.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-8 (d): 'with IRPT_SOURCE_READ_ROLE_ARN UNSET, instantiating Firm49F prints the K5 WARN note and uses the host session (the \"behaves exactly as today\" claim, measured, 0 network events)'.",
+    "world_is": "Host SSM command a69d4b35-acea-472b-9682-097953866aeb on i-02448edb624a7a7cf, running the minted bundle (sha256 0bd71b5f..., VersionId q8myxeHdNw48w1uDb7YTcBh8DHV9TzU2). With the variable unset: after construction the notes hold no WARN and _gold_client is None, with 0 service and 0 metadata socket events. Calling _gold() without any read appends 'WARN: IRPT_SOURCE_READ_ROLE_ARN not set -- dimension reads on the host session, which the firm bucket's policy refuses'. It returns the cached rc.s3() client (the host session), with 0 service and 6 metadata socket events. With the variable set to a well-formed but non-existent ARN, construction makes 0 socket events and assumes nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "directory_runner.py blob 0351bce745 (a1f09a51dd): Firm49F.__init__ sets self._gold_client = None; the WARN note is appended in _gold()'s else branch",
+        "battery_ib_rtc_8.py arm (d) output: UNSET construction events (0, 0), seam events (0, 6), construct-warn False, warn after seam True, host session True; SET construction (0, 0, assumed False)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The battery grades the claim in two parts: construction must make 0 socket events of any kind, and opening the seam must make 0 service-endpoint events and print the WARN. Metadata-endpoint calls at the seam are shown, not graded. Whether 'today's behaviour' also covers the host's own credential fetch is a question about the face's wording, not about the runner: the runner before IB-rtc-6 created the same client at its first dimension read. No code change is asked for."
   }
 ]
 ```
