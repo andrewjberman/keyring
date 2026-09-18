@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.6",
+ "decomp_version": "v3.7",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -919,6 +919,128 @@ exist; `t34-no-grade-change` reads PASS and is LABELLED a guard.
 - It does **not** touch the 1093, and does not pretend the arithmetic for them has improved.
 - It does **not** change any grading behaviour. The exclusion table is guarded, not edited.
 - It does **not** decide whether a key template should leave the name grade. That is round 8's (b).
+
+## 0h. v3.7 -- THE ROUND-8 RECUT (L10: 1.0.0_SA_CTO's round-7 analysis @`7d3daa9434`)
+
+**Input, and the scope is taken from the REGISTER.** `project.json`'s `phase`, ROUND 8 MATERIAL block,
+names (b) through (f). The round-7 analysis names the same set and the two AGREE -- which is worth
+saying rather than assuming, because this lane took round 7's first framing from an analysis and had to
+withdraw it (**R-57**). Round 7 graded **REALIZED 6 of 7**; `FWD-5` NOT REALIZED and carried here.
+
+### 0h.1 THE ROUND'S CENTRAL FACT, MEASURED AT THE CUT ON BOTH PLANES
+
+```
+  live   2205 nodes, 1838 to judge   -> STOPPED after  3 judged  on API_GW  sentiment-query-api
+  repo   1878 names, 475 .tf files   -> STOPPED after  2 judged  on IAM_POLICY F49ServedAndSourceRead
+```
+
+⛔ **NO CONFORMANCE CLAIM OVER THIS ESTATE HAS A DENOMINATOR ABOVE 3.** Both planes stop on their FIRST
+RAISE, so every "the estate conforms" sentence written in eight rounds rests on 3 live names and 2 repo
+names.
+
+⭐ **AND THE REGISTER NAMES ONLY THE LIVE STOP. MEASURED HERE: THE TWO PLANES STOP ON DIFFERENT TOKENS**
+-- live on `sentiment-query-api` (`'sentiment'` in no vocabulary), repo on `F49ServedAndSourceRead`
+(`'f49'`). A cell told to "fix the stop token" would fix one plane and leave the other stopped at its
+third name. That is why cell 36 is the POPULATION and never a token.
+
+**THE DENOMINATOR MOVES AND THE STOP DOES NOT**, re-measured here against two reported vintages:
+`1805` (round 1) -> `1829` (round 3) -> **`1838` (this cut)**. The estate grew by 33 live names while
+the measurement did not advance one step.
+
+### 0h.2 THE CELLS -- 4, and no earlier cell is re-opened
+
+```
+  cells at v3.6 ......................................................... 35
+  plus round 8's four ................................................... +4
+  = cells in this decomposition ......................................... 39
+  round 8 runs exactly the four: 36, 37, 38, 39
+```
+
+⚠ **THE HEADER FENCE'S `"cells": 28` IS NOT THE RUNNING TOTAL AND DISAGREES WITH THIS BLOCK.** Measured:
+the header reads `28`, §0g's subtraction reads `33` at v3.5 and `35` at v3.6, and this block reads `39`.
+The header field counts the ORIGINAL decomposition's cells and has not moved since; the per-round
+subtractions are the live count. **This is disclosed rather than silently overwritten**, because the
+issuer has not independently derived what that field was intended to denominate, and changing a number
+to make two carriers agree -- without knowing which one is right -- is how a wrong value acquires a
+confident vintage. It is named here so a later reader gets it from the carrier rather than from a
+recount, and it is nobody's cell this round.
+
+| cell | id | what it does | rulings | serves |
+|---|---|---|---|---|
+| 36 | `EN-p-36` | **THE RAISE POPULATION WHOLESALE.** Disposition every RAISE on BOTH planes -- resolved to a registry row or CARDED through the EXISTING `--not-judged` mechanism -- so the census RUNS TO THE END and a conformance claim finally has a denominator | R-67, R-29 | FWD-5 |
+| 37 | `EN-g-37` | **THE SLUG-TIME LIMB.** `surprise-row-gate.py` refuses a slug when a GRADUATED item in the staged set carries NO remediation row. A MISSING clock | R-66, S74 | FWD-2 |
+| 38 | `EN-k-38` | **THE STALENESS LIMB.** The same gate grades an OPEN remediation row, owned, unmoved across N rounds. An UNSERVED clock -- which no rowlessness limb can ever see | R-66 addendum, S75 | FWD-2 |
+| 39 | `EN-m-39` | **TEMPLATE-VS-KEY.** A mechanism distinguishing an S3 KEY TEMPLATE from an S3 KEY, with Rule 24's four postulates and a word-boundary token census | R-62(b) | FWD-5 |
+
+**ONE AXIS, ONE INTENT (Rule 24 iii):** every cell makes a POPULATION MEASURABLE that is currently
+unmeasured -- 36 the estate's names, 37 and 38 the clocks, 39 the rows that are not names at all.
+
+### 0h.3 WHY 37 AND 38 ARE TWO CELLS AND NOT ONE, WHICH IS THE ROUND'S LOAD-BEARING CHOICE
+
+The round-7 analysis names **THREE clock-failure classes that must not share a remedy**, and the
+middle one is why splitting is not tidiness:
+
+```
+  MISSING       S74   GRADUATED, no remediation row        -> a rowlessness limb catches it   (37)
+  UNSERVED      S75   row EXISTS, OPEN, owned, 67h         -> NO ROWLESSNESS LIMB WILL EVER
+                                                              SEE IT, BECAUSE THE ROW EXISTS  (38)
+  UNSATISFIABLE S78   the condition cannot be met at all   -> needs RE-POINTING, not work; NO CELL
+```
+
+⛔ **A CHECK SCOPED TO ROWLESSNESS CANNOT SEE A DEFECT IN A ROW THAT IS PRESENT.** That is Rule 22's
+shared-blindness clause with the sign flipped, and it is exactly how `W7-S1` sat OPEN and OWNED for 67
+hours through every census that re-measured its own token. So cell 38 carries an arm whose only job is
+to prove the two limbs are different questions: `k38-distinct` requires the staleness mutant to be a row
+the ROWLESSNESS limb PASSES. **If 37 also refuses it, the round built one limb twice and bought
+nothing.**
+
+⚠ **AND NEITHER IS BUILT ON THE STRENGTH OF AN ARGUMENT.** Both hold REFUSAL POWER over every slug in
+the estate. `R-56`, `R-61` and `R-62` are this project's own lessons about a mechanism reached for
+without reading what it does, so each cell carries a POSITIVE CONTROL (a compliant input the limb must
+ACCEPT) as a PEER of its mutant -- because **a mutant alone bounds UNDER-firing and says nothing about
+OVER-firing**, and a limb that refuses every slug passes any mutant table while halting the fabric.
+
+### 0h.4 WRITE SURFACES, AND WHY THIS IS THREE SLOTS AND NOT FOUR
+
+```
+  EN-p-36   deliverables/<serial>/ + the project's surprise channel      slot 1
+  EN-g-37   .tools/surprise-row-gate.py + deliverables/<serial>/         slot 2, first
+  EN-k-38   .tools/surprise-row-gate.py + deliverables/<serial>/         slot 2, second
+  EN-m-39   org/standards/NAMING_SCHEMA.json + deliverables/<serial>/    slot 3
+```
+
+⛔ **37 AND 38 WRITE THE SAME FILE, SO THEY SHARE A SLOT AND ARE SEQUENCED.** Two workers editing
+`surprise-row-gate.py` concurrently is a guaranteed conflict on a file whose every limb has refusal
+power, and the analysis's "each with its own cell" is a statement about GRADING, not about concurrency.
+Sequencing satisfies both. `fanout: 3 slots over 4 cells, cap 8`; levels L0 = {36, 37, 39}, L1 = {38}.
+
+**39 IS THE ONLY CELL PERMITTED TO TOUCH `NAMING_SCHEMA.json`,** and its own guard re-asserts the 8/7
+exclusion split unchanged for every type it does not DECLARE it is moving.
+
+### 0h.5 THE FIXED INPUT
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r8/check_en_r8.py` -- 14 real arms; `selftest-arms` drives
+**31 arms of which 13 are POSITIVE-SATISFIABILITY** against simulated correct records, 0 failures.
+`R8_BASE.json` pins `43243d281397eba6204aaa0c1a0027cc7d295ebe` and **every figure carries a `claim`
+field**: the two censuses are `measured` by the issuer at this cut; the `504 live / 623 repo` RAISE
+population is `reported` (it is `W7-S1`'s, 2026-09-15) and is deliberately NOT re-derived here, because
+re-deriving it IS cell 36's work. If 36's numbers differ from the pinned ones, **36's are the round's**.
+
+**WIRING MEASURED AT THE CUT, NOT ASSUMED: 14 of 14 real arms read FAIL** because their inputs do not
+exist. Unlike round 7 there is NO guard-shaped arm reading PASS -- `m39-no-grade-change` grades the
+cell's RECORD rather than the live schema, so it fails with the rest.
+
+### 0h.6 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** make `FWD-5` REALIZED. It makes the estate MEASURABLE, which the ACCEPT requires
+  before a list of every breaking name can exist at all.
+- It does **not** resolve the 1093. `(f)` stays on the register until a clean-up project is SEATED --
+  `ADVI_FIRMBKTS` and `MDPF_CANON` both read `dep_stage PRD` with no `coo_lane`, and **an owner that is
+  a CATEGORY decays exactly like no owner** (`R-70`).
+- It does **not** touch `W7-S1` or `W7-S4`. Those are `1.0.0_SA_CTO`'s own open clocks and its analysis
+  says in terms that they are not the recut's to carry.
+- It does **not** re-derive `504/623`. That figure is carried with its claim so a cell cannot mistake it
+  for measured-at-this-cut.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
