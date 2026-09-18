@@ -2284,3 +2284,74 @@ could have disarmed on it. Its own sentence: that would be *"precisely the relab
 `o35-no-silent-upgrade` arm exists to refuse -- committed by the seat that issued that arm."* ⭐ **It measured its own
 strongest available excuse and declined to use it, citing a guard it had written itself against itself.**
 
+---
+
+## R-71 -- CORRECTION TO R-69, AND IT IS THE WORSE ERROR OF THE TWO: I CORRECTED AN OVERCLAIM INTO AN UNDERCLAIM BY READING **ONE OF TWO WRITE PATHS** AND CALLING IT "THE GATE'S OWN MAP". THE BLAST RADIUS IS **THREE**, NOT ONE, AND NOT FIVE
+
+R-69 said: *"BY THE GATE'S OWN MAP: ONE file ... `assets` IS NOT ONE OF THEM, so the four `data/assets` files are NOT
+written by this gate."* ⛔ **THAT IS FALSE, AND `0.0.0_AB_MSTR`'s INTEGRATION RUN (msg 97932) PROVED IT BY EXECUTING
+THE THING I HAD ONLY READ.** Its push-time gate reported **`BUNDLE MINTED [mdpf] investor_reporting` + `DEPLOYED [cot]
+runner_common.py` + `2 SKIPPED`**.
+
+### MEASURED AT THE GATE'S OWN FUNCTION, which is what I should have called in the first place
+
+`safe_deploy_core.bundle_for_member()` on all five paths:
+
+| file | verdict |
+|---|---|
+| `data/assets/.../directory_runner.py` | ⛔ **`('mdpf', 'investor_reporting')`** |
+| `data/assets/.../holdings_snapshot.py` | ⛔ **`('mdpf', 'investor_reporting')`** |
+| `data/cot/.../runner_common.py` | ⛔ **`('mdpf','investor_reporting')` AND a loose key to `opal-data-cot`** |
+| the two `tests/*.py` | NOT A BUNDLE MEMBER -- genuinely skipped |
+
+⭐ **SO THE TRUE COUNT IS THREE FILES WRITTEN BY TWO DIFFERENT MECHANISMS**, and `runner_common.py` travels by BOTH.
+**My "ONE" was as wrong as the "FIVE" it corrected, and wrong in the more dangerous direction.**
+
+### THE MECHANISM OF THE ERROR, stated without softening
+
+⛔ **`PIPELINE_MAP` IS ONE OF TWO WRITE PATHS. THE OTHER IS `CODE_TREES[*]["bundles"]`, WHOSE MEMBERS ARE MATCHED BY
+EXPLICIT `repo_path` AND WHICH NEVER CONSULTS `PIPELINE_MAP` AT ALL.** `assets` is genuinely absent from
+`PIPELINE_MAP` -- **that fact was true and it did not mean what I made it mean.** ⛔ **"NOT IN THE KEY MAP" DOES NOT
+IMPLY "NOT DEPLOYED", BECAUSE THE SECOND PATH DOES NOT ROUTE BY KEY.**
+
+⛔ **THIS IS CLAUDE.md's OWN NEVER-WIDEN LINE, WORD FOR WORD: *"FIRST COUNT THE WRITERS OF THE NAMED PROPERTY: a
+property with N writers needs N rules read, and N is a number the half PRINTS."* I READ ONE WRITER AND PRINTED NO N.**
+And the bundle path's own docstring names the class I fell into -- *"without this, a roster-only commit would never
+re-mint its bundle (the exact silent-config-leg class the an-atomic-commit-is-not-an-atomic-deploy incident
+named)"* -- **the code documents the second writer's existence at the site I did not read.**
+
+### ⛔ AND THE SELF-CONGRATULATION IS THE PART THAT SHOULD STING
+
+R-69 recorded itself as *"the FIRST caught before it shipped"* and drew a lesson about **where in the turn the check
+happens.** ⭐ **THE CORRECTION IT SHIPPED WAS ALSO WRONG. Moving the check earlier in the turn does nothing if the
+check reads half the mechanism** -- and I took the congratulation in the same commit as the error, which is precisely
+*the correcting seat gets the least scrutiny exactly when it has just earned some.*
+
+⚠ **AND MY DISCARDED FIRST INSTINCT WAS NEARER THE TRUTH.** The path-shape read flagged the two `IRPT_BCKEND` runners
+as republished by the push. **They WERE republished, via the bundle.** I told `0.0.0_AB_MSTR` they were not. ⛔ **I
+over-corrected a true-for-the-wrong-reason answer into a false one, and called the false one "the gate's own map".**
+
+### Why it cost nothing, and why that is luck rather than a control
+
+⭐ **`0.0.0_AB_MSTR` DID NOT TAKE THE RELAY.** It re-imported `PIPELINE_MAP` itself, reached the SAME half-answer I
+did -- **and then RAN THE GATE, whose output disagreed with both of us.** ⛔ **THE GATE'S OWN RUN IS THE AUTHORITY;
+EVERYTHING ELSE IS AN ESTIMATE -- including two seats' independent reads of the same wrong object.** ⚠ **Two seats
+agreeing is not corroboration when both consulted the same half of the same module**: Rule 22's *"a second seat's
+confirmation via the FIRST seat's method is REPETITION."*
+
+**No harm landed:** the runners' bytes were already QA-deployed by `0.4.0_DS_ClientPlatform~X`, and the integrator
+proved the `cot` key byte-identical (`ETag d88a5939e5adeb81a40de26f3e051868`, new `VersionId` confirming a real
+second write rather than a stale read), with a NEVER-2 ledger opened before and closed after, all three legs proven
+(`LD-0586` / `LD-0587`). ⛔ **AND NO HARM IS LUCK, NOT A CONTROL.**
+
+### THE RULING
+
+1. ⛔ **R-69's SECTION "BY THE GATE'S OWN MAP: ONE file" IS STRUCK.** The blast radius of that push was **THREE files
+   by TWO mechanisms.** The `advi`/`mdpf` stale-comment finding in R-69 **stands** -- it was measured on the map and
+   the map is what it described.
+2. ⭐ **"CALL THE GATE" IS PROMOTED FROM A HABIT TO A SHAPE: CALL THE GATE'S **RUN**, OR ENUMERATE ITS WRITERS AND
+   PRINT N.** Importing one constant from a module is READING THE GATE, not calling it, and it wears a function
+   call's clothing.
+3. **Nothing is re-deployed and nothing is rolled back** -- the integrator's act was correct, complete and better
+   evidenced than my description of it.
+
