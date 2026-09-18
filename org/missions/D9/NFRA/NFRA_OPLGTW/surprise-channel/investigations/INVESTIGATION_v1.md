@@ -3218,6 +3218,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "S46 names 2.0.0_SA_COO~O as disarm owner on one open arm: after 16:37Z the journal shows one GET /callback answering 302/303 followed by one POST /token 200.",
     "world_is": "Met exactly: one /callback 302 and one /token 200 at 17:34:08Z, with no AccessDenied in the window, and the resulting token served a real tool call. The permission is exercised AND the outcome is exercised.",
     "notes": "EVIDENCE for S46's disarm, not its adjudication -- S46's disposition stays 3.0.0_SA_CVO's at L9. Round-2 carries S46 names are unaffected: branch (2) conditional UpdateItem consume, and a LOGIN-PATH health check (liveness does not prove usability). This read also releases the hold on OG-r-2 (the host benchmark was held so it would not muddy this measurement)."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S10",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-18T20:30Z",
+    "one_line": "OGR2-AC6's written bar ('regresses by no more than 20 percent with zero failures') is measured UNSATISFIABLE in every window this cell can construct on the live ALB target group opal-gateway-tg, because the BEFORE window (OG-p-1's OGP1-AC11, 2026-09-02..2026-09-16, predating every change this project has made) already carries a non-zero HTTPCode_Target_5XX_Count -- so 'zero failures' was never true of this system's baseline, not something OG-r-2 caused or can restore.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn: `.tools/aws cloudwatch get-metric-statistics --namespace AWS/ApplicationELB --metric-name HTTPCode_Target_5XX_Count --dimensions Name=LoadBalancer,Value=app/opal-gateway/89166a68f337e5a4 Name=TargetGroup,Value=targetgroup/opal-gateway-tg/00997fc81f087cb8 --start-time 2026-09-02T19:15:00Z --end-time 2026-09-16T19:15:00Z --period 1209600 --statistics Sum` (OG-p-1's own OGP1-AC11 window, re-read live) -> Sum=19.0 -- non-zero, and this window ends before OG-i-4's resize (2026-09-18T14:53:48Z) or OG-r-1's release even existed.",
+        "RUN this turn: the identical call over the 14-day trailing window ending now (2026-09-04T20:01:41Z..2026-09-18T20:01:41Z) -> Sum=18.0, sample_count=38903.0, p95=0.5516718987799433s (vs before p95=0.5535024102704742s -- a -0.33% change, well inside the 20% cap); and over a narrow post-resize-only window (2026-09-18T14:53:00Z..2026-09-18T20:02:00Z) -> Sum=2.0 of 119.0 samples.",
+        "READ org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json:117-153 (OGP1-AC11): records TargetResponseTime SampleCount/p95 for that same before-window but carries no HTTPCode_Target_5XX_Count field at all -- 'zero failures' was never actually measured as part of establishing OG-p-1's own baseline, only asserted in this cell's own PRD language (PRD @f0aa50dbc0 :288, 'A14 compares a declared identical existing-user workload before/after: no failures and no more than 20 percent p95 latency regression')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-r-2 OGR2-AC6: 'the existing-workflow p95 after, against OG-p-1's before, regresses by no more than 20 percent with zero failures, workload, sample counts and windows printed.' Bounds: 'Spec frozen; REFUSE what you cannot meet as written ... never lower a limit or raise a cap to pass.'",
+    "world_is": "The p95-regression half of OGR2-AC6 is comfortably met (regression is actually negative -- an improvement). The 'zero failures' half is measured FALSE in both windows available to this cell, and was ALREADY false before this project touched anything (the pre-existing background HTTPCode_Target_5XX_Count rate on this shared target group is ~1.3-1.4/day, essentially unchanged after: 19/14d before vs 18/14d after). This cell's own probe (og_r2.py ac6()) grades AC6 on the LITERAL written text rather than substituting a regression-only reading, so OGR2-AC6 records FAIL-OGR2-AC6 even though nothing this project did made latency or failures worse.",
+    "notes": "Not disarmed by this worker: disarming would require either (a) Andrew/CTO ruling that AC6's 'zero failures' clause means 'no failure-RATE increase versus the declared before-measurement' (in which case AC6 would re-grade PASS on the printed evidence already in CAPACITY.json), or (b) accepting the FAIL as the honest, correct reading of the written bar and closing this cell's proof with it disclosed (as OG-r-1's round did with 3 of 18 genuine FAILs). This worker's <paths> grant does not include the PRD or this order's own acceptance text, so neither a bar reinterpretation nor a bar amendment is this worker's to make; graded literally and left ARMED for the issuing COO/CVO at L8/L9. COST: none beyond this row -- OGR2-AC6 stands as measured FAIL in the proof instance. NON-APPLICATION: any future window in which HTTPCode_Target_5XX_Count reads exactly 0 -- that would satisfy the literal text and this row would disarm on remeasurement, not on reinterpretation."
   }
 ]
 ```
