@@ -4741,3 +4741,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Filed as ONE row rather than three because the class is the finding, not the instances -- this is the same class this seat measured tonight in LGIC_ENFORCE (row LGIC_ENFORCE-S61, a wrong-object citation whose quoted phrase lives in a sibling file) and the same class 1.0.0_SA_CTO owned in R-34. The remedy is a convention, not a correction: a line citation inside a judgment record carries its pin. NONE of these changes a grade and the round's substance survives all four."
 }
 ```
+
+## Round 3, IB-rtc-5 -- worker 0.9.0_WK_IRPT_BCKEND~4's row
+
+```json
+[
+  {
+    "id": "IRPT_BCKEND-W4-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T02:20:00Z",
+    "one_line": "THE DECOMP'S NAMED FALLBACK PLANE DOES NOT EXIST: IB-rtc-5's cell text says, if the browser host is not reachable non-interactively, fall back to 'the renderer's in-process path with the SAME code'. That path is round-1's named-slot HTML fixture renderer plus a local headless browser, and `render.py`'s own header (IB-rt-8, round 2) states it is RETIRED AS EVIDENCE and its machinery is GONE from the module -- `default_renderer()`, `FIXTURE_PACKAGE_DIR` and the assembly code no longer exist anywhere in infra/aws/lambda/investor-reporting/export/. The substitution actually used, and the only one that satisfies the criterion's intent (a REAL renderer whose output varies with real content, on a plane reachable without a production session): the counterpart's REAL render code (portal/src/pages/InvestorReporting/render/{manifest.ts,PrintEntry.tsx}/PerformanceDocument) executed against the LOCAL vite dev server, auth-stubbed by Playwright network interception -- the identical mechanism portal/scripts/ui-smoke.mjs and __tests__/fe-s-31/print-driver.mjs already use and portal/CLAUDE.md's Verification law names. This cell's driver (rtc5-render-driver.cjs) is print-driver.mjs's mechanism unchanged in its rendering half, with page.pdf() added. Nothing about the render code is patched or wrapped (bound 12); only the HOST plane and the DATA plane (synthetic fixtures vs. a live scoped API) differ from IB-rt-8's browser-host run, which is the exact substitution the decomp's own sentence contemplates -- it just named the wrong artifact as the fallback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- a future round-3 cell whose face repeats 'the renderer's in-process path with the SAME code' as a live option should read this row first; the durable fix is the decomp language naming the LOCAL-DEV-PLANE-ON-REAL-CODE substitution directly rather than the retired fixture path",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/export/render.py @862b0e4a6e header, verbatim: 'the template machinery is GONE from this module rather than left behind with a comment. A retired path that still exists is a path something can still take.'",
+        "Grep for default_renderer|FIXTURE_PACKAGE_DIR|RENDERER_VERSION across infra/aws/lambda/investor-reporting: 0 hits in any .py module (only in package.py's own retirement-census comment and the retained fixture .html files themselves)",
+        "handler.py @this commit carries submit_export/finalize_export, no run_export -- battery_ib_s_14.py (round 2, committed) still calls handler_mod.run_export(...), which no longer exists; that battery is stale against the current handler.py",
+        "portal/scripts/ui-smoke.mjs header, verbatim: 'headless screenshot of a portal route, no credentials needed ... a stubbed auth session ... no login and no devBypass is needed'; portal/src/pages/InvestorReporting/__tests__/fe-s-31/print-driver.mjs header: 'The mechanism is ../fe-s-30/reporting-driver.mjs's: Playwright request interception, the same identity stub, the same Edge binary'",
+        "IB-rtc-5_R35-AC1_battery_output.txt @this commit -- both renders reach data-print-state=\"ready\" on the local dev plane and produce real, distinct PDFs from the real render code"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rtc-5 decomp v0.3 s.R3.1, verbatim: 'rendered through the same renderer invocation IB-rt-8 exercised on the browser-host pattern (or, if that host is not reachable non-interactively, the renderer's in-process path with the SAME code, the plane named)'.",
+    "world_is": "The named in-process path (round-1's fixture renderer) does not exist in the current export package; it was deliberately retired and removed in round 2. A worker following the decomp literally would find no in-process fallback to run at all.",
+    "notes": "Judged on FORM only: the TO's face named a capability this worker lacks (a retired module), and the substitution taken is the one that preserves the criterion's actual intent -- a real renderer, real content-driven variation, a non-deployed plane. Filed rather than silently substituted per bound 8 ('a capability you lack: ONE row ... then keep working')."
+  }
+]
+```
