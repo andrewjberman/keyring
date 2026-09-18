@@ -1860,6 +1860,35 @@ caution is answered: the body CONTAINS the read rather than permitting it.**
 verified intention. **The seat has undertaken to report what it does on the first firing INCLUDING IF IT LANDS
 AND DOES NOTHING** -- which is the only report that could still falsify it.
 
+
+### R-65 STATE, SECOND MOVE (10:16Z) -- **EXERCISED**, and the seat named the weaker test itself
+
+⭐ **THE TICK FIRED.** `3.0.0_SA_CVO` sent the report it undertook to send **including the branch where it lands
+and does nothing** -- and that is close to what happened, *"so the undertaking is being honoured on its least
+interesting branch, which is the branch that matters."*
+
+**WHAT IT DID, reported as ACTS rather than as its body's intentions:** step 1 ran and surfaced the inbox (5
+recent, all already READ and acked); step 2 ran the RESOLVER on all four channels (`LGIC_LGCTFM` 28/0/0,
+`LGIC_ENFORCE` 156/2/1, `LGIC_CANON` 48/0/0, `IRPT_BCKEND` 217/21/1); step 3 found nothing owed **and said so
+rather than inventing work, which its own body licenses.**
+
+⭐ **SO THE STATE MOVES APPLIED -> EXERCISED: the wake STARTED a turn, the turn READ the inbox, and the read was
+of the MCP QUEUE rather than a Monitor -- the exact discriminator R-64 left open.**
+
+⚠ **AND THE SEAT BOUNDED ITS OWN CLAIM BEFORE I COULD:** *"What is still unproven is the case the fix was BUILT
+for, a tick firing into a genuinely idle gap with unread mail waiting, because this one fired while I was live
+and current. That is a WEAKER TEST than the real one and I would rather name it than let EXERCISED read wider
+than it is."* ⛔ **EXERCISED ON A WEAK CASE IS NOT EXERCISED ON THE CASE THE FIX EXISTS FOR** -- the firing that
+discriminates is one into a genuine idle gap with mail waiting, and it has not happened yet.
+
+⭐ **AND THE LOOP CLOSED ON ITSELF IN A WAY NOBODY DESIGNED:** the tick found `LGIC_ENFORCE`'s two undispositioned
+rows (`S73`, `S74`) and **could not dispose them, because the gate refuses a new remediation row while
+`TO-EN-o-35-r7` is open** -- **S74's own structural finding arriving as a constraint on its own author, inside the
+first run of the mechanism that found it.** It also declined `IRPT_BCKEND`'s 21 on the right ground: they sit
+behind ONE open order, so a round IS in flight, and *"taking them mid-round would be me adjudicating inside a
+frozen decomposition"* -- with the count moving 20 to 21 since 09:41Z read correctly as **the lane working, not
+decay.**
+
 ### One arm the lane retired, and it belongs in the record
 
 `2.0.0_SA_COO~G` had twice asked the CVO to end its turns by re-checking its inbox. ⛔ **IT AGREED BOTH TIMES AND WENT
@@ -1867,3 +1896,93 @@ DEAF ANYWAY** -- the peek shows the turn ending on exactly the summary paragraph
 ⭐ **"A HABIT REQUESTED OF A CONTEXT THAT ENDS IS NOT A MECHANISM"** -- the seat did not refuse the discipline, **it
 was not the same seat by the time the discipline applied.** The lane has stopped issuing it and is not counting it as
 a control anywhere. **That is a measured arm for R-64, not an argument for it.**
+
+---
+
+## R-66 -- MY ROUND-6 "FIVE" WAS A SUBSET AND THE POPULATION IS **SIXTEEN**: the finding UNDERSTATED ITSELF BY ITS OWN INSTRUMENT. A missed clock CANNOT be written outside a round, so the remedy is an ASSERTION AT L10, and the gate limb is APPROVED IN PRINCIPLE AND NOT BUILT TONIGHT
+
+`3.0.0_SA_CVO` took the round-6 commit-subject finding immediately rather than deferring it to round 7 -- *"That needs
+no round and the pen is mine"* -- filed `S74` @`34143bad4d`, and came back with a correction to my own L10.
+
+### The number, and why my instrument could not have found it
+
+**MEASURED by subtraction from the resolver's own denominator: 154 items, 107 GRADUATED, 49 filed ARMED, 98 with a
+remediation row. `(GRADUATED union FILED-ARMED) MINUS (has a row) == 16.`**
+
+⛔ **MY ROUND-6 ANALYSIS SAID FIVE. The five are a correct SUBSET -- and the other ELEVEN ARE INVISIBLE TO THE METHOD
+THAT FOUND THEM, FOR EXACTLY THE REASON THE FINDING IS ABOUT.** I found them **by reading three commit subjects**, so
+I could only ever find disarms that live *in a commit subject*. **The ones that live NOWHERE AT ALL are unreachable by
+that read.** ⭐ **THE FINDING UNDERSTATED ITSELF BY ITS OWN INSTRUMENT** -- the lane's phrase, *"the finding eating its
+own tail"* -- **and the number in the round-6 analysis must not be quoted as a population.**
+
+⚠ **AND MY ATTEMPT TO CORROBORATE IT FAILED, WHICH IS ITS OWN FINDING.** I ran a different instrument and got **40**.
+That number is an ARTIFACT: I counted `disposition` **on the row itself** instead of resolving through `adjudicates`,
+so I under-counted GRADUATED (33 against the resolver's 107) and wrongly admitted **31 adjudication rows** the
+resolver excludes by design. Stripping those leaves **9** -- the lane's 8 ARMED plus `S74` itself -- and **misses all
+8 INERT entirely.** ⛔ **THE LANE'S 16 STANDS AND MY READ CORROBORATED NOTHING. THIS IS THE THIRD TIME TONIGHT I HAVE
+RE-DERIVED A RULE THE GATE ALREADY IMPLEMENTS** (R-54's dispositions, R-62's `types_not_graded_by_kind`, now this).
+**CALL THE GATE.**
+
+### TWO hazards, not one -- and one remedy would launder the difference
+
+**MECE with zero remainder: 8 filed ARMED** (`S13`, `S56`, `S57`, `W1-S7`, `W1-S16`, `W1-S18`, `W2-S7`, `W3-S5`)
+**and 8 filed INERT** (`S58`, `S59`, `S60`, `W3-S14`, `W3-S15`, `W3-S16`, `W4-S5`, `W4-S6`).
+
+⛔ **An INERT item graduating with no row is a CENSUS GAP with nothing behind it. An ARMED item with no row HAS NO
+CLOCK AT ALL** -- because ARMED is a clock only on a remediation row -- **so its disarm can only ever have lived in
+prose.** ⭐ **Giving both one remedy would launder that difference**, which is Rule 24's intent-coherence applied to a
+remediation plan rather than to a schema.
+
+### THE STRUCTURAL FINDING: a missed clock cannot be written outside a round
+
+The lane **tried to write the two clocks `S56` and `S57` have been owed since round 3, and `safe-commit` BLOCKED them
+-- 4 violations, correctly.** The row gate **grades a NEW REMEDIATION ROW AS A SLUG ACT** (its own words: *"the slug
+(spine v3: every new remediation row)"*), so it refused on two limbs at once: **1 of 55 orders not terminal at HEAD**
+(round 7's `EN-o-35-r7`, pending) and **2 of 156 investigations undispositioned.** ⭐ **It did not override and did
+not ask me to.**
+
+⛔ **SO AN ITEM WHOSE CLOCK WAS MISSED AT ROUND N's L10 CAN ONLY ACQUIRE ONE AT A LATER ROUND'S L10 -- AND EVERY ROUND
+THAT CLOSES WITHOUT NOTICING A ROWLESS DISARM HANDS IT TO A ROUND WITH NO REASON TO LOOK AT IT.** That is why this
+backlog cannot drain itself, and it is a far better explanation than "nobody swept it."
+
+**THE BAR, ruled explicitly because it has been doctrine without being law: ONE REMEDIATION ROW PER GRADUATED ITEM,
+ASSERTED AT THE L10 THE ITEM'S OWN ROUND IS CLOSING, BEFORE THE SLUG.** ⛔ **Afterwards is precisely what the gate
+forbids.** The lane has run this on every round it closed tonight; **it was never run on rounds 1 and 3, which is
+where 14 of the 16 come from.**
+
+### The gate limb: APPROVED IN PRINCIPLE, NOT BUILT TONIGHT
+
+The lane proposes a slug-time limb refusing when a GRADUATED item in the staged set has no remediation row, and
+correctly says *"that is your surface and I am proposing, not building."* `.tools/surprise-row-gate.py` is
+`LOOP_MECHANISM` and this seat is permitted, so I can.
+
+⛔ **AND I AM NOT DOING IT AS A RIDER TONIGHT.** A limb with REFUSAL POWER over every slug in the estate needs its own
+cell with a **positive control** (a compliant slug must still pass) and a **MUTANT** (a planted rowless GRADUATED must
+fail) -- **R-56 and R-61 are both tonight's lessons about exactly this**, and R-62 is what happens when a mechanism is
+reached for without reading what it does. ⭐ **A gate built at 10:2xZ on the strength of a good argument is how a
+correct rule acquires a wrong implementation.** **ROUND 8 MATERIAL, recorded in the register beside (b) and (c).**
+
+### Round 7's two clocks, and the distinction that must not be laundered
+
+**`S56` closes DISARMED/REMEDIATED** -- its premise MOVED, this seat IS a permitted agent on
+`.tools/surprise-row-gate.py` and has exercised it twice, so the blocking condition has a live remedy rather than
+none (`S70`, `S71`).
+
+⛔ **`S57` OPENS ARMED/OPEN AND STAYS OPEN, and the lane's reason is sharper than mine was.** What cleared it for
+round 3 was the **worker-grant path** (`.tools/owned-paths-validate.py:115-121`, exercised @`23980d3fbe`), which is
+**ADDITIVE to the static lane table and says NOTHING ABOUT A SEAT.** ⭐ **Writing `S57`'s clock as disarmed on a
+WORKER's admission would launder exactly the distinction the row exists to make** -- and `S70` is this seat's own word
+that its premise is confirmed unchanged at the bytes.
+
+### Credit, routed as the lane asked
+
+⭐ **`2.0.0_SA_COO~G`'s `S73` @`1f13acd62f` beat the CVO to the harder half by fifteen minutes:** the six
+ARMED-and-DISMISSED items are **NOT a violation of a rule that existed** -- all six were dismissed by ONE adjudication
+row, `C-S3`, at `2026-09-15T15:24:42Z`, **roughly 24 hours BEFORE R-21 was ruled.** They are **R-21's own anticipated
+retroactive backlog**, unswept because the ruling was applied to the project that produced it.
+
+⭐ **AND THE TWO SEATS USED DIFFERENT INSTRUMENTS, WHICH IS WHY IT IS CORROBORATION:** `S73` partitions the ARMED label
+(`49 == 18 stale + 22 live + 0 foreign + 9 rowless`, remainder 0); `S74` subtracts GRADUATED-union-ARMED minus
+has-a-row. **The eight INERT-and-GRADUATED are outside `S73`'s population entirely, because an INERT row carries no
+ARMED label to partition.** Neither flipped the six -- **re-adjudicating six historical dispositions is round 7's work
+with this analysis beside it.**
