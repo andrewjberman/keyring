@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_OPLGTW~5</issued_to>
 <issued_by>2.0.0_SA_COO~O</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>complete</status>
+<status>pending</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v0.9 @e09219470f | **Contract:** `org/standards/NFRA_OPLGTW_CONTRACT.json` v1.1 | **Decomp cell:** `OG-q-6` | **outcome_ref:** FWD-2, FWD-5 | **depends_on:** `OG-q-4`, `OG-q-5` (both wired on the live path) | **precedes:** `OG-v-2`'s last re-hand | **slot:** ~5
 
@@ -26,6 +26,17 @@ found 5 NOT-ENFORCED. One was `OG-q-5`'s half one and is now wired. These four r
 | **R22** [P4.S4] | the NEGATIVE half: "never construct a cash/AUA total by adding different balance fields" | `assert_field_summable()` and its siblings |
 | **R24** [P4.S6] | "Duplicate/conflicting source grains produce unavailable, not silent deduplication." | `assert_unique_grain()` (`semantics.py:285-295`) |
 | **R25** [P4.S7] | the dataset description records grain, type, unit, SIGN and NULL semantics (grain and type/unit are already exposed; sign and null are not) | `datasets.json` + the describe path |
+
+**THE TWO DEFECT-ASSERTING TESTS (added on the RE-OPEN; rows `NFRA_OPLGTW-W5-S19` and `NFRA_OPLGTW-W5-S20`, which
+you filed and which are correct).** Your R20 and R24 wiring turns `tests/test_schwab_query.py::test_ogq2_ac06` and
+`::test_ogq2_ac20` RED, because each asserts the PRE-WIRING shape the contract forbids -- the same class
+`1.0.0_SA_CTO` ruled on in R-OG-15 for `test_ogq2_ac07` and `test_ogq2_ac15`, and that precedent governs here. Those
+two tests are now yours for exactly this:
+- Flip each of the two to expect the contract's refusal. NO OTHER LINE of that file is touched, and no other test's
+  expectation changes.
+- Each flipped assertion cites, in a comment on the assertion, the contract clause or C3 rule it now encodes.
+- This is NOT a re-open of `OG-q-2`: its cell is closed and its other criteria stand. AC7 and AC8 grade the
+  correction; AC9 then reads the module green.
 
 **Read the census rows themselves before you start** -- each carries its C3 sentence, its coordinates, the function
 it names and why the verdict is NOT-ENFORCED. They are your specification; this table is a summary of them.
@@ -78,7 +89,16 @@ printing its measurement with its denominator, then exactly one line `VERDICT: P
 <criterion id="OGQ6-AC6" cell_refs="OG-q-6"><invocation>cd <WS> && timeout 600 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q6.py AC6</invocation><expect>(?m)^VERDICT: PASS-OGQ6-AC6(?![0-9])</expect></criterion>
 `OGQ6-AC6` -- (closing) the C3 census is RE-READ at this HEAD against the PRD's C3 at its then-current pin, **its sentence denominator and rule count RE-PRINTED at re-read time and NEVER inherited from the 29 measured at the earlier vintage** (R-OG-18's qualifier: 29 is a count of a document this project is actively amending), and its NOT-ENFORCED count reads 0; any rule newly appearing in C3 since the first census is enumerated in the re-read and, if NOT-ENFORCED, reported as a finding rather than silently dropped.
 
-<expected_criteria>OGQ6-AC1, OGQ6-AC2, OGQ6-AC3, OGQ6-AC4, OGQ6-AC5, OGQ6-AC6</expected_criteria>
+<criterion id="OGQ6-AC7" cell_refs="OG-q-6"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q6.py AC7</invocation><expect>(?m)^VERDICT: PASS-OGQ6-AC7(?![0-9])</expect></criterion>
+`OGQ6-AC7` -- the probe prints the diff of `tests/test_schwab_query.py` against your cut base with its LINE COUNT, and passes only if every changed line lies inside `test_ogq2_ac06` or `test_ogq2_ac20`.
+
+<criterion id="OGQ6-AC8" cell_refs="OG-q-6"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q6.py AC8</invocation><expect>(?m)^VERDICT: PASS-OGQ6-AC8(?![0-9])</expect></criterion>
+`OGQ6-AC8` -- the probe prints that file's collected test count before and after the correction, both denominators stated and equal, and passes only if the two corrected tests each carry a comment citing the contract clause or C3 rule their new expectation encodes.
+
+<criterion id="OGQ6-AC9" cell_refs="OG-q-6"><invocation>cd <WS> && timeout 400 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q6.py AC9</invocation><expect>(?m)^VERDICT: PASS-OGQ6-AC9(?![0-9])</expect></criterion>
+`OGQ6-AC9` -- the probe runs `tests/test_schwab_query.py`, `tests/test_schwab_semantics.py`, `tests/test_schwab_c3_rules.py` and `tests/test_schwab_wiring.py`, ONE pytest process per module, and passes only if every module's failure count is 0, each module's counts and the denominator 4 printed.
+
+<expected_criteria>OGQ6-AC1, OGQ6-AC2, OGQ6-AC3, OGQ6-AC4, OGQ6-AC5, OGQ6-AC6, OGQ6-AC7, OGQ6-AC8, OGQ6-AC9</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -86,7 +106,8 @@ printing its measurement with its denominator, then exactly one line `VERDICT: P
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **`integration.py` is granted for a call site ONLY**, and only where a rule cannot be reached from `query.py`. Name which rules used it in your result file. Change no other tool's behaviour.
-- **`semantics.py`, `datasets.json`, `data_entitlement.py`, `tests/test_schwab_query.py` and `tests/acceptance/**` are NOT yours** -- other cells', merged or open. A needed change there is a BLOCKING row. In particular `test_ogv2_a18` (row `NFRA_OPLGTW-S26`) and `test_ogv2_a06`'s `isError` arm (row `NFRA_OPLGTW-W5-S18`) are OTHER cells' defects: do not touch them, and do not count them against your own criteria.
+- **`tests/test_schwab_query.py` is yours for EXACTLY `test_ogq2_ac06` and `test_ogq2_ac20`** (the re-open's grant; rows W5-S19 and W5-S20). Any other line in that file is outside your grant and is a BLOCKING row.
+- **`semantics.py`, `datasets.json`, `data_entitlement.py` and `tests/acceptance/**` are NOT yours** -- other cells', merged or open. A needed change there is a BLOCKING row. In particular `test_ogv2_a18` (row `NFRA_OPLGTW-S26`) and `test_ogv2_a06`'s `isError` arm (row `NFRA_OPLGTW-W5-S18`) are OTHER cells' defects: do not touch them, and do not count them against your own criteria.
 - **Branch.** You work in the worktree named in your identity line, on its branch, cut from `CLOUD` at hand-off. Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` serves every invocation; if absent, rebuild it as `cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`. Never commit `.venv-og/` or `.scratch/`.
 - **One module per pytest process.** Two test modules in one process collide on the MCP session manager; that is a harness fact, not a defect to fix here.
@@ -106,6 +127,7 @@ printing its measurement with its denominator, then exactly one line `VERDICT: P
 infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py
 infra/aws/ec2/opal-gateway/tests/test_schwab_c3_rules.py
+infra/aws/ec2/opal-gateway/tests/test_schwab_query.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -115,11 +137,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGQ6-AC1` .. `OGQ6-AC6` (6). Instance at
+Criterion ids: `OGQ6-AC1` .. `OGQ6-AC9` (9). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/NFRA_OPLGTW.TO-OG-q-6.c3-rules-wiring.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @e09219470f, decomp_ref.doc the
 decomposition as amended, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ6-AC1,OGQ6-AC2,OGQ6-AC3,OGQ6-AC4,OGQ6-AC5,OGQ6-AC6`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGQ6-AC1,OGQ6-AC2,OGQ6-AC3,OGQ6-AC4,OGQ6-AC5,OGQ6-AC6,OGQ6-AC7,OGQ6-AC8,OGQ6-AC9`
 BEFORE the `complete` flip. Result file `c3-rules-wiring.result.md` beside it, naming each rule's call site by
 `file:line` and carrying the census re-read's own printed denominator. **Flip `complete` only when every MECHANICAL
 criterion PASSES by output.**
@@ -153,3 +175,15 @@ its `OGQ5-AC6` is a measured FAIL whose two failures are OTHER cells' defects (`
 cell behind two repairs it does not depend on, while slot ~5's worker sits idle -- and the ruling's REASON for the
 ordering was slot availability, which is satisfied. This seat therefore cut it now and says so here and to
 `1.0.0_SA_CTO` in the same act, so the reading can be corrected rather than discovered.
+
+RE-OPENED 2026-09-18 ~03:2xZ by `2.0.0_SA_COO~O` after its own drain @`7785d21060`, on rows `NFRA_OPLGTW-W5-S19`
+and `NFRA_OPLGTW-W5-S20` (ARMED, this seat the disarm owner), which the worker filed and which are correct: the
+R20 and R24 wiring turns `test_ogq2_ac06` and `test_ogq2_ac20` RED because each asserts the PRE-WIRING shape the
+contract forbids. Measured by this seat on the SHARED tree after the drain: `tests/test_schwab_c3_rules.py` 4
+passed, `tests/test_schwab_semantics.py` 14 passed, `tests/test_schwab_query.py` **2 failed / 23 passed**, both
+failures those two tests. `1.0.0_SA_CTO` ruling R-OG-15 already settled this exact class for
+`test_ogq2_ac07`/`test_ogq2_ac15`, so the precedent governs and no new call was raised: the two tests are granted
+for their expectations only, AC7 and AC8 grade the correction's tightness and AC9 reads the four modules green.
+`OG-q-2` is NOT re-opened. This is the FIFTH and SIXTH instance of the defect-asserting-test class in this
+project, all of them in one file, and the C3 census is what makes the population visible rather than the
+instances. No criterion was removed.
