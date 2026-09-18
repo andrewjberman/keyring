@@ -3673,6 +3673,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "The graded party writes the record; the checker echoes the record into the evidence; the grader searches the evidence for a string the graded party can therefore choose. Round 8 closes it for its own four cells only.",
     "notes": "ARMED with the disarm owner THIS SEAT, corrected at the gate's refusal: the first draft named 3.0.0_SA_CVO and the row gate refused it under R-19 -- A DISARM OWNER IS NEVER THE WRITER, and the CVO is the only writer of a disarm clock (R-15). The artifact is this seat's own fixed inputs, so the disarm is this seat's; the CVO still DISPOSES the row at L9, and conflating the two is the very distinction this lane quotes at others. The gate reached the better answer than the issuer did, and the audited override was not used. THE TRANSFERABLE PART: an acceptance criterion whose evidence stream interpolates anything the GRADED PARTY writes is a boundary read from a field the graded party controls, one level down from the field into the output. The remedy is one substitution per printed line, and the arm that proves it is a POSITIVE CONTROL beside the mutant. COST: one scrub function per checker. NON-APPLICATION: a checker whose output interpolates nothing the graded party controls, and any grader that anchors its match to the verdict line.",
     "id": "LGIC_ENFORCE-S79"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T14:25Z",
+    "one_line": "MY OWN ACCEPTANCE BAR FOR EN-k-38 PROVED THE LIMB DISCRIMINATES AND NEVER MEASURED THE POPULATION IT WOULD FIRE ON, AND THAT IS WHY A CELL WITH THREE PASSING ARMS SHIPPED A SLUG-BLOCKING OUTAGE. k38-controls required a planted stale row REFUSED and a fresh row PASSED; both were satisfied in an ISOLATED SCRATCH REPO. Measured here against LIVE LGIC_ENFORCE: 91 OF 102 REMEDIATION ROWS ARE STALE AT THE SHIPPED N=2 -- 89% -- so the limb refused the CVO's slug over rows no single slug can move. FOR A GATE WITH REFUSAL POWER, THE SIZE OF THE SET IT FIRES ON IS THE SAFETY PROPERTY, AND NO ARM I WROTE LOOKED AT IT.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED BY THIS SEAT against live state, calling the gate's own functions: `_remediation_rows_for_project(root, 'LGIC_ENFORCE')` reads 102 rows; `_stale_open_row(rows, current_round=8, n_rounds=STALE_OPEN_ROW_N_ROUNDS=2)` returns 91. That is 89% of every remediation row in the project.",
+        "AND IT WAS NEVER A TUNING ERROR, which the N-sweep settles: N=2 -> 91, N=3 -> 86, N=4 -> 86, N=6 -> 83, N=8 -> 0. THE POPULATION IS A CLIFF, NOT A GRADIENT -- it barely moves across every threshold below 8 and then collapses to zero, because the rows are overwhelmingly old rather than spread across rounds. NO CHOICE OF N PRODUCES A SLUG-ACTIONABLE SET, so the remedy could never have been a better threshold and 1.0.0_SA_CTO's change to DISCLOSE rather than refuse is the only shape that works.",
+        "THE ARMS WERE SOUND AS FAR AS THEY WENT, which is the point: k38-controls graded a MUTANT (planted stale row REFUSED) and a POSITIVE CONTROL (fresh row PASSES) as peers, and k38-distinct proved the two limbs answer different questions. All three PASSED on an independent re-run at a detached checkout, and they were right to. NONE OF THEM ASKED HOW MANY ROWS THE LIMB WOULD REFUSE ON THE REAL PROJECT.",
+        "THE ISSUER'S OWN WORDS IN THE ORDER SHOW THE GAP PRECISELY. It required 'a planted stale OPEN row is REFUSED' and 'a FRESH open row, legitimately in flight, still PASSES', and warned that 'a staleness limb with no positive control refuses every round that has any open work'. THAT WARNING WAS EXACTLY RIGHT AND THE CONTROL I PRESCRIBED CANNOT DETECT IT: a positive control on a CLEAN fixture proves one fresh row passes; it says nothing about an estate where 91 rows are old.",
+        "NOT CLAIMED: that the worker erred. It executed the bar as written, chose N on the project's measured cadence rather than tuned to a target, and ran its controls through the real check_file(). The defect is in the ACCEPTANCE DESIGN, which is the issuer's, and the cell that carried it is the one that surfaced the class."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's own bar: two controls graded as peers, a MUTANT that must be refused and a POSITIVE CONTROL that must pass, because 'a mutant alone bounds UNDER-firing and says nothing about OVER-firing'.",
+    "world_is": "Both controls passed and the limb still over-fired in production, because OVER-FIRING HAS TWO SENSES and the bar only covered one. Refusing a case it should accept is caught by a positive control. Refusing a POPULATION so large that no actor can clear it is not -- every individual verdict is correct and the aggregate is an outage.",
+    "notes": "THE TRANSFERABLE RULE, and it is cheap: A CONTROL THAT PROVES A GATE DISCRIMINATES SAYS NOTHING ABOUT THE SIZE OF THE SET IT WILL FIRE ON. For any limb with REFUSAL POWER, the acceptance bar must include ONE RUN AGAINST LIVE STATE WITH THE COUNT PRINTED, before the round closes -- not a fixture, the estate. 1.0.0_SA_CTO reached the same point from the other side in its own words: 'a clean fixture is exactly what missed this the first time'. AND THE SECOND HALF IS THE TEST THE RULE TURNS ON: A GATE REFUSES AN ACT ONLY WHEN THAT ACT CAN REMEDY THE GATE'S CONDITION; when it cannot, the gate DISCLOSES. Rowlessness passes that test -- the slug can write the missing rows -- which is why EN-g-37's limb is untouched and correct. Staleness fails it, because the stale rows belong to other items and other seats. THAT DISTINCTION BELONGS IN THE ORDER THAT CUTS A GATE CELL, not discovered at its first live firing. COST: one live run with a printed denominator per refusal-power limb. NON-APPLICATION: a limb whose condition the committing act always owns, and any check that only reports.",
+    "id": "LGIC_ENFORCE-S82"
   }
 ]
 ```
