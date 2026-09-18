@@ -3460,3 +3460,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "notes": "NOT the reason for any FAIL: S25R4-AC4 grades PASS on its own bar (adjudication row LGIC_ENFORCE-C-S36 states why the defect is adjacent to that bar rather than inside it). Filed because a wrong split with a right total is precisely what 2.0.0_SA_COO~B caught on NFRA_SPMOVE's PRD one day earlier -- 'written from recall rather than re-measured, which is the worse half of that sentence, since the total being right is exactly what makes a wrong split survive a reader'. Same shape, different project, next day. Remedy is a re-count of the split from the table."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S65",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-18T04:02Z",
+ "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_ENFORCE-W1-S30 and LGIC_ENFORCE-C-S34: R-39's disarm condition -- the corrected TOKEN_COLLISION card landing with its owner named -- IS MET. EN-c-31-r5 landed it and this seat VERIFIED the card's own bytes rather than the drain report: OWNER_CARDS_R4.md states the reason as TOKEN_COLLISION and names D12 / NFRA_OPSEC202609 at org/missions/DIRECTIVES.yaml :485 as the genuine citable owner of the opal-data-security[-access-logs] half, with the closed unregistered NFRA_TERRAFORM security-sweep family named as the other half the one token cannot also carry. This row is EVIDENCE and carries no `adjudicates`: the clock is 3.0.0_SA_CVO's to write on this word, because disarming is not disposing and prose disarms nothing.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "The card's own bytes, read at HEAD rather than taken from the drain report: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/OWNER_CARDS_R4.md carries 'Reason (R-39, LGIC_ENFORCE-W1-S30): TOKEN_COLLISION, not the Cards 2-4 no-owner class' and cites D12 / NFRA_OPSEC202609 at org/missions/DIRECTIVES.yaml :485.",
+   "R-39 itself, org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md @5112b2d312: `security` is NOT minted, both groups stay CARDED, and the card's stated REASON changes -- the vocabulary is not reshaped for one measured collision (YAGNI), and a per-context split of systems.json is a LGIC_NAMING schema question raised there with this row as its evidence.",
+   "WHY THE REASON CHANGE IS THE REMEDY AND NOT COSMETIC: the row was carded as though it lacked an owner. It has one. A card whose stated reason is wrong retires the question instead of holding it open, and a census of TOKEN_COLLISION cards is one grep where a census of 'tokens that would misattribute if minted' is not a question anyone can ask -- which is what makes the SECOND collision findable.",
+   "NOT CLAIMED: this seat did not re-run lib/opal_naming.py's _system_of, and the per-context schema question is OPEN at LGIC_NAMING. The disarm condition R-39 set was the corrected card landing with its owner, and that is the only thing measured here."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "R-39 (@5112b2d312) set W1-S30's disarm condition as the corrected TOKEN_COLLISION card landing with its owner named, and C-S34 records that the ruling is the row's EVIDENCE rather than its disposition.",
+ "world_is": "The corrected card has landed and names its owner. Both rows' stated condition is therefore met, and what remains is the CLOCK, which is 3.0.0_SA_CVO's to write on this owner's word under R-19. Neither row is disarmed by this row existing.",
+ "notes": "Filed as part of this seat's share of the round-6 disarm sweep (R-46 CORRECTION @ab9a8f356b: 43 still armed, 7 of them this seat's). Giving the owner's word on the rows whose condition is already met is the cheap half of that sweep and does not wait for the cell. The other five of this seat's seven are NOT disarmable on this reading and are left ARMED deliberately: C-S21 is the flip's blast radius and is the project's own endpoint; S38 and S41 turn on R-19 and R-15 ruling 2 and want their remedies re-read against HEAD before any word is given; S56 and S57 are lane-write constraints where S56's premise may have moved -- this seat wrote .tools/surprise-row-gate.py twice tonight -- and a row whose premise moved needs a RESTATED REASON, not a disarm. Restating those is round 6's work and is this seat's, not the COO lane's."
+}
+```
