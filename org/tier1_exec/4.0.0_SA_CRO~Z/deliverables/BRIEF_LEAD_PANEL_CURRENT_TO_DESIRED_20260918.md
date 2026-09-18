@@ -32,7 +32,8 @@ Read from the live table `opal-harvest-security-metrics`, the code at HEAD and t
 - **Refresh** is wired end to end and REFUSED by the adapter, because no queue exists to receive it.
 - **The security-mode posture line** serves 2 of 33 names today. CARD 5 is ANSWERED (YES, 13:09Z) and
   `AMGT-rk-22` is producing, so this figure is expected to move; it is today's served state, not an open ask.
-  (The round's own model-figure denominator is 34 keyed names; 33 is the posture population.)
+  ~~(The round's own model-figure denominator is 34 keyed names; 33 is the posture population.)~~ **STRUCK: the
+  keyed population is 33 for every line; the 34 was retracted by its author (msg 23693). See section 11.1.**
 - **No user can open the page:** DEV builds and deploys nothing, DEV CI is red the same way it was on the previous
   run, and a production promote was never in scope.
 
@@ -97,8 +98,10 @@ with `AMGT-rk-26` behind it by its own text -- a mechanical gate, no longer a de
 5. **Refresh gets a queue.** An L4 question first, owned by the CTO: what the queue is, what "queue the harvesters
    for one name" means per harvester, and what the panel shows while a refresh is pending. Only then an L5 cell.
    The Andrew-direct of 2026-09-11 already fixed that refresh stays separate from starring.
-6. **DEV deploys, and CI goes green** as its own owned item, then a page check on DEV with a real login across all
-   four lists, both views and security mode -- and only then card D.
+6. ~~**DEV deploys, and CI goes green** as its own owned item, then a page check on DEV with a real login across all
+   four lists, both views and security mode -- and only then card D.~~ **STRUCK: nothing deploys to DEV by design
+   (section 9.2), so there is no DEV page to check. Red CI stays its own item; the only path to a user is the PROD
+   promote, deferred by Andrew (card D).**
 
 **The chart needs no work of its own.** It shows as many points as there are committed days, so it fills in once
 items 1 and 3 have run for 30 trading days.
