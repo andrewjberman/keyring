@@ -1,7 +1,8 @@
-# AMGT_RESAPP PRD v0.11 and v0.12 -- L4-R review of the ratified-text half (3.0.0_SA_CVO~Z)
+# AMGT_RESAPP PRD v0.11, v0.12 and v0.13 -- L4-R review of the ratified-text half (3.0.0_SA_CVO~Z)
 
-**The stamp binds v0.12 @`4de34f0d95`, ratified-text half_hash `901bf534d397`. Section 6 reviews that version's
-delta over v0.11.**
+**Current: v0.13 @`1699960261`, ratified-text half_hash `679b1d41f694` -- SIGNED (section 7).** v0.11 and v0.12 were
+REFUSED on annotation, history and seat names inside CONTRACTS (sections 3 and 6). The substance passed at every
+version.
 
 **Under review:** `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` @`9c8e04cd9a`
 - prd_version v0.11
@@ -148,5 +149,54 @@ section 3.
 
 **Verdict on v0.12: REFUSED on criterion (d) alone.** The substance passes, including both v0.12 changes. Clearing
 section 3's four items is the whole of what this seat needs in order to sign.
+
+**Record note.** The re-stamp citing this section was refused by the tool at ~20:1xZ: "the PRD's worktree copy
+differs from HEAD in a half's bytes". The v0.13 edit was in progress in the shared tree at the time. The v0.12
+REFUSED stamp @`075227f4c0` therefore still cites the review at @`969755b2f2`, which covers v0.11. This section is
+the record of the v0.12 bytes, and v0.13 supersedes both.
+
+## 7. v0.13 @`1699960261` -- SIGNED (ratified-text half_hash `679b1d41f694`)
+
+**Two reads, because a check scoped to the diff cannot see what the diff did not touch.**
+
+**(i) The v0.12 -> v0.13 diff.** ENDPOINT 0 changed lines; CONTRACTS 313 -> 299 lines, 52 changed. Every item in
+section 3 is removed:
+- **Seat serials (item 1):** "L4 READING, NOT ANDREW'S WORD" carries no serials, and "Kept from v0.7 (brief
+  @`a65fe406c2`)" drops `4.0.0_SA_CRO~W`.
+- **Present-tense defect narratives with file:line citations (item 2):** build_universe.py D1, passages.py,
+  serp.py / enrich.py and enrich.py:582-594 are all out, and the "Preconditions" line no longer says "each absent
+  today".
+- **The Keyence measurement (item 3):** out.
+- **The supersession paragraph (item 4):** out.
+- **Beyond what was asked:** the clause heads drop their line pins, and the dated example lists (Roche / RWE /
+  Zurich; "3 of 22 names") are out. Every RULE is intact.
+
+**(ii) The whole v0.13 half, scanned.** Denominator: 542 lines.
+- **file:line citations:** 0.
+- **measurement narrative:** 0.
+- **supersession:** 1 hit, "Kept from v0.7 (brief @`a65fe406c2`)" -- provenance, admitted by section 3's bar.
+- **"today":** 4 hits. Three are ENDPOINT text unchanged since v0.10 (ENDPOINT:48, :72, :149), and ENDPOINT is
+  ratified content this review does not rewrite. One is an older CONTRACTS state line with no citation
+  (CONTRACTS:279, "Today each is a Python module a person runs by hand").
+- **seat serials:** 15 hits, all in contracts older than v0.11. They are OWNERSHIP assignments ("Owner of the
+  readers: `2.0.0_SA_COO~W`") and provenance paths to records. An owner assignment is binding content, not
+  annotation.
+
+**Why these 19 residuals do not block the signature.** None was in section 3's list. 1.0.0_SA_CTO~Z cleared exactly
+what this seat asked for, and refusing now over items this seat did not name would move the bar after it was met.
+
+**Recommended at a later bump, not required:** several of the ownership serials name `~W` lanes, which may no longer
+be the live owners; and CONTRACTS:279's "Today" line states a present condition that will age.
+
+**(iii) The one new substantive change, VERIFIED.** C-PEER-SET-SA now reads `C-SA-TERMS-BEFORE-SCHEDULE` SATISFIED
+for this path, and the vendor word covers "its refresh". Andrew-direct ~20:0xZ, verbatim in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`: "I have
+already clarified SA ToS, we are good, if I had an issue with the design i wouldnt have designed it this way." The
+clause is his word, scoped to this path. The "NOT CHANGED" list correctly drops the two contracts this change does
+touch. PASS.
+
+**Verdict on v0.13: SIGNED.**
+- **Substance:** passes every check -- sections 2, 6 and (iii) above.
+- **Hygiene:** meets section 3's bar.
 
 -- 3.0.0_SA_CVO
