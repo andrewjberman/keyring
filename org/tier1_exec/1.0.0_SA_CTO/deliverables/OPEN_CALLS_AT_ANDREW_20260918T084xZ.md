@@ -48,8 +48,13 @@ one Andrew reads first.**
 
 ```
 +-- CALL 2 of 4 ------------------------------------------------------+
-  **Re-order the COO seating queue to put ADVI_FIRMBKTS ahead of
-  MDPF_TAXSMA and NFRA_MCPINDEX?  (a) yes  (b) no, leave it**
+  **Should ADVI_FIRMBKTS enter the COO seating queue ahead of TAXSMA and
+  MCPINDEX?  (a) yes  (b) no, keep your order**
+  YOUR ~23:3xZ WORD ALREADY SET THIS ORDER and I am not asking you to
+  reverse it: "I want you to bring back, in this order, COO~T for TAXSMA,
+  then COO~M for MCPINDEX." It was CONDITIONAL -- "hoping to wake up
+  tomorrow and all of these to be done. If that is the case..." -- and
+  THAT CONDITION IS NOT MET, so no slot has freed and nothing is seated.
   D14 has FOUR members. LGIC_NAMING is complete; LGIC_ENFORCE is
   reachable and in round 8. LGIC_CANON and LGIC_LGCTFM are BOTH
   UNREACHABLE by any act of this fabric, and BOTH END ON THE SAME
@@ -61,15 +66,19 @@ one Andrew reads first.**
   (3 of 3); the queue is MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS ->
   MDPF_CANON.
   ----------------------------------------------------------------------
-  **REC --** (a), and the case got STRONGER after this card was written.
-  ADVI_FIRMBKTS is THIRD and is the ONLY one of the four that unblocks
-  anything in D14; the two ahead of it unblock nothing here. No document
+  **REC --** (a). YOUR ORDER STANDS AND IT WAS COHERENT ON THE WORK --
+  TAXSMA is EXECUTING with a named dark lane that would RESUME cut work,
+  MCPINDEX is at PRD with its ratified-text half still owed and a lane
+  seated there would be seated into a wait. What I am reporting is a
+  project that appears in NEITHER of your two seat sentences:
+  ADVI_FIRMBKTS is the ONLY project that unblocks D14, and ONE UNSEATED
+  PROJECT BLOCKS THREE SEPARATE THREADS ACROSS TWO PROJECTS. No document
   said this, because the sequence orders by DEPENDENCY and nobody had
-  read it against D14's own stop-condition. ONE UNSEATED PROJECT NOW
-  BLOCKS THREE SEPARATE THREADS ACROSS TWO PROJECTS: an earlier version
-  of this card routed one of them through a middle step, and that was
-  falsified from the PRD's own bytes -- the middle step ALREADY RAN and
-  the outcome did not move. The order is YOURS and I have not touched it.
+  read it against D14's own stop-condition. Measured this morning; you
+  did not have it when you ruled. An earlier version of this card routed
+  one of the three through a middle step, and 2.0.0_SA_COO~G falsified
+  that from the PRD's own bytes -- the middle step ALREADY RAN and the
+  outcome did not move. The order is YOURS and I have not touched it.
   ----------------------------------------------------------------------
   **THIS IS THE D14 STOP-CONDITION ITSELF.** When LGIC_ENFORCE reaches
   complete, only UNREACHABLE members remain and the /self-drive loop
