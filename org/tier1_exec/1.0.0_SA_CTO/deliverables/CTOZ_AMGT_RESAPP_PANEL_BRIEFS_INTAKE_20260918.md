@@ -9,7 +9,7 @@ functions."*
 **When the addendum is written -- Andrew-direct 2026-09-18 ~17:2xZ at this terminal, verbatim:** *"I want to wait until CRO
 and I have gone through all the pages and brought forward al the briefs, we still have a couple more to do. Exec Mgmt brief is
 being refined with one more piece, then we will go on to Peers, Model, and Posture."* **So no PRD addendum is drafted, staged or
-applied until every panel brief is in.** Remaining after Peers (in, s.2C): Model and Posture. Exec Management is complete.
+applied until every panel brief is in.** ALL BRIEFS THIS SEAT WAITS ON ARE IN (Model integrated, s.2D). Posture follows and holds nothing up.
 
 **AMENDED by Andrew-direct ~18:2xZ at this terminal, verbatim:** *"the only thing remaining really is the Model brief, which is
 en route shortly. After you integrate that, we may proceed; no need to wait for Posture brief. Also, when you have everything
@@ -274,6 +274,34 @@ waits on that answer**; the 15 test GETs ran under his word for the test.
 
 ⛔ **HAR hygiene:** the HAR of the SA page carries Andrew's logged-in session. It is read for SHAPE only -- no header, cookie or
 token value is printed, logged or committed.
+
+---
+
+## 2D. Model -- `BRIEF_MODEL_CURRENT_TO_DESIRED_20260918.md` @`f48864fce6` (msg 23725) -- THE LAST BRIEF THIS SEAT WAITS FOR
+
+Andrew-direct ~18:4xZ, verbatim: *"write it up and get it over to CTO~Z. I told them after they receive this brief and integrate
+it into their flow, they may proceed with COO~Z. You and I will proceed to Posture regardless, but the greater fabric does not
+need to be held up on that."* His ruling on the panel: *"I'd use Bloomberg as primary, seeking alpha as a fall back"* -- for
+forecast years (the mirror of the Peers rule).
+
+**Model is the healthiest panel in the series:** SERVED 33 of 33, FY2016-2025; check face PASS 5,926 / REFUSE 348 / PROVISIONAL 103.
+
+| # | finding | existing art | disp. | lands as |
+|---|---|---|---|---|
+| M1 | ⭐ **All 348 refusals are ONE missing registry entry, not bad data.** The unit map lives in a WORKER'S deliverables folder -- `model_block_pull.py:286-288` `_FIELD_MAP_PATH = .../deliverables/0.9.0_WK_AMGT_RESAPP~1/field_map.json` (**verified at source here**). Four fields carry per-security units for the 3 pilot names only; for everyone else `_resolved_unit` (`:300-316`) falls back to "not yet built" and `run_checks.py:54-55` refuses. The dividend row is refused on 30 of 33 names for a map entry | C-UNIT-MAP-MEASURED (named in the docstring) | **EXEC -- a production dependency on a worker's folder** | move the map to a proper home and build it for every name. **No new pull**: stage `derive` reads raw back from S3. The cheapest item on the panel, and it clears every refusal. Same class as the "cache in a worker folder" row W32-S4 in the round-13 slug |
+| M2 | `HIST_END = "2025-12-31"` is fixed (`:101`, **verified**) | -- | **ADD** | a rolling window to the latest closed fiscal year per issuer |
+| M3 | **Forecasts FY1-FY3, Bloomberg primary / SA fallback** -- measured with an EXPLICIT `BEST_FPERIOD_OVERRIDE`: `BEST_EPS` 33/33/33, `BEST_SALES` 33/33/32, `BEST_EBITDA` 31/31/31, `BEST_PE_RATIO` 31/32/32, `BEST_DPS` 33/33/33. BA control FY2026-28 EPS -0.83 / 3.95 / 8.05 | 0 hits for forecast years in the Model contract | **ADD -- Andrew-ruled** | each cell carries fiscal year AND source (`BBG` / `SA_FALLBACK`); column headers from `BEST_PERIOD_END_DATE`, never a counted offset; labelled consensus, not reported. The SA fallback is a handful of cells, not a column |
+| M4 | ⚠ **Two instrument traps, both measured**: the crosswalk's `bloomberg` field has NO yellow key (`BA US`) -- the CRO's first pull got 33 of 33 security errors, a failed instrument reading as zero coverage; and `BEST_` fields WITHOUT the override return the next QUARTER, which looks like a plausible annual value | READ_HERE s.4 (the override) | **ADD to the traps** | every Bloomberg call appends ` Equity` or reads the block's own security string |
+| M5 | Five sheet rows have no field (Revenue/Sh, FCF yield, FCF margin, RoTA, Earnings margin); the page correctly refuses to compute them | `modelSheet.ts` refusal | **ADD** | the Bloomberg fields that carry them go in the producer's field list -- never computed on the page |
+| M6 | The pull is by hand, not a leg of `scheduled_daily_pull.cmd`; every block is one hand run dated 2026-09-16 | -- | **ADD -- instantiation stage "model block"** | a step of instantiating the security, then refreshed after each fiscal close on a cadence ANDREW sets (his Bloomberg-cadence reservation stands) |
+| M7 | Robustness needs quarterly TTM inputs and fields the annual block lacks | ruled 8-quarter TTM window | **ADD -- its own L4 question** | this seat's |
+| M8 | **Upside / Base / Downside cases** -- EPS now has a source; the multiple and the scenario spread are Opal's judgment | -- | **AT ANDREW** | stays ABSENT with that reason until he rules |
+
+**The COO's capacity answer lands here too** (msg 23726): up to **16 workers concurrently** (2x the default cap), measured on the
+device at 20 logical cores / 63.5 GB RAM / 31 GB free, ~1.3 GB per worktree -- and the ceiling is the DRAIN, not CPU, since every
+worker lands through one serialized safe-merge at ~5-10 min each. **So the addendum should split into as many independent chains
+as it honestly has, and the chains should be sized so drains, not builds, are the long pole.** The COO also asks that the
+round-13 slug rows naming it as remedy owner become cells.
 
 ---
 
