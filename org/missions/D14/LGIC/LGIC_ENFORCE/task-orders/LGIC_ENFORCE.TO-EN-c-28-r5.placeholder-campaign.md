@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves current) | **Decomp cell:** `EN-c-28` (decomposition v3.4 s.0e) | **outcome_ref:** FWD-5 | **depends_on:** `EN-h-29-r5` and `EN-c-31-r5` drained -- your census must read a registry whose known-defective bytes have already been repaired
 
