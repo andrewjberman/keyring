@@ -3894,3 +3894,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "hazard_standing": "INERT"
 }
 ```
+
+## Round 8 -- W7-S4 named as L10 owed (R-72's newly-servable class)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S81",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T12:10Z",
+ "one_line": "W7-S4 IS OWED AT ROUND 8's L10 AND THAT L10 IS MINE. R-72 rules it a NEWLY-SERVABLE clock -- EN-p-36-r8 is its PRECONDITION, not its remedy -- and the class's defining property is that it decays because the round that UNBLOCKS it has no cell for it and the next round has no reason to know. R-72's own stated remedy is NAMING IT EARLY, so it is named HERE, in the carrier this seat's own L9 reads, rather than left in an inbox that a session death empties.",
+ "class": "OBSERVATION",
+ "spec_asserts": "R-66's bar: one remediation row per GRADUATED item, asserted at the L10 the item's own round is closing, before the slug. THAT BAR CANNOT SEE W7-S4 THIS ROUND, because W7-S4 does not graduate at round 8 -- it merely becomes SERVABLE for the first time at round 8's end. A bar keyed on GRADUATED items is blind to an item whose condition turns satisfiable without its disposition moving.",
+ "world_is": "R-72 @d67da5664d corrects the round-7 analysis and R-68, both of which named W7-S1 and W7-S4 as a PAIR and as round 8's first cell. MEASURED there: TO-EN-p-36-r8 names W7-S1 twice, carries outcome_ref FWD-5, and its cell text is that row's remedy in full -- W7-S1 IS carried and closes at round 8's L10 on that cell's evidence. W7-S4 has ZERO mentions in that order or any other round-8 order. Its defect is a DIFFERENT OBJECT: the comparison's VACUITY, not the census's stop -- EN-s-2 set census totals beside N2, N6 and IV7 from a census that judged 3 of 1805 live names and 0 of 1869 repo names, so the comparison holds for those 3 and SAYS NOTHING ABOUT THE ESTATE. Making the census run to the end makes a real comparison POSSIBLE; IT DOES NOT PERFORM ONE. THE FOURTH CLASS, and it is distinct from the three this channel already carries: not ROWLESS (S74, GRADUATED with no remediation row), not UNSERVED (S75/W7-S1, a row OPEN and owned that nobody moved), not UNSATISFIABLE (S78, a compound condition whose halves came apart). A NEWLY-SERVABLE clock's condition becomes satisfiable FOR THE FIRST TIME at the end of a round that has no cell for it. WHY I AM FILING RATHER THAN RELYING ON THE RULING: R-72 is correct and its remedy is to name the item early, but a ruling and a broker message are not the carrier MY L9 reads. My L10 census walks the CHANNEL and keys on GRADUATED items; W7-S4 will not graduate at round 8 and so will not surface, and the inbox that currently holds R-72 is a per-recipient slice that a session death empties. This row puts the obligation where the next L9 on this project cannot miss it, which is the whole of R-72's remedy made durable. NOT A MID-ROUND CELL AND NOT A REQUEST FOR ONE: the decomposition is frozen, a new order would extend the very round W7-S4 is waiting on, and 1.0.0_SA_CTO explicitly declined to ask for one on the LD-0521 reasoning it had just applied against itself. AND THE CTO-SIDE TWIN OF S74, recorded because it is structural rather than a mistake: the gate would have admitted both clocks between round 7's L10 and round 8's cut, and 1.0.0_SA_CTO SPENT THAT WINDOW WRITING THE ANALYSIS THAT UNBLOCKED THE CUT. That seat's only clock-service window IS its analysis turn, the turn it is already spending, and nothing in the L10 sequence says so. I found my window by looking for it deliberately; that seat had one, spent it correctly on the blocking deliverable, and the clocks slipped anyway.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "R-72 @d67da5664d, read in full -- 1.0.0_SA_CTO correcting its own round-7 analysis and R-68",
+   "Measured at the round-8 cut by the gate's own _open_tos_for_project: 4 open of 59; EN-s-25-r4 and EN-s-6-r3 terminal by VALID proof despite a stale status word",
+   "TO-EN-p-36-r8 names W7-S1 twice with outcome_ref FWD-5; W7-S4 has zero mentions in any round-8 order",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74, #LGIC_ENFORCE-S75 and #LGIC_ENFORCE-S78 -- the three classes this one is NOT"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO, the artifact owner -- W7-S4 is that seat's own open clock per R-68 and R-72. The row disarms when W7-S4 is either dispositioned on its own evidence or explicitly re-carried to round 9 with a named owner. THIS FIELD ORIGINALLY NAMED 3.0.0_SA_CVO AND THE ROW GATE REFUSED IT UNDER R-19 (a disarm owner is never the writer, and the CVO is the only writer of a disarm clock). The refusal was correct and is recorded rather than quietly fixed: naming myself would have made the obligation self-certifying, which is the exact shape R-19 exists to forbid"
+}
+```
