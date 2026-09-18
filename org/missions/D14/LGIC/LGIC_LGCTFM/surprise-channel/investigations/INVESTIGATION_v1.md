@@ -198,6 +198,28 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "W1-S1 asserts that core_reproduce treats a raising grade() call as correctly reported only when desired.verdict == RAISE, so a NOT_COVERED verdict -- which the record and the WORKER FACE both require for an untypeable resource -- reads FAIL.",
    "world_is": "core_reproduce now accepts NOT_COVERED on the paired-field test the record specifies, and the arm passes on 278 of 278 rows. The untypeable case is additionally exercised by its own two arms.",
    "notes": "EVIDENCE, not a disposition; no `adjudicates`, and the disposition is 3.0.0_SA_CVO's at L9. WORTH SAYING PLAINLY BECAUSE IT IS THE SECOND TIME THIS ROUND: both W1-S29 (on LGIC_ENFORCE) and this row were defects in THIS SEAT's own fixed input, found by a worker running it, and in both cases the worker's report was the only instrument that could have found them -- a checker's author re-running its own checker is repetition. The cost of the fixed-input pattern is exactly this: the issuer's instrument is graded by nobody until a cell runs it for real."
+  },
+  {
+   "id": "LGIC_LGCTFM-S6",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T00:52Z",
+   "one_line": "ANDREW_CARD.md's RECOMMENDATION -- the one line a decision-maker actually weighs -- SAID 'the two rows touching a live, client-facing surface' AND THERE IS EXACTLY ONE. Measured over all 179 tensions of the contract the card ranks: client_facing == true is 1 (T-0001, the opal-data-bd bucket), live == true is 1 (T-0001), both together 1, irreversible == true is 0. The card's TABLE is correct and its own analysis sentence is correct ('Rank 1 is the only irreversible-or-client-facing-or-live row in the top ten'), so the RANKING and the 179-row order are not impeached -- what was wrong is the summary written FOR the reader who decides without checking, which is exactly backwards from how a card is used.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "Found by 1.0.0_SA_CTO (msg 97745) on ANDREW_CARD.md @554d1de05b, with its own denominator table: 179 tensions, client_facing true 1, live true 1, both 1, irreversible 0.",
+     "RE-DERIVED HERE ON A DIFFERENT ACCESSOR before acting, because the finding's own message records that the CTO's FIRST accessor read the factor values at the top level of each tension and returned 0 client_facing rows across 179 -- a confident zero that would have contradicted the card entirely. The values live under factors.<name>.value. This seat printed tensions[0].factors' real key set (client_facing, irreversible, live, rules_colliding) and then a VALUE HISTOGRAM over the whole population: {True: 1, False: 177, None: 1}. A histogram with three distinct values proves the accessor is reading a real cell rather than returning a constant, which a bare count of 1 does not.",
+     "THE CORRECTION COULD NOT LAND IN THE CARD ITSELF AND THAT IS THE GATE WORKING: this seat edited the line, and .tools/owned-paths-validate.py clause 4 (ADHC_OWNPTH.004, lane TREE_DELIVERABLES) REFUSED the commit -- 'deliverables/0.9.0_WK_LGIC_LGCTFM~3/ANDREW_CARD.md ... agent=2.0.0_SA_COO~G not in permitted_agents'. A worker's deliverable folder admits exactly that serial. The edit was reverted (git checkout --) and the correction lands instead as this seat's own record at org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md, carried to Andrew BESIDE the card in the same act -- which is what 1.0.0_SA_CTO asked for and is better than an in-place edit of a document already in a reader's hands."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "V1R1-AC4 (x1 arm v1-card) asserts the card carries the ranking rule verbatim and its top ten tension ids, and it reads PASS. Nothing in round 1's criteria grades the card's PROSE against the population it characterises.",
+   "world_is": "The card passed every mechanical arm with a recommendation line that overstated the top-priority population by one. The gap is structural, not a worker's slip: v1-card grades presence (rule verbatim, 10 of 10 ids), never the arithmetic of a sentence about the factors.",
+   "notes": "INERT: the ranking is unaffected, the correction is landed, and Andrew has the corrected line beside the card in the same act. FOURTH INSTANCE OF ONE FAMILY IN ONE EVENING, which is what makes it worth a row rather than a fix: this seat's own LGIC_LGCTFM-S3 (a PASS on bytes the cell did not produce), the CTO's S25R4-AC5 (an id that exists in no order and survives a count check), LGIC_ENFORCE S61 (a quote whose one clean grep hit is the wrong file), LGIC_ENFORCE S62 (a right total with a wrong split) and this one (a right table with a wrong summary). In every case the EVIDENCE is sound and the SENTENCE ABOVE IT is not, and in every case a second seat caught it. THE CHEAP CONTROL, for any future card: state the claim as a count with its denominator ('1 of 179') rather than as a word ('the two rows'), because a number invites the check a word does not. NOT CLAIMED: that v1-card should have caught this -- grading a prose summary against the population it describes is a new criterion, not a repair of that arm, and it belongs to whoever cuts the next card cell."
   }
 ]
 ```
