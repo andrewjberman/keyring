@@ -6,6 +6,11 @@ the various functions (Lead Panel, Thesis, Exec Mgmt, etc.) and write briefs cov
 and development process. I want you to read them as they come in because some of it may be additive to existing art on these
 functions."*
 
+**When the addendum is written -- Andrew-direct 2026-09-18 ~17:2xZ at this terminal, verbatim:** *"I want to wait until CRO
+and I have gone through all the pages and brought forward al the briefs, we still have a couple more to do. Exec Mgmt brief is
+being refined with one more piece, then we will go on to Peers, Model, and Posture."* **So no PRD addendum is drafted, staged or
+applied until every panel brief is in.** Remaining: Exec Management (one more piece), Peers, Model, Posture.
+
 **Existing art it is measured against:** the PRD `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` at **v0.10** (the
 ratified constraints, by ID), the decomposition, and the surprise channel. **Every row below cites the PRD by constraint ID or
 line, or says 0 hits.**
