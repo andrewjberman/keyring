@@ -4912,6 +4912,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The override was the correct escape, not a widening: the path is on the order's grant, and the gap is in the mechanism's reach. For the issuer's next cut: a seat-held order that grants a path in another lane either needs that lane's override named on the face, or the validator's task-order clause extended to seats. The first is a sentence; the second is a gate edit for the gate's owner."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S54",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T05:06:27Z",
+    "one_line": "TO IB-rtc-3's OWN FACE NAMES '9 sources + 3 destinations' FOR THE HOST SWEEP; THE TRUE POPULATION, MEASURED BY A DIFFERENT PROJECT'S OWN WORKER AND RATIFIED BY THE CTO, IS 10 SOURCE PREFIXES. Three documents already disagreed on this denominator (9, 6, 9) before this order was cut, and the order inherited one of the stale numbers rather than the corrected one. This worker re-runs the CORRECTED 10-source instrument (the same one the applied IAM change was proven against) rather than a 9-source one that would silently omit a real read site.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rtc-3, cell text: 'the on-host sweep from the first cut (W2-S49's read-only SSM sweep re-run: 9 sources + 3 destinations, verdicts, positive control) BEFORE building' and acceptance R33-AC1(c): 'the sweep, 9 + 3 verdicts with the control firing'.",
+    "world_is": "MDPF_GLOBAL.TO-IAM1's own proof instance (org/tier2_senior/0.7.0_AE_CloudOps~C/deliverables/MDPF_GLOBAL.TO-IAM1.mdpf-daily-runner-prefix-grants.proof_of_spec.json, surprise MDPF_GLOBAL-S1, @70e131626d) measured the population BY SUBTRACTION from directory_runner.py's own read sites plus the three firms' runner_common.py constants and got 10, 'where three upstream documents said 9, 6 and 9' -- one of those 9s is this project's own row IRPT_BCKEND-W2-S49, which swept only 6 (2 READ-OK + 4 READ-DENY) of the true 10 because it never probed the four OTHER opal-data-49financial/gold/advi/dimensions/ tables (dim_account, dim_identity_crosswalk, dim_portfolio_group, bridge_group_account) that directory_runner.py's Firm49F also reads. That correction was RATIFIED by the CTO in MDPF_GLOBAL's amendment 1 @bcff22b113 ('re-cut the ceiling to 11' -- 10 sources + 1 positive control). The deployed IAM grant (mdpf-daily-runner-ec2-role, applied @52986aca17) and the read-only instrument it was proven against (s3://opal-data-mdpf/diagnostics/aec-irpt-iam1/irpt_sweep_v2.sh, sha256 8b39dea2419d8d3b03d47134bced6f368d55c2378a04db898cc3120447d0bb1b, fetched and re-verified byte-for-byte by this worker) both address 10 source prefixes, not 9. Re-running a 9-source sweep now would silently under-count the very population the applied grant was measured against.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier2_senior/0.7.0_AE_CloudOps~C/deliverables/MDPF_GLOBAL.TO-IAM1.mdpf-daily-runner-prefix-grants.proof_of_spec.json, IAM1-AC1 status_reason and surprise MDPF_GLOBAL-S1",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_BCKEND-W2-S49 (this project's own prior sweep), world_is: 6 source prefixes named, not 9 or 10",
+        ".scratch/irpt_sweep_v2.sh fetched from s3://opal-data-mdpf/diagnostics/aec-irpt-iam1/irpt_sweep_v2.sh, local sha256sum 8b39dea2419d8d3b03d47134bced6f368d55c2378a04db898cc3120447d0bb1b == the proof instance's recorded commit_or_etag"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN LANE AND NOT WORKED AROUND: this worker re-runs the corrected, already-deployed 10-source instrument as its arm (c) sweep rather than inventing a 9-source one to match the face's stale count, and reports the true denominator in its own battery output. The acceptance text's literal '9 + 3' is read as this cell's inherited shorthand for 'the sweep, with its denominator and positive control', not as a population this worker must reproduce -- the population is what the instrument measures, printed, not what the face counted before the correction existed."
   }
 ]
 ```
