@@ -800,3 +800,24 @@ dry-runs transferred 3 of 3 read; stand-in / pre-canon / never-ran did not, 3 of
 been walked five times. Instrument read: one engine run over `mdpf` rooted in the session scratchpad (run-id
 20260918T174353Z-685dc7e), repo run home and registries untouched, not committed. Five proposals (P1-P5), none
 dispatched. No recommendation on ADVI_FIRMBKTS sequencing or on the subject choice, which is Andrew's.
+
+
+## RCN-0010 -- The start-to-finish walk of the model-portfolio pipeline, and the ruleset for compiling it (the LGIC_LGCTFM pipeline-walk brief)
+
+**Date:** 2026-09-18 ~18:4xZ-19:4xZ . **Commissioned:** Andrew-direct ~18:2xZ and ~18:3xZ at this terminal (records
+@28a8ae74e3, @c9e54d5c0f). **Artifacts:** the walk
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/LGCTFM_PIPELINE_WALK_MDPF_START_TO_FINISH_20260918.md`; the brief
+`docs/briefs/d14-lgctfm-pipeline-walk-brief-20260918.md` (midstream, for the CTO's /endpoint --forward). Binding
+requirement: 1.0.0_SA_CTO R-81 @4443e7308e.
+
+Answer to Andrew's question: NO such walk is established in /legacy-transform (bucket-seeded, no edges, no consumer
+hop). The walk with the comp-tools that exist found on the model-portfolio subject: 7 triggers with targets (one
+CROSS-SYSTEM: mdpf-feeder-accelerator fires on opal-data-inf's sentinel, a bucket ADVI_FIRMBKTS retires), 6 Lambdas +
+1 EC2 runner (absent from EC2_MANIFEST.json; started by the two trigger Lambdas holding ec2:StartInstances), 13 roles,
+11 policies, 3 alarms, 6 log groups, an SSM parameter and a secret path outside the 33-type vocabulary, 17 packaged
+scripts, ~30 storage locations, 3 routes, 1 component; record scans 128 of 831 change-management records and 884 of
+6,068 log files with every off-plane name classified (mdpf-daily-trigger RETIRED 2026-08-07 by record); four sibling
+platinum keys written in the same second carry four viewer verdicts (VISIBLE / consumed-by-field route-unresolved /
+routed field-use-unmeasured / NO-ROUTE). Ruleset W1-W13 in the brief's Part V; eight outcomes O1-O8. Two static
+instruments disagree on one script's writes (union rule). Nothing moved; no applied-plane GET exercised; the
+integration carrier is the CTO's.
