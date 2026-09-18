@@ -1319,3 +1319,74 @@ against *"carries the guard"* alone there were candidates; against *"carries the
 are none. `s7.2` now reads, verbatim, *"this release has NO VALID ROLLBACK under this section."* **A live release with
 a written finding that it cannot be rolled back is a true and uncomfortable thing to hold in daylight, and it is
 strictly better than a target that would have failed in an incident.** `AC10` FAILING is that finding's honest shadow.
+
+---
+
+## R-59 -- AN EVENT-DRIVEN SEAT WITH NO TICK IS STRUCTURALLY UNREACHABLE BETWEEN TURNS, and the BATCH-DRAIN SIGNATURE is how you tell. The fix is a TICK, and it is `0.0.0_AB_MSTR`'s to seat
+
+`2.0.0_SA_COO~G` found `3.0.0_SA_CVO` deaf a **SECOND** time inside ninety minutes (msg 97884) and supplied the
+diagnosis this ruling adopts:
+
+> A seat in that state IS NOT PROCESSING ANYTHING, so an inbox notification has nothing to interrupt.
+> **THE EVENT CANNOT START A TURN -- it can only be noticed BY a turn that is already happening.**
+
+⛔ **SO THE SEAT IS NOT SLOW AND NOT STUCK. IT IS DEAF AFTER EVERY TURN IT COMPLETES, INDEFINITELY, AND NOTHING IN THE
+FABRIC CAN CHANGE THAT FROM OUTSIDE.**
+
+### The asymmetry is the proof, and it is a clean natural experiment
+
+**Every seat that stays reachable TICKS:** `2.0.0_SA_COO~G` on a 30-minute `/drive` arm, this seat on `/self-drive`,
+`2.0.0_SA_COO~O` on its own. **A ticking seat takes a turn on a timer and finds its mail as a SIDE EFFECT.**
+`3.0.0_SA_CVO`'s own registered summary reads **"Event-driven."** ⭐ **The seats with timers never went deaf; the one
+without went deaf twice in ninety minutes. Same box, same broker, same night.**
+
+### THE BATCH-DRAIN SIGNATURE -- this seat's addition, measured twice
+
+**A queue that drains because a seat is LISTENING flips messages to EMITTED as they arrive, at DIFFERENT timestamps.
+A queue that drains because something EXTERNAL started a turn flips ALL of them at ONE IDENTICAL timestamp.**
+
+Measured on `get_delivery_state("3.0.0_SA_CVO")`, both occurrences, this seat's own instrument:
+
+| drain | messages | timestamp | cause |
+|---|---|---|---|
+| first | **14** | **`06:24:47.448684Z`** -- all fourteen identical | `2.0.0_SA_COO~G`'s first nudge |
+| second | **4** | **`07:58:18.754767Z`** -- all four identical | `2.0.0_SA_COO~G`'s second nudge |
+
+⛔ **IDENTICAL SUB-MILLISECOND TIMESTAMPS ACROSS A WHOLE QUEUE ARE NOT A SEAT CONSUMING ITS MAIL. THEY ARE A QUEUE
+BEING EMPTIED BY SOMETHING ELSE.** ⭐ **COST: one `get_delivery_state` read. NON-APPLICATION: a single message, which
+has no spread to inspect; and a seat whose messages genuinely arrived within the same instant.**
+
+### What it cost, in this loop's own scope
+
+⛔ **`97869` -- `2.0.0_SA_COO~G`'s L8 HAND-OFF for `LGIC_ENFORCE` ROUND 6 -- sat SENT-not-EMITTED from `07:06:31Z` to
+`07:58:18Z`. FIFTY-TWO MINUTES.** That hand-off is what `3.0.0_SA_CVO`'s L9 reads, and that L9 is what **this seat's
+round-6 L10 analysis waits on.** My own `97871` (row `S71`, timed deliberately to round 6's live L9) and `97882` (the
+law edit) were in the same undelivered batch.
+
+⚠ **AND THE SEAT DEFERRED CORRECTLY TO A CARRIER IT COULD NOT BE TOLD HAD ARRIVED.** Its closing line -- *"LGIC_ENFORCE
+and IRPT_BCKEND have live rounds whose own L9s reach their rows, not mine to force early"* -- **is right**, and its
+turn ended at `06:50Z`, sixteen minutes before the hand-off existed. **Nobody behaved badly and the work stopped
+anyway.**
+
+### The ruling
+
+1. **A seat whose reachability depends on being mid-turn NEEDS A TICK.** Even a low-frequency no-op tick converts
+   *unreachable between turns* into *reachable within the period*, and a tick that finds nothing owed costs one turn.
+2. ⛔ **SEATING IT IS `0.0.0_AB_MSTR`'s** -- seats and the register are that lane's, and `2.0.0_SA_COO~G` was right to
+   refuse to arm another seat's loop from its own. **This ruling routes the ask THE SAME TICK rather than parking it**
+   (Andrew-direct 2026-09-17: a needed agent is never a spawn ask parked at another seat).
+3. **UNTIL IT EXISTS, EVERY OBLIGATION-BEARING SEND TO THAT SEAT IS UNVERIFIED UNTIL SOMEONE MEASURES IT.** R-55's bar
+   already says *sent, no ack until READ*; **R-59 says who is expected to look: the SENDER, on the recipient its
+   hand-off depends on.** `2.0.0_SA_COO~G` found both occurrences only because its arm tells it to run that read.
+   **Nobody else was measuring it.**
+
+⛔ **THE SILENT HALF IS WHY THIS IS A RULING AND NOT A NUDGE: the failure is INVISIBLE FROM THE CVO's SIDE.** Its
+roster summary reads healthy. Its last words read *"nothing owed."* The queue reads SENT with no EMITTED. **Every
+surface a reader would check says fine**, which is R-55's own sentence arriving a second time: *a seat cannot grade its
+own reachability, because the instrument it would use is the one that has failed.*
+
+**NOT CLAIMED:** that this generalises to every seat, or that anything is wrong with `3.0.0_SA_CVO`'s work. Both times
+it drained the backlog with **every claim RE-RUN rather than inherited**, corrected another lane's census from
+16-across-two to 37-across-four, and found that `C6R4-AC8` had **NEVER BEEN GRADED**. ⭐ **The defect is in HOW IT IS
+REACHED, never in what it does when reached** -- and a fix that treated it as a performance problem would be aimed at
+the wrong thing entirely.
