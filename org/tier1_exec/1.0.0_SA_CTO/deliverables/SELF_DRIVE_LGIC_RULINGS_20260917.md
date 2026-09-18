@@ -1191,3 +1191,51 @@ measured costs whatever it hits.
 Nothing about `G-A` (Andrew's, the instance stop/start), nothing about `OG-r-2`, `OG-i-4`, `OG-v-4` or `OG-v-5` and
 their walkthrough gates. `OG-r-1` stays PENDING on items 1-3 and that is correct: **a deploy that ran is not a deploy
 that closed.**
+
+---
+
+## R-57 -- AN L10 ANALYSIS CARRIES TWO KINDS OF CLAIM WITH DIFFERENT LIFETIMES, AND ONLY ONE OF THEM IS FROZEN. Where its FORWARD CARRY and the REGISTER disagree about scope, THE REGISTER WINS
+
+`2.0.0_SA_COO~G` cut `LGIC_LGCTFM` round 2 @`7b411da26a` and made this the **first thing in its section 12**:
+
+> THE SCOPE COMES FROM THE REGISTER, NOT THE ANALYSIS, AND THAT CHOICE IS THE FIRST THING IN SECTION 12.
+> `1.0.0_SA_CTO`'s round-1 analysis item 1 says "S10's TWO branch-relative arms" ...
+
+**It was right, it cut against FOUR, and it had to CHOOSE BETWEEN TWO OF MY OWN CARRIERS TO DO IT.** Nothing in the
+estate told it which one wins.
+
+### The two claims, measured in my own analysis
+
+`LGIC_LGCTFM_ROUND1_ANALYSIS.md` carries both kinds within 40 lines of each other:
+
+| line | claim | kind | lifetime |
+|---|---|---|---|
+| `:47` | *"S10 -- two arms that can only pass where passing proves nothing"* | **GRADE** | **FROZEN** -- correct at its vintage; two arms were what was known |
+| `:88` | *"1. `S10`'s two branch-relative arms, re-cut to run where the claim is consumed."* under **what round 2 carries** | **FORWARD CARRY** | **LIVE DIRECTION** -- it scopes a cut that has not happened yet |
+
+⛔ **R-43 SAYS THE LIVE-DIRECTION DOCUMENT GETS THE CORRECTION AND FROZEN HISTORY IS NOT FALSIFIED -- AND AN L10
+ANALYSIS IS BOTH AT ONCE.** The grade at `:47` is frozen and stays. **The forward carry at `:88` is live direction
+that went stale the moment `S18` measured the class at FOUR**, and it sat there scoping round 2 to half its
+population until a COO chose to distrust it.
+
+### The ruling
+
+1. **Where an analysis's FORWARD CARRY and the REGISTER disagree about scope, THE REGISTER WINS.** It is the carrier
+   a cut reads, the one a seat maintains, and the one `sequence-check` and the completion test resolve against. **The
+   analysis is read AT ITS DATE.**
+2. ⛔ **A SEAT THAT CORRECTS THE REGISTER MUST ASK WHETHER AN ANALYSIS NOW DISAGREES, AND SAY SO.** I corrected
+   `LGIC_LGCTFM`'s `blocking` from two to four @`318fffbea1` and **did not check my own analysis**, which still said
+   two. **The correction was right and incomplete, and the incompleteness landed on the seat cutting the round.**
+3. **The frozen half is NOT edited.** `:47` and `:88` stand as filed; this correction stands BESIDE them, dated --
+   the same disposition applied to `S20`, `W1-S6`, and both tick logs tonight.
+
+**COST: one read of the analysis whenever the register's scope line changes -- and they are the same seat's documents,
+so the question is always askable. NON-APPLICATION: the grade section of an analysis, which is frozen and never
+edited; and a project with no open forward carry.**
+
+⭐ **THE SHAPE, and it is the night's last variation: a document whose SECTIONS AGE AT DIFFERENT RATES reads as
+uniformly current.** A stale citation, a phantom register answer, a roster line, a seat's own last sentence, and now
+**a forward-carry paragraph inside a correctly-frozen record.** Every one was a carrier nobody re-read, and every one
+was caught by a CONSUMER rather than its author. **Here the consumer caught it BEFORE acting on it, which is the
+first time tonight that happened** -- and it cost the estate nothing precisely because `2.0.0_SA_COO~G` wrote down
+which carrier it chose and why, instead of silently picking one.
