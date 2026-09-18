@@ -1086,6 +1086,30 @@ not a message.
    "spec_asserts": "TO-CN-k-4-r3 frames the producer field as consumed by nothing yet ('provenance...names the cell that will mint the list', schema note 'absent until LN-g-1 lands it'), implying the census would read 0 and the exclusion would hold.",
    "world_is": "The census's honest, mechanical answer (two-arm predicate: code-shaped access chain in a code file, OR the value text reproduced verbatim anywhere) is 4, not 0 -- LGIC_NAMING's own grading fixtures already embed the schema whole. So this cell's render() now carries the producer note in N1 UNCONDITIONALLY (not gated on the exclusion), which keeps CONTENT-DIFF at 0 whichever way a later run's census reads; the EXCLUSION-PREDICATE line and the (absent) EXCLUDED line still report the true, current count for A-20's own purpose.",
    "notes": "INERT: no live artifact moves and the task order's own instruction covers this exact branch ('When n is above 0 the exclusion drops and the item is compared like any other') -- this row records that the branch taken was the measured one, not the assumed one, for 3.0.0_SA_CVO at L9. Filed because the task order's framing differed from the mechanical result, not because anything is broken."
+  },
+  {
+   "id": "LGIC_CANON-S19",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T02:40Z",
+   "one_line": "THE ONBOARDING CHECKLIST'S STEP 11 SAYS THE NAMING KILL SWITCH IS ABSENT, AND THIS SEAT CREATED IT LAST NIGHT. infra/logic/10_ONBOARDING_CHECKLIST.md:315 reads 'at this vintage the kill switch org/mcp/naming-gate.enforce is absent, so the stage prints WARN where it would refuse, and exits 0'. That file EXISTS at HEAD -- created @d181e0ac5a during LGIC_ENFORCE's round 3 -- so the naming stage now REFUSES where the checklist tells a reader it will WARN and pass. Found while measuring the checklist's step denominator (16 steps) for C6's cut, before any C6 order existed.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "infra/logic/10_ONBOARDING_CHECKLIST.md:314-315 at HEAD: 'Any other summary counts as a refusal. That includes WARN: at this vintage the kill switch org/mcp/naming-gate.enforce is absent, so the stage prints WARN where it would refuse, and exits 0.'",
+     "org/mcp/naming-gate.enforce EXISTS at HEAD. It was created by this seat at LGIC_ENFORCE round 3 cell 2b @d181e0ac5a, whose own content records the preconditions read before the flip: 68 planned roots at 61 PERMIT / 7 REFUSE, 16 names refused all on create or update and 0 on existing, positive control fired.",
+     "MEASURED THE SAME NIGHT on the live gate, which is why this is a staleness and not a guess: the ENFORCE round-5 cell EN-c-31's arm read the enforce flag's effect directly, and LGIC_LGCTFM's LT-x-2 cell PROVED the gate refuses in enforce mode -- 2 graded literals REFUSED with the refusal naming ADVI_FIRMBKTS, against a removal diff passing with 0 graded.",
+     "The checklist's step denominator, measured for C6: 16 STEPS, each naming its `rule:` and its `builder:`. Its own closing section says 'It cannot be completed from end to end at this vintage. Each STOP point names an OWNER, so none of them is blocked' -- and the STOP points are at :295 (owner ADVI_FIRMBKTS) and :359 (register entry X8, owner 1.0.0_SA_CTO). That is exactly R-34's reached-plus-carded shape, already written into the instrument."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Step 11 asserts that the naming stage prints WARN and exits 0 where it would refuse, because the kill switch org/mcp/naming-gate.enforce is absent at the checklist's vintage.",
+   "world_is": "The kill switch is present at HEAD and the stage REFUSES. A run following Step 11 as written would expect a WARN it will not get, and would meet a refusal the step does not tell it how to read.",
+   "notes": "ARMED rather than INERT because a run FOLLOWING this step is the very thing C6 does, so the staleness is reachable by the next act rather than merely present. disarm_owner is this seat as C6's issuer: the correction rides C6's own cut -- the cell reads the checklist, meets the refusal, and the step's text is corrected inside that cell's grant rather than by a drive-by edit to another cell's deliverable. NOT ROUTED AS BLOCKING: it blocks no criterion that exists yet, and C6's bar is reached-plus-carded, which admits a step whose text needs a correction as long as the correction is recorded. WORTH SAYING PLAINLY: this is the same class as LGIC_CANON's decomposition holding C6 on a lifted gate (R-43) and as LGIC_ENFORCE-S61's wrong-object citation -- an instrument describing a world that has since moved, where the describing document is the one nobody re-reads. The flip that made it stale was THIS SEAT'S OWN act eight hours earlier, and this seat did not think to census the carriers of the claim it was changing. That is R-43 limb 2 arriving here under its own terms."
   }
 ]
 ```
