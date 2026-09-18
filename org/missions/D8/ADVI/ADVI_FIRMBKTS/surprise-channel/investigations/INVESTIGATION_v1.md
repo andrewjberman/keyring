@@ -235,6 +235,28 @@ write: **1 row** (`S1`).
     "spec_asserts": "CLAUDE.md Rule 21: '--corpus aws: the LIVE AWS plane -- regex over every aws CloudNode's name+arn+props ... drift_class per hit (LIVE-no-DECLARED = in AWS, not in the repo)'.",
     "world_is": "The trail, a LIVE-no-DECLARED resource until 9f3fd2cf4a, is not in the corpus at all. The census therefore reads out-of-corpus rather than returning a drift class, and a seat relying on the tool alone would not learn that the trail sat outside Terraform.",
     "notes": "Owner: the comp-find aws corpus and its CloudNode extractors (the served cloud graph, NFRA_GLOBGRPH). Which extractor would carry CloudTrail was not traced here."
+  },
+  {
+    "id": "ADVI_FIRMBKTS-W2-S10",
+    "project": "ADVI_FIRMBKTS",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "surfaced_at": "2026-09-18T00:30:00Z",
+    "one_line": "LGIC_LGCTFM cell LT-x-3's second run on blackdiamond-49financial (a forks pass, --seed-loc opal-data-49financial:_campaign/) surfaced a live, undeclared S3 key prefix -- opal-data-49financial/_campaign/c02-reemit/ -- absent from every prior walk of this subject; its name RAISEs against lib/opal_naming.py grade() and opens tension R-0185|A3|GRAMMAR|R1 (T-0002), the run's only CLOSED/OPENED delta.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "workflows/legacy_transform/blackdiamond-49financial/20260918T002711Z-caf0983/DIFF.md (this order's committed diff of that run against .../20260917T233143Z-a89fd61, run_home.py diff, reproduced verbatim): 'CLOSED: 0', 'OPENED: 1', '  R-0185|A3|GRAMMAR|R1', 'UNCHANGED: 179'.",
+        ".tools/aws s3api list-objects-v2 --bucket opal-data-49financial --prefix '_campaign/' --delimiter / --max-keys 50 (read-only), run at this seat 2026-09-17 ~23:5xZ (UTC boundary): CommonPrefixes = ['_campaign/c02-reemit/']; --prefix '_campaign/c02-reemit/' Contents = ['_campaign/c02-reemit/c02_reemit_mirror_pull.py'] (one live object).",
+        "workflows/legacy_transform/blackdiamond-49financial/20260918T002711Z-caf0983/contract.json rows[-1]: row_id R-0185, kind PLANE, node_type S3Key, current.name 'opal-data-49financial/_campaign/c02-reemit/', current.drift_class 'LIVE-no-DECLARED' (INFERRED), current.declaration 'ABSENT' (terraform tree read), desired.verdict 'RAISE' -- lib/opal_naming.py grade('_campaign/c02-reemit/', 'S3Key') raises \"K1: segment 1 '_campaign' is neither a source nor a tier\" (reproduced directly against lib/opal_naming.py at this seat)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md T12 (row for FWD-8): 'the diff reads closed / opened / unchanged for a reader who opens neither run; a NEW row is filed in the migration project's channel'; DEC-12 lists the run home's diff as 'consumed ... by the surprise channel of whichever project a NEW row belongs to'.",
+    "world_is": "No prior LGCTFM walk of blackdiamond-49financial (plain --seed opal-data-bd / opal-data-49financial only) ever passed --seed-loc, so this forks-discovered prefix was never a row in any earlier contract.json; it surfaced only once this cell's practice/real wave walked it, and its key grammar (no source/tier segment under GRADING_RULE.md's K-section) does not resolve -- a live, un-migrated legacy write surface with no Terraform declaration and no registry mark, exactly the shape T12/DEC-12 name for filing here.",
+    "notes": "No repair proposed or taken by this worker (WORKER FACE: 'you write a second run ... and file one row per OPENED tension'; the row is the deliverable, not a fix). Owner of any remediation is whichever ADVI_FIRMBKTS/LGIC_LGCTFM seat next triages the migration project's channel."
   }
 ]
 ```
