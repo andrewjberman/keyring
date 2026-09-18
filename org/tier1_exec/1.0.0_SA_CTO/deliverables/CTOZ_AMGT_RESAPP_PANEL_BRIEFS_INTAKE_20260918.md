@@ -180,6 +180,23 @@ form; card 2 AHEAD of the recommended timing -- he chose not to wait for the val
 **Put back to Andrew, NOT decided:** the Bright Data CEO-profile search (card 2 did not name it), and whether the running
 three-name validation should exercise Lusha. His "no fleet run until validated end to end" stands over both cards.
 
+**The "one more piece" -- the CEO search, redesigned by Andrew ~17:2xZ** (brief s.9 @`32a4882d81`, msg 23713), verbatim: *"We
+should also do that, search the CEO's name with Bright Data SERP, and have an agent go through it and pull/organize the relevant
+results."* The CEO step changes from one `site:<IR domain>` query plus a host test to a SERP on the CEO's NAME, then an agent
+that organizes the results. It joins the same `C-EXEC-MANAGEMENT` amendment.
+
+| # | finding | disp. | lands as |
+|---|---|---|---|
+| E14 | ⛔ **A FAILED search reads as an EMPTY one.** `serp_brightdata` (`data/find/dualbiz/scripts/serp.py:264-272`) does `except Exception: break` on a request error and `break` on a bad JSON body, returning whatever list it had -- usually `[]`. `enrich.py:434-439` then records 0 urls as **NOTHING_FOUND**, and its own `except` at `:431` is dead for that path because the primitive never raises. **Verified at source here.** | **ADD -- the failed-retrieval-returns-a-value class** | a request failure must surface as a failure with its cause, never as an empty result. Must land BEFORE the redesign runs, or a bad key or a network fault will be recorded as "the CEO has no public profile" for every name |
+| E15 | `serp_brightdata` returns URLS ONLY -- title and snippet are dropped (`:278-282`), so an agent cannot judge relevance | **ADD** | the redesign needs the organic result's title and snippet |
+| E16 | Namesakes: CEO names collide | **ADD** | an identity test before any organized fact is kept |
+| E17 | Every organized fact carries its url and a quote that re-locates verbatim in the fetched page; a fact with no quote is held | RESTATE of `C-FILINGS-ANALYZER`'s verbatim discipline, extended | the same guarantee Thesis enforces, applied to web results |
+| E18 | The "opaque redirect wrappers" label on the 4 real searches is the module's own and is **unverified** | **MEASURE FIRST** | one query read before the label is repeated anywhere |
+
+No contact data (the module's CONTACT_STEMS / CONTACT_KEYS carry over); a `ceo_profile` block replaces `ceo_public_profile`;
+cost measured on the validation names first. Recorded narrow: CEO only. The running validation's scope is unchanged (no Lusha,
+no Bright Data), because that question is still open with Andrew.
+
 **Owed by THIS seat when round 14 cuts it:** build item 1 (the honest CEO line and empty-roster rendering) changes what the
 adapter and page serve for every one of the 12 served names, so it needs a **CTO+COO never-widen pair** -- this seat writes the
 CTO half against the exact diff.

@@ -22,7 +22,13 @@ Typos are his. Immediately before it, same terminal, on the PRD addendum:
 - **The one open order is `AMGT-rk-26`**, blocked: mandatory two-step MFA (his own 2026-09-02 word) stops every automated
   login, so its authenticated render capture cannot run. Its worker drafted row `AMGT_RESAPP-Z-W31-S3` (BLOCKING / ARMED) in its
   worktree. The order's own BOUNDS carry a refusal clause -- *"a criterion you cannot satisfy AS WRITTEN is REFUSED with its
-  measurement and a row"* -- and REFUSED is terminal. How rk-26 is closed is the COO's to decide.
+  measurement and a row"*. How rk-26 is closed is the COO's to decide.
+  ⛔ **CORRECTED 17:2xZ -- this line first said "and REFUSED is terminal". That is FALSE for the census.**
+  `.tools/surprise-row-gate.py:152` `TERMINAL_TO_WORDS` = complete, completed, closed, done, superseded, cancelled, canceled,
+  withdrawn -- **"refused" is not in it**, so `<status>refused</status>` leaves rk-26 OPEN and the L10 precondition false.
+  Caught by `3.0.0_SA_CVO~Z` (msg 23714), verified at source here, corrected to `2.0.0_SA_COO~Z` (msg after 23714). Terminal on
+  the record means either a status word from that list (`closed` reads as Andrew's word does) or a VALID proof-of-spec instance
+  recording the refusal -- verified by `_open_tos_census` reading 0 open, never by the edit having been made.
 - **Residue this seat has seen:** the rk-26 worktree holds plaintext passwords in `.scratch/` (untracked, not gitignored), so a
   drain that stages the worktree wholesale would commit them; and `git worktree list` carries worktrees from rounds 7-12 and
   other projects. This list is what was seen, not a census -- the COO's census governs.
