@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T12:0xZ to slot ~3 (cold start) on the CTO's round-3 analysis s.6/s.9 item 5: S68 stays ARMED because a workaround that succeeds is the most likely thing to be mistaken for a fix. Its apply is IB-rtd-5, gated on both halves.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~3 measured the three-way content difference (served 12,008B sha256 c9e54ce2... is a stale pre-C-1-repoint snapshot, neither the committed blob nor its CRLF rendering), censused 4 of 4 consumers (0 live code paths read the served object) and writers/readers-by-grant (3 of 263 / 6 of 263), and wrote NEVER_WIDEN_SIGNOFF_PACKET_IB-rtd-4.md recommending a targeted apply from LF bytes. R44-AC1 PASS-by-output, R44-AC2 recorded for 3.0.0_SA_CVO. proof_of_spec VALID rc=0. S68 stays ARMED (owner 2.0.0_SA_COO~B) pending IB-rtd-5's apply.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 4 (the CTO's round-3 analysis @5c59f68d70, msg 97944) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 3) | **Round-3 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md` @5c59f68d70 | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar (analysis s.4, ADOPTED) | **Decomp cell:** `IB-rtd-4` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.4, s.R4) | **outcome_ref:** FWD-7 (the deploy discipline the directory's root shares with MDPF)
 
