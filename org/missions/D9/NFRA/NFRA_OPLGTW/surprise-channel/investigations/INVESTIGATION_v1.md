@@ -2540,6 +2540,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGV2-AC4's invocation and `<expect>`: every module the glob `infra/aws/ec2/opal-gateway/tests/test_*.py` derives passes in its own process, `MODULES: [1-9][0-9]* FAILED-MODULES: 0`, with only the one named row-S1 test deselected.",
     "world_is": "test_schwab_query.py carries two tests (test_ogq2_ac06, test_ogq2_ac20) asserting the pre-R20/R24 shape C3 now forbids; they fail, so FAILED-MODULES reads 1, not 0. This cell's <paths> grant is `tests/acceptance/test_local_acceptance.py`, `tests/acceptance/conftest.py` and this investigation file -- it cannot edit test_schwab_query.py to close this, and the order that can (TO-OG-q-6) is already reopened for exactly this pair but not yet drained at this HEAD.",
     "notes": "BLOCKING for THIS order's OGV2-AC4 (a whole-glob criterion, unlike TO-OG-q-6's own narrower AC7-AC9); not a new hazard -- re-measured against the already-ARMED W5-S19/W5-S20 rows at a later commit to confirm they are still open. OGV2-AC4 is recorded FAIL by this measurement; no repair attempted outside this cell's grant."
+  },
+  {
+    "id": "NFRA_OPLGTW-S27",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-18T04:10Z",
+    "one_line": "Disarm evidence for THREE rows this seat owns -- NFRA_OPLGTW-W5-S19, W5-S20 and W6-S10 -- which are ONE defect measured by two cells at two vintages: test_schwab_query.py::test_ogq2_ac06 and ::test_ogq2_ac20 asserted the pre-wiring shape OG-q-6's R20/R24 wiring correctly refuses. Corrected in OG-q-6's re-open, drained @e58d9d2b04, and the SHARED-TREE re-run R-OG-16 limb 3 requires reads test_schwab_query.py 25 passed, test_schwab_c3_rules.py 4 passed, tests/acceptance/test_local_acceptance.py 14 passed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN on the SHARED TREE after the drain @e58d9d2b04, one module per process: `pytest -q tests/test_schwab_query.py` -> 25 passed; `tests/test_schwab_c3_rules.py` -> 4 passed; `tests/acceptance/test_local_acceptance.py` -> 14 passed. BEFORE, at @7785d21060: test_schwab_query.py 2 failed / 23 passed, both failures those two tests.",
+        "THE CORRECTION'S TIGHTNESS IS GRADED, not asserted: OGQ6-AC7 confined all 5 diff hunks to the two granted test functions, OGQ6-AC8 read 25 of 25 tests collected before and after with 2 of 2 clause citations present, OGQ6-AC9 read 4 of 4 modules green (46 passed).",
+        "ONE DEFECT, THREE ROWS, TWO CELLS: W5-S19 and W5-S20 were filed by 0.9.0_WK_NFRA_OPLGTW~5 when its wiring turned the two tests red; W6-S10 was filed by 0.9.0_WK_NFRA_OPLGTW~6 re-measuring the SAME two tests at OG-v-2's own HEAD, because that order's whole-glob OGV2-AC4 needed the module clean where OG-q-6's narrower AC7-AC9 did not. Both filings were correct and neither is a duplicate: they are the same fact measured from two grants.",
+        "WORKER-SIDE R-40 APPLICATION, unprompted and worth recording: 0.9.0_WK_NFRA_OPLGTW~5 found its own AC5 mutant had gone STALE once its earlier drain merged into CLOUD, and re-pinned the mutant to the pre-wiring BYTES (query.py at 881b1a5445, integration.py at 0ced7baf10) rather than a branch label -- a LABEL IS NOT AN IDENTITY, applied by the worker without being told."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGQ2-AC6 and OGQ2-AC20 assert that a grouping dropping date identity and a duplicate-grain read succeed; OGV2-AC4 requires every one of 25 test modules green.",
+    "world_is": "Both tests now expect the contract's refusal with their clauses cited, the wiring stands, and all three modules are green on the shared tree. The three rows' hazard is spent. This seat is the disarm owner of all three and gives the word here; 3.0.0_SA_CVO writes the clock at L9.",
+    "notes": "This is the FIFTH and SIXTH instance of the defect-asserting-test class in this project, all six in ONE file, and they were found by the C3 census's population read rather than one at a time. Evidence only: this row adjudicates nothing."
   }
 ]
 ```
