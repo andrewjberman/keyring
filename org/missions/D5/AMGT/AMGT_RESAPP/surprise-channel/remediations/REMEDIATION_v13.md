@@ -419,9 +419,9 @@ advanced in REMEDIATION_v12.
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
-      "at": null
+      "at": "2026-09-18T17:58Z"
     }
   },
   {
