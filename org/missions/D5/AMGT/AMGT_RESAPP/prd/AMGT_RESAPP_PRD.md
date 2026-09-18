@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.12",
+  "prd_version": "v0.13",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,17 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.13 CHANGE NOTE -- 2026-09-18 ~20:1xZ, `1.0.0_SA_CTO~Z`: ratified-text hygiene, and Andrew clears SA's terms
+
+(1) **`3.0.0_SA_CVO~Z` REFUSED v0.12's ratified-text half on criterion (d) alone** -- annotation, history and seat names inside
+the section; substance passed (review `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V011_RATIFIED_TEXT_REVIEW_20260918_Z.md`
+@`969755b2f2`, stamp @`075227f4c0`). Every RULE is kept. Moved OUT of `C-FILINGS-ANALYZER`, `C-FILINGS-TRANSLATION`,
+`C-EXEC-MANAGEMENT` and `C-PEERS-V-FLOORS` into section 10's closing evidence list: seat serials, present-tense defect
+descriptions with file:line, the Keyence measurements and the supersession narrative. (2) **Andrew-direct ~20:0xZ,
+VERBATIM:** *"I have already clarified SA ToS, we are good, if I had an issue with the design i wouldnt have designed it this
+way."* (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`). `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED for the two Seeking Alpha paths lifted at v0.12, and the terms-reading
+task is withdrawn. Both halves move.
 
 ### v0.12 CHANGE NOTE -- 2026-09-18 ~19:4xZ, `1.0.0_SA_CTO~Z`: Andrew answered the six round-13 cards
 
@@ -621,22 +632,21 @@ Source: the voice memo ~05:5xZ (part three); card 3.
   never retries around the challenge and never launches the harvester. Raw bytes land before derivation, at an address
   built by `lib/opal_naming.py` (Rule 30).
 - PRODUCTION USE AUTHORIZED, BY NAME (v0.12; Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`):
-  `C-SA-VENDOR-WORD` is lifted for THIS path -- one Peers read per security at instantiation and in validation. ⛔ A
-  RECURRING or SCHEDULED Peers read still waits on `C-SA-TERMS-BEFORE-SCHEDULE`: SA's terms of use are read first and his
-  ruling on them recorded.
-- NOT CHANGED BY THIS CLAUSE: FWD-19's comparable (C-SIMILARITY-RANKER, C-POSTURE); C-SA-TERMS-BEFORE-SCHEDULE,
-  C-SA-VENDOR-WORD and C-VENDOR-EGRESS, which bind this path as written; C-IDENTITY-RESOLVED; C-ETF-PLANE-READ.
+  `C-SA-VENDOR-WORD` is lifted for THIS path -- one Peers read per security at instantiation and in validation, and its
+  refresh. `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED for this path (v0.13; Andrew-direct ~20:0xZ, *"I have already clarified
+  SA ToS, we are good"*, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`).
+- NOT CHANGED BY THIS CLAUSE: FWD-19's comparable (C-SIMILARITY-RANKER, C-POSTURE); C-VENDOR-EGRESS;
+  C-IDENTITY-RESOLVED; C-ETF-PLANE-READ.
 Source: Andrew-direct 2026-09-18 ~17:4x-18:1xZ (`ANDREW_DIRECT_20260918_17xxZ_PEERS_SEEKING_ALPHA.md`); brief
 `BRIEF_PEERS_CURRENT_TO_DESIRED_20260918.md` @a2fdbad164.
 
-**C-PEERS-V-FLOORS (amends `lib/research/scores/peers_v.py:62-70`; v0.11).** MIN_PEERS_FOR_V 8 -> 5 and
+**C-PEERS-V-FLOORS (amends the floors in `lib/research/scores/peers_v.py`; v0.11).** MIN_PEERS_FOR_V 8 -> 5 and
 MIN_PEERS_PER_MEASURE 6 -> 5; MIN_MEASURES_FOR_V (|M| >= 3) unchanged. Source: Andrew-direct ~18:0xZ, *"It's now 5 instead
 of 8, we'll fit to the SA shape"*; the per-measure floor follows from his *"Agree with everything"*, which confirmed the
 CRO's stated consequence (at 6, no measure computes over five peers). The asserts carry this citation in place of the
 earlier ruling; they are floors, never loosened below 5 / 5 / 3. Peers V's `absent_reason` is never empty.
-⚠ L4 READING, `1.0.0_SA_CTO~Z`'s, FOR `3.0.0_SA_CVO` TO SIGN -- NOT ANDREW'S WORD: Peers V runs AS WRITTEN on its own
-Bloomberg `FIELDS` (`peers_v.py:74-82`), pulled for the SA peer tickers as `<TICKER> US Equity` (measured to resolve with
-no mapping step). SA chooses WHO; the measure's own fields say WHAT. Feeding it SA's metrics would be a translation layer
+⚠ L4 READING, NOT ANDREW'S WORD: Peers V runs AS WRITTEN on its own Bloomberg `FIELDS`, pulled for the SA peer tickers
+as `<TICKER> US Equity`. SA chooses WHO; the measure's own fields say WHAT. Feeding it SA's metrics would be a translation layer
 and is not done.
 
 **C-POSTURE (FWD-19's shape).** Posture = (1) MEMBERSHIP at the snapshot vintage (held / not held, book,
@@ -651,10 +661,9 @@ the trade pipeline reads it. "The final execution" is a person's act on the page
 ~05:1x-05:2xZ and the voice memo (part five); card 3.
 
 **C-FILINGS-ANALYZER (FWD-18's shape; v0.11).** ⛔ **BLOOMBERG SUPPLIES KEYS, NEVER TEXT.** Bloomberg returns no filing text
-(docsvc and news refuse; BQL refuses on entitlement -- measured, Thesis brief s.3). The analyzer reads the WINNING DOCUMENT of
+(Thesis brief s.3). The analyzer reads the WINNING DOCUMENT of
 the security's FILINGS BATTERY. Bloomberg supplies the keys that battery searches with: the CIK (`CENTRAL_INDEX_KEY_NUMBER`),
-the LEI and the legal name. Its web address is a HINT, never a key: it names a subsidiary or branch site for 3 of 22 names
-measured.
+the LEI and the legal name. Its web address is a HINT, never a key.
 **The battery -- ordered; the first document passing the acceptance test wins:**
 - **US (Andrew-direct ~16:3xZ 2026-09-18):** (1) EDGAR; (2) EDGAR by the Bloomberg-resolved CIK; (3) web search, surfaced
   through the issuer's IR page.
@@ -664,25 +673,22 @@ measured.
 - **Terminal:** UNRESOLVED-SOURCE, persisted with every step's attempt, key and failure reason. Never a silent skip.
 **One acceptance test, every step:** (a) **RIGHT ENTITY** -- the document names the listed issuer, checked against
 Bloomberg's legal name and the LEI where the document carries one, otherwise the legal name plus a national registry
-identifier. A subsidiary's report on the parent's domain FAILS (Roche Holdings Inc, RWE Finance Europe BV, Zurich Life).
+identifier. A subsidiary's report on the parent's domain FAILS.
 (b) **CURRENT** -- an annual report for a fiscal year ended within the last 18 months. (c) **KNOWN FAMILY** -- a document
 family the section cutter and the roster can parse; a cut from a family the cutter does not know FAILS (c) and never passes
-as a section (D9). Language is RECORDED, not tested (`C-FILINGS-TRANSLATION`). A failing document is recorded with its
+as a section. Language is RECORDED, not tested (`C-FILINGS-TRANSLATION`). A failing document is recorded with its
 reason, and the next step runs. The source object carries the winning step, the key it used, the family, the language and
 the entity evidence; the family is recorded because cutting and roster parsing are BY FAMILY.
 ⛔ **Step 1 reads the LIVE SEC tables** -- the ticker table AND the submissions index -- never a cached subset, and applies the
 name guard to EVERY listing, US included. A miss is reported against the table actually read, with that table's row count.
-(D1: `lib/research/identity/build_universe.py:503-508` reads a 33-ticker cache in a worker folder and reports a miss as
-absence from the 10,422-row table, so it misses Caterpillar; `:518-520` reads the submissions from the same cache; the guard
-at `:510` fires only for non-US listings.)
 The analyzer calls the Claude API with document citations and writes TYPED rows to the pool
 (`filings/v1/{security_key}/{accession}.analysis.json`): guidance changes, segment revenue, top risks, management commentary,
 big bets, big challenges, and a THESIS DRIVER field naming the series the one chart is drawn from. With a JSON answer
 requested, citations arrive INLINE and structured output cannot be combined with citations, so the cell is TWO PASSES or a
 TAG PARSER, and the cut names which. Every sentence the Thesis tab shows is MARKED machine prose beside its cited passage
 (FWD-9). The analysis carries an ANALYZER VERSION that MOVES whenever its output contract moves; a skip-on-unchanged rule is
-built only after that, never before (the stale analyses all claim the current version today).
-**Kept from v0.7 (`4.0.0_SA_CRO~W`, brief @`a65fe406c2`):** every cited claim RESOLVES to an exact passage. The analysis
+built only after that, never before.
+**Kept from v0.7 (brief @`a65fe406c2`):** every cited claim RESOLVES to an exact passage. The analysis
 persists the source document and the exact submitted excerpt with content hashes, the canonical identity, the accession or
 document id, the retrieval time, the parser version and an index-to-passage map. A claim whose tag resolves to nothing is
 HELD uncited: never rendered as evidence and never a chart input. The drafting reader validates each evidence id's existence,
@@ -692,9 +698,7 @@ the officer role-start field are EXERCISED on a real filing before either is cla
 stale. A validation run needs his per-use word; the three-name run (~16:5xZ) is the precedent, not a standing grant. Building
 any battery step that calls outside Opal needs his per-use word. The scheduled batch stays disabled until he activates it.
 **NOT CHANGED:** the typed row set, the pool path, FWD-9 marking, the two-pass-or-parser choice, batch activation as
-Andrew's call, and the roster authority (`C-EXEC-MANAGEMENT`). **SUPERSEDED by this clause:** the v0.7 premise that the
-analyzer reads "the filing Bloomberg pulls", and the section-9 condition *"measure one Bloomberg-pulled filing before the
-public stand-in is retired"* -- Bloomberg carries no filing text, so that condition can never be met and is retired.
+Andrew's call, and the roster authority (`C-EXEC-MANAGEMENT`).
 
 **C-FILINGS-TRANSLATION (translation is a stage; Andrew-direct ~16:3xZ, *"a translation functionality will be required"*; v0.11).**
 ⛔ **ANALYZE THE ORIGINAL; TRANSLATE THE OUTPUT.** A battery winner in any language is analyzed in its ORIGINAL language. Only
@@ -702,8 +706,7 @@ the analyzer's OUTPUT is translated. Every cited span re-locates VERBATIM in the
 first is REFUSED:** the check would then verify against the model's own translation, and a mistranslation would be invisible.
 **Where it sits:** after the cutter and the passage map, before analysis. Language is detected there and recorded on every
 document, so the stage runs exactly when needed and a wrong detection is visible.
-**Preconditions (each absent today):** (i) **Unicode passages** -- no ASCII folding of evidence text
-(`lib/research/filings/passages.py:67-79` keeps 6.8% of Japanese characters); (ii) **citation blocks pre-cut to the passage
+**Preconditions:** (i) **Unicode passages** -- no ASCII folding of evidence text; (ii) **citation blocks pre-cut to the passage
 map** -- a plain-text document yields whole-document citations on a script without spaces; (iii) **a CHARACTER-LEVEL verbatim
 rule** for scripts written without spaces.
 **Contract for translated text (a value carries its claim):** each translated line carries `translated: true`, the source
@@ -712,11 +715,7 @@ The page labels it a translation, never the filing's words. A chart point is ver
 document's locale and unit. Roster names keep the original script and take an English rendering only from the issuer's own
 document.
 **English edition:** an issuer's English document is used instead of translation only when it is the SAME fiscal year AND the
-SAME document family and it passes test (c). A thinner document in English is a different document (Keyence: the Annual
-Report is not the Yuho).
-**Measured on Keyence (the Yuho, Japanese):** 70 of 71 findings carried a verbatim run of 12+ characters inside their one cited
-passage; the neighbour-passage and one-character-mutation controls refused 70/70 and 68/68; 0 of 71 translations re-locate in
-the original.
+SAME document family and it passes test (c). A thinner document in English is a different document.
 **NOT CHANGED:** `C-VERBATIM-GATE`'s object stays the original filing; the battery's acceptance test does not test language;
 this clause authorizes no model call, producer or run.
 
@@ -741,8 +740,7 @@ never the roster. Each Lusha call is billed and runs only under Andrew's per-use
 **The CEO profile** comes from a Bright Data SERP on the CEO's NAME, followed by an agent that reads the results and pulls
 and organizes the relevant ones. The CEO is the only officer searched. The rules:
 - A FAILED search (a request error or an unparseable body) is recorded as FAILED, with its cause -- never as an EMPTY
-  search. Today the primitive breaks silently and returns a list (`data/find/dualbiz/scripts/serp.py:264-272`), and the
-  caller records 0 urls as NOTHING_FOUND (`lib/research/management/enrich.py:434-439`).
+  search.
 - Each organic result keeps its title and snippet, not the url alone.
 - An identity test (this person, at this company, in this role) comes before any result is kept; a namesake is refused.
 - Every organized fact carries its url and a quote that re-locates VERBATIM in the fetched page. A fact with no quote is
@@ -752,8 +750,7 @@ and organizes the relevant ones. The CEO is the only officer searched. The rules
   a verbatim quote); SEARCH FAILED, with its cause.
 - Bright Data calls, like Lusha calls, run only under Andrew's per-use word.
 **The pool:** the average tenure is the mean over OFFICERS across EVERY current FILING roster -- the newest object per name
-across all dates, within the union universe -- never over one run's objects (today `enrich.py:582-594` keeps only one
-`as_of`). The denominator prints beside the value. No contact data point (email, phone, mobile) is stored at any level,
+across all dates, within the union universe -- never over one run's objects. The denominator prints beside the value. No contact data point (email, phone, mobile) is stored at any level,
 including in anything the CEO agent pulls.
 This clause does NOT change: the filing as the authority, the role-start source, the pool's mean over officers, the
 collection lane's owner (the harvest estate), or Andrew's standing "no fleet run until validated end to end". It
@@ -870,7 +867,7 @@ annual value (measured). Coverage measured with the override: `BEST_EPS` 33/33/3
 a cell only where Bloomberg has none.** Every cell carries its fiscal year and `source` = `BBG` | `SA_FALLBACK`. Column headers
 come from `BEST_PERIOD_END_DATE`, never from a counted offset. The page labels the columns CONSENSUS, never reported. **The
 SA fallback is a Seeking Alpha production read, AUTHORIZED for this path by name** (v0.12, Andrew-direct ~19:4xZ, *"Yes use SA
-thats fine"*); a SCHEDULED fallback refresh still waits on `C-SA-TERMS-BEFORE-SCHEDULE`. The refresh cadence is Andrew's (his Bloomberg-cadence reservation stands).
+thats fine"*); `C-SA-TERMS-BEFORE-SCHEDULE` is satisfied for it (v0.13, *"I have already clarified SA ToS, we are good"*). The refresh cadence is Andrew's (his Bloomberg-cadence reservation stands).
 
 **`C-MODEL-WINDOW-AND-ROWS` (v0.11).** (1) **The window rolls:** the history ends at each issuer's LATEST CLOSED fiscal year --
 a year that has ENDED and been REPORTED -- never a fixed date (today `HIST_END = "2025-12-31"`, `model_block_pull.py:101`).
@@ -1094,6 +1091,8 @@ terms and rule on them.
 > recorded. ⛔ **A one-off exploratory fetch is NOT a scheduled consumer and is not gated by this.**
 > ⛔ **AND NO CELL READS THE TERMS AND RULES ON THEM** -- the reading is a task, the ruling is
 > Andrew's, and a cell that does both has taken a commercial decision it does not hold.
+> **v0.13: SATISFIED for `C-PEER-SET-SA` and `C-MODEL-FORECASTS`'s SA fallback** -- Andrew-direct ~20:0xZ, *"I have already
+> clarified SA ToS, we are good"* (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`).
 
 
 ⛔ **`C-SA-VENDOR-WORD` -- THE PER-USE EGRESS READING, RULED HERE BECAUSE IT IS L4's AND
@@ -1106,7 +1105,8 @@ route, the authentication and the credential's location, in the imperative**, wh
 |---|---|
 | **AUTHORIZED** | the EXPLORATION and the COMPARISON -- calling the route to establish whether it works, and how it compares to the scrape |
 | **NOT AUTHORIZED** | recurring or production use of that route. **A word for an evaluation is not a standing right**, and `C-VENDOR-EGRESS` is per-use by construction |
-| **LIFTED BY NAME (v0.12)** | Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*: production use at instantiation and in validation for exactly two paths -- `C-PEER-SET-SA` and the `SA_FALLBACK` cells of `C-MODEL-FORECASTS`. Every other route stays NOT AUTHORIZED; a scheduled read of either still waits on `C-SA-TERMS-BEFORE-SCHEDULE` |
+| **LIFTED BY NAME (v0.12)** | Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*: production use at instantiation and in validation for exactly two paths -- `C-PEER-SET-SA` and the `SA_FALLBACK` cells of `C-MODEL-FORECASTS`. Every other route stays NOT AUTHORIZED |
+| **TERMS CLEARED (v0.13)** | Andrew-direct ~20:0xZ, *"I have already clarified SA ToS, we are good, if I had an issue with the design i wouldnt have designed it this way."* `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED for the two paths above: his ruling on the terms is recorded, so their scheduled refresh is not gated by it. No terms-reading task is owed |
 
 ⚠ **THIS READING IS THIS SEAT'S AND ANDREW MAY CORRECT IT.** It is recorded so a cell does not have
 to guess, and so that if it is wrong it is wrong in ONE place with a name on it rather than in every
@@ -1659,3 +1659,27 @@ two paths `C-SA-VENDOR-WORD` names as lifted.
 
 **What this section does NOT change:** any stage's own contract above; the Posture stage, whose brief is not yet
 integrated; the chatter schedule; any cadence, which stays Andrew's.
+
+**Evidence behind the v0.11 CONTRACTS -- moved here at v0.13 so the ratified text carries rules and provenance only** (the
+ratified-text reviewer's criterion (d): a defect said to exist "today" inside ratified text becomes false the moment it is
+fixed, and a cited line ages separately from the text quoting it). Each item is a measurement as of 2026-09-18 and a pointer
+for the round-14 cell, not a rule.
+- `C-FILINGS-ANALYZER`: Bloomberg returns no filing text -- docsvc and news refuse, BQL refuses on entitlement (Thesis brief
+  s.3). Bloomberg's web address names a subsidiary or branch site for 3 of 22 names measured. Subsidiary reports that fail
+  the entity test: Roche Holdings Inc, RWE Finance Europe BV, Zurich Life. D1: `lib/research/identity/build_universe.py:503-508`
+  reads a 33-ticker cache in a worker folder and reports a miss as absence from the 10,422-row table, so it misses
+  Caterpillar; `:518-520` reads the submissions from the same cache; the guard at `:510` fires only for non-US listings. D9: an
+  unknown document family must fail (c). The stale analyses all claim the current analyzer version.
+- `C-FILINGS-ANALYZER` supersedes the v0.7 premise that the analyzer reads "the filing Bloomberg pulls", and retires the
+  section-9 condition *"measure one Bloomberg-pulled filing before the public stand-in is retired"* (Bloomberg carries no
+  filing text, so it can never be met). v0.7's resolve-every-claim rule was measured by the CRO at brief @`a65fe406c2`.
+- `C-FILINGS-TRANSLATION`: all three preconditions are absent; `lib/research/filings/passages.py:67-79` keeps 6.8% of Japanese
+  characters. Keyence (the Yuho, Japanese): 70 of 71 findings carried a verbatim run of 12+ characters inside their one cited
+  passage; the neighbour-passage and one-character-mutation controls refused 70/70 and 68/68; 0 of 71 translations re-locate
+  in the original. Keyence's English Annual Report is not the Yuho.
+- `C-EXEC-MANAGEMENT`: the SERP primitive breaks silently and returns a list (`data/find/dualbiz/scripts/serp.py:264-272`),
+  and the caller records 0 urls as NOTHING_FOUND (`lib/research/management/enrich.py:434-439`); the pool keeps only one
+  `as_of` (`enrich.py:582-594`).
+- `C-PEERS-V-FLOORS`: the floors sit at `lib/research/scores/peers_v.py:62-70`, the measure's `FIELDS` at `:74-82`; SA peer
+  tickers were measured to resolve as `<TICKER> US Equity` with no mapping step. The L4 reading in that clause is
+  `1.0.0_SA_CTO~Z`'s.
