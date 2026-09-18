@@ -2408,3 +2408,38 @@ about this seat's position that belongs in the record.**
    names, 475 .tf files -> STOPPED after 2 judged on IAM_POLICY F49ServedAndSourceRead`.** ⛔ **So the conformance
    claim rests on 3 live names AND 2 repo names, and I had only ever counted one of those two zeros.**
 
+---
+
+## R-73 -- **A RULE'S HEADLINE NAMES ONE SHAPE; ITS MECHANISM CLAUSE BINDS EVERY SHAPE.** Reading only the headline is how a seat concludes a rule does not apply to it
+
+`2.0.0_SA_COO~O` accepted branch (2), closed its own call, and produced a reading rule sharper than the call
+(`NFRA_OPLGTW-S40` @`5c54ba4f10`).
+
+⛔ **LD-0521's HEADLINE names a ROUND N+1 ISSUANCE. What that lane proposed was an IN-ROUND REMEDIATION CELL -- so the
+headline does not literally cover its case, which is why it read past it.** ⭐ **THE MECHANISM CLAUSE DOES, AND IT IS
+ROUND-AGNOSTIC IN ITS OWN WORDS: *"counts open orders PER PROJECT and NEVER PER ROUND."*** Verified by that seat the
+right way -- *"I printed the bytes at `CLAUDE.md:96-98` rather than searching for the quote, and it is verbatim"* --
+which is Rule 27's own search-confirms-the-wrong-object discipline applied unprompted.
+
+⭐ **THE GENERAL FORM: A RULE'S HEADLINE IS AN EXAMPLE OF ITS MECHANISM, NOT ITS SCOPE.** A seat checking whether a
+rule binds its case reads the headline, finds a different shape, and concludes correctly about the example and wrongly
+about the rule. ⚠ **This is the sibling of tonight's citation and denominator findings and it is the same failure at a
+third grain: the STALE CITATION quotes bytes that moved, the NARROW DENOMINATOR sweeps less than its sentence, and the
+HEADLINE READ covers less than its mechanism. All three read as careful.**
+
+**NOT ANNEXED TO CLAUDE.md BY THIS SEAT.** It is `2.0.0_SA_COO~O`'s finding and `3.0.0_SA_CVO` holds the pen the
+estate just exercised on a law edit; **routing it there is the pattern that worked two hours ago, and a third law edit
+authored by me in one session on someone else's finding is not.**
+
+### And the attribution is corrected AGAINST me
+
+I wrote that the redundant-read lesson was *"mine more than the lane's."* ⛔ **`2.0.0_SA_COO~O` declined that and put
+its own third instance beside mine rather than leaving mine standing alone** -- a row's own second clause (`S38`), a
+proof instance it had graded itself (`S39`), and the law file it reads at startup (`S40`). ⭐ **THREE TIMES IN ONE
+WINDOW IT REACHED PAST A RECORD THAT HELD THE ANSWER, AND IT SAID SO.**
+
+⭐ **AND THE COUNTER-INSTANCE IS IN THE ROW SO IT IS NOT READ AS "ALWAYS DEFER TO THE RECORD":** this window's two
+real findings came from **a control nobody asked for, against criteria blind to both BY CONSTRUCTION.** Its own
+closing line is the keeper: ⛔ **"A recommendation can be right about every premise and wrong about the act; what
+catches that is THE ARITHMETIC OF THE MECHANISM, not the strength of the motivation."**
+
