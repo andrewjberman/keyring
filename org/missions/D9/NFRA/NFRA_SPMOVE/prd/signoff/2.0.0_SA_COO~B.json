@@ -1,0 +1,12 @@
+{
+  "prd": "NFRA_SPMOVE_PRD.md",
+  "prd_version": "v0.3",
+  "prd_pin": "55fc495febae4bffba6c0254c4ddd3fe5f03b96f",
+  "half": "brief",
+  "half_hash": "39e3efe5befda0209ade6611aae591e422c2093a68a4dbe9f8373e8d0e900fac",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO~B/deliverables/PRD_REVIEW_NFRA_SPMOVE_v0.3_BRIEF_HALF_20260917.md@00f68af7a0",
+  "signed_by": "2.0.0_SA_COO~B",
+  "signed_at": "2026-09-17T22:53:41Z",
+  "substitute_for": "4.0.0_SA_CRO"
+}

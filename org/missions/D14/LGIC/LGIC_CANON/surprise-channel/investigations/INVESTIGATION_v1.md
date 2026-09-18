@@ -1042,6 +1042,119 @@ not a message.
    "spec_asserts": "CN-i-1 repairs four instrument defects in this seat's round-2 fixed inputs.",
    "world_is": "Two of the four are already repaired at HEAD. CN-i-1 repairs two, and carries the other two forward as regression arms rather than re-fixing what is not broken.",
    "notes": "INERT: adds no hazard. It NARROWS the cut rather than widening it, which is the direction that needs evidence, so both live defects are reproduced above from the current bytes rather than cited from the rows. * WHAT CN-i-1 NOW BUILDS: the two repairs (a k3-contentdiff that PLANTS the removal it claims, and an o3-sovereign that counts MARKED ROWS with its denominator printed), plus A-23's negative self-test per subcommand with EACH ARM EXERCISED ALONE, plus regression arms holding the two already-repaired readings in place so a later round cannot quietly undo them. ! AND THE REGRESSION ARMS ARE NOT OPTIONAL: a repair with no arm is a repair that can be reverted without anything failing, which is how W5-S2's class got into two checkers at once in the first place."
+  },
+  {
+   "id": "LGIC_CANON-S18",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-17T13:21Z",
+   "one_line": "DECOMPOSITION v5's ROUND-3 SUBTRACTION READS 6 CELLS AND THE ROUND RUNS 7: it omits CN-l-3, which the same section's LEVELS paragraph and the CTO's round-2 analysis both carry; and 'CN-j-8/9/10' wrote three ids as one token, so CN-j-9 and CN-j-10 resolved to no cell of the decomposition by the L6 gate's grammar. Found at the round-3 cut, before any order existed; v5.1 declares all seven by id.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "LGIC_CANON_DECOMP.md s.0e @a27616f46f -- the subtraction block: 'cells at v4 12, minus 5 REALIZED, minus C6 1 = 6', listing CN-k-4-r3, CN-k-5, CN-j-8/9/10, CN-j-11. The LEVELS paragraph immediately below: 'Level 0: CN-k-4-r3, CN-k-5, CN-l-3'.",
+     "LGIC_CANON_ROUND2_ANALYSIS.md s.3 @4a55888962 -- the direction table carries CN-l-3 (A-21, FWD-6) as a round-3 cell.",
+     "to-pipeline-gate.py _cell_refs_violations at a27616f46f: cell ids are read with CELL_ID_RE over the decomposition text; measured over v5 the id set carries CN-j-8 and CN-j-11 but not CN-j-9 or CN-j-10, and 'CN-k-4-r3' is not a cell id by the grammar (CN-k-4 is)."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Decomposition v5 s.0e: 'cells round 3 runs ... 6'.",
+   "world_is": "Seven cells run: CN-k-4 (round-3 re-cut), CN-k-5, CN-l-3, CN-j-8, CN-j-9, CN-j-10, CN-j-11. The issuance covers all seven and v5.1 declares them by id in a table.",
+   "notes": "INERT: the count, not a cell, was wrong, and it was caught before any order was cut, so no worker read it. The same seat wrote v5; a subtraction whose listed members were not re-counted against its own levels paragraph is Rule 24's forward-list failure inside a subtraction's clothes."
+  },
+  {
+   "id": "LGIC_CANON-W1-S5",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-09-17T21:00Z",
+   "one_line": "A-20's producer census does NOT read 0: LGIC_NAMING's own grading-exercise fixtures embed the whole NAMING_SCHEMA.json verbatim, so /key/legacy_served_paths/producer's value text is already reproduced elsewhere in the tree -- the exclusion the task order's framing assumed ('absent until LN-g-1 lands it') does not hold today.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_NAMING/deliverables/exercises/r2/seats/e1.prompt.txt:50 @881b419753 -- the exercise dumps NAMING_SCHEMA.json's `key` block verbatim, including `\"producer\": \"LGIC_NAMING cell LN-g-1: every served path below {source}/{scope}/platinum/ that the frozen portal requests...\"` byte-for-byte; the same string recurs in e2.prompt.txt under r2 and both seats' prompts under r3 (4 files total).",
+     "infra/logic/render_naming_section.py producer_consumer_census() -- run against the tree at this commit: EXCLUSION-PREDICATE producer: 4 consumer(s) of 36940 file(s) scanned, all four the exercise prompts (document arm: the field's own value text found verbatim); zero code-arm matches.",
+     "A same-line co-occurrence of the two words 'legacy_served_paths' and 'producer' was tried first and read WORSE: 13 consumers, including check_canon_r3.py's own `PRODUCER = \"/key/legacy_served_paths/producer\"` line, which greps the RENDERER's OUTPUT and never opens the schema -- a mention, not a read, and a fixed (un-editable) input, so that rule could never reach n=0."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-CN-k-4-r3 frames the producer field as consumed by nothing yet ('provenance...names the cell that will mint the list', schema note 'absent until LN-g-1 lands it'), implying the census would read 0 and the exclusion would hold.",
+   "world_is": "The census's honest, mechanical answer (two-arm predicate: code-shaped access chain in a code file, OR the value text reproduced verbatim anywhere) is 4, not 0 -- LGIC_NAMING's own grading fixtures already embed the schema whole. So this cell's render() now carries the producer note in N1 UNCONDITIONALLY (not gated on the exclusion), which keeps CONTENT-DIFF at 0 whichever way a later run's census reads; the EXCLUSION-PREDICATE line and the (absent) EXCLUDED line still report the true, current count for A-20's own purpose.",
+   "notes": "INERT: no live artifact moves and the task order's own instruction covers this exact branch ('When n is above 0 the exclusion drops and the item is compared like any other') -- this row records that the branch taken was the measured one, not the assumed one, for 3.0.0_SA_CVO at L9. Filed because the task order's framing differed from the mechanical result, not because anything is broken."
+  },
+  {
+   "id": "LGIC_CANON-S19",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T02:40Z",
+   "one_line": "THE ONBOARDING CHECKLIST'S STEP 11 SAYS THE NAMING KILL SWITCH IS ABSENT, AND THIS SEAT CREATED IT LAST NIGHT. infra/logic/10_ONBOARDING_CHECKLIST.md:315 reads 'at this vintage the kill switch org/mcp/naming-gate.enforce is absent, so the stage prints WARN where it would refuse, and exits 0'. That file EXISTS at HEAD -- created @d181e0ac5a during LGIC_ENFORCE's round 3 -- so the naming stage now REFUSES where the checklist tells a reader it will WARN and pass. Found while measuring the checklist's step denominator (16 steps) for C6's cut, before any C6 order existed.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "infra/logic/10_ONBOARDING_CHECKLIST.md:314-315 at HEAD: 'Any other summary counts as a refusal. That includes WARN: at this vintage the kill switch org/mcp/naming-gate.enforce is absent, so the stage prints WARN where it would refuse, and exits 0.'",
+     "org/mcp/naming-gate.enforce EXISTS at HEAD. It was created by this seat at LGIC_ENFORCE round 3 cell 2b @d181e0ac5a, whose own content records the preconditions read before the flip: 68 planned roots at 61 PERMIT / 7 REFUSE, 16 names refused all on create or update and 0 on existing, positive control fired.",
+     "MEASURED THE SAME NIGHT on the live gate, which is why this is a staleness and not a guess: the ENFORCE round-5 cell EN-c-31's arm read the enforce flag's effect directly, and LGIC_LGCTFM's LT-x-2 cell PROVED the gate refuses in enforce mode -- 2 graded literals REFUSED with the refusal naming ADVI_FIRMBKTS, against a removal diff passing with 0 graded.",
+     "The checklist's step denominator, measured for C6: 16 STEPS, each naming its `rule:` and its `builder:`. Its own closing section says 'It cannot be completed from end to end at this vintage. Each STOP point names an OWNER, so none of them is blocked' -- and the STOP points are at :295 (owner ADVI_FIRMBKTS) and :359 (register entry X8, owner 1.0.0_SA_CTO). That is exactly R-34's reached-plus-carded shape, already written into the instrument."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "Step 11 asserts that the naming stage prints WARN and exits 0 where it would refuse, because the kill switch org/mcp/naming-gate.enforce is absent at the checklist's vintage.",
+   "world_is": "The kill switch is present at HEAD and the stage REFUSES. A run following Step 11 as written would expect a WARN it will not get, and would meet a refusal the step does not tell it how to read.",
+   "notes": "ARMED rather than INERT because a run FOLLOWING this step is the very thing C6 does, so the staleness is reachable by the next act rather than merely present. disarm_owner is this seat as C6's issuer: the correction rides C6's own cut -- the cell reads the checklist, meets the refusal, and the step's text is corrected inside that cell's grant rather than by a drive-by edit to another cell's deliverable. NOT ROUTED AS BLOCKING: it blocks no criterion that exists yet, and C6's bar is reached-plus-carded, which admits a step whose text needs a correction as long as the correction is recorded. WORTH SAYING PLAINLY: this is the same class as LGIC_CANON's decomposition holding C6 on a lifted gate (R-43) and as LGIC_ENFORCE-S61's wrong-object citation -- an instrument describing a world that has since moved, where the describing document is the one nobody re-reads. The flip that made it stale was THIS SEAT'S OWN act eight hours earlier, and this seat did not think to census the carriers of the claim it was changing. That is R-43 limb 2 arriving here under its own terms."
+  },
+  {
+   "id": "LGIC_CANON-W1-S6",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-09-18T03:05Z",
+   "one_line": "The round-4 cut's own pinned context (R4_BASE.json and the task order) measured '2 built: no steps' in the checklist; re-measured at this cell's tree with comp-read --enumerate 'built: no', the checklist carries exactly ONE such step (Step 13, EN-s-1) both then and now.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/R4_BASE.json:14 -- 'checklist_built_no_steps': 2, pinned at base_commit 43ed12c300.",
+     "comp-read infra/logic/10_ONBOARDING_CHECKLIST.md --enumerate 'built: no' at this cell's HEAD: 'ENUMERATE: 2 hit(s)' total, of which 1 is the SUB hit inside the HOW-TO-RUN-IT prose (:26, defining what a built:no step is) and the other WHOLE hit is Step 13's own line (:339 pre-correction) -- one real step, not two.",
+     "git show 43ed12c300:infra/logic/10_ONBOARDING_CHECKLIST.md, same enumerate pattern applied by eye over the STEP blocks: Steps 1-12 and 14-16 all read 'built: yes ...'; only Step 13 reads 'built: no'."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R4_BASE.json's measured_at_this_base and the task order's own MEASURED-AT-THE-CUT table both state 'steps whose builder does not exist yet .......... 2'.",
+   "world_is": "Exactly 1 step (Step 13, EN-s-1) carries `built: no`, at the pinned base commit and at this cell's HEAD alike -- the count was off by one at the moment it was pinned, not a drift since.",
+   "notes": "INERT: this number is CONTEXT per the task order's own BOUNDS clause ('Numbers in this order are CONTEXT ... never acceptance values. Re-measure at your own tree'), and no arm in check_cn_r4.py reads checklist_built_no_steps -- it is descriptive only. Filed because Rule 24(i)'s subtraction-over-recall applies to the issuer's own pinned denominators too, and this one did not hold up against a direct enumerate."
+  },
+  {
+   "id": "LGIC_CANON-W1-S7",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_CANON~1",
+   "surfaced_at": "2026-09-18T03:10Z",
+   "one_line": "Step 13 tells a reader that LGIC_ENFORCE cell EN-s-1 is pending and to write 'EN-s-1 open'; both LGIC_ENFORCE.TO-EN-s-1 and its -r2 sibling read <status>complete -- proof-of-spec VALID (rc=0) at this cell's HEAD, re-verified by re-running proof-of-spec-check. Running the now-available census mode surfaces a SECOND, unrelated gap: it stops at the first RAISE (an unrelated resource, 'sentiment-query-api') before reaching any 49financial/49f-carrying row.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-s-1.census-run.md:8 and LGIC_ENFORCE.TO-EN-s-1-r2.census-run.md:8 at this cell's HEAD: both `<status>` values open 'complete -- proof-of-spec VALID (rc=0)'.",
+     "python .tools/proof-of-spec-check.py org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-1-r2.census-run.proof_of_spec.json S1R-AC1,S1R-AC2,S1R-AC3,S1R-AC4,S1R-AC5 -- re-run by this seat: 'VALID (rc=0)'.",
+     "python lib/opal_naming.py census --repo --live --budget 60 --report .scratch/census_c6.md (this seat's own worktree, not committed -- scratch): 'CENSUS RAISE live API_GW sentiment-query-api -- R1.f: sentiment is in no vocabulary; no registry row resolves it' then 'CENSUS: STOPPED on the first RAISE after 3 judged (0 carded): live API_GW sentiment-query-api', rc=0 (the tool's own exit, not a pass/fail on the census content). No 49financial or 49f row was reached before the stop."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "infra/logic/10_ONBOARDING_CHECKLIST.md Step 13 (pre-correction) said EN-s-1 'has not closed at this vintage' and both its task orders 'are both pending', so the step's own instruction was to write 'EN-s-1 open' and grade names only through Steps 11-12.",
+   "world_is": "EN-s-1 closed (both orders complete, proof-of-spec VALID) before this cell's cut, so the census mode is available and was run; it stops on an unrelated RAISE before it can grade this firm's own rows, which is a live, closeable gap of its own (Rule 30, fixed at the raised row, not at this cell).",
+   "notes": "ARMED for the same reason as LGIC_CANON-S19: a run FOLLOWING Step 13 as written would skip a census that is now available, so the staleness is reachable by the next act. disarm_owner is this seat's issuer for the same reason S19 gives -- the correction rides C6's own cut and is made inside this cell's grant (infra/logic/10_ONBOARDING_CHECKLIST.md is in <paths>). NOT ROUTED AS BLOCKING: C6's bar is reached-plus-carded, and this cell cards Step 13 on the NEW gap (the unrelated RAISE) rather than the old one (EN-s-1 pending), which the run record states."
   }
 ]
 ```

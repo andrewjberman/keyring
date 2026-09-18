@@ -5,7 +5,7 @@
  "project": "LGIC_CANON",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v1.5",
+ "prd_version": "v1.7",
  "step": 4,
  "brief_ref": "docs/briefs/d14-pipeline-canon-brief-20260912.md@a4cc0cb681",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -19,6 +19,9 @@
 
 **Endpoint:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_D14_PIPELINE_CANON_20260912.md`.
 - The v2 re-cut is @`ddf93b2165`; its ruling stamps are @`e2210bf34c`.
+- **FWD-5's v3 re-cut is @`c6914daf82`** -- the practice-wave mechanism and the CARDED carve-out are RATIFIED THERE,
+  with both authorities named in its STATUS line, and the ENDPOINT section below transcribes that pin verbatim. No
+  citation lives inside the section.
 - Andrew confirmed the DONE WHEN lines 2026-09-13 ~18:4xZ, and FWD-6 is graded at APPLIED (ruled (a)).
 
 **Registration and order:**
@@ -117,7 +120,11 @@ proves nothing." v1.2 left CELL CANDIDATES C2's inputs column on the old wording
                     judgement call the rules should already have made -- where today
                     every firm has been a one-off; no demonstration firm is made up
                     for it, and the first genuinely new firm re-runs it as
-                    confirmation only
+                    confirmation only. A step that cannot complete because a live
+                    firm bucket does not exist yet is CARDED as a named gap with its
+                    owner and re-run when that bucket lands -- it never holds this
+                    outcome, and the run is graded on the steps the practice wave
+                    can reach
          SOURCE     brief v2 Part I O5; bar Part III O5; Andrew, "we're going to have
                     the same pattern over and over again as we take on more and
                     more firms"; Andrew-direct 2026-09-16 ~18:2xZ, "Yes we can do
@@ -218,6 +225,13 @@ proves nothing." v1.2 left CELL CANDIDATES C2's inputs column on the old wording
     and I don't feel like messing around making demo cruft."* FWD-5's bar (ENDPOINT) is the practice wave; the
     first genuinely new firm is the confirming arm; no demonstration firm is made up. Gate G-N is lifted by that word.
   - **LGIC_CANON's close waits on one `LGIC_LGCTFM` practice wave, which is a driven act, not a wait.**
+  - **R-34 (Andrew-direct 2026-09-17 ~19:0xZ, VERBATIM: *"2 doesnt matter right now this should not be a holdup if its a
+    fwd it should not be"*):** no step of C6 waits on `ADVI_FIRMBKTS`. The practice wave runs over an EXISTING firm's
+    subject on the subject's own plane; any step that genuinely needs a not-yet-minted firm bucket is CARDED with its
+    owner and its reason, the run continues, and the card is re-run when that bucket lands. The outcome is graded on
+    what the wave reaches plus its carded set -- `reached + carded == steps`, denominators printed. **Gate G-N was
+    already lifted by his ~18:2xZ word of 2026-09-16; the CTO's round-3 analysis @d60e80f68c wrongly named it as still
+    open and is corrected by this addendum.**
 - **DEC-7 FWD-6 at APPLIED, ruled (a).** The ledger v0.3 reads 0 AWAITING, but by its own s.7 its counts were
   *"re-derived by hand ... a row-by-row recount is owed before any count here is cited as measured."* Cell C8 does
   four things:

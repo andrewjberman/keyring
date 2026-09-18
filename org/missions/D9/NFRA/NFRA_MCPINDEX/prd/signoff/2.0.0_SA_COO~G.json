@@ -1,0 +1,13 @@
+{
+  "prd": "NFRA_MCPINDEX_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "033f152e5d700b2c3247bd6e53209c4fd1ab0bf8",
+  "half": "brief",
+  "half_hash": "351d64227a9e3a53b2dc4cfc73e857363a76e37e7f21118a2e9bb5a7b5550c16",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.1_BRIEF_HALF_20260917.md@025bbdca56",
+  "signed_by": "2.0.0_SA_COO~G",
+  "signed_at": "2026-09-17T21:16:38Z",
+  "substitute_for": "4.0.0_SA_CRO",
+  "reason": "the named single writer emit_catalog_v02.py disclaims the live catalog in its own bytes (:5); nothing names what writes infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml v0.3 -- name the live writer or make identifying it S1's first act"
+}

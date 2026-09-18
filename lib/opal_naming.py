@@ -1680,6 +1680,186 @@ def generate(out_dir, targets=None):
     return results
 
 
+# --------------------------------------------------------------------------- targets (EN-g-9, R-16/R-26)
+# The generator's TARGET LIST and its SHIP / REPO-ONLY split, one row per plane's OWN record (R-26): never
+# a re-derived rule. `python lib/opal_naming.py targets` is READ-ONLY -- it classifies, it never renders,
+# because a re-render re-stamps every SHIP view and some of those views SHIP (R-16).
+
+LAMBDA_SOURCE_MAP_PATH = "infra/aws/lambda/ci/lambda-source-map.json"
+TF_ROOT = "infra/aws/terraform"
+_HASH_PIN_MARKERS = ("sha_metadata_key", "index_md5")
+
+
+def _sdc():
+    """The S3/DS plane's own module (`.tools/safe_deploy_core.py`), loaded by path -- its answer is called,
+    never re-derived."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "safe_deploy_core_en_g9", os.path.join(REPO, ".tools", "safe_deploy_core.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _lambda_source_map():
+    """The Lambda plane's own record: infra/aws/lambda/ci/lambda-source-map.json's `functions` dict."""
+    with open(os.path.join(REPO, *LAMBDA_SOURCE_MAP_PATH.split("/")), encoding="utf-8") as fh:
+        return json.load(fh).get("functions", {})
+
+
+_JS_SOURCE_EXT = (".mjs", ".js", ".cjs", ".ts")
+
+
+def _import_hit(rel, text, stem):
+    """True only when `stem` sits inside an actual import/require statement in `text` -- a bare substring
+    match also fires on a COMMENT or a docstring MENTION (measured: `.tools/ds-precommit-check.py` false-
+    matched three functions this way, each hit a Rule-14 comment, none an import), so this discriminates
+    a live reader from a citation the way p4_citations already does one project cell over."""
+    esc = re.escape(stem)
+    if rel.endswith(".py"):
+        pat = re.compile(r"(?m)^[ \t]*(?:from[ \t]+\S*\b%s\b\S*[ \t]+import\b|import[ \t]+\S*\b%s\b\S*)"
+                          % (esc, esc))
+    elif rel.endswith(_JS_SOURCE_EXT):
+        pat = re.compile(r"""(?:from\s+['"][^'"]*\b%s\b[^'"]*['"]|require\(\s*['"][^'"]*\b%s\b[^'"]*['"]\s*\))"""
+                          % (esc, esc))
+    else:
+        return False
+    return bool(pat.search(text))
+
+
+def lambda_plane_consumers(t):
+    """Functions declaring `t` as a build input, resolved from lambda-source-map.json alone (R-26): a
+    basename the function's OWN source_dir does not itself hold on disk (a shared import packaged FLAT --
+    e.g. _authz/loaders.py lands in seven functions' `files` lists though no loaders.py sits beside any of
+    them), OR a declared source file that IMPORTS `t`'s stem (an esbuild-bundled shared import -- e.g.
+    lambda-edge index.mjs importing _shared/firm-config.mjs; `_import_hit` above, never a bare substring)."""
+    bn = os.path.basename(t)
+    stem = os.path.splitext(bn)[0]
+    target_abs = os.path.normpath(os.path.join(REPO, *t.split("/")))
+    consumers = []
+    for fname, f in sorted(_lambda_source_map().items()):
+        sd = f.get("source_dir") or ""
+        if not sd:
+            continue
+        files = f.get("files") or []
+        own = os.path.normpath(os.path.join(REPO, *sd.split("/"), bn))
+        if own == target_abs:
+            continue  # the function IS the shared file's own location, not a consumer
+        if bn in files and not os.path.isfile(own):
+            consumers.append(fname)
+            continue
+        for rel in files:
+            if rel == bn:
+                continue
+            fp = os.path.join(REPO, *sd.split("/"), *rel.split("/"))
+            if not os.path.isfile(fp):
+                continue
+            try:
+                with open(fp, encoding="utf-8", errors="replace") as fh:
+                    text = fh.read()
+            except OSError:
+                continue
+            if stem and _import_hit(rel, text, stem):
+                consumers.append(fname)
+                break
+    return consumers
+
+
+def terraform_plane_consumers(t):
+    """Terraform roots consuming the module `t` lives under, measured (R-26): every tracked .tf file
+    outside that module directory naming `modules/<name>` -- git grep IS the Terraform plane's own record,
+    there is no separate manifest to read instead."""
+    import subprocess
+    parts = t.split("/")
+    if "modules" not in parts:
+        return []
+    i = parts.index("modules")
+    if i + 1 >= len(parts):
+        return []
+    module_dir = "/".join(parts[:i + 2])
+    needle = "modules/%s" % parts[i + 1]
+    p = subprocess.run(["git", "grep", "-l", needle, "--", TF_ROOT], capture_output=True, text=True, cwd=REPO)
+    if p.returncode not in (0, 1):
+        return []
+    roots = set()
+    for ln in p.stdout.splitlines():
+        f = ln.strip().replace("\\", "/")
+        if f and not f.startswith(module_dir + "/"):
+            roots.add(f.rsplit("/", 1)[0])
+    return sorted(roots)
+
+
+def hash_pinned_census():
+    """(n, m): instruments in .tools/*.py keying a verification on a shipping bundle's per-member sha256
+    (`sha_metadata_key`, safe_deploy_core's bundle path) or a solo file's md5/ETag (`index_md5`, its
+    single-file path) -- m is the scanned corpus, never UNKNOWN, never a bare zero."""
+    import glob
+    files = sorted(glob.glob(os.path.join(REPO, ".tools", "*.py")))
+    n = 0
+    for fp in files:
+        try:
+            with open(fp, encoding="utf-8", errors="replace") as fh:
+                text = fh.read()
+        except OSError:
+            continue
+        if any(marker in text for marker in _HASH_PIN_MARKERS):
+            n += 1
+    return n, len(files)
+
+
+def targets_report(extra_targets=None):
+    """[(status, plane, path, measured)] over generate()'s own target list (the 7 VIEWS plus LOCALS_PATH,
+    VECTORS_PATH, TFTEST_PATH) and any extra_targets appended: each plane's OWN record decides SHIP (S3/DS
+    via safe_deploy_core, Lambda via lambda-source-map.json, Terraform via the consuming root); the two
+    opal_name test fixtures print REPO-ONLY (fixtures beside a shipping module are not a deploy); a .tools/
+    script no deploy plane claims prints REPO-ONLY (repo-local tooling); a target NO plane claims at all
+    prints UNCLASSIFIED. Never calls generate() and writes nothing (R-16)."""
+    known = [v[0] for v in VIEWS] + [LOCALS_PATH, VECTORS_PATH, TFTEST_PATH]
+    wanted = list(known) + list(extra_targets or [])
+    sdc = _sdc()
+    rows = []
+    for t in wanted:
+        if t in (VECTORS_PATH, TFTEST_PATH):
+            rows.append(("REPO-ONLY", "terraform", t,
+                         "comp-find root census (test fixture beside the module, not a deploy)"))
+            continue
+        if sdc.file_to_s3_target(t) or sdc.bundle_for_member(t):
+            rows.append(("SHIP", "s3", t, "safe_deploy_core (file_to_s3_target/bundle_for_member)"))
+            continue
+        lam = lambda_plane_consumers(t)
+        if lam:
+            rows.append(("SHIP", "lambda", t,
+                         "lambda-source-map.json (%d consumer(s): %s)" % (len(lam), ", ".join(lam[:5]))))
+            continue
+        tfc = terraform_plane_consumers(t)
+        if tfc:
+            rows.append(("SHIP", "terraform", t,
+                         "consuming root(s) %s (git grep modules/<name>)" % ", ".join(tfc)))
+            continue
+        if t.startswith(".tools/"):
+            rows.append(("REPO-ONLY", "tools", t,
+                         "no S3/Lambda/Terraform claim (repo-local gate script, never packaged)"))
+            continue
+        rows.append(("UNCLASSIFIED", "-", t, "no plane claims it"))
+    return rows
+
+
+def cmd_targets(extra_target=None):
+    """The `targets` subcommand: print the TARGETS count, one classified row per target, a PLANE count per
+    plane and the hash-pinned-consumer census; exit non-zero if any row is UNCLASSIFIED."""
+    rows = targets_report([extra_target] if extra_target else None)
+    print("TARGETS: %d" % len(rows))
+    planes = {}
+    for status, plane, path, measured in rows:
+        print("%s %s %s measured: %s" % (status, plane, path, measured))
+        planes[plane] = planes.get(plane, 0) + 1
+    for plane in sorted(planes):
+        print("PLANE %s: %d" % (plane, planes[plane]))
+    n, m = hash_pinned_census()
+    print("HASH-PINNED CONSUMERS: %d of %d scanned" % (n, m))
+    return 1 if any(r[0] == "UNCLASSIFIED" for r in rows) else 0
+
+
 # --------------------------------------------------------------------------- census (EN-s-1, DEC-7)
 # Census mode judges every nameable name of two planes with grade(), and a RAISE stops the run with the string
 # printed: it is never filed under a verdict (NAMING_SCHEMA.json grade.unplaceable).
@@ -2119,21 +2299,33 @@ def census_names_file(path):
     return items
 
 
-def census_judge(items, out=print):
-    """grade() each item in order: (rows, the RAISE that stopped the run or None). A RAISE stops the run."""
+def census_judge(items, out=print, not_judged=None):
+    """grade() each item in order: (rows, the RAISE that stopped the run or None, carded_live, carded_repo).
+    A RAISE stops the run. R-29 (AMENDMENT 1, LGIC_ENFORCE.TO-EN-s-6-r3): an item whose (plane, current)
+    matches a --not-judged entry is CARDED -- never passed to grade(), never a row, never a stop -- so a
+    RAISE it would have thrown is skipped entirely; a RAISE on any OTHER name still stops the run."""
     rows = []
+    carded_live = carded_repo = 0
+    nj_index = set((e.get("plane"), e.get("name")) for e in (not_judged or []))
     for it in items:
+        if (it["plane"], it["current"]) in nj_index:
+            if it["plane"] == "live":
+                carded_live += 1
+            elif it["plane"] == "repo":
+                carded_repo += 1
+            out("CENSUS CARDED %s %s %s -- NOT-JUDGED (R-29)" % (it["plane"], it["type"], it["current"]))
+            continue
         try:
             verdict, canon = grade(it["current"], it["type"])
         except RaiseDefect as exc:
             out("CENSUS RAISE %s %s %s%s -- %s" % (it["plane"], it["type"],
                                                    (it["where"] + " ") if it.get("where") else "", it["current"], exc))
-            return rows, dict(it, message=str(exc))
+            return rows, dict(it, message=str(exc)), carded_live, carded_repo
         row = {"current": it["current"], "canonical": canon, "verdict": verdict, "type": it["type"], "plane": it["plane"]}
         if it.get("where"):
             row["where"] = it["where"]
         rows.append(row)
-    return rows, None
+    return rows, None, carded_live, carded_repo
 
 
 def _count(rows, key):
@@ -2152,9 +2344,12 @@ def census_report(path, doc, prose):
         fh.write(prose.rstrip("\n") + "\n\n```json\n" + js + "\n```\n")
 
 
-def census(names_file=None, live=False, repo=False, report=None, budget=600, out=print):
-    """Census mode (DEC-7). Returns the exit code: 0 when every item is judged; 3 on the first RAISE; 2 when a
-    plane cannot be read. The live plane is judged first, then the repo plane."""
+def census(names_file=None, live=False, repo=False, report=None, budget=600, not_judged_file=None, out=print):
+    """Census mode (DEC-7). Returns the exit code: 0 when every item is judged or carded; 3 on the first
+    RAISE among the UNcarded items; 2 when a plane cannot be read. The live plane is judged first, then
+    the repo plane. R-29 (AMENDMENT 1): not_judged_file is a JSON list of {"name", "plane", "card"} --
+    each a name CARDED rather than graded; it does not stop the run and is copied verbatim into the
+    report's top-level "not_judged" list."""
     schema = _schema()
     v = _vocab()
     items, stats, vintage, shown = [], {}, None, None
@@ -2189,7 +2384,14 @@ def census(names_file=None, live=False, repo=False, report=None, budget=600, out
     except CensusError as exc:
         out("CENSUS ERROR %s" % exc)
         return 2
-    rows, stopped = census_judge(items, out)
+    not_judged = None
+    if not_judged_file:
+        with open(not_judged_file, encoding="utf-8") as fh:
+            not_judged = json.load(fh)
+        if not isinstance(not_judged, list):
+            out("CENSUS ERROR --not-judged %s is not a JSON list" % not_judged_file)
+            return 2
+    rows, stopped, carded_live, carded_repo = census_judge(items, out, not_judged)
     for r in rows:
         out("CENSUS %s %s %s %s -> %s" % (r["verdict"], r["plane"], r["type"], r["current"], r["canonical"]))
     live_nameable = live_n - live_ng - live_fixed
@@ -2200,16 +2402,18 @@ def census(names_file=None, live=False, repo=False, report=None, budget=600, out
         doc = {"vintage": vintage, "live_command": shown,
                "denominators": {"repo": repo_n, "live": live_n, "live_nameable": live_nameable,
                                 "judged_live": judged_live, "judged_repo": judged_repo,
-                                "live_not_graded_types": live_ng, "live_aws_fixed": live_fixed},
-               "registry": registry_hash()[:16], "stopped": stopped, "rows": rows}
+                                "live_not_graded_types": live_ng, "live_aws_fixed": live_fixed,
+                                "carded_live": carded_live, "carded_repo": carded_repo},
+               "registry": registry_hash()[:16], "stopped": stopped, "not_judged": not_judged or [], "rows": rows}
         census_report(report, doc, _census_prose(doc, stats, ng_counts, fixed_counts))
         out("CENSUS REPORT %s" % report)
     if stopped:
-        out("CENSUS: STOPPED on the first RAISE after %d judged: %s %s %r" % (
-            len(rows), stopped["plane"], stopped["type"], stopped["current"]))
+        out("CENSUS: STOPPED on the first RAISE after %d judged (%d carded): %s %s %r" % (
+            len(rows), carded_live + carded_repo, stopped["plane"], stopped["type"], stopped["current"]))
         return 3
-    out("CENSUS: COMPLETE %d judged (live %d of %d nameable, repo %d of %d)" % (
-        len(rows), judged_live, live_nameable, judged_repo, repo_n))
+    out("CENSUS: COMPLETE %d judged + %d carded (live %d+%d of %d nameable, repo %d+%d of %d)" % (
+        len(rows), carded_live + carded_repo, judged_live, carded_live, live_nameable,
+        judged_repo, carded_repo, repo_n))
     return 0
 
 
@@ -2241,7 +2445,9 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
             d["live"], d["live_not_graded_types"], ", ".join("%s %d" % kv for kv in sorted(ng_counts.items())) or "none",
             d["live_aws_fixed"], ", ".join("%s %d" % kv for kv in sorted(fixed_counts.items())) or "none",
             d["live_nameable"]),
-        "- judged_live = **%d** of %d. Verdicts: %s." % (d["judged_live"], d["live_nameable"], _count(live, "verdict")),
+        "- judged_live = **%d** + carded_live **%d** (NOT-JUDGED, R-29) = %d of live_nameable %d. Verdicts: %s." % (
+            d["judged_live"], d.get("carded_live", 0), d["judged_live"] + d.get("carded_live", 0),
+            d["live_nameable"], _count(live, "verdict")),
         "",
         "## The repo plane",
         "",
@@ -2254,7 +2460,17 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         % (stats.get("source_files", 0), CENSUS_LAMBDA_ROOT, ", ".join(CENSUS_SOURCE_EXT),
            stats.get("vendored_excluded", 0), stats.get("source_templates", 0), len(stats.get("unparsed", [])),
            (": " + ", ".join(stats["unparsed"][:10])) if stats.get("unparsed") else ""),
-        "- repo = **%d** names; judged_repo = **%d**. Verdicts: %s." % (d["repo"], d["judged_repo"], _count(repo, "verdict")),
+        "- repo = **%d** names; judged_repo = **%d** + carded_repo **%d** (NOT-JUDGED, R-29) = %d. Verdicts: %s." % (
+            d["repo"], d["judged_repo"], d.get("carded_repo", 0), d["judged_repo"] + d.get("carded_repo", 0),
+            _count(repo, "verdict")),
+        "",
+        "## Carded (NOT-JUDGED, R-29 / AMENDMENT 1)",
+        "",
+        ("%d name(s) carded rather than graded -- each RAISE's owner could not be measured from a declared "
+         "source, or its mint would touch a GENERATED POLICY on an APPLIED resource; see each name's owner "
+         "card. %s" % (len(doc.get("not_judged") or []),
+                        "; ".join("`%s` (%s)" % (e.get("name"), e.get("plane")) for e in (doc.get("not_judged") or []))))
+        if doc.get("not_judged") else "None carded this run.",
         "",
         "## Totals by type (judged rows)",
         "",
@@ -2284,12 +2500,16 @@ def main(argv=None):
     g.add_argument("--out", required=True)
     g.add_argument("--target", action="append")
     sub.add_parser("vectors", help="print the name() vector JSON (cell EN-b-1)")
+    t2 = sub.add_parser("targets", help="print the target list and its SHIP/REPO-ONLY split (cell EN-g-9)")
+    t2.add_argument("--extra-target", help="one extra path to classify alongside the known targets")
     c = sub.add_parser("census", help="grade names (DEC-7, cell EN-s-1)")
     c.add_argument("--names")
     c.add_argument("--live", action="store_true")
     c.add_argument("--repo", action="store_true")
     c.add_argument("--report", help="write the census report (prose, then one fenced json block) to this path")
     c.add_argument("--budget", type=int, default=600, help="seconds for the live pull (comp-find --budget)")
+    c.add_argument("--not-judged", help="JSON file: a list of {name, plane, card} names CARDED rather than "
+                                         "graded (R-29, AMENDMENT 1) -- a RAISE on one of these does not stop the run")
     a = ap.parse_args(argv)
 
     if a.cmd == "validate":
@@ -2325,11 +2545,13 @@ def main(argv=None):
         except NotBuilt as exc:
             print("ERROR: %s" % exc)
             return 2
+    if a.cmd == "targets":
+        return cmd_targets(a.extra_target)
     if a.cmd == "census":
         live, repo = a.live, a.repo
         if not (a.names or live or repo):
             live = repo = True
-        return census(a.names, live, repo, a.report, a.budget)
+        return census(a.names, live, repo, a.report, a.budget, a.not_judged)
     ap.print_help()
     return 2
 

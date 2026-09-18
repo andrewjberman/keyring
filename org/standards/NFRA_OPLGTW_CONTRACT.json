@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "project": "NFRA_OPLGTW",
   "authority": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md#contracts",
   "activation": "DESIGN_ONLY_NOT_A_GRANT",
@@ -29,6 +29,13 @@
     "schwab_query",
     "schwab_prepare_download"
   ],
+  "tool_operations": {
+    "schwab_get_access": null,
+    "schwab_list_files": "list",
+    "schwab_describe_dataset": "describe",
+    "schwab_query": "query",
+    "schwab_prepare_download": "download_filtered"
+  },
   "principal_key": [
     "tid",
     "oid"
@@ -195,7 +202,7 @@
   ],
   "state_store": {
     "service": "dynamodb",
-    "table": "opal-gateway-access-state",
+    "table": "gateway-access-state-table",
     "region": "us-east-1",
     "account": "313476888478",
     "record_types": [
@@ -217,8 +224,9 @@
     },
     "runtime_policy_access": "strong read only; write actions require all LeadingKeys match RUNTIME#*"
   },
-  "reader_role": "opal-mcp-emp-menachem-schwab-read",
-  "catalog_role": "opal-mcp-schwab-catalog-read",
+  "reader_role": "gateway-schwab-read-role",
+  "catalog_role": "gateway-schwab-catalog-read-role",
+  "assume_readers_policy": "gateway-assume-schwab-readers-policy",
   "source_bucket": "opal-data-assets",
   "data_prefixes": [
     "schwab/08242234/silver/dim_position/",

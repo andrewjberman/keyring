@@ -76,6 +76,24 @@ ENFORCE_FILE = os.path.join(REPO, "org", "mcp", "naming-gate.enforce")
 VERDICT_LOG = os.path.join(REPO, "org", "mcp", "naming-gate-verdicts.log")
 REGISTRY_PREFIX = "infra/logic/registry/"
 GRADED_EXT = (".py", ".js", ".mjs", ".ts", ".tf", ".json", ".yaml", ".yml")
+# THE GATE'S DOMAIN (R-11/R-13, round-3 EN-n-1): a resource is MINTED where the applied plane is
+# DECLARED, never in a RECORD (proof instances, task orders, deliverables, surprise rows, logs, PRDs,
+# project rows). The record trees are the WHOLE of org/** and docs/**; a record tree is never opened
+# (no pre-image read, no generated-file check, no literal extraction), regardless of suffix.
+RECORD_TREE_PREFIXES = ("org/", "docs/")
+# R-35 (1.0.0_SA_CTO, 2026-09-17, on 2.0.0_SA_COO~G's CALL 1, row LGIC_LGCTFM-W2-S1): an ENGINE'S OWN
+# MEASURED RUN OUTPUT is a RECORD, exactly like a proof instance under org/**, and R-13 simply did not
+# enumerate the tree it lands in. Every prior LGCTFM round wrote only into org/**, so nothing exercised
+# this until the first real run -- which the gate then refused wholesale (1719 REFUSE + 49 RAISE measured
+# by 0.9.0_WK_LGIC_LGCTFM~2 and confirmed by its issuer at HEAD).
+# THE EXEMPTION IS THE RUN DIRECTORY, NEVER THE TREE ABOVE IT. `workflows/legacy_transform/` also holds
+# run_home.py -- ENGINE CODE, which mints names and MUST stay graded -- so a prefix exemption on the run
+# home's parent would blind the gate to exactly the declarations it exists to grade. The discriminator is
+# the run id's own shape, read from its producer (workflows/legacy_transform/run_home.py:7, :46: run_dir =
+# <root>/<subject>/<run-id>, run-id = <UTC YYYYMMDDTHHMMSSZ>-<short repo head>), and it is self-limiting:
+# nothing hand-authored lives in a directory named by a UTC stamp plus a commit pin, and run_home REFUSES
+# a run directory that already exists (`:48`), so the name is minted once by the engine and never reused.
+RUN_ARTIFACT_RE = re.compile(r"^workflows/[^/]+/[^/]+/[0-9]{8}T[0-9]{6}Z-[0-9a-f]{7,40}/")
 BUILDERS = {"key", "address", "name", "lookup"}
 NAMING_MODULE_NAMES = {"opal_naming"}
 # A call whose string argument is a numeric spelling, never a name: float("inf") is not the firm inf.
@@ -697,9 +715,117 @@ def generator_output(nm, path, post_text):
         shutil.rmtree(tmp, ignore_errors=True)
 
 
+# --------------------------------------------------------------------------- the domain (R-11/R-13)
+def _is_record_tree(path):
+    return path.startswith(RECORD_TREE_PREFIXES) or _is_run_artifact(path)
+
+
+def _is_run_artifact(path):
+    """An engine's own measured output inside a minted run directory (R-35). See RUN_ARTIFACT_RE."""
+    return RUN_ARTIFACT_RE.match(path) is not None
+
+
+def _is_gitattributes(path):
+    return path == ".gitattributes" or path.endswith("/.gitattributes")
+
+
+_RESOLVE_CACHE = {}
+
+
+def _resolves_to_tracked(value):
+    """A path-shaped value is a CITATION, not a mint, when it resolves to a tracked file at HEAD (R-11).
+    A path-shaped value that does NOT resolve (a typo, an invented file) is still graded and still refuses."""
+    if value in _RESOLVE_CACHE:
+        return _RESOLVE_CACHE[value]
+    ok = False
+    if (value and "/" in value and not value.startswith("/") and "://" not in value
+            and not value.startswith("arn:") and ".." not in value.split("/")):
+        rc, _out, _err = git("cat-file", "-e", "HEAD:%s" % value)
+        ok = rc == 0
+    _RESOLVE_CACHE[value] = ok
+    return ok
+
+
+_GITATTR_BINARY_TOKENS = ("binary", "-diff")
+
+
+def _judge_gitattributes_line(path, ln, txt):
+    """A5-A6: a `binary` or `-diff` attribute on a declaration-tree path needs a same-line reason
+    comment (text after `#` on the same line) or the gate refuses it. A target inside a RECORD tree is
+    never graded here (measured at the cut: all 3 existing binary lines sit in record trees)."""
+    left, _sep, tail = txt.partition("#")
+    reason = tail.strip()
+    tokens = left.split()
+    if not tokens:
+        return None
+    pattern, attrs = tokens[0], tokens[1:]
+    if not any(a in _GITATTR_BINARY_TOKENS for a in attrs):
+        return None
+    if _is_record_tree(pattern.lstrip("/")):
+        return None
+    if reason:
+        return ("PASS", path, ln, txt.strip(), "-",
+                "binary/-diff attribute on a declaration-tree path carries a same-line reason: %r" % reason, "PASS")
+    return ("REFUSE", path, ln, txt.strip(), "<same-line reason comment, e.g. '# why'>",
+            "a binary/-diff attribute on a declaration-tree path with no same-line reason comment (A-6)", "REFUSE")
+
+
+def _grade_gitattributes(f):
+    path = f["new"]
+    pre_text = None
+    if f["old"] is not None:
+        rc, out, _err = git("show", "HEAD:%s" % f["old"])
+        if rc == 0:
+            pre_text = text_of(out)
+        elif os.path.isfile(os.path.join(REPO, *f["old"].split("/"))):
+            with open(os.path.join(REPO, *f["old"].split("/")), "rb") as fh:
+                pre_text = text_of(fh.read())
+    _post_lines, added = apply_hunks(pre_text or "", f["hunks"])
+    rows = []
+    for ln, txt in sorted(added.items()):
+        row = _judge_gitattributes_line(path, ln, txt)
+        if row:
+            rows.append(row)
+    return rows
+
+
+def domain_meta(files):
+    """DENOMINATOR (Rule 24(i) subtraction: domain = total MINUS EXCLUDED record trees) and COVERAGE
+    (S42: the paths in that domain the gate cannot see, by extension) for the whole run.
+
+    The EXCLUSION SET IS PRINTED, never implied (R-35): the subtraction names every limb it subtracts on
+    and counts each separately, so a tree added to the exemption later cannot land on the wrong side of
+    this line unnoticed -- the counts disagree before the reader does."""
+    total, record, run_record, seen = 0, 0, 0, 0
+    for f in files:
+        path = f["new"] if f["new"] is not None else f["old"]
+        if path is None:
+            continue
+        total += 1
+        if _is_record_tree(path):
+            record += 1
+            if _is_run_artifact(path):
+                run_record += 1
+            continue
+        if path.endswith(GRADED_EXT) or _is_gitattributes(path):
+            seen += 1
+    domain = total - record
+    unseen = domain - seen
+    excluded_spec = "%s, run-artifact dirs %s" % (", ".join(RECORD_TREE_PREFIXES), RUN_ARTIFACT_RE.pattern)
+    return [
+        "DENOMINATOR: %d path(s) in this diff; declaration-tree domain = %d MINUS EXCLUDED(%s) %d = %d path(s)"
+        " [of the excluded, %d are run artifacts and %d are org//docs/]"
+        % (total, total, excluded_spec, record, domain, run_record, record - run_record),
+        "COVERAGE: %d path(s) in the declaration domain the gate could not see (extension outside its graded"
+        " set and not .gitattributes); %d seen" % (unseen, seen),
+    ]
+
+
 # --------------------------------------------------------------------------- the matrix
 def judge(nm, path, lit, pre_text):
     """(line verdict, canonical, why, counts-as) for one literal, or None when it is not graded."""
+    if _resolves_to_tracked(lit.value):
+        return None  # a value resolving to a tracked path at HEAD is a CITATION (R-11), not a mint
     typ, graded_as = nm.classify(lit.value, lit.hint)
     carr = nm.carrier(lit.value)
     if typ is None and carr is None:
@@ -748,6 +874,10 @@ def grade_file(nm, f, post_from_index):
     path = f["new"]
     if path is None:
         return []  # a deletion grades nothing
+    if _is_record_tree(path):
+        return []  # a RECORD tree is never opened (R-11/R-13): no pre-image read, no literal extraction
+    if _is_gitattributes(path):
+        return _grade_gitattributes(f)
     if not path.endswith(GRADED_EXT):
         return []
     pre_text = None
@@ -885,7 +1015,7 @@ def run(args):
     rows = []
     for f in files:
         rows += grade_file(nm, f, args.post_from_index)
-    return rows
+    return rows, domain_meta(files)
 
 
 def main(argv=None):
@@ -897,7 +1027,7 @@ def main(argv=None):
     enforce = enforcing(args.enforce)
     mode = "ENFORCE" if enforce else "WARN"
     try:
-        rows = run(args)
+        rows, meta = run(args)
     except Exception as exc:
         line = "NAMING ERROR %s" % (str(exc) if isinstance(exc, GateError) else "%s: %s" % (type(exc).__name__, exc))
         print(line)
@@ -905,8 +1035,10 @@ def main(argv=None):
         if not enforce:
             print("  (WARN window: the limb's own error never blocks a commit; enforce is off)")
         return 1 if enforce else 0
+    for ln in meta:
+        print(ln)
     rows.sort(key=lambda r: (r[1], r[2], r[3]))
-    verdict_lines = []
+    verdict_lines = list(meta)
     for verdict, path, line, s, canon, why, _counts in rows:
         vl = "NAMING %s %s:%d %s -> %s" % (verdict, path, line, s, canon)
         verdict_lines.append(vl)

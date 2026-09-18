@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~2, commit 23980d3fbe (registry edit + regenerated fixtures) / c0cc17f4f2 (deliverables); proof org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-r-5-r3.registry-tokens.proof_of_spec.json, proof-of-spec-check rc=0. R5R3-AC1..AC4 PASS-by-output; R5R3-AC5 judgment, UNVERIFIABLE-BY-INSTRUMENT, owed to 3.0.0_SA_CVO at L9.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-r-5` = round-3 cell 5 (decomposition v3.2, section 0c) | **outcome_ref:** FWD-5 | **depends_on:** none -- level 0; EN-s-6-r3 and EN-w-7-r3 wait on this drain
 

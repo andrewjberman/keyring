@@ -1129,15 +1129,49 @@ _TREE_TO_RE = re.compile(r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/task
 _FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 
 
-def _channel_row_ids(code: str) -> tuple[set, int]:
-    """(row ids, files scanned) across BOTH channel roots for one project. Reads the WORKTREE (this
-    checker runs at completion, not at commit; the row gate is the staged-index reader). A fenced
-    block that does not parse is skipped and counted in the scan -- absence of an id is what the
-    caller grades, and a malformed channel file is the row gate's finding, not this limb's."""
+def _instance_checkout_root(inst_path) -> Path:
+    """The checkout (repo/worktree root) that HOLDS `inst_path`, walking up from it to the nearest
+    `.git` entry (a dir for a normal clone, a file for a linked worktree -- `.exists()` covers both).
+    Falls back to WORKSPACE (this script's OWN checkout) when `inst_path` is None, unresolvable, or no
+    `.git` is found above it -- so every caller that does not pass a path (the pre-existing self-test
+    arms, any internal caller injecting `row_ids` directly) is byte-identical to before this function
+    existed.
+
+    LGIC_NAMING-S21: `_channel_row_ids` used to glob WORKSPACE unconditionally, so a checker running
+    from the MAIN checkout but graded against an instance in a linked worktree or a side branch read
+    that instance's own channel row as absent -- the row was committed in the GRADED tree, just not in
+    the tree the script happened to live in. The channel a `surprises` entry is checked against must be
+    the one the INSTANCE's own checkout carries, never the script's."""
+    if inst_path is None:
+        return WORKSPACE
+    try:
+        p = Path(inst_path).resolve()
+    except Exception:  # noqa: BLE001
+        return WORKSPACE
+    cur = p if p.is_dir() else p.parent
+    seen = set()
+    while cur not in seen:
+        seen.add(cur)
+        if (cur / ".git").exists():
+            return cur
+        if cur.parent == cur:
+            break
+        cur = cur.parent
+    return WORKSPACE
+
+
+def _channel_row_ids(code: str, root: Path | None = None) -> tuple[set, int]:
+    """(row ids, files scanned) across BOTH channel roots for one project, read from `root` (the
+    INSTANCE's own checkout -- see `_instance_checkout_root`), defaulting to WORKSPACE (this script's
+    checkout) when `root` is not given, which is what every pre-existing caller still gets. Reads the
+    WORKTREE (this checker runs at completion, not at commit; the row gate is the staged-index reader).
+    A fenced block that does not parse is skipped and counted in the scan -- absence of an id is what
+    the caller grades, and a malformed channel file is the row gate's finding, not this limb's."""
     if not code:
         return set(), 0
-    files = list(WORKSPACE.glob("org/surprise_channel/%s/INVESTIGATION_v*" % code))
-    files += list(WORKSPACE.glob("org/missions/D*/*/%s/surprise-channel/investigations/INVESTIGATION_v*" % code))
+    root = WORKSPACE if root is None else root
+    files = list(root.glob("org/surprise_channel/%s/INVESTIGATION_v*" % code))
+    files += list(root.glob("org/missions/D*/*/%s/surprise-channel/investigations/INVESTIGATION_v*" % code))
     ids: set = set()
     for f in files:
         try:
@@ -1176,10 +1210,13 @@ def _governing_is_tree(inst: dict) -> tuple[bool, str]:
 
 
 def surprises_check(inst: dict, enforce: bool | None = None, row_ids: set | None = None,
-                    files_scanned: int | None = None) -> tuple[list[str], list[str]]:
+                    files_scanned: int | None = None, inst_path=None) -> tuple[list[str], list[str]]:
     """(violations, frames). Every entry of `surprises` must open with a row id that resolves to a row
     in the project's channel. ENFORCE -> violations; ANNOUNCE -> frame lines only. `enforce`,
-    `row_ids` and `files_scanned` are injectable so the self-test exercises the limb without a repo."""
+    `row_ids` and `files_scanned` are injectable so the self-test exercises the limb without a repo.
+    `inst_path` (LGIC_NAMING-S21) roots the channel glob at the INSTANCE's own checkout via
+    `_instance_checkout_root`, never at this script's -- unused when `row_ids` is injected, and a
+    caller that omits it gets WORKSPACE, exactly as before this parameter existed."""
     v: list[str] = []
     frames: list[str] = []
     entries = inst.get("surprises", []) or []
@@ -1191,7 +1228,7 @@ def surprises_check(inst: dict, enforce: bool | None = None, row_ids: set | None
         reason = "mode injected by caller"
     code = _project_code(str(inst.get("to_id", "")))
     if row_ids is None:
-        row_ids, files_scanned = _channel_row_ids(code)
+        row_ids, files_scanned = _channel_row_ids(code, _instance_checkout_root(inst_path))
     files_scanned = 0 if files_scanned is None else files_scanned
     defects: list[str] = []
     n_with_id = n_resolved = 0
@@ -1967,6 +2004,43 @@ def _self_test() -> int:
         dict(base, surprises=["legacy free-string surprise"]), False, rows, 0, "surprises-announce")
     arm("F ENFORCE + empty list -> 0 violations, frame says 0 entries",
         dict(base, surprises=[]), True, rows, 0, "0 entries")
+
+    # ---- LGIC_NAMING-S21 (EN-i-3): the channel is resolved from the INSTANCE's own checkout, never
+    # this script's. A row planted ONLY in a throwaway repo, resolved via `inst_path`, with `row_ids`
+    # left uninjected so `_instance_checkout_root` + `_channel_row_ids` actually run. ----
+    def _channel_root_arm():
+        import shutil as _sh
+        import tempfile as _tf
+        root = _tf.mkdtemp(prefix="pos_check_i3_root_")
+        try:
+            root_p = Path(root)
+            (root_p / ".git").mkdir()
+            ch = root_p / "org" / "missions" / "D14" / "LGIC" / "NFRA_TESTPROJ" / "surprise-channel" / "investigations"
+            ch.mkdir(parents=True)
+            (ch / "INVESTIGATION_v1.md").write_text(
+                "```json\n" + json.dumps([{"id": "NFRA_TESTPROJ-S77", "project": "NFRA_TESTPROJ"}], indent=1)
+                + "\n```\n", encoding="utf-8", newline="\n")
+            # premise control: the row must be ABSENT from THIS script's own checkout (WORKSPACE), or a
+            # PASS here would prove nothing about rooting.
+            premise_ids, _ = _channel_row_ids("NFRA_TESTPROJ")
+            if "NFRA_TESTPROJ-S77" in premise_ids:
+                arms.append(("M channel-root: PREMISE BROKEN -- NFRA_TESTPROJ-S77 already resolves in "
+                             "this script's own checkout", False, -1, 0, "premise"))
+                return
+            fake_inst_path = root_p / "org" / "missions" / "D14" / "LGIC" / "NFRA_TESTPROJ" / \
+                "deliverables" / "w" / "x.proof_of_spec.json"
+            inst_ = dict(base, to_id="NFRA_TESTPROJ.TO-X-1",
+                        surprises=["NFRA_TESTPROJ-S77: planted only in a side checkout"])
+            v, f = surprises_check(inst_, enforce=True, inst_path=fake_inst_path)
+            resolved_line = next((x for x in f if x.startswith("surprises-frame:")), "")
+            ok = (len(v) == 0) and (" 1 resolve to a channel row" in resolved_line)
+            arms.append(("M channel-root: a row planted ONLY in the instance's own checkout resolves "
+                         "via inst_path (LGIC_NAMING-S21)", ok, len(v), 0, resolved_line[:110]))
+        finally:
+            _sh.rmtree(root, ignore_errors=True)
+
+    _channel_root_arm()
+
     # ---- spine v3 carrier 4: the expect match and the judgment refusal (pure, conditional_checks) ----
     def _row(**kw):
         r = {"criterion_id": "V3-AC1", "criterion_verbatim": "the deciding line is printed", "method": "command",
@@ -2265,7 +2339,8 @@ def main() -> int:
     align_frames = list(bind_frames) + list(align_frames) + res_frames
     # SURPRISES LIMB (2026-09-03): runs on every instance; ENFORCE vs ANNOUNCE is derived from the
     # governing TO's root, never from a caller-side flag -- the same one-discriminator rule as layer 1.
-    sur_violations, sur_frames = surprises_check(inst)
+    # inst_path (LGIC_NAMING-S21) roots the channel glob at the INSTANCE's own checkout.
+    sur_violations, sur_frames = surprises_check(inst, inst_path=Path(args[0]))
     violations.extend(sur_violations)
     align_frames = align_frames + sur_frames
     # INVOCATION ALIGNMENT LIMB (2026-09-12, FE-s-23): runs on EVERY instance and prints its

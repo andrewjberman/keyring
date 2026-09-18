@@ -1,0 +1,13 @@
+{
+  "prd": "NFRA_SPMOVE_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "aad379d84b8606236138a7c394d2529a4b8d0ae1",
+  "half": "brief",
+  "half_hash": "f1d2f2d921579af861a30a73204aadf57c3e477ac50185852d31cfa53710db03",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/PRD_REVIEW_NFRA_SPMOVE_v0.1_BRIEF_HALF_20260917.md@c1281bfe0a",
+  "signed_by": "2.0.0_SA_COO~G",
+  "signed_at": "2026-09-17T21:27:08Z",
+  "substitute_for": "4.0.0_SA_CRO",
+  "reason": "no BRIEF COVERAGE section exists: the brief's 22 headings at d5e870fed2 have no denominator in the PRD, Part V's preconditions are mapped nowhere and Part VII's non-claims are carried nowhere (0 hits across 128 lines) -- additive correction"
+}

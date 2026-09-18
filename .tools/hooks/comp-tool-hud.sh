@@ -272,7 +272,11 @@ elif printf '%s' "$query" | grep -qE 'aws s3(api)? (ls|list-objects)[^|]*(^|/)(g
   msg="comp-tool on the HUD: raw \`aws s3 ls\` on a served/artifact prefix answers TWO different questions -- say which you are asking. (1) IS IT FRESH -> \`comp-freshness <artifact>\` = EXISTS/FRESH/SCALED/NOT-FROZEN (the validate-on-served check), not a listing + mtime eyeball. (2) WHAT SERVES THIS KEY / the URL->S3 path -> \`comp-routes trace --json <url>\` RESOLVES THIS (@a119bc34c). USE --json AND KEY ON THE \`outcome\` ENUM -- it is NOT an oracle and the enum is the only safe discriminator: RESOLVED | UNRESOLVED_NO_RULE (the static table does not COVER that prefix -- NOT proof no key exists) | CATCHALL_DEFAULT (a DEFAULT, NOT a resolution -- returned for ANY unmodelled path) | NO_MATCH. TREAT ANYTHING != RESOLVED AS NOT-A-RESOLUTION: on a catch-all \`s3_key\` MAY BE NON-NULL while outcome is CATCHALL_DEFAULT, so keying on 'did I get a key?' reads a default as an answer. AND KNOW THE BOUNDARY OF RESOLVED ITSELF: it means THE MODELLED TABLE PRODUCED A KEY -- NOT that the router will serve it. The table is TRANSCRIBED from the routers, so an auth/PII branch can 401 a path that trace resolves S3-direct (live case: pseudonymized platinum summary paths). RESOLVED is a claim about the MODEL, never a grant of access -- never infer servability or authorization from it. AND \`s3_uri\`'s BUCKET CAN BE THE WRONG FIRM'S: for scoped advisor-intelligence paths the router picks the origin bucket PER FIRM AT REQUEST TIME (bd|inf|cot), while trace reports ONE fixed bucket -- never carry that bucket into a firm-separation judgement (CLAUDE.md NEVER #2). The payload carries its own \`disclosure\`, \`plane\`, \`vintage\` and \`blind_spots\` FROM comp-routes' output contract -- read them there rather than from this nudge (one source; this message deliberately does not restate them). NOTE \`blind_spots\` is a DECLARED STRUCTURAL LIMIT LIST, not a health signal -- it is non-empty on a perfectly good RESOLVED answer and means 'what this answer does not cover'. Treat a bare ls as evidence of PRESENCE only, never of the serving path. (3) WHAT IS ACTUALLY SERVED RIGHT NOW -> LIVE S3 IS the authority (NOT comp-estate's resolver snapshot (names-only; keys re-derive live -- read its header vintage), NOT kuzu for a post-build key); \`comp-freshness\` reads live S3 and frames age correctly, which a raw ls does not -- its LastModified renders in LOCAL time on this host, a known false-staleness trap. If you genuinely need the raw listing itself, that is a legitimate \`# rail-checked:\` case. (advisory -- your command still runs.)"
 elif printf '%s' "$query" | grep -qE 'aws dynamodb (describe-table|list-tables)'; then
   class=aws_dynamodb
-  msg="comp-tool on the HUD: \`aws dynamodb describe-table/list-tables\`. For the table AS A GRAPH NODE: \`comp-aws\` = its edges/consumers; \`comp-freshness <table> --ddb\` = firm-config drift. (Row DATA-ACCESS -- get-item/scan/query -- is operational/no-graph, off the rail.) (advisory -- your command still runs.)"
+  # FIXED 2026-09-17: comp-aws is DEPRECATED FOR AGENT USE since 2026-09-09 (its own wrapper prints
+  # the notice on every call). comp-which's own router picks comp-estate/comp-blast for an
+  # edges/consumers question, never comp-aws or --corpus aws -- --corpus aws is a FLAT regex over
+  # live node name+arn+props with NO edge traversal, so it cannot answer "what consumes this" at all.
+  msg="comp-tool on the HUD: \`aws dynamodb describe-table/list-tables\`. For the table AS A GRAPH NODE (edges/consumers): \`comp-estate --resource <table>\` or \`comp-blast <table>\`; \`comp-freshness <table> --ddb\` = firm-config drift. (Row DATA-ACCESS -- get-item/scan/query -- is operational/no-graph, off the rail.) (advisory -- your command still runs.)"
 elif [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '(grep|rg|findstr)([^|;]*)(infra/aws/|\.tf([^A-Za-z0-9]|$))'; then
   class=infra_grep
   # NFRA_TOOLBHVR.ROUTE 2026-07-23: the old text promised "`comp-routes` = the serving path".
@@ -281,7 +285,18 @@ elif [ "$tool" = Bash ] && printf '%s' "$query" | grep -qE '(grep|rg|findstr)([^
   # WITH a known rewrite rule vs one without). comp-routes IS trustworthy as a CONFIG-DERIVED
   # LISTING (behaviors/origins/rewrites/api-routes) -- so the nudge now promises exactly that
   # and no more. Promising a resolution the tool cannot make is how a nudge trains bypass.
-  msg="comp-tool on the HUD: grepping infra/.tf. \`comp-aws\` = the resource edges/blast-radius (relationship-aware, not text -- the destructive-op pre-gate basis); \`comp-iam\` = the perms; \`comp-routes behaviors|origins|rewrites|api-routes\` = the CF/edge CONFIG listing (NOT a URL->S3-key resolution -- \`comp-routes trace\` is undiscriminating for the static-rewrite class). Repo-scoped + edge-aware vs a blind .tf grep. (advisory -- your command still runs.)"
+  #
+  # FIXED 2026-09-17 (Andrew: "the infra-grep alternatives ... should just be comp-find --corpus
+  # aws" -- investigated, and the literal swap would have been wrong): comp-aws is DEPRECATED FOR
+  # AGENT USE since 2026-09-09. Its "edges/blast-radius" claim is a GRAPH TRAVERSAL question, and
+  # comp-which's own router never once picks --corpus aws for that framing -- it picks comp-blast /
+  # comp-estate every time, because --corpus aws is a FLAT regex over live node name+arn+props with
+  # NO edge traversal at all; it cannot tell you what a resource affects. So blast-radius moves to
+  # comp-blast/comp-estate, not --corpus aws. What --corpus aws DOES answer, and what nothing here
+  # asked before, is "is this declared thing actually LIVE in AWS right now, and what's its drift
+  # class" -- a genuinely different, useful question someone grepping infra/.tf may actually mean,
+  # so it is ADDED here rather than substituted for the edges claim.
+  msg="comp-tool on the HUD: grepping infra/.tf. Say which question you mean: DECLARED (edges/blast-radius, relationship-aware not text) -> \`comp-blast <fn-or-arn>\` or \`comp-estate --resource <key>\`; \`comp-iam\` = the perms; \`comp-routes behaviors|origins|rewrites|api-routes\` = the CF/edge CONFIG listing (NOT a URL->S3-key resolution -- \`comp-routes trace\` is undiscriminating for the static-rewrite class). APPLIED/LIVE (does this actually exist in AWS right now, drift class) -> \`comp-find --corpus aws '<pattern>' [NODE_TYPE]\`, the served cloud graph -- \`comp-aws\` is DEPRECATED for agent use (2026-09-09), do not reach for it. Repo-scoped + edge-aware vs a blind .tf grep. (advisory -- your command still runs.)"
 elif printf '%s' "$query" | grep -qE '(^|[^A-Za-z0-9_])(INF_)?[A-DIS]_-?[0-9]{1,2}[a-z]?([^A-Za-z0-9_]|$)'; then
   _id=$(printf '%s' "$query" | grep -oE '(INF_)?[A-DIS]_-?[0-9]{1,2}[a-z]?' | head -1)
   class=script_id
@@ -297,7 +312,9 @@ elif printf '%s' "$query" | grep -qE 'portal/src/|\.tsx([^A-Za-z0-9]|$)|/api/(sc
   msg="comp-tool on the HUD: searching a portal component/route. \`comp-transform schema-check <Component>\` = its data-prop type contract (MISSING = runtime undefined); \`comp-routes behaviors\` = the serving/CF path (4xx/HTML masking). \`comp-estate <thread>\` shows the backend that feeds it. (advisory -- your search still runs.)"
 elif printf '%s' "$query" | grep -qE 'opal-[a-z][a-z-]+|(inf|bd)-[a-z-]+-(trigger|runner|publisher|daily)|yang-generate-[a-z-]+|causality-[a-z-]+'; then
   class=lambda
-  msg="comp-tool on the HUD: searching for a lambda. \`comp-iam service <fn>\` = its IAM/perms; \`comp-aws\` = its edges/blast; \`comp-estate --resource <fn>\` = which named thread it's in. (advisory -- your search still runs.)"
+  # FIXED 2026-09-17: comp-aws deprecated for agent use since 2026-09-09; comp-blast/comp-estate
+  # already covered the same edges/blast claim and are what comp-which's router actually picks.
+  msg="comp-tool on the HUD: searching for a lambda. \`comp-iam service <fn>\` = its IAM/perms; \`comp-blast <fn>\` = its edges/blast; \`comp-estate --resource <fn>\` = which named thread it's in. (advisory -- your search still runs.)"
 elif printf '%s' "$query" | grep -qE 'iam[_-]?role|:role/|aws_iam_policy'; then
   class=iam_role
   msg="comp-tool on the HUD: searching for an IAM role/policy. \`comp-iam service <lambda>\` / \`comp-iam gaps\` = perms before deploy (mind: a Principal:* on Effect=Deny is a GUARDRAIL, not a public grant). (advisory -- your search still runs.)"

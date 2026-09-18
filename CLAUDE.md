@@ -171,6 +171,21 @@ later — a CORRECTNESS cost, not a speed one.
     its own; then re-read the population UNSCOPED once.** COST: one extra unscoped read after a scoped pass. NON-APPLICATION: members with
     no shared dependency, and a scoped check that IS the whole question rather than evidence for a
     wider one.
+    ⛔ **AND THE STATE AXIS HAS A NEGATIVE MIRROR NOBODY STATES: ABSENT ≠ EXERCISED-AGAINST.** The axis
+    above governs a control you claim WORKS. A guard that is MISSING, or a hazard that is REAL, is an
+    **EXPOSURE** until someone measures whether it ever FIRED; only then is it an **INCIDENT** — and the
+    two carry DIFFERENT REMEDIES. An exposure is closed by BUILDING THE GUARD. An incident ALSO requires
+    RE-OPENING WHATEVER THE GAP ADMITTED. **Conflating them costs in both directions** — re-opening work
+    nothing ever harmed, or closing a guard-building task on the strength of "nothing went wrong".
+    ⭐ The discriminator is ONE QUERY: run the defect's OWN SIGNATURE over the graded population and
+    PRINT THE DENOMINATOR. Measured 2026-09-18, `LGIC_ENFORCE-S79`/`S80`: `proof-of-spec-check` grades
+    `<expect>` as an UNANCHORED search over evidence the GRADED PARTY writes, and the round-6/7 checkers
+    carry no scrub — a real forge-your-own-PASS capability. The signature (a FAIL token in the evidence
+    with the `<expect>` still matching, under a PASS) returned **0 of 13** across every round-6 and
+    round-7 criterion carrying an `<expect>`, so both L9s stood and neither round was re-opened.
+    `1.0.0_SA_CTO` counts two further instances the same night (`R-74`), not re-measured here.
+    COST: one query. NON-APPLICATION: a gap whose remedy is the same either way, and any claim about a
+    control you assert DOES work — that is the forward axis above.
     **"proof / root cause / definitively / source-confirmed" are RESERVED** — legal only past STATE at
     EXERCISED; cite `file:line @ <commit-ish>` (a citation without a vintage is not a citation). It
     governs SUPPLEMENTARY controls, never the substance of the act; size by the claim your work FEEDS;
@@ -254,7 +269,18 @@ that glyph leaves 212 / 135 / 251 characters that decode CLEAN AND WRONG. **Dele
 loud failure into silent mojibake, which is strictly worse and looks like compliance.** So the only
 two safe moves are ALL non-ASCII out, or every reader explicit (`encoding='utf-8'`) — **never a
 subset.** ⭐ Detector, one expression and zero cost: `len(b) - len(b.decode('utf-8'))` is 0 on a pure
-ASCII file. **COST: none — a do-not-do.** **NON-APPLICATION: a file that is ALREADY pure ASCII (keep
+ASCII file. ⛔ **THAT EXPRESSION IS A ZERO/NON-ZERO DETECTOR AND ITS MAGNITUDE IS A **BYTE DELTA**, NEVER A
+CHARACTER COUNT — the two differ by a factor that depends on WHICH codepoints are present, so no reader can
+recover one from the other.** Measured 2026-09-18 on this file: **byte delta 453, characters 234** (ratio 1.94;
+13 distinct codepoints, 3-byte `U+2014`×121 down to 2-byte `U+00A7`×9). The character counts quoted above are
+CHARACTERS; **a reader who reaches for the detector beside them gets a number in different units.** For a count,
+count: `sum(1 for ch in text if ord(ch) > 127)`. Measured the same day, TWO seats read the magnitude as a count
+within hours — `2.0.0_SA_COO~G` published 14 for 7 glyphs (4×`U+26D4`, 2×`U+2B50`, 1×`U+26A0`: 7 characters,
+21 bytes, delta 14) in three carriers and corrected itself; `1.0.0_SA_CTO` put the byte delta into a LAW-EDIT
+commit message as a “non-ASCII count”. **The detector stayed sound the whole time, which is why neither noticed:
+non-zero is non-zero, and nothing in the formula announces its unit.** COST: none — use the counting expression
+when you want a count. NON-APPLICATION: the pure presence/absence question, which the original expression
+answers perfectly and is all it ever claimed. **COST: none — a do-not-do.** **NON-APPLICATION: a file that is ALREADY pure ASCII (keep
 it that way), and any file whose every reader is known explicit.** Measured beside it: 29 of 91
 `.tools/*.py` carry non-ASCII (8 raising, 21 silent) and `.owned-paths.yaml` — the LANE-GRANT file —
 is in the SILENT class at 204. `2.0.0_SA_COO~Z` / `2.0.0_SA_COO~ZZZ` / `0.0.0_AB_MSTR~Z`, corroborated
@@ -284,7 +310,24 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     a COO arm naming two partners of three; `ETFS_GUARDRAIL` row S16 doing the same inside an ACCEPT (so a
     GRADE would have read REALIZED on the violation); and a manual-trigger addendum that enumerated the
     outcomes it covered instead of subtracting from the outcomes that NAME a date, leaving `NFRA_OUTSET`
-    FWD-5 uncovered. Found by `2.0.0_SA_COO`, which had committed the same shape an hour earlier. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
+    FWD-5 uncovered. Found by `2.0.0_SA_COO`, which had committed the same shape an hour earlier.
+    ⛔ **AND THE TELL IS NOT A MISSING DENOMINATOR — IT IS A DENOMINATOR WHOSE SCOPE IS NARROWER THAN
+    THE SENTENCE BESIDE IT.** Before any sentence about a POPULATION, ask what the printed number
+    actually swept, in PATH **and in TIME**. **A wrong-domain census does not look careless — it looks
+    MEASURED, because it arrives with a real number.** Measured 2026-09-18, FOUR SEATS IN FOUR HOURS,
+    every instance carrying a real printed denominator: `LGIC_LGCTFM-S11` censused run directories under
+    ONE tree and wrote the unscoped word ANYWHERE; a round-6 analysis read THREE COMMIT SUBJECTS and
+    reported "five" rowless disarms against a true SIXTEEN — a method that can only ever find disarms
+    that live IN a commit subject, so **the finding understated itself by its own instrument**;
+    `LGIC_ENFORCE-S75` measured 2 files and concluded about a PROJECT, with the falsifier INSIDE THE
+    FILE THE ROW WAS SPLICED INTO (90 hits, 29 files); and `R-67 §4` read one file's rows and wrote a
+    sentence about every row in the project — **INSIDE THE RULING CONVICTING S75 OF THAT MOVE.** ⚠ TIME
+    IS SCOPE: `comp-iam roles` prints `(210 found)` with NO vintage and omits a role applied 2h15m
+    earlier, while its own sibling `comp-iam live` prints its derive time AND both of its unverified
+    halves (`IRPT_BCKEND-S73`) — same tool, one path disclosing and one silent. COST: one question per
+    CLAIM, no re-read. NON-APPLICATION: a sentence whose subject IS the swept set ("of the 210 roles
+    comp-iam lists, 13 are irpt-*") — there the denominator and the sentence share a scope by
+    construction. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
     (iv) STATE COHERENCE (name which values one remedy does NOT move). **Outcome arrays, typed-result sets
     and predicates ARE schemas.** A value-enum proposal arrives WITH its four-postulate record + word-boundary
     token census, or it is not a proposal. `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
@@ -354,7 +397,19 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
   definition references. ⛔ **An entry a
   device left OPEN proves only that THIS device saw no completion** — before acting on any open/`--red`
   entry, measure the ARTIFACT (rev-parse + describe + is-ancestor with positive control); world-done →
-  close SUPERSEDED, never re-execute (a re-execute of an overtaken promote is a REWIND). Annex §NEVER-2.
+  close SUPERSEDED, never re-execute (a re-execute of an overtaken promote is a REWIND).
+  ⛔ **AND THE ABSENCE OF AN ENTRY IS NOT EVIDENCE DURING A WORKER DEPLOY.** This line requires the entry
+  BEFORE the deploy; Rule 14b puts the worker in its OWN worktree; so the entry sits on a BRANCH and reaches the
+  shared tree only at the DRAIN — **after** the deploy. **An `.open_deploys/` read from `CLOUD` returns a
+  confident, denominator-bearing “no entry” for the whole window in which the entry is MANDATORY, and it reads
+  identically whether the deploy is pre-flight or HALF-LANDED.** Read EVERY live worktree (`git worktree list
+  --porcelain`, then `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/`), union them and
+  print the per-tree denominator — and use `ls-tree`/`ls -a`, since `ls -1` hides `.unindexed_red_state.json`.
+  Measured 2026-09-18 on `NFRA_OPLGTW` `OG-r-1`: CLOUD **7** entries without it, the worker's worktree **8** with
+  it, open since 05:08:50Z — while a CTO watch read “none” for three ticks and wrote that read into a log as a
+  successor's instruction. COST: one `worktree list` + one `ls-tree` per live worktree. NON-APPLICATION: a deploy
+  run in the shared tree by a non-worker seat — there the shared read IS the population. R-53's sibling; R-52.
+  Annex §NEVER-2.
 - **NEVER rebase on a shared branch** (CLOUD/DEV/PROD/main); rejected push = pull-merge, re-push. Gate:
   `.tools/hooks/never-rules-gate.sh`; audited override `# never-override: <reason>`. Scratch branches free.
 - **NEVER call a pipeline stale/broken until you resolve the TRADING CALENDAR — count trading days.**
@@ -496,7 +551,22 @@ derived layer is current-day-only; never mint `data/bloomberg/`).
 session.** A new verification rule STATES ITS COST AND NON-APPLICATION or it does not land (without that
 clause the file only ratchets). **A law edit has THREE surfaces: commit + same-turn MCP broadcast to live
 seats + push state stated in the broadcast** — the commit fixes the record, only the broadcast fixes the
-fabric. **Where things go:** imperative+mechanism → here; principle → `docs/doctrine/`; what happened →
+fabric. ⛔ **AND WHERE THE AUTHOR IS MECHANICALLY BARRED FROM BROADCASTING, THE BROADCAST
+SURFACE IS SATISFIED BY RELAY — THE AUTHOR ASKS A SEAT PERMITTED TO BROADCAST, NAMES ITSELF AND THE
+COMMIT, AND ITS DUTY IS DISCHARGED BY THE ASK; THE RELAYING SEAT OWES THE BROADCAST SAME-TURN AND SAYS
+IN IT THAT IT IS A RELAY AND WHO AUTHORED THE EDIT.** Without this the file imposed a duty one of its own
+readers could not perform: the L8 correspondence gate permits `3.0.0_SA_CVO` exactly ONE send, the slug to
+the CTO, **at every dep_stage** — so a law edit that seat authors could reach the commit and push-state
+surfaces and never the one this rule calls the only one that fixes the fabric. Measured 2026-09-18: the Rule
+24 scope line @`e9b00e3518`, refused to 6 named recipients with nothing written for any of them. ⭐ **THE
+RELAY IS NOT A GATE ON THE AUTHOR — IT CONSTRAINS NOTHING THE AUTHOR COULD OTHERWISE DO**, which is the
+test that separates it from an agent-made gate; it names a route for an act that was impossible, and the
+refusing gate's own text already names that route. ⛔ **THE TWO ALTERNATIVES ARE WORSE AND ARE REFUSED:**
+letting the barred seat broadcast re-opens the second channel the correspondence rule exists to close, and
+*"the author of a law edit is exempt from the correspondence rule"* is an agent-made exemption, which §2
+forbids. ⚠ **The author does NOT self-relay by finding a friendlier recipient list** — the ask goes to a
+seat whose OWN lane permits the broadcast. COST: one message. NON-APPLICATION: any author who can already
+broadcast — which is every seat but the CVO today, so this clause is dormant unless that changes. **Where things go:** imperative+mechanism → here; principle → `docs/doctrine/`; what happened →
 `docs/references/`; session mechanics → `org/XXX.md`; decision → `org/tier0/ledger/`. **Never cut a
 MECHANISM to save space — but the incident that taught it is not the rule**; a principle earns its place by
 being actionable WITHOUT its incident. Long-form text of any rule: `docs/doctrine/CLAUDE_ANNEX.md`.

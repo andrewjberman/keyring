@@ -173,6 +173,19 @@ REMEDIATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/remediations/*",
 ADJUDICATION_PATTERNS = ("org/missions/D*/*/%s/surprise-channel/adjudications/*",
                          "org/surprise_channel/%s/ADJUDICATION_v*")
 
+# EN-k-38 / S75: THE STALENESS THRESHOLD, A JUDGMENT (task order K38R8, graded by 3.0.0_SA_CVO at L9, not by
+# this gate's own arms -- the arms only check that a fresh row PASSES and a stale one does NOT). Measured
+# against LGIC_ENFORCE's own round cadence at the round-8 cut (round 1 at 2026-09-15T02:20Z through round
+# 8's cut census at 2026-09-18 ~05:42 UTC -- about 75.5 hours across 7 round-to-round gaps, roughly 10.8h
+# per round) and against the W7-S1 incident itself (opened OPEN+owned at round v1, first seen stale at
+# round v8 -- a 7-round, 67-hour gap that survived every rowlessness-shaped instrument because the row
+# EXISTS). N=2 rounds means a row must survive its OWN minting round PLUS one full further round with no
+# update before it is flagged -- normal same-round or next-round remediation lag is not penalised, but a
+# row idle across a round boundary is caught at the NEXT slug rather than the 7th. Applied to W7-S1's own
+# numbers, N=2 would have caught it at round v3 (2026-09-17T14:12Z), about 40 hours before round 8 actually
+# did.
+STALE_OPEN_ROW_N_ROUNDS = 2
+
 
 # FOREIGN-ROW SWEEP (2026-09-03, proposed by 1.0.0_SA_CTO~Z via 0.0.0_AB_MSTR~Z 93627, accepted at the base): on a
 # shared append-only channel file, a seat that commits THE FILE carries every peer row sitting uncommitted in it under
@@ -449,6 +462,68 @@ def _latest_dispositions(root, code):
         rem_ids.extend(r.get("id") for r in rows if r.get("id"))
     latest, unknown = _resolve_latest(files, rem_ids)
     return latest, unknown, len(files) + len(rem_paths), ""
+
+
+def _remediation_ids_for_project(root, code):
+    """(ids, note) -- the SET of item ids carried by a REMEDIATION row under `code`'s channel, read
+    from the INDEX (never the worktree). ids is None when the census could not run -- the caller
+    fails closed, exactly as `_latest_dispositions` already does on the sibling read.
+
+    THIS IS A STANDALONE READ, NOT A SECOND RETURN VALUE BOLTED ONTO `_latest_dispositions`.
+    `_resolve_latest` already folds remediation-row presence into `latest` -- it sets an item's
+    resolved disposition to GRADUATED whenever a remediation row bears that id (:414-416) -- but a
+    CVO row can ALSO carry `disposition: GRADUATED` directly, as its own L9 field (annex 4a, :1260),
+    with NO remediation row ever minted. Both paths land on the identical string "GRADUATED" in
+    `latest`, so nothing downstream of `_resolve_latest` can tell them apart; only an INDEPENDENT
+    read of which ids remediation rows actually carry can (S74's structural finding). Growing
+    `_latest_dispositions`'s return arity would touch every one of its existing callers and the
+    self-test's literal 4-tuple fixtures for a question this gate never previously asked; a second,
+    narrow read costs one census and changes nothing already wired."""
+    rem_paths, note = _index_paths(root, [p % code for p in REMEDIATION_PATTERNS])
+    if rem_paths is None:
+        return None, note
+    ids = set()
+    for p in rem_paths:
+        st, text = _blob(root, "", p)
+        if st != "OK":
+            return None, "%s unreadable in the index (%s)" % (p, st)
+        rows, bad = _rows(text, p.lower().endswith(".json"))
+        if bad:
+            return None, "%s holds %d unparsed block(s)" % (p, bad)
+        ids.update(r.get("id") for r in rows if r.get("id"))
+    return ids, ""
+
+
+def _remediation_rows_for_project(root, code):
+    """(rows_by_id, note) -- the LATEST remediation row (the FULL dict, not just its id) per id carried
+    under `code`'s REMEDIATION channel, read from the INDEX. rows_by_id is None when the census could not
+    run -- the caller fails closed, the same convention as `_remediation_ids_for_project`, whose key-set
+    this function's key-set equals by construction.
+
+    A SEPARATE READ, NOT A SECOND RETURN VALUE BOLTED ONTO `_remediation_ids_for_project`: EN-k-38's
+    staleness question needs the row's OWN `remediation.state`/`remediation.owner`/`remediation.round`,
+    not merely that an id is carried (S74's precedent for why a narrow, independent census beats growing
+    an existing one's arity). The channel is APPEND-ONLY (protocol s.0: "a correction ... is a NEW row
+    citing the old id ... a reader resolves a row's state from the newest row that cites it") so the LAST
+    occurrence of an id, walking `_index_paths`' file order then each file's row order, IS the newest --
+    exactly the rule `_remediation_ids_for_project`'s plain `.update()` already relies on for presence;
+    here the same walk keeps the row itself rather than discarding it."""
+    rem_paths, note = _index_paths(root, [p % code for p in REMEDIATION_PATTERNS])
+    if rem_paths is None:
+        return None, note
+    rows_by_id = {}
+    for p in rem_paths:
+        st, text = _blob(root, "", p)
+        if st != "OK":
+            return None, "%s unreadable in the index (%s)" % (p, st)
+        rows, bad = _rows(text, p.lower().endswith(".json"))
+        if bad:
+            return None, "%s holds %d unparsed block(s)" % (p, bad)
+        for r in rows:
+            rid = r.get("id")
+            if rid:
+                rows_by_id[rid] = r
+    return rows_by_id, ""
 
 
 def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merging=False,
@@ -792,6 +867,167 @@ def _investigations_precondition_violations(rel, row, code, route_word, disposit
                    "`adjudicates` (spine L10 precondition; Andrew-direct 2026-09-03 'Recs approved')."
                    % (rid, route_word, len(open_items), len(latest), code, ", ".join(open_items)))
     return out
+
+
+def _graduated_without_row(latest, remediation_ids):
+    """PURE. `latest` is the {item_id: disposition} dict `_resolve_latest`/`_latest_dispositions`
+    already produce; `remediation_ids` is the set of item ids a REMEDIATION row under the project
+    actually carries (`_remediation_ids_for_project`). Returns the sorted list of item ids whose
+    LATEST disposition is GRADUATED while NO remediation row bears that id -- S74's structural
+    finding stated as a predicate: `_resolve_latest` writes "GRADUATED" onto `latest[rid]` either
+    because a remediation row exists (the automatic path, :414-416) OR because the CVO put
+    `disposition: GRADUATED` directly on the investigation row itself at L9 (annex 4a, :1260) with
+    no remediation row ever minted -- and the two paths are indistinguishable from `latest` alone,
+    which is why this function takes the independent remediation census as a second argument rather
+    than re-deriving it. `latest is None` or `remediation_ids is None` (either census could not run)
+    returns None, never an empty list -- "could not check" and "checked, none missing" must not
+    collapse into the same value, the same fail-closed discipline `_investigations_precondition_
+    violations` already applies to `latest is None` two functions above."""
+    if latest is None or remediation_ids is None:
+        return None
+    return sorted(rid for rid, disp in latest.items() if disp == "GRADUATED" and rid not in remediation_ids)
+
+
+def _graduated_without_row_violations(rel, row, code, route_word, dispositions, remediation_census,
+                                      merging=False, parent_ids=None):
+    """THE SLUG-TIME LIMB (EN-g-37, S74): refuses a NEW route-carrying row -- the slug -- while a
+    GRADUATED item under `code` carries no remediation row. `dispositions` is the 4-tuple from
+    `_latest_dispositions` (injectable, same convention as `_investigations_precondition_
+    violations`); `remediation_census` is the (ids, note) tuple from `_remediation_ids_for_project`
+    (injectable the same way).
+
+    WHY THIS MATTERS STRUCTURALLY, NOT JUST AS A RULE: this gate already grades a NEW remediation
+    row as the slug act (module docstring, "carrier 6 of eight"), so a remediation row for a missed
+    clock can only ever be written INSIDE a round's own slug commit or a LATER round's. A round that
+    closes its slug without one leaves the item invisible to every later round that has no reason to
+    look at it -- 14 of 16 known instances trace to exactly the two rounds where this was not run.
+
+    AT A MERGE: a CARRIED row is not evaluated -- see `_row_was_carried` and the twin limbs' twin
+    blocks; a row MINTED in the merge commit is the merging seat's own routing act and binds."""
+    if merging and _row_was_carried(row, parent_ids):
+        return []
+    rid = row.get("id", "<no id>")
+    latest, unknown, nfiles, note = dispositions
+    if latest is None:
+        return ["%s: the rowlessness precondition (every GRADUATED item under %s carries a "
+                "remediation row) could NOT be evaluated (%s) -- REFUSED, fail-closed" % (rid, code, note)]
+    rem_ids, rnote = remediation_census
+    if rem_ids is None:
+        return ["%s: the rowlessness precondition (every GRADUATED item under %s carries a "
+                "remediation row) could NOT be evaluated -- the remediation census failed (%s) "
+                "-- REFUSED, fail-closed" % (rid, code, rnote)]
+    rowless = _graduated_without_row(latest, rem_ids)
+    if not rowless:
+        return []
+    return ["%s: NEW row (%s) while %d GRADUATED item(s) under %s carry NO remediation row: %s. "
+            "A missed clock cannot be written outside a round once its slug closes -- the row goes "
+            "in BEFORE this commit, in the SAME slug (S74)." % (rid, route_word, len(rowless), code, ", ".join(rowless))]
+
+
+def _round_num(v):
+    """int from a `vN` round token (`remediation.round`, or a row's own `round`), or None when it does
+    not parse -- never raises. PURE, and deliberately permissive about WHAT it is handed: the caller
+    decides whose round field this reads."""
+    m = re.match(r"^v([0-9]+)$", str(v or ""))
+    return int(m.group(1)) if m else None
+
+
+def _stale_open_row(rows_by_id, current_round, n_rounds):
+    """PURE. rows_by_id is the {id: row} dict `_remediation_rows_for_project` produces (the LATEST
+    remediation row per id, by construction -- the row EXISTS, which is exactly why EN-g-37's
+    rowlessness limb can never see it, S75's own class). current_round is the int round number of THIS
+    slug (read from the NEW remediation row's own `round`, e.g. 8 from "v8"); n_rounds is the threshold N
+    -- a JUDGMENT call the caller supplies (STALE_OPEN_ROW_N_ROUNDS), never derived by this function.
+
+    Returns the sorted list of ids whose LATEST remediation row is `remediation.state == "OPEN"`, carries
+    a non-empty `remediation.owner`, AND whose own `remediation.round` sits `n_rounds` or more rounds
+    behind `current_round` -- OPEN, OWNED, UNMOVED, stated as a predicate.
+
+    `rows_by_id is None`, `current_round is None` or `n_rounds is None` (any input could not be produced)
+    returns None, never an empty list -- "could not check" and "checked, none stale" must not collapse
+    into the same value, the same fail-closed discipline its sibling rowlessness core already applies."""
+    if rows_by_id is None or current_round is None or n_rounds is None:
+        return None
+    out = []
+    for rid, row in rows_by_id.items():
+        rem = row.get("remediation") if isinstance(row, dict) else None
+        if not isinstance(rem, dict):
+            continue
+        if rem.get("state") != "OPEN":
+            continue
+        if not str(rem.get("owner", "")).strip():
+            continue
+        row_round = _round_num(rem.get("round"))
+        if row_round is None:
+            continue
+        if current_round - row_round >= n_rounds:
+            out.append(rid)
+    return sorted(out)
+
+
+def _stale_open_row_violations(rel, row, code, route_word, remediation_rows, n_rounds=STALE_OPEN_ROW_N_ROUNDS,
+                               merging=False, parent_ids=None):
+    """THE STALENESS LIMB (EN-k-38, S75): refuses a NEW remediation row -- the slug -- while an EXISTING
+    remediation row under `code` sits OPEN, carries a named owner, and has not moved for `n_rounds` or
+    more rounds measured against THIS slug's own round. `remediation_rows` is the (rows_by_id, note)
+    tuple from `_remediation_rows_for_project` (injectable, same convention as the sibling census EN-g-37
+    uses).
+
+    WHY THIS IS A DIFFERENT QUESTION FROM ITS SIBLING ROWLESSNESS LIMB (EN-g-37), NOT THE SAME ONE
+    TWICE: that limb asks whether a remediation row EXISTS for a GRADUATED item; this one asks whether
+    an EXISTING remediation row has MOVED. A check scoped to rowlessness cannot see a defect in a row
+    that is present (Rule 22's shared-blindness clause) -- W7-S1 survived eight rounds because every
+    instrument that looked asked only the first question, and the row was never missing.
+
+    THE ROUND COMES FROM THE ROW BEING COMMITTED, NOT FROM A CLOCK: a remediation row's own `round`
+    field IS the slug's round (schema-required, `^v[0-9]+$`); reading it off the row under grading keeps
+    this limb PURE and POSITION-INDEPENDENT the same way its sibling is, with no wall-clock dependency.
+
+    AT A MERGE: a CARRIED row is not evaluated -- see `_row_was_carried` and the twin limb's twin block;
+    a row MINTED in the merge commit is the merging seat's own routing act and binds.
+
+    RETURNS (violations, notes). THE STALE-SET BRANCH DISCLOSES; THE TWO EVALUABILITY BRANCHES REFUSE, and
+    the split is not a softening -- it is the rule 1.0.0_SA_CTO ruled after this limb deadlocked round 8's
+    L10 against its sibling: A GATE REFUSES AN ACT ONLY WHEN THAT ACT CAN REMEDY THE GATE'S CONDITION;
+    WHEN IT CANNOT, THE GATE DISCLOSES.
+
+      - census unreadable  -> REFUSE. The channel file the writer is editing is the one that failed to
+                             parse; the committing act CAN fix it. Coupled, so fail-closed stands.
+      - `round` unparseable -> REFUSE. It is a defect in THIS row, which the writer owns outright.
+      - N rows are stale    -> DISCLOSE. The stale rows belong to OTHER items, frequently to OTHER SEATS,
+                             and NO SINGLE SLUG CAN MOVE THEM. Measured 2026-09-18 on the first slug this
+                             pair ever graded: the sibling rowlessness limb DEMANDED 8 new rows and this
+                             limb refused all 8 as new rows, against 91 stale rows accumulated over eight
+                             rounds that predate this limb entirely. There was no ordering of the slug
+                             author's own acts that cleared it, so as a refusal this limb blocked EVERY
+                             slug on the project indefinitely rather than only that one.
+
+    S75's finding is fully served by disclosure: its whole point was that a row which EXISTS but has not
+    MOVED is invisible to every instrument that looks, and a printed stale set at slug time is exactly the
+    look nobody was taking. A REFUSAL FORM needs a reachable remedy first -- a backlog-clearing cell with
+    an owner -- and that is a later round's work, not a condition on this one's slug."""
+    if merging and _row_was_carried(row, parent_ids):
+        return [], []
+    rid = row.get("id", "<no id>")
+    current_round = _round_num(row.get("round"))
+    rows_by_id, rnote = remediation_rows
+    if rows_by_id is None:
+        return ["%s: the staleness precondition (every OPEN, owned remediation row under %s has moved "
+                "within %d round(s)) could NOT be evaluated -- the remediation census failed (%s) -- "
+                "REFUSED, fail-closed" % (rid, code, n_rounds, rnote)], []
+    if current_round is None:
+        return ["%s: NEW row (%s) carries no parseable `round` (round=%r) -- the staleness precondition "
+                "needs the slug's own round to measure a gap against, so this REFUSES rather than skip "
+                "the check" % (rid, route_word, row.get("round"))], []
+    stale = _stale_open_row(rows_by_id, current_round, n_rounds)
+    if not stale:
+        return [], []
+    return [], ["%s: STALENESS DISCLOSED (not a refusal) -- %d OPEN, owned remediation row(s) under %s "
+                "have not moved for %d or more round(s): %s. A row that EXISTS, is OPEN and is OWNED goes "
+                "stale silently and no rowlessness limb will ever see it (S75). THIS SLUG IS NOT REFUSED "
+                "FOR IT: these rows are other items', often other seats', and no single slug can move "
+                "them -- clearing them needs its own cell with an owner."
+                % (rid, len(stale), code, n_rounds, ", ".join(stale))]
 
 
 def _proof_verdict(root, inst, rel, _run=None):
@@ -1522,13 +1758,36 @@ def _monotone_advance(old, new):
     # Measured need: LGIC_CANON-W5-S2 and C-S20 were ruled reassigned (R-19) and the field was immutable, so a ruling
     # had no landing surface; measured hazard the immutability guards: a graded party renaming its way out of a
     # hazard -- which is why the citation is required and the clock may not move in the same write.
+    # R-42 EXTENSION (1.0.0_SA_CTO, 2026-09-18): the move admits `remediation.owner` on the SAME terms, because a
+    # ruling that reassigns a row must be able to land on EVERY field that names an ADDRESSEE -- and `remediation.owner`
+    # names who performs the remedy. Measured need: R-42 placed IRPT_BCKEND's W4-S25/W4-S28 on a live lane after their
+    # disarm owner (a CELL) went terminal; `3.0.0_SA_CVO` moved `disarm.owner`, found this limb refused the
+    # `remediation.owner` half ALONE and BOTH-TOGETHER, and reported the ruling as DESIRED-NOT-APPLIED rather than
+    # attempting a write the gate would refuse. That is the SAME "a ruling had no landing surface" shape the R-19
+    # addendum was written to fix, one field over.
+    # THE ADDRESSEE SET IS THREE FIELDS, not one, and the third was found by `3.0.0_SA_CVO` reading the SCHEMA rather
+    # than the code (97793): `remediation_row.schema.json` describes the TOP-LEVEL `owner` in its own words as "the lane
+    # that builds the remediation" -- which names who must ACT, so R-42's principle makes it an addressee too. There is
+    # no who-filed field on the remediation plane at all; PROVENANCE for a finding lives on the INVESTIGATION row as
+    # `surfaced_by`, which this move never touches. So all three of `owner`, `disarm.owner` and `remediation.owner` are
+    # addressees and all three must be able to follow a ruling.
+    # ⛔ AND A SUBSET MAY MOVE IN ONE WRITE. This seat first admitted exactly ONE field per move and argued that kept
+    # each reassignment inspectable -- that reasoning does not survive the three-field fact: it would force THREE
+    # writes to relocate ONE row, each citing the same ruling, for no added discrimination, since the diff already
+    # shows which fields moved and to what while the citation records why. The constraints that make the move safe are
+    # unchanged and neither is loosened: EXACTLY ONE appended evidence entry citing a ruling by id and vintage, and NO
+    # clock may move in the same write. Only the FIELD SET widened.
     owner_moved = False
-    if isinstance(od, dict) and isinstance(nd, dict) and od.get("owner") != nd.get("owner"):
+    _owner_holders = [(o, n), (od, nd), (o.get("remediation"), n.get("remediation"))]
+    _changed = [(a, b) for a, b in _owner_holders
+                if isinstance(a, dict) and isinstance(b, dict) and a.get("owner") != b.get("owner")]
+    if _changed:
         oe, ne = o.get("evidence"), n.get("evidence")
         if (isinstance(oe, list) and isinstance(ne, list) and len(ne) == len(oe) + 1 and ne[:len(oe)] == oe
                 and RULING_CITATION_RE.search(str(ne[-1]))):
             owner_moved = True
-            nd["owner"] = od.get("owner")
+            for _a, _b in _changed:
+                _b["owner"] = _a.get("owner")
             n["evidence"] = oe
     if owner_moved:
         return (not moved) and o == n
@@ -1638,6 +1897,25 @@ def check_file(root, rel):
             pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
                                                                _latest_dispositions(root, folder_project),
                                                                merging=_mrg, parent_ids=_pids))
+            # EN-g-37 / S74: rowlessness only -- a GRADUATED item under this project with no
+            # remediation row bearing its id. Staleness (a row that EXISTS but has not moved) is a
+            # DIFFERENT question this limb cannot see and does not attempt (EN-k-38).
+            pre.extend(_graduated_without_row_violations(rel, row, folder_project, _route_word,
+                                                         _latest_dispositions(root, folder_project),
+                                                         _remediation_ids_for_project(root, folder_project),
+                                                         merging=_mrg, parent_ids=_pids))
+            # EN-k-38 / S75: staleness only -- an EXISTING remediation row under this project that is
+            # OPEN, owned and has not moved for STALE_OPEN_ROW_N_ROUNDS or more rounds against THIS
+            # slug's own round. REMEDIATION-plane only: `remediation.round` is the field this limb reads,
+            # and only a NEW remediation row carries a round for THIS slug to measure against -- a
+            # DECOMP_INVALIDATING investigation row (the other route_word shape above) has no round field
+            # at all and is not this limb's question.
+            if kind == "REMEDIATION" and folder_kind == "REMEDIATION":
+                _kv, _kn = _stale_open_row_violations(rel, row, folder_project, _route_word,
+                                                      _remediation_rows_for_project(root, folder_project),
+                                                      merging=_mrg, parent_ids=_pids)
+                pre.extend(_kv)
+                notes.extend(_kn)
             v.extend(pre)
             if _mrg:
                 _carried = _row_was_carried(row, _pids)
@@ -2006,6 +2284,7 @@ def _self_test(root):
     ]
     # monotone state advance on an existing remediation row (93695 item 4)
     base_row = {"id": "X-S1", "remedy": "fix the thing", "evidence": ["a@b"], "hazard_standing": "ARMED", "closed": False,
+                "owner": "x",
                 "disarm": {"state": "ARMED", "owner": "x", "at": None}, "remediation": {"state": "OPEN", "owner": "x", "round": "v1"}}
     def adv(**over):
         r = json.loads(json.dumps(base_row))
@@ -2039,6 +2318,33 @@ def _self_test(root):
         ("advance OWNER MUTANT: owner changes and the existing evidence is REWRITTEN under the citation -> refused",
          lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"},
                                                      evidence=["z@z", "SELF_DRIVE_LGIC_RULINGS_20260916.md@4a55888962 R-19"]))),
+        # R-42 EXTENSION: `remediation.owner` on the same terms, and EXACTLY ONE owner field per move.
+        ("advance OWNER R-42: remediation.owner changes AND exactly one CTO-ruling citation is appended -> admitted",
+         lambda: _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42 MUTANT: remediation.owner changes with NO citation -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B"}))),
+        ("advance OWNER R-42: BOTH nested owners move under ONE citation -> ADMITTED (a subset of the addressee set "
+         "relocates in one write; the diff shows which fields moved, the citation says why)",
+         lambda: _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~B"}, remediation={"owner": "2.0.0_SA_COO~B"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42: the TOP-LEVEL owner ('the lane that builds the remediation', an ADDRESSEE per the schema) "
+         "moves under one citation -> ADMITTED",
+         lambda: _monotone_advance(base_row, adv(owner="2.0.0_SA_COO~B",
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42: ALL THREE addressee owners relocate in one write -> ADMITTED",
+         lambda: _monotone_advance(base_row, adv(owner="2.0.0_SA_COO~B", disarm={"owner": "2.0.0_SA_COO~B"},
+                                                 remediation={"owner": "2.0.0_SA_COO~B"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42 MUTANT: all three move with NO citation -> refused",
+         lambda: not _monotone_advance(base_row, adv(owner="2.0.0_SA_COO~B", disarm={"owner": "2.0.0_SA_COO~B"},
+                                                     remediation={"owner": "2.0.0_SA_COO~B"}))),
+        ("advance OWNER R-42 MUTANT: remediation.owner moves AND a clock moves in the same write -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B", "state": "REMEDIATED"},
+                                                     evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42 CONTROL: the DISARM half still admits exactly as before (no regression)",
+         lambda: _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
     ]
     # OWNER-AND-CARRIER LIMBS on NEW rows (R-18(2), R-19(2), A-1) -- graded through _check_row with the committed schemas;
     # each limb has a positive (refuses) and a negative (a legitimate owner or carrier passes this limb) arm.
@@ -2152,6 +2458,119 @@ def _self_test(root):
         ("uniqueness limb: the planes are separate -- remediation rows read remediation documents only; investigation rows read investigations + adjudications",
          lambda: _plane_patterns("REMEDIATION") == REMEDIATION_PATTERNS
          and _plane_patterns("INVESTIGATION") == INVESTIGATION_PATTERNS + ADJUDICATION_PATTERNS),
+    ]
+    # EN-g-37 / S74: THE SLUG-TIME LIMB -- a GRADUATED item under a project with NO remediation row
+    # bearing its id refuses the slug. `_graduated_without_row` is the PURE core; `_graduated_
+    # without_row_violations` is the wrapper `check_file` calls, with the same merge-carried
+    # exemption as the twin L10 precondition limbs. Red and green, plus the two fail-closed arms and
+    # the negative control that this limb never reaches for k-38's staleness question.
+    arms += [
+        ("EN-g-37 rowlessness POSITIVE: a GRADUATED item WITH a remediation row -> not flagged (the automatic path)",
+         lambda: _graduated_without_row({"X_PRJ-S1": "GRADUATED"}, {"X_PRJ-S1"}) == []),
+        ("EN-g-37 rowlessness MUTANT: a GRADUATED item (the CVO's own L9 field) with NO remediation row -> flagged",
+         lambda: _graduated_without_row({"X_PRJ-S1": "GRADUATED"}, set()) == ["X_PRJ-S1"]),
+        ("EN-g-37 rowlessness: a non-GRADUATED item with no remediation row -> NOT flagged (rowlessness grades GRADUATED only, not staleness)",
+         lambda: _graduated_without_row({"X_PRJ-S1": "UNDER_INVESTIGATION"}, set()) == []),
+        ("EN-g-37 rowlessness: fails closed (None, never an empty list) when the dispositions census could not run",
+         lambda: _graduated_without_row(None, {"X_PRJ-S1"}) is None),
+        ("EN-g-37 rowlessness: fails closed (None, never an empty list) when the remediation census could not run",
+         lambda: _graduated_without_row({"X_PRJ-S1": "GRADUATED"}, None) is None),
+        ("EN-g-37 violations POSITIVE: a compliant slug (the GRADUATED item has its remediation row) -> admitted",
+         lambda: _graduated_without_row_violations("r", row, "X_PRJ", "the slug",
+                                                    ({"X_PRJ-S1": "GRADUATED"}, [], 1, ""), ({"X_PRJ-S1"}, "")) == []),
+        ("EN-g-37 violations MUTANT: a rowless GRADUATED item -> the slug is REFUSED, naming the id",
+         lambda: any("X_PRJ-S1" in x and "NO remediation row" in x for x in _graduated_without_row_violations(
+             "r", row, "X_PRJ", "the slug", ({"X_PRJ-S1": "GRADUATED"}, [], 1, ""), (set(), "")))),
+        ("EN-g-37 violations: the dispositions census failing REFUSES fail-closed, names the reason",
+         lambda: any("fail-closed" in x for x in _graduated_without_row_violations(
+             "r", row, "X_PRJ", "the slug", (None, [], 0, "git rc=128"), (set(), "")))),
+        ("EN-g-37 violations: the remediation census failing REFUSES fail-closed, names the reason",
+         lambda: any("fail-closed" in x for x in _graduated_without_row_violations(
+             "r", row, "X_PRJ", "the slug", ({"X_PRJ-S1": "GRADUATED"}, [], 1, ""), (None, "git rc=128")))),
+        ("EN-g-37 violations AT A MERGE: a CARRIED row is not evaluated (history arriving, not a routing act)",
+         lambda: _graduated_without_row_violations("r", {"id": "X_PRJ-S9"}, "X_PRJ", "the slug",
+                                                    ({"X_PRJ-S1": "GRADUATED"}, [], 1, ""), (set(), ""),
+                                                    merging=True, parent_ids={"X_PRJ-S9"}) == []),
+        ("EN-g-37 violations AT A MERGE: a row MINTED in the merge (not in the parents) still binds",
+         lambda: any("X_PRJ-S1" in x for x in _graduated_without_row_violations(
+             "r", {"id": "X_PRJ-S9"}, "X_PRJ", "the slug", ({"X_PRJ-S1": "GRADUATED"}, [], 1, ""), (set(), ""),
+             merging=True, parent_ids={"X_PRJ-OTHER"}))),
+        ("EN-g-37 NEGATIVE CONTROL: k-38's staleness question (an OPEN row that EXISTS) is invisible to this limb by construction",
+         lambda: _graduated_without_row({"X_PRJ-S1": "UNDER_INVESTIGATION"}, {"X_PRJ-S1"}) == []
+         and "_stale_open_row" not in inspect.getsource(_graduated_without_row)
+         and "_stale_open_row" not in inspect.getsource(_graduated_without_row_violations)),
+    ]
+    # EN-k-38 / S75: THE STALENESS LIMB -- an EXISTING remediation row under a project that is OPEN,
+    # carries a named owner, and has not moved for STALE_OPEN_ROW_N_ROUNDS or more rounds is DISCLOSED on
+    # the slug (it REFUSED until 2026-09-18; see the wrapper's docstring for why that deadlocked). `_stale_open_row` is the PURE core; `_stale_open_row_violations` is the wrapper `check_file`
+    # calls, with the same merge-carried exemption as EN-g-37's twin. Red and green, the fail-closed
+    # arms, the non-open/non-owned negative arms, and the DISCRIMINATION arm (`k38-distinct`) proving
+    # this limb catches a row EN-g-37's rowlessness limb ADMITS -- the round bought two questions, not
+    # one asked twice.
+    _stale_rr = lambda **kw: dict({"remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v1"}}, **kw)  # noqa: E731
+    arms += [
+        ("EN-k-38 staleness POSITIVE: an OPEN, owned row within the N-round window -> not flagged",
+         lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr()}, 2, STALE_OPEN_ROW_N_ROUNDS) == []),
+        ("EN-k-38 staleness MUTANT: the SAME row, N or more rounds behind the slug's round -> flagged",
+         lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr()}, 1 + STALE_OPEN_ROW_N_ROUNDS, STALE_OPEN_ROW_N_ROUNDS)
+         == ["X_PRJ-W1-S1"]),
+        ("EN-k-38 staleness: a REMEDIATED row, however old, is NOT flagged (staleness grades OPEN only)",
+         lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr(remediation={"state": "REMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"})},
+                                 8, STALE_OPEN_ROW_N_ROUNDS) == []),
+        ("EN-k-38 staleness: an OPEN row with NO owner is NOT flagged (owned is a required half, not a courtesy)",
+         lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr(remediation={"state": "OPEN", "owner": "  ", "round": "v1"})},
+                                 8, STALE_OPEN_ROW_N_ROUNDS) == []),
+        ("EN-k-38 staleness: fails closed (None, never an empty list) when the remediation census could not run",
+         lambda: _stale_open_row(None, 8, STALE_OPEN_ROW_N_ROUNDS) is None),
+        ("EN-k-38 staleness: fails closed (None) when the slug's own round did not parse",
+         lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr()}, None, STALE_OPEN_ROW_N_ROUNDS) is None),
+        ("EN-k-38 staleness: fails closed (None) when no threshold is supplied",
+         lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr()}, 8, None) is None),
+        ("EN-k-38 POSITIVE: a fresh OPEN row, legitimately in flight -> no violation and nothing disclosed",
+         lambda: _stale_open_row_violations("r", {"id": "X_PRJ-W1-S2", "round": "v2"}, "X_PRJ", "the slug",
+                                            ({"X_PRJ-W1-S1": _stale_rr()}, "")) == ([], [])),
+        ("EN-k-38 MUTANT: a stale OPEN, owned row STILL SURFACES -- disclosed, naming the id and S75",
+         lambda: any("X_PRJ-W1-S1" in n and "S75" in n for n in _stale_open_row_violations(
+             "r", {"id": "X_PRJ-W1-S2", "round": "v%d" % (1 + STALE_OPEN_ROW_N_ROUNDS)}, "X_PRJ", "the slug",
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[1])),
+        ("EN-k-38 THE DEADLOCK ARM: a stale row does NOT refuse the slug -- the violation half is EMPTY. "
+         "Round 8's L10 deadlocked because this branch refused the very rows its sibling limb demanded, "
+         "against 91 stale rows no single slug could move (1.0.0_SA_CTO, 2026-09-18)",
+         lambda: _stale_open_row_violations(
+             "r", {"id": "X_PRJ-W1-S2", "round": "v%d" % (1 + STALE_OPEN_ROW_N_ROUNDS)}, "X_PRJ", "the slug",
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[0] == []),
+        ("EN-k-38 the two EVALUABILITY branches still REFUSE, because the committing act CAN fix both: "
+         "an unreadable census fails closed",
+         lambda: any("fail-closed" in x for x in _stale_open_row_violations(
+             "r", {"id": "X_PRJ-W1-S2", "round": "v8"}, "X_PRJ", "the slug", (None, "git rc=128"))[0])),
+        ("EN-k-38 evaluability: the NEW row's own round does not parse -> REFUSED, not silently skipped",
+         lambda: any("no parseable" in x for x in _stale_open_row_violations(
+             "r", {"id": "X_PRJ-W1-S2", "round": "not-a-round"}, "X_PRJ", "the slug",
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[0])),
+        ("EN-k-38 AT A MERGE: a CARRIED row is not evaluated (history arriving, not a routing act)",
+         lambda: _stale_open_row_violations("r", {"id": "X_PRJ-S9", "round": "v8"}, "X_PRJ", "the slug",
+                                            ({"X_PRJ-W1-S1": _stale_rr()}, ""),
+                                            merging=True, parent_ids={"X_PRJ-S9"}) == ([], [])),
+        ("EN-k-38 AT A MERGE: a row MINTED in the merge (not in the parents) still discloses",
+         lambda: any("X_PRJ-W1-S1" in n for n in _stale_open_row_violations(
+             "r", {"id": "X_PRJ-S9", "round": "v8"}, "X_PRJ", "the slug", ({"X_PRJ-W1-S1": _stale_rr()}, ""),
+             merging=True, parent_ids={"X_PRJ-OTHER"})[1])),
+        ("EN-k-38 NEGATIVE CONTROL: g-37's rowlessness question (a GRADUATED item with no remediation row) "
+         "is invisible to this limb by construction",
+         lambda: _stale_open_row({}, 8, STALE_OPEN_ROW_N_ROUNDS) == []
+         and "_graduated_without_row" not in inspect.getsource(_stale_open_row)
+         and "_graduated_without_row" not in inspect.getsource(_stale_open_row_violations)),
+        ("EN-k-38 DISCRIMINATION (k38-distinct): a GRADUATED item WITH its remediation row -- the row EXISTS -- "
+         "is SILENT to g-37's rowlessness limb, and the SAME row is SURFACED by k-38's staleness limb for "
+         "being OPEN, owned and unmoved: the round bought two questions, not one asked twice. The arm's "
+         "second half now reads k-38's NOTES rather than its violations -- the DISCRIMINATION is unchanged "
+         "and only the INSTRUMENT k-38 answers with moved, from refusal to disclosure (1.0.0_SA_CTO, "
+         "2026-09-18: a gate refuses an act only when that act can remedy its condition)",
+         lambda: _graduated_without_row_violations("r", row, "X_PRJ", "the slug",
+                                                    ({"X_PRJ-W1-S1": "GRADUATED"}, [], 1, ""), ({"X_PRJ-W1-S1"}, "")) == []
+         and any("X_PRJ-W1-S1" in n and "S75" in n for n in _stale_open_row_violations(
+             "r", {"id": "X_PRJ-W1-S2", "round": "v%d" % (1 + STALE_OPEN_ROW_N_ROUNDS)}, "X_PRJ", "the slug",
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[1])),
     ]
     # THE ALLOCATOR COORDINATE (RULING 2 @9ef9a40aae): the grammar and the discipline, red and green.
     WK = "0.9.0_WK_X_PRJ~2"

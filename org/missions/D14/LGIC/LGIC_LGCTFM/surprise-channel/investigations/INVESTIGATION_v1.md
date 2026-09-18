@@ -11,6 +11,8 @@ PRD, so it is a row here, not a message.
 **Denominator at this write: 1 row** -- `LGIC_LGCTFM-S1`, 2.0.0_SA_COO~G.
 
 ```json
+
+
 [
   {
     "id": "LGIC_LGCTFM-S1",
@@ -36,6 +38,795 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "PRD v1.1 T4: the fork fixture is IV.5's FOUR positive forks plus the SmartX negative.",
     "world_is": "The brief's IV.5 enumerates FIVE positive members and states that each is a positive control. Four would omit one.",
     "notes": "ARMED, disarm_owner 2.0.0_SA_COO~G -- this seat's, because the artifact that carries the defect is this seat's own decomposition and the fixed input that has not been written yet. NOT ADJUDICABLE and not routed: nothing in the PRD's RATIFIED text is touched, the cell-candidate table is explicitly the COO lane's to split, merge and re-sequence, and no other seat is blocked. THE ACT: FORK_CONTROLS.json is built with FIVE positives and the one negative, its denominator printed and this row cited, and the decomposition's section 3a is amended to five in the same commit. DISARM WHEN both land. * If 1.0.0_SA_CTO reads IV.5's fifth member -- the bd/49f/49financial spelling set -- as a NAMING tension rather than a fork, the count returns to four and this row disarms the other way; on the bytes it satisfies IV.5's own rule (several current spellings whose desired canonical form is one string) and IV.5 makes no exception for it, so five is what the carrier says. I am recording that reading rather than resolving it silently, because the fifth member is the only one of the five that is not a pair of PATHS."
+  },
+  {
+    "id": "LGIC_LGCTFM-S2",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-17T14:15Z",
+    "one_line": "DECOMPOSITION v1's CONSTRAINT 1 COUNTS THREE WRITERS OF lib/opal_lgctfm.py AND THE ROUND-1 CUT HAS FOUR: T6's plan is engine code (the PRD's PATHS row names lib/opal_lgctfm.py for T3-T9), so LT-p-1 on slot ~2 writes the engine after slot ~1's LT-e-1/e-2/e-3. Found at the L6 cut, before any order existed; v1.1 s.10 states it and the edge LT-e-3 -> LT-p-1 already sequences it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LGIC_LGCTFM_DECOMP.md s.5 CONSTRAINT 1 @686d196fa1: 'LT-e-1, LT-e-2 and LT-e-3 all write lib/opal_lgctfm.py ... this is the ONE file more than one cell writes'; s.3's table gives LT-p-1's write surface as 'the run directory' only.",
+        "LGIC_LGCTFM_PRD.md v1.4 PATHS: 'new | lib/opal_lgctfm.py, lib/lgctfm_render.py, lib/tests/test_opal_lgctfm.py | T3-T9'; T6 (the plan) is inside that range and CONTRACTS names plan.json and plan.md as produced by the run, i.e. by engine code.",
+        "LGIC_LGCTFM_DECOMP.md s.5 edges: 'LT-e-3 -> LT-p-1' -- so the fourth writer starts only after the third drains; no two open orders edit the engine at once."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Decomposition v1 s.5 CONSTRAINT 1: three writers of lib/opal_lgctfm.py, one queue on slot ~1.",
+    "world_is": "Four writers across two slots, sequenced by the existing edge set; LT-p-1's order grants lib/opal_lgctfm.py and says it starts after LT-e-3 drains. v1.1 s.10 records it.",
+    "notes": "INERT: the count, not a cell or an edge, was wrong, and it was caught at the cut before any worker read it. The same seat wrote v1; a writer census taken from the cells' 'writes' column inherited that column's omission rather than re-reading the PRD's PATHS table."
+  },
+  {
+    "id": "LGIC_LGCTFM-W1-S1",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+    "surfaced_at": "2026-09-17T14:30Z",
+    "one_line": "LT-e-2's OWN GRADED CRITERION E2R1-AC1 (check_lt_r1.py e2-reproduce) NOW FAILS ON A RE-RUN AGAINST THIS ROUND'S WALK OUTPUT, THOUGH NOTHING IN LT-e-2's CELL CHANGED. This round (LT-e-3) plants a third resource whose node_type fits no type in NAMING_SCHEMA.json's 33-type vocabulary at all (COGNITO_USER_POOL, WORKER FACE's own requirement), and lib/opal_lgctfm.py now returns desired.verdict = NOT_COVERED for it per 11_LGCTFM_CONTRACT_SCHEMA_RECORD.md s.3.1's six-value verdict enum. check_lt_r1.py's core_reproduce (built for e2-reproduce, LT-e-2's own arm) treats ANY raising builder call as correct ONLY when desired.verdict == 'RAISE' -- it has no branch for NOT_COVERED, a verdict this round's own WORKER FACE mints. Re-running e2-reproduce now: 'rows with a builder call the checker can make: 278; reproduced: 277' and 'VERDICT: FAIL-E2-DESIRED-EQUALS-BUILDER'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py core_reproduce() (:585-610): 'good = cell_value(d.get(\"verdict\")) == \"RAISE\" and bool(...)' on any raised exception -- no NOT_COVERED branch.",
+        "infra/logic/11_LGCTFM_CONTRACT_SCHEMA_RECORD.md s.3.1: 'desired.verdict | NAMING_SCHEMA.json grade.verdicts CONFORMANT | ALIAS | OUT-OF-PATTERN + RAISE (grade.unplaceable) + NOT_GRADED (grade.not_graded) + NOT_COVERED (not_covered) | adopted whole; no fourth verdict (brief IV.6)' -- NOT_COVERED is a SIXTH value, distinct from RAISE, and this order's own WORKER FACE requires it: 'its row carries desired.verdict = NOT_COVERED and no tension names it.'",
+        "Measured this run: `python check_lt_r1.py e2-reproduce` against the regenerated org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/contract.json prints 'R-0278 grade([...COGNITO_USER_POOL]) -> RAISE G1.1: ... ; contract form=None verdict='NOT_COVERED'' and 'VERDICT: FAIL-E2-DESIRED-EQUALS-BUILDER', where the prior round's own re-run at commit 9b628270a1 recorded '277 of 277 builder calls reproduced'.",
+        "This is not this order's own criterion (E2R1-AC1 belongs to the DRAINED, MERGED order LGIC_LGCTFM.TO-LT-e-2-r1, whose <status> already reads complete); this row is filed because a later re-run of that criterion -- by an issuer, the CVO at L9, or a future round's regression sweep -- would read a FAIL that is not a defect in LT-e-2's own code, but a fixed-input checker's assumption (any raise = RAISE) this round's own spec supersedes for one verdict."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "check_lt_r1.py's core_reproduce (LT-e-2's E2R1-AC1 arm) asserts a raising grade() call is correctly reported only when desired.verdict == RAISE.",
+    "world_is": "11_LGCTFM_CONTRACT_SCHEMA_RECORD.md s.3.1 and this order's WORKER FACE both require a G1.1 raise (no type fits) to read desired.verdict = NOT_COVERED, not RAISE; e2-reproduce has no branch for it and reads FAIL when re-run against a walk contract carrying the LT-e-3 untypeable plant.",
+    "notes": "ARMED because e2-reproduce is a mechanical, re-runnable checker and nothing marks it superseded; disarm_owner is 2.0.0_SA_COO~G because check_lt_r1.py under fixed_inputs/r1/ is this seat's own artifact and this worker's BOUNDS forbid editing a fixed input even to fix its own assumption. THE FIX, for the disarm owner: add a NOT_COVERED branch to core_reproduce (good = verdict in (RAISE, NOT_COVERED) with the appropriate paired field check), or accept the one-row miss as a known, superseded-by-spec exception the issuer records rather than re-grades. Not routed as BLOCKING: it blocks no criterion of THIS order (E3R1-AC1..AC6 all read PASS against the same regenerated contract), and LT-e-2's order is already complete and merged."
+  },
+  {
+    "id": "LGIC_LGCTFM-W2-S1",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "surfaced_at": "2026-09-17T20:40Z",
+    "one_line": "DEC-9's MARK COMMIT AND THE ENGINE'S OWN RUN ARTIFACTS ARE NOT COMMITTABLE AT DEC-12's RUN HOME: .tools/naming-gate.py (ENFORCE mode) REFUSES contract.json, plan.json, PLANT.json, PLANT_UNTYPEABLE.json and MARK.json wholesale (1719 REFUSE + 49 RAISE lines on the first real run) because workflows/legacy_transform/ is covered by none of the gate's three exemptions, and the walk's own MEASURED current-state values are exactly the legacy tokens (opal-data-bd, 49financial, 49f, blackdiamond/49f/session-trigger-mode.json, ...) the gate's carrier rule refuses as a NEW hand-kept literal. Never exercised before this cell: every prior graded round wrote to org/missions/.../deliverables/, which IS exempt.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/naming-gate.py:83 RECORD_TREE_PREFIXES = (\"org/\", \"docs/\"); :77 REGISTRY_PREFIX = \"infra/logic/registry/\"; :904-905 'if path.startswith(REGISTRY_PREFIX): return rows  # the registry files: every token is permitted there'; :906 '/tests/ fixtures are not graded'. workflows/legacy_transform/blackdiamond-49financial/ (DEC-12's run home, LGIC_LGCTFM_PRD.md v1.4) matches none of the three, so every new file there is fully graded.",
+        "MEASURED this run: `bash .tools/safe-commit.sh --author \"0.9.0_WK_LGIC_LGCTFM~2 <...>\" -F .scratch/commit_msg_1.txt -- infra/logic/registry/remediations.json workflows/legacy_transform/blackdiamond-49financial/` against the run directory written by `python lib/opal_lgctfm.py run --subject 49financial --seed opal-data-bd --seed opal-data-49financial --run-home-subject blackdiamond-49financial --root workflows/legacy_transform` printed 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' with 1719 'NAMING REFUSE' + 49 'NAMING RAISE' lines against exactly 5 of the run's files: contract.json, plan.json, PLANT.json, PLANT_UNTYPEABLE.json, MARK.json (the sixth JSON file, VINTAGE.json, and the four .md files carried no graded literal and committed clean on the second attempt).",
+        "infra/logic/registry/remediations.json itself -- an EXISTING file under REGISTRY_PREFIX -- committed a new surface ({\"kind\": \"s3-prefix\", \"bucket\": \"opal-data-bd\", \"prefix\": \"gold/\"}) with ZERO naming-gate lines: the registry exemption (naming-gate.py:904-905) is real and working; it is workflows/ that carries no equivalent.",
+        "lib/opal_lgctfm.py's own docstring (module header, LT-e-1) states the walk's purpose as recording current-state resources verbatim, including ones no instrument can place ('planted deliberately and returned as an UNMEASURED row, never silently dropped'); the engine is not mine to edit (WORKER FACE: 'You edit no code: an engine defect is a BLOCKING row') and neither is .tools/naming-gate.py (outside this order's <paths> grant)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_LGCTFM_PRD.md DEC-9: 'the mark act appends to the three existing registries only ... in the run's own commit, through safe-commit and the naming gate.' DEC-12: the run home is workflows/legacy_transform/.",
+    "world_is": ".tools/naming-gate.py's exemption set (RECORD_TREE_PREFIXES, REGISTRY_PREFIX, /tests/) does not reach workflows/legacy_transform/, so the run's own contract.json/plan.json/PLANT.json/PLANT_UNTYPEABLE.json and any MARK.json naming a legacy bucket-alias or s3-prefix are refused by the same gate DEC-9 says the mark commit runs through -- the two ratified decisions (DEC-9/DEC-12 here, LGIC_ENFORCE's gate exemptions) were never checked against each other outside org/, and this cell is the first to leave that exemption.",
+    "notes": "BLOCKING because it stops the run's own core deliverable (contract.json) and the DEC-9 mark commit from ever landing on git, not just one criterion; ARMED because every future LGCTFM run at this same home refires it identically. disarm_owner 1.0.0_SA_CTO: this is a naming-gate.py exemption-set change (LGIC_ENFORCE's file, this worker's <paths> does not include it) or a DEC-12 run-home change (a PRD decision only the CTO amends) -- either repair is an L4 act. THIS WORKER'S ACT, inside its own grant: commit everything the gate accepts (the run's .md files, VINTAGE.json, and the registry mark) and leave the five refused files PRESENT, UNTRACKED, on disk in the run directory so the disk-reading criteria can still grade them; recorded, not worked around."
+  },
+  {
+    "id": "LGIC_LGCTFM-W2-S2",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "surfaced_at": "2026-09-17T21:05Z",
+    "one_line": "EVERY WALK EMITS A ROW WHOSE node_type (COGNITO_USER_POOL) IS OUTSIDE org/standards/LGCTFM_CONTRACT.schema.json's 33-value node_type ENUM, SO NO REAL CONTRACT lib/opal_lgctfm.py PRODUCES CAN EVER VALIDATE AGAINST ITS OWN SCHEMA. The row is LT-e-3's own unconditional plant (cmd_walk() always injects name 'opal-blackdiamond-49financial-legacy-user-pool', node_type COGNITO_USER_POOL, PLANT_UNTYPEABLE.json), built to prove the walk returns an untypeable resource NOT_COVERED rather than dropping it silently -- but the schema's resource_or_plane_row.node_type enum (record s.1.1, 'the 33 node types BY SUBTRACTION from NAMING_SCHEMA.json') has no 34th 'untypeable' value, so the plant row fails 'row' oneOf, and this run's X1R1-AC1 (`check_lt_r1.py x1-run-dir`) reads FAIL on schema errors: 1 for exactly this reason.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED this run: `python check_lt_r1.py x1-run-dir` against workflows/legacy_transform/blackdiamond-49financial/20260917T202556Z-bb29248/contract.json prints 'schema errors on its contract: 1' and 'VERDICT: FAIL-X1-RUN-DIRECTORY-COMPLETE'; the single jsonschema error's path is ['rows', 184] (row_id R-0185, node_type 'COGNITO_USER_POOL', message ends '... is not valid under any of the given schemas', schema_path ['properties','rows','items','oneOf']).",
+        "org/standards/LGCTFM_CONTRACT.schema.json:70-78 $defs.node_type.enum lists 33 values and does not include COGNITO_USER_POOL; $defs.resource_or_plane_row (:122-149) requires node_type to match that ref, so no oneOf branch admits this row.",
+        "workflows/legacy_transform/blackdiamond-49financial/20260917T202556Z-bb29248/PLANT_UNTYPEABLE.json and org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/PLANT_UNTYPEABLE.json are byte-identical ({\"name\": \"opal-blackdiamond-49financial-legacy-user-pool\"}) across two different subjects/seed sets and two different engine writers (LT-e-3 planted it, LT-p-1's cmd_walk() self-invocation of walk still emits it) -- the plant is unconditional, not seed-dependent, so this fires on every future real run identically.",
+        "row LGIC_LGCTFM-W1-S1 (this same channel) already names a RELATED but DISTINCT defect on the same plant -- check_lt_r1.py's own core_reproduce (LT-e-2's arm) has no NOT_COVERED branch. That row is about a FIXED-INPUT CHECKER's assumption; this row is about the CONTRACT SCHEMA's own enum never having grown to admit the type LT-e-3 chose to plant, which is a defect in the shipped standard, not in a checker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/standards/LGCTFM_CONTRACT.schema.json validates every contract lib/opal_lgctfm.py walk produces (X1R1-AC1's own bar; DEC-11's receiving-check gains artifact type lgctfm-contract on the same premise).",
+    "world_is": "The schema's node_type enum (33 values, record s.1.1) does not include COGNITO_USER_POOL, the node_type of LT-e-3's own unconditional untypeable plant, so every real contract this engine writes fails schema validation on exactly that one row.",
+    "notes": "BLOCKING because it fails this order's own X1R1-AC1 and will fail it on every future real run identically; ARMED for the same reason. disarm_owner 2.0.0_SA_COO~G as the LT-e-3/LT-p-1 issuer and the seat that authored 11_LGCTFM_CONTRACT_SCHEMA_RECORD.md's node_type subtraction -- the repair is either a 34th enum value naming the untypeable case (schema, org/standards/, L4-adjacent) or excluding NOT_COVERED-verdict rows from the row oneOf's requirement that node_type be typed. THIS WORKER'S ACT: none available inside <paths> (the schema and the engine are both outside this order's write grant, and 'you edit no code' forbids the engine fix regardless); X1R1-AC1 is graded FAIL on the measured output, verbatim."
+  },
+  {
+    "id": "LGIC_LGCTFM-S3",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T00:20Z",
+    "one_line": "LT-x-1's RUN DIRECTORY IS A COMPOSITE OF TWO DIFFERENT RUNS AND NOTHING INSIDE IT SAYS SO. contract.json, plan.json, PLANT.json and PLANT_UNTYPEABLE.json under workflows/legacy_transform/blackdiamond-49financial/20260917T202556Z-bb29248/ were ADDED by a LATER CELL's commit (LT-e-4, a5fca30175) and are byte-identical to that amendment's OWN default-off run 20260917T233115Z-a89fd61, while the directory's VINTAGE.json still declares run_id 20260917T202556Z-bb29248 at repo_head bb292483994d4e2c379d671e6512313864c0363c. So X1R1-AC1 -- the criterion that reads 'the run directory is complete and its contract validates' -- now grades an artifact LT-x-1's own run did not produce, and it reads PASS. MARK.json, the fifth file the naming gate refused, was never committed at all and the worktree that held it is gone, so X1R1-AC2's evidence no longer exists anywhere and re-running x1-marks at HEAD reads FAIL-X1-MARK-ROWS-IN-THE-THREE-REGISTRIES.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ADD commits, measured at caf09838c9 with `git log --oneline --diff-filter=A -- <path>` (one line each, no ambiguity): contract.json, plan.json, PLANT.json and PLANT_UNTYPEABLE.json all -> a5fca30175 'amend(LT-e-4-r1, 0.9.0_WK_LGIC_LGCTFM~2): the untypeable plant becomes OPT-IN'; VINTAGE.json -> 53d59778a1 (LT-x-1's own run+mark commit); FWD10.json -> ef6b9f3b9d (LT-x-1's proof-prep). Four of the six run files in LT-x-1's directory were written by a different cell.",
+        "Byte equality, `git hash-object` at caf09838c9: contract.json is 84d4d1e62b in BOTH 20260917T202556Z-bb29248 and 20260917T233115Z-a89fd61, and 95b04ca692 in the flag-on run 20260917T233143Z-a89fd61; plan.json is f26d46db87 in all three; PLANT.json 2b347189db and PLANT_UNTYPEABLE.json d62982a9bd in the first two. The copy is exact, not merely similar.",
+        "VINTAGE.json of the two directories, read side by side: identical graph_built '2026-09-17 18:16:22 UTC' and identical registry_hash 'scopes.json sha256:b2a54608f8ebbade', but DIFFERENT repo_head (bb292483994d... vs a89fd61a0baa...) and different run_id. The pairing of one run's VINTAGE with another run's contract is what makes the directory incoherent.",
+        "MARK.json absence, two instruments: `git ls-tree -r --name-only HEAD` has no MARK.json anywhere under workflows/ (the only MARK.json at HEAD is an unrelated D11 card under org/tier2_senior/0.8.0_AE_CloudComp/); and `ls .worktrees/*/workflows/legacy_transform/blackdiamond-49financial/*/MARK.json` -> 'No such file or directory', with wk-lgic-lgctfm-1-2b (the worker's own worktree, where AC2 measured 4 of 4 entries) absent from `git worktree list`.",
+        "The substantive act DID land and is citable at HEAD: 53d59778a1 is an ancestor of caf09838c9 (merge-base --is-ancestor, positive result) and carries the DEC-9 mark into infra/logic/registry/remediations.json -- the s3-prefix surface {\"bucket\": \"opal-data-bd\", \"prefix\": \"gold/\"} under ADVI_FIRMBKTS. What is lost is the REPRODUCIBILITY of the criterion, not the mark."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "X1R1-AC1 grades the run directory LT-x-1's OWN run wrote; DEC-12's run home holds one run per directory, and LT-h-1's run_home.py refuses to overwrite an existing run directory precisely so that a directory's contents and its VINTAGE.json describe the same run.",
+    "world_is": "Four of the six files in LT-x-1's run directory were produced by a later cell's run at a different repo_head and placed into LT-x-1's directory by hand (the engine's own refusal cannot be what put them there), and a fifth, MARK.json, was never committed and no longer exists on this device.",
+    "notes": "ARMED and BLOCKING because it blocks LT-x-1's `complete` flip, which is the ISSUER's act, not a worker's -- this row is the issuer refusing its own flip. THE MITIGATION IS REAL AND IS NOT THE FIX: both runs read the same graph vintage and the same registry hash, so under LT-d-1's determinism the copied bytes are very probably what LT-x-1's command WOULD emit under the amended engine. But they are not what its run DID emit -- its run carried the untypeable plant ON, which is exactly why its contract failed validation and LGIC_LGCTFM-W2-S2 was filed. Grading a PASS on a substituted artifact launders provenance into the record, and the substitution is invisible at the criterion: x1_run_dir reads the directory, not who wrote it. THE DISARM, chosen by the issuer and not proposed to anyone: re-hand LT-x-1 inside round 1 to re-run the engine at the amended default, minting a FRESH run directory with its own VINTAGE.json, writing and COMMITTING MARK.json (R-35 now exempts a minted run directory, so the commit that refused 1719 times will land), and re-grading X1R1-AC1 through AC5 against that one coherent run. The 20:25Z directory stays exactly as it is, as the historical record of the first run and of the defect W2-S2 describes."
+  },
+  {
+    "id": "LGIC_LGCTFM-S4",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T00:22Z",
+    "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-W2-S2 (the untypeable row no schema could admit): the defect is repaired AT ITS ROOT and the fix is exercised, not merely written. 1.0.0_SA_CTO ruled R-36 -- the untypeable plant becomes OPT-IN behind --plant-untypeable, OFF by default, its carry counted in PLANT_UNTYPEABLE.json and PRINTED EVEN AT ZERO -- and the schema's 33-value node_type enum was NOT widened to admit COGNITO_USER_POOL. Cell LT-e-4 built it and drained at caf09838c9 with 8 of 8 criteria PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LT-e-4's eight mechanical criteria, re-run by the ISSUER at the branch tip before the merge (a different checkout from the worker's): a4-plant-off, a4-flag-on, a4-count-typed, a4-schema-valid, a4-e3-exercised, x1-run-dir, e1-stdlib and d1-pytest, all PASS. Merged by .tools/safe-merge.sh as caf09838c9.",
+        "The default-off run 20260917T233115Z-a89fd61 carries 184 of 184 contract rows with no ungraded node_type and PLANT_UNTYPEABLE.json at 39 bytes (the printed zero); the flag-on run 20260917T233143Z-a89fd61 carries the untypeable resource as NOT_COVERED with PLANT_UNTYPEABLE.json at 2880 bytes. Both validate against org/standards/LGCTFM_CONTRACT.schema.json.",
+        "The criterion the defect blocked now passes on a re-run at caf09838c9 in issuer worktree wk-lgic-lgctfm-1-5: `check_lt_r1.py x1-run-dir` -> 'missing of the 6 run files: []; schema errors on its contract: 0; VERDICT: PASS-X1-RUN-DIRECTORY-COMPLETE', against the worker's recorded 'schema errors on its contract: 1 ... COGNITO_USER_POOL ... is not valid under any of the given schemas'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W2-S2 asserts that no contract lib/opal_lgctfm.py produces can validate against its own schema, because every walk unconditionally plants a row whose node_type is outside the 33-value enum.",
+    "world_is": "The plant is no longer unconditional: it is opt-in, off by default, and its carry is counted outside the contract rows. A default walk now produces a contract that validates, measured on two real runs.",
+    "notes": "This row is EVIDENCE, not a disposition -- disarming is not disposing, and prose disarms nothing. W2-S2's own disarm_owner is 2.0.0_SA_COO~G and the act that disarms it is LT-e-4's drain, which is cited above by hash. The disposition of W2-S2 belongs to 3.0.0_SA_CVO at L9, which is why this row carries no `adjudicates`. NOT CLAIMED HERE: that the 20:25Z run directory is coherent -- it is not, and that is LGIC_LGCTFM-S3, a separate item with a separate remedy."
+  },
+  {
+    "id": "LGIC_LGCTFM-S5",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T00:24Z",
+    "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-W1-S1 (LT-e-2's own graded criterion failing on a re-run it never changed): the issuer's fixed input was the defective party, and it was repaired rather than the criterion waived. check_lt_r1.py's core_reproduce gained a NOT_COVERED branch @56dbaee026 -- a NOT_COVERED verdict is now correct when the engine raised 'is not a node type' and emitted no form -- plus two new arms, e2-not-covered and e2-not-covered-wrong-raise, so the branch has a positive AND a negative control.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Re-run at caf09838c9 in issuer worktree wk-lgic-lgctfm-1-5, a different checkout from both the worker's and the one the failure was measured on: `check_lt_r1.py e2-reproduce` -> 'rows with a builder call the checker can make: 278; reproduced: 278; VERDICT: PASS-E2-DESIRED-EQUALS-BUILDER'. The denominator is printed and is the whole population, not a sample.",
+        "The repair is in the ISSUER's fixed input (fixed_inputs/r1/check_lt_r1.py), which is where the row said the defect was and where the worker's BOUNDS forbade it from going -- the worker was right to file a row rather than edit it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W1-S1 asserts that core_reproduce treats a raising grade() call as correctly reported only when desired.verdict == RAISE, so a NOT_COVERED verdict -- which the record and the WORKER FACE both require for an untypeable resource -- reads FAIL.",
+    "world_is": "core_reproduce now accepts NOT_COVERED on the paired-field test the record specifies, and the arm passes on 278 of 278 rows. The untypeable case is additionally exercised by its own two arms.",
+    "notes": "EVIDENCE, not a disposition; no `adjudicates`, and the disposition is 3.0.0_SA_CVO's at L9. WORTH SAYING PLAINLY BECAUSE IT IS THE SECOND TIME THIS ROUND: both W1-S29 (on LGIC_ENFORCE) and this row were defects in THIS SEAT's own fixed input, found by a worker running it, and in both cases the worker's report was the only instrument that could have found them -- a checker's author re-running its own checker is repetition. The cost of the fixed-input pattern is exactly this: the issuer's instrument is graded by nobody until a cell runs it for real."
+  },
+  {
+    "id": "LGIC_LGCTFM-S6",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T00:52Z",
+    "one_line": "ANDREW_CARD.md's RECOMMENDATION -- the one line a decision-maker actually weighs -- SAID 'the two rows touching a live, client-facing surface' AND THERE IS EXACTLY ONE. Measured over all 179 tensions of the contract the card ranks: client_facing == true is 1 (T-0001, the opal-data-bd bucket), live == true is 1 (T-0001), both together 1, irreversible == true is 0. The card's TABLE is correct and its own analysis sentence is correct ('Rank 1 is the only irreversible-or-client-facing-or-live row in the top ten'), so the RANKING and the 179-row order are not impeached -- what was wrong is the summary written FOR the reader who decides without checking, which is exactly backwards from how a card is used.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Found by 1.0.0_SA_CTO (msg 97745) on ANDREW_CARD.md @554d1de05b, with its own denominator table: 179 tensions, client_facing true 1, live true 1, both 1, irreversible 0.",
+        "RE-DERIVED HERE ON A DIFFERENT ACCESSOR before acting, because the finding's own message records that the CTO's FIRST accessor read the factor values at the top level of each tension and returned 0 client_facing rows across 179 -- a confident zero that would have contradicted the card entirely. The values live under factors.<name>.value. This seat printed tensions[0].factors' real key set (client_facing, irreversible, live, rules_colliding) and then a VALUE HISTOGRAM over the whole population: {True: 1, False: 177, None: 1}. A histogram with three distinct values proves the accessor is reading a real cell rather than returning a constant, which a bare count of 1 does not.",
+        "THE CORRECTION COULD NOT LAND IN THE CARD ITSELF AND THAT IS THE GATE WORKING: this seat edited the line, and .tools/owned-paths-validate.py clause 4 (ADHC_OWNPTH.004, lane TREE_DELIVERABLES) REFUSED the commit -- 'deliverables/0.9.0_WK_LGIC_LGCTFM~3/ANDREW_CARD.md ... agent=2.0.0_SA_COO~G not in permitted_agents'. A worker's deliverable folder admits exactly that serial. The edit was reverted (git checkout --) and the correction lands instead as this seat's own record at org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md, carried to Andrew BESIDE the card in the same act -- which is what 1.0.0_SA_CTO asked for and is better than an in-place edit of a document already in a reader's hands."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "V1R1-AC4 (x1 arm v1-card) asserts the card carries the ranking rule verbatim and its top ten tension ids, and it reads PASS. Nothing in round 1's criteria grades the card's PROSE against the population it characterises.",
+    "world_is": "The card passed every mechanical arm with a recommendation line that overstated the top-priority population by one. The gap is structural, not a worker's slip: v1-card grades presence (rule verbatim, 10 of 10 ids), never the arithmetic of a sentence about the factors.",
+    "notes": "INERT: the ranking is unaffected, the correction is landed, and Andrew has the corrected line beside the card in the same act. FOURTH INSTANCE OF ONE FAMILY IN ONE EVENING, which is what makes it worth a row rather than a fix: this seat's own LGIC_LGCTFM-S3 (a PASS on bytes the cell did not produce), the CTO's S25R4-AC5 (an id that exists in no order and survives a count check), LGIC_ENFORCE S61 (a quote whose one clean grep hit is the wrong file), LGIC_ENFORCE S62 (a right total with a wrong split) and this one (a right table with a wrong summary). In every case the EVIDENCE is sound and the SENTENCE ABOVE IT is not, and in every case a second seat caught it. THE CHEAP CONTROL, for any future card: state the claim as a count with its denominator ('1 of 179') rather than as a word ('the two rows'), because a number invites the check a word does not. NOT CLAIMED: that v1-card should have caught this -- grading a prose summary against the population it describes is a new criterion, not a repair of that arm, and it belongs to whoever cuts the next card cell."
+  },
+  {
+    "id": "LGIC_LGCTFM-W2-S3",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "surfaced_at": "2026-09-18T01:21Z",
+    "one_line": "The re-hand's fresh walk (run 20260918T011619Z-8db9eb1) carries 13 current-name rows under `opal-data-bd/silver/`, and `infra/logic/06_CONFORMANCE_LEDGER.md:72` already carries a DECIDED disposition for that whole prefix -- MIGRATE -> `opal-data-assets/blackdiamond/49financial/silver/` (R4), LIVE -- exactly the same shape (a DECIDED MIGRATE the registry did not yet carry) as the `gold/` prefix the first hand marked in 53d59778a1. This worker APPENDED `{kind: s3-prefix, bucket: opal-data-bd, prefix: silver/}` to `infra/logic/registry/remediations.json`'s ADVI_FIRMBKTS surfaces this hand, beside disclosing the already-present `gold/` entry, both recorded in this run's MARK.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/logic/06_CONFORMANCE_LEDGER.md:72 @HEAD (read via comp-read): '| `opal-data-bd/silver/` | 7,989 (7 json) | 09-12 | **R4** | **MIGRATE -> `opal-data-assets/blackdiamond/49financial/silver/`** (R4) -- LIVE | DECIDED |'.",
+        "workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json: 13 rows whose current.name.value starts with 'silver/' (python count over the 184-row contract).",
+        "infra/logic/registry/remediations.json ADVI_FIRMBKTS.surfaces, s3-prefix kind, at this commit: [{bucket: opal-data-portal-v2, prefix: platinum/advi/49financial/}, {bucket: opal-data-bd, prefix: gold/}] -- no silver/ entry."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The WORKER FACE's measured-at-base note names exactly ONE ADVI_FIRMBKTS s3-prefix row already landed (gold/) and instructs: record and disclose an already-present entry, never append twice. Separately, X1R1-AC5 (x1-r16) requires a commit ON THIS BRANCH after merge-base that touches one of the three registries and carries a TARGETS: line (R-16) -- and the gold/ entry's own mark commit (53d59778a1) already sits BEFORE this branch's merge-base with CLOUD, so it does not count toward that criterion; re-committing gold/ unchanged is not a real git diff.",
+    "world_is": "A second DECIDED-but-unmarked prefix on the identical bucket exists on the live ledger (06_CONFORMANCE_LEDGER.md:72) and this run's own walk surfaces 13 live rows under it -- the same evidentiary shape DEC-9 already accepted for gold/ (same project ADVI_FIRMBKTS, same kind s3-prefix, same bucket, a DECIDED-not-yet-marked disposition this walk measures directly). This worker APPENDED it to infra/logic/registry/remediations.json's ADVI_FIRMBKTS surfaces (never a fourth registry file -- DEC-9's Rule-24 bound is about the FILE COUNT staying at three, not the row count within one) and records both the disclosed gold/ entry and the newly-appended silver/ entry in this run's MARK.json, because (a) it clears the same bar the first hand's mark did and (b) it is what makes X1R1-AC5 satisfiable on this branch without a no-op commit.",
+    "notes": "This is a JUDGMENT CALL beyond a literal reading of 'record and disclose, never append twice' (which was written for the ONE entry the measured note named) -- disclosed here rather than acted on silently. If the issuer/CVO judges the silver/ append out of this cell's scope, the remedy is a revert of that one entry plus a different route to X1R1-AC5 (e.g. a scopes.json touch), not a re-litigation of the gold/ disclosure. Kept working per CLAUDE.md section 2."
+  },
+  {
+    "id": "LGIC_LGCTFM-S7",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T02:12Z",
+    "one_line": "X1R1-AC3 WAS GRADED AGAINST THE WRONG RUN'S FWD10.json AND THE WORKER SAID SO RATHER THAN LETTING THE PASS STAND. When this seat added graded_run() to close S3's position-not-identity hole it repointed x1-run-dir and x1-marks and MISSED x1-fwd10, which still read subject_runs()[0] -- the earliest run id. So on the re-hand AC3 graded the FIRST hand's FWD10.json, not the coherent run's. Repaired at HEAD; the arm now names the run its own R-40 manifest identifies, and the graded object genuinely CHANGED: the two files hash 8f0b277a296a (first hand) and ba13720b293e (this hand).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The worker's own report, unprompted: 'this arm reads subject_runs()[0], i.e. the first hand's bb29248/FWD10.json, not this hand's own file -- disclosed in the result doc and proof instance'. It had a PASS in hand and disclosed the wrong object anyway.",
+        "Re-run at HEAD after the repair: 'run directories under the subject: 5; carrying an R-40 HASHES.json: 1 [20260918T011619Z-8db9eb1]; graded run: 20260918T011619Z-8db9eb1 ... VERDICT: PASS-X1-LIVE-PLANE-ZERO-DELTA'. The new object passes on its own merits -- the repair did not rescue a failing grade, it moved a passing grade onto the right subject.",
+        "git hash-object on both files, which is what makes 'the object changed' a measurement rather than an assertion: 20260917T202556Z-bb29248/FWD10.json = 8f0b277a296a, 20260918T011619Z-8db9eb1/FWD10.json = ba13720b293e.",
+        "THE RE-GRADE COULD NOT BE WRITTEN INTO THE WORKER'S PROOF INSTANCE, and that is the gate working for the SECOND time tonight on the same rule: this seat amended AC3's status_reason and .tools/owned-paths-validate.py clause 4 (ADHC_OWNPTH.004, lane TREE_DELIVERABLES) refused the commit -- 'deliverables/0.9.0_WK_LGIC_LGCTFM~2/...proof_of_spec.json ... agent=2.0.0_SA_COO~G not in permitted_agents'. A worker's deliverable folder admits exactly that serial, so AN ISSUER RE-GRADE HAS NO HOME INSIDE A WORKER'S INSTANCE. The amendment was reverted (git checkout --) and the re-grade lands as this seat's own record at org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/X1R1_AC3_ISSUER_REGRADE_20260918.md, which 3.0.0_SA_CVO reads beside the instance at L9. The worker's recorded measurement is therefore untouched, which is the better outcome and not merely the permitted one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "After the R-40 repair, every LT-x-1 criterion whose subject is this cell's run grades the run the R-40 manifest names.",
+    "world_is": "Two of the three did. x1-fwd10 kept reading position and graded another run's artifact, and the gap was closed only because the worker reported it.",
+    "notes": "EVIDENCE, not a disposition; no `adjudicates`, and 3.0.0_SA_CVO grades AC6 and disposes this at L9. THE LESSON IS ABOUT THE REPAIR, NOT THE DEFECT: when a fix repoints HOW an object is identified, the unit of work is EVERY ARM THAT IDENTIFIES THAT OBJECT, enumerated from the file, never the arms the author happens to be thinking about. This seat repointed two of three from memory and shipped the third. The census was one grep for the accessor it was replacing (`subject_runs()[0]` occurs in x1_run_dir, x1_marks and x1_fwd10) and it was not run."
+  },
+  {
+    "id": "LGIC_LGCTFM-S8",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T02:30Z",
+    "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-S3, the composite run directory. The remedy chosen on that row -- re-hand LT-x-1 to produce ONE COHERENT RUN rather than disclose a substituted one -- is DONE. Run 20260918T011619Z-8db9eb1 exists with its own VINTAGE.json, all six run files, a contract that validates with 0 schema errors, MARK.json COMMITTED for the first time, and an R-40 HASHES.json declaring 8 of 8 produced files with 0 hash mismatches. The 20:25Z composite directory is untouched and stays as the historical record of the refused first run, exactly as the re-hand ordered.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Drained @31c18f775d. X1R1-AC1, AC2, AC4, AC5 and AC7 re-run by the ISSUER at branch tip fc273d0bc0, and AC3 re-run at HEAD after the x1_fwd10 repair (LGIC_LGCTFM-S7); all six mechanical criteria PASS and the proof instance reads VALID rc=0.",
+        "The criterion that could not be reproduced at all when S3 was filed now can: x1-marks reads 'MARK entries 2; registries read 3; entries absent from their file, off the three files, or not under ADVI_FIRMBKTS: 0'. MARK.json is in the tree rather than in a deleted worktree.",
+        "The arm no longer grades by POSITION: graded_run() names the run its own R-40 manifest identifies, and x1-run-dir prints 'run directories under the subject: 5; carrying an R-40 HASHES.json: 1 [20260918T011619Z-8db9eb1]; graded run: 20260918T011619Z-8db9eb1'. A later commit that replaced a file in that directory would now FAIL the hash arm instead of silently satisfying the completeness arm -- which is the defect S3 described, closed at the mechanism and not merely at the instance.",
+        "The mark the first hand landed is still citable and is not double-counted: 53d59778a1 remains an ancestor of HEAD carrying the gold/ s3-prefix row, and this hand's MARK.json RECORDS it as already present while appending only the genuinely new silver/ surface."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S3 asserts that LT-x-1's run directory was a composite of two runs, that X1R1-AC1 therefore read PASS on bytes the cell did not produce, and that X1R1-AC2's evidence no longer existed anywhere.",
+    "world_is": "All three are now false OF THE GRADED RUN, which is a fresh coherent one, while remaining true of the 20:25Z directory S3 describes -- that directory is deliberately unchanged.",
+    "notes": "EVIDENCE, not a disposition; no `adjudicates`, and 3.0.0_SA_CVO disposes this at L9 alongside X1R1-AC6. WHAT THIS ROW DOES NOT CLAIM: that the 20:25Z directory's provenance was repaired. It was not, and repairing it was explicitly forbidden to the re-hand -- the record of a refused first run is worth more intact than tidied. The cost of the whole episode, stated plainly: one worker-hour of re-run, one ruling (R-40), one arm repointed three times and one arm missed, against a PASS that would have entered the record on bytes no cell of this project produced."
+  },
+  {
+    "id": "LGIC_LGCTFM-S9",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T02:32Z",
+    "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-S1, the fork fixture's disagreeing denominator. The row asked whether a fixture built on the PRD's FOUR positive forks under-covers the brief's FIVE by one. ANSWERED ON MEASUREMENT RATHER THAN BY PICKING A CARRIER: the fifth member was measured on both planes and DOES NOT EXIST at this vintage, so FORK_CONTROLS.json v1.1 carries FOUR positives, ONE negative and ONE WITHDRAWN, with all three denominators printed and the withdrawal's reason and destination recorded in the fixture's own history.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The fixture itself, read at HEAD: denominator_positive 4, denominator_negative 1, denominator_withdrawn 1; positives FORK-1..FORK-4 each with a `measured` field; withdrawn FORK-5 carrying `withdrawn_to`.",
+        "Its `history` array records the whole route in three entries and cites this row by id: v1.0 carried FIVE on the brief's IV.5 enumeration; ruling R-24 @53654598b0 held that five stands but the fifth must be ONE MEASURED PAIR, because a control expecting a fork row per class member makes the detector fire on everything -- which is what the SmartX negative refuses; v1.1 measured the pair, found it absent at this vintage, and withdrew FORK-5 to the tension set.",
+        "So the count is FOUR ON EVIDENCE and not four by omission, which is exactly the distinction S1 was filed to force. The under-coverage S1 feared would have been a silent four; this is a printed four beside a printed one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S1 asserts that the fork fixture's denominator disagrees across three carriers -- the PRD's four, the brief IV.5 enumeration's five, and the Part III bar's three by way of example -- and that a fixture built on four would under-cover the control set by one member while reading clean.",
+    "world_is": "The disagreement was real and is resolved by measurement, not by choosing a carrier: the fifth member does not exist at this vintage, and the fixture prints what it withdrew and why.",
+    "notes": "EVIDENCE, not a disposition; no `adjudicates`. WORTH KEEPING: the row was filed at the L6 cut BEFORE any order existed, and what it bought was not a corrected number -- it was a fixture that prints its own withdrawals. Three carriers disagreeing about a count is not settled by finding the authoritative carrier; it is settled by measuring the members and printing what each count includes."
+  },
+  {
+    "id": "LGIC_LGCTFM-S13",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T03:30Z",
+    "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-S10, which is 3.0.0_SA_CVO's row and was right. x1-r16 and x1-footprint read `git merge-base HEAD CLOUD`, so they measured A BRANCH AGAINST ITS OWN BASE -- correct exactly once, at the worker's tip, and FALSE FAIL for every later reader, printing 'paths changed on this branch: 0' while the cell's work sat in the tree. Repaired @39e6977e95 by binding to IDENTITY rather than POSITION: the cell's commits are found by AUTHOR (this project's three worker serials) AND by the ORDER ID in the message, over the whole history. Measured after the repair on the SHARED TREE, which is the state that could not be reached before: x1-footprint 7 commits, 22 paths, 0 outside the grant, PASS; x1-r16 2 of 2 registry commits carrying a TARGETS: line, PASS; and all SIX x1 arms now PASS at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The repair, @39e6977e95: cell_commits() runs `git log --all --author=<each of the three worker serials> --grep=<order id>`, and both arms read through it. Authorship survives a drain; a branch position does not. Two qualifiers are written into the function rather than left implicit -- it reads AUTHOR, which says who WROTE a commit and never who pushed or merged it, and a merge commit carries the ISSUER's author line, so a drain is correctly not counted as the cell's work.",
+        "THE FIRST VERSION OF THE REPAIR WAS ALSO WRONG AND RUNNING IT IS WHAT CAUGHT THAT: scoped by AUTHOR ALONE it graded all three slots' work across the whole round and reported 9 paths 'outside the grant' -- lib/opal_lgctfm.py, the renderer, the tests, the skill, the method doc, two .tools files and ADVI_FIRMBKTS's channel -- every one another cell's legitimate work. A FALSE FAIL TRADED FOR A WRONG-DOMAIN FAIL. The order_id narrowing is the fix and the docstring says why it is not optional.",
+        "Neither arm can now pass vacuously: an empty commit set is an explicit FAIL in both, printed in the output, because R-16's bar cannot be met by finding nothing. selftest-arms still reads PASS-ARMS-DISCRIMINATE.",
+        "Verified as a POST-DRAIN READER sees it, at HEAD on the shared tree rather than at a branch tip: x1-run-dir, x1-marks, x1-fwd10, x1-footprint, x1-r16 and x1-hashes all PASS. 3.0.0_SA_CVO can now re-run every one of them at L9, which it could not before this repair."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S10 asserts that two of LT-x-1's arms are branch-relative and read false FAIL for any seat that re-runs them off the worker's checkout.",
+    "world_is": "They were, and they did. Both now bind to the cell's own commits by author and order id, and both pass on the shared tree.",
+    "notes": "EVIDENCE, not a disposition; no `adjudicates`, and 3.0.0_SA_CVO -- whose row this is -- disposes it at L9. THE FOURTH DEFECT IN THIS SEAT'S ARMS TONIGHT AND THE WORST, because the trap was already written down in this seat's own memory under 'an issuer checker whose base is merge-base HEAD CLOUD cannot regrade a cell after its drain'. Two arms shipped with exactly that shape, and this seat re-ran them at branch tips all night without noticing a later reader could not. 1.0.0_SA_CTO recorded the sharper general form and it is the reason this row matters beyond two arms: A LESSON YOU HAVE WRITTEN DOWN IS NOT A CONTROL -- it fires only where someone re-reads it at the moment of the cut, and the cut is exactly when nobody re-reads. So the remedy is an ARM THAT RUNS WHERE THE CLAIM IS CONSUMED, not a note to be more careful."
+  },
+  {
+    "id": "LGIC_LGCTFM-S14",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T04:30Z",
+    "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S10: the two branch-relative arms 3.0.0_SA_CVO named are repaired and MEASURED PASS IN THE SHARED CHECKOUT -- run in the very place the row says they read FALSE FAIL, which is the row's own discriminator. x1-r16 -> PASS-X1-MARK-COMMIT-PRINTS-TARGETS ('commits authored by 3 worker serial(s) and naming LGIC_LGCTFM.TO-LT-x-1-r1 touching 3 path(s): 2 ... carrying a TARGETS: line (lib/opal_naming.py targets, R-16): 2'); x1-footprint -> PASS-X1-REPO-FOOTPRINT-BOUNDED ('paths changed on this branch: 22; outside the run home, the three registries and this project's own tree: 0 []'). This row is EVIDENCE and carries no `adjudicates`: disarming is not disposing and the clock stays 3.0.0_SA_CVO's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE REPAIR: 39e6977e95, this seat's own commit, replacing `git merge-base HEAD CLOUD` in both arms with cell_commits(order_id='LGIC_LGCTFM.TO-LT-x-1-r1') -- the cell's commits resolved by AUTHOR plus the order id in the message, an identity that survives a drain where a branch position does not. Function and docstring at org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py:157 at HEAD, with both call sites at :1437 and :1456.",
+        "MEASURED at the SHARED checkout C:/Users/AndrewBerman/Desktop/ajb_workspace at HEAD, NOT a worker worktree -- which is what makes it corroboration rather than the known repetition trap: both arms re-run and both print PASS, verdict strings quoted verbatim in the one_line above.",
+        "THE FIRST REPAIR OF THIS FUNCTION WAS ALSO WRONG AND THE DOCSTRING SAYS SO: scoping by AUTHOR alone graded all three worker slots' work across the whole round and reported 9 paths 'outside the grant' that belong to OTHER cells. A false FAIL traded for a WRONG-DOMAIN FAIL, caught by running it. `order_id` is the narrowing that makes the subtraction's domain the claim's population.",
+        "NOT CLAIMED, and it is the reason row LGIC_LGCTFM-S18 exists beside this one: this covers ONLY the two arms S10 names. An unscoped read of `base_ref()` over the same file finds TWO MORE callers, and they fail in the opposite, silent direction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S10's own remedy: 'Make an arm whose verdict depends on the checkout PRINT that dependence, or resolve its base from the run's own recorded base rather than from the ambient branch, so a grader can tell a finding from a location. Two arms are affected (x1-r16, x1-footprint); the other twelve re-run clean off-branch and need nothing.'",
+    "world_is": "Both named arms now resolve their subject from the cell's own commits and both read PASS at HEAD on the shared tree, where the row measured FAIL-X1-MARK-COMMIT-PRINTS-TARGETS and FAIL-X1-REPO-FOOTPRINT-BOUNDED. The second clause of S10's remedy -- 'the other twelve re-run clean off-branch and need nothing' -- is the part that does not hold; see S18.",
+    "notes": "COST of the evidence: two arm runs. The row was right and it was the worst of the four defects this seat's arms carried that night, because the lesson -- an issuer re-run inside the worker's own worktree is repetition, not corroboration -- was ALREADY WRITTEN DOWN in this seat's memory before the arms were authored. A lesson you have written down is not a control; it fires only where someone re-reads it at the cut, which is exactly when nobody re-reads."
+  },
+  {
+    "id": "LGIC_LGCTFM-S15",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T04:30Z",
+    "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S11: the row says plainly that 'nothing is owed to the cells; what is owed is the CONVENTION', and the convention EXISTS and is APPLIED. R-40 states it (a criterion whose subject is a RUN or a PRODUCED ARTIFACT binds to that artifact's CONTENT HASH) and two measured applications follow it. The three historical sentences stay unpinned DELIBERATELY, not by oversight: R-43 scopes a frozen-history defect's remedy to ONE LIVE-DIRECTION document and never to a sweep over rounds already graded.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "R-40, org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md -- the standing bar this row's spec_asserts already cites as its own authority.",
+        "APPLICATION 1, MEASURED: check_lt_r1.py's graded_run() at HEAD selects the graded run by the presence of its own R-40 HASHES.json manifest and REFUSES when the count carrying one is not exactly 1 -- it prints 'run directories under the subject: N; carrying an R-40 HASHES.json: M' and names the rule. Landed in LT-x-1's re-hand 8db9eb1bd9.",
+        "APPLICATION 2, MEASURED: LGIC_ENFORCE round 6's fixed input org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r6/check_en_r6.py @cbf0853d26 pins its cut base in R6_BASE.json and binds every produced-artifact arm to it rather than to `git merge-base HEAD CLOUD`.",
+        "R-43: the remedy for a defect in frozen history is ONE live-direction document, never a sweep over the frozen rounds. The three sentences S11 measures (P1R1-AC6's 1626 packages, X1R1-AC6's 1074, E3R1-AC6's 271 tensions / 1084 cells) are each checkable at their own vintage, as the row itself records, and NONE is re-pinned by this word.",
+        "NOT CLAIMED: that the convention is mechanically ENFORCED. It is not. No gate refuses a judgment record whose number names no run; R-40 binds by reading, and this disarm rests on the convention existing and being applied twice, not on a gate."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S11's own spec_asserts: 'R-40's bar, issued this same evening: any criterion whose subject is a RUN or a PRODUCED ARTIFACT records that artifact's CONTENT HASH beside the run id and is graded against it.' And its remedy: 'No grade moves ... nothing is owed to the cells; what is owed is the convention.'",
+    "world_is": "The convention is stated (R-40) and applied in two fixed inputs this seat authored after the row was filed. It is not gated anywhere. The three unpinned numbers remain unpinned and that is the recorded disposition under R-43, not a gap.",
+    "notes": "COST: two source reads. The honest limit of this word is the last evidence line -- a convention applied twice by the seat that wrote both applications is DESIRED-and-APPLIED, not EXERCISED by anyone else, and a later round is free to cite a number with no run."
+  },
+  {
+    "id": "LGIC_LGCTFM-S16",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T04:30Z",
+    "one_line": "RESTATED REASON, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S12 -- NOT a disarm. The row's named remedy ('one line in ANDREW_CARD.md naming the run id it ranks and that run's contract content hash') IS NOT AVAILABLE TO THIS SEAT: .tools/owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) refuses an issuer's edit inside a worker's deliverables folder, and this seat MEASURED that refusal on this exact file and reverted. So the reason moves, from 'a line in the card' to 'the run id and the contract's content hash delivered in this seat's own record BESIDE the card' -- and the row's premise moved a second time when 1.0.0_SA_CTO adjudicated the card @662d53b793, so the decision it feeds is now recorded against a named adjudication and not against an unidentified subject alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED: .tools/owned-paths-validate.py clause 4 refused this seat twice that evening, once on ANDREW_CARD.md itself and once on a worker's proof instance. Both edits were reverted and the corrections landed as this seat's own records instead. An issuer re-grade has no home inside a worker's instance.",
+        "662d53b793, 1.0.0_SA_CTO: 'adjudication(LGIC_LGCTFM ANDREW_CARD, 1.0.0_SA_CTO on Andrew's unavailability): the ranked list is CONFIRMED as printed, the card's own RECOMMENDATION is corrected by one, and ranks 2-10 are ratified as TIED so no remediation is sequenced on them' -- under Andrew-direct 2026-09-17 ~23:5xZ, VERBATIM: 'Have CTO adjudicate the ANDREW_CARD.md if I'm not available.'",
+        "WHAT IS STILL TRUE AND IS WHY THIS IS A RESTATEMENT AND NOT A DISARM: the card's own bytes still name no run id. S12's measurement stands unrefuted -- five run directories under the subject, four carrying 179 tensions and one carrying 180, and nothing IN the card says which it ranks.",
+        "NOT CLAIMED: that the adjudication pins the subject. It does not name a run id either. What it changes is the CONSEQUENCE the row weighed -- 'an answer recorded against an unidentified subject is hard to re-bind later' -- because the answer of record is now an adjudication with a commit, an authority and a date."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S12's own remedy: 'One line in ANDREW_CARD.md naming the run id it ranks and that run's contract content hash.' And R-40: a criterion whose subject is a RUN or a PRODUCED ARTIFACT records that artifact's content hash beside the run id.",
+    "world_is": "The remedy as written addresses a file this seat is mechanically forbidden to edit, so it could never have been performed by its own disarm owner. The remedy that IS available -- the run id plus the contract's content hash in this seat's own record, delivered beside the card -- is what this row restates the reason to, and it is NOT yet done.",
+    "notes": "STAYS ARMED, and the restated reason is the owed act: this seat writes the run id 20260918T011619Z-8db9eb1 and its contract's content hash 33204e29839de89af81fb293317cce3ccdf2266d into its own record beside the card, at the point the card is next carried. A row left ARMED with a reason nobody can act on reads as held when nobody is holding it; a row left ARMED with a reason its owner CAN act on is a debt. This is now the second kind."
+  },
+  {
+    "id": "LGIC_LGCTFM-S17",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T04:30Z",
+    "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S6: the condition the row itself set -- that the correction reach the decision-maker BESIDE the card 'rather than as a silent rewrite' -- IS MET, and met in exactly that shape. 1.0.0_SA_CTO's adjudication @662d53b793 states the correction explicitly ('the card's own RECOMMENDATION is corrected by one') while CONFIRMING the ranking as printed, and the card's own bytes were never rewritten. The corrected claim is stated the way S6 said a card's claim should be: 1 of 179, a count with its denominator, not a word.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "662d53b793, 1.0.0_SA_CTO, under Andrew-direct 2026-09-17 ~23:5xZ ('Have CTO adjudicate the ANDREW_CARD.md if I'm not available'), with both of that direct's conditions recorded as held before the seat acted: the card went to ANDREW FIRST and had been with him since ~00:36Z, and round 1 was measured TERMINAL rather than assumed.",
+        "The adjudication's own words on the defect S6 filed: rank 1 (T-0001, the opal-data-bd bucket) is correctly first as the only row that is client_facing AND live, and the RECOMMENDATION's 'the two rows touching a live, client-facing surface' is wrong by one measured over 179 tensions.",
+        "S6's own measurement, independently reproduced by 3.0.0_SA_CVO across all five run directories at the nested factor path (four runs: client_facing 1 / live 1 / irreversible 0 over 179; one run: 180 with live 2; BOTH-together 1 everywhere), with the top-level read kept as a control that returns a confident 0.",
+        "NOT CLAIMED: that Andrew has read either the card or the correction. The condition S6 set was that the correction reach him BESIDE the card rather than silently replacing it, and that is what is measured here -- delivery of the correction into the record, not his reading of it. FWD-4 still grades on his answer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S6, adjudication row LGIC_LGCTFM-C-S3: 'It stays ARMED because the card is in Andrew's hands and the correction has to reach him BESIDE it rather than as a silent rewrite.' And S6's own cheap control: 'state the claim as a count with its denominator (1 of 179) rather than as a word (the two rows), because a number invites the check a word does not.'",
+    "world_is": "The correction is in the record as an adjudication with its own commit, its own authority and its own date, beside a card that was not altered. The ranking S6 explicitly declined to impeach is confirmed as printed.",
+    "notes": "COST: one commit read. S6 called itself the fourth instance in one evening of a family where the EVIDENCE is sound and the SENTENCE ABOVE IT is not, and in every instance a SECOND SEAT caught it -- which is the argument for the control rather than for more care by the author."
+  },
+  {
+    "id": "LGIC_LGCTFM-S18",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T04:30Z",
+    "one_line": "S10'S CLASS HAS FOUR MEMBERS, NOT TWO, AND THE TWO NOBODY NAMED FAIL SILENTLY. An UNSCOPED read of `base_ref()` over check_lt_r1.py finds 2 callers remaining after S10's repair -- x2-flag and x3-filed -- and re-run in the shared checkout they do NOT read FALSE FAIL, they read VACUOUS PASS. x2-flag prints \"commits on this branch touching org/mcp/naming-gate.enforce: ''\" and PASSES because the off-branch window is EMPTY, so it would pass IDENTICALLY had the cell touched the flag. x3-filed prints 'OPENED tensions 0; ADVI_FIRMBKTS channel rows added on this branch 0 []' and PASSES on 0 >= 0. A FALSE FAIL GETS INVESTIGATED; A VACUOUS PASS GETS ACCEPTED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE DENOMINATOR, printed: `git show HEAD:<check_lt_r1.py> | grep -n 'base_ref()'` returns 3 lines -- the definition at :147 and callers at :1508 (x2_flag_untouched) and :1567 (x3_opened_filed). S10's two arms account for NEITHER; they now call cell_commits().",
+        "MEASURED at the SHARED checkout C:/Users/AndrewBerman/Desktop/ajb_workspace at HEAD, NOT a worker worktree -- which is what makes it corroboration rather than the known repetition trap: x2-flag -> PASS-X2-ESTATE-FLAG-UNTOUCHED, x3-filed -> PASS-X3-OPENED-ROWS-FILED. Both PASS, and both pass on an EMPTY input set.",
+        "THE DISCRIMINATOR THAT EXPOSES THE VACUITY, and it is a sibling arm rather than an argument: x3-nontrivial re-run beside x3-filed reads FAIL-X3-WAVE-MOVED-SOMETHING, 'CLOSED 0 + OPENED 0 = 0 (a practice wave that moves nothing exercises nothing)', while x3-two-runs reads 'run directories 5; with contract.json + VINTAGE.json: 5'. So the zero is not the wave -- it is WHICH PAIR the arm resolved.",
+        "A THIRD SHAPE SITS BESIDE THE TWO: _last_two() picks the cell's subject BY POSITION in a directory five runs now share, which is the SAME position-resolution defect R-40's HASHES.json manifest was written to close in x1 and which is still live in x3.",
+        "HOW IT WAS FOUND, because the method is the transferable part: 3.0.0_SA_CVO's read started from the failures it OBSERVED while grading, so it could only reach the LOUD polarity. The UNSCOPED read of the SHARED MECHANISM -- the function both remaining arms call -- found the silent one. CLAUDE.md Rule 22: a check scoped to the members cannot see a defect in what the members share."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S10's remedy asserts the population: 'Two arms are affected (x1-r16, x1-footprint); the other twelve re-run clean off-branch and need nothing.' The spine's L9 requires the CVO to RE-DERIVE, which requires an arm to be re-runnable somewhere other than the branch that produced it.",
+    "world_is": "Four arms in this file are checkout-dependent. Two are repaired (S14). Two remain and both read PASS off-branch for the wrong reason, so re-running them off the worker's checkout produces a green that certifies nothing. 'The other twelve re-run clean off-branch and need nothing' is false for two of the twelve.",
+    "notes": "NOT REPAIRED, and the reason is stated rather than implied: these are fixed inputs of a CLOSED, GRADED round whose L8/L9 sits with 3.0.0_SA_CVO. On their own branches the windows were NON-empty, so the grades those arms fed are sound and editing the arms now moves no grade; R-43 scopes a frozen-history defect's remedy to ONE LIVE-DIRECTION document and never to a sweep. THE LIVE DIRECTION IS ALREADY APPLIED ONCE AND THAT IS THE CONTROL THIS ROW ARGUES FOR: LGIC_ENFORCE round 6's check_en_r6.py @cbf0853d26 drives 8 POSITIVE-SATISFIABILITY arms against two SIMULATED CORRECT records alongside its mutant arms -- an arm that passes an empty set fails the positive arm, which is the only control that catches a vacuous pass, because a mutant test cannot. WHAT IS OWED: LGIC_LGCTFM round 2's fixed inputs carry the positive-satisfiability control and R-40's content-hash subject binding FROM THE CUT, and no round-1 arm is re-run as acceptance for anything. COST of finding this: one grep of a shared mechanism and four arm runs. NON-APPLICATION: a checker with no cross-arm shared helper."
+  },
+  {
+    "id": "LGIC_LGCTFM-S19",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T04:56Z",
+    "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S16 (and therefore for S12's underlying finding): the RESTATED remedy is PERFORMED. CARD_SUBJECT_PIN.md @a4f61daeb0 pins ANDREW_CARD.md's subject to run 20260918T011619Z-8db9eb1 and contract content hash 33204e29839de89af81fb293317cce3ccdf2266d, NAMES ITS INSTRUMENT (git hash-object, the manifest's own), and carries a NEGATIVE CONTROL over the other candidate run that returns a different hash -- so the pin discriminates between exactly the two runs S12 said a reader could not tell apart. Filed one commit after S16 said it was NOT YET DONE, because a row left ARMED with a reason its owner CAN act on is a debt, not a hazard.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RECORD: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/CARD_SUBJECT_PIN.md @a4f61daeb0 -- committed BEFORE this row was written, never PENDING-THIS-COMMIT.",
+        "VERIFIED under the manifest's own instrument rather than restated: `git hash-object workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json` returns 33204e29839de89af81fb293317cce3ccdf2266d, equal to HASHES.json's claim for that file, whose own `instrument` field reads 'git hash-object'.",
+        "NEGATIVE CONTROL, run deliberately: the same instrument over run 20260918T002711Z-caf0983's contract.json -- the 180-tension run, the only other candidate -- returns 3ffedfed35c05a1820d594c85c2b416c0441aa0f.",
+        "THE POPULATION, printed: 5 run directories under the subject, 4 carrying 179 tensions and 1 carrying 180, and EXACTLY ONE carrying an R-40 HASHES.json -- which is what makes 'the graded run' a measurement rather than a position.",
+        "AND THE MISTAKE WORTH RECORDING BECAUSE IT NEARLY BECAME A CORRECTION OF A CORRECT NUMBER: a plain sha1 of the SAME contract.json reads 9c5cdb873f00a599bb00166831a91646fea97990, and this seat computed that FIRST and briefly read it as a mismatch against a hash it had already published in row S16 and in two messages. IT WAS NOT A MISMATCH; IT WAS TWO INSTRUMENTS -- git prefixes `blob <len>` and a NUL byte before hashing. A hash without its instrument is a number two readers can disagree about while both being right.",
+        "NOT CLAIMED: that Andrew has read the card, the correction or this pin. S12's consequence clause was that an answer recorded against an unidentified subject is hard to re-bind later; what is measured here is that the subject is now identified by content hash in the record. FWD-4 still grades on his answer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S16's own restated reason: 'the run id and the contract's content hash delivered in this seat's own record BESIDE the card', recorded there as NOT yet done. And R-40: a criterion whose subject is a RUN or a PRODUCED ARTIFACT binds to that artifact's CONTENT HASH.",
+    "world_is": "CARD_SUBJECT_PIN.md exists at a4f61daeb0 and carries the run id, the contract content hash, the instrument that produced it, a negative control that separates the two candidate runs, the five-run population with its one-of-five manifest count, and S6's corrected claim stated as 1 of 179 with its denominator. ANDREW_CARD.md itself is UNCHANGED, which is the condition S6 set and which clause 4 would have refused in any case.",
+    "notes": "S12 and S16 stay 3.0.0_SA_CVO's to dispose; this row carries no `adjudicates` and disarms nothing by existing. WHAT IS STILL TRUE: the CARD's own bytes still name no run, and that cannot be changed by this seat -- owned-paths clause 4 refuses an issuer's edit inside a worker's deliverables folder. So the honest state is not 'the card is pinned' but 'the card's subject is pinned in the record that travels with it', and the durable fix is a CELL whose <paths> names the card, in whatever round next touches it. COST of this remedy: one record, one verification and one negative control. NON-APPLICATION: an artifact the acting seat's own grant covers -- there the line goes in the artifact and no second record is needed."
+  },
+  {
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "fabric": "laptop",
+    "grounding": {
+      "evidence": [
+        "MEASURED by 0.9.0_WK_LGIC_LGCTFM~2 building LT-n-2's record: git hash-object over org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/plan_r1/contract.json@7b411da26a and over org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/contract.json@7b411da26a BOTH return 413f0215c2370a3a5f521fbf248f5d323a02a897 -- two byte-identical homes. For each path git hash-object equals git rev-parse HEAD:<path>, so the pin is the COMMITTED bytes and not this autocrlf checkout's.",
+        "MEASURED at the same vintage: plan_r1/contract.json@7b411da26a carries 278 rows and 271 tensions -- E3R1-AC6's population, intact. workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json@7b411da26a (git hash-object 33204e29839de89af81fb293317cce3ccdf2266d, the run R2_BASE.json pins as graded_run_round_1) carries 184 rows and 179 tensions.",
+        "MEASURED at the same vintage: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/plan_r1/plan.json@7b411da26a carries 1626 packages and was planned from the 271-tension contract above; workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/plan.json@7b411da26a (git hash-object f26d46db87f3d8bcbf7b7ff13dafe708030c6d48) carries 1074 and was planned from the 179-tension contract. Two plans, two counts, neither number wrong.",
+        "INSTRUMENT: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/pin_numbers_r1.py, committed by this cell in the same commit that carries this row (row LGIC_ENFORCE-S69: a record citing an untracked instrument has an unverifiable claim at its centre). It refuses rather than reports: it re-measures every pinned number against its own artifact and raises if the artifact disagrees with the citation, and it refuses if a worktree hash and its HEAD blob differ.",
+        "NOT A RE-GRADE, AND NOT A DISARM. E3R1-AC6 remains excluded BY NAME in NUMBER_PINS_R2.json on 1.0.0_SA_CTO's round-1 analysis item 2, verbatim: E3 is NOT re-graded against R-40. This row records only WHERE the population lives and at which content hash. Whether that reopens anything is for the seat that owns S11's disarm, never for this worker."
+      ],
+      "status": "GROUNDED"
+    },
+    "hazard_standing": "INERT",
+    "id": "LGIC_LGCTFM-W2-S4",
+    "notes": "Filed as ONE row because the class is the finding: an unpinned number does not merely fail to resolve, it invites a contradiction that is not there. Surfaced while building LT-n-2's record and filed without halting, per the channel rule. The cell's own bound -- NO GRADE MOVES -- is kept: nothing here re-grades E3R1-AC6, P1R1-AC6 or X1R1-AC6, and this row carries no adjudicates and disarms nothing by existing. The same measurement is recorded in NUMBER_PINS_R2.json under what_the_pins_resolve, computed by the instrument at run time rather than typed.",
+    "one_line": "THE 271-TENSION POPULATION STILL EXISTS -- TRACKED AT HEAD, IN TWO BYTE-IDENTICAL FILES -- AND 1626 AND 1074 ARE BOTH TRUE, OF TWO DIFFERENT CONTRACTS. Binding each number to its own artifact dissolves the disagreement S11 measured. No grade moves; E3R1-AC6 stays excluded by name.",
+    "project": "LGIC_LGCTFM",
+    "spec_asserts": "LGIC_LGCTFM.TO-LT-n-2-r2's cell text, and row LGIC_LGCTFM-S11 which it quotes, both assert two things about round 1's unpinned numbers: that E3R1-AC6 grades 271 tensions where the contract now carries 179, so that population no longer exists anywhere; and that P1R1-AC6's 1626 packages and X1R1-AC6's 1074 cannot both be true of one plan.",
+    "surfaced_at": "2026-09-18T07:58:49Z",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "world_is": "Both assertions are falsified by the pins the cell was ordered to compute, and by the same mechanism: each number was true of a DIFFERENT artifact, and only the missing artifact name made them look irreconcilable. The 271-tension contract exists at HEAD, tracked, in two byte-identical files at git hash-object 413f0215c2370a3a5f521fbf248f5d323a02a897 (278 rows, 271 tensions), so E3's population is not gone and is content-addressable. 1626 is that contract's plan; 1074 is the graded run's plan; both are true of their own plan. The defect S11 measured was real and is exactly as it named it -- the numbers carried no artifact -- but the inference drawn beside it, that the numbers disagree and that one population is unrecoverable, does not survive the pinning."
+  },
+  {
+   "id": "LGIC_LGCTFM-W1-S21",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+   "surfaced_at": "2026-09-18T08:00Z",
+   "one_line": "ROUND 1's NON-RE-DERIVABLE POPULATION IS NOT ONLY THE CHECKOUT-DEPENDENT ARMS -- THREE FURTHER CAUSES, EACH MEASURED FROM A THIRD POSITION, AND NONE OF THEM IS A POSITION. (1) LIVE-BUILDER DRIFT: e2-reproduce, an arm of a CLOSED cell whose mechanical criteria graded PASS, reads FAIL-E2-DESIRED-EQUALS-BUILDER here -- 273 of 278 rows reproduce and 5 diverge because lib/opal_naming.py grade() now returns 'advi-inf-accounts-v2-daily' where the frozen contract holds '{system}-inf-accounts-v2-daily'. A static census of the checker cannot see this: the moving part is the LIBRARY the arm imports, not the checkout it runs in. (2) A PIN WHOSE PATH PREDATES THE FILE: S2R1-AC8's evidence compares two tools against org/standards/LGCTFM_CONTRACT.schema.json@ef8197ed07, and that path does not exist in that commit -- ef8197ed07 is round 1's L6 ISSUANCE and the schema was added 24 minutes later by a DIFFERENT cell. (3) A QUOTED MEASUREMENT THAT WENT STALE INSIDE ITS OWN CELL: E2R1-AC5's evidence states 'grep of lib/opal_lgctfm.py for the literal string FORK_CONTROLS returns 0 hits'; the string entered that file in the CELL'S OWN BUILD COMMIT f73efe6113, 3m40s before its own proof commit, so the stated result was already false when it was written and no seat at any vintage from that commit forward can reproduce it.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED at the THIRD POSITION -- the linked worktree .worktrees/wk-lgic-lgctfm-2-1 at HEAD 7b411da26a, which is neither a round-1 producing branch (all deleted at their drains; `git branch --list wk-lgic-lgctfm*` returns only the two round-2 refs) nor 3.0.0_SA_CVO's grading checkout (the shared tree, at 508eb695ca on CLOUD per `git worktree list`). Instrument, TRACKED and re-runnable: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/rederive_r1.py.",
+     "(1) `python <r1 fixed input>/check_lt_r1.py e2-reproduce` -> 'rows with a builder call the checker can make: 278; reproduced: 273' then 'VERDICT: FAIL-E2-DESIRED-EQUALS-BUILDER', the five named rows being R-0251, R-0257, R-0264, R-0265, R-0266, each 'grade([...]) -> (OUT-OF-PATTERN, advi-inf-...) ; contract form=\"(OUT-OF-PATTERN, {system}-inf-...)\"'. The arm is correct and the contract is frozen; what moved is the builder between them.",
+     "(2) `git cat-file -p ef8197ed07:org/standards/LGCTFM_CONTRACT.schema.json` -> rc=128, \"fatal: path 'org/standards/LGCTFM_CONTRACT.schema.json' exists on disk, but not in 'ef8197ed07'\". POSITIVE CONTROL beside it, so the rc is not read as a broken instrument: `git cat-file -s 4ad93b7166:<same path>` -> 10246, and `git log --diff-filter=A -- <same path>` names e2daf62f07 (0.9.0_WK_LGIC_LGCTFM~1, 2026-09-17T10:52:52-04:00) as the commit that added it, against ef8197ed07 (2.0.0_SA_COO~G, 10:28:59-04:00). NOTE THE INSTRUMENT: `git show ... 2>/dev/null` returns CLEAN-EMPTY on this same read and reads as a present-but-empty file.",
+     "(3) `git log -S FORK_CONTROLS --format='%h %aI %an %s' -- lib/opal_lgctfm.py` returns exactly one commit, f73efe6113 (0.9.0_WK_LGIC_LGCTFM~1, 2026-09-17T14:04:58-04:00, 'build(LGIC_LGCTFM.TO-LT-e-2-r1 ...)'), and the cell's proof commit is a565fbdf4a at 14:08:38-04:00. A read of the file at HEAD returns 4 hits (:43, :46, :984, :1062) and a read at the 9b628270a1 pin returns 4 as well. All four are prose, so the PROPOSITION the claim makes survives; the MEASUREMENT it cites does not.",
+     "WHY THIS IS NOT A RESTATEMENT OF S10/S18: those rows' class is the INVOKING CHECKOUT (base_ref(), _last_two()), and this record's own AST census over the checker's printed denominator of 67 arms reproduces that class exactly -- {x2-flag, x3-filed} for AMBIENT-REF -- and then adds x3-diff, which reads FAIL-X3-COMMITTED-DIFF-REPRODUCES ('absent: DIFF.md in the latest run') and appears in neither S18's evidence nor R2_BASE's four. The three causes above are OUTSIDE that class entirely and were found by RUNNING the arms after the census, not by the census: a static call graph cannot see a library that moved or a pin that never held a path."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "R2_BASE.json's `checkout_dependent_arms_KNOWN` names four arms as THE floor of what a later seat cannot re-derive and names one further shape (_last_two()); LGIC_LGCTFM-S18's world_is states 'Four arms in this file are checkout-dependent.' Both frame the non-re-derivable population as a property of WHERE an arm runs, and LT-a-2's own order says four is a floor and not an answer.",
+   "world_is": "Three of the four criteria this cell classifies NOT RE-DERIVABLE fail for causes that are not positions at all: a library that moved under a frozen artifact, a pin whose path did not yet exist, and a quoted number that was false at its own commit. The fourth (X1R1-AC6) is an unrepeatable live-plane window, which is a vintage rather than a checkout. The position class is real and now measured at seven arms, but it is not the whole population, and a seat searching only for checkout-dependence will certify the rest clean.",
+   "notes": "NOT REPAIRED AND NO ROUND-1 VERDICT MOVES. R-43 scopes a frozen-history defect's remedy to one live-direction document, and LT-a-2 is that document for this round; editing check_lt_r1.py or any round-1 fixed input was refused by the order and not done. WHAT IS OWED, in live direction and stated for the disarm owner rather than assumed: (a) a claim whose evidence CALLS a live builder against a frozen artifact names the builder's vintage, or it is re-derivable only until the builder moves; (b) a citation's pin is checked against the PATH and not only the commit -- both existed, and only their INTERSECTION did not; (c) a quoted instrument result carries the vintage it was taken at, since this one was falsified by its own cell 3m40s later. COST of finding all three: one arm run, one `git cat-file -p` with a positive control, one `git log -S`. NON-APPLICATION: a claim whose evidence is a pinned blob and a quoted string -- H1R1-AC5 is that shape and it re-derives exactly."
+  },
+ {
+  "id": "LGIC_LGCTFM-W1-S22",
+  "project": "LGIC_LGCTFM",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+  "surfaced_at": "2026-09-18T08:45Z",
+  "one_line": "THE PUBLISHED REASON FOR THE TWO HASHES IS HALF THE CAUSE, AND THE RECIPE AS WRITTEN YIELDS A THIRD NUMBER. Four carriers explain the gap between git hash-object's 33204e29839de89af81fb293317cce3ccdf2266d and a plain sha1's 9c5cdb873f00a599bb00166831a91646fea97990 for one contract.json as 'git prefixes blob <len> and a NUL byte'. Measured on this checkout, the prefix ALONE returns d07bf29d245fd358fa15859b09a35aa8a3a2d5c3, which matches nothing published: git hash-object also applies the end-of-line filter first, so the published hash is the id of the COMMITTED (LF) bytes while the plain sha1 is over the CHECKOUT (CRLF) bytes. Every number in the record is correct; the stated MECHANISM is not, and the mechanism is the half a later seat re-derives from.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "MEASURED in worktree wk-lgic-lgctfm-2-3 at a3897b2206, with the instrument LT-c-2's order names: `git hash-object workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json` returns 33204e29839de89af81fb293317cce3ccdf2266d, equal to `git rev-parse HEAD:<that path>`. NEGATIVE CONTROL on the other candidate run 20260918T002711Z-caf0983 returns 3ffedfed35c05a1820d594c85c2b416c0441aa0f. Both agree with the record; this row impeaches neither.",
+    "MEASURED, the discriminator the published explanation predicts and the world denies: sha1 over (b'blob 790871' + NUL + the CHECKOUT bytes) is d07bf29d245fd358fa15859b09a35aa8a3a2d5c3, while sha1 over (b'blob 765904' + NUL + the same bytes with CRLF replaced by LF) is 33204e29839de89af81fb293317cce3ccdf2266d. The checkout is 790871 bytes carrying 24967 CRLF pairs; normalised it is 765904 bytes. `git config --get core.autocrlf` reads true on this box. So the difference between the two published numbers is TWO transformations, not one.",
+    "THE CARRIERS, four, all at a3897b2206: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/R2_BASE.json field graded_run_round_1.instrument; org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/CARD_SUBJECT_PIN.md; org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_LGCTFM-S19 grounding.evidence; and org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/NUMBER_PINS_R2.json, where the same string is the hash_instrument of all 16 pins. The last is the only one that also carries the discriminator -- 'confirmed equal to git rev-parse HEAD:<path>, so the pin is the committed bytes' -- which is the sentence that makes the recipe reproducible.",
+    "NOT CLAIMED: that any published NUMBER is wrong, that the card's subject pin is wrong, or that S19's disarm is impeached. 33204e29, 9c5cdb87 and 3ffedfed are each correct as printed by the instrument named beside them, and LT-c-2 verified the first two plus the negative control before writing the card. What is incomplete is the stated CAUSE."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R2_BASE.json's graded_run_round_1.instrument: 'git hash-object -- NOT plain sha1, which reads 9c5cdb873f00a599bb00166831a91646fea97990 for the same bytes because git prefixes blob <len> and a NUL byte.' CARD_SUBJECT_PIN.md and row LGIC_LGCTFM-S19 state the same single cause, and NUMBER_PINS_R2.json attaches it to every pinned number as the hash_instrument field.",
+  "world_is": "The prefix is one of two transformations. git hash-object runs the end-of-line filter before hashing, so on this autocrlf=true checkout it hashes 765904 LF bytes while the plain sha1 hashes 790871 CRLF bytes. A seat that re-derives 'the way the note says' -- prefix over the bytes it can see -- gets d07bf29d245fd358fa15859b09a35aa8a3a2d5c3, a number that appears nowhere in the record, and reads a mismatch where there is none. The published values and the phrase 'the same bytes' are both true only of the committed blob, which the note does not say.",
+  "notes": "ARMED rather than INERT because round 2's stated purpose is an instrument the R19 migrations can trust, and this string travels on all 16 pins as the recipe for re-deriving them: left alone it fires on the first later seat that re-derives a pinned hash on a Windows checkout. The failure is the exact near-miss LGIC_LGCTFM-S19 already records -- a seat briefly reading a correct number as a mismatch -- one level down, which is why it is worth a row rather than a shrug. THE REMEDY IS ONE CLAUSE, not a re-measurement: say that git hash-object hashes the COMMITTED bytes and cite `git rev-parse HEAD:<path>` as the cross-check, which NUMBER_PINS_R2.json already does and the other three carriers do not. LT-c-2's own addition to ANDREW_CARD.md is written in that form. COST: one clause per carrier. NON-APPLICATION: a repository checked out LF-only, where the two transformations collapse and the published one-cause sentence is exactly right -- which is presumably where it was written."
+ },
+  {
+    "id": "LGIC_LGCTFM-S23",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T09:25Z",
+    "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S11 -- AND ITS PREMISE IS FALSIFIED IN THE DIRECTION THAT MAKES THE ROUND-1 GRADES MORE DEFENSIBLE, NOT LESS. S11 says P1R1-AC6's 1626 packages and X1R1-AC6's 1074 'cannot both be true of one plan', and that E3R1-AC6's 271-tension population 'no longer exists anywhere'. Both halves are wrong. An UNSCOPED census of every TRACKED file named contract.json (denominator 12, repo-wide, from git's own index) finds hash 413f0215c2370a3a carried by TWO byte-identical files at 278 rows / 271 tensions. THE 271-TENSION POPULATION IS TRACKED AT HEAD. The two package counts were never about one plan -- they are two different contracts, so both numbers are true of their own subject. S11's REMEDY still stands and is met; only its reasoning about the numbers is falsified.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED UNSCOPED over the TRACKED corpus via `git ls-files *contract.json` -- 12 files, the printed denominator -- rather than over a directory this seat guessed: hash 413f0215c2370a3a is carried by BOTH org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/contract.json and .../0.9.0_WK_LGIC_LGCTFM~2/plan_r1/contract.json, each 278 rows / 271 tensions.",
+        "FOUND BY THE CELL, NOT BY THIS SEAT: 0.9.0_WK_LGIC_LGCTFM~2 at LT-n-2 reported it while binding each number to its artifact, which is precisely what the cell was ordered to do and precisely what nobody had done before -- S11 compared NUMBERS to NUMBERS, and the cell compared each number to ITS OWN SUBJECT.",
+        "AND THIS SEAT'S FIRST VERIFICATION READ THE WRONG DOMAIN, disclosed because it is the same class the row corrects: a glob over workflows/legacy_transform/**/contract.json returned 5 files and NONE at 271 tensions, which reads as confirmation that the population is gone. The older contracts live under DELIVERABLES, not under the run home. The domain was chosen because that is where RUNS live, and it excluded the very objects the claim was about. Rule 24: a subtraction over the wrong domain is blinder than recall, because it arrives with a printed denominator.",
+        "WHAT THIS DOES NOT DISTURB: every round-1 grade. P1R1-AC6's 1626 is true of its plan, X1R1-AC6's 1074 is true of the graded run's plan, and E3R1-AC6's 271 was true of the contract it read and STILL IS, because that contract is tracked. No verdict moves and E3 remains excluded by name from round 2's pins, exactly as 1.0.0_SA_CTO's round-1 analysis item 2 requires.",
+        "NOT CLAIMED: that S11 was careless. Its three measurements were correct AT THE GRAIN IT USED -- it read the judgment records and compared the numbers they cite, which is what a row filed from an L9 read can do. Binding a number to an artifact is a different act and needs a cell."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S11's own remedy, verbatim: 'No grade moves ... nothing is owed to the cells; what is owed is the CONVENTION.' And R-40: a criterion whose subject is a RUN or PRODUCED ARTIFACT binds to that artifact's CONTENT HASH.",
+    "world_is": "The convention is built and applied: NUMBER_PINS_R2.json binds 17 numbers over a printed denominator of 520 digit runs, 16 pinned with run id + content hash + hash_instrument and 1 excluded by name. S11's remedy is therefore MET. Its premise -- that two of the numbers contradict and that a third's population is gone -- is falsified by binding them to artifacts, which is the very act the convention exists to compel.",
+    "notes": "This row carries no `adjudicates` and disposes nothing: disarming is not disposing and the clock stays 3.0.0_SA_CVO's. THE TRANSFERABLE PART IS THE SHAPE OF THE ERROR, not the correction: S11 concluded a CONTRADICTION from two numbers that were never about one subject, and concluded an ABSENCE from a population it had not searched for. Both are the same mistake -- reasoning about numbers without their referents. The convention R-40 asks for is exactly what makes that mistake impossible, so S11 diagnosed the right remedy from the wrong evidence. COST of the correction: one unscoped `git ls-files` with its denominator printed. NON-APPLICATION: a number whose subject is already named beside it."
+  },
+  {
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T12:30Z",
+    "one_line": "FWD-6 DOES NOT CLOSE ON LGIC_CANON'S C6 PRACTICE WAVE, AND THE DISCRIMINATOR IS THAT C6 ALREADY RAN. This project's register says FWD-6 'closes when a real migration's decomposition is cut from the plan -- which is LGIC_CANON's C6 practice wave'. MEASURED at the PRD's own bytes: FWD-6's ACCEPT is 'the 49 Financial migration's decomposition starts from the run's plan', and the PRD's PLAN row line 177 names its consumer verbatim -- 'consumed by the subject's migration project at L5 (`ADVI_FIRMBKTS` first)'. C6 ran at LGIC_CANON round 4 (reached 12 + carded 4, C6R4-AC8 graded PASS) AND FWD-6 DID NOT MOVE. If the register's mechanism were right, FWD-6 would have closed then. THE VERDICT (UNREACHABLE) IS UNCHANGED AND THE STATED MECHANISM IS FALSE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT THE PRD, which R-51 makes the authoritative carrier for an outcome's state ('DONE reads from the PRD's FWD outcome array'): org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md:116-121 -- FWD-6 'The migration's work plan comes out of the run ... shaped so a COO lane can decompose from it directly', DONE WHEN 'EXERCISED -- a real migration's decomposition has been cut from it', ACCEPT 'the 49 Financial migration's decomposition starts from the run's plan instead of rebuilding the inventory from scratch'. Nothing in the outcome names C6, LGIC_CANON, or a checklist run.",
+        "THE CONSUMER IS NAMED VERBATIM AT PRD:177, in the PLAN row: 'consumed by the subject's migration project at L5 (`ADVI_FIRMBKTS` first)'. Read at the PRD rather than taken from the artifact: plan.json's own `owner` field says the same on every package, but a producer's self-description is not evidence for what the spec requires, so the PRD row it cites was opened and printed.",
+        "THE DISCRIMINATOR, and it is what makes this a falsification rather than a reading: C6 ALREADY RAN. LGIC_CANON round 4 closed with C6's checklist run REACHED 12 + CARDED 4 == 16 of 16 and its C6R4-AC8 graded PASS. LGCTFM FWD-6 is still NOT REALIZED. An outcome whose stated closing event HAS OCCURRED and which has not moved is an outcome whose stated closing event is not its closing event.",
+        "WHAT THIS DOES NOT CHANGE: the VERDICT. FWD-6 remains NOT REALIZED and LGIC_LGCTFM remains unreachable by any act of this fabric, exactly as 1.0.0_SA_CTO's R-75 classification says. This row corrects WHY, not WHETHER, and it does not ask for a round 3.",
+        "WHAT IT DOES CHANGE IS THE SEATING ARITHMETIC, which is why it is filed rather than noted: R-75 has ADVI_FIRMBKTS blocking LGIC_CANON's carded steps 10 and 16, with LGCTFM FWD-6 routed through LGIC_CANON's C6. On this reading FWD-6 ALSO terminates DIRECTLY on ADVI_FIRMBKTS with no C6 intermediary -- so ONE unseated project blocks THREE threads across TWO projects, not two threads through a chain."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_LGCTFM's register: FWD-6 'closes when a real migration's decomposition is cut from the plan -- which is LGIC_CANON's C6 practice wave, not another engine cell.' And R-51: DONE resolves on the PRD's outcome array.",
+    "world_is": "The PRD's FWD-6 names no C6 and no LGIC_CANON; its PLAN row names ADVI_FIRMBKTS as the L5 consumer; and C6 has already run without moving the outcome.",
+    "notes": "THE REGISTER IS 1.0.0_SA_CTO's L3 CARRIER AND THIS SEAT DOES NOT EDIT IT -- the correction is RECOMMENDED to that seat and carried here meanwhile, because a broker message is never the carrier. RECOMMENDED: re-point LGIC_LGCTFM's FWD-6 blocking text at ADVI_FIRMBKTS's L5 consumption of the plan, and carry the count into card 6's seating rec as THREE threads on one unseated project. THE CLASS: a register gloss that is RIGHT ABOUT THE VERDICT and WRONG ABOUT THE MECHANISM survives every check that only re-verifies the verdict -- the same shape as this estate's `git hash-object` finding, where every published number was correct and only the stated mechanism was half. It fires on the first seat who acts on the RECIPE rather than the conclusion. COST: one read of the outcome at the PRD instead of the register. NON-APPLICATION: an outcome whose register text quotes the PRD verbatim.",
+    "id": "LGIC_LGCTFM-S24"
+  },
+ {
+  "id": "LGIC_LGCTFM-S25",
+  "project": "LGIC_LGCTFM",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+  "surfaced_at": "2026-09-18T15:19:36Z",
+  "one_line": "THE ROUND-1 SKILL .claude/skills/lgctfm/SKILL.md IS RETIRED ON ANDREW'S WORD (2026-09-18, verbatim: 'get rid of the stale skill'), DELETED AT e2aa0d51c8, and a re-run of round 1's fixed input now FAILS ONE ARM ON THAT ABSENCE, BY DESIGN AND NOT ON A DEFECT. check_lt_r1.py:50 pins SKILL = '.claude/skills/lgctfm/SKILL.md' and its E1-SKILL-INVOKES-ENGINE arm at :565-568 returns FAIL-E1-SKILL-INVOKES-ENGINE 'absent' when the file is gone. Round 1 is CLOSED and GRADED and its grade STANDS: R-43, frozen history is not falsified by a later authorized change, and the checker is a FIXED INPUT of a closed round that round 2 already declined to repair. The live invocation frame is now .claude/skills/legacy-transform/SKILL.md, and engine verbs are read from `python lib/opal_lgctfm.py --help`.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "LGIC_LGCTFM.TO-LT-e-1-r1.walk.md:18 -- 'You write lib/opal_lgctfm.py (the engine), infra/logic/10_LEGACY_TRANSFORM.md (the method) and .claude/skills/lgctfm/SKILL.md (the one invocation)'; PRD LGIC_LGCTFM_PRD.md:330 lists that path as T3's deliverable, 'the invocation'.",
+  "world_is": "The file was deleted at e2aa0d51c8 (author 0.4.0_DS_ClientPlatform~X) together with the new .claude/skills/legacy-transform/SKILL.md, 183 lines added and 46 deleted. It documented the `walk` verb alone at the LT-e-1 vintage while the engine's argparse at lib/opal_lgctfm.py:1539 carries four verbs (walk, forks, plan, run), and it carried none of R-35, R-36, R-40, R-47 or R-57. Five surfaces still name the retired path and are NOT rewritten, all frozen records: the PRD (:180, :202, :330, :389), the decomposition (:35, :105), the LT-e-1 task order (:18, :76), that cell's proof instance and result, and the round-1 fixed input check_lt_r1.py. The two workflows/ README edits that would complete the house two-way cross-reference are REFUSED to this seat by the owned-paths lane gate (lane ANY_EXEC_OR_AE) and wait on a permitted seat.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "git show --stat e2aa0d51c8: .claude/skills/legacy-transform/SKILL.md +183, .claude/skills/lgctfm/SKILL.md -46",
+    "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py:50 and :565-568 (the arm reads SKILL and says 'absent: %s')",
+    "lib/opal_lgctfm.py:1539 argparse -- four subcommands; .claude/skills/lgctfm/SKILL.md at its deleted vintage documented one"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed so the next seat re-running check_lt_r1.py reads that arm as this retirement rather than as a regression -- the same class the project already named, an arm of a closed round failing on later drift. No repair is proposed to the fixed input (R-43) and no frozen record is rewritten. If a future round wants the arm green, the honest move is a NEW arm in a NEW checker pointing at the live skill, never an edit to round 1's."
+ },
+  {
+    "id": "LGIC_LGCTFM-S26",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T19:22Z",
+    "one_line": "R-81 (@4443e7308e, 19:18Z) -- the design requirement round 3 is to be cut against -- ARRIVED 25 MINUTES AFTER ROUND 3's ISSUANCE (@6139990fe7) AND AFTER LT-e-5's WORKER WAS SPAWNED, and LT-e-5's worker face names two sources R-81 now refuses or conditions: lambda-source-map.json as the source_text leg WITHOUT the comp-lambdamap two-plane guard, and comp-iam WITHOUT restricting it to live/reconcile/simulate. The round is frozen and a worker cannot be messaged, so the face stands as issued; this row carries R-81 to the drain and to L9.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuance @6139990fe7 committed ~18:5xZ; LT-e-5 and LT-r-2 spawned at worktree base 6018f62ed3; R-81 delivered as msg 98045 at 20260918T191803Z.",
+        "LT-e-5's worker face, step 2, lists `source_text` via infra/aws/lambda/ci/lambda-source-map.json and `iam_grant` via comp-iam with no subcommand restriction.",
+        "R-81 VERBATIM: comp-iam's gaps/roles/services/stats are REFUSED as discovery sources; every hand-maintained input must carry the comp-lambdamap guard (two independent planes, a named drift class) OR be DECLARED in the run's output with date, owner and un-defer condition; 'No third option.' Measured by 1.0.0_SA_CTO: lambda-source-map.json 216 entries vs 217 live, 19 names disagreeing (10 live absent, 9 stale, incl. an unfollowed rename).",
+        "R-81 also names a FIRST CELL round 3 does not carry: a canonical graph-call-manifest.yaml entry for the AWS-inventory question (comp-which returns a six-way tie at 1.50-1.60 with no winner)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 3 is cut against R-81's instrument assignment and hand-surface rule, and its first cell is the missing canonical manifest entry.",
+    "world_is": "Round 3 was cut against R-79 alone, 25 minutes before R-81 existed. Its four cells' CRITERIA are unaffected by R-81 (floor, named-rowed, shape, schema, render, rename, real run); only LT-e-5's DESIGN latitude is narrowed, and the canonical-entry cell is absent.",
+    "notes": "DISARMS AT LT-e-5's DRAIN, by the disarm owner, on ONE measurement: the drained design's legs are read against R-81 -- every source is one R-81 assigns, and lambda-source-map.json is either guarded by comp-lambdamap or DECLARED in the contract's coverage block with date/owner/un-defer condition. Conformant -> disarmed with that evidence. Non-conformant -> the conformance repair is cut as a cell of the NEXT round beside the canonical manifest entry, and LT-x-4 is NOT spawned on a non-conformant engine. Recommended to 1.0.0_SA_CTO the same tick (keep round 3 frozen rather than stop and re-spawn a live worker). COST: one read at the drain. NON-APPLICATION: LT-r-2 and LT-p-2, which read no AWS source."
+  },
+  {
+    "id": "LGIC_LGCTFM-S27",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T19:52Z",
+    "one_line": "MY OWN ORDER STATED A FALSE FACT TO A LIVE WORKER: LT-e-5's face says 'comp-trigger --list --json carries targets'. IT CARRIES NO TARGET FIELD. Measured by the issuer: 167 triggers (144 rules + 23 schedules, us-east-1), keys across ALL entries exactly arn, kind, name, pattern, schedule, state. First surfaced by 4.0.0_SA_CRO's RCN-0010 (@ecf57e8806), re-measured here on the tool's own JSON rather than taken from the record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/modules/graph/comp_trigger.py --list --json: denominator {rules 144, schedules 23}; 167 entries; union of keys ['arn','kind','name','pattern','schedule','state'].",
+        "LT-e-5's worker face, step 2, trigger_target leg: '(a rule or schedule targets it -- comp-trigger --list --json carries targets)'.",
+        "RCN-0010 s.1: targets were read from Terraform target blocks, because the comp-trigger listing has no target key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LT-e-5's face: comp-trigger --list --json carries each trigger's target, so the trigger_target leg can read it there.",
+    "world_is": "It does not. A worker following the face literally finds no targets and either builds the leg on another source or reports the leg empty -- and an EMPTY leg is exactly R-81's 'a relation reading zero is a question, never an answer'.",
+    "notes": "WHY INERT: the face states a FACT, not a criterion, and no arm depends on it -- the floor, named-class, shape and schema arms never read comp-trigger. It does not re-open the frozen round (R-82). What it changes is the DRAIN READ: at LT-e-5's drain, if its trigger_target leg reports targets, the issuer reads WHICH source produced them; if it reports none, that zero is treated as UNVERIFIED, not as a finding. Carried into LT-x-4's face pre-spawn by S28. THE LESSON, and it is this lane's third in one day of the same shape: I wrote a claim about an instrument's OUTPUT into a face without running the instrument. COST: one --list --json read at the cut. NON-APPLICATION: a face that names an instrument without asserting what it returns."
+  },
+  {
+    "id": "LGIC_LGCTFM-S28",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T19:52Z",
+    "one_line": "RECORD OF A PRE-SPAWN AMENDMENT, made under R-82's condition: LGIC_LGCTFM.TO-LT-x-4-r3's worker face gained ONE paragraph after issuance @6139990fe7 and BEFORE any worker read it. It carries R-81's 'a relation reading zero is a question, never an answer' and S27's measured fact that comp-trigger carries no target field. NO CRITERION, <paths> GRANT, <expect> OR INVOCATION CHANGED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "R-82 @62907d86b5 (msg 98050): 'LT-x-4's FACE MAY BE AMENDED PRE-SPAWN ... ONE PARAGRAPH, NO CRITERION CHANGE ... RECORD THE AMENDMENT IN THE ROUND'S CHANNEL AS A ROW BEFORE THE SPAWN.' Reason given: 'THE FREEZE PROTECTS A READER, NOT A FILE.'",
+        "LT-x-4 has no worker: it depends on LT-e-5, LT-p-2 and LT-r-2 all draining, and only LT-r-2 has drained (@20464bafee).",
+        "check_lt_r3.py selftest-arms after the edit: S85-order-quotes-carrier PASS for LT-x-4 -- the quoted coverage shape is byte-for-meaning unchanged; VERDICT PASS-ARMS-DISCRIMINATE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An issued order's face matches the text it was issued as, or the difference is on the record.",
+    "world_is": "It differs by one paragraph, recorded here, committed in the same commit as the edit so the drain, the L9 and any later reader can see it. to-pipeline-gate LIMB 6 grades only NEWLY-ADDED orders, so this modification is ungraded by any gate and this row is its only audit.",
+    "notes": "COST: one row per pre-spawn amendment. NON-APPLICATION: an order a worker is already reading -- that is frozen, and the only off-spec act there is a row, not an edit (R-82)."
   }
 ]
+```
+
+## Round 1 -- three findings of the CVO's own L9 read
+
+```json
+{
+ "id": "LGIC_LGCTFM-S10",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T02:05Z",
+ "one_line": "TWO OF LT-x-1's OWN ARMS ARE BRANCH-RELATIVE AND READ FALSE FAIL FOR ANY SEAT THAT RE-RUNS THEM OFF THE WORKER'S CHECKOUT. x1-r16 and x1-footprint measure a branch against its own merge base, so on the shared tree they print FAIL with 'paths changed on this branch: 0' and 'commits touching the three registries: 0' -- artifacts of WHERE they ran, not findings.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO at HEAD on the shared checkout: check_lt_r1.py x1-r16 -> FAIL-X1-MARK-COMMIT-PRINTS-TARGETS, 'commits touching the three registries: 0'; x1-footprint -> FAIL-X1-REPO-FOOTPRINT-BOUNDED, 'base 43ed12c300; paths changed on this branch: 0'.",
+   "MEASURED, the control: the other twelve x1/v1/x2 arms re-run at HEAD reproduce the instance's own verdicts exactly, so the two failures are not a broken checker or a wrong tree.",
+   "The instance's recorded values for the same two arms: PASS at base 8db9eb1bd9, paths changed 14, registry-touching commits 1.",
+   "This is the INVERSE of the known trap that an issuer re-running a cell inside the worker's own worktree is repetition rather than corroboration: here the arm can ONLY be made to pass in the place that makes it repetition."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The spine's L9: a judgment criterion is graded by the CVO against the cell's evidence, and the CVO re-derives rather than restating -- which requires the arms to be re-runnable somewhere other than the branch that produced them.",
+ "world_is": "The instance records both PASS at base 8db9eb1bd9 with 'paths changed: 14' and 'commits touching the three registries: 1'. Re-run at HEAD on the shared checkout they print FAIL-X1-REPO-FOOTPRINT-BOUNDED (base 43ed12c300, paths changed 0) and FAIL-X1-MARK-COMMIT-PRINTS-TARGETS (0 commits). Both verdicts are true of the shared tree and say nothing about the cell. The other twelve x1/v1/x2 arms reproduce identically off-branch, so the defect is these two and not the checker.",
+ "notes": "NOT a mark against LT-x-1: the arms are correct about their subject on the branch they were built for, and the cell's other evidence is independently re-derivable. What is owed is that an arm whose verdict depends on the checkout prints that dependence -- or resolves its base from the run's own recorded base rather than from the ambient branch -- so a grader can tell a finding from a location. disarm_owner 2.0.0_SA_COO~G as the checker's author."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S11",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T02:05Z",
+ "one_line": "THREE NUMBERS IN THIS ROUND'S JUDGMENT RECORDS NAME NO RUN, AND TWO OF THEM DISAGREE WITH EACH OTHER. P1R1-AC6 cites plan.json's 1626 packages; X1R1-AC6 cites 'its atomic package plan (1074 packages)'. E3R1-AC6 grades 271 tensions and 1084 factor cells, and the contract at HEAD carries 179 tensions -- that population no longer exists anywhere.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO: P1R1-AC6's evidence names 1626 packages; X1R1-AC6's names 1074; neither sentence carries a run id.",
+   "MEASURED: E3R1-AC6's evidence reads 'every one of the 271 tensions' and '1084 of 1084'; contract.json at the graded run 20260918T011619Z-8db9eb1 carries 179 tensions, and so does every other run directory under the subject except 20260918T002711Z-caf0983, which carries 180.",
+   "NOT A DEFECT IN THE GRADES: all three cells' reasoning is checkable at their own vintages, and this seat graded each on that basis. The defect is that the numbers are unpinned, which is exactly what R-40 was issued to stop."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "R-40's bar, issued this same evening: any criterion whose subject is a RUN or a PRODUCED ARTIFACT records that artifact's CONTENT HASH beside the run id and is graded against it.",
+ "world_is": "Each number was true of the run its cell read. None of the three sentences carries a run id, so none resolves against any current artifact, and the two package counts cannot both be true of one plan. E3's case is the sharpest: its judgment is SOUND AT ITS OWN VINTAGE (it ran before LT-e-4 made the untypeable plant opt-in, which is what moved the population) and is unreproducible now, so a later reader can neither confirm nor refute it.",
+ "notes": "Filed as ONE row because the class is the finding, not the three instances. R-40 binds prospectively and this is its first measured population inside this project; the remedy is a run id (and, per R-40, a content hash) beside any number a judgment record cites. This is the same class as IRPT_BCKEND-S56 and LGIC_ENFORCE-S61 filed by this seat tonight in two other projects."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S12",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T02:05Z",
+ "one_line": "ANDREW_CARD.md NAMES NO RUN AT ALL. A regex for a run id over the card returns ZERO matches: it identifies its own subject only as 'graph built 2026-09-17 18:16 UTC'. The card is with Andrew now, and the one thing pinning it away from a DIFFERENT run in the same subject directory is that its order happens to be 179 rows long.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO: a search for the run-id shape over ANDREW_CARD.md returns 0 matches; its only self-identification is a build timestamp.",
+   "MEASURED across all five run directories under workflows/legacy_transform/blackdiamond-49financial/, reading factor values at their nested path factors.<name>.value: four runs carry 179 tensions with client_facing 1 / live 1 / irreversible 0; 20260918T002711Z-caf0983 carries 180 with live 2.",
+   "MEASURED, the wrong-reader control run deliberately: reading the same factors at the TOP level of each tension returns 0 for client_facing and 0 for live on EVERY run -- a confident zero that would contradict the card entirely.",
+   "The card's table and its analysis sentence are both correct; row LGIC_LGCTFM-S6 carries the separate defect in its RECOMMENDATION line."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "R-40: a criterion whose subject is a RUN or a PRODUCED ARTIFACT records that artifact's content hash beside the run id, so a later commit that replaces the directory FAILS rather than silently satisfying it.",
+ "world_is": "Five run directories exist under the subject. Four carry 179 tensions and one carries 180, and the 180-tension run reads live == 2 where the others read live == 1. The card ranks a 179-row order, so it is not that run -- but nothing IN the card says so. A reader cannot tell from the card which artifact it ranks, and under R-40 that is precisely a subject named by a label something else could satisfy.",
+ "notes": "The remedy is one line in the card naming the run id and its contract's content hash. It matters more than usual because the artifact is in a decision-maker's hands right now and because FWD-4 will be graded against his answer to it -- an answer recorded against an unidentified subject is hard to re-bind later. Not urgent enough to interrupt his read: the card's substance is sound and this seat is not asking for it to be withdrawn."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S20",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-18T05:08Z",
+ "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-W2-S3: the row asks whether DEC-9's acceptance EXTENDS to a second prefix, and the answer is that DEC-9 NEVER ADMITTED A PREFIX AT ALL, so there is nothing to extend. Ruled R-49 at 27b969ec5f. Read at DEC-9's own bytes rather than at the record of its first application: LGIC_LGCTFM_PRD.md :246 constrains WHICH REGISTRIES the mark act may write -- three, and no fourth -- and across 6 unscoped occurrences of DEC-9 in that PRD not one names a prefix. gold/ is simply the prefix a cell reached first. Answering the question either way would have MINTED a prefix admission by implication. This row is EVIDENCE and carries no `adjudicates`: the clock is 3.0.0_SA_CVO's to write on this word, because disarming is not disposing and prose disarms nothing.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "DEC-9's own bytes at org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md :246 -- 'The mark act appends to the three existing registries only, under the subject's migration project, in the run's own commit, through safe-commit and the naming gate ... A fourth mark is a Rule 24 act nobody has asked for.' The axis is REGISTRIES, not prefixes.",
+   "COVERAGE, printed: an UNSCOPED read of the token DEC-9 over that PRD returns 6 occurrences -- :60, :178, :246, :356, :368, :377. None enumerates a prefix, and gold/ is not named in any of them. The census is the whole file, not the two lines the row cites.",
+   "R-49 and R-50, org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md @27b969ec5f, decided the same tick the call arrived (2.0.0_SA_COO~G msg 97836) under the call-routing law, Andrew-direct 2026-09-17 ~13:0xZ.",
+   "THE PRACTICAL ASK IS GRANTED BY A DIFFERENT MECHANISM, ruled R-50: the markable population on opal-data-bd is the ledger's own DISPOSITION column intersected with DECIDED -- 7 of the 11 rows at infra/logic/06_CONFORMANCE_LEDGER.md :70-:80 read MIGRATE (:70, :71, :72, :73, :75, :76, :79); 3 read RETIRE and 1 reads CONFORMANT IN PRINCIPLE. silver/ at :72 IS among the seven. So the row's underlying need is met, by the mechanism rather than by an extension of DEC-9.",
+   "NOT CLAIMED, and the positive control is why I can say this rather than assume it: the RETIRE exclusion is NOT independently corroborated. A falsifier against LEGACY_SERVED_PATHS.json returned zero for the three RETIRE prefixes AND zero for all seven admitted ones -- the control did not fire -- because that file is `mapping`, 8 rows of {path, reason}, whose paths are BUCKET-RELATIVE, so the search was the wrong grain and could only return zero. Whether any retiring prefix is still served is an OPEN measurement owned by ADVI_FIRMBKTS at its mark act."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "LGIC_LGCTFM-W2-S3 asserts that DEC-9 accepted a prefix (gold/) and that whether that acceptance extends to a second prefix (opal-data-bd/silver/, 06_CONFORMANCE_LEDGER.md :72, MIGRATE under R4) is a decision no one has made.",
+ "world_is": "DEC-9 admits no prefix. Its text constrains the three registries the mark act may write and enumerates no prefix anywhere across its 6 occurrences in the PRD. The row's question is therefore a category error rather than an open decision, and its stated condition -- a decision nobody has made -- is answered by R-49. What remains is the CLOCK, which is 3.0.0_SA_CVO's to write on this owner's word under R-19. The row is not disarmed by this row existing.",
+ "notes": "W2-S3 was the last open id on composite C-S3; 2.0.0_SA_COO~G gave its own word on the other four @7f45eab413. THE GENERAL FORM, and it inverts the shape this estate hit four times tonight: every other instance was a rule applied to a SUBSET of its population (R-43's carriers, the lane's 'nearer 54', this seat's R-46 3-of-57, the CVO's S10 two-of-four). This one is a rule read as having a POPULATION IT NEVER HAD. Both come from taking a decision's SCOPE from where it was first exercised rather than from its own text, and both have the same remedy: read the decision's bytes, not the record of its first application."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S21",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "4.0.0_SA_CRO",
+ "surfaced_at": "2026-09-18T20:13Z",
+ "one_line": "OFF-TASK OBSERVATION from the pipeline-walk verification (RCN-0010, Andrew-direct ~19:5xZ): opal-data-inf/gold/meta/pipeline-complete.json was last written 2026-09-05T12:52:20Z while gold/meta/pipeline-failed.json is written daily (last 2026-09-18T12:35:45Z) and the per-date sentinels gold/eclipse/{d}/_meta/gold_complete.json land daily (09-16 12:36:57Z, 09-17 12:35:43Z, 09-18 12:35:54Z). Consequence measured: the MDPF accelerator rule mdpf-feeder-accelerator (ENABLED, pattern on that completion key, live target mdpf-feeder-trigger) has not fired for 13 days and nothing said so, because the Scheduler backstop mdpf-feeder-backstop-daily fires the same Lambda at 12:52Z and the Lambda's own pre-check gates on the per-date sentinel, not the completion marker. Whether the INF gold chain is failing daily or deliberately ends without the completion marker since a 09-05/09-06 change is UNMEASURED here and is that chain's owner's question. Nothing chased; no seat stopped.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".tools/aws s3api list-objects-v2 --bucket opal-data-inf --prefix gold/meta/ (2026-09-18 ~19:5xZ): pipeline-complete.json 2026-09-05T12:52:20Z; pipeline-failed.json 2026-09-18T12:35:45Z; pull-complete.json 2026-09-05T12:52:19Z.",
+   ".tools/aws s3api head-object on gold/eclipse/{2026-09-16,17,18}/_meta/gold_complete.json: present, 12:36:57Z / 12:35:43Z / 12:35:54Z.",
+   ".tools/aws events describe-rule + list-targets-by-rule mdpf-feeder-accelerator: ENABLED; target arn:aws:lambda:us-east-1:313476888478:function:mdpf-feeder-trigger with DLQ mdpf-daily-trigger-dlq.",
+   ".tools/aws scheduler get-schedule mdpf-feeder-backstop-daily: ENABLED, cron(52 12 * * ? *), same target. opal-data-mdpf/telemetry/mdpf-daily-runner/status.json LastModified 2026-09-18T12:54:13Z: the runner dispatched today on the backstop path.",
+   "infra/aws/lambda/mdpf-pipeline/mdpf-feeder-trigger/lambda_function.py:86-93,153-168 -- WSC_GATE_KEY = gold/eclipse/{d}/_meta/gold_complete.json in INF_BUCKET; absent -> NOT-YET, status 200, no dispatch.",
+   "Writers of gold/meta/pipeline-complete.json per comp-find (39 hits / 13,057 files): data/inf/scripts/gold/orion-gold-dispatch.sh (HEAD band), infra/aws/lambda/inf-gold-trigger, inf-gold-freshness-guard; readers include etfs-netassets-daily, inf-portal-publisher, the opal-assets mirror family, inf-pipeline s3-notifications.tf -- so other consumers of that marker may be in the same state; NOT censused here."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The MDPF pipeline's accelerator (feeder-trigger.tf:259-285, live ENABLED) fires when the INF gold chain writes its completion marker; RCN-0010's first wording read that rule as the binding cross-system dependency.",
+ "world_is": "The completion marker has not been written for 13 days; the INF chain writes a failed marker daily while its per-date gold sentinels land; the MDPF accelerator is live and dead at once, and MDPF runs on its backstop clock. The binding dependency is the feeder Lambda's INF_BUCKET pre-check on the per-date sentinel, not the rule's pattern (corrected in RCN-0010 s.2.1 and the brief's IV.3). Whose finding the daily failed marker is, and whether it is known, is not this seat's to decide.",
+ "notes": "Filed under LGIC_LGCTFM because the walk that found it is this project's substrate (the pipeline-walk brief, Amendment 1 O9/W14: LIVE-NEWER-THAN-RECORD is exactly this row's delta class). If the INF chain has a live owner project, the CVO may re-home the row; this seat does not. Off-task per CLAUDE.md s.2: one row, keep working."
+}
 ```

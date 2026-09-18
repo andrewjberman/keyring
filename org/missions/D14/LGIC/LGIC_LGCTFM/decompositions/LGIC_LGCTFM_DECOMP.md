@@ -294,3 +294,319 @@ engine's author.`
   drives the card to him; it does not let a report stand in for his read.
 - It does not grade anything. Every verdict here is a bar to be measured, and the cells' own criteria, not
   this document, are what a worker satisfies.
+
+---
+
+## 10. v1.1 -- THE ADDENDUM AT THE L6 CUT (2026-09-17, `2.0.0_SA_COO~G`), before any round-1 order existed
+
+**The cell set is unchanged: 13 cells, the table in section 3, nothing added, dropped or deferred.** PRD v1.4 is
+ADMITTED (`prd-signoff.py status LGIC_LGCTFM`: both halves SIGNED, current); v1.2-v1.4 moved only T4's fork count and
+DEC-5's wording, which FORK_CONTROLS.json v1.1 already carries (four positives, one negative). Three things the cut
+measured that section 5 did not say:
+
+1. **CONSTRAINT 1 COUNTED THREE WRITERS OF `lib/opal_lgctfm.py`; THE CUT HAS FOUR.** T6's plan is engine code (the
+   PRD's PATHS row names `lib/opal_lgctfm.py` for T3-T9, and the plan is T6), so `LT-p-1` writes the engine too, on
+   slot ~2. It is not a concurrency hazard: the edge `LT-e-3 -> LT-p-1` already forces it after slot ~1's queue drains,
+   and the face says so. `LT-p-1` also carries the `run` verb that assembles a run directory, so `LT-x-1` and
+   `LT-x-3` run the instrument and edit no code. Row `LGIC_LGCTFM-S2`.
+2. **`LT-h-1`'s code has a home that is not the engine:** `workflows/legacy_transform/run_home.py` (`new`, `manifest`,
+   `diff`). `LT-h-1` sits at level 0 beside `LT-e-1`, which holds the engine, so the run home cannot live in it.
+3. **The interfaces every criterion reads are fixed in the faces** -- the contract's field names (from
+   `infra/logic/11_LGCTFM_CONTRACT_SCHEMA_RECORD.md`), the CLI verbs, the artifact paths -- and the checker
+   `fixed_inputs/r1/check_lt_r1.py` reads exactly those. `PLANTED_CONTRACT.json` is the one planted contract the
+   schema, the receiving check, the renderer and the diff are exercised on.
+
+**Slot plan (unchanged from section 5):** ~1 `LT-s-1 -> LT-e-1 -> LT-e-2 -> LT-e-3`; ~2 `LT-h-1 -> LT-p-1 -> LT-x-1 ->
+LT-x-3`; ~3 `LT-s-2 -> LT-r-1 -> LT-d-1 -> LT-x-2 -> LT-v-1`.
+
+---
+
+## 11. v1.2 -- THE ROUND-1 AMENDMENT (2026-09-17, `2.0.0_SA_COO~G`), on `1.0.0_SA_CTO`'s RULING R-36
+
+**ONE cell is ADDED: `LT-e-4`. The other 13 are unchanged -- nothing is dropped, deferred or re-scoped.** The
+count is 14.
+
+**Why the cell exists.** `LT-x-1`'s `X1R1-AC1` FAILED on one row, and the cause was a contradiction between two
+DRAINED cells rather than a defect in either: `LT-s-1`'s schema built `$defs.node_type.enum` as EXACTLY
+`NAMING_SCHEMA.json`'s 33 graded types BY SUBTRACTION, which its own order required, and `LT-e-3`'s untypeable
+plant emits a row whose `node_type` is `COGNITO_USER_POOL`, outside those 33 -- unconditionally, in `cmd_walk()`,
+on every subject. So every contract the engine writes failed validation on that row. Row `LGIC_LGCTFM-W2-S2`.
+R-36 ruled REC (A) and REFUSED the sentinel alternative: the enum's equality by subtraction is the invariant that
+lets the contract say a type is ungraded at all (Rule 24(i)), and a schema that can absorb an ungraded type stops
+being able to say so.
+
+**Why `LT-e-4`, and why the `e` series.** The substantive change is ENGINE behaviour -- the plant becomes opt-in
+and an untypeable node is carried instead of written -- so it belongs with `LT-e-1..LT-e-3`, and 4 is the next free
+number in that series. The one non-engine byte it needs (the contract's count field) is the ISSUER's, landed with
+this amendment rather than left to the cell: a criterion that cannot be satisfied by any write inside the cell's
+own grant is the exact defect class R-36 exists to close, and the schema is `LT-s-1`'s drained deliverable.
+
+| cell | PRD row | what it is | outcomes | write surface |
+|---|---|---|---|---|
+| `LT-e-4` | T5 (amends), T10 (unblocks) | the untypeable plant becomes OPT-IN; an ungraded node is CARRIED in the run's own `PLANT_UNTYPEABLE.json` with `NOT_COVERED` and COUNTED in the contract; two real runs prove both halves | FWD-1, FWD-4 | `lib/opal_lgctfm.py`, the run home |
+
+**Seating: slot ~2, level 5.** `depends_on`: `LT-p-1` (the `run` verb that assembles a run directory, drained on
+this slot) and `LT-e-3` (the plant this cell makes opt-in, drained on slot ~1). It is the FIFTH writer of
+`lib/opal_lgctfm.py` and the LAST, and CONSTRAINT 1's queue still holds: slot ~1's engine queue drained before
+`LT-p-1`, and this cell is after `LT-p-1` on the same slot, so no two writers are ever concurrent. Section 10's
+count of four writers becomes FIVE with this cell.
+
+**What the ISSUER landed with this amendment, so the cell's criteria are satisfiable inside its grant:**
+
+1. `org/standards/LGCTFM_CONTRACT.schema.json` gains ONE property, `untypeable`, a `$defs/cell` whose value is the
+   count, and it is added to `required`. **Required is the mechanism, not decoration:** R-36's words are that an
+   empty carrier must not be readable as "the walk met none" -- a printed zero is a measurement and an absent one
+   is silence -- and `required` is what makes absence impossible rather than merely discouraged. `$defs.node_type`
+   is NOT touched, so `LT-s-1`'s subtraction invariant is untouched and `s1-node-types` still grades it.
+2. `fixed_inputs/r1/PLANTED_CONTRACT.json` gains that cell with `value: 0`, because the schema's top level is
+   `additionalProperties: false` and a new required property would otherwise make the planted fixture -- the one
+   input `LT-s-1`'s and `LT-s-2`'s criteria validate -- INVALID at the cut. Measured after: `s1-valid`,
+   `s1-bare-value`, `s1-one-api`, `s1-no-instrument`, `s1-node-types`, `s1-enums`, `s2-accept-valid`,
+   `s2-refuse-bare`, `s2-unchecked`, `s2-selftest`, `r1-identical`, `r1-edit`, `r1-hand-edit`, `r1-fresh`,
+   `e2-reproduce` and `e3-untypeable` all still PASS.
+3. `fixed_inputs/r1/check_lt_r1.py` gains five arms (`a4-plant-off`, `a4-flag-on`, `a4-count-typed`,
+   `a4-schema-valid`, `a4-e3-exercised`) and `core_untypeable` now grades EITHER carrier shape, so the historical
+   walk artifact keeps its verdict while the amendment's runs are graded on what they actually write. Self-test 70
+   of 70, each new arm's GREEN fixture and DOCTORED twin driven alone.
+
+**`LT-x-1` is NOT reopened by the cell.** Its order stays `pending` until this amendment drains; the worker
+re-runs `x1-run-dir` as its own criterion, and the ISSUER re-opens and flips `LT-x-1` at the drain. A worker never
+flips another cell's order.
+
+---
+
+## 12. v1.3 -- THE ROUND-2 RECUT (2026-09-18, `2.0.0_SA_COO~G`), on `1.0.0_SA_CTO`'s round-1 analysis
+
+**Input, and the two carriers DISAGREE on one point so the fresher one governs.**
+`LGIC_LGCTFM_ROUND1_ANALYSIS.md` @`fe2d71cb2a`-era, section "WHAT ROUND 2 CARRIES", items 1-5; and
+`project.json`'s `blocking` as `1.0.0_SA_CTO` corrected it at `last_updated 2026-09-18T06:55:00Z`. The
+analysis item 1 says *"S10's TWO branch-relative arms"*; the register says **FOUR**, citing row `S18` and
+`3.0.0_SA_CVO`'s independent confirmation @`98f7074714`. **THE REGISTER IS FRESHER AND IS RIGHT, AND THE
+ANALYSIS IS THE CARRIER THAT WENT STALE** -- which is this evening's own R-51 class, read in the direction
+that matters: a cut that took the analysis at face value would have scoped this round to HALF its
+population.
+
+Round 1 graded **REALIZED 8 of 10**. `FWD-4` is APPLIED-not-realized and `FWD-6` NOT REALIZED, and
+[HARD] **NEITHER CAN BE CLOSED BY AN ENGINE CELL** -- `FWD-4` closes on Andrew's own read of `ANDREW_CARD.md`,
+`FWD-6` when a REAL migration's decomposition is cut from the plan, which is `LGIC_CANON`'s C6 practice
+wave. **So round 2 is a HARDENING round and says so rather than implying progress toward an outcome it
+cannot move.** Its job is to leave the instrument TRUSTWORTHY for the R19 migrations that will consume it.
+
+### 12.1 THE CELLS -- 3, and no earlier cell is re-opened
+
+```
+  cells at v1.2 ......................................................... 14
+  plus round 2's three .................................................. +3
+  = cells in this decomposition ......................................... 17
+  round 2 runs exactly the three: LT-a-2, LT-n-2, LT-c-2
+```
+
+| cell | id | what it does | serves | rows it answers |
+|---|---|---|---|---|
+| 15 | `LT-a-2` | **THE RE-DERIVATION RECORD.** Takes round 1's FOURTEEN judgment claims and re-derives each from a THIRD POSITION -- neither the branch that produced it nor the checkout that graded it -- recording per claim RE-DERIVED or NOT-RE-DERIVABLE **with its mechanism**. The four checkout-dependent arms are EXPECTED in the second class; a partition that finds fewer than four has not looked | FWD-3, FWD-9 | `S10`, `S18` |
+| 16 | `LT-n-2` | **RUN IDS AND CONTENT HASHES ON EVERY NUMBER** a round-1 judgment record cites, enumerated BY SUBTRACTION from the records and never as a forward list, with `E3` EXCLUDED BY NAME and its reason stated | FWD-3 | `S11` |
+| 17 | `LT-c-2` | **THE CARD NAMES ITS SUBJECT ON ITS FACE** -- run id plus contract content hash plus the INSTRUMENT that produced the hash, and a pointer to the adjudication. [HARD] **IT DOES NOT TOUCH THE RANKING OR THE RECOMMENDATION** | FWD-4's readability, not its closure | `S12`, `S16` |
+
+### 12.2 WHY `LT-a-2` IS A RECORD AND NOT A REPAIR, WHICH IS THE OPPOSITE OF WHAT THE ITEM SOUNDS LIKE
+
+The obvious reading of *"re-cut to run where the claim is consumed"* is **repair round 1's checker**. That
+is REFUSED here, on this lane's own filed position and on `R-43`: `check_lt_r1.py` is a FIXED INPUT of a
+CLOSED, GRADED round. On their own branches those arms' windows were NON-EMPTY, so the grades they fed are
+SOUND and an edit now moves no grade. R-43 scopes a frozen-history defect's remedy to ONE LIVE-DIRECTION
+document, never a sweep over rounds already closed.
+
+[KEY] **WHAT IS ACTUALLY MISSING IS THE THING NOBODY HAS: A STATEMENT OF WHICH OF ROUND 1's CLAIMS A LATER
+SEAT CAN CHECK.** A claim that can only be verified in the place that makes verification repetition is not
+a claim a migration can rely on. So the cell produces the partition, and the four known members are its
+FLOOR rather than its answer -- `S18` found two of them only by an UNSCOPED read of the shared mechanism,
+and the cell is told to do the same rather than to work from the list.
+
+### 12.3 `LT-c-2` IS HOW `S16` IS RESOLVED, AND THE RESOLUTION IS A GRANT
+
+`S12`'s named remedy is one line in `ANDREW_CARD.md`. `S16` recorded that **this remedy could never be
+performed by its own disarm owner**: `.tools/owned-paths-validate.py` clause 4 refuses an ISSUER's edit
+inside a worker's deliverables folder, measured twice on that exact file. The remedy is not impossible --
+**it needs a CELL whose `<paths>` names the card**, which is a worker's grant and not an issuer's.
+
+[HARD] **AND THE CELL IS DELIBERATELY NARROWER THAN THE ROW.** `S6`'s condition was that the card's correction
+reach the decision-maker BESIDE it *"rather than as a silent rewrite"*, and it did, by
+`1.0.0_SA_CTO`'s adjudication @`662d53b793`. So this cell ADDS the subject pin and a pointer, and a graded
+arm REFUSES any change to the ranking table or the recommendation line -- byte-identity on the 179-row
+order is an acceptance criterion, not a courtesy. A round that quietly rewrote a card sitting with a
+decision-maker would be the exact act `S6` exists to prevent.
+
+### 12.4 WRITE SURFACES, AND THE ONE CROSS-WORKER GRANT
+
+```
+  LT-a-2   deliverables/<its own serial>/ + the project's surprise channel
+  LT-n-2   deliverables/<its own serial>/ + the project's surprise channel
+  LT-c-2   deliverables/0.9.0_WK_LGIC_LGCTFM~3/ANDREW_CARD.md   <- CROSS-WORKER, granted explicitly
+           + deliverables/<its own serial>/ + the project's surprise channel
+```
+
+### 12.5 THE FAN-OUT, AND THIS ROUND CARRIES A STATED EXPERIMENT
+
+```
+  slot ~1   LT-a-2  ->  LT-c-2
+  slot ~2   LT-n-2
+```
+
+`fanout: 2 slots over 2 connected components, cap 8, reason: the three cells share ONLY the surprise
+channel and no cell reads another's output; levels L0 = {LT-a-2, LT-n-2}, L1 = {LT-c-2}. LT-c-2 queues
+behind LT-a-2 because the card's pin should cite the re-derivation record if that record contradicts it.`
+
+[CAUTION] **ROUND 6 OF `LGIC_ENFORCE` PUT BOTH ITS CELLS ON ONE QUEUE on the rule that two worker branches
+appending to one channel is a GUARANTEED conflict** -- measured 3 of 3 on a sibling project's round-4
+drains. **THIS ROUND TAKES TWO SLOTS, AND THE REASON IS A MEASUREMENT THAT CUTS THE OTHER WAY.** At round
+6's second drain, `1.0.0_SA_CTO` had appended `LGIC_ENFORCE-S70` to the channel in the shared tree while
+this lane's worker appended `W1-S70` on its branch -- a genuine concurrent append at the same array end --
+and `safe-merge` merged it **with NO conflict**: the union test over every document read 190 ids expected
+and 190 merged, nothing missing, nothing extra, both rows present.
+
+[KEY] **THE HYPOTHESIS THIS ROUND TESTS, STATED SO IT CAN BE REFUTED: a TEXTUAL SPLICE merges where a
+WHOLE-ARRAY RE-DUMP conflicts.** A splice touches only the bytes between the last row and the closing
+bracket, which is a 3-way merge git resolves; a re-dump rewrites every line of the array, which conflicts
+with any other change to it. The 3-of-3 conflicts and this 1-of-1 clean merge are then not contradictory
+-- they are two different write methods. **BOTH ORDERS THEREFORE MANDATE A TEXTUAL SPLICE AND FORBID A
+RE-DUMP**, and if the second drain conflicts anyway the hypothesis is refuted and recorded as such rather
+than quietly forgotten. n=1 is not a result; it is a reason to run the test with the cost bounded to one
+union merge.
+
+### 12.6 THE FIXED INPUT, AND WHAT IT CARRIES FROM THE ROUND-1 HEADLINE
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_lt_r2.py`. Round 1's own headline is adopted as a
+construction rule rather than a lesson: **three of this lane's arms were UNSATISFIABLE BY A CORRECT FIX
+and all three passed their INJECTED self-tests**, because a fixture written by the arm's author shares the
+arm's assumption. So every core in this checker is driven against a **SIMULATED CORRECT RECORD and must
+PASS**, as well as against a doctored one and must FAIL. [HARD] **A MUTANT TEST CANNOT CATCH A VACUOUS PASS**
+(`R-47`): the mutant proves an arm CAN fail, and a vacuous arm fails it happily while passing everything
+real. Both controls exist here or the arm is not cut.
+
+**AND EVERY ARM IS POSITION-INDEPENDENT BY CONSTRUCTION, WHICH IS THE WHOLE POINT OF THE ROUND:** no arm
+resolves its subject by position in a directory, and none reads `git merge-base HEAD CLOUD`. A cell's
+commits are found by AUTHOR plus its order id in the message; a run is found by its own `HASHES.json`
+manifest (`R-40`); and any arm whose verdict could depend on the checkout PRINTS that dependence.
+
+### 12.7 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** move `FWD-4` or `FWD-6`. Both bar on acts outside this engine and the round says so.
+- It does **not** re-grade `E3`. `S11`'s remedy is the CONVENTION, and `E3`'s judgment was SOUND AT ITS
+  OWN VINTAGE -- it ran before `LT-e-4` made the untypeable plant opt-in, which is what moved the
+  population. Re-grading it would falsify a correct grade.
+- It does **not** repair round 1's checker, and 12.2 says why.
+- It does **not** touch the card's ranking or recommendation, and 12.3 makes that a graded refusal.
+
+
+---
+
+## 13. v1.4 -- THE ROUND-3 RECUT (2026-09-18, `2.0.0_SA_COO~G`), on `1.0.0_SA_CTO`'s RULING R-79
+
+**Input.** R-79 @`0e9027c6dc` (msg 98034) and its answer to this lane's crossing recommendation (msg 98035).
+**FWD-1's REALIZED grade is RETRACTED: 7 of 10, not 8.** It is a DEFECT against FWD-1, not a new outcome:
+the ratified ACCEPT already reads *"never has to go and list the SCHEDULES, MACHINES, ROLES and BUCKETS by
+hand to fill a gap the contract left blank WITHOUT SAYING SO"*, and Andrew's word at ~18:2xZ (record
+@`28a8ae74e3`) names the same list in other words -- *"If we are missing lambdas/ec2/eventbridge rules or
+schedules/ddb/etc, any involved aws resources, then the workflow process is not done"*, *"the workflow must
+be designed to create rows for these items"*. PRD unchanged at v1.4, both halves SIGNED and current (read
+from `prd-signoff.py status` at this cut).
+
+[CORRECTION, recorded against this lane] **I recommended a PRD ADDENDUM at 18:19Z on the premise that the
+bars "never named" compute. The premise was false and I had not read FWD-1's ACCEPT before asserting it.**
+`1.0.0_SA_CTO` printed the ACCEPT and the premise fell. What survived is the gradeable form, adopted as
+FWD-1's ACCEPTANCE ARM: *for a named project token, EVERY live AWS node the involved instrument reaches
+carries a row, and the denominator is printed per node_type against the live plane.*
+
+**The round-1 grade measured the DONE WHEN, never the ACCEPT** -- existence and readership, not coverage.
+Measured at this cut by the issuer, on an instrument DIFFERENT from the engine's walk (comp-find over the
+live aws corpus for the subject's two token spellings: 88 hits across 2590 nodes, graph 2026-09-18
+12:17:28 UTC), against the graded run `20260918T011619Z-8db9eb1`:
+
+```
+  node_type        live floor   rows in the graded run
+  LAMBDA                9              0
+  EC2_INSTANCE          1              0
+  DYNAMODB_TABLE        1              0
+  SCHEDULE              4              1
+  IAM_ROLE             13              1   (a PLANT)
+  flow.current.md  -- COMPUTE --  (none)   <- a blank that does not say it is a gap
+```
+
+### 13.1 THE CELLS -- 4, R-79's (a)-(d) plus FWD-1's adopted acceptance arm
+
+```
+  cells at v1.3 ......................................................... 17
+  plus round 3's four ................................................... +4
+  = cells in this decomposition ......................................... 21
+  round 3 runs exactly the four: LT-e-5, LT-r-2, LT-p-2, LT-x-4
+```
+
+| cell | id | what it does | serves | R-79 item |
+|---|---|---|---|---|
+| 18 | `LT-e-5` | **DISCOVERY BY DESIGN.** The walk reaches the subject's compute, schedules, machines, roles and tables -- seeded by the subject's TOKEN beside its buckets, and following the readers the estate already runs (comp-trigger targets, `lambda-source-map.json`, comp-iam statements). **The cell DEFINES "involved"** (token / trigger target / IAM grant / source text, or several) and writes a top-level `coverage` block into the contract whose shape is R3_BASE.json's, the ONE carrier. Schema admits it; the frozen graded contract still validates | FWD-1 | (a), (b), (c) |
+| 19 | `LT-r-2` | **NO BARE "(none)".** An empty column is a statement about the INSTRUMENT: with a coverage block, every column prints `<R> row(s) of <I> involved`; without one (every run before this round), every column prints `NOT MEASURED`. FWD-5's regenerate-and-compare arm stays PASS | FWD-1 (the blank that does not say so), FWD-5 kept | (c) |
+| 20 | `LT-p-2` | **`dependencies` -> `step_dependencies`** on every plan package, values preserved value-for-value, frozen runs untouched. RCN-0009 P4, adopted by R-79 as owed | FWD-6's reading hazard | (d) |
+| 21 | `LT-x-4` | **THE REAL RUN AND THE ACCEPTANCE ARM.** One new 49F run into the run home, with the new discovery, render and plan. Every floor node of every type is a row or an excluded entry with a reason; every NAMED-class floor node is a ROW. The COMPUTE column names the Lambdas and the EC2 runner. **No registry mark** | FWD-1's ACCEPT, graded | the arm 98035 adopted |
+
+### 13.2 WRITE SURFACES, AND WHY THREE CELLS SHARE ONE QUEUE
+
+```
+  LT-e-5   lib/opal_lgctfm.py, org/standards/LGCTFM_CONTRACT.schema.json,
+           infra/logic/10_LEGACY_TRANSFORM.md, deliverables/0.9.0_WK_LGIC_LGCTFM~1/, channel
+  LT-r-2   lib/lgctfm_render.py, deliverables/0.9.0_WK_LGIC_LGCTFM~2/, channel
+  LT-p-2   lib/opal_lgctfm.py, infra/logic/10_LEGACY_TRANSFORM.md, deliverables/0.9.0_WK_LGIC_LGCTFM~1/, channel
+  LT-x-4   workflows/legacy_transform/blackdiamond-49financial/<new run-id>/,
+           deliverables/0.9.0_WK_LGIC_LGCTFM~1/, channel
+```
+
+CONSTRAINT 1 (s.5) still binds: `lib/opal_lgctfm.py` has one writer at a time, so `LT-e-5` and `LT-p-2`
+QUEUE on slot `~1`; `LT-x-4` queues behind both because it runs the engine they produce. `LT-r-2` touches
+only the renderer and runs beside them on slot `~2`; `LT-x-4` is spawned only once `LT-r-2` has DRAINED,
+because its render arm reads the new renderer's output.
+
+```
+  slot ~1   LT-e-5  ->  LT-p-2  ->  LT-x-4
+  slot ~2   LT-r-2
+```
+
+`fanout: 2 slots over 4 cells, cap 8, reason: three cells write or run lib/opal_lgctfm.py and queue on one
+slot (CONSTRAINT 1); the renderer is disjoint and runs beside them; levels L0 = {LT-e-5, LT-r-2},
+L1 = {LT-p-2}, L2 = {LT-x-4}, with LT-x-4 also depending on LT-r-2's drain.`
+
+### 13.3 THE FIXED INPUT, AND THE RULE IT ADOPTS FROM A SIBLING'S DEFECT
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/` -- `R3_BASE.json` and `check_lt_r3.py`, 14 real arms
+and a 24-arm self-test. Three construction rules, each from a measured defect:
+
+1. **THE FLOOR IS RE-MEASURED AT GRADE TIME, WITH AN INSTRUMENT THAT IS NOT THE ENGINE.** A floor read from
+   the fixed input at grade time would be a stale figure acting as a bar.
+2. **ONE REAL NEGATIVE.** The self-test runs the coverage cores against the ACTUAL graded run and requires
+   FAIL (LAMBDA 0 of 9), beside the author's own mutants -- a mutant shares its author's assumption.
+3. **THE RECORD SHAPE HAS ONE CARRIER** (`LGIC_ENFORCE-S85`, this lane's own defect three hours earlier).
+   The coverage block's shape lives ONLY in R3_BASE.json; the positive records are BUILT from it; and the
+   self-test refuses if any round-3 order's quoted shape differs from it. **Also caught at this cut, and
+   fixed before issuance:** the first draft's positive shape test passed because it was handed only the
+   12 node_types the simulated record happened to cover, while the real arm requires all 18 floor types.
+   A positive arm that passes only once the checker narrows its own input is the vacuous pass this rule
+   exists to stop.
+
+**WIRING AT THE CUT:** 11 of 14 real arms FAIL, each for the measured reason (10 bare "(none)" lines over 5
+of 5 runs; 1074 packages carrying `dependencies`, 895 populated; no e-5 contract; no post-cut run). **THREE
+ARE GUARD-SHAPED AND READ PASS AT THE CUT, DISCLOSED:** `r2-regen` (FWD-5's arm, must stay PASS),
+`p2-old-untouched` (frozen history, R-43), `x4-no-registry-move` (no mark). Each protects a thing that
+works; none measures the round's work.
+
+### 13.4 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** build the resource dependency relation (edges). FWD-6 inherits from FWD-1 and the repair
+  order is FWD-1 first (R-79). A cell MAY write per-class extras its discovery already reads; no arm needs it.
+- It does **not** pick the subject between MDPF_CANON and 49F -- Andrew's. 49F is used because FWD-1's
+  ACCEPT names it.
+- It does **not** re-grade round 1 or 2 (R-43), and it does **not** edit the graded run.
+- It does **not** close FWD-1. `1.0.0_SA_CTO` re-grades the outcome at L10 against its ACCEPT.
+- It does **not** build the CONSUMER WALK. Andrew-direct ~18:3xZ (msg 98038, record @`c9e54d5c0f`): *"the
+  final step of the current resource/state manifest should include a walk of the pipeline ... to assess
+  what exactly consumes the final artifacts (and if those artifacts are visible or invisible to a viewer on
+  the portal)"*. `4.0.0_SA_CRO` is attempting it on MDPF_CANON and writing the BRIEF; its carrier into this
+  project is `1.0.0_SA_CTO`'s. Cutting it here would pre-empt both. What round 3 DOES take from the same
+  word is its first sentence -- *"work in all the comp-tools to this process"* -- as `LT-e-5`'s COMP-TOOL
+  LEDGER: every listed comp-tool, USED or NOT USED with a reason, denominator printed.

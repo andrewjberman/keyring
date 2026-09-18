@@ -781,3 +781,43 @@ Andrew requested two project briefs consolidating all four source briefs and fiv
 Authority: exact-seat split record initially 6226b4a680, subsequent priority/laptop direction c0f5ed8163, IRPT/D9 naming 1f0f1dd3f6, and whole-D9 laptop move 4ff4abd9a4. Exact records read and relevant inbox messages acknowledged, acted on and archived. No directive/project register edits or other-project closures by this seat. The prior single-project organization is superseded with one dated notice in each of the nine sources; source bodies preserved.
 
 Validation: evidence `docs/briefs/sources/INVESTOR_REPORTING_FE_BK_SPLIT_EVIDENCE_20260910.json` records all nine before/after hashes, authority hashes, two brief hashes, 83 distinct inline repository paths (78 existing, five explicitly proposed), 53 local links, all 31 initial design source-index paths carried, seven Parts in each brief and 11 shared contract names. The initial path comparison reported one false missing path because a relative Markdown link was not normalized; canonical resolution corrected the checker, and all 31 are carried. No source body change beyond the organization notices. Narrow credential-signature scan found no key/bearer/Cookie headers in the two briefs and split record; this is not a universal secret scanner. No fresh AWS/vendor/UI/authentication measurements this consolidation; dated source limitations retained. Pathspec commit and origin/CLOUD publication are reported separately on delivery.
+
+
+## RCN-0009 -- MDPF_CANON as the first /legacy-transform subject: the engine emits NAME and POSITION, never DEPENDENCY
+
+**Date:** 2026-09-18 ~17:1xZ-18:0xZ . **Commissioned:** 1.0.0_SA_CTO msg 98014 (research ask, relaying Andrew's
+described flow: /legacy-transform -> NAME, POSITION, DEPENDENCY -> LGIC_NAMING desired table -> migration plan ->
+/canonical-flow). **Artifact:** `org/tier1_exec/4.0.0_SA_CRO/deliverables/LGCTFM_SUBJECT_ANALYSIS_MDPF_CANON_AS_FIRST_LEGACY_TRANSFORM_20260918.md`.
+
+Three answers by measurement. Q2: DEPENDENCY is ABSENT from the contract -- six `current.*` cells on 184 of 184
+(49F) and 15 of 15 (mdpf) rows, no relating field; `edges` 0 in 6 of 6 runs and the only writer is forks'
+REPLACES; plan.json `dependencies` is the R19 step chain (895 of 895 same-row, 0 cross-row); plan order = tension
+rank x R19 step. Q1: the engine types every tension A3/GRAMMAR/R1 by module constants (`lib/opal_lgctfm.py:571-573`
+@af794c77e3), so 49F reads 179 of 179 one class and mdpf 10 of 10; structurally five classes are 49F-only (R9
+re-land, whole-bucket retire, new-bucket mint, identity-spine multi-spelling cutover, router map flip) and three
+are MDPF-only (FORK fired today, dedicated runner, Scheduler-heavy triggers). Q3: same-subject non-mutating
+dry-runs transferred 3 of 3 read; stand-in / pre-canon / never-ran did not, 3 of 3; the real subject has already
+been walked five times. Instrument read: one engine run over `mdpf` rooted in the session scratchpad (run-id
+20260918T174353Z-685dc7e), repo run home and registries untouched, not committed. Five proposals (P1-P5), none
+dispatched. No recommendation on ADVI_FIRMBKTS sequencing or on the subject choice, which is Andrew's.
+
+
+## RCN-0010 -- The start-to-finish walk of the model-portfolio pipeline, and the ruleset for compiling it (the LGIC_LGCTFM pipeline-walk brief)
+
+**Date:** 2026-09-18 ~18:4xZ-19:4xZ . **Commissioned:** Andrew-direct ~18:2xZ and ~18:3xZ at this terminal (records
+@28a8ae74e3, @c9e54d5c0f). **Artifacts:** the walk
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/LGCTFM_PIPELINE_WALK_MDPF_START_TO_FINISH_20260918.md`; the brief
+`docs/briefs/d14-lgctfm-pipeline-walk-brief-20260918.md` (midstream, for the CTO's /endpoint --forward). Binding
+requirement: 1.0.0_SA_CTO R-81 @4443e7308e.
+
+Answer to Andrew's question: NO such walk is established in /legacy-transform (bucket-seeded, no edges, no consumer
+hop). The walk with the comp-tools that exist found on the model-portfolio subject: 7 triggers with targets (one
+CROSS-SYSTEM: mdpf-feeder-accelerator fires on opal-data-inf's sentinel, a bucket ADVI_FIRMBKTS retires), 6 Lambdas +
+1 EC2 runner (absent from EC2_MANIFEST.json; started by the two trigger Lambdas holding ec2:StartInstances), 13 roles,
+11 policies, 3 alarms, 6 log groups, an SSM parameter and a secret path outside the 33-type vocabulary, 17 packaged
+scripts, ~30 storage locations, 3 routes, 1 component; record scans 128 of 831 change-management records and 884 of
+6,068 log files with every off-plane name classified (mdpf-daily-trigger RETIRED 2026-08-07 by record); four sibling
+platinum keys written in the same second carry four viewer verdicts (VISIBLE / consumed-by-field route-unresolved /
+routed field-use-unmeasured / NO-ROUTE). Ruleset W1-W13 in the brief's Part V; eight outcomes O1-O8. Two static
+instruments disagree on one script's writes (union rule). Nothing moved; no applied-plane GET exercised; the
+integration carrier is the CTO's.

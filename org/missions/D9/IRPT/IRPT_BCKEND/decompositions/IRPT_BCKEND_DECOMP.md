@@ -1,31 +1,223 @@
-# IRPT_BCKEND -- L5 decomposition -- round 2 -- v0.2
+# IRPT_BCKEND -- L5 decomposition -- round 3 -- v0.3
 
 **v0.2** (2026-09-11 ~11:5xZ, `2.0.0_SA_COO~B`, the ROUND-2 RECUT on the CTO's round-1 analysis `ledger/ROUND_ANALYSIS.round1.md` @`0d57ceb2f9` and the CVO's slug `surprise-channel/remediations/REMEDIATION_v1.md` @`27e67fa6a5`, against PRD v0.13 @`e6ba5d9878`, ADMITTED with both L4-R halves SIGNED). Round 1 (v0.1.1, 19 cells) closed at ROUND_CLOSE with 0 of 10 REALIZED; its cells are retained below by id (section 0) so every round-1 instance's `cell_refs` still resolves in this document's id space. Round 2 is twelve cells, `IB-rt-<n>` and the battery `IB-rtb-1`, cut to the CTO's eight rulings in his order: the seam and the guards first, the three declared producers next, then export, YCharts on the v0.9 mechanism, intake controls, records.
 
 ```json
 {
- "project": "IRPT_BCKEND",
- "directive": "D9",
- "fabric": "laptop",
- "round": 2,
- "decomp_version": "v0.2",
- "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@e6ba5d9878",
- "prd_version": "v0.13",
- "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
- "round1_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5",
- "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
- "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
- "owns_grade": ["FWD-2", "FWD-7", "FWD-9", "FWD-10"],
- "cells_round2": 12,
- "cell_id_shape": "IB-rt-<n> (round 2, ruling-cut); IB-rtb-1 (the round-2 replay battery)",
- "worker_serial": "0.9.0_WK_IRPT_BCKEND~<slot> (the round-1 subagents, continued) and 0.4.0_DS_ClientPlatform~X (one DS-lane cell, the rule-13 act)",
- "cut_head": "67ef99e5c2",
- "counterpart_decomp": "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md"
+  "project": "IRPT_BCKEND",
+  "directive": "D9",
+  "fabric": "laptop",
+  "round": 5,
+  "decomp_version": "0.5",
+  "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
+  "prd_version": "v0.14",
+  "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
+  "round2_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND2_ANALYSIS.md@cfe3a33a9b",
+  "round2_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md@c1a8cd2543 (the L8/L9 commit; msg 97752)",
+  "round1_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5",
+  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+  "endpoint_outcomes": [
+    "FWD-1",
+    "FWD-2",
+    "FWD-3",
+    "FWD-4",
+    "FWD-5",
+    "FWD-7",
+    "FWD-8",
+    "FWD-9",
+    "FWD-10",
+    "FWD-11"
+  ],
+  "owns_grade": [
+    "FWD-2",
+    "FWD-7",
+    "FWD-9",
+    "FWD-10"
+  ],
+  "cells_round2": 12,
+  "cells_round3": 5,
+  "cell_id_shape": "IB-rtc-<n> (round 3, the recut on the round-2 analysis); IB-rt-<n>/IB-rtb-1 (round 2, retained by id)",
+  "worker_serial": "0.9.0_WK_IRPT_BCKEND~<slot> (the round-1 subagents, continued) and 0.4.0_DS_ClientPlatform~X (one DS-lane cell, the rule-13 act)",
+  "cut_head_round2": "67ef99e5c2",
+  "cut_head": "cfe3a33a9b (the round-2 analysis commit; HEAD at the cut is stated in the issuance commit)",
+  "counterpart_decomp": "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md",
+  "round3_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md @5c59f68d70",
+  "cells_round4": 8,
+  "cell_id_shape_round4": "IB-rtd-<n>",
+  "round4_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND4_ANALYSIS.md @561d6e1cc9",
+  "cells_round5": 5,
+  "cell_id_shape_round5": "IB-rte-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
+
+---
+
+## R5. ROUND 5 -- THE RECUT ON THE ROUND-4 ANALYSIS (@561d6e1cc9, msg 98036) AND ANDREW'S 17:3xZ APPROVAL (@af794c77e3)
+
+**Input:** seven judgment PASS, zero of ten FWDs REALIZED (all ten advisor-facing; the structural blocker is that no principal has ever existed to exercise them), S56 and S68 CLOSED, no PRD amendment; s.8 names six owed items; Andrew's verbatim *"Approved"* adopts the two `/open-calls` RECs (the two LGIC firm buckets NOW, creation only; a bounded test principal under both halves). The CTO's correction on W1-S20/W2-S59 changes the remedy: declare the true source in `files[]` / stage from a pinned blob, never a third copy.
+
+### R5.1 The rectangle (5 cells, id shape `IB-rte-<n>`)
+
+| cell | owes | assignee | serves |
+|---|---|---|---|
+| IB-rte-1 | s.8 item 1 / Andrew call 2: the bounded test principal DECLARED -- identity plane measured, keys, exercise plan, never-widen packet; creates nothing | WK~1 | FWD-1, 2, 5, 11 |
+| IB-rte-2 | the principal CREATED under both halves, the four outcomes EXERCISED at a live session by artifact hash, DELETED as the cell's last arm | WK~1 (after rte-1 + halves) | FWD-1, 2, 5, 11 |
+| IB-rte-3 | s.8 item 2 / Andrew call 1: `opal-data-inflection` + `opal-data-cottonwood` CREATED EMPTY via `name()`, in the 49 Financial bucket's shape, gate enumerations regenerated, fence proven; no objects, no cut-over | WK~3 | FWD-1, 7, 10 |
+| IB-rte-4 | s.8 item 4 / W1-S20, W2-S59: the served members declared from their TRUE sources (no third copy), served zips verified member-for-member, clean-checkout builds with 0 manual steps | WK~4 | provenance of every served function |
+| IB-rte-5 | s.8 item 6 / W2-S57 residual: the manifest-history census (rtd-2's Q2), FWD-7's FIVE arms on the controlled clock against the deployed code, the fresh-dispatch case named or driven | WK~2 | FWD-7 |
+
+**Not cells of this project:** s.8 item 3 (S68's cause, the `.gitattributes eol=lf` act) is MDPF's owner's -- the CTO's own, by its word. s.8 item 5 (IRPT_FNTEND's per-firm as-of consequence) is a CARRY: sent to `2.0.0_SA_COO~F` 11:55Z (QUEUED, no live session) and now escalated to `1.0.0_SA_CTO` to land in FNTEND's PRD at L4, which is the only carrier that does not decay. IB-rtd-7 (the port) stays SUPERSEDED until rte-3's buckets, both halves and the FNTEND reader cell exist -- re-cut then, not now.
+
+### R5.2 Edges and fanout
+
+Chains: A `rte-1 -> rte-2`; B `rte-3`; C `rte-4`; D `rte-5`. **fanout: 4 of 4 chains, cap 8.** Handed now: rte-1, rte-3, rte-4, rte-5. rte-2 on rte-1's merge + both halves at HEAD (the COO half is this seat's on the packet; the CTO half is asked the same tick the packet drains). The DS lane holds no round-5 order (nothing Rule-13-shaped is cut); it stays seated for the port's bundle work.
+
+### R5.3 Bounds carried
+
+R-40, R-42, R-44, R-45; the forward-looking-criterion bar and S56's vintage pins on every face; Rule 30 on every name (builder output or a drafted registry row); NEVER-1 on the principal (both halves before creation; deletion inside the same order); creation-only on the buckets (no object, no cut-over, no legacy retirement -- Andrew's prior word stands); no third copy of a served member; read-only on every served bucket in rte-5 (a reconciliation is declared, never performed).
+
+### R5.4 Not decided here
+
+Whether one bounded identity serves FWD-11 or a second is needed (rte-1's judgment); whether `_authz/` becomes a shared package (rte-4's judgment, L4's); whether the D14 register already names the two buckets (rte-3's judgment); the fresh-dispatch design (rte-5's judgment).
+
+## R4. ROUND 4 -- THE RECUT ON THE ROUND-3 ANALYSIS (@5c59f68d70, msg 97944)
+
+**Input:** the CTO's round-3 analysis: nine judgment PASS, zero of ten FWDs REALIZED, no PRD amendment, round 4 unblocked; s.9 names six owed items and s.4 ADOPTS the forward-looking-criterion bar. The issuer adds ONE carried row (W1-S16, the first round-4 cut per S57) and excludes S73 (an estate-instrument defect, routed elsewhere by the CTO).
+
+### R4.1 The rectangle (8 cells, id shape `IB-rtd-<n>`)
+
+| cell | owes | assignee | serves |
+|---|---|---|---|
+| IB-rtd-1 | s.9 item 1: the 13:00Z organic fire graded on what it ACTUALLY loaded (bundle VersionId + CodeSha256 at invocation; artifacts by hash; the scheduler as invoker) | WK~2 | FWD-7 organic arm |
+| IB-rtd-2 | s.9 item 4 / W2-S57: `last_manifest()` finds the COMPLETED manifest at the runner's date; the no-op branch fires on its positive case; deployed; driven after the organic fire | WK~2 (after rtd-1) | FWD-7 |
+| IB-rtd-3 | s.7 / s.9 item 5 (S71): the holdings contract aboard the bundle; the two-schema diff recorded; the re-arm trigger guarded by a test | DS~X | FWD-5, FWD-7 |
+| IB-rtd-4 | s.6 / s.9 item 5 (S68): the route-bindings drift measured by content, consumers + writers censused, the never-widen packet written -- declares only | WK~3 | deploy discipline |
+| IB-rtd-5 | S68 resolved under both halves (CTO = MDPF's owner + COO), root converged | WK~3 (after rtd-4 + halves) | deploy discipline |
+| IB-rtd-6 | s.9 item 2: the LGIC address built (`address()`, refusals -> drafted registry rows), readers/writers censused across both projects, the port planned, the write-grant packet written -- declares only | WK~4 | FWD-1, FWD-7, FWD-10 |
+| IB-rtd-7 | the port under both halves + the CTO's registry rows + FNTEND's reader cell, one window, legacy retired | WK~4 (after rtd-6 + 3 gates) | FWD-1, FWD-7, FWD-10 |
+| IB-rtd-8 | W1-S16: `Enforcer.covers()` firm check restored on BOTH enforcer copies (`_authz/enforce.py:351`, `holdings/enforce.py:319` @5c59f68d70), six-swap tests, deployed, proven on live routes | WK~1 | FWD-2, FWD-11 |
+
+**Not a cell:** s.9 item 3 (the per-firm as-of consequence for IRPT_FNTEND) is a COO carrier -- a message to `2.0.0_SA_COO~F` with the fact and its consequence for the API/as-of display, sent with this issuance. S56's vintage pins and the forward-looking bar are BOUNDS on every face, graded at the drain (bare `:NNN` citations `0 of N`).
+
+### R4.2 Edges and fanout
+
+Chains: A `rtd-1 -> rtd-2`; B `rtd-3`; C `rtd-4 -> rtd-5`; D `rtd-6 -> rtd-7`; E `rtd-8`. **fanout: 5 of 5 chains, cap 8.** Handed now: rtd-3, rtd-4, rtd-6, rtd-8. rtd-1 is handed ~12:5xZ so the worker reads the 13:00Z fire rather than predicts it (the hand-off timing is the issuer's; the cell has no calendar wait beyond the event it grades -- the CTO ruled the organic arm correctly shaped, s.4). rtd-2 after rtd-1 merges (a deploy must not change what the organic fire loads). rtd-5 after rtd-4 + both halves (or SUPERSEDED if the packet recommends no apply). rtd-7 after rtd-6 + the CTO's registry rows + both halves + FNTEND's reader cell.
+
+### R4.3 Bounds carried
+
+R-40, R-42, R-44, R-45 on every face; the forward-looking-criterion bar (s.4); S56's vintage-pin bar on every judgment record; S73 excluded by name; Rule 30 on every address (builder output or a drafted registry row, never a typed path); NEVER-1 sign-off on every widening (rtd-5, rtd-7 gated on both halves); no shadow/dual-write on the port. Worker rows mint `IRPT_BCKEND-W<slot>-S<k>`; the DS mints `IRPT_BCKEND-D-S<k>`.
+
+### R4.4 Not decided here
+
+Which HoldingsSnapshot schema is the contract (L4's); whether the port is this project's conformance or a D14 rider (rtd-6's judgment record puts the evidence in front of the CTO); the enforcer consolidation (rtd-8's judgment record); the `eol=lf` attribute (a row).
+
+## R3. ROUND 3 -- THE RECUT ON THE ROUND-2 ANALYSIS (v0.3, 2026-09-18 ~01:5xZ, `2.0.0_SA_COO~B`)
+
+**Input:** the CTO's round-2 analysis @cfe3a33a9b (on the CVO's L8/L9 @c1a8cd2543, msg 97752): 11 PASS / 1 FAIL across
+twelve judgment criteria, ZERO outcomes REALIZED because no round-2 cell was cut to exercise one; five items the round
+carries (RT5-AC2's one-paragraph repair; W4-S25/W4-S28 re-owned under R-42 with W4-S28's disarm act as a BYTES
+comparison; the ACROSS-INPUTS renderer control before FWD-3/4/8 are narrowed again; W4-S23's re-cut bar and S32's
+stale batteries retired; the 53 graduated ARMED rows' intake against LIVE owners). Plus this seat's own carries from the
+drain (S53/S54/S55): the wall behind IB-rt-6 is narrower than round 2 recorded, and FWD-1/FWD-7 cannot wait on
+ADVI_FIRMBKTS. **The choice: RE-ISSUE against the frozen v0.2 rectangle, not a re-decomposition** -- every round-3 cell
+is a repair, an exercise or a control on a round-2 surface; no PRD row is newly served and no surface is added.
+
+### R3.1 THE RECTANGLE -- five round-3 cells
+
+| cell | executes | serves | write surface | verb | deploys | live arm |
+|---|---|---|---|---|---|---|
+| `IB-rtc-1` | RT5-AC2's repair (analysis s."THE ONE FAIL") | FWD-1, FWD-5, FWD-7 | IB-rt-5's proof instance (the RT5-AC2 row gains the sibling's host reading, cited and hashed) | record | no | no |
+| `IB-rtc-2` | row W2-S51 (the bundle's closure), the Rule 13 DS act | FWD-1, FWD-7, FWD-5 | `.tools/safe_deploy_core.py` CODE_TREES; the re-mint through `--mint-bundle`; on-host import proof | deploy (DS lane) | S3 mint | no |
+| `IB-rtc-3` | FWD-7's exercise on the deployed dispatch for inf and cot; the 49f arm measured BLOCKED on the control | FWD-7 own, FWD-1 | none (the runner and the dispatch as deployed; artifacts land in the firm buckets) | exercise | no | no |
+| `IB-rtc-4` | W4-S28 (bytes), S32 (retire), W4-S23 (vendor bar), W1-S17 (layer fetch) | FWD-4, FWD-3, FWD-8, FWD-2 | rt2_verify_deployed.py; two result headers; RT8's census bar | repair | no | no |
+| `IB-rtc-5` | W4-S19's across-inputs renderer control; the real-path arm HUMAN-GATED | FWD-8, FWD-3, FWD-4 | none (the renderer as built; fixtures under the worker's home) | verify | no | no |
+
+**Outcome coverage, run not asserted:** FWD-1 (rtc-1, rtc-2, rtc-3), FWD-2 (rtc-4), FWD-3 (rtc-4, rtc-5), FWD-4 (rtc-4, rtc-5),
+FWD-5 (rtc-1, rtc-2), FWD-7 (rtc-1, rtc-2, rtc-3), FWD-8 (rtc-4, rtc-5): **7 of 10 outcomes have a round-3 cell.** FWD-9 and
+FWD-10 read ADVANCED cleanly and carry nothing this round. **FWD-11 and the EXERCISED bars of FWD-1/2/5 are NOT cut**,
+deliberately: each bars at a live session (a granted advisor; a restricted advisor; an Opal user across firms), which is
+the test principal RT2 recorded HUMAN-GATED -- the reserved card at Andrew (restated to `0.0.0_AB_MSTR` at this
+issuance). A cell that "exercises" them without the principal would be the self-wrapping harness bound 12 forbids.
+
+**HELD, named:** the 49 Financial directory build (FWD-1/FWD-7's third firm). Its source read is behind
+`DenyForeignFirmPrincipals` on `opal-data-49financial`, a CONTROL not a gap; the remedy is a DESIGN decision (run that
+firm's build under a 49 Financial principal, or another shape) pitched to `1.0.0_SA_CTO` with this seat's rec at this
+issuance. `IB-rtc-3` measures the refusal on this vintage and does not work around it.
+
+### R3.2 THE EDGES AND THE FENCE
+
+```
+  edges (1):  IB-rtc-2 -> IB-rtc-3      (the closure must be aboard the bundle before any build)
+  heads at spawn = 4 : IB-rtc-1 IB-rtc-2 IB-rtc-4 IB-rtc-5      leaves = 4 : IB-rtc-1 IB-rtc-3 IB-rtc-4 IB-rtc-5
+  M, maximal paths = 4          components = 4          depth = 2 (IB-rtc-2 -> IB-rtc-3)         acyclic: trivially
+```
+
+| wave | cells | reason |
+|---|---|---|
+| 1 | `IB-rtc-1` `IB-rtc-2` `IB-rtc-4` `IB-rtc-5` | four heads, four seats, from the first hand-off |
+| 2 | `IB-rtc-3` | after the DS lane's mint merges |
+
+### R3.3 SEATING AND THE FAN-OUT
+
+```
+fanout: 4 of 4 chains, cap 8, reason: four independent heads and one dependent exercise; four worker
+        subagents cold-started (the round-2 subagents died with their sessions -- slot 1: IB-rtc-1;
+        slot 2: IB-rtc-3 after IB-rtc-2 merges; slot 3: IB-rtc-4; slot 4: IB-rtc-5) and the DS lane
+        0.4.0_DS_ClientPlatform~X re-seated by the issuer under /mstr-spawn for the one act no worker
+        may take (IB-rtc-2, Rule 13); the single cross-slot wait is IB-rtc-3 on IB-rtc-2.
+```
+
+Each hand-off is a fresh worktree from `HEAD` at hand-off time (`git worktree add -b wk-irpt_bckend-3-<n> /c/tmp/wk-irpt-3-<n> HEAD`;
+the DS lane `/c/tmp/wk-irpt-3-ds`), `.tools/terraform.exe` provisioned by the issuer where a root is read.
+
+### R3.4 BOUNDS CARRIED, AND ONE ADDED
+
+Items 1-13 of s.8 stand verbatim on every face. Added on every round-3 face: **R-40** (`1.0.0_SA_CTO` @233f5fd5e4) --
+a criterion whose subject is a run or a produced artifact records that artifact's CONTENT HASH beside its run id and is
+graded against the hash; and **R-42** -- a `disarm_owner` is a SEAT SERIAL, never a cell, an order or a condition.
+
+### R3.5 WHAT THIS RECUT DOES NOT DECIDE
+
+- The 49 Financial build's principal (a design fork, the CTO's); the test principal (Andrew's card); the scheduled fire
+  that is FWD-7's acceptance (the schedule is ENABLED and untouched; the cell's manual invoke is QA).
+- The 53 graduated ARMED rows' intake: an OWNER'S word, not a cell's. The 36 owned by `2.0.0_SA_COO~B` are given in
+  this seat's own rows during the round; the CTO's 7 and the CVO's 2 are theirs; the 5 owned by terminated worker slots
+  carry their carve-outs and are re-placed on `2.0.0_SA_COO~B` under R-42 when this seat gives its word on each.
+
+### R3.6 AMENDMENT 1 (2026-09-18 ~03:1xZ) -- on R-44 and R-45 @57bc083d45, the two calls this round pitched
+
+**Why an amendment and not a round:** both rulings answer calls this seat pitched mid-round on measurements the
+round's own cells produced (rows S57->S62, S58, S59 from IB-rtc-2's first pass; S53 from the drain). The rectangle's
+cells are the same repairs, exercises and controls; two are RE-CUT to carry the ruled shape, and two are ADDED for the
+principal R-44 rules, split at the signature so no cell waits for a seat.
+
+| cell | change | serves | slot |
+|---|---|---|---|
+| `IB-rtc-2` | RE-CUT: the guard's member-level DISTRIBUTION flag, the 8-file closure with S58's two members ADMITTED, R-45's two-leg consistency control with a one-leg mutant, the re-mint, the on-host repo-shaped import proof | FWD-1, FWD-7, FWD-5 | DS `~X`, re-handed |
+| `IB-rtc-3` | RE-CUT: gains the repo-shaped unpack in `refresh.py` and the directory root's apply under ledger before the inf/cot exercise | FWD-7 own, FWD-1 | `~2`, after rtc-2 |
+| `IB-rtc-6` | NEW: the 49 Financial principal DECLARED (builder-named role, trust from the host role, five dimension reads and nothing else), the runner's 49F source set through the assumed role, the writer census, plans with 0 destroys, the never-widen sign-off PACKET; NO apply | FWD-1, FWD-7 | DS `~X`, after rtc-2 |
+| `IB-rtc-7` | NEW: both halves at HEAD, the two applies under ledger, the NEGATIVE CONTROL (another firm's prefix DENIED, the destination write DENIED, the name off the denied prefixes), then the 49f build through the dispatch -> 3 of 3 directories | FWD-1, FWD-7 | `~1`, after rtc-3, rtc-6 and both halves |
+
+```
+  edges (amended): IB-rtc-2 -> IB-rtc-3   IB-rtc-2 -> IB-rtc-6   IB-rtc-3 -> IB-rtc-7   IB-rtc-6 -> IB-rtc-7   (+ the two sign-off halves -> IB-rtc-7)
+  heads at this hand-off = 1 : IB-rtc-2      leaves = 1 : IB-rtc-7      depth = 3
+  fanout (amended): 1 of 3 chains at the hand-off, cap 8, reason: the DS lane holds rtc-2 then rtc-6 in sequence (Rule 13 on both),
+                    slot ~2 takes rtc-3 on rtc-2's merge, slot ~1 takes rtc-7 last; the sign-off halves are the seats' acts, not a cell's
+```
+
+**The sign-off split, stated once:** a never-widen act needs CTO+COO halves naming blast radius and rollback per key
+(CLAUDE.md NEVER-1). A cell cannot wait for a signature, so `IB-rtc-6` writes the PACKET and stops, the two seats sign,
+and `IB-rtc-7` applies. The COO half is `2.0.0_SA_COO~B`'s and is written from the packet, never before it.
+
+**ADDED ~06:4xZ on the packet (IB-rtc-6's NEVER_WIDEN_SIGNOFF_PACKET, step 5) and rows S65/S68:** `IB-rtc-8` -- the `investor_reporting` bundle re-minted through the guard after IB-rtc-6's runner edit merged, so the host runs the K5 runner (a Rule 13 DS act; verified on the served object and on the host, no apply). Edge: `IB-rtc-8 -> IB-rtc-7`. `IB-rtc-7` is amended to re-read the packet's blob hash against the COO half, to apply the mdpf-pipeline root TARGETED to K3 (the one departure from s.6's `-target` never, signed in the COO half because that root also plans an unrelated `mdpf_route_bindings` change, row S68), and to wait on `IB-rtc-8`. `IB-rtc-3` was amended a second time (AMENDMENT 2, @af7d39d96f) on row W2-S55: the dispatch passes no explicit `--as-of`; upheld by `1.0.0_SA_CTO` at 97857 on the PRD's own REUSE row for `lib/trading_calendar.py`.
+
+**ADDED ~07:5xZ on row W2-S56 (IB-rtc-3 AMENDMENT 2's real fires, drained @a4db909717 as FAIL-measured):** `IB-rtc-9` -- both gold runners call jsonschema 4.x-only API (`Draft202012Validator`, `ValidationError.json_path`) on a host running 3.2.0, so every firm's build dies at validation the moment it passes the date check; the two call sites are made version-tolerant in the DS lane (never by mutating the shared MDPF host), pinned by a test with a mutant-environment control, the bundle re-minted, the fix exercised ON THE HOST with the pre-cell tarball as the positive control of the defect. Issuer's ruling: ADJUDICABLE (L5/L6), a code defect in a DS file. Edges: `IB-rtc-9 -> IB-rtc-7`; `IB-rtc-9 -> IB-rtc-3 (AMENDMENT 3: the battery re-run only, no code)`. The eleven contracts use no 2019/2020-only keyword (0 of 11 at HEAD), so draft-7 grading on 3.2.0 is the same grading. IB-rtc-3's instance @a4db909717 is INVALID at HEAD on a CCX pin (an artifact pinned PENDING-THIS-COMMIT that an earlier commit carried); it is replaced by AMENDMENT 3's run.
+
+**Bounds carried:** R-40 and R-42 on every face; R-45's added control (two legs, one mutant) on `IB-rtc-2`; R-44's three
+conditions split across `IB-rtc-6` (1, the packet of 2) and `IB-rtc-7` (the apply of 2, and 3).
 
 ---
 

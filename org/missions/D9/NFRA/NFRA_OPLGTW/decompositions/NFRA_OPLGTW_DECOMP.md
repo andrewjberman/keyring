@@ -132,7 +132,7 @@ its cell reads it.
 
 ---
 
-## 3. THE CELLS -- 29 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8)
+## 3. THE CELLS -- 33 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8; `OG-q-4` added 2026-09-17 on ruling R-OG-13; `OG-q-5` added 2026-09-17 on ruling R-OG-17; `OG-q-6` added 2026-09-18 on ruling R-OG-18; `OG-z-4` added 2026-09-18 on ruling R-OG-20)
 
 Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1, prefix `OG`. Axes: `p` parity and baseline, `i` AWS
 infrastructure (Terraform, one state), `d` durable state, `a` authentication, `z` authorization, `c` completion closure,
@@ -180,7 +180,7 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 - the apply runs through `safe-apply` under a ledger entry whose OPEN sentinel is committed before the act
 - the ledger entry is closed and committed before the reads below
 - `describe-table` reads SSE enabled, point-in-time recovery enabled, PAY_PER_REQUEST billing, the TTL attribute set and the designed key schema
-- the runtime grant allows Get, Put, Update and TransactWrite on exactly the table ARN, with write actions conditioned on `dynamodb:LeadingKeys` matching `RUNTIME#*`, and no DeleteItem or table-admin action
+- the runtime grant allows `GetItem`, `PutItem`, `UpdateItem` and `DeleteItem` on exactly the table ARN, with every write action conditioned on `dynamodb:LeadingKeys` matching `RUNTIME#*`, and no table-admin action. **`DeleteItem` was added and the prohibition on it STRUCK AS TO `RUNTIME#` on 2026-09-18 by `1.0.0_SA_CTO` ruling R-OG-21 (@`157b426b2d`), Andrew-approved directly ~16:1xZ**, after the prohibition was measured to be the cause of a ten-hour login outage: `app/oauth_as.py:649` (the pending-authorization consume at `/callback`) and `:772` (burning a code on a failed verifier) both call a CONDITIONAL delete, and both delete an EXPIRING record, which is what the contract's `RUNTIME` clause affirmatively admits ("runtime conditional writes and expiring records"). The contract needed no amendment; only this line and `OGI1-AC5` did. **THE PROHIBITION STANDS UNCHANGED FOR `POLICY#` (line below) AND FOR TABLE-ADMIN ACTIONS**, and the `LeadingKeys` confinement is what keeps the two apart. **AND THE OLD WORDING NAMED A PERMISSION THAT DOES NOT EXIST:** there is no `dynamodb:TransactWriteItems` IAM action at all -- a transaction is authorized PER ITEM against `PutItem`/`UpdateItem` (`probes/og_i1.py:33`, and the TF's own comment at `schwab_access_state.tf:21`) -- so "allows ... TransactWrite" was not an over-grant on paper but a CATEGORY ERROR, and a later cell relying on it would have been relying on something no policy can grant.
 - the operator principal is separate, may conditionally update `POLICY#` records and append `operator_audit` in one transaction, and holds no DeleteItem on `POLICY#` and no table-admin action
 - (difference) from the Gateway host, an isolated runtime-principal write to a `POLICY#` key is AccessDenied, while the same write to a `RUNTIME#` key succeeds in the same harness (A13)
 - two concurrent operator revisions of one isolated `POLICY#` record yield exactly one success and one ConditionalCheckFailed (A13)
@@ -326,6 +326,17 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 
 | cell | what it is | serves | writes | status |
 |---|---|---|---|---|
+| `OG-z-4` | the guard denial's MCP envelope: a refused call is flagged as an error to the CONSUMER, not only in its body (added 2026-09-18 on ruling R-OG-20) | FWD-3, 5 | `GW/app/tools.py`, `GW/tests/test_schwab_denial_envelope.py` (new) | OPEN |
+
+**`OG-z-4` acceptance** (added 2026-09-18 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-20, msg 97775 @bb15319584, closing call 18 on row `NFRA_OPLGTW-W5-S18`. Found because `OG-q-5`'s half-one fix UNMASKED it behind an assertion that had been failing first. Edges: `OG-z-1 -> OG-z-4`, `OG-q-5 -> OG-z-4`, `OG-z-4 -> OG-v-2` (its last re-hand). Slot ~6.)
+- a guard-denied tool call returns the MCP error flag TRUE and its contract error code, graded live through the real app
+- a permitted call in the same harness still returns the error flag FALSE
+- (mutant control) removing the flag-setting line fails the first criterion
+- the class docstring's claim that a denial is "a terminal tool error" is true of the code, or the docstring is corrected to what the code does
+- **R-OG-20's bar, stated as the cell's reason:** a criterion about a REFUSAL grades the signal the CONSUMER reads, never only the text the producer wrote
+
+| cell | what it is | serves | writes | status |
+|---|---|---|---|---|
 | `OG-z-1` | the persistent policy model and its guard on discovery, dispatch and every REST route | FWD-3, 6, 7 | `GW/app/data_entitlement.py` (new), `GW/app/identity_scope.py`, `GW/app/tools.py`, `GW/app/integrations/base.py`, `GW/app/integrations/registry.py`, `GW/app/server.py`, `GW/app/query_v0.py`, `GW/tests/test_data_entitlement_guard.py` (new) | OPEN |
 | `OG-z-2` | the operator's entitlement administration command | FWD-6, 8 | `GW/ops/schwab_entitlement_admin.py` (new), `GW/tests/test_entitlement_admin.py` (new) | OPEN |
 | `OG-z-3` | the keyed account alias | FWD-2, 3 | `GW/app/account_ref.py` (new), `GW/tests/test_account_ref.py` (new) | OPEN |
@@ -456,6 +467,9 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 | `OG-q-1` | the bounded execution engine | FWD-5, 7 | `GW/app/integrations/schwab/engine.py` (new), `GW/requirements.txt`, `GW/tests/test_schwab_engine.py` (new) | OPEN |
 | `OG-q-2` | the five tools, request validation, the response envelope, cursors | FWD-2, 3, 5 | `GW/app/integrations/schwab/integration.py` (new), `GW/app/integrations/schwab/query.py` (new), `GW/app/integrations/schwab/envelope.py` (new), `GW/app/integrations/schwab/cursor.py` (new), `GW/app/integrations/registry.py`, `GW/tests/test_schwab_query.py` (new) | OPEN |
 | `OG-q-3` | snapshot and metric semantics | FWD-2, 5 | `GW/app/integrations/schwab/semantics.py` (new), `GW/app/integrations/schwab/datasets.json` (new), `GW/tests/test_schwab_semantics.py` (new) | OPEN |
+| `OG-q-4` | the semantics checks wired into the live query path (added 2026-09-17 on ruling R-OG-13) | FWD-2, 5 | `GW/app/integrations/schwab/query.py`, `GW/app/integrations/schwab/integration.py`, `GW/tests/test_schwab_wiring.py` (new) | OPEN |
+| `OG-q-5` | the dim_asset partial-account restriction wired on the live path, and a CENSUS of every C3 rule against its call path (added 2026-09-17 on ruling R-OG-17) | FWD-2, 5 | `GW/app/integrations/schwab/query.py`, `GW/app/integrations/schwab/catalog.py`, `GW/tests/test_schwab_asset_policy.py` (new) | OPEN |
+| `OG-q-6` | the FOUR remaining NOT-ENFORCED C3 rules the census found, wired on the live path under ONE mutant (added 2026-09-18 on ruling R-OG-18) | FWD-2, 5 | `GW/app/integrations/schwab/query.py`, `GW/tests/test_schwab_c3_rules.py` (new) | OPEN |
 
 **`OG-q-1` acceptance**
 - each job runs in a child process outside the event loop
@@ -497,6 +511,28 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 - (difference) a revision change during a job discards the result, and an unchanged revision releases it
 - prompt-like text inside data comes back as data and invokes no tool, widens no filter and changes no grant (A12)
 - every tool call writes its audit event through `OG-o-1` before release
+
+**`OG-q-6` acceptance** (added 2026-09-18 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-18, msg 97749 @d6466d7697, closing call 17 on rows `NFRA_OPLGTW-W5-S14`..`W5-S17`. A cell added mid-round on the L4 owner's ruling, not a re-decomposition. Edges: `OG-q-4 -> OG-q-6`, `OG-q-5 -> OG-q-6`, `OG-q-6 -> OG-v-2` (its last re-hand). Slot ~5. ONE cell for all four because they share one call site, one harness and one mutant -- and the ruling made that premise FALSIFIABLE BY THE CELL: the mutant must fail ALL FOUR, and fewer than four is the finding, not an anomaly.)
+- R20: a grouping that drops master or date identity is refused on the live path, the refusal's contract code printed
+- R22: a total built by adding DIFFERENT balance fields is refused on the live path, while a named field's sum across approved accounts still succeeds
+- R24: a duplicate or conflicting source grain returns unavailable rather than a silently de-duplicated answer
+- R25: the dataset description carries sign and null semantics for every authorized field, denominator printed
+- (ONE mutant control, and the one-cell premise rests on it) removing the SHARED call site fails ALL FOUR criteria above; fewer than four FAILS this criterion and the cell splits on that evidence
+- (closing) the C3 census is re-read and its NOT-ENFORCED count falls to 0, WITH ITS DENOMINATOR RE-PRINTED at re-read time rather than inherited from the 29 measured at the earlier vintage
+
+**`OG-q-5` acceptance** (added 2026-09-17 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-17, msg 97682 @70570f36b9, on row `NFRA_OPLGTW-W6-S8`, which `OG-v-2`'s integrated harness measured. A cell added mid-round on the L4 owner's ruling, not a re-decomposition. Edges: `OG-q-2 -> OG-q-5`, `OG-q-3 -> OG-q-5`, `OG-q-5 -> OG-v-2` (its last re-hand). Slot ~5, after `OG-q-4`.)
+- under a partial-account grant, `dim_asset` returns only the CUSIPs the authorized accounts hold on that master and date, graded through the real app
+- a CUSIP held ONLY by an unauthorized account is ABSENT from that same response
+- (mutant control) with the restriction's call site removed in a scratch copy, both criteria above FAIL
+- (the census R-OG-17 adds, because this is the third instance of one root cause) every rule PRD C3 states is enumerated with its denominator PRINTED, and each is marked enforced-on-the-call-path or NOT, measured through the app rather than read off the PRD
+- the neighbouring query, semantics, wiring and acceptance modules still pass, one pytest process per module
+
+**`OG-q-4` acceptance** (added 2026-09-17 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-13, msg 97629 @9798d9dda5, closing call 13 on row `NFRA_OPLGTW-W6-S6`. A cell added mid-round on the L4 owner's ruling, not a re-decomposition. Cause: `OG-q-3`'s criteria exercised `semantics.py` in isolation and named no call site, so 14 of 14 passed over a module nothing imports; `OG-q-2`'s query path predates it. Edges: `OG-q-2 -> OG-q-4`, `OG-q-3 -> OG-q-4`, `OG-q-4 -> OG-v-2` (re-hand). Slot ~5. Every criterion here is graded on the LIVE path through the real app and carries a mutant control, per R-OG-13's standing bar.)
+- a nonadditive field's SUM through the registered `schwab_query` tool is refused, with the refusal's contract error code printed
+- a quantity SUM not grouped by `cusip` and `l_s` through the same tool is refused
+- a legal named-balance SUM through the same tool still succeeds and returns its total
+- (mutant control) with the call site removed in a scratch copy, the two refusal criteria FAIL and the legal SUM still passes
+- `OG-q-2`'s and `OG-q-3`'s own test modules still pass, one pytest process per module
 
 **`OG-q-3` acceptance**
 - grouping never drops master or date identity

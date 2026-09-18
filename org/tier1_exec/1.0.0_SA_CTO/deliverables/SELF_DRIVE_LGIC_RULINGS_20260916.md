@@ -1234,3 +1234,68 @@ lambda-source-map conflict), the 18 staged D14 channel files graded with MERGE_H
 rc=0 with 0. Mutant: a copy of W2-S7 re-id'd W2-S999 and appended in the merge -> NEW gate rc=1, refused on the owner limb. Worktree removed.
 
 **The leg:** `0.0.0_AB_MSTR~Z` re-runs safe-merge against origin/CLOUD at or after the commit carrying this ruling. No override, no row edit.
+
+### R-29 (2026-09-17 ~14:5xZ) -- LGIC_ENFORCE r3 EN-s-6: option (A) RULED, with a fence guard -- the census worker mints the registry rows its RAISEs name, ONLY from a measured declared source; a row that would move an applied policy is carded BLOCKING, never minted; timebox 25 distinct RAISEs
+
+**Call:** `2.0.0_SA_COO~G` 97603. `TO-EN-s-6-r3` (worker `~4` @824e5da109, proof VALID) fails S6R3-AC1..AC4: `lib/opal_naming.py
+census --live --repo` stops on the same first RAISE as rounds 1-2 (live API_GW `sentiment-query-api`, R1.f "'sentiment' is in no
+vocabulary"), plus `{system}` on `inf-otp-relay-api`, which has no row in `infra/logic/registry/resources.json` @HEAD. No round-3
+cell owns those rows (EN-r-5 was scoped to R-6's six tokens; EN-s-6's bounds forbid a registry edit), so FWD-5 cannot close as cut.
+
+**Classified: the default class (this seat's rec)** -- the scope of one in-flight order, decided on an existing precedent (R-6's
+measured-source minting for EN-r-5) and on Rule 30's own text: "a builder REFUSAL is a missing registry row to add".
+
+**Ruling: (A).** Issuer amendment to EN-s-6 before L8, same slot: `infra/logic/registry/systems.json` and `resources.json` join its
+`<paths>`; the worker loops census -> per RAISE, mints the row ONLY where owner and token are MEASURED from a declared source
+(lambda-source-map, EC2 manifest, terraform tree), else writes an owner card and records the name NOT-JUDGED with its reason ->
+re-runs to the end. AC1/AC2 accept judged + carded-not-judged == nameable, carded count printed; `validate` stays OK.
+**Added guard (this seat):** a row whose mint would change a GENERATED POLICY on an APPLIED resource (the registry-derived fence --
+e.g. an exemption under `opal-data-49financial`) is NOT minted: it is carded BLOCKING for never-widen sign-off
+(1.0.0_SA_CTO + 2.0.0_SA_COO), exactly EN-w-7's standing stop. **Timebox:** more than 25 distinct RAISEs -> stop, file the list,
+FWD-5 rides round 4 on it. (B) is not taken: a full round spent on the one outcome ENFORCE still misses, when the precedent
+for closing it in-round already exists.
+
+### R-30 (2026-09-17 ~17:4xZ) -- LGIC_ENFORCE-W2-S12 (ARMED, dark owner 0.7.0_AE_CloudOps): disarmed BY RULE, not by instrumenting opal-data-demo -- a NOT_A_PRINCIPAL claim on a bucket with no CloudTrail data-event selector is REFUSED and carded NOT-JUDGED; disarm owner re-assigned to 1.0.0_SA_CTO
+
+**Call:** `2.0.0_SA_COO~G` 97620 (LGIC_ENFORCE round-3 drain-end), which carries the row as ARMED with a dark owner it could not seat.
+
+**Measured (the row's own grounding @b54636545d):** `opal-data-demo` is in neither data-event trail set
+(`cloudtrail-organization-trail.tf:46-51` read set; `item2e_served_write_trail.tf:30` write set), and the bucket is live. So
+DEC-4(ii)'s one prescribed NOT_A_PRINCIPAL evidence path -- CloudTrail data events live on the bucket -- can never answer for it.
+It did NOT block round 3: EN-w-7's one writer on that bucket resolved EXEMPTED from a direct IAM-grant read, and no applied policy moved.
+
+**Classified: the default class (this seat's rec).** The hazard is a FUTURE claim, not a present act; the cheapest correct remedy is
+a rule, not an apply (adding the bucket to a trail is an infra act, a cost line, and a spawn of a dark lane for a demo bucket).
+
+**Ruling.** (1) On any bucket that is not a member of a live CloudTrail data-event selector, a NOT_A_PRINCIPAL disposition is
+REFUSED: the principal is dispositioned from a direct IAM-grant read (EXEMPTED / NOT_A_PRINCIPAL by grant absence, cited) or carded
+NOT-JUDGED with the missing-instrument reason. Silence in a trail that never covered the bucket is never evidence. (2) This binds
+DEC-4(ii)'s criterion text at ENFORCE round 4's cut. (3) W2-S12's disarm owner moves to 1.0.0_SA_CTO (the owner of the evidence
+rule the remedy changes, R-19), under the R-19 addendum's fourth move; `3.0.0_SA_CVO` writes the owner move and the DISARMED clock
+citing this ruling. (4) Instrumenting opal-data-demo is NOT ordered; if a later project needs trail evidence there, it cuts that cell.
+
+### R-34 (2026-09-17 ~19:1xZ) -- LGIC_CANON FWD-5: no step of the checklist's first run waits on ADVI_FIRMBKTS; an unreachable step is CARDED, and the outcome grades `reached + carded == steps`. CORRECTS this seat's round-3 analysis, which named a gate Andrew had already lifted
+
+**Andrew-direct 2026-09-17 ~19:0xZ, VERBATIM:** *"2 doesnt matter right now this should not be a holdup if its a fwd it should not be"*
+(record `ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md` @57a15b2bbe). It is
+Rule 27's own law in his words: **NO FWD IS A WAIT.**
+
+**OWNED, TWICE, AND BOTH BY THIS SEAT.**
+1. **The round-3 analysis @d60e80f68c said FWD-5 waits on "Andrew's word (gate G-N)". IT DOES NOT.** He lifted G-N on
+   2026-09-16 ~18:2xZ, and the PRD's own DEC-6 records it: *"Yes we can do something like this (b), but I think it would
+   really be in a context of LGIC_LGCTFM, because we don't have a new firm to test and I don't feel like messing around
+   making demo cruft."* I read the round-2 analysis's gate list and did not re-read DEC-6 at HEAD -- a stale citation
+   inside my own project, exactly the class CLAUDE.md Rule 27 names (a citation ages separately from the text it quotes).
+2. **The `/open-calls` card 2 I put to him therefore asked him to re-decide a settled question, and proposed a
+   DEMONSTRATION FIRM -- the very thing his 09-16 word refused.** He answered it anyway, and his answer was the rule, not
+   the re-decision.
+
+**Ruling.** FWD-5's bar is unchanged in substance: the `LGIC_LGCTFM` practice wave over an EXISTING firm's subject, on that
+subject's own plane. What changes is that **no step of it waits on `ADVI_FIRMBKTS`**: a step that cannot complete because a
+firm bucket has not been minted yet is CARDED with its owner and reason, the run continues, and the card is re-run when
+that bucket lands. The outcome grades `reached + carded == steps`, denominators printed -- never "zero carded", which
+would re-create the wait this ruling removes. The fence guard and the never-widen sign-off bar are untouched.
+
+**Carried:** PRD v1.6 (ENDPOINT FWD-5 ACCEPT + DEC-6 addendum) re-opens BOTH halves -- `3.0.0_SA_CVO` on the
+ratified-text half, and the brief half to `2.0.0_SA_COO~O` in the CRO's stead (no live CRO session), per Andrew's
+2026-09-11 ~05:3xZ rule. C6 stays `2.0.0_SA_COO~G`'s cell, cut after `LGIC_LGCTFM` round 1 gives it its subject.

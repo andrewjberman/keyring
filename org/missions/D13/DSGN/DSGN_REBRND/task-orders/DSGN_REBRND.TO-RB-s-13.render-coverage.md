@@ -1,11 +1,24 @@
 # TO DSGN_REBRND.TO-RB-s-13 -- render and keyboard coverage over the inventory
 
+> **AMENDMENT 1, 2026-09-14, issuer `2.0.0_SA_COO~D` -- `RB13-AC2` IS RETIRED FOR `RB13-AC2R` BEFORE THIS ORDER IS SPAWNED.**
+> AC2 compared the count of EVERY `.png` under the whole deliverables tree with the number of render obligations, so
+> OTHER cells' captures counted toward THIS cell's coverage: at the pre-spawn read, 54 of the 57 PNGs on record were
+> slot ~1's, against 96 obligations -- a worker rendering 40 of the 96 would have read COVERED. A count cannot say WHICH
+> obligation a render covers. `RB13-AC2R` runs the issuer's `task-orders/rb13-coverage-check.py`: every obligation row
+> maps, by `<route>|<state>`, to a PNG that EXISTS IN YOUR OWN deliverables folder. **So you WRITE
+> `deliverables/0.9.0_WK_DSGN_REBRND~3/rb13-coverage.json`** -- `{"<route>|<state>": "<png file name in that folder>", ...}`,
+> one entry per render-obligation row of the inventory (96 at the cut, 96 distinct keys). A mapping into another
+> folder is refused, a missing map reads `UNMEASURED`, and every uncovered row prints. Exercised before issue on four
+> layouts built from the real inventory: a complete map -> `COVERED` 96 of 96; one row dropped plus one mapped to a
+> non-existent file -> `SHORT` naming both; one row mapped into slot ~1's folder -> `SHORT` with the refusal; no map ->
+> `UNMEASURED`.
+
 <to_id>DSGN_REBRND.TO-RB-s-13</to_id>
 <project>DSGN_REBRND</project>
 <issued_to>0.9.0_WK_DSGN_REBRND~3</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-13` | **outcome_ref:** FWD-1, FWD-4, FWD-5, FWD-10, FWD-11 | **depends_on:** `RB-s-12`, and the spine cells whose surfaces it covers | **slot:** ~3, queue position 2
 
@@ -31,7 +44,10 @@
 `RB13-AC1` -- the obligation set is read from the inventory and is NON-EMPTY, so coverage is measured against the whole rather than against what was reached. An empty set is REFUSED, never passed.
 
 <criterion id="RB13-AC2" cell_refs="RB-s-13"><invocation>cd <WS> && timeout 120 python -c "import pathlib,json,io,os; d=pathlib.Path('org/missions/D13/DSGN/DSGN_REBRND/deliverables'); pngs=list(d.rglob('*.png')) if d.exists() else []; p='design/brand/portal-surface-inventory.json'; inv=json.load(io.open(p,encoding='utf-8')) if os.path.exists(p) else {}; need=[r for r in inv.get('rows',[]) if r.get('render_obligation')]; print('RENDERS-ON-RECORD:',len(pngs),'OBLIGATIONS:',len(need)); print('VERDICT:','COVERED' if (need and len(pngs)>=len(need)) else 'SHORT')"</invocation><expect>VERDICT: COVERED</expect></criterion>
-`RB13-AC2` -- the renders on record meet or exceed the inventory's render obligations AND the obligation set is non-empty. **At issuance this reads 0 renders / 0 obligations -> SHORT**, which is why the non-empty guard is there: 0 >= 0 would otherwise pass vacuously.
+`RB13-AC2` -- the renders on record meet or exceed the inventory's render obligations AND the obligation set is non-empty. **At issuance this reads 0 renders / 0 obligations -> SHORT**, which is why the non-empty guard is there: 0 >= 0 would otherwise pass vacuously. **RETIRED BY AMENDMENT 1 -- DO NOT RUN IT; it counted every cell's PNGs toward this one. Replaced by `RB13-AC2R`.**
+
+<criterion id="RB13-AC2R" cell_refs="RB-s-13"><invocation>cd <WS> && timeout 120 python org/missions/D13/DSGN/DSGN_REBRND/task-orders/rb13-coverage-check.py</invocation><expect>VERDICT: COVERED</expect></criterion>
+`RB13-AC2R` -- (AMENDMENT 1) every render obligation in the inventory maps, by route and state, to a render of THIS cell that exists in its own folder; every uncovered row prints.
 
 <criterion id="RB13-AC3" cell_refs="RB-s-13"><invocation>cd <WS>/portal && timeout 120 node scripts/ui-smoke.mjs market <WS>/org/missions/D13/DSGN/DSGN_REBRND/deliverables/<SERIAL>/rb-s-13_market_coverage_1440.png --port <PORT>; echo rc=$?</invocation><expect>rc=0</expect></criterion>
 `RB13-AC3` -- the `/market` route renders at 1440 and the script prints the RESOLVED CANVAS -- that printed value is the evidence, not a reading of the CSS. READ the PNG before the flip.
@@ -39,7 +55,7 @@
 <criterion id="RB13-AC4" cell_refs="RB-s-13" judgment="true"/>
 `RB13-AC4` -- graded at L9: every touched surface in the inventory has a read render on record and every touched interactive surface has a keyboard walk; coverage is stated against the inventory's denominator. RECORD; NO VERDICT.
 
-<expected_criteria>RB13-AC1, RB13-AC2, RB13-AC3, RB13-AC4</expected_criteria>
+<expected_criteria>RB13-AC1, RB13-AC2R, RB13-AC3, RB13-AC4</expected_criteria>
 
 ## BOUNDS
 
@@ -55,6 +71,7 @@
 design/brand/portal-surface-inventory.json
 org/missions/D13/DSGN/DSGN_REBRND/deliverables/
 org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/investigations/INVESTIGATION_v1.md
+org/missions/D13/DSGN/DSGN_REBRND/task-orders/rb13-coverage-check.py
 </paths>
 
 <decomp_ref>
@@ -63,10 +80,10 @@ org/missions/D13/DSGN/DSGN_REBRND/surprise-channel/investigations/INVESTIGATION_
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `RB13-AC1` .. `RB13-AC4`. Instance at
+Criterion ids (AMENDMENT 1 -- the retired `RB13-AC2` is NOT an acceptance row): `RB13-AC1`, `RB13-AC2R`, `RB13-AC3`, `RB13-AC4`. Instance at
 `org/missions/D13/DSGN/DSGN_REBRND/deliverables/0.9.0_WK_DSGN_REBRND~3/DSGN_REBRND.TO-RB-s-13.render-coverage.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> RB13-AC1,RB13-AC2,RB13-AC3,RB13-AC4` BEFORE the `complete` flip.
+`python .tools/proof-of-spec-check.py <instance> RB13-AC1,RB13-AC2R,RB13-AC3,RB13-AC4` BEFORE the `complete` flip.
 Every `judgment="true"` criterion is recorded `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO` at L9 -- **a `PASS` or `FAIL` on a judgment row is INVALID.**
 Result file `render-coverage.result.md` beside it. **Flip `complete` only when every MECHANICAL criterion PASSES by output** -- a flip while a row is FAIL withdraws your own grant.
 </proof_of_spec>

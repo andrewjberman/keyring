@@ -250,12 +250,27 @@ def grade(text, tpg):
                  "the same as no header, and fails silently rather than loudly.")
 
     # ---- LIMB C: outcomes must be DEFINED, not pointed at ----
-    defined = _defined_fwd(endpoint if endpoint else text, tpg)
-    if not defined:
-        v.append("defines ZERO outcome cards. The ENDPOINT section must CARRY the FWD-n cards, not "
-                 "point at a document that has them: a pointer promising a later transcription is "
-                 "a promise nothing enforces, and that is exactly how AMGT_RESAPP shipped with no "
-                 "outcomes at all.")
+    # THE READ IS SCOPED TO THE SECTION THE CONSUMER READS, and when that section does not resolve
+    # this limb says so instead of falling back to the whole file. It USED to read `endpoint if
+    # endpoint else text`, so a PRD whose heading the L6 matcher cannot resolve had its cards found
+    # ELSEWHERE in the file and passed LIMB C -- the one limb that asks "are the outcomes readable by
+    # the consumer" answered from a set the consumer never reads, and the exact class it guards
+    # (cards invisible to L6 through an unresolvable section) was left to LIMB A alone. A limb that
+    # grades a DIFFERENT SET than the consumer is the defect this file exists to catch, one level up.
+    # Found 2026-09-17 by a census of all 25 step-4 PRDs that planted the mutant deliberately; no live
+    # PRD was in that state (25 of 25 resolve), so this changes no verdict today and closes the hole.
+    if endpoint is None:
+        defined = set()
+        v.append("outcome cards CANNOT BE READ: the ENDPOINT section does not resolve (see the limb "
+                 "above), so this limb graded nothing rather than falling back to the whole file. "
+                 "Cards elsewhere in the file are invisible to the L6 consumer, which is the point.")
+    else:
+        defined = _defined_fwd(endpoint, tpg)
+        if not defined:
+            v.append("defines ZERO outcome cards. The ENDPOINT section must CARRY the FWD-n cards, not "
+                     "point at a document that has them: a pointer promising a later transcription is "
+                     "a promise nothing enforces, and that is exactly how AMGT_RESAPP shipped with no "
+                     "outcomes at all.")
 
     # ---- LIMB E: the header and the section must agree, BOTH DIRECTIONS ----
     # The two carriers are read by DIFFERENT consumers -- the monitor reads the header, step 5

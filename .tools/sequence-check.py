@@ -42,6 +42,9 @@ Usage:
   sequence-check.py --flags      only projects carrying a flag
   sequence-check.py --project X  one project (repeatable)
   sequence-check.py --json       machine-readable
+  sequence-check.py --compile    recompile the nested `compiled:` JSON block inside SEQUENCE.yaml (live state per stage and
+                                 project, stamped compiled_at + git HEAD) and print it; a SNAPSHOT for fast reading, never
+                                 authority, stale the moment it is written (Andrew-direct 2026-09-17 ~14:0xZ)
   sequence-check.py --self-test  the evaluator against planted cases (no repo read)
 """
 from __future__ import annotations
@@ -54,6 +57,7 @@ import glob
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -62,8 +66,29 @@ SEQ_REL = "org/missions/SEQUENCE.yaml"
 IDLE_DAYS = 7
 STAGES = ("REGISTERED", "PRD", "DECOMP", "EXECUTING", "ROUND_CLOSE", "CLOSED")
 TOP_KEYS = {"version", "owners", "enforcement", "capacity", "stages", "projects", "parked", "pending_placement",
-            "supersedes", "change_log"}
-PROJECT_KEYS = {"fabric", "stage", "waits_on", "hold", "why", "notes"}
+            "supersedes", "change_log", "compiled"}
+# The compiled block (--compile). Written only between these two marker lines; the evaluator never reads `compiled`.
+COMPILED_BEGIN = "# >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,"
+COMPILED_BEGIN_2 = "# stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it."
+COMPILED_END = "# <<< COMPILED STATE"
+# HANDWRITTEN vs COMPILED (Andrew-direct 2026-09-17 ~15:0xZ): "the list of included projects and intended order can be
+# handwritten because thats the nature of a human picking projects to sequence, but the rest should all be compiled."
+# A project row carries only its placement (fabric, stage), its ordering constraints (waits_on, hold) and the human
+# reason for them (why). Every STATE fact -- stage reached, sign-off, seat, lane, version -- is compiled, so `notes` is
+# retired and a `why` that states one is refused.
+PROJECT_KEYS = {"fabric", "stage", "waits_on", "hold", "why"}
+_STATE_TOKENS = re.compile(r"\b(REGISTERED|DECOMP|EXECUTING|ROUND_CLOSE|CLOSED|ADMITTED|WITHHELD|SIGNED|LANE-DARK|NEEDS-SLOT"
+                           r"|HELD|WAITING|OUT-OF-SEQUENCE)\b")
+_STATE_PHRASES = re.compile(r"\bin flight\b|\bseated\b|\bcoo_lane\b|\blane (?:is |goes )?dark\b|\bv\d+\.\d+\b|"
+                            r"\bround \d+ (?:is|in)\b|\bis (?:complete|closed|live)\b", re.I)
+
+
+def state_violations(code, text):
+    """PURE. The state facts a handwritten `why` states -- each is a compiled field's job, never prose's."""
+    t = str(text or "")
+    hits = [m.group(0) for m in _STATE_TOKENS.finditer(t)] + [m.group(0) for m in _STATE_PHRASES.finditer(t)]
+    return ["%s: `why` states project state (%s) -- state is compiled, never handwritten"
+            % (code, ", ".join(sorted(set(hits))))] if hits else []
 GATE_FORMS = ("prd_admitted", "dep_stage_at_least", "status", "manual")
 LIVE_SECONDS = 120          # org/mcp/server.py STALE_THRESHOLD: a registration older than this is not LIVE
 COO_BASE = "2.0.0_SA_COO"
@@ -219,7 +244,9 @@ def validate(doc):
             continue
         for k in p:
             if k not in PROJECT_KEYS:
-                errs.append("%s: unknown key %r" % (code, k))
+                errs.append("%s: unknown key %r%s" % (code, k, " (retired: state is compiled -- see --compile)"
+                                                      if k == "notes" else ""))
+        errs.extend(state_violations(code, p.get("why")))
         if p.get("stage") not in stage_ids:
             errs.append("%s: stage %r is not a declared stage" % (code, p.get("stage")))
         hold = p.get("hold")
@@ -243,7 +270,9 @@ def evaluate(doc, reader, idle_days=IDLE_DAYS, now=None):
             notes.append(rnote)
             rows.append(entry)
             continue
-        entry.update({"dep_stage": row.get("dep_stage"), "status": row.get("status")})
+        entry.update({"dep_stage": row.get("dep_stage"), "status": row.get("status"), "phase": row.get("phase")})
+        _trow, _tn = reader.tree_row(row)
+        entry["coo_lane"] = (_trow or {}).get("coo_lane")
         if row.get("fabric") and p.get("fabric") and str(row.get("fabric")).lower() != str(p.get("fabric")).lower():
             flags.append("DRIFT")
             notes.append("fabric: the file says %r, the register row says %r" % (p.get("fabric"), row.get("fabric")))
@@ -365,6 +394,73 @@ def render_capacity(c):
             c["cap"] if c["cap"] is not None else "-", state, c["note"]))
     if c["queue"]:
         print("  NEXT COO SLOT, in the sequence's order: %s" % " -> ".join(c["queue"]))
+
+
+def _raises(fn):
+    try:
+        fn()
+    except Exception:  # noqa: BLE001
+        return True
+    return False
+
+
+def compile_state(doc, rows, cap, head, seq_commit, now=None):
+    """The nested snapshot: stage -> project -> the sequence's own gates plus the live state read this run."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    by_code = {r["project"]: r for r in rows}
+    counts = {}
+    for r in rows:
+        for f in r["flags"]:
+            counts[f] = counts.get(f, 0) + 1
+    stages = []
+    for s in doc.get("stages") or []:
+        if not isinstance(s, dict):
+            continue
+        projects = {}
+        for code, p in (doc.get("projects") or {}).items():
+            if p.get("stage") != s.get("id"):
+                continue
+            r = by_code.get(code, {})
+            projects[code] = {k: r.get(k) for k in ("dep_stage", "status", "prd", "last_activity", "flags", "notes", "gates")}
+            projects[code]["coo_lane"] = r.get("coo_lane")
+            projects[code]["phase"] = r.get("phase")
+            if p.get("hold"):
+                projects[code]["hold_max_dep_stage"] = p["hold"].get("max_dep_stage")
+        stages.append({"id": s.get("id"), "name": s.get("name"), "projects": projects})
+    live = cap.get("live")
+    return {
+        "compiled_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "head": head,
+        "sequence_file_last_commit": seq_commit or "UNCOMMITTED",
+        "recompile": "python .tools/sequence-check.py --compile",
+        "capacity": {"box_fabric": cap.get("box_fabric"), "cap": cap.get("cap"),
+                     "live_coo_lanes": live if live is not None else "UNREADABLE",
+                     "free": (cap["cap"] - len(live)) if (live is not None and cap.get("cap") is not None) else None,
+                     "next_slot_order": cap.get("queue")},
+        "flags": {"denominator": len(rows), "counts": counts},
+        "stages": stages,
+        "parked": sorted((doc.get("parked") or {}).keys()),
+        "pending_placement": len(doc.get("pending_placement") or []),
+    }
+
+
+def splice_compiled(text, data):
+    """Replace (or append) the marker-bounded `compiled:` block. JSON is YAML; every line is indented so the flow
+    mapping continues under its key. Anything outside the markers is returned byte-identical."""
+    body = "\n".join("  " + ln for ln in json.dumps(data, indent=2, sort_keys=False).splitlines())
+    block = "%s\n%s\ncompiled:\n%s\n%s\n" % (COMPILED_BEGIN, COMPILED_BEGIN_2, body, COMPILED_END)
+    nl = "\r\n" if "\r\n" in text else "\n"
+    if nl != "\n":
+        block = block.replace("\n", nl)
+    b = text.find(COMPILED_BEGIN)
+    if b == -1:
+        return text.rstrip("\r\n") + nl + nl + block
+    e = text.find(COMPILED_END, b)
+    if e == -1:
+        raise ValueError("compiled block BEGIN marker without END marker -- refusing to guess its extent")
+    e = text.find(nl, e)
+    e = len(text) if e == -1 else e + len(nl)
+    return text[:b] + block + text[e:]
 
 
 def render(doc, rows, only_flags=False):
@@ -497,6 +593,33 @@ def self_test():
         ("resolve: a register code the file does not list -> UNPLACED, never zero rows", resolve_codes(rdoc, ["AMGT_RESAPP"], rreg)[0][1] == "UNPLACED"),
         ("resolve: parked and pending-placement codes say which", [s for _, s, _ in resolve_codes(rdoc, ["NFRA_X", "IRPT_BCKEND"], rreg)] == ["PARKED", "PENDING-PLACEMENT"]),
     ]
+    # --compile: the splice round-trips, replaces rather than duplicates, and leaves the rest of the file byte-identical.
+    import yaml as _y
+    _base = "version: 4\n# a comment the splice must keep\nprojects: {}\n"
+    _d1, _d2 = {"compiled_at": "T1", "stages": [{"id": 0, "projects": {"X": {"flags": []}}}]}, {"compiled_at": "T2", "stages": []}
+    _s1 = splice_compiled(_base, _d1)
+    _s2 = splice_compiled(_s1, _d2)
+    cases += [
+        ("compile: the spliced block parses back to the same data", _y.safe_load(_s1).get("compiled") == _d1),
+        ("compile: a second compile REPLACES the block (one BEGIN marker, the new data)",
+         _s2.count(COMPILED_BEGIN) == 1 and _y.safe_load(_s2).get("compiled") == _d2),
+        ("compile: everything outside the markers is byte-identical", _s2[:_s2.find(COMPILED_BEGIN)].rstrip("\n") == _base.rstrip("\n")),
+        ("compile: CRLF file keeps CRLF and still round-trips",
+         "\r\n" in splice_compiled(_base.replace("\n", "\r\n"), _d1) and "\n" not in splice_compiled(_base.replace("\n", "\r\n"), _d1).replace("\r\n", "")
+         and _y.safe_load(splice_compiled(_base.replace("\n", "\r\n"), _d1)).get("compiled") == _d1),
+        ("compile: a BEGIN marker with no END refuses rather than guessing",
+         _raises(lambda: splice_compiled(_base + COMPILED_BEGIN + "\ncompiled: {}\n", _d1))),
+        ("validate: the `compiled` key is admitted", validate({"compiled": {}, "projects": {}}) == []),
+        # HANDWRITTEN = placement + order + reason; STATE = compiled (Andrew-direct 2026-09-17 ~15:0xZ).
+        ("handwritten: a project row with `notes` is refused (retired, state is compiled)",
+         any("retired" in e for e in validate({"stages": [{"id": 0}], "projects": {"X": {"stage": 0, "notes": "n"}}}))),
+        ("handwritten: a `why` stating state (ADMITTED / in flight / v0.2) is refused, each named",
+         (lambda e: len(e) == 1 and all(t in e[0] for t in ("ADMITTED", "in flight", "v0.2")))(
+             state_violations("X", "PRD v0.2 is ADMITTED; in flight under a lane"))),
+        ("handwritten: a `why` giving only a reason and a quoted word passes (no false positive on 'admitted' prose)",
+         state_violations("X", "Its PRD cannot be written before those three are admitted (Andrew ~05:2xZ, 'the Logic "
+                               "projects first').") == []),
+    ]
     fails = 0
     for name, ok in cases:
         print("  %s  %s" % ("PASS" if ok else "FAIL", name))
@@ -510,6 +633,7 @@ def main():
     ap.add_argument("--flags", action="store_true")
     ap.add_argument("--project", action="append")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--compile", action="store_true")
     ap.add_argument("--self-test", action="store_true")
     a = ap.parse_args()
     if a.self_test:
@@ -534,6 +658,21 @@ def main():
     rows = evaluate(doc, reader)
     cap = capacity(doc, reader, rows)
     res = resolve_codes(doc, a.project, _register_codes(ROOT)) if a.project else []
+    if a.compile:
+        h = subprocess.run(["git", "rev-parse", "--short=10", "HEAD"], cwd=ROOT, capture_output=True, text=True)
+        data = compile_state(doc, rows, cap, h.stdout.strip() or None, r.stdout.strip() or None)
+        raw = open(path, "rb").read().decode("utf-8")
+        new = splice_compiled(raw, data)
+        back = yaml.safe_load(new)
+        if back.get("compiled") != data or {k: v for k, v in back.items() if k != "compiled"} != \
+                {k: v for k, v in doc.items() if k != "compiled"}:
+            print("ERROR: the spliced file does not round-trip (compiled block or the rest of the file changed) -- NOT written")
+            return 1
+        open(path, "wb").write(new.encode("utf-8"))
+        print(json.dumps(data, indent=2))
+        print("OK: compiled block written to %s (compiled_at %s, head %s); recompile before acting on it"
+              % (SEQ_REL, data["compiled_at"], data["head"]))
+        return 0
     if a.project:
         rows = [x for x in rows if x["project"] in set(a.project)]
     if a.json:

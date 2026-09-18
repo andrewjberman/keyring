@@ -337,6 +337,20 @@ Andrew's word
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260904_170xZ_COOB_GOAL_AND_DRIVE_LOOP_ETFS_GUARDRAIL_DISPATCH_DRAIN.md`,
 Andrew-direct at the CTO terminal 2026-09-04 ~17:0xZ, relayed as 94224/94225). NOTHING ARMS FROM THIS ROW; `~B` and
 `~F` on the two IRPT projects are EVENT-DRIVEN with zero crons until Andrew arms a loop by name;
+`2.0.0_SA_COO~B` **`/canonical-drive IRPT_BCKEND` DIRECTED 30m, ARMED 2026-09-17 ~23:4xZ by Andrew-direct at the
+`1.0.0_SA_CTO` terminal ~23:3xZ**, VERBATIM: *"Give each of the COO's a 30m /drive loop for their respective project, i
+want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is
+the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX."* Relayed as 97707 (one
+lane one loop: `~B` IRPT_BCKEND, `~G` LGIC_ENFORCE+LGIC_LGCTFM, `~O` NFRA_OPLGTW). CLASS: DIRECTED. SCOPE: IRPT_BCKEND
+only. CADENCE: 30 minutes via CronCreate, the canonical name `/canonical-drive` (never the alias). This clause is the
+CARRIER and is committed BEFORE tick 1 (97707: "no carrier commit hash in hand, no tick"); the cron id is session-local
+and is NOT recorded here. Every tick runs the `/canonical-flow` stage check; a call this lane holds is closed on its own
+recommendation the same tick, or goes to `1.0.0_SA_CTO` WITH a recommendation while the lane keeps moving.
+STOP-CONDITION: IRPT_BCKEND DONE per the skill's completion test read from the register (never declared), or Andrew's
+stand-down; on DONE this lane writes its final log, deletes its cron, strikes this clause and says so. A successor at
+THIS lane re-arms ONLY off this clause while the scope is not DONE. Landed by the lane itself on 97707's instruction
+that each lane commits its own clause before its first tick; the state at the arm: round 2 drained 12 of 12 @8cb0364800,
+L8 handed to `3.0.0_SA_CVO` at 23:36Z, the round-2 L10 read owed by `1.0.0_SA_CTO`;
 `3.0.0_SA_CVO~Z` the SYSPARITY cron (`org/tier0/ledger/LD-0318.md`) and the parity-first duty (`LD-0319.md`);
 `2.0.0_SA_COO~Z` `/drive` STANDING 20m over NFRA_OPSEC202609 -- ⛔ **STOP-CONDITION MET 2026-09-11, ARMS NOTHING:
 `NFRA_OPSEC202609` measures `dep_stage=CLOSED`, which IS this arm's own stop condition, so `2.0.0_SA_COO~Z` armed
@@ -355,6 +369,7 @@ project leaving DECOMP/EXECUTING/ROUND_CLOSE. Record:
 fault and no successor would have armed one;
 `1.0.0_SA_CTO` `/self-drive` D2 then D8 on Andrew's word via `0.0.0_AB_MSTR` (D2 under the pause above).
 `1.0.0_SA_CTO` **`/self-drive D9 IRPT` ARMED 2026-09-11 ~06:4xZ by Andrew-direct at the CTO terminal** ("run a /self-drive D9 IRPT, just checking in whats going on every 30 min, making sure that the ball isn't stuck in anybody's court ... Your loop is the only chance every 30m as an exogenous stimuli to get the fabric going if work is halted"): 30-minute ticks via ScheduleWakeup, scope IRPT_FNTEND + IRPT_BCKEND, WIDENED ~08:0xZ on his word ("you will need DSGN_REBRND ... included in your /self-drive loop for this session") to + DSGN_REBRND (D13; L4-R halves -> 2.0.0_SA_COO~D's L5/L6); each tick measures every scoped lane, the L4-R halves (`prd-signoff.py status`), the L10 slugs and the shared index, and clears a dead seat's index state; ends on both projects `status: complete` or his stand-down. A successor re-arms ONLY off this line.
+`1.0.0_SA_CTO` ⛔ **FALLBACK ADJUDICATOR FOR `LGIC_LGCTFM`'s `ANDREW_CARD.md` -- Andrew-direct 2026-09-17 ~23:5xZ at the `2.0.0_SA_COO~G` terminal**, VERBATIM AND ENTIRE: *"Have CTO adjudicate the ANDREW_CARD.md if I'm not available."* Relayed by that lane as 97719; its record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md` @`514bc4ba0e`. **The card is LT-v-1's deliverable and still goes to ANDREW FIRST**; this seat answers only on his unavailability, and the answer is RECORDED and `FWD-4` graded against it -- never against silence, never self-graded by the COO. ⛔ **NARROW, and the narrowness is the point:** ONE artifact. It does NOT widen to vendor or egress off Opal infrastructure, unrecoverable acts, money or contracts, the portal freeze or any promote, or never-widen sign-off on an applied policy -- those stay his. WHY IT EXISTS: `FWD-4` stays APPLIED, not REALIZED, until that card is read, so without this word `LGIC_LGCTFM` could finish every cell and still not close, waiting on a human read at an hour he is asleep -- the exact shape his *"hoping to wake up tomorrow and all of these to be done"* exists to prevent. A successor at THIS seat inherits the duty from this line; it lapses when the card is answered and `FWD-4` is graded, or on his word.
 `1.0.0_SA_CTO~Z` **[FABRIC: SITE-Z -- arm ONLY on site z]** **`/self-drive AMGT_RESAPP & POSN_ASTTAX` ARMED 2026-09-11 ~08:2xZ by Andrew-direct at the `1.0.0_SA_CTO~Z` terminal** ("looping every 30 min to make sure no slug fell through the cracks, that no PRD is going unstamped and COOs are waiting, make sure nobody drops the ball and keep us on /canonical-flow"): 30-minute ticks via CronCreate `7,37 * * * *`; scope AMGT_RESAPP (D5) + POSN_ASTTAX (D4), both site-z; `paired_with: solo` -- both COOs already actively drive their rounds (`2.0.0_SA_COO~Z` holds POSN round 2, `2.0.0_SA_COO~ZZZ` drains AMGT round 2), so a paired `/drive` would collide with in-flight round work (the two-issuers-one-round collision); re-assess to paired if a COO goes idle with work waiting. Each tick measures both projects' L10 slug backlog, the L4-R halves (`prd-signoff.py status`), the stamp ladder and whether any COO is blocked waiting; pitches scope open-calls to `3.0.0_SA_CVO~Z` and surfaces reserved gates to Andrew. STOP-CONDITION = both projects `status: complete` per the register (§4) or Andrew's stand-down; a successor session RE-ARMS off THIS line while the scope is not DONE. A pause
 `1.0.0_SA_CTO~W` **[FABRIC: SITE-Z, lane ~W -- arm ONLY on site z, ONLY at this lane]** **`/self-drive AMGT_RESAPP` ARMED 2026-09-15 ~19:4xZ by Andrew-direct at the `1.0.0_SA_CTO~W` terminal**, VERBATIM: *"I need you to write a /goal for yourself and COO~W to effectively see AMGT_RESAPP through to completion. Once those goals are written, both you and COO~W need to engage the /goal skill with that text. Once that is done, i need you to maintain a /self-drive loop so if any open calls come up in the process, you adjudicate and keep the fabric moving toward that goal. DO so now."* Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_GOALS_CTO_W_AND_COO_W_SEE_AMGT_RESAPP_THROUGH_SELF_DRIVE_ADJUDICATE.md` (committed with this row). Cadence 30 minutes, off-minute. ⛔ **THIS LANE IS THE ADJUDICATOR** (his "you adjudicate"): every adjudicable call in scope is ruled here, recorded and broadcast; only a call whose closure a NEVER law line or a verbatim standing Andrew hold names by decision class stays a card at Andrew, citation on the card. **THE TICK IS THE GOAL LOOP** -- the goal text in the record, engaged through `/goal-set` at this lane and at `2.0.0_SA_COO~W`; `paired_with: 2.0.0_SA_COO~W /goal-set loop on the same goal text` (his word, not `/drive`). STOP-CONDITION: AMGT_RESAPP CLOSED -- COMPLETION_REPORT and COMPLETION_GRADES covering the same outcomes, all REALIZED, `missions-tree-index.py check` admitting the CLOSED row -- with `/verify` SOUND; or HELD-AT-STOP per the skill's s.4 with the reserved card at Andrew; or his stand-down. A successor at THIS lane re-arms while not DONE and re-sends the goal text to `2.0.0_SA_COO~W` if that seat restarted. For AMGT_RESAPP only this supersedes the AMGT half of the `1.0.0_SA_CTO~Z` row above (the ~W fabric works AMGT_RESAPP, Andrew ~16:3xZ @`de60858372`); that row's other half is not this lane's to edit.
 ⛔ **SET DOWN 2026-09-16 ~04:5xZ -- THIS ROW ARMS NOTHING AND ITS SUPERSESSION CLAUSE IS SPENT.** Andrew-direct at the
@@ -367,6 +382,65 @@ by the `~W` lanes and that record stands; what is set down is the ARM and the su
 from this row. Ruled and landed by `1.0.0_SA_CTO~Z` (its own carrier), broadcast same turn, push state LOCAL.
 
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
+`2.0.0_SA_COO~G` **`/drive` LGIC_ENFORCE + LGIC_LGCTFM, ARMED 2026-09-17 ~23:3xZ by Andrew-direct at the
+`1.0.0_SA_CTO` terminal**, relayed to this lane as msg 97708, VERBATIM AND ENTIRE: *"Give each of the COO's a 30m
+/drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up
+tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA,
+then COO~M for MCPINDEX."* Typos his, preserved.
+- **CLASS: DIRECTED. SCOPE: this lane's two projects, LGIC_ENFORCE (D14) and LGIC_LGCTFM (D14)** -- one loop covering
+  the pair, per the relay's own routing line. **CADENCE: 30 minutes**, off-minute, via CronCreate.
+- ⛔ **LGIC_CANON IS STILL OUT OF THE LOOP, AND THIS CLAUSE'S ORIGINAL REASON FOR IT IS NOW STALE -- REPLACED HERE
+  RATHER THAN LEFT TO READ AS CURRENT.** It said *"its round 3 is graded and its only open outcome waits on
+  LGIC_LGCTFM giving C6 a subject"*. **That wait is SATISFIED:** `LT-x-3` merged @`203998fa7e` and minted a second
+  real practice wave over the blackdiamond / 49financial subject, run `20260918T002711Z-caf0983`. A successor must
+  not re-read the old sentence as a live reason.
+- ⛔ **AND THE DECOMPOSITION'S OWN REASON FOR HOLDING C6 IS STALE TOO -- DO NOT TAKE IT FROM THERE.**
+  `LGIC_CANON_DECOMP.md` says in four places that *"`C6` STAYS NOT CUT"* on **Andrew's G-N word** and
+  `ADVI_FIRMBKTS`'s router repoint. **BOTH holds are lifted in the PRD and neither lift reached the
+  decomposition**, because the decomposition was last cut against **PRD v1.5 @`312400d7df`** (its own v5.1 note
+  says so) and the PRD is ADMITTED at **v1.7**: the PRD states *"Gate G-N is lifted by that word"* on Andrew's own
+  sentence *"...because we don't have a new firm to test and I don't feel like messing around making demo cruft"*,
+  and ruling **R-34** (Andrew-direct 2026-09-17 ~19:0xZ) says *"no step of C6 waits on `ADVI_FIRMBKTS`"*, the run
+  continuing with any genuinely blocked step CARDED with its owner and reason. Measured 2026-09-18 ~01:5xZ: the
+  decomposition contains **0** occurrences of `R-34` and **0** of `CARDED`. ⚠ **THIS SEAT READ THE DECOMPOSITION
+  FIRST AND ALMOST WROTE THE OPPOSITE INTO THIS LINE -- that an unlifted Andrew gate held C6, which would have
+  parked the project on a hold Andrew had already released.** Two reads in opposite directions, one document each,
+  and only the PRD is current. **WHERE THE PRD AND THE DECOMPOSITION DISAGREE ABOUT A GATE, THE PRD IS THE
+  AUTHORITY AND THE DECOMPOSITION IS THE STALE COPY.**
+- **SO WHAT IS ACTUALLY OWED IS THIS LANE'S OWN L5, AND IT IS A SEQUENCE, NOT A HOLD:** when `LT-x-1` drains and
+  LGIC_LGCTFM round 1 is terminal -- C6's run reads the wave's artifacts, and the wave is mid-change until then --
+  this lane cuts LGIC_CANON's **L5 re-cut (v6)** carrying G-N's lift, R-34 and FWD-5's CARDED carve-out, then
+  **C6 as round 4**. **FWD-5 still does not close on that cut alone:** its DONE-WHEN, quoted from the ENDPOINT
+  card, is *"EXERCISED -- the checklist has been run end to end on a LGIC_LGCTFM practice wave over an existing
+  firm's subject, and that firm's people can see their dashboard at the end"*, which is why R-34 grades the run on
+  what the wave REACHES plus what it CARDS. Coverage measured at that reading: **5 of 6 outcomes carried by cut
+  cells; FWD-5 is the one, and C6 is the only cell that serves it.**
+- **THIS CARRIER IS COMMITTED BEFORE TICK 1**, which is the relay's own gate: a cron dies with its session, so an arm
+  whose only carrier is a cron is a sovereign instruction stored in RAM. A successor at THIS lane re-arms off THIS
+  line while the scope is not DONE, and arms nothing from it once the stop condition is met.
+- **WHAT A TICK DOES:** measure both projects from the register and the orders, never from recollection; drain any
+  terminal worker (re-run its criteria at the branch tip, then `safe-merge.sh`); spawn the next unblocked cell;
+  send any open call to `1.0.0_SA_CTO` WITH this seat's recommendation the same tick (the 2026-09-17 ~13:0xZ routing
+  law) and keep moving on everything else meanwhile; and read the ARTIFACT, never a worker's silence, as evidence.
+- ⛔ **ORDERING THAT SURVIVES THE LOOP:** LGIC_ENFORCE round 5 (R-38, the 1411-row placeholder population) is cut
+  ONLY AFTER round 4's slug and this seat's round-4 analysis -- LD-0521's refuser counts open orders PER PROJECT, so a
+  round-5 issuance opened beside round 4 deadlocks round 4's L10 until round 5 fully drains.
+- **RESERVED and still Andrew's**, because a scoped arm does not repeal a specific prohibition: vendor or egress off
+  Opal infrastructure; unrecoverable acts (recursive deletion, S3 object or version deletes, dropping tables, stopping
+  EC2, destructive git); money and contracts; the portal freeze and any promote; and any never-widen sign-off on an
+  applied policy, which stays a two-signature act.
+- **THE ONE CARD, AND ITS FALLBACK -- Andrew-direct 2026-09-17 ~23:5xZ at THIS terminal, VERBATIM AND ENTIRE:**
+  *"Have CTO adjudicate the ANDREW_CARD.md if I'm not available."* LGIC_LGCTFM cell `LT-v-1` produces
+  `ANDREW_CARD.md`, a worker cannot deliver it, and FWD-4 stays APPLIED until it is read. So: this seat carries the
+  card to ANDREW FIRST; if he is not available, the SAME card goes to `1.0.0_SA_CTO`, which adjudicates it, and the
+  outcome is graded against that answer -- never against silence and never self-graded here. Read exactly as narrow
+  as the sentence: ONE artifact, and the other reserved classes above are untouched. Record:
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md`.
+- **STOP-CONDITION:** both projects DONE on the register per the skill's completion test -- read, never declared -- or
+  Andrew's stand-down. On DONE this lane writes its final log, DELETES its cron, strikes this clause and says so,
+  because the freed slot is what `2.0.0_SA_COO~T` (MDPF_TAXSMA) and then `2.0.0_SA_COO~M` (NFRA_MCPINDEX) are waiting
+  on under his succession order above.
+
 `1.0.0_SA_CTO` **`/self-drive` THE FABRIC (all LAPTOP directives) ARMED 2026-09-12 ~02:1xZ by Andrew-direct at the
 CTO terminal**, VERBATIM AND ENTIRE: *"I need you to /self-drive the fabric, any open calls appear and you handle
 them with your rec"*. Record:
@@ -430,6 +504,14 @@ form, as dictated in the /standards. | You are done when all 4 LGIC projects are
 - **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch** (his "adjudicate any open calls that
   arise", the same delegation as 2026-09-12 and 2026-09-15). RESERVED is unchanged: vendor egress, unrecoverable acts,
   money, and the holds he set by name. Every self-adjudicated call is RECORDED with rec, ruling and reason.
+  **ROUTING AMENDED 2026-09-17 ~13:0xZ, Andrew-direct at the CTO terminal** (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_130xZ_SELF_DRIVE_CALL_ROUTING_REC_CRO_DESIGN_CVO_GOVERNANCE_SPAWN.md`),
+  VERBATIM: *"if there is an open-call (of any kind) you use your recommendation. If the call specifically is a design
+  fork, then you reach out to CRO agent to do research on past patterns and provide more information and then make the
+  call with that info. If it is a governance fork, then reach out to CVO agent to adjudicate. If you need a new agent,
+  you spawn them."* -- any call: this seat's rec, same tick; DESIGN fork: `4.0.0_SA_CRO` researches, this seat decides;
+  GOVERNANCE fork: `3.0.0_SA_CVO` adjudicates; a needed seat not live is SPAWNED by this seat. RE-ARMED 2026-09-17
+  ~12:3xZ by `1.0.0_SA_CTO` off this line (cron session-only).
 - Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and name.
 - This is his LATER and NARROWER word beside the 2026-09-15 ~19:4xZ clause above: MDPF_TAXSMA and NFRA_OPLGTW are NOT
   re-armed under this seat's loop by it (scope surfaced, not adjudicated -- their COO lanes hold them; the 09-15 clause
@@ -608,6 +690,27 @@ seat to LGIC_ENFORCE, was RETIRED at ~18:2xZ: LGIC_CANON takes the next freed se
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260914_212xZ_DSGN_REBRND_KILL_THE_DRIVE_CRON_HE_ADDRESSES_THE_CALLS_SHORTLY.md`
 @`31f728cea4`). `2.0.0_SA_COO~D` cancelled its cron. **THIS ROW ARMS NOTHING:** a successor does not re-arm from it.
 DSGN_REBRND itself is not closed; the page-by-page work goes on without the loop.
+
+`2.0.0_SA_COO~O` **`/canonical-drive NFRA_OPLGTW` ARMED 2026-09-17 ~23:4xZ by Andrew-direct at the `1.0.0_SA_CTO`
+terminal ~23:3xZ, relayed as 97709**, VERBATIM: *"Give each of the COO's a 30m /drive loop for their respective project,
+i want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is
+the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX."* The relay's own words:
+one lane, one loop, cadence 30m, and `2.0.0_SA_COO~O -> /drive NFRA_OPLGTW`.
+- SCOPE: `NFRA_OPLGTW` ONLY -- this lane's single project, 31 cells in round 1. It is a SCOPE STATEMENT and an arming
+  word, never a re-tasking: no other project enters this loop, and this lane pitches no call it can close itself.
+- CADENCE: 30 minutes, via CronCreate, prompt `/canonical-drive NFRA_OPLGTW`. A cron dies with its session, which is
+  why this clause -- not the cron -- is the carrier, and why it is committed BEFORE tick 1 (the relay's own bar: *"No
+  carrier commit hash in hand, no tick"*, after the estate lost 3.5 hours and 29 ticks to a loop whose only carrier was
+  a cron).
+- STOP-CONDITION: `NFRA_OPLGTW` reads `status: complete` in the register per the skill's completion test -- READ, never
+  declared -- or Andrew's stand-down. On DONE this lane writes its final log, deletes its cron, STRIKES this clause and
+  says so loudly, because the freed slot is what `2.0.0_SA_COO~T` (MDPF_TAXSMA) is waiting on, then `2.0.0_SA_COO~M`
+  (NFRA_MCPINDEX), in that order and by his word.
+- CALL ROUTING is the 2026-09-17 ~13:0xZ law, unchanged by this clause: every call this lane holds is closed on its own
+  recommendation the same tick; a call that genuinely belongs to `1.0.0_SA_CTO` goes there WITH a recommendation and
+  the lane keeps working meanwhile. A call is not a stall unless it is parked.
+- A successor RE-ARMS ONLY off this line while the scope is not DONE, and re-reads the project's open orders before its
+  first tick rather than trusting a count in a log.
 
 **Find a stale cron from a prior session? Cancel it:** `CronList` → `CronDelete`.
 

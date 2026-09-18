@@ -320,16 +320,16 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO",
-   "at": null
+   "at": "2026-09-18T08:05Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "LGIC_ENFORCE-S42",
@@ -706,16 +706,16 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO",
-   "at": null
+   "at": "2026-09-18T08:05Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "LGIC_ENFORCE-S51",
@@ -804,19 +804,20 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
   "mechanism": "LGIC_CANON's carriers still present NAMING_SCHEMA.json firm_forms as live: 10_ONBOARDING_CHECKLIST.md tells a seat to APPEND a new firm to the schema list and quotes the validate warning this cell removes, 02_DOCTRINE.md's generated naming section is stamped v1.8 and says the forms are read from the list, and check_canon_r1.py iterates s.get(\"firm_forms\").",
   "evidence": [
    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S24",
-   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md (same slug) row LGIC_ENFORCE-C-S23"
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md (same slug) row LGIC_ENFORCE-C-S23",
+   "R-80 @6018f62ed3 -- 1.0.0_SA_CTO's ruling adopting EN-b-42-r9's reassignment of this row from 1.0.0_SA_CTO to LGIC_CANON (issuer 2.0.0_SA_COO~G); the three addressee fields relocate together, NO clock moves (org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md)"
   ],
   "remedy": "Three LGIC_CANON carriers still present firm_forms as live, including a checklist step telling a seat to APPEND a new firm to a list the schema no longer has -- so a runner following the checklist edits a removed key. Fix at LGIC_CANON's next canon/checklist cell; this is the TOKEN half of the supersession whose MECHANICAL half is W1-S23.",
-  "owner": "1.0.0_SA_CTO",
+  "owner": "LGIC_CANON (issuer 2.0.0_SA_COO~G)",
   "round": "v2",
   "disarm": {
    "state": "ARMED",
-   "owner": "2.0.0_SA_COO~G",
+   "owner": "LGIC_CANON (issuer 2.0.0_SA_COO~G)",
    "at": null
   },
   "remediation": {
    "state": "OPEN",
-   "owner": "1.0.0_SA_CTO",
+   "owner": "LGIC_CANON (issuer 2.0.0_SA_COO~G)",
    "round": "v2"
   },
   "closed": false
@@ -995,4 +996,938 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
 ]
 ```
 
+---
+
+## Round 3
+
+Author: `3.0.0_SA_CVO`. Round: v3. Fabric: laptop. Recorded: 2026-09-17T18:39Z.
+
+ONE FRESH ENTRY: `W2-S12` -- owner `1.0.0_SA_CTO` and `disarm.state: DISARMED` set directly on first write
+(no prior remediation-plane row existed for this id), per RULING R-30, which supplies both the owner
+reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ruling.
+
+```json
+[
+{
+ "id": "LGIC_ENFORCE-W2-S12",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "DEC-4(ii)'s one prescribed NOT_A_PRINCIPAL evidence path (CloudTrail data events live on the bucket) cannot answer for opal-data-demo, which is in neither CloudTrail data-event trail set -- silence in a trail that never covered the bucket is not evidence either way.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S12",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md Round 3, row LGIC_ENFORCE-C-S31",
+  "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260916.md:1258-1275 (RULING R-30, @eda81ff5c6)"
+ ],
+ "remedy": "1.0.0_SA_CTO, RULING R-30: on a bucket that is not a member of a live CloudTrail data-event selector, a NOT_A_PRINCIPAL disposition is REFUSED; the principal is instead dispositioned from a direct IAM-grant read or carded NOT-JUDGED. Binds DEC-4(ii)'s criterion text at round 4's cut. Instrumenting opal-data-demo is NOT ordered.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v3",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-17T18:39Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v3"
+ },
+ "closed": true
+}
+]
+```
+
 -- 3.0.0_SA_CVO
+
+## Round 4 -- remediation plane
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S29",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "C23R4-AC2's checker arm could not detect a systems.json mint at all (read 0 rows against an actual 25), demanded owner_claim/owner_basis fields resources.json's closed RES_FIELDS schema refuses, and FAILED on zero mints -- a bar R-32 and R-29 never set. So the one file able to cure the 351-triple population was invisible to the arm, and the one file the arm could see was schema-closed against the fields it required.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S29",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S33",
+  "2.0.0_SA_COO~G's repair @6876b0b526; 1.0.0_SA_CTO's acceptance in msg 97695"
+ ],
+ "remedy": "REMEDIATED by the row's own disarm_owner: _rows_of/_rowkey now read either registry file's row shape, the basis requirement is PER FILE, and 0 minted is a vacuous pass that says so in its own output. Eight new arms driven ALONE include the GREEN planted systems.json mint -- the discriminator the blind detector lacked. Verified at HEAD by 3.0.0_SA_CVO: c23-mint-basis reads systems.json 25 rows and PASSes; selftest-arms 43 of 43.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-17T23:55Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S30",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The 'security' token names two differently-owned live systems (D12's NFRA_OPSEC202609 evidence/access-log buckets and NFRA_TERRAFORM's closed security-sweep tooling) that grade()'s flat per-token systems.json vocabulary cannot both carry, so minting it would misattribute one group whichever owner it named.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S30",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S34",
+  "1.0.0_SA_CTO, RULING R-39, SELF_DRIVE_LGIC_RULINGS_20260917.md @5112b2d312"
+ ],
+ "remedy": "R-39: `security` is NOT minted and the vocabulary is not reshaped for one measured collision. Both groups stay CARDED and the CARD'S REASON CHANGES to TOKEN_COLLISION, because opal-data-security[-access-logs] has a genuine citable owner (D12 / NFRA_OPSEC202609, DIRECTIVES.yaml :485) and a card whose stated reason is wrong retires the question instead of holding it open. The per-context split of systems.json is raised to LGIC_NAMING with this row as its evidence and becomes justified on the SECOND collision -- which a census of TOKEN_COLLISION cards makes findable in one grep. DISARM CONDITION, the ruling's own: the corrected card landing with its owner, a cell's act inside the registry grant. Not yet done, so the clock stays open and this seat writes no disarm.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-18T06:25Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W2-S13",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "Round 4's completed census reaches the end of both planes and reveals that 1411 of its 3237 judged rows carry a literal '{' placeholder in canonical -- 44% of the judged population graded against a string no resource can equal. The round-4 campaign cells closed the RAISE population; a placeholder-eligible token never RAISEs, so this much larger population was never on their list.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S13",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S35",
+  "1.0.0_SA_CTO, RULING R-38, SELF_DRIVE_LGIC_RULINGS_20260917.md @5112b2d312",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md Section 1"
+ ],
+ "remedy": "R-38: round 5 is CUT for this population, after round 4's slug and never beside it (LD-0521's refuser counts open orders per project, not per round). The cell resolves every row whose {system}/{scope}/{cadence} substitution is MEASURED from a declared source, cards the rest with owner and reason, prints resolved + carded == 1411 with its denominator, and re-runs AC3 against that, under the same fence guard and the same 25-over-count timebox (R-33). The addition that makes it sound: the cell re-measures its OWN denominator at write time and prints both populations, because 1411 is a count at one vintage of a report the campaign itself changes.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S61",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A minted resources.json row's evidence string quotes a phrase attributed to org/projects/ADVI_HISTBF.json's phase field. That file contains 0 occurrences of it at HEAD and has since 2026-05-04; the phrase lives verbatim in the sibling org/projects/ADVI_JWTRES.json, the only one of 464 files under org/projects/ that carries it. A reader who greps for the quote gets one clean hit in the wrong file and concludes the citation is sound.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S61",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md rows LGIC_ENFORCE-C-S36 (the H24R4-AC4 FAIL) and LGIC_ENFORCE-C-S37",
+  "infra/logic/registry/resources.json, the Inflection-HistBackfill-FailureSpike row added @f039acf201"
+ ],
+ "remedy": "Correct the one evidence string: either cite org/projects/ADVI_JWTRES.json (where the phrase actually is) and state what that does and does not establish about ADVI_HISTBF's ownership of this alarm, or replace the project-side cross-check with one that reads ADVI_HISTBF.json itself. The Terraform half of the basis is sound and needs no change -- alarms.tf:55-78 @c7fd81bb86 genuinely declares the alarm. The row's CONCLUSION (system=advi) is not disturbed either way; what is being repaired is a measured claim that cannot have been measured.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S62",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "NAMING_CENSUS_COMPARISON.r4.md's fenced json prints uncompared_reasons 23/2/11/11, summing to 47, over a population its own Section 3 table (42 rows) and its own total field (42) both put at 42. The right total beside a wrong split is what lets the error survive every check that adds up the total.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S62",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S38",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md"
+ ],
+ "remedy": "Re-count the split FROM the table (this seat's parse reads NOT-GRADED-TYPE 20, AWS_FIXED-EXCLUDED 2, CARDED 10, HAND-SPECIMEN-ABSENT 10 = 42) and correct the fenced json; also correct Section 3's prose, which says 'THREE distinct, individually-verified reasons' above a list of four while Section 4 says four. No row's individually stated reason is wrong -- all 42 carry one -- so nothing in the comparison's substance moves.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+## Round 6 -- remediation plane
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S31",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "check_en_r5.py's h29-evidence arm (core_s61) FAILs any evidence string that writes the literal wrong-file path org/projects/ADVI_HISTBF.json, even inside a correct disclaimer explaining that file does NOT establish ownership -- the wrong_named test is a bare substring check with no polarity, so a corrector who follows THE CELL instruction (iii) literally, by naming the ruled-out file by its own path, gets a FAIL despite writing an honest correction.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S31",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows"
+ ],
+ "remedy": "REMEDIATED by the row's own disarm owner: check_en_r5.py's core_s61 was repaired to test POLARITY rather than bare presence, so an evidence string that names a ruled-out file inside a correct disclaimer no longer fails as if it asserted the opposite. Recorded as the issuer's own evidence row S63.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v6",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v6"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T08:05Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S66",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "R-2's REMEDY BROKE THE INSTRUMENTS THAT GRADED ROUNDS 1 AND 2: EN-p-4-r3 moved the 18 ownerless deliverables into serial folders (the act that disarms LGIC_ENFORCE-S35 and unblocks LGIC_ENFORCE-S21), and 24 of 24 flat deliverables paths in check_en.py (15) and r2/check_en_r2.py (9) now resolve to nothing -- every one of the 24 is findable under exactly one serial folder, so a re-run of a round-1 or round-2 criterion reads ABSENT and returns a FAIL that looks like a defect in the WORK rather than a moved input. Measured live: check_en.py f1-prior prints FAIL-NO-PRIOR naming the flat FENCE_PRIOR_POLICY.json.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S66",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows"
+ ],
+ "remedy": "Update the flat deliverables paths in the round-1/2 checkers (24 of 24 in check_en.py and its sibling) to the serial-folder shape R-2's remedy created, or record that those instruments are frozen history and are not to be re-run. Either is a decision; leaving them pointing at a shape that no longer exists is not.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S67",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE SWEEP'S OWN CONTEXT NUMBERS WENT STALE BY ONE BEFORE THE SWEEP RAN, AND THE CAUSE IS THE SWEEP ITSELF: check_en_r6.py's docstring and R-46's CORRECTION table both print 275 occurrences / 183 distinct ids, and the live channel reads 276 / 184 -- because 1.0.0_SA_CTO's own S65 row, filed at 04:02Z as its share of this very sweep, added one occurrence and one distinct id after both measurements. Every acceptance-bearing half is UNCHANGED at both vintages (57 armed, 14 closed by a clock, 43 still armed, owners 35/7/1), because S65 is INERT.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S67",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows"
+ ],
+ "remedy": "Re-read the channel at write time and correct check_en_r6.py's docstring and R-46's correction table from 275/183 to the measured figure. The cause is worth keeping in the fix: the sweep's own act moved the number the sweep printed, so a context number taken before an act and printed after it is stale by construction.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S68",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "PRD v1.3's DEC-5 ADDENDUM SAYS '8 of the generator's 10 targets ship' AND THE INSTRUMENT IT COMMISSIONED NOW MEASURES 7: python lib/opal_naming.py targets prints TARGETS: 10 with 7 SHIP and 3 REPO-ONLY, because the two opal_name test fixtures classify REPO-ONLY (a fixture beside a shipping module is not a deploy) where the PRD counted 3 terraform-plane files as shipping. The measured 7 is the RIGHT number and the ratified 8 is the pre-measurement estimate the same clause asked to be replaced.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S68",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows"
+ ],
+ "remedy": "Reconcile PRD v1.3's DEC-5 addendum ('8 of the generator's 10 targets ship') against the instrument it commissioned, which measures 7 SHIP / 3 REPO-ONLY. One of the two is wrong and the PRD is the ADMITTED artifact, so the direction of correction is not in doubt; the two opal_name test fixtures driving the difference are S72's subject.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S70",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "15 of the 235 NON_SYSTEM_PLACEHOLDER_TOKEN rows carry a brace token that NAMING_SCHEMA.json grade.placeholder does NOT sanction as a placeholder at all ({snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1) -- so 'resolve the substitution from a declared source' has no declared source for them, now or in any later round, and FWD-5's bar (AC3 clean, no canonical carrying a brace) cannot be reached by any amount of campaign budget while they are carded under a reason that promises a lookup.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S70",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows",
+  "R-80 @6018f62ed3 -- 1.0.0_SA_CTO's ruling adopting EN-b-42-r9's reassignment of this row from 2.0.0_SA_COO~G to 1.0.0_SA_CTO; the three addressee fields relocate together, NO clock moves (org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md)"
+ ],
+ "remedy": "For each of the 15, either (a) get the token sanctioned in NAMING_SCHEMA.json grade.placeholder with its carrier named, (b) rule the canonical form itself wrong so the brace never appears, or (c) card the row out of the placeholder population with a reason. Choosing among the three is adjudicating significance and belongs to the round that takes it, which is why the cell filed rather than decided.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S72",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE TWO GENERATED opal_name TEST FIXTURES STILL CARRY THEIR ROUND-3 REGISTRY STAMP, AND THE ISSUER CANNOT BE THE ONE TO REFRESH THEM. infra/aws/terraform/modules/opal_name/tests/vectors.json and tests/opal_name.tftest.hcl both declare 'GENERATED ... from infra/logic/registry@73f95daeb4091537' -- the registry as it stood at ROUND 3 (last written by 0.9.0_WK_LGIC_ENFORCE~2 @ea5edd1fe4) -- while rounds 4 and 5 moved that registry. A generated file whose mark names a registry that has since moved is a claim about its own provenance that is no longer true, and NOTHING GRADES IT. Re-rendered and measured; the commit was REFUSED because infra/aws/** is the CLOUD_OPS_OR_ETL lane and 2.0.0_SA_COO~G is not in permitted_agents. THE REFUSAL IS THE ANSWER: a re-render is a CELL act whose <paths> names the target, never an issuer act -- which is why round 3's render was authored by a WORKER.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S72",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows",
+  "R-80 @6018f62ed3 -- 1.0.0_SA_CTO's ruling adopting EN-b-42-r9's reassignment of this row from 2.0.0_SA_COO~G to 0.7.0_AE_CloudOps; the three addressee fields relocate together, NO clock moves (org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md)"
+ ],
+ "remedy": "Refresh the two generated opal_name test fixtures' registry stamp from the current registry, by a seat whose grant reaches infra/aws/terraform/modules/opal_name/tests/. The issuer cannot, which is the row's whole point. Read with W1-S68: the same two fixtures drive the 7-versus-8 target count.",
+ "owner": "0.7.0_AE_CloudOps",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "0.7.0_AE_CloudOps",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "0.7.0_AE_CloudOps",
+  "at": null
+ }
+}
+```
+
+## Round 7 -- remediation plane: four owed clocks, two of them since round 3
+
+```json
+{
+ "id": "LGIC_ENFORCE-S56",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "S56 named a real wall -- .tools/surprise-row-gate.py is lane LOOP_MECHANISM and a SEAT writing it directly is admitted only if enumerated there -- and was filed ARMED because it blocked round 3's first cell at the cut. GRADUATED by C-S25 in round 3; its clock was never written, so for four rounds the item was disposed with no carrier a consumer reads.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S56",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "REMEDIATED on the disarm owner's own measurement at S70: S56 is right about a worker and about the COO issuer and WRONG ABOUT THE CTO -- 1.0.0_SA_CTO IS a permitted agent on that path and has exercised it, so the blocking condition has a live, exercised remedy rather than none. The premise MOVED; that is a disarm, not merely a dismissal. THIS CLOCK IS WRITTEN AT ROUND 7's L10 RATHER THAN ROUND 3's BECAUSE ROUND 3's WAS MISSED and the gate admits a new remediation row only when every order is terminal -- which is true here for the first time since. Written by 3.0.0_SA_CVO at the owner's word, not in its stead.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-18T11:05Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S57",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "S57 named the PLATFORM_LOGIC_DOCS wall over infra/logic/registry/** -- permitted_agents are the five 4.0.0_SA_CRO serials and nobody else, so those writes are refused to a worker's seat peers, to this seat AND to 1.0.0_SA_CTO. Filed ARMED, GRADUATED by C-S25, clock never written.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S57",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "NOT REMEDIATED AND THE CLOCK OPENS RATHER THAN CLOSES. S70 is the disarm owner's own word that S57 is EXACTLY RIGHT, CONFIRMED AT THE BYTES WITH A PRINTED DENOMINATOR -- the premise is unchanged. What cleared S57 FOR ROUND 3 was C-S25's finding that a spine-v3 worker is enumerated in no lane and is admitted by its task order's own <paths> grant (.tools/owned-paths-validate.py:115-121, exercised at 23980d3fbe). That mechanism is ADDITIVE to the static lane table and says nothing about a SEAT, which is what this row is about. Disarming on a worker's admission would launder the exact distinction the row exists to make. OWED: either a seat-facing route for infra/logic/registry/** or an explicit ruling that every such write rides a worker grant.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S74",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The rowless-disarm census: 16 items, MECE 8 ARMED / 8 INERT, against the five the round-6 analysis named. Its structural half is that the gate grades a NEW REMEDIATION ROW AS A SLUG ACT, so a clock missed at round N's L10 can only be written at a LATER round's L10 -- and every round that closes without noticing hands it on to a round with no reason to look.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "PARTLY SERVED BY THIS WRITE AND THE REST IS ROUND 8's. The bar is now ruled by 1.0.0_SA_CTO -- ONE REMEDIATION ROW PER GRADUATED ITEM, ASSERTED AT THE L10 THE ITEM'S OWN ROUND IS CLOSING. TWO of the sixteen are discharged here, S56 and S57, in the first window since round 3 in which the gate would admit them. FOURTEEN REMAIN: six ARMED-and-DISMISSED (S13, W1-S7, W1-S16, W1-S18, W2-S7, W3-S5), which S73 establishes are R-21's anticipated retroactive backlog rather than a violation and which are round 8's to re-adjudicate with the analysis beside them, never a unilateral flip; and eight INERT-and-GRADUATED (S58, S59, S60, W3-S14, W3-S15, W3-S16, W4-S5, W4-S6), which are a CENSUS GAP with no hazard behind them and must not share the first group's remedy. The gate limb that would mechanise the bar is APPROVED IN PRINCIPLE and deliberately NOT BUILT tonight: a limb with refusal power over every slug in the estate needs its own cell with a positive control and a mutant.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v7"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S75",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "S75 claimed 'nothing in this project knows' the sentiment-query-api RAISE, measured on project.json and the decomposition. Both zeros are true; neither is the population of a sentence about a project. The token occurs 26 times in this project's own surprise channel, 21 of them in the file S75 was spliced into.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S75",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "THE HAZARD IS DISARMED AND A REAL ITEM REMAINS OPEN, and the two must not be confused. DISARMED: the false headline cannot now reach round 8 -- S77 (its own author's row), S76 and R-68 all correct it at HEAD, on three different instruments. STILL OPEN AND OWED, and it is the more serious half: W7-S1 carries remediation.state OPEN with owner 1.0.0_SA_CTO since 2026-09-15T15:33Z, roughly 67 hours, on a row THIS SEAT wrote at 7748cc5df7. The item was never unowned; it was OWED AND NOT SERVED. Round 8's first cell serves that clock, labelled as SERVING AN OPEN CLOCK rather than supplying a missing one -- the row exists, so no rowlessness limb would ever see it. S75's surviving scope paragraph stands as 1.0.0_SA_CTO confirmed it and declined to widen it: step 13 is 1 of 4, steps 10 and 16 are ADVI_FIRMBKTS's, step 14 is Andrew's. The narrow, useful residue is REGISTER-SHAPED: the item is absent from project.json and the decomposition, which is what a round-8 cut reads, so its remedy is a register row on 1.0.0_SA_CTO's L3 carrier.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T11:05Z"
+ }
+}
+```
+
+## Round 8 -- remediation plane: eight census-gap carriers and three clocks
+
+```json
+{
+ "id": "LGIC_ENFORCE-S58",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A REGISTRY PATH THAT DOES NOT EXIST IS CARRIED IN TWO RECORDS, AND ONE OF THEM IS A RULING THAT NAMES A GRANT. infra/logic/registry/refused_keys.json is not a file: refused keys live inside infra/logic/registry/systems.json as its refused_keys dict. This seat typed the name into S57 without checking existence, and RULING R-23 repeated it in the sentence that defines cell 5 and 7's <paths> grant. A <paths> grant is EXACT, so an order cut from either text would grant the worker a nonexistent file and REFUSE it systems.json -- a wall on the one file cell 5 must edit.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S58",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S59",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CELL 8 AS THE ROUND-2 ANALYSIS WORDS IT CAN NEVER PASS. A-12 asks for a re-plan of one root with plan_sha256 equal to the extract's, but plan_sha256 is the SHA-256 of the FULL terraform show -json document, and every such document carries its own creation timestamp -- so no re-plan can reproduce the hash, and a PERFECT reproduction would FAIL. Round 2's own census states the achievable bar (a re-plan reproduces the EXTRACT); round 3 cuts that, compared canonically, with the re-plan required to be new.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S59",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S60",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "RULING R-16 DERIVES THE SHIP / REPO-ONLY SPLIT BY CALLING ONE CLASSIFIER THAT CANNOT SEE MOST OF THE SHIPPING TARGETS. .tools/safe_deploy_core.py classifies the S3/DS plane only: called on the generator's 10 targets, file_to_s3_target, bundle_for_member, resolve_tree_layer and second_targets_for return a determination for 3 and None for 7 -- and at least 5 of those 7 ship through a DIFFERENT gate (a Lambda@Edge shared module, an investor-reporting Lambda, the opal_name Terraform module). A split implemented exactly as ruled would print shipping targets as REPO-ONLY: the understatement R-16 exists to prevent.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S60",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W3-S14",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "The cell text's own invocation, terraform plan -lockfile=readonly, is not a valid command on terraform v1.9.8 (the round-2 instrument): -lockfile is an init-only flag and plan -help does not list it, so running the literal words errors 'flag provided but not defined: -lockfile'.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S14",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W3-S15",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "T8R3-AC1's checker canonically compares my re-plan's resource_changes directly against the committed round-2 EXTRACT, which is a deliberately-reduced document (round 2's own task order, T3R step 1: keep only address/mode/type/name/change.actions and the own-name attribute of before/after) -- a genuinely raw, unreduced terraform show -json document can never satisfy AC1, though the cell text calls the artifact 'the full document'.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S15",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W3-S16",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A 'throwaway clone' of one root is not self-contained by directory alone: infra/aws/terraform/49f-value-parity's data.archive_file reads source_dir = ${path.module}/../../compdiff, a sibling tree two levels up, so copying only the root's two .tf files into an isolated scratch directory fails plan with 'could not archive missing directory: ./../../compdiff' until the relative-path sibling is copied at the matching depth too.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S16",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W4-S5",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "Round 3's census-to-the-end run reproduces the SAME RAISE that stopped round 1 (W7-S1) and round 2 (W2-S10's context): live API_GW sentiment-query-api still RAISES R1.f ('sentiment' is in no vocabulary), and the 3rd row still carries a live {system} placeholder (inf-otp-relay-api) -- three rounds apart, systems.json and resources.json carry no new row for either token, so S6R3-AC1/AC2/AC3 FAIL exactly as the order anticipated.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W4-S5",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W4-S6",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "AMENDMENT 1's own 25-distinct-RAISE timebox fires on the FIRST re-run past this cell's original stop: this worker minted resources.json's inf-otp-relay-api row (measured owner advi) and carded 2 further RAISEs (sentiment-query-api, trade-submission-api, owner unmeasurable -- OWNER_CARDS_S6.r3.md), then re-ran and hit a THIRD RAISE on the already-unresolved token astn; a direct-library sweep over every live+repo nameable item (not a sequential CLI loop) measures 462 RAISE occurrences / 351 distinct (plane,type,name) triples / 248 distinct names still ahead, dominated by the SAME already-unresolved tokens (news 114, trade 50, astn 35) plus unrelated S3-key path segments (json 69, jwt 22, security 18, ...) -- so per THE CELL's own clause this worker stops minting/carding here; FWD-5 goes to round 4 on the full list, RAISE_POPULATION_S6.r3.md.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W4-S6",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The item was INERT at filing and GRADUATED on its own merits; nothing was ever owed behind it. The row exists because the slug-time limb requires one carrier per GRADUATED item and because a later reader should not have to infer from SILENCE whether work was outstanding. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed, an ARMED item's row carries a real clock, and none of these eight pretends there is work behind it. Verified by this seat before writing: 8 of 8 are class OBSERVATION, hazard_standing INERT, disarm_owner ABSENT.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S79",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "proof-of-spec-check grades `<expect>` as an UNANCHORED search over the run's whole evidence, and the round checkers ECHO RECORD-DERIVED VALUES -- resource names, card reasons -- into that evidence, while the record is written by the GRADED PARTY. So a card row NAMED `PASS-P36-CARDS-CARRY-REASONS` with an empty reason produces VERDICT: FAIL and simultaneously puts the literal expect string in the output: an unanchored search finds PASS on a FAILING run.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S79",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "REMEDIATED FOR ROUND 8 FORWARD AND MEASURED CLEAN BACKWARD. The scrub landed in check_en_r8.py @23e4e80913 BEFORE any worker was spawned, proven on a MUTANT and a positive control. check_en_r6.py and check_en_r7.py still carry no scrub and are NOT retro-fitted -- that is correct under the exposure-versus-incident distinction now in CLAUDE.md Rule 22: this seat ran the defect's own signature over the graded population (S80 @eb06509fe2) and returned 0 OF 13, so the capability was never exercised and neither closed round re-opens. Building the guard forward is the whole remedy for an exposure; re-opening rounds would have been the remedy for an incident, and there was none.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S81",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "W7-S4 was owed at round 8's L10 and no round-8 order named it -- EN-p-36-r8 is its PRECONDITION, not its remedy (R-72). The NEWLY-SERVABLE class decays precisely because the round that UNBLOCKS an item has no cell for it and the next round has no reason to know, so the item's condition turns satisfiable at the end of a round that was never looking at it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S81",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "REMEDIATED BY THE ACT IT WAS ARMED TO FORCE, not by the round ending. This row's own condition was that W7-S4 be either dispositioned on its own evidence or EXPLICITLY RE-CARRIED TO ROUND 9 WITH A NAMED OWNER; round 8's L9 re-carries it with 2.0.0_SA_COO~G named as round 9's issuer. The precondition is now measurably cleared -- judged_live 1707 and judged_repo 1547 with stopped null on both planes, against the 3-live/0-repo census W7-S4 was filed against -- so a comparison over the estate is possible for the first time. SERVABLE IS NOT SERVED, which is exactly why the carrier had to be named here rather than assumed. THE SPLIT OF DUTIES IS NAMED AT 1.0.0_SA_CTO'S OWN REQUEST AND IN ITS OWN TERMS: round 9's ISSUER is 2.0.0_SA_COO~G, who cuts the cell; the RE-RUN ITSELF IS 1.0.0_SA_CTO'S, which that seat states plainly it has NOT performed -- the three hand products EN-s-2 compared (GRADING_RULE section 9's 43 worked cases, n6-grader-a.tsv's 88 rows, TENSION_RANKING's 10 ranked surfaces) are not located in this project's tree. It declined to claim a re-run it had not done in order to beat a slug, and that refusal is recorded here because it is the thing the L10 would otherwise have quietly absorbed: the precondition CLEARED IN THIS ROUND (judged_live 1707, judged_repo 1547, stopped null on both planes), and the comparison against the completed census's real denominator is OWED AS ROUND 9'S FIRST ACT BY THAT SEAT.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-18T14:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W3-S17",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "PLACEHOLDER_CAMPAIGN_R6.json's S3Key row 'silver/%s/' carries a PYTHON %-STYLE runtime substitution field with NO BRACE at all, so round 7's brace-only instrument -- and key.template_detection, which promotes that same instrument to schema data at NAMING_SCHEMA.json v1.11 -- both correctly class it ORDINARY under their stated scope, while it is shaped identically to the 15 rows the mechanism exists to separate.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S17",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 8 disposition rows"
+ ],
+ "remedy": "NOT REMEDIATED, AND NOT REMEDIATING IT IS THE POINT. The cell DISCLOSED the mechanism's stated limit rather than widening the rule to swallow its own counterexample -- a selector that quietly grew to cover this row would have passed every arm in round 8 and been strictly worse, because the widening would have been fitted to the counterexample that prompted it. What is owed in round 9 is a DELIBERATE DECISION with its own evidence: either widen key.template_detection's scope to cover %-style and printf-style substitution with a discrimination arm run against a negative population, or rule the %-style class explicitly out of scope and record why. Either is admissible; a silent patch is not.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T18:40Z"
+ }
+}
+```
+
+## Round 9 -- remediation plane: four new clocks (W3-S17 closed in place above)
+
+```json
+{
+ "id": "LGIC_ENFORCE-W2-S15",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The naming census admits 2 %-style S3 key literals from the repo plane (both 'silver/%s/') while tracked .py source carries 44 tier-prefixed %-style key literals in 33 files -- 42 never became census rows, 11 of the 33 files first-party producers, including a sibling constant in the same Lambda family as an admitted one.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S15",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN AND ARMED ON THE DISARM OWNER'S OWN CONDITION (S84). Round 9 decided WIDEN, so the 2 %-style repo-plane literals ('silver/%s/') are now in the template class by the schema's own percent_field_regex; what is owed is that the census and the campaign record CLASSIFY them that way at the next run, and the row disarms when a census reading the v1.12 schema classes both as templates.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S73",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "grade()'s canonical form for SSM_DOCUMENT opal-cot-bd-session-fetch keeps the refused token bd, where GRADING_RULE.md R3 says bd next to a firm token is the vendor and 'the canonical form spells blackdiamond'; the hand grader (n6) writes opal-cot-blackdiamond-session-fetch-document. 2 of 3254 census r8 rows carry a bd token in their canonical form, both this name.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S73",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN -- A REAL grade() DEFECT, NOT A HAZARD. grade()'s canonical form for SSM_DOCUMENT opal-cot-bd-session-fetch keeps the refused token `bd`, departing from the written rule. Owed: a fix in lib/opal_naming.py grade() with a positive control on this exact name and a mutant that re-introduces the kept token, run against the live census rather than a fixture. Graduated rather than dismissed so the defect has a carrier.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S74",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "grade() re-joins camel pieces of one segment into a registry word (ExecIncrParityFailure -> exec-incrparity-failure) where GRADING_RULE.md N2 splits before every capital and states no re-join (hand: exec-incr-parity-failure). Either the written rule lacks the clause or grade() applies one it does not have.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S74",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN -- A REAL grade() DEFECT, NOT A HAZARD. grade() re-joins the camel pieces of ONE segment into a registry word (ExecIncrParityFailure), departing from the written rule. Owed: a fix in lib/opal_naming.py grade() with a positive control on this exact name and a mutant, run against the live census. Graduated rather than dismissed so the defect has a carrier.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W3-S19",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "Every row the staleness limb counts ALREADY carries a serial owner by construction; the categories live in the REMEDY text, and the owners this cell seats live only in its record, not on the rows the gate reads.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S19",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN, AND THE WRITE IS THIS SEAT'S PEN. EN-b-42 seated six owners (S18 -> 0.0.0_AB_MSTR, W1-S3 and W2-S1 -> NFRA_COMPEFFICACY, W1-S24 -> LGIC_CANON, S72 -> 0.7.0_AE_CloudOps, W1-S70 -> 1.0.0_SA_CTO) and those owners exist ONLY in STALE_BACKLOG_R9.json -- verified by 3.0.0_SA_CVO, 6 of 6 channel rows still carry the old owner. Owed: relocate each onto its remediation row's owner fields via the admitted owner-change move (exactly one new ruling-citing evidence entry, NO clock move -- R-42 governs relocating the three owner fields). Until then the staleness limb's disclosure names the wrong party for all six.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```

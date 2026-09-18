@@ -191,6 +191,19 @@ CODE_TREES: dict[str, dict] = {
         # to the FROZEN loose key, so bundle-routed scripts are excluded from
         # the per-file pipescript verify -- the mint's own sha-stamped verify
         # (ETag + metadata) is their acceptance surface.
+        #
+        # >> THE DISTRIBUTION FLAG (R-45, 1.0.0_SA_CTO @57bc083d45; IRPT_BCKEND.TO-IB-rtc-2). A member
+        # spec carrying `"distribution": True` is a file ANOTHER pipeline serves on its own per-file
+        # (loose) leg, which this bundle merely carries. For such a member the rule above INVERTS: it
+        # does NOT exit the loose leg. A commit to it deploys its own loose key AND re-mints the bundle
+        # -- two legs, one authority (the repo file). Without the flag, declaring such a file would
+        # freeze that firm's served module while the push reads green (row IRPT_BCKEND-S62: three
+        # per-firm runner_common.py, each served and current on its own leg). The flag goes ONLY on a
+        # file that has a per-file target (file_to_s3_target is not None); the battery
+        # .tools/tests/test_safe_deploy_distribution_member.py asserts that. TWO LEGS CAN DIVERGE: if one
+        # lands and the other does not, each reads green on its own verify. The mint and the loose
+        # upload each verify their own bytes; the cross-leg check (loose ETag == repo md5 AND the
+        # bundle's member bytes == repo bytes) is graded by the cell that declared the members. <<
         "bundles": {
             "accrual_bridge": {
                 # {tar member name -> authority}; flat member names so the AE
@@ -251,24 +264,42 @@ CODE_TREES: dict[str, dict] = {
             # that same host from its own distribution (measured byte-identical to lib/).
             # NO FILE IS COPIED INTO THE REPO BY THIS LINE.
             #
-            # The member name is FLAT (`ids.py`), which is what makes it importable: the runner
-            # is executed as a script, so its own directory is sys.path[0] and the unpacked
-            # sibling resolves as `ids` without the repo-shaped `_IDS_DIR` existing on the box.
+            # SUPERSEDED 2026-09-18 (R-45): the member was FLAT (`ids.py`) and the dispatch moved it
+            # to `_ids/`; members are now named by repo path and land at `_IDS_DIR` directly.
             #
             # DISTINCT sha_metadata_key, per the rule stated above this dict: two members sharing
             # one key silently collide and the object then carries a stamp that verifies ONE file
             # while reading as though it covered both. `ids-sha256` is its own key. <<
+            #
+            # >> MEMBER NAMES ARE REPO PATHS (R-45's second half; IRPT_BCKEND.TO-IB-rtc-2). Every tar
+            # member is stored under its repo-relative path, so the dispatch extracts the tarball at a
+            # repo-shaped root `$W` and every file lands where directory_runner derives it
+            # (`_REPO = parents[4]` of its own directory). The first four members were FLAT names
+            # (directory_runner.py, holdings_snapshot.py, ids.py, trading_calendar.py) and are renamed
+            # here: extracted at `$W`, a flat name lands at `$W/<name>`, where the runner's derivation
+            # does not look. The unpack that consumes these names is refresh.py's, re-cut by
+            # IRPT_BCKEND.TO-IB-rtc-3; until it lands, the dispatch as deployed extracts into the
+            # runner's own directory and cannot find the runner at its old flat path (its build
+            # already failed before this change, for the missing closure -- rows S59, W2-S51).
+            #
+            # THE CLOSURE (8 files, derived by the cell's battery, never recalled): the runner, its two
+            # module-level imports (ids, trading_calendar), the contract it validates against, the firm
+            # registry it and ids.py read, and the three per-firm runner_common.py it imports BY REPO
+            # PATH in SourceSet.__init__. holdings_snapshot.py is the sibling runner, not in that
+            # closure. The three runner_common.py carry `"distribution": True` -- each is served today on
+            # its own firm's loose leg. The two JSON members are admitted by the issuer's L6 ruling on
+            # row S58, on the same reading as ids.py's (amendment H3): distributed, never copied. <<
             "investor_reporting": {
                 "members": {
-                    "directory_runner.py": {
+                    "data/assets/scripts/gold/investor_reporting/directory_runner.py": {
                         "repo_path": "data/assets/scripts/gold/investor_reporting/directory_runner.py",
                         "sha_metadata_key": "directory-runner-sha256",
                     },
-                    "holdings_snapshot.py": {
+                    "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py": {
                         "repo_path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
                         "sha_metadata_key": "holdings-snapshot-sha256",
                     },
-                    "ids.py": {
+                    "infra/aws/lambda/investor-reporting/_ids/ids.py": {
                         "repo_path": "infra/aws/lambda/investor-reporting/_ids/ids.py",
                         "sha_metadata_key": "ids-sha256",
                     },
@@ -289,9 +320,50 @@ CODE_TREES: dict[str, dict] = {
                     # directory would be a SECOND DEFINITION and is refused. CLAUDE.md: "One
                     # frontier: lib/trading_calendar.py". The tar carries a copy the way every
                     # tar does, and it is minted from the one authority every time.
-                    "trading_calendar.py": {
+                    "lib/trading_calendar.py": {
                         "repo_path": "lib/trading_calendar.py",
                         "sha_metadata_key": "trading-calendar-sha256",
+                    },
+                    "infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json": {
+                        "repo_path": "infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json",
+                        "sha_metadata_key": "directory-entry-schema-sha256",
+                    },
+                    "data/firm_registry.json": {
+                        "repo_path": "data/firm_registry.json",
+                        "sha_metadata_key": "firm-registry-sha256",
+                    },
+                    # THE HOLDINGS RUNNER'S CONTRACT (cell IB-rtd-3, row IRPT_BCKEND-S71).
+                    # `holdings_snapshot.py` reads `docs/contracts/investor-reporting/v1/`, NOT the
+                    # `_contracts/` copy the directory runner reads, and a no-network probe shows it is
+                    # the ONLY file that runner opens which the bundle lacked -- so without this member
+                    # `load_contract()` raises FileNotFoundError on the host. BUNDLE-ONLY: a contract has
+                    # no per-file S3 target, so it carries NO "distribution" flag (a flagged member must
+                    # own a loose leg); a commit to it re-mints this bundle through the member detector.
+                    # Which of the two HoldingsSnapshot schemas is THE contract is L4's call; this member
+                    # declares the file the runner reads today and edits neither.
+                    "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json": {
+                        "repo_path": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+                        "sha_metadata_key": "holdings-snapshot-schema-sha256",
+                    },
+                    # DISTRIBUTION members: each keeps its own firm's loose leg (advi / inf / cot) AND
+                    # a commit to it re-mints this bundle. Distinct sha keys, per the rule above,
+                    # NUMBERED in sorted repo-path order (1 = runners_49f, 2 = runners_cot,
+                    # 3 = runners_inf): a key that spelled the firm token would be a hand-kept carrier
+                    # the naming gate refuses (LGIC_ENFORCE DEC-6), and source-repo-paths names each.
+                    "data/assets/scripts/gold/runners_49f/runner_common.py": {
+                        "repo_path": "data/assets/scripts/gold/runners_49f/runner_common.py",
+                        "sha_metadata_key": "runner-common-1-sha256",
+                        "distribution": True,
+                    },
+                    "data/inf/scripts/gold/runners_inf/runner_common.py": {
+                        "repo_path": "data/inf/scripts/gold/runners_inf/runner_common.py",
+                        "sha_metadata_key": "runner-common-3-sha256",
+                        "distribution": True,
+                    },
+                    "data/cot/scripts/gold/runners_cot/runner_common.py": {
+                        "repo_path": "data/cot/scripts/gold/runners_cot/runner_common.py",
+                        "sha_metadata_key": "runner-common-2-sha256",
+                        "distribution": True,
                     },
                 },
                 "bucket": "opal-data-mdpf",
@@ -738,6 +810,57 @@ def bundle_for_member(rel_path: str) -> Optional[tuple[str, str, dict]]:
     return None
 
 
+def is_distribution_spec(spec: dict) -> bool:
+    """True when a member spec is a DISTRIBUTION of a file that keeps its own loose leg (R-45)."""
+    return spec.get("distribution") is True
+
+
+def route_bundle_members(to_deploy: list[str],
+                         bundle_member_files: list[str]) -> tuple[dict[str, tuple[str, dict]], list[str]]:
+    """X-iii routing, factored out of main() unchanged except for R-45's DISTRIBUTION branch, so the
+    routing is testable without touching S3 (.tools/tests/test_safe_deploy_distribution_member.py).
+
+    Returns (triggered, loose): `triggered` maps each bundle to mint -> (tree_label, bundle), once per
+    push however many members changed; `loose` is the per-file upload set. An ordinary member SCRIPT
+    exits the loose leg (its old loose S3 objects are frozen-in-place as the rollback target); a
+    DISTRIBUTION member stays in `loose` AND triggers its bundle; a member CONFIG (json) only ever
+    arrives via bundle_member_files."""
+    triggered: dict[str, tuple[str, dict]] = {}
+    loose: list[str] = []
+    for rel_path in to_deploy:
+        hit = bundle_for_member(rel_path)
+        if hit is not None:
+            label, bname, b = hit
+            triggered[bname] = (label, b)
+            norm = rel_path.replace("\\", "/")
+            spec = next(m for m in b["members"].values() if m["repo_path"] == norm)
+            if is_distribution_spec(spec):
+                print(f"BUNDLE-ROUTED: {rel_path} -> bundle {bname} AND its own loose leg "
+                      f"(DISTRIBUTION member, R-45: two legs)")
+                loose.append(rel_path)
+            else:
+                print(f"BUNDLE-ROUTED: {rel_path} -> bundle {bname} "
+                      f"(loose leg frozen 2026-08-11, X-iii)")
+        else:
+            loose.append(rel_path)
+    for rel_path in bundle_member_files:
+        if rel_path in to_deploy:
+            continue   # script member already routed above
+        hit = bundle_for_member(rel_path)
+        if hit is not None:
+            label, bname, b = hit
+            held_members = [m["repo_path"] for m in b["members"].values()
+                            if m["repo_path"].endswith(".py")
+                            and _serve_held_reason(m["repo_path"]) is not None]
+            if held_members:
+                print(f"SERVE-HELD: bundle {bname} NOT minted (config member {rel_path} "
+                      f"changed, but member script(s) hold the sentinel: {held_members})")
+                continue
+            triggered[bname] = (label, b)
+            print(f"BUNDLE-ROUTED: {rel_path} (config member) -> bundle {bname}")
+    return triggered, loose
+
+
 def second_targets_for(rel_path: str) -> list[tuple[str, str]]:
     """Declared (bucket, key) second deploy targets for a source file (CPR-5)."""
     norm = rel_path.replace("\\", "/")
@@ -1174,7 +1297,14 @@ def main(argv: list[str]) -> int:
         # layout (code/scripts/<layer>/) truncated wrong under the old split.
         dest = target[1].rsplit("/", 1)[0] + "/" if target else "?"
         author = _file_author(author_range, f)
-        print(f"  [script]        {f}  (authored by {author}) -> {dest}")
+        hit = bundle_for_member(f)
+        both = ""
+        if hit is not None:
+            spec = next(m for m in hit[2]["members"].values()
+                        if m["repo_path"] == f.replace("\\", "/"))
+            if is_distribution_spec(spec):
+                both = f" AND bundle {hit[1]} (DISTRIBUTION)"
+        print(f"  [script]        {f}  (authored by {author}) -> {dest}{both}")
     for f in _bundle_only:
         # No file_to_s3_target: a bundle member's destination is the BUNDLE's, resolved at the
         # mint below. Naming the leg honestly beats printing a '?' destination that reads as a
@@ -1274,32 +1404,9 @@ def main(argv: list[str]) -> int:
     # frozen-in-place as the rollback target); a member CONFIG (roster json)
     # only ever arrives via detect_bundle_member_files. Each triggered bundle
     # mints ONCE per push regardless of how many members changed.
-    triggered: dict[str, tuple[str, dict]] = {}
-    loose: list[str] = []
-    for rel_path in to_deploy:
-        hit = bundle_for_member(rel_path)
-        if hit is not None:
-            label, bname, b = hit
-            triggered[bname] = (label, b)
-            print(f"BUNDLE-ROUTED: {rel_path} -> bundle {bname} "
-                  f"(loose leg frozen 2026-08-11, X-iii)")
-        else:
-            loose.append(rel_path)
-    for rel_path in bundle_member_files:
-        if rel_path in to_deploy:
-            continue   # script member already routed above
-        hit = bundle_for_member(rel_path)
-        if hit is not None:
-            label, bname, b = hit
-            held_members = [m["repo_path"] for m in b["members"].values()
-                            if m["repo_path"].endswith(".py")
-                            and _serve_held_reason(m["repo_path"]) is not None]
-            if held_members:
-                print(f"SERVE-HELD: bundle {bname} NOT minted (config member {rel_path} "
-                      f"changed, but member script(s) hold the sentinel: {held_members})")
-                continue
-            triggered[bname] = (label, b)
-            print(f"BUNDLE-ROUTED: {rel_path} (config member) -> bundle {bname}")
+    # R-45: route_bundle_members() is this loop, factored out so it is testable without S3; a
+    # DISTRIBUTION member stays in `loose` AND triggers its bundle.
+    triggered, loose = route_bundle_members(to_deploy, bundle_member_files)
     to_deploy = loose
     if triggered:
         print()

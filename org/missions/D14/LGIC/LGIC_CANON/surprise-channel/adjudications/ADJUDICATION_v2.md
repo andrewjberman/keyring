@@ -241,4 +241,349 @@ JUDGMENT CRITERIA: **9**, one per spawned cell -- J4-J1, J5-J1, J6-J1, J7-J1, K2
 ]
 ```
 
+---
+
+## Round 3
+
+Round 3 of `LGIC_CANON`, compiled and adjudicated by `3.0.0_SA_CVO` on `2.0.0_SA_COO~G`'s L8 hand-off (via `1.0.0_SA_CTO`,
+msg 97617, routing 97615), recorded 2026-09-17T17:5xZ.
+
+THE COMPILE POPULATION IS **3**, THE GATE'S OWN NUMBER: `_latest_dispositions('.', 'LGIC_CANON')` returns 45 items
+resolved, 3 UNDISPOSITIONED -- `LGIC_CANON-S17`, `-S18`, `-W1-S5`. The issuer's own raw fence read (97 row objects /
+64 distinct ids) is not a resolver number and is not this round's denominator, correctly named as such in the hand-off.
+
+ORDERS: **7 of 7 terminal** (`complete`), all 7 proof-of-spec instances independently re-run by this seat
+(`--governing-order`, bound to each order file) at HEAD `7be45c7091`: 7 of 7 VALID, rc=0.
+
+JUDGMENT CRITERIA: **7**, one per spawned cell -- `L3R3-AC4`, `K4R3-AC5`, `K5R3-AC7`, `J8R3-AC4`, `J9R3-AC4`,
+`J10R3-AC5`, `J11R3-AC5`. All seven graded below; **7 of 7 PASS**.
+
+**S6 stays ARMED, disarm_owner `1.0.0_SA_CTO` -- not this seat's to close.** `J11R3-AC5`'s own bar names the
+condition precisely ("row S6 disarms here if the arms could have diverged and did not; the word is
+`1.0.0_SA_CTO`'s"): the measured fact is that they COULD and, on the ONE plane where the canon's own text is
+genuinely compressed enough to support two readings, judge F (briefed) DID diverge from G and H -- while H
+(unbriefed) matched G (briefed) exactly, 23 of 23, diverging from F only where G already does. So the
+briefed/unbriefed axis itself shows no effect; the one real divergence traces to a citable ambiguity, not to
+knowledge of the severity order. That is evidence FOR disarming S6 on the reading its own text asks for, but the
+word is the CTO's to give, per the row's own `disarm_owner` field, not mine to assume on his behalf.
+
+```json
+[
+ {
+  "id": "LGIC_CANON-C-S23",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T17:49Z",
+  "one_line": "S17 GRADUATED: of the four instrument defects CN-i-1 was cut to repair, two (W2-S3, W8-S4) were LIVE and reproduced in the current bytes; two (W3-S2, W5-S2) were already repaired before the row was even filed. check_canon_r3.py's rebuild (round 3, self-test 35 of 35 arms exercised alone) repairs the two live ones; all four disarm below.",
+  "class": "OBSERVATION",
+  "spec_asserts": "The round-2 slug named four instrument defects for CN-i-1 (never issued) to repair.",
+  "world_is": "Independently re-read at HEAD alongside the row: W2-S3 (check_canon_r2.py k3_contentdiff, constant-passes on a substring with no planted negative) and W8-S4 (o3_sovereign, counts token OCCURRENCES not marked rows) are confirmed live defects in the CHECKER, not the canon. W3-S2 (l2_recount's \\S+ regex) and W5-S2 (j_reach's whole-row scan) were already repaired -- W3-S2 in check_canon_r2.py itself (the non-greedy form at :619, docstring recording the driving measurement), W5-S2 at commit df30196cc1 with its own regress-reach arm now PASSing in round 3's check_canon_r3.py. round 3's check_canon_r3.py self-test (35 of 35 arms, each exercised alone) is the repair for the two genuinely live defects.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_CANON-S17, full evidence block (four citations, each read at the line cited)",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/check_canon_r2.py:619 -- l2_recount's non-greedy SECTION pattern, docstring :606-609",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/check_canon_r3.py -- self-test 35 of 35, per the issuer's hand-off"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-S17"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_CANON-C-S24",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T17:49Z",
+  "one_line": "S18 GRADUATED: decomposition v5's round-3 subtraction genuinely undercounted (said 6, ran 7, omitting CN-l-3) and a multi-id token broke the L6 gate's cell-id grammar for two of three judges -- a real Rule-24 forward-list-in-a-subtraction's-clothes defect, caught before any order was cut and already cured at v5.1.",
+  "class": "OBSERVATION",
+  "spec_asserts": "Decomposition v5 s.0e: 'cells round 3 runs ... 6.'",
+  "world_is": "Verified independently: v5's own LEVELS paragraph (Level 0: CN-k-4-r3, CN-k-5, CN-l-3) and the round-2 analysis s.3 direction table both already carried CN-l-3 as a round-3 cell, so the subtraction's own denominator disagreed with the same document's other section -- exactly a forward list (what the author had in mind) rather than a subtraction re-verified against the domain it claims. The seven orders actually issued (503160fc58) match the corrected v5.1 declaration, not the miscounted v5 text. No order was ever cut against the wrong count, so nothing downstream inherited it.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_CANON-S18",
+    "org/missions/D14/LGIC/LGIC_CANON/decompositions/LGIC_CANON_DECOMP.md v5.1 s.0e, all seven cells declared by id",
+    "issuance 503160fc58 -- seven orders issued, matching v5.1"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-S18"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_CANON-C-S25",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T17:49Z",
+  "one_line": "W1-S5 DISMISSED: the task order's assumed exclusion (producer census reads 0) did not hold, but the order's own stated contingency branch (n>0 drops the exclusion, compare like any other item) was the one actually taken, and render() now carries the note unconditionally. Nothing broken; a measured branch, not an assumed one.",
+  "class": "OBSERVATION",
+  "spec_asserts": "N/A -- this row itself makes no spec-vs-world claim beyond confirming the worker's own account.",
+  "world_is": "Independently confirmed: producer_consumer_census() genuinely reads 4 consumers (LGIC_NAMING's own grading-exercise fixtures reproducing the schema's key block verbatim), not 0. The task order's own text names this exact branch and instructs exactly what the worker did. CONTENT-DIFF reads 0 either way because the field now renders unconditionally.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_CANON-W1-S5",
+    "infra/logic/render_naming_section.py producer_consumer_census(), run at HEAD: 4 consumers of 36940 files, all four the exercise prompts (document arm)",
+    "org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.TO-CN-k-4-r3.rerender-adjacency.md -- the contingency branch named verbatim"
+   ]
+  },
+  "dismissal_reason": "The measured branch is exactly the one the order's own text already covered; render() handles it unconditionally and CONTENT-DIFF stays 0. No act is owed.",
+  "adjudicates": [
+   "LGIC_CANON-W1-S5"
+  ],
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_CANON-C-S26",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T17:49Z",
+  "one_line": "L9 GRADE RECORD, round 3: seven JUDGMENT criteria, all PASS -- the four canon coordinate lines and A-6's restatement (K5R3-AC7) independently verified against the actual doctrine bytes before this round's hand-off even arrived; the CN-j-11 roll-up divergence (J11R3-AC5) traces to a real, citable ambiguity at 02_DOCTRINE.md:171/223/247/528-530, not an invented one, and the briefed-vs-unbriefed claim is exactly what the counts show.",
+  "class": "OBSERVATION",
+  "spec_asserts": "N/A -- a grade record.",
+  "world_is": "L3R3-AC4 PASS: 06_CONFORMANCE_LEDGER.md v1.3's three new state/ rows (bd, inf, cot) correctly cite R21+R1, disposition MIGRATE, sourced from the D8 brief IV.6 table (not typed fresh) -- confirmed by direct read of the changelog entry. K4R3-AC5 PASS: the --help match rule is a real two-arm predicate (code access-chain OR verbatim document reproduction), not a vacuous one, and the canon's rendered bd alias_adjacency block is byte-identical to the schema's -- confirmed by this seat's own independent read of 02_DOCTRINE.md N4 earlier the same session, before this hand-off arrived. K5R3-AC7 PASS: all four resolves-R-9(iii) coordinate lines (C1/R10, C2/R1, C3/R6, C4/R19) answer from existing rulings, none invented, verified by this seat's own independent full read of the canon text; R1's census vintage correctly states it predates the source-first ruling; A-6's restatement in 10_ONBOARDING_CHECKLIST.md line 54 matches name()/validate() exactly, citing lib/opal_naming.py:1552, and the Nine-rows recount (five SOVEREIGN, four GIVEN) is verified correct by direct table read. J8R3-AC4/J9R3-AC4/J10R3-AC5 PASS: all three judges' most-severe findings rest on cited, existing rules (spot-verified: :175, :220, :244-249, :399, :479, :555, :557, :580-582 all read as cited); A4 COMPUTE's uniform UNDETERMINED/R13 and R15's NOT REACHED are both the canon's own disclosed silences, not filled placeholders; J9's result additionally discloses four places of genuine judge latitude rather than hiding them. J11R3-AC5 PASS: independently re-derived from the raw judge TSV rows and the cited doctrine lines (:171, :223, :247, :528-530, each read directly by this seat) -- the divergence is real and traceable, F's reading is not frivolous given the compressed non-application wording, and G/H's application is better supported by the canon's own words (:223 and :528-530 both state a carve-out from one rule's reach does not exempt the KEY from R1's grade); H does not diverge from the briefed pair more than they diverge from each other.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/state-plane.r3.result.md and its proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/rerender-adjacency.r3.result.md and its proof_of_spec.json",
+    "org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.TO-CN-k-5-r3.canon-coordinates.md, cross-read against infra/logic/02_DOCTRINE.md and infra/logic/10_ONBOARDING_CHECKLIST.md at HEAD",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-j-8-r3.judge-f.result.md; ~4/judge-g.r3.result.md; ~5/LGIC_CANON.TO-CN-j-10-r3.judge-h-unbriefed.r3.result.md",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/judge-comparison.r3.result.md and its proof_of_spec.json"
+   ]
+  },
+  "grades": [
+   {"criterion": "L3R3-AC4", "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-l-3-r3.state-plane.proof_of_spec.json@01c3d51a6f", "verdict": "PASS", "reason": "The three new ledger rows correctly apply R21+R1 with disposition MIGRATE, sourced from the D8 brief's own table; verified by direct read of 06_CONFORMANCE_LEDGER.md's v1.3 changelog entry."},
+   {"criterion": "K4R3-AC5", "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-4-r3.rerender-adjacency.proof_of_spec.json@3da3b4204f", "verdict": "PASS", "reason": "The census match rule is a real two-arm predicate and the rendered bd alias_adjacency is byte-identical to the schema's; independently confirmed against 02_DOCTRINE.md N4."},
+   {"criterion": "K5R3-AC7", "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-5-r3.canon-coordinates.proof_of_spec.json@1e2a9c931b", "verdict": "PASS", "reason": "All four coordinate lines answer from existing rulings, the R1 vintage is true, and A-6's restatement matches name()/validate() exactly -- each independently verified against the doctrine's actual bytes."},
+   {"criterion": "J8R3-AC4", "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~3/LGIC_CANON.TO-CN-j-8-r3.judge-f.proof_of_spec.json@73ab2a7e51", "verdict": "PASS", "reason": "Every most-severe finding rests on a cited, existing rule; A4/R15 silences are the canon's own disclosed non-decisions, not filled placeholders."},
+   {"criterion": "J9R3-AC4", "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~4/LGIC_CANON.CN-j-9-r3.judge-g.proof_of_spec.json@a1201a92fc", "verdict": "PASS", "reason": "Same bar as J8, met; four points of genuine judge latitude disclosed rather than hidden, strengthening rather than weakening the grade."},
+   {"criterion": "J10R3-AC5", "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~5/LGIC_CANON.TO-CN-j-10-r3.judge-h-unbriefed.proof_of_spec.json@ca6236d89d", "verdict": "PASS", "reason": "Same bar as J8/J9, met; the unbriefed arm's readings match the cited rules exactly."},
+   {"criterion": "J11R3-AC5", "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/LGIC_CANON.TO-CN-j-11-r3.judge-comparison.proof_of_spec.json@7be45c7091", "verdict": "PASS", "reason": "The one divergence traces to a real canon ambiguity at :171/:223/:247/:528-530, independently re-derived; the briefed-vs-unbriefed claim exactly matches the counts (H=G 23/23, F the sole outlier)."}
+  ],
+  "dismissal_reason": "This row grades seven judgment criteria and adjudicates no investigation item; it is a grade record, per the schema's own note for this shape.",
+  "disposition": "DISMISSED_WITH_REASON",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_CANON-C-S27",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T17:49Z",
+  "one_line": "C-S19's ORDER half, left open at round 2 ('the only version still purchasable is a cell that asks a judge for a per-plane or per-tree ROLL-UP, which is what would actually exercise an ORDER'), is now purchased: CN-j-11's roll-up comparison IS that cell, and it ran. The CLASSIFICATION half closed at CN-k-2 (K2-J1); the ORDER half closes here.",
+  "class": "OBSERVATION",
+  "spec_asserts": "C-S19 (round 2): 'THIS SEAT'S OWN ROW C-S9 IS THEREFORE HALF-OPEN: its classification half is closed by CN-k-2 (grade K2-J1), and its ORDER half is untested and stays open.'",
+  "world_is": "CN-j-11's round-3 roll-up (J11R3-AC5, graded above) is exactly the per-tree ROLL-UP comparison C-S19 named as the only remaining way to test whether an ORDER is actually exercised. It ran, over 23 planes, with a positive control (F.F) and a genuine divergence (1 of 23) traced to a real canon coordinate. An order WAS exercised, on the tree this round covers -- the open half is discharged BY THIS EVIDENCE, on this tree; it is not a claim that every tree or every rule interaction is now settled.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S19 (round 2, this seat's own row)",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~2/judge-comparison.r3.result.md and its proof_of_spec.json (J11R3-AC1..AC5)"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-C-S19"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_CANON-C-S28",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T17:49Z",
+  "one_line": "C-S20 DISARMS: check_canon_r3.py rebuilt the two genuinely live instrument arms it named (W2-S3's planted-removal control, W8-S4's marked-row count) and its own self-test exercises all 35 arms alone; the other two items it adjudicated (W3-S2, W5-S2) were already repaired, independently reconfirmed at HEAD. C-S20's own row is not itself mutable (it carries no disarm/remediation/closed clock triple), so this row records the disarm rather than editing it in place.",
+  "class": "OBSERVATION",
+  "spec_asserts": "C-S20: 'a mechanical criterion is trusted precisely because nobody re-reads it, so an arm that reads the wrong object is a verdict generator.'",
+  "world_is": "check_canon_r3.py (round 3, issuer's act A-23) rebuilds the fixed-input checker set; its self-test runs 35 of 35 arms, each exercised alone, per the L8 hand-off. K4R3-AC2 (k3-contentdiff, W2-S3's arm) now plants a real removal and requires the doctored count to exceed the true tree's -- independently confirmed FIRED-AS-EXPECTED against the proof-of-spec instance. K5R3-AC5 (o3-sovereign, W8-S4's arm) now counts marked table rows against 10_ONBOARDING_CHECKLIST.md's own recount -- independently confirmed against the actual table (5 SOVEREIGN of 9). W3-S2 and W5-S2 were already repaired (confirmed under C-S23/row LGIC_CANON-S17 and W5-S2's own remediation row respectively). All four of C-S20's adjudicated items now carry `remediation.state: REMEDIATED`, `closed: true` in REMEDIATION_v2.md's Round 3 section.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S20 (round 2, this seat's own row)",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/check_canon_r3.py -- self-test 35 of 35, per the L8 hand-off (msg 97615)",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-4-r3.rerender-adjacency.proof_of_spec.json -- K4R3-AC2 FIRED-AS-EXPECTED",
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-k-5-r3.canon-coordinates.proof_of_spec.json -- K5R3-AC5 PASS-O3-SOVEREIGN-ROWS-COUNTED, independently re-verified against infra/logic/10_ONBOARDING_CHECKLIST.md:53-61",
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md, Round 3 -- W2-S3, W3-S2, W8-S4 each REMEDIATED/closed"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-C-S20"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ }
+]
+```
+
+---
+
+## Round 3 -- S6 and S3 disarmed on the round-3 analysis
+
+`1.0.0_SA_CTO`'s round-3 analysis (@d60e80f68c) disarms `S6` by his own word and routes
+`2.0.0_SA_COO~G`'s word (msg 97626) disarming `S3` -- the project's last two open rows. This seat
+holds the pen under R-15 for both; neither owner is this seat. LGIC_CANON now carries 0 open rows
+and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKTS's router repoint.
+
+```json
+[
+ {
+  "id": "LGIC_CANON-C-S29",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:51Z",
+  "one_line": "S6 DISARMS: the CTO's own word, on the round-3 analysis's own evidence (CN-j-8/9/10/11, unbriefed h matching briefed g exactly 23 of 23) -- reading two of S6's own two-reading world_is is the one the roll-up confirms: the canon carries what the brief used to supply, the cell was sound, and only the order's warning text was wrong.",
+  "class": "OBSERVATION",
+  "spec_asserts": "S6's own world_is names the disarming test: 'if E then agrees with C and D, that is the direct evidence that CN-k-2 made the canon carry what the brief used to supply.'",
+  "world_is": "1.0.0_SA_CTO, LGIC_CANON round-3 analysis @d60e80f68c, verbatim: 'DISARMED. The unbriefed judge h matched the briefed judge g exactly, 23 of 23, so the canon carries what the brief used to supply: reading two is operative, the cell was sound, and only the order's warning text was wrong.' This seat's own J11R3-AC5 grade (LGIC_CANON-C-S26, this project's round-3 adjudication) independently found the same shape before the analysis landed: H=G exactly, F the sole outlier on an unrelated, citable ambiguity.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND3_ANALYSIS.md@d60e80f68c -- the CTO's word",
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_CANON-S6",
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S26 (this seat's own J11R3-AC5 grade)"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-S6"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ },
+ {
+  "id": "LGIC_CANON-C-S30",
+  "project": "LGIC_CANON",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-09-17T18:51Z",
+  "one_line": "S3 DISARMS: its own owner's word, re-measured at HEAD rather than taken on report -- CN-k-1's renderer now reads the FIRM row's note field on the registry branch, landed inside CN-k-4, and the demo note bullet is back in the generated section with a fresh --check.",
+  "class": "OBSERVATION",
+  "spec_asserts": "S3's own remedy: 'a one-line read of the FIRM row's note field in the renderer's registry branch, re-rendering the bullet exactly as the schema path did.'",
+  "world_is": "1.0.0_SA_CTO, routing 2.0.0_SA_COO~G's word (msg 97626), verbatim: 'DISARMED, by its owner's own word. The row's remedy ... landed inside CN-k-4. The issuer re-measured at HEAD 9b628270a1 rather than taking the worker's report: check_canon_r2.py k3-note reads denominator 1 ['demo'], rendered 1 ['demo'], every FIRM note reaches the section True; render_naming_section.py --check reads FRESH with 0 failures.'",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D14/LGIC/LGIC_CANON/deliverables/1.0.0_SA_CTO/LGIC_CANON_ROUND3_ANALYSIS.md@d60e80f68c",
+    "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md row LGIC_CANON-S3",
+    "check_canon_r2.py k3-note re-run by the issuer at HEAD 9b628270a1: denominator 1 ['demo'], rendered 1 ['demo'], every FIRM note reaches the section True; render_naming_section.py --check FRESH, 0 failures"
+   ]
+  },
+  "adjudicates": [
+   "LGIC_CANON-S3"
+  ],
+  "disposition": "GRADUATED",
+  "hazard_standing": "INERT"
+ }
+]
+```
+
 -- 3.0.0_SA_CVO
+
+## Round 4 -- L8/L9: C6R4-AC8 graded, three rows dispositioned
+
+```json
+{
+ "id": "LGIC_CANON-C-S31",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T06:35Z",
+ "one_line": "L9 GRADE RECORD, round 4: C6R4-AC8 PASS -- the run is a genuine exercise and not a transcription, and the proof is that it corrected the checklist twice. FWD-5 is NOT claimed EXERCISED by this grade.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "This is the one judgment criterion of round 4 and it had not been graded: a census of every grade-carrying adjudication row in this project returns 0 records for C6R4-AC8, the last being C-S26 from round 3. THE GRADE IS PASS on both halves of the bar, each re-derived at the artifacts rather than read from the cell's account. The finding that decides it is the one the CTO's own analysis leads with and it is worth restating as a general fact: AN ONBOARDING CHECKLIST IS A CLAIM ABOUT THE ESTATE, and a claim nobody exercises decays silently while continuing to read as instruction. Two of this one's steps had gone false -- a kill switch it called absent, a cell it called pending -- and only running it found that. The carded set is 4 of 4 with owners and reasons, and Step 14's card is the one that shows the run's discipline: a SOVEREIGN input was missing and the cell STOPPED rather than defaulting it, which is precisely why G-N was lifted rather than satisfied.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.md -- the bar read verbatim",
+   "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.proof_of_spec.json@d8edabc2aa -- the judgment row, which correctly offers no verdict",
+   "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/C6_RUN_RECORD.json -- reached 12, carded 4, each carded step with owner and reason",
+   "VERIFIED BY THIS SEAT at the live artifacts: org/mcp/naming-gate.enforce exists (614 bytes); LGIC_ENFORCE.TO-EN-s-1 and .TO-EN-s-1-r2 both read <status>complete; 10_ONBOARDING_CHECKLIST.md carries both corrections at :314 and :345, each citing its own row",
+   "A census of grade-carrying rows across this project's adjudication files: 0 prior records for C6R4-AC8"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "C6R4-AC8",
+   "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.proof_of_spec.json@d8edabc2aa",
+   "verdict": "PASS",
+   "reason": "THE BAR ASKS TWO THINGS AND THE FIRST IS ANSWERED BY SOMETHING A TRANSCRIPTION COULD NOT HAVE PRODUCED: the run CORRECTED THE CHECKLIST TWICE, and this seat verified both corrections at the live artifacts rather than at the record claiming them. Step 11 told a reader the naming kill switch was ABSENT and the stage would WARN -- org/mcp/naming-gate.enforce EXISTS at HEAD (614 bytes, created @d181e0ac5a in LGIC_ENFORCE round 3), so the stage REFUSES, and a run following the step as written would meet a refusal the step does not tell it how to read. Step 13 told a reader EN-s-1 was pending and to write 'EN-s-1 open' -- both LGIC_ENFORCE.TO-EN-s-1 and its -r2 sibling read <status>complete, so the census mode was AVAILABLE and the cell RAN it. A step-by-step transcription carries a checklist's claims forward; only an exercise discovers that two of them had become false. Both corrections are landed inside the cell's own grant and each cites its own row (10_ONBOARDING_CHECKLIST.md:314 for S19, :345 for W1-S7), verified by this seat at the bytes. NOTHING WAS INVENTED, and the place that proves it is Step 14: it is CARDED precisely BECAUSE a SOVEREIGN portal-paths input was missing and the cell refused to default it -- the checklist's own INPUTS table says a missing sovereign input is a STOP, never a default, and no demonstration firm was made up, which is the exact thing Andrew's G-N lift was about. THE CARDED SET NAMES REAL, CLOSEABLE GAPS, 4 of 4 with an owner and a reason: Step 10 and Step 16 close when ADVI_FIRMBKTS's router repoint lands, both confirmed live and read-only for THIS subject (49financial's served objects are read from the LEGACY tier-first tree in opal-data-portal-v2, not from address() output); Step 13's gap is already corrected and its residue is a census that stops on an unrelated RAISE, closeable at the raised row under Rule 30 rather than here; Step 14 closes on Andrew's own input plus a register entry from the CTO. reached 12 + carded 4 == 16 of 16, which is R-34's bar met exactly as written. WHAT THIS GRADE DOES NOT SAY: that FWD-5 is EXERCISED. Its DONE-WHEN also requires the firm's people seeing their dashboard, an act outside this cell entirely, and the criterion's own text says so."
+  }
+ ],
+ "dismissal_reason": "This row grades one judgment criterion and adjudicates no investigation item; it is a grade record, per the schema's own note for this shape."
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-C-S32",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T06:35Z",
+ "one_line": "S19 and W1-S7 GRADUATED and DISARMED on their owner's own stated condition, verified at the bytes; W1-S6 DISMISSED as descriptive context whose pin turned out to be right.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S19 and W1-S7 name the same disarm condition in their own text -- that the correction RIDES C6's OWN CUT and is made inside the cell's grant on infra/logic/10_ONBOARDING_CHECKLIST.md -- and both conditions are MET: the checklist carries the Step 11 correction at :314 citing LGIC_CANON-S19 and the Step 13 correction at :345 citing LGIC_CANON-W1-S7. Both were ARMED for the right reason, stated by their author: the staleness was reachable BY THE NEXT ACT, because a run following those steps is the very thing C6 does. That is the distinction between a stale line that merely exists and one a reader will act on, and it is why these were not filed INERT. W1-S6 is DISMISSED: it measured a number in the issuer's own pinned context ('2 built: no steps'), found exactly 1 at the pinned base AND at the cell's HEAD alike -- so the count was off by one when pinned rather than drifting since -- and the number is explicitly CONTEXT under the order's own BOUNDS clause, read by no arm in the checker. The row stands as filed and the measurement stands beside it; nothing is owed. Filing it at all was correct under Rule 24's subtraction-over-recall applied to the issuer's own numbers.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md rows S19, W1-S6, W1-S7 -- read in full",
+   "VERIFIED BY THIS SEAT: comp-read over infra/logic/10_ONBOARDING_CHECKLIST.md finds both correction citations, at :314 and :345, in PROSE band",
+   "VERIFIED BY THIS SEAT: org/mcp/naming-gate.enforce present; both EN-s-1 orders read complete"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_CANON-S19",
+  "LGIC_CANON-W1-S6",
+  "LGIC_CANON-W1-S7"
+ ]
+}
+```
+
+## Round 4 follow-on -- a compound-row disposition corrected
+
+```json
+{
+ "id": "LGIC_CANON-C-S33",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T13:00Z",
+ "one_line": "CORRECTING MY OWN COMPOUND-ROW LAUNDERING. C-S32 disposed THREE items under ONE `disposition: GRADUATED` while its own one_line said W1-S6 was DISMISSED -- so the resolver reads W1-S6 GRADUATED and the register records DISMISSED, and NEITHER IS THE LOOSE ONE: my row said two different things and resolved the difference only in prose. W1-S6 is DISMISSED here on a carrier the resolver reads.",
+ "class": "OBSERVATION",
+ "spec_asserts": "A disposition is a FIELD, not a sentence. `_resolve_latest` reads a row's `disposition` and applies it to EVERY id in `adjudicates`; it cannot see a prose exception, and CLAUDE.md already carries both halves of this -- an adjudication that disarms in PROSE disposes nothing, and a COMPOUND artifact row launders provenance in a way no gate can catch.",
+ "world_is": "1.0.0_SA_CTO asked whether LGIC_CANON's register or the gate's resolver is the loose one on W1-S6. THE ANSWER IS NEITHER, AND THE DEFECT IS MINE. C-S32 (round 4's L9, this seat) carries adjudicates ['LGIC_CANON-S19','LGIC_CANON-W1-S6','LGIC_CANON-W1-S7'] under a SINGLE `disposition: GRADUATED`, and its own one_line reads 'S19 and W1-S7 GRADUATED and DISARMED ...; W1-S6 DISMISSED as descriptive context whose pin turned out to be right.' The register faithfully recorded my SENTENCE; the resolver faithfully read my FIELD; the two disagree because one row asserted two different dispositions and only one of them was expressible in the schema I used. I MIXED TWO DISPOSITIONS INTO ONE ROW because the three items were adjudicated in one breath, and that is exactly the compound-artifact shape this estate has already ruled against -- I wrote it anyway, in the row where I was grading other people's rigour. THE SUBSTANCE IS AND ALWAYS WAS A DISMISSAL: W1-S6 re-measured the round-4 cut's own pinned context and found the checklist carries exactly ONE 'built: no' step both then and now, so THE PIN WAS RIGHT and the number is context read by no arm. Nothing is owed by it and nothing ever was. It is INERT, so R-21's bar (an ARMED row GRADUATES, never dismisses) does not reach it and dismissal is available. THE SIDE-EFFECT THAT MADE THIS VISIBLE IS THE USEFUL PART: because the field said GRADUATED, W1-S6 entered the rowless-GRADUATED population and would have REFUSED LGIC_CANON's next slug under the new slug-time limb -- a laundered disposition became a mechanical blocker three rounds later, found by a seat running a live limb against a project with no round in flight. THE GENERAL SHAPE: a row that adjudicates N items under one disposition is only safe when ALL N take that SAME disposition; the moment one differs, the difference must be a SEPARATE ROW, because prose is not a carrier any resolver reads.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S32 -- read at HEAD: disposition GRADUATED, adjudicates 3 ids, one_line naming W1-S6 as DISMISSED",
+   "srg._latest_dispositions('.', 'LGIC_CANON') reads LGIC_CANON-W1-S6 = GRADUATED, measured 5 consecutive times identically",
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-W1-S6 -- the row itself, INERT/OBSERVATION",
+   "1.0.0_SA_CTO's slug-time-limb message: LGIC_CANON carries 3 rowless GRADUATED (S17, S18, W1-S6)"
+  ]
+ },
+ "adjudicates": [
+  "LGIC_CANON-W1-S6"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "dismissal_reason": "W1-S6 is INERT descriptive context: it re-measured the cut's own pinned number, found the pin CORRECT, and the number is read by no arm. Nothing was owed by it. This row restates that dismissal as a FIELD rather than as prose inside a compound row, superseding C-S32's disposition for this id only; S19 and W1-S7 keep C-S32's GRADUATED, which was correct for them."
+}
+```

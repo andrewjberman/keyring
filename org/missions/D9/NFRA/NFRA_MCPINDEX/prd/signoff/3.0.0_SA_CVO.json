@@ -1,0 +1,11 @@
+{
+  "prd": "NFRA_MCPINDEX_PRD.md",
+  "prd_version": "v0.5",
+  "prd_pin": "b7dc80e2cc75d20e35980b0fd30677fc3675363f",
+  "half": "ratified-text",
+  "half_hash": "c099e433c75782cbb75a48e3d45b952da6491358f3a45de2bb3ad3fc85106156",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.5_RATIFIED_TEXT_HALF_20260918.md@ecbf1669ca",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-09-18T01:26:25Z"
+}

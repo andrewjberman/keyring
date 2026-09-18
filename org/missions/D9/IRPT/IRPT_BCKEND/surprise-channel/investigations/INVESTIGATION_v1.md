@@ -4588,6 +4588,896 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "docs/contracts/investor-reporting/v1 is the whole contract the frontend renders against: every code, field and scope answer the producer can emit is named there.",
     "world_is": "Round 5's cells met five points where v1 is silent or inconsistent: an undefined reason code on a frozen print, two missing schema elements, a missing scope-level kind, a Global answer that reaches one firm of two, and an enum a READY answer leaves. The frontend now renders each defensively (IRPT_FNTEND RULINGS T and W); the fixes are the contract's and the producer's.",
     "notes": "Carried by 1.0.0_SA_CTO's IRPT_FNTEND round-5 analysis s.6 -- this row IS the carrier; a round analysis saying 'carried' was not one in round 4 (S40). It joins IRPT_BCKEND's next L4 amendment packet (this seat's), beside LGIC_CANON's three CONTRADICTS and round 4's items 4-6. INERT: no live producer answer is wrong in a way that harms; FWD-11's PARTIAL is the cost."
+  },
+  {
+    "id": "IRPT_BCKEND-S53",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-17T22:16:00Z",
+    "one_line": "MIDSTREAM READ AFTER FIVE DARK DAYS, AND THIS SEAT'S OWN ROW S50 IS CORRECTED: IB-rtb-1 CAN START. S50 said 'IB-rtb-1 cannot start' until the host-role IAM change lands. That read the order's hand-off gate off IB-rt-6's status WORD. The gate's own function reads IB-rt-6 TERMINAL by its VALID proof-of-spec instance at HEAD, and its branch is merged, so the gate 'after IB-rt-1, IB-rt-2, IB-rt-4, IB-rt-6, IB-rt-7 and IB-rt-8 are terminal and merged' is SATISFIED on six of six. IB-rtb-1 is HANDED to a cold-started slot ~1 in this commit's successor. Four outcomes (FWD-2, FWD-5, FWD-8, FWD-11) waited on that cell alone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/surprise-row-gate.py _open_tos_for_project(root, 'IRPT_BCKEND') CALLED at CLOUD 46dce14101, never re-derived: 32 order files scanned, 2 read OPEN (IB-rtb-1 [staged]; the DS-home pointer IRPT_BCKEND.TO-IB-rt-5.pointer.md [no status tag]), and its own note reads '1 order(s) terminal by a VALID proof-of-spec instance at HEAD although the status word is not terminal (spine :436, :487-488): IB-rt-6 [pending]'. Positive control in the same call: LGIC_LGCTFM reads 3 open.",
+        "org/ref/CANONICAL_FABRIC_WORKFLOW_20260901.md :487-488 -- terminality is read from the proof-of-spec instances at HEAD and never from a status field.",
+        "git merge-base --is-ancestor wk-irpt_bckend-2-2c HEAD -> true (drain 5931cf2de9).",
+        "Andrew-direct 2026-09-17 ~19:0xZ at the 1.0.0_SA_CTO terminal, record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md @57a15b2bbe: IRPT_BCKEND is first in his seat order, and 'this should not be a holdup if its a fwd it should not be'.",
+        "comp-iam-usage reach-check mdpf-daily-runner-ec2-role, LIVE policy plane, one ARN per call, 2026-09-17 ~22:0xZ: s3:PutObject on opal-data-bd/investor-reporting/directory/x ALLOWED; on opal-data-cot/investor-reporting/directory/x ALLOWED; NEGATIVE CONTROL s3:PutObject on opal-data-cot/gold/zz-negative-control/x implicitDeny; POSITIVE CONTROL s3:GetObject on opal-data-mdpf/code/scripts/x ALLOWED; s3:GetObject on opal-data-49financial/gold/advi/dimensions/dim_relationship/x implicitDeny. The opal-data-inf destination was NOT probed.",
+        "infra/aws/terraform/mdpf-pipeline/iam.tf :567-696 at 46dce14101 (MDPF_GLOBAL.TO-IAM1 amendment 1, 52986aca17 2026-09-12T12:10Z, then 585a9d24c0 13:08Z): the 49f xref read, the two inf dimension reads and the three firm destinations are declared; the five opal-data-49financial dimension grants were applied, granted nothing and were REVERTED, because that bucket's policy statement DenyForeignFirmPrincipals denies role/mdpf-* and a resource-policy Deny beats an identity Allow."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row IRPT_BCKEND-S50 (this seat, 2026-09-12): 'Until it lands, IB-rt-6 cannot close, IB-rtb-1 cannot start, and six of ten FWD outcomes stay ungradeable.' The IB-rtb-1 face: the order 'becomes pending when the COO hands it over after IB-rt-1, IB-rt-2, IB-rt-4, IB-rt-6, IB-rt-7 and IB-rt-8 are terminal and merged.'",
+    "world_is": "Six of six are terminal by valid instance and merged, so the hand-off gate was satisfied from the 2026-09-12 drain onward and the cell sat staged for five days on this seat's reading of a status word. The wall IB-rt-6 met has also MOVED since the worker's last on-host sweep (W2-S49, 09:41Z 2026-09-12): the host-role grants landed about two and a half hours AFTER it, so the inf and cot directory builds have never been attempted with their grants in place. What still stands is narrower than S50 stated: (1) the five 49 Financial identity dimensions are unreachable to any role/mdpf-* principal BY A CONTROL, not by a missing grant, so RT6-AC1's 'three of three' is unreachable on this host as designed; (2) W2-S51, the minted bundle carries no per-firm runner_common module, which blocks all three builds whatever IAM says. Both are design questions for the round's L10 read, not acts of this round.",
+    "notes": "WHAT THIS SEAT DOES: hands IB-rtb-1 now, drains it, and takes the round to its drain-end read. Arms of IB-rtb-1 that need a LANDED directory artifact will read as measured, with rows; that is evidence for the L10 read, never a reason to hold the cell. WHAT IT DOES NOT DO: it does not re-run IB-rt-6 (terminal; the spec and the decomposition are frozen mid-round), does not touch the host role, and does not supersede anything. CARRIED TO 1.0.0_SA_CTO's ROUND-2 READ, as the on-demand re-cut Rule 27 requires: FWD-1 and FWD-7 cannot wait on ADVI_FIRMBKTS (dep_stage PRD, no COO lane, measured by sequence-check 2026-09-17). Candidate remedies are that seat's to choose: run the 49 Financial directory build under a 49 Financial principal rather than the shared mdpf host; and declare the three runner_common modules as bundle members. ALSO FOUND: the pointer file this seat issued into org/tier2_senior/0.4.0_DS_ClientPlatform~X/task_orders/ carries no status tag and is counted OPEN by the L10 limb although IB-rt-5 itself is complete with a valid instance; it will block the slug until it carries a terminal word or is removed, and it is this seat's to settle before the drain-end read. INERT: nothing served is wrong; the cost was five days on four outcomes."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S17",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-17T23:10:00Z",
+    "one_line": "IB-rt-2's TERMINAL 'arm (e) 7 of 7 VERIFIED' does not reproduce from a fresh worktree at the SAME HEAD -- it reads 3 of 7, and the cause is the verifier's own local layer-zip cache, not the served bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RE-RUN: `timeout 300 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py` in worktree /c/tmp/wk-irpt-2-1 at HEAD cd3bf01fcd3a42159db0a2c3307a8b0b12e0b73f (its own vintage_disclosure() prints '0 subject file(s) differ from HEAD'): arm (e) prints 'IMPORT-OK 3 of 7 | negative control FIRES 7 of 7 | VERIFIED 3 of 7' and the summary reads '14 of 15 arms PASS' / 'BLOCKED: 1 of 15 arms FAIL'.",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.result.md line 8-9 @cd3bf01fcd: '15 of 15 ARMS PASS' and 'all SEVEN functions are applied and verified on their SERVED bytes'.",
+        "DIRECT: `py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/rt2_verify_deployed.py irpt-directory-search irpt-performance-adapter irpt-narrative irpt-export-render irpt-status irpt-ycharts-generate irpt-holdings` (this turn): the four layered functions each print 'WARN: C:\\tmp\\wk-irpt-2-1\\.scratch\\layer\\irpt-common-5.zip absent -- a layered function cannot be probed in its real layout' then 'SERVED IMPORT-FAIL ModuleNotFoundError: No module named keys', while all seven print 'THREE-WAY CHAIN: EQUAL' (declared artifact_sha256 == S3 content-sha256 == live CodeSha256) -- the served bytes are not in question.",
+        "the same fresh re-run's OTHER arms are clean at this HEAD: arm (a) '0 of 12 unguarded... control fires 3 of 3 victim(s) moved the verdict to 1 of 12'; arm (b) '36 of 36 swaps hold'; arm (g) '12 of 12 deployed route(s) refuse a mismatched contract version... 12 of 12 served refusals validate against v1 StatusEnvelope'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "battery_ib_rt_2.result.md (this project, 0.9.0_WK_IRPT_BCKEND~2, TERMINAL record): 'NO ROOT IS HELD: all SEVEN functions are applied and verified on their SERVED bytes... THE ORDER IS TERMINAL' -- arm (e) read 7 of 7 IMPORT-OK/VERIFIED at the commit that closed it.",
+    "world_is": "A fresh, independent re-run of the SAME committed battery.py at the SAME HEAD, from a different worktree (/c/tmp/wk-irpt-2-1, this cell's), reads 3 of 7 IMPORT-OK/VERIFIED. rt2_verify_deployed.py's own WARN names the cause: the fresh worktree's .scratch/layer/ cache of the irpt-common:5 layer zip is absent, so the four functions that attach that layer cannot be probed in their real /opt/python layout and fail with a ModuleNotFoundError the served bytes do not actually raise (the three-way sha256 chain -- declared, S3, live CodeSha256 -- reads EQUAL on 7 of 7 in the same run). So 'VERIFIED' as this instrument prints it is a claim that depends on incidental local worktree state (a gitignored cache directory), not solely on the committed record or the deployed bytes -- a Rule-22 STATE-axis gap (DESIRED/APPLIED vs what one EXERCISE happens to find cached) that a reader of the terminal result.md alone would not see.",
+    "notes": "This is IB-rt-2's own order (0.9.0_WK_IRPT_BCKEND~2, terminal, complete) and not this cell's to re-open or fix; IB-rtb-1 does not depend on rt2_verify_deployed.py's strict reimport-from-S3 check anywhere -- its own arm (b) six-swap census and arm (g)-equivalent CONTRACT_VERSION checks reuse routetable.py's in-worktree import and a direct `aws lambda invoke`, both of which read clean in the same fresh worktree. Candidate remedy (the CTO's or IB-rt-2's issuer's to choose, not carded here): rt2_verify_deployed.py downloads the layer zip itself when its local cache is absent, rather than WARNing and then reporting NOT VERIFIED. INERT would require the served bytes to be wrong; they are not (three-way chain EQUAL). ARMED because the next fresh worktree that re-runs this exact battery to confirm a terminal order will see the same false FAIL and may spend time chasing a production regression that is not there."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S18",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-17T23:20:00Z",
+    "one_line": "The four synthetic export PDFs IB-sb-3's download arm replayed against are now PERMANENTLY GONE from opal-data-ycharts -- not merely marker-hidden as RT8-g's own record predicted -- and IB-rtb-1's download arm had to substitute a labelled fixture record for the storage boundary.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "LIVE: `aws s3api head-object --bucket opal-data-ycharts --key firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf` (this turn) -> 404 Not Found; the same for v0-11-overview, v0-11-comparison, v0-11-multicomp -- 0 of 4 retrievable by an ordinary read.",
+        "LIVE: `aws s3api list-objects-v2 --bucket opal-data-ycharts --prefix firms/49financial/generations/GENIBS14SYN/` (this turn) -> empty (no Contents key at all).",
+        "LIVE: `boto3 s3.list_object_versions(Bucket='opal-data-ycharts', Prefix='firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf')` (this turn) -> `Versions: []`, only a `DeleteMarkers` entry (VersionId `04OM8jGc8DHS0zMtKePd0CBx_XLv7m.s`, matching RT8-g's own AFTER-read table) -- 0 of 4 keys carry ANY entry in `Versions`.",
+        "DIRECT: `boto3 s3.get_object(Bucket='opal-data-ycharts', Key='firms/49financial/generations/GENIBS14SYN/attempts/1/exports/r1/report.pdf', VersionId='wl2x4Z9vSi31.i.TUVq__pjfcz0U4qFK')` (the pre-delete VersionId RT8-g's own BEFORE-inventory table records) -> `NoSuchVersion: The specified version does not exist.`",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/RT8-g_synthetic_delete_record.md s.III and s.IV @cd3bf01fcd (this project): 'opal-data-ycharts HAS VERSIONING ENABLED... the four noncurrent versions listed above remain retrievable by their VersionId' -- table lists r1's pre-delete VersionId as `wl2x4Z9vSi31.i.TUVq__pjfcz0U4qFK`.",
+        "LIVE: `aws s3api list-objects-v2 --bucket opal-data-ycharts --prefix firms/49financial/generations/GENRT8PROOF/` (this turn) -> two objects, both `bundle.json` (660 and 606 bytes); 0 `report.pdf` objects exist under that generation either.",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rtb_1.py arm_c3_download() (this cell, committed this turn): arm c3a reads BLOCKED at 0 of 4 real objects; arm c3b measures the reauthorization mechanism against a labelled fixture record instead (authorized served, swapped pdf id refused OBJECT_NOT_COVERED, revoked-then-right-id refused EMPTY_GRANT)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "RT8-g_synthetic_delete_record.md s.III, verbatim: 'a delete-object without a --version-id on a versioned bucket does NOT destroy bytes: it writes a DELETE MARKER, after which head-object returns 404 and every ordinary read stops finding the object, while the four noncurrent versions listed above remain retrievable by their VersionId... So \"deleted\" here means \"removed from every ordinary read\", not \"the bytes are gone.\"' IB-rtb-1's own face (IB-sb-3's arm (e), inherited): 'the download... against four REAL synthetic objects, never a client artifact.'",
+    "world_is": "Six days after that delete, none of the four objects has ANY entry in list-object-versions -- not even the noncurrent version RT8-g's own record names by VersionId, which now reads NoSuchVersion. The bytes are gone by every S3-side read this turn, contradicting RT8-g's own stated recoverability, and no substitute real rendered PDF export exists anywhere else in the estate at this vintage (GENRT8PROOF/ carries only two bundle.json metadata objects; IB-rt-8's render never got past SESSION_ABSENT so no report.pdf was ever produced there). IB-rtb-1's download arm therefore measures its REAUTHORIZATION MECHANISM against a real Enforcer/guard()/download() dispatcher with a labelled FIXTURE artifact-metadata record standing in for the storage boundary (the same pattern bound 1 sanctions for the other eleven routes' Entry.deps), printing the real-object gap as BLOCKED rather than silently substituting a fixture for a claim about a currently-existing object (bound 12).",
+    "notes": "Not this cell's to fix: no delete was authorized by this order and none is proposed. Candidate remedies (the CTO's/COO's to choose): correct RT8-g's own recoverability claim now that it has been falsified by a later read (an S3 lifecycle rule on this bucket most likely expired the noncurrent version -- not checked here, and not this cell's call to make); and, if a real PDF export fixture is needed for a future replay, mint one fresh under its own generation id with Andrew's word, the way IB-s-14 first did. ARMED because a future reader who trusts RT8-g's 'retrievable by VersionId' sentence without re-checking will believe a recovery path exists that does not. INERT would require the bytes to still be recoverable; they are not, by two independent reads (ordinary GetObject and list-object-versions)."
+  },
+  {
+    "id": "IRPT_BCKEND-S54",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-17T23:48:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S17 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~B), at the drain of IB-rtb-1. The hazard was a future fresh-worktree re-run of IB-rt-2's terminal battery reading 'arm (e) 3 of 7' and being chased as a production regression. It is disarmed by naming the discriminator on the carrier every such reader consults first: the three-way sha256 chain (declared, S3, live CodeSha256) reads EQUAL on 7 of 7 in the SAME run that prints 3 of 7, so the 3 of 7 is the verifier's local layer-zip cache (gitignored .scratch/layer/, absent in every fresh worktree), never the served bytes. The remedy is a cell for the round-2 recut and is carried to 1.0.0_SA_CTO's L10 read, not executed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row IRPT_BCKEND-W1-S17 @8cb0364800 (worker 0.9.0_WK_IRPT_BCKEND~1, merged by this seat): the fresh-worktree re-run of deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rt_2.py at the same HEAD reads 3 of 7 on arm (e) with rt2_verify_deployed.py's own WARN naming the absent .scratch/layer/ cache of irpt-common:5, while the three-way sha256 chain reads EQUAL on 7 of 7 in that run.",
+        "IB-rt-2 is terminal (complete, VALID instance under deliverables/0.9.0_WK_IRPT_BCKEND~2/) and its record is not re-opened; the spec and decomposition are frozen mid-round (Rule 27), so the remedy cannot be a cell of this round.",
+        "IB-rtb-1 does not consume rt2_verify_deployed.py's strict reimport check (W1-S17 notes); the issuer's own re-run of battery_ib_rtb_1.py on the SHARED checkout (a different tree from the worker's) at 8cb0364800 printed IBRTB1-REPLAY-AUTHENTICATED, rc=0, overall_pass true -- 12 of 12 routes, 36 of 36 plus 6 of 6 swaps refused, unguarded 0 of 12 with the control at 1 of 12, key census 0 of 16."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rt-2's terminal result prints 'arm (e) 7 of 7 VERIFIED' as a property of the deployed functions.",
+    "world_is": "That reading depends on a gitignored local cache as well as on the deployed bytes; without the cache the same instrument prints 3 of 7 while the sha256 chain still proves the served bytes equal on 7 of 7. The served bytes are right; the instrument's VERIFIED word is under-specified.",
+    "notes": "CARRIED TO THE ROUND-2 L10 READ as a recut candidate, the CTO's to place: rt2_verify_deployed.py downloads the layer zip when its local cache is absent instead of WARNing and printing NOT VERIFIED (W1-S17's own candidate remedy). DISARMED, NOT REMEDIATED: the false FAIL can still be printed; what no longer happens is a reader taking it for a regression, because this row and W1-S17 sit on the channel that reader consults and both name the discriminator."
+  },
+  {
+    "id": "IRPT_BCKEND-S55",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-17T23:49:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-W1-S18 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~B), at the drain of IB-rtb-1. The four synthetic export PDFs are gone from opal-data-ycharts by an AUTHORIZED, LEDGERED act this seat performed on 2026-09-12 -- row S43: Andrew-direct ~01:5xZ 'Approved all 9' on the corrected count, nine per-version deletes, ledger opened before and closed after with 8 of 8 legs, post-act head-object 404 on 9 of 9 with a positive control. The cold-started worker could not know this and read RT8-g's older 'retrievable by VersionId' sentence as live; that sentence was true when RT8-g wrote it (2026-09-11) and was falsified by the 09-12 act, which S43 already records. No unauthorized delete happened and no lifecycle rule did it: get-bucket-lifecycle-configuration on opal-data-ycharts returns NoSuchLifecycleConfiguration (read by this seat 2026-09-17 ~23:4xZ).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row IRPT_BCKEND-S43 (2.0.0_SA_COO~B, 2026-09-12T02:45Z): the nine noncurrent versions deleted permanently and verified gone by VersionId; ledger org/critical_paths/change_management/20260912T0215Z_irpt-bckend-w4s20-nine-version-delete_deploy_completion.md CLOSED 8 of 8; Andrew-direct record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260912_015xZ_ALL_NINE_NONCURRENT_VERSIONS_APPROVED.md.",
+        "row IRPT_BCKEND-W1-S18 @8cb0364800: 0 of 4 by ordinary read and 0 of 4 in list-object-versions, NoSuchVersion on RT8-g's named VersionId -- consistent with S43, not contradicting it.",
+        ".tools/aws s3api get-bucket-lifecycle-configuration --bucket opal-data-ycharts -> NoSuchLifecycleConfiguration (rc=255), so expiry by lifecycle is excluded and the act in S43 is the one explanation.",
+        "STALE CARRIER NAMED: org/missions/D9/IRPT/IRPT_BCKEND/project.json `blocking` at 0d3ad7d496 (2026-09-14) still says the four versions 'are deleted too ... by the lane holding this project, with a human confirming at the delete', as a pending act; it had already been done two days earlier under S43. The row is 1.0.0_SA_CTO's (TREE_PROJECT_ROW) and is carried to the L10 read for correction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RT8-g_synthetic_delete_record.md (IB-rt-8, 2026-09-11): the four synthetic PDFs remain retrievable by VersionId after the marker delete; project.json `blocking` (2026-09-14): the per-version delete is still to be done with a human confirming.",
+    "world_is": "Both sentences are dated before or across the 09-12 act: the versions were deleted on Andrew's word on 2026-09-12 (S43), nothing recoverable remains, and no lifecycle rule exists on the bucket. IB-rtb-1's download arm correctly measured its reauthorization mechanism against a labelled fixture record and printed the real-object gap as BLOCKED rather than substituting a fixture for a claim.",
+    "notes": "DISARMED: the recovery path the hazard promised never existed after 09-12, and the reader who would have trusted RT8-g now finds S43 and this row beside W1-S18. NOT REMEDIATED here: RT8-g's record is worker ~4's terminal deliverable and stays as written; if a real rendered PDF export is ever needed for a replay it is minted fresh under its own generation id on Andrew's word (W1-S18's candidate), a cell for a later round. Also corrected on this seat's own account: this seat told its terminal earlier tonight that the version deletion 'waits on Andrew'; S43 shows it was executed 09-12 on his word. The stale project.json sentence is what misled the re-read."
+  },
+  {
+    "id": "IRPT_BCKEND-S57",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-18T02:10:00Z",
+    "one_line": "ROUND-3 INTAKE, THE OWNER'S WORD ON EVERY ARMED ROW THIS SEAT OWNS: 37 of the 53 graduated ARMED rows name 2.0.0_SA_COO~B as disarm owner (36 by exact serial plus S45 by prefix); each is given ONE word here, DISARMED with the act and its carrier cited (21), STILL-ARMED IN ROUND with the round-3 cell that disarms it (2), or STILL-ARMED CARRIED with the round-4 candidate or the packet it rides (14). Written so 3.0.0_SA_CVO can write a clock on a word rather than on silence (R-19), and so the analysis's 'intake against LIVE owners' is a measured act rather than a bookkeeping pass. The 16 rows owned by other seats (1.0.0_SA_CTO 7, 3.0.0_SA_CVO 2, terminated worker slots 5, W4-S25/W4-S28 re-placed on this seat by R-42) are not spoken for here except the two re-placed ones: W4-S25 rides the test-principal card at Andrew; W4-S28's disarm act is IB-rtc-4 arm (a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "denominator: 53 ARMED rows minted since the round-2 issuance 388b8199b8 (hazard_standing ARMED, id not in the 71 rows at that commit), owner field read from each row; 36 begin with the exact serial 2.0.0_SA_COO~B and S45 names the seat by prefix -- 37 spoken for; the census script's output is the list below, one line per row",
+        "the DISARMED words cite the drain rows that carried the act (S26, S33, S34, S35, S36, S37, S38, S41-S43, S46, S48, S54, S55) and, for W3-S22/W4-S24, a HEAD read this turn: infra/aws/lambda/investor-reporting/_authz/dispatch.py ABSENT, _authz/authz_dispatch.py PRESENT, export/dispatch.py PRESENT",
+        "the IN ROUND words cite IB-rtc-4's face @e7b61b4936 (arms (b) and (d))",
+        "the CARRIED words name the packet or the round-4 candidate; none is closed by assertion",
+        "the CTO's round-2 analysis @cfe3a33a9b s.'ROWS: 53 ARMED GRADUATE AND NOT ONE DISARMS' and s.'ROUND 3 -- what it carries' item 5"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every ARMED row carries a disarm owner whose word the CVO writes a clock on (R-19); the round-2 analysis: 'Every one of the 53 needs a live owner's word, which is round 3's intake, not a bookkeeping pass.'",
+    "world_is": "Of the 37 this seat owns: 21 were already disarmed by acts taken in round 2's drains, and the acts are cited; 2 are disarmed by a round-3 cell now executing; 14 stay ARMED on a measurement or a decision that no round-3 cell holds, each with its named next carrier. The one this seat would put first in any round-4 cut is W1-S16, a firm check missing in the shared enforcer, because it is the only STILL-ARMED row whose hazard is cross-firm authorization rather than record hygiene.",
+    "notes": "THE WORDS, ONE PER ROW (id: word -- act or carrier):\n- S28: DISARMED -- the decomposition's literal 'sha_metadata_key' was never implemented literally: IB-rt-5 minted through the guard's own bundle payload (COMPLETE @86d2d0835f, S33) and IB-rtc-2 re-mints through the same guard; the v0.2 text is history no cell reads\n- S32: STILL-ARMED, IN ROUND -- IB-rtc-4 arm (b): the two round-1 batteries gain a SUPERSEDED header; nothing minted or moved (the CTO's S32 ruling)\n- W1-S12: DISARMED -- the drain merged build_layer.py as the UNION of both cells' member lists (S34) and the published irpt-common:5 carried 9 of 9 declared members, measured member by member (S35, S36); no second publish was needed\n- W1-S16: STILL-ARMED, CARRIED -- Enforcer.covers() admitting any advisor id for a FIRM_OPERATIONS/OPAL_GLOBAL viewer without a firm check is a cross-firm authorization gap in _authz (IB-s-3's surface); no round-2 or round-3 cell holds _authz for it. Carried to 1.0.0_SA_CTO's round-3 read as a round-4 cell candidate FIRST in line, and named to 3.0.0_SA_CVO here because it is a security-class item\n- W2-S16: DISARMED -- by the criterion re-cut at S26 (RT1-AC1 (b) -> the seam publishes the response contracts)\n- W2-S19: DISARMED -- ops/ and its root were granted by issuer amendment 122206aab7 (S33) and irpt-status reached triple equality 3 of 3 (S36); IB-rt-2 terminal with all seven functions on entry.lambda_handler (S48)\n- W2-S21: DISARMED -- the six absent build inputs of irpt-status were removed (S36); W3-S24 corrected the premise for irpt-ycharts-generate so the shared libraries were NOT stripped (S37); IB-rt-2 terminal (S48)\n- W2-S22: DISARMED -- sequenced at S35/S36: IB-rt-4 arm (e) applied at the merged tip first, IB-rt-2's applies after; both terminal, no half-landed state (S47, S48 sentinel reads)\n- W2-S24: DISARMED -- IB-rt-2 terminal: the guard reaches all seven functions through the entry modules, applied under ledger (S48)\n- W3-S17: DISARMED -- the three 'orphans' were IB-rt-8's declared resources; the export root's baseline plan read No changes at the merged tip (S33, S35)\n- W3-S18: DISARMED -- triple equality registered == S3 == live read 6 of 6 at S35 (W3-S18 closed there)\n- W3-S20: DISARMED -- closed by IB-rt-8's merge (S35)\n- W3-S21: STILL-ARMED, CARRIED -- the layer's BUILD_MANIFEST.json was to be superseded by the next rebuild (S35) and the next rebuild never happened because the live :5 already carried the union (S36) -- so the manifest may still disagree with the published zip. Round-4 candidate: regenerate BUILD_MANIFEST from the published :5 and record its sha (R-40); IB-rtc-4 arm (d) downloads that zip and is the natural place to print the mismatch, but its face is frozen and does not ask\n- W3-S22: DISARMED -- _authz/dispatch.py no longer exists at HEAD; the module is _authz/authz_dispatch.py (IB-rt-2's rename, W2-S28 granted at S36); export/dispatch.py stands alone on the flat path\n- W3-S23: DISARMED -- IB-rt-9 arm (a): 4 of 4 code readers migrated or retired, 0 legacy any-non-403 predicates, with controls (S37)\n- W3-S24: DISARMED -- the premise was corrected and the removal not done (S37); the corrected premise is on the record for any later cell handed the same sentence\n- W3-S25: DISARMED -- the three functions were rebuilt with ids.py packaged and applied under ledger by IB-rt-2 (S48, third apply)\n- W4-S14: STILL-ARMED, CARRIED -- the cloud render's host act is superseded by W4-S25 (the render is now SESSION-gated, not host-gated); both ride the test-principal card at Andrew (0.0.0_AB_MSTR, 01:49Z); IB-rtc-5 runs the across-inputs control on the post-authorizer plane with the real-path arm HUMAN-GATED\n- W4-S15: DISARMED -- as W1-S12: the union rebuilt at the drain, the live :5 carrying every declared member (S34, S36)\n- W4-S16: STILL-ARMED, CARRIED -- attempt_id on ExportReceipt.export_ref is a shared-contract change; carried to 1.0.0_SA_CTO's contract amendment packet beside S51/S52's items, not a round-3 cell\n- W4-S20: DISARMED -- by the authorized per-version delete of 2026-09-12 (S41 stop, S42 CTO word, S43 act with ledger 8 of 8); re-confirmed at S55 with the bucket's NoSuchLifecycleConfiguration\n- W4-S21: STILL-ARMED, CARRIED -- the cross-root grant on irpt-ycharts-runner-role is a pattern question (fold into the ycharts root, or record the cross-root attachment as accepted); carried to the round-3 read; an IAM census reading the ycharts root alone still understates the role\n- W4-S24: DISARMED -- as W3-S22: the collision is gone at HEAD by the rename\n- W3-S26: DISARMED -- the issuer's sequencing error (S38) was withdrawn and IB-rt-2's applies landed the entry modules importing in /var/task, all seven functions (S48)\n- W3-S27: DISARMED -- its own text: irpt-export-render was never armed by the ids.py gap (the layer carried ids.py byte-identical); no act was owed\n- W3-S28: STILL-ARMED, CARRIED -- irpt-export-render runs the layer's keys.py (21320 bytes) while the other functions ship the tree's (29894 bytes) flat; not touched by round 2's applies as far as the record says. Round-4 candidate: keys.py parity across the seven functions, graded by content hash (R-40)\n- W3-S31: STILL-ARMED, CARRIED -- the generation job's 401 at read-back vs create are indistinguishable from an evicted session; dispositioned at S39 as an L10 carry; the round-2 analysis did not place it; round-4 candidate under FWD-4 (the fixed v0.9 mechanism admits an eviction outcome)\n- W3-S32: STILL-ARMED, CARRIED -- JobStore keeps only the latest state so model_portfolio_id is erased after SUBMITTED; same carry as W3-S31, round-4 candidate\n- W4-S29: STILL-ARMED, CARRIED -- battery_ib_s_18.py raises TypeError in arm (c) (sort on a None key); routed to this seat at S40 and not yet repaired -- a one-line fix in a worker's deliverable, round-4 candidate; until then PATH_MANIFEST's grader cannot complete and any claim that the register was graded is qualified\n- W3-S35: STILL-ARMED, CARRIED -- the corrections item has no timestamp field: a frozen-contract change carried at S45 to L10; carried again to 1.0.0_SA_CTO's contract amendment packet\n- W3-S36: STILL-ARMED, CARRIED -- parse.py/corrections.py are declared by no function; the first function to ship them must ship settings.json; carried with W3-S35 to the contract/packaging packet\n- S45: STILL-ARMED, CARRIED -- this seat's own row carrying W3-S35/W3-S36; its word is the two above\n- W2-S41: DISARMED -- the <paths> block gained the holdings paths at a3e84db9ef and the gate admitted the work (S46)\n- W3-S38: STILL-ARMED, CARRIED -- the empty research-root state object in S3 is addressed by nothing; removing it is an S3 delete (human-confirmed class) -- a card when a round-4 cleanup cell is cut, never a rider\n- W2-S42: STILL-ARMED, CARRIED -- the cause was corrected at S48 (a neighbour cited as a cause); whether the ycharts root still plans destroys after IB-rt-2's third apply is UNREAD -- a plan read on that root is the disarm act, round-4 candidate, and no cell applies that root until it is read\n- W1-S17: STILL-ARMED, IN ROUND -- IB-rtc-4 arm (d): the verifier fetches the layer zip when its cache is absent; disarm word given at S54\n- W1-S18: DISARMED -- by S43's authorized act, word given at S55\n\nA DISARMED word here is the owner's word that the act was taken; it does not disposition the row (DISARMING is not DISPOSING) -- 3.0.0_SA_CVO writes the clock or the DISMISSED_WITH_REASON on its own instrument. A CARRIED word is not a wait: each names a candidate cell for the round-3 read, and the recut is this seat's when the analysis lands."
+  },
+  {
+    "id": "IRPT_BCKEND-S61",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-18T02:58:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-W4-S32 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~B), at the drain of IB-rtc-5 @799ffd91bc. The hazard was a later face repeating this issuer's own phrase 'the renderer's in-process path with the SAME code' as a live fallback, when that path (round-1's fixture renderer) was retired and removed in round 2. Disarmed by this row naming the plane that EXISTS and that IB-rtc-5 actually used -- the counterpart's real render code served by a local vite dev server (http://localhost:5189), auth-stubbed by the same Playwright mechanism the portal's own smoke driver and print driver use -- as the ONLY admitted substitute for the browser host; and by a standing instruction to this seat: the next face that names a render plane names THAT plane, never the retired path, and cites this row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "row IRPT_BCKEND-W4-S32 @799ffd91bc (worker 0.9.0_WK_IRPT_BCKEND~4): render.py's own header states the fixture renderer is RETIRED AS EVIDENCE and its machinery is gone from infra/aws/lambda/investor-reporting/export/; default_renderer(), FIXTURE_PACKAGE_DIR and the assembly code exist nowhere in the package.",
+        "IB-rtc-5's proof instance and IB-rtc-5_R35-AC1_battery_output.txt under deliverables/0.9.0_WK_IRPT_BCKEND~4/ @799ffd91bc: arm (d) names the plane -- LOCAL DEV SERVER (vite/bun, http://localhost:5189) running the counterpart's real render code -- and the real-path arm HUMAN-GATED verbatim from W4-S25; R35-AC1 PASS 5 of 5 arms, reproduced across 4 full-process runs.",
+        "the phrase originates in this seat's face for IB-rtc-5 @e7b61b4936 ('or, if that host is not reachable non-interactively, the renderer's in-process path with the SAME code'), written from the round-1 memory of a path that round 2 retired -- the issuer's defect, not the worker's, and the same wrong-object family as R-40 (a label that something else no longer satisfies)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rtc-5's face: the control runs on the browser host, 'or, if that host is not reachable non-interactively, the renderer's in-process path with the SAME code, the plane named'.",
+    "world_is": "No in-process path with that code exists at HEAD; the worker substituted the real render code on a local dev server, named the plane, and the control passed on it. The substitution is now the recorded plane.",
+    "notes": "DISARMED, NOT REMEDIATED: the decomposition v0.3 text is frozen mid-round and is not edited; the durable fix W4-S32 asks for -- the decomp language naming the local-dev-plane-on-real-code substitution directly -- lands in the round-4 decomposition when it is cut, and this row is the carrier until then. Whether the local-dev plane is the plane FWD-8's DONE WHEN names is R35-AC2's judgment for 3.0.0_SA_CVO, not settled here."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T02:20:00Z",
+    "one_line": "W4-S28's arm (a) BYTES comparison for irpt-ycharts-generate reads NOT-REPRODUCIBLE, not EQUAL/DIFFER-with-confidence: three independent build attempts (the canonical build-and-upload.sh, and the project's own proven multi-root packager under both its own zip recipe and the canonical script's) each produce a different hash, none matching the served CodeSha256 -- AND the fix commit (56a6e07e8f, infra/aws/lambda/investor-reporting/ycharts/extract/certify.py) is a member of ZERO of the 216 functions declared in lambda-source-map.json, so no build attempt could ever be expected to carry it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO IB-rtc-4 arm (a), this cell, this commit: build-and-upload.sh's OWN resolution rule (source_dir/<name>, no shared-root fallback) finds 11 of 30 declared members absent at infra/aws/lambda/investor-reporting/ycharts/generate/ (enforce.py, errors.py, gate.py, keys.py, resolve.py, ids.py, firm_destination_policy.json, firm_registry.json, settings.json, served.py, loaders.py) -- the canonical script REFUSES before any zip exists",
+        "the same run: rt2_package.py's multi-root packager (source_dir first, then _authz/_scope/_keys/_ids/_gate/intake/directory/data//terraform-core, ZIP_DATE=2026-09-11) resolves all 30 of 30 and builds sha256(b64)=c6BiKUE4bZNbvy72mtzD6RlOPAWTUi2yhcWogDsOQxQ=",
+        "the same run: the SAME 30 resolved members rebuilt with build-and-upload.sh's own zip recipe (PowerShell, sorted, LastWriteTime=2020-01-01) produces sha256(b64)=SyHWPla5ejQqzg/o/GABrOPt0oLVKImhzYCO25wd5AQ=",
+        ".tools/aws lambda get-function-configuration --function-name irpt-ycharts-generate --query CodeSha256 (this turn): CJ6aBh7BWJFcT2Vv0/cJFSXHaH5cs1LvqXvJRfkXHm8= -- equal to the DECLARED artifact_sha256 in lambda-source-map.json, and DIFFERENT from both built hashes above",
+        "PREMISE CHECK, this cell: job.py, recipe.py, transport.py, entry.py (the four generate-package source files) read for a reference to certify/extract -- only job.py contains the substring 'extract' and it is the word 'extraction' in a comment, never an import; a full source-map census (py -3.12, this turn) finds 0 of 216 declared functions listing certify.py or extract.py or a source_dir under ycharts/extract",
+        "row IRPT_BCKEND-W4-S28's own disarm_owner text, verbatim: 'the corrected extractor reaches a running function only at the irpt-ycharts-generate package's next build' -- a claim this row's evidence does not support: extract/certify.py is not a declared or resolvable input to ANY function's build today, including irpt-ycharts-generate's"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtc-4 arm (a): build the deployment zip 'exactly as its Terraform root builds it' and compare CodeSha256; row W4-S28's disarm_owner: the fix 'reaches a running function only at the irpt-ycharts-generate package's next build'.",
+    "world_is": "The Terraform root's documented build mechanism (build-and-upload.sh) cannot build this function at all from a literal source_dir read -- it only succeeds via a shared-root convention a LATER cell (IB-rt-2) invented and that the canonical script does not implement. Two legitimate, deterministic recipes both disagree with the served bytes and with EACH OTHER, so this arm cannot certify what source produced the live artifact. Separately and more consequentially for W4-S28: extract/certify.py -- where the actual date-provenance fix (56a6e07e8f) lives -- is not part of ANY deployed Lambda's declared build, so W4-S28's own remedy path ('rides the generate package's next build') rests on a premise this cell's census does not confirm. Neither an EQUAL nor a DIFFER reading of this arm could, by itself, tell an adjudicator whether the certify.py fix is aboard any deployed function, because no build this cell could construct ever includes that file.",
+    "notes": "Not this cell's to resolve further: TO IB-rtc-4 bounds this order to a bytes comparison, read-only against the deployed plane, and forbid re-minting anything. Candidate next acts (the CTO's/COO's to choose, not carded here): (1) determine whether ANY deployed function is supposed to import extract/certify.py at runtime, and if so wire it into that function's declared files and rebuild via a byte-verified recipe; (2) if no function should import it, correct W4-S28's disarm_owner text so it does not point at a build that can never carry the fix; (3) separately, pin the exact recipe (member list, zip tool, timestamp, compression settings) that produced CJ6aBh7BWJFcT2Vv0/cJFSXHaH5cs1LvqXvJRfkXHm8= -- e.g. the S3 object's own version history -- before any FUTURE bytes comparison on this function can be trusted. Full transcript: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtc-4_R34-AC1_battery_output.txt."
+  },
+  {
+    "id": "IRPT_BCKEND-S62",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "DECLARING THE THREE per-firm runner_common.py AS MEMBERS OF THE investor_reporting BUNDLE -- WHICH THE RUNNER'S CLOSURE REQUIRES -- WOULD FREEZE THREE LIVE PRODUCTION DEPLOY LEGS. The guard routes ANY bundle member out of its per-file (loose) leg and scans every tree to do it, and all three files are served today on their own firms' loose legs with ETag equal to the repo md5. Not declared by IB-rtc-2: choosing between freezing three firms' runner deploys and changing the X-iii routing contract is above this order.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-2 L5 note: 'Each member is declared in .tools/safe_deploy_core.py CODE_TREES bundle investor_reporting exactly as IB-rt-5 declared the first members ... copy its shape, not its list', over a closure that includes the three per-firm runner_common.py modules (row W2-S51). The face's own admission rule treats data/*/scripts/gold/** as declarable.",
+    "world_is": "MEASURED at e9dc18f302 with the guard's OWN functions (battery_ib_rtc_2.py arm (g)). file_to_s3_target gives each module a live per-file target: data/assets/scripts/gold/runners_49f/runner_common.py -> s3://opal-data-49financial/_code/runner_common.py [advi]; data/inf/scripts/gold/runners_inf/runner_common.py -> s3://opal-data-inf/code/gold/runners_inf/runner_common.py [inf]; data/cot/scripts/gold/runners_cot/runner_common.py -> s3://opal-data-cot/code/gold/runners_cot/runner_common.py [cot]. head-object on each reads ETag == md5 of the repo file, so all three are SERVED and CURRENT on their own legs. With each module added to a deep COPY of CODE_TREES, bundle_for_member() returns investor_reporting for 3 of 3. The deploy flow's X-iii loop (safe_deploy_core.py:1272-1303 @e9dc18f302) puts a routed file in `triggered` and NOT in `loose`, and bundle_for_member (:731-738) scans every tree, so a declaration in the mdpf tree's bundle captures a file of the advi, inf and cot trees. CONSEQUENCE: the next DS commit to any of the three modules would re-mint the IRPT tarball and leave that firm's served runner_common.py at its pre-commit bytes -- the 49F advi chain, the INF runners and the COT runners would run stale code while the push reads BUNDLE-ROUTED and green. IB-rt-5's members were safe to declare because their loose keys 404'd (a first-mint); these three are the opposite case.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (g): 'undeclared closure members with a LIVE loose leg: 3; that a declaration would route out of it: 3'; the guard's real declaration untouched by the probe (git diff --stat empty)",
+        "aws s3api head-object: s3://opal-data-49financial/_code/runner_common.py ETag 5221d6b5d73157ce9728807a7a6b9c80 (LastModified 2026-08-19T19:01:27Z) == md5 of the repo file; s3://opal-data-inf/code/gold/runners_inf/runner_common.py d974c587f379592905a3c38b03bf3da4 (2026-08-12) == repo md5; s3://opal-data-cot/code/gold/runners_cot/runner_common.py 384920cf9eb601ea7a344493d1a09d6a (2026-08-12) == repo md5",
+        ".tools/safe_deploy_core.py:1279-1287 @e9dc18f302: hit = bundle_for_member(rel_path); if hit is not None -> triggered[bname], print 'BUNDLE-ROUTED ... (loose leg frozen 2026-08-11, X-iii)'; else loose.append(rel_path). Header :186-193: 'A member script listed in a bundle EXITS the loose per-file leg'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "THE SHAPES THAT WOULD CLEAR IT, for 1.0.0_SA_CTO's L10 read (this seat does not choose): (1) a member-level DISTRIBUTION flag in the guard -- the member keeps its own loose leg AND a commit to it also re-mints the bundle -- which is amendment H3's 'distribution, not a second definition' reading (ids.py, trading_calendar.py) extended to a file that ALSO has a loose leg; it changes the CTO-blessed X-iii routing contract, so it is a ruling, not a CODE_TREES edit; (2) the host fetches each firm's runner_common.py from its own SERVED loose key at build time -- which has the mdpf principal read opal-data-49financial/_code/ and so meets the cross-firm bound first; (3) a repo checkout on the host at the depth the runner derives (row W2-S51: 'THE REMEDY IS A SHAPE DECISION, NOT A MEMBER LIST'). This seat's rec, stated once: (1), because it keeps one authority per file and one routing mechanism. Row IRPT_BCKEND-S59 shows no declaration clears IB-rtc-3 on the deployed dispatch, so this choice and the dispatch's unpack are one decision."
+  },
+  {
+    "id": "IRPT_BCKEND-S58",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "TWO CLOSURE MEMBERS FALL OUTSIDE THE GLOBS THIS ORDER ADMITS FOR A MEMBER, SO BY THE FACE'S OWN RULE EACH IS A BLOCKING ROW: data/firm_registry.json and infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json. Both are loaded on the runner's own path (the registry by client_firms() and by ids.py's registry walk, the contract by validate_entries()), so the closure cannot be completed inside this order.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-2 L5 note: 'A member the closure needs that is NOT under a data/*/scripts/gold/** or lib/** path this order's <paths> admits is a BLOCKING row, not an override.'",
+    "world_is": "The closure DERIVED at e9dc18f302 by two instruments that agree (a static AST sweep of 6 modules, and a dynamic open/import audit of the runner's no-S3 entry points -- battery arm (a)) is 8 files: directory_runner.py, lib/trading_calendar.py, infra/aws/lambda/investor-reporting/_ids/ids.py, the three runner_common.py, data/firm_registry.json and infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json. 3 of 8 are declared. Of the 5 missing, the three runner_common.py are under data/*/scripts/gold/** (row IRPT_BCKEND-S62 carries why they are still not declared) and TWO are outside both globs. For the reader weighing the rule: the bundle already carries one member outside it -- infra/aws/lambda/investor-reporting/_ids/ids.py, declared by IB-rt-6 under amendment H3 -- so whether the rule stands for a JSON contract and the firm registry is the issuer's call, not this seat's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (a): 'CLOSURE N = 8' and 'DECLARED: 3 of 8 closure members'; static sweep 8 USED references, dynamic probe rc=0 opening the same 8",
+        "directory_runner.py @e9dc18f302: FIRM_REGISTRY_PATH :122 read at :186 in client_firms(), called by main() :877; CONTRACT_PATH :120-121 read at :746 in load_contract(), called by validate_entries() :751 from run_firm() :831",
+        "infra/aws/lambda/investor-reporting/_ids/ids.py @e9dc18f302: _find_registry() :113-139 walks up from its own directory to data/firm_registry.json; reached by opaque() -> _mint() -> _check_firm() -> firm_ids() (:249-254, :214-218, :183-194, :145-156)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The closure differs from row W2-S51's list by ONE path at this tip: infra/aws/lambda-edge/_shared/firm-config.mjs is no longer loaded -- FIRM_CONFIG_PATH is still bound at directory_runner.py:123 with zero loads since firm_bucket_map() became a generated literal (LGIC_ENFORCE DEC-5, @45187da290). infra/aws/lambda/investor-reporting/_ids/raw_keys.json is named by ids.py:64 but opened only by raw_keys()/raw_key_for(), which no runner path calls, so it is outside the closure. The dead constant, and the unused _FIRM_CFG_RE at :166, are a neighbouring tidy-up, not touched here."
+  },
+  {
+    "id": "IRPT_BCKEND-S59",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "EVEN A COMPLETE CLOSURE ABOARD THE BUNDLE CANNOT REACH THE RUNNER THROUGH THE DEPLOYED DISPATCH. refresh.runner_script unpacks the tarball into the runner's own directory and relocates exactly three FLAT member names; the runner derives each firm's runner_common.py and the firm registry OUTSIDE that directory, and the only member name that could climb there (a '..' path) makes GNU tar exit 2, which trips the dispatch's '|| exit 91'. So IB-rtc-3 -- which writes no code home and exercises the dispatch AS DEPLOYED -- cannot land an inf or cot directory whatever IB-rtc-2 mints.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition v0.3 s.R3.2: 'edges (1): IB-rtc-2 -> IB-rtc-3 (the closure must be aboard the bundle before any build)'. TO-IB-rtc-3 DELIVERABLE: 'No code home is written; the dispatch and the runner are exercised AS DEPLOYED.' Its context line: 'IB-rtc-2 carries the closure.'",
+    "world_is": "MEASURED LOCALLY on ONE payload built by the guard's own build_bundle_payload with the full closure (the 4 declared members plus the 5 missing, named by repo path; 9 members). Placed at each member's declared repo path: directory_runner imports and SourceSet instantiates 3 of 3 (49financial, cottonwood, inflection IMPORT-OK). Put through refresh.runner_script's own unpack lines (infra/aws/lambda/investor-reporting/directory/refresh.py:430-443 @e9dc18f302, cut before its build, its aws s3 cp replaced by a local cp): 0 of 3, each firm 'RuntimeError: REFUSE: identity runner module absent: .../data/<firm tree>/scripts/gold/runners_*/runner_common.py'. The recipe extracts into $W/data/assets/scripts/gold/investor_reporting/ and moves only ids.py, trading_calendar.py and a FLAT DirectoryEntry.schema.json (:440-443); the runner resolves runner_common via _REPO / rel_dir (directory_runner.py:216) and the registry via _REPO/data (:122), both outside that directory. A member named '../runners_inf/runner_common.py' is refused by GNU tar 1.35 ('Member name contains ..', rc=2). The contract IS placeable today under a flat member name; the registry and the three runner_common.py are not.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (h): 'DECLARED placement (unpack rc=0): IMPORT-OK 3 of 3' and 'DEPLOYED placement ...: IMPORT-OK 0 of 3' with three REFUSE lines; dot-dot probe rc=2",
+        "refresh.py:436 @e9dc18f302: tar -xzf $W/bundle.tar.gz -C $W/data/assets/scripts/gold/investor_reporting/ || exit 91; :440-443 the three '[ -f $R/<flat> ] && mv' relocations",
+        "TO-IB-rtc-3 face BOUNDS: 'No IAM, no Terraform apply, no bundle mint'; decomposition v0.3 s.R3.1 gives IB-rtc-3 write surface 'none'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not measured on the host: the host was STOPPED and no re-mint happened, so the one admitted StartInstances was not spent on an unchanged object. The instrument is Git Bash GNU tar 1.35 and Windows Python 3.12; the host runs Python 3.9.25 (row W2-S49), and the refusal is a file-existence check (directory_runner.py:217-218), which is not version-sensitive. The remedy is a refresh.py change -- unpack repo-shaped, for instance member names that ARE repo paths extracted at $W -- that the next cut must own. It is one decision with row IRPT_BCKEND-S62's."
+  },
+  {
+    "id": "IRPT_BCKEND-S60",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T02:40:00Z",
+    "one_line": "THE FACE'S NEGATIVE CONTROL NAMES THE WRONG PRIOR: IB-rt-5's ETag (cd188f6e...) carried TWO members, not three, and it is not the object this cell would replace -- the key has since held six further distinct objects (nine uploads), and the object served when this cell began is 7791109b... with FOUR members. A re-mint is told from a no-op against THAT object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "R32-AC1 (f): 'the NEGATIVE CONTROL: the PREVIOUS tarball (its ETag from IB-rt-5's instance) is shown to have carried 3 members, so the arm can tell a re-mint from a no-op.'",
+    "world_is": "list-object-versions on s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz returns 19 versions. ETag cd188f6edb7270300a7409d66f9a3432 (IB-rt-5, 10 versions on 2026-09-11) carries 2 members (directory_runner.py, holdings_snapshot.py); 964b4eef... (2026-09-11T18:48Z) 2 members; a35420ac... (2026-09-12T06:56Z) 3 members, ids.py added by IB-rt-6 -- the three-member tarball row W2-S49 listed on the host; c596538e... (2026-09-12T08:58Z) 4 members, trading_calendar.py added; then ec26d1d1... (09-15), a787eb49... (09-16, two versions) and 7791109b... (09-16, two versions), each 4 members -- re-mints by pushes that touched a member file, the X-iii routing working as designed. Served at 2026-09-18T02:2xZ: ETag 7791109bada2dbb44c5ac742b65671ee, VersionId AxKzxFHuxAP7TTIJsmkxtWZxxgEgVJDC, sha256 3441f09d6fafe077a64254c76d9f3ce300ce882c5f3dcbceaa0ba9b32aaf7159, 4 members, every sha stamp equal to the repo at e9dc18f302.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtc_2.py arm (f): 'IB-rt-5 ETag cd188f6edb7270300a7409d66f9a3432: 10 version(s) carry it; members 2 [...] (the face says 3)'",
+        "tar -tzf over six downloaded versions (VersionIds BAv6hA9I..., oEuOF3So..., yusulz6a..., DU0ppTu2..., r2kGjt0T..., AxKzxFHu...): 2, 2, 3, 4, 4, 4 members"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The battery grades (f) against the PRE-CELL object (a new VersionId, a new ETag and strictly more members) and prints the face's IB-rt-5 comparison beside it, so both readings stay visible. No re-mint happened in this cell, so (f) reads NO-OP."
+  },
+  {
+    "id": "IRPT_BCKEND-S63",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T04:25:00Z",
+    "one_line": "THE BUNDLE PACKER READS THE WORKTREE WHILE THE LOOSE LEG SERVES THE GIT BLOB, SO A MEMBER WITH NO eol ATTRIBUTE IS PACKED WITH CRLF ON AN autocrlf CHECKOUT. build_bundle_payload() does src.read_bytes() on the worktree file; deploy_file() uploads `git show :<path>` (the ADHC_DSFLOW index-bytes fix). The two JSON members this amendment admits (data/firm_registry.json, _contracts/DirectoryEntry.schema.json) and the accrual bridge's partner_roster.json have no eol attribute, so their bundled bytes are device-dependent and differ from the recorded blob. The three DISTRIBUTION members (.py, eol=lf) are unaffected, so R-45's two-leg check does not trip on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "R-40 (1.0.0_SA_CTO @233f5fd5e4): a produced artifact is graded against its CONTENT HASH. The guard's own IB-1 rule (safe_deploy_core.py deploy_file docstring, ADHC_DSFLOW.TO-INDEXBYTES-DEPLOY): 'the uploaded bytes ARE the index blob'. The amended face (d): the re-minted key's identity with its sha256 recorded.",
+    "world_is": "MEASURED at 65a95ae8db in /c/tmp/wk-irpt-3-ds2 (core.autocrlf=true): data/firm_registry.json eol=unspecified, worktree 136 CR bytes, index 0; infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json eol=unspecified, worktree 260 CR, index 0; data/mdpf/config/partner_roster.json eol=unspecified, worktree 393 CR, index 0. Every .py member reads eol=lf with 0 CR in both. build_bundle_payload (safe_deploy_core.py, 'data = src.read_bytes()' on WORKSPACE / repo_path) packs the worktree bytes; deploy_file (same file) uploads the index blob. So the per-member sha stamp of a JSON member equals the CRLF worktree bytes and NOT the blob, and the same commit minted from an LF checkout would yield a different ETag. The JSON is valid either way (json.loads ignores CR), so no consumer breaks; the identity is what is device-dependent.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git check-attr eol + CR counts of worktree vs `git show :<path>` for the nine bundle members and partner_roster.json, 2026-09-18 ~03:3xZ",
+        ".tools/safe_deploy_core.py @65a95ae8db: build_bundle_payload reads `src = WORKSPACE / spec['repo_path']...; data = src.read_bytes()`; deploy_file's docstring records the index-blob rule it implements",
+        "battery_ib_rtc_2.py arm (d) prints, per member, stamp==member and member==git blob, with the CR count where they differ"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not changed here: making the packer read the index would also change the accrual bridge's minted bytes (partner_roster.json), which is another pipeline's served artifact, and it is outside what this amendment asks. Two remedies for the guard's owner: build_bundle_payload reads `git show :<path>` the way deploy_file does, or .gitattributes gives the JSON members eol=lf. Either makes a bundle's identity the same on every device."
+  },
+  {
+    "id": "IRPT_BCKEND-S64",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T04:25:00Z",
+    "one_line": "A TASK ORDER'S <paths> GRANT IS HONOURED BY THE LANE GATE ONLY FOR A 0.9.0_WK_* WORKER, NOT FOR THE SEAT IT IS HANDED TO. This order names `.tools/tests/` in <paths> and hands it to the Tier-2 seat 0.4.0_DS_ClientPlatform~X; the commit of the flag's own test file was REFUSED by owned-paths-check (lane TOOL_BATTERIES, owner 0.8.0_AE_CloudComp, 'agent not in permitted_agents'). It landed only under the audited GIT_COMMIT_AUTHOR_OVERRIDE=TOOL_BATTERIES, one lane and one file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's <preflight> lane line: 'the <paths> block above IS the grant (RULING 1 @9ef9a40aae) ... admitted to you ONLY through this order while it is non-terminal; a path you need that is not listed is a BLOCKING row, never an override.' <paths> lists `.tools/tests/`.",
+    "world_is": "safe-commit at 2026-09-18 ~04:0xZ refused `.tools/tests/test_safe_deploy_distribution_member.py`: 'VIOLATION: ... lane=TOOL_BATTERIES ...; agent=0.4.0_DS_ClientPlatform~X not in permitted_agents'. .tools/owned-paths-validate.py:115-117 and :209-231 @65a95ae8db admit a <paths> grant only to a serial that parses as 0.9.0_WK_<CODE>~<n> ('A spine-v3 worker ... is admitted to exactly the paths that a NON-TERMINAL task order ... names in its <paths> block'). A seat handed the same order resolves by .owned-paths.yaml lanes alone. .tools/safe_deploy_core.py, also in <paths>, passed on the seat's own lanes. The commit 6be251a0e3 carries GIT_COMMIT_AUTHOR_OVERRIDE=TOOL_BATTERIES, audited to org/git-author-override-audit.log, with the reason in its message.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the safe-commit refusal text, captured to .scratch/commit_l1b.log in /c/tmp/wk-irpt-3-ds2 (lane TOOL_BATTERIES, owner 0.8.0_AE_CloudComp)",
+        ".tools/owned-paths-validate.py @65a95ae8db :115-117 (the fifth additive clause: workers only) and :209-231 (_owns_task_order_paths requires serial_glob 0.9.0_WK_*)",
+        "commit 6be251a0e3 on wk-irpt_bckend-3-ds2: the test file alone, under GIT_COMMIT_AUTHOR_OVERRIDE=TOOL_BATTERIES"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The override was the correct escape, not a widening: the path is on the order's grant, and the gap is in the mechanism's reach. For the issuer's next cut: a seat-held order that grants a path in another lane either needs that lane's override named on the face, or the validator's task-order clause extended to seats. The first is a sentence; the second is a gate edit for the gate's owner."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S54",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T05:06:27Z",
+    "one_line": "TO IB-rtc-3's OWN FACE NAMES '9 sources + 3 destinations' FOR THE HOST SWEEP; THE TRUE POPULATION, MEASURED BY A DIFFERENT PROJECT'S OWN WORKER AND RATIFIED BY THE CTO, IS 10 SOURCE PREFIXES. Three documents already disagreed on this denominator (9, 6, 9) before this order was cut, and the order inherited one of the stale numbers rather than the corrected one. This worker re-runs the CORRECTED 10-source instrument (the same one the applied IAM change was proven against) rather than a 9-source one that would silently omit a real read site.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rtc-3, cell text: 'the on-host sweep from the first cut (W2-S49's read-only SSM sweep re-run: 9 sources + 3 destinations, verdicts, positive control) BEFORE building' and acceptance R33-AC1(c): 'the sweep, 9 + 3 verdicts with the control firing'.",
+    "world_is": "MDPF_GLOBAL.TO-IAM1's own proof instance (org/tier2_senior/0.7.0_AE_CloudOps~C/deliverables/MDPF_GLOBAL.TO-IAM1.mdpf-daily-runner-prefix-grants.proof_of_spec.json, surprise MDPF_GLOBAL-S1, @70e131626d) measured the population BY SUBTRACTION from directory_runner.py's own read sites plus the three firms' runner_common.py constants and got 10, 'where three upstream documents said 9, 6 and 9' -- one of those 9s is this project's own row IRPT_BCKEND-W2-S49, which swept only 6 (2 READ-OK + 4 READ-DENY) of the true 10 because it never probed the four OTHER opal-data-49financial/gold/advi/dimensions/ tables (dim_account, dim_identity_crosswalk, dim_portfolio_group, bridge_group_account) that directory_runner.py's Firm49F also reads. That correction was RATIFIED by the CTO in MDPF_GLOBAL's amendment 1 @bcff22b113 ('re-cut the ceiling to 11' -- 10 sources + 1 positive control). The deployed IAM grant (mdpf-daily-runner-ec2-role, applied @52986aca17) and the read-only instrument it was proven against (s3://opal-data-mdpf/diagnostics/aec-irpt-iam1/irpt_sweep_v2.sh, sha256 8b39dea2419d8d3b03d47134bced6f368d55c2378a04db898cc3120447d0bb1b, fetched and re-verified byte-for-byte by this worker) both address 10 source prefixes, not 9. Re-running a 9-source sweep now would silently under-count the very population the applied grant was measured against.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier2_senior/0.7.0_AE_CloudOps~C/deliverables/MDPF_GLOBAL.TO-IAM1.mdpf-daily-runner-prefix-grants.proof_of_spec.json, IAM1-AC1 status_reason and surprise MDPF_GLOBAL-S1",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_BCKEND-W2-S49 (this project's own prior sweep), world_is: 6 source prefixes named, not 9 or 10",
+        ".scratch/irpt_sweep_v2.sh fetched from s3://opal-data-mdpf/diagnostics/aec-irpt-iam1/irpt_sweep_v2.sh, local sha256sum 8b39dea2419d8d3b03d47134bced6f368d55c2378a04db898cc3120447d0bb1b == the proof instance's recorded commit_or_etag"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN LANE AND NOT WORKED AROUND: this worker re-runs the corrected, already-deployed 10-source instrument as its arm (c) sweep rather than inventing a 9-source one to match the face's stale count, and reports the true denominator in its own battery output. The acceptance text's literal '9 + 3' is read as this cell's inherited shorthand for 'the sweep, with its denominator and positive control', not as a population this worker must reproduce -- the population is what the instrument measures, printed, not what the face counted before the correction existed."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S55",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T05:40:28Z",
+    "one_line": "THE REPO-SHAPED UNPACK FIXED THE BLOCKER THE FACE NAMED (FileNotFoundError) AND EXPOSED A DIFFERENT, DEEPER ONE THE FACE DID NOT ANTICIPATE: refresh.py's dispatch types an EXPLICIT --as-of equal to the LAMBDA's own computed business date (today's real clock date, via the NYSE calendar), but directory_runner.py's per-firm completed-date frontier naturally LAGS that date -- INF's frontier tops out one trading day behind, COT's two -- so an explicit --as-of REFUSES for BOTH inflection and cottonwood on every fire whose target date is not already in that firm's completed set. Both dispatched builds (SSM commands accepted, host online, unpack now succeeds, all three runner_common modules import) ended Failed at directory_runner.py's own select_business_date() refusal, not at any IAM or unpack defect. R33-AC1(d)'s '2 of 2 landed' does not hold as a result: 0 of 2.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rtc-3 cell text (d): 'Fire the deployed dispatch for inf and cot exactly as its schedule would ... read back through the mechanism IB-rt-6 built' and acceptance R33-AC1: '(d) inf and cot 2 of 2 landed with key, ETag, sha256, revision before -> after, retained-or-first-mint, row count, and the reconciliation naming the same command ids with REFRESH_OK.' The face's own framing (arms a-c, e, f) treats the unpack recipe and the 49F IAM deny as the ONLY two named blockers standing between this cell and a landed artifact for inf/cot; it does not anticipate a THIRD, independent blocker beneath them.",
+    "world_is": "MEASURED by firing the deployed function exactly as its schedule input would (payload {\"kind\":\"irpt_directory_refresh\",...}, no business_date override, invoked 2026-09-18T05:31:14Z): all three firms REFRESH_DISPATCHED with real SSM command ids (49financial b1c2b24e-5029-46c3-807f-09ed6f78a917, cottonwood 71f11079-ae43-477e-b803-02fa91791c34, inflection 74c1f0f4-2267-4ea1-9bf2-849f4d8f32cb) on host i-02448edb624a7a7cf. ALL THREE commands ended Status=Failed rc=1, and for the FIRST time in this project's record the host's own stdout shows the FULL nine-member repo-shaped tree extracted, IMPORT-OK for trading_calendar, ids AND contract, and the build reaching directory_runner.py's own main() for all three firms (DENOMINATOR line 'firms selected 1 of 3 registry kind=client' printed by the runner itself). inflection's stdout: 'ERROR: inflection: REFUSE: explicit --as-of 2026-09-18 has no completed source set for inflection (source set carries 135 completed dates)'; cottonwood's stdout: the same class, 'no completed source set for cottonwood (source set carries 125 completed dates)'; 49financial's stdout: 'An error occurred (AccessDenied) when calling the ListObjectsV2 operation ... opal-data-49financial ... explicit deny in a resource-based policy' -- exactly the row IRPT_BCKEND-W2-S49/S53 and iam.tf:598-603 class, so the 49F arm is the EXPECTED, cited blocker and not this row's subject. A follow-up read-only SSM diagnostic (command 6a302049-bae1-4ae9-9290-17868373cae9, Status Success) instantiated FirmCOT/FirmINF from the SAME extracted tree and printed 'COT max/min: 2026-09-16 2026-04-22 125' and 'INF max/min: 2026-09-17 2026-04-29 135' -- COT's completed-date frontier is two trading days behind 2026-09-18, INF's is one. A second Lambda invoke (the reconciliation fire, 2026-09-18T05:3xZ) read all three commands' terminal status back correctly and recorded REFRESH_FAILED with dispatch_failure=BUILD_ENDED_UNSUCCESSFUL / half=BUILD (not HAND_OVER) for all three firms, action RETRY -- the dispatch-to-reconcile loop IB-rt-6 built closes correctly even though no artifact ever lands from this cause. directory_runner.py:352-364 (select_business_date): an explicit as-of that is absent from source.completed_dates() raises RuntimeError('REFUSE: explicit --as-of ... has no completed source set ...') rather than falling back to the WALK the same function performs when no explicit date is given (:365 onward). refresh.py's runner_script() (unchanged by this cell's edit, R-45 in scope was the unpack only) types 'python3 $R/directory_runner.py --firms %s --as-of %s --upload' with business_date = the value refresh.lambda_handler resolved from its OWN clock (today), never the runner's own per-firm frontier.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM commands 74c1f0f4-2267-4ea1-9bf2-849f4d8f32cb (inflection), 71f11079-ae43-477e-b803-02fa91791c34 (cottonwood), b1c2b24e-5029-46c3-807f-09ed6f78a917 (49financial) on i-02448edb624a7a7cf, all Status=Failed ResponseCode=1, full stdout captured in this worker's .scratch/ssm_result_<firm>.json",
+        "manifests at s3://opal-data-inf/investor-reporting/directory/_refresh/2026-09-18/manifest.json (and the opal-data-cot, opal-data-bd equivalents), before-reconcile (RUNNING, dispatched) and after-reconcile (FAILED, BUILD_ENDED_UNSUCCESSFUL/BUILD)",
+        "SSM command 6a302049-bae1-4ae9-9290-17868373cae9 (Status Success), stdout 'COT max/min: 2026-09-16 2026-04-22 125' / 'INF max/min: 2026-09-17 2026-04-29 135'",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:352-364, select_business_date()'s explicit-as-of branch",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py:runner_script(), the '--as-of %s' % business_date line, unchanged by this cell (R-45's scope was the unpack recipe only, commit ca2a8d5b11)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN LANE AND NOT WORKED AROUND: fixing how the dispatch selects/passes a business date is a change to the LAMBDA's dispatch semantics, not to 'the unpack recipe becomes repo-shaped' this cell was cut for, and directory_runner.py's own WALK logic (used by every OTHER caller of select_business_date) is outside this order's <paths> in spirit even where a path might technically be writable -- fixing a neighbouring defect is the one thing bound 8/12 forbids. RECOMMENDATION FOR THE NEXT CUT, stated and not acted on: either drop the explicit --as-of from runner_script() and let directory_runner.py's own trading-day WALK select each firm's newest completed date (the same design already used when refresh.py calls it with no explicit date), or have refresh.py compute a per-firm-aware date before dispatch. WHY THIS COULD NOT HAVE BEEN SEEN BEFORE THIS CELL: every prior fire (IB-rt-6 through the last scheduled 09-17 fire) failed EARLIER, either at the flat-unpack FileNotFoundError or at HAND_OVER_RUNNER_OFFLINE (host stopped) -- this is the first fire in the project's history to reach directory_runner.py's own business-date logic at all."
+  },
+  {
+    "id": "IRPT_BCKEND-S65",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE 49 FINANCIAL PRINCIPAL IS DECLARED IN THE REFRESH LAMBDA'S OWN DEPLOY ROOT, SO THE NEXT APPLY OF THAT ROOT -- FOR ANY REASON -- CREATES IT WITHOUT THE NEVER-WIDEN SIGN-OFF. principal_49f.tf sits in infra/aws/terraform/investor-reporting/directory/, the root every refresh.py or schedule change deploys through; once this branch merges, an apply of that root from any tree carrying the file creates a role that can read 49 Financial's five dimension tables, before the CTO and COO halves exist. The same holds for mdpf-pipeline/'s one AssumeRole statement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "R-44 condition 2: 'The IAM apply is a never-widen-class act. The sign-off names the BLAST RADIUS ... not the producer's intention.' TO-IB-rtc-6: 'it DECLARES, PLANS and WRITES THE PACKET; it does NOT apply. The apply and the negative control on the LIVE principal are IB-rtc-7's, after both sign-off halves exist at HEAD.'",
+    "world_is": "Measured 2026-09-18 ~05:4xZ: the directory root plans 2 to add (the role and its policy) + 1 to change (the Lambda env), 0 to destroy; mdpf-pipeline plans the host-policy statement + an unrelated config object (row IRPT_BCKEND-S68). IB-rtc-3 applied the directory root at ~05:23Z from its own worktree cut before this declaration, so it did not carry it; a later apply from a tree that has merged this branch would. Neither root takes variables and safe-apply has no -var passthrough, so an inert-by-default flag would itself change what IB-rtc-7's face says to do; the declaration is plain, as the face asks.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan (vendored 1.9.8) of infra/aws/terraform/investor-reporting/directory at 05:41:30Z: 'Plan: 2 to add, 1 to change, 0 to destroy.'",
+        "aws lambda get-function-configuration irpt-directory-refresh: LastModified 2026-09-18T05:23:55Z (IB-rtc-3's deploy); IB-rtc-3's branch wk-irpt_bckend-3-2 is cut at 7b2f8fe9bf, before this declaration",
+        "IRPT_BCKEND.TO-IB-rtc-7's face (b): 'APPLY under ledger ... the directory/ root then the mdpf-pipeline/ root' -- no flag to flip"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: hold every apply of the directory/ and mdpf-pipeline/ roots from a tree carrying this declaration until IB-rtc-7 runs with both halves at HEAD, or sequence IB-rtc-7 as the next apply of both. The packet (NEVER_WIDEN_SIGNOFF_PACKET_IB-rtc-6.md) states the same condition."
+  },
+  {
+    "id": "IRPT_BCKEND-S66",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE FACE'S NAME-PREFIX CHECK NAMES THE OLD DENY LIST; THE LIVE CONTROL IS NOW THE OPPOSITE SHAPE. opal-data-49financial's bucket policy no longer denies four named prefixes (role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*): LGIC_ENFORCE EN-f-1 replaced it with ArnNotLike [role/*-49f-*] plus 16 named exemptions. The builder's name irpt-49f-directory-read-role matches 0 of the 4 old prefixes AND matches the fence's admit pattern -- and it is the second that makes the grant work.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-6 (f): 'the name-prefix check (the builder's name matches none of role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*)'; mdpf-pipeline/iam.tf :598-600 still describes the Deny as 'ArnLike aws:PrincipalArn [role/cot-*, role/inf-*, role/mdpf-*, role/opal-assets-mdpf-*]'.",
+    "world_is": "aws s3api get-bucket-policy --bucket opal-data-49financial at 2026-09-18 ~05:1xZ: ONE statement, DenyForeignFirmPrincipals, Effect Deny, Action s3:*, Condition ArnNotLike aws:PrincipalArn = [arn:aws:iam::313476888478:role/*-49f-*, plus 16 exempted principal ARNs]. lib/opal_naming.py fence_patterns('49financial') returns exactly ['arn:aws:iam::313476888478:role/*-49f-*']. shared-infra/s3-49financial.tf carries the REPLACED comment (LGIC_ENFORCE EN-f-1, DEC-4). So a principal is now admitted by carrying the 49f scope slot, not by avoiding four prefixes; mdpf-daily-runner-ec2-role is still denied (it carries no scope slot), which is why the host cannot read the tables itself.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "get-bucket-policy opal-data-49financial: DenyForeignFirmPrincipals ArnNotLike [role/*-49f-*, 16 exemptions]",
+        "py lib/opal_naming.py fence_patterns('49financial') -> ['arn:aws:iam::313476888478:role/*-49f-*']",
+        "name('irpt','49financial','directory-read','role') -> 'irpt-49f-directory-read-role'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The packet reports both checks. The :598-600 comment in mdpf-pipeline/iam.tf is now stale about the mechanism (it still describes the four-prefix Deny); a neighbouring tidy-up, not touched here beyond the new statement's own comment, which states the current fence."
+  },
+  {
+    "id": "IRPT_BCKEND-S67",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE NAMING GATE REFUSED THE LEGACY 49 FINANCIAL DIMENSIONS ADDRESS TYPED INTO A NEW FILE ('gold/advi/dimensions' -> canonical 'advi/{scope}/gold/dimensions', NEW and OUT-OF-PATTERN). The data lives only at the legacy address, so the builder's canonical form would grant reads on an empty prefix. Resolved by DERIVING the root from the producer's own runner_common.OUT_ROOT -- the same constant directory_runner reads -- with the producer file cited by its repo-relative path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "CLAUDE.md Rule 30: 'Every S3 address is lib/opal_naming.py address() output ... a builder REFUSAL is a missing registry row to add ... never a hand-typed workaround'; NON-APPLICATION: 'existing pipelines -- each reaches conformance through its own migration project (R19)'. The five tables are an existing pipeline's output.",
+    "world_is": ".tools/naming-gate.py --diff --enforce on this branch's diff: 'NAMING REFUSE infra/aws/terraform/investor-reporting/directory/principal_49f.tf:68 gold/advi/dimensions -> advi/{scope}/gold/dimensions; why: NEW and OUT-OF-PATTERN as S3Key'. A new file makes every string NEW, and remediations.json cannot admit a NEW string (it makes an EXISTING one stricter). The five tables exist only at opal-data-49financial/gold/advi/dimensions/ (KeyCount 5,5,5,2,2 on --max-keys 5). The declaration now reads OUT_ROOT = \"gold/advi\" from data/assets/scripts/gold/runners_49f/runner_common.py (cited by repo-relative path, which the gate treats as a citation, R-11) and builds '<OUT_ROOT>/dimensions'. The gate then reads 'NAMING-GATE: PASS'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch naming-gate output (first run) with the REFUSE line quoted above; final run 'NAMING-GATE: PASS 0 graded', rc=0",
+        "data/assets/scripts/gold/runners_49f/runner_common.py:39 'OUT_ROOT = \"gold/advi\"  # GOLDHOME re-point 2026-08-18'",
+        "directory_runner.py Firm49F: f\"{self.rc.OUT_ROOT}/dimensions/{table}\" -- the same constant"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The derivation is kept because it is better than the literal, not because it passes the gate: a migration of the 49 Financial gold root (R19) moves the grant with the producer and the reader. For the LGIC owner: the gate has no way to admit an EXISTING-estate address in a NEW declaration file other than deriving it; a pipeline that must name a legacy address it does not produce will meet the same refusal."
+  },
+  {
+    "id": "IRPT_BCKEND-S68",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "AN UNTARGETED APPLY OF mdpf-pipeline/ WOULD ALSO PUSH AN UNRELATED CONFIG OBJECT -- AND, FROM A WINDOWS CHECKOUT, CRLF BYTES. The plan is 0 to add, 2 to change: the host policy's one new statement, and aws_s3_object.mdpf_route_bindings, whose deployed hash matches neither the committed blob nor this worktree's CRLF copy. The never-widen sign-off covers the statement only, so IB-rtc-7's mdpf-pipeline apply must be -target=aws_iam_role_policy.mdpf_runner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "TO-IB-rtc-6 (e): 'terraform plan on BOTH roots ... printed N to add, 0 to change, 0 to destroy (or the exact non-zero explained)'. TO-IB-rtc-7 (b): 'the directory/ root then the mdpf-pipeline/ root, .tools/safe-apply.sh' -- untargeted.",
+    "world_is": "terraform plan of mdpf-pipeline (vendored 1.9.8, 2026-09-18 ~05:3xZ): '0 to add, 2 to change, 0 to destroy'. aws_s3_object.mdpf_route_bindings: source_hash 56a03a1410848f88b006f1f98b69dced -> f94e8e4c5d7c56d93f6ab16af227721d, metadata content-sha256 c9e54ce2... -> 37eb8451.... data/mdpf/config/route_bindings.yaml has no eol attribute: this worktree's copy is CRLF (185 CR, md5 f94e8e4c...), the committed blob is LF (md5 650f893a...), and the deployed object is neither (56a03a14...). So the committed file has moved since that object was last applied (someone's unapplied change), and an apply from this box would upload the CRLF rendering. .tools/safe-apply.sh passes every argument through to terraform, so -target is available.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "plan text IB-rtc-6_plan_mdpf-pipeline.txt: the aws_s3_object.mdpf_route_bindings in-place update with the two hashes",
+        "md5 of data/mdpf/config/route_bindings.yaml: worktree f94e8e4c... (CR=185) vs git show HEAD: 650f893a... (CR=0)",
+        ".tools/safe-apply.sh header: 'delegates via exec to the real terraform binary with every argument passed through unchanged'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: IB-rtc-7 applies mdpf-pipeline with -target=aws_iam_role_policy.mdpf_runner (the packet prescribes it), or the route_bindings owner reconciles that object first from an LF checkout. Not this cell's object; not touched."
+  },
+  {
+    "id": "IRPT_BCKEND-S69",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T05:45:00Z",
+    "one_line": "THE FACE ASSUMED IB-rtc-3 HAD MERGED BEFORE THIS CELL STARTED; IT HAD NOT. Both cells edit infra/aws/lambda/investor-reporting/directory/refresh.py: IB-rtc-3 rewrites runner_script's unpack, this cell adds the source-principal hand-off in dispatch() and one env reader. This cell's edit avoids runner_script and the import block so the two are likely to merge cleanly; the drain checks that. And refresh.py reaches the Lambda only through a rebuilt artifact, so IB-rtc-7's directory apply must carry a rebuild that includes this edit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-6 (c): 'refresh.py (IB-rtc-3's surface, merged before you start) passes the role ARN into the runner's environment for the 49f firm only'.",
+    "world_is": "At hand-off (msg 97834, 04:48Z) IB-rtc-3 was 'handed to slot ~2 this minute'; its branch wk-irpt_bckend-3-2 then carried 0 commits past 7b2f8fe9bf, and by ~05:4xZ carried 4 (ca2a8d5b11 'refresh.py's unpack recipe becomes repo-shaped', 661d2a9240, 315524e62d zip rebuilt, fbd23a9314), with the Lambda redeployed at 05:23:55Z. This cell's refresh.py change touches dispatch() (the export line before send_command) and adds _firm_source_roles_from_env() beside _firm_ids_from_env(); runner_script() and the imports are untouched.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log 7b2f8fe9bf..wk-irpt_bckend-3-2: 4 commits by 0.9.0_WK_IRPT_BCKEND~2, including ca2a8d5b11 on refresh.py",
+        "get-function-configuration irpt-directory-refresh LastModified 2026-09-18T05:23:55Z",
+        "this branch's refresh.py diff: dispatch() + _firm_source_roles_from_env(); 37 of 37 directory tests pass"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A trial merge of the two branches is recorded in this cell's result. The packet names the Lambda artifact rebuild as part of IB-rtc-7's directory apply; without it the env map is set and the running refresh.py ignores it (harmless, and the 49 Financial build keeps failing at the fence)."
+  },
+  {
+    "id": "IRPT_BCKEND-S70",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T06:42:00Z",
+    "one_line": "THE FACE READS THE K5 WARN AS PRINTED AT CONSTRUCTION WITH 0 NETWORK EVENTS; IT IS PRINTED ONE STEP LATER. Firm49F.__init__ builds no client and appends no note; the WARN is appended by the lazy seam _gold() the first time a client is needed. Opening that seam with the variable unset builds the host's S3 client, and on the host that makes 6 calls to the EC2 instance-metadata endpoint for credentials and 0 to any service endpoint. Construction itself makes 0 of either, with the variable set or unset.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-8 (d): 'with IRPT_SOURCE_READ_ROLE_ARN UNSET, instantiating Firm49F prints the K5 WARN note and uses the host session (the \"behaves exactly as today\" claim, measured, 0 network events)'.",
+    "world_is": "Host SSM command a69d4b35-acea-472b-9682-097953866aeb on i-02448edb624a7a7cf, running the minted bundle (sha256 0bd71b5f..., VersionId q8myxeHdNw48w1uDb7YTcBh8DHV9TzU2). With the variable unset: after construction the notes hold no WARN and _gold_client is None, with 0 service and 0 metadata socket events. Calling _gold() without any read appends 'WARN: IRPT_SOURCE_READ_ROLE_ARN not set -- dimension reads on the host session, which the firm bucket's policy refuses'. It returns the cached rc.s3() client (the host session), with 0 service and 6 metadata socket events. With the variable set to a well-formed but non-existent ARN, construction makes 0 socket events and assumes nothing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "directory_runner.py blob 0351bce745 (a1f09a51dd): Firm49F.__init__ sets self._gold_client = None; the WARN note is appended in _gold()'s else branch",
+        "battery_ib_rtc_8.py arm (d) output: UNSET construction events (0, 0), seam events (0, 6), construct-warn False, warn after seam True, host session True; SET construction (0, 0, assumed False)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The battery grades the claim in two parts: construction must make 0 socket events of any kind, and opening the seam must make 0 service-endpoint events and print the WARN. Metadata-endpoint calls at the seam are shown, not graded. Whether 'today's behaviour' also covers the host's own credential fetch is a question about the face's wording, not about the runner: the runner before IB-rtc-6 created the same client at its first dimension read. No code change is asked for."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S56",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T07:03:01Z",
+    "one_line": "AMENDMENT 2's FIX (drop the explicit --as-of) IS CONFIRMED WORKING -- both inflection's and cottonwood's real fires now proceed PAST directory_runner.py's own business-date check for the first time in this project's record -- and the real fire then exposed a FOURTH, still deeper, out-of-lane blocker: directory_runner.py's validate_entries() calls jsonschema.Draft202012Validator, a class ABSENT from the host's installed jsonschema==3.2.0 (added upstream only in jsonschema 4.18.0). Both builds now end 'ERROR: <firm>: module jsonschema has no attribute Draft202012Validator', rc=1, BUILD_ENDED_UNSUCCESSFUL. R33-AC1(d)'s '2 of 2 landed' still does not hold: 0 of 2, for a THIRD distinct cause in this project's history (flat-unpack FileNotFoundError -> as-of refusal, W2-S55 -> now this).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDMENT 2 (this task order face): 'the dispatch passes NO explicit --as-of ... the runner's own trading-day walk selects each firm's newest COMPLETED business date ... a fire whose runner date equals the previous manifest's date records REFRESH_NOOP_SAME_FRONTIER'. Acceptance R33-AC1(d): 'inf and cot 2 of 2 landed with key, ETag, sha256, revision before -> after, retained-or-first-mint, row count, and the reconciliation naming the same command ids with REFRESH_OK.' The amendment's own framing treats the business-date refusal (W2-S55) as the ONLY remaining named blocker between the repo-shaped unpack and a landed artifact for inf/cot; it does not anticipate a further, independent blocker beneath it.",
+    "world_is": "MEASURED by refresh.py's runner_script() edit (this cell, commit 22294ad856: the '--as-of %s' argument to directory_runner.py is dropped entirely) deployed and fired live. Rebuilt irpt-directory-refresh.zip uploaded and VERIFIED (sha256(b64) u82ZY7lCKf/lR7hxFQfy2a6FofEfkSGu4hLLoO7wU+4=, served CodeSha256 matches, terraform apply 0 added/1 changed/0 destroyed, post-apply re-plan 0-diff, ledger irpt-bckend-rtc3-amendment2-noop CLOSED). Invoked the deployed function with the exact schedule payload ({\"kind\":\"irpt_directory_refresh\",...}, no business_date override) at 2026-09-18T06:53:58Z: all three firms REFRESH_DISPATCHED with NEW SSM command ids (inflection f9c34e7a-479e-4de4-9bf8-7ba9c804a106, cottonwood e6869e09-c8b5-4a1b-b0a8-576cf5a4e069, 49financial 0fe77c42-bdfa-4601-86f8-d6e785efe8ae) on host i-02448edb624a7a7cf (already running). All three ended Status=Failed rc=1. inflection's and cottonwood's stdout NO LONGER shows the W2-S55 'REFUSE: explicit --as-of' line -- both print the full import check (IMPORT-OK trading_calendar, ids, contract), 'SOURCE_SETS' and then 'ERROR: <firm>: module 'jsonschema' has no attribute 'Draft202012Validator'' before rc=1. 49financial's stdout is unchanged from the prior fire: AccessDenied on opal-data-49financial (row IRPT_BCKEND-W2-S49/S53, iam.tf:598-603), the EXPECTED, cited blocker and not this row's subject. Confirmed independently: this worker's own py -3.12 interpreter reports jsonschema 4.26.0 with Draft202012Validator present; the host's SSM stdout names jsonschema 3.2.0 in its own dependency-version echo, and jsonschema.Draft202012Validator was added upstream in 4.18.0 (2023), so 3.2.0 genuinely lacks it -- not a transient or environment-specific fluke. A second Lambda invoke (the reconciliation fire, 2026-09-18T06:58:27Z) read all three commands' terminal status back correctly and recorded REFRESH_FAILED with dispatch_failure=BUILD_ENDED_UNSUCCESSFUL/half=BUILD (not HAND_OVER) for all three firms, action RETRY -- the dispatch-to-reconcile loop closes correctly again even though no artifact lands from this new cause. list-objects-v2 on all three firm buckets under investor-reporting/directory/ still shows 6 objects (the six _refresh/ manifests through 09-18), 0 directory.json, 0 latest.json in every bucket.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM commands f9c34e7a-479e-4de4-9bf8-7ba9c804a106 (inflection), e6869e09-c8b5-4a1b-b0a8-576cf5a4e069 (cottonwood), 0fe77c42-bdfa-4601-86f8-d6e785efe8ae (49financial) on i-02448edb624a7a7cf, all Status=Failed, full stdout captured in this worker's .scratch/poll_results.json",
+        "manifests at s3://opal-data-inf/investor-reporting/directory/_refresh/2026-09-18/manifest.json (and the opal-data-cot, opal-data-bd equivalents): before-this-fire (RUNNING, dispatched with the NEW command ids) and after-reconcile (FAILED, BUILD_ENDED_UNSUCCESSFUL/BUILD)",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py:749-752, validate_entries()'s jsonschema.Draft202012Validator(schema) call",
+        "local py -3.12 interpreter: `import jsonschema; jsonschema.__version__` == 4.26.0, `Draft202012Validator` present in dir(jsonschema); host SSM stdout dep line: `dep jsonschema 3.2.0`",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py:runner_script() at commit 22294ad856, the '--as-of' argument removed -- both firms' stdout confirms the argument's ABSENCE (no REFUSE line) before the NEW error surfaces"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "IN LANE AND NOT WORKED AROUND: directory_runner.py is outside this order's <paths> (it is lane IB-rtc-2's own bundle source), and a jsonschema version pin or a Draft7Validator/best-available-validator fallback is a change to the RUNNER's own validation code, not to the Lambda's dispatch semantics this cell (AMENDMENT 2) was cut for -- fixing it would be the neighbouring-defect violation bound 8/12 forbids a second time in this same cell. RECOMMENDATION FOR THE NEXT CUT, stated and not acted on: either pin the host's installed jsonschema to >=4.18 (an environment/AMI change, likely NFRA_CLDGRPH's or the mdpf daily-runner's own lane) or have directory_runner.py select a validator class conditionally (`getattr(jsonschema, 'Draft202012Validator', jsonschema.Draft7Validator)` or equivalent) so the runtime's actual jsonschema version is honoured rather than assumed. WHY THIS COULD NOT HAVE BEEN SEEN BEFORE THIS CELL: every prior fire in this project's history failed EARLIER -- at the flat-unpack FileNotFoundError, at HAND_OVER_RUNNER_OFFLINE, or at the W2-S55 business-date refusal -- so no fire before this one had ever reached validate_entries() at all. AMENDMENT 2's own fix is PROVEN CORRECT AND WORKING as far as it goes: the business-date refusal it targeted is gone, confirmed by its own absence in the stdout of both firms, and each firm's build now fails at a strictly later point than before."
+  },
+  {
+    "id": "IRPT_BCKEND-S71",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T08:05:00Z",
+    "one_line": "THE HOLDINGS RUNNER READS A DIFFERENT CONTRACT FILE THAN THE FACE CENSUSED, AND THAT FILE IS NOT IN THE BUNDLE. holdings_snapshot.py's CONTRACT_PATH is docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json (blob 9ec70af2, 34577 bytes), not infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json (blob 95e4d500, 26022 bytes). The draft-7 claim still holds for it: all 11 docs/contracts/v1 schemas use no 2019-09/2020-12-only keyword, no $ref and no array-form items. But the bundle's 9 members do not include it, so holdings_snapshot.py run from the bundle on the host raises FileNotFoundError at load_contract(), with or without this cell's fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtc-9 THE CELL: 'The eleven _contracts/*.schema.json all declare $schema 2020-12 and NONE uses a 2019-09/2020-12-only keyword ... so a draft-7 validator grades the same set of entries the 2020-12 one does'; and (d) runs validate_snapshot() on the host from the extracted tarball.",
+    "world_is": "holdings_snapshot.py:109-110 @de4e176cc3 sets CONTRACT_PATH = _REPO/docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json. The two HoldingsSnapshot schemas are different files: 391 vs 295 keys walked. A no-network open/import probe of holdings_snapshot.py (import, then load_contract, firm_bucket_map and client_firms) opens 4 repo files. 3 are bundle members (firm_registry.json, _ids/ids.py, lib/trading_calendar.py); 1 is not (the docs/contracts/v1 schema). The guard's investor_reporting declaration names 9 members, and the only contract among them is DirectoryEntry.schema.json. The irpt-holdings-snapshot schedule is DISABLED, so no fire reaches this today.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git rev-parse HEAD:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json = 9ec70af2ba0c71ea589dab48bd14407e111694a8; HEAD:infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json = 95e4d500747c75da27eebbde783c82edf242cbe0",
+        "contract keyword census over docs/contracts/investor-reporting/v1/*.schema.json: 11 files, 0 2020-only keywords, 0 $ref, 0 array-form items",
+        "safe_deploy_core.find_bundle('investor_reporting') members: 9 repo paths, no HoldingsSnapshot schema"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed here: adding a bundle member is a guard edit (.tools/safe_deploy_core.py), outside this order's paths, and the holdings build is not in this cell. This cell's host arm (d) places the real docs/contracts/v1 schema bytes (sha256-bound to blob 9ec70af2) in the extracted tree, both beside the new tarball and beside the pre-cell one, so validate_snapshot() can be exercised. It says so in its output."
+  },
+  {
+    "id": "IRPT_BCKEND-S72",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-18T09:40:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-S65 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~B), at the drain of IB-rtc-7. The hazard was any apply of the directory/ or mdpf-pipeline/ root from a tree carrying principal_49f.tf BEFORE IB-rtc-7 ran with both never-widen halves at HEAD. Measured: IB-rtc-7 WAS the next apply of both roots, under both halves, and the hazard's window is closed -- the principal now exists BY the signed act, not around it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IB-rtc-7 VALID at HEAD 9196f164cf (proof-of-spec-check rc=0 on the shared tree with --governing-order): arm (a) 2 of 2 halves present (COO @437789944a, CTO @3a976e1e1d), packet blob bb92a81c697c6d3fb8b01cb65fedfb9cb0563e38 re-hashed equal; arm (b) directory root 2 added / 1 changed / 0 destroyed and mdpf-pipeline TARGETED 0 added / 1 changed / 0 destroyed on aws_iam_role_policy.mdpf_runner only (32 -> 33 statements), both under ledger irpt-bckend-rtc7-49f-principal (OPEN @d8720e83df, CLOSED @1bd528592b, 4 of 4 legs).",
+        "Between S65's surfacing (05:45Z) and IB-rtc-7's apply (08:4xZ) the only applies of either root were IB-rtc-3 AMENDMENT 2's two directory-root applies from worktree wk-irpt_bckend-3-2b, cut at af7d39d96f -- BEFORE IB-rtc-6's declaration merged @119fda050a -- so neither tree carried principal_49f.tf (git merge-base --is-ancestor 119fda050a af7d39d96f is false); the role did not exist until 08:4xZ (IB-rtc-7's post-apply get-role is its first read).",
+        "Post-apply writer census 12 of 263 (IB-rtc-6 read 12 of 262; the 263rd principal is the new role itself, which is NOT a writer), same membership -- the CTO half's condition (2) did not fire; the negative control read 3 of 3 DENIED + 1 of 1 READ-OK from the host by the host."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S65 notes: 'hold every apply of the directory/ and mdpf-pipeline/ roots from a tree carrying this declaration until IB-rtc-7 runs with both halves at HEAD, or sequence IB-rtc-7 as the next apply of both.'",
+    "world_is": "IB-rtc-7 was sequenced as the next apply of both (rtc-7's status line @34029b1ba3 names every precondition merged and both halves at HEAD; the applies ran 08:4xZ). The route-bindings drift S68 stays ARMED at 1.0.0_SA_CTO and was NOT absorbed: the mdpf-pipeline apply was targeted to K3 exactly as the COO half signed.",
+    "notes": "Disposition of S65 is the CVO's at L9; this row is the disarm evidence its disarm_owner owed. Residual, NOT this row's: S68 (route-bindings drift, CTO-owned); the D14 destination move (the 49f directory landed under legacy opal-data-bd, as the packet states)."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S57",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T10:06:07Z",
+    "one_line": "AMENDMENT 3's re-fire never reaches REFRESH_NOOP_SAME_FRONTIER (the branch the amendment's own text names as the alternate LANDED outcome): last_manifest()'s calendar-day backward walk finds a STALE REFRESH_DISPATCHED manifest dated TODAY (IB-rtc-7's own first dispatch, keyed by clock date per design) before it ever reaches the later COMPLETED manifest at the runner's own (earlier) business date, so every re-fire this same calendar day reads previous_entries as empty and re-reports the UNCHANGED, already-landed artifact as REFRESH_COMPLETED_WITH_ADDITIONS (added == entry_count) rather than a no-op -- confirmed on BOTH graded firms, byte-identical ETag/sha256 to IB-rtc-7's own fire on both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDMENT 3 (this task order face): 'inf and cot 2 of 2 landed ... or REFRESH_NOOP_SAME_FRONTIER for a firm whose frontier IB-rtc-7's fire already landed this trading day, when the reconciliation names the earlier command id with REFRESH_OK and the artifact's as_of equals the runner's frontier ... print which branch each firm took'. AMENDMENT 2's own ruling (this face, verbatim): 'a fire whose runner date equals the previous manifest's date records REFRESH_NOOP_SAME_FRONTIER', i.e. the design's stated expectation is that a repeat fire on an unmoved frontier reads as a no-op, distinguishable from a genuinely new completion.",
+    "world_is": "MEASURED, live, this cell's own fire (2026-09-18, real Lambda invoke, no business_date override, schedule payload read live from schedule.tf). Both inflection's and cottonwood's manifests this fire read reason_code=REFRESH_COMPLETED_WITH_ADDITIONS, delta.previous_entry_count=0, delta.added==current_entry_count (291 for inflection; 248 for cottonwood's client-deduped grain -- see below), and delta carries NO ssm_command_id (a 'landed' build_fn return never sets that key); yet the S3 object's ETag/sha256 at the landed key are BYTE-IDENTICAL to IB-rtc-7's own fire earlier the same day (inflection ETag 782324f961078b228a32af9316af9836, cottonwood ETag 264e0fbedc24c09bd066ee9eb278ea5f -- both unchanged), and before/after list-objects-v2 shows 0 new keys in either bucket this fire. Fetched s3://opal-data-inf/investor-reporting/directory/_refresh/2026-09-18/manifest.json directly (the SAME 'today' key last_manifest() would check first): reason_code=REFRESH_DISPATCHED, state=RUNNING, directory_revision=pending, delta={'build_dispatch':'SSM','redispatched':true,'ssm_command_id':'e0f6a54c-d43c-4276-a3e4-41923573d79d'} -- IB-rtc-7's OWN first dispatch command id for inflection, UNCHANGED since IB-rtc-7 wrote it, still sitting at as_of=2026-09-18 (today's clock date, per refresh.py's own documented rule that a DISPATCHED manifest is keyed by 'now' and a COMPLETED one by the runner's date -- so this record is NEVER superseded by the later completed manifest at 2026-09-17, which lives at a DIFFERENT key). Cottonwood's freshly-rewritten completed manifest (s3://opal-data-cot/.../_refresh/2026-09-16/manifest.json, LastModified 2026-09-18T09:55:04Z, i.e. from THIS run) carries notes=['previous command c25a3bdb-7d18-41f0-b521-cf9d513ea6a2 -> Success'] -- IB-rtc-7's own cottonwood dispatch id, and delta.previous_entry_count=0/added=248 (248 is the DEDUPED-by-client_id count from compute_delta(), not a discrepancy against the artifact's own entry_count=259 -- cot's relationship-grain fan-out means 259 raw entries collapse to 248 unique client_ids, confirmed against directory_runner.py's key_of()/compute_delta()). Tracing SsmBuildDispatcher.__call__ (refresh.py:598-660) against this evidence: last_manifest(bucket, now=2026-09-18) walks the trading calendar backward from 'expected' and finds the _refresh/2026-09-18/manifest.json (REFRESH_DISPATCHED, cid set) BEFORE it would reach _refresh/2026-09-17/ or _refresh/2026-09-16/ (COMPLETED, no cid) -- so prev_delta.get('ssm_command_id') IS the old dispatch cid (truthy), command_status(cid) reads Success, pointer().key != prev_delta.get('directory_key') (the DISPATCHED manifest never set one) so the 'landed' branch fires again on the SAME already-served artifact, and refresh_firm's own dispatcher.previous_entries() (called BEFORE build_fn, reading the SAME stale DISPATCHED manifest's delta.directory_key=None) returns None -- hence added==entry_count every time. same_frontier (the branch AMENDMENT 2 built specifically for this shape) can only trigger when key==prev_delta.directory_key, which never happens while the 'previous' record last_manifest() selects is the stale DISPATCHED one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-inf/investor-reporting/directory/_refresh/2026-09-18/manifest.json (fetched this run): reason_code=REFRESH_DISPATCHED, delta.ssm_command_id=e0f6a54c-d43c-4276-a3e4-41923573d79d, matching IB-rtc-7's own recorded dispatch id for inflection",
+        "s3://opal-data-cot/investor-reporting/directory/_refresh/2026-09-16/manifest.json (fetched this run, LastModified 2026-09-18T09:55:04Z): reason_code=REFRESH_COMPLETED_WITH_ADDITIONS, delta.previous_entry_count=0, delta.added=248, notes cites IB-rtc-7's own command c25a3bdb-7d18-41f0-b521-cf9d513ea6a2",
+        "this cell's battery_ib_rtc_3.py arm de: inflection/cottonwood landed ETag/sha256 (782324f961078b228a32af9316af9836 / 264e0fbedc24c09bd066ee9eb278ea5f) byte-identical to IB-rtc-7's own result.md table; 0 new keys in either bucket's before/after list-objects-v2",
+        "infra/aws/lambda/investor-reporting/directory/refresh.py:195-218 last_manifest() (calendar-day backward walk, first-found wins, no comparison of WHICH kind of record it finds), :598-660 SsmBuildDispatcher.__call__ (the same_frontier branch's cid/directory_key preconditions), :661-665 previous_entries() (reads prev_delta.directory_key, None on a DISPATCHED manifest)",
+        "data/assets/scripts/gold/investor_reporting/directory_runner.py compute_delta()/key_of() -- confirms cottonwood's 259 raw entries collapse to 248 unique client_ids by design (not a discrepancy)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT FIXED HERE, per AMENDMENT 3's own bound ('this amendment changes NO code and NO infrastructure ... do NOT edit refresh.py'). Does not block THIS cell's own acceptance: R33-AC1(d) grades presence + correct hash + correct business date for the landed artifact, which both firms have (byte-identical to IB-rtc-7's genuine build), and the face's own text admits EITHER branch as LANDED -- REFRESH_COMPLETED_WITH_ADDITIONS with an unchanged artifact is not named as a disqualifying outcome. Flagged for R33-AC2 and any later cell that reads REFRESH_NOOP_SAME_FRONTIER's own test coverage: the six AMENDMENT-2 unit tests exercise same_frontier via an INJECTED build_fn/manifest shape (bound 12's harness form) and never exercised the REAL last_manifest() walk against a REAL DISPATCHED-then-COMPLETED-at-an-earlier-date history, which is exactly the shape every real fire produces the same day a build first dispatches -- so the branch this amendment's own ruling built has, as measured today, NEVER fired against a real manifest history. RECOMMENDATION, stated and not acted on: last_manifest() (or SsmBuildDispatcher) should prefer the most recent record BY REASON-CODE PRECEDENCE (a COMPLETED manifest at an earlier business date supersedes a DISPATCHED one at a later clock date for the SAME dispatch cycle), not purely by calendar-day recency."
+  },
+  {
+    "id": "IRPT_BCKEND-S74",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T12:20:00Z",
+    "one_line": "THE PRE-CELL OBJECT IS NOT THE VERSION THE FACE NAMES, THOUGH ITS BYTES ARE. The face binds the negative control to IB-rtc-9's mint, VersionId 0XLkiPt4wljdniLnF2fkPKN4qAIkjUbc / ETag 4c942a76. The key's LATEST version is instead 00PXLyYmM0vJavlwdpUHBKRi3pza0_nS, same ETag and 61540 bytes. It was written at 2026-09-18T11:05:45Z by the pre-push safe-deploy gate during 0.0.0_AB_MSTR's integration push, which also rewrote cot's loose runner_common.py as a new VersionId 81mlcZFSpRyiH_OeK0OlWFvEHKYUelj_ with the same ETag d88a5939. So 'the three legs unchanged' is graded against the loose VersionIds read before this cell's mint, not IB-rtc-2's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtd-3 (b): 'the negative control against IB-rtc-9's 0XLkiPt4wljdniLnF2fkPKN4qAIkjUbc / ETag 4c942a76f990874838e33e37f24ed69a DIFFERS ... the three distribution legs 3 of 3 unchanged'.",
+    "world_is": "list-object-versions on s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (26 versions) shows 0XLkiPt4 written at 07:58:33Z and 00PXLyYm at 11:05:45Z, both ETag 4c942a76f990874838e33e37f24ed69a and 61540 bytes. org/critical_paths/change_management/20260918T1102Z_mstr-integration-20260918-cot-runner-common_deploy_completion.md records it: L2 has the gate's 'BUNDLE MINTED [mdpf] investor_reporting ... md5=4c942a76...'; L3 has cot's loose key rewritten as VersionId 81mlcZFS... at 11:05:57Z, ETag d88a5939. At 12:1xZ the loose legs read: 49F jnnxQWbVT_lx6WlJu8HbVXNjQJpYK00w, cot 81mlcZFSpRyiH_OeK0OlWFvEHKYUelj_, inf z_WDDmx6004thBhXbT0uBvsDkNibZQF8.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions: 0XLkiPt4 (07:58:33Z) and 00PXLyYm (11:05:45Z, IsLatest), both ETag 4c942a76f990874838e33e37f24ed69a",
+        "the MSTR integration's change-management entry @e4623a5872, legs L2 and L3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Nothing is wrong: an idempotent re-write of identical bytes by the push gate. The battery binds the pre-cell to BOTH versions, which it shows are byte-identical, and binds the loose legs to the VersionIds read before this cell's mint."
+  },
+  {
+    "id": "IRPT_BCKEND-S75",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T12:22:00Z",
+    "one_line": "TWO CORRECTIONS TO THIS SEAT'S OWN ROW S71, AND S63 MEETS THE NEW MEMBER. (1) S71's sizes, which the face repeats, came from the autocrlf CHECKOUT, not the blobs. The v1 HoldingsSnapshot schema blob 9ec70af2 is 33882 bytes, not 34577 (695 CR added by the checkout). The _contracts/ copy, blob 95e4d500, is 25485 bytes, not 26022. (2) The guard's packer reads the worktree (row S63), so a mint from this worktree would carry the new member with 695 CR and it would NOT equal blob 9ec70af2 as face (b) requires. This cell writes the blob's exact bytes into that one worktree path before the mint (git status clean, the content object unchanged), and records it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtd-3 THE CELL: 'docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json (blob 9ec70af2, 34577 bytes) ... the _contracts/ copy (blob 95e4d500, 26022 bytes)'; (b) 'the new member's bytes in the tarball == the repo blob 9ec70af2...'.",
+    "world_is": "git cat-file -s HEAD:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json = 33882; git cat-file -s HEAD:infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json = 25485. In /c/tmp/wk-irpt-4-ds6 (core.autocrlf=true, no text/eol attribute on either path) the checked-out v1 file is 34577 bytes with 695 CR. The existing JSON members data/firm_registry.json and DirectoryEntry.schema.json are packed CRLF on every mint (136 and 260 CR); that is S63, unchanged here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file -s at e4623a5872: 33882 and 25485",
+        "worktree read of the v1 schema: 34577 bytes, 695 CR; git check-attr text/eol: unspecified"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "S71's key-count comparison (391 vs 295 keys walked) is unaffected, since it parsed the JSON. The rendering in (2) applies to this mint only. A later mint from a default autocrlf worktree packs the member CRLF again, until the packer reads the blob (S63, the guard owner's). The other two JSON members are left exactly as every mint packs them."
+  },
+  {
+    "id": "IRPT_BCKEND-S76",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T12:45:00Z",
+    "one_line": "ENABLING irpt-holdings-snapshot WOULD NOT RUN THE BUNDLED HOLDINGS RUNNER, so S71 does not arm 'the moment anyone enables it'. The schedule's target is the SQS queue irpt-generation, with the input 'REGISTERED SLOT, DISABLED -- not a live trigger; no compute target deployed'. That queue has 0 event-source mappings, so an enable today enqueues a message nothing consumes. The trigger test guards a NECESSARY condition, ENABLED with a member missing. A second precondition, a compute target that dispatches the bundled runner, does not exist yet and is not what the test reads.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtd-3 THE CELL: 'The irpt-holdings-snapshot schedule is DISABLED, so no fire reaches it today -- and it ARMS the moment anyone enables it.'",
+    "world_is": "scheduler get-schedule irpt-holdings-snapshot (12:4xZ): State DISABLED, cron(30 12 ? * MON-FRI *) UTC, Target Arn arn:aws:sqs:us-east-1:313476888478:irpt-generation, Input kind irpt_holdings_snapshot_trigger_slot. lambda list-event-source-mappings --event-source-arn on that queue: 0. sqs get-queue-attributes: 0 visible and 0 in-flight messages. The declaration states the same: infra/aws/terraform/investor-reporting/directory/schedule.tf:6-13 @fb4dcbc8ac ('It is NOT wired to a live compute target ... nothing currently consumes that message'), :71 @fb4dcbc8ac (state DISABLED), :79-83 @fb4dcbc8ac (target is the generation queue).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws scheduler get-schedule --name irpt-holdings-snapshot: Target.Arn = the irpt-generation queue",
+        "aws lambda list-event-source-mappings --event-source-arn arn:aws:sqs:us-east-1:313476888478:irpt-generation: 0 mappings",
+        "infra/aws/terraform/investor-reporting/directory/schedule.tf:6-13,:71,:79-83 @fb4dcbc8ac"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Nothing is broken: the slot is DISABLED and says it is unwired. The guard this cell built is still right for its condition. S71 would arm only if BOTH the schedule is enabled AND a compute target is wired to run the bundled runner. The trigger test reads the first; the second is recorded for R43-AC2 and is not this cell's to build."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T12:53:52Z",
+    "one_line": "IB-rtd-6's named census location portal/ is an UNINITIALIZED gitlink in this worker's worktree -- comp-find over it reads a MEASURED 0 hit(s) across 0 file(s) scanned, which is out-of-corpus, never an absence claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IB-rtd-6 face (b): 'every reader of investor-reporting/directory (comp-find over the repo, denominator printed; the Lambda source map's functions; portal/ and IRPT_FNTEND's tree home)' -- portal/ is named as a location this cell's census must cover.",
+    "world_is": "This worker's worktree carries portal as a bare gitlink with no working tree: `git ls-tree HEAD portal` reads `160000 commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0 portal`, `.gitmodules` is empty/absent, `git config --get-regexp submodule` returns nothing, and `test -d portal/src` reads NO_SRC. `comp-find 'investor-reporting/directory' portal/` reads `DENOMINATOR: 0 hit(s) across 0 file(s) scanned` -- a MEASURED zero over zero files, not evidence the term is absent from portal's real content. The FE's actual reader surface (if any) cannot be inspected from this worktree; part (c)'s finding that the port costs IRPT_FNTEND no code change rests on the API CONTRACT carrying no S3 path (a 0-hit comp-find over docs/contracts/investor-reporting/), not on a direct read of portal/ source.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD portal @e4623a5872 (this worktree's base): `160000 commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0\tportal`",
+        "cat .gitmodules (empty output) and `git config --get-regexp submodule` (empty output), same worktree",
+        "test -d portal/src -> NO_SRC; comp-find 'investor-reporting/directory' portal/ -> 'DENOMINATOR: 0 hit(s) across 0 file(s) scanned in scope [corpus=all]'",
+        "battery_ib_rtd_6.py part_b(), IB-rtd-6_R46-AC1_battery_output.txt lines 128-135"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Does not block IB-rtd-6's own acceptance: the task order's own instruction set (CLAUDE.md s.3) reads an out-of-corpus 0-of-0 as MEASURED, not FAIL. Left UNDER_INVESTIGATION rather than DISMISSED because a later cell that needs portal/'s actual FE source (e.g. to verify the FNTEND hand-off this order names) will hit the same gap and needs a portal worktree (memory: 'portal is a GITLINK so a worker needs a portal worktree inside its workspace worktree') -- out of this READ-ONLY order's <paths> grant to build."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S19",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T12:34:59Z",
+    "one_line": "TO IB-rtd-8's own premise (and the issuer's Rule-22 census it quotes) states the advisor-axis defect (row W1-S16) sits in TWO INDEPENDENTLY-BROKEN copies of `Enforcer.covers()`, citing `_authz/enforce.py:351 @5c59f68d70` beside `holdings/enforce.py:319 @5c59f68d70`. Reading `_authz/enforce.py` AT THAT EXACT PIN shows the branch ALREADY FIXED -- the firm-membership check (lines 342-349) runs BEFORE line 351 and refuses an off-firm advisor for every principal class. The fix landed at IB-rt-2 (commit 49035683d1, round 2), an ancestor of BOTH 5c59f68d70 and this branch's own HEAD. `holdings/enforce.py` is not a second, hand-maintained implementation of `covers()` at all: `holdings/stage.py` + STAGE_MANIFEST.json show it is a PINNED, COMMITTED-BLOB copy of `_authz/enforce.py`, staged at pin `2a42c9563f0b31f983bc955285ba4a0d5f3385f8` -- which PRE-DATES the IB-rt-2 fix by construction. So there was one canonical defect, one canonical fix, and one stale pin never re-run since -- not two independently-broken branches to hand-edit in parallel. A bare `path:line @ commit` citation that does not read the surrounding guard (lines 314-341) reads as confirming the defect at a pin where it is already closed -- exactly the citation-staleness failure mode CLAUDE.md Rule 27 names for a quoted passage, here on a LINE-NUMBER citation instead of a quoted string.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:342-356 read from the worktree (branch tip e4623a5872) and via `git show 5c59f68d70:infra/aws/lambda/investor-reporting/_authz/enforce.py` (both identical, saved at .scratch/authz_enforce_5c59f68d70.py this turn): the FIRM_OPERATIONS/OPAL_GLOBAL branch at line 351 is reached ONLY after `if object_id not in firm_advisors: return False, ...` at lines 344-349 -- not an unconditional True.",
+        "`git log --oneline -- infra/aws/lambda/investor-reporting/_authz/enforce.py` (this turn): 49035683d1 'IRPT_BCKEND IB-rt-2: the dispatch.py collision is gone, and covers() now CHECKS the firm its comment claimed' is the fix commit, ahead of 48313e9c0e and 749415b9a0 on the same path.",
+        "`git merge-base --is-ancestor 49035683d1 5c59f68d70` and `... 49035683d1 HEAD` (this turn, branch tip e4623a5872): both rc=0 -- the fix commit is an ancestor of the pin the issuer cited AND of this order's own branch tip.",
+        "infra/aws/lambda/investor-reporting/holdings/STAGE_MANIFEST.json (pre-fix, this order's <paths>): enforce.py member pinned at `2a42c9563f0b31f983bc955285ba4a0d5f3385f8`, a commit that PRE-DATES 49035683d1 (holdings/stage.py's own docstring: staged from `git show <pin>:<path>`, never a hand copy).",
+        "downloaded the seven LIVE served zips this turn (irpt-performance-adapter, irpt-directory-search, irpt-narrative, irpt-ycharts-generate, irpt-export-render, irpt-status, irpt-holdings) and hashed each `enforce.py` member: the six that flat-copy `_authz/enforce.py` at build time ALL serve sha256 69808e78... (the FIXED content, byte-identical to the current `_authz/enforce.py`); only `irpt-holdings` served sha256 adb8ece4... (the PRE-fix content, byte-identical to the stale pin) -- so the live population independently confirms exactly ONE stale copy, not two."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtd-8, verbatim: 'the branch exists in TWO copies of the enforcer; both are fixed' and 'the issuer's census (Rule 22, the shared premise): the branch exists at `infra/aws/lambda/investor-reporting/_authz/enforce.py:351 @5c59f68d70` AND at `infra/aws/lambda/investor-reporting/holdings/enforce.py:319 @5c59f68d70` -- two copies, one defect.'",
+    "world_is": "One copy (`_authz/enforce.py`) was already fixed, at a commit ancestral to the cited pin. The other (`holdings/enforce.py`) was never an independent implementation -- it is a staged mirror of the first, frozen at a pin older than the fix. This order's deliverable therefore re-stages `holdings/enforce.py`'s `enforce.py` member to the fixed content (scoped to that one member; `errors.py`/`resolve.py`/`handler.py` are byte-identical to their original pin at HEAD and are left untouched, and the packaged contract is left untouched because it DOES differ since the old pin and this order forbids a contract change) rather than hand-editing prose into two files that would then be two independently-drifting definitions of one predicate -- exactly the shape bound (a) warns against consolidating INTO, not the shape to create.",
+    "notes": "Not a correction of the finding itself (row W1-S16 is real and stays ARMED until this cell's fix lands) -- a correction of the CENSUS that scoped the FIX, caught before any code was hand-duplicated. INERT: no reader is misled going forward, because this row and the corrected STAGE_MANIFEST.json/BUILD_MANIFEST.json pins sit beside the fact. Routed for awareness, not for a gate: a future census that cites a `path:line @ commit` pair for a branch inside a function should read the ENCLOSING guard, not just the cited line, before concluding the branch is reachable unconditionally."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S20",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T13:42:12Z",
+    "one_line": "UNTRACKED-PRODUCTION-SOURCE-FILE GAP (the same class `memory/feedback_structural_over_cultural_pattern.md` item 6 already names for a different function): `lambda-source-map.json` declares `served.py` and `loaders.py` in irpt-holdings' `files[]`, and the CURRENTLY-DEPLOYED zip genuinely packages both (downloaded and confirmed this turn) -- but NEITHER file exists on disk anywhere under `infra/aws/lambda/investor-reporting/holdings/`, and `git log --diff-filter=D` shows neither was ever committed there and then deleted. `holdings/stage.py`'s own `MEMBERS` tuple never names them either (only enforce.py/errors.py/resolve.py/handler.py). `build-and-upload.sh` therefore REFUSES to build `irpt-holdings` at all (`ERROR: File not found`) until this gap is closed by hand, every single time -- which is exactly this cell's own blocker this run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route -- the fix is either (a) commit `served.py`/`loaders.py` into `holdings/` as staged, pinned, COMMITTED-BLOB copies of `_authz/served.py`/`_authz/loaders.py` the way `stage.py` already does for the other four members (widening `stage.py`'s own `MEMBERS` tuple), or (b) if holdings' deployed `loaders.py` is meant to be its OWN bespoke loader rather than a mirror of `_authz/loaders.py` (their content DIFFERS today -- see evidence -- so this is not obviously a simple mirror), author it in-tree under its own name with its own provenance. Either way it is a `holdings/`-scoped act outside this order's bound (\"the two enforce.py files and their tests are the ONLY code touched\"), so it is recorded rather than done here. ARMED because every future rebuild of `irpt-holdings` hits the SAME refusal and, per this row's own workaround, the two missing files have to be re-materialized from whatever the CURRENTLY-DEPLOYED zip happens to hold -- a source of truth that only exists live, not in git.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings` (this turn, before any workaround): `ERROR: File not found: infra/aws/lambda/investor-reporting/holdings/served.py` and the same for `loaders.py` -- 0 built, 1 failed.",
+        "`ls infra/aws/lambda/investor-reporting/holdings/` (this turn): served.py and loaders.py ABSENT; `git log --oneline --diff-filter=D -- .../holdings/served.py .../holdings/loaders.py` (this turn): 0 commits -- never committed there, so not a deletion either.",
+        "downloaded the LIVE deployed `irpt-holdings` zip fresh this turn and listed its members: `served.py` and `loaders.py` ARE genuinely packaged and served (12 members total) -- so the gap is real production drift, not a dead declaration.",
+        "`infra/aws/lambda/investor-reporting/holdings/stage.py` MEMBERS tuple (read this turn): four entries only (enforce.py, errors.py, resolve.py, handler.py) -- served.py/loaders.py were never added to the staging mechanism that is supposed to keep every flat-copied member's provenance pinned.",
+        "content check (this turn): the deployed `served.py` member is BYTE-IDENTICAL to the current `_authz/served.py` (38627 bytes, matches); the deployed `loaders.py` member DIFFERS from the current `_authz/loaders.py` (6437 vs 6934 bytes) -- so a naive fix that mirrors `_authz/loaders.py` today would be a LOADER CHANGE, not a provenance fix, and is out of this order's bound for that reason too.",
+        "memory/feedback_structural_over_cultural_pattern.md item 6 (cited by this worktree's own `[risk-reflex]` HOLD notice on `lambda-source-map.json` this turn): the SAME class, named 2026-05-11 for a different function (23 LAMBDA-DIMS Phase A files, 4-day drift) -- 'Proposed structural fix: extend safe-deploy.sh (or new pre-commit/pre-push gate) to detect untracked .py files under infra/aws/lambda/*/ that match deployed Lambda artifacts per lambda-source-map.json.' -- queued, still pending, and this row is a second, independent measured instance of exactly the gap it describes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "lambda-source-map.json's irpt-holdings entry: files[] names served.py and loaders.py as packaged members of source_dir infra/aws/lambda/investor-reporting/holdings.",
+    "world_is": "Both files are served in production and neither exists in the repository at any commit for that path. This cell's OWN deploy (irpt-holdings, this order) could only proceed by extracting both, unchanged, from the currently-deployed zip and placing them in the worktree FOR THE DURATION OF THE BUILD ONLY -- removed again immediately after, and never committed, because materializing them permanently is a holdings/-scoped code change this order's bound does not authorize. The fix (mint them properly in-tree, or determine loaders.py is meant to diverge and document why) is the next cell to touch this directory's to take.",
+    "notes": "Not this cell's to fix, per bound (\"The two enforce.py files and their tests are the ONLY code touched\"). Filed rather than repaired, per the surprise-channel bound (a capability I lack: I cannot commit new tracked source files outside my declared scope even to close a gap I needed to work around). The workaround (extract-build-remove) is recorded in this order's own deploy-ledger proof rows rather than left silent."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T15:55:00Z",
+    "one_line": "CONDITION (3)'s literal wording ('the UNTARGETED root plan reads 0 to add / 0 to change / 0 to destroy') assumes terraform prints a 'Plan:' summary line; when the ONLY thing stale after a -target apply is a derived OUTPUT value (not a resource), terraform prints NO 'Plan:' line at all (0 resource actions -- no add/change/destroy block for any resource) but still emits a 'Changes to Outputs:' section, and -detailed-exitcode reads 2 (changes present), not 0. On this act, post-apply, the untargeted plan showed ZERO resource actions (aws_s3_object.mdpf_route_bindings itself did NOT reappear in the diff) and ONE stale output (mdpf_route_bindings_sha256, still c9e54ce2... in state because a -target apply/plan does not recompute outputs -- exactly what terraform's own apply-time warning predicted: 'output values may not be fully updated'). This is a state-bookkeeping artifact of the targeted apply, not a second drifted resource, and applying anything further (even untargeted) to clear it would violate this order's BOUNDS ('nothing else on that root is applied').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this commit: post-apply untargeted `terraform plan -input=false -no-color` on infra/aws/terraform/mdpf-pipeline (LF-materialized source, matching the act's own sourcing) prints NO 'Plan: N to add, N to change, N to destroy' line and NO '~ resource \"aws_s3_object\" \"mdpf_route_bindings\"' block -- only 'Changes to Outputs: ~ mdpf_route_bindings_sha256 = \"c9e54ce2...\" -> \"98f5e9c5...\"' followed by 'You can apply this plan to save these new output values to the Terraform state, without changing any real infrastructure.'",
+        "the same plan re-run with `-detailed-exitcode`: rc=2 (Terraform's own contract: 0=no changes, 1=error, 2=changes present) -- so a literal rc-based or 'Plan:' substring check would read this as non-zero even though 0 resources are scheduled to change",
+        "the targeted apply's own stdout, this run (.scratch/tf_apply4.txt, not committed -- scratch): 'Warning: Applied changes may be incomplete ... some changes requested in the configuration may have been ignored and the output values may not be fully updated. Run the following command to verify that no other changes are pending: terraform plan' -- the tool foretold exactly this output staleness at apply time",
+        "head-object on the served key post-apply reads content-sha256=98f5e9c51d016d5283562e525b53088292576d86752c6cf0449865fbf328d923 (the committed hash) -- the RESOURCE itself is converged; only the root's cached OUTPUT value in state lags"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtd-5 (b) and both never-widen halves, verbatim shape: 'the post-apply UNTARGETED plan reads 0 to add, 0 to change, 0 to destroy on the root ... a non-zero untargeted plan means that measurement was wrong and S68 STAYS ARMED.'",
+    "world_is": "The root's RESOURCES read 0 to add / 0 to change / 0 to destroy (no 'Plan:' line at all, because Terraform omits it when nothing resource-level differs); the root's OUTPUTS read non-zero via -detailed-exitcode because -target skips output recomputation, exactly as Terraform's own apply-time warning said it would. Read strictly by resource-level convergence (what S68 is about -- the SERVED OBJECT'S content), the root IS converged. Read by a literal rc/'Plan:' grep with no resource-vs-output distinction, this act would misfire ARMED on a state-bookkeeping artifact that carries zero infrastructure meaning and that this order's own BOUNDS forbid clearing by any further apply on this root.",
+    "notes": "Not this cell's to fix further: the BOUNDS forbid applying anything beyond the one targeted resource, so the output-staleness resolves itself (with zero infra effect) the next time ANY untargeted plan/apply touches this root for an unrelated reason. Routed for R45-AC2's judgment (whether S68 reads fully closed or the CVO wants the distinction made explicit in the sign-off language for future never-widen packets using -target)."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S58",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T15:05:00Z",
+    "one_line": "build-and-upload.sh's ADHC_DRIFTD.002 parity check is scoped PER-FUNCTION over a source_dir TWO functions share (irpt-directory-refresh and irpt-directory-search both build from infra/aws/lambda/investor-reporting/directory/), so it falsely flags entry.py -- a file that belongs ONLY to the sibling irpt-directory-search's own files[] -- as an unregistered extra when building irpt-directory-refresh alone; the sanctioned BAU_PARITY_SKIP=1 override was used and justified in the deploy commit message.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO IB-rtd-2 face (b): \"DEPLOY the directory root under a change-management ledger entry (python .tools/deploy_ledger.py open ...) ... plan 0 to destroy, exactly the artifact change; served CodeSha256 == built\".",
+    "world_is": "`bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-refresh` (this run, before any override) failed with 'ERROR: ADHC_DRIFTD.002 parity check failed -- Files present in source_dir but NOT in lambda-source-map.json files[]: + entry.py'. infra/aws/lambda/ci/lambda-source-map.json's own irpt-directory-search entry (same source_dir) DOES declare entry.py in its files[]; the currently-served irpt-directory-refresh zip (fetched this run) has NEVER carried entry.py (5 members: refresh.py, expiry.py, handler.py, errors.py, trading_calendar.py). Re-run with BAU_PARITY_SKIP=1 (the script's own documented override, 'use only when an explicit ignore is justified -- log reason in the commit message') succeeded: import-closure OK, 5 members, uploaded, sha256 verified. This gate would refuse EVERY future single-function build of irpt-directory-refresh (or irpt-directory-search) in this shared source_dir, not just this one -- a structural gap in the tool for a multi-function shared source_dir, a different symptom of the same directory/holdings sharing-source-trees-across-functions class row IRPT_BCKEND-W1-S20 already named.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "build_upload.txt (this run, before override): 'ERROR: ADHC_DRIFTD.002 parity check failed ... + entry.py'",
+        "infra/aws/lambda/ci/lambda-source-map.json: functions['irpt-directory-search'].files includes 'entry.py'; functions['irpt-directory-refresh'].files does not (and never has)",
+        "the currently-served irpt-directory-refresh.zip (downloaded this run, s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-directory-refresh.zip): 5 members, entry.py absent",
+        "infra/aws/lambda/ci/build-and-upload.sh:220-245 (this worktree, HEAD): the parity check scopes PARITY_EXTRAS to $FN_FILES_PADDED, this function's own files[] only, against every top-level *.py in $ABS_SOURCE -- it cannot see that a sibling function in the same source_dir owns a file this one does not"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix: build-and-upload.sh is outside this order's <paths> grant (only infra/aws/lambda/ci/lambda-source-map.json is named). The sanctioned override (BAU_PARITY_SKIP=1, justified in the deploy commit message 05c0322989) unblocked THIS deploy correctly and safely -- entry.py's absence from irpt-directory-refresh's files[] and from its served zip was independently confirmed before the override was used. Left UNDER_INVESTIGATION because the underlying gap (the parity check has no notion of a MULTI-FUNCTION shared source_dir) will refuse the next single-function build of either sibling the same way."
+  },
+  {
+    "id": "IRPT_BCKEND-W2-S59",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-18T15:07:00Z",
+    "one_line": "THE SAME untracked-production-source-file class row IRPT_BCKEND-W1-S20 named for holdings/served.py+loaders.py exists for directory/'s OWN declared files[]: errors.py and trading_calendar.py are declared in lambda-source-map.json's irpt-directory-refresh.files[] and genuinely served in the currently-deployed zip, but neither has ever been committed anywhere under infra/aws/lambda/investor-reporting/directory/ -- build-and-upload.sh refused with 'File not found' for both until they were present on disk.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route",
+    "spec_asserts": "TO IB-rtd-2 face (b): \"DEPLOY the directory root under a change-management ledger entry ... served CodeSha256 == built; lambda-source-map.json re-pointed\".",
+    "world_is": "`bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-refresh` (this run, first attempt) failed: 'ERROR: File not found: infra/aws/lambda/investor-reporting/directory/errors.py' and the same for trading_calendar.py. `git log --oneline --all --diff-filter=D -- infra/aws/lambda/investor-reporting/directory/errors.py infra/aws/lambda/investor-reporting/directory/trading_calendar.py` (this run): 0 commits at any point in this repo's history for either path -- never committed, so not a deletion either, matching W1-S20's own finding for the sibling holdings/ root. The currently-deployed irpt-directory-refresh zip (fetched this run) DOES carry both, and both are BYTE-IDENTICAL (sha256 confirmed) to their own canonical in-repo sources: errors.py to infra/aws/lambda/investor-reporting/_authz/errors.py (10652 bytes, sha256 784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2, both sides), trading_calendar.py to lib/trading_calendar.py (6979 bytes). This cell's own deploy could only proceed by populating both, unchanged, from those CANONICAL sources (not the opaque zip, since a grounded in-repo source was available) FOR THE DURATION OF THE BUILD ONLY -- removed again immediately after, and never committed, because materializing them permanently is a directory/-scoped file-provenance fix this order's bound does not authorize (\"refresh.py and its tests are the ONLY code touched\").",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "build_upload.txt (this run, first attempt): 'ERROR: File not found: infra/aws/lambda/investor-reporting/directory/errors.py' and 'trading_calendar.py'",
+        "`git log --oneline --all --diff-filter=D -- .../directory/errors.py .../directory/trading_calendar.py` (this run): 0 commits",
+        "downloaded the LIVE deployed irpt-directory-refresh zip fresh this run: errors.py and trading_calendar.py both present, sha256-identical to infra/aws/lambda/investor-reporting/_authz/errors.py and lib/trading_calendar.py respectively",
+        "lambda-source-map.json functions['irpt-directory-refresh'].files: ['refresh.py','expiry.py','handler.py','errors.py','trading_calendar.py'] -- both names declared"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix, per bound (\"refresh.py and its tests are the ONLY code touched\"). Filed rather than repaired, per the surprise-channel bound (a capability I lack: I cannot commit new tracked source files outside my declared scope even to close a gap I needed to work around). The workaround (copy-from-canonical-source, build, remove) is recorded in this order's own deploy-ledger commit message (05c0322989) rather than left silent. ARMED for the same reason W1-S20 is: every future rebuild of irpt-directory-refresh hits the SAME refusal until directory/'s own file provenance is fixed in-tree; routed to the same owner as W1-S20."
   }
 ]
+```
+
+## Round 2 -- a finding of the CVO's own L9 read
+
+```json
+{
+ "id": "IRPT_BCKEND-S56",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "THREE judgment records cite line ranges that were TRUE WHEN WRITTEN and are wrong at HEAD, none carrying a vintage pin -- and one carries a factual reading that a later authorized act made false. A citation ages separately from the text it quotes, and this round produced four instances of it in the evidence the CVO grades from.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~B to route the pin convention to the round's cells; the row disarms when a judgment record's line citations carry @<commit> as the estate's other citation surfaces already do",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "RT1-AC2 writes 'firmRole ... is injected ZERO times (index.mjs :383-391)'. At HEAD those lines are a console.warn for advisor_scoping_denied; the nine injected headers sit at :400-408. At the round-2 issuance pin 388b8199b8, :383-391 WAS exactly those nine header lines -- so the citation was true when written and is stale by 17 lines now.",
+   "RT5-AC2 cites directory_runner.py:80-95 for the _REPO/sys.path/import trading_calendar derivation. At HEAD that range is the docstring and imports; the derivation is at :103-108. True at 388b8199b8, moved since.",
+   "RT8-AC2's fourth gap carries a reading that a later authorized act made FALSE: \"'deleted' on a versioned bucket means DELETE MARKER, so the bytes remain retrievable by VersionId and the estate should not read 'gone'\". S43's ledgered act took NINE per-version deletes with post-act head-object 404 on 9 of 9, and S55 records the PDFs as permanently gone. The record's own pointer (row W4-S20) is the right one; the sentence beside it has aged.",
+   "SUBSTANCE RE-VERIFIED INDEPENDENTLY BY THIS SEAT in each case, so none of the three changes a grade: none of the nine edge headers carries payload.firmRole (firmRole occurs 7 times in that file, all in authorization logic and comments, never in a header assignment); directory_runner.py's derivation is intact at its new lines; and the PDFs are genuinely gone."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CLAUDE.md Rule 22: a citation without a vintage is not a citation; and Rule 27: a citation ages separately from the text it quotes, so re-reading the rule catches neither.",
+ "world_is": "Four citations in three judgment records are wrong at HEAD and were right when written, and not one carries the @<commit> that would have made the staleness visible instead of invisible. The cost landed on this seat: each had to be re-derived at two vintages to tell a stale pointer from a false claim, which is the tax the estate's own law is written to avoid.",
+ "notes": "Filed as ONE row rather than three because the class is the finding, not the instances -- this is the same class this seat measured tonight in LGIC_ENFORCE (row LGIC_ENFORCE-S61, a wrong-object citation whose quoted phrase lives in a sibling file) and the same class 1.0.0_SA_CTO owned in R-34. The remedy is a convention, not a correction: a line citation inside a judgment record carries its pin. NONE of these changes a grade and the round's substance survives all four."
+}
+```
+
+## Round 3, IB-rtc-5 -- worker 0.9.0_WK_IRPT_BCKEND~4's row
+
+```json
+[
+  {
+    "id": "IRPT_BCKEND-W4-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T02:20:00Z",
+    "one_line": "THE DECOMP'S NAMED FALLBACK PLANE DOES NOT EXIST: IB-rtc-5's cell text says, if the browser host is not reachable non-interactively, fall back to 'the renderer's in-process path with the SAME code'. That path is round-1's named-slot HTML fixture renderer plus a local headless browser, and `render.py`'s own header (IB-rt-8, round 2) states it is RETIRED AS EVIDENCE and its machinery is GONE from the module -- `default_renderer()`, `FIXTURE_PACKAGE_DIR` and the assembly code no longer exist anywhere in infra/aws/lambda/investor-reporting/export/. The substitution actually used, and the only one that satisfies the criterion's intent (a REAL renderer whose output varies with real content, on a plane reachable without a production session): the counterpart's REAL render code (portal/src/pages/InvestorReporting/render/{manifest.ts,PrintEntry.tsx}/PerformanceDocument) executed against the LOCAL vite dev server, auth-stubbed by Playwright network interception -- the identical mechanism portal/scripts/ui-smoke.mjs and __tests__/fe-s-31/print-driver.mjs already use and portal/CLAUDE.md's Verification law names. This cell's driver (rtc5-render-driver.cjs) is print-driver.mjs's mechanism unchanged in its rendering half, with page.pdf() added. Nothing about the render code is patched or wrapped (bound 12); only the HOST plane and the DATA plane (synthetic fixtures vs. a live scoped API) differ from IB-rt-8's browser-host run, which is the exact substitution the decomp's own sentence contemplates -- it just named the wrong artifact as the fallback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B -- a future round-3 cell whose face repeats 'the renderer's in-process path with the SAME code' as a live option should read this row first; the durable fix is the decomp language naming the LOCAL-DEV-PLANE-ON-REAL-CODE substitution directly rather than the retired fixture path",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/export/render.py @862b0e4a6e header, verbatim: 'the template machinery is GONE from this module rather than left behind with a comment. A retired path that still exists is a path something can still take.'",
+        "Grep for default_renderer|FIXTURE_PACKAGE_DIR|RENDERER_VERSION across infra/aws/lambda/investor-reporting: 0 hits in any .py module (only in package.py's own retirement-census comment and the retained fixture .html files themselves)",
+        "handler.py @this commit carries submit_export/finalize_export, no run_export -- battery_ib_s_14.py (round 2, committed) still calls handler_mod.run_export(...), which no longer exists; that battery is stale against the current handler.py",
+        "portal/scripts/ui-smoke.mjs header, verbatim: 'headless screenshot of a portal route, no credentials needed ... a stubbed auth session ... no login and no devBypass is needed'; portal/src/pages/InvestorReporting/__tests__/fe-s-31/print-driver.mjs header: 'The mechanism is ../fe-s-30/reporting-driver.mjs's: Playwright request interception, the same identity stub, the same Edge binary'",
+        "IB-rtc-5_R35-AC1_battery_output.txt @this commit -- both renders reach data-print-state=\"ready\" on the local dev plane and produce real, distinct PDFs from the real render code"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rtc-5 decomp v0.3 s.R3.1, verbatim: 'rendered through the same renderer invocation IB-rt-8 exercised on the browser-host pattern (or, if that host is not reachable non-interactively, the renderer's in-process path with the SAME code, the plane named)'.",
+    "world_is": "The named in-process path (round-1's fixture renderer) does not exist in the current export package; it was deliberately retired and removed in round 2. A worker following the decomp literally would find no in-process fallback to run at all.",
+    "notes": "Judged on FORM only: the TO's face named a capability this worker lacks (a retired module), and the substitution taken is the one that preserves the criterion's actual intent -- a real renderer, real content-driven variation, a non-deployed plane. Filed rather than silently substituted per bound 8 ('a capability you lack: ONE row ... then keep working')."
+  }
+]
+```
+
+## Round 3 -- CVO verification finding
+
+```json
+{
+ "id": "IRPT_BCKEND-S73",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:20Z",
+ "one_line": "`comp-iam roles` PRINTS A BARE DENOMINATOR WITH NO VINTAGE, AND A ROLE APPLIED 2h15m AGO IS ABSENT FROM IT. Found while verifying R37-AC2: irpt-49f-directory-read-role is LIVE (created 2026-09-18T08:49:34Z) and does not appear among comp-iam's `210 found`. R37's claim STANDS -- the instrument is what is stale. The sibling subcommand `comp-iam live` discloses its vintage EXEMPLARILY, so this is a DISCLOSURE ASYMMETRY inside one tool, not a missing capability.",
+ "class": "OBSERVATION",
+ "spec_asserts": "A census output carries the vintage of the population it counted, so a reader can tell 'these are the roles' from 'these were the roles at a moment I am not naming'. CLAUDE.md: put the control on the RETRIEVAL -- outputs do not carry their own frame, so print the denominator beside the number. A denominator certifies the SWEEP, never the SET.",
+ "world_is": "MEASURED. `comp-iam roles` prints 'IAM ROLES (210 found)' and a list, with NO vintage line anywhere in its output -- I grepped its own output for built/snapshot/vintage/as-of/generated and got only two role NAMES containing the word snapshot. Of those 210, 13 are irpt-*; `irpt-49f-directory-read-role` is NOT among them. THE ROLE IS LIVE: a direct read returns arn:aws:iam::313476888478:role/irpt-49f-directory-read-role created 2026-09-18T08:49:34Z, which is 2h15m before this read. SO A SEAT ASKING comp-iam WHETHER A FRESH APPLY LANDED GETS A CONFIDENT, DENOMINATOR-BEARING ABSENCE, and the failure is indistinguishable from the role genuinely not existing -- which is the exact inverse of the phantom-backstop class the tool's own HUD message advertises catching (a DECLARED-but-unapplied control). Here it would report an APPLIED control as undeclared-or-absent. THE TOOL IS BETTER THAN ITS DEFAULT PATH SUGGESTS AND THAT IS THE POINT. `comp-iam live` prints a full provenance header: 'LIVE PROVENANCE: materialized graph (kuzu_nessie_db) -- population and vintage read from the ROWS', 'full-derive: 247 node(s), newest 2026-09-18T02:00:39Z (age 9.2h)', and it volunteers BOTH of its own unverified halves -- 'incremental pipe: NOT CHECKED (--pipe) -- the plus mutations since half of the freshness claim is UNVERIFIED' and 'population cross-check: UNAVAILABLE (no --census) -- the graph population is TAKEN ON TRUST'. That is a model disclosure and it is why I can state the second half precisely: the 02:00:39Z derive is 6h49m BEFORE the role was created, so `live`'s 247 cannot contain it either -- but `live` SAYS SO and `roles` does not. NOTE ALSO THAT THE TWO POPULATIONS DIFFER BY 37 (210 vs 247) and neither output explains the gap to a reader who runs both. THE CLASS IS TONIGHT'S, IN A NEW DIMENSION: a denominator whose SCOPE is narrower than the sentence it supports -- here narrower in TIME rather than in PATH. '(210 found)' reads as 'these are the roles'; it means 'these were the roles as of a moment this output does not name'. The remedy is small and needs no new capability: carry `live`'s provenance header onto `roles`, `role`, `service` and `services`. I did NOT use the rail escape to avoid the tool -- I ran comp-iam first, twice, and used a rail-checked raw read only for the one question comp-iam cannot answer by construction, whether an apply made after its snapshot has landed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "`comp-iam roles` at 2026-09-18T11:1xZ: 'IAM ROLES (210 found)', 13 irpt-* roles, irpt-49f-directory-read-role ABSENT; no vintage token in the output",
+   "`.tools/aws iam get-role --role-name irpt-49f-directory-read-role` (rail-checked, vintage question): arn:aws:iam::313476888478:role/irpt-49f-directory-read-role, CreateDate 2026-09-18T08:49:34Z",
+   "`comp-iam live`: population 247, full-derive newest 2026-09-18T02:00:39Z (age 9.2h), incremental pipe NOT CHECKED, population cross-check UNAVAILABLE -- all disclosed by the tool itself",
+   "IB-rtc-7's own record: both roots applied under ledger irpt-bckend-rtc7-49f-principal (OPEN d8720e83df, CLOSED 1bd528592b)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT"
+}
 ```

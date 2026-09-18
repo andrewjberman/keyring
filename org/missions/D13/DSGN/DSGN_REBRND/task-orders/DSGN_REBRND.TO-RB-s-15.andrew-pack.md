@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_DSGN_REBRND~1</issued_to>
 <issued_by>2.0.0_SA_COO~D</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D13 | **Fabric:** laptop | **PRD:** `../prd/DSGN_REBRND_PRD.md` v0.2 @8ad762f7bf | **Decomp cell:** `RB-s-15` | **outcome_ref:** FWD-9 | **depends_on:** `RB-s-14` | **slot:** ~1, queue position 12
 
@@ -19,7 +19,23 @@
 
 **Build a one-page pack** for Andrew to put on screen beside a competitor **HE** chooses: the three routes rendered after RB-s-1..RB-s-13, with the BEFORE renders beside them.
 
-**The before renders already exist** and must be used rather than re-derived: they were captured 2026-09-11 at 1440x900 against the dev server and read into the brief's IV.9. Re-render the AFTER set at the same width, same routes, same fixtures.
+**AMENDMENT 1, 2026-09-14, issuer `2.0.0_SA_COO~D` -- THE BEFORE RENDERS ARE NOT ON DISK, SO THEY ARE RE-RENDERED FROM A
+PINNED PRE-ROUND TREE.** This sentence used to say the 2026-09-11 BEFORE renders "already exist and must be used". The
+brief's IV.9 describes them but records no path, and a full census found none: 1,281 PNGs across 175,080 files
+(`comp-find --corpus all`), 27 named for the three routes, none of them that capture (NOT searched: the 104,673-file
+ephemeral floor, where a prior session's scratch capture would have lived). **So render the BEFORE set yourself, from
+portal `787015e8`** -- the feature branch's own fork point from `DEV`, before the round's first commit (`964fc361`), and
+the tree the brief photographed: its `src/index.css:69` carries the chartreuse `#ADFF2F` the brief's IV.9 measured.
+The issuer hands you a DETACHED portal worktree at that commit (its path is in your identity line); you create no
+worktree yourself. **Both sets: the same three routes (`market`, `positioning`, `portfolio-management`), 1440 wide, and
+NO fixtures** -- the brief's own BEFORE ran against a failing data plane, so fixtures on one side only would make the
+pair unequal. Name the BEFORE files `rb-s-15_<route>_before_1440.png`, beside the AFTER set.
+
+**AND THE PACK SAYS, IN ITS OWN TEXT, WHAT IT DOES NOT SHOW (row `DSGN_REBRND-S2`).** Andrew's Option A (panels go light)
+puts the pages' light-on-dark idioms in scope for inversion -- `portal/CLAUDE.md` now counts **4,887** in `src/pages/` --
+and no cell of this round covers applying it. So the AFTER renders show this round's law, tokens, controls, focus, density
+and states on a product whose page bodies are still largely dark-on-dark. State that plainly on the pack's first screen,
+so the side-by-side is not read as the finished rebrand.
 
 **⛔ NO COMPETITOR SITE IS CAPTURED.** The brief's comparator set (§IV.11 -- Addepar, Canoe, Orion, Bloomberg, Koyfin, YCharts) is **NOT MEASURED**; it was named from category knowledge and the brief says so at VII.10. Capturing one is EGRESS and needs Andrew's per-use word, which this order does not carry and does not assume.
 

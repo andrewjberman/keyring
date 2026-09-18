@@ -96,3 +96,421 @@ Andrew-direct ~18:2xZ (record `ANDREW_DIRECT_20260916_182xZ_RESERVED_GROUP_FOUR_
 **Measured:** `data_entitlement.py` :164-166 already uses `None` from `classify()` to mean "a tool nobody has classified, denied to everyone"; SCHWAB_TOOLS's `None` means "needs no data operation, any active grant carries it" (:73-74). Two `None`s with two meanings in one module is Rule 24(iii)'s intent-coherence defect, and a reader of the contract cannot see the second meaning at all.
 
 **Ruling: (a) an explicit class.** `schwab_get_access`'s operation is `access` -- "read the caller's own grant and revision; requires an ACTIVE grant carrying at least one other operation; reads no data object" -- added to the contract JSON's `operations` enum in the v1.1 the rename orders are already producing, and to SCHWAB_TOOLS as the string `"access"`; `None` is reserved for the unclassified-and-denied meaning `classify()` already gives it. The entitlement check for `access` grants it iff the grant is active, which is the behaviour the comment describes, now stated as data. **(b) AC26 re-cut** as COO~O proposes: the file is unchanged against the cut base except the one mapping line, and classifies exactly the five contract tools, four with their operation class and `get_access` as `access`; the probe prints each tool and its class and the denominator 5. One mapping line and one enum entry ride the re-hand to `~5` after OG-q-3.
+
+## R-OG-11 (2026-09-17 ~13:4xZ) -- call 11 / row S22: R-OG-10(a) is VACATED; contract v1.1 carries a TOTAL `tool_operations` map, `null` = carried by every active grant and never grantable; `operations` enum, OPERATIONS, the admin set and the :282 predicate unchanged
+
+**Call:** `2.0.0_SA_COO~O` 97589 call 11 (row NFRA_OPLGTW-S22 @1bd2afeec1). R-OG-10(a) breaks the grant path: the contract's
+`operations` enum is the GRANTABLE set -- `ops/schwab_entitlement_admin.py:163` builds its allowed set from it while
+`app/data_entitlement.py:61` OPERATIONS and the guard at :214 refuse any other op -- so `access` there lets the admin write a
+grant that denies its principal everything; and mapping :76 to `access` alone denies `schwab_get_access` to every grant,
+because :282 admits a tool only on `op is None or op in grant.scope.operations`. Both confirmed at `d88cd32d0c`
+(`data_entitlement.py`) by this seat. **OWNED:** R-OG-10 amended a grantable enum without reading who consumes it.
+
+**Routed as a DESIGN FORK** (Andrew-direct 2026-09-17 ~13:0xZ routing record @809a8b4090): `4.0.0_SA_CRO` spawned for
+precedent research; findings 97594 at HEAD a27616f46f. Operative findings: (P1) this contract already partitions named
+but non-grantable members into a SIBLING key (`operations` :15 vs `disabled_operations` :21; code :61-62; guard :213-216;
+admin :163-164) -- nothing non-grantable ever sits in the grantable enum; (P2) the estate's null-sentinel "ungated" shape in a
+TOTAL map (`portal/src/pages/Positioning/shared/modeAccess.ts:106/:116/:194` @be8cf218), which the gateway already follows
+at :76/:282 -- in code only; two independent code copies of the mapping exist and nothing ties them
+(`app/data_entitlement.py:76` SCHWAB_TOOLS, `app/integrations/schwab/integration.py:70` TOOL_OPERATION @c3728d6bdb).
+
+**Ruling.** (1) R-OG-10(a) and its AC26 re-cut are VACATED. (2) Contract v1.1 adds one key, `tool_operations`: an object
+with EXACTLY the five `tools` as keys, each value a member of `operations` or `null`; `null` is documented in the contract
+as "carried by every ACTIVE grant; never grantable; reads no data object" (today: `schwab_get_access` only). This is P2's
+shape given a contract carrier and P1's partition respected. (3) `operations`, `disabled_operations`, OPERATIONS, the
+admin's allowed set and the :282 predicate do NOT change; :76 stays `None`. (4) The drift the research found is closed by a
+test, not prose: both code copies (SCHWAB_TOOLS, TOOL_OPERATION) must equal the contract's `tool_operations` exactly, keys
+and values, denominator 5 printed -- a positive control mutating one copy must fail it. (5) R-OG-10's Rule 24(iii)
+observation (classify()'s `None` = unclassified-and-denied beside SCHWAB_TOOLS's `None` = implicit) is NOT re-opened: in the
+contract the map is total, so `null` has one meaning there; the code-side ambiguity is pre-existing and unchanged.
+COO~O's option (a) (a class vocabulary + a :282 change) is not taken: it adds a vocabulary the estate's contracts do not
+carry and a predicate edit the total map makes unnecessary.
+
+**Carried:** PRD v0.8 CONTRACTS names the key (re-opens the ratified-text half only). OG-q-2's re-hand carries (2) and (4)
+in its `<paths>`/criteria, cut by `2.0.0_SA_COO~O`.
+
+## R-OG-12 (2026-09-17 ~14:5xZ) -- call 12 / row W6-S5: (b) with one addition -- the hash-matched A7 real-data questions ask at the FIXED date OG-v-3 sealed (2026-09-15); "latest" resolution is still exercised, by a separate per-master request graded against the live closure at ask time, never against a sealed value
+
+**Call:** `2.0.0_SA_COO~O` 97601 call 12 (row NFRA_OPLGTW-W6-S5, ARMED, disarm owner `2.0.0_SA_COO~O`). OG-v-3 sealed RQ1-RQ6
+against OG-c-2's 2026-09-15 objects; qualified 2026-09-16 closures for both masters landed 09:46Z and 10:16Z, and
+`infra/aws/ec2/opal-gateway/tests/acceptance/WALKTHROUGH_PROTOCOL.md:209` defines "latest" as the latest qualified complete
+date, with RQ1-RQ6 (:215-220) asked at "latest" -- so OGV4-AC5's hash match reads a correct Gateway as wrong, again every day.
+
+**Classified: the default class (this seat's rec), not a design fork** -- a test-determinism choice inside one acceptance
+walkthrough, with no estate pattern at issue.
+
+**Why not (b) alone:** the PRD's C3 (`NFRA_OPLGTW_PRD.md:155` @8a63c77b51) makes "the available dates and latest qualified date
+are returned explicitly" a contract obligation, and RQ1-RQ6 are today the walkthrough's only exercise of latest resolution.
+Pinning all six to 2026-09-15 would make A7 deterministic by deleting that coverage.
+
+**Ruling.** (1) RQ1-RQ6's hash-matched answers are asked at the explicit business date 2026-09-15 (RQ5/RQ6's "previous
+qualified date" = the qualified date immediately before 2026-09-15, as sealed); protocol section 4's "latest" becomes "the
+fixed date sealed by OG-v-3" for those six. No re-seal. (2) v-4 ADDS one request per master with no date, and grades it
+against a live read taken in the same walkthrough: the Gateway's returned latest qualified date equals the newest qualified
+closure marker for that master at ask time, and the returned available-dates list contains 2026-09-15. No hash, no sealed
+value, so it cannot drift. (3) The amendment rides TO-OG-v-4 with protocol section 4 added to its `<paths>`, cut by
+`2.0.0_SA_COO~O`. (4) W6-S5 disarms when that amendment commits; `2.0.0_SA_COO~O` files the disarm evidence.
+
+## R-OG-13 (2026-09-17 ~18:4xZ) -- call 13 / row W6-S6: both acts APPROVED as recommended, and a STANDING BAR -- a criterion that exercises a module PROVES ITS CALL SITE on the live path, with a mutant that removes the call site and must fail
+
+**Call:** `2.0.0_SA_COO~O` 97628 (row NFRA_OPLGTW-W6-S6, ARMED, disarm owner this seat). OG-v-2's integrated harness ran the real
+app and found `app/integrations/schwab/semantics.py`'s `assert_sum_allowed` family is never called from `query.py` or
+`integration.py`: a nonadditive SUM (closing_price) and an ungrouped quantity SUM both SUCCEED where the contract says refuse.
+OGV2-AC2 FAILs and the order stays open. The issuer re-measured with a different instrument @693b2972a0: `assert_sum_allowed` is
+defined at `semantics.py:273` and referenced nowhere outside `tests/test_schwab_semantics.py`; no module under `app/` imports
+`semantics`. **Nothing is deployed, so nothing served is wrong today.**
+
+**Classified: the default class (this seat's rec).** The remedy is a cut, not a pattern choice, and the estate already has the
+lesson in law (an injected self-test certifies the ARMS, never the WIRING).
+
+**Ruling.** (1) and (2) as `2.0.0_SA_COO~O` proposed. **(1)** ONE newly-added order on a new decomposition cell, issued to `~5`:
+wire the additivity and grouping checks into the query path. Its criteria run on the LIVE path through the real app -- a
+nonadditive SUM refuses, an ungrouped quantity SUM refuses, a legal SUM still succeeds -- **plus a MUTANT control that removes the
+call site and MUST fail those criteria**, so a green cannot come from a module nothing calls. Both PRD halves read SIGNED at v0.9,
+so LIMB 6 admits it. **(2)** Then re-hand OG-v-2 to build the 7 unbuilt machine A-rows (row W6-S7) and re-grade AC2 whole.
+**q-2 and q-3 are NOT re-opened** -- their cells are closed and the cut, not the work, was the defect.
+
+**STANDING BAR for every remaining NFRA_OPLGTW cut (and the reason this ruling exists):** a criterion that exercises a module in
+isolation does not evidence the behaviour the contract promises. From here, **a criterion whose subject is a check, a guard or a
+refusal names the CALL SITE it runs through and is graded on the live path, with a mutant control removing that call site.** OG-q-3's
+14 of 14 passed over a module nothing imports; that is the exact shape this bar refuses.
+
+**W6-S6 disarm (this seat's field):** ARMED until (1)'s order drains with its mutant control failing as designed; the drain's proof
+instance is the disarm evidence, and `3.0.0_SA_CVO` writes the clock on this seat's word at that point.
+
+## R-OG-14 (2026-09-17 ~19:1xZ) -- call 14 / row W1-S13: APPROVED as recommended -- the renamed readers' assume and deny arms are re-EXERCISED as one added criterion on TO-OG-r-1, live from the host through the released build, with R-OG-13's mutant control; i-2 and i-3 are NOT re-opened
+
+**Call:** `2.0.0_SA_COO~O` 97640 (row W1-S13, INERT, correctly refused by the worker). The issuer names its own order text as the
+defect: TO-OG-i-3 told the worker to re-run OG-i-2's live denial and assume arms against the new ARNs, but those arms run
+on-host through `AWS-RunShellScript` with caller-supplied parameters, which **R-OG-6 forbids from OG-i-3 onward**, and the fixed
+parameterless document that same cell creates cannot express them. The worker refused as written and substituted
+`iam get-role` / `get-role-policy`, which confirms the trust principal, the two re-keyed ExternalIds and the six-statement
+deny/allow shape as **DECLARED**. So after the rename and the ExternalId re-key, the assume arm and the POLICY#-deny arm are
+**EXERCISED nowhere**: OG-i-2's live proof stands only at its old-name vintage.
+
+**Ruling: as recommended.** ONE criterion is added to `TO-OG-r-1` -- the first cell that legitimately exercises the released
+build on that host: from the host, through the released build, an assume of EACH renamed reader role succeeds with its re-keyed
+ExternalId, and the wrong-ExternalId arm is DENIED; graded live, with a mutant control per R-OG-13. No new cell. OG-i-2 and
+OG-i-3 are NOT re-opened -- the work was right and the order text was wrong, and r-1 is already blocked on OG-v-2, so this costs
+no time. **DECLARED is not EXERCISED, and this ruling is what keeps that distinction from being lost at the rename.**
+
+**Standing, restated:** R-OG-6's parameterless-document bar is untouched by this. A live arm that cannot be expressed under it
+moves to a cell that can run it, never back to caller-supplied parameters.
+
+**G-A, the one Andrew gate on this project's critical path:** OG-i-4 (the Gateway instance resize) is HELD on his recorded word
+to stop and start the instance. `2.0.0_SA_COO~O` offered to draft the ask; this seat puts it to him directly instead, with its
+own recommendation, the same turn it was surfaced. Nothing else on the critical path waits on him.
+
+## R-OG-15 (2026-09-17 ~19:4xZ) -- call 15 / row W5-S10: AMEND OG-q-4 to own the two tests that ASSERT the defect it fixed; not a q-2 re-open, not a third cell. The drain stays HELD until the amendment lands
+
+**Call:** `2.0.0_SA_COO~O` 97646 (row W5-S10, BLOCKING, INERT). OG-q-4 wired the additivity and grouping checks into
+`check_against_grant` in `query.py`: AC1/AC2/AC3 PASS on the live path and **AC4's mutant fired as designed** (R-OG-13's bar
+did its job). AC5 FAILS because `tests/test_schwab_query.py::test_ogq2_ac07` and `::test_ogq2_ac15` **assert that an
+UNGROUPED QUANTITY SUM is ACCEPTED** -- the exact shape the contract says refuse. Re-measured at the issuer's seat on a
+second instrument in the worker's worktree: 2 failed, 23 passed, both failures those two tests. The file is OG-q-2's and
+outside q-4's grant, so the worker refused and left the order OPEN. **Correct on both counts.**
+
+**The finding underneath, stated plainly: two of OG-q-2's 29 criteria PASSED BY ASSERTING THE DEFECT, and would have gone
+on passing forever.** Same root as W6-S6 (R-OG-13): a criterion written against a module in isolation, with nothing tying
+it to the contract the module exists to enforce. **A test that encodes the wrong behaviour is worse than a missing test:
+it converts a regression into a guarantee.**
+
+**Ruling: the issuer's REC, as written.** Amend `TO-OG-q-4` to grant `infra/aws/ec2/opal-gateway/tests/test_schwab_query.py`
+for EXACTLY those two tests' expectations -- each flipped to expect the contract's refusal, no other line touched -- and
+re-hand `~5`. Criteria: the diff's line count is printed; the file's test count before and after is printed (23 passing +
+2 corrected = 25, denominators stated); each flipped assertion cites the contract clause it now encodes. This is **q-4
+finishing its own AC5**, not a re-open of q-2: q-2's cell is closed and its other 27 criteria stand.
+
+**The third-cell alternative is NOT taken.** A cut and a spawn for a two-assertion change buys a tidier ledger and costs a
+round-trip; the honest record is this ruling plus the amendment's printed diff.
+
+**The HOLD is right and is affirmed.** Merging q-4 before the amendment would leave CLOUD with two knowingly red tests --
+the S21 shape. The branch sits safe at 881b1a5445; the drain lands when the amendment's criteria pass, with the whole
+module green.
+
+**Carried into round-close:** the CVO grades OGQ2-AC7 and OGQ2-AC15's original passes as **UNSOUND AT THEIR VINTAGE** in
+its L9 record -- not to re-open the cell, but so the project's own history does not read as if those two ever evidenced
+anything.
+
+## R-OG-16 (2026-09-17 ~20:4xZ) -- STANDING BAR on the back of row S24 (no call was made; this is the rule the finding earns): a RENAME cell carries a CONSUMER CENSUS of the old name, with its denominator printed, and the census is a criterion
+
+**Not a call.** `2.0.0_SA_COO~O` (97656) reported and is repairing this inside `TO-OG-v-2`'s own grant; nothing waits on this
+seat. The ruling exists so the class cannot repeat on the renames still ahead.
+
+**What happened, in its own words and measured on the SHARED TREE:** OG-i-3 carried R-OG-7's reader-role rename and **was cut
+with no census of the old names' consumers.** `tests/acceptance/conftest.py:88-89` still hardcodes the pre-rename ARNs;
+`aws_roles.role_config()` refuses the stale ARN and `integration.py` swallows it as UNAVAILABLE. `pytest -q
+tests/acceptance/test_local_acceptance.py` on CLOUD reads **5 failed, 2 passed** -- so the shared branch has carried a red
+acceptance module since i-3's drain, independent of q-4, and q-4's live-path criteria could not reach the wiring they were
+written to grade. Corroborated on a different checkout by worker ~5's row W5-S11, same two lines. **Nothing deployed and
+nothing served is wrong: the red is the harness, not the product.**
+
+**The bar, for every remaining rename in this project.** A cell that renames an applied resource carries, as a CRITERION and
+not as prose:
+1. a census of the OLD name's consumers over the tracked corpus -- code, tests, fixtures, Terraform, docs that are read by a
+   runner -- with **the denominator printed** (files scanned), and
+2. the repoint of every live reader the census finds, inside that cell's own `<paths>` grant or carded BLOCKING where the
+   path is not granted, and
+3. a re-run of any harness the census names, **on the shared tree after the drain**, not only in the worker's worktree.
+
+**Why the third limb exists and is the one that was missing:** a worktree-green harness and a shared-tree-green harness are
+different measurements, and only the second is what the next seat inherits. This is LGIC_ENFORCE's R-27 lesson (re-point the
+LIVE READERS, enumerate them, never assume) arriving in this project by a different door.
+
+**Carried:** `2.0.0_SA_COO~O` repairs conftest inside OG-v-2; S24 disarms on that repair with the shared-tree re-run as its
+evidence; OG-q-4's drain stays held until the module is green there.
+
+
+---
+
+## R-OG-17 -- 2026-09-17: the dim_asset partial-account restriction is WIRED on the live path; one cell, R-OG-13's bar, and the word is GIVEN
+
+**Call:** `2.0.0_SA_COO~O`, msg 97678 CALL 16, row `NFRA_OPLGTW-W6-S8` (ARMED, disarm owner this seat). The worker's
+integrated harness found a SECOND unwired check: PRD C3's `dim_asset` partial-account restriction -- under a
+partial-account grant, `dim_asset` returns only CUSIPs the authorized accounts hold on the same master and date -- is
+one of OG-q-3's acceptance bullets and is not enforced on the live query path. Same shape as W6-S6, different rule.
+A6's failure is this; A8's is OG-q-4's wiring, still on its branch.
+
+**RULING: the REC is adopted verbatim and the cell is CUT -- `2.0.0_SA_COO~O` has the word, issued to `~5` when it
+frees.** Graded through the real app under R-OG-13's bar, three criteria and a mutant: a partial-account grant sees
+only its accounts' CUSIPs; a CUSIP held ONLY by an unauthorized account is ABSENT; and a mutant that removes the call
+site FAILS both -- the third is the one that says the check is wired rather than merely present. R-OG-16's three limbs
+bind wherever a name moves inside the cell.
+
+**This is the THIRD instance of one root cause and it is now named as such.** R-OG-13 (additivity), R-OG-15 (grouping)
+and this row are all criteria written against a MODULE in isolation and proven where nothing calls them. The standing
+bar already says call-site grading with a mutant control; what this instance adds is that the population was never
+enumerated. **So the same cell carries a CENSUS: every rule PRD C3 states, with the denominator printed, each marked
+enforced-on-the-call-path or not, measured through the app.** A fourth instance found one at a time would mean this
+seat graded the members and never the set they share (Rule 22's shared-dependency limb).
+
+**Sequencing, as `2.0.0_SA_COO~O` laid it out and this seat confirms:** OG-q-4 re-grades at the repaired harness and
+drains; the `dim_asset` cell lands; only THEN does OG-v-2 take its last re-hand to re-grade AC2 whole, or AC2 fails
+again on A6 alone. S24's disarm is ACCEPTED on its evidence row `NFRA_OPLGTW-S25` @`c4b78ef2c4` -- R-OG-16 limb 3
+exercised end to end, the shared-tree re-run reading 2 failed / 12 passed where it read 5 failed / 2 passed, same
+command, one drain between, five ARN-class failures cleared and 0 new. `3.0.0_SA_CVO` writes the clock.
+
+
+---
+
+## R-OG-18 -- 2026-09-18: ONE cell for all four uncalled C3 rules, and the single MUTANT is what makes that choice falsifiable
+
+**Call:** `2.0.0_SA_COO~O`, msg 97747 CALL 17. R-OG-17's census addition drained @`4db9547d32` (OGQ5-AC5 PASS) and
+found that `dim_asset` was not alone: **four more C3 rules are built-but-uncalled** (rows `W5-S14`..`W5-S17`) -- each an
+existing `semantics.py` function nothing on the query path invokes. Same shape as R-OG-13, R-OG-15 and W6-S8.
+
+**THE CENSUS IS WHY THEY WERE FOUND, and that is the part to keep.** It was built BY SUBTRACTION exactly as the order
+required: C3 split into 6 paragraphs, **34 sentences as the printed denominator**, 3 excluded with their reasons
+stated, 2 folded into one row against `qualify_asset_plan()`'s own shape, leaving **29 rules -- 20 ENFORCED-ON-CALL-PATH,
+5 NOT-ENFORCED, 4 NOT-A-CALL-PATH-RULE**, every ENFORCED verdict naming its call site and the exercise that reached it.
+Seven instances of this class have now been found in one project; the first three were found ONE AT A TIME by whoever
+happened to test a call site, and the last four were found TOGETHER by asking what the members shared. **That is Rule
+22's shared-dependency limb paying for itself in a single hand-off.**
+
+**RULING: ONE cell for all four, as recommended. The REC is adopted whole.** They share one call site (`query.py`'s
+grant check, where OG-q-4 and OG-q-5 already wire), one harness and one mutant control; four cells would buy four cuts,
+four spawns and four drains against one edit surface and would not buy one additional discrimination.
+
+**ONE ADDITION, which turns the risk of the one-cell choice into a measurement.** The one-cell case RESTS on the
+premise that all four share that call site. So the single mutant control -- removing the shared call site -- **MUST
+fail all four live-path criteria, and if it fails fewer than four, the premise is FALSE and that is the finding**: a
+rule whose criterion survives the removal of the shared site is not wired to it, and the cell splits on the evidence
+rather than on a guess. State that in the order as the mutant's expectation, so the one-cell choice is falsifiable by
+the cell itself instead of being an assumption the drain inherits.
+
+**The closing criterion stays the CENSUS RE-READ**, which is the right bar and the reason this ruling is confident: it
+proves the POPULATION moved (5 NOT-ENFORCED becomes 1 or 0) rather than proving four tests are green. Four greens
+certify four members; the census certifies the set. **And it re-prints its own denominator at re-read time** -- 29 is a
+count taken at one vintage of a document this project is actively amending, so a re-read that assumes 29 is the same
+inherited-count error one level up.
+
+**On `W5-S13`, the issuer's own `<paths>` defect:** recorded and accepted as reported. `SchwabService.query()` in
+`integration.py` is the only place that can hand `qualify_asset_plan()` its inputs, the first cut's grant did not name
+that file, and **the worker REFUSED rather than edit outside its grant** -- which is exactly what the order asks and is
+the behaviour that makes a grant mean anything. Granted for that call site only @`35377638d7`, re-handed, and the
+amendment says plainly the defect was the issuer's. A lane that names its own cut as the cause is a lane whose reports
+can be believed.
+
+
+---
+
+## R-OG-19 -- `2.0.0_SA_COO~O`'s reading of "after OG-q-5 closes" is CORRECT; a sequencing instruction must state its REASON, and mine did not
+
+**The lane did not wait, and it was right not to.** R-OG-18 said to cut the C3 cell "after OG-q-5 closes". `OG-q-5` is
+NOT closed -- its `AC6` is a measured FAIL on two failures owned by OTHER cells -- so waiting would have serialised
+`q-6` behind two repairs it does not depend on **while slot ~5 idled.** The lane read the ordering's REASON as SLOT
+AVAILABILITY, which was satisfied, cut `q-6` @`a96788f138`, and wrote the reading into the order's record face rather
+than only into a message.
+
+**RULING: the reading is right and the defect is in my instruction.** I meant "do not double-book slot ~5". I wrote a
+CLOSURE condition, which is a different thing, and a closure condition would have imported `q-5`'s unrelated failures
+into `q-6`'s start. **A sequencing instruction states its REASON -- dependency, resource, or L10 ordering -- because
+the executing seat cannot tell them apart from the word "after", and the three have different remedies.** Where a
+sequencing word is ambiguous and a lane's reading keeps work moving without breaking a stated bar, THAT READING
+GOVERNS; the lane is closer to the slot than the ruling is.
+
+**And no L10 hazard is in play here, which is worth stating so it is not re-litigated:** LD-0521's deadlock binds a
+ROUND N+1 issuance cut before round N's SLUG. `q-6` is a CELL inside the same round, and adding one while a sibling
+order is open is ordinary L6 work.
+
+**COST: none -- it is a drafting rule on my own instructions.** **NON-APPLICATION: a genuine dependency, which is
+named as one** ("after X drains, because Y reads X's artifact").
+
+---
+
+## R-OG-20 -- CALL 18 adopted whole: a REFUSAL'S ENVELOPE IS PART OF THE REFUSAL, and this is the third instance of a test asserting the right thing about the wrong surface
+
+**Row `NFRA_OPLGTW-W5-S18`, ARMED, disarm owner this seat.** Wiring `OG-q-5` half one UNMASKED a second, unrelated
+failure the first assertion had been hiding: a post-revocation `schwab_query` denial reaches the caller with the MCP
+`isError` flag **NEVER SET TRUE**. `app/tools.py`'s `_PolicyGuardedMCP.call_tool()` returns `data_entitlement.py`'s raw
+guard-denial dict straight through.
+
+⛔ **THE DENIAL'S CONTENT IS CORRECT AND ITS ENVELOPE SAYS THE CALL SUCCEEDED.** That is the whole finding. A refusal
+a consumer cannot detect is not a refusal -- it is a success carrying disappointing text, and every test that reads the
+BODY passes while every client that reads the FLAG is misled. Nothing is deployed, so nothing served is wrong today.
+
+**RULING: REC adopted whole. ONE small cell to `~6`**, criteria graded live through the real app -- a guard-denied call
+returns `isError` true AND its contract error code; a permitted call still returns `isError` false -- plus a mutant
+that removes the flag-setting line and must fail the first.
+
+**NOT FOLDED INTO `q-6`, and the lane's reason for that is better than the cell it protects:** `tools.py` is a
+DIFFERENT CALL SITE from the query path, and folding it in **would break exactly the one-cell premise R-OG-18's `AC5`
+exists to test.** That is this seat's own ruling being applied against a convenience, by the lane that would have
+benefited from the shortcut. `app/tools.py` belongs to no open cell, so there is no grant collision.
+
+**THE CLASS, now measured three times this week:** `W4-S19` (a renderer graded by comparing each output to ITSELF),
+`OGQ2-AC7/AC15`, and this row. **Each test asserted something TRUE about the wrong surface** -- the artifact's own
+bytes, the denial's body -- while the property a consumer depends on went unasserted. **The general bar: a criterion
+about a REFUSAL grades the signal the CONSUMER reads, not only the text the producer wrote.**
+
+`OG-v-2` takes its last re-hand ONCE, after both `q-6` and this cell land, so `AC2` is re-graded whole rather than
+failing twice on other cells' rows -- the lane's sequencing and it is correct.
+
+## R-OG-21 -- THE LOGIN OUTAGE: `DeleteItem` on `RUNTIME#` is ADMITTED, because THE RATIFIED CONTRACT ALREADY PERMITS IT and the prohibition lives one tier below it
+
+**Andrew approved branch (1) directly (2026-09-18 ~16:1xZ; to this seat, verbatim: *"i already approved it"*).**
+`0.7.0_AE_CloudOps` (98003) and `2.0.0_SA_COO~O` (98004) each verified the defect on their own instruments and each
+recommended (1); both correctly REFUSED to retire another cell's passing criterion to fix an outage. **That refusal is
+why this ruling exists, and both were right to make it.** Login has been impossible through the durable build since
+the `OG-r-1` deploy at 05:58:16Z.
+
+**VERIFIED BY THIS SEAT AT THE BYTES BEFORE RULING, not taken from either report:**
+
+| fact | read |
+|---|---|
+| `schwab_access_state.tf` @HEAD, the whole resource | TWO statements: `AccessStateStrongRead` (`GetItem`) and `AccessStateRuntimeWritesRuntimeKeysOnly` (`PutItem`, `UpdateItem`). **No `DeleteItem`.** |
+| `:42` | `access_state_runtime_keys = ["RUNTIME#*"]` |
+| `oauth_as.py:649` (`take_pending`), `:772` (code burn) | both call `st.delete_runtime` -- **and BOTH PASS A ConditionExpression** |
+| `NFRA_OPLGTW_DECOMP.md:182` | *"...and no DeleteItem or table-admin action"* |
+| **`NFRA_OPLGTW_CONTRACT.json` v1.1** | `POLICY`: *"operator writes only; **no TTL or ordinary delete**"*; `RUNTIME`: *"client/pending-auth/code/refresh/ticket/catalog; **runtime conditional writes and expiring records**"* |
+
+⛔ **THE RULING, AND IT TURNS ENTIRELY ON WHICH NAMESPACE THE PROHIBITION SITS IN: the contract forbids ordinary delete
+on `POLICY`, AND ONLY ON `POLICY`.** `RUNTIME`'s own clause affirmatively describes *"runtime conditional writes and
+expiring records"* -- and both call sites are **CONDITIONAL deletes of EXPIRING records** (a pending authorization, a
+one-time code). ⭐ **AND `runtime_policy_access` CONSTRAINS THE SCOPE OF WRITES (`LeadingKeys`), NEVER THE VERB SET** --
+*"strong read only; write actions require all LeadingKeys match RUNTIME#*"*. **No ratified clause enumerates verbs at
+all.** So branch (1) needs **no contract amendment**: it was already inside the ratified envelope.
+
+**WHAT IT DOES CONTRADICT IS ONE TIER DOWN, AND THAT IS WHAT I AM AMENDING.** `DECOMP:182`'s *"no DeleteItem"* is
+**STRUCK AS TO `RUNTIME#`** (it stands for `POLICY#` and for table-admin). `OGI1-AC5`'s requirement that the permission
+be ABSENT is **RETIRED PROSPECTIVELY.**
+
+⛔ **`OG-i-1`'s GRADE STANDS, UNDER R-43** -- the criterion was true at its vintage and was genuinely EXERCISED. A
+criterion retired by a later authorized amendment is not a wrong grade. ⭐ **This is the FOURTH instance of that shape
+this week** (`W1-S21`, `R38-AC2`, `LGIC_LGCTFM-S25` four hours ago, now `OGI1-AC5`): the cell was right, the record was
+right at its vintage, and a later legitimate act made the evidence non-reproducible.
+
+⛔ **BUT `OGI1-AC5` IS THE SHARPEST OF THE FOUR AND DESERVES ITS OWN SENTENCE: IT DID NOT MERELY FAIL TO CATCH THE
+DEFECT -- IT CERTIFIED IT.** The criterion's PASS condition *was* the outage condition: a `DeleteItem` on a `RUNTIME#`
+key returning `implicitDeny`, recorded PASS. **A criterion that REQUIRES THE ABSENCE OF A PERMISSION THE SHIPPED CODE
+NEEDS is a test that passes because the system is broken**, and it will keep passing for exactly as long as the system
+stays broken. **The general bar: a criterion asserting that a permission is ABSENT must name the call sites that would
+need it, or it is asserting a fact about IAM while claiming one about the system.**
+
+⭐ **AND A SECOND DIVERGENCE NEITHER SEAT NAMED, found only by reading the WHOLE resource rather than the cited
+statement: `DECOMP:182` says the grant allows *"Get, Put, Update and TransactWrite"* -- and there is NO `TransactWrite`
+anywhere in the file** (every `dynamodb:` action in it, both policies: `GetItem`; `PutItem`/`UpdateItem` on `RUNTIME#*`;
+`GetItem`; `PutItem`/`UpdateItem` on `POLICY#*`). **So that one decomp line is wrong in BOTH directions at once --
+over-granting on paper where the TF under-grants, and under-granting where the code needs more.** ⛔ **A DECOMPOSITION
+SENTENCE THAT MISDESCRIBES THE APPLIED GRANT IN BOTH DIRECTIONS IS NOT A SPECIFICATION OF IT; IT IS A MEMORY OF ONE.**
+The constraint belongs in the CONTRACT (where it is ratified and signed) or in the TF (where it is APPLIED) -- never in
+a decomp line a later reader will cite as authority, which is exactly what happened here.
+
+**THE CLASS -- Rule 22's shared-dependency blindness, with a live instance and a 10-hour outage as its cost.** Two
+COMPLETE cells contradicted each other and **each passed its own criteria**: `OG-a-1`'s 18 tests ran on **moto, which
+enforces no IAM**, so the code path was never exercised against the real grant; `OG-i-1`'s `OGI1-AC5` required and
+exercised the absence. **Every per-member arm was green. The thing the members SHARE -- the grant the code needs -- was
+checked by neither.**
+
+**(2) IS THE BETTER END STATE AND IS CARRIED, NOT DROPPED:** rewriting both deletes as conditional `UpdateItem`s setting
+`consumed_at` (the shape `redeem_code` already uses at `:759`), reads treating consumed as absent. It keeps every
+ratified criterion green but needs tests, a release through `OG-r-1`'s route and a restart -- **not an outage remedy.**
+**Round 2 carries it as the correctness item**, exactly the split `2.0.0_SA_COO~O` proposed and the same one this seat
+made for the sentinel.
+
+**AND THE HEALTH-CHECK GAP IS ROUND 2's TOO.** `2.0.0_SA_COO~O` corrected itself to Andrew unprompted: `/health` 200,
+`/mcp` 401 and an ALB healthy target were all TRUE and the answer was wrong in substance, because they measure
+**LIVENESS** and he asked whether he could **USE** it. ⭐ **A GREEN THAT ANSWERS A DIFFERENT QUESTION THAN THE ONE ASKED
+IS WORSE THAN NO ANSWER, because it spends the asker's trust.** **No check on this service covers the login path** --
+that is why a 10-hour outage was invisible to every instrument pointed at it, and building that check is round 2's.
+
+## R-OG-21A -- CORRECTION TO R-OG-21, BY `2.0.0_SA_COO~O` (98010): my citation was ONE LINE OFF toward the prohibition my own addendum depends on, and my second finding is RETRACTED, not softened
+
+**The outage is CLOSED.** `0.7.0_AE_CloudOps` applied and EXERCISED the fix @`df9e05cb55` on Andrew's direct word
+(*"Go ahead with the fix"*, @`c298ed4b68`): `iam get-role-policy` shows the three actions under the unchanged
+`LeadingKeys RUNTIME#*` condition; SSM under `opal-gateway-role` at 16:37:05Z put a `RUNTIME#probe` key, **conditional
+`delete_item` SUCCEEDED**, and **`delete_item` on a `POLICY#` key still returned `AccessDeniedException`**. Ledger
+`nfra-oplgtw-gw-runtime-deleteitem` opened before the act, three legs proven, CLOSED. `2.0.0_SA_COO~O` cut the decomp
+amendment @`86177bf020`. **Both corrections below are `2.0.0_SA_COO~O`'s, and both are right.**
+
+⛔ **CORRECTION 1 -- THE ONE THAT MATTERED. R-OG-21 SAID "`DECOMP:182`'s 'no DeleteItem' is STRUCK AS TO `RUNTIME#`".
+THE CLAUSE IS AT `:183`.** Verified by this seat by printing the bytes at each line:
+
+```
+:182  - `describe-table` reads SSE enabled, point-in-time recovery enabled, PAY_PER_REQUEST billing, ...
+:183  - the runtime grant allows GetItem, PutItem, UpdateItem and DeleteItem on exactly the table ARN, ...
+:184  - the operator principal is separate, ... and holds no DeleteItem on `POLICY#` ...
+```
+
+⛔ **`:184` CARRIES THE OPERATOR'S `POLICY#` PROHIBITION -- THE ONE PROHIBITION THE CONTRACT DOES STATE EXPLICITLY, AND
+THE ONE R-OG-21's WHOLE ARGUMENT RESTS ON.** A seat striking "one line off" in the other direction would have retired
+the `POLICY#`-side prohibition **by the act that depends on it surviving.** `2.0.0_SA_COO~O` scoped its edit to `:183`,
+asserted `:184`'s survival BEFORE writing and verified it AFTER; `:184` is untouched.
+
+⭐ **AND THE FAILURE IS THE EXACT ONE RULE 27 NAMES AND R-73 RECORDED, COMMITTED BY THE SEAT THAT RECORDED IT: I PRINTED
+THE BYTES OF A RANGE (`sed -n '178,190p'`) AND THEN TYPED A SINGLE LINE NUMBER OFF MY MEMORY OF THAT RANGE.** The quoted
+TEXT was correct, so every check I ran on the quote passed. **A range read does not verify a point citation** --
+"print the bytes at the cited line" means at THE LINE, singular, after the number is written.
+
+⛔ **CORRECTION 2 -- MY SECOND "FINDING" IS WITHDRAWN IN FULL.** R-OG-21 said *"there is NO TransactWrite anywhere in
+that file"* and inferred a decomp that *"over-grants on paper where the TF under-grants."* **Both halves are wrong.**
+
+- **The token IS in the file.** My census was `grep 'dynamodb:'` -- scoped to `dynamodb:`-PREFIXED tokens -- and I then
+  wrote a sentence about *"anywhere in that file."* ⛔ **THAT IS RULE 24's SCOPE-TELL: A DENOMINATOR WHOSE SCOPE IS
+  NARROWER THAN THE SENTENCE BESIDE IT** -- the identical defect I spent the `LGIC_ENFORCE` round-8 analysis
+  correcting, committed roughly three hours later, in a ruling, by me.
+- **And the substance is a CATEGORY ERROR, which is a better reading than mine.** There is **no
+  `dynamodb:TransactWriteItems` IAM action at all**; a transaction is authorized PER ITEM against `PutItem`/`UpdateItem`.
+  `probes/og_i1.py:33` states it and **MEASURED it**, grading "TransactWrite" on those constituents under the
+  `LeadingKeys` condition as row `NFRA_OPLGTW-W1-S3`. ⭐ **So the cell had already handled it correctly, `DECOMP:183`
+  names a CAPABILITY rather than an action, and there was never a two-directional error to find.** My warning that
+  *"if a later cell relies on TransactWrite being granted, it is not"* is withdrawn as misleading: such a cell would not
+  be under-granted, it would be naming something no IAM policy can grant.
+
+⚠ **ONE FIGURE IN THE CORRECTION ITSELF DOES NOT RECONCILE, AND IT CHANGES NOTHING.** 98010 reports `TransactWrite`
+*"four times, all in COMMENTS, at `:19-21` and `:27-28`."* Measured by this seat at BOTH vintages -- `86177bf020^` and
+HEAD -- **the literal token occurs exactly ONCE**, at `:21`, inside the sentence stating the IAM action does not exist.
+**The substance of 98010 is right and mine was wrong; its count is the same class of error as the one it is correcting.**
+Recorded because a later seat re-deriving "four" will not find it.
+
+**WHAT STANDS FROM R-OG-21, UNCHANGED:** the ratified contract permits a conditional delete on `RUNTIME#` and forbids
+ordinary delete on `POLICY#` only; `OGI1-AC5` is retired prospectively and `OG-i-1`'s grade stands under R-43; the
+`LeadingKeys` confinement; the standing bar that **a criterion asserting a permission is ABSENT must name the call sites
+that would need it**; and that `OGI1-AC5` did not merely miss the defect but CERTIFIED it. `2.0.0_SA_COO~O` accepts that
+bar and the health-check finding without reservation.
+
+⛔ **ONE CLOCK REMAINS OPEN AND IT IS NOT THE IAM ACTION: NO REAL END-TO-END LOGIN HAS BEEN OBSERVED SINCE THE FIX.**
+The IAM action is exercised; the `/callback` path is not. Disarm condition, readable via SSM with no identity read: the
+journal shows one `GET /callback` answering 30x then one `POST /token` 200 after 16:37Z. Andrew is the expected producer
+(reconnect from Claude). `NFRA_OPLGTW-S46` @`5efdc94d2f` carries it, disarm owner `2.0.0_SA_COO~O`. **The act is proven
+at the permission and UNPROVEN at the outcome, and those are different claims.**

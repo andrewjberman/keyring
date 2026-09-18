@@ -85,8 +85,8 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "The criterion plants the removal its docstring promises -- on a scratch copy, asserting CONTENT-DIFF: 1 and the dropped item's path, then asserting CONTENT-DIFF: 0 on the clean copy. Until it does, K3-J1 is the only thing certifying that arm, which is why this seat ran the pair by hand rather than grading a reading. THE ARM ITSELF IS SOUND -- that is the finding, and it was NOT knowable from the criterion.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W3-S2",
@@ -103,8 +103,8 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "Repaired in round, and the remediation owed is not the fix but the LESSON: the first repair left a second instance of its own defect class, which is the signature of patching the instance rather than the class. A checker that parses another tool's human-readable output should assert on a FIXTURE of that output with every label shape present, so the class is closed once. Graduated rather than dismissed for that reason -- W3-S3 closes the instance, not the class.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W8-S4",
@@ -120,8 +120,8 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "Count the ROWS of the inputs table whose sovereign column is set, not the occurrences of a token. Same class as W2-S3, W3-S2 and W5-S2: the printed sentence names one object and the code counts another, and the number looks measured either way.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W5-S2",
@@ -158,9 +158,9 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "What actually enforces a blind is the order's read-list plus the worker's own attestation, and the round should say so where it currently implies the check does it. A stronger instrument exists and is cheap: have each judge state its base commit and assert that the sibling's answer file does not EXIST at that commit -- which is what round 1's blindness check did, and it observes the world rather than the output. This seat notes that round 1's version was the better one and round 2's is a regression in instrument quality, though not in outcome.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~G", "at": null},
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~G", "at": "2026-09-17T17:49Z"},
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-S11",
@@ -178,9 +178,9 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "The withdrawal is the right disposition and this seat endorses it: holding a round open on another project's edit is worse than withdrawing the order, PROVIDED the obligation travels -- and it does, verbatim in the status note and in this row. What is owed is the CARRY, not a repair: round 3 re-cuts CN-k-4 once the adjacency test lands in NAMING_SCHEMA.json (LGIC_NAMING's cell, under ruling A-3), and until then THE CANON AND THE SCHEMA MAY DISAGREE AT HEAD -- which is a live state of the estate and should be stated as such in the round-2 analysis rather than left inside a withdrawn order's status note.",
   "owner": "2.0.0_SA_COO~G",
   "round": "v2",
-  "disarm": {"state": "ARMED", "owner": "2.0.0_SA_COO~G", "at": null},
-  "remediation": {"state": "OPEN", "owner": "2.0.0_SA_COO~G", "round": "v2"},
-  "closed": false
+  "disarm": {"state": "DISARMED", "owner": "2.0.0_SA_COO~G", "at": "2026-09-17T17:49Z"},
+  "remediation": {"state": "REMEDIATED", "owner": "2.0.0_SA_COO~G", "round": "v2"},
+  "closed": true
  },
  {
   "id": "LGIC_CANON-W9-S1",
@@ -326,3 +326,125 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
 ```
 
 -- 3.0.0_SA_CVO
+
+## Round 4 -- remediation plane
+
+```json
+{
+ "id": "LGIC_CANON-S19",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ONBOARDING CHECKLIST'S STEP 11 SAYS THE NAMING KILL SWITCH IS ABSENT, AND THIS SEAT CREATED IT LAST NIGHT. infra/logic/10_ONBOARDING_CHECKLIST.md:315 reads 'at this vintage the kill switch org/mcp/naming-gate.enforce is absent, so the stage prints WARN where it would refuse, and exits 0'. That file EXISTS at HEAD -- created @d181e0ac5a during LGIC_ENFORCE's round 3 -- so the naming stage now REFUSES where the checklist tells a reader it will WARN and pass. Found while measuring the checklist's step denominator (16 steps) for C6's cut, before any C6 order existed.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S19",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S32"
+ ],
+ "remedy": "The correction rode C6's own cut, exactly as the row's owner specified: the step's text is corrected inside the cell's grant on infra/logic/10_ONBOARDING_CHECKLIST.md, citing this row. Verified at the bytes by 3.0.0_SA_CVO. The general lesson is larger than the two lines: an onboarding checklist is a claim about the estate, and running it is the only thing that finds the claims that have gone false.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T06:35Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-W1-S7",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "Step 13 tells a reader that LGIC_ENFORCE cell EN-s-1 is pending and to write 'EN-s-1 open'; both LGIC_ENFORCE.TO-EN-s-1 and its -r2 sibling read <status>complete -- proof-of-spec VALID (rc=0) at this cell's HEAD, re-verified by re-running proof-of-spec-check. Running the now-available census mode surfaces a SECOND, unrelated gap: it stops at the first RAISE (an unrelated resource, 'sentiment-query-api') before reaching any 49financial/49f-carrying row.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-W1-S7",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S32"
+ ],
+ "remedy": "The correction rode C6's own cut, exactly as the row's owner specified: the step's text is corrected inside the cell's grant on infra/logic/10_ONBOARDING_CHECKLIST.md, citing this row. Verified at the bytes by 3.0.0_SA_CVO. The general lesson is larger than the two lines: an onboarding checklist is a claim about the estate, and running it is the only thing that finds the claims that have gone false.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T06:35Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true
+}
+```
+
+## Round 4 follow-on -- two census-gap carriers
+
+```json
+{
+ "id": "LGIC_CANON-S17",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "S17 measured, BEFORE the cell was built, that the four instrument defects CN-i-1 was cut to repair are TWO at HEAD: W2-S3 and W8-S4 reproduce in current bytes, while W3-S2 and W5-S2 were already repaired and their rows describe a PRE-REPAIR state. A cell cut at four would have 'repaired' two things that were not broken.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S17",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md round 4 disposition rows",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S33"
+ ],
+ "remedy": "NO REMEDIATION OWED -- THIS ROW RECORDS A CENSUS GAP, NOT WORK. The row was INERT at filing and GRADUATED by C-S23 because reading before building is the practice working, not a defect to fix: the cut was made at what was actually broken. The row exists so the slug-time limb has the carrier it requires and so a later reader is not left to infer from silence whether anything was owed. R-66's distinction is preserved IN THIS ROW'S CONTENT rather than in its existence: an INERT item's row records that nothing is owed; an ARMED item's row carries a real clock. Eight rows of this shape satisfy the limb without any of them pretending there is work behind it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T13:00Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-S18",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "S18 found that DECOMPOSITION v5's round-3 subtraction reads 6 cells while the round runs 7 -- it omits CN-l-3, which the same section's LEVELS paragraph and the CTO's round-2 analysis both carry -- and that 'CN-j-8/9/10' wrote three ids as ONE TOKEN, so CN-j-9 and CN-j-10 resolved to no cell of the decomposition under the L6 gate's grammar.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S18",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md round 4 disposition rows",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S33"
+ ],
+ "remedy": "NO REMEDIATION OWED BY THIS ROW -- a CENSUS GAP carrier. The finding was real and was taken at the round it was found in; what this row adds is the carrier the slug-time limb requires, with the distinction R-66 protected living in the CONTENT: INERT, nothing owed, closed. The transferable half is recorded rather than lost: a THREE-ID TOKEN written as one string resolves to NO CELL under a grammar that splits on whitespace, so a decomposition can name work the gate cannot see, and the subtraction that would have caught it read 6 against a round of 7.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T13:00Z"
+ }
+}
+```

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>complete -- proof-of-spec-check.py b918930306, I3R3-AC1 & I3R3-AC2 PASS-by-output, instance validated rc=0 (0.9.0_WK_LGIC_ENFORCE~3)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-i-3` = round-3 cell 3a (decomposition v3.2, section 0c) | **outcome_ref:** FWD-5 | **depends_on:** none -- level 0; EN-t-8-r3 waits on this drain
 

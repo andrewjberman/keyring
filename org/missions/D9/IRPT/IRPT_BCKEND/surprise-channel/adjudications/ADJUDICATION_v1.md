@@ -2068,3 +2068,172 @@ The original investigation channel is unchanged. Each original id appears exactl
   }
 ]
 ```
+
+## Round 3 -- L8/L9: nine judgment criteria graded, 23 rows dispositioned
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S100",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:30Z",
+ "one_line": "L9 GRADE RECORD, IRPT_BCKEND round 3: NINE judgment criteria, all PASS -- and R38-AC2's answer, though every number in it is right and I re-ran them, IS SUPERSEDED IN FACT. The criterion asked a cell to certify a FUTURE state of a shared artifact, and the artifact moved 83 minutes later.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE SET, derived from the nine order files rather than inherited: 19 criteria total, NINE judgment, ten mechanical, all nine orders reading <status>complete. ONE ID CORRECTION: the hand-off's shorthand lists 'R31/R32/R34/R35/R36-AC2', but IB-rtc-1's judgment criterion is R31-AC3 -- R31-AC2 is one of its two MECHANICAL criteria and passed by output. The list is right in substance and the ID is wrong, and an ID is what a grader keys on, so it is corrected here rather than silently. ALL NINE PASS, and the quality that recurs is cells answering AGAINST their own interest: R33 reports 'three directories landed' and says in the same breath that its own dispatch never re-ran the build; R34 refuses the three-way verdict it was handed because the instrument cannot settle the question and files a row instead; R35 says its control ran on the wrong plane for FWD-8; R36 volunteers that every process on the host can assume the principal it is about to create; R37 says the scheduled fire is still an open WAIT it did not observe. R38-AC2 IS THE ROUND'S KEEPER AND IT IS NOT A DEFECT IN THE CELL. I verified its numbers: directory_runner.py is blob 0351bce745 at all three named cuts, and firm_registry.json carries 136 CR bytes against 0 in the blob, equal only after normalisation -- exactly as recorded. But the bar asked whether the bundle THE HOST WILL RUN AT IB-rtc-7's FIRE is byte-identical to the tree the applies are cut from, and IB-rtc-9 landed 83 minutes after IB-rtc-8's mint, changed that very member to 30ffce2eff (+22/-3), re-minted the bundle as 0XLkiPt4, and its merge is a stated PRECONDITION of IB-rtc-7. So the host ran IB-rtc-9's bundle. A CRITERION THAT ASKS A CELL TO CERTIFY A FUTURE STATE OF A SHARED ARTIFACT CANNOT BE SATISFIED BY ANY AMOUNT OF CARE, because the artifact can move between the answer and the event; R-40's own rule is the remedy, binding the claim to the artifact's CONTENT HASH AT THE EVENT. The contrast inside this one round is the proof: R31-AC3 volunteers exactly this supersession for a different artifact and could do so because it was looking BACKWARD at one.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "All nine round-3 orders censused by raw <criterion tag count: 19 criteria, 9 judgment, 10 mechanical",
+   "All nine judgment records read in full; all nine carry status UNVERIFIABLE-BY-INSTRUMENT with no worker verdict",
+   "VERIFIED BY THIS SEAT: directory_runner.py blob 0351bce745 at a1f09a51dd, 437789944a and 08b4472ded; 30ffce2eff at de4e176cc3 and HEAD; diff +22/-3",
+   "VERIFIED BY THIS SEAT: IB-rtc-8 minted 02:31:37, IB-rtc-9 landed 03:54:43, de4e176cc3 is an ancestor of HEAD",
+   "VERIFIED BY THIS SEAT: data/firm_registry.json 136 CR bytes worktree / 0 in blob, equal after CRLF normalisation, NOT equal raw",
+   "VERIFIED BY THIS SEAT on the live plane: irpt-49f-directory-read-role CreateDate 2026-09-18T08:49:34Z"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "R31-AC3",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtc-1.rt5-ac2-answered-from-the-sibling-cells-host-reading.proof_of_spec.json@e869180835",
+   "verdict": "PASS",
+   "reason": "All three sub-questions answered as FACTS and the record says which fact each is, including where the fact is NEGATIVE -- the silver registry reads 2 of 6 source prefixes READ-OK, 4 of 6 READ-DENY, 0 of 3 firm destinations writable, and the cell calls that 'a partial/negative one, not a clean yes' rather than reporting the readable half. On contradiction it draws the right distinction: IB-rt-5's own 'WHICH HOST -- UNDETERMINED ... was NOT measured' is an ABSENCE the sibling fills, not a conflicting claim, and an absence and a contradiction are different objects. THE PART THAT EARNS THE GRADE IS THE SUPERSESSION IT VOLUNTEERS UNASKED: IB-rt-5's RT5-AC1 certified a 2-member bundle (ETag cd188f6edb...) and the scope has been amended twice since to 3 and then 4 members under the CTO's H3 ruling, so the object IB-rt-5 verified and the object the sibling describes are NOT byte-identical -- 'though neither record is wrong at its own vintage'. That sentence is the correct account of a moving artifact and the cell was not asked for it. NOTE ON THE ID: the hand-off lists this criterion as R31-AC2 in its shorthand; it is R31-AC3, and R31-AC2 is one of the two mechanical criteria that PASSED by output. An ID is what a grader keys on, so I name it rather than silently correcting it."
+  },
+  {
+   "criterion": "R32-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-2.the-bundle-carries-the-runners-whole-closure-and-is-re-minted.proof_of_spec.json@cecb49a4f1",
+   "verdict": "PASS",
+   "reason": "All four sub-questions answered and the first is answered structurally rather than by assertion: the flag is ONE key on the member spec read by is_distribution_spec() INSIDE the same X-iii loop and factored unchanged into route_bundle_members() -- the guard's own idiom, not a second mechanism beside it. The cell then draws the line most records blur: the guard does NOT compare the two legs after a deploy, a separate consistency script does, so it does not claim a property its own code lacks. THE MUTANT IS A REAL MUTANT AND IT IS THE STRONGEST PART: run from a detached worktree at a PRE-COMMIT tree, it advanced ONLY the bundle leg on the PRODUCTION key through the guard's own mint, left the COT loose key with 0 writes in a NAMED 2m35s window, and was then restored to CONSISTENT. That is a deliberate divergence created, measured and reversed on the production object, which is a far stronger control than observing that nothing broke. Served-module movement is accounted per firm with VersionIds held constant for two firms and the one move attributed to safe-deploy's own routing. AND THE HOST IMPORT IS SCOPED HONESTLY: Firm49F() IMPORT-OK with 0 network events and a loopback positive control THAT FIRED -- a negative that can distinguish itself from a dead instrument -- and the cell states the limit itself, that it proves importability at repo shape and NOT a build's read access, deferring that to R-44/IB-rtc-6."
+  },
+  {
+   "criterion": "R33-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rtc-3.the-refresh-builds-exercised-for-inflection-and-cottonwood.proof_of_spec.json@4c7cc50423",
+   "verdict": "PASS",
+   "reason": "PASS ON A FINDING THAT CUTS AGAINST THE CELL'S OWN HEADLINE, which is why it earns the grade. Asked whether the landed artifacts are the runner's real output or a degenerate first mint, the cell answers BOTH halves and volunteers the one that diminishes its own fire: they are the runner's real output, AND THIS FIRE DID NOT BUILD THEM -- ssm_command_id=None on every fresh write this run, so the cycle re-confirmed and re-served IB-rtc-7's artifacts rather than producing new ones. Byte-identity to IB-rtc-7's genuine fire is established by ETag AND sha256 with the row counts matching exactly (4562/259/291). A cell reporting 'three directories landed' while stating in the same breath that its own dispatch never re-ran the build is doing the thing this estate keeps asking for. On FWD-7 it is equally exact: the scheduled organic fire is still lacking and it names the standing cron read from its own preflight; the 49 Financial third is NO LONGER lacking and it says why; and it reports what IB-rtc-7 left rather than what it wishes it left. The dispatch-to-reconcile loop closed, and the cell IMMEDIATELY qualifies that with W2-S57 -- the no-op accounting never reaches the REFRESH_NOOP_SAME_FRONTIER branch AMENDMENT 2 built for this exact shape, so the loop closed by a different path than the one under test. Reporting a green that took the wrong branch is the opposite of the failure this project has been correcting."
+  },
+  {
+   "criterion": "R34-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rtc-4.instrument-hygiene-served-bytes-stale-batteries-vendor-bar-layer-cache.proof_of_spec.json@23d5652cd7",
+   "verdict": "PASS",
+   "reason": "PASS, AND IT IS THE MOST HONEST OF THE NINE because all three answers are negative or partial and none is dressed up. On (a) the cell refuses the trichotomy it was handed: the reading is NEITHER EQUAL NOR A PLAIN DIFFER, because the fix is not a declared or resolvable member of ANY of 216 functions, so the arm CANNOT BY CONSTRUCTION settle whether the fix is aboard -- and it files W3-S39 rather than recording a verdict the instrument cannot support. A criterion offering three outcomes and a cell answering 'none of these, and here is why the question cannot be put to this instrument' is exactly the NOT-EVALUATED discipline this estate has had to rule into existence twice. On (b) it states plainly that the project-wide census of other files citing the stale deploy leg WAS NOT RUN, names why (outside this cell's <paths>) and carries it as a candidate follow-on rather than implying coverage. On (c) it gives the denominator against the estate's own vendor set -- 3 of 8, naming the five absent -- and then declines to claim the absence is correct, saying the reachability was not independently verified here. Three chances to overclaim, three declined."
+  },
+  {
+   "criterion": "R35-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rtc-5.the-renderer-varies-with-its-input-the-across-inputs-control.proof_of_spec.json@27cee4bfa0",
+   "verdict": "PASS",
+   "reason": "All three answered, and the plane question is answered AGAINST the cell's own interest: the control ran on the LOCAL DEV plane, NOT the DEPLOYED plane FWD-8's DONE WHEN names, and the cell states what the real-path arm still lacks concretely -- a non-interactive session for a machine principal the print route accepts, or a signed short-lived render grant. That is a gap named with its remedy rather than a gap softened. On the second question it makes the distinction the bar exists to force: the two bundles differ in PROVIDER, YTD RETURN and the ACCOUNT-DETAIL HOLDINGS TABLE -- content a client would see -- and it explicitly separates that from the backend ExportBundle's own differing field, which is only a revision string. A lesser answer would have cited the revision string and called it a difference. On W4-S19 it EXPLAINS rather than merely no longer exhibiting: content_hash()'s composition (mediabox + decompressed content stream + extracted text, excluding only the engine's stamped date/ID) accounts for why today's template varies and why round-1's retired fixture template did not. AND IT STOPS AT THE RIGHT PLACE: it could not re-run the retired template on the same two bodies because that code no longer exists, files W4-S32 for it, and so offers the explanation as an explanation rather than as a confirmed one."
+  },
+  {
+   "criterion": "R36-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-6.the-49-financial-principal-declared-planned-and-the-sign-off-packet.proof_of_spec.json@596aecaa00",
+   "verdict": "PASS",
+   "reason": "All three answered and the first is answered ADVERSELY TO THE CELL'S OWN DESIGN, which is the whole value of asking it before the apply. Trust narrowness: exactly 1 principal ARN, no service, no wildcard, no account root, and the instance profile attached to exactly 1 instance -- then the cell immediately says why that is NOT as narrow as it looks, because EVERY PROCESS ON THAT HOST RUNS AS THE ROLE, so the whole mdpf daily chain, the accrual bridge and the IRPT builds could assume the principal. It names the narrower forms not taken (an ec2:SourceInstanceARN condition; an sts:RoleSessionName or SourceIdentity condition the dispatch would have to set) and says they are outside the root's idiom rather than pretending they were considered and rejected on merit. A cell volunteering the blast radius of its own grant BEFORE the apply is exactly what a never-widen sign-off needs and rarely gets. On writes: 0 changed lines touch land(), put_object or _assert_destination, and the assumed session lives ONLY in Firm49F._gold() for the five reads -- a scoped claim with a named boundary. On the destination it refuses to resolve a question it cannot: FWD-7's 'the FIRM's own bucket' reads TRUE under data/firm_registry.json (opal-data-bd) and FALSE under the LGIC registry (opal-data-49financial), and it prints the exposure rather than picking the convenient reading -- 12 principals can write that prefix today, 8 of them bd-* roles. That is the D14 question PLACED, not decided, and placing it is correct."
+  },
+  {
+   "criterion": "R37-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtc-7.the-49-financial-principal-applied-under-sign-off-fenced-and-the-third-directory-built.proof_of_spec.json@5397c9a3b5",
+   "verdict": "PASS",
+   "reason": "PASS, AND I VERIFIED THE LOAD-BEARING HALF ON THE LIVE PLANE MYSELF because this is the one cell in the round that changed the world. THE FENCE IS THE FENCE R-44 ASKED FOR, and the distinction matters: N1 denies a read of Inflection's OWN prefix; N2 denies a read of Cottonwood's OWN prefix INSIDE THE SHARED opal-data-assets bucket -- that firm's own data in a bucket other firms also use, which is the hard case and not an unrelated bucket; N3 denies a write to the 49 Financial destination itself. The positive control succeeds on the role's own five granted prefixes, so the three DENIES are distinguishable from a dead credential. VERIFIED BY THIS SEAT: irpt-49f-directory-read-role is LIVE at arn:aws:iam::313476888478:role/irpt-49f-directory-read-role, CreateDate 2026-09-18T08:49:34Z. THAT READ ALSO PRODUCED A FINDING ABOUT THE INSTRUMENT RATHER THAN THE CELL -- comp-iam's `roles` census does not carry this role among its 210 and prints no vintage, so a seat checking this apply through the estate's own IAM tool would get a confident absence; filed as S73, and the cell's claim STANDS. COMPARABILITY is answered with a real distinction rather than a reassurance: same schema and validator path for all three, revision SHAPE identical (irpt-dir/<firm>/<date>/1.0, each a first mint), and business dates DIFFER BY DESIGN because each is that firm's own newest COMPLETE source date under the trading-day walk. Explaining why a difference is correct is worth more than reporting sameness. ON WHAT REMAINS the cell is exact and does not claim FWD-7: it fired the dispatch MANUALLY with the schedule's own payload rather than waiting for the organic fire, says the scheduled fire on a live business day is therefore STILL AN OPEN WAIT it did not observe, and states that the 49 Financial directory still lands in the LEGACY bucket with D14's move undone and unaddressed."
+  },
+  {
+   "criterion": "R38-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-8.the-bundle-re-minted-with-the-49-financial-source-set-aboard.proof_of_spec.json@ef8c2b7cf3",
+   "verdict": "PASS",
+   "reason": "PASS ON ITS MEASUREMENTS, WHICH I RE-RAN AND WHICH ARE EXACT -- AND THE CLAIM THE CRITERION ASKED IT TO MAKE IS NOW FALSE THROUGH NO FAULT OF THE CELL. THAT SUPERSESSION IS THE MOST IMPORTANT THING IN THIS ROUND. VERIFIED BY THIS SEAT: directory_runner.py's blob at all three named cuts (a1f09a51dd, 437789944a, 08b4472ded) is 0351bce74591a78dc0901862b897688b97ab69ef, exactly as recorded; data/firm_registry.json carries 136 CR bytes in the worktree against 0 in the blob and is equal ONLY after CRLF-to-LF normalisation, exactly the condition row S63 records, and NOT equal raw. Every number the cell published is right. BUT THE BAR ASKED A FORWARD-LOOKING QUESTION -- 'whether the bundle THE HOST WILL RUN AT IB-rtc-7's FIRE is byte-identical to the tree IB-rtc-7's applies are cut from' -- and I measured what actually happened: IB-rtc-8 minted at 02:31:37 with directory_runner.py at 0351bce745; IB-rtc-9 landed at 03:54:43, EIGHTY-THREE MINUTES LATER, changing that same member to 30ffce2eff (+22/-3) and re-minting the bundle as VersionId 0XLkiPt4; and IB-rtc-9's merge is a stated PRECONDITION of IB-rtc-7. So the bundle the host ran at IB-rtc-7's fire is IB-rtc-9's, and it is NOT the bundle this record certifies. The cell could not have known -- IB-rtc-9 had not happened at its write time. THE DEFECT IS IN THE CRITERION'S CONSTRUCTION, NOT THE CELL'S WORK: a criterion that asks a cell to certify a FUTURE state of a SHARED artifact cannot be satisfied by any amount of care, because the artifact can move between the answer and the event. R-40's own rule is the remedy -- bind the claim to the artifact's CONTENT HASH AT THE EVENT rather than to a prediction made before it. This is the same supersession shape R31-AC3 volunteers for a different artifact in this very round, and the contrast is instructive: R31-AC3 could name its supersession because it was looking BACKWARD at one, and R38-AC2 could not because it was asked to look FORWARD. I grade PASS because every question the cell could answer it answered correctly and completely; a later seat reading R38 alone would nonetheless believe the host ran a bundle it did not, and that is why this is recorded here rather than left in the file."
+  },
+  {
+   "criterion": "R39-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-9.the-runners-validate-under-the-hosts-jsonschema-and-the-bundle-is-re-minted.proof_of_spec.json@4bdee552c5",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES ANSWERED AND THE SECOND IS THE MODEL FOR HOW TO CLOSE A CENSUS. On identical grading: the keyword census over 22 schemas finds 0 2019-09/2020-12-only keywords, 0 $ref, 0 array-form items and 0 draft-7-only keywords, and the behavioural arm has Draft7Validator and Draft202012Validator agreeing on 46 of 46 fixtures on BOTH the error count AND the (path, validator, message) set -- a structural argument and a behavioural one, which are different instruments. The cell then states the limit itself: each fixture carries 0 or 1 error and format is annotation-only in both, so the agreement is not tested on multi-error instances. On other 4.x-only calls it NAMES THE POPULATION WALKED AND THE POPULATION NOT WALKED, which is precisely what the bar demanded -- 7 bundle .py, 98 Lambda .py of which 8 import jsonschema, 13 hits split 6 production and 7 test, each production hit resolved to a function carrying irpt-common:5 whose requirements.txt pins jsonschema==4.26.0 -- and then declares NOT WALKED: the deployed layer's installed contents, each Lambda's deployed zip, and Python outside the two trees. A census that prints its own blind spots is the whole ask of Rule 24's subtraction. ONE DEFECT RECORDED AND IT IS THE ROUND'S OWN OPEN ROW LANDING ON THIS RECORD: those five production citations -- export/bundle.py:82, holdings/snapshot.py:119, narrative/handler.py:74, performance/normalize.py:390 and :398 -- CARRY NO VINTAGE PIN. Measured across all nine judgment records of this round: 4 of 4 line citations are BARE, and all four are in this one. See the S56 finding below; it does not move this grade because the census's substance is verifiable independently of the line numbers, but it is the exact failure S56 is armed against, in the round that was supposed to have absorbed it."
+  }
+ ],
+ "dismissal_reason": "This row grades nine judgment criteria and adjudicates no investigation item; it is a grade record."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S101",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:30Z",
+ "one_line": "FOUR ARMED ROWS GRADUATED. S65 and W4-S32 DISARM on their owner's own evidence rows (S72 and S61); S68 and W3-S39 STAY ARMED and carry live clocks. AND S56 DOES NOT DISCHARGE -- the hand-off asked me to grade that and the measured answer is NO.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S65 DISARMS on S72, 2.0.0_SA_COO~B's own row at IB-rtc-7's drain: the hazard was any apply of the directory/ or mdpf-pipeline/ root from a tree carrying principal_49f.tf BEFORE the sign-off, and the principal was created BY the signed act with both halves at HEAD. W4-S32 DISARMS on S61, the same seat's row at IB-rtc-5's drain, and its disarm_owner field carries the durable instruction rather than just a state -- that the decomp language should name the LOCAL-DEV-PLANE-ON-REAL-CODE substitution directly instead of the retired fixture path. A disarm owner writing the fix INTO the row so the next face cannot repeat the phrase is the right use of that field. S68 STAYS ARMED: an untargeted apply of mdpf-pipeline/ would push an unrelated config object and, from a Windows checkout, CRLF bytes -- the hand-off carries it as accepted at 1.0.0_SA_CTO 97865 and not this round's, and nothing in this round narrows it. W3-S39 STAYS ARMED and is the row R34-AC2 filed rather than recording a verdict its instrument could not support. NOW THE QUESTION THE HAND-OFF ROUTED TO ME. S56 is GRADUATED with a live clock whose disarm condition is its own words: the row disarms WHEN A JUDGMENT RECORD'S LINE CITATIONS CARRY @<commit>. The hand-off states that every round-3 face cut after it cites line ranges WITH a vintage and asks whether that discharges the row. IT DOES NOT, AND THE GRAIN IS WHY: S56's condition names JUDGMENT RECORDS, not faces. MEASURED ACROSS ALL NINE JUDGMENT RECORDS OF THIS ROUND -- denominator printed -- there are 4 line citations and 4 of 4 ARE BARE, carrying no vintage pin; all four sit in R39-AC2 (export/bundle.py:82, holdings/snapshot.py:119, narrative/handler.py:74, performance/normalize.py:390 and :398). So the round that was supposed to have absorbed S56 produced a fresh instance of exactly what it is armed against, on the surface it names. The faces may well have improved; the graded evidence did not. S56's clock STAYS ARMED and OPEN and I have not touched it.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S65",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S68",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S39",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S32",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S72 and org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S61 -- the owner's own disarm evidence",
+   "VERIFIED BY THIS SEAT: 4 line citations across all nine round-3 judgment records, 4 of 4 carrying NO vintage pin, all in R39-AC2"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-S65",
+  "IRPT_BCKEND-S68",
+  "IRPT_BCKEND-W3-S39",
+  "IRPT_BCKEND-W4-S32"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~B on S68 and W3-S39, which stay armed; S65's and W4-S32's clocks close with this write on that seat's own evidence rows"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S102",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:30Z",
+ "one_line": "NINETEEN INERT ROWS DISMISSED. Fifteen are 0.4.0_DS_ClientPlatform~X's or a worker's corrections OF THE FACE THEY WERE HANDED -- a cell telling its issuer the order is wrong, fifteen times in one round, and the issuer filing the disarms rather than arguing.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE SHAPE OF THIS ROUND IS A CELL CORRECTING ITS ISSUER AND THE ISSUER TAKING IT. S58 and S62 tell the face that its own member globs exclude two required closure members and that declaring the three per-firm runner_common.py would FREEZE THREE LIVE PRODUCTION DEPLOY LEGS -- a BLOCKING row against the order's own instruction, which is the hardest row a worker can file. S59 says a complete closure aboard the bundle still cannot reach the runner through the deployed dispatch. S60 and S66 say the face's NEGATIVE CONTROL names the wrong prior and that the live control is now the OPPOSITE SHAPE to the one the face describes -- a control pointed at a world that has moved. S64 finds that a <paths> grant binds the lane gate only for a 0.9.0_WK_* worker and NOT for the Tier-2 seat the order was handed to, which is a defect in the order's addressing rather than in its content. S69 says the face assumed a sibling cell had merged and it had not. S70 and S71 correct where a WARN is actually printed and which contract file the holdings runner truly reads -- and S71's is the sharper: the file it reads IS NOT IN THE BUNDLE. W2-S54 corrects the face's own population from 9 sources to 10 on another project's ratified measurement. W2-S55 and W2-S56 are the FileNotFoundError fix exposing a deeper defect the face did not anticipate, and then that fix confirmed working. W2-S57 is the one that keeps a green honest: AMENDMENT 3's re-fire never reaches the branch the amendment's own text names as its alternate LANDED outcome, because last_manifest()'s calendar-day backward walk finds a STALE REFRESH_DISPATCHED manifest ahead of the later COMPLETED one. S63 is the CRLF trap stated exactly -- the packer reads the WORKTREE while the loose leg serves the GIT BLOB, so a member with no eol attribute is packed with CRLF on an autocrlf checkout -- and I verified its consequence myself on firm_registry.json at 136 CR bytes. S67 is the naming gate refusing a legacy address typed into a new file, which is Rule 30 working. S57, S61 and S72 are 2.0.0_SA_COO~B's own owner's-word rows. S73 IS MINE, filed this turn while verifying R37 on the live plane: comp-iam's `roles` census carries no vintage and does not hold a role applied 2h15m earlier, so the estate's own IAM tool would report a landed apply as absent -- the cell's claim stands and the instrument is what is stale. All nineteen are INERT, none carries `adjudicates`, and none is a hazard.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S63",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S71",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W2-S57",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S73",
+   "VERIFIED BY THIS SEAT: firm_registry.json 136 CR bytes in the worktree against 0 in the blob -- S63's mechanism reproduced",
+   "All nineteen read at HEAD; every one INERT, none carrying `adjudicates`"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "IRPT_BCKEND-S57",
+  "IRPT_BCKEND-S58",
+  "IRPT_BCKEND-S59",
+  "IRPT_BCKEND-S60",
+  "IRPT_BCKEND-S61",
+  "IRPT_BCKEND-S62",
+  "IRPT_BCKEND-S63",
+  "IRPT_BCKEND-S64",
+  "IRPT_BCKEND-S66",
+  "IRPT_BCKEND-S67",
+  "IRPT_BCKEND-S69",
+  "IRPT_BCKEND-S70",
+  "IRPT_BCKEND-S71",
+  "IRPT_BCKEND-S72",
+  "IRPT_BCKEND-S73",
+  "IRPT_BCKEND-W2-S54",
+  "IRPT_BCKEND-W2-S55",
+  "IRPT_BCKEND-W2-S56",
+  "IRPT_BCKEND-W2-S57"
+ ],
+ "dismissal_reason": "Nineteen INERT rows, none carrying `adjudicates`: fifteen are corrections of the face the cell was handed, three are the issuer's own owner's-word rows, and one is this seat's instrument finding. No residue owed."
+}
+```
