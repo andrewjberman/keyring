@@ -163,6 +163,14 @@ change-management entry BEFORE the first live act and is committed, not staged.
 
 ## 5. CARDS AT ANDREW -- each with this seat's recommendation
 
+⭐ **ALL SIX ANSWERED, Andrew-direct ~19:4xZ** (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`),
+VERBATIM: *"1.) Yes use SA thats fine. 2.) Yes full egress. 3.) Yes. 4.) Agreed, yes. 5.) Base. I think the upside and downside
+cases can be discussed on methodology. 6.) Yes"* -- his numbering is the /open-calls frame's, so, by THIS section's numbers:
+card 3 (SA production) YES, lifted by name for Peers and the forecast fallback; card 4 (Lusha) YES, no credit ceiling inside
+the validation; card 1 (international battery) YES; card 5 (HOLD) YES; card 2 (cases) BASE adopted, Upside/Downside ABSENT
+pending a methodology discussion; card 6 YES, routed to `0.0.0_AB_MSTR~Z`. Landed in the PRD as v0.12. **R14-P1 is no longer
+validation-only.**
+
 1. **The international filings battery order.** His US order is ratified; for international he said *"I dont know but we
    need a plan"*. PROPOSED (Thesis brief s.8.2): EDGAR by ticker -> EDGAR by Bloomberg CIK -> ESEF/UKSEF by LEI -> company
    site -> national regulator -> UNRESOLVED. **REC: YES**, with the company site BEFORE the regulator -- measured, it covers
@@ -250,6 +258,8 @@ Unlike round 12, this round's rulings do NOT sit inside ratified text, so the PR
 The halves are MEASURED after the write: v0.10 ratified-text `1246a6ea32fc` -> v0.11 `2ea7e0a99695`; v0.10 brief `0455fc3d1e95`
 -> v0.11 `14e406e0d673` (`prd_signoff_lib.half_hashes`; `prd-signoff.py status` reads both STALE, owed by `3.0.0_SA_CVO~Z` and
 `4.0.0_SA_CRO~Z`, both live). 1,363 -> 1,637 lines.
+**v0.12 (the six cards, plus `4.0.0_SA_CRO~Z`'s two brief-half corrections, msg 23744) moved both again before either was
+signed:** ratified-text `901bf534d397`, brief `30d687e41b92`. The signers review v0.12.
 
 **LD-0521 holds:** the round-14 issuance is cut after this delivery AND both v0.11 halves SIGNED, by `2.0.0_SA_COO~Z` alone.
 

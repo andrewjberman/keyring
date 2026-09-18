@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.11",
+  "prd_version": "v0.12",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,19 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.12 CHANGE NOTE -- 2026-09-18 ~19:4xZ, `1.0.0_SA_CTO~Z`: Andrew answered the six round-13 cards
+
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`. His words, VERBATIM: *"1.) Yes use SA thats fine. 2.) Yes full egress. 3.) Yes. 4.) Agreed, yes. 5.) Base. I
+think the upside and downside cases can be discussed on methodology. 6.) Yes"*. Landed before either v0.11 half was signed,
+so the signers review v0.12's bytes. **Ratified-text half:** `C-PEER-SET-SA` (SA production use LIFTED for this path by
+name); `C-FILINGS-ANALYZER` (international battery order RATIFIED). **Brief half:** `C-MODEL-FORECASTS` (SA fallback
+LIFTED by name); `C-MODEL-WINDOW-AND-ROWS` (Base case adopted; Upside/Downside ABSENT pending methodology); `C-VERBATIM-GATE`
+(a sentence with no span is HELD); the `C-SA-VENDOR-WORD` table (the two named lifts); `C-VALIDATION-NAMES` (Lusha and SA
+authorized inside the validation); and, on `4.0.0_SA_CRO~Z`'s review (msg 23744), `C-DESCRIPTION-LINE`'s order corrected
+(Bloomberg's field first; a drafted sentence only past a describes-the-business test) and card 4's figure re-stated over the
+served population (179 of 389). Card 6 (headless capture, estate-wide) is outside this PRD and routed to
+`0.0.0_AB_MSTR~Z`. **Not changed:** a RECURRING or SCHEDULED Seeking Alpha read still waits on `C-SA-TERMS-BEFORE-SCHEDULE`.
 
 ### v0.11 CHANGE NOTE -- 2026-09-18, `1.0.0_SA_CTO~Z`, the answer to round 13's slug (`ledger/ROUND_ANALYSIS.round13.md`)
 
@@ -607,9 +620,10 @@ Source: the voice memo ~05:5xZ (part three); card 3.
 - SESSION: a 403 that `detectors.classify` reads as REHARVEST STOPS the run and says so. The Peers path never signs in,
   never retries around the challenge and never launches the harvester. Raw bytes land before derivation, at an address
   built by `lib/opal_naming.py` (Rule 30).
-- ⛔ PRODUCTION USE WAITS: `C-SA-VENDOR-WORD` marks Seeking Alpha production use NOT AUTHORIZED, and this clause does not
-  lift it. Until Andrew lifts it for this path by name, the path is built and proven on the validation names only. A
-  RECURRING or SCHEDULED Peers read also waits on `C-SA-TERMS-BEFORE-SCHEDULE`.
+- PRODUCTION USE AUTHORIZED, BY NAME (v0.12; Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`):
+  `C-SA-VENDOR-WORD` is lifted for THIS path -- one Peers read per security at instantiation and in validation. ⛔ A
+  RECURRING or SCHEDULED Peers read still waits on `C-SA-TERMS-BEFORE-SCHEDULE`: SA's terms of use are read first and his
+  ruling on them recorded.
 - NOT CHANGED BY THIS CLAUSE: FWD-19's comparable (C-SIMILARITY-RANKER, C-POSTURE); C-SA-TERMS-BEFORE-SCHEDULE,
   C-SA-VENDOR-WORD and C-VENDOR-EGRESS, which bind this path as written; C-IDENTITY-RESOLVED; C-ETF-PLANE-READ.
 Source: Andrew-direct 2026-09-18 ~17:4x-18:1xZ (`ANDREW_DIRECT_20260918_17xxZ_PEERS_SEEKING_ALPHA.md`); brief
@@ -644,7 +658,7 @@ measured.
 **The battery -- ordered; the first document passing the acceptance test wins:**
 - **US (Andrew-direct ~16:3xZ 2026-09-18):** (1) EDGAR; (2) EDGAR by the Bloomberg-resolved CIK; (3) web search, surfaced
   through the issuer's IR page.
-- **International -- ⚠ PROPOSED, NOT RATIFIED; Andrew's word pending** (his: *"we need a plan"*; CRO brief s.8.2): (1) EDGAR
+- **International (RATIFIED v0.12, Andrew-direct ~19:4xZ, *"Yes."*; proposed at CRO brief s.8.2):** (1) EDGAR
   by ticker; (2) EDGAR by Bloomberg CIK; (3) ESEF / UKSEF by LEI; (4) the company's own site; (5) the national regulator,
   one adapter per jurisdiction, built only for a name that step 4 fails.
 - **Terminal:** UNRESOLVED-SOURCE, persisted with every step's attempt, key and failure reason. Never a silent skip.
@@ -854,10 +868,9 @@ fields (`BEST_EPS`, `BEST_SALES`, `BEST_EBITDA`, `BEST_PE_RATIO`, `BEST_DPS`), e
 annual value (measured). Coverage measured with the override: `BEST_EPS` 33/33/33, `BEST_SALES` 33/33/32, `BEST_EBITDA`
 31/31/31, `BEST_PE_RATIO` 31/32/32, `BEST_DPS` 33/33/33; control BA FY2026-28 EPS -0.83 / 3.95 / 8.05. **Seeking Alpha fills
 a cell only where Bloomberg has none.** Every cell carries its fiscal year and `source` = `BBG` | `SA_FALLBACK`. Column headers
-come from `BEST_PERIOD_END_DATE`, never from a counted offset. The page labels the columns CONSENSUS, never reported. ⛔ **The
-SA fallback is a Seeking Alpha production read and waits on `C-SA-VENDOR-WORD` exactly as `C-PEER-SET-SA` does**; until Andrew
-lifts it for this path by name, a fallback cell is built and proven on the validation names only, and elsewhere stays ABSENT
-with that reason. The refresh cadence is Andrew's (his Bloomberg-cadence reservation stands).
+come from `BEST_PERIOD_END_DATE`, never from a counted offset. The page labels the columns CONSENSUS, never reported. **The
+SA fallback is a Seeking Alpha production read, AUTHORIZED for this path by name** (v0.12, Andrew-direct ~19:4xZ, *"Yes use SA
+thats fine"*); a SCHEDULED fallback refresh still waits on `C-SA-TERMS-BEFORE-SCHEDULE`. The refresh cadence is Andrew's (his Bloomberg-cadence reservation stands).
 
 **`C-MODEL-WINDOW-AND-ROWS` (v0.11).** (1) **The window rolls:** the history ends at each issuer's LATEST CLOSED fiscal year --
 a year that has ENDED and been REPORTED -- never a fixed date (today `HIST_END = "2025-12-31"`, `model_block_pull.py:101`).
@@ -868,8 +881,10 @@ refreshed after each fiscal close on a cadence Andrew sets; today every block is
 yellow key:** every Bloomberg call names the security as `<RESOLVED bloomberg id> Equity` or reads the block's own security
 string. The crosswalk's `bloomberg` field carries no yellow key, and a call without one returned 33 of 33 security errors --
 a failed instrument reading as zero coverage. **Appending the yellow key to an id `C-ONE-IDENTITY` has already RESOLVED is not
-the guess it forbids** (making an id by appending `US Equity` to an unresolved one). (5) Upside / Base / Downside cases stay
-ABSENT with the reason "a multiple and a scenario spread are Opal's judgment, pending Andrew's word". (6) The robustness
+the guess it forbids** (making an id by appending `US Equity` to an unresolved one). (5) **The Base case is consensus EPS x
+the security's own trailing-median P/E** (v0.12, Andrew-direct ~19:4xZ, *"Base."*), each input carrying its source and
+window. **Upside and Downside stay ABSENT** with the reason "methodology to be discussed with Andrew" (*"I think the upside
+and downside cases can be discussed on methodology"*); no seat chooses a spread. (6) The robustness
 inputs (quarterly TTM over the ruled 8-quarter window) are an open L4 question at `1.0.0_SA_CTO~Z`, not a round-14 cell.
 
 **`C-FISCAL-YEAR-JOIN`** -- ⛔ **NEVER JOIN PRICE TO FUNDAMENTALS ON THE DATE STRING.** Measured
@@ -898,9 +913,10 @@ and a fold that changes characters (ASCII folding, symbol substitution) is not v
 regenerated**. ⛔ **EVERY PASS COUNT PRINTS ITS SPLIT:** passed on a span / passed with NO span / held. A count that omits the
 split is not evidence of verbatim coverage (measured D18: a sentence with no quoted span passes today -- 17 of 39 for CAT, 16
 of 40 for CSL -- so the "389 of 389 PASS" figure did not mean what it read as). ⛔ **A drafted sentence with no verbatim span is
-served LABELLED as not anchored to a quote, never presented as verbatim-checked.** Whether such a sentence is instead HELD is
-Andrew's decision (it would withhold roughly 40% of today's drafted prose, and it reverses the v0.7 choice to keep passage
-support and exact quotation as separate outcomes) and is pending his card. The minimum run length is word-based for spaced
+HELD: never served, and counted in the split** (v0.12, Andrew-direct ~19:4xZ, *"Agreed, yes."*). Over today's 12 served documents
+this withholds **179 of 389 sentences (46%, measured 2026-09-18 by `4.0.0_SA_CRO~Z`, msg 23744)**; the validation names ran
+17 of 39 (CAT) and 16 of 40 (CSL). It reverses the v0.7 choice to keep passage support and exact quotation as separate outcomes; both
+consequences were on the card he answered. The minimum run length is word-based for spaced
 scripts and CHARACTER-based for scripts without spaces (`C-FILINGS-TRANSLATION`); the cut states each threshold. The rule binds
 BOTH writers of `drafting/v1/<key>.json` (`batch.py:150`, `analyze.py:1215`). ⭐ **This is a GATE, not trust-the-model**: it is
 machine-checkable and has discriminating controls -- a span pointed at the neighbouring passage, and a one-character mutation of
@@ -1090,6 +1106,7 @@ route, the authentication and the credential's location, in the imperative**, wh
 |---|---|
 | **AUTHORIZED** | the EXPLORATION and the COMPARISON -- calling the route to establish whether it works, and how it compares to the scrape |
 | **NOT AUTHORIZED** | recurring or production use of that route. **A word for an evaluation is not a standing right**, and `C-VENDOR-EGRESS` is per-use by construction |
+| **LIFTED BY NAME (v0.12)** | Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*: production use at instantiation and in validation for exactly two paths -- `C-PEER-SET-SA` and the `SA_FALLBACK` cells of `C-MODEL-FORECASTS`. Every other route stays NOT AUTHORIZED; a scheduled read of either still waits on `C-SA-TERMS-BEFORE-SCHEDULE` |
 
 ⚠ **THIS READING IS THIS SEAT'S AND ANDREW MAY CORRECT IT.** It is recorded so a cell does not have
 to guess, and so that if it is wrong it is wrong in ONE place with a name on it rather than in every
@@ -1160,14 +1177,18 @@ daily job (`scheduled_daily_pull.cmd`) as their own leg with their own exit code
 never-widen pair signed; the price lists were 3 trading days stale without it. Staleness is counted in TRADING days
 (`lib/trading_calendar.py`), never calendar days.
 
-**`C-DESCRIPTION-LINE` (v0.11; Lead Panel L8).** The one-line description has three sources, in this order: (1) the first
-sentence of a VALIDATED drafted `company_description` section, marked machine, with its evidence ids; (2) else Bloomberg's
-description field -- `CIE_DES`, else `CIE_DES_BULK` -- added to the model-block pull's header list (today the pull never
-requests `CIE_DES`, and `CIE_DES_BULK` is populated for the 21 names with no filing identity), labelled as Bloomberg's; (3)
-else ABSENT, naming every probe. **This REVERSES today's reader order** (`lib/research/api/scoped_amgt.py:2538`
-`read_description` tries the header scalar first), so adding the field does not replace a drafted description on the 12 names
-that have one. The adapter reads the field by the exact name the pull writes, and the long-text field's shape is measured on a
-real block before the reader is built against it.
+**`C-DESCRIPTION-LINE` (v0.11; Lead Panel L8; order corrected at v0.12 on `4.0.0_SA_CRO~Z`'s L4-R review, msg 23744).** The
+one-line description has three sources, in this order: (1) Bloomberg's description field -- `CIE_DES`, else `CIE_DES_BULK` --
+added to the model-block pull's header list and labelled as Bloomberg's (today the pull never requests `CIE_DES`, and
+`CIE_DES_BULK` is populated for the 21 names with no filing identity); (2) else the first sentence of a VALIDATED drafted
+`company_description` section, marked machine, with its evidence ids, **ONLY if it passes a stated describes-the-business
+test** -- the test's wording is the cut's; (3) else ABSENT, naming every probe. ⛔ **"VALIDATED" means schema-valid, not
+descriptive:** measured 2026-09-18 over the 12 served names with the adapter's own reads, sentence 1 of `company_description`
+describes the business on 0 of 12 (Boeing: *"Commercial Airplanes revenue was $41,494 million in 2025..."*; Home Depot:
+*"Consolidated net sales were $164.7 billion in fiscal 2025."*), and validation D23 found the same on CAT. Today's reader
+(`lib/research/api/scoped_amgt.py:2538` `read_description`) tries a header scalar first and then that sentence unconditionally;
+the cell adds the field and the test. The adapter reads the field by the exact name the pull writes, and the long-text field's
+shape is measured on a real block before the reader is built against it.
 
 **`C-HARVESTER-COMPUTE`** -- ⭐ **AMENDED AT v0.5 (addendum s.8). The compute moves OUT of this
 project's build and INTO the HARVEST ESTATE**, which Andrew assigned to `4.0.0_SA_CRO~Z` to oversee and
@@ -1632,6 +1653,9 @@ and the peer candidate universe (`lib/research/peers/universe.py`, worker `~21`,
 10-K), CSL (English, company site only), Keyence (Japanese) -- or on a dry run. A run on those three names IS the
 end-to-end validation Andrew set as the bar; **no cell is a fleet run or a re-run of the covered population** before it
 passes (Andrew-direct ~16:3xZ, *"I dont care about rerunning until the process is completely validated end to end"*).
+**Vendor calls inside the validation (v0.12, Andrew-direct ~19:4xZ):** Lusha, *"Yes full egress"* -- no credit ceiling
+within the validation, read as scoped to it and not as a standing grant across the covered population; Seeking Alpha on the
+two paths `C-SA-VENDOR-WORD` names as lifted.
 
 **What this section does NOT change:** any stage's own contract above; the Posture stage, whose brief is not yet
 integrated; the chatter schedule; any cadence, which stays Andrew's.
