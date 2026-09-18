@@ -319,3 +319,86 @@ and leave the frozen ones alone, saying which is which.** A census that cannot t
 one produces either a silent miss or a falsified history, and both were reachable here.
 
 **COST:** one token census per gate lift. **NON-APPLICATION:** an amendment that does not move a gate.
+
+
+---
+
+## R-44 -- the 49 Financial directory build runs under a 49 FINANCIAL PRINCIPAL; the bucket-policy exception is REFUSED by a NEVER line, and holding is refused by Rule 27
+
+**Call:** `2.0.0_SA_COO~B`, drive tick 5 (97785-class), IRPT_BCKEND. **DISCLOSURE FIRST: this call reached this seat
+at ~01:49Z and was not answered until ~02:5xZ -- roughly an hour parked at my desk while that lane kept working.** The
+lane did everything right: it carried a rec, named its alternatives, and explicitly said the lane keeps moving
+meanwhile. The delay is mine, and it is the exact failure Andrew's 2026-09-17 routing law exists to prevent.
+
+**The fork.** FWD-1 and FWD-7 need three firms' directories. Two can be built by the shared `mdpf` host (grants landed
+09-12). The third CANNOT be built by ANY `role/mdpf-*` principal, because `opal-data-49financial`'s
+`DenyForeignFirmPrincipals` denies that prefix (`iam.tf:598-603`) -- a control this seat itself confirmed at msg 96105.
+
+**RULING: (a), the lane's own rec.** The 49 Financial build runs under a **49 Financial principal**, assumed by the
+dispatch for that firm only, reading only that firm's dimensions and writing only that firm's directory prefix; the
+other two firms keep the host role.
+
+**Why the alternatives are not merely worse -- they are refused by standing law:**
+- **(b) a bucket-policy exception for one `mdpf` role: REFUSED.** CLAUDE.md's NEVER -- *never reference another firm's
+  data from a pipeline tree, BUCKET or KEY-PREFIX* -- and the same line's warning that **the guard is only as wide as
+  its enumeration.** Carving an exception into `DenyForeignFirmPrincipals` is not a workaround for the control; it IS
+  the widening the control exists to refuse. The lane recommended against it for exactly this reason and is right.
+- **(c) hold FWD-1/FWD-7 at 2 of 3 until `ADVI_FIRMBKTS`: REFUSED.** `ADVI_FIRMBKTS` is `dep_stage: PRD` with no lane.
+  That is a WAIT, and Rule 27's L2 clause is explicit that no FWD is a wait -- the mechanism is driven deliberately.
+- **(a) is the cross-firm law's OWN SHAPE**: the firm's data under the firm's principal. It does not widen a deny, it
+  does not wait, and it is exercisable on demand once the role exists.
+
+**THREE CONDITIONS ON (a), and the third is the one that makes it falsifiable:**
+1. **The role name is BUILDER OUTPUT (Rule 30)** -- `name(<registry key>, ..., kind="role")`, never typed, and the PRD
+   cites the builder's output rather than promising it.
+2. **The IAM apply is a never-widen-class act.** The sign-off names the BLAST RADIUS -- what the role may touch and the
+   rollback per key -- not the producer's intention. Ledger entry opened at start, closed at completion.
+3. **A NEGATIVE CONTROL ON THE NEW ROLE, not only a positive one.** It is not enough that the new principal CAN read
+   49 Financial's dimensions and write its directory prefix. The cell must also show it CANNOT read another firm's
+   prefix -- an attempted read that is DENIED -- and that its name does not match the denied prefixes. **A principal
+   proven only by what it can do has not been shown to be fenced**, and a fence is the entire reason this option beats
+   (b). Count the WRITERS of the 49 Financial directory prefix while you are there: a second writer makes "this role
+   writes it" an incomplete account.
+
+It is an addendum or a round-4 cell with the IAM apply under sign-off; nothing in round 3 assumes it, which is the
+correct posture and is why round 3 was right to cut without it.
+
+---
+
+## R-45 -- the bundle's SHAPE: member-level DISTRIBUTION flag plus a REPO-SHAPED unpack, and the flag's own hazard gets a control
+
+**Call:** `2.0.0_SA_COO~B`, drive tick 8, on `0.4.0_DS_ClientPlatform~X`'s rows S57/S58/S59, measured with the guard's
+own functions at `e9dc18f302`. Two halves that are one decision:
+
+1. **Declaring the three per-firm `runner_common.py` as bundle members would FREEZE three live production deploy legs.**
+   The guard's X-iii routing puts a bundle member in `triggered`, never `loose`; all three are served today on their
+   own firms' loose legs with `ETag == repo md5`. A commit would re-mint the IRPT tarball and **leave the firm's served
+   module stale while reading green.**
+2. **Even a complete closure aboard the bundle cannot reach the runner through the DEPLOYED dispatch.**
+   `refresh.runner_script` (`refresh.py:430-443`) unpacks into the runner's own directory and relocates exactly three
+   FLAT names, while `directory_runner` resolves at repo-relative depth; a `..` member makes GNU tar exit 2 into the
+   dispatch's `|| exit 91`. Measured on one 9-member payload: declared placement IMPORT-OK **3 of 3**; the dispatch's
+   own unpack **0 of 3**.
+
+**RULING: the REC is adopted -- a member-level DISTRIBUTION flag (the member keeps its loose leg AND a commit to it
+also re-mints the bundle) plus a REPO-SHAPED unpack (members named by repo path, extracted at `$W`).** One authority
+per file, one routing mechanism, and the dispatch reaches what the runner derives. Alternative (2) -- the host fetching
+each firm's module from its served loose key at build time -- **meets the cross-firm bound first** and collides with
+R-44's own subject; alternative (3), a repo checkout at the runner's depth, is heavier and contradicts `W2-S51`'s
+finding that the remedy is a SHAPE, not a member list.
+
+⛔ **THE ADDED CONTROL, because the flag creates the hazard it removes, one level over.** A distribution member now has
+**TWO deploy legs per commit.** If one lands and the other does not, the result is precisely the divergence the flag
+exists to prevent -- a served module out of step with the bundle, reading green on whichever leg is inspected. So the
+cell carries a CONSISTENCY criterion graded after a real commit: **the served loose object's `ETag` equals the repo
+md5 AND the bundle's member bytes equal the repo bytes**, with a **MUTANT that advances only ONE leg and must FAIL
+it.** A flag that routes to two places is only as good as the check that both arrived.
+
+`S58`'s two closure members outside the face's member globs (`data/firm_registry.json`,
+`_contracts/DirectoryEntry.schema.json`) are that lane's L6 call to admit, as it proposed -- the bundle already carries
+one such member under amendment H3, so the precedent is the lane's own and needs no ruling from here.
+
+On the word, `IB-rtc-2` (guard flag + declaration + re-mint) and `IB-rtc-3` (`refresh.py`'s unpack, a code-home change
+that becomes a build+deploy cell under ledger) re-cut in the same issuance. **Both FWD-1 and FWD-7's `inf` and `cot`
+thirds become exercisable on this ruling, with no dependency on `ADVI_FIRMBKTS`** -- which is the lane's point and the
+reason holding was never the cheap option.
