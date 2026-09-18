@@ -136,7 +136,7 @@ function Invoke-PoolTerraformTemp {
     $items = Get-ChildItem -LiteralPath $temp -Force -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -like 'terraform-provider*' -and -not (Test-Excluded $_.FullName) }
     $totalBytes = 0
-    foreach ($f in $items) { $totalBytes += (if ($f.PSIsContainer) { Get-DirSizeBytes $f.FullName } else { $f.Length }) }
+    foreach ($f in $items) { $totalBytes += $(if ($f.PSIsContainer) { Get-DirSizeBytes $f.FullName } else { $f.Length }) }
     Write-Output ("[terraform-provider-temp] found {0} item(s), {1}" -f $items.Count, (Format-GB $totalBytes))
     if ($items.Count -eq 0) { return }
     if ($DryRun) { Write-Output "[terraform-provider-temp] DRY RUN -- would delete all of the above"; return }
@@ -183,7 +183,14 @@ function Invoke-PoolOrphanedDirs {
         if (-not (Test-Path $root)) { continue }
         Get-ChildItem -LiteralPath $root -Force -Directory -ErrorAction SilentlyContinue | ForEach-Object {
             $n = $_.FullName.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
-            if (($registeredNorm -notcontains $n) -and -not (Test-Excluded $_.FullName)) { $orphans += $_ }
+            if (($registeredNorm -notcontains $n) -and -not (Test-Excluded $_.FullName)) {
+                # The live window binds THIS pool too. Measured 2026-09-18: a dry run listed
+                # .worktrees\verify-lt-3-1 for deletion 30 minutes after its last write -- an
+                # unregistered directory is not a DEAD one; a seat's scratch checkout looks identical.
+                if (Test-WorktreeLive $_.FullName) {
+                    Write-Output ("[orphaned-worktree-dirs] LIVE (written inside the {0}h window) -- untouched: {1}" -f $LiveWindowHours, $_.FullName)
+                } else { $orphans += $_ }
+            }
         }
     }
     $totalBytes = 0
