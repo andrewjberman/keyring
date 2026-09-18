@@ -76,3 +76,16 @@ Both this seat and `0.0.0_AB_MSTR~Z` recommended (ii). Verbatim:
    address its own registry row states until its own migration project moves it (Rule 30 R19); the doctrine change
    states the rule, and per-scope homes record where each pipeline actually is.
 4. **Client-confidential data is untouched:** R4-R7 bind there with no free axis.
+
+## Addendum ~22:0xZ (2) -- what `opal-data-assets` is FOR, in his words
+
+Immediately after choosing option (ii), verbatim:
+
+> opal-data-assets is very specifically for client/partner custodial information
+
+**Reading, narrow:** the bucket's purpose is **client and partner CUSTODIAL information** -- narrower than "client
+data" as this seat and the CTO had been relaying it. The doctrine wording placed under option (ii) carries HIS words:
+`opal-data-assets` holds client/partner custodial information; every other scope is homed by scope at every tier,
+bronze and silver included. **This seat does not define "custodial" further than he said it** -- the placement quotes
+him, and any narrower reading (for example whether a firm-attributable derivation of custodial data is also custodial)
+is a question for him, not an inference.
