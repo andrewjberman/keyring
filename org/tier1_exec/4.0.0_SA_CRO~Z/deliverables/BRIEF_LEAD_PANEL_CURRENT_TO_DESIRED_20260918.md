@@ -21,10 +21,10 @@ Read from the live table `opal-harvest-security-metrics`, the code at HEAD and t
 
 | list | last committed | state |
 |---|---|---|
-| Trending x Chatter | 18 Sep | COMPLETE, 10 rows, every day 15-18 Sep |
-| Breakout x Chatter | 18 Sep | EMPTY, 0 rows, every day 15-18 Sep, and the pointer carries no reason |
+| Trending x Chatter | 18 Sep | COMPLETE, 10 rows -- **but see UPDATE 1: all ten carry ZERO articles and score 0, ranked alphabetically. The list looks full and carries no signal.** |
+| Breakout x Chatter | 18 Sep | EMPTY, 0 rows, every day 15-18 Sep; the pointer carries no reason. UPDATE 1: all 191 names fail the 3-mention floor, because the article store holds almost nothing |
 | Trending x Price | 15 Sep | COMPLETE, 32 rows; three trading days stale |
-| Breakout x Price | 15 Sep | COMPLETE, 32 rows; three trading days stale |
+| Breakout x Price | 15 Sep | COMPLETE, 32 rows; three trading days stale. UPDATE 1: 23 of the 32 are FALLING names, down to -9.2%, listed as breakouts |
 
 - **Chatter is scheduled:** EventBridge `cron(0 10 * * ? *)` UTC fires the `chatter-axis-producer` Lambda daily.
 - **Price is not:** `integrations/bloomberg/research/price_axis_pull.py` has no leg in
@@ -143,3 +143,71 @@ are offered to whichever seat the CTO routes them to; this seat will take any of
 for `BREAKOUT_CHATTER#2026-09-18` read in full (no reason field); `infra/aws/terraform/harvest/chatter-axis-schedule.tf`
 at `cron(0 10 * * ? *)`; `scheduled_daily_pull.cmd` with no price leg; `movement_gate.py`'s declared-ABSENT price
 floor; the refresh route's stated refusal in `amgt-lead-panel.ts`.
+
+
+---
+
+## 8. UPDATE 1, 2026-09-18 ~15:1xZ -- the deep dive found the chatter side is hollow, and Andrew decided three cards
+
+Andrew-direct at this terminal, recorded verbatim in
+`ANDREW_DIRECT_20260918_15xxZ_LEAD_PANEL_DECISIONS.md`: *"Please update your brief with your updated findings as the
+gaps are discovered."* This section is that update. Section 1's first read called Trending x Chatter healthy. **That
+was wrong, and it was wrong because it read the pointer's STATE rather than the rows under it.**
+
+### 8.1 The findings
+
+**F1. The chatter article store carries three names.** `publication-links/v1/` in `opal-data-harvest` holds
+prefixes for exactly **3** names -- BA, COST, HD. Run through the producer's own reader over the 30-day window, **188
+of 191 names have ZERO articles, all reads complete**; the busiest name has 3. For AAPL, NVDA, MSFT, JPM and TSLA the
+all-time count is zero and the reader has no lookup key at all. **The chatter subject is not starved of history; it is
+starved of SOURCE.** No window, backfill or floor fixes that.
+
+**F2. Trending x Chatter is a tie at zero, presented as a ranking.** The live 18 Sep generation
+(`20260918T100026Z-efd7e544dd59`) has ten rows -- 2317 TT, 2602335D US, 9433 JP, 992 HK, AAPL, ABBV, ABT, ADM, AEP,
+AIG -- every one with `window_total_count` 0 and `score` 0. They are simply the first ten keys in alphabetical order.
+The pointer reads COMPLETE and the panel shows "the ten most talked-about names". **This is the most misleading state on
+the panel, because it is the one that looks finished.**
+
+**F3. Breakout x Chatter's empty list has a reason -- the producer computes it and discards it.** Run in dry-run for 18
+Sep (writes nothing), the producer excludes **191 of 191** names with the reason `BELOW_MIN_ABSOLUTE_JUMP`. The reason
+exists in memory at write time; only the pointer omits it. So build item 2, the `empty_reason` field, is cheaper than
+section 4 implied: it writes down what the producer already knows.
+
+**F4. Breakout x Price lists falling names as breakouts.** The 15 Sep generation ranks all 32 names by percentage move
+against the trailing mean, with no floor and no sign test: 23 of 32 are NEGATIVE, from -0.05% to -9.2%, and all 32
+appear. Each row carries `min_absolute_jump_basis: ABSENT_NOT_RATIFIED`, which is the module telling the truth about
+why. Card B below closes this.
+
+**F5. Trending x Price is sound.** It ranks the 30-day window return (`WINDOW_RETURN_PCT`), from +19.3% (PBR) down to
+-15.0% (ASML). Staleness is its only gap, and card A closes that.
+
+### 8.2 The decisions
+
+| card | Andrew's word | what it now means |
+|---|---|---|
+| **A. Price cadence** | "Yes we should just get prices as of prior day on the existing BBG job." | APPROVED. Price joins `scheduled_daily_pull.cmd` as an isolated leg, as-of T-1 by `lib/trading_calendar`. Build item 1 is unblocked; `1.0.0_SA_CTO~Z` sequences it. |
+| **B. Price floor** | "go with your rec here." | APPROVED AT THIS SEAT'S RECOMMENDATION, stated here at the moment of adoption: **a price Breakout requires a POSITIVE move of at least +5% above the trailing 30-day mean; anything smaller or negative is excluded, and a day where nothing clears it is an honest EMPTY.** On the one measured day (15 Sep) that leaves 3 of 32 names, at +7.2%, +9.9% and +10.9%, and removes all 23 declines. It lands in `movement_gate.py` as the price entry of `MIN_ABSOLUTE_JUMP`, basis RATIFIED citing the decision record. It is one constant: two weeks of daily price runs will show whether +5% is too tight. |
+| **C. CARD 5** | "Card 5 I still don't know what that refrs to." | **NOT RECOGNISED -- put back to him, not treated as confirmed.** CARD 5 is: run the two producers that write management commentary and the posture read across all 33 covered names (today 5 and 2). It makes model calls, estimated in the low single digits of dollars. `2.0.0_SA_COO~Z` recorded a "yes do it" at 13:09Z as the answer and `AMGT-rk-22` began producing on it. Whether that yes was meant for this is his to say. |
+| **D. Promote** | "the Promote can wait." | DEFERRED. Nothing is prepared toward it. |
+
+### 8.3 What the build list becomes
+
+1. **Price goes daily** -- approved (card A).
+2. **Every empty day says why** -- cheaper than first stated (F3): write the reason the producer already computes.
+3. ~~Chatter backfill~~ -- **WITHDRAWN.** F1 shows the problem is source coverage, not history depth; a backfill of an
+   empty store backfills zeros.
+4. **Price floor lands** -- approved at the recommendation (card B).
+5. **Refresh gets a queue** -- unchanged, L4 first.
+6. **DEV deploys and CI goes green** -- unchanged; the promote itself is deferred (card D).
+7. **NEW, and the largest item on the panel: chatter needs a source.** The harvester that writes
+   `publication-links/v1/` covers 3 names. Until it covers the universe, both chatter lists are empty or hollow. First an
+   L4 question for `1.0.0_SA_CTO~Z`: which harvester is meant to cover these names, why it reaches three, and whether the
+   gap is ingestion (nothing fetched) or association (fetched but not keyed to the name -- the empty lookup keys on
+   AAPL and NVDA point here).
+8. **NEW: Trending must not rank a zero.** A name with no chatter should not appear on a "most talked-about" list, and a
+   day where nobody has chatter should read EMPTY with its reason -- the same honesty the Breakout list already has.
+
+**Evidence for this update:** the producer's own dry-run for 2026-09-18 (`compute_chatter_axis`, `write_fn=None`); its
+`default_daily_article_counts` over ten sample names; the `publication-links/v1/` prefix listing; the live
+`TRENDING_CHATTER`, `BREAKOUT_PRICE` and `TRENDING_PRICE` generations read row by row from
+`opal-harvest-security-metrics`.
