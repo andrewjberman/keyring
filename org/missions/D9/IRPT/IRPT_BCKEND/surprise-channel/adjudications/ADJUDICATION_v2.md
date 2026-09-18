@@ -240,3 +240,529 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
   }
 ]
 ```
+
+## Round 2 -- L8/L9: 124 rows dispositioned, twelve judgment criteria graded, five CVO-owned questions ruled
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S88",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "DISMISSED, 32 rows: the issuer's own drain logs, disposition rows, disarms and in-flight self-corrections -- each is a RECORD or is itself the answer to another row, and none leaves a residue anyone owes.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Every member is INERT and falls in one of four shapes: (1) a drain or wind-down log (S25, S33-S37); (2) an issuer disposition or disarm row that closes other rows (S26, S38-S40, S42, S43, S48, S53-S55); (3) an in-flight self-correction retracting the author's own earlier claim (W2-S17, W2-S37, W2-S43); (4) a tooling or harness observation already closed in its own turn (W2-S52, W3-S29, W3-S30, W3-S33, W3-S37, W4-S17, W4-S18, W4-S22, W4-S26, W4-S27, W4-S30, W4-S31) plus the carrier row S52. DISMISSAL IS THE CORRECT DISPOSITION AND NOT A CONVENIENCE: an answer row that is itself graduated would mint a clock for work already done, and this channel's own rule is that a record carries no obligation. None is ARMED, so R-21 does not reach them. What they are NOT being read as: evidence that the findings they answer were sound -- those findings carry their own dispositions elsewhere in this round.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- all 32 rows read individually by this seat",
+   "2.0.0_SA_COO~B's L8 hand-off msg 97711 naming the round-2 population",
+   "hazard_standing verified INERT on all 32 by a direct field read, so none is refused dismissal by R-21"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "IRPT_BCKEND-S25",
+  "IRPT_BCKEND-S33",
+  "IRPT_BCKEND-S34",
+  "IRPT_BCKEND-S35",
+  "IRPT_BCKEND-S36",
+  "IRPT_BCKEND-S37",
+  "IRPT_BCKEND-S26",
+  "IRPT_BCKEND-S38",
+  "IRPT_BCKEND-S39",
+  "IRPT_BCKEND-S40",
+  "IRPT_BCKEND-S42",
+  "IRPT_BCKEND-S43",
+  "IRPT_BCKEND-S48",
+  "IRPT_BCKEND-S52",
+  "IRPT_BCKEND-S53",
+  "IRPT_BCKEND-S54",
+  "IRPT_BCKEND-S55",
+  "IRPT_BCKEND-W2-S17",
+  "IRPT_BCKEND-W2-S37",
+  "IRPT_BCKEND-W2-S43",
+  "IRPT_BCKEND-W3-S29",
+  "IRPT_BCKEND-W3-S30",
+  "IRPT_BCKEND-W3-S33",
+  "IRPT_BCKEND-W3-S37",
+  "IRPT_BCKEND-W2-S52",
+  "IRPT_BCKEND-W4-S17",
+  "IRPT_BCKEND-W4-S18",
+  "IRPT_BCKEND-W4-S22",
+  "IRPT_BCKEND-W4-S26",
+  "IRPT_BCKEND-W4-S27",
+  "IRPT_BCKEND-W4-S30",
+  "IRPT_BCKEND-W4-S31"
+ ],
+ "dismissal_reason": "Records and answer rows: each is a log of what happened or is itself the disposition of another row. No residue is owed by any seat, and all 32 are INERT."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S89",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "DISMISSED, 24 rows: findings an issuer act, a ruling or the artifact itself already answered in-round, each verified by this seat against the answering object rather than against the claiming row.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "These are real findings that were closed while the round ran. The seam set (W2-S13, W2-S14, W2-S15, W2-S18, W2-S20, W2-S23, W2-S25) was settled in the v1 artifact itself -- routes.json's operation columns, the wire rule, the enumerated DEPLOYED-ONLY outcome -- rather than by a schema edit, which RT1-AC2's record states and which this seat confirmed by reading the published contract's own columns. The order-text defects (S27, S30, S31) were answered by S33/S38/S40. The build-and-test observations (W2-S29, W2-S31, W2-S33, W2-S34, W2-S39, W2-S40, W2-S45, W2-S46, W2-S47, W2-S50, W2-S53, W3-S34) were each accepted INERT by the issuer with a stated discriminator, and W2-S39's cell-introduced cache defect was disarmed by the third apply (S48). W1-S13 and W1-S15 are arm-construction observations whose subject no longer exists. NONE IS ARMED. WHAT THIS DISMISSAL DOES NOT SAY: that the answering act was itself verified end to end -- where this seat verified the artifact rather than the claim, it is named in the evidence; the rest are dismissed on the issuer's in-round disposition, which is the issuer's to make and is recorded in its own rows.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- all 24 rows read individually",
+   "The answering rows S33, S38, S40, S44, S45, S46, S48, S49 read directly rather than summarised",
+   "hazard_standing verified INERT on all 24"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "IRPT_BCKEND-S27",
+  "IRPT_BCKEND-S30",
+  "IRPT_BCKEND-S31",
+  "IRPT_BCKEND-W2-S13",
+  "IRPT_BCKEND-W2-S14",
+  "IRPT_BCKEND-W2-S15",
+  "IRPT_BCKEND-W2-S18",
+  "IRPT_BCKEND-W2-S20",
+  "IRPT_BCKEND-W2-S23",
+  "IRPT_BCKEND-W2-S25",
+  "IRPT_BCKEND-W2-S29",
+  "IRPT_BCKEND-W2-S31",
+  "IRPT_BCKEND-W2-S33",
+  "IRPT_BCKEND-W2-S34",
+  "IRPT_BCKEND-W2-S39",
+  "IRPT_BCKEND-W2-S40",
+  "IRPT_BCKEND-W2-S45",
+  "IRPT_BCKEND-W2-S46",
+  "IRPT_BCKEND-W2-S47",
+  "IRPT_BCKEND-W2-S50",
+  "IRPT_BCKEND-W2-S53",
+  "IRPT_BCKEND-W1-S13",
+  "IRPT_BCKEND-W1-S15",
+  "IRPT_BCKEND-W3-S34"
+ ],
+ "dismissal_reason": "Answered in-round by an issuer act, a ruling or the published artifact; all 24 are INERT and no residue is owed."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S90",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "GRADUATED, 14 INERT rows that carry a live residue: not armed, but each names work no seat has done, so each takes a remediation clock rather than a dismissal.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "The discriminator applied to every INERT row this round was: does anything remain that a seat must DO? For these fourteen the answer is yes, and dismissing them would retire the question. The set splits three ways. (1) GRANT AND REACH defects where an ordered act cannot be taken inside the grant it was issued against -- W1-S14, W2-S19, W2-S24, W2-S28, W2-S30, W2-S32, W2-S35. (2) CONTRACT defects in the frozen v1 surface -- W2-S16 (0 of 7 reachable operations validate against a document contract), W2-S26 (published operation ids use hyphens that _keys.OPERATION_RE refuses, so every guarded request was KEY_REFUSED), W2-S27 (a third firm-id spelling), W2-S36, W2-S38. (3) THE WALL UNDER IB-rt-6 -- W2-S48 and W2-S51, the deployed refresh's missing trading calendar and the bundle that cannot carry the runner's seven repo-path files. Several carry a later row that CLAIMS them; a claim is not a clock, and this round is where they get one.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- each of the fourteen read in full",
+   "Membership derived by subtraction from the measured 124-row population, not from a forward list: 124 = 32 records + 24 answered + 14 inert-with-residue + 47 armed + 7 taken bespoke",
+   "hazard_standing read per row; none of the fourteen is ARMED, so each is dismissible by R-21 and is graduated on the residue test instead"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "IRPT_BCKEND-W1-S14",
+  "IRPT_BCKEND-W2-S26",
+  "IRPT_BCKEND-W2-S27",
+  "IRPT_BCKEND-W2-S28",
+  "IRPT_BCKEND-W2-S30",
+  "IRPT_BCKEND-W2-S32",
+  "IRPT_BCKEND-W2-S35",
+  "IRPT_BCKEND-W2-S36",
+  "IRPT_BCKEND-W2-S38",
+  "IRPT_BCKEND-W2-S44",
+  "IRPT_BCKEND-W2-S48",
+  "IRPT_BCKEND-W2-S49",
+  "IRPT_BCKEND-W2-S51",
+  "IRPT_BCKEND-W1-S11"
+ ]
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S91",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "GRADUATED, 47 ARMED rows: R-21 admits no other disposition for an armed row, and every one of them keeps its standing -- this round disarms none of them, because not one disarm owner has given a word this seat may write on.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "R-21 is the whole rule here: an ARMED row GRADUATES, never dismisses. So the disposition is not a judgment call; what IS a judgment call is the hazard standing, and this seat leaves all 47 ARMED. THE REASON IS R-19, and it is worth stating plainly because it is the difference between a clock and a claim: this seat holds the pen and is never the word. Of the 47, forty-two name a live seat (2.0.0_SA_COO~B or 1.0.0_SA_CTO) as disarm owner and none of those seats has given a disarm word for them this round; five name a DEAD WORKER SLOT (W3-S13, W3-S15 taken bespoke, W3-S19, S46, S49) and their owner text CLAIMS an in-turn act. THOSE FIVE ARE THE INTERESTING CASE AND THIS SEAT DID NOT WRITE THEIR DISARMS EITHER: the owner text of each carves out explicitly what is NOT disarmed and routes it onward -- W3-S13 keeps the already-written-keys question, W3-S19 keeps the general shape that nothing ties a module's import graph to its packaging list, S46 keeps W2-S39 until an apply verifies, S49 keeps W2-S45. A partial disarm written as a whole one would retire the carved-out half, which is exactly the failure the carve-out was written to prevent. They graduate ARMED with the carve-out as the remediation's subject.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- all 47 read in full, including each disarm_owner field verbatim",
+   "R-19 (a disarm owner is never the writer) and R-21 (an ARMED row graduates, never dismisses)",
+   "2.0.0_SA_COO~B's L8 hand-off msg 97711, which states that the rows it could not seat ride to 1.0.0_SA_CTO's L10 read",
+   "VERIFIED BY THIS SEAT for W3-S19's carve-out: .tools/check-lambda-layer-deps audits imports against LAYER requirements and by its own docstring reads 'each non-stdlib non-local import' -- it does not grade first-party packaging, it is a manual tool with an opt-in --strict, and it is wired into no merge guard or commit-gate. The general shape the row names is real at HEAD."
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-S28",
+  "IRPT_BCKEND-S29",
+  "IRPT_BCKEND-S41",
+  "IRPT_BCKEND-S44",
+  "IRPT_BCKEND-S45",
+  "IRPT_BCKEND-S46",
+  "IRPT_BCKEND-S47",
+  "IRPT_BCKEND-S49",
+  "IRPT_BCKEND-S50",
+  "IRPT_BCKEND-S51",
+  "IRPT_BCKEND-W1-S12",
+  "IRPT_BCKEND-W1-S16",
+  "IRPT_BCKEND-W1-S17",
+  "IRPT_BCKEND-W1-S18",
+  "IRPT_BCKEND-W2-S16",
+  "IRPT_BCKEND-W2-S19",
+  "IRPT_BCKEND-W2-S21",
+  "IRPT_BCKEND-W2-S22",
+  "IRPT_BCKEND-W2-S24",
+  "IRPT_BCKEND-W2-S41",
+  "IRPT_BCKEND-W2-S42",
+  "IRPT_BCKEND-W3-S13",
+  "IRPT_BCKEND-W3-S14",
+  "IRPT_BCKEND-W3-S17",
+  "IRPT_BCKEND-W3-S18",
+  "IRPT_BCKEND-W3-S19",
+  "IRPT_BCKEND-W3-S20",
+  "IRPT_BCKEND-W3-S21",
+  "IRPT_BCKEND-W3-S22",
+  "IRPT_BCKEND-W3-S23",
+  "IRPT_BCKEND-W3-S24",
+  "IRPT_BCKEND-W3-S25",
+  "IRPT_BCKEND-W3-S26",
+  "IRPT_BCKEND-W3-S27",
+  "IRPT_BCKEND-W3-S28",
+  "IRPT_BCKEND-W3-S31",
+  "IRPT_BCKEND-W3-S32",
+  "IRPT_BCKEND-W3-S35",
+  "IRPT_BCKEND-W3-S36",
+  "IRPT_BCKEND-W3-S38",
+  "IRPT_BCKEND-W4-S14",
+  "IRPT_BCKEND-W4-S15",
+  "IRPT_BCKEND-W4-S16",
+  "IRPT_BCKEND-W4-S20",
+  "IRPT_BCKEND-W4-S21",
+  "IRPT_BCKEND-W4-S24",
+  "IRPT_BCKEND-W4-S29"
+ ],
+ "disarm_owner": "per-row: 2.0.0_SA_COO~B or 1.0.0_SA_CTO as each row names, and 1.0.0_SA_CTO at L10 to place the five whose named owner is a terminated worker slot"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S92",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "W3-S16 RULED, and it is the CVO's to rule because the disagreement is between a ruling's stated count and the file's measured one: THE FILE IS AUTHORITATIVE. Twelve was true when it was written; eighteen is true now; the fix covered all eighteen, so nothing is owed on the work and what aged is the ruling's number.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "The row's own measurement reproduces: an AST census over _keys/keys.py at round-1 HEAD 7478fdf144 reads 24 KeyComponentRefused construction sites, 16 of them interpolating at least one %r, carrying 18 placeholders (one site carries two), plus 8 further %r elsewhere in the module. CTO ruling 4 and the L5 note both say 'twelve %r message sites become zero'. THE RULING IS NOT WRONG, IT IS VINTAGED: twelve was presumably the count when row W2-S10 was written, and _keys has grown since. This seat rules that a COUNT INSIDE A RULING IS A MEASUREMENT AT A VINTAGE and ages exactly like any other citation -- the remedy is that such a count carries its pin, not that the ruling is re-issued. No act is owed on the fix itself: all 18 are now zero, which the cell drove from the census rather than from the ruling's number, and that is why the discrepancy was harmless here. It would not have been harmless the other way round: a fix scoped to the ruling's twelve would have left six sites live and every artifact would have read clean.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S16",
+   "The row's own AST census over git show 7478fdf144:infra/aws/lambda/investor-reporting/_keys/keys.py",
+   "CLAUDE.md Rule 22: a citation without a vintage is not a citation -- this seat reads a ruling's COUNT as a citation of the file it counts"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "IRPT_BCKEND-W3-S16"
+ ],
+ "dismissal_reason": "Ruled: the file is authoritative over the ruling's stated count, the fix covered the measured eighteen, and no act is owed. The residue is documentary -- a count inside a ruling should carry its pin -- and is recorded here rather than given a clock."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S93",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "W4-S19 RULED, and this is the consequential one: IB-s-14's (v0.11) render arm is graded UNSOUND AT ITS VINTAGE. Round 1's renderer produced ONE document from THREE different bundles, and the arm passed because it compared each PDF only to itself.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "MEASURED, and the numbers are the ruling: three Analysis exports built from three DISTINCT bundles (digests 38753e307c2e, 86c38f465c00, 9f89d01d4fa7), stored as three objects, read back in round 2 as three DIFFERENT raw sha256 but ONE normalized content hash (b646b23012...) and an identical decompressed content-stream length of 71,944 bytes. The three differ only in the creation date and the /ID the print engine stamps. A RENDERER WHOSE OUTPUT DOES NOT VARY WITH ITS INPUT CANNOT BE EVIDENCE THAT THE INPUT WAS RENDERED, and every per-object check passed precisely because the arm's comparison was per-object -- the digest chain was intact end to end for each variant separately, which is exactly why the constancy was invisible. THE GRADE: IB-s-14's v0.11 arm did not establish what it has been read as establishing, and FWD-4 and FWD-8's proof gap is NOT narrowed by it. This is recorded so the project's history does not read as if that arm ever evidenced input-sensitivity, which is the same disposition 1.0.0_SA_CTO asked this seat to make on NFRA_OPLGTW's OGQ2-AC7 and OGQ2-AC15 -- the second and third instances of one class in one week, and the class is: a per-object check cannot see a constant. THE FORWARD REMEDY is a difference control, not a re-run: the next render must show that two distinct bundles produce two distinct content hashes, and until one does, no render arm should be cited for FWD-4 or FWD-8.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S19",
+   "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IB-s-14_S14-AC1_battery_output.txt:135-148 -- three variants, three bundle digests, three distinct keys, each 'stored hash equal True'",
+   "1.0.0_SA_CTO msg 97649 (R-OG-15), which set the precedent shape for grading an original pass UNSOUND AT ITS VINTAGE rather than re-opening its cell"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-W4-S19"
+ ],
+ "disarm_owner": "1.0.0_SA_CTO at L10 to place the difference control on whichever order next renders; the row disarms when a render shows two distinct bundles producing two distinct content hashes"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S94",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "W4-S23 RULED on the criterion's wording, which is the half named to this seat: '0 EXTERNAL connections during the render' is an UNACHIEVABLE bar against the portal as built and is re-cut to '0 VENDOR connections', with foreign-origin requests counted and disclosed beside it.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "The guard's own line is the evidence and it is a good measurement: 12 requests, opalinvest.dev 10, fonts.googleapis.com 1, fonts.gstatic.com 1 -- 2 FOREIGN of 12, 0 VENDOR of 12, with the vendor host list enumerated (ycharts.com, api.ycharts.com, bd3.bdreporting.com, api.cloud.orionadvisor.com) so the zero carries a denominator. THE REASONING: the number this criterion exists to protect is vendor egress, and it measured ZERO. The page pulls webfonts from Google, which is not a vendor call and breaches no bound this project carries, but it does falsify the criterion's own phrase -- so the bar as written can only be met by a system that does not exist, and keeping it forces one of two bad outcomes: a false GREEN obtained by quietly redefining 'external', or a permanent block on a compliant render. A BAR A CORRECT SYSTEM CANNOT MEET IS A DEFECTIVE BAR. What this seat does NOT rule: the substance. Self-hosting the webfonts is IRPT_FNTEND's call and is separately worth doing because it also closes RT8-AC2's finding that the package DECLARES Lato while the app FETCHES its faces from a third party at render time -- the document's typography currently depends on an origin outside the estate, which is a reproducibility question and not only a connection count.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S23",
+   "the render host's own guard line, verbatim in that row's grounding",
+   "RT8-AC2's font measurement: the package declares ['Lato-Regular','Lato-Bold','Lato-Italic'] and the four stored PDFs embed ['AAAAAA+SegoeUI-Bold','BAAAAA+SegoeUI','CAAAAA+TimesNewRomanPSMT'] -- 0 of 3 declared fonts in 4 of 4 artifacts"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-W4-S23"
+ ],
+ "disarm_owner": "1.0.0_SA_CTO for the criterion's re-cut wording (the text lives in the order and the PRD); IRPT_FNTEND for the substance. The row disarms when the criterion reads '0 VENDOR connections' with the foreign-origin count disclosed beside it"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S95",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "S32 RULED: both round-1 batteries are now STALE INSTRUMENTS that report the OPPOSITE of the world. After IB-rt-5's correct bundle mint, a re-run of either reads ABSENT / DEPLOY LEG BLOCKED -- a FALSE RED after a successful first-mint.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "The mechanism reproduces from the batteries' own bytes: battery_ib_s_4.py:320-324 builds key = SHARED_CODE_PREFIX + 'directory_runner.py' and head-objects it, taking landed = (rc == 0). After IB-rt-5 the served shape is ONE hash-stamped bundle at that prefix and the per-file keys are frozen 404s, so the head-object misses and the battery reports a regression that did not happen. THE RULING, and the reason it is worth a row rather than a note: A FALSE RED IS WORSE THAN A FALSE GREEN HERE, because it trains a reader to discount the instrument, and the next real regression reads identically. So this seat rules that ANY CITATION of battery_ib_s_4's or battery_ib_s_12's deploy leg is INVALID AT HEAD until the key shape is updated to the bundle, and a passing re-run of either is not evidence of anything either. The remedy is small and belongs to the owning cells (IB-s-4, IB-s-12) through 2.0.0_SA_COO~B; what must NOT happen is a re-mint of the per-file keys to satisfy a stale battery, which would undo IB-rt-5's correct work to keep an instrument happy.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S32",
+   "deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_s_4.py:320-324, cited in that row's own grounding",
+   "The row names 3.0.0_SA_CVO as the seat that reads it at L9; this is that read"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-S32"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~B to route the key-shape update to IB-s-4 and IB-s-12; the row disarms when both batteries head-object the bundle rather than the per-file keys"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S96",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "W3-S15 RULED on the denominator question the row put to this seat: arm (c) is NOT re-cut as a dataflow census. What changes is the CLAIM -- the arm must name its own denominator as EXCEPT HANDLERS rather than as error paths.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "The row is right about the gap and right to have filed it: arm (c)'s census reads except blocks (49 across 25 modules, 10 rendering the caught exception), and a public reason can be built on an ordinary return with no handler involved -- one such path existed (directory/handler.py returning 'ERROR: unsupported op ' + repr(op)) and surfaced only because a neighbouring test failed. So '0 of 57 except handlers render the exception' is TRUE and is NOT the claim 'no public reason carries caller data'. THE RULING: re-cutting arm (c) over every expression that reaches a public reason field is a dataflow instrument, materially larger than the one that exists, and this estate has one measured instance of the gap. The proportionate act is to make the existing arm honest about its own sweep -- a denominator certifies the sweep and never the set -- and a dataflow re-cut becomes justified on the SECOND instance, which the corrected wording is exactly what makes findable. This is the same shape 1.0.0_SA_CTO ruled on LGIC_ENFORCE's token collision under R-39, and this seat applies it here for the same reason: one measurement does not size an instrument. The cell was also right not to widen the arm on its own authority.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S15",
+   "RT4-AC2's own evidence, which states the consequence precisely and carries the one measured instance",
+   "1.0.0_SA_CTO, RULING R-39 (LGIC_ENFORCE), for the sizing principle applied here"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-W3-S15"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~B to route the wording change to the arm's owning cell; the row disarms when arm (c)'s output names EXCEPT HANDLERS as its denominator. Its original owner is a terminated worker slot, so the act needs a live seat"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S97",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "W4-S25 and W4-S28 GRADUATED and ARMED, and the finding is STRUCTURAL: both name a CELL as their disarm owner, that cell (IB-rtb-1) is terminal, and it closed without touching either row. A disarm owner that is a cell becomes unownable the moment the cell ends.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "VERIFIED BY THIS SEAT, not taken from the hand-off: 'W4-S25' occurs 0 times and 'W4-S28' occurs 0 times in IB-rtb-1's proof instance. The cell is complete (2026-09-17T23:35Z) and its own AC1 evidence concedes the very boundary W4-S25 names -- 'authenticated replay NOT RUN on plane 2, same test-JWT gap'. SO THE SUBSTANCE WAS NAMED HONESTLY AND THE ROW WAS NOT, which is the precise shape of the defect: RTB1-AC2's judgment record states the gap in prose while the two rows carrying it as hazards went unmentioned and unowned. THE STRUCTURAL POINT, which is this seat's to make: R-19 says a disarm owner is never the writer -- the CVO writes a clock on an OWNER'S WORD. A cell cannot give a word. When a row's disarm_owner names a cell rather than a seat, the row is orphaned by design at the moment that cell terminates, and no mechanism notices. Both owner fields here are also PROSE carrying a CONDITION, not an owner at all. W4-S28's condition is separately checkable and this seat checked it: the fix is in source at 56a6e07e8f (2026-09-12T00:03:03Z UTC) and the deployed irpt-ycharts-generate was last modified 2026-09-12T05:21:01Z UTC, so the rebuild ORDERING is consistent with the fix being aboard -- but the row's own stated disarm act is a read of the served CodeSha256 against the built zip, and NOBODY HAS DONE THAT. A timestamp ordering is not a bytes comparison, so the row stays ARMED on a measurement rather than on an assumption.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S25 and #IRPT_BCKEND-W4-S28",
+   "This seat's own zero-hit read of IRPT_BCKEND.TO-IB-rtb-1...proof_of_spec.json for both row ids",
+   "This seat's own AWS reads: lambda get-function-configuration irpt-ycharts-generate -> LastModified 2026-09-12T05:21:01.000+0000; git log -1 56a6e07e8f -> 2026-09-11 20:03:03 -0400 (= 2026-09-12T00:03:03Z)",
+   "R-19's addendum on owner moves, which admits an owner change carrying exactly one new ruling-citing evidence entry with no simultaneous clock move"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-W4-S25",
+  "IRPT_BCKEND-W4-S28"
+ ],
+ "disarm_owner": "1.0.0_SA_CTO at L10, to place both on a live seat -- neither can be owned by IB-rtb-1, which is terminal. W4-S28's disarm act is a served-CodeSha256-vs-built-zip read and is cheap now that the rebuild ordering is consistent; W4-S25 needs the session decision its own text names (a machine principal the typed client accepts, or a signed short-lived render grant)"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S98",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "L9 GRADE RECORD, round 2: TWELVE judgment criteria -- eleven PASS, one FAIL (RT5-AC2, a direct question answered by inference with a printed zero). The hand-off said THIRTEEN and named two for IB-rt-9; measured three ways, there are twelve and IB-rt-9 has one.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- a grade record.",
+ "world_is": "THE SET, measured rather than inherited. Across the project's 31 order files there are 31 criteria carrying judgment=\"true\", exactly one per order; the round-2 subset is the twelve rt/rtb orders. IB-rt-9's <expected_criteria> reads exactly 'RT9-AC1, RT9-AC2', its order carries one judgment tag, and its instance carries one judgment row -- so the hand-off's 'two for IB-rt-9' has no referent, and its total of thirteen is one too many. This is the second count-from-recall this seat has measured tonight across two projects; the other (LGIC_ENFORCE's routed S25R4-AC5, which exists in no order) had the RIGHT TOTAL and a wrong member, which is the more dangerous shape because a count check passes. THE GRADES: eleven PASS, one FAIL, each with its instrument named in its own reason field. Every PASS was re-derived against the bytes or by running something, never by restating the worker's account: RT3's namespace claim was checked at the source AND on the applied plane (three deployed functions carry no override), RT6's zoned-schedule seam was confirmed by reading the live scheduler and censusing the module's single clock read, RT9's 'in the tree and not in the world' was settled by reading the live probe's LastModified and its schedule state, and RT11's packaging claim re-measured at 0 of 216. TWO THINGS THE GRADES DO NOT SAY: that RT6-AC1's FAIL is overturned -- it is a different criterion, its token is correctly withheld, and its proof validates rc=0 on this seat's own run; and that the round's outcome coverage is met -- that is 1.0.0_SA_CTO's L10 read and is not stated here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "All 31 order files' <criterion> declarations read directly for the judgment census; IB-rt-9's <expected_criteria> read verbatim",
+   "All 12 proof-of-spec instances read in full; RTB1, RT6, RT3 and RT9 read first-hand by this seat rather than through any intermediary",
+   "This seat's own live-plane reads: scheduler get-schedule irpt-directory-refresh (ENABLED, cron(0 9 ? * MON-FRI *), America/New_York); lambda get-function-configuration for ycharts-session-probe (LastModified 2026-05-22T15:16:20Z), irpt-directory-refresh / irpt-directory-search / irpt-holdings (IRPT_DIRECTORY_ID_NAMESPACE unset); events list-rules showing ycharts-session-probe-schedule ENABLED and ycharts-session-capture-schedule DISABLED",
+   "This seat's own source censuses: refresh.py 1 clock read of 917 lines at :817; _ids/ids.py:61 and :217-218; parse.py/corrections.py in 0 of 216 functions in lambda-source-map.json",
+   "This seat's own re-validation of IB-rt-6's instance: proof-of-spec-check.py --governing-order, VALID rc=0"
+  ]
+ },
+ "grades": [
+  {
+   "criterion": "RT1-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rt-1.the-seam-one-versioned-contract-artifact.proof_of_spec.json@c22f179bbf",
+   "verdict": "PASS",
+   "reason": "Three heads answered. Q1's 'which operations' is answered as a complete population rather than an enumeration -- 11 of 11 consumer paths return ROUTE_UNKNOWN, so the set IS every operation, and the disposition is one true statement covering all of them ('THE SCHEMA WAS NOT EDITED'). Q3 is answered affirmatively and precisely: eleven fields the PRD does not name, one per schema, all authored by this cell (contract_version), with 82 of 83 properties citing a CONTRACTS table row and 0 of 83 citing no PRD location. DEFECT RECORDED, not fatal: the evidence writes 'firmRole ... is injected ZERO times (index.mjs :383-391)' with no vintage pin, and at HEAD those lines are a console.warn -- the nine injected headers have moved to :400-408. The claim was TRUE when written (verified at the round-2 issuance pin 388b8199b8) and the substance re-verifies independently at HEAD: none of the nine headers carries payload.firmRole. This is the third instance this week of a citation that was true at its vintage and carries no pin; it is filed as IRPT_BCKEND-S56."
+  },
+  {
+   "criterion": "RT2-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rt-2.guard-the-six-dispatched-handlers-and-the-test-principal.proof_of_spec.json@c6bcccd551",
+   "verdict": "PASS",
+   "reason": "Q1 is answered per function and by name, and it answers the harder half the bar actually asks -- whether guarding CHANGED the protection: ycharts-generate and export-render were protected by the request shape, irpt-status by the absent operation, and three (directory-search, performance-adapter, narrative) were NOT protected by their shape at all. Q3 names what the in-process swaps cannot show. Q2 is UNANSWERED BY MEASUREMENT and the record says so four times, including in its own denominator field ('2 of 3 judgment questions answered by measurement'). This seat grades that as satisfying the bar rather than failing it, because the bar's own phrasing is conditional -- 'whether the test principal, IF MINTED, differs' -- and the mint is HUMAN-GATED by a bound this cell may not cross. An honest 'not minted, and here is the operator act that would answer it' is the correct answer to a conditional whose antecedent is false. CARRIAGE DEFECT NOTED: this is the one judgment row of the twelve carrying no `judgment` field (judgment=None where the other eleven read true); the checker passes it regardless, so the flag is unenforced."
+  },
+  {
+   "criterion": "RT3-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rt-3.one-opaque-id-normalizer-and-the-grain.proof_of_spec.json@1956a377a6",
+   "verdict": "PASS",
+   "reason": "The strongest-evidenced of the twelve, and this seat verified its most consequential head on BOTH planes rather than reading it. Q2 asks whether the salt/grammar makes an id re-identifiable from a public key space and the answer is flatly correct: it is a NAMESPACE, NOT A SECRET. Verified at the bytes -- _ids/ids.py:61 reads ID_NAMESPACE = os.environ.get('IRPT_DIRECTORY_ID_NAMESPACE', 'IRPT_DIRECTORY_ID_NS_V1') and :217-218 compose sha256(NS|firm|kind|raw)[:24] -- and verified on the APPLIED plane, which the record does not claim and which matters: irpt-directory-refresh, irpt-directory-search and irpt-holdings all read IRPT_DIRECTORY_ID_NAMESPACE = None, so the live namespace IS the shipped literal. The record's own limits are the right ones: an opaque id is a stable handle and not a privacy barrier, and the enumeration cost is stated. Q1 and Q3 are answered with per-firm values and one-sided populations."
+  },
+  {
+   "criterion": "RT4-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-4.typed-ids-at-every-key-boundary-and-the-exception-path.proof_of_spec.json@56525018f8",
+   "verdict": "PASS",
+   "reason": "Q1 is answered by live measurement and the answer as asked is NONE: 38 keys, 251 segments, 6 refused, all six NOT_A_DECLARED_SHAPE and zero DISPLAY_NAME_SHAPED or EMAIL_SHAPED. Q2 names three real diagnostic losses including one this estate cannot currently close ('THE RESIDUAL CLASS IS UNOBSERVED ... NOBODY COUNTS how often it is returned', against a standing bound that forbids this project a monitor). Q3 names four unreachable paths in three kinds and concedes that two of the three kinds are asserted by READING rather than by execution, because forcing them would be the self-wrapping harness bound 12 forbids as evidence. The cell also surfaced a hole in its OWN criterion's coverage -- arm (c)'s denominator is except handlers, so a public reason built on an ordinary return is outside it -- and stated the consequence exactly. That is the behaviour this bar exists to reward."
+  },
+  {
+   "criterion": "RT5-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rt-5.the-gold-first-mint-bundle-declared-and-minted.proof_of_spec.json@479ed367e5",
+   "verdict": "FAIL",
+   "reason": "Q1 and Q3 are answered well: 'ONLY THE TWO FILES, NOT THE WHOLE RUNNER' with an AST census of four non-stdlib imports, and a notably clean Q3 ('DEPLOYED, never EXERCISED. Not one line of either runner was executed by this cell'). Q2 IS NOT ANSWERED, and its own denominator field says so in numbers: '0 hosts identified; 0 runner lines executed'. The bar asks a direct, factual, non-conditional question -- WHICH HOST will execute them and whether that host's tree already carries their dependencies (pandas, the silver registry) -- and the record answers 'WHICH HOST -- UNDETERMINED BY ANY READ THIS CELL MADE', substituting a precedent (accrual_bridge unpacks flat) and an inference. A judgment criterion is not satisfied by an inference where the question asked for a fact. The grade costs little to repair and this seat names the repair: the answer now exists in this project's own evidence -- IB-rt-6 measured the host directly (ModuleNotFoundError for 'ids' on the runner, with boto3, pandas, jsonschema and trading_calendar all resolving), which is exactly Q2's second half. One paragraph citing that measurement closes it. NOT held against the cell: the same stale-citation class as RT1 (directory_runner.py:80-95, true at 388b8199b8, now :103-108) is recorded, not graded."
+  },
+  {
+   "criterion": "RT6-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rt-6.the-refresh-builds-behind-the-enabled-schedule.proof_of_spec.json@1082067648",
+   "verdict": "PASS",
+   "reason": "The fullest record of the twelve, and this seat verified its central seam independently on two instruments. Q1 names a real, unproven seam -- a schedule whose expression is ZONED while its handler's clock is not -- and this seat confirmed both halves: the live schedule reads State ENABLED, cron(0 9 ? * MON-FRI *), ScheduleExpressionTimezone America/New_York (EventBridge Scheduler, not Rules -- `events list-rules` returns empty here, a false absence the record's sibling row S49 also names), and a comp-read enumerate over the deployed refresh module finds exactly ONE clock read in 917 lines, at :817, `now = _event_business_date(event) or dt.date.today()`. So a scheduled fire, which supplies no business_date, falls through to a UTC today() under a New-York-zoned cadence. Q1 also names a lifecycle hole the cell cannot close and refuses to paper over. Q2 answers with a closed 5-token set over 6 raise sites and states the design choice ('THE ENVELOPE DOES NOT DISTINGUISH THEM, DELIBERATELY, AND THE MANIFEST DOES'). Q3 is 'NOTHING YET, AND THAT IS THE HONEST ANSWER'. Graded on its own bar and not on RT6-AC1's FAIL, which is a different criterion and correctly withheld its token."
+  },
+  {
+   "criterion": "RT7-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rt-7.the-holdings-handler-and-the-attribution-holdouts.proof_of_spec.json@b9a3fcc335",
+   "verdict": "PASS",
+   "reason": "Q1 gives three wrongness classes each with its fixture and its existence state, and the denominator concedes 0 of 3 exist -- which is the honest answer to a bar that asks 'built or not'. Q2 is measured and carries the sharper half unprompted: Cottonwood is furthest at one day (custody 2026-09-10 vs overlay 2026-09-11, carried on all 971 nodes), AND 49F's equality is named as STRUCTURAL rather than reassuring, because its custody and overlay arrive in one table so the two clocks CANNOT differ there and equality is not evidence of freshness. That distinction is the difference between a number and a measurement. Q3 names three things the served slice cannot tell a reader, including a reader-facing ambiguity left open: not-entitled and ownership-map-not-caught-up read identically as 'not in the permitted set'."
+  },
+  {
+   "criterion": "RT8-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rt-8.the-export-worker-renders.proof_of_spec.json@ed80340d68",
+   "verdict": "PASS",
+   "reason": "Q2 is the sharpest measurement in the whole round: the package DECLARES ['Lato-Regular','Lato-Bold','Lato-Italic'] and the four stored PDFs embed ['AAAAAA+SegoeUI-Bold','BAAAAA+SegoeUI','CAAAAA+TimesNewRomanPSMT'] -- 0 OF 3 DECLARED FONTS IN 4 OF 4 ARTIFACTS -- with the cause named (the app fetches its typefaces from a third party at render time). Q3 is measured twice with two instruments; Q4 names five gaps. Q1's subject did not happen: no PDF was produced, because the print route answered with a sign-in screen, so lifetime, cost and concurrency are reported for a FAILED render. This seat grades that as answered rather than missing -- the record states the failure plainly and reports what the host did do (~55 s uptime, concurrency 1, a 900 s timeout unapproached) -- and the underlying gap is carried as W4-S25, which this seat graduates ARMED in C-S97. DEFECT RECORDED: Q4's fifth gap carries a reading that has since become false -- 'deleted on a versioned bucket means DELETE MARKER, so the bytes remain retrievable by VersionId' -- where S43's ledgered act took nine per-version deletes with post-act 404 on 9 of 9 and the objects are permanently gone. The evidence's own pointer (W4-S20) is right; the sentence beside it has aged. Filed as IRPT_BCKEND-S56 with the RT1 instance."
+  },
+  {
+   "criterion": "RT9-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-9.ycharts-session-broker-on-the-fixed-cloud-chain.proof_of_spec.json@6d5a801053",
+   "verdict": "PASS",
+   "reason": "Q1 is a clean 5-of-5 reader table with the predicate each parses and, better, the discriminator that corrected its own count: 'the discriminator is a Secrets Manager read API call, not the secret's name, and that distinction is what took this arm from a wrong 7 to a right 5'. Q2 names four things the fixture fence cannot show, including the non-atomicity the PRD already names (the lease in DynamoDB, the session in Secrets Manager, and nothing making those one transaction). Q3 names five. THIS SEAT VERIFIED ON THE LIVE PLANE what the record states and what no repo read could settle: ycharts-session-probe reads LastModified 2026-05-22T15:16:20Z with its schedule ENABLED at cron(0 */6 * * ? *), so the rewritten predicate is genuinely in the tree and not in the world and SessionFresh=1 from it is evidence of nothing -- exactly as the record says and cites nowhere. The retired capture reads DISABLED, matching the retirement claim. THE HARD STOP IS HONOURED AND PROVEN, not asserted: 'Any live YCharts call, login or session capture' is a declared exclusion under bound 1, with arm (f) proving 0 non-loopback connections escaped either offline drive with both guards' positive controls fired, and the capture host read STOPPED live."
+  },
+  {
+   "criterion": "RT10-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rt-10.glyphs-and-dates-per-document-font-mapping-and-provenance.proof_of_spec.json@a4bebe2b07",
+   "verdict": "PASS",
+   "reason": "Q1 is measured and structurally corrected: 73 of 89 compared codes diverge, and the unit is the FONT RESOURCE, not the document -- a correction to the question's own framing that makes the answer mean something. The named divergence 'code 14: a vs ,' is the right example to lead with, because inside a rendered number it is the difference between 1,234 and 1a234. Q2 is answered YES with counts (14 of 71, 40 of 91, 67 of 118 rows take the REPORT claim, a majority in the multicomp case) and the concrete harm -- an eleven-day-stale number presented under today's date. Q3 is answered by INFERENCE on 0 real-client specimens and is LABELLED as inference throughout, including in the denominator; this seat grades that as correct rather than deficient, because manufacturing a specimen to answer it is the self-wrapping-harness defect bound 12 forbids, and a labelled inference is what an honest answer to an unanswerable-without-a-specimen question looks like. The cell also names a hole its own count cannot show (codes 45 and 46, mapped by exactly one document each, so their absence from the divergence list IS the hole)."
+  },
+  {
+   "criterion": "RT11-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-11.intake-currency-and-unit-controls-quarantine-over-relabeling.proof_of_spec.json@7408aa5c5e",
+   "verdict": "PASS",
+   "reason": "All three heads answered, and the first is quantified into a consequence rather than described: 'ANY WORKBOOK FORMATTED AS CURRENCY IN EXCEL ... on a book of 200 client workbooks that is 200 reviews, and the reviewer's answer will be yes, USD 200 times' -- which is the real content of 'programmatic by default' becoming 'review everything'. Q2 names five currency signal families the specimens could not represent. Q3 is candid where it would have been easy not to be: a quarantine is 'CURRENTLY a state that exists correctly and reaches no one'. The cell states the boundary of its own evidence in the same breath -- every specimen is synthetic and adversarial by construction and parse.py is packaged by 0 functions, so 'the controls are proven; the ENCOUNTER is not'. This seat re-measured that packaging claim at HEAD: parse.py and corrections.py appear in 0 of 216 functions in lambda-source-map.json. The claim holds and its denominator has moved from the cited 214 to 216."
+  },
+  {
+   "criterion": "RTB1-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtb-1.the-replay-authenticated-across-every-deployed-route.proof_of_spec.json@9c4f79f918",
+   "verdict": "PASS",
+   "reason": "All three heads answered, and this seat read the record first-hand rather than through a digest. Q1 is answered directly and quantifies the movement: FWD-2's EXERCISED bar grew from '5 of 11 routes reauthorization-testable' to '12 of 12', all on the POST-AUTHORIZER plane, and what still lacks is an authenticated six-swap run through CloudFront -> edge validator -> API Gateway authorizer -> handler as ONE continuous real request, for any of the 12 routes. Q3 is unambiguous and is the answer that matters most: all six guards were exercised only in-process, and the real-path plane exercises NONE of them -- it stops at the authorizer before any of the six identity comparisons is reached. Q2 is answered for two of three layers by measurement and for the edge not at all, which the record states. Its design-intent half is the issuer's own decomposition read back, and the cell FLAGS that it cannot itself adjudicate intent versus sequencing -- the right disclosure. The criterion is graded on its three heads. SEPARATELY, and not a mark against this grade: the two rows naming this cell as their disarm owner are absent from its record, which this seat verified at 0 occurrences each and graduates as a structural finding in C-S97."
+  }
+ ],
+ "dismissal_reason": "This row grades twelve judgment criteria and adjudicates no investigation item; it is a grade record, per the schema's own note for this shape.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S99",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "S56 GRADUATED and ARMED: this seat's own L9 finding -- four citations across three judgment records that were true when written and are wrong at HEAD, none carrying a vintage pin -- graduated in the same round it was filed, so it carries a clock rather than prose.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Filed while grading RT1-AC2, RT5-AC2 and RT8-AC2 and graduated immediately, because a finding raised at L9 and left as narrative would be exactly the 'prose disarms nothing' failure this channel exists to prevent. It is ARMED rather than INERT because the records are the evidence a future seat will grade from and they will read as current: a line citation with no pin is indistinguishable at a glance from one that still resolves. It is NOT graded against any of the three cells -- this seat re-verified the substance behind all four citations and none changes a verdict, which is stated in both the row and the grade record so the finding cannot be read as a defect in the work it describes.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S56",
+   "The three instances are quoted with both vintages in that row's own grounding, each re-derived by this seat at 388b8199b8 and at HEAD",
+   "Companion instance of the same class in another project the same night: LGIC_ENFORCE-S61"
+  ]
+ },
+ "adjudicates": [
+  "IRPT_BCKEND-S56"
+ ],
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~B to route the pin convention to the round's cells"
+}
+```

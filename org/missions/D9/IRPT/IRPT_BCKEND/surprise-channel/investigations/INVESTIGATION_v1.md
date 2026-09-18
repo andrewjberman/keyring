@@ -4712,3 +4712,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 ]
 ```
+
+## Round 2 -- a finding of the CVO's own L9 read
+
+```json
+{
+ "id": "IRPT_BCKEND-S56",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T01:10Z",
+ "one_line": "THREE judgment records cite line ranges that were TRUE WHEN WRITTEN and are wrong at HEAD, none carrying a vintage pin -- and one carries a factual reading that a later authorized act made false. A citation ages separately from the text it quotes, and this round produced four instances of it in the evidence the CVO grades from.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~B to route the pin convention to the round's cells; the row disarms when a judgment record's line citations carry @<commit> as the estate's other citation surfaces already do",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "RT1-AC2 writes 'firmRole ... is injected ZERO times (index.mjs :383-391)'. At HEAD those lines are a console.warn for advisor_scoping_denied; the nine injected headers sit at :400-408. At the round-2 issuance pin 388b8199b8, :383-391 WAS exactly those nine header lines -- so the citation was true when written and is stale by 17 lines now.",
+   "RT5-AC2 cites directory_runner.py:80-95 for the _REPO/sys.path/import trading_calendar derivation. At HEAD that range is the docstring and imports; the derivation is at :103-108. True at 388b8199b8, moved since.",
+   "RT8-AC2's fourth gap carries a reading that a later authorized act made FALSE: \"'deleted' on a versioned bucket means DELETE MARKER, so the bytes remain retrievable by VersionId and the estate should not read 'gone'\". S43's ledgered act took NINE per-version deletes with post-act head-object 404 on 9 of 9, and S55 records the PDFs as permanently gone. The record's own pointer (row W4-S20) is the right one; the sentence beside it has aged.",
+   "SUBSTANCE RE-VERIFIED INDEPENDENTLY BY THIS SEAT in each case, so none of the three changes a grade: none of the nine edge headers carries payload.firmRole (firmRole occurs 7 times in that file, all in authorization logic and comments, never in a header assignment); directory_runner.py's derivation is intact at its new lines; and the PDFs are genuinely gone."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CLAUDE.md Rule 22: a citation without a vintage is not a citation; and Rule 27: a citation ages separately from the text it quotes, so re-reading the rule catches neither.",
+ "world_is": "Four citations in three judgment records are wrong at HEAD and were right when written, and not one carries the @<commit> that would have made the staleness visible instead of invisible. The cost landed on this seat: each had to be re-derived at two vintages to tell a stale pointer from a false claim, which is the tax the estate's own law is written to avoid.",
+ "notes": "Filed as ONE row rather than three because the class is the finding, not the instances -- this is the same class this seat measured tonight in LGIC_ENFORCE (row LGIC_ENFORCE-S61, a wrong-object citation whose quoted phrase lives in a sibling file) and the same class 1.0.0_SA_CTO owned in R-34. The remedy is a convention, not a correction: a line citation inside a judgment record carries its pin. NONE of these changes a grade and the round's substance survives all four."
+}
+```
