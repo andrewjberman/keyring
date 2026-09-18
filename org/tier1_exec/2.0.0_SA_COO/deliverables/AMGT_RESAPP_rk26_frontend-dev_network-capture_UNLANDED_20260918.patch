@@ -1,0 +1,204 @@
+diff --git a/.tools/frontend-dev.py b/.tools/frontend-dev.py
+index 120f804975..55eaf0b3db 100644
+--- a/.tools/frontend-dev.py
++++ b/.tools/frontend-dev.py
+@@ -156,7 +156,15 @@ class ScenarioRunner:
+         self.issues: list[dict[str, Any]] = []
+         self.screenshots: list[str] = []
+         self.ss_idx = 0
++        # AMGT-rk-26 (network-log extension): ONE list per scenario -- an
++        # "artifact per name/tab-set" is a per-SCENARIO file, not one run-wide
++        # dump, so a constitution running two scenarios (e.g. two security
++        # names) gets two independent network logs, never a merged one that
++        # would hide which name a given request belongs to.
++        self.network_log: list[dict[str, Any]] = []
++        self.network_log_path: str | None = None
+         self._hook_console()
++        self._hook_network()
+ 
+     def _hook_console(self) -> None:
+         def on_console(msg):
+@@ -175,12 +183,43 @@ class ScenarioRunner:
+         self.page.on("console", on_console)
+         self.page.on("pageerror", on_pageerror)
+ 
+-    def screenshot(self, label: str) -> str:
++    def _hook_network(self) -> None:
++        """AMGT-rk-26: the network-log capture named by the task order.
++
++        `page.on("response")` (the base the order names) -- the ONE surviving
++        oracle for whether the browser sent a path segment `%2F`-encoded or
++        normalised, because `response.url` / `response.request.url` is the
++        LITERAL string the browser put on the wire, not a re-serialization of
++        parsed components. One row per response, appended to a PER-SCENARIO
++        list (see `__init__`) and flushed to its own file in `run()`.
++        """
++
++        def on_response(response) -> None:
++            try:
++                req = response.request
++                entry: dict[str, Any] = {
++                    "ts": datetime.now(timezone.utc).isoformat(),
++                    "method": req.method,
++                    "url": response.url,
++                    "status": response.status,
++                    "resource_type": req.resource_type,
++                    "request_headers": dict(req.headers),
++                }
++                self.network_log.append(entry)
++            except Exception as e:
++                self.network_log.append({
++                    "ts": datetime.now(timezone.utc).isoformat(),
++                    "error": f"response hook failed: {e}",
++                })
++
++        self.page.on("response", on_response)
++
++    def screenshot(self, label: str, full_page: bool = False) -> str:
+         safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in label)[:50]
+         fname = self.out_dir / f"{self.ss_idx:02d}-{self.name}-{safe}.png"
+         self.ss_idx += 1
+         try:
+-            self.page.screenshot(path=str(fname), full_page=False)
++            self.page.screenshot(path=str(fname), full_page=full_page)
+             self.screenshots.append(str(fname))
+         except Exception as e:
+             log(f"  SS FAILED: {label} ({e})")
+@@ -241,7 +280,21 @@ class ScenarioRunner:
+         elif action == "wait":
+             self.page.wait_for_timeout(step["ms"])
+         elif action == "screenshot":
+-            self.screenshot(step.get("label", f"step-{self.ss_idx}"))
++            self.screenshot(step.get("label", f"step-{self.ss_idx}"), full_page=step.get("full_page", False))
++        elif action == "fill":
++            # AMGT-rk-26: minimum addition to reach a text input (the Lead
++            # Panel's ticker search box, a login field) -- no existing action
++            # could type into one.
++            loc = self._resolve_locator(step).first
++            loc.fill(step["value"], timeout=step.get("timeout_ms", 5000))
++            self.page.wait_for_timeout(step.get("wait_ms", 300))
++        elif action == "press":
++            # AMGT-rk-26: submits the search box's form (Enter), or any other
++            # key a scenario needs, without inventing a click target for a
++            # control that has none (the search form has no visible button).
++            loc = self._resolve_locator(step).first
++            loc.press(step["key"], timeout=step.get("timeout_ms", 5000))
++            self.page.wait_for_timeout(step.get("wait_ms", 1000))
+         elif action == "assert_visible":
+             loc = self._resolve_locator(step)
+             if loc.count() == 0:
+@@ -420,6 +473,23 @@ class ScenarioRunner:
+             self.run_step(step)
+         for step in self.scenario.get("teardown", []):
+             self.run_step(step)
++        self._flush_network_log()
++
++    def _flush_network_log(self) -> None:
++        """AMGT-rk-26: write this scenario's own network log beside its screenshots.
++
++        One file per scenario (see `__init__`'s note) so a constitution running
++        several scenarios in one process -- e.g. one per security name -- never
++        collapses which requests belong to which name into a single dump.
++        """
++        safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in self.name)[:50]
++        fname = self.out_dir / f"{safe}-network-log.json"
++        try:
++            fname.write_text(json.dumps(self.network_log, indent=2), encoding="utf-8")
++            self.network_log_path = str(fname)
++            log(f"  NETWORK LOG: {len(self.network_log)} response(s) -> {fname}")
++        except Exception as e:
++            log(f"  NETWORK LOG WRITE FAILED: {e}")
+ 
+ 
+ def build_actionable_fixes(all_issues: list[dict[str, Any]]) -> dict[str, Any]:
+@@ -462,6 +532,7 @@ def main() -> int:
+     all_issues: list[dict[str, Any]] = []
+     all_screenshots: list[str] = []
+     all_console: list[str] = []
++    all_network_logs: list[str] = []
+ 
+     with sync_playwright() as p:
+         launch_kwargs = {"headless": args.headless}
+@@ -476,6 +547,34 @@ def main() -> int:
+         context = browser.new_context(viewport={"width": 1440, "height": 900})
+         page = context.new_page()
+ 
++        # AMGT-rk-26: the AUTH leg runs before any ScenarioRunner exists (its
++        # network hook attaches per-scenario, after login), so a login failure
++        # -- the exact failure this order hit -- would otherwise leave no
++        # network-log artifact at all. Hook here too, independently, and
++        # always flush it (pass or fail) to `<out_dir>/pre-auth-network-log.json`.
++        pre_auth_network_log: list[dict[str, Any]] = []
++
++        def _on_pre_auth_response(response) -> None:
++            try:
++                req = response.request
++                pre_auth_network_log.append({
++                    "ts": datetime.now(timezone.utc).isoformat(),
++                    "method": req.method,
++                    "url": response.url,
++                    "status": response.status,
++                    "resource_type": req.resource_type,
++                })
++            except Exception as e:
++                pre_auth_network_log.append({"ts": datetime.now(timezone.utc).isoformat(), "error": str(e)})
++
++        page.on("response", _on_pre_auth_response)
++
++        def _flush_pre_auth_network_log() -> str:
++            fname = out_dir / "pre-auth-network-log.json"
++            fname.write_text(json.dumps(pre_auth_network_log, indent=2), encoding="utf-8")
++            log(f"  NETWORK LOG (pre-auth): {len(pre_auth_network_log)} response(s) -> {fname}")
++            return str(fname)
++
+         try:
+             if "login" in cfg:
+                 if args.login_email:
+@@ -485,17 +584,25 @@ def main() -> int:
+                 log(f"[AUTH] logging in as {cfg['login'].get('email')}")
+                 if not do_login(page, cfg["login"], args.base):
+                     log("ERROR: login failed")
++                    fail_shot = out_dir / "00-login-failed.png"
++                    try:
++                        page.screenshot(path=str(fail_shot), full_page=True)
++                    except Exception as e:
++                        log(f"  SS FAILED (login-failed capture): {e}")
++                    net_path = _flush_pre_auth_network_log()
+                     browser.close()
+                     result = {
+                         "status": "FAIL",
+                         "issues": [{"description": "login failed", "severity": "blocking"}],
+-                        "screenshots": [],
++                        "screenshots": [str(fail_shot)],
+                         "console_errors": [],
++                        "network_log": net_path,
+                     }
+                     (out_dir / "results.json").write_text(json.dumps(result, indent=2))
+                     _emit_block(result)
+                     return 1
+                 log("[AUTH] OK")
++                _flush_pre_auth_network_log()
+ 
+             for scn in scenarios:
+                 runner = ScenarioRunner(page, args.base, out_dir, scn)
+@@ -504,9 +611,12 @@ def main() -> int:
+                 except Exception as e:
+                     runner.fail(f"scenario crashed: {e}", severity="blocking")
+                     log(traceback.format_exc())
++                    runner._flush_network_log()
+                 all_issues.extend(runner.issues)
+                 all_screenshots.extend(runner.screenshots)
+                 all_console.extend(runner.console_errors + runner.page_errors)
++                if runner.network_log_path:
++                    all_network_logs.append(runner.network_log_path)
+         finally:
+             browser.close()
+ 
+@@ -514,6 +624,7 @@ def main() -> int:
+         "status": "FAIL" if any(i.get("severity") == "blocking" for i in all_issues) else "PASS",
+         "issues": all_issues,
+         "screenshots": all_screenshots,
++        "network_logs": all_network_logs,
+         "console_errors": sorted(set(all_console)),
+         "constitution": str(args.constitution),
+         "out_dir": str(out_dir),

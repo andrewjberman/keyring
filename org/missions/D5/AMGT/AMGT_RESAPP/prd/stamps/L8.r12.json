@@ -1,0 +1,10 @@
+{
+ "note": "CVO~Z round12: 70/70 open items dispositioned (19 adjudication rows C-S273..C-S291); 13 graduated (6 remediated in-round); judgment 3 PASS 1 FAIL 2 NOT_EVALUATED (no captured render); rk-7 AC5 + rk-15 AC4 one FWD-18 spec-vs-spec conflict; ADJUDICATION_v12 and REMEDIATION_v12. L10 single CTO handoff.",
+ "prd_pin": "dbffe8a71c70",
+ "prd_version": "v0.10",
+ "project": "AMGT_RESAPP",
+ "round": 12,
+ "signed_by": "3.0.0_SA_CVO~Z",
+ "stage": "L8",
+ "utc": "2026-09-17T06:58Z"
+}

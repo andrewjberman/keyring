@@ -1,0 +1,127 @@
+# Andrew-direct ~17:4xZ 2026-09-17 -- the cost deck is for nontechnical managers; five $200 Max accounts; open on August paid vs standard cost
+
+**Recorded by:** 4.0.0_SA_CRO~Z, at this terminal, the same minutes the words arrived.
+**Scope:** the deliverable recorded @`12fa905d41` (report + deck on the true cost of Claude), delivered @`1798bfe168`.
+
+## Verbatim
+
+Message 1, on the delivered deck:
+
+> THE DECK LOOKS GOOD BUT IT NEEDS TO BE CONSTRUCTED A LITTLE MORE EXPLANATORILY. Currently, we operate 5 Claude $200
+> Pro Max accounts (and a $200 Codex Pro account outside the context of this convo). You are writing the copy for a
+> technical audience, you need to really spell it out, this is for nontechnical managers who have no idea what
+> anything is.
+
+Message 2, mid-turn:
+
+> Also right from the beginning, should show what was paid in month of august versus what it actually costs through
+> standard mechanisms.
+
+## Reading (narrow)
+
+1. Rewrite the deck copy, and the report's framing, for nontechnical managers: every term defined where it first
+   appears (token, context, cache, model, API, subscription, retention, commit, task order), plain sentences, the
+   mechanism spelled out before the number.
+2. The subscription cost is five Claude Max accounts at $200 a month each, $1,000 a month (STATED by Andrew). It
+   replaces the 1-to-3-plan range the first deck carried. The $200 Codex Pro account is outside this deliverable and is
+   not costed.
+3. The deck opens on August: what was paid for the month against what the same work costs at standard pay-as-you-go
+   API prices. Limits, which the deck states rather than hides: the local session records begin 2026-08-18 (30-day
+   cleanup), and they cover site Z only.
+
+Not a canonical-flow project and no new gate; binds this seat's deliverable only.
+
+## Follow-on words, ~17:4xZ (before the 17:45:20Z request to 0.0.0_AB_MSTR~Z), mid-turn
+
+After this seat reported that the gateway identity on site Z refuses email search, three messages arrived in order:
+
+> you can do it
+
+> if you need information from the main fabric, just ask MSTR
+
+> on their token usage
+
+Reading: the laptop (main) fabric's token usage is in scope and is obtained by asking `0.0.0_AB_MSTR`, so the August
+comparison can cover both fabrics rather than site Z alone. It is NOT read as a word to widen the gateway's email
+allowlist; the payment side stays STATED (five accounts at $200).
+
+## Follow-on words, ~17:4xZ-17:5xZ (before the 17:51:38Z Ramp request to 0.0.0_AB_MSTR~Z), mid-turn
+
+> last 30 days are fine if thats the information you have
+
+Reading: the deck compares the last 30 days (18 Aug - 17 Sep 2026) instead of calendar August; no August extrapolation.
+
+> you also need to include any anthropic extra api costs that appeared in the period, scan andrew@opalinvest.com
+> outlook for those ramp anthropic payments in the period. any anthropic payments that were not $200 are extra api
+
+Reading: "what we paid" = the five $200 subscriptions PLUS every Anthropic payment in the window that is not $200,
+taken from Ramp payment notices in the andrew@opalinvest.com mailbox. This is Andrew's per-use word to read that
+mailbox for this purpose. It is not a word to change any gateway allowlist; if no reachable identity can read that
+mailbox, the scan is routed to 0.0.0_AB_MSTR~Z.
+
+## Follow-on words, ~18:3xZ, mid-turn (verbatim, in order)
+
+> yeah the accounts are andrew@goldengate.dev, andrew@fideles.capital, andrew@opalinvest.com,
+> andrew.opalinvest@gmail.com, and andrew.opalinvest2@gmail.com
+
+> Work with MSTR Base to get the true numbers. Also the file i updated has proper layout and copy, i deleted a
+> bunch of slides that were not necessary. Make sure to use my copy for the new version, just make sure the numbers
+> for commits/task orders/usage/etc are accurate.
+
+> Relay this to MSTR~Z
+
+> I also want a slide immediately at the front that says what we actually bought in this period, what was built in
+> the last 30 days.
+
+> Ideally we can then track all those associated projects and actually show the attributed cost versus real cost.
+
+Reading:
+1. Andrew's hand-edited deck (16 slides, saved 18:36Z, layout and copy his) is the BASE for the next version. The
+   build script no longer generates the deliverable; numbers are corrected INTO his file, so the /deck-gen [AUTO]
+   gate no longer applies and visual QA is the remaining control. Said plainly in the hand-off.
+2. Two new slides at the front: what was built in the window, and attributed cost vs real cost per project.
+3. The five accounts are named above. Site Z's records carry three account ids; `~/.claude.json` and its `.bak-*`
+   copies map two of them: 8a8c44de = andrew.opalinvest2@gmail.com (50.6% of this machine's spend),
+   d0171e4d = andrew@opalinvest.com (31.2%). f8715057 (5.5%) is unmapped here; 12.7% sits in sessions with no
+   account id. The laptop half is asked of `0.0.0_AB_MSTR~Z` (msgs 18:35:28Z, 18:35:58Z, 18:41:43Z).
+4. DISCREPANCY, unresolved and not silently reconciled: Andrew's edited slide carries $110.04 of extra usage dated
+   16 September; the mailbox scan measured $10.04 on 26 August and, on three independent queries, nothing between
+   7 and 17 September. His figure is treated as authoritative because he reads Ramp directly; whether the August
+   charge is a separate fourth row is his call and is asked, not assumed.
+
+## Follow-on words, ~18:5xZ, mid-turn (verbatim, in order)
+
+> use my edit disregard mstr, i know things they dont
+
+> dont touch that
+
+> This is a good layout but the issue with it is that it only covers the bloomberg sitez box. this deck needs to
+> cover ALL WORK DONE IN THE PERIOD, both boxes.
+
+Reading, and the correction this seat made to its own first reading:
+- The first two words were read as "change nothing at all", and the MSTR asks were stood down whole. That was too
+  wide. The third word says the scope is BOTH machines. What Andrew set aside is the PAYMENT evidence -- he holds
+  Ramp facts the mail record does not carry -- so his $1,110 paid, his $110.04 extra-usage row and his charges
+  table stand as written and are never rewritten. The USAGE side had to grow to both machines.
+- MSTR re-engaged for the laptop's project split; the laptop's commits are in the SAME git history, so the
+  fabric-wide output counts were measured here without waiting: 13,829 commits by agent seats and 348 completed
+  task orders in the window, against site Z's own 4,872 and 187.
+- Per-project cost across both machines: site Z per seat (measured here), the laptop's $34,953 split by its own
+  commit pattern (weaker, and labelled). Top four: investor reporting $5,381, cloud systems map $4,645,
+  performance reporting $2,389, naming enforcement $2,188.
+
+## Laptop half, measured (msg 23576, 19:07Z)
+
+`0.0.0_AB_MSTR~Z` had the laptop run THIS seat's own `per_project_cost.py` @`120ef31c6a` unmodified, so both halves
+now use one instrument. Laptop priced total $35,001.18 across 52 projects (the earlier $34,953.22 differs only by
+calendar-window vs exact-timestamp bounds). Top: NFRA_CLDGRPH $2,828, NFRA_C3MATERIALIZ $2,728, NFRA_SUBSTRATECAR
+$2,464, NFRA_COMPEFFICACY $2,117, IRPT_BCKEND $2,003, ETFS_GUARDRAIL $1,965, IRPT_FNTEND $1,447; $3,560 in seats
+with spend and no commits. One cross-fabric commit exists, inside NFRA_CLDGRPH, authored by `0.0.0_AB_MSTR~Z`; no
+other project on either side crosses, so double-counting is one commit wide.
+
+TWO COUNTS THAT DISAGREE, both disclosed rather than reconciled by force:
+- Commits: this seat counts 13,829 agent commits in the window (site Z 4,872 by the cost-report rule); the laptop
+  counts 13,999 total with a 10,004 / 3,995 split by a different rule (author suffix + project fabric). The deck
+  carries 13,829, measured here under one rule over one history.
+- Task orders: this seat counts 348 across every project; the laptop counts 183 laptop-side plus 180 site-Z-side,
+  363 in total. The deck carries 348. Neither count is asserted over the other.

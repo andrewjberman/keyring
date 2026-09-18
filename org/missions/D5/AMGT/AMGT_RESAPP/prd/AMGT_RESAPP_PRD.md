@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.10",
+  "prd_version": "v0.13",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -91,7 +91,7 @@ which held that L4-R forbids annotation, history and seat names across the whole
 
 ### C-LIST-OWNER -- THE NAMED OWNER, RECORDED 2026-09-14 (a fact, not an amendment)
 
-`C-LIST-OWNER` (`:353`, serves `FWD-14`) requires that each of the publisher allowlist and the
+`C-LIST-OWNER` (`:947`, serves `FWD-14`) requires that each of the publisher allowlist and the
 company-to-social-account map carry **a named owner** and **a rot signal**. **THE NAMED OWNER IS
 `0.5.0_AE_OpalETL~Z`.**
 
@@ -121,14 +121,14 @@ realizes when a CELL delivers the owner into the lists with correct provenance**
 the COO's to cut after a slug. The rot-signal half is already delivered and running (90-day and
 30-day review intervals, `reviewed_at` stamps, a separate computed `rot_signal.json`).
 
-⭐ **WHY IT IS RECORDED HERE AND NOT BESIDE THE CONTRACT AT `:353`.** Two reasons, both measured.
+⭐ **WHY IT IS RECORDED HERE AND NOT BESIDE THE CONTRACT AT `:947`.** Two reasons, both measured.
 **(1)** `.tools/prd_signoff_lib.py:93-98` -- `half_of_section(None)` returns **None**: the
 pre-heading preamble belongs to NEITHER L4-R half, while `## 3. CONSTRAINTS ON THE CUT` (which holds
-`:353`) is the **brief** half. Writing the fact at `:353` would make a SIGNED half stale for a note
+`:947`) is the **brief** half. Writing the fact at `:947` would make a SIGNED half stale for a note
 that changes no requirement. **(2)** `TREE_DELIVERABLES` is **NOBODY by enumeration** -- the gate
 refused `2.0.0_SA_COO~ZZZ` on the lists themselves, and back-filling a ROUND-2 worker's artifact with
 a fact Andrew supplied **two rounds later** would make that file assert a provenance it does not
-have. ⚠ The cost is DISCOVERABILITY: a reader who opens `:353` alone does not see this note. That is
+have. ⚠ The cost is DISCOVERABILITY: a reader who opens `:947` alone does not see this note. That is
 accepted deliberately, and it is why the note names the contract rather than the reverse.
 ---
 
@@ -200,6 +200,57 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.13 CHANGE NOTE -- 2026-09-18 ~20:1xZ, `1.0.0_SA_CTO~Z`: ratified-text hygiene, and Andrew clears SA's terms
+
+(1) **`3.0.0_SA_CVO~Z` REFUSED v0.12's ratified-text half on criterion (d) alone** -- annotation, history and seat names inside
+the section; substance passed (review `org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V011_RATIFIED_TEXT_REVIEW_20260918_Z.md`
+@`969755b2f2`, stamp @`075227f4c0`). Every RULE is kept. Moved OUT of `C-FILINGS-ANALYZER`, `C-FILINGS-TRANSLATION`,
+`C-EXEC-MANAGEMENT` and `C-PEERS-V-FLOORS` into section 10's closing evidence list: seat serials, present-tense defect
+descriptions with file:line, the Keyence measurements and the supersession narrative. (2) **Andrew-direct ~20:0xZ,
+VERBATIM:** *"I have already clarified SA ToS, we are good, if I had an issue with the design i wouldnt have designed it this
+way."* (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`). `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED for the two Seeking Alpha paths lifted at v0.12, and the terms-reading
+task is withdrawn. Both halves move.
+
+### v0.12 CHANGE NOTE -- 2026-09-18 ~19:4xZ, `1.0.0_SA_CTO~Z`: Andrew answered the six round-13 cards
+
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`. His words, VERBATIM: *"1.) Yes use SA thats fine. 2.) Yes full egress. 3.) Yes. 4.) Agreed, yes. 5.) Base. I
+think the upside and downside cases can be discussed on methodology. 6.) Yes"*. Landed before either v0.11 half was signed,
+so the signers review v0.12's bytes. **Ratified-text half:** `C-PEER-SET-SA` (SA production use LIFTED for this path by
+name); `C-FILINGS-ANALYZER` (international battery order RATIFIED). **Brief half:** `C-MODEL-FORECASTS` (SA fallback
+LIFTED by name); `C-MODEL-WINDOW-AND-ROWS` (Base case adopted; Upside/Downside ABSENT pending methodology); `C-VERBATIM-GATE`
+(a sentence with no span is HELD); the `C-SA-VENDOR-WORD` table (the two named lifts); `C-VALIDATION-NAMES` (Lusha and SA
+authorized inside the validation); and, on `4.0.0_SA_CRO~Z`'s review (msg 23744), `C-DESCRIPTION-LINE`'s order corrected
+(Bloomberg's field first; a drafted sentence only past a describes-the-business test) and card 4's figure re-stated over the
+served population (179 of 389). Card 6 (headless capture, estate-wide) is outside this PRD and routed to
+`0.0.0_AB_MSTR~Z`. **Not changed:** a RECURRING or SCHEDULED Seeking Alpha read still waits on `C-SA-TERMS-BEFORE-SCHEDULE`.
+
+### v0.11 CHANGE NOTE -- 2026-09-18, `1.0.0_SA_CTO~Z`, the answer to round 13's slug (`ledger/ROUND_ANALYSIS.round13.md`)
+
+**Source:** round 13's slug (97 of 97 orders terminal) and the six current-to-desired panel briefs `4.0.0_SA_CRO~Z` brought
+forward with Andrew (Lead Panel, Thesis, Exec Management, Peers, Model, and the three-name instantiation validation
+@`b527b93214`), read into `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTOZ_AMGT_RESAPP_PANEL_BRIEFS_INTAKE_20260918.md`. The
+Posture brief is NOT integrated here (Andrew: *"no need to wait for Posture brief"*); FWD-19 is untouched. **BOTH HALVES
+RE-OPEN.**
+
+**Ratified-text half (ENDPOINT + CONTRACTS):** `C-FILINGS-ANALYZER` replaced (the source is the per-security battery's
+winning document; Bloomberg supplies keys, never text); `C-FILINGS-TRANSLATION` added (analyze the original, translate the
+output); `C-EXEC-MANAGEMENT` replaced (Andrew's cards 1 and 2 and the CEO search; `roster_source`; a zero-officer roster is
+not SERVED); `C-SIMILARITY-RANKER` narrowed to FWD-19's comparable, and FWD-8's peer set moved to the new `C-PEER-SET-SA`
+with `C-PEERS-V-FLOORS`; the ENDPOINT's stale "Eighteen outcomes" corrected to Nineteen (the v0.9 note said it was fixed;
+the bytes were not).
+
+**Brief half:** `C-UNIT-MAP-MEASURED` amended (built for every name); `C-MODEL-FORECASTS` and `C-MODEL-WINDOW-AND-ROWS`
+added; `C-VERBATIM-GATE` replaced (every pass count prints its split; a sentence with no span is served LABELLED, and whether
+it is instead HELD is Andrew's card); `C-SERVER-SIDE-RANKING` amended (no rank without signal; `empty_reason`);
+`C-PRICE-BREAKOUT-FLOOR`, `C-PRICE-DAILY-LEG` (Andrew's Lead Panel cards B and A) and `C-DESCRIPTION-LINE` added; the
+section-9 condition *"measure one Bloomberg-pulled filing"* marked superseded; and a new **section 10, THE INSTANTIATION
+STAGES**, with `C-INSTANTIATION-ENTRY`, `C-PRODUCTION-HOME` and `C-VALIDATION-NAMES`. In this preamble, the five stale `:353`
+citations of `C-LIST-OWNER` (on four lines) are repointed to its definition, now `:947`.
+
+**Not changed:** every FWD line; FWD-19 and `C-POSTURE`; `C-SA-VENDOR-WORD`, `C-SA-TERMS-BEFORE-SCHEDULE` and
+`C-VENDOR-EGRESS`, which bind the new Seeking Alpha paths as written; any cadence, which stays Andrew's. **Placed as a `###`
+in the preamble, before `## 0.`, so this note moves neither half by itself.**
 
 ---
 
@@ -454,7 +505,7 @@ disputable, by rule, and carry no technical language.*
 
 **BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
 
-⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Eighteen outcomes cannot be closed by any
+⚠ **THIS IS THE MOST IMPORTANT SINGLE FACT FOR L5. Nineteen outcomes cannot be closed by any
 build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of its own artifact.**
 **Grade the `DONE WHEN` state line, never the `ACCEPT` paragraph beside it.**
 
@@ -543,7 +594,7 @@ folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10) and the current hold
 at the snapshot vintage, so every comparable Posture names carries the same model block, feed, filings
 and peers evidence as the target. Source: Andrew-direct ~05:2xZ (the third Posture word).
 
-**C-SIMILARITY-RANKER (the rule for FWD-8's peer set and for FWD-19's comparable; Rule 24 schema).**
+**C-SIMILARITY-RANKER (the rule for FWD-19's comparable; Rule 24 schema. v0.11: FWD-8's peer set moved to `C-PEER-SET-SA` below).**
 The comparable set of a subject is computed, never copied from a workbook (the F6 defect), by ONE ranker
 over ONE database:
 - the database = the Security Scanner's universe data (`UniverseDataRow`: ticker, name, mktVal, country,
@@ -558,10 +609,45 @@ over ONE database:
   intent -- similarity of business and scale, never valuation; (iv) state coherence -- the set carries
   `basis` = analyst | derived | absent as the engine already does, and a Seeking Alpha comparables list, if
   its API exposes one, is an INPUT candidate measured first, never the rule.
-The Peers tab then renders Adam's `CSC` shape over that set: per peer Price, Shares, Debt, Preferred,
-Minority, Cash, Market Cap, EV, P/E (three years), leverage ratios, five-year growth of Revenue / EBIT /
-FCF, with Average / Median / Min / Max rows, and the Security Scanner's factor quintiles as the ranking
-half. Source: the voice memo ~05:5xZ (part three); card 3.
+Source: the voice memo ~05:5xZ (part three); card 3.
+
+**C-PEER-SET-SA (FWD-8's peer set and comparison table; supersedes C-SIMILARITY-RANKER for FWD-8 only; v0.11).**
+- SET: a subject's peers are Seeking Alpha's suggested peers, 5 per subject (`/api/v3/symbols/{slug}/suggested`,
+  `source_type=peers_similarities`), fetched through the EXISTING `integrations/seekingalpha/rest_fetch.py`
+  (`load_config` / `build_session` / `_do_get`), GET only. No new fetcher, and never the crawler. `basis` = sa | absent;
+  an absent set names its reason (no SA slug; entity test failed; no suggested peers; REHARVEST).
+- IDENTITY FIRST: a subject's SA slug passes an ENTITY test (SA's company name shares a distinctive token with ours) before
+  any peer call; a slug that fails it is UNRESOLVED with its reason, never the first hit. `ROG` -> Rogers Corporation, not
+  Roche, is the standing positive control and must be refused. **Each PEER ticker's Bloomberg join passes the same
+  name-agreement check** before its values are used -- the same trap one hop further out.
+- TABLE: SA's shape, 17 of 17 CSC columns. Preferred + Minority is ONE column, `other_cap_struct`.
+- SOURCE RULE (Andrew's, general for this pipeline): a column SA carries comes from SA; a column SA lacks comes from
+  Bloomberg (the SA ticker queried as `<TICKER> US Equity`); where Bloomberg has no value, SA's nearest measure is used,
+  LABELLED as that measure and never under the Bloomberg column's name. Every cell carries `source` = `SA` | `BBG` |
+  `SA_FALLBACK:<field>`. One source per measure across a set wherever the data allows; every Average / Median / Min / Max
+  row prints its source mix.
+- NOT MEANINGFUL: an SA value flagged `meaningful: false`, or an absent SA value, is shown as such (ABSENT with SA's reason)
+  and never zero-filled or filled from another source. The Bloomberg fill applies only to the columns SA lacks.
+- SESSION: a 403 that `detectors.classify` reads as REHARVEST STOPS the run and says so. The Peers path never signs in,
+  never retries around the challenge and never launches the harvester. Raw bytes land before derivation, at an address
+  built by `lib/opal_naming.py` (Rule 30).
+- PRODUCTION USE AUTHORIZED, BY NAME (v0.12; Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`):
+  `C-SA-VENDOR-WORD` is lifted for THIS path -- one Peers read per security at instantiation and in validation, and its
+  refresh. `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED for this path (v0.13; Andrew-direct ~20:0xZ, *"I have already clarified
+  SA ToS, we are good"*, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`).
+- NOT CHANGED BY THIS CLAUSE: FWD-19's comparable (C-SIMILARITY-RANKER, C-POSTURE); C-VENDOR-EGRESS;
+  C-IDENTITY-RESOLVED; C-ETF-PLANE-READ.
+Source: Andrew-direct 2026-09-18 ~17:4x-18:1xZ (`ANDREW_DIRECT_20260918_17xxZ_PEERS_SEEKING_ALPHA.md`); brief
+`BRIEF_PEERS_CURRENT_TO_DESIRED_20260918.md` @a2fdbad164.
+
+**C-PEERS-V-FLOORS (amends the floors in `lib/research/scores/peers_v.py`; v0.11).** MIN_PEERS_FOR_V 8 -> 5 and
+MIN_PEERS_PER_MEASURE 6 -> 5; MIN_MEASURES_FOR_V (|M| >= 3) unchanged. Source: Andrew-direct ~18:0xZ, *"It's now 5 instead
+of 8, we'll fit to the SA shape"*; the per-measure floor follows from his *"Agree with everything"*, which confirmed the
+CRO's stated consequence (at 6, no measure computes over five peers). The asserts carry this citation in place of the
+earlier ruling; they are floors, never loosened below 5 / 5 / 3. Peers V's `absent_reason` is never empty.
+⚠ L4 READING, NOT ANDREW'S WORD: Peers V runs AS WRITTEN on its own Bloomberg `FIELDS`, pulled for the SA peer tickers
+as `<TICKER> US Equity`. SA chooses WHO; the measure's own fields say WHAT. Feeding it SA's metrics would be a translation layer
+and is not done.
 
 **C-POSTURE (FWD-19's shape).** Posture = (1) MEMBERSHIP at the snapshot vintage (held / not held, book,
 weight); (2) the COMPARABLE = the most similar name on the OTHER side by C-SIMILARITY-RANKER (an Opal
@@ -574,32 +660,101 @@ as_of: <snapshot date>, marked: machine}`, stored versioned in the pool under `p
 the trade pipeline reads it. "The final execution" is a person's act on the page. Source: Andrew-direct
 ~05:1x-05:2xZ and the voice memo (part five); card 3.
 
-**C-FILINGS-ANALYZER (FWD-18's shape).** The analyzer reads the filing Bloomberg pulls (a public filing
-stood in for the measurement), through the Claude API with document citations, and writes TYPED rows to the
-pool (`filings/v1/{security_key}/{accession}.analysis.json`): guidance changes, segment revenue, top risks,
-management commentary, big bets, big challenges, and a THESIS DRIVER field naming the series the one chart
-is drawn from. Measured shape (card 1 @5007337353): with a JSON answer requested, citations arrive INLINE as
-cite tags and no citation blocks; structured output and citations cannot be combined; so the cell is TWO
-PASSES or a TAG PARSER, and the cut names which. It runs as a scheduled batch over the union universe,
-never per page view. Every sentence the Thesis tab shows from it is MARKED machine prose beside its cited
-passage (FWD-9's rule). Egress: Andrew's session word @dfa63b6d92; the Bloomberg-terms question is carded and
-open. ⭐ **v0.7 (measured by `4.0.0_SA_CRO~W`, brief @`a65fe406c2`):** every cited claim RESOLVES to an exact
-passage -- the analysis persists the source filing and the exact submitted excerpt with content hashes, the
-canonical identity, the accession, the retrieval time and the parser version, and an index-to-passage map
-beside the rows; a claim whose tag resolves to nothing is HELD uncited, never rendered as evidence and never a
-chart input (card 1's five uncited segment rows are the measured instance); the drafting reader receives typed
-evidence records with stable ids and the PASSAGE text, validates existence, association and source version for
-every id before its verbatim gate, and runs that gate against the passage, not the title (the existing gate at
-`lib/research/drafting/pipeline.py` passed an unknown id with no quotation and refused a valid body passage:
-three probes, 2026-09-15 ~06:2xZ); the THESIS DRIVER series and the officer role-start field are EXERCISED on a
-real filing before either is claimed to exist -- card 1's parsed object carries neither.
+**C-FILINGS-ANALYZER (FWD-18's shape; v0.11).** ⛔ **BLOOMBERG SUPPLIES KEYS, NEVER TEXT.** Bloomberg returns no filing text
+(Thesis brief s.3). The analyzer reads the WINNING DOCUMENT of
+the security's FILINGS BATTERY. Bloomberg supplies the keys that battery searches with: the CIK (`CENTRAL_INDEX_KEY_NUMBER`),
+the LEI and the legal name. Its web address is a HINT, never a key.
+**The battery -- ordered; the first document passing the acceptance test wins:**
+- **US (Andrew-direct ~16:3xZ 2026-09-18):** (1) EDGAR; (2) EDGAR by the Bloomberg-resolved CIK; (3) web search, surfaced
+  through the issuer's IR page.
+- **International (RATIFIED v0.12, Andrew-direct ~19:4xZ, *"Yes."*; proposed at CRO brief s.8.2):** (1) EDGAR
+  by ticker; (2) EDGAR by Bloomberg CIK; (3) ESEF / UKSEF by LEI; (4) the company's own site; (5) the national regulator,
+  one adapter per jurisdiction, built only for a name that step 4 fails.
+- **Terminal:** UNRESOLVED-SOURCE, persisted with every step's attempt, key and failure reason. Never a silent skip.
+**One acceptance test, every step:** (a) **RIGHT ENTITY** -- the document names the listed issuer, checked against
+Bloomberg's legal name and the LEI where the document carries one, otherwise the legal name plus a national registry
+identifier. A subsidiary's report on the parent's domain FAILS.
+(b) **CURRENT** -- an annual report for a fiscal year ended within the last 18 months. (c) **KNOWN FAMILY** -- a document
+family the section cutter and the roster can parse; a cut from a family the cutter does not know FAILS (c) and never passes
+as a section. Language is RECORDED, not tested (`C-FILINGS-TRANSLATION`). A failing document is recorded with its
+reason, and the next step runs. The source object carries the winning step, the key it used, the family, the language and
+the entity evidence; the family is recorded because cutting and roster parsing are BY FAMILY.
+⛔ **Step 1 reads the LIVE SEC tables** -- the ticker table AND the submissions index -- never a cached subset, and applies the
+name guard to EVERY listing, US included. A miss is reported against the table actually read, with that table's row count.
+The analyzer calls the Claude API with document citations and writes TYPED rows to the pool
+(`filings/v1/{security_key}/{accession}.analysis.json`): guidance changes, segment revenue, top risks, management commentary,
+big bets, big challenges, and a THESIS DRIVER field naming the series the one chart is drawn from. With a JSON answer
+requested, citations arrive INLINE and structured output cannot be combined with citations, so the cell is TWO PASSES or a
+TAG PARSER, and the cut names which. Every sentence the Thesis tab shows is MARKED machine prose beside its cited passage
+(FWD-9). The analysis carries an ANALYZER VERSION that MOVES whenever its output contract moves; a skip-on-unchanged rule is
+built only after that, never before.
+**Kept from v0.7 (brief @`a65fe406c2`):** every cited claim RESOLVES to an exact passage. The analysis
+persists the source document and the exact submitted excerpt with content hashes, the canonical identity, the accession or
+document id, the retrieval time, the parser version and an index-to-passage map. A claim whose tag resolves to nothing is
+HELD uncited: never rendered as evidence and never a chart input. The drafting reader validates each evidence id's existence,
+association and source version before `C-VERBATIM-GATE`, and runs that gate against the passage. The THESIS DRIVER series and
+the officer role-start field are EXERCISED on a real filing before either is claimed to exist.
+⛔ **NO FLEET RUN AND NO RE-RUN until the process is validated end to end** (Andrew-direct ~16:3xZ). Stale analyses stay
+stale. A validation run needs his per-use word; the three-name run (~16:5xZ) is the precedent, not a standing grant. Building
+any battery step that calls outside Opal needs his per-use word. The scheduled batch stays disabled until he activates it.
+**NOT CHANGED:** the typed row set, the pool path, FWD-9 marking, the two-pass-or-parser choice, batch activation as
+Andrew's call, and the roster authority (`C-EXEC-MANAGEMENT`).
 
-**C-EXEC-MANAGEMENT (FWD-17's shape).** The roster and each officer's role start come from the FILING's
-executive-officer section (the authority); Lusha prospecting enriches each CONFIRMED officer with a profile
-link and title (card 2: the `c-suite` filter is loose and carries no tenure); a targeted web search on the
-company's own IR domain fills the CEO's public profile; the pool-average tenure is computed over the union
-universe from the same filing field. No contact data point is stored. Owner of the collection lane: the
-harvest estate under the same loop discipline Andrew set at ~04:3xZ.
+**C-FILINGS-TRANSLATION (translation is a stage; Andrew-direct ~16:3xZ, *"a translation functionality will be required"*; v0.11).**
+⛔ **ANALYZE THE ORIGINAL; TRANSLATE THE OUTPUT.** A battery winner in any language is analyzed in its ORIGINAL language. Only
+the analyzer's OUTPUT is translated. Every cited span re-locates VERBATIM in the ORIGINAL filing. ⛔ **Translating the passages
+first is REFUSED:** the check would then verify against the model's own translation, and a mistranslation would be invisible.
+**Where it sits:** after the cutter and the passage map, before analysis. Language is detected there and recorded on every
+document, so the stage runs exactly when needed and a wrong detection is visible.
+**Preconditions:** (i) **Unicode passages** -- no ASCII folding of evidence text; (ii) **citation blocks pre-cut to the passage
+map** -- a plain-text document yields whole-document citations on a script without spaces; (iii) **a CHARACTER-LEVEL verbatim
+rule** for scripts written without spaces.
+**Contract for translated text (a value carries its claim):** each translated line carries `translated: true`, the source
+language, the translator (model and prompt version) and the time, with the original sentence and its passage id beside it.
+The page labels it a translation, never the filing's words. A chart point is verified in the original and parsed with the
+document's locale and unit. Roster names keep the original script and take an English rendering only from the issuer's own
+document.
+**English edition:** an issuer's English document is used instead of translation only when it is the SAME fiscal year AND the
+SAME document family and it passes test (c). A thinner document in English is a different document.
+**NOT CHANGED:** `C-VERBATIM-GATE`'s object stays the original filing; the battery's acceptance test does not test language;
+this clause authorizes no model call, producer or run.
+
+**C-EXEC-MANAGEMENT (FWD-17's shape; v0.11 carries Andrew-direct 2026-09-18 ~17:1xZ cards 1 and 2, and ~17:2xZ).**
+The FILING's executive-officer section is the roster authority, and each officer's role start comes from it. When the
+filing yields no RESOLVED roster, Bloomberg's `COMPANY_EXEC_OFFICERS` (name and title only, names kept verbatim) fills
+the officer TABLE and is labelled on the page as a Bloomberg fallback. Role start, tenure and the pool comparison stay
+ABSENT, with the reason that Bloomberg carries no role start. A RESOLVED filing roster replaces the fallback on the next
+build. Every management object carries `roster_source` = FILING | BLOOMBERG_FALLBACK. ⛔ **The fallback never hides why
+the filing failed:** when a filing roster failed (an empty officer-section cut, or a section no declared shape reads),
+its own `roster_status` and `roster_reason` stay on the object beside the Bloomberg officers, and the page shows them.
+Two further rules apply to every roster:
+- A roster with ZERO officers is NOT SERVED. It is ABSENT with its reason. Every census and report prints the content
+  count (names with at least one officer) beside the status count, and counts FILING and BLOOMBERG_FALLBACK separately.
+- A roster row must be a PERSON. A title alone ("Executive Vice", "Senior Vice") is never accepted as a name. A roster
+  whose rows all fail this test is not RESOLVED, so the fallback applies to it.
+**Enrichment** (Lusha profile link and title) is a step of instantiating a new security. It attaches to an officer that
+the roster's own source confirmed; Bloomberg-fallback officers are enrichable, and the label says which source applies.
+The company domain comes ONLY from the site the filings battery VERIFIED as the right entity -- never a hand list, never
+Bloomberg's raw web address. A name with no verified domain records Lusha as NOT ATTEMPTED, with that reason. Lusha is
+never the roster. Each Lusha call is billed and runs only under Andrew's per-use word.
+**The CEO profile** comes from a Bright Data SERP on the CEO's NAME, followed by an agent that reads the results and pulls
+and organizes the relevant ones. The CEO is the only officer searched. The rules:
+- A FAILED search (a request error or an unparseable body) is recorded as FAILED, with its cause -- never as an EMPTY
+  search.
+- Each organic result keeps its title and snippet, not the url alone.
+- An identity test (this person, at this company, in this role) comes before any result is kept; a namesake is refused.
+- Every organized fact carries its url and a quote that re-locates VERBATIM in the fetched page. A fact with no quote is
+  HELD and never shown. The agent adds nothing from its own knowledge.
+- The page renders the object's own `absence_class`, never a reason it infers, in FIVE states: CONFIRMED; NOT SEARCHED,
+  with the reason; SEARCHED, NOTHING FOUND; SEARCHED, NOTHING KEPT (results read, none passed the identity test or carried
+  a verbatim quote); SEARCH FAILED, with its cause.
+- Bright Data calls, like Lusha calls, run only under Andrew's per-use word.
+**The pool:** the average tenure is the mean over OFFICERS across EVERY current FILING roster -- the newest object per name
+across all dates, within the union universe -- never over one run's objects. The denominator prints beside the value. No contact data point (email, phone, mobile) is stored at any level,
+including in anything the CEO agent pulls.
+This clause does NOT change: the filing as the authority, the role-start source, the pool's mean over officers, the
+collection lane's owner (the harvest estate), or Andrew's standing "no fleet run until validated end to end". It
+authorizes no run and no vendor call. Open at L4, not decided here: whether a Bloomberg-fallback CEO is searched.
 
 ---
 
@@ -696,6 +851,39 @@ are millions; shares outstanding is absolute while diluted-EPS share count is mi
 percents where the source holds decimals; capital expenditure's sign is inverted. **Every mapped
 field carries a MEASURED unit and sign, never an inferred one, and the measurement is per field.**
 
+⚠ **v0.11 (Model brief @`f48864fce6`, M1).** The map is built for EVERY name at instantiation, not the three pilots. Its home is
+version control beside the producer that reads it (`C-PRODUCTION-HOME`); today it sits in a worker's deliverables folder
+(`integrations/bloomberg/research/model_block_pull.py:286-288`, worker `~1`), and for every other name `_resolved_unit`
+(`:300-316`) falls back to "not yet built" and the check face refuses. **All 348 measured refusals are this one missing entry,
+not bad data.** Building the map needs NO new pull: the `derive` stage re-reads the raw block from the pool. A field whose unit
+is not measured stays REFUSED; it is never inferred to clear a refusal.
+
+**`C-MODEL-FORECASTS` (v0.11; Andrew-direct ~18:4xZ 2026-09-18, *"I'd use Bloomberg as primary, seeking alpha as a fall
+back"*).** The Model carries forecast years FY1-FY3 beside the history. **Bloomberg is primary**: the `BEST_` consensus
+fields (`BEST_EPS`, `BEST_SALES`, `BEST_EBITDA`, `BEST_PE_RATIO`, `BEST_DPS`), each pulled with an EXPLICIT
+`BEST_FPERIOD_OVERRIDE` per year -- without the override a `BEST_` field returns the next QUARTER, which reads as a plausible
+annual value (measured). Coverage measured with the override: `BEST_EPS` 33/33/33, `BEST_SALES` 33/33/32, `BEST_EBITDA`
+31/31/31, `BEST_PE_RATIO` 31/32/32, `BEST_DPS` 33/33/33; control BA FY2026-28 EPS -0.83 / 3.95 / 8.05. **Seeking Alpha fills
+a cell only where Bloomberg has none.** Every cell carries its fiscal year and `source` = `BBG` | `SA_FALLBACK`. Column headers
+come from `BEST_PERIOD_END_DATE`, never from a counted offset. The page labels the columns CONSENSUS, never reported. **The
+SA fallback is a Seeking Alpha production read, AUTHORIZED for this path by name** (v0.12, Andrew-direct ~19:4xZ, *"Yes use SA
+thats fine"*); `C-SA-TERMS-BEFORE-SCHEDULE` is satisfied for it (v0.13, *"I have already clarified SA ToS, we are good"*). The refresh cadence is Andrew's (his Bloomberg-cadence reservation stands).
+
+**`C-MODEL-WINDOW-AND-ROWS` (v0.11).** (1) **The window rolls:** the history ends at each issuer's LATEST CLOSED fiscal year --
+a year that has ENDED and been REPORTED -- never a fixed date (today `HIST_END = "2025-12-31"`, `model_block_pull.py:101`).
+(2) **Five sheet rows have no field today** (Revenue per share, FCF yield, FCF margin, return on total assets, earnings
+margin). The Bloomberg fields that carry them join the producer's field list; the page never computes them, and keeps refusing
+until the field exists. (3) **The model block is an instantiation stage** (section 10): pulled when a security is added, then
+refreshed after each fiscal close on a cadence Andrew sets; today every block is one hand run dated 2026-09-16. (4) **The
+yellow key:** every Bloomberg call names the security as `<RESOLVED bloomberg id> Equity` or reads the block's own security
+string. The crosswalk's `bloomberg` field carries no yellow key, and a call without one returned 33 of 33 security errors --
+a failed instrument reading as zero coverage. **Appending the yellow key to an id `C-ONE-IDENTITY` has already RESOLVED is not
+the guess it forbids** (making an id by appending `US Equity` to an unresolved one). (5) **The Base case is consensus EPS x
+the security's own trailing-median P/E** (v0.12, Andrew-direct ~19:4xZ, *"Base."*), each input carrying its source and
+window. **Upside and Downside stay ABSENT** with the reason "methodology to be discussed with Andrew" (*"I think the upside
+and downside cases can be discussed on methodology"*); no seat chooses a spread. (6) The robustness
+inputs (quarterly TTM over the ruled 8-quarter window) are an open L4 question at `1.0.0_SA_CTO~Z`, not a round-14 cell.
+
 **`C-FISCAL-YEAR-JOIN`** -- ⛔ **NEVER JOIN PRICE TO FUNDAMENTALS ON THE DATE STRING.** Measured
 (F5): 4 of 10 years land split, 14 rows for 10 fiscal years, and a date-string join **silently drops
 40% of that name's price history**. **Fiscal year is the join key.**
@@ -716,10 +904,20 @@ so a rule change that cannot be re-derived from stored raw bytes is a permanent 
 Serves `FWD-12` directly. **A single refresh that moves everything under one timestamp is a
 violation, not a shortcut.**
 
-**`C-VERBATIM-GATE`** -- wherever output quotes a source, the quoted text must be an **exact
-normalised substring of the fetched text**; non-verbatim is **rejected and regenerated**. ⭐ **This
-is a GATE, not trust-the-model**, it is machine-checkable, and the estate has already proved the
-form.
+**`C-VERBATIM-GATE` (v0.11)** -- wherever output quotes a source, the quoted text must be an exact substring of the ORIGINAL
+fetched text, inside the passage the sentence cites; normalisation is limited to whitespace and Unicode canonical equivalence,
+and a fold that changes characters (ASCII folding, symbol substitution) is not verbatim; non-verbatim is **rejected and
+regenerated**. ⛔ **EVERY PASS COUNT PRINTS ITS SPLIT:** passed on a span / passed with NO span / held. A count that omits the
+split is not evidence of verbatim coverage (measured D18: a sentence with no quoted span passes today -- 17 of 39 for CAT, 16
+of 40 for CSL -- so the "389 of 389 PASS" figure did not mean what it read as). ⛔ **A drafted sentence with no verbatim span is
+HELD: never served, and counted in the split** (v0.12, Andrew-direct ~19:4xZ, *"Agreed, yes."*). Over today's 12 served documents
+this withholds **179 of 389 sentences (46%, measured 2026-09-18 by `4.0.0_SA_CRO~Z`, msg 23744)**; the validation names ran
+17 of 39 (CAT) and 16 of 40 (CSL). It reverses the v0.7 choice to keep passage support and exact quotation as separate outcomes; both
+consequences were on the card he answered. The minimum run length is word-based for spaced
+scripts and CHARACTER-based for scripts without spaces (`C-FILINGS-TRANSLATION`); the cut states each threshold. The rule binds
+BOTH writers of `drafting/v1/<key>.json` (`batch.py:150`, `analyze.py:1215`). ⭐ **This is a GATE, not trust-the-model**: it is
+machine-checkable and has discriminating controls -- a span pointed at the neighbouring passage, and a one-character mutation of
+a passing span, must both be REFUSED.
 
 **`C-MARK-NOT-DEGRADE`** -- ⛔ **a failed stage MARKS the pack; it never silently produces a thinner
 one.** A thin pack that looks whole is the exact failure `FWD-10` exists to prevent.
@@ -893,6 +1091,8 @@ terms and rule on them.
 > recorded. ⛔ **A one-off exploratory fetch is NOT a scheduled consumer and is not gated by this.**
 > ⛔ **AND NO CELL READS THE TERMS AND RULES ON THEM** -- the reading is a task, the ruling is
 > Andrew's, and a cell that does both has taken a commercial decision it does not hold.
+> **v0.13: SATISFIED for `C-PEER-SET-SA` and `C-MODEL-FORECASTS`'s SA fallback** -- Andrew-direct ~20:0xZ, *"I have already
+> clarified SA ToS, we are good"* (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_20xxZ_AMGT_RESAPP_SA_TERMS_CLEARED.md`).
 
 
 ⛔ **`C-SA-VENDOR-WORD` -- THE PER-USE EGRESS READING, RULED HERE BECAUSE IT IS L4's AND
@@ -905,6 +1105,8 @@ route, the authentication and the credential's location, in the imperative**, wh
 |---|---|
 | **AUTHORIZED** | the EXPLORATION and the COMPARISON -- calling the route to establish whether it works, and how it compares to the scrape |
 | **NOT AUTHORIZED** | recurring or production use of that route. **A word for an evaluation is not a standing right**, and `C-VENDOR-EGRESS` is per-use by construction |
+| **LIFTED BY NAME (v0.12)** | Andrew-direct ~19:4xZ, *"Yes use SA thats fine"*: production use at instantiation and in validation for exactly two paths -- `C-PEER-SET-SA` and the `SA_FALLBACK` cells of `C-MODEL-FORECASTS`. Every other route stays NOT AUTHORIZED |
+| **TERMS CLEARED (v0.13)** | Andrew-direct ~20:0xZ, *"I have already clarified SA ToS, we are good, if I had an issue with the design i wouldnt have designed it this way."* `C-SA-TERMS-BEFORE-SCHEDULE` is SATISFIED for the two paths above: his ruling on the terms is recorded, so their scheduled refresh is not gated by it. No terms-reading task is owed |
 
 ⚠ **THIS READING IS THIS SEAT'S AND ANDREW MAY CORRECT IT.** It is recorded so a cell does not have
 to guess, and so that if it is wrong it is wrong in ONE place with a name on it rather than in every
@@ -945,9 +1147,48 @@ and written as pre-computed per-ticker rows into a SEPARATE metrics table
 them and never re-derives a ranking at render time. Chatter axis = the committed chatter gate (30-day,
 0-100 normalized, TOP_N=10); Price axis = the new engine (S16).
 
+⚠ **v0.11 (Lead Panel brief @`9136ff9e73`, L2 and L5) -- NO RANK WITHOUT SIGNAL.** A ranking never lists a member with no
+signal. Today Trending x Chatter ranks ten names that all have zero articles and score 0, in alphabetical order, and the list
+looks finished. **Signal, per subject:** CHATTER -- at least one article for the name in the window (score above zero);
+PRICE -- at least two observations in the window, the movement gate's own `INSUFFICIENT_OBSERVATIONS` test. A SUCCESSFUL run
+whose every member lacks signal, or fails its breakout test, publishes an EMPTY generation carrying `empty_reason`: the
+dominant exclusion reason and its count over the printed denominator (today Breakout x Chatter computes
+`BELOW_MIN_ABSOLUTE_JUMP` for 191 of 191 and discards it). **A FAILED run is not EMPTY**: it stays a failure and the prior
+generation stays current, as `C-RANKING-GENERATION` already requires. `empty_reason` is part of the pointer contract: BOTH
+generation writers (`lib/research/metrics/chatter_axis.py`, `lib/research/price/generation.py`) write it through ONE shared
+pointer builder in place of today's two copies, it is covered by the generation's `payload_hash`, and the adapter carries it
+to the panel, which shows it in place of an empty list.
+
 **`C-PRICE-RANKING-BOXSIDE`** -- the price axis reads Bloomberg historical/intraday and therefore runs
 in the BOX-SIDE puller shape (the ETF-daily-pull shape), NOT a Lambda calling Bloomberg. 30-day window,
 matching chatter (Andrew unified both to 30).
+
+**`C-PRICE-BREAKOUT-FLOOR` (v0.11; Andrew's Lead Panel card B, sequenced msg 23684).** A price BREAKOUT is a POSITIVE move of
+at least **+5% over the trailing 30-day mean close**, measured UNSMOOTHED: `(close - mean) / mean >= 0.05`, with `mean > 0`.
+⛔ **It is NOT a `MIN_ABSOLUTE_JUMP` entry:** that table holds a jump in the subject's own units, and the chatter smoothing
+(`BASELINE_SMOOTHING = 1.0` in `breakout_pct`'s denominator, `lib/research/metrics/movement_gate.py:386-398`) is a
+count-scale device that would shade a percentage on a price. The price rule is its own test, and the chatter floor is never
+transplanted onto price. Measured before it: 23 of 32 listed price "breakouts" were FALLING names (the gate returns
+`NO_RATIFIED_ABSOLUTE_FLOOR`, `:413-428`). The count under the new rule is RE-MEASURED by the cell, never asserted from this
+figure. Card B is a direct act with card A, B first, under a never-widen pair.
+
+**`C-PRICE-DAILY-LEG` (v0.11; Andrew's Lead Panel card A, sequenced msg 23684).** Prior-day prices are pulled on the EXISTING
+daily job (`scheduled_daily_pull.cmd`) as their own leg with their own exit codes (80-83), a change record opened first and a
+never-widen pair signed; the price lists were 3 trading days stale without it. Staleness is counted in TRADING days
+(`lib/trading_calendar.py`), never calendar days.
+
+**`C-DESCRIPTION-LINE` (v0.11; Lead Panel L8; order corrected at v0.12 on `4.0.0_SA_CRO~Z`'s L4-R review, msg 23744).** The
+one-line description has three sources, in this order: (1) Bloomberg's description field -- `CIE_DES`, else `CIE_DES_BULK` --
+added to the model-block pull's header list and labelled as Bloomberg's (today the pull never requests `CIE_DES`, and
+`CIE_DES_BULK` is populated for the 21 names with no filing identity); (2) else the first sentence of a VALIDATED drafted
+`company_description` section, marked machine, with its evidence ids, **ONLY if it passes a stated describes-the-business
+test** -- the test's wording is the cut's; (3) else ABSENT, naming every probe. ⛔ **"VALIDATED" means schema-valid, not
+descriptive:** measured 2026-09-18 over the 12 served names with the adapter's own reads, sentence 1 of `company_description`
+describes the business on 0 of 12 (Boeing: *"Commercial Airplanes revenue was $41,494 million in 2025..."*; Home Depot:
+*"Consolidated net sales were $164.7 billion in fiscal 2025."*), and validation D23 found the same on CAT. Today's reader
+(`lib/research/api/scoped_amgt.py:2538` `read_description`) tries a header scalar first and then that sentence unconditionally;
+the cell adds the field and the test. The adapter reads the field by the exact name the pull writes, and the long-text field's
+shape is measured on a real block before the reader is built against it.
 
 **`C-HARVESTER-COMPUTE`** -- ⭐ **AMENDED AT v0.5 (addendum s.8). The compute moves OUT of this
 project's build and INTO the HARVEST ESTATE**, which Andrew assigned to `4.0.0_SA_CRO~Z` to oversee and
@@ -1274,7 +1515,7 @@ at this bump (`git log -1 --format=%h -- <path>`), read 2026-09-15 ~06:3xZ.
 
 | limit (card / brief) | what it means | required check |
 |---|---|---|
-| ONE company's filing (Boeing 10-K, an Item 1A + Item 7 excerpt), a public filing standing in for the Bloomberg pull (card 1) | nothing is known about a second filer, a 10-Q, a foreign filer or a whole document | run the analyzer on at least three filings across two filers including one non-US name; print items / cited / uncited per filing; measure one Bloomberg-pulled filing before the public stand-in is retired |
+| ONE company's filing (Boeing 10-K, an Item 1A + Item 7 excerpt), a public filing standing in for the Bloomberg pull (card 1) | nothing is known about a second filer, a 10-Q, a foreign filer or a whole document | run the analyzer on at least three filings across two filers including one non-US name; print items / cited / uncited per filing; measure one Bloomberg-pulled filing before the public stand-in is retired (SUPERSEDED at v0.11 by `C-FILINGS-ANALYZER`: Bloomberg carries no filing text, so this condition is retired) |
 | 5 of 76 outputs uncited (card 1); the saved parsed object shows `citations_total=0` because citations arrived INLINE and no passage map was persisted | uncited rows exist, and the measurement cannot locate the passages it cites | hold uncited rows; persist the index-to-passage map; a resolvability check over every cited id (brief @`a65fe406c2`, first acceptance line) |
 | the Lusha `c-suite` filter is LOOSE, 50 of 50 rows returned, NO tenure field (card 2) | Lusha can be neither the roster's authority nor the tenure source | the filing's officer section is the authority; Lusha enriches CONFIRMED officers only; tenure from the filing field; print confirmed / unconfirmed per company |
 | the peers engine has NO candidate universe loaded (9b) | the ranker's rungs exist but rank over nothing | load the Scanner universe data UNION the model-block headers; print the denominator; run the four-postulate MECE check (the database MINUS the excluded = the ranked) |
@@ -1361,3 +1602,84 @@ eight at v0.6, ten at v0.7; s.2-s.8 DO change by supersession); (11) 9a rewritte
 9a-2 added (the coverage map, the measurement limits, the required checks); (12) 9d gains the five briefs in
 dependency order; (13) 9e, 9f, 9g. Outside the PRD, at @`2285a23678`: the carrier, the design file, and the
 correction on the transcript record whose line 80 named a file that did not exist.
+
+---
+
+## 10. ADDENDUM v0.11 -- INSTANTIATING A NEW SECURITY: THE STAGES (Andrew-direct 2026-09-18 ~16:3xZ)
+
+**The frame, verbatim:** *"we will be adding things over time and the more important thing than establishing a pipeline
+itself is the process behind full 'security analysis' backend instantiation for a new security."* **So the product is the
+PROCESS that stands up every stage for a security that is not covered today**, and each panel's constraints above are the
+rules of one or more of these stages.
+
+**Every stage takes the BATTERY'S SHAPE:** ordered attempts; ONE acceptance test per attempt; an explicit terminal state --
+SERVED, or UNRESOLVED with its reason -- never a silent skip and never an empty success; and the route that won recorded on
+the object. **A stage's population is the crosswalk's MEASURED records (`crosswalk/v1/<date>.json`), never a store listing,
+a hand list or a worker's folder** (`C-PRODUCTION-HOME`).
+
+| stage | what must exist for the security | what triggers it for a NEW security -- today, measured (validation @b527b93214) |
+|---|---|---|
+| identity | a MEASURED crosswalk record in the POOL | **none** -- the entry point that is missing. `C-INSTANTIATION-ENTRY` below |
+| universe row + filing identity | a `universe/v1` row with its filing identity | none (manual; newest vintage 16 Sep) |
+| model block | a Bloomberg model block, every unit measured | none (a hard-coded pilot list) |
+| filings | a source object from the battery (`C-FILINGS-ANALYZER`) | only battery step 1 exists in code, and it reads a stale subset |
+| translation | translated OUTPUT over the original passages | none -- not built |
+| analysis and drafting | an analysis and a drafted document, every sentence on a verbatim span | the disabled batch; no run until validated |
+| management | a roster (`C-EXEC-MANAGEMENT`), enriched | the disabled weekly task |
+| peers | a peer set and comparison table (`C-PEER-SET-SA`) | none |
+| posture | a posture object (`C-POSTURE`) | none; reads model blocks from a repo folder, not the pool |
+| scores | the three scores, each SERVED or ABSENT with its reason | none; reads the pool crosswalk directly |
+| description | a drafted section or the Bloomberg description field | read time |
+| chatter and news | article links for the name | **the chatter Lambda -- the ONLY scheduled stage**; its source covers 3 names |
+| price | a daily price pull (Lead Panel card A) | none (manual) |
+| movement lists | computed from chatter and price | automatic once both inputs exist |
+
+**`C-INSTANTIATION-ENTRY` (new, v0.11).** ONE "add a security" step lands a new security's identity in the POOL crosswalk --
+name, exchange, LEI, SEC id and CIK, from ONE Bloomberg call with the yellow key appended -- and every downstream stage runs
+from that record in dependency order. **Every reader behind the page keys on the pool crosswalk, so a security produced end
+to end elsewhere renders nothing until this step has run** (measured on CAT, CSL and Keyence). A security whose identity
+cannot be resolved is UNRESOLVED with its reason, and no downstream stage runs for it.
+
+**`C-PRODUCTION-HOME` (new, v0.11).** A production code path never reads or writes a WORKER'S deliverables folder -- that
+folder is the proof artifact of one task order and covers only the names that worker handled. **Configuration** (for
+example the unit map) lives under version control beside the producer that reads it; **cached data** (for example the SEC
+ticker table and the peer candidate universe) lives in the pool at an address built by `lib/opal_naming.py` (Rule 30). **A
+dry run writes nothing, anywhere.** Measured instances this clause retires: the unit map
+(`integrations/bloomberg/research/model_block_pull.py:286-288`, worker `~1`), the SEC ticker cache
+(`lib/research/identity/build_universe.py:503-507`, worker `~19`, whose miss is reported as absence from the full table),
+and the peer candidate universe (`lib/research/peers/universe.py`, worker `~21`, rewritten even under `--dry-run`).
+
+**`C-VALIDATION-NAMES` (new, v0.11).** Every round-14 cell is proven on the three validation names -- Caterpillar (US,
+10-K), CSL (English, company site only), Keyence (Japanese) -- or on a dry run. A run on those three names IS the
+end-to-end validation Andrew set as the bar; **no cell is a fleet run or a re-run of the covered population** before it
+passes (Andrew-direct ~16:3xZ, *"I dont care about rerunning until the process is completely validated end to end"*).
+**Vendor calls inside the validation (v0.12, Andrew-direct ~19:4xZ):** Lusha, *"Yes full egress"* -- no credit ceiling
+within the validation, read as scoped to it and not as a standing grant across the covered population; Seeking Alpha on the
+two paths `C-SA-VENDOR-WORD` names as lifted.
+
+**What this section does NOT change:** any stage's own contract above; the Posture stage, whose brief is not yet
+integrated; the chatter schedule; any cadence, which stays Andrew's.
+
+**Evidence behind the v0.11 CONTRACTS -- moved here at v0.13 so the ratified text carries rules and provenance only** (the
+ratified-text reviewer's criterion (d): a defect said to exist "today" inside ratified text becomes false the moment it is
+fixed, and a cited line ages separately from the text quoting it). Each item is a measurement as of 2026-09-18 and a pointer
+for the round-14 cell, not a rule.
+- `C-FILINGS-ANALYZER`: Bloomberg returns no filing text -- docsvc and news refuse, BQL refuses on entitlement (Thesis brief
+  s.3). Bloomberg's web address names a subsidiary or branch site for 3 of 22 names measured. Subsidiary reports that fail
+  the entity test: Roche Holdings Inc, RWE Finance Europe BV, Zurich Life. D1: `lib/research/identity/build_universe.py:503-508`
+  reads a 33-ticker cache in a worker folder and reports a miss as absence from the 10,422-row table, so it misses
+  Caterpillar; `:518-520` reads the submissions from the same cache; the guard at `:510` fires only for non-US listings. D9: an
+  unknown document family must fail (c). The stale analyses all claim the current analyzer version.
+- `C-FILINGS-ANALYZER` supersedes the v0.7 premise that the analyzer reads "the filing Bloomberg pulls", and retires the
+  section-9 condition *"measure one Bloomberg-pulled filing before the public stand-in is retired"* (Bloomberg carries no
+  filing text, so it can never be met). v0.7's resolve-every-claim rule was measured by the CRO at brief @`a65fe406c2`.
+- `C-FILINGS-TRANSLATION`: all three preconditions are absent; `lib/research/filings/passages.py:67-79` keeps 6.8% of Japanese
+  characters. Keyence (the Yuho, Japanese): 70 of 71 findings carried a verbatim run of 12+ characters inside their one cited
+  passage; the neighbour-passage and one-character-mutation controls refused 70/70 and 68/68; 0 of 71 translations re-locate
+  in the original. Keyence's English Annual Report is not the Yuho.
+- `C-EXEC-MANAGEMENT`: the SERP primitive breaks silently and returns a list (`data/find/dualbiz/scripts/serp.py:264-272`),
+  and the caller records 0 urls as NOTHING_FOUND (`lib/research/management/enrich.py:434-439`); the pool keeps only one
+  `as_of` (`enrich.py:582-594`).
+- `C-PEERS-V-FLOORS`: the floors sit at `lib/research/scores/peers_v.py:62-70`, the measure's `FIELDS` at `:74-82`; SA peer
+  tickers were measured to resolve as `<TICKER> US Equity` with no mapping step. The L4 reading in that clause is
+  `1.0.0_SA_CTO~Z`'s.
