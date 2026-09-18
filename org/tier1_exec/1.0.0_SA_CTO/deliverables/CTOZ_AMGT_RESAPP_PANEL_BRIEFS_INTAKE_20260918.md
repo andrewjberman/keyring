@@ -11,6 +11,17 @@ and I have gone through all the pages and brought forward al the briefs, we stil
 being refined with one more piece, then we will go on to Peers, Model, and Posture."* **So no PRD addendum is drafted, staged or
 applied until every panel brief is in.** Remaining after Peers (in, s.2C): Model and Posture. Exec Management is complete.
 
+**AMENDED by Andrew-direct ~18:2xZ at this terminal, verbatim:** *"the only thing remaining really is the Model brief, which is
+en route shortly. After you integrate that, we may proceed; no need to wait for Posture brief. Also, when you have everything
+together, make sure that CTO picks up the pace on subagent instantiation. I'm keeping this device completely free of any other
+projects so that we can apply all CPU/memory to this project, so it is important that we actualy make use of that."* **So the
+addendum and the round-13 ROUND_ANALYSIS proceed once the MODEL brief is integrated; Posture is not waited on.**
+
+**Every brief checked against its NEWEST commit at ~18:2xZ** (Andrew's ask: make sure the one read is the most recent):
+Peers `a2fdbad164` = the commit read; Exec Management `32a4882d81` and Thesis `1c6e685ae6` = their newest, with the sections
+added after this seat's first read now read directly (s.2.1, s.2B); Lead Panel `1c6e685ae6` (the struck stale lines). All
+four working trees clean.
+
 **Existing art it is measured against:** the PRD `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` at **v0.10** (the
 ratified constraints, by ID), the decomposition, and the surprise channel. **Every row below cites the PRD by constraint ID or
 line, or says 0 hits.**
@@ -113,6 +124,20 @@ RWE Finance Europe BV, Zurich Life), and Bloomberg's web address points at a sub
 returns *a* current annual report from the issuer's domain has not passed until it is the RIGHT ENTITY's. The CRO names one
 acceptance test per step -- right entity, current, known document family -- and that should be the battery's contract.
 
+**Read directly from the brief at `1c6e685ae6` (the newest commit), not from the message, and not otherwise captured above:**
+- **T14 -- the document FAMILY must be recorded** (s.8.3 #3). KDDI's English document is an INTEGRATED report, not the statutory
+  annual securities report, and its officer section may not carry what the roster needs. The cutter and the roster parse BY
+  FAMILY -- 10-K and 20-F today; ESEF and company-site annual reports after the battery. **Whether ONE heading-based cutter can
+  serve the last two is this seat's L4 design question**, so that each new country is not a new parser. ADD.
+- **T15 -- Bloomberg's web address is a hint, not a key** (s.8.3 #1): a subsidiary or branch for 3 of 22 (HSBC -> `hsbc.co.uk`,
+  ICICI -> a branch site, SSE -> its networks business), and a different domain from the one hosting the annual report for
+  Walmex and Lenovo. Feeds the entity test (cross-panel table).
+- **T16 -- the INSTANTIATION STAGE TABLE** (s.8.5): identity, universe row, model block, filings, translation, analysis and
+  drafting, management, posture, description, chatter and news, price, movement lists -- each asking *what makes this stage run
+  for a NEW security?* **Every stage takes the battery's shape: ordered attempts, one acceptance test, an explicit terminal
+  state (SERVED, or UNRESOLVED with its reason), and the route recorded.** ⭐ **This is the backbone the round-14 addendum is
+  organized around** (s.2.2), and the remaining panel briefs add rows to it.
+
 ### 2.2 The premise re-frames this intake, not just the Thesis panel
 
 His priority is **the process for instantiating the full security-analysis backend for a NEW security**, ahead of any one
@@ -177,8 +202,9 @@ form; card 2 AHEAD of the recommended timing -- he chose not to wait for the val
 - Lusha enrichment is a step of instantiation, its domain from the battery's VERIFIED site only, NOT ATTEMPTED with its reason
   when there is none, Bloomberg-fallback officers enrichable, credits measured on the validation names before any scale.
 
-**Put back to Andrew, NOT decided:** the Bright Data CEO-profile search (card 2 did not name it), and whether the running
-three-name validation should exercise Lusha. His "no fleet run until validated end to end" stands over both cards.
+**Put back to Andrew, NOT decided:** whether the running three-name validation should exercise Lusha (about 6 credits). ~~The
+Bright Data CEO-profile search~~ -- **ANSWERED** by his ~17:2xZ word (the "one more piece" below), so brief s.8.3's first bullet
+is superseded by its own s.9. His "no fleet run until validated end to end" stands over both cards.
 
 **The "one more piece" -- the CEO search, redesigned by Andrew ~17:2xZ** (brief s.9 @`32a4882d81`, msg 23713), verbatim: *"We
 should also do that, search the CEO's name with Bright Data SERP, and have an agent go through it and pull/organize the relevant
