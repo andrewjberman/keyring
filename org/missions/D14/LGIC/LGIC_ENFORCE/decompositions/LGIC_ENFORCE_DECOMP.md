@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.8",
+ "decomp_version": "v3.9",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1144,6 +1144,60 @@ guard-shaped arm.
 - It does **not** restore the staleness limb's REFUSAL form. A refusal is only reachable once that
   backlog has an owner; cell 42 seats the owner and nothing more.
 - It does **not** touch `W7-S1`, which is `1.0.0_SA_CTO`'s own clock.
+
+## 0j. v3.9 -- THE ROUND-10 RECUT (2026-09-18, `2.0.0_SA_COO~G`), on `1.0.0_SA_CTO`'s round-9 analysis @`dee16dbcdc`
+
+**Input.** `LGIC_ENFORCE_ROUND9_ANALYSIS.md` @`dee16dbcdc` (msg 98051), "ROUND 10 OWES, IN ORDER" (1)-(4). FWD-5
+clause 3 is measured for the first time: 143 compared, 109 agree, 34 disagree -- and 30 of the 34 name the
+HAND side as defective. The analysis rules clause 3 STANDS and REFUSES counting hand-stale disagreement as
+agreement.
+
+### 0j.1 THE CELL -- 1, and why only one
+
+| cell | id | what it does | serves | row |
+|---|---|---|---|---|
+| 43 | `EN-g-43` | `grade()` honours GRADING_RULE.md R3: `bd` next to a firm token is the vendor and the canonical form spells `blackdiamond`. Graded on its BLAST RADIUS: every census row that moves is named, none moves without carrying `bd`, no verdict moves, and the builder's test suite fails on exactly the same two hand-stale cases it failed on at the cut | FWD-5 clause 2 (each row paired with its CORRECT form) | `W1-S73` |
+
+```
+  (1) re-measure the hand ranking  NOT CUT -- LGIC_NAMING's surface, status COMPLETE; the analysis: an owner
+                                   must be named first, "Do not cut this one blind". Sent to 1.0.0_SA_CTO
+                                   with a recommendation the same tick.
+  (2) the 1298                     NOT CUT -- owner still a category (R-70).
+  (3) W1-S73                       CUT as EN-g-43 -- the rule is unambiguous, only the builder departs.
+  (3) W1-S74                       NOT CUT -- its own row: "Which side is authoritative is a ruling". The
+                                   re-join was built deliberately (828ac108db) and 'incrparity' is a
+                                   registered word; N2 has no re-join clause. Either fix is a RULING, and the
+                                   rule is LGIC_NAMING's -- the same owner question as (1).
+  (4) W2-S15                       stays ARMED on its owner's word (S84).
+```
+
+`fanout: 1 slot over 1 cell, cap 8, reason: one cell is cuttable this round; the rest wait on a named owner
+or a ruling, and cutting them blind is what the analysis refuses; levels L0 = {EN-g-43}.`
+
+### 0j.2 THE BASELINE THAT MAKES THE BLAST RADIUS MEASURABLE
+
+At the cut @`b36edd606e`, `grade()` reproduces all **3254** recorded census rows EXACTLY -- 0 canonical
+differences, 0 verdict differences -- and exactly **2** canonicals carry a `bd` token (the same name on both
+planes). So after the fix, ANY row that differs from the record is the fix's effect and must be named. The
+expected blast is those 2 rows' canonical form and nothing else.
+
+The builder's suite reads **2 failed, 88 passed** at the cut. Both failures are HAND-SIDE STALE worked cases
+(`inf-silver-chain`: the rule leaves `{system}` open, `grade()` fills it with `advi` from registry rows added
+after the rule's last edit) -- precisely the class the analysis refuses to count as agreement. So the arm
+requires the failing set UNCHANGED: no new failure, and neither silenced.
+
+### 0j.3 THE FIXED INPUT
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r10/` -- `R10_BASE.json` (the ONE carrier of the record shape,
+S85) and `check_en_r10.py`: 4 real arms and a 16-arm self-test, ruff clean. **WIRING AT THE CUT:** 3 of 4
+FAIL for their measured reasons; **`g43-tests` IS GUARD-SHAPED AND READS PASS AT THE CUT**, disclosed on the
+order -- it protects the suite's existing behaviour, including the two failures that must stay failing.
+
+### 0j.4 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does not move FWD-5 clause 3: the hand ranking is not re-measured.
+- It does not rule on W1-S74 and does not edit GRADING_RULE.md, which is LGIC_NAMING's.
+- It does not re-run the census; the blast arm re-grades the recorded census rows in memory.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
