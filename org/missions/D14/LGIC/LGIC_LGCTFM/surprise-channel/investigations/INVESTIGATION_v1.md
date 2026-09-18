@@ -600,7 +600,29 @@ PRD, so it is a row here, not a message.
     "world_is": "The PRD's FWD-6 names no C6 and no LGIC_CANON; its PLAN row names ADVI_FIRMBKTS as the L5 consumer; and C6 has already run without moving the outcome.",
     "notes": "THE REGISTER IS 1.0.0_SA_CTO's L3 CARRIER AND THIS SEAT DOES NOT EDIT IT -- the correction is RECOMMENDED to that seat and carried here meanwhile, because a broker message is never the carrier. RECOMMENDED: re-point LGIC_LGCTFM's FWD-6 blocking text at ADVI_FIRMBKTS's L5 consumption of the plan, and carry the count into card 6's seating rec as THREE threads on one unseated project. THE CLASS: a register gloss that is RIGHT ABOUT THE VERDICT and WRONG ABOUT THE MECHANISM survives every check that only re-verifies the verdict -- the same shape as this estate's `git hash-object` finding, where every published number was correct and only the stated mechanism was half. It fires on the first seat who acts on the RECIPE rather than the conclusion. COST: one read of the outcome at the PRD instead of the register. NON-APPLICATION: an outcome whose register text quotes the PRD verbatim.",
     "id": "LGIC_LGCTFM-S24"
-  }
+  },
+ {
+  "id": "LGIC_LGCTFM-S25",
+  "project": "LGIC_LGCTFM",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+  "surfaced_at": "2026-09-18T15:19:36Z",
+  "one_line": "THE ROUND-1 SKILL .claude/skills/lgctfm/SKILL.md IS RETIRED ON ANDREW'S WORD (2026-09-18, verbatim: 'get rid of the stale skill'), DELETED AT e2aa0d51c8, and a re-run of round 1's fixed input now FAILS ONE ARM ON THAT ABSENCE, BY DESIGN AND NOT ON A DEFECT. check_lt_r1.py:50 pins SKILL = '.claude/skills/lgctfm/SKILL.md' and its E1-SKILL-INVOKES-ENGINE arm at :565-568 returns FAIL-E1-SKILL-INVOKES-ENGINE 'absent' when the file is gone. Round 1 is CLOSED and GRADED and its grade STANDS: R-43, frozen history is not falsified by a later authorized change, and the checker is a FIXED INPUT of a closed round that round 2 already declined to repair. The live invocation frame is now .claude/skills/legacy-transform/SKILL.md, and engine verbs are read from `python lib/opal_lgctfm.py --help`.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "LGIC_LGCTFM.TO-LT-e-1-r1.walk.md:18 -- 'You write lib/opal_lgctfm.py (the engine), infra/logic/10_LEGACY_TRANSFORM.md (the method) and .claude/skills/lgctfm/SKILL.md (the one invocation)'; PRD LGIC_LGCTFM_PRD.md:330 lists that path as T3's deliverable, 'the invocation'.",
+  "world_is": "The file was deleted at e2aa0d51c8 (author 0.4.0_DS_ClientPlatform~X) together with the new .claude/skills/legacy-transform/SKILL.md, 183 lines added and 46 deleted. It documented the `walk` verb alone at the LT-e-1 vintage while the engine's argparse at lib/opal_lgctfm.py:1539 carries four verbs (walk, forks, plan, run), and it carried none of R-35, R-36, R-40, R-47 or R-57. Five surfaces still name the retired path and are NOT rewritten, all frozen records: the PRD (:180, :202, :330, :389), the decomposition (:35, :105), the LT-e-1 task order (:18, :76), that cell's proof instance and result, and the round-1 fixed input check_lt_r1.py. The two workflows/ README edits that would complete the house two-way cross-reference are REFUSED to this seat by the owned-paths lane gate (lane ANY_EXEC_OR_AE) and wait on a permitted seat.",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "git show --stat e2aa0d51c8: .claude/skills/legacy-transform/SKILL.md +183, .claude/skills/lgctfm/SKILL.md -46",
+    "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py:50 and :565-568 (the arm reads SKILL and says 'absent: %s')",
+    "lib/opal_lgctfm.py:1539 argparse -- four subcommands; .claude/skills/lgctfm/SKILL.md at its deleted vintage documented one"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Filed so the next seat re-running check_lt_r1.py reads that arm as this retirement rather than as a regression -- the same class the project already named, an arm of a closed round failing on later drift. No repair is proposed to the fixed input (R-43) and no frozen record is rewritten. If a future round wants the arm green, the honest move is a NEW arm in a NEW checker pointing at the live skill, never an edit to round 1's."
+ }
 ]
 ```
 
