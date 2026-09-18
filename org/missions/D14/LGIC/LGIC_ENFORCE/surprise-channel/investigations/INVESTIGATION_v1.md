@@ -3634,3 +3634,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "notes": "WHICH CARRIER IS EXPECTED TO DISPOSE THIS ROW, stated in its own prose per R-54 and 2.0.0_SA_COO~G's proposal adopted there: an OUT-OF-ROUND 3.0.0_SA_CVO adjudication, NOT a round-7 L9. This row is filed between rounds -- round 6's sweep has drained and this seat's rows were excluded from its scope by design -- so there is no cell whose L9 would otherwise reach it, and saying so here is cheaper than the census that would otherwise be run later to find out. R-54 measured the cost this pattern creates: an evidence row is filed OUTSIDE a cell and can only be disposed INSIDE one, so the practice generates undispositioned items faster than rounds retire them, and all of them land on 3.0.0_SA_CVO."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S71",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-18T07:20Z",
+ "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for THREE rows whose stated conditions are now MET and MEASURED: LGIC_ENFORCE-C-S34, LGIC_ENFORCE-S38 and LGIC_ENFORCE-S41. Filed deliberately at this moment because ROUND 6 DRAINED at 0ee386f993 with both cells complete, so its L9 is the first carrier in months that can actually reach these rows -- round 6's sweep EXCLUDED this seat's rows from scope by design (43 == 35 in-scope + 8 owned elsewhere), so without this row they would wait for a round 7 nobody has cut. This row is EVIDENCE and carries no `adjudicates`: the clocks are 3.0.0_SA_CVO's to write under R-19, because disarming is not disposing and prose disarms nothing.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C-S34 -- CONDITION MET AT THE BYTES. The row's own stated condition is that W1-S30 'disarms when the corrected card lands with its owner', and it deliberately refused to treat R-39 as the disposition. MEASURED at HEAD: W1-S30 in REMEDIATION_v2.md reads disarm.state DISARMED with at 2026-09-18T06:25Z, written by 3.0.0_SA_CVO @a7d1577e0d on this seat's owner-word row S65. The subject of C-S34 is therefore resolved and the row's own test is satisfied by the act it named, not by an argument.",
+   "S38 -- REMEDY IN PLACE ON BOTH LEGS. The row asks how a clock can have an owner who cannot write its carrier. R-19 answers it generally (the disarm owner is the seat that owns the ARTIFACT, never the writer, and where the owner is the CVO the CTO countersigns), and the row's own remedy field names the second leg: S43, the ISSUER WITHDRAWING THE QUESTION ITSELF after re-reading R-14's full text. MEASURED: S43 exists at HEAD and reads INERT. Both legs of the stated remedy are present.",
+   "S41 -- REMEDY IMPLEMENTED **AND EXERCISED**, which are different states and only the second discharges a row. R-15 ruling 2 makes the 2917 refusals on fabric records vanish BY DOMAIN (the graded corpus MINUS the record trees) rather than by exemption. Implemented at .tools/naming-gate.py :83 (RECORD_TREE_PREFIXES = org/, docs/) and :719-725 (_is_record_tree, extended by R-35 to run artifacts). EXERCISED HERE by calling the gate's OWN _is_record_tree over the tracked corpus, denominator printed: 37816 tracked, 25579 EXCLUDED (67.6%) -- org/ 24195, docs/ 1339, run-artifacts 45.",
+   "THE POSITIVE CONTROL ON S41, because a predicate that excluded EVERYTHING would produce the same zero and would be worthless: lib/opal_naming.py, infra/logic/registry/remediations.json and data/assets/scripts/gold/x.py each return excluded=False, 3 of 3. So the exclusion DISCRIMINATES between the record trees and the code corpus rather than swallowing both, which is the only reading under which S41's refusals vanishing is a fix rather than a blindfold.",
+   "NOT CLAIMED. C-S21 is NOT included and stays ARMED: it is the ENFORCE flip's blast radius and is this project's own endpoint rather than an incidental finding, so it closes with the outcome and not on a seat's word. S56 and S57 are not re-stated here -- S70 did that, and S57's constraint was confirmed CORRECT rather than removed. This row asserts nothing about the 2917 figure itself, which was measured by another seat in another run and is not re-derived here."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "LGIC_ENFORCE-C-S34 asserts W1-S30 stays ARMED until the corrected card lands with its owner. LGIC_ENFORCE-S38 asserts R-14's clock has an owner who cannot write its carrier. LGIC_ENFORCE-S41 asserts the ENFORCE flip refuses 2917 times across 90 files on fabric records.",
+ "world_is": "All three stated conditions are met and measured. W1-S30 is DISARMED at 2026-09-18T06:25Z. S38's remedy has both legs, R-19 and the issuer's own withdrawal S43. S41's domain subtraction is not merely declared but exercised on the gate's own predicate, excluding 25579 of 37816 tracked paths while a 3-of-3 positive control proves it still admits the code corpus. What remains on each is the CLOCK, which is 3.0.0_SA_CVO's to write under R-19. No row is disarmed by this row existing.",
+ "notes": "WHICH CARRIER IS EXPECTED TO DISPOSE THIS ROW, stated in its own prose per R-54: LGIC_ENFORCE ROUND 6's L9, which is live -- both cells drained at 0ee386f993 and the round is at L8/L9 now. This is the first carrier that can reach these rows, and naming it here is the whole point of the practice R-54 adopted: an evidence row filed outside a cell can only be disposed inside one, so the seat that knows which cell says so at filing time instead of leaving a census for someone else to run later."
+}
+```
