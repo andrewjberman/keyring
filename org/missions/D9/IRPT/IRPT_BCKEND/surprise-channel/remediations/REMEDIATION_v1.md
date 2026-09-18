@@ -2684,3 +2684,121 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  }
 }
 ```
+
+## Round 3 -- remediation plane
+
+```json
+{
+ "id": "IRPT_BCKEND-S65",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "The 49 Financial principal was DECLARED in the refresh Lambda's own deploy root (principal_49f.tf under infra/aws/lambda/investor-reporting/directory/), so ANY apply of that root for ANY reason would have created it WITHOUT the never-widen sign-off. An unrelated apply becomes a grant.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S65",
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md round 3 disposition rows"
+ ],
+ "remedy": "REMEDIATED on the disarm owner's own evidence at S72, filed at IB-rtc-7's drain: the principal was created BY the signed act, with both never-widen halves at HEAD (COO @437789944a, CTO @3a976e1e1d), the packet blob re-hashed, the mdpf-pipeline apply TARGETED to K3, and the writer census unchanged at 12 of 263 same membership. S72 records that no apply of either root from a tree carrying the declaration preceded it -- which is the condition, measured rather than assumed. VERIFIED BY THIS SEAT on the live plane: the role exists at CreateDate 2026-09-18T08:49:34Z.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v3",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v3"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": "2026-09-18T11:30Z"
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S32",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "The decomposition names a fallback plane that does not exist: IB-rtc-5's cell text offers 'the renderer's in-process path with the SAME code' if the browser host is unreachable non-interactively, and that path was retired. A face naming a retired mechanism as a live option sends the next cell at nothing.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S32",
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md round 3 disposition rows"
+ ],
+ "remedy": "REMEDIATED on the disarm owner's own evidence at S61, filed at IB-rtc-5's drain @799ffd91bc. The row's own disarm_owner field carries the durable fix rather than merely a state: the decomp language must name the LOCAL-DEV-PLANE-ON-REAL-CODE substitution directly instead of the retired fixture path, and any future face repeating the retired phrase should read this row first. Writing the instruction into the field so the next face cannot repeat the phrase is the right use of it.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v3",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v3"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": "2026-09-18T11:30Z"
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S68",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "An UNTARGETED apply of mdpf-pipeline/ would push more than the host policy's one new statement: an unrelated aws_s3_object config, and from a Windows checkout, CRLF bytes. The plan is 0 to add and 2 to change, and only one of the two is the intended act.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S68",
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md round 3 disposition rows"
+ ],
+ "remedy": "NOT REMEDIATED AND THE CLOCK STAYS OPEN. IB-rtc-7 avoided the hazard by TARGETING its apply to K3 rather than by removing it, so the exposure survives the act that worked around it -- the next untargeted apply of that root meets the same two-change plan. Accepted as carried by 1.0.0_SA_CTO at 97865 and explicitly not this round's. Owed: either the config object moved out of that root's blast radius, or a standing requirement that every apply of mdpf-pipeline/ be targeted, recorded where an operator reads it rather than in a row.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v3"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S39",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "W4-S28's arm (a) BYTES comparison for irpt-ycharts-generate reads NOT-REPRODUCIBLE rather than EQUAL or DIFFER-with-confidence: the fix (extract/certify.py, 56a6e07e8f) is not a declared or resolvable member of ANY of 216 functions, so the arm CANNOT BY CONSTRUCTION settle whether it is aboard.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S39",
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v1.md round 3 disposition rows"
+ ],
+ "remedy": "NOT REMEDIATED AND CORRECTLY SO -- this row exists because R34's cell REFUSED to record a verdict its instrument could not support, and closing it would undo that. The question W4-S28 poses is still open and the arm cannot answer it; what is owed is a read that CAN, which means resolving the deployed bytes for that function against its BUILD INPUT (source-map or manifest) rather than by filename, per CLAUDE.md 22a. Until such a read exists, NOT-REPRODUCIBLE is the honest value and the clock should stay open rather than be closed on the absence of a finding.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v3"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
