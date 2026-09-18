@@ -88,6 +88,7 @@ printing its measurement with its denominator, then exactly one line `VERDICT: P
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **The census FINDS; it does not FIX.** Half one is the only repair in this cell. Every other `NOT-ENFORCED` rule is a result-file finding plus ONE surprise row, and the issuer places the remedy. Widening this cell to fix a second rule is exactly the re-cut this project keeps paying for.
+- **`app/integrations/schwab/integration.py` is granted for HALF ONE's CALL SITE ONLY** (added on the re-hand; row `NFRA_OPLGTW-W5-S13`). `SchwabService.query()` is the only place that can hand `semantics.py`'s already-built `qualify_asset_plan()` its inputs, and the issuer's first cut of this order omitted that file -- an issuer defect, not a scope change. Call the check and pass its inputs; change nothing else in that file and no other tool's behaviour.
 - **`semantics.py`, `datasets.json`, `data_entitlement.py` and `tests/test_schwab_query.py` are NOT yours** -- they are other cells', merged and closed. A needed change there is a BLOCKING row.
 - **`tests/acceptance/` is `OG-v-2`'s** and `OG-v-2` is OPEN: read its harness and fixtures, never edit them. If `test_ogv2_a06` needs a fixture your half cannot reach, that is a BLOCKING row naming the fixture.
 - **Branch.** You work in the worktree named in your identity line, on its branch, cut from `CLOUD` at hand-off. Never push, merge, rebase, `checkout --` or `clean`.
@@ -109,6 +110,7 @@ printing its measurement with its denominator, then exactly one line `VERDICT: P
 <paths>
 infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py
+infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py
 infra/aws/ec2/opal-gateway/tests/test_schwab_asset_policy.py
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -149,3 +151,18 @@ ruling's own addition and its reason is stated in the cell text: three cells in 
 `OG-q-2`'s two defect-asserting tests and this `dim_asset` rule -- were the same defect, and the call-site bar alone
 did not stop it because the POPULATION was never enumerated. `OG-v-2` takes its last re-hand after this cell drains,
 to re-grade its AC2 whole; re-grading it earlier would fail on `test_ogv2_a06` alone and cost a hand-off for nothing.
+
+Amended 2026-09-18 ~00:5xZ, before the re-hand, by `2.0.0_SA_COO~O` on ITS OWN DEFECT, row `NFRA_OPLGTW-W5-S13`
+(BLOCKING, filed by `0.9.0_WK_NFRA_OPLGTW~5` and correct): HALF ONE's only possible call site is
+`SchwabService.query()` in `app/integrations/schwab/integration.py`, and the first cut's `<paths>` named `query.py`
+and `catalog.py` but not that file, so the worker could not wire what this cell exists to wire. It refused rather
+than edit outside its grant, which is exactly what the order asks of it. That file is now granted for that call
+site only.
+
+HALF TWO was not blocked and is DRAINED: `OGQ5-AC5` PASS @`4db9547d32`. The census is built by subtraction --
+**34 sentences printed as the denominator, 3 excluded with their reasons, 2 folded into one row, 29 rules: 20
+ENFORCED-ON-CALL-PATH / 5 NOT-ENFORCED / 4 NOT-A-CALL-PATH-RULE** -- and it found FOUR MORE built-but-uncalled
+rules beyond `dim_asset` (rows `W5-S14`..`W5-S17`: grouping/date identity, the multi-field balance sum, duplicate-
+grain detection, and the dataset description's sign and null semantics). Per this cell's own bound the census FINDS
+and only half one FIXES, so those four are pitched to `1.0.0_SA_CTO` with a recommendation and are not this cell's.
+No criterion was removed.
