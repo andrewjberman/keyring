@@ -13,6 +13,50 @@
 
 ## WORKER FACE
 
+### RE-HAND -- READ THIS FIRST. THIS CELL HAS BEEN RUN ONCE AND THE ISSUER REFUSED ITS OWN COMPLETE FLIP.
+
+**What happened, measured, not summarised.** The first hand ran the engine at 20:25Z and its run directory
+`workflows/legacy_transform/blackdiamond-49financial/20260917T202556Z-bb29248/` is in the tree. But `.tools/naming-gate.py`
+(ENFORCE mode) refused five of its six JSON artifacts wholesale -- 1719 REFUSE lines -- so only `VINTAGE.json` and the four
+`.md` files committed. Ruling **R-35** then exempted a minted run directory, and the four refused files WERE later added --
+**by a different cell's commit.** `git log --diff-filter=A` names `a5fca30175` (cell `LT-e-4`) as the ADD commit for
+`contract.json`, `plan.json`, `PLANT.json` and `PLANT_UNTYPEABLE.json`, and `git hash-object` shows them BYTE-IDENTICAL to
+that amendment's own 23:31Z run `20260917T233115Z-a89fd61` (`contract.json` is `84d4d1e62b` in both, `95b04ca692` in the
+flag-on run). The directory's `VINTAGE.json` still declares `run_id 20260917T202556Z-bb29248` at `repo_head bb292483994d`.
+`MARK.json` was never committed at all and the worktree that held it is gone, so it exists nowhere on this device.
+
+**So `X1R1-AC1` reads PASS on bytes this cell's run did not produce, and `X1R1-AC2` is not reproducible at all.** That is
+filed as `LGIC_LGCTFM-S3` and it is the ISSUER's defect, not the first hand's: the criterion reads the run directory and
+never asks who wrote it. **You are not fixing someone's mistake; you are producing the one coherent run the record needs.**
+
+**WHAT YOU DO DIFFERENTLY, and it is the whole point of this hand:**
+
+1. **Mint a FRESH run directory.** Do not touch, move, delete or re-write `20260917T202556Z-bb29248` or either
+   `a89fd61` directory. They stay exactly as they are -- the 20:25Z one is the historical record of the refused first run.
+   `run_home.py` refuses to overwrite an existing run directory, so a new run mints a new id by construction.
+2. **`MARK.json` IS COMMITTED THIS TIME.** R-35 exempts a minted run directory, so the commit that refused 1719 times
+   now lands. If it refuses again, that is a BLOCKING row with the gate's own output quoted, never a workaround.
+3. **RULING R-40 BINDS THIS CELL** (`1.0.0_SA_CTO`, 2026-09-18, msg 97741, record `SELF_DRIVE_LGIC_RULINGS_20260917.md`
+   @`233f5fd5e4`): *a criterion whose subject is a RUN or a PRODUCED ARTIFACT records that artifact's CONTENT HASH beside
+   the run id, and is graded against that hash.* So your run directory also carries **`HASHES.json`**, written at
+   production time:
+   ```
+   {"run_id": "<your run id>", "repo_head": "<git rev-parse HEAD at the run>",
+    "produced_at": "<UTC ISO>", "instrument": "git hash-object",
+    "files": {"contract.json": "<sha>", "flow.current.md": "<sha>", "flow.desired.md": "<sha>",
+              "plan.json": "<sha>", "plan.md": "<sha>", "VINTAGE.json": "<sha>",
+              "MARK.json": "<sha>", "FWD10.json": "<sha>"}}
+   ```
+   Exactly those EIGHT keys, no more and no fewer -- the new arm compares the declared set to the required set in BOTH
+   directions, so a manifest that omits a file does not pass either. Hash each file AFTER you finish writing it.
+   `HASHES.json` does not hash itself.
+4. **A LABEL IS NOT AN IDENTITY.** Anywhere your result doc or proof instance names this run, name it by run id AND by
+   the `contract.json` hash from `HASHES.json`. That is what makes a later replacement detectable instead of silently
+   satisfying the criterion.
+
+**The 20:25Z directory's provenance is NOT yours to correct** -- it is `LGIC_LGCTFM-S3`'s subject and the issuer's row. Do
+not add a note to it, do not amend its `VINTAGE.json`, and do not file a second row about it; it is already filed.
+
 ### THE CELL
 
 `LT-x-1` (PRD T10, DEC-9, DEC-13, DEC-15). **You write the run directory under `workflows/legacy_transform/blackdiamond-49financial/` and append MARK rows to the three registries.** You edit no code: an engine defect is a BLOCKING row.
@@ -22,7 +66,7 @@
 3. **Mark (DEC-9).** Append, under project `ADVI_FIRMBKTS`, only to `infra/logic/registry/remediations.json` (surface kinds `bucket-alias`, `s3-prefix`), `org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json` (served paths, measured with request site) and `infra/logic/registry/scopes.json` (bucket aliases). Record every appended entry in `<run-id>/MARK.json` as `{"marks": [{"file": <one of the three paths>, "project": "ADVI_FIRMBKTS", "entry": <the exact JSON value appended>}]}`. An entry already present is recorded and disclosed, not appended twice. **Commit the marks through `safe-commit` (the naming gate runs), and paste the output of `python lib/opal_naming.py targets` into that commit's message (ruling R-16: a registry edit re-stamps generated views -- the `TARGETS:` line must be in the message).** Do NOT run `generate`.
 4. **After.** Re-read both planes; write `<run-id>/FWD10.json`: `{"aws": {"instrument": "comp-find --corpus aws", "before": {"nodes_scanned", "built"}, "after": {"nodes_scanned", "built"}, "delta_outside_run": [<every live node that changed and is not this run's>]}, "served": {"before": {"routes_sha256"}, "after": {"routes_sha256"}}}`.
 
-The run directory holds `contract.json`, `flow.current.md`, `flow.desired.md`, `plan.json`, `plan.md`, `VINTAGE.json`, `MARK.json`, `FWD10.json`, and its contract validates against `org/standards/LGCTFM_CONTRACT.schema.json`. **The only paths this branch changes** are under `workflows/legacy_transform/`, the three registries, and `org/missions/D14/LGIC/LGIC_LGCTFM/`.
+The run directory holds `contract.json`, `flow.current.md`, `flow.desired.md`, `plan.json`, `plan.md`, `VINTAGE.json`, `MARK.json`, `FWD10.json` and **`HASHES.json`** (the R-40 manifest, above), and its contract validates against `org/standards/LGCTFM_CONTRACT.schema.json`. **The only paths this branch changes** are under `workflows/legacy_transform/`, the three registries, and `org/missions/D14/LGIC/LGIC_LGCTFM/`.
 
 **Read:** `org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md` DEC-9, DEC-13, DEC-15 and the plane note under the ENDPOINT; `infra/logic/registry/remediations.json` `_about`; `.tools/naming-gate.py` (the DEC-6 matrix); `org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260916.md` R-16.
 
@@ -42,7 +86,9 @@ The run directory holds `contract.json`, `flow.current.md`, `flow.desired.md`, `
 
 <criterion id="X1R1-AC6" cell_refs="LT-x-1" judgment="true"/>
 
-<expected_criteria>X1R1-AC1, X1R1-AC2, X1R1-AC3, X1R1-AC4, X1R1-AC5, X1R1-AC6</expected_criteria>
+<criterion id="X1R1-AC7" cell_refs="LT-x-1"><invocation>cd <WS> && timeout 300 python org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py x1-hashes</invocation><expect>PASS-X1-RUN-ARTIFACTS-BOUND-TO-THEIR-HASHES</expect></criterion>
+
+<expected_criteria>X1R1-AC1, X1R1-AC2, X1R1-AC3, X1R1-AC4, X1R1-AC5, X1R1-AC6, X1R1-AC7</expected_criteria>
 
 **Every mechanical criterion above reads FAIL at the cut** (its input does not exist yet) **except where the issuance commit message records otherwise.** **X1R1-AC6, for `3.0.0_SA_CVO` at L9 (no verdict from you):** FWD-10 on the LIVE plane (R-17): the before and after reads were taken with the named instruments at the vintages recorded, and every live change in the window is attributed; FWD-1: the contract lets the 49 Financial migration's opener learn what the pipeline is made of without listing it by hand.
 
@@ -76,10 +122,13 @@ org/missions/D14/LGIC/LGIC_NAMING/deliverables/LEGACY_SERVED_PATHS.json
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `X1R1-AC1`, `X1R1-AC2`, `X1R1-AC3`, `X1R1-AC4`, `X1R1-AC5`, `X1R1-AC6`. Instance at
+Criterion ids: `X1R1-AC1`, `X1R1-AC2`, `X1R1-AC3`, `X1R1-AC4`, `X1R1-AC5`, `X1R1-AC6`, `X1R1-AC7`. Instance at
 `org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-x-1-r1.first-run-and-mark.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`), validated with
-`python .tools/proof-of-spec-check.py <instance> X1R1-AC1,X1R1-AC2,X1R1-AC3,X1R1-AC4,X1R1-AC5,X1R1-AC6 --governing-order org/missions/D14/LGIC/LGIC_LGCTFM/task-orders/LGIC_LGCTFM.TO-LT-x-1-r1.first-run-and-mark.md` BEFORE the `complete` flip.
+`python .tools/proof-of-spec-check.py <instance> X1R1-AC1,X1R1-AC2,X1R1-AC3,X1R1-AC4,X1R1-AC5,X1R1-AC6,X1R1-AC7 --governing-order org/missions/D14/LGIC/LGIC_LGCTFM/task-orders/LGIC_LGCTFM.TO-LT-x-1-r1.first-run-and-mark.md` BEFORE the `complete` flip.
+**THE INSTANCE AT THIS PATH IS THE FIRST HAND'S AND YOU REPLACE IT WHOLE** -- its `AC1` FAIL and its `AC2` PASS were both
+measured against the run directory this hand supersedes, and the issuer's note on `AC2` says so. Every criterion is
+re-measured at YOUR run; nothing is carried forward.
 Result file `first-run-and-mark.r1.result.md` beside it. **Commit the artifact first, then pin it; never PENDING-THIS-COMMIT.**
 `X1R1-AC6` is JUDGMENT: record `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming `3.0.0_SA_CVO`; a PASS or FAIL there is invalid.
 </proof_of_spec>
