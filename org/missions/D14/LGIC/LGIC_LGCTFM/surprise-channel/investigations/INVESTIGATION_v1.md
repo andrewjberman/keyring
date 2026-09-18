@@ -220,6 +220,28 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "V1R1-AC4 (x1 arm v1-card) asserts the card carries the ranking rule verbatim and its top ten tension ids, and it reads PASS. Nothing in round 1's criteria grades the card's PROSE against the population it characterises.",
    "world_is": "The card passed every mechanical arm with a recommendation line that overstated the top-priority population by one. The gap is structural, not a worker's slip: v1-card grades presence (rule verbatim, 10 of 10 ids), never the arithmetic of a sentence about the factors.",
    "notes": "INERT: the ranking is unaffected, the correction is landed, and Andrew has the corrected line beside the card in the same act. FOURTH INSTANCE OF ONE FAMILY IN ONE EVENING, which is what makes it worth a row rather than a fix: this seat's own LGIC_LGCTFM-S3 (a PASS on bytes the cell did not produce), the CTO's S25R4-AC5 (an id that exists in no order and survives a count check), LGIC_ENFORCE S61 (a quote whose one clean grep hit is the wrong file), LGIC_ENFORCE S62 (a right total with a wrong split) and this one (a right table with a wrong summary). In every case the EVIDENCE is sound and the SENTENCE ABOVE IT is not, and in every case a second seat caught it. THE CHEAP CONTROL, for any future card: state the claim as a count with its denominator ('1 of 179') rather than as a word ('the two rows'), because a number invites the check a word does not. NOT CLAIMED: that v1-card should have caught this -- grading a prose summary against the population it describes is a new criterion, not a repair of that arm, and it belongs to whoever cuts the next card cell."
+  },
+  {
+   "id": "LGIC_LGCTFM-W2-S3",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+   "surfaced_at": "2026-09-18T01:21Z",
+   "one_line": "The re-hand's fresh walk (run 20260918T011619Z-8db9eb1) carries 13 current-name rows under `opal-data-bd/silver/`, and `infra/logic/06_CONFORMANCE_LEDGER.md:72` already carries a DECIDED disposition for that whole prefix -- MIGRATE -> `opal-data-assets/blackdiamond/49financial/silver/` (R4), LIVE -- exactly the same shape (a DECIDED MIGRATE the registry did not yet carry) as the `gold/` prefix the first hand marked in 53d59778a1. This worker APPENDED `{kind: s3-prefix, bucket: opal-data-bd, prefix: silver/}` to `infra/logic/registry/remediations.json`'s ADVI_FIRMBKTS surfaces this hand, beside disclosing the already-present `gold/` entry, both recorded in this run's MARK.json.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "infra/logic/06_CONFORMANCE_LEDGER.md:72 @HEAD (read via comp-read): '| `opal-data-bd/silver/` | 7,989 (7 json) | 09-12 | **R4** | **MIGRATE -> `opal-data-assets/blackdiamond/49financial/silver/`** (R4) -- LIVE | DECIDED |'.",
+     "workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json: 13 rows whose current.name.value starts with 'silver/' (python count over the 184-row contract).",
+     "infra/logic/registry/remediations.json ADVI_FIRMBKTS.surfaces, s3-prefix kind, at this commit: [{bucket: opal-data-portal-v2, prefix: platinum/advi/49financial/}, {bucket: opal-data-bd, prefix: gold/}] -- no silver/ entry."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "The WORKER FACE's measured-at-base note names exactly ONE ADVI_FIRMBKTS s3-prefix row already landed (gold/) and instructs: record and disclose an already-present entry, never append twice. Separately, X1R1-AC5 (x1-r16) requires a commit ON THIS BRANCH after merge-base that touches one of the three registries and carries a TARGETS: line (R-16) -- and the gold/ entry's own mark commit (53d59778a1) already sits BEFORE this branch's merge-base with CLOUD, so it does not count toward that criterion; re-committing gold/ unchanged is not a real git diff.",
+   "world_is": "A second DECIDED-but-unmarked prefix on the identical bucket exists on the live ledger (06_CONFORMANCE_LEDGER.md:72) and this run's own walk surfaces 13 live rows under it -- the same evidentiary shape DEC-9 already accepted for gold/ (same project ADVI_FIRMBKTS, same kind s3-prefix, same bucket, a DECIDED-not-yet-marked disposition this walk measures directly). This worker APPENDED it to infra/logic/registry/remediations.json's ADVI_FIRMBKTS surfaces (never a fourth registry file -- DEC-9's Rule-24 bound is about the FILE COUNT staying at three, not the row count within one) and records both the disclosed gold/ entry and the newly-appended silver/ entry in this run's MARK.json, because (a) it clears the same bar the first hand's mark did and (b) it is what makes X1R1-AC5 satisfiable on this branch without a no-op commit.",
+   "notes": "This is a JUDGMENT CALL beyond a literal reading of 'record and disclose, never append twice' (which was written for the ONE entry the measured note named) -- disclosed here rather than acted on silently. If the issuer/CVO judges the silver/ append out of this cell's scope, the remedy is a revert of that one entry plus a different route to X1R1-AC5 (e.g. a scopes.json touch), not a re-litigation of the gold/ disclosure. Kept working per CLAUDE.md section 2."
   }
 ]
 ```
