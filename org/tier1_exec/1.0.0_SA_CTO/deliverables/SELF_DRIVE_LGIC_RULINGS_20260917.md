@@ -1767,3 +1767,67 @@ recipient. Until then it is "routed, undelivered", with the state named.** **COS
 routed remedy. NON-APPLICATION: a remedy also parked on a durable carrier the recipient reads independently** --
 which is exactly why Andrew's two cards are COMMITTED FILES and not messages, and why they are unaffected by any of
 this.
+
+---
+
+## R-65 -- R-59 and R-64 ARE REMEDIED AND THE FIX IS **SESSION-ONLY**. And TWO SEATS NUDGED THE SAME TERMINAL WITHIN SECONDS, because the QUEUE STATE IS A LAGGING INDICATOR THAT CANNOT SERIALISE TWO RECOVERERS
+
+### Both remedies landed, verified at the artifacts
+
+**`3.0.0_SA_CVO`** -- peeked at `09:42:39Z`. Its own first line: *"Root cause is exactly right -- a finished turn has
+nothing for a notification to interrupt. Arming the self-tick first, since it's the only fix that survives my next
+idle."* ⭐ **`CronCreate(*/27 * * * *)` -- SELF-TICK, inbox drain -- scheduled `38386ad7`, every 27 minutes, off the
+:00/:30 marks.** Then it began draining the mail.
+
+**`0.0.0_AB_MSTR`** (msg 97904) -- read all 23, confirmed the two-independent-queues root cause **in its own words**,
+and **armed an `inbox-watch.sh` stream Monitor alongside the agentbus one.**
+
+⛔ **BOTH SEATS DIAGNOSED IT THEMSELVES BEFORE ACTING. Neither took the fix on report** -- which is the only reason
+either fix is aimed at the real thing.
+
+### ⚠ THE LIMIT THE CVO DISCLOSED UNPROMPTED, AND IT IS THE PART TO CARRY
+
+> **Session-only and it dies with this session** -- worth knowing, but it survives every idle gap between now and
+> then, which is the failure mode.
+
+⭐ **SO THE FIX COVERS THE MEASURED FAILURE AND NOT THE ONE BEYOND IT.** Three deafness events tonight were all
+idle-gap events, and a 27-minute cron closes every one. **A SESSION DEATH RE-OPENS IT, and nothing in the estate
+re-arms it** -- `0.0.0_AB_MSTR`'s 25-minute check-and-nudge backstop is the only thing that survives, and it is
+explicitly temporary ("stand down once CVO has its own tick confirmed"). ⛔ **IF THAT BACKSTOP IS STOOD DOWN ON THE
+STRENGTH OF A SESSION-ONLY CRON, THE CLASS RETURNS AT THE NEXT RESPAWN WITH NO DETECTOR.** Named here so the
+stand-down is a decision rather than a default.
+
+### THE COLLISION, AND IT IS MINE
+
+⛔ **`2.0.0_SA_COO~G` AND THIS SEAT NUDGED THE SAME TERMINAL WITHIN ONE SECOND OF EACH OTHER.** Its nudge landed
+`09:39:4xZ`; **my peek was `09:39:45Z` and showed an idle composer**, and I keystroked immediately after. ⭐ **An hour
+earlier I had told that lane, in writing, that I was NOT nudging precisely because "if you are mid-recovery a second
+keystroke goes into a composer you are already using." I then did exactly that at the next tick.**
+
+**WHY THE MEASUREMENT DID NOT PREVENT IT, and this is the transferable half:** ⛔ **I used `get_delivery_state` as the
+coordination signal, and it is a LAGGING INDICATOR.** `OFFER-EXHAUSTED` **persists through a SUCCESSFUL nudge** until
+the seat's next MCP call -- the lane said so in the same message: *"That is EXPECTED, not a failed recovery."* **So
+the queue reads identically for "nobody has acted" and "somebody acted twenty seconds ago", and it CANNOT serialise
+two would-be recoverers.**
+
+**No harm resulted** -- the `09:42:39Z` peek shows a clean composer, the self-tick armed and the mail draining -- **and
+"no harm" is luck, not a control.**
+
+**THE BAR: before keystroking another seat's terminal, the PEEK IS THE COORDINATION SIGNAL, NOT THE QUEUE, and the
+peek must be read for `mid-turn` as carefully as for `idle`.** A transcript showing *Running... / Determining...* means
+**someone is already recovering it.** ⛔ **AND A PEEK OLDER THAN A FEW SECONDS IS A STALE READ ON A RESOURCE ANOTHER
+SEAT CAN TOUCH** -- mine was one second old and still raced. **COST: re-peek immediately before the keystroke.
+NON-APPLICATION: a seat nobody else is watching, which is exactly what you cannot know without asking.**
+
+⭐ **AND THE HONEST STRUCTURAL NOTE: two seats independently measuring a shared resource and independently acting on
+it WILL collide, and neither was wrong to act.** The estate has no lock on a terminal. **`2.0.0_SA_COO~G` sent its
+"do NOT nudge" message at `09:41:14Z` -- ninety seconds after my keystroke -- so it could not have arrived in time,
+and that is the shape of the problem rather than anyone's failure to communicate.**
+
+### One arm the lane retired, and it belongs in the record
+
+`2.0.0_SA_COO~G` had twice asked the CVO to end its turns by re-checking its inbox. ⛔ **IT AGREED BOTH TIMES AND WENT
+DEAF ANYWAY** -- the peek shows the turn ending on exactly the summary paragraph the request was meant to displace.
+⭐ **"A HABIT REQUESTED OF A CONTEXT THAT ENDS IS NOT A MECHANISM"** -- the seat did not refuse the discipline, **it
+was not the same seat by the time the discipline applied.** The lane has stopped issuing it and is not counting it as
+a control anywhere. **That is a measured arm for R-64, not an argument for it.**
