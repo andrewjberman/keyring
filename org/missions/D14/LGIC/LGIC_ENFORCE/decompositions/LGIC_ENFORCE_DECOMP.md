@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.4",
+ "decomp_version": "v3.5",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -706,6 +706,101 @@ and the table independently reproduced the CVO's own remedy split, 20/2/10/10 = 
 **A STALE FIELD IN THIS DOCUMENT'S OWN HEADER, corrected in this commit and disclosed rather than quietly fixed:** the
 header json read `"decomp_version": "v2.1"` while this document's section headings had reached v3.3 across two
 recuts. It is set to `v3.4` here, matching this section.
+
+## 0f. v3.5 -- THE ROUND-6 RECUT (L10: 1.0.0_SA_CTO's round-5 analysis)
+
+**Input.** `LGIC_ENFORCE_ROUND5_ANALYSIS.md` @`b683398fda`, on this seat's drain-end, plus ruling **R-46**
+@`c862eeb867` **AS CORRECTED** @`ab9a8f356b`. Round 5 graded **REALIZED 6 of 7**; FWD-5 stays open.
+
+**Round 6 is TWO cells, numbered 32 and 33, and no earlier cell is re-opened:**
+
+```
+  cells at v3.4 ......................................................... 31
+  plus round 6's two .................................................... +2
+  = cells in this decomposition ......................................... 33
+  round 6 runs exactly the two: 32, 33
+```
+
+| cell | id | what it does | rulings | serves |
+|---|---|---|---|---|
+| 32 | `EN-s-32` | **the DISARM SWEEP.** Over the armed population, per owner: DISARM what is genuinely met, **RESTATE what has drifted**, and say which is which. Prints its predicate, its owner-resolution order and its occurrence-vs-distinct choice BEFORE any count; re-measures the denominator at its own write time; and prints the partition `43 == 35 IN SCOPE + 8 OWNED ELSEWHERE` with the other owners named | R-46 (corrected), R-42 | FWD-3 |
+| 33 | `EN-c-33` | **the campaign continued.** The 1370 rows round 5's timebox handed forward, carried by CLASS and not as one total; `NON_SYSTEM_PLACEHOLDER_TOKEN` gets a disposition of its own rather than being folded into the timebox. Same fence guard, same R-33 bound | R-38, R-33, R-29 | FWD-5 |
+
+### WHY THE SWEEP EXISTS, AND IT IS NOT HOUSEKEEPING
+
+Round 5's slug stated for the first time that the project carried a large ARMED population, and the number
+took **three attempts across two seats** to settle: 57 against 54, then a ruling of 55, then **43** derived
+independently by both seats from R-46's rule rather than from each other's answer. Each wrong number was
+wrong for a different reason, and every reason is now a condition on this cell:
+
+- **54** -- this seat's reader keyed a dict by row id so the LAST document won, and it never read the
+  top-level `owner` that R-42 had just established as an addressee. **Condition: the owner-resolution
+  order is PRINTED.**
+- **55** -- R-46's disposition test applied to the 3 rows under discussion instead of all 57, leaving 12
+  rows counted as open that a clock had closed days earlier. **Condition: the denominator is re-measured
+  over the WHOLE population at the cell's own write time.**
+- **92** -- the same channel at the OCCURRENCE level rather than the distinct-id level. **Condition: the
+  occurrence-vs-distinct choice is PRINTED.** A number without it is not a measurement.
+
+⛔ **AND THE SWEEP'S SCOPE IS 35, NOT 43.** Of the 43, `1.0.0_SA_CTO` holds 7 and `3.0.0_SA_CVO` holds 1,
+and **a worker of this lane cannot disarm another seat's row.** So the cell works 35 and PRINTS the other
+8 with their owners. A cell that graded itself on its own subset while the round called it 43 would be
+this evening's subset-not-population defect one more time, in the very cell built to stop it.
+
+**THE OWNER'S WORD IS ALREADY PARTLY GIVEN, and it shows the shape:** `1.0.0_SA_CTO` disarmed two of its
+seven early (`W1-S30`, `C-S34`, row `S65`) on R-39's met condition, and **left five armed with stated
+reasons** -- including `S56`, whose premise moved when that seat wrote the very file the row says is
+writable by nobody. **A row whose premise moved needs a RESTATED REASON, not a disarm**, and that is the
+half of the sweep that is easy to skip.
+
+### THE CAMPAIGN'S SECOND PASS, AND THE CLASS THAT IS NOT A TIMEBOX
+
+Round 5 carded 1370 rows in three classes, read fresh from its own record rather than quoted:
+`TIMEBOXED_R33` **1134**, `NON_SYSTEM_PLACEHOLDER_TOKEN` **235**, `TYPE_MISMATCH_NEEDS_CONFIRMATION` **1**.
+
+⚠ **THE 235 ARE A DIFFERENT QUESTION AND ONE REMEDY DOES NOT MOVE BOTH** (Rule 24(iv)). A `TIMEBOXED_R33`
+row is one the campaign simply did not reach. A `NON_SYSTEM_PLACEHOLDER_TOKEN` row is one where the token
+**is not a system at all**, so "resolve it from a declared source" may not even apply to it. Folding them
+together would let 235 rows ride a timebox forever under a reason that was never theirs. The cell carries
+every class BY NAME with its count, and gives the 235 a disposition rule of their own.
+
+### WRITE SURFACES, AND WHY THIS IS ONE QUEUE
+
+```
+  EN-s-32   the project's surprise channel ONLY (its own sweep record in its deliverables folder)
+  EN-c-33   infra/logic/registry/{systems,resources}.json + its own records + the channel
+```
+
+**Both write the channel, so they are ONE QUEUE on ONE SLOT**, sweep first. CLAUDE.md 14b says an
+append-only shared file is where you do NOT isolate -- but that rule is about a seat choosing a worktree,
+and TWO WORKER BRANCHES appending to one channel is a GUARANTEED conflict at the second merge rather than
+a seconds-long race. Measured 3 of 3 on a sibling project's round-4 drains.
+
+### EDGES AND THE SLOT PLAN
+
+```
+  slot ~1   EN-s-32-r6  ->  EN-c-33-r6     the channel, then the registry + the channel
+```
+
+`fanout: 1 slot over 1 connected component, cap 8, reason: both cells write the project's surprise
+channel, so parallelism buys a merge conflict rather than wall-clock; levels L0 = {32}, L1 = {33}. The
+sweep runs FIRST because its output is a cleaner channel for the campaign to append to, and because it is
+the smaller of the two.`
+
+### THE FIXED INPUTS L6 CUTS INTO THE FACES
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r6/check_en_r6.py` -- 9 subcommands, and `selftest-arms` drives
+**28 arms, 8 of them POSITIVE-SATISFIABILITY** against two simulated correct records. `R6_BASE.json` pins
+`372b1d653d`.
+
+⭐ **THE CHECKER IMPLEMENTS R-46's PREDICATE ITSELF AND REFUSES A DECLARATION THAT DOES NOT MATCH IT.**
+That is unusual and deliberate: a cell that PRINTED one rule and COUNTED by another would otherwise satisfy
+condition 1 while defeating it. Verified at the cut by calling the checker's own `armed_population()`
+against the live channel -- **43 still armed, 35 in scope**, matching the pin and both seats' independent
+derivations.
+
+**One guard, and it is labelled:** `c33-fence` reads PASS at the cut because the applied fence must STAY
+unchanged (R-29). The other eight arms read FAIL, each because its input does not exist yet.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
