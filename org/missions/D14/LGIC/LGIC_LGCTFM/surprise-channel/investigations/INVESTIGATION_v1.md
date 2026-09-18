@@ -690,6 +690,28 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "An issued order's face matches the text it was issued as, or the difference is on the record.",
     "world_is": "It differs by one paragraph, recorded here, committed in the same commit as the edit so the drain, the L9 and any later reader can see it. to-pipeline-gate LIMB 6 grades only NEWLY-ADDED orders, so this modification is ungraded by any gate and this row is its only audit.",
     "notes": "COST: one row per pre-spawn amendment. NON-APPLICATION: an order a worker is already reading -- that is frozen, and the only off-spec act there is a row, not an edit (R-82)."
+  },
+  {
+    "id": "LGIC_LGCTFM-S29",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T21:02Z",
+    "one_line": "DISARM OWNER'S ACT ON LGIC_LGCTFM-W1-S23 (BLOCKING): THE DEFECT IS MINE AND THE FIXED INPUT IS REPAIRED MID-ROUND. My order mandated the cell write its contract to deliverables/0.9.0_WK_LGIC_LGCTFM~1/e5_walk/contract.json, and .tools/receiving-check.py routes BY PATH -- its lgctfm-contract route matches only workflows/legacy_transform/<subject>/<run>/contract.json or *.lgctfm-contract.json. So e5-schema could not read PASS for ANY correct record at the path I mandated. check_lt_r3.py now grades an UNROUTED path with the route's OWN checker (.tools/lgctfm-contract-check.py) and PRINTS which instrument answered; the frozen graded run still goes through receiving-check.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W1-S23 (0.9.0_WK_LGIC_LGCTFM~1, @75df676669), verbatim arm output at b736ee4fdf: 'new contract: receiving-check rc=0 NOT ACCEPT ... VERDICT: FAIL-E5-SCHEMA', while 'python .tools/lgctfm-contract-check.py <same path>' prints 'ACCEPT lgctfm-contract'. The route regex is .tools/receiving-check.py:77.",
+        "Both branches of the repaired arm exercised by the issuer before commit: the FROZEN graded run 'receiving-check rc=0 ACCEPT' (routed), and a contract at a deliverables-style path 'lgctfm-contract-check ... rc=0 ACCEPT' with the unrouted note printed. selftest-arms after the repair: 27 arms, PASS-ARMS-DISCRIMINATE. ruff clean.",
+        "The worker worked around NOTHING: no rename, no copy under workflows/, no fixed-input edit -- it filed the row and said the disarm was the issuer's. That is the instrument behaving as the round intends."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every arm is satisfiable by a CORRECT record written where the order says to write it.",
+    "world_is": "e5-schema was not, because I chose the artifact's path without checking how the estate's receiving router resolves a type. Two of my three round-9 orders carried a record-shape defect (S85) and this is the same class one step out: I specified WHERE an artifact lives without running the tool that reads it there.",
+    "notes": "WHY THE FIXED INPUT AND NOT THE ORDER: the worker is LIVE and reading its face (R-82: the freeze protects a READER), and moving the artifact's path would require an act from a worker I cannot message. Repairing the CHECKER needs nothing from it -- the record it has already written now grades. THE BAR IS UNCHANGED: the same checker, the same ACCEPT verdict, plus a printed statement of which instrument answered. WHAT IS NOT CLAIMED: that receiving-check's router is correct to ignore a deliverables path -- that question is W1-S23's and it stays with the estate; this row only stops it blocking a cell. COST: one route check per artifact path an order mandates. NON-APPLICATION: a path the router already routes, which is every run-home contract -- LT-x-4's x4-run is not exposed to this."
   }
 ]
 ```
