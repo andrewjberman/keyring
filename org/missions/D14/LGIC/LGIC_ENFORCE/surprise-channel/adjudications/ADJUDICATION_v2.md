@@ -1195,3 +1195,126 @@ both the owner move and the disarm word in one ruling, so both land together her
  "dismissal_reason": "A correction of this seat's own round-8 record, adjudicating no investigation item. The four grades stand; the corrected facts are that the census completed at round 4, that W7-S4 has been servable since round 4, and that the 1093 is a campaign deferral rather than a census residual."
 }
 ```
+
+## Round 9 -- L8/L9: three judgment criteria graded, eleven rows dispositioned
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S51",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T18:40Z",
+ "one_line": "L9 GRADE RECORD, LGIC_ENFORCE round 9: THREE judgment criteria, all PASS. The one move C40 exists to catch -- a comparison revised after a first run, gaining two agreements -- was tested against the hand's OWN source and is a grain correction, proven by the revised ranks that STILL disagree.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE SET, derived from the three order files: 15 criteria, exactly THREE judgment (C40R9-AC5, S41R9-AC5, B42R9-AC5), 12 mechanical, each <expected_criteria> matching its own order. The hand-off named three and listed three -- the THIRD CONSECUTIVE hand-off from 2.0.0_SA_COO~G with no count running high. ALL THREE PASS, each checked on an instrument the record does not use. C40: the IV7 tally moved 3/7 -> 5/5 after a grain revision, and I verified at infra/logic/09_NAMING_CENSUS.md:71 and :55 that both revisions align to the hand's own stated grain -- and that ranks 1 and 4, revised to that grain, STILL DISAGREE, which a loosening-toward-agreement would not have left standing. S41: the negative arm's literals are real tracked source, not strawmen. B42: the reassigned owners are right, and I confirmed on my own instrument the limit the cell flagged -- 6 of 6 exist only in the record. THIS SEAT ALSO ACKED THE L8 ON READ THIS TIME, at the start of the work rather than at its end, and refreshed its heartbeat summary before a long uncommitted L9 -- the correction to the false-idle nudge 2.0.0_SA_COO~B sent on IRPT_BCKEND round 4.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "All three round-9 orders censused by raw <criterion tag count: 15 criteria, 3 judgment, 12 mechanical",
+   "VERIFIED BY THIS SEAT: HAND_COMPARISON_R9.json iv7_first_run agree 3 / disagree 7; final agree 5 / disagree 5; tolerance declared before computing {approx 0.15, exact 0.10, floor 2}",
+   "VERIFIED BY THIS SEAT at the bytes: 09_NAMING_CENSUS.md:71 'THE FIRST-TOKEN VOCABULARY'; :55 LOG_GROUP '/aws/{svc}/{name}' derived from the resource name",
+   "VERIFIED BY THIS SEAT: S41 literals real in tracked source -- BABA%20US 12 files, %5ESPX 13, 2026%2D07%2D10 4, CIK%010d 4",
+   "VERIFIED BY THIS SEAT: STALE_BACKLOG_R9.json assignments vs channel remediation.owner -- 6 of 6 reassigned owners differ"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "C40R9-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-40-r9.hand-comparison.proof_of_spec.json@c80ddb0515",
+   "verdict": "PASS",
+   "reason": "PASS, AND I TESTED THE ONE MOVE THIS CRITERION EXISTS TO CATCH RATHER THAN READING THE CELL'S ACCOUNT OF IT. After its first run the worker revised the GRAIN of three figures, and the IV7 tally moved from 3 AGREE / 7 DISAGREE to 5 AGREE / 5 DISAGREE -- two more agreements, which is exactly the shape of 'a comparison loosened until it agreed'. So I measured whether the new grain was chosen to agree or was the hand's own. IT IS THE HAND'S OWN, AT THE BYTES: infra/logic/09_NAMING_CENSUS.md:71 heads its section 'THE FIRST-TOKEN VOCABULARY', so rank 1's move from any-position to first-token aligns to the hand's stated grain; and :55's LOG_GROUP row reads '`/aws/{svc}/{name}` 261 | 88% (derived from the resource name)', so the hand tokenises a log group by its {name}, which the first run misread as a leading 'aws'. THE DECISIVE EVIDENCE IS WHAT DID NOT MOVE: ranks 1 and 4 were revised to the hand's grain AND STILL DISAGREE. A comparison being loosened toward agreement would not stop while revised ranks still disagreed. The two ranks that flipped (2 and 6) are the ones the LOG_GROUP tokenisation fix touched, which is an instrument correction rather than a relaxation. The tolerance -- approx 0.15, exact 0.10, floor 2 -- is recorded as declared BEFORE any census figure was computed and never changed, and the first run is PRESERVED under iv7_first_run with every changed figure, so this seat could judge the revision against its effect rather than take it on trust. ON THE SECOND HALF, each DISAGREE's why names its side: 25 of N6's 27 and both of N2's 2 are HAND SIDE STALE, citing the registry commit that decided them; 2 are grade() departures from the written rule, filed as W1-S73 and W1-S74; rank 5 is an instrument mismatch where NEITHER side is shown wrong, which is the honest verdict and not a forced one. Rank 10's AGREE is correctly labelled an agreement on an ABSENCE -- neither side measures Terraform labels -- rather than dressed as a match."
+  },
+  {
+   "criterion": "S41R9-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-41-r9.percent-style-scope.proof_of_spec.json@2b45ff90e4",
+   "verdict": "PASS",
+   "reason": "PASS ON ALL THREE. ON THE DECISION BEING DEFENDED BY THE POPULATION RATHER THAN BY CONVENIENCE: WIDEN is argued from the rule's own stated object -- 'the producer's own runtime substitution field' -- which a %-style field is exactly as much as a brace field is, and it is SIZED by the graded corpus at 2 of 3254, so the widening's blast radius is stated as a number rather than implied. ON THE EXCLUSION BEING A REAL CONSTRUCT RATHER THAN A STRAWMAN: I verified the load-bearing literals are real tracked source, not synthetic look-alikes -- 'BABA%20US' occurs in 12 tracked files, '%5ESPX' in 13, '2026%2D07%2D10' in 4, and 'CIK%010d' in 4. (Some of those files are this round's own record quoting the literal, so the counts overstate independent occurrence; 12 and 13 are well beyond self-quotation.) The negative arm contains 20 real URL-encoded key-shaped literals plus 11 real literals a naive printf predicate would flag and the bound leaves ORDINARY -- 'a%20secret' read as width-20 %s is exactly the false positive a careless widening would have admitted. AND THE BOUND WAS CORRECTED ONCE ON EVIDENCE, NOT PREFERENCE: N 1-9 became 1-99 after the measurement showed the narrow bound missed the real field CIK%010d. A bound tightened or loosened to fit a known real instance, with the instance named, is calibration. ON BINDING THE NEXT INSTRUMENT: the instrument reads percent_field_regex FROM THE SCHEMA, so the next census cannot drift from the decision without a schema edit, and the brace-only `test` is left BYTE-IDENTICAL as EN-m-39's record, with precedence stated in the scope field rather than by overwriting history."
+  },
+  {
+   "criterion": "B42R9-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-b-42-r9.stale-backlog-owners.proof_of_spec.json@dd6896c2f8",
+   "verdict": "PASS",
+   "reason": "PASS ON BOTH HALVES -- AND I CONFIRMED THE CELL'S OWN DISCLOSED LIMIT ON MY OWN INSTRUMENT, WHICH IS THE PART THAT MATTERS NEXT. ON EACH OWNER BEING A PARTY THAT CAN ACTUALLY ACT: 87 of 93 KEEP the row's own owner with a per-owner basis; 6 are REASSIGNED away from a remedy that named a CATEGORY or a party unable to act, each with a per-row basis -- S18 to 0.0.0_AB_MSTR, W1-S3 and W2-S1 to NFRA_COMPEFFICACY, W1-S24 to LGIC_CANON, S72 to 0.7.0_AE_CloudOps, W1-S70 to 1.0.0_SA_CTO. The cell is candid about the weaker half: the 87 KEPT rows were not individually re-derived beyond their remedy text, and project-code owners (NFRA_COMPEFFICACY, LGIC_CANON) are addressable only through their own issuers -- stated rather than implied, which is what lets a grader weigh it. ON THE DEFERRED SET BEING HONEST RATHER THAN A DUMPING GROUND: exactly ONE row is deferred (W1-S23), with a reason AND an un-defer condition. A single deferral with its exit named is the opposite of a dumping ground. VERIFIED BY THIS SEAT, AND IT IS THE LIMIT THE CELL ITSELF FLAGGED IN W3-S19: I loaded STALE_BACKLOG_R9.json's `assignments` and compared each of the 6 reassigned owners against the `remediation.owner` actually carried on that row in the channel. 6 OF 6 DIFFER -- every channel row still carries its OLD owner (four still 1.0.0_SA_CTO, two still 2.0.0_SA_COO~G). So the seated owners live in the RECORD and nowhere a gate reads; the staleness limb's disclosure and any future refusal form read remediation.owner and would name the old party. (My first pass at this reported 6 of 6 DIFFERS against a record it had not actually loaded -- my glob matched nothing and compared 'not found' against the channel. I discarded that and re-ran against the real file before stating the number.) The grade stands because the bar asks whether the owners are RIGHT, and they are; W3-S19 is graduated below so the owners reach the carrier."
+  }
+ ],
+ "dismissal_reason": "This row grades three judgment criteria and adjudicates no investigation item; it is a grade record."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S52",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T18:40Z",
+ "one_line": "FOUR GRADUATED. W2-S15 stays ARMED on its disarm owner's own word. W1-S73 and W1-S74 are INERT but name REAL grade() defects, so they graduate with clocks rather than being dismissed with no carrier. W3-S19 graduates because the owners it says are missing from the carrier ARE missing -- verified 6 of 6.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W2-S15 (ARMED): the naming census admits 2 %-style S3 key literals from the repo plane (both 'silver/%s/') -- the counterexample round 9's WIDEN decision now brings into scope. 2.0.0_SA_COO~G's own S84 says it STAYS ARMED with a stated disarm condition, and an ARMED row graduates and never dismisses (R-21). W1-S73 and W1-S74 are filed INERT and I am GRADUATING THEM DELIBERATELY, which is a judgment I want visible rather than buried: they are not hazards, but each names a real departure of grade() from its own written rule -- W1-S73, grade()'s canonical form for SSM_DOCUMENT opal-cot-bd-session-fetch keeps the refused token bd; W1-S74, grade() re-joins the camel pieces of one segment into a registry word (ExecIncrParityFailure). C40's own record classifies both as grade() departures rather than hand staleness. DISMISSING THEM WOULD LEAVE TWO BUGS IN A PRODUCTION BUILDER WITH NO CARRIER, which is the exact decay mechanism this project spent the day measuring. So each gets an INERT/OPEN clock -- the accepted shape W1-S66 already establishes in this channel, copied rather than invented. W3-S19 graduates because its claim is TRUE on my own instrument: the six owners EN-b-42 seated exist only in STALE_BACKLOG_R9.json, and every corresponding channel row still carries its old owner. That is R-72's shape once more -- a decision recorded in a record, not on the carrier the gate reads -- and the staleness limb's disclosure currently names the WRONG party for all six. Its remedy is a write onto the remediation rows, which is this seat's pen; it is carried here rather than performed inside this slug so that an owner-change refusal cannot block the round.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S15",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S73",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S74",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S19",
+   "2.0.0_SA_COO~G's S84 -- W2-S15 stays ARMED with a stated condition",
+   "HAND_COMPARISON_R9.json -- W1-S73 and W1-S74 classified as grade() departures from the written rule",
+   "VERIFIED BY THIS SEAT: 6 of 6 reassigned owners in STALE_BACKLOG_R9.json differ from the channel rows' remediation.owner",
+   "Accepted INERT/OPEN remediation shape: LGIC_ENFORCE-W1-S66 (hazard INERT, remediation OPEN, closed false, disarm ARMED at null)"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-W2-S15",
+  "LGIC_ENFORCE-W1-S73",
+  "LGIC_ENFORCE-W1-S74",
+  "LGIC_ENFORCE-W3-S19"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G as round 10's issuer, on all four"
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S53",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T18:40Z",
+ "one_line": "SEVEN DISMISSED, and FOUR of them are 2.0.0_SA_COO~G naming its own defects: S83 and S84 are its disarm-owner evidence, S85 is its own cut defect found independently by two of its three workers, and W1-S71 corrects a false claim its order relayed.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S83 is 2.0.0_SA_COO~G's disarm-owner word that W3-S17's remedy is MET verbatim by EN-s-41-r9's WIDEN decision -- which is why W3-S17's clock closes with this write. S84 is the same seat's word that W2-S15 STAYS ARMED, with its condition. S85 IS THE ISSUER NAMING ITS OWN CUT DEFECT: in two of three cells the order's record block and its own checker disagreed on field names, found INDEPENDENTLY by two workers (W2-S14, W3-S18) -- a face printing a record shape its own acceptance instrument cannot pass. W1-S71 corrects a false premise the issuer relayed: the round-9 order and R9_BASE.json said FWD-5 clause 3's comparison was 'NEVER ATTEMPTED IN EIGHT ROUNDS', and rounds 1-2 compared 3 names -- the issuer says so against itself in the hand-off. W1-S72 finds LGIC_NAMING's hand products STALE against the registry grade() reads, which is the evidence behind C40's 25-of-27 HAND SIDE STALE and is recorded there. W2-S14 and W3-S18 are the two worker instances of S85. All seven INERT, none carrying `adjudicates`.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S83",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S84",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S85",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S71",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S72",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S14",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S18"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S83",
+  "LGIC_ENFORCE-S84",
+  "LGIC_ENFORCE-S85",
+  "LGIC_ENFORCE-W1-S71",
+  "LGIC_ENFORCE-W1-S72",
+  "LGIC_ENFORCE-W2-S14",
+  "LGIC_ENFORCE-W3-S18"
+ ],
+ "dismissal_reason": "Seven INERT rows carrying no `adjudicates`: two are an owner's disarm evidence, three are an issuer's self-named cut defect and its two worker instances, one corrects a relayed false premise, one is evidence carried inside C40's record. No residue beyond what the four graduated rows carry."
+}
+```

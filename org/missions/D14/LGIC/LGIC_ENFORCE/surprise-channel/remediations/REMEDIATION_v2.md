@@ -1798,9 +1798,127 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "owner": "2.0.0_SA_COO~G",
  "round": "v8",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "2.0.0_SA_COO~G",
   "round": "v8"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T18:40Z"
+ }
+}
+```
+
+## Round 9 -- remediation plane: four new clocks (W3-S17 closed in place above)
+
+```json
+{
+ "id": "LGIC_ENFORCE-W2-S15",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The naming census admits 2 %-style S3 key literals from the repo plane (both 'silver/%s/') while tracked .py source carries 44 tier-prefixed %-style key literals in 33 files -- 42 never became census rows, 11 of the 33 files first-party producers, including a sibling constant in the same Lambda family as an admitted one.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S15",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN AND ARMED ON THE DISARM OWNER'S OWN CONDITION (S84). Round 9 decided WIDEN, so the 2 %-style repo-plane literals ('silver/%s/') are now in the template class by the schema's own percent_field_regex; what is owed is that the census and the campaign record CLASSIFY them that way at the next run, and the row disarms when a census reading the v1.12 schema classes both as templates.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S73",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "grade()'s canonical form for SSM_DOCUMENT opal-cot-bd-session-fetch keeps the refused token bd, where GRADING_RULE.md R3 says bd next to a firm token is the vendor and 'the canonical form spells blackdiamond'; the hand grader (n6) writes opal-cot-blackdiamond-session-fetch-document. 2 of 3254 census r8 rows carry a bd token in their canonical form, both this name.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S73",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN -- A REAL grade() DEFECT, NOT A HAZARD. grade()'s canonical form for SSM_DOCUMENT opal-cot-bd-session-fetch keeps the refused token `bd`, departing from the written rule. Owed: a fix in lib/opal_naming.py grade() with a positive control on this exact name and a mutant that re-introduces the kept token, run against the live census rather than a fixture. Graduated rather than dismissed so the defect has a carrier.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S74",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "grade() re-joins camel pieces of one segment into a registry word (ExecIncrParityFailure -> exec-incrparity-failure) where GRADING_RULE.md N2 splits before every capital and states no re-join (hand: exec-incr-parity-failure). Either the written rule lacks the clause or grade() applies one it does not have.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S74",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN -- A REAL grade() DEFECT, NOT A HAZARD. grade() re-joins the camel pieces of ONE segment into a registry word (ExecIncrParityFailure), departing from the written rule. Owed: a fix in lib/opal_naming.py grade() with a positive control on this exact name and a mutant, run against the live census. Graduated rather than dismissed so the defect has a carrier.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W3-S19",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "Every row the staleness limb counts ALREADY carries a serial owner by construction; the categories live in the REMEDY text, and the owners this cell seats live only in its record, not on the rows the gate reads.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S19",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 9 disposition rows"
+ ],
+ "remedy": "OPEN, AND THE WRITE IS THIS SEAT'S PEN. EN-b-42 seated six owners (S18 -> 0.0.0_AB_MSTR, W1-S3 and W2-S1 -> NFRA_COMPEFFICACY, W1-S24 -> LGIC_CANON, S72 -> 0.7.0_AE_CloudOps, W1-S70 -> 1.0.0_SA_CTO) and those owners exist ONLY in STALE_BACKLOG_R9.json -- verified by 3.0.0_SA_CVO, 6 of 6 channel rows still carry the old owner. Owed: relocate each onto its remediation row's owner fields via the admitted owner-change move (exactly one new ruling-citing evidence entry, NO clock move -- R-42 governs relocating the three owner fields). Until then the staleness limb's disclosure names the wrong party for all six.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v9"
  },
  "closed": false,
  "disarm": {
