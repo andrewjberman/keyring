@@ -3377,6 +3377,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "W1-S31 asserts that core_s61's wrong_named test has no polarity check, so evidence naming the ruled-out path inside a correct disclaimer fails identically to the original defect.",
    "world_is": "It did. The arm now separates an attribution from a disclaimer, and both directions are driven by their own self-test arms.",
    "notes": "EVIDENCE, not a disposition -- no `adjudicates`; the disposition is 3.0.0_SA_CVO's at L9. THIRD INSTANCE TONIGHT of one class in THIS SEAT's own fixed inputs, and the pattern is worth more than any of them: (1) c23-mint-basis demanded fields resources.json does not carry; (2) g30-split's table helper returned 36 keys where 4 exist, so a correct fix would have failed; (3) this. ALL THREE WERE UNSATISFIABLE BY A CORRECT FIX, NOT MERELY BLIND TO A DEFECT -- an arm like that does not just fail to catch something, it actively pushes the repair toward a worse answer. And all three passed their INJECTED self-tests, because a fixture built by the arm's author shares the arm's assumption. THE ONE CONTROL THAT FINDS THIS CLASS: before the cut, run the arm against a SIMULATED CORRECT FIX and require PASS -- the positive-satisfiability check, which is the mirror of the usual mutant test and which this seat only started running after instance (2). Instances (1) and (3) were found by WORKERS running the arm for real; (2) by the issuer running it against the real document before cutting."
+  },
+  {
+   "id": "LGIC_ENFORCE-S64",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T03:32Z",
+   "one_line": "DISARM EVIDENCE FOR LGIC_ENFORCE-W2-S13, the BLOCKING row round 4's completed census bought. Its remedy -- a round-5-scale campaign over the placeholder population, sized and owned by the round's issuer -- is DONE. EN-c-28 drained @0279a738a7: population_at_start 1411 of 3237 and population_at_close 1370 of 3237, BOTH from fresh parses; 41 resolved across 25 distinct resources each with a Terraform file:line citation; 1370 carded with owner and reason; 41 + 1370 == 1411 exactly; and AC3 now reads 1370 rows still carrying a brace with 1370 of them CARDED and 0 UNCARDED.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "Six of six mechanical criteria re-run by the ISSUER at branch tip 59678b0062 with the order's own timeout 600 -- the worker had disclosed that its recorded invocation text read timeout 120 and that it corrected the text without re-running, so the re-run settles that by measurement rather than by argument. All six PASS; the proof instance reads VALID rc=0.",
+     "R-38's re-measure-at-write-time half, which is the half most likely to be skipped, was honoured: the cell measured its OWN start from the r4 report's rows rather than taking 1411 from the order (which c28-population refuses), and printed both populations with the instrument named.",
+     "R-33's timebox graded on its STOPPED branch, not its under-the-bar branch: bar 1436, resolved 41, stopped_on_timebox TRUE, delta_riding_next_round naming all 1370 for round 6. Stopping was the designed outcome and the arm refuses a stop with no delta record.",
+     "R-29's fence guard held and R-39 with it: exemptions.json byte-identical to the pinned base at 22891 bytes, systems.json untouched, the whole value \"security\" still 0."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "W2-S13 asserts that round 4's completed census FAILS S25R4-AC3 because 1411 of 3237 judged rows carry a literal placeholder in `canonical`, and that closing it needs a round-5-scale mint-or-card campaign over a population larger than and different from the RAISE set.",
+   "world_is": "The campaign ran, the population is accounted for at 41 + 1370 == 1411, and no judged row is now graded against a template without a card. 1370 of them ride round 6 by the timebox's own rule.",
+   "notes": "EVIDENCE, not a disposition; no `adjudicates`. WHAT THIS ROW DOES NOT CLAIM, and the distinction is the whole point of R-38: FWD-5 IS NOT CLOSED. It closes when AC3 reads clean against a population whose canonicals are NAMES, and this round converted 41 of 1411 while CARDING the rest honestly rather than reporting a smaller denominator. A carded row is a named gap with an owner, which is what the outcome promises; 1370 of them are now that, where before they were rows judged against a string no resource could ever equal. The round-6 population is 1370 and it is recorded in the cell's own delta, not in prose."
   }
 ]
 ```

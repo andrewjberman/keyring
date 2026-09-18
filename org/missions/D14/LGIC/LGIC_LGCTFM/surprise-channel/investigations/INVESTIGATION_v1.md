@@ -310,6 +310,29 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "S1 asserts that the fork fixture's denominator disagrees across three carriers -- the PRD's four, the brief IV.5 enumeration's five, and the Part III bar's three by way of example -- and that a fixture built on four would under-cover the control set by one member while reading clean.",
    "world_is": "The disagreement was real and is resolved by measurement, not by choosing a carrier: the fifth member does not exist at this vintage, and the fixture prints what it withdrew and why.",
    "notes": "EVIDENCE, not a disposition; no `adjudicates`. WORTH KEEPING: the row was filed at the L6 cut BEFORE any order existed, and what it bought was not a corrected number -- it was a fixture that prints its own withdrawals. Three carriers disagreeing about a count is not settled by finding the authoritative carrier; it is settled by measuring the members and printing what each count includes."
+  },
+  {
+   "id": "LGIC_LGCTFM-S13",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T03:30Z",
+   "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-S10, which is 3.0.0_SA_CVO's row and was right. x1-r16 and x1-footprint read `git merge-base HEAD CLOUD`, so they measured A BRANCH AGAINST ITS OWN BASE -- correct exactly once, at the worker's tip, and FALSE FAIL for every later reader, printing 'paths changed on this branch: 0' while the cell's work sat in the tree. Repaired @39e6977e95 by binding to IDENTITY rather than POSITION: the cell's commits are found by AUTHOR (this project's three worker serials) AND by the ORDER ID in the message, over the whole history. Measured after the repair on the SHARED TREE, which is the state that could not be reached before: x1-footprint 7 commits, 22 paths, 0 outside the grant, PASS; x1-r16 2 of 2 registry commits carrying a TARGETS: line, PASS; and all SIX x1 arms now PASS at HEAD.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "The repair, @39e6977e95: cell_commits() runs `git log --all --author=<each of the three worker serials> --grep=<order id>`, and both arms read through it. Authorship survives a drain; a branch position does not. Two qualifiers are written into the function rather than left implicit -- it reads AUTHOR, which says who WROTE a commit and never who pushed or merged it, and a merge commit carries the ISSUER's author line, so a drain is correctly not counted as the cell's work.",
+     "THE FIRST VERSION OF THE REPAIR WAS ALSO WRONG AND RUNNING IT IS WHAT CAUGHT THAT: scoped by AUTHOR ALONE it graded all three slots' work across the whole round and reported 9 paths 'outside the grant' -- lib/opal_lgctfm.py, the renderer, the tests, the skill, the method doc, two .tools files and ADVI_FIRMBKTS's channel -- every one another cell's legitimate work. A FALSE FAIL TRADED FOR A WRONG-DOMAIN FAIL. The order_id narrowing is the fix and the docstring says why it is not optional.",
+     "Neither arm can now pass vacuously: an empty commit set is an explicit FAIL in both, printed in the output, because R-16's bar cannot be met by finding nothing. selftest-arms still reads PASS-ARMS-DISCRIMINATE.",
+     "Verified as a POST-DRAIN READER sees it, at HEAD on the shared tree rather than at a branch tip: x1-run-dir, x1-marks, x1-fwd10, x1-footprint, x1-r16 and x1-hashes all PASS. 3.0.0_SA_CVO can now re-run every one of them at L9, which it could not before this repair."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "S10 asserts that two of LT-x-1's arms are branch-relative and read false FAIL for any seat that re-runs them off the worker's checkout.",
+   "world_is": "They were, and they did. Both now bind to the cell's own commits by author and order id, and both pass on the shared tree.",
+   "notes": "EVIDENCE, not a disposition; no `adjudicates`, and 3.0.0_SA_CVO -- whose row this is -- disposes it at L9. THE FOURTH DEFECT IN THIS SEAT'S ARMS TONIGHT AND THE WORST, because the trap was already written down in this seat's own memory under 'an issuer checker whose base is merge-base HEAD CLOUD cannot regrade a cell after its drain'. Two arms shipped with exactly that shape, and this seat re-ran them at branch tips all night without noticing a later reader could not. 1.0.0_SA_CTO recorded the sharper general form and it is the reason this row matters beyond two arms: A LESSON YOU HAVE WRITTEN DOWN IS NOT A CONTROL -- it fires only where someone re-reads it at the moment of the cut, and the cut is exactly when nobody re-reads. So the remedy is an ARM THAT RUNS WHERE THE CLAIM IS CONSUMED, not a note to be more careful."
   }
 ]
 ```
