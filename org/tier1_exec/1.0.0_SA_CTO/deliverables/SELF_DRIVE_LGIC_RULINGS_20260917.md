@@ -2712,3 +2712,81 @@ intermediary, so ONE UNSEATED PROJECT BLOCKS THREE THREADS ACROSS TWO PROJECTS r
 ⭐ **Card 6's rec is strengthened and the card is corrected**, because a card at Andrew carrying a falsified
 dependency is worse than no card.
 
+## R-79 -- `LGIC_LGCTFM` FWD-1's REALIZED GRADE IS **RETRACTED**. It was graded on its DONE WHEN and its ACCEPT was never measured. **NO PRD AMENDMENT IS OWED, BECAUSE THE ACCEPT ALREADY SAYS WHAT ANDREW SAID.**
+
+**ANDREW-DIRECT 2026-09-18 ~18:2xZ at the `4.0.0_SA_CRO` terminal, VERBATIM AND ENTIRE** (record @`28a8ae74e3`,
+relayed 98028): *"If we are missing lambdas/ec2/eventbridge rules or schedules/ddb/etc, any involved aws resources,
+then the workflow process is not done."* and *"that means that the workflow must be designed to create rows for these
+items"*. **CONFIRMED to this seat ~18:3xZ, VERBATIM:** *"Yes if LGCTFM doesn't actually pull full resources accurately
+for a given product pipeline (current state chart), then it is not done, and that is what needs to be rectified in its
+design/process."* Typos his.
+
+⛔ **THE RULING: THIS IS A DEFECT AGAINST `FWD-1`, NOT A NEW OUTCOME AND NOT A MAP CELL OF THE MIGRATION PROJECTS.**
+`4.0.0_SA_CRO` named those three branches and correctly declined to pick one; the pick is L2/L4 and it is mine.
+
+**`FWD-1`, VERBATIM FROM THE RATIFIED PRD:**
+
+> *"A seat names a legacy subject and gets back ONE contract listing **EVERY RESOURCE THAT COMPOSES IT**, each row
+> saying which instrument found it **and what that instrument cannot see**"*
+> **ACCEPT** *"the person opening the 49 Financial migration learns what the pipeline is made of from the run's
+> contract, and **never has to go and list the SCHEDULES, MACHINES, ROLES and BUCKETS by hand** to fill a gap the
+> contract left blank **WITHOUT SAYING SO**"*
+
+⭐ **HIS SENTENCE ADDS NOTHING TO FWD-1. IT RESTATES IT.** The ACCEPT already enumerates *schedules, machines, roles
+and buckets*; he said *lambdas/ec2/eventbridge rules or schedules/ddb*. **He independently named the same gap his own
+ratified ACCEPT names** -- which is the strongest form a finding can take, and it is why no amendment is owed.
+
+**WHAT THE ROUND-1 GRADE ACTUALLY MEASURED, quoted from the round-1 analysis's own table:** *"run on
+`blackdiamond`/`49financial` twice; the contract exists, 184 rows / 179 tensions, read by seats other than its
+author."* ⛔ **EVERY ONE OF THOSE FOUR FACTS GRADES THE `DONE WHEN` -- run on the first real subject, read by the
+person opening the migration. NOT ONE OF THEM TOUCHES THE ACCEPT.** It certified EXISTENCE and READERSHIP where the
+bar asks for COVERAGE.
+
+**THE MEASUREMENT THAT FALSIFIES IT** (`4.0.0_SA_CRO`, RCN-0009 @`edcbe51fb4`): the 49F graded run carries **LAMBDA
+0, EC2 0, DYNAMODB 0 of 184 rows**; a read-only `mdpf` run carries **14 real rows against 60 live nodes bearing the
+token -- 0 of 6 LAMBDA, 0 of 1 EC2, 0 of 13 roles, 0 of 11 policies.** The walk is **bucket-seeded**. ⛔ **OF THE FOUR
+THINGS THE ACCEPT ENUMERATES -- SCHEDULES, MACHINES, ROLES, BUCKETS -- ONLY BUCKETS ARE COVERED.**
+
+⛔ **AND THE SECOND HALF OF THE ACCEPT IS THE SHARPER FAILURE, BECAUSE THE CONTRACT COMMITS THE EXACT FAILURE MODE THE
+ACCEPT NAMES BY NAME.** `FWD-1` requires each row to say *what that instrument cannot see*, and the ACCEPT forbids *a
+gap the contract left blank WITHOUT SAYING SO*. `flow.current.md`'s COMPUTE section reads **"(none)"** -- one arrow in
+206 lines. **"(none)" IS A BLANK THAT DOES NOT SAY IT IS A GAP: it reads as "this subject has no compute", not as
+"this instrument cannot see compute."** A reader trusts it and stops looking. That is the precise harm the ACCEPT was
+written to prevent.
+
+**CONSEQUENCE: `LGIC_LGCTFM` READS REALIZED 7 OF 10, NOT 8.** `FWD-1` joins `FWD-4` (awaiting Andrew's read) and
+`FWD-6` (awaiting a real migration's decomposition). **The round-1 and round-2 L9 grades STAND at their vintage under
+R-43** -- they were honest gradings of the bar as they read it; what is retracted is an OUTCOME grade the CTO owns,
+not a judgment criterion the CVO graded.
+
+⚠ **`FWD-5` STANDS, QUALIFIED -- AND I AM NOT RETRACTING IT, BECAUSE A SLOPPIER READING WOULD.** Its ACCEPT is purely
+REGENERATION FIDELITY: *"change a row in the contract, regenerate, and the picture changes to match; nobody ever edits
+the picture by hand."* That is met. **The picture renders its input faithfully; it cannot render what the contract
+does not carry.** So the defect is UPSTREAM, in `FWD-1`, and `FWD-5`'s value is contingent on `FWD-1`'s repair rather
+than defective in itself. ⭐ **Naming which of two coupled outcomes is the defective one is the whole job here: retract
+the wrong one and a later round rebuilds a renderer that was never broken.**
+
+⛔ **NO PRD AMENDMENT. NO L4-R RE-SIGNATURE.** The ratified text is untouched and correct as written -- this is a
+GRADE RETRACTION plus a round-3 cell, not an endpoint change. **An addendum here would have been the actual error:
+it would have implied the bar did not previously require coverage, and the bar has required it since ratification.**
+
+**WHAT ROUND 3 OWES, and his word names the shape: DESIGN, not a caveat** (*"the workflow must be designed to create
+rows for these items"*, *"rectified in its design/process"*).
+1. **The seed/discovery design** -- the walk is bucket-seeded, so compute is not merely unrendered, it is **not in the
+   rows at all**. `RCN-0009` P1/P2 are proposals on it: populate from readers the estate already runs under Rule 20
+   (`comp-trigger` targets, `lambda-source-map` `source_dir`/`iam_role`/artifact, `comp-iam` statements, `07_` routing
+   associations), and seed by the subject's TOKEN beside its buckets.
+2. **The "involved" instrument is the design's to define** -- name token, trigger target, IAM grant, source text, or
+   all four. `4.0.0_SA_CRO` correctly left that open; it is a round-3 design question, not a ruling.
+3. ⛔ **PRINT A COVERAGE DENOMINATOR ON EVERY RUN** -- rows against token-bearing live nodes. **That is the arm that
+   converts "(none)" from a claim about the world into a statement about the instrument**, and it is the cheap half of
+   this repair (cost: one `comp-find`).
+4. **`plan.json`'s `dependencies` field is a READING HAZARD and is named here so round 3 does not inherit it:** 895 of
+   1,074 populated, **every one `<same row>-<previous R19 step>`, ZERO cross-row.** A reader sees a populated
+   `dependencies` and concludes a dependency graph exists. `RCN-0009` P4 proposes `step_dependencies`; I adopt that
+   rename as owed.
+
+⭐ **AND THE DEPENDENCY GAP I RULED A "DEFECT ON FWD-6" EARLIER THIS TICK IS SUBSUMED HERE AND RE-POINTED: the engine
+emits NAME + POSITION and never DEPENDENCY, and a contract that carries no compute cannot carry a relation between
+compute either. FWD-6's plan cannot order what FWD-1's contract never listed.** So `FWD-1` is the root and `FWD-6`
+inherits; the repair order is `FWD-1` first, and the earlier framing is corrected rather than carried.
