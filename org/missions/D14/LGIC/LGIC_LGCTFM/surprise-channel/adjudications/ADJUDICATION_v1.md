@@ -456,3 +456,36 @@ Closing count: carrier-less **0 of 1**.
  "dismissal_reason": "An INERT evidence row carrying no `adjudicates` of its own, correcting a register's stated mechanism. Verified correct at the PRD's bytes on every limb, including a negative with its denominator. No residue is owed inside this project's engine -- the verdict it examines does not move -- and its substance is carried into the D14 stop-condition record as a second independent route to ADVI_FIRMBKTS."
 }
 ```
+
+## Out-of-round disposition -- S25 (0 open orders, no carrier)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S12",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T15:30Z",
+ "one_line": "S25 DISMISSED and every cited fact verified at the bytes. ROUND 1's GRADE STANDS -- I graded it and a later AUTHORIZED deletion does not falsify a closed round. THE TRANSFERABLE HALF: A RE-RUN OF A CLOSED ROUND'S ARM THAT NOW FAILS IS NOT A DEFECT IN THAT ROUND, and this is the THIRD instance of that shape on this project alone.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "DISPOSED OUTSIDE A ROUND DELIBERATELY: LGIC_LGCTFM reads 0 open orders and this was its only undispositioned row, so it had NO CARRIER and would have decayed -- the condition this seat's tick exists to catch, and the second time today on this same project. EVERY CITED FACT VERIFIED AT THE BYTES rather than accepted: the old path .claude/skills/lgctfm/SKILL.md is ABSENT from the worktree and the new .claude/skills/legacy-transform/SKILL.md is PRESENT; the deleting commit is e2aa0d51c8 by 0.4.0_DS_ClientPlatform~X; check_lt_r1.py:50 pins SKILL = \".claude/skills/lgctfm/SKILL.md\" verbatim; and :565-568 reads tag = \"E1-SKILL-INVOKES-ENGINE\" / t = read(SKILL) / if t is None: / return say(\"FAIL-\" + tag, \"absent: %s\" % SKILL). So the arm's FAIL branch is reachable and deterministic on the absence. I READ THAT BRANCH RATHER THAN RUNNING THE ROUND-1 CHECKER, and say so: the branch is unconditional on a None read and re-running a closed round's whole fixed input would be disproportionate, but that is a READ and not an EXERCISE. AND I HOLD ONE INSTRUMENT THE FILING SEAT COULD NOT: the live invocation frame `legacy-transform` APPEARS IN THIS SEAT'S OWN AVAILABLE-SKILLS LISTING THIS TURN, which confirms the replacement from the CONSUMER side rather than from the filesystem. That is corroboration on a genuinely different plane. ROUND 1's GRADE STANDS AND THE REASON IS NOT MERELY R-43. R-43 says frozen history is not falsified by a later authorized change, which is true and sufficient. The sharper statement is that a FAILING RE-RUN AND A WRONG GRADE ARE DIFFERENT CLAIMS: the arm asserted a file existed AT THE LT-e-1 VINTAGE and it did; it now reports absence because Andrew retired the file on 2026-09-18, verbatim 'get rid of the stale skill'. An arm that fails because its SUBJECT was authorizedly removed is measuring the present against a past bar, which is the instrument working correctly and reporting a true fact about today. THIS IS THE THIRD INSTANCE OF THAT SHAPE ON THIS PROJECT ALONE and they are worth reading together: W1-S21 (round-1 arms non-reproducible through LIVE-BUILDER DRIFT), R38-AC2 on IRPT (a criterion certifying a FUTURE state of a shared artifact, falsified 83 minutes later by an authorized re-mint), and now S25 (an arm's subject authorizedly deleted). In all three the cell was right, the record was right at its vintage, and a later legitimate act made the evidence non-reproducible. THE FIVE FROZEN SURFACES ARE CORRECTLY NOT REWRITTEN -- the PRD, the decomposition, the LT-e-1 order, that cell's proof instance and result, and the round-1 fixed input all still name the retired path, and rewriting any of them would falsify history to make a re-run green, which is precisely the move R-43 forbids. THE ONE RESIDUE, NAMED BECAUSE IT HAS NO OWNER: the two workflows/ README edits that would complete the house's two-way cross-reference are REFUSED TO THE FILING SEAT by the owned-paths lane gate (lane ANY_EXEC_OR_AE) and wait on a permitted seat. That is real, small, and currently carried by nobody -- this project has no round in flight to pick it up. It is named here so a permitted seat can take it rather than leaving it to be rediscovered.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S25 -- 0.4.0_DS_ClientPlatform~X's row, read in full",
+   "VERIFIED BY THIS SEAT: old path ABSENT, new path PRESENT in the worktree; deleting commit e2aa0d51c8",
+   "VERIFIED BY THIS SEAT at the bytes: check_lt_r1.py:50 pins the retired path; :565-568 returns FAIL-E1-SKILL-INVOKES-ENGINE on a None read",
+   "VERIFIED ON AN INSTRUMENT UNIQUE TO THIS SEAT: `legacy-transform` is present in this seat's own available-skills listing at this turn -- the replacement confirmed from the consumer side",
+   "Andrew-direct 2026-09-18, verbatim: 'get rid of the stale skill'",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S21 -- the live-builder-drift sibling of this shape"
+  ]
+ },
+ "adjudicates": [
+  "LGIC_LGCTFM-S25"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "dismissal_reason": "An INERT record of an authorized retirement, carrying no `adjudicates` of its own and no hazard. Round 1's grade stands under R-43 and under the sharper reading that a failing re-run and a wrong grade are different claims. The five frozen surfaces are correctly left naming the retired path. One residue is named rather than closed: the two workflows/ README cross-reference edits are refused to the filing seat by lane ANY_EXEC_OR_AE and are carried by nobody, so a permitted seat should take them."
+}
+```
