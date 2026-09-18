@@ -559,14 +559,15 @@ STATES: W1-S20 reads REMEDIATED (the probes .tf is absent at HEAD since @8c77a14
    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md@47f1045854#LGIC_ENFORCE-S18",
    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v1.md (same slug) row LGIC_ENFORCE-C-S10",
    "MEASURED: git diff --name-status c6d652a6dc^1 c6d652a6dc lists 2 paths (TO-EN-f-2, INVESTIGATION_v1.md). The branch changed 8 more against the merge base; one, check_en.py, was already equal on CLOUD. lgic-enforce-fence-probes.tf and the .open_deploys sentinel were PRESENT at c6d652a6dc and at HEAD, and absent at c6d652a6dc^2. The shared working tree showed them as unstaged deletions.",
-   "CENSUS: all 55 merge commits by 2.0.0_SA_COO~G since 2026-09-14 12:00Z. A path counts as dropped when the merge's blob differs from the branch tip's while CLOUD's side left the path untouched. Result: 1 of 55 affected (c6d652a6dc), 6 paths."
+   "CENSUS: all 55 merge commits by 2.0.0_SA_COO~G since 2026-09-14 12:00Z. A path counts as dropped when the merge's blob differs from the branch tip's while CLOUD's side left the path untouched. Result: 1 of 55 affected (c6d652a6dc), 6 paths.",
+   "R-80 @6018f62ed3 -- 1.0.0_SA_CTO's ruling adopting EN-b-42-r9's reassignment of this row from 1.0.0_SA_CTO to 0.0.0_AB_MSTR; the three addressee fields relocate together, NO clock moves (org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md)"
   ],
   "remedy": "Identify the writer that restores the shared index around its own commit, and run the first-parent-vs-branch diff census over other seats' drains; safe-merge.sh checks the recorded paths against the branch's own diff before it prints MERGED.",
-  "owner": "1.0.0_SA_CTO",
+  "owner": "0.0.0_AB_MSTR",
   "round": "v1",
   "remediation": {
    "state": "OPEN",
-   "owner": "1.0.0_SA_CTO",
+   "owner": "0.0.0_AB_MSTR",
    "round": "v1"
   },
   "closed": false

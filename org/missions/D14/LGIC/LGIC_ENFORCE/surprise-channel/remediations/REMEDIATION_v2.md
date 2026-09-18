@@ -804,19 +804,20 @@ STATES: `closed` is false on every row. **19 ARMED**, and per R-14 that is a FIL
   "mechanism": "LGIC_CANON's carriers still present NAMING_SCHEMA.json firm_forms as live: 10_ONBOARDING_CHECKLIST.md tells a seat to APPEND a new firm to the schema list and quotes the validate warning this cell removes, 02_DOCTRINE.md's generated naming section is stamped v1.8 and says the forms are read from the list, and check_canon_r1.py iterates s.get(\"firm_forms\").",
   "evidence": [
    "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S24",
-   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md (same slug) row LGIC_ENFORCE-C-S23"
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md (same slug) row LGIC_ENFORCE-C-S23",
+   "R-80 @6018f62ed3 -- 1.0.0_SA_CTO's ruling adopting EN-b-42-r9's reassignment of this row from 1.0.0_SA_CTO to LGIC_CANON (issuer 2.0.0_SA_COO~G); the three addressee fields relocate together, NO clock moves (org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md)"
   ],
   "remedy": "Three LGIC_CANON carriers still present firm_forms as live, including a checklist step telling a seat to APPEND a new firm to a list the schema no longer has -- so a runner following the checklist edits a removed key. Fix at LGIC_CANON's next canon/checklist cell; this is the TOKEN half of the supersession whose MECHANICAL half is W1-S23.",
-  "owner": "1.0.0_SA_CTO",
+  "owner": "LGIC_CANON (issuer 2.0.0_SA_COO~G)",
   "round": "v2",
   "disarm": {
    "state": "ARMED",
-   "owner": "2.0.0_SA_COO~G",
+   "owner": "LGIC_CANON (issuer 2.0.0_SA_COO~G)",
    "at": null
   },
   "remediation": {
    "state": "OPEN",
-   "owner": "1.0.0_SA_CTO",
+   "owner": "LGIC_CANON (issuer 2.0.0_SA_COO~G)",
    "round": "v2"
   },
   "closed": false
@@ -1320,20 +1321,21 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "mechanism": "15 of the 235 NON_SYSTEM_PLACEHOLDER_TOKEN rows carry a brace token that NAMING_SCHEMA.json grade.placeholder does NOT sanction as a placeholder at all ({snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1) -- so 'resolve the substitution from a declared source' has no declared source for them, now or in any later round, and FWD-5's bar (AC3 clean, no canonical carrying a brace) cannot be reached by any amount of campaign budget while they are carded under a reason that promises a lookup.",
  "evidence": [
   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S70",
-  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows"
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows",
+  "R-80 @6018f62ed3 -- 1.0.0_SA_CTO's ruling adopting EN-b-42-r9's reassignment of this row from 2.0.0_SA_COO~G to 1.0.0_SA_CTO; the three addressee fields relocate together, NO clock moves (org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md)"
  ],
  "remedy": "For each of the 15, either (a) get the token sanctioned in NAMING_SCHEMA.json grade.placeholder with its carrier named, (b) rule the canonical form itself wrong so the brace never appears, or (c) card the row out of the placeholder population with a reason. Choosing among the three is adjudicating significance and belongs to the round that takes it, which is why the cell filed rather than decided.",
- "owner": "2.0.0_SA_COO~G",
+ "owner": "1.0.0_SA_CTO",
  "round": "v6",
  "remediation": {
   "state": "OPEN",
-  "owner": "2.0.0_SA_COO~G",
+  "owner": "1.0.0_SA_CTO",
   "round": "v6"
  },
  "closed": false,
  "disarm": {
   "state": "ARMED",
-  "owner": "2.0.0_SA_COO~G",
+  "owner": "1.0.0_SA_CTO",
   "at": null
  }
 }
@@ -1349,20 +1351,21 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "mechanism": "THE TWO GENERATED opal_name TEST FIXTURES STILL CARRY THEIR ROUND-3 REGISTRY STAMP, AND THE ISSUER CANNOT BE THE ONE TO REFRESH THEM. infra/aws/terraform/modules/opal_name/tests/vectors.json and tests/opal_name.tftest.hcl both declare 'GENERATED ... from infra/logic/registry@73f95daeb4091537' -- the registry as it stood at ROUND 3 (last written by 0.9.0_WK_LGIC_ENFORCE~2 @ea5edd1fe4) -- while rounds 4 and 5 moved that registry. A generated file whose mark names a registry that has since moved is a claim about its own provenance that is no longer true, and NOTHING GRADES IT. Re-rendered and measured; the commit was REFUSED because infra/aws/** is the CLOUD_OPS_OR_ETL lane and 2.0.0_SA_COO~G is not in permitted_agents. THE REFUSAL IS THE ANSWER: a re-render is a CELL act whose <paths> names the target, never an issuer act -- which is why round 3's render was authored by a WORKER.",
  "evidence": [
   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S72",
-  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows"
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 6 grade and disposition rows",
+  "R-80 @6018f62ed3 -- 1.0.0_SA_CTO's ruling adopting EN-b-42-r9's reassignment of this row from 2.0.0_SA_COO~G to 0.7.0_AE_CloudOps; the three addressee fields relocate together, NO clock moves (org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md)"
  ],
  "remedy": "Refresh the two generated opal_name test fixtures' registry stamp from the current registry, by a seat whose grant reaches infra/aws/terraform/modules/opal_name/tests/. The issuer cannot, which is the row's whole point. Read with W1-S68: the same two fixtures drive the 7-versus-8 target count.",
- "owner": "2.0.0_SA_COO~G",
+ "owner": "0.7.0_AE_CloudOps",
  "round": "v6",
  "remediation": {
   "state": "OPEN",
-  "owner": "2.0.0_SA_COO~G",
+  "owner": "0.7.0_AE_CloudOps",
   "round": "v6"
  },
  "closed": false,
  "disarm": {
   "state": "ARMED",
-  "owner": "2.0.0_SA_COO~G",
+  "owner": "0.7.0_AE_CloudOps",
   "at": null
  }
 }
