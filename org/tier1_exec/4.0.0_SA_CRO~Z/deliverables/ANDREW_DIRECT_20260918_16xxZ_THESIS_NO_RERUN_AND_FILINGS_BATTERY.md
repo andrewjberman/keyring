@@ -33,5 +33,21 @@ And, a few minutes later, while the brief update was being written:
    for instantiating the full security-analysis backend for a NEW security -- ahead of any one pipeline.
 4. **Translation is in scope for the Thesis spec.** A filing not in English is translated rather than excluded, and
    the Thesis brief carries the design (section 8.4 of `BRIEF_THESIS_CURRENT_TO_DESIRED_20260918.md`).
-5. Nothing here authorizes egress, a producer, a schedule or a model call. Building any battery step that calls
+5. Nothing here authorizes egress, a producer, a schedule or a model call.
+
+## Addendum ~16:5xZ -- the validation question, answered
+
+Asked whether validating on three names not covered today (one US, one international with an English report, one
+needing translation; a handful of model calls, not a fleet run) sits inside the "no re-run" line. Verbatim:
+
+> sure set a subagent at opus model in this session to go pursue that, then you and I will proced to the next function,
+> exec mgmt
+
+**Reading, narrow:** the three-name validation is AUTHORIZED, run by an Opus subagent of this session. That covers,
+per use and for these three names only: EDGAR reads through the estate's `fetch.py`; the `filings.xbrl.org` index and
+one report download; web search; downloading each name's annual report from the issuer's own site or its regulator;
+Bloomberg reference data; and the estate analyzer's model calls, under a stated spend cap. **It does NOT cover** Lusha
+or Bright Data calls (billed vendors, not named; the management enrichment step is recorded as not exercised), any
+write to the shared pool, crosswalk or universe (a new key there would change every other seat's census -- the
+NVIDIA class), any scheduled-task change, or any repo code change. Building any battery step that calls
    outside Opal still needs his per-use word.
