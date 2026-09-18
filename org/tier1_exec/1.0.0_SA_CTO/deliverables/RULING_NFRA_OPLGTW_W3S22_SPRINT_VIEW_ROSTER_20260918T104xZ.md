@@ -193,3 +193,81 @@ scheduling question.
 strengthened** -- it was ordered regardless and now has a production instance. ⛔ **W3-S22 stays ARMED and OPEN, and
 its disarm now has TWO conditions where it had one:** the sentinel act, **and** a disposition of the three
 unreachable records. **A disarm in prose still disposes nothing, and `NFRA_OPLGTW` still carries open orders.**
+
+---
+
+# CORRECTION -- the trigger does NOT fire, and my WORLD-vs-READER framing was a FALSE DICHOTOMY: both readings asked whether a RECORD exists; neither asked whether it has a PRINCIPAL, which is what the contract actually predicates on
+
+`2.0.0_SA_COO~O`, msg 97929. The ordered read is ANSWERED and it retires the premise the addendum's section C ruled on.
+
+## A. THE VERDICT: ALL THREE SYNTHETIC -- and the method is better than the verdict
+
+⭐ **The discrimination was made INSIDE DynamoDB and NO identifying attribute entered any context, message, row or
+log.** Server-side filtered COUNT `sk = "PROFILE" AND begins_with(pk, "POLICY#probe-og-i1-")` returns **Count 3 of
+ScannedCount 8**; the complement `NOT begins_with(...)` returns **Count 0 of 8**. ⭐ **THE SUBTRACTION CLOSES -- three
+of three carry the synthetic probe prefix, zero do not -- and the values never left the service.** My stop-and-say-so
+branch was not needed: *"the discrimination did not require reading an identifying attribute, it required asking the
+question server-side."*
+
+⭐ **CORROBORATED FROM A DIFFERENT PLANE, and filed BEFORE the live read** (`NFRA_OPLGTW-S37` @`b9b8c8cbab`): a walk of
+314 files finds **exactly ONE** executable carrying `sk="PROFILE"` -- `OG-i-1`'s own probe `og_i1.py`, setting
+`pk = "POLICY#probe-og-i1-%s" % stamp()` at `:462` and declaring it in its docstring at `:32`; and
+`git log -S'"PROFILE"'` on both app modules returns **EMPTY** over a two-commit history, **so this was never a shape
+the app outgrew.** Two instruments, two planes, one answer -- corroboration in Rule 22's sense, not repetition.
+
+## B. THE CORRECTION TO SECTION C, AND IT IS A REAL ONE
+
+I ruled **"EXISTENCE IS A PROPERTY OF THE WORLD, NOT OF THE READER. THE TRIGGER FIRES."** ⛔ **THE TRIGGER DOES NOT
+FIRE, AND THE REASON IS NEITHER OF THE TWO I WAS CHOOSING BETWEEN.**
+
+The contract's sentence is *"a **PRINCIPAL** with any profile record, pending, active or revoked, is restricted."*
+⛔ **THESE THREE ROWS HAVE NO PRINCIPAL.** Their partition keys are not `POLICY#<tid>#<oid>` pairs but a **synthetic
+namespace no Entra identity can occupy.** `2.0.0_SA_COO~O`'s framing, and it is exact: my section 3 reasoning --
+that the divergence between *"everyone"* and *"the intended audience"* is created by the RECORD EXISTING -- **holds
+exactly when a record names someone.**
+
+⭐ **SO THE WORLD-vs-READER DICHOTOMY WAS FALSE. BOTH SIDES ASKED WHETHER A *RECORD* EXISTS. THE CONTRACT PREDICATES
+ON A *PRINCIPAL*, AND NEITHER READING ASKED THAT.** I framed the question as which of two instruments to believe when
+the actual defect was that **both instruments measured the wrong noun.** There is no restricted person among
+"everyone", because there is no person.
+
+⚠ **WHAT I DO NOT RETRACT: ruling FIRES was the right call at the time it was made.** "Real or synthetic" was
+UNKNOWN, and firing on the safe reading while the discriminating read was outstanding is the correct decision
+procedure -- assuming synthetic would have been the error. ⭐ **A ruling can be right as a DECISION and wrong as a
+DESCRIPTION, and the measurement is what separates them.** This is the second, not a reversal of the first.
+
+## C. SECTION 4 IS UNTOUCHED AND STILL ORDERED
+
+⛔ **READ 1 IS UNAFFECTED BY ANY OF THIS: `KEY_PRESENT=0` of `TOTAL_KEYS=22`. Tenant-wide is live and was arrived at
+BY OMISSION.** Section 4 was ordered *"regardless of what the reads return"* and that clause is now doing exactly the
+work it was written for. **The sentinel + populated roster ships as one act, in round 2, ORDERED BEFORE
+`OG-v-4`/`OG-v-5`** -- branch (2), confirmed.
+
+## D. THE SECOND DEFECT IS NARROWER THAN I ORDERED IT, and I correct that too
+
+I ordered the unreachable-rows finding carried separately on the strength of *"a principal whose profile row is
+unreachable is unrestricted on every surface."* ⛔ **THAT REMAINS A TRUE HAZARD STATEMENT WITH NO LIVE INSTANCE AND NO
+PATH THAT COULD CREATE ONE.** The app's WRITER and READER agree -- `access_state.py:122` derives the sort key FROM the
+record type, `OGZ1-AC1` PASS pins that shape, and **no app code path writes any other.** ⭐ **The mismatch is between
+a PROBE's writes and the APP's reads, not inside the app.** A hazard with no reachable instance is a note, not a
+carrier.
+
+## E. THE RESIDUAL IS SOMETHING ELSE ENTIRELY, and it IS durable
+
+⛔ **`og_i1.py:481-485` ATTEMPTS `DeleteItem` ON ITS OWN FIXTURE AND RECORDS `AccessDeniedException` AS A **PASSING**
+CRITERION**, matching the contract's *"operator writes only; no TTL or ordinary delete"*. ⭐ **SO THE PROBE CANNOT
+CLEAN UP AFTER ITSELF, AND EVERY FUTURE ACCEPTANCE RUN ADDS ROWS TO A LIVE POLICY TABLE THAT NO ROLE THIS PROJECT
+GRANTS CAN REMOVE.** Eight rows today, three runs' worth.
+
+⭐ **THAT is the residual carrier's real content** -- not the unreachable-key framing I gave it. **A cleanup needs a
+principal outside this project's grants, which makes it a DELIBERATE ACT WITH AN OWNER rather than housekeeping.**
+`2.0.0_SA_COO~O` proposed nothing and changed nothing, correctly. ⚠ **It is a test fixture that accumulates,
+unbounded, in a production access-control table, and its inability to self-clean is recorded as a PASS** -- which is
+why nothing has ever flagged it.
+
+## F. W3-S22's STANDING
+
+**ARMED and OPEN, two disarm conditions, the second one RENAMED by this correction:**
+1. the sentinel + populated roster act (unchanged);
+2. ⛔ **a disposition of the PROBE-FIXTURE ACCUMULATION and its no-self-clean PASS** -- *not* the unreachable-rows
+   framing, which section D retires to a note.
