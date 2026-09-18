@@ -115,6 +115,17 @@ radius, in daylight, and is NOT this cell's.
 for the stated window, so there is no referent. A PASS would be vacuous and a FAIL would measure the wrong
 thing. Record it that way in the proof instance; do not manufacture a verdict.
 
+**THE PROBE THAT MANUFACTURED THE LEDGER DRIFT (row `NFRA_OPLGTW-W2-S9`, R-58 item 2, AC21).** Your own root
+cause, adopted exactly as filed and graded harder than you proposed: `og_r1.py`'s `ac8()` wrote L1's ledger-proof
+text as the LITERAL string "OGR1-AC4 PASS" regardless of what AC4 measured, and left the sentinel path out of its
+commit set. `1.0.0_SA_CTO` names it for what it is -- **a DETECTOR THAT CANNOT RETURN NON-ZERO ON THE POSITIVE
+CASE, a constant wearing a measurement's clothes** -- and notes it did not merely mis-report once: **it is what
+MANUFACTURED the DRIFT-DANGEROUS ledger** that R-56 item 1 then had to repair. The ledger's STATE is fixed; this
+code is not, it SHIPS as a deliverable, and the next deploy reusing it repeats the drift while the repaired state
+hides it.
+**GRADE IT AGAINST THE FAILING CASE.** AC4 is still FAILING and must stay so: against a PASSING case a hardcoded
+"PASS" and a derived "PASS" are byte-identical, which is exactly how this survived its first grading.
+
 **Read:** the PRD's "C1", "C6" and "Operator journey, audit and release"; `infra/aws/ec2/safe-ec2-deploy.sh` and
 `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` (the release process); `infra/aws/ec2/EC2_MANIFEST.json`; the baseline.
 
@@ -186,7 +197,10 @@ taking the short id, printing its measurement with vintage and denominator, then
 <criterion id="OGR1-AC20" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC20</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC20(?![0-9])</expect></criterion>
 `OGR1-AC20` -- `py -3.12 .tools/deploy_ledger.py check` prints NEITHER `DRIFT-DANGEROUS` NOR `OPEN` for slug `nfra-oplgtw-og-r-1-first-release`, every leg carrying its proof; the probe quotes the tool's own lines, and a `git diff` of the sentinel and the record over this pass shows ONLY tool-authored changes -- any hand-edit of either file FAILS this criterion.
 
-<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12, OGR1-AC13, OGR1-AC14, OGR1-AC15, OGR1-AC16, OGR1-AC17, OGR1-AC18, OGR1-AC19, OGR1-AC20</expected_criteria>
+<criterion id="OGR1-AC21" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC21</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC21(?![0-9])</expect></criterion>
+`OGR1-AC21` -- (the constant-wearing-a-measurement's-clothes fix, row `NFRA_OPLGTW-W2-S9`) `og_r1.py`'s `ac8()` DERIVES each leg's ledger-proof text from that criterion's REAL measured verdict rather than a literal, and includes the sentinel path in its commit set; the probe proves it AGAINST THE FAILING CASE -- with AC4 still FAILING, the proof text `ac8()` would write names AC4 as FAILED and not as PASS -- and prints both the derived text and AC4's measured verdict beside each other. **A hardcoded "PASS" and a derived "PASS" are byte-identical on a passing case, which is how this survived its first grading, so a green here against a passing AC4 does not satisfy this criterion.**
+
+<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12, OGR1-AC13, OGR1-AC14, OGR1-AC15, OGR1-AC16, OGR1-AC17, OGR1-AC18, OGR1-AC19, OGR1-AC20, OGR1-AC21</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -222,13 +236,21 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGR1-AC1` .. `OGR1-AC20` (20). Instance at
+Criterion ids: `OGR1-AC1` .. `OGR1-AC21` (21). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/NFRA_OPLGTW.TO-OG-r-1.first-release-cutover.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12,OGR1-AC13,OGR1-AC14,OGR1-AC15,OGR1-AC16,OGR1-AC17,OGR1-AC18,OGR1-AC19,OGR1-AC20`
-BEFORE the `complete` flip. Result file `first-release-cutover.result.md` beside it. **Flip `complete` only when every
-MECHANICAL criterion PASSES by output.**
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12,OGR1-AC13,OGR1-AC14,OGR1-AC15,OGR1-AC16,OGR1-AC17,OGR1-AC18,OGR1-AC19,OGR1-AC20,OGR1-AC21`
+BEFORE the `complete` flip. Result file `first-release-cutover.result.md` beside it. **FLIP `complete` WHEN THE PROOF INSTANCE READS VALID** (amended on R-58): the spine reads terminality FROM THE
+PROOF, never from the status field -- `.tools/surprise-row-gate.py:820-824` `_proof_terminal`, citing
+`CANONICAL_FABRIC_WORKFLOW_20260901.md:436` and `:487-488`. `1.0.0_SA_CTO` MEASURED this instance with
+`--governing-order` bound: 20 of 20 criteria carry a cell_ref, 20 of 20 comparable invocation rows match, 0
+diverging, **VALID (rc=0) WITH AC4 AND AC10 FAILED AND AC9 N/A-BY-CONSTRUCTION**. So this order is already
+terminal by proof and does not block the slug. `AC4` and `AC10` are carried into L8/L9 as ADJUDICATED FAILS citing
+R-56, and `AC9` as N/A-BY-CONSTRUCTION. ⛔ **THIS IS NOT A LICENCE AND DOES NOT GENERALISE**: the PROOF is the
+oracle, an instance reads VALID only when every criterion's recorded evidence matches what its `<expect>` admits,
+a cell whose proof reads INVALID is terminal by nothing, and a criterion re-written to admit its own failure is
+R-56's refusal all over again.
 </proof_of_spec>
 
 **REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape. You cannot send or receive messages; anything you would ask is a surprise row.
@@ -295,3 +317,12 @@ first read of W2-S7 among them: the object read was not the object the claim was
 R-56's ADDED CONDITION on the rollback is the part this issuer's rec did not state and it changes the search: a
 commit that carries the guard but was NEVER DEPLOYED is not a rollback target, it is an untested forward deploy
 performed during an incident. No criterion was removed.
+
+Amended again 2026-09-18 ~07:5xZ by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-58 (msg 97876 @`508eb695ca`),
+answering call 21. **ITEM 1 REFUSED AS FRAMED AND GRANTED IN SUBSTANCE, because the state this issuer asked to
+MINT ALREADY EXISTS**: the spine reads terminality from the PROOF, not the status field, and this order's own
+proof instance reads VALID with AC4 and AC10 FAILED. **The blocker was never the spine -- it was THIS ORDER'S OWN
+BOUND being stricter than the spine, which is this issuer's text and this issuer's to amend.** R-51's principle on
+its second outing tonight: a stop condition that names a missing instrument is fixed by re-pointing it at an
+existing owned artifact, never by minting the artifact the sentence assumed. No new enum and no spine change.
+ITEM 2 ADOPTED AS WRITTEN and carried as AC21. No criterion was removed.
