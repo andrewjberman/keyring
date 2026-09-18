@@ -130,6 +130,74 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "org/standards/LGCTFM_CONTRACT.schema.json validates every contract lib/opal_lgctfm.py walk produces (X1R1-AC1's own bar; DEC-11's receiving-check gains artifact type lgctfm-contract on the same premise).",
    "world_is": "The schema's node_type enum (33 values, record s.1.1) does not include COGNITO_USER_POOL, the node_type of LT-e-3's own unconditional untypeable plant, so every real contract this engine writes fails schema validation on exactly that one row.",
    "notes": "BLOCKING because it fails this order's own X1R1-AC1 and will fail it on every future real run identically; ARMED for the same reason. disarm_owner 2.0.0_SA_COO~G as the LT-e-3/LT-p-1 issuer and the seat that authored 11_LGCTFM_CONTRACT_SCHEMA_RECORD.md's node_type subtraction -- the repair is either a 34th enum value naming the untypeable case (schema, org/standards/, L4-adjacent) or excluding NOT_COVERED-verdict rows from the row oneOf's requirement that node_type be typed. THIS WORKER'S ACT: none available inside <paths> (the schema and the engine are both outside this order's write grant, and 'you edit no code' forbids the engine fix regardless); X1R1-AC1 is graded FAIL on the measured output, verbatim."
+  },
+  {
+   "id": "LGIC_LGCTFM-S3",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T00:20Z",
+   "one_line": "LT-x-1's RUN DIRECTORY IS A COMPOSITE OF TWO DIFFERENT RUNS AND NOTHING INSIDE IT SAYS SO. contract.json, plan.json, PLANT.json and PLANT_UNTYPEABLE.json under workflows/legacy_transform/blackdiamond-49financial/20260917T202556Z-bb29248/ were ADDED by a LATER CELL's commit (LT-e-4, a5fca30175) and are byte-identical to that amendment's OWN default-off run 20260917T233115Z-a89fd61, while the directory's VINTAGE.json still declares run_id 20260917T202556Z-bb29248 at repo_head bb292483994d4e2c379d671e6512313864c0363c. So X1R1-AC1 -- the criterion that reads 'the run directory is complete and its contract validates' -- now grades an artifact LT-x-1's own run did not produce, and it reads PASS. MARK.json, the fifth file the naming gate refused, was never committed at all and the worktree that held it is gone, so X1R1-AC2's evidence no longer exists anywhere and re-running x1-marks at HEAD reads FAIL-X1-MARK-ROWS-IN-THE-THREE-REGISTRIES.",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "ADD commits, measured at caf09838c9 with `git log --oneline --diff-filter=A -- <path>` (one line each, no ambiguity): contract.json, plan.json, PLANT.json and PLANT_UNTYPEABLE.json all -> a5fca30175 'amend(LT-e-4-r1, 0.9.0_WK_LGIC_LGCTFM~2): the untypeable plant becomes OPT-IN'; VINTAGE.json -> 53d59778a1 (LT-x-1's own run+mark commit); FWD10.json -> ef6b9f3b9d (LT-x-1's proof-prep). Four of the six run files in LT-x-1's directory were written by a different cell.",
+     "Byte equality, `git hash-object` at caf09838c9: contract.json is 84d4d1e62b in BOTH 20260917T202556Z-bb29248 and 20260917T233115Z-a89fd61, and 95b04ca692 in the flag-on run 20260917T233143Z-a89fd61; plan.json is f26d46db87 in all three; PLANT.json 2b347189db and PLANT_UNTYPEABLE.json d62982a9bd in the first two. The copy is exact, not merely similar.",
+     "VINTAGE.json of the two directories, read side by side: identical graph_built '2026-09-17 18:16:22 UTC' and identical registry_hash 'scopes.json sha256:b2a54608f8ebbade', but DIFFERENT repo_head (bb292483994d... vs a89fd61a0baa...) and different run_id. The pairing of one run's VINTAGE with another run's contract is what makes the directory incoherent.",
+     "MARK.json absence, two instruments: `git ls-tree -r --name-only HEAD` has no MARK.json anywhere under workflows/ (the only MARK.json at HEAD is an unrelated D11 card under org/tier2_senior/0.8.0_AE_CloudComp/); and `ls .worktrees/*/workflows/legacy_transform/blackdiamond-49financial/*/MARK.json` -> 'No such file or directory', with wk-lgic-lgctfm-1-2b (the worker's own worktree, where AC2 measured 4 of 4 entries) absent from `git worktree list`.",
+     "The substantive act DID land and is citable at HEAD: 53d59778a1 is an ancestor of caf09838c9 (merge-base --is-ancestor, positive result) and carries the DEC-9 mark into infra/logic/registry/remediations.json -- the s3-prefix surface {\"bucket\": \"opal-data-bd\", \"prefix\": \"gold/\"} under ADVI_FIRMBKTS. What is lost is the REPRODUCIBILITY of the criterion, not the mark."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "X1R1-AC1 grades the run directory LT-x-1's OWN run wrote; DEC-12's run home holds one run per directory, and LT-h-1's run_home.py refuses to overwrite an existing run directory precisely so that a directory's contents and its VINTAGE.json describe the same run.",
+   "world_is": "Four of the six files in LT-x-1's run directory were produced by a later cell's run at a different repo_head and placed into LT-x-1's directory by hand (the engine's own refusal cannot be what put them there), and a fifth, MARK.json, was never committed and no longer exists on this device.",
+   "notes": "ARMED and BLOCKING because it blocks LT-x-1's `complete` flip, which is the ISSUER's act, not a worker's -- this row is the issuer refusing its own flip. THE MITIGATION IS REAL AND IS NOT THE FIX: both runs read the same graph vintage and the same registry hash, so under LT-d-1's determinism the copied bytes are very probably what LT-x-1's command WOULD emit under the amended engine. But they are not what its run DID emit -- its run carried the untypeable plant ON, which is exactly why its contract failed validation and LGIC_LGCTFM-W2-S2 was filed. Grading a PASS on a substituted artifact launders provenance into the record, and the substitution is invisible at the criterion: x1_run_dir reads the directory, not who wrote it. THE DISARM, chosen by the issuer and not proposed to anyone: re-hand LT-x-1 inside round 1 to re-run the engine at the amended default, minting a FRESH run directory with its own VINTAGE.json, writing and COMMITTING MARK.json (R-35 now exempts a minted run directory, so the commit that refused 1719 times will land), and re-grading X1R1-AC1 through AC5 against that one coherent run. The 20:25Z directory stays exactly as it is, as the historical record of the first run and of the defect W2-S2 describes."
+  },
+  {
+   "id": "LGIC_LGCTFM-S4",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T00:22Z",
+   "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-W2-S2 (the untypeable row no schema could admit): the defect is repaired AT ITS ROOT and the fix is exercised, not merely written. 1.0.0_SA_CTO ruled R-36 -- the untypeable plant becomes OPT-IN behind --plant-untypeable, OFF by default, its carry counted in PLANT_UNTYPEABLE.json and PRINTED EVEN AT ZERO -- and the schema's 33-value node_type enum was NOT widened to admit COGNITO_USER_POOL. Cell LT-e-4 built it and drained at caf09838c9 with 8 of 8 criteria PASS.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "LT-e-4's eight mechanical criteria, re-run by the ISSUER at the branch tip before the merge (a different checkout from the worker's): a4-plant-off, a4-flag-on, a4-count-typed, a4-schema-valid, a4-e3-exercised, x1-run-dir, e1-stdlib and d1-pytest, all PASS. Merged by .tools/safe-merge.sh as caf09838c9.",
+     "The default-off run 20260917T233115Z-a89fd61 carries 184 of 184 contract rows with no ungraded node_type and PLANT_UNTYPEABLE.json at 39 bytes (the printed zero); the flag-on run 20260917T233143Z-a89fd61 carries the untypeable resource as NOT_COVERED with PLANT_UNTYPEABLE.json at 2880 bytes. Both validate against org/standards/LGCTFM_CONTRACT.schema.json.",
+     "The criterion the defect blocked now passes on a re-run at caf09838c9 in issuer worktree wk-lgic-lgctfm-1-5: `check_lt_r1.py x1-run-dir` -> 'missing of the 6 run files: []; schema errors on its contract: 0; VERDICT: PASS-X1-RUN-DIRECTORY-COMPLETE', against the worker's recorded 'schema errors on its contract: 1 ... COGNITO_USER_POOL ... is not valid under any of the given schemas'."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "W2-S2 asserts that no contract lib/opal_lgctfm.py produces can validate against its own schema, because every walk unconditionally plants a row whose node_type is outside the 33-value enum.",
+   "world_is": "The plant is no longer unconditional: it is opt-in, off by default, and its carry is counted outside the contract rows. A default walk now produces a contract that validates, measured on two real runs.",
+   "notes": "This row is EVIDENCE, not a disposition -- disarming is not disposing, and prose disarms nothing. W2-S2's own disarm_owner is 2.0.0_SA_COO~G and the act that disarms it is LT-e-4's drain, which is cited above by hash. The disposition of W2-S2 belongs to 3.0.0_SA_CVO at L9, which is why this row carries no `adjudicates`. NOT CLAIMED HERE: that the 20:25Z run directory is coherent -- it is not, and that is LGIC_LGCTFM-S3, a separate item with a separate remedy."
+  },
+  {
+   "id": "LGIC_LGCTFM-S5",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T00:24Z",
+   "one_line": "DISARM EVIDENCE FOR LGIC_LGCTFM-W1-S1 (LT-e-2's own graded criterion failing on a re-run it never changed): the issuer's fixed input was the defective party, and it was repaired rather than the criterion waived. check_lt_r1.py's core_reproduce gained a NOT_COVERED branch @56dbaee026 -- a NOT_COVERED verdict is now correct when the engine raised 'is not a node type' and emitted no form -- plus two new arms, e2-not-covered and e2-not-covered-wrong-raise, so the branch has a positive AND a negative control.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "Re-run at caf09838c9 in issuer worktree wk-lgic-lgctfm-1-5, a different checkout from both the worker's and the one the failure was measured on: `check_lt_r1.py e2-reproduce` -> 'rows with a builder call the checker can make: 278; reproduced: 278; VERDICT: PASS-E2-DESIRED-EQUALS-BUILDER'. The denominator is printed and is the whole population, not a sample.",
+     "The repair is in the ISSUER's fixed input (fixed_inputs/r1/check_lt_r1.py), which is where the row said the defect was and where the worker's BOUNDS forbade it from going -- the worker was right to file a row rather than edit it."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "W1-S1 asserts that core_reproduce treats a raising grade() call as correctly reported only when desired.verdict == RAISE, so a NOT_COVERED verdict -- which the record and the WORKER FACE both require for an untypeable resource -- reads FAIL.",
+   "world_is": "core_reproduce now accepts NOT_COVERED on the paired-field test the record specifies, and the arm passes on 278 of 278 rows. The untypeable case is additionally exercised by its own two arms.",
+   "notes": "EVIDENCE, not a disposition; no `adjudicates`, and the disposition is 3.0.0_SA_CVO's at L9. WORTH SAYING PLAINLY BECAUSE IT IS THE SECOND TIME THIS ROUND: both W1-S29 (on LGIC_ENFORCE) and this row were defects in THIS SEAT's own fixed input, found by a worker running it, and in both cases the worker's report was the only instrument that could have found them -- a checker's author re-running its own checker is repetition. The cost of the fixed-input pattern is exactly this: the issuer's instrument is graded by nobody until a cell runs it for real."
   }
 ]
 ```
