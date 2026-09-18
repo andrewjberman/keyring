@@ -1522,13 +1522,27 @@ def _monotone_advance(old, new):
     # Measured need: LGIC_CANON-W5-S2 and C-S20 were ruled reassigned (R-19) and the field was immutable, so a ruling
     # had no landing surface; measured hazard the immutability guards: a graded party renaming its way out of a
     # hazard -- which is why the citation is required and the clock may not move in the same write.
+    # R-42 EXTENSION (1.0.0_SA_CTO, 2026-09-18): the move admits `remediation.owner` on the SAME terms, because a
+    # ruling that reassigns a row must be able to land on EVERY field that names an ADDRESSEE -- and `remediation.owner`
+    # names who performs the remedy. Measured need: R-42 placed IRPT_BCKEND's W4-S25/W4-S28 on a live lane after their
+    # disarm owner (a CELL) went terminal; `3.0.0_SA_CVO` moved `disarm.owner`, found this limb refused the
+    # `remediation.owner` half ALONE and BOTH-TOGETHER, and reported the ruling as DESIRED-NOT-APPLIED rather than
+    # attempting a write the gate would refuse. That is the SAME "a ruling had no landing surface" shape the R-19
+    # addendum was written to fix, one field over.
+    # ⛔ EXACTLY ONE OWNER FIELD PER ADMITTED MOVE. Both-at-once stays REFUSED -- not an oversight carried forward but
+    # the property that makes each reassignment separately inspectable, which is the whole point of requiring a
+    # ruling citation. Two fields moving under one citation cannot be told apart afterwards.
     owner_moved = False
-    if isinstance(od, dict) and isinstance(nd, dict) and od.get("owner") != nd.get("owner"):
+    _owner_pairs = [(od, nd), (o.get("remediation"), n.get("remediation"))]
+    _changed = [(a, b) for a, b in _owner_pairs
+                if isinstance(a, dict) and isinstance(b, dict) and a.get("owner") != b.get("owner")]
+    if len(_changed) == 1:
         oe, ne = o.get("evidence"), n.get("evidence")
         if (isinstance(oe, list) and isinstance(ne, list) and len(ne) == len(oe) + 1 and ne[:len(oe)] == oe
                 and RULING_CITATION_RE.search(str(ne[-1]))):
             owner_moved = True
-            nd["owner"] = od.get("owner")
+            _a, _b = _changed[0]
+            _b["owner"] = _a.get("owner")
             n["evidence"] = oe
     if owner_moved:
         return (not moved) and o == n
@@ -2039,6 +2053,22 @@ def _self_test(root):
         ("advance OWNER MUTANT: owner changes and the existing evidence is REWRITTEN under the citation -> refused",
          lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"},
                                                      evidence=["z@z", "SELF_DRIVE_LGIC_RULINGS_20260916.md@4a55888962 R-19"]))),
+        # R-42 EXTENSION: `remediation.owner` on the same terms, and EXACTLY ONE owner field per move.
+        ("advance OWNER R-42: remediation.owner changes AND exactly one CTO-ruling citation is appended -> admitted",
+         lambda: _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42 MUTANT: remediation.owner changes with NO citation -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B"}))),
+        ("advance OWNER R-42 MUTANT: BOTH owners move under one citation -> refused (one field per move, so each "
+         "reassignment stays separately inspectable)",
+         lambda: not _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"}, remediation={"owner": "2.0.0_SA_COO~B"},
+                                                     evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42 MUTANT: remediation.owner moves AND a clock moves in the same write -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"owner": "2.0.0_SA_COO~B", "state": "REMEDIATED"},
+                                                     evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
+        ("advance OWNER R-42 CONTROL: the DISARM half still admits exactly as before (no regression)",
+         lambda: _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"},
+                                                 evidence=["a@b", "SELF_DRIVE_LGIC_RULINGS_20260917.md@57bc083d45 R-42"]))),
     ]
     # OWNER-AND-CARRIER LIMBS on NEW rows (R-18(2), R-19(2), A-1) -- graded through _check_row with the committed schemas;
     # each limb has a positive (refuses) and a negative (a legitimate owner or carrier passes this limb) arm.
