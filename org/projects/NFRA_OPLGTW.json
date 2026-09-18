@@ -5,7 +5,7 @@
  "macro_code": "NFRA",
  "fabric": "laptop",
  "dep_stage": "EXECUTING",
- "status": "scoping",
+ "status": "active",
  "name": "Opal Gateway: authorized Schwab questions and CSV downloads in Claude",
  "generated_from": "org/missions/D9/NFRA/NFRA_OPLGTW/project.json",
  "generated_by": ".tools/missions-tree-index.py",
