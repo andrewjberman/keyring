@@ -271,3 +271,71 @@ why nothing has ever flagged it.
 1. the sentinel + populated roster act (unchanged);
 2. ⛔ **a disposition of the PROBE-FIXTURE ACCUMULATION and its no-self-clean PASS** -- *not* the unreachable-rows
    framing, which section D retires to a note.
+
+---
+
+# SECOND CORRECTION -- the window is WEEKS, my own log proves it, and section 4 CONFLATED TWO ACTS. The sentinel ships with an EXPLICIT TENANT-WIDE VALUE and needs nobody's audience decision
+
+`2.0.0_SA_COO~O`, row `NFRA_OPLGTW-S38` @`9738e13044`, correcting its own rows first.
+
+## A. THE CLAUSE DID NOT LAPSE THIS MORNING. IT WAS ALREADY FALSE WHEN THE ROW WAS WRITTEN
+
+The pre-`OG-r-1` deployed commit `7bd89b5d71` **already carries `app/sprint_view.py`**. ⭐ **And the read
+DISCRIMINATES rather than merely returning a presence: positive control `server.py` PRESENT at that commit, negative
+control `data_entitlement.py` ABSENT -- matching this seat's own R-56 measurement exactly.** Deployed
+`2026-09-09T19:08:11Z` per `W2-S7`'s manifest read.
+
+⛔ **AND MY OWN LOG CONVICTS ME:**
+`org/tier1_exec/1.0.0_SA_CTO/logs/2026-08-28/ctoD_daily_sprint_web_client_and_grep_gate_audit_1722-1923Z.md`
+**inventories `sprint_view.py` AND the roster option as already deployed to `i-07dccb1615503ac99` THREE WEEKS AGO.**
+
+⛔ **SO `W3-S22`'s "nothing is deployed" half was ALREADY FALSE when the row was written 3.3 days ago, and section 1 of
+this ruling -- "both halves of that clause are spent", written as though `OG-r-1` spent them at 05:58Z -- INHERITED
+THAT ERROR AND RESTATED IT.** `OG-r-1` **INHERITED** this exposure; it did not create it. ⭐ **The window is WEEKS and
+spans the whole pilot build, not five hours.**
+
+⚠ **The remedy is unchanged and the urgency is NOT weakened -- an older exposure is not a smaller one, and it is worse
+that it has been live across the build.** What was wrong is the CAUSAL STORY, and it would have been inherited by the
+next reader.
+
+⭐ **THE CARRY, and it is a clean rule this estate does not yet have written down:** ⛔ **A CLAUSE WITH TWO CONDITIONS
+NEEDS BOTH RE-READ AT THE SAME VINTAGE.** The lane re-read the half that had just changed (`z-2` complete) and took
+the other half **from the row's own text** -- *"the sentence that was true when written, trusted because it was
+written down."* **That is how a three-week-old deployment got described as five hours old**, and it is the same family
+as tonight's stale-comment and stale-citation findings.
+
+## B. SECTION 4 IS BLOCKED AS I WROTE IT -- and the block is my own conflation
+
+Section 4 orders the sentinel to ship *"WITH THE ROSTER POPULATED IN THE SAME ACT"*. ⛔ **THERE IS NO VALUE TO
+POPULATE IT WITH.** Unscoped census, denominator printed: **36 hits across 167,676 files scanned** (68,640
+ephemeral-floor, 11 unreadable, 4,880 binary not searched; bands SURFACED 8 / CONFIG 6 / DOC 22). **Every SURFACED hit
+is `app/config.py`, `app/sprint_view.py` or the lane's own scratch; the only CONFIG hit is its own scratch json.** No
+Terraform, no `.env` template, no runbook, no deliverable names a value or an intended audience. **My 2026-08-28 log
+names the OPTION without naming who belongs on it.** The deployed `.env` carries 22 keys and not this one.
+
+## C. ⭐ THE RULING: SECTION 4 CONFLATED **TWO DIFFERENT ACTS**, AND ONLY ONE OF THEM IS ANDREW'S
+
+⛔ **"MAKE IT EXPLICIT" AND "MAKE IT NARROW" ARE NOT THE SAME ACT, AND I BOUND THEM INTO ONE.**
+
+1. **THE CORRECTNESS FIX -- ships now, needs nobody's decision.** The sentinel lands **with
+   `SPRINT_VIEW_ALLOWED_EMAILS="*"`**, the explicit tenant-wide value. ⭐ **THE REACHABLE SET IS UNCHANGED: empty
+   admits everyone today and `"*"` admits everyone after -- DELTA = 0, so no never-widen hold attaches and there is no
+   availability risk.** What changes is that **tenant-wide stops being reachable BY OMISSION and becomes a RECORDED
+   DECISION**, and an unconfigured host thereafter fails CLOSED. ⭐ **This closes the entire defect section 4 named,
+   and it needs no roster.**
+2. **THE AUDIENCE DECISION -- Andrew's, and carded separately.** *Who* may view the Daily Sprint is a **scope /
+   business-semantics** question, which `/open-calls` reserves to him. ⛔ **`2.0.0_SA_COO~O` REFUSED TO INVENT A
+   ROSTER AND WAS RIGHT: "a roster I invented would be an access-control decision taken by a seat."** Narrowing from
+   `"*"` to a named list is then a **separate, reversible act** whenever he answers.
+
+⭐ **SO ROUND 2 IS UNBLOCKED AND NOTHING WAITS ON ANDREW.** The card is real and it is his, but **the fix does not
+depend on it** -- which is the whole point of splitting them. ⚠ **Had I left section 4 as written, a sovereign
+question nobody had asked would have silently become a blocker on a correctness fix, discovered at cut time.**
+`2.0.0_SA_COO~O` surfaced it **before** cutting rather than at the cut, which is the only reason that did not happen.
+
+## D. Standing
+
+- **Section 4 AMENDED per C. Branch (2) timing stands:** round 2, ordered before `OG-v-4`/`OG-v-5`.
+- **`W3-S22` remains ARMED and OPEN**, disarm conditions unchanged from the first correction: the sentinel act, and a
+  disposition of the probe-fixture accumulation.
+- **CARD 5 to Andrew:** the Daily-Sprint audience. **It blocks nothing** and is stated as such on the card.

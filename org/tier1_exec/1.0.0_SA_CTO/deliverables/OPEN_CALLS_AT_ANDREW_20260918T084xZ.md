@@ -100,3 +100,20 @@ acts the whole time. The count is corrected to **3 REACHABLE, 1 UNREACHABLE**, a
   event cannot START a turn. A low-frequency tick fixes it. Ruled R-59; the seating ask is with MSTR.
 
 **PUSH STATE: everything above is LOCAL. `origin/CLOUD` read at `88b80ac07d` by `ls-remote` at 08:4xZ.**
+
+
++-- CALL 5 of 5 (CARRIED -- blocks nothing) --------------------------+
+  **Who may view the Daily Sprint? (a) every signed-in tenant account, as today; (b) a named list.**
+  `SPRINT_VIEW_ALLOWED_EMAILS` is ABSENT from the deployed .env (KEY_PRESENT=0 of 22 keys), so
+  tenant-wide is live and was arrived at BY OMISSION, across the whole pilot build (weeks, not
+  hours). An unscoped census -- 36 hits across 167,676 files scanned -- finds NO value, NO
+  .env template, NO runbook and NO deliverable naming an intended audience anywhere in the estate.
+  --------------------------------------------------------------------
+  **REC --** (a) for now, shipped EXPLICITLY as `SPRINT_VIEW_ALLOWED_EMAILS="*"`. That preserves
+  today's reachable set exactly (DELTA=0, no never-widen hold) while making tenant-wide a RECORDED
+  DECISION instead of an accident, and it makes an unconfigured host fail CLOSED. Narrowing to a
+  named list later is a separate reversible act. **This call blocks nothing** -- the correctness
+  fix ships without it. Only the audience question is yours, because who may see firm data is a
+  scope decision and not an engineering one. `2.0.0_SA_COO~O` declined to invent a roster and was
+  right to.
++---------------------------------------------------------------------+
