@@ -1076,3 +1076,87 @@ number was NARROW, not wrong, and it said so first.** ⭐ **R-54's rec stands on
 survives the CVO's own read -- and the CVO re-deriving rather than accepting is the correct response to a census handed
 in from another lane**, which is the same discipline this seat asked for when it withdrew its own ENFORCE and CANON
 numbers an hour ago. **The unscoped read is the one to carry.**
+
+---
+
+## R-56 -- CALL 20, four items: THREE RECS ADOPTED AND ONE REFUSED. The deployed release's DOCUMENTED ROLLBACK RESTORES A BUILD WITH NO ENTITLEMENT GUARD -- verified here with a positive control -- and "carries the guard" is NOT a sufficient test for its replacement
+
+`2.0.0_SA_COO~O` drained `OG-r-1`'s deploy @`5162842caf` and routed four items (msg 97863). **AC15-AC18 -- R-53's fix --
+ALL PASS, including AC18's arm holding the override audit log and agent-context file under the MAIN tree**, which was
+the fourth control this seat added because the lane's own three could not have caught it. 15 of 18.
+
+### ITEM 2 -- ADOPTED, AND IT IS THE ONE THAT MATTERS. Verified at the bytes, not taken on report.
+
+`W2-S7`: the runbook s7.2 names `7bd89b5d71` (2026-09-09) as `OG-r-1`'s rollback target, and that commit has no
+entitlement guard. **Re-measured here, and the first attempt FAILED ITS OWN POSITIVE CONTROL** -- I read `app/...` at
+the repo root and got ABSENT for all three files at BOTH refs, which is a wrong-path artifact, not a finding. At the
+real path `infra/aws/ec2/opal-gateway/app/`:
+
+| file | at `7bd89b5d71` | at HEAD (positive control) |
+|---|---|---|
+| `data_entitlement.py` | **ABSENT** | PRESENT |
+| `revocation.py` | PRESENT | PRESENT |
+| `identity_scope.py` | PRESENT | PRESENT |
+
+**The control fires, the instrument discriminates, and the lane's claim is EXACTLY right.** ⛔ **WE HAVE DEPLOYED A
+RELEASE WHOSE WRITTEN ROLLBACK WOULD REMOVE THE PER-PRINCIPAL ENTITLEMENT GUARD.** Nothing is wrong on the host; **the
+EXPOSURE IS THE RECOVERY PATH**, which is worse than an ordinary defect because it is the thing you reach for when
+something else has already gone wrong. `AC10` FAILS on it correctly.
+
+⭐ **AND THE REC NEEDS ONE ADDITION THE LANE DID NOT STATE.** "Re-point s7.2 to a commit that carries the guard" is
+NECESSARY BUT NOT SUFFICIENT. The guard entered at `d88cd32d0c`, whose own subject ends **"-- not deployed"**. ⛔ **So
+a commit can carry the guard and still never have been a running state, and a rollback target that was never deployed
+is not a rollback -- it is an untested forward deploy performed during an incident.** The replacement target must
+satisfy BOTH: it carries `data_entitlement.py`, AND it is a state that was actually deployed and proven on the host.
+**If no such commit exists, THAT is the finding** -- it means this release has no valid rollback at all and the
+runbook should say so in those words rather than name a target that cannot serve.
+
+### ITEM 1 -- ADOPTED. The ledger disagrees with itself, and the tool caught what a rendering hid.
+
+`deploy_ledger.py check`: **DRIFT-DANGEROUS -- the entry reads terminal ("CLOSED -- nothing stranded") while legs
+L1/L2/L3 carry NO proof; "a NEVER#6 bypass wearing a compliance mask."** Per-leg proof is recorded through
+`close-leg`, then `close` through the tool. ⛔ **NO HAND-EDIT OF EITHER FILE -- the tool says so and it is right**; a
+hand-edit would make record and sentinel agree by fiat, which is the defect rather than its repair.
+
+⭐ **`2.0.0_SA_COO~O` NAMED ITS OWN ERROR RATHER THAN QUIETLY CORRECTING IT:** it had reported "ledger closed properly"
+one tick earlier because **it read the COMPLETION RECORD, which is a RENDERING, and the tool's own line says the
+SENTINEL is the object.** That is the same wrong-object class as R-50's key, R-52's tree and this ruling's own failed
+first read -- **four instances tonight, four different seats' instruments, one shape: the object you read was not the
+object your claim was about.**
+
+### ITEM 4 -- ADOPTED. `AC9` grades NOT-EVALUATED with its reason recorded.
+
+`OG-p-1`'s baseline never captured an error count for the stated window, so the criterion has **no referent**. The
+lane's own framing is the doctrine: *"a PASS here would be vacuous and a FAIL would be a measurement of the wrong
+thing."* A vocabulary with no NOT-EVALUATED value encodes non-evaluation AS a verdict, and R-47 is exactly why a
+vacuous PASS is the branch to refuse.
+
+### ITEM 3 -- REFUSED AS RECOMMENDED, FOR TONIGHT, AND THE ALTERNATIVE IS REFUSED TOO
+
+`AC4` fails 9 of 68: deployed bytes differ from LF git blobs on a Windows worktree with `core.autocrlf=true`, across
+`.service`, `requirements.txt`, `.txt`, `.yaml`, `.json`, `.md`, `.html`, `.jsonl`. The lane recommends adding
+`.gitattributes` coverage "so the class disappears rather than the instance", and offered the alternative itself
+without recommending it.
+
+⛔ **THE CLASS FIX IS RIGHT IN DIRECTION AND WRONG TONIGHT, ON TWO GROUNDS THIS SEAT CAN MEASURE.** (a) Those eight
+extensions cover a very large fraction of this repo; a `text eol=lf` rule renormalises every matching file, **and five
+seats plus multiple workers are holding live linked worktrees at this moment** -- that is a repo-wide diff storm
+landing on other seats' indexes, and its blast radius is a number nobody has printed. (b) ⛔ **`.gitattributes` IS A
+GATE-ADJACENT SURFACE BY THIS ESTATE'S OWN MEASUREMENT:** `LGIC_ENFORCE`'s `S42`, carried inside `C-S21`, records that
+**a one-line `.gitattributes` entry VOIDS THE NAMING GATE AT ANY SETTING.** A change to that file is therefore never
+just a whitespace act.
+
+**AND THE ALTERNATIVE IS REFUSED ON THE LANE'S OWN REASONING:** re-cutting `AC4` to compare NORMALISED content
+weakens the criterion, and `2.0.0_SA_COO~O` said so while offering it. ⭐ **An acceptance criterion is not re-cut to
+fit a result it correctly refused.**
+
+**SO: `AC4` STAYS FAILED AS WRITTEN.** The nine are enumerated, each carded with "no functional break found", and the
+`.gitattributes` class fix becomes **its own act with its own printed blast radius, in daylight, not a rider on a
+release cutover at 06:3xZ.** A FAIL that is honest and carded costs one criterion; a repo-wide renormalisation nobody
+measured costs whatever it hits.
+
+### What this ruling does not decide
+
+Nothing about `G-A` (Andrew's, the instance stop/start), nothing about `OG-r-2`, `OG-i-4`, `OG-v-4` or `OG-v-5` and
+their walkthrough gates. `OG-r-1` stays PENDING on items 1-3 and that is correct: **a deploy that ran is not a deploy
+that closed.**
