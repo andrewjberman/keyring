@@ -453,3 +453,64 @@ made for the sentinel.
 **LIVENESS** and he asked whether he could **USE** it. ⭐ **A GREEN THAT ANSWERS A DIFFERENT QUESTION THAN THE ONE ASKED
 IS WORSE THAN NO ANSWER, because it spends the asker's trust.** **No check on this service covers the login path** --
 that is why a 10-hour outage was invisible to every instrument pointed at it, and building that check is round 2's.
+
+## R-OG-21A -- CORRECTION TO R-OG-21, BY `2.0.0_SA_COO~O` (98010): my citation was ONE LINE OFF toward the prohibition my own addendum depends on, and my second finding is RETRACTED, not softened
+
+**The outage is CLOSED.** `0.7.0_AE_CloudOps` applied and EXERCISED the fix @`df9e05cb55` on Andrew's direct word
+(*"Go ahead with the fix"*, @`c298ed4b68`): `iam get-role-policy` shows the three actions under the unchanged
+`LeadingKeys RUNTIME#*` condition; SSM under `opal-gateway-role` at 16:37:05Z put a `RUNTIME#probe` key, **conditional
+`delete_item` SUCCEEDED**, and **`delete_item` on a `POLICY#` key still returned `AccessDeniedException`**. Ledger
+`nfra-oplgtw-gw-runtime-deleteitem` opened before the act, three legs proven, CLOSED. `2.0.0_SA_COO~O` cut the decomp
+amendment @`86177bf020`. **Both corrections below are `2.0.0_SA_COO~O`'s, and both are right.**
+
+⛔ **CORRECTION 1 -- THE ONE THAT MATTERED. R-OG-21 SAID "`DECOMP:182`'s 'no DeleteItem' is STRUCK AS TO `RUNTIME#`".
+THE CLAUSE IS AT `:183`.** Verified by this seat by printing the bytes at each line:
+
+```
+:182  - `describe-table` reads SSE enabled, point-in-time recovery enabled, PAY_PER_REQUEST billing, ...
+:183  - the runtime grant allows GetItem, PutItem, UpdateItem and DeleteItem on exactly the table ARN, ...
+:184  - the operator principal is separate, ... and holds no DeleteItem on `POLICY#` ...
+```
+
+⛔ **`:184` CARRIES THE OPERATOR'S `POLICY#` PROHIBITION -- THE ONE PROHIBITION THE CONTRACT DOES STATE EXPLICITLY, AND
+THE ONE R-OG-21's WHOLE ARGUMENT RESTS ON.** A seat striking "one line off" in the other direction would have retired
+the `POLICY#`-side prohibition **by the act that depends on it surviving.** `2.0.0_SA_COO~O` scoped its edit to `:183`,
+asserted `:184`'s survival BEFORE writing and verified it AFTER; `:184` is untouched.
+
+⭐ **AND THE FAILURE IS THE EXACT ONE RULE 27 NAMES AND R-73 RECORDED, COMMITTED BY THE SEAT THAT RECORDED IT: I PRINTED
+THE BYTES OF A RANGE (`sed -n '178,190p'`) AND THEN TYPED A SINGLE LINE NUMBER OFF MY MEMORY OF THAT RANGE.** The quoted
+TEXT was correct, so every check I ran on the quote passed. **A range read does not verify a point citation** --
+"print the bytes at the cited line" means at THE LINE, singular, after the number is written.
+
+⛔ **CORRECTION 2 -- MY SECOND "FINDING" IS WITHDRAWN IN FULL.** R-OG-21 said *"there is NO TransactWrite anywhere in
+that file"* and inferred a decomp that *"over-grants on paper where the TF under-grants."* **Both halves are wrong.**
+
+- **The token IS in the file.** My census was `grep 'dynamodb:'` -- scoped to `dynamodb:`-PREFIXED tokens -- and I then
+  wrote a sentence about *"anywhere in that file."* ⛔ **THAT IS RULE 24's SCOPE-TELL: A DENOMINATOR WHOSE SCOPE IS
+  NARROWER THAN THE SENTENCE BESIDE IT** -- the identical defect I spent the `LGIC_ENFORCE` round-8 analysis
+  correcting, committed roughly three hours later, in a ruling, by me.
+- **And the substance is a CATEGORY ERROR, which is a better reading than mine.** There is **no
+  `dynamodb:TransactWriteItems` IAM action at all**; a transaction is authorized PER ITEM against `PutItem`/`UpdateItem`.
+  `probes/og_i1.py:33` states it and **MEASURED it**, grading "TransactWrite" on those constituents under the
+  `LeadingKeys` condition as row `NFRA_OPLGTW-W1-S3`. ⭐ **So the cell had already handled it correctly, `DECOMP:183`
+  names a CAPABILITY rather than an action, and there was never a two-directional error to find.** My warning that
+  *"if a later cell relies on TransactWrite being granted, it is not"* is withdrawn as misleading: such a cell would not
+  be under-granted, it would be naming something no IAM policy can grant.
+
+⚠ **ONE FIGURE IN THE CORRECTION ITSELF DOES NOT RECONCILE, AND IT CHANGES NOTHING.** 98010 reports `TransactWrite`
+*"four times, all in COMMENTS, at `:19-21` and `:27-28`."* Measured by this seat at BOTH vintages -- `86177bf020^` and
+HEAD -- **the literal token occurs exactly ONCE**, at `:21`, inside the sentence stating the IAM action does not exist.
+**The substance of 98010 is right and mine was wrong; its count is the same class of error as the one it is correcting.**
+Recorded because a later seat re-deriving "four" will not find it.
+
+**WHAT STANDS FROM R-OG-21, UNCHANGED:** the ratified contract permits a conditional delete on `RUNTIME#` and forbids
+ordinary delete on `POLICY#` only; `OGI1-AC5` is retired prospectively and `OG-i-1`'s grade stands under R-43; the
+`LeadingKeys` confinement; the standing bar that **a criterion asserting a permission is ABSENT must name the call sites
+that would need it**; and that `OGI1-AC5` did not merely miss the defect but CERTIFIED it. `2.0.0_SA_COO~O` accepts that
+bar and the health-check finding without reservation.
+
+⛔ **ONE CLOCK REMAINS OPEN AND IT IS NOT THE IAM ACTION: NO REAL END-TO-END LOGIN HAS BEEN OBSERVED SINCE THE FIX.**
+The IAM action is exercised; the `/callback` path is not. Disarm condition, readable via SSM with no identity read: the
+journal shows one `GET /callback` answering 30x then one `POST /token` 200 after 16:37Z. Andrew is the expected producer
+(reconnect from Claude). `NFRA_OPLGTW-S46` @`5efdc94d2f` carries it, disarm owner `2.0.0_SA_COO~O`. **The act is proven
+at the permission and UNPROVEN at the outcome, and those are different claims.**
