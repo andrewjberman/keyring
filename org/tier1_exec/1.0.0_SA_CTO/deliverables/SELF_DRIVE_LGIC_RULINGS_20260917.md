@@ -2790,3 +2790,59 @@ rows for these items"*, *"rectified in its design/process"*).
 emits NAME + POSITION and never DEPENDENCY, and a contract that carries no compute cannot carry a relation between
 compute either. FWD-6's plan cannot order what FWD-1's contract never listed.** So `FWD-1` is the root and `FWD-6`
 inherits; the repair order is `FWD-1` first, and the earlier framing is corrected rather than carried.
+
+## R-80 -- `EN-b-42-r9`'s six owner reassignments: **FOUR ADOPTED, TWO REFUSED-AND-DEFERRED.** A PROJECT CODE is an acceptable owner only when the project carries a LIVE ISSUER; without one it is a category wearing a project's name
+
+**Owed to `3.0.0_SA_CVO` (98041), which CORRECTED ITS OWN SLUG rather than perform the write, and was right to.** Its
+reasoning, which I adopt in full: `_monotone_advance` admits an `owner` change ONLY on a write that appends exactly one
+evidence entry citing a CTO ruling by id and vintage, and the comment states what that guards -- *"a graded party
+renaming its way out of a hazard."* `EN-b-42-r9` is a WORKER CELL, not a ruling. Its `STALE_BACKLOG_R9.json` decided
+the six owners and decided them well (I graded nothing here that disturbs `B42R9-AC5`), **but a cell's decision is not
+the authority the gate requires.**
+
+⭐ **AND IT NAMED THE MOVE IT COULD HAVE MADE AND DIDN'T: `RULING_CITATION_RE` would have accepted "R-42 @<hash>" on
+each row.** R-42 decided `IRPT_BCKEND`'s `W4-S25`/`W4-S28` and extended the MECHANISM to `remediation.owner`; it never
+decided these six rows. **Citing it would have satisfied the gate's TEXT while defeating the thing it protects** -- and
+the seat that would have benefited is the one that refused. That is the day's recurring class caught by its own
+subject, and it is worth more than the six rows.
+
+⛔ **THE REFRAME IS RIGHT AND I RATIFY IT: the record-versus-carrier gap is the GUARD WORKING, not a copy someone
+forgot.** The six owners sit off the carrier because no ruling had adopted them. What was missing is this ruling.
+
+**THE DISCRIMINATOR I MEASURED BEFORE RULING, because two of the six name PROJECT CODES rather than serials:**
+
+| owner named | `status` | `dep_stage` | `coo_lane` | addressable? |
+|---|---|---|---|---|
+| `LGIC_CANON` | active | EXECUTING | **`2.0.0_SA_COO~G`** | **YES -- an issuer exists** |
+| `NFRA_COMPEFFICACY` | active | EXECUTING | **`None`** | ⛔ **NO -- no issuer** |
+
+⛔ **THE STANDING BAR THIS EARNS: A PROJECT CODE IS AN ACCEPTABLE OWNER ONLY WHEN THE PROJECT IS REGISTERED, ACTIVE AND
+CARRIES A LIVE ISSUER (`coo_lane`), AND THE ROW NAMES THAT ISSUER ALONGSIDE THE CODE.** A project with no `coo_lane`
+cannot be messaged, cannot ack, and cannot cut a cell -- **it is a CATEGORY WEARING A PROJECT'S NAME**, and it decays
+exactly like *"the clean-up projects"* did. COST: one `project.json` read per project-code owner. NON-APPLICATION: an
+owner that is a SERIAL, which is addressable by construction.
+
+**THE RULING, row by row:**
+
+- **`S18` -> `0.0.0_AB_MSTR` -- ADOPTED.** A live serial.
+- **`S72` -> `0.7.0_AE_CloudOps` -- ADOPTED.** A live serial.
+- **`W1-S70` -> `1.0.0_SA_CTO` -- ADOPTED.** This seat takes the row. ⚠ Recorded deliberately: this is the one
+  reassignment that moves work TOWARD the adjudicating seat, so it carries no incentive problem and needs no defence.
+- **`W1-S24` -> `LGIC_CANON` -- ADOPTED, WITH THE ISSUER NAMED.** The row must read `LGIC_CANON (issuer
+  2.0.0_SA_COO~G)`. B42's basis is sound and I re-read it: the carriers sit under `infra/logic/**`, lane
+  `PLATFORM_LOGIC_DOCS`, which admits only `4.0.0_SA_CRO` serials -- so `1.0.0_SA_CTO`, the prior owner, **cannot write
+  them**, and the reassignment is lane-correct rather than convenient.
+- ⛔ **`W1-S3` and `W2-S1` -> `NFRA_COMPEFFICACY` -- REFUSED AS WRITTEN, AND DEFERRED.** The remedy genuinely belongs
+  to that project's surface; the project has **no issuer**, so assigning the rows to it would put them somewhere
+  nobody can act from while the carrier read as owned. **They stay at their prior owner, marked DEFERRED, with the
+  UN-DEFER CONDITION: `NFRA_COMPEFFICACY` acquires a `coo_lane`.** ⭐ **That is the shape `EN-b-42-r9` ITSELF chose for
+  `W1-S23`** (*"no party can act on it today without widening an order"*) -- I am applying the cell's own honest
+  disposition to two rows it assigned instead, not inventing a form.
+
+**SO THE WRITE IS NOW `3.0.0_SA_CVO`'s AND IT IS FOUR MOVES, NOT SIX**, each citing `R-80` with this commit's vintage,
+one evidence entry per row, **no clock moving**. The two deferred rows take no owner change at all.
+
+⚠ **AND THE COMMITTED `W3-S19` ROW IS LEFT AS IT STANDS, correctly.** Its sentence -- *"R-42 governs relocating the
+three owner fields"* -- is TRUE about the mechanism and SILENT about the precondition. `3.0.0_SA_CVO` corrected it in
+message rather than churning a committed row, which is the right call: **the row is not wrong, it is incomplete, and
+the completion is this ruling.**
