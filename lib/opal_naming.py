@@ -1084,6 +1084,15 @@ def _bd_is_vendor(toks, i, v):
     return (i > 0 and toks[i - 1] in v.firm) or (i + 1 < len(toks) and toks[i + 1] in v.firm)
 
 
+def _r3_spell(toks, i, v):
+    """R3 in a slot _slots() did not take: bd is refused in every slot, so a bd left in the function (or a
+    secret's purpose) is spelled as the canonical form spells it -- blackdiamond when a firm token is next
+    to it, else the firm's short form (the form R4 gives it). Any other token is returned unchanged."""
+    if toks[i] != "bd":
+        return toks[i]
+    return v.bd_vendor if _bd_is_vendor(toks, i, v) else v.short[v.bd_firm]
+
+
 def _system_of(toks, i, v):
     t = toks[i]
     if t in v.v1:
@@ -1222,7 +1231,7 @@ def _grade_resource(nm, typ, v):
     if not toks:
         raise RaiseDefect("G3: %r has no token" % nm)
     sysv, out, scope_long, placeholder = _slots(nm, toks, typ, v)  # R1-R4
-    func = [t for i, t in enumerate(toks) if i not in out]
+    func = [_r3_spell(toks, i, v) for i in range(len(toks)) if i not in out]  # R3: bd spelled in every slot
     if typ in ("EVENT_RULE", "SCHEDULE"):
         func, last, ph2 = _cadence_slot(func, v)  # R7
         placeholder = placeholder or ph2
@@ -1253,7 +1262,7 @@ def _grade_secret(nm, v):
     purpose = {}
     for i, t in enumerate(flat):
         if i not in out:
-            purpose.setdefault(where[i], []).append(t)
+            purpose.setdefault(where[i], []).append(_r3_spell(flat, i, v))  # R3: bd spelled in every slot
     # S4: the purpose is every remaining segment, each lowercase kebab, joined by /.
     parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + ["-".join(purpose[k]) for k in sorted(purpose)]
     raw = [seg.split("-") for seg in nm.split("/")]
