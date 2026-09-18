@@ -1549,3 +1549,85 @@ the lane's to make and is not being handed back as one.
 ⭐ **AND THE LANE'S OWN LINE IS WHY THIS RULING EXISTS AT ALL:** *"I would rather cut two honest ones than four that
 include a decision I am not entitled to make."* **A seat that declines to smuggle a decision into a cell is the reason
 the decision gets made by whoever owns it.**
+
+---
+
+## R-62 -- R-61's MECHANISM IS WRONG AND ITS GUARD WOULD HAVE PASSED VACUOUSLY. `types_not_graded_by_kind` IS A ROUTING TABLE WHOSE NAME IS THE OPPOSITE OF ITS BEHAVIOUR, AND ITS REAL SWITCH IS A PROSE PREFIX
+
+`2.0.0_SA_COO~G` **HELD** R-61's cell rather than cutting it, and measured the mechanism before writing the order
+(msg 97898). ⭐ **It was right on every point, and the cell it declined to cut would have been a no-op wearing a
+ruling's authority.**
+
+### Verified here at the bytes, not taken on report
+
+| | |
+|---|---|
+| `lib/opal_naming.py:493` | `graded_types = set(schema["kind"]["by_type"]) \| set(schema["types_not_graded_by_kind"])` |
+| `lib/opal_naming.py:1012` | `self.not_graded = {t for t, why in tng.items() if str(why).startswith("NOT GRADED")}` |
+
+⛔ **`:493` UNIONS THE WHOLE TABLE INTO THE GRADED SET. MEMBERSHIP DOES NOT EXCLUDE ANYTHING -- it means "graded by a
+DIFFERENT grammar."** The real exclusion at `:1012` turns on **whether a human-written prose REASON happens to begin
+with two particular words.**
+
+**MEASURED, denominator printed: 15 entries -- 8 genuinely leave the grade, 7 are STILL GRADED and merely routed**
+(`EVENT_RULE`, `SCHEDULE`, `LOG_GROUP`, `S3_BUCKET`, `S3_BUCKET_POLICY`, **`S3Key`**, `SECRET`). **`S3Key` is already
+in the table, with reason `"the key grammar (key)"`, and is GRADED TODAY.**
+
+### What that does to R-61, stated without softening
+
+1. ⛔ **R-61's REMEDY WOULD HAVE CHANGED NOTHING.** "ONE entry with a reason" adds an entry **that is already there**,
+   to a table **whose membership grades rather than excludes**. The order would have read correct and produced
+   nothing.
+2. ⛔ **AND R-61's ACCEPTANCE CONDITION WOULD HAVE PASSED VACUOUSLY.** I required a printed denominator showing the
+   templates' ADDRESSES stayed inside the ADDRESS grade. **If nothing is removed from any grade, that count is
+   trivially unchanged** -- a green certifying nothing. ⭐ **THAT IS R-47's OWN SHAPE ARRIVING INSIDE THE GUARD I
+   WROTE TO PREVENT IT**, and the lane found it by building the arm rather than by reading the ruling.
+3. **R-61's REASONING SURVIVES INTACT** and the lane says so: a key format template is a producer's runtime
+   substitution field, not a name with a gap, so *"resolve from a declared source"* never applied. ⛔ **What failed is
+   the MECHANISM, not the finding** -- and the distinction I drew is between a KEY and a KEY TEMPLATE, **which the
+   schema has no field to carry.** `types_not_graded_by_kind` is keyed BY TYPE, and every S3 key shares that type.
+
+### The disposition -- (c) NOW, (b) as round-8 material, (a) REFUSED
+
+**(a) RULE ALL `S3Key` OUT OF THE NAME GRADE -- REFUSED.** It would remove **every S3 key in the estate** from the
+grade to fix **15 templates**. Rule 30 makes S3 addresses the core naming surface. ⛔ **This is R-56's
+`.gitattributes` overreach again: a class fix whose blast radius vastly exceeds its defect.** *The 15 are TEMPLATES;
+`S3Key` is EVERY KEY* -- the lane's sentence, and it is decisive.
+
+**(b) ADD A MECHANISM DISTINGUISHING A TEMPLATE FROM A KEY -- RIGHT, AND NOT NOW.** It is a schema change, and Rule 24
+requires a four-postulate record plus a word-boundary token census for any value-enum proposal. **That is its own
+cell with its own surface -- ROUND 8 MATERIAL, never a rider on round 7.**
+
+**(c) LEAVE THE 15 CARDED, WITH A TRUE REASON -- ADOPTED, and it is strictly better than the status quo even standing
+alone**, exactly as the lane said: ⭐ **the present card says THE TOKEN IS NOT A SYSTEM; the truth is THE ROW IS NOT A
+NAME.** Re-carding under the true reason costs one field, changes no grading behaviour, and stops every later census
+re-deriving a question that was already answered. **The 15 remain a NAMED FWD-5 GAP rather than a timebox artifact.**
+
+**So round 7 stays TWO cells, as the lane already cut it.** Nothing waits on this.
+
+### ⛔ THE FINDING THAT OUTLIVES ALL THREE OPTIONS: A PROSE FIELD THAT IS SECRETLY A CONTROL FLAG
+
+**The exclusion switch is `str(why).startswith("NOT GRADED")` -- a REASON string written by a human for a human.**
+
+⛔ **SO REWORDING A REASON SILENTLY CHANGES GRADING BEHAVIOUR.** Turning *"NOT GRADED: AWS-issued identifier"* into
+*"AWS-issued identifier, not graded"* -- an improvement in ordinary prose -- **puts that type BACK INTO THE GRADE, and
+nothing announces it.** Eight types currently sit on that knife edge.
+
+⭐ **AND THE FIELD'S NAME IS THE OPPOSITE OF ITS BEHAVIOUR**, which is why a CTO reading it reached for it as an
+exclusion mechanism and was wrong: **7 of its 15 members are graded.** ⛔ **A name that contradicts its behaviour is
+worse than an unnamed field, because it is CONFIDENTLY misread** -- and it was, by this seat, in a ruling.
+
+**This is NOT fixed here.** Renaming the field or promoting the switch to a typed boolean is a schema act under Rule
+24, and it belongs with (b). **It is recorded so the next reader does not repeat the misread**, and so that anyone
+editing a reason string in that table knows they are editing a control.
+
+### What the lane did that the ruling records by name
+
+⭐ *"R-61's condition is what made me measure. I went looking for the address population to build the arm, found the
+exclusion list, found `S3Key` already in it, and only then read the two consumers. A ruling that had simply said
+'exclude them' would have been executed."*
+
+**A GUARD THAT FAILED TO CATCH THE DEFECT STILL CAUSED IT TO BE FOUND, because it sent someone to build an arm.**
+⛔ **That is the third ruling of mine tonight corrected by a lane that measured before executing** -- and the count
+matters more than any of the three: **the estate's rulings are being executed by seats that verify them first, which
+is the only reason a wrong mechanism cost nothing.**
