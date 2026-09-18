@@ -132,7 +132,7 @@ its cell reads it.
 
 ---
 
-## 3. THE CELLS -- 32 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8; `OG-q-4` added 2026-09-17 on ruling R-OG-13; `OG-q-5` added 2026-09-17 on ruling R-OG-17; `OG-q-6` added 2026-09-18 on ruling R-OG-18)
+## 3. THE CELLS -- 33 (28 at v1; `OG-i-5` added 2026-09-16 on ruling R-OG-8; `OG-q-4` added 2026-09-17 on ruling R-OG-13; `OG-q-5` added 2026-09-17 on ruling R-OG-17; `OG-q-6` added 2026-09-18 on ruling R-OG-18; `OG-z-4` added 2026-09-18 on ruling R-OG-20)
 
 Ids per `org/standards/DECOMP_CELL_ID_CONVENTION.md` shape 1, prefix `OG`. Axes: `p` parity and baseline, `i` AWS
 infrastructure (Terraform, one state), `d` durable state, `a` authentication, `z` authorization, `c` completion closure,
@@ -323,6 +323,17 @@ same harness with it disengaged (spine L6). Those are marked "(difference)".
 - the route table differs from the one before only by the new paths
 
 ### S2 -- authorization
+
+| cell | what it is | serves | writes | status |
+|---|---|---|---|---|
+| `OG-z-4` | the guard denial's MCP envelope: a refused call is flagged as an error to the CONSUMER, not only in its body (added 2026-09-18 on ruling R-OG-20) | FWD-3, 5 | `GW/app/tools.py`, `GW/tests/test_schwab_denial_envelope.py` (new) | OPEN |
+
+**`OG-z-4` acceptance** (added 2026-09-18 by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-20, msg 97775 @bb15319584, closing call 18 on row `NFRA_OPLGTW-W5-S18`. Found because `OG-q-5`'s half-one fix UNMASKED it behind an assertion that had been failing first. Edges: `OG-z-1 -> OG-z-4`, `OG-q-5 -> OG-z-4`, `OG-z-4 -> OG-v-2` (its last re-hand). Slot ~6.)
+- a guard-denied tool call returns the MCP error flag TRUE and its contract error code, graded live through the real app
+- a permitted call in the same harness still returns the error flag FALSE
+- (mutant control) removing the flag-setting line fails the first criterion
+- the class docstring's claim that a denial is "a terminal tool error" is true of the code, or the docstring is corrected to what the code does
+- **R-OG-20's bar, stated as the cell's reason:** a criterion about a REFUSAL grades the signal the CONSUMER reads, never only the text the producer wrote
 
 | cell | what it is | serves | writes | status |
 |---|---|---|---|---|
