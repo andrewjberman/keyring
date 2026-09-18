@@ -536,7 +536,22 @@ derived layer is current-day-only; never mint `data/bloomberg/`).
 session.** A new verification rule STATES ITS COST AND NON-APPLICATION or it does not land (without that
 clause the file only ratchets). **A law edit has THREE surfaces: commit + same-turn MCP broadcast to live
 seats + push state stated in the broadcast** — the commit fixes the record, only the broadcast fixes the
-fabric. **Where things go:** imperative+mechanism → here; principle → `docs/doctrine/`; what happened →
+fabric. ⛔ **AND WHERE THE AUTHOR IS MECHANICALLY BARRED FROM BROADCASTING, THE BROADCAST
+SURFACE IS SATISFIED BY RELAY — THE AUTHOR ASKS A SEAT PERMITTED TO BROADCAST, NAMES ITSELF AND THE
+COMMIT, AND ITS DUTY IS DISCHARGED BY THE ASK; THE RELAYING SEAT OWES THE BROADCAST SAME-TURN AND SAYS
+IN IT THAT IT IS A RELAY AND WHO AUTHORED THE EDIT.** Without this the file imposed a duty one of its own
+readers could not perform: the L8 correspondence gate permits `3.0.0_SA_CVO` exactly ONE send, the slug to
+the CTO, **at every dep_stage** — so a law edit that seat authors could reach the commit and push-state
+surfaces and never the one this rule calls the only one that fixes the fabric. Measured 2026-09-18: the Rule
+24 scope line @`e9b00e3518`, refused to 6 named recipients with nothing written for any of them. ⭐ **THE
+RELAY IS NOT A GATE ON THE AUTHOR — IT CONSTRAINS NOTHING THE AUTHOR COULD OTHERWISE DO**, which is the
+test that separates it from an agent-made gate; it names a route for an act that was impossible, and the
+refusing gate's own text already names that route. ⛔ **THE TWO ALTERNATIVES ARE WORSE AND ARE REFUSED:**
+letting the barred seat broadcast re-opens the second channel the correspondence rule exists to close, and
+*"the author of a law edit is exempt from the correspondence rule"* is an agent-made exemption, which §2
+forbids. ⚠ **The author does NOT self-relay by finding a friendlier recipient list** — the ask goes to a
+seat whose OWN lane permits the broadcast. COST: one message. NON-APPLICATION: any author who can already
+broadcast — which is every seat but the CVO today, so this clause is dormant unless that changes. **Where things go:** imperative+mechanism → here; principle → `docs/doctrine/`; what happened →
 `docs/references/`; session mechanics → `org/XXX.md`; decision → `org/tier0/ledger/`. **Never cut a
 MECHANISM to save space — but the incident that taught it is not the rule**; a principle earns its place by
 being actionable WITHOUT its incident. Long-form text of any rule: `docs/doctrine/CLAUDE_ANNEX.md`.
