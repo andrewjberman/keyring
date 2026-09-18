@@ -514,3 +514,70 @@ The IAM action is exercised; the `/callback` path is not. Disarm condition, read
 journal shows one `GET /callback` answering 30x then one `POST /token` 200 after 16:37Z. Andrew is the expected producer
 (reconnect from Claude). `NFRA_OPLGTW-S46` @`5efdc94d2f` carries it, disarm owner `2.0.0_SA_COO~O`. **The act is proven
 at the permission and UNPROVEN at the outcome, and those are different claims.**
+
+---
+
+## R-OG-22 -- CALL 1 (AC4): the REC is adopted AGAINST raising the cap, but the call offers a FALSE BINARY and the third branch is the one the measurements actually point at
+
+**The call:** the contract asks 250,000 rows / 50 MiB per export; the job cap is `job_memory_bytes = 268435456`. The measured export peaked at **270,581,760** and ended `LIMIT_EXCEEDED`. The largest export that COMPLETED was **62,500 rows / 9,468,970 bytes at 214,065,152 peak RSS**. `2.0.0_SA_COO~O`'s REC: a PRD revision lowering `export_rows`/`export_utf8_bytes` to a measured-achievable pair, rather than raising `job_memory_bytes`.
+
+### The half of the rec I adopt outright
+
+⛔ **`job_memory_bytes` DOES NOT MOVE.** The rec's reason is correct and it is the blast-radius reason: the cap is a **multi-tenant ADMISSION parameter** on a 1,936,322,560-byte host where two jobs already reserve 912,624,640, while the export size is a **single-feature contract term**. Widening a shared admission parameter to fit one feature re-prices every other tenant's admission -- the wider radius, chosen to fix the narrower problem. That is settled and no revision may quietly take the other route.
+
+### ⛔ THE BRANCH NEITHER THE CALL NOR THE REC NAMES, AND RULE 24 IS WHY I LOOKED FOR IT
+
+The call is framed as a two-member set -- *lower the contract* or *raise the cap*. Rule 24 (i): **hunt the uncovered member, and hunt it by SUBTRACTION.** The domain is not "which of the two numbers do we edit"; it is **every way peak RSS can be brought under the cap at contract scale.** Subtracting the two named members leaves one:
+
+⭐ **CHANGE NEITHER NUMBER -- MAKE PEAK RSS STOP BEING A FUNCTION OF EXPORT SIZE.** And the cell's own measurements are what point there: **9,468,970 bytes of output cost 214,065,152 bytes of peak RSS -- a ratio of about 22.6 to 1.** A writer that streamed rows would not carry that ratio; a resident result set does. **The measured evidence is more consistent with "the whole result set is materialised in memory" than with "the contract is too big."** I have NOT confirmed that read -- it is an inference from a ratio, and I am labelling it as one -- but it is a cheap thing to falsify and it is not in the record at all.
+
+### THE RULING
+
+1. **`job_memory_bytes` stays at 268435456.** Not a revision candidate.
+2. ⛔ **BEFORE any contract number is lowered, the revision ANSWERS ONE QUESTION: is 250,000 rows / 50 MiB a CONSUMER REQUIREMENT or an aspiration?** The two answers have different remedies and the record currently supports neither, because nobody has asked. **If a real consumer needs 250k rows, lowering the contract does not solve that consumer's problem -- it relabels it**, and the streaming branch is the only member of the set that serves it.
+3. **If it is an aspiration**, the rec lands exactly as written -- and the achievable pair is stated **with margin, never at the observed maximum**: the largest completed run sat at 214,065,152 against a 268,435,456 cap, and a pair pinned to an observed peak has no headroom for the next input that is 5% larger.
+4. **The pair is MEASURED, never interpolated.** 62,500 rows completing does not license "125,000 rows probably completes"; the ratio above is the reason that interpolation is unsafe.
+
+**I own the revision (L4) and I am not cutting it this tick** -- it is blocked on question 2, which is a question about a consumer, not about this cell. `2.0.0_SA_COO~O` is not blocked by that: nothing in OG-r-2 waits on the revision.
+
+---
+
+## R-OG-23 -- CALL 2 (AC6): the REVISED rec is adopted, the criterion is NOT weakened, and `2.0.0_SA_COO~O`'s correction of its own call is the finding of this round
+
+**Superseded first:** call 2 as written at 22:11Z argued from "an ambient background rate" to weakening the bar. `2.0.0_SA_COO~O` corrected itself at 22:47Z (msg 98070, row `S49` @`6acc95cba2`) before I ruled, and the correction reverses its own recommendation. ⭐ **I am ruling on the CORRECTED call, and the correction is right.**
+
+### WHY THE ORIGINAL REC WAS WRONG IN A WAY THIS ESTATE HAS A NAME FOR
+
+The first rec rested on a **14-day SUM**. The correction read the same metric **per day-bucket (denominator 15)** and found the events are **EPISODIC**: non-zero on FOUR days (09-04 = 3, 09-09 = 3, 09-10 = 13, 09-18 = 2), **true zeros on ELEVEN** while `RequestCount` is non-zero on all fifteen; at period 3600 they are bursts inside single hours, never a rate.
+
+⛔ **THIS IS RULE 24'S SCOPE-TELL EXACTLY: A REAL DENOMINATOR SUPPORTING A SENTENCE ABOUT A DIFFERENT POPULATION.** A sum over 14 days is a true number that cannot distinguish "irreducible ambient rate" from "four bad days and eleven clean ones" -- and **those two have opposite remedies.** "Ambient" means irreducible, which argues for replacing the bar with a rate comparison. **Episodic means a zero-failure window is CONSTRUCTIBLE**, which is the opposite conclusion from the same instrument at a finer grain.
+
+### THE RULING
+
+1. ⛔ **AC6's literal "zero failures" STANDS. It is not amended, not weakened to a rate, and not given a delta bar.** Eleven clean days of fifteen are the proof that the bar is satisfiable, and **a bar is not unsatisfiable because one cell could not build a window that met it.**
+2. **It is graded on a window free of NAMED incidents, each named IN THE RECORD with its cause.** That is the corrected rec and I adopt it verbatim.
+3. ⛔ **THE 19 ERRORS OF 09-04 / 09-09 / 09-10 ARE NOT NAMED.** `2.0.0_SA_COO~O` says so itself and declines to claim a cause it did not read. **So those three days are NOT eligible window material until named** -- a window is "free of named incidents" only when the incidents in it have actually been named, and an unexamined burst is not a clean day.
+4. **Today's two ARE named and ARE ours:** the 14:00Z and 15:00Z buckets correspond to `GET /callback` 503s at 14:55:37Z and 15:16:07Z during the `DeleteItem` outage (row `S46`, a different plane, same two events). ⭐ **Two instruments, independently derived, agreeing on the same two events is CORROBORATION rather than repetition** -- the CloudWatch metric and the journal read share no method. 09-18 is therefore an eligible day for a window that EXCLUDES the outage interval, and a named incident of our own making is precisely what the clause is for.
+5. **Row `W2-S10` stays ARMED and its disposition remains the CVO's at L9.** Its core claim -- *the criterion is unsatisfiable in the windows THAT CELL could build* -- is TRUE and is not disturbed by this ruling. ⚠ **It is a claim about the cell's windows, not about the criterion**, and the two must not be collapsed when the row is dispositioned.
+
+⭐ **RECORDED AS CREDIT, NOT COURTESY:** a seat that re-measures its own recommendation at a finer grain and publishes the reversal before the ruling lands is doing the thing the correcting-seat trap says is hardest. The correction cost one metric call and changed the remedy.
+
+---
+
+## R-OG-24 -- CALL 3 (AC2): the rec is adopted -- the bar IS "never exceeds", so the PASS is VACUOUS -- and the defect is in a SHARED LIMB, which makes it bigger than AC2
+
+**The call:** `onhost_bench.py:418-421` grades `cap_respected` by comparing RSS **only when the job succeeded**; a job ending `LIMIT_EXCEEDED` is graded `True` with its RSS unread. The maximal job peaked at **282,021,888** against the **268,435,456** cap -- 5.06% over -- and PASSES, while AC4's export job FAILS at a SMALLER 270,581,760 only because AC4's text also demands the CSV be generated.
+
+### THE RULING
+
+1. ⛔ **AC2's BAR IS "NEVER EXCEEDS." The PASS IS A DISCLOSED FAIL.** Adopted as recommended.
+2. ⛔ **AND IT IS WORSE THAN AMBIGUOUS -- IT IS VACUOUS.** A limb that reads the guarded property **only on the success path cannot return non-zero on the positive case it exists to catch**: the jobs most likely to breach a memory cap are exactly the jobs that die of it. This is the catalogued *detector that cannot fire* shape, and the verdict it produces is not evidence of compliance in either direction.
+3. ⭐ **THE DEFECT IS IN A SHARED LIMB, SO THE SCOPE IS NOT AC2.** Rule 22: *a check scoped to the members cannot see a defect in what the members share.* **Every criterion whose verdict reads `cap_respected` inherits this, and each one currently reads PASS or FAIL on a limb that is blind on the failure path.** ⛔ **CENSUS `cap_respected`'s CONSUMERS BEFORE ANY OF THEM IS QUOTED AGAIN, AND PRINT THE DENOMINATOR.** I am not naming a count, because I have not run it and a number I did not measure is exactly what this ruling convicts.
+4. **The instrument is repaired, not worked around:** `cap_respected` reads peak RSS on **every** terminal path, `LIMIT_EXCEEDED` included. A grader that must be read together with a caveat is a grader that will be quoted without one.
+5. **Admission arithmetic is priced against transient overshoot**, as recommended -- a child that transiently reaches about 1.05x the cap.
+
+### ⚠ ONE NUMBER IN THE CALL DOES NOT RECONCILE, AND IT IS CHEAP TO FIX
+
+The call says two such children reach **562,036,736** against a reserve computed at 375,753,728. But **2 x 282,021,888 = 564,043,776**, not 562,036,736 -- a difference of **2,007,040**, which means the two figures rest on DIFFERENT child values (562,036,736 is the double of 281,018,368, not of 282,021,888). **Neither is necessarily wrong** -- one may be the measured maximum and the other a different run's peak -- **but the doubling must print its own input.** ⛔ **The conclusion is unaffected: on either figure two children exceed the 375,753,728 reserve by more than 185 MB**, so the admission finding stands and this is a provenance repair, not a reversal.
+
+**Nothing here re-grades a criterion or moves a cap.** AC2 becomes a disclosed FAIL and joins AC4 as the second input to R-OG-22's revision; the `cap_respected` repair and its consumer census are `2.0.0_SA_COO~O`'s to place in a cell.
