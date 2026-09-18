@@ -573,3 +573,97 @@ row whose premise moved, an unpinned card, and now a roster line.**
 **THE BAR, and it is cheap:** a seat that reports a BLOCK in its summary re-reads that summary whenever it reports the
 block resolved anywhere else. This seat said "not blocked" in messages and analyses for hours while its own roster line
 said otherwise, and **the roster is what a seat reads when it does not have the messages.**
+
+---
+
+## R-49 -- DEC-9 ADMITS NO PREFIX AT ALL, so `LGIC_LGCTFM-W2-S3`'s question has no answer: it is a category error, and the row DISARMS on that
+
+`2.0.0_SA_COO~G` routed this as an open call with its recommendation in the same act (msg 97836). Under the
+call-routing law (Andrew-direct 2026-09-17 ~13:0xZ) **any open call is the driver's to decide on its own rec the same
+tick**, and this one is additionally mine by lane: DEC-9 lives in `LGIC_LGCTFM_PRD.md`, and the PRD is the CTO's.
+
+**THE ROW ASKS:** a second DECIDED-but-unmarked prefix (`opal-data-bd/silver/`, `infra/logic/06_CONFORMANCE_LEDGER.md:72`)
+sits on the same bucket with the same evidentiary shape DEC-9 accepted for `gold/`, and *"whether DEC-9's acceptance
+EXTENDS to a second prefix is a decision no one has made."*
+
+**RULING: there is nothing to extend, because DEC-9 never admitted a prefix.** Read at its own bytes rather than from
+the row's characterisation -- `org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md:246`:
+
+> **DEC-9 The mark act appends to the three existing registries only, under the subject's migration project, in the
+> run's own commit, through `safe-commit` and the naming gate.** ... A fourth mark is a Rule 24 act nobody has asked for.
+
+DEC-9's axis is **WHICH REGISTRIES THE MARK ACT MAY WRITE** -- three, and no fourth. It does not enumerate prefixes,
+and `gold/` is not named in it. Unscoped read of `DEC-9` over the PRD: **6 occurrences** (`:60`, `:178`, `:246`, `:356`,
+`:368`, `:377`); none names a prefix. `gold/` was simply the prefix a cell reached first. **So "does the acceptance
+extend to a second prefix" presupposes a prefix admission that does not exist**, and answering it either way would
+have MINTED that admission by implication. `2.0.0_SA_COO~G`'s reading is correct and is adopted.
+
+⛔ **THE GENERAL FORM, and it is the night's shape inverted:** every other instance tonight was a rule applied to a
+SUBSET of its population. **This is a rule read as having a population it never had.** Both come from taking a
+decision's SCOPE from where it was first exercised rather than from its own text. The remedy is the same one: read the
+decision's bytes, not the record of its first application.
+
+**W2-S3 DISARMS on this ruling** -- it named a decision nobody had made, and the decision is now made. This seat is its
+`disarm_owner`, so this is the owner's word; the CLOCK stays `3.0.0_SA_CVO`'s, and no `adjudicates` is carried.
+It was the last open id on composite `C-S3`.
+
+---
+
+## R-50 -- the markable population is `DECIDED` **AND** `MIGRATE` -- SEVEN of eleven, not eleven; the rec censused the right file on the WRONG COLUMN
+
+`2.0.0_SA_COO~G` was right to refuse to answer the row as asked and to hand me a population instead of a sighting --
+*"Census the mechanism, not the sighting. I would rather hand you the eleven than the one."* **That instinct is R-47 one
+level up and it is correct.** But the census reads one column too far left, and I am ruling against the rec's number.
+
+**MEASURED, on a different instrument than the lane's** (mine admits header and legend rows, so the denominators differ
+by construction and are printed rather than reconciled): `infra/logic/06_CONFORMANCE_LEDGER.md`, **261 lines**;
+**102** pipe-table rows detected; **73 DECIDED**, 29 not. The lane's detector saw 76 body rows / 64 DECIDED. **Neither
+number is the markable set, and that is the finding.**
+
+**THE LEDGER'S OWN HEADER, `:68`, NAMES TWO COLUMNS:**
+
+> `| bucket · plane | objects | newest | rules | disposition | decided |`
+
+`decided` answers **"has a word been given on this row?"**. `disposition` answers **"what happens to this surface?"**.
+They are different axes, and the mark act needs the second. **The rec censused `decided`.**
+
+**THE ELEVEN `opal-data-bd` ROWS, `:70-:80`, BY DISPOSITION:**
+
+| disposition | n | lines |
+|---|---|---|
+| **MIGRATE** | **7** | `:70` platinum/, `:71` gold/, `:72` silver/, `:73` schwab/silver/, `:75` bronze/, `:76` smartx/bronze/, `:79` gold/_state+_parity+manifests |
+| RETIRE | 3 | `:74` canonical/schwab/, `:77` schwab/bronze/, `:80` logs/gold/ |
+| CONFORMANT IN PRINCIPLE | 1 | `:78` code/ |
+
+**DECIDED 11 of 11. MIGRATE 7 of 11.** All three registries DEC-9 names describe **a surface that MOVES** --
+`remediations.json` surface kinds `bucket-alias` and `s3-prefix`, `LEGACY_SERVED_PATHS.json` served paths, `scopes.json`
+`bucket_aliases`. **A RETIRE row has nothing to alias to; a CONFORMANT row is already at its home.** Marking those four
+would write four rows asserting a destination the ledger does not give them.
+
+⛔ **RULE 24 (iii), INTENT COHERENCE, IS THE TEST THAT SEPARATES THEM:** one axis, one intent. `decided` is a
+PROCESS-STATE column (is a word owed?); `disposition` is an OUTCOME column (does this move?). **A census that selects
+on process-state and acts on outcome is reading a schema across two axes**, and it passes every count check because
+both columns are populated on every row. The lane's own exclusion work was real and correct -- it printed the 12
+not-DECIDED rows and flagged that three are WAITING ON ANDREW -- **but a correct subtraction on the wrong axis is still
+the wrong set**, and it arrives looking measured because the denominator is real.
+
+**MARKABLE ON THIS BUCKET: the seven at `:70`, `:71`, `:72`, `:73`, `:75`, `:76`, `:79`.** `silver/` (`:72`) IS among
+them, so the row's practical ask is granted -- by the mechanism, not by an extension of DEC-9.
+
+**WHAT THIS RULING DOES NOT MOVE, stated because Rule 24 (iv) requires it:** the three `opal-data-etfs` rows at
+`:106-:108` read **WAITING (Andrew)** and are untouched -- no ruling of mine reaches them. The two `OWED` register
+entries `X3`/`X5` (`:137`, `:139`) name Andrew as decider and are untouched.
+
+⚠ **AND ONE EXCLUSION IS RULED BUT NOT MEASURED, disclosed rather than smoothed.** I tried to falsify the RETIRE
+exclusion against `LEGACY_SERVED_PATHS.json` -- if a retiring prefix still carried a served path, it would need a mark
+after all. **The positive control DID NOT FIRE**: zero hits for the three RETIRE prefixes AND zero for all seven
+ADMITTED ones, so the instrument discriminated nothing. Reading the file's real shape showed why -- it is
+`mapping`, **8 rows** of `{path, reason}`, and its paths are **BUCKET-RELATIVE** (`platinum/advi/{firm}/{leaf} ...`),
+so a search for `opal-data-bd` was the **WRONG GRAIN** and could only ever return zero. **The RETIRE exclusion
+therefore rests on the disposition axis alone and is NOT independently corroborated.** It is ruled, and it is open to
+one measurement nobody has taken: whether any of the three retiring prefixes is still served. **Owner: the
+`ADVI_FIRMBKTS` migration project at its mark act**, which is the first cell that can measure it against a live read.
+
+⭐ **The positive control is the only reason I know that zero was empty rather than clean** -- and I had written R-47
+about exactly this four hours earlier, which did not stop me running the wrong-grain search. **A lesson you have
+written down is not a control; the control is the arm you run beside the answer.**
