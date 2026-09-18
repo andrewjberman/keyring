@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T12:45Z to slot ~2 (cold start, worktree /c/tmp/wk-irpt-4-2, branch wk-irpt_bckend-4-2 from HEAD), fifteen minutes before the 13:00Z fire, so the worker takes the T0 row and then READS the event. Was: staged -- assigned to slot ~2; becomes pending when the COO hands it at ~12:5xZ.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~2, 2026-09-18. T0 armed 12:48:46Z-12:57:44Z (before the 13:00:00Z fire); the fire observed at 13:00:29Z (request id 986aad35-d0ab-4b76-9161-0ac88e100734, invoker scheduler.amazonaws.com via CloudTrail AssumeRole on irpt-directory-refresh-scheduler-role); 3 of 3 firms accounted for (REFRESH_COMPLETED_WITH_ADDITIONS on byte-identical bytes, row IRPT_BCKEND-W2-S57's pattern, now confirmed organic). R41-AC1 PASS (battery token IBR41-ORGANIC-FIRE-READ-BY-ITS-ARTIFACTS, 23/23 arms, rc 0). R41-AC2 judgment recorded (UNVERIFIABLE-BY-INSTRUMENT, CVO at L9). proof-of-spec-check rc=0, VALID. HANDED by 2.0.0_SA_COO~B at 12:45Z (@406f1bf79b, fifteen minutes before the 13:00Z fire); drained by the issuer.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 4 (the CTO's round-3 analysis @5c59f68d70, msg 97944) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 3) | **Round-3 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md` @5c59f68d70 | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar (analysis s.4, ADOPTED) | **Decomp cell:** `IB-rtd-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.4, s.R4) | **outcome_ref:** FWD-7 (the organic arm), FWD-1
 
