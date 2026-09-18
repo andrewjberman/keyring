@@ -3647,6 +3647,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "The arithmetic clause was satisfied by round 5 and went unremarked; the AC3 clause is unsatisfied and is now outside this project's charter under R-60. The clock has been ARMED since 2026-09-17 pointing at a compound condition whose halves now have different owners.",
     "notes": "THE CLOCK STAYS ARMED AND THIS ROW DISARMS NOTHING. It carries no `adjudicates` and disposes nothing. RECOMMENDED AND DELIBERATELY NOT TAKEN, because the remedy text is R-38's and re-pointing a ruling's remedy is 1.0.0_SA_CTO's: RE-POINT W2-S13's disarm condition at R-60's bar -- the row disarms when the LIST is complete and classified, which round 6's zero-remainder partition and round 7's label work substantially deliver -- and TRANSFER the residual resolution obligation to the clean-up projects with a named owner, rather than leaving it on a LGIC_ENFORCE clock that cannot clear it. This is R-51's class one level over: a condition naming a retired BAR is RE-POINTED, never quietly satisfied and never left to decay. COST: one register line plus one remedy re-point. NON-APPLICATION: a compound remedy whose clauses share an owner and a charter, where finishing the work is the whole answer.",
     "id": "LGIC_ENFORCE-S78"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T11:55Z",
+    "one_line": "A CRITERION'S EVIDENCE COULD FORGE ITS OWN VERDICT, AND THE SHAPE SPANS THREE ROUNDS' CHECKERS. proof-of-spec-check grades `<expect>` as an UNANCHORED SEARCH over the run's whole evidence; the round checkers ECHO RECORD-DERIVED VALUES -- resource names, card reasons -- and the record is written by the GRADED PARTY. MEASURED at the round-8 cut: a card row NAMED `PASS-P36-CARDS-CARRY-REASONS` with an empty reason produces `VERDICT: FAIL-...` AND puts the literal expect string in the output, so an unanchored search finds PASS on a FAILING run. Closed in check_en_r8.py @23e4e80913 BEFORE any worker was spawned, proven on a mutant AND a positive control. check_en_r6.py and check_en_r7.py carry NO such scrub.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "FOUND BY THE L6 GATE, NOT BY THIS SEAT, and it was announced rather than refused: the round-8 issuance printed OUTPUT-VOCABULARY ANNOUNCE four times -- 'check_en_r8.py's output is not only its own text: it prints a bare value it does not author at line 64 (a relay: that line can be anything). Not judged, not refused.' The gate named the shape precisely and left the judgment to a reader.",
+        "PROBED RATHER THAN REASONED ABOUT. A record with a carded row whose `name` is the literal expect string and whose `card` is empty was fed to the real subcommand. Output verbatim: \"rows with no card reason or no name (must be 0): 1 ['PASS-P36-CARDS-CARRY-REASONS']\" followed by \"VERDICT: FAIL-P36-CARDS-CARRY-REASONS\". Verdict FAIL; expect string PRESENT. That is the whole defect in one run.",
+        "CLOSED AT THE SOURCE and proven in BOTH directions, because a fix tested only against the attack is half a measurement: after the scrub the same forged record renders 'PASS_P36-CARDS-CARRY-REASONS' and the expect string is ABSENT (False, as required), while a CORRECT record still emits 'VERDICT: PASS-P36-CARDS-CARRY-REASONS' (True, as required). A scrubber that also broke the legitimate PASS would have passed the mutant test perfectly.",
+        "SCOPE MEASURED, NOT ASSUMED: check_en_r6.py and check_en_r7.py contain no scrub. The shape is present in all three rounds' checkers and was closed only in round 8's.",
+        "WHAT THIS DOES NOT CLAIM, and the distinction is the point: it does NOT say round 6's or round 7's grades are wrong. It says a criterion COULD have been satisfied by a forged record, not that one WAS. Those records were produced by cooperative cells and their evidence was re-run by the issuer at an INDEPENDENT CHECKOUT, which is a different instrument from the criterion's own search. The gap is between what the mechanism GUARANTEES and what the run HAPPENED to produce.",
+        "TIMING, stated because it decides whether this was an issuer's repair or a mid-round spec change: the round was CUT and NOT DISPATCHED. No worker had been spawned, none had read the file, and no criterion had been graded against it. The orders tell workers 'never an edit to a fixed input'; that bound is the WORKER's. Had a worker been live, the correct act would have been a BLOCKING row rather than an edit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A criterion's `<expect>` is graded by proof-of-spec-check as an UNANCHORED search over the recorded evidence, and a task order's acceptance is supposed to be a statement about the WORLD that the graded party cannot author.",
+    "world_is": "The graded party writes the record; the checker echoes the record into the evidence; the grader searches the evidence for a string the graded party can therefore choose. Round 8 closes it for its own four cells only.",
+    "notes": "ARMED with the disarm owner THIS SEAT, corrected at the gate's refusal: the first draft named 3.0.0_SA_CVO and the row gate refused it under R-19 -- A DISARM OWNER IS NEVER THE WRITER, and the CVO is the only writer of a disarm clock (R-15). The artifact is this seat's own fixed inputs, so the disarm is this seat's; the CVO still DISPOSES the row at L9, and conflating the two is the very distinction this lane quotes at others. The gate reached the better answer than the issuer did, and the audited override was not used. THE TRANSFERABLE PART: an acceptance criterion whose evidence stream interpolates anything the GRADED PARTY writes is a boundary read from a field the graded party controls, one level down from the field into the output. The remedy is one substitution per printed line, and the arm that proves it is a POSITIVE CONTROL beside the mutant. COST: one scrub function per checker. NON-APPLICATION: a checker whose output interpolates nothing the graded party controls, and any grader that anchors its match to the verdict line.",
+    "id": "LGIC_ENFORCE-S79"
   }
 ]
 ```
