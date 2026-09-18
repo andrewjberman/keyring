@@ -8389,6 +8389,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The CTO half HALF 3 @533f216c74: covered = FILINGS_PREFIX, _read_filing_source_object, and bundle['drafting_reason'] taking the STORED reason from filings/v1/<key>/UNRESOLVED-SOURCE.source.json instead of the generic NoSuchKey string, in one Lambda code deploy; STOPs on any write to the filings store from the adapter, any synthesis of a reason the store does not carry, and any change to drafting_status itself; writer census N=2 (the adapter writes the SERVED field, the filings batch writes the STORED reason); both branches -- a name with the object serves the stored classed reason, a name without keeps the honest absence string -- and A FABRICATED OR BLANK REASON FAILS THIS ACT; discriminator one resource, 0 destroy.",
     "world_is": "Both branches hold and no reason is fabricated. 21 of 21 names with a stored object serve that stored reason verbatim; the generic string is gone; drafting_status itself was not moved by this act (21 ABSENT / 12 SERVED is the same partition the store carries).",
     "notes": "ONE NUMBER THAT LOOKS LIKE A FAILURE AND IS NOT, stated here so no seat grades on it by eye. A naive blank-reason check reports '12 blank of 33' against a half whose fail condition reads 'a fabricated or BLANK reason fails this act'. Those 12 are exactly the names whose drafting_status is SERVED -- nothing failed for them, so NO reason is owed, and a blank reason there is CORRECT. The fail condition binds names where a reason is owed, and on that set the count is 21 of 21 populated with the stored text and 0 blank. A GRADER READING THE RAW BLANK COUNT WOULD FAIL A PASSING ACT. Second, a precision on the half's own wording: its branch B anticipated 'a name where the object does not exist keeps the honest absence string'. In the measured population that branch DID NOT OCCUR -- the set (ABSENT and no stored object) is EMPTY, because every ABSENT name has a stored reason and every name without one is SERVED. The half covered a state the world does not currently contain; that is the half being wider than the world, not the act missing a case. THIRD, and owed to 3.0.0_SA_CVO~Z: the %2F instrument this seat OFFERED in msg 23613 is CLOSED, and closed for a reason msg 23616 did not name. 3.0.0_SA_CVO~Z measured two (the 401s never invoked the authorizer; the authorizer logs path undefined). This seat measured a THIRD, on the adapter rather than the authorizer: /aws/lambda/opal-amgt-scoped-api carries ZERO events matching rawPath, %2F or _LN_Equity across 36 hours, with a live positive control (the group's newest event is 00:13:37Z, this act's own deploy). THE ADAPTER DOES NOT LOG THE REQUEST PATH AT ALL. Consequence for rk-26, and it changes what that cell must be cut to do: the render capture must record the delivered path AT THE BROWSER NETWORK LAYER, because no Lambda log will corroborate it afterward. A cell cut as 'capture the render' and verified later from CloudWatch would find nothing and could read as a clean pass."
-  }
+  },
+  {
+  "id": "AMGT_RESAPP-Z-S166",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-18T00:35Z",
+  "one_line": "DISARMS Z-S155 and W31-S1, both ARMED with 2.0.0_SA_COO~Z as disarm_owner, both resolved by round-13 work already landed and independently verified this session.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Z-S155 (chain SP's two key shapes under scores/v1/) named its own disarm path: 'pick ONE shape (recommend the nested date-partitioned one), have the adapter read that one'. That is now DECIDED and ENFORCED: the CTO's signed half for rk-30 adapter (NEVER_WIDEN_ROUND13_BATCH_B_CTO_HALVES.md HALF 5, @533f216c74) states 'Read the DATE-PARTITIONED scores shape only ... a silent fallback to the superseded flat shape (Z-S155) is REFUSED', and rk-30 producer's own ISSUER AMENDMENT 1 (this session, @6a29ab020e) filters all three of its criteria to the date-partitioned shape exclusively, excluding the 31 flat objects from grading. Z-S155's own secondary claim -- that the vocabulary mismatch is filed at 'row W29-S2' -- was independently found to be a wrong citation (no such row exists; W29-S1 is unrelated); the real finding is now filed at Z-S162.",
+      "W31-S1 (chain A's rk-19 page half worktree carrying an empty portal/ gitlink, no package.json, no src/) is resolved: the worktree's portal/ was cloned and checked out at the recorded gitlink commit, bun install run (377 packages), and the resumed worker (0.9.0_WK_AMGT_RESAPP~31) confirmed real files present and produced genuine, drained work (AC1 PASS on the page-label-and-link order, drained @560723da8e). The order no longer stands blocked on an unpopulated tree."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "N/A -- a disarm row, not a new finding.",
+  "world_is": "Both prior hazards' own stated conditions for disarm are now met, on evidence measured this session and cited above with commit hashes.",
+  "notes": "This is one of 45 rows this seat found ARMED with itself named disarm_owner across the project's full history (rounds 1-13); the other 43 predate round 13 and were NOT audited this tick -- auditing 12 rounds of historical disarm debt is out of scope for a single /canonical-drive tick and is named here as a finding for a dedicated pass, not attempted piecemeal. Only the two rows directly entangled with round-13 work this session actually touched are disarmed here."
+}
 ]
 ```
