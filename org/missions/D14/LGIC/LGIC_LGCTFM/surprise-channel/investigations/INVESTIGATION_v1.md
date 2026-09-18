@@ -779,7 +779,31 @@ PRD, so it is a row here, not a message.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "INERT today because the advisory does not block. The row is filed because 1.0.0_SA_CTO is validating the comp-tools and their gates in parallel, and a false positive on the sanctioned route would refuse this engine the day the mode flips. The worker does not judge significance."
-   }
+   },
+  {
+    "id": "LGIC_LGCTFM-S30",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T21:34Z",
+    "one_line": "S26's DRAIN TEST RUN, AND IT READS NON-CONFORMANT ON BOTH HALVES -- so LGIC_LGCTFM-S26 STAYS ARMED, LT-x-4 IS NOT SPAWNED, and the conformance repair leads round 4 beside R-81's canonical manifest entry. The cell is not at fault: it was issued 25 minutes before R-81 existed and could not have been built against it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HALF ONE -- every source is one R-81 assigns: NOT MET. The iam_grant leg reads `comp-iam role \"\"` (infra/logic/10_LEGACY_TRANSFORM.md:175 and the ledger row 38, and the contract's coverage.instrument). `bash .tools/comp-iam --help` lists `role  Show granted actions for one role`, a TERRAFORM-plane sibling of the refused `roles`. R-81 assigns authorization to `comp-iam live / reconcile / simulate ONLY`. The other three legs conform: comp-find --corpus aws (inventory), comp-kuzu (relations), comp-trigger (what fires).",
+        "HALF TWO -- lambda-source-map.json guarded or DECLARED: NOT MET. The source_text leg reads it (10_LEGACY_TRANSFORM.md:176), the ledger row 44 reads `comp-lambdamap  NOT USED`, and the contract's `coverage` carries exactly five keys -- by_node_type, instrument, legs, token_floor, vintage -- with no declaration of date, owner or un-defer condition. R-81: the comp-lambdamap guard or a dated declaration, `No third option`. Its own measurement of why: 216 map entries against 217 live, 19 names disagreeing.",
+        "WHAT IS CONFORMANT AND MEASURED, so the cell's work is not mis-read: the four arms re-run by the issuer on the MERGED tree at 01ba67fe65 all PASS (e5-coverage-shape, e5-floor, e5-named-rowed, e5-schema), selftest-arms PASS-ARMS-DISCRIMINATE. Floor 88 = 79 rowed + 9 excluded + 0 unaccounted; every NAMED class 38 of 38 rowed; 381 involved nodes rowed; comp-tool ledger 4 USED of a printed 78.",
+        "SEQUENCING, from the record: issuance @6139990fe7 and the spawn precede R-81 (msg 98045, 19:18Z) by about 25 minutes; S26 recorded that gap when it happened and R-82 @62907d86b5 ratified keeping the round frozen and the drain read as the test."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S26: at LT-e-5's drain, every source is one R-81 assigns AND lambda-source-map.json is comp-lambdamap-guarded or DECLARED with date, owner and un-defer condition; conformant disarms, non-conformant leads round 4.",
+    "world_is": "Three legs conform, one reads a Terraform-plane comp-iam subcommand outside R-81's permitted set, and the hand surface is neither guarded nor declared.",
+    "notes": "WHAT ROUND 4 OWES ON THIS, in order and with the reason each is small: (1) re-point the iam_grant leg to `comp-iam live` (or reconcile/simulate), which also moves it from the DECLARED plane to the LIVE one -- the same axis R-81's assignment exists to hold; (2) either run comp-lambdamap's two-plane guard over the source map, or write the dated declaration into the contract's coverage block with its owner and un-defer condition; (3) THEN LT-x-4, the real run, on the repaired engine. Round 4 opens with R-81's canonical graph-call-manifest.yaml entry beside these. WHAT THIS ROW DOES NOT CLAIM: that the cell's coverage numbers are wrong. The legs it used reach MORE than the floor, not less, and the floor arm is instrument-independent (comp-find at grade time). A re-point may ADD involved nodes; it is not expected to remove any, and round 4 measures that rather than assuming it. COST: one drain read. NON-APPLICATION: LT-p-2, which reads no AWS source at all and is unaffected."
+  }
 ]
 ```
 
