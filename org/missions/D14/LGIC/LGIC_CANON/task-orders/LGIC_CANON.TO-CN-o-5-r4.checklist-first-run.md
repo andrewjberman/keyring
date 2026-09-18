@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_CANON~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete -- proof-of-spec VALID (rc=0) against org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.proof_of_spec.json, gate run 2026-09-18 by the worker with --governing-order bound; all 7 mechanical criteria (C6R4-AC1..AC7) PASS-by-output, reached 12 + carded 4 = 16 of 16 checklist steps, C6R4-AC8 JUDGMENT left for 3.0.0_SA_CVO at L9</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_CANON_PRD.md` v1.7 (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `CN-o-5` (decomposition v6 s.0f; the PRD calls it C6) | **outcome_ref:** FWD-5 | **depends_on:** LGIC_LGCTFM round 1 terminal -- MET, 14 of 14, and its wave is named below by CONTENT HASH rather than by label
 
