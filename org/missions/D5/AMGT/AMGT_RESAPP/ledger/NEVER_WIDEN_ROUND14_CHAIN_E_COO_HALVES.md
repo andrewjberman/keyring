@@ -62,7 +62,10 @@ date's object on every run; `rk-47` adds `--skip-pool` so chain E's later cells 
 (chain F's census, measured 2026-09-18), so no schedule rewrites the pool during the round -- re-measured by the worker
 at spawn (`schtasks /Query /TN OpalResearch-ExecManagement /XML`, `Enabled false` printed into the entry).
 
-**EXPECTED OUTCOME, both branches.** BA (a 2026-09-15 object) and NU (a 2026-09-18 object) BOTH serve
+**EXPECTED OUTCOME, both branches, stated against the CHANGED producer (CTO msg 23833): the cell's step 1 makes
+`compute_pool` read the NEWEST object per name ACROSS dates (PRD :752-755; today `enrich.py:594` filters to ONE date,
+which is why the 2026-09-18 pool object is null), so the non-null pool below is reachable only through that change --
+no live act runs before it is built and its test passes.** BA (a 2026-09-15 object) and NU (a 2026-09-18 object) BOTH serve
 `pool_object_key management/v1/_pool/<today>.json` with the SAME non-null `pool_avg` and the SAME `pool_denominator`
 (`names_with_roster` 7 at the cut; re-measured). The PLANTED nonexistent key: `management_status ABSENT`, `pool_avg
 null` -- the newest-pool read never invents a pool for a name with no roster. If the pool object's rebuild yields
@@ -89,7 +92,11 @@ and after -- EQUAL, or the criterion fails). NO Lambda, NO Terraform.
 **WRITER CENSUS:** `management/v1/<key>/<as_of>` -- N = 1 (`crosswalk.write_pool`, dated key); `raw/bloomberg/<key>/
 <stamp>/exec_officers.json` -- N = 1 (the fallback module, put-if-absent). No schedule (DISABLED, above).
 
-**EXPECTED OUTCOME, both branches.** A name whose filing roster is empty or absent and whose Bloomberg officer list
+**EXPECTED OUTCOME, both branches -- and the REFUSAL branch explicitly (CTO msg 23833):** at HEAD `management.schema.json`
+has no `roster_source` and sets `additionalProperties: false`, so a write carrying it lands ZERO keys with a non-zero rc;
+the cell's step 3 adds `roster_source` and its enum in the SAME act, and AC3 runs only after that schema lands. If the
+schema still refuses, the branch is: nothing written, rc non-zero, the criterion FAILS naming the schema -- covered, and
+the rollback below is a no-op. A name whose filing roster is empty or absent and whose Bloomberg officer list
 resolves: `roster_source bloomberg`, officers > 0, the fallback label carried ON THE OBJECT (the adapter whitelist means
 it reaches the page only through `rk-43`'s reading). A name whose Bloomberg field refuses or the terminal is signed out:
 the object is written with `roster_source ABSENT` and the reason, and the criterion is recorded REFUSED with the surface
@@ -117,7 +124,9 @@ worker prints pre-act sha and VersionId per key). Served: NO until `rk-31` lands
 **WRITER CENSUS of those 3 keys: N = 1 active writer this round** (`crosswalk.write_pool` via `enrich`), two cells in
 sequence (`rk-47` then `rk-48`, same slot, `rk-48` reading `rk-47`'s object as its pre-act state). No schedule.
 
-**EXPECTED OUTCOME, both branches.** A CEO whose SERP records anchor to the namesake control: `ceo_profile` with the
+**EXPECTED OUTCOME, both branches (CTO msg 23833: the domain comes from `rk-38`'s `verified_site`, never a hand list;
+`domains.json` is not a source for a validation name).** A name with no `verified_site`: `NOT_ATTEMPTED` /
+`NO_VERIFIED_SITE`, nothing searched, nothing rewritten for it. A CEO whose SERP records anchor to the namesake control: `ceo_profile` with the
 anchored fields and the record ids. A CEO with no anchoring record, or the vendor word ABSENT from the spawn prompt:
 `ceo_profile` ABSENT with the reason (offline branch -- AC4-AC6 REFUSED with the reason, nothing rewritten), and
 `ceo_public_profile` unchanged. The `_pool/` ETag EQUAL before and after in every branch.

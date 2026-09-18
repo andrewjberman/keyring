@@ -17,7 +17,11 @@ whose key is in the MEASURED population AND carries an analysis object (12 at th
 at spawn). NO model call (the rebuild applies the gate to sentences already drafted -- it holds an unanchored sentence,
 it writes none). NO Lambda redeploy (AC7 is a read-only invoke before and after).
 
-**BLAST RADIUS.** Up to 12 (re-measured) keys under `drafting/v1/`, each REWRITTEN IN PLACE (this prefix is keyed by
+**BLAST RADIUS (narrowed on CTO msg 23833 D4, the issuer's reading with its basis):** LIVE, only the validation keys
+`CAT_US_Equity`, `CSL_AU_Equity`, `6861_JP_Equity` that carry an analysis object (`--only-keys`; 0 to 3, each absence
+NOT ATTEMPTED with its reason); the twelve covered keys are DRY-RUN ONLY this round -- their rebuild is a producer
+re-run over covered names, barred by Andrew's standing word until end-to-end validation, re-opened then under a fresh
+pair. Where the live set is non-empty: up to 3 keys under `drafting/v1/`, each REWRITTEN IN PLACE (this prefix is keyed by
 name, not stamped -- the one served prefix in this round whose rollback is a RE-PUT, not a delete). Served: YES, every
 one -- the thesis/drafting routes serve these objects for every crosswalk name that has one. Nothing else moves: no
 analysis object, no filings source object, no adapter.
@@ -30,7 +34,10 @@ act N = 1, and the order's AC8 proves the entry point exists and refuses a bad c
 writes the prefix (`OpalResearch-FilingsAnalyzer` is DISABLED; `comp-schedule` at the cut: 0 on `drafting`). Rule read: a
 rebuild replaces the whole object for a key from its analysis object under the current gate.
 
-**EXPECTED OUTCOME, both branches (read from the HOLD rule as the order inlines it, section 1).** A sentence with a
+**EXPECTED OUTCOME, both branches (read from the HOLD rule as the order inlines it, section 1), with the D3 bind: the
+rebuilt document ships ONLY `PASS` sentences in `sections[].sentences`, every held sentence in a top-level block, and no
+`verbatim_check` value outside {PASS, REFUSE} reaches the adapter -- the branch that would take every document INVALID
+against the deployed validator while the shrink check reads GREEN is closed by the order's bind and printed per key.** A sentence with a
 verbatim span anchored in its source: SERVED unchanged. A sentence with no anchoring span: HELD -- present in the
 object under `held_no_span` with its reason, `served_no_span` = 0 for EVERY rebuilt key (AC6 prints both counts per
 key). The 11 objects derived from pre-driver-point analyses (analysis s.3.8, carried as data): rebuilt under the gate

@@ -21,7 +21,7 @@ object to `opal-data-assets` is covered by NO half. Pool objects stay at their `
 ## `AMGT-rk-51` -- peers V from SA with floors; scores for the three validation names (R14-P2; FWD-8, S162 (1), C-PEERS-V-FLOORS)
 
 **THE ACT.** ONE Bloomberg refdata pull for the V fields on the three keys, landed raw at
-the builder's address for `bloomberg` / `global` (or `amgt`) / `bronze` / `peers-v-fields` / `<key>`, whose bucket MUST print `opal-data-harvest` (registry-gated), then
+the builder's address for `bloomberg` / `harvest` / `bronze` / `peers-v-fields` / `<key>` (scope token `harvest`, CTO L4 ruling @2560e04f46), whose bucket MUST print `opal-data-harvest` (registry-gated), then
 `run_scores --security-key <K>` writing `s3://opal-data-harvest/scores/v1/{CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity}/<as_of>.json` --
 three NEW dated keys. THE KEY FILTER IS A SOURCE CHANGE THIS CELL MAKES (order step 3b, on CTO msg 23830): at HEAD
 `run_scores.run()` (`:216-238`) iterates EVERY keyed name of the newest crosswalk (33 now, 36 once `rk-31` lands) and
