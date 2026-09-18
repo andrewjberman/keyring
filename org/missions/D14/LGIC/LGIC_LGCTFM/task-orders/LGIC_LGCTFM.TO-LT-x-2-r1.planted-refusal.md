@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~3, 2026-09-17: X2R1-AC1..AC3 PASS-by-output (check_lt_r1.py x2-adding/x2-removing/x2-flag, rc=0 each); X2R1-AC4 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9); proof-of-spec-check VALID rc=0 @1b45fb4d55</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves current) | **Decomp cell:** `LT-x-2` (decomposition v1.1) | **outcome_ref:** FWD-7 | **depends_on:** LT-x-1 (drained on slot ~2; the planted refusal needs a MARK to violate) and LT-d-1 (same slot)
 
