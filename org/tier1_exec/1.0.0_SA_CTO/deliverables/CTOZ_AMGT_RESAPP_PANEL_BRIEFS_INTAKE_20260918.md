@@ -80,6 +80,42 @@ corrected by measurement here: the version is present and never moves -- and the
 lock the stale analyses in permanently.** **Three ADD** (T6, T7, T8), of which T8 is the best value-for-cost item
 found yet and T7 is a standing obligation on this seat's own co-sign practice. **Two cards at Andrew** (T10, T11).
 
+### 2.1 Andrew answered both Thesis cards (~16:3xZ) -- and re-framed the series
+
+Record `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_16xxZ_THESIS_NO_RERUN_AND_FILINGS_BATTERY.md`
+@`1c6e685ae6`, read from the commit (verified an ancestor of HEAD), verbatim:
+
+> *"I dont care about rerunning until the process is completely validated end to end and the product is basically done.
+> [...] for every security, we basically have a battery on how to get its filings: If US 1.) Start with EDGAR, 2.) Try the
+> BBG resolution, 3.) Try websearch maybe surfaced through an IR page. If International: 1.) I dont know but we need a plan.
+> The premise behind this is that we will be adding things over time and the more important thing than establishing a
+> pipeline itself is the process behind full "security analysis" backend instantiation for a new security."*
+> and: *"a translation functionality will be required in cases like these and that should be included in the spec/brief"*
+
+**What it changes in the rows above:**
+
+| row | was | now |
+|---|---|---|
+| T3 (stale-analysis chart) | EXEC: a ~$6 re-run | **ACCEPTED AS IT STANDS** -- no re-run until the process is validated end to end. The one-name chart is not a defect to fix now |
+| T4 (version never moves) | EXEC, correctness | still correct and still load-bearing -- but it is correctness work for WHENEVER the job is enabled, not urgent. The CRO applied the correction to its brief (@`1c6e685ae6`) after re-reading 12 of 12 analyses |
+| T10 (the last nine) | AT ANDREW: buy or build | **RE-FRAMED: not a source for nine names but a per-security BATTERY every security goes through.** US order is his; the international order is his open ask. CRO proposal (Thesis s.8.2): EDGAR by ticker -> EDGAR by Bloomberg CIK -> ESEF by LEI -> company site -> national regulator -> UNRESOLVED-SOURCE carrying every attempt |
+| T11 (may the batch run) | AT ANDREW | **ANSWERED NOT NOW** -- no fleet run ahead of validation. Whether a validation exemplar run is inside that line is put back to him, not assumed |
+| T1 (C-FILINGS-ANALYZER names Bloomberg as the source) | FIX-ART | **FITS THE BATTERY DIRECTLY:** the contract's source becomes "the battery's winning document", with Bloomberg supplying the KEYS (CIK, LEI, name) and never the text. That is a cleaner correction than any this seat had drafted |
+| NEW T13 | -- | **Translation is IN the Thesis spec**, by his word. CRO s.8.4 recommends analyzing the ORIGINAL and translating the OUTPUT, so every span still re-locates verbatim in the filing; translating first would verify against the model's own translation. **This seat concurs, and it is the only design that keeps C-FILINGS-ANALYZER's verbatim discipline (T2) intact.** Open for L4: chart-point locale parsing, roster script, cost |
+
+⛔ **The entity test is load-bearing in any battery.** The same domains serve SUBSIDIARIES' annual reports (Roche Holdings Inc,
+RWE Finance Europe BV, Zurich Life), and Bloomberg's web address points at a subsidiary or branch for 3 of 22. A step that
+returns *a* current annual report from the issuer's domain has not passed until it is the RIGHT ENTITY's. The CRO names one
+acceptance test per step -- right entity, current, known document family -- and that should be the battery's contract.
+
+### 2.2 The premise re-frames this intake, not just the Thesis panel
+
+His priority is **the process for instantiating the full security-analysis backend for a NEW security**, ahead of any one
+pipeline. The CRO will write that as an L1 instantiation brief when the panel walk ends. **The three cross-panel questions below
+are exactly the rows where that process has no answer yet** -- so this intake and the instantiation table should converge, and
+the round-14 PRD addendum should be organized around the instantiation stages rather than around panels. Proposed validation
+(CRO): instantiate one US, one English-international and one non-English name end to end.
+
 ---
 
 ## Cross-panel: items that are ONE question, not two
