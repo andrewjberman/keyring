@@ -136,6 +136,35 @@ PBR).
 | E7 | **The same census counts UNRESOLVED-SOURCE placeholders as filings**: 188 = 12 real + 176 placeholder names. Enabled, a run would write **~176 zero-officer rosters that the adapter serves as SERVED** | -- | **ADD -- and E1 makes it serious** | together with E1 this is the panel's worst latent defect: one enable would turn 7 real rosters into 183 "served" ones, 176 of them empty |
 | E8 | `OpalResearch-ExecManagement` is DISABLED, its path is **split at the space** (Execute = `C:\Users\Opal`), it has never run (267011); `run_batch.cmd` pins universe 2026-09-15; enrichment is scoped by `domains.json`, 5 hand-declared names | `C-EXEC-MANAGEMENT`: the harvest estate owns the collection lane | **EXEC** | **the IDENTICAL launcher defect and date pin found on the Thesis task (T5, T6)** -- so it is a pattern in how these tasks were registered, not two incidents. Fix once, in the registration, for every research task |
 
+### 2B.1 The full brief -- `BRIEF_EXEC_MANAGEMENT_CURRENT_TO_DESIRED_20260918.md` @`36ed77f347` (msg 23705), at Andrew's word *"This is good, write the brief and bring it to the CTO~Z"*
+
+It confirms every figure above on a re-read with no change, and adds:
+
+| # | finding | existing art | disp. | lands as |
+|---|---|---|---|---|
+| E5' | **The pool fragmentation has a cause at source**: `compute_pool`'s docstring (`enrich.py:582-588`) promises the average over EVERY name with a roster; the code keeps only objects named exactly that `as_of` (`:594`) | `C-EXEC-MANAGEMENT`: *"computed over the union universe"* | **EXEC -- code vs its own docstring AND the ratified text** | E5 is now a code defect with a line number, not a data gap. Two authorities (docstring, contract) agree and the code disagrees with both |
+| E9 | **Bloomberg `COMPANY_EXEC_OFFICERS` is NAME + TITLE only, no role start** -- measured on HSBC, KDDI, Roche | L9/T12 left this UNMEASURED | **ANSWERS this seat's open question** | as a second source it can fill the TABLE but never tenure or the pool -- the same gap card 2 held against Lusha. So the ratified-text change narrows to: a LABELLED table-only fallback |
+| E10 | The officer-section cut lives in the FILINGS stage (`fetch.py:116` 10-K Item 10, `:147` 20-F Item 6; persisted `:440-447`); an empty cut is recorded as an empty success | -- | **ADD** | an empty cut must be a FAILED cut with its reason. Same honesty rule as E1 and L2, one stage upstream |
+| E11 | The empty roster renders "0 officer(s) from Item 6 ..." over an empty table; `roster_status` and `roster_reason` ride the payload and are never rendered (`ExecManagementTab.tsx:95-137`) | FWD-9-class: a reason carried must be shown | **ADD** | pairs with E4 -- the page has the true reason in hand on both lines and prints neither |
+| E12 | **Enrichment is a hand list**: `domains.json` declares 5 names; every other name is SKIPPED | -- | **ADD** | the domain must come from the site the filings battery VERIFIED (right entity), never the hand list or Bloomberg's raw web address (a subsidiary or branch for HSBC, ICICI Bank, SSE) |
+| E13 | **No trigger**: every roster so far came from a hand run | `C-EXEC-MANAGEMENT` names the harvest estate as owner of the collection lane | **ADD -- the instantiation gap in one line** | the roster builds when a security's filing lands, as a step of instantiation |
+
+**Two cards for Andrew** (brief s.2), both genuinely his:
+- *"Should an officer list from Bloomberg fill the table when the filing gives none?"* -- CRO rec: yes, LABELLED, table only,
+  tenure and pool left ABSENT with that reason. **This seat concurs**: it gives 21 blank panels named executives without
+  claiming a tenure the source lacks, and it is the value-carries-its-claim rule applied to a roster. If he says yes, the
+  change to `C-EXEC-MANAGEMENT` is this seat's to write and the CVO's to sign.
+- *"Should Lusha profile links be part of instantiating a new security?"* -- billed per use; CRO rec: decide after the
+  three-name validation reports. **This seat concurs.**
+
+**Owed by THIS seat when round 14 cuts it:** build item 1 (the honest CEO line and empty-roster rendering) changes what the
+adapter and page serve for every one of the 12 served names, so it needs a **CTO+COO never-widen pair** -- this seat writes the
+CTO half against the exact diff.
+
+**Running now, per the brief s.7:** a three-name instantiation validation (a subagent of `4.0.0_SA_CRO~Z`, authorized
+~16:5xZ) -- one US, one English-international, one non-English name, end to end. Its report is the first measurement of the
+instantiation process itself, and it lands in the Thesis and Exec Management briefs.
+
 ### Net for this panel
 
 **The panel's headline number was a status count.** Seven names have a roster; four have tenure; and the page tells the reader
