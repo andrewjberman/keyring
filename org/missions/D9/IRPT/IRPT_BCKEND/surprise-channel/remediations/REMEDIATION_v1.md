@@ -2604,7 +2604,8 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "mechanism": "THE RENDER IS NO LONGER HOST-GATED AND IS NOW SESSION-GATED: with the host authorized and started, Chromium reached https://opalinvest.dev/investor-reporting/print and the route answered with a SIGN-IN SCREEN, so render_export.cjs refused SESSION_ABSENT and never signed in. Row W4-S14 (nobody may START a host) is DISARMED by Andrew's word of 14:5xZ and by the four measured steps that followed it; what remains is a different gate on a different owner -- the print route is an AUTHENTICATED APP ROUTE and the host needs a session the typed client can use. The README named this fourth dependency before the act ('a session the typed client can use ... a separate operator decision from starting a box'), so it is a confirmed prediction rather than a discovery. Everything else in the chain is now proven END TO END on real infrastructure: the document deployed its own code, node 18 and Chromium 1187 were found on the box, playwright loaded, the browser opened the REAL origin, the network guard measured 12 requests with 0 vendor, and the host returned to stopped.",
  "evidence": [
   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S25",
-  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md row IRPT_BCKEND-C-S97"
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md row IRPT_BCKEND-C-S97",
+  "1.0.0_SA_CTO, RULING R-42 @cfe3a33a9b (IRPT_BCKEND round-2 analysis): a disarm_owner is a SEAT SERIAL, never a cell, an order or a condition -- IB-rtb-1 went terminal without touching either row and nothing noticed, because the field was populated and looked fine. Both rows are placed on 2.0.0_SA_COO~B."
  ],
  "remedy": "Place the row on a live seat -- its named owner IB-rtb-1 is terminal and cannot give a word. The session decision its own text names is the substance: a non-interactive session for a machine principal the portal's typed client accepts on the print route, OR a print route that accepts a signed short-lived render grant.",
  "owner": "1.0.0_SA_CTO",
@@ -2617,7 +2618,7 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "closed": false,
  "disarm": {
   "state": "ARMED",
-  "owner": "1.0.0_SA_CTO",
+  "owner": "2.0.0_SA_COO~B",
   "at": null
  }
 }
@@ -2633,7 +2634,8 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "mechanism": "THE ROUND-1 EXTRACTOR DATED ROWS FROM A NEIGHBOURING BLOCK AND FROM A DIFFERENT DOCUMENT, AND ITS OWN CERTIFICATION READ CERTIFIED THROUGHOUT. Re-derived from this run's rows by extract.round1_undated_baseline(): on the retained overview specimen 15 of 61 emitted rows sit on a page that prints TWO different Data-as-of dates (page 2 carries 2026-09-09 and 2026-09-11; page 6 carries 2026-08-31 and 2026-09-11), and round 1's rule took the page's FIRST date line for every row on the page -- so those 15 rows carried whichever date came first in the text stream, which for a stale-priced block is the fresher date. On the multicomp specimen a further 12 of 108 rows were dated CENSUS_STATED: a date read from docs/briefs/sources/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json, which is a DIFFERENT DOCUMENT'S statement about this one. NONE OF THIS WAS VISIBLE TO ROUND 1'S CERTIFIER, and that is the structural point rather than the incident: its three legs graded value-at-coordinates, label-in-neighbourhood and unit-declared, and a date is at NONE of those coordinates -- it is at the block heading's. Every one of the 15 rows passed all three legs, because each was individually correct about everything the legs could see. IB-rt-10 adds the fourth leg that can see it and two mutants that exercise it; the round-1 counts are reproduced exactly (comparison 34 of 81, multicomp 51 of 108) so",
  "evidence": [
   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S28",
-  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md row IRPT_BCKEND-C-S97"
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md row IRPT_BCKEND-C-S97",
+  "1.0.0_SA_CTO, RULING R-42 @cfe3a33a9b (IRPT_BCKEND round-2 analysis): a disarm_owner is a SEAT SERIAL, never a cell, an order or a condition -- IB-rtb-1 went terminal without touching either row and nothing noticed, because the field was populated and looked fine. Both rows are placed on 2.0.0_SA_COO~B."
  ],
  "remedy": "Place the row on a live seat, then perform the disarm act the row itself names: read the served CodeSha256 of irpt-ycharts-generate against the built zip. The rebuild ORDERING is already consistent (fix committed 2026-09-12T00:03:03Z, function last modified 2026-09-12T05:21:01Z), so the act is cheap -- but a timestamp ordering is not a bytes comparison and the row stays armed until one is done.",
  "owner": "1.0.0_SA_CTO",
@@ -2646,7 +2648,7 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "closed": false,
  "disarm": {
   "state": "ARMED",
-  "owner": "1.0.0_SA_CTO",
+  "owner": "2.0.0_SA_COO~B",
   "at": null
  }
 }
