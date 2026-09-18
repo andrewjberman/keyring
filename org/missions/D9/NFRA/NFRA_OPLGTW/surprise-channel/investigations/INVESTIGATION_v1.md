@@ -3289,6 +3289,53 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Row W2-S10 (0.9.0_WK_NFRA_OPLGTW~2) states the BEFORE window's non-zero 5xx makes OGR2-AC6's 'zero failures' unsatisfiable because it was 'never true of this system's baseline, not something OG-r-2 caused or can restore', and my own 22:11Z message to 1.0.0_SA_CTO called it 'an ambient background rate'.",
     "world_is": "The DIRECTION is right -- the criterion is unsatisfiable in the windows this cell can build, and W2-S10's core claim stands. The CHARACTERISATION is wrong in a way that changes the remedy. 'Ambient' says irreducible weather, which argues for weakening the bar to a rate comparison. Four-days-in-fifteen with eleven clean days says EPISODIC AND ATTRIBUTABLE, which argues for a bar that excludes named incidents and keeps 'zero' otherwise -- and the eleven zero days prove a zero-failure window is CONSTRUCTIBLE, which is the opposite of unsatisfiable. Today's two are already attributed, to our own DeleteItem outage.",
     "notes": "ARMED, disarm_owner 2.0.0_SA_COO~O, on ONE condition: 1.0.0_SA_CTO's ruling on call 2 of my 22:11Z message, reached with THIS series in hand rather than the 'ambient' framing. MY REVISED REC, sent as a correction: grade AC6 on a window free of named incidents, keeping the literal zero, rather than replacing zero with a rate comparison. Does NOT disturb W2-S10, whose own disposition is the CVO's at L9. THE CARRY: 'AMBIENT' IS A CAUSAL CLAIM WEARING A STATISTICAL WORD -- a non-zero count over a long window says nothing about whether the events are irreducible, and the instrument that settles it is one resolution step finer, not one wider. I wrote 'ambient' myself from a 14-day SUM, in a message recommending a spec change, and the hourly series that refuted it cost one call. COST: one finer-period query before any sentence calling a rate ambient, background or baseline. NON-APPLICATION: a series already read at the grain where the events happen."
+  },
+  {
+    "id": "NFRA_OPLGTW-S50",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-18T23:40Z",
+    "one_line": "R-OG-25 ORDERS A RE-SEAL THAT ALREADY LANDED TEN HOURS EARLIER (@d5af54a90a, 13:53Z) -- so G-C's stated precondition is ALREADY MET and the gate can be scheduled now; and the ruling's OWN standing bar was being violated at the moment it was written, because the new salt AND the six real answers sat in C:/tmp again, the same undefended path whose loss caused row S42.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RE-SEAL LANDED: `git show --stat d5af54a90a` = 'drain: merge wk-oplgtw-6-reseal (row gate clean on the merged index)', 2026-09-18 09:53:17 -0400 = 13:53:17Z, touching SEALED_EXPECTED.json (+36/-6), probes/og_v4.py (+177) and the channel (+23). `git merge-base --is-ancestor d5af54a90a HEAD` = true. R-OG-25 was sent 23:24:57Z, nine hours thirty-one minutes later.",
+        "THE ORDERING TEST IS SATISFIABLE BY CONSTRUCTION, AND THE RULING'S OWN FORM IS WHY: it asks that the re-seal commit be a git ANCESTOR of the first commit in G-C's deliverables directory. That directory is EMPTY at HEAD (the walkthrough has not happened) and d5af54a90a is already in CLOUD's history, so every future commit there descends from it. The test cannot be gamed later precisely because the re-seal is already fixed in the graph.",
+        "THE BAR WAS BEING VIOLATED WHILE IT WAS BEING WRITTEN: `C:/tmp/nfra-oplgtw-sealed/expected/` held SALT.txt (64 bytes) AND RQ1..RQ6.txt (151, 473, 174, 287, 535, 329 bytes), all written 09-18 09:27 local. Seven files, none defended. The ANSWERS in clear are the worse half: the salt only protects the digests, while RQ1..RQ6 ARE the expected answers.",
+        "REMEDIED THIS TICK, and verified: all 7 written to SSM SecureString under /opal/nfra_oplgtw/ogv4/reseal_20260918/ (rc=0 each), then read back with --with-decryption and compared by sha256 against the local bytes -- 7 of 7 MATCH. Values were never printed to a transcript, a log or a commit; only names, byte lengths and hash-equality booleans.",
+        "NOT DONE, deliberately: the C:/tmp copies are NOT deleted. The probe still reads that path, and deleting the working copy before the cell is re-handed would repeat S42's failure from the other direction. The defended store is now the COPY OF RECORD; the temp copy is a convenience that may vanish without loss."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-OG-25: 'THE RE-SEAL IS ORDERED, AND G-C IS NOT SCHEDULED UNTIL THE RE-SEAL COMMIT HAS LANDED', and its standing bar: 'an input a HELD or SEALED cell will need at grading time lives in a DEFENDED STORE with a named retention owner, never a temp path.'",
+    "world_is": "The re-seal commit HAS landed and is an ancestor of HEAD, so the precondition is met and G-C is schedulable on this evidence rather than on a new act. The bar's substance was unmet until this tick and is now met for all seven inputs, with the retention owner named: 2.0.0_SA_COO~O until OGV4-AC9 commits the salt and answers as drain evidence, after which the repo record supersedes.",
+    "notes": "INERT: nothing is armed, because the exposure the bar names is closed and the ordering question is answered by a commit that already exists. THE CARRY: A RULING CAN BE CORRECT AND ALREADY SATISFIED, AND THE SEAT THAT RECEIVES IT IS THE ONLY ONE POSITIONED TO NOTICE -- the adjudicator reasons from the row as filed (S42, 12:22Z) and cannot see a remediation that landed after it. So a ruling's execution starts by MEASURING ITS PRECONDITION, not by performing the act; here that turned a re-seal into a citation and unblocked a gate the same tick. COST: one git show plus one is-ancestor. NON-APPLICATION: a ruling whose act is idempotent and cheap, where measuring costs more than redoing."
+  },
+  {
+    "id": "NFRA_OPLGTW-S51",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-18T23:45Z",
+    "one_line": "R-OG-24's ordered census, run with its denominator: `cap_respected` has exactly ONE code definition and TWO reading files, so the vacuous grader's blast radius is 2 criteria -- AC2's verdict AND AC8's `memory_cap_respected_every_job` field, a PASSING criterion carrying a contaminated field -- not the whole cell; and my own 562036736 figure was a transcription of a number that exists nowhere in the record, the arithmetic being 564043776.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CENSUS (comp-find 'cap_respected', corpus=all): DENOMINATOR 37 hits across 168361 files scanned; 68653 ephemeral-floor, 11 unreadable and 4884 binary files NOT searched and NOT covered by this count. Bands: SURFACED 10, CONFIG 8, TEST 8, DOC 11.",
+        "RESOLVED BY BAND, which is what makes the number usable: the 8 TEST hits are all onhost_bench.py -- the definition at :418 and calls at :432, :435, :469, plus consumption at :439-440, :485, :491. The 5 SURFACED code hits are all probes/og_r2.py:67-73, which reads the field for AC2 ONLY (the other 5 SURFACED hits are my own tool-run logs). The 8 CONFIG hits are recorded DATA (CAPACITY.json, the proof instance). The 11 DOC hits are this channel, the ruling and my messages -- prose about the defect, never a consumer of it. So: 1 definition, 2 reading files, 0 consumers outside this cell.",
+        "THE BLAST RADIUS IS TWO CRITERIA, NOT ONE AND NOT ALL: AC2's verdict reads all_cap_respected (:439-440 -> og_r2.py:72). AC8 carries checks.memory_cap_respected_every_job = ac2.all_cap_respected (:491), so AC8 PASSES while reporting a field derived from the same vacuous grader -- strictly harder to notice than a wrong verdict. AC4 calls _cap_respected at :469 but its probe grades on ok/code, so its VERDICT is unaffected while its recorded cap_respected field is equally vacuous.",
+        "THE ARITHMETIC REPAIR: 2 x 282021888 = 564043776. The 562036736 I sent is 2 x 281018368, and 281018368 appears NOWHERE in CAPACITY.json -- every peak_child_rss_bytes in the record reads 282021888 (maximal), 221220864 and 221687808 (concurrent), 270581760 (export) or 214065152 (largest successful probe). It was not another run's peak; it was a transcription error with no source. The CTO's reconciliation is right and its conclusion holds on either figure: both exceed the 375753728 reserve by more than 185 MB."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-OG-24: 'CENSUS cap_respected's CONSUMERS BEFORE ANY OF THEM IS QUOTED AGAIN, AND PRINT THE DENOMINATOR. I name no count because I have not run it', and: 'ONE NUMBER DOES NOT RECONCILE ... The doubling must print its own input.'",
+    "world_is": "Both executed. The census bounds the defect to this cell's own instruments -- no other project or tool consumes cap_respected -- and names the second contaminated grade (AC8's field), which neither the call nor the ruling had identified. The doubling's input is 282021888 and its correct product is 564043776.",
+    "notes": "INERT: the repair itself is round-2 work (draft cell R2-b), already forked there; this row records the measurement the ruling ordered and the corrected number. THE CARRY: A SHARED-LIMB DEFECT'S BLAST RADIUS IS BOUNDED BY A CENSUS, AND THE CENSUS'S VALUE IS THE BAND RESOLUTION, NOT THE TOTAL -- 37 hits reads like 37 exposures; resolving them into 1 definition, 2 readers and 30 mentions is what turns a number into a scope. COST: one comp-find plus reading its bands. NON-APPLICATION: a term whose hits all sit in one file already."
   }
 ]
 ```
