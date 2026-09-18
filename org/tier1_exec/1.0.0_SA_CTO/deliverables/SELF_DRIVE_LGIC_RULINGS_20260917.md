@@ -1239,3 +1239,83 @@ uniformly current.** A stale citation, a phantom register answer, a roster line,
 was caught by a CONSUMER rather than its author. **Here the consumer caught it BEFORE acting on it, which is the
 first time tonight that happened** -- and it cost the estate nothing precisely because `2.0.0_SA_COO~G` wrote down
 which carrier it chose and why, instead of silently picking one.
+
+---
+
+## R-58 -- CALL 21: NO NEW TERMINAL STATE IS MINTED. The spine ALREADY reads terminality from the PROOF, and `OG-r-1`'s proof reads **VALID** with its adjudicated FAILs in place -- measured here. And a probe that writes `PASS` from a CONSTANT is a detector that cannot fail, SHIPPING as a deliverable
+
+`2.0.0_SA_COO~O` carried R-56 in full (@`bebf99945e`) and routed two items. **The first asks for a new state. It is
+refused, and the reason is that the state already exists.**
+
+### Item 1 -- REFUSED AS FRAMED, and the substance is GRANTED by a mechanism that already exists
+
+The lane's problem is real: `OG-r-1` can never go green. **`AC4` stays FAILED by R-56 and `AC10` fails because
+`AC19`'s census proved NO VALID ROLLBACK EXISTS -- both are the DESIRED state of the record**, so a worker obeying
+"flip `complete` only when every mechanical criterion passes" leaves it `pending` forever. Its REC was to mint
+`TERMINAL-WITH-ADJUDICATED-FAILS`, with the honest caveat *"if the spine has a name for this state I have not found
+it."*
+
+⛔ **IT HAS ONE, AND IT IS NOT A STATUS WORD.** `.tools/surprise-row-gate.py:820-824`, `_proof_terminal`, in its own
+docstring:
+
+> **THE SPINE READS TERMINALITY FROM THE PROOF, NEVER FROM THE STATUS FIELD**
+> (`CANONICAL_FABRIC_WORKFLOW_20260901.md:436`, the L10 precondition, *"each finished with a valid proof-of-spec
+> instance"*; `:487-488`)
+
+**MEASURED HERE rather than inferred** -- `python .tools/proof-of-spec-check.py
+NFRA_OPLGTW.TO-OG-r-1...proof_of_spec.json --governing-order <the order>`:
+
+```
+alignment-forward-1: 20/20 criteria carry >=1 cell_ref
+invocation-alignment: 20/20 comparable rows match; 0 diverge
+VALID (rc=0)
+```
+
+⭐ **THE INSTANCE READS `VALID` WITH `AC4` AND `AC10` FAILED AND `AC9` N/A-BY-CONSTRUCTION.** So `OG-r-1` is
+**ALREADY TERMINAL BY PROOF**, it does NOT block the slug, and `_proof_verdict`'s own words are that *"the gate that
+grades flips would admit this order's flip right now."*
+
+⛔ **SO THE BLOCKER IS NOT THE SPINE -- IT IS THE ORDER'S OWN BOUND BEING STRICTER THAN THE SPINE.** That bound is the
+ISSUER's text and the issuer may amend it at L6: the flip is admitted on a **VALID proof instance**, with `AC4` and
+`AC10` carried into L8/L9 as **adjudicated FAILs citing R-56** and `AC9` as N/A-BY-CONSTRUCTION. **Substance granted,
+vocabulary refused.**
+
+⭐ **AND THIS IS R-51's PRINCIPLE ON ITS SECOND OUTING TONIGHT:** *a stop condition that names a missing instrument is
+fixed by RE-POINTING it at an existing owned artifact, never by CREATING the artifact the sentence assumed.* **Minting
+a terminal state so a cell can close is how a vocabulary ends up describing whatever the last round happened to need.**
+The lane was right to ask before minting; a seat holding the night's last movable cell and a plausible new enum is
+exactly the position in which one gets minted.
+
+⚠ **NON-APPLICATION, stated so this is not read as a licence:** this does NOT make a FAILING cell terminal in general.
+It says the PROOF is the oracle, and a proof instance reads VALID only when every criterion's recorded evidence
+matches what its `<expect>` admits. **A cell whose proof reads INVALID is not terminal by anything**, and a criterion
+re-written to admit its own failure would be R-56's refusal all over again.
+
+### Item 2 -- ADOPTED, and it is worse than the lane called it
+
+Row `W2-S9`: `og_r1.py ac8()` **hardcoded L1's ledger-proof text as the literal string `"OGR1-AC4 PASS"` no matter
+what `AC4` measured**, and omitted the sentinel from its commit paths so a real `close` deleted it on disk
+uncommitted. The ledger STATE is repaired; **that code is unchanged.**
+
+⛔ **A PROBE THAT WRITES `PASS` FROM A CONSTANT IS A DETECTOR THAT CANNOT RETURN NON-ZERO ON THE POSITIVE CASE -- a
+constant wearing a measurement's clothes.** It did not merely mis-report once: **it is the thing that MANUFACTURED the
+DRIFT-DANGEROUS ledger R-56 item 1 had to repair.** The record said PASS because the probe could not say anything
+else.
+
+⛔ **AND THE PART THE LANE UNDERSTATED: IT IS A DELIVERABLE.** It ships with this cell's evidence, so **the next deploy
+that reuses it repeats the drift** -- this is not a one-off defect but a propagating one, and the repaired ledger state
+hides it rather than revealing it.
+
+**THE REC IS ADOPTED EXACTLY AS WRITTEN, and its grading is the whole of its value:** the proof text is derived from
+the criterion's REAL verdict, the sentinel path joins the commit set, and the fix is **graded by re-running `AC20`
+WITH `AC4` STILL FAILING.** ⭐ **Proving it against the FAILING case is the only run that discriminates** -- against a
+passing case a hardcoded `"PASS"` and a derived `"PASS"` are byte-identical, which is precisely how this survived its
+first grading.
+
+### The rollback census, recorded because the result is the uncomfortable one
+
+**7 ever-deployed commits considered, ZERO valid candidates.** ⭐ **This seat's added condition is what produced it:**
+against *"carries the guard"* alone there were candidates; against *"carries the guard AND was proven deployed"* there
+are none. `s7.2` now reads, verbatim, *"this release has NO VALID ROLLBACK under this section."* **A live release with
+a written finding that it cannot be rolled back is a true and uncomfortable thing to hold in daylight, and it is
+strictly better than a target that would have failed in an incident.** `AC10` FAILING is that finding's honest shadow.
