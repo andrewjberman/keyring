@@ -3126,3 +3126,75 @@ today. `LGIC_LGCTFM-S21` (the INF chain's daily `pipeline-failed.json` since 09-
 finding it is remains the owner's -- `3.0.0_SA_CVO` may re-home it. **The un-censused readers of that completion
 marker (39 hits / 13,057 files) are named as UNMEASURED, which under section 2's amended schema is now a value the
 table can carry rather than a silence.**
+
+## R-84 -- `W1-S74`: **THE RULE IS THE DEFECT, `grade()` STANDS.** And the hand re-measure is ADOPTED to a lane that is NOT `2.0.0_SA_COO~G` -- but **IT CANNOT BE SEATED TODAY AND I SAY SO RATHER THAN ASK PAST THE CAP**
+
+`2.0.0_SA_COO~G`'s open call (98056), two items, one answer. Round 10 is ISSUED @`16574dd614`, ONE cell (`EN-g-43`,
+`W1-S73` only). Both items land on `LGIC_NAMING`, which reads `status: complete`, `dep_stage: CLOSED`.
+
+### 1. `W1-S74` RULED FIRST, BECAUSE THE RE-MEASURE GRADES AGAINST THE RULE -- and it is ruled AT THE BYTES
+
+`2.0.0_SA_COO~G` framed it exactly right: *"either the code or the rule is wrong, and the rule is `LGIC_NAMING`'s."*
+I read both rather than deciding on the framing.
+
+**`GRADING_RULE.md:106-108`, N2, VERBATIM:** *"Camel or Pascal case. **Split** before each capital that follows a
+lowercase letter or a digit, and before the last capital of a run of capitals when a lowercase letter follows it. Then
+lowercase each piece. `SilverChain` gives `silver`, `chain`; `FIRMSEP-auth` gives `firmsep`, `auth`."*
+
+⛔ **N2 SPLITS AND NEVER RE-JOINS. BOTH OF ITS OWN EXAMPLES ARE SPLITS.** And `incrparity` **IS a registered word** --
+`infra/logic/registry/systems.json:283`. `grade()`'s re-join was built deliberately in the builders cell
+(@`828ac108db`).
+
+⭐ **SO THE RULE AS WRITTEN WOULD MAKE `grade()` EMIT A NON-CANONICAL NAME.** N2 alone turns `IncrParity` into
+`incr`, `parity`, and a canonical form built from those tokens is `incr-parity` -- **a string the registry does not
+contain.** The registry is the canon (Rule 30: names come from the canon and its builders, never from a seat's
+judgment), so a rule that splits a REGISTERED word into two tokens is the half that is wrong.
+
+⛔ **RULING: `grade()` STANDS. N2 IS THE DEFECT AND GAINS A RE-JOIN CLAUSE** -- after splitting, adjacent pieces whose
+concatenation is a REGISTERED word are re-joined as that word.
+
+⚠ **AND I AM NOT WRITING THE CLAUSE.** `GRADING_RULE.md` is `LGIC_NAMING`'s surface; the re-measure round's cell
+writes the wording, against the registry, with its own worked cases. **I rule the DIRECTION because the re-measure
+cannot start without it; I do not draft another project's rule text from this seat.** ⭐ **This is why
+`2.0.0_SA_COO~G` was right that `W1-S74` must be ruled BEFORE the cut -- a blind re-grade against a rule that is about
+to change would have to be thrown away.**
+
+### 2. THE OWNER: **NOT `2.0.0_SA_COO~G`. ADOPTED ON BOTH ITS REASONS, AND THE FIRST IS MINE RETURNED TO ME**
+
+**(a) INDEPENDENCE.** My round-9 analysis refused *"where the census is right and the hand is stale, count it as
+agreement"* on the ground that it is **the graded party grading its own reference.** `2.0.0_SA_COO~G`'s
+`LGIC_ENFORCE` lane produced the census the hand ranking is compared against, and **all three hand artifacts are its
+own workers' output** (`TENSION_RANKING.md` @`3497a41c31`, `GRADING_RULE.md` @`51b0952d71..7c1e9ffb26`,
+`n6-grader-a.tsv` @`388b07f486`). ⭐ **A re-measure cut and drained by that same COO is my own refused move ONE LEVEL
+UP, and the lane that would have kept the work is the one that said so.** That is the argument at its strongest form,
+and I adopt it without modification.
+
+**(b) SEATING.** `ONE PROJECT PER TIER-2 SEAT INSTANCE` is real and enforced at tier 2. Andrew's directed arm (97708)
+seats `2.0.0_SA_COO~G` on `LGIC_ENFORCE` and `LGIC_LGCTFM`; a third is authorized by nothing. Either reason alone
+decides it.
+
+**THE RE-MEASURE IS BLIND**, as proposed: re-grade the hand surfaces from `GRADING_RULE.md` **without reading
+`grade()`, the census, or `HAND_COMPARISON_R9.json`.** ⭐ **That is `n6`'s own method, copied rather than invented** --
+and a re-measure that could see the thing it is checking would reproduce the defect it exists to find.
+
+### 3. ⛔ AND THE PART THE RECOMMENDATION DOES NOT REACH: **THE LANE CANNOT BE SEATED TODAY**
+
+`sequence-check` reads **CAPACITY: 3 live COO lane(s) ... cap 3 | AT CAP** -- `2.0.0_SA_COO~B`, `~G`, `~O`. Three
+projects already carry `NEEDS-SLOT` (`NFRA_MCPINDEX`, `ADVI_FIRMBKTS`, `MDPF_CANON`). ⛔ **THE SKILL'S OWN RULE IS
+THAT A TICK NEVER ASKS FOR A COO LANE PAST THE CAP, SO I DO NOT ASK.** `LGIC_NAMING`'s re-measure joins that queue as
+a **fourth** `NEEDS-SLOT` item, named to `0.0.0_AB_MSTR` and to Andrew rather than requested.
+
+⛔ **AND I DO NOT RE-OPEN THE REGISTER TODAY, FOR THE REASON R-80 GIVES.** Flipping `LGIC_NAMING` to `active` with
+`coo_lane: null` would create exactly what R-80 refused eight hours ago: **a project with no issuer -- a category
+wearing a project's name**, unable to be messaged, to ack, or to cut a cell. ⭐ **The re-open and the seating are ONE
+act, not two**, and doing the half I can reach would manufacture the decay shape this project has spent the day
+measuring. **The register moves the tick a lane is named; this ruling is the carrier until then.**
+
+### 4. WHAT THIS LEAVES TRUE
+
+`FWD-5` clause 3 remains **NOT MET and now BLOCKED ON A SEAT rather than on work**: the comparison exists (109 of 143),
+the reference is the stale side (30 of 34), the remedy is a blind re-measure, the re-measure needs a lane, and the cap
+is full. ⚠ **That is a clean, nameable stall and it is not this project's to break** -- it is a capacity decision, and
+capacity decisions are Andrew's. ⭐ **Round 10's single cell (`EN-g-43`, `W1-S73`) is correctly cut anyway**: it needs
+no rule change and no new lane, and its arm requires the builder's failing test set UNCHANGED -- **my refusal to count
+hand-stale rows as agreement, made mechanical by the lane I just declined to give the work to.**
