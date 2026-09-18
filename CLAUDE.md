@@ -295,7 +295,24 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     a COO arm naming two partners of three; `ETFS_GUARDRAIL` row S16 doing the same inside an ACCEPT (so a
     GRADE would have read REALIZED on the violation); and a manual-trigger addendum that enumerated the
     outcomes it covered instead of subtracting from the outcomes that NAME a date, leaving `NFRA_OUTSET`
-    FWD-5 uncovered. Found by `2.0.0_SA_COO`, which had committed the same shape an hour earlier. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
+    FWD-5 uncovered. Found by `2.0.0_SA_COO`, which had committed the same shape an hour earlier.
+    ⛔ **AND THE TELL IS NOT A MISSING DENOMINATOR — IT IS A DENOMINATOR WHOSE SCOPE IS NARROWER THAN
+    THE SENTENCE BESIDE IT.** Before any sentence about a POPULATION, ask what the printed number
+    actually swept, in PATH **and in TIME**. **A wrong-domain census does not look careless — it looks
+    MEASURED, because it arrives with a real number.** Measured 2026-09-18, FOUR SEATS IN FOUR HOURS,
+    every instance carrying a real printed denominator: `LGIC_LGCTFM-S11` censused run directories under
+    ONE tree and wrote the unscoped word ANYWHERE; a round-6 analysis read THREE COMMIT SUBJECTS and
+    reported "five" rowless disarms against a true SIXTEEN — a method that can only ever find disarms
+    that live IN a commit subject, so **the finding understated itself by its own instrument**;
+    `LGIC_ENFORCE-S75` measured 2 files and concluded about a PROJECT, with the falsifier INSIDE THE
+    FILE THE ROW WAS SPLICED INTO (90 hits, 29 files); and `R-67 §4` read one file's rows and wrote a
+    sentence about every row in the project — **INSIDE THE RULING CONVICTING S75 OF THAT MOVE.** ⚠ TIME
+    IS SCOPE: `comp-iam roles` prints `(210 found)` with NO vintage and omits a role applied 2h15m
+    earlier, while its own sibling `comp-iam live` prints its derive time AND both of its unverified
+    halves (`IRPT_BCKEND-S73`) — same tool, one path disclosing and one silent. COST: one question per
+    CLAIM, no re-read. NON-APPLICATION: a sentence whose subject IS the swept set ("of the 210 roles
+    comp-iam lists, 13 are irpt-*") — there the denominator and the sentence share a scope by
+    construction. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
     (iv) STATE COHERENCE (name which values one remedy does NOT move). **Outcome arrays, typed-result sets
     and predicates ARE schemas.** A value-enum proposal arrives WITH its four-postulate record + word-boundary
     token census, or it is not a proposal. `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
