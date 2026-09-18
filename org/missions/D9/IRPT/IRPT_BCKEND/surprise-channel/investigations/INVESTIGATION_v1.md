@@ -5137,6 +5137,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not fixed here: adding a bundle member is a guard edit (.tools/safe_deploy_core.py), outside this order's paths, and the holdings build is not in this cell. This cell's host arm (d) places the real docs/contracts/v1 schema bytes (sha256-bound to blob 9ec70af2) in the extracted tree, both beside the new tarball and beside the pre-cell one, so validate_snapshot() can be exercised. It says so in its output."
+  },
+  {
+    "id": "IRPT_BCKEND-S72",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~B",
+    "surfaced_at": "2026-09-18T09:40:00Z",
+    "one_line": "DISARM of IRPT_BCKEND-S65 (OBSERVATION, ARMED, disarm_owner 2.0.0_SA_COO~B), at the drain of IB-rtc-7. The hazard was any apply of the directory/ or mdpf-pipeline/ root from a tree carrying principal_49f.tf BEFORE IB-rtc-7 ran with both never-widen halves at HEAD. Measured: IB-rtc-7 WAS the next apply of both roots, under both halves, and the hazard's window is closed -- the principal now exists BY the signed act, not around it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IB-rtc-7 VALID at HEAD 9196f164cf (proof-of-spec-check rc=0 on the shared tree with --governing-order): arm (a) 2 of 2 halves present (COO @437789944a, CTO @3a976e1e1d), packet blob bb92a81c697c6d3fb8b01cb65fedfb9cb0563e38 re-hashed equal; arm (b) directory root 2 added / 1 changed / 0 destroyed and mdpf-pipeline TARGETED 0 added / 1 changed / 0 destroyed on aws_iam_role_policy.mdpf_runner only (32 -> 33 statements), both under ledger irpt-bckend-rtc7-49f-principal (OPEN @d8720e83df, CLOSED @1bd528592b, 4 of 4 legs).",
+        "Between S65's surfacing (05:45Z) and IB-rtc-7's apply (08:4xZ) the only applies of either root were IB-rtc-3 AMENDMENT 2's two directory-root applies from worktree wk-irpt_bckend-3-2b, cut at af7d39d96f -- BEFORE IB-rtc-6's declaration merged @119fda050a -- so neither tree carried principal_49f.tf (git merge-base --is-ancestor 119fda050a af7d39d96f is false); the role did not exist until 08:4xZ (IB-rtc-7's post-apply get-role is its first read).",
+        "Post-apply writer census 12 of 263 (IB-rtc-6 read 12 of 262; the 263rd principal is the new role itself, which is NOT a writer), same membership -- the CTO half's condition (2) did not fire; the negative control read 3 of 3 DENIED + 1 of 1 READ-OK from the host by the host."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S65 notes: 'hold every apply of the directory/ and mdpf-pipeline/ roots from a tree carrying this declaration until IB-rtc-7 runs with both halves at HEAD, or sequence IB-rtc-7 as the next apply of both.'",
+    "world_is": "IB-rtc-7 was sequenced as the next apply of both (rtc-7's status line @34029b1ba3 names every precondition merged and both halves at HEAD; the applies ran 08:4xZ). The route-bindings drift S68 stays ARMED at 1.0.0_SA_CTO and was NOT absorbed: the mdpf-pipeline apply was targeted to K3 exactly as the COO half signed.",
+    "notes": "Disposition of S65 is the CVO's at L9; this row is the disarm evidence its disarm_owner owed. Residual, NOT this row's: S68 (route-bindings drift, CTO-owned); the D14 destination move (the 49f directory landed under legacy opal-data-bd, as the packet states)."
   }
 ]
 ```
