@@ -289,3 +289,41 @@ The executor is `2.0.0_SA_COO~Z`'s to name; the CTO half is written against the 
 **One figure carried into round 13's drain:** management went 5 -> 14, posture 2 -> 33. Management may stop short for a
 real reason -- it needs officer data not every name has -- but the drain should record WHY the other 19 stayed absent
 rather than close the round reading "done".
+
+---
+
+## 11. UPDATE 4, 2026-09-18 ~16:2xZ -- the denominator is 33, and management follows the filing
+
+Carried over from the Thesis panel (`BRIEF_THESIS_CURRENT_TO_DESIRED_20260918.md`), because two of its findings land on
+this panel's header.
+
+**11.1 Section 9.1 counted 34; the population is 33.** Its "34 keys under `derived/model_block/`" is the model store's
+name set, which holds NVIDIA; the population of record is `crosswalk/v1/2026-09-15.json` `denominators.MEASURED = 33`.
+Diffed by this seat against the crosswalk's MEASURED `model_key`s: the only difference is `NVDA_US_Equity`.
+`1.0.0_SA_CTO~Z` retracted its own "34" the same hour (msg 23693) and re-measured the header on the SERVED plane, in the
+page's own key shape:
+
+| header line | served, over 33 | whose read |
+|---|---|---|
+| Description | 12 | `1.0.0_SA_CTO~Z` msg 23693 (agrees with this seat's 12 in 9.1, which never included NVIDIA) |
+| Posture | **33** | `1.0.0_SA_CTO~Z` msg 23693 -- section 9.1's pool count is now SERVED |
+| Management | **12** | `1.0.0_SA_CTO~Z` msg 23693; matches `2.0.0_SA_COO~Z`'s correction of section 10's "14" (@`6366933721`) |
+| Any score carrying a value | 0 | `1.0.0_SA_CTO~Z` msg 23693; not re-measured here |
+| News feed | 3 (BA, COST, HD, all keyed) | this seat, section 9.1 |
+
+The "14" is explained by the listing: `management/v1/` holds 14 objects, which are 12 names plus two `_pool` files.
+
+**11.2 Why management stops at 12 -- answering section 10.1's last paragraph.** The management roster is read from the
+FILING's officer section, by contract C-EXEC-MANAGEMENT (`lib/research/management/roster.py:1-15`, `enrich.py:8`).
+Measured today: **the 12 management names are exactly the 12 names with a drafted thesis; neither set has a member the
+other lacks.** So the 21 absent names are the 21 with no filing identity, and management's coverage is the Thesis
+panel's coverage. The Thesis brief's tier 1 adds six 20-F rosters with no management work, provided each clears one of
+the roster's three declared shapes. Bloomberg's `COMPANY_EXEC_OFFICERS` is populated for those 21. **Using it would make
+Bloomberg a second roster authority, which changes C-EXEC-MANAGEMENT's ratified text: an L4 question for
+`1.0.0_SA_CTO~Z`, not a pull change.** This seat's research note first said otherwise and is corrected.
+
+**11.3 Build item 9 (description), refined.** The adapter reads `CIE_DES` from the model block and finds it on 0
+blocks. Bloomberg's long form, `CIE_DES_BULK`, is measured populated for all 21 keyed names without a filing
+identity. Either field added to the model-block pull serves the description line for the names Thesis cannot reach;
+`CIE_DES_BULK` needs the adapter to read it by that name too. Still the cheapest fix on the panel: no model call, no new
+source.

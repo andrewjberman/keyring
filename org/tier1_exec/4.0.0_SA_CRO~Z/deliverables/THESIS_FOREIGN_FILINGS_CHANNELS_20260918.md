@@ -5,20 +5,30 @@
 web search for additional foreign channel reserach"*. **Status:** research. It builds nothing, writes nothing to the
 pool, schedules nothing. For `1.0.0_SA_CTO~Z`, whose L4 question the Thesis source is.
 
+> **CORRECTION, 2026-09-18 ~16:2xZ -- two figures in this note were wrong as first committed @`70361878b6`.**
+> (1) **The denominator is 33, not 34.** The population of record is `crosswalk/v1/2026-09-15.json`,
+> `denominators.MEASURED = 33`; this note's 34 was those 33 plus NVIDIA, which has model blocks but no measured
+> identity (diffed today, and raised first by `1.0.0_SA_CTO~Z`, msg 23693). NVIDIA files a current 10-K and stays in
+> the section 3 table, but no longer counts toward any tier: tier 1 adds 6, not 7. The tiers now read 12, 18, 24 and
+> 33 of 33. (2) **`COMPANY_EXEC_OFFICERS` does not close the management gap as a field add.** The management roster
+> is read from the filing by contract C-EXEC-MANAGEMENT (`lib/research/management/roster.py:1-15`), so using a
+> Bloomberg roster is a change to ratified text -- an L4 question, not a pull change. Sections 1, 2 and 6 are
+> corrected in place. The plan built on this note: `BRIEF_THESIS_CURRENT_TO_DESIRED_20260918.md`.
+
 ---
 
 ## 1. The answer
 
-The Thesis pipeline cites passages from annual filings, and today reaches 12 of the 34 covered names -- the ones
-the union universe already gives an SEC filing identity. **Measured today, 25 of 34 are reachable from two free,
+The Thesis pipeline cites passages from annual filings, and today reaches 12 of the 33 keyed names -- the ones
+the union universe already gives an SEC filing identity. **Measured today, 24 of 33 are reachable from two free,
 official sources, and the other 9 each need a jurisdiction-specific route or a purchase.**
 
 | tier | source | names | cumulative |
 |---|---|---|---|
-| today | SEC EDGAR, identity already on the union universe | 12 | 12 of 34 |
-| 1 | SEC EDGAR, identity taken from Bloomberg's `CENTRAL_INDEX_KEY_NUMBER` | +7 | 19 of 34 |
-| 2 | ESEF / UKSEF annual financial reports on `filings.xbrl.org` | +6 | 25 of 34 |
-| 3 | one route per jurisdiction, or a purchased feed | 9 | 34 of 34 |
+| today | SEC EDGAR, identity already on the union universe | 12 | 12 of 33 |
+| 1 | SEC EDGAR, identity taken from Bloomberg's `CENTRAL_INDEX_KEY_NUMBER` | +6 | 18 of 33 |
+| 2 | ESEF / UKSEF annual financial reports on `filings.xbrl.org` | +6 | 24 of 33 |
+| 3 | one route per jurisdiction, or a purchased feed | 9 | 33 of 33 |
 
 ---
 
@@ -30,8 +40,8 @@ Searched the Terminal API's own field dictionary (`//blp/apiflds`) and probed it
   queries on entitlement, as `integrations/bloomberg/READ_HERE.md` s.4 already records.
 - **It returns the identifiers that locate every filing:** `CENTRAL_INDEX_KEY_NUMBER` (SEC CIK) for all 22
   unresolved names and for NVIDIA; `LEGAL_ENTITY_IDENTIFIER` for 13 of the final 15; `COMPANY_WEB_ADDRESS` for all 22.
-- **It closes two other panels' gaps with no new source:** `CIE_DES_BULK` (long business description) and
-  `COMPANY_EXEC_OFFICERS` are populated for all 22.
+- **It carries two header fields:** `CIE_DES_BULK` (long business description) and `COMPANY_EXEC_OFFICERS` are
+  populated for all 22. The description is a field add; the officer list is not (see the correction above).
 
 **Bloomberg as the filing source is a purchase, not a build.** Its company filings are not on this terminal's API
 entitlement. The question for the Bloomberg rep is filings access through Data License, or the BQL entitlement,
@@ -58,7 +68,7 @@ Bloomberg's NAME.**
 | HSBC | 20-F, 2026-02-26 |
 | ICICI Bank | 20-F, 2026-07-20 |
 | Unilever | 20-F, 2026-03-12 |
-| NVIDIA | 10-K, 2026-02-25 |
+| NVIDIA (outside the keyed 33) | 10-K, 2026-02-25 |
 
 Fifteen others have a CIK but no current annual report: Enel's last 20-F is 2007, Imperial's 2007, KPN's 2008; the
 rest file only ADR paperwork (F-6), ownership forms or old 12g3-2(b) supplements. **A CIK proves an SEC record,
@@ -110,11 +120,12 @@ earns its cost, if one is bought.
 
 ## 6. For the CTO's L4
 
-1. Tier 1 is an identity fix, not a new source. It lifts Thesis from 12 to 19 names and needs no vendor spend.
-2. Tier 2 is one new adapter plus a second section cutter, both over free official data, and lifts it to 25.
+1. Tier 1 is an identity fix, not a new source. It lifts Thesis from 12 to 18 of 33 and needs no vendor spend.
+2. Tier 2 is one new adapter plus a second section cutter, both over free official data, and lifts it to 24.
 3. Tier 3 is a buy-or-build decision for Andrew: nine adapters, or one feed.
-4. Independent of all three: `CIE_DES_BULK` and `COMPANY_EXEC_OFFICERS` on the existing Bloomberg pull close the
-   description line (12 of 34) and most of the management gap (14 of 34) for every covered name.
+4. Independent of all three: `CIE_DES_BULK` on the existing Bloomberg pull serves the description line (12 of 33
+   today) for the names Thesis cannot reach. Management (12 of 33) follows filing coverage, because its roster is
+   read from the filing; a Bloomberg roster would be a contract change, not a field add.
 
 **Sources:** EDGAR submissions API (`data.sec.gov`); [filings.xbrl.org about](https://filings.xbrl.org/docs/about);
 [FCA National Storage Mechanism](https://www.fca.org.uk/markets/primary-markets/regulatory-disclosures/national-storage-mechanism);
