@@ -622,7 +622,31 @@ PRD, so it is a row here, not a message.
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Filed so the next seat re-running check_lt_r1.py reads that arm as this retirement rather than as a regression -- the same class the project already named, an arm of a closed round failing on later drift. No repair is proposed to the fixed input (R-43) and no frozen record is rewritten. If a future round wants the arm green, the honest move is a NEW arm in a NEW checker pointing at the live skill, never an edit to round 1's."
- }
+ },
+  {
+    "id": "LGIC_LGCTFM-S26",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T19:22Z",
+    "one_line": "R-81 (@4443e7308e, 19:18Z) -- the design requirement round 3 is to be cut against -- ARRIVED 25 MINUTES AFTER ROUND 3's ISSUANCE (@6139990fe7) AND AFTER LT-e-5's WORKER WAS SPAWNED, and LT-e-5's worker face names two sources R-81 now refuses or conditions: lambda-source-map.json as the source_text leg WITHOUT the comp-lambdamap two-plane guard, and comp-iam WITHOUT restricting it to live/reconcile/simulate. The round is frozen and a worker cannot be messaged, so the face stands as issued; this row carries R-81 to the drain and to L9.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuance @6139990fe7 committed ~18:5xZ; LT-e-5 and LT-r-2 spawned at worktree base 6018f62ed3; R-81 delivered as msg 98045 at 20260918T191803Z.",
+        "LT-e-5's worker face, step 2, lists `source_text` via infra/aws/lambda/ci/lambda-source-map.json and `iam_grant` via comp-iam with no subcommand restriction.",
+        "R-81 VERBATIM: comp-iam's gaps/roles/services/stats are REFUSED as discovery sources; every hand-maintained input must carry the comp-lambdamap guard (two independent planes, a named drift class) OR be DECLARED in the run's output with date, owner and un-defer condition; 'No third option.' Measured by 1.0.0_SA_CTO: lambda-source-map.json 216 entries vs 217 live, 19 names disagreeing (10 live absent, 9 stale, incl. an unfollowed rename).",
+        "R-81 also names a FIRST CELL round 3 does not carry: a canonical graph-call-manifest.yaml entry for the AWS-inventory question (comp-which returns a six-way tie at 1.50-1.60 with no winner)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 3 is cut against R-81's instrument assignment and hand-surface rule, and its first cell is the missing canonical manifest entry.",
+    "world_is": "Round 3 was cut against R-79 alone, 25 minutes before R-81 existed. Its four cells' CRITERIA are unaffected by R-81 (floor, named-rowed, shape, schema, render, rename, real run); only LT-e-5's DESIGN latitude is narrowed, and the canonical-entry cell is absent.",
+    "notes": "DISARMS AT LT-e-5's DRAIN, by the disarm owner, on ONE measurement: the drained design's legs are read against R-81 -- every source is one R-81 assigns, and lambda-source-map.json is either guarded by comp-lambdamap or DECLARED in the contract's coverage block with date/owner/un-defer condition. Conformant -> disarmed with that evidence. Non-conformant -> the conformance repair is cut as a cell of the NEXT round beside the canonical manifest entry, and LT-x-4 is NOT spawned on a non-conformant engine. Recommended to 1.0.0_SA_CTO the same tick (keep round 3 frozen rather than stop and re-spawn a live worker). COST: one read at the drain. NON-APPLICATION: LT-r-2 and LT-p-2, which read no AWS source."
+  }
 ]
 ```
 
