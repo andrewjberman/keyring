@@ -214,9 +214,9 @@ change_log:
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-17T23:49:59Z",
-    "head": "9635e8f16c",
-    "sequence_file_last_commit": "326eaadad6 2026-09-17T19:43:10-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-09-18T01:33:16Z",
+    "head": "b21c2b5db4",
+    "sequence_file_last_commit": "304d4a6024 2026-09-17T19:50:38-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
@@ -229,6 +229,7 @@ compiled:
       "free": 0,
       "next_slot_order": [
         "MDPF_TAXSMA",
+        "NFRA_MCPINDEX",
         "ADVI_FIRMBKTS",
         "MDPF_CANON"
       ]
@@ -237,7 +238,7 @@ compiled:
       "denominator": 10,
       "counts": {
         "LANE-DARK": 1,
-        "NEEDS-SLOT": 2
+        "NEEDS-SLOT": 3
       }
     },
     "stages": [
@@ -249,7 +250,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.14 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "58e8ce74ce 2026-09-17T19:29:53-04:00",
+            "last_activity": "c5f965ab7e 2026-09-17T21:31:13-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -274,19 +275,23 @@ compiled:
           "NFRA_MCPINDEX": {
             "dep_stage": "PRD",
             "status": "active",
-            "prd": "v0.4 WITHHELD (brief STALE, ratified-text STALE)",
-            "last_activity": "9635e8f16c 2026-09-17T19:49:00-04:00",
-            "flags": [],
-            "notes": [],
+            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "77c0786e7b 2026-09-17T21:26:35-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
             "gates": [],
             "coo_lane": null,
             "phase": null
           },
           "NFRA_OPLGTW": {
             "dep_stage": "EXECUTING",
-            "status": "scoping",
+            "status": "active",
             "prd": "v0.9 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "7b70dfb910 2026-09-17T19:20:03-04:00",
+            "last_activity": "35377638d7 2026-09-17T20:49:06-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -314,7 +319,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "0e10fea7fe 2026-09-17T18:18:59-04:00",
+            "last_activity": "2befae9891 2026-09-17T21:25:06-04:00",
             "flags": [],
             "notes": [],
             "gates": [
@@ -331,7 +336,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6fd50d6cfb 2026-09-17T19:44:58-04:00",
+            "last_activity": "6b6a7ef0dd 2026-09-17T20:00:22-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -342,7 +347,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "60aac06844 2026-09-17T19:08:46-04:00",
+            "last_activity": "8db9eb1bd9 2026-09-17T20:59:28-04:00",
             "flags": [],
             "notes": [],
             "gates": [
@@ -375,7 +380,7 @@ compiled:
             "dep_stage": "PRD",
             "status": "active",
             "prd": "v1.2 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "0d3ad7d496 2026-09-14T09:54:46-04:00",
+            "last_activity": "fb93bfac56 2026-09-17T20:39:42-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
