@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T12:0xZ to slot ~4 (cold start) on the CTO's round-3 analysis s.9 item 2. The move itself is IB-rtd-7, gated on both halves and on IRPT_FNTEND's reader.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~4, 2026-09-18. R46-AC1 PASS-by-output (token IBR46-DESTINATION-DECLARED-AT-LGIC-ADDRESS-AND-PACKETED, battery rc=0); R46-AC2 judgment RECORDED for 3.0.0_SA_CVO, no verdict. proof-of-spec-check rc=0 (both --governing-order and positional-ids forms). The move itself is IB-rtd-7, gated on both halves and on IRPT_FNTEND's reader.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 4 (the CTO's round-3 analysis @5c59f68d70, msg 97944) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 3) | **Round-3 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md` @5c59f68d70 | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar (analysis s.4, ADOPTED) | **Decomp cell:** `IB-rtd-6` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.4, s.R4) | **outcome_ref:** FWD-1, FWD-7, FWD-10 (the firm-bound destination)
 

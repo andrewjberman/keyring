@@ -5247,6 +5247,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Nothing is broken: the slot is DISABLED and says it is unwired. The guard this cell built is still right for its condition. S71 would arm only if BOTH the schedule is enabled AND a compute target is wired to run the bundled runner. The trigger test reads the first; the second is recorded for R43-AC2 and is not this cell's to build."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T12:53:52Z",
+    "one_line": "IB-rtd-6's named census location portal/ is an UNINITIALIZED gitlink in this worker's worktree -- comp-find over it reads a MEASURED 0 hit(s) across 0 file(s) scanned, which is out-of-corpus, never an absence claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IB-rtd-6 face (b): 'every reader of investor-reporting/directory (comp-find over the repo, denominator printed; the Lambda source map's functions; portal/ and IRPT_FNTEND's tree home)' -- portal/ is named as a location this cell's census must cover.",
+    "world_is": "This worker's worktree carries portal as a bare gitlink with no working tree: `git ls-tree HEAD portal` reads `160000 commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0 portal`, `.gitmodules` is empty/absent, `git config --get-regexp submodule` returns nothing, and `test -d portal/src` reads NO_SRC. `comp-find 'investor-reporting/directory' portal/` reads `DENOMINATOR: 0 hit(s) across 0 file(s) scanned` -- a MEASURED zero over zero files, not evidence the term is absent from portal's real content. The FE's actual reader surface (if any) cannot be inspected from this worktree; part (c)'s finding that the port costs IRPT_FNTEND no code change rests on the API CONTRACT carrying no S3 path (a 0-hit comp-find over docs/contracts/investor-reporting/), not on a direct read of portal/ source.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-tree HEAD portal @e4623a5872 (this worktree's base): `160000 commit 2453a7b4c6b7ff91ea89db499890a9486265d1a0\tportal`",
+        "cat .gitmodules (empty output) and `git config --get-regexp submodule` (empty output), same worktree",
+        "test -d portal/src -> NO_SRC; comp-find 'investor-reporting/directory' portal/ -> 'DENOMINATOR: 0 hit(s) across 0 file(s) scanned in scope [corpus=all]'",
+        "battery_ib_rtd_6.py part_b(), IB-rtd-6_R46-AC1_battery_output.txt lines 128-135"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Does not block IB-rtd-6's own acceptance: the task order's own instruction set (CLAUDE.md s.3) reads an out-of-corpus 0-of-0 as MEASURED, not FAIL. Left UNDER_INVESTIGATION rather than DISMISSED because a later cell that needs portal/'s actual FE source (e.g. to verify the FNTEND hand-off this order names) will hit the same gap and needs a portal worktree (memory: 'portal is a GITLINK so a worker needs a portal worktree inside its workspace worktree') -- out of this READ-ONLY order's <paths> grant to build."
   }
 ]
 ```
