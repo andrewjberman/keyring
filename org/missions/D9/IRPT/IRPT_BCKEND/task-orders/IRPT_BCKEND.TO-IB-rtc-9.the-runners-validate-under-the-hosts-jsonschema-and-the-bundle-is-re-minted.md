@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~X</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T07:5xZ to the DS lane, fourth in its queue, cut on row IRPT_BCKEND-W2-S56 (the issuer's ruling: ADJUDICABLE within L5/L6 -- a DS-lane code defect, fixed in code, never by mutating the shared host's package set). A head; its merge is a precondition of IB-rtc-7 and of IB-rtc-3's AMENDMENT 3 re-run.</status>
+<status>complete -- 0.4.0_DS_ClientPlatform~X, 2026-09-18: R39-AC1 PASS 4 of 4 (token printed, fresh detached checkout at 0101c370c9); R39-AC2 recorded for 3.0.0_SA_CVO, not self-graded; the runners fixed at de4e176cc3; the bundle minted at VersionId 0XLkiPt4wljdniLnF2fkPKN4qAIkjUbc / ETag 4c942a76 under the ledger entry irpt-bckend-rtc9-jsonschema-mint (opened 163c3bf7b0, closed dfdd58a2a6); on the host (jsonschema 3.2.0) the new members accept 2 of 2 and refuse 2 of 2 with paths while the pre-cell members raise AttributeError 4 of 4; row IRPT_BCKEND-S71 (INERT). Its merge is a precondition of IB-rtc-7 and of IB-rtc-3's AMENDMENT 3 re-run.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 3 (AMENDMENT 1 on R-44/R-45 @57bc083d45; this cell added ~07:5xZ on row W2-S56) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d | **Rulings:** R-44 / R-45 @57bc083d45; the issuer's ruling on W2-S56 (this face) | **Decomp cell:** `IB-rtc-9` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.3, s.R3.6) | **outcome_ref:** FWD-1, FWD-7 (every firm's build dies at validation today)
 
