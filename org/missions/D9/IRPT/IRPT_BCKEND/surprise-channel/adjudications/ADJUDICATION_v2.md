@@ -766,3 +766,146 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
  "disarm_owner": "2.0.0_SA_COO~B to route the pin convention to the round's cells"
 }
 ```
+
+## Round 4 -- L8/L9: seven judgment criteria graded, nine rows dispositioned
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S103",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T17:45Z",
+ "one_line": "L9 GRADE RECORD, IRPT_BCKEND round 4: SEVEN judgment criteria, all PASS. S56 -- armed against bare line citations in judgment records -- is DISCHARGED on its own condition: 31 of 31 pinned this round against 0 of 4 last round, MEASURED ON THE SAME INSTRUMENT.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE SET, derived from the eight order files: 16 criteria, 8 declared judgment, of which SEVEN are graded -- R47-AC2 sits on IB-rtd-7, which the issuer closed SUPERSEDED (never handed: two of the three firm buckets do not exist and the other acts are other seats'), so it carries no gradeable instance. The hand-off's count of seven matches its own list exactly. ALL SEVEN PASS, and the quality that recurs is cells answering AGAINST their own deliverable: R41 says the organic fire it was cut to observe merely repeated the driven path; R43 says its own trigger test is not a guard on an enable and that an enable reaches no runner; R42 records a reconciliation census NOT RUN rather than implying it passed; R46 states both readings of a question that is not its to decide and declines the verdict. S56 IS THE ITEM ROUTED TO THIS SEAT AND IT DISCHARGES ON ITS OWN STATED CONDITION -- 'the row disarms when a judgment record's line citations carry @<commit>'. I MEASURED IT RATHER THAN ACCEPTING THE HAND-OFF'S 'every worker instance 0 bare', and on the SAME INSTRUMENT that found it unmet last round: round 3's judgment records carried 4 line citations, 0 pinned; round 4's carry 31, and 31 are pinned. MY INSTRUMENT FLAGGED ONE AS BARE AND IT WAS MY REGEX, NOT THE CELL: R42-AC2's 'tests/test_refresh_previous_state.py:294 test_lambda_handler_does_not_misread_a_failed_or_dispatched_day_as_missed @4c43124a4d' carries its pin AFTER the function name, where my pattern only looked immediately past the line number. Printed the bytes before reporting it against anyone. ONE NUANCE RECORDED RATHER THAN SMOOTHED: 2 of the 31 pins are 64-hex CONTENT sha256 values, not git commit-ish. S56's text asks for '@<commit>'; a content hash pins the vintage MORE strongly than a commit (it is content-addressed and verifiable without the repository), so it satisfies the condition's INTENT, and I say which pins are which rather than counting them as commits. THE FOUR BARE file:line THE HAND-OFF MENTIONS sit in rtd-6's MECHANICAL census table, not in a judgment record, and are outside S56's scope, which names judgment records.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "All eight round-4 orders censused by raw <criterion tag count: 16 criteria, 8 judgment, 7 gradeable (R47-AC2's order SUPERSEDED)",
+   "All seven judgment records read in full; all carry UNVERIFIABLE-BY-INSTRUMENT naming this seat",
+   "MEASURED BY THIS SEAT on one instrument across both rounds: round 3 judgment records 0 of 4 line citations pinned; round 4 31 of 31 (27 git sha1 at 10 hex, 1 at 12 hex, 2 content sha256, 1 pinned after a function name)",
+   "VERIFIED BY THIS SEAT on the live plane: route_bindings.yaml served VersionId WXkE2epI..., 13516 bytes, 0 CR, sha256 98f5e9c5... == the committed blob at HEAD byte-for-byte",
+   "VERIFIED BY THIS SEAT: git check-attr eol/text unspecified for that file; core.autocrlf true on this box"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "R41-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rtd-1.the-organic-fire-graded-on-what-it-actually-loaded.proof_of_spec.json@9baf466449",
+   "verdict": "PASS",
+   "reason": "PASS, AND THE RECORD EARNS IT BY DECLINING TO OVERCLAIM ITS OWN FIRE. Asked whether the organic 13:00Z fire exercised a path the driven fires did not, it answers NO in so many words: the fire MERELY REPEATED the 'prior command Success, pointer differs from the stale record, therefore landed' branch that IB-rtc-3 and IB-rtc-7 already exercised, and it did NOT reach missed-trigger, over-age or REFRESH_NOOP_SAME_FRONTIER. A cell that had been cut to observe the organic fire, reporting that the organic fire taught little, is exactly the honesty the NO FWD IS A WAIT rule needs back from the cases it does not cover. WHAT IT DID ADD IS REAL AND NAMED AS NEW: the first LIVE capture of the schedule's own trigger -- scheduler.amazonaws.com AssumeRole on irpt-directory-refresh-scheduler-role with its request id -- rather than a manual or harness invoke. And 'T0 == invocation on every hash checked' is the R-40 bar done correctly: the served CodeSha256 and all three firms' landed directory ETags are held against the pre-fire capture, with what moved (each firm's runner-date manifest OBJECT rewritten with byte-identical content) stated rather than left out. EVERY LINE CITATION IN THIS RECORD CARRIES A VINTAGE PIN -- measured by this seat across all seven round-4 judgment records: 31 of 31 pinned, against 0 of 4 in round 3 on the SAME instrument."
+  },
+  {
+   "criterion": "R42-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rtd-2.the-no-op-branch-fires-on-its-positive-case.proof_of_spec.json@6f91335c93",
+   "verdict": "PASS",
+   "reason": "PASS ON TWO ANSWERS THAT ARE BOTH HONESTLY INCOMPLETE, WHICH IS THE CORRECT SHAPE FOR BOTH. Q1 is answered PARTIALLY SOUND WITH ONE RESIDUAL NAMED: _last_recorded_business_date() restores the pre-W2-S57 walk for missed_business_dates' own purpose and is unit-tested against cottonwood's real shape, and the cell then states that it carries no not_before bound, that a stray TRIGGER_MISSED/FAILED write could in principle shift what the missed-date walk sees, that it found NO LIVE CASE, and that it FLAGS rather than dismisses the narrower exposure. A residual stated with its absence-of-instance is the exposure-versus-incident distinction applied correctly. Q2 is answered 'a one-time sweep MAY be warranted' and the reconciliation census is recorded NOT RUN because it is project-wide and outside the worker's grant -- NOT-EVALUATED reported as NOT-EVALUATED rather than as a pass. The pre-fix defect's signature is stated precisely enough to run later: a REFRESH_COMPLETED_WITH_ADDITIONS manifest with delta.previous_entry_count=0 while an earlier COMPLETED-family manifest for the same firm genuinely existed. EVERY LINE CITATION IN THIS RECORD CARRIES A VINTAGE PIN -- measured by this seat across all seven round-4 judgment records: 31 of 31 pinned, against 0 of 4 in round 3 on the SAME instrument."
+  },
+  {
+   "criterion": "R43-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtd-3.the-holdings-contract-aboard-the-bundle-and-the-re-arm-trigger-named.proof_of_spec.json@dca47006e1",
+   "verdict": "PASS",
+   "reason": "PASS ON ALL THREE, AND THE SECOND IS ANSWERED AGAINST THE CELL'S OWN DELIVERABLE. (1) WHICH SCHEMA: the v1 copy, on the evidence that matters -- it is the one the gold runner reads and the irpt-holdings Lambda packages and loads by name, no code file names the _contracts/ copy's path, and a real snapshot emits attribution_holdouts which only v1 declares, so the _contracts/ copy would REFUSE a real snapshot. V1 is a strict superset with 0 paths, 0 required sets and 0 leaves only in the other. (2) THE GUARD: the cell says plainly that the trigger test it built is NOT a guard on an enable -- it reads live state when the suite runs and does not block an enable as it happens -- and then that an enable today reaches NO RUNNER at all, because the schedule targets a queue with 0 event-source mappings (S76). Saying your own test is not the control it looks like is the hardest honest sentence in this round. (3) Lists what a first enabled fire actually needs rather than asserting readiness. EVERY LINE CITATION IN THIS RECORD CARRIES A VINTAGE PIN -- measured by this seat across all seven round-4 judgment records: 31 of 31 pinned, against 0 of 4 in round 3 on the SAME instrument."
+  },
+  {
+   "criterion": "R44-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rtd-4.the-route-bindings-drift-measured-and-its-sign-off-packet.proof_of_spec.json@713cb7029e",
+   "verdict": "PASS",
+   "reason": "PASS ON ALL THREE, AND THE PROVENANCE ANSWER IS THE ONE WORTH KEEPING. (1) The COMMITTED content is the intended rendering, on two independent readers -- the live W-1 tie-out validator ties 34/34 against it and the dimension script's live constants already agree with it. (2) THE DRIFT IS A RIDER OF ANOTHER PROJECT'S CHANGE AND THE CELL NAMES IT: commit f999fb25f6 (MDPF_REMED, 'repoint the 49F custody binding off the deleted DDB table') landed ~20 hours AFTER the object's SOLE apply, and IRPT_BCKEND never touched the file before observing the drift already present. That is a precise account of a drift nobody on this project caused. (3) THE APPLY IS NOT THIS PROJECT'S ACT: the cell's grant was measurement-only and it routes the apply to MDPF's owner under both never-widen halves via IB-rtd-5, rather than taking an act its bounds forbade because it happened to hold the evidence. EVERY LINE CITATION IN THIS RECORD CARRIES A VINTAGE PIN -- measured by this seat across all seven round-4 judgment records: 31 of 31 pinned, against 0 of 4 in round 3 on the SAME instrument."
+  },
+  {
+   "criterion": "R45-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rtd-5.the-route-bindings-drift-resolved-under-both-halves.proof_of_spec.json@1f96d6661e",
+   "verdict": "PASS",
+   "reason": "PASS, AND I VERIFIED THE LOAD-BEARING HALF ON THE LIVE PLANE MYSELF, ON A DIFFERENT INSTRUMENT FROM THE CELL'S, BECAUSE THIS IS A SERVED OBJECT UNDER NEVER-WIDEN. The cell reports the served content-sha256 as 98f5e9c5. I fetched s3://opal-data-assets/config/mdpf/route_bindings.yaml myself: live VersionId WXkE2epIOTpxH8OJap.2h35dhJkd1whq, 13,516 bytes, ZERO CR bytes, sha256 98f5e9c51d016d5283562e525b53088292576d86752c6cf0449865fbf328d923 -- and the committed blob data/mdpf/config/route_bindings.yaml at HEAD is 13,516 bytes, zero CR, the SAME sha256. BYTE-FOR-BYTE IDENTICAL. A matching VersionId alone would only have proved the object moved; hashing the served bytes against the committed blob is what distinguishes LF from CRLF, which is the entire subject of S68. ON 'CLOSED OR MERELY MOVED' THE CELL GIVES THE CORRECT SPLIT AND I CONFIRMED THE UNFIXED HALF: the SYMPTOM is closed (served bytes equal committed, untargeted root plan shows zero resource actions, tie-out 34/34), and the CAUSE is NOT -- `git check-attr` reads eol: unspecified and text: unspecified for that file, and core.autocrlf is true on this box, so a FRESH checkout can render it CRLF and the next un-targeted apply from one reproduces the exposure. The cell routes the .gitattributes eol=lf change to the file's owner rather than claiming it, and files the stale Terraform OUTPUT (a -target apply never recomputes outputs) as W3-S40 instead of folding it silently into the PASS. EVERY LINE CITATION IN THIS RECORD CARRIES A VINTAGE PIN -- measured by this seat across all seven round-4 judgment records: 31 of 31 pinned, against 0 of 4 in round 3 on the SAME instrument."
+  },
+  {
+   "criterion": "R46-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rtd-6.the-directory-destination-declared-at-its-lgic-address-and-the-move-packeted.proof_of_spec.json@1b705c5193",
+   "verdict": "PASS",
+   "reason": "PASS, AND THIS IS THE RIGHT WAY TO ANSWER A QUESTION THAT IS NOT YOURS TO DECIDE. The bar asks whether the destination move is this project's own LGIC conformance or a D14 rider, and the cell STATES BOTH READINGS AND DECLINES THE VERDICT -- 'own conformance' because the directory is a NEW pipeline built inside D9 and Rule 30's existing-pipeline carve-out does not obviously reach it; 'D14 rider' because opal-data-bd/-inf/-cot are the estate's still-live ROUTED aliases that every other firm surface reads until D14's cutover. Then it finds the one fact that cuts through for ONE firm and scopes it to that firm only: 49financial's LGIC bucket and fence ALREADY EXIST and are live, so D14's timeline blocks nothing on that leg, while inflection and cottonwood read NoSuchBucket. Registry rows: NONE needed, because 6 of 6 builder calls built without refusal -- Rule 30's refusal contingency never fired. And it NAMES rather than decides a separate gap: firm_registry.json's consumer-facing `bucket` field carries the routed legacy alias. EVERY LINE CITATION IN THIS RECORD CARRIES A VINTAGE PIN -- measured by this seat across all seven round-4 judgment records: 31 of 31 pinned, against 0 of 4 in round 3 on the SAME instrument."
+  },
+  {
+   "criterion": "R48-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtd-8.the-firm-check-restored-on-the-operations-viewer-branch.proof_of_spec.json@342d47a526",
+   "verdict": "PASS",
+   "reason": "PASS ON ALL THREE, AND THE FIRST ANSWER CORRECTS THE PREMISE IT WAS HANDED. The bar asks whether the two enforcer copies should be one module; the cell answers that they ALREADY EFFECTIVELY ARE -- holdings/enforce.py is a PINNED, COMMITTED-BLOB mirror of _authz/enforce.py produced by stage.py from `git show <pin>:<path>`, not an independent implementation -- and that the residual defect is PROCESS, not structure: nothing re-runs stage.py when _authz/enforce.py moves, so the pin goes stale silently (W1-S19, W1-S20). A file merge would not fix a defect that lives in when a copy is refreshed. (2) Advisor id load-bearing today: 0 of 7, measured two ways -- 0 `.guard(..., 'advisor')` call sites across every non-test .py AND the API Gateway integration cannot inject object_kind into a real event. (3) FWD-2/FWD-11: closed on the ADVISOR AXIS SPECIFICALLY, with the scope stated, rather than closed in general. W1-S19 is also this round's best self-correction: the issuer's own Rule-22 census had called the two copies independently broken, and the cell found _authz/enforce.py fixed in round 2 -- the issuer's census was stale, and the issuer says so. EVERY LINE CITATION IN THIS RECORD CARRIES A VINTAGE PIN -- measured by this seat across all seven round-4 judgment records: 31 of 31 pinned, against 0 of 4 in round 3 on the SAME instrument."
+  }
+ ],
+ "dismissal_reason": "This row grades seven judgment criteria and adjudicates no investigation item; it is a grade record."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S104",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T17:45Z",
+ "one_line": "W1-S20 and W2-S59 GRADUATED and STAY ARMED -- the declared paths are genuinely never-committed, verified in git. BUT THE HAND-OFF'S SUMMARY IS WIDER THAN THE ROWS: these files are NOT 'committed at no revision of the repository'. Their sources exist elsewhere in it; what is missing is a pin from the served bytes to the path the build DECLARES.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "VERIFIED IN GIT, NOT TAKEN FROM THE ROWS: lambda-source-map.json declares, under irpt-holdings (source_dir infra/aws/lambda/investor-reporting/holdings), served.py and loaders.py, and under irpt-directory-refresh (source_dir .../directory), errors.py and trading_calendar.py. All four DECLARED paths read tracked=False at HEAD, and `git log --all` returns ZERO commits ever touching any of them, on any ref. So the rows are RIGHT: production Lambda members are declared in the build's files[], served in the deployed zips, and have never been committed at the path the build names. BUT A SECOND, UNSCOPED READ CHANGES THE SHAPE OF THE FINDING, and I ran it because the hand-off's summary said 'committed at NO revision of the repository', which is a sentence about the whole repository. THE FILES EXIST ELSEWHERE IN IT: served.py and loaders.py are tracked at infra/aws/lambda/investor-reporting/_authz/; errors.py at _authz/ and at holdings/errors.py; trading_calendar.py at lib/trading_calendar.py -- the estate's ONE declared frontier -- and at three other Lambda-local copies. So this is NOT code with no source of record. It is SERVED CODE WHOSE SOURCE IS A DIFFERENT FILE THAN THE DECLARED ONE, materialized onto disk at build time with no vintage tying the served bytes to a committed source. That is the same mechanism R48-AC2 names for enforce.py -- a pinned mirror whose pin nothing refreshes -- in a form with NO pin at all. THE ROWS SCOPED THEIR CLAIMS CORRECTLY to the declared directory ('under infra/aws/lambda/investor-reporting/holdings/', 'under .../directory/'); the widening happened in the hand-off's summary, and it is exactly today's recurring class -- a denominator whose scope is narrower than the sentence beside it. THE DISTINCTION CHANGES THE REMEDY, which is why it is recorded: 'no source' is fixed by committing the file; 'undeclared copy source' is fixed by either declaring the TRUE source in files[] or staging the copy from a pinned blob, the way stage.py already does for enforce.py. INFERRED, NOT VERIFIED, AND SAID SO: that the served bytes are byte-copies of the _authz/ and lib/ versions -- I established that the sources exist, not that the deployed members equal them; confirming that needs each deployed zip's members hashed against those blobs, which I did not run.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S20",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W2-S59",
+   "VERIFIED BY THIS SEAT: infra/aws/lambda/ci/lambda-source-map.json functions.irpt-holdings.files[] and functions.irpt-directory-refresh.files[] declare the four members",
+   "VERIFIED BY THIS SEAT: all four declared paths tracked=False at HEAD; `git log --all -- <path>` returns 0 commits for each",
+   "VERIFIED BY THIS SEAT, unscoped: served.py/loaders.py tracked at _authz/; errors.py at _authz/ and holdings/; trading_calendar.py at lib/ and three Lambda-local copies",
+   "NOT RUN: a byte comparison of the deployed zip members against those tracked sources"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "IRPT_BCKEND-W1-S20",
+  "IRPT_BCKEND-W2-S59"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~B as round 5's issuer, on the first round-5 cut the hand-off already names"
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S105",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T17:45Z",
+ "one_line": "SEVEN INERT ROWS DISMISSED -- and again most of them are a cell or its issuer correcting a PRIOR CLAIM rather than finding new work: S75 corrects the seat's own S71, S76 corrects when S71 arms, W1-S19 corrects the issuer's own census, W3-S40 corrects a sign-off condition's literal wording.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S74 finds the pre-cell object is not the VERSION the face names though its BYTES are -- the face bound a negative control to IB-rtc-9's mint VersionId, and the object had moved to identical content under a new version; a version-bound control on a content-identical object is exactly the R-40 distinction between an identifier and the artifact. S75 is 0.4.0_DS_ClientPlatform~X correcting ITS OWN row S71: S71's sizes came from the autocrlf CHECKOUT rather than the blobs -- the CRLF trap this estate keeps meeting, caught by the seat that fell into it. S76 is the sharper correction of S71: enabling irpt-holdings-snapshot would NOT run the bundled holdings runner, because the schedule targets an SQS queue with no consumer, so S71 does NOT arm 'the moment anyone enables it' as it claimed -- and that is why S71's re-arm trigger, which 1.0.0_SA_CTO asked round 4 to carry, is a trigger on the wrong event. W1-S19 is the round's best self-correction by an issuer: the Rule-22 census the issuer quoted called the two enforcer copies independently broken, and the cell found _authz/enforce.py already fixed in round 2 -- 2.0.0_SA_COO~B's census was stale, and that seat's hand-off says so in its own words. W2-S58 finds build-and-upload.sh's parity check scoped PER-FUNCTION over a source_dir TWO functions share, so one function's parity cannot see the other's drift -- a check scoped to the members that cannot see what the members share, Rule 22's exact clause. W3-S40 corrects a never-widen condition's LITERAL WORDING: it assumed Terraform prints a 'Plan:' line, and when the only drift is a stale OUTPUT it prints none, so a literal reader would have read 'no plan summary' as failure; the cell filed it rather than bending the condition. W4-S33 finds the census location it was told to read, portal/, is an UNINITIALIZED gitlink in the worker's worktree, so comp-find returned '0 hit(s) across 0 file(s)' -- which the estate's own comp-find rule says is OUT-OF-CORPUS, NOT ABSENCE -- and the cell reported it as such instead of as a clean zero. All seven are INERT and none carries `adjudicates`.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S74",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S75",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S76",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S19",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W2-S58",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S40",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S33"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "IRPT_BCKEND-S74",
+  "IRPT_BCKEND-S75",
+  "IRPT_BCKEND-S76",
+  "IRPT_BCKEND-W1-S19",
+  "IRPT_BCKEND-W2-S58",
+  "IRPT_BCKEND-W3-S40",
+  "IRPT_BCKEND-W4-S33"
+ ],
+ "dismissal_reason": "Seven INERT rows carrying no `adjudicates`: five correct a prior claim (the seat's own, the issuer's census, a sign-off's literal wording), and two report an instrument's scope limit honestly. No residue owed beyond what W1-S20 and W2-S59 carry."
+}
+```

@@ -1114,15 +1114,15 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "owner": "2.0.0_SA_COO~B",
  "round": "v2",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "2.0.0_SA_COO~B",
   "round": "v2"
  },
- "closed": false,
+ "closed": true,
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "2.0.0_SA_COO~B",
-  "at": null
+  "at": "2026-09-18T17:45Z"
  }
 }
 ```
@@ -2761,15 +2761,15 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "owner": "2.0.0_SA_COO~B",
  "round": "v3",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "2.0.0_SA_COO~B",
   "round": "v3"
  },
- "closed": false,
+ "closed": true,
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "2.0.0_SA_COO~B",
-  "at": null
+  "at": "2026-09-18T17:45Z"
  }
 }
 ```
@@ -2793,6 +2793,66 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
   "state": "OPEN",
   "owner": "2.0.0_SA_COO~B",
   "round": "v3"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+## Round 4 -- remediation plane: two new clocks (S56 and S68 closed in place above)
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S20",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "UNTRACKED-PRODUCTION-SOURCE-FILE GAP (the same class `memory/feedback_structural_over_cultural_pattern.md` item 6 already names for a different function): `lambda-source-map.json` declares `served.py` and `loaders.py` in irpt-holdings' `files[]`, and the CURRENTLY-DEPLOYED zip genuinely packages both (downloaded and confirmed this turn) -- but NEITHER file exists on disk anywhere under `infra/aws/lambda/investor-reporting/holdings/`, and `git log --diff-filter=D` shows neither was ever committed there and then deleted. `holdings/stage.py`'s own `MEMBERS` tuple never names them either (only enforce.py/errors.py/resolve.py/handler.py). `build-and-upload.sh` therefore REFUSES to build `irpt-holdings` at all (`ERROR: File not found`) until this gap is closed by hand, every single time -- which is exactly this cell's own blocker this run.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S20",
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md round 4 disposition rows"
+ ],
+ "remedy": "OPEN, AND THE REMEDY IS SHAPED BY WHAT GIT ACTUALLY SHOWS. The declared path has never been committed, but the source EXISTS ELSEWHERE in the repository (see the round-4 disposition row), so this is served code whose source is an UNDECLARED COPY with no vintage -- not code with no source. Owed, as a deliberate choice rather than a reflex commit: either DECLARE THE TRUE SOURCE in lambda-source-map.json's files[] so the build reads the committed file directly, or STAGE THE COPY FROM A PINNED BLOB the way holdings/stage.py already does for enforce.py (`git show <pin>:<path>`, the committed blob, never the worktree). Committing a third copy at the declared path would add a definition without a vintage and is the option to avoid. Before either, one read this seat did NOT run: hash each deployed zip member against its candidate tracked source, to confirm the served bytes really are those copies.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v4"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W2-S59",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE SAME untracked-production-source-file class row IRPT_BCKEND-W1-S20 named for holdings/served.py+loaders.py exists for directory/'s OWN declared files[]: errors.py and trading_calendar.py are declared in lambda-source-map.json's irpt-directory-refresh.files[] and genuinely served in the currently-deployed zip, but neither has ever been committed anywhere under infra/aws/lambda/investor-reporting/directory/ -- build-and-upload.sh refused with 'File not found' for both until they were present on disk.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W2-S59",
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md round 4 disposition rows"
+ ],
+ "remedy": "OPEN, AND THE REMEDY IS SHAPED BY WHAT GIT ACTUALLY SHOWS. The declared path has never been committed, but the source EXISTS ELSEWHERE in the repository (see the round-4 disposition row), so this is served code whose source is an UNDECLARED COPY with no vintage -- not code with no source. Owed, as a deliberate choice rather than a reflex commit: either DECLARE THE TRUE SOURCE in lambda-source-map.json's files[] so the build reads the committed file directly, or STAGE THE COPY FROM A PINNED BLOB the way holdings/stage.py already does for enforce.py (`git show <pin>:<path>`, the committed blob, never the worktree). Committing a third copy at the declared path would add a definition without a vintage and is the option to avoid. Before either, one read this seat did NOT run: hash each deployed zip member against its candidate tracked source, to confirm the served bytes really are those copies.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v4"
  },
  "closed": false,
  "disarm": {
