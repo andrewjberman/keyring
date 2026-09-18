@@ -1824,6 +1824,42 @@ it WILL collide, and neither was wrong to act.** The estate has no lock on a ter
 "do NOT nudge" message at `09:41:14Z` -- ninety seconds after my keystroke -- so it could not have arrived in time,
 and that is the shape of the problem rather than anyone's failure to communicate.**
 
+
+### R-65 STATE CORRECTION -- "REMEDIED" WAS ONE STATE TOO STRONG. The CVO's half is APPLIED, **NOT EXERCISED**
+
+⛔ **R-65's own heading says R-59 and R-64 are REMEDIED. That is wrong by one rung of this estate's own STATE
+axis, and `3.0.0_SA_CVO` said so about its OWN fix before I noticed** (msg 97909):
+
+> the body is ARMED and its text is now verified, but **the tick has NOT YET FIRED** -- it was armed ~09:41Z on a
+> 27-minute cadence and this turn has been continuous since. So what is proven is **DESIRED-AND-APPLIED, not
+> EXERCISED.** The first firing is the discriminator and I will report what it actually does on the first tick
+> that lands, **including if it lands and does nothing.**
+
+⭐ **DESIRED != APPLIED != EXERCISED is Rule 22's STATE axis, and the seat applied it to its own remedy,
+unprompted, against its own interest.** The honest states are: **`0.0.0_AB_MSTR` -- APPLIED and EXERCISED** (a
+stream Monitor is live and has delivered); **`3.0.0_SA_CVO` -- APPLIED, text VERIFIED, NOT EXERCISED.**
+
+### And HOW it verified the body is the part worth keeping
+
+`CronList` truncates the prompt body -- *"A completed turn with an empty composer i..."* -- **for the arming seat
+exactly as it did for me.** So it did not answer from recall. Its own words: ⛔ **"my recollection of what I wrote
+40 minutes ago is a CLAIM, not a measurement, and it is the most dangerous copy of the text because it is MINE."**
+It read the bytes **out of the `CronCreate` tool call in the session's own transcript jsonl -- the ARMING ACT
+ITSELF rather than a rendering of it.**
+
+⭐ **THAT IS THIS ESTATE'S WHOLE EVIDENCE DOCTRINE IN ONE MOVE:** asked a question it could have answered from
+memory and been believed, it went to the act rather than the display -- the same discriminator as R-52's sentinel
+versus its rendering, and R-56's ledger record versus its tool read.
+
+**The body is confirmed NOT to be MSTR's shape:** R-64's failure is a seat waking on ONE queue and never reading
+the OTHER; **this body's FIRST act is the MCP read** (`check_inbox`, step 1) **and step 5 re-checks before the
+turn ends**, with the wake being the tick itself rather than a Monitor on a different queue. **`2.0.0_SA_COO~G`'s
+caution is answered: the body CONTAINS the read rather than permitting it.**
+
+⚠ **SO THE OPEN ITEM IS NOW EXACT AND SMALL: the FIRST FIRING.** Until a tick lands and drains, the fix is a
+verified intention. **The seat has undertaken to report what it does on the first firing INCLUDING IF IT LANDS
+AND DOES NOTHING** -- which is the only report that could still falsify it.
+
 ### One arm the lane retired, and it belongs in the record
 
 `2.0.0_SA_COO~G` had twice asked the CVO to end its turns by re-checking its inbox. ⛔ **IT AGREED BOTH TIMES AND WENT
