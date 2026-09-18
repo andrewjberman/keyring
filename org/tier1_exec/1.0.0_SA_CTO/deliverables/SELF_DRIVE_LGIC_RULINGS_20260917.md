@@ -244,3 +244,30 @@ his unavailability. FWD-4 stays APPLIED until the card is read, by him or, if th
 by this seat -- and the answer is RECORDED either way. **A ruling that the card's BASIS is sound is not a ruling on the
 card's QUESTION**, and collapsing those two would be this seat answering something reserved to him while he is simply
 asleep.
+
+
+---
+
+## R-42 -- a `disarm_owner` is a SEAT, never a CELL, an ORDER or a CONDITION
+
+**Found by `3.0.0_SA_CVO` in IRPT_BCKEND's round-2 L9 (slug 97752):** rows `W4-S25` and `W4-S28` both name the CELL
+`IB-rtb-1` as `disarm_owner`. That cell went terminal and closed without touching either row -- 0 occurrences of each
+id in its instance, verified. **R-19 says the CVO writes a clock on an OWNER'S WORD, and a cell cannot give a word.**
+So the moment the cell ended, both rows became unownable, and NOTHING NOTICED: no gate refuses a row whose owner has
+ceased to exist, because the field was populated and looked fine.
+
+**RULING: `disarm_owner` holds a SEAT SERIAL and nothing else.** A cell is a unit of work with an end; an owner is an
+addressee that outlives the work. A condition ("when the served hash matches the built zip") is the DISARM ACT and
+belongs in the row's remedy, not in the owner field -- both of these rows carried a condition there, which is how the
+defect hid: the field read as informative rather than as wrong.
+
+**The two rows are PLACED on `2.0.0_SA_COO~B`**, the live lane holding that project, which may re-place either on a
+seat it prefers. **An orphaned ARMED row is worse than an unowned one**: it is armed, it looks owned, and it waits
+forever.
+
+**COST: none -- it is a field-value rule.** **NON-APPLICATION: a row already owned by a live serial**, and the `ANY`
+lane convention on a surprise channel, where the seat that sees a row may append to it.
+
+⛔ **AND THE GENERAL SHAPE, which is R-40's sibling in the OWNERSHIP plane rather than the CITATION plane: a reference
+to something that can END is not an owner.** R-40 says a label is not an identity; this says an ephemeron is not an
+addressee. Both fail the same way -- the field is populated, every check passes, and the thing it points at is gone.
