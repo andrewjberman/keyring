@@ -5183,6 +5183,48 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "NOT FIXED HERE, per AMENDMENT 3's own bound ('this amendment changes NO code and NO infrastructure ... do NOT edit refresh.py'). Does not block THIS cell's own acceptance: R33-AC1(d) grades presence + correct hash + correct business date for the landed artifact, which both firms have (byte-identical to IB-rtc-7's genuine build), and the face's own text admits EITHER branch as LANDED -- REFRESH_COMPLETED_WITH_ADDITIONS with an unchanged artifact is not named as a disqualifying outcome. Flagged for R33-AC2 and any later cell that reads REFRESH_NOOP_SAME_FRONTIER's own test coverage: the six AMENDMENT-2 unit tests exercise same_frontier via an INJECTED build_fn/manifest shape (bound 12's harness form) and never exercised the REAL last_manifest() walk against a REAL DISPATCHED-then-COMPLETED-at-an-earlier-date history, which is exactly the shape every real fire produces the same day a build first dispatches -- so the branch this amendment's own ruling built has, as measured today, NEVER fired against a real manifest history. RECOMMENDATION, stated and not acted on: last_manifest() (or SsmBuildDispatcher) should prefer the most recent record BY REASON-CODE PRECEDENCE (a COMPLETED manifest at an earlier business date supersedes a DISPATCHED one at a later clock date for the SAME dispatch cycle), not purely by calendar-day recency."
+  },
+  {
+    "id": "IRPT_BCKEND-S74",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T12:20:00Z",
+    "one_line": "THE PRE-CELL OBJECT IS NOT THE VERSION THE FACE NAMES, THOUGH ITS BYTES ARE. The face binds the negative control to IB-rtc-9's mint, VersionId 0XLkiPt4wljdniLnF2fkPKN4qAIkjUbc / ETag 4c942a76. The key's LATEST version is instead 00PXLyYmM0vJavlwdpUHBKRi3pza0_nS, same ETag and 61540 bytes. It was written at 2026-09-18T11:05:45Z by the pre-push safe-deploy gate during 0.0.0_AB_MSTR's integration push, which also rewrote cot's loose runner_common.py as a new VersionId 81mlcZFSpRyiH_OeK0OlWFvEHKYUelj_ with the same ETag d88a5939. So 'the three legs unchanged' is graded against the loose VersionIds read before this cell's mint, not IB-rtc-2's.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtd-3 (b): 'the negative control against IB-rtc-9's 0XLkiPt4wljdniLnF2fkPKN4qAIkjUbc / ETag 4c942a76f990874838e33e37f24ed69a DIFFERS ... the three distribution legs 3 of 3 unchanged'.",
+    "world_is": "list-object-versions on s3://opal-data-mdpf/code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz (26 versions) shows 0XLkiPt4 written at 07:58:33Z and 00PXLyYm at 11:05:45Z, both ETag 4c942a76f990874838e33e37f24ed69a and 61540 bytes. org/critical_paths/change_management/20260918T1102Z_mstr-integration-20260918-cot-runner-common_deploy_completion.md records it: L2 has the gate's 'BUNDLE MINTED [mdpf] investor_reporting ... md5=4c942a76...'; L3 has cot's loose key rewritten as VersionId 81mlcZFS... at 11:05:57Z, ETag d88a5939. At 12:1xZ the loose legs read: 49F jnnxQWbVT_lx6WlJu8HbVXNjQJpYK00w, cot 81mlcZFSpRyiH_OeK0OlWFvEHKYUelj_, inf z_WDDmx6004thBhXbT0uBvsDkNibZQF8.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions: 0XLkiPt4 (07:58:33Z) and 00PXLyYm (11:05:45Z, IsLatest), both ETag 4c942a76f990874838e33e37f24ed69a",
+        "the MSTR integration's change-management entry @e4623a5872, legs L2 and L3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Nothing is wrong: an idempotent re-write of identical bytes by the push gate. The battery binds the pre-cell to BOTH versions, which it shows are byte-identical, and binds the loose legs to the VersionIds read before this cell's mint."
+  },
+  {
+    "id": "IRPT_BCKEND-S75",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T12:22:00Z",
+    "one_line": "TWO CORRECTIONS TO THIS SEAT'S OWN ROW S71, AND S63 MEETS THE NEW MEMBER. (1) S71's sizes, which the face repeats, came from the autocrlf CHECKOUT, not the blobs. The v1 HoldingsSnapshot schema blob 9ec70af2 is 33882 bytes, not 34577 (695 CR added by the checkout). The _contracts/ copy, blob 95e4d500, is 25485 bytes, not 26022. (2) The guard's packer reads the worktree (row S63), so a mint from this worktree would carry the new member with 695 CR and it would NOT equal blob 9ec70af2 as face (b) requires. This cell writes the blob's exact bytes into that one worktree path before the mint (git status clean, the content object unchanged), and records it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-IB-rtd-3 THE CELL: 'docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json (blob 9ec70af2, 34577 bytes) ... the _contracts/ copy (blob 95e4d500, 26022 bytes)'; (b) 'the new member's bytes in the tarball == the repo blob 9ec70af2...'.",
+    "world_is": "git cat-file -s HEAD:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json = 33882; git cat-file -s HEAD:infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json = 25485. In /c/tmp/wk-irpt-4-ds6 (core.autocrlf=true, no text/eol attribute on either path) the checked-out v1 file is 34577 bytes with 695 CR. The existing JSON members data/firm_registry.json and DirectoryEntry.schema.json are packed CRLF on every mint (136 and 260 CR); that is S63, unchanged here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file -s at e4623a5872: 33882 and 25485",
+        "worktree read of the v1 schema: 34577 bytes, 695 CR; git check-attr text/eol: unspecified"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "S71's key-count comparison (391 vs 295 keys walked) is unaffected, since it parsed the JSON. The rendering in (2) applies to this mint only. A later mint from a default autocrlf worktree packs the member CRLF again, until the packer reads the blob (S63, the guard owner's). The other two JSON members are left exactly as every mint packs them."
   }
 ]
 ```
