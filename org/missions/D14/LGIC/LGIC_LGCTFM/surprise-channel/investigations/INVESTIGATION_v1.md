@@ -564,3 +564,30 @@ PRD, so it is a row here, not a message.
  "notes": "The remedy is one line in the card naming the run id and its contract's content hash. It matters more than usual because the artifact is in a decision-maker's hands right now and because FWD-4 will be graded against his answer to it -- an answer recorded against an unidentified subject is hard to re-bind later. Not urgent enough to interrupt his read: the card's substance is sound and this seat is not asking for it to be withdrawn."
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S20",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-18T05:08Z",
+ "one_line": "DISARM EVIDENCE, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-W2-S3: the row asks whether DEC-9's acceptance EXTENDS to a second prefix, and the answer is that DEC-9 NEVER ADMITTED A PREFIX AT ALL, so there is nothing to extend. Ruled R-49 at 27b969ec5f. Read at DEC-9's own bytes rather than at the record of its first application: LGIC_LGCTFM_PRD.md :246 constrains WHICH REGISTRIES the mark act may write -- three, and no fourth -- and across 6 unscoped occurrences of DEC-9 in that PRD not one names a prefix. gold/ is simply the prefix a cell reached first. Answering the question either way would have MINTED a prefix admission by implication. This row is EVIDENCE and carries no `adjudicates`: the clock is 3.0.0_SA_CVO's to write on this word, because disarming is not disposing and prose disarms nothing.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "DEC-9's own bytes at org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md :246 -- 'The mark act appends to the three existing registries only, under the subject's migration project, in the run's own commit, through safe-commit and the naming gate ... A fourth mark is a Rule 24 act nobody has asked for.' The axis is REGISTRIES, not prefixes.",
+   "COVERAGE, printed: an UNSCOPED read of the token DEC-9 over that PRD returns 6 occurrences -- :60, :178, :246, :356, :368, :377. None enumerates a prefix, and gold/ is not named in any of them. The census is the whole file, not the two lines the row cites.",
+   "R-49 and R-50, org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md @27b969ec5f, decided the same tick the call arrived (2.0.0_SA_COO~G msg 97836) under the call-routing law, Andrew-direct 2026-09-17 ~13:0xZ.",
+   "THE PRACTICAL ASK IS GRANTED BY A DIFFERENT MECHANISM, ruled R-50: the markable population on opal-data-bd is the ledger's own DISPOSITION column intersected with DECIDED -- 7 of the 11 rows at infra/logic/06_CONFORMANCE_LEDGER.md :70-:80 read MIGRATE (:70, :71, :72, :73, :75, :76, :79); 3 read RETIRE and 1 reads CONFORMANT IN PRINCIPLE. silver/ at :72 IS among the seven. So the row's underlying need is met, by the mechanism rather than by an extension of DEC-9.",
+   "NOT CLAIMED, and the positive control is why I can say this rather than assume it: the RETIRE exclusion is NOT independently corroborated. A falsifier against LEGACY_SERVED_PATHS.json returned zero for the three RETIRE prefixes AND zero for all seven admitted ones -- the control did not fire -- because that file is `mapping`, 8 rows of {path, reason}, whose paths are BUCKET-RELATIVE, so the search was the wrong grain and could only return zero. Whether any retiring prefix is still served is an OPEN measurement owned by ADVI_FIRMBKTS at its mark act."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "LGIC_LGCTFM-W2-S3 asserts that DEC-9 accepted a prefix (gold/) and that whether that acceptance extends to a second prefix (opal-data-bd/silver/, 06_CONFORMANCE_LEDGER.md :72, MIGRATE under R4) is a decision no one has made.",
+ "world_is": "DEC-9 admits no prefix. Its text constrains the three registries the mark act may write and enumerates no prefix anywhere across its 6 occurrences in the PRD. The row's question is therefore a category error rather than an open decision, and its stated condition -- a decision nobody has made -- is answered by R-49. What remains is the CLOCK, which is 3.0.0_SA_CVO's to write on this owner's word under R-19. The row is not disarmed by this row existing.",
+ "notes": "W2-S3 was the last open id on composite C-S3; 2.0.0_SA_COO~G gave its own word on the other four @7f45eab413. THE GENERAL FORM, and it inverts the shape this estate hit four times tonight: every other instance was a rule applied to a SUBSET of its population (R-43's carriers, the lane's 'nearer 54', this seat's R-46 3-of-57, the CVO's S10 two-of-four). This one is a rule read as having a POPULATION IT NEVER HAD. Both come from taking a decision's SCOPE from where it was first exercised rather than from its own text, and both have the same remedy: read the decision's bytes, not the record of its first application."
+}
+```
