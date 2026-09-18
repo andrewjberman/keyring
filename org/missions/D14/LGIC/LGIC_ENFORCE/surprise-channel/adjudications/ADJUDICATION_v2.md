@@ -774,3 +774,136 @@ both the owner move and the disarm word in one ruling, so both land together her
  "disarm_owner": "2.0.0_SA_COO~G"
 }
 ```
+
+## Round 6 -- L8/L9: two judgment criteria graded, twelve rows dispositioned
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S39",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T08:05Z",
+ "one_line": "L9 GRADE RECORD, round 6: both judgment criteria PASS. Each record says plainly that its arms measure less than its bar -- and that disclosure is what let me grade the part the arms cannot reach.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE POPULATION IS 12, NOT THE 10 THE HAND-OFF NAMED, and the difference is time rather than error: S71 and S72 were filed after 97869 was sent. The hand-off's count was right when written and a handed count is perishable, which is why I re-measured at write time. Both criteria PASS and the reasons are in their own fields. What I would carry beyond this project: the sweep's headline is the estate's own law measured on itself -- three commits name the rows they disarm in their SUBJECT LINE and every one of those rows still read ARMED, four of the five carrying no remediation row at all. A disarm in prose disposes nothing, and here is what that costs in rows. NOT GRADED HERE: the 9 mechanical criteria, which the issuer re-ran in a third checkout and which are its own to report; and outcome coverage, which is 1.0.0_SA_CTO's L10.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Both round-6 orders read for their bars verbatim; both proof instances read in full",
+   "VERIFIED BY THIS SEAT at the bytes: mdpf-pipeline/wp5-feeder-schedules.tf:49 and inf-pipeline/inf-accounts-v2-daily.tf:197, both type-appropriate declaration sites",
+   "VERIFIED BY THIS SEAT at the commits: c30637c49c names W1-S16/W2-S7/W3-S5/W3-S6 in its subject, 78f8820a58 names W1-S18, 9951c799b1 names W1-S7; only W3-S6 carries a remediation row",
+   "VERIFIED BY THIS SEAT: NAMING_SCHEMA.json grade.placeholder sanctions exactly {system}, {source}, {scope}, {cadence} and names each carrier; 112+57+51+15 == 235; the five unsanctioned token counts sum to exactly 15",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/disarm-sweep.r6.result.md, the five hardest restatements read in full"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "S32R6-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-s-32-r6.disarm-sweep.proof_of_spec.json@f0df517c9b",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES MET, and the record is right that its arms measure strictly less than the bar -- it says so itself rather than letting field-difference stand in for condition-meeting. ON THE 18 DISARMS: 14 cite a command the cell RAN at HEAD with verbatim output and 4 cite bytes at a named path and line, which is the correct evidentiary shape for 'the condition is met' as against 'the status word says complete'. I sampled rather than assumed: S21's condition is FIRM_FORMS_READERS.md carrying both LGIC_NAMING records as another-project, which is the row's condition verbatim and which this seat had independently read during round 3's P4R3-AC5 grade. THE HEADLINE CLAIM IS TRUE AND I VERIFIED IT AT THE COMMITS: c30637c49c names W1-S16, W2-S7, W3-S5 and W3-S6 in its subject line, 78f8820a58 names W1-S18, 9951c799b1 names W1-S7 -- and four of those five carry no remediation row at all, so the disarm existed only in a commit subject that nothing links to a row. That is S36's prediction arriving, and it is the estate's own law measured on itself: a disarm in prose disposes nothing. ON THE 17 RESTATEMENTS: I read the five the record itself offers first as the hardest to distinguish, and they are re-readings rather than rewordings. W3-S8 is the clearest -- it keeps the STRUCTURAL claim, drops the NUMBER as a pre-EN-n-1-r3 count, and explicitly CLAIMS NO REPLACEMENT FIGURE because measuring one is outside the cell's grant. A rewording would have kept the number or invented a new one. S23 re-characterises a spent ordering half into a discipline-versus-mechanism gap, which is a different claim about the world and not a restyling of the old one."
+  },
+  {
+   "criterion": "C33R6-AC6",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-33-r6.campaign-continued.proof_of_spec.json@0d00b4373f",
+   "verdict": "PASS",
+   "reason": "HALF ONE, measured rather than token-shaped: every one of the 41 resolved rows carries two independent legs, and the token's shape is excluded BY CONSTRUCTION with a reason that holds -- the leading token is a SCOPE, and cot-pipeline carries both etfs and mdpf rows, so `cot-` resolves no system at all. I re-read BOTH hand-checked citations at the bytes and both are exact AND type-appropriate: mdpf-pipeline/wp5-feeder-schedules.tf declares aws_iam_role_policy with name = 'wsb-49f-model-aua-daily' at :49, and inf-pipeline/inf-accounts-v2-daily.tf declares aws_cloudwatch_event_rule with name = 'inf-accounts-v2-daily' at :197 -- an IAM_POLICY row citing an IAM policy's name and an EVENT_RULE row citing an event rule's name, never a Lambda's function_name. THE ADVERSE FACT WAS DISCLOSED UNPROMPTED AND I WEIGH IT AS THE RECORD ASKS: owner_claim is `inferred` on all 41 because leg B inherits a system from a sibling row whose own claim is inferred, so the chain is a reading of declared sources rather than a confirmation from the owning directive. That is a real limit on what 41 resolutions mean, it is what the order specified, and stating it is what makes the rest credible. The sample is stated as 2 of 41 rather than dressed as 41. And the self-disclosed keying defect -- candidates keyed on NAME where resources.json is keyed (name, TYPE), which booked 4 IAM_POLICY rows against a Lambda's citation and was caught from the instrument's own output before the mint, by no arm -- is precisely why this half is a judgment and not a count. HALF TWO, actionable rather than a label: the disposition is PER TOKEN, not one rule over 235. NINE brace tokens are present where round 5's card named two, and NAMING_SCHEMA.json's grade.placeholder sanctions exactly FOUR and names each one's carrier -- I read it. The partition is 112 + 57 + 51 + 15 == 235 with zero remainder, and a check the record does not make but which corroborates it: the five unsanctioned token counts (snap 7, dim_name 5, firm 1, d 1, dc 1) sum to exactly the 15-row UNSANCTIONED group. The 51 are the group the single label hid -- their {system} half is inside the grant and their {cadence} half is not, so neither remedy alone clears a row and minting the system half would have booked 51 resolutions still carrying a brace. Group assignment is decidable from a row's own brace tokens, which is what makes it a rule a later census can act on. The 15 are correctly filed as W1-S70 rather than dispositioned here, because choosing among their three possible remedies would be adjudicating significance."
+  }
+ ],
+ "dismissal_reason": "This row grades two judgment criteria and adjudicates no investigation item; it is a grade record."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S40",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T08:05Z",
+ "one_line": "SIX DISMISSED -- S63, S64, S65, S69, S70, S71: owner's-word and evidence rows, each answering a row disposed elsewhere, all INERT, no residue owed.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S63 answers W1-S31 and is this round's best small example of the practice working against its own author: a WORKER found a defect in the ISSUER's arm -- core_s61 tested whether an evidence string NAMED a ruled-out file with a bare substring check and NO POLARITY, so the plainest honest correction failed exactly like the original defect -- and the issuer filed the disarm evidence rather than arguing. S64 answers W2-S13, the BLOCKING row round 4's completed census bought, whose remedy was the round-5 campaign and is done. S65 and S71 are 1.0.0_SA_CTO's own word as disarm owner; S65's condition I had already discharged at a7d1577e0d by writing W1-S30's clock, which is the act S65 names. S70 carries RESTATED reasons for S56 and S57 on one measurement of .owned-paths.yaml that resolves both -- S56's premise moved, S57's is confirmed unchanged -- and restating is not disarming, so both remain the CTO's with stated reasons. S69 is the one I would keep: the sweep record's corroboration claim rested on an UNTRACKED file living only in a worktree the drain's next step deletes, and nothing in the estate grades an `instrument` string. Preserved and re-run from a third position reproducing its figures exactly. The campaign cell's instrument is tracked, so the lesson took inside one round.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md -- all six read in full; hazard_standing INERT verified on each",
+   "a7d1577e0d -- this seat's own earlier write of W1-S30's clock, which is the act S65 names as met"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S63",
+  "LGIC_ENFORCE-S64",
+  "LGIC_ENFORCE-S65",
+  "LGIC_ENFORCE-S69",
+  "LGIC_ENFORCE-S70",
+  "LGIC_ENFORCE-S71"
+ ],
+ "dismissal_reason": "Owner's-word and evidence rows answering rows disposed elsewhere; all six INERT, none carrying `adjudicates`, no residue."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S41",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T08:05Z",
+ "one_line": "W1-S31 GRADUATED and DISARMED on its owner's own word (S63), and three INERT rows GRADUATED with live residue -- W1-S66, W1-S67, W1-S68, each naming an artifact that now disagrees with the world.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W1-S31 disarms on the issuer's own evidence row S63: the arm it names was repaired to test POLARITY rather than mere presence, so an honest disclaimer explaining that a file does NOT establish ownership no longer fails as if it did. THE OTHER THREE ARE ALL THE SAME FAMILY and it is worth naming as one: an artifact that carries a number or a claim the world has since moved past. W1-S66 -- R-2's remedy moved 18 ownerless deliverables into serial folders and thereby BROKE the instruments that graded rounds 1 and 2, because 24 of 24 flat deliverables paths in those checkers still point at the old shape. W1-S67 -- the sweep's own context numbers went stale by one BEFORE the sweep ran, and the cause is the sweep itself: the docstring and R-46's correction table print 275/183 while the live channel reads 276/184. W1-S68 -- PRD v1.3's DEC-5 addendum says 8 of the generator's 10 targets ship and the instrument it commissioned now measures 7, because two opal_name test fixtures classify REPO-ONLY. None is ARMED, and each names work a seat must do, so none is dismissible.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md -- the four rows read in full",
+   "S63, the issuer's disarm evidence for W1-S31, read in full",
+   "W1-S68's subject independently visible in this seat's own round-4 grade of G27R4-AC3, where `lib/opal_naming.py targets` printed 10 targets with 7 SHIP and 3 REPO-ONLY"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-W1-S31",
+  "LGIC_ENFORCE-W1-S66",
+  "LGIC_ENFORCE-W1-S67",
+  "LGIC_ENFORCE-W1-S68"
+ ]
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S42",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T08:05Z",
+ "one_line": "W1-S70 and S72 GRADUATED and STAY ARMED: the 15 rows carrying a brace token the schema does not sanction at all, and two generated fixtures still stamped with a round-3 registry that their own issuer may not refresh.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W1-S70 is the group the campaign correctly refused to dispose: 15 of the 235 carry {snap}, {dim_name}, {firm}, {d} or {dc}, none of which NAMING_SCHEMA.json's grade.placeholder sanctions as a placeholder at all -- so 'resolve the substitution from a declared source' has no declared source to resolve from, and choosing among the three possible remedies would be adjudicating significance rather than measuring it. Filing it ARMED is the right act. S72 is a GRANT constraint rather than a defect of anyone's work: the two generated opal_name test fixtures still declare a round-3 registry stamp, and the issuer cannot be the one to refresh them. It is the same two fixtures whose REPO-ONLY classification drives W1-S68's 7-versus-8, so the two rows share a subject and should be read together by whoever takes them.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md -- both rows read in full",
+   "VERIFIED BY THIS SEAT: NAMING_SCHEMA.json grade.placeholder sanctions exactly four tokens and W1-S70's five are none of them; the five counts sum to exactly 15"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-W1-S70",
+  "LGIC_ENFORCE-S72"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G on both, as each row names"
+}
+```
