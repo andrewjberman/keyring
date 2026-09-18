@@ -54,3 +54,25 @@ Verbatim, minutes after the words above:
    work under his word, not this seat's here.
 4. **A task to this seat:** the shapes of the data RESAPP pulls from every source, a review of the LGIC naming standards,
    and a plan to manage it properly. That plan carries the tier classification per prefix, measured.
+
+## Addendum ~22:0xZ -- the doctrine placement, chosen
+
+`0.0.0_AB_MSTR~Z` put two shapes to him (msg 23815), because `_home_bucket` (`lib/opal_naming.py:249-261`) resolves
+through `tiers.json.homes[tenancy][tier]` and every existing tenancy sends bronze and silver to `opal-data-assets`, so
+no scope row alone can make `address()` return an `opal-data-harvest` bronze address: (i) a new tenancy whose bronze and
+silver are scope-homed, or (ii) place his "opal-data-assets is client assets only" reading into the doctrine itself.
+Both this seat and `0.0.0_AB_MSTR~Z` recommended (ii). Verbatim:
+
+> yes 2 is the move
+
+**Reading, narrow:**
+1. **Option (ii) is chosen: the doctrine records what he said** -- `opal-data-assets` is for CLIENT data; general and
+   product data is homed by scope at every tier, bronze and silver included. It is a change to the one file every
+   address in the estate resolves through, which is why it was his call.
+2. **The placement is `0.0.0_AB_MSTR~Z`'s**, on the laptop fabric (`infra/logic/**` is lane PLATFORM_LOGIC_DOCS, which
+   excludes this lane), and the answer goes to `1.0.0_SA_CTO~Z` as that seat asked.
+3. **It is estate-wide, not AMGT-only** -- and the hazard this seat names for whoever writes it: changing the homes
+   table must NOT silently re-home another scope's live bronze or silver. Every existing general pipeline keeps the
+   address its own registry row states until its own migration project moves it (Rule 30 R19); the doctrine change
+   states the rule, and per-scope homes record where each pipeline actually is.
+4. **Client-confidential data is untouched:** R4-R7 bind there with no free axis.
