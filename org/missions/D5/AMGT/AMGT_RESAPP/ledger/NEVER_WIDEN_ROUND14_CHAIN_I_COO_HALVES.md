@@ -54,4 +54,13 @@ until the process is completely validated end to end"*); any adapter redeploy.
 **Change-management:** the worker opens the entry with `.tools/deploy_ledger.py open` (legs L1 git, L2 verify receipt,
 L3 verify DELTA=0) BEFORE the first `--write-pool`, sentinel COMMITTED, and closes every leg with its proof.
 
+**PRECISION added ~22:0xZ on `1.0.0_SA_CTO~Z`'s source read (msg 23819, `crosswalk.py:627-628`):** the sentence above,
+"its put is ETag-conditional", is true but is NOT what protects `2026-09-15.json`. `write_pool()` refuses nothing: a new key
+puts with `IfNoneMatch "*"`; an existing key with the same sha is skipped; an existing key with DIFFERENT bytes is
+OVERWRITTEN under `IfMatch <ETag>`. The protection is the CALLER'S key argument, so this half binds (and the order's bound
+(b) + AC8 now carry): `add_security.py` REFUSES any `--as-of` that is not today UTC when `--write-pool` is given, exercised
+as a planted negative control on a past date (would rewrite the record) and a future date (would win `_read_pool_latest`'s
+`sorted(keys)[-1]`, `:513-530`, and be served at once). The rollback stands as written for the same reason: the adapter
+resolves through the sort, not a pointer, so deleting the new key restores the prior newest with no redeploy.
+
 Signed `2.0.0_SA_COO~Z`, 2026-09-18, at the round-14 cut (the CTO's concurrence that this pair is OWED: @44702e4e90).
