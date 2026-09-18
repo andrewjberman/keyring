@@ -82,7 +82,9 @@ credits.
 
 ---
 
-## 2. Two decisions that are Andrew's
+## 2. Two decisions that are Andrew's -- BOTH ANSWERED YES ~17:1xZ, see section 8
+
+Kept as first written so the record shows what was asked.
 
 | the question | why it is his | this seat's recommendation |
 |---|---|---|
@@ -134,7 +136,8 @@ All of this is round-14 material, cut by `2.0.0_SA_COO~Z` after round 13's slug 
    the VLO age-in-role mis-split. Then one layout per new document family from the Thesis battery (ESEF, company-site
    annual report, translated original). The translation design (Thesis brief s.8.4) applies: names in their original
    script are kept, and matched to English only on an exact rendering.
-7. **The two cards**, as Andrew answers them.
+7. ~~**The two cards**, as Andrew answers them.~~ **BOTH YES (section 8):** 7a, the labelled Bloomberg fallback roster
+   (a contract change first); 7b, Lusha as a step of instantiation, keyed on the verified company domain.
 
 ---
 
@@ -172,3 +175,61 @@ No seat is re-tasked, no scope is widened, no task is enabled, no run is made an
 execution behind it is read-only: the adapter's own reads and the management batch's `--dry-run`, which makes no
 vendor call and writes nothing. The three-name instantiation validation (an Opus subagent of this seat, authorized
 ~16:5xZ) is still running and will report into this brief and the Thesis brief when it lands.
+
+---
+
+## 8. UPDATE 1, 2026-09-18 ~17:1xZ -- both cards YES
+
+Andrew-direct, recorded verbatim in `ANDREW_DIRECT_20260918_17xxZ_EXEC_MANAGEMENT_CARDS.md`: *"1.) Yes. 2.) Yes they
+should."*
+
+### 8.1 Card 1 -- a Bloomberg officer list fills the table when the filing gives none
+
+**What it is:** when the filing stage yields no RESOLVED roster, the officer table is filled from Bloomberg's
+`COMPANY_EXEC_OFFICERS` (name and title), labelled on the page as Bloomberg's, with role start, tenure and the pool
+comparison ABSENT and the reason stated ("Bloomberg carries no role start"). Today that would put named executives on
+all 21 keyed names without a filing (measured populated for all 21), and it is the only route to a roster for any new
+security whose filing the battery cannot yet reach.
+
+**What it needs, in order -- all for `1.0.0_SA_CTO~Z`'s L4:**
+1. **A contract change first.** C-EXEC-MANAGEMENT makes the filing the roster authority (`roster.py:1-15`). The
+   amendment adds a second, LOWER source, and it is ratified text, so the CVO signs that half.
+2. **The roster object carries its source,** e.g. `roster_source: FILING | BLOOMBERG_FALLBACK`, per "a value must carry
+   its claim". The adapter serves it, and the tab labels every Bloomberg row.
+3. **The filing's failure travels WITH the fallback.** When a filing exists but its roster failed (today ASML, PBR,
+   HAL, INTU, KMB), the object keeps the filing roster's `roster_reason` beside the Bloomberg officers. **Otherwise the
+   fallback hides the parser defects that section 4 items 5-6 exist to fix,** and a census would read "covered" where
+   the filing path is broken.
+4. **The filing wins when it arrives.** A RESOLVED filing roster supersedes the fallback on the next build.
+5. **The pull.** `COMPANY_EXEC_OFFICERS` is one more field on an existing Bloomberg reference pull, beside `CIE_DES` /
+   `CIE_DES_BULK` for the description (Lead Panel brief 11.3). Adding a field is not a cadence change. Parsing: each
+   entry reads `"<name>,  <title>"` (two spaces), with nicknames and honorifics inside the name (`Manveen Kaur "Pam"`,
+   `Dr Thomas Schinecker`), kept verbatim.
+6. **The count stays honest.** Section 5's "served means at least one officer" applies to both sources, and every
+   census prints FILING and BLOOMBERG_FALLBACK separately.
+
+### 8.2 Card 2 -- Lusha profile links are a step of instantiation
+
+**What it is:** every new security's instantiation includes the Lusha step: one prospecting call by company domain,
+bounded at 2 credits a name by `enrich.py`'s own `CREDIT_BOUND_PER_NAME`, attaching profile links to officers already on
+the roster.
+
+**What it needs:**
+1. **The domain comes from the instantiation, not a hand list.** It is taken from the company site the filings battery
+   verified at step 4 (Thesis brief s.8.2, the entity test), replacing the 5-name `domains.json`. It is **never taken raw
+   from Bloomberg's web address**, which points at a subsidiary or branch for HSBC, ICICI Bank and SSE.
+2. **A name with no verified domain** records Lusha as NOT ATTEMPTED with that reason, never a guessed domain -- the
+   module's existing rule.
+3. **Bloomberg-fallback officers are enrichable.** The contract says Lusha attaches to an officer the FILING confirmed;
+   with card 1 it attaches to an officer confirmed by the roster's own source, and the label carries which. That wording
+   belongs in the same contract amendment as card 1.
+4. **Credits are measured, not estimated,** on the validation names before the step runs at any scale: matched officers
+   per credit. Today's measured baseline is weak: 11 of 62 officers linked across the pilot, and BABA matched 0 for 2
+   credits.
+
+### 8.3 Not covered by either answer -- put back to Andrew
+
+- **The CEO-profile web search** (Bright Data SERP) is the OTHER billed half of enrichment, and card 2 named Lusha only.
+  It stays undecided, and section 4 item 1's honesty fix applies to it either way.
+- **Whether the running three-name validation should exercise Lusha** (about 6 credits). Its recorded scope excludes
+  Lusha and stays that way until he says otherwise.
