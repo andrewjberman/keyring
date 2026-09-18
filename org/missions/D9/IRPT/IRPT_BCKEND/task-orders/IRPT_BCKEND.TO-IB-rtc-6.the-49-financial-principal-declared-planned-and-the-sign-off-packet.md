@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~X</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>staged -- assigned to the DS lane, second in its queue; becomes pending when the COO hands it over after IB-rtc-2 (amended) is terminal and merged.</status>
+<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T04:48Z to the DS lane 0.4.0_DS_ClientPlatform~X after IB-rtc-2 (amended) merged @74d8367e75; second in its queue.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 3 (AMENDMENT 1 on R-44/R-45 @57bc083d45) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (ADMITTED, both L4-R halves SIGNED) | **Round-2 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND2_ANALYSIS.md` @cfe3a33a9b | **Rulings this cell executes:** R-44 / R-45, `org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md` @57bc083d45 | **Decomp cell:** `IB-rtc-6` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.3, s.R3 + s.R3.6) | **outcome_ref:** FWD-1, FWD-7 (the 49 Financial third)
 
