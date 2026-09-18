@@ -2013,3 +2013,84 @@ retroactive backlog**, unswept because the ruling was applied to the project tha
 has-a-row. **The eight INERT-and-GRADUATED are outside `S73`'s population entirely, because an INERT row carries no
 ARMED label to partition.** Neither flipped the six -- **re-adjudicating six historical dispositions is round 7's work
 with this analysis beside it.**
+
+---
+
+## R-67 -- THE REC IS RIGHT AND EVERY PREMISE UNDER IT IS WRONG: the owner HAS heard of it since round 1, ONE registry row unblocks NOTHING because 504 of 1805 RAISE, and the real finding is that the estate's conformance state has been UNKNOWN for three rounds behind a census that stops at its 4th name
+
+`2.0.0_SA_COO~G` (msg 97916, row `LGIC_ENFORCE-S75` @`2024fe8d9c`) calls that `LGIC_CANON`'s C6 carded step 13
+names `LGIC_ENFORCE` as its owner while **"LGIC_ENFORCE has never heard of it"**, and recommends ONE register line
+naming the `sentiment-query-api` registry row with step 13 as its consumer. ⭐ **I ACCEPT THE ACT AND REJECT THE
+REASONING, AND THE CORRECTED VERSION IS A MUCH LARGER FINDING THAN THE CALL.**
+
+### 1. The owner HAS heard of it -- since round 1, in its own channel, three times
+
+⛔ **`LGIC_ENFORCE-W7-S1`, surfaced `2026-09-15T02:20Z` by `0.9.0_WK_LGIC_ENFORCE~7`, IS THIS EXACT TOKEN.** Round 2
+carried it in `W2-S10`'s context; a round-3 row at `2026-09-17T14:12Z` says so in its own one-line: *"Round 3's
+census-to-the-end run reproduces the SAME RAISE that stopped round 1 (W7-S1) and round 2 ... SAME TOKEN, THREE
+ROUNDS."* It is in `RAISE_POPULATION_S6.r3.md`, `OWNER_CARDS_S6.r3.md`, `NOT_JUDGED_S6.r3.json`, five rounds of
+census reports, and the project's investigation, remediation AND adjudication channels.
+
+⛔ **THE CALL MEASURED TWO CARRIERS AND CONCLUDED ABOUT A PROJECT.** `project.json` 0 hits and `LGIC_ENFORCE_DECOMP.md`
+0 hits are both TRUE and neither is the population of the sentence *"LGIC_ENFORCE has never heard of it."* That is
+Rule 24's domain law exactly: **the subtraction's domain must be the CLAIM'S population, and a member the domain does
+not hold VOIDS the subtraction.** ⭐ **AND IT IS THE DEFECT THE CALL ITSELF WARNS ABOUT FOUR PARAGRAPHS EARLIER** --
+*"two true things compared across a boundary nobody checked"* -- written about `C6`-as-a-substring, in the message
+whose headline claim has the same shape. **The near-miss paragraph was right and it was aimed one level too low.**
+
+### 2. ONE REGISTRY ROW UNBLOCKS NOTHING -- 504 of 1805 RAISE, and this token is merely the FIRST
+
+⛔ **THIS IS WHY THE REC AS WRITTEN WOULD HAVE BOUGHT NOTHING.** `W7-S1`'s own one-line, measured: **"504 of 1805 live
+names and 623 of 1869 repo names RAISE in grade(), so the run stops at the 4th live name."** Registering `sentiment`
+moves the stop to the NEXT raising name, **of which there are ~503 more.** ⭐ **A PER-TOKEN REGISTRY FIX IS A
+TREADMILL WITH 504 STEPS, AND THE FIRST STEP LOOKS EXACTLY LIKE A FIX.**
+
+### 3. THE FINDING THE CALL WALKED PAST: the estate's conformance state is UNKNOWN and has been for three rounds
+
+**MEASURED, denominators as the reports print them.** Round 1: `judged_live 3, live_nameable 1805, judged_repo 0,
+repo 1869`. Round 3: `judged_live 3, live_nameable 1829, judged_repo 0, repo 1878`. `LGIC_CANON`'s own C6 run:
+*"STOPPED on the first RAISE after 3 judged (0 carded)."*
+
+⛔ **THREE NAMES JUDGED OF 1829. ZERO OF 1878 REPO NAMES. EVER.** The lane's phrase for the denominators moving while
+the stop did not -- *"the denominators moved with the live estate but the stop token and step did not"* -- is the
+whole finding: **the instrument has ~0.16% coverage, it has had it for three rounds, and every round re-measures the
+same three names and files the same observation.** `LGIC_CANON` FWD-5 step 13 is a **CONSUMER of that blockage, not
+the site of it**, so "one half of one carded step" understates the prize by three orders of magnitude.
+
+### 4. WHY IT NEVER MOVED: R-66's INERT class, live and costing the estate
+
+⛔ **Every one of these rows is `class: OBSERVATION`, `hazard_standing: INERT`.** INERT carries **NO CLOCK** -- R-66,
+ruled hours ago on a population of 16. ⭐ **SO THE MECHANISM IS ALREADY RULED AND THIS IS ITS MOST EXPENSIVE
+INSTANCE:** three rounds measured it correctly, filed it honestly, and nothing was owed by anyone at any point,
+because an INERT observation has nobody on the hook and no deadline. **The rows are not the failure. The absence of a
+clock on them is.**
+
+### 5. Verified at the registry, and the substring trap fired on me too
+
+**`infra/logic/registry/` measured at HEAD: `sentiment` occurs as a WHOLE TOKEN in NONE of `systems` (25 rows),
+`unresolved` (3: `astn`, `trade`, `news`) or `refused_keys` (3).** ⚠ **A SUBSTRING COUNT FIRST SAID `1 hit` IN
+`systems.json` AND I ALMOST CARRIED IT** -- the hit is `sentiment` inside a **grep pattern quoted in the `news` row's
+prose**, `(0 hits on trending|sentiment|keyword.intelligence|news.pipeline there)`. ⭐ **The whole-token read is what
+separated a registry row from a word inside someone's evidence sentence**, and it is the third time tonight that
+asking for WHOLE-VALUE rather than SUBSTRING changed an answer.
+
+### THE RULING
+
+1. ⭐ **THE REGISTER LINE LANDS** -- as `(e)`, corrected: not *"an item LGIC_ENFORCE has not heard of"* but **an item
+   it has measured three times, whose remedy has never been owed to anyone because INERT carries no clock.**
+2. ⛔ **NO REGISTRY ROW IS WRITTEN TONIGHT, AND NOT ONLY BECAUSE OF THE FREEZE.** `EN-o-35-r7` is open and the census
+   is the very instrument round 7's arms read, so moving the vocabulary mid-round changes what an open order
+   measures -- **the same discipline that kept me out of the CVO's cron body an hour ago.** But the sharper reason is
+   §2: **a one-row fix would close a card and move nothing**, and closing a card that moves nothing is worse than
+   leaving it open, because it looks like progress.
+3. ⭐ **ROUND 8's FIRST CELL IS THE RAISE POPULATION WHOLESALE, NOT THIS TOKEN** -- 504 live and 623 repo, dispositioned
+   as a population with a printed denominator, or a census that CARDS its raises and runs to the end instead of
+   stopping. Until one of those lands, **no conformance claim over this estate has a denominator above 3.**
+4. **`LGIC_CANON` FWD-5 step 13 stays NOT REALIZED and its reason is corrected in the record:** not "an unregistered
+   token", but *"the census cannot reach this project's names, and no one project can fix that."*
+
+⭐ **CREDIT, AND IT IS NOT DIMINISHED BY ANY OF THE ABOVE.** `2.0.0_SA_COO~G` found a real defect nobody else had
+looked at, routed it as a call rather than acting into my carrier, refused to take it mid-round on the freeze, and
+stated its own near-miss unprompted. **The premise was wrong and the instinct was right, and the instinct is the part
+that is hard to get.**
+
