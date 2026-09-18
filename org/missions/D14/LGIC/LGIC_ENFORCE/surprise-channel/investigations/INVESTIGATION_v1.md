@@ -3738,7 +3738,53 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
-}
+},
+  {
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "fabric": "laptop",
+    "grounding": {
+      "evidence": [
+        "MEASURED, the order at a6476ef28f (org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-s-41-r9.percent-style-scope.md, section WHERE YOUR RECORD GOES): the template reads {\"decision\": \"HOLD-BRACE-ONLY\" | \"WIDEN\", \"why\": ..., \"population\": {\"instrument\", \"denominator_measured_at_write_time\": <int>, \"percent_style_occurrences\": <int>, ...}, \"excludes\": [...], \"schema_change\": {...}, \"grades_moved\": 0, \"disarms\": ...}.",
+        "MEASURED, the instrument at a6476ef28f (org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r9/check_en_r9.py): core_s41_decision (:194-210) requires `decision` to be a DICT with `branch` and a `why` of 40+ chars, and returns 'missing `decision` block' for a string; core_s41_population (:213-228) reads `percent_style_population.rows` and a `denominator_measured_at_write_time` DICT {instrument, value}, where the face gives an int under `population`; core_s41_negative_arm (:231-250) reads `negative_arm.{tested,rejected}`, which the face does not name (it names `excludes`); core_s41_no_silent_move (:253-280) reads `exclusion_table_after`, which the face does not name (it names `grades_moved`).",
+        "HANDLED IN THIS CELL, not worked around: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/PERCENT_STYLE_SCOPE_R9.json carries the instrument's shape AND every field the face names beside it (decision.branch/why plus top-level why; percent_style_population plus population; negative_arm plus excludes; exclusion_table_after plus grades_moved), so both readers are served and no fixed input was edited. selftest-arms returned 27 arms, 0 failures, before any record existed -- the positive arms are satisfiable; the defect is only between the face and the instrument."
+      ],
+      "status": "GROUNDED"
+    },
+    "hazard_standing": "INERT",
+    "id": "LGIC_ENFORCE-W2-S14",
+    "notes": "FORM only. INERT: the order is this round's only s41 order and this record satisfies both shapes; a re-cut of the face or a future order reusing its template would re-expose it. COST: none beyond the read.",
+    "one_line": "TO-EN-s-41-r9's worker face prints a record shape its own acceptance instrument cannot pass: the face shows `decision` as a bare string and a `population` block, while check_en_r9.py reads `decision.branch`, `percent_style_population`, `negative_arm` and `exclusion_table_after` -- a record written to the face verbatim FAILS S41R9-AC1..AC4.",
+    "project": "LGIC_ENFORCE",
+    "spec_asserts": "The worker face is the worker's whole context (Rule 27 L7), so a record written to the face's printed shape should satisfy the criteria the same face names.",
+    "surfaced_at": "2026-09-18T17:25Z",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "world_is": "The face's printed record shape and check_en_r9.py's s41 cores disagree on four keys; only a worker that reads the fixed instrument's source discovers the required shape."
+  },
+  {
+    "class": "OBSERVATION",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "disposition": "UNDER_INVESTIGATION",
+    "fabric": "laptop",
+    "grounding": {
+      "evidence": [
+        "MEASURED, org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/PERCENT_STYLE_CENSUS_R9.out.json (percent_style_census_r9.py limb B, run 2026-09-18T17:22:13Z at base a6476ef28f): git ls-files over 6498 tracked .py files, 6498 scanned, 0 unreadable; 44 tier-prefixed (bronze/ silver/ gold/ platinum/ state/ code/) key-shaped literals carrying a printf field, in 33 files; tier_prefixed_not_in_census = 42.",
+        "MEASURED, limb A of the same run: NAMING_CENSUS_REPORT.r8.md's rows fence holds 3254 rows, of which exactly 2 carry a %-field in `current`, both 'silver/%s/' (S3Key, plane repo) -- SILVER_PREFIX_FMT at infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py:69 and infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe/lambda_function.py:67.",
+        "MEASURED, the 11 first-party producer files carrying unadmitted literals: data/assets/scripts/gold/investor_reporting/holdings_snapshot.py (:662, :663, :665, :847), data/assets/scripts/gold/runners_49f/perfrp_emit_core.py (:1684, :1688), data/cot/scripts/bronze/cot_bronze_ingest.py:1366, data/cot/scripts/gold/B_00.canonical_holdings.py:128, data/etfs/scripts/coverage/remediate.py:172, data/etfs/scripts/presentation/render_month_end.py (:1075, :1076), infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/lambda_function.py:72, infra/aws/lambda/bd-pipeline/bd-49f-fees-runner/lambda_function.py:49, infra/aws/lambda/cot-pipeline/cot-etf-ownership-daily/lambda_function.py:98 -- plus the two freshness probes, whose ONE constant each was admitted.",
+        "CORROBORATED by a different instrument on the same domain: comp-find over corpus=default (35732 files scanned, 69 hits) names the same 11 first-party producer files."
+      ],
+      "status": "GROUNDED"
+    },
+    "hazard_standing": "ARMED",
+    "id": "LGIC_ENFORCE-W2-S15",
+    "notes": "FORM, not significance, and NOT this cell's to remedy: the census extractor is outside this order's <paths>. ARMED because, left alone, the 42 literals stay invisible to the census under EITHER scope decision -- EN-s-41's WIDEN only decides how a %-style row is classed once admitted. Disarm owner 2.0.0_SA_COO~G, the issuer already carrying the census campaign cards. Some of the 42 are tests and seat deliverables and may be correctly out of the census; the 11 producer files are the part the owner's read decides. COST: none beyond this cell's own limb B.",
+    "one_line": "The naming census admits 2 %-style S3 key literals from the repo plane (both 'silver/%s/') while tracked .py source carries 44 tier-prefixed %-style key literals in 33 files -- 42 never became census rows, 11 of the 33 files first-party producers, including a sibling constant in the same Lambda family as an admitted one.",
+    "project": "LGIC_ENFORCE",
+    "spec_asserts": "The naming census's repo plane is the population key.grammar and key.template_detection grade; a producer's declared S3 key format is a row of it (the two 'silver/%s/' rows prove the extractor reads Python key constants).",
+    "surfaced_at": "2026-09-18T17:25Z",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~2",
+    "world_is": "The extractor admitted 2 of 44 tier-prefixed %-style key literals in tracked source; why it admits these two and not, e.g., 'platinum/reports/%s/etf_ownership.pdf' in the same Lambda family is NOT measured here -- this row states the shape only."
+  }
 ]
 ```
 

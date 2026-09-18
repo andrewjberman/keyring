@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves current) | **Decomp cell:** `EN-s-41` (decomposition v3.8 s.0i) | **outcome_ref:** FWD-2 | **depends_on:** none -- the only order on slot `~2`
 
