@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete -- C31R5-AC1 PASS, C31R5-AC2 PASS, C31R5-AC3 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9). proof-of-spec-check.py rc=0 VALID at f67dbcbbc0. 0.9.0_WK_LGIC_ENFORCE~1.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves current) | **Decomp cell:** `EN-c-31` (decomposition v3.4 s.0e) | **outcome_ref:** FWD-5 | **depends_on:** `EN-h-29-r5` drained (same queue, same folder grant)
 
