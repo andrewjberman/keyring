@@ -1,12 +1,11 @@
 {
   "prd": "NFRA_MCPINDEX_PRD.md",
-  "prd_version": "v0.4",
-  "prd_pin": "9635e8f16c63c6729d28bce977c3528b57399c68",
+  "prd_version": "v0.5",
+  "prd_pin": "b7dc80e2cc75d20e35980b0fd30677fc3675363f",
   "half": "ratified-text",
-  "half_hash": "9536b1e3f05ad729bfec98fd240feb8848a6b2ad83c5090d8f904deb3a03dd56",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.4_RATIFIED_TEXT_HALF_20260918.md@09653cd330",
+  "half_hash": "c099e433c75782cbb75a48e3d45b952da6491358f3a45de2bb3ad3fc85106156",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.5_RATIFIED_TEXT_HALF_20260918.md@ecbf1669ca",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-18T01:04:31Z",
-  "reason": "The ten cards are verbatim and verified; the section's preamble carries version history and a seat name, which the bar forbids inside the section"
+  "signed_at": "2026-09-18T01:26:25Z"
 }
