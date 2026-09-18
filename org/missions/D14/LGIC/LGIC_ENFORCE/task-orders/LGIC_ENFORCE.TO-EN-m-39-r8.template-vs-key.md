@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~3</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete -- key.template_detection landed org/standards/NAMING_SCHEMA.json v1.10->v1.11 @21b9b46e80; M39R8-AC1..AC4 PASS-by-output, M39R8-AC5 UNVERIFIABLE-BY-INSTRUMENT (oracle 3.0.0_SA_CVO); proof-of-spec-check rc=0; surprise row LGIC_ENFORCE-W3-S17 filed</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves current) | **Decomp cell:** `EN-m-39` (decomposition v3.7 s.0h) | **outcome_ref:** FWD-5 | **depends_on:** none -- the only order on slot `~3`
 
