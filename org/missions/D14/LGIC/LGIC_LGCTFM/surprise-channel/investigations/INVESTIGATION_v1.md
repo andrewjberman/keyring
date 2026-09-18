@@ -779,6 +779,52 @@ PRD, so it is a row here, not a message.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "INERT today because the advisory does not block. The row is filed because 1.0.0_SA_CTO is validating the comp-tools and their gates in parallel, and a false positive on the sanctioned route would refuse this engine the day the mode flips. The worker does not judge significance."
+   },
+  {
+    "id": "LGIC_LGCTFM-W1-S30",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+    "surfaced_at": "2026-09-18T22:27:09Z",
+    "one_line": "THE ORDER NAMES THREE WRITE SITES FOR THE PACKAGE FIELD AND ONE OF THEM DOES NOT EXIST: render_plan_md() has never printed `dependencies` under either spelling. plan.md renders only `package_id`, the never-widen flag and `objective`, so the rename could not land there and the human-readable artifact still shows no step relation at all. Two sites existed and both were renamed; no rendering change was invented to satisfy the third.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "LGIC_LGCTFM.TO-LT-p-2-r3.step-dependencies.md WORKER FACE, WHAT YOU BUILD 1: \"Rename the package field to `step_dependencies` everywhere the engine writes it (the field list, the package builder, `plan.md`'s rendering)\".",
+    "world_is": "Measured before the edit @f08295cc8f: `comp-read lib/opal_lgctfm.py --enumerate 'dependencies'` returns 3 hit(s) across 2024 lines -- :129 COMMENT (the ATOM_DECOMP quote), :131 CODE (PACKAGE_FIELDS) and :1746 CODE (_build_one_package). None is inside render_plan_md() (lib/opal_lgctfm.py:1762-1796 @f08295cc8f), whose only per-package line is `- %s%s: %s` over package_id, the never-widen flag and objective. The rename therefore touched 2 of the 3 named sites, and plan.md is byte-unaffected by it.",
+    "grounding": {
+     "status": "GROUNDED",
+     "evidence": [
+      "comp-read lib/opal_lgctfm.py --enumerate 'dependencies' @f08295cc8f: 3 hits / 2024 lines, bands DOCSTRING=0 COMMENT=1 DEF=0 CODE=2",
+      "lib/opal_lgctfm.py render_plan_md() :1762-1796 @f08295cc8f: the package line is \"- %s%s: %s\" % (package_id, flag, objective) -- no dependency field of either spelling",
+      "after the edit @df4753e185: `comp-read lib/opal_lgctfm.py --enumerate '(?<![_a-z])dependencies'` returns 2 hit(s), both COMMENT (the verbatim ATOM_DECOMP quote and the rename note), CODE=0"
+     ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: nothing is broken and no criterion reads plan.md. Filed because the next reader of this order would look for a rendering change that was never possible, and because the underlying question -- whether plan.md should print the step relation at all -- belongs to whoever owns FWD-6's `resource_dependencies`, not to this cell. No rendering was added: the order's WHAT YOU BUILD 4 forbids inventing a relation field, and inventing a plan.md line to make the premise true would be the same move. The worker judges form, not significance."
+   },
+  {
+    "id": "LGIC_LGCTFM-W1-S31",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+    "surfaced_at": "2026-09-18T22:27:09Z",
+    "one_line": "ROUND 1's FIXED-INPUT CHECKER STILL NAMES THE OLD SPELLING AND IS AN EXPOSURE, NOT AN INCIDENT. check_lt_r1.py's own PACKAGE_FIELDS carries `dependencies`; its p1-fields arm reads the FROZEN plan_r1/plan.json, so it reads PASS today (1626 packages, 0 missing). Against a FRESHLY BUILT plan it would report 1074 of 1074 packages missing a field -- measured, not predicted. The file is outside this order's <paths>, so it is not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "LGIC_LGCTFM.TO-LT-p-2-r3.step-dependencies.md WORKER FACE: \"No package carries `dependencies` after the change\", with P2R3-AC4 asking 3.0.0_SA_CVO \"whether any remaining reader of the old name (a doc, a skill, a checker) was left pointing at a field that no longer exists\"; BOUNDS grant only lib/opal_lgctfm.py, infra/logic/10_LEGACY_TRANSFORM.md, the channel and this slot's deliverables.",
+    "world_is": "Measured @df4753e185. (1) org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py:84 PACKAGE_FIELDS = ('objective', 'dependencies', ...) -- read out of the file by ast, never retyped. (2) `python check_lt_r1.py p1-fields` -> \"packages 1626; missing one of the eight fields: 0\" / PASS-P1-EIGHT-FIELDS-EVERY-PACKAGE, because _plan() reads PLAN_DIR/plan.json -- the frozen round-1 deliverable, which keeps the old spelling. (3) Driving that same core over a plan built by the edited engine on a scratch copy of the graded run: packages 1074, would-report-missing 1074, first offender's missing field ['dependencies']. So the gap has NOT fired and nothing needs re-opening; it fires the first time the r1 arm meets a fresh plan.",
+    "grounding": {
+     "status": "GROUNDED",
+     "evidence": [
+      "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py:84 and :909-917 @df4753e185: PACKAGE_FIELDS and core_pkg_fields()",
+      "python check_lt_r1.py p1-fields @df4753e185 -> PASS-P1-EIGHT-FIELDS-EVERY-PACKAGE, \"packages 1626; missing one of the eight fields: 0\"",
+      "core_pkg_fields' rule over a fresh plan (engine `plan` on a scratch copy of workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1) @df4753e185: 1074 packages, 1074 would report missing ['dependencies']",
+      "check_lt_r3.py p2-renamed @df4753e185: packages 1074; carrying `dependencies` 0; carrying `step_dependencies` 1074"
+     ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ARMED with disarm_owner 2.0.0_SA_COO~G because the remedy is one token in a round-1 fixed input this order does not grant, and a worker never widens its own <paths>. The distinction matters for the remedy: an EXPOSURE is closed by editing the r1 checker (or by declaring round 1's arms frozen against round 1's frozen plan), while an INCIDENT would also require re-opening whatever the gap admitted -- and the r1 arm's run above shows nothing was admitted. Round 1's graded evidence stands unchanged. This row is the measurement P2R3-AC4 needs; the grade itself is 3.0.0_SA_CVO's and no verdict is offered here."
    }
 ]
 ```
