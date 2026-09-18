@@ -3,7 +3,7 @@
   "project": "NFRA_MCPINDEX",
   "directive": "D9",
   "fabric": "laptop",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "docs/briefs/opal-mcp-tool-index-brief-20260917.md@826ac6925a",
   "endpoint_outcomes": [
@@ -95,11 +95,7 @@ measurement.
 
 The ten outcomes are `org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MCPINDEX_ENDPOINT_FORWARD_20260917.md` @`9da61cab00`,
 confirmed by Andrew ~19:0xZ. **They are TRANSCRIBED from that pin verbatim below -- statement, DONE WHEN, ACCEPT
-and PROOF -- and only the SOURCE line is dropped.** v0.2 and v0.3 carried a COMPRESSED paraphrase of each card,
-which `3.0.0_SA_CVO` refused at the ratified-text half (@`7fef989e77`): a reworded ACCEPT is a different bar, and
-the operative constraints were the ones that went missing -- FWD-3's "transactions are reachable, not only the
-three `dim_*` tables", FWD-8's "no new vendor egress beyond Andrew's standing per-use word", FWD-9's "removal
-takes effect without a redeploy". The endpoint document remains the text that governs.
+and PROOF -- and only the SOURCE line is dropped.** The endpoint document remains the text that governs.
 
   FWD-1  A staff member who does not know which system holds a fact asks Claude and is
          pointed to the right tool, with the data's freshness and scope, on the first try
