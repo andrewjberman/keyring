@@ -2355,3 +2355,56 @@ second write rather than a stale read), with a NEVER-2 ledger opened before and 
 3. **Nothing is re-deployed and nothing is rolled back** -- the integrator's act was correct, complete and better
    evidenced than my description of it.
 
+---
+
+## R-72 -- MY TWO CLOCKS ARE NOT ONE ITEM, AND I PAIRED THEM WRONGLY: `W7-S1` IS CARRIED BY ROUND 8, `W7-S4` IS NOT, AND THE CELL THAT SERVES ONE IS ONLY THE **PRECONDITION** OF THE OTHER
+
+The round-7 analysis and R-68 both wrote **"`W7-S1` and `W7-S4` -- this seat's own open clocks"** as a pair and named
+them round 8's first cell. ⛔ **THEY ARE TWO DIFFERENT ITEMS WITH TWO DIFFERENT REMEDIES AND ONLY ONE IS SERVED.**
+
+**MEASURED at the round-8 cut (`2.0.0_SA_COO~G`, four orders now open of 59, by the gate's own
+`_open_tos_for_project` run):**
+
+- ⭐ **`W7-S1` IS CARRIED.** `LGIC_ENFORCE.TO-EN-p-36-r8.raise-population.md` names it **twice**, carries
+  `outcome_ref: FWD-5`, and its cell text is the row's remedy in full: *"the naming census stops on its FIRST RAISE,
+  on both planes, and has for eight rounds ... every sentence anyone has written about this estate conforming rests on
+  3 live names and 2 repo names. Your job is to make the census RUN TO THE END."*
+- ⛔ **`W7-S4` IS NOT CARRIED -- ZERO mentions in that order or any other round-8 order.** Its defect is a different
+  object: *"EN-s-2 sets the census totals beside N2, N6 and IV7, but the census it reads judged 3 of 1805 live names
+  and 0 of 1869 repo names ... The comparison holds for those 3 names and SAYS NOTHING ABOUT THE ESTATE."*
+  ⭐ **THE DEFECT IS THE COMPARISON'S VACUITY, NOT THE CENSUS'S STOP.** Making the census run to the end makes a real
+  comparison POSSIBLE; **it does not perform one.**
+
+### ⛔ SO `EN-p-36-r8` IS `W7-S4`'s PRECONDITION, NOT ITS REMEDY -- and that is a class, not a one-off
+
+⭐ **AN ITEM WHOSE BLOCKER IS BEING CLEARED BY A CELL THAT DOES NOT OWN THE ACT THAT BECOMES POSSIBLE WHEN IT CLEARS
+IS INVISIBLE TO EVERY MECHANISM RULED TONIGHT.** It is not rowless (R-66's `S74`), not unserved-by-neglect (`S75`),
+and not unsatisfiable (`S78`) -- **its condition becomes satisfiable for the first time at the end of a round that has
+no cell for it.** ⛔ **A FOURTH CLOCK-FAILURE CLASS: THE NEWLY-SERVABLE CLOCK.** And it decays exactly like the
+others, because the round that unblocks it has no reason to look at it and the next round has no reason to know.
+
+### And the window closed on me while I was writing the thing that closed it
+
+⛔ **The gate would have admitted these clocks between round 7's L10 (~11:0xZ) and round 8's cut. I SPENT THAT WINDOW
+WRITING THE ANALYSIS THAT UNBLOCKED THE CUT.** Four orders are open now and a new remediation row is refused.
+⭐ **THE CTO'S CLOCK-SERVICE WINDOW *IS* ITS ANALYSIS TURN, and nothing in the L10 sequence says so** -- slug -> CTO
+analysis -> recut means the only gap the CTO ever holds is the turn it is already spending. `3.0.0_SA_CVO` found its
+window by looking for it deliberately; **I had mine, used it correctly on the blocking deliverable, and the clocks
+slipped anyway.** ⚠ **That is not a mistake to correct -- the recut WAS the right priority -- it is a structural fact
+about this seat's position that belongs in the record.**
+
+### THE RULING
+
+1. ⭐ **`W7-S1`: CARRIED. It closes at round 8's L10 on `EN-p-36-r8`'s evidence** and needs nothing further from me.
+2. ⛔ **`W7-S4`: NOT CARRIED, and I am NOT asking for a mid-round cell** -- the decomposition is frozen and a new
+   order would extend the very round its remedy waits on (LD-0521, the lesson of the `NFRA_OPLGTW` branch-(1) strike).
+   **It is named NOW as ROUND 8's L10 OWED**, which is exactly R-66's bar: *asserted at the L10 the item's own round
+   is closing, before the slug.* ⭐ **Naming it early is the whole remedy for the newly-servable class** -- the round
+   that clears the blocker is the only round that will ever be looking.
+3. **The pairing in the round-7 analysis and R-68 is CORRECTED** rather than left to be inherited: **one clock, not
+   two, is round 8's first cell.**
+4. ⭐ **CREDIT: `2.0.0_SA_COO~G`'s cut is BETTER THAN MY (e).** I gave it the LIVE plane only -- 504 of 1805 raising,
+   `judged_live` 3 of 1829. **It measured the REPO plane too and found a second stop I never looked for: `repo 1878
+   names, 475 .tf files -> STOPPED after 2 judged on IAM_POLICY F49ServedAndSourceRead`.** ⛔ **So the conformance
+   claim rests on 3 live names AND 2 repo names, and I had only ever counted one of those two zeros.**
+
