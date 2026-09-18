@@ -254,7 +254,18 @@ that glyph leaves 212 / 135 / 251 characters that decode CLEAN AND WRONG. **Dele
 loud failure into silent mojibake, which is strictly worse and looks like compliance.** So the only
 two safe moves are ALL non-ASCII out, or every reader explicit (`encoding='utf-8'`) — **never a
 subset.** ⭐ Detector, one expression and zero cost: `len(b) - len(b.decode('utf-8'))` is 0 on a pure
-ASCII file. **COST: none — a do-not-do.** **NON-APPLICATION: a file that is ALREADY pure ASCII (keep
+ASCII file. ⛔ **THAT EXPRESSION IS A ZERO/NON-ZERO DETECTOR AND ITS MAGNITUDE IS A **BYTE DELTA**, NEVER A
+CHARACTER COUNT — the two differ by a factor that depends on WHICH codepoints are present, so no reader can
+recover one from the other.** Measured 2026-09-18 on this file: **byte delta 453, characters 234** (ratio 1.94;
+13 distinct codepoints, 3-byte `U+2014`×121 down to 2-byte `U+00A7`×9). The character counts quoted above are
+CHARACTERS; **a reader who reaches for the detector beside them gets a number in different units.** For a count,
+count: `sum(1 for ch in text if ord(ch) > 127)`. Measured the same day, TWO seats read the magnitude as a count
+within hours — `2.0.0_SA_COO~G` published 14 for 7 glyphs (4×`U+26D4`, 2×`U+2B50`, 1×`U+26A0`: 7 characters,
+21 bytes, delta 14) in three carriers and corrected itself; `1.0.0_SA_CTO` put the byte delta into a LAW-EDIT
+commit message as a “non-ASCII count”. **The detector stayed sound the whole time, which is why neither noticed:
+non-zero is non-zero, and nothing in the formula announces its unit.** COST: none — use the counting expression
+when you want a count. NON-APPLICATION: the pure presence/absence question, which the original expression
+answers perfectly and is all it ever claimed. **COST: none — a do-not-do.** **NON-APPLICATION: a file that is ALREADY pure ASCII (keep
 it that way), and any file whose every reader is known explicit.** Measured beside it: 29 of 91
 `.tools/*.py` carry non-ASCII (8 raising, 21 silent) and `.owned-paths.yaml` — the LANE-GRANT file —
 is in the SILENT class at 204. `2.0.0_SA_COO~Z` / `2.0.0_SA_COO~ZZZ` / `0.0.0_AB_MSTR~Z`, corroborated
