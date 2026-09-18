@@ -97,6 +97,15 @@ never repaired, widened, or satisfied by a route this order did not name.
 re-serialize it) and never edit an existing row. **Found something off-task? APPEND ONE ROW AND KEEP
 WORKING.**
 
+**ISSUER AMENDMENT 1 (2.0.0_SA_COO~Z, 2026-09-17 ~23:5xZ, at grading time):** AC2/AC3's `status` field name
+corrected to `state` (the runner's real `classify.py`-shaped field, per its own confirmed output) --
+matches the order's own `<expect>` text, which already anticipated a field-name substitution. AC2/AC3's key
+listing filtered to the date-partitioned shape (a trailing `/YYYY-MM-DD.json` regex) rather than a raw
+top-level prefix listing, since the pool now also carries 31 superseded flat-shape objects (row Z-S155)
+whose lexicographic sort order would otherwise put several of them ahead of the canonical shape in the
+un-filtered `[:3]`/`[:5]` slice. This is the SAME key-shape trap class row S141/AC-rk-23 already caught
+once this round, recurring on a different criterion.
+
 ## 5. PROOF OF SPEC -- one clause per criterion (every invocation is LITERAL; record it byte-for-byte; each runs under timeout 120)
 
 <proof_of_spec>
@@ -113,26 +122,25 @@ written = [o['Key'] for o in resp2.get('Contents', [])]
 print('scores_objects_written', len(written))
 "</invocation><expect>AFTER this order's runner executes, scores_objects_written is nonzero and reasonably close to keyed_count (a name may legitimately be ABSENT on all three fields and still get a written object -- the object exists, its fields carry the classification); the worker prints the exact key prefix it actually used if different from `scores/v1/`</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rk-30"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
-import boto3, json
+import boto3, json, re
 s3 = boto3.client('s3')
-# the worker substitutes its real key shape here before running
 resp = s3.list_objects_v2(Bucket='opal-data-harvest', Prefix='scores/v1/')
-keys = [o['Key'] for o in resp.get('Contents', [])][:3]
+keys = [o['Key'] for o in resp.get('Contents', []) if re.search(r'/\d{4}-\d{2}-\d{2}\.json$', o['Key'])][:3]
 for k in keys:
     doc = json.loads(s3.get_object(Bucket='opal-data-harvest', Key=k)['Body'].read())
-    print(k, {kk: (doc.get(kk) or {}).get('status') for kk in ('robustness', 'peers_v', 'divergence')})
+    print(k, {kk: (doc.get(kk) or {}).get('state') for kk in ('robustness', 'peers_v', 'divergence')})
 "</invocation><expect>every sampled object carries all three keys (robustness, peers_v, divergence -- the worker names its actual field names if different), each a MEASURED or ABSENT status per classify.py's shape; divergence reads ABSENT with a house-forecast reason on every sampled object, unconditionally</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-30"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
-import boto3, json
+import boto3, json, re
 s3 = boto3.client('s3')
 resp = s3.list_objects_v2(Bucket='opal-data-harvest', Prefix='scores/v1/')
-keys = [o['Key'] for o in resp.get('Contents', [])]
+keys = [o['Key'] for o in resp.get('Contents', []) if re.search(r'/\d{4}-\d{2}-\d{2}\.json$', o['Key'])]
 missing_field_absent = True
 for k in keys[:5]:
     doc = json.loads(s3.get_object(Bucket='opal-data-harvest', Key=k)['Body'].read())
     for field in ('robustness', 'peers_v'):
         rec = doc.get(field) or {}
-        if rec.get('status') == 'MEASURED' and rec.get('value') in (None, ''):
+        if rec.get('state') == 'MEASURED' and rec.get('value') in (None, ''):
             missing_field_absent = False
 print('planted_negative_holds', missing_field_absent)
 "</invocation><expect>planted_negative_holds is True -- no sampled record ever reports MEASURED with a null/empty value; this is the class of bug this whole round's S121 criteria-class ruling exists to catch (a status field that could read MEASURED on invented/missing data)</expect></criterion>
@@ -151,3 +159,9 @@ per `org/standards/PROOF_OF_SPEC.schema.json`, graded by YOUR WORKTREE'S OWN
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+<status>complete</status>
+<round>13</round>
+<slot>~29</slot>
