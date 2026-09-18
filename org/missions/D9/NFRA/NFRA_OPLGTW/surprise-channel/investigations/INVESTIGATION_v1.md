@@ -2590,6 +2590,27 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "This order's BOUNDS: 'The Gateway only through infra/aws/ec2/safe-ec2-deploy.sh. No hand copy, no direct SSM install...'; and 'A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.'",
     "world_is": "The one sanctioned deploy route fails closed at its own halt-gate identity check before any deploy work begins, because the route's own worktree-redirect fix points the identity resolver at the shared main tree rather than at the worker's own (issuer-provisioned) worktree copy of its session-serial file -- and the fix needed to close that gap is a write outside this worker's <paths>, in a different checkout entirely. No override exists for this failure branch and none was attempted.",
     "notes": "ARMED, not disarmed here: nothing was deployed (Step 1 passed, Step 2 never ran), so no AWS/host state changed and the deploy is not half-landed in the CLAUDE.md NEVER-2 sense -- it never landed at all. The open deploy-completion ledger (org/critical_paths/.open_deploys/nfra-oplgtw-og-r-1-first-release.json, opened this run for OGR1-AC1) has every leg still OPEN and unproven; it does NOT qualify for deploy_ledger.py hold (an open apply-kind leg disqualifies HELD by construction) and cannot be truthfully closed (nothing to prove). It is left OPEN, correctly reading as a stranded start once its window elapses, until a seat with write access to the shared main tree's org/mcp/sessions/ (or a fix to safe-ec2-deploy.sh's HALT_GATE_REPO_ROOT redirect so it also checks the INVOKING worktree, not only MAIN_TREE) unblocks AC2. Remedy is either: (a) provision org/mcp/sessions/e3c2c727-fc4c-4791-9a1d-09455d5089b8.serial in the shared main tree, or (b) amend safe-ec2-deploy.sh/halt-gate-check.sh to also check WORKSPACE_ROOT's own org/mcp/sessions/ before or alongside MAIN_TREE's. Disarm owner is the issuing COO (a worker is terminal at its drain and cannot carry an ARMED row's disarm word, R-18) since the actual FIX -- either provisioning the serial file in the shared main tree or amending safe-ec2-deploy.sh/halt-gate-check.sh -- is outside this cell's <paths>."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-18T05:30Z",
+    "one_line": "The live 'gateway-access-state-table' DynamoDB table carries 8 leftover items from OTHER cells' own acceptance probes (og_i1.py/og_i5.py), pk-shaped 'POLICY#probe-og-i1-<timestamp>[-ttl|-race]' (sk PROFILE/AUDIT#000N) and 'RUNTIME#probe-og-i5-<timestamp>' (sk AC9) -- synthetic test fixtures, never cleaned up, sitting in the PRODUCTION table this release's OGR1-AC3/AC12 grade for 'no principal profile active'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn: dynamodb Scan(ProjectionExpression=pk,sk) on gateway-access-state-table via boto3 -> 8 of 8 items, every pk/sk pair matching either `POLICY#probe-og-i1-\\d{8}T\\d{6}...` or `RUNTIME#probe-og-i5-\\d{8}T\\d{6}` -- none carries a real tid/oid-shaped identifier.",
+        "The naming (`probe-og-i1-...`, `probe-og-i5-...`) matches the OG-i-1 and OG-i-5 cells' own probe scripts (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/probes/og_i1.py, og_i5.py), which write synthetic RUNTIME/POLICY records under access_state.runtime_key() to grade their own criteria against the live table -- not a real Schwab or OAuth principal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGR1-AC3/AC12 read the live access-state table as evidence that no principal profile/grant is active this release.",
+    "world_is": "The table is not empty, but every item present is a pre-existing, other-cell test fixture rather than a real principal profile; OGR1-AC3/AC12 classify and exclude these (pattern probe-og-<cell>-<timestamp>) to grade the REAL population, which is empty, rather than reporting a false FAIL on a non-zero raw count.",
+    "notes": "INERT: no principal is actually affected and this release grants nothing; the leftover fixtures are a housekeeping gap in OG-i-1/OG-i-5's own test hygiene (their probes never delete what they write), not a security exposure. Not this cell's defect to fix (its <paths> does not reach those cells' probes or a table-cleanup act); left for whichever cell's remit covers access-state table hygiene."
   }
 ]
 ```
