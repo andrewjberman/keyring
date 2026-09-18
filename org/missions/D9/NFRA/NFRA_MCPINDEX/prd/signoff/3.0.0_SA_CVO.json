@@ -1,12 +1,12 @@
 {
   "prd": "NFRA_MCPINDEX_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "a89fd61a0baab2c11f98a28e5a94312db46af6a7",
+  "prd_version": "v0.4",
+  "prd_pin": "9635e8f16c63c6729d28bce977c3528b57399c68",
   "half": "ratified-text",
-  "half_hash": "77669a83e9f3eb00e658412f57317a803f077e75d7b150c7d068a2cca1a5de06",
+  "half_hash": "9536b1e3f05ad729bfec98fd240feb8848a6b2ad83c5090d8f904deb3a03dd56",
   "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.3_RATIFIED_TEXT_HALF_20260917.md@7fef989e77",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_NFRA_MCPINDEX_v0.4_RATIFIED_TEXT_HALF_20260918.md@09653cd330",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-09-17T23:35:47Z",
-  "reason": "ENDPOINT section is not verbatim -- all 10 outcomes reworded, ACCEPT/PROOF/SOURCE dropped wholesale, unlike sibling NFRA_SPMOVE v0.3"
+  "signed_at": "2026-09-18T01:04:31Z",
+  "reason": "The ten cards are verbatim and verified; the section's preamble carries version history and a seat name, which the bar forbids inside the section"
 }
