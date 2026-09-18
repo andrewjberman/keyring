@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>staged -- assigned to slot ~2; becomes pending when the COO hands it at ~12:5xZ, just before the fire, so the worker reads the event rather than predicts it (the hand-off timing is the issuer's; the cell contains no calendar wait beyond the fire it exists to read).</status>
+<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T12:45Z to slot ~2 (cold start, worktree /c/tmp/wk-irpt-4-2, branch wk-irpt_bckend-4-2 from HEAD), fifteen minutes before the 13:00Z fire, so the worker takes the T0 row and then READS the event. Was: staged -- assigned to slot ~2; becomes pending when the COO hands it at ~12:5xZ.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 4 (the CTO's round-3 analysis @5c59f68d70, msg 97944) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 3) | **Round-3 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md` @5c59f68d70 | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar (analysis s.4, ADOPTED) | **Decomp cell:** `IB-rtd-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.4, s.R4) | **outcome_ref:** FWD-7 (the organic arm), FWD-1
 
