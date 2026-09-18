@@ -97,7 +97,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 `OGR1-AC9` -- the Gateway's error count over the first stated window after the deploy does not exceed `OG-p-1`'s baseline for the same window length.
 
 <criterion id="OGR1-AC10" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC10</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC10(?![0-9])</expect></criterion>
-`OGR1-AC10` -- the previous release artifact is recorded and restorable by the runbook's rollback section.
+`OGR1-AC10` -- the previous release artifact is recorded and restorable by the runbook's rollback section, and its CONTENT HASH is recorded beside its identity at the moment the record is written (`git hash-object` for a tracked file, the packaging tool's own digest otherwise), so a later artifact at the same path FAILS this criterion instead of silently satisfying it; the probe prints the recorded hash and the hash it reads back (R-40).
 
 <criterion id="OGR1-AC11" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 120 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC11</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC11(?![0-9])</expect></criterion>
 `OGR1-AC11` -- (difference) on the release base, locally and before the deploy, an identity carrying a predecessor's email and tier but no tid/oid grant is denied every Schwab tool, while the same request under an active tid/oid grant is allowed; the Schwab tool count is printed.
@@ -186,3 +186,12 @@ vintage, because `OG-i-3`'s first-act re-run could not be expressed under R-OG-6
 correctly refused there. This cell is the first that legitimately exercises them: it deploys the released build to that
 host. R-OG-13's standing bar is carried -- AC13 is graded on the live path and AC14 is its mutant control. `OG-i-2` and
 `OG-i-3` are NOT re-opened. No criterion was removed.
+
+Amended again 2026-09-18 ~00:4xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-40 (msg 97744
+@233f5fd5e4), a STANDING BAR issued after the same wrong-object class landed three times in three projects in one
+night: a criterion whose subject is a RUN or a PRODUCED ARTIFACT binds to that artifact's CONTENT HASH, because a
+LABEL IS NOT AN IDENTITY and a later commit can satisfy the label. AC10 was this order's one criterion of that shape
+-- "the previous release artifact is recorded and restorable" named the artifact by path and by nothing else -- and it
+now records the hash beside the identity at record time. AC4 already had the bar's shape (deployed digests compared
+file by file against the BUILD INPUT) and is unchanged; AC13 and AC14 are graded live against a running system, which
+R-40 names as its own non-application. No criterion was removed.
