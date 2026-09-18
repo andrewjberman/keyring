@@ -242,6 +242,29 @@ PRD, so it is a row here, not a message.
    "spec_asserts": "The WORKER FACE's measured-at-base note names exactly ONE ADVI_FIRMBKTS s3-prefix row already landed (gold/) and instructs: record and disclose an already-present entry, never append twice. Separately, X1R1-AC5 (x1-r16) requires a commit ON THIS BRANCH after merge-base that touches one of the three registries and carries a TARGETS: line (R-16) -- and the gold/ entry's own mark commit (53d59778a1) already sits BEFORE this branch's merge-base with CLOUD, so it does not count toward that criterion; re-committing gold/ unchanged is not a real git diff.",
    "world_is": "A second DECIDED-but-unmarked prefix on the identical bucket exists on the live ledger (06_CONFORMANCE_LEDGER.md:72) and this run's own walk surfaces 13 live rows under it -- the same evidentiary shape DEC-9 already accepted for gold/ (same project ADVI_FIRMBKTS, same kind s3-prefix, same bucket, a DECIDED-not-yet-marked disposition this walk measures directly). This worker APPENDED it to infra/logic/registry/remediations.json's ADVI_FIRMBKTS surfaces (never a fourth registry file -- DEC-9's Rule-24 bound is about the FILE COUNT staying at three, not the row count within one) and records both the disclosed gold/ entry and the newly-appended silver/ entry in this run's MARK.json, because (a) it clears the same bar the first hand's mark did and (b) it is what makes X1R1-AC5 satisfiable on this branch without a no-op commit.",
    "notes": "This is a JUDGMENT CALL beyond a literal reading of 'record and disclose, never append twice' (which was written for the ONE entry the measured note named) -- disclosed here rather than acted on silently. If the issuer/CVO judges the silver/ append out of this cell's scope, the remedy is a revert of that one entry plus a different route to X1R1-AC5 (e.g. a scopes.json touch), not a re-litigation of the gold/ disclosure. Kept working per CLAUDE.md section 2."
+  },
+  {
+   "id": "LGIC_LGCTFM-S7",
+   "project": "LGIC_LGCTFM",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T02:12Z",
+   "one_line": "X1R1-AC3 WAS GRADED AGAINST THE WRONG RUN'S FWD10.json AND THE WORKER SAID SO RATHER THAN LETTING THE PASS STAND. When this seat added graded_run() to close S3's position-not-identity hole it repointed x1-run-dir and x1-marks and MISSED x1-fwd10, which still read subject_runs()[0] -- the earliest run id. So on the re-hand AC3 graded the FIRST hand's FWD10.json, not the coherent run's. Repaired at HEAD; the arm now names the run its own R-40 manifest identifies, and the graded object genuinely CHANGED: the two files hash 8f0b277a296a (first hand) and ba13720b293e (this hand).",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "The worker's own report, unprompted: 'this arm reads subject_runs()[0], i.e. the first hand's bb29248/FWD10.json, not this hand's own file -- disclosed in the result doc and proof instance'. It had a PASS in hand and disclosed the wrong object anyway.",
+     "Re-run at HEAD after the repair: 'run directories under the subject: 5; carrying an R-40 HASHES.json: 1 [20260918T011619Z-8db9eb1]; graded run: 20260918T011619Z-8db9eb1 ... VERDICT: PASS-X1-LIVE-PLANE-ZERO-DELTA'. The new object passes on its own merits -- the repair did not rescue a failing grade, it moved a passing grade onto the right subject.",
+     "git hash-object on both files, which is what makes 'the object changed' a measurement rather than an assertion: 20260917T202556Z-bb29248/FWD10.json = 8f0b277a296a, 20260918T011619Z-8db9eb1/FWD10.json = ba13720b293e.",
+     "THE RE-GRADE COULD NOT BE WRITTEN INTO THE WORKER'S PROOF INSTANCE, and that is the gate working for the SECOND time tonight on the same rule: this seat amended AC3's status_reason and .tools/owned-paths-validate.py clause 4 (ADHC_OWNPTH.004, lane TREE_DELIVERABLES) refused the commit -- 'deliverables/0.9.0_WK_LGIC_LGCTFM~2/...proof_of_spec.json ... agent=2.0.0_SA_COO~G not in permitted_agents'. A worker's deliverable folder admits exactly that serial, so AN ISSUER RE-GRADE HAS NO HOME INSIDE A WORKER'S INSTANCE. The amendment was reverted (git checkout --) and the re-grade lands as this seat's own record at org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/X1R1_AC3_ISSUER_REGRADE_20260918.md, which 3.0.0_SA_CVO reads beside the instance at L9. The worker's recorded measurement is therefore untouched, which is the better outcome and not merely the permitted one."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "After the R-40 repair, every LT-x-1 criterion whose subject is this cell's run grades the run the R-40 manifest names.",
+   "world_is": "Two of the three did. x1-fwd10 kept reading position and graded another run's artifact, and the gap was closed only because the worker reported it.",
+   "notes": "EVIDENCE, not a disposition; no `adjudicates`, and 3.0.0_SA_CVO grades AC6 and disposes this at L9. THE LESSON IS ABOUT THE REPAIR, NOT THE DEFECT: when a fix repoints HOW an object is identified, the unit of work is EVERY ARM THAT IDENTIFIES THAT OBJECT, enumerated from the file, never the arms the author happens to be thinking about. This seat repointed two of three from memory and shipped the third. The census was one grep for the accessor it was replacing (`subject_runs()[0]` occurs in x1_run_dir, x1_marks and x1_fwd10) and it was not run."
   }
 ]
 ```

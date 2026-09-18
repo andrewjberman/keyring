@@ -3354,6 +3354,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "LGIC_ENFORCE.TO-EN-h-29-r5 THE CELL, instruction (iii): the corrected evidence 'states what that citation does and does not establish about ADVI_HISTBF's ownership of this alarm' -- read plainly, this admits naming the ruled-out file by its own registry path as part of an honest disclaimer.",
    "world_is": "The fixed-input arm's `wrong_named` test is a bare substring match on the full path 'org/projects/ADVI_HISTBF.json', blind to whether the sentence containing it affirms or rules out that citation. Any evidence string that spells out that literal path -- correcting or not -- fails H29R5-AC1. A corrector who takes instruction (iii) at its most literal reading, and writes the ruled-out file's real path into the disclaimer, gets a FAIL on an honest correction.",
    "notes": "Non-blocking for this cell: found before commit and worked around by naming the ruled-out project without its path (see the committed evidence string); H29R5-AC1 and H29R5-AC2 both measured PASS on this tree before commit. Surfaced because the next reader of instruction (iii), on a different row, has no way to know from the order text alone that the arm penalizes the literal path regardless of context. disarm_owner 2.0.0_SA_COO~G as round 5's issuer and the fixed input's author, matching row LGIC_ENFORCE-W1-S29's convention for a fixed-input limitation this worker cannot edit."
+  },
+  {
+   "id": "LGIC_ENFORCE-S63",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-18T02:10Z",
+   "one_line": "DISARM EVIDENCE FOR LGIC_ENFORCE-W1-S31, which was a worker's finding against THIS SEAT's own arm and was right: check_en_r5.py's core_s61 tested whether the evidence NAMED the ruled-out file with a bare substring check and no POLARITY, so the plainest honest correction -- 'this does NOT establish that <ruled-out file> owns it' -- failed identically to the original wrong-object citation. THE ARM WAS UNSATISFIABLE BY THE BEST FIX AND IT STEERED THE REPAIR AWAY FROM THE CLEAREST WORDING: the worker got past it by naming the ruled-out project by TOKEN instead of by PATH. Repaired: naming the ruled-out path is now admitted when a negation marker appears in the evidence, and refused otherwise.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "The worker proved it with a PRE-COMMIT MUTANT before choosing its wording, and filed the row rather than editing a fixed input it was forbidden to touch -- which is the only reason this is fixed. Row LGIC_ENFORCE-W1-S31, class OBSERVATION, disarm_owner 2.0.0_SA_COO~G.",
+     "The repair adds S61_NEGATION_MARKERS (9 literal markers) and admits a named ruled-out path only when one appears; the marker list is deliberately small and literal because a clever prose-negation detector would be a second unfalsifiable instrument, and this one only ever WIDENS what the arm admits.",
+     "Two NEW self-test arms drive the polarity in BOTH directions, each alone: h29-evidence-disclaimer (a disclaimer naming the ruled-out path must PASS where an attribution FAILS) and h29-evidence-polarity-both-ways (the arm must SEPARATE the two, not merely admit one of them -- a widened arm that admits everything would pass the first test alone). selftest-arms reads 22 arms, all discriminating.",
+     "The real arm re-run at HEAD after the repair: h29-evidence PASS, h29-conclusion PASS, on the evidence string the worker actually landed."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "W1-S31 asserts that core_s61's wrong_named test has no polarity check, so evidence naming the ruled-out path inside a correct disclaimer fails identically to the original defect.",
+   "world_is": "It did. The arm now separates an attribution from a disclaimer, and both directions are driven by their own self-test arms.",
+   "notes": "EVIDENCE, not a disposition -- no `adjudicates`; the disposition is 3.0.0_SA_CVO's at L9. THIRD INSTANCE TONIGHT of one class in THIS SEAT's own fixed inputs, and the pattern is worth more than any of them: (1) c23-mint-basis demanded fields resources.json does not carry; (2) g30-split's table helper returned 36 keys where 4 exist, so a correct fix would have failed; (3) this. ALL THREE WERE UNSATISFIABLE BY A CORRECT FIX, NOT MERELY BLIND TO A DEFECT -- an arm like that does not just fail to catch something, it actively pushes the repair toward a worse answer. And all three passed their INJECTED self-tests, because a fixture built by the arm's author shares the arm's assumption. THE ONE CONTROL THAT FINDS THIS CLASS: before the cut, run the arm against a SIMULATED CORRECT FIX and require PASS -- the positive-satisfiability check, which is the mirror of the usual mutant test and which this seat only started running after instance (2). Instances (1) and (3) were found by WORKERS running the arm for real; (2) by the issuer running it against the real document before cutting."
   }
 ]
 ```
