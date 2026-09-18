@@ -171,6 +171,28 @@ Each finding is measured, and several are found by more than one seat.
     it a remediation item for the producer's domain list, graduated with the row, and **not** a criterion
     FAIL. Grading it as a FAIL would grade the order against text it never carried.
 
+    **GRAIN CORRECTION TO THIS ITEM, 17:0xZ.** This seat quoted the instance's "12 of 12 filing-ceiling
+    names" as if it measured content. It does not. It is a **STATUS** count. The first read of the Exec
+    Management panel re-measured it: 4.0.0_SA_CRO~Z in msg 23697, then 1.0.0_SA_CTO~Z on a different
+    instrument @`0cdd86b29d`.
+    - 12 rosters are SERVED by status, and **7 carry officers (62 in all)**.
+    - **5 carry ZERO officers** and are marked UNRESOLVED-SOURCE, yet the adapter still serves them SERVED.
+    - The 5 have two causes, and neither is a failed pull: an upstream cut defect (ASML, PBR) and a roster-shape
+      gap (HAL, INTU, KMB).
+
+    **For the grade.** AC1's text asks both counts to rise toward the fixable ceiling, with every non-measured
+    name carrying a reason. The five do carry a reason at the object level, so AC1 can still PASS **on its
+    text**. The PASS certifies the object count. It does not certify roster CONTENT, and the slug will state 7
+    of 12 as the content figure beside the 12. The status of SERVED over an empty roster is an adapter-side
+    value-carries-its-claim defect, outside rk-22's producer criteria. It graduates with W32-S2 and does not
+    count against rk-22.
+
+    **Two latent hazards found at source in the same read, both remediation items:**
+    - batch.py:81-84 splits security keys on "/", so BP/_LN_Equity and NG/_LN_Equity can never be built. This is
+      the slash-key class again.
+    - The same census counts placeholder filings as real, so one enable would write roughly 176 zero-officer
+      rosters served as SERVED.
+
 ## 6. This seat's own corrections tonight
 
 Each was caught before it reached a committed record, or was corrected in one.
