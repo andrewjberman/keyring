@@ -354,7 +354,19 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
   definition references. ⛔ **An entry a
   device left OPEN proves only that THIS device saw no completion** — before acting on any open/`--red`
   entry, measure the ARTIFACT (rev-parse + describe + is-ancestor with positive control); world-done →
-  close SUPERSEDED, never re-execute (a re-execute of an overtaken promote is a REWIND). Annex §NEVER-2.
+  close SUPERSEDED, never re-execute (a re-execute of an overtaken promote is a REWIND).
+  ⛔ **AND THE ABSENCE OF AN ENTRY IS NOT EVIDENCE DURING A WORKER DEPLOY.** This line requires the entry
+  BEFORE the deploy; Rule 14b puts the worker in its OWN worktree; so the entry sits on a BRANCH and reaches the
+  shared tree only at the DRAIN — **after** the deploy. **An `.open_deploys/` read from `CLOUD` returns a
+  confident, denominator-bearing “no entry” for the whole window in which the entry is MANDATORY, and it reads
+  identically whether the deploy is pre-flight or HALF-LANDED.** Read EVERY live worktree (`git worktree list
+  --porcelain`, then `git -C <wt> ls-tree -r --name-only HEAD org/critical_paths/.open_deploys/`), union them and
+  print the per-tree denominator — and use `ls-tree`/`ls -a`, since `ls -1` hides `.unindexed_red_state.json`.
+  Measured 2026-09-18 on `NFRA_OPLGTW` `OG-r-1`: CLOUD **7** entries without it, the worker's worktree **8** with
+  it, open since 05:08:50Z — while a CTO watch read “none” for three ticks and wrote that read into a log as a
+  successor's instruction. COST: one `worktree list` + one `ls-tree` per live worktree. NON-APPLICATION: a deploy
+  run in the shared tree by a non-worker seat — there the shared read IS the population. R-53's sibling; R-52.
+  Annex §NEVER-2.
 - **NEVER rebase on a shared branch** (CLOUD/DEV/PROD/main); rejected push = pull-merge, re-push. Gate:
   `.tools/hooks/never-rules-gate.sh`; audited override `# never-override: <reason>`. Scratch branches free.
 - **NEVER call a pipeline stale/broken until you resolve the TRADING CALENDAR — count trading days.**
