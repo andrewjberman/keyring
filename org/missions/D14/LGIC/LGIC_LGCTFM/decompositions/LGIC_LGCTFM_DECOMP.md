@@ -495,3 +495,118 @@ manifest (`R-40`); and any arm whose verdict could depend on the checkout PRINTS
   population. Re-grading it would falsify a correct grade.
 - It does **not** repair round 1's checker, and 12.2 says why.
 - It does **not** touch the card's ranking or recommendation, and 12.3 makes that a graded refusal.
+
+
+---
+
+## 13. v1.4 -- THE ROUND-3 RECUT (2026-09-18, `2.0.0_SA_COO~G`), on `1.0.0_SA_CTO`'s RULING R-79
+
+**Input.** R-79 @`0e9027c6dc` (msg 98034) and its answer to this lane's crossing recommendation (msg 98035).
+**FWD-1's REALIZED grade is RETRACTED: 7 of 10, not 8.** It is a DEFECT against FWD-1, not a new outcome:
+the ratified ACCEPT already reads *"never has to go and list the SCHEDULES, MACHINES, ROLES and BUCKETS by
+hand to fill a gap the contract left blank WITHOUT SAYING SO"*, and Andrew's word at ~18:2xZ (record
+@`28a8ae74e3`) names the same list in other words -- *"If we are missing lambdas/ec2/eventbridge rules or
+schedules/ddb/etc, any involved aws resources, then the workflow process is not done"*, *"the workflow must
+be designed to create rows for these items"*. PRD unchanged at v1.4, both halves SIGNED and current (read
+from `prd-signoff.py status` at this cut).
+
+[CORRECTION, recorded against this lane] **I recommended a PRD ADDENDUM at 18:19Z on the premise that the
+bars "never named" compute. The premise was false and I had not read FWD-1's ACCEPT before asserting it.**
+`1.0.0_SA_CTO` printed the ACCEPT and the premise fell. What survived is the gradeable form, adopted as
+FWD-1's ACCEPTANCE ARM: *for a named project token, EVERY live AWS node the involved instrument reaches
+carries a row, and the denominator is printed per node_type against the live plane.*
+
+**The round-1 grade measured the DONE WHEN, never the ACCEPT** -- existence and readership, not coverage.
+Measured at this cut by the issuer, on an instrument DIFFERENT from the engine's walk (comp-find over the
+live aws corpus for the subject's two token spellings: 88 hits across 2590 nodes, graph 2026-09-18
+12:17:28 UTC), against the graded run `20260918T011619Z-8db9eb1`:
+
+```
+  node_type        live floor   rows in the graded run
+  LAMBDA                9              0
+  EC2_INSTANCE          1              0
+  DYNAMODB_TABLE        1              0
+  SCHEDULE              4              1
+  IAM_ROLE             13              1   (a PLANT)
+  flow.current.md  -- COMPUTE --  (none)   <- a blank that does not say it is a gap
+```
+
+### 13.1 THE CELLS -- 4, R-79's (a)-(d) plus FWD-1's adopted acceptance arm
+
+```
+  cells at v1.3 ......................................................... 17
+  plus round 3's four ................................................... +4
+  = cells in this decomposition ......................................... 21
+  round 3 runs exactly the four: LT-e-5, LT-r-2, LT-p-2, LT-x-4
+```
+
+| cell | id | what it does | serves | R-79 item |
+|---|---|---|---|---|
+| 18 | `LT-e-5` | **DISCOVERY BY DESIGN.** The walk reaches the subject's compute, schedules, machines, roles and tables -- seeded by the subject's TOKEN beside its buckets, and following the readers the estate already runs (comp-trigger targets, `lambda-source-map.json`, comp-iam statements). **The cell DEFINES "involved"** (token / trigger target / IAM grant / source text, or several) and writes a top-level `coverage` block into the contract whose shape is R3_BASE.json's, the ONE carrier. Schema admits it; the frozen graded contract still validates | FWD-1 | (a), (b), (c) |
+| 19 | `LT-r-2` | **NO BARE "(none)".** An empty column is a statement about the INSTRUMENT: with a coverage block, every column prints `<R> row(s) of <I> involved`; without one (every run before this round), every column prints `NOT MEASURED`. FWD-5's regenerate-and-compare arm stays PASS | FWD-1 (the blank that does not say so), FWD-5 kept | (c) |
+| 20 | `LT-p-2` | **`dependencies` -> `step_dependencies`** on every plan package, values preserved value-for-value, frozen runs untouched. RCN-0009 P4, adopted by R-79 as owed | FWD-6's reading hazard | (d) |
+| 21 | `LT-x-4` | **THE REAL RUN AND THE ACCEPTANCE ARM.** One new 49F run into the run home, with the new discovery, render and plan. Every floor node of every type is a row or an excluded entry with a reason; every NAMED-class floor node is a ROW. The COMPUTE column names the Lambdas and the EC2 runner. **No registry mark** | FWD-1's ACCEPT, graded | the arm 98035 adopted |
+
+### 13.2 WRITE SURFACES, AND WHY THREE CELLS SHARE ONE QUEUE
+
+```
+  LT-e-5   lib/opal_lgctfm.py, org/standards/LGCTFM_CONTRACT.schema.json,
+           infra/logic/10_LEGACY_TRANSFORM.md, deliverables/0.9.0_WK_LGIC_LGCTFM~1/, channel
+  LT-r-2   lib/lgctfm_render.py, deliverables/0.9.0_WK_LGIC_LGCTFM~2/, channel
+  LT-p-2   lib/opal_lgctfm.py, infra/logic/10_LEGACY_TRANSFORM.md, deliverables/0.9.0_WK_LGIC_LGCTFM~1/, channel
+  LT-x-4   workflows/legacy_transform/blackdiamond-49financial/<new run-id>/,
+           deliverables/0.9.0_WK_LGIC_LGCTFM~1/, channel
+```
+
+CONSTRAINT 1 (s.5) still binds: `lib/opal_lgctfm.py` has one writer at a time, so `LT-e-5` and `LT-p-2`
+QUEUE on slot `~1`; `LT-x-4` queues behind both because it runs the engine they produce. `LT-r-2` touches
+only the renderer and runs beside them on slot `~2`; `LT-x-4` is spawned only once `LT-r-2` has DRAINED,
+because its render arm reads the new renderer's output.
+
+```
+  slot ~1   LT-e-5  ->  LT-p-2  ->  LT-x-4
+  slot ~2   LT-r-2
+```
+
+`fanout: 2 slots over 4 cells, cap 8, reason: three cells write or run lib/opal_lgctfm.py and queue on one
+slot (CONSTRAINT 1); the renderer is disjoint and runs beside them; levels L0 = {LT-e-5, LT-r-2},
+L1 = {LT-p-2}, L2 = {LT-x-4}, with LT-x-4 also depending on LT-r-2's drain.`
+
+### 13.3 THE FIXED INPUT, AND THE RULE IT ADOPTS FROM A SIBLING'S DEFECT
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/` -- `R3_BASE.json` and `check_lt_r3.py`, 14 real arms
+and a 24-arm self-test. Three construction rules, each from a measured defect:
+
+1. **THE FLOOR IS RE-MEASURED AT GRADE TIME, WITH AN INSTRUMENT THAT IS NOT THE ENGINE.** A floor read from
+   the fixed input at grade time would be a stale figure acting as a bar.
+2. **ONE REAL NEGATIVE.** The self-test runs the coverage cores against the ACTUAL graded run and requires
+   FAIL (LAMBDA 0 of 9), beside the author's own mutants -- a mutant shares its author's assumption.
+3. **THE RECORD SHAPE HAS ONE CARRIER** (`LGIC_ENFORCE-S85`, this lane's own defect three hours earlier).
+   The coverage block's shape lives ONLY in R3_BASE.json; the positive records are BUILT from it; and the
+   self-test refuses if any round-3 order's quoted shape differs from it. **Also caught at this cut, and
+   fixed before issuance:** the first draft's positive shape test passed because it was handed only the
+   12 node_types the simulated record happened to cover, while the real arm requires all 18 floor types.
+   A positive arm that passes only once the checker narrows its own input is the vacuous pass this rule
+   exists to stop.
+
+**WIRING AT THE CUT:** 11 of 14 real arms FAIL, each for the measured reason (10 bare "(none)" lines over 5
+of 5 runs; 1074 packages carrying `dependencies`, 895 populated; no e-5 contract; no post-cut run). **THREE
+ARE GUARD-SHAPED AND READ PASS AT THE CUT, DISCLOSED:** `r2-regen` (FWD-5's arm, must stay PASS),
+`p2-old-untouched` (frozen history, R-43), `x4-no-registry-move` (no mark). Each protects a thing that
+works; none measures the round's work.
+
+### 13.4 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** build the resource dependency relation (edges). FWD-6 inherits from FWD-1 and the repair
+  order is FWD-1 first (R-79). A cell MAY write per-class extras its discovery already reads; no arm needs it.
+- It does **not** pick the subject between MDPF_CANON and 49F -- Andrew's. 49F is used because FWD-1's
+  ACCEPT names it.
+- It does **not** re-grade round 1 or 2 (R-43), and it does **not** edit the graded run.
+- It does **not** close FWD-1. `1.0.0_SA_CTO` re-grades the outcome at L10 against its ACCEPT.
+- It does **not** build the CONSUMER WALK. Andrew-direct ~18:3xZ (msg 98038, record @`c9e54d5c0f`): *"the
+  final step of the current resource/state manifest should include a walk of the pipeline ... to assess
+  what exactly consumes the final artifacts (and if those artifacts are visible or invisible to a viewer on
+  the portal)"*. `4.0.0_SA_CRO` is attempting it on MDPF_CANON and writing the BRIEF; its carrier into this
+  project is `1.0.0_SA_CTO`'s. Cutting it here would pre-empt both. What round 3 DOES take from the same
+  word is its first sentence -- *"work in all the comp-tools to this process"* -- as `LT-e-5`'s COMP-TOOL
+  LEDGER: every listed comp-tool, USED or NOT USED with a reason, denominator printed.
