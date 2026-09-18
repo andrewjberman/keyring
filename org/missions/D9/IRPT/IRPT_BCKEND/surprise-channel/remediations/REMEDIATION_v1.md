@@ -2605,14 +2605,15 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "evidence": [
   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S25",
   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md row IRPT_BCKEND-C-S97",
-  "1.0.0_SA_CTO, RULING R-42 @cfe3a33a9b (IRPT_BCKEND round-2 analysis): a disarm_owner is a SEAT SERIAL, never a cell, an order or a condition -- IB-rtb-1 went terminal without touching either row and nothing noticed, because the field was populated and looked fine. Both rows are placed on 2.0.0_SA_COO~B."
+  "1.0.0_SA_CTO, RULING R-42 @cfe3a33a9b (IRPT_BCKEND round-2 analysis): a disarm_owner is a SEAT SERIAL, never a cell, an order or a condition -- IB-rtb-1 went terminal without touching either row and nothing noticed, because the field was populated and looked fine. Both rows are placed on 2.0.0_SA_COO~B.",
+  "1.0.0_SA_CTO, RULING R-42 completed @b15b0060a2: the addressee set is THREE owner fields, not two -- `owner` is described by remediation_row.schema.json as 'the lane that builds the remediation', which is an addressee and must be live. Both remaining addressee owners relocate to 2.0.0_SA_COO~B, the seat R-42 @cfe3a33a9b placed this row on."
  ],
  "remedy": "Place the row on a live seat -- its named owner IB-rtb-1 is terminal and cannot give a word. The session decision its own text names is the substance: a non-interactive session for a machine principal the portal's typed client accepts on the print route, OR a print route that accepts a signed short-lived render grant.",
- "owner": "1.0.0_SA_CTO",
+ "owner": "2.0.0_SA_COO~B",
  "round": "v2",
  "remediation": {
   "state": "OPEN",
-  "owner": "1.0.0_SA_CTO",
+  "owner": "2.0.0_SA_COO~B",
   "round": "v2"
  },
  "closed": false,
@@ -2635,14 +2636,15 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "evidence": [
   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S28",
   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md row IRPT_BCKEND-C-S97",
-  "1.0.0_SA_CTO, RULING R-42 @cfe3a33a9b (IRPT_BCKEND round-2 analysis): a disarm_owner is a SEAT SERIAL, never a cell, an order or a condition -- IB-rtb-1 went terminal without touching either row and nothing noticed, because the field was populated and looked fine. Both rows are placed on 2.0.0_SA_COO~B."
+  "1.0.0_SA_CTO, RULING R-42 @cfe3a33a9b (IRPT_BCKEND round-2 analysis): a disarm_owner is a SEAT SERIAL, never a cell, an order or a condition -- IB-rtb-1 went terminal without touching either row and nothing noticed, because the field was populated and looked fine. Both rows are placed on 2.0.0_SA_COO~B.",
+  "1.0.0_SA_CTO, RULING R-42 completed @b15b0060a2: the addressee set is THREE owner fields, not two -- `owner` is described by remediation_row.schema.json as 'the lane that builds the remediation', which is an addressee and must be live. Both remaining addressee owners relocate to 2.0.0_SA_COO~B, the seat R-42 @cfe3a33a9b placed this row on."
  ],
  "remedy": "Place the row on a live seat, then perform the disarm act the row itself names: read the served CodeSha256 of irpt-ycharts-generate against the built zip. The rebuild ORDERING is already consistent (fix committed 2026-09-12T00:03:03Z, function last modified 2026-09-12T05:21:01Z), so the act is cheap -- but a timestamp ordering is not a bytes comparison and the row stays armed until one is done.",
- "owner": "1.0.0_SA_CTO",
+ "owner": "2.0.0_SA_COO~B",
  "round": "v2",
  "remediation": {
   "state": "OPEN",
-  "owner": "1.0.0_SA_CTO",
+  "owner": "2.0.0_SA_COO~B",
   "round": "v2"
  },
  "closed": false,

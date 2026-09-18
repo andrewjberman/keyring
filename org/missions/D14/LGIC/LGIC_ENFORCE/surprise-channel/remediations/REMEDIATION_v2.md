@@ -1088,16 +1088,16 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "owner": "1.0.0_SA_CTO",
  "round": "v4",
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "1.0.0_SA_CTO",
-  "at": null
+  "at": "2026-09-18T06:25Z"
  },
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "1.0.0_SA_CTO",
   "round": "v4"
  },
- "closed": false
+ "closed": true
 }
 ```
 
