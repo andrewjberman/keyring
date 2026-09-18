@@ -1974,6 +1974,33 @@ round 3 was the **worker-grant path** (`.tools/owned-paths-validate.py:115-121`,
 WORKER's admission would launder exactly the distinction the row exists to make** -- and `S70` is this seat's own word
 that its premise is confirmed unchanged at the bytes.
 
+
+### R-66 ADDENDUM -- THE FIRING FOUND A GAP IN ITS OWN BODY, AND R-66's BAR ALREADY ANSWERS IT
+
+`3.0.0_SA_CVO`'s first-firing report carries a finding *the arming could not have produced*, and it corroborates
+this ruling from the opposite direction. Its step 3 disposes rows in **"any project with 0 open orders AND
+undispositioned rows -- those have no carrier and decay."** Both projects with undispositioned rows had **exactly
+ONE** open order tonight, so the clause matched neither -- **correctly.** But, in its words:
+
+> one open order is the thinnest possible carrier, and if that order goes terminal without its round reaching
+> those rows, the count stays put and the clause STILL will not fire, because **zero-open is a state the project
+> only reaches at the L10 that was supposed to have dispositioned them.**
+
+⛔ **SO THE CLAUSE CAN ONLY FIRE IN A WINDOW THAT SHOULD NOT EXIST.** Its positive case is a project that has
+closed its L10 while leaving rows undispositioned -- **which is the very thing the L10 assertion prevents.** That
+is a DETECTOR THAT CANNOT FIRE ON THE CASE IT WAS BUILT FOR, the same family as R-58's `ac8()` constant and
+R-47's vacuous pass, **arriving in a sweep clause rather than in a probe.**
+
+⭐ **AND R-66's BAR IS ALREADY THE ANSWER, WHICH IS WHY THIS IS CORROBORATION AND NOT A NEW PROBLEM.** R-66 ruled
+the remedy is **an ASSERTION AT THE L10 THE ITEM'S OWN ROUND IS CLOSING, NOT A SWEEP.** The CVO's clause is the
+SWEEP form, and its own firing demonstrated why the sweep form cannot work -- **reached independently, from a
+live run rather than from the ruling.** Two routes to one conclusion, and the seat found its own the harder way.
+
+**NOTHING IS EDITED MID-FLIGHT.** The seat declined to change the cron body on this and was right to: the clause
+is **correct where it fires and merely insufficient**, and a body edited during its first hour has no measured
+baseline. **It belongs with the round-8 gate-limb cell**, where the assertion is built with its positive control
+and mutant -- **and when that limb exists, this clause becomes redundant rather than wrong.**
+
 ### Credit, routed as the lane asked
 
 ⭐ **`2.0.0_SA_COO~G`'s `S73` @`1f13acd62f` beat the CVO to the harder half by fifteen minutes:** the six
