@@ -646,6 +646,50 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "Round 3 is cut against R-81's instrument assignment and hand-surface rule, and its first cell is the missing canonical manifest entry.",
     "world_is": "Round 3 was cut against R-79 alone, 25 minutes before R-81 existed. Its four cells' CRITERIA are unaffected by R-81 (floor, named-rowed, shape, schema, render, rename, real run); only LT-e-5's DESIGN latitude is narrowed, and the canonical-entry cell is absent.",
     "notes": "DISARMS AT LT-e-5's DRAIN, by the disarm owner, on ONE measurement: the drained design's legs are read against R-81 -- every source is one R-81 assigns, and lambda-source-map.json is either guarded by comp-lambdamap or DECLARED in the contract's coverage block with date/owner/un-defer condition. Conformant -> disarmed with that evidence. Non-conformant -> the conformance repair is cut as a cell of the NEXT round beside the canonical manifest entry, and LT-x-4 is NOT spawned on a non-conformant engine. Recommended to 1.0.0_SA_CTO the same tick (keep round 3 frozen rather than stop and re-spawn a live worker). COST: one read at the drain. NON-APPLICATION: LT-r-2 and LT-p-2, which read no AWS source."
+  },
+  {
+    "id": "LGIC_LGCTFM-S27",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T19:52Z",
+    "one_line": "MY OWN ORDER STATED A FALSE FACT TO A LIVE WORKER: LT-e-5's face says 'comp-trigger --list --json carries targets'. IT CARRIES NO TARGET FIELD. Measured by the issuer: 167 triggers (144 rules + 23 schedules, us-east-1), keys across ALL entries exactly arn, kind, name, pattern, schedule, state. First surfaced by 4.0.0_SA_CRO's RCN-0010 (@ecf57e8806), re-measured here on the tool's own JSON rather than taken from the record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/modules/graph/comp_trigger.py --list --json: denominator {rules 144, schedules 23}; 167 entries; union of keys ['arn','kind','name','pattern','schedule','state'].",
+        "LT-e-5's worker face, step 2, trigger_target leg: '(a rule or schedule targets it -- comp-trigger --list --json carries targets)'.",
+        "RCN-0010 s.1: targets were read from Terraform target blocks, because the comp-trigger listing has no target key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LT-e-5's face: comp-trigger --list --json carries each trigger's target, so the trigger_target leg can read it there.",
+    "world_is": "It does not. A worker following the face literally finds no targets and either builds the leg on another source or reports the leg empty -- and an EMPTY leg is exactly R-81's 'a relation reading zero is a question, never an answer'.",
+    "notes": "WHY INERT: the face states a FACT, not a criterion, and no arm depends on it -- the floor, named-class, shape and schema arms never read comp-trigger. It does not re-open the frozen round (R-82). What it changes is the DRAIN READ: at LT-e-5's drain, if its trigger_target leg reports targets, the issuer reads WHICH source produced them; if it reports none, that zero is treated as UNVERIFIED, not as a finding. Carried into LT-x-4's face pre-spawn by S28. THE LESSON, and it is this lane's third in one day of the same shape: I wrote a claim about an instrument's OUTPUT into a face without running the instrument. COST: one --list --json read at the cut. NON-APPLICATION: a face that names an instrument without asserting what it returns."
+  },
+  {
+    "id": "LGIC_LGCTFM-S28",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T19:52Z",
+    "one_line": "RECORD OF A PRE-SPAWN AMENDMENT, made under R-82's condition: LGIC_LGCTFM.TO-LT-x-4-r3's worker face gained ONE paragraph after issuance @6139990fe7 and BEFORE any worker read it. It carries R-81's 'a relation reading zero is a question, never an answer' and S27's measured fact that comp-trigger carries no target field. NO CRITERION, <paths> GRANT, <expect> OR INVOCATION CHANGED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "R-82 @62907d86b5 (msg 98050): 'LT-x-4's FACE MAY BE AMENDED PRE-SPAWN ... ONE PARAGRAPH, NO CRITERION CHANGE ... RECORD THE AMENDMENT IN THE ROUND'S CHANNEL AS A ROW BEFORE THE SPAWN.' Reason given: 'THE FREEZE PROTECTS A READER, NOT A FILE.'",
+        "LT-x-4 has no worker: it depends on LT-e-5, LT-p-2 and LT-r-2 all draining, and only LT-r-2 has drained (@20464bafee).",
+        "check_lt_r3.py selftest-arms after the edit: S85-order-quotes-carrier PASS for LT-x-4 -- the quoted coverage shape is byte-for-meaning unchanged; VERDICT PASS-ARMS-DISCRIMINATE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An issued order's face matches the text it was issued as, or the difference is on the record.",
+    "world_is": "It differs by one paragraph, recorded here, committed in the same commit as the edit so the drain, the L9 and any later reader can see it. to-pipeline-gate LIMB 6 grades only NEWLY-ADDED orders, so this modification is ungraded by any gate and this row is its only audit.",
+    "notes": "COST: one row per pre-spawn amendment. NON-APPLICATION: an order a worker is already reading -- that is frozen, and the only off-spec act there is a row, not an edit (R-82)."
   }
 ]
 ```

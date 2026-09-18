@@ -61,6 +61,16 @@ The three earlier cells of this round built the parts: `LT-e-5` the discovery an
 }
 ```
 
+**AMENDED PRE-SPAWN (2026-09-18, row `LGIC_LGCTFM-S28`, authorized by ruling R-82 @`62907d86b5`; no criterion
+changed).** Ruling R-81 (@`4443e7308e`) binds how you READ the run: **A RELATION READING ZERO IS A QUESTION,
+NEVER AN ANSWER.** TRIGGERS read 0 across the entire live graph until an IAM grant landed on 2026-09-04 while
+Terraform declared real targets. So any empty relation or empty column in your run -- no trigger for a Lambda,
+no role for a function, a zero from one comp-tool where another reports hits -- is recorded as UNVERIFIED in
+your result record until a positive control fires, never as "the subject has none". And **`comp-trigger --list
+--json` carries NO target field** (measured by the issuer: 167 triggers, keys `arn kind name pattern schedule
+state`, row `LGIC_LGCTFM-S27`), so a trigger's target in this run comes from whatever source `LT-e-5` designed
+-- read its method note and state which one produced each target you rely on.
+
 ### ACCEPTANCE
 
 <placeholders>WS</placeholders>
