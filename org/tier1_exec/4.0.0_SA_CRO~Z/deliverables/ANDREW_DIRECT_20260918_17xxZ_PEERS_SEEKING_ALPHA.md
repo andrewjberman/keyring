@@ -73,3 +73,19 @@ growth, 5-year FCF growth); preferred and minority interest arriving as one SA f
 
 **Then, verbatim:** *"Agree with everything youve got write up the brief and issue to CTO~Z"* -- which confirms item 1's
 consequence (the per-measure floor moves to 5 with the peer floor) and directs the Peers brief to `1.0.0_SA_CTO~Z`.
+
+## Addendum ~18:3xZ -- MODEL panel: the source for forecast years
+
+Asked, on the Model panel, whether forecast years (FY1-FY3 consensus) should come from Bloomberg's `BEST_` fields or
+from Seeking Alpha. Verbatim:
+
+> I'd use Bloomberg as primary, seeking alpha as a fall back.
+
+**Reading, narrow:** Model-tab forecast years take Bloomberg consensus first; where Bloomberg has no value, Seeking
+Alpha's, labelled as SA's. This is the mirror of the Peers rule (SA first there, Bloomberg filling). It does NOT answer
+the separate question of the Upside / Base / Downside cases, which stays open.
+
+**Then, verbatim:** *"write it up and get it over to CTO~Z. I told them after they receive this brief and integrate it
+into their flow, they may proceed with COO~Z. You and I will proceed to Posture regardless, but the greater fabric does
+not need to be held up on that."* -- the Model brief goes to `1.0.0_SA_CTO~Z`; on integrating it, the CTO may proceed
+to `2.0.0_SA_COO~Z` without waiting for the Posture brief.

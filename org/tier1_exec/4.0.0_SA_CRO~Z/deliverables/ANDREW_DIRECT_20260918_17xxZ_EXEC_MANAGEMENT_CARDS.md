@@ -43,3 +43,14 @@ the Lusha lookups. Verbatim:
 2. **The CEO only**, as he said; other officers are not widened into it.
 3. **Whether the running three-name validation should call Lusha or Bright Data now is NOT answered by this.** Its
    recorded scope still excludes both.
+
+## Addendum ~18:4xZ -- an exploration subagent for the CEO step
+
+Verbatim, quoting back this seat's summary of the CEO step: *"Also set up another subagent to go explore how this would
+be properly implemented"*.
+
+**Reading, narrow:** one subagent of this seat, on Opus as for the validation, explores and writes up how the CEO step
+(Exec Management brief s.9) should be implemented, with a scratch prototype. Covered, for that exploration only: up to
+10 Bright Data SERP queries through the estate's existing zone and key; fetching the public pages those return; model
+calls for the curation prototype under a US$5 cap; three sample CEOs. **Not covered:** Lusha; any S3 write; any repo
+code change or commit; any schedule; storing any contact data.
