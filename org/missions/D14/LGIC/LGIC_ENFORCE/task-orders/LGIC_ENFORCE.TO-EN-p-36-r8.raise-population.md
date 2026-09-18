@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~1 2026-09-18: both planes RUN TO THE END (stopped=null), 462 raises dispositioned (0 resolved, 462 carded citing OWNER_CARDS_R4.md), resolved+carded==raise_population per plane (131 live, 331 repo); RAISE_POPULATION_R8.json @54659987c0; proof-of-spec-check rc=0 VALID; P36R8-AC1..AC4 PASS-by-output, P36R8-AC5 UNVERIFIABLE-BY-INSTRUMENT reserved for 3.0.0_SA_CVO at L9</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves current) | **Decomp cell:** `EN-p-36` (decomposition v3.7 s.0h) | **outcome_ref:** FWD-5 | **depends_on:** none -- FIRST and only order on slot `~1`
 
