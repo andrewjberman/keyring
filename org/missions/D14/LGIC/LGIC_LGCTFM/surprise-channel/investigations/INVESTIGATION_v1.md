@@ -576,6 +576,30 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "S11's own remedy, verbatim: 'No grade moves ... nothing is owed to the cells; what is owed is the CONVENTION.' And R-40: a criterion whose subject is a RUN or PRODUCED ARTIFACT binds to that artifact's CONTENT HASH.",
     "world_is": "The convention is built and applied: NUMBER_PINS_R2.json binds 17 numbers over a printed denominator of 520 digit runs, 16 pinned with run id + content hash + hash_instrument and 1 excluded by name. S11's remedy is therefore MET. Its premise -- that two of the numbers contradict and that a third's population is gone -- is falsified by binding them to artifacts, which is the very act the convention exists to compel.",
     "notes": "This row carries no `adjudicates` and disposes nothing: disarming is not disposing and the clock stays 3.0.0_SA_CVO's. THE TRANSFERABLE PART IS THE SHAPE OF THE ERROR, not the correction: S11 concluded a CONTRADICTION from two numbers that were never about one subject, and concluded an ABSENCE from a population it had not searched for. Both are the same mistake -- reasoning about numbers without their referents. The convention R-40 asks for is exactly what makes that mistake impossible, so S11 diagnosed the right remedy from the wrong evidence. COST of the correction: one unscoped `git ls-files` with its denominator printed. NON-APPLICATION: a number whose subject is already named beside it."
+  },
+  {
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T12:30Z",
+    "one_line": "FWD-6 DOES NOT CLOSE ON LGIC_CANON'S C6 PRACTICE WAVE, AND THE DISCRIMINATOR IS THAT C6 ALREADY RAN. This project's register says FWD-6 'closes when a real migration's decomposition is cut from the plan -- which is LGIC_CANON's C6 practice wave'. MEASURED at the PRD's own bytes: FWD-6's ACCEPT is 'the 49 Financial migration's decomposition starts from the run's plan', and the PRD's PLAN row line 177 names its consumer verbatim -- 'consumed by the subject's migration project at L5 (`ADVI_FIRMBKTS` first)'. C6 ran at LGIC_CANON round 4 (reached 12 + carded 4, C6R4-AC8 graded PASS) AND FWD-6 DID NOT MOVE. If the register's mechanism were right, FWD-6 would have closed then. THE VERDICT (UNREACHABLE) IS UNCHANGED AND THE STATED MECHANISM IS FALSE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED AT THE PRD, which R-51 makes the authoritative carrier for an outcome's state ('DONE reads from the PRD's FWD outcome array'): org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md:116-121 -- FWD-6 'The migration's work plan comes out of the run ... shaped so a COO lane can decompose from it directly', DONE WHEN 'EXERCISED -- a real migration's decomposition has been cut from it', ACCEPT 'the 49 Financial migration's decomposition starts from the run's plan instead of rebuilding the inventory from scratch'. Nothing in the outcome names C6, LGIC_CANON, or a checklist run.",
+        "THE CONSUMER IS NAMED VERBATIM AT PRD:177, in the PLAN row: 'consumed by the subject's migration project at L5 (`ADVI_FIRMBKTS` first)'. Read at the PRD rather than taken from the artifact: plan.json's own `owner` field says the same on every package, but a producer's self-description is not evidence for what the spec requires, so the PRD row it cites was opened and printed.",
+        "THE DISCRIMINATOR, and it is what makes this a falsification rather than a reading: C6 ALREADY RAN. LGIC_CANON round 4 closed with C6's checklist run REACHED 12 + CARDED 4 == 16 of 16 and its C6R4-AC8 graded PASS. LGCTFM FWD-6 is still NOT REALIZED. An outcome whose stated closing event HAS OCCURRED and which has not moved is an outcome whose stated closing event is not its closing event.",
+        "WHAT THIS DOES NOT CHANGE: the VERDICT. FWD-6 remains NOT REALIZED and LGIC_LGCTFM remains unreachable by any act of this fabric, exactly as 1.0.0_SA_CTO's R-75 classification says. This row corrects WHY, not WHETHER, and it does not ask for a round 3.",
+        "WHAT IT DOES CHANGE IS THE SEATING ARITHMETIC, which is why it is filed rather than noted: R-75 has ADVI_FIRMBKTS blocking LGIC_CANON's carded steps 10 and 16, with LGCTFM FWD-6 routed through LGIC_CANON's C6. On this reading FWD-6 ALSO terminates DIRECTLY on ADVI_FIRMBKTS with no C6 intermediary -- so ONE unseated project blocks THREE threads across TWO projects, not two threads through a chain."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_LGCTFM's register: FWD-6 'closes when a real migration's decomposition is cut from the plan -- which is LGIC_CANON's C6 practice wave, not another engine cell.' And R-51: DONE resolves on the PRD's outcome array.",
+    "world_is": "The PRD's FWD-6 names no C6 and no LGIC_CANON; its PLAN row names ADVI_FIRMBKTS as the L5 consumer; and C6 has already run without moving the outcome.",
+    "notes": "THE REGISTER IS 1.0.0_SA_CTO's L3 CARRIER AND THIS SEAT DOES NOT EDIT IT -- the correction is RECOMMENDED to that seat and carried here meanwhile, because a broker message is never the carrier. RECOMMENDED: re-point LGIC_LGCTFM's FWD-6 blocking text at ADVI_FIRMBKTS's L5 consumption of the plan, and carry the count into card 6's seating rec as THREE threads on one unseated project. THE CLASS: a register gloss that is RIGHT ABOUT THE VERDICT and WRONG ABOUT THE MECHANISM survives every check that only re-verifies the verdict -- the same shape as this estate's `git hash-object` finding, where every published number was correct and only the stated mechanism was half. It fires on the first seat who acts on the RECIPE rather than the conclusion. COST: one read of the outcome at the PRD instead of the register. NON-APPLICATION: an outcome whose register text quotes the PRD verbatim.",
+    "id": "LGIC_LGCTFM-S24"
   }
 ]
 ```
