@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.5",
+ "decomp_version": "v3.6",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -801,6 +801,124 @@ derivations.
 
 **One guard, and it is labelled:** `c33-fence` reads PASS at the cut because the applied fence must STAY
 unchanged (R-29). The other eight arms read FAIL, each because its input does not exist yet.
+
+## 0g. v3.6 -- THE ROUND-7 RECUT (L10: 1.0.0_SA_CTO's round-6 analysis @`d1f880b870`)
+
+**Input, and the scope is taken from the REGISTER rather than from the analysis.** `project.json`'s
+`phase`, `last_updated` 2026-09-18T08:40:00Z, names round 7's material. The round-6 analysis names it
+too, and where a forward carry and the register disagree the register wins (**R-57**). This lane cut
+LGIC_LGCTFM round 2 against the register an hour earlier for the same reason, then took its first
+framing of THIS round from an analysis and had to withdraw it -- so the rule is applied here
+deliberately rather than remembered.
+
+Round 6 graded **REALIZED 6 of 7**. `FWD-5` NOT REALIZED and carried here.
+
+### 0g.1 THE ROUND'S CENTRAL CHOICE: IT DOES NOT ATTEMPT THE 1093
+
+Rounds 5 and 6 each resolved **41** rows. Measured: 1411 -> 1329 in two rounds, a NET 82, with about
+thirty more rounds at that rate. That arithmetic is kept as a SHAPE and not a forecast -- it assumes a
+constant rate over a population twice found to be non-uniform, which is the assumption round 6
+falsified.
+
+⭐ **BUT THE DECIDING GROUND IS NOT YIELD, AND THIS LANE HAD IT WRONG FIRST.** `R-60` read `FWD-5`'s
+own ACCEPT at the bytes: *"a ranked list of every name and address that breaks the pattern, each paired
+with its correct form, totals shown ... THIS IS THE LIST CLEAN-UP PROJECTS START FROM"*, DONE WHEN =
+EXERCISED. **THE OUTCOME IS THE LIST. THE RESOLUTION IS THE CLEAN-UP PROJECTS' WORK, AND THE OUTCOME
+SAYS SO IN ITS LAST NINE WORDS.** Rounds 5 and 6 ground against a bar `FWD-5` never set, and it was
+graded against that bar three times before anyone read the closing clause. A classification pass is
+not a retreat from the bar; it is NEARER to it than the grind was.
+
+⚠ **IT STILL DOES NOT MAKE `FWD-5` REALIZED.** The ACCEPT wants each row paired with its correct form
+and 1093 have none. Round 7 changes WHICH WORK CLOSES IT, never whether it is closed.
+
+**AND THE 1093's CLASS NAME IS ITSELF THE FINDING** (`R-60`, elevating this lane's sentence to a Rule
+24 result): `TIMEBOXED_R33` describes the MEASURING PROCESS, not the measured domain. A taxonomy value
+borrowed from the OBSERVER is not a member of the domain being partitioned at all -- a FIFTH shape
+beside wrong grain, wrong axis and uncovered member, and it passes every count check because 1093 rows
+really do carry it. It is 82% of what remains.
+
+### 0g.2 THE CELLS -- 2, and no earlier cell is re-opened
+
+```
+  cells at v3.5 ......................................................... 33
+  plus round 7's two .................................................... +2
+  = cells in this decomposition ......................................... 35
+  round 7 runs exactly the two: 34, 35
+```
+
+| cell | id | what it does | rulings | serves |
+|---|---|---|---|---|
+| 34 | `EN-t-34` | **THE LABELS THAT LIE.** The 51 two-carrier rows get a label naming BOTH remedies AND EACH REMEDY'S CARRIER; the 15 key-format templates get a reason saying THE ROW IS NOT A NAME instead of one saying the token is not a system | R-60, R-62(c) | FWD-5 |
+| 35 | `EN-o-35` | **THE CLAIM THAT UNDER-STATES.** The 41 resolved rows read `owner_claim: inferred` because leg B inherits from a sibling whose own claim is inferred. Each is CONFIRMED from an OWNING DIRECTIVE or CARDED with a reason | R-42, R-19 | FWD-5 |
+
+**ONE AXIS, ONE INTENT (Rule 24 iii):** both cells are about a FIELD THAT SAYS SOMETHING FALSE ABOUT A
+ROW. 34 fixes labels that mis-describe; 35 fixes a claim that under-states. Neither resolves a
+placeholder and neither touches the 1093.
+
+### 0g.3 WHY THE 15 ARE CARDED HERE AND NOT EXCLUDED, WHICH IS A RULING AND NOT THIS LANE'S CHOICE
+
+This lane was told to cut a third cell adding a `types_not_graded_by_kind` entry for the 15. **IT WAS
+HELD AND MEASURED FIRST, AND THE REMEDY WOULD NOT HAVE WORKED.**
+
+```
+  all 15 rows carry type S3Key, and S3Key is ALREADY an entry in that table
+  lib/opal_naming.py:493   graded_types = by_type | set(types_not_graded_by_kind)   <- UNIONS IT IN
+  lib/opal_naming.py:1012  not_graded = {t for t, why in tng.items()
+                                         if str(why).startswith("NOT GRADED")}      <- THE REAL SWITCH
+  15 entries: 8 genuinely out, 7 STILL GRADED -- S3Key among them, reason "the key grammar (key)"
+```
+
+⛔ **`types_not_graded_by_kind` IS A ROUTING TABLE, NOT AN EXCLUSION LIST, AND ITS NAME IS THE OPPOSITE
+OF ITS BEHAVIOUR.** The entry would have changed nothing, and the acceptance condition attached to it
+-- a printed denominator showing the templates' addresses stayed inside the address grade -- WOULD HAVE
+PASSED VACUOUSLY, because nothing would have left any grade. That is `R-47`'s own shape arriving inside
+the guard written to prevent it.
+
+`R-62` then ruled: removing ALL `S3Key` from the name grade is **REFUSED** (it removes every S3 key in
+the estate to fix 15 templates, and Rule 30 makes S3 addresses the core naming surface -- **the 15 are
+TEMPLATES; S3Key is EVERY KEY**); a mechanism distinguishing a template from a key is **ROUND 8**
+material, because a schema change needs Rule 24's four-postulate record and a token census and is never
+a rider; and **leaving the 15 CARDED UNDER A TRUE REASON is ADOPTED**, which is what cell 34 carries.
+
+⭐ **THE STANDING HAZARD, pinned in `R7_BASE.json` because both cells read that table:** the exclusion
+switch is a PROSE REASON STRING written by a human for a human, so **REWORDING A REASON SILENTLY
+CHANGES GRADING BEHAVIOUR**. Turning *"NOT GRADED: AWS-issued identifier"* into *"AWS-issued
+identifier, not graded"* -- an improvement in ordinary prose -- puts that type BACK INTO THE GRADE and
+nothing announces it. Eight types sit on that edge. `t34-no-grade-change` READS PASS AT THE CUT and
+refuses any cell that moves the table.
+
+### 0g.4 WRITE SURFACES, AND WHY THIS IS ONE QUEUE
+
+```
+  EN-t-34   deliverables/<its serial>/ + the project's surprise channel
+  EN-o-35   deliverables/<its serial>/ + the project's surprise channel
+```
+
+**ONE QUEUE ON ONE SLOT, and this round has the measurement rather than the rule.** LGIC_LGCTFM round 2
+ran two slots on a stated hypothesis that a TEXTUAL SPLICE merges where a whole-array RE-DUMP
+conflicts. **IT WAS REFUTED:** the second drain conflicted although both sides spliced, and
+`safe-merge`'s own banner says an append-only channel conflicts on EVERY concurrent drain -- the normal
+path, not the exception. The cost was one union merge, exactly as bounded, and the hypothesis is
+recorded dead rather than quietly dropped. So round 7 queues.
+
+### 0g.5 THE FIXED INPUT
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r7/check_en_r7.py` -- 8 subcommands; `selftest-arms` drives
+**21 arms, 8 of them POSITIVE-SATISFIABILITY** against simulated correct records. `R7_BASE.json` pins
+`2c3d7b0cb2` and EVERY figure in it was MEASURED at the cut: the 51 **re-identified independently of
+round 6's own label** by requiring both `{system}` and `{cadence}` in the row's text (51 = 51,
+EVENT_RULE 49 / LOG_GROUP 2); the 15 by the five unsanctioned tokens (all `S3Key`); the 41 (41 of 41
+`inferred`); and the exclusion table's 8/7 split.
+
+**WIRING MEASURED AT THE CUT, NOT ASSUMED:** 7 of 8 real arms read FAIL because their inputs do not
+exist; `t34-no-grade-change` reads PASS and is LABELLED a guard.
+
+### 0g.6 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** make `FWD-5` REALIZED, and 0g.1 says why in the outcome's own words.
+- It does **not** touch the 1093, and does not pretend the arithmetic for them has improved.
+- It does **not** change any grading behaviour. The exclusion table is guarded, not edited.
+- It does **not** decide whether a key template should leave the name grade. That is round 8's (b).
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
