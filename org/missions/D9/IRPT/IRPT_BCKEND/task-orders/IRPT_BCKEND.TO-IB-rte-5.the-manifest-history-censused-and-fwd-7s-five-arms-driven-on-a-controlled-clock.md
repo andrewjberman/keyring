@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T19:0xZ to slot ~2 (cold start) on the round-4 analysis s.8 item 6 and rtd-2's recorded-not-run Q2.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~2 2026-09-18T21:3xZ: R55-AC1 PASS-by-output (16 of 16 graded checks, token IBR55-MANIFESTS-CENSUSED-AND-FIVE-ARMS-DRIVEN); rtd-2's Q2 CLOSED at k=0 of 5 via the full un-purged S3-version history; five arms driven 5 of 5 distinct against the current deployed CodeSha256; fresh-dispatch case measured, named-blocked (0 of 1), not driven. R55-AC2 recorded for the CVO, no verdict. proof-of-spec-check.py rc=0 VALID.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 5 (the CTO's round-4 analysis @561d6e1cc9, msg 98036) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 4) | **Round-4 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND4_ANALYSIS.md` @561d6e1cc9 | **Andrew-direct:** 2026-09-18 ~17:3xZ "Approved" (record `org/tier1_exec/2.0.0_SA_COO~B/deliverables/ANDREW_DIRECT_20260918_173xZ_TWO_OPEN_CALLS_APPROVED_IRPT_BCKEND.md` @af794c77e3) | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar; Rule 30 | **Decomp cell:** `IB-rte-5` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.5, s.R5) | **outcome_ref:** FWD-7
 
