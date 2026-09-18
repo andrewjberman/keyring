@@ -3331,6 +3331,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "LGIC_ENFORCE.TO-EN-s-25-r4 WORKER FACE THE CELL item 4: 'NO PLACEHOLDER reaches a report row (W2-S10's rule): no row's `canonical` may contain `{`.'",
    "world_is": "1411 of the round's 3237 judged rows carry a `{` placeholder in canonical. The registry is outside this worker's grant (BOUNDS: 'The registry is not yours this round'), so S25R4-AC3 is reported FAIL with this measured evidence rather than worked around; nothing is minted or carded by this worker.",
    "notes": "AC1 and AC2 (both planes complete, stopped null, vintage stated) PASS on the same run. Closing this bar needs a round-5-scale mint/card campaign over the placeholder population (a DIFFERENT, larger set than RAISE_POPULATION_S6.r3.md, since a placeholder-eligible token never raises and so was never captured there) -- sized and owned by the round's issuer/analysis, not this cell. disarm_owner 2.0.0_SA_COO~G as round 4's issuer, matching row LGIC_ENFORCE-W1-S29's convention."
+  },
+  {
+   "id": "LGIC_ENFORCE-W1-S31",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+   "surfaced_at": "2026-09-18T01:40Z",
+   "one_line": "check_en_r5.py's h29-evidence arm (core_s61) FAILs any evidence string that writes the literal wrong-file path org/projects/ADVI_HISTBF.json, even inside a correct disclaimer explaining that file does NOT establish ownership -- the wrong_named test is a bare substring check with no polarity, so a corrector who follows THE CELL instruction (iii) literally, by naming the ruled-out file by its own path, gets a FAIL despite writing an honest correction.",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED, this worktree: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r5/check_en_r5.py:412-422, `core_s61(evidence, right_has_core, wrong_has_core, wrong_named)`: `if wrong_named and not wrong_has_core: ... return False, [\"STILL A WRONG-OBJECT CITATION...\"]`; `wrong_named` (:460) is `bool(ev and S61_WRONG_FILE in ev)` -- a bare substring test on the literal path 'org/projects/ADVI_HISTBF.json' with no check of what the surrounding sentence says about it.",
+     "TESTED, this worktree, before committing (resources.json restored to the committed text afterward, verified by `git diff --stat` reading 1 file / 1 line changed both before and after): a draft evidence string ending '... it does NOT establish that org/projects/ADVI_HISTBF.json owns this alarm's project accounting.' made `python check_en_r5.py h29-evidence` print 'the row's evidence still names org/projects/ADVI_HISTBF.json: True' / 'STILL A WRONG-OBJECT CITATION: the evidence attributes the phrase to a file measured NOT to carry it' / `VERDICT: FAIL-H29-WRONG-OBJECT-CITATION-CORRECTED` -- identical failure text to the UNCORRECTED row, despite the sentence explicitly ruling the file out. The same disclaimer rewritten to name the project as 'ADVI_HISTBF' (short token, no path, no .json) left the arm's `wrong_named` False and the run printed `VERDICT: PASS-H29-WRONG-OBJECT-CITATION-CORRECTED`.",
+     "The committed row's evidence string (infra/logic/registry/resources.json, row 'Inflection-HistBackfill-FailureSpike') is written to satisfy this by construction: it names the ruled-out project by short token only ('ADVI_HISTBF'), never by its registry path, everywhere the disclaimer discusses what the citation does not establish."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_ENFORCE.TO-EN-h-29-r5 THE CELL, instruction (iii): the corrected evidence 'states what that citation does and does not establish about ADVI_HISTBF's ownership of this alarm' -- read plainly, this admits naming the ruled-out file by its own registry path as part of an honest disclaimer.",
+   "world_is": "The fixed-input arm's `wrong_named` test is a bare substring match on the full path 'org/projects/ADVI_HISTBF.json', blind to whether the sentence containing it affirms or rules out that citation. Any evidence string that spells out that literal path -- correcting or not -- fails H29R5-AC1. A corrector who takes instruction (iii) at its most literal reading, and writes the ruled-out file's real path into the disclaimer, gets a FAIL on an honest correction.",
+   "notes": "Non-blocking for this cell: found before commit and worked around by naming the ruled-out project without its path (see the committed evidence string); H29R5-AC1 and H29R5-AC2 both measured PASS on this tree before commit. Surfaced because the next reader of instruction (iii), on a different row, has no way to know from the order text alone that the arm penalizes the literal path regardless of context. disarm_owner 2.0.0_SA_COO~G as round 5's issuer and the fixed input's author, matching row LGIC_ENFORCE-W1-S29's convention for a fixed-input limitation this worker cannot edit."
   }
 ]
 ```
