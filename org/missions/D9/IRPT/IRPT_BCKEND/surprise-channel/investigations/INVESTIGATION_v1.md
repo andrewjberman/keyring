@@ -5247,3 +5247,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 ]
 ```
+
+## Round 3 -- CVO verification finding
+
+```json
+{
+ "id": "IRPT_BCKEND-S73",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:20Z",
+ "one_line": "`comp-iam roles` PRINTS A BARE DENOMINATOR WITH NO VINTAGE, AND A ROLE APPLIED 2h15m AGO IS ABSENT FROM IT. Found while verifying R37-AC2: irpt-49f-directory-read-role is LIVE (created 2026-09-18T08:49:34Z) and does not appear among comp-iam's `210 found`. R37's claim STANDS -- the instrument is what is stale. The sibling subcommand `comp-iam live` discloses its vintage EXEMPLARILY, so this is a DISCLOSURE ASYMMETRY inside one tool, not a missing capability.",
+ "class": "OBSERVATION",
+ "spec_asserts": "A census output carries the vintage of the population it counted, so a reader can tell 'these are the roles' from 'these were the roles at a moment I am not naming'. CLAUDE.md: put the control on the RETRIEVAL -- outputs do not carry their own frame, so print the denominator beside the number. A denominator certifies the SWEEP, never the SET.",
+ "world_is": "MEASURED. `comp-iam roles` prints 'IAM ROLES (210 found)' and a list, with NO vintage line anywhere in its output -- I grepped its own output for built/snapshot/vintage/as-of/generated and got only two role NAMES containing the word snapshot. Of those 210, 13 are irpt-*; `irpt-49f-directory-read-role` is NOT among them. THE ROLE IS LIVE: a direct read returns arn:aws:iam::313476888478:role/irpt-49f-directory-read-role created 2026-09-18T08:49:34Z, which is 2h15m before this read. SO A SEAT ASKING comp-iam WHETHER A FRESH APPLY LANDED GETS A CONFIDENT, DENOMINATOR-BEARING ABSENCE, and the failure is indistinguishable from the role genuinely not existing -- which is the exact inverse of the phantom-backstop class the tool's own HUD message advertises catching (a DECLARED-but-unapplied control). Here it would report an APPLIED control as undeclared-or-absent. THE TOOL IS BETTER THAN ITS DEFAULT PATH SUGGESTS AND THAT IS THE POINT. `comp-iam live` prints a full provenance header: 'LIVE PROVENANCE: materialized graph (kuzu_nessie_db) -- population and vintage read from the ROWS', 'full-derive: 247 node(s), newest 2026-09-18T02:00:39Z (age 9.2h)', and it volunteers BOTH of its own unverified halves -- 'incremental pipe: NOT CHECKED (--pipe) -- the plus mutations since half of the freshness claim is UNVERIFIED' and 'population cross-check: UNAVAILABLE (no --census) -- the graph population is TAKEN ON TRUST'. That is a model disclosure and it is why I can state the second half precisely: the 02:00:39Z derive is 6h49m BEFORE the role was created, so `live`'s 247 cannot contain it either -- but `live` SAYS SO and `roles` does not. NOTE ALSO THAT THE TWO POPULATIONS DIFFER BY 37 (210 vs 247) and neither output explains the gap to a reader who runs both. THE CLASS IS TONIGHT'S, IN A NEW DIMENSION: a denominator whose SCOPE is narrower than the sentence it supports -- here narrower in TIME rather than in PATH. '(210 found)' reads as 'these are the roles'; it means 'these were the roles as of a moment this output does not name'. The remedy is small and needs no new capability: carry `live`'s provenance header onto `roles`, `role`, `service` and `services`. I did NOT use the rail escape to avoid the tool -- I ran comp-iam first, twice, and used a rail-checked raw read only for the one question comp-iam cannot answer by construction, whether an apply made after its snapshot has landed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "`comp-iam roles` at 2026-09-18T11:1xZ: 'IAM ROLES (210 found)', 13 irpt-* roles, irpt-49f-directory-read-role ABSENT; no vintage token in the output",
+   "`.tools/aws iam get-role --role-name irpt-49f-directory-read-role` (rail-checked, vintage question): arn:aws:iam::313476888478:role/irpt-49f-directory-read-role, CreateDate 2026-09-18T08:49:34Z",
+   "`comp-iam live`: population 247, full-derive newest 2026-09-18T02:00:39Z (age 9.2h), incremental pipe NOT CHECKED, population cross-check UNAVAILABLE -- all disclosed by the tool itself",
+   "IB-rtc-7's own record: both roots applied under ledger irpt-bckend-rtc7-49f-principal (OPEN d8720e83df, CLOSED 1bd528592b)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT"
+}
+```
