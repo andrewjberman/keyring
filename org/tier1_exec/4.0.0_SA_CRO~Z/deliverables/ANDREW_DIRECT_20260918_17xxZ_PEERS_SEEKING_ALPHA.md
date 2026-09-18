@@ -52,3 +52,24 @@ the session scratchpad); any schedule or producer; any new fetch code in the rep
 `rest_fetch.load_config` / `build_session` / `_do_get`, all classified OK by `detectors.classify`. The parked session
 (captured 2026-09-11T02:13Z) was accepted. Nothing was landed in any bucket; bodies and the request log sit in the
 session scratchpad (`sa_peers_test/`). No cookie, proxy credential or session value was printed.
+
+## Addendum ~18:0xZ -- three rulings on the Peers shape
+
+Put to him: the Peers V eight-peer floor against SA's five peers; the two CSC columns SA does not carry (5-year EBIT
+growth, 5-year FCF growth); preferred and minority interest arriving as one SA field. Verbatim:
+
+> It's now 5 instead of 8, we'll fit to the SA shape. If we can get the remaining two from BBG then do that, if not,
+> fall back to what SA provides, as a general rule for the pipeline for that process. Yes we can do that in SA shape.
+
+**Reading, narrow:**
+1. **The Peers V peer floor is 5, replacing his earlier ruled 8** (`lib/research/scores/peers_v.py:64`, asserted at
+   `:70`), and the panel fits SA's shape. **Consequence, stated for the CTO to confirm rather than assumed silently:**
+   the per-measure floor `MIN_PEERS_PER_MEASURE = 6` (`:62`) sits above five, so with SA's five peers no measure would
+   ever compute. "Fit to the SA shape" is read as moving it to 5 as well; the measure-count floor (`|M| >= 3`, `:69`) is
+   not touched.
+2. **A general rule for the Peers pipeline:** a column SA does not carry is taken from Bloomberg if Bloomberg has it;
+   otherwise the pipeline falls back to what SA provides.
+3. **Preferred and minority interest are shown as SA's single combined field.**
+
+**Then, verbatim:** *"Agree with everything youve got write up the brief and issue to CTO~Z"* -- which confirms item 1's
+consequence (the per-measure floor moves to 5 with the peer floor) and directs the Peers brief to `1.0.0_SA_CTO~Z`.

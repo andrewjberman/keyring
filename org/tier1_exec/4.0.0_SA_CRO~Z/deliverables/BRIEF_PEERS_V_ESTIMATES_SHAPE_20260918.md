@@ -5,6 +5,13 @@
 peers, I will answer that once ive better seen the shape of the data."* **This is that shape.** It recommends no
 measure, cuts no cell, writes to no pool and schedules nothing.
 
+> **CORRECTION and SUPERSESSION, 2026-09-18 ~18:1xZ.** (1) **The denominator is 33, not 34.** The 34 below is the
+> model store's name set, which includes NVIDIA; the population of record is the crosswalk's 33 MEASURED names. NVIDIA
+> was one of the four names that would not serve, so "30 of 34" reads **30 of 33** over the keyed population.
+> (2) **The design this brief measured is superseded.** Andrew moved the Peers panel to Seeking Alpha's peers
+> comparison and ruled the Peers V peer floor 5, not 8. The current plan is `BRIEF_PEERS_CURRENT_TO_DESIRED_20260918.md`.
+> The SEDOL-resolution finding below still stands for any Bloomberg read of a numeric peer ticker.
+
 ---
 
 ## 1. The answer in one line
