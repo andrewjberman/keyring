@@ -8771,6 +8771,72 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Z-S164 asserts that a complete Peers V is unobtainable from landed data and that the only route to it is a vendor estimates pull reserved to Andrew -- and, by its silence on any other cause, that the ESTIMATE FIELDS are what stands between the fabric and a measured Peers V. Andrew's word at this terminal 2026-09-18 ~12:5xZ @c6c49ede58, verbatim: 'we will always be able to find peers, I will answer that once ive better seen the shape of the data.'",
     "world_is": "The estimate fields were never the binding constraint. Peer IDENTITY was, and it is one lookup wide. With egress authorized the measure computes for 30 of 34 names as written, and where a measure is missing it is missing HONESTLY for a reason that reads as correct: banks and insurers have no FCF yield or EBITDA multiple, Boeing has no trailing P/E on negative EPS, and two ADR lines refuse fields with an explicit 'not applicable to security'. Andrew's one-sentence steer was right and this seat's ruling was the thing that needed correcting.",
     "notes": "WHAT IS WITHDRAWN AND WHAT IS NOT, stated separately so the next reader does not over-correct in the other direction. (1) WITHDRAWN: Z-S164's operative conclusion that Peers V is unreachable without a redefinition, and every downstream reading that the measure would ship ABSENT as its settled answer. (2) NOT WITHDRAWN: its measurement of the LANDED plane -- the three estimate fields genuinely are on no landed object, and a translation layer over the R-1 scanner vocabulary genuinely cannot manufacture them. A row that withdrew both would be trading one wrong reading for another. (3) THE TRANSFERABLE LESSON, which is worth more than the item: A SUBTRACTION IS ONLY AS GOOD AS THE DOMAIN IT SUBTRACTS OVER, AND CHOOSING THE DOMAIN IS ITSELF A CLAIM. Z-S164 chose the FIELD domain -- which sources carry which mnemonics -- and executed the subtraction correctly inside it. It never asked whether the KEY SPACE was sound, which is question 6 of the substrate card (org/standards/SUBSTRATE_CARD.schema.json) and would have caught this for the cost of one read of the identifier column. The tell was available and unread: 224 of 1,658 is 13.5 percent of the peer rows in a shape the resolver silently skips, and a silent skip is exactly the failure mode question 7 asks to be made distinguishable from a genuine negative. (4) WHAT THIS DOES NOT DO: it does not answer the measure-definition question, which is Andrew's by his own word and stays his; it does not cut or amend any round-13 order; rk-30 adapter AC1's ruling at Z-S173 is UNDISTURBED, because AC1 fails on what the round COMMITTED TO PRODUCE and not on what is reachable in principle -- a distinction this row would blur if it claimed otherwise. The narrowed question left for the PRD, and it is the CRO's own framing rather than this seat's: what to serve for a name whose peer set is empty or one member short, and whether a name with three computable measures carries a labelled narrower score."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-18T14:17:27Z",
+    "one_line": "AMGT-rk-22's 7 new management names cost ZERO Lusha/SERP credits: domains.json declares only the original 5 QA names, so every added name's lusha_enrichment.status is SKIPPED and ceo_public_profile is never queried.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/management/domains.json (5 entries, unchanged by this order -- rk-22's ruling item 1 scopes to running the producers over the population, not to declaring new domains)",
+        "management_posture_batch.py management --write-pool run, 2026-09-18: all 7 of ASML_NA_Equity/HAL_US_Equity/INTU_US_Equity/KMB_US_Equity/NU_US_Equity/PBR_US_Equity/VLO_US_Equity print lusha=SKIPPED(pull-missed); credits_used 0 for every one"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CARD 5's own cost line (ROUND_ANALYSIS.round11.md; decomp s.21e) estimates a per-name Lusha/SERP+Anthropic cost for this cell's run, and Andrew's 'yes do it' authorized a vendor spend on that basis.",
+    "world_is": "The Lusha/Bright-Data half of that spend was $0 for all 7 new management names -- domains.json's own declared coverage ('the five QA names of AMGT-rj-8') never grew, so every new name's enrichment is a config-scoped SKIP, not a billed call. The only real vendor spend this cell incurred was posture's Anthropic calls (7 of 28 new names reached a real model call; the rest resolved to a classed ABSENT before the model step). This is a favorable variance against CARD 5's estimate, not a defect -- named here so the actual receipt is on record beside the estimate, per the round's own 'this seat says so rather than presenting a filings-pipeline number as a management/posture one' discipline.",
+    "notes": "Remedy holder (if any is ever wanted): a future cell that declares domains for the 7 additional filed names would let Lusha/SERP actually run for them; that is new scope (researching each company's own corporate/IR domain), not this cell's ruling, and is not done here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-18T14:17:27Z",
+    "one_line": "BP/_LN_Equity and NG/_LN_Equity's literal '/' lands posture/v1/<key>/<as_of>.json one level DEEPER than every other name (posture/v1/BP/_LN_Equity/... instead of posture/v1/BP_LN_Equity/...) -- the writes succeeded and read back clean, but the key SHAPE differs, exactly the class AMGT-rk-23 (FWD-5) is scoped to census.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/posture/judge.py:236-237 pool_key() formats the raw security_key into the S3 key with no path-safe encode -- the same class the decomp names at render_pack.py:243-244 and scoped_amgt.py:1403",
+        "live read 2026-09-18: s3://opal-data-harvest/posture/v1/BP/_LN_Equity/2026-09-16.json and s3://opal-data-harvest/posture/v1/NG/_LN_Equity/2026-09-16.json both exist and read back with sha256/Metadata matching (the OK: uploaded ... with read-back lines from this cell's own posture batch run)",
+        "org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md:2440-2441 (AMGT-rk-23's own criterion: 'print serves a valid PDF for 33 of 33 keyed names ... including a planted case using BP/_LN_Equity or NG/_LN_Equity literally')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 of this cell's own task order asks only that posture_names' count increase toward 33, read from a flat list_objects_v2 count over the whole posture/v1/ prefix -- a count that is DENOMINATOR-BLIND to key depth.",
+    "world_is": "The count is correct (33 of 33) either way, so AC1 is unaffected -- but any FUTURE consumer that parses a name out of a posture/v1/ key by splitting on the first '/' (this cell's own management_posture_batch.py served_names() included, before this note) will read 'BP' and 'NG' rather than 'BP/_LN_Equity' and 'NG/_LN_Equity', undercounting served names by exactly 2. This cell's own batch driver has this defect and is NOT fixed here: AMGT-rk-23 is the cell that owns path-safety for security keys, and fixing it inside rk-22's task order would be scope creep into a cell already cut separately.",
+    "notes": "Remedy holder: whichever seat carries AMGT-rk-23 forward. No action taken on management_posture_batch.py's served_names() beyond this note; its report command's '31 of 33' line for posture (before the two literal-slash names were run) is the visible symptom -- the true, denominator-correct count (list_objects_v2 with no name-parsing) is 33 of 33, confirmed by this cell's own AC1 invocation."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-18T14:40:18Z",
+    "one_line": "Running lib/research/posture/judge.py (via comparable.py -> lib/research/peers/universe.py load_candidate_universe()) rewrote a cache file OUTSIDE this cell's <paths> grant -- org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/candidate_universe.json, another worker's deliverables folder -- as a documented, correct STALE-CACHE REBUILD, left UNCOMMITTED by this worker rather than written outside its grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/universe.py:141-146 cache_path() defaults to CACHE_DIR_DEFAULT/CACHE_NAME, and that default resolves under 0.9.0_WK_AMGT_RESAPP~21's deliverables folder (a prior worker's cell, AMGT-rk-14) -- the ONE shared cache every posture run reads through comparable.py:198",
+        "lib/research/peers/universe.py:558-577 load_candidate_universe()'s own docstring: 'a cache written BEFORE the preset-bounded retention landed carries the code set and no values ... is REBUILT, never served'",
+        "measured 2026-09-18: HEAD's committed cache carries schema_version 1, no preset_value_codes, no preset_values/fx_basis per row; after this cell's posture batch run the working-tree file carries schema_version 2, preset_value_codes 26, preset_values + fx_basis on 2848-2850 of 2851 rows -- i.e. the code's OWN staleness check fired exactly as documented, not a defect this cell introduced",
+        "git status: only this ONE file changed outside this cell's <paths>; not staged, not committed by this worker"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's <paths> names lib/research/management/, lib/research/posture/, integrations/bloomberg/research/ and this worker's own deliverables/investigation/task-order paths -- nothing under 0.9.0_WK_AMGT_RESAPP~21/.",
+    "world_is": "Exercising the mandated posture producer transitively calls a shared library cache whose DEFAULT PATH sits inside a different worker's deliverables folder, and that library correctly rebuilds a cache it finds stale. This worker did not choose that path, cannot fix its default from inside this cell's <paths> (lib/research/peers/ is not granted here), and does not commit the resulting file -- it is left as an uncommitted working-tree diff so no write lands outside the grant. A future run by ANY seat (worker or not) reaches the identical rebuilt bytes, since the staleness is in the COMMITTED file, not in this run.",
+    "notes": "Remedy holder: whoever next touches lib/research/peers/universe.py or AMGT-rk-14's own follow-on -- CACHE_DIR_DEFAULT should not default into a WORKER-NUMBERED deliverables folder at all (a worker slot is not a durable cache home). Not fixed here: out of this cell's <paths> and out of its ruling."
   }
 ]
 ```
