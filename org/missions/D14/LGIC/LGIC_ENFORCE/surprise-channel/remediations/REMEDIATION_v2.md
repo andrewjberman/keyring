@@ -1367,3 +1367,125 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  }
 }
 ```
+
+## Round 7 -- remediation plane: four owed clocks, two of them since round 3
+
+```json
+{
+ "id": "LGIC_ENFORCE-S56",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "S56 named a real wall -- .tools/surprise-row-gate.py is lane LOOP_MECHANISM and a SEAT writing it directly is admitted only if enumerated there -- and was filed ARMED because it blocked round 3's first cell at the cut. GRADUATED by C-S25 in round 3; its clock was never written, so for four rounds the item was disposed with no carrier a consumer reads.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S56",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "REMEDIATED on the disarm owner's own measurement at S70: S56 is right about a worker and about the COO issuer and WRONG ABOUT THE CTO -- 1.0.0_SA_CTO IS a permitted agent on that path and has exercised it, so the blocking condition has a live, exercised remedy rather than none. The premise MOVED; that is a disarm, not merely a dismissal. THIS CLOCK IS WRITTEN AT ROUND 7's L10 RATHER THAN ROUND 3's BECAUSE ROUND 3's WAS MISSED and the gate admits a new remediation row only when every order is terminal -- which is true here for the first time since. Written by 3.0.0_SA_CVO at the owner's word, not in its stead.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-18T11:05Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S57",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "S57 named the PLATFORM_LOGIC_DOCS wall over infra/logic/registry/** -- permitted_agents are the five 4.0.0_SA_CRO serials and nobody else, so those writes are refused to a worker's seat peers, to this seat AND to 1.0.0_SA_CTO. Filed ARMED, GRADUATED by C-S25, clock never written.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S57",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "NOT REMEDIATED AND THE CLOCK OPENS RATHER THAN CLOSES. S70 is the disarm owner's own word that S57 is EXACTLY RIGHT, CONFIRMED AT THE BYTES WITH A PRINTED DENOMINATOR -- the premise is unchanged. What cleared S57 FOR ROUND 3 was C-S25's finding that a spine-v3 worker is enumerated in no lane and is admitted by its task order's own <paths> grant (.tools/owned-paths-validate.py:115-121, exercised at 23980d3fbe). That mechanism is ADDITIVE to the static lane table and says nothing about a SEAT, which is what this row is about. Disarming on a worker's admission would launder the exact distinction the row exists to make. OWED: either a seat-facing route for infra/logic/registry/** or an explicit ruling that every such write rides a worker grant.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S74",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The rowless-disarm census: 16 items, MECE 8 ARMED / 8 INERT, against the five the round-6 analysis named. Its structural half is that the gate grades a NEW REMEDIATION ROW AS A SLUG ACT, so a clock missed at round N's L10 can only be written at a LATER round's L10 -- and every round that closes without noticing hands it on to a round with no reason to look.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "PARTLY SERVED BY THIS WRITE AND THE REST IS ROUND 8's. The bar is now ruled by 1.0.0_SA_CTO -- ONE REMEDIATION ROW PER GRADUATED ITEM, ASSERTED AT THE L10 THE ITEM'S OWN ROUND IS CLOSING. TWO of the sixteen are discharged here, S56 and S57, in the first window since round 3 in which the gate would admit them. FOURTEEN REMAIN: six ARMED-and-DISMISSED (S13, W1-S7, W1-S16, W1-S18, W2-S7, W3-S5), which S73 establishes are R-21's anticipated retroactive backlog rather than a violation and which are round 8's to re-adjudicate with the analysis beside them, never a unilateral flip; and eight INERT-and-GRADUATED (S58, S59, S60, W3-S14, W3-S15, W3-S16, W4-S5, W4-S6), which are a CENSUS GAP with no hazard behind them and must not share the first group's remedy. The gate limb that would mechanise the bar is APPROVED IN PRINCIPLE and deliberately NOT BUILT tonight: a limb with refusal power over every slug in the estate needs its own cell with a positive control and a mutant.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v7"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S75",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "S75 claimed 'nothing in this project knows' the sentiment-query-api RAISE, measured on project.json and the decomposition. Both zeros are true; neither is the population of a sentence about a project. The token occurs 26 times in this project's own surprise channel, 21 of them in the file S75 was spliced into.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S75",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md round 7 disposition rows",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74"
+ ],
+ "remedy": "THE HAZARD IS DISARMED AND A REAL ITEM REMAINS OPEN, and the two must not be confused. DISARMED: the false headline cannot now reach round 8 -- S77 (its own author's row), S76 and R-68 all correct it at HEAD, on three different instruments. STILL OPEN AND OWED, and it is the more serious half: W7-S1 carries remediation.state OPEN with owner 1.0.0_SA_CTO since 2026-09-15T15:33Z, roughly 67 hours, on a row THIS SEAT wrote at 7748cc5df7. The item was never unowned; it was OWED AND NOT SERVED. Round 8's first cell serves that clock, labelled as SERVING AN OPEN CLOCK rather than supplying a missing one -- the row exists, so no rowlessness limb would ever see it. S75's surviving scope paragraph stands as 1.0.0_SA_CTO confirmed it and declined to widen it: step 13 is 1 of 4, steps 10 and 16 are ADVI_FIRMBKTS's, step 14 is Andrew's. The narrow, useful residue is REGISTER-SHAPED: the item is absent from project.json and the decomposition, which is what a round-8 cut reads, so its remedy is a register row on 1.0.0_SA_CTO's L3 carrier.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T11:05Z"
+ }
+}
+```

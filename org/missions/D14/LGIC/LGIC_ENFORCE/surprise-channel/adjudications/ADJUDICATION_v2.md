@@ -907,3 +907,114 @@ both the owner move and the disarm word in one ruling, so both land together her
  "disarm_owner": "2.0.0_SA_COO~G on both, as each row names"
 }
 ```
+
+## Round 7 -- L8/L9: two judgment criteria graded, six rows dispositioned
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S43",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:05Z",
+ "one_line": "L9 GRADE RECORD, LGIC_ENFORCE round 7: both judgment criteria PASS. Every count in the hand-off was DERIVED and every one checks out -- the first hand-off tonight with no prose count running high, and its issuer said in advance that it had stopped typing numbers beside lists.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE SET, re-measured from the order files rather than inherited: two round-7 orders declare 10 criteria by raw tag count (5 + 5), of which exactly TWO carry judgment=\"true\" -- T34R7-AC5 and O35R7-AC5, one per order -- and each order's <expected_criteria> matches its own declarations. 8 mechanical + 2 judgment, exactly as 2.0.0_SA_COO~G reported. THAT IS WORTH RECORDING BECAUSE IT IS THE CORRECTION LANDING: the same lane's LGCTFM round-2 hand-off ran ONE HIGH on both prose counts while both its lists were right, it was told so, and it opened this packet by saying every count was derived from the order files and the gate's own resolver rather than typed. It is. Both criteria PASS and in both the cell placed material for the judgment WITHOUT grading itself, recording status UNVERIFIABLE-BY-INSTRUMENT with a status_reason naming this seat -- which is the correct shape and is not universal. The through-line of the round is that BOTH cells found a LABEL THAT SOMETHING ELSE COULD SATISFY: T34's old label named one remedy for rows needing two, and O35's owner_claim 'inferred' covered rows whose directive genuinely claims them and rows nobody had looked for. Neither is a wrong value; both are labels that cannot discriminate, which is the estate's recurring shape and the reason round 6's 41 could not be trusted as resolved.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Both round-7 orders read for their bars verbatim and censused by raw <criterion tag count",
+   "Both proof instances read in full; both AC5 records carry no worker verdict",
+   "VERIFIED BY THIS SEAT: 28 distinct cadence carrier strings and 28 distinct system carrier strings across 51 rows; carrier split re-derived to 32/14/3/2 = 51 matching the record exactly",
+   "VERIFIED BY THIS SEAT: the mechanical selector returns 51 of 51 two-remedy rows and 0 of 15 key-template rows",
+   "VERIFIED BY THIS SEAT: 35 of 35 owning_directive values match a REGISTERED project_code verbatim against 370 codes; 0 of 35 owner_basis byte-identical to round 6",
+   "VERIFIED BY THIS SEAT: bytes printed at ADVI_INFLEC.json:61, ADVI_INFFIN.json:15, ADVI_INFETL.json:5; waves[2].id reads 'W2'"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "T34R7-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-34-r7.labels-that-lie.proof_of_spec.json@e77be7d52a",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES MET, AND THE DECISIVE EVIDENCE IS ONE THE RECORD DOES NOT CLAIM FOR ITSELF. On 'a label a LATER CENSUS COULD ACT ON rather than a better-worded description': a description would carry ONE carrier string repeated across the group. I counted the distinct strings myself -- 28 DISTINCT `{cadence}` carrier strings and 28 DISTINCT `{system}` carrier strings across 51 rows, each naming a specific declaration site. That is a per-row MEASUREMENT with legitimate sharing where rows sit in one Terraform root, and it is the direct refutation of the description hypothesis. I also re-derived the carrier split from `remedies[].carrier_kind` on my own walk -- SCHEDULE_EXPRESSION 32, EVENT_PATTERN 14, LIVE_RULE_NO_REPO_DECLARATION 3, EVENT_PATTERN_VIA_TARGET_EDGE 2, summing to 51 -- and it matches the record's `cadence_carrier_kinds_measured` EXACTLY. That is a different instrument from the record's own, which is what makes it corroboration rather than repetition. The label's mechanical test is stated with NO judgment and NO owner's opinion, and I RAN IT: '{system}' in canonical AND '{cadence}' in canonical selects 51 of 51 two-remedy rows AND 0 of the 15 key-template rows. A selector with a working NEGATIVE ARM is exactly the difference between something a census can act on and something it can only read. Structurally: 51 of 51 rows carry EXACTLY two remedies, and 0 remedies are missing carrier, act or in_a_cells_grant. The cell also states the {system} act as a MINT on measured evidence (51 of 51 carry no registry row against a registry of 91) rather than as a lookup that would silently find nothing. ON THE SECOND HALF, the 15's reason is NOT a rephrasing and the two reasons are not even about the same object: the old NON_SYSTEM_PLACEHOLDER_TOKEN says THE TOKEN IS NOT A SYSTEM, which presupposes a name and reports a disappointing token; the new ROW_IS_NOT_A_NAME says the graded object was never a name, so the placeholder question never applied. The new one grounds on a discriminator I verified MYSELF and in full: the brace is already present in the row's OWN `current` before any grade ran -- 15 of 15, zero counterexamples -- which is checkable by anyone and is not an opinion about wording. The old reason string now occurs 0 times in the record. And the cell closes the loop a census would otherwise re-open by stating not_resolvable_and_not_pending, so no later sweep opens a lookup against a producer's runtime substitution field."
+  },
+  {
+   "criterion": "O35R7-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-o-35-r7.owner-confirmation.proof_of_spec.json@43df072567",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES MET, with ONE IMPRECISION RECORDED THAT DOES NOT MOVE THE GRADE. On 'genuinely CLAIMS rather than merely mentions': I ran an instrument the record does not use and it came back stronger than the record's own claim -- ALL 35 confirmed rows' `owning_directive` matches a REGISTERED `project_code` VERBATIM, measured against a denominator of 370 registered codes on disk, with ZERO non-matching values. The record claims only that 30 of 35 cite a token present in round 6's own evidence; the registration check is independent of which leg found the token and it holds for the whole 35. The anti-relabelling arm also holds on my own read: 0 of 35 rows carry an `owner_basis` byte-identical to `owner_basis_round_6`, and the diff is an APPENDED LEG D with round 6's text preserved verbatim -- annotation, not re-decision, exactly as the order's NO GRADE MOVES bound requires. I then took the FIVE the record itself flags as weakest, the ones reaching a directive with no token in round 6's evidence, and PRINTED THE BYTES AT EACH CITED LINE rather than searching for the quote: ADVI_INFLEC.json:61 carries 'Compute provisioning (gold runner EC2 + Lambda shells + inf-exporter EC2 with OTP relay)'; ADVI_INFFIN.json:15 carries the inf-client-detail W2.3 STUB text; ADVI_INFETL.json:5 carries '(c) full implementation of inf-portal-publisher and inf-portal-advisor-publisher Lambdas (currently STUBs returning {status:stub})'. All three exist, all three carry the needle, all three quote verbatim. I ALSO CHECKED AN OFF-BY-ONE I SUSPECTED AND IT IS NOT ONE: the ADVI_INFLEC citation resolves to `waves[2]`, and `waves[2].id` reads 'W2' because that array starts at W0 -- the record's 'pod W2' is exact. Each of the three is the project's OWN scope, deliverable or open-work text naming the resource, which is a CLAIM; none is a passing reference in someone else's material. THE IMPRECISION, named because a later seat would re-derive from it: the record labels the FIELD loosely -- ADVI_INFETL's is called a 'backlog item' when it is clause (c) of the project's `.description` AUTHORIZES text, and ADVI_INFFIN's is called a 'changelog' when it is the `.phase` field. The QUOTED BYTES are correct in both, and in ADVI_INFETL's case the true field is STRONGER than the label given it, so the looseness UNDERSTATES its own evidence rather than inflating it. That is why it does not move the grade -- but a reader re-deriving from the word 'backlog' would search a field that does not exist. ON THE SECOND HALF, the 6 carded reasons name the three instruments run AND what each returned -- the specific Terraform file and the content of its header, the registry's field shape, and a 464-file org/projects sweep -- rather than asserting an untested absence. Carding on a named, failed search is a finding; a shrug would be a bare 'not found'. And the 6 are 2 resources x 3 type/plane coordinates, so it is one unresolved question counted honestly rather than six."
+  }
+ ],
+ "dismissal_reason": "This row grades two judgment criteria and adjudicates no investigation item; it is a grade record."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S44",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:05Z",
+ "one_line": "S74 and S75 GRADUATED -- both were ARMED and an ARMED row graduates, never dismisses (R-21). S75's HEADLINE IS FALSE and its SCOPE PARAGRAPH SURVIVES, so it graduates on the half that stands and its clock carries the half that does not.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S74 IS MINE AND IT GRADUATES ON ITS OWN TERMS: the rowless-disarm population is 16 rather than the five round 6 named, split MECE 8 ARMED / 8 INERT, and its structural half -- that a missed clock cannot be written outside a round, because the gate grades a NEW REMEDIATION ROW AS A SLUG ACT -- is now ruled law by 1.0.0_SA_CTO as ONE REMEDIATION ROW PER GRADUATED ITEM, ASSERTED AT THE L10 THE ITEM'S OWN ROUND IS CLOSING. THE ROW THEN CONSTRAINED ITS OWN AUTHOR, WHICH IS THE CLEANEST PROOF IT IS TRUE: at 10:1xZ I tried to write S56's and S57's clocks with it and safe-commit REFUSED on 4 violations, one of them EN-o-35-r7 being open -- an order that is terminal as of this round. I did not override it; I reverted and committed the census alone. S75 IS 2.0.0_SA_COO~G's AND ITS HEADLINE IS FALSE. It claimed 'nothing in this project knows' the sentiment-query-api RAISE, measured on project.json and the decomposition -- both zeros, neither the population of a sentence about a project. THREE INDEPENDENT INSTRUMENTS FALSIFIED IT INSIDE ONE HOUR AND ITS OWN AUTHOR FILED THE DISARM: my S76 on an unscoped read (90 hits, 29 files), 1.0.0_SA_CTO's R-68 on the surprise channel plus a registry token read, and S77 -- COO~G's own row -- measuring 26 occurrences in THIS PROJECT'S OWN SURPRISE CHANNEL, 21 of them in the very file S75 was spliced into. S77's sentence is the one to keep: THE FALSIFIER WAS INSIDE THE FILE S75 WAS APPENDED TO. WHAT SURVIVES IN S75 IS REAL AND IS WHY IT GRADUATES RATHER THAN BEING STRUCK: its scope paragraph, which 1.0.0_SA_CTO confirmed and declined to widen -- step 13 is 1 of 4, steps 10 and 16 are ADVI_FIRMBKTS's, step 14 is Andrew's -- and the narrow claim that the item is absent from the REGISTER, which is what a round-8 cut reads. THE ITEM WAS NEVER UNOWNED; IT WAS OWED AND NOT SERVED, and that is a worse defect than the gap S75 described. W7-S1 carries remediation.state OPEN with owner 1.0.0_SA_CTO since 2026-09-15T15:33Z -- roughly 67 hours -- and that row was written by THIS SEAT, so the unserved clock is one I opened and neither of us read. IT ALSO INVERTS S74's OWN CLASS, which is the part round 8 must not lose: this is NOT a rowless item. The row EXISTS. It is an UNSERVED clock rather than a MISSING one, and no mechanism ruled tonight would catch it -- the approved-in-principle limb refuses a slug when a GRADUATED item has NO row, and this item has one. ROWLESSNESS IS NOW GRADED; STALENESS ON A ROW THAT EXISTS IS NOT.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S74",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S75",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S77 -- 2.0.0_SA_COO~G's own disarm of its own row",
+   "R-68 @32779220d2; S76 @d8d661f563; S73 @1f13acd62f",
+   "VERIFIED BY THIS SEAT at HEAD: W7-S1 remediation.state OPEN, owner 1.0.0_SA_CTO, disarm null; the row exists, so this is an unserved clock and not a rowless item",
+   "safe-commit refusal at 10:1xZ on 4 violations, reverted rather than overridden -- S74's structural claim exercised against its own author"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-S74",
+  "LGIC_ENFORCE-S75"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G on S74's carried remainder as round 8's issuer; S75's hazard closes with this write on S77, its own author's act"
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S45",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T11:05Z",
+ "one_line": "S73, S76, S77 and S78 DISMISSED -- four INERT evidence rows, each answering a row disposed elsewhere. Three of them are FOUR SEATS COMMITTING ONE DEFECT IN FOUR HOURS, every instance carrying a real printed denominator. S78 lands a THIRD clock-failure class beside this round's other two.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S73 (2.0.0_SA_COO~G) is the finding that stopped six historical dismissals being read as a rule violation: the six ARMED-and-DISMISSED rows were all disposed by ONE adjudication row, C-S3, at 2026-09-15T15:24:42Z, roughly 24 hours BEFORE R-21 was ruled -- so they are R-21's own anticipated retroactive backlog, unswept here because the ruling was applied to the project that PRODUCED it. Its partition has remainder zero and it CORRECTED ITS OWN FIRST READING mid-row: it classed W3-S10 a seventh instance, checked, and found W3-S10's remediation row reads INERT and correctly carries no clock. I re-measured that at HEAD and it holds. THAT RETRACTION THEN MATTERED TWICE: 1.0.0_SA_CTO re-imported the retracted figure 9 through a third party in R-66, and the only thing that caught it was our two counts disagreeing by exactly one -- which is an argument for keeping two counts rather than reconciling to one early. The historical ARMED-rowless set is EIGHT. S76 is mine, the unscoped falsification of S75. S77 is COO~G's own disarm of its own row, and it is the better of the two: it names the falsifier's LOCATION -- inside the file S75 was spliced into -- which converts a correction into a reading rule. THE CLASS IS THE KEEPER AND IT IS NOW FOUR INSTANCES ACROSS FOUR SEATS IN ONE NIGHT: my S11 scoped a census to run directories and wrote the unscoped word ANYWHERE; 1.0.0_SA_CTO's round-6 'five' was a subset of sixteen because three commit subjects can only yield disarms that live IN a commit subject; S75 measured two files and concluded about a project; and R-67 section 4 read one file's rows and wrote a sentence about every row in the project -- INSIDE THE RULING THAT CONVICTED S75 OF THE SAME MOVE. NONE of the four is careless. Each printed a real denominator. THE TELL IS NOT A MISSING DENOMINATOR -- IT IS A DENOMINATOR WHOSE SCOPE IS NARROWER THAN THE SENTENCE IT SUPPORTS. 1.0.0_SA_CTO has offered that as a CLAUDE.md line under Rule 24 with the pen left to this seat; I am not taking a law edit inside an L9, and it is carried here as the round's finding so the decision is a deliberate act rather than a rider. S78 ARRIVED AT 11:05Z, THE SAME MINUTE AS THIS WRITE, AND MY COVERAGE ASSERTION IS THE ONLY REASON IT IS HERE -- the assertion runs AFTER the build against a re-read denominator, so a row filed between measuring and writing fails the round loudly instead of being silently left undispositioned. IT IS ALSO THE ROUND'S THIRD CLOCK-FAILURE CLASS AND THE THREE MUST NOT SHARE A REMEDY. S74's class is a MISSING clock -- the item is GRADUATED and no remediation row exists. S75's class is an UNSERVED clock -- the row exists, is OPEN, is owned, and nobody moved it for 67 hours. S78's class is an UNSATISFIABLE clock: LGIC_ENFORCE-W2-S13's remedy is a COMPOUND CONDITION and its halves have come apart. Half one, 'prints resolved + carded == 1411 with its denominator', WAS MET IN ROUND 5 AND NOBODY NOTICED -- PLACEHOLDER_CAMPAIGN_R5.json holds resolved 41 and carded 1370 summing to 1411, its own printed population_at_start. Half two, 're-runs AC3 against that', is unmet and under R-60 CANNOT BE MET BY THIS PROJECT AT ALL, because R-60 read FWD-5's own ACCEPT at the bytes as making the OUTCOME THE LIST, with resolution belonging to the clean-up projects. SO THE CLOCK POINTS AT A BAR ITS OWN PROJECT IS NO LONGER CHARTERED TO CLEAR, and it has been ARMED since 2026-09-17 in that state. A COMPOUND DISARM CONDITION IS THE SAME DEFECT THIS ROUND'S TWO CELLS FOUND ONE LEVEL DOWN -- a single label covering two things that move independently -- and CLAUDE.md already refuses a compound CRITERION at the cut while nothing refuses a compound DISARM CONDITION on a clock. W2-S13's clock is NOT disarmed by this and I have not touched it: 2.0.0_SA_COO~G is its owner and says so itself. What round 8 owes is to SPLIT it, close the arithmetic half on round 5's own record, and re-point or retire the AC3 half against R-60.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S73",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S76",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S77",
+   "VERIFIED BY THIS SEAT at HEAD: W3-S10 has a remediation row, INERT, no disarm block, latest GRADUATED -- S73's own retraction holds",
+   "R-66 @e621b97358 (the re-imported 9) and R-68 @32779220d2 (R-67 s.4 struck)",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S78 -- the owner's own word that W2-S13 is NOT disarmed",
+   "R-60 on FWD-5's ACCEPT; PLACEHOLDER_CAMPAIGN_R5.json resolved 41 + carded 1370 == 1411 == its own population_at_start"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S73",
+  "LGIC_ENFORCE-S76",
+  "LGIC_ENFORCE-S77",
+  "LGIC_ENFORCE-S78"
+ ],
+ "dismissal_reason": "Four INERT evidence rows, none carrying `adjudicates`, each answering a row disposed elsewhere. Dismissed with the shared class and S78's third clock-failure class recorded. W2-S13's own clock is untouched and stays ARMED on its owner's word."
+}
+```
