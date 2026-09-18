@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~1, artifact @de49b075fc. S32R6-AC1 PASS-S32-PREDICATE-PRINTED-AND-MATCHING, S32R6-AC2 PASS-S32-ARMED-DENOMINATOR-RE-MEASURED, S32R6-AC3 PASS-S32-PARTITION-COVERS-THE-POPULATION, S32R6-AC4 PASS-S32-EVERY-IN-SCOPE-ROW-DISARMED-OR-RESTATED (all four PASS-by-output; all four read FAIL at the cut on the absent record). S32R6-AC5 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9, no verdict from this worker). Partition re-measured at this cell's own write time on a second, independently coded instrument: 43 == 35 IN SCOPE + 8 OWNED ELSEWHERE (7 1.0.0_SA_CTO, 1 3.0.0_SA_CVO), 43 at start and 43 at close. Outcome: 18 DISARMED, 17 RESTATED. Rows filed: LGIC_ENFORCE-W1-S66, W1-S67, W1-S68 (all INERT). proof-of-spec-check.py rc=0 VALID against org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-s-32-r6.disarm-sweep.proof_of_spec.json.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves current) | **Decomp cell:** `EN-s-32` (decomposition v3.5 s.0f) | **outcome_ref:** FWD-3 | **depends_on:** none -- this is the FIRST cell of round 6's queue
 

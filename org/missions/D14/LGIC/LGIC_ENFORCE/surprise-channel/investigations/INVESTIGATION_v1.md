@@ -3400,6 +3400,78 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
    "spec_asserts": "W2-S13 asserts that round 4's completed census FAILS S25R4-AC3 because 1411 of 3237 judged rows carry a literal placeholder in `canonical`, and that closing it needs a round-5-scale mint-or-card campaign over a population larger than and different from the RAISE set.",
    "world_is": "The campaign ran, the population is accounted for at 41 + 1370 == 1411, and no judged row is now graded against a template without a card. 1370 of them ride round 6 by the timebox's own rule.",
    "notes": "EVIDENCE, not a disposition; no `adjudicates`. WHAT THIS ROW DOES NOT CLAIM, and the distinction is the whole point of R-38: FWD-5 IS NOT CLOSED. It closes when AC3 reads clean against a population whose canonicals are NAMES, and this round converted 41 of 1411 while CARDING the rest honestly rather than reporting a smaller denominator. A carded row is a named gap with an owner, which is what the outcome promises; 1370 of them are now that, where before they were rows judged against a string no resource could ever equal. The round-6 population is 1370 and it is recorded in the cell's own delta, not in prose."
+  },
+  {
+   "id": "LGIC_ENFORCE-W1-S66",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+   "surfaced_at": "2026-09-18T04:59Z",
+   "one_line": "R-2's REMEDY BROKE THE INSTRUMENTS THAT GRADED ROUNDS 1 AND 2: EN-p-4-r3 moved the 18 ownerless deliverables into serial folders (the act that disarms LGIC_ENFORCE-S35 and unblocks LGIC_ENFORCE-S21), and 24 of 24 flat deliverables paths in check_en.py (15) and r2/check_en_r2.py (9) now resolve to nothing -- every one of the 24 is findable under exactly one serial folder, so a re-run of a round-1 or round-2 criterion reads ABSENT and returns a FAIL that looks like a defect in the WORK rather than a moved input. Measured live: check_en.py f1-prior prints FAIL-NO-PRIOR naming the flat FENCE_PRIOR_POLICY.json.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE MOVE: EN-p-4-r3 @b595cc8750 'move the 18 ownerless deliverables' and @5591319612 're-point live readers, re-derive readers census'. Measured at HEAD by git object TYPE (git ls-tree HEAD on the deliverables directory): 0 blobs directly under deliverables/, 10 serial trees -- R-2 measured 12 and LGIC_ENFORCE-S35 measured 17.",
+     "THE DENOMINATOR: 24 of 24 real flat references fail to resolve at HEAD, 0 resolve. check_en.py 15 (CARRIER_CENSUS.md :241, FENCE_WRITER_CENSUS.md :289, FENCE_PRIOR_POLICY.json :627, FENCE_PROBES.md :715/:737/:744, TF_LABEL_CENSUS.md :921, NAMING_CENSUS_REPORT.md :998, NAMING_CENSUS_COMPARISON.md :1030/:1037, EXERCISE_FWD6.md :1049, EXERCISE_FWD7.md :1099, EXERCISE_FWD1_SEARCH.md :1143/:1152, EXERCISE_FWD2.md :1157); r2/check_en_r2.py 9 (:70 :71 :72 :73 :74 :75 :78 :80 :81). Each builds its path as the deliverables root plus a bare basename; every one of the 24 target files exists under exactly one serial folder at HEAD.",
+     "EXERCISED, not inferred: python check_en.py f1-prior at HEAD prints 'org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/FENCE_PRIOR_POLICY.json absent or unparseable' then 'VERDICT: FAIL-NO-PRIOR', while the file itself is at deliverables/0.9.0_WK_LGIC_ENFORCE~1/FENCE_PRIOR_POLICY.json (git ls-files).",
+     "NEGATIVE CONTROL on scope: round 4's checker is NOT affected -- r4/check_en_r4.py builds every deliverables path serial-qualified (:55 :56 :518 :519 :606), so the defect is specific to the two checkers written before the placement cell, not to the pattern.",
+     "EXCLUDED AS A FALSE POSITIVE, stated rather than dropped: r3/check_en_r3.py :1719/:1721/:1747 match the same textual pattern but are SYNTHETIC self-test fixture data (a placement-map document with source and destination keys for A.md and B.md inside its own self-test), not references to real deliverables. The 27 raw hits are therefore 24 real plus 3 fixture, and the claim is scoped to the 24."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_ENFORCE-S35 states R-2's remedy as 'a cell that moves all 17 into their authoring serial's folder ... after which S21's one-line edit becomes possible', and names no other consequence of the move. TO-EN-p-4-r3's own bound is the placement, and BOUNDS on every round's cells say 'Fixed inputs are read-only'.",
+   "world_is": "The move landed and did exactly what S35 asked, and it also silently invalidated the input-path resolution of the two checkers that graded rounds 1 and 2 -- 24 of 24 flat references. Nothing refused, because a fixed input is read-only to workers and no gate compares a checker's constructed paths against the tree. The rounds are terminal, so no OPEN criterion depends on them; the exposure is a RE-RUN (a CVO re-grade, a later verification) reading ABSENT and grading the work FAIL for a reason that is not in the work.",
+   "notes": "Owner named in prose rather than as a clock: the repair is the ISSUER's, 2.0.0_SA_COO~G, as the author of both fixed inputs, and it is one line per reference (serial-qualify the path, as r4 already does) or one resolver that searches the serial folders. FILED INERT AS A LABEL per R-46 -- 'ARMED is a CLOCK on a remediation row and a LABEL anywhere else', and only a REMEDIATION clock closes -- NOT as a claim the defect is inert: it is live and it produces a false FAIL on any re-run. The standing is 3.0.0_SA_CVO's to set at L9. AND THE STANDING CHOICE IS ITSELF CONSTRAINED, which is recorded here rather than worked around silently: a row filed ARMED and owned by 2.0.0_SA_COO~G from inside THIS cell would raise the live armed population to 44 with 36 naming this lane, and this cell's own partition arm (s32-partition, core_partition in the round-6 fixed input) compares the arm's fresh re-derivation against a declared in_scope plus owned_elsewhere -- so the cell that is instructed to file surprise rows cannot file an ARMED one in its own owner without failing its own criterion. That coupling is a finding for the next cell of this shape, and for the issuer that writes the next such arm."
+  },
+  {
+   "id": "LGIC_ENFORCE-W1-S67",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+   "surfaced_at": "2026-09-18T04:59Z",
+   "one_line": "THE SWEEP'S OWN CONTEXT NUMBERS WENT STALE BY ONE BEFORE THE SWEEP RAN, AND THE CAUSE IS THE SWEEP ITSELF: check_en_r6.py's docstring and R-46's CORRECTION table both print 275 occurrences / 183 distinct ids, and the live channel reads 276 / 184 -- because 1.0.0_SA_CTO's own S65 row, filed at 04:02Z as its share of this very sweep, added one occurrence and one distinct id after both measurements. Every acceptance-bearing half is UNCHANGED at both vintages (57 armed, 14 closed by a clock, 43 still armed, owners 35/7/1), because S65 is INERT.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "MEASURED AT TWO VINTAGES with one instrument, reading blobs by git show: at 54858e9f7f (before S65) occurrences 275, distinct ids 183, armed 57, closed 14, STILL ARMED 43, owners 35/7/1. At 372b1d653d (S65 landed; R6_BASE.json's pin) and at this worktree's base cbf0853d26: occurrences 276, distinct ids 184, armed 57, closed 14, STILL ARMED 43, owners 35/7/1. The delta is exactly +1 occurrence and +1 distinct id.",
+     "THE TWO STALE CARRIERS, quoted: check_en_r6.py's module docstring 'MEASURED AT THE CUT with exactly this predicate: 275 occurrences, 183 distinct ids'; and org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md R-46 CORRECTION table row 'row occurrences / distinct ids | 275 / 183 | 275 / 183'.",
+     "THE CAUSE, dated from the rows themselves: R-46's correction is stamped ~03:5xZ 2026-09-18 and LGIC_ENFORCE-S65's surfaced_at is 2026-09-18T04:02Z, so the row postdates both measurements. S65 carries hazard_standing INERT, which is why it moves the occurrence and distinct-id counts and moves NO armed count.",
+     "CORROBORATED ON TWO INDEPENDENT INSTRUMENTS at this worktree's base: the checker's own armed_population() prints 'occurrences 276; distinct ids 184; armed ids 57; closed by a clock 14; STILL ARMED 43', and this worker's separately coded reader (os.walk plus a line-by-line fence scan rather than glob plus one regex) prints the same five figures with an identical still-armed ID SET (set difference empty both ways, 0 owner disagreements).",
+     "A SECOND SYMPTOM OF THE SAME CAUSE: TO-EN-s-32-r6's BOUNDS say the investigation file 'carries THREE json fences -- fence 0 is the row array and the other two are standalone dicts'. At HEAD it carries FOUR: fence 0 the 143-row array, then three standalone dicts (S61, S62, S65). S65's fence is the fourth. The order's splice instruction is still CORRECT -- fence 0 is the list and a splice at the file's last bracket would corrupt the document -- only its fence COUNT is one behind."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "TO-EN-s-32-r6 condition 2 says 'Do not take 43 or 35 from this order' and requires the denominator re-measured at the cell's own write time, and its BOUNDS say 'Numbers in this order are CONTEXT, never acceptance values'. check_en_r6.py's docstring presents 275 / 183 as 'MEASURED AT THE CUT'.",
+   "world_is": "Two of the six figures in that measured-at-the-cut line are one vintage behind the commit that introduced the file: the channel read 276 / 184 at cbf0853d26, the very commit that added check_en_r6.py, because the CTO's S65 row landed between the measurement and the cut. The four acceptance-bearing figures are exact at both vintages, so nothing in the sweep's grading moves and no arm is wrong.",
+   "notes": "FILED FOR THE RECORD, NOT AS AN OBSTACLE, and the order's own instruction is what made it visible: re-measuring rather than inheriting is condition 2, and doing so surfaced a one-vintage drift in the context line. This is the good case of R-38's clause -- the sweep's own participants were writing to the channel the sweep measures, so a carried number could not have stayed true. No repair is requested of a terminal round's fixed input; the docstring is correct as of the vintage it measured and the ruling's per-row verdicts are unaffected. Recorded so a later reader who re-derives 276 / 184 does not conclude either carrier was wrong, and so the next sweep states the VINTAGE beside an occurrence count the way this one states its predicate."
+  },
+  {
+   "id": "LGIC_ENFORCE-W1-S68",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+   "surfaced_at": "2026-09-18T04:59Z",
+   "one_line": "PRD v1.3's DEC-5 ADDENDUM SAYS '8 of the generator's 10 targets ship' AND THE INSTRUMENT IT COMMISSIONED NOW MEASURES 7: python lib/opal_naming.py targets prints TARGETS: 10 with 7 SHIP and 3 REPO-ONLY, because the two opal_name test fixtures classify REPO-ONLY (a fixture beside a shipping module is not a deploy) where the PRD counted 3 terraform-plane files as shipping. The measured 7 is the RIGHT number and the ratified 8 is the pre-measurement estimate the same clause asked to be replaced.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "THE RATIFIED FIGURE: org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md :279-280 '8 of the generator's 10 targets ship (2 lambda/Terraform, 3 DS -> S3 bundle, 3 terraform-plane module files; 1 repo-only; 1 classified by the gate)'.",
+     "THE MEASURED FIGURE, run at HEAD: python lib/opal_naming.py targets prints 'TARGETS: 10' then 7 SHIP rows and 3 REPO-ONLY rows, with 'PLANE lambda: 3 / PLANE s3: 3 / PLANE terraform: 3 / PLANE tools: 1' and 'HASH-PINNED CONSUMERS: 1 of 95 scanned'. SHIP = 3 lambda + 3 s3 + 1 terraform.",
+     "WHERE THE DIFFERENCE LIVES, per the run's own reason strings: infra/aws/terraform/modules/opal_name/tests/vectors.json and tests/opal_name.tftest.hcl print 'REPO-ONLY terraform ... measured: comp-find root census (test fixture beside the module, not a deploy)', and .tools/ds-precommit-check.py prints 'REPO-ONLY tools ... no S3/Lambda/Terraform claim'. The PRD's '3 terraform-plane module files' as shipping is the clause that moved.",
+     "IT IS THE CLAUSE'S OWN INTENT, not a contradiction of it: the same addendum says the split 'is derived by CALLING the deploy gate's own classifier (.tools/safe_deploy_core.py) over that list, so the number is the gate's and carries measured: safe_deploy_core', and the run's s3 rows carry exactly that provenance string. lib/opal_naming.py :1694-1698 loads that module by path and calls it; :1811-1840 classifies per plane; :2503 registers the targets subcommand for cell EN-g-9, whose order TO-EN-g-9-r3 is complete.",
+     "THE ROW THIS SITS BESIDE: LGIC_ENFORCE-S50 asked for exactly this disclosure and held shape (a), 'the coupling is correct and should be DISCLOSED, not engineered away ... a property with consequences prints its number rather than relying on whoever is at the push'. Both halves landed, which is why this worker disarms S50; this row is the residue of the estimate the print superseded."
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "spec_asserts": "LGIC_ENFORCE_PRD.md v1.3's DEC-5 addendum states as ratified text that 8 of the generator's 10 targets ship, and in the same clause requires that the SHIP / REPO-ONLY split be derived by calling the deploy gate's classifier 'so the number cannot go stale silently'.",
+   "world_is": "The generator now calls that classifier and measures 7 SHIP / 3 REPO-ONLY over 10 targets. The PRD's 8 was written before the print existed, so a ratified document and the instrument it commissioned now disagree by one -- and the instrument is the authority the clause itself names. The staleness did not go unnoticed, which is what the clause was for; it is recorded here rather than left for a reader who quotes the PRD figure.",
+   "notes": "Owner in prose: 1.0.0_SA_CTO as the PRD's only author, and the remedy is a one-figure header-grade correction to DEC-5's addendum (8 -> 7, with the two fixtures named REPO-ONLY), or an explicit line that the PRD states the pre-print estimate and the generator's output is the authority. NOT a defect in the generator and NOT a reason to re-open the addendum's substance: the coupling it discloses is correct and the disclosure mechanism works. Filed INERT: nothing downstream reads the PRD's integer as data, and the consumer-facing number is the run's. A DIFFERENT and still-open half of the same clause, recorded so it is not read as closed by this row: the addendum also requires the bundle-md5 and member-sha256 consumer census, and the run prints 'HASH-PINNED CONSUMERS: 1 of 95 scanned' -- a denominator, which is what the clause asked for, so that half reads satisfied on this run."
   }
 ]
 ```
