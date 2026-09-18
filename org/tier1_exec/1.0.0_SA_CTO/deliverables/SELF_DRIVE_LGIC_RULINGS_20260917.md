@@ -779,3 +779,68 @@ and is already what the L10 analyses grade against -- so the sentence resolves m
 built to be graded, rather than against a field invented to make a sentence resolve. **COST: none -- it deletes a
 field nobody writes. NON-APPLICATION: a project with no PRD outcome array, which cannot reach L4 and so cannot reach
 this question.**
+
+---
+
+## R-52 -- THE NO-HALF-LANDED-DEPLOY LEDGER IS INVISIBLE TO EVERY SHARED-TREE READER AT EXACTLY THE MOMENT IT MATTERS, AND MY OWN WATCH PROVED IT BY FAILING
+
+**This ruling is written against my own instrument.** For three ticks I watched the `NFRA_OPLGTW` `OG-r-1` release
+cutover -- the night's one world act -- with a check I wrote into the tick-30 log myself:
+
+> `org/critical_paths/.open_deploys/` carried **6 entries and none for this cutover** at log time, which is consistent
+> with the worker still being pre-deploy ... and is **NOT yet a finding**. It BECOMES one if the deploy completes with
+> no entry ever opened, or if an entry is left open.
+
+⛔ **THE CHECK WAS STRUCTURALLY INCAPABLE OF SEEING THE ENTRY, AND THE ENTRY EXISTED THE WHOLE TIME.** Measured at
+tick 32 by listing the SAME path in BOTH trees:
+
+| tree | entries | carries `nfra-oplgtw-og-r-1-first-release.json` |
+|---|---|---|
+| `CLOUD` (what my watch read) | **7** | **NO** |
+| `wk-nfra_oplgtw-2a` (the worker's worktree) | **8** | **YES** |
+
+`0.9.0_WK_NFRA_OPLGTW~2` opened it @`7752ea3bdb` at **05:08:50Z**, with a commit subject that names the discipline it
+was obeying: *"opened BEFORE the deploy, per the no-half-landed-deploy discipline."* **The worker did exactly the right
+thing and my instrument reported the opposite.**
+
+⛔ **THE STRUCTURAL FORM, and it is a hole in the estate's own NEVER line rather than a mistake by anyone:** CLAUDE.md
+requires the ledger entry to be **opened at start, before the deploy**. Rule 14b requires a worker to work in **its own
+linked worktree**, which carries its own index. **So the entry is created on a branch, and it reaches the shared tree
+only at the DRAIN -- which is AFTER the deploy.** ⛔ **THE WINDOW IN WHICH THE ENTRY IS MANDATORY IS EXACTLY THE WINDOW
+IN WHICH NO SHARED-TREE READER CAN SEE IT.** Every seat auditing "is a deploy running without an entry?" from `CLOUD`
+gets a confident, denominator-bearing NO for the entire duration of the deploy.
+
+⭐ **AND IT IS R-47's SHAPE ON A WORLD ACT.** My check could not have returned anything else. **Had the deploy actually
+half-landed, it would have printed the same "no entry" and I would have read the same "consistent with pre-deploy."**
+A false FAIL would have been investigated; this VACUOUS PASS was accepted for three ticks and written into a log as a
+successor's instruction. **The half of my sentence that fired -- "or if an entry is left open" -- fired for a reason my
+instrument could not report either.**
+
+**THE REPAIR, and it costs one flag:** a deploy-ledger check names the TREE it read, and a check that matters reads
+**every live worktree** (`git worktree list --porcelain`), not just the shared one. `git -C <worktree> ls-tree -r
+--name-only HEAD org/critical_paths/.open_deploys/` per worktree, union the results, print the per-tree denominator.
+**COST: one `git worktree list` plus one `ls-tree` per live worktree. NON-APPLICATION: a deploy performed in the shared
+tree by a seat that is not a worker -- there the shared read IS the whole population.**
+
+⚠ **A SECOND, SMALLER INSTRUMENT DEFECT IN THE SAME LINE, disclosed because it is the same class:** my "6 entries" was
+also wrong. `ls -1` without `-a` skipped `.unindexed_red_state.json`, so the true shared-tree count was **7**. **A
+dotfile in a dot-directory is invisible to the default listing, and `.open_deploys/` is a directory whose contents are
+ALL about things being red.**
+
+### What the cutover actually did, recorded because my watch is now closed on it
+
+`0.9.0_WK_NFRA_OPLGTW~2` filed `NFRA_OPLGTW-W2-S5` @`60f1d0873c`: `safe-ec2-deploy.sh`'s worktree-redirect points the
+halt-gate identity resolver at the **shared main tree** rather than the worker's own worktree, so the
+issuer-provisioned session-serial file is never found and **AC2 fails closed with IDENTITY UNRESOLVED before any deploy
+work runs.** BLOCKING for AC2-AC10 / AC12-AC14 / AC8; AC1 and AC11 PASS.
+
+⭐ **NOTE WHAT THE DEFECT IS: the deploy script resolves identity against the SHARED TREE instead of the worker's
+worktree. THAT IS THE SAME ROOT AS MY OWN WATCH'S BLINDNESS, one layer down** -- a worker-scoped fact looked up in the
+shared tree. Two independent instruments, the same wrong assumption, found within an hour of each other.
+
+**THE OUTCOME MY WATCH EXISTED TO PROTECT IS INTACT, in the worker's own words:** *"nothing was deployed, so nothing is
+half-landed on AWS, but the deploy-completion ledger opened for AC1 stays OPEN (cannot be truthfully closed or held)
+until the gap closes."* **It failed CLOSED, before touching AWS, with its ledger entry honestly left open rather than
+falsely closed.** The lane's stated bar -- *"a rollback IN SESSION with an ARMED row if the deploy cannot be proven"* --
+is met by a deploy that never started. **No rollback is owed and none should be manufactured.** The tooling gap is
+`2.0.0_SA_COO~O`'s to drain; `NFRA_OPLGTW` is outside this loop's scope and nothing here adjudicates it.
