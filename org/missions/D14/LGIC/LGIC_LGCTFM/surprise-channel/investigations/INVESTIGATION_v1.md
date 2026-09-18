@@ -479,6 +479,30 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "S16's own restated reason: 'the run id and the contract's content hash delivered in this seat's own record BESIDE the card', recorded there as NOT yet done. And R-40: a criterion whose subject is a RUN or a PRODUCED ARTIFACT binds to that artifact's CONTENT HASH.",
     "world_is": "CARD_SUBJECT_PIN.md exists at a4f61daeb0 and carries the run id, the contract content hash, the instrument that produced it, a negative control that separates the two candidate runs, the five-run population with its one-of-five manifest count, and S6's corrected claim stated as 1 of 179 with its denominator. ANDREW_CARD.md itself is UNCHANGED, which is the condition S6 set and which clause 4 would have refused in any case.",
     "notes": "S12 and S16 stay 3.0.0_SA_CVO's to dispose; this row carries no `adjudicates` and disarms nothing by existing. WHAT IS STILL TRUE: the CARD's own bytes still name no run, and that cannot be changed by this seat -- owned-paths clause 4 refuses an issuer's edit inside a worker's deliverables folder. So the honest state is not 'the card is pinned' but 'the card's subject is pinned in the record that travels with it', and the durable fix is a CELL whose <paths> names the card, in whatever round next touches it. COST of this remedy: one record, one verification and one negative control. NON-APPLICATION: an artifact the acting seat's own grant covers -- there the line goes in the artifact and no second record is needed."
+  },
+  {
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "fabric": "laptop",
+    "grounding": {
+      "evidence": [
+        "MEASURED by 0.9.0_WK_LGIC_LGCTFM~2 building LT-n-2's record: git hash-object over org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/plan_r1/contract.json@7b411da26a and over org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/contract.json@7b411da26a BOTH return 413f0215c2370a3a5f521fbf248f5d323a02a897 -- two byte-identical homes. For each path git hash-object equals git rev-parse HEAD:<path>, so the pin is the COMMITTED bytes and not this autocrlf checkout's.",
+        "MEASURED at the same vintage: plan_r1/contract.json@7b411da26a carries 278 rows and 271 tensions -- E3R1-AC6's population, intact. workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/contract.json@7b411da26a (git hash-object 33204e29839de89af81fb293317cce3ccdf2266d, the run R2_BASE.json pins as graded_run_round_1) carries 184 rows and 179 tensions.",
+        "MEASURED at the same vintage: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/plan_r1/plan.json@7b411da26a carries 1626 packages and was planned from the 271-tension contract above; workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/plan.json@7b411da26a (git hash-object f26d46db87f3d8bcbf7b7ff13dafe708030c6d48) carries 1074 and was planned from the 179-tension contract. Two plans, two counts, neither number wrong.",
+        "INSTRUMENT: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/pin_numbers_r1.py, committed by this cell in the same commit that carries this row (row LGIC_ENFORCE-S69: a record citing an untracked instrument has an unverifiable claim at its centre). It refuses rather than reports: it re-measures every pinned number against its own artifact and raises if the artifact disagrees with the citation, and it refuses if a worktree hash and its HEAD blob differ.",
+        "NOT A RE-GRADE, AND NOT A DISARM. E3R1-AC6 remains excluded BY NAME in NUMBER_PINS_R2.json on 1.0.0_SA_CTO's round-1 analysis item 2, verbatim: E3 is NOT re-graded against R-40. This row records only WHERE the population lives and at which content hash. Whether that reopens anything is for the seat that owns S11's disarm, never for this worker."
+      ],
+      "status": "GROUNDED"
+    },
+    "hazard_standing": "INERT",
+    "id": "LGIC_LGCTFM-W2-S4",
+    "notes": "Filed as ONE row because the class is the finding: an unpinned number does not merely fail to resolve, it invites a contradiction that is not there. Surfaced while building LT-n-2's record and filed without halting, per the channel rule. The cell's own bound -- NO GRADE MOVES -- is kept: nothing here re-grades E3R1-AC6, P1R1-AC6 or X1R1-AC6, and this row carries no adjudicates and disarms nothing by existing. The same measurement is recorded in NUMBER_PINS_R2.json under what_the_pins_resolve, computed by the instrument at run time rather than typed.",
+    "one_line": "THE 271-TENSION POPULATION STILL EXISTS -- TRACKED AT HEAD, IN TWO BYTE-IDENTICAL FILES -- AND 1626 AND 1074 ARE BOTH TRUE, OF TWO DIFFERENT CONTRACTS. Binding each number to its own artifact dissolves the disagreement S11 measured. No grade moves; E3R1-AC6 stays excluded by name.",
+    "project": "LGIC_LGCTFM",
+    "spec_asserts": "LGIC_LGCTFM.TO-LT-n-2-r2's cell text, and row LGIC_LGCTFM-S11 which it quotes, both assert two things about round 1's unpinned numbers: that E3R1-AC6 grades 271 tensions where the contract now carries 179, so that population no longer exists anywhere; and that P1R1-AC6's 1626 packages and X1R1-AC6's 1074 cannot both be true of one plan.",
+    "surfaced_at": "2026-09-18T07:58:49Z",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "world_is": "Both assertions are falsified by the pins the cell was ordered to compute, and by the same mechanism: each number was true of a DIFFERENT artifact, and only the missing artifact name made them look irreconcilable. The 271-tension contract exists at HEAD, tracked, in two byte-identical files at git hash-object 413f0215c2370a3a5f521fbf248f5d323a02a897 (278 rows, 271 tensions), so E3's population is not gone and is content-addressable. 1626 is that contract's plan; 1074 is the graded run's plan; both are true of their own plan. The defect S11 measured was real and is exactly as it named it -- the numbers carried no artifact -- but the inference drawn beside it, that the numbers disagree and that one population is unrecoverable, does not survive the pinning."
   }
 ]
 ```
