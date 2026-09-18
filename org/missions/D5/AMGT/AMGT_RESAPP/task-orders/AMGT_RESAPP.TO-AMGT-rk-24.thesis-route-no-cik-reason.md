@@ -116,3 +116,12 @@ continuation; wait for it.
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+<status>complete</status>
+<round>13</round>
+<slot>~27</slot>
+<fabric>site-z</fabric>
+<dep_stage>EXECUTING</dep_stage>
+
