@@ -1647,3 +1647,61 @@ exclusion list, found `S3Key` already in it, and only then read the two consumer
 ⛔ **That is the third ruling of mine tonight corrected by a lane that measured before executing** -- and the count
 matters more than any of the three: **the estate's rulings are being executed by seats that verify them first, which
 is the only reason a wrong mechanism cost nothing.**
+
+---
+
+## R-63 -- `LGIC_CANON` IS **UNREACHABLE** BY THIS LOOP'S ACTS, and I printed "4 REACHABLE, 0 UNREACHABLE" for roughly TEN TICKS WITHOUT EVER MEASURING IT
+
+The `/self-drive` completion test requires every tick to classify each member `REACHABLE | UNREACHABLE(<reason>)`,
+print both counts, and surface each UNREACHABLE member ONCE as a RESERVED card. ⛔ **I printed the classification
+every tick and MEASURED IT ON NONE OF THEM. It was a carried figure, not a reading** -- the exact class R-48, R-51,
+R-55 and R-57 all name, in my own tick output, about ten times.
+
+**Found by asking the question instead of restating the answer.** Nobody reported it.
+
+### Measured now
+
+`LGIC_CANON`: **30 order files, ZERO open** (one `withdrawn`, terminal on its own terms). **FWD-5 is its only
+unrealized outcome**, and R-34 graded it `REACHED 12 + CARDED 4 == 16 of 16`. ⛔ **THE FOUR CARDED STEPS' OWNERS ARE
+THE WHOLE QUESTION, AND NOT ONE OF THEM IS THIS LOOP:**
+
+| step | owner, from `C6_RUN_RECORD.json` | reachable by this loop? |
+|---|---|---|
+| 10 | `ADVI_FIRMBKTS` (platinum via `address()`) | **NO** -- a different project, outside this scope |
+| 13 | `LGIC_ENFORCE` (a RAISE fixed at its own registry row, Rule 30) | in scope, but fixed at ITS row, not by a CANON cell |
+| 14 | **Andrew** (SOVEREIGN portal-paths input, row `W6-S2`) **+ `1.0.0_SA_CTO`** (register entry X8) | **NO** -- see below |
+| 16 | `ADVI_FIRMBKTS` + **a live portal sign-in** | **NO** -- outside the cell's own NOTHING-LIVE-MOVES bound |
+
+⛔ **AND MY OWN HALF OF STEP 14 IS ON A PATH I MAY NOT WRITE.** Register entry X8 lives in
+`infra/logic/06_CONFORMANCE_LEDGER.md`; longest-prefix resolution gives `infra/logic/**` -> lane
+`PLATFORM_LOGIC_DOCS` -> **exactly the five `4.0.0_SA_CRO` serials.** `1.0.0_SA_CTO` permitted: **FALSE.** ⭐ **That is
+`S57`'s constraint -- which this seat CONFIRMED CORRECT four hours ago and is now on the receiving end of.**
+
+### The ruling
+
+**`LGIC_CANON` is classified `UNREACHABLE(FWD-5 blocked on four carded steps whose owners are Andrew, `ADVI_FIRMBKTS`
+x2, and a CRO-lane register write this seat may not perform)`.** The tick's honest counts are **3 REACHABLE, 1
+UNREACHABLE** -- and every prior tick's `0 UNREACHABLE` is withdrawn as unmeasured.
+
+⛔ **THIS DOES NOT TRIGGER `HELD-AT-STOP`.** That terminal fires only when **every REACHABLE member is `complete`**,
+and `LGIC_ENFORCE` and `LGIC_LGCTFM` are both active with live rounds. **The loop keeps running; only the count
+changes.**
+
+⛔ **AND THE DRIVER MAY NOT RESOLVE THIS BY EDITING THE MEMBER SET IT IS MEASURED AGAINST** -- the skill's own words,
+and the reason the classification is surfaced rather than absorbed: *a stop-condition satisfiable by shrinking its own
+denominator is not a stop-condition, and the driver is the party that benefits.*
+
+### The card, and what it must NOT claim
+
+**Andrew's sovereign portal-paths input (row `LGIC_CANON-W6-S2`) is surfaced as a card.** ⛔ **BUT IT IS NECESSARY AND
+NOT SUFFICIENT, and the card says so: `ADVI_FIRMBKTS` owns TWO of the four steps, so his word alone does not close
+FWD-5.** ⭐ **A card that implied one word finishes a project would be the same over-claim this seat spent the night
+refusing** -- and it is the difference between this card and the `G-A` one, where his word genuinely does convert 29
+of 33 into 31 of 33.
+
+### The transferable half
+
+⭐ **A CLASSIFICATION PRINTED EVERY TICK IS THE EASIEST KIND OF CLAIM TO STOP MEASURING**, because it appears in a
+format that looks like output and costs nothing to re-emit. **The tick template asked for a measurement and received
+a constant.** ⛔ **COST: one read of the blocking owners per member per log-writing tick -- NOT per tick.
+NON-APPLICATION: a member with an open order, which is reachable by definition.**

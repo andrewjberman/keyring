@@ -1,14 +1,15 @@
-# OPEN CALLS AT ANDREW -- `1.0.0_SA_CTO` (1 call, 2026-09-18 ~08:4xZ)
+# OPEN CALLS AT ANDREW -- `1.0.0_SA_CTO` (2 calls, 2026-09-18 ~08:4xZ; CALL 2 added ~09:2xZ)
 
-Prepared while he is asleep so it is WAITING rather than composed on waking. **One call. It is the single hinge on
-`NFRA_OPLGTW`'s last four orders**, and it is RESERVED by a NEVER-class line that names its decision class.
+Prepared while he is asleep so it is WAITING rather than composed on waking. **CALL 1 is the single hinge on
+`NFRA_OPLGTW`'s last four orders**, RESERVED by a NEVER-class line that names its decision class.
+**CALL 2 was found at tick 40 by measuring a classification this seat had been PRINTING unmeasured for about ten ticks** (R-63).
 
 ---
 
 ## BLOCKING (work waits on the word)
 
 ```
-+-- CALL 1 of 1 ------------------------------------------------------+
++-- CALL 1 of 2 ------------------------------------------------------+
   **May the Gateway EC2 instance be STOPPED and STARTED for the resize
   (gate G-A, order OG-i-4)?  yes / no**
   NFRA_OPLGTW is 29 of 33 order faces complete. The last four are ALL
@@ -29,6 +30,44 @@ Prepared while he is asleep so it is WAITING rather than composed on waking. **O
   adjudicable. No agent lifts it, including this seat.
 +---------------------------------------------------------------------+
 ```
+
+
+---
+
+## CARRIED (nothing is blocked on the word ALONE -- answer whenever)
+
+```
++-- CALL 2 of 2 ------------------------------------------------------+
+  **The SOVEREIGN portal-paths input for the 49 Financial sign-in step
+  (LGIC_CANON step 14, row LGIC_CANON-W6-S2).  What are the paths?**
+  LGIC_CANON has ZERO open orders and ONE unrealized outcome, FWD-5 --
+  "the firm's people can see their dashboard." Four carded steps stand
+  between the checklist run and that dashboard, and step 14 is yours.
+  ----------------------------------------------------------------------
+  **REC --** give the portal paths when convenient. There is no rush and
+  no rec on the VALUE: the input is sovereign because only you hold it,
+  not because it is contentious.
+  ----------------------------------------------------------------------
+  **WHY THIS IS *CARRIED* AND NOT *BLOCKING*, stated so the card cannot
+  be read as bigger than it is --** YOUR WORD IS NECESSARY AND NOT
+  SUFFICIENT. `ADVI_FIRMBKTS` owns TWO of the four carded steps (10 and
+  16, the platinum `address()` repoint and a live portal sign-in), and
+  `LGIC_ENFORCE` owns a third. Answering this does NOT close FWD-5 and
+  does not finish LGIC_CANON.
++---------------------------------------------------------------------+
+```
+
+**AND ONE HALF OF STEP 14 IS MINE AND I CANNOT DO IT** -- register entry X8 lives in
+`infra/logic/06_CONFORMANCE_LEDGER.md`, whose lane (`PLATFORM_LOGIC_DOCS`) admits exactly the five `4.0.0_SA_CRO`
+serials and not this seat. **That is a lane constraint this seat measured and RULED CORRECT four hours ago**
+(`LGIC_ENFORCE-S57`), so it is reported rather than worked around. It needs a CRO lane or your word to widen it --
+**and it is NOT what CALL 2 asks for.**
+
+⛔ **HOW THIS CARD CAME TO EXIST, because it reflects on the reporting and you should have it:** every `/self-drive`
+tick prints `N REACHABLE, 0 UNREACHABLE`. **This seat printed `0 UNREACHABLE` for roughly ten ticks without ever
+measuring it** -- a carried figure in a slot that looks like output. `LGIC_CANON` has been UNREACHABLE by this loop's
+acts the whole time. The count is corrected to **3 REACHABLE, 1 UNREACHABLE**, and the loop keeps running because
+`LGIC_ENFORCE` and `LGIC_LGCTFM` are both live.
 
 ---
 
