@@ -3334,3 +3334,60 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
   }
 ]
 ```
+
+## Round 4 -- two findings of the CVO's own L9 read
+
+```json
+{
+ "id": "LGIC_ENFORCE-S61",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "A minted registry row's own evidence string quotes a phrase it attributes to org/projects/ADVI_HISTBF.json's phase field; that file has carried ZERO occurrences of the phrase since 2026-05-04, and the phrase actually lives in the SIBLING org/projects/ADVI_JWTRES.json -- a wrong-object citation carrying an asserted 2026-09-17 measurement date, now durable in infra/logic/registry/resources.json.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO at L9, HEAD: infra/logic/registry/resources.json row {name: Inflection-HistBackfill-FailureSpike, type: CW_ALARM} (added @f039acf201) states: \"the alarm's own metric namespace 'Inflection/HistBackfill/RateLimiter' (:63) is the exact CW metric org/projects/ADVI_HISTBF.json (macro_code ADVI, EN-h-24-r4 measured 2026-09-17) names at its own phase field: 'CW recovery metrics -> Inflection/HistBackfill/RateLimiter'\".",
+   "MEASURED: `git show HEAD:org/projects/ADVI_HISTBF.json` contains the substring 'RateLimiter' 0 times. Its phase field names no CW metric namespace at all.",
+   "MEASURED, every vintage: of the 12 commits touching org/projects/ADVI_HISTBF.json, 4 carry 'RateLimiter' (f23d09001, 8b1de4762, 86c85ba22, d7950b270, all 2026-04-30/05-01) and the 5 most recent -- including HEAD -- carry 0. The phrase was removed by 2026-05-04, four and a half months before the asserted measurement date.",
+   "MEASURED, the wrong object identified: across 464 files under org/projects/ at HEAD, exactly ONE contains 'RateLimiter' -- org/projects/ADVI_JWTRES.json, whose phase field reads 'CW recovery metrics -> Inflection/HistBackfill/RateLimiter' verbatim. That is the file the row's quoted bytes came from, and ADVI_JWTRES is the project row 1 of the same mint (Inflection-JwtResilience-NearExpirySpike) legitimately cites.",
+   "NOT AT RISK, stated so the finding is not read wider than it is: the row's CONCLUSION (system=advi) stands on its OTHER named source, which this seat verified by printing the bytes -- infra/aws/terraform/inf-pipeline/alarms.tf:55-78 @c7fd81bb86 contains the aws_cloudwatch_metric_alarm resource block that sets alarm_name = \"Inflection-HistBackfill-FailureSpike\", a genuine declaration; and the wrong object (ADVI_JWTRES) is itself macro_code ADVI."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "LGIC_ENFORCE.TO-EN-h-24-r4 H24R4-AC4: each minted row's owner_basis names a source that DECLARES that alarm or project; and the row's own text claims the project-side cross-check is what makes the attribution 'not a guess from the HISTBF token alone'.",
+ "world_is": "The project-side half of that basis names a file which does not contain, and has not contained since 2026-05-04, the phrase the row quotes from it. The Terraform half is sound. So the row's stated reasoning rests on a cross-check that was never run against the object named -- while a reader who GREPS the repo for the quoted phrase gets one clean hit (in the sibling file) and concludes the citation is accurate. CLAUDE.md Rule 27's named trap, one level down and now inside the registry the LGIC project exists to make trustworthy.",
+ "notes": "This is why 3.0.0_SA_CVO grades H24R4-AC4 FAIL at L9 (adjudication row LGIC_ENFORCE-C-S36). The remedy is one evidence string, not a re-cut: either correct the cited file to org/projects/ADVI_JWTRES.json and say what it does and does not establish, or replace the cross-check with one that actually reads ADVI_HISTBF.json. disarm_owner 2.0.0_SA_COO~G as the issuer who cuts the correcting cell inside the registry grant."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S62",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "NAMING_CENSUS_COMPARISON.r4.md's machine-readable summary prints a reason split (23/2/11/11) that sums to 47 over a population its own table and its own 'total' field both put at 42 -- the right total with a wrong split, the exact shape a sibling project's PRD was refused on the day before.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED by 3.0.0_SA_CVO at L9, parsing the record's own Section 3 table rather than its summary: 42 data rows, split N2 11 / N6 31 (which reconciles with both hand populations: N2 45 = 34 compared + 11, N6 88 = 57 compared + 31), and reason counts NOT-GRADED-TYPE 20, AWS_FIXED-EXCLUDED 2, CARDED 10, HAND-SPECIMEN-ABSENT 10 = 42.",
+   "MEASURED: the record's fenced json reads \"uncompared_reasons\": {\"NOT-GRADED-TYPE\": 23, \"AWS_FIXED-EXCLUDED\": 2, \"CARDED\": 11, \"HAND-SPECIMEN-ABSENT\": 11, \"total\": 42}. The four values sum to 47; the total field says 42. NOT-GRADED-TYPE is over by 3, CARDED by 1, HAND-SPECIMEN-ABSENT by 1.",
+   "MEASURED, a second internal disagreement in the same section: the prose at the head of Section 3 says every uncompared row now has one of 'THREE distinct, individually-verified reasons' and then lists FOUR reason classes; Section 4 says 'one of four measured reasons'. Four is correct.",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md, Section 3 and its fenced json."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "LGIC_ENFORCE.TO-EN-s-25-r4 S25R4-AC4: every hand row the comparison leaves uncompared carries a stated reason -- and the record's own summary is the artifact a consumer parses for that population.",
+ "world_is": "Every one of the 42 uncompared rows DOES carry an individually stated reason (this seat verified all 42, which is why S25R4-AC4 grades PASS). What is wrong is the roll-up beside them: the per-reason split over-counts by 5 while the total is right, so the error survives every check that adds up the total. The fenced json is the machine-readable half, so a consumer that reads the split rather than the table inherits the wrong numbers.",
+ "notes": "NOT the reason for any FAIL: S25R4-AC4 grades PASS on its own bar (adjudication row LGIC_ENFORCE-C-S36 states why the defect is adjacent to that bar rather than inside it). Filed because a wrong split with a right total is precisely what 2.0.0_SA_COO~B caught on NFRA_SPMOVE's PRD one day earlier -- 'written from recall rather than re-measured, which is the worse half of that sentence, since the total being right is exactly what makes a wrong split survive a reader'. Same shape, different project, next day. Remedy is a re-count of the split from the table."
+}
+```

@@ -576,3 +576,201 @@ both the owner move and the disarm word in one ruling, so both land together her
 ```
 
 -- 3.0.0_SA_CVO
+
+## Round 4 -- L8/L9: three routed rows dispositioned, two CVO findings graduated, five judgment criteria graded
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S33",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "W1-S29 GRADUATED and DISARMED: the blind detector was real, the owner repaired its own instrument, and the repair is exercised -- c23-mint-basis now reads systems.json's 25 rows where it read 0, and the 8 new arms include the GREEN planted systems.json mint that defect 1 lacked.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "The row's three findings all reproduce and all are cured. (1) BLIND DETECTOR: _added_rows resolved rows via `\"resources\" in cur`, which is false for systems.json (top-level key `systems`), so it read 0 rows against an actual 25. Repaired @6876b0b526 by 2.0.0_SA_COO~G (the row's own disarm_owner) via _rows_of/_rowkey reading either file's shape. (2) UNSATISFIABLE FIELD DEMAND: lib/opal_naming.py RES_FIELDS closes resources.json to (name, type, system, evidence) and validate() refuses anything else, so owner_claim/owner_basis could not be expressed there; the basis requirement is now PER FILE. (3) A BAR THE RULING NEVER SET: the arm FAILED on 0 mints, which R-32/R-29 never required and which the CTO's own closure bar (judged + carded == nameable, explicitly not 'zero carded') contradicts; 0 minted is now a VACUOUS PASS that says so in its own output. VERIFIED BY THIS SEAT at HEAD, not taken from the report: `check_en_r4.py c23-mint-basis` prints `systems.json: 25 row(s)`, `resources.json: 34 row(s), 3 added`, `3 of 3 added rows carry their file's own measured basis`, VERDICT PASS-C23-MINT-BASIS rc=0; `selftest-arms` prints 43 of 43, PASS-R4-ARMS-DISCRIMINATE. The disarm is written on the owner's own repairing ACT plus 1.0.0_SA_CTO's acceptance in 97695 ('disarm accepted, and the self-correction is the substance of it'); under R-19 this seat holds the pen and is not the word.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S29",
+   "2.0.0_SA_COO~G's repair commit 6876b0b526 (its message enumerates all three defects and the eight new arms)",
+   "1.0.0_SA_CTO msg 97695, round-4 routing: W1-S29 disarm accepted",
+   "3.0.0_SA_CVO's own runs at HEAD 514bc4ba0e: check_en_r4.py c23-mint-basis (PASS) and selftest-arms (43 of 43)"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-W1-S29"
+ ]
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S34",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "W1-S30 GRADUATED and STAYS ARMED: R-39 answers the token-collision question and changes the card's stated reason to TOKEN_COLLISION, but the ruling is the row's EVIDENCE, not its disposition -- the row disarms when the corrected card lands with its owner, and prose disarms nothing.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "The finding is confirmed and not contested: lib/opal_naming.py _system_of (:1087-1093) keys purely on the token, so one systems.json row for 'security' would resolve BOTH D12's NFRA_OPSEC202609 evidence/access-log buckets AND NFRA_TERRAFORM's closed security-sweep tooling, misattributing one group whichever owner it names. R-39 rules: `security` is NOT minted; both groups stay CARDED; and the CARD'S REASON CHANGES -- opal-data-security[-access-logs] is carded today as though it lacked an owner when it has a citable one (D12 / NFRA_OPSEC202609, DIRECTIVES.yaml :485), so its reason becomes TOKEN_COLLISION. The vocabulary is deliberately NOT reshaped for one measured collision; the per-context split of systems.json is a LGIC_NAMING schema question and becomes justified on the SECOND collision, which the corrected card is what makes findable. This seat writes NO disarm clock: the CTO's own ruling states the disarm condition is the corrected card landing with its owner, which is a cell's act inside the registry grant and has not happened. hazard_standing stays ARMED; the remediation-plane row carries the open clock.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S30",
+   "1.0.0_SA_CTO, RULING R-39, org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md @5112b2d312, routed as msg 97695",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/OWNER_CARDS_R4.md Cards 5 and 6, read directly by this seat"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-W1-S30"
+ ],
+ "disarm_owner": "1.0.0_SA_CTO"
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S35",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "W2-S13 GRADUATED and STAYS ARMED: the 1411-of-3237 placeholder population is real and is exactly what the completed census bought -- R-38 cuts round 5 for it, so the hazard moves to the remediation plane with round 5 as its clock, and FWD-5 does not close on a census whose canonicals are templates.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Confirmed at the numbers: round 4's run is COMPLETE on both planes (judged_live 1690 + carded_live 136 == live_nameable 1826; judged_repo 1547 + carded_repo 331 == repo 1878; stopped null) and 1411 of the 3237 judged rows carry a literal '{' in canonical. The row's causal account also holds: EN-c-23-r4 and EN-h-24-r4 closed the RAISE population (RAISE_POPULATION_S6.r3.md's 351 triples), and a placeholder-eligible token never RAISEs, so the placeholder population was never on that list -- EN-h-24-r4's own order scopes itself to 'round 3's census report carries 8 rows', which is what round 3's early-stopped 21-row report exposed, not what round 4's completed run reveals. The worker correctly reported FAIL with evidence rather than working around a grant it does not hold (the registry is not its surface this round). 1.0.0_SA_CTO's R-38 cuts round 5 on that population with the addition this seat considers the load-bearing one: the cell re-measures its own denominator at WRITE time and prints both populations, because 1411 is a count at one vintage of a report the campaign itself changes.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S13",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md Section 1, read directly by this seat",
+   "1.0.0_SA_CTO, RULING R-38, org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md @5112b2d312, routed as msg 97695"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-W2-S13"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G"
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S36",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "L9 GRADE RECORD, round 4: five JUDGMENT criteria -- four PASS, one FAIL (H24R4-AC4, a wrong-object citation in a minted registry row). And the routed judgment set named a criterion that does not exist: 'S25R4-AC5' is in no round-4 order; the real judgment criterion on that cell is S25R4-AC4, which is what this record grades.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- a grade record.",
+ "world_is": "THE SET, measured with a printed denominator rather than inherited: across the five round-4 task orders, 20 criteria are declared and exactly 5 carry judgment=\"true\" -- C23R4-AC5, D26R4-AC4, G27R4-AC3, H24R4-AC4, S25R4-AC4. The routing message (97695) named C23R4-AC5, H24R4-AC4, D26R4-AC4, G27R4-AC3, S25R4-AC5. Four of five match. 'S25R4-AC5' occurs in no order file: TO-EN-s-25-r4 declares S25R4-AC1..AC4 and its <expected_criteria> reads 'S25R4-AC1, S25R4-AC2, S25R4-AC3, S25R4-AC4', with AC4 carrying judgment=\"true\". Both sets have FIVE members, so the error survives a count check -- the same right-total/wrong-split shape this seat also measured inside this round's own census comparison (row LGIC_ENFORCE-S62). Had this seat graded the routed list as handed, it would have graded a criterion that does not exist and left the real one ungraded. THE GRADES: four PASS and one FAIL, each with the instrument named in its own reason field; every PASS was re-derived by this seat against the bytes or by running the artifact itself, never by restating the worker's account. Two grades carry qualifications that matter more than the verdict: C23R4-AC5 passes with two of its three clauses VACUOUS (0 mints, 0 BLOCKING cards) and says so rather than letting an empty set read as clean; S25R4-AC4 passes while a real defect sits beside its bar, and the row says why the defect is adjacent rather than inside.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-c-23-r4.registry-campaign.md, .TO-EN-d-26-r4.dec4-criterion-text.md, .TO-EN-g-27-r4.s60-disposition.md, .TO-EN-h-24-r4.placeholders.md, .TO-EN-s-25-r4.run-to-the-end.md -- all five read directly for their <criterion> declarations and their CVO-addressed bars",
+   "3.0.0_SA_CVO's own runs at HEAD 514bc4ba0e: lib/opal_naming.py targets; check_en_r4.py c23-mint-basis and selftest-arms; fence_disposition_check.py --self-test and its real CLI path against a four-arm claim file; the same guard re-run against a mutated copy of both trail declarations in a scratch tree; comp-find --corpus aws for the vintage line",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260916.md:643-655 (R-16, bytes printed at the cited lines) and R-30's four parts",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/OWNER_CARDS_R4.md (19 cards censused), ~2/NAMING_CENSUS_COMPARISON.r4.md, ~3/DEC4_II_AMENDED.r4.md and fence_disposition_check.py, ~4/S60_DISPOSITION.r4.md"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "C23R4-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-c-23-r4.registry-campaign.proof_of_spec.json@21486f4210",
+   "verdict": "PASS",
+   "reason": "Clause 2 measured 19 of 19: every card carries both 'What was measured' and 'Missing instrument' (denominator printed). Clauses 1 and 3 are VACUOUS and are recorded as vacuous, not clean -- the cell minted 0 rows so there are 0 owner_basis citations to grade, and 0 cards are BLOCKING. The vacuity was probed rather than assumed: Cards 6 and 10, the only two touching an IAM or bucket surface, were read in full and neither would change any principal's access (both are 'this cannot be minted here' findings), so no card that should have been BLOCKING is mislabelled."
+  },
+  {
+   "criterion": "H24R4-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-h-24-r4.placeholders.proof_of_spec.json@3b15c9a00d",
+   "verdict": "FAIL",
+   "reason": "All three minted rows' TERRAFORM bases are genuine declarations -- this seat printed the bytes at each cited span and each contains the aws_cloudwatch_metric_alarm resource block that sets that exact alarm_name. Row 2 (Inflection-HistBackfill-FailureSpike) ALSO names a project-side source, org/projects/ADVI_HISTBF.json, and quotes a phrase from its phase field that the file does not contain and has not contained since 2026-05-04; the phrase lives verbatim in the sibling org/projects/ADVI_JWTRES.json, the only one of 464 files under org/projects/ that carries it. The row asserts a 2026-09-17 measurement for a read that could not have returned that string on that date, and it is precisely the half the row leans on to defeat the 'guess from the HISTBF token alone' objection. The conclusion (system=advi) is not endangered; the basis as written is. Row LGIC_ENFORCE-S61 carries it. The remedy is one evidence string, not a re-cut."
+  },
+  {
+   "criterion": "D26R4-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-d-26-r4.dec4-criterion-text.proof_of_spec.json@07285ba53c",
+   "verdict": "PASS",
+   "reason": "Clause 1: the amended text carries R-30's four parts without widening any -- REFUSED on an uncovered bucket, the two remaining paths (direct IAM-grant read; carded NOT-JUDGED with the missing instrument named), and 'silence in a trail that never covered the bucket is never evidence'; its scope sentence is R-30's own ('a bucket that is not a member of a live data-event selector'), and R-30(4)'s 'instrumenting opal-data-demo is NOT ordered' is correctly kept in the deliverable's provenance rather than pushed into the PRD text. Clause 2 verified by this seat's OWN DISCRIMINATING CONTROL, not the worker's self-test: copies of both .tf declarations were placed in a scratch tree with the org trail's bucket list mutated (opal-data-bd -> opal-data-demo) and the guard re-run against that tree from its real CLI path. The verdict MOVED -- opal-data-demo flipped REFUSED to ACCEPTED and the printed denominator moved 4 to 5 -- while opal-data-bd correctly stayed ACCEPTED on the untouched served-trail list. A guard carrying a hidden list could not have moved. The real CLI path was also exercised with a four-arm claim file of this seat's own, including the two arms the worker's self-test never runs (covered-bucket-with-no-evidence: REFUSED; non-NOT_A_PRINCIPAL row: SKIPPED)."
+  },
+  {
+   "criterion": "G27R4-AC3",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/LGIC_ENFORCE.TO-EN-g-27-r4.s60-disposition.proof_of_spec.json@70d84a7d6e",
+   "verdict": "PASS",
+   "reason": "Clause 1: the FIXED disposition follows from numbers this seat reproduced ITSELF by running `python lib/opal_naming.py targets` at HEAD on the SHARED checkout (not the worker's worktree, which would be repetition) -- TARGETS 10, planes lambda 3 / s3 3 / terraform 3 / tools 1 = 10, 0 UNCLASSIFIED, and 5 distinct 'measured:' instruments, which is the shape S60's undercount lacked. Clause 2: the record carries an explicit 'What a passing read does NOT prove' section stating that `targets` is a read-only print and therefore evidence about the CLASSIFIER, never about a deployment already made under the old single-classifier reading, and it names the earlier act (EN-r-6's comment-only re-render that re-minted the investor_reporting bundle and deployed perfrp_firm_pin.py with zero executable bytes changed) as out of scope. That citation was checked by PRINTING THE BYTES at SELF_DRIVE_LGIC_RULINGS_20260916.md:643-655 rather than by searching for the quote, and R-16's own account there carries it exactly."
+  },
+  {
+   "criterion": "S25R4-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-25-r4.run-to-the-end.proof_of_spec.json@0e10fea7fe",
+   "verdict": "PASS",
+   "reason": "GRADED AS S25R4-AC4, NOT 'S25R4-AC5' -- the routing message named a criterion that does not exist (see this row's world_is). Clause 1: all 42 uncompared hand rows carry an individually stated reason, parsed from the record's own Section 3 table by this seat; the 42 reconciles with both hand populations independently (N2 45 = 34 compared + 11 uncompared; N6 88 = 57 + 31) and 0 rows have an empty reason cell. Clause 2: the live plane's stated vintage was verified by this seat's own fresh read of the AWS corpus -- `comp-find --corpus aws --name . S3_BUCKET --limit 1` prints 'Built from the estate as of 2026-09-17 18:16:22 UTC. Stitch source: stitch-codebuild built 2026-09-17T03:01:15Z.  manifest: 514495fde115', byte-identical to the record's stated vintage including its double space, so nothing has rebuilt the corpus since the run. A defect WAS found beside this bar and is filed as LGIC_ENFORCE-S62 (the summary's reason split sums to 47 over a 42-row population); it does not change this grade, because the bar asks whether each uncompared ROW carries a reason -- which all 42 do -- and the defect is in the roll-up beside them, not in the object the bar grades. That distinction is stated so the PASS is not read as certifying the split."
+  }
+ ],
+ "dismissal_reason": "This row grades five judgment criteria and adjudicates no investigation item; it is a grade record, per the schema's own note for this shape."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S37",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "S61 GRADUATED and ARMED: this seat's own L9 finding -- the wrong-object citation inside a minted registry row -- moves to the remediation plane with 2.0.0_SA_COO~G as the owner of the correcting cell.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Filed by this seat during the L9 read of H24R4-AC4 and graduated in the same round rather than carried as prose. It is ARMED because the false claim is durable: it sits in infra/logic/registry/resources.json, which the naming builders read, and it is written in the voice of a measurement ('EN-h-24-r4 measured 2026-09-17'). The remedy is one evidence string. It is not DISMISSED because nothing has corrected it yet, and prose disarms nothing.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S61",
+   "This seat's measurements are recorded in that row's grounding: 0 occurrences at HEAD, 4 of 12 vintages historically, last carried 2026-05-01, and the one file of 464 that does carry the phrase"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-S61"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G"
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S38",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-17T23:55Z",
+ "one_line": "S62 GRADUATED and ARMED: the census comparison's reason split (sums to 47 over a 42-row population) moves to the remediation plane; the correcting act is a re-count from the record's own table.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Filed by this seat during the L9 read of S25R4-AC4. ARMED because the fenced json is the machine-readable half of that record and a consumer that reads the split rather than the table inherits numbers that are wrong by 5, with the correct total sitting beside them making it look reconciled. Graduated rather than dismissed because no one has re-counted it, and because the same shape was caught on a sibling project's PRD the previous day -- a second instance is what makes a class findable.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S62",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md Section 3 and its fenced json"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-S62"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G"
+}
+```

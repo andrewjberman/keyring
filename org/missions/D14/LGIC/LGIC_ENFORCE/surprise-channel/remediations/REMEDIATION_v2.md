@@ -1038,3 +1038,156 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
 ```
 
 -- 3.0.0_SA_CVO
+
+## Round 4 -- remediation plane
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S29",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "C23R4-AC2's checker arm could not detect a systems.json mint at all (read 0 rows against an actual 25), demanded owner_claim/owner_basis fields resources.json's closed RES_FIELDS schema refuses, and FAILED on zero mints -- a bar R-32 and R-29 never set. So the one file able to cure the 351-triple population was invisible to the arm, and the one file the arm could see was schema-closed against the fields it required.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S29",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S33",
+  "2.0.0_SA_COO~G's repair @6876b0b526; 1.0.0_SA_CTO's acceptance in msg 97695"
+ ],
+ "remedy": "REMEDIATED by the row's own disarm_owner: _rows_of/_rowkey now read either registry file's row shape, the basis requirement is PER FILE, and 0 minted is a vacuous pass that says so in its own output. Eight new arms driven ALONE include the GREEN planted systems.json mint -- the discriminator the blind detector lacked. Verified at HEAD by 3.0.0_SA_CVO: c23-mint-basis reads systems.json 25 rows and PASSes; selftest-arms 43 of 43.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-17T23:55Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S30",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The 'security' token names two differently-owned live systems (D12's NFRA_OPSEC202609 evidence/access-log buckets and NFRA_TERRAFORM's closed security-sweep tooling) that grade()'s flat per-token systems.json vocabulary cannot both carry, so minting it would misattribute one group whichever owner it named.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S30",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S34",
+  "1.0.0_SA_CTO, RULING R-39, SELF_DRIVE_LGIC_RULINGS_20260917.md @5112b2d312"
+ ],
+ "remedy": "R-39: `security` is NOT minted and the vocabulary is not reshaped for one measured collision. Both groups stay CARDED and the CARD'S REASON CHANGES to TOKEN_COLLISION, because opal-data-security[-access-logs] has a genuine citable owner (D12 / NFRA_OPSEC202609, DIRECTIVES.yaml :485) and a card whose stated reason is wrong retires the question instead of holding it open. The per-context split of systems.json is raised to LGIC_NAMING with this row as its evidence and becomes justified on the SECOND collision -- which a census of TOKEN_COLLISION cards makes findable in one grep. DISARM CONDITION, the ruling's own: the corrected card landing with its owner, a cell's act inside the registry grant. Not yet done, so the clock stays open and this seat writes no disarm.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W2-S13",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "Round 4's completed census reaches the end of both planes and reveals that 1411 of its 3237 judged rows carry a literal '{' placeholder in canonical -- 44% of the judged population graded against a string no resource can equal. The round-4 campaign cells closed the RAISE population; a placeholder-eligible token never RAISEs, so this much larger population was never on their list.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S13",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S35",
+  "1.0.0_SA_CTO, RULING R-38, SELF_DRIVE_LGIC_RULINGS_20260917.md @5112b2d312",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md Section 1"
+ ],
+ "remedy": "R-38: round 5 is CUT for this population, after round 4's slug and never beside it (LD-0521's refuser counts open orders per project, not per round). The cell resolves every row whose {system}/{scope}/{cadence} substitution is MEASURED from a declared source, cards the rest with owner and reason, prints resolved + carded == 1411 with its denominator, and re-runs AC3 against that, under the same fence guard and the same 25-over-count timebox (R-33). The addition that makes it sound: the cell re-measures its OWN denominator at write time and prints both populations, because 1411 is a count at one vintage of a report the campaign itself changes.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S61",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A minted resources.json row's evidence string quotes a phrase attributed to org/projects/ADVI_HISTBF.json's phase field. That file contains 0 occurrences of it at HEAD and has since 2026-05-04; the phrase lives verbatim in the sibling org/projects/ADVI_JWTRES.json, the only one of 464 files under org/projects/ that carries it. A reader who greps for the quote gets one clean hit in the wrong file and concludes the citation is sound.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S61",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md rows LGIC_ENFORCE-C-S36 (the H24R4-AC4 FAIL) and LGIC_ENFORCE-C-S37",
+  "infra/logic/registry/resources.json, the Inflection-HistBackfill-FailureSpike row added @f039acf201"
+ ],
+ "remedy": "Correct the one evidence string: either cite org/projects/ADVI_JWTRES.json (where the phrase actually is) and state what that does and does not establish about ADVI_HISTBF's ownership of this alarm, or replace the project-side cross-check with one that reads ADVI_HISTBF.json itself. The Terraform half of the basis is sound and needs no change -- alarms.tf:55-78 @c7fd81bb86 genuinely declares the alarm. The row's CONCLUSION (system=advi) is not disturbed either way; what is being repaired is a measured claim that cannot have been measured.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S62",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "NAMING_CENSUS_COMPARISON.r4.md's fenced json prints uncompared_reasons 23/2/11/11, summing to 47, over a population its own Section 3 table (42 rows) and its own total field (42) both put at 42. The right total beside a wrong split is what lets the error survive every check that adds up the total.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S62",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_ENFORCE-C-S38",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/NAMING_CENSUS_COMPARISON.r4.md"
+ ],
+ "remedy": "Re-count the split FROM the table (this seat's parse reads NOT-GRADED-TYPE 20, AWS_FIXED-EXCLUDED 2, CARDED 10, HAND-SPECIMEN-ABSENT 10 = 42) and correct the fenced json; also correct Section 3's prose, which says 'THREE distinct, individually-verified reasons' above a list of four while Section 4 says four. No row's individually stated reason is wrong -- all 42 carry one -- so nothing in the comparison's substance moves.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
