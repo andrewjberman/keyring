@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~X</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T12:0xZ to the DS lane (its fifth order, first of round 4) on the CTO's round-3 analysis s.7/s.9 item 5: S71 is INERT only because a schedule is DISABLED and nothing watches that transition.</status>
+<status>complete -- 0.4.0_DS_ClientPlatform~X, 2026-09-18: R43-AC1 PASS 4 of 4 (token printed, fresh detached checkout at fb4dcbc8ac); R43-AC2 recorded for 3.0.0_SA_CVO, not self-graded (0 bare citations); the v1 HoldingsSnapshot schema declared bundle-only at 28bc06907f; the bundle minted at VersionId .v.aG6Rbk5wXOjGgb4vnQIeGPzrabMKo / ETag a8e1a036 under the ledger entry irpt-bckend-rtd3-holdings-contract-mint (opened 3ac01a96ae, closed 8f460875a1); load_contract() returns on the host 1 of 1 and the pre-cell raises FileNotFoundError 1 of 1; the trigger test (024033d9d9) PASS live, its mutant FAILING under a simulated ENABLED read; rows IRPT_BCKEND-S74, S75, S76 (all INERT).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 4 (the CTO's round-3 analysis @5c59f68d70, msg 97944) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 3) | **Round-3 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md` @5c59f68d70 | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar (analysis s.4, ADOPTED) | **Decomp cell:** `IB-rtd-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.4, s.R4) | **outcome_ref:** FWD-5, FWD-7
 
