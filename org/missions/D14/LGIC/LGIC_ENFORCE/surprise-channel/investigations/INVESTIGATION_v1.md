@@ -3697,6 +3697,91 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "Both controls passed and the limb still over-fired in production, because OVER-FIRING HAS TWO SENSES and the bar only covered one. Refusing a case it should accept is caught by a positive control. Refusing a POPULATION so large that no actor can clear it is not -- every individual verdict is correct and the aggregate is an outage.",
     "notes": "THE TRANSFERABLE RULE, and it is cheap: A CONTROL THAT PROVES A GATE DISCRIMINATES SAYS NOTHING ABOUT THE SIZE OF THE SET IT WILL FIRE ON. For any limb with REFUSAL POWER, the acceptance bar must include ONE RUN AGAINST LIVE STATE WITH THE COUNT PRINTED, before the round closes -- not a fixture, the estate. 1.0.0_SA_CTO reached the same point from the other side in its own words: 'a clean fixture is exactly what missed this the first time'. AND THE SECOND HALF IS THE TEST THE RULE TURNS ON: A GATE REFUSES AN ACT ONLY WHEN THAT ACT CAN REMEDY THE GATE'S CONDITION; when it cannot, the gate DISCLOSES. Rowlessness passes that test -- the slug can write the missing rows -- which is why EN-g-37's limb is untouched and correct. Staleness fails it, because the stale rows belong to other items and other seats. THAT DISTINCTION BELONGS IN THE ORDER THAT CUTS A GATE CELL, not discovered at its first live firing. COST: one live run with a printed denominator per refusal-power limb. NON-APPLICATION: a limb whose condition the committing act always owns, and any check that only reports.",
     "id": "LGIC_ENFORCE-S82"
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S71",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-18T17:22Z",
+    "one_line": "The round-9 order and R9_BASE.json say FWD-5 clause 3's comparison was NEVER ATTEMPTED IN EIGHT ROUNDS; EN-s-2 made it in rounds 1 and 2, on the 3 names the stopped census had judged then (0 disagreements). It was never made on the COMPLETED census, which is the true statement.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/census-comparison.r2.result.md @3c8c64692b, section 2: 'Matched on (name, type), compared on verdict AND canonical form ... 0 disagreements over 3 compared pairs' against N2, N6 and IV7.",
+        "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~7/LGIC_ENFORCE.TO-EN-s-2.census-comparison.proof_of_spec.json @3c8c64692b: '3 of 3 hand products compared ... N2: 1 name graded by both, of 43 worked cases. N6: 2 names ... IV7: 10 ranked surfaces'.",
+        "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r9/R9_BASE.json @3c8c64692b fwd5_clause_state.clause_3: 'NOT MET AND NEVER ATTEMPTED IN EIGHT ROUNDS'.",
+        "This cell's comparison (org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/HAND_COMPARISON_R9.json) is the first over the completed census: N2 45, N6 88, IV7 10 compared."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-c-40-r9 worker face: 'IT HAS NEVER BEEN ATTEMPTED IN EIGHT ROUNDS'; R9_BASE.json clause_3 the same.",
+    "world_is": "Attempted twice (EN-s-2 rounds 1 and 2) on a partial population of 3 names, because the census had stopped; the attempts are why the r2 record already measured 43 -> 45 worked cases. What was never done is the comparison on the completed census. Filed for form: the difference decides whether rounds 1-2's method is precedent for this one."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S72",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-18T17:22Z",
+    "one_line": "LGIC_NAMING's hand products are STALE against the registry grade() reads: GRADING_RULE.md section 9 disagrees with grade() on 2 of 45 worked cases and n6-grader-a.tsv on 25 of 88 rows only because registry rows landed after each was written -- and the two hand products now contradict EACH OTHER on opal-globgrph and opal-gateway.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/HAND_COMPARISON_R9.json surfaces.grading_rule_worked_cases: inf-silver-chain LAMBDA and Inflection-SilverChain-DimConversionFailure CW_ALARM -- hand canonical {system}-inf-..., grade() advi-inf-... at the census vintage 54659987c0 and at HEAD 3c8c64692b alike; infra/logic/registry/resources.json gained both rows at 43194e7a28 / f039acf201 (2026-09-17), after GRADING_RULE.md's last change 7c1e9ffb26 (2026-09-16).",
+        "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/HAND_COMPARISON_R9.json surfaces.n6_grader_rows: 25 of the 27 disagreements trace to a registry row first present after n6-grader-a.tsv @388b07f486 (2026-09-14T13:42:15-04:00): systems.json a925c8a642 (globgrph, estate, firmsep, semantic; astn/trade/news unresolved), c19dcc8147 (gateway), 72d636db4f (user, yield, access, partner, incrparity), resources.json advi rows 6c87bd0968 / 7604292b33, and NAMING_SCHEMA.json aws_fixed 'prefix: aws-waf-logs-' de52d3db04.",
+        "GRADING_RULE.md section 9 grades ECS_CLUSTER opal-globgrph OUT-OF-PATTERN globgrph-cluster and LOAD_BALANCER opal-gateway OUT-OF-PATTERN gateway-lb; n6-grader-a.tsv grades the same two RAISE and OUT-OF-PATTERN opal-gateway-lb."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The three LGIC_NAMING deliverables are the hand gradings FWD-5 clause 3 compares totals against (TO-EN-c-40-r9); EN-b-1's order states grade() implements GRADING_RULE.md exactly and grades grade() against every worked case.",
+    "world_is": "At the completed census's vintage, 2 worked cases and 25 grader rows are hand records OLDER than the registry rows that decide them; grade() follows R1.d / R1.c / G2.1 as written and the hand records were never re-graded. A re-run of EN-b-1's b1-agree today would read 43 of 45, not 45 of 45. Not edited: the instruments are read-only to this cell; LGIC_NAMING owns any re-grade."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S73",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-18T17:22Z",
+    "one_line": "grade()'s canonical form for SSM_DOCUMENT opal-cot-bd-session-fetch keeps the refused token bd, where GRADING_RULE.md R3 says bd next to a firm token is the vendor and 'the canonical form spells blackdiamond'; the hand grader (n6) writes opal-cot-blackdiamond-session-fetch-document. 2 of 3254 census r8 rows carry a bd token in their canonical form, both this name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grade('opal-cot-bd-session-fetch', 'SSM_DOCUMENT') = ('OUT-OF-PATTERN', 'opal-cot-bd-session-fetch-document') from lib/opal_naming.py at the census commit 54659987c0 and at HEAD 3c8c64692b (org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/HAND_COMPARISON_R9.json, vintage_diffs 0).",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md:204 @3c8c64692b: 'R3 bd is refused in every slot (S10). It is the VENDOR blackdiamond when a V4 firm token is next to it ... Either way it is an alias, and the canonical form spells blackdiamond, or the firm's form for the slot.'",
+        "NAMING_CENSUS_REPORT.r8.md json rows: 3254 rows, 2 whose canonical splits to a bd token (live and repo, both opal-cot-bd-session-fetch -> opal-cot-bd-session-fetch-document)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "GRADING_RULE.md R3: the canonical form never carries bd; EN-b-1: grade() implements the written rule exactly.",
+    "world_is": "When R2 makes opal the system and bd sits in the function slot next to cot, grade() leaves bd unaliased in the canonical form. The verdict (OUT-OF-PATTERN) is unaffected; the canonical form carries a refused token. Not fixed here: lib/opal_naming.py is outside this order's paths."
+  },
+  {
+    "id": "LGIC_ENFORCE-W1-S74",
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-18T17:22Z",
+    "one_line": "grade() re-joins camel pieces of one segment into a registry word (ExecIncrParityFailure -> exec-incrparity-failure) where GRADING_RULE.md N2 splits before every capital and states no re-join (hand: exec-incr-parity-failure). Either the written rule lacks the clause or grade() applies one it does not have.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grade('ExecIncrParityFailure', 'CW_ALARM') = ('OUT-OF-PATTERN', '{system}-exec-incrparity-failure-alarm') at census commit 54659987c0 and HEAD 3c8c64692b; n6-grader-a.tsv @388b07f486 gives {system}-exec-incr-parity-failure-alarm (org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/HAND_COMPARISON_R9.json).",
+        "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md:106-108 @3c8c64692b, N2: 'Split before each capital that follows a lowercase letter or a digit ... Then lowercase each piece.' -- no re-join clause.",
+        "The re-join is recorded in this channel as EXERCISED behaviour (INVESTIGATION_v1.md row citing lib/opal_naming.py _res_tokens, 'rejoins pieces of ONE original segment whose concatenation is a V1/V2/V3/V4 word'); `git log -S rejoin -- lib/opal_naming.py` first 828ac108db (2026-09-14T20:55:52-04:00), and 'incrparity' first in infra/logic/registry/systems.json at 72d636db4f (2026-09-16)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "EN-b-1: grade() implements GRADING_RULE.md exactly; N2 is the case-splitting step.",
+    "world_is": "grade() and the written N2 give different canonical forms for a camel name whose adjacent pieces concatenate to a registered token. The verdict agrees; the canonical form does not. Which side is authoritative is a ruling, not this cell's."
   }
 ]
 ```
