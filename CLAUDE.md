@@ -171,6 +171,21 @@ later — a CORRECTNESS cost, not a speed one.
     its own; then re-read the population UNSCOPED once.** COST: one extra unscoped read after a scoped pass. NON-APPLICATION: members with
     no shared dependency, and a scoped check that IS the whole question rather than evidence for a
     wider one.
+    ⛔ **AND THE STATE AXIS HAS A NEGATIVE MIRROR NOBODY STATES: ABSENT ≠ EXERCISED-AGAINST.** The axis
+    above governs a control you claim WORKS. A guard that is MISSING, or a hazard that is REAL, is an
+    **EXPOSURE** until someone measures whether it ever FIRED; only then is it an **INCIDENT** — and the
+    two carry DIFFERENT REMEDIES. An exposure is closed by BUILDING THE GUARD. An incident ALSO requires
+    RE-OPENING WHATEVER THE GAP ADMITTED. **Conflating them costs in both directions** — re-opening work
+    nothing ever harmed, or closing a guard-building task on the strength of "nothing went wrong".
+    ⭐ The discriminator is ONE QUERY: run the defect's OWN SIGNATURE over the graded population and
+    PRINT THE DENOMINATOR. Measured 2026-09-18, `LGIC_ENFORCE-S79`/`S80`: `proof-of-spec-check` grades
+    `<expect>` as an UNANCHORED search over evidence the GRADED PARTY writes, and the round-6/7 checkers
+    carry no scrub — a real forge-your-own-PASS capability. The signature (a FAIL token in the evidence
+    with the `<expect>` still matching, under a PASS) returned **0 of 13** across every round-6 and
+    round-7 criterion carrying an `<expect>`, so both L9s stood and neither round was re-opened.
+    `1.0.0_SA_CTO` counts two further instances the same night (`R-74`), not re-measured here.
+    COST: one query. NON-APPLICATION: a gap whose remedy is the same either way, and any claim about a
+    control you assert DOES work — that is the forward axis above.
     **"proof / root cause / definitively / source-confirmed" are RESERVED** — legal only past STATE at
     EXERCISED; cite `file:line @ <commit-ish>` (a citation without a vintage is not a citation). It
     governs SUPPLEMENTARY controls, never the substance of the act; size by the claim your work FEEDS;
