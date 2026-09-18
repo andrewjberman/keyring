@@ -667,3 +667,115 @@ one measurement nobody has taken: whether any of the three retiring prefixes is 
 ⭐ **The positive control is the only reason I know that zero was empty rather than clean** -- and I had written R-47
 about exactly this four hours earlier, which did not stop me running the wrong-grain search. **A lesson you have
 written down is not a control; the control is the arm you run beside the answer.**
+
+---
+
+## R-50 CORRECTION -- I named the WRONG KEY in my own disclosure, and the true answer is STRONGER than the one I disclosed: the RETIRE exclusion is not un-corroborated, it is UNFALSIFIABLE BY THAT FILE
+
+`2.0.0_SA_COO~G` took the measurement R-50 said nobody had taken (msg 97839) instead of accepting the open item. Two
+things come back, and **one of them is a defect in my own committed text.**
+
+**THE DEFECT, MINE.** R-50 and row `LGIC_LGCTFM-S20` both say `LEGACY_SERVED_PATHS.json` "is `mapping`, **8 rows** of
+`{path, reason}`, and its paths are BUCKET-RELATIVE". **That names the wrong key.** Measured at the file's own shape:
+
+| key | type | n |
+|---|---|---|
+| `paths` | list of **str** | **39** -- these ARE the served paths |
+| `excluded` | list of dict `{path, reason}` | 8 -- what I reported |
+| `mapping` | dict | 6 route templates -- the key I named |
+
+⛔ **AND THE MECHANISM IS THE PART WORTH KEEPING, because my FIRST read was RIGHT AND I OVERWROTE IT WITH A WRONG ONE.**
+The falsifier printed `served-path rows: 39` -- correct, from `d.get("paths")`. The follow-up "characterize the file"
+read used a generic *first list-of-dicts* heuristic, which **skips `paths` precisely because it is a list of STRINGS**
+and lands on `excluded`. **A heuristic written to be robust selected the wrong object, and because it ran SECOND it is
+the number that reached the record.** The later read was not more careful; it was more generic. **A second look is not
+automatically a better look, and when it disagrees with the first, that is a finding to resolve, not a refresh.**
+
+**THE SUBSTANTIVE ANSWER, and it strengthens R-50 rather than disturbing it.** The grain was real but it was never the
+reason. That file cannot answer the question **at any grain**, twice over, and `2.0.0_SA_COO~G` measured both:
+
+1. **ITS TIER DOMAIN EXCLUDES EVERY PREFIX IN QUESTION.** Its title scopes it to *"every served path below
+   `{source}/{scope}/platinum/` that the frozen portal requests"*. Over its own denominator of 39, re-measured here on
+   my instrument: **`platinum` 39 of 39, and ZERO paths without it.** The three RETIRE prefixes are
+   `canonical/schwab/{silver,gold}`, `schwab/bronze/` and `logs/gold/` -- **not one is platinum**, and neither are four
+   of my seven ADMITTED ones. **So the positive control was SOUND and the instrument's DOMAIN was wrong** -- which is
+   the failure Rule 24 names when the subtraction's domain is not the claim's population, arriving here as a zero.
+2. **IT HAS NO BUCKET AXIS AT ALL.** `opal-data-bd` occurs zero times in the file, and its `key_form` says why in its
+   own first sentence: each entry is a key template **BELOW THE BUCKET**. So bucket-relative was the right grain **and
+   still insufficient.**
+
+⭐ **CONCLUSION, upgraded: the RETIRE exclusion is not merely UN-CORROBORATED by this file -- it is UNFALSIFIABLE BY
+IT.** No re-grained search there moves it either way. **So R-50's exclusion stands on the best evidence that exists
+rather than on a gap**, and my "open measurement, owner `ADVI_FIRMBKTS`" now carries an INSTRUMENT instead of only an
+owner: a live read of the objects under those three prefixes with their newest timestamps, or a portal-source census
+below a non-platinum tier -- the census this file's own `census` block records that it did **not** do. Weak
+corroboration already sits in the ledger's `newest` column: `:74` 08-18, `:77` 04-08, `:80` 04-01, **30 to 170 days
+stale.**
+
+⛔ **AND THE TRAP FOR THE NEXT READER, which is why my zero was the lucky outcome:** a whole-file token count of this
+file returns `gold` 3 and `canonical` 2, **all PROSE hits** in the title, `key_form` and `excluded` -- zero in `paths`.
+**A grep for a retiring prefix's tier returns NON-ZERO here and reads as a hit.** My wrong-object read produced an
+honest zero; a slightly less careful one would have produced a FALSE POSITIVE and corroborated the opposite ruling.
+
+**ONE DISCREPANCY BETWEEN OUR TWO COUNTS, resolved in the lane's favour rather than split.** I measured `canonical` = 1
+across the 39 paths where `2.0.0_SA_COO~G` measured 0. The hit is
+`advi/{scope}/platinum/firm/advisor_nna_canonical.json` -- **`canonical` in a FILENAME, not the tier segment
+`canonical/`.** The lane's claim was about segments and is correct; mine was a substring count and is the loose one.
+**The numbers never disagreed; the grains did.**
+
+**R-43 DISPOSITION: row `LGIC_LGCTFM-S20` IS NOT REWRITTEN.** It is a filed row carrying a frozen measurement, and the
+correction stands BESIDE it here, in the live-direction document -- the same disposition the lane took on `W1-S6`. The
+markable set is unchanged: **the seven at `:70`, `:71`, `:72`, `:73`, `:75`, `:76`, `:79`.**
+
+---
+
+## R-51 -- a PHANTOM ANSWER in a register row is worse than a stale block, and DONE resolves on the PRD's outcome array; NO `completion_test` FIELD IS MINTED
+
+`2.0.0_SA_COO~G` read `org/missions/D14/LGIC/LGIC_ENFORCE/project.json` **because the arm told it to read the register
+rather than its recollection**, and found three of the four items in `blocking` stale or wrong (msg 97838). **That row
+is MY L3 carrier -- Rule 27 puts it in the CTO's carrier set and says the CTO writes every carrier itself in its own
+commit -- so the lane routed it with a recommendation and did not edit it. That is exactly right.** Every claim below
+was re-measured on this seat's own instruments before the edit.
+
+| # | the row said | measured | verdict |
+|---|---|---|---|
+| 1 | CVO holds round 4; round 5 cannot be cut | round 4 closed, round 5 cut AND drained, L10 written @`b683398fda` | **SATISFIED -- struck** |
+| 2 | "Round 5's **one cell**" | **FOUR** `-r5` order files: `EN-c-28`, `EN-c-31`, `EN-g-30`, `EN-h-29` | **WRONG ON ITS FACE -- struck** |
+| 3 | W1-S30 disarms when the card lands | condition MET; row `S65` is the owner's word; clock open at `3.0.0_SA_CVO` | **reduced to the clock** |
+| 4 | W2-S13 "is **answered by round 5**" | `remediation.state` **OPEN**, `disarm.state` ARMED, `disarm.at` **null** | **FALSE -- rewritten** |
+
+⛔ **(4) IS THE ONE THAT MATTERS AND THE LANE NAMED THE ASYMMETRY EXACTLY: a stale BLOCK costs a WAIT; a phantom ANSWER
+costs the WORK.** Round 5's `EN-c-28-r5` stopped on the R-33 timebox and **carded the population forward** -- the order
+file's own bar is `judged + carded`, and `stopped_on_timebox` is a field it reports. The register converted "carded
+forward" into "answered", and a reader who trusts it stops looking. **R-48 said a roster summary is a live claim about
+the fabric; this is the same defect one object over, in the carrier the estate treats as authoritative** -- and it was
+found only because a COO read the register instead of its own memory of the register.
+
+⚠ **AND THE STALENESS IS NOT EVEN GRADEABLE ON THIS ROW: `LGIC_ENFORCE/project.json` HAS NO `last_updated` KEY AT
+ALL** (27 keys, measured; the field is simply absent), while `LGIC_LGCTFM`'s HAS one reading `2026-09-17T14:20:00Z`
+**while its own prose cites `@662d53b793` from 02:21Z on the 18th.** ⛔ **Same disease, opposite halves: one row cannot
+be checked, the other can be checked and LIES IN THE DIRECTION A READER TRUSTS** -- an old timestamp over fresh text
+reads as "nothing has happened since", which is the one inference a timestamp exists to license. Both are repaired in
+this seat's own commit; `last_updated` is added to `LGIC_ENFORCE` and corrected on `LGIC_LGCTFM`.
+
+### The second call: what does DONE read from?
+
+The lane reported that **its own stop condition names an instrument that does not exist** -- *"both projects DONE on
+the register per the completion test"* -- and censused it unscoped rather than assuming: **`completion` ZERO
+occurrences in either `project.json`, `complete_when` zero, `completion_test` zero**, and `done_when` once, as prose
+inside an Andrew-direct citation. Re-run here: **confirmed, 0 / 0 / 0 / 1.** It has been reporting "not DONE" from the
+PRD's FWD outcomes and **saying so every tick**, which is the correct behaviour for an unfalsifiable stop.
+
+**RULING: the lane's recommendation is ADOPTED VERBATIM, including its refusal.** DONE = **every FWD outcome REALIZED
+on the PRD, plus `status` off `active`**. ⛔ **NO `completion_test` FIELD IS MINTED.** The lane's reason is better than
+any I would have written and it is the ruling's reason:
+
+> Minting a field so a stop condition has something to read is how a test ends up describing whatever the last round
+> happened to do.
+
+⭐ **A STOP CONDITION THAT NAMES A MISSING INSTRUMENT IS FIXED BY RE-POINTING IT AT AN EXISTING OWNED ARTIFACT, NEVER BY
+CREATING THE ARTIFACT THE SENTENCE ASSUMED.** The PRD's outcome array already exists, already has an owner (this seat),
+and is already what the L10 analyses grade against -- so the sentence resolves mechanically against a thing that was
+built to be graded, rather than against a field invented to make a sentence resolve. **COST: none -- it deletes a
+field nobody writes. NON-APPLICATION: a project with no PRD outcome array, which cannot reach L4 and so cannot reach
+this question.**
