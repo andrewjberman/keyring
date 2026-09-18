@@ -118,6 +118,34 @@ the round-14 PRD addendum should be organized around the instantiation stages ra
 
 ---
 
+## 2B. Exec Management -- FIRST READ by message (msg 23697, 16:52Z); the brief itself follows at Andrew's word
+
+Measured by `4.0.0_SA_CRO~Z` with the adapter's own `read_management` over the crosswalk's 33. **The headline figure was
+re-measured here on a different instrument** (the served thesis bundle's `management` block, keys `%2F`-encoded): **agrees
+exactly -- 12 SERVED, 7 with officers (62 officers), 5 with ZERO officers, all 5 `UNRESOLVED-SOURCE`** (ASML, HAL, INTU, KMB,
+PBR).
+
+| # | finding | existing art | disp. | lands as |
+|---|---|---|---|---|
+| E1 | ⛔ **SERVED is a status, not content.** 5 of the 12 "served" rosters carry 0 officers. Real coverage is **7 of 33**, and tenure plus a pool comparison exists for **4** (BA, COST, HD, SAP) | `C-EXEC-MANAGEMENT` (:597) defines the roster's SOURCE, not what "served" must contain | **ADD -- and it corrects figures in circulation** | a contract clause: a roster with zero officers is not SERVED, it is ABSENT with its reason. **Corrects this seat's own "management 12 of 33"** (msg 23693 and the register row) -- see s.3 |
+| E2 | The 5 empty rosters have TWO causes, neither a failed pull: ASML/PBR -- *"the persisted 20-F carries an EMPTY officer section (Item 6) -- the item was not cut from the primary document"*, an upstream CUT defect in the filings stage; HAL/INTU/KMB -- *"no declared shape read this section"* (20 / 4 / 194 usable lines, 0 candidates), a roster-SHAPE gap | -- | **ADD** | two different fixes in two different stages. The round-13 drain record labels them `pull-missed` (msg 23691); **that understates both** -- the pulls ran, the cutter and the shape reader did not. Flagged for the completion record |
+| E3 | Row quality on the 7 good rosters: BABA, NU, VLO have officers with no role start; **VLO's role reads "... and President 60" -- the age leaked into the role field** | `C-EXEC-MANAGEMENT`: role start is filing-sourced | **EXEC** | a parser defect in `roster.py`, not a spec gap |
+| E4 | **The CEO profile line misstates WHY on 7 of 12.** `ceo_profile_reading` (`scoped_amgt.py:2285-2296`) maps "no url count" to NOT_CONFIRMED_INSTRUMENT_CANNOT_SAY, and `ExecManagementTab.tsx:84-87` then tells the reader *the search returned unreadable links*. For 7 of 12 **no search ran** -- no declared IR domain, or no CEO because the roster is unresolved -- and each object carries `absence_class: NOTHING_FOUND`, which the reader ignores. True split: 1 CONFIRMED, 4 searched-and-unreadable, 7 not searched | FWD-9-class rule: a reason shown must be the TRUE reason | **ADD -- a page that tells the reader something false** | the reader must render the object's own `absence_class`. The most user-visible defect in the panel: it is not absent-and-honest, it is present-and-wrong |
+| E5 | **The tenure pool fragments by run**: `_pool/2026-09-15` = 4.08y over 40 officers of 5 names; `_pool/2026-09-18` = no value, 2 rosters, 0 officers with a role start. NU and VLO show the pool ABSENT; each run pools only itself | `C-EXEC-MANAGEMENT`: *"the pool-average tenure is computed over the union universe"* | **FIX-ART / EXEC** | the ratified text says the pool is over the UNIVERSE; the code pools over ONE RUN. The art is right and the code violates it |
+| E6 | **The batch census splits security keys on `/`** -- `batch.py:81-84`, `obj["Key"].split("/")` taking `parts[2]` and requiring `parts[3]` to end `.source.json` -- **verified at source here.** `BP/_LN_Equity` and `NG/_LN_Equity` can NEVER be built, even after Thesis tier 1 gives them real 20-Fs | -- | **ADD -- a production defect of the exact class this seat committed twice in analysis today** | the fix is the one banked in memory: take keys from the population of record, never by splitting a path. It will silently drop two London names on every run and report success |
+| E7 | **The same census counts UNRESOLVED-SOURCE placeholders as filings**: 188 = 12 real + 176 placeholder names. Enabled, a run would write **~176 zero-officer rosters that the adapter serves as SERVED** | -- | **ADD -- and E1 makes it serious** | together with E1 this is the panel's worst latent defect: one enable would turn 7 real rosters into 183 "served" ones, 176 of them empty |
+| E8 | `OpalResearch-ExecManagement` is DISABLED, its path is **split at the space** (Execute = `C:\Users\Opal`), it has never run (267011); `run_batch.cmd` pins universe 2026-09-15; enrichment is scoped by `domains.json`, 5 hand-declared names | `C-EXEC-MANAGEMENT`: the harvest estate owns the collection lane | **EXEC** | **the IDENTICAL launcher defect and date pin found on the Thesis task (T5, T6)** -- so it is a pattern in how these tasks were registered, not two incidents. Fix once, in the registration, for every research task |
+
+### Net for this panel
+
+**The panel's headline number was a status count.** Seven names have a roster; four have tenure; and the page tells the reader
+a search failed on seven names where no search ran. **Three defects share one root with Thesis** -- the launcher split at the
+space (E8/T5), the pinned universe (E8/T6), and a census that splits keys on `/` (E6, and this seat's own error twice today).
+**The instantiation lens (s.2.2) fits exactly:** every one of E2, E6, E7 and E8 is a place where "stand up management for a NEW
+security" has no working answer.
+
+---
+
 ## Cross-panel: items that are ONE question, not two
 
 | question | panels | why one |
@@ -125,10 +153,18 @@ the round-14 PRD addendum should be organized around the instantiation stages ra
 | Filing identity for the 21 names without one | Thesis T8/T9, Lead Panel header L9 (management) | management's roster is read from the filing, so every name Thesis reaches, management reaches |
 | `publication-links/v1` coverage | Lead Panel L3 (chatter), L4 (news feed) | both chatter lists and the feed read the same store |
 | Bloomberg as a second authority | Lead Panel L9, Thesis T12 | the same ratified-text change to `C-EXEC-MANAGEMENT` |
+| Scheduled-task registration (launcher split at the space, universe pinned to a date) | Thesis T5/T6, Exec Mgmt E8 | the same registration defect on two research tasks -- fix it where tasks are registered, once |
+| Key census by splitting a path on `/` | Exec Mgmt E6 (production code); this seat's own analysis twice | two London names silently dropped, success reported |
+| "SERVED" meaning a status rather than content | Exec Mgmt E1/E7; Lead Panel L2 (a list of zeros reading COMPLETE) | a producer can report success over an empty payload -- one honesty rule across panels |
 
 ---
 
 ## 3. Corrections this intake forced on this seat's own record
+
+- **"Management 12 of 33" is a STATUS count, not coverage** (E1). This seat reported it in the 33-vs-34 retraction (msg 23693)
+  and the register row @`1620bdddef` still says *"management commentary 5 -> 14 names"* -- wrong twice: 14 was an object count
+  (12 names plus two pool files), and 12 is served-status, of which **7 carry officers**. Re-stated in the register row with
+  this intake's commit.
 
 - **The DEV push is NOT a reachability act** (L10). The phrase this seat carried from the CVO's verdict into the register row
   and the verdicts ledger -- "a durability act before it is a reachability one" -- implies the push eventually makes the pages
