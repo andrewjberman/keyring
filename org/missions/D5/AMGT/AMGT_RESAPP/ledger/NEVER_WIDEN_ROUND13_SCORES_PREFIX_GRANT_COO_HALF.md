@@ -45,10 +45,49 @@ Thirteen-and-thirteen with the twelve pre-existing entries byte-identical, one T
 the plan, `CodeSha256` unchanged, and the negative control still refusing. Any deviation is this half
 REFUSED and the act rolls back.
 
-## THIS HALF'S OWN OBLIGATION AT DRAIN
+## MEASURED, AT DRAIN -- worker `0.9.0_WK_AMGT_RESAPP~34`, branch `wk-amgt-13-scores-iam`. Independently
+## re-verified this seat on a fresh instrument beyond the worker's and CTO's own reads (direct
+## `iam.get_role_policy`, a fresh live invoke, a fresh `get_function_configuration`); the CTO separately
+## added `iam:SimulatePrincipalPolicy` as a fourth instrument (positive/negative/write-arm all correct).
 
-The measured values above are appended to THIS FILE as an edit once the act reports -- never left as a
-session-only dispatch.
+1. **Pre-act policy**: 12 entries each limb, `scores/v1/` in neither -- this is the rollback document,
+   preserved in the worker's own deliverable and this ledger's own commit history.
+2. **The act**: one Terraform locals-list entry, `"scores/v1/"`, added to
+   `local.scoped_amgt_pool_prefixes` (`infra/aws/terraform/harvest/scoped-amgt-api.tf`), plus the stale
+   `:135`-region comment corrected (14->16 top-level prefixes, ungranted set recomputed to `identity/`,
+   `lib/`, `social/`). Landed at `3c2a6e47ca` -- committed by this seat directly (the worker's own commit
+   of this ONE file was correctly refused by the owned-paths gate, `CLOUD_OPS_OR_ETL` lane, since the
+   worker held no backing task order for an infra/aws/terraform path; landed via the audited
+   `GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL` escape as the directing/co-signing seat).
+3. **Targeted plan**: `0 to add, 1 to change, 0 to destroy`, naming only
+   `aws_iam_role_policy.scoped_amgt_api_grants`. HELD.
+4. **Post-act per-limb count**: 13/13, added values exactly `arn:aws:s3:::opal-data-harvest/scores/v1/*`
+   (GetObject) and `scores/v1/*` (ListBucket StringLike), the other 12 byte-identical on both limbs --
+   confirmed independently this seat, LOST set empty.
+5. **Negative control**: `identity/`, `lib/`, `social/` absent from both limbs post-act (document-level,
+   this seat's own read) -- CORROBORATED on a stronger instrument by the CTO's
+   `iam:SimulatePrincipalPolicy` read: GetObject/ListBucket on `identity/`, `lib/`, `social/` all
+   `implicitDeny`; `scores/v1/` GetObject/ListBucket both `allowed`; PutObject/DeleteObject on
+   `scores/v1/` both `implicitDeny` (a write-arm neither half explicitly asked for, added by the CTO
+   since STOP 1 forbids write). **This simulation instrument is now the estate's default for any
+   future per-limb grant control on this project** -- it answers a control neither signed half could
+   otherwise execute (assuming the role's own identity is refused to every seat by its trust policy).
+6. **Post-act served read**: `ASML_NA_Equity` -- `scores_status SERVED` (was `READ_FAILED`),
+   `scores_read.status SERVED`, `scores_read.read_completed true`, `object_key
+   scores/v1/BA_US_Equity/2026-09-17.json` (the date-partitioned shape -- `Z-S155`'s STOP held on the
+   read path). All three scores classed `ABSENT_SOURCE` -- **this is the act SUCCEEDING**, per both
+   halves' own stated branch. `robustness`/`divergence` each carry a real `absent_reason`;
+   `peers_v`'s is EMPTY (a value-must-carry-its-claim gap, itself a new, separate finding for round 14,
+   not a defect in this act).
+7. **Change-management entry**: opened before the act, closed on the post-act served read, committed
+   on the worker's own branch (`270641f7bf`) and landing at HEAD with this drain.
+8. **`CodeSha256`**: `0l7f4YGikexrP7INF7q8r5k11+0J0BBxpJ6sYqP8Uyo=` unchanged before and after --
+   independently confirmed this seat.
+
+**Rollback:** NOT TRIGGERED -- the grant lands and the read completes on the first try. The pre-act
+12-entry document above remains the standing rollback anchor should a later act need it.
+
+**NEVER-WIDEN CO-SIGN CLOSED, both halves, every limb of the discriminator held.**
 
 Push state: LOCAL on SITEZ.
 
