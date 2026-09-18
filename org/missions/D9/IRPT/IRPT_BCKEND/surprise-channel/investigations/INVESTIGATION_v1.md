@@ -4711,7 +4711,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "DISARMED: the recovery path the hazard promised never existed after 09-12, and the reader who would have trusted RT8-g now finds S43 and this row beside W1-S18. NOT REMEDIATED here: RT8-g's record is worker ~4's terminal deliverable and stays as written; if a real rendered PDF export is ever needed for a replay it is minted fresh under its own generation id on Andrew's word (W1-S18's candidate), a cell for a later round. Also corrected on this seat's own account: this seat told its terminal earlier tonight that the version deletion 'waits on Andrew'; S43 shows it was executed 09-12 on his word. The stale project.json sentence is what misled the re-read."
   },
   {
-    "id": "IRPT_BCKEND-S57",
+    "id": "IRPT_BCKEND-S62",
     "project": "IRPT_BCKEND",
     "fabric": "laptop",
     "surfaced_by": "0.4.0_DS_ClientPlatform~X",
@@ -4742,7 +4742,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "class": "BLOCKING",
     "hazard_standing": "INERT",
     "spec_asserts": "TO-IB-rtc-2 L5 note: 'A member the closure needs that is NOT under a data/*/scripts/gold/** or lib/** path this order's <paths> admits is a BLOCKING row, not an override.'",
-    "world_is": "The closure DERIVED at e9dc18f302 by two instruments that agree (a static AST sweep of 6 modules, and a dynamic open/import audit of the runner's no-S3 entry points -- battery arm (a)) is 8 files: directory_runner.py, lib/trading_calendar.py, infra/aws/lambda/investor-reporting/_ids/ids.py, the three runner_common.py, data/firm_registry.json and infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json. 3 of 8 are declared. Of the 5 missing, the three runner_common.py are under data/*/scripts/gold/** (row IRPT_BCKEND-S57 carries why they are still not declared) and TWO are outside both globs. For the reader weighing the rule: the bundle already carries one member outside it -- infra/aws/lambda/investor-reporting/_ids/ids.py, declared by IB-rt-6 under amendment H3 -- so whether the rule stands for a JSON contract and the firm registry is the issuer's call, not this seat's.",
+    "world_is": "The closure DERIVED at e9dc18f302 by two instruments that agree (a static AST sweep of 6 modules, and a dynamic open/import audit of the runner's no-S3 entry points -- battery arm (a)) is 8 files: directory_runner.py, lib/trading_calendar.py, infra/aws/lambda/investor-reporting/_ids/ids.py, the three runner_common.py, data/firm_registry.json and infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json. 3 of 8 are declared. Of the 5 missing, the three runner_common.py are under data/*/scripts/gold/** (row IRPT_BCKEND-S62 carries why they are still not declared) and TWO are outside both globs. For the reader weighing the rule: the bundle already carries one member outside it -- infra/aws/lambda/investor-reporting/_ids/ids.py, declared by IB-rt-6 under amendment H3 -- so whether the rule stands for a JSON contract and the firm registry is the issuer's call, not this seat's.",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
@@ -4774,7 +4774,7 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
       ]
     },
     "disposition": "UNDER_INVESTIGATION",
-    "notes": "Not measured on the host: the host was STOPPED and no re-mint happened, so the one admitted StartInstances was not spent on an unchanged object. The instrument is Git Bash GNU tar 1.35 and Windows Python 3.12; the host runs Python 3.9.25 (row W2-S49), and the refusal is a file-existence check (directory_runner.py:217-218), which is not version-sensitive. The remedy is a refresh.py change -- unpack repo-shaped, for instance member names that ARE repo paths extracted at $W -- that the next cut must own. It is one decision with row IRPT_BCKEND-S57's."
+    "notes": "Not measured on the host: the host was STOPPED and no re-mint happened, so the one admitted StartInstances was not spent on an unchanged object. The instrument is Git Bash GNU tar 1.35 and Windows Python 3.12; the host runs Python 3.9.25 (row W2-S49), and the refusal is a file-existence check (directory_runner.py:217-218), which is not version-sensitive. The remedy is a refresh.py change -- unpack repo-shaped, for instance member names that ARE repo paths extracted at $W -- that the next cut must own. It is one decision with row IRPT_BCKEND-S62's."
   },
   {
     "id": "IRPT_BCKEND-S60",
