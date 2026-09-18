@@ -1,12 +1,11 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.12",
-  "prd_pin": "4de34f0d953e6f3c6ee7fc723b04dc5ca0168652",
+  "prd_version": "v0.13",
+  "prd_pin": "16999602615f9643385bc571748aa7a25079baf0",
   "half": "ratified-text",
-  "half_hash": "901bf534d39700b1d35c40a421d4f5df8a14956b3087fc88162814be5ef197f5",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V011_RATIFIED_TEXT_REVIEW_20260918_Z.md@969755b2f2",
+  "half_hash": "679b1d41f6947c750fb6033e52a4a509f7d5444cdcd3f4020d7b9ff0733cf7b6",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_V011_RATIFIED_TEXT_REVIEW_20260918_Z.md@8109272c22",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-18T19:56:45Z",
-  "reason": "annotation, history and seat names inside CONTRACTS (seat serials, present-tense defect narratives with file:line citations, a measurement narrative, supersession history); substance passes -- see review"
+  "signed_at": "2026-09-18T20:34:16Z"
 }
