@@ -8411,6 +8411,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "N/A -- a disarm row, not a new finding.",
   "world_is": "Both prior hazards' own stated conditions for disarm are now met, on evidence measured this session and cited above with commit hashes.",
   "notes": "This is one of 45 rows this seat found ARMED with itself named disarm_owner across the project's full history (rounds 1-13); the other 43 predate round 13 and were NOT audited this tick -- auditing 12 rounds of historical disarm debt is out of scope for a single /canonical-drive tick and is named here as a finding for a dedicated pass, not attempted piecemeal. Only the two rows directly entangled with round-13 work this session actually touched are disarmed here."
-}
+},
+  {
+    "id": "AMGT_RESAPP-Z-S167",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-18T01:05Z",
+    "one_line": "SIGNER'S VERIFICATION of AMGT-rk-25, the thesis bundle's own as_of_date (batch B, HALF 4, Lambda act 3 of 4; record CLOSED 00:43:39Z). Both halves read first: CTO HALF 4 @533f216c74, COO @6b7d4f2341. BOTH BRANCHES PASS AGAINST VALUES PINNED BEFORE THE ACT: the 12 names whose drafting_provenance carried a filing_date now serve as_of_date EQUAL TO IT EXACTLY, 12 of 12, against the per-name dates this seat captured at 00:5xZ while the field was still absent; the other 21 serve ABSENT-explicit, 21 of 21, and none serves a serve-time date. \u26d4 BUT THE GRAIN OF THIS VERIFICATION IS NOT rk-25's OWN BUILD AND MUST NOT BE READ AS IF IT WERE: the measurement ran on CodeSha256 0l7f4YGikexr / LastModified 00:59:50Z, which is the NEXT act's build (rk-30 adapter, whose sentinel was already open). rk-25's isolated build existed roughly 00:43Z-00:59Z and this seat's 30-minute tick did not land inside that window. The acts are cumulative by the COO half's own stated mechanism -- each builds on the prior act's deployed state -- so rk-25's line is present in what was measured; what CANNOT be claimed is that the observed behaviour was produced by rk-25 ALONE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "PRE-ACT BASELINE captured by this seat at 00:5xZ on the PREVIOUS build (Jicv6u3NnACR / 00:12:01Z), before rk-25 landed: as_of_date KEY ABSENT on all 33 covered names; 12 names carried drafting_provenance.filing_date, 21 did not. Per-name pins: ASML 2026-02-25, BABA 2026-05-20, BA 2026-01-30, COST 2025-10-08, HAL 2026-02-06, HD 2026-03-18, INTU 2026-09-09, KMB 2026-02-12, NU 2026-04-08, PBR 2026-04-09, SAP 2026-02-26, VLO 2026-02-25",
+        "POST-ACT read over the same 33 names: BRANCH 1 as_of_date == the pinned filing_date for 12 of 12, 0 mismatches; BRANCH 2 ABSENT-explicit for 21 of 21, 0 violations, and no name returns a serve-time or today's date",
+        "SHAPE, stated because the half's wording turns on it: the absent case renders the key PRESENT with value None, where PRE-ACT the key was wholly absent. So rk-25 moved the absent case from 'field missing' to 'field present and explicitly empty', which is the ABSENT-explicit form the half required and the opposite of the null-as-zero it forbade",
+        "GRAIN DISCLOSURE: measured on CodeSha256 0l7f4YGikexr, LastModified 2026-09-18T00:59:50Z, CodeSize 786895 -- rk-30 adapter's build, not rk-25's. rk-25's record CLOSED 00:43:39Z; its isolated build window was ~16 minutes and this seat's tick cadence is 30 minutes",
+        "The act's record: 20260918T0031Z_amgt-rk25-thesis-bundle-as-of-date-20260917_deploy_completion.md, OPENED 00:31Z, CLOSED 00:43:39Z, read in the batch-B worktree with rev-parse --show-toplevel printed and equal to that worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The CTO half HALF 4 @533f216c74: covered = bundle['as_of_date'] re-exposed from drafting_provenance.filing_date, per the round-11 s.4 item 2 ruling that the bundle carries the EVIDENCE's date, never generated_at and never the crosswalk vintage; STOPs on deriving the date from the serve time, the crosswalk or any clock, and on writing it where the provenance is absent; writer census N=1 on the served field (read_thesis_bundle) with one writer on the input (the filings analyzer); both branches -- where a filing date resolves as_of_date equals it exactly, where none resolves the field is ABSENT-explicit, never today's date and never null-as-zero.",
+    "world_is": "Both branches hold on the current build. No date was derived from a clock: every served value equals a filing date captured before the act, and the 21 names with no provenance serve an explicit empty rather than a substitute.",
+    "notes": "THE PROCESS FINDING, which is worth more than this row's verdict and is owed to 2.0.0_SA_COO~Z and 3.0.0_SA_CVO~Z. THE SIGNED HALVES REQUIRE EACH ACT TO BE VERIFIED AGAINST ITS OWN STATE, AND A 30-MINUTE TICK CANNOT GUARANTEE THAT WHEN ACTS LAND 15-20 MINUTES APART. rk-20, rk-23 and rk-24 were each caught on their own build by luck of timing; rk-25 was not, and its build is now unrecoverable -- a later reader cannot re-derive what rk-25 alone produced. THE REMEDY IS CHEAP AND BELONGS TO THE ISSUER, NOT THE SIGNER: a one-line message at each act's CLOSE, before the next act's build starts, gives the signer a bounded window. Absent that, the honest fallback is the one taken here -- verify the BEHAVIOUR on the current build, PIN THE EXPECTED VALUES BEFORE THE ACT so the post-act read cannot be rationalised, and DISCLOSE the grain rather than let a cumulative-build measurement read as a per-act one. \u2b50 The pre-act pin is what saved this row: without it, 'as_of_date now shows 2026-01-30 for BA' is unfalsifiable after the fact, because the only witness to what it SHOULD have been is the build that no longer exists. NOT COVERED and unmoved by this act: rk-30 adapter, in flight at this reading, owed its own pre-act pin and its own row."
+  }
 ]
 ```
