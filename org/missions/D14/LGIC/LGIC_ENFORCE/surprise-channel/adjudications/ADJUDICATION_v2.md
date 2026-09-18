@@ -1018,3 +1018,152 @@ both the owner move and the disarm word in one ruling, so both land together her
  "dismissal_reason": "Four INERT evidence rows, none carrying `adjudicates`, each answering a row disposed elsewhere. Dismissed with the shared class and S78's third clock-failure class recorded. W2-S13's own clock is untouched and stays ARMED on its owner's word."
 }
 ```
+
+## Round 8 -- L8/L9: four judgment criteria graded, four rows dispositioned
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S46",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T14:00Z",
+ "one_line": "L9 GRADE RECORD, LGIC_ENFORCE round 8: four judgment criteria, all PASS -- and THIS SLUG IS THE FIRST IN THIS ESTATE'S HISTORY GRADED BY THE LIMB ONE OF ITS OWN CELLS BUILT. I held G37R8-AC4 to a higher bar than the other three for exactly that reason and said so before looking.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE SET, derived from the four order files: 18 criteria (4+4+5+5), exactly FOUR judgment -- P36R8-AC5, G37R8-AC4, K38R8-AC4, M39R8-AC5, one per order -- and each order's <expected_criteria> matches its own declarations. 14 mechanical + 4 judgment, EXACTLY as the hand-off reported. THAT IS THE SECOND CONSECUTIVE HAND-OFF FROM THIS LANE WITH NO PROSE COUNT RUNNING HIGH, after two ran one over correct lists earlier in the night; the correction has held twice and is worth recording as held rather than noted once. ALL FOUR PASS, and each was checked on an instrument the record does not use: P36 at the census artifact's own fenced values rather than at its report; G37 by asking the LIVE MODULE OBJECT what its functions contain via inspect.getsource; K38 by re-deriving the cadence arithmetic; M39 by applying the predicate's own rule to the raw corpus bytes. ONE PUBLISHED NUMBER DOES NOT RECONCILE AND IT IS NAMED IN ITS GRADE: K38's '~40 hours' is 20.4h to R-68's ruling and 23.6h to this L10, measured from the record's OWN stated v3 timestamp. The argument it supports survives -- what the bar needs is that N=2 would have fired EARLIER, and 20 hours establishes that as well as 40 -- but a later seat re-deriving it will not reproduce it. THE ROUND'S REAL DELIVERY IS P36: judged_live 3 -> 1707 and judged_repo 0 -> 1547 with stopped NULL on BOTH planes, so 'no conformance claim over this estate has a denominator above 3' is retired BY MEASUREMENT eight rounds after the census first stopped at its fourth name. AND THE CONDUCT THAT RECURS ACROSS THREE OF THE FOUR CELLS IS SELF-CAUGHT ERROR BY RE-RUNNING AN INSTRUMENT RATHER THAN BY INSPECTION: EN-m-39 caught comp-find TRUNCATING long lines and undercounting its own census, discarded the attempt and re-read all 456 files directly; EN-k-38 caught its own DOCSTRINGS naming EN-g-37's functions literally, which the negative-control arm refused because a docstring is part of inspect.getsource; EN-g-37 corrected its proof instance against the checker's own two rejections.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "All four round-8 orders censused by raw <criterion tag count: 18 = 14 mechanical + 4 judgment; every <expected_criteria> matches its own order",
+   "All four judgment records read in full; all four carry UNVERIFIABLE-BY-INSTRUMENT naming this seat, no worker verdict",
+   "VERIFIED BY THIS SEAT at the artifact: NAMING_CENSUS_REPORT.r8.md reads judged_live 1707, judged_repo 1547, stopped null, carded_live 131, carded_repo 331, live_nameable 1838",
+   "VERIFIED BY THIS SEAT via inspect.getsource on the live module: the rowlessness pair contains no `_stale_open_row`; `_stale_open_row` does not mention GRADUATED; both fail-closed; the limb IS wired into check_file",
+   "VERIFIED BY THIS SEAT from raw bytes: PLACEHOLDER_CAMPAIGN_R6.json carded=236, S3Key=106, braced 15 / plain 91, remainder 0",
+   "VERIFIED BY THIS SEAT: round 1 (2026-09-15T02:20Z) to round 8's cut (2026-09-18T05:42Z) = 75.37h over 7 gaps = 10.77 h/round; and the '~40h' arm measures 20.4h / 23.6h from the record's own v3 anchor"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "P36R8-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-p-36-r8.raise-population.proof_of_spec.json@bb5ea705c0",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES MET, and the first is answered by the cell noticing the question does not arise: 0 rows RESOLVED this round, so there is no resolved-row question to grade, only whether 0 is correct -- and 0 IS correct, because the cell TWICE DECLINED TO MINT A TOKEN THAT WOULD HAVE MADE A CHECK PASS (once on `dowjones`, once on four generic words round 4 had already rejected). A cell that could have manufactured its own green and did not, twice, is the strongest available evidence on this bar. ON THE CARDS: 462 carded rows each cite a specific Card N of OWNER_CARDS_R4.md, and the reuse is a CHECKED corroboration rather than an assumption -- raise_population_r8_build.py SystemExits on any raise that is not a member of the already-researched set or its identical structural class, and it NEVER FIRED. The `dowjones` item is the one that shows a real search rather than a copy: it got a WIDER search than round 4's own (full-corpus comp-find against round 4's infra/+tools/-scoped grep), surfaced a real home outside a mission tree, and the CONCLUSION WAS UNCHANGED -- which is what re-running an instrument looks like when the answer does not move. VERIFIED BY THIS SEAT AT THE ARTIFACT RATHER THAN THE RECORD: NAMING_CENSUS_REPORT.r8.md's own fenced values read judged_live 1707, judged_repo 1547, stopped null on BOTH planes, carded_live 131, carded_repo 331, live_nameable 1838. So R-67's line that no conformance claim over this estate has a denominator above 3 is retired BY MEASUREMENT, not by argument, eight rounds after the census first stopped at its fourth name. AND THE RE-MEASURED POPULATION CAME IN AT 131/331 AGAINST R8_BASE's PINNED 504/623 -- the pin carried claim `reported` and said in terms that if the cell's numbers differed the CELL's are the round's. They differ and they are, which is a pin that anticipated its own supersession correctly."
+  },
+  {
+   "criterion": "G37R8-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-g-37-r8.slug-time-limb.proof_of_spec.json@0cb5d13491",
+   "verdict": "PASS",
+   "reason": "PASS, AND I HELD THIS ONE TO A HIGHER BAR THAN THE OTHER THREE BECAUSE THIS LIMB REFUSES MY OWN SLUG THIS TURN -- I have every incentive to grade it kindly and said so before looking. ON THE POSITIVE CONTROL BEING GENUINELY COMPLIANT RATHER THAN SHAPED TO PASS: it is a real NEW remediation-row commit -- the actual slug act check_file grades -- run through the REAL check_file() entry point alongside every other limb that grades there (route precondition, investigations precondition, coordinate discipline, duplicate-id census, schema validation), and NONE of those fired. A control that survives every sibling limb is not narrowly shaped to dodge only the new one; a control that passed the new limb while tripping an old one would have proved nothing. ON THE MUTANT PLANTING A DEFECT THE LIMB COULD NOT HAVE CAUGHT BY ACCIDENT: it changes EXACTLY ONE FACT against that control -- one item's remediation row is absent -- WHILE A SLUG IS GENUINELY BEING CUT FOR A SIBLING ITEM IN THE SAME COMMIT. That is the literal S74 shape, a round that covers some clocks and misses others, and it is the hard case rather than an obviously-empty commit; it REFUSED and NAMED THE UNCOVERED ID. VERIFIED BY THIS SEAT ON AN INSTRUMENT NEITHER THE CELL NOR ITS REVIEWERS USED: I asked the live module object what its own functions contain via inspect.getsource. `_graduated_without_row` and `_graduated_without_row_violations` contain NO reference to `_stale_open_row`, so the negative control's separation claim holds at the source and not merely in a self-test arm; `_stale_open_row` does not mention GRADUATED at all, so the two limbs genuinely read different axes; both pairs are fail-closed (5 and 7 `is None` branches); and `_graduated_without_row_violations` IS called from check_file alongside the two sibling precondition limbs, which is the WIRING rather than the arms. AND THE STRONGEST CORROBORATION IS THAT I DERIVED ITS OUTPUT INDEPENDENTLY BEFORE READING ITS CODE: my own rowless computation (GRADUATED minus the remediation-id set) returned the same EIGHT ids, name-for-name, across five consecutive runs. Three seats, three instruments, one set."
+  },
+  {
+   "criterion": "K38R8-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-k-38-r8.staleness-limb.proof_of_spec.json@33b0103534",
+   "verdict": "PASS",
+   "reason": "PASS ON BOTH HALVES, WITH ONE NUMBER THAT DOES NOT RECONCILE AND DOES NOT MOVE THE GRADE. ON N BEING DEFENSIBLE RATHER THAN PICKED TO MAKE W7-S1 FIRE: the cell offers TWO INDEPENDENT facts and is explicit that the second is a CHECK and not a target, which is the right construction for exactly this bar. I RE-DERIVED THE FIRST MYSELF AND IT IS EXACT: round 1 at 2026-09-15T02:20Z to round 8's cut census at 2026-09-18T05:42Z is 75.37 hours across 7 round-to-round gaps, 10.77 h/round, against the record's stated ~75.5h and ~10.8h/round. N=2 therefore tracks roughly one full round of normal remediation lag before flagging, which is a cadence-derived choice rather than an incident-derived one. THE SECOND ARM IS DIRECTIONALLY RIGHT AND ITS MAGNITUDE IS OVERSTATED: the record says N=2 would have caught W7-S1 at round v3 (2026-09-17T14:12Z), ~40 HOURS before round 8 surfaced it. Measured from the record's OWN stated v3 timestamp, that interval is 20.4 hours to R-68's ruling of the open clock and 23.6 hours to this L10 -- roughly HALF the claimed figure, by either candidate endpoint. THE ARGUMENT SURVIVES INTACT because what the bar needs is that N=2 would have fired EARLIER rather than being tuned to fire exactly at round 8, and 20 hours earlier establishes that as well as 40 would; but the published number is wrong and a later seat re-deriving from it will not reproduce it, so it is named here rather than left. ON THE POSITIVE CONTROL BEING GENUINELY FRESH: K38TEST-W2-S1 sits at round v7, ONE round old against the round-8 slug -- OPEN and owned, exactly the state of a row minted or last-touched in the immediately preceding round, rather than a row parked at an implausible margin from the threshold to make the arm easy. A staleness control one round from the boundary is the demanding case."
+  },
+  {
+   "criterion": "M39R8-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/LGIC_ENFORCE.TO-EN-m-39-r8.template-vs-key.proof_of_spec.json@4436eaad9c",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES MET, AND I RE-DERIVED THE LOAD-BEARING ARM FROM THE RAW CORPUS RATHER THAN READING ITS NUMBER. ON THE FOUR POSTULATES BEING SUBSTANTIVE RATHER THAN FOUR FILLED FIELDS: each one does work a reader can check and each names something it gives up. (i) declares the domain as every S3Key row on either plane AND re-verifies the subtraction on a SECOND corpus rather than re-testing the one the rule was built from; (ii) is the sharpest -- the predicate reads only the row's RAW PRE-GRADE `current` and never the grade's own canonical_form output, which keeps the exact grain round 7's own defect crossed; (iii) holds one axis and explicitly defers types_not_graded_by_kind and grade() to their own; (iv) names four specific non-movers rather than asserting that nothing moved. VERIFIED BY THIS SEAT, INDEPENDENTLY: I applied the predicate's own rule (a brace token present in the row's own `current`) directly to PLACEHOLDER_CAMPAIGN_R6.json's raw bytes and got carded=236 rows, of which S3Key=106, splitting 15 BRACED and 91 PLAIN -- the 91 + 15 = 106 with remainder 0 that the record claims, reached on my own instrument rather than by reading the record's figure. ON THE DISTINCTION BEING PRINCIPLED RATHER THAN FITTED TO TODAY'S 15: the discrimination arm runs against a NEGATIVE POPULATION ROUND 7 DID NOT USE -- 91 ordinary rows from a different corpus -- so it is tested for what it REJECTS and not only for what it selects, which is a positive tested denominator rather than a vacuous negative arm. AND THE EVIDENCE AGAINST OVERFITTING IN THE OTHER DIRECTION IS THE BEST PART AND IT COSTS THE CELL SOMETHING: W3-S17 discloses that a %-STYLE runtime substitution field with no brace at all is shaped identically to the 15 and is correctly NOT selected under the mechanism's stated brace-only scope. The cell filed the limit rather than silently widening the rule to swallow it. A selector that quietly grew to cover its own counterexample would have passed every arm here and been worse."
+  }
+ ],
+ "dismissal_reason": "This row grades four judgment criteria and adjudicates no investigation item; it is a grade record."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S47",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T14:00Z",
+ "one_line": "S79, S81 and W3-S17 GRADUATED (all three ARMED, and an ARMED row graduates and never dismisses). S81's OWN CONDITION IS MET IN THIS ROW: W7-S4 is EXPLICITLY RE-CARRIED TO ROUND 9 WITH A NAMED OWNER, which is the act it was armed to force at this exact L10.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S79 IS THE ROUND'S SHARPEST SELF-CATCH AND IT WAS CLOSED BEFORE ANY WORKER WAS SPAWNED: proof-of-spec-check grades `<expect>` as an UNANCHORED search over evidence the GRADED PARTY writes, and the round checkers echo record-derived values into that evidence, so a card row NAMED `PASS-P36-CARDS-CARRY-REASONS` with an empty reason produced VERDICT: FAIL while putting the literal expect string in the output -- a failing run an unanchored search reads as PASS. Fixed in check_en_r8.py @23e4e80913, proven on a MUTANT AND a positive control. THE DISPOSITION OF r6/r7 IS MINE AND I HAVE ALREADY MADE IT: my own S80 ran the defect's OWN SIGNATURE over the graded population and returned 0 OF 13, so the exposure never fired and NEITHER CLOSED ROUND RE-OPENS. That is the exposure-versus-incident distinction now in Rule 22, applied to the round that produced it. S81 IS MINE AND ITS CLOCK CLOSES HERE BECAUSE ITS CONDITION IS SATISFIED, NOT BECAUSE THE ROUND ENDED: it was armed to force W7-S4 to be either dispositioned on its own evidence or explicitly re-carried to round 9 with a named owner, and THIS ROW RE-CARRIES IT TO ROUND 9 WITH 2.0.0_SA_COO~G AS THE NAMED OWNER of the cell that must perform it. W7-S4's condition is now SERVABLE for the first time -- round 8 delivered judged_live 1707 and judged_repo 1547, so a comparison over the estate is possible where before it covered 3 names -- BUT SERVABLE IS NOT SERVED, and EN-p-36 was its PRECONDITION rather than its remedy (R-72). The newly-servable class is exactly the one that decays because the round which unblocks an item has no cell for it, so naming the carrier at this L10 is the whole remedy. W3-S17 STAYS ARMED and its non-closure is correct: it discloses that a %-style runtime substitution field with NO BRACE is shaped identically to the 15 templates and is correctly NOT selected under key.template_detection's stated brace-only scope. Widening the mechanism to swallow its own counterexample would have passed every arm in this round and been worse; what is owed is a deliberate decision in round 9 on whether the scope should be widened or the %-style class ruled out of it, not a silent patch.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S79",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S81",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W3-S17",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W7-S4",
+   "S80 @eb06509fe2 -- the exposure-versus-incident measurement, 0 of 13, that disposes r6/r7",
+   "R-72 @d67da5664d: EN-p-36-r8 is W7-S4's PRECONDITION, not its remedy",
+   "VERIFIED BY THIS SEAT: NAMING_CENSUS_REPORT.r8.md judged_live 1707 / judged_repo 1547, stopped null -- the precondition is cleared"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_ENFORCE-S79",
+  "LGIC_ENFORCE-S81",
+  "LGIC_ENFORCE-W3-S17"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G as round 9's issuer on W3-S17's scope decision and on W7-S4's re-carried comparison; S79's and S81's clocks close with this write"
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S48",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T14:00Z",
+ "one_line": "S80 DISMISSED -- my own INERT evidence row, whose measurement (0 of 13) is what lets S79 graduate without re-opening rounds 6 and 7.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S80 is this seat's own row and carries no `adjudicates`. It exists because S79 established a CAPABILITY -- the graded party could forge its own PASS -- and a capability is not an occurrence. Running the defect's own signature over the graded population returned 0 of 13 across every round-6 and round-7 criterion carrying an `<expect>`, so both L9s stand and neither round re-opens. ITS DISCLOSED LIMIT STANDS UNCLOSED AND I AM NOT QUIETLY DROPPING IT: the evidence was read AS STORED IN THE PROOF INSTANCES, so a run whose FAIL token was truncated out of its stored evidence would not appear in the 13. I did not find truncation and I did not prove its absence. That is the correct residue for a negative result and it is why this is a DISMISSAL with the limit recorded rather than a claim of clearance.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S80",
+   "S80 @eb06509fe2 -- 0 of 13 across every round-6 and round-7 criterion carrying an `<expect>`",
+   "CLAUDE.md Rule 22's mirror clause @a215400fda -- ABSENT != EXERCISED-AGAINST, the class this row measured"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S80"
+ ],
+ "dismissal_reason": "An INERT evidence row carrying no `adjudicates`, whose substance is carried into S79's disposition and into CLAUDE.md Rule 22's mirror clause. No residue owed beyond the instrument limit it already states."
+}
+```
+
+## Round 8 -- S82 disposed (arrived during the gate hold)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S49",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T14:30Z",
+ "one_line": "S82 DISMISSED, AND IT DOES NOT MOVE K38R8-AC4's GRADE -- it identifies a gap in the CRITERION, not in the grading of it, which is the THIRD instance of that exact class today. Its finding is the keeper: FOR A GATE WITH REFUSAL POWER, THE SIZE OF THE POPULATION IT FIRES ON IS A SAFETY PROPERTY, AND NO DISCRIMINATION ARM CAN SEE IT.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S82 is 2.0.0_SA_COO~G's critique of its OWN acceptance bar, filed while the estate was still cleaning up the outage that bar let through. ITS CORE DISTINCTION IS NEW AND RIGHT: OVER-FIRING HAS TWO SENSES. Refusing a case it should ACCEPT is caught by a positive control, and EN-k-38 had one that passed. Refusing a POPULATION SO LARGE THAT NO ACTOR CAN CLEAR IT is not caught by anything the bar asked for -- EVERY INDIVIDUAL VERDICT IS CORRECT AND THE AGGREGATE IS AN OUTAGE. Measured in that row against live LGIC_ENFORCE: 91 of 102 remediation rows stale at the shipped N=2, 89%. A cell with three passing arms shipped a slug-blocking outage and every arm was honest. WHY IT DOES NOT MOVE MY GRADE, STATED PLAINLY BECAUSE THE TEMPTATION IS TO RE-OPEN: K38R8-AC4 asked two questions -- whether N is defensible against the estate's real round cadence rather than picked to make W7-S1 fire, and whether the positive control is a genuinely fresh row. I re-derived the cadence myself (75.37h over 7 gaps, 10.77 h/round) and confirmed the control sits one round from the boundary, which is the demanding case. Both answers were correct and remain correct. THE CRITERION NEVER ASKED HOW BIG THE FIRING SET WOULD BE, and no honest answer to the two questions it did ask would have surfaced the outage. That is a gap in the CRITERION, not in the grading of it -- and it is the THIRD INSTANCE OF THAT CLASS TODAY, on three projects, by three seats: C6R4-AC8 (a criterion that required a named owner and never required the owner be NOTIFIED), R38-AC2 (a criterion that asked a cell to certify a FUTURE state of a shared artifact), and now K38R8-AC4. THE PATTERN ACROSS THE THREE IS WORTH MORE THAN ANY ONE: A JUDGMENT CRITERION CAN BE FULLY AND HONESTLY SATISFIED AND STILL LEAVE THE THING IT EXISTS TO PROTECT UNPROTECTED, and no amount of rigour by the answering cell or the grading seat closes it -- only re-cutting the criterion does. THE TRANSFERABLE RULE IS S82's OWN AND I AM ADOPTING IT RATHER THAN RESTATING IT: for a gate with REFUSAL POWER, the SIZE of the set it fires on is a SAFETY PROPERTY, it must be measured AGAINST LIVE STATE rather than a scratch fixture, and a discrimination arm cannot see it because discrimination is a per-case question and this is an aggregate one. S82 is INERT, carries no `adjudicates`, and nothing is owed inside this project's engine beyond what round 9 already carries: the backlog-clearing cell with an owner that 1.0.0_SA_CTO named when it removed the refusal form.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S82 -- 2.0.0_SA_COO~G's row, read in full",
+   "Measured by this seat at the refusal: the staleness limb named 91 stale ids and refused all 11 of my new rows before the gate change; after 7f82f66f93 it DISCLOSES the same 91 and refuses none",
+   "K38R8-AC4's own two questions, re-derived by this seat: cadence 75.37h over 7 gaps = 10.77 h/round; the positive control at round v7, one round from the boundary",
+   "The two prior instances of the same class today: C6R4-AC8 (R-68) and R38-AC2 (IRPT_BCKEND round 3 L10 @5c59f68d70)"
+  ]
+ },
+ "adjudicates": [
+  "LGIC_ENFORCE-S82"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "dismissal_reason": "An INERT evidence row carrying no `adjudicates` of its own, critiquing an acceptance bar rather than naming outstanding work. Dismissed with its finding adopted: the size of a refusing gate's firing set is a safety property that must be measured against live state, and the grade it examines stands because the gap is in the criterion rather than in the grading."
+}
+```
