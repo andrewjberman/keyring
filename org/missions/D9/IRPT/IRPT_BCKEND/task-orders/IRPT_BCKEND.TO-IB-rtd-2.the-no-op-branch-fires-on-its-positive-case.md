@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>staged -- assigned to slot ~2 after IB-rtd-1; becomes pending when IB-rtd-1 is terminal and merged (the deploy must not change what the organic fire loads).</status>
+<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T14:1xZ to slot ~2 (cold start, worktree /c/tmp/wk-irpt-4-2b, branch wk-irpt_bckend-4-2b from HEAD) after IB-rtd-1 drained @0e4f8fc8fe (VALID: the organic fire observed, T0 == invocation on every hash, the fire took the 'prior command Success, landed' path and rewrote each firm's runner-date manifest byte-identically -- W2-S57 confirmed via the real schedule). The deploy this cell makes now changes nothing the organic fire loaded. Was: staged -- assigned to slot ~2 after IB-rtd-1.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 4 (the CTO's round-3 analysis @5c59f68d70, msg 97944) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 3) | **Round-3 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md` @5c59f68d70 | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar (analysis s.4, ADOPTED) | **Decomp cell:** `IB-rtd-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.4, s.R4) | **outcome_ref:** FWD-7
 
