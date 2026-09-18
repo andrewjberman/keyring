@@ -79,3 +79,49 @@ carrier and every seat has it.** What lands then: `C-PRODUCTION-HOME` (PRD s.10)
 structure rule; the s.10 stage table's "pool" wording names it; `C-INSTANTIATION-ENTRY` keeps the crosswalk there.
 
 -- `1.0.0_SA_CTO~Z`
+
+---
+
+## APPENDIX -- FIVE MORE WORDS IN FORTY MINUTES; THE SETTLED POSITION, AND WHY NO ROW WAS WRITTEN
+
+Between ~21:2xZ and ~21:5xZ Andrew moved this item four more times, each relayed verbatim by `4.0.0_SA_CRO~Z`. In order:
+
+1. ~21:2xZ -- *"Yes that is the canon for \"CLIENT ASSETS\"."* / *"client assets have different expectations"* (narrowed the
+   departure to bronze; recorded in s.3 above).
+2. ~21:4xZ -- *"Actually, my apologies, we should follow the nomenclature and structure for all new buckets, that is my
+   error."* / *"If we do not do so, it is just gong to cause more problems than its worth downstream"* / *"so even though
+   its more effort, might as well just establish this early and up front"* -- **the departure is WITHDRAWN**; conform.
+3. ~21:5xZ -- *"We can run bronze and silver inside the opal-data-harvest bucket, that is fine, it does not need to be in
+   opal-data-assets, which i believe should exclusively be for client assets."*
+
+**THE SETTLED POSITION, as of ~21:5xZ:**
+- **`opal-data-harvest` holds every AMGT_RESAPP tier, bronze and silver included. Nothing moves to `opal-data-assets`, and
+  no object moves at all.** The cross-bucket migration framing (`4.0.0_SA_CRO~Z` msg 23794, `0.0.0_AB_MSTR~Z` msg 23798) is
+  withdrawn by each of its authors.
+- **No R20 departure row.** What AMGT owes is a DECLARED REASON for its product-bucket home, not an exception.
+- **The work that remains is STRUCTURE INSIDE the bucket:** `address()` and `name()` build every address and name, and a
+  key's tier is readable from its prefix (Rule 30, his *"structured in said bucket in proper form"*).
+- **`opal-data-assets` is CLIENT ASSETS ONLY** in his reading -- a statement about the CANON, wider than AMGT. Placing it
+  in the doctrine is `0.0.0_AB_MSTR~Z`'s on the laptop lane, not this seat's.
+
+**WHY THIS SEAT WROTE NO REGISTRY ROW TONIGHT, although it holds the override to.** The registry cannot express his word
+yet, and the gap is mechanical, not effort: `_home_bucket` (`lib/opal_naming.py:249-261`) reads
+`tiers.json.homes[tenancy][tier]`, and **every existing tenancy -- FIRM, PRODUCT, COMPOSITE, DEMO-TENANT -- sends bronze
+and silver to the shared `opal-data-assets`.** So a `harvest` scope row on tenancy PRODUCT would make `address()` print
+`opal-data-assets` for every bronze key -- the exact opposite of his word. Expressing it needs EITHER a new tenancy whose
+bronze and silver are scope-homed, OR the doctrine reading above placed first (R4 scoped to client assets), and **that
+choice is the doctrine's, which `0.0.0_AB_MSTR~Z` holds.** ⛔ **A row written before that choice would encode a guess into
+the one file every address resolves through.** The override lets this seat write the file; it does not make the shape known.
+
+**What this seat holds next:** the per-prefix TIER CLASSIFICATION for the ten live AMGT prefixes -- and it is NOT being
+written here either, because Andrew tasked `4.0.0_SA_CRO~Z` the same hour with a measured deep dive on the shapes RESAPP
+pulls from every source plus a review of the LGIC naming standards, and that brief is where the classification comes from
+MEASURED rather than assumed. Duplicating it here would produce a second, weaker answer to the same question.
+
+**Round 14 is untouched by all of this.** `2.0.0_SA_COO~Z`'s uniform registry gate ("the live arm fires iff `address()`
+prints an `opal-data-harvest` bucket for the key"; "no AMGT_RESAPP object is authorized to land in `opal-data-assets` under
+any branch") agrees with his latest word and is CORRECT AS WRITTEN -- `0.0.0_AB_MSTR~Z` corrected its own contrary relay
+within ten minutes. No face is re-cut on anything in this record.
+
+-- `1.0.0_SA_CTO~Z`
+
