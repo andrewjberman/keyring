@@ -1,4 +1,7 @@
-# AMGT_RESAPP PRD v0.11 -- L4-R review of the ratified-text half (3.0.0_SA_CVO~Z)
+# AMGT_RESAPP PRD v0.11 and v0.12 -- L4-R review of the ratified-text half (3.0.0_SA_CVO~Z)
+
+**The stamp binds v0.12 @`4de34f0d95`, ratified-text half_hash `901bf534d397`. Section 6 reviews that version's
+delta over v0.11.**
 
 **Under review:** `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` @`9c8e04cd9a`
 - prd_version v0.11
@@ -114,5 +117,36 @@ re-introduced by the rewrite; clearing it now clears the older lapse too.
 - The CONTRACTS heading's "the reviewer is `3.0.0_SA_CVO`, always" sits in the TITLE, which the half hash does not
   cover beyond its first word.
 - The ENDPOINT [warning sign] line is operative.
+
+## 6. v0.12 @`4de34f0d95` -- THE BYTES THE STAMP BINDS (ratified-text half_hash `901bf534d397`)
+
+**A grain correction this seat owes.** Sections 1-5 reviewed v0.11 (half_hash `2ea7e0a99695`). Between that review
+and the stamp, 1.0.0_SA_CTO~Z bumped the PRD to v0.12. `prd-signoff.py` binds a stamp to the PRD at HEAD, so the
+first REFUSED stamp (@`075227f4c0`) was bound to v0.12's bytes while citing a review of v0.11's. This seat did not
+re-read the half hash immediately before stamping, and that is its miss. This section reviews the v0.12 delta so the
+stamp and its review describe the same bytes, and the stamp is re-issued citing this version of the document.
+
+**The delta.** Same instrument, v0.11 -> v0.12: ENDPOINT 0 changed lines; CONTRACTS 9 changed lines, in two places.
+
+1. **C-PEER-SET-SA: "PRODUCTION USE WAITS" becomes "PRODUCTION USE AUTHORIZED, BY NAME".** `C-SA-VENDOR-WORD` is
+   lifted for this path, one Peers read per security at instantiation and in validation, and a RECURRING or SCHEDULED
+   read still waits on `C-SA-TERMS-BEFORE-SCHEDULE`.
+   - **Verified** against `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_194xZ_AMGT_RESAPP_SIX_CARDS_ANSWERED.md`
+     @`4de34f0d95`. Card 1 asked for SA as a production source for Peers, per security at instantiation, and his
+     answer is verbatim "1.) Yes use SA thats fine".
+   - **The clause is the narrow reading.** It lifts the vendor word for the path by name and leaves the scheduled
+     read behind the terms review, as card 1's (b) framed it. PASS.
+2. **C-FILINGS-ANALYZER: the international battery goes from "PROPOSED, NOT RATIFIED" to "RATIFIED v0.12".**
+   - **Verified** against the same record. Card 3 put the order EDGAR ticker -> EDGAR Bloomberg CIK -> ESEF/UKSEF by
+     LEI -> company site -> national regulator -> UNRESOLVED, and his answer is verbatim "3.) Yes.". PASS.
+
+**The refusal grounds are unchanged in v0.12.** None of the items in section 3 was removed: the seat serials in
+C-PEERS-V-FLOORS and C-FILINGS-ANALYZER, the present-tense defect narratives with file:line citations, the Keyence
+measurement narrative and the supersession history are all still in the body. The v0.12 provenance additions --
+"(v0.12; Andrew-direct ~19:4xZ, ...)" with the record's path -- are provenance and are acceptable under the bar in
+section 3.
+
+**Verdict on v0.12: REFUSED on criterion (d) alone.** The substance passes, including both v0.12 changes. Clearing
+section 3's four items is the whole of what this seat needs in order to sign.
 
 -- 3.0.0_SA_CVO
