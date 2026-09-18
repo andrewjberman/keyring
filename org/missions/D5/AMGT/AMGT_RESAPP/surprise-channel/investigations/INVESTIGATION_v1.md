@@ -8750,6 +8750,72 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-30 adapter AC1 asserts that measured_robustness and measured_peers_v are both nonzero over the keyed denominator. The CTO half HALF 5 @533f216c74 asserts that where the producer's object exists the three records serve with their MEASURED OR ABSENT classing, and ruling Z-S164 plus the scores-grant CTO half @a9fb5caa70 both state that a completed read returning honestly-ABSENT scores is the act SUCCEEDING rather than partially failing.",
     "world_is": "The read completes and all three scores classify honestly as ABSENT_SOURCE with distinct causes. The act met every bar its own co-signed halves set. AC1 asks for MEASURED values whose inputs do not exist and cannot be produced this round without a RESERVED vendor pull or a measure definition that is round-14 PRD work.",
     "notes": "THE RULING, three parts. (1) rk-30 ADAPTER'S ACT IS COMPLETE. It is verified on the served plane against both signed halves (Z-S172) and nothing further is owed by the deploy. (2) AC1 IS NOT FLIPPED AND MUST NOT BE. Flipping a criterion to make a report read complete is precisely the defect 4.0.0_SA_CRO~Z's brief warned about, and this seat will not do it nor authorise it. AC1 stands as UNMET, and the unmet portion GRADUATES to round 14 attached to the measure-definition question ruling Z-S164 already placed at L4 -- which is this seat's own to answer before any cell is cut. 3.0.0_SA_CVO~Z grades AC1 at L9 on that basis; this row is evidence, not a grade. (3) ONE PART OF AC1 IS IN-SCOPE, CHEAP AND SHOULD NOT GRADUATE: peers_v serving ABSENT with an EMPTY absent_reason on 33 of 33 needs NO new data. robustness and divergence both emit real reasons from the same producer, so the asymmetry is an omission rather than a missing input, and under the estate's own a-value-must-carry-its-claim doctrine an ABSENT with no reason is the weakest of the three. That is a round-13-shaped fix if 2.0.0_SA_COO~Z has a cell that can carry it, or the first item of the round-14 scores cell if not. \u2b50 AND THE HEALTHY READING OF THIS TICK: the FAIL population went from SEVEN orders to THREE by real re-runs, not by re-labelling -- two of them on a remedy that was already banked in estate memory and only needed to be handed over. Of the three that remain, rk-20 AC1 and rk-23 AC1 are criterion defects with citations (Z-S161 / W27-S9, and Z-S163's 33 of 33), and this row disposes of the third."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-18T14:17:27Z",
+    "one_line": "AMGT-rk-22's 7 new management names cost ZERO Lusha/SERP credits: domains.json declares only the original 5 QA names, so every added name's lusha_enrichment.status is SKIPPED and ceo_public_profile is never queried.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/management/domains.json (5 entries, unchanged by this order -- rk-22's ruling item 1 scopes to running the producers over the population, not to declaring new domains)",
+        "management_posture_batch.py management --write-pool run, 2026-09-18: all 7 of ASML_NA_Equity/HAL_US_Equity/INTU_US_Equity/KMB_US_Equity/NU_US_Equity/PBR_US_Equity/VLO_US_Equity print lusha=SKIPPED(pull-missed); credits_used 0 for every one"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CARD 5's own cost line (ROUND_ANALYSIS.round11.md; decomp s.21e) estimates a per-name Lusha/SERP+Anthropic cost for this cell's run, and Andrew's 'yes do it' authorized a vendor spend on that basis.",
+    "world_is": "The Lusha/Bright-Data half of that spend was $0 for all 7 new management names -- domains.json's own declared coverage ('the five QA names of AMGT-rj-8') never grew, so every new name's enrichment is a config-scoped SKIP, not a billed call. The only real vendor spend this cell incurred was posture's Anthropic calls (7 of 28 new names reached a real model call; the rest resolved to a classed ABSENT before the model step). This is a favorable variance against CARD 5's estimate, not a defect -- named here so the actual receipt is on record beside the estimate, per the round's own 'this seat says so rather than presenting a filings-pipeline number as a management/posture one' discipline.",
+    "notes": "Remedy holder (if any is ever wanted): a future cell that declares domains for the 7 additional filed names would let Lusha/SERP actually run for them; that is new scope (researching each company's own corporate/IR domain), not this cell's ruling, and is not done here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-18T14:17:27Z",
+    "one_line": "BP/_LN_Equity and NG/_LN_Equity's literal '/' lands posture/v1/<key>/<as_of>.json one level DEEPER than every other name (posture/v1/BP/_LN_Equity/... instead of posture/v1/BP_LN_Equity/...) -- the writes succeeded and read back clean, but the key SHAPE differs, exactly the class AMGT-rk-23 (FWD-5) is scoped to census.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/posture/judge.py:236-237 pool_key() formats the raw security_key into the S3 key with no path-safe encode -- the same class the decomp names at render_pack.py:243-244 and scoped_amgt.py:1403",
+        "live read 2026-09-18: s3://opal-data-harvest/posture/v1/BP/_LN_Equity/2026-09-16.json and s3://opal-data-harvest/posture/v1/NG/_LN_Equity/2026-09-16.json both exist and read back with sha256/Metadata matching (the OK: uploaded ... with read-back lines from this cell's own posture batch run)",
+        "org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md:2440-2441 (AMGT-rk-23's own criterion: 'print serves a valid PDF for 33 of 33 keyed names ... including a planted case using BP/_LN_Equity or NG/_LN_Equity literally')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 of this cell's own task order asks only that posture_names' count increase toward 33, read from a flat list_objects_v2 count over the whole posture/v1/ prefix -- a count that is DENOMINATOR-BLIND to key depth.",
+    "world_is": "The count is correct (33 of 33) either way, so AC1 is unaffected -- but any FUTURE consumer that parses a name out of a posture/v1/ key by splitting on the first '/' (this cell's own management_posture_batch.py served_names() included, before this note) will read 'BP' and 'NG' rather than 'BP/_LN_Equity' and 'NG/_LN_Equity', undercounting served names by exactly 2. This cell's own batch driver has this defect and is NOT fixed here: AMGT-rk-23 is the cell that owns path-safety for security keys, and fixing it inside rk-22's task order would be scope creep into a cell already cut separately.",
+    "notes": "Remedy holder: whichever seat carries AMGT-rk-23 forward. No action taken on management_posture_batch.py's served_names() beyond this note; its report command's '31 of 33' line for posture (before the two literal-slash names were run) is the visible symptom -- the true, denominator-correct count (list_objects_v2 with no name-parsing) is 33 of 33, confirmed by this cell's own AC1 invocation."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W32-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~32",
+    "surfaced_at": "2026-09-18T14:40:18Z",
+    "one_line": "Running lib/research/posture/judge.py (via comparable.py -> lib/research/peers/universe.py load_candidate_universe()) rewrote a cache file OUTSIDE this cell's <paths> grant -- org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~21/candidate_universe.json, another worker's deliverables folder -- as a documented, correct STALE-CACHE REBUILD, left UNCOMMITTED by this worker rather than written outside its grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/peers/universe.py:141-146 cache_path() defaults to CACHE_DIR_DEFAULT/CACHE_NAME, and that default resolves under 0.9.0_WK_AMGT_RESAPP~21's deliverables folder (a prior worker's cell, AMGT-rk-14) -- the ONE shared cache every posture run reads through comparable.py:198",
+        "lib/research/peers/universe.py:558-577 load_candidate_universe()'s own docstring: 'a cache written BEFORE the preset-bounded retention landed carries the code set and no values ... is REBUILT, never served'",
+        "measured 2026-09-18: HEAD's committed cache carries schema_version 1, no preset_value_codes, no preset_values/fx_basis per row; after this cell's posture batch run the working-tree file carries schema_version 2, preset_value_codes 26, preset_values + fx_basis on 2848-2850 of 2851 rows -- i.e. the code's OWN staleness check fired exactly as documented, not a defect this cell introduced",
+        "git status: only this ONE file changed outside this cell's <paths>; not staged, not committed by this worker"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's <paths> names lib/research/management/, lib/research/posture/, integrations/bloomberg/research/ and this worker's own deliverables/investigation/task-order paths -- nothing under 0.9.0_WK_AMGT_RESAPP~21/.",
+    "world_is": "Exercising the mandated posture producer transitively calls a shared library cache whose DEFAULT PATH sits inside a different worker's deliverables folder, and that library correctly rebuilds a cache it finds stale. This worker did not choose that path, cannot fix its default from inside this cell's <paths> (lib/research/peers/ is not granted here), and does not commit the resulting file -- it is left as an uncommitted working-tree diff so no write lands outside the grant. A future run by ANY seat (worker or not) reaches the identical rebuilt bytes, since the staleness is in the COMMITTED file, not in this run.",
+    "notes": "Remedy holder: whoever next touches lib/research/peers/universe.py or AMGT-rk-14's own follow-on -- CACHE_DIR_DEFAULT should not default into a WORKER-NUMBERED deliverables folder at all (a worker slot is not a durable cache home). Not fixed here: out of this cell's <paths> and out of its ruling."
   }
 ]
 ```
