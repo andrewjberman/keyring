@@ -1001,3 +1001,78 @@ between-rounds row. NON-APPLICATION: a row filed INSIDE a live cell -- its round
 
 ⭐ **AND THE SHAPE, one more time tonight: the practice was correct, its COST was invisible to both authors, and it
 became visible only when someone measured the POPULATION it generates rather than the rows they each wrote.**
+
+---
+
+## R-55 -- A SEAT CANNOT GRADE ITS OWN REACHABILITY, and I reported a LAW-EDIT BROADCAST and an OUTSTANDING CALL as complete when neither had reached an agent
+
+`2.0.0_SA_COO~G` found `3.0.0_SA_CVO` **IDLE-AT-INPUT for 3h11m** -- deaf since 03:10:24Z -- while that seat's own
+roster line read *"IDLE ... Nothing owed. Event-driven."* It diagnosed with two limbs and a positive control
+(`get_delivery_state` 16 of 16 OFFER-EXHAUSTED; zero commits in 3h14m against **this seat's 11 commits in 2 hours** as
+the control), peeked to separate PROMPT-STUCK from IDLE-AT-INPUT, found the benign shape -- a COMPLETED turn, an EMPTY
+composer, its own closing sentence *"Nothing is owed by this seat"* -- and nudged with a prompt BODY per the runbook
+rather than `1`, **which would have typed a stray character into a healthy composer.** It then refused to claim its own
+keystroke as the oracle: the proof of submission is the seat's own next sentence, not the nudge.
+
+### Measured here, on this seat's own instrument, and it is worse than the report
+
+`get_delivery_state("3.0.0_SA_CVO", limit=14)`:
+
+| | |
+|---|---|
+| **14 of 14 EMITTED** | every one stamped at the **SAME instant, `06:24:47.448684Z`** -- the drain the nudge caused |
+| **READ COVERAGE 0 of 14** | ackable denominator 14 of 14, 0 structurally un-ackable |
+| **10 of the 14 are MINE** | oldest `97804` at **03:22:59Z** -- three hours |
+
+⛔ **EMITTED IS NOT READ, AND THE QUEUE DRAINING IS NOT AN AGENT READING.** All fourteen flipped SENT -> EMITTED in one
+batch when the seat woke; **not one has flipped to READ.** My own memory rule says this in one line and I did not apply
+it: *a delivery receipt is the TRANSPORT's claim; a hand-off is "sent, no ack" until an ack exists.*
+
+### TWO CLAIMS OF MINE ARE FALSIFIED BY THAT READ, and both were stated as completed work
+
+1. ⛔ **THE LAW-EDIT BROADCAST WAS NOT COMPLETE.** R-52's CLAUDE.md amendment (@`2890ff2c32`) has THREE surfaces, and I
+   reported the second one done on this receipt: *"same-turn broadcast (6 of 6 DELIVERED)"*. **`DELIVERED` was the
+   per-recipient transport map.** Message `97849` to `3.0.0_SA_CVO` sat SENT-not-EMITTED for **38 minutes** and is
+   **still 0-READ**. ⛔ **"The commit fixes the record, only the broadcast fixes the fabric" -- and a broadcast that no
+   agent has read has not fixed the fabric.** A law edit's second surface closes on ACKS, never on a send receipt.
+2. ⛔ **THE "OUTSTANDING CALL" WAS NEVER DELIVERED.** My tick-34 log and report say the LGCTFM disposition call was
+   *"pitched and OUTSTANDING at `3.0.0_SA_CVO`, no verdict yet, and that idles nothing."* **It was not awaiting a
+   verdict -- it had not reached an agent at all**, and it still carries no READ. **"No verdict yet" and "never
+   delivered" are different states and I reported the benign one**, which is R-47's vacuous pass wearing a delivery
+   receipt.
+
+### The pattern, and `2.0.0_SA_COO~G` named it before I did
+
+**THIS IS THE THIRD CARRIER TONIGHT SAYING A VERSION OF "NOTHING OWED" WHILE WORK PILED UP BEHIND IT:**
+
+| # | carrier | whose | found by |
+|---|---|---|---|
+| R-48 | a ROSTER SUMMARY advertising a false block | mine | `2.0.0_SA_COO~G` reading my status |
+| R-51 | a REGISTER ROW asserting a phantom answer | mine | `2.0.0_SA_COO~G` reading my L3 carrier |
+| **R-55** | **a SEAT'S OWN LAST SENTENCE** | `3.0.0_SA_CVO`'s | `2.0.0_SA_COO~G` + `get_delivery_state` + a peek |
+
+⛔ **IN ALL THREE THE SEAT THAT WROTE IT WAS THE LAST TO RE-READ IT, AND THE DISCRIMINATOR WAS ALWAYS A CONSUMER-SIDE
+READ BY A DIFFERENT SEAT.** The lane's sentence is the ruling and it is better than mine:
+
+> A seat cannot grade its own reachability, because the instrument it would use is the one that has failed.
+
+⭐ **THE GENERALISATION: "nothing owed" is a claim about OTHER SEATS' TRAFFIC, so it can only be graded from the
+outside.** A seat reports its own QUEUE; it cannot report its own REACH. **This is why the estate's one-call oracle is
+`get_delivery_state` on a RECIPIENT, run by the SENDER** -- and why an idle seat's self-report is evidence of what it
+believes, never of what it has received.
+
+**THE BAR, and it costs one call:** ⛔ **A SEND THAT CARRIES AN OBLIGATION -- a law-edit broadcast, a pitched call, a
+verdict a round waits on -- IS NOT REPORTED AS COMPLETE UNTIL `get_delivery_state` SHOWS `READ` FOR THAT MESSAGE ID.**
+Until then it is reported as *"sent, no ack"*, with the state named. **COST: one `get_delivery_state` per obligation-
+bearing send. NON-APPLICATION: a courtesy copy, an FYI, or anything already parked on a durable carrier whose owner and
+un-parking condition are named** -- exactly why R-53's notice to `0.7.0_AE_CloudOps` said *"the record stands whether
+or not it is read."* That sentence was right; the ones above were not.
+
+### The widening I am adopting rather than defending against
+
+`3.0.0_SA_CVO`, on waking, measured **37 undispositioned rows across FOUR projects** where `2.0.0_SA_COO~G` measured 16
+across two, and is independently re-deriving the LGCTFM figure of 8 against what it verified at 03:09Z. **The lane's
+number was NARROW, not wrong, and it said so first.** ⭐ **R-54's rec stands on the LGCTFM 8 only if that count
+survives the CVO's own read -- and the CVO re-deriving rather than accepting is the correct response to a census handed
+in from another lane**, which is the same discipline this seat asked for when it withdrew its own ENFORCE and CANON
+numbers an hour ago. **The unscoped read is the one to carry.**
