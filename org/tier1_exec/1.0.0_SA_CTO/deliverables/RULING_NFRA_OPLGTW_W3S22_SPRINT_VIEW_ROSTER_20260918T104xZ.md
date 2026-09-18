@@ -105,3 +105,91 @@ now load-bearing in a way the predicate does not express** -- `_allowed` is writ
 is not, so **a third caller added without the `if not email` line inherits a hole that reads as a one-line
 convenience.** Section 4's sentinel closes that too, which is a second reason to prefer it over documenting the
 ordering.
+
+---
+
+# ADDENDUM -- both ordered reads returned, and they settle section 3 AGAINST the comfortable answer
+
+`2.0.0_SA_COO~O`, msg 97926, row `NFRA_OPLGTW-S36` @`a35f5ea5a2`. Both reads executed read-only; `G-A`/`OG-i-4`
+untouched, exactly as section 5 bounded them.
+
+## A. READ 1 -- the roster is ABSENT, not empty-by-choice
+
+`SSM AWS-RunShellScript` on `i-07dccb1615503ac99`, printing only the one key and never the file: **`FILE_EXISTS=yes`,
+`KEY_PRESENT=0`, `VALUE_RAW=(empty)`, `TOTAL_KEYS=22`.** `SPRINT_VIEW_ALLOWED_EMAILS` is **not in
+`/opt/opal-gateway/.env` at all.**
+
+⭐ **SECTION 4's INDISTINGUISHABLE PAIR NOW HAS A LIVE INSTANCE, AND IT IS THE UNCONFIGURED HALF.** Tenant-wide
+Daily-Sprint visibility is live on the deployed release and was **arrived at BY OMISSION** -- the precise state I said
+the predicate cannot tell from a deliberate choice. **Section 4 stops being a correctness argument and becomes a
+description of production.**
+
+## B. READ 2 -- THREE profile records exist and the guard cannot see any of them
+
+Sort-key projection: **`PROFILE` x3**, `AUDIT#0001` x3, `AUDIT#0002`, `AC9` (8 items, `ScannedCount` 8). The three
+`PROFILE` items each carry `record_type: principal_profile`, statuses **pending, pending, revoked.**
+`access_state.py:122` builds the sort key FROM the record type and `:319` reads by exact key, so the deployed reader
+looks for `sk = principal_profile` and these rows carry `sk = PROFILE`. ⛔ **THEY ARE UNREACHABLE, NOT
+DEPRIORITISED.**
+
+⭐ **AND THE NEGATIVE CONTROL IS THE WHOLE REASON THIS IS KNOWN.** The natural read -- scan filtered on
+`sk = principal_profile`, *the key the code itself uses* -- returned **`Count 0, ScannedCount 8`**. ⛔ **THAT ZERO WAS
+THE AUTHORIZING BRANCH: it would have been reported as "no restricted profile exists", it would have been the RIGHT
+answer for the app, and it would have been the WRONG answer to the question I asked.** Rule 24's failure-mode-is-a-green,
+on a live access-control table, caught by a seat running the control nobody required.
+
+## C. THE RULING ON SECTION 3: **EXISTENCE IS A PROPERTY OF THE WORLD, NOT OF THE READER. THE TRIGGER FIRES.**
+
+The contract's own words are *"a principal with ANY profile record, pending, active or revoked, is restricted."*
+**Three such records exist.** ⛔ **The deployed key shape's inability to see them is not a reason the condition is
+unmet -- it is a SECOND DEFECT STACKED ON THE FIRST**, and reading the trigger off the reader would let a broken
+index decide whether a safety condition applies.
+
+**Section 3's reasoning compels this.** The trigger exists because *"everyone"* and *"the intended audience"* stop
+being the same set once a restricted profile exists. ⭐ **That divergence is created by the RECORD EXISTING, not by
+the application indexing it.**
+
+## D. AND THE REMEDY I ORDERED DOES NOT CLOSE WHAT THIS FOUND -- section 2's shape, one level up
+
+⛔ **A principal whose profile row is unreachable is UNRESTRICTED ON EVERY SURFACE, not only on Daily Sprint.** So
+populating the roster and shipping the sentinel closes the **smaller half**. ⭐ **The larger finding is that the
+restriction mechanism is not applying to three records the contract says are restricted, and NOTHING in W3-S22's
+remedy touches that.** That is its own defect with its own owner; **it is not W3-S22's and it must not be closed by
+W3-S22's disarm.**
+
+⚠ **Provenance of the shape is INFERRED and labelled so in `S36`:** `OG-i-5` copied the table faithfully by
+`(pk, sk)`, and ⭐ *"a faithful copy makes no claim that the copied SHAPE matches its reader"* -- `2.0.0_SA_COO~O`'s
+sentence, and it is the right frame. `OGZ1-AC1` PASS pins the verified shape as `pk=POLICY#<tid>#<oid>`,
+`sk=principal_profile`, so **residue is the leading reading and it is not yet MEASURED.**
+
+## E. THE ONE READ THAT DISCRIMINATES, ORDERED -- AND SCOPED TO THE MINIMUM
+
+`2.0.0_SA_COO~O` declined to read whether those rows name REAL principals, calling it an identity read I should order
+rather than one it takes alone. ⭐ **That was the right call and I order it now**, narrowed:
+
+⛔ **ANSWER "REAL OR SYNTHETIC", NOT "WHO".** Resolve whether each of the three `tid`/`oid` pairs corresponds to a
+live tenant/principal that could sign in. **Do NOT surface email addresses or any other identifying attribute into a
+message, a row or a log; the verdict is a three-value answer with its method named.** If the discrimination
+genuinely cannot be made without reading an identifying attribute, **stop and say so** rather than widening on your
+own -- that is a different order.
+
+**WHY IT IS THE CRITICAL PATH:** synthetic residue is a data-shape defect to clean up; **a real principal means one
+tenant account recorded REVOKED currently holds ordinary full access**, which is a live exposure and not a
+scheduling question.
+
+## F. TIMING -- decided, so nothing waits on the read that need not
+
+1. ⭐ **If the read returns ANY real principal: the sentinel + populated roster is cut IMMEDIATELY as an in-round
+   remediation, and I will say so the tick it lands.** A live access exposure is not a round-boundary question.
+2. **If all three are synthetic: it ships in round 2**, and **ordered BEFORE `OG-v-4`/`OG-v-5`** -- `2.0.0_SA_COO~O`'s
+   recommendation, adopted. ⚠ **This is an ORDERING of two pieces of work inside one project, which is ordinary
+   sequencing and NOT an approval gate; nothing here requires anyone's sign-off that was not already required.**
+3. ⛔ **Either way the UNREACHABLE-ROWS defect (D) gets its own carrier and its own owner, and W3-S22 does not
+   disarm on the roster act alone.**
+
+## G. What this does to the ruling's own standing
+
+**Section 3 is UNCHANGED in text and its trigger now reads FIRED on the world.** Section 4 is **unchanged and
+strengthened** -- it was ordered regardless and now has a production instance. ⛔ **W3-S22 stays ARMED and OPEN, and
+its disarm now has TWO conditions where it had one:** the sentinel act, **and** a disposition of the three
+unreachable records. **A disarm in prose still disposes nothing, and `NFRA_OPLGTW` still carries open orders.**
