@@ -3196,6 +3196,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OG-a-1 (durable OAuth) and OG-i-1 (the table and its grants) are both `complete`, each with every mechanical criterion PASS. OGI1-AC5: \"the runtime grant allows Get, Put, Update and TransactWrite on exactly the table ARN, with write actions conditioned on dynamodb:LeadingKeys matching RUNTIME#*, and no DeleteItem or table-admin action.\" OG-a-1's result: \"pending authorization ... consumed conditionally at the callback\". The PRD's operator journey presumes a user can sign in.",
     "world_is": "Both cells were green and no user could sign in for ten and a half hours, because the property the two cells SHARE -- the runtime role's action set against the actions the shipped code issues -- was measured by neither: OG-i-1 measured the grant without the code, OG-a-1 measured the code without the grant. CLAUDE.md Rule 22's shared-dependency clause with its sharpest instance: the per-member arm was not merely unchecked but ACTIVELY PASSING, and OGI1-AC5's PASS condition WAS the outage condition (1.0.0_SA_CTO, msg 98008). By Rule 22's negative mirror this is an INCIDENT (the guard's absence FIRED, on 3 of 3 callbacks since the deploy), not an exposure -- so the remedy is the grant AND the re-opening of what the gap admitted, which here is nothing: no login succeeded, so no state was written on the broken path; the one client record and the pending/code records it created are ordinary and expire. The walkthrough gates G-C/G-D, the only cells that would have run a real login, were HELD on Andrew's word the whole window, which is why the integrated release shipped with the flow never once exercised end-to-end.",
     "notes": "ARMED, disarm_owner 2.0.0_SA_COO~O, on ONE open arm: a real end-to-end login has NOT yet been observed since the fix -- the IAM action is exercised, the /callback path is not. DISARM CONDITION (readable by that lane via SSM without any identity read): the journal shows one `GET /callback` answering 302/303 followed by one `POST /token` 200 after 16:37Z; Andrew's reconnect from Claude is the expected producer and this seat has asked for it. NOT CLAIMED: that branch (2) -- consuming by conditional UpdateItem marking consumed_at, which keeps the grant narrower -- is unnecessary; 2.0.0_SA_COO~O carries it as a round-2 correctness item and this row does not pre-empt it. THE CARRY, beyond Rule 22's clause: A CRITERION THAT REQUIRES THE ABSENCE OF A PERMISSION THE SHIPPED CODE NEEDS PASSES BECAUSE THE SYSTEM IS BROKEN, and keeps passing exactly as long as it stays broken -- the moto arm and the IAM arm must meet in ONE invocation (a live-role call of the code's own consume path, or a per-action census of the code's boto3 verbs against the policy's Action list) before a release is cut. COST: one census. NON-APPLICATION: a code path whose store is exercised through the deployed role in its acceptance."
+  },
+  {
+    "id": "NFRA_OPLGTW-S47",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-18T17:52Z",
+    "one_line": "Disarm evidence for S46 by its named owner: the first end-to-end Gateway login since the DeleteItem fix completed -- POST /register 201 (17:33:16Z) -> GET /authorize 307 -> GET /callback 302 -> POST /token 200 (17:34:08Z), 0 AccessDenied since 16:37Z -- and the issued token served a tool call through the MCP client.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command 1bcf7062-ad77-48f2-aa21-071f9494a804 on i-07dccb1615503ac99, journalctl -u opal-gateway --since 2026-09-18 16:37:00 UTC, filtered to method + path + status (query strings stripped, no identity read). DENOMINATOR, every login-path request in the window = 6: 17:00:23Z GET /authorize 400, 17:00:31Z GET /authorize 400, 17:33:16Z POST /register 201, 17:33:18Z GET /authorize 307, 17:34:08Z GET /callback 302, 17:34:08Z POST /token 200. `grep -c AccessDenied` over the same window = 0 (the invocation status reads Failed only because grep -c exits 1 on a zero count).",
+        "The two 17:00Z 400s precede the 17:17Z removal of the stale client-side mcpOAuth entry and match S46's benign stale-client_id defect; after the removal the client re-registered (the 201) and the flow ran clean.",
+        "OUTCOME PLANE, a different instrument from the journal: in a fresh Claude Code session at ~17:50Z, the opalgateway tool `whoami` returned a Microsoft Graph user profile (HTTP-level success; the profile content is not recorded here). A tool listing and call require the bearer token the 17:34:08Z POST /token issued."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S46 names 2.0.0_SA_COO~O as disarm owner on one open arm: after 16:37Z the journal shows one GET /callback answering 302/303 followed by one POST /token 200.",
+    "world_is": "Met exactly: one /callback 302 and one /token 200 at 17:34:08Z, with no AccessDenied in the window, and the resulting token served a real tool call. The permission is exercised AND the outcome is exercised.",
+    "notes": "EVIDENCE for S46's disarm, not its adjudication -- S46's disposition stays 3.0.0_SA_CVO's at L9. Round-2 carries S46 names are unaffected: branch (2) conditional UpdateItem consume, and a LOGIN-PATH health check (liveness does not prove usability). This read also releases the hold on OG-r-2 (the host benchmark was held so it would not muddy this measurement)."
   }
 ]
 ```
