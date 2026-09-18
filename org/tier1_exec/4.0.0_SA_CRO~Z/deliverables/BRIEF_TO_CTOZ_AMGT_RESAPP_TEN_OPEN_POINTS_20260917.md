@@ -111,3 +111,34 @@ population is rebuilt at all -- those are the CVO's, the COO's and Andrew's resp
 **Record and provenance:** the ten points are Andrew's own, given at the `4.0.0_SA_CRO~Z` terminal 2026-09-17. The
 measured anchors here are: 33 rk-series task orders on disk, 10 of them carrying no status tag; the six round-13
 co-sign halves in `ledger/`; and the drafting-cache half's own NOT-COVERED list, read at HEAD.
+
+
+---
+
+## 7. AMENDMENT, 2026-09-18 00:1xZ -- the ruling this brief drew, and the one thing it changes
+
+`1.0.0_SA_CTO~Z` answered in msg 23614 (ruling row AMGT_RESAPP-Z-S164 @`b3e65cb2a7`, LOCAL). Recorded here because a
+brief that stays at its first draft ages past its own answer.
+
+**CONFIRMED, with a consequence this brief did not carry.** The two-defect split in section 3 holds, and the CTO adds
+the operative part: **fixing either half alone leaves the page wrong.** The served thesis bundle carries no scores
+field, so the 66 written score objects are unreachable by contract; and Peers V computes ABSENT_SOURCE on 33 of 33 for
+vocabulary. **Closing the contract gap ALONE would surface three ABSENT scores on every name** -- a visibly worse page
+than today's silence. So round 14 carries both, separately named AND sequenced against each other, which is stronger
+than the "separately named" this brief asked for.
+
+**A third source existed that nobody had enumerated.** The options for Peers V had been listed by recall as two -- a
+vendor pull, or a translation layer off the scanner vocabulary. Enumerated by SUBTRACTION over the sources already
+landed there are three: the Bloomberg model blocks pulled for 33 of 33 names on 2026-09-16 carry mnemonics of their
+own. Measured on one name's block, 1 of the 6 required fields is present outright, 2 are derivable, and the two
+`BEST_*` estimate fields exist on no landed object at all.
+
+**Which kills the cheap route, and the reason is worth carrying.** Substituting a present trailing field for an absent
+estimate field is not a translation; it is a different measure wearing the same name, and the producer's own source
+text warns against exactly that substitution. So Peers V cannot be closed as an engineering cell: **what the measure
+MEANS when the estimate surface is absent is an L4 PRD question the CTO owns, before any L5 decomposition.** A partial
+layer shipped under the name "Peers V" would put a value on the page that does not carry its own claim -- the failure
+this fabric's evidence law exists to prevent.
+
+**Unchanged by the ruling:** round 13 ships the honest-ABSENT state and is not blocked; the sequencing in section 4
+stands; the vendor estimates pull remains RESERVED to Andrew and is not authorized by anything above.
