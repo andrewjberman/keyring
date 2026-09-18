@@ -330,3 +330,58 @@ that file, and **the worker REFUSED rather than edit outside its grant** -- whic
 the behaviour that makes a grant mean anything. Granted for that call site only @`35377638d7`, re-handed, and the
 amendment says plainly the defect was the issuer's. A lane that names its own cut as the cause is a lane whose reports
 can be believed.
+
+
+---
+
+## R-OG-19 -- `2.0.0_SA_COO~O`'s reading of "after OG-q-5 closes" is CORRECT; a sequencing instruction must state its REASON, and mine did not
+
+**The lane did not wait, and it was right not to.** R-OG-18 said to cut the C3 cell "after OG-q-5 closes". `OG-q-5` is
+NOT closed -- its `AC6` is a measured FAIL on two failures owned by OTHER cells -- so waiting would have serialised
+`q-6` behind two repairs it does not depend on **while slot ~5 idled.** The lane read the ordering's REASON as SLOT
+AVAILABILITY, which was satisfied, cut `q-6` @`a96788f138`, and wrote the reading into the order's record face rather
+than only into a message.
+
+**RULING: the reading is right and the defect is in my instruction.** I meant "do not double-book slot ~5". I wrote a
+CLOSURE condition, which is a different thing, and a closure condition would have imported `q-5`'s unrelated failures
+into `q-6`'s start. **A sequencing instruction states its REASON -- dependency, resource, or L10 ordering -- because
+the executing seat cannot tell them apart from the word "after", and the three have different remedies.** Where a
+sequencing word is ambiguous and a lane's reading keeps work moving without breaking a stated bar, THAT READING
+GOVERNS; the lane is closer to the slot than the ruling is.
+
+**And no L10 hazard is in play here, which is worth stating so it is not re-litigated:** LD-0521's deadlock binds a
+ROUND N+1 issuance cut before round N's SLUG. `q-6` is a CELL inside the same round, and adding one while a sibling
+order is open is ordinary L6 work.
+
+**COST: none -- it is a drafting rule on my own instructions.** **NON-APPLICATION: a genuine dependency, which is
+named as one** ("after X drains, because Y reads X's artifact").
+
+---
+
+## R-OG-20 -- CALL 18 adopted whole: a REFUSAL'S ENVELOPE IS PART OF THE REFUSAL, and this is the third instance of a test asserting the right thing about the wrong surface
+
+**Row `NFRA_OPLGTW-W5-S18`, ARMED, disarm owner this seat.** Wiring `OG-q-5` half one UNMASKED a second, unrelated
+failure the first assertion had been hiding: a post-revocation `schwab_query` denial reaches the caller with the MCP
+`isError` flag **NEVER SET TRUE**. `app/tools.py`'s `_PolicyGuardedMCP.call_tool()` returns `data_entitlement.py`'s raw
+guard-denial dict straight through.
+
+⛔ **THE DENIAL'S CONTENT IS CORRECT AND ITS ENVELOPE SAYS THE CALL SUCCEEDED.** That is the whole finding. A refusal
+a consumer cannot detect is not a refusal -- it is a success carrying disappointing text, and every test that reads the
+BODY passes while every client that reads the FLAG is misled. Nothing is deployed, so nothing served is wrong today.
+
+**RULING: REC adopted whole. ONE small cell to `~6`**, criteria graded live through the real app -- a guard-denied call
+returns `isError` true AND its contract error code; a permitted call still returns `isError` false -- plus a mutant
+that removes the flag-setting line and must fail the first.
+
+**NOT FOLDED INTO `q-6`, and the lane's reason for that is better than the cell it protects:** `tools.py` is a
+DIFFERENT CALL SITE from the query path, and folding it in **would break exactly the one-cell premise R-OG-18's `AC5`
+exists to test.** That is this seat's own ruling being applied against a convenience, by the lane that would have
+benefited from the shortcut. `app/tools.py` belongs to no open cell, so there is no grant collision.
+
+**THE CLASS, now measured three times this week:** `W4-S19` (a renderer graded by comparing each output to ITSELF),
+`OGQ2-AC7/AC15`, and this row. **Each test asserted something TRUE about the wrong surface** -- the artifact's own
+bytes, the denial's body -- while the property a consumer depends on went unasserted. **The general bar: a criterion
+about a REFUSAL grades the signal the CONSUMER reads, not only the text the producer wrote.**
+
+`OG-v-2` takes its last re-hand ONCE, after both `q-6` and this cell land, so `AC2` is re-graded whole rather than
+failing twice on other cells' rows -- the lane's sequencing and it is correct.
