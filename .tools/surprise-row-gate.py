@@ -984,27 +984,50 @@ def _stale_open_row_violations(rel, row, code, route_word, remediation_rows, n_r
     this limb PURE and POSITION-INDEPENDENT the same way its sibling is, with no wall-clock dependency.
 
     AT A MERGE: a CARRIED row is not evaluated -- see `_row_was_carried` and the twin limb's twin block;
-    a row MINTED in the merge commit is the merging seat's own routing act and binds."""
+    a row MINTED in the merge commit is the merging seat's own routing act and binds.
+
+    RETURNS (violations, notes). THE STALE-SET BRANCH DISCLOSES; THE TWO EVALUABILITY BRANCHES REFUSE, and
+    the split is not a softening -- it is the rule 1.0.0_SA_CTO ruled after this limb deadlocked round 8's
+    L10 against its sibling: A GATE REFUSES AN ACT ONLY WHEN THAT ACT CAN REMEDY THE GATE'S CONDITION;
+    WHEN IT CANNOT, THE GATE DISCLOSES.
+
+      - census unreadable  -> REFUSE. The channel file the writer is editing is the one that failed to
+                             parse; the committing act CAN fix it. Coupled, so fail-closed stands.
+      - `round` unparseable -> REFUSE. It is a defect in THIS row, which the writer owns outright.
+      - N rows are stale    -> DISCLOSE. The stale rows belong to OTHER items, frequently to OTHER SEATS,
+                             and NO SINGLE SLUG CAN MOVE THEM. Measured 2026-09-18 on the first slug this
+                             pair ever graded: the sibling rowlessness limb DEMANDED 8 new rows and this
+                             limb refused all 8 as new rows, against 91 stale rows accumulated over eight
+                             rounds that predate this limb entirely. There was no ordering of the slug
+                             author's own acts that cleared it, so as a refusal this limb blocked EVERY
+                             slug on the project indefinitely rather than only that one.
+
+    S75's finding is fully served by disclosure: its whole point was that a row which EXISTS but has not
+    MOVED is invisible to every instrument that looks, and a printed stale set at slug time is exactly the
+    look nobody was taking. A REFUSAL FORM needs a reachable remedy first -- a backlog-clearing cell with
+    an owner -- and that is a later round's work, not a condition on this one's slug."""
     if merging and _row_was_carried(row, parent_ids):
-        return []
+        return [], []
     rid = row.get("id", "<no id>")
     current_round = _round_num(row.get("round"))
     rows_by_id, rnote = remediation_rows
     if rows_by_id is None:
         return ["%s: the staleness precondition (every OPEN, owned remediation row under %s has moved "
                 "within %d round(s)) could NOT be evaluated -- the remediation census failed (%s) -- "
-                "REFUSED, fail-closed" % (rid, code, n_rounds, rnote)]
+                "REFUSED, fail-closed" % (rid, code, n_rounds, rnote)], []
     if current_round is None:
         return ["%s: NEW row (%s) carries no parseable `round` (round=%r) -- the staleness precondition "
                 "needs the slug's own round to measure a gap against, so this REFUSES rather than skip "
-                "the check" % (rid, route_word, row.get("round"))]
+                "the check" % (rid, route_word, row.get("round"))], []
     stale = _stale_open_row(rows_by_id, current_round, n_rounds)
     if not stale:
-        return []
-    return ["%s: NEW row (%s) while %d OPEN, owned remediation row(s) under %s have not moved for %d or "
-            "more round(s): %s. A row that EXISTS, is OPEN and is OWNED still goes stale silently, and no "
-            "rowlessness limb will ever see it -- the row goes in BEFORE this commit, in the SAME slug "
-            "(S75)." % (rid, route_word, len(stale), code, n_rounds, ", ".join(stale))]
+        return [], []
+    return [], ["%s: STALENESS DISCLOSED (not a refusal) -- %d OPEN, owned remediation row(s) under %s "
+                "have not moved for %d or more round(s): %s. A row that EXISTS, is OPEN and is OWNED goes "
+                "stale silently and no rowlessness limb will ever see it (S75). THIS SLUG IS NOT REFUSED "
+                "FOR IT: these rows are other items', often other seats', and no single slug can move "
+                "them -- clearing them needs its own cell with an owner."
+                % (rid, len(stale), code, n_rounds, ", ".join(stale))]
 
 
 def _proof_verdict(root, inst, rel, _run=None):
@@ -1888,9 +1911,11 @@ def check_file(root, rel):
             # DECOMP_INVALIDATING investigation row (the other route_word shape above) has no round field
             # at all and is not this limb's question.
             if kind == "REMEDIATION" and folder_kind == "REMEDIATION":
-                pre.extend(_stale_open_row_violations(rel, row, folder_project, _route_word,
+                _kv, _kn = _stale_open_row_violations(rel, row, folder_project, _route_word,
                                                       _remediation_rows_for_project(root, folder_project),
-                                                      merging=_mrg, parent_ids=_pids))
+                                                      merging=_mrg, parent_ids=_pids)
+                pre.extend(_kv)
+                notes.extend(_kn)
             v.extend(pre)
             if _mrg:
                 _carried = _row_was_carried(row, _pids)
@@ -2476,8 +2501,8 @@ def _self_test(root):
          and "_stale_open_row" not in inspect.getsource(_graduated_without_row_violations)),
     ]
     # EN-k-38 / S75: THE STALENESS LIMB -- an EXISTING remediation row under a project that is OPEN,
-    # carries a named owner, and has not moved for STALE_OPEN_ROW_N_ROUNDS or more rounds refuses the
-    # slug. `_stale_open_row` is the PURE core; `_stale_open_row_violations` is the wrapper `check_file`
+    # carries a named owner, and has not moved for STALE_OPEN_ROW_N_ROUNDS or more rounds is DISCLOSED on
+    # the slug (it REFUSED until 2026-09-18; see the wrapper's docstring for why that deadlocked). `_stale_open_row` is the PURE core; `_stale_open_row_violations` is the wrapper `check_file`
     # calls, with the same merge-carried exemption as EN-g-37's twin. Red and green, the fail-closed
     # arms, the non-open/non-owned negative arms, and the DISCRIMINATION arm (`k38-distinct`) proving
     # this limb catches a row EN-g-37's rowlessness limb ADMITS -- the round bought two questions, not
@@ -2501,41 +2526,51 @@ def _self_test(root):
          lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr()}, None, STALE_OPEN_ROW_N_ROUNDS) is None),
         ("EN-k-38 staleness: fails closed (None) when no threshold is supplied",
          lambda: _stale_open_row({"X_PRJ-W1-S1": _stale_rr()}, 8, None) is None),
-        ("EN-k-38 violations POSITIVE: a fresh OPEN row, legitimately in flight -> admitted",
+        ("EN-k-38 POSITIVE: a fresh OPEN row, legitimately in flight -> no violation and nothing disclosed",
          lambda: _stale_open_row_violations("r", {"id": "X_PRJ-W1-S2", "round": "v2"}, "X_PRJ", "the slug",
-                                            ({"X_PRJ-W1-S1": _stale_rr()}, "")) == []),
-        ("EN-k-38 violations MUTANT: a stale OPEN, owned row -> the slug is REFUSED, naming the id and S75",
-         lambda: any("X_PRJ-W1-S1" in x and "S75" in x for x in _stale_open_row_violations(
+                                            ({"X_PRJ-W1-S1": _stale_rr()}, "")) == ([], [])),
+        ("EN-k-38 MUTANT: a stale OPEN, owned row STILL SURFACES -- disclosed, naming the id and S75",
+         lambda: any("X_PRJ-W1-S1" in n and "S75" in n for n in _stale_open_row_violations(
              "r", {"id": "X_PRJ-W1-S2", "round": "v%d" % (1 + STALE_OPEN_ROW_N_ROUNDS)}, "X_PRJ", "the slug",
-             ({"X_PRJ-W1-S1": _stale_rr()}, "")))),
-        ("EN-k-38 violations: the remediation census failing REFUSES fail-closed, names the reason",
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[1])),
+        ("EN-k-38 THE DEADLOCK ARM: a stale row does NOT refuse the slug -- the violation half is EMPTY. "
+         "Round 8's L10 deadlocked because this branch refused the very rows its sibling limb demanded, "
+         "against 91 stale rows no single slug could move (1.0.0_SA_CTO, 2026-09-18)",
+         lambda: _stale_open_row_violations(
+             "r", {"id": "X_PRJ-W1-S2", "round": "v%d" % (1 + STALE_OPEN_ROW_N_ROUNDS)}, "X_PRJ", "the slug",
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[0] == []),
+        ("EN-k-38 the two EVALUABILITY branches still REFUSE, because the committing act CAN fix both: "
+         "an unreadable census fails closed",
          lambda: any("fail-closed" in x for x in _stale_open_row_violations(
-             "r", {"id": "X_PRJ-W1-S2", "round": "v8"}, "X_PRJ", "the slug", (None, "git rc=128")))),
-        ("EN-k-38 violations: the NEW row's own round does not parse -> REFUSED, not silently skipped",
+             "r", {"id": "X_PRJ-W1-S2", "round": "v8"}, "X_PRJ", "the slug", (None, "git rc=128"))[0])),
+        ("EN-k-38 evaluability: the NEW row's own round does not parse -> REFUSED, not silently skipped",
          lambda: any("no parseable" in x for x in _stale_open_row_violations(
              "r", {"id": "X_PRJ-W1-S2", "round": "not-a-round"}, "X_PRJ", "the slug",
-             ({"X_PRJ-W1-S1": _stale_rr()}, "")))),
-        ("EN-k-38 violations AT A MERGE: a CARRIED row is not evaluated (history arriving, not a routing act)",
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[0])),
+        ("EN-k-38 AT A MERGE: a CARRIED row is not evaluated (history arriving, not a routing act)",
          lambda: _stale_open_row_violations("r", {"id": "X_PRJ-S9", "round": "v8"}, "X_PRJ", "the slug",
                                             ({"X_PRJ-W1-S1": _stale_rr()}, ""),
-                                            merging=True, parent_ids={"X_PRJ-S9"}) == []),
-        ("EN-k-38 violations AT A MERGE: a row MINTED in the merge (not in the parents) still binds",
-         lambda: any("X_PRJ-W1-S1" in x for x in _stale_open_row_violations(
+                                            merging=True, parent_ids={"X_PRJ-S9"}) == ([], [])),
+        ("EN-k-38 AT A MERGE: a row MINTED in the merge (not in the parents) still discloses",
+         lambda: any("X_PRJ-W1-S1" in n for n in _stale_open_row_violations(
              "r", {"id": "X_PRJ-S9", "round": "v8"}, "X_PRJ", "the slug", ({"X_PRJ-W1-S1": _stale_rr()}, ""),
-             merging=True, parent_ids={"X_PRJ-OTHER"}))),
+             merging=True, parent_ids={"X_PRJ-OTHER"})[1])),
         ("EN-k-38 NEGATIVE CONTROL: g-37's rowlessness question (a GRADUATED item with no remediation row) "
          "is invisible to this limb by construction",
          lambda: _stale_open_row({}, 8, STALE_OPEN_ROW_N_ROUNDS) == []
          and "_graduated_without_row" not in inspect.getsource(_stale_open_row)
          and "_graduated_without_row" not in inspect.getsource(_stale_open_row_violations)),
         ("EN-k-38 DISCRIMINATION (k38-distinct): a GRADUATED item WITH its remediation row -- the row EXISTS -- "
-         "is ADMITTED by g-37's rowlessness limb, and the SAME row is REFUSED by k-38's staleness limb for "
-         "being OPEN, owned and unmoved: the round bought two questions, not one asked twice",
+         "is SILENT to g-37's rowlessness limb, and the SAME row is SURFACED by k-38's staleness limb for "
+         "being OPEN, owned and unmoved: the round bought two questions, not one asked twice. The arm's "
+         "second half now reads k-38's NOTES rather than its violations -- the DISCRIMINATION is unchanged "
+         "and only the INSTRUMENT k-38 answers with moved, from refusal to disclosure (1.0.0_SA_CTO, "
+         "2026-09-18: a gate refuses an act only when that act can remedy its condition)",
          lambda: _graduated_without_row_violations("r", row, "X_PRJ", "the slug",
                                                     ({"X_PRJ-W1-S1": "GRADUATED"}, [], 1, ""), ({"X_PRJ-W1-S1"}, "")) == []
-         and any("X_PRJ-W1-S1" in x and "S75" in x for x in _stale_open_row_violations(
+         and any("X_PRJ-W1-S1" in n and "S75" in n for n in _stale_open_row_violations(
              "r", {"id": "X_PRJ-W1-S2", "round": "v%d" % (1 + STALE_OPEN_ROW_N_ROUNDS)}, "X_PRJ", "the slug",
-             ({"X_PRJ-W1-S1": _stale_rr()}, "")))),
+             ({"X_PRJ-W1-S1": _stale_rr()}, ""))[1])),
     ]
     # THE ALLOCATOR COORDINATE (RULING 2 @9ef9a40aae): the grammar and the discipline, red and green.
     WK = "0.9.0_WK_X_PRJ~2"
