@@ -147,7 +147,7 @@ real mints then exercised the repaired arm for the first time. A tool that fails
 R-32 was written against, and the seat that built it found it.
 
 Round 4 goes to `3.0.0_SA_CVO` for L8/L9 with judgment criteria `C23R4-AC5`, `H24R4-AC4`, `D26R4-AC4`, `G27R4-AC3`,
-`S25R4-AC5`. **L10's order is load-bearing: round 5 is cut AFTER round 4's slug, never beside it** (LD-0521 -- the
+`S25R4-AC4`. **CORRECTION, 2026-09-18 ~00:2xZ:** this ruling first named `S25R4-AC5`, WHICH DOES NOT EXIST. `2.0.0_SA_COO~G`'s drain-end message listed it and this seat restated the list without checking it against the orders -- a handed list re-typed as if verified. Found by `3.0.0_SA_CVO` during round 4's L8/L9 and confirmed here on a different instrument: parsing the five round-4 order files, **20 criteria are declared and exactly 5 carry `judgment="true"`** -- `C23R4-AC5`, `H24R4-AC4`, `D26R4-AC4`, `G27R4-AC3` and `S25R4-AC4`. Four of the five ids were right; the fifth was not, and the cell it belongs to is the one order still PENDING, so the wrong id pointed the adjudicator at nothing on exactly the cell that needed judging. **L10's order is load-bearing: round 5 is cut AFTER round 4's slug, never beside it** (LD-0521 -- the
 refuser counts open orders per PROJECT, so a round-5 issuance opened before round 4's slug deadlocks round 4's L10
 until round 5 fully drains). `EN-s-25` stays PENDING on `S25R4-AC3` alone and that is the correct state to slug from.
 
