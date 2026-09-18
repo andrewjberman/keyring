@@ -2611,6 +2611,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGR1-AC3/AC12 read the live access-state table as evidence that no principal profile/grant is active this release.",
     "world_is": "The table is not empty, but every item present is a pre-existing, other-cell test fixture rather than a real principal profile; OGR1-AC3/AC12 classify and exclude these (pattern probe-og-<cell>-<timestamp>) to grade the REAL population, which is empty, rather than reporting a false FAIL on a non-zero raw count.",
     "notes": "INERT: no principal is actually affected and this release grants nothing; the leftover fixtures are a housekeeping gap in OG-i-1/OG-i-5's own test hygiene (their probes never delete what they write), not a security exposure. Not this cell's defect to fix (its <paths> does not reach those cells' probes or a table-cleanup act); left for whichever cell's remit covers access-state table hygiene."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-18T05:35Z",
+    "one_line": "The Gateway's CURRENTLY-DEPLOYED commit (EC2_MANIFEST.json opal-gateway.deployed_commit, 7bd89b5d71b8d488d9e8c4168513193c9d6a9ec2, 2026-09-09 -- the OG-r-1 rollback target per the runbook's 7.2) has NO app/data_entitlement.py at all: `git cat-file -e 7bd89b5d71...:infra/aws/ec2/opal-gateway/app/data_entitlement.py` fails ('exists on disk, but not in' that commit). app/revocation.py and app/identity_scope.py DO exist there. So this release's own rollback-to-previous-binary path (SCHWAB_PILOT_RUNBOOK.md s.7.2, step 1: 'Confirm the target commit is NOT older than ... the restricted-profile denial (app/data_entitlement.py, app/identity_scope.py)') is UNSAFE against the ACTUAL previous artifact as things stand today: it fails that named precondition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn: `git cat-file -e 7bd89b5d71b8d488d9e8c4168513193c9d6a9ec2:infra/aws/ec2/opal-gateway/app/data_entitlement.py` -> rc!=0, stderr 'fatal: path ... exists on disk, but not in 7bd89b5d71...'. Same commit: `app/identity_scope.py` and `app/revocation.py` both `cat-file -e` clean (rc=0, present).",
+        "READ infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md:255-260 (s.7.2 step 1, OG-o-2): 'Confirm the target commit is NOT older than the durable token revocation shim (app/revocation.py) or the restricted-profile denial (app/data_entitlement.py, app/identity_scope.py) -- rolling back past either would reopen the email-only path or accept legacy refresh tokens, which C6 forbids outright.' The currently-deployed (pre-OG-r-1) commit fails this exact named check for one of the two named files.",
+        "READ infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway.deployed_commit at this worktree's cut base -- 7bd89b5d71b8d488d9e8c4168513193c9d6a9ec2, deployed_at 2026-09-09T19:08:11Z, i.e. the live host predates essentially all of this project's own build (data_entitlement.py, identity_scope.py's OG-a-2 cutover work, etc.) that landed afterward on CLOUD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGR1-AC10 (and the runbook it cites) treats 'the previous release artifact ... restorable by the runbook's rollback section' as a property this release can simply record.",
+    "world_is": "The previous release artifact fails the runbook's own restorability precondition (data_entitlement.py absent), so OGR1-AC10 measures FAIL truthfully -- not a probe defect, a genuine gap: were an operator ever to invoke SCHWAB_PILOT_RUNBOOK.md s.7.2 against THIS specific previous commit, the runbook's own step 1 would (correctly) refuse it, leaving s.7.1 (the ENABLED_INTEGRATIONS flag flip, which does not depend on which binary is running) as the only safe rollback route until a newer previous-release commit -- one that carries data_entitlement.py -- exists to roll back to.",
+    "notes": "ARMED because it is a real operational gap in the rollback story this release's PRD C6 promises, not merely a probe artifact; disarmed once EITHER a later deploy makes the recorded 'previous' commit one that carries data_entitlement.py, or the runbook/PRD is amended to say s.7.1 (flag-disable) is the ONLY safe rollback route at this stage of the rollout (round 1, nothing enabled, so s.7.1 alone is sufficient regardless). This cell cannot amend the runbook (outside its <paths>) or choose a different 'previous' commit to record (there is only one deployed_commit)."
   }
 ]
 ```
