@@ -290,3 +290,41 @@ Item 1's honest CEO states still land first: they fix what the page says about t
 CEO step is added after item 6 as **item 8**: the structured search primitive with FAILED distinct from EMPTY (9.2 items
 1-3), then the agent step (items 4-8) proven on the validation names, all behind the contract amendment. It depends on
 card 1's roster (a CEO name to search) and on s.8.2's verified domain only for the official-biography category.
+
+---
+
+## 10. UPDATE 3, 2026-09-18 ~19:4xZ -- the CEO step, explored and prototyped
+
+Andrew asked for a subagent to "go explore how this would be properly implemented" (addendum ~18:4xZ). Its design,
+measured on Boeing, SAP and Halliburton (10 of 10 authorized SERP requests; $0.56 of a $5 model cap; no Lusha, no
+writes), is `CEO_STEP_IMPLEMENTATION_DESIGN_20260918.md` (committed with this update). It changes section 9 in four
+places.
+
+1. **CORRECTION -- the "opaque redirect wrapper" label is stale (s.9.2 item 3).** On 18 Sep, 50 of 50 organic links
+   across 6 responses were direct URLs, including a byte-for-byte repeat of the 15 Sep Boeing query. Wrappers remain
+   only in non-organic blocks, and one un-followed GET to Google resolves one (1 of 1). So the 4 "searched, links
+   unreadable" objects reflect the module never resolving its links, not a property of the zone.
+2. **The search primitive errs in BOTH directions, measured (s.9.2 items 1-2).** 3 of 9 requests failed on captcha,
+   arriving as HTTP 200 with a 0-byte body (the failure shows only in `x-brd-*` headers), and each came back from
+   `serp_brightdata` as an empty list, recorded as NOTHING_FOUND. The one genuinely empty search returned 9 URLs,
+   because Google rewrote the query (`spelling.original_empty: true`). The design adds `serp_brightdata_records`
+   beside the old function (whose two other callers are FIND_DUALBIZ's -- a lane note for the L4) with OK / EMPTY /
+   FAILED from the measured shapes, and retries only on captcha or 5xx (2 of 2 retries succeeded).
+3. **The role term makes identity work for a common name.** `"Jeff Miller" "Halliburton"` returned 0 of 9 results
+   about him (obituaries of people surnamed Halliburton, a foundation, another employee); `"Jeff Miller" Halliburton
+   CEO` returned 9 of 9. Identity is three layers: model triage over titles and snippets, a deterministic anchor
+   (surname within 500 characters of the company token: 18 of 18 positives pass, 4 of 4 readable negatives fail),
+   and a verified identity quote. Untested: a same-name person in the same industry.
+4. **Two axes, not one list (s.9.2 item 6).** The category list mixed a SOURCE axis (official bio, professional
+   profile, interview, news) with a FACT axis (prior roles, board roles). The design puts `source_kind` on each page
+   and `topic` on each fact. "Official bio" is settled from the verified company domain, not by the model, which
+   mislabelled 2 of 3 third-party hosts.
+
+**The verbatim rule held:** 101 of 101 recorded facts re-located on their pages, and 163 of 163 one-word mutants of
+kept quotes were rejected. **Cost, measured: about $0.14 per CEO in model spend** (about $4.7 for 33). The SERP
+unit price is not in any header or estate record, so the account's billing console has to supply it.
+
+**Open, several of them Andrew's:** whether "found but not read" links are shown (recommend yes, labelled, links
+never facts); whether LinkedIn pages are fetched (recommend link-only); whether an unlocker may read the 403/429
+pages (his cost ruling in `FIND_DUALBIZ_PRD.md:47` says `serp_opal` only); whether residence lines are ever shown;
+and the query's name form.
