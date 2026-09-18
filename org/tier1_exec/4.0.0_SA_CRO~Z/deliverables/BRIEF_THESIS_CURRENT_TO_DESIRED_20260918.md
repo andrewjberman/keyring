@@ -356,3 +356,32 @@ are the instantiation process. Most are not measured yet, and the remaining pane
 [Walmex annual report 2025, MSE, English](https://files.walmex.mx/upload/files/2025/EN/Annual/Walmex_Annual_Report_MSE_2025.pdf);
 [Zurich annual report 2025](https://www.zurich.com/-/media-assets/project/zurich/dotcom/investor-relations/docs/financial-reports/2025/annual-report-2025-en.pdf);
 [Zurich Life Insurance Company Ltd annual report 2025](https://www.zurich.com/-/media-assets/project/zurich/dotcom/investor-relations/docs/financial-reports/2025/annual-report-2025-zurich-life-insurance-company-ltd.pdf).
+
+---
+
+## 9. UPDATE 2, 2026-09-18 ~18:5xZ -- the three-name validation, and two corrections it makes to this brief
+
+The validation Andrew authorized (~16:5xZ) ran Caterpillar, CSL and Keyence through every stage as it exists. Report:
+`INSTANTIATION_VALIDATION_REPORT_20260918.md` @b527b93214. Its section 2 is section 8.5's table MEASURED, with a
+"trigger for a new name" column; its section 5 lists 27 defects with file:line.
+
+**Correction 1 -- battery step 1 is not "the SEC ticker table" (s.3, s.8.2).** `build_universe.py:503-508` reads a
+33-ticker cache in a worker's deliverables folder (`0.9.0_WK_AMGT_RESAPP~19/sec_ticker_cik_cache.json`) and reports a
+miss as absence from the full 10,422-row table. It misses Caterpillar. The live table with the existing name guard
+resolves CAT and correctly refuses CSL (Carlisle). Step 1 needs the live table, or a cache rebuilt per name, before any
+new US name is added (report D1).
+
+**Correction 2 -- "389 of 389 sentences PASS verbatim" includes vacuous passes (s.1).** `drafting_build.py:85-128`
+passes a sentence with no quoted span. On the validation names that was 17 of 39 (CAT) and 16 of 40 (CSL). The figure
+is true as stated and weaker than it reads: the count of sentences that carry a quote which re-locates is the one to
+print (report D18).
+
+**Confirmed -- translation design A (s.8.4) holds.** On Keyence's Japanese Yuho, 70 of 71 findings carried a verbatim run
+inside their one cited passage. The neighbour-passage and mutation controls refused 70 of 70 and 68 of 68, and 0 of 71
+translations relocate in the original. Cost: $0.32 a name. It needs Unicode passages (`passages.py:67-79` keeps 6.8% of
+Japanese text), citation blocks pre-cut to the passage map, and a character-level verbatim rule.
+
+**Confirmed -- battery step 4 works, and the document layer is the gap.** Step 4 found the right, current report for both
+international names; nothing in the estate can cut either. PDF reflow lifts passage coverage from 9.3% and 1.8% to 91.6%
+and 92.4%. The 20-F "riskfactors" fallback cut a 70,000-character wrong-object excerpt from CSL's report (D9), so test
+(c) must be a real gate.
