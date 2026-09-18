@@ -3697,7 +3697,48 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "Both controls passed and the limb still over-fired in production, because OVER-FIRING HAS TWO SENSES and the bar only covered one. Refusing a case it should accept is caught by a positive control. Refusing a POPULATION so large that no actor can clear it is not -- every individual verdict is correct and the aggregate is an outage.",
     "notes": "THE TRANSFERABLE RULE, and it is cheap: A CONTROL THAT PROVES A GATE DISCRIMINATES SAYS NOTHING ABOUT THE SIZE OF THE SET IT WILL FIRE ON. For any limb with REFUSAL POWER, the acceptance bar must include ONE RUN AGAINST LIVE STATE WITH THE COUNT PRINTED, before the round closes -- not a fixture, the estate. 1.0.0_SA_CTO reached the same point from the other side in its own words: 'a clean fixture is exactly what missed this the first time'. AND THE SECOND HALF IS THE TEST THE RULE TURNS ON: A GATE REFUSES AN ACT ONLY WHEN THAT ACT CAN REMEDY THE GATE'S CONDITION; when it cannot, the gate DISCLOSES. Rowlessness passes that test -- the slug can write the missing rows -- which is why EN-g-37's limb is untouched and correct. Staleness fails it, because the stale rows belong to other items and other seats. THAT DISTINCTION BELONGS IN THE ORDER THAT CUTS A GATE CELL, not discovered at its first live firing. COST: one live run with a printed denominator per refusal-power limb. NON-APPLICATION: a limb whose condition the committing act always owns, and any check that only reports.",
     "id": "LGIC_ENFORCE-S82"
-  }
+  },
+{
+  "id": "LGIC_ENFORCE-W3-S18",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+  "surfaced_at": "2026-09-18T17:14:50Z",
+  "one_line": "EN-b-42's worker face and its own fixed checker name DIFFERENT record keys: a record built to the face alone reads FAIL on all four mechanical arms.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The worker face gives the record shape as measured_at_write_time{...}, assignments[{row, owner, basis}], deferred[{row, reason, uncondition}], coverage{...}.",
+  "world_is": "check_en_r9.py reads stale_population{rows, denominator_measured_at_write_time{instrument, value}}, assignments[{id, owner}] and deferred[{id, why, un_defers_when}]. None of the face's keys row/reason/uncondition/measured_at_write_time is read by any b42 core, so the face-only shape fails b42-remeasured (no stale_population), b42-every-row-owned (no row count) and b42-deferred-reasons on any non-empty deferral, and passes no-category-owners only by owner. The record written carries BOTH shapes on every entry; nothing in either fixed input was edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r9/check_en_r9.py @a6476ef28f core_b42_remeasured reads rec['stale_population']; core_b42_every_row_owned reads x['id'] and x['owner']; core_b42_deferred_carry_reasons reads x['why'] and x['un_defers_when']",
+      "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-b-42-r9.stale-backlog-owners.md @a6476ef28f worker face, WHERE YOUR RECORD GOES: keys measured_at_write_time / row / reason / uncondition"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-W3-S19",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+  "surfaced_at": "2026-09-18T17:14:50Z",
+  "one_line": "Every row the staleness limb counts ALREADY carries a serial owner by construction; the categories live in the REMEDY text, and the owners this cell seats live only in its record, not on the rows the gate reads.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The cell frames the stale backlog as rows lacking a named owner and asks for one NAMED owner per row, refusing categories such as 'the clean-up projects'.",
+  "world_is": "_stale_open_row counts a row only if remediation.owner is non-empty, so all 94 stale rows at round 9 already carry a serial (1.0.0_SA_CTO 50, 2.0.0_SA_COO~G 43, 0.0.0_AB_MSTR 1). The category phrases sit in the rows' remedy field ('Each tool's owner fixes its tool', 'The checker's author', 'a seat whose grant reaches ...', 'the round that takes it', 'a future census'), which b42-no-category-owners never reads -- it inspects the record's owner field only. And the 6 reassignments plus 1 deferral this cell makes exist only in STALE_BACKLOG_R9.json: the channel rows still carry their prior remediation.owner, which is what the gate reads, so a later REFUSAL form built on remediation.owner would grade the pre-cell owners unless a remediation row re-states each owner.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/surprise-row-gate.py @a6476ef28f _stale_open_row: 'if not str(rem.get(\"owner\", \"\")).strip(): continue'",
+      "measure_stale_r9.py 9 in this worker's deliverables folder: remediation_rows=113 stale=94; owners on stale rows 1.0.0_SA_CTO 50, 2.0.0_SA_COO~G 43, 0.0.0_AB_MSTR 1",
+      "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r9/check_en_r9.py @a6476ef28f core_b42_no_category_owners reads only (x or {}).get('owner')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
 
