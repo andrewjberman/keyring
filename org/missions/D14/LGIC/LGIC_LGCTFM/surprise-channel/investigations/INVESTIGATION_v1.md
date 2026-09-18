@@ -712,7 +712,74 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "Every arm is satisfiable by a CORRECT record written where the order says to write it.",
     "world_is": "e5-schema was not, because I chose the artifact's path without checking how the estate's receiving router resolves a type. Two of my three round-9 orders carried a record-shape defect (S85) and this is the same class one step out: I specified WHERE an artifact lives without running the tool that reads it there.",
     "notes": "WHY THE FIXED INPUT AND NOT THE ORDER: the worker is LIVE and reading its face (R-82: the freeze protects a READER), and moving the artifact's path would require an act from a worker I cannot message. Repairing the CHECKER needs nothing from it -- the record it has already written now grades. THE BAR IS UNCHANGED: the same checker, the same ACCEPT verdict, plus a printed statement of which instrument answered. WHAT IS NOT CLAIMED: that receiving-check's router is correct to ignore a deliverables path -- that question is W1-S23's and it stays with the estate; this row only stops it blocking a cell. COST: one route check per artifact path an order mandates. NON-APPLICATION: a path the router already routes, which is every run-home contract -- LT-x-4's x4-run is not exposed to this."
-  }
+  },
+  {
+    "id": "LGIC_LGCTFM-W1-S23",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+    "surfaced_at": "2026-09-18T20:40:33Z",
+    "one_line": "E5R3-AC4 (`e5-schema`) CANNOT READ PASS FOR ANY RECORD WRITTEN WHERE THE ORDER PUTS IT. The arm demands `ACCEPT lgctfm-contract` from .tools/receiving-check.py on R3_BASE.json's e5_walk_output, `org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/e5_walk/contract.json`. receiving-check picks its checker by PATH, and the lgctfm-contract route matches only `workflows/legacy_transform/<subject>/<run>/contract.json` or `*.lgctfm-contract.json`. The mandated path matches neither, so it reads `UNCHECKED unrecognised` and the arm prints FAIL-E5-SCHEMA. The same bytes read `ACCEPT lgctfm-contract` under the route's own checker, .tools/lgctfm-contract-check.py.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "LGIC_LGCTFM.TO-LT-e-5-r3.discovery-by-design.md WORKER FACE: `.../0.9.0_WK_LGIC_LGCTFM~1/e5_walk/contract.json` must exist and carry the coverage block; E5R3-AC4 `python <C> e5-schema` -- expect PASS-E5-SCHEMA; 'your new contract must too' read ACCEPT under `python .tools/receiving-check.py <contract.json>`. The order also says: 'If a CORRECT record cannot satisfy an arm, that is a BLOCKING surprise row quoting the arm and its output. Never work around it, and never edit a fixed input.'",
+    "world_is": "Arm output, verbatim, at b736ee4fdf: `new contract: receiving-check rc=0 NOT ACCEPT: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/e5_walk/contract.json` / `graded run (frozen, R-43): receiving-check rc=0 ACCEPT: workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1\\contract.json` / `VERDICT: FAIL-E5-SCHEMA`. receiving-check on the new contract prints `UNCHECKED  unrecognised` / `VERDICT: 0 ACCEPT | 0 HAND BACK | 1 UNCHECKED`. The route regex is at .tools/receiving-check.py:77 @b736ee4fdf. `python .tools/lgctfm-contract-check.py <same path>` prints `ACCEPT lgctfm-contract` / `VERDICT: 1 ACCEPT | 0 HAND BACK | 0 UNCHECKED`. selftest-arms reads PASS-ARMS-DISCRIMINATE, but its own text says receiving_accept() is 'NOT driven here', so no positive arm ever fed it a path at e5_walk_output. The schema half of the arm DID hold: the frozen 1.0 run still reads ACCEPT through receiving-check. Three schema mutants read HAND BACK under lgctfm-contract-check: coverage deleted from the 1.1 contract; coverage added to the 1.0 run; a leg outside the four.",
+    "grounding": {
+     "status": "GROUNDED",
+     "evidence": [
+      "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/check_lt_r3.py e5-schema @b736ee4fdf -> FAIL-E5-SCHEMA (new contract NOT ACCEPT, graded run ACCEPT)",
+      ".tools/receiving-check.py:77-79 @b736ee4fdf: ROUTES[0] = workflows/legacy_transform/[^/]+/[^/]+/contract\\.json$|\\.lgctfm-contract\\.json$ -> lgctfm-contract-check.py",
+      "python .tools/lgctfm-contract-check.py org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/e5_walk/contract.json @b736ee4fdf -> ACCEPT lgctfm-contract",
+      "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/check_lt_r3.py:384-386 (_e5_contract) reads e5_walk_output from R3_BASE.json; R3_BASE.json e5_walk_output names the e5_walk/contract.json path"
+     ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not worked around. The contract was not renamed to *.lgctfm-contract.json, no copy was placed under workflows/, and no fixed input was edited. The disarm is the issuer's: route the path, rename R3_BASE's e5_walk_output, or grade AC4 through lgctfm-contract-check. The worker does not judge significance. LT-x-4's x4-run reads a contract under workflows/legacy_transform/, which the route DOES match, so that arm is not exposed to this."
+   },
+  {
+    "id": "LGIC_LGCTFM-W1-S24",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+    "surfaced_at": "2026-09-18T20:40:33Z",
+    "one_line": "`comp-trigger --list --json` CARRIES NO TARGETS, contrary to the order's premise. Every one of its 167 entries has exactly {arn, kind, name, pattern, schedule, state}. Targets come only from the QUERY mode (`comp-trigger <substring> --json`), only for EventBridge rules, and each query pays list-targets-by-rule across all 144 rules (about 110 s). Scheduler schedules' targets are read by no comp-trigger path. The trigger_target leg therefore reads comp-kuzu TRIGGERS/EMITS_TO edges, which cover schedules and S3 notifications, plus `comp-trigger 'arn:' --json` for the live rule targets.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "LGIC_LGCTFM.TO-LT-e-5-r3.discovery-by-design.md WORKER FACE, WHAT YOU BUILD 2: '`trigger_target`: a rule or schedule targets it; `comp-trigger --list --json` carries targets.'",
+    "world_is": "Measured @b736ee4fdf: `python org/modules/graph/comp_trigger.py --list --json` returns denominator {rules 144, schedules 23}, and the Counter of key-sets over its 167 triggers is {('arn','kind','name','pattern','schedule','state'): 167}. `comp_trigger.py '49f' --json` returns targets on its 11 events-rule matches and `None` on its 5 scheduler matches. match_triggers() at org/modules/graph/comp_trigger.py:350-367 reads targets only for kind == events-rule. `comp_trigger.py 'arn:' --json` took 1m49s and returned 144 matches, all by target-arn.",
+    "grounding": {
+     "status": "GROUNDED",
+     "evidence": [
+      "org/modules/graph/comp_trigger.py --list --json @b736ee4fdf: 167 entries, one key-set, no `targets`",
+      "org/modules/graph/comp_trigger.py:362-367 @b736ee4fdf: `if not hit and targets_of is not None and r[\"kind\"] == \"events-rule\"`",
+      "lib/opal_lgctfm.py live_rule_targets() and discover_involved() @b736ee4fdf: the leg's actual instruments"
+     ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "A premise row, filed so the next reader of the order does not rebuild on --list. The leg is exercised with the instruments that do carry targets. 1.0.0_SA_CTO is validating the comp-tools in parallel, and this is a capability gap in a tool's list mode, not a wrong answer."
+   },
+  {
+    "id": "LGIC_LGCTFM-W1-S25",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+    "surfaced_at": "2026-09-18T20:40:33Z",
+    "one_line": "THE COMMIT GATE'S MANIFEST-ADVISORY FLAGS A CYPHER STRING HANDED TO comp-kuzu AS 'raw Cypher outside comp-kuzu' and says both findings 'would block in blocking mode'. The two queries in lib/opal_lgctfm.py discover_involved() are argv to `.tools/comp-kuzu` (kuzu_rows() -> _bash_tool(COMP_KUZU, [query, '--json', ...])), which is exactly the route the advisory asks for, so the finding reads the string's presence, not its route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The order, WHAT YOU BUILD 2: 'Use the readers the estate already runs (Rule 20: org/modules/graph/graph-call-manifest.yaml). Never write a new AWS caller.' The manifest names comp-kuzu as the served-projection read path (cloud.lookup.nodes_by_type).",
+    "world_is": "`bash .tools/commit-gate.sh lib/opal_lgctfm.py` before the commit @b736ee4fdf: 'All checks passed!', then `MANIFEST-ADVISORY [ERROR] lib/opal_lgctfm.py:772 (C_adhoc_reimplementation) ... embeds raw Cypher outside comp-kuzu. Route graph queries through comp-kuzu so they hit the SERVED graph projection through the thin client`, the same at :788, and `MANIFEST-ADVISORY: 2 graph-access finding(s) (2 would block in blocking mode). Advisory -- not blocking.` The gate rc was 0 and the commit landed.",
+    "grounding": {
+     "status": "GROUNDED",
+     "evidence": [
+      "bash .tools/commit-gate.sh lib/opal_lgctfm.py -> 2 MANIFEST-ADVISORY C_adhoc_reimplementation findings at :772 and :788, rc=0",
+      "lib/opal_lgctfm.py kuzu_rows() @b736ee4fdf: `_bash_tool(COMP_KUZU, [query, \"--json\", \"--limit\", str(limit)], timeout)`"
+     ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT today because the advisory does not block. The row is filed because 1.0.0_SA_CTO is validating the comp-tools and their gates in parallel, and a false positive on the sanctioned route would refuse this engine the day the mode flips. The worker does not judge significance."
+   }
 ]
 ```
 
