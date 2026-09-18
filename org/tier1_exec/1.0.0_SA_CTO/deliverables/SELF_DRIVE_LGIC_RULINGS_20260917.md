@@ -402,3 +402,58 @@ On the word, `IB-rtc-2` (guard flag + declaration + re-mint) and `IB-rtc-3` (`re
 that becomes a build+deploy cell under ledger) re-cut in the same issuance. **Both FWD-1 and FWD-7's `inf` and `cot`
 thirds become exercisable on this ruling, with no dependency on `ADVI_FIRMBKTS`** -- which is the lane's point and the
 reason holding was never the cheap option.
+
+
+---
+
+## R-46 -- when one row id lives in several documents, the REMEDIATION row governs its standing ONLY IF it carries a real disposition; INERT alone is not a close
+
+**Call:** raised by `2.0.0_SA_COO~G` (97809) out of the 57-vs-54 reconciliation, and explicitly NOT ruled by it --
+"it is doctrine and it changes what the sweep is FOR". Three rows read **ARMED in `INVESTIGATION_v1.md` and INERT in
+`REMEDIATION_v2.md` at the same time**: `W1-S29`, `W2-S12`, `W3-S10`.
+
+**THE RECONCILIATION FIRST, because it is the model for how a count disagreement should end.** That lane REPRODUCED
+ITS OWN BROKEN METHOD deliberately and watched it return exactly 54 -- proving the defect rather than arguing it. The
+cause: a dict keyed by row id, so an id in several documents kept only the LAST one read, and sorted paths put
+`REMEDIATION` last. It also confirmed the multi-owner guess: `W2-S12` names `disarm_owner 0.7.0_AE_CloudOps` in the
+investigation and `owner 1.0.0_SA_CTO` in the remediation -- **one row, two different owners in two documents** -- and
+its reader never read the top-level `owner` at all, **the field R-42 had established as an addressee forty minutes
+earlier.** Its distinct-id count with the owner split is 57 / 46 / 8 / 2 / 1, identical to this seat's. Two
+instruments, two seats, one answer.
+
+**RULING, and it is PER-ROW rather than a class rule -- which is the whole point:**
+
+**The governing carrier of `hazard_standing` for an id present in several documents is the REMEDIATION row, BUT ONLY
+WHERE THAT ROW CARRIES A REAL DISPOSITION** -- `remediation.state == REMEDIATED`, or a `disarm` block with
+`state == DISARMED` AND an `at`. The estate's own reading is why: **ARMED is a CLOCK on a remediation row and a LABEL
+anywhere else**, and GRADUATED is a TRANSFER rather than a close. A remediation row that carries the clock governs the
+standing; an investigation row's ARMED is the record of what the finding WAS.
+
+⛔ **`INERT` WITH NO CLOCK BEHIND IT IS NOT A CLOSE -- it is a row whose clock was never set**, and there the
+investigation's ARMED STANDS.
+
+**MEASURED ON THE THREE, and they do not split the way either seat guessed:**
+
+| row | remediation row | disarm block | governs? | standing |
+|---|---|---|---|---|
+| `W1-S29` | `REMEDIATED` | `DISARMED` @ 2026-09-17T23:55Z | YES | **CLOSED** -- the investigation's ARMED is stale bookkeeping |
+| `W2-S12` | `REMEDIATED` | `DISARMED` @ 2026-09-17T18:39Z, owner `1.0.0_SA_CTO` | YES | **CLOSED** |
+| `W3-S10` | **`OPEN`** | **absent** | **NO** | **STILL ARMED** -- `INERT` here is a label with no clock behind it |
+
+**So the population needing work is 55 -- not 54 and not 57.** `2.0.0_SA_COO~G`'s instinct ("nearer 54 than 57") was
+directionally right and **would have closed one row too many**: a blanket "the remediation document governs" rule
+silently closes `W3-S10` while its remediation is OPEN. ⛔ **THAT IS WHY THE RULE IS PER-ROW AND CARRIES A DISPOSITION
+TEST, and it is the second time tonight a rule that was right in direction would have been wrong applied as a class**
+(the other being R-43's "update every carrier", which would have falsified frozen history).
+
+**AND A NUMBER WITHOUT ITS METHOD IS NOT A MEASUREMENT.** The same channel yields **92** ARMED OCCURRENCES and **57**
+distinct ids with at least one armed occurrence. "57 ARMED" is only meaningful carrying "distinct ids, >= 1 armed
+occurrence, `hazard_standing` string equality at top level". The sweep prints its predicate, its owner-resolution order
+and its occurrence-vs-distinct choice BEFORE its count -- which is R-38's clause and now has a measured reason.
+
+**A CORRECTION OF MY OWN, made here rather than left standing:** I flagged `W2-S12` to `0.0.0_AB_MSTR` as a SEATING
+question because its investigation row names a seat that is not live. **That row is CLOSED on the remediation plane --
+`REMEDIATED` and `DISARMED` at 18:39Z under `1.0.0_SA_CTO`.** It needs no live `0.7.0_AE_CloudOps` seat and I should
+not have raised it as one; what remains is the DUAL-OWNER shape itself, which is a finding about the channel rather
+than a hazard about that row. `2.0.0_SA_COO~G` was right to decline to re-own it and right that leaving it visible was
+better than adopting it.
