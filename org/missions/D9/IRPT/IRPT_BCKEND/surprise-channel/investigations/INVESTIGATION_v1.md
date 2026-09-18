@@ -4755,6 +4755,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "IB-rtc-5's face: the control runs on the browser host, 'or, if that host is not reachable non-interactively, the renderer's in-process path with the SAME code, the plane named'.",
     "world_is": "No in-process path with that code exists at HEAD; the worker substituted the real render code on a local dev server, named the plane, and the control passed on it. The substitution is now the recorded plane.",
     "notes": "DISARMED, NOT REMEDIATED: the decomposition v0.3 text is frozen mid-round and is not edited; the durable fix W4-S32 asks for -- the decomp language naming the local-dev-plane-on-real-code substitution directly -- lands in the round-4 decomposition when it is cut, and this row is the carrier until then. Whether the local-dev plane is the plane FWD-8's DONE WHEN names is R35-AC2's judgment for 3.0.0_SA_CVO, not settled here."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T02:20:00Z",
+    "one_line": "W4-S28's arm (a) BYTES comparison for irpt-ycharts-generate reads NOT-REPRODUCIBLE, not EQUAL/DIFFER-with-confidence: three independent build attempts (the canonical build-and-upload.sh, and the project's own proven multi-root packager under both its own zip recipe and the canonical script's) each produce a different hash, none matching the served CodeSha256 -- AND the fix commit (56a6e07e8f, infra/aws/lambda/investor-reporting/ycharts/extract/certify.py) is a member of ZERO of the 216 functions declared in lambda-source-map.json, so no build attempt could ever be expected to carry it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO IB-rtc-4 arm (a), this cell, this commit: build-and-upload.sh's OWN resolution rule (source_dir/<name>, no shared-root fallback) finds 11 of 30 declared members absent at infra/aws/lambda/investor-reporting/ycharts/generate/ (enforce.py, errors.py, gate.py, keys.py, resolve.py, ids.py, firm_destination_policy.json, firm_registry.json, settings.json, served.py, loaders.py) -- the canonical script REFUSES before any zip exists",
+        "the same run: rt2_package.py's multi-root packager (source_dir first, then _authz/_scope/_keys/_ids/_gate/intake/directory/data//terraform-core, ZIP_DATE=2026-09-11) resolves all 30 of 30 and builds sha256(b64)=c6BiKUE4bZNbvy72mtzD6RlOPAWTUi2yhcWogDsOQxQ=",
+        "the same run: the SAME 30 resolved members rebuilt with build-and-upload.sh's own zip recipe (PowerShell, sorted, LastWriteTime=2020-01-01) produces sha256(b64)=SyHWPla5ejQqzg/o/GABrOPt0oLVKImhzYCO25wd5AQ=",
+        ".tools/aws lambda get-function-configuration --function-name irpt-ycharts-generate --query CodeSha256 (this turn): CJ6aBh7BWJFcT2Vv0/cJFSXHaH5cs1LvqXvJRfkXHm8= -- equal to the DECLARED artifact_sha256 in lambda-source-map.json, and DIFFERENT from both built hashes above",
+        "PREMISE CHECK, this cell: job.py, recipe.py, transport.py, entry.py (the four generate-package source files) read for a reference to certify/extract -- only job.py contains the substring 'extract' and it is the word 'extraction' in a comment, never an import; a full source-map census (py -3.12, this turn) finds 0 of 216 declared functions listing certify.py or extract.py or a source_dir under ycharts/extract",
+        "row IRPT_BCKEND-W4-S28's own disarm_owner text, verbatim: 'the corrected extractor reaches a running function only at the irpt-ycharts-generate package's next build' -- a claim this row's evidence does not support: extract/certify.py is not a declared or resolvable input to ANY function's build today, including irpt-ycharts-generate's"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtc-4 arm (a): build the deployment zip 'exactly as its Terraform root builds it' and compare CodeSha256; row W4-S28's disarm_owner: the fix 'reaches a running function only at the irpt-ycharts-generate package's next build'.",
+    "world_is": "The Terraform root's documented build mechanism (build-and-upload.sh) cannot build this function at all from a literal source_dir read -- it only succeeds via a shared-root convention a LATER cell (IB-rt-2) invented and that the canonical script does not implement. Two legitimate, deterministic recipes both disagree with the served bytes and with EACH OTHER, so this arm cannot certify what source produced the live artifact. Separately and more consequentially for W4-S28: extract/certify.py -- where the actual date-provenance fix (56a6e07e8f) lives -- is not part of ANY deployed Lambda's declared build, so W4-S28's own remedy path ('rides the generate package's next build') rests on a premise this cell's census does not confirm. Neither an EQUAL nor a DIFFER reading of this arm could, by itself, tell an adjudicator whether the certify.py fix is aboard any deployed function, because no build this cell could construct ever includes that file.",
+    "notes": "Not this cell's to resolve further: TO IB-rtc-4 bounds this order to a bytes comparison, read-only against the deployed plane, and forbid re-minting anything. Candidate next acts (the CTO's/COO's to choose, not carded here): (1) determine whether ANY deployed function is supposed to import extract/certify.py at runtime, and if so wire it into that function's declared files and rebuild via a byte-verified recipe; (2) if no function should import it, correct W4-S28's disarm_owner text so it does not point at a build that can never carry the fix; (3) separately, pin the exact recipe (member list, zip tool, timestamp, compression settings) that produced CJ6aBh7BWJFcT2Vv0/cJFSXHaH5cs1LvqXvJRfkXHm8= -- e.g. the S3 object's own version history -- before any FUTURE bytes comparison on this function can be trusted. Full transcript: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtc-4_R34-AC1_battery_output.txt."
   }
 ]
 ```
