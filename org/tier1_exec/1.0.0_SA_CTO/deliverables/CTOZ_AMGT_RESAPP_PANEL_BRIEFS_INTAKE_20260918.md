@@ -9,7 +9,7 @@ functions."*
 **When the addendum is written -- Andrew-direct 2026-09-18 ~17:2xZ at this terminal, verbatim:** *"I want to wait until CRO
 and I have gone through all the pages and brought forward al the briefs, we still have a couple more to do. Exec Mgmt brief is
 being refined with one more piece, then we will go on to Peers, Model, and Posture."* **So no PRD addendum is drafted, staged or
-applied until every panel brief is in.** Remaining: Exec Management (one more piece), Peers, Model, Posture.
+applied until every panel brief is in.** Remaining after Peers (in, s.2C): Model and Posture. Exec Management is complete.
 
 **Existing art it is measured against:** the PRD `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` at **v0.10** (the
 ratified constraints, by ID), the decomposition, and the surprise channel. **Every row below cites the PRD by constraint ID or
@@ -215,6 +215,42 @@ security" has no working answer.
 
 ---
 
+## 2C. Peers -- `BRIEF_PEERS_CURRENT_TO_DESIRED_20260918.md` @`a2fdbad164` (msg 23720), at Andrew's word *"Agree with everything youve got write up the brief and issue to CTO~Z"*
+
+**Andrew's design:** the Peers panel takes its peer set and comparison table from **Seeking Alpha's peers comparison**, through
+the EXISTING `integrations/seekingalpha/rest_fetch.py` on the parked session (*"not the crawler script"*). Measured with that
+module as-is: 15 GETs for BA, SAP, KDDIY, all OK, nothing landed.
+
+| # | finding | existing art | disp. | lands as |
+|---|---|---|---|---|
+| P1 | **The current sets are the defect.** Boeing's engine peers are Deere, Eaton, Union Pacific, Uber...; SA's are Airbus, Lockheed, General Dynamics, Northrop, RTX. A ranker over sector and size cannot tell an aircraft maker from a railroad | R-1 ratified (PRD v0.8, quoted `engine.py:11-16`): *"computed ... by ONE ranker over ONE database"* | **FIX-ART -- ratified text, by Andrew's word** | R-1's sentence is replaced by an SA-sourced set. **The CVO signs that half** |
+| P2 | **The comparison table goes from 5 of 17 columns to 17 of 17**: SA supplies 11, Bloomberg supplies the two growth columns SA lacks (`GEO_GROW_OPER_INC`, `FREE_CASH_FLOW_5_YEAR_GROWTH`, 15 of 18 rows each, queried as `<SA ticker> US Equity` with no mapping step), 4 derived | R-1's `csc.py` column map | **ADD** | the forward P/E becomes a TRUE fiscal-year figure -- the old map labelled trailing and NTM figures with fiscal years, which is why `csc.py` had a refusal rule |
+| P3 | **Andrew's general rule for the pipeline:** SA first; Bloomberg for columns SA lacks; where Bloomberg has nothing, SA's nearest, LABELLED as that measure. Every cell carries `SA` / `BBG` / `SA_FALLBACK:<field>`; summary rows print their source mix | "a value must carry its claim" (CLAUDE.md s.4) | **ADD -- ratified by him** | a per-cell source field, and a summary row never hides a mixed source |
+| P4 | **Peers V floors 8 -> 5 and 6 -> 5** ("It's now 5 instead of 8, we'll fit to the SA shape"); `\|M\| >= 3` unchanged. `peers_v.py:62-70` asserts his old ruling by name | -- | **ANSWERS the Peers V card** | ⭐ **the measure-definition question he reserved @`c6c49ede58` is now ANSWERED** -- it leaves this seat's RESERVED list. The asserts carry the new citation |
+| P5 | **Identity is load-bearing again:** `ROG` returns Rogers Corporation, not Roche, with a clean 200. The existing resolver (`sa_symbol_resolve_pass.py`) has an ENTITY test | same class as the filings battery's entity test (T10 / s.2.1) | **ADD** | a slug that fails the entity test is UNRESOLVED with its reason, never the first hit -- and the ROG case is the standing positive control |
+| P6 | Non-meaningful values are honest: Boeing's FY1 P/E is null with `meaningful: false` on negative earnings; KDDI and SK Telecom carry no SA estimates | -- | RESTATE of the honesty rule | shown as not meaningful, never zero, never filled from another source |
+| P7 | Session health is a stop: a 403 with the challenge marker is `REHARVEST` and the run STOPS; the Peers path never signs in | -- | **ADD** | no retry, no harvester launch from this path |
+
+**Supersedes this seat's own Z-S174 forward path.** Z-S174 measured Peers V computing for 30 of 34 on Bloomberg estimates
+after SEDOL-stem resolution of the SCANNER sets. Andrew's design replaces those sets with SA's, and SA returns US listings and
+ADRs in USD -- so the 160-of-372 SEDOL-stem problem does not arise on the new path. Z-S174's lesson (subtract over the right
+domain) stands; its remedy is overtaken.
+
+⚠ **ONE QUESTION THE BRIEF LEAVES OPEN, for this seat's L4:** which source feeds Peers V's SIX measures on the SA set.
+`peers_v.py:74-76` `FIELDS` are Bloomberg mnemonics (`FREE_CASH_FLOW_YIELD`, `BEST_PE_RATIO`, ...). The brief measured that
+Bloomberg resolves SA tickers with no mapping step, so the measure can run **as written** by pulling `FIELDS` for the SA peer
+tickers. Feeding it SA's own metrics instead would be a translation layer -- the thing Andrew's "measure as written" framing and
+Z-S164/Z-S174 both steered away from. **This seat's reading: Bloomberg `FIELDS` over the SA peer set** -- SA chooses WHO, the
+measure's own fields say WHAT. To be stated in the addendum and signed, not assumed.
+
+**At Andrew, not decided:** SA's terms of use for automated API pulls -- raised to him by the CRO. **A production Peers pull
+waits on that answer**; the 15 test GETs ran under his word for the test.
+
+⛔ **HAR hygiene:** the HAR of the SA page carries Andrew's logged-in session. It is read for SHAPE only -- no header, cookie or
+token value is printed, logged or committed.
+
+---
+
 ## Cross-panel: items that are ONE question, not two
 
 | question | panels | why one |
@@ -222,6 +258,8 @@ security" has no working answer.
 | Filing identity for the 21 names without one | Thesis T8/T9, Lead Panel header L9 (management) | management's roster is read from the filing, so every name Thesis reaches, management reaches |
 | `publication-links/v1` coverage | Lead Panel L3 (chatter), L4 (news feed) | both chatter lists and the feed read the same store |
 | Bloomberg as a second authority | Lead Panel L9, Thesis T12 | the same ratified-text change to `C-EXEC-MANAGEMENT` |
+| An ENTITY test before any external identifier is trusted | Thesis T10 (filings battery), Exec Mgmt E12 (company domain), Peers P5 (SA slug -- ROG is Rogers, not Roche) | three panels, one rule: a clean response from the wrong company is the failure mode, and a right-entity check comes first |
+| "SA / Bloomberg first, labelled fallback" source rules | Peers P3, Exec Mgmt card 1 (Bloomberg officer fallback) | every fallback cell carries its source; a fallback never hides the reason the primary failed |
 | Scheduled-task registration (launcher split at the space, universe pinned to a date) | Thesis T5/T6, Exec Mgmt E8 | the same registration defect on two research tasks -- fix it where tasks are registered, once |
 | Key census by splitting a path on `/` | Exec Mgmt E6 (production code); this seat's own analysis twice | two London names silently dropped, success reported |
 | "SERVED" meaning a status rather than content | Exec Mgmt E1/E7; Lead Panel L2 (a list of zeros reading COMPLETE) | a producer can report success over an empty payload -- one honesty rule across panels |
