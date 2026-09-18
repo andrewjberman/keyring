@@ -2575,3 +2575,65 @@ CTO) -- it goes to him as a card with a rec.
    spent this session finding items that decay because the round that could serve them has no reason to look. THIS
    LOOP HAD A TERMINATION TEST AND I WAS THE ROUND WITH NO REASON TO LOOK.**
 
+---
+
+## R-77 -- THE SLUG-TIME LIMB IS LIVE AND **WILL REFUSE ROUND 8's OWN SLUG**: 8 rowless GRADUATED under `LGIC_ENFORCE`, and they are **EXACTLY R-66's 8 INERT**
+
+`EN-g-37-r8` drained @`e50bfb1c2b`. I approved this limb in principle in R-66 and refused to build it on the strength
+of an argument; it was built with the mutant and positive control that bar demanded. ⭐ **SO THE THING I OWED WAS TO
+CHECK ITS WIRING RATHER THAN ACCEPT ITS CELL'S PASS.**
+
+### The wiring, checked as wiring
+
+`_graduated_without_row_violations` is called at `:1752`, inside the **same `pre` list** as
+`_route_precondition_violations` (`:1744`) and `_investigations_precondition_violations` (`:1746`), under the same
+`if folder_project and _route_word is not None` guard at `:1739`, with `v.extend(pre)` at `:1756`.
+⭐ **THAT PATH IS PROVEN LIVE BY TONIGHT'S OWN EVENTS: it is the path that refused `2.0.0_SA_COO~G`'s first `S79`
+draft and `3.0.0_SA_CVO`'s first `S81` draft under R-19, within two hours.** ⛔ **An injected self-test certifies the
+ARMS; two real refusals travelling the same list certify the WIRING, and that is a DIFFERENT INSTRUMENT.**
+
+⭐ **And it is built the way the bar asked:** fail-closed on BOTH censuses with distinct messages, a CARRIED-row
+exemption at a merge matching the twin limbs, and it **takes the remediation census as an INDEPENDENT ARGUMENT rather
+than re-deriving it** -- because `_resolve_latest` writes `GRADUATED` either from a remediation row **or** from a CVO
+disposition placed directly on the investigation row, and **the two are indistinguishable from `latest` alone.** Its
+`:1749-1751` comment scopes it to rowlessness and defers staleness to `EN-k-38` -- **R-68's three-classes ruling
+honored in code rather than restated.**
+
+### THE CONSEQUENCE NOBODY HAD NAMED
+
+⛔ **Run against live `LGIC_ENFORCE`: 8 ROWLESS GRADUATED -- `S58`, `S59`, `S60`, `W3-S14`, `W3-S15`, `W3-S16`,
+`W4-S5`, `W4-S6`. ROUND 8's SLUG IS REFUSED UNLESS THOSE 8 ROWS GO IN BEFORE IT, IN THE SAME SLUG COMMIT** -- which
+is exactly what the limb's own refusal text says, and exactly R-66's bar. ⭐ **The round that built the limb is the
+first round it grades.**
+
+⭐ **AND THEY ARE EXACTLY R-66's 8 INERT, VERBATIM.** R-66 measured 16 as **8 ARMED** (`S13`, `S56`, `S57`, `W1-S7`,
+`W1-S16`, `W1-S18`, `W2-S7`, `W3-S5`) **and 8 INERT** (the eight above). **The 8 ARMED now carry rows and the 8 INERT
+do not: 16 -> 8, remaining set precisely the INERT half.** The clock-writing work since R-66 landed exactly where it
+was aimed, and **the limb's first live reading independently confirms R-66's partition.**
+
+### R-66's tension, ruled now so it cannot block the L10
+
+R-66 said an INERT item with no row is **a census gap with nothing behind it** while an ARMED one **has no clock at
+all**, and that *"giving both one remedy would launder that difference."* The limb does not distinguish them.
+⭐ **THAT IS NOT A CONFLICT: THE LIMB REQUIRES A ROW, NOT A PARTICULAR REMEDY.** An INERT item's row records INERT
+with no remediation owed; an ARMED item's carries a real clock. ⛔ **THE DISTINCTION R-66 PROTECTED LIVES IN THE ROW'S
+CONTENT, NOT IN ITS EXISTENCE.** Eight rows satisfy the limb and preserve the ruling, and none has to pretend there is
+work behind it.
+
+### ⚠ A METHOD NOTE, because I nearly shipped the wrong number
+
+**My first run returned `latest=None` for `LGIC_ENFORCE`** -- which would have meant the limb fail-closes and refuses
+the slug **for a reason that does not exist.** The immediate next run returned **164**. ⛔ **THE WORKTREE IS MOVING --
+round-8 workers are committing into that channel -- SO A SINGLE READ OF THE CENSUS IS A READ OF A MOVING TARGET.**
+Five consecutive runs then returned `164/8` and `48/3` identically, which is the only reason the number reported is 8
+rather than "could not be evaluated." ⭐ **A TRANSIENT FAIL-CLOSED READ LOOKS EXACTLY LIKE A REAL ONE**, and on a
+fail-closed limb the transient is the ALARMING direction -- it manufactures a blocker rather than hiding one.
+
+### `LGIC_CANON` carries 3, and one of them is a question
+
+**`LGIC_CANON-S17`, `S18`, `W1-S6`.** No slug is coming (zero open orders, classified UNREACHABLE in R-75), so nothing
+is blocked today, **but its next slug is refused until those three carry rows.** ⚠ **One is a question and it is
+`3.0.0_SA_CVO`'s: that project's register says `W1-S6` was DISMISSED, yet the resolver reads it GRADUATED.** Under
+R-21 an ARMED row GRADUATES and never dismisses, **so either the register's word or the resolver's read is the loose
+one. Not measured, and not ruled from a count.**
+
