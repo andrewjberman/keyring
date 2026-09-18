@@ -1621,6 +1621,22 @@ worse than an unnamed field, because it is CONFIDENTLY misread** -- and it was, 
 24, and it belongs with (b). **It is recorded so the next reader does not repeat the misread**, and so that anyone
 editing a reason string in that table knows they are editing a control.
 
+
+### CARRIER CLAUSE, added minutes after the ruling because the ruling itself lacked one
+
+⛔ **R-62 ADOPTED (c) AND NAMED NOBODY TO CARRY IT.** An adopted disposition with no carrier is exactly the
+class R-54 measured and R-59 ruled on -- **an item with no carrier does not wait, it DECAYS** -- and this one was
+created BY A RULING WRITTEN TO PREVENT THAT. Found by re-reading my own ruling, not by anyone reporting it.
+
+**THE CARRIER: `LGIC_ENFORCE`'s REGISTER ROW now, and ROUND 8's cut then.** (b) and (c) are recorded together in
+`project.json` `phase` as round-8 material -- (b) the template-vs-key mechanism, (c) the interim re-card under the
+true reason -- because **the register is the carrier a cut READS (R-57), and a ruling is not.** Round 7 is
+unchanged at two cells and nothing waits on this.
+
+⭐ **AND THE SHAPE, for the fourth time tonight: I wrote the rule, applied it to two other seats' carriers, and
+then left my own disposition uncarried.** `2.0.0_SA_COO~G`'s sentence covers this too -- **a rule I applied
+correctly once is not a rule I have.**
+
 ### What the lane did that the ruling records by name
 
 ⭐ *"R-61's condition is what made me measure. I went looking for the address population to build the arm, found the
