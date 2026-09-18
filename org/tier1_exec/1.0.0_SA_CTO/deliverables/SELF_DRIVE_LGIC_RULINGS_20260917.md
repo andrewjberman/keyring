@@ -2846,3 +2846,120 @@ one evidence entry per row, **no clock moving**. The two deferred rows take no o
 three owner fields"* -- is TRUE about the mechanism and SILENT about the precondition. `3.0.0_SA_CVO` corrected it in
 message rather than churning a committed row, which is the right call: **the row is not wrong, it is incomplete, and
 the completion is this ruling.**
+
+## R-81 -- `LGIC_LGCTFM` ROUND 3: THE DESIGN REQUIREMENT for FWD-1's repair. **The architecture is ALREADY RULED -- the run READS the served graph and never derives** -- and the first act is a missing canonical entry, not a new instrument
+
+Completes R-79, which ruled the compute gap a DEFECT AGAINST `FWD-1` and said round 3's shape is DESIGN. Andrew-direct
+~18:2xZ (*"the workflow must be designed to create rows for these items"*), ~18:3xZ (*"we want to work in all the
+comp-tools ... so we adequately enumerate the true resources involved"*, *"I want to make sure that the process is
+athletic"*) and ~18:4xZ (*"hand-written stuff is the danger zone unless explicitly qualified/dated"*). Grounded on four
+tool surveys run by this seat this tick plus `4.0.0_SA_CRO`'s RCN-0009 @`edcbe51fb4`.
+
+### 1. THE ARCHITECTURE IS NOT AN OPEN QUESTION. HE ALREADY RULED IT.
+
+`NFRA_CLDGRPH` **CG-s-30**, Andrew-direct ~19:3xZ, VERBATIM: *"effectively deprecate it and pull it off from being
+surfaced via comp-which. We do not need to gate it."* `comp-aws` -- the tool that DERIVES the AWS plane -- was
+deprecated for agent use and `comp-which`'s curated tuples repointed to `comp-kuzu` / `comp-find --corpus aws`.
+**SO AN AGENT DISCOVERS AWS RESOURCES BY READING THE SERVED GRAPH, NEVER BY RUNNING A DERIVE. `/legacy-transform` IS
+A READER.** `docs/architecture/NFRA_GRAPHS.md` section 4 states the same doctrine. **Round 3 does not get to re-open
+this**, and a design that shells out to a derive is refused on his word, not on mine.
+
+### 2. THE FIRST ACT IS A MISSING CANONICAL ENTRY, AND IT IS SMALL
+
+`NFRA_COMPEFFICACY` captured `comp-which` asked literally *"What AWS resources exist + how are they typed/connected?"*
+It returns **78 ranked rows with no winner** -- `comp-iam` 1.60, `comp-keys` 1.55, `comp-blast` 1.52, then
+`comp-estate` / `comp-find --corpus aws` / `comp-kuzu` tied at 1.50. **BY `NFRA_GRAPHS` section 7 AC1 -- "exactly one
+`canonical` entry per distinct graph use-case" -- A SIX-WAY TIE ON THE INVENTORY QUESTION IS A MISSING CANONICAL
+ENTRY.** Round 3's first cell adds it to `org/modules/graph/graph-call-manifest.yaml`. **This is the whole reason the
+estate has six tools and no answer: nobody declared which one answers this.**
+
+### 3. THE INSTRUMENT ASSIGNMENT -- measured, per question, so no cell has to re-derive it
+
+| the question | the instrument | why it, and its measured limit |
+|---|---|---|
+| WHICH resources compose the subject | **`comp-find --corpus aws`** | `src=full-derive` on **217 of 217** LAMBDA nodes; prints a **VINTAGE**, a **DENOMINATOR**, and a **`drift_class`** per node incl. `LIVE-no-DECLARED` (15 today). The only surface already carrying the derived-vs-declared discriminator as a FIELD |
+| relations between them | **`comp-kuzu`** | 40+ populated edge types; `TRIGGERS` 177, `ROUTES_TO` 115, `INVOKES` 43 |
+| what FIRES a compute resource | **`comp-trigger`** | almost entirely derived, denominator on **every** path incl. misses, typed rc, never collapses unavailable into absent. Limit: EventBridge rules + Scheduler schedules, ONE region |
+| who is AUTHORIZED on a resource | **`comp-iam live` / `reconcile` / `simulate` ONLY** | graph-primary or delegating the verdict to AWS's own evaluator, and refusing stale with rc=3 |
+
+**AND THE EXCLUSIONS ARE PART OF THE ASSIGNMENT.** `comp-iam`'s `gaps` / `roles` / `services` / `stats` are
+**REFUSED as discovery sources**: their population is `lambda-source-map.json`, and they are precisely the subcommands
+that print **no plane banner and no scanned-trees denominator**. `comp-estate` is REFUSED as a resource source: it
+answers from `estate-coverage-resolver.json`, `generated_at` **2026-08-20**, `last_review` **2026-07-30**, regeneration
+**EXPLICITLY PARKED (CTO 2026-08-14)** -- it cannot see a Lambda created since August. `comp-routes` is REFUSED as a
+live-routing source: **zero AWS calls, Terraform-plane only**, documenting 23 CloudFront behaviours against **29 live**.
+
+### 4. THE HAND-SURFACE RULE -- the answer to his danger-zone question, as a buildable bar
+
+**Every hand-maintained input this design leans on MUST either (a) carry the `comp-lambdamap` guard -- checked against
+TWO INDEPENDENT PLANES on every run, raising a named drift class -- or (b) be DECLARED in the run's output with its
+date, its owner, and the condition that un-defers it.** There is no third option, and a surface meeting neither is not
+an input.
+
+**`comp-lambdamap` IS THE TEMPLATE AND IT ALREADY EXISTS**: it checks `lambda-source-map.json` against Terraform
+stanzas AND on-disk dirs every run, raising `MISSING_ENTRY` / `ORPHAN_ENTRY`. Its own blind spot is narrow and
+NAMEABLE -- a console-created Lambda in neither plane -- which is what a declared limit looks like.
+
+**MEASURED BY THIS SEAT, why the rule is not theoretical:** `lambda-source-map.json` holds **216** entries against
+**217** live. **The totals nearly agree while 19 NAMES DISAGREE** -- 10 live absent from the map, 9 map entries with no
+live function -- and the sharpest is a RENAME the map never followed (`m365-ms-ingest-liveness` /
+`m365-otp-liveness` in the map; `opal-ms-ingest-liveness` / `opal-otp-liveness` live). **A READER COMPARING COUNTS
+CONCLUDES THE MAP IS CURRENT.**
+
+**The surfaces round 3 must NOT lean on without (a) or (b), each measured:**
+
+- `CLASSES` (`comp_aws_cli.py:1361-1394`) -- a closed **30-type** hand list that is the ceiling on the entire cloud
+  graph and everything querying it, **undated, no re-census trigger**. An unmodeled service is invisible while the
+  graph publishes clean at a fresh vintage.
+- `_AWS_MANAGED_POLICY_ACTIONS` (`extract_iam.py:91-113`) -- 22 hand-typed policies that **SHADOW THE LIVE API**:
+  static table first, disk cache second (2026-07-08), `iam:GetPolicy` third, and nothing in the output says which was
+  consulted.
+- `_ACTION_VERB` (`:1960-1974`) -- **7 services**, the entire basis for `READS`/`WRITES`.
+- `TF_SCAN_ROOTS` (`:2105-2109`) -- 3 paths, undated; its own comment: *"Anything outside them is INVISIBLE to every
+  comp-iam verdict."*
+- `_AWS_CLI_S3` (`:671-683`) -- **no sentinel**: an unmatched CLI verb is indistinguishable from a file with no calls.
+- `comp-freshness`'s **107** cadence entries across five configs, wholly undated; the DynamoDB config untouched since
+  **2026-05-11**.
+
+### 5. THE COVERAGE DENOMINATOR -- his word "athletic", made mechanical
+
+**EVERY RUN PRINTS, PER NODE_TYPE, ROWS-AGAINST-TOKEN-BEARING-LIVE-NODES, PLUS THE GRAPH'S VINTAGE.** I adopt
+`2.0.0_SA_COO~G`'s form from 98031 verbatim as `FWD-1`'s acceptance arm -- it was better than my own wording. **THAT
+IS THE ARM THAT CONVERTS `flow.current.md`'s COMPUTE "(none)" FROM A CLAIM ABOUT THE WORLD INTO A STATEMENT ABOUT THE
+INSTRUMENT**, which is exactly what `FWD-1`'s ACCEPT demands when it forbids *"a gap the contract left blank WITHOUT
+SAYING SO"*. Cost: one `comp-find` per run.
+
+**AND THE RUN MUST IMPOSE ITS OWN AGE THRESHOLD.** `comp-kuzu` has **no staleness guard, deliberately** -- the
+vintage is in-band, never in the rc, and its own contract says *"an rc-only caller CANNOT tell a current answer from an
+old one; read the line."* A reader that checks only the exit code inherits unbounded staleness.
+
+### 6. HIS FINAL STEP (consumers + portal visibility) NEEDS A REPAIR BEFORE IT NEEDS A WALK
+
+- **`SERVED_FROM` = 27, and all 27 land on the WRONG NODE CLASS.** Measured by me at the graph; `NFRA_CLDGRPH` W4-S7
+  records the same 27 as `ServedURL-SERVED_FROM-> S3_BUCKET_POLICY`, not `S3_BUCKET`. **Row `S31j` records that two
+  scorers disagree on which shape is canonical and the WRONG-CLASS LANDING WAS "ADOPTED AS CANON IN A SCORED
+  ARTIFACT."** So portal-visibility has a verified-but-misaimed instrument, and the repair is a round-3 item.
+- **`STORED_IN` is populated and meaningless**: 955 edges that are `191 sources x 5 targets` -- a cross-product,
+  *"never 955 facts"* -- with **`STORED_IN_RESOLVED = 0 of 955`**, because targets are ARN-grain and `S3_BUCKET`
+  identity is NAME-grain. *"None ever has resolved."*
+- **Route-to-lambda IS sound** (`ROUTES_TO` 86-115), so the consumer hop is buildable today where the artifact hop is
+  not.
+- `TRIGGERS` was **0 across the entire live graph** until an IAM grant landed 2026-09-04, while Terraform declared
+  real targets. **A relation reading zero is a question, never an answer** -- round 3 treats every empty relation as
+  UNVERIFIED until a positive control fires.
+
+### 7. TWO PIECES OF HISTORY THE DESIGN INHERITS
+
+**`comp-adapter-audit` WAS DELETED FOR EXACTLY THIS FAILURE**, and its retirement reason is the bar in one sentence:
+*"hand-frozen coverage denominator (19 of 122 adapters, censused 2026-07-10) decayed silently as the portal grew -- the
+dangerous quadrant."* **This estate has already paid for this lesson once.**
+
+**`comp-surface-check` was retired with NO SUCCESSOR** -- it was the SEV1 critical-surface guard for model
+portfolios, benchmarks and ADVI. That slot is empty today. Not round 3's to fill, named so it is not re-discovered.
+
+### 8. WHAT IS NOT RULED HERE
+
+The `MDPF_CANON`-vs-49F subject is Andrew's, with RCN-0009 delivered as its input. **The `FWD-6` amendment, if any,
+stays HELD** pending his rehearsal-vs-closing word. `4.0.0_SA_CRO` holds the pipeline-walk brief and the two interim
+scans; the integration carrier for that brief is mine and is not pre-decided here. **No gate is created by this
+ruling** -- it is a design requirement for a cell `2.0.0_SA_COO~G` cuts, not a refusal any tool enforces.
