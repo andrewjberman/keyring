@@ -3076,6 +3076,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "Orders and evidence across this project cite out-of-repo artifacts as if they persist: OG-v-3's retention clause ('kept until OG-v-4 has graded'), OG-i-3's source-map citation, and OG-v-4's actual- answers directory. CLAUDE.md 22a treats a build-input source map as the instrument for a deployed-bytes claim.",
     "world_is": "Every out-of-repo data path this project ever cited is gone -- 16 of 16 -- while the one live worktree survives, so this is not a broad temp sweep that also took a worktree but something that removed the DATA trees specifically or that they simply never outlived the sessions that made them. The consequences differ by artifact and are NOT uniform: the SALT is unrecoverable and blocks a criterion (S42); QUALIFIED_VERSIONS' content survives in-repo and blocks nothing; the OG-i-3 source map costs RE-VERIFIABILITY of a completed grading rather than its validity. A single 'the temp trees are gone' sentence would flatten three different consequences into one alarm, which is why each is stated with its own.",
     "notes": "ARMED, disarm_owner this lane, and deliberately NOT BLOCKING -- S42 carries the blocking half and this row is its population. FOR THE CVO AT L9, which is the practical reason to file it: any criterion or result-file claim resting on a `C:/tmp/nfra-oplgtw-*` path CANNOT BE RE-VERIFIED, and the citations are enumerated above so nobody has to re-derive which ones. That is a property of the evidence's repeatability, not of its correctness at grading time. NOT CLAIMED: what removed them, and whether any worker violated a retention clause -- unmeasured, and the remedies do not depend on it. THE CARRY, which S42 stated for one file and this row measures for a surface: AN OUT-OF-REPO ARTIFACT HAS NO GUARD, NO VINTAGE AND NO WITNESS. The estate's controls -- the freeze, the gates, the worktree discipline, the commit record -- all stop at the repository boundary, so a cell that puts something outside it has chosen a store with none of them. COST: one census per project that cites an outside path. NON-APPLICATION: an out-of-repo artifact that is DERIVED and re-derivable from in-repo pins, which is exactly what QUALIFIED_VERSIONS turned out to be and what the SALT is not."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-18T13:32:53Z",
+    "one_line": "TO-OG-v-4's WORKER FACE names `probes/og_v4.py` as an existing probe for every mechanical criterion, but no such file existed at hand-off in this slot's deliverables/probes/ (only og_v1.py, og_v3.py, og_z4.py were present) -- PHASE 1 required creating it from scratch, implementing ONLY the AC8 branch (usage error on any other id), since AC1-AC7/AC9 belong to PHASE 2's hand-off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ before writing: `ls org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/` at this worktree's HEAD (15edf9f07b) listed exactly `og_v1.py`, `og_v3.py`, `og_z4.py` -- no `og_v4.py`.",
+        "The order's own AC1-AC9 invocation lines all name `probes/og_v4.py` as if already present, and AC8's own invocation (`timeout 300 .venv-og/Scripts/python .../probes/og_v4.py AC8`) cannot run without it.",
+        "Written this turn at org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py, following og_v3.py's own PASS/FAIL verdict-line pattern; only `ac8()` is implemented -- `main()` returns a usage error (rc 2) naming PHASE 2 for AC1-AC7/AC9, never a fabricated PASS/FAIL for a criterion this hand-off does not own.",
+        "AC8's invocation ran successfully against this new file this turn: `VERDICT: PASS-OGV4-AC8`, rc=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-v-4 WORKER FACE: 'The probe for every mechanical criterion is .../probes/og_v4.py, taking the short id, printing its measurement with its denominator, then exactly one line VERDICT: ...' -- phrased as a fact about an existing instrument, not an instruction to build one.",
+    "world_is": "The file did not exist in this slot's deliverables at hand-off; PHASE 1 could not satisfy AC8's own invocation without first writing it. Only the AC8 branch is implemented, matching this hand-off's exact scope (AC1-AC7, AC9, J1, J2 belong to PHASE 2 and are refused here with a usage error, not graded).",
+    "notes": "INERT: no future-harm mechanism -- the file exists now, is committed with this drain, and PHASE 2's worker extends the same file to add the remaining AC branches (a normal continuation, not a defect to disarm). Filed for FORM per Rule 22's step-7 trigger (had to do something the order's own wording implied was already done); no significance judged. COST: none beyond this row. NON-APPLICATION: a future hand-off finding AC1-AC7/AC9 unimplemented in this file is not a surprise -- it is exactly what this row states PHASE 1 left undone."
   }
 ]
 ```
