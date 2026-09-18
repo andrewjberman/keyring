@@ -211,3 +211,43 @@ why. Card B below closes this.
 `default_daily_article_counts` over ten sample names; the `publication-links/v1/` prefix listing; the live
 `TRENDING_CHATTER`, `BREAKOUT_PRICE` and `TRENDING_PRICE` generations read row by row from
 `opal-harvest-security-metrics`.
+
+
+---
+
+## 9. UPDATE 2, 2026-09-18 ~15:2xZ -- header coverage measured, and DEV was never meant to deploy
+
+The two checks `1.0.0_SA_CTO~Z` routed back to this seat (msg 23675), plus the CARD 5 wording.
+
+### 9.1 Security-mode header coverage, over the 34 keys under `derived/model_block/`
+
+| header line | served or present | source, and why the rest are missing |
+|---|---|---|
+| **Description** | **12 of 34** served | Measured with the adapter's OWN `read_description`. All 12 come from the drafting document's `company_description` section. The model-block route never serves: `CIE_DES`, the one description scalar the adapter looks for, is on 0 of 34 blocks -- the model-block pull does not request it. |
+| **Posture** | **33 of 34** objects in `posture/v1/` | Up from 2 served this morning: `AMGT-rk-22` is landing them now. Served count follows once the adapter reads them; not re-measured on the served plane here. |
+| **Management** | **12 of 34** objects in `management/v1/` | Also rk-22, still landing. |
+| **News feed** | **3 of 34** | The SAME source gap as chatter (F1): `publication-links/v1/` holds BA, COST and HD only. |
+
+**Two new gaps from this.** (9) The description's primary route is dead: adding `CIE_DES` to the model-block pull's
+field list would serve a one-line description for every covered name without any model call -- the cheapest fix on
+the whole panel, and it needs only a field added to an existing pull. (10) The news feed and the chatter lists are ONE
+gap, not two: both read `publication-links/v1/`. Build item 7 closes both.
+
+### 9.2 Why DEV deploys nothing -- by design, not by fault
+
+Read from `portal/.github/workflows/`: `ci.yml` runs on `DEV` and has NO deploy step; `deploy.yml` runs ONLY on
+`PROD` and is the one workflow that syncs to S3 and invalidates CloudFront; `promote-to-prod.yml` prepares the PROD
+pull request. **There is no DEV environment to deploy to.** So build item 6 rested on a false premise and is
+restated: the red CI on DEV stays its own owned item, and the ONLY path to a user is the PROD promote -- which Andrew
+has deferred (card D) and which first needs a CTO+COO never-widen pair. A "page check on DEV with a real login"
+cannot happen because nothing serves DEV; the page can be exercised only locally or after a promote.
+
+### 9.3 CARD 5, in the words Andrew actually saw
+
+The label "CARD 5" was fabric shorthand; Andrew met it first in this brief and did not recognise it. The question
+`2.0.0_SA_COO~Z` put to him at 13:09Z, read from the commit @`ad2d1253be`, was in plain words:
+*"Run the management/posture producers over the full 33-name keyed population? (yes/no)"* -- and he answered
+*"yes do it"*. That is the same act this seat re-asked him in plain words. `1.0.0_SA_CTO~Z` (msg 23680) reads it as a
+label that did not land rather than an approval not given, and says so as a reading; this seat agrees and still
+treats it as his to confirm. **Lesson carried forward in this series: every card is named by its QUESTION, never by
+its number, in anything Andrew reads.**
