@@ -2469,6 +2469,54 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "The MCP contract implied by every caller in this codebase that inspects `result.isError` to decide success/failure (this test's own `h_._tool()` at tests/test_principal_cutover.py:342-353, and this cell's own AC1-3 tests' `run_query()` helper) -- a denied/refused tool call sets isError=True.",
     "world_is": "app/tools.py's `_PolicyGuardedMCP.call_tool()` returns app/data_entitlement.py's raw guard-denial dict as the tool's structured result without ever constructing a `CallToolResult(isError=True, ...)`, for EVERY tool this dispatch guard denies (a revoked/restricted profile, an unclassified tool, a scoped-identity refusal, a write-class denial -- every `guard_denied: True` dict this file and app/integrations/base.py's parallel run_integration_tool build). A caller trusting `isError` alone, not the payload shape, reads such a denial as a success. Not this cell's defect and not caused by this cell's fix; only exposed by it, per the grounding above.",
     "notes": "ARMED (best-evidence, not confirmed live): this chokepoint is unconditional on every registered tool, unlike this cell's own Schwab-scoped findings. The remedy (app/tools.py `_PolicyGuardedMCP.call_tool()` wrapping a `guard_denied` dict into a proper `CallToolResult(isError=True, ...)` before returning it) touches app/tools.py and app/data_entitlement.py, neither in this cell's <paths> grant and neither this cell's task (HALF ONE is the dim_asset restriction only); named here, not repaired, per this order's own bound against widening to a second defect."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S19",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-18T02:44:00Z",
+    "one_line": "TO-OG-q-6's R20 wiring (query.py check_against_grant -> semantics.assert_grouping_preserves_identity) correctly refuses group_by containing business_date, which turns tests/test_schwab_query.py::test_ogq2_ac06's 'at_limit' group_fields case RED -- that case groups by ALL_POSITION[:10] (dim_position's own contract-field order), and business_date sits at index 1, so it was always inside the 10-field 'at the limit, should succeed' arm.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn on this cell's own edited worktree: `pytest -q infra/aws/ec2/opal-gateway/tests/test_schwab_query.py` -> `2 failed, 23 passed` (test_ogq2_ac06 and test_ogq2_ac20); test_ogq2_ac06 fails at test_schwab_query.py:462 `good = ok(world.query(at_limit))` with payload `{'error': {'code': 'INVALID_REQUEST', 'reason': 'group_removes_date_identity', 'where': 'group_by'}}`.",
+        "READ infra/aws/ec2/opal-gateway/tests/test_schwab_query.py:49 `ALL_POSITION = tuple(CONTRACT['fields']['dim_position'])` and org/standards/NFRA_OPLGTW_CONTRACT.json `fields.dim_position` at this commit -> `['account_ref','business_date','cusip',...]`, index('business_date')==1, so `groups[:10]` (the case's 'at_limit', asserted to SUCCEED) and `groups[:11]` (the 'over', asserted to be REFUSED for count-of-fields reasons) BOTH contain business_date.",
+        "READ app/integrations/schwab/semantics.py:173-181 `assert_grouping_preserves_identity` (OG-q-3's own code, unedited by this cell) -- its own docstring states the rule is 'Refused outright, independent of query.py's own grammar check', i.e. this test's OLD expectation (group_by=[...,'business_date',...] succeeds when under the field-count limit) is exactly the C3 R20 gap this cell's task order (ruling R-OG-18) was cut to close, not an interaction this cell introduced by choice.",
+        "Re-run confirmed via this cell's own probe: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q6.py AC6's informational regression pass, this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own BOUNDS text: 'tests/test_schwab_query.py ... are NOT yours -- other cells', merged or open. A needed change there is a BLOCKING row.'",
+    "world_is": "test_schwab_query.py::test_ogq2_ac06 now fails because it asserts the PRE-R20 behaviour (grouping by business_date among up to 10 fields succeeds) as correct; C3 R20 says it must always refuse. This cell cannot edit test_schwab_query.py (not its <paths>), so the test stays red until its owner updates the 'at_limit' fixture to exclude business_date from the group_fields case (or asserts a refusal there instead).",
+    "notes": "ARMED: a real, committed test-suite regression (not a dormant-feature latent risk like this cell's other C3 rows) -- whoever next runs the full opal-gateway suite sees this red. Not this cell's defect to fix (file outside <paths>); this cell's own AC1..AC6 are unaffected and all PASS. Remedy: update test_ogq2_ac06's 'at_limit' group_fields fixture to a field list that excludes business_date (or move business_date to the 'over the limit, refused' arm), the issuer's or that file's owning cell's call."
+  },
+  {
+    "id": "NFRA_OPLGTW-W5-S20",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~5",
+    "surfaced_at": "2026-09-18T02:45:00Z",
+    "one_line": "TO-OG-q-6's R24 wiring (integration.py SchwabService.query() -> semantics.assert_unique_grain, rows mode with every grain field requested) correctly refuses a duplicated source grain even on a SINGLE page, which turns tests/test_schwab_query.py::test_ogq2_ac20's one-page duplicate-grain case RED -- that case asserts a duplicate-grain dataset SUCCEEDS once page_size is large enough to avoid paging, the exact 'silent deduplication is acceptable if it fits in one page' shape C3 R24 forbids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn on this cell's own edited worktree: `pytest -q infra/aws/ec2/opal-gateway/tests/test_schwab_query.py::test_ogq2_ac20` -> FAILED at test_schwab_query.py:905 `one_page_dup = ok(dup.query(dict(q, page_size=50)))` with payload `{'error': {'code': 'UNAVAILABLE', 'reason': 'duplicate_source_grain'}}`.",
+        "READ infra/aws/ec2/opal-gateway/tests/test_schwab_query.py:895-906 @this commit -- the test builds `dup_rows = POSITIONS + [one extra row sharing (A1, 'AAA000001', 'AAA', 'L') 's grain fields]`, asserts the SMALL-page-size query `err(...)` (paging refused, the PRE-EXISTING `_grain_unique` paging guard, unrelated to this cell), then asserts the SAME duplicated dataset queried with `page_size=50` (one page, no pagination needed) SUCCEEDS -- i.e. the test's own design treats 'fits in one page' as license to skip the duplicate-grain check entirely.",
+        "READ this cell's own C3_CALL_PATH_CENSUS.md row R24 -- the census's own measured gap, this order's task table, and this cell's wiring in integration.py's query() (columns=['account_ref','cusip','l_s'] intersect the grain fields) apply sem.assert_unique_grain to `all_rows` regardless of page_size, exactly because C3's text ('produce unavailable, not silent deduplication') names no page-size exception.",
+        "Re-run confirmed via this cell's own probe: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~5/probes/og_q6.py AC6's informational regression pass, this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own BOUNDS text: 'tests/test_schwab_query.py ... are NOT yours -- other cells', merged or open. A needed change there is a BLOCKING row.'",
+    "world_is": "test_schwab_query.py::test_ogq2_ac20 now fails because its 'one_page_dup' case asserts success for a duplicated source grain merely because pagination is not needed; C3 R24 requires UNAVAILABLE regardless of page size. This cell cannot edit test_schwab_query.py (not its <paths>), so the test stays red until its owner updates that assertion to expect a refusal (or narrows the fixture so the duplicate-grain row is not among the requested/grain-visible columns).",
+    "notes": "ARMED: a real, committed test-suite regression (not a dormant-feature latent risk) -- whoever next runs the full opal-gateway suite sees this red. Not this cell's defect to fix (file outside <paths>); this cell's own AC1..AC6 are unaffected and all PASS. Remedy: update test_ogq2_ac20's one-page duplicate-grain expectation to a refusal, the issuer's or that file's owning cell's call."
   }
 ]
 ```
