@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v4",
+ "decomp_version": "v6",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_CANON/prd/LGIC_CANON_PRD.md@5b2336a5e4",
  "prd_half_hashes": {"brief": "SIGNED 4.0.0_SA_CRO, current at v1.3 (prd-signoff.py status, read at the L6 cut 2026-09-15)", "ratified-text": "SIGNED 3.0.0_SA_CVO, current at v1.3 (ENDPOINT and CONTRACTS unchanged)"},
@@ -403,6 +403,121 @@ none of R3, R8, R15, R21 (`judge-compare-r2.md` s.2). `CN_TREE_R3.md`, 23 planes
 **Fixed inputs, issuer-written at the cut** (`deliverables/2.0.0_SA_COO~G/fixed_inputs/r3/`): `check_canon_r3.py` v2
 (the cell arms, a GREEN and a DOCTORED fixture per core, 35 of 35 arms behaved) and `CN_TREE_R3.md`. Round 2's
 `CN_SEVERITY.md` and `CN_SEVEN_RULES.json` are read in place.
+
+## 0f. v6 -- THE ROUND-4 RECUT (2026-09-18), AND THE CORRECTION OF THIS DOCUMENT'S OWN STALE GATE
+
+**Authority.** PRD **v1.7 @`1bd1963781`**, ADMITTED, both halves SIGNED and `current` -- read at this cut with
+`python .tools/prd-signoff.py status LGIC_CANON`, not carried forward. Plus `1.0.0_SA_CTO`'s ruling **R-43**
+@`50e51bd8d3` and this lane's law edit @`a0a63bcc1a` that produced it.
+
+### THIS DOCUMENT WAS THE STALE CARRIER. THAT IS WHAT v6 IS FOR.
+
+Sections 0, 0d, 0e and s.3 say that **`C6` STAYS NOT CUT** on **Andrew's G-N word** and on `ADVI_FIRMBKTS`'s router
+repoint (A-8) -- **ten times, measured: 7 occurrences of `NOT CUT` and 3 of `not cut`.** (A handed report of this said
+"four places"; this seat counted and it is ten. An inherited count is a subset measurement until you ask what
+population it enumerated.) **Both holds were lifted in the PRD and neither lift reached here.**
+
+- **G-N.** PRD v1.7, verbatim: *"Gate G-N is lifted by that word"* -- Andrew's own sentence of 2026-09-16 ~18:2xZ,
+  *"...because we don't have a new firm to test and I don't feel like messing around making demo cruft."* The PRD
+  goes further and says so about a sibling document: *"the CTO's round-3 analysis @`d60e80f68c` wrongly named it as
+  still open and is corrected by this addendum."* **The stale-carrier problem was visible in the PRD before this
+  document noticed it about itself.**
+- **`ADVI_FIRMBKTS`.** Ruling **R-34** (Andrew-direct 2026-09-17 ~19:0xZ, VERBATIM: *"2 doesnt matter right now this
+  should not be a holdup if its a fwd it should not be"*): *"no step of C6 waits on `ADVI_FIRMBKTS`"*.
+
+**THE ASYMMETRY IS THE DEFECT, and the two measurements below have DIFFERENT AUTHORS -- said so rather than merged
+into one block, because a printed denominator certifies its own sweep and lends nothing to the line beside it.**
+
+`1.0.0_SA_CTO`'s own census (R-43 limb 2), over 1,087 files under three roots:
+
+```
+  files mentioning G-N ................................................ 22   (12 of them COMPLETED task orders)
+  files mentioning ADVI_FIRMBKTS ...................................... 47
+  files mentioning R-34, the LIFT ...................................... 6   (only 2 inside this project)
+```
+
+**THIS SEAT'S own count, in THIS DOCUMENT at HEAD before v6** (52,714 bytes):
+
+```
+  occurrences of G-N ................................................... 11
+  occurrences of ADVI_FIRMBKTS .......................................... 6
+  occurrences of R-34 ................................................... 0
+  occurrences of CARDED ................................................. 0
+  occurrences of carded, lower case ..................................... 0
+```
+
+**A gate propagated to 22 carriers and its lift reached 2.** The lower-case check is in the list because "CARDED is
+absent" and "the concept is absent" are different claims, and only the second one justifies a re-cut.
+
+⛔ **AND THE REMEDY IS ONE DOCUMENT, NOT A SWEEP.** Of the 22 carriers, **all TWELVE task orders** mentioning G-N read
+`complete`. **A completed order is FROZEN HISTORY and is CORRECT at its vintage** -- a round-1 analysis should say what
+was true in round 1, and rewriting it would falsify a record rather than repair one. Only a carrier read as CURRENT
+DIRECTION can be stale, and **exactly one qualifies: this document.** R-43 states this in the ruling itself precisely
+so a careless reading of it does not produce a sweep.
+
+⚠ **THE NEAR-MISS, recorded because it is the more useful half.** Reading THIS DOCUMENT first, `2.0.0_SA_COO~G`
+drafted the OPPOSITE claim into `org/XXX.md` -- that an **unlifted** Andrew gate held C6 -- which would have parked
+this project on a hold he had already released, in the file every seat reads at startup. It was caught by verifying
+the seat's own sentence AT THE BYTES before committing it, not by re-reading it. **R-43 limb 1: the PRD is the
+AUTHORITY over a decomposition on a gate.** The PRD is the ADMITTED artifact, hash-bound and both-halves-signed; a
+decomposition is cut FROM it, so a derived copy contradicting its source about a gate is stale by construction and the
+direction of correction is never in doubt.
+
+### THE SUBJECT EXISTS NOW, WHICH IS THE OTHER THING THAT CHANGED
+
+`C6`'s subject was always *"a `LGIC_LGCTFM` practice wave over an existing firm's subject (that project's round-1
+run)"*. **LGIC_LGCTFM round 1 is TERMINAL at 14 of 14**, graded by `surprise-row-gate.py`'s own `_proof_terminal` with
+a live negative control, and it minted FIVE run directories under
+`workflows/legacy_transform/blackdiamond-49financial/` -- the coherent, R-40-hash-bound one being
+`20260918T011619Z-8db9eb1` (`contract.json` `33204e29839de89af81fb293317cce3ccdf2266d`). So the wait this document
+recorded is satisfied, and it is satisfied by an artifact with a content hash rather than by a label.
+
+### THE CELL COUNT
+
+```
+  cells at v5.1 ......................................................... 12
+  plus round 4's one ..................................................... +1   (C6, previously NOT CUT)
+  = cells in this decomposition ......................................... 13
+  round 4 runs exactly one: C6
+```
+
+| cell | what it does | rulings | serves | level | slot |
+|---|---|---|---|---|---|
+| `C6` | **the checklist's FIRST REAL RUN.** Take the 49 Financial subject through `infra/logic/10_ONBOARDING_CHECKLIST.md` end to end on LGIC_LGCTFM's practice wave: the identity row, the bucket from the template, IAM under the scope-derived fence, pipelines through `key()` and `address()`, the routes, and the served dashboard. Record the run STEP BY STEP with the surprise rows it raised. **Any step that genuinely needs a not-yet-minted firm bucket is CARDED with its owner and its reason and the run CONTINUES** -- it is not a stop. | R-34, A-8 (released), G-N (lifted) | FWD-5 | 0 | `~1` |
+
+**THE GRADING RULE IS R-34's AND IT IS QUOTED, NOT PARAPHRASED:** *"The outcome is graded on what the wave reaches
+plus its carded set -- `reached + carded == steps`, denominators printed."* So `C6`'s bar is **not** "every step
+completed"; it is **every step either REACHED or CARDED, with the three counts printed and reconciling.** A run that
+stops at the first unreachable step fails this bar, and so does a run that silently skips one.
+
+⛔ **FWD-5 DOES NOT CLOSE ON THIS CELL ALONE, and the cut says so rather than letting a later reader discover it.**
+Its DONE-WHEN, quoted from the ENDPOINT card: *"EXERCISED -- the checklist has been run end to end on a LGIC_LGCTFM
+practice wave over an existing firm's subject, and that firm's people can see their dashboard at the end."* The
+dashboard half is a SERVED-PLANE condition, which is exactly why R-34 grades on reached-plus-carded: a step the
+practice wave cannot reach is carded with an owner, and FWD-5 reaches EXERCISED when the carded set is closed, not
+when this cell drains.
+
+### WHAT THIS ROUND DOES NOT CARRY
+
+1. **No other cell is re-opened.** FWD-1, 2, 3, 4 and 6 are carried by cells already cut and graded; round 4 is one
+   cell.
+2. **Nothing in the twelve completed task orders is rewritten**, per R-43's own remedy clause.
+3. **No demonstration firm is made up.** Andrew's word is explicit about that, and it is the reason G-N was lifted
+   rather than satisfied.
+4. **The served dashboard is READ, never written.** No apply, no promote, no route change; the portal freeze is
+   untouched and stays Andrew's.
+
+### THE SLOT PLAN
+
+```
+  slot ~1  CN-c-6-r4    the checklist run record + its cards + the surprise rows it raises
+```
+
+`fanout: 1 slot over 1 connected component, cap 8, reason: round 4 is a single cell with no intra-round dependency;
+level L0 = {C6}. One cell, one slot, no queue.`
+
+**Its dependency is EXTERNAL and already met:** LGIC_LGCTFM round 1 terminal, which the L6 cut states with the run id
+and the contract hash rather than with the project name.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
