@@ -326,3 +326,63 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
 ```
 
 -- 3.0.0_SA_CVO
+
+## Round 4 -- remediation plane
+
+```json
+{
+ "id": "LGIC_CANON-S19",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ONBOARDING CHECKLIST'S STEP 11 SAYS THE NAMING KILL SWITCH IS ABSENT, AND THIS SEAT CREATED IT LAST NIGHT. infra/logic/10_ONBOARDING_CHECKLIST.md:315 reads 'at this vintage the kill switch org/mcp/naming-gate.enforce is absent, so the stage prints WARN where it would refuse, and exits 0'. That file EXISTS at HEAD -- created @d181e0ac5a during LGIC_ENFORCE's round 3 -- so the naming stage now REFUSES where the checklist tells a reader it will WARN and pass. Found while measuring the checklist's step denominator (16 steps) for C6's cut, before any C6 order existed.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S19",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S32"
+ ],
+ "remedy": "The correction rode C6's own cut, exactly as the row's owner specified: the step's text is corrected inside the cell's grant on infra/logic/10_ONBOARDING_CHECKLIST.md, citing this row. Verified at the bytes by 3.0.0_SA_CVO. The general lesson is larger than the two lines: an onboarding checklist is a claim about the estate, and running it is the only thing that finds the claims that have gone false.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T06:35Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-W1-S7",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "Step 13 tells a reader that LGIC_ENFORCE cell EN-s-1 is pending and to write 'EN-s-1 open'; both LGIC_ENFORCE.TO-EN-s-1 and its -r2 sibling read <status>complete -- proof-of-spec VALID (rc=0) at this cell's HEAD, re-verified by re-running proof-of-spec-check. Running the now-available census mode surfaces a SECOND, unrelated gap: it stops at the first RAISE (an unrelated resource, 'sentiment-query-api') before reaching any 49financial/49f-carrying row.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-W1-S7",
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md row LGIC_CANON-C-S32"
+ ],
+ "remedy": "The correction rode C6's own cut, exactly as the row's owner specified: the step's text is corrected inside the cell's grant on infra/logic/10_ONBOARDING_CHECKLIST.md, citing this row. Verified at the bytes by 3.0.0_SA_CVO. The general lesson is larger than the two lines: an onboarding checklist is a claim about the estate, and running it is the only thing that finds the claims that have gone false.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T06:35Z"
+ },
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true
+}
+```

@@ -490,3 +490,69 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
 ```
 
 -- 3.0.0_SA_CVO
+
+## Round 4 -- L8/L9: C6R4-AC8 graded, three rows dispositioned
+
+```json
+{
+ "id": "LGIC_CANON-C-S31",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T06:35Z",
+ "one_line": "L9 GRADE RECORD, round 4: C6R4-AC8 PASS -- the run is a genuine exercise and not a transcription, and the proof is that it corrected the checklist twice. FWD-5 is NOT claimed EXERCISED by this grade.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "This is the one judgment criterion of round 4 and it had not been graded: a census of every grade-carrying adjudication row in this project returns 0 records for C6R4-AC8, the last being C-S26 from round 3. THE GRADE IS PASS on both halves of the bar, each re-derived at the artifacts rather than read from the cell's account. The finding that decides it is the one the CTO's own analysis leads with and it is worth restating as a general fact: AN ONBOARDING CHECKLIST IS A CLAIM ABOUT THE ESTATE, and a claim nobody exercises decays silently while continuing to read as instruction. Two of this one's steps had gone false -- a kill switch it called absent, a cell it called pending -- and only running it found that. The carded set is 4 of 4 with owners and reasons, and Step 14's card is the one that shows the run's discipline: a SOVEREIGN input was missing and the cell STOPPED rather than defaulting it, which is precisely why G-N was lifted rather than satisfied.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/task-orders/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.md -- the bar read verbatim",
+   "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.proof_of_spec.json@d8edabc2aa -- the judgment row, which correctly offers no verdict",
+   "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/C6_RUN_RECORD.json -- reached 12, carded 4, each carded step with owner and reason",
+   "VERIFIED BY THIS SEAT at the live artifacts: org/mcp/naming-gate.enforce exists (614 bytes); LGIC_ENFORCE.TO-EN-s-1 and .TO-EN-s-1-r2 both read <status>complete; 10_ONBOARDING_CHECKLIST.md carries both corrections at :314 and :345, each citing its own row",
+   "A census of grade-carrying rows across this project's adjudication files: 0 prior records for C6R4-AC8"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "C6R4-AC8",
+   "instance": "org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/LGIC_CANON.TO-CN-o-5-r4.checklist-first-run.proof_of_spec.json@d8edabc2aa",
+   "verdict": "PASS",
+   "reason": "THE BAR ASKS TWO THINGS AND THE FIRST IS ANSWERED BY SOMETHING A TRANSCRIPTION COULD NOT HAVE PRODUCED: the run CORRECTED THE CHECKLIST TWICE, and this seat verified both corrections at the live artifacts rather than at the record claiming them. Step 11 told a reader the naming kill switch was ABSENT and the stage would WARN -- org/mcp/naming-gate.enforce EXISTS at HEAD (614 bytes, created @d181e0ac5a in LGIC_ENFORCE round 3), so the stage REFUSES, and a run following the step as written would meet a refusal the step does not tell it how to read. Step 13 told a reader EN-s-1 was pending and to write 'EN-s-1 open' -- both LGIC_ENFORCE.TO-EN-s-1 and its -r2 sibling read <status>complete, so the census mode was AVAILABLE and the cell RAN it. A step-by-step transcription carries a checklist's claims forward; only an exercise discovers that two of them had become false. Both corrections are landed inside the cell's own grant and each cites its own row (10_ONBOARDING_CHECKLIST.md:314 for S19, :345 for W1-S7), verified by this seat at the bytes. NOTHING WAS INVENTED, and the place that proves it is Step 14: it is CARDED precisely BECAUSE a SOVEREIGN portal-paths input was missing and the cell refused to default it -- the checklist's own INPUTS table says a missing sovereign input is a STOP, never a default, and no demonstration firm was made up, which is the exact thing Andrew's G-N lift was about. THE CARDED SET NAMES REAL, CLOSEABLE GAPS, 4 of 4 with an owner and a reason: Step 10 and Step 16 close when ADVI_FIRMBKTS's router repoint lands, both confirmed live and read-only for THIS subject (49financial's served objects are read from the LEGACY tier-first tree in opal-data-portal-v2, not from address() output); Step 13's gap is already corrected and its residue is a census that stops on an unrelated RAISE, closeable at the raised row under Rule 30 rather than here; Step 14 closes on Andrew's own input plus a register entry from the CTO. reached 12 + carded 4 == 16 of 16, which is R-34's bar met exactly as written. WHAT THIS GRADE DOES NOT SAY: that FWD-5 is EXERCISED. Its DONE-WHEN also requires the firm's people seeing their dashboard, an act outside this cell entirely, and the criterion's own text says so."
+  }
+ ],
+ "dismissal_reason": "This row grades one judgment criterion and adjudicates no investigation item; it is a grade record, per the schema's own note for this shape."
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-C-S32",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T06:35Z",
+ "one_line": "S19 and W1-S7 GRADUATED and DISARMED on their owner's own stated condition, verified at the bytes; W1-S6 DISMISSED as descriptive context whose pin turned out to be right.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S19 and W1-S7 name the same disarm condition in their own text -- that the correction RIDES C6's OWN CUT and is made inside the cell's grant on infra/logic/10_ONBOARDING_CHECKLIST.md -- and both conditions are MET: the checklist carries the Step 11 correction at :314 citing LGIC_CANON-S19 and the Step 13 correction at :345 citing LGIC_CANON-W1-S7. Both were ARMED for the right reason, stated by their author: the staleness was reachable BY THE NEXT ACT, because a run following those steps is the very thing C6 does. That is the distinction between a stale line that merely exists and one a reader will act on, and it is why these were not filed INERT. W1-S6 is DISMISSED: it measured a number in the issuer's own pinned context ('2 built: no steps'), found exactly 1 at the pinned base AND at the cell's HEAD alike -- so the count was off by one when pinned rather than drifting since -- and the number is explicitly CONTEXT under the order's own BOUNDS clause, read by no arm in the checker. The row stands as filed and the measurement stands beside it; nothing is owed. Filing it at all was correct under Rule 24's subtraction-over-recall applied to the issuer's own numbers.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md rows S19, W1-S6, W1-S7 -- read in full",
+   "VERIFIED BY THIS SEAT: comp-read over infra/logic/10_ONBOARDING_CHECKLIST.md finds both correction citations, at :314 and :345, in PROSE band",
+   "VERIFIED BY THIS SEAT: org/mcp/naming-gate.enforce present; both EN-s-1 orders read complete"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_CANON-S19",
+  "LGIC_CANON-W1-S6",
+  "LGIC_CANON-W1-S7"
+ ]
+}
+```
