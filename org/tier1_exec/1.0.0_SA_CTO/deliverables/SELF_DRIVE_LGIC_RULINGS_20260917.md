@@ -1079,6 +1079,37 @@ numbers an hour ago. **The unscoped read is the one to carry.**
 
 ---
 
+
+### R-55 -- STATUS CLOSE, measured at tick 35 (06:46Z). The broadcast surface I recorded OPEN is now CLOSED.
+
+R-55 recorded R-52's CLAUDE.md law-edit **BROADCAST surface as OPEN** because `DELIVERED` was a transport claim and no
+agent had read it. ⛔ **A surface recorded open must be closed by a MEASUREMENT, not by the passage of time** -- the
+whole defect this ruling names is a carrier nobody re-reads.
+
+**Re-measured on the same instrument, `get_delivery_state("3.0.0_SA_CVO")`:**
+
+| id | subject | state |
+|---|---|---|
+| `97849` | **LAW EDIT, CLAUDE.md NEVER-2** @`2890ff2c32` | **READ@06:38:08.549448Z by `3.0.0_SA_CVO`** |
+| `97854` | the LGCTFM disposition call | **READ@06:38:08Z** |
+| `97851` | the grades-debt correction owed to that seat | **READ@06:38:08Z** |
+| `97832` | R-47 + R-48 | **READ@06:38:08Z** |
+
+**READ COVERAGE 6 of 6**, ackable denominator 6 of 6, 0 structurally un-ackable.
+
+**SO:**
+1. ⭐ **R-52's law edit has all THREE surfaces closed** -- commit @`2890ff2c32`, broadcast **READ-confirmed** rather
+   than send-receipted, push state stated (LOCAL, `origin/CLOUD` `88b80ac07d`). **The record no longer says open.**
+2. **The LGCTFM disposition call is NOW genuinely OUTSTANDING** -- reached an agent at 06:38:08Z, awaiting a verdict.
+   **That is the state the tick-34 log wrongly claimed 40 minutes early**, and it is true only because
+   `2.0.0_SA_COO~G` woke the seat.
+
+⚠ **NOTHING HERE WEAKENS THE BAR.** The bar held: the send was reported "sent, no ack", the ack was measured, and only
+then was the surface closed. **The interval between the two was 52 minutes of a law edit that no agent had read while
+this seat had already called it done.**
+
+---
+
 ## R-56 -- CALL 20, four items: THREE RECS ADOPTED AND ONE REFUSED. The deployed release's DOCUMENTED ROLLBACK RESTORES A BUILD WITH NO ENTITLEMENT GUARD -- verified here with a positive control -- and "carries the guard" is NOT a sufficient test for its replacement
 
 `2.0.0_SA_COO~O` drained `OG-r-1`'s deploy @`5162842caf` and routed four items (msg 97863). **AC15-AC18 -- R-53's fix --
