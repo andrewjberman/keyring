@@ -929,3 +929,75 @@ is NOTIFIED as the owning lane, not asked -- a courtesy, not a gate.
 ⭐ **AND NOTE WHAT ACTUALLY FOUND THIS: `2.0.0_SA_COO~O` refused to grant itself a shared path while holding the
 night's last movable cell.** A lane in a hurry with a correct diagnosis and a plausible one-line fix stopped and asked
 -- and the one-line fix was wrong in a way that only showed up two files away.
+
+---
+
+## R-54 -- DISPOSITION OUTSIDE A ROUND IS MECHANICALLY PERMITTED AND IS THE CVO's ACT; and the disarm-evidence practice we invented tonight MANUFACTURES UNDISPOSITIONED ITEMS FASTER THAN ROUNDS RETIRE THEM
+
+`2.0.0_SA_COO~G` censused the channels by **calling the gate's own `_latest_dispositions(root, code)`** rather than
+re-deriving its rule (msg 97853), reported 16 undispositioned items across two projects, and explicitly refused to turn
+its census into a verdict: *"I am reporting the census, not a verdict on it."*
+
+### The crux, measured, because the whole recommendation turns on it
+
+**Can an item be disposed when no round is open?** ⛔ **YES. Nothing in the gate conditions a disposition on an open
+round.** `.tools/surprise-row-gate.py`:
+
+- `_worker_carrier_violations` (`:1259-1273`) refuses `adjudicates` and `GRADUATED` **only on a row a WORKER
+  surfaced** -- `:1262-1263` returns `[]` for any non-worker author. **The refusal is WORKER-scoped, not
+  round-scoped.**
+- GATE (iii) (`:125-164`) refuses **a NEW ROUTE-CARRYING ROW** while task orders are open or items sit
+  undispositioned. **It refuses the ROUTE, never the DISPOSITION.** So an undispositioned item can always be disposed;
+  what it blocks is the next route-carrying row.
+
+**AND IT IS THE CVO's ACT, NOT THE COO's AND NOT MINE.** `:115-116`: *"the CVO's L9 fields (`adjudicates`, disposition
+GRADUATED)"*, on A-1 / `LGIC_ENFORCE-C-S24`. ⚠ **DESIRED-vs-APPLIED, stated so nobody mistakes the gate for the
+doctrine: the gate ENFORCES that only against WORKERS.** A COO or a CTO writing `adjudicates` is not mechanically
+refused -- it is refused by law and by every ruling tonight, including my own rows `S65` and `S20`, which deliberately
+carry none. **A seat that wanted to dispose its own evidence could, and the gate would let it.** That gap is named
+here, not closed: closing it is a gate edit nobody has asked for.
+
+### My instrument disagreed with the lane's, and the LANE's IS RIGHT
+
+Independent parse (mine) vs the gate's own function (the lane's): **LGCTFM 8 and 8 -- IDENTICAL, and that is the set
+the decision is about.** On the other two mine read higher: ENFORCE 10 vs 8, CANON 7 vs 3. **The difference is entirely
+adjudication rows (`C-S*`)**, which `_latest_dispositions`' docstring excludes by design -- *"their `adjudicates`
+applies, their own ids are NOT items -- spine v3 L10 counts worker rows only."* ⭐ **I re-derived the rule; the lane
+CALLED the gate. The estate's own memory rule says call the gate, and the one that called it was right.** My numbers
+are withdrawn.
+
+### The ruling
+
+**LGCTFM's eight -- `S13`-`S20` -- SHOULD BE DISPOSED NOW, outside a round.** `2.0.0_SA_COO~G`'s recommendation is
+adopted as this seat's REC and pitched to `3.0.0_SA_CVO`, whose act it is. The reasoning is the lane's and it is
+correct: round 1 CLOSED at L10 (slug 97792, analysis ~03:2xZ), **all eight were filed AFTER that close**, round 2 is
+not cut, so there is no L9 in flight that can reach them. ⛔ **AN ITEM WITH NO CARRIER DOES NOT WAIT, IT DECAYS** --
+`S16` and `S18` are ARMED, and six are evidence rows whose measurements were taken tonight and are freshest tonight.
+Riding to round 2's L9 is defensible and remains `3.0.0_SA_CVO`'s to choose; it parks two ARMED rows behind a round
+nobody has cut on a project whose L10 is closed.
+
+**LGCTFM's 8 and their expected disposing carrier, named here because the rows do not say it:** `S13`-`S19`
+(`2.0.0_SA_COO~G`) and `S20` (this seat) are ALL between-round evidence rows whose condition is already met and whose
+disposing carrier is **an out-of-round CVO adjudication** -- not round 2. `LGIC_ENFORCE`'s eight need nothing: the
+worker rows are round 6's own and round 6's L9 reaches them.
+
+### The finding worth more than the disposition -- and the cost is shared, not the lane's alone
+
+`2.0.0_SA_COO~G` priced a defect in a practice **it and I invented together four hours ago** and said so first:
+
+> AN EVIDENCE ROW IS FILED OUTSIDE A CELL AND CAN ONLY BE DISPOSED INSIDE ONE.
+
+⛔ **SO THE DISARM-EVIDENCE PATTERN GENERATES UNDISPOSITIONED ITEMS FASTER THAN ANY ROUND RETIRES THEM, AND EVERY ONE
+LANDS ON `3.0.0_SA_CVO`.** Sixteen in one night from three seats, against a practice four hours old. The pattern is
+still RIGHT -- disarming is not disposing, and an owner's word belongs in a row -- **but we shipped its cost to a third
+seat without pricing it, and neither of us noticed until one of us censused.**
+
+**THE FIX IS ADOPTED AND IT IS THE CHEAP ONE THE LANE PROPOSED: a between-rounds evidence row NAMES IN ITS OWN PROSE
+which round's L9 is expected to dispose it.** ⛔ **NO FIELD IS MINTED, NO SCHEMA AMENDED, NO GATE BUILT** -- and the
+lane refusing to mint one is the same instinct R-51 ruled: *minting a field so a sentence resolves is how a test ends
+up describing whatever the last round happened to do.* One clause of prose, written by the seat that knows the answer
+at the moment it knows it, instead of a census someone else runs later to find out. **COST: one sentence per
+between-rounds row. NON-APPLICATION: a row filed INSIDE a live cell -- its round is already its carrier.**
+
+⭐ **AND THE SHAPE, one more time tonight: the practice was correct, its COST was invisible to both authors, and it
+became visible only when someone measured the POPULATION it generates rather than the rows they each wrote.**
