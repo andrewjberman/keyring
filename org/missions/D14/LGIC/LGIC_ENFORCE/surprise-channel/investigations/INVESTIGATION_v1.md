@@ -3842,3 +3842,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "hazard_standing": "INERT"
 }
 ```
+
+## Round 8 -- EN-m-39's own negative-arm population surfaces a %-style template outside round 7's brace-only scope
+
+```json
+{
+ "id": "LGIC_ENFORCE-W3-S17",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~3",
+ "surfaced_at": "2026-09-18T12:16Z",
+ "one_line": "PLACEHOLDER_CAMPAIGN_R6.json's S3Key row 'silver/%s/' (plane repo, two occurrences in that file) carries a python %-STYLE runtime substitution field with NO brace at all, so round 7's brace-only unsanctioned_brace instrument -- and this cell's key.template_detection, which promotes that same instrument to schema data -- both correctly class it ORDINARY under their stated (brace-only) scope, while it is shaped identically to the 15 key-format templates: a producer's own declared name carrying a runtime substitution field the census would otherwise grade as though it were a fixed name.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "MEASURED, this cell's own negative-arm population (M39R8-AC4's discrimination test): org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/PLACEHOLDER_CAMPAIGN_R6.json carries `current: 'silver/%s/'`, type S3Key, plane repo, canonical '{source}/{scope}/silver/%s/', reason NON_SYSTEM_PLACEHOLDER_TOKEN -- at TWO positions in that file (lines 1578 and 1713 at this tree).",
+   "template_detection's own test ({[^{}]+} brace tokens minus the four grade.placeholder sanctions) returns an EMPTY remainder for this row -- zero braces present -- so this cell's mechanism correctly classes it ORDINARY under the rule AS SCOPED. This is not a defect in this cell's field: round 7's own re-identification instrument is explicitly brace-only ('the row's own brace tokens MINUS the four ... sanctions'), and this field promotes that exact instrument unchanged.",
+   "NOT one of round 7's 15: LABEL_TRUTH_R7.json's key_template_rows enumerates 15 `current` values and 'silver/%s/' is not among them; round 7's re-identification instrument extracts only {...} tokens, which cannot see a %s field.",
+   "NOT RE-DECIDED: whether 'silver/%s/' IS a sixteenth key-format template is exactly the kind of significance call round 7 settled for the 15, and this cell's bounds forbid re-deciding it for any row. This row states the SHAPE only -- an S3Key row carrying a non-brace runtime substitution field exists in a carding record and is invisible to both round 7's instrument and this round's schema field, both by their own stated scope."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "R-62 (c) and this cell's key.template_detection state the discriminator as BRACE tokens specifically ({[^{}]+} minus the four grade.placeholder sanctions); round 7's LABEL_TRUTH_R7.json unsanctioned_brace instrument is stated the same way.",
+ "world_is": "PLACEHOLDER_CAMPAIGN_R6.json carries at least one S3Key row whose own `current` is a producer format string using a DIFFERENT substitution syntax (%s) that the brace-only instrument -- round 7's and this round's alike -- does not detect, so it remains classed as an ordinary NON_SYSTEM_PLACEHOLDER_TOKEN row rather than as a key-format template.",
+ "notes": "FORM, not significance, per this cell's own bounds ('the 15 rows' significance is not yours to re-decide'). NOT BLOCKING this cell: the order's discrimination bar is 15 of 15 templates selected and 91 of 91 tested ordinary keys correctly rejected, both met (TEMPLATE_VS_KEY_R8.json), and 'silver/%s/' is correctly rejected UNDER THE STATED (brace-only) SCOPE, so no arm here reads FAIL. ARMED because, left alone, the harm is through FUTURE NORMAL operation: if 'silver/%s/' (or a sibling) is in fact the same class of defect as the 15, it will keep being carded under NON_SYSTEM_PLACEHOLDER_TOKEN or graded as an ordinary key indefinitely, and neither instrument will ever surface it -- the exact shape W1-S70 names for the 15 themselves, one substitution-syntax over. THE DISARM IS A DOMAIN DECISION, not a worker's, for the same reason W1-S70 gives: either key.template_detection's rule widens to cover non-brace runtime substitution syntaxes (a %-format specifier or similar), or 'silver/%s/' and any sibling are separately measured and found to be something else (a stale row, a different producer convention). 2.0.0_SA_COO~G holds the disarm as the issuer already carrying the 235-row NON_SYSTEM_PLACEHOLDER_TOKEN cards this row's row sits inside. COST: none beyond this cell's own negative-arm read, already being run for M39R8-AC4's discrimination criterion."
+}
+```
