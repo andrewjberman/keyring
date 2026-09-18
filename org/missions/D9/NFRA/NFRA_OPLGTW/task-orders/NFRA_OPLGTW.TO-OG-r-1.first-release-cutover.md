@@ -80,6 +80,41 @@ the one-line fix this issuer proposed, which was wrong two files away:
 this issuer's own control set could not produce** -- it is the one that keeps the override audit trail in the main
 tree. Then continue the deploy: AC2 and everything downstream are unblocked by this fix.
 
+**THE THREE OPEN FAILS, RULED (R-56, msg 97864 @853a37edd1). Read this before touching anything.**
+
+**(a) THE LEDGER DISAGREES WITH ITSELF -- fix it THROUGH THE TOOL ONLY.** `deploy_ledger.py check` reads
+**DRIFT-DANGEROUS**: this entry says terminal (`CLOSED -- nothing stranded`) while legs `L1`, `L2` and `L3` carry
+NO proof, and it still reads OPEN stranded on those three. The tool's own words: *a NEVER#6 bypass wearing a
+compliance mask; the .md is a RENDERING of the sentinel -- never hand-edit it.* Record per-leg proof with
+`py -3.12 .tools/deploy_ledger.py close-leg` for each of L1, L2 and L3 from the evidence you already gathered --
+for the baked asset that is the ON-HOST md5 of the RUNNING path, never an S3 ETag, per the tool's own leg-kind
+rule -- then `close` through the tool. **A HAND-EDIT OF EITHER FILE MAKES RECORD AND SENTINEL AGREE BY FIAT,
+WHICH IS THE DEFECT RATHER THAN ITS REPAIR.** AC20 grades this.
+
+**(b) THE ROLLBACK TARGET WOULD REMOVE THE ENTITLEMENT GUARD, and the replacement needs TWO properties.** Row
+`W2-S7` is verified at the bytes by `1.0.0_SA_CTO` with a positive control: at
+`infra/aws/ec2/opal-gateway/app/`, commit `7bd89b5d71` (the runbook s7.2 target) has `data_entitlement.py`
+ABSENT while `revocation.py` and `identity_scope.py` are PRESENT; HEAD has all three. **A commit that merely
+carries the guard is NOT enough**: the guard entered at `d88cd32d0c`, whose own subject ends "-- not deployed",
+and *a rollback target that was never deployed is not a rollback -- it is an untested forward deploy performed
+during an incident.* So the replacement must (i) carry `app/data_entitlement.py` AND (ii) be a state actually
+DEPLOYED and PROVEN on the host, with that proof cited. **IF NO SUCH COMMIT EXISTS, THAT IS THE FINDING: this
+release has NO VALID ROLLBACK, and s7.2 must say so IN THOSE WORDS** rather than name a target that cannot
+serve. AC19 grades it either way, and the census that decides it prints its denominator.
+
+**(c) AC4 STAYS FAILED AS WRITTEN. Do not re-cut it and do not fix the class here.** The nine CRLF files are
+enumerated and CARDED with their "no functional break found" basis (row `W2-S8`). R-56 REFUSED both the
+`.gitattributes` class fix and the normalised re-cut: those eight extensions cover a large fraction of the repo,
+so an `eol=lf` rule renormalises every matching file while five seats and multiple workers hold live linked
+worktrees -- a diff storm with an unprinted blast radius -- and `.gitattributes` is gate-adjacent
+(`LGIC_ENFORCE` S42: a one-line entry VOIDS THE NAMING GATE AT ANY SETTING). **AN ACCEPTANCE CRITERION IS NOT
+RE-CUT TO FIT A RESULT IT CORRECTLY REFUSED.** The class fix becomes its own act with its own printed blast
+radius, in daylight, and is NOT this cell's.
+
+**(d) AC9 IS GRADED NOT-EVALUATED** with its reason recorded: `OG-p-1`'s baseline never captured an error count
+for the stated window, so there is no referent. A PASS would be vacuous and a FAIL would measure the wrong
+thing. Record it that way in the proof instance; do not manufacture a verdict.
+
 **Read:** the PRD's "C1", "C6" and "Operator journey, audit and release"; `infra/aws/ec2/safe-ec2-deploy.sh` and
 `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` (the release process); `infra/aws/ec2/EC2_MANIFEST.json`; the baseline.
 
@@ -145,7 +180,13 @@ taking the short id, printing its measurement with vintage and denominator, then
 <criterion id="OGR1-AC18" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC18</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC18(?![0-9])</expect></criterion>
 `OGR1-AC18` -- (the arm that protects the audit trail) from THIS worktree, `HALT_GATE_AUDIT_LOG` and `HALT_GATE_CONTEXT_FILE` still resolve UNDER THE MAIN TREE, both absolute paths echoed; a fix that moved either into a worktree deleted at drain FAILS this criterion even though AC15 and AC16 would pass.
 
-<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12, OGR1-AC13, OGR1-AC14, OGR1-AC15, OGR1-AC16, OGR1-AC17, OGR1-AC18</expected_criteria>
+<criterion id="OGR1-AC19" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC19</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC19(?![0-9])</expect></criterion>
+`OGR1-AC19` -- the runbook's s7.2 rollback target EITHER names a commit that (i) carries `infra/aws/ec2/opal-gateway/app/data_entitlement.py` and (ii) is a state PROVEN DEPLOYED on the host, with that proof cited, OR states in those words that this release has NO VALID ROLLBACK; the probe prints the candidate census with its DENOMINATOR (every commit considered, and for each whether the guard is present and whether it was ever deployed) so the conclusion is a subtraction rather than a choice.
+
+<criterion id="OGR1-AC20" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC20</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC20(?![0-9])</expect></criterion>
+`OGR1-AC20` -- `py -3.12 .tools/deploy_ledger.py check` prints NEITHER `DRIFT-DANGEROUS` NOR `OPEN` for slug `nfra-oplgtw-og-r-1-first-release`, every leg carrying its proof; the probe quotes the tool's own lines, and a `git diff` of the sentinel and the record over this pass shows ONLY tool-authored changes -- any hand-edit of either file FAILS this criterion.
+
+<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12, OGR1-AC13, OGR1-AC14, OGR1-AC15, OGR1-AC16, OGR1-AC17, OGR1-AC18, OGR1-AC19, OGR1-AC20</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -169,6 +210,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
 infra/aws/ec2/safe-ec2-deploy.sh
+infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-r-1-first-release.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -180,11 +222,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGR1-AC1` .. `OGR1-AC18` (18). Instance at
+Criterion ids: `OGR1-AC1` .. `OGR1-AC20` (20). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/NFRA_OPLGTW.TO-OG-r-1.first-release-cutover.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12,OGR1-AC13,OGR1-AC14,OGR1-AC15,OGR1-AC16,OGR1-AC17,OGR1-AC18`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12,OGR1-AC13,OGR1-AC14,OGR1-AC15,OGR1-AC16,OGR1-AC17,OGR1-AC18,OGR1-AC19,OGR1-AC20`
 BEFORE the `complete` flip. Result file `first-release-cutover.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -241,3 +283,15 @@ ONE-LINE FIX WAS REFUSED AND CORRECTED: the gate already loops over both trees, 
 bare flip would have relocated the override audit log into an ephemeral worktree while passing this issuer's three
 controls. AC15-AC18 carry the corrected edit and R-53's fourth control. AC1 and AC11 already PASS and are not
 re-run for their own sake; AC2 onward resume once the gate resolves. No criterion was removed.
+
+Amended again 2026-09-18 ~06:4xZ, AFTER the deploy LANDED and drained @`5162842caf`, by `2.0.0_SA_COO~O` on
+`1.0.0_SA_CTO` ruling R-56 (msg 97864 @`853a37edd1`), which answered call 20's four items: items 1, 2 and 4
+ADOPTED, item 3 REFUSED BOTH WAYS. AC19 and AC20 added; `SCHWAB_PILOT_RUNBOOK.md` granted for s7.2 ONLY;
+AC4 stays FAILED AS WRITTEN and its class fix is explicitly NOT this cell's; AC9 is graded NOT-EVALUATED with
+its reason. **THE ISSUER'S OWN ERROR IS ON THE RECORD**: this seat reported "ledger closed properly" from the
+COMPLETION RECORD, which is a RENDERING -- the SENTINEL is the object, and the tool's own line says so. R-56
+counts it as the fourth instance in one night of one shape across four seats' instruments, the CTO's own failed
+first read of W2-S7 among them: the object read was not the object the claim was about.
+R-56's ADDED CONDITION on the rollback is the part this issuer's rec did not state and it changes the search: a
+commit that carries the guard but was NEVER DEPLOYED is not a rollback target, it is an untested forward deploy
+performed during an incident. No criterion was removed.
