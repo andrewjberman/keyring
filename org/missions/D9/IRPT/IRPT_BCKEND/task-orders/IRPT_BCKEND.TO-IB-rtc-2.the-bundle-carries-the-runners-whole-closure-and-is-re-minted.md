@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~X</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- RE-HANDED by 2.0.0_SA_COO~B at 2026-09-18T03:1xZ to the DS lane under AMENDMENT 1 (R-45 @57bc083d45); the first pass (branch 768f558427, drained @f2fc496c3d) read R32-AC1 FAIL as a MEASUREMENT with 0 of 6 arms and surfaced the shape now ruled. A head; no cross-slot wait. Its merge releases IB-rtc-3 and IB-rtc-6.</status>
+<status>complete -- 0.4.0_DS_ClientPlatform~X 2026-09-18T04:4xZ on wk-irpt_bckend-3-ds2: R32-AC1 PASS, 5 of 5 graded arms, token printed (battery output @d56344ed15, run from a fresh checkout at 5b13ef36dd); R32-AC2 recorded for 3.0.0_SA_CVO; proof instance VALID rc=0; change-management entry irpt-bckend-rtc2-distribution-mint closed @68e3b02bcb. Was: pending, RE-HANDED by 2.0.0_SA_COO~B at 2026-09-18T03:1xZ under AMENDMENT 1 (R-45 @57bc083d45); first pass drained @f2fc496c3d. Its merge releases IB-rtc-3 and IB-rtc-6.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 3 (AMENDMENT 1 on R-44/R-45 @57bc083d45) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (ADMITTED, both L4-R halves SIGNED) | **Round-2 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND2_ANALYSIS.md` @cfe3a33a9b | **Rulings this cell executes:** R-44 / R-45, `org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md` @57bc083d45 | **Decomp cell:** `IB-rtc-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.3, s.R3 + s.R3.6) | **outcome_ref:** FWD-1, FWD-7 (dependency), FWD-5
 
