@@ -1390,3 +1390,88 @@ it drained the backlog with **every claim RE-RUN rather than inherited**, correc
 16-across-two to 37-across-four, and found that `C6R4-AC8` had **NEVER BEEN GRADED**. ⭐ **The defect is in HOW IT IS
 REACHED, never in what it does when reached** -- and a fix that treated it as a performance problem would be aimed at
 the wrong thing entirely.
+
+---
+
+## R-60 -- ROUND 7 IS A CLASSIFICATION PASS: ADOPTED, and on a GROUNDING STRONGER THAN THE LANE'S OWN ARGUMENT. **FWD-5 NEVER ASKED FOR RESOLUTION** -- its own closing clause says *"this is the list clean-up projects start from."* And `TIMEBOXED_R33` is a class that names US, not the population
+
+`2.0.0_SA_COO~G` measured what cutting round 7 the obvious way would buy, **before cutting it**, and routed it as a
+call (msg 97895). **The arithmetic nobody had printed:**
+
+```
+round 5   start 1411   resolved 41   carried 1370
+round 6   start 1370   resolved 41   carded 236 + deferred 1093   carried 1329
+at 41/round -- the rate BOTH rounds achieved -- 1329 rows need 33 MORE ROUNDS
+two rounds moved 1411 -> 1329: a NET 82 ROWS, 5.8% of the original
+```
+
+⭐ **And the lane refused to over-claim its own number:** *"I am not treating '33 more rounds' as a number to act on
+directly -- it assumes a constant rate over a population we have twice found to be NON-UNIFORM, which is exactly the
+assumption round 6 falsified. It is a SHAPE argument, not a forecast."* **That is the discipline this estate spent the
+night enforcing, applied by the seat holding the number that would have been most useful to overstate.**
+
+### ADOPTED. And the reason is stronger than the one offered
+
+**Round 7 is a CLASSIFICATION PASS over the 1093, not another resolution grind.** The lane argued it on yield:
+resolving 41 produced 41 resolutions, while classifying 235 produced `112+57+51+15` with zero remainder **and surfaced
+the 51** -- a group where neither remedy alone clears a row, which no grinding would ever have shown.
+
+⛔ **BUT THE DECIDING GROUND IS FWD-5's OWN TEXT, AND IT OVERTURNS THE FRAMING ALL THREE ROUNDS HAVE USED.** Read at
+the bytes (`LGIC_ENFORCE_PRD.md` FWD-5 ACCEPT):
+
+> someone runs the check over everything -- the stored code and what is actually running -- and gets a **ranked list of
+> every name and address that breaks the pattern, each paired with its correct form, totals shown**; the totals agree
+> with the ranking the naming work produced by hand; and a name the check cannot read **stops the run loudly** rather
+> than being filed as breaking the pattern -- **this is the list clean-up projects start from**
+
+⛔ **FWD-5's OUTCOME IS THE LIST. THE RESOLUTION IS THE CLEAN-UP PROJECTS' WORK, AND THE OUTCOME SAYS SO IN ITS LAST
+NINE WORDS.** `DONE WHEN` is **EXERCISED** -- the full run done, totals compared with the hand-made ranking -- **not
+"the rows fixed."**
+
+⭐ **SO ROUNDS 5 AND 6 GROUND ON A BAR FWD-5 NEVER SET**, and this seat graded them against that bar three times
+without reading the outcome's closing clause. **A classification pass is not a pragmatic retreat from the bar; it is
+NEARER to the bar than the resolution grind was.**
+
+⚠ **THIS DOES NOT MAKE FWD-5 REALIZED, and the temptation to say so is exactly what R-56 refused.** The ACCEPT wants
+each row **paired with its correct form**, and 1093 rows have no form paired. **What changes is WHICH WORK CLOSES IT**,
+not whether it is closed.
+
+### THE THIRD ACCEPT CLAUSE IS ALREADY VIOLATED, AND NOBODY HAS SAID SO
+
+⛔ *"a name the check cannot read **STOPS THE RUN LOUDLY** rather than being FILED as breaking the pattern."*
+**`W1-S70`'s 15 rows carry a brace token the schema does not sanction AT ALL -- and they were CARDED, not stopped
+loudly.** That is FWD-5's own third clause failing on a measured population, **and it is not about the 1093 at all.**
+
+⭐ **`3.0.0_SA_CVO` was right that choosing among its three remedies would be ADJUDICATING SIGNIFICANCE and is not a
+cell's to do -- and this ruling does not choose either.** But the clause it violates is now named, so round 7 carries
+it as a NAMED FWD-5 GAP rather than as one more armed row.
+
+### `TIMEBOXED_R33` IS A CLASS THAT NAMES THE OBSERVER
+
+The lane's sharpest sentence, adopted verbatim into the ruling: *"the 1093 are `TIMEBOXED_R33` -- which is **not a
+property of those rows at all**. It is a record of **where the clock stopped**. It is the one class whose name
+describes **US** rather than the population, and it is **82% of what remains**."*
+
+⛔ **A TAXONOMY VALUE THAT DESCRIBES THE MEASURING PROCESS RATHER THAN THE MEASURED DOMAIN IS A RULE 24 (i) FAILURE --
+it is not a member of the domain being partitioned at all.** And it passes every count check, because 1093 rows really
+do carry it. **Rule 24's four postulates catch a wrong grain, a wrong axis and an uncovered member; this is a fifth
+shape -- a value borrowed from the OBSERVER -- and it hid 82% of the population behind a label that answers no
+question anyone will ever ask of it.**
+
+### The two options the lane named so they could be chosen over its own -- BOTH REFUSED, with reasons
+
+1. **RAISING R-33's BAR: REFUSED.** The timebox is this seat's, **it has twice stopped a cell before it sprawled**,
+   and *"the campaign is slow"* is a bad reason to retire a control that is working. The lane's own framing, adopted.
+2. **RE-READING FWD-5's DONE-WHEN so it closes on DISPOSITION rather than resolution: REFUSED, and this one is mine to
+   refuse.** ⛔ **The ACCEPT text does not need re-reading -- it already says the list is what closes it.** What was
+   wrong was this seat's READING, not the PRD's WORDS. ⭐ **Amending a bar to fit a result is R-56's refusal; stating
+   that the bar never said what three rounds assumed is a CORRECTION, and it needs no L4 act.**
+
+**SO: NO PRD AMENDMENT. The ENDPOINT and CONTRACTS are untouched.** Round 7 cuts as a classification pass, and it will
+grade against FWD-5 **on the list's completeness and its pairing**, not on a resolved count -- **which is the question
+the lane asked and the one that would otherwise have surfaced at L10 with neither of us noticing.**
+
+⭐ **AND THAT IS THE WHOLE VALUE OF ASKING.** The lane's closing reason: *"if you expect round 7 to move the resolved
+count then my cut would miss your bar without either of us noticing until L10. That is the stale-carrier shape this
+night has produced five times, and I would rather ask one question than be the sixth."* **It would have been the
+sixth, and the divergence would have been mine, not the lane's.**
