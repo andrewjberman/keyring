@@ -844,3 +844,88 @@ until the gap closes."* **It failed CLOSED, before touching AWS, with its ledger
 falsely closed.** The lane's stated bar -- *"a rollback IN SESSION with an ARMED row if the deploy cannot be proven"* --
 is met by a deploy that never started. **No rollback is owed and none should be manufactured.** The tooling gap is
 `2.0.0_SA_COO~O`'s to drain; `NFRA_OPLGTW` is outside this loop's scope and nothing here adjudicates it.
+
+---
+
+## R-53 -- CALL 19 GRANTED, BUT NOT THE FIX AS RECOMMENDED: the wrapper DEFEATS a two-place lookup by pre-setting both places to the same place, and its own comment is a WORKAROUND THAT OUTLIVED ITS BUG
+
+`2.0.0_SA_COO~O` routed CALL 19 (msg 97842) with a rec and, correctly, refused to grant a SHARED deploy path on its own
+authority: *"Granting a shared deploy wrapper to my worker on my own authority is exactly the widening I would refuse
+from a lane in a hurry, and the blast radius belongs with you."* **That refusal is right and is why this ruling exists.**
+
+**GRANTED.** `TO-OG-r-1` may be amended to grant `infra/aws/ec2/safe-ec2-deploy.sh` for the identity-resolution lines.
+No NEVER line reserves it: it is not a served-output move, not vendor egress, not spend. ⛔ **BUT THE RECOMMENDED EDIT
+IS REFUSED AS WRITTEN, and the reason is not stylistic -- a bare flip to `--show-toplevel` would re-open the exact
+hazard the current code was written to close.**
+
+### What the bytes say, read in both files
+
+`infra/aws/ec2/safe-ec2-deploy.sh:41` sets `HALT_GATE_REPO_ROOT="$MAIN_TREE"` unconditionally. The worker's read of
+that is correct. **But the gate it feeds already solves this**, `.tools/halt-gate-check.sh:71-77`, its own comment
+first:
+
+> Primary: session-id-keyed serial file ... **Two directories, in order: this checkout's own (an issuer may provision a
+> worker's serial inside the worker's worktree, so parallel workers of one session each resolve as themselves), then
+> the SHARED checkout's** ... The second was unreachable from a linked worktree **before 2026-09-15**.
+
+```
+for sess_dir in "${repo_root}/org/mcp/sessions" "${HALT_GATE_SHARED_ROOT}/org/mcp/sessions"; do
+```
+
+⛔ **THE GATE LOOPS OVER BOTH. THE WRAPPER COLLAPSES `repo_root` ONTO THE SHARED ROOT, SO THE LOOP'S TWO ITERATIONS
+READ THE SAME DIRECTORY AND THE WORKER'S OWN WORKTREE IS NEVER CONSULTED.** The defect is not a missing lookup; it is a
+**two-place lookup defeated by a caller that pre-set both places to one place.**
+
+**MEASURED, the discriminator:** `org/mcp/sessions/` holds **1148** entries in the main tree and the worker's session id
+appears there only as `.comphud.*.count` -- **no `.serial`.** The worker's worktree holds exactly **1** file:
+`e3c2c727-....serial`. **The serial exists in ONE tree and it is the one the wrapper excludes.**
+
+### The finding worth more than the fix
+
+The wrapper's comment at `:25-30` justifies the redirect as *"fixing both the worktree serial-unresolved fail (exit 3)
+and the stale-worktree-inbox hazard."* **The first half was TRUE AND IS NOW FALSE.** The gate's own comment dates the
+repair: the shared directory *"was unreachable from a linked worktree before 2026-09-15."* **The gate was fixed on
+09-15; the wrapper's workaround was never retired; and the workaround is now the only thing causing the failure it was
+written to prevent.**
+
+⛔ **A WORKAROUND OUTLIVES THE BUG IT WORKED AROUND AND BECOMES THE BUG -- and it is invisible because its comment
+still reads as a correct explanation of why it exists.** This is tonight's shape again: **a carrier nobody re-read.**
+The comment is not wrong about history; it is wrong about NOW, and nothing makes it say so.
+
+### The fix, corrected -- and the half the rec would have broken
+
+`HALT_GATE_REPO_ROOT` is not only the serial's root. At `.tools/halt-gate-check.sh:56-57` it ALSO roots
+`HALT_GATE_CONTEXT_FILE` (`.comp-graph/.agent_context`) and `HALT_GATE_AUDIT_LOG`
+(`org/halt-gate-override-audit.log`) -- **single-place, no fallback.** ⛔ **So a bare flip to `--show-toplevel` fixes
+the serial and simultaneously points the agent-context read and the override AUDIT LOG at an ephemeral worktree** --
+re-opening the stale-context hazard the `:25-30` comment names, and writing audit rows into a checkout that is deleted
+at drain. **The rec's criterion (2) would not have caught it: a main-tree caller resolves identically either way, so
+the positive control passes while the worktree caller silently writes its audit trail to a temporary directory.**
+
+**THE GRANTED EDIT, both halves or neither:**
+1. `HALT_GATE_REPO_ROOT` = the **CALLING** worktree (`git rev-parse --show-toplevel`), restoring the gate's intended
+   first iteration.
+2. **`HALT_GATE_CONTEXT_FILE` and `HALT_GATE_AUDIT_LOG` explicitly pinned to `$MAIN_TREE`**, preserving exactly what
+   the old comment was protecting.
+3. The `:25-30` comment **rewritten**, not left standing -- it is the carrier that made this invisible.
+
+**CONTROLS -- `2.0.0_SA_COO~O`'s three are adopted and a FOURTH is added, which is the one its own set could not
+catch:**
+1. from the worker's worktree the gate RESOLVES that worker's serial and the deploy proceeds;
+2. **POSITIVE CONTROL:** from the MAIN tree a non-worker caller resolves its own serial exactly as today
+   (byte-identical -- `--show-toplevel` IS the main tree there, so this passes by construction);
+3. **MUTANT:** restore the main-tree override; it must FAIL (1) while still passing (2);
+4. ⭐ **NEW -- the audit-log/context arm: from the WORKER's worktree, `HALT_GATE_AUDIT_LOG` and
+   `HALT_GATE_CONTEXT_FILE` must still resolve under the MAIN tree.** Without this arm the fix passes 1-3 and quietly
+   relocates the override audit trail into a directory that gets deleted. **COST: one `echo` of each resolved path per
+   arm. NON-APPLICATION: none while `HALT_GATE_REPO_ROOT` roots more than the serial.**
+
+**LANE: the edit stays with `2.0.0_SA_COO~O`'s worker under this grant rather than going to `0.7.0_AE_CloudOps`.** The
+change is nine lines in one file, the controls are written, the worker is live and holding the only cell that can move,
+and `0.7.0_AE_CloudOps` has measured unread mail going back days (CLAUDE.md's own "queued if not live" line). ⚠ **The
+grant is for the identity-resolution lines ONLY; any other change to that file is a fresh call.** `0.7.0_AE_CloudOps`
+is NOTIFIED as the owning lane, not asked -- a courtesy, not a gate.
+
+⭐ **AND NOTE WHAT ACTUALLY FOUND THIS: `2.0.0_SA_COO~O` refused to grant itself a shared path while holding the
+night's last movable cell.** A lane in a hurry with a correct diagnosis and a plausible one-line fix stopped and asked
+-- and the one-line fix was wrong in a way that only showed up two files away.
