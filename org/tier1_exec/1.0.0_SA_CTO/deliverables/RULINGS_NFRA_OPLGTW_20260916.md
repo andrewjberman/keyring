@@ -385,3 +385,71 @@ about a REFUSAL grades the signal the CONSUMER reads, not only the text the prod
 
 `OG-v-2` takes its last re-hand ONCE, after both `q-6` and this cell land, so `AC2` is re-graded whole rather than
 failing twice on other cells' rows -- the lane's sequencing and it is correct.
+
+## R-OG-21 -- THE LOGIN OUTAGE: `DeleteItem` on `RUNTIME#` is ADMITTED, because THE RATIFIED CONTRACT ALREADY PERMITS IT and the prohibition lives one tier below it
+
+**Andrew approved branch (1) directly (2026-09-18 ~16:1xZ; to this seat, verbatim: *"i already approved it"*).**
+`0.7.0_AE_CloudOps` (98003) and `2.0.0_SA_COO~O` (98004) each verified the defect on their own instruments and each
+recommended (1); both correctly REFUSED to retire another cell's passing criterion to fix an outage. **That refusal is
+why this ruling exists, and both were right to make it.** Login has been impossible through the durable build since
+the `OG-r-1` deploy at 05:58:16Z.
+
+**VERIFIED BY THIS SEAT AT THE BYTES BEFORE RULING, not taken from either report:**
+
+| fact | read |
+|---|---|
+| `schwab_access_state.tf` @HEAD, the whole resource | TWO statements: `AccessStateStrongRead` (`GetItem`) and `AccessStateRuntimeWritesRuntimeKeysOnly` (`PutItem`, `UpdateItem`). **No `DeleteItem`.** |
+| `:42` | `access_state_runtime_keys = ["RUNTIME#*"]` |
+| `oauth_as.py:649` (`take_pending`), `:772` (code burn) | both call `st.delete_runtime` -- **and BOTH PASS A ConditionExpression** |
+| `NFRA_OPLGTW_DECOMP.md:182` | *"...and no DeleteItem or table-admin action"* |
+| **`NFRA_OPLGTW_CONTRACT.json` v1.1** | `POLICY`: *"operator writes only; **no TTL or ordinary delete**"*; `RUNTIME`: *"client/pending-auth/code/refresh/ticket/catalog; **runtime conditional writes and expiring records**"* |
+
+⛔ **THE RULING, AND IT TURNS ENTIRELY ON WHICH NAMESPACE THE PROHIBITION SITS IN: the contract forbids ordinary delete
+on `POLICY`, AND ONLY ON `POLICY`.** `RUNTIME`'s own clause affirmatively describes *"runtime conditional writes and
+expiring records"* -- and both call sites are **CONDITIONAL deletes of EXPIRING records** (a pending authorization, a
+one-time code). ⭐ **AND `runtime_policy_access` CONSTRAINS THE SCOPE OF WRITES (`LeadingKeys`), NEVER THE VERB SET** --
+*"strong read only; write actions require all LeadingKeys match RUNTIME#*"*. **No ratified clause enumerates verbs at
+all.** So branch (1) needs **no contract amendment**: it was already inside the ratified envelope.
+
+**WHAT IT DOES CONTRADICT IS ONE TIER DOWN, AND THAT IS WHAT I AM AMENDING.** `DECOMP:182`'s *"no DeleteItem"* is
+**STRUCK AS TO `RUNTIME#`** (it stands for `POLICY#` and for table-admin). `OGI1-AC5`'s requirement that the permission
+be ABSENT is **RETIRED PROSPECTIVELY.**
+
+⛔ **`OG-i-1`'s GRADE STANDS, UNDER R-43** -- the criterion was true at its vintage and was genuinely EXERCISED. A
+criterion retired by a later authorized amendment is not a wrong grade. ⭐ **This is the FOURTH instance of that shape
+this week** (`W1-S21`, `R38-AC2`, `LGIC_LGCTFM-S25` four hours ago, now `OGI1-AC5`): the cell was right, the record was
+right at its vintage, and a later legitimate act made the evidence non-reproducible.
+
+⛔ **BUT `OGI1-AC5` IS THE SHARPEST OF THE FOUR AND DESERVES ITS OWN SENTENCE: IT DID NOT MERELY FAIL TO CATCH THE
+DEFECT -- IT CERTIFIED IT.** The criterion's PASS condition *was* the outage condition: a `DeleteItem` on a `RUNTIME#`
+key returning `implicitDeny`, recorded PASS. **A criterion that REQUIRES THE ABSENCE OF A PERMISSION THE SHIPPED CODE
+NEEDS is a test that passes because the system is broken**, and it will keep passing for exactly as long as the system
+stays broken. **The general bar: a criterion asserting that a permission is ABSENT must name the call sites that would
+need it, or it is asserting a fact about IAM while claiming one about the system.**
+
+⭐ **AND A SECOND DIVERGENCE NEITHER SEAT NAMED, found only by reading the WHOLE resource rather than the cited
+statement: `DECOMP:182` says the grant allows *"Get, Put, Update and TransactWrite"* -- and there is NO `TransactWrite`
+anywhere in the file** (every `dynamodb:` action in it, both policies: `GetItem`; `PutItem`/`UpdateItem` on `RUNTIME#*`;
+`GetItem`; `PutItem`/`UpdateItem` on `POLICY#*`). **So that one decomp line is wrong in BOTH directions at once --
+over-granting on paper where the TF under-grants, and under-granting where the code needs more.** ⛔ **A DECOMPOSITION
+SENTENCE THAT MISDESCRIBES THE APPLIED GRANT IN BOTH DIRECTIONS IS NOT A SPECIFICATION OF IT; IT IS A MEMORY OF ONE.**
+The constraint belongs in the CONTRACT (where it is ratified and signed) or in the TF (where it is APPLIED) -- never in
+a decomp line a later reader will cite as authority, which is exactly what happened here.
+
+**THE CLASS -- Rule 22's shared-dependency blindness, with a live instance and a 10-hour outage as its cost.** Two
+COMPLETE cells contradicted each other and **each passed its own criteria**: `OG-a-1`'s 18 tests ran on **moto, which
+enforces no IAM**, so the code path was never exercised against the real grant; `OG-i-1`'s `OGI1-AC5` required and
+exercised the absence. **Every per-member arm was green. The thing the members SHARE -- the grant the code needs -- was
+checked by neither.**
+
+**(2) IS THE BETTER END STATE AND IS CARRIED, NOT DROPPED:** rewriting both deletes as conditional `UpdateItem`s setting
+`consumed_at` (the shape `redeem_code` already uses at `:759`), reads treating consumed as absent. It keeps every
+ratified criterion green but needs tests, a release through `OG-r-1`'s route and a restart -- **not an outage remedy.**
+**Round 2 carries it as the correctness item**, exactly the split `2.0.0_SA_COO~O` proposed and the same one this seat
+made for the sentinel.
+
+**AND THE HEALTH-CHECK GAP IS ROUND 2's TOO.** `2.0.0_SA_COO~O` corrected itself to Andrew unprompted: `/health` 200,
+`/mcp` 401 and an ALB healthy target were all TRUE and the answer was wrong in substance, because they measure
+**LIVENESS** and he asked whether he could **USE** it. ⭐ **A GREEN THAT ANSWERS A DIFFERENT QUESTION THAN THE ONE ASKED
+IS WORSE THAN NO ANSWER, because it spends the asker's trust.** **No check on this service covers the login path** --
+that is why a 10-hour outage was invisible to every instrument pointed at it, and building that check is round 2's.
