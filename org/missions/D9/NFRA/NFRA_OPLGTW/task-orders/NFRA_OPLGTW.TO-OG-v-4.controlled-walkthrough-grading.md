@@ -112,8 +112,23 @@ graded destroys the seal and FAILS this criterion** -- the probe checks AC5's re
 
 - **Grant.** Your write surface is the `<paths>` block below, plus `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/` and this order's own file (for the `<status>` flip). Nothing else. A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.
 - **G-C and G-D.** Both records at HEAD, or a BLOCKING row and a stop.
-- **You grade; you do not operate.** No sign-in, no connector act, no grant change, no rollback, no call to the Gateway as a user. Reads only: the records, the audit sink, the bucket settings, and (AC6) the closure markers under `schwab/<master>/meta/complete/` in `opal-data-assets`.
+- **PHASE 1 WRITES, AND ONE OF ITS WRITES IS OUTSIDE THE REPOSITORY.** For `OGV4-AC8` only, your write surface
+  ADDITIONALLY includes `C:/tmp/nfra-oplgtw-sealed/` -- the same out-of-repo bound `OG-v-3` carried, restored here
+  because the re-seal cannot mint a salt anywhere else without destroying the property it exists to create. Nothing
+  else outside the repository, ever.
+- **PHASE 1 RE-RUNS A COMMITTED INSTRUMENT; IT DOES NOT REIMPLEMENT ONE.** `OG-v-3`'s sealing script SURVIVES in this
+  slot's deliverables at `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/compute_expected.py` --
+  it mints the salt (`secrets.token_hex(32)`), computes each RQ's answer from the version-pinned objects with pyarrow
+  decode plus stdlib `decimal.Decimal`, writes the plaintext answers outside the repository and emits
+  `SEALED_EXPECTED.json`. RUN THAT FILE. "The same instrument" is then provable rather than asserted, because it is
+  the same file. If it cannot run as committed, that is a BLOCKING row naming the failure -- never a reimplementation.
+- **You grade; you do not operate -- IN PHASE 2.** No sign-in, no connector act, no grant change, no rollback, no call to the Gateway as a user. Reads only: the records, the audit sink, the bucket settings, and (AC6) the closure markers under `schwab/<master>/meta/complete/` in `opal-data-assets`.
 - **Customer data stays out of the repository.** Answers are compared by hash; no value is committed or printed.
+  **THIS BINDS PHASE 1 HARDEST**, because phase 1 is the step that HANDLES the real answers: they are written only
+  under `C:/tmp/nfra-oplgtw-sealed/expected/`, never into a deliverable, a row, a result file or a probe's stdout.
+  `OGV4-AC9`'s later commit of those files is the ONE exception and it happens only after `OGV4-AC5` is graded --
+  by then the walkthrough is over, the values are no longer a seal, and committing them is what makes every digest
+  re-derivable.
 - **Branch.** You work in the worktree named in your identity line, cut from `CLOUD` at hand-off. Never push, merge, rebase, `checkout --` or `clean`.
 - **Interpreter.** Your venv `.venv-og` (`cd <WS> && py -3.12 -m venv --system-site-packages .venv-og && .venv-og/Scripts/python -m pip install -r infra/aws/ec2/opal-gateway/requirements.txt msal moto pytest`) serves every invocation. Never commit `.venv-og/` or `.scratch/`.
 - **No egress off Opal infrastructure.** No call to Claude, an Anthropic endpoint, an interactive Entra sign-in or any vendor API.
@@ -172,7 +187,17 @@ sequencing: ONE order, TWO hand-offs, phase 1 gated on those records being ABSEN
 `OG-r-1` was handed, drained, amended and re-handed within one order. Both of the ruling's substantive requirements are
 built: the absence-at-a-named-commit record (`OGV4-AC8`) and the salt committed as drain evidence after AC5 is graded
 (`OGV4-AC9`). Two criteria added, none removed or re-cut; no grant changed; no new order, so the open-order count is
-unchanged. Decomposition v1
+unchanged.
+
+Amended AGAIN minutes later, same issuer, BEFORE any hand-off, because the amendment above ordered work this order's
+own BOUNDS forbade. **This order grants writes to the `<paths>` block, the slot's deliverables and its own file --
+and `OGV4-AC8` must write a salt to `C:/tmp/nfra-oplgtw-sealed/`, which none of those cover; its "Reads only" bound
+forbids writing at all.** A worker handed phase 1 would have been RIGHT to file a BLOCKING row on the first act and
+stop. The grant is restored from `OG-v-3`, which carried exactly this out-of-repo bound, and the reads-only clause is
+scoped to phase 2. Found by checking the order's BOUNDS against the work just ordered, which is the check the first
+amendment skipped: A NEW CRITERION IS NOT ORDERED UNTIL ITS GRANT IS READ. Also named here rather than left implicit:
+`compute_expected.py` -- `OG-v-3`'s actual sealing instrument -- IS COMMITTED and survives the loss of everything it
+wrote, so the re-seal is a RE-RUN of a committed file and "the same instrument" is provable instead of asserted. Decomposition v1
 @8768f46770. After this cell drains, the COO removes `C:/tmp/nfra-oplgtw-sealed/` (the retention `OG-v-3` states).
 
 Amended 2026-09-17 ~15:0xZ, before hand-off, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling R-OG-12 (msg 97602
