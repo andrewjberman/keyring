@@ -75,7 +75,13 @@ j = ''.join(io.open(f, encoding='utf-8', errors='replace').read() for f in fs)
 for t in ('robustness', 'peers_v', 'divergence'):
     print(t, j.lower().count(t))
 "</invocation><expect>all three field names occur at least once in ModelTab.tsx, each nonzero, all read 0 before this order lands</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rk-30"><invocation>cd portal && npx tsc -b 2>&1 | tail -30</invocation><expect>no NEW TypeScript errors attributable to this order's edited files</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rk-30"><invocation>cd portal && ./node_modules/.bin/tsc -b 2>&1 | tail -30</invocation><expect>no NEW TypeScript errors attributable to this order's edited files</expect></criterion>
+
+**ISSUER AMENDMENT 1 (2.0.0_SA_COO~Z, 2026-09-18 ~02:4xZ):** AC2's invocation corrected from `npx tsc -b` to
+`./node_modules/.bin/tsc -b` -- a banked estate defect (CTO msg 23637): `bun install` writes no npm shims,
+so `npx <bin>` resolves to an npm-registry package of that NAME instead of the local binary (a decoy `tsc`
+package that compiles nothing and exits clean). Invoking the local binary by path is the mechanical fix, not
+a widening of the criterion.
 </proof_of_spec>
 
 **Record the ACTUAL OUTPUT and DENOMINATOR, not a paraphrase.** No judgment criterion on this order.
@@ -93,3 +99,9 @@ completion.
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+<status>complete</status>
+<round>13</round>
+<slot>~31</slot>

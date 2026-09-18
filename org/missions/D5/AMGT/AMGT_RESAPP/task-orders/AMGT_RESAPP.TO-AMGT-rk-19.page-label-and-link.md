@@ -87,7 +87,13 @@ print('components', len(fs))
 for t in ('from the filing', 'passage', 'source ===', \"source ==\"):
     print(t, j.lower().count(t.lower()))
 "</invocation><expect>at least one component contains the label text (a case-insensitive match on "from the filing", worded as the worker actually wrote it -- if the wording differs, the worker names its exact wording and re-runs this check against that literal string) and at least one reference to rendering/handling a passage link; both read 0 before this order lands</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rk-19"><invocation>cd portal && npx tsc -b 2>&1 | tail -30</invocation><expect>the merged tree's TypeScript build has no NEW errors attributable to this order's edited files (pre-existing unrelated errors, if any, are named and excluded, matching this project's own established practice of separating this cell's additions from inherited breakage)</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rk-19"><invocation>cd portal && ./node_modules/.bin/tsc -b 2>&1 | tail -30</invocation><expect>the merged tree's TypeScript build has no NEW errors attributable to this order's edited files (pre-existing unrelated errors, if any, are named and excluded, matching this project's own established practice of separating this cell's additions from inherited breakage)</expect></criterion>
+
+**ISSUER AMENDMENT 2 (2.0.0_SA_COO~Z, 2026-09-18 ~02:4xZ):** AC2's invocation corrected from `npx tsc -b` to
+`./node_modules/.bin/tsc -b` -- a banked estate defect (CTO msg 23637): `bun install` writes no npm shims,
+so `npx <bin>` resolves to an npm-registry package of that NAME instead of the local binary (a decoy `tsc`
+package that compiles nothing and exits clean). Invoking the local binary by path is the mechanical fix, not
+a widening of the criterion.
 </proof_of_spec>
 
 **Record the ACTUAL OUTPUT and DENOMINATOR, not a paraphrase.** No judgment criterion on this order.
@@ -104,3 +110,9 @@ landed; wait for confirmation before starting it.
 
 **MUTATION DISCIPLINE:** snapshot WORKING-TREE BYTES to `.scratch/` before editing. Never `git checkout --`,
 never `git stash`, never `git show :path`.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+<status>complete</status>
+<round>13</round>
+<slot>~31</slot>
