@@ -109,11 +109,11 @@ closed is for the round-12 analysis to read against the served plane.
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v12"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
       "state": "DISARMED",
       "owner": "1.0.0_SA_CTO~Z",
@@ -139,11 +139,11 @@ closed is for the round-12 analysis to read against the served plane.
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-S141",
@@ -162,11 +162,11 @@ closed is for the round-12 analysis to read against the served plane.
     "owner": "2.0.0_SA_COO~Z",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Z",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-S139",
@@ -186,11 +186,11 @@ closed is for the round-12 analysis to read against the served plane.
     "owner": "2.0.0_SA_COO~Z",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Z",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-S117",
