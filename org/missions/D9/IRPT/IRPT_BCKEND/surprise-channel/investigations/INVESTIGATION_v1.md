@@ -4868,6 +4868,50 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The battery grades (f) against the PRE-CELL object (a new VersionId, a new ETag and strictly more members) and prints the face's IB-rt-5 comparison beside it, so both readings stay visible. No re-mint happened in this cell, so (f) reads NO-OP."
+  },
+  {
+    "id": "IRPT_BCKEND-S63",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T04:25:00Z",
+    "one_line": "THE BUNDLE PACKER READS THE WORKTREE WHILE THE LOOSE LEG SERVES THE GIT BLOB, SO A MEMBER WITH NO eol ATTRIBUTE IS PACKED WITH CRLF ON AN autocrlf CHECKOUT. build_bundle_payload() does src.read_bytes() on the worktree file; deploy_file() uploads `git show :<path>` (the ADHC_DSFLOW index-bytes fix). The two JSON members this amendment admits (data/firm_registry.json, _contracts/DirectoryEntry.schema.json) and the accrual bridge's partner_roster.json have no eol attribute, so their bundled bytes are device-dependent and differ from the recorded blob. The three DISTRIBUTION members (.py, eol=lf) are unaffected, so R-45's two-leg check does not trip on it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "R-40 (1.0.0_SA_CTO @233f5fd5e4): a produced artifact is graded against its CONTENT HASH. The guard's own IB-1 rule (safe_deploy_core.py deploy_file docstring, ADHC_DSFLOW.TO-INDEXBYTES-DEPLOY): 'the uploaded bytes ARE the index blob'. The amended face (d): the re-minted key's identity with its sha256 recorded.",
+    "world_is": "MEASURED at 65a95ae8db in /c/tmp/wk-irpt-3-ds2 (core.autocrlf=true): data/firm_registry.json eol=unspecified, worktree 136 CR bytes, index 0; infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json eol=unspecified, worktree 260 CR, index 0; data/mdpf/config/partner_roster.json eol=unspecified, worktree 393 CR, index 0. Every .py member reads eol=lf with 0 CR in both. build_bundle_payload (safe_deploy_core.py, 'data = src.read_bytes()' on WORKSPACE / repo_path) packs the worktree bytes; deploy_file (same file) uploads the index blob. So the per-member sha stamp of a JSON member equals the CRLF worktree bytes and NOT the blob, and the same commit minted from an LF checkout would yield a different ETag. The JSON is valid either way (json.loads ignores CR), so no consumer breaks; the identity is what is device-dependent.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git check-attr eol + CR counts of worktree vs `git show :<path>` for the nine bundle members and partner_roster.json, 2026-09-18 ~03:3xZ",
+        ".tools/safe_deploy_core.py @65a95ae8db: build_bundle_payload reads `src = WORKSPACE / spec['repo_path']...; data = src.read_bytes()`; deploy_file's docstring records the index-blob rule it implements",
+        "battery_ib_rtc_2.py arm (d) prints, per member, stamp==member and member==git blob, with the CR count where they differ"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not changed here: making the packer read the index would also change the accrual bridge's minted bytes (partner_roster.json), which is another pipeline's served artifact, and it is outside what this amendment asks. Two remedies for the guard's owner: build_bundle_payload reads `git show :<path>` the way deploy_file does, or .gitattributes gives the JSON members eol=lf. Either makes a bundle's identity the same on every device."
+  },
+  {
+    "id": "IRPT_BCKEND-S64",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.4.0_DS_ClientPlatform~X",
+    "surfaced_at": "2026-09-18T04:25:00Z",
+    "one_line": "A TASK ORDER'S <paths> GRANT IS HONOURED BY THE LANE GATE ONLY FOR A 0.9.0_WK_* WORKER, NOT FOR THE SEAT IT IS HANDED TO. This order names `.tools/tests/` in <paths> and hands it to the Tier-2 seat 0.4.0_DS_ClientPlatform~X; the commit of the flag's own test file was REFUSED by owned-paths-check (lane TOOL_BATTERIES, owner 0.8.0_AE_CloudComp, 'agent not in permitted_agents'). It landed only under the audited GIT_COMMIT_AUTHOR_OVERRIDE=TOOL_BATTERIES, one lane and one file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face's <preflight> lane line: 'the <paths> block above IS the grant (RULING 1 @9ef9a40aae) ... admitted to you ONLY through this order while it is non-terminal; a path you need that is not listed is a BLOCKING row, never an override.' <paths> lists `.tools/tests/`.",
+    "world_is": "safe-commit at 2026-09-18 ~04:0xZ refused `.tools/tests/test_safe_deploy_distribution_member.py`: 'VIOLATION: ... lane=TOOL_BATTERIES ...; agent=0.4.0_DS_ClientPlatform~X not in permitted_agents'. .tools/owned-paths-validate.py:115-117 and :209-231 @65a95ae8db admit a <paths> grant only to a serial that parses as 0.9.0_WK_<CODE>~<n> ('A spine-v3 worker ... is admitted to exactly the paths that a NON-TERMINAL task order ... names in its <paths> block'). A seat handed the same order resolves by .owned-paths.yaml lanes alone. .tools/safe_deploy_core.py, also in <paths>, passed on the seat's own lanes. The commit 6be251a0e3 carries GIT_COMMIT_AUTHOR_OVERRIDE=TOOL_BATTERIES, audited to org/git-author-override-audit.log, with the reason in its message.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the safe-commit refusal text, captured to .scratch/commit_l1b.log in /c/tmp/wk-irpt-3-ds2 (lane TOOL_BATTERIES, owner 0.8.0_AE_CloudComp)",
+        ".tools/owned-paths-validate.py @65a95ae8db :115-117 (the fifth additive clause: workers only) and :209-231 (_owns_task_order_paths requires serial_glob 0.9.0_WK_*)",
+        "commit 6be251a0e3 on wk-irpt_bckend-3-ds2: the test file alone, under GIT_COMMIT_AUTHOR_OVERRIDE=TOOL_BATTERIES"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The override was the correct escape, not a widening: the path is on the order's grant, and the gap is in the mechanism's reach. For the issuer's next cut: a seat-held order that grants a path in another lane either needs that lane's override named on the face, or the validator's task-order clause extended to seats. The first is a sentence; the second is a gate edit for the gate's owner."
   }
 ]
 ```

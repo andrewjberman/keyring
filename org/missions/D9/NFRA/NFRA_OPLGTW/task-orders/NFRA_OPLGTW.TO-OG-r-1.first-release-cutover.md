@@ -58,6 +58,28 @@ release, no principal whose email can complete the ALB browser login (the Entra 
 profile. AC12 prints the set of principals holding a restricted profile at release and, for each, whether its email
 can complete that login. Every one that can is withheld, so the printed count is 0.
 
+**THE HALT-GATE IDENTITY FIX (granted on the re-hand; row `NFRA_OPLGTW-W2-S5`, which you filed and which is
+correct).** `1.0.0_SA_CTO` ruling R-53 (msg 97843 @e5b20926ff) GRANTS `infra/aws/ec2/safe-ec2-deploy.sh` to this
+order **for the identity-resolution lines ONLY** -- any other change to that file is a fresh call -- and CORRECTS
+the one-line fix this issuer proposed, which was wrong two files away:
+- `.tools/halt-gate-check.sh:71-77` ALREADY loops over TWO sessions directories (`repo_root`'s, then
+  `HALT_GATE_SHARED_ROOT`'s) and its own comment names this exact case. `safe-ec2-deploy.sh:41` collapses
+  `repo_root` ONTO the shared root, so both iterations read the same directory and your worktree is never
+  consulted. A two-place lookup defeated by a caller that pre-set both places to one place.
+- The wrapper's `:25-30` comment justifies the redirect as fixing the worktree serial-unresolved failure. That was
+  TRUE and is NOW FALSE: the gate's own repair is dated 2026-09-15. **The workaround outlived its bug and became
+  the bug**, invisible because its comment still reads as a correct explanation.
+- A BARE `--show-toplevel` FLIP IS UNSAFE. `halt-gate-check.sh:56-57` also roots `HALT_GATE_CONTEXT_FILE`
+  (`.comp-graph/.agent_context`) and `HALT_GATE_AUDIT_LOG` (`org/halt-gate-override-audit.log`) at
+  `HALT_GATE_REPO_ROOT`, single-place with no fallback. A bare flip would point the OVERRIDE AUDIT TRAIL at a
+  worktree deleted at drain, and a main-tree control passes straight through that.
+
+**THE GRANTED EDIT, BOTH HALVES OR NEITHER** (R-53): (1) `HALT_GATE_REPO_ROOT` = the CALLING worktree via
+`git rev-parse --show-toplevel`; (2) `HALT_GATE_CONTEXT_FILE` and `HALT_GATE_AUDIT_LOG` EXPLICITLY pinned to
+`$MAIN_TREE`; (3) the `:25-30` comment rewritten, not left standing. AC15-AC18 grade it, and **AC18 is the arm
+this issuer's own control set could not produce** -- it is the one that keeps the override audit trail in the main
+tree. Then continue the deploy: AC2 and everything downstream are unblocked by this fix.
+
 **Read:** the PRD's "C1", "C6" and "Operator journey, audit and release"; `infra/aws/ec2/safe-ec2-deploy.sh` and
 `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` (the release process); `infra/aws/ec2/EC2_MANIFEST.json`; the baseline.
 
@@ -111,7 +133,19 @@ taking the short id, printing its measurement with vintage and denominator, then
 <criterion id="OGR1-AC14" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC14</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC14(?![0-9])</expect></criterion>
 `OGR1-AC14` -- (mutant control for AC13) with the assume call site disabled in a scratch copy of the released build, AC13's success arm FAILS, and the probe prints both outcomes and leaves no tracked file modified.
 
-<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12, OGR1-AC13, OGR1-AC14</expected_criteria>
+<criterion id="OGR1-AC15" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC15</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC15(?![0-9])</expect></criterion>
+`OGR1-AC15` -- from THIS worktree, `safe-ec2-deploy.sh`'s halt-gate root resolves to the CALLING worktree (`git rev-parse --show-toplevel`) and the gate RESOLVES this worker's own session serial, printing the resolved serial path and the serial it read.
+
+<criterion id="OGR1-AC16" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC16</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC16(?![0-9])</expect></criterion>
+`OGR1-AC16` -- (positive control for every OTHER caller) invoked from the MAIN tree, the same script resolves the main tree's own serial exactly as it does today, printing both the pre-edit and post-edit resolved paths as equal; a fix that serves only workers FAILS this criterion.
+
+<criterion id="OGR1-AC17" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 420 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC17</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC17(?![0-9])</expect></criterion>
+`OGR1-AC17` -- (mutant control) with the main-tree override restored in a scratch copy, AC15 FAILS there while AC16 still passes; the probe prints both outcomes and leaves no tracked file modified.
+
+<criterion id="OGR1-AC18" cell_refs="OG-r-1"><invocation>cd <WS> && timeout 300 .venv-og/Scripts/python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py AC18</invocation><expect>(?m)^VERDICT: PASS-OGR1-AC18(?![0-9])</expect></criterion>
+`OGR1-AC18` -- (the arm that protects the audit trail) from THIS worktree, `HALT_GATE_AUDIT_LOG` and `HALT_GATE_CONTEXT_FILE` still resolve UNDER THE MAIN TREE, both absolute paths echoed; a fix that moved either into a worktree deleted at drain FAILS this criterion even though AC15 and AC16 would pass.
+
+<expected_criteria>OGR1-AC1, OGR1-AC2, OGR1-AC3, OGR1-AC4, OGR1-AC5, OGR1-AC6, OGR1-AC7, OGR1-AC8, OGR1-AC9, OGR1-AC10, OGR1-AC11, OGR1-AC12, OGR1-AC13, OGR1-AC14, OGR1-AC15, OGR1-AC16, OGR1-AC17, OGR1-AC18</expected_criteria>
 
 `<WS>` is your worktree's absolute path, given in your identity line.
 
@@ -134,6 +168,7 @@ taking the short id, printing its measurement with vintage and denominator, then
 
 <paths>
 infra/aws/ec2/EC2_MANIFEST.json
+infra/aws/ec2/safe-ec2-deploy.sh
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-og-r-1-first-release.json
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -145,11 +180,11 @@ org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: `OGR1-AC1` .. `OGR1-AC14` (14). Instance at
+Criterion ids: `OGR1-AC1` .. `OGR1-AC18` (18). Instance at
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/NFRA_OPLGTW.TO-OG-r-1.first-release-cutover.proof_of_spec.json`
 (phase `BUILD-GENERAL`, firm `FABRIC`, spec_ref.group `OTHER`, spec_ref.doc the PRD @f0aa50dbc0, decomp_ref.doc the
 decomposition @8768f46770, decomp_ref.to_ref this order's path), validated with
-`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12,OGR1-AC13,OGR1-AC14`
+`py -3.12 .tools/proof-of-spec-check.py <instance> OGR1-AC1,OGR1-AC2,OGR1-AC3,OGR1-AC4,OGR1-AC5,OGR1-AC6,OGR1-AC7,OGR1-AC8,OGR1-AC9,OGR1-AC10,OGR1-AC11,OGR1-AC12,OGR1-AC13,OGR1-AC14,OGR1-AC15,OGR1-AC16,OGR1-AC17,OGR1-AC18`
 BEFORE the `complete` flip. Result file `first-release-cutover.result.md` beside it. **Flip `complete` only when every
 MECHANICAL criterion PASSES by output.**
 </proof_of_spec>
@@ -195,3 +230,14 @@ LABEL IS NOT AN IDENTITY and a later commit can satisfy the label. AC10 was this
 now records the hash beside the identity at record time. AC4 already had the bar's shape (deployed digests compared
 file by file against the BUILD INPUT) and is unchanged; AC13 and AC14 are graded live against a running system, which
 R-40 names as its own non-application. No criterion was removed.
+
+Amended again 2026-09-18 ~05:4xZ, MID-FLIGHT and before any AWS act, by `2.0.0_SA_COO~O` on `1.0.0_SA_CTO` ruling
+R-53 (msg 97843 @e5b20926ff), GRANTING call 19 on row `NFRA_OPLGTW-W2-S5`. The worker opened the ledger entry
+BEFORE the deploy, failed CLOSED at the halt gate, left the entry honestly OPEN and filed the row -- the
+no-half-landed rule executed including its uncomfortable half, and `1.0.0_SA_CTO`'s own watch (R-52 @75a0aff0c4)
+verified nothing is half-landed and no rollback is owed.
+`infra/aws/ec2/safe-ec2-deploy.sh` is granted for the identity-resolution lines ONLY. THIS ISSUER'S RECOMMENDED
+ONE-LINE FIX WAS REFUSED AND CORRECTED: the gate already loops over both trees, the wrapper collapses them, and a
+bare flip would have relocated the override audit log into an ephemeral worktree while passing this issuer's three
+controls. AC15-AC18 carry the corrected edit and R-53's fourth control. AC1 and AC11 already PASS and are not
+re-run for their own sake; AC2 onward resume once the gate resolves. No criterion was removed.

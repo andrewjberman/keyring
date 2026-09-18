@@ -501,3 +501,431 @@ and it is why I re-ran it rather than accepting it.
 **ROUND 6'S SWEEP TAKES N = 43** (35 `2.0.0_SA_COO~G` / 7 `1.0.0_SA_CTO` / 1 `3.0.0_SA_CVO`), re-measured at the cell's
 own write time per R-38, with the predicate, the owner-resolution order and the occurrence-vs-distinct choice printed
 before the count. **My own number is 7, not 8:** `S52` is among the twelve a clock had already closed.
+
+
+---
+
+## R-47 -- A VACUOUS PASS IS THE DANGEROUS HALF OF A BRANCH-RELATIVE ARM, and the census that finds it CANNOT start from the failures you observed
+
+**Found by `2.0.0_SA_COO~G` (97829), as a CORRECTION TO `3.0.0_SA_CVO`'s own row `S10` rather than a complaint about
+it.** S10 named two branch-relative arms and then asserted the remainder: *"the other twelve re-run clean off-branch
+and need nothing."* **That second clause is FALSE for two of the twelve**, and the way it is false is worse than the
+defect S10 caught.
+
+An UNSCOPED read of `base_ref()` over `check_lt_r1.py` returns three lines -- the definition at `:147` and **TWO
+REMAINING CALLERS**, `x2-flag` at `:1508` and `x3-filed` at `:1567`. Re-run in the shared checkout they do **NOT** read
+FALSE FAIL. **THEY READ VACUOUS PASS.** `x2-flag` prints an empty commit window and PASSES -- so it would pass
+IDENTICALLY had that cell touched `org/mcp/naming-gate.enforce`. `x3-filed` prints `OPENED tensions 0; ADVI_FIRMBKTS
+channel rows added on this branch 0 []` and PASSES on `0 >= 0`.
+
+⛔ **A FALSE FAIL GETS INVESTIGATED. A VACUOUS PASS GETS ACCEPTED.** The two nobody named are the dangerous half,
+because the arm that cannot fail is indistinguishable from the arm that passed for the right reason -- and the one
+S10 found announces itself.
+
+**THE DISCRIMINATOR WAS A SIBLING ARM, NOT AN ARGUMENT.** `x3-nontrivial` re-run beside `x3-filed` reads
+`FAIL-X3-WAVE-MOVED-SOMETHING`, "CLOSED 0 + OPENED 0 = 0", while `x3-two-runs` reads "run directories 5; with
+contract.json + VINTAGE.json: 5". **So the zero is not the wave -- it is WHICH PAIR the arm resolved**, because
+`_last_two()` picks its subject BY POSITION in a directory five runs now share. **That is R-40's position-resolution
+defect, closed in `x1` by the HASHES manifest and STILL LIVE in `x3`** -- the same class surviving in a sibling of the
+place it was fixed.
+
+**AND THE PART THAT GENERALISES, WHICH IS WHY THIS IS A RULING AND NOT A NOTE:** `3.0.0_SA_CVO` could not have found
+it. That seat's read started from **the failures it OBSERVED while grading** -- the correct instrument for finding a
+false FAIL, and **structurally blind to a vacuous PASS**, because a vacuous pass produces no observation to start from.
+What found it was an UNSCOPED read of the SHARED MECHANISM both remaining arms call.
+
+⛔ **THIS IS RULE 22's SHARED-DEPENDENCY CLAUSE, MEASURED ON A FINDING RATHER THAN ON A CODEBASE: THE MEMBERS' OWN
+LIST IS THE WORST AVAILABLE DOMAIN FOR THE CENSUS, AND IT ARRIVES LOOKING AUTHORITATIVE PRECISELY BECAUSE IT CAME FROM
+A REAL FINDING.** A list of defects is a list of what someone could SEE. Census the MECHANISM, not the sightings.
+
+**FOURTH INSTANCE TONIGHT OF THE SUBSET-NOT-POPULATION SHAPE**, and the first where the subset was itself a correct
+finding: R-43's carriers, the "nearer 54", R-46's 3-of-57, and now S10's twelve.
+
+**RULING: NOT REPAIRED IN ROUND 1, and the lane's reasoning is adopted whole.** Both arms are FIXED INPUTS of a
+CLOSED, GRADED round; on their own branches the windows were NON-empty, so the grades they fed are SOUND and an edit
+now moves no grade. **R-43 scopes a frozen-history defect to the live-direction document, never to a sweep.** What is
+owed is that `LGIC_LGCTFM` round 2 carries the corrected inputs FROM THE CUT, and **no round-1 arm is re-run as
+acceptance for anything.** No round re-opens and nothing is asked of `3.0.0_SA_CVO`.
+
+**THE ONLY CONTROL THAT CATCHES THIS CLASS IS THE POSITIVE-SATISFIABILITY ARM** -- run the checker against a SIMULATED
+CORRECT RECORD and require PASS -- which round 6's `check_en_r6.py` already drives eight of, against two simulated
+correct records. ⛔ **A MUTANT TEST CANNOT CATCH A VACUOUS PASS**: the mutant proves the arm can FAIL, and a vacuous
+arm fails the mutant happily while passing everything real. The two controls are not redundant and must both exist.
+
+---
+
+## R-48 -- a seat's ROSTER SUMMARY is a live claim about the fabric, and mine advertised a false block for a whole night
+
+`2.0.0_SA_COO~G` closed 97829 by reading THIS SEAT'S OWN registered summary and finding it said:
+
+> BLOCKED: LGIC waits on a COO~G seat (asked `0.0.0_AB_MSTR`)
+
+**It has said that all night while `2.0.0_SA_COO~G` was live and closed four rounds.** The lane put it exactly right:
+*"If that summary is stale it costs nothing; if a real gate is being held open against a seat that does not need
+seating, it is holding LGIC for no reason, and `1.0.0_SA_CTO` is the only seat that can tell which."*
+
+**IT WAS STALE, AND IT IS MINE.** Corrected at this tick. The defect is not the wrong words -- it is that **a summary
+is READ BY OTHER SEATS AS CURRENT STATE and by `0.0.0_AB_MSTR` as a seating obligation**, and nothing in the estate
+grades it: no gate refuses a stale summary, no census counts one, and the seat that wrote it is the last to re-read it.
+⛔ **EVERY DEFECT CLASS TONIGHT HAS THE SAME SPINE -- A CARRIER NOBODY RE-READS: a stale citation, a wrong credit, a
+row whose premise moved, an unpinned card, and now a roster line.**
+
+**THE BAR, and it is cheap:** a seat that reports a BLOCK in its summary re-reads that summary whenever it reports the
+block resolved anywhere else. This seat said "not blocked" in messages and analyses for hours while its own roster line
+said otherwise, and **the roster is what a seat reads when it does not have the messages.**
+
+---
+
+## R-49 -- DEC-9 ADMITS NO PREFIX AT ALL, so `LGIC_LGCTFM-W2-S3`'s question has no answer: it is a category error, and the row DISARMS on that
+
+`2.0.0_SA_COO~G` routed this as an open call with its recommendation in the same act (msg 97836). Under the
+call-routing law (Andrew-direct 2026-09-17 ~13:0xZ) **any open call is the driver's to decide on its own rec the same
+tick**, and this one is additionally mine by lane: DEC-9 lives in `LGIC_LGCTFM_PRD.md`, and the PRD is the CTO's.
+
+**THE ROW ASKS:** a second DECIDED-but-unmarked prefix (`opal-data-bd/silver/`, `infra/logic/06_CONFORMANCE_LEDGER.md:72`)
+sits on the same bucket with the same evidentiary shape DEC-9 accepted for `gold/`, and *"whether DEC-9's acceptance
+EXTENDS to a second prefix is a decision no one has made."*
+
+**RULING: there is nothing to extend, because DEC-9 never admitted a prefix.** Read at its own bytes rather than from
+the row's characterisation -- `org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md:246`:
+
+> **DEC-9 The mark act appends to the three existing registries only, under the subject's migration project, in the
+> run's own commit, through `safe-commit` and the naming gate.** ... A fourth mark is a Rule 24 act nobody has asked for.
+
+DEC-9's axis is **WHICH REGISTRIES THE MARK ACT MAY WRITE** -- three, and no fourth. It does not enumerate prefixes,
+and `gold/` is not named in it. Unscoped read of `DEC-9` over the PRD: **6 occurrences** (`:60`, `:178`, `:246`, `:356`,
+`:368`, `:377`); none names a prefix. `gold/` was simply the prefix a cell reached first. **So "does the acceptance
+extend to a second prefix" presupposes a prefix admission that does not exist**, and answering it either way would
+have MINTED that admission by implication. `2.0.0_SA_COO~G`'s reading is correct and is adopted.
+
+⛔ **THE GENERAL FORM, and it is the night's shape inverted:** every other instance tonight was a rule applied to a
+SUBSET of its population. **This is a rule read as having a population it never had.** Both come from taking a
+decision's SCOPE from where it was first exercised rather than from its own text. The remedy is the same one: read the
+decision's bytes, not the record of its first application.
+
+**W2-S3 DISARMS on this ruling** -- it named a decision nobody had made, and the decision is now made. This seat is its
+`disarm_owner`, so this is the owner's word; the CLOCK stays `3.0.0_SA_CVO`'s, and no `adjudicates` is carried.
+It was the last open id on composite `C-S3`.
+
+---
+
+## R-50 -- the markable population is `DECIDED` **AND** `MIGRATE` -- SEVEN of eleven, not eleven; the rec censused the right file on the WRONG COLUMN
+
+`2.0.0_SA_COO~G` was right to refuse to answer the row as asked and to hand me a population instead of a sighting --
+*"Census the mechanism, not the sighting. I would rather hand you the eleven than the one."* **That instinct is R-47 one
+level up and it is correct.** But the census reads one column too far left, and I am ruling against the rec's number.
+
+**MEASURED, on a different instrument than the lane's** (mine admits header and legend rows, so the denominators differ
+by construction and are printed rather than reconciled): `infra/logic/06_CONFORMANCE_LEDGER.md`, **261 lines**;
+**102** pipe-table rows detected; **73 DECIDED**, 29 not. The lane's detector saw 76 body rows / 64 DECIDED. **Neither
+number is the markable set, and that is the finding.**
+
+**THE LEDGER'S OWN HEADER, `:68`, NAMES TWO COLUMNS:**
+
+> `| bucket · plane | objects | newest | rules | disposition | decided |`
+
+`decided` answers **"has a word been given on this row?"**. `disposition` answers **"what happens to this surface?"**.
+They are different axes, and the mark act needs the second. **The rec censused `decided`.**
+
+**THE ELEVEN `opal-data-bd` ROWS, `:70-:80`, BY DISPOSITION:**
+
+| disposition | n | lines |
+|---|---|---|
+| **MIGRATE** | **7** | `:70` platinum/, `:71` gold/, `:72` silver/, `:73` schwab/silver/, `:75` bronze/, `:76` smartx/bronze/, `:79` gold/_state+_parity+manifests |
+| RETIRE | 3 | `:74` canonical/schwab/, `:77` schwab/bronze/, `:80` logs/gold/ |
+| CONFORMANT IN PRINCIPLE | 1 | `:78` code/ |
+
+**DECIDED 11 of 11. MIGRATE 7 of 11.** All three registries DEC-9 names describe **a surface that MOVES** --
+`remediations.json` surface kinds `bucket-alias` and `s3-prefix`, `LEGACY_SERVED_PATHS.json` served paths, `scopes.json`
+`bucket_aliases`. **A RETIRE row has nothing to alias to; a CONFORMANT row is already at its home.** Marking those four
+would write four rows asserting a destination the ledger does not give them.
+
+⛔ **RULE 24 (iii), INTENT COHERENCE, IS THE TEST THAT SEPARATES THEM:** one axis, one intent. `decided` is a
+PROCESS-STATE column (is a word owed?); `disposition` is an OUTCOME column (does this move?). **A census that selects
+on process-state and acts on outcome is reading a schema across two axes**, and it passes every count check because
+both columns are populated on every row. The lane's own exclusion work was real and correct -- it printed the 12
+not-DECIDED rows and flagged that three are WAITING ON ANDREW -- **but a correct subtraction on the wrong axis is still
+the wrong set**, and it arrives looking measured because the denominator is real.
+
+**MARKABLE ON THIS BUCKET: the seven at `:70`, `:71`, `:72`, `:73`, `:75`, `:76`, `:79`.** `silver/` (`:72`) IS among
+them, so the row's practical ask is granted -- by the mechanism, not by an extension of DEC-9.
+
+**WHAT THIS RULING DOES NOT MOVE, stated because Rule 24 (iv) requires it:** the three `opal-data-etfs` rows at
+`:106-:108` read **WAITING (Andrew)** and are untouched -- no ruling of mine reaches them. The two `OWED` register
+entries `X3`/`X5` (`:137`, `:139`) name Andrew as decider and are untouched.
+
+⚠ **AND ONE EXCLUSION IS RULED BUT NOT MEASURED, disclosed rather than smoothed.** I tried to falsify the RETIRE
+exclusion against `LEGACY_SERVED_PATHS.json` -- if a retiring prefix still carried a served path, it would need a mark
+after all. **The positive control DID NOT FIRE**: zero hits for the three RETIRE prefixes AND zero for all seven
+ADMITTED ones, so the instrument discriminated nothing. Reading the file's real shape showed why -- it is
+`mapping`, **8 rows** of `{path, reason}`, and its paths are **BUCKET-RELATIVE** (`platinum/advi/{firm}/{leaf} ...`),
+so a search for `opal-data-bd` was the **WRONG GRAIN** and could only ever return zero. **The RETIRE exclusion
+therefore rests on the disposition axis alone and is NOT independently corroborated.** It is ruled, and it is open to
+one measurement nobody has taken: whether any of the three retiring prefixes is still served. **Owner: the
+`ADVI_FIRMBKTS` migration project at its mark act**, which is the first cell that can measure it against a live read.
+
+⭐ **The positive control is the only reason I know that zero was empty rather than clean** -- and I had written R-47
+about exactly this four hours earlier, which did not stop me running the wrong-grain search. **A lesson you have
+written down is not a control; the control is the arm you run beside the answer.**
+
+---
+
+## R-50 CORRECTION -- I named the WRONG KEY in my own disclosure, and the true answer is STRONGER than the one I disclosed: the RETIRE exclusion is not un-corroborated, it is UNFALSIFIABLE BY THAT FILE
+
+`2.0.0_SA_COO~G` took the measurement R-50 said nobody had taken (msg 97839) instead of accepting the open item. Two
+things come back, and **one of them is a defect in my own committed text.**
+
+**THE DEFECT, MINE.** R-50 and row `LGIC_LGCTFM-S20` both say `LEGACY_SERVED_PATHS.json` "is `mapping`, **8 rows** of
+`{path, reason}`, and its paths are BUCKET-RELATIVE". **That names the wrong key.** Measured at the file's own shape:
+
+| key | type | n |
+|---|---|---|
+| `paths` | list of **str** | **39** -- these ARE the served paths |
+| `excluded` | list of dict `{path, reason}` | 8 -- what I reported |
+| `mapping` | dict | 6 route templates -- the key I named |
+
+⛔ **AND THE MECHANISM IS THE PART WORTH KEEPING, because my FIRST read was RIGHT AND I OVERWROTE IT WITH A WRONG ONE.**
+The falsifier printed `served-path rows: 39` -- correct, from `d.get("paths")`. The follow-up "characterize the file"
+read used a generic *first list-of-dicts* heuristic, which **skips `paths` precisely because it is a list of STRINGS**
+and lands on `excluded`. **A heuristic written to be robust selected the wrong object, and because it ran SECOND it is
+the number that reached the record.** The later read was not more careful; it was more generic. **A second look is not
+automatically a better look, and when it disagrees with the first, that is a finding to resolve, not a refresh.**
+
+**THE SUBSTANTIVE ANSWER, and it strengthens R-50 rather than disturbing it.** The grain was real but it was never the
+reason. That file cannot answer the question **at any grain**, twice over, and `2.0.0_SA_COO~G` measured both:
+
+1. **ITS TIER DOMAIN EXCLUDES EVERY PREFIX IN QUESTION.** Its title scopes it to *"every served path below
+   `{source}/{scope}/platinum/` that the frozen portal requests"*. Over its own denominator of 39, re-measured here on
+   my instrument: **`platinum` 39 of 39, and ZERO paths without it.** The three RETIRE prefixes are
+   `canonical/schwab/{silver,gold}`, `schwab/bronze/` and `logs/gold/` -- **not one is platinum**, and neither are four
+   of my seven ADMITTED ones. **So the positive control was SOUND and the instrument's DOMAIN was wrong** -- which is
+   the failure Rule 24 names when the subtraction's domain is not the claim's population, arriving here as a zero.
+2. **IT HAS NO BUCKET AXIS AT ALL.** `opal-data-bd` occurs zero times in the file, and its `key_form` says why in its
+   own first sentence: each entry is a key template **BELOW THE BUCKET**. So bucket-relative was the right grain **and
+   still insufficient.**
+
+⭐ **CONCLUSION, upgraded: the RETIRE exclusion is not merely UN-CORROBORATED by this file -- it is UNFALSIFIABLE BY
+IT.** No re-grained search there moves it either way. **So R-50's exclusion stands on the best evidence that exists
+rather than on a gap**, and my "open measurement, owner `ADVI_FIRMBKTS`" now carries an INSTRUMENT instead of only an
+owner: a live read of the objects under those three prefixes with their newest timestamps, or a portal-source census
+below a non-platinum tier -- the census this file's own `census` block records that it did **not** do. Weak
+corroboration already sits in the ledger's `newest` column: `:74` 08-18, `:77` 04-08, `:80` 04-01, **30 to 170 days
+stale.**
+
+⛔ **AND THE TRAP FOR THE NEXT READER, which is why my zero was the lucky outcome:** a whole-file token count of this
+file returns `gold` 3 and `canonical` 2, **all PROSE hits** in the title, `key_form` and `excluded` -- zero in `paths`.
+**A grep for a retiring prefix's tier returns NON-ZERO here and reads as a hit.** My wrong-object read produced an
+honest zero; a slightly less careful one would have produced a FALSE POSITIVE and corroborated the opposite ruling.
+
+**ONE DISCREPANCY BETWEEN OUR TWO COUNTS, resolved in the lane's favour rather than split.** I measured `canonical` = 1
+across the 39 paths where `2.0.0_SA_COO~G` measured 0. The hit is
+`advi/{scope}/platinum/firm/advisor_nna_canonical.json` -- **`canonical` in a FILENAME, not the tier segment
+`canonical/`.** The lane's claim was about segments and is correct; mine was a substring count and is the loose one.
+**The numbers never disagreed; the grains did.**
+
+**R-43 DISPOSITION: row `LGIC_LGCTFM-S20` IS NOT REWRITTEN.** It is a filed row carrying a frozen measurement, and the
+correction stands BESIDE it here, in the live-direction document -- the same disposition the lane took on `W1-S6`. The
+markable set is unchanged: **the seven at `:70`, `:71`, `:72`, `:73`, `:75`, `:76`, `:79`.**
+
+---
+
+## R-51 -- a PHANTOM ANSWER in a register row is worse than a stale block, and DONE resolves on the PRD's outcome array; NO `completion_test` FIELD IS MINTED
+
+`2.0.0_SA_COO~G` read `org/missions/D14/LGIC/LGIC_ENFORCE/project.json` **because the arm told it to read the register
+rather than its recollection**, and found three of the four items in `blocking` stale or wrong (msg 97838). **That row
+is MY L3 carrier -- Rule 27 puts it in the CTO's carrier set and says the CTO writes every carrier itself in its own
+commit -- so the lane routed it with a recommendation and did not edit it. That is exactly right.** Every claim below
+was re-measured on this seat's own instruments before the edit.
+
+| # | the row said | measured | verdict |
+|---|---|---|---|
+| 1 | CVO holds round 4; round 5 cannot be cut | round 4 closed, round 5 cut AND drained, L10 written @`b683398fda` | **SATISFIED -- struck** |
+| 2 | "Round 5's **one cell**" | **FOUR** `-r5` order files: `EN-c-28`, `EN-c-31`, `EN-g-30`, `EN-h-29` | **WRONG ON ITS FACE -- struck** |
+| 3 | W1-S30 disarms when the card lands | condition MET; row `S65` is the owner's word; clock open at `3.0.0_SA_CVO` | **reduced to the clock** |
+| 4 | W2-S13 "is **answered by round 5**" | `remediation.state` **OPEN**, `disarm.state` ARMED, `disarm.at` **null** | **FALSE -- rewritten** |
+
+⛔ **(4) IS THE ONE THAT MATTERS AND THE LANE NAMED THE ASYMMETRY EXACTLY: a stale BLOCK costs a WAIT; a phantom ANSWER
+costs the WORK.** Round 5's `EN-c-28-r5` stopped on the R-33 timebox and **carded the population forward** -- the order
+file's own bar is `judged + carded`, and `stopped_on_timebox` is a field it reports. The register converted "carded
+forward" into "answered", and a reader who trusts it stops looking. **R-48 said a roster summary is a live claim about
+the fabric; this is the same defect one object over, in the carrier the estate treats as authoritative** -- and it was
+found only because a COO read the register instead of its own memory of the register.
+
+⚠ **AND THE STALENESS IS NOT EVEN GRADEABLE ON THIS ROW: `LGIC_ENFORCE/project.json` HAS NO `last_updated` KEY AT
+ALL** (27 keys, measured; the field is simply absent), while `LGIC_LGCTFM`'s HAS one reading `2026-09-17T14:20:00Z`
+**while its own prose cites `@662d53b793` from 02:21Z on the 18th.** ⛔ **Same disease, opposite halves: one row cannot
+be checked, the other can be checked and LIES IN THE DIRECTION A READER TRUSTS** -- an old timestamp over fresh text
+reads as "nothing has happened since", which is the one inference a timestamp exists to license. Both are repaired in
+this seat's own commit; `last_updated` is added to `LGIC_ENFORCE` and corrected on `LGIC_LGCTFM`.
+
+### The second call: what does DONE read from?
+
+The lane reported that **its own stop condition names an instrument that does not exist** -- *"both projects DONE on
+the register per the completion test"* -- and censused it unscoped rather than assuming: **`completion` ZERO
+occurrences in either `project.json`, `complete_when` zero, `completion_test` zero**, and `done_when` once, as prose
+inside an Andrew-direct citation. Re-run here: **confirmed, 0 / 0 / 0 / 1.** It has been reporting "not DONE" from the
+PRD's FWD outcomes and **saying so every tick**, which is the correct behaviour for an unfalsifiable stop.
+
+**RULING: the lane's recommendation is ADOPTED VERBATIM, including its refusal.** DONE = **every FWD outcome REALIZED
+on the PRD, plus `status` off `active`**. ⛔ **NO `completion_test` FIELD IS MINTED.** The lane's reason is better than
+any I would have written and it is the ruling's reason:
+
+> Minting a field so a stop condition has something to read is how a test ends up describing whatever the last round
+> happened to do.
+
+⭐ **A STOP CONDITION THAT NAMES A MISSING INSTRUMENT IS FIXED BY RE-POINTING IT AT AN EXISTING OWNED ARTIFACT, NEVER BY
+CREATING THE ARTIFACT THE SENTENCE ASSUMED.** The PRD's outcome array already exists, already has an owner (this seat),
+and is already what the L10 analyses grade against -- so the sentence resolves mechanically against a thing that was
+built to be graded, rather than against a field invented to make a sentence resolve. **COST: none -- it deletes a
+field nobody writes. NON-APPLICATION: a project with no PRD outcome array, which cannot reach L4 and so cannot reach
+this question.**
+
+---
+
+## R-52 -- THE NO-HALF-LANDED-DEPLOY LEDGER IS INVISIBLE TO EVERY SHARED-TREE READER AT EXACTLY THE MOMENT IT MATTERS, AND MY OWN WATCH PROVED IT BY FAILING
+
+**This ruling is written against my own instrument.** For three ticks I watched the `NFRA_OPLGTW` `OG-r-1` release
+cutover -- the night's one world act -- with a check I wrote into the tick-30 log myself:
+
+> `org/critical_paths/.open_deploys/` carried **6 entries and none for this cutover** at log time, which is consistent
+> with the worker still being pre-deploy ... and is **NOT yet a finding**. It BECOMES one if the deploy completes with
+> no entry ever opened, or if an entry is left open.
+
+⛔ **THE CHECK WAS STRUCTURALLY INCAPABLE OF SEEING THE ENTRY, AND THE ENTRY EXISTED THE WHOLE TIME.** Measured at
+tick 32 by listing the SAME path in BOTH trees:
+
+| tree | entries | carries `nfra-oplgtw-og-r-1-first-release.json` |
+|---|---|---|
+| `CLOUD` (what my watch read) | **7** | **NO** |
+| `wk-nfra_oplgtw-2a` (the worker's worktree) | **8** | **YES** |
+
+`0.9.0_WK_NFRA_OPLGTW~2` opened it @`7752ea3bdb` at **05:08:50Z**, with a commit subject that names the discipline it
+was obeying: *"opened BEFORE the deploy, per the no-half-landed-deploy discipline."* **The worker did exactly the right
+thing and my instrument reported the opposite.**
+
+⛔ **THE STRUCTURAL FORM, and it is a hole in the estate's own NEVER line rather than a mistake by anyone:** CLAUDE.md
+requires the ledger entry to be **opened at start, before the deploy**. Rule 14b requires a worker to work in **its own
+linked worktree**, which carries its own index. **So the entry is created on a branch, and it reaches the shared tree
+only at the DRAIN -- which is AFTER the deploy.** ⛔ **THE WINDOW IN WHICH THE ENTRY IS MANDATORY IS EXACTLY THE WINDOW
+IN WHICH NO SHARED-TREE READER CAN SEE IT.** Every seat auditing "is a deploy running without an entry?" from `CLOUD`
+gets a confident, denominator-bearing NO for the entire duration of the deploy.
+
+⭐ **AND IT IS R-47's SHAPE ON A WORLD ACT.** My check could not have returned anything else. **Had the deploy actually
+half-landed, it would have printed the same "no entry" and I would have read the same "consistent with pre-deploy."**
+A false FAIL would have been investigated; this VACUOUS PASS was accepted for three ticks and written into a log as a
+successor's instruction. **The half of my sentence that fired -- "or if an entry is left open" -- fired for a reason my
+instrument could not report either.**
+
+**THE REPAIR, and it costs one flag:** a deploy-ledger check names the TREE it read, and a check that matters reads
+**every live worktree** (`git worktree list --porcelain`), not just the shared one. `git -C <worktree> ls-tree -r
+--name-only HEAD org/critical_paths/.open_deploys/` per worktree, union the results, print the per-tree denominator.
+**COST: one `git worktree list` plus one `ls-tree` per live worktree. NON-APPLICATION: a deploy performed in the shared
+tree by a seat that is not a worker -- there the shared read IS the whole population.**
+
+⚠ **A SECOND, SMALLER INSTRUMENT DEFECT IN THE SAME LINE, disclosed because it is the same class:** my "6 entries" was
+also wrong. `ls -1` without `-a` skipped `.unindexed_red_state.json`, so the true shared-tree count was **7**. **A
+dotfile in a dot-directory is invisible to the default listing, and `.open_deploys/` is a directory whose contents are
+ALL about things being red.**
+
+### What the cutover actually did, recorded because my watch is now closed on it
+
+`0.9.0_WK_NFRA_OPLGTW~2` filed `NFRA_OPLGTW-W2-S5` @`60f1d0873c`: `safe-ec2-deploy.sh`'s worktree-redirect points the
+halt-gate identity resolver at the **shared main tree** rather than the worker's own worktree, so the
+issuer-provisioned session-serial file is never found and **AC2 fails closed with IDENTITY UNRESOLVED before any deploy
+work runs.** BLOCKING for AC2-AC10 / AC12-AC14 / AC8; AC1 and AC11 PASS.
+
+⭐ **NOTE WHAT THE DEFECT IS: the deploy script resolves identity against the SHARED TREE instead of the worker's
+worktree. THAT IS THE SAME ROOT AS MY OWN WATCH'S BLINDNESS, one layer down** -- a worker-scoped fact looked up in the
+shared tree. Two independent instruments, the same wrong assumption, found within an hour of each other.
+
+**THE OUTCOME MY WATCH EXISTED TO PROTECT IS INTACT, in the worker's own words:** *"nothing was deployed, so nothing is
+half-landed on AWS, but the deploy-completion ledger opened for AC1 stays OPEN (cannot be truthfully closed or held)
+until the gap closes."* **It failed CLOSED, before touching AWS, with its ledger entry honestly left open rather than
+falsely closed.** The lane's stated bar -- *"a rollback IN SESSION with an ARMED row if the deploy cannot be proven"* --
+is met by a deploy that never started. **No rollback is owed and none should be manufactured.** The tooling gap is
+`2.0.0_SA_COO~O`'s to drain; `NFRA_OPLGTW` is outside this loop's scope and nothing here adjudicates it.
+
+---
+
+## R-53 -- CALL 19 GRANTED, BUT NOT THE FIX AS RECOMMENDED: the wrapper DEFEATS a two-place lookup by pre-setting both places to the same place, and its own comment is a WORKAROUND THAT OUTLIVED ITS BUG
+
+`2.0.0_SA_COO~O` routed CALL 19 (msg 97842) with a rec and, correctly, refused to grant a SHARED deploy path on its own
+authority: *"Granting a shared deploy wrapper to my worker on my own authority is exactly the widening I would refuse
+from a lane in a hurry, and the blast radius belongs with you."* **That refusal is right and is why this ruling exists.**
+
+**GRANTED.** `TO-OG-r-1` may be amended to grant `infra/aws/ec2/safe-ec2-deploy.sh` for the identity-resolution lines.
+No NEVER line reserves it: it is not a served-output move, not vendor egress, not spend. ⛔ **BUT THE RECOMMENDED EDIT
+IS REFUSED AS WRITTEN, and the reason is not stylistic -- a bare flip to `--show-toplevel` would re-open the exact
+hazard the current code was written to close.**
+
+### What the bytes say, read in both files
+
+`infra/aws/ec2/safe-ec2-deploy.sh:41` sets `HALT_GATE_REPO_ROOT="$MAIN_TREE"` unconditionally. The worker's read of
+that is correct. **But the gate it feeds already solves this**, `.tools/halt-gate-check.sh:71-77`, its own comment
+first:
+
+> Primary: session-id-keyed serial file ... **Two directories, in order: this checkout's own (an issuer may provision a
+> worker's serial inside the worker's worktree, so parallel workers of one session each resolve as themselves), then
+> the SHARED checkout's** ... The second was unreachable from a linked worktree **before 2026-09-15**.
+
+```
+for sess_dir in "${repo_root}/org/mcp/sessions" "${HALT_GATE_SHARED_ROOT}/org/mcp/sessions"; do
+```
+
+⛔ **THE GATE LOOPS OVER BOTH. THE WRAPPER COLLAPSES `repo_root` ONTO THE SHARED ROOT, SO THE LOOP'S TWO ITERATIONS
+READ THE SAME DIRECTORY AND THE WORKER'S OWN WORKTREE IS NEVER CONSULTED.** The defect is not a missing lookup; it is a
+**two-place lookup defeated by a caller that pre-set both places to one place.**
+
+**MEASURED, the discriminator:** `org/mcp/sessions/` holds **1148** entries in the main tree and the worker's session id
+appears there only as `.comphud.*.count` -- **no `.serial`.** The worker's worktree holds exactly **1** file:
+`e3c2c727-....serial`. **The serial exists in ONE tree and it is the one the wrapper excludes.**
+
+### The finding worth more than the fix
+
+The wrapper's comment at `:25-30` justifies the redirect as *"fixing both the worktree serial-unresolved fail (exit 3)
+and the stale-worktree-inbox hazard."* **The first half was TRUE AND IS NOW FALSE.** The gate's own comment dates the
+repair: the shared directory *"was unreachable from a linked worktree before 2026-09-15."* **The gate was fixed on
+09-15; the wrapper's workaround was never retired; and the workaround is now the only thing causing the failure it was
+written to prevent.**
+
+⛔ **A WORKAROUND OUTLIVES THE BUG IT WORKED AROUND AND BECOMES THE BUG -- and it is invisible because its comment
+still reads as a correct explanation of why it exists.** This is tonight's shape again: **a carrier nobody re-read.**
+The comment is not wrong about history; it is wrong about NOW, and nothing makes it say so.
+
+### The fix, corrected -- and the half the rec would have broken
+
+`HALT_GATE_REPO_ROOT` is not only the serial's root. At `.tools/halt-gate-check.sh:56-57` it ALSO roots
+`HALT_GATE_CONTEXT_FILE` (`.comp-graph/.agent_context`) and `HALT_GATE_AUDIT_LOG`
+(`org/halt-gate-override-audit.log`) -- **single-place, no fallback.** ⛔ **So a bare flip to `--show-toplevel` fixes
+the serial and simultaneously points the agent-context read and the override AUDIT LOG at an ephemeral worktree** --
+re-opening the stale-context hazard the `:25-30` comment names, and writing audit rows into a checkout that is deleted
+at drain. **The rec's criterion (2) would not have caught it: a main-tree caller resolves identically either way, so
+the positive control passes while the worktree caller silently writes its audit trail to a temporary directory.**
+
+**THE GRANTED EDIT, both halves or neither:**
+1. `HALT_GATE_REPO_ROOT` = the **CALLING** worktree (`git rev-parse --show-toplevel`), restoring the gate's intended
+   first iteration.
+2. **`HALT_GATE_CONTEXT_FILE` and `HALT_GATE_AUDIT_LOG` explicitly pinned to `$MAIN_TREE`**, preserving exactly what
+   the old comment was protecting.
+3. The `:25-30` comment **rewritten**, not left standing -- it is the carrier that made this invisible.
+
+**CONTROLS -- `2.0.0_SA_COO~O`'s three are adopted and a FOURTH is added, which is the one its own set could not
+catch:**
+1. from the worker's worktree the gate RESOLVES that worker's serial and the deploy proceeds;
+2. **POSITIVE CONTROL:** from the MAIN tree a non-worker caller resolves its own serial exactly as today
+   (byte-identical -- `--show-toplevel` IS the main tree there, so this passes by construction);
+3. **MUTANT:** restore the main-tree override; it must FAIL (1) while still passing (2);
+4. ⭐ **NEW -- the audit-log/context arm: from the WORKER's worktree, `HALT_GATE_AUDIT_LOG` and
+   `HALT_GATE_CONTEXT_FILE` must still resolve under the MAIN tree.** Without this arm the fix passes 1-3 and quietly
+   relocates the override audit trail into a directory that gets deleted. **COST: one `echo` of each resolved path per
+   arm. NON-APPLICATION: none while `HALT_GATE_REPO_ROOT` roots more than the serial.**
+
+**LANE: the edit stays with `2.0.0_SA_COO~O`'s worker under this grant rather than going to `0.7.0_AE_CloudOps`.** The
+change is nine lines in one file, the controls are written, the worker is live and holding the only cell that can move,
+and `0.7.0_AE_CloudOps` has measured unread mail going back days (CLAUDE.md's own "queued if not live" line). ⚠ **The
+grant is for the identity-resolution lines ONLY; any other change to that file is a fresh call.** `0.7.0_AE_CloudOps`
+is NOTIFIED as the owning lane, not asked -- a courtesy, not a gate.
+
+⭐ **AND NOTE WHAT ACTUALLY FOUND THIS: `2.0.0_SA_COO~O` refused to grant itself a shared path while holding the
+night's last movable cell.** A lane in a hurry with a correct diagnosis and a plausible one-line fix stopped and asked
+-- and the one-line fix was wrong in a way that only showed up two files away.
