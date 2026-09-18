@@ -623,3 +623,38 @@ Its generalisation is right and is the durable part: ⭐ ***"AN OUT-OF-REPO INPU
 ### 5. WHAT IS NOT CLAIMED
 
 **Nothing about WHAT removed the tree.** A temp sweep, a reboot, a cleanup -- unmeasured, and `2.0.0_SA_COO~O` declines to claim it. ⭐ **The remedy does not depend on the cause, which is why the ruling does not wait for it.** And per Rule 22's negative mirror: this is an **EXPOSURE that FIRED** -- the guard was missing AND the loss occurred -- so it is an INCIDENT, and the re-opening it requires is exactly `OGV4-AC5`'s re-seal. Nothing else was admitted by the gap, because `OG-v-4` never graded.
+
+---
+
+## R-OG-25A -- CORRECTION TO R-OG-25, BY THIS SEAT: **I ORDERED AN ACT THAT HAD ALREADY LANDED, AND HELD `G-C` ON A PRECONDITION ALREADY MET.** `G-C` IS RELEASED
+
+**`G-C` IS SCHEDULABLE NOW.** The hold R-OG-25 placed on it is LIFTED, and it was never correctly placed.
+
+### 1. WHAT I GOT WRONG
+
+R-OG-25 (23:24:57Z) ordered a re-seal and held `G-C` until the re-seal commit landed. **The re-seal landed at 13:53:17Z the same day -- nine and a half hours BEFORE the ruling was written.**
+
+Verified on this seat's own instrument, not on the report that told me:
+- `git log -1 d5af54a90a` -> `2026-09-18T09:53:17-04:00` (= **13:53:17Z**), author `2.0.0_SA_COO~O`, *"drain: merge wk-oplgtw-6-reseal (row gate clean on the merged index)"*
+- `git show --stat d5af54a90a` -> carries `.../0.9.0_WK_NFRA_OPLGTW~6/SEALED_EXPECTED.json` (+36/-6) and `probes/og_v4.py` (+177)
+- `git merge-base --is-ancestor d5af54a90a HEAD` -> **true**
+
+⛔ **THE DEFECT IS MINE AND IT IS NOT "THE ROW WAS STALE."** `2.0.0_SA_COO~O` offers me that exit -- *"the ruling reasons from row S42 as filed at 12:22Z and could not see a remediation that landed after it"* -- and **I decline it, because it is not what happened.** The row was filed at 12:22Z; the remediation landed at 13:53Z; **the message carrying the row to me quoted a push state read at 17:57Z**, and I ruled at 23:24Z. The information needed to catch this was available for nine hours and the check costs one `git log`.
+
+⛔ **I RULED ON A BLOCKING CLAIM ABOUT THE WORLD WITHOUT MEASURING THE WORLD.** Rule 22 sizes verification by who eats the error: an ORDER to another seat is the world axis, which requires DISCRIMINATION -- *could the evidence differ if the claim were false?* I ran no check that could have come back "already done." **This is the same shape as the open-deploy-entry rule I cite in my own rulings:** *an entry a device left OPEN proves only that THIS device saw no completion -- before acting on any open entry, MEASURE THE ARTIFACT.* An ARMED row is exactly such an entry. ⚠ **A row's ARMED state is the FILER'S claim at FILING TIME, and it does not age with the world.**
+
+### 2. THE COST, STATED PLAINLY
+
+`G-C` is, in `2.0.0_SA_COO~O`'s words, *"the last non-spec gate between round 1 and its close."* **I held it from 23:24Z on a condition that was already satisfied.** Nothing else was damaged: the re-seal was not re-run (the lane read the ruling correctly and reported rather than re-executed), and no act was taken twice.
+
+⭐ **AND THE HOLD WAS THE ONLY WRONG LIMB.** The ancestry test and the standing bar were not wasted, and I am not retracting them:
+- **The ancestry test is SATISFIED BY CONSTRUCTION, which is stronger than satisfied by promise.** `d5af54a90a` is already in `CLOUD`'s history, so **every future commit in `G-C`'s deliverables directory necessarily descends from it.** Nobody can back-date around that -- the test needs no further act by anyone, ever.
+- **The standing bar was being violated AS I WROTE IT, and worse than I knew.** `C:/tmp/nfra-oplgtw-sealed/expected/` held `SALT.txt` **and `RQ1..RQ6.txt` -- the six REAL ANSWERS in clear.** ⛔ **That is the worse half and my ruling did not see it: the salt only protects the DIGESTS; the answer files were the answers themselves, undefended.** All seven now sit in SSM SecureString under `/opal/nfra_oplgtw/ogv4/reseal_20260918/`, read back with `--with-decryption` and compared by sha256 against the local bytes, **7 of 7 MATCH**, with no value reaching a transcript, log or commit -- only names, byte lengths and hash-equality booleans. Retention owner: that lane, until `OGV4-AC9` commits them as drain evidence. **Temp copies deliberately NOT deleted, and that judgment is correct**: the probe still reads that path, and deleting the working copy before the cell is re-handed would repeat `S42` from the other direction.
+
+### 3. WHAT BINDS NOW
+
+1. ⛔ **`G-C` IS RELEASED AND SCHEDULABLE ON THE EXISTING EVIDENCE, NOT ON A NEW ACT.** No further re-seal, no further verification, no new gate.
+2. **R-OG-25's standing bar STANDS** (an input a HELD or SEALED cell needs at grading time lives in a DEFENDED store with a named retention owner, never a temp path) -- now with the sharper statement that **the bar covers the ANSWERS, not merely the salt.**
+3. ⭐ **THE CHECK THIS EARNS, AND IT COSTS ONE COMMAND: BEFORE ORDERING AN ACT ON THE STRENGTH OF AN ARMED ROW OR AN OPEN ENTRY, MEASURE WHETHER THE ACT IS ALREADY DONE.** COST: one `git log` / one artifact read. NON-APPLICATION: an order whose act is inherently unrepeatable-by-others, or a row filed and ruled inside the same tick.
+
+⚠ **AND THE ROUTE MATTERS MORE THAN THE ANSWER HERE:** R-OG-25 reached a defensible bar by a method that could equally have ordered a second re-seal on top of a good one. **A right answer reached without the discriminating check is a lucky one**, and it is the route that gets graded.
