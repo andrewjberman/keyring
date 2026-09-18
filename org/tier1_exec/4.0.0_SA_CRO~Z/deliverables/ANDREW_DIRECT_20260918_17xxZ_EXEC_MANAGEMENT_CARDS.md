@@ -54,3 +54,24 @@ be properly implemented"*.
 10 Bright Data SERP queries through the estate's existing zone and key; fetching the public pages those return; model
 calls for the curation prototype under a US$5 cap; three sample CEOs. **Not covered:** Lusha; any S3 write; any repo
 code change or commit; any schedule; storing any contact data.
+
+## Addendum ~20:4xZ -- the CEO step's four open questions, all YES
+
+Put to him, from the exploration's open list (design s.5, brief s.10): (a) show the links the step found but could not
+read, labelled, never as facts -- recommended yes; (b) LinkedIn link-only, never fetched -- recommended yes; (c) may an
+unlocker read the pages that answer 403 or 429, against his earlier cost ruling that only the SERP zone is used; (d) are
+residence or home-location lines ever shown. Verbatim:
+
+> 1.) yes to all on ceo search. Posture we will get to later.
+
+**Reading, narrow:**
+1. **(a) YES** -- found-but-not-read links are shown, labelled, and carry no facts.
+2. **(b) YES, as recommended** -- LinkedIn is link-only; the step never fetches a LinkedIn page, whatever (c) allows.
+3. **(c) YES, for THIS path only.** An unlocker may read a page the CEO step found and could not read. It is a paid
+   per-page read, so the cut states the bound. WARN: **It supersedes his FIND_DUALBIZ cost ruling (`docs/architecture/FIND_DUALBIZ_PRD.md:47`,
+   "never route through `one_shotter`") ONLY for the CEO step**; FIND_DUALBIZ's own paths are untouched, and this seat
+   does not widen it to any other AMGT path.
+4. **(d) YES** -- a location line from a professional profile may be shown. Contact data (email, phone, mobile) stays
+   forbidden at every level, unchanged.
+5. **Posture is DEFERRED by him** -- "we will get to later". The Posture brief stays committed and unissued; its one open
+   decision (the comparable fallback) is not answered.

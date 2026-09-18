@@ -328,3 +328,24 @@ unit price is not in any header or estate record, so the account's billing conso
 never facts); whether LinkedIn pages are fetched (recommend link-only); whether an unlocker may read the 403/429
 pages (his cost ruling in `FIND_DUALBIZ_PRD.md:47` says `serp_opal` only); whether residence lines are ever shown;
 and the query's name form.
+
+---
+
+## 11. UPDATE 4, 2026-09-18 ~20:4xZ -- the CEO step's four open questions, all answered YES
+
+Andrew-direct, verbatim in the record's ~20:4xZ addendum: *"1.) yes to all on ceo search. Posture we will get to
+later."* The four, as put to him, and what each now binds:
+
+| question | ruling |
+|---|---|
+| Show links the step found but could not read? | **YES**, labelled, listed as links and never as facts -- the `found_not_read[]` block of the design's schema |
+| LinkedIn: link-only, never fetched? | **YES.** The step never fetches a LinkedIn page. Lusha already supplies the profile URL for a matched officer |
+| An unlocker for pages answering 403 or 429? | **YES, for the CEO step only.** It is a paid per-page read, so the cut states its bound. It supersedes his FIND_DUALBIZ cost ruling (`FIND_DUALBIZ_PRD.md:47`) **for this path alone**; no other AMGT path is widened |
+| Show a residence or home-location line? | **YES.** Contact data (email, phone, mobile) stays forbidden at every level |
+
+**What this changes in the design** (`CEO_STEP_IMPLEMENTATION_DESIGN_20260918.md`): its risks 4 and 5 are settled, and
+its open items (a), (b), (c) and (e) are closed. The `other` fact topic it proposed dropping comes back only for a
+location line, which is labelled as such. Still open there: the query's name form (its s.3.4), and whether the running
+validation exercises the step.
+
+**Posture is deferred** by the same word; its brief stays committed and unissued, with its comparable decision open.
