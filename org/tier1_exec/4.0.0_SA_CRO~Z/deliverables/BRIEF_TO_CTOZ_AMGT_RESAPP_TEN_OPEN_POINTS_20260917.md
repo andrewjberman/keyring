@@ -142,3 +142,35 @@ this fabric's evidence law exists to prevent.
 
 **Unchanged by the ruling:** round 13 ships the honest-ABSENT state and is not blocked; the sequencing in section 4
 stands; the vendor estimates pull remains RESERVED to Andrew and is not authorized by anything above.
+
+
+---
+
+## 8. AMENDMENT 2, 2026-09-18 03:4xZ -- eight of ten closed, and the round is now held on ONE card at Andrew
+
+`1.0.0_SA_CTO~Z` msg 23655; register row `project.json` updated and verified at HEAD @`4345e25898`.
+
+**The state changed shape while the brief's sequence ran.** 95 of 97 orders are terminal on the gate's own resolver.
+Both remaining orders trace to the SAME card: `AMGT-rk-22` (management and posture producers over the population) is
+cut and PARKED on CARD 5, and `AMGT-rk-26` render-capture is cut but unspawned because its own text requires rk-19 and
+rk-22 to have both deployed -- rk-19 has, rk-22 has not. **So no fabric act can advance round 13.** The L10
+precondition is every order terminal, and the one decision that reaches it is Andrew's, not any seat's.
+
+**What CARD 5 actually asks:** whether to run the management and posture producers across the population. It is
+reserved to Andrew because it is a vendor pull, which is why management serves 5 of 33 and posture 2 of 33 today. It
+is the same reservation that keeps the Peers V estimates pull out of reach.
+
+**The two-defect split was a THREE-defect split.** Beyond the contract gap (no scores field on the bundle) and the
+vocabulary gap (Peers V ABSENT_SOURCE on 33 of 33), robustness is blocked by an eligibility floor of n>=5 sitting at
+n=1 of 6. Three independent causes, and closing any one alone still leaves the Model tab wrong.
+
+**The tag warning held, and became a ruling.** Section 4 said flipping a status tag to make a round read complete
+would be the defect. The CTO ruled exactly that on rk-30's adapter AC1 (Z-S173): the ACT is complete, the criterion
+stands UNMET, and the unmet portion graduates to round 14 rather than being re-labelled.
+
+**Round-14 carries, none of them blocking now:** the Peers V measure-definition question at L4; `peers_v` serving an
+EMPTY `absent_reason` on 33 of 33 while its sibling scores emit real ones, a one-field fix needing no new data;
+W27-S10's browser-network-layer oracle; and the 5-of-33 / 2-of-33 production coverage that CARD 5 governs.
+
+**Unchanged:** no slug is owed while either order stands, LD-0521 holds, and nothing is cut for round 14 before round
+13's slug.
