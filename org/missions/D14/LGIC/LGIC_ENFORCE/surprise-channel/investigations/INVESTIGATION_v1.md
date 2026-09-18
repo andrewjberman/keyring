@@ -3623,6 +3623,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "S75 chose two files as the domain for a claim about a whole project, ran a correct subtraction inside them, and published the result as a property of the project. The falsifying rows sat in the same channel document the row was appended to.",
     "notes": "DISARM: this row is the disarm evidence for LGIC_ENFORCE-S75, whose disarm_owner is this seat. S75 is NOT deleted and its scope paragraph STANDS -- step 13 is 1 of 4, steps 10 and 16 are ADVI_FIRMBKTS's and step 14 is Andrew's, which 1.0.0_SA_CTO confirmed and declined to widen. What is struck is the headline: the owner was NOT uninformed. This row carries no `adjudicates` and disposes nothing -- disarming is not disposing and the clock stays 3.0.0_SA_CVO's. THE TRANSFERABLE PART: a claim of the form 'X does not know about Y' has as its population EVERY CARRIER X READS, and a surprise channel is the first of them, not an afterthought -- especially when you are appending to it in the same act. COST: one census over the project's own channel before asserting an absence about the project. NON-APPLICATION: a claim explicitly scoped to named files, which is what S75's two measurements were and all they ever supported.",
     "id": "LGIC_ENFORCE-S77"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T11:05Z",
+    "one_line": "DISARM OWNER'S WORD ON LGIC_ENFORCE-W2-S13, AND IT IS *NOT DISARMED*. Its remedy has TWO HALVES AND THEY HAVE COME APART. Half one -- 'prints resolved + carded == 1411 with its denominator' -- WAS MET IN ROUND 5 AND NOBODY NOTICED: PLACEHOLDER_CAMPAIGN_R5.json holds resolved 41 and carded 1370, summing to 1411, which is its own printed `population_at_start`. Half two -- 're-runs AC3 against that' -- is NOT met and, under R-60, CANNOT BE MET BY THIS PROJECT: AC3 is 'no row's canonical may contain {', and R-60 read FWD-5's own ACCEPT at the bytes as making the OUTCOME THE LIST, with resolution being the clean-up projects' work. So the clock points at a bar its own project is no longer chartered to clear.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "HALF ONE, MEASURED AT THE ARTIFACT rather than recalled from a round report: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/PLACEHOLDER_CAMPAIGN_R5.json carries `resolved` list length 41 and `carded` list length 1370; 41 + 1370 == 1411; its `denominators` block prints population_at_start 1411 and population_at_close 1370, and its own `denominator_delta_note` states the difference is exactly the 41 rows the round resolved. That is the remedy's arithmetic clause satisfied verbatim, in round 5.",
+        "HALF TWO, MEASURED THE SAME WAY: PLACEHOLDER_CAMPAIGN_R6.json carries resolved 41, carded 236 and DEFERRED 1093 -- a third bucket the remedy's sentence never names -- summing to 1370. So after round 6 the resolved-plus-carded figure is 277 of 1370, and 1093 rows still carry a literal `{`. AC3 re-run clean is therefore still false, and both rounds record `stopped_on_timebox: true`.",
+        "WHY HALF TWO IS NOT MERELY UNFINISHED BUT OUT OF CHARTER: R-60 read FWD-5's ACCEPT at the bytes -- it ends 'THIS IS THE LIST CLEAN-UP PROJECTS START FROM' -- and ruled that the OUTCOME IS THE LIST and the RESOLUTION is the clean-up projects' work. Rounds 5 and 6 ground against a bar FWD-5 never set and were graded against it three times before the closing clause was read. W2-S13's remedy text was written under R-38, BEFORE R-60, and inherits the retired bar.",
+        "NOT CLAIMED, and this is the line that keeps the row honest: that W2-S13's HAZARD is gone. 1093 rows judged against a string no resource can equal is exactly the defect the row named, and it is still true. What is being reported is that the DISARM CONDITION as drafted can no longer be reached by the project that owns the clock -- not that the condition has become unimportant.",
+        "AND NOT DISARMED ON A TECHNICALITY: half one being met does not license a disarm, because the remedy joins its two clauses with 'and'. Disarming on the satisfied half while the unsatisfied half is the substantive one would be the relabelling that EN-o-35's own no-silent-upgrade arm exists to refuse, committed by the seat that issued that arm."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "W2-S13's remediation row `remedy` field, verbatim: the cell 'resolves every row whose {system}/{scope}/{cadence} substitution is MEASURED from a declared source, cards the rest with owner and reason, prints resolved + carded == 1411 with its denominator, and re-runs AC3 against that'. Its `disarm` block reads state ARMED, owner 2.0.0_SA_COO~G, at null.",
+    "world_is": "The arithmetic clause was satisfied by round 5 and went unremarked; the AC3 clause is unsatisfied and is now outside this project's charter under R-60. The clock has been ARMED since 2026-09-17 pointing at a compound condition whose halves now have different owners.",
+    "notes": "THE CLOCK STAYS ARMED AND THIS ROW DISARMS NOTHING. It carries no `adjudicates` and disposes nothing. RECOMMENDED AND DELIBERATELY NOT TAKEN, because the remedy text is R-38's and re-pointing a ruling's remedy is 1.0.0_SA_CTO's: RE-POINT W2-S13's disarm condition at R-60's bar -- the row disarms when the LIST is complete and classified, which round 6's zero-remainder partition and round 7's label work substantially deliver -- and TRANSFER the residual resolution obligation to the clean-up projects with a named owner, rather than leaving it on a LGIC_ENFORCE clock that cannot clear it. This is R-51's class one level over: a condition naming a retired BAR is RE-POINTED, never quietly satisfied and never left to decay. COST: one register line plus one remedy re-point. NON-APPLICATION: a compound remedy whose clauses share an owner and a charter, where finishing the work is the whole answer.",
+    "id": "LGIC_ENFORCE-S78"
   }
 ]
 ```
