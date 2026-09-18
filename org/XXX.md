@@ -430,8 +430,33 @@ or hold with no line here is re-armed by the next successor who reads only the l
 tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA,
 then COO~M for MCPINDEX."* Typos his, preserved.
 - **CLASS: DIRECTED. SCOPE: this lane's two projects, LGIC_ENFORCE (D14) and LGIC_LGCTFM (D14)** -- one loop covering
-  the pair, per the relay's own routing line. LGIC_CANON is NOT in scope: its round 3 is graded and its only open
-  outcome waits on LGIC_LGCTFM giving C6 a subject. **CADENCE: 30 minutes**, off-minute, via CronCreate.
+  the pair, per the relay's own routing line. **CADENCE: 30 minutes**, off-minute, via CronCreate.
+- ⛔ **LGIC_CANON IS STILL OUT OF THE LOOP, AND THIS CLAUSE'S ORIGINAL REASON FOR IT IS NOW STALE -- REPLACED HERE
+  RATHER THAN LEFT TO READ AS CURRENT.** It said *"its round 3 is graded and its only open outcome waits on
+  LGIC_LGCTFM giving C6 a subject"*. **That wait is SATISFIED:** `LT-x-3` merged @`203998fa7e` and minted a second
+  real practice wave over the blackdiamond / 49financial subject, run `20260918T002711Z-caf0983`. A successor must
+  not re-read the old sentence as a live reason.
+- ⛔ **AND THE DECOMPOSITION'S OWN REASON FOR HOLDING C6 IS STALE TOO -- DO NOT TAKE IT FROM THERE.**
+  `LGIC_CANON_DECOMP.md` says in four places that *"`C6` STAYS NOT CUT"* on **Andrew's G-N word** and
+  `ADVI_FIRMBKTS`'s router repoint. **BOTH holds are lifted in the PRD and neither lift reached the
+  decomposition**, because the decomposition was last cut against **PRD v1.5 @`312400d7df`** (its own v5.1 note
+  says so) and the PRD is ADMITTED at **v1.7**: the PRD states *"Gate G-N is lifted by that word"* on Andrew's own
+  sentence *"...because we don't have a new firm to test and I don't feel like messing around making demo cruft"*,
+  and ruling **R-34** (Andrew-direct 2026-09-17 ~19:0xZ) says *"no step of C6 waits on `ADVI_FIRMBKTS`"*, the run
+  continuing with any genuinely blocked step CARDED with its owner and reason. Measured 2026-09-18 ~01:5xZ: the
+  decomposition contains **0** occurrences of `R-34` and **0** of `CARDED`. ⚠ **THIS SEAT READ THE DECOMPOSITION
+  FIRST AND ALMOST WROTE THE OPPOSITE INTO THIS LINE -- that an unlifted Andrew gate held C6, which would have
+  parked the project on a hold Andrew had already released.** Two reads in opposite directions, one document each,
+  and only the PRD is current. **WHERE THE PRD AND THE DECOMPOSITION DISAGREE ABOUT A GATE, THE PRD IS THE
+  AUTHORITY AND THE DECOMPOSITION IS THE STALE COPY.**
+- **SO WHAT IS ACTUALLY OWED IS THIS LANE'S OWN L5, AND IT IS A SEQUENCE, NOT A HOLD:** when `LT-x-1` drains and
+  LGIC_LGCTFM round 1 is terminal -- C6's run reads the wave's artifacts, and the wave is mid-change until then --
+  this lane cuts LGIC_CANON's **L5 re-cut (v6)** carrying G-N's lift, R-34 and FWD-5's CARDED carve-out, then
+  **C6 as round 4**. **FWD-5 still does not close on that cut alone:** its DONE-WHEN, quoted from the ENDPOINT
+  card, is *"EXERCISED -- the checklist has been run end to end on a LGIC_LGCTFM practice wave over an existing
+  firm's subject, and that firm's people can see their dashboard at the end"*, which is why R-34 grades the run on
+  what the wave REACHES plus what it CARDS. Coverage measured at that reading: **5 of 6 outcomes carried by cut
+  cells; FWD-5 is the one, and C6 is the only cell that serves it.**
 - **THIS CARRIER IS COMMITTED BEFORE TICK 1**, which is the relay's own gate: a cron dies with its session, so an arm
   whose only carrier is a cron is a sovereign instruction stored in RAM. A successor at THIS lane re-arms off THIS
   line while the scope is not DONE, and arms nothing from it once the stop condition is met.
