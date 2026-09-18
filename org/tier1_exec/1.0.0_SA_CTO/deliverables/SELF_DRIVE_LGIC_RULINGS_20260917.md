@@ -1475,3 +1475,77 @@ the lane asked and the one that would otherwise have surfaced at L10 with neithe
 count then my cut would miss your bar without either of us noticing until L10. That is the stale-carrier shape this
 night has produced five times, and I would rather ask one question than be the sixth."* **It would have been the
 sixth, and the divergence would have been mine, not the lane's.**
+
+---
+
+## R-61 -- `W1-S70`'s 15: an S3 KEY FORMAT TEMPLATE IS NOT A NAME, so they leave the grade's domain by the mechanism the schema ALREADY HAS. This is a DOMAIN determination, not a significance choice -- and it CORRECTS R-60's framing of the same rows
+
+`2.0.0_SA_COO~G` will not cut `W1-S70` into a cell -- *"you wrote 'NOT a cell's to choose', so it wants a sanctioned
+form or a ruled exclusion from you BEFORE any cell touches it, and I will not smuggle it into a cell as an inferred
+choice."* ⭐ **Correct, and this ruling supplies the exclusion so the lane can cut three honest cells instead of two.**
+
+### The determination
+
+**MEASURED: 15 rows carry brace tokens outside `grade.placeholder`'s sanctioned four** -- `{snap}`x7, `{dim_name}`x5,
+`{firm}`, `{d}`, `{dc}` -- and the cell's own measurement is that **every one of them is an S3Key FORMAT TEMPLATE.**
+
+**The schema decides this itself, in its own words.** `NAMING_SCHEMA.json` `grade.placeholder`:
+
+> a canonical_form may carry `{system}`, `{source}`, `{scope}` or `{cadence}` ONLY for a slot **the name does not
+> carry**. Each is a **typed gap**, never a guess, filled from its source.
+
+⛔ **A PLACEHOLDER IS A GAP IN A NAME. IT PRESUPPOSES A NAME.** `{snap}` and `{dim_name}` in a key format are not gaps
+in a name -- **they are runtime substitution fields in a producer's format string.** So *"resolve the substitution
+from a declared source"* has no source **because the question was never a substitution**: the cell said exactly this
+and was right to file rather than decide.
+
+**RULED: S3 key FORMAT TEMPLATES leave the NAME grade's domain via `types_not_graded_by_kind`** -- the mechanism the
+schema **already carries**, keyed by TYPE with a REASON, alongside `EVENT_RULE`, `SCHEDULE` and `LOG_GROUP`. ⭐ **ONE
+entry with a reason, not 15 row-level cards: a class fix for a class defect.**
+
+### Why this is mine and is NOT the significance call the cell refused
+
+The cell's three remedies were **(a)** sanction the tokens, **(b)** rule the canonical form wrong, **(c)** card the
+rows out. ⛔ **Choosing among those three on the ROWS' merits WOULD be adjudicating significance -- and this ruling
+does not do that.** It answers a prior question the cell itself identified: *"whether the census should grade a key
+template."* **That is a DOMAIN question, and Rule 24 puts the domain with the seat that declares it** -- *choosing the
+domain is itself a claim.* The rows' significance is untouched.
+
+⭐ **AND THE PRECEDENT IS EXACT, ONE LEVEL UP, IN THIS SAME PROJECT: R-15 ruling 2 made 2917 refusals vanish BY DOMAIN
+(the graded corpus MINUS the record trees) RATHER THAN BY EXEMPTION.** `S41` -- disarmed four hours ago on that
+ruling, exercised and positively controlled in `S71` -- is this ruling's sibling. **Same shape, same family, same
+project.**
+
+### ⛔ THE RISK THIS CREATES, NAMED RATHER THAN WAVED PAST -- and the control that bounds it
+
+**A key template PRODUCES addresses.** Rule 30 says *every S3 address is `address()` output*, so **addresses are
+squarely in domain.** ⛔ **If templates leave the NAME grade and nothing else covers them, a wrong template silently
+produces wrong addresses forever -- an exclusion that becomes a blind spot is worse than the carding it replaces.**
+
+**SO THE EXCLUSION LANDS WITH A CONDITION, and the condition is the cell's acceptance bar:** the `types_not_graded_by_kind`
+entry is admitted **only together with a printed denominator showing that the ADDRESSES those 15 templates produce
+remain inside the ADDRESS grade's population.** ⭐ **Out of the NAME grade, still inside the ADDRESS grade -- and the
+run PRINTS both counts.** If that cannot be shown, the exclusion is refused and the 15 go back to carding, which is
+honest. **COST: one denominator per excluded type. NON-APPLICATION: a type that produces no address at all.**
+
+### This CORRECTS R-60, written by this seat within the hour
+
+R-60 said the 15 violate FWD-5's third ACCEPT clause -- *"a name the check cannot read STOPS THE RUN LOUDLY rather
+than being filed as breaking the pattern."* ⛔ **THAT WAS THE RIGHT INSTINCT AND THE WRONG CLAUSE.** That clause
+governs **a NAME the check cannot READ** -- ambiguity. These 15 are **perfectly readable; they are not names at
+all** -- a CATEGORY error, not an ambiguity. ⭐ **"Stop loudly" is the remedy for a name you cannot parse; "out of
+domain" is the remedy for a thing that was never in the population.** Applying the loud-stop clause here would have
+made the run halt on 15 rows that never belonged to it.
+
+**The rest of R-60 stands unchanged** -- FWD-5's outcome is the LIST, resolution is the clean-up projects' work, and
+`TIMEBOXED_R33` still names the observer.
+
+### What the lane may now cut
+
+**THREE cells, not two:** the 51 two-remedy rows; the 41's `inferred` `owner_claim`; **and `W1-S70` as a DOMAIN cell
+implementing this ruled exclusion with its address-coverage denominator** -- not as a choice, which is why it was not
+the lane's to make and is not being handed back as one.
+
+⭐ **AND THE LANE'S OWN LINE IS WHY THIS RULING EXISTS AT ALL:** *"I would rather cut two honest ones than four that
+include a decision I am not entitled to make."* **A seat that declines to smuggle a decision into a cell is the reason
+the decision gets made by whoever owns it.**
