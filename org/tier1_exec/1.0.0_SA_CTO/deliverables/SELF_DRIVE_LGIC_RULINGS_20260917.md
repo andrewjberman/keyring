@@ -271,3 +271,51 @@ lane convention on a surprise channel, where the seat that sees a row may append
 ⛔ **AND THE GENERAL SHAPE, which is R-40's sibling in the OWNERSHIP plane rather than the CITATION plane: a reference
 to something that can END is not an owner.** R-40 says a label is not an identity; this says an ephemeron is not an
 addressee. Both fail the same way -- the field is populated, every check passes, and the thing it points at is gone.
+
+
+---
+
+## R-43 -- where a PRD and a DECOMPOSITION disagree about a gate, the PRD is the AUTHORITY and the decomposition is the STALE COPY; and an amendment that LIFTS a gate must name that gate's carriers
+
+**Found by `2.0.0_SA_COO~G` (@`a0a63bcc1a`), on its own law-file clause, and it is this seat's defect that it found.**
+`LGIC_CANON_DECOMP.md` says in FOUR places that `C6` **STAYS NOT CUT** on Andrew's `G-N` word and on
+`ADVI_FIRMBKTS`'s router repoint. **BOTH HOLDS ARE LIFTED IN THE PRD AND NEITHER LIFT REACHED THE DECOMPOSITION.** The
+PRD is ADMITTED at v1.7; the decomposition was last cut against v1.5.
+
+⛔ **THE NEAR-MISS IS THE LESSON, and it is that lane's to be credited with:** reading the DECOMPOSITION first, it
+drafted the OPPOSITE claim into `org/XXX.md` -- that an unlifted Andrew gate held `C6` -- **which would have parked the
+project on a hold Andrew had already released, in the file every seat reads at startup.** It caught its own sentence by
+verifying it at the bytes before committing, not by re-reading it.
+
+**RULING 1: the PRD is the authority.** It is the ADMITTED artifact, both halves signed and hash-bound; the
+decomposition is cut FROM it and is a derived copy. A derived copy that contradicts its source about a GATE is stale by
+construction, and the direction of the correction is never in doubt.
+
+**RULING 2, and this is the part that is mine:** an amendment that LIFTS a gate **names that gate's carriers in the
+amendment itself, with a denominator.** When this seat amended `LGIC_CANON` to v1.6/v1.7 and issued R-34, it changed a
+GATE and censused nothing.
+
+**MEASURED, after the fact, over 1087 files under three roots:**
+
+| token | files carrying it | inside LGIC_CANON |
+|---|---|---|
+| `G-N` (the gate) | **22** | 12 task orders, the decomposition, the PRD, 3 round analyses, the project row, an adjudication |
+| `ADVI_FIRMBKTS` (the second hold) | **47** | -- |
+| **`R-34` (the LIFT)** | **6** | **2** -- the PRD and the project row |
+
+**The gate propagated to 22 carriers and its lift reached 2 of them.** That asymmetry IS the defect, and it is exactly
+the shape `feedback_census_every_carrier_of_a_contract_before_amending_one` names.
+
+**THE REMEDY IS ONE DOCUMENT, NOT A SWEEP -- and the discrimination matters more than the count.** Of the 22 carriers,
+**every task order mentioning `G-N` reads `complete`** (12 of 12, measured). A completed order is FROZEN HISTORY and is
+CORRECT at its vintage: a round-1 analysis SHOULD say what was true in round 1, and rewriting it would be falsifying a
+record. **Only a carrier read as CURRENT DIRECTION can be stale**, and exactly one qualifies: the DECOMPOSITION
+(`G-N` x11, `ADVI_FIRMBKTS` x6, **`R-34` x0, `CARDED` x0**). `2.0.0_SA_COO~G` has already committed to correcting it in
+`LGIC_CANON`'s L5 re-cut (v6) when `LGIC_LGCTFM` round 1 goes terminal, which is the right cut and the right seat.
+
+⛔ **SO THE BAR IS NOT "UPDATE EVERY FILE THAT MENTIONS THE GATE" -- that would corrupt the record.** It is: **when a
+gate is lifted, enumerate its carriers with the denominator printed, then correct the ones read as CURRENT DIRECTION
+and leave the frozen ones alone, saying which is which.** A census that cannot tell a live carrier from a historical
+one produces either a silent miss or a falsified history, and both were reachable here.
+
+**COST:** one token census per gate lift. **NON-APPLICATION:** an amendment that does not move a gate.
