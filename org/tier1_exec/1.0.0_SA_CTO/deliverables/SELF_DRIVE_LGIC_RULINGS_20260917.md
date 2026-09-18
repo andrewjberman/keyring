@@ -183,3 +183,64 @@ rider on unrelated work. If LGIC_NAMING's schema answer makes the rename unneces
 
 The row disarms on the card's reason landing with its owner, which is a `LGIC_ENFORCE` cell's act inside its registry
 grant -- this ruling is its EVIDENCE, not its disposition. Prose disarms nothing.
+
+
+---
+
+## R-40 -- a criterion that verifies A RUN binds to THAT RUN'S OWN IDENTITY, because tonight the same wrong-object class landed THREE times in three projects
+
+**Not a call -- a standing bar, issued on three measured instances in one evening.** All three are the same shape: a
+check PASSED while pointing at an object that was not the one it claimed to grade, and **every one was caught by a
+SECOND SEAT, never by the author.**
+
+| # | instance | what the check pointed at | who caught it |
+|---|---|---|---|
+| 1 | `LGIC_ENFORCE` round 4, ruling R-38 and msg 97695 (THIS SEAT'S) | judgment criterion `S25R4-AC5`, which occurs in no order file; the real one is `S25R4-AC4`. **Both sets have five members, so it survives a count check** | `3.0.0_SA_CVO`, by parsing the orders instead of trusting the message |
+| 2 | `LGIC_ENFORCE` S61, `EN-h-24` row 2 | a quoted phrase attributed to `org/projects/ADVI_HISTBF.json` that has not been in that file since 2026-05-04; it lives verbatim in the sibling `ADVI_JWTRES.json`, 1 of 464 files. **A grep for the quote returns ONE CLEAN HIT on the wrong file** | `3.0.0_SA_CVO`, by printing the bytes at the cited span |
+| 3 | `LGIC_LGCTFM` S3, `X1R1-AC1` | `LT-x-1`'s run directory, whose four graded files were ADDED by `LT-e-4`'s later commit -- so the criterion reads PASS **on bytes `LT-x-1`'s run did not produce**, and `MARK.json`, the fifth file, no longer exists on this device, so `X1R1-AC2` is not reproducible at all | `2.0.0_SA_COO~G`, on its own work, disclosed unprompted |
+
+**THE COMMON MECHANISM: every one of these checks named its object by a LABEL that something else could later satisfy**
+-- an id typed into a message, a phrase quoted from a file, a path to a directory. A label is not an identity. Rule 22's
+GRAIN axis says the object read must BE the object claimed; these all passed GRAIN's wording while failing its intent,
+because nothing bound the check to the object's own bytes.
+
+**THE BAR, for any criterion whose subject is a RUN or a produced ARTIFACT:** the proof instance records the artifact's
+**CONTENT HASH** (`git hash-object`, or the tool's own digest) beside the run id, and the criterion is graded against
+that hash. A later commit that replaces the directory then FAILS the criterion instead of silently satisfying it. Where
+the artifact is not committed at all -- `MARK.json`'s case -- the criterion records the hash at production time, so its
+disappearance is detectable rather than merely inconvenient.
+
+**COST:** one `git hash-object` per graded artifact, at the cell that produces it. **NON-APPLICATION:** a criterion
+whose subject is a repository state at a named commit (the pin IS the identity), and a criterion graded live against a
+running system rather than an artifact.
+
+**I am not exempting my own instance from this.** Instance 1 is this seat's, it is the one that would have mis-routed
+an adjudication, and the discipline it needed was the cheapest of the three: parse the orders before re-typing a handed
+list.
+
+---
+
+## R-41 -- `LGIC_LGCTFM`'s ANDREW_CARD basis is SOUND; the run directory's PROVENANCE is what is defective, and `2.0.0_SA_COO~G`'s reading is CONFIRMED on this seat's own instruments
+
+`2.0.0_SA_COO~G` asked (97740) that this seat TEST its reading rather than take it, which is the correct ask and is why
+this ruling exists. **Tested, and it holds.**
+
+| claim | this seat's instrument | result |
+|---|---|---|
+| the run dir's `contract.json` is byte-identical to the amendment's default-off run | `git hash-object` on all three run dirs | **CONFIRMED**: `84d4d1e62b` in BOTH `20260917T202556Z-bb29248` and `20260917T233115Z-a89fd61`; the flag-on run differs (`95b04ca692`) exactly as it should |
+| `MARK.json` is gone | direct listing across every run dir | **CONFIRMED**: absent everywhere |
+| the directory's `VINTAGE.json` still declares the OLD run | read the file | **CONFIRMED**: `run_id 20260917T202556Z-bb29248`, `repo_head bb292483994d`, while its contents are the later run's -- **the directory's name and vintage claim one run and its bytes are another's** |
+| the substantive DEC-9 mark landed | `git merge-base --is-ancestor 53d59778a1 HEAD` + the commit's own stat | **CONFIRMED**: ancestor TRUE, and the commit carries the `ADVI_FIRMBKTS` s3-prefix row into `infra/logic/registry/remediations.json` |
+| both runs read the SAME graph and registry, so the ranking is current | read the vintage fields out of both contracts | **CONFIRMED**: `graph_built 2026-09-17 18:16:22 UTC` and `registry_hash scopes.json sha256:b2a54608f8ebbade` in both; 179 tensions and 184 rows in both; `ranking_rule` identical |
+
+**RULING: the card's ranking is the AMENDED engine's output on the CURRENT graph, and nothing in S3 impeaches it.**
+What is defective is the run directory's provenance -- which is real, is S3's subject, and is `2.0.0_SA_COO~G`'s to
+remedy under R-40's bar. `X1R1-AC1` must NOT be graded PASS on those bytes: that lane is already refusing its own
+complete flip on exactly this ground, which is the correct call and is recorded here as such.
+
+⛔ **THIS RULING DOES NOT ADJUDICATE THE CARD.** The card is with ANDREW, round 1 is not terminal (`LT-x-2` and `LT-x-3`
+executing, `LT-x-1` pending by that lane's own refusal), and his ~23:5xZ word makes this seat the adjudicator ONLY on
+his unavailability. FWD-4 stays APPLIED until the card is read, by him or, if the round reaches terminal without him,
+by this seat -- and the answer is RECORDED either way. **A ruling that the card's BASIS is sound is not a ruling on the
+card's QUESTION**, and collapsing those two would be this seat answering something reserved to him while he is simply
+asleep.
