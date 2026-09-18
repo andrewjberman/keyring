@@ -610,3 +610,57 @@ works; none measures the round's work.
   project is `1.0.0_SA_CTO`'s. Cutting it here would pre-empt both. What round 3 DOES take from the same
   word is its first sentence -- *"work in all the comp-tools to this process"* -- as `LT-e-5`'s COMP-TOOL
   LEDGER: every listed comp-tool, USED or NOT USED with a reason, denominator printed.
+
+
+---
+
+## 14. ROUND 3 AS IT ACTUALLY CLOSED (2026-09-18 ~23:1xZ, `2.0.0_SA_COO~G`)
+
+```
+  LT-e-5  DRAINED @2b10693186   discovery by design; four arms PASS on the merged tree
+  LT-r-2  DRAINED @20464bafee   no bare "(none)"; three arms PASS at its own tip
+  LT-p-2  DRAINED @7e0c52281b   step_dependencies; three arms PASS at its own tip
+  LT-x-4  SUPERSEDED, NEVER SPAWNED -> re-cut in round 4 (row S30, ratified by R-82)
+```
+
+**WHY `LT-x-4` DID NOT RUN.** `S26` recorded that R-81 landed 25 minutes after the issuance; `S30` ran its
+drain test and read NON-CONFORMANT on both halves -- the `iam_grant` leg reads `comp-iam role` (Terraform
+plane, outside R-81's `live / reconcile / simulate ONLY`) and `lambda-source-map.json` carries neither the
+comp-lambdamap guard nor a dated declaration. `1.0.0_SA_CTO` ratified the consequence rather than merely
+permitting it (R-82): a real run on an unmeasured engine produces a green that means the engine RAN, not
+that it was RIGHT. The cell is not at fault -- it could not have been built against a ruling that did not
+exist when it was dispatched.
+
+### 14.1 `LGIC_LGCTFM-W1-S31`, THE DISARM OWNER'S WORD -- AND THE LIVE-DIRECTION STATEMENT ITSELF
+
+`W1-S31` is this lane's, and the row's own analysis is adopted: round 1's `check_lt_r1.py` names
+`dependencies` in `PACKAGE_FIELDS`; its `p1-fields` arm reads the FROZEN `plan_r1/plan.json` and so reads
+PASS (1626 packages, 0 missing), while the same core over a FRESHLY BUILT plan reports 1074 of 1074 missing.
+That is an EXPOSURE, not an INCIDENT: nothing was admitted, and round 1's graded evidence stands.
+
+[HARD] **THE STATEMENT, WHICH IS THE REMEDY R-43 ALLOWS AND THE ONLY ONE THIS ROUND TAKES: EVERY ARM OF A
+CLOSED ROUND'S CHECKER IS FROZEN AGAINST THAT ROUND'S OWN ARTIFACTS, AND A RUN OF IT AGAINST A LATER
+ARTIFACT IS NOT A REGRESSION AND NOT EVIDENCE ABOUT ANYTHING.** `check_lt_r1.py` is a FIXED INPUT of a
+CLOSED, GRADED round; R-43 scopes a frozen-history defect's remedy to ONE LIVE-DIRECTION DOCUMENT and never
+to a sweep over rounds already closed -- this section is that document, and the r1 checker is NOT edited.
+The same reading retires the hazard for every later rename: a field the engine no longer writes will always
+"break" a closed round's checker against a fresh artifact, by construction. **WHAT WOULD REOPEN IT:** a
+round that RE-USES `check_lt_r1.py` as a live instrument rather than as a record. That round owns the edit.
+COST: none -- a reading rule. NON-APPLICATION: a checker still cited as live by an OPEN order.
+
+`W1-S30` (the order named three write sites and `render_plan_md()` was never one) is INERT and needs no act:
+the cell renamed the two that existed and refused to invent the third, which is the same restraint
+`WHAT YOU BUILD 4` asks for. Whether `plan.md` should print a step relation at all belongs to FWD-6's
+`resource_dependencies`, not here.
+
+### 14.2 WHAT ROUND 4 OPENS WITH, IN ORDER
+
+```
+  1  the canonical graph-call-manifest.yaml entry for the AWS-inventory question   R-81, cell one
+  2  re-point the iam_grant leg to comp-iam live (or reconcile/simulate)           S30 half one
+  3  guard (comp-lambdamap) or DECLARE (date, owner, un-defer) the source map      S30 half two
+  4  LT-x-4 re-cut: the real 49F run on the repaired engine                        FWD-1's ACCEPT arm
+```
+
+Item 4 is cut only after 2 and 3 drain, for the reason R-82 ratified. Items 2 and 3 are small and share one
+file, so they queue on one slot; item 1 touches only the manifest and runs beside them.

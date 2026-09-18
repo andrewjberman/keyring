@@ -849,7 +849,30 @@ PRD, so it is a row here, not a message.
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "ARMED with disarm_owner 2.0.0_SA_COO~G because the remedy is one token in a round-1 fixed input this order does not grant, and a worker never widens its own <paths>. The distinction matters for the remedy: an EXPOSURE is closed by editing the r1 checker (or by declaring round 1's arms frozen against round 1's frozen plan), while an INCIDENT would also require re-opening whatever the gap admitted -- and the r1 arm's run above shows nothing was admitted. Round 1's graded evidence stands unchanged. This row is the measurement P2R3-AC4 needs; the grade itself is 3.0.0_SA_CVO's and no verdict is offered here."
-     }
+     },
+  {
+    "id": "LGIC_LGCTFM-S31",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G",
+    "surfaced_at": "2026-09-18T23:14Z",
+    "one_line": "ROUND 3 CLOSES WITH THREE CELLS DRAINED AND ONE SUPERSEDED-NEVER-SPAWNED, and this row carries the disarm owner's word on W1-S31. LT-x-4 is marked superseded on its own face and re-cut in round 4 after the two R-81 repairs (S30). W1-S31's remedy is the LIVE-DIRECTION STATEMENT R-43 allows, now written into the decomposition s.14.1, and NOT an edit to a closed round's checker.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Drains: LT-r-2 @20464bafee, LT-e-5 @2b10693186, LT-p-2 @7e0c52281b. Each had every mechanical arm and its proof-of-spec re-run by the issuer at an independent checkout -- LT-r-2 and LT-p-2 at their own tips (d0352788cf, 492e73bd89), LT-e-5 on the MERGED tree at 01ba67fe65 because the arm its order broke could only pass where the repair lives (S29).",
+        "srg._open_tos_for_project(LGIC_LGCTFM) before this row: 1 open of 21 -- LT-x-4 only; and it reports LT-e-5 TERMINAL BY A VALID PROOF-OF-SPEC INSTANCE although its status word is pending (spine :436, :487-488), which is why the pending word does not block.",
+        "W1-S31, measured by the cell that filed it: check_lt_r1.py's p1-fields reads the FROZEN plan_r1/plan.json and PASSES (1626 packages, 0 missing); the same core over a freshly built plan reports 1074 of 1074 missing. Nothing was admitted -- an EXPOSURE, not an INCIDENT.",
+        "The statement now in the decomposition s.14.1: every arm of a CLOSED round's checker is frozen against that round's own artifacts, and a run of it against a later artifact is neither a regression nor evidence. R-43 scopes a frozen-history remedy to ONE live-direction document; that section is it, and check_lt_r1.py is not edited."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A round closes when every cell is terminal, and an ARMED row's disarm owner gives it a word rather than leaving it open.",
+    "world_is": "Three cells terminal; the fourth is superseded with its reason on its face and its re-cut named; W1-S31 answered by a live-direction statement; W1-S30 needs no act (the cell renamed the two write sites that existed and refused to invent the third).",
+    "notes": "WHY SUPERSEDE RATHER THAN LEAVE IT PENDING: the refuser counts OPEN ORDERS PER PROJECT (LD-0521), so an order nobody will run blocks this project's next L10 indefinitely -- and R-82 ratified that it must not run on an unmeasured engine. Superseding names the state truthfully and moves the work to a round that can do it. WHAT THIS ROW DOES NOT CLAIM: that round 3 met FWD-1. It did not -- the real run is the arm FWD-1's ACCEPT turns on, and it is round 4's. What round 3 DID is build the three parts that run needs and prove each against a re-measured floor. COST: one status flip plus this row. NON-APPLICATION: an order a worker is mid-way through -- that is a drain or an abort, never a supersede."
+  }
 ]
 ```
 
