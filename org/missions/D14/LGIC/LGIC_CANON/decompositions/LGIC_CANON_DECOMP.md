@@ -476,14 +476,14 @@ recorded is satisfied, and it is satisfied by an artifact with a content hash ra
 
 ```
   cells at v5.1 ......................................................... 12
-  plus round 4's one ..................................................... +1   (C6, previously NOT CUT)
+  plus round 4's one ..................................................... +1   (CN-o-5 = the PRD's C6, previously NOT CUT)
   = cells in this decomposition ......................................... 13
-  round 4 runs exactly one: C6
+  round 4 runs exactly one: CN-o-5 (the PRD's C6)
 ```
 
 | cell | what it does | rulings | serves | level | slot |
 |---|---|---|---|---|---|
-| `C6` | **the checklist's FIRST REAL RUN.** Take the 49 Financial subject through `infra/logic/10_ONBOARDING_CHECKLIST.md` end to end on LGIC_LGCTFM's practice wave: the identity row, the bucket from the template, IAM under the scope-derived fence, pipelines through `key()` and `address()`, the routes, and the served dashboard. Record the run STEP BY STEP with the surprise rows it raised. **Any step that genuinely needs a not-yet-minted firm bucket is CARDED with its owner and its reason and the run CONTINUES** -- it is not a stop. | R-34, A-8 (released), G-N (lifted) | FWD-5 | 0 | `~1` |
+| `CN-o-5` (the PRD's **C6**) | **the checklist's FIRST REAL RUN.** Take the 49 Financial subject through `infra/logic/10_ONBOARDING_CHECKLIST.md` end to end on LGIC_LGCTFM's practice wave: the identity row, the bucket from the template, IAM under the scope-derived fence, pipelines through `key()` and `address()`, the routes, and the served dashboard. Record the run STEP BY STEP with the surprise rows it raised. **Any step that genuinely needs a not-yet-minted firm bucket is CARDED with its owner and its reason and the run CONTINUES** -- it is not a stop. | R-34, A-8 (released), G-N (lifted) | FWD-5 | 0 | `~1` |
 
 **THE GRADING RULE IS R-34's AND IT IS QUOTED, NOT PARAPHRASED:** *"The outcome is graded on what the wave reaches
 plus its carded set -- `reached + carded == steps`, denominators printed."* So `C6`'s bar is **not** "every step
@@ -510,11 +510,11 @@ when this cell drains.
 ### THE SLOT PLAN
 
 ```
-  slot ~1  CN-c-6-r4    the checklist run record + its cards + the surprise rows it raises
+  slot ~1  CN-o-5-r4    the checklist run record + its cards + the surprise rows it raises
 ```
 
 `fanout: 1 slot over 1 connected component, cap 8, reason: round 4 is a single cell with no intra-round dependency;
-level L0 = {C6}. One cell, one slot, no queue.`
+level L0 = {CN-o-5}. One cell, one slot, no queue.`
 
 **Its dependency is EXTERNAL and already met:** LGIC_LGCTFM round 1 terminal, which the L6 cut states with the run id
 and the contract hash rather than with the project name.
@@ -604,6 +604,7 @@ criterion**. `J` marks a judgment criterion, graded by `3.0.0_SA_CVO` at L9.
 - C3 → CN-r-1
 - C4 → CN-r-2
 - C5 → CN-o-1, CN-o-2
+- C6 → CN-o-5 (cut at round 4, v6 s.0f; the gate's cell-id grammar refuses a bare `C6`, which is why the mapping is written here rather than assumed)
 - C7 → CN-n-1, CN-n-2, CN-n-3
 - C8 → CN-l-1
 - **C6 is NOT CUT, on Andrew's word** (§0.1; gate G-N)
