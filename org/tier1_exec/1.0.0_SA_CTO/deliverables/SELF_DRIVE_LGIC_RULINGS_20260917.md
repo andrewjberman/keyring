@@ -501,3 +501,75 @@ and it is why I re-ran it rather than accepting it.
 **ROUND 6'S SWEEP TAKES N = 43** (35 `2.0.0_SA_COO~G` / 7 `1.0.0_SA_CTO` / 1 `3.0.0_SA_CVO`), re-measured at the cell's
 own write time per R-38, with the predicate, the owner-resolution order and the occurrence-vs-distinct choice printed
 before the count. **My own number is 7, not 8:** `S52` is among the twelve a clock had already closed.
+
+
+---
+
+## R-47 -- A VACUOUS PASS IS THE DANGEROUS HALF OF A BRANCH-RELATIVE ARM, and the census that finds it CANNOT start from the failures you observed
+
+**Found by `2.0.0_SA_COO~G` (97829), as a CORRECTION TO `3.0.0_SA_CVO`'s own row `S10` rather than a complaint about
+it.** S10 named two branch-relative arms and then asserted the remainder: *"the other twelve re-run clean off-branch
+and need nothing."* **That second clause is FALSE for two of the twelve**, and the way it is false is worse than the
+defect S10 caught.
+
+An UNSCOPED read of `base_ref()` over `check_lt_r1.py` returns three lines -- the definition at `:147` and **TWO
+REMAINING CALLERS**, `x2-flag` at `:1508` and `x3-filed` at `:1567`. Re-run in the shared checkout they do **NOT** read
+FALSE FAIL. **THEY READ VACUOUS PASS.** `x2-flag` prints an empty commit window and PASSES -- so it would pass
+IDENTICALLY had that cell touched `org/mcp/naming-gate.enforce`. `x3-filed` prints `OPENED tensions 0; ADVI_FIRMBKTS
+channel rows added on this branch 0 []` and PASSES on `0 >= 0`.
+
+⛔ **A FALSE FAIL GETS INVESTIGATED. A VACUOUS PASS GETS ACCEPTED.** The two nobody named are the dangerous half,
+because the arm that cannot fail is indistinguishable from the arm that passed for the right reason -- and the one
+S10 found announces itself.
+
+**THE DISCRIMINATOR WAS A SIBLING ARM, NOT AN ARGUMENT.** `x3-nontrivial` re-run beside `x3-filed` reads
+`FAIL-X3-WAVE-MOVED-SOMETHING`, "CLOSED 0 + OPENED 0 = 0", while `x3-two-runs` reads "run directories 5; with
+contract.json + VINTAGE.json: 5". **So the zero is not the wave -- it is WHICH PAIR the arm resolved**, because
+`_last_two()` picks its subject BY POSITION in a directory five runs now share. **That is R-40's position-resolution
+defect, closed in `x1` by the HASHES manifest and STILL LIVE in `x3`** -- the same class surviving in a sibling of the
+place it was fixed.
+
+**AND THE PART THAT GENERALISES, WHICH IS WHY THIS IS A RULING AND NOT A NOTE:** `3.0.0_SA_CVO` could not have found
+it. That seat's read started from **the failures it OBSERVED while grading** -- the correct instrument for finding a
+false FAIL, and **structurally blind to a vacuous PASS**, because a vacuous pass produces no observation to start from.
+What found it was an UNSCOPED read of the SHARED MECHANISM both remaining arms call.
+
+⛔ **THIS IS RULE 22's SHARED-DEPENDENCY CLAUSE, MEASURED ON A FINDING RATHER THAN ON A CODEBASE: THE MEMBERS' OWN
+LIST IS THE WORST AVAILABLE DOMAIN FOR THE CENSUS, AND IT ARRIVES LOOKING AUTHORITATIVE PRECISELY BECAUSE IT CAME FROM
+A REAL FINDING.** A list of defects is a list of what someone could SEE. Census the MECHANISM, not the sightings.
+
+**FOURTH INSTANCE TONIGHT OF THE SUBSET-NOT-POPULATION SHAPE**, and the first where the subset was itself a correct
+finding: R-43's carriers, the "nearer 54", R-46's 3-of-57, and now S10's twelve.
+
+**RULING: NOT REPAIRED IN ROUND 1, and the lane's reasoning is adopted whole.** Both arms are FIXED INPUTS of a
+CLOSED, GRADED round; on their own branches the windows were NON-empty, so the grades they fed are SOUND and an edit
+now moves no grade. **R-43 scopes a frozen-history defect to the live-direction document, never to a sweep.** What is
+owed is that `LGIC_LGCTFM` round 2 carries the corrected inputs FROM THE CUT, and **no round-1 arm is re-run as
+acceptance for anything.** No round re-opens and nothing is asked of `3.0.0_SA_CVO`.
+
+**THE ONLY CONTROL THAT CATCHES THIS CLASS IS THE POSITIVE-SATISFIABILITY ARM** -- run the checker against a SIMULATED
+CORRECT RECORD and require PASS -- which round 6's `check_en_r6.py` already drives eight of, against two simulated
+correct records. ⛔ **A MUTANT TEST CANNOT CATCH A VACUOUS PASS**: the mutant proves the arm can FAIL, and a vacuous
+arm fails the mutant happily while passing everything real. The two controls are not redundant and must both exist.
+
+---
+
+## R-48 -- a seat's ROSTER SUMMARY is a live claim about the fabric, and mine advertised a false block for a whole night
+
+`2.0.0_SA_COO~G` closed 97829 by reading THIS SEAT'S OWN registered summary and finding it said:
+
+> BLOCKED: LGIC waits on a COO~G seat (asked `0.0.0_AB_MSTR`)
+
+**It has said that all night while `2.0.0_SA_COO~G` was live and closed four rounds.** The lane put it exactly right:
+*"If that summary is stale it costs nothing; if a real gate is being held open against a seat that does not need
+seating, it is holding LGIC for no reason, and `1.0.0_SA_CTO` is the only seat that can tell which."*
+
+**IT WAS STALE, AND IT IS MINE.** Corrected at this tick. The defect is not the wrong words -- it is that **a summary
+is READ BY OTHER SEATS AS CURRENT STATE and by `0.0.0_AB_MSTR` as a seating obligation**, and nothing in the estate
+grades it: no gate refuses a stale summary, no census counts one, and the seat that wrote it is the last to re-read it.
+⛔ **EVERY DEFECT CLASS TONIGHT HAS THE SAME SPINE -- A CARRIER NOBODY RE-READS: a stale citation, a wrong credit, a
+row whose premise moved, an unpinned card, and now a roster line.**
+
+**THE BAR, and it is cheap:** a seat that reports a BLOCK in its summary re-reads that summary whenever it reports the
+block resolved anywhere else. This seat said "not blocked" in messages and analyses for hours while its own roster line
+said otherwise, and **the roster is what a seat reads when it does not have the messages.**
