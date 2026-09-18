@@ -4,34 +4,84 @@
 
 ```json
 {
- "project": "IRPT_BCKEND",
- "directive": "D9",
- "fabric": "laptop",
- "round": 3,
- "decomp_version": "v0.3",
- "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
- "prd_version": "v0.14",
- "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
- "round2_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND2_ANALYSIS.md@cfe3a33a9b",
- "round2_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md@c1a8cd2543 (the L8/L9 commit; msg 97752)",
- "round1_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5",
- "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
- "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
- "owns_grade": ["FWD-2", "FWD-7", "FWD-9", "FWD-10"],
- "cells_round2": 12,
- "cells_round3": 5,
- "cell_id_shape": "IB-rtc-<n> (round 3, the recut on the round-2 analysis); IB-rt-<n>/IB-rtb-1 (round 2, retained by id)",
- "worker_serial": "0.9.0_WK_IRPT_BCKEND~<slot> (the round-1 subagents, continued) and 0.4.0_DS_ClientPlatform~X (one DS-lane cell, the rule-13 act)",
- "cut_head_round2": "67ef99e5c2",
- "cut_head": "cfe3a33a9b (the round-2 analysis commit; HEAD at the cut is stated in the issuance commit)",
- "counterpart_decomp": "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md"
+  "project": "IRPT_BCKEND",
+  "directive": "D9",
+  "fabric": "laptop",
+  "round": 4,
+  "decomp_version": "0.4",
+  "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
+  "prd_version": "v0.14",
+  "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
+  "round2_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND2_ANALYSIS.md@cfe3a33a9b",
+  "round2_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md@c1a8cd2543 (the L8/L9 commit; msg 97752)",
+  "round1_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md@27e67fa6a5",
+  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FWD_IRPT_BCKEND_20260910.md",
+  "endpoint_outcomes": [
+    "FWD-1",
+    "FWD-2",
+    "FWD-3",
+    "FWD-4",
+    "FWD-5",
+    "FWD-7",
+    "FWD-8",
+    "FWD-9",
+    "FWD-10",
+    "FWD-11"
+  ],
+  "owns_grade": [
+    "FWD-2",
+    "FWD-7",
+    "FWD-9",
+    "FWD-10"
+  ],
+  "cells_round2": 12,
+  "cells_round3": 5,
+  "cell_id_shape": "IB-rtc-<n> (round 3, the recut on the round-2 analysis); IB-rt-<n>/IB-rtb-1 (round 2, retained by id)",
+  "worker_serial": "0.9.0_WK_IRPT_BCKEND~<slot> (the round-1 subagents, continued) and 0.4.0_DS_ClientPlatform~X (one DS-lane cell, the rule-13 act)",
+  "cut_head_round2": "67ef99e5c2",
+  "cut_head": "cfe3a33a9b (the round-2 analysis commit; HEAD at the cut is stated in the issuance commit)",
+  "counterpart_decomp": "org/missions/D9/IRPT/IRPT_FNTEND/decompositions/IRPT_FNTEND_DECOMP.md",
+  "round3_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND3_ANALYSIS.md @5c59f68d70",
+  "cells_round4": 8,
+  "cell_id_shape_round4": "IB-rtd-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R4. ROUND 4 -- THE RECUT ON THE ROUND-3 ANALYSIS (@5c59f68d70, msg 97944)
+
+**Input:** the CTO's round-3 analysis: nine judgment PASS, zero of ten FWDs REALIZED, no PRD amendment, round 4 unblocked; s.9 names six owed items and s.4 ADOPTS the forward-looking-criterion bar. The issuer adds ONE carried row (W1-S16, the first round-4 cut per S57) and excludes S73 (an estate-instrument defect, routed elsewhere by the CTO).
+
+### R4.1 The rectangle (8 cells, id shape `IB-rtd-<n>`)
+
+| cell | owes | assignee | serves |
+|---|---|---|---|
+| IB-rtd-1 | s.9 item 1: the 13:00Z organic fire graded on what it ACTUALLY loaded (bundle VersionId + CodeSha256 at invocation; artifacts by hash; the scheduler as invoker) | WK~2 | FWD-7 organic arm |
+| IB-rtd-2 | s.9 item 4 / W2-S57: `last_manifest()` finds the COMPLETED manifest at the runner's date; the no-op branch fires on its positive case; deployed; driven after the organic fire | WK~2 (after rtd-1) | FWD-7 |
+| IB-rtd-3 | s.7 / s.9 item 5 (S71): the holdings contract aboard the bundle; the two-schema diff recorded; the re-arm trigger guarded by a test | DS~X | FWD-5, FWD-7 |
+| IB-rtd-4 | s.6 / s.9 item 5 (S68): the route-bindings drift measured by content, consumers + writers censused, the never-widen packet written -- declares only | WK~3 | deploy discipline |
+| IB-rtd-5 | S68 resolved under both halves (CTO = MDPF's owner + COO), root converged | WK~3 (after rtd-4 + halves) | deploy discipline |
+| IB-rtd-6 | s.9 item 2: the LGIC address built (`address()`, refusals -> drafted registry rows), readers/writers censused across both projects, the port planned, the write-grant packet written -- declares only | WK~4 | FWD-1, FWD-7, FWD-10 |
+| IB-rtd-7 | the port under both halves + the CTO's registry rows + FNTEND's reader cell, one window, legacy retired | WK~4 (after rtd-6 + 3 gates) | FWD-1, FWD-7, FWD-10 |
+| IB-rtd-8 | W1-S16: `Enforcer.covers()` firm check restored on BOTH enforcer copies (`_authz/enforce.py:351`, `holdings/enforce.py:319` @5c59f68d70), six-swap tests, deployed, proven on live routes | WK~1 | FWD-2, FWD-11 |
+
+**Not a cell:** s.9 item 3 (the per-firm as-of consequence for IRPT_FNTEND) is a COO carrier -- a message to `2.0.0_SA_COO~F` with the fact and its consequence for the API/as-of display, sent with this issuance. S56's vintage pins and the forward-looking bar are BOUNDS on every face, graded at the drain (bare `:NNN` citations `0 of N`).
+
+### R4.2 Edges and fanout
+
+Chains: A `rtd-1 -> rtd-2`; B `rtd-3`; C `rtd-4 -> rtd-5`; D `rtd-6 -> rtd-7`; E `rtd-8`. **fanout: 5 of 5 chains, cap 8.** Handed now: rtd-3, rtd-4, rtd-6, rtd-8. rtd-1 is handed ~12:5xZ so the worker reads the 13:00Z fire rather than predicts it (the hand-off timing is the issuer's; the cell has no calendar wait beyond the event it grades -- the CTO ruled the organic arm correctly shaped, s.4). rtd-2 after rtd-1 merges (a deploy must not change what the organic fire loads). rtd-5 after rtd-4 + both halves (or SUPERSEDED if the packet recommends no apply). rtd-7 after rtd-6 + the CTO's registry rows + both halves + FNTEND's reader cell.
+
+### R4.3 Bounds carried
+
+R-40, R-42, R-44, R-45 on every face; the forward-looking-criterion bar (s.4); S56's vintage-pin bar on every judgment record; S73 excluded by name; Rule 30 on every address (builder output or a drafted registry row, never a typed path); NEVER-1 sign-off on every widening (rtd-5, rtd-7 gated on both halves); no shadow/dual-write on the port. Worker rows mint `IRPT_BCKEND-W<slot>-S<k>`; the DS mints `IRPT_BCKEND-D-S<k>`.
+
+### R4.4 Not decided here
+
+Which HoldingsSnapshot schema is the contract (L4's); whether the port is this project's conformance or a D14 rider (rtd-6's judgment record puts the evidence in front of the CTO); the enforcer consolidation (rtd-8's judgment record); the `eol=lf` attribute (a row).
 
 ## R3. ROUND 3 -- THE RECUT ON THE ROUND-2 ANALYSIS (v0.3, 2026-09-18 ~01:5xZ, `2.0.0_SA_COO~B`)
 
