@@ -252,3 +252,69 @@ Closing count: carrier-less **0 of 1**.
  "dismissal_reason": "This row grades fourteen judgment criteria and adjudicates no investigation item; it is a grade record, per the schema's own note for this shape."
 }
 ```
+
+## Round 1 close-out -- the eight carrier-less rows disposed outside a round
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S6",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T06:20Z",
+ "one_line": "SIX EVIDENCE ROWS DISMISSED -- S13, S14, S15, S17, S19 and S20. Each is an owner's word or a repair record answering a row disposed elsewhere, and each is INERT. Disposed OUTSIDE a round, which is this seat's call and is settled on the merits rather than on what the gate allows.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE TIMING CALL, answered: DISPOSE NOW rather than carry to round 2's L9. Round 1 closed at L10 and all eight were filed after that close, so no L9 in flight can reach them; round 2 is not cut and nobody has said when it will be. Two of the eight are ARMED, and an item with no carrier does not wait -- it decays, while the measurements inside it are freshest now. The mechanical question was settled before the call reached this seat: _worker_carrier_violations is WORKER-scoped (it returns [] for any non-worker author) and GATE (iii) refuses a new ROUTE-CARRYING row, never a disposition, so nothing prevents disposing with no round open. THE SIX: S13 and S14 answer this seat's own S10 -- the branch-relative arms are repaired by binding to IDENTITY rather than POSITION, and S14's word rests on the row's own discriminator, that they PASS in the SHARED checkout. S15 answers S11: the convention exists as R-40 and is applied twice, and the row states its own honest limit rather than overclaiming. S17 answers S6: the correction reached the decision-maker BESIDE the card via the CTO's adjudication and the card's bytes were never rewritten, which is the exact shape S6's own condition required. S19 answers S16 and S12's underlying finding: the restated remedy is performed as CARD_SUBJECT_PIN.md. S20 answers W2-S3 under R-49 -- DEC-9 never admitted a prefix at all, so there was nothing to extend, which dissolves the question rather than deciding it. NONE carries `adjudicates` and none is ARMED, so R-21 does not reach them and dismissal is available.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md -- all six read in full",
+   "2.0.0_SA_COO~G msg 97852 (the census) and 1.0.0_SA_CTO msg 97854 (the call, R-54 @eeaaf56cbe)",
+   "VERIFIED BY THIS SEAT, not accepted from S14: check_lt_r1.py x1-r16 -> PASS-X1-MARK-COMMIT-PRINTS-TARGETS and x1-footprint -> PASS-X1-REPO-FOOTPRINT-BOUNDED, both run at HEAD on the SHARED checkout, which is the precise place S10 measured them reading FALSE FAIL",
+   "VERIFIED BY THIS SEAT for S19: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/CARD_SUBJECT_PIN.md pins run 20260918T011619Z-8db9eb1 and contract content hash 33204e29839de89af81fb293317cce3ccdf2266d, names git hash-object as its instrument, and states that a plain sha1 of the same bytes reads differently -- the instrument being part of the value. That hash matches this seat's own recomputation of the manifest during the round-1 L9."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_LGCTFM-S13",
+  "LGIC_LGCTFM-S14",
+  "LGIC_LGCTFM-S15",
+  "LGIC_LGCTFM-S17",
+  "LGIC_LGCTFM-S19",
+  "LGIC_LGCTFM-S20"
+ ],
+ "dismissal_reason": "Owner's-word and repair-record rows, each answering a row disposed elsewhere; all six INERT, none carrying `adjudicates`, no residue owed by any seat."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S7",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T06:20Z",
+ "one_line": "S16 and S18 GRADUATED. S16's restated remedy is PERFORMED, so it graduates with its clock already closed; S18 is a NEW finding this seat verified and it stays ARMED -- S10's class has FOUR members and the two nobody named fail SILENTLY.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S16 is the RESTATEMENT of this seat's S12, and restating rather than disarming was the correct act by its owner: the remedy S12 named -- one line in ANDREW_CARD.md -- is one the issuer is MECHANICALLY FORBIDDEN to perform, because owned-paths clause 4 refuses an issuer's edit inside a worker's deliverables folder, measured on that exact file and reverted. The reason moved and the owed act moved with it, and S19 records that act performed as CARD_SUBJECT_PIN.md. So S16 graduates with a closed clock. WHAT REMAINS TRUE AND IS RECORDED RATHER THAN SWEPT: the card's OWN bytes still name no run, and no seat but a worker or the CTO can change that -- the hazard is now a KNOWN limitation carried in a durable hash-bound record with a negative control, which is what S12 existed to buy, rather than a silent one. S18 IS REAL AND THIS SEAT CONFIRMED IT INDEPENDENTLY rather than taking the row: x2-flag prints `commits on this branch touching org/mcp/naming-gate.enforce: ''` and PASSES, and x3-filed prints `OPENED tensions 0; ADVI_FIRMBKTS channel rows added on this branch 0 []` and PASSES -- both on an EMPTY window, so each would pass identically had the cell touched nothing at all. That is a VACUOUS PASS, which is the dangerous half of the class R-47 and R-48 name, and it is strictly worse than S10's FALSE FAIL: a false fail announces itself and gets investigated, a vacuous pass is indistinguishable from a real one. It stays ARMED. Its non-repair is correct and stated: these are fixed inputs of a CLOSED, GRADED round, their windows were non-empty on their own branches so the grades they fed are sound, and editing them now would move no grade while falsifying a frozen record (R-43's scope).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md rows S16 and S18, read in full",
+   "VERIFIED BY THIS SEAT at HEAD on the shared checkout: x2-flag -> PASS-X2-ESTATE-FLAG-UNTOUCHED on an empty commit window; x3-filed -> PASS-X3-OPENED-ROWS-FILED on 0 opened and 0 filed. Both passes are vacuous exactly as S18 states.",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/CARD_SUBJECT_PIN.md, read by this seat for S16's performed remedy",
+   "R-47 and R-48 @1582e48505 for the vacuous-pass class; R-43 for why a frozen graded input is not rewritten"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_LGCTFM-S16",
+  "LGIC_LGCTFM-S18"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G on S18; S16 carries no live hazard, its clock closes with this write"
+}
+```

@@ -175,15 +175,15 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "owner": "2.0.0_SA_COO~G",
  "round": "v1",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "2.0.0_SA_COO~G",
   "round": "v1"
  },
- "closed": false,
+ "closed": true,
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "2.0.0_SA_COO~G",
-  "at": null
+  "at": "2026-09-18T06:20Z"
  }
 }
 ```
@@ -204,15 +204,15 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "owner": "1.0.0_SA_CTO",
  "round": "v1",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "1.0.0_SA_CTO",
   "round": "v1"
  },
- "closed": false,
+ "closed": true,
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "1.0.0_SA_CTO",
-  "at": null
+  "at": "2026-09-18T06:20Z"
  }
 }
 ```
@@ -233,15 +233,15 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "owner": "2.0.0_SA_COO~G",
  "round": "v1",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "2.0.0_SA_COO~G",
   "round": "v1"
  },
- "closed": false,
+ "closed": true,
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "2.0.0_SA_COO~G",
-  "at": null
+  "at": "2026-09-18T06:20Z"
  }
 }
 ```
@@ -262,15 +262,15 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "owner": "2.0.0_SA_COO~G",
  "round": "v1",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "2.0.0_SA_COO~G",
   "round": "v1"
  },
- "closed": false,
+ "closed": true,
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "2.0.0_SA_COO~G",
-  "at": null
+  "at": "2026-09-18T06:20Z"
  }
 }
 ```
@@ -288,6 +288,66 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/adjudications/ADJUDICATION_v1.md row LGIC_LGCTFM-C-S3"
  ],
  "remedy": "One line in ANDREW_CARD.md naming the run id it ranks and that run's contract content hash. It matters more than usual because the artifact is with a decision-maker now and FWD-4 will be graded against his answer to it -- an answer recorded against an unidentified subject is hard to re-bind later. Five run directories exist under the subject and one of them carries a different tension count.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v1",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v1"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T06:20Z"
+ }
+}
+```
+
+## Round 1 close-out -- remediation plane
+
+```json
+{
+ "id": "LGIC_LGCTFM-S16",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "RESTATED REASON, THIS SEAT'S OWN WORD AS DISARM OWNER, for LGIC_LGCTFM-S12 -- NOT a disarm. The row's named remedy ('one line in ANDREW_CARD.md naming the run id it ranks and that run's contract content hash') IS NOT AVAILABLE TO THIS SEAT: .tools/owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) refuses an issuer's edit inside a worker's deliverables folder, and this seat MEASURED that refusal on this exact file and reverted. So the reason moves, from 'a line in the card' to 'the run id and the contract's content hash delivered in this seat's own record BESIDE the card' -- and the row's premise moved a second time when 1.0.0_SA_CTO adjudicated the card @662d53b793, so the decision it feeds is now recorded against a named adjudication and not against an unidentified subject alone.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S16",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/adjudications/ADJUDICATION_v1.md row LGIC_LGCTFM-C-S7"
+ ],
+ "remedy": "PERFORMED. The remedy moved with the reason: the pin could not go into ANDREW_CARD.md (owned-paths clause 4 refuses an issuer's edit inside a worker's deliverables folder, measured and reverted), so it landed in the issuer's own record beside the card as CARD_SUBJECT_PIN.md @a4f61daeb0 -- run id, contract content hash, its instrument named, and a negative control over the other candidate run. Recorded performed by row S19 and verified at the file by this seat.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v1",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v1"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T06:20Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S18",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "S10'S CLASS HAS FOUR MEMBERS, NOT TWO, AND THE TWO NOBODY NAMED FAIL SILENTLY. An UNSCOPED read of `base_ref()` over check_lt_r1.py finds 2 callers remaining after S10's repair -- x2-flag and x3-filed -- and re-run in the shared checkout they do NOT read FALSE FAIL, they read VACUOUS PASS. x2-flag prints \"commits on this branch touching org/mcp/naming-gate.enforce: ''\" and PASSES because the off-branch window is EMPTY, so it would pass IDENTICALLY had the cell touched the flag. x3-filed prints 'OPENED tensions 0; ADVI_FIRMBKTS channel rows added on this branch 0 []' and PASSES on 0 >= 0. A FALSE FAIL GETS INVESTIGATED; A VACUOUS PASS GETS ACCEPTED.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S18",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/adjudications/ADJUDICATION_v1.md row LGIC_LGCTFM-C-S7"
+ ],
+ "remedy": "Give x2-flag and x3-filed a POSITIVE-SATISFIABILITY arm -- the mirror of a mutant: show each can PASS for the right reason on a non-empty window, so an empty window is distinguishable from a satisfied one. NOT a repair of the round-1 inputs themselves: their windows were non-empty on their own branches, the grades they fed are sound, and editing a frozen graded input would move no grade while falsifying a record (R-43). The act belongs to whichever round next touches that checker.",
  "owner": "2.0.0_SA_COO~G",
  "round": "v1",
  "remediation": {
