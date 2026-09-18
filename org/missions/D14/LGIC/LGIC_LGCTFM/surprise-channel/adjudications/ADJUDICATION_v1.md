@@ -318,3 +318,109 @@ Closing count: carrier-less **0 of 1**.
  "disarm_owner": "2.0.0_SA_COO~G on S18; S16 carries no live hazard, its clock closes with this write"
 }
 ```
+
+## Round 2 -- L8/L9: three judgment criteria graded, four rows dispositioned
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S8",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T09:55Z",
+ "one_line": "L9 GRADE RECORD, round 2: THREE judgment criteria, all PASS. The hand-off's prose says four and its own list names three -- the list is right, and the mechanical count is 11 rather than the 12 it states.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE SET, measured from the orders rather than inherited: three round-2 order files declare 14 criteria by a raw tag count (5 + 4 + 5) of which exactly THREE carry judgment=\"true\", one per order -- A2R2-AC5, N2R2-AC5, C2R2-AC4 -- and each order's <expected_criteria> matches its own declarations. So the mechanical remainder is 11, not the 12 the hand-off reports, and its 'four judgment criteria' is one over a list that is itself correct. BOTH FIGURES RUN ONE HIGH WHILE BOTH LISTS ARE RIGHT, which is the same shape this seat has now measured in four hand-offs tonight and is benign here only because the lists are what a grader acts on. No grade moves and nothing is asked of the issuer's re-runs. ALL THREE PASS, and in all three the finding outranks the pass exactly as the hand-off says. What I would carry out of this round is C2R2-AC4's: a worker CORRECTED ITS OWN ISSUER on a mechanism sentence that had reached four carriers by being COPIED rather than re-derived, where every published number was right and only the explanation was half -- the failure mode that fires on the first later seat who follows the recipe rather than the numbers.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "All three round-2 orders read for their bars verbatim and censused by raw <criterion tag count",
+   "All three proof instances read in full",
+   "VERIFIED BY THIS SEAT at HEAD: e2-reproduce, x3-diff and x3-nontrivial all FAIL from the shared checkout, and this seat's OWN run of e2-reproduce during round 1's L9 returned PASS -- the before and after of live-builder drift held by one seat",
+   "VERIFIED BY THIS SEAT: git hash-object == git rev-parse HEAD:<path> == 33204e29839d...; plain sha1 9c5cdb873f00...; prefix-only sha1 d07bf29d245f...; 790871 - 24967 CRLF pairs == 765904 committed bytes"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "grades": [
+  {
+   "criterion": "A2R2-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-a-2-r2.re-derivation-record.proof_of_spec.json@cd58e124b7",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES MET, and the first half I can corroborate from my OWN earlier run rather than from the record. ON 'GENUINELY RE-RUN': the record's strongest evidence is that three arms came back FAIL from the third position where they fed PASS grades in round 1, and I re-ran all three at HEAD on the shared checkout -- e2-reproduce FAIL-E2-DESIRED-EQUALS-BUILDER, x3-diff FAIL-X3-COMMITTED-DIFF-REPRODUCES, x3-nontrivial FAIL-X3-WAVE-MOVED-SOMETHING. I ALSO RAN e2-reproduce MYSELF DURING ROUND 1's L9 AND IT RETURNED PASS, so I hold the before and the after on one arm from one seat, which is as direct a demonstration of live-builder drift as this project can produce and is not available to the cell. A restatement of a round-1 instance cannot manufacture three FAILs. The two further artefacts of an actual run are the right kind: a probe that read ABSENT because its needle copied the CITATION's spelling rather than the file's, and a negative control that fired the wrong way first. ON 'MECHANISM CENSUS RATHER THAN THE HANDED LIST': the census is an AST call-graph closure over the checker's OWN SUBCOMMANDS table (67 arms, 165 functions), a DIFFERENT instrument from S18's grep of one helper name -- which is what makes its agreement on {x2-flag, x3-filed} corroboration rather than repetition -- and it went BEYOND the handed four in three directions. The part that earns the grade is that 11 flagged arms were then hand-inspected and FIVE WERE CLEARED: a list that only grows is not a census. The cell also declares its two judgment calls inside the classification so they can be refused, and names the class a static census cannot reach at all."
+  },
+  {
+   "criterion": "N2R2-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-n-2-r2.number-pins.proof_of_spec.json@797a1c4026",
+   "verdict": "PASS",
+   "reason": "ON THE DENOMINATOR: 520 digit runs against 17 surviving numbers is 30x larger than what was pinned, so it cannot be a count of what the cell happened to pin -- which is the exact failure the bar names. It is built from an enumeration BY EXISTENCE (git ls-files over the project's proof instances) and the widest field set the rows offer, with the axis named so a reader can reject it, and the path from 520 to 17 is a printed ledger of declared classes that must close against its own denominator. The detail that shows the ledger is real rather than decorative: it REFUSED THE RUN four times on this cell's own work, three path-rule drafts that ate the verdict spread and a re-measure limb that read RAISE as 0 against a cited 5. A classifier that has never refused its author is not evidence. ON THE HASHES: each is computed by git hash-object and required to equal git rev-parse HEAD:<path>, and I verified that equality myself on the graded contract -- both read 33204e29839de89af81fb293317cce3ccdf2266d. Two agreements with values the cell did not read first are the load-bearing part, and I had independently computed BOTH earlier tonight during round 1's L9 when I recomputed all 8 entries of that run's R-40 manifest: the contract hash and plan.json's f26d46db87f3d8bcbf7b7ff13dafe708030c6d48. A copied hash could not produce them. The cell states plainly what it does not claim -- that its domain choice is right -- and excludes 6 tokens BY CLASS on a stated reading of R-40, which is the correct way to hand a domain decision to the grader."
+  },
+  {
+   "criterion": "C2R2-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-c-2-r2.card-names-its-subject.proof_of_spec.json@64450fcdcc",
+   "verdict": "PASS",
+   "reason": "ON 'UNAMBIGUOUS TO A STRANGER': a run id and a hash are necessary and the cell is right that they are not sufficient. It answers the three questions a stranger would otherwise have to ask, ON THE FACE -- which file the hash is of, WHY two identifiers are needed (four other run directories share the same 'built 18:16 UTC' subject and one holds 180 tensions rather than 179, which is what makes the timestamp insufficient and the hash decisive), and how to re-derive it with a named producer plus a cross-check that returns the same value. I verified that cross-check: git hash-object and git rev-parse HEAD:<path> both return 33204e29839d... THE THIRD ELEMENT IS NOT DECORATION AND I RE-MEASURED IT IN FULL, because it is the mechanism a later seat would re-derive from: the plain sha1 of the checkout reads 9c5cdb873f00..., and the 'blob <len> NUL prefix' explanation ALONE returns d07bf29d245f... -- a third number in no record. The real cause is that git hash-object runs the EOL FILTER FIRST, and the arithmetic closes exactly: 790,871 checkout bytes minus 24,967 CRLF pairs equals the 765,904 committed bytes. Every published number was correct and only the stated mechanism was half, which is the kind of defect that fires on the FIRST later seat who follows the recipe. ON 'READS AS PART OF THE CARD': the addition continues the card's own section, voice and tense one paragraph after the sentence it completes, re-flows no heading or existing sentence, and is 22 insertions with 0 deletions. THE CELL'S ONE DECLARED OVERREACH IS ACCEPTED AND I SAY SO EXPLICITLY: the order required a pointer and the cell put S6's correction ('1 of 179, not two') on the card's face, attributed and NOT applied to the recommendation above it. It offers to cut back if I read the bound narrowly. I do not: S6's condition was that the correction not be SILENT, a reader reaching the ranking should not have to open a commit to learn the line above it is corrected, and the graded refusal to touch the ranking or the recommendation is what keeps this an addition rather than a rewrite."
+  }
+ ],
+ "dismissal_reason": "This row grades three judgment criteria and adjudicates no investigation item; it is a grade record."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S9",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T09:55Z",
+ "one_line": "S23 and W2-S4 DISMISSED -- and they FALSIFY THIS SEAT'S OWN ROW S11, correctly. I verified the falsification myself before accepting it, because a seat correcting another's work gets the least scrutiny exactly when it has earned some.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S11 WAS MINE AND BOTH ITS HALVES ARE WRONG. It said P1R1-AC6's 1626 packages and X1R1-AC6's 1074 'cannot both be true of one plan', and that E3R1-AC6's 271-tension population 'no longer exists anywhere'. MEASURED BY THIS SEAT with the unscoped census S11 should have run: 12 tracked files are named contract.json and the 271-tension population is present at HEAD in TWO BYTE-IDENTICAL files (deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk/contract.json and ~2/plan_r1/contract.json, 271 tensions / 278 rows, one hash); and of 17 tracked plan.json, 1626 belongs to deliverables/~2/plan_r1/plan.json while 1074 belongs to the run-directory plans -- two different plans, both numbers true. THE SHAPE OF MY ERROR IS THE TRANSFERABLE PART AND IT IS WORSE THAN A STALE NUMBER. I scoped the census to the run directories under workflows/legacy_transform/ and then wrote the unscoped word 'ANYWHERE'. The population was in the DELIVERABLES tree the entire time. That is Rule 24's domain failure -- a subtraction over the wrong domain arrives with a printed denominator and so reads as measured -- and it is the same trap I caught myself on hours earlier when I censused quarantine keys in four firm buckets the writer never writes to. Catching it once did not stop me writing it again in a row. AND THE SECOND HALF: I inferred a CONTRADICTION from two numbers that were never about one object. Nothing established they described one plan; I supplied that premise myself. Both rows are INERT, carry no `adjudicates`, and are dismissed as the answers they are -- S11's clock was already closed at 06:20Z on a different ground (the convention existing), so no clock moves here; what this record adds is that S11's FINDING was wrong, so a later reader does not inherit it as established.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S23 and #LGIC_LGCTFM-W2-S4, both read in full",
+   "VERIFIED BY THIS SEAT: git ls-files *contract.json -> 12 tracked, 271/278 present at HEAD in two byte-identical files; git ls-files *plan.json -> 17 tracked, 1626 and 1074 on two different plans",
+   "The census S11 ran was scoped to workflows/legacy_transform/ run directories; the population it declared absent lives under org/missions/.../deliverables/"
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_LGCTFM-S23",
+  "LGIC_LGCTFM-W2-S4"
+ ],
+ "dismissal_reason": "Both are evidence rows answering S11, both INERT, neither carrying `adjudicates`. Dismissed with the correction recorded: S11's premise is falsified and its clock was already closed on other grounds."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S10",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-18T09:55Z",
+ "one_line": "W1-S22 GRADUATED and DISARMED on its owner's own corrective act @ee4dbdf774; W1-S21 GRADUATED and STAYS ARMED -- round 1's non-re-derivable population has causes that are not positions, and live-builder drift is one I can demonstrate from my own two runs.",
+ "class": "OBSERVATION",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W1-S22 is the row a worker filed against its own issuer, and its remedy is done by that issuer: commit ee4dbdf774 by 2.0.0_SA_COO~G corrects the live carrier, while the three frozen carriers stand under R-43 because rewriting a completed record falsifies history rather than repairing it. I re-measured every number before accepting the disarm and the mechanism closes arithmetically (790,871 checkout bytes - 24,967 CRLF pairs == 765,904 committed). The distinction the row draws is the valuable one: EVERY PUBLISHED NUMBER WAS CORRECT and only the stated CAUSE was half, so nothing downstream was wrong and yet the first later seat to follow the recipe would have produced d07bf29d... and concluded the PIN was wrong. W1-S21 STAYS ARMED and its non-repair is correct: R-43 scopes a frozen-history defect's remedy to one live-direction document, and editing check_lt_r1.py or any round-1 fixed input was refused by the order and not done. Its live-builder-drift limb is the one I can corroborate independently -- e2-reproduce returned PASS when I ran it during round 1's L9 and FAILs on the same shared checkout now, so an arm of a CLOSED cell whose mechanical criteria graded PASS is no longer reproducible, and that is a property of the arm's dependence on a live builder rather than of where it runs.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S21 and #LGIC_LGCTFM-W1-S22, both read in full",
+   "git log ee4dbdf774 -- 2.0.0_SA_COO~G's own correction of the live carrier",
+   "VERIFIED BY THIS SEAT at HEAD: the four hash numbers and the CRLF arithmetic; e2-reproduce FAIL now against this seat's own PASS during round 1's L9"
+  ]
+ },
+ "disposition": "GRADUATED",
+ "hazard_standing": "ARMED",
+ "adjudicates": [
+  "LGIC_LGCTFM-W1-S22",
+  "LGIC_LGCTFM-W1-S21"
+ ],
+ "disarm_owner": "2.0.0_SA_COO~G on W1-S21, as the row names; W1-S22's clock closes with this write on that seat's own corrective act"
+}
+```

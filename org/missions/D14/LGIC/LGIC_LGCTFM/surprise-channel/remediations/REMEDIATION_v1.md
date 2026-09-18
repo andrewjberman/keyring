@@ -363,3 +363,63 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  }
 }
 ```
+
+## Round 2 -- remediation plane
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S22",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE PUBLISHED REASON FOR THE TWO HASHES IS HALF THE CAUSE, AND THE RECIPE AS WRITTEN YIELDS A THIRD NUMBER. Four carriers explain the gap between git hash-object's 33204e29839de89af81fb293317cce3ccdf2266d and a plain sha1's 9c5cdb873f00a599bb00166831a91646fea97990 for one contract.json as 'git prefixes blob <len> and a NUL byte'. Measured on this checkout, the prefix ALONE returns d07bf29d245fd358fa15859b09a35aa8a3a2d5c3, which matches nothing published: git hash-object also applies the end-of-line filter first, so the published hash is the id of the COMMITTED (LF) bytes while the plain sha1 is over the CHECKOUT (CRLF) bytes. Every number in the record is correct; the stated MECHANISM is not, and the mechanism is the half a later seat re-derives from.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S22",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/adjudications/ADJUDICATION_v1.md round 2 disposition rows"
+ ],
+ "remedy": "REMEDIATED by the row's own disarm owner at ee4dbdf774: the live carrier now states the real cause -- git hash-object runs the EOL filter before the blob header, so the published id is of the COMMITTED bytes -- and the three frozen carriers stand under R-43. Verified by 3.0.0_SA_CVO: hash-object and rev-parse agree at 33204e29839d, plain sha1 reads 9c5cdb873f00, the prefix-only recipe yields d07bf29d245f which appears in no record, and 790871 - 24967 == 765904.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v2",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v2"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-18T09:55Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S21",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "ROUND 1's NON-RE-DERIVABLE POPULATION IS NOT ONLY THE CHECKOUT-DEPENDENT ARMS -- THREE FURTHER CAUSES, EACH MEASURED FROM A THIRD POSITION, AND NONE OF THEM IS A POSITION. (1) LIVE-BUILDER DRIFT: e2-reproduce, an arm of a CLOSED cell whose mechanical criteria graded PASS, reads FAIL-E2-DESIRED-EQUALS-BUILDER here -- 273 of 278 rows reproduce and 5 diverge because lib/opal_naming.py grade() now returns 'advi-inf-accounts-v2-daily' where the frozen contract holds '{system}-inf-accounts-v2-daily'. A static census of the checker cannot see this: the moving part is the LIBRARY the arm imports, not the checkout it runs in. (2) A PIN WHOSE PATH PREDATES THE FILE: S2R1-AC8's evidence compares two tools against org/standards/LGCTFM_CONTRACT.schema.json@ef8197ed07, and that path does not exist in that commit -- ef8197ed07 is round 1's L6 ISSUANCE and the schema was added 24 minutes later by a DIFFERENT cell. (3) A QUOTED MEASUREMENT THAT WENT STALE INSIDE ITS OWN CELL: E2R1-AC5's evidence states 'grep of lib/opal_lgctfm.py for the literal string FORK_CONTROLS returns 0 hits'; the string entered that file in the CELL'S OWN BUILD COMMIT f73efe6113, 3m40s before its own proof commit, so the stated result was already false when it was written and no seat at any vintage from that commit forward",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S21",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/adjudications/ADJUDICATION_v1.md round 2 disposition rows"
+ ],
+ "remedy": "Not a repair of round 1's fixed inputs -- R-43 scopes a frozen-history defect to one live-direction document and the order refused the edit. What is owed is that the three further causes are carried where a later seat re-deriving a round-1 arm will meet them, so a FAIL from a fresh position is read as drift rather than as a defect in the cell. LIVE-BUILDER DRIFT is the one to state first: an arm can pass at its cut and fail later with nothing about the cell changed, because its subject is a builder that keeps moving.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v2",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v2"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
