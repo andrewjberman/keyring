@@ -802,3 +802,31 @@ PRD, so it is a row here, not a message.
  "notes": "W2-S3 was the last open id on composite C-S3; 2.0.0_SA_COO~G gave its own word on the other four @7f45eab413. THE GENERAL FORM, and it inverts the shape this estate hit four times tonight: every other instance was a rule applied to a SUBSET of its population (R-43's carriers, the lane's 'nearer 54', this seat's R-46 3-of-57, the CVO's S10 two-of-four). This one is a rule read as having a POPULATION IT NEVER HAD. Both come from taking a decision's SCOPE from where it was first exercised rather than from its own text, and both have the same remedy: read the decision's bytes, not the record of its first application."
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S21",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "4.0.0_SA_CRO",
+ "surfaced_at": "2026-09-18T20:13Z",
+ "one_line": "OFF-TASK OBSERVATION from the pipeline-walk verification (RCN-0010, Andrew-direct ~19:5xZ): opal-data-inf/gold/meta/pipeline-complete.json was last written 2026-09-05T12:52:20Z while gold/meta/pipeline-failed.json is written daily (last 2026-09-18T12:35:45Z) and the per-date sentinels gold/eclipse/{d}/_meta/gold_complete.json land daily (09-16 12:36:57Z, 09-17 12:35:43Z, 09-18 12:35:54Z). Consequence measured: the MDPF accelerator rule mdpf-feeder-accelerator (ENABLED, pattern on that completion key, live target mdpf-feeder-trigger) has not fired for 13 days and nothing said so, because the Scheduler backstop mdpf-feeder-backstop-daily fires the same Lambda at 12:52Z and the Lambda's own pre-check gates on the per-date sentinel, not the completion marker. Whether the INF gold chain is failing daily or deliberately ends without the completion marker since a 09-05/09-06 change is UNMEASURED here and is that chain's owner's question. Nothing chased; no seat stopped.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".tools/aws s3api list-objects-v2 --bucket opal-data-inf --prefix gold/meta/ (2026-09-18 ~19:5xZ): pipeline-complete.json 2026-09-05T12:52:20Z; pipeline-failed.json 2026-09-18T12:35:45Z; pull-complete.json 2026-09-05T12:52:19Z.",
+   ".tools/aws s3api head-object on gold/eclipse/{2026-09-16,17,18}/_meta/gold_complete.json: present, 12:36:57Z / 12:35:43Z / 12:35:54Z.",
+   ".tools/aws events describe-rule + list-targets-by-rule mdpf-feeder-accelerator: ENABLED; target arn:aws:lambda:us-east-1:313476888478:function:mdpf-feeder-trigger with DLQ mdpf-daily-trigger-dlq.",
+   ".tools/aws scheduler get-schedule mdpf-feeder-backstop-daily: ENABLED, cron(52 12 * * ? *), same target. opal-data-mdpf/telemetry/mdpf-daily-runner/status.json LastModified 2026-09-18T12:54:13Z: the runner dispatched today on the backstop path.",
+   "infra/aws/lambda/mdpf-pipeline/mdpf-feeder-trigger/lambda_function.py:86-93,153-168 -- WSC_GATE_KEY = gold/eclipse/{d}/_meta/gold_complete.json in INF_BUCKET; absent -> NOT-YET, status 200, no dispatch.",
+   "Writers of gold/meta/pipeline-complete.json per comp-find (39 hits / 13,057 files): data/inf/scripts/gold/orion-gold-dispatch.sh (HEAD band), infra/aws/lambda/inf-gold-trigger, inf-gold-freshness-guard; readers include etfs-netassets-daily, inf-portal-publisher, the opal-assets mirror family, inf-pipeline s3-notifications.tf -- so other consumers of that marker may be in the same state; NOT censused here."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The MDPF pipeline's accelerator (feeder-trigger.tf:259-285, live ENABLED) fires when the INF gold chain writes its completion marker; RCN-0010's first wording read that rule as the binding cross-system dependency.",
+ "world_is": "The completion marker has not been written for 13 days; the INF chain writes a failed marker daily while its per-date gold sentinels land; the MDPF accelerator is live and dead at once, and MDPF runs on its backstop clock. The binding dependency is the feeder Lambda's INF_BUCKET pre-check on the per-date sentinel, not the rule's pattern (corrected in RCN-0010 s.2.1 and the brief's IV.3). Whose finding the daily failed marker is, and whether it is known, is not this seat's to decide.",
+ "notes": "Filed under LGIC_LGCTFM because the walk that found it is this project's substrate (the pipeline-walk brief, Amendment 1 O9/W14: LIVE-NEWER-THAN-RECORD is exactly this row's delta class). If the INF chain has a live owner project, the CVO may re-home the row; this seat does not. Off-task per CLAUDE.md s.2: one row, keep working."
+}
+```

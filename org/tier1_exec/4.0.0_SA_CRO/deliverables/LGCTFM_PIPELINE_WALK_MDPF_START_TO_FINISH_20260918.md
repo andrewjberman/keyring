@@ -26,8 +26,9 @@ them, and nothing in the run answers "who consumes the final artifact and can a 
 mdpf run carried 14 real rows across 7 kinds (RCN-0009). This walk, over the same subject at the same graph
 vintage, carries the population in s.2 -- 6 Lambdas, 1 EC2 runner, 13 roles, 11 policies, 6 schedules, 1
 event rule, 3 alarms, 6 log groups, a layer, a security group, an instance profile, an SSM parameter, a secret
-path, a DLQ, ~17 repo scripts, ~30 storage locations, 3 portal routes, 1 component -- and one CROSS-SYSTEM
-trigger dependency (s.2.1) that no per-subject instrument can see and the firm-bucket migration must carry.
+path, a DLQ, ~17 repo scripts, ~30 storage locations, 3 portal routes, 1 component -- and a CROSS-SYSTEM
+dependency on two legacy buckets carried in four places (s.2.1, corrected ~19:5xZ) that no per-subject instrument
+can see and the firm-bucket migration must carry.
 
 ---
 
@@ -71,13 +72,28 @@ names it, this record did not exercise it).
 | `mdpf-accrual-bridge-daily` | Scheduler | `cron(40 13 * * ? *)` | Lambda `mdpf-accrual-trigger` (`accrual-bridge.tf:165-194`) | -- |
 | `opal-assets-mdpf-portal-publisher-daily` | Scheduler | `cron(50 13 * * ? *)` | Lambda `opal-assets-mdpf-portal-publisher` (`mdpf_portal_publisher.tf:211-234`) | -- |
 
-**The cross-system dependency.** `mdpf-feeder-accelerator` fires the MDPF feeder when the INFLECTION gold chain
-writes its completion sentinel into `opal-data-inf` -- a legacy firm bucket `ADVI_FIRMBKTS` retires. The
-engine's mdpf run carried this rule as one GRAMMAR tension on its NAME and nothing about its PATTERN; the 49F
-run does not carry it at all (its seeds are `opal-data-bd` / `-49financial`). So the resource that binds the two
-migrations together is invisible to both runs. The runner's dispatch script waits on the same sentinel
-(`mdpf-daily-dispatch.sh:283-301`, `INF_BUCKET="opal-data-inf"`). **A cutover that moves `opal-data-inf` without
-repointing this pattern silently stops the MDPF feeder, and no per-subject instrument would say so.**
+**The cross-system dependency -- CORRECTED 2026-09-18 ~19:5xZ on Andrew's "check and make sure this is accurate"
+(record `ANDREW_DIRECT_20260918_195xZ_VERIFY_CROSS_SYSTEM_CLAIM_AND_RECORD_VS_LIVE_RECONCILIATION_WORKFLOW.md`; the
+first wording is kept in this file's history and in commit ecf57e8806's message, never rewritten silently).**
+Verified on the applied plane: the rule is ENABLED, its pattern names `opal-data-inf` / `gold/meta/pipeline-complete.json`,
+its live target is `mdpf-feeder-trigger` with the DLQ (`events describe-rule`, `list-targets-by-rule`). **But that
+sentinel was last written 2026-09-05T12:52:20Z; the INF chain has written `gold/meta/pipeline-failed.json` daily since
+(last 2026-09-18T12:35:45Z). The accelerator has not fired for 13 days and MDPF published today** -- because the
+Scheduler backstop `mdpf-feeder-backstop-daily` (`cron(52 12 * * ? *)`) fires the same Lambda. The dependency that
+BINDS the two migrations is not the pattern; it is the feeder Lambda's pre-check (`lambda_function.py:86-93,153-168`):
+`INF_BUCKET` (default `opal-data-inf`) + `WSC_GATE_KEY = gold/eclipse/{d}/_meta/gold_complete.json`; absent -> `NOT-YET`,
+`dispatched: False`, status 200, "NOT an error", the runner is never started, no DLQ, no alarm. The same Lambda reads
+`BD_BUCKET = opal-data-bd` for WS-E's rps parquet (reported, not gating). The dispatch script waits on a DIFFERENT key
+in the same bucket (`gold/eclipse/{RUN_DATE}/_meta/gold_complete.json`, `:283-301`), bounded 30 min, non-fatal. So:
+**four carriers on two legacy buckets** (the rule's pattern, the Lambda's two env-bound buckets, the script's wait),
+both buckets ones `ADVI_FIRMBKTS` retires, none visible to either engine run (the MDPF run typed the rule's NAME
+only; the 49F run does not carry it; neither carries a Lambda's environment or a script's wait). **A cutover that
+moves `opal-data-inf` without repointing the feeder's `INF_BUCKET` silently STALLS the feeder chain and silently
+STALES the served artifacts -- the floor still fires the gold Lambda at 13:30Z and the publisher at 13:50Z, so the
+portal keeps receiving a daily platinum built from the last feeds that landed. Nothing stops and nothing alarms.**
+The earlier phrase "silently stops MDPF" was wrong in that direction and the phrase "waits on the same key" was
+wrong outright. The INF chain's daily `pipeline-failed.json` since 09-06 is filed as a surprise row (LGIC_LGCTFM
+channel), not chased.
 
 ### 2.2 Compute (6 Lambdas + 1 EC2 live; 2 named in the repo and records but NOT live)
 

@@ -64,9 +64,12 @@ the run's output names stays a separate R19 project under never-widen sign-off.
 - **What the walk found in one afternoon on the smaller subject** (RCN-0010): 6 Lambdas, 1 EC2 runner, 13 roles, 11
   policies, 7 triggers with targets, 3 alarms, 6 log groups, a layer, an SSM parameter and a secret path outside the
   33-type vocabulary, ~17 packaged scripts, ~30 storage locations, 3 routes, 1 component, and ONE CROSS-SYSTEM
-  TRIGGER (`mdpf-feeder-accelerator` fires on `opal-data-inf`'s completion sentinel -- a bucket `ADVI_FIRMBKTS`
-  retires) that neither subject's run can see. Every class Andrew named was missing, and the one that binds the two
-  migrations together was missing twice.
+  DEPENDENCY on two legacy buckets carried in four places (a rule's pattern, a Lambda's two env-bound buckets, a
+  script's wait; IV.3, corrected ~19:5xZ) that neither subject's run can see. Every class Andrew named was missing,
+  and the dependency that binds the two migrations together was missing from both runs.
+- **Amendment 1 (~19:5xZ, same day):** Andrew's reconciliation step -- record scans coalesced to the newest claim,
+  cross-referenced against live or derived-from-live measurement, every delta a row, the table VALIDATED only when the
+  deltas are dispositioned -- is O9 and W14.
 
 ---
 
@@ -131,8 +134,9 @@ at the cut.
 
 A trigger whose pattern names another subject's bucket, a script that waits on another subject's sentinel, a role
 that reads another subject's silver -- each is a row tagged with the other subject's registry key. **Bar:**
-`mdpf-feeder-accelerator` (pattern on `opal-data-inf`) and the dispatch script's wait on the same sentinel appear
-in the MDPF run tagged `inflection`, and the 49F/INF run carries them back as consumers of the bucket it retires.
+`mdpf-feeder-accelerator` (pattern on `opal-data-inf`), the feeder Lambda's `INF_BUCKET` / `BD_BUCKET` gates and
+the dispatch script's wait on a second sentinel in the same bucket appear in the MDPF run tagged `inflection` and
+`49financial`, and the 49F/INF run carries them back as consumers of the buckets it retires.
 
 ### O7 -- A reader sees which of the run's facts came from a HAND-KEPT surface, with that surface's measured drift beside it
 
@@ -146,6 +150,22 @@ surface.
 
 The ruleset is Part V; the engine's determinism test extends to the walk. **Bar:** two compiles by different
 slots at one vintage diff to zero on the tension identity key AND on the edge set.
+
+### O9 -- A reader sees, per resource, what the estate's RECORDS claim its state is (the newest record winning), what the LIVE or derived-from-live instruments MEASURE it to be, and every delta between the two as its own row with an owner -- and the run's current-state table is called VALIDATED only when that delta set is empty or every member is dispositioned
+
+*(Amendment 1, Andrew-direct ~19:5xZ: "run the various repo scan (change management, logs), coalesce to whatever
+the newest truth seems to indicate, then cross reference that with the comp-tool scans on confirmed
+live/derived-from-live surfaces. Any delta gets specific investigation/remediation, which leads to a validated
+'current state' table.")* Three columns on every row: CLAIMED (the latest-dated record or declaration naming the
+resource, with its date and path), MEASURED (the live plane at its `built:` vintage, live `s3api`, `describe-rule`,
+`get-schedule`, `comp-iam live`), DELTA (one of AGREE / RECORD-NEWER-THAN-LIVE / LIVE-NEWER-THAN-RECORD /
+DECLARATION-STALE / UNMEASURED-EITHER-SIDE). A delta row names its investigation or remediation and its owner; the
+run's own table is VALIDATED when no delta is open. **Bar (today's own instance):** `ec2.tf`'s comment claims
+`mdpf-daily-trigger` starts the runner (declaration); the 2026-08-07 cutover record claims it was retired (newest
+record); the live plane holds no such Lambda and `mdpf-feeder-trigger` holds `ec2:StartInstances` (measured). Newest
+record and live AGREE; the declaration is STALE; the remediation is a one-line comment fix owned by the Terraform
+lane. A second instance: the accelerator's pattern (declared, live, ENABLED) against its sentinel's LastModified
+(2026-09-05) -- LIVE-NEWER-THAN-RECORD, investigation owed to the INF chain's owner.
 
 ---
 
@@ -195,12 +215,22 @@ Its JSON keys are `arn, kind, name, pattern, schedule, state`. The seven MDPF ta
 `target {}` blocks in eight `.tf` files (desired plane). The applied-plane read (`get-schedule`, `list-targets-by-rule`)
 is one call per trigger and was not run here. A run must carry both planes or say which it read.
 
-### IV.3 -- The cross-system trigger is the resource that binds two migrations, and both runs miss it
+### IV.3 -- The cross-system dependency is carried in four places on two legacy buckets, both runs miss all four, and the one everyone would name first is already dead
 
-`mdpf-feeder-accelerator`'s pattern: `Object Created` on bucket `opal-data-inf`, key `gold/meta/pipeline-complete.json`
-(`feeder-trigger.tf:259-285`; live, ENABLED). The runner's dispatch script waits on the same key
-(`mdpf-daily-dispatch.sh:283-301`). The MDPF engine run carried the rule as a GRAMMAR tension on its name; the 49F
-run does not carry it. `ADVI_FIRMBKTS` retires `opal-data-inf`. This is O6's founding instance.
+CORRECTED ~19:5xZ on Andrew's verification ask (record `..._195xZ_VERIFY_CROSS_SYSTEM_CLAIM_...md`). Applied plane:
+`mdpf-feeder-accelerator` is ENABLED, pattern `Object Created` on `opal-data-inf` / `gold/meta/pipeline-complete.json`,
+live target `mdpf-feeder-trigger` -- and that sentinel was last written 2026-09-05T12:52:20Z (the INF chain writes
+`pipeline-failed.json` daily since), so the accelerator has not fired in 13 days while MDPF published today on the
+backstop schedule. The BINDING carrier is the feeder Lambda's pre-check: `INF_BUCKET` + `WSC_GATE_KEY =
+gold/eclipse/{d}/_meta/gold_complete.json`; absent -> `NOT-YET`, status 200, no dispatch, no DLQ, no alarm
+(`lambda_function.py:86-93,153-168`). The same Lambda reads `BD_BUCKET = opal-data-bd` (reported, not gating). The
+dispatch script waits on a DIFFERENT key in the same bucket, bounded and non-fatal (`:283-301`). Four carriers, two
+buckets `ADVI_FIRMBKTS` retires, zero rows in either run. The consequence of an unrepointed cutover is a silent
+STALL of the feeders and a silent STALING of the served platinum -- not a stop, and no alarm. Three lessons for the
+ruleset: a Lambda's ENVIRONMENT is a dependency surface (W2's COMPUTE -> ARTIFACT hop reads env, not only grants); a
+trigger's pattern can be live and dead at once (W9: the sentinel's LastModified is the positive control); and the
+first, most visible carrier of a dependency is not necessarily the binding one (W3's union). This is O6's founding
+instance.
 
 ### IV.4 -- Two static instruments disagree on one script's writes, and each is right about its own blindness
 
@@ -317,6 +347,14 @@ none.
 W13 **The plan orders PORT and REPOINT packages after the packages of the rows they depend on, beneath the tension
 rank, and prints any cycle;** `plan.json`'s step chain is renamed `step_dependencies` (R-81, P4 owed). COST: one
 topological pass. NON-APPLICATION: a run with no edges, which under W1-W9 is not done.
+
+W14 **Reconcile CLAIMED against MEASURED before the table is called current** (Amendment 1, O9): coalesce the record
+scans and the declarations to ONE claim per resource, the latest-dated winning and its date and path printed;
+measure the same resource on a live or derived-from-live surface; emit the delta as a row from the closed set
+AGREE / RECORD-NEWER-THAN-LIVE / LIVE-NEWER-THAN-RECORD / DECLARATION-STALE / UNMEASURED-EITHER-SIDE, each with an
+owner; the run's current-state table is VALIDATED only when every delta row is dispositioned. A Lambda's
+ENVIRONMENT and a script's literal buckets are claim surfaces too (IV.3). COST: one join over the rows the run already
+holds. NON-APPLICATION: a resource with no record and no declaration, which is itself a delta (LIVE-NEWER-THAN-RECORD).
 
 ---
 
