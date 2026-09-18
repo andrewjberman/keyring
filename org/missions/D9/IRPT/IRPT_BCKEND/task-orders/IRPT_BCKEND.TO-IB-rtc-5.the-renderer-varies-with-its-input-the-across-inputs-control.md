@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T01:45Z to slot ~4 (cold start) at the issuance; a head, no cross-slot wait.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~4, 2026-09-18: R35-AC1 PASSES BY OUTPUT (5 of 5 arms, token IBR35-RENDER-VARIES-WITH-INPUT, reproduced across two independent runs); R35-AC2 recorded for 3.0.0_SA_CVO, no self-grade. proof_of_spec.json VALID rc=0. Row IRPT_BCKEND-W4-S32 filed (the decomp's named in-process fallback is retired; substituted with the counterpart's real render code on the local dev plane).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 3 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (ADMITTED, both L4-R halves SIGNED) | **Round-2 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND2_ANALYSIS.md` @cfe3a33a9b | **Round-2 slug:** L8/L9 @c1a8cd2543 (`3.0.0_SA_CVO`, msg 97752) | **Decomp cell:** `IB-rtc-5` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.3, s.R3) | **outcome_ref:** FWD-8, FWD-3, FWD-4
 
