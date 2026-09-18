@@ -3123,6 +3123,28 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "TO-OG-v-4 WORKER FACE: 'The probe for every mechanical criterion is .../probes/og_v4.py, taking the short id, printing its measurement with its denominator, then exactly one line VERDICT: ...' -- phrased as a fact about an existing instrument, not an instruction to build one.",
     "world_is": "The file did not exist in this slot's deliverables at hand-off; PHASE 1 could not satisfy AC8's own invocation without first writing it. Only the AC8 branch is implemented, matching this hand-off's exact scope (AC1-AC7, AC9, J1, J2 belong to PHASE 2 and are refused here with a usage error, not graded).",
     "notes": "INERT: no future-harm mechanism -- the file exists now, is committed with this drain, and PHASE 2's worker extends the same file to add the remaining AC branches (a normal continuation, not a defect to disarm). Filed for FORM per Rule 22's step-7 trigger (had to do something the order's own wording implied was already done); no significance judged. COST: none beyond this row. NON-APPLICATION: a future hand-off finding AC1-AC7/AC9 unimplemented in this file is not a surprise -- it is exactly what this row states PHASE 1 left undone."
-  }
+  },
+{
+  "id": "NFRA_OPLGTW-W1-S14",
+  "project": "NFRA_OPLGTW",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~1",
+  "surfaced_at": "2026-09-18T00:00:00Z",
+  "one_line": "OG-i-4's resize plan shows public_dns/public_ip going to (known after apply) alongside instance_type -- a recompute side effect of the stop/start, not an independently configured change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan (infra/aws/terraform/opal-gateway, .tools/terraform.exe, planfile .scratch/og_i4/resize.tfplan, this worktree @wk-oplgtw-1-i4): 'aws_instance.gw will be updated in-place ... ~ instance_type = \"t4g.nano\" -> \"t4g.small\" ~ public_dns = \"ec2-13-221-151-249.compute-1.amazonaws.com\" -> (known after apply) ~ public_ip = \"13.221.151.249\" -> (known after apply) ... Plan: 0 to add, 1 to change, 0 to destroy.'",
+      "terraform show -json of that planfile: resource_changes has 84 entries, exactly 1 non-no-op (aws_instance.gw, actions=['update'], replace_paths=null); its changed_attribute_names (before!=after) = ['instance_type','public_dns','public_ip']; after_unknown = {'public_dns': true, 'public_ip': true} -- so public_dns/public_ip are RECOMPUTED-TO-UNKNOWN, not independently set to a new declared value, and no other resource in the 84 changed.",
+      "TO-OG-i-4 WORKER FACE itself narrates the mechanism this plan exhibits: 'Changing an EC2 instance type stops and starts the instance' -- the instance carries no Elastic IP (associate_public_ip_address=true, no aws_eip resource in infra/aws/terraform/opal-gateway/main.tf), so any stop/start of THIS SAME resource reassigns a new ephemeral public IP and DNS name as an AWS-side mechanical consequence, not a Terraform config edit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-i-4 BOUNDS: 'Blast radius. One attribute on one resource. A plan that replaces the instance, or changes any other attribute or resource, is a BLOCKING row and no apply.' OGI4-AC2: 'the plan changes only `instance_type` on `aws_instance.gw` and does not replace the instance.'",
+  "world_is": "The plan's diff block for aws_instance.gw lists three tildes (instance_type, public_dns, public_ip), not one -- but only instance_type has a concretely declared before/after VALUE; public_dns and public_ip go from a known value to `(known after apply)` (after_unknown=true), which is what any in-place update requiring a stop/start on a non-EIP instance produces regardless of which attribute triggered it. No other resource address appears among the 84 with a non-no-op action, and the resource's own action is 'update', never 'replace' (replace_paths null, Plan line reads 0 add / 1 change / 0 destroy).",
+  "notes": "Read as OBSERVATION/INERT and NOT BLOCKING: the order's own G-A text already names the stop/start as the mechanism this cell authorises, and public_dns/public_ip re-issuing on any stop/start of a public, non-EIP instance is that mechanism's unavoidable, intrinsic side effect on the SAME resource -- not a second attribute independently changed by config, and not a second resource. OGI4-AC2 is graded on: (a) exactly 1 non-no-op resource_changes entry across the full 84, (b) that entry's address is aws_instance.gw, (c) its action is 'update' with replace_paths null, (d) the only changed_attribute_name with a concretely declared (non-unknown) after-value is instance_type. Filed for FORM (Rule 22 step-7: judgment call on what 'changes only instance_type' admits) before proceeding to apply, per 'Anything off-spec is one surprise row ... and you keep working.' COST: none beyond this row -- the apply proceeds unchanged. NON-APPLICATION: a plan that shows a SECOND resource, or a THIRD attribute with a concretely declared new value, or any replace action -- any of those would be the BLOCKING case this row is not."
+}
 ]
 ```
