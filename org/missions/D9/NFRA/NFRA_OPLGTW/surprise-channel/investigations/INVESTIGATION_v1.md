@@ -3100,6 +3100,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "`OGV4-AC8` (this issuer's amendment) requires the re-seal to be computed 'from the SAME version-pinned objects OG-v-3 recorded, by the same instrument', with only the salt fresh. That presupposes the questions and their dates have not moved since the seal.",
     "world_is": "The presupposition holds, and it holds for a reason someone deliberately built rather than by luck: the one post-seal edit to the protocol exists to FREEZE the dates against exactly this drift, and the sealing script never resolved a date at run time in the first place. So the re-seal differs from `OG-v-3`'s ONLY in its salt, and therefore only in its digests -- which is what `OGV4-AC8` already requires the probe to state. A reader who notices that a newer qualified closure (2026-09-16) exists, or that the protocol's mtime is later than the seal's, has found a real ordering and the WRONG conclusion; this row is here so that costs one read instead of a re-investigation.",
     "notes": "Filed INERT: nothing is wrong and nothing is asked. This is PRE-EMPTIVE CONTEXT for whoever grades `OGV4-AC5` or reviews the re-seal, because the alarming-looking fact (protocol edited AFTER the seal) is cheap to find and its benign explanation is not. NOT CLAIMED: that the re-seal itself is correct -- that is `OGV4-AC8`'s to prove when the worker runs it, and this row deliberately does not pre-empt its evidence. THE CARRY: A VINTAGE ORDERING IS A QUESTION, NOT A VERDICT -- 'the input changed after the artifact' is the right thing to notice and the wrong thing to conclude from, because the change may exist to PROTECT the artifact. The diff settles it and the timestamps never can."
+  },
+  {
+    "id": "NFRA_OPLGTW-W6-S11",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~6",
+    "surfaced_at": "2026-09-18T13:32:53Z",
+    "one_line": "TO-OG-v-4's WORKER FACE names `probes/og_v4.py` as an existing probe for every mechanical criterion, but no such file existed at hand-off in this slot's deliverables/probes/ (only og_v1.py, og_v3.py, og_z4.py were present) -- PHASE 1 required creating it from scratch, implementing ONLY the AC8 branch (usage error on any other id), since AC1-AC7/AC9 belong to PHASE 2's hand-off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ before writing: `ls org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/` at this worktree's HEAD (15edf9f07b) listed exactly `og_v1.py`, `og_v3.py`, `og_z4.py` -- no `og_v4.py`.",
+        "The order's own AC1-AC9 invocation lines all name `probes/og_v4.py` as if already present, and AC8's own invocation (`timeout 300 .venv-og/Scripts/python .../probes/og_v4.py AC8`) cannot run without it.",
+        "Written this turn at org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py, following og_v3.py's own PASS/FAIL verdict-line pattern; only `ac8()` is implemented -- `main()` returns a usage error (rc 2) naming PHASE 2 for AC1-AC7/AC9, never a fabricated PASS/FAIL for a criterion this hand-off does not own.",
+        "AC8's invocation ran successfully against this new file this turn: `VERDICT: PASS-OGV4-AC8`, rc=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-OG-v-4 WORKER FACE: 'The probe for every mechanical criterion is .../probes/og_v4.py, taking the short id, printing its measurement with its denominator, then exactly one line VERDICT: ...' -- phrased as a fact about an existing instrument, not an instruction to build one.",
+    "world_is": "The file did not exist in this slot's deliverables at hand-off; PHASE 1 could not satisfy AC8's own invocation without first writing it. Only the AC8 branch is implemented, matching this hand-off's exact scope (AC1-AC7, AC9, J1, J2 belong to PHASE 2 and are refused here with a usage error, not graded).",
+    "notes": "INERT: no future-harm mechanism -- the file exists now, is committed with this drain, and PHASE 2's worker extends the same file to add the remaining AC branches (a normal continuation, not a defect to disarm). Filed for FORM per Rule 22's step-7 trigger (had to do something the order's own wording implied was already done); no significance judged. COST: none beyond this row. NON-APPLICATION: a future hand-off finding AC1-AC7/AC9 unimplemented in this file is not a surprise -- it is exactly what this row states PHASE 1 left undone."
   }
 ]
 ```
