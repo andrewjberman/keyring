@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.7",
+ "decomp_version": "v3.8",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1041,6 +1041,109 @@ cell's RECORD rather than the live schema, so it fails with the rest.
   says in terms that they are not the recut's to carry.
 - It does **not** re-derive `504/623`. That figure is carried with its claim so a cell cannot mistake it
   for measured-at-this-cut.
+
+## 0i. v3.8 -- THE ROUND-9 RECUT (L10: 1.0.0_SA_CTO's round-8 analysis @`b7ec08b2fe`)
+
+**Input, and the scope is taken from the REGISTER READ AT HEAD.** `project.json`'s `blocking`, WHAT
+ROUND 9 OWES (a)-(d), read with `git show HEAD:` rather than by path. ⛔ **THAT WAS NOT PEDANTRY: ONE
+TICK BEFORE THIS CUT, BOTH THE ROUND-8 ANALYSIS AND THE REGISTER UPDATE WERE PRESENT ON DISK AND
+NEITHER WAS COMMITTED.** A path read would have shown `ROUND 8 CLOSED` and cut this round against an
+artifact that had not landed. Round 8 graded **REALIZED 6 of 7**; `FWD-5` NOT REALIZED and carried here.
+
+### 0i.1 FWD-5 FAILS TWO CLAUSES, AND ROUND 7 NAMED ONLY ONE
+
+```
+  clause 1  runs over everything, both planes        MET since ROUND 4
+  clause 2  each paired with its CORRECT form        NOT MET -- 1298 of 2474 carry a TEMPLATE
+  clause 3  totals agree with the hand ranking       NOT MET, NEVER ATTEMPTED IN EIGHT ROUNDS
+  clause 4                                            RETIRED at round 7
+```
+
+⭐ **CLAUSE 3 IS NAMED BY THE CENSUS REPORT ITSELF**, one occurrence, verbatim: *"The comparison
+against LGIC_NAMING's hand gradings is EN-s-2's and is not made here."* **THAT SENTENCE IS `W7-S4`,
+and cell 40 exists to make the comparison it declines.**
+
+⛔ **AND `W7-S4` HAS BEEN SERVABLE SINCE ROUND 4, NOT ROUND 8** -- `1.0.0_SA_CTO`'s own correction
+against itself. The census first ran to completion at round 4; round 7's analysis asserted
+*"judged_live is 3 of 1829"* while `.r4.md` and `.r5.md` had been in the tree 13 and 8 hours reading
+1690/1547. **The item sat four rounds under three analyses because a stale figure made its
+precondition look unmet.** It is not carried a fifth.
+
+### 0i.2 THE CELLS -- 3, and no earlier cell is re-opened
+
+```
+  cells at v3.7 ......................................................... 39
+  plus round 9's three .................................................. +3
+  = cells in this decomposition ......................................... 42
+  round 9 runs exactly the three: 40, 41, 42
+```
+
+⚠ The header fence's `"cells": 28` still counts the ORIGINAL decomposition and is not the running
+total, disclosed at s.0h.2 and unchanged here.
+
+| cell | id | what it does | rulings | serves |
+|---|---|---|---|---|
+| 40 | `EN-c-40` | **THE COMPARISON THE CENSUS DECLINES.** N2/N6/IV7 against LGIC_NAMING's hand gradings, over all three surfaces with a denominator each -- `FWD-5`'s ONLY REMAINING STRUCTURAL CLAUSE | R-66, S81 | FWD-5 |
+| 41 | `EN-s-41` | **THE SCOPE DECISION, TAKEN NOT PATCHED.** `W3-S17`'s %-style class against the brace-only rule: HOLD or WIDEN, with a negative arm either way | R-62, W3-S17 | FWD-5 |
+| 42 | `EN-b-42` | **THE STALE BACKLOG GETS AN OWNER.** Every stale remediation row assigned to a NAMED party, never a category | R-70, S82 | FWD-2 |
+
+**ONE AXIS, ONE INTENT (Rule 24 iii):** each cell converts something CARRIED into something OWNED OR
+DECIDED -- 40 a comparison nobody made, 41 a scope nobody chose, 42 a backlog nobody owns.
+
+### 0i.3 TWO OF THIS ROUND'S OWN INPUT FIGURES WERE ALREADY STALE AT THE CUT
+
+```
+  section 9's worked cases   register says 43   ISSUER MEASURED 45   (parsed the fence)
+  the stale remediation set  register says 91   ISSUER MEASURED 94   (at current_round=9)
+```
+
+⛔ **NEITHER IS A COMPLAINT -- BOTH ARE THE REASON TWO ARMS EXIST.** `c40-recount` requires the cell
+to re-count section 9 at its OWN write time and NAME which carrier is stale; `b42-remeasured`
+requires its own denominator because **the stale set grows with the round number by construction**, so
+a plan written against 91 is already wrong when it lands. A round that inherited both figures would
+have compared 43 cases it could not find and owned 91 rows of 94.
+
+### 0i.4 WRITE SURFACES -- THREE SLOTS, ALL LEVEL 0
+
+```
+  EN-c-40   deliverables/<serial>/ + the project's channel                 slot 1
+  EN-s-41   org/standards/NAMING_SCHEMA.json + deliverables/ + channel     slot 2
+  EN-b-42   deliverables/<serial>/ + the project's channel                 slot 3
+```
+
+No two cells share a CODE surface. The only shared file is the append-only channel, where 14b's
+inversion applies and **no slot isolates**. `fanout: 3 slots over 3 cells, cap 8`; levels L0 = {40, 41,
+42}, L1 = {}. **41 is the only cell permitted to touch `NAMING_SCHEMA.json`**, and its own arm
+re-asserts the 8/7 exclusion split for every type it does not DECLARE it is moving.
+
+### 0i.5 THE FIXED INPUT
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r9/check_en_r9.py` -- 12 real arms; `selftest-arms` drives
+**27 arms of which 13 are POSITIVE-SATISFIABILITY**, 0 failures. `R9_BASE.json` pins
+`d9cdb39063497f32065770de740bdeb426f7dc3b`, and **every figure carries a `claim`**: the clause-2
+split, the three instruments' shapes and the stale set are `measured` BY THIS ISSUER; the FWD-5 clause
+state is `reported`.
+
+⭐ **THE 1298 WAS RE-DERIVED HERE RATHER THAN INHERITED**, from the census report's own `rows` fence:
+3254 rows, OUT-OF-PATTERN **2474**, template-carrying **1298**, concrete 1176, tokens `{system}` 1119
+/ `{scope}` 122 / `{cadence}` 108 / `{source}` 85 / rest 10, with **138 rows carrying more than one
+distinct token**. Every figure matches the register name-for-name. ⚠ A first pass printed only the top
+SIX tokens and appeared to contradict the register's "rest 10" -- **the data was right and the DISPLAY
+was truncated**, which is this estate's never-head-a-census rule arriving inside a python call.
+
+**WIRING MEASURED AT THE CUT: 12 of 12 real arms read FAIL** because their records do not exist. No
+guard-shaped arm.
+
+### 0i.6 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** close `FWD-5`. Cell 40 closes clause 3; **clause 2 remains open at 1298 rows** and
+  is not cut here.
+- It does **not** cut `(b)`, the 1298. **Its owner is still a CATEGORY**, and an owner that is a
+  category decays exactly like no owner (`R-70`). It transfers to a NAMED project the tick one is
+  seated and not before -- which is also exactly what cell 42 does for a different backlog.
+- It does **not** restore the staleness limb's REFUSAL form. A refusal is only reachable once that
+  backlog has an owner; cell 42 seats the owner and nothing more.
+- It does **not** touch `W7-S1`, which is `1.0.0_SA_CTO`'s own clock.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
