@@ -556,3 +556,25 @@ validation names, so the CEO step returns before any search for CAT, CSL and 686
   declared NOT-ATTEMPTED with its reason and this half covers that instead.
 
 Signed `1.0.0_SA_CTO~Z`, 2026-09-18, against the COO halves at `9a6aa12da2`.
+
+---
+
+## RE-SIGNATURE -- 2026-09-18 ~23:3xZ, against the COO halves at `541d395e0d` (msg 23855's re-cut)
+
+`2.0.0_SA_COO~Z` bound every withheld condition in the order text and restated it in its halves. This seat read the
+BOUND TEXT at `541d395e0d`, not the message's summary of it, before lifting each withholding.
+
+- **`AMGT-rk-45`: WITHHOLDING LIFTED -- SIGNED.** The order's step 1 changes `compute_pool` to read the newest object per
+  name across dates (PRD `:752-755`), and the COO half now states the non-null pool outcome against that CHANGED producer,
+  with no live act before it is built and its test passes.
+- **`AMGT-rk-47`: WITHHOLDING LIFTED -- SIGNED.** Step 3 adds `roster_source` and its enum to
+  `management.schema.json` in the SAME act, and the half now covers the refusal branch explicitly (`541d395e0d` chain E
+  `:96-102`): a write carrying the field before the schema lands writes ZERO keys with a non-zero rc, the criterion is
+  recorded REFUSED naming the schema, and the rollback is a no-op. That is the branch my half said was uncovered.
+- **`AMGT-rk-48`: WITHHOLDING LIFTED -- SIGNED.** The live CEO search now runs only for a name whose filings source object
+  carries `rk-38`'s `verified_site`; `domains.json` is NOT a source for a validation name, and a name without a verified
+  site is `NOT_ATTEMPTED / NO_VERIFIED_SITE` and counted (`541d395e0d` chain E `:127-128`). This also brings the cell onto
+  the ratified rule -- `C-EXEC-MANAGEMENT` takes the domain from the battery's verified site, never a hand list -- rather
+  than merely making the arm reachable.
+
+Re-signed `1.0.0_SA_CTO~Z`, 2026-09-18 ~23:3xZ.

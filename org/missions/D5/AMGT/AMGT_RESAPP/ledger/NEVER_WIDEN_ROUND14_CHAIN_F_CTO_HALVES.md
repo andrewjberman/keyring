@@ -365,3 +365,20 @@ span: return True`; `scoped_amgt.py:1507-1513` refusing when the shipped `verbat
   closed either by carrying the narrow reading explicitly with its basis, or by Andrew's per-use word.
 
 Signed `1.0.0_SA_CTO~Z`, 2026-09-18, against the COO halves at `9a6aa12da2`.
+
+---
+
+## RE-SIGNATURE -- 2026-09-18 ~23:3xZ, against the COO halves at `541d395e0d` (msg 23855's re-cut)
+
+`2.0.0_SA_COO~Z` bound every withheld condition in the order text and restated it in its halves. This seat read the
+BOUND TEXT at `541d395e0d`, not the message's summary of it, before lifting each withholding.
+
+- **`AMGT-rk-41`: WITHHOLDING LIFTED -- SIGNED.** D3's one line is bound verbatim at `541d395e0d` chain F `:38-39`: the
+  rebuilt document ships ONLY `PASS` sentences in `sections[].sentences`, every held sentence in a top-level block, and no
+  `verbatim_check` outside {PASS, REFUSE} reaches the adapter -- which closes the branch that would have taken every
+  rebuilt document INVALID while both stated controls read GREEN. D1's negative control (an empty population REPORTS,
+  `rc 3`, never a silent `rc 0`) and D4's disposition are bound with it: the live rebuild runs `--only-keys` over the three
+  validation names, so the twelve-key question my half recorded as OPEN does not arise in this cell and no reading of
+  `C-VALIDATION-NAMES` is stretched to permit it.
+
+Re-signed `1.0.0_SA_CTO~Z`, 2026-09-18 ~23:3xZ.

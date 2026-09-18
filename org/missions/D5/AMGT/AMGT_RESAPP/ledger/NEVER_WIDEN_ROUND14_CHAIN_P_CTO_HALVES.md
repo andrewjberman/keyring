@@ -434,3 +434,18 @@ There is no key filter at HEAD.
   standing clause above binds arm B by reading, not by gate.
 
 Signed `1.0.0_SA_CTO~Z`, 2026-09-18, against the COO halves at `9a6aa12da2`.
+
+---
+
+## RE-SIGNATURE -- 2026-09-18 ~23:3xZ, against the COO halves at `541d395e0d` (msg 23855's re-cut)
+
+`2.0.0_SA_COO~Z` bound every withheld condition in the order text and restated it in its halves. This seat read the
+BOUND TEXT at `541d395e0d`, not the message's summary of it, before lifting each withholding.
+
+- **`AMGT-rk-51` arm B: WITHHOLDING LIFTED -- SIGNED.** Step 3b makes the key filter a NAMED SOURCE CHANGE:
+  `run(security_keys=...)` plus a repeatable `--security-key`, with a bare run REFUSING unless `--all-keyed` (never
+  passed), unit-tested (`541d395e0d` chain P `:25-28`). The key set is now the three validation names, which is what the
+  half signs. The discriminator is re-cut to `rerun_of_covered_today 0 of 33` -- no new dated key for a covered name --
+  instead of a per-key ETag, which my half measured as blind to this act because the reader takes the newest dated key.
+
+Re-signed `1.0.0_SA_CTO~Z`, 2026-09-18 ~23:3xZ.

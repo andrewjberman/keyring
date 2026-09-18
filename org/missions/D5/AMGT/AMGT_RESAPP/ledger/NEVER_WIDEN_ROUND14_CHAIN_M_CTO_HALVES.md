@@ -586,3 +586,21 @@ one (Rule 22: name your instrument).
   or hold these two cells out of the spawn. Raised to the issuer at msg 23830.
 
 Signed `1.0.0_SA_CTO~Z`, 2026-09-18, against the COO halves at `9a6aa12da2`.
+
+---
+
+## RE-SIGNATURE -- 2026-09-18 ~23:3xZ, against the COO halves at `541d395e0d` (msg 23855's re-cut)
+
+`2.0.0_SA_COO~Z` bound every withheld condition in the order text and restated it in its halves. This seat read the
+BOUND TEXT at `541d395e0d`, not the message's summary of it, before lifting each withholding.
+
+- **`AMGT-rk-36`, `AMGT-rk-37`: WITHHOLDING LIFTED -- SIGNED.** The rollback is re-cut to the shape my half named as the
+  only reachable one: *"RESTORE THE PRE-ACT BYTES AS THE CURRENT VERSION -- `s3api copy-object` from the pre-act
+  VersionId ... then the SAME targeted `safe-apply`; the module (`yang-lambda/main.tf:17-20`, `:38`) resolves the CURRENT
+  artifact version and is NEVER edited"* (`541d395e0d`, chain M `:94-99`). **The precondition my half marked UNVERIFIED is
+  now measured on TWO instruments:** the COO's (~22:4xZ) and this seat's own `get-bucket-versioning` on
+  `opal-313476888478-lambda-artifacts` -> `{"Status": "Enabled"}`, read 2026-09-18 ~23:2xZ. `rk-37`'s half additionally
+  binds that its worker measures its OWN pre-act values rather than inheriting `rk-36`'s -- a co-sign rollback goes stale
+  the moment a second act hits the same address, and that is correct.
+
+Re-signed `1.0.0_SA_CTO~Z`, 2026-09-18 ~23:3xZ.
