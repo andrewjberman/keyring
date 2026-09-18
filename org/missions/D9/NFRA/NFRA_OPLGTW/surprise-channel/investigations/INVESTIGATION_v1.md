@@ -2563,6 +2563,101 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "OGQ2-AC6 and OGQ2-AC20 assert that a grouping dropping date identity and a duplicate-grain read succeed; OGV2-AC4 requires every one of 25 test modules green.",
     "world_is": "Both tests now expect the contract's refusal with their clauses cited, the wiring stands, and all three modules are green on the shared tree. The three rows' hazard is spent. This seat is the disarm owner of all three and gives the word here; 3.0.0_SA_CVO writes the clock at L9.",
     "notes": "This is the FIFTH and SIXTH instance of the defect-asserting-test class in this project, all six in ONE file, and they were found by the C3 census's population read rather than one at a time. Evidence only: this row adjudicates nothing."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S5",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-18T05:15Z",
+    "one_line": "infra/aws/ec2/safe-ec2-deploy.sh's own worktree fix redirects HALT_GATE_REPO_ROOT to the SHARED MAIN TREE (via git-common-dir) before sourcing .tools/halt-gate-check.sh, so a worker's own linked-worktree copy of its session-serial file (org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial, pre-provisioned by the issuer per this order's identity line) is NEVER checked; the halt gate fails closed with 'IDENTITY UNRESOLVED', and its own printed remediation line writes a RELATIVE path that -- given the script's absolute MAIN_TREE override -- would still land in the wrong place. AC2 (the deploy) is BLOCKING on this; every criterion that depends on the deploy having run (AC2-AC10, AC12-AC14, and AC8's close) is BLOCKING as a result. AC1 and AC11 do not depend on the deploy and both PASS.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ infra/aws/ec2/ec2/safe-ec2-deploy.sh:25-41 @this worktree's HEAD (cut from CLOUD @1ca5067f6e): `_GIT_COMMON_DIR=\"$(git -C \"$WORKSPACE_ROOT\" rev-parse --git-common-dir ...)\"` then `MAIN_TREE=\"$(cd \"$_GIT_COMMON_DIR/..\" && pwd)\"` then unconditionally `HALT_GATE_REPO_ROOT=\"$MAIN_TREE\"` -- WORKSPACE_ROOT here is this worker's OWN worktree (/c/tmp/wk-oplgtw-2a), and the comment at :25-30 states the INTENT is runtime state resolving from 'the LIVE main-tree inbox + serial even when this wrapper is invoked from a build worktree'.",
+        "MEASURED directly in this worktree: `git rev-parse --git-common-dir` -> `C:/Users/AndrewBerman/Desktop/ajb_workspace/.git`; `git rev-parse --show-toplevel` -> `C:/tmp/wk-oplgtw-2a`. So MAIN_TREE resolves to `C:/Users/AndrewBerman/Desktop/ajb_workspace`, NOT this worktree, for every worker spawned into a linked worktree of the CLOUD session.",
+        "READ .tools/halt-gate-check.sh:68-109 `halt_gate_resolve_serial()`: it checks `${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial` then `${HALT_GATE_SHARED_ROOT}/org/mcp/sessions/...`, where `repo_root=HALT_GATE_REPO_ROOT` (already overridden to MAIN_TREE by safe-ec2-deploy.sh before sourcing) and HALT_GATE_SHARED_ROOT (:48-53) re-derives from HALT_GATE_REPO_ROOT's OWN git-common-dir, landing on the SAME MAIN_TREE again -- so BOTH checked directories are the main tree; neither is this worktree.",
+        "MEASURED: this worker's own worktree carries `org/mcp/sessions/e3c2c727-fc4c-4791-9a1d-09455d5089b8.serial` containing `0.9.0_WK_NFRA_OPLGTW~2` (the issuer's pre-provisioning, per this order's identity line) -- `ls`/`cat` confirmed present and correct. The SAME path under the main tree (`/c/Users/AndrewBerman/Desktop/ajb_workspace/org/mcp/sessions/e3c2c727-....serial`) does NOT exist -- confirmed absent by direct `ls`.",
+        "RUN this turn: `timeout 550 .venv-og/Scripts/python .../probes/og_r1.py AC2` -> safe-ec2-deploy.sh Step 1 (pre-deployment check) PASSED, then the sourced halt_gate_check printed 'HALT-GATE: IDENTITY UNRESOLVED -- BLOCKED (fail-closed)' verbatim and safe-ec2-deploy.sh exited rc=3 BEFORE Step 2 ('Running Deployment') ever ran -- no artifact was built, no S3 upload, no SSM command issued, no host state changed. Confirmed by re-reading EC2_MANIFEST.json's opal-gateway.deployed_commit unchanged from before this run.",
+        "READ .tools/halt-gate-check.sh:295-308: the identity-unresolved path `return 3` is reached BEFORE any HALT_OVERRIDE check (that env var is read only later, at :438, on the STOP-found branch) -- there is no audited override for this failure mode; the gate's own printed text says so ('Do NOT override this').",
+        "This worker's <paths> grant (this order, <paths> block) is `infra/aws/ec2/EC2_MANIFEST.json`, `org/critical_paths/change_management/`, the one named .open_deploys sentinel, and this investigation file -- it does not include `org/mcp/sessions/` in EITHER tree, and the blocking path lies in the SHARED MAIN TREE outside this worktree entirely, so writing the missing serial file there would be an out-of-grant write to a different checkout altogether, not merely an out-of-grant path in this one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's BOUNDS: 'The Gateway only through infra/aws/ec2/safe-ec2-deploy.sh. No hand copy, no direct SSM install...'; and 'A path you need that is not named is a BLOCKING surprise row on that criterion -- never an override.'",
+    "world_is": "The one sanctioned deploy route fails closed at its own halt-gate identity check before any deploy work begins, because the route's own worktree-redirect fix points the identity resolver at the shared main tree rather than at the worker's own (issuer-provisioned) worktree copy of its session-serial file -- and the fix needed to close that gap is a write outside this worker's <paths>, in a different checkout entirely. No override exists for this failure branch and none was attempted.",
+    "notes": "ARMED, not disarmed here: nothing was deployed (Step 1 passed, Step 2 never ran), so no AWS/host state changed and the deploy is not half-landed in the CLAUDE.md NEVER-2 sense -- it never landed at all. The open deploy-completion ledger (org/critical_paths/.open_deploys/nfra-oplgtw-og-r-1-first-release.json, opened this run for OGR1-AC1) has every leg still OPEN and unproven; it does NOT qualify for deploy_ledger.py hold (an open apply-kind leg disqualifies HELD by construction) and cannot be truthfully closed (nothing to prove). It is left OPEN, correctly reading as a stranded start once its window elapses, until a seat with write access to the shared main tree's org/mcp/sessions/ (or a fix to safe-ec2-deploy.sh's HALT_GATE_REPO_ROOT redirect so it also checks the INVOKING worktree, not only MAIN_TREE) unblocks AC2. Remedy is either: (a) provision org/mcp/sessions/e3c2c727-fc4c-4791-9a1d-09455d5089b8.serial in the shared main tree, or (b) amend safe-ec2-deploy.sh/halt-gate-check.sh to also check WORKSPACE_ROOT's own org/mcp/sessions/ before or alongside MAIN_TREE's. Disarm owner is the issuing COO (a worker is terminal at its drain and cannot carry an ARMED row's disarm word, R-18) since the actual FIX -- either provisioning the serial file in the shared main tree or amending safe-ec2-deploy.sh/halt-gate-check.sh -- is outside this cell's <paths>."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S6",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-18T05:30Z",
+    "one_line": "The live 'gateway-access-state-table' DynamoDB table carries 8 leftover items from OTHER cells' own acceptance probes (og_i1.py/og_i5.py), pk-shaped 'POLICY#probe-og-i1-<timestamp>[-ttl|-race]' (sk PROFILE/AUDIT#000N) and 'RUNTIME#probe-og-i5-<timestamp>' (sk AC9) -- synthetic test fixtures, never cleaned up, sitting in the PRODUCTION table this release's OGR1-AC3/AC12 grade for 'no principal profile active'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn: dynamodb Scan(ProjectionExpression=pk,sk) on gateway-access-state-table via boto3 -> 8 of 8 items, every pk/sk pair matching either `POLICY#probe-og-i1-\\d{8}T\\d{6}...` or `RUNTIME#probe-og-i5-\\d{8}T\\d{6}` -- none carries a real tid/oid-shaped identifier.",
+        "The naming (`probe-og-i1-...`, `probe-og-i5-...`) matches the OG-i-1 and OG-i-5 cells' own probe scripts (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~1/probes/og_i1.py, og_i5.py), which write synthetic RUNTIME/POLICY records under access_state.runtime_key() to grade their own criteria against the live table -- not a real Schwab or OAuth principal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGR1-AC3/AC12 read the live access-state table as evidence that no principal profile/grant is active this release.",
+    "world_is": "The table is not empty, but every item present is a pre-existing, other-cell test fixture rather than a real principal profile; OGR1-AC3/AC12 classify and exclude these (pattern probe-og-<cell>-<timestamp>) to grade the REAL population, which is empty, rather than reporting a false FAIL on a non-zero raw count.",
+    "notes": "INERT: no principal is actually affected and this release grants nothing; the leftover fixtures are a housekeeping gap in OG-i-1/OG-i-5's own test hygiene (their probes never delete what they write), not a security exposure. Not this cell's defect to fix (its <paths> does not reach those cells' probes or a table-cleanup act); left for whichever cell's remit covers access-state table hygiene."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S7",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-18T05:35Z",
+    "one_line": "The Gateway's CURRENTLY-DEPLOYED commit (EC2_MANIFEST.json opal-gateway.deployed_commit, 7bd89b5d71b8d488d9e8c4168513193c9d6a9ec2, 2026-09-09 -- the OG-r-1 rollback target per the runbook's 7.2) has NO app/data_entitlement.py at all: `git cat-file -e 7bd89b5d71...:infra/aws/ec2/opal-gateway/app/data_entitlement.py` fails ('exists on disk, but not in' that commit). app/revocation.py and app/identity_scope.py DO exist there. So this release's own rollback-to-previous-binary path (SCHWAB_PILOT_RUNBOOK.md s.7.2, step 1: 'Confirm the target commit is NOT older than ... the restricted-profile denial (app/data_entitlement.py, app/identity_scope.py)') is UNSAFE against the ACTUAL previous artifact as things stand today: it fails that named precondition.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn: `git cat-file -e 7bd89b5d71b8d488d9e8c4168513193c9d6a9ec2:infra/aws/ec2/opal-gateway/app/data_entitlement.py` -> rc!=0, stderr 'fatal: path ... exists on disk, but not in 7bd89b5d71...'. Same commit: `app/identity_scope.py` and `app/revocation.py` both `cat-file -e` clean (rc=0, present).",
+        "READ infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md:255-260 (s.7.2 step 1, OG-o-2): 'Confirm the target commit is NOT older than the durable token revocation shim (app/revocation.py) or the restricted-profile denial (app/data_entitlement.py, app/identity_scope.py) -- rolling back past either would reopen the email-only path or accept legacy refresh tokens, which C6 forbids outright.' The currently-deployed (pre-OG-r-1) commit fails this exact named check for one of the two named files.",
+        "READ infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway.deployed_commit at this worktree's cut base -- 7bd89b5d71b8d488d9e8c4168513193c9d6a9ec2, deployed_at 2026-09-09T19:08:11Z, i.e. the live host predates essentially all of this project's own build (data_entitlement.py, identity_scope.py's OG-a-2 cutover work, etc.) that landed afterward on CLOUD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OGR1-AC10 (and the runbook it cites) treats 'the previous release artifact ... restorable by the runbook's rollback section' as a property this release can simply record.",
+    "world_is": "The previous release artifact fails the runbook's own restorability precondition (data_entitlement.py absent), so OGR1-AC10 measures FAIL truthfully -- not a probe defect, a genuine gap: were an operator ever to invoke SCHWAB_PILOT_RUNBOOK.md s.7.2 against THIS specific previous commit, the runbook's own step 1 would (correctly) refuse it, leaving s.7.1 (the ENABLED_INTEGRATIONS flag flip, which does not depend on which binary is running) as the only safe rollback route until a newer previous-release commit -- one that carries data_entitlement.py -- exists to roll back to.",
+    "notes": "ARMED because it is a real operational gap in the rollback story this release's PRD C6 promises, not merely a probe artifact; disarmed once EITHER a later deploy makes the recorded 'previous' commit one that carries data_entitlement.py, or the runbook/PRD is amended to say s.7.1 (flag-disable) is the ONLY safe rollback route at this stage of the rollout (round 1, nothing enabled, so s.7.1 alone is sufficient regardless). This cell cannot amend the runbook (outside its <paths>) or choose a different 'previous' commit to record (there is only one deployed_commit)."
+  },
+  {
+    "id": "NFRA_OPLGTW-W2-S8",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~2",
+    "surfaced_at": "2026-09-18T06:05Z",
+    "one_line": "OG-r-1's real deploy (safe-ec2-deploy.sh, from this Windows worktree, core.autocrlf=true) deployed 9 of 68 shipped files with CRLF line endings that differ byte-for-byte from their LF-stored git blobs -- deploy/opal-gateway.service, requirements.txt, identity_tool_allowlist.txt, app/refs/DATA_CATALOG.yaml, app/integrations/schwab/datasets.json, app/graphql_plumbing/DESIGN.md, app/entity_resolution/SCAFFOLD.md, app/static/schwab_download/index.html, app/org/mcp/agent_telemetry/0.7.0_AE_CloudOps.jsonl -- every one an extension NOT covered by a `text: set / eol: lf` .gitattributes rule (only .py carries that rule; OGR1-AC4's own digest comparison caught it, 9 MISMATCH of 68).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~O",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN this turn (OGR1-AC4): SSM sha256sum on i-07dccb1615503ac99 (/opt/opal-gateway) vs git blob sha256 at the deployed commit -- 68 of 68 files compared, 9 MISMATCH, all 9 host hashes differing from tree hashes; 0 host-only, 0 tree-only (every file exists on both sides, only the bytes differ).",
+        "MEASURED: `git config --get core.autocrlf` on this worktree/box -> `true`. `git check-attr text eol -- infra/aws/ec2/opal-gateway/requirements.txt` -> `text: unspecified, eol: unspecified` (no override), vs the SAME check on `app/server.py` -> `text: set, eol: lf` (explicit override). Read `infra/aws/ec2/opal-gateway/requirements.txt` as raw bytes on this worktree: 17 CRLF sequences, 0 bare-LF -- CRLF on disk, LF in the git blob (git always stores LF-normalized content for a non-binary path under autocrlf=true).",
+        "deploy-to-ec2.sh builds its artifact with `tar -czf $ART -C $SRC ... app deploy requirements.txt identity_tool_allowlist.txt` (line ~69) -- `$SRC` is the literal WORKTREE CHECKOUT directory, so tar packages whatever autocrlf rendered on disk, not the git-stored (LF) bytes; only paths an explicit `.gitattributes` rule protects (only `*.py` -> `eol=lf`, measured) survive a Windows checkout unchanged.",
+        "IMPACT CHECKED, NOT ASSUMED: `app/identity_scope.py:77` opens `identity_tool_allowlist.txt` in TEXT MODE (`open(path, \"r\", encoding=\"utf-8\")`), which universal-newlines-translates CRLF to LF per line before `.split()` ever runs -- so this file's CRLF does NOT corrupt its own parsing. `deploy/opal-gateway.service` demonstrably worked: the SAME deploy run's own on-box smoke (`systemctl restart opal-gateway` + `curl /health` + `/mcp` 401) succeeded this run (OGR1-AC2 PASS), so systemd tolerated the CRLF unit file this time. OGP1-AC1's OWN baseline (2026-09-15, the PRE-OG-r-1 deployed commit) recorded these SAME paths' host hashes as MATCH == tree (BASELINE.json OGP1-AC1 measurement, `deploy/opal-gateway.service` and `requirements.txt` both listed, denominator 50, digest_mismatch 0) -- so the corruption is NEW to THIS deploy, not a pre-existing, already-tolerated condition; the prior deploying box did not render CRLF for these paths."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C6: 'Pin Terraform, dependency lock and EC2 release artifacts using the existing Gateway release manifest/process. Measure declared/deployed parity on-instance via the normal SSM inspection.' OGR1-AC4: 'every deployed file's digest equals the build input's, file by file.'",
+    "world_is": "9 of 68 deployed files are byte-different from their git blobs (CRLF vs LF) because deploy-to-ec2.sh tars the literal checkout directory and only .py carries an eol=lf .gitattributes override; on THIS deploying box (core.autocrlf=true) every OTHER text extension in the artifact rendered CRLF on checkout. OGR1-AC4 measures this truthfully as FAIL (9 mismatch). No functional break was found for the two paths checked closely (the allowlist parses in text mode; the systemd unit started), but exact byte parity -- the thing AC4 and PRD C6 both name -- is violated, and a future file needing byte-exact content (a checksum, a signature, a binary misclassified as text) would not get this same free pass.",
+    "notes": "ARMED: a real defect in the release PROCESS (deploy-to-ec2.sh has no line-ending normalization and no full eol=lf .gitattributes coverage), reproducible on any Windows deploying box with autocrlf=true, not specific to this worker or this release's content. This cell cannot edit deploy-to-ec2.sh or .gitattributes (outside its <paths>) and did not attempt to (spec frozen; AC4 is reported FAIL with this true reason, not repaired). Remedy candidates for the owning cell: add `.gitattributes` `eol=lf` for the whole `infra/aws/ec2/opal-gateway/` tree (or at minimum `deploy/*.service`, `requirements.txt`, `identity_tool_allowlist.txt`), or have deploy-to-ec2.sh build its artifact via `git archive` (which always emits the repository's normalized bytes) instead of `tar -C $SRC` over the live checkout."
   }
 ]
 ```
