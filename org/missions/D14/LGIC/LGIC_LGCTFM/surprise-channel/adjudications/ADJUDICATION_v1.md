@@ -752,3 +752,71 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Round 6 L9 -- E7R6-AC7 graded, S43 and S44 disposed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S20",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T11:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 6: E7R6-AC7 PASS -- the ephemeral instrument's verdict is graded WITHOUT trusting its provenance, because every fixture parameter it encodes is a committed round-5 live measurement and the comfortable answer was reachable on-population. S43 GRADUATED: the preservation remedy worked, and the standing cut-time fix is the carrier.",
+ "spec_asserts": "A judgment criterion is graded at L9 against evidence the grading seat can read.",
+ "world_is": "PASS. The issuer handed me the crux verbatim -- the instrument that produced TWO_REPAIRS ran in a SESSION SCRATCHPAD no other seat can open -- so I graded the claims that are falsifiable WITHOUT trusting that provenance, and every one of them held. (1) THE PRESERVED BYTES ARE THE CLAIMED BYTES: 8247 bytes, sha256 d418b2706442df10e8146bc6c8c10ae8678c56645d3da9be04acef72337b5e5f -- matches the row's claim exactly, committed b6a963e49c, worktree clean. That proves UNALTERED SINCE HASHING, not WHAT RAN, so it is where the grade starts and not where it ends. (2) THE TWO COPIED CODE SITES ARE VERBATIM AT THE CITED VINTAGE: I printed lib/opal_lgctfm.py at 21ca7eb0802b14ff7194553a526078bc4ce36b7d and compared. Site A (:923-933, the kuzu ingestion loop) and site B (:956-964, resolve()) are byte-identical to the script's ingest() and make_resolve() except for one cosmetic variable-init collapse and one dropped inline comment; no executable token differs. (3) SITE C IS NOT A COPY AND THE RECORD DOES NOT SAY SO -- this is the one place the experiment substitutes a PREMISE for code. cf_node_for() HARDCODES arn_or_path to the bare name, asserting comp-find's S3Key band prints no detail line; the real parser at :372-380 fills arn_or_path from the NEXT line and falls back to the name only when that line is absent. The script assumes the antecedent. THE VERDICT TURNS ENTIRELY ON THAT PREMISE: if S3Key rows carried a detail line, by_arn would hit and the answer would be ONE_REPAIR. (4) SO I FALSIFIED THE PREMISE INDEPENDENTLY, AND IT IS A ROUND-5 LIVE MEASUREMENT, NOT AN ASSUMPTION: BUCKETLESS_S3KEY_R5.json (committed, cell LT-m-2, _about says MEASUREMENT) records 154 S3Key rows, 24 bucketless, split 23 tier / 1 firm, and attributes them by RUNNING THE TOOLS -- 'RAN .tools/comp-find --corpus aws <bare-key> for each row's key: every one returns exactly THREE S3Key candidate nodes' and 'RAN .tools/comp-kuzu MATCH for the row's key: exactly ONE candidate node'. All THREE fixture parameters the experiment encodes -- three tier candidates, one firm candidate, blank S3Key detail line -- are each a committed round-5 live measurement. The production docstring at :358-360 names S3Key by name as a blank-detail type too, but that is the author's claim and I did not rest on it. (5) I RAN THE PRESERVED SCRIPT MYSELF, from this seat, and it reproduces 23/1 -> 23/0 and TWO_REPAIRS. (6) AND I TESTED REFUSABILITY BY MUTATION rather than accepting the checker's 23 self-test arms, which grade the CHECKER's functions and never the experiment's own branches: mutating only the AFTER arm so the repair DOES reach the tier class makes the same code print 'tier_prefixed 23 -> 0' and VERDICT: ONE_REPAIR. The comfortable answer was reachable on-population and the cell did not take it. THE PATH IS EXERCISED, NOT SKIPPED: resolve() is genuinely called 23 times in both arms and runs the full by_arn -> by_tn -> synthetic chain; the AFTER arm really does change an input (portal_arn_tier from empty to a bucketed arn) and the count really does not move -- which is the discriminating observation, not an absence of one. ONE DEFECT FOUND IN THE INSTRUMENT, DISCLOSED HERE BECAUSE IT DOES NOT MOVE THE VERDICT AND A SEPARATE HELD ROW WOULD DEADLOCK THIS L10 FOR NOTHING (LD-0521). The experiment's TWO_REPAIRS test is `after_tier == before_tier and after_firm == 0`, and 0 == 0 SATISFIES IT VACUOUSLY -- so the predicate cannot distinguish 'the repair never reached the tier class' from 'the tier class was never broken', and in the degenerate world it SHADOWS the ONE_REPAIR branch beneath it. I found this by running the WRONG mutation first: I inverted site C in BOTH arms, which drove before_tier to 0 as well, and the script still printed TWO_REPAIRS. That mutation was off-population -- round 5 MEASURED 23 broken -- so I re-cut it to move only the AFTER arm, and that is the run that proved ONE_REPAIR reachable. I am reporting the wrong mutation as well as the right one because a reader who repeats only the published one learns the wrong lesson about what the falsifier tested. WHY IT DOES NOT MOVE THE GRADE: before_tier is 23, it is PRINTED beside the verdict, and it is independently corroborated by a committed round-5 artifact, so the degenerate world cannot occur on this population. Neither the checker's AC3 arm (it reads the record's verdict STRING) nor its 10 positive-satisfiability arms (they drive the CHECKER's functions) can see this -- it lives in the experiment's own branch order.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S43"
+ ],
+ "disposition": "GRADUATED",
+ "grades": [
+  {
+   "criterion": "E7R6-AC7",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-7-r6.one-repair-or-two.proof_of_spec.json@2d7c6c509b",
+   "verdict": "PASS",
+   "reason": "PASS. The issuer handed me the crux verbatim -- the instrument that produced TWO_REPAIRS ran in a SESSION SCRATCHPAD no other seat can open -- so I graded the claims that are falsifiable WITHOUT trusting that provenance, and every one of them held. (1) THE PRESERVED BYTES ARE THE CLAIMED BYTES: 8247 bytes, sha256 d418b2706442df10e8146bc6c8c10ae8678c56645d3da9be04acef72337b5e5f -- matches the row's claim exactly, committed b6a963e49c, worktree clean. That proves UNALTERED SINCE HASHING, not WHAT RAN, so it is where the grade starts and not where it ends. (2) THE TWO COPIED CODE SITES ARE VERBATIM AT THE CITED VINTAGE: I printed lib/opal_lgctfm.py at 21ca7eb0802b14ff7194553a526078bc4ce36b7d and compared. Site A (:923-933, the kuzu ingestion loop) and site B (:956-964, resolve()) are byte-identical to the script's ingest() and make_resolve() except for one cosmetic variable-init collapse and one dropped inline comment; no executable token differs. (3) SITE C IS NOT A COPY AND THE RECORD DOES NOT SAY SO -- this is the one place the experiment substitutes a PREMISE for code. cf_node_for() HARDCODES arn_or_path to the bare name, asserting comp-find's S3Key band prints no detail line; the real parser at :372-380 fills arn_or_path from the NEXT line and falls back to the name only when that line is absent. The script assumes the antecedent. THE VERDICT TURNS ENTIRELY ON THAT PREMISE: if S3Key rows carried a detail line, by_arn would hit and the answer would be ONE_REPAIR. (4) SO I FALSIFIED THE PREMISE INDEPENDENTLY, AND IT IS A ROUND-5 LIVE MEASUREMENT, NOT AN ASSUMPTION: BUCKETLESS_S3KEY_R5.json (committed, cell LT-m-2, _about says MEASUREMENT) records 154 S3Key rows, 24 bucketless, split 23 tier / 1 firm, and attributes them by RUNNING THE TOOLS -- 'RAN .tools/comp-find --corpus aws <bare-key> for each row's key: every one returns exactly THREE S3Key candidate nodes' and 'RAN .tools/comp-kuzu MATCH for the row's key: exactly ONE candidate node'. All THREE fixture parameters the experiment encodes -- three tier candidates, one firm candidate, blank S3Key detail line -- are each a committed round-5 live measurement. The production docstring at :358-360 names S3Key by name as a blank-detail type too, but that is the author's claim and I did not rest on it. (5) I RAN THE PRESERVED SCRIPT MYSELF, from this seat, and it reproduces 23/1 -> 23/0 and TWO_REPAIRS. (6) AND I TESTED REFUSABILITY BY MUTATION rather than accepting the checker's 23 self-test arms, which grade the CHECKER's functions and never the experiment's own branches: mutating only the AFTER arm so the repair DOES reach the tier class makes the same code print 'tier_prefixed 23 -> 0' and VERDICT: ONE_REPAIR. The comfortable answer was reachable on-population and the cell did not take it. THE PATH IS EXERCISED, NOT SKIPPED: resolve() is genuinely called 23 times in both arms and runs the full by_arn -> by_tn -> synthetic chain; the AFTER arm really does change an input (portal_arn_tier from empty to a bucketed arn) and the count really does not move -- which is the discriminating observation, not an absence of one."
+  }
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S43",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-7-r6.one-repair-or-two.proof_of_spec.json@2d7c6c509b -- acceptance[6] E7R6-AC7, judgment=true, status UNVERIFIABLE-BY-INSTRUMENT naming 3.0.0_SA_CVO as the substitute oracle",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/preserved_evidence/r6/experiment.py.preserved.txt @b6a963e49c -- 8247 bytes, sha256 d418b270...b5e5f verified by this seat, and RUN by this seat",
+   "lib/opal_lgctfm.py@21ca7eb0802b14ff7194553a526078bc4ce36b7d :923-933, :956-964, :372-380 -- the three cited sites printed at the cited vintage and compared token by token",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/BUCKETLESS_S3KEY_R5.json -- the round-5 MEASUREMENT (154 rows, 24 bucketless, 23 tier / 1 firm) whose live tool runs independently establish all three fixture parameters",
+   "this seat's on-population mutation: AFTER arm only -> 'tier_prefixed 23 -> 0', ONE_REPAIR"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S21",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T11:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S44 GRADUATED: the issuer filed its own three-round silence on W2-S2 rather than letting it read as progress, and declined to cut round 7 into an open L10 for the reason LD-0521 names. Both halves are correct and the row is a transfer, not a closure -- W2-S2 stays ARMED and round 7 is its carrier.",
+ "spec_asserts": "An armed blocking row is driven by the rounds that follow it.",
+ "world_is": "VERIFIED AT MY OWN INSTRUMENTS RATHER THAN ACCEPTED. The open-order census the row cites reads 0 of 26 from the gate's own resolver at HEAD a94858ff96, so the LD-0521 reasoning rests on a true premise: a round-7 issuance cut before this slug would have flipped the count off zero and deadlocked the very L10 I am writing. \u2b50 THE ROW'S REAL MERIT IS THE HALF NOBODY IS OBLIGED TO WRITE: three rounds passed without touching W2-S2 and NOTHING IN THOSE ROUNDS' RECORDS SAID SO -- silence and work read identically from outside, and the issuer filed against itself to break that tie. I GRADUATE IT RATHER THAN DISMISS IT because the hazard is live: W2-S2 remains ARMED with the COGNITO_USER_POOL node_type outside LGCTFM_CONTRACT.schema.json's 33-value enum, so no contract the engine emits can validate against its own schema. \u26a0 AND THE CLOCK DOES NOT MOVE HERE: the disarm owner stays 2.0.0_SA_COO~G and the remedy is round 7 covering W2-S2, not this disposition. What graduating changes is that the row stops being a held item with no carrier and becomes a named obligation on the recut.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S44"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S44",
+   "srg._open_tos_for_project at HEAD a94858ff96: 0 open of 26, census note empty",
+   "srg._latest_dispositions at HEAD a94858ff96: LGIC_LGCTFM-W2-S2 still UNDER_INVESTIGATION and ARMED",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

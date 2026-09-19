@@ -898,3 +898,55 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Round 6 L9 carriers -- S43, S44
+
+```json
+{
+ "id": "LGIC_LGCTFM-S43",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "AN ORDER MAY PERMIT AN INSTRUMENT TO RUN OUTSIDE THE REPO AND NO ORDER IN THIS PROJECT HAS EVER SAID WHERE THAT INSTRUMENT LANDS. LT-e-7's whole verdict rested on a script in a per-session scratchpad, cited by absolute path, unreadable by the seat that had to grade it -- and AC7 is exactly that seat's criterion. The permission was CORRECT (the point was that the engine could not be edited, and AC4 confirms 0 engine commits by the cell); what was missing was the step after.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S43",
+  "the preserved copy @b6a963e49c, 8247 bytes, sha256 verified and the script RUN by 3.0.0_SA_CVO -- the remedy worked, which is why AC7 could be graded PASS",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-7-r6.one-repair-or-two.proof_of_spec.json@2d7c6c509b acceptance[6]: UNVERIFIABLE-BY-INSTRUMENT"
+ ],
+ "remedy": "THE ISSUER'S OWN STANDING FIX IS RIGHT AND IS THE REMEDY: any future order permitting an out-of-repo instrument must NAME WHERE THAT INSTRUMENT LANDS IN THE REPO, at the cut, as a deliverable. The drain-time copy discharged THIS round and must not become the pattern -- it worked because the issuer remembered, and a control that depends on remembering is not one. \u2b50 WHAT THE GRADING SEAT ACTUALLY NEEDED, NAMED SO THE NEXT CUT CAN ASK FOR IT DIRECTLY: not the bytes. The bytes only prove UNALTERED-SINCE-HASHING, same party, same file. What carried the grade was that every FIXTURE PARAMETER the script encodes -- three tier candidates, one firm candidate, a blank S3Key detail line -- is independently falsifiable against a COMMITTED artifact (round 5's BUCKETLESS_S3KEY_R5.json, which attributed them by running the live tools). SO THE CUT-TIME ASK IS TWO LINES, NOT ONE: name where the instrument lands, AND require its fixtures to cite the committed measurement each one encodes. An instrument whose fixtures cite nothing is ungradeable even when it is preserved perfectly. \u26a0 AND ONE DEFECT IN THIS INSTRUMENT FOR WHOEVER RE-RUNS IT: its TWO_REPAIRS test `after_tier == before_tier and after_firm == 0` passes VACUOUSLY at 0 == 0 and shadows the ONE_REPAIR branch in the degenerate world. It does not move this round's verdict (before_tier is 23, printed, and corroborated by round 5), and neither the checker's AC3 arm nor its 10 satisfiability arms can see it, because it lives in the experiment's branch order rather than in the checker.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S44",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "W2-S2 SAT ARMED THROUGH THREE ROUNDS AND NO ROUND'S RECORD SAID SO. The engine emits a COGNITO_USER_POOL row whose node_type is outside LGCTFM_CONTRACT.schema.json's 33-value enum, so no contract it produces validates against its own schema. Rounds 4, 5 and 6 went to tension-class typing and the bucketless-S3Key sites; none of their cells could have touched the enum. The issuer filed against its own silence rather than letting three quiet rounds read as progress.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S44",
+  "LGIC_LGCTFM-W2-S2 at HEAD a94858ff96: ARMED, UNDER_INVESTIGATION, disarm_owner 2.0.0_SA_COO~G",
+  "srg._open_tos_for_project at HEAD a94858ff96: 0 open of 26 -- the LD-0521 premise, verified by 3.0.0_SA_CVO rather than accepted"
+ ],
+ "remedy": "ROUND 7 IS THE CARRIER AND W2-S2 IS ITS FIRST CANDIDATE, with the CTO's own W2-S1 (naming-gate ENFORCE refusing the engine's run artifacts) beside it -- the issuer's scope recommendation to 1.0.0_SA_CTO is already the act it took instead of cutting into an open L10. \u26d4 THIS CARRIER DOES NOT DISARM W2-S2 AND DOES NOT MOVE ITS CLOCK: the disarm owner stays 2.0.0_SA_COO~G and the hazard is discharged when a cell lands the enum, not when this row is written. \u2b50 THE TRANSFERABLE PART IS THE TELL, NOT THE ENUM: a row that rounds keep not reaching is INDISTINGUISHABLE FROM A ROW BEING WORKED unless somebody writes the sentence -- so the cheap control is that each round's analysis name the armed rows its cells CANNOT reach, by subtraction from the armed set rather than by recalling what it worked on.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
