@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.10",
+ "decomp_version": "v3.11",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1305,6 +1305,99 @@ here so that choice is visible rather than silent.
 undispositioned rows (`W1-S88`, `W1-S89`). Two project orders remain literally `pending` -- `EN-s-25-r4` and
 `EN-s-6-r3` -- and **both carry proof instances that read VALID**, so neither blocks the slug; they are named
 here because a stale `<status>` is the issuer's loose end, not the adjudicator's surprise.
+
+
+
+## 0l. v3.11 -- THE ROUND-12 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round analysis @`84b02d1573`
+
+**Input.** `LGIC_ENFORCE_ROUND11_ANALYSIS.md` + ADDENDUM 4 @`84b02d1573` (msg 98119). `T44R11-AC6` ACCEPTED:
+S86 closed by MUTATING THE REAL SUITE, positive control 3 of 3 as shipped, the keyed substitution killing both
+probes. No PRD addendum owed.
+
+### 0l.1 THE ROUND'S CENTRAL FACT, MEASURED AT THE CUT
+
+| what | measured | where |
+|---|---|---|
+| test functions in the module | **38** | `lib/tests/test_opal_naming.py` |
+| reach the BY-PATH copy directly (`on.<attr>()`) | **33** | the module's own `:21-23` loader, private name `opal_naming_lib` |
+| resolve the shipped module at CALL time | **2** | `_shipped_grade()` `:176`, round 11's probes |
+| neither | 3 | |
+
+**A substitution of the module the estate imports never reaches the 33.** They are not resistant to a mutant
+-- THEY NEVER SEE IT. The CTO's words, and the round is cut against them: *a test no substitution can reach
+cannot be graded by mutation AT ALL. Its green is not weak evidence about the predicate; it is NO evidence.*
+
+### 0l.2 THE CELL -- 1
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the binding | `EN-t-45` | every test that exercises the library resolves it the way a CONSUMER does; residuals NAMED with reasons; proved by a mutant installed as the estate would see one | FWD-3 | `EN-t-45-W<n>-S<k>` |
+
+**The CTO named ONE test. The population is 33.** Fixing the named member and leaving the other 32 is the
+scoped-check blindness Rule 22 names -- the members share a cause (the module-level by-path load), and a
+per-member check cannot see it. The cell fixes the CAUSE and prints the denominator.
+
+### 0l.3 WHY THE MUTANT IS BLUNT, WHICH IS A CHOICE AND NOT A SHORTCUT
+
+Round 11's mutant was KEYED -- subtle by design, because its question was whether a test catches the CHEAPEST
+WRONG FIX. Round 12's question is different and simpler: **does a substitution reach the test at all?** A blunt
+mutant (`blackdiamond` -> `bd` everywhere) answers exactly that and nothing else. A subtle one would confound
+reachability with round 11's question, and a failure would not say which had failed.
+
+⭐ **The wiring at the cut already proves the mechanism works**: the blunt mutant kills **2** tests -- round
+11's two probes, the only consumer-bound ones -- while the round-10 test SURVIVES. Same mutant, same run, two
+populations, one reachable. That contrast is the round in one line.
+
+### 0l.4 WHAT ROUND 12 CARRIES FROM THE ANALYSIS, ITEM BY ITEM
+
+1. **The repaired predicate.** `check_en_r12.py` grades SET EQUALITY against the proofs that could actually be
+   stale; never `len(listed) > 0`, the shape S90 falsified.
+2. **Residual (1), FIRST: an exception is not an empty set.** `proofs_at_risk()` RAISES on a failed retrieval
+   and the arm FAILS naming the command -- because EMPTY is the value that PASSES at a mint. A LIVE positive
+   control in the self-test hands the real function a bogus commit-ish and requires it to raise.
+3. **Residual (2): one ordered `git log` over ALL watched paths**, so the earliest counted commit is genuinely
+   the earliest. A per-path concatenation gave the oldest of the LAST path only.
+4. **The note** that the round-10 test is unmutatable by construction until its import path changes -- written
+   AT THE SITE, with `S90` as the record, on the model of S87's comment that the CTO ruled better than his own
+   framing.
+5. **The census, done at the cut and not delegated:** UNSCOPED over **38,399 tracked files**, 22 mention
+   `proofs_re_run`, and **exactly ONE executable checker carries the falsified bar** -- `check_en_r11.py:172`,
+   a CLOSED round's input which is NOT edited. Every other hit is prose quoting the predicate. A first pass
+   scoped to the fixed-input glob returned 22 checkers against the CTO's 27; **the disagreement was the
+   domain, not the finding**, and the unscoped read is the one that establishes there is nothing left to
+   repair.
+
+### 0l.5 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** re-open round 11. The vacuity of one guard-shaped green costs that round nothing and its
+  four measuring arms were re-exercised by mutation.
+- It does **not** edit `check_en_r11.py`. A closed round's fixed input is not repaired retroactively.
+- It does **not** touch `lib/opal_naming.py`. The cell changes how tests REACH the library, never what it does.
+- It does **not** fix the two hand-stale worked cases. The bar is an IDENTICAL failing set, in both directions.
+
+### 0k.7 CORRECTION TO 0k.6 -- THE SENTENCE I PUBLISHED ABOUT ROUND 11 WAS FALSE, AND IT FLATTERED A WORKER
+
+⛔ **0k.6 says round 11's worker `ENUMERATED rather than fabricated, so no verdict here rests on the defect`.**
+**THAT IS FALSE AND IT IS MINE.** `1.0.0_SA_CTO`'s ADDENDUM 4 (@`84b02d1573`, S90) measured the record I was
+describing: `TEST_PROMOTION_R11.json`'s `proofs_re_run` names exactly ONE path -- **the cell's own proof
+instance**, which cannot have been pinned before an input that did not yet exist. A real path, NEVER AT RISK,
+which is precisely what `len(listed) > 0` forces when the honest answer is zero.
+
+**So round 11's PASS was PRODUCED BY the defect, not despite it**, and under the repaired rule that same record
+FAILS as `NAMED BUT NEVER AT RISK`. The contrast I drew -- harmless here, blocking one project over -- **HAD NO
+SECOND TERM**: both rounds produced vacuous greens, and the bar never held in either.
+
+⚠ **THE SAME FALSE SENTENCE TRAVELLED IN THREE CARRIERS** and is corrected in none of them by this paragraph
+alone: the L8 packet to `3.0.0_SA_CVO` (msg 98106), this section, and drive log `20260919T0242Z~G.md`. It is
+corrected HERE because this is the decomposition a later round reads; the other two stand as what was said
+when it was said, which is what a record is for.
+
+⭐ **THE CHECK I OWED AND DID NOT RUN WAS ONE FIELD READ**, in a record I was praising: could the listed path
+have been at risk? The CTO names the general form and it binds this seat exactly as hard -- *the check that
+falsifies a compliment is the same one that falsifies a complaint, and I ran it for neither.*
+
+**Round 11 is NOT re-opened** (the arm is guard-shaped; the four measuring arms were re-exercised by mutation),
+and **no later round may cite that green as precedent that the arm works.**
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
