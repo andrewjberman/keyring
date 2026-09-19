@@ -1631,3 +1631,30 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W2-S45",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+ "surfaced_at": "2026-09-19T12:23Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "G1R7-AC1 CANNOT BE SATISFIED BY A CORRECT ARTIFACT: the round-7 order's DEC-9/DEC-12 refused set measures EMPTY at the current gate, and AC1's own checker (core_gate_scope) hard-refuses an empty refused list, so the criterion the order cut for W2-S1's re-measurement is now unsatisfiable by construction, exactly as the order's own residual-disclosure warned it might be.",
+ "spec_asserts": "LGIC_LGCTFM.TO-LT-g-1-r7.gate-scope.md WORKER FACE: 'note the arm DOES require a non-empty refused set, so if you measure zero refusals, file it BLOCKING and report: that is a criterion that a correct artifact could not satisfy, and it is mine to fix, not yours to work around.' check_lt_r7.py core_gate_scope:125-126: 'if not refused: bad.append(\"no refused paths recorded: the row claims a refusal, so show it\")'.",
+ "world_is": "1.0.0_SA_CTO's R-35 fix (commit 5fd4251792, 2026-09-17T18:40:15-04:00, subject 'fix(naming-gate R-35, 1.0.0_SA_CTO): an engine's own MEASURED RUN OUTPUT is a RECORD') added RUN_ARTIFACT_RE (naming-gate.py:96) and routed it through _is_record_tree (naming-gate.py:719-725), exempting any path shaped workflows/<engine>/<subject>/<8-digit>T<6-digit>Z-<7..40 hex>/... from grading entirely. This fix landed BEFORE round 7's cut_pin (ed073a4d48, 2026-09-19T07:24:02-04:00; verified 5fd4251792 IS an ancestor of ed073a4d48 via git merge-base --is-ancestor). MEASURED this run: `python .tools/naming-gate.py --diff <diff of the real DEC-9 mark commit 3ea3fec204's 5 added files: MARK.json, contract.json, plan.json, PLANT.json, PLANT_UNTYPEABLE.json under workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/> --enforce` printed 'NAMING-GATE: PASS 0 graded', rc=0 -- the DENOMINATOR line shows all 5 excluded as run artifacts, zero NAMING lines of any kind. Corroborated independently: commit 3ea3fec204 (0.9.0_WK_LGIC_LGCTFM~2, 2026-09-17T21:36:56-04:00, AFTER the fix) landed these same 5 files at HEAD via safe-commit.sh (which calls this same naming-gate.py --enforce) with zero naming-gate lines; all 5 are tracked and git status is clean on them. All 6 run directories under workflows/legacy_transform/blackdiamond-49financial/ follow the same timestamp-hash shape and are committed clean. A control probe confirms the gate is SCOPED, not silenced wholesale: a synthetic hand-authored file placed one directory level OUTSIDE the run-id shape (workflows/legacy_transform/blackdiamond-49financial/scratch-probe.json, not committed), carrying the same legacy literal ('opal-data-bd'), was REFUSED: 'NAMING REFUSE workflows/legacy_transform/blackdiamond-49financial/scratch-probe.json:2 opal-data-bd -> opal-data-49financial ... NAMING-GATE: REFUSE 1 graded', rc=1.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "naming-gate.py:96 RUN_ARTIFACT_RE; :719-725 _is_record_tree/_is_run_artifact; :905-906 grade_file's early `if _is_record_tree(path): return []` -- read at gate_pin 5fd4251792 (current HEAD of .tools/naming-gate.py)",
+   "git merge-base --is-ancestor 5fd4251792 ed073a4d48 => true (the fix predates this round's cut_pin)",
+   "live invocation: python .tools/naming-gate.py --diff <5-file diff from commit 3ea3fec204> --enforce -> 'NAMING-GATE: PASS 0 graded' rc=0, DENOMINATOR line: '5 are run artifacts'",
+   "git log --diff-filter=A on the 5 paths -> commit 3ea3fec204, dated after 5fd4251792, landed clean via safe-commit.sh",
+   "GATE_SCOPE_R7.json (this cell's record) + check_lt_r7.py g1-scope run against it -> VERDICT: FAIL-G1-SCOPE, with the ONLY failure reasons being 'no refused paths recorded' and 'refusal_basis must be one of (...)' -- both are direct consequences of the empty refused set, not a defect in the record's other fields (AC2/AC3 both PASS against the same record)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
