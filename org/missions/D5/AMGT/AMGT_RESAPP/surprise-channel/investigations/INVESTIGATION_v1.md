@@ -8884,6 +8884,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W44-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~44",
+    "surfaced_at": "2026-09-18T21:50Z",
+    "one_line": "schtasks' own exported task XML declares encoding=\"UTF-16\" in its prolog but (measured 2026-09-18 on this build, both via bash redirection and via Python subprocess.run capture) actually emits bytes with NO byte-order mark and no null-interleaving -- an ASCII-compatible single-byte stream, not real UTF-16 -- so AC5's literal python -c read (encoding='utf-16') raises UnicodeError: 'UTF-16 stream does not start with BOM' on both the before and after captures.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c \"print(open('.scratch/batch/task_before.xml','rb').read()[:4])\" -> b'<?xm' (no BOM) on both task_before.xml and task_after.xml, captured via bash '>' redirection of `schtasks /Query /TN OpalResearch-FilingsAnalyzer /XML`",
+        "python subprocess.run(['schtasks','/Query','/TN','OpalResearch-FilingsAnalyzer','/XML'], capture_output=True).stdout[:20] -> b'<?xml version=\\\"1.0\\\" ' -- identical no-BOM shape independent of the bash pipe, so this is schtasks' own output, not a shell/redirection artifact",
+        "the file's own first line reads literally <?xml version=\\\"1.0\\\" encoding=\\\"UTF-16\\\"?> while every subsequent byte is single-byte ASCII (e.g. run of \\\\r\\\\r\\\\n rather than UTF-16LE's null-interleaved \\\\r\\\\x00\\\\n\\\\x00)",
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-42.batch-correct-before-run.md AC5's own <expect> anticipates exactly this: 'If schtasks emits UTF-16 with a BOM the read above handles it; if it emits another encoding, print the raw bytes' first 4 and adapt the read, recording what was measured' -- this row is that record"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5's literal invocation reads schtasks' /XML export with encoding='utf-16', implicitly trusting the file's own encoding declaration.",
+    "world_is": "The declaration and the bytes disagree on this build: schtasks writes an ASCII-compatible stream under a UTF-16 declaration. register_task_xml() (lib/research/filings/batch.py) measures the actual bytes (a BOM check) rather than trusting the prolog, and this worker adapted the AC5 verification read the same way (encoding='ascii', errors='replace') rather than the literal invocation's encoding='utf-16' -- the criterion's own text authorizes exactly this adaptation. The live task itself was re-registered for real via the printed schtasks /Create /XML ... /F command and read back DISABLED both before and after, satisfying AC5 on the adapted read.",
+    "notes": "Not fixed at the source (schtasks.exe is not this estate's code) and not this cell's to fix -- named so a future reader of ANY schtasks /XML output on this device does not assume the declared encoding is the real one. No remedy owner named; informational."
   }
 ]
 ```
