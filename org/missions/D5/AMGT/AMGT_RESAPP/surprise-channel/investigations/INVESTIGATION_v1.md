@@ -9344,6 +9344,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The four listed ANNUAL-REPORT risk-heading phrases are the vocabulary a real annual report's risk section carries.",
     "world_is": "On the one ANNUAL-REPORT document this order actually validates against, none of the four phrases matches the report's own primary risk section title; one of them ('Risk management') happens to also be the real heading of a DIFFERENT, later section discussing the same general topic (enterprise risk management under Governance), and the cutter resolves to that section instead. This is not a wrong-object bug in the D9 sense (no story, no cross-reference, no table-of-contents entry was cut) -- it is a genuine heading that is thematically adjacent but not the report's own named risk-factors section.",
     "notes": "Remedy, if wanted: add 'Material Risks' (or a broader synonym set) to the declared ANNUAL-REPORT risk phrase list. Not done here -- the order names the four phrases explicitly and this worker does not widen a declared pattern list on its own judgment (the REFUSAL CLAUSE); AC4 is satisfied as measured either way."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W43-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~43",
+    "surfaced_at": "2026-09-19T05:25Z",
+    "one_line": "AC7's expect (served_without_span moves to 0 for BA_US_Equity after AC6) cannot be met this round: issuer bind D4 narrows AC6's LIVE write to the three validation names only, and BA_US_Equity is one of the twelve covered (non-validation) keys that stay DRY-RUN this round -- so AC6 never rewrites BA_US_Equity's pool object at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC6's own invocation, run this session: `python -m lib.research.filings.drafting_build --rebuild-pool --population crosswalk/v1/2026-09-15.json --only-keys CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity --pre-act-dir .scratch/drafting_v1_preact` -- rc 0, 'REBUILT 0 of 3; 3 ABSENT (no analysis object)'; BA_US_Equity is not named in --only-keys and is never touched.",
+        "Two separate lambda:invoke calls on opal-amgt-scoped-api for BA_US_Equity's thesis route, one immediately after AC6 and one repeated to confirm stability, both this session: statusCode 200 drafting_status SERVED served 38 served_without_span 21 -- IDENTICAL before and after, because nothing wrote to BA_US_Equity's pool object.",
+        "The order's own ISSUER BINDS (D4, CTO msg 23833): 'the twelve covered keys are DRY-RUN only (AC5 prints their split and pre-act shas; nothing is written)' -- BA_US_Equity is one of these twelve (AC5's dry-run table, this session, lists BA_US_Equity: served_on_span=17 held_no_span=21 refused=2).",
+        "AC7's own <expect> text: 'served N greater than 0 and served_without_span 0 -- the served prose moved exactly as the producer's rule says' and 'Run BEFORE AC6 as well and record that served_without_span was greater than 0 then (the discriminating before/after pair)' -- this presumes AC6 rewrites BA_US_Equity, which D4's narrowing (agreed at re-signature, binding this order) precludes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC7 asserts that after AC6, BA_US_Equity's served set carries served_without_span 0 -- i.e. that AC6's rebuild reaches BA_US_Equity.",
+    "world_is": "AC6, per issuer bind D4 (which this same order carries and which the never-widen pair enforces), rewrites ONLY the three validation names; BA_US_Equity is a covered, non-validation key and is DRY-RUN only this round. AC6 therefore never touches BA_US_Equity's drafting/v1 object, and the deployed adapter continues to serve BA_US_Equity's PRE-HOLD object (served_without_span 21, unchanged before and after). AC7 is REFUSED on this measurement per the order's own REFUSAL CLAUSE -- not repaired by running a live rebuild of BA_US_Equity, which D4 explicitly bars this round -- and recorded as such in AC7's acceptance row and in the change-management entry's close checklist.",
+    "notes": "Not a defect in this worker's build: the conflict is between AC7's literal expect text (written assuming the full covered-population rebuild) and issuer bind D4 (narrowing that rebuild to the three validation names, added later at re-signature to satisfy C-VALIDATION-NAMES). Re-opening AC7 for BA_US_Equity specifically needs either a fresh never-widen pair scoped to BA_US_Equity or the covered-population rebuild D4 defers to end-to-end validation. No remedy owner named beyond that; informational, and cited verbatim in the change-management entry's close section (org/critical_paths/change_management/amgt-rk-41-verbatim-gate-hold-rebuild-20260919.md)."
   }
 ]
 ```
