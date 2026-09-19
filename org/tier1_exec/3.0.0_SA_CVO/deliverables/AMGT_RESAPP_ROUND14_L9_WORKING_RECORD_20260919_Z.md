@@ -136,6 +136,54 @@ round 14's work. The same shape as the law's own round-6/7 measurement.
 RE-MEASURE AT DRAIN-END: the denominator above is 53 over 15 instances. Sixteen orders had no
 instance when this ran, so the sweep is re-run over the full population before the slug.
 
+### 3b. THE BLIND SPOT IN SECTION 3a's OWN SCREEN -- 44% of rows carry no `expect` at all
+
+Section 3a printed its denominator honestly (53 rows carrying an `<expect>`) but did NOT say what the
+COMPLEMENT was, and the complement is where the screen is blind: the signature needs an `expect` to
+match, so a row with `expect: None` cannot be screened by it AT ALL.
+
+Re-measured at 21 of 31 instances: **113 acceptance rows -- 63 carry an `<expect>`, 50 carry NONE.**
+Forty-four percent of the population was outside section 3a's reach and the section did not say so.
+A DENOMINATOR CERTIFIES THE SWEEP, NEVER THE SET, and "53 rows" quietly described a sweep that could
+not see the other 27 at the time.
+
+SCREENING THE COMPLEMENT (status PASS, no `expect`, a FAIL token in the evidence): **4 rows.**
+
+| row | verdict |
+|---|---|
+| `rk-57` AC1, AC2, AC3 | LEGITIMATE -- these criteria are ABOUT the sweep's own FAIL classification, so the token is their subject matter, not a hidden failure |
+| `rk-61` AC2 | the one real item, below -- and NOT a forgery |
+
+STILL ZERO FORGED PASSES across both halves of the population.
+
+### 3c. rk-61 AC2: a SELF-GRADED JUDGMENT, honestly disclosed -- regrade at L9
+
+`rk-61` AC2's criterion is *"The battery passes (a final line 'N passed', 0 failed)"*. Its evidence
+prints **"2 failed, 163 passed"**. Its status is **PASS**. On the surface that is the forge signature;
+it is not, and the difference is worth being exact about.
+
+The evidence does not hide anything -- it is among the most rigorous in the round:
+- it prints the failure lines and the `2 failed, 163 passed` total verbatim;
+- it runs a GRAIN check: `git diff --name-only $(git merge-base HEAD SITEZ)..HEAD` does NOT list
+  `test_generation_and_pool_routes.py`, so the failures are disjoint from this cell's diff;
+- it REPRODUCES the two failures INDEPENDENTLY in the shared tree at `2b76b81236d`, naming the
+  intervening commit and confirming it touches only a ledger entry.
+- and the worker's own row `W61-S1` states the opposite grade: *"AC2 is graded FAIL on its own literal
+  terms (2 failed, not 0)"*.
+
+So both carriers are honest and they DISAGREE: the row says FAIL-on-literal-terms, the instance says
+PASS-on-the-merits. What actually happened is that AC2 STOPPED BEING A MECHANICAL CRITERION the moment
+its literal bar became unmeetable for reasons outside the cell (section 4h: the repair is unassigned,
+and `rk-61` holds no grant on that file). At that moment it became a JUDGMENT -- and judgment is
+graded at L9, never self-graded. The worker self-graded it, carefully and in good faith.
+
+AC2 also carries NO `expect`, so no mechanical limb could have caught the divergence either.
+
+L9 DISPOSITION (to be written at the adjudication, not here): AC2 is neither PASS nor a FAIL charged
+to `rk-61`. It is UNVERIFIABLE-BY-INSTRUMENT against its literal bar, with the bar itself defective
+for inherited reasons. The cell's own new arms are 9 of 9 green and that is what `rk-61` is
+accountable for.
+
 ## 4. rk-58 graded by hand (the sweep cannot see it)
 
 Re-run by this seat at HEAD aaeb02348b, independently of the worker's self-report:
