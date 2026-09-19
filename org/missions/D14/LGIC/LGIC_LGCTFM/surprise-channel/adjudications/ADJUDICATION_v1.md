@@ -932,3 +932,73 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Round 8 L9 -- L1R8-AC4 graded, three rows disposed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S25",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T16:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 8: L1R8-AC4 PASS. I re-ran the census's own query FROM THE SHARED TREE -- 0 of 7 STILL-LIVE are stale -- and verified all NINE named closers are real ancestors of HEAD with a negative control. S50 and S51 GRADUATED.",
+ "spec_asserts": "Judgment criteria are graded at L9 and never self-graded.",
+ "world_is": "PASS on all four questions, and I ran the census's OWN INSTRUMENT FROM A DIFFERENT POSITION to answer the one that matters most. THE DENOMINATOR MATCHES THE ROUTE RECORD AT THE STATED PIN, checked at the pin and not at HEAD: `git cat-file -p e788f77fd1:REMEDIATION_ROUTE_R7.json` reads denominator 35, population 23, 23 rows -- and THE ID SETS ARE IDENTICAL to the liveness rows, 0 in either direction. EACH EVIDENCE DESCRIBES A READ ACTUALLY PERFORMED, not an inference from the route: every line carries a concrete instrument with its result -- `git log e788f77fd1..HEAD -- <path>: 0 commits`, a byte read at a named line (render_plan_md(), lib/opal_lgctfm.py:1953-1980), a --grep over the row id. EACH closed_by REALLY CLOSES ITS ROW, and I spot-verified the whole set rather than a sample: ALL NINE named closers are real ancestors of HEAD on my own `merge-base --is-ancestor` run, their commit subjects match the repairs claimed, and a non-commit correctly fails the same test so the check discriminates. \u2b50 AND THE DIRECTION THIS ROUND EXISTS TO CATCH -- IS ANY STILL-LIVE ACTUALLY ALREADY REMEDIED -- I ANSWERED BY RE-RUNNING THE CELL'S OWN QUERY FROM THE SHARED TREE. That matters because S52 establishes that a worker's worktree forks at issuance, so the cell's 'HEAD' is NOT the shared tree's HEAD and its absence findings are blind to the post-fork window. Re-run from the shared tree, all seven STILL-LIVE files show 0 commits since the pin: check_lt_r1.py 0, lib/opal_lgctfm.py 0, lib/lgctfm_render.py 0, CLAUDE.md 0, org/XXX.md 0, LGCTFM_CONTRACT.schema.json 0. \u26d4 0 OF 7 STILL-LIVE ARE STALE. \u26a0 AND THE SHARPEST THING IN THIS GRADE IS WHERE THE STALENESS ACTUALLY LANDED: S52 finds TWO stale classifications and BOTH ARE IN NOT-THIS-SEATS, which is the one bucket AC4's wording does not name. THE CRITERION NAMED THE DIRECTION WHERE A MISS IS EXPENSIVE AND THE REAL MISS LANDED IN THE DIRECTION IT DID NOT NAME -- the census's structural blindness is uniform across all three buckets, but a judgment criterion that names one of them certifies only that one. That is a bar-writing lesson, not a cell defect, and it does not move this verdict: the cell's STILL-LIVE set is clean at HEAD on my instrument.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S50",
+  "LGIC_LGCTFM-S51"
+ ],
+ "disposition": "GRADUATED",
+ "grades": [
+  {
+   "criterion": "L1R8-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-l-1-r8.routed-row-liveness.proof_of_spec.json@992f3a9282",
+   "verdict": "PASS",
+   "reason": "PASS on all four questions, and I ran the census's OWN INSTRUMENT FROM A DIFFERENT POSITION to answer the one that matters most. THE DENOMINATOR MATCHES THE ROUTE RECORD AT THE STATED PIN, checked at the pin and not at HEAD: `git cat-file -p e788f77fd1:REMEDIATION_ROUTE_R7.json` reads denominator 35, population 23, 23 rows -- and THE ID SETS ARE IDENTICAL to the liveness rows, 0 in either direction. EACH EVIDENCE DESCRIBES A READ ACTUALLY PERFORMED, not an inference from the route: every line carries a concrete instrument with its result -- `git log e788f77fd1..HEAD -- <path>: 0 commits`, a byte read at a named line (render_plan_md(), lib/opal_lgctfm.py:1953-1980), a --grep over the row id. EACH closed_by REALLY CLOSES ITS ROW, and I spot-verified the whole set rather than a sample: ALL NINE named closers are real ancestors of HEAD on my own `merge-base --is-ancestor` run, their commit subjects match the repairs claimed, and a non-commit correctly fails the same test so the check discriminates. \u2b50 AND THE DIRECTION THIS ROUND EXISTS TO CATCH -- IS ANY STILL-LIVE ACTUALLY ALREADY REMEDIED -- I ANSWERED BY RE-RUNNING THE CELL'S OWN QUERY FROM THE SHARED TREE. That matters because S52 establishes that a worker's worktree forks at issuance, so the cell's 'HEAD' is NOT the shared tree's HEAD and its absence findings are blind to the post-fork window. Re-run from the shared tree, all seven STILL-LIVE files show 0 commits since the pin: check_lt_r1.py 0, lib/opal_lgctfm.py 0, lib/lgctfm_render.py 0, CLAUDE.md 0, org/XXX.md 0, LGCTFM_CONTRACT.schema.json 0. \u26d4 0 OF 7 STILL-LIVE ARE STALE. \u26a0 AND THE SHARPEST THING IN THIS GRADE IS WHERE THE STALENESS ACTUALLY LANDED: S52 finds TWO stale classifications and BOTH ARE IN NOT-THIS-SEATS, which is the one bucket AC4's wording does not name. THE CRITERION NAMED THE DIRECTION WHERE A MISS IS EXPENSIVE AND THE REAL MISS LANDED IN THE DIRECTION IT DID NOT NAME -- the census's structural blindness is uniform across all three buckets, but a judgment criterion that names one of them certifies only that one. That is a bar-writing lesson, not a cell defect, and it does not move this verdict: the cell's STILL-LIVE set is clean at HEAD on my instrument."
+  }
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S50",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S51",
+   "git cat-file -p e788f77fd1:REMEDIATION_ROUTE_R7.json -- denominator 35, population 23, id sets identical to the liveness rows",
+   "this seat's merge-base --is-ancestor over all 9 named closers at HEAD 44bc71628e: 9 of 9 TRUE, with a negative control that correctly fails",
+   "this seat's re-run of the cell's own git-log query FROM THE SHARED TREE: 0 of 7 STILL-LIVE files have moved since the pin"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S26",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T16:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S52, S53 AND S54 GRADUATED: a liveness census run in a worker's worktree is forked at issuance, so it is structurally blind to exactly the window in which routed rows get closed -- and its 'no commit' lines read as confident absence findings about another seat's work. I verified the blindness is real AND bounded it: it cost 2 of 23 rows, both in NOT-THIS-SEATS, and 0 of 7 STILL-LIVE.",
+ "spec_asserts": "A census re-reading rows at HEAD sees the state a grader will see.",
+ "world_is": "It sees the state ITS WORKTREE had at issuance. \u26d4 THE HAZARD IS NOT THE STALENESS, IT IS THE GRAMMAR: an evidence line reading 'git log <pin>..HEAD -- <path>: 0 commits' is a CONFIDENT ABSENCE FINDING ABOUT ANOTHER SEAT'S WORK, and the reader cannot tell from the sentence which HEAD it means. The same words are true-and-complete from the shared tree and true-but-partial from a fork. I BOUNDED IT RATHER THAN ACCEPTING OR DISPUTING IT: re-running the cell's own query from the shared tree, all seven STILL-LIVE rows still read 0 commits, so the blindness cost exactly the two NOT-THIS-SEATS rows S52 names and nothing in the direction the round was cut to catch. \u2b50 AND THE PAIRING IS WHAT MAKES THIS WORTH KEEPING: ROUND 8 WAS CUT ON S49's FINDING -- 'the cost is not the stale row, it is the work done around it' -- AND ITS OWN INSTRUMENT TURNS OUT TO CARRY A NARROWER VERSION OF THE SAME DEFECT. The cell measured 9 of 23 rows already dead and thereby saved nine cells of wasted remedy work; its residual blind spot is 2 of 23 in the cheapest bucket. That is a good trade and it is also the reason the class keeps recurring: \u26a0 EVERY INSTRUMENT THAT READS 'THE WORLD NOW' FROM A FORKED CHECKOUT HAS THIS SHAPE, and the fork is mandated by Rule 14b for good reasons that are not going away.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S52",
+  "LGIC_LGCTFM-S53",
+  "LGIC_LGCTFM-S54"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S52",
+   "this seat's re-run from the SHARED tree: 0 of 7 STILL-LIVE rows have a post-pin commit",
+   "ROUTED_ROW_LIVENESS_R8.json: 9 ALREADY-REMEDIED / 7 STILL-LIVE / 7 NOT-THIS-SEATS of 23",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carriers, minted in this commit"
+  ]
+ }
+}
+```

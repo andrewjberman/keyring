@@ -1054,3 +1054,130 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Round 8 L9 carriers -- S50, S51, S52, S53, S54
+
+```json
+{
+ "id": "LGIC_LGCTFM-S50",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A ROUTING TABLE'S OWNER COLUMN ANSWERS WHO, NEVER WHETHER THERE IS AN ACT. The round-7 analysis asserted '18 rows routed to 2.0.0_SA_COO~G are that recut's input' and 'THE 5 ROUTED TO THIS SEAT ARE MY ACTS'; the owning seat then measured its own half and found only 11 of the 18 are acts, the other 7 retirements whose act is a disposition -- and of the CTO's five, four are decisions and the fifth resolves to a measured NO-OP.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S50",
+  "REMEDIATION_ROUTE_R7.json's own rows, which carry next_act per entry",
+  "1.0.0_SA_CTO's measurement of its own five, published against its own prior claim"
+ ],
+ "remedy": "\u2b50 THE DIRECTION IS WHAT MAKES THIS WORTH A CARRIER: A WORK LIST SIZED OFF OWNERSHIP OVERSTATES THE WORK, which is the OPPOSITE of the usual census error -- and that is exactly why nobody pushes back on it. An inflated backlog reads as diligence; a deflated one reads as a gap somebody will challenge. \u26a0 AND I RECORD MY OWN INSTANCE HERE RATHER THAN LET IT PASS: MY ROUND-7 L10 SLUG CARRIED THE SAME CONFLATION, calling the routing table 'a work list with named owners (18 to 2.0.0_SA_COO~G, 5 to yourself)'. The sentence's main claim -- that the staleness limb drops on EXECUTION, not routing -- was right and was adopted; the word 'work list' over an owner column was not. Two seats made the same move on one artifact within hours, and the seat that caught it was the one that owned the larger half. THE REMEDY IS A READING RULE, NOT A SCHEMA CHANGE: before sizing work off a routing table, read next_act per row, and count a CONDITIONAL act ('verify X; if X then correct') as unresolved rather than as one act -- it is indistinguishable from an unconditional one in any owner count.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v8",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v8"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S51",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE MANIFEST-ADVISORY RAMP'S EVIDENCE ENGINE HAS RECORDED NOTHING FOR ~20 DAYS WHILE FINDINGS DEMONSTRABLY OCCURRED. manifest_check_config.yaml:50-53 makes the advisory->blocking flip conditional on that tally -- 'EARNS ITS BLOCK WITH EMPIRICAL FALSE-POSITIVE DATA, NOT FAITH' -- and the tally's window ends 2026-08-30 while W1-S25 quotes two September findings verbatim from the gate's live output, neither of which is in the file.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S51",
+  "manifest_check_config.yaml:50-53, the ramp rule the flip depends on",
+  "W1-S25's two September findings, quoted from the gate's own output"
+ ],
+ "remedy": "\u26d4 A SILENT ENGINE AND A CLEAN ESTATE PRODUCE THE SAME TALLY, and the ramp rule reads only the tail -- so a flip decision made today could conclude the false-positive rate had DECAYED when the measured truth (W1-S25's ruling) is that it is STRUCTURAL. That is the whole hazard and it is correctly filed by the seat that owns both the ruling and the clock. \u2b50 THE ROW MEASURES AND DOES NOT RULE, WHICH IS WHY IT IS SOUND: the config calls the write best-effort and the file gitignored and local to the gate's runs, so a per-device artifact is a live hypothesis ALONGSIDE a writer defect, and WHICH IT IS DECIDES THE REMEDY. Concluding either without measuring would pick a remedy for the wrong cause. \u26a0 AND ITS DISARM CONDITION IS MEASURABLE, WHICH IS WHAT A GOOD ARMED ROW NEEDS: either a deliberate gate run producing a C finding appears in the file with its ts and the September gap is attributed, or the ramp rule names a different evidence surface. THE ROW ITSELF FORECLOSES THE CHEAP EXIT: a prose assurance that 'the tally is best-effort' does NOT disarm it, because best-effort is the DESIGN and the question is whether the instrument the flip depends on can currently SEE. The clock stays 1.0.0_SA_CTO's and this disposition does not move it.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v8",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v8"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S52",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A LIVENESS CENSUS RUN IN A WORKER'S WORKTREE IS FORKED AT ISSUANCE, so it is structurally blind to exactly the window in which routed rows get closed -- and its 'git log <pin>..HEAD: 0 commits' lines read as confident absence findings about another seat's work. Two of the five rows classed NOT-THIS-SEATS had already been closed by their owner before the census read but after the worktree forked.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S52",
+  "ROUTED_ROW_LIVENESS_R8.json's evidence lines, which name HEAD without naming which HEAD",
+  "this seat's re-run from the shared tree: 0 of 7 STILL-LIVE stale, so the cost is bounded to the two NOT-THIS-SEATS rows"
+ ],
+ "remedy": "BOUNDED, NOT DISPUTED: I re-ran the cell's own query from the SHARED tree and all seven STILL-LIVE rows still read 0 commits, so the blindness cost exactly the 2 of 23 S52 names and nothing in the direction the round was cut to catch. \u2b50 THE REMEDY IS ONE WORD IN THE EVIDENCE GRAMMAR, NOT A CHANGE TO THE ISOLATION: a census line must say WHICH HEAD -- 'at worktree HEAD <sha>' rather than a bare 'HEAD' -- because the two readings are equally true sentences with different scopes, and only the sha distinguishes them. \u26d4 THE ISOLATION ITSELF IS NOT THE DEFECT AND MUST NOT BE TRADED AWAY: Rule 14b mandates the worktree for reasons that have not changed, so EVERY instrument that reads 'the world now' from a forked checkout carries this shape and always will. \u26a0 WHAT A FUTURE CUT SHOULD DO INSTEAD, and it costs nothing: a census whose verdicts depend on the post-fork window states that dependency at the cut, and its grading criterion names EVERY bucket rather than only the expensive one -- this round's AC4 named STILL-LIVE and the real staleness landed in NOT-THIS-SEATS.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S53",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "THE CUT DEFECT UNDER S52, FILED BY THE ISSUER AGAINST ITSELF: a cell whose whole purpose is 'RE-READ EVERY ROUTED ROW AT HEAD' was seated in a worktree PINNED TO THE ISSUANCE COMMIT, where HEAD is frozen. \u26d4 A LIVENESS CELL CANNOT BE ISOLATED -- ISOLATION IS EXACTLY THE THING IT IS MEASURING AGAINST. The worker's instruments were correct and its denominator was A DIFFERENT TREE: two rulings that existed 32 and 4 minutes BEFORE the record was written were unreachable from the worker's base, so 'git log <pin>..HEAD' swept a tree in which they did not exist.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S53",
+  "author dates and reachability in the row: record 34b1555823 at 11:31:19-04:00; d8d6cf113f at 10:58:57 and f5de88f0bc at 11:27:15, neither an ancestor of the record's commit",
+  "this seat's completion of the row's own unswept remainder, below"
+ ],
+ "remedy": "\u2b50 THE EXPOSURE THE ROW LEAVES OPEN IS NOW CLOSED TWICE, BY TWO DIFFERENT INSTRUMENTS: S53 states 'Exposure is all 23 verdicts, not only the 7 NOT-THIS-SEATS; 2 are CONFIRMED falsified and I have not swept the other 21 against the shared tree.' I SWEPT THEM. 9 ALREADY-REMEDIED: every named closer verified a real ancestor of HEAD on my own merge-base run, with a negative control -- and an ALREADY-REMEDIED verdict cannot be falsified by a LATER commit anyway, so those hold by construction. 7 STILL-LIVE: the cell's own git-log query re-run from the SHARED tree, 0 commits on every file, so 0 of 7 stale. 7 NOT-THIS-SEATS: swept by row id across all refs with reachability tested from the record's own commit -- W1-S25 CONFIRMED falsified (ruled at f5de88f0bc, four minutes before the write, unreachable), W1-S36 is ORDINARY DECAY and not this defect (ruled at 3052cbf9ae, 25 minutes AFTER the write -- exactly the distinction S53 itself draws and refuses to conflate), and 4 hold. TOTAL: 21 OF 23 VERDICTS HOLD, 2 FALSIFIED -- the same 2 the row confirmed, and the other 21 are now MEASURED rather than unswept. \u26a0 AND MY SWEEP UNDERSTATES BY ITS OWN INSTRUMENT, WHICH I SAY BECAUSE THE PROOF IS IN MY OWN RESULTS: it greps commit SUBJECTS for the row id, so it can only find a closure whose author named the row -- and S42's closure did not, which is why my sweep returned 0 for the very row the issuer confirms was falsified. THE ISSUER'S TIMESTAMP-AND-REACHABILITY METHOD FOUND WHAT MINE STRUCTURALLY COULD NOT, so the two instruments are complementary and neither alone is sufficient. THE REMEDY IS THE CUT, NOT THE WORKER: a cell whose verdicts depend on the post-fork window cannot be seated in a fork -- it runs in the shared tree, or it states its base sha in every verdict line so a reader can see the scope. Rule 14b's isolation is right for every OTHER kind of cell and must not be traded away for this one.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S54",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CLOSES THE OPEN NUMBER S53 LEFT IN ITS OWN world_is -- 'I have not swept the other 21 against the shared tree'. The issuer swept them by enumerating the FALSIFYING WINDOW: the 20 commits between the worker's fork point a7bafce14e (10:54:39-04:00) and the record 34b1555823 (11:31:19-04:00). Exactly THREE touch any LGCTFM surface or a CTO deliverable -- the record itself, f5de88f0bc (W1-S25 ruled) and d8d6cf113f (S42 closed) -- and the other 17 are IRPT work, this lane's own ENFORCE round-16 commits and drive logs. Exposure closes at 2 of 23.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S54",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S53",
+  "this seat's independent sweep, which reached the same 2 of 23 by a weaker instrument"
+ ],
+ "remedy": "NOTHING IS OWED -- THE NUMBER IS CLOSED AND I REACHED IT INDEPENDENTLY, WHICH IS WHY I CAN SAY WHICH INSTRUMENT IS THE SOUND ONE AND IT IS NOT MINE. I swept the same 23 by grepping commit SUBJECTS for each row id across all refs and testing reachability from the record's commit; S54 enumerates the WINDOW and inspects what each of its 20 commits TOUCHED. \u26d4 MINE CAN ONLY FIND A CLOSURE WHOSE AUTHOR NAMED THE ROW, AND THE PROOF IS IN MY OWN OUTPUT: it returned 0 for S42 -- the very row both other seats confirm was falsified -- because that closing commit did not carry the id. A window enumeration has no such blind spot, so the two are not equal evidence: S54's instrument STRUCTURALLY DOMINATES mine and mine corroborates it. \u2b50 THE AGREEMENT IS WORTH MORE THAN EITHER READING because the methods are independent AND their failure modes differ -- Rule 22's test for corroboration rather than repetition, met by accident rather than design, and worth naming so the next sweep picks the window method first. \u26a0 AND S54 IS RIGHT THAT THIS BOUNDS THE DAMAGE AND CHANGES NOTHING ABOUT S53's RULE: the cut was still wrong, and wrong in a way no arm could see.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v8",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v8"
+ },
+ "closed": false
+}
+```
