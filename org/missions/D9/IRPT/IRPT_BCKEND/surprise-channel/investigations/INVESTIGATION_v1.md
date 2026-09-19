@@ -6122,6 +6122,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Disarm: IB-rtf-3 stays open. The act needs a RE-CUT PACKET naming the partner-table key (with its own writer census and reader census of opal-partner-49financial, and its rollback) and both halves re-signed against the new blob, or a ruling that the four outcomes are exercised by some other principal. The CTO half s.1 routes the decision. Not this seat's to widen."
+  },
+  {
+    "id": "IRPT_BCKEND-S87",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T09:07:00Z",
+    "one_line": "OFF-TASK EXPOSURE, not measured as an incident: the portal repo TRACKS two auth fixtures holding plaintext login credentials -- .frontend-dev/auth/credentials.json (e-mail + 12-character password for three smoke logins: internal_admin, firm_49financial, firm_49financial_alt) and .frontend-dev/auth/login-constitution.json (one more e-mail + 12-character password). Both came in with portal commit 03d719d4 (2026-06-08) and are on origin/DEV and origin/PROD (github.com/Opal-Capital/portal). Whether any password is live was NOT tested and must not be.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "Bound 6 of every IRPT order, and the estate's rule: no credential in any artifact, log, fixture or commit; secrets are read by NAME at runtime.",
+    "world_is": "The IB-rtf-9 reader census, an unscoped git grep over the portal repo at HEAD be8cf21874 for the partner-claim pattern, hit portal/.frontend-dev/auth/credentials.json. It is TRACKED (git ls-files --error-unmatch rc 0), and so is its sibling .frontend-dev/auth/login-constitution.json (keys _doc/url/email/password/success_url_substring/post_login_path/notes; password a 12-character string), which the table-name pattern hit in the same census. A key-and-length walk printed NO value: credentials/{internal_admin, firm_49financial, firm_49financial_alt}/{email, password, role, firmScope, reaches, use_for}, each password a 12-character string. It was added in portal commit 03d719d4 by 0.4.0_DE_ClientPlatform on 2026-06-08, and `git branch -r --contains 03d719d4` lists origin/DEV and origin/PROD among others. This is an EXPOSURE: a credential value sits in version control on a remote. Whether any password still authenticates, and whether anyone outside used it, were NOT measured. Measuring either needs a login attempt, which is out of this order's scope and is itself a credential use. It is also relevant to R66-AC2: a STANDING firm_49financial smoke login already exists, which bears on 'can a future round repeat this without a standing account'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal ls-files --error-unmatch .frontend-dev/auth/credentials.json -> tracked (portal HEAD be8cf21874, branch DEV)",
+        "key walk of that file (key names and value lengths only): three credentials entries each carrying email + password (str len 12)",
+        "git -C portal branch -r --contains 03d719d4 -> origin/DEV, origin/PROD, and three other remote branches; git remote: github.com/Opal-Capital/portal",
+        "git -C portal ls-files --error-unmatch .frontend-dev/auth/login-constitution.json -> tracked; key walk (names and lengths only): email + password (str len 12); added in the same commit 03d719d4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this seat's to fix, and not IRPT_BCKEND's: rotating the four passwords (opal-users-v2 rows), purging the file from the portal history, and deciding whether a smoke login may be standing are routed to 1.0.0_SA_CTO. No value was read into this session's output or any artifact."
+  },
+  {
+    "id": "IRPT_BCKEND-S88",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T09:15:00Z",
+    "one_line": "CORRECTION to this seat's own row S86, and to the IB-rtf-9 face that repeats it: the mechanism cited for 'a 49financial login with no partner row is admitted by firmId on the older portal routes' -- lib/partner/index.ts:39-47 (canAccessFirm) -- has 0 callers in production code. The admission is real by a different mechanism: the L0 tier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row IRPT_BCKEND-S86 (world_is item 4, committed @1771b07216) and the IRPT_BCKEND.TO-IB-rtf-9 face (THE CELL, first paragraph @dd95b034da) say: 'admitted by firmId alone on the older portal routes (lib/partner/index.ts:39-47)'.",
+    "world_is": "canAccessFirm is defined at infra/aws/lambda/lib/partner/index.ts:39-47 @b95c935160, and a Grep over infra/**/*.{ts,tsx,js,mjs,py} finds no call site: the only hit is the definition. The firm-level admission those sentences describe DOES exist, through a different chain. (1) The edge tier policy defines 'L0 -- any authenticated 49 Financial user (firm-aggregate data)' (infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs:9 @b95c935160); a principal with no advisorRole is level 0 (:65). (2) The API authorizer's allowedFirmIds is the principal's own firm for a non-admin, non-Dev, non-internal token (infra/aws/users/lambda/portal-authorizer/index.mjs:125-154 @b95c935160). (3) opal-partners-data checks the tier only for L1/L2 (infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py:1673-1680 @b95c935160). So the substance of S86's sentence stands and its citation does not. The IB-rtf-9 packet cites the real chain.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep canAccessFirm|can_access_firm over infra/**/*.{ts,tsx,js,mjs,py} @b95c935160: 1 hit, infra/aws/lambda/lib/partner/index.ts:39 (the definition)",
+        "infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs:9,55-67 @b95c935160: L0 = any authenticated firm user; unknown role = level 0",
+        "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py:1673-1680 @b95c935160: tier gate only for L1/L2"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No behaviour changes; the exposure 1.0.0_SA_CTO holds is unchanged in substance. Only the cited mechanism moves."
   }
 ]
 ```
