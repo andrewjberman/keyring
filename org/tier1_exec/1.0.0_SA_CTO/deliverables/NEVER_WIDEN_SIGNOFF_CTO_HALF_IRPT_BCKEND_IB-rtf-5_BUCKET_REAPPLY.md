@@ -99,3 +99,63 @@ STOP on non-match) and s.3 (the `0`-keys re-measure at apply time), and the s.5 
 
 With the COO half @`ad45bd9691`, **both halves required by CLAUDE.md's never-widen line are on file for
 `IB-rtf-5`** -- and **the only remaining gate is Andrew's step 4.**
+
+---
+
+## ADDENDUM 1 -- 2026-09-19 ~06:5xZ: **ANDREW'S ~06:3xZ WORD DOES NOT LIFT s.4's ORDERING, AND THE REASON IS MECHANICAL RATHER THAN DEFERENTIAL**
+
+**Relayed by `2.0.0_SA_COO~B` (msg `98154`), recorded at that seat. VERBATIM:** *"i cant get to the console right
+now, i am remote. have an AE deal with it. if they cant for whateve rreason, proceed and note it for later."*
+**No ruling was asked of this seat. This addendum is written anyway**, because a later reader holding his word
+beside s.4 of this half has a contradiction to resolve alone, and resolving it wrongly authorises an unsigned act.
+
+### THE READING
+
+⛔ **"PROCEED" CANNOT MEAN "APPLY WITHOUT STEP 4", BECAUSE THE APPLY CANNOT RUN WITHOUT STEP 4.** The policy
+attached today is the `W3-S43` lockout -- the fence document written with an **EMPTY exemption list** -- and it
+denies `s3:*` to every principal. The account's own **ROOT** is the only identity that can remove a bucket policy
+that denies the account, and root is **deliberately not** in the exemption set (s.2 of this half says so and gives
+the reason). So until root acts, every applying identity is denied on its first read. **There is no branch in
+which the apply proceeds and something different happens; there is only a branch in which it fails louder.**
+
+**Therefore his word is read as: the ROUND proceeds, step 4 is PARKED with an owner and an un-park condition.**
+That is exactly how `2.0.0_SA_COO~B` executed it -- `IB-rtf-7` cut to the AE lane, every profile tried with
+`sts get-caller-identity` printed per attempt, `AccessDenied` recorded truthfully, `IB-rtf-5` left STAGED, and the
+item carried on the drain-end packet and slug as parked rather than as a defect. ⭐ **THAT EXECUTION IS CORRECT AND
+THIS ADDENDUM RATIFIES IT WITHOUT WIDENING IT.** Nothing in his word authorises starting the stopped host,
+changing IAM, adding root to an exemption list, or routing around the fence -- and `2.0.0_SA_COO~B` said so first.
+
+### ⚠ THE PART THAT OUTLIVES THE MEASUREMENT, AND IS THE REASON THIS ADDENDUM EXISTS
+
+⛔ **HIS WORDS ARE SAFE TODAY ONLY BECAUSE OF A MEASUREMENT, AND THE MEASUREMENT IS PERISHABLE.** "Proceed" is
+harmless while the apply is *impossible*. **The moment any identity CAN remove that policy -- root acting, an
+exemption list edited, a profile turning out to be exempt -- THE SAME SEVEN WORDS WOULD READ AS AUTHORISING AN
+APPLY THAT NEITHER NEVER-WIDEN HALF SIGNED.** An instruction whose safety rests on a fact nobody re-checks is an
+instruction that changes meaning silently.
+
+**BINDING, AND IT COSTS NOTHING BECAUSE ARM (b) ALREADY RUNS BOTH READS:** his word is NOT a substitute for step 4
+and NOT an amendment to this half. **The apply proceeds only when `get-bucket-policy` shows the lockout gone AND
+arm (b)'s identity assertion passes** -- s.2 and s.3 stand unmodified. **If step 4 is ever satisfied by some route
+other than Andrew at the console, that route is a NEW REACHABLE STATE and returns to BOTH halves before the apply,
+not after.**
+
+### ⚠ AND A TRAP FOR ANYONE ANSWERING *"WHO CAN DO STEP 4?"* FROM THE REPO
+
+`infra/logic/registry/exemptions.json` at HEAD lists **three IAM users** -- `Andrew_Berman`,
+`Andrew_Berman_Console`, `Opal_Terminal` (root absent; verified at HEAD this tick). ⛔ **THOSE ARE THE EXEMPTIONS
+OF THE POLICY THE APPLY WILL CREATE. THEY ARE NOT THE EXEMPTIONS OF THE POLICY ATTACHED RIGHT NOW.** A reader who
+opens the registry to find out who can remove today's fence reads **DESIRED state and concludes three identities
+can act, when the APPLIED state is the empty-list lockout and none of them can.** ⭐ **Rule 22's STATE axis at its
+sharpest: the registry is not wrong, it is answering a different question than the one asked.** The only measured
+fact about the applied plane is `2.0.0_SA_COO~B`'s `AccessDenied` on every identity tried -- **read from that
+seat's measurement, not re-derived here**, and consistent with the lockout's predicted behaviour.
+
+### TERMINOLOGY, ON ANDREW'S OWN CORRECTION
+
+His first message ~06:3xZ asked why the buckets were being deleted. **They are not; the POLICY is.** Every seat
+naming this act to him says **"remove the bucket's access policy"**, never the bare AWS verb. ⭐ **A tool's verb
+leaked into a human sentence and read as destruction of the thing it protects** -- the buckets stay exactly as
+approved @`af794c77e3`, and this act re-attaches the correct fence.
+
+**s.1, s.2, s.3 and s.5 of this half are UNCHANGED. The five input blobs are unchanged. Step 4 remains the only
+gate, now with an AE attempt recorded as tried-and-failed rather than untried.**
