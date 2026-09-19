@@ -105,3 +105,54 @@ next-bump items, the CVO's two residuals, the Posture panel, the CEO-step answer
 +---------------------------------------------------------------------+
 
 -- `1.0.0_SA_CTO~Z`
+
+---
+
+## APPENDIX -- `4.0.0_SA_CRO~Z` READ `REF_A` AND `REF_C` (@`2d098d2ab7`): the delta STANDS, eight additions, and ONE CORRECTION TO MY CARD
+
+This seat asked to be corrected before the addendum rather than after. The answer: **nothing in `REF_A` or `REF_C`
+contradicts any of the nine items**, and item 1 (quarterly grain) is corroborated on both -- `REF_A`'s financial summary is
+columned Mar-24 through Jun-26, `REF_C`'s snapshot is Q2-2026 vs Q2-2025 throughout.
+**Provenance, and it is a genuinely independent path:** that seat read the PDFs out of the object store with `git show`
+and recomputed sha256 on the extracted bytes, matching all three prefixes this seat took from its own extraction. **Two
+seats, two paths, same hashes.** The inherited-vintage qualifier still stands for both of us: neither hashed bytes fetched
+fresh from `origin/CLOUD`.
+
+**EIGHT ADDITIONS to the L4 delta, carried as that seat's measurement:**
+1. **FOUR forward years, not three.** `REF_A` carries 2025 | 2026E | 2027E | 2028E | 2029E; `C-MODEL-FORECASTS` specifies
+   FY1-FY3 -- one short, and the fourth year is the one `REF_C`'s scenario table prices off.
+2. **A balance-sheet block we do not pull at all**: cash, intangibles, fixed assets, total assets, current and LT
+   liabilities, common equity, each as a percent of total assets. The model block's header scalars carry none of them.
+3. ⭐ **`REF_C` s.8 ALREADY PRINTS Bear / Base / Bull** as `Key assumptions | FY2028E EPS | Multiple | Implied value`, with
+   the bear and bull assumptions stated in words. **Andrew ruled Base at v0.12 and reserved Upside/Downside for "a
+   methodology discussion" -- and the house's own answer to that discussion is in the document he sent us.** His open card
+   should be re-put with `REF_C` s.8 in front of him rather than as an abstract question.
+4. **Ownership and positioning as a SECTION** (`REF_C` s.7): institutional and insider ownership, shares short, percent of
+   float, days to cover, the CHANGE in short interest, beta, and the ten largest holders with their 13F quarter.
+5. **Per-product and per-region quarterly series** -- 14 figures by product by quarter with y/y growth, plus sales by
+   region and therapy. **We have no product or segment time series anywhere**; segments are cited PROSE, which is exactly
+   why the thesis driver chart refuses.
+6. **y/y growth rows on every line** -- the Model sheet has none by construction.
+7. **An earnings-call TRANSCRIPT is a cited source** (`REF_C` Sources). No transcript stage exists;
+   `integrations/seekingalpha/rest_fetch.py` already documents a `/transcripts` endpoint on the session the Peers path now
+   uses.
+8. **Guidance as `Prior | Updated | Direction`** -- our analyzer extracts the item but neither the prior value nor the
+   direction, which is the half that makes the line readable.
+
+## ⚠ THE CORRECTION TO THIS SEAT'S OWN CARD, and it goes back to Andrew
+
+My card asked whether an Opal report issues **"a RECOMMENDATION and a PRICE TARGET"**. `4.0.0_SA_CRO~Z`, having read
+`REF_A` (which this seat has NOT opened), measures that its *"Rating actions and target price changes"* section **reports
+what OTHER analysts did -- it is not a house target. NEITHER document issues a house price target.**
+**So the card was over-stated by me, and it is narrower than I put it:** the only thing `REF_A` issues and `REF_B` declines
+is **the POSITION LINE** (*"Recommendation: Maintain position in PFOE"*). The price-target half of my question was never a
+live fork, and I have told him so rather than leaving the wider framing standing. **The REC is unchanged** -- follow
+`REF_B` -- and that seat concurs, with the note that adopting `REF_B` costs us nothing of `REF_A`'s "Why we own" paragraph,
+which is Opal's own voice.
+
+**This is the exact failure this seat named in the PRD's own citation rule, committed one level up:** I characterised a
+document I had not read, from a summary, and the characterisation was wider than the source. The delta items survive
+because each names a clause rather than the document; the card did not, because it named the document.
+
+-- `1.0.0_SA_CTO~Z`
+
