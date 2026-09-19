@@ -139,3 +139,46 @@ saved bytes (or `copy_object` from the pre-act VersionId), read back sha256.
 write; a run without the per-use word on file.
 
 Signed `2.0.0_SA_COO~Z`, 2026-09-18, at the round-14 cut.
+
+## `AMGT-rk-49` -- Lusha enrichment keyed off `rk-38`'s verified site, validation names (R14-F1 gate; FWD-17)
+
+**ADDED MID-ROUND, 2026-09-19 ~13:5xZ, by the issuer, BEFORE the cell's first live act.** The cut read this cell as
+*gated on R14-F1, not co-signed* and told the worker to make no live write until the spawn prompt said whether the chain E
+pair already names these keys' rewrite. It does NOT: `rk-48`'s section names *"the ONE in-place rewrite of a dated key in
+this chain"* and lists any second rewrite under NOT COVERED. So a section is owed here and the worker's refusal
+(row `AMGT_RESAPP-Z-W50-S1`, AC3/AC4 REFUSED, nothing written) was correct. Measured at spawn by the worker: CAT and CSL
+carry NO `verified_site`; Keyence carries `www.keyence.co.jp` (step 4). Sequencing: after `rk-38`, `rk-47`, `rk-48` (all
+drained; `rk-48` drained @1f70d87d8d).
+
+**THE ACT.** AC1-AC2 OFFLINE (the domain rule `domain_for` from the filings object's `verified_site` only, the unit arm,
+the three-name dry run: `lusha client constructed 0 time(s); nothing written`) -- no pair needed. AC3 LIVE, under Andrew's
+word quoted in the order (*"2.) Yes full egress."*, ruled *"Lusha calls are authorized inside the instantiation validation
+(Caterpillar, CSL, Keyence) with NO credit ceiling"*, record @4de34f0d95): `enrich.main --enrich-only --skip-pool` on the
+three validation names; the ONE billable call is `prospecting_page` on the verified domain, so today ONE Lusha call
+(Keyence) and ZERO for CAT and CSL, which are written `lusha_enrichment.status SKIPPED` with reason `NO_VERIFIED_SITE`
+(`domains.json` is never a source for a validation name). Then a REWRITE of the three dated management keys
+`management/v1/{CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity}/<as_of>.json` (the objects `rk-47`/`rk-48` wrote): the
+`lusha_enrichment` block and, on the CALLED name, `officers[].profile_url / lusha_title / enrichment`. AC4 reads back.
+
+**BLAST RADIUS.** Exactly those three dated keys, in place -- the SECOND in-place rewrite of a dated key in this chain
+(`rk-48`'s was the first). Served: YES (`rk-31` landed; `read_management` reads the newest dated key). `_pool/`
+untouched (`--skip-pool`; ETag EQUAL before and after). NO Lambda. NO covered name.
+
+**WRITER CENSUS of those 3 keys: N = 1 active writer this round** (`crosswalk.write_pool` via `enrich`), three cells in
+sequence on the same keys (`rk-47`, `rk-48`, then `rk-49` reading `rk-48`'s object as its pre-act state). No schedule.
+
+**EXPECTED OUTCOME, both branches, read from `apply_lusha_enrichment`'s own rule.** A name with a `verified_site`:
+`status CALLED`, `credits_used` printed, officers enriched where Lusha matches, unmatched officers `pull-missed`. A name
+without one: `status SKIPPED`, `reason NO_VERIFIED_SITE`, `credits_used 0`, officers unchanged. A Lusha error: `status`
+FAILED with the error text, officers unchanged, the key still rewritten (the block records the attempt). In every branch
+the pre-existing `ceo_profile` / `ceo_public_profile` / `officers` content is preserved except the three enrichment fields.
+
+**PER-KEY ROLLBACK.** Pre-act: `get_object` bytes of each of the 3 keys saved to `.scratch/` with sha256 + VersionId
+printed into the entry (bucket versioned). Rollback = `copy_object` from the pre-act VersionId (or re-put the saved
+bytes), read back sha256. `_pool/`: ETag compared, no write to roll back.
+
+**NOT COVERED:** any Lusha call on a name outside the three; any call on a name without a `verified_site`; a `_pool/`
+write; a Lambda; any run without the order's quoted word.
+
+Signed `2.0.0_SA_COO~Z`, 2026-09-19 ~13:5xZ, mid-round, before the cell's first live act; counterpart half owed by
+`1.0.0_SA_CTO~Z` (asked the same tick). The worker acts only when BOTH halves carry this section.
