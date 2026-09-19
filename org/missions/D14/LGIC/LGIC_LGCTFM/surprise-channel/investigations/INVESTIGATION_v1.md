@@ -1293,3 +1293,32 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## Round 4, LT-x-5 -- x4-no-registry-move FAILS on a concurrent unrelated project's commit, already landed before this worker's spawn
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S39",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+ "surfaced_at": "2026-09-19T04:09Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "X5R4-AC3 (x4-no-registry-move) READS FAIL AT THIS WORKER'S OWN HEAD, BEFORE ANY ACT OF MINE: an unrelated project's commit, 845343f925 (IRPT_BCKEND steps 2-3, 4.0.0_SA_CRO), changed infra/logic/registry/exemptions.json and infra/logic/registry/scopes.json (inflection/cottonwood bucket_provisioned + bucket_managed_by + six operator exemption rows) and is already an ancestor of this worktree's own HEAD c28c728a30, between the round's cut_pin 87607a2a30 and my spawn. The order's face states AC3 'READS PASS AT THE CUT' and 'protects the registries and must still read PASS after your run' -- but the guard is a literal `git diff cut_pin HEAD -- <registry paths>`, independent of anything this cell does, and it was already non-empty before this worker wrote a single byte.",
+ "spec_asserts": "x4-no-registry-move is guard-shaped and reads PASS at the cut; LT-x-5 does not touch any registry (no MARK this round), so it must still read PASS after the run.",
+ "world_is": "Measured in this worker's own worktree at HEAD c28c728a309ab0d83b2831c2972179791a2985fb, before and after the run/FWD10/HASHES writes (none of which touch a registry path): `python check_lt_r4.py x4-no-registry-move` prints 'registries + LEGACY_SERVED_PATHS since 87607a2a30: 2 path(s) changed (pin resolvable=True)' naming infra/logic/registry/exemptions.json and infra/logic/registry/scopes.json, VERDICT FAIL-X4-NO-REGISTRY-MOVE. `git merge-base --is-ancestor 845343f925 HEAD` confirms that commit is already an ancestor of this worktree's HEAD; `git diff 87607a2a30 HEAD -- infra/logic/registry/scopes.json` and the same for exemptions.json show only 845343f925's IRPT_BCKEND content (bucket_provisioned true, bucket_managed_by, six new exemption rows for opal-data-inflection/opal-data-cottonwood) -- nothing from LGIC_LGCTFM or this cell. This worker does not edit the engine, the checker or any registry (BOUNDS), so the arm cannot be satisfied by any act inside this order's grant; disarming it is either a repair to the guard's own window (e.g. scoping it to paths/keys this project's round actually owns) or a COO-level acknowledgement that the guard cannot hold across a shared branch carrying other projects' registry writes.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_lt_r4.py:365-375 x4_no_registry_move() -- a literal `git diff --name-only <cut_pin> HEAD -- infra/logic/registry/ LEGACY_SERVED_PATHS.json`",
+   "check_lt_r4.py x4-no-registry-move output at this worktree's HEAD c28c728a30: '2 path(s) changed' naming infra/logic/registry/exemptions.json and infra/logic/registry/scopes.json, VERDICT: FAIL-X4-NO-REGISTRY-MOVE",
+   "git merge-base --is-ancestor 845343f925 HEAD (rc=0) -- the offending commit is already in this worktree's own history",
+   "git log --oneline 845343f925 -1: 'registry(IRPT_BCKEND steps 2-3, 4.0.0_SA_CRO): the inflection/cottonwood provisioned flip AND their bucket_managed_by field AND their six operator exemption rows'",
+   "git diff 87607a2a30c4018a2d9bb9ad7fe02e15dcc9005b HEAD -- infra/logic/registry/scopes.json infra/logic/registry/exemptions.json -- content is entirely IRPT_BCKEND's (opal-data-inflection/opal-data-cottonwood), zero LGIC_LGCTFM content"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
