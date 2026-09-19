@@ -932,6 +932,21 @@ def _self_test():
         ("round-issuer: a prose mention of <round> is inert -- not read as the key, still refused as missing",
          lambda: any("line-anchored" in x for x in
                      _round_issuer_violations(tree, "the `<round>` element names the round\n" + v3, {}))),
+        # GATE (xi) -- THE STATUS-ELEMENT LIMB (row AMGT_RESAPP-Z-S153; cell AMGT-rk-56). Pure arms;
+        # the real-index battery (a scratch git repo, the gate's own CLI, real committed bytes)
+        # lives in .tools/tests/test_gate_xi_status_element.py.
+        ("status-element RED: no <status> element at all -> refused naming S153",
+         lambda: any("S153" in x and "NO <status> element" in x for x in _status_element_violations(tree, v3))),
+        ("status-element RED: a backticked prose mention only -> refused identically to no element",
+         lambda: any("S153" in x for x in
+                     _status_element_violations(tree, "flip `<status>` to `complete`\n" + v3))),
+        ("status-element GREEN: <status>pending</status> on its own line -> admitted",
+         lambda: _status_element_violations(tree, "<status>pending</status>\n" + v3) == []),
+        ("status-element RED: born <status>complete</status> at issuance -> refused as born terminal",
+         lambda: any("born terminal" in x for x in
+                     _status_element_violations(tree, "<status>complete</status>\n" + v3))),
+        ("status-element: a flat-root order is NOT graded (the legacy population, same scope as every limb here)",
+         lambda: _status_element_violations("org/tier2_senior/A/task_orders/X.TO-1.md", v3) == []),
     ]
     failed = 0
     for name, fn in arms:
@@ -1096,6 +1111,62 @@ def _placeholder_modify_violations(rel, head_text, staged_text):
     return ["%s [MODIFIED; the order already declares <placeholders> at HEAD, so GATE (viii) grades the "
             "amendment -- Andrew-direct card 6, record @e2210bf34c]: %s" % (rel, x.split(": ", 1)[-1])
             for x in _placeholder_declaration_violations(rel, staged_text)]
+
+
+# GATE (xi) -- THE STATUS-ELEMENT LIMB, ON NEWLY-ADDED TREE ORDERS ONLY (row AMGT_RESAPP-Z-S153,
+# surfaced by 4.0.0_SA_CRO~Z 2026-09-17; ROUND_ANALYSIS.round13.md s.4 row R14-T2; cell AMGT-rk-56).
+# MEASURED: all 15 round-13 task orders (AMGT-rk-19..rk-30) were born with NO <status> element at
+# all, while each worker face's closing step tells the worker to flip <status> to complete, and
+# to-check.py lists all 15 as '??'. Round-12 orders carried the element from their adding commit.
+# No limb of check_file() reads the record face's status -- this is that limb.
+#
+# LINE-ANCHORED, the same discipline as PLACEHOLDERS_TAG_RE and ROUND_ELEMENT_RE above, and for the
+# identical reason: a backticked prose mention of the tag ("flip `<status>` to `complete`") must
+# read IDENTICALLY to an order with no element at all, never as the element -- the Z-S15 / to-check
+# FIX C class every downstream status reader (to-check.py:113-122, surprise-row-gate.py:1125-1165,
+# owned-paths-validate.py:125-140) already learned the hard way.
+#
+# TERMINAL AT ISSUANCE IS ALSO REFUSED. An order is issued OPEN; the word must not be one either
+# sibling gate treats as terminal -- DONE_WORDS below (this file: complete, completed, closed,
+# done) UNION surprise-row-gate.py:152 TERMINAL_TO_WORDS (adds superseded, cancelled, canceled,
+# withdrawn) -- READ AS ONE SET. Mirrored here, not imported: these are two standalone CLI tools
+# with no import path between them, the same shape as PLACEHOLDERS_TAG_RE's cross-tool mirror
+# above; the next edit to either terminal-word tuple must move both.
+#
+# SCOPE. [] for flat-root orders (the legacy population, same scope as every limb in this file). A
+# MODIFY is never graded by this limb: main() sends only the NEWLY-ADDED (git A/R) set through
+# check_file(), exactly as GATE (viii)'s newly-added half does -- a worker adding the element at
+# close to a legacy untagged order is a MODIFICATION and is admitted, as S153's own world_is
+# anticipates. NO BACK-FILL: the 3 untagged orders already at HEAD at the cut
+# (rk-20.price-generation-contract, rk-23.artifact-name-encoding, rk-30.scores-adapter-model-tab)
+# are prospective-only and are not touched by this limb or any other (the gate's own doctrine,
+# :1757-1762 above).
+STATUS_ELEMENT_RE = re.compile(r"^[ \t]*<status>\s*([A-Za-z_-]+)\s*</status>[ \t]*$", re.M)
+GATE_XI_TERMINAL_WORDS = ("complete", "completed", "closed", "done",
+                          "superseded", "cancelled", "canceled", "withdrawn")
+
+
+def _status_element_violations(rel, text):
+    """GATE (xi): PURE, no I/O. [] for flat-root orders. A NEWLY-ADDED tree task order must carry a
+    LINE-ANCHORED <status>WORD</status> element (STATUS_ELEMENT_RE) -- missing, or present only as
+    a prose mention that does not match the anchored regex, is refused naming row
+    AMGT_RESAPP-Z-S153. Present but carrying a word in GATE_XI_TERMINAL_WORDS is refused as "born
+    terminal" -- an order is issued open, and a terminal word belongs to the worker's close."""
+    rel = rel.replace("\\", "/")
+    if not TREE_TO_RE.search(rel):
+        return []
+    m = STATUS_ELEMENT_RE.search(text or "")
+    if m is None:
+        return ["%s: a NEW tree task order carries NO <status> element on its own line -- issue it "
+                "with <status>pending</status> in the record face; the worker flips it at close and "
+                "every status reader keys on it (row AMGT_RESAPP-Z-S153: 15 of 15 round-13 orders "
+                "were born untagged)." % rel]
+    word = m.group(1).lower()
+    if word in GATE_XI_TERMINAL_WORDS:
+        return ["%s: born terminal -- <status>%s</status> at issuance. An order is issued OPEN; a "
+                "terminal word belongs to the worker's close, not the issuance (row "
+                "AMGT_RESAPP-Z-S153)." % (rel, m.group(1))]
+    return []
 
 
 # GATE (ix) -- THE OUTPUT-VOCABULARY LIMB: A BAR ITS TOOL CAN NEVER PRINT IS REFUSED AT THE CUT (FE-s-36;
@@ -2567,6 +2638,9 @@ def check_file(root, rel):
     # invocation-alignment limb of proof-of-spec-check.py on the issuance being cut (1.0.0_SA_CTO ruling D,
     # cell FE-s-28). Opt-in enforcement is armed by the party the check exists to catch.
     v.extend(_placeholder_declaration_violations(rel, text))
+    # GATE (xi) -- a NEW tree TO carries a line-anchored <status> element, not born terminal
+    # (row AMGT_RESAPP-Z-S153; cell AMGT-rk-56).
+    v.extend(_status_element_violations(rel, text))
     # GATE (iv) -- a NEW tree TO commits only under 2.0.0_SA_COO (LD-0521 A3).
     v.extend(_issuer_identity_violations(rel, _committer_serial(root)))
     # CELL REFERENCES resolve against the named decomposition at the cut (S5's class, 2026-09-03).
@@ -2843,6 +2917,59 @@ def _rounds_cli(root, args):
     return 0
 
 
+def _status_census(root, code):
+    """({"with": [order,...], "without": [order,...], "words": {word:int}}, total) for `code`'s TREE
+    task orders TRACKED AT HEAD, read with `git ls-files` + `git show HEAD:<path>` -- never the
+    worktree (the same shape as _head_rounds_census). (None, 0) when the census could not run."""
+    try:
+        ls = subprocess.run(["git", "ls-files", "--", "org/missions/D*/*/%s/task-orders/*.md" % code],
+                            cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                            timeout=60)
+    except Exception:  # noqa: BLE001
+        return None, 0
+    if ls.returncode != 0:
+        return None, 0
+    paths = sorted({p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()})
+    with_status, without_status, words = [], [], {}
+    for p in paths:
+        text = _head_blob(root, p)
+        m = STATUS_ELEMENT_RE.search(text) if text is not None else None
+        if m:
+            with_status.append(p)
+            w = m.group(1).lower()
+            words[w] = words.get(w, 0) + 1
+        else:
+            without_status.append(p)
+    return {"with": with_status, "without": without_status, "words": words}, len(paths)
+
+
+def _status_census_cli(root, args):
+    """`--status-census <CODE>` -- read-only, GATE (xi)'s own census (row AMGT_RESAPP-Z-S153; cell
+    AMGT-rk-56). Prints, for `<CODE>`'s TREE task orders TRACKED AT HEAD: orders WITH a
+    line-anchored <status> element (count), orders WITHOUT (each named), the status-word
+    distribution, and the denominator ("N order(s) at HEAD"). rc 0 always -- an informational read,
+    not an enforcement decision, the same shape as --rounds."""
+    idx = args.index("--status-census")
+    if idx + 1 >= len(args):
+        print("[to-pipeline-gate --status-census] needs a <CODE> argument, e.g. --status-census AMGT_RESAPP")
+        return 0
+    code = args[idx + 1]
+    census, total = _status_census(root, code)
+    if census is None:
+        print("[to-pipeline-gate --status-census] could not read tree orders for %s at HEAD (git "
+              "ls-files failed) -- 0 order(s) at HEAD." % code)
+        return 0
+    print("WITH a line-anchored <status> element: %d" % len(census["with"]))
+    print("WITHOUT a line-anchored <status> element: %d" % len(census["without"]))
+    for p in sorted(census["without"]):
+        print("  %s" % os.path.basename(p))
+    print("word distribution:")
+    for w in sorted(census["words"], key=lambda x: (-census["words"][x], x)):
+        print("  %-16s %4d" % (w, census["words"][w]))
+    print("%d order(s) at HEAD" % total)
+    return 0
+
+
 def main(argv):
     root = _repo_root()
     if "--sweep" in argv[1:]:
@@ -2851,6 +2978,8 @@ def main(argv):
         return _self_test()
     if "--rounds" in argv[1:]:
         return _rounds_cli(root, argv[1:])
+    if "--status-census" in argv[1:]:
+        return _status_census_cli(root, argv[1:])
 
     # ⛔ MERGE EXEMPTION (2026-09-04, 1.0.0_SA_CTO on 0.0.0_AB_MSTR's 94264). A MERGE IS NOT
     # AUTHORSHIP. This gate had none while BOTH its siblings did -- owned-paths-check.sh:85 and
