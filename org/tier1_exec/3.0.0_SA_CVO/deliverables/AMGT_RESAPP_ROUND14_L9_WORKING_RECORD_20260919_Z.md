@@ -714,6 +714,52 @@ named Andrew call, not as open work anyone is failing to do -- and the `rk-48` t
 UNVERIFIABLE pending a second, DIFFERENT Andrew word. TWO gates, TWO questions, named separately,
 because collapsing them into "waiting on Andrew" would lose which answer unblocks which cell.
 
+## 4n. rk-40 / W42: a THIRD gate class (BUDGET), two cross-order contract gaps, and a deliverable never written
+
+Seven rows from worker ~42 on `AMGT-rk-40`, four of them BLOCKING. The order is still pending.
+
+**A THIRD GATE CLASS -- BUDGET, not authorization (`W42-S6`, BLOCKING, ARMED).** Seven live
+`analyze.py` invocations (five cold pass-1 calls at roughly USD 0.42-0.45 each) were needed to
+reproduce, diagnose and confirm the bugs in S3-S5. Cumulative spend reached ~USD 2.95 of a USD 3.00
+cap, leaving no headroom for AC5's required translation call (~USD 0.11-0.30). AC5 CANNOT RUN.
+
+Section 4m named two Andrew-gated close conditions. This is a third kind and it belongs beside them,
+because it has the same effect and a different owner: **a criterion that cannot be run for want of
+BUDGET is not a failing criterion and not a defect in the cell** -- and unlike the Andrew gates, the
+cost was incurred by the DIAGNOSTIC work that found real bugs. The order paid its budget to fix
+defects (S3, S4) and then could not afford its own acceptance. That trade is defensible; what must
+not happen is AC5 being graded as a miss.
+
+**TWO CROSS-ORDER CONTRACT GAPS, `rk-39` -> `rk-40` (`W42-S1`, `W42-S2`, both BLOCKING).** AC2-AC6 all
+assume `rk-39`'s document-layer source object carries an `excerpt` key; measured, it does not. Then,
+after that was fixed, a SECOND distinct gap: `analyze.py`'s `main()` unconditionally indexes
+`form`/`url`/`filing_date`/`parser_version` on the source print line, and the local CLI object carries
+none of the four. SAME SHAPE AS SECTION 4c-bis, ONE LEVEL DOWN: there a peer order moved the
+POPULATION under a later cell's criteria; here a peer order's OBJECT SHAPE does not match what the
+later cell's criteria assume. And as with `rk-60` (section 5), the second gap was invisible until the
+first was repaired -- a repaired criterion is still not a verified one.
+
+**REAL DEFECTS FOUND AND FIXED BY RUNNING LIVE (`W42-S3`, `W42-S4`).** `resolve_pass_1` treated
+`end_block_index` as INCLUSIVE where the SDK's own docstring states it is EXCLUSIVE, so every citation
+reported a 2-block span with one block resolving; plus a genuine multi-block citation bug. Separately,
+the live model wrote findings in English with a few quoted Japanese terms -- 0 of 66 served items in
+the filing's own script -- despite the prompt saying "write every finding in the filing's own
+language"; fixed by moving the rule to the FIRST bullet and naming the failure mode. GRADE THESE AS
+VALUE DELIVERED, not as noise: both are defects no offline arm would have surfaced.
+
+**A BAR UNMEETABLE FOR CONTENT REASONS (`W42-S5`, ARMED).** After every fix, the one affordable live
+sample still reads blocks-per-citation 1/1/2 against a named 1/1/1, and VERBATIM-CHARS 57 of 67
+(85.1%) against a named >= 0.90 -- both traced to genuine properties of THIS filing rather than to
+code. Another criterion-defect instance with a NEW cause: the bar was set without knowing the content
+it would be measured on.
+
+**A DELIVERABLE NAMED AND NEVER WRITTEN (`W42-S7`).** AC6 measured `with_translation` 0 of 32:
+`drafting_build.py`'s `draft()` never copied an item's `text_translated`/`translation` fields onto its
+drafted sentence. Deliverable 5 named this explicitly and the code was simply never written -- and it
+went unnoticed because no prior session ever reached a live run that would exercise it. THE LESSON FOR
+L9: a deliverable whose only exercise is a BUDGETED LIVE CALL is effectively unverified until that
+call is affordable, which ties this row directly to `W42-S6`.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
