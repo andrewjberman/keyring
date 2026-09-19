@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~1 @a1d048eb84 (branch wk-lgic-lgctfm-10-1). R1R10-AC1 PASS-R1-RECLASS, R1R10-AC2 PASS-R1-REROUTE, R1R10-AC3 PASS-R10-VINTAGE-FIELD, R1R10-AC4 PASS-R10-STALE-PROOFS (all rc=0); R1R10-AC5 UNVERIFIABLE-BY-INSTRUMENT (judgment, routed to 3.0.0_SA_CVO at L9). Record c0bf6d3021 (ROUTED_ROW_RECLASS_R10.json + fixed_inputs/r1/DRIFT_CAUSES.md); check_lt_r1.py blob unchanged (8835d6519b67d96bb6bc07b4230c0be81a4590f0 at base and HEAD). proof-of-spec-check: VALID (rc=0), acceptance rows=5, violations=0. No row disarmed; S18/W1-S21 disposition owed to 3.0.0_SA_CVO at L9, disarm to 2.0.0_SA_COO~G under R-19.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-r-1` (decomposition v1.11 s.21) | **outcome_ref:** FWD-6 | **depends_on:** none -- **the only cell this round**
 
