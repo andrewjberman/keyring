@@ -1088,6 +1088,17 @@ def _r3_spell(toks, i, v):
     """R3 in a slot _slots() did not take: bd is refused in every slot, so a bd left in the function (or a
     secret's purpose) is spelled as the canonical form spells it -- blackdiamond when a firm token is next
     to it, else the firm's short form (the form R4 gives it). Any other token is returned unchanged."""
+    # LGIC_ENFORCE-S87: THE FIRM BRANCH BELOW (`v.short[v.bd_firm]`) HAS NO OBSERVABLE OUTPUT TODAY, AND IT
+    # STAYS. It is not unreachable -- it is reached and then subtracted. R3 spells a leftover bd with no
+    # adjacent firm token as the firm's own short form; that is the SAME reading R4 has already written into
+    # the scope slot, so FN1b (a function token equal to a token already written in the system or scope slot
+    # is dropped) removes it, and no canonical form this function feeds can ever print it. Every other path
+    # to a lone bd is taken by _slots() as the scope, or raises at R4 as two scopes. R3 and FN1b compose
+    # exactly as written, so this is NOT a defect and NOT a repair site: changing either rule to make the
+    # branch visible would be the defect. Removing the branch would need a proof that the composition can
+    # never change, which nobody has -- so the fact is carried here instead, where whoever opens the file
+    # reads it. Record: LGIC_ENFORCE-S87 (surfaced by 3.0.0_SA_CVO at L9, round 10) and the round-10
+    # analysis section 3. Do not re-derive it; do not delete the branch on the strength of a coverage report.
     if toks[i] != "bd":
         return toks[i]
     return v.bd_vendor if _bd_is_vendor(toks, i, v) else v.short[v.bd_firm]
