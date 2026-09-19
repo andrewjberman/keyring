@@ -142,6 +142,25 @@ fields). `AMGT-rk-42` makes `ANALYZER_VERSION` MOVE with the contract (a fingerp
 before you, its test fails until you bump `ANALYZER_VERSION` and the fingerprint together -- do that (`2.0.0` ->
 `2.1.0`). If it has not, bump `ANALYZER_VERSION` `analyze.py:60` to `1.1.0` yourself; whichever lands second reconciles.
 
+**ISSUER AMENDMENT on row AMGT_RESAPP-Z-W42-S1 (`2.0.0_SA_COO~Z`, 2026-09-19 ~07:4xZ) -- THE EXCERPT CONTRACT GAP, DISARMED HERE:**
+MEASURED by the issuer on the pool: `filings/v1/6861_JP_Equity/doc-1defdb68a7ffd3b7.source.json` (rk-38's RESOLVED YUHO object,
+parser 2.0.0) carries `excerpt: None` and no `sections`, while `filings/v1/CAT_US_Equity/000001823026000008.source.json` (the EDGAR
+path) carries `excerpt {items, item_keys, text, chars, excerpt_sha256, truncated_items, item_chars, item_full_chars}`; rk-39's
+`document.py` CLI writes `sections` (risk/mdna/officers) and nothing assembles them into the analyzer's `excerpt` shape
+(`analyze.py:955/1015/1251` read `source_object["excerpt"]`). Both owning cells (rk-38, rk-39) are drained; no live writer holds
+those files. RULED: (i) your `<paths>` are WIDENED to `lib/research/filings/document.py`, `lib/research/filings/fetch.py` and
+`lib/research/filings/battery.py` for this one purpose; (ii) STEP 0, before AC2: implement `document.sections_to_excerpt(sections,
+family)` producing the analyzer's exact `excerpt` shape (items in the fixed order risk, mdna, officers -- each item `{key, text}` --
+`item_keys`, joined `text`, `chars`, `excerpt_sha256` over `text`, `truncated_items`, `item_chars`, `item_full_chars`; the EDGAR path
+in `fetch.build_source_object` is the reference shape, read it and match it field for field), call it from BOTH the `document.py`
+CLI (so `.scratch/docs/<key>.source.json` carries `excerpt`) and `fetch.build_battery_source_object` (so a battery landing carries
+`excerpt` for every family, never `None` on a RESOLVED object), with a unit arm on the Keyence fixture asserting `excerpt` is
+present, non-empty and sha-stable; (iii) then RE-LAND the Keyence pool object with the battery CLI exactly as rk-38's AC4 ran it
+(`python -m lib.research.filings.battery --security-key 6861_JP_Equity ... --write-pool`; a validation-name pool write on an
+unserved key, rk-38's own act shape, no pair owed; print the pool receipt and read it back: `excerpt` non-empty), and record the
+Keyence object's new key in your report; (iv) AC2-AC6 then run exactly as written. Nothing here touches a covered name or any
+served route.
+
 ## 3. SURFACES -- what you may read and write
 
 <paths>
@@ -157,6 +176,9 @@ lib/research/drafting/tests/test_drafting.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~42/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-40.translation-design-a.md
+lib/research/filings/document.py
+lib/research/filings/fetch.py
+lib/research/filings/battery.py
 </paths>
 
 - **A SURFACE NOT NAMED IN `<paths>` IS A WALL.** A READ needs no grant; this block governs WRITES. In `analyze.py` you
