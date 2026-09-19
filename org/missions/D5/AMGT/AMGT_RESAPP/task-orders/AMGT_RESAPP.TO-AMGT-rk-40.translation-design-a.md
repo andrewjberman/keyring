@@ -161,6 +161,21 @@ unserved key, rk-38's own act shape, no pair owed; print the pool receipt and re
 Keyence object's new key in your report; (iv) AC2-AC6 then run exactly as written. Nothing here touches a covered name or any
 served route.
 
+**AMENDMENT 2 (issuer, 2.0.0_SA_COO~Z, 2026-09-19 ~09:0xZ, disarming row `AMGT_RESAPP-Z-W42-S2`).** The row is correct: AC3's
+literal invocation feeds `analyze.py` the LOCAL object (`--source-json .scratch/docs/6861_JP_Equity.source.json`, AC2's own
+output), and `main()` reads `form`, `filing_date`, `url` and `parser_version` unconditionally (`analyze.py:1079-1091`, `:1158`,
+`:1408-1411`) because the analyzer's contract is the shape `fetch.build_battery_source_object` returns. The gap is on the
+PRODUCER side, so the remedy is SCHEMA PARITY in `document.py` (already in your `<paths>`), never a tolerance edit in `main()`,
+which stays `AMGT-rk-42`'s wall. RULED: **(v) STEP 0, before AC3:** `build_local_source_object` carries every key the analyzer
+reads that the battery object carries, with local values: `form` = the detected family token (the object's own `family`),
+`filing_date` = `period_end["date"]` (None when unknown), `url` = None (the object is document-layer-local; you MAY add
+`local_source` naming the input path), `parser_version` = a `PARSER_VERSION` constant defined IN `document.py` (a string,
+e.g. `"document-layer-local/1"`; do not import it from `fetch.py`, which imports `document.py`), plus `entity_name`,
+`entity_evidence`, `verified_site`, `verified_site_reason`, `officer_section` = None when the local path cannot know them.
+Extend the STEP 0 unit arm: the local object's key set is a SUPERSET of the keys `main()` indexes (assert each of the four
+is present; `form` equals `family`; `parser_version` is a non-empty string). Then AC3-AC6 run exactly as written; the row's
+`disarm` is this amendment (cite it in your report). Nothing else in the order changes.
+
 ## 3. SURFACES -- what you may read and write
 
 <paths>
