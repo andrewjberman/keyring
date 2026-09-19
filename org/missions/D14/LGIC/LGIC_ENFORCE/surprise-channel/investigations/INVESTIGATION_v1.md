@@ -3981,6 +3981,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "16 arms, 6 positive-satisfiability, PASS-ARMS-DISCRIMINATE. The expectation the criterion turns on is met; only the parenthetical denominator is off by one, and it is off because the quantity is DERIVED FROM THE ORDER COUNT and was quoted as a constant.",
     "notes": "Filed on FORM, not significance: a premise the order states did not hold as written, and a worker who treated the parenthetical as the bar would have read its own clean control as a mismatch. Cost of the fix at the cut is one word -- quote the POSITIVE-SATISFIABILITY count (fixed at 6) and the verdict, and let the total print itself.",
     "id": "LGIC_ENFORCE-W1-S89"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-19T05:30Z",
+    "one_line": "check_en_r12.py's core_binding classifies a test purely from the regex-captured `def test_X(...)` body, so a by-path library call placed in that test's @pytest.mark.parametrize decorator (evaluated at collection time, above the def line) is invisible to it in BOTH directions -- never counted toward the 33 by-path tests at the cut, and never required to move for T45R12-AC1 to read PASS-T45-BINDING.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CODE, read: check_en_r12.py core_binding (:76-79) captures each test body with a regex anchored on the literal def line -- def NAME open-paren, non-greedy through the next top-level def or end of file -- so the capture starts at the def line and never includes any decorator lines written above it.",
+        "MEASURED at the cut, lib/tests/test_opal_naming.py@eda1e967d0: test_builders_refuse_what_they_cannot_build's @pytest.mark.parametrize decorator (:83-92) holds 9 on.key(/on.name( calls inside its lambda list, all by-path. core_binding classified this test as neither (not by_path, not consumer) -- one of R12_BASE.json the_binding_defect.neither:3, alongside test_the_rule_has_its_worked_cases, which genuinely reaches nothing.",
+        "RESULT: core_binding_ok reads only the by_path list length; a test never counted by_path can be left on the by-path module forever with AC1 still reading PASS-T45-BINDING -- the same shape this round exists to fix (a green that is not weak evidence, it is no evidence), one level down inside the checker built to catch it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-EN-t-45-r12: 're-measured here, never inherited' -- 38 total / 33 by-path / 2 consumer at the cut, implying the split accounts for every test's library reach.",
+    "world_is": "The split is regex-scoped to the captured def body only; a decorator-level by-path reach is outside that scope and moves neither the by_path count nor the AC1 verdict in either direction.",
+    "notes": "Remedied in this cell's own edit regardless of the gap: test_builders_refuse_what_they_cannot_build's decorator was converted to _shipped_lib() alongside every other test in the same commit, so no residual is left live in the file. Filed because the checker itself would not have caught it had the decorator been left untouched, and any later round reusing this core_binding shape over a file with decorator-level library calls inherits the same blind spot. disarm_owner omitted: INERT, no live exposure.",
+    "id": "LGIC_ENFORCE-W1-S91"
   }
 ]
 ```
