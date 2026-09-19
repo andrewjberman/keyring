@@ -327,7 +327,23 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     halves (`IRPT_BCKEND-S73`) — same tool, one path disclosing and one silent. COST: one question per
     CLAIM, no re-read. NON-APPLICATION: a sentence whose subject IS the swept set ("of the 210 roles
     comp-iam lists, 13 are irpt-*") — there the denominator and the sentence share a scope by
-    construction. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
+    construction.
+    ⛔ **AND A CLAIM YOU INHERITED FROM A PEER HAS NO DENOMINATOR TO NARROW -- the subtraction cannot fire,
+    because you exercised NOTHING.** An inherited SENTENCE does not look like an inherited NUMBER: there is
+    no figure beside it to interrogate, so a careful reader walks straight past it. ⭐ **THE TELL IS
+    GRAMMATICAL, NOT NUMERICAL: NEVER / ALWAYS / EVERY / NOTHING / ANY in a sentence whose evidence line
+    names ONE object, or none.** Before restating a peer's universal, ask which INSTRUMENT produced it and
+    what that instrument can SEE -- a filesystem census answers PRESENT and can never answer NEVER. Measured
+    2026-09-19, **THREE SEATS**, each found by the seat it convicted: *"one file that has never existed on
+    this box"* came off a `find`, was restated by a second seat into a **LAW-EDIT COMMIT MESSAGE**
+    (permanent, unlike the broadcast it also rode), and the same shape sits in that seat's own commits **six
+    weeks earlier** on an unrelated subject. ⛔ **THE THIRD CHANNEL IS THE WORST AND IT IS NOT A RESTATEMENT
+    AT ALL: a seat INHERITED an unmeasured universal INTO A REMEDY** -- writing *"state the baseline"* as the
+    fix for a claim that nothing stated it, while its own positive control had already stated it -- **and a
+    remedy is what a later seat EXECUTES.** COST: one question per universal quantifier, asked of a sentence
+    already in front of you, so it is bounded in a way a census clause is not. NON-APPLICATION: a sentence
+    whose subject IS the exercised object (*"`response_envelope()` never omits the key"*).
+    (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
     (iv) STATE COHERENCE (name which values one remedy does NOT move). **Outcome arrays, typed-result sets
     and predicates ARE schemas.** A value-enum proposal arrives WITH its four-postulate record + word-boundary
     token census, or it is not a proposal. `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
