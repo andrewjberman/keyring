@@ -100,8 +100,10 @@ portal/ already checked out at the gitlink's recorded commit, before the next ch
      `TSC: <output of ./node_modules/.bin/tsc --version, or ABSENT>`.
    - `remove <worktree-path> [--portal-only]`: `git -C "<main>/portal" worktree remove --force "<worktree>/portal"`
      (the link is removed with the directory; a junction is unlinked, never recursed into), then
-     `git -C "<main>/portal" worktree prune`, then -- unless `--portal-only` -- `git worktree remove --force
-     "<worktree>"` and `git worktree prune`. Prints `REMOVED: ...` lines and `PORTAL_WORKTREES_LISTING_PATH: 0 of N`
+     then RECREATE the empty gitlink placeholder (`mkdir "<worktree>/portal"`, so the superproject's status reads clean,
+     never `D portal`) and NEVER run `worktree prune` (a prune clears UNRELATED pre-existing prunable entries, which AC5
+     forbids; `worktree remove` already drops its own entry) -- ISSUER REPAIR on row W60-S3, making section 1 agree with
+     AC5's end-state; then -- unless `--portal-only` -- `git worktree remove --force "<worktree>"` (no prune). Prints `REMOVED: ...` lines and `PORTAL_WORKTREES_LISTING_PATH: 0 of N`
      (the nested repository's worktree list no longer carries the path).
    - `--self-test`: PURE and local arms with a printed denominator (`RESULT: <f> arm(s) failed of <n>`): (a) into a
      temp directory carrying an empty `portal/` subdirectory (a stand-in for a fresh superproject worktree, created
@@ -216,11 +218,11 @@ print('nested_status_lines', len(subprocess.run(['git', '-C', 'portal', 'status'
   <criterion id="AC3" cell_refs="AMGT-rk-60"><invocation>cd "$(git rev-parse --show-toplevel)/portal" && python -c "
 import os, subprocess
 print('node_modules_is_link_or_dir', os.path.isdir('node_modules'), 'bin_tsc', os.path.exists('node_modules/.bin/tsc'))
-r = subprocess.run(['./node_modules/.bin/tsc', '--version'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60, shell=False)
+r = subprocess.run(['bash', '-c', './node_modules/.bin/tsc --version'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60, shell=False)
 print('tsc_rc', r.returncode, (r.stdout + r.stderr).strip()[-200:])
-n = subprocess.run(['./node_modules/.bin/tsc', '--version'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60, cwd=os.path.join(subprocess.run(['git', 'worktree', 'list', '--porcelain'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30).stdout.splitlines()[0].replace('worktree ', '', 1), 'portal'))
+n = subprocess.run(['bash', '-c', './node_modules/.bin/tsc --version'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=60, cwd=os.path.join(subprocess.run(['git', 'worktree', 'list', '--porcelain'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=30).stdout.splitlines()[0].replace('worktree ', '', 1), 'portal'))
 print('main_tree_tsc', (n.stdout + n.stderr).strip()[-200:], 'same_version', (r.stdout or '').strip() == (n.stdout or '').strip())
-"</invocation><expect>node_modules_is_link_or_dir True and bin_tsc True (link mode reached the main tree's node_modules through the link); tsc_rc 0 printing "Version X.Y.Z" -- the compiler resolves BY PATH inside the provisioned portal, which is the resolution AMGT-rk-53 AC6 and every page cell use (never npx); same_version True against the main tree's own ./node_modules/.bin/tsc --version</expect></criterion>
+"</invocation><expect>node_modules_is_link_or_dir True and bin_tsc True (link mode reached the main tree's node_modules through the link); tsc_rc 0 printing "Version X.Y.Z" -- the compiler resolves BY PATH inside the provisioned portal, which is the resolution AMGT-rk-53 AC6 and every page cell use (never npx); same_version True against the main tree's own ./node_modules/.bin/tsc --version ISSUER REPAIR (2.0.0_SA_COO~Z, on row W60-S2): the shim at node_modules/.bin/tsc is a POSIX shebang script that native-Windows Python cannot CreateProcess (WinError 193), so both calls go through bash -c -- the resolution is still BY PATH inside the provisioned portal; a version printed through bash meets the criterion</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rk-60"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import io, subprocess
 f = '.claude/skills/dispatch/SKILL.md'
