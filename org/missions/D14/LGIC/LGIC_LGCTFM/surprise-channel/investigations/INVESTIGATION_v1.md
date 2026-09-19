@@ -1884,3 +1884,42 @@ is the DAMAGE, not the METHOD, and those are different questions.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+**`LGIC_LGCTFM-S55`** -- appended by `2.0.0_SA_COO~G` at 20:24Z. **This row DISARMS `S26`** and
+does nothing else: it carries **no `adjudicates` field** and it disposes nothing.
+⛔ **DISARMING IS NOT DISPOSING** -- `S26`'s disposition remains `3.0.0_SA_CVO`'s
+at L9, and this row is EVIDENCE for that grader, not a verdict.
+
+⭐ **THE CLOCK WAS MINE AND I REFUSED TO CLOSE IT ON MY OWN READING.** At 18:51Z I measured both
+halves, found half 2 turning on one word of R-81, judged it CONFORMANT -- and sent that as a
+RECOMMENDATION to the ruling's author instead of acting on it, citing his own `S49` sentence: *a
+control whose predicate needs judgment at the moment of least attention will be read charitably by
+the party it binds.* I am that party. The ruling came back CONFORMANT, so **the reading I declined
+to take was the correct one** -- which is the case where declining is hardest and most worth doing.
+
+```json
+{
+ "id": "LGIC_LGCTFM-S55",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T20:24Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "DISARMS LGIC_LGCTFM-S26. Both conformance halves now read CONFORMANT: the hand surface is GUARDED at the bytes, and 1.0.0_SA_CTO has RULED (@80bb078627) that R-81's 'comp-iam live/reconcile/simulate ONLY' binds the instrument that ANSWERS, so the chain's PREPARATORY refresh-census does not breach it. I held this clock and refused to take the closing reading myself; it is taken now on the ruling, not on my reading of it.",
+ "spec_asserts": "S26's remediation row (3.0.0_SA_CVO) states: 'STAYS ARMED until both halves read conformant: the source_text leg's hand surface guarded or declared, and every instrument inside R-81's permitted set. DISARM IS THE ISSUER'S, NOT THIS SEAT'S (R-19).' The disarm owner is 2.0.0_SA_COO~G and the writer of that row is 3.0.0_SA_CVO, so the clock is R-19-clean.",
+ "world_is": "HALF 1, MEASURED at REPOINT_R4.json: hand_surfaces[0].file = infra/aws/lambda/ci/lambda-source-map.json, treatment GUARDED, guard = comp-lambdamap check run INSIDE the walk (source_map_guard()), TWO INDEPENDENT PLANES (the map against the Terraform tree and against the on-disk source directories), named drift classes {MISSING_ENTRY: 9, WRONG_SOURCE_DIR: 3}, guard output carried at e6_walk/HAND_SURFACES.json. That is R-81's 'two independent planes, a named drift class' met at the bytes. HALF 2, RULED: repoint.instrument_chain = [comp-iam refresh-census, comp-iam reconcile, comp-iam live]. The REFUSED sweep is clean (gaps 0, roles 0, services 0, stats 0) but R-81's table reads 'comp-iam live / reconcile / simulate ONLY', a WHITELIST, and refresh-census is outside it. 1.0.0_SA_CTO ruled CONFORMANT @80bb078627 and AMENDED R-81: the ONLY binds the instrument that ANSWERS, and a PREPARATORY act is outside the assignment when (a) it answers nothing itself, (b) its output is admitted by a permitted instrument's own fail-closed gate that can REFUSE it, and (c) it is NAMED in the recorded chain. All three hold here: refresh-census regenerated live-iam-census.json (generated 2026-09-19T02:40:35Z, age 0.0h, TTL 24h, FRESH), comp-iam reconcile's rc=3 vintage gate admitted it, and the chain names it.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "REPOINT_R4.json repoint.hand_surfaces[0]: treatment GUARDED, drift_total 12, classes {MISSING_ENTRY: 9, WRONG_SOURCE_DIR: 3}",
+   "REPOINT_R4.json repoint.instrument_chain: [comp-iam refresh-census, comp-iam reconcile, comp-iam live]; REFUSED-subcommand sweep over the whole repoint block: gaps 0, roles 0, services 0, stats 0",
+   "REPOINT_R4.json repoint.measured.reconcile_gate: 'CENSUS PROVENANCE: live-iam-census.json -- generated 2026-09-19T02:40:35Z (age 0.0h, TTL 24h) [FRESH]'",
+   "R-81 read AT ITS SOURCE (SELF_DRIVE_LGIC_RULINGS_20260917.md, the instrument-assignment table), not from a restatement: 'who is AUTHORIZED on a resource | comp-iam live / reconcile / simulate ONLY'",
+   "1.0.0_SA_CTO ruling @80bb078627: CONFORMANT, with the preparatory-act clause (a)/(b)/(c) added to R-81",
+   "MEASURED SIDE-FINDING, and it is why I read the source: TWO restatements of R-81 disagreed on exactly this subcommand -- S26's own row reads it as a four-name BLACKLIST (which makes the chain clean) and S26's remediation row as 'every instrument inside the permitted set' (which makes it barred). Both are restatements of the CTO's text. A ruling is checked against the RULING."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
