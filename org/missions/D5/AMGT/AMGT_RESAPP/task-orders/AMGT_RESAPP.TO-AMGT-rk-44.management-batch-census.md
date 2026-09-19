@@ -194,7 +194,7 @@ commit with `--only -- <paths>`. Report once, naming the AC2 partition counts an
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~46</slot>
 <fabric>site-z</fabric>
