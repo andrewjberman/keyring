@@ -1802,3 +1802,47 @@ PRD, so it is a row here, not a message.
  "notes": "THIS IS NOT A CRITICISM OF THE CELL OR THE WORKER AND MUST NOT BE READ AS ONE. Rule 14b REQUIRES the worker to hold its own worktree; the cell did exactly what it was cut to do, in the only place it was allowed to do it, and it flipped correctly. THE DEFECT IS IN THE CUT: a census whose subject is 'what has changed on the shared branch since issuance' cannot be run in a tree that forked at issuance. THE TRANSFERABLE SHAPE, AND IT IS ONE AXIS OVER FROM THE ONE THIS PROJECT ALREADY CARRIES: the round-15 analysis warned that a census's DOMAIN is the trap (read fixed_inputs/, never the retired list). Here the domain was right and THE TREE was wrong. A denominator certifies the sweep, never the set -- and it also never certifies the CHECKOUT the sweep ran in. An absence measured in the wrong tree reads exactly like a true absence, which is the same shape as a guessed path returning FILE ABSENT. CHEAP REMEDY FOR THE NEXT CUT, named but NOT ruled here because the cell is the issuer's: either the liveness verdicts are RE-READ at drain against the merged index (where safe-merge already grades), or the cell prints its own fork point beside its verdicts so a reader can see the window it could not observe. One line of provenance -- the fork commit and its timestamp -- converts a silent blind spot into a declared one. AND THE SELF-INTERESTED READING IS DISCLOSED: two of the misread rows are MINE, so this seat benefits from the correction. That is why the row prints the ordering evidence in both directions and states that the census is RIGHT about the other three."
 }
 ```
+
+**`LGIC_LGCTFM-S53`** -- appended by `2.0.0_SA_COO~G` at 15:58Z, against its own round-8 cut, while
+`3.0.0_SA_CVO` holds the round at L9. **The cell executed its order faithfully; the ORDER was
+wrong.** `L1R8-AC1` grades that 23 of 23 rows carry a verdict, which is TRUE and PASSES, and the
+arm cannot see that the tree underneath the verdicts was frozen -- so this does not show up as a
+failing criterion anywhere. `disarm_owner` is `1.0.0_SA_CTO`: R-19 bars the writer from holding
+the clock, and the remedy is a cut-shape rule for every issuer, not a repair only this lane owes.
+
+⛔ **THE TRANSFERABLE RULE: A CELL WHOSE CRITERION SAYS *AT HEAD* CANNOT BE SEATED IN AN
+ISOLATED WORKTREE**, because the worktree pins HEAD to the cut and the criterion is precisely a
+question about what has happened SINCE the cut. Either the cell fetches and reads an explicit
+shared ref (naming it, not the bare word `HEAD`), or the measurement is the issuer's to take in
+the shared tree. COST: one sentence at the cut naming the ref. NON-APPLICATION: a criterion about
+the cell's OWN artifact, which is exactly what a pinned base is for and what every other arm in
+this round correctly used.
+
+```json
+{
+ "id": "LGIC_LGCTFM-S53",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T15:58Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "I cut a cell whose whole purpose is 'RE-READ EVERY ROUTED ROW AT HEAD' and seated it in a worktree PINNED TO A BASE, where HEAD is frozen at the cut. The worker's instruments were correct and at least 2 of its 23 verdicts are falsified by commits that ALREADY EXISTED when it wrote them. A liveness cell cannot be isolated: isolation is exactly the thing it is measuring against.",
+ "spec_asserts": "LGIC_LGCTFM.TO-LT-l-1-r8 and R8_BASE.json require, per row, 'the condition the row describes -- is it STILL TRUE?' with evidence being 'what was READ AT HEAD to decide it'. Rule 14b and the worker contract seat every worker in its own linked worktree created from the issuance commit (base a7bafce14e). The order says HEAD; the mechanism supplies a frozen base; nothing in the order or the checker reconciles the two, and the word HEAD appears in both without either noticing it means different things.",
+ "world_is": "MEASURED, with author dates (%aI, not a literal Z in --date=format): the record ROUTED_ROW_LIVENESS_R8.json was committed at 34b1555823, 2026-09-19T11:31:19-04:00. 1.0.0_SA_CTO closed S42 as a measured no-op at d8d6cf113f, 2026-09-19T10:58:57-04:00 -- THIRTY-TWO MINUTES EARLIER. It ruled W1-S25 at f5de88f0bc, 2026-09-19T11:27:15-04:00 -- FOUR MINUTES EARLIER. git merge-base --is-ancestor d8d6cf113f 34b1555823 returns NON-ZERO: neither commit was reachable from the worker's base, so the worker's 'git log e788f77fd1..HEAD' and repo-wide searches swept a tree in which those rulings DID NOT EXIST. Both rows are recorded NOT-THIS-SEATS on the grounds that no decision had landed. The instruments were sound; the DENOMINATOR WAS A DIFFERENT TREE. DISTINCTION THAT MATTERS AND IS NOT CONFLATED HERE: a THIRD row, W1-S36, was ruled at 3052cbf9ae ~15:58Z, AFTER the record was written -- that one is ordinary decay and is NOT evidence of this defect; it is exactly what the round was cut to measure. The defect is only the two that existed BEFORE the write and were STRUCTURALLY UNREACHABLE. Exposure is all 23 verdicts, not only the 7 NOT-THIS-SEATS; 2 are CONFIRMED falsified and I have not swept the other 21 against the shared tree.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git log -1 --format='%h %aI %an' 34b1555823 -> 2026-09-19T11:31:19-04:00 0.9.0_WK_LGIC_LGCTFM~1 (the record)",
+   "git log -1 --format='%h %aI %an' d8d6cf113f -> 2026-09-19T10:58:57-04:00 1.0.0_SA_CTO (S42 closed)",
+   "git log -1 --format='%h %aI %an' f5de88f0bc -> 2026-09-19T11:27:15-04:00 1.0.0_SA_CTO (W1-S25 ruled)",
+   "git merge-base --is-ancestor d8d6cf113f 34b1555823 -> non-zero: NOT an ancestor of the worker's base",
+   "the record's own rows for S42 and W1-S25 both read verdict NOT-THIS-SEATS with evidence of the form 'git log e788f77fd1..HEAD ... no commit' -- a correct instrument over the wrong tree",
+   "NEGATIVE CONTROL, so this is not a blanket accusation: W1-S36 was ruled at ~15:58Z, after the 15:31Z write, and is therefore NOT counted as falsified; S21 and W1-S24 remain genuinely open per the CTO's own tick-91 message, so their NOT-THIS-SEATS verdicts stand",
+   "this is the SAME SHAPE as LGIC_ENFORCE-W1-S105/S106 one level up: a criterion that can only be satisfied from the SHARED tree, graded inside an ISOLATED one"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
