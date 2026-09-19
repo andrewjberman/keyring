@@ -78,6 +78,8 @@ the `lambda-source-map.json` declarations; the packet (if any member branches to
 <criterion id="R58-AC2" cell_refs="IB-rtf-1" judgment="true"/>
 **`R58-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** State for `3.0.0_SA_CVO`: per DELTA != 0 member, whether the evidence reads "served is stale" or "canonical is incomplete" and what would discriminate; whether `firm_registry.json` should be a BUILDER OUTPUT from `infra/logic/registry/` (Rule 30) rather than a tracked file; what W4-S35's `_meta.artifact` claim means for the family's provenance stamps; and whether `_authz/` should be a shared package (IB-rte-4's carried question). No verdict. Every line citation carries `@<commit-ish>`; a blob pin is written `blob <hash>`.
 
+<expected_criteria>R58-AC1, R58-AC2</expected_criteria>
+
 <placeholders>NONE</placeholders>
 
 <paths>

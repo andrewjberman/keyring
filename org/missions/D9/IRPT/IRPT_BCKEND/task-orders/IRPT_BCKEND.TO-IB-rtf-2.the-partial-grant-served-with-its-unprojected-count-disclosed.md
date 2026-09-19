@@ -79,6 +79,8 @@ the `enforce.py` inversion + tests; the contract field + envelope changes + test
 <criterion id="R59-AC2" cell_refs="IB-rtf-2" judgment="true"/>
 **`R59-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** State for `3.0.0_SA_CVO`: whether the disclosure field's `kinds` taxonomy is MECE over the gap reasons `_scope.unmatched_reasons` can emit (the four-postulate record); whether the seam's VINTAGE travels with the served response (a partial today is a different partial after the seam is re-cut); whether FWD-1/2/5's served path is now REACHABLE for a real advisor (per firm: 49financial served, inflection/cottonwood empty -> refused); and what IRPT_FNTEND must render for the obligation to be discharged. No verdict. Every line citation carries `@<commit-ish>`.
 
+<expected_criteria>R59-AC1, R59-AC2</expected_criteria>
+
 <placeholders>NONE</placeholders>
 
 <paths>

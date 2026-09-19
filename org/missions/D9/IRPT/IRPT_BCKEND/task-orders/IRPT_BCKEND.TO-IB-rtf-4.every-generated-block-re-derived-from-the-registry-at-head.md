@@ -77,6 +77,8 @@ the regenerated target(s); `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_
 <criterion id="R61-AC2" cell_refs="IB-rtf-4" judgment="true"/>
 **`R61-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** State for `3.0.0_SA_CVO`: whether a registry change should re-run its generators at commit time (a PROPOSAL for the CTO -- no gate is built or inferred by this order); whether `lib/opal_naming.py:617`'s realness read is the right sense post-split or the split should be named in the schema (`bucket_managed_by` as a closed enum, IB-rte-7's R57-AC2 question); and which generated consumers of the registry exist outside this order's grant and who owns them. No verdict. Every line citation carries `@<commit-ish>`.
 
+<expected_criteria>R61-AC1, R61-AC2</expected_criteria>
+
 <placeholders>NONE</placeholders>
 
 <paths>

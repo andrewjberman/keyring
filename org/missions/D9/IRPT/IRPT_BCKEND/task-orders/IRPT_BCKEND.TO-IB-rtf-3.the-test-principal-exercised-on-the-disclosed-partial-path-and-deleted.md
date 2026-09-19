@@ -71,6 +71,8 @@ the ledger entries; `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_Clou
 <criterion id="R60-AC2" cell_refs="IB-rtf-3" judgment="true"/>
 **`R60-AC2` -- JUDGMENT, RECORDED AND NOT SELF-GRADED.** State for `3.0.0_SA_CVO`: whether each of FWD-1/2/5/11 is now EXERCISED as its DONE WHEN reads (say per outcome what the arm did and did not reach, and what the partial's `count` means for the DONE WHEN); what the exercise revealed about the served routes (defects filed as rows); and whether a future round can repeat this without a standing account. No verdict. Every line citation carries `@<commit-ish>`.
 
+<expected_criteria>R60-AC1, R60-AC2</expected_criteria>
+
 <placeholders>NONE</placeholders>
 
 <paths>
