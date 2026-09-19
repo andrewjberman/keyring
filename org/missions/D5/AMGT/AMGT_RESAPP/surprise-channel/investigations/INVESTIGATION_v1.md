@@ -9367,6 +9367,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC7 asserts that after AC6, BA_US_Equity's served set carries served_without_span 0 -- i.e. that AC6's rebuild reaches BA_US_Equity.",
     "world_is": "AC6, per issuer bind D4 (which this same order carries and which the never-widen pair enforces), rewrites ONLY the three validation names; BA_US_Equity is a covered, non-validation key and is DRY-RUN only this round. AC6 therefore never touches BA_US_Equity's drafting/v1 object, and the deployed adapter continues to serve BA_US_Equity's PRE-HOLD object (served_without_span 21, unchanged before and after). AC7 is REFUSED on this measurement per the order's own REFUSAL CLAUSE -- not repaired by running a live rebuild of BA_US_Equity, which D4 explicitly bars this round -- and recorded as such in AC7's acceptance row and in the change-management entry's close checklist.",
     "notes": "Not a defect in this worker's build: the conflict is between AC7's literal expect text (written assuming the full covered-population rebuild) and issuer bind D4 (narrowing that rebuild to the three validation names, added later at re-signature to satisfy C-VALIDATION-NAMES). Re-opening AC7 for BA_US_Equity specifically needs either a fresh never-widen pair scoped to BA_US_Equity or the covered-population rebuild D4 defers to end-to-end validation. No remedy owner named beyond that; informational, and cited verbatim in the change-management entry's close section (org/critical_paths/change_management/amgt-rk-41-verbatim-gate-hold-rebuild-20260919.md)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S176",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-19T06:29Z",
+    "one_line": "The round-14 acceptance sweep silently omits AMGT-rk-58's five criteria: _order_criteria scopes to the FIRST <proof_of_spec> span in the document, and rk-58's first such span is a PROSE mention whose captured body is the literal '...', so the real block is never read -- the five criteria are not UNVERIFIABLE, they are absent from the sweep and from its denominator.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MECHANISM, read at HEAD 249d6527bd: .tools/surprise-row-gate.py:1180 _PROOF_BLOCK_RE = re.compile(r\"<proof_of_spec>(.*?)</proof_of_spec>\", re.S) -- non-greedy, unanchored; :1191 m = _PROOF_BLOCK_RE.search(text) takes the FIRST span in the whole document. The docstring's fallback to whole text fires only when the block tag is MISSING (:1189), so a wrong-but-present first span defeats it.",
+        "THE SPAN: AMGT_RESAPP.TO-AMGT-rk-58.direct-act-minted-order.md:80 carries `<proof_of_spec>...</proof_of_spec>` inside prose backticks. The regex ignores backticks; the captured group is the literal three-character string '...'. The real block is :191-241 and holds five criteria at :192, :193, :221, :234, :235.",
+        "DISCRIMINATING PAIR, run this session against rk-58's HEAD bytes via the tool's own _order_criteria: as-is returns 0 criteria; with that single prose line removed and nothing else changed it returns 5. Positive control: the file carries 5 <criterion tags by direct count.",
+        "COVERAGE: all 128 tree task orders of AMGT_RESAPP enumerated by the tool's OWN _task_order_paths_for_sweep and read at HEAD; exactly ONE order is affected. rk-57 reads parsed=4 raw=5 and is NOT affected -- its fifth <criterion at :93 is a prose `<criterion-id>` mention and the order's own closeout at :193 names AC1,AC2,AC3,AC4. That false positive was checked before this row was filed.",
+        "THE PRINTED EFFECT: `python .tools/surprise-row-gate.py --acceptance AMGT_RESAPP --round 14` prints 'PASS 59 / FAIL 1 / UNVERIFIABLE 100 of 160 criteria over 30 order(s); unrounded 0' while 31 order files carry <round>14</round> (file-scoped count, native Grep). The 1-order / 5-criterion gap is exactly rk-58, and it is NOT surfaced in `unrounded`, which correctly reads 0 because rk-58 does carry <round>14</round> at :262."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-57's cell (R14-T3, from row AMGT_RESAPP-Z-S169) asserts the acceptance sweep classifies EVERY criterion of every order of the round into PASS / FAIL / UNVERIFIABLE, each UNVERIFIABLE carrying its reason -- so a criterion is never silently dropped and the printed denominator is the round's true coverage.",
+    "world_is": "An order whose prose mentions <proof_of_spec>...</proof_of_spec> ABOVE its real block has its criteria scoped to the prose span. rk-58's five criteria are omitted entirely. The omission is invisible in the sweep's own output on both available denominators: _acceptance_sweep's orders_out holds one entry per order carrying AT LEAST ONE criterion (:1337), so rk-58 drops out of the order count, and `unrounded` counts only orders with NO <round> tag (:1340), which rk-58 has. The sweep therefore reads complete at 160 criteria over 30 orders when the round's true figures are 165 over 31.",
+    "notes": "REMEDY, one line at :1191, narrowest form: anchor the block tag to line start (^<proof_of_spec>$) -- both real blocks in this project satisfy it and no prose mention does; this matches _order_round's own line-anchored idiom at :1184. Alternatives: take the LAST span, or the first span that actually contains a <criterion tag. NOT FIXED IN THIS ROW: rk-57 is complete and its AC1 --self-test and AC2 battery pin current behaviour, so the fix must land with a self-test arm covering a prose-mention order and belongs to an owner named at L9. DISARM OWNER is 1.0.0_SA_CTO~Z, the gate's owner -- the first cut of this row named this seat and the row gate refused it (R-19: a disarm owner is never the writer of the disarm clock). STANDING: this seat will not accept the sweep's denominator as round 14's coverage; rk-58's five criteria are graded by hand at L9. DISARMS when either the parser carries that arm, or rk-58's five criteria are graded and recorded in the round-14 adjudication."
   }
 ]
 ```
