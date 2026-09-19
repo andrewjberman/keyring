@@ -6034,6 +6034,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
       ]
     },
     "notes": "Formatting-only; no future harm named, so hazard_standing is INERT with no disarm_owner."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T09:05:00Z",
+    "one_line": "TO-IB-rtf-8 arm (d) requires the never-widen packet's blast-radius key to read irpt-holdings' PRIOR CodeSha256 LIVE, never from the manifest -- and read live (.tools/aws lambda get-function-configuration --function-name irpt-holdings), it disagrees with infra/aws/lambda/ci/lambda-source-map.json's own recorded irpt-holdings.artifact_sha256: live CodeSha256 is base64 oVv1pYw56N22WLxKUukuyqQBrhAIWXHzhK1vGDlMbKs=, the manifest's artifact_sha256 is base64 Bn7iLO/E/9CKYP0sz0YdneloZLHdldHkr/c3jWc25Xc= -- two different values for the same served property.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (reconcile which act moved the served bytes without updating the manifest's artifact_sha256, or correct the manifest field; this order's own packet used the LIVE read, so this pass is not exposed, but a future rollback/never-widen act that trusts the manifest's artifact_sha256 as ground truth instead of a live read would be)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 40 .tools/aws lambda get-function-configuration --function-name irpt-holdings --region us-east-1 --query \"{CodeSha256:CodeSha256,LastModified:LastModified}\" --output json, this run: {\"CodeSha256\": \"oVv1pYw56N22WLxKUukuyqQBrhAIWXHzhK1vGDlMbKs=\", \"LastModified\": \"2026-09-19T05:37:12.000+0000\"}",
+        "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-holdings.artifact_sha256 (this worktree's HEAD, ccbf4ac3cb, unedited by this order): \"Bn7iLO/E/9CKYP0sz0YdneloZLHdldHkr/c3jWc25Xc=\" -- read via py -3.12 json.load, this run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rtf-8 arm (d): the packet's blast radius reads 'prior CodeSha256 read live'; CLAUDE.md's writers-census bound (Rule 5, never-widen sign-off) expects a named property's writers enumerated so a sign-off covers what actually moved it.",
+    "world_is": "The two values name the SAME property (irpt-holdings' served CodeSha256) and disagree; this order's own packet is unaffected because it reads the LIVE value directly rather than the manifest field, but the manifest's own artifact_sha256 is stale relative to what AWS actually serves, for a reason this cell did not investigate (out of BOUNDS: no other route's bytes are touched by this order, and the manifest's artifact_sha256 for irpt-holdings is left exactly as found).",
+    "notes": "Not this cell's to fix (BOUNDS: only the enforce.py member and its staged_from/prose are touched on this manifest entry). Routed to the CTO to reconcile the stale artifact_sha256 or name the deploy that moved served bytes without it."
   }
 ]
 ```
