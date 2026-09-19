@@ -194,7 +194,7 @@ it is SHAPE:
 | the rollback named | delete the new key | re-put the saved pre-act bytes |
 | on the next day | still correct | key is 404; rollback is wrong |
 
-⭐ **A HALF THAT NAMES THE ACT'S SHAPE FROM THE PRODUCER'S RULE SURVIVES A DAY BOUNDARY; ONE THAT
+**A HALF THAT NAMES THE ACT'S SHAPE FROM THE PRODUCER'S RULE SURVIVES A DAY BOUNDARY; ONE THAT
 NAMES IT FROM THE INPUT'S STATE ON THE DAY OF SIGNING DOES NOT.** That is the HARD STOPS clause's
 "read from the PRODUCER'S OWN RULE at signing -- never predicted from the input's shape", and round 14
 ran the controlled experiment on it by accident: two halves, same night, same boundary, opposite
