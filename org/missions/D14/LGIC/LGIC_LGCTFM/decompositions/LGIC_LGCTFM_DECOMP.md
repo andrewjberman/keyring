@@ -730,6 +730,68 @@ walk output; no post-cut run). **TWO ARE GUARD-SHAPED AND READ PASS, DISCLOSED:*
 `r4-stale-proofs`.
 
 
+
+## 16. v1.6 -- THE ROUND-5 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round analysis @`abea09f936`
+
+**Input.** `LGIC_LGCTFM_ROUND4_ANALYSIS.md` @`abea09f936` (msg 98152). Round 4 STANDS; no PRD addendum owed;
+endpoint outcomes unchanged. The recut is ONE cell and the analysis names its shape: **a MEASUREMENT cell,
+not a repair cell.**
+
+### 16.1 THE CELL -- 1
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the bucketless keys | `LT-m-2` | measures WHICH producer writes an S3Key with no bucket and HOW MANY producers there are -- and repairs nothing | FWD-1 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+⛔ **WHY MEASUREMENT AND NOT REPAIR, in the analysis's own words:** *the shapes are plausibly TWO causes, and
+a cell that assumes one remedy will make the NUMBERS agree rather than the DATA.* A remedy is the next
+round's question.
+
+### 16.2 THE POPULATION AT THE CUT, AND WHERE THIS SEAT'S MEASUREMENT DISAGREES WITH THE ANALYSIS
+
+Measured from the round-4 run's own contract at `a25a11ab75`, NOT inherited: 404 contract rows, **154
+S3Key**, all with a string path; leading segment after `s3:` is `opal-data-bd` 130, `platinum` 12, `gold`
+10, `silver` 1, `blackdiamond` 1 -- so **24 of 154 resolve to no bucket.**
+
+⚠ **The analysis calls the 24th row a malformed single-colon `s3:`. In the run this seat read there is NO
+bare `s3:` row:** the 24th is `s3:blackdiamond/49f/_ops/pull_state.json`, FIRM-prefixed. The total and the
+tier split (12/10/1) agree exactly; only that row's characterisation differs -- **a different shape with a
+plausibly different producer.** The disagreement is written into the order so the cell HUNTS rather than
+CONFIRMS, and so that a bare `s3:` row in a run this seat did not read is still findable.
+
+### 16.3 THE BAR THIS ROUND'S CRITERIA WERE BUILT AGAINST
+
+⭐ The CTO's bar from round 4, binding at CUT time: **can a CORRECT artifact satisfy this? Where the honest
+answer is no, THE CRITERION IS THE DEFECT, NOT THE CELL.** Round 4 shipped FOUR criteria no correct record
+could satisfy, and in each the cheapest satisfying move was to damage something -- up to reverting another
+project's commit.
+
+So every round-5 criterion was checked against a **hand-built CORRECT record** before the cut, and that
+record is driven in the checker's own self-test as a POSITIVE-SATISFIABILITY arm (`_correct()`): the bar is
+EXERCISED, not promised. Two consequences visible in the arms:
+
+1. **An UNATTRIBUTED row is admissible when NAMED with its reason.** A cell that genuinely cannot reach a
+   producer must be able to say so without fabricating one; what the arm refuses is SILENCE -- a row in
+   neither list. A criterion demanding attribution of every row would be precisely the unsatisfiable shape.
+2. **`s41-no-repair` grades the CELL'S OWN COMMITS BY AUTHOR**, carried forward from `W1-S39` rather than
+   re-learned: another seat's registry commit is excused and PRINTED, never charged to this cell.
+
+### 16.4 THE VINTAGE FIELD LANDS HERE
+
+`1.0.0_SA_CTO` ADDENDUM 3 @`b1693a5b79` ruled the per-proof fixed-input vintage FIELD into **round 5's
+carrier**, and this is that carrier. `record.fixed_inputs_at_pin` maps each fixed input the cell invoked to
+the COMMIT it invoked it at, and `r5-vintage-field` requires both fixed inputs to be named AND each commit
+to RESOLVE against its path. ⭐ This is what retires the sweep: **an arm that walks a log from a pin can
+always be aimed at the wrong window; a proof that carries the commit of the input it invoked cannot be.**
+
+### 16.5 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** repair a single bucketless row, and it does not name a remedy.
+- It does **not** decide whether the tier-prefixed and firm-prefixed shapes share a producer -- that is the
+  measurement's OUTPUT, and pre-deciding it is the failure the analysis names.
+- It does **not** touch the engine, the registries or `LEGACY_SERVED_PATHS.json`.
+- It does **not** re-open round 4, whose three cells stand as graded.
+
 ### 15.4 THE ROUND-4 CLOSE -- three cells drained, and FOUR of this seat's own arms were repaired mid-round
 
 | cell | drain | arms at the MERGED tree | proof |
