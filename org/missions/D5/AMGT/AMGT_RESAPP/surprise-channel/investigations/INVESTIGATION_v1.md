@@ -8951,6 +8951,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC5 expects the pre-existing prunable entry to survive untouched and the worktree's portal/ directory to remain present-but-empty with a clean superproject status after remove --portal-only.",
     "world_is": "Section 1 rules an UNCONDITIONAL 'git -C <main>/portal worktree prune' as part of the remove verb, and that call prunes every stale entry the nested repository can see, not only the one this cell created; separately, 'git worktree remove --force' removes the worktree's root directory entirely, which section 1 never instructs the script to recreate. Both are direct, literal consequences of building exactly what section 1 rules; AC5's own <expect> assumes different consequences from the same named steps.",
     "notes": "REFUSED per the Refusal Clause: this worker did not scope the prune call to its own entry, and did not add an unruled 'mkdir portal_dir' recreation step, because section 1 names neither. As a housekeeping act OUTSIDE the graded invocation (after AC5's output was already recorded), this worker recreated its OWN worktree's empty portal/ placeholder (mkdir) so its own superproject status returns to clean, matching 'leave your worktree as you found it' -- this does not change AC5's recorded measurement. The pre-existing wk-amgt-10-1 prunable registration cannot be un-pruned; its underlying directory was already gone (that is what 'prunable' means), so no data was lost, only a stale admin entry another seat might have wanted to observe. Disarm: the issuer either accepts AC5's literal measurement as the correct behavior (and corrects AC5's own <expect> text for future rounds) or amends section 1's remove verb to scope the prune and recreate the placeholder -- this worker's <paths> does not include re-ruling section 1 beyond what was already built."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W60-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~60",
+    "surfaced_at": "2026-09-19T03:05:00Z",
+    "one_line": "AC3's literal invocation still crashes after the issuer's bash-c repair, on a SECOND, different defect: its own comparison call re-runs 'git worktree list --porcelain' from inside portal/ (a distinct nested repository), so it resolves the NESTED repo's own main worktree instead of the superproject's, appends 'portal' a second time, and hands subprocess.run a cwd that does not exist.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured this session, AC3 invocation run verbatim under timeout 120 from cwd portal/ (repaired form, both tsc calls through bash -c): rc=1, output ends with 'NotADirectoryError: [WinError 267] The directory name is invalid' raised inside subprocess.run at the CreateProcess call for the SECOND (main_tree_tsc) invocation; the first line printed is 'node_modules_is_link_or_dir True bin_tsc True' and 'tsc_rc 0 ... Version 5.9.3' for the FIRST call, so the by-path resolution itself succeeds and only the comparison call crashes.",
+        "python -c \"import subprocess; print(subprocess.run(['git','worktree','list','--porcelain'],capture_output=True,text=True).stdout.splitlines()[0])\" run from cwd portal/ prints 'worktree C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal' (the NESTED repository's own main worktree, since git worktree list has no repository context beyond cwd) -- os.path.join(that, 'portal') is '.../ajb_workspace/portal/portal', which os.path.isdir() reports False.",
+        "This is independent of the wk-provision.sh script under test: the crash is entirely inside AC3's own inlined python, in the 'n = subprocess.run(...)' line's cwd= expression, which never passes -C to the git worktree list call it uses to locate 'main'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3's invocation asserts that its own comparison subprocess call, run with cwd computed from 'git worktree list --porcelain' at the current directory, lands in the main tree's portal/ directory and prints the main tree's own tsc --version for the same_version check.",
+    "world_is": "The current directory at that point is the WORKER'S OWN portal/ (a distinct nested git repository), so the uncwd'd 'git worktree list --porcelain' call returns THAT repository's worktree list, not the superproject's -- the computed cwd is wrong by construction and the directory it names does not exist, independent of any script or environment defect this cell built.",
+    "notes": "REFUSED per the Refusal Clause: this worker did not rewrite AC3's invocation (e.g. adding '-C <main>' or hardcoding the main tree path) because the order's invocations are literal and it names no such route; AC1/AC2/AC4/AC5 do not share this defect. The substantive fact AC3 exists to prove -- tsc resolves BY PATH inside the provisioned portal/ via bash -c, printing 'Version 5.9.3' -- IS measured true (the first call succeeds); only the invocation's own SECOND, self-comparison call is unreachable as written. Disarm: the issuer corrects AC3's invocation (scope the second 'git worktree list --porcelain' with '-C' to the worker's own worktree root, or drop the comparison call) for the next round this shape is reused."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W60-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~60",
+    "surfaced_at": "2026-09-19T03:40:00Z",
+    "one_line": "AC4's 'at_head 0' / non-empty 'skill_numstat' expectation cannot be reproduced literally in this RESUMED session, because this worker's own earlier commit (48102a8e9f) already carries the SKILL.md edit and sits on this branch's HEAD -- diffing 'HEAD' now measures zero delta, not because the edit is missing but because HEAD has moved past the point it was introduced.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured this session, AC4 invocation run verbatim: 'mentions_wk_provision_now 2 at_head 2', 'portal_ref_word_now 1 at_head 1', 'skill_numstat' empty -- all three contradict the order's literal <expect> ('at_head 0', 'at_head 0', 'skill_numstat shows the one file with added lines').",
+        "git log on this branch (wk-amgt-14-60): HEAD is fae9316edb (issuer's own repair commit, task-order text only), parent 79b56a7265 (this worker's PRIOR session's proof commit), parent 48102a8e9f (this worker's PRIOR session's build commit, which introduced the SKILL.md edit), parent 047aee5478 (the round-14 issuance drain -- the TRUE pre-cell baseline). 'HEAD' in AC4's invocation now resolves past all three of this cell's own prior commits.",
+        "diff <(git show 48102a8e9f:.claude/skills/dispatch/SKILL.md) .claude/skills/dispatch/SKILL.md -> IDENTICAL (byte-for-byte no drift since the previously-recorded PASS at 79b56a7265, which measured 'at_head 0' against the then-current HEAD).",
+        "python measurement against the TRUE pre-cell baseline 047aee5478 (not bare 'HEAD'): mentions_wk_provision_now 2 at_baseline(047aee5478) 0; portal_ref_word_now 1 at_baseline 0 -- confirming the substantive novelty claim ('this content is new, not pre-existing') genuinely holds; only the bare-'HEAD' instrument no longer discriminates it because HEAD itself is now downstream of the cell's own build."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4's invocation asserts that diffing the current SKILL.md bytes against 'HEAD' shows the wk-provision.sh/portal_ref: mentions as NEW (absent at HEAD) and the numstat as non-empty, proving this cell's edit is freshly added.",
+    "world_is": "In a resumed worker session whose earlier build was already committed to this same branch, 'HEAD' is no longer the pre-cell baseline -- it is downstream of that very build -- so a bare 'git show HEAD:<file>' diff structurally cannot detect the novelty it was written to detect, independent of anything wrong with SKILL.md's own content (which is unchanged, byte-for-byte, since the previously-recorded PASS).",
+    "notes": "Graded PASS on the mechanism (analogous to AC2/row S1's illustrative-literal treatment): every field AC4 exists to police about the SCRIPT and the SKILL FILE'S OWN CONTENT (worktree_add_line_kept 1 of 1, non_ascii_now equals non_ascii_head, script_non_ascii 0, script_crlf 0, script_set_uo_pipefail 1) matches exactly, and the discriminating re-measurement against the true pre-cell baseline (047aee5478) confirms the novelty claim independently. This worker did not rewrite AC4's invocation to diff against a named historical commit instead of bare HEAD, because the order's invocations are literal and name no such route. Disarm: none required (INERT) -- flagged so a future round-14-style resumed session with a mid-flight repair commit knows 'vs HEAD' novelty checks on an already-committed branch will read this way structurally, not as a regression."
   }
 ]
 ```

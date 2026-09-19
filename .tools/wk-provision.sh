@@ -228,12 +228,15 @@ cmd_remove() {
     git -C "$nested" worktree remove --force "$portal_dir" \
       || echo "WARN: git worktree remove reported an issue for $portal_dir" >&2
   fi
-  git -C "$nested" worktree prune
+  # ISSUER REPAIR (row W60-S3): recreate the empty gitlink placeholder so the superproject's own
+  # status reads clean (never "D portal"), and NEVER run `worktree prune` here -- a prune clears
+  # every unrelated pre-existing prunable entry in the nested repository's worktree list, which
+  # AC5 forbids; `git worktree remove` above already drops this call's own entry on its own.
+  mkdir -p "$portal_dir"
   echo "REMOVED: $portal_dir"
 
   if [ "$portal_only" = "false" ]; then
     git worktree remove --force "$worktree" || die 1 "git worktree remove failed for $worktree"
-    git worktree prune
     echo "REMOVED: $worktree"
   fi
 
@@ -256,18 +259,24 @@ cmd_self_test() {
   nested="$main/portal"
 
   local fail=0
-  local total=6
+  local total=7
 
   local wt1="$tmp_base/wt1"
   local wt2="$tmp_base/wt2"
   local wt3="$tmp_base/wt3"
+  local wt4="$tmp_base/wt4"
+  local orphan_portal="$tmp_base/orphan-portal"
 
   echo "== ARM 1: portal provisions at the nested repository's HEAD =="
   # --no-checkout: a stand-in superproject worktree needs no full working-tree checkout (the
-  # superproject's own checkout cost is unrelated to what this arm tests); portal/ is created by
-  # hand as the empty placeholder a real checkout would also produce for this gitlink.
+  # superproject's own checkout cost is unrelated to what this arm tests); "git checkout HEAD --
+  # portal" alone then populates just the gitlink placeholder THROUGH GIT'S OWN CHECKOUT MACHINERY
+  # -- a plain "mkdir -p" produces a directory that LOOKS the same but leaves the worktree's index
+  # unreconciled, so "git status" reports it "D portal" forever after (measured: a real full
+  # checkout reads clean immediately; --no-checkout + mkdir reads "D portal" both before AND after
+  # the gitlink is touched). ARM5 checks status, so it needs the real placeholder, not the look-alike.
   git worktree add --no-checkout -b wk-selftest-rk60-1 "$wt1" HEAD >/dev/null 2>&1
-  mkdir -p "$wt1/portal"
+  git -C "$wt1" checkout HEAD -- portal
   local arm1_out arm1_rc
   arm1_out="$(bash "$0" portal "$wt1" 2>&1)"; arm1_rc=$?
   echo "$arm1_out"
@@ -284,7 +293,7 @@ cmd_self_test() {
 
   echo "== ARM 2: a bad --portal-ref refuses rc 2, creates nothing =="
   git worktree add --no-checkout -b wk-selftest-rk60-2 "$wt2" HEAD >/dev/null 2>&1
-  mkdir -p "$wt2/portal"
+  git -C "$wt2" checkout HEAD -- portal
   local arm2_out arm2_rc
   arm2_out="$(bash "$0" portal "$wt2" --portal-ref no-such-ref-rk60 2>&1)"; arm2_rc=$?
   echo "$arm2_out"
@@ -297,7 +306,7 @@ cmd_self_test() {
 
   echo "== ARM 3: a non-empty portal/ refuses rc 2 =="
   git worktree add --no-checkout -b wk-selftest-rk60-3 "$wt3" HEAD >/dev/null 2>&1
-  mkdir -p "$wt3/portal"
+  git -C "$wt3" checkout HEAD -- portal
   echo "placeholder" > "$wt3/portal/dummy.txt"
   local arm3_out arm3_rc
   arm3_out="$(bash "$0" portal "$wt3" 2>&1)"; arm3_rc=$?
@@ -320,36 +329,87 @@ cmd_self_test() {
   fi
   if [ "$arm4_ok" = "true" ]; then echo "ARM4: PASS"; else echo "ARM4: FAIL"; fail=$((fail + 1)); fi
 
-  echo "== ARM 5: remove --portal-only leaves the nested worktree list without the path =="
+  echo "== ARM 5: remove --portal-only leaves the nested worktree list without the path, and recreates the empty placeholder =="
   local arm5_out arm5_rc
   arm5_out="$(bash "$0" remove "$wt1" --portal-only 2>&1)"; arm5_rc=$?
   echo "$arm5_out"
   local arm5_ok="true"
   [ "$arm5_rc" -eq 0 ] || arm5_ok="false"
   if git -C "$nested" worktree list | grep -F -q "$wt1/portal"; then arm5_ok="false"; fi
+  [ -d "$wt1/portal" ] || arm5_ok="false"
   local wt1_portal_count
   wt1_portal_count="$(ls -A "$wt1/portal" 2>/dev/null | wc -l)"
   [ "$wt1_portal_count" -eq 0 ] || arm5_ok="false"
+  local wt1_status
+  wt1_status="$(git -C "$wt1" status --short -- portal 2>&1)"
+  [ -z "$wt1_status" ] || arm5_ok="false"
   if [ "$arm5_ok" = "true" ]; then echo "ARM5: PASS"; else echo "ARM5: FAIL"; fail=$((fail + 1)); fi
 
-  echo "== ARM 6: full cleanup -- every branch and worktree the self-test created is gone =="
+  echo "== ARM 6: no worktree prune runs -- an unrelated pre-existing prunable entry survives =="
+  git worktree add --no-checkout -b wk-selftest-rk60-4 "$wt4" HEAD >/dev/null 2>&1
+  git -C "$wt4" checkout HEAD -- portal
+  bash "$0" portal "$wt4" >/dev/null 2>&1
+  # Manufacture an UNRELATED prunable entry in the nested repository's own worktree list: add a
+  # worktree, then delete its directory OUTSIDE git so git itself marks it "prunable" on next list.
+  git -C "$nested" worktree add --no-checkout -b wk-selftest-rk60-orphan-portal "$orphan_portal" HEAD >/dev/null 2>&1
+  rm -rf "$orphan_portal"
+  local arm6_ok="true"
+  if ! git -C "$nested" worktree list | grep -F "$orphan_portal" | grep -q "prunable"; then
+    echo "WARN: could not manufacture the orphan prunable entry; arm6 cannot discriminate"
+    arm6_ok="false"
+  fi
+  local arm6_out arm6_rc
+  arm6_out="$(bash "$0" remove "$wt4" --portal-only 2>&1)"; arm6_rc=$?
+  echo "$arm6_out"
+  [ "$arm6_rc" -eq 0 ] || arm6_ok="false"
+  # The orphan entry must STILL be listed (prunable or not) -- if `remove` ever ran `worktree
+  # prune`, this entry would be gone.
+  if ! git -C "$nested" worktree list | grep -F -q "$orphan_portal"; then arm6_ok="false"; fi
+  [ -d "$wt4/portal" ] || arm6_ok="false"
+  local wt4_portal_count
+  wt4_portal_count="$(ls -A "$wt4/portal" 2>/dev/null | wc -l)"
+  [ "$wt4_portal_count" -eq 0 ] || arm6_ok="false"
+  # Scope the check to cmd_remove's OWN body (the self-test's cleanup, further down in this same
+  # file, legitimately calls "worktree prune" on itself -- a whole-file grep would match that and
+  # fail ARM6 unconditionally regardless of what cmd_remove does). Comment lines are stripped too:
+  # cmd_remove's own repair comment says "NEVER run `worktree prune` here", which contains the
+  # literal phrase without calling it.
+  if sed -n '/^cmd_remove()/,/^}/p' "$0" | grep -v '^[[:space:]]*#' | grep -q "worktree prune"; then
+    echo "ERROR: cmd_remove's own body still calls \"worktree prune\""
+    arm6_ok="false"
+  fi
+  if [ "$arm6_ok" = "true" ]; then echo "ARM6: PASS"; else echo "ARM6: FAIL"; fail=$((fail + 1)); fi
+
+  echo "== ARM 7: full cleanup -- every branch and worktree the self-test created is gone =="
   git worktree remove --force "$wt1" >/dev/null 2>&1
   git worktree remove --force "$wt2" >/dev/null 2>&1
   git worktree remove --force "$wt3" >/dev/null 2>&1
+  git worktree remove --force "$wt4" >/dev/null 2>&1
   git worktree prune
-  git branch -D wk-selftest-rk60-1 >/dev/null 2>&1
-  git branch -D wk-selftest-rk60-2 >/dev/null 2>&1
-  git branch -D wk-selftest-rk60-3 >/dev/null 2>&1
-  git -C "$nested" branch -D wk-selftest-rk60-1-portal >/dev/null 2>&1
+  # Swept by PATTERN, not by one hardcoded name per arm: a hardcoded list silently misses any
+  # branch a later arm creates (measured -- "wk-selftest-rk60-4-portal", created by ARM6's own
+  # provision call, was never in this list and survived every prior version of this cleanup).
+  # This is the self-test's OWN cleanup of ITS manufactured orphan entry (ARM6), never the
+  # `remove` verb's behavior under test (which is proven by ARM6 to never prune). It runs BEFORE
+  # the nested branch-delete loop below: a branch still referenced by a prunable-but-unpruned
+  # worktree admin entry is still "used by worktree" as far as `branch -D` is concerned, so
+  # pruning first is what lets the orphan's own branch delete succeed.
   git -C "$nested" worktree prune
+  local b
+  for b in $(git branch --list 'wk-selftest-rk60-*' | awk '{print $NF}'); do
+    git branch -D "$b" >/dev/null 2>&1
+  done
+  for b in $(git -C "$nested" branch --list 'wk-selftest-rk60-*' | awk '{print $NF}'); do
+    git -C "$nested" branch -D "$b" >/dev/null 2>&1
+  done
   rm -rf "$tmp_base"
 
-  local arm6_ok="true"
-  if git worktree list | grep -F -q "$tmp_base"; then arm6_ok="false"; fi
-  if git -C "$nested" worktree list | grep -F -q "$tmp_base"; then arm6_ok="false"; fi
-  if git branch --list 'wk-selftest-rk60-*' | grep -q .; then arm6_ok="false"; fi
-  if git -C "$nested" branch --list 'wk-selftest-rk60-*-portal' | grep -q .; then arm6_ok="false"; fi
-  if [ "$arm6_ok" = "true" ]; then echo "ARM6: PASS"; else echo "ARM6: FAIL"; fail=$((fail + 1)); fi
+  local arm7_ok="true"
+  if git worktree list | grep -F -q "$tmp_base"; then arm7_ok="false"; fi
+  if git -C "$nested" worktree list | grep -F -q "$tmp_base"; then arm7_ok="false"; fi
+  if git branch --list 'wk-selftest-rk60-*' | grep -q .; then arm7_ok="false"; fi
+  if git -C "$nested" branch --list 'wk-selftest-rk60-*-portal' | grep -q .; then arm7_ok="false"; fi
+  if [ "$arm7_ok" = "true" ]; then echo "ARM7: PASS"; else echo "ARM7: FAIL"; fail=$((fail + 1)); fi
 
   echo "RESULT: $fail arm(s) failed of $total"
   [ "$fail" -eq 0 ]
