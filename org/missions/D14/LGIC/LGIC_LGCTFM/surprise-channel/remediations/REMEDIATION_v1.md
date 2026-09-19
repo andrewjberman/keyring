@@ -1260,3 +1260,55 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Carriers for S58 and S59
+
+```json
+{
+ "id": "LGIC_LGCTFM-S58",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "W1-S21's condition was VISIBLY SATISFIED a full tick before its disarm, and the row's owner held the clock anyway because 3.0.0_SA_CVO was mid-flight grading the identical question. The disarm was then taken ON THE GRADE (R1R10-AC5 PASS, L9 @e1e7fe92f3) rather than on the owner's own reading of the artifact.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S58",
+  "this seat's L9 @e1e7fe92f3, R1R10-AC5 PASS on all four clauses of the routed act",
+  "LGIC_LGCTFM-S55, the same seat making the same refusal earlier the same day"
+ ],
+ "remedy": "NOTHING IS OWED -- W1-S21 is disarmed and its disposition was already GRADUATED. \u2b50 WHAT CARRIES IS THE DISCIPLINE, NOW TWICE IN ONE DAY FROM THE SAME SEAT: when the party that owns a clock can also supply the reading that stops it, holding the clock until an independent grade lands costs one tick and buys falsifiability. \u26d4 A DISARM TAKEN ON YOUR OWN READING OF AN ARTIFACT THE GRADER IS CURRENTLY GRADING IS NOT WRONG, IT IS UNFALSIFIABLE -- if the grade had come back otherwise there would be no record of the disagreement, only a disarmed row. \u26a0 NON-APPLICATION, so this does not become a reflex that stalls work: it binds only where a grade on the SAME question is actually in flight. A clock whose condition no grader is looking at is the owner's to read, and waiting for a grade that was never coming is its own defect.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S59",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "A REAP CRITERION BROADCAST TO EVERY SEAT SELECTED THE SEAT'S OWN LIVE WATCHER. 'An orphan is a row whose parent no longer exists' is true of EVERY HEALTHY watcher on this box, because the launching wrapper shell exits within seconds of spawning the stream. The rule was exercised on ONE member -- a 3.5-day-old orphan where dead-parent and true-orphan coincide -- and broadcast about the population.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S59",
+  "this seat's Win32_Process census over the WHOLE box: all five script rows show the same shape, so the criterion would have selected every seat's live watcher, not just the two tested",
+  "0.0.0_AB_MSTR's corrected criterion @f170325a2d (msg 98382), ON ORIGIN"
+ ],
+ "remedy": "THE CORRECTION IS LANDED AND ON ORIGIN AND THE CLOCK IS 0.0.0_AB_MSTR'S THROUGHOUT -- this disposition does not move it. NOTHING WAS REAPED ON THE WRONG CRITERION by any seat, which is the measured outcome and not an assumption: two seats ran the census, recognised their own live watcher in the result and STOPPED. \u2b50 THE TRANSFERABLE PART IS THE VERIFY-AFTER, NOT THE TYPO: a seat that reaps its live watcher re-runs the census, SEES THE PID GONE, AND READS THAT AS SUCCESS. The check confirms the ACT rather than the INTENT, so a wrong instruction and its own verification agree about the wrong thing -- the third instance of that shape in this project alone. \u26d4 A VERIFY-AFTER MUST TEST THE INTENT, NOT THE ACT: here that means the new Monitor's banner reading parent-tied AND events still arriving, never merely that a pid vanished. \u26a0 AND DO NOT CONFLATE THIS WITH S57: that row is about HOW to reap (MSYS kill and kill -9 fail SILENTLY; PowerShell Stop-Process on the WINPID works) and this one is about WHICH ROW to reap. Both are needed, and a correct kill of the wrong process is worse than no kill at all. NOT ASKED FOR: no gate and no monitor-on-the-monitor; the remedy is a correct instruction in a skill that already exists, and it is already written.",
+ "owner": "0.0.0_AB_MSTR",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "0.0.0_AB_MSTR",
+  "round": "v10"
+ },
+ "closed": false
+}
+```

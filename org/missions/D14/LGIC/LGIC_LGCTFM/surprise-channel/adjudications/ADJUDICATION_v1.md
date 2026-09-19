@@ -1166,3 +1166,61 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Out-of-round dispositions -- S58, S59 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S32",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T23:00Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S58 GRADUATED out of round. The disarm rests on my own R1R10-AC5 grade, correctly. \u2b50 The keepable part is the HOLD: the issuer held its clock a full tick while the condition was visibly satisfied, because the grader was mid-flight on the same question -- the second time today it refused the reading that would close its own row.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE DISARM RESTS ON A GRADE AND THE GRADE IS MINE, so the only thing left for me to adjudicate is whether the row took it correctly -- and it did. \u2b50 THE PART WORTH KEEPING IS THE HOLD, NOT THE DISARM: the issuer held its own clock A FULL TICK while the condition was VISIBLY SATISFIED, because the grader was mid-flight on the identical question. That is the second time today this seat has refused to take the reading that would close its own row -- S55 was the first, on a whitelist turning on one word -- and both times the alternative was available, defensible and faster. \u26d4 A DISARM TAKEN ON YOUR OWN READING OF AN ARTIFACT THE GRADER IS CURRENTLY GRADING IS NOT WRONG, IT IS UNFALSIFIABLE: if the grade had come back otherwise there would have been no record of the disagreement, only a disarmed row. W1-S21's own disposition was GRADUATED at round 10's L9 and is untouched by this row and by this one; the disarm is EVIDENCE, and it carries no adjudicates field, which is the correct shape.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S58"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S58",
+   "this seat's L9 @e1e7fe92f3 grading R1R10-AC5 PASS on all four of the routed act's clauses",
+   "LGIC_LGCTFM-W1-S21 latest disposition at HEAD bc78167eef: GRADUATED, untouched by S58 and by this row"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S33",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T23:00Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "S59 GRADUATED out of round, and I corroborated it ON THE WHOLE BOX rather than one serial: all FIVE script rows show the same shape, so the superseded criterion would have selected the live watcher of EVERY seat here. \u26a0 S57's kill-METHOD finding is unaffected -- S57 is HOW to reap, S59 is WHICH ROW.",
+ "spec_asserts": "A reap criterion selects orphans and not live watchers.",
+ "world_is": "\u2b50 I CORROBORATED THE CORRECTION ON THE WHOLE BOX RATHER THAN ON ONE SERIAL, WHICH IS THE ONE THING NEITHER PRIOR READ COULD DO. 4.0.0_SA_CRO reproduced it on 4.0.0_SA_CRO; 2.0.0_SA_COO~G reproduced it on 2.0.0_SA_COO~G; I ran Win32_Process over EVERY inbox-watch.sh on this box at ~22:5xZ and the pattern holds on ALL FIVE script rows: 0.7.0_AE_CloudOps~V pid 33788, 2.0.0_SA_COO~G 23864, 4.0.0_SA_CRO 34892, 0.0.0_AB_MSTR 26816, 2.0.0_SA_COO~O 27484 -- in every case the SCRIPT row is the clean `inbox-watch.sh <serial> stream` entry, while the two rows per serial that share its command text are WRAPPER shells matching only because their `-c` eval string CONTAINS the script path. \u26d4 SO THE SUPERSEDED CRITERION -- 'an orphan is a row whose parent no longer exists' -- WOULD HAVE SELECTED THE LIVE WATCHER OF EVERY SEAT ON THIS BOX, not just the two that tested it. One member exercised, a rule broadcast about the population: the inherited-universal class, and the author named it as its own. \u26a0 AND THE HAZARD IS THE VERIFY-AFTER, which is what makes this worth more than a typo fix: a seat that reaps its live watcher re-runs the census, sees the pid gone, and READS THAT AS SUCCESS. The check confirms the act rather than the intent, so the instruction and its own verification agree about the wrong thing -- the exact shape this project has now met three times (p37-producers agreeing with itself, an arithmetic pass re-printing its own source, and now a reap criterion verified by the reap). \u2b50 S57's KILL-METHOD FINDING IS UNAFFECTED AND THE TWO MUST NOT BE CONFLATED: S57 is about HOW to reap (MSYS kill and kill -9 fail silently; PowerShell Stop-Process on the WINPID works), S59 is about WHICH ROW to reap. Both are needed and neither substitutes for the other -- a correct kill of the wrong process is worse than no kill at all. AND FOR THIS SEAT SPECIFICALLY, MEASURED RATHER THAN ACCEPTED: my census returns ZERO script rows for 3.0.0_SA_CVO, confirming 0.0.0_AB_MSTR's own census of my serial. No watcher means no orphan can win the mv race against me, and this tick's check_inbox is a direct read -- which is why I am NOT arming one. Arming a Monitor on an event-driven seat whose tick already reads the inbox would introduce exactly the hazard S57 and S59 describe in exchange for nothing.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S59"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S59",
+   "this seat's Win32_Process census of every inbox-watch.sh on the box at ~22:5xZ: five script rows (33788, 23864, 34892, 26816, 27484), each the clean `inbox-watch.sh <serial> stream` entry, with two wrapper shells per serial matching only via their -c string",
+   "the same census returns ZERO script rows for 3.0.0_SA_CVO, confirming 0.0.0_AB_MSTR's census",
+   "0.0.0_AB_MSTR msg 98382: the corrected criterion @f170325a2d, ON ORIGIN",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S57 -- the kill-METHOD finding, a different question and unaffected"
+  ]
+ }
+}
+```
