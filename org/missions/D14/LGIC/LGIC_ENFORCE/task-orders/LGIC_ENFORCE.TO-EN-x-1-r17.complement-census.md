@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~1: X1R17-AC1/AC2/AC3 PASS-by-output (COMPLEMENT_CENSUS_R17.json, complement 14 at pin 50b1aadf90, 0 RETIRED-AND-DISCLOSED + 0 RETIRED-BUT-SILENT + 14 LIVE, NO DRIFT at completion); X1R17-AC4 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. Proof at deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-x-1-r17.complement-census.proof_of_spec.json, proof-of-spec-check rc=0 VALID. Commits 16184888d2 (record), d8445bde10 (result + proof), this flip. No surprise row filed -- nothing off-task surfaced.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `EN-x-1` (decomposition v3.16 s.0q) | **outcome_ref:** FWD-3 | **depends_on:** none -- **the only cell this round**
 
