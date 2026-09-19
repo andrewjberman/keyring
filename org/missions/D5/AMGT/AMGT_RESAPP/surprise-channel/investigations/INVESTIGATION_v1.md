@@ -9209,6 +9209,97 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This order's AC2 repair note asserts that emitting no <round> element is what lets a minted direct-act order clear GATE (x): 'gate_violations 0 holds only if the minter emits no <round> element'.",
     "world_is": "GATE (x)'s round-issuer limb (committed at 432033882e, not present in this worktree's copy of the gate) is wired only into to-pipeline-gate.py's main() over the newly-added `targets` set, never into check_file() -- so AC2's own test method (a direct check_file(root, fx) call, never main()) cannot exercise GATE (x) either way. On the one real path that DOES exercise it -- a genuinely staged, newly-added tree order graded through main(), such as at a commit-time hook -- an UNROUNDED order is REFUSED by name for carrying no line-anchored <round>N</round> element: the opposite of what this repair note needs to hold once GATE (x) and this minter's unrounded output meet in the same gate.",
     "notes": "Not this cell's defect and not fixed here (THE GATE IS CALLED, NEVER EDITED; GATE (x) is out of scope for this cell and, per this session's is-ancestor check, absent from this worktree's copy of the gate). Filed because the repair's own stated reason for the fix -- 'a DIRECT act is outside every round ... GATE (x) ... now refuses a newly-added order into a round that already has orders at HEAD' -- names only the COLLISION branch of GATE (x)'s two refusal branches and omits the MISSING-KEY branch, which fires on exactly the unrounded shape this repair asks the minter to emit. Disarm needs either: (a) GATE (x) grows a carve-out for a DIRECT-ACT order shape (e.g. a marker the missing-key branch treats as satisfied) before this minter's unrounded output is ever committed as a real, non-dry-run mint into a fabric carrying GATE (x); or (b) a ruling that a direct-act order is graded outside GATE (x) entirely (by tree-path pattern or title marker), stated in the gate's own scoping comment the way the flat-root and MODIFY carve-outs already are. Not this worker's call -- named as a row, not resolved. This session's own AC1-AC5 runs are unaffected either way, since AC2/AC3 call check_file()/the minter's refusal path directly and never exercise GATE (x)'s main()-only branch."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W37-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~37",
+    "surfaced_at": "2026-09-19T01:46:49Z",
+    "one_line": "AMGT-rk-33's REGISTRY GATE (Andrew VERBATIM: 'opal-data-harvest bucket is the designated folder for all RESAPP data content/pipelines') fires on the SEC ticker-to-CIK bronze table: lib/opal_naming.py address('sec','harvest','bronze','company_tickers','date=2026-09-15') BUILDS but resolves into s3://opal-data-assets/..., not opal-data-harvest, because tiers.json's PRODUCT tenancy still homes bronze/silver to the shared bucket for every scope including 'harvest' -- so the SEC cache's live landing is REFUSED-BY-REGISTRY and this order never writes it there.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured this session: nm.address('sec','harvest','bronze','company_tickers','date=2026-09-15') -> 's3://opal-data-assets/sec/harvest/bronze/company_tickers/date=2026-09-15' (lib/opal_naming.py, HEAD of this worktree); nm.address('amgt','harvest','gold','candidate_universe','date=2026-08-06') -> 's3://opal-data-harvest/amgt/harvest/gold/candidate_universe/date=2026-08-06' -- same scope token 'harvest', two different tenancy outcomes because tiers.json routes by (tenancy, tier), not by scope alone",
+        "infra/logic/registry/tiers.json:16-19 PRODUCT.bronze/silver: home shared, bucket opal-data-assets, rule R4/R8; PRODUCT.gold: home scope -> the scope row's own bucket (opal-data-harvest for 'harvest')",
+        "infra/logic/registry/scopes.json harvest row's own note, verbatim: 'OPEN AND NOT DECIDED BY THIS ROW: this row takes tenancy PRODUCT, under which bronze and silver home to the shared opal-data-assets ... Andrew's sentence puts them in opal-data-harvest, and the SHAPE that carries it ... is his, asked in words at three terminals and unanswered at this write'",
+        "live head_object on s3://opal-data-assets/sec/harvest/bronze/company_tickers/date=2026-09-15/sec_ticker_cik_cache.json -> botocore.exceptions.ClientError 404 Not Found (this worker never wrote there, per the registry-gate refusal clause); both buckets opal-data-assets and opal-data-harvest independently confirmed to EXIST via head_bucket"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT_RESAPP.TO-AMGT-rk-33's issuer amendment (2.0.0_SA_COO~Z, on Andrew's words relayed by 1.0.0_SA_CTO~Z msg 23778): 'EVERY AMGT_RESAPP byte this order lands -- bronze raw included -- lands in opal-data-harvest, at an address PRINTED BY lib/opal_naming.py address(), never typed'; and 'the live arm is LIVE iff that address's bucket is opal-data-harvest'.",
+    "world_is": "The builder itself, unmodified by this worker, prints a bronze address in opal-data-assets for the 'sec' vendor under scope 'harvest' -- the registry's own PRODUCT-tenancy bronze/silver rule (tiers.json), not a hand-typed literal or a stale read. Per the issuer amendment's own REFUSAL CLAUSE this worker does NOT write to opal-data-assets and does NOT type an opal-data-harvest address instead; the SEC table landing (RULED 3 bullet 2) is REFUSED-BY-REGISTRY and stays that way until the harvest scope's OPEN tenancy question (scopes.json's own note) is decided one way or the other.",
+    "notes": "Disarm needs ONE of: (a) Andrew's open call on the harvest scope's tenancy shape (a new scope-homed bronze/silver tenancy vs. his 'opal-data-assets is for client/partner custodial data' reading, per scopes.json's harvest row note) resolved and landed in tiers.json/scopes.json; or (b) a registry ruling that the SEC vendor's bronze specifically routes to opal-data-harvest by some other declared mechanism (R20 departure). Until then, AMGT-rk-32 (the next queued step on this same file, build_universe.py) inherits an EMPTY bronze pool object at the address load_sec_cache() now reads, and its own load will REFUSE LOUDLY naming this same address -- not a defect in rk-32, the same standing gap this row names."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W37-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~37",
+    "surfaced_at": "2026-09-19T02:17:45Z",
+    "one_line": "AC6's mandated census (AMGT-rk-33, C-PRODUCTION-HOME): after this cell's fixes, 50 lines across 25 production .py files still name a worker's deliverables folder ('0.9.0_WK_AMGT_RESAPP~<n>') by literal or path segment; the three PRD-named instances (model_block_pull.py's field-map/pull-log, build_universe.py's SEC cache, peers/universe.py's candidate-universe cache) are ABSENT from this list -- this row is the CLASS'S RESIDUE, not edited by this order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "denominator: the AC6 walk over this worktree, excluding /.git, /org/, /node_modules, /.scratch, /portal, /tests, /.runtmp, /data/",
+        "50 hit(s) across 25 file(s), file:line printed exhaustively: infra/aws/terraform/harvest/lambda_src/build_zip.py:91, integrations/bloomberg/research/derive_fye_fixed.py:127, integrations/bloomberg/research/model_block_pull.py:49, integrations/bloomberg/research/price_axis_pull.py:24, integrations/bloomberg/research/price_axis_pull.py:137, integrations/bloomberg/research/price_axis_pull.py:144, integrations/bloomberg/research/pull_baba_daily_px.py:68, lib/research/coverage/run_reader.py:5, lib/research/coverage/run_reader.py:64, lib/research/coverage/run_reader.py:142, lib/research/coverage/run_sa_reexercise.py:5, lib/research/coverage/run_sa_reexercise.py:164, lib/research/drafting/run_drafting.py:5, lib/research/drafting/run_drafting.py:57, lib/research/drafting/run_drafting.py:67, lib/research/filings/analyze.py:1096, lib/research/freshness/build_view.py:67, lib/research/freshness/build_view.py:70, lib/research/identity/build_universe.py:56, lib/research/identity/build_universe.py:81, lib/research/identity/coverage_pass.py:58, lib/research/identity/coverage_pass.py:59, lib/research/identity/coverage_pass.py:60, lib/research/identity/coverage_pass.py:61, lib/research/identity/coverage_pass.py:82, lib/research/identity/coverage_pass.py:84, lib/research/identity/coverage_pass.py:86, lib/research/identity/coverage_pass.py:89, lib/research/identity/coverage_pass.py:136, lib/research/identity/crosswalk.py:14, lib/research/identity/crosswalk.py:72, lib/research/identity/crosswalk.py:102, lib/research/identity/crosswalk.py:139, lib/research/lists/build_lists.py:123, lib/research/lists/impostor.py:29, lib/research/metrics/chatter_axis.py:8, lib/research/metrics/chatter_axis.py:138, lib/research/peers/engine.py:81, lib/research/peers/universe.py:19, lib/research/peers/universe.py:74, lib/research/posture/fit.py:81, lib/research/posture/packs.py:13, lib/research/posture/packs.py:42, lib/research/price/backfill_legacy_generation.py:13, lib/research/price/generation.py:4, lib/research/provenance/render_print.py:283, lib/research/rules/figure.py:51, lib/research/social/collect.py:256, lib/research/social/collect.py:448, lib/research/social/collect.py:997",
+        "ABSENT as required: model_block_pull.py:286-288 and :464-467 (the unit map and pull-log writer, both moved off worker ~1 by this order); build_universe.py:450-453 (SEC_CACHE_DEFAULT, retired); peers/universe.py:81-86 (CACHE_DIR_DEFAULT/CACHE_NAME pointed at worker ~21, retired)",
+        "files with the most residue: lib/research/identity/coverage_pass.py (9 lines), lib/research/identity/crosswalk.py (4 lines), lib/research/social/collect.py (3 lines) -- all outside this cell's <paths> grant (only integrations/bloomberg/research/model_block_pull.py, lib/research/identity/build_universe.py and lib/research/peers/universe.py were writable here)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-PRODUCTION-HOME (PRD v0.13 @1699960261 :1643-1650): 'A production code path never reads or writes a WORKER'S deliverables folder' -- named as retiring three MEASURED instances, with this order's own AC6 requiring the CENSUS of everything else be printed and filed as the class's residue rather than fixed here.",
+    "world_is": "50 production .py lines across 25 files still read or write a worker's deliverables folder path (mostly worker ~1, ~3, ~4, ~9, ~19, ~21, ~22), spanning modules under lib/research/identity, lib/research/coverage, lib/research/drafting, lib/research/filings, lib/research/freshness, lib/research/lists, lib/research/metrics, lib/research/peers, lib/research/posture, lib/research/price, lib/research/provenance, lib/research/rules, lib/research/social, integrations/bloomberg/research and infra/aws/terraform/harvest/lambda_src -- none of them in this cell's <paths> grant except the three PRD-named ones this order retired.",
+    "notes": "Remedy holder: this residue is C-PRODUCTION-HOME's class, not this cell's -- each file needs its own cell (config beside its producer, or a pool address via lib/opal_naming.py) under whichever chain/order next touches it; not widened or fixed here per this order's own BOUNDS (REFUSAL CLAUSE: a criterion is refused as written, never repaired via a route the order did not name)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W37-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~37",
+    "surfaced_at": "2026-09-19T02:37:17Z",
+    "one_line": "AC2's own expect text states field_map.json carries 36 fields; the worker ~1 SOURCE file this order copies byte-for-byte (never rebuilds) carries 32, and the copy is byte_identical to it -- the discrepancy is in the order's stated expectation, not in this order's own act.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: json.load(open('org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~1/field_map.json'))['fields'] has len 32, the same 32 mnemonics as integrations/bloomberg/research/field_map.json (sha256 08003d1b602c1d96... on both sides, byte_identical True)",
+        "this order's RULED 2 is explicit: copy BYTE-FOR-BYTE, never rebuild ('the map MOVES, it is not rebuilt -- rk-34 rebuilds it for every name at THIS path'), so 32 is the correct, faithful count to carry forward"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's expect clause: 'byte_identical True with 36 fields and 3 securities'.",
+    "world_is": "The source worker-~1 artifact itself, unmodified by anyone, carries 32 field entries -- 36 was never true of this file at any point this worker could measure; likely a miscount at the cut (perhaps conflating the CRO field map HEADER_FIELDS(15)+HIST_FIELDS(19)=34 target set with the fields actually mapped in field_map.json, itself a different, smaller set).",
+    "notes": "Not a defect in this cell's work (rk-34 rebuilds this map 'for every name' per this order's own text and is the seat that can reconcile the count against the CRO's field list, not this one, which only moves bytes)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W37-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~37",
+    "surfaced_at": "2026-09-19T03:10:07Z",
+    "one_line": "RULED 1's REGENERATE step ('if anything beyond the mark line changes, STOP and file a row') fires: a fresh lib/opal_naming.py generate against the CURRENT registry (sec + harvest rows already landed before this worker's spawn) changes opal_name.tftest.hcl's run \"refuses_product_scope\" vector from scope=\"etfs\" to scope=\"harvest\", NOT just the mark line -- so this worker did NOT regenerate the tracked files; both stay exactly as committed at HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: python lib/opal_naming.py generate --out .scratch/gen --target infra/aws/terraform/modules/opal_name/tests/vectors.json --target infra/aws/terraform/modules/opal_name/tests/opal_name.tftest.hcl, diffed against the tracked files",
+        "vectors.json: ONLY the _generated mark line differs (registry@73f95daeb4091537 -> registry@4efb707a2b20bbdf over exemptions.json,resources.json,scopes.json,systems.json) -- a sec VENDOR row genuinely adds no vector, exactly as RULED 1 predicted",
+        "opal_name.tftest.hcl: the mark line differs AND line 592 differs, run \"refuses_product_scope\" variables.scope \"etfs\" -> \"harvest\" -- the generator selects the FIRST PRODUCT-class scope in scopes.json for this vector, and infra/logic/registry/scopes.json's own harvest-row note states it was \"Placed BEFORE the etfs row deliberately, never at the array tail\", which is exactly what shifts the selection",
+        "both scopes.json rows (etfs and harvest) are class PRODUCT (scopes.json:264, :286); this worker did not add, edit or reorder any registry row (infra/logic/registry/ is a READ under this order, not a write surface)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RULED 1: 'REGENERATE both with python lib/opal_naming.py generate --out . --target <path> -- if anything beyond the mark line changes, STOP and file a row (a sec VENDOR row adds no vector: _VECTOR_SHAPES :1613-1614).'",
+    "world_is": "The sec VENDOR row alone adds no vector, confirmed on vectors.json. But the harvest SCOPE row (landed the same merge, for a different reason -- C-PRODUCTION-HOME's own home) DOES move one vector's scope selection in opal_name.tftest.hcl, because the generator's vector-selection logic keys off ARRAY POSITION among same-class scope rows, not off any explicit exemption. This is a genuine side effect of where a new PRODUCT scope row is inserted, not a defect in the sec row RULED 1 was written to cover.",
+    "notes": "Remedy holder: whoever owns lib/opal_naming.py generate's vector-selection logic (not in this order's <paths>) or the registry's row-ordering discipline for infra/logic/registry/. This worker leaves both GENERATED files at their committed HEAD bytes (neither hand-edited nor regenerated) per the REFUSAL CLAUSE -- AC7 records tree_equals_generator True for vectors.json and False for opal_name.tftest.hcl as the honest, as-measured result."
   }
 ]
 ```
