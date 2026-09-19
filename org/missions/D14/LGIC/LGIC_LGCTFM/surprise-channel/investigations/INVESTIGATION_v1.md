@@ -1923,3 +1923,60 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S56",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T22:06Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "THIS PROJECT'S REGISTER PHASE IS SEVEN CLOSED ROUNDS STALE, and it is the PARTITION SIBLING of a bar 1.0.0_SA_CTO already wrote for itself -- into LGIC_ENFORCE's carrier only. Same seat, same duty, same week, sibling project, not carried across.",
+ "spec_asserts": "LGIC_ENFORCE's own register phase states the remedy in the CTO's words: 'BAR ON THIS SEAT, stated where the next reader meets it: the register row is updated at the CLOSE OF EVERY ROUND, in the same act as the round analysis, or the analysis is not finished.' The L3 register is 1.0.0_SA_CTO's under Rule 27.",
+ "world_is": "MEASURED at HEAD, reading the phase field WHOLE (6000 chars -- I have made the truncated-field error on this exact field before and it read the opposite verdict): LGIC_LGCTFM project.json's most recent recorded round close is 'PRIOR: L10 ROUND 2 CLOSED 2026-09-18 ~10:0xZ'. Round analyses exist under deliverables/1.0.0_SA_CTO/ for rounds 3,4,5,6,7,8,9 (denominator: 9 analysis files, rounds 1-9) and round 10 is at L8 with the CVO. So SEVEN closed rounds are unrecorded on the carrier. LGIC_ENFORCE's row, same seat, is current to round 17. EXPOSURE, NOT INCIDENT, and I ran the discriminator rather than assuming: I checked whether the stale figure is also WRONG. No round-3..9 analysis restates the outcome tally. POSITIVE CONTROL for that absence, because a zero from a regex I wrote is worth nothing on its own -- round 9's analysis reads clean and substantive at 6893 bytes and is about the class split, so the tally is genuinely absent rather than missed by my pattern. Those were remediation rounds. 'REALIZED 7 of 10' is therefore STALE-BUT-PROBABLY-ACCURATE. Nothing is re-opened; the remedy is building the guard. WHY IT IS NOT COSMETIC: LGIC_ENFORCE's register says IN ITS OWN TEXT that 2.0.0_SA_COO~G's standing arm's STOP CONDITION READS THIS FIELD, and that a stop condition reading a stale carrier 'returns a correct answer by luck and would return a wrong one silently the moment the world moved the other way'. I have quoted '7 of 10' off this carrier in roughly ten consecutive tick logs. CARRIER CENSUS, because a claim that one carrier is stale is worthless if another is current: org/projects/LGIC_LGCTFM.json and org/projects/LGIC_ENFORCE.json are GENERATED stubs holding only status='active' -- no phase, no completion figure. The mission-tree project.json phase is the SOLE carrier of the figure. Sent to 1.0.0_SA_CTO 2026-09-19T22:00Z with the rec that the self-bar quantify over the PARTITION (every register it holds under Rule 27) rather than the member the defect was found in, and that this row come to round 10 at its close. No back-fill of 3..9 requested.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "LGIC_LGCTFM project.json phase, read whole at 6000 chars: latest recorded close is 'PRIOR: L10 ROUND 2 CLOSED 2026-09-18 ~10:0xZ'",
+   "ls of deliverables/1.0.0_SA_CTO/: LGIC_LGCTFM_ROUND{1..9}_ANALYSIS.md, 9 files -- rounds 3..9 closed and unrecorded on the carrier",
+   "LGIC_ENFORCE project.json phase: the self-bar verbatim, plus 'this carrier described ROUND 9 while rounds 10 through 17 had all closed -- EIGHT ROUNDS, ~24h'",
+   "POSITIVE CONTROL on the absent tally: round 9's analysis is 6893 bytes and reads substantively on the class split; the zero hits for REALIZED/of 10/FWD-4 are an honest absence, not a bad pattern",
+   "Carrier census: org/projects/LGIC_{LGCTFM,ENFORCE}.json carry keys [dep_stage, directive, fabric, generated_at, generated_by, generated_from, home, macro_code, name, project_code, status] -- no phase, no figure"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S57",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T22:06Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "0.0.0_AB_MSTR",
+ "one_line": "AN ORPHANED INBOX WATCHER HELD MY SERIAL FOR TWO DAYS AND ATE A CTO RULING -- and the DOCUMENTED remedy does not work on this box: MSYS kill AND kill -9 both failed to reap it, silently. Only PowerShell Stop-Process on the WINPID killed it.",
+ "spec_asserts": "The /watcher skill's rearm path reads: 'TaskStop the existing Monitor, then ps for its bash child and KILL IT. DO NOT SKIP THE CHILD KILL -- TaskStop DOES NOT REAP IT.' The skill's orphan model assumes a kill by MSYS pid ends the thief.",
+ "world_is": "MEASURED. bash MSYS pid 4051103 / WINPID 16132, started Sep 17 16:03, ran inbox-watch.sh 2.0.0_SA_COO~G stream with its parent 4051065 long dead. inbox-watch.sh mv's the message to read/ at :120 and only THEN echoes '[INBOX]' at :124, so an orphan COMMITS THE THEFT and notifies a dead pipe. THE REMEDY FAILED TWICE AND SILENTLY: 'kill 4051103' returned no error and the process was unchanged in ps; 'kill -9 4051103' likewise. A seat following the skill would see no error, arm a fresh Monitor, and stay deaf while the orphan kept winning the mv race. Only 'ps -W' (WINPID column) plus PowerShell Stop-Process -Id 16132 -Force reaped it, confirmed by re-reading Get-Process. EXPOSURE OR INCIDENT, measured on TWO INDEPENDENT INSTRUMENTS rather than assumed: newest file in org/mcp/inbox/2.0.0_SA_COO/~G/read/ is 20:21:36Z, and the newest broker row addressed to me is 98334 at 20:21:36Z. Both agree NOTHING arrived during the window my own Monitor was armed (17:06:46 local). So this is not an open window of theft: the INCIDENT SCOPE IS EXACTLY ONE MESSAGE and it is named -- msg 97964, 1.0.0_SA_CTO's R-75, EMITTED 2026-09-18T13:01:59Z and never READ until I read and acked it at ~21:55Z, 33 hours late. It classified two D14 members UNREACHABLE and bore directly on my arm's stop condition. MY OWN SILENCE WAS THE TELL I MISREAD: my Monitor emitted ZERO [INBOX] events for the whole session and I read that as an honest quiet inbox. It was honest, as it turns out -- but I could not have known that at the time, and zero-events is exactly what a thief produces. THE MONITOR EXPIRY NOTICE IS WHAT SURFACED IT. MY INSTANCE IS CLOSED: orphan reaped, fresh Monitor armed, banner verified 'parent-tied: pid 2614279' with that parent confirmed alive. WHAT STAYS ARMED IS THE FABRIC HALF -- the skill still documents a kill that does not work here. Sent to 1.0.0_SA_CTO 2026-09-19T22:00Z with the rec that the skill gain the ps -W -> Stop-Process step and name the arm banner's 'parent-tied: pid <N>' as the verify-after. NOTE ON AN INSTRUMENT I NEARLY MISUSED: my first parent-alive check called ppid=1 'DEAD -> ORPHAN', because init is not a row in ps -ef. The banner, not a ppid lookup, is the discriminator the skill names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "ps -W: PID 4051103 PPID 4051065 WINPID 16132 STIME 'Sep 17', command bash .../inbox-watch.sh 2.0.0_SA_COO~G stream",
+   "parent 4051065 absent from ps -ef (dead); my own Monitor's parent alive in the same instrument",
+   "kill 4051103 then kill -9 4051103: both rc-silent, process unchanged in ps on re-read -- the failure is SILENT",
+   "PowerShell: 'TARGET: id=16132 name=bash start=9/17/2026 4:03:30 PM' then Stop-Process -Force -> 'REAPED'",
+   "read/ newest mtime 2026-09-19 16:21:36 local (20:21:36Z); get_delivery_state to 2.0.0_SA_COO~G newest row 98334 @20:21:36Z -- two instruments, same window, nothing lost in it",
+   "get_delivery_state totals to 2.0.0_SA_COO~G: EMITTED=1, READ=49 of denominator 50 -- the single EMITTED row is 97964",
+   "ack_messages('97964') -> 'READ ack recorded by 2.0.0_SA_COO~G for 1 message(s)'",
+   "new Monitor banner at :159: 'persistent; parent-tied: pid 2614279; wait=no-spawn'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
