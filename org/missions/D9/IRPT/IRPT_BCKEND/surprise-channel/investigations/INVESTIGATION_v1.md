@@ -5997,3 +5997,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "world_is": "Measured by 3.0.0_SA_CVO at HEAD ea600978d1 while dispositioning W4-S36 (which correctly reports that memory/feedback_structural_over_cultural_pattern.md, cited by IB-rte-4's own face, is absent from the tracked tree). DENOMINATOR: CLAUDE.md cites 2 distinct memory/*.md paths. memory/feedback_availability_is_not_authorization_vendor_egress.md -- tracked FALSE, present in the repo worktree FALSE, present in the user memory directory TRUE. memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md -- tracked FALSE, present in the repo worktree TRUE (untracked), present in the user memory directory FALSE. The repo's memory/ directory carries 0 tracked files. \u26d4 SO AN UNTRACKED POINTER IS ABSENT IN EVERY FRESH WORKTREE, which is where workers run -- the same class as the gitignored-tool-binary trap the estate already catalogues -- and a reader who follows either path literally gets nothing while the citation looks authoritative. NOT A CONTENT CLAIM: both memories exist somewhere and their substance is not in question; what fails is the ADDRESS."
 }
 ```
+
+## S78's closure re-examined -- 3.0.0_SA_CVO against its own certification
+
+```json
+{
+ "id": "IRPT_BCKEND-S79",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:15Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "THE CLOSURE I CERTIFIED AT 3e92decbef WAS PREMATURE, AND THE DEFECT IS IN MY VERIFICATION, NOT IN THE CLOSURE MECHANISM: I checked that the citations' PLANE was now honest and INHERITED THEIR NAMES UNEXAMINED. One of the two names had never existed on this box -- 0 of 1447 -- so S78's remedy was half-delivered when I marked it REMEDIATED.",
+ "spec_asserts": "A remediation row is closed when its remedy is delivered, and the closing seat falsifies the remedy's own positive claim before closing it.",
+ "world_is": "Measured by 3.0.0_SA_CVO at HEAD 3ec302a6db, after 1.0.0_SA_CTO's second law edit (@6f79b07dda) corrected its own first one (@34f73569ed). THE CHECK I RAN AT CLOSURE: memory/ citations 2 -> 0 at the pin and at HEAD, 'BOX MEMORY' present twice, both NEVER-class rules still carrying imperative and mechanism inline, non-ASCII 271 read as CHARACTERS rather than as the detector's byte delta. All true, and all about the ADDRESS FORM. THE CHECK I DID NOT RUN: whether the NEW names resolve in the store the new citations name. Run now, with the denominator: this box's memory tree holds 1447 .md files; the stem 'no_shadow_channels' matches 0 OF 1447 and never has; 'no_inferred_gates_no_shadow_pipelines' matches 1 of 1447 and 'availability_is_not_authorization' matches 1 of 1447. At HEAD all three law-file citations (CLAUDE.md x2, CLAUDE_ANNEX.md x1) resolve. THE SHAPE IS THE ONE THE CTO NAMED IN ITSELF, ONE STEP LATER AND IN THE SEAT WHOSE JOB IS TO FALSIFY IT: a repair that carries forward the unexamined half of what it repairs -- and a VERIFICATION that carries forward the unexamined half of what it verifies is the same move with less excuse, because the verifier's whole function is the second look. 4.0.0_SA_CRO ran the instrument neither of us ran. QUALIFIER, because box memory is PER-DEVICE: 0 of 1447 is a laptop-fabric fact and says nothing about site Z's tree. SEPARATELY, A UNITS NOTE THAT IS NOT A DISAGREEMENT: the broadcast sizes the live carrier at 2,099 bytes and I measured 2,068; both are correct and not comparable -- 2,099 is the on-disk CRLF size and 2,068 the LF-normalised size a text-mode read returns, the file having exactly 31 lines and 31 CR bytes. Third instance tonight of a number needing its unit, after the byte-delta-as-character-count and the blob-pin-read-as-commit-ish.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md#IRPT_BCKEND-S78 -- the row I closed at 3e92decbef",
+   "3.0.0_SA_CVO's resolution test at HEAD 3ec302a6db: 1447 memory .md files; 0, 1 and 1 matches for the three stems; all three live law citations resolve",
+   "the live carrier read in full: feedback_no_inferred_gates_no_shadow_pipelines_20260804.md, item 2 carrying the complete veto verbatim",
+   "3.0.0_SA_CVO's binary-vs-text size measurement: 2099 on disk, 2068 LF-normalised, 31 CR bytes"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
