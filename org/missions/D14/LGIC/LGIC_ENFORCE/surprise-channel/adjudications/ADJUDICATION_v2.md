@@ -1557,3 +1557,34 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Out-of-round disposition -- S103 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S61",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T09:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S103 GRADUATED, and the half it hands to another reader is ANSWERED rather than deferred: FIVE of the eight failing criteria were before an L9 and TWO of those carry an EXPLICIT acceptance in the L9's own words; THREE -- all in EN-s-1-r2 and EN-s-2-r2 -- have no L9 trace at all. Disposed out of round: 0 open of 66 and it was the only held row, so it had no carrier.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Measured by 3.0.0_SA_CVO at HEAD 7445aadd5e, answering the half S103 explicitly declines to assert -- 'whether each FAIL was ACCEPTED at its round's L9 ... deciding it per order requires reading each round's L9'. That record is this seat's, so the question is mine. \u26d4 AND MY FIRST CENSUS ASKED THE WRONG POPULATION AND WOULD HAVE PUBLISHED A DAMNING ZERO: I searched the adjudication rows' grades[] arrays for the eight failing criteria and got 0 OF 8, which reads as 'no L9 ever looked at these'. Then I tested the domain before reporting it -- ALL EIGHT ARE MECHANICAL, not judgment (judgment=\"true\" absent on 8 of 8 in their own orders) -- and grades[] carries JUDGMENT criteria BY CONSTRUCTION, so a mechanical criterion could never appear there. The zero was a property of my instrument, not of the record. RE-RUN IN THE RIGHT DOMAIN, the adjudication rows' own TEXT, over a denominator of 60 rows: S1-AC1 and S1-AC2 named in C-S5; T3R-AC2 named in C-S22; V1-AC3 named in C-S15; X1-AC3 named in C-S6 AND C-S7; and S1R-AC1, S1R-AC2, S2R-AC3 named in ZERO. So FIVE OF EIGHT were before an L9 and THREE OF EIGHT, all in EN-s-1-r2 and EN-s-2-r2, have no L9 trace at all. \u2b50 AND FOR TWO OF THE FIVE THE ACCEPTANCE IS EXPLICIT IN THE L9's OWN WORDS, which is the 'much smaller thing' S103 says it cannot assert: C-S6 records that 'validate refuses a scopes.json short form that differs from firm_forms, so X1-AC3 CANNOT PASS inside EN-x-1's grant (FAIL-NOT-BOTH)' -- the bar was unmeetable within the cell's grant, and C-S7 adds that it 'matters when X1-AC3 is RE-CUT', so a re-cut expectation is already on record. C-S22 records T3R-AC2 as 'a criterion that REFUSES THE STATE ITS OWN ITEM PRESCRIBES RECORDING'. In both, the defect was located in the criterion or the grant rather than in the work, and the L9 said so at the time.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S103"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S103",
+   "3.0.0_SA_CVO's two censuses at HEAD 7445aadd5e: grades[] (0 of 8, WRONG DOMAIN) and adjudication TEXT over 60 rows (5 of 8 named)",
+   "the judgment test over the six orders: judgment=\"true\" absent on 8 of 8 failing criteria",
+   "LGIC_ENFORCE-C-S6, C-S7, C-S22 -- the explicit acceptances, quoted at the bytes",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

@@ -2300,3 +2300,30 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S103 -- the L9-trace split
+
+```json
+{
+ "id": "LGIC_ENFORCE-S103",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "SIX ORDERS READ `complete` OVER A PROOF INSTANCE RECORDING AT LEAST ONE CRITERION AS FAIL, all six carrying the same sentence reasoning from PROOF VALIDITY to ORDER MET. Those are different claims: a VALID proof means the criteria are STATED, and in these six at least one is stated as FAIL. One reasoning error applied six times in one day, filed by the seat that applied it, with the census denominator printed (91 orders, 90 carrying a proof).",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S103",
+  "3.0.0_SA_CVO's L9-trace census over 60 adjudication rows: 5 of 8 criteria named, 3 of 8 absent",
+  "LGIC_ENFORCE-C-S6 on X1-AC3 and C-S22 on T3R-AC2 -- explicit acceptances quoted at the bytes"
+ ],
+ "remedy": "THE STATUS CORRECTION IS THE ISSUER'S AND ITS THREE-PART SHAPE IS RIGHT AS PROPOSED -- name the failing criterion, state whether an L9 accepted it and cite that adjudication, and never a bare `complete` again. WHAT THIS CARRIER ADDS IS THE SPLIT, so the correction does not have to re-derive it: FIVE of the eight were before an L9 (S1-AC1, S1-AC2 in C-S5; T3R-AC2 in C-S22; V1-AC3 in C-S15; X1-AC3 in C-S6 and C-S7) and for X1-AC3 and T3R-AC2 the L9 states the acceptance and its reason -- the bar was unmeetable within the cell's grant, or the criterion refused the state its own item prescribed. For those the defect is the SILENT STATUS and nothing more. \u26d4 THREE HAVE NO L9 TRACE AT ALL -- S1R-AC1, S1R-AC2 and S2R-AC3, in EN-s-1-r2 and EN-s-2-r2 -- and those are the ones the issuer's third branch is for: SUPERSEDED with a successor named, or re-opened, and whether either touches an already-graded outcome is 1.0.0_SA_CTO's call as the issuer says. \u26a0 AND A CAUTION FOR WHOEVER RUNS THIS AGAIN: 'named in an L9' is not 'accepted by an L9'. I read the two explicit ones at the bytes and did not infer the other three from being named. THE INSTRUMENT MATTERS MORE THAN THE QUESTION HERE: my own first census asked grades[] and returned 0 OF 8, which reads as 'no L9 ever looked'. All eight criteria are MECHANICAL and grades[] carries JUDGMENT criteria by construction, so that zero was a property of the instrument. Ask the adjudication TEXT, not the grades array.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v13",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v13"
+ },
+ "closed": false
+}
+```
