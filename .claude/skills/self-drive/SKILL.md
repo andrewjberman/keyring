@@ -81,6 +81,20 @@ order by way of dependencies or design, across BOTH fabrics, with the gates betw
    against the file's cap. A tick never asks for a COO lane past the cap. When a slot frees, the next one goes to the
    first `NEEDS-SLOT` project in the sequence's order, and the tick names that project to `0.0.0_AB_MSTR`, who seats it.
 
+**0.8 THE INBOX IS A MEASUREMENT, EVERY TICK -- read it beside the register, never in place of it.** Before Step 1,
+run `check_inbox` / `get_agent_status("<driver serial>")` for the driver's OWN serial and print the count of unread
+messages beside the open-TO denominator. **A SLUG IS A MESSAGE AND AN ANALYSIS IS NOT A TASK ORDER**: the open-TO
+census in 0.1 answers "are there open orders", and a round whose orders are all terminal is exactly the moment the
+L10 duty (the CVO's slug, then this seat's analysis) lands on THIS seat -- so the register reads an honest zero while
+the seat owes two artifacts, and Step 3's "verdicts received" assumes they were read by someone. Measured 2026-09-19
+by `1.0.0_SA_CTO` (tick-96 log @`c5efffa266`): ticks 92-95 each printed `0 open of 165` and concluded nothing was
+owed while two L10 slugs and a sign-off nudge sat unread for 1h33m; two lanes' recuts waited on it; `2.0.0_SA_COO~G`
+and `0.0.0_AB_MSTR` named it in the same words, and the seat's own tick-88 log already carried the generalisation
+("a drained zero is not a quiet scope") with no instrument behind it. ⚠ **A roster read does not substitute:** the
+roster row's liveness stamp and its summary have DIFFERENT vintages and the row prints only one -- the same seat
+read LIVE 13 s ago beside a 29.5 h-old summary. COST: one call per tick. NON-APPLICATION: none -- an empty inbox
+pays one call and prints `0 unread`.
+
 ## ⛔ CALL ROUTING — SUPERSEDES STEPS 1-2 WHEREVER THEY DIFFER (Andrew-direct 2026-09-17 ~13:0xZ)
 
 VERBATIM: *"if there is an open-call (of any kind) you use your recommendation. If the call specifically is a design fork,
@@ -149,7 +163,7 @@ CVO; nothing here lifts a NEVER — it stops calls from being COSTUMED as NEVERs
 
 ## Step 3 — Proceed on verdicts received since the last tick
 
-For each CVO verdict that arrived (inbox, READ-acked):
+For each CVO verdict that arrived (inbox, READ-acked -- read by the 0.8 measurement this tick, never assumed to have arrived):
 1. **Record it** — a CVO adjudication is an exec ruling, not an Andrew-direct word: write it into the project JSON (`phase` prefix + `blocking`) and the tick log, citing the message id and the verdict's grounding. Never paraphrase the verdict's operative sentence.
 2. **Land it in the verdict ledger, THEN broadcast.** Append the row to `org/{tier}/{driver_base_serial}/drive_pairs/<scope>/VERDICTS.jsonl` (schema + consumed-field contract: `org/ref/DRIVE_PAIR_PROTOCOL.md`; committed with the tick log) — the paired /drive consumes it by cursor, and an `unblocks: NONE` row is legal and honest. Then **broadcast** to the seats it binds (COO of this fabric for cells/TOs; MSTR for seats/register; the PRD author for amendments) — by serial, never "you". The ledger is the record; the broadcast is the courtesy — the message scrolls, the artifact persists.
 3. **Execute the driver's OWN acts** — amend the PRD the same turn; route the cell input to COO; ask MSTR for a seat when a class is declared dark; strike a superseded card. **Never cut a TO, never dispatch a seat, never apply.** Those stay with COO / the executors under Rule 27.
