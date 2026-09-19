@@ -8930,6 +8930,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-44's order: 'Two known off-task facts you WILL meet: roster.load_source_object() ... and the two batch drivers' population rules now differ -- file ONE row naming both and keep working.'",
     "world_is": "Item 1 stands unchanged (out of this cell's <paths>, roster.py read-only here). Item 2 is measured NOT to differ in RESULT any longer -- this cell's population fix (crosswalk MEASURED records) and management_posture_batch.py's keyed_population/filed_names already computed the same 12-name ceiling at this measurement -- but the STRUCTURAL duplication the order's framing warned of is real and unremedied: two independent per-name filings/v1/ census implementations that happen to agree today and are free to drift on the next change to either.",
     "notes": "Neither item is repaired here: item 1 is roster.py, granted to AMGT-rk-46's order, not this one; item 2's remedy (one shared census function) touches both lib/research/management/ and integrations/bloomberg/research/, neither of which this order's <paths> grants for that purpose, and no open cell in this round is named as owning a de-duplication -- surfaced for the issuer."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W54-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~54",
+    "surfaced_at": "2026-09-18T18:40:00Z",
+    "one_line": "The L3 intake's five no-lookup-key names (AAPL, NVDA, MSFT, JPM, TSLA) and the three C-VALIDATION-NAMES tickers (CAT, CSL, Keyence/6861) are not merely lookup-key-empty inside crosswalk/v1/2026-09-15.json -- they are ABSENT from it entirely, under either resolution (33 MEASURED + 56 UNRESOLVED = 89 total records), so a fix aimed at this crosswalk's association layer cannot reach any of the eight named identities.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rk-54 AC2 measured, all 33 RESOLUTION_MEASURED crosswalk records: every record returns without_alias=0 (crosswalk.aliases() always derives 3 generic forms from security_key, it does not read an association_keys field that can be empty), so the L3 framing 'no lookup key at all' is not reproduced at this instrument's grain for the population this crosswalk actually holds.",
+        "measured this session: searching all 89 crosswalk records (33 MEASURED security_key/company-name values + 56 UNRESOLVED, which carry no security_key or company_name at all, only security-<hash> aliases) for AAPL/NVDA/MSFT/JPM/TSLA/CAT/CSL/6861/KEYENCE by substring on security_key and company_name: zero matches on all nine tokens.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~54/PUBLICATION_LINKS_COVERAGE_MEASURE_20260918.json validation_names={} (empty) -- the AC5 invocation's own printed line at this cut.",
+        "the harvester's own universe() command (lib/opal_data_harvest/__main__.py) reports a SEPARATE 89-security denominator (5 pilot-keyed, 84 security-<hash>-keyed) that also does not surface these nine names by ticker; the Lead Panel intake's 191-name union universe is a THIRD, wider population these eight names may belong to instead"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-VALIDATION-NAMES (v0.13 :1652-1658) and the Lead Panel intake (CTOZ_AMGT_RESAPP_PANEL_BRIEFS_INTAKE_20260918.md:44-45) both frame AAPL/NVDA/MSFT/JPM/TSLA and CAT/CSL/Keyence as members of the article-store's identity space whose LOOKUP KEY is missing or empty -- implying they are IN the crosswalk/pool identity space, just unresolved within it. AMGT-rk-54's AC5 invocation is written expecting each validation name to get its own classed row inside the 33-record table.",
+    "world_is": "None of the eight names appear in crosswalk/v1/2026-09-15.json at all, under either RESOLUTION_MEASURED or UNRESOLVED -- the crosswalk's own population (89 records total) simply does not carry them, so there is no row for AC5's validation-name check to classify (validation_names={}) and no per-name remedy inside this crosswalk can reach them. This cell recorded the empty result per the refusal clause (the instrument ran exactly as specified and printed what is there) rather than substituting a different population to force a non-empty match.",
+    "notes": "For the CTO's L4 (this cell's own stated audience, ROUND_ANALYSIS.round13.md s.7 :225): the fix for 'AAPL/NVDA/MSFT/JPM/TSLA have no lookup key' is not an association-layer repair inside THIS crosswalk -- it is first a question of which universe/crosswalk build is supposed to carry these eight names at all (the harvester's own universe(), the 89-record research crosswalk, and the 191-name chatter union are three DIFFERENT populations measured this round, and these eight names were not found as members of the first two). Not fixed here: this cell is MEASURE-ONLY and grants no write into lib/opal_data_harvest/, the crosswalk, or the chatter producer."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W54-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~54",
+    "surfaced_at": "2026-09-18T18:55:00Z",
+    "one_line": "crosswalk.load_crosswalk() resolves the pool's crosswalk/v1/ prefix by sorted(keys)[-1] with NO pinning -- a new vintage (crosswalk/v1/2026-09-19.json) landed live in the pool DURING this MEASURE-only cell's own execution window and silently changed the answer to the SAME unmodified invocation from population 33 (vintage 2026-09-15.json, this order's own stated figure) to population 36, mid-session, with zero code change on either side.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured this session: an early AC2/AC5 pass (via this cell's own build script) read crosswalk/v1/2026-09-15.json (implicitly, as the then-latest) and produced population=33, matching AMGT-rk-54's own stated figure ('the population of record is crosswalk/v1/2026-09-15.json MEASURED = 33'); a later, IDENTICAL invocation of the SAME command minutes later produced population=36",
+        "S3 listing of crosswalk/v1/ at the moment of divergence: two objects present, crosswalk/v1/2026-09-15.json (LastModified 2026-09-15T08:02:41Z, 188380 bytes) and crosswalk/v1/2026-09-19.json (LastModified 2026-09-19T01:23:43Z, 202505 bytes) -- the second object did not exist at this worker's spawn-time reads and was not written by this worker (this cell makes no pool writes, per its own BOUNDS)",
+        "lib/research/identity/crosswalk.py:528 _read_pool_latest(): 'body = client.get_object(... Key=sorted(keys)[-1])' -- lexicographic sort over ALL objects under crosswalk/v1/, no vintage pin, no atomicity guard, called fresh (uncached, since load_crosswalk's process-local _CACHE keys on '<pool>' and each python -c invocation is a fresh process) by AC2/AC5's own literal invocations",
+        "re-running the build twice AFTER the new file settled (no further arrivals across two checks) reproduces population=36 byte-identically both times (excluding measured_at) -- STABLE now, but the divergence during the session was real and reproducible from the recorded timestamps alone"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-54's own text pins a specific population and vintage: 'The population of record is crosswalk/v1/2026-09-15.json MEASURED = 33 (analysis s.1) -- the denominator of your per-name table,' and its AC2/AC5 invocations are written to re-measure and confirm that figure ('33 of 33 at the cut; re-measure').",
+    "world_is": "The literal AC2/AC5 invocations this order specifies call crosswalk.load_crosswalk() with no path argument, which always resolves the POOL'S CURRENT LATEST object by lexicographic sort, never the named 2026-09-15.json file specifically. A new vintage landed live during this cell's own runtime and the identical, unmodified invocation began returning population=36 instead of 33 -- the order's own stated denominator was invalidated by a producer outside this cell's control mid-execution, and nothing in the crosswalk module or this order's invocation pins against that. This worker did not alter the invocation to force the 09-15 vintage (the refusal clause: run AS WRITTEN) and instead delivered the SETTLED, final reading (36, vintage 09-19) with both figures documented.",
+    "notes": "For the CTO's L4 and for whoever next issues a MEASURE order against this crosswalk: EITHER (a) accept that 'population of record' in a task order is a snapshot that a live producer can silently supersede mid-cell, and any order citing a specific dated vintage should also state whether workers should PIN to it (via the AMGT_CROSSWALK_PATH env var or an explicit path argument) or always read whatever is live -- this order did neither explicitly and this worker read live, or (b) treat crosswalk.load_crosswalk()'s unpinned 'latest' resolution itself as the defect to fix (a MEASURE-only order's own re-run should not be able to change its answer without any input the order controls changing). Not fixed here: lib/research/identity/crosswalk.py is outside this cell's <paths> grant and this is a MEASURE-only cell. The new vintage's 3 added names (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity -- exactly the C-VALIDATION-NAMES tickers) are documented in this cell's own record as present-at-09-19/absent-at-09-15, which is why S1 (filed against the 09-15 vintage) is not edited but this row supersedes its population claim for anyone reading forward from today."
   }
 ]
 ```
