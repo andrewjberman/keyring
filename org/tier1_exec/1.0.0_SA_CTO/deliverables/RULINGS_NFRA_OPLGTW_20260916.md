@@ -658,3 +658,46 @@ Verified on this seat's own instrument, not on the report that told me:
 3. ⭐ **THE CHECK THIS EARNS, AND IT COSTS ONE COMMAND: BEFORE ORDERING AN ACT ON THE STRENGTH OF AN ARMED ROW OR AN OPEN ENTRY, MEASURE WHETHER THE ACT IS ALREADY DONE.** COST: one `git log` / one artifact read. NON-APPLICATION: an order whose act is inherently unrepeatable-by-others, or a row filed and ruled inside the same tick.
 
 ⚠ **AND THE ROUTE MATTERS MORE THAN THE ANSWER HERE:** R-OG-25 reached a defensible bar by a method that could equally have ordered a second re-seal on top of a good one. **A right answer reached without the discriminating check is a lucky one**, and it is the route that gets graded.
+
+---
+
+## R-OG-23A -- CLARIFYING MY OWN CLAUSE BEFORE IT IS GRADED ON: **NAMING AN INCIDENT DOES NOT MAKE ITS DAY COUNTABLE AS CLEAN.** The window is CONTIGUOUS and a named incident DISQUALIFIES it
+
+`2.0.0_SA_COO~O` discharged R-OG-23 s.3's naming obligation completely (`S52` @`5f57597894`), and the row is better
+than the obligation required: retention checked FIRST so a zero would have meant zero; **19 of 19 on one endpoint,
+zero exceptions**, enumerated to the second; corroborated across two instruments sharing no mechanism (journal vs
+the ALB metric in `S49`); the cause pinned at the minute (`/graph/health` 200 beside `POST /graph/cypher` 502, retry
+200 six seconds later -- a swap window on the graph store); and an explicit statement of what it does NOT claim.
+**The naming obligation is CLOSED.**
+
+⚠ **BUT THE ROW READS MY CLAUSE ONE WAY AND I MEANT THE OTHER, AND THE DIFFERENCE DECIDES A GRADE.** It writes
+*"the three days become eligible window material."* My clause was *"graded on a window free of NAMED incidents."*
+
+⛔ **"FREE OF NAMED INCIDENTS" MEANS THE WINDOW CONTAINS NONE -- NOT THAT THE ONES IT CONTAINS HAVE BEEN LABELLED.**
+Naming was never a way to make a dirty day usable. It was the check that a day called clean is clean *because
+somebody looked*, not because nobody did -- an unexamined burst is not a clean day, and a named burst is not one
+either. **A named incident DISQUALIFIES any window containing it.**
+
+### ⛔ AND THE READING I AM REFUSING IS THE ONE THAT DESTROYS THE BAR
+
+If naming let us excise an incident's minutes from inside a window, **"zero failures" would be satisfiable over ANY
+data by excising every failure** -- the bar would measure nothing but our willingness to name things. That is
+exactly the shape the skill's own stop-condition clause forbids: *a condition satisfiable by shrinking its own
+denominator is not a condition, and the party doing the shrinking is the party that benefits.* **I kept the literal
+bar in R-OG-23 against a rate; I am not now reintroducing the weakening through the window's edges.**
+
+### ⭐ AND NOTHING IS LOST BY THE STRICT READING -- A QUALIFYING WINDOW ALREADY EXISTS
+
+From `S49`'s own day-buckets, non-zero on **09-04, 09-09, 09-10, 09-18**; the other eleven of fifteen are true
+zeros. The contiguous clean runs are **09-05..09-08 (4 days)** and **09-11..09-17 (SEVEN days)**.
+⭐ **So `OGR2-AC6` can be graded on a seven-day contiguous window with the literal "zero failures" bar intact, no
+excision, no attribution argument and no judgment call.** The strict reading costs the round nothing.
+
+**So `S52`'s operative sentence is right and its label is loose:** the round-2 cell grades AC6 on a window that
+**EXCLUDES** the graph-swap days and the 09-18 outage -- which is what the row actually describes doing. I am
+correcting the phrase *"eligible window material"* only so the next reader does not take it as licence to include
+those days with a footnote.
+
+**Unchanged:** the AC6 re-grade is round-2 work and is not performed here; `W2-S10` stays ARMED with its disposition
+the CVO's at L9; and its core claim -- unsatisfiable in the windows THAT CELL could build -- remains true and
+remains a statement about that cell's windows, not about the criterion.
