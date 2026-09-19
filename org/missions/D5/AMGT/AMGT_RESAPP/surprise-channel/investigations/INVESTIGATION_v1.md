@@ -8884,6 +8884,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W46-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~46",
+    "surfaced_at": "2026-09-18T21:10:00Z",
+    "one_line": "AMGT-rk-44 AC3: schtasks does NOT strip the escaped inner quotes RULED item 4 specifies -- the stored Action.Execute value carries the literal quote characters at both ends, so it does not byte-match the order's stated 'ending run_batch.cmd' (it ends run_batch.cmd\\\" -- a trailing quote character), even though the actual defect (split at the space) IS corrected and Arguments is empty.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task_definition()['change_action'] applied verbatim via `MSYS_NO_PATHCONV=1 cmd.exe /c <script containing the literal schtasks /Change ... /TR \\\"\\\\\\\"<launcher>\\\\\\\"\\\" line>` -- both the raw MSYS-bash invocation and the native cmd.exe-script invocation produced the IDENTICAL stored value, so this is not an artifact of the shell used to issue it",
+        "PowerShell read-back: LEN 85, RAW [\\\"C:\\\\Users\\\\Opal Bloomberg\\\\Desktop\\\\ajb_workspace\\\\lib\\\\research\\\\management\\\\run_batch.cmd\\\"], i.e. the value is the 83-character path plus one literal doublequote at each end; ARGS []",
+        "before the change, Execute measured 'C:\\\\Users\\\\Opal' with the remainder in Arguments (the split-at-space defect); after, Execute is ONE unsplit field (the defect IS corrected) and Arguments is empty, and STATE/SETTINGS-ENABLED read Disabled/False in both reads"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-44 RULED item 4 and AC3's <expect>: task_definition()'s escaped-inner-quotes /TR value, once applied with schtasks /Change and read back, leaves Action.Execute as the bare full path 'ending \\\"\\\\lib\\\\research\\\\management\\\\run_batch.cmd\\\"' with Arguments empty.",
+    "world_is": "schtasks.exe on this box stores the /TR value's literal bytes as given (including the two escaped-then-embedded doublequote characters) into Action.Execute rather than stripping them; the field is therefore the quoted string, one character longer at each end than the order's literal wording describes, though it is never split at the space and Arguments stays empty -- the substantive fix (RULED item 4's whole point) holds.",
+    "notes": "Not repaired here: RULED item 4 names schtasks /Change /TR with escaped inner quotes as the ONE mechanism, so no alternate route (e.g. a PowerShell Set-ScheduledTask cmdlet) was substituted per the REFUSAL CLAUSE. AC3 is graded FAIL against the literal 'ending run_batch.cmd' text on this measurement; the task itself is left correctly DISABLED and non-split, matching every other clause of AC3."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W46-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~46",
+    "surfaced_at": "2026-09-18T21:12:00Z",
+    "one_line": "Two off-task facts named by AMGT-rk-44's own order, filed together per its instruction: (1) roster.load_source_object() (roster.py:472-498, AMGT-rk-46's file) takes sorted(keys)[-1] over a name's filings/v1/<key>/ objects, so a name carrying BOTH a real accession and the UNRESOLVED-SOURCE placeholder would pick the placeholder ('U' sorts after every digit) -- not fixed here, out of this cell's <paths>. (2) The two batch drivers' population/census logic is duplicated across lib/research/management/batch.py (this cell) and integrations/bloomberg/research/management_posture_batch.py (AMGT-rk-22): MEASURED LIVE, their real-filing/MANAGEMENT-CEILING sets are now IDENTICAL (12 names, same 12 keys) after this cell's fix, but the logic itself remains two independent implementations, not one shared reader -- a future change to either can silently re-diverge them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "AMGT-rk-46 (item 1, its own task order already names this fix); 2.0.0_SA_COO~Z (item 2, the shared-census unification is not owned by any open cell)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/management/roster.py:490-498 load_source_object(): 'key = sorted(keys)[-1]' with no accession-vs-placeholder distinction, over keys filtered only by endswith('.source.json') -- read at HEAD 4f44431d34, unmodified by this order (roster.py is READ-ONLY under this cell's <paths>)",
+        "python integrations/bloomberg/research/management_posture_batch.py report (2026-09-18, live pool): 'MANAGEMENT CEILING: 12 of 33 keyed names carry a RESOLVED filing' naming exactly ASML_NA_Equity, BABA_US_Equity, BA_US_Equity, COST_US_Equity, HAL_US_Equity, HD_US_Equity, INTU_US_Equity, KMB_US_Equity, NU_US_Equity, PBR_US_Equity, SAP_GY_Equity, VLO_US_Equity",
+        "python -m lib.research.management.batch --dry-run (this cell's fix, same live pool, same moment): REAL-FILING lists the identical 12 names in the identical set",
+        "the two modules import from different packages (lib.research.management.enrich/roster vs a same-file reimplementation of keyed_population/filed_status in integrations/bloomberg/research/management_posture_batch.py) -- no shared function computes the census once for both"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-44's order: 'Two known off-task facts you WILL meet: roster.load_source_object() ... and the two batch drivers' population rules now differ -- file ONE row naming both and keep working.'",
+    "world_is": "Item 1 stands unchanged (out of this cell's <paths>, roster.py read-only here). Item 2 is measured NOT to differ in RESULT any longer -- this cell's population fix (crosswalk MEASURED records) and management_posture_batch.py's keyed_population/filed_names already computed the same 12-name ceiling at this measurement -- but the STRUCTURAL duplication the order's framing warned of is real and unremedied: two independent per-name filings/v1/ census implementations that happen to agree today and are free to drift on the next change to either.",
+    "notes": "Neither item is repaired here: item 1 is roster.py, granted to AMGT-rk-46's order, not this one; item 2's remedy (one shared census function) touches both lib/research/management/ and integrations/bloomberg/research/, neither of which this order's <paths> grants for that purpose, and no open cell in this round is named as owning a de-duplication -- surfaced for the issuer."
   }
 ]
 ```
