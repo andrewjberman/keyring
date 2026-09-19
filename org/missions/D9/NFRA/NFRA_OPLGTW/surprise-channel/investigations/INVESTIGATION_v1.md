@@ -3336,6 +3336,30 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "R-OG-24: 'CENSUS cap_respected's CONSUMERS BEFORE ANY OF THEM IS QUOTED AGAIN, AND PRINT THE DENOMINATOR. I name no count because I have not run it', and: 'ONE NUMBER DOES NOT RECONCILE ... The doubling must print its own input.'",
     "world_is": "Both executed. The census bounds the defect to this cell's own instruments -- no other project or tool consumes cap_respected -- and names the second contaminated grade (AC8's field), which neither the call nor the ruling had identified. The doubling's input is 282021888 and its correct product is 564043776.",
     "notes": "INERT: the repair itself is round-2 work (draft cell R2-b), already forked there; this row records the measurement the ruling ordered and the corrected number. THE CARRY: A SHARED-LIMB DEFECT'S BLAST RADIUS IS BOUNDED BY A CENSUS, AND THE CENSUS'S VALUE IS THE BAND RESOLUTION, NOT THE TOTAL -- 37 hits reads like 37 exposures; resolving them into 1 definition, 2 readers and 30 mentions is what turns a number into a scope. COST: one comp-find plus reading its bands. NON-APPLICATION: a term whose hits all sit in one file already."
+  },
+  {
+    "id": "NFRA_OPLGTW-S52",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-19T00:35Z",
+    "one_line": "THE 19 UNNAMED 5xx ARE NAMED, AND THEY ARE ONE CAUSE CLASS: all 19 are `POST /graph/cypher` 502 on the graph endpoint -- none on the Schwab, login or MCP path -- each preceded by a `/graph/health` 200 and followed by a successful retry within seconds, which is a transient window on the graph backend and not a Gateway fault. So 09-04, 09-09 and 09-10 become eligible window material under R-OG-23, and OGR2-AC6's literal 'zero failures' is now satisfiable on an incident-excluding window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RETENTION FIRST, because an absence here would have been unfalsifiable: the host journal's earliest line is 2026-08-15T03:02:10Z (journalctl -u opal-gateway | head -1), 799.7M archived and active. All three days are INSIDE the window, so a zero would have meant zero, not lost data.",
+        "THE ENUMERATION (SSM 69a99012-e05f-4476-b3a8-7e7196c56bc1 on i-07dccb1615503ac99, method+path+status only, query strings stripped, no identity read): 09-04 = 3 (16:09:03, 16:36:15, 17:15:41), 09-09 = 3 (20:30:38, 21:21:54, 21:24:42), 09-10 = 13 (00:26:45, 00:27:01, 01:47:10, 01:47:16, 02:43:31, 02:43:37, 03:17:20, 03:17:24, 06:07:31, 13:35:06, 13:54:52, 13:55:24, 14:01:40). Every single line is `POST /graph/cypher HTTP/1.1 502`. Denominator 19 of 19, one endpoint, zero exceptions.",
+        "CORROBORATION ACROSS PLANES: 3 + 3 + 13 = 19 matches the CloudWatch HTTPCode_Target_5XX_Count day-buckets in row S49 exactly, derived from the ALB metric and never from the journal. Two instruments sharing no mechanism, same three days, same three counts.",
+        "THE CAUSE, at the minute (SSM a4d7d30c-f8c4-4996-b03e-ca53b0ab49cd, 13:34:30-13:35:30Z): 13:35:06 `GET /graph/health` 200, then `POST /graph/cypher` 502 in the same second; 13:35:12 `/graph/health` 200 and `/graph/cypher` 200 -- the retry SUCCEEDS six seconds later. The pairing at 00:26:45/00:27:01, 01:47:10/01:47:16, 02:43:31/02:43:37 and 03:17:20/03:17:24 (16, 6, 6 and 4 seconds apart) is the same shape. A liveness endpoint reporting 200 while the query path is briefly unserviceable is a SWAP/RELOAD WINDOW on the graph store, which `graph_status` exposes as `last_swap`.",
+        "WHAT THIS DOES NOT CLAIM: that the swap window is harmless, or that it is in this project's scope to fix. It is the graph surface's own behaviour, outside NFRA_OPLGTW's boundary, and it is named here only to the degree AC6's bar requires -- WHICH ENDPOINT, WHICH CAUSE CLASS, and NOT the Schwab path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-OG-23 (@4ab7ce54fd), the consequence the CTO drew and this lane did not: 'the 19 errors of 09-04/09-09/09-10 are NOT named, so those three days are NOT eligible window material until they are -- an unexamined burst is not a clean day, and \"free of named incidents\" means the incidents in it have actually been named.'",
+    "world_is": "They are now named, on two corroborating instruments, as one cause class on one endpoint outside the graded path. Under R-OG-23's own rule the three days become eligible, and the practical consequence is that OGR2-AC6 can be graded on a window that excludes the graph-swap 502s and today's DeleteItem outage, with the literal 'zero failures' bar intact -- which is what the CTO ruled must be preserved.",
+    "notes": "INERT: nothing is armed; this closes the naming obligation R-OG-23 created and feeds round 2's AC6 cell (draft R2-c, @94b0c19f27) plus its R2-g item, which can now be dispositioned as NAMED rather than investigated. The AC6 re-grade itself is round-2 work and is NOT performed here. THE CARRY: A HEALTH ENDPOINT AND THE PATH IT CLAIMS TO SPEAK FOR CAN DISAGREE WITHIN THE SAME SECOND -- `/graph/health` 200 beside `/graph/cypher` 502 is the same class as this project's own ten-hour outage, where `/health` 200 + `/mcp` 401 + ALB healthy stayed green while no one could sign in. A liveness check certifies the process, never the capability. COST: one journal read at the minute of a failure. NON-APPLICATION: a probe that exercises the capability itself."
   }
 ]
 ```
