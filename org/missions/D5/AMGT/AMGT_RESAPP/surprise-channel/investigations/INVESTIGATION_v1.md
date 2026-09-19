@@ -9001,6 +9001,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC5's literal invocation reads schtasks' /XML export with encoding='utf-16', implicitly trusting the file's own encoding declaration.",
     "world_is": "The declaration and the bytes disagree on this build: schtasks writes an ASCII-compatible stream under a UTF-16 declaration. register_task_xml() (lib/research/filings/batch.py) measures the actual bytes (a BOM check) rather than trusting the prolog, and this worker adapted the AC5 verification read the same way (encoding='ascii', errors='replace') rather than the literal invocation's encoding='utf-16' -- the criterion's own text authorizes exactly this adaptation. The live task itself was re-registered for real via the printed schtasks /Create /XML ... /F command and read back DISABLED both before and after, satisfying AC5 on the adapted read.",
     "notes": "Not fixed at the source (schtasks.exe is not this estate's code) and not this cell's to fix -- named so a future reader of ANY schtasks /XML output on this device does not assume the declared encoding is the real one. No remedy owner named; informational."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W59-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~59",
+    "surfaced_at": "2026-09-18T00:00Z",
+    "one_line": "AC1's fmt_rc=0-with-no-diff bar is unsatisfiable without violating this same order's own hunk-confinement bound (AC5): chatter-axis-schedule.tf carries PRE-EXISTING terraform-fmt drift at :114-116 (an unrelated IAM policy Sid/Effect/Action alignment), present at HEAD before this worker's edit and outside the declared 33-44/124 scope.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`terraform fmt -check -diff chatter-axis-schedule.tf` on HEAD's own bytes (git show HEAD:infra/aws/terraform/harvest/chatter-axis-schedule.tf, restored after the check) returns rc=3 with a diff confined entirely to lines 104-110 (Sid/Effect/Action alignment inside aws_iam_role_policy.chatter_axis_lambda's WriteSecurityMetrics/OwnLogStreamOnly statements) -- measured by 0.9.0_WK_AMGT_RESAPP~59 in /c/tmp/wk-amgt-14-59 before and after this cell's own edit, same rc=3 and same diff both times.",
+        "AC1's <expect> reads: 'fmt_rc 0 with no diff'; the order's own RULED section states 'no line outside :33-44 and :124 moves' and AC5 mechanically enforces that via hunks_confined_to_33-44_and_124.",
+        "A terraform fmt -write on the whole file would fix the drift (satisfying AC1) but would add a third diff hunk at lines 104-110, outside 33-44/124, failing AC5's own mechanical check -- the two mechanical criteria cannot both pass in the same commit given the file's measured HEAD state."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 asserts 'fmt_rc 0 with no diff' after this cell's one-expression, one-comment-block edit, implying the file was fmt-clean at HEAD before this cell touched it.",
+    "world_is": "The file is NOT fmt-clean at HEAD: an unrelated IAM policy block (lines 104-110) already carries terraform-fmt drift, unchanged by this cell's edit and outside its declared 33-44/124 scope. AC1 is REFUSED on this measurement rather than repaired by widening this cell's write surface to the unrelated block, per the order's own REFUSAL CLAUSE; AC1's acceptance row records status FAIL with this row cited."
   }
 ]
 ```

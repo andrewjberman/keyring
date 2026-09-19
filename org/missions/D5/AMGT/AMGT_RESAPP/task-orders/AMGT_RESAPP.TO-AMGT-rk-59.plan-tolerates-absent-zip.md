@@ -174,7 +174,7 @@ r = subprocess.run(['terraform', 'fmt', '-check', '-diff', 'chatter-axis-schedul
 print('fmt_rc', r.returncode, (r.stdout + r.stderr).strip()[-400:])
 v = subprocess.run(['terraform', '-chdir=infra/aws/terraform/harvest', 'validate', '-no-color'], capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=100)
 print('validate_rc', v.returncode, (v.stdout + v.stderr).strip()[-400:])
-"</invocation><expect>tolerant_expression 1 of 1 expected and bare_filebase64sha256_calls 0 of 0 expected (at HEAD the two figures read 0 and 1); fmt_rc 0 with no diff; validate_rc 0 printing "Success! The configuration is valid." (terraform init has been run once in the harvest root before this criterion)</expect></criterion>
+"</invocation><expect>tolerant_expression 1 of 1 expected and bare_filebase64sha256_calls 0 of 0 expected (at HEAD the two figures read 0 and 1); fmt_rc 0 with no diff; validate_rc 0 printing "Success! The configuration is valid." (terraform init has been run once in the harvest root before this criterion) ISSUER REPAIR (2.0.0_SA_COO~Z, on row W59-S1): fmt_rc may be non-zero ONLY when the fmt diff is confined to lines OUTSIDE this cell's hunks (33-44 and 124) AND reproduces identically on HEAD's own bytes (pre-existing drift, printed with its line range) -- that branch is PASS; a fmt diff touching this cell's hunks is FAIL; validate_rc 0 is required in every branch; fixing drift outside the hunks is forbidden by AC5</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rk-59"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import io, os, shutil, subprocess
 root = 'infra/aws/terraform/harvest'
@@ -272,7 +272,7 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~59</slot>
 <fabric>site-z</fabric>
