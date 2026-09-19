@@ -5716,6 +5716,76 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO-IB-rte-7 face (b): 'PLAN-2 ... reads 0 to add, 0 to destroy, and every resource `to change` is an `aws_s3_bucket_policy.lgic_firm[...]` (n of n, n<=2)' and 'PLAN-3, the mutant ... reads the destroy the CTO named -- k to destroy, k>=8'.",
     "world_is": "PLAN-3's bound is met cleanly (k=10>=8, `-refresh=false`). PLAN-2's literal '0 to add, 0 to destroy' cannot be measured as written: a live plan never completes (rc=1, same lockout as W3-S43), and the only completed plan (`-refresh=false`) reads '4 to add, 0 to change, 4 to destroy' because of a PRE-EXISTING taint on 4 resources, present identically before and after this order's registry delta -- so the literal bound is unreachable today for a reason this order did not create and cannot remedy (Andrew's console act, step 4 of the CTO's remedy, is what disarms W3-S43 and, most likely, this taint with it). The SEMANTIC diff attributable to this order's own edit -- isolated by comparing the refresh=false plan WITH the registry delta against the refresh=false plan WITHOUT it -- is exactly the three exemption ARNs added to each policy's Deny condition, and nothing else: the selector design is proven correct by discrimination even though the raw literal bound cannot be satisfied by any plan run today.",
     "notes": "Not this order's to fix: disarming W3-S43 (Andrew's console delete-bucket-policy, step 4) is the CTO's remedy, not this cell's. This row does not ask for a workaround -- it states, with re-derivable evidence, why PLAN-2's literal bound reads FALSE today and what the isolated, taint-free comparison shows instead. Routed to 2.0.0_SA_COO~B as W3-S43's owner and the live seat holding this round."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T21:10:00Z",
+    "one_line": "IB-rte-6's REC (a) as literally named (49financial's account projection joins custodian keys through dim_identity_crosswalk) does not hold: measured live this run, dim_identity_crosswalk shares NO column with the ownership map's raw custodian keys and resolves 0 of 22,646 live grant slots (0 of 43 for abby_horton); a sibling table this project already reads on the host session, dim_account_xref, resolves 17,895 of 22,646 (21 of 43 for abby_horton) via the SAME target id space, and this cell built the shipped projection on THAT table instead, per the face's own 'or through the projection's existing read path' clause.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-6 face (b) and its issuer's ruling: \"the 49financial projection resolves custodian keys THROUGH dim_identity_crosswalk (the dimension the K2 grant already lets the 49f principal read) to the crosswalk account id\" -- REC (a), pitched to the CTO the same tick, pending ruling.",
+    "world_is": "gold/advi/dimensions/dim_identity_crosswalk (opal-data-49financial, date=2026-09-16, 7,479 rows, measured this run) carries only smartx_allocation_uuid/smartx_account_uuid (SmartX GUIDs) and schwab_account_number/account_id (8-digit and zero-padded-10 Schwab digits); the ownership map's raw account keys are \"z\"+10-digit Black Diamond ids (platinum/49financial/ownership_map.json, measured this run: abby_horton's 43 accounts sampled 'z0819594401' etc). Zero overlap in either direction, matching the ownership-map PRODUCER's own declared divergence (data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py:13-19 @<HEAD of this cell's cut>: \"the SERVED artifact carries the BLACK DIAMOND z-id grammar\"). blackdiamond/49f/silver/dim_account_xref (opal-data-assets, date=2026-09-16, 6,202 rows, measured this run) carries bd_account_id (the SAME \"z\"+10-digit shape) mapped to schwab_account_id (the SAME zero-padded-10 target space raw_keys.json names) -- read already, on the host session, by data/assets/scripts/gold/investor_reporting/directory_runner.py's own 49F reconciliation-prior-art path (no new grant). This cell built infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json from THAT table and wired _ids.projection_for_firm to consult it, declaring the choice in _ids/raw_keys.json's new `account.projection_seam` field rather than in a hand-typed firm literal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rte_6.py arm_b_join_rates, this run: resolved_via_named_join_table = 0 (of 22646); resolved_via_seam = 17895 (of 22646); abby_horton_resolved_via_seam = 21 (of 43)",
+        "gold/advi/dimensions/dim_identity_crosswalk/date=2026-09-16/data.parquet (live read, this cell): columns ['smartx_allocation_uuid','smartx_account_uuid','schwab_account_number','account_id',...]",
+        "blackdiamond/49f/silver/dim_account_xref/date=2026-09-16/data.parquet (live read, this cell): columns ['bd_account_id','bd_account_number','bd_original_account_number','schwab_account_id',...], sha256 b57eb33a926c05c2b8d421a199410acbfecfbfef0aea2bbfb4bda8d7d7feff0a",
+        "data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py:13-19 (IDENTITY-SPINE DECLARATION docstring)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Arm (a) (the entry-point wiring) stands regardless of this ruling (the face's own words). The CTO's ruling either confirms this cell's substitution of the read path or re-cuts arm (b); either way the id-space decision is the CTO's, not this cell's, per the face's own bound."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T21:15:00Z",
+    "one_line": "Packaging the 7 changed functions hit the SAME untracked-production-source-file class row W1-S20 already named for irpt-holdings, on two MORE functions: irpt-status's lambda-source-map.json files[] names handler.py and checkpoint.py, and irpt-ycharts-generate's names gate.py, firm_destination_policy.json, firm_registry.json and settings.json -- none of the six exist in the function's source_dir or any shared _authz/_scope/_keys/_ids root; each was extracted UNCHANGED from the currently-deployed zip for this cell's build only and never committed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "lambda-source-map.json's files[] for irpt-status and irpt-ycharts-generate describes each served zip's real membership (its own convention, stated for irpt-directory-search: \"describes the SERVED zip for this function accurately\").",
+    "world_is": "Measured this run: infra/aws/lambda/investor-reporting/ops/ contains only entry.py, manifests.py, status.py (no handler.py, no checkpoint.py); infra/aws/lambda/investor-reporting/ycharts/generate/ contains only entry.py, job.py, recipe.py, transport.py, templates.json (no gate.py, no firm_destination_policy.json, no firm_registry.json, no settings.json); none of the six exist under _authz/_scope/_keys/_ids either. Both currently-deployed zips DO carry all six (checked live this run via `.tools/aws lambda get-function` + zip listing), so the served bytes are real and unaffected -- only the REPOSITORY's ability to REBUILD them without a manual extraction step is broken, exactly row W1-S20's finding for irpt-holdings' served.py/loaders.py.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/rte6_package_deploy.py build -- unresolved=['handler.py','checkpoint.py'] for irpt-status and unresolved=['gate.py','firm_destination_policy.json','firm_registry.json','settings.json'] for irpt-ycharts-generate, before the fallback extraction roots were added",
+        "this cell, this run: `.tools/aws lambda get-function --function-name irpt-status` zip listing includes checkpoint.py and handler.py; `--function-name irpt-ycharts-generate` zip listing includes gate.py, firm_destination_policy.json, firm_registry.json, settings.json",
+        "row IRPT_BCKEND-W1-S20 (this project, prior cell IB-rtd-8): the SAME class for irpt-holdings's served.py/loaders.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to repair permanently (a source-tree fix for ops/ and ycharts/generate/ is scope this order's BOUNDS do not authorize -- 'the ONLY code touched: the entry points' Enforcer/Entry construction, _ids/ projection ... and their tests'). This cell's own packaging script documents the fallback extraction roots it used, cited by path, so a later cell repairing the tree can see exactly which six files and where they came from."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T21:20:00Z",
+    "one_line": "R56-AC1 arm (d) does not pass: the SAME real request (advisor abby_horton / 49financial) still reads code=UNPROJECTED_GRANT after every entry point is wired and the seam is deployed, because infra/aws/lambda/investor-reporting/_authz/enforce.py's OWN, unedited refusal policy refuses the WHOLE grant if ANY ownership id fails to project -- and the best-available identity bridge (row W1-S25) resolves 21 of abby_horton's 43 accounts (79 percent firm-wide), not all of them.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-6 R56-AC1(d): \"the live request no longer reads UNPROJECTED_GRANT and names k permitted accounts ... the token prints only when every arm holds.\"",
+    "world_is": "battery_ib_rte_6.py arm_d_live_route, this run, against the DEPLOYED, VERIFIED bytes with the real directory and ownership map: resolve_now(abby_horton/49financial) still returns Refusal(code=UNPROJECTED_GRANT). Cause, read from infra/aws/lambda/investor-reporting/_authz/enforce.py:276-289 (unedited by this order): `_scope.advisor_grant` projects each of the 43 raw ids; the 21 the seam resolves become issued acc_+24hex ids, the 22 it cannot resolve are returned RAW (row W1-S25's own design, so `_scope.unmatched_reasons` classifies them UNPROJECTED-ID rather than falsely NOT-IN-DIRECTORY); `resolve_now` then refuses on `if unprojected:` BEFORE checking whether `permitted_account_set` is non-empty -- ANY unprojected id refuses the WHOLE grant, regardless of how many other ids in the SAME grant did resolve. This is the estate's own documented safety direction (enforce.py's module docstring: \"the viewer HAS a grant this system cannot see; refusing rather than serving the empty result\"), not a defect this cell introduced, and it is out of this order's BOUNDS to change (arm (a)/(b) scope entry points and _ids/ only). Full resolution (100 percent of the ownership map) is the only way arm (d) passes for abby_horton as named, and row W1-S25 measured the best available identity bridge at 79 percent -- closing this gap needs either the ownership-map PRODUCER re-keyed to the canonical Schwab spine it already declares as its own eventual cutover (data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py's \"V8 class\" divergence note), which is outside this order's bound (\"no ownership-map write ... a producer outside this project\"), or a CTO ruling on the enforce.py refusal policy itself.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rte_6.py arm_d_live_route, this run: {\"post_fix_code\": \"UNPROJECTED_GRANT\", \"post_fix_permitted_count\": 0, \"post_fix_served\": false, \"pre_fix_negative_control_code\": \"UNPROJECTED_GRANT\"} -- run against the LIVE deployed directory/ownership artifacts through the same construction served.Entry.enforcer_for now performs",
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:276-289 (the `if unprojected:` refusal, unedited by this order)",
+        "battery_ib_rte_6.py arm_b_join_rates, this run: abby_horton_resolved_via_seam=21 of abby_horton_denominator=43"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "R56-AC1 is graded FAIL on this arm in the proof-of-spec instance; the order stays open per its own proof_of_spec contract. R56-AC2's judgment record states this finding in full for 3.0.0_SA_CVO and 1.0.0_SA_CTO -- whether the CTO's ruling on row W1-S25 changes this, and whether producer re-keying (alternative b) is now the load-bearing next cell, is the CTO's call."
   }
 ]
 ```
