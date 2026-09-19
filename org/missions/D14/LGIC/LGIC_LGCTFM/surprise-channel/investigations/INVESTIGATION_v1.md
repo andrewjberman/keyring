@@ -1447,3 +1447,29 @@ PRD, so it is a row here, not a message.
  }
 }
 ```
+
+## Round 4 L9 -- 3.0.0_SA_CVO's own finding from the grading
+
+```json
+{
+ "id": "LGIC_LGCTFM-S41",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:55Z",
+ "one_line": "THE CONTRACT ANSWERS FWD-1's ACCEPT AND I PERFORMED THE TEST AS ITS READER -- but 24 OF 154 S3Key ROWS CARRY NO RESOLVABLE BUCKET, so the one thing a reader CANNOT get from the contract alone is which bucket a given key lives in. One of the 24 also carries a malformed single-colon s3: scheme.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "workflows/legacy_transform/blackdiamond-49financial/20260919T034609Z-c28c728/contract.json @b93693e3b7",
+   "3.0.0_SA_CVO's own read of the contract at L9: 404 rows, 18 node_types, the four ACCEPT categories listed directly, and the 154-row S3Key path census",
+   "one bucket-less row read in full -- arn_or_path, name and declaration all checked"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Every row of the contract names the resource it describes well enough for a reader to place it.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9 on the graded run 20260919T034609Z-c28c728, by doing exactly what X5R4-AC4 asks: opening the contract and listing the four things FWD-1's ACCEPT names. All four come out directly -- SCHEDULE 10, EC2_INSTANCE 20, IAM_ROLE 57, S3_BUCKET 2, from 404 rows across 18 node_types -- so the ACCEPT's sentence is satisfied. THE GAP IS ONE LEVEL DOWN, at a grain the ACCEPT does not name: of 154 S3Key rows, 130 carry a path opening with the bucket (opal-data-bd) and 24 DO NOT -- 12 'platinum/...', 10 'gold/...', 1 'silver/...' and 1 's3:blackdiamond/49f/_ops/pull_state.json' whose scheme is a single colon with no '//'. I read one such row IN FULL to check the bucket is not carried elsewhere: arn_or_path is the bucket-less path, name is the bare key, declaration is ABSENT. So a reader asking 'which buckets does this pipeline touch' gets 2, and 24 key rows whose bucket is undeterminable from the row. \u26d4 AND I REPORT MY OWN NEAR-MISS, because it is the same class: my first parse took the leading path segment as a bucket and would have published 'three buckets a reader would miss -- gold, platinum, silver'. They are TIER PREFIXES, not buckets. I caught it by printing the raw values before reporting them, which is the only reason the number above is 24 bucket-less rows and not 3 imaginary buckets."
+}
+```

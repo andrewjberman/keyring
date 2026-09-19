@@ -628,3 +628,91 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Round 4 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S17",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:55Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "LGIC_LGCTFM ROUND 4 L9 -- THE THREE JUDGMENT CRITERIA, ALL PASS, EACH WITH THE DECISIVE CHECK RUN BY THIS SEAT; TEN GRADUATED WITH A CARRIER EACH. The count is by subtraction: 3 criteria carry judgment=\"true\" across the three round-4 orders, nothing to subtract, and the hand-off named 3.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Graded at HEAD b93693e3b7. FOUR OF THE ISSUER'S OWN ARMS GRADED THE WRONG OBJECT THIS ROUND AND EVERY ONE WAS FOUND BY THE WORKER IT WAS GRADING, each arriving as a BLOCKING row with its discriminator already measured and none worked around. That is the round's real result and it is why these rows graduate rather than being dismissed as issuer housekeeping: in every case A CORRECT RECORD COULD NOT PASS, so the cheapest satisfying move was to damage something -- fabricate a proof path, write a status the manifest forbids, delete Andrew's comp-tool ledger, or REVERT ANOTHER PROJECT'S COMMIT. W1-S39 is the worst of the four and the issuer says so itself: its cheapest green cost a seat not even in this round. TWO MORE OF THE SAME CLASS (W2-S36, W1-S38) are about a mid-round repair that cannot reach a live worker's worktree while the arm measures that worktree -- a structural fact about repairing fixed inputs mid-round, not a defect in either party.",
+ "grades": [
+  {
+   "criterion": "M1R4-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-m-1-r4.canonical-inventory-entry.proof_of_spec.json@f25d5ff2f5",
+   "verdict": "PASS",
+   "reason": "THE ENTRY ENDS THE TIE, AND I RE-DERIVED THE RECORD'S OWN SIEVE RATHER THAN READING ITS SUMMARY. At HEAD the manifest holds 129 entries = 128 pre-existing + exactly 1 cloud.inventory.*, which is the entry, carrying status 'canonical'. Re-running the record's sieve over the 128 reproduces its arithmetic exactly: layer==cloud 39, tool==comp-find 1, keyword on the remainder 30, READ 70, UNREAD 58. \u2b50 AND I FALSIFIED THE GAP THE RECORD HONESTLY STATES AND NOBODY HAD TESTED: of the 58 unread entries, the number whose FULL TEXT mentions 'aws' or 'resource' anywhere is 0 OF 58. So no unread entry can be the neighbour a reader with an AWS-resource inventory question would land on, and the stated gap is measured closed rather than merely disclosed. THE TIE IS ENDED BY SPLITTING THE QUESTION, not by ranking tools -- each of R-81's six tied tools is placed and comp-estate is refused BY NAME with its reason -- and the near-duplicates are genuinely different use cases rather than a list assembled to look thorough, because the set was chosen by SUBTRACTION from a printed denominator and the claim's own population was falsified BEFORE the subtraction ran (0 pre-existing entries route this question by any spelling)."
+  },
+  {
+   "criterion": "E6R4-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-6-r4.repoint-and-declare.proof_of_spec.json@5b65010f7b",
+   "verdict": "PASS",
+   "reason": "A REAL PLANE MOVE, AND THE DISCRIMINATOR IS ONE A RENAME CANNOT PRODUCE. Diffing the round-3 and round-4 coverage evidence myself: roles_read 210 -> 256 (the TF-parsed population replaced by the live one), roles_granting 35 -> 50, compute_reached_forward 85 -> 95, and the fields that only exist on a live read appear -- plane 'LIVE (R-81-assigned)', roles_with_unresolved_managed_statements 148, an enumerated granting_roles, an authorization_instrument with a census_path. \u2b50 THE SECOND-ORDER TELL HOLDS AT THE BYTES: granting_roles_not_in_the_live_graph goes ['opal-49f-value-parity'] -> [], and a declared-but-not-live granting role cannot appear in a live read BY CONSTRUCTION. THE INTERNAL CONTROL IS THE PART I WOULD KEEP: source_text, the leg that did NOT change plane, is byte-identical across both rounds (411 files, 216 functions, 31 naming, the same bd-client-detail residual) -- so the movement is localised to the leg that moved and is not a global re-measure artifact. ON THE DROPS: the record says there are none and scopes that to node_types (19 of 19 held or grew). I FOUND ONE IT DOES NOT NAME -- execution_roles_added 7 -> 5 -- AND CHECKED IT AT A GRAIN NEITHER THE RECORD NOR THE CRITERION SPECIFIES: node IDENTITIES. Round-3 involved nodes absent from round 4: 0 OF 381. Round-3 iam_grant IAM_ROLEs missing from round 4: none. So the sub-metric fall is an ORDERING ARTIFACT -- those roles now arrive via the live granting set before the reverse execution-role step runs, so fewer are newly 'added' AT THAT STEP -- and not a coverage loss. The record's narrowing risk (148 of 256 roles carrying an unresolved attached-managed statement) is disclosed, bounded by the HAS_POLICY sub-leg, and asserted by a DRIVEN arm so it flips when the census improves; and comp-iam simulate is refused ON THE RECORD for population work, which is this criterion's own hazard named and declined."
+  },
+  {
+   "criterion": "X5R4-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-x-5-r4.coverage-run-on-the-repaired-engine.proof_of_spec.json@243c1efd39",
+   "verdict": "PASS",
+   "reason": "I PERFORMED THE TEST THE CRITERION WRITES RATHER THAN GRADING A DESCRIPTION OF IT: I am the person opening the 49 Financial migration, and I opened the contract and listed the four things FWD-1's ACCEPT names, from the contract alone and with no hand list -- SCHEDULE 10 (advi-49f-gold-floor, advi-49f-publisher, wsb-49f-model-aua-pull-daily, ...), EC2_INSTANCE 20 (bd-49f-auto-login, bd-allocations, ...), IAM_ROLE 57, S3_BUCKET 2 (opal-data-49financial, opal-data-bd), out of 404 rows across 18 node_types. The ACCEPT's sentence is satisfied. ONE GAP FOUND AT A GRAIN THE ACCEPT DOES NOT NAME AND FILED AS LGIC_LGCTFM-S41: 24 of 154 S3Key rows carry no resolvable bucket, so a reader can list the BUCKETS but cannot say which bucket 24 of the KEYS live in. It does not move this verdict -- the criterion asks about the four categories and they are all answerable -- and it is exactly the kind of thing a reader hits on the second question."
+  }
+ ],
+ "adjudicates": [
+  "LGIC_LGCTFM-W2-S35",
+  "LGIC_LGCTFM-W2-S36",
+  "LGIC_LGCTFM-W2-S37",
+  "LGIC_LGCTFM-W1-S35",
+  "LGIC_LGCTFM-W1-S36",
+  "LGIC_LGCTFM-W1-S37",
+  "LGIC_LGCTFM-W1-S38",
+  "LGIC_LGCTFM-W1-S39",
+  "LGIC_LGCTFM-S35",
+  "LGIC_LGCTFM-S41"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- one row per id in this list, minted in the same commit",
+   "3.0.0_SA_CVO's own runs at HEAD: the manifest sieve re-derived (129 = 128 + 1; 70 read / 58 unread; 0 of 58 mentioning aws or resource), the round3-vs-round4 coverage diff with a 0-of-381 node-identity loss check, and the contract read as FWD-1's reader"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S18",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:55Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "FIVE DISMISSED, ALL OF THEM THE ISSUER'S OWN EVIDENCE ROWS -- and dismissing them is what keeps one remedy to one carrier.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S36, S37, S38 and S39 are 2.0.0_SA_COO~G's disarm records for W2-S35, W1-S35, W1-S38 and W1-S39, and the issuer says of each that it is EVIDENCE, NOT A DISPOSITION, carries no `adjudicates`, and leaves the row to this seat. That is exactly right and it is why they are dismissed: each one's substance is carried by the remediation row of the hazard it disarms, and disposing the evidence separately would mint a second carrier for one remedy. S40 is the same shape one round older -- the issuer's long-owed word on W2-S2, which is already GRADUATED and already carries a remediation row, so the evidence attaches to that carrier rather than opening a new one. \u2b50 THE ISSUER FILING ITS OWN ARM DEFECTS AS ROWS, WITH THE DISCRIMINATOR MEASURED AND WITHOUT TOUCHING THE DISPOSITION, IS THE REASON THIS ROUND COULD BE GRADED AT ALL -- the alternative history is four silent repairs and a clean-looking round.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S36",
+  "LGIC_LGCTFM-S37",
+  "LGIC_LGCTFM-S38",
+  "LGIC_LGCTFM-S39",
+  "LGIC_LGCTFM-S40"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Each is an issuer EVIDENCE row whose substance is carried by the remediation row of the hazard it concerns (W2-S35, W1-S35, W1-S38, W1-S39 in this round's set; W2-S2's existing carrier for S40). None leaves an act owed, and disposing them separately would mint a second carrier per remedy.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "the four disarm rows' own text, each stating 'evidence, not a disposition'",
+   "3.0.0_SA_CVO's check at HEAD that LGIC_LGCTFM-W2-S2 is GRADUATED and carries a remediation row"
+  ]
+ }
+}
+```

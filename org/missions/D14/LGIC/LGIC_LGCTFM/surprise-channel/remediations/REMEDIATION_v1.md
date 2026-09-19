@@ -629,3 +629,245 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": true
 }
 ```
+
+## Round 4 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "LGIC_LGCTFM-W2-S35",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "AN ARM DEMANDED A VOCABULARY THE SUBJECT HAS NEVER ADMITTED: m1-entry required status in (active|current|live) while graph-call-manifest.yaml's own schema admits canonical|deprecated|planned|retired and 125 of its 128 pre-existing entries read 'canonical'. The intersection was ZERO of 127, so no correct entry could pass and the cheapest green was to write a status the manifest forbids.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W2-S35",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "Repaired at 1d4df2c115 to take the manifest's OWN vocabulary, and the entry now reads PASS at the merged tree. What is owed forward is the class, not the fix: AN ARM THAT GRADES A VALUE AGAINST A VOCABULARY IT INVENTED RATHER THAN AGAINST THE SUBJECT'S OWN IS UNSATISFIABLE BY CONSTRUCTION, and the tell is cheap -- intersect the arm's accepted set with the subject's admitted set before the cut and print both denominators.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W2-S36",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A MID-ROUND FIXED-INPUT REPAIR CANNOT REACH A LIVE WORKER'S WORKTREE, AND THE ARM IT REPAIRS MEASURES THAT WORKTREE. The issuer repaired r4-stale-proofs at 1df2481ca0, which is not an ancestor of the worker's branch, so the in-tree checker FAILED the honest record while the repaired bytes PASSED it on the same tree.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W2-S36",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "This is STRUCTURAL and is not anyone's defect -- it is the cost of repairing a fixed input while workers are live, and it is the other half of the S32 bar the estate has been building all night. What is owed is that a mid-round fixed-input repair is ANNOUNCED to the live workers with the instruction to re-run from the merged tree rather than their own, which the issuer did here by message; making that the standing shape rather than this round's good judgment is the remedy. \u26d4 NOT a proposal to stop repairing fixed inputs mid-round: the alternative is leaving an unsatisfiable arm in front of a worker.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W2-S37",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE RULE-BANK TWO-PHASE OVERRIDE IS UNDISCHARGEABLE BY A WORKER: committing one manifest entry trips comp-system's STALE-source block, whose own text names an audited override line as the legal path AND requires it to be discharged in-session by a recompile commit -- which is outside a worker's grant.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W2-S37",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "A gate whose only legal path requires an act the graded party cannot perform is the same class as the four arms above, one level out: the worker cannot comply and cannot refuse. What is owed is a routing decision -- either the recompile is part of the issuing seat's drain, or the block admits a worker-shaped discharge. The row does not choose; the surface is not this project's.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S35",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "core_sources() WAS A BARE SUBSTRING SEARCH OVER THE WHOLE METHOD NOTE, so it could not tell a tool NAMED AS A SOURCE from one NAMED AS NOT USED -- and all three residual hits were rows of the 78-row COMP-TOOL LEDGER whose verdict column literally reads NOT USED. The cheapest passing move was to DELETE AN ANDREW-DIRECT ARTIFACT.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S35",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "Repaired at 21a163f492 to read the DESIGN half of the method note only. The class is the sharpest of the four and worth stating once: A SUBSTRING SEARCH CANNOT READ A NEGATION, so an arm built on one grades the presence of a word and never the claim -- and when the word appears in a truthful disclosure, the arm pays the record for being honest. The worker refusing to delete the ledger and filing BLOCKING instead is the behaviour the order asked for and got.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S36",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "LGCTFM_CONTRACT.schema.json's $defs.coverage is CLOSED (additionalProperties false, exactly five keys), so a contract carrying R-81's hand-surface guard output inside its coverage block reads HAND BACK from the estate's own router. The guard therefore rides in a sidecar.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S36",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "A ROUTED ITEM, NOT A ROUND-4 DEFECT, and the row is right to say so -- the schema is outside every cell's grant. What is owed is the owner's decision on whether the coverage block admits the guard's output or the sidecar becomes the declared shape; until then the guard's output is real and is simply not inside the artifact the router validates. Owner is the CTO because the schema is an estate surface.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S37",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ORDER'S ARM COUNT IS A MOVING NUMBER, NOT A CONSTANT: the face names '21 arms, 8 positive-satisfiability' and selftest-arms drove 24 and 8, because four arms are minted per round-4 order rather than fixed.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S37",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "Identical to LGIC_ENFORCE-W1-S89 one project over, and the remedy is the same and already taken forward there: STOP QUOTING A DERIVED TOTAL IN AN ORDER -- the run prints its own. A number an order quotes about its own instrument is a SECOND carrier of a fact the instrument already reports, and a second carrier goes stale silently. Pin the verdict token and the properties that must hold (8 positive-satisfiability arms), never the cardinality of a set the run computes.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S38",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A PER-WORKTREE MEASUREMENT FED A SHARED EQUALITY BAR: core_stale() required the record's fixed_input_commits_since_cut to EQUAL a count re-measured live, but the worker measures it against ITS OWN branch, which does not carry the issuer's mid-round repair commit -- so an honest record goes stale at the drain through no act of the worker's.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S38",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "Repaired at 21a163f492: the count became informational and the SET of at-risk proofs became the bar. The class to carry forward is that A BAR KEYED ON A COUNT TAKEN IN A DIFFERENT CHECKOUT IS NOT A BAR ON THE RECORD, IT IS A BAR ON WHERE THE RECORD WAS WRITTEN -- and a set that is stable across checkouts is the right shape, which is what the repair chose.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S39",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "x4-no-registry-move DIFFED THE WHOLE TREE, so an unrelated project's commit (845343f925, IRPT_BCKEND steps 2-3 by 4.0.0_SA_CRO, touching exemptions.json and scopes.json) FAILED this cell AT THE WORKER'S OWN HEAD, BEFORE ANY ACT OF THE WORKER'S. The cheapest passing move would have been to REVERT ANOTHER PROJECT'S WORK.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S39",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "Repaired at d08be0b693 to grade the cell's own write surface. \u2b50 THIS IS THE WORST OF THE FOUR AND THE ONLY ONE WHOSE CHEAPEST GREEN COSTS A SEAT THAT IS NOT IN THE ROUND -- an arm scoped to the tree makes every other seat's concurrent work a source of failure for a cell that never touched it, and on a shared branch with five live seats that is not a rare case. The standing shape: AN ARM'S DIFF SCOPE IS THE CELL'S GRANT, never the tree, and the grant is already written in the order's own <paths>.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S35",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ROUND-4 STALE-PROOF ARM COUNTED ITS OWN MINT AND PRICED THE HONEST ANSWER OUT: the window opens at the ANALYSIS pin, the commit CREATING the fixed-input directory lands after it, so git log returns 1 -- and the old rule demanded len(proofs_re_run) > 0 where the honest list is EMPTY, because no round-4 proof existed before the input did.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S35",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.15.4 -- the round-4 close"
+ ],
+ "remedy": "Repaired at 1df2481ca0 to SET EQUALITY against the proofs that existed at the parent of the earliest counted commit, with the two residuals the CTO's round-11 analysis named closed at eda1e967d0 -- the empty-set-on-instrument-failure and the unsorted per-path concatenation, the first with a LIVE positive control that hands the real function a bogus commit-ish and requires it to raise. THAT POSITIVE CONTROL IS THE PART WORTH KEEPING: it is the difference between a repair that is believed and one that is exercised. Nothing further is owed in this project; the sibling carrier in LGIC_ENFORCE is tracked by that project's own S90.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S41",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE CONTRACT NAMES THE FOUR CATEGORIES FWD-1's ACCEPT ASKS FOR AND CANNOT PLACE 24 OF ITS OWN KEYS: 24 of 154 S3Key rows carry a path with no bucket component (12 platinum/, 10 gold/, 1 silver/, 1 with a malformed single-colon 's3:' scheme), and the bucket appears in no other field of those rows -- arn_or_path, name and declaration all checked on one in full.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S41",
+  "workflows/legacy_transform/blackdiamond-49financial/20260919T034609Z-c28c728/contract.json @b93693e3b7"
+ ],
+ "remedy": "NOT A ROUND-4 DEFECT AND NOT A REASON TO RE-RUN: the walk rowed what the graph gave it, and the missing bucket is a property of the SOURCE key strings rather than of the run. What is owed is a decision by the engine's owner on whether an S3Key row must resolve its bucket -- either the row carries it as its own field, or the contract states that a tier-prefixed key is bucket-relative and says relative to what. The malformed 's3:' scheme (single colon, no '//') is the separable half and is a one-character defect in whatever produced that key. \u26a0 READ WITH THE ROW: my own first parse of this misread the tier prefixes as bucket names, so any re-measure should print the raw values rather than trusting a path split.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
