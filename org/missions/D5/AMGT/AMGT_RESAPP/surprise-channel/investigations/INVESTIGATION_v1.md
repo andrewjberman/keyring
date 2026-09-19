@@ -9734,5 +9734,118 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "In a resumed worker session whose earlier build was already committed to this same branch, 'HEAD' is no longer the pre-cell baseline -- it is downstream of that very build -- so a bare 'git show HEAD:<file>' diff structurally cannot detect the novelty it was written to detect, independent of anything wrong with SKILL.md's own content (which is unchanged, byte-for-byte, since the previously-recorded PASS).",
     "notes": "Graded PASS on the mechanism (analogous to AC2/row S1's illustrative-literal treatment): every field AC4 exists to police about the SCRIPT and the SKILL FILE'S OWN CONTENT (worktree_add_line_kept 1 of 1, non_ascii_now equals non_ascii_head, script_non_ascii 0, script_crlf 0, script_set_uo_pipefail 1) matches exactly, and the discriminating re-measurement against the true pre-cell baseline (047aee5478) confirms the novelty claim independently. This worker did not rewrite AC4's invocation to diff against a named historical commit instead of bare HEAD, because the order's invocations are literal and name no such route. Disarm: none required (INERT) -- flagged so a future round-14-style resumed session with a mid-flight repair commit knows 'vs HEAD' novelty checks on an already-committed branch will read this way structurally, not as a regression."
   }
+,
+  {
+    "id": "AMGT_RESAPP-Z-W38-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~38",
+    "surfaced_at": "2026-09-19T06:00:00Z",
+    "one_line": "The face's section 3 names the AMGT-rk-34 rollback as 're-derive with the pre-act map bytes, NO S3 delete', but the actual signed never-widen pair (both halves) names the rollback as delete_object of the new stamp -- the two documents disagree about the one thing section 3 says 'the pair' states.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND14_CHAIN_M_COO_HALVES.md :16-17 (AMGT-rk-34 section): 'the rollback of a derive is \"delete the new stamp\"' -- the shared chain rule stated once and applied to rk-34 below it",
+        "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND14_CHAIN_M_CTO_HALVES.md :72-73: the CTO half independently states the COO half's 'blast radius of a derive is a new newest stamp for the keys named, and the rollback is delete the new stamp' is CORRECT and rests on :1005-1015 + :452-454 -- agreeing with the delete-based rollback, not a re-derive-based one",
+        "the face's own worker-face text (section 3, THE POOL WRITE IS A DEPLOY OF SERVED OUTPUT) states the rollback as: re-derive the affected keys with the PRE-ACT map bytes, a NEWER stamp carrying the old units; NO S3 delete (an S3 delete needs human confirmation and is never your act)",
+        "both ledger files' AMGT-rk-34 sections were read in full by this worker before its first live act (section 2's gate) and neither states a re-derive-based rollback anywhere"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Face section 3: the pair's CTO half and COO half each name this blast radius (33 keys, one writer, four readers) and this rollback (re-derive with pre-act map bytes, NO S3 delete); a pair that does not is not the pair this order requires.",
+    "world_is": "The pair (both halves, read at their signed vintage) names a DIFFERENT rollback -- delete_object of every stamp newer than the pre-act one -- which is itself an S3 delete, a class of act CLAUDE.md's Agent Autonomy section reserves for explicit human confirmation. This worker recorded the pre-act stamp list (pre_act_stamps.json) so either rollback shape is executable by a human later, and did not need to execute any rollback (every derive in this order's act succeeded).",
+    "notes": "Not blocking this order (no rollback was needed; the derive succeeded on all 33). Whoever next relies on 'the pair' as stated in a worker face for this chain should re-read the ledger files directly rather than trust the face's paraphrase -- reconciliation owner: 2.0.0_SA_COO~Z and 1.0.0_SA_CTO~Z, the pair's signers."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W38-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~38",
+    "surfaced_at": "2026-09-19T06:10:00Z",
+    "one_line": "AC1's post-act bar (REFUSE_NOT_YET_BUILT reads 0) and AC3's per-name bar (REFUSE_NOT_YET_BUILT 0) are UNREACHABLE for any of the 33 that carries a genuine per-security UNRESOLVED unit, because this order's own RULED item-3(b) contract text for that branch embeds the same SEE-field_map.json/not-yet-built substrings run_checks.py's unit_status_for keys on for the NO-ENTRY branch -- so 'entry present but UNRESOLVED' and 'entry never built' are mechanically indistinguishable and BOTH read NOT-YET-BUILT, never REFUSE_OTHER.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/checkface/run_checks.py unit_status_for(): checks 'not yet built' in unit or 'SEE field_map.json' in unit BEFORE the sign/currency_caveat branches, returning NOT-YET-BUILT on the unit TEXT alone",
+        "this order's RULED item 3(b): the UNRESOLVED-per-security unit text this worker's builder MUST write is 'UNRESOLVED-ON-<security>: <reason> -- SEE field_map.json: a MEASURED unit is not yet built for this security' -- containing both trigger substrings verbatim, RULED and built exactly as specified (integrations/bloomberg/research/build_unit_map.py unresolved_unit_text())",
+        "measured post-act (AC1 invocation, byte-for-byte, this worker's proof-of-spec instance): REFUSE_NOT_YET_BUILT 38 (not 0), per_field CURR_ENTP_VAL 1, IS_DIV_PER_SHR 17, CAPITAL_EXPEND 10, PE_RATIO 10 -- and REFUSE_OTHER 0, i.e. every genuinely-measured-but-non-discriminating case (BA US Equity's and NU US Equity's zero-every-year IS_DIV_PER_SHR; BP/ LN Equity's out-of-band PE_RATIO; BBSE3 BZ Equity's ambiguous-magnitude CAPITAL_EXPEND; one CURR_ENTP_VAL case) landed in NOT-YET-BUILT, none in REFUSE_OTHER",
+        "the CTO half of the never-widen pair already names the SAME class of discrimination failure one field over: NEVER_WIDEN_ROUND14_CHAIN_M_CTO_HALVES.md M-DISAGREE-1(a) -- if the cell does not ALSO change _resolved_unit to emit a real ABSENT token, AC3 reads 0 of 33 on BOTH branches and the criterion is a green that cannot discriminate; it blocks the CRITERION, owner the L6 cut; and its section 1.6 explicitly forbids this worker from changing _resolved_unit's return values (a new ABSENT token is a schema change under Rule 24(iv), not a free edit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 expect: after the act, REFUSE_NOT_YET_BUILT reads 0, and every REFUSE_OTHER line carries a reason other than NOT-YET-BUILT (an UNRESOLVED-ON-<security> unit written by the builder with its cause, or a PENDING currency caveat); AC3 expect: each covered name answers REFUSE_NOT_YET_BUILT 0; section 4's REFUSAL CLAUSE: a refusal that survives because a magnitude genuinely does not discriminate is listed under AC1's REFUSE_OTHER with its UNRESOLVED-ON-<security> reason, and the bar 0-NOT-YET-BUILT is still met because the entry now EXISTS and says why.",
+    "world_is": "Given RULED item 3(b)'s literal contract text, the described mechanism (UNRESOLVED entries landing in REFUSE_OTHER so the 0-NOT-YET-BUILT bar is still met) does not hold: unit_status_for cannot tell the two branches apart, so a genuine, correctly-recorded UNRESOLVED-ON-<security> entry ALSO reads NOT-YET-BUILT. This worker built exactly what item 3(b) RULED (never widened, never repaired via an unowned route, per the REFUSAL CLAUSE) and records AC1 and AC3 as measured -- FAIL against their literal bars -- rather than reinterpret the bar to pass.",
+    "notes": "This is the same discrimination failure M-DISAGREE-1(a) already named and assigned to the L6 cut, one field over (unit vs a hypothetical corrected-overlay ABSENT token); this row is the measured instance of it actually firing, not a new class. Remedy: either accept a non-zero NOT-YET-BUILT residual as the correct outcome for a name with a genuine per-security-unresolved field (amend AC1/AC3's literal bar to match the REFUSAL CLAUSE's own stated intent), or give run_checks.py's unit_status_for a way to distinguish the two branches (e.g. a distinct marker text neither of the three named consumers currently key on) -- both are L6/PRD-level decisions, outside this order's paths (lib/ is not writable here) and outside its RULED text."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W38-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~38",
+    "surfaced_at": "2026-09-19T06:20:00Z",
+    "one_line": "AC3's own literal invocation reads model_status via (inner.get('model') or {}).get('model_status'), but the Lambda's response body carries model_status as a TOP-LEVEL key with no nested 'model' dict at all -- the literal invocation prints None for every name regardless of actual state.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: a direct lambda.invoke on opal-amgt-scoped-api for BA_US_Equity, HD_US_Equity and BP%2F_LN_Equity, printing list(inner.keys()) -- model_status appears at the TOP LEVEL of inner alongside security_key/check_face/fiscal_year_figures/...; inner.get('model') is None for all three",
+        "measured: inner.get('model_status') (the corrected, top-level read) returns SERVED for all three names, both before and after this order's act",
+        "AC3's invocation as given in the worker face literally does (inner.get('model') or {}).get('model_status'), which this worker ran byte-for-byte and which prints None for all three names in the recorded output_evidence"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 expect: each of BA_US_Equity, HD_US_Equity and the slash-keyed BP%2F_LN_Equity answers statusCode 200 with model_status SERVED.",
+    "world_is": "The served plane genuinely answers model_status SERVED (confirmed on a corrected read); the criterion's OWN literal invocation code cannot observe this because it reads the wrong path in the response object, so its output_evidence shows None on all three names even though the underlying claim is true. Recorded byte-for-byte per the order's own instruction; not corrected in the recorded invocation (an invocation is run LITERAL, never patched).",
+    "notes": "A future re-cut of this criterion's invocation should read inner.get('model_status') directly, not inner.get('model', {}).get('model_status'). Does not change AC3's overall FAIL disposition here, since REFUSE_NOT_YET_BUILT is independently nonzero on 2 of the 3 names (see S2)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W38-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~38",
+    "surfaced_at": "2026-09-19T06:25:00Z",
+    "one_line": "The crosswalk's keyed-name count moved from 33 (the analysis's cut) to 36 between the cut and this worker's spawn -- the 3 extra are exactly the validation names (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity), now identity-keyed in the crosswalk while their raw is still absent -- which moves AC2's literal 33-of-33/missing_pairs-0 bar to 33-of-36/missing_pairs-96, though AC2 (unlike AC1) carries no 'may have moved' caveat.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured (AC1's own pre-act invocation, run first per this order's instruction): crosswalk crosswalk/v1/2026-09-19.json keyed_names 36, names_with_block 33 of 36, REFUSE_NOT_YET_BUILT 348 with per_field IS_DIV_PER_SHR 297 / EQY_FREE_FLOAT_PCT 29 / SHORT_INT_RATIO 12 / SI_PERCENT_EQUITY_FLOAT 10 -- exactly the Model brief's 33-name figure, over a now-36-name crosswalk",
+        "measured: 6861_JP_Equity, CAT_US_Equity, CSL_AU_Equity are present as security_key entries in crosswalk/v1/2026-09-19.json but have NO raw landed under raw/bloomberg/<key>/ (confirmed by a refdata.json-presence walk, not a folder-existence guess -- see S5)",
+        "AC2 measured (this worker's own run, byte-for-byte): securities_with_entry_for_every_mnemonic 33 of 36, missing_pairs 96 (32 mnemonics x the same 3 validation names), all against names with no raw -- never a mapping defect on a name this order was scoped to build"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 expect: securities_with_entry_for_every_mnemonic reads 33 of 33 with missing_pairs 0.",
+    "world_is": "The live crosswalk carries 36 keyed names, not 33, at this worker's spawn; the map covers all 33 names this order was scoped to (every one with raw landed), and correctly carries NO entry for the 3 that have no raw (C-UNIT-MAP-MEASURED: never guessed). The literal 33-of-33 bar cannot be met against a 36-name live crosswalk without either re-reading it as 33-of-36 (the honest, RE-MEASURE-obligated reading AC1 itself models) or building entries for names with no raw (which this order's BOUNDS and RULED text forbid).",
+    "notes": "Recorded as measured (FAIL against the literal bar) rather than reinterpreted to pass, per the REFUSAL CLAUSE. Same root cause as AC1's own acknowledged 'it may have moved' movement; AC2 was not written with the same caveat. Owner of the caveat gap: the L6 cut."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W38-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~38",
+    "surfaced_at": "2026-09-19T06:30:00Z",
+    "one_line": "raw/bloomberg/<key>/<stamp>/ can carry a stamp folder holding ONLY an identity.json (no refdata.json/histdata.json) for a key whose Bloomberg raw has never landed -- measured on all three validation names -- so a stamp folder existing is not evidence raw landed, and model_block_pull.py's own _latest_stamp (used unmodified by its stage_derive) would crash NoSuchKey rather than report absence if pointed at one of these keys.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: s3://opal-data-harvest/raw/bloomberg/CAT_US_Equity/20260919T011821Z/ contains ONLY identity.json (183 bytes); same shape for CSL_AU_Equity (20260919T011824Z) and 6861_JP_Equity (20260919T011828Z) -- no refdata.json, no histdata.json, at the ONLY stamp under each key",
+        "this worker's first implementation of build_unit_map.py used model_block_pull.py's own _latest_stamp (a Delimiter='/' CommonPrefixes read, no content check) and crashed with botocore.errorfactory.NoSuchKey on get_object(refdata.json) for exactly these three keys before this worker hardened its OWN module to verify refdata.json/histdata.json actually exist under a stamp before trusting it",
+        "integrations/bloomberg/research/model_block_pull.py's stage_derive (:369-461) calls the SAME unmodified _latest_stamp (:206-214) with no such check -- unchanged by this order per section 1's RULED scope (this order only reads the producer's reader, per item 3, and builds a new sibling module)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own chain names AMGT-rk-35 (per the COO half) as the cell that will pull+derive exactly these three keys once R14-I1 lands their identity -- this row records that the identity landing has ALREADY happened (ahead of the pull), sharing the raw/bloomberg/ prefix in a shape _latest_stamp cannot distinguish from a real raw landing.",
+    "world_is": "Today the three keys' only stamp is identity-only, so any code path calling _latest_stamp on them (this worker's original builder, or model_block_pull.py's own stage_derive if invoked against these keys before their real pull lands) reads a stamp that exists but is not raw, and fails with an unhandled S3 exception rather than a clean 'no raw landed' state.",
+    "notes": "This worker's own build_unit_map.py is hardened against this (verifies refdata.json+histdata.json presence per stamp, newest-first) and its AC4 dry run over these three names prints the correct explicit UNRESOLVED terminal state, not a crash. model_block_pull.py's stage_derive itself is unchanged and carries the same landmine -- owner: whoever next runs derive against a key that might carry an identity-only stamp (rk-35, or model_block_pull.py's own hardening as a future cell); not in this order's paths to fix beyond the new module."
+  }
 ]
 ```
