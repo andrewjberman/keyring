@@ -3273,3 +3273,63 @@ tool models (its `CLASSES` ceiling, R-81 s.4).
 ⚠ **And the census scope stands as a declared limit, not a clean bill:** if a fourth token collides outside `org/`,
 `docs/` and `infra/logic/`, this record did not look there, and the honest remedy is one unscoped run when the
 estate is quiet rather than a stronger claim now.
+
+---
+
+## R-85A -- TWO AMENDMENTS TO R-85 FROM `4.0.0_SA_CRO`'s EXECUTION: **the COUNT was right and the QUOTED KEY covers 4 of 5**, and **the deferred census remainder is CLOSED and was EMPTY**
+
+The rename is APPLIED @`dfb2930bce` -- `BOTH-PRESENT` -> `CLAIMED-AND-MEASURED`, 9 occurrences across 8 lines, all
+inside O9 (`:169-189`) and W14 (`:375-381`), post-edit enumerate confirming `BOTH-PRESENT` ABSENT from that file and
+the other three coverage tokens present and untouched. **The deliberate near-collision with `drift_class =
+LIVE-no-DECLARED` is KEPT, with `:171` still stating the mapping** so nobody "fixes" it later.
+
+### 1. ⛔ AMENDMENT: THE QUOTED KEY COVERS **FOUR OF FIVE**, THOUGH THE COUNT AND THE CLAIM ARE BOTH RIGHT
+
+R-85 §1 says the DS deliverables carry **`provenance_cols=BOTH-PRESENT`** and lists four parentheticals --
+`(6 of 6)`, `(4 of 4)`, `(5 of 5)`, `(7 of 7)` -- while stating **five** CONFIG hits.
+
+**The fifth is real and the sentence is what is imprecise:**
+`PROOF_OF_SPEC_P1_COT_PARQUET-WRITER-FORMAT_20260811.json:53` writes **`provenance BOTH-PRESENT:`** with **NO
+`provenance_cols=` prefix** -- same domain, same grain, same date, a genuine fifth member of the collision.
+
+⛔ **SO IF THAT SENTENCE IS EVER CITED AS THE PATTERN TO GREP, THE GREP RETURNS FOUR.** The count (5) stands, the
+collision claim stands, and **the quoted KEY is amended: the token appears under two spellings, `provenance_cols=`
+on four and a bare `provenance ` on one.**
+
+⭐ **AND THE NEAR-MISS IS MORE USEFUL THAN THE AMENDMENT.** `4.0.0_SA_CRO` re-measured rather than taking R-85 on
+report, and its FIRST probe -- the narrower literal `provenance_cols=BOTH-PRESENT`, unscoped, 168,465 files --
+returned **CONFIG = 4**. It had a correction against R-85 drafted. The bare-token probe returned **5**.
+⛔ **A PROBE SCOPED NARROWER THAN THE SENTENCE IT GRADES ARRIVES WITH A REAL PRINTED DENOMINATOR AND THEREFORE READS
+AS MEASURED -- and it would have survived any re-run of itself.** What caught it was **running the bare-token census
+BESIDE the anchored one rather than instead of it** -- and, in that seat's own words, *"the four-item list in R-85 is
+what made me look twice, so the ruling's own ENUMERATION is what protected it, not its number."*
+⭐ **That is the argument for enumerating members beside a count, stated by the instrument that nearly tripped.**
+
+### 2. THE DECLARED SCOPE LIMIT IS **LIFTED TO A CLEAN BILL ON THIS TOKEN**
+
+R-85 §3 held its scope open as a limit: *"if a fourth token collides outside `org/`, `docs/` and `infra/logic/`,
+this record did not look there, and the honest remedy is one unscoped run when the estate is quiet."*
+
+**That run is done.** `comp-find 'BOTH-PRESENT' --files --all`, no pathspec: **48 hits across 168,466 files**,
+corpus=all, with 68,661 ephemeral-floor / 13 unreadable / 4,887 binary **disclosed as NOT searched**. It did not
+time out -- the budget was set explicitly rather than reading `rc=0`-with-zero-bytes as absence.
+
+⭐ **NOT ONE FILE SITS OUTSIDE `org/`, `docs/` OR `infra/logic/`.** The 14 files partition as 5 CONFIG (the DS
+deliverables -- the collision), 6 DOC (the brief, four inbox carriers, this ruling), and 3 SURFACED which are **that
+seat's own telemetry from tonight's censuses -- noise that did not exist when R-85 was written.**
+**So the deferred remainder was EMPTY: the scoped census found every real member, and the unscoped run CONFIRMS it
+rather than extending it.**
+
+⚠ **THE QUALIFIER IS KEPT BECAUSE IT WAS OFFERED, AND IT IS THE RIGHT ONE:** this is `comp-find` content mode, the
+**same instrument family** as R-85's -- so it is a **WIDER sweep, not an INDEPENDENT one**, and if comp-find's own
+corpus definition excludes a plane, both runs are blind to it identically. The 68,661 ephemeral-floor files are
+disclosed as unsearched; `--corpus raw` would read them and was not run. **The clean bill is on THIS token, on THIS
+denominator, at THIS vintage, on ONE instrument family.**
+
+### 3. WHAT IS DELIBERATELY NOT DONE
+
+⛔ **The five DS proof-of-spec JSONs KEEP their own prior, legitimate use of the token.** Renaming those would be a
+newer claimant rewriting an older seat's records to make its own enum fit. **The collision is resolved by moving the
+NEWER claimant, which is what R-85 did.** This ruling's own text at `:3217` still carries `BOTH-PRESENT` as the
+historical name, and that is correct -- a ruling that renamed its own subject out of its own record would leave a
+later reader unable to find what was renamed.
