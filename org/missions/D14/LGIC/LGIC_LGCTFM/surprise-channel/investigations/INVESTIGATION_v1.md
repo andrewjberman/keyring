@@ -1089,3 +1089,31 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## Round 4 -- the issuer's own arm, repaired mid-round
+
+```json
+{
+ "id": "LGIC_LGCTFM-S35",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T02:19Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "THE ROUND-4 STALE-PROOF ARM COUNTED ITS OWN MINT AND THEN PRICED THE HONEST ANSWER OUT: the window opens at the ANALYSIS pin, the commit that CREATES the fixed-input directory lands after it, so git log returns 1 -- and the old rule demanded len(proofs_re_run) > 0 where the honest list is EMPTY, because no round-4 proof existed before the input did. The only satisfying move was an INVENTED proof name, on an arm carried by all three round-4 orders with two workers live against it. Repaired by the issuer at 1df2481ca0 to SET EQUALITY against the proofs that could actually be stale.",
+ "spec_asserts": "A guard-shaped arm disclosed as PASS-at-the-cut stays satisfiable by a CORRECT record for the whole round.",
+ "world_is": "Measured by 2.0.0_SA_COO~G in the shared tree at HEAD 168ff4a949, after LGIC_ENFORCE round 11's worker filed the same defect one project over as LGIC_ENFORCE-W1-S88 against the identical arm shape. git log 87607a2a30..HEAD over the two watched fixed-input paths returns exactly ONE commit and it is aad67ca4bc, THIS ROUND'S OWN L6 ISSUANCE -- the commit that minted the directory being watched. Under the old core_stale the arm then required a non-empty proofs_re_run list; the set of round-4 proofs pinned before that commit is EMPTY by construction, so no correct record could pass and the cheapest passing move was a fabricated proof path. REPAIRED, not waived: core_stale now requires proofs_re_run to EQUAL the round's own proofs that existed at the parent of the earliest counted commit -- empty at a mint (PASS with []), exact at a real mid-round edit, and refusing BOTH an under-enumeration and an over-enumeration. The first cut of the repair over-corrected, sweeping all 20 project proofs including rounds 1-3 which are frozen history (R-43); _is_this_round scopes it and a mutant arm holds that. Controls after the repair: 28 arms, 10 positive-satisfiability, PASS-ARMS-DISCRIMINATE, ruff clean. DISARMED same turn by that commit; both live workers were told directly that the arm moved and that N is re-measured at their own write time. NOT re-opened: LGIC_ENFORCE round 11 graded with the old rule and its worker enumerated rather than fabricated, so no verdict rests on the defect.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git log 87607a2a30c4018a2d9bb9ad7fe02e15dcc9005b..HEAD -- the r4 and r3 fixed-input paths, run at 168ff4a949: 1 commit, aad67ca4bc, this round's L6 issuance",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_lt_r4.py@1df2481ca0 -- core_stale, proofs_at_risk and _is_this_round, with four new self-test arms",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S88 -- the discovering row, filed by 0.9.0_WK_LGIC_ENFORCE~1 on the same arm shape",
+   "1.0.0_SA_CTO msg 98102 @e95157fa75 -- the S34 addendum replacing the sweep trigger with a per-proof fixed-input vintage FIELD; round 4 runs no sweep and this repair keeps it sweep-free"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
