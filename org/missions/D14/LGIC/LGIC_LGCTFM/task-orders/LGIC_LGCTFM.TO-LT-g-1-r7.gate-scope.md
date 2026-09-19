@@ -40,11 +40,27 @@ by which predicate, on what basis -- and to prove the guard is SCOPED rather tha
 5. **THE VINTAGE FIELD:** `fixed_inputs_at_pin`, mapping each fixed input you invoked to the COMMIT you
    invoked it at -- both `check_lt_r7.py` and `R7_BASE.json`, each resolvable against its path.
 
-⚠ **IF THE GATE NO LONGER REFUSES THESE PATHS, THAT IS THE RESULT.** The row is from round 2 and the
-gate has been edited since. Record what you measure. A cell that manufactures a refusal to match an old
-row has done the opposite of its job -- but note the arm DOES require a non-empty refused set, so if
-you measure zero refusals, **file it BLOCKING and report**: that is a criterion that a correct artifact
-could not satisfy, and it is mine to fix, not yours to work around.
+⚠ **IF THE GATE NO LONGER REFUSES THESE PATHS, THAT IS THE RESULT** -- and it is what happened.
+
+⛔ **THE RESIDUAL THIS ORDER DISCLOSED AT THE CUT FIRED, AND THE ARM IS REPAIRED.** The first cut
+required a NON-EMPTY refused set, so a genuinely-empty one could not be satisfied by any correct
+artifact. `0.9.0_WK_LGIC_LGCTFM~2` measured **0 of 5** refused, filed `LGIC_LGCTFM-W2-S45` BLOCKING
+**rather than manufacturing a refusal**, and did not flip its order. That was exactly right, and the
+defect was mine. **`W2-S1` IS ALREADY REMEDIED**: `1.0.0_SA_CTO`'s R-35 fix @`5fd4251792` is an ancestor
+of this round's cut pin -- it landed BEFORE the round was cut, and nobody had noticed, which is the
+`S44` class again.
+
+**SO THE ARM NOW ADMITS TWO SHAPES:**
+
+- **(A) THE GATE STILL REFUSES** -- a refused set, a predicate at `file:line`, a `refusal_basis` from
+  the enum, and an ADMITTING control.
+- **(B) THE GATE NO LONGER REFUSES** -- an EMPTY refused set, with `why_zero`, the EXCLUDING predicate
+  at `file:line`, and a **`scoping_control`**: a path in the SAME tree the gate **DOES** refuse,
+  `refused: true`, with its output line.
+
+⭐ **THE DISCRIMINATOR IS PRESERVED EXACTLY WHERE IT MATTERS.** Branch (B) is not a weakening: without
+the scoping control, **a scoped carve-out and a gate that has gone silent everywhere read identically**
+-- and that is the whole question this cell exists to answer.
 
 **RECORD SHAPE (the one carrier is `deliverables/2.0.0_SA_COO~G/fixed_inputs/r7/R7_BASE.json`; this is a quotation of YOUR half of it)**
 
@@ -53,15 +69,21 @@ could not satisfy, and it is mine to fix, not yours to work around.
   "gate_scope": {
     "refused": [{"path": "<path>", "verdict": "<the gate's own output line>"}],
     "refused_denominator": 0,
-    "refusing_predicate": "<file:line of the code that refuses>",
-    "refusal_basis": "<FILENAME|PATH|CONTENT>",
+    "refusing_predicate": "<file:line of the code that REFUSES (branch A) or EXCLUDES (branch B)>",
+    "refusal_basis": "<FILENAME|PATH|CONTENT -- branch A only; empty on branch B>",
     "admitting_control": {"path": "<a path the gate ADMITS>", "verdict": "<its output line>"},
+    "why_zero": "<branch B only: what produced the empty refused set>",
+    "scoping_control": {"path": "<branch B only: a path in the SAME tree the gate DOES refuse>", "verdict": "<its output line>", "refused": true},
     "gate_pin": "<commit of .tools/naming-gate.py read>"
   },
   "fixed_inputs_at_pin": {"<path>": "<commit>"},
   "stale_proofs": {"fixed_input_commits_since_cut": 0, "proofs_re_run": []}
 }
 ```
+
+⚠ **Any other field you find useful is welcome and the arm ignores it** -- the first pass of this cell
+carried `measured_paths`, `invocation`, `gate_output_verbatim`, `rc` and a corroboration field, and all
+of them made the record better. **The named fields above are the floor, not the ceiling.**
 
 Write it to `<WS>/org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/GATE_SCOPE_R7.json`.
 
@@ -153,7 +175,7 @@ forward into the cut rather than re-learned after it.
 <preflight>
 comp-schedule: RUN at the round-7 cut: no schedule is created or read.
 comp-iam: RUN at the round-7 cut: no grant moves.
-comp-adversary: RUN at the round-7 cut: the cheapest satisfying move is to record a refusal from the ROW's round-2 text rather than from a run, which is why every refused entry carries the gate's OWN output line and the record carries a gate_pin; the second-cheapest is an "admitting" control that is not actually admitted, so the arm refuses a control whose path also appears in the refused list. What no mechanical arm here can see is whether the gate was run at all -- stated on the order and routed to AC4. RESIDUAL DISCLOSED AT THE CUT: the arm requires a NON-EMPTY refused set, so if the gate has since been widened and refuses nothing, a correct artifact cannot satisfy AC1. The order tells the worker to file that BLOCKING rather than manufacture a refusal, and names it as the issuer's defect to fix.
+comp-adversary: RUN at the round-7 cut: the cheapest satisfying move is to record a refusal from the ROW's round-2 text rather than from a run, which is why every refused entry carries the gate's OWN output line and the record carries a gate_pin; the second-cheapest is an "admitting" control that is not actually admitted, so the arm refuses a control whose path also appears in the refused list. What no mechanical arm here can see is whether the gate was run at all -- stated on the order and routed to AC4. RESIDUAL DISCLOSED AT THE CUT, AND IT FIRED: the first cut of the arm required a NON-EMPTY refused set, so a genuinely-empty one could not be satisfied by any correct artifact. 0.9.0_WK_LGIC_LGCTFM~2 measured 0 of 5, filed LGIC_LGCTFM-W2-S45 BLOCKING rather than manufacturing a refusal, and did not flip its order. The arm is REPAIRED to admit branch (B) -- an empty refused set WITH why_zero, the excluding predicate at file:line, and a scoping control proving the gate still refuses something in the same tree. The discriminator is preserved: without that control a scoped carve-out and a gate gone silent everywhere read identically. Disclosing the residual at the cut is what made the worker file it instead of working around it.
 lane: <paths> is the grant; deliverables/0.9.0_WK_LGIC_LGCTFM~2/ by the tree convention. .tools/naming-gate.py has NO writer this round.
 contention: the channel is shared -- append-only, 14b's inversion applies. Three cells write three disjoint deliverable directories.
 </preflight>
