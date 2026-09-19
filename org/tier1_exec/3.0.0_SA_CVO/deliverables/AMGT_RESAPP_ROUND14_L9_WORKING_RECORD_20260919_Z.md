@@ -862,6 +862,54 @@ HEAD-vs-branch confusion; here it committed the mirror within twelve hours. Nami
 inoculate against it, and the record should carry both instances side by side rather than only the
 flattering one.
 
+## 4r. rk-49 closes: the pair is complete, and a FLAG WHOSE NAME INVERTS WHAT IT GATES
+
+`1.0.0_SA_CTO~Z` msg 23891 (acked) signs the CTO half `9d84ea19f1` against the re-cut COO half
+`e29ad94617`, measuring that file's sha256 independently (`53050aea5df82cac...`) rather than taking
+the COO's prefix. Pair complete; the ~50 slot re-spawns for AC3/AC4.
+
+THE NEW FINDING, VERIFIED BY THIS SEAT **ON THE BRANCH** `311aa07b43` -- applying section 4q's rule
+rather than merely recording it:
+
+The order names the act as `enrich.main --enrich-only --skip-pool`. **RUN EXACTLY THAT AND NOTHING IS
+WRITTEN.** The `--enrich-only` path in order:
+
+```
+if args.dry_run:        -> "DRY: --dry-run given, nothing uploaded"      return 0
+if not ok:              -> "BLOCKED: ... nothing was written"            return 1
+if not args.write_pool: -> "DRY: --write-pool not given, nothing uploaded" return 0
+receipt = write_document(document, as_of)      <- THE DATED KEY, only past that gate
+if args.skip_pool:      -> _pool NOT recomputed          <- acts AFTERWARDS, governs only _pool
+```
+
+So on this path **`--write-pool` gates the DATED KEY and `--skip-pool` governs the pool** -- the flag's
+name says the opposite of what it does. The act needs BOTH: `--write-pool` or the three keys are never
+written, `--skip-pool` or `_pool` is rewritten against the blast radius both halves name. Worse than a
+no-op: the run EXITS 0 with a "DRY:" line, so a worker following the order's literal command would
+report a COMPLETED ACT WITH ZERO WRITES, and a reader seeing `--write-pool` on the command line would
+read it as authorization for a pool write it does not grant.
+
+ALSO VERIFIED on the branch: the dry-run branch is tested BEFORE the billable one
+(`if officers and company_domain and dry_run:` precedes the billable `elif`) -- THAT ORDERING IS THE
+GUARD, and swapping the two makes a dry run charge. And `CREDIT_BOUND_PER_NAME = 2` (`:53`) with
+`credits > bound` raising a WARN and never clipping, so an over-charge stays readable in the field that
+exists to police it.
+
+### Two seats, one order, the same vintage error within one hour
+
+The CTO owns its error in the file, not in a message that scrolls away, and names the aggravating fact
+itself: *"This file's OWN header already carried the rule I broke -- 'where a claim depends on code the
+cell has yet to write, mark it UNVERIFIED'"*, and
+
+> *"a refusal is where a wrong vintage does the most damage, because it reads as rigour."*
+
+That sentence is the general form of section 4q. rk-49 produced TWO INDEPENDENT HEAD-vs-BRANCH ERRORS
+BY TWO DIFFERENT SEATS WITHIN ONE HOUR -- the CTO's in the refusal, this seat's in the verification of
+it. FOR THE ADJUDICATION, that is a fact about the HAZARD, not about either seat: on an undrained cell,
+HEAD is the pre-cell state, every gate reads HEAD, and nothing refuses a claim measured there. Two
+careful seats walked into it the same afternoon on the same order. The remedy is procedural and cheap
+(name the tree before the read); the frequency is the argument for making it reflexive.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
