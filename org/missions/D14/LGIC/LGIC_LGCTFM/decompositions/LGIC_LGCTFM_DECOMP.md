@@ -1085,3 +1085,85 @@ counts. ⛔ **The order does not quote those counts** (`W1-S37`, third consecuti
 
 **WIRING AT THE CUT**, each red naming the act that clears it: `l1-liveness` and `r8-vintage-field`
 **FAIL**, both cleared by this cell alone; `r8-stale-proofs` is **GUARD-SHAPED and reads PASS**.
+
+
+---
+
+## 20. v1.10 -- THE ROUND-9 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-8 analysis @`b24a81c4d3`
+
+**Input.** `1.0.0_SA_CTO`'s round-8 analysis @`b24a81c4d3` and `3.0.0_SA_CVO`'s L9 @`2bb57f01f8`.
+**Round 8 STANDS** -- `L1R8-AC4` PASS, five rows GRADUATED (`S50`-`S54`), no PRD addendum owed, scope 0
+open of 30 at the cut.
+
+⚠ **A CITATION CORRECTION AGAINST s.19's OWN HEADER.** That header calls the controlling row
+*"`3.0.0_SA_CVO`'s S49"*. **It is `1.0.0_SA_CTO`'s.** Measured: FOUR rows answer to `-S49` across the
+LGIC channels, and `LGIC_LGCTFM-S49` reads `surfaced_by: 1.0.0_SA_CTO` in both its investigation and
+remediation carriers; the CVO GRADUATED it at round 8's L9 and did not surface it. ⭐ **The cause is
+worth more than the correction: I read that row inside commit `938ea238ed`, which IS a CVO commit, and
+attributed the row to the seat whose commit I read it in. On a shared append-only channel the COMMIT
+AUTHOR IS NOT THE ROW'S `surfaced_by`.** s.19 is not rewritten -- it stands at its vintage.
+
+### 20.1 THE CELL -- ONE, AND THE POPULATION IS THE SEVEN
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| remedy-and-disposition | `LT-m-1` | executes the routed acts that are executable and dispositions ALL SEVEN `STILL-LIVE` rows with a class and a reason | the round-7 routing table's remaining live half | `S18` `W1-S21` `S26` `W1-S30` `S33` `W2-S36` `S41` |
+
+The analysis s.5 item 3 reads *"Nothing else."* One cell, one worker, no second lane.
+
+### 20.2 ⛔ THE SEVEN ROUTED ACTS ARE NOT SEVEN OF THE SAME THING, AND TWO CANNOT BE DONE AS WRITTEN
+
+Measured at the cut, reading all seven `next_act` fields at HEAD:
+
+| class | rows | why |
+|---|---|---|
+| executable code remedy on a LIVE library | `W1-S30`, `S33` | `lib/opal_lgctfm.py`, `lib/lgctfm_render.py` -- not pinned, tests exist |
+| **UNEXECUTABLE AS ROUTED** | `S18`, `W1-S21` | both ask for arms in **`check_lt_r1.py`, a CLOSED round's PINNED fixed input** |
+| NOT WORK -- a DECISION | `S41` | *"the engine's owner decides"* |
+| NOT A WORKER'S ACT | `W2-S36` | a mechanics/law edit, whose broadcast surface a worker cannot discharge |
+| THE ISSUER'S OWN ACT | `S26` | verify-then-disarm, and a disarm is the row owner's under R-19 |
+
+⭐ **THE COLLISION IS THE FINDING AND THE ROUTE DID NOT SEE IT.** `LGIC_ENFORCE` round 16 ruled -- and
+its L9 and L10 upheld -- that an annotation is recorded by an **ADDITIVE SIBLING** and **never** by an
+edit to a pinned fixed input, because editing it after that round's proofs pinned against it is the
+stale-proof hazard. **Two routed acts ask for exactly that edit.** Round 8's liveness cell RECORDED the
+collision and correctly did not resolve it; this cell classes it and still does not resolve it.
+
+⚠ **`UNEXECUTABLE-AS-ROUTED` IS THE CLASS A CELL COULD HIDE UNFINISHED WORK BEHIND**, so the checker
+makes it the costliest to assert: a row in that class must NAME the blocking ruling **and** a pinned
+`fixed_inputs/` path the act would edit, or the arm FAILS.
+
+### 20.3 EVERY VERDICT LINE STATES ITS BASE SHA
+
+The analysis s.4 adopts the CVO's sentence as the ruling: **"A LIVENESS CELL CANNOT BE ISOLATED --
+ISOLATION IS EXACTLY THE THING IT IS MEASURING AGAINST. The remedy is the CUT, not the worker: such a
+cell runs IN THE SHARED TREE, or STATES ITS BASE SHA IN EVERY VERDICT LINE."**
+
+This worker holds a worktree -- ⛔ **Rule 14b is NOT traded away; the carve-out is one cell class, not a
+weakening of 14b** -- so the second branch binds, mechanically: **every row carries `base_sha`, and a
+row without one FAILS.** A header-only sha is refused too, and a label (`HEAD`) is refused because **a
+label is not a tree.** Round 8's 2-of-23 miss was invisible precisely because no verdict line said
+which tree it was read in.
+
+**And any liveness re-read uses the WINDOW method** (s.3): enumerate the commit window and inspect what
+each commit touched, never a grep of commit SUBJECTS for a row id. ⭐ The CVO ruled against its own
+instrument here -- a subject grep is an AUTHOR-COOPERATION instrument and returned **0 for `S42`**, the
+row two seats confirmed was falsified.
+
+### 20.4 THE JUDGMENT CRITERION QUANTIFIES OVER THE PARTITION
+
+Taken from the round-8 analysis s.2, the bar-writing rule its own author took against himself: **when a
+defect's mechanism is UNIFORM over a partition, the criterion quantifies over the PARTITION, not over
+the bucket where the cost is highest.** `M1R9-AC4` therefore names **all five classes** -- a remedy
+wrongly marked `EXECUTED` is exactly as bad as one wrongly marked `UNEXECUTABLE`, and last round both
+misses landed in the one bucket the criterion did not name. **COST: one clause.**
+
+### 20.5 WHAT THIS ROUND DELIBERATELY DOES NOT DO
+
+- **Edit `check_lt_r1.py`.** Refused by name; the cell records the collision instead.
+- **Disarm any row.** All seven name `2.0.0_SA_COO~G`, and an issuer's worker disarming rows that
+  issuer routed is self-certification at two removes. `EXECUTED` records that the ACT was done; the
+  DISARM stays the issuer's and the DISPOSITION stays `3.0.0_SA_CVO`'s at L9.
+- **The `W2-S36` mechanics edit.** A law edit carries three surfaces including a same-turn broadcast,
+  and a worker has no send tool -- so it is classed and routed, never performed here.
+- **Anything outside the seven.**
