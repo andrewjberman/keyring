@@ -419,6 +419,20 @@ criterion aged across a PEER ORDER'S WRITE. Both are "the expectation was true w
 when run", and neither is caught by any gate -- the decomposition is frozen mid-round, but the WORLD
 the criteria describe is not.
 
+A SUBCLASS WORTH GRADING CONSISTENTLY -- **the criterion probes a key the producer never writes.** Two
+instances, and the two were handled differently:
+
+| row | the probe | the producer | outcome |
+|---|---|---|---|
+| `W38-S3` | AC3 reads `(inner.get('model') or {}).get('model_status')` | `model_status` is TOP-LEVEL, no nested `model` dict | prints `None` for EVERY name regardless of state -- a control that cannot discriminate. NOT fixed |
+| `W39-S3` | AC5 reads `inner.get('model')` | `read_thesis_bundle` flattened only three keys, never nested `model` | FIXED additively in-cell: `bundle['model'] = model` ADDED beside every pre-existing flattened key, so no existing consumer moves; 22 of 22 and 16 of 16 tests still pass |
+
+GRADE THEM DIFFERENTLY AND SAY WHY: `W39-S3`'s AC5 is NOT a standing defect -- the worker implemented
+item 6's own instruction in the shape AC5 already grades, additively and within its grant, and proved
+no consumer moved. `W38-S3`'s AC3 IS a standing criterion defect, and the sharper point is that it
+FAILS SILENTLY: a probe that returns `None` for every input looks like a measurement and is a constant.
+A criterion whose access path is wrong does not error -- it returns the null value and reads as data.
+
 FOR THE ADJUDICATION: this is the round's dominant defect class stated at its root. `W37-S3`,
 `W41-S2`, `W43-S1`, `W46-S1`, `W49-S1`, `W53-S3`, `W60-S1` and `W60-S5` are all instances of an
 expectation that no longer matches the world its act runs in -- from a later issuer bind, a peer
