@@ -351,6 +351,32 @@ test is whether the acts the order actually performed fall inside the path its o
 permits. Three facts had to be read together to get this right -- the clause, the criterion classes,
 and the worktree ancestry -- and any one of them alone points the wrong way.
 
+### 4c-bis. rk-31's crosswalk write is an INTRA-ROUND state change, and it has now caught a second order
+
+Section 4c graded the vintage-pinning check and passed it. The wider fact behind that check is a
+round-level hazard with TWO measured instances, and it should be named as a class in the adjudication:
+
+`rk-31` wrote `crosswalk/v1/2026-09-19.json` at 01:23:43Z, moving MEASURED from 33 to 36 and adding
+`CAT_US_Equity`, `CSL_AU_Equity` and `6861_JP_Equity` as measured records. Later orders in the SAME
+round carry criteria written against the PRE-`rk-31` world:
+
+| order | outcome | why |
+|---|---|---|
+| `rk-41` | SURVIVED | AC5/AC6/AC8 each pin `--population crosswalk/v1/2026-09-15.json` explicitly |
+| `rk-49` | CAUGHT -- row `W49-S1` | AC4's expect assumes the three validation keys are NOT in the crosswalk; at spawn they already were |
+
+Same round, same write, opposite outcomes, and the difference is one explicit pin. This is the
+intra-round sibling of section 4a's day-boundary finding: there a half aged across a DATE, here a
+criterion aged across a PEER ORDER'S WRITE. Both are "the expectation was true when written and false
+when run", and neither is caught by any gate -- the decomposition is frozen mid-round, but the WORLD
+the criteria describe is not.
+
+FOR THE ADJUDICATION: this is the round's dominant defect class stated at its root. `W37-S3`,
+`W41-S2`, `W43-S1`, `W46-S1`, `W49-S1`, `W53-S3`, `W60-S1` and `W60-S5` are all instances of an
+expectation that no longer matches the world its act runs in -- from a later issuer bind, a peer
+order's write, a resumed session's own HEAD, or a platform's actual behaviour. The acts are largely
+right; the expectations aged.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
@@ -376,6 +402,19 @@ and the worktree ancestry -- and any one of them alone points the wrong way.
   DISCRIMINATION failure in the strict sense: the evidence would not differ if the claim were false.
 - **`W37-S1` (ARMED, `1.0.0_SA_CTO~Z`)** -- the registry gate firing on the SEC bronze table; the
   tenancy fork is Andrew's and is working as designed.
+- **`W60-S3` -- a ruled step whose blast radius escaped its own round.** The order's ruled
+  remove-verb sequence runs an unconditional `git -C <nested> worktree prune`, which cleared a
+  PRE-EXISTING, unrelated prunable entry belonging to ROUND 10 (`C:/tmp/wk-amgt-10-1/portal`) -- while
+  AC5's own expected end-state says that entry is "not pruned by you". A cell's ruled step reached
+  outside the cell. Grade the RULE, not only the worker: an unconditional prune has no cell boundary,
+  and the criterion that describes the end-state already knew it should have one.
+- **`rk-60` is carrying three BLOCKING rows** (`W60-S2`, `W60-S3`, `W60-S4`) and is still pending.
+  `W60-S2` and `W60-S4` are two SUCCESSIVE defects in the SAME criterion (AC3): first a Win32
+  `CreateProcess` failure on an extensionless POSIX shim (WinError 193), then -- only after the
+  issuer's repair landed -- a second, different defect where the comparison call runs
+  `git worktree list --porcelain` from inside `portal/`, a distinct nested repository, and resolves
+  that repo's main worktree instead of the superproject's. WORTH SAYING AT L9: a repaired criterion
+  is not a verified criterion; the second defect was invisible until the first was fixed.
 
 ## 6. Banked checks for the acceptance sweep at drain-end
 
