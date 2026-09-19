@@ -5969,6 +5969,71 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not a defect in this cell's work: arm (e)'s pass condition is the SELF-CONSISTENT relationship (k>=1, count==denominator-k), never a hardcoded 43, and it holds. Recorded so a later reader comparing this run's numbers against the packet's '21/22 of 43' does not read the difference as a bug in the deploy."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S42",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T07:43:11Z",
+    "one_line": "irpt-holdings :: enforce.py has no staged_from entry at all (a local, tracked-at-path fork, W1-S29's known divergence) so this cell's census classes it PIN-STALE-SERVED-DIVERGED-FROM-HEAD against the SHARED _authz/enforce.py at HEAD and this order's remedy (a manifest re-pin) leaves it untouched by construction -- re-filed here as the SAME finding's own re-pin-cell classification, not a new fact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtf_6.py part_a_census(), this run: irpt-holdings :: enforce.py has no staged_from entry (cfg['staged_from'] carries only data/custodian_key_seam.json, ids.py, loaders.py, served.py); files[] names enforce.py; classify() falls to the no-pin branch, comparing served (sha256 69808e783c...) against HEAD:infra/aws/lambda/investor-reporting/_authz/enforce.py (sha256 d1c8e7e094...) -- MISMATCH, so PIN-STALE-SERVED-DIVERGED-FROM-HEAD",
+        "git show HEAD:infra/aws/lambda/investor-reporting/holdings/enforce.py, this run: line 41 states 'AN UNPROJECTED GRANT IS A REFUSAL, NOT AN EMPTY ANSWER' and line 276 the bare pre-inversion check, exactly IRPT_BCKEND-W1-S29's own citation, re-verified unchanged at this HEAD (4ee8426c72bb6261f055a6cd31fe23e5ebf75ff5)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's BOUNDS (cell text (b)): 'A PIN-STALE-SERVED-DIVERGED-FROM-HEAD member ... is NOT re-pinned to the served bytes and NOT to HEAD's shared file ... it is classed, rowed ... and left for the CTO's ruling.'",
+    "world_is": "irpt-holdings :: enforce.py is classed PIN-STALE-SERVED-DIVERGED-FROM-HEAD by this run's census and is left untouched in infra/aws/lambda/ci/lambda-source-map.json -- no staged_from entry added, no pin written, no served bytes committed as source. The underlying fact is IRPT_BCKEND-W1-S29's, unchanged; this row exists because this order's own cell text names the classification and the row explicitly, and the channel is append-only.",
+    "notes": "Not this cell's to fix (BOUNDS). Routed to 1.0.0_SA_CTO alongside IRPT_BCKEND-W1-S29, which already carries the full grounding and the fold-vs-fix ruling question; see R63-AC2_judgment.md sub-question 3 for this order's own restatement."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S43",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T07:43:11Z",
+    "one_line": "build-and-upload.sh's own comment claims passing SHA256 to the JSON tool via environment variable is already MSYS-safe against the leading-'/' base64-to-Windows-path mangle it names for CLI args; measured this run, the SAME mangle hit the env-var path too for one value (irpt-performance-adapter's artifact_sha256, which happens to start '/C', triggering MSYS's single-letter drive heuristic) and was written into the real committed lambda-source-map.json before being caught and corrected this same commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/build-and-upload.sh:509-513 @4ee8426c72bb6261f055a6cd31fe23e5ebf75ff5: 'This script passes the sha via env var below, which is already MSYS-safe' -- the claim, verbatim",
+        "this run's own battery output (IB-rtf-6_R63-AC1_battery_output.txt, this commit): the build's own echo printed 'SHA256: /CB3B9irhRbHafBMdcPe6zQGxU1bkCZbGPBPpv8npSY=' (clean) for irpt-performance-adapter, and .tools/aws s3api head-object on the resulting S3 object (this run, out-of-band) confirmed the REAL uploaded object's content-sha256 metadata is the same clean value -- but infra/aws/lambda/ci/lambda-source-map.json (before this row's fix, in the same working tree) held 'C:/Program Files/Git/CB3B9irhRbHafBMdcPe6zQGxU1bkCZbGPBPpv8npSY=' for that function's artifact_sha256, written by TMPJS_UPDATE's SHA256 env-var hand-off to node from inside this battery's git-bash-resolver-spawned subprocess",
+        "this run, a full scan of the corrected manifest for any further 'C:\\\\'/'Program Files'-shaped string value: 0 found (py -3.12 walk over every string value in the parsed JSON)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "world_is": "The mangle is real and reproducible under a git-bash-resolver-spawned nested bash (this battery's own _bash() helper, matching IB-rtf-1's own pattern) invoking build-and-upload.sh, at least for a base64 value whose first two characters are '/' + an uppercase letter (MSYS's drive-letter heuristic). No other member's sha256 this run began that way, so no other field was hit, but the exposure is general to any future value with that shape and is not guarded by the script's own base64-format check (build-and-upload.sh:514-517), which validates the SHA256 value in BASH -- before the env-var hand-off to node where the mangle actually occurs -- and so cannot see it.",
+    "spec_asserts": "BOUNDS: 'the packager script is read, never edited (its class is R63-AC2's).' This row's remedy (a script fix, or a documented caveat correcting the false 'already MSYS-safe' claim) is therefore explicitly out of this cell's reach; only the DATA (lambda-source-map.json's corrupted field, this order's one writable file) was corrected here.",
+    "notes": "Corrected in this same commit by writing back the value read from the real S3 object's own metadata (never fabricated) into the one field BOUNDS permits this order to touch. Routed to 2.0.0_SA_COO~B to route a script-side fix or comment correction; R63-AC2's own judgment record notes the two-mechanism question this same trap sits inside."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S44",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T07:43:11Z",
+    "one_line": "This order's own BOUNDS ask for this row's append to use LF line endings; the investigation file's own first json fence (and the whole file) is CRLF throughout (5973 of 5974 lines checked, this run) -- this append matches the file's OWN prevailing convention (CRLF) instead, to avoid a mixed-EOL corruption on an append-only shared channel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's BOUNDS (surprise row instructions): 'inside the fenced json array, LF line endings, UTF-8 written explicitly'.",
+    "world_is": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is CRLF end-to-end (measured this run: splitting the whole file on CRLF vs LF shows 5973 of 5974 lines in the first fence's own span carry a preceding CR byte). Writing this append as pure LF would introduce a mixed-EOL file with no clear boundary; writing it as CRLF (matching every neighbouring row) is the lower-risk choice given Rule 14b's append-only-shared-file guidance (never isolate, take the shared convention) and is what this commit does for all three new rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "py -3.12 count, this run: splitting the file on CRLF yields 6171 segments; checking the first 5974 lines individually shows 5973 of 5974 carrying a preceding CR byte"
+      ]
+    },
+    "notes": "Formatting-only; no future harm named, so hazard_standing is INERT with no disarm_owner."
   }
 ]
 ```
