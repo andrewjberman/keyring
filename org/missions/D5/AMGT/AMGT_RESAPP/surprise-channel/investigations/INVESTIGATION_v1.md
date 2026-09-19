@@ -10216,6 +10216,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "AC5 expect: 'BA_US_Equity answers 200 ... has_forecast_keys True ... forecast_figures 0 with forecast_reason naming the missing bestdata.json ... check_face_len and fiscal_row_count EQUAL to the values you recorded for BA in the PRE-DEPLOY census' -- read via `m = inner.get('model') or {}`.",
   "world_is": "Fixed additively in this order's own commit: read_thesis_bundle now also sets bundle['model'] = model (the WHOLE read_model() return dict), alongside every pre-existing flattened key (model_status/fiscal_years/model_cases/fiscal_year_figures), which is UNCHANGED -- no existing consumer of this bundle moves. This is implementing item 6's own instruction (forecast fields ride the /thesis payload) in the shape AC5 already grades, not a new route or a widening beyond what item 6 and AC5 together specify. Verified: 22 of 22 offline tests unaffected (test_forecast_fallback.py + test_fiscal_scope_contract.py) and 16 of 16 lib/research/api/tests/ thesis/model/fiscal-keyword tests still pass post-fix.",
   "notes": "Recorded per the REFUSAL CLAUSE's own instruction to record the measurement before acting; the repair chosen is additive-only (a new top-level key, zero existing keys touched) and is inside item 6's RULED text, so it is treated as implementing the order rather than widening it. Flagged for the L9 adjudicator to confirm the reading."
-}
+},
+  {
+    "id": "AMGT_RESAPP-Z-S180",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-19T15:27Z",
+    "one_line": "DISARMS W50-S3 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~Z): the three served management objects fail the rk-48 schema on `ceo_profile` because rk-48's live arm -- the only writer of that block -- is refused on Andrew's Bright Data per-use word; so rk-49's rewrite is SEQUENCED BEHIND rk-48's live arm and both wait on the same word. Nothing was written (3 of 3 keys byte-identical pre=post, _pool ETag equal, 0 credits). RULED: rk-49 closes by construction like rk-48 (AC3 REFUSED-BY-SEQUENCE, AC4 PASS on the unchanged read-back); the live enrichment re-opens together with rk-48 AC4-AC6 on the word. No schema patch, no placeholder block: either would be a served-content change outside the signed chain E pair.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker report 0.9.0_WK_AMGT_RESAPP~50 (branch wk-amgt-14-50 @33c86347d6): CAT and CSL `BLOCKED: the re-enriched document did not validate, nothing was written -- $: 'ceo_profile' is a required property` (RC 1); Keyence withheld after an independent validate() pre-check on the unmodified object proved the identical block; apply_lusha_enrichment never touches ceo_profile.",
+        "Pre=post per key: CAT 3faf6d1ba78c6bc7 / PO0KN5ZWaAmK28_drCI9dXxmmYC5Qx1T; CSL aa0f738e67922396 / pNV1.QMgs9tdvbuVCa4ifuzP4K.UKKIX; 6861 cdb115b5e985b5be / ntH46iAfkv1Je.AMZA0LIXbDeyJCNm80; _pool ETag 7a1197377a0fff0e4e861ebc5208cf4a before = after; issuer live read: the three keys' LastModified 07:46Z (rk-47's writes).",
+        "The schema requirement is rk-48's (management.schema.json, drained @1f70d87d8d); the block is written only by rk-48's live arm (AC4-AC6), refused by construction: the Bright Data per-use word is not on file (carded to Andrew @7d4e261a11 and by this seat 13:13Z).",
+        "Chain E pair for rk-49 (COO e29ad94617, CTO 9d84ea19f1) names the blast radius as the three keys' enrichment fields only; a ceo_profile placeholder or a schema relaxation is outside it."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "An exposure, not an incident: no served object moved. The dependency rk-38/rk-47/rk-48 -> rk-49 the decomposition declares (s.22d) is exact -- rk-49's write cannot land before rk-48's -- and the gate that holds rk-48's live arm therefore holds rk-49's. Order of the re-open on Andrew's word: rk-48 AC4-AC6 (writes ceo_profile on the three keys), then rk-49 AC3/AC4 (the second in-place rewrite), each under its own pair section and a fresh ledger entry.",
+    "notes": "Adjudicated at the /canonical-drive tick 2026-09-19 ~15:1xZ; the acceptance repair on rk-49 AC3/AC4 cites this row; drive log names it. W50-S4 (comp-secrets --reveal prints a descriptor block, not a bare value) is 1.0.0_SA_CTO~Z's and is untouched here."
+  }
 ]
 ```
