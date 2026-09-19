@@ -10240,6 +10240,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "An exposure, not an incident: no served object moved. The dependency rk-38/rk-47/rk-48 -> rk-49 the decomposition declares (s.22d) is exact -- rk-49's write cannot land before rk-48's -- and the gate that holds rk-48's live arm therefore holds rk-49's. Order of the re-open on Andrew's word: rk-48 AC4-AC6 (writes ceo_profile on the three keys), then rk-49 AC3/AC4 (the second in-place rewrite), each under its own pair section and a fresh ledger entry.",
     "notes": "Adjudicated at the /canonical-drive tick 2026-09-19 ~15:1xZ; the acceptance repair on rk-49 AC3/AC4 cites this row; drive log names it. W50-S4 (comp-secrets --reveal prints a descriptor block, not a bare value) is 1.0.0_SA_CTO~Z's and is untouched here."
-  }
+  },
+{
+  "id": "AMGT_RESAPP-Z-W39-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~39",
+  "surfaced_at": "2026-09-19T16:36:05Z",
+  "one_line": "An Edit-tool call given a bare 'C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\...' path (rather than the worktree's 'C:\\tmp\\wk-amgt-14-39\\...' path) landed the FIRST HEADER_FIELDS edit for this order in the SHARED main workspace tree instead of this worker's isolated worktree -- caught on the very next command (git status --short showed the worktree file clean while the main tree showed the diff) and reverted with git checkout -- <path> before any further work.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "immediately after the mis-targeted Edit, `git -C /c/tmp/wk-amgt-14-39 status --short integrations/bloomberg/research/model_block_pull.py` printed nothing while `git -C '/c/Users/Opal Bloomberg/Desktop/ajb_workspace' status --short` printed ' M integrations/bloomberg/research/model_block_pull.py'",
+      "confirmed the diff in the main tree was CLEAN against HEAD before revert (`git diff` showed only my own hunk, `git log -1 --format=%H -- <path>` = 1de3fb108c, the same commit the worktree branched from) -- no other seat's uncommitted work was at risk of being clobbered by the revert",
+      "reverted with `git -C '/c/Users/Opal Bloomberg/Desktop/ajb_workspace' checkout -- integrations/bloomberg/research/model_block_pull.py`; re-checked clean same turn; the same edit was then correctly re-applied inside the worktree (C:\\tmp\\wk-amgt-14-39\\...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "L7 IDENTITY line: 'Your worktree is /c/tmp/wk-amgt-14-39 ... Work ONLY there'; CLAUDE.md 14b: edit in the worktree where you will commit.",
+  "world_is": "A tool call that accepts an absolute path does not itself enforce the worktree boundary -- supplying the repo's OTHER checkout's absolute path silently succeeds against that checkout instead of refusing or warning. The mistake was caught by habit (checking git status in both trees after every edit), not by any mechanism. No commit was ever made from the wrong tree and no other seat's file was touched, so this is INERT, not ARMED -- but the near-miss class (an absolute-path tool call to the wrong one of several live checkouts of the same repo) is not otherwise gated anywhere in this estate that this worker is aware of.",
+  "notes": "Filed per the standing instruction to append a row for anything odd and keep working. No remediation attempted here (out of this order's <paths> and out of scope); named for whichever seat owns tooling/workflow hazards to judge whether a same-repo-multiple-worktrees guard is worth building."
+},
+{
+  "id": "AMGT_RESAPP-Z-W39-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~39",
+  "surfaced_at": "2026-09-19T16:36:05Z",
+  "one_line": "Two PRE-EXISTING, off-task test failures in lib/research/api/tests/test_generation_and_pool_routes.py (test_13_management_is_M1_with_the_pool_average_at_the_same_as_of, test_13b_the_ceo_profile_reading_separates_the_two_absences) both assert ceo_profile_reading(...)['reading'] == 'NOT_CONFIRMED_NOTHING_FOUND' on a 0-url ABSENT input, but the live function now returns 'NOT_SEARCHED' for that same input -- present at this worktree's HEAD before any AMGT-rk-37 edit, unrelated to this cell's surface.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`python -m pytest -q lib/research/api/tests/` at HEAD (before any AMGT-rk-37 edit, restored from .scratch/scoped_amgt.py.orig for the check) -> the SAME 2 failures, same assertion, same 'NOT_SEARCHED' vs 'NOT_CONFIRMED_NOTHING_FOUND' mismatch",
+      "re-ran after this order's full change set landed -> identical 2 failures, 177 passed (was 176 passed + the now-fixed test_16, so this order's own change set is net +1 passing, 0 new failures)",
+      "neither failing test names CIE_DES/CIE_DES_BULK/HIST_FIELDS/cases -- both are about ceo_profile_reading's classification of a zero-URL SERP result, a surface this order's <paths> does not name and this order's cell does not touch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "spec_asserts": "test_generation_and_pool_routes.py:510 and its test_13b sibling assert the reading 'NOT_CONFIRMED_NOTHING_FOUND' for a 0-url ABSENT basis.",
+  "world_is": "ceo_profile_reading currently returns 'NOT_SEARCHED' for that same input, so either the function drifted after these tests were written or the tests were never updated to a later, deliberate rename of that reading value -- undetermined which, and not this cell's surface to fix (Rule: 'NEVER... fix a neighbouring defect'). Left unfixed and reported per the refusal/surprise-channel discipline.",
+  "notes": "ARMED because a live discrepancy between a test's asserted contract and the function's actual behavior on the CEO-profile reading surface is exactly the shape of defect that misleads a future reader of either the code or the test; disarm_owner named as the issuer to route to whichever seat next touches lib/research/api/scoped_amgt.py's ceo_profile_reading or the AMGT-rk-43/CEO-profile cell line (row AMGT_RESAPP-Z-W22-S1 touched this same function per the order's own s.1 citation)."
+}
 ]
 ```
