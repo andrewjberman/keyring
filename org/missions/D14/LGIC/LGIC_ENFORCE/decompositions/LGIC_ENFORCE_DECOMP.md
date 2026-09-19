@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.9",
+ "decomp_version": "v3.10",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1198,6 +1198,67 @@ order -- it protects the suite's existing behaviour, including the two failures 
 - It does not move FWD-5 clause 3: the hand ranking is not re-measured.
 - It does not rule on W1-S74 and does not edit GRADING_RULE.md, which is LGIC_NAMING's.
 - It does not re-run the census; the blast arm re-grades the recorded census rows in memory.
+
+## 0k. v3.10 -- THE ROUND-11 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round analysis @`ba1dcf65e9`
+
+**Input.** `LGIC_ENFORCE_ROUND10_ANALYSIS.md` @`ba1dcf65e9` (msg 98094). Round 10's judgment criterion PASSED
+**on the third ground only** -- running `grade()` on names the census does not contain. The first two grounds
+are shape arguments and corroborate; they could not have come back wrong.
+
+### 0k.1 THE CELL -- 1
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| 44 | `EN-t-44` | **THE TEST CATCHES THE WRONG FIX, AND THE DEAD-LOOKING BRANCH SAYS SO AT ITS SITE.** Promote `3.0.0_SA_CVO`'s own L9 probe into `lib/tests/test_opal_naming.py` -- two names whose bd sits at an index and an adjacency the census instance never occupies -- and prove the promotion by requiring those tests to FAIL against a KEYED SUBSTITUTION. Then carry `S87` in a comment beside `_r3_spell` | FWD-5 clause 2 | `S86`, `S87` |
+
+```
+  the hand-ranking re-measure   NOT CUT -- blocked on a COO LANE, cap 3 of 3 (R-84). Not this lane's to seat.
+  the 1298                      NOT CUT -- owner still a category (R-70).
+  W2-S15                        stays ARMED on its owner's word (S84).
+  the N2 re-join clause         NOT CUT -- R-84 ruled the RULE is the defect; the clause is written by the
+                                re-measure round in LGIC_NAMING's own surface, never here.
+```
+
+`fanout: 1 slot over 1 cell, cap 8, reason: one cell is cuttable; everything else waits on a seat or an owner
+and cutting it blind is what the analyses refuse; levels L0 = {EN-t-44}.`
+
+### 0k.2 WHY THE MUTANT IS THE ROUND, AND THE PROMOTION IS NOT
+
+`S86`'s finding is that round 10's test asserts only the census instance's own shape, so **it would pass the
+very substitution `G43R10-AC5` existed to rule out.** A promotion graded only against the REAL `grade()`
+would repeat that: it would prove two correct names render correctly. So `t44-mutant` swaps in the CHEAPEST
+WRONG FIX -- rewrite the census instance, leave every other name raw -- and REQUIRES each probe test to fail
+against it. **A test that cannot fail on the defect its round was cut to fix is a green carrying no
+information** (the catalogued detector-that-cannot-fire, aimed at the instance instead of the class).
+
+Measured by the issuer at the cut, so no arm is a fishing expedition: both probes render
+`opal-cot-session-blackdiamond-fetch-document` at `ba1dcf65e9`, and neither has a test.
+
+### 0k.3 THE STALE-PROOF BAR, ADOPTED AS AN ARM
+
+The analysis's bar, from `S32`: **when a FIXED INPUT changes mid-round, every proof pinned before that change
+against that input is STALE-UNGRADED until re-run, and the round enumerates them and prints the count.**
+`t44-stale-proofs` runs the discriminator -- one `git log` over this round's fixed-input path, which usually
+returns zero, so the bar costs nothing when nothing moved. **It exists for the MIRROR, which is the dangerous
+one:** round 3's instance was an UNDERSTATE (a broken checker repaired after a pin, the record more
+pessimistic than the world), and the mirror is a fixed input that REGRESSES after a pin, leaving a proof
+reading PASS while the arm now FAILS. The two are indistinguishable from the proof alone, because a pinned
+proof carries its own vintage but NOT its input's.
+
+### 0k.4 THE FIXED INPUT AND THE WIRING AT THE CUT
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r11/` -- `R11_BASE.json` (the ONE carrier, `S85`) and
+`check_en_r11.py`, 5 real arms and a 15-arm self-test with 6 positive-satisfiability arms, ruff clean.
+**3 of 5 FAIL at the cut for their measured reasons** (no test asserts either probe; the comment carries 0 of
+3 required references). **TWO ARE GUARD-SHAPED AND READ PASS, DISCLOSED:** `t44-tests` (the suite's failing
+set must stay exactly the two hand-stale cases) and `t44-stale-proofs` (nothing has moved yet).
+
+### 0k.5 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** re-open `G43R10-AC5`. The analysis says in terms that it is PASS with or without this.
+- It does **not** remove the unobservable branch. Removing it needs a proof the composition can never change,
+  which nobody has; the branch STAYS and gains a comment.
+- It does **not** move a verdict: re-grading the census at the end must yield the same 2 rows round 10 named.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
