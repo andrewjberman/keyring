@@ -8930,6 +8930,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The worker face states the worktree is 'ALREADY populated (a linked worktree of the nested portal repo at DEV 625a0888, with node_modules junctioned)' and directs running the deploy mechanism directly, implying no environment repair is needed before the order's own named commands would succeed.",
     "world_is": "None of the three repairs touched this order's own surface (adapter code, page code, or the target Lambda); all three were pre-existing gaps in how this worker's worktree/portal-worktree pair was provisioned at spawn. Every repair is reproducible and is recorded above so the next AMGT_RESAPP round's spawn/provisioning step (COO~Z, L6) can fix the junction-writer and add a branch-on-checkout step, rather than every worker rediscovering the same three gaps.",
     "notes": "Remedy holder: 2.0.0_SA_COO~Z's worker-provisioning mechanism for round 15+ -- (1) the portal junction writer should verify the reparse point resolves before declaring a worktree populated; (2) a portal linked-worktree should be created with -b <branch> per Rule 14b, never left detached; (3) infra/aws/terraform/harvest worktrees used for a targeted apply should either ship a pre-warmed .terraform/ + .build/ or the order should name the exact init/build steps needed. Not this worker's to fix upstream -- named as a row, not resolved."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W45-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~45",
+    "surfaced_at": "2026-09-19T03:35:00Z",
+    "one_line": "AMGT-rk-43's own edit correctly breaks 2 of 160 pre-existing lib/research/api/tests/test_generation_and_pool_routes.py assertions (test_13_management_is_M1_with_the_pool_average_at_the_same_as_of and test_13b_the_ceo_profile_reading_separates_the_two_absences) that assert the SUPERSEDED sentence-parsed two-value ceo_profile_reading contract (NOT_CONFIRMED_NOTHING_FOUND / NOT_CONFIRMED_INSTRUMENT_CANNOT_SAY) this order replaces by design with the six-value field-only contract; this order's <paths> grants lib/research/api/scoped_amgt.py only, not lib/research/api/tests/, so the tests cannot be updated here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/api/tests/ -q, post-edit: 2 failed, 158 passed -- FAILED lib/research/api/tests/test_generation_and_pool_routes.py::test_13_management_is_M1_with_the_pool_average_at_the_same_as_of (assert 'NOT_SEARCHED' == 'NOT_CONFIRMED_NOTHING_FOUND'); FAILED ...::test_13b_the_ceo_profile_reading_separates_the_two_absences (same shape, twice)",
+        "test_generation_and_pool_routes.py:458-463: both failing assertions construct ceo_public_profile fixtures with status+basis ONLY, no query key at all -- under AMGT-rk-43's own subtraction table (status ABSENT, query null -> NOT_SEARCHED, checked before any basis/absence_class read) this is the textbook NOT_SEARCHED case, not a bug",
+        "this order's own <paths> lists lib/research/api/scoped_amgt.py, portal/src/pages/SecurityAnalysis/, org/critical_paths/, and this worker's own deliverables/surprise-channel/task-order/ledger paths -- lib/research/api/tests/ is not among them"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Nothing in this order names the unit-test suite; the order's own proof mechanism is the PROOF OF SPEC criteria (AC1-AC5), not lib/research/api/tests/, and section 1(a)'s SUBTRACTION table is stated as the new, correct contract, explicitly superseding the sentence-parsed one these two tests assert.",
+    "world_is": "The two failing tests are STALE fixtures of the superseded contract this order was cut to remove; they are not evidence against this order's own correctness (AC2's planted-negative fixtures, built to the NEW contract, pass 4 of 4). Left FAILING in the committed tree because updating them is outside this cell's <paths>.",
+    "notes": "Remedy holder: the next cell (or the COO directly) that holds lib/research/api/tests/ in its <paths> -- update the two assertions to the six-value contract (NOT_SEARCHED for a query-less fixture, SEARCHED_NOTHING_FOUND / SEARCHED_LINKS_UNREADABLE for query-bearing fixtures matching the new absence_class-based split). Not fixed here."
   }
 ]
 ```
