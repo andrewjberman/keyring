@@ -1704,3 +1704,78 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Round 16 L9 -- two judgment grades, three rows disposed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S65",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T16:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 16: M2R16-AC4 and S1R16-AC4 both PASS. I re-derived the additivity blob hashes myself (identical at pin and HEAD, ONE commit ever) and hunted the census's missed member by subtraction from my OWN unscoped read of 38665 files -- both deltas resolve, and a FOURTH vintage effect falls out: a sibling project's issuance grew this census's population mid-write. S107 GRADUATED.",
+ "spec_asserts": "Judgment criteria are graded at L9 and never self-graded.",
+ "world_is": "M2R16-AC4: PASS on all three questions, each answered at the bytes. (1) RETIRED.md EXISTS at the stated path and READS USEFULLY TO SOMEBODY WHO NEVER SAW ROUND 15 -- I read it cold: it explains what round 14's one-renderer repair did, why that zeroed the discriminator these CMDs read the population off, names the SHARED count_report() the three depend on, and separates the two that FAIL LOUDLY from the one that PASSES. \u2b50 AND ITS LAST SECTION IS WHY I TRUST THE REST OF IT: 'This file does not stop p37-producers from returning PASS ... it does not change the instrument's own output.' A marker that names its own limit is not overclaiming, and that limit is exactly the residual I raised at round 15's L9. (2) THE TWO BLOB HASHES ARE REAL AND I RE-DERIVED THEM RATHER THAN COMPARING THE RECORD TO ITSELF: `git rev-parse c2865743ed:check_en_r13.py` and `git rev-parse HEAD:check_en_r13.py` BOTH return 80da489681358bb7650ee6f1092ad09b3aa90eef, and `git log --follow` shows exactly ONE commit has ever touched that file. So the additivity the CTO's ruling required is PROVED, not asserted -- including through the issuer's own rescue commit. (3) EVERY CMD THE RETIRING RECORD RETIRED IS NAMED: p37-population, p37-tokens and p37-producers, which are the same three I ran myself at round 15's L9 and whose verdicts (FAIL, FAIL, PASS) the marker describes correctly. CITATIONS CHECKED AT THE CITED LINES, not by grep: :74 falls inside count_report() (its docstring line, one below the def -- a fair pointer, not a stale one); `silent = sorted(set(tokens_measured) - attributed - un_tokens)` is really at :144 and is really what makes the vacuous pass; DISCRIMINATOR_SWEEP_R15.json resolves at a08f5000ac; and the marker quotes my own round-15 L9 @c6ac61b33a accurately. \u26a0 I GRADE THIS KNOWING THE PROVENANCE THE ISSUER DISCLOSED: the worker authored the bytes, the issuer's own <paths> grant defect blocked the worker from committing them, and the issuer committed them unmodified. The criterion asks whether the file exists and says what it should -- it does, and the 3651-byte sha256 the hand-off states matches what is at HEAD. || S1R16-AC4: PASS, and the question I was told to answer by subtraction FROM MY OWN LARGER READ is the one I spent the effort on. I enumerated UNSCOPED over 38665 tracked files at HEAD: 108 paths under a fixed_inputs/ directory, 36 of them .py. WITHIN THE CELL'S ORDERED DOMAIN (ENFORCE + LGCTFM) I count 25 where the cell counts 23, and BOTH DELTAS RESOLVE IN THE CELL'S FAVOUR: (a) existing_alias.py under fixed_inputs/g1_preimage/ is a FIXTURE, not a checker, and the cell's how_enumerated states its filter -- /check_(en|lt)[_a-z0-9]*\\.py$ -- so the exclusion is DECLARED, not silent; (b) check_lt_r8.py IS a checker matching that filter, and it did not exist at the cell's stated vintage -- `git cat-file -e 938ea238ed:<path>` returns ABSENT and the commit that minted it (a7bafce14e, LGCTFM round 8's own L6 issuance) is NOT an ancestor of that pin. \u2b50 SO THAT IS A FOURTH VINTAGE EFFECT, OF A DIFFERENT SHAPE FROM THE THREE THE ISSUER DISCLOSED: the three were within-round; this one is CROSS-PROJECT -- a sibling project's own issuance grew this census's population while it was being written. The denominator is 23 at the pin and 24 at HEAD, and the record is right because it carries its pin. \u26d4 THE FINDING THAT IS NOT THE CELL'S: 11 CHECKERS SIT OUTSIDE THE ORDERED DOMAIN ENTIRELY -- 7 in LGIC_NAMING and 4 in LGIC_CANON, all under the same 2.0.0_SA_COO~G/fixed_inputs/ shape. The round-15 analysis scoped this cell to ENFORCE + LGCTFM in terms, so the CELL OBEYED ITS ORDER AND STATED ITS DOMAIN HONESTLY; the under-scoping is the CUT's. I name it for the analysis, not against the cell. EACH instrument_discloses_it IS TRUE AT THE BYTES: I read all three non-LIVE files at HEAD and NONE contains RETIRED / SUPERSEDED / DO NOT RUN / 'no longer measure'. \u26a0 AND THE r13 ROW REPAYS A SECOND LOOK, BECAUSE AT HEAD ITS DIRECTORY NOW CARRIES RETIRED.md WHILE THE FIELD STILL READS FALSE. That is not only the 23-minute clock the issuer disclosed -- IT IS A GRAIN DIFFERENCE: the field name says INSTRUMENT and the CTO's remedy is DIRECTORY-level discoverability, and RETIRED.md itself says it 'does not change the instrument's own output'. Read strictly at the file, FALSE is correct at the pin AND at HEAD, and the two records do not actually contradict. THE check_en_r2.py EXCLUSION THE ISSUER FLAGGED FOR ME IS CORRECT AND PRINCIPLED: S55 is a live BLOCKING QUALITY DEFECT with a repair pending, which is not a disposition that the CMD's PASS is retired or moot. Classing it RETIRED-* would have laundered a PENDING REPAIR INTO A CLOSURE, and the cell stated the distinction in the row's own basis and escalated it for AC4 rather than folding it into either verdict.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S107"
+ ],
+ "disposition": "GRADUATED",
+ "grades": [
+  {
+   "criterion": "M2R16-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-m-2-r16.retired-marker.proof_of_spec.json@f419aebda8",
+   "verdict": "PASS",
+   "reason": "PASS on all three questions, each answered at the bytes. (1) RETIRED.md EXISTS at the stated path and READS USEFULLY TO SOMEBODY WHO NEVER SAW ROUND 15 -- I read it cold: it explains what round 14's one-renderer repair did, why that zeroed the discriminator these CMDs read the population off, names the SHARED count_report() the three depend on, and separates the two that FAIL LOUDLY from the one that PASSES. \u2b50 AND ITS LAST SECTION IS WHY I TRUST THE REST OF IT: 'This file does not stop p37-producers from returning PASS ... it does not change the instrument's own output.' A marker that names its own limit is not overclaiming, and that limit is exactly the residual I raised at round 15's L9. (2) THE TWO BLOB HASHES ARE REAL AND I RE-DERIVED THEM RATHER THAN COMPARING THE RECORD TO ITSELF: `git rev-parse c2865743ed:check_en_r13.py` and `git rev-parse HEAD:check_en_r13.py` BOTH return 80da489681358bb7650ee6f1092ad09b3aa90eef, and `git log --follow` shows exactly ONE commit has ever touched that file. So the additivity the CTO's ruling required is PROVED, not asserted -- including through the issuer's own rescue commit. (3) EVERY CMD THE RETIRING RECORD RETIRED IS NAMED: p37-population, p37-tokens and p37-producers, which are the same three I ran myself at round 15's L9 and whose verdicts (FAIL, FAIL, PASS) the marker describes correctly. CITATIONS CHECKED AT THE CITED LINES, not by grep: :74 falls inside count_report() (its docstring line, one below the def -- a fair pointer, not a stale one); `silent = sorted(set(tokens_measured) - attributed - un_tokens)` is really at :144 and is really what makes the vacuous pass; DISCRIMINATOR_SWEEP_R15.json resolves at a08f5000ac; and the marker quotes my own round-15 L9 @c6ac61b33a accurately. \u26a0 I GRADE THIS KNOWING THE PROVENANCE THE ISSUER DISCLOSED: the worker authored the bytes, the issuer's own <paths> grant defect blocked the worker from committing them, and the issuer committed them unmodified. The criterion asks whether the file exists and says what it should -- it does, and the 3651-byte sha256 the hand-off states matches what is at HEAD."
+  },
+  {
+   "criterion": "S1R16-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-s-1-r16.retired-but-runnable-census.proof_of_spec.json@e6a1001244",
+   "verdict": "PASS",
+   "reason": "PASS, and the question I was told to answer by subtraction FROM MY OWN LARGER READ is the one I spent the effort on. I enumerated UNSCOPED over 38665 tracked files at HEAD: 108 paths under a fixed_inputs/ directory, 36 of them .py. WITHIN THE CELL'S ORDERED DOMAIN (ENFORCE + LGCTFM) I count 25 where the cell counts 23, and BOTH DELTAS RESOLVE IN THE CELL'S FAVOUR: (a) existing_alias.py under fixed_inputs/g1_preimage/ is a FIXTURE, not a checker, and the cell's how_enumerated states its filter -- /check_(en|lt)[_a-z0-9]*\\.py$ -- so the exclusion is DECLARED, not silent; (b) check_lt_r8.py IS a checker matching that filter, and it did not exist at the cell's stated vintage -- `git cat-file -e 938ea238ed:<path>` returns ABSENT and the commit that minted it (a7bafce14e, LGCTFM round 8's own L6 issuance) is NOT an ancestor of that pin. \u2b50 SO THAT IS A FOURTH VINTAGE EFFECT, OF A DIFFERENT SHAPE FROM THE THREE THE ISSUER DISCLOSED: the three were within-round; this one is CROSS-PROJECT -- a sibling project's own issuance grew this census's population while it was being written. The denominator is 23 at the pin and 24 at HEAD, and the record is right because it carries its pin. \u26d4 THE FINDING THAT IS NOT THE CELL'S: 11 CHECKERS SIT OUTSIDE THE ORDERED DOMAIN ENTIRELY -- 7 in LGIC_NAMING and 4 in LGIC_CANON, all under the same 2.0.0_SA_COO~G/fixed_inputs/ shape. The round-15 analysis scoped this cell to ENFORCE + LGCTFM in terms, so the CELL OBEYED ITS ORDER AND STATED ITS DOMAIN HONESTLY; the under-scoping is the CUT's. I name it for the analysis, not against the cell. EACH instrument_discloses_it IS TRUE AT THE BYTES: I read all three non-LIVE files at HEAD and NONE contains RETIRED / SUPERSEDED / DO NOT RUN / 'no longer measure'. \u26a0 AND THE r13 ROW REPAYS A SECOND LOOK, BECAUSE AT HEAD ITS DIRECTORY NOW CARRIES RETIRED.md WHILE THE FIELD STILL READS FALSE. That is not only the 23-minute clock the issuer disclosed -- IT IS A GRAIN DIFFERENCE: the field name says INSTRUMENT and the CTO's remedy is DIRECTORY-level discoverability, and RETIRED.md itself says it 'does not change the instrument's own output'. Read strictly at the file, FALSE is correct at the pin AND at HEAD, and the two records do not actually contradict. THE check_en_r2.py EXCLUSION THE ISSUER FLAGGED FOR ME IS CORRECT AND PRINCIPLED: S55 is a live BLOCKING QUALITY DEFECT with a repair pending, which is not a disposition that the CMD's PASS is retired or moot. Classing it RETIRED-* would have laundered a PENDING REPAIR INTO A CLOSURE, and the cell stated the distinction in the row's own basis and escalated it for AC4 rather than folding it into either verdict."
+  }
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S107",
+   "this seat's re-derivation: git rev-parse c2865743ed:check_en_r13.py == HEAD:check_en_r13.py == 80da489681358bb7650ee6f1092ad09b3aa90eef; git log --follow shows 1 commit ever",
+   "this seat's UNSCOPED enumeration at HEAD 8e3a8c0623: 38665 tracked files, 108 under fixed_inputs/, 36 .py, split ENFORCE 17 / LGCTFM 8 / LGIC_NAMING 7 / LGIC_CANON 4",
+   "git cat-file -e 938ea238ed:<check_lt_r8.py> -> ABSENT, and a7bafce14e is NOT an ancestor of that pin -- the census is complete for its vintage",
+   "this seat's byte read of all three non-LIVE instruments: 0 carry any retirement word"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S66",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T16:20Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "W1-S106 and S108 GRADUATED: the worker was RIGHT that the order's PROSE grant and its mechanical <paths> block disagreed, and the consequence was that the cell cut to produce a file could not commit it. The issuer measured the claim TRUE against itself and rescued the bytes unmodified.",
+ "spec_asserts": "The grant a cell is given covers the artifact the cell exists to produce.",
+ "world_is": "It did not. BOUNDS prose granted RETIRED.md while the <paths> block -- which the same order calls 'the grant' -- named one unrelated file, and owned-paths-validate.py reads only that block plus conventions, so safe-commit refused rc=1 ADHC_OWNPTH.005. \u2b50 THE TRANSFERABLE PART IS WHY NO ISSUER EVER CATCHES THIS, and S108 states it: a worker's OWN deliverables directory is granted by a CONVENTION rather than by <paths>, so an issuer writing a prose grant for a path inside its OWN folder gets no feedback until a worker hits the refusal. The grant surface and the prose surface disagree silently by construction. \u26d4 AND THE NEAR-MISS IS WORSE THAN THE REFUSAL: the marker sat UNTRACKED in a worktree whose teardown is step 1 of the issuer's own tick, while RETIRED_MARKER_R16.json NAMED the path -- so the round would have drained a record pointing at a file that died at teardown, and no arm anywhere reads that path. A REFUSAL THAT BLOCKS A WRITE IS LOUD; THE ORPHANED BYTES IT LEAVES BEHIND ARE NOT. I VERIFIED THE RESCUE RATHER THAN ACCEPTING IT: the blob at HEAD is byte-identical to what the record describes, and the checker beside it did not move (one commit ever, same blob at pin and HEAD), so nothing pinned was disturbed by the rescue.",
+ "adjudicates": [
+  "LGIC_ENFORCE-W1-S106",
+  "LGIC_ENFORCE-S108"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S106",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S108",
+   "RETIRED.md present at HEAD at the path RETIRED_MARKER_R16.json names",
+   "check_en_r13.py blob identical at c2865743ed and HEAD, one commit ever -- the rescue disturbed nothing pinned",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carriers, minted in this commit"
+  ]
+ }
+}
+```

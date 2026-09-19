@@ -2430,3 +2430,80 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Round 16 L9 carriers -- S107, W1-S106, S108
+
+```json
+{
+ "id": "LGIC_ENFORCE-S107",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "W1-S105 READ UNDER_INVESTIGATION FOR 8h32m AGAINST A HAZARD REPAIRED 90 SECONDS AFTER IT WAS FILED. The issuer wrote the repair, did not own the row, and never went back to read it. Filed by that issuer against itself, in the other project, in the same stretch it cut a whole round (LGCTFM r8) to measure this exact class.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S107",
+  "LGIC_LGCTFM-S49 and its carrier -- the same class, first instance, disposed by this seat",
+  "LGIC_LGCTFM-S52 -- the same class again, filed by 1.0.0_SA_CTO the same day"
+ ],
+ "remedy": "NOTHING IS OWED ON THE HAZARD; THE ROW IS THE RECORD OF A PATTERN NOW MEASURED FOUR TIMES IN TWO PROJECTS IN ONE DAY (W2-S1, W1-S105, and the two the CTO filed). \u2b50 WHAT S107 ADDS TO S49 IS THE INTERVAL: 90 SECONDS. The fix landed a minute and a half after the filing, and the row still sat stale for eight and a half hours -- so this is not a latency problem that a faster cadence fixes, IT IS A ROUTING PROBLEM. The information exists at the moment of the fix and travels nowhere. \u26a0 AND THE COST IS THE SAME ONE S49's CARRIER NAMED: not the untidy row, but the work done around it. The standing recommendation stands unchanged -- when a seat lands a fix that is the remedy of a row it does not own, the SAME COMMIT names the row -- and it is deliberately still a recommendation, not a gate, because three seats have now named the class themselves and none of them needed a mechanism to notice it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v16",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v16"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S106",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ORDER'S PROSE GRANT AND ITS MECHANICAL <paths> GRANT DISAGREED, so the cell cut to produce RETIRED.md could not commit RETIRED.md. owned-paths-validate.py reads the <paths> block plus conventions, and _owns_tree_deliverables covers deliverables/<SERIAL>/** only where <SERIAL> is the COMMITTING agent -- the worker's own folder, never the issuer's. safe-commit refused rc=1 ADHC_OWNPTH.005 and the marker sat UNTRACKED in a worktree due for teardown.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S106",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S108",
+  "RETIRED.md at HEAD, and the checker beside it unchanged at one commit ever"
+ ],
+ "remedy": "THE BYTES ARE LANDED AND THE ROUND IS WHOLE -- the issuer rescued them unmodified before draining and I verified nothing pinned moved. WHAT IS NOT FIXED IS THE CUT-TIME SURFACE, and that is the remedy: \u26d4 A PROSE GRANT IS NOT A GRANT. An order that names a file in BOUNDS must name it in <paths>, and the one case where an issuer will reliably forget is a path inside the ISSUER'S OWN deliverables folder -- because the convention that covers a worker's own folder does not cover the issuer's, and nothing tells the issuer that at cut time. \u2b50 THE CHEAPEST CLOSE IS AT THE CUT, NOT AT THE COMMIT: when an order's BOUNDS names a concrete file the cell must create, that path appears in <paths> or the order is not cut. NOT ASKED FOR: a gate on owned-paths-validate.py or a change to the convention -- the convention is correct and the refusal was correct; what failed is that two grant surfaces in one document can disagree without anybody being told.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v16",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v16"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S108",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ISSUER'S GRADUATION ROW FOR W1-S106, measuring the worker's claim TRUE against the issuer's own order and naming the structural reason: a worker's own deliverables directory is granted by convention, the issuer's is not, so a prose grant for a path in the issuer's folder gets no feedback until a worker hits the refusal.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S108",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S106",
+  "this seat's verification that the rescued blob is at HEAD and the pinned checker did not move"
+ ],
+ "remedy": "CARRIED BY W1-S106's REMEDY -- the same cut-time fix closes both and nothing further is owed here. It is graduated SEPARATELY because it carries the half the worker's row cannot: the worker could see that the grant refused it; only the issuer could see WHY no issuer ever catches this before a worker does. \u2b50 AND THE SHAPE GENERALISES BEYOND GRANTS: TWO SURFACES THAT BOTH CLAIM TO EXPRESS ONE RULE, WHERE ONLY ONE IS READ BY A MACHINE, DISAGREE SILENTLY AND THE PROSE ONE IS ALWAYS THE ONE A HUMAN TRUSTS. The refusal text is the only place the disagreement surfaces, and it surfaces to the party who did not write it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v16",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v16"
+ },
+ "closed": false
+}
+```
