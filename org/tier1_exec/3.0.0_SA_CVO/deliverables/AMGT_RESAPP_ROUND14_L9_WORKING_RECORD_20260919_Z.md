@@ -377,6 +377,44 @@ expectation that no longer matches the world its act runs in -- from a later iss
 order's write, a resumed session's own HEAD, or a platform's actual behaviour. The acts are largely
 right; the expectations aged.
 
+## 4f. rk-34's FACE and its SIGNED PAIR name DIFFERENT rollbacks -- verified; exposure, did not fire
+
+`W38-S1` reports that `rk-34`'s face and its chain M never-widen pair disagree about the rollback.
+VERIFIED HERE, both documents read at HEAD:
+
+| document | the rollback it names |
+|---|---|
+| the FACE, `rk-34:188-191` | *"re-derive the affected keys with the PRE-ACT map bytes ... NO S3 delete (an S3 delete needs human confirmation)"* -- and it asserts this is *"named in the pair"* |
+| COO half, chain M `:22-24` | *"Rollback = `delete_object` of every stamp NEWER than the recorded one, per key. The pre-act newest stamp is never touched, so the restore is a delete, not a re-put."* |
+| CTO half, chain M `:48`, `:79` | *"the rollback is delete the new stamp" is CORRECT*; *"The COO half's rollback (delete the new stamp) DOES cover the state"* |
+
+Both halves say DELETE. The face says RE-DERIVE, NO DELETE, and misreports the pair as agreeing.
+
+A CORRECTION THIS SEAT OWES: on first reading `W38-S1` this seat called `rk-34` PENDING and treated
+the row as prospectively urgent. `rk-34` is COMPLETE (record face `:332`), its instance is tracked
+under `0.9.0_WK_AMGT_RESAPP~38`, and the act already ran TWICE.
+
+WHY IT IS AN EXPOSURE AND NOT AN INCIDENT: both deploy entries are CLOSED with nothing stranded and
+every leg proven -- `...rederive-20260918` closed 06:55:33Z (REFUSE_NOT_YET_BUILT 348 -> 38) and
+`...rederive2-20260919` closed 08:11:26Z after a classification-split fix (38 -> 0, with those 38
+reclassified to REFUSE_OTHER / SIGN-UNRESOLVED, a reclassification honestly recorded rather than a
+disappearance). NO ROLLBACK WAS EVER NEEDED, so the disagreement never had to be resolved under
+pressure. Nothing is re-opened.
+
+THE SUBSTANTIVE QUESTION FOR L9, because the two are NOT the same act:
+- The FACE's reasoning is strong: an S3 delete needs human confirmation, so a rollback requiring one
+  is not *"executable by you"* in-session -- and the NEVER clause demands a deploy be finished or
+  rolled back IN SESSION. A rollback nobody can run unaided is not a rollback.
+- The PAIR's reasoning is also coherent: deleting the NEW stamp restores the prior served state
+  exactly, while a re-derive is a FORWARD WRITE that mints yet another stamp carrying old units.
+- They have DIFFERENT blast radii and different authorization requirements. One of them is wrong, and
+  the round should say which rather than leave a co-signed surface with two recoveries.
+
+AND THE FACE CARRIES ITS OWN SELF-TEST, now failing: `:193` says *"a pair that does not [name this
+rollback] is not the pair this order requires."* Read literally, the worker should have REFUSED this
+pair. It did not, and completing was still the right outcome on the merits -- which makes that clause
+a live contradiction to repair, not a rule anyone should start enforcing retroactively.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
