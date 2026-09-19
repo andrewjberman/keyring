@@ -914,6 +914,24 @@ def _self_test():
          lambda: '"--governing-order", rel' in inspect.getsource(check_complete_flip)),
         ("binding: a refused flip names the checker's VIOLATION lines, not only its verdict line",
          lambda: '"VIOLATION: "' in inspect.getsource(check_complete_flip)),
+        # GATE (x) -- ONE ISSUER PER ROUND (row AMGT_RESAPP-Z-S154; Rule 27; cell AMGT-rk-55). Pure
+        # arms; the real-index battery (a scratch git repo, the gate's own CLI, real committed
+        # bytes) lives in .tools/tests/test_gate_x_round_issuer.py.
+        ("round-issuer RED: a second order into round 13 (already at HEAD) -> refused naming round 13 and S154",
+         lambda: any("round 13" in x and "S154" in x for x in
+                     _round_issuer_violations(tree, "<round>13</round>\n" + v3,
+                                              {13: ["org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-0.md"]}))),
+        ("round-issuer GREEN: the next round (14), none at HEAD yet -> admitted",
+         lambda: _round_issuer_violations(tree, "<round>14</round>\n" + v3,
+                                          {13: ["org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-0.md"]}) == []),
+        ("round-issuer RED: no line-anchored <round>N</round> element -> refused naming the missing key",
+         lambda: any("line-anchored" in x and "<round>" in x for x in _round_issuer_violations(tree, v3, {}))),
+        ("round-issuer: a flat-root order is NOT graded (the legacy population, same scope as every limb here)",
+         lambda: _round_issuer_violations("org/tier2_senior/A/task_orders/X.TO-1.md", "<round>13</round>\n" + v3,
+                                          {13: ["org/tier2_senior/A/task_orders/X.TO-0.md"]}) == []),
+        ("round-issuer: a prose mention of <round> is inert -- not read as the key, still refused as missing",
+         lambda: any("line-anchored" in x for x in
+                     _round_issuer_violations(tree, "the `<round>` element names the round\n" + v3, {}))),
     ]
     failed = 0
     for name, fn in arms:
@@ -1718,6 +1736,99 @@ def _output_vocabulary_violations(root, rel, text):
                      % (OV_TAG, rel, n_mech, tally["admitted"], tally["refused"], tally["announced"], tally["runner"],
                         tally["other"]))
     return v, notes
+
+
+# GATE (x) -- ONE ISSUER PER ROUND, keyed to the ROUND, never the serial (row AMGT_RESAPP-Z-S154;
+# CLAUDE.md Rule 27, "and a WORKSTREAM IS A SCOPE, NOT A ROUND"; decomp cell AMGT-rk-55). MEASURED
+# 2026-09-17: round 13 of AMGT_RESAPP was issued TWICE by two continuations of ONE COO seat serial
+# (2.0.0_SA_COO~Z); GATE (iv) above grades WHO commits and passed both times, because it is keyed to
+# the SERIAL and nothing in this file read the ROUND. This limb does.
+#
+# THE KEY. The record face already carries it: `<round>N</round>` on its own line (the rk-22
+# template, the rk-19 order). LINE-ANCHORED, the same discipline as PLACEHOLDERS_TAG_RE above -- a
+# prose mention of `<round>` in a worker face is inert and must not be read as the element.
+#
+# THE CENSUS. `head_rounds` is {round:int -> [order path, ...]} for the project's TREE task orders
+# TRACKED AT HEAD, read with `git ls-files` + `git show HEAD:<path>` -- never the worktree, because
+# the worktree can carry a rename or an edit not yet staged. HEAD does not move inside one gate
+# process, so it is read ONCE per (root, code) and cached -- the same shape as the _open_tos_census
+# cache in the sibling gate, surprise-row-gate.py.
+#
+# THE SCOPE. Flat-root orders are not graded (the legacy population, same scope as every limb in
+# this file). No order at HEAD is back-filled with a <round> element by this limb or any other --
+# an unrounded order at HEAD simply carries no entry in head_rounds and is never the COLLIDING side
+# of a refusal; it can still be graded on the MISSING-KEY arm if it is itself staged as ADDED, which
+# it is not (it is already at HEAD). A MODIFICATION is not graded here: main() feeds this limb only
+# the NEWLY-ADDED (git A/R) set, exactly as GATE (viii)'s newly-added half does -- a worker's status
+# flip and a COO re-cut of an existing order are modifications by construction (Rule 27).
+ROUND_ELEMENT_RE = re.compile(r"^[ \t]*<round>\s*([0-9]+)\s*</round>[ \t]*$", re.M)
+
+_HEAD_ROUNDS_CACHE = {}
+
+
+def _head_rounds_for_project(root, code):
+    """({round:int -> [order path, ...]}, unrounded_count, total) for `code`'s TREE task orders
+    TRACKED AT HEAD, read ONCE per (root, code) per gate run and cached (see the GATE (x) comment
+    above). The dict is None when the census could not run -- the caller fails closed on the LIMB,
+    never the whole gate (a census failure here must not silently admit every round collision)."""
+    key = (root, code)
+    if key not in _HEAD_ROUNDS_CACHE:
+        _HEAD_ROUNDS_CACHE[key] = _head_rounds_census(root, code)
+    return _HEAD_ROUNDS_CACHE[key]
+
+
+def _head_rounds_census(root, code):
+    try:
+        ls = subprocess.run(["git", "ls-files", "--", "org/missions/D*/*/%s/task-orders/*.md" % code],
+                            cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace",
+                            timeout=60)
+    except Exception:  # noqa: BLE001
+        return None, 0, 0
+    if ls.returncode != 0:
+        return None, 0, 0
+    paths = sorted({p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()})
+    rounds, unrounded = {}, 0
+    for p in paths:
+        text = _head_blob(root, p)
+        if text is None:
+            continue
+        m = ROUND_ELEMENT_RE.search(text)
+        if m:
+            rounds.setdefault(int(m.group(1)), []).append(p)
+        else:
+            unrounded += 1
+    return rounds, unrounded, len(paths)
+
+
+def _round_issuer_violations(rel, text, head_rounds):
+    """GATE (x): PURE, no I/O. `head_rounds` is {round:int -> [order path, ...]} for the project's
+    TREE orders TRACKED AT HEAD (the caller's census, see _head_rounds_census). [] when `rel` is not
+    a tree order (the flat-root legacy population is not graded). Otherwise the order MUST carry a
+    line-anchored <round>N</round> element -- a prose mention of the tag is not the element and is
+    not read as one; missing -> REFUSED naming the missing key. And its round must carry NO order at
+    HEAD yet -- found -> REFUSED naming every colliding order in that round in ONE message, so the
+    issuer sees the whole set, and citing row AMGT_RESAPP-Z-S154."""
+    rel = rel.replace("\\", "/")
+    m_code = TREE_TO_RE.search(rel)
+    if not m_code:
+        return []
+    m = ROUND_ELEMENT_RE.search(text or "")
+    if not m:
+        return ["%s: NO line-anchored <round>N</round> element -- ONE ISSUER PER ROUND is keyed to "
+                "the ROUND, never the serial (Rule 27; row AMGT_RESAPP-Z-S154), and this limb needs "
+                "the key on its own line to enforce it. A prose mention of <round> elsewhere in the "
+                "face is not the element. Add '<round>N</round>' naming this order's round." % rel]
+    n = int(m.group(1))
+    existing = (head_rounds or {}).get(n) or []
+    if existing:
+        code = m_code.group(5)
+        return ["%s: round %d of %s already has an issuance at HEAD (%d order(s): %s); ONE ISSUER "
+                "PER ROUND is keyed to the ROUND, never the serial (Rule 27; row "
+                "AMGT_RESAPP-Z-S154). A re-cut into the first issuance MODIFIES its orders and adds "
+                "no file; a genuinely additional order into an open round takes the audited "
+                "'# pipeline-override: <reason>'."
+                % (rel, n, code, len(existing), ", ".join(os.path.basename(p) for p in sorted(existing)))]
+    return []
 
 
 def _staged_modified(root):
@@ -2709,12 +2820,37 @@ def _merge_in_progress(root):
         return False
 
 
+def _rounds_cli(root, args):
+    """`--rounds <CODE>` -- read-only, GATE (x)'s own census, the read the COO runs before cutting a
+    round. Prints, for `<CODE>`'s TREE task orders TRACKED AT HEAD: one line per round with its
+    order count, the unrounded count, and the denominator ("N order(s) at HEAD"). rc 0 always -- an
+    informational read, not an enforcement decision; a census that could not run says so and still
+    returns 0 rather than blocking a read nobody staged anything against."""
+    idx = args.index("--rounds")
+    if idx + 1 >= len(args):
+        print("[to-pipeline-gate --rounds] needs a <CODE> argument, e.g. --rounds AMGT_RESAPP")
+        return 0
+    code = args[idx + 1]
+    rounds, unrounded, total = _head_rounds_for_project(root, code)
+    if rounds is None:
+        print("[to-pipeline-gate --rounds] could not read tree orders for %s at HEAD (git ls-files "
+              "failed) -- 0 order(s) at HEAD." % code)
+        return 0
+    for n in sorted(rounds):
+        print("round %d: %d order(s)" % (n, len(rounds[n])))
+    print("unrounded: %d order(s)" % unrounded)
+    print("%d order(s) at HEAD" % total)
+    return 0
+
+
 def main(argv):
     root = _repo_root()
     if "--sweep" in argv[1:]:
         return sweep(root)
     if "--self-test" in argv[1:]:
         return _self_test()
+    if "--rounds" in argv[1:]:
+        return _rounds_cli(root, argv[1:])
 
     # ⛔ MERGE EXEMPTION (2026-09-04, 1.0.0_SA_CTO on 0.0.0_AB_MSTR's 94264). A MERGE IS NOT
     # AUTHORSHIP. This gate had none while BOTH its siblings did -- owned-paths-check.sh:85 and
@@ -2778,6 +2914,26 @@ def main(argv):
         _cov_v.extend(_carrier2_violations(root, targets))
         all_v.extend(_cov_v)
         all_notes.extend(_cov_n)
+
+    # GATE (x) -- ONE ISSUER PER ROUND, keyed to the ROUND (row AMGT_RESAPP-Z-S154; Rule 27; cell
+    # AMGT-rk-55). A NEWLY-ADDED tree order names its round, and a second issuance into a round that
+    # already has one at HEAD is refused with every colliding order named. Flat-root orders are not
+    # graded (_round_issuer_violations returns [] on them); the census is cached once per project code.
+    for rel in targets:
+        m_code = TREE_TO_RE.search(rel)
+        if not m_code:
+            continue
+        try:
+            with open(os.path.join(root, rel), "r", encoding="utf-8", errors="replace") as fh:
+                rtext = fh.read()
+        except Exception:  # noqa: BLE001
+            continue  # already refused as UNREADABLE by check_file above
+        head_rounds, _unrounded, _total = _head_rounds_for_project(root, m_code.group(5))
+        if head_rounds is None:
+            all_notes.append("GATE (x): round census for %s could not run (git ls-files failed) -- "
+                             "the round-issuer limb did not grade %s." % (m_code.group(5), rel))
+            continue
+        all_v.extend(_round_issuer_violations(rel, rtext, head_rounds))
 
     # LAYER 1 half B runs on EVERY staged TO, added or modified -- a `complete` flip is almost
     # always a MODIFY, so scoping this to newly-added (as layers 2/3 correctly are) would make it
