@@ -10024,6 +10024,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "N/A -- found off-task while censusing every consumer of model_block_pull before editing it (this order item 1.2 discipline extended to a full-consumer check).",
   "world_is": "A live SQS-driven pull_consumer.py invocation on any message would raise TypeError: stage_pull() takes 3 positional arguments but 4 were given, before ever reaching Bloomberg -- the pull consumer path is broken at HEAD independent of this order.",
   "notes": "Not in this order paths (pull_consumer.py sits under integrations/bloomberg/research/, which IS a paths grant, but fixing an unrelated consumer is scope-widening this order does not authorize -- REFUSAL CLAUSE). Left for the owning cell/order."
+},
+{
+  "id": "AMGT_RESAPP-Z-W39-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~39",
+  "surfaced_at": "2026-09-19T13:28:36Z",
+  "one_line": "AC5's literal invocation reads `inner.get('model')` on the /thesis payload, but read_thesis_bundle (pre-existing, unchanged by this order until the fix below) never nested a 'model' key -- it only ever flattened THREE of read_model()'s keys (model_status, fiscal_years, model_cases) to the bundle's top level, so forecast_figures/forecast_periods/forecast_source_counts/forecast_reason/fiscal_row_count were unreachable at any key AC5 probes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured pre-fix, live invoke on BA_US_Equity /thesis: inner.keys() = ['as_of_date','check_face','drafted_sections','drafting_provenance','drafting_read_completed','drafting_reason','drafting_source','drafting_status','fiscal_year_figures','fiscal_years','generated_at','header_figures','held_uncited_basis','held_uncited_count','identity','management','model_cases','model_status','posture','scores','security_key','thesis_driver','thesis_driver_chart'] -- no 'model' key",
+      "read at source, lib/research/api/scoped_amgt.py read_thesis_bundle (pre-fix): bundle = {..., \"model_status\": model[\"model_status\"], \"fiscal_years\": model[\"fiscal_years\"], \"model_cases\": model[\"cases\"], ...} -- only these three of read_model()'s ~10 keys were ever pulled out; this shape predates AMGT-rk-36 (git blame: AMGT-rj-9)",
+      "the order's own item 6 states read_model()'s new fields ride the /thesis payload ('the one route that reaches the model block'), and AC5's script is the order's stated grading instrument for exactly those fields under 'model'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC5 expect: 'BA_US_Equity answers 200 ... has_forecast_keys True ... forecast_figures 0 with forecast_reason naming the missing bestdata.json ... check_face_len and fiscal_row_count EQUAL to the values you recorded for BA in the PRE-DEPLOY census' -- read via `m = inner.get('model') or {}`.",
+  "world_is": "Fixed additively in this order's own commit: read_thesis_bundle now also sets bundle['model'] = model (the WHOLE read_model() return dict), alongside every pre-existing flattened key (model_status/fiscal_years/model_cases/fiscal_year_figures), which is UNCHANGED -- no existing consumer of this bundle moves. This is implementing item 6's own instruction (forecast fields ride the /thesis payload) in the shape AC5 already grades, not a new route or a widening beyond what item 6 and AC5 together specify. Verified: 22 of 22 offline tests unaffected (test_forecast_fallback.py + test_fiscal_scope_contract.py) and 16 of 16 lib/research/api/tests/ thesis/model/fiscal-keyword tests still pass post-fix.",
+  "notes": "Recorded per the REFUSAL CLAUSE's own instruction to record the measurement before acting; the repair chosen is additive-only (a new top-level key, zero existing keys touched) and is inside item 6's RULED text, so it is treated as implementing the order rather than widening it. Flagged for the L9 adjudicator to confirm the reading."
 }
 ]
 ```
