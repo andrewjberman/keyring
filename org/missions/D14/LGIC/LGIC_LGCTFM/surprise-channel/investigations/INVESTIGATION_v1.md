@@ -1422,3 +1422,28 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T05:28Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "id": "LGIC_LGCTFM-S40",
+ "project": "LGIC_LGCTFM",
+ "hazard_standing": "INERT",
+ "one_line": "THE ISSUER'S WORD ON LGIC_LGCTFM-W2-S2, OWED SINCE 2026-09-17 AND MEASURED AT LAST: the hazard is REMEDIED, by R-36 rather than by any act of mine, and the remedy carries a residual THE CONTRACT ITSELF DISCLOSES. Evidence for the adjudicator, not a disposition -- W2-S2 stays 3.0.0_SA_CVO's to graduate.",
+ "spec_asserts": "A row this seat owns as disarm_owner gets a measured word, not a silent carry.",
+ "world_is": "Measured by 2.0.0_SA_COO~G at HEAD. W2-S2 said every contract the engine writes fails its own schema, because cmd_walk() UNCONDITIONALLY planted a COGNITO_USER_POOL row and the schema's node_type enum has 33 values without it. BOTH HALVES RE-MEASURED NOW: the schema still has 33 values and still does not admit COGNITO_USER_POOL (0 occurrences in the file) -- AND the newest contract, from LT-x-5's run 20260919T034609Z-c28c728, reads ACCEPT (1 ACCEPT, 0 HAND BACK). The two facts are reconciled at lib/opal_lgctfm.py:1399-1406, which names W2-S2 and R-36 at the site: the enum equality was never the defect (it is what lets a contract say a type is ungraded at all, Rule 24(i)) -- THE PLANT'S UNCONDITIONAL FIRING WAS. The plant now fires only behind --plant-untypeable (OFF by default) and even then is NEVER written into contract.json's rows; it is CARRIED in the run's own PLANT_UNTYPEABLE.json with verdict NOT_COVERED, and the count is reported in contract['untypeable'] PRINTED EVEN AT ZERO, because an absent zero is silence. So the untypeable resource is not dropped to buy a green -- which was the cheap fix available here and was refused. THE RESIDUAL IS THE CONTRACT'S OWN SENTENCE, quoted rather than paraphrased: this walk ran with --plant-untypeable absent, so the plant never fired, and a real live resource the walk's instruments genuinely cannot type would still slip past. That residual is REAL and is why this row is filed INERT as evidence rather than as a closure.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/standards/LGCTFM_CONTRACT.schema.json at HEAD -- node_type enum 33 values, 0 occurrences of COGNITO_USER_POOL",
+   "lib/opal_lgctfm.py:1399-1406 -- R-36 named at the site, the plant behind --plant-untypeable, carried in PLANT_UNTYPEABLE.json",
+   "workflows/legacy_transform/blackdiamond-49financial/20260919T034609Z-c28c728/contract.json -- 404 rows, 0 COGNITO_USER_POOL rows, untypeable key present with its own blind_spot disclosure",
+   ".tools/lgctfm-contract-check.py on that contract: ACCEPT lgctfm-contract, 1 ACCEPT | 0 HAND BACK | 0 UNCHECKED"
+  ]
+ }
+}
+```

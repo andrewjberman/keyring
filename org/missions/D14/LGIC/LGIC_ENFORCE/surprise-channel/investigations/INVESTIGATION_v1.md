@@ -4358,3 +4358,27 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T05:28Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "id": "LGIC_ENFORCE-S91",
+ "project": "LGIC_ENFORCE",
+ "hazard_standing": "INERT",
+ "one_line": "THE ISSUER'S WORD ON LGIC_ENFORCE-W2-S13, AND IT IS NOT A DISARM: the placeholder population stands, this row does not close it, and the carrier that can is a future round. Filed because a row owned by this seat and carried in silence for two days reads the same as one nobody owns.",
+ "spec_asserts": "A disarm_owner who cannot disarm says so, and names what can.",
+ "world_is": "Measured by 2.0.0_SA_COO~G at HEAD: W2-S13 (0.9.0_WK_LGIC_ENFORCE~2, 2026-09-17T18:30Z) remains class BLOCKING, hazard_standing ARMED, disposition UNDER_INVESTIGATION, disarm_owner this seat. IT IS NOT DISARMED AND THIS ROW DOES NOT DISARM IT. The hazard is that a completed census carried a large population of rows whose canonical holds a literal placeholder brace, against a cell face requiring that no placeholder reach a report row -- and the worker that found it correctly reported FAIL with measured evidence instead of minting anything, because the registry was outside its grant. WHAT I DELIBERATELY DO NOT DO HERE IS RE-ASSERT THE COUNT. The row's figure is that worker's measurement at ITS vintage against ITS registry pin; quoting it now as if it were current would be an inherited count wearing a fresh date, which is the exact move this project has spent the night repairing in its own instruments. THE CLOSING CARRIER IS A FUTURE ROUND on R-38, whose cell RE-MEASURES ITS OWN DENOMINATOR AT WRITE TIME rather than carrying this row's number forward, and that round is gated behind the current round's slug and analysis (LD-0521), not behind anything this seat is withholding.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W2-S13 -- read at HEAD: BLOCKING, ARMED, UNDER_INVESTIGATION, disarm_owner 2.0.0_SA_COO~G",
+   "the standing drive arm names this population as a future round's subject, with its denominator re-measured at write time",
+   "LD-0521 -- the refuser counts open orders per PROJECT, so the closing round cannot be cut beside an open one"
+  ]
+ }
+}
+```
