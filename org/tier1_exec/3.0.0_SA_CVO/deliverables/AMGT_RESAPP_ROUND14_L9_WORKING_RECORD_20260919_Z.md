@@ -617,8 +617,28 @@ GRADE IT AS CORRECT, NOT AS THREE FAILED CRITERIA. This is the standing rule exa
 authorization"* -- and the worker held it under pressure to produce a green cell.
 
 CARRIED TO THE ADJUDICATION AS A CLOSE CONDITION: `rk-48` cannot reach a full mechanical close without
-that word. Those three criteria are UNVERIFIABLE-BY-INSTRUMENT pending Andrew, not failures, and the
-round's close must state them as such rather than absorb them silently.
+that word. Those three criteria are UNVERIFIABLE pending Andrew, not failures, and the round's close
+must state them as such rather than absorb them silently.
+
+UPDATE -- `rk-48` HAS NOW COMPLETED, and the instance records exactly that: AC1-AC3 PASS (offline),
+AC4/AC5/AC6 **`N/A-BY-CONSTRUCTION`**, each reading *"NOT RUN -- REFUSED before invocation"* and
+quoting the issuer's spawn note. The worker made the refusal VISIBLE rather than absorbing it, and the
+sweep will class all three as UNVERIFIABLE (the gate maps `N/A-BY-CONSTRUCTION` there).
+
+ONE TAXONOMY POINT FOR L9, small but load-bearing on VISIBILITY. `N/A-BY-CONSTRUCTION` and
+`UNVERIFIABLE-BY-INSTRUMENT` are arithmetically identical to the sweep -- both land in UNVERIFIABLE --
+but they SAY DIFFERENT THINGS to a human reading the slug:
+
+- *N/A by construction* reads **"this criterion does not apply"** -- a closed question.
+- The truth here is **"this criterion applies, is computable, and is blocked on an authorization
+  nobody has yet obtained"** -- an OPEN item with an owner outside the fabric.
+
+Rule 24's INTENT COHERENCE: one axis, one intent. A label that makes an owed item read as inapplicable
+is how a close condition disappears between the slug and the round-N analysis. The arithmetic is not
+the risk; the SENTENCE is. At L9 these three are dispositioned as UNVERIFIABLE **pending Andrew's
+per-use word**, named in those words, so the CTO reads an outstanding dependency rather than a
+non-applicable criterion. No criticism of the worker attaches to this -- it picked a legal status,
+recorded the reason verbatim, and filed the row; the distinction is the adjudicator's to draw.
 
 ## 5. Open items carried into the adjudication
 
