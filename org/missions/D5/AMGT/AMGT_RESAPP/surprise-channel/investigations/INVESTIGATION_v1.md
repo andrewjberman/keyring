@@ -9846,6 +9846,72 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This order's own chain names AMGT-rk-35 (per the COO half) as the cell that will pull+derive exactly these three keys once R14-I1 lands their identity -- this row records that the identity landing has ALREADY happened (ahead of the pull), sharing the raw/bloomberg/ prefix in a shape _latest_stamp cannot distinguish from a real raw landing.",
     "world_is": "Today the three keys' only stamp is identity-only, so any code path calling _latest_stamp on them (this worker's original builder, or model_block_pull.py's own stage_derive if invoked against these keys before their real pull lands) reads a stamp that exists but is not raw, and fails with an unhandled S3 exception rather than a clean 'no raw landed' state.",
     "notes": "This worker's own build_unit_map.py is hardened against this (verifies refdata.json+histdata.json presence per stamp, newest-first) and its AC4 dry run over these three names prints the correct explicit UNRESOLVED terminal state, not a crash. model_block_pull.py's stage_derive itself is unchanged and carries the same landmine -- owner: whoever next runs derive against a key that might carry an identity-only stamp (rk-35, or model_block_pull.py's own hardening as a future cell); not in this order's paths to fix beyond the new module."
-  }
+  },
+  {
+      "id": "AMGT_RESAPP-Z-W49-S2",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~49",
+      "surfaced_at": "2026-09-19T10:19:17Z",
+      "one_line": "AC4, AC5 and AC6 of AMGT-rk-48 are REFUSED: the issuer's spawn notes state Andrew's per-use word for Bright Data is NOT on file for this order, so every criterion whose invocation would make a live Bright Data SERP call (AC4, AC5) or read the S3 objects those calls would have written (AC6) is refused rather than executed; AC1-AC3 (offline: the classifier, the schema, the mutant/verbatim/namesake controls) are closed with PASS.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "issuer notes on this spawn, verbatim: \"Andrew's per-use word for Bright Data is NOT on file for this order. Any criterion whose invocation needs a Bright Data (or any other external vendor) call is REFUSED: record the criterion as refused with reason 'vendor per-use word not on file', file ONE surprise row naming the criteria and the vendor, and keep working on the rest. Never call an external vendor API.\"",
+          "the task order's own text names the same gate: \"if the spawn prompt does not state the per-use word for the validation run's Bright Data calls, AC4-AC6 are REFUSED with a row and the order is terminal on AC1-AC3 plus that refusal\" (order section 5, closing paragraph; BOUNDS section, vendor-calls clause)",
+          "AC1-AC3 run clean under this build: python -m unittest lib.research.management.tests.test_ceo_search -v -- Ran 19 tests, OK; the classify_serp_attempt / serp_brightdata_records AC2 invocation prints the four measured shapes each PASS, denominator 4 of 4; the AC3 schema invocation prints required has ceo_profile True, keeps ceo_public_profile True, the five-state enum, the six fact topics, stale redirect claim False, denominator 8 definitions"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "AMGT-rk-48's step 7 (\"the live run\") and its AC4-AC6 assume the vendor call is authorized to run against the three validation names once verified_site has landed.",
+      "world_is": "No Andrew-direct per-use word for Bright Data is on file at this spawn (the ~17:2xZ / ~18:4xZ record's own narrow reading, cited in the order at :44-45, explicitly LEFT the running validation's Bright Data use to Andrew, and no later record closes that gap). The live arm is therefore unreachable this session by the issuer's own instruction, not by a code defect.",
+      "notes": "Vendor named: Bright Data (serp_opal zone). No Bright Data or other external vendor API was called by this worker at any point. AC1-AC3 fully exercise the built primitive, the block shape and the schema offline; AC4-AC6 remain open pending Andrew's per-use word, which is the COO's/CTO's to obtain, not this worker's."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W49-S3",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~49",
+      "surfaced_at": "2026-09-19T10:19:17Z",
+      "one_line": "lib/research/api/tests/test_generation_and_pool_routes.py (a WALL, not in this order's <paths>) carries 2 pre-existing failing assertions against scoped_amgt.ceo_profile_reading, unrelated to this order's edits -- the test's hand-built fixture omits the 'query' key the adapter's own SUBTRACTION rule (AMGT-rk-43) already requires, so it reads NOT_SEARCHED where the test still expects the RETIRED constant NOT_CONFIRMED_NOTHING_FOUND (a value scoped_amgt.py no longer defines at all).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python -m pytest lib/research/api/tests/test_generation_and_pool_routes.py -q -- 2 failed, 22 passed; both failures assert == 'NOT_CONFIRMED_NOTHING_FOUND', observed 'NOT_SEARCHED'",
+          "lib/research/api/scoped_amgt.py:2284-2290 defines CEO_READING_NOT_SEARCHED = 'NOT_SEARCHED' and documents the reading as a SUBTRACTION requiring 'status', 'url', 'query', 'absence_class', 'basis' on the profile dict; scoped_amgt.py contains no string 'NOT_CONFIRMED_NOTHING_FOUND' anywhere (grep: 0 hits) -- the test cites a constant its own adapter retired under AMGT-rk-43 (R14-E1), before this worker touched anything",
+          "scoped_amgt.py imports (lines 104-118) carry no import of lib.research.management.enrich or lib.research.management.ceo_search -- this worker's schema/enrich/ceo_search changes cannot be the cause; the failing test's own fixture dict at :510 omits 'query' entirely, which the adapter's documented subtraction reads as 'no query was ever issued' i.e. NOT_SEARCHED regardless of any code this order touches"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "A green test suite under lib/research/api/tests/ certifies the adapter's ceo_profile_reading behaves as its own docstring's subtraction table states.",
+      "world_is": "Two of its tests fail today, independent of this order, because the test's own fixture is stale against its adapter's already-renamed enum (NOT_CONFIRMED_NOTHING_FOUND retired under AMGT-rk-43, replaced by SEARCHED_NOTHING_FOUND, with NOT_SEARCHED covering the no-query branch the stale fixture happens to hit).",
+      "notes": "Found while measuring this order's blast radius on the schema change (AMGT-rk-48 rewires ceo_public_profile from an independently-computed value to a projection of the new ceo_profile block). lib/research/api/ is a WALL under this order's <paths> (scoped_amgt.py named explicitly); not fixed here. Design doc CEO_STEP_IMPLEMENTATION_DESIGN_20260918.md s.3.6 already names this file and lib/research/management/tests/test_management.py:422-454 as needing a rewrite for the adapter cell that serves ceo_profile itself -- this row is additional evidence for that future cell, not a new finding about this order's own correctness."
+    },
+    {
+      "id": "AMGT_RESAPP-Z-W49-S4",
+      "project": "AMGT_RESAPP",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_RESAPP~49",
+      "surfaced_at": "2026-09-19T10:19:17Z",
+      "one_line": "Two of this order's own sources disagree on whether the CEO search may run at all without a filings-battery verified_site: step 7's own prose says the search proceeds and merely denies official_bio labelling, while the issuer bind (msg 23833, quoted in the CTO half's re-signature) says the search is NOT_ATTEMPTED without one -- this worker built to the issuer bind (the later, authorizing text) as the general rule, not validation-only.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "task order AMGT-rk-48 section 1 step 7, verbatim: \"A verified company domain for official_bio comes from the filings object only where AMGT-rk-38 has landed one ... absent that, every kept item is third_party_bio or another kind, and the block says so\" -- this reads as: the search still runs without a verified domain.",
+          "task order AMGT-rk-48 section 2, ISSUER BIND (msg 23833), verbatim: \"the live CEO search for a validation name runs ONLY when that name's filings source object carries a verified_site landed by AMGT-rk-38 ... a name without one is recorded NOT_ATTEMPTED with reason NO_VERIFIED_SITE ... never searched on a typed or guessed domain\" -- this reads as: no verified_site means no search at all.",
+          "the CTO half's re-signature (NEVER_WIDEN_ROUND14_CHAIN_E_CTO_HALVES.md, 'WITHHOLDING LIFTED -- SIGNED' passage for AMGT-rk-48) states the bind 'brings the cell onto the ratified rule ... rather than merely making the arm reachable', which this worker reads as making the bind the GENERAL rule, not validation-only"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Both readings are present in the order's own text with no explicit reconciliation between step 7 and the issuer bind.",
+      "world_is": "lib/research/management/ceo_search.py::ceo_profile() implements the issuer-bind reading as the default (require_verified_domain=True: no verified_site -> NOT_SEARCHED / NO_VERIFIED_SITE, nothing searched, for every caller including production names via enrich.py's new verified_domain_for()), with an explicit override parameter (require_verified_domain=False) for a caller that has independently confirmed a domain by another route. Not exercised live this session (AC4-AC6 refused, row S2).",
+      "notes": "The L4 (per PRD :757, already open on the adjacent Bloomberg-fallback-CEO question) should settle this explicitly rather than leave it to a worker's reading of two documents in tension; flagged here rather than resolved unilaterally beyond the concrete code choice already made and documented in ceo_search.ceo_profile()'s own docstring."
+    }
 ]
 ```
