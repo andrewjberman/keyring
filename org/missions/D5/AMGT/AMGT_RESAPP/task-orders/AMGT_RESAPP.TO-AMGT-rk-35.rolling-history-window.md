@@ -256,7 +256,7 @@ for n in names:
 print('crosswalk', cw[-1], 'keyed_names', len(names), 'pre_act_recorded', len([n for n in names if n in pre]))
 print('served_stamps_moved', len(moved), moved)
 print('raw_landings_newer_than_pre', len(raw_moved), raw_moved)
-"</invocation><expect>THE NEGATIVE CONTROL -- NO FLEET RUN, NO RE-RUN: over the crosswalk's keyed names read fresh (33 at the cut), pre_act_recorded 33 (the stamp list you wrote at spawn, AFTER rk-34's re-derive drained, so rk-34's stamps are the baseline), served_stamps_moved 0 and raw_landings_newer_than_pre 0 -- this order pulled and derived nothing for any covered name. pre_act_stamps.json carries, per name, the newest derived stamp and (under _raw_newest) the newest raw key at spawn. Any moved stamp or new raw landing on a covered name is NOT met and is a violation of C-VALIDATION-NAMES, reported as such</expect></criterion>
+"</invocation><expect>ISSUER REPAIR (2.0.0_SA_COO~Z, 2026-09-19 ~11:0xZ, row AMGT_RESAPP-Z-W39-S1): the negative control's population is the COVERED names -- the crosswalk-keyed names MINUS the three validation names this order is authorized to pull (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity), because AMGT-rk-31 landed those three into the crosswalk (33 -> 36) before this order's live act, an ordering the chain M COO half signed. Print BOTH: the whole-crosswalk sweep as cut (36 swept, served_stamps_moved listing exactly the three validation keys and nothing else) AND the covered-name figure 'covered_names_moved 0 of 33'. PASS when the moved set equals exactly the validation set and the covered figure is 0 of 33; any other name moved is FAIL as cut. The original bar follows for the record: THE NEGATIVE CONTROL -- NO FLEET RUN, NO RE-RUN: over the crosswalk's keyed names read fresh (33 at the cut), pre_act_recorded 33 (the stamp list you wrote at spawn, AFTER rk-34's re-derive drained, so rk-34's stamps are the baseline), served_stamps_moved 0 and raw_landings_newer_than_pre 0 -- this order pulled and derived nothing for any covered name. pre_act_stamps.json carries, per name, the newest derived stamp and (under _raw_newest) the newest raw key at spawn. Any moved stamp or new raw landing on a covered name is NOT met and is a violation of C-VALIDATION-NAMES, reported as such</expect></criterion>
 </proof_of_spec>
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR, not a paraphrase.** No judgment criterion on this order.
@@ -278,7 +278,7 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~39</slot>
 <fabric>site-z</fabric>
