@@ -5879,6 +5879,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Not this cell's to fix: BOUNDS restrict touched code to _authz/enforce.py's refusal order, the envelope/contract, entry points and their tests -- holdings/enforce.py is a separately-forked file (history: commit ebf5eae0c8, IB-rtd-8 'irpt-bckend-rtd8-holdings-advisor-fix -- rebuild+redeploy irpt-holdings for the re-staged holdings/enforce.py') outside this order's grant to edit. Routed to 1.0.0_SA_CTO as the ruling's owner: either fold holdings/enforce.py back onto the shared _authz module or apply the same inversion+disclosure fix to its own fork in a future cell. irpt-holdings was still deployed this pass (it is one of the packet's signed N=7 keys and its zip DID change hash from shared _ids/_keys/_authz/served.py updates), so its CodeSha256 now matches the built artifact even though its enforce.py logic is unchanged."
+ },
+ {
+  "id": "IRPT_BCKEND-W1-S30",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-19T05:58:00Z",
+  "one_line": "The live abby_horton/49financial numbers measured this pass (k=21, unprojected count=12, denominator=33) differ from the packet's/order's expected 21/22-of-43, because a CONCURRENT scheduled refresh (irpt-directory-refresh, another active process this window) re-wrote opal-data-bd's ownership_map.json between packet-write time and this arm's live read -- the self-consistency (k + count == denominator, k >= 1) that arm (e) actually grades still holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "This order's packet (written 00:42-01:01Z, this cell's first pass) and arm (e)'s acceptance text state the expected live-proof outcome as 'k >= 1 permitted with count = 43 - k disclosed (row W1-S27's own numbers: k=21, count=22, measured by battery_ib_rte_6.py arm_b_join_rates, this project, prior cell)'.",
+  "world_is": "This run (second pass, ~05:5xZ) reads k=21 permitted and unprojected_grant={count:12, denominator:33} for abby_horton/49financial through the REAL served.Entry.enforcer_for('49financial') against the LIVE ownership map -- 33, not 43. org/critical_paths/.open_deploys/ and s3api list-object-versions both show opal-data-bd's platinum/49financial/ownership_map.json was overwritten at 2026-09-19T05:10:38Z (prior version 2026-09-19T00:09:01Z, the packet's own window), and irpt-directory-refresh.zip in the shared lambda-artifacts bucket shows continuous re-uploads across this same window (05:08:16Z latest at time of arm (d)'s plan) -- a DIFFERENT, concurrently-running cell's scheduled refresh, not this order's act, moved the underlying data. The RELATIONSHIP the acceptance criterion actually needs (k >= 1, count == denominator - k, cross-firm swap refused, pre-fix bytes reading UNPROJECTED_GRANT, inflection/cottonwood refused) holds exactly as measured this run; only the specific numeric constants (21/22/43) recorded at an earlier vintage no longer match current live state, consistent with the forward-looking-criterion bar (BOUNDS: 'no criterion... certifies what a future event WILL find... a prediction made before the event is not evidence').",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rtf_2.py arm_e_live_proof(), this run: post_fix_permitted_count=21, post_fix_unprojected_grant={count:12, denominator:33, kinds:{UNPROJECTED-ID:12}}, post_fix_count_plus_k_equals_denominator=true",
+    ".tools/aws s3api list-object-versions --bucket opal-data-bd --prefix platinum/49financial/ownership_map.json, this run: latest version nR.FkCE1frsI9R5zRp2wJWB7vyMZ04NK at 2026-09-19T05:10:38Z, prior wZ.0UnhQPokUfcud.W7MeajwqtY93Osx at 2026-09-19T00:09:01Z (the packet's own measurement window)",
+    ".tools/aws s3api get-object on that key, this run: advisors.abby_horton.accounts has 33 entries at the current version",
+    ".tools/aws s3api list-object-versions --bucket opal-313476888478-lambda-artifacts --prefix investor-reporting/irpt-directory-refresh.zip, this run (arm (d) planning window): latest version at 2026-09-19T05:08:16Z with 30+ versions across the prior 24h -- a separate, actively-running deploy cadence for a DIFFERENT function this order does not touch"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect in this cell's work: arm (e)'s pass condition is the SELF-CONSISTENT relationship (k>=1, count==denominator-k), never a hardcoded 43, and it holds. Recorded so a later reader comparing this run's numbers against the packet's '21/22 of 43' does not read the difference as a bug in the deploy."
  }
 ]
 ```
