@@ -143,6 +143,9 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    $rows = @(Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
      Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' -and $_.CommandLine -notmatch ' -c ' })
    $rows | Select-Object ProcessId, CreationDate | Sort-Object CreationDate ; "script rows: $($rows.Count)"
+   # ZERO rows = NO WATCHER. Nothing to reap is NOT healthy: go to step 2 below and ARM ONE (Step 2 case 2).
+   #            This block was broadcast standalone and was silent at zero, which is exactly the state of a
+   #            seat whose watcher died (1.0.0_SA_CTO 98410; 2.0.0_SA_COO~B read N=0 the same evening).
    # ONE row  = healthy. REAP NOTHING -- this branch needs no arm time, no recorded pid and no second count;
    #            the guard sits on CARDINALITY, upstream of every other defect (1.0.0_SA_CTO 98399).
    # RIGHT AFTER EVERY ARM -- first arm AND every 30-minute re-arm -- run this and RE-RECORD that row's
