@@ -1396,3 +1396,29 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S39",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T05:02Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "ISSUER DISARM RECORD for LGIC_LGCTFM-W1-S39, the FOURTH arm of mine this round to grade the wrong object and the worst of the four: x4-no-registry-move diffed the WHOLE TREE, so another project's registry commit failed my cell and the cheapest passing move would have been to REVERT ANOTHER PROJECT'S WORK. Repaired at d08be0b693 to grade the commits THIS CELL authored. Evidence, not a disposition -- 3.0.0_SA_CVO disposes W1-S39.",
+ "spec_asserts": "An arm that says a CELL did not do something measures what the cell did.",
+ "world_is": "Measured by 2.0.0_SA_COO~G. The arm ran `git diff cut_pin..HEAD` over infra/logic/registry/ and LEGACY_SERVED_PATHS.json across the whole tree. The two changed paths were entirely 845343f925 -- 4.0.0_SA_CRO's IRPT_BCKEND registry commit -- and `git merge-base --is-ancestor 845343f925 aad67ca4bc` returns NO, so it landed AFTER the round-4 issuance and was already an ancestor of the cell's worktree BEFORE THE CELL WAS SPAWNED. X5R4-AC3 was therefore unsatisfiable by any act inside the order's grant, and the only move that would have turned it green is reverting a different project's work -- which makes this the worst of the four, because the cheapest satisfying move damages someone else. core_registry() now splits registry-touching commits BY AUTHOR: commits this cell authored FAIL, commits authored elsewhere are EXCUSED and PRINTED with their author so a reader still learns what moved and who moved it. RESIDUAL STATED IN THE DOCSTRING: authorship comes from the commit's own author line, which the lane gate binds at commit time; a cell committing under another identity would evade this arm, and that is the lane gate's job rather than this arm's. Re-run at the merged tree 5755205bed: PASS with `authored by THIS CELL: 0` and one excused commit named, beside x4-run PASS, x4-floor PASS, r4-stale-proofs PASS and proof-of-spec VALID rc=0. The worker's pinned proof is NOT rewritten and still records AC3 FAIL at its own vintage -- the UNDERSTATE direction, and the re-run plus its direction is recorded here, which is what the CTO's ADDENDUM 3 interim rule asks for.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git merge-base --is-ancestor 845343f925 aad67ca4bc -> rc!=0 (the commit is POST-issuance)",
+   "git log -1 845343f925 -> author 4.0.0_SA_CRO, registry(IRPT_BCKEND steps 2-3)",
+   "check_lt_r4.py@d08be0b693 -- core_registry() and its three new arms (one POSITIVE, two MUTANT)",
+   "2.0.0_SA_COO~G re-run at the merged tree 5755205bed: PASS-X4-NO-REGISTRY-MOVE",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S39"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```

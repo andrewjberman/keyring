@@ -729,6 +729,51 @@ entries where 129 is the bar; the method note still names `comp-iam role`; no ha
 walk output; no post-cut run). **TWO ARE GUARD-SHAPED AND READ PASS, DISCLOSED:** `x4-no-registry-move` and
 `r4-stale-proofs`.
 
+
+### 15.4 THE ROUND-4 CLOSE -- three cells drained, and FOUR of this seat's own arms were repaired mid-round
+
+| cell | drain | arms at the MERGED tree | proof |
+|---|---|---|---|
+| `LT-m-1` | `b238df04d5` | `m1-entry`, `m1-untouched`, `r4-stale-proofs` PASS | VALID (rc=0) |
+| `LT-e-6` | `9ac7b0b2c3` | `e6-sources`, `e6-handsurface`, `e6-coverage`, `e6-no-loss`, `r4-stale-proofs` PASS | VALID (rc=0) |
+| `LT-x-5` | `5755205bed` | `x4-run`, `x4-floor`, `x4-no-registry-move`, `r4-stale-proofs` PASS | VALID (rc=0) |
+
+**What the round was for, and it landed.** The engine is R-81-conformant on both halves `S30` measured
+NON-CONFORMANT: the `iam_grant` leg reads the LIVE plane through `comp-iam reconcile` (its own report:
+`live roles (census) 256 | TF-parsed 210 | matched 206`), and the hand surface is GUARDED by `comp-lambdamap`
+with 12 findings in 2 drift classes. ⭐ **The second-order tell is sharper than the count:**
+`granting_roles_not_in_the_live_graph` is now EMPTY where round 3 had to carry `opal-49f-value-parity` as a
+declared-but-not-live granting role -- **a result a live-plane read cannot produce by construction.**
+Involved **381 -> 402**, seven node types grew, twelve held, **ZERO dropped**. The manifest carries exactly one
+`cloud.inventory.*` entry, 128 -> 129, with the pre-existing digest `697f4e9d80df` unchanged. The real run
+`20260919T034609Z-c28c728` accounts **90 of 90** floor nodes (81 rowed + 9 excluded + 0 unaccounted).
+
+⛔ **FOUR OF MY OWN ARMS GRADED THE WRONG OBJECT, AND EVERY ONE WAS FOUND BY THE WORKER IT WAS GRADING.**
+Not one was worked around; each arrived as a BLOCKING row with its discriminator already measured.
+
+| row | the arm | what it graded | what it should have graded | repair |
+|---|---|---|---|---|
+| `S35`/`W1-S88` | `r4-stale-proofs` | a window that counted its own mint | the proofs that could BE stale | `1df2481ca0` |
+| `W2-S35` | `m1-entry` | a status vocabulary the file has never admitted (intersection **0** of 127) | the manifest's own enum | `1d4df2c115` |
+| `W1-S35` | `e6-sources` | every mention of a refused tool, including Andrew's LEDGER naming it as refused | the DESIGN half only | `21a163f492` |
+| `W1-S39` | `x4-no-registry-move` | the whole TREE, so another project's commit failed my cell | the commits THIS CELL authored | `d08be0b693` |
+
+⭐ **THE COMMON SHAPE, STATED ONCE: AN ARM THAT GRADES TEXT, A NUMBER OR A TREE INSTEAD OF THE CLAIM.** In every
+case a CORRECT record could not pass, so the cheapest satisfying move was to damage something -- fabricate a
+proof path, write a status the file forbids, delete a truthful record, or **revert another project's work.**
+`W1-S39` is the worst of the four for exactly that reason: its cheapest green costs a seat that is not even in
+this round.
+
+**Two more of mine, repaired without a row because the CTO's analysis named them first** (@`84b02d1573`):
+`proofs_at_risk()` returned an EMPTY SET on a failed `git ls-tree` -- and empty is the value that PASSES at a
+mint, so an instrument failure was indistinguishable from a clean one -- and the commit list was a per-path
+concatenation whose `[-1]` was the oldest of the LAST path only. Both at `eda1e967d0`, the first with a LIVE
+positive control that hands the real function a bogus commit-ish and requires it to raise.
+
+**No pinned proof was rewritten.** `LT-m-1`'s instance still records `AC1` FAIL and `LT-x-5`'s still records
+`AC3` FAIL, each at its own vintage -- the UNDERSTATE direction of the `S32` bar -- and the issuer's re-runs at
+the merged trees are recorded in `S36`, `S37`, `S38` and `S39` rather than by editing a worker's artifact.
+
 ### 15.3 WHAT THIS ROUND DOES NOT CLAIM
 
 - It does **not** close FWD-1. `1.0.0_SA_CTO` re-grades the outcome at L10 against its ACCEPT.
