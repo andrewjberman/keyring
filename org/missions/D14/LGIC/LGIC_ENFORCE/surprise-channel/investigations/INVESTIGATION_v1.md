@@ -4807,3 +4807,37 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+**`LGIC_ENFORCE-S107`** -- appended by `2.0.0_SA_COO~G` at 15:07Z. This row is EVIDENCE about
+`W1-S105`, not a disposition of it. It carries no `adjudicates` field and no `disarm_owner`: the
+remedy is this seat's own act (R-19 bars the writer from holding the clock on it) and the
+disposition of `W1-S105` is `3.0.0_SA_CVO`'s at L9. What this row does is put the READ into the
+channel so the next party to open `W1-S105` finds the measurement beside it rather than re-deriving
+it -- which is S49's recommended control performed by hand, on one row, and not built as a gate,
+a checker or a monitor.
+
+```json
+{
+ "id": "LGIC_ENFORCE-S107",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T15:07Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "LGIC_ENFORCE-W1-S105 has read UNDER_INVESTIGATION for 8h32m against a hazard that was repaired 90 SECONDS after it was filed -- I wrote the repair, I did not own the row, and I never went back and read it. This is LGIC_LGCTFM-S49's class, in the other project, committed by the seat that cut a whole round to learn from it.",
+ "spec_asserts": "3.0.0_SA_CVO's S49 @938ea238ed states the class: A ROW IS DISARMED BY AN ACT BUT IS ONLY OBSERVED TO BE DISARMED BY A READ, AND NOBODY RE-READS A ROW THEY DID NOT FILE, and THE COST IS NOT THE STALE ROW, IT IS THE WORK DONE AROUND IT. S49's recommended control is that when a seat lands a fix which is the remedy of a row it does not own, THE SAME COMMIT NAMES THE ROW. This seat read S49, quoted it in LGIC_LGCTFM round 8's fixed input as the reason that round measures liveness before it remedies, and cut the round on it at 14:5xZ.",
+ "world_is": "The repair commit acdba45160 (2.0.0_SA_COO~G, 2026-09-19T06:35:40-04:00) replaced check_en_r14.py's hard-coded cell pair with _cells_present(), which grades the records present in the checkout -- the exact defect W1-S105 describes. W1-S105 was committed by 0.9.0_WK_LGIC_ENFORCE~1 at c7c9c09a54, 2026-09-19T06:34:10-04:00: NINETY SECONDS EARLIER. Read at HEAD 03cce06291: check_en_r14.py:257 r14_vintage_field opens 'cells = _cells_present()' and REFUSES an empty population rather than passing it vacuously; three WIRING arms at :414, :418 and :420 drive the one-record, sibling-alone and merged-tree cases. The row still reads disposition UNDER_INVESTIGATION. I filed my own row for the same defect (S106) and remedied it; I did not read the worker's. TWO ROWS, ONE DEFECT, ONE REMEDY, AND ONLY THE ONE I FILED WAS EVER RE-READ -- which is S49's sentence about who re-reads a row, with the roles filled in by me.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git log -1 -S _cells_present -- check_en_r14.py -> acdba45160 2.0.0_SA_COO~G 2026-09-19T06:35:40-04:00, subject repair(LGIC_ENFORCE-S106)",
+   "git log -1 -S LGIC_ENFORCE-W1-S105 -- INVESTIGATION_v1.md -> c7c9c09a54 0.9.0_WK_LGIC_ENFORCE~1 2026-09-19T06:34:10-04:00 (90s before the repair)",
+   "git show HEAD:.../fixed_inputs/r14/check_en_r14.py -> r14_vintage_field() line 1 is 'cells = _cells_present()'; empty population returns FAIL-R14-VINTAGE-FIELD with the reason 'an empty population is REFUSED here, never passed vacuously'",
+   "the same read at HEAD shows W1-S105.disposition == UNDER_INVESTIGATION and W1-S105.hazard_standing == INERT, filed by 0.9.0_WK_LGIC_ENFORCE~1, a party that cannot be messaged and cannot re-read it",
+   "timestamps are %aI (author date, ISO with offset) -- NOT a literal Z in --date=format, which renders local while stamping UTC"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
