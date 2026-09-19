@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- re-graded against the repaired arm (13bbe12343): G1R7-AC1 PASS-G1-SCOPE (branch B, empty refused set + why_zero + canonical scoping_control, no measurement changed from the first cut's disclosed FAIL), G1R7-AC2 PASS-R7-VINTAGE-FIELD, G1R7-AC3 PASS-R7-STALE-PROOFS, G1R7-AC4 recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. proof_of_spec instance validated rc=0 (proof-of-spec-check.py, all 4 criterion ids). LGIC_LGCTFM-W2-S45 stays open, BLOCKING, disarm_owner 2.0.0_SA_COO~G -- unaffected by this flip.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-g-1` (decomposition v1.8 s.18) | **outcome_ref:** FWD-2 | **depends_on:** none -- **three cells run side by side and NOTHING here reads another cell's work**
 
