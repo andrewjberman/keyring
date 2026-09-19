@@ -1062,3 +1062,30 @@ PRD, so it is a row here, not a message.
  "world_is": "Measured by 3.0.0_SA_CVO at L9 by importing lib/lgctfm_render.py at HEAD and calling _coverage_lines() directly -- the renderer's own function, not the checker's wrapper. On a synthetic block {LAMBDA: rows 2, involved 5, no not_covered} it returns '  coverage: 2 row(s) of 5 involved node(s) -- short by 3, named below' with NO 'not covered' line following. REACHABILITY MEASURED, NOT ASSUMED: the one live coverage block (e5_walk/contract.json) has rows == involved on 19 of 19 node_types and 0 not_covered entries, so 0 of 19 can enter the branch today. This does NOT move R2R3-AC4, which is graded PASS on the same instrument: the criterion asks whether the reader learns an empty or short column is the INSTRUMENT's limit, and 'short by 3' tells them; the unkept promise is the sentence after the one that answers the question."
 }
 ```
+
+## Round 3 L10 -- the round-4 bar's trigger, measured over the backlog
+
+```json
+{
+ "id": "LGIC_LGCTFM-S34",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T01:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "THE ROUND-4 BAR'S TRIGGER IS MISPRICED, MEASURED RATHER THAN ARGUED: the round analysis @ba1dcf65e9 says the discriminator 'git log --since=<round cut> -- <fixed-input path>' is 'one command that usually returns zero', so the bar costs nothing. RUN OVER THE BACKLOG IT RETURNS NON-ZERO ON 63 OF 112 EVALUABLE PROOFS. A trigger that fires on the majority case is not free, and the arm-level question it is standing in for is one the file-level test cannot answer.",
+ "spec_asserts": "A fixed input committed after a proof's pin marks that proof STALE-UNGRADED, and the file-level git log that detects it usually returns zero, so the bar is close to free.",
+ "world_is": "Measured by 3.0.0_SA_CVO over the tracked corpus at HEAD, running the analysis's OWN discriminator. DENOMINATOR: 163 tracked proof-of-spec instances across LGIC_LGCTFM, LGIC_ENFORCE, LGIC_CANON and IRPT_BCKEND; 112 name a fixed-input checker in their own bytes and are therefore evaluable (IRPT_BCKEND contributes 0 checkers, so its 51 instances are outside the population and are not counted as clean). SIGNATURE: an instance whose pin commit predates a commit to the checker it names. HITS: 63 of 112 instance-by-checker pairs. I ALSO REPORT A NARROWING THAT DID NOT WORK, because reporting only the one that did would misstate the result: I expected the round-match axis (count only the instance's OWN-ROUND checker) to subtract most of the hits, and it subtracted EXACTLY ZERO -- an instance only ever names its own round's checker, so that axis is vacuous and the 63 stands. WHY THE FILE-LEVEL TEST CANNOT DECIDE, measured on one checker's whole history: check_lt_r1.py over its 6 commits moves from 61 to 67 subcommand keys with 0 removed -- the later commits ADD LATER CELLS' ARMS, which cannot change an earlier arm's verdict -- yet 3 of those 6 commits change the line count WITHOUT changing the key set, so they edit existing code and COULD. The file's mtime cannot separate the two, which is why the analysis's own remedy (re-run the arm, record the direction) is the only decider and the trigger should select the arms that can move.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND3_ANALYSIS.md@ba1dcf65e9 -- the bar and the 'usually returns zero' premise",
+   "3.0.0_SA_CVO's sweep at HEAD: 163 instances, 112 evaluable, 63 signature hits, 0 subtracted by the round-match axis",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r1/check_lt_r1.py -- 6 commits, subcommand keys 61 -> 67, 0 removed, 3 commits changing lines without changing keys",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S32"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```

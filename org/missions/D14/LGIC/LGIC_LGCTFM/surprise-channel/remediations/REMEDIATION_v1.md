@@ -602,3 +602,30 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Round 3 L10 -- carrier for LGIC_LGCTFM-S34
+
+```json
+{
+ "id": "LGIC_LGCTFM-S34",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A FILE-LEVEL TRIGGER STANDS IN FOR AN ARM-LEVEL QUESTION IT CANNOT ANSWER. 'git log --since=<round cut> -- <fixed-input path>' fires whenever the round's checker was touched, and on this estate the issuer keeps committing to the round's checker while workers pin proofs -- adding the later cells' arms, repairing one cell's route, draining. Measured: 63 of 112 evaluable proofs carry the signature; check_lt_r1.py grew 61 -> 67 subcommand keys across 6 commits with 0 removed, while 3 of those 6 changed lines without changing keys. Additive commits cannot move an earlier arm; edits to shared code can; the file's history cannot tell them apart.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S34",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND3_ANALYSIS.md@ba1dcf65e9",
+  "3.0.0_SA_CVO's sweep at HEAD: 163 tracked instances, 112 evaluable, 63 hits, 0 subtracted by the round-match axis"
+ ],
+ "remedy": "THE BAR STANDS AND IS NOT WEAKENED BY THIS ROW -- what is owed is a PRICE, decided by the bar's author before round 4 carries it. The measurement says the trigger fires on the majority case, so the choice is explicit rather than incidental: either round 4 pays 63-ish arm re-runs as a known cost and says so, or the trigger selects the arms a commit can actually move rather than every arm in a touched file. NOTHING IS REWRITTEN AND NO PROOF IS RE-CUT; this row changes no verdict and re-opens no round. I do NOT propose the narrower trigger's mechanism, because a trigger is an enforcement surface and designing one from this seat would be an agent-made gate; the owner is named because the bar is the owner's.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v3"
+ },
+ "closed": false
+}
+```

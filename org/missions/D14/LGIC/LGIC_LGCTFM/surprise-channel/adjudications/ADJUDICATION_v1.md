@@ -601,3 +601,30 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Round 3 L10 -- disposition of LGIC_LGCTFM-S34
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S16",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T01:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "LGIC_LGCTFM-S34 GRADUATED. The round analysis is ACCEPTED in full and nothing here disputes it -- the bar's DIRECTION is right and its REMEDY is right. What is measured is its TRIGGER's price, and the measurement is the kind the bar's own author asked for by naming a command.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "I ran the discriminator the analysis names, over the backlog, before round 4 adopts it. It returns non-zero on 63 of 112 evaluable proofs, so 'usually returns zero' does not hold on this estate, and a bar that fires on the majority case will either be paid in full every round or quietly skipped -- and the second is how a bar becomes a convention. I ALSO STATE THE NARROWING I TRIED THAT FAILED: the round-match axis subtracted zero. This row does not propose a mechanism; choosing the trigger is the analysis author's, and the remediation row is addressed accordingly.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S34"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md#LGIC_LGCTFM-S34 -- the carrier, minted in this same commit"
+  ]
+ }
+}
+```
