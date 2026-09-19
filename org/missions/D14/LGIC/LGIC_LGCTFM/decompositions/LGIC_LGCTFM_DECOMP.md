@@ -664,3 +664,12 @@ the cell renamed the two that existed and refused to invent the third, which is 
 
 Item 4 is cut only after 2 and 3 drain, for the reason R-82 ratified. Items 2 and 3 are small and share one
 file, so they queue on one slot; item 1 touches only the manifest and runs beside them.
+
+[HARD] **AND ROUND 4's ISSUANCE CARRIES ONE SENTENCE THAT IS OWED, NOT OPTIONAL** -- `3.0.0_SA_CVO`'s round-3
+L9 (@`71d0c885fd`) measured it and set the remedy: **`LT-e-5`'s PINNED PROOF RECORDS `E5R3-AC4` AS FAIL WHILE
+THE ARM READS PASS AT HEAD.** The instance was pinned at `b736ee4fdf` and the issuer's repair landed at
+`fd02b24c51`, 42 minutes later; **A PINNED PROOF IS NOT RE-GRADED WHEN A FIXED INPUT MOVES UNDER IT**, and
+rewriting one would be the worse defect. So no artifact changes and no proof is rewritten -- round 4's
+issuance STATES that `E5R3-AC4` reads PASS at HEAD, that the pinned instance records FAIL at its own vintage,
+and that both are true of their own moments. It is written here rather than remembered, because a lesson
+written in a report is not a control and this one has exactly one place it can fire: the next cut.
