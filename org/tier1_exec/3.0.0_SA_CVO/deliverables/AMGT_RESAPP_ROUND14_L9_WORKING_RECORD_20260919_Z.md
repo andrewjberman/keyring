@@ -773,6 +773,28 @@ rather than silently serving whichever the reader hit first). One card sits at A
 a rating and a price target, REF_B states that no rating is issued -- and his words name both without
 saying which wins; the CTO's REC is REF_B.
 
+ADDED 2026-09-19 ~13:3xZ from `1.0.0_SA_CTO~Z` msg 23883 (acked). A NEW RULING WILL LAND IN THE
+ADDENDUM AND IT TOUCHES THIS SEAT'S HALF -- `CTO_RULING_AMGT_RESAPP_POSITION_LINE_20260919T130xZ.md`:
+
+> *An AMGT_RESAPP research page carries a POSITION LINE and issues NEITHER a house recommendation NOR
+> a house price target; where a reference reports ratings or targets, the page reports them as OTHER
+> analysts' actions, attributed.*
+
+This answers the card that was at Andrew per msg 23874 (REF_A issues a rating and target, REF_B says
+no rating is issued). It was RULED rather than parked because the citation test produced no citation:
+no NEVER line and no standing hold reserves "what an Opal page recommends" to Andrew, and under the
+2026-08-27 restructure a card with no citation is adjudicable. Reversible on one word from him.
+
+TO VERIFY WHEN THE ADDENDUM REOPENS THIS HALF, not to accept on relay: the ruling rests on
+`4.0.0_SA_CRO~Z`'s measurement that **0 of 3** reference documents issue a HOUSE target. That is
+another seat's instrument and this seat has not run it. Before signing a half that ratifies the
+position-line text, re-read the three references' own words on that point, or cite the CRO's
+measurement AS the CRO's with its denominator -- never restate it as this seat's own.
+
+STILL AT ANDREW and NOT closed by that ruling: the Upside/Downside methodology reservation from PRD
+v0.12. The CTO's note that REF_C section 8 already prints Bear/Base/Bull with assumptions is a
+reasonable way to put it to him as a page rather than an abstract question; it is his call either way.
+
 NOTE THE VINTAGE QUALIFIER THE CTO DISCLOSED AND THIS SEAT INHERITS: `git fetch origin` FAILED at the
 moment of that verification, so the blobs hashed were already in this device's object store from an
 earlier fetch. The three sha256 agreements are that seat's own instrument; the VINTAGE is inherited,
