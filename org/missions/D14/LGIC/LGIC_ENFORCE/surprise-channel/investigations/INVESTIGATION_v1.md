@@ -3936,6 +3936,51 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "It proved a correct record in the CHECKER's vocabulary passes. The order and the checker are TWO CARRIERS OF ONE CONTRACT, written separately by one author, and the arm only ever read one of them.",
     "notes": "THE RULE, and it is cheap: A POSITIVE-SATISFIABILITY ARM MUST BE FED THE RECORD SHAPE THE ORDER PUBLISHES -- parse the order's own 'WHERE YOUR RECORD GOES' block into the positive record, never hand-author it beside the checker. Then a drift between the two carriers fails at the cut, before a worker pays for it. It is R-47's positive-satisfiability arm and 'census every carrier of a contract' meeting at one seam neither covers alone. COST: one parse per cell at the cut. NON-APPLICATION: an order that publishes no record shape, where the checker IS the only carrier. Round 10's fixed input adopts it.",
     "id": "LGIC_ENFORCE-S85"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-19T01:32Z",
+    "one_line": "THE STALE-PROOF ARM COUNTS ITS OWN MINT: `t44-stale-proofs` walks `git log <cut_pin>..HEAD -- <the r11 fixed-input DIRECTORY>`, and the round-11 cut pin (ba1dcf65e9, the round-10 ANALYSIS commit) PRE-DATES the L6 issuance commit ae436a7994 that CREATED that directory -- so the window contains the commit that minted the input it watches, the arm read FAIL-T44-STALE-PROOFS at the cut, and the order's own premise that it 'READ[S] PASS AT THE CUT' and 'returns zero until a fixed input moves' is false for THIS round by construction.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured in worktree .worktrees/wk-lgic-enforce-11-1 at HEAD ae436a7994: `python org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r11/check_en_r11.py t44-stale-proofs` printed `fixed input commits since the cut: 1 (['ae436a7994 L6 issuance(LGIC_ENFORCE round 11, 2.0.0_SA_COO~G) ...'])` and `VERDICT: FAIL-T44-STALE-PROOFS`.",
+        "R11_BASE.json:3 `cut_pin` is ba1dcf65e90a751b0a93e0bf6f6a39ecc4f8702b; R11_BASE.json:53 `watched_paths` is the directory `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r11`, which does not exist at that pin -- the issuance commit adds it.",
+        "The order's ACCEPTANCE section states: 'AC4 AND AC5 ARE GUARD-SHAPED AND READ PASS AT THE CUT ... AC5 is the stale-proof bar whose `git log` returns zero until a fixed input moves. Neither measures your work.'",
+        "check_en_r11.py:165-175 `core_stale`: with n>0 the arm passes only when the worker's record claims `fixed_input_commits_since_cut == n` AND enumerates at least one entry in `proofs_re_run` -- so the arm IS satisfiable by a correct change, which is why this row is OBSERVATION and not BLOCKING."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5's git log 'returns zero until a fixed input moves', AC5 'READ[S] PASS AT THE CUT', and 'neither measures your work'.",
+    "world_is": "It returns ONE commit -- the L6 issuance that created the watched directory -- so AC5 read FAIL at the cut and can only be turned PASS by the worker writing a non-empty `proofs_re_run` and the matching count into TEST_PROMOTION_R11.json. It therefore DOES measure the worker's record, and the one proof it can honestly name is this cell's own, pinned AFTER the mint.",
+    "notes": "THE TRANSFERABLE SHAPE: a bar written as 'every proof pinned BEFORE the input changed' has an EMPTY honest population when the only commit in its window is the one that MINTED the input -- and the arm requires a NON-EMPTY list, so the empty-and-correct answer and the stale-and-uncorrected answer are the two cases it cannot tell apart. The cheap fix is to start the window at the ISSUANCE commit rather than the analysis pin, or to admit the mint as a named exception that passes with an empty list. Not proposed as a change here: the fixed input is frozen mid-round and this row is the carrier. This cell's record enumerates the one proof it ran against the input at its current bytes and says so in its result file.",
+    "id": "LGIC_ENFORCE-W1-S88"
+  },
+  {
+    "project": "LGIC_ENFORCE",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+    "surfaced_at": "2026-09-19T01:32Z",
+    "one_line": "The order tells the worker to expect `PASS-ARMS-DISCRIMINATE` from `selftest-arms` with '(15 arms, 6 positive-satisfiability)'; the run prints 'arms driven: 16 (6 POSITIVE-SATISFIABILITY, 10 mutant/other)'. The verdict and the positive count are right; the TOTAL is not a constant, because one `S85-order-quotes-carrier:<order>` arm is minted PER round-11 task order found on disk, so the number the order quotes can only ever be correct for the order count at the moment it was typed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured in worktree .worktrees/wk-lgic-enforce-11-1 at HEAD ae436a7994, FIRST act of the cell: `python .../check_en_r11.py selftest-arms` printed 'arms driven: 16 (6 POSITIVE-SATISFIABILITY, 10 mutant/other)' and 'VERDICT: PASS-ARMS-DISCRIMINATE'.",
+        "check_en_r11.py:285-297: the arm list is extended inside `for op in orders:` over glob 'LGIC_ENFORCE.TO-EN-*-r11.*.md', then once more by the aggregate `S85-every-order-quotes`, which itself printed '1 of 1 round-11 order(s)'.",
+        "14 arms are static in the function body; 14 + 1 per order + 1 aggregate = 16 with one order cut. A second round-11 order would print 17 against the same quoted 15."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "'run `python <C> selftest-arms` FIRST and expect `PASS-ARMS-DISCRIMINATE` (15 arms, 6 positive-satisfiability)'.",
+    "world_is": "16 arms, 6 positive-satisfiability, PASS-ARMS-DISCRIMINATE. The expectation the criterion turns on is met; only the parenthetical denominator is off by one, and it is off because the quantity is DERIVED FROM THE ORDER COUNT and was quoted as a constant.",
+    "notes": "Filed on FORM, not significance: a premise the order states did not hold as written, and a worker who treated the parenthetical as the bar would have read its own clean control as a mismatch. Cost of the fix at the cut is one word -- quote the POSITIVE-SATISFIABILITY count (fixed at 6) and the verdict, and let the total print itself.",
+    "id": "LGIC_ENFORCE-W1-S89"
   }
 ]
 ```
