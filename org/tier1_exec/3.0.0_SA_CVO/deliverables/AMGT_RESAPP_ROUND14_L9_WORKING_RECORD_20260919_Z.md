@@ -985,6 +985,58 @@ TWO CELLS, ONE ROUND, ONE IDIOM RIGHT AND ONE WRONG. That is an issuer-consisten
 as much as a CLI-shape defect, and it is only visible by comparing two orders -- no single cell's
 review could surface it.
 
+## 4t. LIVE CREDENTIAL IN A CHANNEL ROW ON AN UNDRAINED BRANCH -- contained, and the irony is the lesson
+
+`1.0.0_SA_CTO~Z` msg 23896 (acked). Row `W50-S4` on `wk-amgt-14-50` demonstrates a CLI's output shape
+by pasting that output verbatim -- INCLUDING the revealed `value:` line of a live API key.
+
+**NO VALUE IS REPRODUCED HERE, AND THIS SEAT DID NOT READ THE ROW.** Verifying the claim would have
+meant pulling the cleartext into this seat's own context, which is the failure mode itself. Every
+check below is BY ROW ID or against TOOL SOURCE. (The earlier branch read in section 4s extracted row
+IDs through `grep -o` and never the evidence body.)
+
+CONTAINMENT, measured independently by this seat:
+
+| check | result |
+|---|---|
+| the ROW at shared-tree HEAD | **0 occurrences** of the `W50-S4` id (the single hit is a MENTION in `Z-S180`'s `notes`, not the row) |
+| `origin/SITEZ` | `047aee5478` -- far behind local `6c90b78d44`; nothing carrying it is pushed |
+| `git merge-base --is-ancestor 6b1fd76215 HEAD` | FALSE -- NOT merged, still on the branch |
+
+So the exposure sits on ONE local branch, undrained and unpushed. Narrow, and open.
+
+REDACTION IS NECESSARY AND NOT SUFFICIENT, and this is the part that would be missed: the cleartext is
+already in that branch's COMMIT HISTORY, and an ordinary merge carries every commit. A clean tip does
+not help. Either the carrying commit is rewritten before the drain -- a deliberate act with its own
+record -- or the credential is treated as COMPROMISED and rotated. Rotation is Andrew's call and an AE
+act; no seat in this round performs it and this record does not ask for it, it names it.
+
+NOT THIS SEAT'S TO ROUTE: the asks are to `2.0.0_SA_COO~Z` (do not drain as written) and
+`0.0.0_AB_MSTR~Z` (hold the push), and `1.0.0_SA_CTO~Z` owns the row's disarm. This seat's one send is
+the slug, so it records and does not relay.
+
+### The irony is load-bearing and belongs in the doctrine, not just the round
+
+`.tools/comp-secrets:249` guarantees that *"the auto-logger records the command (NAME) never stdout, so
+it stays out of compiler-tools-log.md regardless."* **THAT GUARANTEE HELD PERFECTLY.** It was defeated
+one layer up, by a human-authored artifact quoting the stdout the logger was careful never to touch.
+
+> A TOOL THAT KEEPS A SECRET OUT OF ITS OWN LOG CANNOT KEEP IT OUT OF A DOCUMENT SOMEONE WRITES ABOUT
+> THE TOOL. No comp-tool change would have prevented this.
+
+NO FAULT ATTACHES TO THE WORKER, and the adjudication should say so plainly: it found a real defect,
+refused rather than routing around it, charged nothing, and filed exactly the row it was supposed to
+file. **Pasting the evidence verbatim is the obvious move when the evidence IS the output shape.** The
+gap is contractual -- nothing in the row's own schema says "redact a revealed secret before you quote
+it" -- and the finding needs only the SHAPE ("a 4-line block whose last line is `value: <...>`"), never
+the characters.
+
+THE UNDERLYING CLI FINDING STANDS, confirmed here from tool source with no secret involved:
+`:236` reads `if args.json and not args.reveal:` -- so **`--json --reveal` SILENTLY FALLS THROUGH TO THE
+TEXT BLOCK**, a machine-readable request answered in a human format with no error, and a caller piping
+to `jq` gets nothing. Together with section 4s's `rk-40`-vs-`rk-49` idiom split, that is the same CLI
+producing three different outcomes in one round.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
