@@ -9575,6 +9575,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC1(a) (this order, section 5): 'a planted 1-observation series is excluded (INSUFFICIENT_OBSERVATIONS or NO_OBSERVATIONS from the movement gate on TRENDING; INSUFFICIENT_INTERIOR_SERIES_FOR_TRAILING_BASELINE on BREAKOUT) and never ranked'.",
     "world_is": "The BREAKOUT half of the citation is exact. The TRENDING half is not one of the two named literals; the code path that actually excludes a 1-observation TRENDING series was, at the time this citation was written, apparently conflated with `movement_scores`'s own NO_OBSERVATIONS/`breakout_qualifies`'s INSUFFICIENT_OBSERVATIONS. The test this worker wrote (lib/research/price/tests/test_generation.py::test_compute_price_axis_a_1_observation_series_is_excluded_a_5_observation_one_is_ranked) asserts the MEASURED reason (startswith 'UNMEASURABLE:') rather than the cell's literal, and says so in its own docstring.",
     "notes": "No fix needed in code -- the exclusion behaviour (never ranked) is correct and proven; only the order's own descriptive parenthetical is imprecise. Disarm: none armed (INERT) -- filed so a future reader citing this cell's AC1(a) does not grep movement_scores for a literal 'INSUFFICIENT_OBSERVATIONS' on the TRENDING branch and conclude it is missing."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W61-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~61",
+    "surfaced_at": "2026-09-19T08:40Z",
+    "one_line": "AC2's full lib/research/api/tests battery is red at 2 of 165 (unrelated to this cell's router change): test_generation_and_pool_routes.py's two ceo_profile_reading tests expect the string 'NOT_CONFIRMED_NOTHING_FOUND', a value that does not exist anywhere in scoped_amgt.py's CEO_READING_* enum.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z / 2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/api/tests -q (this worktree, post-edit): '2 failed, 163 passed' -- FAILED lib/research/api/tests/test_generation_and_pool_routes.py::test_13_management_is_M1_with_the_pool_average_at_the_same_as_of and ::test_13b_the_ceo_profile_reading_separates_the_two_absences, both 'AssertionError: assert '\\''NOT_SEARCHED'\\'' == '\\''NOT_CONFIRMED_NOTHING_FOUND'\\''.",
+        "scoped_amgt.py:2283-2288 defines CEO_READING_CONFIRMED='CONFIRMED', CEO_READING_NOT_SEARCHED='NOT_SEARCHED', CEO_READING_SEARCHED_NOTHING_FOUND='SEARCHED_NOTHING_FOUND', CEO_READING_SEARCHED_LINKS_UNREADABLE, CEO_READING_SEARCH_FAILED, CEO_READING_UNREADABLE_OBJECT -- no 'NOT_CONFIRMED_NOTHING_FOUND' string exists in the module (comp-find equivalent: grep of the file for the literal returns 0 hits outside the two failing test assertions).",
+        "git log --oneline -3 -- lib/research/api/tests/test_generation_and_pool_routes.py: most recent touching commit is 498dda6b6f (build(AMGT_RESAPP rk-53) ...); this worker's own edits (scoped_amgt.py's handler()/security arm and docstring only, plus a new file test_slash_safe_security_route.py) never touch ceo_profile_reading, read_management or this test file, so the failure predates and is disjoint from AMGT-rk-61's diff -- confirmed by running only the new test file plus test_scoped_amgt_mount.py in isolation: 9 of 9 passed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 (this order, section 5): 'the battery passes (a final line \"N passed\", 0 failed)'.",
+    "world_is": "At this worktree's HEAD (carrying rk-43/rk-45/rk-53's drained adapter changes), the battery is 2 of 165 failed BEFORE this cell's own edit and remains 2 of 165 failed after it -- a pre-existing test/production mismatch this cell's <paths> grant (lib/research/api/scoped_amgt.py limited to the router arm; no grant on test_generation_and_pool_routes.py) cannot repair. AC2 is graded FAIL on its own literal terms (2 failed, not 0) while this cell's OWN new/touched tests (test_slash_safe_security_route.py's 4 tests + test_scoped_amgt_mount.py's 5) are 9 of 9 green.",
+    "notes": "Refused, not repaired, per the order's own REFUSAL CLAUSE -- fixing ceo_profile_reading or the test's expected literal is out of this cell's <paths> and out of scope for a router-slash-indifference order. This does not gate the deploy: section 3 step 0 names explicit STOP conditions only for AC1 (failing) and AC3 (printing anything); AC2 is recorded as measured and the single-writer-queue deploy proceeds on AC1/AC3's own terms."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W61-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~61",
+    "surfaced_at": "2026-09-19T08:40Z",
+    "one_line": "ISSUER OBSERVATION REQUEST (CTO msg 23867): one page-built call against a slashed key (BP/_LN_Equity, page's own encodeURIComponent form) through the LIVE gateway returns 401 Unauthorized -- IDENTICAL to a genuinely-unmapped-route negative control, so this instrument cannot discriminate whether %2F survives to rawPath or is normalised before routing; the edge authorizer answers before or regardless of route match.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "curl -s -i 'https://7k3ed8px20.execute-api.us-east-1.amazonaws.com/api/scoped/amgt/security/BP%2F_LN_Equity/thesis' (the portal's own encodeURIComponent('BP/_LN_Equity') form, unauthenticated, this session 2026-09-19T08:39:56Z) -> HTTP/1.1 401 Unauthorized, body {\"message\":\"Unauthorized\"} (API Gateway's own authorizer-rejection shape, never scoped_amgt.py's {\"refused\":true,\"reason\":...}).",
+        "Same call with a LITERAL slash (.../security/BP/_LN_Equity/thesis) -> identical 401 {\"message\":\"Unauthorized\"} at 08:40:25Z.",
+        "NEGATIVE CONTROL, a route that provably does not exist anywhere in scoped_amgt_route_table() (.../api/scoped/amgt/nosuchroute/whatever) -> the SAME 401 {\"message\":\"Unauthorized\"} at 08:40:25Z -- so a 401 here is produced whether or not any route matched, and this call therefore carries NO signal on the %2F-survives-or-normalised question.",
+        "infra/aws/terraform/harvest/main.tf:100-101 (portal_api_id 7k3ed8px20) and aws apigatewayv2 get-stages --api-id 7k3ed8px20 (this session): one stage, $default -- confirms the endpoint used is this API, not a different one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO msg 23867 (relayed via this cell's worker face): record ONE page-built call against a slashed key through the gateway as an observation -- whether %2F survives to rawPath or is normalised before routing.",
+    "world_is": "The call was made as requested and answers NEITHER branch: the shared edge authorizer rejects every request with an identical 401 before this worker's instrument can see whether API Gateway's router matched a single-segment route. This reproduces, on a DIFFERENT instrument (an unauthenticated direct HTTP call vs the row's own DIRECT lambda.invoke), the CTO half's own stated limit (NEVER_WIDEN_ROUND14_CHAIN_T_CTO_HALVES.md AMGT-rk-61 section 4): 'whether a %2F from the portal's encodeURIComponent survives to rawPath as %2F, or is normalised by API Gateway into a path separator before routing' is NOT MEASURED by either half, and an authenticated edge capture (blocked by MFA per the row this cell closes) remains the only instrument that could resolve it.",
+    "notes": "No action taken beyond the observation requested; not held against this cell (the ruling W27-S10 already named this exact residual question and ruled it out of this order's scope). Disarm owner would be whoever eventually runs the authenticated capture -- left unset (INERT) because nothing here is a hazard on the process's normal operation, only an open measurement."
   }
 ]
 ```
