@@ -820,3 +820,84 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Round 7 L9 -- three judgment grades, three rows disposed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S22",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T14:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 7: ALL THREE judgment criteria PASS. N3R7-AC4 -- I recomputed the emitted set off the run's own 575 rows and got the record's 18 exactly, where the enum would have given 33. G1R7-AC4 -- I built a MATCHED-PAIR control the record did not have and ran both arms. R3R7-AC4 -- re-derived, and my own first arithmetic check was repetition. S45 and S46 GRADUATED.",
+ "spec_asserts": "Judgment criteria are graded at L9 and never self-graded.",
+ "world_is": "N3R7-AC4: PASS. The criterion's sharpest question is whether the EMITTED set was read off the RUN or assembled from the enum, and that is decidable at the bytes, so I decided it there rather than reading the record's assurance. I opened the run's own walk_r7/contract.json and computed sorted(set(r['node_type'] for r in rows)) MYSELF over its 575 rows: 18 members, and the record's emitted set EQUALS MINE EXACTLY. \u2b50 THE DISCRIMINATION IS BUILT INTO THE TWO NUMBERS: a set assembled from the schema would have been 33, not 18. 18 is what 575 real rows actually produced, and the gap is the answer. The run's own independent cells corroborate from a second direction -- contract.json's untypeable reads 0 and its coverage block's not_covered reads 0, both MEASURED by the walk rather than asserted by the cell. So emitted_minus_declared = 0 is a GENUINE ZERO: not a cell that found nothing, but a walk that emitted 18 types every one of which the enum declares. \u2b50 AND THIS IS THE CASE THE POSITIVE ARM EXISTED FOR. W2-S2's round-2 premise was that an unconditional COGNITO_USER_POOL plant put a node type outside the enum; the plant now fires only behind --plant-untypeable, off by default, and is never written into rows. A bar that could only pass ON A VIOLATION would have pressed this cell to manufacture one. It did not have to, and that is the arm working rather than the round being lucky. || G1R7-AC4: PASS, and I did not merely re-run the cell's control -- I BUILT A TIGHTER ONE AND RAN BOTH ARMS SEPARATELY. The whole of branch (B) rests on one claim: that the exemption is a SCOPED run-directory carve-out and not a gate that has gone silent on workflows/legacy_transform/ wholesale. The record's scoping control demonstrates it with a different path from the admitted set. \u2b50 MINE IS A MATCHED PAIR -- IDENTICAL CONTENT, IDENTICAL BASENAME, DIFFERING ONLY IN WHETHER THE PATH SITS INSIDE A MINTED RUN DIRECTORY: (A) workflows/legacy_transform/blackdiamond-49financial/scratch-probe.json carrying {\"bucket\": \"opal-data-bd\"} -> NAMING REFUSE ... opal-data-bd -> opal-data-49financial, '1 seen', rc=1; (B) the SAME filename and the SAME bytes at workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/scratch-probe.json -> NAMING-GATE: PASS 0 graded, '0 seen', rc=0. One directory level apart, opposite verdicts, nothing else varied. That is the carve-out proved by a controlled comparison rather than by two unrelated paths, and it is the arm that separates a scoped exemption from a silent gate -- which the issuer named as the reason branch (B) is not a weakening. THE CITED PREDICATE IS THE CODE THAT TRULY SHORT-CIRCUITS, read at the bytes: RUN_ARTIFACT_RE at naming-gate.py:96 is ^workflows/[^/]+/[^/]+/[0-9]{8}T[0-9]{6}Z-[0-9a-f]{7,40}/ and _is_record_tree at :719-721 returns True on it, ahead of any grading. The gate_pin 5fd4251792 IS the current HEAD of .tools/naming-gate.py, so the measurement is at the artifact a re-runner gets. \u26a0 AND THE HONEST SHAPE OF THIS CELL IS THAT ITS CRITERION WAS UNSATISFIABLE AND IT SAID SO: AC1 required a NON-EMPTY refused set, the gate no longer refuses, and no correct artifact could have satisfied it. The worker measured 0 of 5, filed W2-S45 BLOCKING, and DID NOT FLIP ITS ORDER -- the third time in two rounds a graded party has refused that move. || R3R7-AC4: PASS, re-derived rather than re-read, and I caught my own instrument mid-check. I re-parsed REMEDIATION_v1.md myself: 35 json fences, 35 rows, 35 unique ids, 0 duplicates -- matching the denominator. I applied the stated predicate closed == false MYSELF and got 23, and the record's rows[] ids EQUAL MY SET EXACTLY, 0 in either direction: no member invented, none dropped. \u26d4 MY FIRST ARITHMETIC CHECK WAS REPETITION, NOT CORROBORATION, AND I SAY SO BECAUSE IT PASSED: I read `routed` and `retired` as LISTS when they are INTS -- count fields -- so my '16 + 7 + 0 = 23' was re-printing the record's own numbers back at it while looking like a derivation. Re-derived properly from the 23 entries' own next_act values: RETIRE = 7, everything else = 16, matching. THE PREDICATE FOLLOWS FROM EVIDENCE RATHER THAN CONVENIENCE and the cell's reasoning is better than the order's: it chose closed over the order's own 'disarm empty' framing because disarm is a sub-object present only on v1-v2 rows and absent by convention on v3+, so keying on its emptiness would CONFLATE SCHEMA DRIFT WITH DISPOSITION, while closed is the one boolean every row of every round carries. That is a cell correcting its issuer on a measurement definition, with the reason stated. EVERY next_act IS AN ACT SOMEBODY COULD TAKE: 0 of 23 entries are missing next_act or basis, each names a seat (18 to 2.0.0_SA_COO~G, 5 to 1.0.0_SA_CTO) and a concrete act, and the routed ones quote or paraphrase the row's OWN remedy rather than inventing one. THE TWO OWNER FLAGS ARE CORRECT: W2-S37's surface is not this project's, and S42's owed act sits on a round-N analysis, which is the CTO's.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S45",
+  "LGIC_LGCTFM-S46"
+ ],
+ "disposition": "GRADUATED",
+ "grades": [
+  {
+   "criterion": "N3R7-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-n-3-r7.node-type-population.proof_of_spec.json@0d3dacd282",
+   "verdict": "PASS",
+   "reason": "PASS. The criterion's sharpest question is whether the EMITTED set was read off the RUN or assembled from the enum, and that is decidable at the bytes, so I decided it there rather than reading the record's assurance. I opened the run's own walk_r7/contract.json and computed sorted(set(r['node_type'] for r in rows)) MYSELF over its 575 rows: 18 members, and the record's emitted set EQUALS MINE EXACTLY. \u2b50 THE DISCRIMINATION IS BUILT INTO THE TWO NUMBERS: a set assembled from the schema would have been 33, not 18. 18 is what 575 real rows actually produced, and the gap is the answer. The run's own independent cells corroborate from a second direction -- contract.json's untypeable reads 0 and its coverage block's not_covered reads 0, both MEASURED by the walk rather than asserted by the cell. So emitted_minus_declared = 0 is a GENUINE ZERO: not a cell that found nothing, but a walk that emitted 18 types every one of which the enum declares. \u2b50 AND THIS IS THE CASE THE POSITIVE ARM EXISTED FOR. W2-S2's round-2 premise was that an unconditional COGNITO_USER_POOL plant put a node type outside the enum; the plant now fires only behind --plant-untypeable, off by default, and is never written into rows. A bar that could only pass ON A VIOLATION would have pressed this cell to manufacture one. It did not have to, and that is the arm working rather than the round being lucky."
+  },
+  {
+   "criterion": "G1R7-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-g-1-r7.gate-scope.proof_of_spec.json@2e265b8b07",
+   "verdict": "PASS",
+   "reason": "PASS, and I did not merely re-run the cell's control -- I BUILT A TIGHTER ONE AND RAN BOTH ARMS SEPARATELY. The whole of branch (B) rests on one claim: that the exemption is a SCOPED run-directory carve-out and not a gate that has gone silent on workflows/legacy_transform/ wholesale. The record's scoping control demonstrates it with a different path from the admitted set. \u2b50 MINE IS A MATCHED PAIR -- IDENTICAL CONTENT, IDENTICAL BASENAME, DIFFERING ONLY IN WHETHER THE PATH SITS INSIDE A MINTED RUN DIRECTORY: (A) workflows/legacy_transform/blackdiamond-49financial/scratch-probe.json carrying {\"bucket\": \"opal-data-bd\"} -> NAMING REFUSE ... opal-data-bd -> opal-data-49financial, '1 seen', rc=1; (B) the SAME filename and the SAME bytes at workflows/legacy_transform/blackdiamond-49financial/20260918T011619Z-8db9eb1/scratch-probe.json -> NAMING-GATE: PASS 0 graded, '0 seen', rc=0. One directory level apart, opposite verdicts, nothing else varied. That is the carve-out proved by a controlled comparison rather than by two unrelated paths, and it is the arm that separates a scoped exemption from a silent gate -- which the issuer named as the reason branch (B) is not a weakening. THE CITED PREDICATE IS THE CODE THAT TRULY SHORT-CIRCUITS, read at the bytes: RUN_ARTIFACT_RE at naming-gate.py:96 is ^workflows/[^/]+/[^/]+/[0-9]{8}T[0-9]{6}Z-[0-9a-f]{7,40}/ and _is_record_tree at :719-721 returns True on it, ahead of any grading. The gate_pin 5fd4251792 IS the current HEAD of .tools/naming-gate.py, so the measurement is at the artifact a re-runner gets. \u26a0 AND THE HONEST SHAPE OF THIS CELL IS THAT ITS CRITERION WAS UNSATISFIABLE AND IT SAID SO: AC1 required a NON-EMPTY refused set, the gate no longer refuses, and no correct artifact could have satisfied it. The worker measured 0 of 5, filed W2-S45 BLOCKING, and DID NOT FLIP ITS ORDER -- the third time in two rounds a graded party has refused that move."
+  },
+  {
+   "criterion": "R3R7-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-r-3-r7.remediation-route.proof_of_spec.json@acf65699b4",
+   "verdict": "PASS",
+   "reason": "PASS, re-derived rather than re-read, and I caught my own instrument mid-check. I re-parsed REMEDIATION_v1.md myself: 35 json fences, 35 rows, 35 unique ids, 0 duplicates -- matching the denominator. I applied the stated predicate closed == false MYSELF and got 23, and the record's rows[] ids EQUAL MY SET EXACTLY, 0 in either direction: no member invented, none dropped. \u26d4 MY FIRST ARITHMETIC CHECK WAS REPETITION, NOT CORROBORATION, AND I SAY SO BECAUSE IT PASSED: I read `routed` and `retired` as LISTS when they are INTS -- count fields -- so my '16 + 7 + 0 = 23' was re-printing the record's own numbers back at it while looking like a derivation. Re-derived properly from the 23 entries' own next_act values: RETIRE = 7, everything else = 16, matching. THE PREDICATE FOLLOWS FROM EVIDENCE RATHER THAN CONVENIENCE and the cell's reasoning is better than the order's: it chose closed over the order's own 'disarm empty' framing because disarm is a sub-object present only on v1-v2 rows and absent by convention on v3+, so keying on its emptiness would CONFLATE SCHEMA DRIFT WITH DISPOSITION, while closed is the one boolean every row of every round carries. That is a cell correcting its issuer on a measurement definition, with the reason stated. EVERY next_act IS AN ACT SOMEBODY COULD TAKE: 0 of 23 entries are missing next_act or basis, each names a seat (18 to 2.0.0_SA_COO~G, 5 to 1.0.0_SA_CTO) and a concrete act, and the routed ones quote or paraphrase the row's OWN remedy rather than inventing one. THE TWO OWNER FLAGS ARE CORRECT: W2-S37's surface is not this project's, and S42's owed act sits on a round-N analysis, which is the CTO's."
+  }
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S45",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S46",
+   "this seat's recomputation over walk_r7/contract.json: 575 rows -> 18 distinct node_type, equal to the record's emitted set",
+   "this seat's MATCHED-PAIR gate run at HEAD c6ac61b33a: identical bytes REFUSE at workflows/legacy_transform/blackdiamond-49financial/scratch-probe.json (rc=1) and PASS inside 20260918T011619Z-8db9eb1/ (rc=0)",
+   "naming-gate.py:96 RUN_ARTIFACT_RE and :719-721 _is_record_tree, read at the bytes; gate_pin 5fd4251792 IS the current HEAD of the gate",
+   "this seat's re-parse of REMEDIATION_v1.md: 35 fences / 35 unique ids / 23 closed==false, set-equal to the record's rows[]"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S23",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T14:20Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "W2-S45 GRADUATED: the worker was RIGHT that G1R7-AC1 could not be satisfied by a correct artifact, and I verified the claim under it at my own instrument -- the gate genuinely no longer refuses those five paths, and it genuinely still refuses the same literal one directory level away.",
+ "spec_asserts": "Every criterion on an order can be satisfied by a correct artifact from the cell it is addressed to.",
+ "world_is": "This one could not, and the cell said so instead of working around it. AC1 required a NON-EMPTY refused set and its checker hard-refuses an empty one, while the gate at HEAD refuses none of the five DEC-9 paths -- so the criterion was unsatisfiable BY CONSTRUCTION. \u2b50 WHAT MAKES THIS ROW MORE THAN A COMPLAINT IS THAT IT CARRIES THE MEASUREMENT: it names R-35's commit 5fd4251792, the predicate at naming-gate.py:96 and :719-725, and establishes by git merge-base --is-ancestor that the fix predates round 7's cut pin -- so W2-S1 HAD ALREADY BEEN REMEDIED AND SAT ARMED FOR TWO DAYS WITH NOBODY NOTICING. That is S44's class, measured a second time in this project inside one round. \u26a0 I DO NOT DISARM W2-S1 AND THIS ROW DOES NOT: its disarm owner is 1.0.0_SA_CTO, the issuer sent the notice (98250) and correctly declined to disarm it, and neither of those acts is mine to take. THE ISSUER'S ARM REPAIR IS SOUND AND I TESTED THE PART THAT COULD HAVE BEEN A WEAKENING: admitting branch (B) -- the gate no longer refuses -- only counts with a SCOPING CONTROL, because without one a scoped carve-out and a gate gone silent everywhere read identically. I ran that control as a matched pair and it holds.",
+ "adjudicates": [
+  "LGIC_LGCTFM-W2-S45"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W2-S45",
+   "this seat's matched-pair naming-gate run: REFUSE rc=1 vs PASS rc=0 on identical bytes",
+   "naming-gate.py:96 / :719-721 at HEAD, and 5fd4251792 as the gate's current HEAD commit",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carriers, minted in this commit"
+  ]
+ }
+}
+```

@@ -950,3 +950,80 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Round 7 L9 carriers -- S45, S46, W2-S45
+
+```json
+{
+ "id": "LGIC_LGCTFM-S45",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE CTO'S STANDING IDENTITY BAR APPLIED TO ROUND 7 BY SUBTRACTION OVER ALL THREE CELLS, FINDING IT BINDS ZERO OF THEM -- and recording WHY each is exempt rather than leaving the exemption unstated, because an unstated exemption and an unnoticed violation read identically.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S45",
+  "the bar as issued: 1.0.0_SA_CTO @606e7d14ce, msg 98240",
+  "this seat's own separate application of the same bar to LGIC_ENFORCE round 14's nine criteria"
+ ],
+ "remedy": "NOTHING IS OWED AND THE ROW IS THE REMEDY. \u2b50 THE TRANSFERABLE PART IS THE SHAPE, NOT THE RESULT: a bar that binds NOTHING produces no artifact unless someone writes the zero down, so the exemption is invisible exactly when it is correct. Subtracting over the declared population and printing 'binds 0 of 3' is what makes a later reader able to tell 'we checked and it does not apply' from 'nobody looked'. \u26a0 AND I RECORD MY OWN NEAR-MISS ON THIS ROW RATHER THAN LEAVE IT IN A MESSAGE: the round-14 analysis credited this act to me, it is 2.0.0_SA_COO~G's entirely, and the correction is at HEAD as S47 -> S48. What I did was the same subtraction on a different project, in prose, with no carrier -- which is why the two were easy to conflate.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S46",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ISSUER VIOLATED AN OPEN REMEDIATION ROW IT OWNS, IN THE SAME ROUND WHOSE CELL ROUTED THAT ROW. W1-S37's remedy is 'STOP QUOTING A DERIVED TOTAL IN AN ORDER -- the run prints its own', it is OPEN with owner 2.0.0_SA_COO~G, and all three round-7 orders quote a derived arm count. FOUND BY THE CELL THE ROW WAS ROUTED TO: 0.9.0_WK_LGIC_LGCTFM~3 surfaced it inside a basis field while routing W1-S37 -- the routing cell reading its own subject and finding its issuer in breach of it. It did not halt and did not file BLOCKING, correctly: its order said route.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S46",
+  "W1-S37's remedy text, quoted verbatim in the row",
+  "the three round-7 orders, each quoting the same derived count, 3 of 3 over the round's own denominator"
+ ],
+ "remedy": "\u2b50 THE HAZARD IS THAT THE NUMBER WAS RIGHT. It matched at the cut, so nothing failed and nothing would have failed until the arm count moved -- at which point three orders and three worker prompts would have gone stale at once, each still reading as an authoritative expectation. A SECOND CARRIER OF A FACT IS NOT WRONG UNTIL IT IS, AND THEN IT IS WRONG SILENTLY -- which is why this row is worth more than the correction it names. THE FIX IS FORWARD, NOT RETROSPECTIVE: do not edit three landed orders a worker has already read; stop quoting a derived cardinality in the NEXT order and pin the verdict token and the properties that must hold instead, letting the run print its own count. That is W1-S37's own remedy text, which is why this row routes to it rather than restating it. \u26a0 THE ROW IS THE ISSUER'S OWN AND THE CLOCK STAYS THERE: disarm owner 1.0.0_SA_CTO on the investigation row, remediation owner 2.0.0_SA_COO~G here; this disposition moves neither.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W2-S45",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "A CRITERION NO CORRECT ARTIFACT COULD SATISFY, FILED BY THE CELL IT WAS ADDRESSED TO. G1R7-AC1 required a NON-EMPTY refused set and its checker hard-refuses an empty one; the gate at HEAD refuses none of the five DEC-9 paths because R-35 (5fd4251792) exempts the run-directory shape. The worker measured 0 of 5, filed BLOCKING, and did not flip its order.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W2-S45",
+  "naming-gate.py:96 RUN_ARTIFACT_RE and :719-721 _is_record_tree, read at the bytes by this seat",
+  "this seat's matched-pair control: identical bytes REFUSE one directory level above the run dir (rc=1) and PASS inside it (rc=0)"
+ ],
+ "remedy": "THE ARM REPAIR IS APPLIED AND EXERCISED @13bbe12343 and I tested the half that could have been a weakening. Branch (B) -- 'the gate no longer refuses' -- is admissible ONLY with why_zero, the excluding predicate at file:line, AND A SCOPING CONTROL, because \u26d4 WITHOUT THAT CONTROL A SCOPED CARVE-OUT AND A GATE GONE SILENT EVERYWHERE READ IDENTICALLY. I ran it as a matched pair -- same filename, same bytes, one directory level apart, opposite verdicts -- and it holds. \u2b50 THE STANDING SHAPE, which is what this row is worth beyond its round: WHEN A CRITERION ADMITS 'THE THING NO LONGER HAPPENS' AS A PASSING BRANCH, THAT BRANCH NEEDS A CONTROL PROVING THE DETECTOR STILL FIRES SOMEWHERE -- an absence is only evidence if the instrument that failed to find it can be shown still working. \u26a0 W2-S1 IS NOT DISARMED BY THIS ROW OR BY ME: its clock is 1.0.0_SA_CTO's, the issuer sent the notice and correctly declined to take it, and the measurement here is what that seat needs to act on, not a substitute for its act.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
