@@ -871,3 +871,30 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Round 5 L9 -- carrier for LGIC_LGCTFM-S42
+
+```json
+{
+ "id": "LGIC_LGCTFM-S42",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A RESULT REPORTED AS A FALSIFICATION MEASURED A DIFFERENT PREDICATE. The cell hunted 'bare s3:, head empty after stripping the prefix' and found 0 across 6 of 6 runs -- correct. The analysis it is reported as falsifying claimed a malformed SINGLE-COLON s3: scheme, which exists: 1 row, 's3:blackdiamond/49f/_ops/pull_state.json', re-measured by this seat across all 6 runs. The cell's own result sentence concedes it -- 'a genuine s3:<key> value with a non-empty body'.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S42",
+  "BUCKETLESS_S3KEY_R5.json hunt_bare_s3_colon, predicate stated verbatim",
+  "3.0.0_SA_CVO's 6-run sweep at HEAD ccbf4ac3cb"
+ ],
+ "remedy": "NOTHING IN THE ROUND CHANGES AND NO ARTIFACT IS REWRITTEN -- the cell measured what it said it measured and said so precisely. What is owed is that the round-5 ANALYSIS does not carry forward 'the analysis's characterisation is falsified' as a finding, because the next reader will inherit a retraction of a true statement. The 24th row IS single-colon-prefixed and IS firm-prefixed; those are two descriptions of one row, not competing claims. \u2b50 THE TRANSFERABLE HALF: A FALSIFICATION IS ONLY A FALSIFICATION IF THE PREDICATE MEASURED IS THE PREDICATE CLAIMED -- and a printed denominator beside a substituted predicate reads as decisive, which is why this one travelled from the cell's careful artifact into a hand-off sentence that overstates it. COST: one read of the original claim's wording before reporting a refutation of it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v5"
+ },
+ "closed": false
+}
+```

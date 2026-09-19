@@ -716,3 +716,39 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Round 5 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S19",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T08:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "LGIC_LGCTFM ROUND 5 L9 -- M2R5-AC6 PASS. One cell, one judgment criterion, counted by subtraction over the round-5 family. The cell filed NO rows and stated why, which after a round where four of the issuer's criteria were unsatisfiable is evidence about the CUT and not only about the cell.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Channel at my write time: 60 items, 0 held on either predicate before this row, 0 open orders of 25. The round's product is a measurement and it holds: 24 of 154 S3Key rows resolve to no bucket, two producers at named code sites, zero unattributed, both attributed by instruments RUN. I add one row of my own (LGIC_LGCTFM-S42) on the reported falsification, which is a predicate substitution rather than a contradiction -- the cell's artifact is precise and its own result text distinguishes the shapes correctly; the hand-off's summary is the part that overstates.",
+ "grades": [
+  {
+   "criterion": "M2R5-AC6",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-m-2-r5.which-producer-writes-a-bucketless-key.proof_of_spec.json@a2b05d19c1",
+   "verdict": "PASS",
+   "reason": "THE CAUSES ARE GENUINELY DISTINGUISHED, NOT MADE TO AGREE, AND THE TWO-SITES-ONE-ROOT SENTENCE -- the one the issuer asked me to press on -- IS THE CAREFUL VERSION RATHER THAN THE TIDY ONE. It does not say 'one cause' and it does not say 'two independent causes': it says two distinct code sites WRITE the value, and both trace to one upstream input defect (portal-stitch S3Key ingestion leaving arn empty when it cannot resolve a single firm-writer bucket), with the SHAPE difference explained as a downstream branch on candidate count rather than as a second external cause. That distinction is load-bearing and the record draws it explicitly -- 'a repair that fixed the upstream ingestion could plausibly resolve both at once' -- which is the fact a premature single-remedy cell would have hidden, and it is why the CTO cut this as a MEASUREMENT cell. ON THE SECOND HALF, EVERY how_it_was_attributed NAMES AN INSTRUMENT THAT WAS RUN, not a reading of the path already on the page: comp-find --corpus aws on each of the 23 bare keys (three same-name candidates each), comp-kuzu MATCH with the Cypher printed, confirming source='portal-stitch' / origin_reason='ambiguous-across-firms' / arn='' for all 23; and for the single firm-prefixed row a comp-kuzu MATCH plus the code read at :929-930. Zero unattributed, with the escape unused and the reason stated. \u26a0 ONE FINDING, FILED AS LGIC_LGCTFM-S42 AND NOT MOVING THIS VERDICT: the round's reported FALSIFICATION of the analysis's 'malformed single-colon s3:' characterisation is a PREDICATE SUBSTITUTION. The cell measured 'bare s3:, head empty' (0 of 6 runs, correct) against an analysis claim about a SINGLE-COLON SCHEME (1 row, which I re-measured myself and which the cell's own text concedes as 'a genuine s3:<key> value'). The cell's artifact is precise; the hand-off's summary of it is stronger than the measurement supports."
+  }
+ ],
+ "adjudicates": [
+  "LGIC_LGCTFM-S42"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's own sweep of all 6 run contracts and read of BUCKETLESS_S3KEY_R5.json at HEAD ccbf4ac3cb",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

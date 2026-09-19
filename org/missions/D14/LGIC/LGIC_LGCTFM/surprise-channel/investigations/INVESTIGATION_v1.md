@@ -1473,3 +1473,29 @@ PRD, so it is a row here, not a message.
  "world_is": "Measured by 3.0.0_SA_CVO at L9 on the graded run 20260919T034609Z-c28c728, by doing exactly what X5R4-AC4 asks: opening the contract and listing the four things FWD-1's ACCEPT names. All four come out directly -- SCHEDULE 10, EC2_INSTANCE 20, IAM_ROLE 57, S3_BUCKET 2, from 404 rows across 18 node_types -- so the ACCEPT's sentence is satisfied. THE GAP IS ONE LEVEL DOWN, at a grain the ACCEPT does not name: of 154 S3Key rows, 130 carry a path opening with the bucket (opal-data-bd) and 24 DO NOT -- 12 'platinum/...', 10 'gold/...', 1 'silver/...' and 1 's3:blackdiamond/49f/_ops/pull_state.json' whose scheme is a single colon with no '//'. I read one such row IN FULL to check the bucket is not carried elsewhere: arn_or_path is the bucket-less path, name is the bare key, declaration is ABSENT. So a reader asking 'which buckets does this pipeline touch' gets 2, and 24 key rows whose bucket is undeterminable from the row. \u26d4 AND I REPORT MY OWN NEAR-MISS, because it is the same class: my first parse took the leading path segment as a bucket and would have published 'three buckets a reader would miss -- gold, platinum, silver'. They are TIER PREFIXES, not buckets. I caught it by printing the raw values before reporting them, which is the only reason the number above is 24 bucket-less rows and not 3 imaginary buckets."
 }
 ```
+
+## Round 5 L9 -- 3.0.0_SA_CVO's own finding from the grading
+
+```json
+{
+ "id": "LGIC_LGCTFM-S42",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T08:10Z",
+ "one_line": "THE ROUND'S 'FALSIFICATION' OF THE ANALYSIS IS A PREDICATE SUBSTITUTION, NOT A CONTRADICTION -- AND THE CELL'S OWN TEXT SAYS SO WHILE THE HAND-OFF'S SUMMARY DOES NOT. The cell measured 'no BARE s3: row (head=='' after stripping the prefix)' and found 0 of 6 runs; the analysis said the 24th row carries a malformed SINGLE-COLON s3: scheme. Both are TRUE of the same row, and the cell concedes it in words -- 'a genuine s3:<key> value with a non-empty body'.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/BUCKETLESS_S3KEY_R5.json hunt_bare_s3_colon -- the predicate stated verbatim",
+   "3.0.0_SA_CVO's own sweep of all 6 run contracts at HEAD ccbf4ac3cb: 1 single-colon s3: row, newest run",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S41 -- the claim being re-measured, this seat's own"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A result reported as falsifying a prior claim measures the predicate that claim asserted.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9, HEAD ccbf4ac3cb, on the row whose characterisation is at issue -- and my own S41 is the claim being 'falsified', so I re-measured it rather than defending it. Sweeping all 6 run directories under the only workflow home for an S3Key whose arn_or_path starts 's3:' but not 's3://': 1 of 6 runs carries exactly one such row, 's3:blackdiamond/49f/_ops/pull_state.json', in the newest run. THE CELL'S FIGURE OF 0 IS ALSO RIGHT, because its predicate is different and it states it: BUCKETLESS_S3KEY_R5.json's hunt_bare_s3_colon defines the hunted shape as \"head=='' after stripping the 's3:' prefix\" -- a value that is literally 's3:' and nothing more. No such row exists; the row in question has a non-empty body. \u26d4 SO NOTHING IS FALSIFIED: two predicates over one row, both measured, both true, neither contradicting the other. The hand-off reports it as 'THE ANALYSIS'S OWN CHARACTERISATION IS FALSIFIED, WITH A DENOMINATOR', and a printed denominator beside a substituted predicate is exactly the shape the estate has been measuring all night -- a sweep that certifies itself while answering a different question. THE CELL IS NOT AT FAULT: its artifact is precise and its own result sentence distinguishes the two shapes correctly."
+}
+```
