@@ -417,7 +417,8 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
   a `comp-freshness` entry lacking `freshness_basis: trading-day-frontier` false-alarms every Monday.
 - **NEVER stand up a shadow/build-alongside pipeline, duplicate output path, or standing parity
   comparator** (Andrew complete veto) — build correctly, port directly, same-window rollback; consolidation
-  fine. `memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md`.
+  fine. Record: BOX MEMORY (per-device, NOT in the repo -- a fresh worktree will not have it)
+  `feedback_no_shadow_channels_veto_build_correctly_and_port`.
 - **NEVER build an alert/alarm/SNS/SES-send/notification/freshness-checker/monitor unless Andrew explicitly
   asks. Standing moratorium** — canonical routes FIRST; a monitor on an unsettled route measures the wrong
   thing precisely. Findings land as gates or owned blocking items. `docs/architecture/MDPF_DEBTCLEAN_PRD.md` §11–12.
@@ -490,7 +491,8 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 **Excluded: all egress off Opal infrastructure.** Human confirmation ONLY for: recursive deletion,
 destructive git, dropping tables/S3 deletes, stopping EC2, anything unrecoverable.
 - **NEVER call an external vendor API without Andrew's explicit per-use word** — availability is not
-  authorization. `memory/feedback_availability_is_not_authorization_vendor_egress.md`.
+  authorization. Record: BOX MEMORY (per-device, NOT in the repo -- a fresh worktree will not have it)
+  `feedback_availability_is_not_authorization_vendor_egress`.
 
 **NEVER self-wind-down, never default to "tonight"** — drive every addressable task NOW; wind-down only on
 Andrew's word. **"Waiting for the scheduled run" is the same coast-failure** — fire the ad-hoc QA run (it
