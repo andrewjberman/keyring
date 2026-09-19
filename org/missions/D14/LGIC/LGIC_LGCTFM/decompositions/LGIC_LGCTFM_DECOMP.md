@@ -924,3 +924,102 @@ the merged trees are recorded in `S36`, `S37`, `S38` and `S39` rather than by ed
   `W1-S25` has a SCHEDULED ARMING -- the day the commit gate's advisory flips -- and is the one that cannot
   be left to be rediscovered; it is named here so the routing is visible from this project's own record.
 - It does **not** move FWD-4, which stays APPLIED on Andrew's own read.
+---
+
+## 18. v1.8 -- THE ROUND-7 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-6 analysis @`ed073a4d48`
+
+**Input.** `1.0.0_SA_CTO`'s round-6 analysis @`ed073a4d48` (msg 98235). **Round 6 STANDS**; `E7R6-AC7`
+PASS accepted; no PRD addendum owed; endpoint outcomes unchanged; scope 0 open of 26 at the cut.
+**The analysis ADOPTED this seat's ranking and MADE the one decision this seat handed up.**
+
+### 18.1 THE CELLS -- 3, AND THE NON-PAIRING NOW BINDS THE CRITERION
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the node-type population | `LT-n-3` | measures which `node_type`s the engine ACTUALLY emits against the schema enum, BY SUBTRACTION both ways -- and decides the fork for nobody | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+| the gate scope | `LT-g-1` | measures WHICH paths `.tools/naming-gate.py` refuses, by which predicate at `file:line`, on what BASIS, with a path it ADMITS | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+| the remediation route | `LT-r-3` | gives every unmoved remediation row a NEXT ACT or an explicit retirement -- and remedies none of them | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+**Levels.** All three at L0. `fanout: 3 slots over 3 cells, cap 8`. No dependency edge: three disjoint
+deliverable directories, three disjoint read surfaces, and **no arm reads a second cell's record.**
+
+⛔ **THE INSTRUCTION THAT SHAPES EVERY CRITERION HERE**, `1.0.0_SA_CTO` verbatim: *"AND 'DO NOT PAIR'
+BINDS THE CRITERION, NOT ONLY THE CELL. `S106` is that instruction defeated one level down: two
+correctly separated cells re-coupled by a shared grading arm that ANDs both."* So the two round-wide
+arms (`r7-vintage-field`, `r7-stale-proofs`) grade **the records PRESENT IN THE CHECKOUT** -- a worker's
+worktree carries exactly its own, the merged tree carries all three -- and an EMPTY population is
+REFUSED rather than vacuously passed. **That is `S106`'s repair carried into the cut instead of
+re-learned after it**, and four of the checker's arms drive that WRAPPER, which is the thing the
+previous round's 28 arms could not see.
+
+### 18.2 `LT-n-3` -- THE MEASUREMENT THAT DECIDES NOTHING
+
+`W2-S2` has been ARMED and BLOCKING since round 2 and rounds 4, 5 and 6 did not move it (`S44`). The
+analysis: *"Cut it as a MEASUREMENT of which node types the engine ACTUALLY emits against the enum's
+33, read BY SUBTRACTION from the emitted set, not by checking the ones anybody remembers ... The fork
+(widen the enum vs refuse at the producer) is decided ON that measurement, not before it."*
+
+BOTH sets are denominators and BOTH differences are recorded: `emitted_minus_declared` (the violation
+class) and `declared_minus_emitted` (**a finding, not a defect claim**). **The arm RE-DERIVES both from
+the record's own lists** and refuses a stated difference the lists do not support -- the one thing a
+reader cannot check without re-deriving it. ⭐ **A ZERO answer PASSES**, with its own positive arm: the
+enum may have moved since round 2, and a bar that only passed on a violation would be an instruction to
+find one.
+
+### 18.3 `LT-g-1` -- THE REFUSAL, PLUS THE CONTROL THAT MAKES IT MEAN SOMETHING
+
+`W2-S1` is ARMED and BLOCKING with **`1.0.0_SA_CTO` as its disarm owner**, so this cell measures and
+proposes no gate edit. Beyond the refused set it records the refusing predicate at `file:line`, a
+`gate_pin` (the gate is another seat's LIVE artifact and moves), and the **REFUSAL BASIS --
+`FILENAME` / `PATH` / `CONTENT`, exactly one -- which is the field that decides whether a RENAME lapses
+the guard silently.**
+
+⛔ **AND AN ADMITTING CONTROL IS MANDATORY: without a path the gate ADMITS, a scoped guard and a gate
+that refuses everything read IDENTICALLY.** The arm also refuses a control whose path appears in the
+refused list.
+
+⚠ **ONE RESIDUAL IS DISCLOSED AT THE CUT RATHER THAN DISCOVERED LATER:** the arm requires a NON-EMPTY
+refused set, so if the gate has since been widened and refuses nothing, **a correct artifact cannot
+satisfy `AC1`.** The order tells the worker to file that BLOCKING instead of manufacturing a refusal,
+and names it as the ISSUER's defect to fix. That is the `S106` lesson applied forward: **a red must
+name the act that clears it, and a red no act of the cell's can clear must say so.**
+
+### 18.4 `LT-r-3` -- THE ROUTE, AND THE INHERITED NUMBER MEASURED BEFORE IT SHIPPED
+
+The analysis made the call this seat handed up: **CENSUS-AND-ROUTE, not fix-them-all** -- *"nineteen
+unrelated remedies in one order"* is not a cell.
+
+⭐ **THE NINETEEN IS AN INHERITED COUNT AND THIS SEAT MEASURED IT AT THE CUT**, over `REMEDIATION_v1.md`,
+denominator **35 rows**: *not closed* = **23**; *not closed AND round <= v4* = 20; *not closed AND
+`disarm` empty* = **19**; *INERT and not closed* = **19**. **Nineteen is real under TWO predicates and
+twenty-three is the broader unclosed set** -- the number is not wrong, it is PREDICATE-DEPENDENT. So the
+arm refuses a record with no stated predicate, and the cell re-measures at its own write time.
+
+⚠ **AND ONE PREMISE OF THE FRAMING IS ALREADY SATISFIED: 35 of 35 rows carry a non-empty `owner`.** So
+"each row gets a named owner" is not the gap -- **THE GAP IS THE NEXT ACT**, and the order says so, so
+the round is not spent re-assigning owners that already exist.
+
+`unroutable` is explicitly admissible with a reason and has its own positive arm: **inventing a next act
+for a row nobody understands is worse than saying so.** The route is EVIDENCE -- the remediation rows
+stay `3.0.0_SA_CVO`'s to write (R-19).
+
+### 18.5 THE NEW BAR THIS ROUND CARRIES
+
+`1.0.0_SA_CTO` adopted `S43`'s carrier over this seat's weaker version: an order permitting an
+out-of-repo instrument names where it LANDS **and its FIXTURES cite the committed measurement each one
+encodes** -- *"an instrument whose fixtures cite nothing is UNGRADEABLE EVEN WHEN PRESERVED PERFECTLY."*
+Its sibling from the same analysis: **the record names every site where the instrument DIVERGES from the
+code it models, and what each divergence ASSUMES** -- round 6's script copied three sites verbatim and
+REWROTE a fourth, and the rewritten site is by construction the interesting one. All three orders carry
+both halves. **No cell here needs an out-of-repo instrument**; each measures the live artifact directly.
+
+### 18.6 FIXED INPUTS
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r7/` -- `R7_BASE.json` (**the ONE CARRIER, S85**; each order
+quotes ONLY its own cell's half) and `check_lt_r7.py`: 5 real arms, **34 self-test arms with 10
+POSITIVE-SATISFIABILITY and 4 driving the WIRING**, ruff clean.
+
+**WIRING AT THE CUT**, and each order states WHICH ACT CLEARS EACH RED: `n3-population`, `g1-scope`,
+`r3-route` and `r7-vintage-field` **FAIL** and are cleared by **that cell alone**; `r7-stale-proofs` is
+**GUARD-SHAPED and reads PASS** with an empty window.
+
