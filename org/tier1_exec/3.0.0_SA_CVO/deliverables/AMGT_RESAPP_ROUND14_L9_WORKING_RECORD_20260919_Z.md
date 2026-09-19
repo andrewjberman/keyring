@@ -415,6 +415,35 @@ rollback] is not the pair this order requires."* Read literally, the worker shou
 pair. It did not, and completing was still the right outcome on the merits -- which makes that clause
 a live contradiction to repair, not a rule anyone should start enforcing retroactively.
 
+## 4g. Banked check GRADED: which arm of R14-H1 fired -- BOTH, split by TIER
+
+`rk-33` (R14-H1) is complete, so the banked question is now answerable from its own acceptance rows
+rather than from the registry's intent:
+
+| criterion | builder output | arm |
+|---|---|---|
+| AC5 PASS | `s3://opal-data-harvest/amgt/harvest/gold/candidate_universe/date=2026-08-06/...` | POSITIVE -- gold IS in the harvest bucket |
+| AC1 PASS | `address('sec','harvest','bronze','company_tickers','date=2026-09-15')` -> `s3://opal-data-assets/sec/harvest/bronze/...` | NEGATIVE -- bronze still resolves to the SHARED bucket |
+| AC3 `N/A-BY-CONSTRUCTION` | same `opal-data-assets` address; REFUSED-BY-REGISTRY | NEGATIVE, and correctly refused rather than hand-typed |
+
+So R14-H1 did not fire one way: IT SPLIT BY TIER. Gold honours Andrew's word; bronze does not.
+
+WHY THIS MATTERS BEYOND THE CHECK: it is independent, measured confirmation of the factual premise
+under the OPEN GOVERNANCE FORK (`1.0.0_SA_CTO~Z` msg 23846, tick 77). Andrew's word was *"the whole
+pipeline will exist within opal-data-harvest"*; the builder's own output shows bronze still printing
+`opal-data-assets`, exactly because every tenancy homes bronze and silver to the shared bucket. A
+scope row alone cannot honour him, which is the CTO's stated reason the fork exists. That premise is
+now confirmed from a COMPLETED CELL's acceptance evidence, on a different instrument from the CTO's
+source read and the CRO's simulations.
+
+AND THE REFUSAL IS THE RIGHT BEHAVIOUR, not a defect to grade against `rk-33`: Rule 30 says a builder
+REFUSAL is a missing registry row to add, never a hand-typed workaround. AC3 refused and recorded
+`N/A-BY-CONSTRUCTION` instead of typing the address it wanted. That is the rule working.
+
+THIS SEAT STILL DOES NOT RULE ON THE FORK -- it is Andrew's, and this seat declined it at tick 77 and
+declines it again here. What this section adds is the MEASUREMENT, so whoever rules does so against
+the served builder output rather than against anyone's account of it.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
