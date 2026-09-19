@@ -6559,7 +6559,79 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not this order's: likely a role grant on the evidence bucket or its KMS key (the class to name needs S91's sink, or a role-scoped diagnostic). Neither an IAM nor a source change is in this order's bounds. A receipt that does not exist should read NOT_FOUND, the handler's own designed refusal."
-  }
+  },
+  {
+  "id": "IRPT_BCKEND-W1-S34",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-19T19:05:11Z",
+  "one_line": "This order's own arm (a) census, run to end the S96/S98/S103 class, finds the SAME class a FOURTH, FIFTH and SIXTH time in the module this order does NOT touch: _scope/resolve.py's _server_only_properties() (staged flat into directory-search, narrative, export, performance, ops/status, and duplicated as holdings' own tracked resolve.py) resolves ResolvedScope.schema.json at _HERE/../_contracts, which is one directory above /var/task and exists in NEITHER the deployed zip NOR the irpt-common layer's 5-contract list, on ANY of the 6 functions -- with no env override at all (unlike DirectoryEntry's IRPT_CONTRACTS_DIR check). ops/status.py's own _server_only_properties()/_load_schema() has the identical construct for StatusEnvelope.schema.json, and ops/manifests.py's PATH_MANIFEST_PATH for PATH_MANIFEST.json -- both also checkout-only, one level above /var/task, on irpt-status. The resolve.py case degrades in the UNSAFE direction (except (OSError, ValueError): return [] -- no fields stripped beyond the hardcoded {'vendor_ids'} floor); the status.py case degrades SAFELY (falls back to the correct literal ['internal_correlation_id']).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's arm (a): 'every RUNTIME FILE OPEN in its packaged Python members' censused and classed STAGED/ENV-RESOLVED-TO-LAYER/MISSING, 'so the class ends'.",
+  "world_is": "infra/aws/lambda/investor-reporting/_scope/resolve.py:71-73,503-510 @19ccf82226 (CONTRACTS_DIR = os.path.normpath(os.path.join(_HERE, '..', '_contracts')); RESOLVED_SCOPE_SCHEMA = CONTRACTS_DIR/ResolvedScope.schema.json; no os.environ.get anywhere in this module) -- staged as resolve.py (packaged_as) into irpt-directory-search, irpt-narrative, irpt-export-render, irpt-performance-adapter and irpt-status per infra/aws/lambda/ci/lambda-source-map.json's staged_from arrays (all 5 read this run), and duplicated at infra/aws/lambda/investor-reporting/holdings/resolve.py:503-510 (own tracked copy, same construct). infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json's committed contracts[] carries exactly 5 names (Performance/Narrative/Render/ExportBundle/ExportReceipt) -- 0 of 5 is ResolvedScope, read this run. ops/status.py:60-61,84-98 @19ccf82226 (CONTRACTS_DIR = os.path.normpath(os.path.join(_LAMBDA_ROOT, '_contracts')), _LAMBDA_ROOT = dirname(_HERE); no env read) and ops/manifests.py:46 (PATH_MANIFEST_PATH = os.path.join(_LAMBDA_ROOT, 'PATH_MANIFEST.json')) -- ops/lambda.tf carries no IRPT_CONTRACTS_DIR and layers=[] (read this run). Reproduced by this order's battery (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rtf_13.py, arm (a)), IB-rtf-13_R70-AC1_battery_output.txt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py:71-73,503-510 @19ccf82226",
+      "infra/aws/lambda/investor-reporting/holdings/resolve.py:503-510 @19ccf82226",
+      "infra/aws/lambda/investor-reporting/ops/status.py:60-61,84-98 @19ccf82226",
+      "infra/aws/lambda/investor-reporting/ops/manifests.py:46,216-219 @19ccf82226",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.{irpt-directory-search,irpt-narrative,irpt-export-render,irpt-performance-adapter,irpt-status}.staged_from (resolve.py present in all 5), this run",
+      "infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json .contracts[] (5 entries, none named ResolvedScope), this run",
+      "infra/aws/terraform/investor-reporting/ops/lambda.tf (layers=[], no IRPT_CONTRACTS_DIR), this run",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rtf_13.py arm (a) output, this run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not this order's to fix: BOUNDS restrict the only deploy to irpt-directory-search and forbid a _scope/, _ids/, directory/ SOURCE edit; a remedy here (stage ResolvedScope.schema.json + StatusEnvelope.schema.json + PATH_MANIFEST.json the way DirectoryEntry is staged here, or add them to the irpt-common layer) touches 6 of 7 functions' manifests/env and is a wider cell than this one. Choices for the issuer: (i) a follow-on cell mirroring this order's own shape for the three contracts across the 6 affected functions; (ii) add the three to the irpt-common layer instead (fewer manifest edits, one build); (iii) accept resolve.py's [] fallback as the intended behavior and only fix status.py/manifests.py's reachability question. R70-AC2's own judgment question (why three passes were needed to find one class) is answered in part by this row: the class recurs OUTSIDE the population any single pass's <paths> grant reaches."
+},
+  {
+  "id": "IRPT_BCKEND-W1-S35",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-19T19:05:11Z",
+  "one_line": "export/package.py's candidate_checkouts() (packaged as package.py in irpt-export-render's own files[]) hardcodes Andrew's own device-specific absolute paths as fallback candidates for a portal checkout ('/c/Users/AndrewBerman/Desktop/ajb_workspace/portal', 'C:/Users/AndrewBerman/Desktop/ajb_workspace/portal') -- paths that can never exist on a deployed Lambda -- so on the live irpt-export-render runtime every candidate in the list is absent (IRPT_PORTAL_CHECKOUT is unset in export/lambda.tf; the two hardcoded literals are this laptop's own filesystem; the final ancestor-walk candidate needs 6 levels above /var/task, which has 2) and package.locate() unconditionally raises PackageUnavailable in production -- a MISSING open with no candidate that can ever resolve in the deployed zip, and a live instance of the class CLAUDE.md's device-specific-logic rule names ('NEVER write device-specific logic ... DERIVE, dont hardcode').",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's arm (a) census population includes every runtime file open in the 7 functions' packaged Python members, classed STAGED/ENV-RESOLVED-TO-LAYER/MISSING.",
+  "world_is": "infra/aws/lambda/investor-reporting/export/package.py:61-110 @19ccf82226 (candidate_checkouts(): env IRPT_PORTAL_CHECKOUT, then the two hardcoded absolute paths above, then a 6-level ancestor walk from __file__ checking for a 'portal' subdirectory; locate() raises PackageUnavailable('no portal checkout carries ...') when every candidate's manifest.is_file() is False). infra/aws/terraform/investor-reporting/export/lambda.tf's environment_variables (read this run) sets no IRPT_PORTAL_CHECKOUT. 'package.py' is declared in irpt-export-render's files[] (infra/aws/lambda/ci/lambda-source-map.json, read this run) -- it ships. CLAUDE.md Rule (HARD STOPS section): 'NEVER write device-specific logic into ajb_workspace/portal -- DERIVE, dont hardcode ... Direction ratified, remediation NOT authorized -- surface, dont chase.' (LD-0405). Reachability from a currently-wired export-render route was NOT independently confirmed this pass (export/entry.py's ROUTES table was not re-read for a package/locate-triggering operation).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/package.py:61-110 @19ccf82226",
+      "infra/aws/terraform/investor-reporting/export/lambda.tf environment_variables block (no IRPT_PORTAL_CHECKOUT), read this run",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-export-render.files[] includes 'package.py', read this run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not this order's to fix (export/package.py is outside this order's <paths>, and this order's BOUNDS name only the directory root's manifest/env). Two independent questions for the issuer: (1) is package.locate() reachable from any WIRED export-render route today, or only a diagnostic action; (2) the device-specific literal is the LD-0405 class regardless of reachability and its remedy (git rev-parse --show-toplevel, or an explicit required env with no repo-relative fallback) is a decision, not something this row makes."
+},
+  {
+  "id": "IRPT_BCKEND-W1-S36",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-19T19:05:11Z",
+  "one_line": "_keys/keys.py:verify_against_layout(layout_path) is a runtime-open call site (io.open(path)) present in every one of the 7 serving functions' copies of keys.py (flat in irpt-directory-search/irpt-intake-poller/irpt-status; via the irpt-common layer's python/keys.py in irpt-narrative/irpt-performance-adapter/irpt-export-render/irpt-holdings), but it takes a caller-supplied layout_path with no static default and this order's census sweep (Grep, path=infra/aws/lambda/investor-reporting) found exactly ONE match for 'verify_against_layout(' -- its own def line -- across the whole tree: 0 call sites in any shipped handler, entry point or non-test module. It is excluded from the STAGED/ENV-RESOLVED-TO-LAYER/MISSING three-way count because it has no static target to classify, not because it was overlooked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "This order's arm (a): 'every RUNTIME FILE OPEN in its packaged Python members' censused, 'n of n opens per function classed STAGED/ENV-RESOLVED-TO-LAYER/MISSING'.",
+  "world_is": "infra/aws/lambda/investor-reporting/_keys/keys.py:582-591 @19ccf82226 (def verify_against_layout(layout_path): ... with open(layout_path...)). Grep tool census, this run, path=infra/aws/lambda/investor-reporting, pattern 'verify_against_layout\\\\(': 2 matches total -- the def itself (:582) and one COMMENT citing it (:108) as documentation of a DIFFERENT function's own declaration mechanism; 0 call sites.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_keys/keys.py:582-591 @19ccf82226",
+      "Grep tool census, this run, path=infra/aws/lambda/investor-reporting, pattern 'verify_against_layout\\\\(': def line + 1 comment reference, 0 call sites"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for completeness of this order's arm (a) denominator (it explains why one enumerated call site sits outside the three-way classification), not a defect: an unreachable helper with a caller-supplied path is inert by construction."
+}
 ]
 ```
 
