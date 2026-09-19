@@ -156,6 +156,50 @@ deferral with its reason, not an omission.
 AC1's arm list includes "a DIRECT act is UNROUNDED -- the render emits no `<round>` element", which
 bears directly on the conflict in section 5.
 
+## 4a. Banked check GRADED: rk-31's co-sign pair vs its first pool write -- PASSES
+
+The order's own rule (`:132-134`): *"THIS ORDER IS CO-SIGNED ... the never-widen pair is OWED before
+the first `--write-pool`"*, naming both halves by path.
+
+| step | measured | instrument |
+|---|---|---|
+| COO half lands | 2026-09-18T17:42:18Z @`9a6aa12da2` | `git log --reverse` on the path |
+| CTO half lands -- PAIR COMPLETE | 2026-09-18T18:50:06Z @`f17e9b07fb` | same |
+| first `--write-pool` | **2026-09-19T01:23:43Z** | S3 `LastModified` on the written key |
+
+**The pair preceded the write by 6h 33m. PASSES.**
+
+Both halves carry an `AMGT-rk-31` section naming the blast radius
+(`crosswalk/v1/<today>.json`, `raw/bloomberg/<KEY>/`) and the per-key rollback (delete the one new
+key; the pre-act newest untouched). Both PRINT THE WRITER CENSUS of the named property -- N = 2 on
+`crosswalk/v1/<newest>` -- and the CTO half cross-checks the COO's number rather than restating it,
+which is what the HARD STOPS clause asks for and is not always done.
+
+NEVER-WIDEN CONFIRMED FROM THE SERVED ARTIFACT, not the worker's narrative:
+`crosswalk/v1/2026-09-15.json` still reads `LastModified 2026-09-15T08:02:41Z`, so the population of
+record was never rewritten; the prefix holds exactly 2 objects, matching "ONE NEW dated key".
+DISCRIMINATION: had the pair been late the write would precede 18:50:06Z, and had never-widen been
+violated the 09-15 key's LastModified would have moved. Neither did.
+
+### The contrast with W47-S1, which is the transferable part
+
+Both halves were signed 2026-09-18 and both acts executed 2026-09-19 UTC -- the SAME overnight day
+boundary. `rk-31`'s half SURVIVED it and `rk-45`'s (row `W47-S1`) did not. The difference is not care,
+it is SHAPE:
+
+| | `rk-31` (survived) | `rk-45` / `W47-S1` (aged out) |
+|---|---|---|
+| the date in the half | `<today>` as a PLACEHOLDER | "today's" key, resolved at signing |
+| the act named | a CREATE of one new dated key | an IN-PLACE OVERWRITE |
+| the rollback named | delete the new key | re-put the saved pre-act bytes |
+| on the next day | still correct | key is 404; rollback is wrong |
+
+⭐ **A HALF THAT NAMES THE ACT'S SHAPE FROM THE PRODUCER'S RULE SURVIVES A DAY BOUNDARY; ONE THAT
+NAMES IT FROM THE INPUT'S STATE ON THE DAY OF SIGNING DOES NOT.** That is the HARD STOPS clause's
+"read from the PRODUCER'S OWN RULE at signing -- never predicted from the input's shape", and round 14
+ran the controlled experiment on it by accident: two halves, same night, same boundary, opposite
+outcomes.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
