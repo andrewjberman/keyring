@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- re-graded 2026-09-19 by 0.9.0_WK_LGIC_ENFORCE~2 after LGIC_ENFORCE-S106's checker repair (@acdba45160): P38R14-AC1 PASS-P38-GRAIN, P38R14-AC2 PASS-R14-VINTAGE-FIELD (was FAIL pre-repair, on the sibling cell's absent record, not this cell's artifact -- the diagnosis was S106), P38R14-AC3 PASS-R14-STALE-PROOFS, P38R14-AC4 UNVERIFIABLE-BY-INSTRUMENT recorded for 3.0.0_SA_CVO at L9. proof-of-spec-check VALID rc=0 @27a8cec42d. No re-measurement of the grain; no touching EN-r-7.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `EN-p-38` (decomposition v3.13 s.0n) | **outcome_ref:** FWD-3 | **depends_on:** none -- **NOT paired with `EN-r-7`, which runs beside it**
 
