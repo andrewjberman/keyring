@@ -4408,3 +4408,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "world_is": "Measured by 3.0.0_SA_CVO at L9 at HEAD b93693e3b7, on the whole suite rather than on selected tests. REPRODUCED INDEPENDENTLY: unmutated, 2 failed / 91 passed with the two hand-stale worked cases as the failing set; under my own blunt mutant installed as a pytest plugin on sys.modules['opal_naming'], 10 failed -- 8 KILLED, and test_r3_bd_left_in_the_function_is_spelled_blackdiamond IS in the kill set, so the round-10 test is killable exactly as the round claims. An AST census with a DECORATOR-INCLUSIVE span (the W1-S91 repair's own rule) over 38 test functions finds 0 still reaching the by-path copy only, confirming 33 -> 0. TWO PRECISION POINTS THE ROUND'S NUMBERS DO NOT CARRY. (1) A probe at sessionfinish reports sys.modules['opal_naming'] present=FALSE in the ordinary run and TRUE only under substitution -- so 'resolve the shipped module 2 -> 36' describes REACHABILITY UNDER SUBSTITUTION, not what an ordinary run resolves; the fallback to the by-path copy is what executes normally. That is correct by design (the suite deliberately needs no sys.path entry) and is worth stating because the figure reads as a property of every run. (2) THE FILE NOW HAS TWO CONSUMER-BINDING HELPERS: _shipped_grade() from round 11 and _shipped_lib() from round 12, both resolving sys.modules.get('opal_naming', on). Both are correct and my mutant kills tests bound through each. But my own first census keyed on _shipped_lib() classified my two round-11 probes as 'neither' -- a classifier blind to a shape it did not anticipate, which is W1-S91's class one level up, committed by this seat while grading W1-S91."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S93",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T06:01Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S55's REMEDY IS ALREADY IN BOTH ARTIFACTS AND ONLY LOOKS ABSENT BECAUSE THE FIX IS INVISIBLE: check_ln_r4.py:399 and check_en_r2.py:346 each carry a REAL ESC BYTE in the strip pattern, which every terminal read renders as nothing. This seat came within one assertion of 'repairing' two already-correct files on the strength of that rendering.",
+ "spec_asserts": "A remedy present in an artifact is legible to the seat that owns the row.",
+ "world_is": "Measured by 2.0.0_SA_COO~G at HEAD, by running EACH FILE'S OWN PATTERN rather than a retyped copy of it. Both files contain exactly ONE 0x1b byte, and it sits in the strip pattern: repr of check_ln_r4.py:399 is out = re.sub(r\"<ESC>\\\\[[0-9;]*[A-Za-z]\", \"\", r.stdout + r.stderr) and check_en_r2.py:346 is the same shape. Extracted from the file and compiled, each pattern strips real coloured pytest output to leave 'FAILED lib/tes...' and yields 1 anchored ^FAILED match. THE REMEDY S55 ASKS FOR IS THEREFORE PRESENT, and the arm is sound in the direction that matters. THE NEAR-MISS IS THE POINT AND IS RECORDED RATHER THAN QUIETLY AVOIDED: a `sed` read of both lines displays them WITHOUT the ESC, indistinguishable from the defective form, so this seat built a positive control against a pattern IT HAD TYPED ITSELF -- r\"\\\\[[0-9;]*[A-Za-z]\" -- watched it return 0 matches, and concluded the files were broken. The edit was written and did not land only because the replacement's `old` string failed its own equality assertion; `git status` is clean and nothing was modified. THE DISCRIMINATOR WAS ONE repr() OF THE LINE AND A BYTE COUNT, and it inverted the verdict. A CONTROL BUILT ON A RETYPED COPY OF THE THING IT GRADES MEASURES THE COPY: that is the same class as this project's four arm defects tonight, one level down, and it aimed at a file that was already right.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "byte count: check_ln_r4.py and check_en_r2.py each hold exactly one 0x1b, in the strip pattern",
+   "repr of each line prints the ESC where sed renders nothing -- the two reads disagree and only one is the bytes",
+   "each file's OWN pattern, extracted and compiled, strips real coloured pytest output to 1 anchored ^FAILED match",
+   "git status clean: the near-repair never landed, refused by its own old-string assertion",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md#LGIC_ENFORCE-S55"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
