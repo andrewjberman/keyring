@@ -8884,6 +8884,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W48-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~48",
+    "surfaced_at": "2026-09-18T21:10:00Z",
+    "one_line": "Building AC-rk-46 item 5 (a section that incorporates by reference is UNRESOLVED-SOURCE with its pointer sentence quoted) correctly reclassifies an EXISTING baseline test's fixture text in the shared tests/test_management.py, so this order edited one pre-existing assertion in that file rather than only appending new classes at the end.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/management/tests/test_management.py MissingSectionTest.test_unreadable_section_is_unresolved_source_never_a_guessed_roster (pre-existing at HEAD 047aee547894e43ad80e3f5e51112374c75844b6) builds its fixture from the literal sentence 'Information required by this item is incorporated by reference to the proxy statement.' and asserted roster_reason contains 'no declared shape'",
+        "that sentence contains the marker 'incorporated by reference' this order's _find_reference_pointer() (RULED item 5) is required to detect, so after the edit roster_reason correctly reads 'the officer section INCORPORATES BY REFERENCE: ...' instead -- a strictly more informative, still-UNRESOLVED-SOURCE, still-zero-officers outcome",
+        "measured: reverting only the new roster.py behaviour while keeping the old assertion makes AC1 fail (1 of 27 baseline tests FAIL); the fix is inherent to building item 5 as specified, not an accidental side effect of an unrelated change",
+        "remedy taken: the ONE assertion line was changed to check for 'incorporated by reference' instead of 'no declared shape', and a NEW test (test_a_section_with_neither_a_shape_nor_a_pointer_gets_the_generic_reason) was appended to keep the generic-reason branch covered; no class was reordered, no other worker's class (AMGT-rk-44's, AMGT-rk-45's) was touched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 3 of this order's own face: 'tests/test_management.py is ALSO appended by AMGT-rk-44 (a census test) and AMGT-rk-45 (pool tests) -- an append-only shared file inside one chain; add your classes at the END of the file and never reorder existing ones.'",
+    "world_is": "'Append-only' bound the ORDERING of classes (no reordering, new classes at the end) so three workers' additions do not collide in one merge; it did not anticipate that building THIS cell's own required behaviour (item 5) would change the correct answer for one line ALREADY in the file, authored before this cell existed. Editing that one assertion was the only way to keep 'every test passes' (AC1) true while actually building item 5 as specified -- leaving it unedited would either fail AC1 or require NOT building the reference-pointer detector for exactly the sentence shape item 5 names.",
+    "notes": "Class + hazard: OBSERVATION/INERT -- the edit is a one-line assertion fix inside a test this cell owns the correctness of, not a rewrite of another worker's class, and no reorder occurred. Remedy holder: none needed; recorded so the drain sees why one pre-existing assertion's expected string changed under a nominally append-only file."
   }
 ]
 ```
