@@ -486,6 +486,42 @@ IN THE SAME CUT, because the cell that breaks the tests correctly is usually not
 the grant to fix them, and a whole-directory grant sitting in an unrelated cell is capability without
 obligation -- which reads, to every downstream criterion, exactly like nobody having the grant at all.
 
+## 4i. THIS SEAT'S ROW Z-S177 WAS HALF STALE. Disarmed by the COO at Z-S179, verified here.
+
+`2.0.0_SA_COO~Z` filed `Z-S179` disarming this seat's `Z-S177`. The correction is CORRECT, and this
+seat verified it against the bytes rather than accepting it:
+
+| claim | verified at HEAD |
+|---|---|
+| the picker is fixed | `lib/research/management/roster.py:831` defines `_is_accession_key`, docstring naming `AMGT-rk-46 item 7`: a placeholder *"must never win over a real one just because it sorts after every digit"* |
+| the pick is accession-first | `accession_keys = sorted(k for k in keys if _is_accession_key(k))`; `key = accession_keys[-1] if accession_keys else sorted(keys)[-1]` |
+| it predates the row | `7e28fcb73d` authored 2026-09-19T00:10:44-04:00 = **04:10Z**, an ancestor of HEAD; `Z-S177` was filed **08:05Z** -- FOUR HOURS LATER |
+
+WHAT THIS SEAT DID WRONG, stated plainly. `Z-S177` COMPOSED two workers' rows. The DATA half was
+re-measured against the store and stands (206 objects, 193 keys, 177 placeholder-only, 0 incidents --
+none of that is disputed). The CODE half was taken from `W46-S2`'s row AND NEVER RE-READ AT HEAD. The
+inherited citation was wrong in BOTH coordinates: `lib/research/filings/roster.py:472-498` -- that
+PATH DOES NOT EXIST (the file is `lib/research/management/roster.py`) and the function sits at `:831`.
+
+THE DETECTOR WAS ONE COMMAND AND COSTS NOTHING: printing the bytes at the cited range would have
+failed instantly with "No such file or directory". This is CLAUDE.md Rule 27's own clause --
+*"A CITATION AGES SEPARATELY FROM THE TEXT IT QUOTES"* and *"SEARCHING FOR A QUOTE IS NOT CHECKING IT:
+PRINT THE BYTES AT THE CITED LINE"* -- met in a new place: **a citation inherited from ANOTHER ROW
+ages exactly like one inherited from a law line, and composing rows is precisely where a seat takes
+citations it did not make.** The composition was the right instinct; skipping the re-read was not.
+
+WHAT SURVIVES, and the COO carries it to the slug: `_is_accession_key` is `stem.isdigit()`, so a
+non-EDGAR `doc-<sha16>` winner is NOT an accession. For such a key the pick still falls to
+`sorted(keys)[-1]`, where the winner beats `UNRESOLVED-SOURCE` only because lowercase `d`(100) >
+`U`(85). That is the ACCIDENTAL-PROTECTION half of `Z-S177`, it is still true, and `Z-S179`'s residual
+states the remedy: `_is_accession_key` should admit the doc- shape as RESOLVED so the placeholder
+loses BY RULE for every winner shape.
+
+NET: `Z-S177` filed one stale half and one live half. The stale half cost a disarm cycle for the COO.
+The live half is a real residual now heading to the slug. Both are recorded here rather than quietly
+amended, and `Z-S179` names the class -- a row grounded on a vintage older than HEAD -- as the same
+class this seat itself named in `Z-S178`. This seat filed one and committed the other within hours.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
