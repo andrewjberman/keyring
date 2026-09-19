@@ -10285,6 +10285,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "test_generation_and_pool_routes.py:510 and its test_13b sibling assert the reading 'NOT_CONFIRMED_NOTHING_FOUND' for a 0-url ABSENT basis.",
   "world_is": "ceo_profile_reading currently returns 'NOT_SEARCHED' for that same input, so either the function drifted after these tests were written or the tests were never updated to a later, deliberate rename of that reading value -- undetermined which, and not this cell's surface to fix (Rule: 'NEVER... fix a neighbouring defect'). Left unfixed and reported per the refusal/surprise-channel discipline.",
   "notes": "ARMED because a live discrepancy between a test's asserted contract and the function's actual behavior on the CEO-profile reading surface is exactly the shape of defect that misleads a future reader of either the code or the test; disarm_owner named as the issuer to route to whichever seat next touches lib/research/api/scoped_amgt.py's ceo_profile_reading or the AMGT-rk-43/CEO-profile cell line (row AMGT_RESAPP-Z-W22-S1 touched this same function per the order's own s.1 citation)."
-}
+},
+  {
+    "id": "AMGT_RESAPP-Z-S181",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-19T17:07Z",
+    "one_line": "DISARMS W39-S5 (ARMED, disarm_owner 2.0.0_SA_COO~Z): the two pre-existing failures in test_generation_and_pool_routes.py (test_13, test_13b: 'NOT_SEARCHED' == 'NOT_CONFIRMED_NOTHING_FOUND') are the SAME drift already carried to the slug by W61-S1 and W49-S3 -- reproduced on SITEZ HEAD at 198dd585b7, 2b76b81236 and again by rk-37's worker before and after its edits; no round-14 cell's diff touches the assertion's inputs. One slug item, not three.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer negative control 2026-09-19 ~09:5xZ on SITEZ HEAD 198dd585b7: `python -m pytest lib/research/api/tests -q` -> 2 failed, 159 passed, the two named tests; rk-61's AC2 repair (0af11ce545) graded them as reproduced drift; rk-49's worker (W49-S3) and rk-37's worker (W39-S5) measured the same two before and after their own edits.",
+        "The assertion reads ceo_profile_reading on a live pool object (the Keyence filings object re-landed by rk-40 STEP 0 (iii) at 08:32Z carries no officer search result, so the reading is NOT_SEARCHED); the tests couple to live pool state, which is the slug's item, not a cell's defect."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "Three workers filed the same two failures under three ids; the L10 slug should carry ONE item: the two tests are coupled to live pool state and need a fixture or a state pin (owner: the CTO's round-15 analysis).",
+    "notes": "Adjudicated at the /canonical-drive tick 2026-09-19 ~17:0xZ after rk-37's drain @ba25e6f4d7; the drive log names it."
+  }
 ]
 ```
