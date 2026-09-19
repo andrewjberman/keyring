@@ -794,9 +794,17 @@ def _render_view(path, syntax, tags, reg, h16):
 
 
 def _hcl(obj, indent=0):
+    """HCL literal, rendered fmt-canonical: `terraform fmt` aligns an attribute group's `=` on the
+    widest key, so a renderer emitting exactly one space produces a file `fmt -check` refuses at
+    EVERY registry state -- alignment only, plan byte-identical (IRPT_BCKEND-W3-S47, rc=3 measured
+    against both the live file and the pre-regen blob 6199adb8ec). The oracle is `terraform fmt
+    -check` run on the generated file; this padding rule is never the evidence for itself."""
     pad = " " * indent
     if isinstance(obj, dict):
-        items = ["%s  %s = %s" % (pad, json.dumps(k), _hcl(v, indent + 2)) for k, v in obj.items()]
+        keys = {k: json.dumps(k) for k in obj}
+        width = max((len(v) for v in keys.values()), default=0)
+        items = ["%s  %s%s = %s" % (pad, keys[k], " " * (width - len(keys[k])), _hcl(v, indent + 2))
+                 for k, v in obj.items()]
         return "{\n%s\n%s}" % ("\n".join(items), pad)
     if isinstance(obj, list):
         return "[%s]" % ", ".join(_hcl(x) for x in obj)
