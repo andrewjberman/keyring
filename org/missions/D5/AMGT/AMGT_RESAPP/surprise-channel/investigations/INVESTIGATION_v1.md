@@ -9392,6 +9392,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-rk-57's cell (R14-T3, from row AMGT_RESAPP-Z-S169) asserts the acceptance sweep classifies EVERY criterion of every order of the round into PASS / FAIL / UNVERIFIABLE, each UNVERIFIABLE carrying its reason -- so a criterion is never silently dropped and the printed denominator is the round's true coverage.",
     "world_is": "An order whose prose mentions <proof_of_spec>...</proof_of_spec> ABOVE its real block has its criteria scoped to the prose span. rk-58's five criteria are omitted entirely. The omission is invisible in the sweep's own output on both available denominators: _acceptance_sweep's orders_out holds one entry per order carrying AT LEAST ONE criterion (:1337), so rk-58 drops out of the order count, and `unrounded` counts only orders with NO <round> tag (:1340), which rk-58 has. The sweep therefore reads complete at 160 criteria over 30 orders when the round's true figures are 165 over 31.",
     "notes": "REMEDY, one line at :1191, narrowest form: anchor the block tag to line start (^<proof_of_spec>$) -- both real blocks in this project satisfy it and no prose mention does; this matches _order_round's own line-anchored idiom at :1184. Alternatives: take the LAST span, or the first span that actually contains a <criterion tag. NOT FIXED IN THIS ROW: rk-57 is complete and its AC1 --self-test and AC2 battery pin current behaviour, so the fix must land with a self-test arm covering a prose-mention order and belongs to an owner named at L9. DISARM OWNER is 1.0.0_SA_CTO~Z, the gate's owner -- the first cut of this row named this seat and the row gate refused it (R-19: a disarm owner is never the writer of the disarm clock). STANDING: this seat will not accept the sweep's denominator as round 14's coverage; rk-58's five criteria are graded by hand at L9. DISARMS when either the parser carries that arm, or rk-58's five criteria are graded and recorded in the round-14 adjudication."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W47-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~47",
+    "surfaced_at": "2026-09-19T05:35:00Z",
+    "one_line": "AMGT-rk-45's never-widen halves and order text describe the pool write as OVERWRITING today's null-valued _pool/<today>.json (true at the 2026-09-18 cut); this worker's UTC today is 2026-09-19, one day later, and management/v1/_pool/2026-09-19.json is 404 -- the act is a NEW key, not an in-place overwrite, so there are no pre-act bytes to snapshot and the pool leg's rollback is delete-object, not re-put.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NEVER_WIDEN_ROUND14_CHAIN_E_COO_HALVES.md AMGT-rk-45 section, THE ACT (i): 'OVERWRITING today's null-value pool object (the state at the cut: `_pool/2026-09-18.json` carries `pool_avg null`)'.",
+        "NEVER_WIDEN_ROUND14_CHAIN_E_COO_HALVES.md AMGT-rk-45 section, BLAST RADIUS: 'Pool: ONE object, `_pool/<today>.json`, rewritten in place (the ONE in-place overwrite in this chain).'",
+        "measured this session: `date -u +%F` -> 2026-09-19; `aws s3api head-object --bucket opal-data-harvest --key management/v1/_pool/2026-09-19.json` -> 404 Not Found (rc 254 via the aws shim's error-exit convention).",
+        "AC2's own live listing (this session) shows only `_pool/2026-09-15.json` and `_pool/2026-09-18.json` under management/v1/_pool/ -- no 2026-09-19 object exists to overwrite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The co-signed halves state the act's blast radius and per-key rollback against an IN-PLACE OVERWRITE of today's pool key, with pre-act bytes to snapshot and re-put on rollback.",
+    "world_is": "A day has elapsed between the halves' signing (2026-09-18) and this worker's execution (2026-09-19 UTC); 'today' for THIS act is a key that does not yet exist, so the write is a fresh PUT, not an overwrite, and the per-key rollback this worker recorded in the change-management entry is delete-object on the new key (restoring the pre-act ABSENCE) rather than a re-put of saved bytes. The substance of the halves (blast radius = the pool line of every served management block; N=3 writers; the outcome stated against the changed compute_pool) is unaffected -- only the ONE mechanical fact of overwrite-vs-create for the specific key touched on this calendar day.",
+    "notes": "Not a defect in this cell's own work: the change-management entry (org/critical_paths/change_management/20260919T0530Z_amgt-rk45-one-pool_deploy_completion.md) records the 404 and the corrected rollback before any write. Disarm owner for the GENERAL pattern (a never-widen half naming an in-place overwrite by a calendar-relative key that a later-running worker may find absent) is whichever seat next authors a never-widen half for a date-keyed object -- state the rollback for BOTH the overwrite and the fresh-create branch, the way Rule 5's sign-off discipline already requires for a producer's two branches."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W47-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~47",
+    "surfaced_at": "2026-09-19T06:25:00Z",
+    "one_line": "lib/research/api/tests/test_generation_and_pool_routes.py::test_13's own comment ('the pool object at the name's own as_of, not the other one') describes the PRE-AC5 adapter semantics this order retires (scoped_amgt.py:2431 now reads read_pool_object without as_of, i.e. the NEWEST pool object, never the name's own as_of); the assertion still passes only because the fixture's two planted pool dates happen to make newest == the name's own as_of, so the test is now a coincidental pass on a stale rationale, not a regression.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test_generation_and_pool_routes.py:433-449 plants management/v1/_pool/2026-09-14.json (pool_avg_tenure_years 9.99) and management/v1/_pool/2026-09-15.json (pool_avg_tenure_years 4.08), then asserts block['pool_avg_tenure_years'] == 4.08 with the comment 'the pool object at the name's own as_of, not the other one' -- the name's own as_of in this fixture (CTRL_US_Equity) is also 2026-09-15.",
+        "This order's AC5/ledger diff (lib/research/api/scoped_amgt.py:2431, this commit): pool_document, pool_record = read_pool_object(MANAGEMENT_PREFIX, MANAGEMENT_POOL_NAME) -- as_of dropped, so read_pool_object always resolves the NEWEST object under the prefix (its own docstring :1153-1156), never the caller's as_of.",
+        "measured this session: python -m pytest lib/research/api/tests/ -q -> 158 passed, 2 failed (test_13 and test_13b, both failing on the SAME pre-existing ceo_profile_reading assertion documented by AMGT-rk-43/row AMGT_RESAPP-Z-W45-S3, not on the pool_avg_tenure_years line) -- confirms this order's change did not flip test_13's pool assertion, only because 2026-09-15 sorts as both the newest pool date AND the name's own as_of in this fixture."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Nothing in this order names lib/research/api/tests/; the order's own <paths> lists lib/research/api/scoped_amgt.py but not its tests directory, and this order's own AC5 is the proof mechanism for the adapter change, not this pre-existing suite.",
+    "world_is": "test_13's comment states a rationale ('the name's own as_of, not the other one') that is no longer what the code does after this order's own change; the test does not currently discriminate between the old semantics (name's own as_of) and the new one (newest overall) because its two fixture dates are ordered so both semantics agree. A future fixture with the name's own as_of OLDER than the pool's newest date would silently start reading the wrong branch's expectation into a passing-for-the-wrong-reason test.",
+    "notes": "Not fixed here: THE PATHS GRANT does not extend to lib/research/api/tests/ (same exclusion AMGT-rk-43 recorded as row AMGT_RESAPP-Z-W45-S3 for a different pre-existing failure in the same file). Disarm owner is the next cell holding lib/research/api/tests/ in its <paths>: replant test_13 with the pool's newest date OLDER than the name's own as_of (or vice versa) so the assertion actually discriminates newest-object-per-name from same-as_of, and update the comment to state the current (newest-wins) contract."
   }
 ]
 ```
