@@ -9631,6 +9631,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This order's own section 1.3 states a USD 3.00 cap 'a handful of retries' and BOUNDS repeats it as the exact egress ceiling; the CLAUDE.md 'NEVER call an external vendor API without Andrew's explicit per-use word' rule treats a stated budget as the boundary of what is pre-authorized, not a target to approach as closely as possible.",
     "world_is": "Reproducing, diagnosing and proving each of the three real bugs in rows S3-S4 under a live model (each bug was invisible without a live call, since the model's own citation/language behaviour is what exposed each one) consumed the great majority of this order's budget before AC5 could be reached at all -- AC5 and AC6 are REFUSED here, not attempted, rather than risk exceeding the named cap.",
     "notes": "Disarm requires either (a) a budget amendment authorizing a further live call for this order (even a small one, since AC5's own translation call is unavoidable to produce AC6's input), or (b) accepting AC5/AC6 as REFUSED-FOR-BUDGET on this order and routing the live translation/drafting proof to a follow-on cell with its own fresh cap. Not done here: attempting AC5 anyway on the ~USD 0.05 remaining, which would very likely exceed the stated ceiling -- BOUNDS' egress line is treated as a hard stop, not a soft target."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W42-S7",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~42",
+    "surfaced_at": "2026-09-19T12:30:00Z",
+    "one_line": "AC6, run for the first time this session (AC5 was budget-blocked in prior sessions), measured with_translation 0 of 32 on the first attempt: drafting_build.py's draft() (this order's own owned lines, section 1.2 item 5's carrier) never copied an item's text_translated/translation fields onto its drafted sentence -- deliverable 5 named this explicitly but the code was never written, since no prior session reached a live translated object to measure it against.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pre-fix live measurement this session on .scratch/keyence/6861_JP_Equity.translated.json (AC5's own live output): 'served_sentences 32 with_translation 0 gate_on_original 32' -- text_translated/translation were present on the analysis object's items (translate_output's own contract, unit-proven in AC1) but absent on every drafted sentence",
+        "grep -n \"text_translated\\|translation\" lib/research/filings/drafting_build.py returned 0 hits before the fix",
+        "fix: FilingsProducer.draft() (lib/research/filings/drafting_build.py, owned lines ~281-311) now carries item.get('text_translated')/item.get('translation')/item.get('text_original', text) onto each sentence dict, added AFTER quote_method/spans are computed against the ORIGINAL text (the gate itself is untouched -- it never reads these keys)",
+        "post-fix live re-run on the SAME stored translated object (no new model call): 'served_sentences 32 with_translation 32 gate_on_original 32 quote_methods ['longest-verbatim-run-chars', 'model-marked']' -- AC6's own named bar (N of N, no none-found) now clears; lib/research/filings/tests suite re-run 70 of 70 OK, lib/research/drafting/tests 18 of 18 OK (no regression)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 1.2 item 5 of this order states 'build_drafting_document() carries text_translated and translation on every sentence.'",
+    "world_is": "That carrying was unbuilt at HEAD before this session (the module had zero references to either field); AC6 is the first invocation in this order's history to exercise it live, because AC5's live translation call was budget-blocked in every prior session. Fixed within this order's own owned lines this session; no design change, no widening.",
+    "notes": "Fixed and live-verified same session, this row is INERT on filing (never ARMED): AC6 output_evidence in the instance this session is the POST-fix measurement. Filed for the record per Rule 2's 'found something odd, append one row and keep working' -- a spec element the order itself named but that no prior session's budget reached far enough to build or measure."
   }
 ]
 ```
