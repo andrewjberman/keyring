@@ -9598,6 +9598,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "A co-signed chain's two halves are on file before the cell acts, and a worker reads them from its own worktree.",
     "world_is": "Both halves are on file in the ESTATE. The worker's worktree was created before the CTO half landed at 02:53:24Z, so its read returns a true ABSENT for its branch and a false one for the project. This is the isolation-branch shape the law names: a limb's output is undelivered to a worktree until that worktree advances, and nothing refuses. The blocking condition is real FOR THAT WORKER and is cleared by advancing the worktree onto a commit containing ce9231d095 -- not by writing anything new.",
     "notes": "FILED PROMPTLY AND DELIBERATELY: the cheap wrong response to a BLOCKING 'half is absent' row is to AUTHOR THE MISSING HALF. Here that would create a SECOND chain L CTO half competing with ce9231d095, on a never-widen surface, which is materially worse than the block it would clear. This row exists so the disarm owner of W53-S1 (2.0.0_SA_COO~Z) has the ancestry fact before choosing. INERT: it carries no hazard of its own and supplies the evidence that disarms another row. NOT A DEFECT IN THE WORKER: its read and its refusal were both right, and the only thing it could not see is the commit that landed after it was spawned."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W49-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~49",
+    "surfaced_at": "2026-09-19T07:55:00Z",
+    "one_line": "AC4's <expect> assumes the three validation keys (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity) are NOT in the crosswalk -- measured at spawn time, all three are ALREADY MEASURED records in crosswalk/v1/2026-09-19.json (rk-31 landed them earlier this round), so they are counted as ordinary keyed-population/served names, not as an out-of-crosswalk special case.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python read of s3://opal-data-harvest/crosswalk/v1/2026-09-19.json: records for CAT_US_Equity, CSL_AU_Equity and 6861_JP_Equity all carry resolution=MEASURED",
+        "management_posture_batch.py report (this order's AC4) printed 'MANAGEMENT SERVED: 14 of 14 ceiling names (6861_JP_Equity, ... CAT_US_Equity, ...)' -- both names appear inside the CEILING intersection, which is only reachable through keyed_population()'s crosswalk read, not through served_names() alone",
+        "MANAGEMENT CONTENT: FILING 1 BLOOMBERG_FALLBACK 2 zero-officer 12 of 15 served object(s) -- a+b+c=N holds; CAT_US_Equity contributes to FILING (its filing resolved by rk-38's battery before this order ran), CSL_AU_Equity and 6861_JP_Equity contribute to BLOOMBERG_FALLBACK"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4's <expect> clause: 'the three validation keys are NOT in the crosswalk, so they are counted only if served_names lists them -- state which'.",
+    "world_is": "All three validation keys ARE in the crosswalk (MEASURED) at this order's spawn vintage (crosswalk/v1/2026-09-19.json), not merely present via served_names(). This does not fail AC4 -- the invocation is read-only, writes nothing, and its printed lines (KEYED POPULATION, MANAGEMENT CEILING, MANAGEMENT CONTENT) are exactly as specified with a+b+c=N -- but the premise behind the 'state which' instruction was already stale by the time this worker spawned.",
+    "notes": "No remedy needed on this order's surface: the batch's own targeting (filed_names, cmd_management) is unchanged per this order's BOUNDS, and AC4 asked only for a report line, which reads live and correctly either way. Filed for the record in case a later cell relies on the 'not in crosswalk' premise."
   }
 ]
 ```
