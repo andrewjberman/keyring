@@ -270,7 +270,7 @@ and post-act `source_code_hash`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~47</slot>
 <fabric>site-z</fabric>
