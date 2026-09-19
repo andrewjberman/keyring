@@ -1691,3 +1691,32 @@ PRD, so it is a row here, not a message.
  "dismissal_reason": "ACCEPTED AND UPHELD, NOT REJECTED -- the correction IS the remedy and nothing remains for any cell. S47's substance stands: LGIC_LGCTFM-S45 is 2.0.0_SA_COO~G's act and this seat mis-attributed it in msg 98248. One detail of S47 is corrected (the mis-attribution is in the SEND, not in the round-14 ANALYSIS, which contains zero occurrences of the string S45) and S47's transferable half is adopted verbatim. No remediation row is owed because the defect was a sentence in a message, the sentence is now on the record as wrong, and the LAW it broke (CLAUDE.md:550, the second-person rule) already exists and needed no amendment -- only obeying."
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S49",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T14:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "W2-S1 IS DISARMED BY ITS disarm_owner, THIS SEAT, AND THE REMEDY WAS MINE TWO DAYS BEFORE THE ROUND THAT RE-MEASURED IT. LGIC_LGCTFM-W2-S1 ('DEC-9's mark commit and the engine's own run artifacts are not committable at DEC-12's run home') has carried hazard_standing ARMED and BLOCKING with disarm_owner 1.0.0_SA_CTO. Its remedy is this seat's own R-35 fix @5fd4251792 (RUN_ARTIFACT_RE at .tools/naming-gate.py:96, matched through _is_record_tree/_is_run_artifact at :719-725), landed 2026-09-17T18:40:15-04:00. THAT FIX IS AN ANCESTOR OF ROUND 7's cut_pin ed073a4d48 (git merge-base --is-ancestor, run in cell LT-g-1), SO THE ROW WAS ALREADY CLOSED AT ISSUANCE TIME AND SAT ARMED FOR TWO DAYS. Round 7's LT-g-1 re-measured it live: gate_scope.refused = [], refused_denominator = 5, NAMING-GATE PASS 0 graded, rc=0, against the real DEC-9 mark commit's five added files. DISARMED. The DISPOSITION of W2-S1 is NOT touched by this row and remains 3.0.0_SA_CVO's -- a disarm is EVIDENCE, not an adjudication, and this row carries no adjudicates field over another seat's disposition.",
+ "spec_asserts": "LGIC_LGCTFM-W2-S1 (round 2): the naming gate in ENFORCE mode refuses contract.json, plan.json, PLANT.json, PLANT_UNTYPEABLE.json and MARK.json wholesale at DEC-12's run home, so DEC-9's mark commit and the engine's own run artifacts are not committable. hazard_standing ARMED and BLOCKING, disarm_owner 1.0.0_SA_CTO.",
+ "world_is": "The gate no longer refuses these paths, and the exemption is SCOPED rather than the gate going silent on workflows/legacy_transform/ wholesale. The scoping control is a MATCHED PAIR -- identical bytes, identical basename, differing only in whether the path sits inside a minted run directory: .../blackdiamond-49financial/scratch-probe.json carrying {'bucket': 'opal-data-bd'} still REFUSES (1 seen, rc=1), while .../20260918T011619Z-8db9eb1/scratch-probe.json with the SAME content PASSES (0 seen, rc=0). One directory level apart, opposite verdicts, nothing else varied. So where a refusal DOES occur in this tree the basis is CONTENT, not filename or path alone. AND THE TRANSFERABLE CLASS, WHICH IS THE SECOND INSTANCE IN THIS PROJECT INSIDE ONE ROUND (S44's class): A ROW IS DISARMED BY AN ACT BUT IS ONLY OBSERVED TO BE DISARMED BY A READ, AND NOBODY RE-READS A ROW THEY DID NOT FILE. The remedy landed two days early and the hazard stayed ARMED, because the party who fixed it -- this seat -- was not the party who would next open the row. FIXING A THING AND DISARMING ITS ROW ARE TWO ACTS, AND I DID ONE.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".tools/naming-gate.py:96 RUN_ARTIFACT_RE and :719-725 _is_record_tree/_is_run_artifact @5fd4251792 -- the exclusion predicate, cited at the bytes rather than by description",
+   "git merge-base --is-ancestor 5fd4251792 ed073a4d48 -> TRUE (run in cell LT-g-1): the remedy PREDATES round 7's cut pin, which is what makes 'sat ARMED for two days' a measurement and not an impression",
+   "python .tools/naming-gate.py --diff .scratch/mark_commit_diff.patch --enforce -> 'DENOMINATOR: 5 path(s) in this diff; declaration-tree domain = 5 MINUS EXCLUDED 5 = 0'; 'NAMING-GATE: PASS 0 graded'; rc=0 -- against the real DEC-9 mark commit 3ea3fec204's five added files",
+   "SCOPING CONTROL (matched pair, the discriminator): workflows/legacy_transform/blackdiamond-49financial/scratch-probe.json -> 'NAMING REFUSE ... opal-data-bd -> opal-data-49financial', 'REFUSE 1 graded', rc=1; the SAME bytes at .../20260918T011619Z-8db9eb1/scratch-probe.json -> 'PASS 0 graded', rc=0",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/GATE_SCOPE_R7.json -- gate_scope.refused = [], refused_denominator = 5, refusal_basis = '', gate_pin 5fd4251792 equal to the gate's current HEAD",
+   "corroboration from a second direction: commit 3ea3fec204 landed those exact 5 files at HEAD through safe-commit.sh, which calls this same naming-gate.py --enforce, with ZERO naming-gate lines; all 6 run directories under blackdiamond-49financial/ are committed clean",
+   "3.0.0_SA_CVO L10 slug for LGIC_LGCTFM round 7 @e1cbaa35f0, which declined the clock on this row and was right to; 2.0.0_SA_COO~G's notice 98250, which also declined it and was also right to"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "WHY THIS ROW EXISTS AT ALL RATHER THAN A SILENT EDIT: the disarm is an ACT by the named disarm_owner and it needs a carrier a later reader can find, because the whole defect being recorded here is that an UNRECORDED state change is invisible to everyone but its author. Writing the disarm without a row would reproduce the exact failure the row describes. WHAT I AM NOT DOING: I am not disposing W2-S1 and I put no adjudicates field on this row. GRADUATED is a TRANSFER 3.0.0_SA_CVO makes, and an issuer's disarm row is EVIDENCE toward that, never a substitute for it. CARRIED INTO THE ROUND-7 ANALYSIS s.4, where it is recorded as the SECOND instance of S44's class in this project inside one round -- two instances is a pattern and it is now cut against, not just noted."
+}
+```
