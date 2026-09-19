@@ -47,6 +47,24 @@ empty column in your run is recorded as UNVERIFIED until a positive control fire
 none". And `comp-trigger --list --json` carries **NO target field** (167 entries, keys `arn kind name pattern
 schedule state`) -- targets come from whatever source `LT-e-6` designed, and you state which produced each.
 
+**AMENDED PRE-SPAWN A SECOND TIME, ON WHAT `LT-e-6` MEASURED AT ITS DRAIN (rows `W1-S36`, `W1-S38`).**
+
+1. ⛔ **DO NOT REACH FOR `coverage.hand_surfaces` IN THE CONTRACT -- IT CANNOT EXIST THERE.**
+   `org/standards/LGCTFM_CONTRACT.schema.json` `$defs.coverage` is CLOSED (`additionalProperties: false`),
+   so R-81's guard output is REFUSED by the schema: `LT-e-6`'s first build read
+   `HAND BACK ... Additional properties are not allowed`. The guard rides in
+   `deliverables/0.9.0_WK_LGIC_LGCTFM~1/e6_walk/HAND_SURFACES.json`, beside the contract, and the contract
+   itself reads `ACCEPT lgctfm-contract` (rc=0). **The schema is OUTSIDE your grant and is not yours to
+   widen** -- read the sidecar, cite it, and if your run needs the guard inside the contract, that is a ROW,
+   not an edit. `LT-e-6` flagged this FOR YOU specifically; the round should not pay for it twice.
+
+2. **The stale-proof bar's COUNT is informational and its SET is the bar** (repaired at `21a163f492` on
+   `W1-S38`): `fixed_input_commits_since_cut` is checkout-dependent -- measure it AT YOUR OWN WRITE TIME and
+   never copy a number from this order -- while `proofs_re_run` must EQUAL the set of ROUND-4 proofs that
+   existed before the earliest counted commit. Two round-4 proofs are now pinned (`LT-m-1`, `LT-e-6`), so
+   that set is NO LONGER EMPTY: enumerate what the arm names and re-run exactly those, or the arm refuses
+   both the under- and the over-enumeration.
+
 **RECORD SHAPE (the one carrier is `deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/R4_BASE.json`; this is a quotation of it)**
 
 ```json
