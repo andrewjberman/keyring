@@ -7011,3 +7011,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "TAXONOMY DEFECT, Rule 24(i) met from the wrong side: the set of 'errors that mean refused' is written as a FORWARD LIST of two names instead of as a SUBTRACTION from what the call can raise, and a forward list omits silently -- here it omits the single most likely production error on a least-privilege role. THE REMEDY IS NOT 'add AccessDenied to the tuple', which is the same forward list one name longer: test the ERROR CODE off the modeled response (exc.response['Error']['Code'], available on every ClientError subclass) or isinstance(exc, botocore.exceptions.ClientError), and decide refusal from the CODE plus the HTTP status, leaving genuinely unexpected classes to propagate. NOT MINE: a source change, and IB-rtf-14 bars a handler edit in terms. WHY IT MATTERS BEYOND THIS ROUTE, and the reason it is filed separately from S105: this defect makes the SERVED ANSWER UNTRUE rather than merely unhelpful -- a caller denied by IAM is told the request was UNEXPECTED (an internal failure) instead of refused, which sends the reader to the wrong plane entirely, and it is exactly the trail S104 sent three passes down. It also survives every remedy in S105: align the key, write the receipt, widen the grant -- a future denial on this route still serves UNEXPECTED. DISARM CONDITION, measurable: the except clause decides on the error CODE or on isinstance, and an exercised denial on this route serves a POLICY answer rather than UNEXPECTED. A CENSUS THIS ROW DOES NOT CLAIM TO HAVE RUN: whether other handlers in this estate use the same class-NAME test. That census is owed and is named here so it has a carrier."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S107",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-19T20:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "THE FIRM BOUNDARY ON THE TWO NEW LGIC FIRM BUCKETS IS ENFORCED BY A SUBSTRING GLOB ON A ROLE NAME, AND A SUBSTRING GLOB ADMITS EVERY FUTURE ROLE THAT HAPPENS TO SPELL IT",
+  "spec_asserts": "CLAUDE.md NEVER line: 'NEVER reference another firm's data from a pipeline tree -- BUCKET *or* KEY-PREFIX ... per-firm buckets -> bucket-scoped Deny', and the same line warns that 'an enumerated ban list lapses SILENTLY when a name changes'. The bucket-scoped Deny on opal-data-inflection and opal-data-cottonwood is the mechanism the law names, so the boundary is expected to be exact.",
+  "world_is": "infra/aws/terraform/modules/opal_name/generated_locals.tf carries fence_patterns as SUBSTRING GLOBS over role NAMES, not as an enumeration of principals: '49financial' = ['arn:aws:iam::313476888478:role/*-49f-*'], 'inflection' = ['arn:aws:iam::313476888478:role/*-inf-*'], 'cottonwood' = ['arn:aws:iam::313476888478:role/*-cot-*'], 'demo' = ['arn:aws:iam::313476888478:role/*-demo-*']. The admit pattern for the inflection bucket is therefore satisfied by ANY role in account 313476888478 whose name contains the three characters 'inf' between hyphens -- which is a spelling property, not an ownership property. The same shape governs cottonwood on 'cot'. NOTE THE TWO DIRECTIONS ARE NOT SYMMETRIC: the glob is simultaneously TOO WIDE (a future unrelated role spelling '-inf-' is admitted to a firm bucket with no act by anyone) and, as measured this session, TOO NARROW in practice (it denied the applying identity and Andrew's own user from the buckets it created -- see IRPT_BCKEND-W3-S43, whose remedy is the same file).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf @HEAD, fence_patterns block read as bytes: four firms, every value a role-NAME glob with a wildcard on BOTH sides of the firm token",
+      "aws s3api get-bucket-policy --bucket opal-data-inflection -> AccessDenied, 'User: arn:aws:iam::313476888478:user/Andrew_Berman is not authorized to perform: s3:GetBucketPolicy on resource: arn:aws:s3:::opal-data-inflection with an explicit deny in a resource-based policy' -- the fence is APPLIED and EXERCISED-AGAINST, not merely declared (Rule 22 STATE at EXERCISED)",
+      "aws s3api list-buckets -> opal-data-inflection and opal-data-cottonwood both CreationDate 2026-09-18T20:05:17Z (same second, one apply)",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf comment names the lockout cause itself: 'an empty exemption list means the Deny fence admits ONLY a role matching role/*-inf-*|*-cot-* ... This self-locked-out the applying identity from its own newly-created buckets.'",
+      "NEGATIVE CONTROL NOT RUN AND NAMED AS NOT RUN: no census has been made of how many existing roles in account 313476888478 already match '*-inf-*' or '*-cot-*'. That census is what would turn this EXPOSURE into an INCIDENT and it is the disarm measurement below."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHY THIS IS FILED AS AN EXPOSURE AND NOT AN INCIDENT (Rule 22's negative mirror, ABSENT != EXERCISED-AGAINST): a substring glob guarding a firm boundary is a real hazard, but nothing here measures whether any role has ever matched one it should not. The two remedies differ -- an exposure closes by tightening the pattern; an incident ALSO requires re-opening whatever the gap admitted -- so the classification is load-bearing and the discriminating query is named rather than assumed. SAME SHAPE, ALREADY ON THE RECORD: the K-DIR prefix finding in IRPT_BCKEND-S97, where a Terraform sentence claimed a key-prefix separation the interpolation did not implement. Both are a boundary asserted in one vocabulary and implemented in another. NOT MINE TO FIX: infra/aws/terraform/** is the CLOUD_OPS_OR_ETL lane and this seat holds no grant there; this row is the carrier, and the pattern edit rides whatever act next opens that root -- most likely the fence repair the lockout already requires, which touches this exact file. DISARM CONDITION, measurable and cheap: one enumeration of roles in 313476888478 matching each fence pattern, with its denominator printed, compared against the roles each firm is intended to admit; the row disarms when the admitted set equals the intended set, whether that is reached by tightening the pattern or by recording that the current matches are exactly the intended ones."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S108",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-19T20:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "THE DIRECTORY CONTRACT EXISTS TWICE IN THE TREE WITH DIFFERENT BYTES, AND THE COPY THAT DEPLOYS IS NOT THE COPY THAT SITS BESIDE THE LAMBDA SOURCE",
+  "spec_asserts": "The IB-rtf-13 packet stages DirectoryEntry.schema.json as a member of the served zip and declares it at 12,967 bytes, sha256 7ed220ff87a7..., naming it by its PACKAGED path (contracts/...). A contract is expected to have ONE authoritative text: a developer reading the schema beside the code is expected to be reading what deploys.",
+  "world_is": "Two files in this repo share the basename DirectoryEntry.schema.json and their bytes differ by 495. At pin 6e764ef0aa: docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json is 12,967 bytes sha256 7ed220ff87a7 -- this is the one the build stages -- while infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json is 12,472 bytes sha256 ead062c26602. The SECOND is the one sitting next to the Lambda source, so the copy a developer meets while reading the handler is NOT the copy that deploys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse 6e764ef0aa:docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json + hash-object -> 12,967 bytes, sha256 7ed220ff87a7..., CR 0, non-ASCII 0, parses as a JSON Schema -- EXACT MATCH to the packet's declaration",
+      "the same read against infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json at the same pin -> 12,472 bytes, sha256 ead062c26602 (and 12,732 on disk with 260 CR, the autocrlf effect)",
+      "Glob over the basename across the repo -> exactly these two candidates, which is the read that enumerated the population rather than assuming it",
+      "NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-13_DIRECTORY_CONTRACT_STAGED.md section 3, where this divergence was found and explicitly NOT held against the packet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "HOW IT WAS FOUND, because the finding method is worth more than the finding: reading the WRONG one of the two first produced a confident, precise, three-way mismatch against a CORRECT sign-off packet -- disk 12,732 / blob 12,472 / declared 12,967, three real numbers, none matching, reading exactly like a genuine defect. NOTHING ABOUT THE NUMBERS COULD HAVE CAUGHT IT; every instrument answers faithfully about whatever file it was handed. Testing the OTHER CANDIDATE is what caught it. NOT A SIGN-OFF HOLD AND IT WAS NOT HELD: the rtf-13 act stages the correct, declared, pinned blob, and nothing about the second copy is widened by that packet. THE HAZARD IS THE VENDORED-COPY CLASS 4.0.0_SA_CRO's Addendum A measured 2 of 2 on, and it is the same family as S103 -- a runtime that cannot reach the contract it needs, in a tree that holds two versions of it. DISARM CONDITION, measurable: one copy remains, or the second is demonstrably generated from the first by a step in the build (so the divergence cannot re-open by hand), or it carries a header naming the authoritative copy and the divergence is measured to zero. A CENSUS THIS ROW DOES NOT CLAIM TO HAVE RUN: whether other contracts under docs/contracts/ have the same second copy under infra/aws/lambda/**/_contracts/. That census is owed and is named here so it has a carrier; it belongs with the round-6 binding-check tool, whose population this row joins."
+}
+```
