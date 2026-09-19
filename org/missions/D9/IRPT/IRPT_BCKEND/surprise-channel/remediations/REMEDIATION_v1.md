@@ -2862,3 +2862,456 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  }
 }
 ```
+
+## Round 5 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S42",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE FENCE CANNOT RECOGNISE THE NEW BUCKET NAMES AND THE CAUSE HAS MOVED SINCE THIS ROW WAS WRITTEN. The row says scopes.json's bucket_provisioned stays false for both firms; at HEAD it is TRUE for both. The guard is still stale, because lib/opal_naming.py's generator has not been re-run, not because the flag is false.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S42",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "One command, now unblocked and no longer outside anyone's paths: re-run the generator against today's registry and commit the regenerated block. The diff is already known -- opal-data-cottonwood joins data/black_diamond/ and opal-data-inflection joins data/cot/ -- because this seat regenerated it into a scratchpad to measure it. See IRPT_BCKEND-S77, which carries the measurement and the 0-of-290 exposure census.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S43",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE APPLIED DENY FENCE LOCKED THE APPLYING IDENTITY OUT OF BOTH NEW BUCKETS: exemptions.json carries no rows for either name, so head-bucket, get-bucket-policy, get-bucket-versioning and delete-bucket-policy all read AccessDenied for the account admin itself -- measured live by the cell.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S43",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "Exemption rows for both new bucket names mirroring 49financial's (at least the three admin identities), plus the console/root repair of the applied policy. The console step is Andrew's; the registry rows are the CTO's under Rule 30 and are already handed to the CRO. Until both land, NOTHING can be granted on or read back from either bucket -- this row is the reason IB-rte-3's re-hand cannot simply be re-run.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S45",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A LIVE terraform plan ON shared-infra CANNOT COMPLETE TODAY for either selector (the same lockout W3-S43 names), and the only completed plan (-refresh=false) surfaces a SECOND, orthogonal, pre-existing taint on 4 resources that is identical with or without this order's registry delta.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S45",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "PLAN-2's literal '0 to add, 0 to destroy' bound cannot be measured until the lockout is repaired; the registry edit's own isolated effect is already proven correct, so what is owed is the RE-MEASUREMENT after W3-S43, not a re-design. \u26a0 The orthogonal 4-resource taint is a SEPARATE finding that survives this round and must not be absorbed into the lockout's repair -- it was there before this order and will be there after.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S21",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE ORDER FACE'S ADVISOR-ID ASSUMPTION DOES NOT HOLD: it assumed an ISSUED opaque id per bound 13, minted by the instrument the directory uses; _ids.py has no 'advisor' kind and bound 13's own list excludes advisor. The real advisor id is a raw identity-plane string.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S21",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "The face is frozen and is not edited. What is owed is that round 6's cells inherit the CORRECTED premise rather than the face's -- an advisor id is a raw identity-plane string, so any cell reasoning about projection must treat it as such. This is the premise W1-S25's seam and the CTO's L4 ruling both rest on, so it is load-bearing rather than a footnote.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S22",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE BOUNDED TEST PRINCIPAL DOES NOT BY ITSELF MAKE THE SERVED PATH EXERCISABLE: at the time of filing, 0 of 13 live modules passed id_projection, so every live FIRM_ADVISOR request against real ownership-map data was refused UNPROJECTED_GRANT -- measured on the real Enforcer wired as production wires it.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S22",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "\u2b50 PARTLY OVERTAKEN AND THE ROW SHOULD BE READ WITH ITS VINTAGE: at HEAD 7 of 7 entry.py modules pass id_projection (IB-rte-6's wiring arm landed after this row was written), and the 6 handler/dispatch modules structurally cannot carry the property. What REMAINS true is the half the wiring does not fix -- the refusal fires on the grant's own shape, so the served path stays unreachable for a real advisor until the CTO's ordering inversion ships. Disarm belongs to the owner, not to this seat (R-19).",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S24",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "cottonwood's LIVE directory carries termination.indicator = UNKNOWN for 260 of 260 entries -- none ACTIVE, none TERMINATED -- so cottonwood cannot exhibit FWD-1's terminated-client-stays-visible behaviour at all.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S24",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "A PRODUCER gap, not a consumer one, and it bounds what any future cell can grade at cottonwood: no principal and no wiring change can exercise FWD-1's CONSTRAINT there until the field is populated upstream. What is owed is that the producer is identified and the limitation is stated wherever FWD-1's coverage is claimed, so a 2-of-3-firms result is not read as 3 of 3.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S26",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "TWO MORE UNTRACKED-PRODUCTION-SOURCE-FILE GAPS surfaced while packaging (irpt-status's handler.py and checkpoint.py; irpt-ycharts-generate's gate.py and three json fixtures) -- the same class as W1-S20 and W2-S59.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S26",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "Carried into round 6's FIRST cell as members of its population, NOT a new cell -- this is 1.0.0_SA_CTO's own disposition of the class in its 98087 ruling and its L4 ruling repeats it. What this row adds is the two named members, so the round-6 population is a subtraction from a known list rather than a fresh hunt.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S34",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "firm_registry.json (packaged into BOTH irpt-intake-poller and irpt-ycharts-generate) has NO true source anywhere in this repository's reachable git object graph -- established by a content-addressed search, not by filename.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S34",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "A served artifact whose source cannot be found cannot be rebuilt, so the Rule-10 rebuild invariant does not hold for these two functions. What is owed is either a located source (another store, another repo) or a declared one committed with its provenance -- and until one exists, any claim that these functions are reproducible from the repo is false. \u26a0 NOTE the file shares a NAME with a generated artifact the naming builder writes (data/firm_registry.json), which is exactly how a missing source stays invisible.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S35",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "settings.json (irpt-ycharts-generate) likewise has no true source anywhere, and its own embedded provenance pointer is STALE -- so the artifact carries a claim about where it came from that does not resolve.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S35",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "Same class as W4-S34 and the same remedy, with one addition that makes it worse rather than equal: a stale embedded pointer is more dangerous than an absent one, because a reader who follows it concludes the provenance was checked. The pointer is corrected or removed in the same act that declares the source.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S38",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "AN ESTATE-WIDE, PRE-EXISTING CRLF checkout-vs-LF-blob artifact affects every non-.py, non-.tf/.hcl/.sh text fixture packaged into a Lambda zip on this box: .gitattributes' eol=lf domain covers *.tf, *.tfvars, *.tf.json, infra/aws/terraform/**/*.js, *.hcl, *.sh, *.py, Dockerfile and one prompts path, and NO general *.json -- verified at HEAD by this seat. 49 of 147 census rows are this artifact, not a provenance gap.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S38",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "\u26d4 DO NOT WIDEN THE DOMAIN TO *.json AND CALL IT CLOSED -- that is the third widening to the member that bit, and the file's own comments record the first two (the *.tf case, the terraform-root *.js case on W2-S12), each naming its incident and leaving the next member uncovered. The remedy is the SUBTRACTION Rule 24 asks for: enumerate every text extension packaged into a deployed artifact, print the denominator, and declare the domain as that set minus what is deliberately excluded. Owner is the estate's, since the domain spans every Lambda family.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S25",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE ISSUER'S OWN RECOMMENDED JOIN RESOLVED ZERO AND THE CELL SAID SO: REC (a) through dim_identity_crosswalk resolves 0 of 22,646 live grant slots (SmartX GUIDs and Schwab digits against Black Diamond z+10-digit keys, a divergence the map's producer declares at d08_firm_ownership_map.py:13-19). The cell substituted the face's own stated alternative, dim_account_xref, and resolved 17,895 of 22,646.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S25",
+  "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_L4_RULING_PARTIAL_PROJECTION_20260919.md @61627f39f9"
+ ],
+ "remedy": "RULED BY 1.0.0_SA_CTO AND THE RULING IS READ AT THE BYTES HERE: the seam STANDS as this round's declared projection source, dated and declared as it is, and it does NOT become the id space by being used. The durable answer is (b) -- re-key the ownership-map producer to the Schwab spine its own d08 note already names as the eventual cutover -- and that is DS-owned and CARRIED to that owner rather than absorbed. This row stays open until the carry is made to a named DS seat; the routing is the CTO's, which is why the owner is the CTO and not a project code.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S27",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE SERVED PATH REFUSES A 79-PERCENT-COMPLETE BRIDGE ENTIRELY: abby_horton still reads UNPROJECTED_GRANT after full wiring and the deployed seam, because _authz/enforce.py's resolve_now runs the unprojected check at :283 BEFORE the empty-permitted-set check at :291, with the file's own comment at :276 stating that order deliberately. The 21 resolved accounts never reach permitted_account_set.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S27",
+  "infra/aws/lambda/investor-reporting/_authz/enforce.py:276-294 @ea600978d1 -- read at the bytes by 3.0.0_SA_CVO",
+  "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_L4_RULING_PARTIAL_PROJECTION_20260919.md @61627f39f9"
+ ],
+ "remedy": "RULED (c) BY 1.0.0_SA_CTO: (a) now, (b) as the durable fix, with a BINDING CONDITION the original call did not name -- the unprojected count and kinds are NON-OPTIONAL in the payload including when zero, the EMPTY-projected-set branch KEEPS refusing, and a consumer obligation is filed against IRPT_FNTEND in the same round the field ships. \u26d4 THE CONDITION IS THE PART THIS ROW MUST CARRY FORWARD: a disclosure field that no consumer renders degrades to exactly the silent partial the policy forbids, and it degrades INVISIBLY because the backend's own evidence shows the field present and correct. The change is one refusal ORDER, not a loosening of the fence -- verified here that the cross-firm refusal and the empty-set refusal both stand on their own lines. The cell, its deploy ledger and its never-widen halves are round 6's.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S41",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "49financial's CloudTrail read-logging is a BORN-WITH control its declaration carries and the two new buckets do not: the cell could not copy it without changing another resource on the root, which its own BOUNDS forbade, so it scoped it out deliberately and said so.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S41",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "A REAL GAP the new buckets should close in a follow-on, and the row is right that scoping it out was correct rather than a miss -- an enumerated 'p of p' control list that silently grew would have been the worse act. What is owed is that the follow-on names read-logging explicitly, so the new buckets reach 49financial's actual control set and not just its enumerated four.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S44",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE NEGATIVE-CONTROL HOST IS STOPPED AND UNREACHABLE VIA SSM, so the cell substituted a weaker simulate-principal-policy check rather than starting a production runner outside its scope. The substitution is disclosed, not hidden.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S44",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "\u26d4 THE ARM IS UNEXERCISED, NOT PASSED, and IB-rte-3's re-hand owes it -- R57-AC2 names it explicitly as part of what the re-hand still lacks. A simulate-policy check and a live host denial are different claims (the estate's own catalogue records simulate-policy returning FALSE ALLOW), so the weaker check cannot close the stronger arm. Either the host is started for the measurement or the arm is re-cut against an instrument that can actually answer it.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S77",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "ONE REGISTRY FLIP MEANS TWO DIFFERENT THINGS TO TWO CONSUMERS AND ONLY ONE WAS ACTED ON. s3-lgic-firm-buckets.tf reads bucket_provisioned as 'not managed here' and has been re-keyed onto bucket_managed_by; lib/opal_naming.py:617 reads it as 'real, so the cross-firm fence must name it' and still keys on the flag alone. Flipping it to true therefore un-blocked Terraform and simultaneously changed the fence generator's output, and the generator was never re-run.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S77",
+  "lib/opal_naming.py:617 and .tools/ds-precommit-check.py's generated block @ea600978d1",
+  "3.0.0_SA_CVO's scratchpad regeneration and 0-of-290 exposure census at HEAD"
+ ],
+ "remedy": "Re-run the generator and commit the block -- the diff is already measured. \u26d4 AND THE STANDING HAZARD IS THE PART THAT OUTLIVES THIS ROUND: CLAUDE.md already says an enumerated ban list lapses SILENTLY when a name changes and that a new firm name is a GATE EDIT. This is that sentence firing for real, with the twist that nobody typed a new name -- a FLAG FLIP moved the enumeration's input, so even the discipline of 'a new firm is a gate edit' would not have caught it. Whether the fence generator should get its own predicate rather than borrowing bucket_provisioned is the owner's call and is the R57-AC2 question one level down. EXPOSURE only today: 0 of 290.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S78",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A POINTER THAT RESOLVES IN NEITHER STORE THE READER HAS. CLAUDE.md cites 2 memory/ paths; 2 of 2 are untracked; one exists only in the repo worktree (so absent in every fresh worktree, which is where workers run) and one only in the user memory directory (so absent from the repo entirely). An order face inherited the same convention and cited a third path that exists in neither.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S78",
+  "CLAUDE.md @ea600978d1 -- the two citations, each tested against both stores"
+ ],
+ "remedy": "NOT A CONTENT FIX -- both memories exist and their substance is not in question; what fails is the ADDRESS. The owner decides whether the law file's memory/ pointers are tracked into the repo, rewritten to name the store they actually live in, or dropped in favour of the rule text they support. \u26d4 NO GATE IS PROPOSED AND NONE SHOULD BE INFERRED: this is a citation-hygiene call on a constitutional file, and designing an enforcement surface for it from this seat would be an agent-made gate. COST of the check itself: one resolution test per pointer, 2 pointers.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": false
+}
+```

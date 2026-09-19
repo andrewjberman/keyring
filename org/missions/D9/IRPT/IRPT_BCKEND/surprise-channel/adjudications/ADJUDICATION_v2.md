@@ -909,3 +909,114 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
  "dismissal_reason": "Seven INERT rows carrying no `adjudicates`: five correct a prior claim (the seat's own, the issuer's census, a sign-off's literal wording), and two report an instrument's scope limit honestly. No residue owed beyond what W1-S20 and W2-S59 carry."
 }
 ```
+
+## Round 5 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S106",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "IRPT_BCKEND ROUND 5 L9 -- THE SIX JUDGMENT CRITERIA, ALL PASS, EACH WITH AT LEAST ONE FACT RE-MEASURED ON AN INSTRUMENT THIS SEAT RAN. The count is by SUBTRACTION from the orders, not from the hand-off: 7 criteria carry judgment=\"true\" across the rte-* family, MINUS R52-AC2 whose order is SUPERSEDED and was never handed -- leaves 6, and the hand-off named 6. R52-AC2 is named here rather than left to vanish with its cell.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Graded at HEAD ea600978d1. Channel before this write: 245 items, 0 undispositioned, 17 UNDER_INVESTIGATION (the round-5 set), 0 open orders of 61 by the gate's own _open_tos_for_project, which also discloses 5 orders terminal by a VALID proof although their status word is not terminal. Every number in the grades below is from a run by this seat: a live SSM read, a live Lambda CodeSha256 read, two repo censuses with printed denominators, a generator re-run into the scratchpad that never touched the repo, and two reads of source at cited lines.",
+ "grades": [
+  {
+   "criterion": "R51-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rte-1.the-bounded-test-principal-declared-and-its-sign-off-packet.proof_of_spec.json@6850bb3c69",
+   "verdict": "PASS",
+   "reason": "THE RECORD ANSWERS ALL THREE PARTS AND ITS TWO LOAD-BEARING FACTS SURVIVE MY OWN INSTRUMENTS. (1) FWD-11's blocker is NOT an identity-count question and the record is right to relocate it: I re-read the live plane myself and 'aws ssm get-parameter --name /opal/irpt/opal-principal-roster' returns ParameterNotFound at HEAD, so no identity of any shape resolves OPAL_GLOBAL today. (2) THE WIRING HALF HAS MOVED UNDER THE RECORD AND I SAY SO RATHER THAN GRADING A STALE NUMBER: '0 of 13 live entry/handler/dispatch modules ever pass id_projection' was measured at the round-5 issuance @391e4ad948; at HEAD, 7 of 7 entry.py modules pass id_projection= and the remaining 6 are handler.py/dispatch.py, inner modules that never construct the authz entry and structurally cannot carry the property. IB-rte-6's wiring cell landed between the pin and now. THAT IS S32's CLASS ONE PROJECT OVER, and in the same UNDERSTATE direction: the record is pessimistic about the world, correct at its own vintage, and nothing re-grades it. \u26d4 I ALSO REPORT MY OWN WRONG DISCRIMINATOR BEFORE ANYONE ELSE FINDS IT: my first probe counted modules referencing 'Enforcer' and returned 2 of 13, which would have published a false picture -- 5 of the 7 entry modules pass id_projection to a different constructor, so 'Enforcer' was the wrong object and the right population is the entry modules. (3) The unexercisable list is complete and each member names a cause outside the principal."
+  },
+  {
+   "criterion": "R53-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rte-3.the-two-lgic-firm-buckets-created-empty-ahead-of-d14.proof_of_spec.json@d80e365875",
+   "verdict": "PASS",
+   "reason": "CONFORMS, AND THE RECORD IS RIGHT ON ALL THREE PARTS -- but its second part is SUPERSEDED at HEAD in a way that MOVES THE REMEDY, which is the finding of this round. The D14 register does already name both buckets (scopes.json FIRM rows, verified at HEAD), so the creation conforms rather than pre-empts. 49financial's declaration is canonical on its four enumerated controls and the record is right that its CloudTrail born-with control and its populated exemptions list are gaps to close, not over-build. \u26d4 WHAT MOVED: the record says bucket_provisioned 'stays false until a registry-owning seat flips it'. AT HEAD IT IS TRUE FOR BOTH FIRMS, each carrying bucket_managed_by -- IB-rte-7's drafted field landed. AND THE FENCE IS STILL STALE ANYWAY: regenerating from today's registry into the scratchpad adds opal-data-cottonwood and opal-data-inflection, which the live block does not carry. So W3-S42's blocking condition SURVIVES while its stated CAUSE is false, and the remedy moves from a registry edit outside that order's paths to one generator re-run that is now unblocked. EXPOSURE, NOT INCIDENT: 0 hits across 290 readable tracked files in the two trees. Filed as IRPT_BCKEND-S77."
+  },
+  {
+   "criterion": "R54-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rte-4.the-served-lambda-members-declared-from-their-true-sources.proof_of_spec.json@7a081cbdc9",
+   "verdict": "PASS",
+   "reason": "THE CENSUS IS SOUND AND ITS OWN BIGGEST QUALIFIER IS THE VALUABLE PART, VERIFIED HERE AT THE BYTES: .gitattributes at HEAD carries eol=lf for *.tf, *.tfvars, *.tf.json, infra/aws/terraform/**/*.js, *.hcl, *.sh, *.py, Dockerfile and one prompts path -- and NO general *.json rule. So W4-S38 is right that 49 of the 147 census rows are a CRLF checkout-vs-LF-blob artifact rather than a provenance gap, and a census that did not say so would have reported a third of its population as a defect. \u2b50 THE TRANSFERABLE HALF, which the row does not draw and which the file's own comments prove: THIS IS THE THIRD TIME THIS DOMAIN HAS BEEN WIDENED TO THE MEMBER THAT BIT. The *.tf rule was added on an ETFS_GUARDRAIL row, the terraform-root *.js rule on IRPT_BCKEND-W2-S12, and each widening names its own incident and leaves the next member uncovered -- exactly the forward-list failure Rule 24 tells you to replace with a subtraction from a printed denominator. ON THE OWNER QUESTION THE CRITERION ASKS: infra/aws/lambda/ci/ serves every Lambda family, not this project's alone, so the builder change is the ESTATE's to keep and not IRPT_BCKEND's to own -- the record names this correctly and does not absorb it."
+  },
+  {
+   "criterion": "R55-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rte-5.the-manifest-history-censused-and-fwd-7s-five-arms-driven-on-a-controlled-clock.proof_of_spec.json@d9b0e5bfdc",
+   "verdict": "PASS",
+   "reason": "THE RECORD SPLITS FWD-7's DONE WHEN INSTEAD OF ANSWERING IT YES OR NO, AND THAT SPLIT IS THE CORRECT ANSWER: 5 of 5 arms on the controlled clock, 3 of 5 ever fired on the live path, with the two that have not (REFRESH_TRIGGER_MISSED and a genuinely-new dispatch) named as a property of the world's data state rather than of the cell. I VERIFIED THE CONTROLLED-CLOCK HALF ON MY OWN INSTRUMENTS, because 'EXERCISED' is only worth anything against the artifact that is actually deployed: the live irpt-directory-refresh CodeSha256 reads q7O3GGjK2PBHkNo6KfJOAVaJhUW4cwxtWQFZgTqSO/o=, byte-identical to the record's, and ib_s_4_controlled_clock.py's HEAD blob equals the hash the record pins, with exactly one commit ever touching the file. \u26a0 ONE QUALIFICATION ON THE PIN'S FORM, not its soundness: the record writes it as '@1258192be1...', and in this estate '@<hash>' reads as a COMMIT-ish -- resolving it that way returns 'exists on disk, but not in <rev>', which reads like a missing file rather than a wrong hash KIND. The pin is a BLOB and is therefore the STRONGER kind, content-addressed exactly as the instrument law prefers; only the notation is ambiguous, and it cost this seat one confused lookup. On the fresh-dispatch case the record is right that only patience is indicated and that a driven live observation would need a design change that is standing-moratorium-adjacent -- correctly refused rather than built."
+  },
+  {
+   "criterion": "R56-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rte-6.the-served-path-admits-a-projected-advisor-grant.proof_of_spec.json@b6c674f5f3",
+   "verdict": "PASS",
+   "reason": "THE MEASUREMENT IS THE CELL'S STRONGEST ACT AND IT WENT AGAINST ITS OWN ISSUER'S RECOMMENDATION: REC (a) as literally named resolves 0 of 22,646 and the cell said so, then took the face's stated alternative to 17,895 of 22,646 (abby_horton 21 of 43). 1.0.0_SA_CTO's L4 ruling is READ AT THE BYTES HERE rather than taken from the hand-off -- 61627f39f9 exists and is an ancestor of HEAD, and its record rules (c): (a) now with a NON-OPTIONAL disclosure field, the empty-projected-set branch KEEPS refusing, and a consumer obligation filed against IRPT_FNTEND in the same round the field ships. \u2b50 I VERIFIED THE RULING'S LOAD-BEARING PREMISE ON THE CODE, because the whole remedy is an ordering inversion and an inversion aimed at the wrong lines fixes nothing: _authz/enforce.py refuses UNPROJECTED_GRANT at :283 and only tests the empty permitted set at :291, and the file's OWN comment at :276 states that order deliberately. So the present behaviour is documented policy, not an accident -- which is exactly why this is an ENTITLEMENT CONTRACT at L4 and not a code defect, and the CTO's classification holds. ON THE CRITERION'S OWN THIRD PART: FWD-1/2/5's served path is reachable for the PROJECTED SUBSET only, and it becomes reachable for a real advisor when the inversion ships -- not before."
+  },
+  {
+   "criterion": "R57-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rte-7.the-lgic-firm-buckets-survive-the-registry-flip.proof_of_spec.json@04132943d6",
+   "verdict": "PASS",
+   "reason": "AND THE CENSUS THE CRITERION ASKS FOR IS RUN HERE RATHER THAN DELEGATED. DENOMINATOR: 38,374 tracked files, 35,965 readable; bucket_provisioned occurs 136 times across 43 files, of which the FUNCTIONAL readers -- code that branches on the value -- are FIVE: lib/opal_naming.py:278, :358 (validate's type refusal) and :617 (the cross-firm fence's own selector), infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:100, and infra/logic/render_naming_section.py:432 (the field's rendered description). Everything else is prose, fixtures, exercise prompts and records. \u2b50 SO THE ANSWER TO 'SHOULD IT BE SPLIT' IS THAT IT ALREADY HAS BEEN, IN ONE OF THE TWO PLACES, AND THAT ASYMMETRY IS THE DEFECT: the Terraform selector has been re-keyed onto bucket_managed_by and reads the flag only as an absent-safe fallback, while lib/opal_naming.py:617 still keys the cross-firm fence on the flag ALONE. One flip therefore means 'stop managing these here' to one consumer and 'start fencing these' to the other, and only the first was acted on -- which is precisely how the fence went stale (IRPT_BCKEND-S77). The drafted field is the RIGHT shape and not a stopgap on this evidence, because it names the fact the Terraform root actually needs; what it does not yet do is give the fence generator its own predicate. ON WHAT IB-rte-3's RE-HAND STILL LACKS: the exemption rows and the console repair (W3-S43), the generator re-run (IRPT_BCKEND-S77), and the host negative control whose instance is STOPPED (W3-S44) -- the last is unexercised, not passed."
+  }
+ ],
+ "adjudicates": [
+  "IRPT_BCKEND-W3-S42",
+  "IRPT_BCKEND-W3-S43",
+  "IRPT_BCKEND-W3-S45",
+  "IRPT_BCKEND-W1-S21",
+  "IRPT_BCKEND-W1-S22",
+  "IRPT_BCKEND-W1-S24",
+  "IRPT_BCKEND-W1-S26",
+  "IRPT_BCKEND-W4-S34",
+  "IRPT_BCKEND-W4-S35",
+  "IRPT_BCKEND-W4-S38",
+  "IRPT_BCKEND-W1-S25",
+  "IRPT_BCKEND-W1-S27",
+  "IRPT_BCKEND-W3-S41",
+  "IRPT_BCKEND-W3-S44",
+  "IRPT_BCKEND-S77",
+  "IRPT_BCKEND-S78"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md -- one row per id in this list, minted in the same commit",
+   "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_L4_RULING_PARTIAL_PROJECTION_20260919.md @61627f39f9 -- read at the bytes, ancestor of HEAD",
+   "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md @82ecb14d32 -- the L8 packet"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S107",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "THREE DISMISSED, and one of them only after measuring whether it was a one-off or a class -- it was a class, so the class is carried by a new row rather than dismissed with it.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W1-S23: the order face's example directory-prefix date was one day stale against every firm's live latest.json at the cell's cut. True, INERT, and nothing is owed -- an illustrative date in a frozen face is not a defect in the artifact, and the cell read the live pointer rather than the example. W4-S36: the face cited memory/feedback_structural_over_cultural_pattern.md and it is absent from the tracked tree -- TRUE, and I checked whether it was one bad path or a POINTER CLASS before disposing it. It is a class: CLAUDE.md itself cites exactly 2 memory/ paths and 2 of 2 are unresolvable as written, in two DIFFERENT ways. The order face is frozen and owes nothing; the class is filed as IRPT_BCKEND-S78 and graduated there. W4-S37: a git hash-object default-filter run produced a blob id that existed in the ODB at the wrong content, SELF-CAUGHT and corrected with --no-filters before it was reported. Nothing is owed and the row is a credit rather than a defect -- it is the catalogued unit trap (a content hash without its instrument is two different numbers) meeting a real collision, and the worker ran the negative control that separated them.",
+ "adjudicates": [
+  "IRPT_BCKEND-W1-S23",
+  "IRPT_BCKEND-W4-S36",
+  "IRPT_BCKEND-W4-S37"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Each id's reason is at its own name in world_is. None leaves an act owed: two are true observations on frozen faces with no artifact consequence, and the third is a self-caught instrument trap. W4-S36's CLASS is not dismissed -- it is carried by IRPT_BCKEND-S78.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's resolution test of CLAUDE.md's 2 memory/ citations at HEAD ea600978d1",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S78"
+  ]
+ }
+}
+```

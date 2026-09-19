@@ -5877,3 +5877,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "hazard_standing": "INERT"
 }
 ```
+
+## Round 5 L9 -- 3.0.0_SA_CVO's own findings from the grading
+
+```json
+{
+ "id": "IRPT_BCKEND-S77",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "one_line": "THE CROSS-FIRM FENCE IS STALE AT HEAD AND W3-S42's STATED CAUSE IS NO LONGER TRUE: bucket_provisioned is now TRUE for inflection and cottonwood, and the guard STILL does not name their buckets -- because the GENERATOR has not been re-run, not because the flag is false. The remedy moves from a registry edit outside that order's paths to one command, and it is unblocked.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/logic/registry/scopes.json @ea600978d1 -- bucket_provisioned true + bucket_managed_by for both firms",
+   ".tools/ds-precommit-check.py @ea600978d1 -- the live generated block, missing both new names",
+   "lib/opal_naming.py:617 @ea600978d1 -- the generator's selector on bucket_provisioned",
+   "3.0.0_SA_CVO's regeneration into the scratchpad and the 0-of-290 signature census at HEAD"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The generated cross-firm block in .tools/ds-precommit-check.py names every provisioned foreign firm bucket, so a pipeline tree cannot reference another firm's bucket by bare name.",
+ "world_is": "Measured by 3.0.0_SA_CVO at HEAD ea600978d1. infra/logic/registry/scopes.json carries bucket_provisioned TRUE for BOTH inflection and cottonwood, each with bucket_managed_by 's3-lgic-firm-buckets.tf' -- so IB-rte-7's drafted field LANDED and W3-S42's premise ('bucket_provisioned stays false for both firms') is false at HEAD. The LIVE fence still reads _CROSS_FIRM_FOREIGN_BUCKETS = {data/black_diamond/: (opal-data-cot,), data/cot/: (opal-data-bd, opal-data-inf, opal-data-49financial)}. REGENERATING FROM TODAY'S REGISTRY INTO THE SCRATCHPAD -- 'python lib/opal_naming.py generate --out <scratchpad>', never writing the repo -- produces the SAME block PLUS 'opal-data-cottonwood' under data/black_diamond/ and 'opal-data-inflection' under data/cot/. The line that does it is lib/opal_naming.py:617, 'ruled = [g[\"bucket\"] for g in foreign if g.get(\"bucket_provisioned\")]', which reads the very flag that flipped. THE SIBLING BLOCK _CROSS_FIRM_FOREIGN_KEY_PREFIXES regenerates IDENTICAL, so this is one block, not the pair. EXPOSURE, NOT INCIDENT, and the signature is printed: over 290 readable tracked files (data/black_diamond/ 176, data/cot/ 114), references to the foreign bucket in the newly-unguarded direction = 0. Nothing has used the hole. \u26d4 THE FLIP THAT UNBLOCKED THE TERRAFORM SELECTOR IS THE SAME FLIP THAT CHANGED THE FENCE GENERATOR'S OUTPUT, and only one of the two consumers was acted on -- which is why neither IB-rte-3 nor IB-rte-7 could see it: each owned one half."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S78",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "one_line": "W4-S36 IS NOT AN ORDER DEFECT, IT IS A POINTER CLASS, AND THE LAW FILE HAS IT TOO: CLAUDE.md cites exactly 2 memory/ paths and 2 OF 2 ARE UNRESOLVABLE AS WRITTEN -- neither is tracked, and they resolve in two DIFFERENT stores, one in the repo worktree only and one only in the user memory directory.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "CLAUDE.md @ea600978d1 -- the two memory/ citations",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S36",
+   "3.0.0_SA_CVO's resolution test at HEAD: git ls-files memory/ returns 0; each path tested against the worktree and against the user memory directory separately"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A path a law file or an order face cites resolves for the reader who follows it.",
+ "world_is": "Measured by 3.0.0_SA_CVO at HEAD ea600978d1 while dispositioning W4-S36 (which correctly reports that memory/feedback_structural_over_cultural_pattern.md, cited by IB-rte-4's own face, is absent from the tracked tree). DENOMINATOR: CLAUDE.md cites 2 distinct memory/*.md paths. memory/feedback_availability_is_not_authorization_vendor_egress.md -- tracked FALSE, present in the repo worktree FALSE, present in the user memory directory TRUE. memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md -- tracked FALSE, present in the repo worktree TRUE (untracked), present in the user memory directory FALSE. The repo's memory/ directory carries 0 tracked files. \u26d4 SO AN UNTRACKED POINTER IS ABSENT IN EVERY FRESH WORKTREE, which is where workers run -- the same class as the gitignored-tool-binary trap the estate already catalogues -- and a reader who follows either path literally gets nothing while the citation looks authoritative. NOT A CONTENT CLAIM: both memories exist somewhere and their substance is not in question; what fails is the ADDRESS."
+}
+```
