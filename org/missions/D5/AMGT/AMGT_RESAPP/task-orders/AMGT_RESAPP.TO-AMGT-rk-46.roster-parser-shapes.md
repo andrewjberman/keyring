@@ -252,7 +252,7 @@ side, and the fixture files committed with their byte counts.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~48</slot>
 <fabric>site-z</fabric>
