@@ -4782,3 +4782,28 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S105",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+ "surfaced_at": "2026-09-19T10:29Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "R7R14-AC3 (r14-vintage-field) grades BOTH round-14 cells' records together, but each cell's record lives in a DIFFERENT worker's isolated worktree -- so from either worker's own worktree alone this criterion reads FAIL until drain merges both, regardless of how correct that worker's own record is.",
+ "spec_asserts": "The task order lists R7R14-AC3 among EN-r-7's own expected_criteria and instructs the worker to run its invocation and record the output; the order's WIRING note says only 'AC1 and AC3 FAIL (no record exists yet)' at the cut, grouping the two together without flagging that AC3 -- unlike AC1 -- cannot flip to PASS from this worker's own actions alone.",
+ "world_is": "check_en_r14.py:233-247 (r14_vintage_field) iterates BOTH cells ('EN-r-7', 'EN-p-38') and AND-combines core_vintage() per cell. EN-p-38's record lives at deliverables/0.9.0_WK_LGIC_ENFORCE~2/TOKEN_GRAIN_R14.json, owned by a separate worker (0.9.0_WK_LGIC_ENFORCE~2) in a separate worktree/branch this worker cannot message or merge, per the order's own BOUNDS. Measured from THIS worktree after EN-r-7's own record was written and committed (37865221aa): 'python check_en_r14.py r14-vintage-field' returns VERDICT: FAIL-R14-VINTAGE-FIELD -- the EN-r-7 block is clean (2 of 2 fixed inputs named, both resolvable) while the EN-p-38 block reads 'fixed inputs named at pin: 0 []' and 'NOT NAMED: [R14_BASE.json, check_en_r14.py]' because that path does not exist on this branch. This is not a defect in EN-r-7's own work -- it is a shared, cross-cell criterion applied identically (same checker function) to both round-14 task orders, satisfiable only by a MERGED tree at drain, never by either worker's own isolated worktree.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "check_en_r14.py:233-247 (r14_vintage_field) iterates ('EN-r-7','EN-p-38') and AND-combines core_vintage() per cell",
+   "R14_BASE.json record_shape.paths.EN-p-38 = deliverables/0.9.0_WK_LGIC_ENFORCE~2/TOKEN_GRAIN_R14.json, a path this worktree (branch wk-lgic-enforce-14-1) does not carry",
+   "measured at commit 37865221aa (this worktree): python check_en_r14.py r14-vintage-field -> VERDICT: FAIL-R14-VINTAGE-FIELD, EN-p-38 block 'fixed inputs named at pin: 0 []', 'NOT NAMED: [R14_BASE.json, check_en_r14.py]'",
+   "the order's own WIRING note ('AC1 and AC3 FAIL (no record exists yet)') describes only the AT-THE-CUT state and does not distinguish AC1 (single-cell, resolvable by this worker alone) from AC3 (cross-cell, resolvable only at drain)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
