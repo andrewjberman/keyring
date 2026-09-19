@@ -9484,6 +9484,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC7's own script treats every object under filings/v1/<security_key>/*.source.json as current evidence for that key ('for key in objs: ... served += 1'), implicitly reading the prefix as carrying one row per validation key.",
     "world_is": "The prefix can carry more than one historical object per key once a key's battery outcome changes across separate --write-pool invocations (exactly what a resumable, iteratively-fixed crawl produces in practice). AC7 still PASSES on its own stated failure bar (no key is absent; no object carries parser_version 1.0.0) because every object present, including the stale one, was written by THIS battery at parser_version 2.0.0 -- but a downstream reader of the prefix that assumes 'one object per key' would pick up the wrong one depending on S3 listing order.",
     "notes": "Remedy holder: whichever cell reads filings/v1/<security_key>/ downstream (AMGT-rk-49 or the analyzer) should key on the LATEST retrieved_at / most recent PUT among same-prefix objects, or this order's own pool-write step should be made to delete/supersede a prior differently-keyed object for the same security_key -- neither is in this order's <paths> (filings/v1/ writes here are scoped to the three validation names only, and this worker does not delete pool objects on its own judgment)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W49-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~49",
+    "surfaced_at": "2026-09-19T07:55:00Z",
+    "one_line": "AC4's <expect> assumes the three validation keys (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity) are NOT in the crosswalk -- measured at spawn time, all three are ALREADY MEASURED records in crosswalk/v1/2026-09-19.json (rk-31 landed them earlier this round), so they are counted as ordinary keyed-population/served names, not as an out-of-crosswalk special case.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python read of s3://opal-data-harvest/crosswalk/v1/2026-09-19.json: records for CAT_US_Equity, CSL_AU_Equity and 6861_JP_Equity all carry resolution=MEASURED",
+        "management_posture_batch.py report (this order's AC4) printed 'MANAGEMENT SERVED: 14 of 14 ceiling names (6861_JP_Equity, ... CAT_US_Equity, ...)' -- both names appear inside the CEILING intersection, which is only reachable through keyed_population()'s crosswalk read, not through served_names() alone",
+        "MANAGEMENT CONTENT: FILING 1 BLOOMBERG_FALLBACK 2 zero-officer 12 of 15 served object(s) -- a+b+c=N holds; CAT_US_Equity contributes to FILING (its filing resolved by rk-38's battery before this order ran), CSL_AU_Equity and 6861_JP_Equity contribute to BLOOMBERG_FALLBACK"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4's <expect> clause: 'the three validation keys are NOT in the crosswalk, so they are counted only if served_names lists them -- state which'.",
+    "world_is": "All three validation keys ARE in the crosswalk (MEASURED) at this order's spawn vintage (crosswalk/v1/2026-09-19.json), not merely present via served_names(). This does not fail AC4 -- the invocation is read-only, writes nothing, and its printed lines (KEYED POPULATION, MANAGEMENT CEILING, MANAGEMENT CONTENT) are exactly as specified with a+b+c=N -- but the premise behind the 'state which' instruction was already stale by the time this worker spawned.",
+    "notes": "No remedy needed on this order's surface: the batch's own targeting (filed_names, cmd_management) is unchanged per this order's BOUNDS, and AC4 asked only for a report line, which reads live and correctly either way. Filed for the record in case a later cell relies on the 'not in crosswalk' premise."
   }
 ]
 ```
