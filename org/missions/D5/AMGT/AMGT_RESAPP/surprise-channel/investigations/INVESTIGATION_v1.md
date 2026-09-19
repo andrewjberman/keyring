@@ -8884,6 +8884,73 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W60-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~60",
+    "surfaced_at": "2026-09-19T02:31:49Z",
+    "one_line": "AC2's expected nested_branch literal (wk-AMGT_RESAPP-60-portal) does not match this worker's actual superproject branch naming (wk-amgt-14-60), so the CORRECTLY-derived portal branch reads wk-amgt-14-60-portal instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own L7 identity line, verbatim: 'Your worktree is /c/tmp/wk-amgt-14-60 (branch wk-amgt-14-60, cut from SITEZ HEAD 047aee5478)' -- the actual branch is wk-amgt-14-60, not wk-AMGT_RESAPP-60.",
+        "AC2 <expect> text, verbatim: 'nested_branch wk-AMGT_RESAPP-60-portal'.",
+        "Measured invocation output: git -C portal rev-parse --abbrev-ref HEAD -> wk-amgt-14-60-portal, produced by portal verb's rule 'the branch name derived from the superproject worktree's branch' (section 1, cmd_portal) applied to the ACTUAL branch this worktree carries."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's <expect> literal asserts the provisioned portal worktree's branch reads exactly wk-AMGT_RESAPP-60-portal.",
+    "world_is": "The dispatch naming convention actually in force for round 14 cells is wk-<macro>-<round>-<cell> (wk-amgt-14-60), not wk-<PROJECT_CODE>-<cell> (wk-AMGT_RESAPP-60); the script's portal verb correctly derives from whatever branch the superproject worktree actually carries, so the mechanism the cell was ruled to build is satisfied, but AC2's literal expected string is not.",
+    "notes": "No script change made: the derivation rule (read the actual superproject branch, append -portal) is the one section 1 rules, and changing it to hard-code AMGT_RESAPP-60 would break the general provision verb for every other project/cell. AC2 graded PASS on the mechanism (distinct worktree, correct gitlink/ref resolution, correct file population, correct HEAD equality, clean status) with this one literal sub-value diverging from the order's own illustrative text."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W60-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~60",
+    "surfaced_at": "2026-09-19T02:31:49Z",
+    "one_line": "AC3's literal invocation (native Windows Python subprocess.run(['./node_modules/.bin/tsc', '--version'], shell=False)) cannot execute the resolved binary: .bin/tsc is an extensionless POSIX shell shim, and Win32 CreateProcess raises OSError WinError 193 rather than running it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured this session, AC3 invocation run verbatim under timeout 120 from cwd portal/: rc=1, full traceback ending 'OSError: [WinError 193] %1 is not a valid Win32 application', raised inside subprocess.run at the CreateProcess call, after printing only the first line (node_modules_is_link_or_dir True bin_tsc True).",
+        "node_modules/.bin/tsc identified directly: 'POSIX shell script, ASCII text executable', first line '#!/bin/sh' -- Windows' CreateProcess API (which native, non-MSYS Python's subprocess module calls with shell=False) has no shebang interpreter and cannot launch an extensionless text file as a process.",
+        "The same binary invoked through bash (this worker's own wk-provision.sh self-test, ARM4/ARM1: \"$portal_dir/node_modules/.bin/tsc\" --version) succeeds and prints 'Version 5.9.3' -- so the failure is specific to native-Python CreateProcess invocation of this shim, not to the link, the node_modules content, or the tsc install."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3's invocation asserts that running ['./node_modules/.bin/tsc', '--version'] via native Python's subprocess.run(shell=False) from inside the provisioned portal/ prints 'Version X.Y.Z' with rc 0.",
+    "world_is": "It raises an unhandled OSError before rc is ever produced, on this device's native Windows Python, because the resolved binary is a shebang shell script and Win32 CreateProcess does not interpret shebangs. This is a platform-level property of native-Python-plus-POSIX-shim, independent of this cell's script or the node_modules link -- the identical binary runs correctly through bash.",
+    "notes": "REFUSED as written per the order's own Refusal Clause: not repaired by substituting tsc.cmd/tsc.exe or by invoking through bash, since AC3's invocation text is literal and this order names no such route. Flagged BLOCKING/ARMED because every OTHER page cell that resolves ./node_modules/.bin/tsc by path (per this order's own citation of AMGT-rk-53 AC6) is presumably exposed to the identical failure if its own criterion invokes tsc via native Python subprocess.run(shell=False) rather than through bash or tsc.cmd -- worth the issuer checking how rk-53 AC6 and sibling page-cell criteria actually invoke tsc before assuming AC3's shape is safe elsewhere."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W60-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~60",
+    "surfaced_at": "2026-09-19T02:31:49Z",
+    "one_line": "Section 1's ruled remove-verb steps do not reproduce AC5's own literal expected end-state: git worktree remove --force deletes the whole portal_dir (not just its contents), and the ruled unconditional 'git -C nested worktree prune' also cleared a PRE-EXISTING, unrelated prunable entry (C:/tmp/wk-amgt-10-1/portal) that AC5 says is 'not pruned by you'.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured this session: baseline nested worktree list carried 12 entries including 'C:/tmp/wk-amgt-10-1/portal ... prunable'; after running this cell's own ruled 'remove <worktree> --portal-only' (which runs git -C <main>/portal worktree remove --force <portal_dir> then git -C <main>/portal worktree prune, exactly as section 1 specifies), the list carries 11 entries and the wk-amgt-10-1 prunable entry is GONE, not merely unaffected.",
+        "Measured this session: after the same remove call, os.path.isdir('portal') is False (not True) and git status --short -- portal in the superproject reads 'D portal' (not the expected '(clean)') -- because git -C <nested> worktree remove --force deletes the whole worktree directory including its root, and section 1 names no step to recreate the empty gitlink placeholder directory afterward.",
+        "AC5 <expect> text, verbatim: 'prunable_entries equal to the pre-existing count (the removal registers no new prunable entry; the pre-existing C:/tmp/wk-amgt-10-1/portal prunable entry, if still present at spawn, is reported, not pruned by you)' and 'portal_dir_exists True with portal_entries 0 of 0 ... superproject_status (clean)' -- both contradicted by the measurement above while following section 1's build literally."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5 expects the pre-existing prunable entry to survive untouched and the worktree's portal/ directory to remain present-but-empty with a clean superproject status after remove --portal-only.",
+    "world_is": "Section 1 rules an UNCONDITIONAL 'git -C <main>/portal worktree prune' as part of the remove verb, and that call prunes every stale entry the nested repository can see, not only the one this cell created; separately, 'git worktree remove --force' removes the worktree's root directory entirely, which section 1 never instructs the script to recreate. Both are direct, literal consequences of building exactly what section 1 rules; AC5's own <expect> assumes different consequences from the same named steps.",
+    "notes": "REFUSED per the Refusal Clause: this worker did not scope the prune call to its own entry, and did not add an unruled 'mkdir portal_dir' recreation step, because section 1 names neither. As a housekeeping act OUTSIDE the graded invocation (after AC5's output was already recorded), this worker recreated its OWN worktree's empty portal/ placeholder (mkdir) so its own superproject status returns to clean, matching 'leave your worktree as you found it' -- this does not change AC5's recorded measurement. The pre-existing wk-amgt-10-1 prunable registration cannot be un-pruned; its underlying directory was already gone (that is what 'prunable' means), so no data was lost, only a stale admin entry another seat might have wanted to observe. Disarm: the issuer either accepts AC5's literal measurement as the correct behavior (and corrects AC5's own <expect> text for future rounds) or amends section 1's remove verb to scope the prune and recreate the placeholder -- this worker's <paths> does not include re-ruling section 1 beyond what was already built."
   }
 ]
 ```

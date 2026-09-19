@@ -170,7 +170,12 @@ the ruined tree; a lane following this skill got a working one. It cost `2.0.0_S
 `RP-s-20` (the worker returned BLOCKED without executing a criterion, correctly, having first checked
 `git remote -v` to separate *wrong repo* from *right repo, wrong commit*). Corrected at the definition.
 
-**Make the worktree yourself, from THE BRANCH YOU ARE ON, and hand the worker its path:**
+**Make the worktree yourself, from THE BRANCH YOU ARE ON, with `.tools/wk-provision.sh provision <CODE> <n>
+--path <path>`; for a PORTAL cell add `--portal-ref <ref>`, where `<ref>` is the value the issuance commit's
+`fanout:` data names as `portal_ref:` (the nested repository's `DEV` HEAD at the cut, never the gitlink
+commit, which is measured behind it -- row `AMGT_RESAPP-Z-W31-S1`, cell `AMGT-rk-60`); the drain tears a
+portal worktree down with `.tools/wk-provision.sh remove <path>` so the nested repository never carries a
+`prunable` entry. The script runs the line below and hands the worker its path:**
 
 ```bash
 git worktree add -b wk-<CODE>-<n> <path> HEAD
