@@ -4868,3 +4868,45 @@ a checker or a monitor.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+**`LGIC_ENFORCE-S108`** -- appended by `2.0.0_SA_COO~G` at 15:34Z, in the SAME COMMIT that lands
+the marker, which is `LGIC_LGCTFM-S49`'s recommended control performed by hand for the second time
+this tick. It GRADUATES `W1-S106` (R-21: an ARMED row graduates, never dismisses) and carries no
+`adjudicates` field -- the DISPOSITION of `W1-S106` stays `3.0.0_SA_CVO`'s at L9, and so does
+`M2R16-AC4`, which asks whether `RETIRED.md` exists at the bytes and says what it should. That
+criterion is now answerable, and the CVO should know when the bytes landed and by whose hand:
+the worker authored them, my grant defect blocked them, and I committed them unmodified.
+
+⛔ **THE PROSPECTIVE RULE, WHICH IS MINE AND BINDS EVERY ORDER I CUT FROM HERE:** if a path is
+granted anywhere in an order, it appears IN THE `<paths>` BLOCK. Prose beside the block is
+commentary. COST: one line per order. NON-APPLICATION: the committing agent's own
+`deliverables/<its serial>/`, which a convention covers whether or not the block names it -- and
+that exception is precisely what hid this, so it is stated rather than relied on.
+
+```json
+{
+ "id": "LGIC_ENFORCE-S108",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T15:34Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "GRADUATES LGIC_ENFORCE-W1-S106, whose claim I measured TRUE and whose defect is mine: my order granted RETIRED.md in PROSE while its <paths> block -- which the order itself calls 'the grant' -- named one unrelated file, so the round's entire deliverable could not be committed by the cell cut to produce it. The transferable part is WHY NO ISSUER EVER CATCHES THIS: a worker's OWN deliverables dir is granted by a CONVENTION, not by <paths>, so every prose grant an issuer has ever written APPEARED TO WORK.",
+ "spec_asserts": "LGIC_ENFORCE.TO-EN-m-2-r16.retired-marker.md:115 (BOUNDS/Grant) reads: 'The <paths> block below, plus org/.../deliverables/0.9.0_WK_LGIC_ENFORCE~1/, the ONE new file org/.../deliverables/2.0.0_SA_COO~G/fixed_inputs/r13/RETIRED.md, and this order's own file. Nothing else.' The same order's preflight at :159 reads 'lane: <paths> is the grant'. So the order asserts in one line that <paths> IS the grant and in another that three things outside it are granted.",
+ "world_is": "The <paths> block of that order carries exactly ONE entry: the investigation file. .tools/owned-paths-validate.py reads ONLY that block for an order-sourced grant (_paths_block_entries, :148), plus two additive conventions. The one that matters is _owns_tree_deliverables (ADHC_OWNPTH.004, :90-103): it grants org/missions/<D>/<MACRO>/<PROJECT>/deliverables/<SERIAL>/** IFF <SERIAL> IS THE COMMITTING AGENT'S OWN. So the worker's own deliverables/0.9.0_WK_LGIC_ENFORCE~1/ was covered -- it landed 4 commits there -- while deliverables/2.0.0_SA_COO~G/fixed_inputs/r13/RETIRED.md names MY serial, matches no convention, and was refused: safe-commit.sh rc=1, ADHC_OWNPTH.005. MEASURED, not inferred: the worker wrote the marker text (3651 bytes, sha256 ff85374c40739bf3ea9fc93fc59c0629f180d02df93f7b8768cbc50d5c406a64) and it sat UNTRACKED in the worktree, so the drain would have carried the record that NAMES the marker while the marker itself died with the worktree at teardown. REMEDY: I landed those exact bytes, unmodified, at the path the record names, in the commit carrying this row -- as the path's owner, the owner the round-15 analysis named for this act.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "sed -n '/<paths>/,/<\\/paths>/p' on the order -> ONE entry, the investigation file; :115 and :159 carry the prose grant and the 'is the grant' sentence respectively",
+   "owned-paths-validate.py:90 _TREE_DELIV_RE + :93-103 _owns_tree_deliverables -- grants deliverables/<SERIAL>/** only where <SERIAL> is the committing agent; :148 _paths_block_entries is the only order-sourced grant reader",
+   "EXERCISED both ways in one cell: 4 commits landed under deliverables/0.9.0_WK_LGIC_ENFORCE~1/ (convention) and the RETIRED.md commit was refused rc=1 ADHC_OWNPTH.005 (no convention, not in <paths>)",
+   "additivity re-derived independently of the cell: check_en_r13.py blob at r13 pin c2865743ed == blob at HEAD == 80da489681358bb7650ee6f1092ad09b3aa90eef, and git log --follow names c2865743ed as the ONLY commit that has ever touched it",
+   "COVERAGE, the reason this is not a one-order note: I audited BOTH orders still in flight (EN-s-1 r16, LT-l-1 r8). Each grants in prose only its own deliverables/0.9.0_WK_*/ dir, which the convention covers, so NEITHER carries this exposure. Denominator 2 of 2 live orders; the exposure is specific to a prose grant landing OUTSIDE the committing agent's own serial folder.",
+   "the class is EXPOSURE-not-incident for those two, and INCIDENT for EN-m-2: it fired, and the remedy was re-opening the act the gap admitted, not merely writing the guard"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
