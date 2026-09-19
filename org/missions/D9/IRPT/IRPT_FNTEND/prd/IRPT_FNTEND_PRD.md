@@ -5,7 +5,7 @@
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-11", "FWD-12"],
@@ -119,6 +119,8 @@ Consumed from the counterpart, whose PRD carries the field definitions (its II.3
 | `ExportBundle`, `ExportReceipt` | consumed | F8 |
 | `StatusEnvelope` | consumed | F7, F12 |
 | `RenderPackage` | **produced** | F9 |
+
+**(v0.7) `unprojected_grant` -- AN ENVELOPE-LEVEL FIELD, NOT A CONTRACT BODY FIELD, AND IT IS RECORDED AT THAT GRAIN ON PURPOSE.** The counterpart shipped it this round on the SERVED RESPONSE ENVELOPE -- `{count, denominator, kinds}`, top-level and NON-OPTIONAL, present at zero -- built in `infra/aws/lambda/investor-reporting/_authz/served.py::response_envelope()` and fed from `_authz/enforce.py`'s `Enforcer` census. It therefore reaches **every scoped route, not a subset**: 7 of 7 `entry.py` import the shared served boundary and share its ONE call site (directory, export, holdings, narrative, ops, performance, ycharts/generate), so it lands on **F2, F4, F5, F6, F7, F8, F10, F11 and F12** -- it belongs in no single row of the table above, and filing it under `ResolvedScope` would misstate where it lives. **THIS PROJECT OWES A RENDERING:** a VISIBLE partial indicator whenever `unprojected_grant.count > 0`, on every view that displays a scoped result. ⭐ **The acceptance test is the one the originating ruling states and it is an EVIDENCE test, not a code test:** the day someone asks *"was the partial ever actually shown?"*, the answer must be an ARTIFACT -- a capture, a fixture render -- and not a recollection. ⚠ **AND THE COUNTERPART'S GUARANTEE IS PRESENT-AT-ZERO, SO ABSENCE OF THE KEY IS A BACKEND DEFECT, NEVER A "NO PARTIAL" SIGNAL** -- a consumer that treats a missing key as zero would render clean on exactly the failure this field exists to surface, and would do so silently. Source: `IRPT_BCKEND-W1-S28` (ARMED, `disarm_owner 1.0.0_SA_CTO`) discharging CTO ruling @`61627f39f9` condition 2, which requires the consumer obligation filed as a named, owned row in the same round the field ships; this clause is the routing that row names, and **the row disarms when a cell here renders the indicator and captures it, not when this clause lands.**
 
 Supervision and billing cohort semantics -- the original brief's independent supervision/billing concepts and their hierarchy, and Holdings' alternative Client partitions (Opal Supervised/Unsupervised as fee-taking status; Advised/Residual as advisory status; vendor AccountSupervised is NOT Opal fee-taking) -- ride two contracts and are carried explicitly here because no single row above names them: `DirectoryEntry` carries the cohort/capability facts for the selected scope; `HoldingsSnapshot` carries the classification partitions per node. Both only when authoritative; an unknown value is an explicit unknown state, never false and never Client. Consumed by F2 (cohort controls shown only for supported, authoritative classifications) and F6 (partition display, never conflated with the supervision/billing axes); produced by the counterpart's B1 and B12. Source: BK brief II.2 and IV.5 registry paragraph; FE brief II.3.
 
