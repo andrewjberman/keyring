@@ -9510,6 +9510,71 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "A security_key's served source object is THE resolved winner for that name -- one current object per key, and a resolved accession supersedes an earlier UNRESOLVED-SOURCE placeholder.",
     "world_is": "The prefix accumulates one object per distinct OUTCOME rather than per key, and the reader picks the lexicographic maximum. Those two combine so that the placeholder, whose name begins 'U', outranks every digit-leading EDGAR accession. Today nothing is mis-served, because the only key holding both has a lowercase doc- winner. But 177 of 193 keys currently hold ONLY a placeholder, and the battery is resumable and iteratively fixed -- exactly the pattern W40-S2 describes -- so the next run that resolves any of those 177 to an EDGAR accession writes the winner ALONGSIDE the placeholder and the reader keeps returning the placeholder.",
     "notes": "EXPOSURE, NOT INCIDENT (Rule 22, ABSENT != EXERCISED-AGAINST): the signature was run over the whole population with its denominator printed and returned 0 of 193, so NOTHING IS RE-OPENED and no served output is wrong today. The remedy is the guard. W46-S2 already names AMGT-rk-46's own task order as carrying the item-1 fix; this row adds what that row could not: the COMPOSITION with W40-S2's accumulation, the MEASURED surface (177 of 193), and the fact that the single live coexistence is protected only by ASCII case ordering rather than by design. A picker fix alone is sufficient and is the cheaper half; superseding on write would also close it. DISARMS when the picker no longer selects a placeholder in the presence of any resolved object -- with an arm covering a DIGIT-LEADING accession specifically, since a doc- fixture passes today for the wrong reason."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W53-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~53",
+    "surfaced_at": "2026-09-19T07:48Z",
+    "one_line": "The chain L CTO half (NEVER_WIDEN_ROUND14_CHAIN_L_CTO_HALVES.md) is absent from this worktree; only the COO half exists.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test -f org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND14_CHAIN_L_COO_HALVES.md -> EXISTS, carries a section headed 'AMGT-rk-53 -- no rank without signal ...' (grep -n confirmed).",
+        "test -f org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND14_CHAIN_L_CTO_HALVES.md -> ABSENT (measured this session, worktree /c/tmp/wk-amgt-14-53 at SITEZ HEAD 879e6c5c15)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order (section 'ISSUER RULE -- WHERE THE NEVER-WIDEN PAIR LIVES'): 'Either file absent or its AMGT-rk-53 section missing: run the read-only, offline and in-process criteria, file a BLOCKING row (disarm_owner 2.0.0_SA_COO~Z), and STOP -- never act on one half.'",
+    "world_is": "The CTO half is absent. Per the COO half's own text ('THE ACT BY THE WORKER: NONE ON THE SERVED PLANE ... this half covers NOTHING the worker does') and this order's own BOUNDS section ('THIS ORDER DEPLOYS NOTHING'), every criterion this worker runs (AC1-AC7) is read-only, offline or in-process against the worktree's own bytes -- none is the live act (a Lambda redeploy) the pair actually scopes. This worker therefore ran every criterion as literally instructed by the fallback clause, filed this row, and did NOT perform (and was never asked to perform) any deploy. The pair's absence blocks only the COO's own later consolidated redeploy under section 4, which this worker does not reach.",
+    "notes": "Disarm: 1.0.0_SA_CTO~Z (or 2.0.0_SA_COO~Z in its stead per the co-sign discipline) writes the CTO half naming AMGT-rk-53's section before the chatter-axis Lambda redeploy this order's BOUNDS section reserves to the COO."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W53-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~53",
+    "surfaced_at": "2026-09-19T07:48Z",
+    "one_line": "This worktree's portal/node_modules was a BROKEN symlink (target mangled to /c/C:/Users/... by MSYS path conversion at spawn-time provisioning), not the working junction the worker face's identity line asserted -- fixed in-session with a Windows junction to the main tree's portal/node_modules, no bun install run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls -la portal/node_modules (before the fix, this session): 'node_modules -> /c/C:/Users/Opal Bloomberg/Desktop/ajb_workspace/portal/node_modules/' -- a doubled prefix (/c/ + C:/...) that resolves to no real path; test -f portal/node_modules/.bin/tsc -> MISSING.",
+        "cmd.exe /c mklink /J ... against the correct absolute Windows path succeeded after removing the broken symlink; test -f portal/node_modules/.bin/tsc -> PRESENT, ./node_modules/.bin/tsc --version -> 'Version 5.9.3' (this session)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Worker-face identity line: 'Your worktree's portal/ is ALREADY populated (a linked worktree of the nested portal repo at DEV, node_modules junctioned) -- run no install; use ./node_modules/.bin/tsc -b inside portal/.'",
+    "world_is": "The portal git worktree link itself was correctly provisioned (HEAD at rk-43's commit, clean status), but the node_modules junction was a symlink whose target string was corrupted by an MSYS/Windows path-conversion artifact at provisioning time, so it pointed nowhere real. AC6's own tsc invocation would have failed with 'command not found' had this not been caught and fixed. No bun install was run to fix it -- only a corrected OS-level junction to the ALREADY-INSTALLED main-tree node_modules, consistent with the 'run no install' bound.",
+    "notes": "Disarm owner is whoever builds the per-worker portal provisioning step (the /dispatch mechanism, under 2.0.0_SA_COO~Z): create the node_modules junction with a path the OS resolves directly (e.g. via a non-MSYS mklink invocation, or verify the resulting symlink target with a positive control) rather than one built through an MSYS path-conversion step that can double-prefix a drive letter. Other round-14 worker worktrees provisioned the same way may carry the same broken link undetected until their own AC6-equivalent runs tsc."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W53-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~53",
+    "surfaced_at": "2026-09-19T07:48Z",
+    "one_line": "AC1(a)'s cell text names the excluded reason for a zero/thin PRICE-TRENDING series as 'INSUFFICIENT_OBSERVATIONS or NO_OBSERVATIONS from the movement gate on TRENDING'; the MEASURED reason for a 1-observation series on TRENDING is 'UNMEASURABLE:a window return needs at least 2 observations (got 1)' -- a third, distinct string movement_gate.py itself produces on that branch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "movement_gate.py: movement_scores()'s TRENDING branch calls subject_level_score(), catches MovementGateError, and sets excluded[key] = 'UNMEASURABLE:{0}'.format(...) -- NEVER 'NO_OBSERVATIONS' (that literal only fires when `not values`, i.e. a series with zero non-None observations) and NEVER 'INSUFFICIENT_OBSERVATIONS' (that literal is `breakout_qualifies`'s own string, on the BREAKOUT branch only).",
+        "Measured this session: python -c invoking lib.research.price.generation.compute_price_axis on a 1-observation series prints TRENDING_PRICE excluded == {'ONE US': 'UNMEASURABLE:a window return needs at least 2 observations (got 1)'} and BREAKOUT_PRICE excluded == {'ONE US': 'INSUFFICIENT_INTERIOR_SERIES_FOR_TRAILING_BASELINE'} (the writer's own pre-filter reason, exactly as the cell names for BREAKOUT)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1(a) (this order, section 5): 'a planted 1-observation series is excluded (INSUFFICIENT_OBSERVATIONS or NO_OBSERVATIONS from the movement gate on TRENDING; INSUFFICIENT_INTERIOR_SERIES_FOR_TRAILING_BASELINE on BREAKOUT) and never ranked'.",
+    "world_is": "The BREAKOUT half of the citation is exact. The TRENDING half is not one of the two named literals; the code path that actually excludes a 1-observation TRENDING series was, at the time this citation was written, apparently conflated with `movement_scores`'s own NO_OBSERVATIONS/`breakout_qualifies`'s INSUFFICIENT_OBSERVATIONS. The test this worker wrote (lib/research/price/tests/test_generation.py::test_compute_price_axis_a_1_observation_series_is_excluded_a_5_observation_one_is_ranked) asserts the MEASURED reason (startswith 'UNMEASURABLE:') rather than the cell's literal, and says so in its own docstring.",
+    "notes": "No fix needed in code -- the exclusion behaviour (never ranked) is correct and proven; only the order's own descriptive parenthetical is imprecise. Disarm: none armed (INERT) -- filed so a future reader citing this cell's AC1(a) does not grep movement_scores for a literal 'INSUFFICIENT_OBSERVATIONS' on the TRENDING branch and conclude it is missing."
   }
 ]
 ```
