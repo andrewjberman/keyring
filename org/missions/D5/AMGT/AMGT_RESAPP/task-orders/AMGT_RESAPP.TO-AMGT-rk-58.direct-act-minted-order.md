@@ -153,7 +153,7 @@ committed pair at HEAD and the issuer's two input files.
 .tools/direct-act-order.py
 .tools/tests/test_direct_act_order.py
 .claude/skills/dispatch/SKILL.md
-org/missions/D5/AMGT/AMGT_RESAPP/task-orders/.fixture-AMGT-rk-58.direct-act.md
+org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-58-fixture.direct-act.md
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~58/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-58.direct-act-minted-order.md
@@ -162,7 +162,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-58.direct-ac
 - **A SURFACE NOT NAMED IN `<paths>` IS A WALL.** A READ needs no grant (read `.tools/owned-paths-validate.py`,
   `.tools/to-pipeline-gate.py`, `.tools/prd_signoff_lib.py`, `.owned-paths.yaml`, the two round-13 scores-prefix
   halves and `org/missions/D5/AMGT/AMGT_RESAPP/project.json` freely); this block governs WRITES. The
-  `.fixture-AMGT-rk-58.direct-act.md` entry exists so AC2 can hand the gate a file at a tree path; it is NEVER
+  `AMGT_RESAPP.TO-AMGT-rk-58-fixture.direct-act.md` entry exists so AC2 can hand the gate a file at a tree path; it is NEVER
   committed -- it is deleted by the invocation that writes it, and a `git status --short` that shows it after AC2 is a
   FAIL of AC2. Scratch is `<your worktree>/.scratch/` only.
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~58 <0.9.0_WK_AMGT_RESAPP~58@opal.agent>" -F <msgfile> -- <paths>`
@@ -207,7 +207,7 @@ pair = [l for l in out.splitlines() if l.startswith('PAIR: COO sha256=')]
 print('pair_line', len(pair), 'of 1')
 rendered = out.split('---BEGIN ORDER---', 1)[1].split('---END ORDER---', 1)[0] if '---BEGIN ORDER---' in out else ''
 print('invocation_tags', rendered.count(T('invocation')), 'expect_tags', rendered.count(T('expect')), 'paths_block', rendered.count('\n' + T('paths') + '\n'))
-fx = 'org/missions/D5/AMGT/AMGT_RESAPP/task-orders/.fixture-AMGT-rk-58.direct-act.md'
+fx = 'org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-58-fixture.direct-act.md'
 try:
     io.open(fx, 'w', encoding='utf-8', newline='\n').write(rendered)
     spec = importlib.util.spec_from_file_location('togate', '.tools/to-pipeline-gate.py')
@@ -217,7 +217,7 @@ try:
 finally:
     if os.path.exists(fx): os.remove(fx)
 print('fixture_remains', os.path.exists(fx))
-"</invocation><expect>mint_rc 0; pair_line 1 of 1 with two 64-hex sha256 values over the HEAD bytes of the two round-13 scores-prefix halves; the rendered order (between the ---BEGIN ORDER--- and ---END ORDER--- markers the dry run prints) carries invocation_tags 1, expect_tags 1, paths_block 1, and its paths block names infra/aws/terraform/harvest/scoped-amgt-api.tf plus the five standing entries; gate_violations 0 of 1 fixture from the L6 gate's own check_file on the rendered bytes at a tree path; fixture_remains False -- the dry run wrote nothing and the fixture is gone</expect></criterion>
+"</invocation><expect>mint_rc 0; pair_line 1 of 1 with two 64-hex sha256 values over the HEAD bytes of the two round-13 scores-prefix halves; the rendered order (between the ---BEGIN ORDER--- and ---END ORDER--- markers the dry run prints) carries invocation_tags 1, expect_tags 1, paths_block 1, and its paths block names infra/aws/terraform/harvest/scoped-amgt-api.tf plus the five standing entries; gate_violations 0 of 1 fixture from the L6 gate's own check_file on the rendered bytes at a tree path; fixture_remains False -- the dry run wrote nothing and the fixture is gone ISSUER REPAIR (2.0.0_SA_COO~Z, on row W58-S1): the fixture is named in PROJECT.TO-NAME form so the gate's project-name limb can resolve it; AND because GATE (x) (one issuer per round, AMGT-rk-55, drained @432033882e) now refuses a newly-added order into a round that already has orders at HEAD, the minted fixture must be UNROUNDED -- a DIRECT act is outside every round -- so gate_violations 0 holds only if the minter emits no <round> element (if it emits one, that is the minter's defect to fix, not the criterion's); the fixture is removed and the index restored after the run</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-58"><invocation>cd "$(git rev-parse --show-toplevel)" && export OPAL_AGENT_SERIAL=2.0.0_SA_COO~Z && python -c "
 import os, subprocess, sys
 d = 'org/missions/D5/AMGT/AMGT_RESAPP/task-orders'
@@ -258,7 +258,7 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~58</slot>
 <fabric>site-z</fabric>

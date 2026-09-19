@@ -9159,6 +9159,56 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Nothing in this order names the unit-test suite; the order's own proof mechanism is the PROOF OF SPEC criteria (AC1-AC5), not lib/research/api/tests/, and section 1(a)'s SUBTRACTION table is stated as the new, correct contract, explicitly superseding the sentence-parsed one these two tests assert.",
     "world_is": "The two failing tests are STALE fixtures of the superseded contract this order was cut to remove; they are not evidence against this order's own correctness (AC2's planted-negative fixtures, built to the NEW contract, pass 4 of 4). Left FAILING in the committed tree because updating them is outside this cell's <paths>.",
     "notes": "Remedy holder: the next cell (or the COO directly) that holds lib/research/api/tests/ in its <paths> -- update the two assertions to the six-value contract (NOT_SEARCHED for a query-less fixture, SEARCHED_NOTHING_FOUND / SEARCHED_LINKS_UNREADABLE for query-bearing fixtures matching the new absence_class-based split). Not fixed here."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W58-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~58",
+    "surfaced_at": "2026-09-19T00:57:34Z",
+    "one_line": "AC2's own hardcoded fixture filename ('.fixture-AMGT-rk-58.direct-act.md') cannot pass to-pipeline-gate.py's check_file regardless of what the minter renders: check_project_stage's _project_of() requires the basename to start with an uppercase PROJECT code, and a leading '.' never matches, so the invocation prints gate_violations 1 of 1, not the 0 AC2's own expect names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2's own literal invocation (this order, section 5) hardcodes fx = 'org/missions/D5/AMGT/AMGT_RESAPP/task-orders/.fixture-AMGT-rk-58.direct-act.md' and writes the minter's --dry-run rendered bytes there before calling to-pipeline-gate.py's check_file(root, fx) directly.",
+        ".tools/to-pipeline-gate.py:1843-1847 _project_of(): base = os.path.basename(rel); m = PROJECT_RE.match(base); return m.group(1) if m else None -- with PROJECT_RE = r'([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*)'. .match() anchors at index 0, and the fixture basename starts with '.', so _project_of returns None unconditionally, independent of file content.",
+        ".tools/to-pipeline-gate.py:1891-1897 check_project_stage(): 'if not code: return [\"%s: filename declares no PROJECT code -- a TO is named PROJECT.TO-NAME.md so its project is resolvable without opening it\" % rel]' -- fires before dep_stage, fabric or any other limb is read.",
+        "measured this session in the worker's own worktree, running AC2's invocation exactly as written: mint_rc 0, pair_line 1 of 1, invocation_tags 1, expect_tags 1, paths_block 1 -- every OTHER AC2 expectation held -- but gate_violations 1 of 1 fixture, the sole violation being the filename-declares-no-PROJECT-code message above.",
+        "confirmed filename-only and content-independent in isolation: re.compile(r'([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*)').match('.fixture-AMGT-rk-58.direct-act.md') returns None."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's expect clause (this order, section 5): gate_violations 0 of 1 fixture from the L6 gate's own check_file on the rendered bytes at a tree path -- asserting the minter's rendered order, handed to the real gate at the literal fixture path AC2's own invocation hardcodes, passes with zero violations.",
+    "world_is": "The gate's check_project_stage refuses on the FILENAME alone (no leading PROJECT code before the first '.') before it ever reads the file's content, so ANY bytes written to '.fixture-AMGT-rk-58.direct-act.md' -- including a byte-for-byte copy of the real, already-committed AMGT_RESAPP.TO-AMGT-rk-58...md order this cell's own <paths> lists -- produce exactly this one violation. AC2 as literally invoked reads gate_violations 1, not 0; the minter itself is not the cause (its own naming convention, <CODE>.TO-<cell>.<slug>.md, is exactly the PROJECT.TO- shape the gate wants, and a real non-dry-run mint under that name clears this limb).",
+    "notes": "Not fixed here: THE GATE IS CALLED, NEVER EDITED (this order's own BOUNDS section), and the fixture filename is this order's own literal, not something this cell's <paths> lets it rename. Disarm owner is the issuer of any FUTURE direct-act order that asks a worker to hand the L6 gate a hidden-dot fixture filename for an AC2-shaped check: name a fixture filename that itself matches PROJECT.TO-NAME.md, or accept that check_project_stage will always fire on it, rather than repeating this exact literal."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W58-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~58",
+    "surfaced_at": "2026-09-19T01:30:00Z",
+    "one_line": "GATE (x)'s round-issuer refusal lives only in to-pipeline-gate.py's main() over the newly-added targets set, never inside check_file() itself -- so AC2's own test method (a direct check_file(root, fx) call) cannot see it, and this order's repair note ('gate_violations 0 holds only if the minter emits no <round> element') is true for AC2 as tested but the OPPOSITE of GATE (x)'s missing-key branch, which REFUSES a newly-added tree order carrying no line-anchored <round>N</round> element.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "GATE (x) commit 432033882e (build(AMGT_RESAPP rk-55, 0.9.0_WK_AMGT_RESAPP~55)) wires _round_issuer_violations only into to-pipeline-gate.py's main(), in the per-file loop over the newly-added `targets` set added after the LAYER coverage section -- never inside check_file() (:2402), whose own body this commit leaves untouched (git show 432033882e -- .tools/to-pipeline-gate.py, read this session).",
+        "_round_issuer_violations's own missing-key branch, same commit: \"if not m: return ['%s: NO line-anchored <round>N</round> element -- ONE ISSUER PER ROUND is keyed to the ROUND, never the serial ... Add '<round>N</round>' naming this order's round.' % rel]\" -- a newly-added tree order carrying no <round> element is REFUSED, not admitted.",
+        "This worktree's own .tools/to-pipeline-gate.py is NOT an ancestor-container of 432033882e: `git merge-base --is-ancestor 432033882e HEAD` printed NOT_ANCESTOR, measured this session -- GATE (x) is absent from this worktree's gate, so this session's own AC2 gate_violations 0 (measured via check_file) is not itself contradicted by this row; the gap named here is prospective, for whichever fabric first carries both GATE (x) and an unrounded order minted by this tool through a real (non-dry-run, main()-graded) commit path.",
+        "This order's own AC2 expect text, the issuer's repair note verbatim: 'the minted fixture must be UNROUNDED -- a DIRECT act is outside every round -- so gate_violations 0 holds only if the minter emits no <round> element (if it emits one, that is the minter's defect to fix, not the criterion's)'.",
+        "AC2 as literally invoked in this order calls to-pipeline-gate.py's check_file(root, fx) directly via importlib.util.spec_from_file_location, never main() -- confirmed by reading AC2's own invocation text (this order, section 5) and by this session's own run of it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's AC2 repair note asserts that emitting no <round> element is what lets a minted direct-act order clear GATE (x): 'gate_violations 0 holds only if the minter emits no <round> element'.",
+    "world_is": "GATE (x)'s round-issuer limb (committed at 432033882e, not present in this worktree's copy of the gate) is wired only into to-pipeline-gate.py's main() over the newly-added `targets` set, never into check_file() -- so AC2's own test method (a direct check_file(root, fx) call, never main()) cannot exercise GATE (x) either way. On the one real path that DOES exercise it -- a genuinely staged, newly-added tree order graded through main(), such as at a commit-time hook -- an UNROUNDED order is REFUSED by name for carrying no line-anchored <round>N</round> element: the opposite of what this repair note needs to hold once GATE (x) and this minter's unrounded output meet in the same gate.",
+    "notes": "Not this cell's defect and not fixed here (THE GATE IS CALLED, NEVER EDITED; GATE (x) is out of scope for this cell and, per this session's is-ancestor check, absent from this worktree's copy of the gate). Filed because the repair's own stated reason for the fix -- 'a DIRECT act is outside every round ... GATE (x) ... now refuses a newly-added order into a round that already has orders at HEAD' -- names only the COLLISION branch of GATE (x)'s two refusal branches and omits the MISSING-KEY branch, which fires on exactly the unrounded shape this repair asks the minter to emit. Disarm needs either: (a) GATE (x) grows a carve-out for a DIRECT-ACT order shape (e.g. a marker the missing-key branch treats as satisfied) before this minter's unrounded output is ever committed as a real, non-dry-run mint into a fabric carrying GATE (x); or (b) a ruling that a direct-act order is graded outside GATE (x) entirely (by tree-path pattern or title marker), stated in the gate's own scoping comment the way the flat-root and MODIFY carve-outs already are. Not this worker's call -- named as a row, not resolved. This session's own AC1-AC5 runs are unaffected either way, since AC2/AC3 call check_file()/the minter's refusal path directly and never exercise GATE (x)'s main()-only branch."
   }
 ]
 ```

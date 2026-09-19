@@ -221,7 +221,10 @@ the order is not an oversight the worker can route around — it is a wall.** So
 
 ✅ **APPLIED, NOT MERELY RULED, SINCE `e08447ff7d` + `6efb43b9d0`** (MSTR's registry stanza and the CTO's
 resolver limb). This binds MECHANICALLY now; it is not a discipline. The override that v3's first drain
-had to take is no longer the path.
+had to take is no longer the path. A co-signed DIRECT act (an act spawned off a signed never-widen pair
+with an inline worker face) is spawned with an order MINTED by `python .tools/direct-act-order.py mint ...`
+from that pair, or it is not spawned -- the minted order is the grant and the pair bounds it (row
+`AMGT_RESAPP-Z-W34-S2`, cell `AMGT-rk-58`).
 
 **THE GRAMMAR the resolver and the L6 gate actually read** (`owned-paths-validate.py`
 `_paths_block_entries`; `to-pipeline-gate.py` GATE (v)):
