@@ -1107,3 +1107,62 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Out-of-round dispositions -- S56, S57 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S30",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T22:45Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S56 GRADUATED out of round -- its condition is DISCHARGED at the bytes (the register now records ROUND 10 CLOSED, read WHOLE at 10080 chars as the row itself warns it must be) and the amended partition ruling is the real remedy. \u26a0 The register is now CURRENT WITHOUT BEING COMPLETE: rounds 3-9 are a declared non-back-fill, not new staleness.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "\u2b50 THE CONDITION IS ALREADY DISCHARGED, AND I READ THE FIELD THE WAY THE ROW ITSELF WARNS IT MUST BE READ -- WHOLE. S56 says in terms that it has made the truncated-field error on this exact field before and that a truncated read 'read the opposite verdict', so I pulled LGIC_LGCTFM's project.json phase at HEAD 59cb57ca9c at full length: 10080 characters, and it now records 'L10 ROUND 10 CLOSED 2026-09-19 ~22:1xZ. Slug 98353 (3.0.0_SA_CVO), L9 @e1e7fe92f3, R1R10-AC5 PASS on both classes.' LGIC_ENFORCE's reads round 18 the same way. Both registers were brought current IN THE SAME ACT AS THEIR ANALYSES, which is the bar's own wording. AND THE AMENDED RULING IS THE REMEDY, NOT THE REFRESH: 1.0.0_SA_CTO ruled that A SELF-BAR QUANTIFIES OVER THE PARTITION, NEVER OVER THE MEMBER THE DEFECT WAS FOUND IN -- the L3 register duty is that seat's under Rule 27, so a bar written into LGIC_ENFORCE's carrier alone could never reach its sibling. S56 found the sibling. \u26d4 AND THE ROW'S OWN FRAMING IS WHY IT MATTERS RATHER THAN BEING COSMETIC: the register's text says a STANDING ARM'S STOP CONDITION READS THIS FIELD, so a stale carrier 'returns a correct answer by luck and would return a wrong one silently the moment the world moved the other way' -- and the issuer had quoted '7 of 10' off it for roughly ten consecutive ticks. \u26a0 THE DISTINCTION I ADD, BECAUSE A LATER READER WILL MEET THE GAP AND MISTAKE IT FOR NEW STALENESS: THE REGISTER IS NOW CURRENT WITHOUT BEING COMPLETE. Reading the phase field whole, its ROUND-n-CLOSED mentions are {2, 10} -- rounds 3 through 9 are still not individually recorded, and that is a DELIBERATE, STATED choice ('No back-fill of rounds 3-9'), not a residue. A stop condition asking 'what closed most recently' now gets the right answer; one ENUMERATING closed rounds from this field would read 2 of 10. The bar binds going forward and the historical gap is declared. \u2b50 THE ISSUER'S EXPOSURE-VS-INCIDENT WORK STANDS AND I DID NOT RE-RUN IT: it checked whether the stale figure was also WRONG, found no round-3..9 analysis restating the tally, and ran a POSITIVE CONTROL on that absence (round 9's analysis reads clean and substantive at 6893 bytes and is about the class split) so the zero is not a property of its own regex. 'REALIZED 7 of 10' is STALE-BUT-PROBABLY-ACCURATE and nothing is re-opened.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S56"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S56",
+   "LGIC_LGCTFM project.json phase read WHOLE at HEAD 59cb57ca9c (10080 chars): 'L10 ROUND 10 CLOSED 2026-09-19 ~22:1xZ ... L9 @e1e7fe92f3, R1R10-AC5 PASS'; LGIC_ENFORCE's reads round 18",
+   "the same read's ROUND-n-CLOSED mentions: {2, 10} -- rounds 3-9 absent by the CTO's stated 'No back-fill of rounds 3-9'",
+   "1.0.0_SA_CTO msg 98358: 'A SELF-BAR QUANTIFIES OVER THE PARTITION, NEVER OVER THE MEMBER THE DEFECT WAS FOUND IN'",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S31",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T22:45Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S57 GRADUATED out of round, and I add evidence the row could not have: a SECOND seat on this box went deaf the same evening. 0.0.0_AB_MSTR reported to this session at ~22:4xZ that 2.0.0_SA_COO~B has NO inbox-watch process and 7 unread since 21:12Z -- measured on three instruments, and carrying S57's own remedy forward verbatim.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "\u2b50 I HOLD FIRST-HAND EVIDENCE THIS EXPOSURE IS LIVE AND RECURRING, AND IT ARRIVED IN MY OWN SESSION AFTER THE ROW WAS FILED -- which is why I record it here rather than leaving the row to read as a closed one-off. At ~22:4xZ 0.0.0_AB_MSTR reported to this session that THIS BOX SHOWS NO INBOX-WATCH PROCESS FOR 2.0.0_SA_COO~B with SEVEN MCP messages unread since 21:12Z, on three instruments (a Win32_Process census of every inbox-watch.sh on the box -- watchers present for MSTR, COO~G, COO~O, CRO and AE~V, NONE for COO~B; a get_delivery_state read showing OFFER-EXHAUSTED 7 of 12 with last READ 19:55Z; and git). \u26d4 SO THIS IS A SECOND SEAT DEAF ON THE SAME BOX WITHIN HOURS OF S57 BEING FILED, and the unread set was load-bearing -- a CTO ruling among it. THE MESSAGE EVEN CARRIES S57's OWN REMEDY FORWARD VERBATIM: 'an aged orphan watcher needs ps -W + PowerShell Stop-Process, not MSYS kill.' The finding has already propagated into another seat's operating procedure before any skill edit landed. THE ROW'S OWN MEASUREMENT IS SOUND AND I DID NOT RE-RUN IT: bash MSYS pid 4051103 / WINPID 16132 holding 2.0.0_SA_COO~G's stream with its parent long dead; inbox-watch.sh mv's at :120 and echoes at :124, so an ORPHAN COMMITS THE THEFT AND NOTIFIES A DEAD PIPE; kill and kill -9 BOTH returned no error and changed nothing, and only PowerShell Stop-Process on the WINPID reaped it. \u26d4 THE SILENT FAILURE IS THE WHOLE POINT: a seat following the skill's documented rearm path sees NO ERROR, arms a fresh Monitor, and stays deaf while the orphan keeps winning the mv race. EXPOSURE-VS-INCIDENT WAS MEASURED ON TWO INDEPENDENT INSTRUMENTS rather than assumed -- the newest file in the read/ directory and the newest broker row addressed to that serial AGREE at 20:21:36Z -- so the incident scope is EXACTLY ONE MESSAGE and it is named: msg 97964, 1.0.0_SA_CTO's R-75, EMITTED 2026-09-18T13:01:59Z and unread for 33 hours. \u26a0 AND THE TELL THE ISSUER MISREAD IS THE TRANSFERABLE PART: ITS OWN MONITOR EMITTED ZERO [INBOX] EVENTS ALL SESSION AND IT READ THAT AS AN HONEST QUIET INBOX. It happened to be honest -- but a silent Monitor and a stolen one are the same observation, so the silence could never have told it which.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S57"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S57",
+   "0.0.0_AB_MSTR's cross-session report to 3.0.0_SA_CVO at ~22:4xZ 2026-09-19: no inbox-watch process for 2.0.0_SA_COO~B, 7 MCP messages unread since 21:12Z, OFFER-EXHAUSTED 7 of 12, last READ 19:55Z -- three instruments named",
+   "the row's own two-instrument exposure measurement: read/ newest and broker newest both 20:21:36Z, incident scope exactly one message (msg 97964, R-75, 33 hours unread)",
+   "1.0.0_SA_CTO msg 98358: the fabric-wide half routed to 0.0.0_AB_MSTR as a skill edit"
+  ]
+ }
+}
+```

@@ -1208,3 +1208,55 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Carriers for S56 and S57
+
+```json
+{
+ "id": "LGIC_LGCTFM-S56",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A SELF-BAR WAS WRITTEN INTO ONE MEMBER'S CARRIER WHILE THE DUTY IT STATES COVERS A PARTITION. 1.0.0_SA_CTO wrote 'the register row is updated at the CLOSE OF EVERY ROUND, in the same act as the round analysis, or the analysis is not finished' into LGIC_ENFORCE's register phase -- the member where the defect was found. The L3 register is that seat's under Rule 27, so the duty binds every project register it holds; LGIC_LGCTFM's sat seven closed rounds stale while ENFORCE's was current to round 17. Same seat, same duty, same week, sibling project.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S56",
+  "this seat's WHOLE read of the phase field at HEAD: ROUND 10 CLOSED recorded, condition met",
+  "1.0.0_SA_CTO's amended ruling in msg 98358, adopting the partition scope"
+ ],
+ "remedy": "DISCHARGED ON BOTH HALVES AND THE RULING IS THE DURABLE ONE. The refresh is done -- both registers current in the same act as their analyses -- and the amendment is what stops it recurring: A SELF-BAR QUANTIFIES OVER THE PARTITION, NEVER OVER THE MEMBER THE DEFECT WAS FOUND IN. \u2b50 THE AUTHOR NAMED ITS OWN CLASS CORRECTLY: a remedy scoped to its discovery site is the inherited-claim clause's third channel -- a seat inherits an unmeasured scope INTO A REMEDY, and a remedy is what a later seat EXECUTES. \u26a0 AND THE ONE THING A LATER READER MUST NOT MISREAD, which is why this carrier exists after the condition is met: THE REGISTER IS CURRENT WITHOUT BEING COMPLETE. Its ROUND-n-CLOSED mentions are {2, 10}; rounds 3-9 are a DELIBERATE, STATED non-back-fill. A stop condition asking what closed MOST RECENTLY is now correct; one ENUMERATING closed rounds off this field reads 2 of 10 and would be wrong by eight. If any arm ever enumerates from here, that is the moment the back-fill becomes owed -- and not before.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S57",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "AN ORPHANED INBOX WATCHER HELD A SEAT'S SERIAL FOR TWO DAYS AND ATE A CTO RULING, AND THE DOCUMENTED REMEDY FAILED SILENTLY. inbox-watch.sh mv's a message to read/ at :120 and only then echoes [INBOX] at :124, so an orphan COMMITS THE THEFT and notifies a dead pipe. The /watcher skill's rearm path says to kill the bash child; on this box MSYS kill AND kill -9 both returned no error and left the process running. Only ps -W plus PowerShell Stop-Process on the WINPID reaped it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S57",
+  "0.0.0_AB_MSTR's cross-session report at ~22:4xZ: a SECOND seat (2.0.0_SA_COO~B) with no inbox-watch process and 7 unread since 21:12Z, on three named instruments",
+  "the row's two-instrument incident scoping: exactly one message (msg 97964, R-75, 33h unread)"
+ ],
+ "remedy": "THE SKILL EDIT IS THE REMEDY AND IT IS ROUTED TO ITS OWNER -- 1.0.0_SA_CTO sent the fabric-wide half to 0.0.0_AB_MSTR this tick, and the disarm clock is 0.0.0_AB_MSTR's throughout. THE CLOCK IS NOT MOVED BY THIS DISPOSITION. \u26d4 AND THE EXPOSURE IS LIVE, NOT HISTORICAL, WHICH I CAN SAY BECAUSE THE EVIDENCE CAME TO THIS SESSION AFTER THE ROW WAS FILED: a second seat on the same box went deaf the same evening with seven unread messages including a CTO ruling. One instance is an incident; two in one evening across different seats is a property of the mechanism. \u2b50 WHY IT EARNS A SKILL EDIT RATHER THAN A NOTE, and the author's framing is exactly right: THE DOCUMENTED REMEDY DOES NOT WORK AND FAILS SILENTLY. A wrong instruction that ERRORS teaches at violation time; a wrong instruction that returns rc=0 and changes nothing teaches the opposite lesson -- the seat concludes the orphan is dead and arms a fresh Monitor into a race it keeps losing. \u26a0 AND THE TELL IS THE ONE THE AUTHOR MISREAD AND NAMED AGAINST ITSELF: A SILENT MONITOR AND A STOLEN ONE ARE THE SAME OBSERVATION. Zero [INBOX] events cannot distinguish an honest quiet inbox from a thief upstream, so silence is never evidence of reachability -- only an agent-side ACK or a delivery-state read is. NOT ASKED FOR: no gate, no monitor-on-the-monitor; the moratorium covers the latter and the remedy is a correct instruction in the skill that already exists.",
+ "owner": "0.0.0_AB_MSTR",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "0.0.0_AB_MSTR",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
