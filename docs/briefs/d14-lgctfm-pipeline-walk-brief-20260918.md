@@ -166,26 +166,26 @@ coverage); the shape below is R-83's, kept every member, and is two fields plus 
 CLAIMED (the latest-dated record or declaration naming the resource, with its date and path), MEASURED (the live
 plane at its `built:` vintage, live `s3api`, `describe-rule`, `get-schedule`, `comp-iam live`), and:
 
-    coverage   = BOTH-PRESENT | LIVE-UNCLAIMED | CLAIMED-ABSENT | UNMEASURED-EITHER-SIDE
+    coverage   = CLAIMED-AND-MEASURED | LIVE-UNCLAIMED | CLAIMED-ABSENT | UNMEASURED-EITHER-SIDE
                  (the four-cell domain CLAIMED {present, absent} x MEASURED {present, absent}, written as the
                  subtraction, MECE by construction; LIVE-UNCLAIMED is comp-find's own drift_class LIVE-no-DECLARED,
                  15 of 217 Lambdas today; CLAIMED-ABSENT is a record naming a resource nobody can find, 9 of 216
                  source-map entries today -- neither is "unmeasured": unmeasured means nobody looked, unclaimed
                  means someone looked and found no claim, and they have different owners and remedies)
-    delta      = AGREE | RECORD-NEWER-THAN-LIVE | LIVE-NEWER-THAN-RECORD   (only when coverage = BOTH-PRESENT)
+    delta      = AGREE | RECORD-NEWER-THAN-LIVE | LIVE-NEWER-THAN-RECORD   (only when coverage = CLAIMED-AND-MEASURED)
     claim_kind = RECORD | DECLARATION   (a property of the CLAIMANT, never a delta value; "declaration stale" is
                  claim_kind = DECLARATION and delta != AGREE)
 
 State coherence (Rule 24 iv, R-83): a re-run moves `coverage` and `delta`; it does NOT move `claim_kind` and does NOT
 move an owner -- a delta whose remedy is a comment fix is still owed after the next run reproduces it. A delta row
 names its investigation or remediation and its owner; the run's own table is VALIDATED only when every delta row
-and every non-BOTH-PRESENT coverage row is dispositioned. **Bar (today's own instances):** `ec2.tf`'s comment
+and every non-CLAIMED-AND-MEASURED coverage row is dispositioned. **Bar (today's own instances):** `ec2.tf`'s comment
 claims `mdpf-daily-trigger` starts the runner (claim_kind DECLARATION); the 2026-08-07 cutover record claims it was
 retired (RECORD, newest); the live plane holds no such Lambda and `mdpf-feeder-trigger` holds `ec2:StartInstances`
-(measured). Against the newest record: BOTH-PRESENT / AGREE. Against the declaration: BOTH-PRESENT /
+(measured). Against the newest record: CLAIMED-AND-MEASURED / AGREE. Against the declaration: CLAIMED-AND-MEASURED /
 RECORD-NEWER-THAN-LIVE with claim_kind DECLARATION -- the comment fix owned by the Terraform lane, still owed after
 the next run. The accelerator's pattern (declared, live, ENABLED) against its sentinel's LastModified (2026-09-05):
-BOTH-PRESENT / LIVE-NEWER-THAN-RECORD, investigation owed to the INF chain's owner. The 39-hit / 13,057-file
+CLAIMED-AND-MEASURED / LIVE-NEWER-THAN-RECORD, investigation owed to the INF chain's owner. The 39-hit / 13,057-file
 un-censused reader set of that sentinel: UNMEASURED-EITHER-SIDE, a value the table CARRIES rather than a silence.
 
 ---
@@ -372,9 +372,9 @@ topological pass. NON-APPLICATION: a run with no edges, which under W1-W9 is not
 W14 **Reconcile CLAIMED against MEASURED before the table is called current** (Amendment 1, O9; shape per R-83,
 Amendment 2): coalesce the record scans and the declarations to ONE claim per resource, the latest-dated winning
 and its date, path and `claim_kind` (RECORD | DECLARATION) printed; measure the same resource on a live or
-derived-from-live surface; emit `coverage` from the four-cell subtraction (BOTH-PRESENT | LIVE-UNCLAIMED |
-CLAIMED-ABSENT | UNMEASURED-EITHER-SIDE) and, only when BOTH-PRESENT, `delta` (AGREE | RECORD-NEWER-THAN-LIVE |
-LIVE-NEWER-THAN-RECORD); every non-AGREE row and every non-BOTH-PRESENT row carries an owner; the run's current-state
+derived-from-live surface; emit `coverage` from the four-cell subtraction (CLAIMED-AND-MEASURED | LIVE-UNCLAIMED |
+CLAIMED-ABSENT | UNMEASURED-EITHER-SIDE) and, only when CLAIMED-AND-MEASURED, `delta` (AGREE | RECORD-NEWER-THAN-LIVE |
+LIVE-NEWER-THAN-RECORD); every non-AGREE row and every non-CLAIMED-AND-MEASURED row carries an owner; the run's current-state
 table is VALIDATED only when each is dispositioned. A re-run moves `coverage` and `delta`, never `claim_kind` or an
 owner. A Lambda's ENVIRONMENT and a script's literal buckets are claim surfaces too (IV.3). COST: one join over the
 rows the run already holds. NON-APPLICATION: none -- a resource with no claim is LIVE-UNCLAIMED and a claim with no
