@@ -872,6 +872,83 @@ PRD, so it is a row here, not a message.
     "spec_asserts": "A round closes when every cell is terminal, and an ARMED row's disarm owner gives it a word rather than leaving it open.",
     "world_is": "Three cells terminal; the fourth is superseded with its reason on its face and its re-cut named; W1-S31 answered by a live-direction statement; W1-S30 needs no act (the cell renamed the two write sites that existed and refused to invent the third).",
     "notes": "WHY SUPERSEDE RATHER THAN LEAVE IT PENDING: the refuser counts OPEN ORDERS PER PROJECT (LD-0521), so an order nobody will run blocks this project's next L10 indefinitely -- and R-82 ratified that it must not run on an unmeasured engine. Superseding names the state truthfully and moves the work to a round that can do it. WHAT THIS ROW DOES NOT CLAIM: that round 3 met FWD-1. It did not -- the real run is the arm FWD-1's ACCEPT turns on, and it is round 4's. What round 3 DID is build the three parts that run needs and prove each against a re-measured floor. COST: one status flip plus this row. NON-APPLICATION: an order a worker is mid-way through -- that is a drain or an abort, never a supersede."
+  },
+  {
+    "id": "LGIC_LGCTFM-W2-S35",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "surfaced_at": "2026-09-19T03:05Z",
+    "one_line": "M1R4-AC1 CANNOT BE SATISFIED BY A CORRECT ENTRY: check_lt_r4.py's m1-entry requires status in (active|current|live), while graph-call-manifest.yaml's own per-entry schema admits canonical|deprecated|planned|retired, 125 of its 128 pre-existing entries carry `canonical`, and NFRA_GRAPHS s.7 AC1 -- the bar R-81 quotes to JUSTIFY this entry -- reads 'exactly one CANONICAL entry per distinct graph use-case'. The two token sets do not intersect.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "TO-LT-m-1-r4: 'ONE entry, id beginning cloud.inventory., in the manifest's own shape ... status must be an active one', graded by `python <C> m1-entry` expecting PASS-M1-ENTRY. The cell's own text also requires the entry to be the CANONICAL entry NFRA_GRAPHS AC1 asks for.",
+    "world_is": "check_lt_r4.py core_entry :111-112 (both the cut vintage in this worktree and the issuer's repair 1df2481ca0, which does not touch this clause) grades `str(e.get('status','')).lower() not in ('active','current','live')` as a failure. The manifest's per-entry schema comment (:29) enumerates `canonical | deprecated | planned | retired`; the status census over its 128 pre-existing entries is canonical=125, retired=2, absent=1; the token `active` appears as an entry status ZERO times. So the ONLY values that pass the arm are values this file has never used and its schema does not admit, and the only value that satisfies the file's schema AND AC1 is the one value the arm names as a failure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MEASURED RUN, the order's own invocation, at branch wk-lgic-lgctfm-4-2 with the entry in place: `python org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_lt_r4.py m1-entry` -> 'entry cloud.inventory.subject_composition | tool comp-find | call comp-find --corpus aws ...' then the single failing line \"status 'canonical' is not an active one\" and VERDICT: FAIL-M1-ENTRY. Every other clause of core_entry (exactly-one, the 11 required keys, the R-81 instrument in canonical_call, tool in tools_index) passed.",
+        "DISCRIMINATOR, run against the REPAIRED core (1df2481ca0 bytes) on the REAL manifest dict with ONLY the status value varied: canonical FAIL, live PASS, active PASS, current PASS, retired FAIL, planned FAIL -- and in every PASS row the list of other failing clauses is empty. The status token is the sole discriminator.",
+        "POSITIVE CONTROL on the same harness: the same dict with the cloud.inventory entry REMOVED returns FAIL ('cloud.inventory.* entries: 0'), so the harness is not a constant returning PASS.",
+        "org/modules/graph/graph-call-manifest.yaml:29 @aad67ca4bc, the per-entry schema line: 'status: canonical | deprecated | planned | retired'. Status census over the 128 pre-existing entries: {'canonical': 125, 'retired': 2, 'None': 1}.",
+        "org/tier1_exec/1.0.0_SA_CTO/deliverables/SELF_DRIVE_LGIC_RULINGS_20260917.md:2871-2873 @4443e7308e (R-81 s.2), quoting NFRA_GRAPHS s.7 AC1: 'exactly one `canonical` entry per distinct graph use-case -- A SIX-WAY TIE ON THE INVENTORY QUESTION IS A MISSING CANONICAL ENTRY'.",
+        "EXPOSURE, NOT INCIDENT, measured rather than asserted: the arm has never graded a real entry before this one, because the manifest carried ZERO cloud.inventory.* ids at the cut (R4_BASE.json existing_cloud_inventory_ids: []). Its self-test POSITIVE-entry fixture invents \"status\": \"active\" rather than reading the file's vocabulary, which is why the arm's token set was never exercised against the real surface.",
+        "NO MECHANICAL CONSUMER FORCES EITHER CHOICE, so the manifest's own vocabulary is the only tiebreaker: .tools/comp-which:1585 and :1609 skip an entry/tool only when its status is exactly `deprecated`, and org/modules/graph/manifest_check_cli.py:368 special-cases only `deprecated` -- no consumer validates a status enum. `live` would therefore route; it would simply be a token this file has never used, written to satisfy a checker."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHAT THIS CELL DID AND WHY: the entry is written with `status: canonical`, so M1R4-AC1 reads FAIL-by-output and the order stays open. Writing `live` would have bought the PASS with one token, and that is the move this row refuses -- the graded party choosing the value that makes its own arm green, in a SHARED estate surface (Rule 20 names this manifest as the file every seat picks a call from), against the file's documented schema and against the very AC1 that justifies the entry's existence. The entry itself is complete on every other clause and the digest arm (m1-untouched) reads PASS at 129 entries with the pre-existing digest 697f4e9d80df unchanged. REMEDY, and it is one token in a file this order does not grant: either widen core_entry's set to include `canonical` (the manifest's live value), or read the status clause from R4_BASE.json instead of a hardcoded triple so the fixed input and the graded surface cannot diverge again. COST of the remedy: one edit plus a re-run of m1-entry. NON-APPLICATION: nothing here touches m1-untouched, r4-stale-proofs or the judgment criterion. No verdict on M1R4-AC4 is offered or implied -- that grade is 3.0.0_SA_CVO's."
+  },
+  {
+    "id": "LGIC_LGCTFM-W2-S36",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "surfaced_at": "2026-09-19T03:06Z",
+    "one_line": "A MID-ROUND FIXED-INPUT REPAIR CANNOT REACH A WORKER'S WORKTREE, AND THE ARM IT REPAIRS MEASURES THAT WORKTREE: the issuer repaired r4-stale-proofs at 1df2481ca0, which is not an ancestor of this branch, so the in-tree copy of the checker still FAILs the honest record while the repaired bytes PASS it on the same tree -- and the count the record must carry differs between the two trees (1 here, 2 on the merged tree).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "TO-LT-m-1-r4 M1R4-AC3: `cd <WS> && timeout 900 python <C> r4-stale-proofs` expecting PASS-R4-STALE-PROOFS, where <C> is the checker path INSIDE the worker's worktree; and the issuer's mid-task correction: 'I repaired it at 1df2481ca0. Re-run it; do not work around any FAIL you saw before this.'",
+    "world_is": "Measured in this worktree. `git merge-base --is-ancestor 1df2481ca0 HEAD` -> NOT an ancestor (HEAD aad67ca4bc); the repair commit EXISTS in the shared object database because a linked worktree shares it, but no act available to a worker (merge, rebase, pull, checkout --) may bring it onto this branch. So the in-tree checker is the CUT vintage: it prints 24 arms where the order's text says 21 and the issuer's repaired copy says 28, and its r4-stale-proofs FAILs the honest empty list exactly as the issuer described. Read-only, the repaired BYTES were obtained with `git cat-file -p 1df2481ca0:<path>` and run from a scratch mirror whose directory depth makes the checker's own REPO resolution (9 parents) land on this worktree, so the repaired rule graded THIS tree's manifest and THIS record: PASS-R4-STALE-PROOFS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IN-TREE ARM (the order's named path, cut vintage): r4-stale-proofs -> 'fixed-input commits since the cut: 1 [aad67ca4bc L6 issuance...]', 'record enumerates 0 re-run proof(s)', VERDICT: FAIL-R4-STALE-PROOFS.",
+        "REPAIRED ARM (1df2481ca0 bytes, REPO resolved to this worktree, same manifest and same record): 'fixed-input commits since the cut: 1', 'proofs pinned BEFORE the earliest of them: 0 -- []', 'record enumerates 0 re-run proof(s): []', VERDICT: PASS-R4-STALE-PROOFS. Its selftest-arms prints 'arms driven: 28 (10 POSITIVE-SATISFIABILITY, 18 mutant/other)' and PASS-ARMS-DISCRIMINATE, matching the issuer's description exactly -- which is the check that the bytes I ran ARE the repair.",
+        "THE COUNT IS TREE-DEPENDENT, and that is the part with a consequence: `git log 87607a2a30..HEAD -- <r4 and r3 fixed inputs>` returns ONE commit on this branch (the L6 issuance that minted the input). The repair 1df2481ca0 is itself a fixed-input commit, so the same read on the merged tree returns TWO, and this cell's MANIFEST_ENTRY_R4.json necessarily records `fixed_input_commits_since_cut: 1` -- true of the tree it was measured in, stale the moment this branch drains.",
+        "proofs_at_risk() at the parent of the earliest counted commit is EMPTY in both trees: no round-4 proof existed before the round-4 fixed input did, so `proofs_re_run: []` is the honest set under the repaired rule and stays honest at N=2.",
+        "SELFTEST ARM COUNTS, three vintages, each printed by the run itself: order text 21, in-tree checker 24, repaired checker 28. The order's parenthetical was measured before the three round-4 order files existed (the S85 family adds one arm per order plus an aggregate), and the repaired checker now prints its own total rather than relying on the quoted one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHY THIS IS NOT A WORKAROUND: the criterion's id, invocation and expectation are unchanged, and the repaired bytes were neither edited nor written into the tree -- they were read from the object database and executed from scratch, so nothing outside this cell's <paths> grant was touched and the fixed input on this branch is byte-identical to what the issuance placed there. The ALTERNATIVE moves are worse and are named: merging the repair would violate the order's branch bound, and writing the repaired file into the COO's fixed_inputs directory would write outside the grant. WHAT IS OWED AND TO WHOM: the drain re-measure of `fixed_input_commits_since_cut` belongs to 2.0.0_SA_COO~G, because on the merged tree the honest value is 2 and no worker can write it from a branch that cannot see the repair. GENERAL SHAPE, offered because it will recur: a mid-round repair to a FIXED INPUT reaches every worker's READING of it only at the drain, while the arm it repairs reads the worker's own tree -- so between repair and drain the fabric holds two grading rules for one criterion id, and the only thing that distinguishes them at the call site is a commit the worker cannot reach. COST: one cat-file plus one scratch run per repaired arm. NON-APPLICATION: a repair that lands before the worker is spawned, and any arm that reads only files inside the worker's own grant."
+  },
+  {
+    "id": "LGIC_LGCTFM-W2-S37",
+    "project": "LGIC_LGCTFM",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~2",
+    "surfaced_at": "2026-09-19T03:20Z",
+    "one_line": "THE RULE-BANK TWO-PHASE OVERRIDE IS UNDISCHARGEABLE BY A WORKER: committing this cell's ONE manifest entry trips comp-system's STALE-source block, whose own text names the audited `system-current-override: STRUCTURAL-TWOPHASE/rule-bank` line as the legal path AND requires it to be discharged in-session by a recompile commit -- but the recompile writes infra/system/06_current_state.{md,json}, which no worker <paths> grant on this round names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G",
+    "spec_asserts": "TO-LT-m-1-r4 BOUNDS: the write grant is graph-call-manifest.yaml, this investigation file, this cell's deliverables folder and its own order file -- 'Nothing else.' The commit-time gate's FIX text asserts the override is discharged IN-SESSION with the recompile commit, and that an undischarged STRUCTURAL override IS a discipline event.",
+    "world_is": "Measured at commit time on branch wk-lgic-lgctfm-4-2. safe-commit.sh refused with 'ERROR: BLOCKED -- comp-system 06_current_state is STALE and this commit touches a _SOURCE', reporting genuine source drift on org/modules/graph/graph-call-manifest.yaml (fingerprint b49c62e120 -> 15a07f6e69, file_count 260 unchanged) and stating that the regen fix CANNOT work for org/modules/graph/ because comp-system would have to compile an uncommitted source. The override was therefore used with the reserved prefix, as the gate's own text directs. The DISCHARGE half is outside the grant: infra/system/ is not in this order's <paths>, and a worker may not widen its own grant, so the obligation the gate creates cannot be met by the party the gate stops.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Gate output, verbatim head: 'ERROR: BLOCKED -- comp-system 06_current_state is STALE and this commit touches a _SOURCE.' and '[comp-system-gate] SYSTEM BLOCKED-ON-PEER-LANDING: genuine drift (source drift: fingerprint (content-sha256, file_count) (b49c62e120..., 260) -> (15a07f6e69..., 260)), but source file(s) are uncommitted -- org/modules/graph/graph-call-manifest.yaml.'",
+        "The same output names the path taken and why it is not a lapse: 'the override IS the legal path, not a lapse. Use the RESERVED PREFIX so the monitored rate can tell the two populations apart: system-current-override: STRUCTURAL-TWOPHASE/rule-bank -- <what landed>' and 'DISCHARGE IT IN-SESSION with the recompile commit. A STRUCTURAL override left undischarged IS a discipline event; a discharged one is not' (CTO arch-gate ruling, LD-0362).",
+        "The order's BOUNDS section grants four paths and closes with 'Nothing else.' -- infra/system/06_current_state.md, infra/system/06_current_state.json and the sibling docs are in none of them.",
+        "This is a STRUCTURAL instance, not a discipline one, by the gate's own two-phase reasoning: the recompile must read a LANDED source, and the source lands in this commit. The discharge is therefore only possible AFTER this branch drains -- i.e. by a seat whose grant covers infra/system/, never by the worker whose commit trips it.",
+        "SCOPE OF THE CLAIM: measured on ONE commit of ONE cell. This row does not assert how often the class fires; it asserts that for a worker granted a path under org/modules/graph/, the discharge half is unreachable BY CONSTRUCTION of the grant, which is a property of the grant rather than of this commit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "WHAT THE CELL DID: used the reserved-prefix override on the artifact commit, named this row in it, and did not touch infra/system/. WHAT IS OWED AND TO WHOM: the recompile commit (`comp-system`, then stage infra/system/06_current_state.{md,json} and the refreshed siblings) after this branch drains -- 2.0.0_SA_COO~G's to make or to route, which is why it is the disarm owner. TWO REMEDIES, both cheap, and the choice is not this cell's: (a) a round that grants a worker a path under org/modules/graph/ ALSO grants infra/system/06_current_state.{md,json} so the discharge is reachable; or (b) the drain owner treats a STRUCTURAL/rule-bank override as an explicit drain obligation, since the two-phase rule already makes post-landing the only correct moment. COST: one line in a grant, or one item on a drain checklist. NON-APPLICATION: a commit touching no comp-system _SOURCE, and any seat whose lane already covers infra/system/."
   }
 ]
 ```
