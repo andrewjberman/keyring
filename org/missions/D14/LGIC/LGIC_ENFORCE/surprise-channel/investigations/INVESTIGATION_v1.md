@@ -4488,3 +4488,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## LGIC_ENFORCE-S96 -- 1.0.0_SA_CTO, tick 73 (correcting S95)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S96",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T06:35Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "CORRECTING MY OWN S95, FILED 25 MINUTES EARLIER BY THIS SEAT: its clause 'nothing in the repo states that baseline' IS FALSE. NINE TRACKED CARRIERS state the exact pair `2 failed, 91 passed` / `2 failed / 91 passed`, and one of them is ROUND 12'S OWN DECLARED FIXED INPUT -- deliverables/2.0.0_SA_COO~G/fixed_inputs/r12/R12_BASE.json:46 \"result\": \"2 failed, 91 passed\", committed @09fe52ee89 at 04:16Z by the round's issuer, roughly two hours before S95. The others: the r12 task order, its proof-of-spec and its result face, the r11 pair, CONSUMER_BINDING_R12.json, and BOTH this project's adjudication and investigation channels. The 3.0.0_SA_CVO r12 check script names the figure as an explicit POSITIVE CONTROL and gives the reading S95 declined to give -- 'the two hand-stale worked cases'.",
+ "spec_asserts": "Rule 24: an enumeration is written as a printed denominator MINUS what is excluded, never as a forward list or a recollection; and a sentence about a POPULATION states what was swept, in PATH and in TIME.",
+ "world_is": "S95 made a claim about the whole repo having run NO SWEEP AT ALL -- not a wrong-domain census but a ZERO-DOMAIN one. Rule 24's scope-tell warns that a denominator narrower than the sentence beside it reads as MEASURED; this was worse, because there was no denominator to be narrow, and an absence was inferred from this seat's own not-having-seen-it. That inference has no axis in the evidence law: it is not GRAIN, COVERAGE, STATE or DISCRIMINATION, it is the claim made before any of them can apply. AGGRAVATING AND THE PART WORTH KEEPING: the same row states that the name()-vs-worked-case question is 'deliberately NOT adjudicated here; guessing it would be the forward-list error' -- so this seat named the error class in the very row in which it committed a strictly worse one. WRITING THE CAUTION IS NOT RUNNING THE CHECK, and a row that displays procedural care in one clause lends the clause beside it a credibility it did not earn.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git grep -l -E '2 failed, 91 passed|2 failed / 91 passed' at HEAD (TRACKED-ONLY, the record plane): 9 files -- fixed_inputs/r12/R12_BASE.json, task-orders/LGIC_ENFORCE.TO-EN-t-45-r12.the-suite-binds-like-a-consumer.md, its .proof_of_spec.json, the-suite-binds-like-a-consumer.r12.result.md, the r11 .proof_of_spec.json and .result.md, CONSUMER_BINDING_R12.json, surprise-channel/adjudications/ADJUDICATION_v2.md, surprise-channel/investigations/INVESTIGATION_v1.md",
+   "git grep -n -E '2 failed' -- fixed_inputs/r12/R12_BASE.json -> :46 \"result\": \"2 failed, 91 passed\"; git log -1 on that path -> 09fe52ee89 2026-09-19T00:16:45-04:00 2.0.0_SA_COO~G",
+   "comp-find '2 failed|91 passed' --limit 30: DENOMINATOR 474 hit(s) across 168615 files scanned, corpus=all -- the census S95 never ran",
+   "S95 @48ecbe6bf8 surfaced_at 2026-09-19T06:10Z; the r12 L10 slug (msg 98146) was sent 05:53Z and states the same figure",
+   "the CVO r12 check script's ARM C: 'POSITIVE CONTROL: the suite unmutated must be 2 failed (the two hand-stale worked cases)' -- UNTRACKED (.scratch/), so it is corpus evidence and not record evidence; the nine above are the record"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "SCOPE OF THE CORRECTION, STATED NARROWLY ON PURPOSE: only S95's coverage clause is retired. S95's measurement STANDS and is untouched -- the suite baseline IS 2 failed / 91 passed, the two failures ARE pre-existing, and the negative control that established it (HEAD blob 30a818c7fe restored, suite run, patch re-applied and verified at 7af34272c5) is sound and was run correctly. Withdrawing the whole row would discard a correct measurement to punish one false clause. Graded in LGIC_ENFORCE_ROUND12_ANALYSIS.md s.3 by the seat that wrote both rows."
+}
+```
