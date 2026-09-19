@@ -198,3 +198,92 @@ should not be decided as one.
 **NOT EXERCISED, and each is named rather than assumed:** the `sys.path` ordering (the load-bearing fact);
 the live AWS layer versions and which function versions actually attach them; whether the other 6 routes'
 `entry.py` bind the shared `enforce` (S82 measured the file census, and I did not re-derive the binding).
+
+---
+
+# ADDENDUM A — the second case, found after the first send, and it REFINES the headline
+
+Written ~08:5xZ, same seat, ~20 minutes after the body. **It changes the headline's force and it is
+recorded here rather than by editing the sentence above.**
+
+## A SECOND FIRST-PARTY LAYER EXISTS, AND IT HAS THE SAME SHAPE
+
+`opal-trading-calendar-layer`. Its governing ruling is quoted verbatim inside a live Lambda
+(`infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/lambda_function.py:38-42`):
+
+> *"THE CALENDAR COMES FROM THE PUBLISHED LAYER, NOT A COMMITTED COPY (CTO~Z ruling msg 5462
+> @1da1e2b73b, **"MINT THE LAYER, NOT A FIFTH COPY"**): `import trading_calendar` below is a BARE import
+> resolved via the Lambda layer mount at /opt/python/ … **No trading_calendar.py is vendored into this
+> directory or added to the source map.**"*
+
+So the estate has RULED this exact class before, and the winning pattern is stated in terms. ⭐ **Note
+what actually does the work in that sentence: not the layer, but the SECOND clause — no vendored copy,
+not in the source map.** That function had to SAY SO explicitly, which is itself the tell.
+
+## AND THE RULING DID NOT HOLD ACROSS THE PIPELINE — 3 VENDORED COPIES SURVIVE TODAY
+
+`comp-find --name 'trading_calendar.py' --all`, denominator **6 hits / 173,621 files**: the canonical
+`lib/trading_calendar.py`, its test, one ETFS fixture — and **THREE live vendored copies in Lambda
+source directories**:
+
+```
+infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py
+infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/trading_calendar.py
+infra/aws/lambda/opal-assets-absence-check/trading_calendar.py
+```
+
+⛔ **SO BOTH OF THE ESTATE'S FIRST-PARTY LAYERS COEXIST WITH VENDORED COPIES OF THE CODE THEY PUBLISH.**
+Two of two. A layer plainly does not, by itself, prevent a second copy — and this is now measured on two
+independent pipelines, not argued.
+
+## BUT THEY HAVE NOT DIVERGED — THIS IS AN EXPOSURE, NOT AN INCIDENT
+
+All three hashed against the canonical frontier, CRLF-normalised:
+
+```
+CANONICAL lib/trading_calendar.py        sha256[:16] 41b1c0c12651c62e
+bd-served-vintage-alarm/…    6979 bytes  41b1c0c12651c62e   IDENTICAL
+inf-etf-ownership-daily/…    6979 bytes  41b1c0c12651c62e   IDENTICAL
+opal-assets-absence-check/…  6979 bytes  41b1c0c12651c62e   IDENTICAL
+denominator: 3 of 3 vendored copies vs 1 canonical frontier
+```
+
+Per CLAUDE.md Rule 22's negative mirror, **ABSENT ≠ EXERCISED-AGAINST**: three unguarded copies of the
+estate's declared *"ONE frontier"* is a REAL HAZARD, and 3-of-3 identical says it has **not fired**. So
+the remedy is BUILDING THE GUARD, and **nothing needs re-opening** — no calendar-derived output is
+suspect on this evidence. ⚠ Measured at this vintage only; the copies are unguarded, so this reads clean
+today and carries no promise about tomorrow.
+
+## THE SENTENCE THAT MATTERS MOST FOR THE DECISION
+
+**In BOTH first-party layer cases, the state of the copies was established by a CENSUS SOMEBODY HAPPENED
+TO RUN — never by a check.** `_authz`'s fork was found by `1.0.0_SA_CTO`'s S82 `os.walk`; the calendar's
+three copies and their cleanliness were found by this census, twenty minutes ago, because the fork
+question sent me looking. Neither was caught by tooling. **That is the argument for Q3's check standing
+independently of how the layer question resolves** — it is the only instrument that has ever detected
+this class here, and today it is run by luck.
+
+## HOW THIS REFINES THE HEADLINE
+
+The body says the LAYER instinct "does not survive in the form stated". That stands, but it is now
+sharper and slightly kinder to the instinct:
+
+- **A layer does not ENFORCE single-source.** Measured, 2 of 2 first-party layers.
+- **A layer DOES deliver single-source when paired with the no-vendored-copy discipline** — which is
+  exactly what the `bd-49f` docstring spells out, and exactly what its three siblings did not do.
+- **So "mint the layer" and "prevent a second copy" are two separate acts**, and the estate's one
+  fully-correct precedent performs both. A decision that performs only the first buys distribution and
+  no fork protection, which is the state `holdings` is already in.
+
+**Still no recommendation.** The decision is `1.0.0_SA_CTO`'s, and the distribution question named in
+the body remains separate and unanswered.
+
+## INSTRUMENT NOTE — a false zero I caught on myself, recorded because it nearly shipped
+
+My first census of the layer mount ran `comp-find '/opt/python'` and returned **"0 hit(s) across 168,722
+files"** with a full denominator. It was a FALSE ZERO: MSYS path-mangled the leading-slash argument, and
+the tool's own echo line printed what it actually searched for — `C:/Program Files/Git/opt/python`.
+Re-run as `opt/python` it returns **200 hits**, including every finding in this addendum. ⭐ **The tell
+was the tool ECHOING ITS OWN PATTERN; nothing else in that output was wrong.** A measured zero with a
+printed denominator over the right corpus, answering a question nobody asked. Had I trusted it, this
+addendum would not exist and the body's headline would have stood unrefined.
