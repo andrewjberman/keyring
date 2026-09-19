@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.11",
+ "decomp_version": "v3.12",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1434,6 +1434,63 @@ falsifies a compliment is the same one that falsifies a complaint, and I ran it 
 
 **Round 11 is NOT re-opened** (the arm is guard-shaped; the four measuring arms were re-exercised by mutation),
 and **no later round may cite that green as precedent that the arm works.**
+
+
+## 0m. v3.12 -- THE ROUND-13 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-12 analysis @`abea09f936`
+
+**Input.** `LGIC_ENFORCE_ROUND12_ANALYSIS.md` @`abea09f936` (msg 98152) and `3.0.0_SA_CVO`'s `W2-S13`
+remediation. Round 12 STANDS; no PRD addendum owed; the CTO re-measured scope at write time as 0 open of 65.
+
+### 0m.1 THE CELL -- 1, AND IT IS R-38's ROUND AT LAST
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the placeholder population | `EN-p-37` | measures HOW MANY rows carry a literal placeholder NOW, WHICH tokens, WHICH producer leaves each unfilled, and whether the rows share ONE cause -- and repairs nothing | FWD-3 | `LGIC_ENFORCE-W<n>-S<k>` |
+
+`W2-S13` has been ARMED since 2026-09-17 with this seat as `disarm_owner`; the CVO's remediation names R-38
+and the gate: **cut after the preceding round's slug and never beside it** (LD-0521). **0 open orders at the
+cut, so the gate is satisfied and this is that round.**
+
+### 0m.2 THE FIGURE IS INHERITED AND THE ROUND SAYS SO
+
+⚠ **`1411 of 3237` is round 4's measurement at ITS registry pin, and this seat did NOT re-measure it at the
+cut.** Deliberately: the current figure needs a live census run, which is the CELL'S work, and a figure
+measured at the cut would be stale again before the worker read it. **Rounds 5 through 12 did naming work on
+this surface, so the population may have moved in EITHER direction.** The cell re-measures its own
+denominator and states the delta **naming BOTH vintages** -- an inherited count wearing a fresh date is the
+failure this project spent two rounds repairing in its own instruments.
+
+⭐ One probe was run and is recorded so the cell does not mistake it for evidence: the newest census REPORT
+carries 51 table lines and ZERO placeholder lines, but it is a SUMMARY table rather than the row dump, so it
+**neither confirms nor refutes** the population.
+
+### 0m.3 WHAT THE ARMS CAN AND CANNOT SEE, WRITTEN ON THE ORDER
+
+⛔ **This checker cannot re-run a live census.** It RE-COUNTS the report the cell produced and refuses a
+record that disagrees with its own artifact. **A green means the record agrees with the cell's artifact,
+never that the live plane was read correctly** -- that half is the judgment criterion's and `3.0.0_SA_CVO`'s.
+Saying so on the order is the whole difference between a bounded green and an overstated one.
+
+### 0m.4 THE ONE-LINE RECUT, CARRIED FOR THE L9
+
+**The round-13 L9 re-reads the channel count at ITS OWN write time and states the delta against its slug.**
+Measured reason: slug 98146 certified `0 undispositioned` over 184 rows at 05:53Z; HEAD read 188 four rows
+later from two seats -- and at the slug's own vintage **182 of 184 already read `UNDER_INVESTIGATION`, which
+is this channel's ordinary HOLDING STATE, not an undispositioned flag.** ⭐ **A PREDICATE'S NAME IS NOT ITS
+SEMANTICS:** read the population's distribution before quoting a predicate, or the finding is about the word.
+An L10 certificate is PERISHABLE on an append-only channel, and the adjudicator structurally cannot see a row
+that lands after its send.
+
+### 0m.5 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** fill a single placeholder, and names no remedy.
+- It does **not** pre-decide the cause question: `UNDETERMINED` is admissible WITH evidence, because forcing
+  `ONE` or `SEVERAL` to look decisive is how a cell invents a cause.
+- It does **not** cut a cell for `S94`: **that remedy is ALREADY IN THE ARTIFACT** -- `registry_hash_scope()`
+  exists at `lib/opal_naming.py:166` and the GENERATE summary already prints its scope clause. Verified at the
+  bytes BEFORE a cell was drafted, which is the second time tonight that check prevented work on a remedy that
+  already existed.
+- It does **not** carry `S96`, which is `1.0.0_SA_CTO`'s own defect on its own row.
 
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
