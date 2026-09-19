@@ -418,7 +418,7 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 - **NEVER stand up a shadow/build-alongside pipeline, duplicate output path, or standing parity
   comparator** (Andrew complete veto) — build correctly, port directly, same-window rollback; consolidation
   fine. Record: BOX MEMORY (per-device, NOT in the repo -- a fresh worktree will not have it)
-  `feedback_no_shadow_channels_veto_build_correctly_and_port`.
+  `feedback_no_inferred_gates_no_shadow_pipelines_20260804` (item 2 is the veto verbatim).
 - **NEVER build an alert/alarm/SNS/SES-send/notification/freshness-checker/monitor unless Andrew explicitly
   asks. Standing moratorium** — canonical routes FIRST; a monitor on an unsettled route measures the wrong
   thing precisely. Findings land as gates or owned blocking items. `docs/architecture/MDPF_DEBTCLEAN_PRD.md` §11–12.
