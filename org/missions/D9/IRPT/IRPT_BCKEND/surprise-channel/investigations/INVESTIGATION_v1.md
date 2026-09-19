@@ -6349,6 +6349,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Choices for the issuer, not this seat: (i) the owner of those undeployed artifacts deploys them first (sequencing), and IB-rtf-10's plan is re-taken and becomes env + grant only; (ii) the halves sign a combined apply that NAMES the 4 code changes; (iii) the module pins s3_object_version to the deployed version for this apply (a module-input change the face does not grant)."
   }
+,
+  {
+    "id": "IRPT_BCKEND-W1-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T11:40:45Z",
+    "one_line": "IB-rtf-11 arm (b)'s premise -- 'every directory/ test that passed a top-level q/selection is REWRITTEN to the 2.0 shape' -- has no directory/ member to rewrite: no test under directory/tests/ ever called entry.search()/entry.resolve() at all (test_handler.py exercises handler.py directly). The ONE test that constructs the top-level-q/selection event S92 describes is _authz/tests/test_guarded_entries.py's base_event(), outside this order's <paths>. Measured before and after this order's fix: that file's 96 tests pass unchanged in both cases (rc=0, '96 passed' both runs) because its assertions never inspect the served data payload -- so it neither breaks from the fix nor exercises the 2.0 shape either side of it, exactly the gap R68-AC2 asks this seat to name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Bound (b): 'Every directory/ test that passed a top-level q/selection is REWRITTEN to the 2.0 shape -- the test that asserted the old shape is the defect's own witness and is not kept.'",
+    "world_is": "Grep census (this run) over infra/aws/lambda/investor-reporting for 'entry.search(' / 'entry.resolve(' / 'import entry' finds exactly two files: _authz/served.py (the import entry.py itself makes) and _authz/tests/test_guarded_entries.py -- zero hits under directory/tests/. test_guarded_entries.py's base_event() (:129-151 @9f72f4d6a4) sets top-level q/limit/selection but never queryStringParameters/body, so _event_params(event) (this order's fix) reads {} for it both before and after -- params.get('limit', DEFAULT_LIMIT) silently changes from 5 to 20 and params.get('selection') from {'account_ids': [fx.A1]} to {}, and neither change fails an assertion because none of that file's cases inspect 'data' content (they check refusal codes, contract_version/operation/firm_id, or protected-byte absence). py -3.12 -m pytest infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py -q: '96 passed' at CLOUD HEAD 4ceb7f8361 (before this order's edit) and '96 passed' again after entry.py's fix -- byte-identical pass count, this run.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "Grep tool census, this run, path=infra/aws/lambda/investor-reporting: 'entry.search(|entry.resolve(|import entry' matches only _authz/served.py and _authz/tests/test_guarded_entries.py -- 0 hits under directory/tests/",
+            "infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py:129-151 @9f72f4d6a4, base_event(): top-level 'q'/'limit'/'selection' keys, no 'queryStringParameters' or 'body' key",
+            "py -3.12 -m pytest infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py -q, this run: '96 passed' both before (CLOUD HEAD 4ceb7f8361) and after this order's directory/entry.py edit"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this seat's to fix (_authz/tests/ is outside this order's <paths>). This order's own directory/tests/test_entry.py (new, this cell) supplies the coverage the premise assumed already existed: it is the first directory/ test to call entry.search()/entry.resolve() at all, using the 2.0 fixture and the 9f72f4d6a4 mutant as the negative control."
+  }
 ]
 ```
 
