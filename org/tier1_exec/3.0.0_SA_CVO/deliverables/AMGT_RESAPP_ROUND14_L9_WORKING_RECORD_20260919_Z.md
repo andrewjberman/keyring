@@ -444,6 +444,48 @@ THIS SEAT STILL DOES NOT RULE ON THE FORK -- it is Andrew's, and this seat decli
 declines it again here. What this section adds is the MEASUREMENT, so whoever rules does so against
 the served builder output rather than against anyone's account of it.
 
+## 4h. A deliberate supersession left 2 tests red, and the REPAIR IS UNASSIGNED (not ungrantable)
+
+Composes `W45-S3` (worker ~45) and `W61-S1` (worker ~61), each of which saw one half.
+
+THE FACTS, verified at HEAD in the shared tree by this seat:
+- `python -m pytest lib/research/api/tests/test_generation_and_pool_routes.py -q` -> **2 failed, 22
+  passed**: `test_13_management_is_M1_with_the_pool_average_at_the_same_as_of` and
+  `test_13b_the_ceo_profile_reading_separates_the_two_absences`, both
+  `assert 'NOT_SEARCHED' == 'NOT_CONFIRMED_NOTHING_FOUND'`.
+- The expected value is GONE from the producer: `NOT_CONFIRMED_NOTHING_FOUND` occurs **0** times in
+  `lib/research/api/scoped_amgt.py`, whose enum now reads `CEO_READING_{CONFIRMED, NOT_SEARCHED,
+  SEARCHED_LINKS_UNREADABLE, SEARCHED_NOTHING_FOUND, SEARCH_FAILED, UNREADABLE_OBJECT}`.
+- The breakage is DELIBERATE and correct: `rk-43` replaced a two-value sentence-parsed contract with a
+  six-value field-only one (`W45-S3`), and the two tests assert the superseded contract.
+- `rk-43` had no grant on the test file; `rk-61` inherits the red battery and its AC2 ("0 failed")
+  FAILS on literal terms through no fault of its own, its own 9 new tests being 9 of 9 green.
+
+A CORRECTION THIS SEAT MADE BEFORE PUBLISHING: the tempting conclusion is "no cell in the round can
+repair it -- an ORPHANED repair". THAT IS FALSE, and the subtraction caught it. Reading the `<paths>`
+BLOCK (not prose mentions) of all 31 round-14 orders: **5 grant something under
+`lib/research/api/tests`, and TWO of those are WHOLE-DIRECTORY grants** --
+
+| order | grant | state |
+|---|---|---|
+| `rk-37` | `lib/research/api/tests/` | PENDING |
+| `rk-53` | `lib/research/api/tests/` | complete |
+| `rk-36`, `rk-51`, `rk-61` | one named file each | -- |
+
+A directory grant covers the broken file. So the CAPABILITY exists and is live right now in `rk-37`.
+
+THE ACCURATE FINDING IS THEREFORE NARROWER AND SHARPER: the repair is not UNGRANTABLE, it is
+UNASSIGNED. `rk-37`'s cell is sheet-rows/description-base-case and has nothing to do with
+`ceo_profile_reading`; it holds the grant by scope, not by task. Nobody is obliged to fix these two
+tests, so they persist -- and every later cell carrying a "the battery is green" criterion inherits a
+literal FAIL it did not cause and cannot be graded down for.
+
+FOR THE ADJUDICATION: `rk-61` AC2's FAIL is NOT `rk-61`'s defect and must not be graded as one. And
+the general shape is worth naming: A DELIBERATE CONTRACT SUPERSESSION NEEDS ITS TEST REPAIR ASSIGNED
+IN THE SAME CUT, because the cell that breaks the tests correctly is usually not the cell that holds
+the grant to fix them, and a whole-directory grant sitting in an unrelated cell is capability without
+obligation -- which reads, to every downstream criterion, exactly like nobody having the grant at all.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
