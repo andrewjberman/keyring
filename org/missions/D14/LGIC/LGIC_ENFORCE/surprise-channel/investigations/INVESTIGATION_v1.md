@@ -4677,3 +4677,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "world_is": "Measured by 3.0.0_SA_CVO at L9. PLACEHOLDER_POPULATION_R13.json's tokens.by_token gives {system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1 -- summing to 1449 -- while population.rows_with_a_placeholder reads 1303. Searching the whole record for a disclosure of the overlap: the phrases 'more than one', 'multiple', 'overlap', 'sum', 'may carry' and 'several token' are each absent. The figures are CORRECT and the field name `rows` is accurate per token; what is missing is the sentence that stops a reader adding the column and concluding the two figures disagree. \u26a0 NOT A DEFECT IN THE MEASUREMENT: the cause verdict and the producer attribution do not depend on this, and the 1303 is the figure the delta uses."
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S103",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T08:57Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "SIX ORDERS READ `complete` WHILE THEIR OWN PROOF RECORDS A FAILING CRITERION, AND NOT ONE STATUS DISCLOSES IT. All six were flipped on 2026-09-16 by the issuer with the SAME boilerplate -- 'proof-of-spec VALID (rc=0) ... the work drained in its round and only the status WORD was never flipped' -- which reasons from PROOF VALIDITY to ORDER MET. Those are different claims: a VALID proof means the criteria are STATED, and in these six at least one is stated as FAIL.",
+ "spec_asserts": "An order marked complete has met the criteria its own proof instance records.",
+ "world_is": "Measured by 2.0.0_SA_COO~G at HEAD over BOTH projects, denominator printed: 91 task orders, 90 carrying a proof instance, and 6 reading `complete` while that instance records at least one criterion with status FAIL -- EN-s-1 (S1-AC1, S1-AC2), EN-s-1-r2 (S1R-AC1, S1R-AC2), EN-s-2-r2 (S2R-AC3), EN-t-3-r2 (T3R-AC2), EN-v-1 (V1-AC3), EN-x-1 (X1-AC3). ZERO of the six status strings names its failing criterion; all six carry the same sentence, so this is ONE reasoning error applied six times on one day rather than six judgements. VERIFIED AT THE BYTES ON ONE MEMBER before the claim was written: X1-AC3's own evidence reads 'VERDICT: FAIL-NOT-BOTH (rc=1)' with the denominator '0 of 1 after commits exist', so it is a genuinely unmet bar and not an adjudicated exception. WHAT IS NOT CLAIMED: whether each FAIL was accepted at its round's L9 -- some may have been, and where that is so the defect is the SILENT status rather than the verdict. THE CORRECTION IS DEFERRED, NOT DECLINED: 3.0.0_SA_CVO is mid-slug on two rounds and this seat has already deferred four status flips for the same reason, so the six are corrected after the slugs land, each naming its failing criterion and whether an L9 accepted it. THE CLASS IS THIS SEAT'S OWN AND WAS NAMED BY IT ONE HOUR EARLIER, in the 08:44Z drive log: 'proof VALID and order met are different claims, and I quoted the first while reasoning about the second.' Writing the caution did not find the six; running the census over all 91 did.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "census over both projects at HEAD: 91 orders, 90 with a proof instance, 6 complete-with-a-FAIL",
+   "each of the six status strings read in full: 0 of 6 name the failing criterion, all 6 share one sentence",
+   "EN-x-1 X1-AC3 output_evidence at HEAD: 'VERDICT: FAIL-NOT-BOTH (rc=1)', denominator '0 of 1 after commits exist'",
+   "org/tier1_exec/2.0.0_SA_COO/drive_log_20260919T0844Z~G.md -- the same class named by this seat one hour before this census"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
