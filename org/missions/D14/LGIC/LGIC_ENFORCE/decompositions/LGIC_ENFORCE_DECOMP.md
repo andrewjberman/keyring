@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.12",
+ "decomp_version": "v3.13",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1584,6 +1584,103 @@ No flagged path falls outside the manifest.
 | `DECLARED` | the PRD or a record asserts it; not independently measured here |
 | `NOT-EVALUATED` | not looked at. Not a pass, not a fail. |
 | `N/A` | the field does not apply to this surface |
+
+---
+
+## 0n. v3.13 -- THE ROUND-14 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-13 analysis @`cf0cf68868`
+
+**Input.** `1.0.0_SA_CTO`'s round-13 analysis @`cf0cf68868` (msg 98202) and `3.0.0_SA_CVO`'s `S101` and
+`S102`, both measured at the round-13 L9. **Round 13 STANDS**; no PRD addendum owed; scope 0 open of 155.
+
+### 0n.1 THE CELLS -- 2, AND THE ANALYSIS FORBADE PAIRING THEM
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| one render path | `EN-r-7` | makes EVERY column of the population report render through ONE path under ONE rule, and regenerates the report through it | FWD-3 | `LGIC_ENFORCE-W<n>-S<k>` |
+| the token grain | `EN-p-38` | measures the multiplicity that reconciles the by-token sum 1449 with the 1303-row population, at a PINNED input | FWD-3 | `LGIC_ENFORCE-W<n>-S<k>` |
+
+**Levels.** Both at L0. `fanout: 2 slots over 2 cells, cap 8`. No dependency edge exists between them --
+see §0n.3.
+
+⛔ **THEY ARE NOT PAIRED, AND THAT IS THE ANALYSIS'S INSTRUCTION, NOT THIS SEAT'S PREFERENCE.**
+`1.0.0_SA_CTO`, verbatim: *"DO NOT PAIR THEM: they share a file and nothing else, and a joint cell will
+report the easier one."* Two orders, two records, two workers, two worktrees. Neither order mentions the
+other's criterion and neither checker arm reads the other's record.
+
+### 0n.2 `EN-r-7` -- THE REPAIR, AND ITS SHAPE IS THE POINT
+
+`S101`: the report renders a brace as a PARENTHESIS in the `current` and `where` columns only -- across
+3264 rows, `canonical` carries 1303 braces and 0 paren-wrapped tokens, the escaped columns carry 0 and 8.
+**The same token renders one way in one column and another way beside it, MANUFACTURING AN APPARENT
+DIFFERENCE between cells EQUAL AT THE VALUES.** Measured cost: the grader's first pass on the cause
+verdict's load-bearing evidence returned **0 of 5** -- a false finding against the cell, **borne by the
+GRADER, not the author**.
+
+The CTO's recut, verbatim: *"cut it to make both columns render through ONE path, NOT to 'fix' the current
+column, or the asymmetry returns the next time a third column is added."*
+
+⭐ **WHAT THIS SEAT MEASURED AT THE CUT AND NEITHER `S101` NOR THE ANALYSIS CARRIES** (printed bytes,
+`PLACEHOLDER_POPULATION_TABLE_R13.md:7-16` @`f658dc53cb`): **the substitution is DELIBERATE AND DECLARED.**
+The table's own preamble says the escaped columns are escaped *so that a pre-existing literal template brace
+in the OBSERVED name is never double-counted*, leaving *"the `canonical` cell ... the ONLY column left with
+real `{` `}` bytes"*; the column header reads `current(escaped)`. **So the escaping is LOAD-BEARING** -- it
+is what let the round-13 arm identify the population by which column carries brace bytes, and a repair that
+merely deletes it breaks that discriminator while looking tidy. ⚠ **It does NOT make `S101` wrong**: the
+asymmetry is real and **declaring a hazard in prose is not removing it**. Filed `LGIC_ENFORCE-W2-S104`.
+
+**What it changed in the cut.** The criterion cannot grade the columns' COUNTS against each other -- two
+columns hold DIFFERENT CONTENT, so `canonical_braces == current_braces` is a bar **no correct artifact can
+meet**. **This seat drafted exactly that bar and repaired it before issuing** -- a fifth instance of the
+shape the cut-time bar exists for, and the first caught by the ISSUER rather than by the worker being
+graded. The asymmetry lives in the RULE, so the rule is graded: ONE renderer at one site, ONE distinct rule
+over EVERY column in the table's own denominator (the routed set written as a SUBTRACTION), a WITNESS token
+rendering identically in two columns, and a stated `population_discriminator` for the job the escaping did.
+
+⛔ **NOTHING UPSTREAM MOVES.** `S101` resolved at the source that the producer is CORRECT at the values.
+`lib/opal_naming.py` has NO writer this round; `r7-no-producer-change` grades the commits the CELL authored,
+by author, so another seat's commit there is excused and printed.
+
+### 0n.3 `EN-p-38` -- THE MEASUREMENT, AND THE PIN THAT UNPAIRS IT
+
+`S102`: the per-token row counts sum to **1449** against a population of **1303** rows, and the record
+discloses the overlap NOWHERE -- *"more than one"*, *"multiple"*, *"overlap"*, *"sum"* and *"may carry"* are
+each ABSENT. `tokens.by_token[].rows` is **PER TOKEN**, `population.rows_with_a_placeholder` is **PER ROW**:
+two grains printed adjacent under one word.
+
+⛔ **IT RE-OPENS NOTHING.** `S102` says in terms that the figures are CORRECT, the field name is accurate
+per token, the cause verdict and producer attribution do not depend on it, and 1303 is the figure the delta
+uses. Round 13's record is FROZEN (R-43). **What is missing is the sentence that stops a reader adding the
+column and concluding the two figures disagree** -- and that lands in a NEW artifact.
+
+**THE INPUT COLLISION AND ITS FIX.** `EN-r-7` REGENERATES the table this cell READS. So **`EN-p-38` pins its
+input by commit** -- the r13 report at `c05f9f9fc9`, read with `git show` -- and states the pin in its
+record, where the arm grades it. **That pin is the whole reason the two cells carry no dependency edge and
+run in parallel.**
+
+**The trap named on the order:** `sum - rows` is NOT the multi-token row count -- it is the count of EXTRA
+token-row incidences, equal to the row count only when no row carries three or more. The arm cannot catch
+that substitution (it is self-consistent by construction), so it is stated on the order and routed to the
+JUDGMENT criterion.
+
+### 0n.4 WHAT THE ARMS CANNOT SEE
+
+`check_en_r14.py` reads RECORDS. It cannot open the regenerated table to confirm the named renderer produced
+it, cannot tell whether `rule_per_column` describes the code that was written, and cannot confirm the grain
+figures came from the pinned artifact. **Each order says so in its own words and routes that half to its
+JUDGMENT criterion**, which `3.0.0_SA_CVO` grades at L9 and no cell self-grades.
+
+### 0n.5 FIXED INPUTS
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r14/` -- `R14_BASE.json` (**the ONE CARRIER of the record shape,
+S85**; both orders quote their own half and the checker builds its positive records from it) and
+`check_en_r14.py` (5 real arms, a 28-arm self-test with **9 POSITIVE-SATISFIABILITY** arms, ruff clean).
+Two of those positive arms prove the repair criterion does **not** dictate which rule: escape-everywhere and
+escape-nowhere both PASS. One proves the measurement criterion accepts `rows_carrying_more_than_one: 0` --
+**a bar that only passed on a large overlap would be an instruction to find one.**
+
+**WIRING AT THE CUT**, measured and disclosed on both orders: `r7-one-path`, `p38-grain` and
+`r14-vintage-field` **FAIL**; `r7-no-producer-change` and `r14-stale-proofs` are **GUARD-SHAPED and read
+PASS** -- one guards a change that must not be made, the other's window is empty until a fixed input moves.
 
 ---
 

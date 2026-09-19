@@ -4703,3 +4703,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S104",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T09:38Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "THE RENDERING SUBSTITUTION S101 FOUND IS DELIBERATE, DECLARED IN THE ARTIFACT'S OWN PREAMBLE, AND LOAD-BEARING -- and S101 is still right. PLACEHOLDER_POPULATION_TABLE_R13.md:7-16 states that `current` and `where` have their braces rendered as parens SO THAT a literal template brace in the OBSERVED name is never double-counted, leaving 'the `canonical` cell ... the ONLY column left with real `{` `}` bytes'; the column header reads `current(escaped)`. So the escaping is WHAT LET THE ROUND-13 ARM IDENTIFY THE POPULATION, and a repair that merely deletes it breaks that discriminator while looking tidy.",
+ "spec_asserts": "A finding of a systematic asymmetry names an unintended defect, and the remedy is to remove the asymmetry.",
+ "world_is": "The asymmetry is intended and disclosed in prose ON THE ARTIFACT, and it does a job. DECLARING A HAZARD IN PROSE IS NOT REMOVING IT -- a reader checking the record's evidence against the artifact still gets 0 of 5, which is exactly what S101 measured, so S101 STANDS UNCHANGED. What moves is the REMEDY's shape: the round-14 repair cannot simply strip the escaping, it must route every column through ONE path under ONE rule AND state what identifies the population afterwards. WHAT THIS COST AT THE CUT, RECORDED BECAUSE IT IS THE POINT: this seat's FIRST DRAFT of the round-14 criterion graded `canonical_braces == current_braces` -- a bar NO CORRECT ARTIFACT CAN MEET, because the two columns hold different content. It was caught by reading the table's own preamble before issuing and replaced with a RULE-shaped bar carrying a WITNESS. That is a fifth instance of the shape the CTO's cut-time bar exists for, and THE FIRST CAUGHT BY THE ISSUER RATHER THAN BY THE WORKER BEING GRADED.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "PLACEHOLDER_POPULATION_TABLE_R13.md:7-16 @f658dc53cb, printed bytes: the escaping and its stated reason",
+   "the same file's column header line: `columns: current(escaped) | canonical | verdict | type | plane | where`",
+   "3.0.0_SA_CVO S101 at HEAD: canonical 1303 braces / 0 parens, escaped columns 0 braces / 8 parens over 3264 rows; grader's first pass 0 of 5",
+   "check_en_r14.py selftest-arms at the cut: 28 arms, 9 POSITIVE-SATISFIABILITY, including two proving the repair criterion does not dictate WHICH rule"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
