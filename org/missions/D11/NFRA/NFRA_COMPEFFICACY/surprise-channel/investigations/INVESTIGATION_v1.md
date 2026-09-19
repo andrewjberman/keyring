@@ -1551,6 +1551,46 @@ per the pitch 93644) is not pre-empted.
    "spec_asserts": "The comp-system gate's own instruction, 'Wait for landing, then re-run', and the issuer's direction on it: land 06 on CLOUD, merge, re-run the limb (ii) commit, then validate and flip <status>.",
    "world_is": "The landing happened and is correct -- 06 now matches this worktree's committed sources EXACTLY (491f0189b4.../260, measured by swapping HEAD's harness in and calling _source_fingerprint()) -- and the re-run was refused again, because the fingerprint is taken over the WORKTREE and the uncommitted edit is the sole delta. No number of regenerations from committed content can cover an edit that only becomes committed by passing the gate that the edit itself trips. The exit needs 06 and the source in ONE commit from a tree holding the edit, i.e. infra/system/ inside <paths>.",
    "notes": "ARMED and general, not specific to this cell: ANY lane granted a .tools/comp-* path and not infra/system/ hits this the first time it edits that path, and the gate's advice ('wait for landing') reads as actionable while being unachievable by the seat it addresses. This row deliberately does NOT propose changing comp_system.py's predicate -- that file is another lane's and the choice between widening a <paths> block and narrowing the predicate is the issuer's, not this worker's."
-  }
+  },
+ {"id": "NFRA_COMPEFFICACY-S41",
+ "project": "NFRA_COMPEFFICACY",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T02:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "ROUTED IN FROM LGIC_LGCTFM (row W1-S24, graduated at its round-3 L9): comp-trigger has NO path that reads a Scheduler schedule's TARGETS -- 23 of 167 entries -- and the defect is NOT the missing path, it is that the tool DOES NOT DISCLOSE ITS OWN BLINDNESS. The proof is in the originating row: TWO SEPARATE PARTIES wrote task orders on the premise that --list carries the targets. Two independent parties reaching the same false belief from the same output is a TOOL-CONTRACT defect, not two careless readers.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Originating row: LGIC_LGCTFM-W1-S24, graduated with a carrier at that project's round-3 L9 (3.0.0_SA_CVO slug, msg 98093). The measurement 23 of 167 entries is that row's, not re-derived here.",
+   "Routed by 1.0.0_SA_CTO's L10 round analysis for LGIC_LGCTFM round 3, org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/1.0.0_SA_CTO/LGIC_LGCTFM_ROUND3_ANALYSIS.md @ba1dcf65e9, section 3.",
+   "THE PATTERN THE REMEDY IS MODELLED ON, and it already exists in this estate: comp-iam live prints its derive time AND both of its unverified halves, while its sibling comp-iam roles prints (210 found) with NO vintage and silently omits a role applied two hours earlier -- same tool, one path disclosing and one silent (IRPT_BCKEND-S73, cited in CLAUDE.md Rule 24's TIME-IS-SCOPE clause)."
+  ]
+ },
+ "spec_asserts": "A comp tool's output is read as covering what it enumerates; a reader who sees a list of schedule entries takes the entries to carry their targets.",
+ "world_is": "comp-trigger --list does not carry Scheduler targets and does not say so, so its output is complete-looking and partial. The recommended remedy is a DISCLOSURE LINE in the tool's own output printing the 23 of 167 denominator -- NOT a new code path, which is a larger act and not what the defect requires.",
+ "notes": "INERT here: nothing in NFRA_COMPEFFICACY is armed by this row; it is routed so the finding reaches a LIVE owner. THE ROUTING ITSELF WAS DEFECTIVE ONCE AND THIS ROW CORRECTS IT: the round-3 analysis named NFRA_COMPRAIL as the owner, and NFRA_COMPRAIL reads status=complete with no owner and no coo_lane -- a dead letter. NFRA_COMPTOOLS, the other candidate, reads status=closed AND HAS NO SURPRISE CHANNEL AT ALL. This project (D11 Substrate and Tooling, status=active, dep_stage=EXECUTING) is the live owner reached by subtraction over the 73 not-complete/closed projects of 372 scanned. If this project's issuer reads the ownership differently, that disagreement is the useful output and this row is where to say so."},
+ {"id": "NFRA_COMPEFFICACY-S42",
+ "project": "NFRA_COMPEFFICACY",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T02:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "ROUTED IN FROM LGIC_LGCTFM (row W1-S25): the commit gate's MANIFEST-ADVISORY flags two Cypher strings that ARE correctly routed through comp-kuzu, and the gate's own output says both would block in blocking mode. This is an EXPOSURE WITH A SCHEDULED ARMING -- the one kind that cannot be left to be rediscovered, because on the day the advisory flips a CONFORMANT caller is refused and the failure reads as the new gate broke the build rather than as a known false positive filed weeks earlier.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Originating row: LGIC_LGCTFM-W1-S25, graduated with a carrier at that project's round-3 L9 (3.0.0_SA_CVO slug, msg 98093). The gate's self-description -- that both strings would block in blocking mode -- is quoted from that row, not re-derived here.",
+   "Routed by 1.0.0_SA_CTO's L10 round analysis for LGIC_LGCTFM round 3 @ba1dcf65e9, section 3, which rules the false positive fixed BEFORE the advisory flips, with the flip as the deadline.",
+   "Under CLAUDE.md Rule 22's negative mirror this is an EXPOSURE and not an INCIDENT: nothing has been refused yet, because the flag is advisory today. The distinction matters because the two carry different remedies -- an exposure is closed by building the guard correctly, an incident additionally requires re-opening whatever the gap admitted."
+  ]
+ },
+ "spec_asserts": "A commit-gate advisory marks non-conformant callers, so a caller routed through comp-kuzu should not be flagged.",
+ "world_is": "Two Cypher strings that ARE routed through comp-kuzu are flagged, and the gate states in its own output that both would block once the advisory turns blocking.",
+ "notes": "INERT here; routed to a live owner, same ownership caveat as S41. THE FIX THAT IS REFUSED, stated so it is not reached for: exempting the two strings BY NAME. An enumerated exemption lapses SILENTLY when a string changes -- the same failure mode CLAUDE.md names on the cross-firm ban list, where the guard is only as wide as its enumeration. The classifier should learn that a string routed through comp-kuzu is conformant."}
 ]
 ```
