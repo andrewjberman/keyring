@@ -9022,6 +9022,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "AC1 asserts 'fmt_rc 0 with no diff' after this cell's one-expression, one-comment-block edit, implying the file was fmt-clean at HEAD before this cell touched it.",
     "world_is": "The file is NOT fmt-clean at HEAD: an unrelated IAM policy block (lines 104-110) already carries terraform-fmt drift, unchanged by this cell's edit and outside its declared 33-44/124 scope. AC1 is REFUSED on this measurement rather than repaired by widening this cell's write surface to the unrelated block, per the order's own REFUSAL CLAUSE; AC1's acceptance row records status FAIL with this row cited."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W43-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~43",
+    "surfaced_at": "2026-09-19T05:25Z",
+    "one_line": "AC7's expect (served_without_span moves to 0 for BA_US_Equity after AC6) cannot be met this round: issuer bind D4 narrows AC6's LIVE write to the three validation names only, and BA_US_Equity is one of the twelve covered (non-validation) keys that stay DRY-RUN this round -- so AC6 never rewrites BA_US_Equity's pool object at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC6's own invocation, run this session: `python -m lib.research.filings.drafting_build --rebuild-pool --population crosswalk/v1/2026-09-15.json --only-keys CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity --pre-act-dir .scratch/drafting_v1_preact` -- rc 0, 'REBUILT 0 of 3; 3 ABSENT (no analysis object)'; BA_US_Equity is not named in --only-keys and is never touched.",
+        "Two separate lambda:invoke calls on opal-amgt-scoped-api for BA_US_Equity's thesis route, one immediately after AC6 and one repeated to confirm stability, both this session: statusCode 200 drafting_status SERVED served 38 served_without_span 21 -- IDENTICAL before and after, because nothing wrote to BA_US_Equity's pool object.",
+        "The order's own ISSUER BINDS (D4, CTO msg 23833): 'the twelve covered keys are DRY-RUN only (AC5 prints their split and pre-act shas; nothing is written)' -- BA_US_Equity is one of these twelve (AC5's dry-run table, this session, lists BA_US_Equity: served_on_span=17 held_no_span=21 refused=2).",
+        "AC7's own <expect> text: 'served N greater than 0 and served_without_span 0 -- the served prose moved exactly as the producer's rule says' and 'Run BEFORE AC6 as well and record that served_without_span was greater than 0 then (the discriminating before/after pair)' -- this presumes AC6 rewrites BA_US_Equity, which D4's narrowing (agreed at re-signature, binding this order) precludes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC7 asserts that after AC6, BA_US_Equity's served set carries served_without_span 0 -- i.e. that AC6's rebuild reaches BA_US_Equity.",
+    "world_is": "AC6, per issuer bind D4 (which this same order carries and which the never-widen pair enforces), rewrites ONLY the three validation names; BA_US_Equity is a covered, non-validation key and is DRY-RUN only this round. AC6 therefore never touches BA_US_Equity's drafting/v1 object, and the deployed adapter continues to serve BA_US_Equity's PRE-HOLD object (served_without_span 21, unchanged before and after). AC7 is REFUSED on this measurement per the order's own REFUSAL CLAUSE -- not repaired by running a live rebuild of BA_US_Equity, which D4 explicitly bars this round -- and recorded as such in AC7's acceptance row and in the change-management entry's close checklist.",
+    "notes": "Not a defect in this worker's build: the conflict is between AC7's literal expect text (written assuming the full covered-population rebuild) and issuer bind D4 (narrowing that rebuild to the three validation names, added later at re-signature to satisfy C-VALIDATION-NAMES). Re-opening AC7 for BA_US_Equity specifically needs either a fresh never-widen pair scoped to BA_US_Equity or the covered-population rebuild D4 defers to end-to-end validation. No remedy owner named beyond that; informational, and cited verbatim in the change-management entry's close section (org/critical_paths/change_management/amgt-rk-41-verbatim-gate-hold-rebuild-20260919.md)."
   }
 ]
 ```

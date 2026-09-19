@@ -1,7 +1,8 @@
 # DEPLOY LEDGER -- AMGT_RESAPP AMGT-rk-41: C-VERBATIM-GATE = HOLD, drafting/v1 rebuild
 
 **Opened:** 2026-09-19T05:17Z by 0.9.0_WK_AMGT_RESAPP~43 (deploy-start, before AC6; NEVER#6)
-**Status:** OPEN (closes on completion of this entry, same session)
+**Status:** CLOSED 2026-09-19T05:xxZ -- AC6 run (branch B: 0 of 3 validation names carried an
+analysis object; REBUILT 0 of 3, all NOT ATTEMPTED); no key written, nothing to roll back.
 **PRD:** org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md v0.13 @1699960261
   `C-VERBATIM-GATE` :907-920, `C-VALIDATION-NAMES` :1652-1658, `C-PRODUCTION-HOME` :1617-1650
 **Never-widen pair (both on file, section `AMGT-rk-41` present, SIGNED at re-signature
@@ -91,9 +92,28 @@ rebuilds 0 keys (branch B above) -- no key is touched, nothing to roll back.
 
 ## Close (checked only when TRUE, with evidence)
 
-- [ ] AC6 run; per-key line(s) recorded (pre_act_sha256, post_act_sha256, sections_values) or
-      NOT ATTEMPTED reasons for all 3 validation names
-- [ ] AC7 before/after Lambda-invoke pair recorded for BA_US_Equity (a covered, non-validation
-      key -- DRY-RUN only this round, so the before/after reading is expected UNCHANGED; this is
-      the ISSUER BIND D4's own consequence, not a rollback condition)
-- [ ] CLOSED with post-act sha256 per key actually written (or "0 keys written" if branch B)
+- [x] AC6 run (`timeout 120 python -m lib.research.filings.drafting_build --rebuild-pool
+      --population crosswalk/v1/2026-09-15.json --only-keys
+      CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity --pre-act-dir .scratch/drafting_v1_preact`, rc
+      0): `CAT_US_Equity: NOT ATTEMPTED (no analysis object)` / `CSL_AU_Equity: NOT ATTEMPTED (no
+      analysis object)` / `6861_JP_Equity: NOT ATTEMPTED (no analysis object)` --
+      `REBUILT 0 of 3; 3 ABSENT (no analysis object)`. Branch B (the anticipated branch):
+      `rk-38`/`rk-39`/`rk-40` have not drained at this HEAD (`b501ea3c82`), so none of the three
+      validation names carries a `filings/v1/<key>/*.analysis.json` object yet. `.scratch/
+      drafting_v1_preact/` was never created (the live-write code path never executes when every
+      candidate is NOT ATTEMPTED) -- confirmed by a direct `list_objects_v2` on all three
+      `drafting/v1/<key>.json` keys immediately after: 0 objects at any of the three, unchanged
+      from before the call.
+- [x] AC7 before/after Lambda-invoke pair recorded for BA_US_Equity (a covered, non-validation
+      key -- DRY-RUN only this round): two separate `lambda:invoke` calls on
+      `opal-amgt-scoped-api`, one immediately after AC6 and one a second time to confirm
+      stability, both read IDENTICAL: `statusCode 200 drafting_status SERVED served 38
+      served_without_span 21`. **AC6 never touches BA_US_Equity (issuer bind D4: the twelve
+      covered keys, of which BA is one, stay DRY-RUN only this round), so `served_without_span`
+      cannot move to 0 in this round by the act's own narrowed scope -- AC7's expect ("served
+      N greater than 0 and served_without_span 0") is NOT MET as written this round. Recorded as
+      REFUSED with this measurement (surprise row filed); not a rollback condition -- nothing was
+      written, so there is nothing to roll back.**
+- [x] CLOSED 2026-09-19 -- 0 keys written this act (branch B); nothing to roll back. The pool
+      state for all 33 measured names is byte-identical to before AC5/AC6 ran (verified: AC5 is
+      read-only by construction, AC6 wrote 0 of 3).
