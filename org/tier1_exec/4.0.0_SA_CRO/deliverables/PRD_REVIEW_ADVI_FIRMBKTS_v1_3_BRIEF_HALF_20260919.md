@@ -95,3 +95,51 @@ account ROOT** can lift the lockout, hence step 4 waits on Andrew at a console. 
 OTHER project's parked item, not in this PRD — this PRD is the artifact that gets it right. Routed to
 `1.0.0_SA_CTO` and `2.0.0_SA_COO~B` in the same turn, with the CTO's own clause noted: any route to step 4
 other than Andrew at the console is a NEW REACHABLE STATE and returns to BOTH halves before the apply.
+
+---
+
+# RETRACTION — §5's cross-project finding, same seat, ~30 minutes later
+
+**THE SIGNATURE IS UNAFFECTED.** `ADVI_FIRMBKTS` v1.3 brief half stays SIGNED and the PRD reads ADMITTED.
+§1, §2 and §4 stand. What is retracted is the CROSS-PROJECT CLAIM in §5 and the message that carried it
+(98341/98342/98343) — **AND TWO SENTENCES IN §3, named here rather than left live.** An earlier draft of this
+retraction said "§1–§4 stand", which would have retracted the conclusion while leaving the overstatement
+that produced it: ⭐ **the same one-step under-naming this whole sequence has been about, committed inside
+the retraction for it.**
+
+⛔ **§3 CORRECTED, two phrases:** "Verified in the generator and **the applied template**" — it is A template,
+not the applied one, and whether it is the declaration that produced the attached bytes is exactly what
+cannot be established (see below). And "**So the method is real**" — unqualified, where the support is
+DESIRED-plane only. What §3 may correctly claim is narrower: *the generator emits the role globs and the
+template builds an `ArnNotLike` deny over them.* The F4 ROW's correctness as a PRD row is unaffected — it
+is ADOPT-AND-REPAIR because the buckets exist and are fenced, both measured, and its acceptance is sound.
+
+⛔ **RETRACTED: "the same source ... falsifies a belief `IRPT_BCKEND` is currently parked on."** The
+correct statement is **UNPROVEN IN BOTH DIRECTIONS.** The parked item does not move on this.
+
+**WHY.** `1.0.0_SA_CTO` corrected its own supporting sentence (98344, carriers `@f5ccff15d0`, row
+`IRPT_BCKEND-S109`) as a DESIRED-plane read, and **the correction reaches my evidence too.** I did not
+inherit the claim — I read `fence_patterns()` and the policy block independently, which is exactly why it
+felt like corroboration. But **an independent read OF THE SAME PLANE is not a different plane.** §4 of this
+review already named the applied policy as unverifiable; §5's headline then said "falsifies" anyway.
+⭐ **A caveat present in the body and absent from the headline is worse than no caveat, because it makes
+the claim look audited.**
+
+**AND THE TIGHTENING I ATTEMPTED FAILED TWICE, both errors mine:**
+
+1. I checked whether the template was unchanged since the apply, and found it CREATED at `16:43:13-04:00`
+   against buckets created `16:05:17-04:00`. I nearly published "the template post-dates the apply."
+   ⛔ **COMMIT TIME IS AN UPPER BOUND ON WHEN BYTES EXISTED, NOT WHEN THEY WERE WRITTEN.** Write → apply →
+   commit is the ordinary worker shape and a 38-minute gap is that interval, not evidence.
+2. What does bear on it: that commit `state-mv'd the 10 already-applied resources onto the new addresses`,
+   so the resources were applied under a DIFFERENT declaration — and whether its policy bytes match this
+   file's is not answerable from the repo.
+
+**NET:** the chain from any readable artifact to the bytes attached on those buckets is BROKEN and I could
+not repair it. The discriminating test is one `s3:*` call from a principal whose ARN matches the glob;
+nobody has run it, and minting that role is an `infra/aws/**` act outside this seat's lane.
+
+**WHAT SURVIVES, narrowly:** the generator does emit role globs and the template does build an `ArnNotLike`
+deny over them — true of the DESIRED plane and nothing more. And `1.0.0_SA_CTO`'s ASYMMETRY point, which I
+confirm: an AccessDenied against `user/Andrew_Berman` is evidence about the USER path only; `role/*-inf-*`
+could not admit an IAM user under any reading, so it says nothing about the role path either way.
