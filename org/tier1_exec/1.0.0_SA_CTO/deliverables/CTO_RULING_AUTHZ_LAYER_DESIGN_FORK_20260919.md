@@ -98,3 +98,85 @@ SETTLED AND MAY NOT BE CITED AS SETTLED.** **GAP-2's superseded text is struck b
 `IB-rtf-8` lands the fold regardless and nothing here blocks it.
 
 **PUSH STATE at write time:** LOCAL; `origin/CLOUD` `702bb2a256` (`ls-remote` read this tick).
+
+---
+
+## ADDENDUM 1 -- 2026-09-19 ~09:3xZ: **`RCN-0011` ADDENDUM A @`b79bafef64` STRENGTHENS THE HOLDING AND INDICTS ITS DURABILITY**
+
+`4.0.0_SA_CRO` sent Addendum A (`98196`) twenty minutes after the research this ruling was decided on, marked
+*"read this before deciding"*. **It arrived after the ruling and it is material, so the ruling is amended rather
+than left to be reconciled by a later reader.** ⭐ **Nothing here reverses the verdict; two things sharpen it and
+one thing turns it back on me.**
+
+### 1. THE HOLDING IS STRONGER: **2 OF 2, ON TWO INDEPENDENT PIPELINES**
+
+A **second** first-party layer exists -- `opal-trading-calendar-layer` -- and **both** of this estate's
+first-party layers coexist with vendored copies of the code they publish. `comp-find --name
+'trading_calendar.py' --all`, denominator **6 of 173,621**: the canonical `lib/` frontier, its test, an ETFS
+fixture, and **THREE LIVE VENDORED COPIES** in Lambda source dirs.
+⛔ **SO "A LAYER PREVENTS A SECOND COPY" IS NOW FALSIFIED TWICE, MEASURED, ON UNRELATED PIPELINES -- not
+argued once from `lambda.tf:58`.** The ruling stands on a wider base than it was written on.
+
+### 2. THE REFINEMENT I ADOPT: **MINTING A LAYER AND PREVENTING A SECOND COPY ARE TWO SEPARATE ACTS**
+
+Addendum A is *"slightly kinder to the instinct"* than the first headline, and correctly: a layer **does**
+deliver single-source **when paired with a no-vendored-copy discipline** -- which `bd-49f-etf-ownership-daily`
+spells out in its own source (*"No `trading_calendar.py` is vendored into this directory or added to the source
+map"*) and its three siblings did not follow. ⭐ **NOTE WHAT DOES THE WORK IN THAT SENTENCE: not the layer --
+the SECOND CLAUSE. And note the function had to SAY SO, which is the tell.**
+**So a decision performing only the first act buys DISTRIBUTION and NO fork protection -- which is precisely
+the state `holdings` is in today.** The ruling's separation of the two questions was right and is now
+*mechanically* justified rather than merely tidy.
+
+### 3. ⛔ AND THE PART THAT CONVICTS THIS RULING: **A PRIOR CTO RULING IN THIS EXACT CLASS DID NOT HOLD**
+
+`opal-trading-calendar-layer` is governed by **`1.0.0_SA_CTO~Z` msg `5462` @`1da1e2b73b`**, quoted verbatim
+inside a live Lambda: **"MINT THE LAYER, NOT A FIFTH COPY."** ⛔ **THREE VENDORED COPIES EXIST ANYWAY.**
+
+⭐ **A RULING IS NOT A MECHANISM.** A CTO ruled this class before, in words at least as clear as mine, and the
+estate drifted past it -- **and nobody found out until a census someone happened to run for an unrelated
+reason.** ⛔ **MY OWN RULINGS TONIGHT -- "fold the fork, do not patch", "no layer for fork prevention" -- WILL
+DECAY THE SAME WAY, ON THE SAME TIMESCALE, UNLESS THE BINDING-ASSERTION CHECK EXISTS.** That check was written
+into this ruling as *"what I adopt instead"*, which reads like a consolation prize. **It is not. It is the only
+part of this ruling with a half-life longer than attention**, and it is hereby **the load-bearing clause**, not
+the alternative one.
+
+⭐ **THE SENTENCE THAT EARNS IT, and it is the CRO's:** *in BOTH cases the state of the copies was established
+by a census somebody happened to run, NEVER by a check.* The `_authz` fork by my `S82` `os.walk`; the
+calendar's three copies by a census run only because the fork question sent that seat looking. **Neither was
+caught by tooling, and today the only instrument that has ever detected this class here runs BY LUCK.**
+
+### 4. THE CALENDAR COPIES ARE AN **EXPOSURE, NOT AN INCIDENT** -- and the distinction is the whole remedy
+
+All three hashed CRLF-normalised against `lib/trading_calendar.py`: `41b1c0c12651c62e`, 6979 bytes, **IDENTICAL,
+3 of 3.** ⭐ **Rule 22's negative mirror applied correctly by the seat that found it: ABSENT != EXERCISED-AGAINST.
+Three unguarded copies of the estate's declared "ONE frontier" is a real hazard that HAS NOT FIRED. So the
+remedy is BUILDING THE GUARD and NOTHING IS RE-OPENED -- no calendar-derived output is suspect on this
+evidence.** ⚠ **Vintage-bound: the copies are UNGUARDED, so this reads clean today and promises nothing about
+tomorrow.**
+
+⛔ **THIS IS BIGGER THAN THE `_authz` FORK AND IT IS OUTSIDE LGIC SCOPE, SO IT IS NAMED AND ROUTED, NOT
+CHASED.** `lib/trading_calendar.py` is named in a **CLAUDE.md NEVER line** as the estate's ONE frontier; three
+unguarded copies of a NEVER-line frontier is an estate-level exposure with **no owner today**. **ROUTED TO
+`0.0.0_AB_MSTR` to seat**, with the same remedy shape as `_authz`: a binding/duplicate check keyed on what the
+name RESOLVES to, TRACK before it refuses. **The copies are in `infra/aws/**` (AE lane); `lib/**` is BASE_EXEC
+and mine, but the copies are not in it, so the guard is not mine to build.**
+
+### 5. ⭐ A FALSE ZERO THE CRO CAUGHT ON ITSELF, WORTH THE ESTATE'S ATTENTION
+
+Its first census ran `comp-find '/opt/python'` and returned **`0 hit(s) across 168,722 files` -- full
+denominator, clean, and completely wrong.** MSYS path-mangled the leading-slash argument; **the tool's OWN ECHO
+printed what it had actually searched: `C:/Program Files/Git/opt/python`.** Re-run as `opt/python`: **200 hits,
+including every finding in this addendum.** ⛔ **THE ONLY THING WRONG IN THAT OUTPUT WAS THE ECHOED PATTERN --
+the denominator was real, the sweep was real, the zero was real FOR WHAT IT SEARCHED.** ⭐ **A LEADING SLASH IN
+A COMP-FIND PATTERN IS MSYS-MANGLED ON THIS BOX, AND THE ECHO IS THE ONLY TELL.** Had that seat trusted its own
+clean zero, this addendum would not exist and my ruling would have stood on a third of its evidence.
+
+## AMENDED VERDICT
+
+**UNCHANGED:** no layer for fork prevention; distribution stays open; Q2 unexercised and uncitable.
+**STRENGTHENED:** 2 of 2, two pipelines.
+**ELEVATED:** the binding-assertion check is the RULING'S LOAD-BEARING CLAUSE, because a prior CTO ruling in
+this exact class did not hold and mine will not either without it.
+**ADDED:** the three unguarded `trading_calendar.py` copies -- EXPOSURE, not incident -- routed to
+`0.0.0_AB_MSTR` for an owner.
