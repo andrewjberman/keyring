@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.15",
+ "decomp_version": "v3.16",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1833,6 +1833,90 @@ consecutive round.
 **WIRING AT THE CUT**, with the act that clears each red: `m2-marker`, `s1-census` and
 `r16-vintage-field` **FAIL**, each cleared by **its own cell alone**; `r16-stale-proofs` is
 **GUARD-SHAPED and reads PASS** on an empty window.
+
+---
+
+## 0q. v3.16 -- THE ROUND-17 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-16 analysis @`b24a81c4d3`
+
+**Input.** `1.0.0_SA_CTO`'s round-16 analysis @`b24a81c4d3` and `3.0.0_SA_CVO`'s L9 @`4acccf10ad`.
+**Round 16 STANDS** -- `M2R16-AC4` and `S1R16-AC4` both PASS, three rows GRADUATED (`S107`, `W1-S106`,
+`S108`), no PRD addendum owed, scope 0 open of 71 at the cut.
+
+### 0q.1 THE CELL -- ONE, AND THE ANALYSIS SAYS "NOTHING ELSE"
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the complement census | `EN-x-1` | re-derives every `fixed_inputs/` checker in LGIC, subtracts the set the round-16 census CARRIED, and classes every member of the remainder | the retired-but-runnable class, completed over its true domain | `S1R16` follow-on |
+
+**The analysis s.4 item 3 reads: "Nothing else. Round 16 drained clean and I am not manufacturing
+work."** This recut takes it literally. One cell, one worker, no second lane.
+
+### 0q.2 ⛔ THE DOMAIN IS A SUBTRACTION AND THE ORDER NAMES NO PROJECT
+
+The round-15 analysis wrote *"cut it ONCE across ENFORCE and LGCTFM"* in the same section as *"the
+domain is `fixed_inputs/` ACROSS THE PROJECT"*. The round-16 cell obeyed its order and declared its
+domain honestly; **11 checkers sat outside it.** `1.0.0_SA_CTO`: *"I STATED THE GENERALISATION AND
+UNDER-SCOPED ITS OWN CELL IN THE SAME BREATH."*
+
+⭐ **So this cell's domain is stated as `full MINUS prior`, and the words `LGIC_NAMING` and
+`LGIC_CANON` appear nowhere in it.** The checker REFUSES a `how_enumerated` that names either --
+a forward list is how the 11 were lost, and **a fifth project minted tomorrow is invisible to a list
+and visible to a subtraction.**
+
+### 0q.3 THE THREE NUMBERS IN THE ANALYSIS ARE NOT THIS CELL'S POPULATION
+
+The analysis says *"MINUS the 25 already censused"* and names **11** outside the domain. **Measured at
+the cut: the round-16 record CARRIES 23 entries, the full denominator is 36, and THE COMPLEMENT IS 13**
+-- 11 outside that round's ordered domain plus 2 inside it that were legitimately not carried
+(`existing_alias.py`, a FIXTURE its declared filter excluded; `check_lt_r8.py`, which **did not exist**
+at its pin). ⛔ **A cell told "11" would have silently dropped the two that make the subtraction
+honest.** `R17_BASE.json` carries this as a CONTROL ON THE FRAMING and the cell re-derives every number
+at its own write time.
+
+### 0q.4 THE ARM RE-DERIVES THE POPULATION ITSELF, AT THE RECORD'S OWN PIN
+
+A census that merely PRINTS a denominator is graded on its own arithmetic. `core_census` runs its own
+`git ls-tree` **at the pin the record states**, subtracts the round-16 record read **at that same
+pin**, and compares to the entries carried **by SET EQUALITY** -- so a silently dropped member fails
+even when the arithmetic closes. ⚠ **Grading at the PIN and not at HEAD is deliberate:** grading at
+HEAD would convict a correct cell the moment the tree moved, which is precisely the fourth vintage
+effect round 16 suffered.
+
+### 0q.5 DRIFT IS DISCLOSED, NEVER REQUIRED TO BE ZERO
+
+Round 16's census was correct **and** its denominator grew under it, because a SIBLING PROJECT's
+issuance minted a checker mid-cell. The bar is therefore that the completion re-read is PRESENT and its
+drift STATED. A `WIRING` arm proves this: a record whose completion denominator is HIGHER than its pin
+denominator, with the drift named, **PASSES**.
+
+### 0q.6 THE JUDGMENT CRITERION QUANTIFIES OVER THE PARTITION
+
+Taken from the round-8 analysis s.2, a bar-writing rule its own author took against himself: **when a
+defect's mechanism is UNIFORM over a partition, the criterion quantifies over the PARTITION, not over
+the bucket where the cost is highest.** The expensive bucket here is obviously `RETIRED-BUT-SILENT`.
+`X1R17-AC4` therefore names **all three classes** and asks whether each entry's class is right at the
+bytes -- because a misclassification **into `LIVE`** hides a retirement exactly as well. **COST: one
+clause.**
+
+### 0q.7 WHAT THIS ROUND DELIBERATELY DOES NOT DO
+
+- **Re-open round 16.** Both AC4s PASS and the L10 is stamped; the analysis adopts this seat's own
+  recommendation (d) that this is NEW WORK FOR A NEW ROUND.
+- **Edit, re-point or annotate any censused instrument.** Round 16 ruled that a retirement is recorded
+  by an ADDITIVE SIBLING and never by an edit to a pinned fixed input. This cell only MEASURES.
+- **`LGIC_ENFORCE-W2-S13`.** ⚠ **NOT in this round and NOT forgotten.** Its remediation is OPEN and
+  ARMED with this seat as owner at round v4. Measured this tick: R-38's *re-measure your own
+  denominator* half **IS discharged** (round-13 record: 1303 of 3264, inherited 1411, SHRANK) while its
+  **RESOLVE/CARD half is NOT** (that record states `no_repair.registry_or_builder_commits_by_this_cell
+  = 0`). The analysis scopes round 17 to the census and says *"nothing else"*, so widening it here
+  would be this seat overriding the analysis it recuts from. **RAISED to `1.0.0_SA_CTO` instead.**
+
+### 0q.8 THE GRANT IS THE `<paths>` BLOCK
+
+`S108`'s remediation, OPEN with this seat at v16, closes AT this cut: **every path granted anywhere in
+the order appears IN the `<paths>` block.** Prose beside the block is commentary. ⛔ The round-16 near
+miss is the reason -- the marker sat UNTRACKED in a worktree due for teardown while its record NAMED
+its path, so **a refusal that blocks a write is loud and the orphaned bytes it leaves behind are not.**
 
 ---
 
