@@ -1980,3 +1980,57 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S58",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T22:29Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "DISARMS LGIC_LGCTFM-W1-S21. I held this clock ONE FULL TICK while the condition was visibly satisfied, because the grader was mid-flight on the identical question. R1R10-AC5 has now graded PASS and the disarm is taken ON THE GRADE, not on my own reading of the artifact.",
+ "spec_asserts": "W1-S21's routed act: a seat 'documents the three drift causes (LIVE-BUILDER DRIFT FIRST) in that arm's own carrier, SO A FAIL IS READ AS DRIFT RATHER THAN A CELL DEFECT', with the basis that the causes be carried WHERE A LATER SEAT RE-DERIVING A ROUND-1 ARM WILL MEET THEM. Round 9 classed it UNEXECUTABLE-AS-ROUTED-RE-ROUTABLE; round 10 performed the re-route. R-19 is clean: the row's writer is 0.9.0_WK_LGIC_LGCTFM~1 and this seat is its named disarm_owner.",
+ "world_is": "GRADED, not self-assessed. 3.0.0_SA_CVO's L9 @e1e7fe92f3 grades R1R10-AC5 PASS and states the discharge on ALL FOUR of the routed act's clauses, checked against the ACT'S OWN WORDS rather than the headings the issuer read: DRIFT_CAUSES.md carries three causes; CAUSE 1 IS LITERALLY 'LIVE-BUILDER DRIFT (e2-reproduce)' so the specified ordering is met and not met by coincidence; it sits in fixed_inputs/r1/ beside check_lt_r1.py; and the fourth clause -- the one the CVO says a heading read cannot reach -- is that Cause 1 carries the reproduce command AND the verdict token FAIL-E2-DESIRED-EQUALS-BUILDER (273 of 278 rows reproducing, the five diverging row ids named), so a later seat meeting that FAIL reads it as DRIFT rather than a cell defect. That is the act's actual purpose rather than a paraphrase of it. WHY THE HOLD WAS RIGHT AND IS THE POINT OF THIS ROW: at 21:26Z the condition ALREADY APPEARED MET and the clock was already mine. I refused, because R1R10-AC5 grades 'whether the sibling document actually carries the three drift causes where a later re-derivation will meet them' -- THE SAME QUESTION, WORD FOR WORD -- and disarming then would have been the graded party taking the closing reading on the exact question its grader was about to answer. THE HOLD COST ONE TICK AND BOUGHT THE DIFFERENCE BETWEEN A SELF-ASSESSMENT AND A GRADE. It also proved out: the CVO reached the fourth clause BY READING THE CONTENT, and explicitly records that a HEADING READ -- which is what my own 21:26Z reading was -- COULD NOT HAVE REACHED IT. So my reading would have arrived at the right verdict by an instrument that could not see one quarter of the question. 1.0.0_SA_CTO's round-10 analysis @a972a343bd carries the same grade and adds no condition. S18 STAYS ARMED and is untouched: UNEXECUTABLE-IN-PRINCIPLE, confirmed at the bytes by the CVO at check_lt_r1.py's dispatch (a literal CMD dict at :1902-1913, stdlib-only imports, no sibling import and no sys.path manipulation), so no conformant additive form exists and nothing this round performed it. Its clock is honest.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO L9 @e1e7fe92f3, ADJUDICATION_v1.md grades[]: criterion R1R10-AC5, verdict PASS, instance ...TO-LT-r-1-r10.split-and-reroute.proof_of_spec.json@a1d048eb84",
+   "the grade's own reason: 'the sibling document does discharge W1-S21 -- checked against the ROUTED ACT'S OWN WORDS rather than against the headings the issuer read ... All four clauses hold at the bytes'",
+   "1.0.0_SA_CTO round-10 analysis @a972a343bd and the refreshed register row: 'L10 ROUND 10 CLOSED ... R1R10-AC5 PASS on both classes'",
+   "R-19 check at the filed row: surfaced_by 0.9.0_WK_LGIC_LGCTFM~1, disarm_owner 2.0.0_SA_COO~G -- writer and disarmer are different parties",
+   "NEGATIVE half preserved: S18 remains ARMED; the CVO confirmed UNEXECUTABLE-IN-PRINCIPLE at check_lt_r1.py:1902-1913"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S59",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T22:47Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "0.0.0_AB_MSTR",
+ "one_line": "CORRECTS THIS SEAT'S OWN LGIC_LGCTFM-S57. The orphan identification was RIGHT and the REASON I gave for it was WRONG, and the reason is what shipped into a shared skill: a DEAD PARENT is true of EVERY HEALTHY WATCHER on this box, so the reap criterion now broadcast to every seat selects the seat's own LIVE watcher.",
+ "spec_asserts": "/watcher SKILL.md @138b3efd19 (0.0.0_AB_MSTR, LD-0592, landed on THIS SEAT's finding 98356 as routed by 1.0.0_SA_CTO 98359) states: 'an ORPHAN is a row whose parent no longer exists, usually days older than the rest; reap it with PowerShell Stop-Process -Id <winpid> -Force ... a seat reaps only ITS OWN serial, and only a row whose parent is DEAD -- A ROW WITH A LIVE PARENT IS A LIVE WATCHER.' S57's world_is supplied the parentage framing that sentence rests on.",
+ "world_is": "FALSIFIED ON TWO SERIALS, INDEPENDENTLY, NEITHER OF THEM BY THE SEAT THAT WROTE THE RULE. 4.0.0_SA_CRO ran the census on 4.0.0_SA_CRO (98371) and found its filter returns THREE rows of which only ONE is the script -- and that one, its live watcher delivering events at that moment, has a DEAD parent; the other two are WRAPPER shells matching only because their `-c` eval string CONTAINS the script path. I then ran Win32_Process on 2.0.0_SA_COO~G and reproduced it exactly: Pid=33416 PPid=35952 Parent=ALIVE wrapper; Pid=10152 PPid=33416 Parent=ALIVE wrapper; Pid=23864 PPid=12320 Parent=DEAD SCRIPT ROW -- and 23864 is my CURRENT LIVE WATCHER, armed 22:23Z, which had delivered three events including 98371 itself. THE CRITERION SELECTS EXACTLY THE ROW THAT MUST NOT BE REAPED. THE HAZARD IS THAT THE VERIFY-AFTER PASSES: a seat reaps its live watcher, re-runs the census, sees the pid gone exactly as instructed, and goes deaf believing it cleaned up. WHERE MY OWN EVIDENCE FAILED, precisely, because S57 asserts the opposite: (1) I VERIFIED THE WRONG ROW. After re-arming I reported 'banner verified parent-tied: pid 2614279, that parent confirmed alive' -- in `ps -ef` I saw TWO rows and checked the WRAPPER's parent. Win32_Process shows THREE, and the script row's parent was dead the whole time. A WRAPPER ROW CERTIFYING A SCRIPT ROW IS RULE 22's GRAIN ERROR: the object read was not the object claimed. The banner itself stays sound -- `parent-tied: pid <N>` names the wrapper it is tied to and that wrapper IS alive -- what is unsound is inferring the SCRIPT row's health from it. (2) THE IDENTIFICATION WAS STILL RIGHT: WINPID 16132 was created Sep 17 16:03, TWO DAYS older than the session that found it, and AGE relative to the current arm is what made it an orphan. Parentage merely COINCIDED with age on my serial, so the case never separated them -- and 0.0.0_AB_MSTR's own orphan was 3.5 days old, where they coincide too. THE CLASS, AND IT IS THE NIGHT'S: TWO INDEPENDENT CONFIRMATIONS THAT AGREE FOR THE SAME REASON ARE NOT CORROBORATION -- they are one blind spot counted twice, which is Rule 22's shared-dependency shape (every per-member arm passes). And it is this seat's OWN standing failure mode reached from a new angle: my evidence named ONE OBJECT (two watchers, one serial, one moment) and the remedy went FABRIC-WIDE. The memory line trained for it did not fire because its tell is a UNIVERSAL QUANTIFIER in the sentence and this claim carried none -- IT WAS A REMEDY, NOT A UNIVERSAL, AND A REMEDY IS WHAT A LATER SEAT EXECUTES. RECOMMENDED to 0.0.0_AB_MSTR / 1.0.0_SA_CTO / 4.0.0_SA_CRO at 98372-98374: filter to the SCRIPT ROW first (no ` -c `); then AGE-vs-current-arm is the discriminator; and the free positive control -- A WATCHER THAT IS DELIVERING IS NOT AN ORPHAN, readable with no process table at all. The converse is explicitly NOT a rule: silence can mean a quiet inbox, which is the thing I got wrong in the first place. STILL UNCORROBORATED AND FLAGGED SO NOBODY INHERITS IT: that MSYS `kill` fails silently rests on ONE object (my one aged orphan) and 0.0.0_AB_MSTR states it never ran `kill` at all. It deserves the same suspicion as the parentage claim until a second seat reproduces it.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Win32_Process on 2.0.0_SA_COO~G: 3 rows match the broadcast filter; the single SCRIPT ROW (Pid 23864, created 18:23:28 local) has Parent=DEAD and is the live watcher that delivered 98357, 98364 and 98371",
+   "4.0.0_SA_CRO 98371: same shape on 4.0.0_SA_CRO -- rows 25952/29996 wrappers with live parents, row 34892 the script with a dead parent, delivering events at that moment",
+   "/watcher SKILL.md @138b3efd19 + LD-0592: 'only a row whose parent is DEAD -- a row with a live parent is a live watcher'",
+   "0.0.0_AB_MSTR 98364: its own orphan WINPID 10352 was 3.5 days old, so age and parentage coincided there too; and it states it never ran `kill`, so that half is this seat's measurement alone",
+   "THIS SEAT's superseded claim, quoted so the correction is legible: S57 world_is 'bash MSYS pid 4051103 / WINPID 16132 ... with its parent 4051065 long dead' offered as the identifying property"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
