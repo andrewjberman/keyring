@@ -72,7 +72,7 @@ an empty `TaskList`, and never conclude "reachable" off (3) alone.
 |---|---|
 | `/watcher` | Arm-at-load check, **once**. Register if STALE; arm the Monitor if absent; pull inbox; report. **No loop is armed** — the persistent Monitor is the standing mechanism. |
 | `/watcher status` | Report-only: registration + Monitor presence + inbox. No changes. |
-| `/watcher rearm` | Force a clean re-arm: TaskStop the existing Monitor, **then `ps` for its bash child and KILL IT**, then arm a fresh stream Monitor. **DO NOT SKIP THE CHILD KILL — `TaskStop` DOES NOT REAP IT.** |
+| `/watcher rearm` | Force a clean re-arm: TaskStop the existing Monitor, **then find its bash child by WINPID and reap it with PowerShell `Stop-Process`** (Step 3.1 -- MSYS `kill` is KNOWN-INEFFECTIVE on an aged orphan here and FAILS SILENTLY), then arm a fresh stream Monitor and **VERIFY-AFTER on the arm banner's `parent-tied: pid <N>`**. **DO NOT SKIP THE CHILD KILL — `TaskStop` DOES NOT REAP IT.** |
 | `/watcher off` / `stop` / `Nm` / `10m` (legacy interval forms) | **Deprecated, accepted gracefully.** There is no loop to start or stop. Run the one-shot check, then if a stale `/watcher` CronCreate job exists, cancel it (Step 5) and say so. |
 
 ## When to invoke
@@ -133,8 +133,28 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    kill:
    ```bash
    bash org/mcp/watcher-status.sh {serial}   # lists any legacy watcher PIDs
-   kill <pid> [<pid> ...]                     # if any were listed
    ```
+   ⛔ **REAP BY WINPID WITH `Stop-Process`. MSYS `kill` AND `kill -9` ARE KNOWN-INEFFECTIVE ON AN AGED
+   ORPHAN ON THIS BOX, AND THEY FAIL SILENTLY** -- no error, the process unchanged in `ps`, the seat arms a
+   fresh Monitor and STAYS DEAF while the orphan keeps winning the `mv` race (`inbox-watch.sh:120` commits
+   the theft, `:124` echoes into a dead pipe). `kill` is named here so nobody re-adds it as the "portable"
+   form. Enumerate on the Windows plane, which shows the PARENT and the START TIME that identify an orphan:
+   ```powershell
+   Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
+     Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' } |
+     Select-Object ProcessId, ParentProcessId, CreationDate
+   # an ORPHAN = a row whose ParentProcessId no longer exists (check it), usually days older than the rest
+   Stop-Process -Id <winpid> -Force -Confirm:$false
+   ```
+   **VERIFY-AFTER, never skip it:** re-run the census and require the WINPID gone; then after arming (step 2)
+   read the new Monitor's banner for `parent-tied: pid <N>`. A kill with no verify-after is exactly what let
+   an orphan run for two days. Self-scoped only: reap watchers for YOUR serial, and only a row whose parent
+   is dead -- a row with a LIVE parent is a peer's or your own live watcher. Measured 2026-09-19:
+   `2.0.0_SA_COO~G` (msg 98356, routed by `1.0.0_SA_CTO` 98359) -- orphan WINPID 16132 since 09-17, `kill`
+   and `kill -9` both survived, one CTO message eaten for 33 h; `0.0.0_AB_MSTR` the same evening -- orphan
+   WINPID 10352 since 09-16 07:14 (3.5 days, parent 25032 dead), reaped by `Stop-Process`, verified gone
+   (MSTR did not re-test `kill`, so the ineffectiveness is one seat's measurement; the remedy is two).
+   COST: one census + one read. NON-APPLICATION: a box with no aged watcher -- the census prints only live rows.
 2. **Arm the Monitor** — use the **Monitor tool**, `persistent: true`,
    `timeout_ms: 3600000`:
    - **RESOLVE THE DRIVE PREFIX FIRST — DO NOT HARDCODE EITHER FORM.** Both may be mounted; `/c` is a
