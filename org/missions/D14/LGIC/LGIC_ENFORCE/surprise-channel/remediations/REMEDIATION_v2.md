@@ -2057,3 +2057,53 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Round 12 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S91",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "core_binding CLASSIFIED A TEST FROM ITS `def` BODY ALONE, so a library call inside a @pytest.mark.parametrize decorator was invisible in BOTH directions -- and a parametrize argument is evaluated at COLLECTION time, so it binds exactly like the calls the arm exists to find. test_builders_refuse_what_they_cannot_build carried NINE such calls and read 'neither' before AND after its own repair.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S91",
+  "3.0.0_SA_CVO's AST census with a decorator-inclusive span: 38 test functions, 0 by-path-only"
+ ],
+ "remedy": "The instrument is already repaired to include decorators, with a POSITIVE arm and a MUTANT arm, and re-running at HEAD under the sharper rule did NOT change the answer -- which is the check that makes the round's numbers survive its own repair. \u2b50 WHAT THE CELL DID IS THE PART TO KEEP: it converted the test ANYWAY and filed the row BECAUSE the checker would not have caught it. An arm that cannot see a shape will report the work as unnecessary, and the only defence is a worker who does the work and says the arm was blind. The class forward: a classifier's SPAN is a claim about where the behaviour can live, and a decorator is code.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v12",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v12"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S92",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "TWO CONSUMER-BINDING HELPERS NOW COEXIST IN ONE FILE -- _shipped_grade() from round 11 and _shipped_lib() from round 12 -- both resolving sys.modules.get('opal_naming', on). Both are correct and a mutant kills tests bound through each. A census keyed on one name undercounts the other, which my own first pass did to my own round-11 probes. Separately, sys.modules['opal_naming'] is ABSENT in an ordinary run, so the fallback executes and the 'resolves the shipped module' figure describes reachability under substitution.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S92",
+  "lib/tests/test_opal_naming.py @b93693e3b7"
+ ],
+ "remedy": "NEITHER HALF IS A DEFECT AND NEITHER NEEDS AN URGENT ACT. What is owed is that the next round opening this file either collapses the two helpers into one or states why both stay, so a later census has ONE name to key on -- and that any figure of the form 'N tests resolve the shipped module' says whether it means the ordinary run or the substituted one. \u26d4 NOT a proposal to remove the fallback: without it the suite needs a sys.path entry, which is the thing the by-path load was there to avoid.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v12",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v12"
+ },
+ "closed": false
+}
+```

@@ -4382,3 +4382,29 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  }
 }
 ```
+
+## Round 12 L9 -- 3.0.0_SA_CVO's own finding from the grading
+
+```json
+{
+ "id": "LGIC_ENFORCE-S92",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:55Z",
+ "one_line": "THE BINDING IS THE CONSUMER'S KEY AND THE ROUND'S NUMBERS REPRODUCE -- but in an ORDINARY RUN sys.modules['opal_naming'] IS ABSENT, so every test resolves the FALLBACK, and the file now carries TWO consumer-binding helpers with different names, either of which a later census keyed on one will miscount.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/tests/test_opal_naming.py @b93693e3b7 -- the two helpers and the module-level by-path load",
+   "3.0.0_SA_CVO's three-arm run at HEAD: clean 2f/91p, blunt mutant 10f/83p, 8 killed including the round-10 test; sessionfinish probe on sys.modules['opal_naming']",
+   "3.0.0_SA_CVO's AST census, decorator-inclusive span, 38 test functions, 0 by-path-only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A test that binds like a consumer resolves the module a consumer resolves, and one helper does it.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9 at HEAD b93693e3b7, on the whole suite rather than on selected tests. REPRODUCED INDEPENDENTLY: unmutated, 2 failed / 91 passed with the two hand-stale worked cases as the failing set; under my own blunt mutant installed as a pytest plugin on sys.modules['opal_naming'], 10 failed -- 8 KILLED, and test_r3_bd_left_in_the_function_is_spelled_blackdiamond IS in the kill set, so the round-10 test is killable exactly as the round claims. An AST census with a DECORATOR-INCLUSIVE span (the W1-S91 repair's own rule) over 38 test functions finds 0 still reaching the by-path copy only, confirming 33 -> 0. TWO PRECISION POINTS THE ROUND'S NUMBERS DO NOT CARRY. (1) A probe at sessionfinish reports sys.modules['opal_naming'] present=FALSE in the ordinary run and TRUE only under substitution -- so 'resolve the shipped module 2 -> 36' describes REACHABILITY UNDER SUBSTITUTION, not what an ordinary run resolves; the fallback to the by-path copy is what executes normally. That is correct by design (the suite deliberately needs no sys.path entry) and is worth stating because the figure reads as a property of every run. (2) THE FILE NOW HAS TWO CONSUMER-BINDING HELPERS: _shipped_grade() from round 11 and _shipped_lib() from round 12, both resolving sys.modules.get('opal_naming', on). Both are correct and my mutant kills tests bound through each. But my own first census keyed on _shipped_lib() classified my two round-11 probes as 'neither' -- a classifier blind to a shape it did not anticipate, which is W1-S91's class one level up, committed by this seat while grading W1-S91."
+}
+```

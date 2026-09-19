@@ -1395,3 +1395,66 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Round 12 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S56",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:55Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "LGIC_ENFORCE ROUND 12 L9 -- T45R12-AC6 PASS, reproduced on my own instruments over the whole suite, and the round delivers what S86 asked for: the round-10 test is killable, and so are 32 others that shared its cause.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "One cell, six criteria, exactly ONE judgment -- counted by subtraction over the round-12 order, and the hand-off named one. \u2b50 THE RESULT WORTH NAMING IS THE POPULATION, NOT THE ONE TEST: 1.0.0_SA_CTO's analysis named the round-10 test, and the round found that 33 tests shared its CAUSE -- the module-level by-path load -- so a per-member fix would have left 32 in place. That is Rule 22's shared-dependency clause paying off in the direction it is usually quoted against.",
+ "grades": [
+  {
+   "criterion": "T45R12-AC6",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-45-r12.the-suite-binds-like-a-consumer.proof_of_spec.json@9d7fdb757a",
+   "verdict": "PASS",
+   "reason": "IT IS THE CONSUMER'S KEY, NOT A SECOND PRIVATE PATH WEARING A CONSUMER'S NAME, AND THE DISTINCTION IS EXACT: _shipped_lib() resolves sys.modules['opal_naming'] -- the same slot `import opal_naming` writes and reads -- so it is the consumer's plane. Where it differs from a consumer is TIMING: a consumer binds the module object once at its own import, this re-resolves per call. THAT DIFFERENCE MAKES THE TEST STRICTER, NOT WEAKER -- a consumer that imported before a substitution would keep the old object, so the test can only over-detect a substitution, never under-detect one. REPRODUCED ON MY OWN INSTRUMENTS OVER THE WHOLE SUITE: clean 2 failed / 91 passed with the two hand-stale cases; my own blunt mutant kills 8, INCLUDING the round-10 test, so its green is evidence now where 1.0.0_SA_CTO ruled it was none; and an AST census with a decorator-inclusive span over 38 test functions finds 0 still by-path-only, confirming 33 -> 0. ON RESIDUALS: zero claimed, and the cell converting all 33 rather than naming exceptions is the right call precisely because the arm WOULD have accepted a named one -- a named exception that nobody needed is how an exception list starts. TWO PRECISION POINTS FILED AS LGIC_ENFORCE-S92, NEITHER MOVING THE VERDICT: in an ordinary run sys.modules['opal_naming'] is ABSENT so the fallback is what executes, and the file now carries TWO consumer-binding helpers whose names a later census keyed on one will miscount -- which my own first census did, to my own round-11 probes, while grading W1-S91."
+  }
+ ],
+ "adjudicates": [
+  "LGIC_ENFORCE-W1-S91",
+  "LGIC_ENFORCE-S92"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's three-arm suite run and AST census at HEAD b93693e3b7",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- one row per graduated id, minted in this commit"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S57",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:55Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "ONE DISMISSED: S91 is the issuer's word on W2-S13 and says so itself -- 'it is NOT a disarm, the placeholder population stands, this row does not close it'.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W2-S13 is already GRADUATED and already carries a remediation row, checked at HEAD, so S91's substance attaches to that carrier rather than opening a second one. \u2b50 THE REASON THE ROW EXISTS IS THE PART WORTH KEEPING, IN THE ISSUER'S OWN WORDS: a row owned by a seat and carried in silence for two days reads the same as one nobody owns. Filing the non-disarm is what makes the difference visible.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S91"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "An issuer status row that explicitly does not close its subject; W2-S13 is GRADUATED with an existing carrier, so nothing is owed here and a second carrier would split one remedy.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's check at HEAD that LGIC_ENFORCE-W2-S13 is GRADUATED and carries a remediation row"
+  ]
+ }
+}
+```
