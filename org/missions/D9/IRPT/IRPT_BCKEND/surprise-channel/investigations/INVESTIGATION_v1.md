@@ -6419,6 +6419,75 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not fixed here; the face bars a neighbouring fix, and the remedy is a CODE deploy on 7 functions. The remedy has the shape of S96: ONE staged_from object per function, for _ids/raw_keys.json packaged as raw_keys.json at its pin with its sha256, then a rebuild of the 7 and a new never-widen packet (six of them change served code). WHY every earlier proof passed: the in-process harness imports _ids/ids.py from the REPOSITORY, where raw_keys.json sits beside it, so HERE resolves to a directory that HAS the file. The zip flattens ids.py to the package root without it. The same code has two file layouts, and only the deployed one is broken. That is a sharper form of the identity bar: a served-path proof must run the deployed BYTES, not just the deployed role. The apply itself stands and is not rolled back: every key reads back as signed, and the path was UNEXPECTED before it (S90 12 of 12) and after it, so the apply moved no served answer. S92 could not be measured, because no directory request reached the compute."
+  },
+  {
+    "id": "IRPT_BCKEND-S99",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:33:10Z",
+    "one_line": "There is a SECOND missing member of the same class: the firm registry. S98's own diagnostic was contaminated, and this row CORRECTS it. S98 said that with ONLY raw_keys.json placed beside ids.py the scope resolves. That run extracted the zip INSIDE the repository, where ids.py's and keys.py's registry walk-up (ids.py:113-138) found the repo's data/firm_registry.json. Run OUTSIDE the repository, as on Lambda, directory-search and status still fail with raw_keys.json alone: their FIRST failure is keys.KeyComponentRefused (firm_registry, REGISTRY_UNREADABLE). narrative and performance-adapter fail next on ids.IdRefused (registry not found). The scope resolves only with BOTH members, on those 4. INCLUDED in IB-rtf-12's key, as the face's (a) directs: manifest @dbf7667178.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "Row IRPT_BCKEND-S98's world_is: 'The SAME run with ONLY the HEAD blob of _ids/raw_keys.json ... placed beside ids.py -> the scope RESOLVES ... for irpt-status AND irpt-directory-search'. The IB-rtf-12 face (a): 'every OTHER file _ids/ code opens beside itself ... a second missing member is a ROW and is INCLUDED in this order's key'.",
+    "world_is": "The diagnostic org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt (21 runs: 7 functions x {bare, +raw_keys.json, +raw_keys.json +firm_registry.json}; the deployed zip, the deployed irpt-common layer mapped onto /opt/python, and the deployed env, run in-process at C:\\d12 with the walk-up checked NONE):\n- directory-search and status: bare UNEXPECTED (keys.KeyComponentRefused REGISTRY_UNREADABLE); +raw still UNEXPECTED (the same); +raw+reg SCOPE-RESOLVED (firm_id present).\n- narrative and performance-adapter: bare FileNotFoundError raw_keys.json; +raw ids.IdRefused (registry not found, 11 paths); +raw+reg SCOPE-RESOLVED.\n- export-render and ycharts-generate: +raw SCOPE-RESOLVED. export resolves the registry through IRPT_FIRM_REGISTRY=/opt/python/firm_registry.json, which is in the layer irpt-common:5; ycharts packages firm_registry.json itself.\n_ids/ beside-opens census: 3 of 3 -- raw_keys.json (:64, :162), the firm registry (:113-138: env, then a data/firm_registry.json walk-up, then beside), and data/<seam>.json (:338-360, staged 7 of 7). keys.py (staged in 3 zips, from the layer in 4) resolves the registry the same way.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt (the 21 diagnostic runs, walk-up NONE)",
+        "infra/aws/lambda/investor-reporting/_ids/ids.py:64,113-138,162,338-360 @dbf7667178",
+        "lambda get-layer-version-by-arn irpt-common:5: python/ carries ids.py, keys.py, raw_keys.json (5990 bytes) and firm_registry.json (5094 bytes); /var/task imports first"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INCLUDED: data/firm_registry.json (blob 99b8eeb54f, 5326 bytes, pin 39cbad4214) is staged as firm_registry.json into directory-search, status, narrative and performance-adapter, in the manifest @dbf7667178. S98's CAUSE stands; only its with-the-file half overstated. The lesson is recorded for the CVO: a diagnostic run under a directory that holds the repository inherits the repository's files through any walk-up; it is the S98 class one level down."
+  },
+  {
+    "id": "IRPT_BCKEND-S100",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:33:10Z",
+    "one_line": "irpt-holdings can NOT reach its designed EMPTY_GRANT, and staging does not change that. Its own loader reads IRPT_DIRECTORY_KEY=investor-reporting/directory/latest.json -- the POINTER -- as the directory ARTIFACT (holdings/entry.py:70-71,88-89,109-112 -> directory/handler.py:78-89). The pointer carries no firm_id_opaque, so FirmBinding raises 'opaque_firm_id must be a non-empty string' and the boundary refuses FIRM_BINDING with no firm_id. It is the same in all 3 diagnostic modes, and live (rtf-10 (f): FIRM_BINDING).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (f), inherited from rtf-10: 'holdings its designed EMPTY_GRANT'. Packet c3a44074d2 section 7: 'Holdings resolves to its designed EMPTY_GRANT'.",
+    "world_is": "get-function-configuration irpt-holdings: IRPT_DIRECTORY_KEY = investor-reporting/directory/latest.json. holdings/entry.py:88-89 @dbf7667178 reads _directory.load_directory(bucket, DIRECTORY_KEY). directory/handler.py:78-89 returns the object at that key verbatim, without following the pointer; the shared loader follows it (_authz/loaders.py:77-78). opaque_firm_for (:109-112) reads firm_id_opaque from the POINTER document, which has none. org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt: irpt-holdings bare / +raw / +raw+reg all FIRM_BINDING, swallowed enforce.AuthzError 'opaque_firm_id must be a non-empty string'. The live rtf-10 (f) request also read FIRM_BINDING, firm_id ABSENT.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/holdings/entry.py:70-71,88-89,109-112 @dbf7667178",
+        "infra/aws/lambda/investor-reporting/directory/handler.py:78-89 @dbf7667178; _authz/loaders.py:77-78",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's: the remedy is a SOURCE change (follow the pointer, as the shared loader does) or a Terraform env change (a dated artifact key would go stale), and the face bars both. Consequence for (f): the holdings line cannot read EMPTY_GRANT after IB-rtf-12 applies; it will still read FIRM_BINDING, a refusal that is not UNEXPECTED but also not scope-resolved. The issuer rules whether (f) carries holdings as recorded-not-counted, or a holdings cell rides first."
+  },
+  {
+    "id": "IRPT_BCKEND-S101",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:33:10Z",
+    "one_line": "The build is WITHHELD at IB-rtf-12 (d). A rebuild from HEAD would move ANOTHER member on 5 of 7 functions: data/custodian_key_seam.json, from the live CRLF hand copy (197344 bytes, 6224 CR) to the committed LF blob (191120 bytes, sha256 87f2f92f). That is the face's STOP condition ('a rebuild that moves any other member is a different act'), so nothing was built. Separately: 29 of 66 of these functions' OWN members sit CRLF on disk in this checkout (core.autocrlf=true), exactly as the live zips carry them. A builder on an LF checkout would move all 29; the build is not reproducible from the committed tree for data members.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (d): 'the served-byte DELTA per function = EXACTLY the raw_keys.json member added -- every other member byte-identical to the live zip, m of m, or STOP: a rebuild that moves any other member is a different act'.",
+    "world_is": "A read-only prediction over the 7 live zips against what build-and-upload.sh packages: own members from DISK, staged members from their pins. Every .py member is byte-identical to live, 7 of 7 functions. The staged seam member moves on irpt-status, irpt-narrative, irpt-export-render, irpt-performance-adapter and irpt-ycharts-generate. irpt-directory-search already carries the LF blob (K-CODE); irpt-holdings' seam is already LF. Own members: 29 of 66 carry CR on disk, byte-identical to live; against the committed LF blobs those 29 would differ (holdings 3, narrative 5, performance-adapter 6, ycharts-generate 15), the byte gap equal to the CR count every time. git check-attr on them: no eol attribute; core.autocrlf=true.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the per-member comparison (live zip member bytes vs the HEAD blob / the pin blob / the worktree disk bytes), this session",
+        "infra/aws/lambda/ci/lambda-source-map.json @dbf7667178 files[] / staged_from per function",
+        "git config core.autocrlf -> true; git check-attr -a on the moved members -> no attributes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer's choices, not this seat's: (i) accept the seam member's CRLF->LF on the 5 as part of the act. The JSON parses identically, it is the committed blob replacing a hand copy, and K-CODE set the precedent under S96. The packet then names it per function. (ii) Leave those 5 functions' seam as served, which needs a manifest change to stage a CRLF copy -- re-staging a hand copy, which S96 rejected. This seat recommends (i). The build-reproducibility half is an estate question (an eol attribute on the Lambda source trees, or the index-sourced gate widened beyond declared_blobs), routed to the CTO and not ridden here."
   }
 ]
 ```
