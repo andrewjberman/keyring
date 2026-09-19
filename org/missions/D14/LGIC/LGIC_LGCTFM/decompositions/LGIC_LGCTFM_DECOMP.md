@@ -1167,3 +1167,67 @@ misses landed in the one bucket the criterion did not name. **COST: one clause.*
 - **The `W2-S36` mechanics edit.** A law edit carries three surfaces including a same-turn broadcast,
   and a worker has no send tool -- so it is classed and routed, never performed here.
 - **Anything outside the seven.**
+
+
+---
+
+## 21. v1.11 -- THE ROUND-10 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-9 analysis @`25bd9cb1fd`
+
+**Input.** `1.0.0_SA_CTO`'s round-9 analysis @`25bd9cb1fd` s.2 and s.6, and `3.0.0_SA_CVO`'s L9
+@`dbd706fcea`. **Round 9 STANDS** -- `M1R9-AC4` PASS across all five classes, no PRD addendum owed,
+scope 0 open of 31 at the cut.
+
+### 21.1 THE CELL -- ONE, AND IT BOTH RE-CLASSES AND ACTS
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| split and re-route | `LT-r-1` | re-classes the two rows carrying the flat `UNEXECUTABLE-AS-ROUTED` value, and PERFORMS `W1-S21`'s conformant re-route | FWD-6 | `S18` `W1-S21` |
+
+### 21.2 ⛔ THE CLASS SPLITS, AND BOTH HALVES MUST NAME SOMETHING
+
+`3.0.0_SA_CVO`'s finding, adopted by the CTO as a taxonomy act:
+
+> ⛔ *"THE RECORD FLATTENS A DISTINCTION THAT MATTERS: a future round reading
+> `UNEXECUTABLE-AS-ROUTED x2` will treat both as equally blocked when **ONE HAS A CHEAP ADDITIVE
+> RE-ROUTE AND THE OTHER HAS NONE.**"*
+
+| row | asks for | conformant alternative |
+|---|---|---|
+| `S18` | an **ARM** in `check_lt_r1.py` | **NONE** -- an arm must be dispatched by the checker's own CMD table, and no sibling can add one |
+| `W1-S21` | **DOCUMENTATION**, carried *"where a later re-derivation will meet them"* | ⭐ **EXISTS** -- a sibling document in `fixed_inputs/r1/`, the `RETIRED.md` shape |
+
+**The class name was still right** -- *"AS ROUTED"* is the operative qualifier, and as routed into
+*"that arm's own carrier"* `W1-S21` does require the barred edit. **The round-9 cell was correct; the
+RECORD was lossy.**
+
+⚠ **`UNEXECUTABLE-IN-PRINCIPLE` IS WHERE A CELL COULD PARK WORK IT DID NOT WANT TO DO**, so the
+checker requires **BOTH** classes to NAME something: RE-ROUTABLE names the alternative, IN-PRINCIPLE
+names what would have to change for one to exist. **A row that says only "blocked" satisfies neither.**
+
+### 21.3 ⛔ THE ADDITIVITY BAR IS ANCHORED TO THE CELL'S OWN BASE, NOT TO A ROUND PIN
+
+`LGIC_ENFORCE` round 16 proved additivity by comparing `check_en_r13.py`'s blob **at its round-13 pin**
+against HEAD -- and they matched because **exactly ONE commit had ever touched that file.**
+
+**Measured here: `check_lt_r1.py` has SIX commits touching it** (`ef8197ed07`, `56dbaee026`,
+`60aac06844`, `8db9eb1bd9`, `e1ffe52bdf`, `39e6977e95`) -- legitimate repairs and amendments **during**
+round 1, before it closed. ⛔ **So a blob-vs-round-1-pin comparison would FAIL ON HONEST HISTORY and be
+a criterion no correct artifact could satisfy.**
+
+⭐ **THE GENERAL RULE, and it is worth more than this round:** **an additivity proof is anchored to the
+ACTOR'S OWN BASE, never to a round pin.** A round pin conflates *"this cell did not edit it"* with
+*"nobody ever edited it"*, and **only the first is the cell's to guarantee.** The arm compares the
+blob at the cell's `base_sha` against the blob at its HEAD, and separately checks the record's claimed
+HEAD blob against the TREE so the record cannot assert additivity by writing the same string twice.
+
+### 21.4 WHAT THIS ROUND DELIBERATELY DOES NOT DO
+
+- **Edit `check_lt_r1.py`.** Refused by name, and the re-route's own arm PROVES the cell did not.
+- **Add an arm to satisfy `S18`.** Impossible without the barred edit -- which is precisely why `S18`
+  is `UNEXECUTABLE-IN-PRINCIPLE`. ⭐ **A cell that found a way to do it would have falsified the class
+  rather than satisfied the round.**
+- **Disarm `S18` or `W1-S21`.** Both name `2.0.0_SA_COO~G`; a disarm is the row owner's act (R-19).
+- **`S26`.** ⭐ **CLOSED** at `LGIC_LGCTFM-S55` @`d180c2077f`, on `1.0.0_SA_CTO`'s R-81 scope ruling
+  @`80bb078627` -- *the ONLY binds the instrument that ANSWERS, and a PREPARATORY act is outside the
+  assignment when it answers nothing, its output is admitted by a permitted instrument's own
+  fail-closed gate, and it is NAMED in the chain.* The analysis says in terms it is not round 10's.
