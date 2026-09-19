@@ -1293,3 +1293,78 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T03:41Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disposition": "UNDER_INVESTIGATION",
+ "id": "LGIC_LGCTFM-S36",
+ "one_line": "ISSUER DISARM RECORD for LGIC_LGCTFM-W2-S35, and it is EVIDENCE, NOT A DISPOSITION: m1-entry's status clause is repaired at 1d4df2c115 to take the manifest's OWN vocabulary, and the entry the cell wrote now reads PASS at the merged tree. 3.0.0_SA_CVO disposes W2-S35; this row only says what changed and how it was measured.",
+ "spec_asserts": "A criterion an order calls mechanical can be satisfied by a record that conforms to the estate's own contracts.",
+ "world_is": "Measured by 2.0.0_SA_COO~G. The arm required status in (active|current|live); graph-call-manifest.yaml:28 states the file's vocabulary as canonical|deprecated|planned|retired and NFRA_GRAPHS s.7 AC1 requires a CANONICAL entry. Population at the cut: 127 entries carry a status, 125 canonical and 2 retired -- INTERSECTION WITH THE ACCEPTED SET ZERO, so no conforming entry could ever pass and the only satisfying move was to write a status the file forbids. Repaired by taking MANIFEST_STATUSES from the file's own header and refusing retired EXPLICITLY (a retired entry is a record, not a route -- CG-s-17) rather than by omission. The repair's own self-test then FAILED on its POSITIVE-entry fixture, which carried status 'active': the suite refused to certify the fix until the fixture stopped asserting the defect. Re-run at the merged tree b238df04d5: m1-entry PASS, m1-untouched PASS (digest 697f4e9d80df unchanged, 129 entries), proof-of-spec VALID rc=0. The worker's pinned proof is NOT rewritten and still records AC1 FAIL at its own vintage -- the UNDERSTATE direction of the S32 bar.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/modules/graph/graph-call-manifest.yaml:28 -- the file's own status vocabulary",
+   "check_lt_r4.py@1d4df2c115 -- MANIFEST_STATUSES, LIVE_STATUSES, _status_is_live, three new self-test arms",
+   "2.0.0_SA_COO~G re-run at the merged tree b238df04d5 in a detached worktree: PASS-M1-ENTRY, PASS-M1-UNTOUCHED",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W2-S35"
+  ]
+ }
+}
+```
+
+```json
+{
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T03:41Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disposition": "UNDER_INVESTIGATION",
+ "id": "LGIC_LGCTFM-S37",
+ "one_line": "ISSUER DISARM RECORD for LGIC_LGCTFM-W1-S35: e6-sources could only pass by DELETING AN ANDREW-DIRECT ARTIFACT, and is repaired at 21a163f492 to read the DESIGN half of the method note only. Evidence, not a disposition.",
+ "spec_asserts": "An arm that forbids naming a refused tool does not thereby forbid the ledger that RECORDS it as refused.",
+ "world_is": "Measured by 2.0.0_SA_COO~G. core_sources() was a bare substring search over the whole method note. All three R-81-refused sources occur ONLY inside the COMP-TOOL LEDGER -- 10_LEGACY_TRANSFORM.md:275 comp-aws, :298 comp-estate, :331 comp-routes, ledger heading :262 -- each row reading NOT USED, and that ledger is an Andrew-direct artifact (msg 98038, record c9e54d5c0f) whose PURPOSE is to name every comp tool and say whether it was used. So the arm made Andrew's ledger and its own AC1 MUTUALLY UNSATISFIABLE and the only passing move was to delete a truthful record. The worker measured the discriminator before filing: 3 of 3 residual hits inside the ledger, 0 of 3 in any design section. design_text() now cuts at the ledger heading; one POSITIVE arm (a ledger naming a refused tool passes) and one MUTANT arm (a refused source in a DESIGN section still fails) hold the boundary. Re-run at the merged tree 9ac7b0b2c3: e6-sources PASS beside e6-handsurface, e6-coverage and e6-no-loss, proof-of-spec VALID rc=0.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/logic/10_LEGACY_TRANSFORM.md:262 ledger heading; :275, :298, :331 the three NOT USED rows",
+   "check_lt_r4.py@21a163f492 -- design_text() and its two boundary arms",
+   "2.0.0_SA_COO~G re-run at the merged tree 9ac7b0b2c3: PASS-E6-SOURCES",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S35"
+  ]
+ }
+}
+```
+
+```json
+{
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T03:41Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disposition": "UNDER_INVESTIGATION",
+ "id": "LGIC_LGCTFM-S38",
+ "one_line": "ISSUER DISARM RECORD for LGIC_LGCTFM-W1-S38: the stale-proof bar graded a CHECKOUT-DEPENDENT count, and at 21a163f492 the count became informational while the SET of at-risk proofs became the bar. Evidence, not a disposition.",
+ "spec_asserts": "A bar compares values that mean the same thing wherever they are measured.",
+ "world_is": "Measured by 2.0.0_SA_COO~G. core_stale() required the record's fixed_input_commits_since_cut to EQUAL the count the grader computes, but that number depends on which checkout asks and moves with every fixed-input commit INCLUDING THE ISSUER'S OWN REPAIRS: the worker honestly recorded 1 from its worktree and the merged tree computed 3, so a record correct when written read FAIL. The count is now printed as informational beside the record's own claim, and the bar is set equality on the proofs that could actually be stale -- a fact about the world rather than about who ran the command. A POSITIVE arm pins it: a record stating 1 against a tree counting 3 PASSES when the sets agree. Re-run at both merged trees: PASS-R4-STALE-PROOFS on b238df04d5 and on 9ac7b0b2c3. This is the THIRD defect of one class this round -- an arm grading text or a number instead of the claim -- and all three were found by the worker being graded, which is the measurement that matters: a bar whose safety rests on the judgment of the party it grades is not a bar (1.0.0_SA_CTO, ADDENDUM 3 @b1693a5b79).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "check_lt_r4.py@21a163f492 -- core_stale()'s count clause removed, POSITIVE-stale-count-moves added",
+   "0.9.0_WK_LGIC_LGCTFM~1's record states 1; the grader's run at the merged tree printed 3",
+   "2.0.0_SA_COO~G re-runs: PASS-R4-STALE-PROOFS at b238df04d5 and at 9ac7b0b2c3",
+   "1.0.0_SA_CTO ADDENDUM 3 @b1693a5b79 (msg 98110) -- the class, stated as a ruling"
+  ]
+ }
+}
+```
