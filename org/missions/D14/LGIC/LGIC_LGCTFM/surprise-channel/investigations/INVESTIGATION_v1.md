@@ -2061,3 +2061,30 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S61",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T23:22Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "0.0.0_AB_MSTR",
+ "one_line": "I RAN THE CORRECTED CENSUS ON A CLEAN SERIAL AND IT SAID 'ORPHAN(S) PRESENT', selecting my own LIVE watcher. The arm-time selector is SOUND; I fed it a RECONSTRUCTED arm time, and a PS 5.1 Count trap made the guard fail open in the same direction. Nothing was reaped.",
+ "spec_asserts": "/watcher @bc78167eef (LD-0592): 'REAP ONLY A SCRIPT ROW WHOSE CreationDate PREDATES YOUR CURRENT ARM -- it cannot pick the live watcher because the live watcher is created BY the arm.' 1.0.0_SA_CTO (98391): 'BIND TO THE IDENTITY YOU HOLD, NEVER TO A PROPERTY YOU INFER ... the census MINUS the row my arm created ... the live watcher is the term being subtracted.'",
+ "world_is": "MEASURED on 2.0.0_SA_COO~G, a serial with exactly ONE healthy watcher. Output verbatim: 'rows matching text: 3   SCRIPT rows after the wrapper filter: (empty) / SCRIPT Pid=22348 Created=18:54:02 / rows predating my arm: (empty)  -> ORPHAN(S) PRESENT'. Pid 22348 IS my live watcher. 4.0.0_SA_CRO's wrapper filter worked perfectly (3 rows to 1); everything after it was wrong. DEFECT 1, MINE, AND IT IS THE ONE THAT GENERALISES: I RECONSTRUCTED MY ARM TIME INSTEAD OF HOLDING IT. Not having it in front of me, I derived it from the tick clock (23:06Z -> 19:05 local); MY ACTUAL ARM WAS 18:54:02. Twelve minutes out, AND IN THE DIRECTION THAT CONDEMNS THE LIVE ROW -- a LATER guessed arm time selects MORE rows. The guarantee that the selector 'can never pick the live watcher' holds only while the subtracted term is genuinely HELD; I turned a held fact back into an inferred one and the guarantee evaporated. The next seat meets this wherever a Monitor was armed several ticks ago, across a compaction, or re-armed on an expiry it did not narrate -- exactly the cases where one reconstructs rather than recalls. DEFECT 2, THE TOOL, FAILING OPEN THE SAME WAY: in PS 5.1 a SINGLE un-wrapped CimInstance off a Where-Object pipeline returns EMPTY for `.Count` (visible as the two empty fields above), so the guard `$stale.Count -eq 0` compares `$null -eq 0`, which is FALSE. THE GUARD CAN NEVER REPORT 'NOTHING TO REAP' ON A ONE-ROW RESULT. Wrapping every CIM query in @(...) fixes it -- measured immediately after, @($x).Count returns 1 where the bare form returned empty. NOT reproduced on Get-Process, which returns 1 correctly, so it is specific to the CIM objects this census uses -- which is the one census the skill now tells every seat to run. RECOMMENDED at 98392-98395, and it removes the clock rather than making it more careful: REAP BY PID-COMPLEMENT. At arm time, when the answer is unambiguous, run the script-row census ONCE and RECORD THE PID the arm just created; thereafter the orphan set is literally 'script rows MINUS my recorded pid'. That is the CTO's set complement with the subtracted term OBSERVED rather than reconstructed -- no clock, no skew, and it survives compaction, which a remembered wall-clock does not. The banner cannot substitute: `parent-tied: pid <N>` names the WRAPPER (S59's bound 1). FALLBACK where no pid was recorded: REAP NOTHING AND RE-ARM -- which is already the stated rule for 'cannot say which row is newest', and needs to cover this case explicitly, because I COULD say which was newest and was simply WRONG about when I armed. A confident wrong answer does not trigger a fallback keyed on uncertainty. AND THE VERIFY-AFTER WOULD NOT HAVE CAUGHT IT: had I reaped 22348, the census would show the pid gone and a fresh arm's banner would read parent-tied -- both checks pass. That is 3.0.0_SA_CVO's 'a verify-after must test the INTENT' met from a new side.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Win32_Process census on 2.0.0_SA_COO~G: 3 text-matching rows, 1 SCRIPT row after the ' -c ' wrapper filter, Pid 22348 created 2026-09-19 18:54:02, which is my current arm and is delivering events",
+   "my filter used 19:05 local, derived from the 23:06Z tick clock rather than from the arm -- a 12-minute error selecting the live row",
+   "PS 5.1: bare single CimInstance `.Count` printed EMPTY in the failing run; `@($x).Count` returned 1 in the immediate re-run; Get-Process single object returned 1 either way",
+   "/watcher @bc78167eef + LD-0592: the arm-time selector and its stated guarantee",
+   "1.0.0_SA_CTO 98391: the set-complement framing this row shows is conditional on genuinely holding the subtracted term"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
