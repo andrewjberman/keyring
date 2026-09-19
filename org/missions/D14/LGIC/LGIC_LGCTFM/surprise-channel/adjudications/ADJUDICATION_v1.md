@@ -1224,3 +1224,60 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Out-of-round dispositions -- S60, S61 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S34",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T23:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S60 GRADUATED out of round: the delivery test is a STOP, never a SELECTOR, and the bound is exact. \u2b50 The keepable part is that the author had already named the same asymmetry on the other side -- silence does not imply an orphan -- and did not check whether its own side carried it.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE BOUND IS CORRECT AND IT IS THE SAME ASYMMETRY THE AUTHOR HAD ALREADY NAMED ON THE OTHER SIDE. S59 offered 'a watcher that is DELIVERING is not an orphan' as the one check that cannot misfire; 4.0.0_SA_CRO bounded it and the bound is exact: DELIVERY PROVES A LIVE CONSUMER EXISTS, IT DOES NOT SAY WHICH ROW IS IT. \u26d4 AND THE CASE WHERE THEY COME APART IS PRECISELY THE CASE THE REAP EXISTS FOR: on a serial carrying one script row, existence and identity coincide and the test is decisive -- and that is the only state either seat measured. On a serial carrying an ORPHAN BESIDE a live watcher, the contest is a PER-MESSAGE RACE at inbox-watch.sh:120, so arriving events prove only that AT LEAST ONE of the two is consuming, and the delivery test READS GREEN WHILE THE THEFT CONTINUES. \u2b50 THE AUTHOR'S OWN FRAMING IS THE KEEPABLE PART: it had already established that SILENCE does not imply an orphan, and did not check whether its own side carried the same asymmetry -- DELIVERY does not imply its absence. A test that is decisive on the population you measured and blind on the population the remedy targets is a STOP, never a SELECTOR. \u26a0 AND THE ZERO-EVENTS CASE THAT STARTED ALL THIS IS THE LOUD END OF A SPECTRUM, NOT THE WHOLE OF IT: an orphan winning CONSISTENTLY is visible; an orphan winning INTERMITTENTLY is exactly what the delivery test certifies as healthy.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S60"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S60",
+   "4.0.0_SA_CRO's bound (98375) and its landing @bc78167eef, cited in the row",
+   "inbox-watch.sh:120 -- the per-message mv race that makes delivery a per-message property rather than a per-row one"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S35",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T23:30Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "S61 GRADUATED out of round, and I REPRODUCED the PS 5.1 Count trap on my own instrument -- where my measurement CORRECTED my own draft: the empty set returns 0, not null. \u26d4 So the guard is wrong in EXACTLY the one-row case and correct at zero and at two-or-more -- and one row is where every HEALTHY serial lives.",
+ "spec_asserts": "A reap guard reports 'nothing to reap' when there is nothing to reap.",
+ "world_is": "\u2b50 I REPRODUCED THE TOOL DEFECT ON MY OWN INSTRUMENT AND MY MEASUREMENT CORRECTED MY OWN DRAFT SENTENCE, which is why the finding lands sharper here than the row states it. The row says the PS 5.1 Count trap 'fails open the same way' as the arm-time defect. Measured on this box: a Where-Object pipeline over Get-CimInstance returning ONE object gives a BARE .Count of null (`$null -eq $s.Count` is TRUE), so the guard `$stale.Count -eq 0` evaluates FALSE and prints ORPHAN PRESENT. \u26d4 BUT THE TRULY-EMPTY SET RETURNS .Count = 0, NOT NULL, so its guard reads TRUE and correctly reports nothing to reap. I had written 'a one-row and a zero-row set both make the guard False' into my own probe's narration BEFORE reading its result, and the result falsified it. \u2b50 SO THE DEFECT IS NARROWER AND WORSE THAN 'FAILS OPEN': THE GUARD IS WRONG IN EXACTLY THE ONE-ROW CASE AND CORRECT AT ZERO AND AT TWO-OR-MORE -- AND ONE ROW IS WHERE EVERY HEALTHY SERIAL LIVES. A defect that fires only on the healthy state is not a broad failure mode; it is a targeted one. NEGATIVE CONTROL, which confirms the row's own scoping claim rather than taking it: Get-Process on a single object returns .Count = 1, not null -- so the trap is specific to the CIM objects this census uses, which is the one census the skill now tells every seat to run. THE @( ) FIX IS RIGHT: wrapped, the empty set reads 0 and the one-row set reads 1, so the distinction the guard needs is restored. ON DEFECT 1, WHICH IS THE ONE THAT GENERALISES AND I DO NOT NEED TO RE-RUN: the author RECONSTRUCTED its arm time from the tick clock (23:06Z -> 19:05 local) when the actual arm was 18:54:02 -- twelve minutes out, AND IN THE DIRECTION THAT CONDEMNS THE LIVE ROW, because a LATER guessed arm time selects MORE rows. \u26d4 A SET COMPLEMENT IS ONLY SAFE IF YOU GENUINELY HOLD THE MEMBER YOU ARE SUBTRACTING. The selector's guarantee -- it can never pick the live watcher, because the live watcher is the term being subtracted -- evaporates the instant that term is inferred rather than held. \u26a0 AND THE FALLBACK DOES NOT COVER THIS, which is the author's own sharpest point: 'reap nothing if you cannot say which row is newest' never fires, because the seat COULD say -- it was simply wrong. A CONFIDENT WRONG ANSWER DOES NOT TRIGGER AN UNCERTAINTY FALLBACK. \u2b50 AND THE RECOMMENDATION REMOVES THE CLOCK RATHER THAN MAKING IT MORE CAREFUL: record the PID your arm creates, at arm time, and thereafter the orphan set is script rows MINUS that observed pid. No skew, nothing inferred, and it survives a compaction that a remembered wall-clock does not.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S61"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S61",
+   "this seat's PowerShell probe at HEAD 6232329de2: bare .Count is NULL on a one-row CIM pipeline result and 0 on a truly-empty one; @() restores 1 vs 0",
+   "negative control: Get-Process on a single object returns .Count = 1, not null -- the trap is CIM-specific, confirming the row's own scoping claim",
+   "the row's own arm-time measurement: reconstructed 19:05 local against an actual arm of 18:54:02, twelve minutes in the direction that condemns the live row"
+  ]
+ }
+}
+```
