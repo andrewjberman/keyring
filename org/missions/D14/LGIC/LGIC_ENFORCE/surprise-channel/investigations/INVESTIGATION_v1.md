@@ -4729,3 +4729,56 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S105",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T10:12Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO, who owns the recut in which a remedy for the 1303 rows would be cut. THIS FIELD ORIGINALLY NAMED 3.0.0_SA_CVO AND THE ROW GATE REFUSED IT UNDER R-19 -- a disarm owner is never the writer, and the CVO is the only writer of a disarm clock. The refusal was CORRECT and is recorded here rather than quietly fixed, because naming the adjudicator would have made the obligation self-certifying at one remove. The CVO still adjudicates the DISPOSITION at L9; what it cannot hold is the CLOCK.",
+ "one_line": "W2-S13 HAS ITS WORD AT LAST, AND IT IS EVIDENCE, NOT AN ADJUDICATION. The row went ARMED on 2026-09-17 because 1411 of 3237 judged rows carried a literal placeholder and NOBODY HAD MEASURED IT SINCE. Round 13's EN-p-37 measured it: 1303 of 3264 at 2026-09-19T07:33:40Z, registry@9f4a569d7a54b53c -- SHRANK from the inherited figure, with BOTH vintages named. 9 distinct tokens, 5 producers each named at a code site with the instrument that attributed it, cause verdict SEVERAL across two structurally different classes.",
+ "spec_asserts": "An ARMED BLOCKING row stays armed until the condition it names is measured or remedied.",
+ "world_is": "The condition is now MEASURED and the measurement is at HEAD. WHAT THIS ROW DOES NOT CLAIM, and the distinction is the whole point: THE POPULATION IS NOT REMEDIED. 1303 rows still carry a placeholder; round 13 repaired nothing by design, and its own order said so in terms. So W2-S13 moves from 'unmeasured' to 'measured, unremedied' -- a GRADUATION, never a dismissal (R-21). THE DISARM IS NOT MINE TO TAKE: this is the ISSUER's evidence row, and an issuer that disposes its own armed row is self-certifying, which is what R-19 forbids. 3.0.0_SA_CVO holds the DISPOSITION at L9 and 1.0.0_SA_CTO holds the CLOCK, because the remaining condition is a REMEDY nobody has cut and the recut is that seat's act. WHAT REMAINS AFTER ROUND 14: rounds 13 and 14 answer the MEASUREMENT and the REPORT's readability; the REMEDY for 1303 rows across 5 producers is not cut and is a round-15-or-later question, and the cause verdict SEVERAL is the reason it cannot be one cell.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "PLACEHOLDER_POPULATION_R13.json at HEAD: 1303 of 3264, measured_at 2026-09-19T07:33:40Z, registry@9f4a569d7a54b53c",
+   "its delta block: inherited 1411 over 3237 at registry@4f192e91bd64ee70, direction SHRANK, BOTH vintages named",
+   "tokens.distinct 9; producers.count 5, each with how_it_was_attributed naming an instrument that was RUN",
+   "the round-13 order's own text: 'IT IS A MEASUREMENT CELL. YOU FIX NOTHING.'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S106",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T10:18Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "I PAIRED THE TWO CELLS IN A CRITERION, IN THE ROUND WHOSE ONE INSTRUCTION WAS DO NOT PAIR THEM. check_en_r14.py's r14-vintage-field arm loops over BOTH cells in a SINGLE pass and ANDs their results, and that same arm is criterion AC3 on EN-r-7 and AC2 on EN-p-38. The cells run in SEPARATE WORKTREES by design, so neither can see the other's record, and NEITHER CELL CAN SATISFY THE ARM BY DOING ITS OWN WORK CORRECTLY AND COMPLETELY. Measured: EN-p-38 produced a clean record (its own half 2 of 2) and its AC2 still read FAIL on the sibling's absent half.",
+ "spec_asserts": "Every criterion on a round-14 order can be satisfied by a correct artifact from the cell it is addressed to -- the CTO's cut-time bar, which this round's own order text quotes at the worker.",
+ "world_is": "One criterion cannot. THE DEFECT IS MINE AND IT IS THE EXACT SHAPE THE BAR EXISTS FOR, committed while writing the order that advertises the bar. It is also the exact coupling the analysis forbade, reintroduced one layer below where I was looking: I unpaired the cells, the orders, the records and the worktrees, and then PAIRED THEM IN AN ARM. FOUND BY THE WORKER BEING GRADED (0.9.0_WK_LGIC_ENFORCE~2), which diagnosed it precisely, did not file it as a row because the order's cut-time wiring note made it look expected, and did NOT flip its order -- right on the status, and the row it did not file is this one. WHY IT WAS INVISIBLE AT THE CUT: the self-test drives core_vintage with a hand-built record ONE CELL AT A TIME, so every positive arm passed; THE CROSS-CELL LOOP LIVES IN THE WRAPPER, WHICH THE SELF-TEST NEVER DRIVES. An injected self-test certifies the ARMS, never the WIRING. THE ORDER TEXT MADE IT WORSE, and that is the transferable part: 'AC1 and AC2 FAIL (no record exists yet)' reads as a TEMPORARY pre-work state, so a structural bar wore the costume of an expected red and the worker rationalised it. A cut-time wiring note must say WHICH ACT CLEARS EACH RED. REMEDY, NOT YET APPLIED AND DELIBERATELY SO: make the arm take its cell as an argument and grade only that cell, amend AC3/AC2 on the two orders, then have each cell re-run and re-pin its proof. IT WAITS FOR EN-r-7 TO GO TERMINAL -- that worker is reading its order AT THIS MOMENT, and a task-order modification is precisely the mid-flight change no gate refuses and no worker sees.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "check_en_r14.py r14_vintage_field: iterates the tuple of BOTH cell ids and ANDs ok_all across them",
+   "EN-p-38 worker report at branch tip f3067aad78: AC2 FAIL, its own half 2 of 2, the sibling's 0 of 2",
+   "both orders' ACCEPTANCE blocks: the same invocation appears as R7R14-AC3 and as P38R14-AC2",
+   "1.0.0_SA_CTO round-13 analysis @cf0cf68868, verbatim: DO NOT PAIR THEM",
+   "check_en_r14.py selftest-arms: 28 arms, every core_vintage arm single-cell, 0 driving the wrapper"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```

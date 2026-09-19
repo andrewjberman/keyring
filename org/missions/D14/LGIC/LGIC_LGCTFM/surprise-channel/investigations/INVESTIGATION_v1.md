@@ -1525,3 +1525,29 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S44",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T10:12Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "W2-S2 IS STILL UNADDRESSED THROUGH ROUND 6 AND I AM SAYING SO RATHER THAN LETTING SILENCE READ AS PROGRESS. Every walk emits a COGNITO_USER_POOL row whose node_type sits OUTSIDE LGCTFM_CONTRACT.schema.json's 33-value enum, so no real contract the engine produces can validate against its own schema. Rounds 4, 5 and 6 went to the tension-class typing and the bucketless-S3Key sites; NONE of them touched the enum, and none of their cells could have.",
+ "spec_asserts": "An armed BLOCKING row with the issuer as disarm owner is being driven by the rounds that follow it.",
+ "world_is": "It has not been. THREE ROUNDS PASSED AND THE ROW DID NOT MOVE, and nothing in those rounds' records says so -- the row's silence and a round working on it read identically from outside, which is the failure this row exists to stop me committing again. WHY IT IS NOT CUT THIS TICK, NAMED SO THE WAIT IS NOT A COAST: LGIC_LGCTFM stands at 0 open of 26 and round 6's L10 is with 3.0.0_SA_CVO for the slug. LD-0521's refuser counts open orders PER PROJECT, so a round-7 issuance cut now would flip the open count off zero and DEADLOCK round 6's L10 until round 7 fully drains -- the cost lands on the adjudicating seat and is invisible to the one that causes it. THE ACT I TAKE INSTEAD, THIS TICK: the round-7 scope recommendation goes to 1.0.0_SA_CTO now, naming W2-S2 as the first candidate and W2-S1 (the CTO's own row, naming-gate ENFORCE refusing the engine's run artifacts) beside it, so the recut arrives with the rows already weighed rather than rediscovered.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "W2-S2 at HEAD: hazard_standing ARMED, disposition UNDER_INVESTIGATION, disarm_owner 2.0.0_SA_COO~G",
+   "rounds 4, 5 and 6 cells read from the decomposition: tension-class typing, the bucketless-S3Key population, the one-repair-or-two hypothesis -- no enum cell among them",
+   "LGIC_LGCTFM order census at HEAD: 0 open of 26, parsed from each order file's own status",
+   "LD-0521: the L6 refuser counts open orders per PROJECT, never per round"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
