@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~1 @659dca28f3 (record) / proof instance @deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-1-r18.resolve-and-card.proof_of_spec.json. Re-derived population 1303 (NO DRIFT), 0 RESOLVED / 1303 CARDED against infra/logic/registry/resources.json (0 of 91 rows exact-match by (name,type); 1 name-only mismatch carded on type). T1R18-AC1/AC2/AC3 PASS by output (t1-resolution, r18-vintage-field, r18-stale-proofs, all rc=0 at HEAD 659dca28f3). T1R18-AC4 JUDGMENT, recorded UNVERIFIABLE-BY-INSTRUMENT for 3.0.0_SA_CVO at L9. proof-of-spec-check.py rc pending this same commit.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `EN-t-1` (decomposition v3.17 s.0r) | **outcome_ref:** FWD-5 | **depends_on:** none -- **the only cell this round**
 
