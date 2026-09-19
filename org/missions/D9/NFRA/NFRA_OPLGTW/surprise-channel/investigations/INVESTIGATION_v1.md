@@ -3360,6 +3360,29 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "R-OG-23 (@4ab7ce54fd), the consequence the CTO drew and this lane did not: 'the 19 errors of 09-04/09-09/09-10 are NOT named, so those three days are NOT eligible window material until they are -- an unexamined burst is not a clean day, and \"free of named incidents\" means the incidents in it have actually been named.'",
     "world_is": "They are now named, on two corroborating instruments, as one cause class on one endpoint outside the graded path. Under R-OG-23's own rule the three days become eligible, and the practical consequence is that OGR2-AC6 can be graded on a window that excludes the graph-swap 502s and today's DeleteItem outage, with the literal 'zero failures' bar intact -- which is what the CTO ruled must be preserved.",
     "notes": "INERT: nothing is armed; this closes the naming obligation R-OG-23 created and feeds round 2's AC6 cell (draft R2-c, @94b0c19f27) plus its R2-g item, which can now be dispositioned as NAMED rather than investigated. The AC6 re-grade itself is round-2 work and is NOT performed here. THE CARRY: A HEALTH ENDPOINT AND THE PATH IT CLAIMS TO SPEAK FOR CAN DISAGREE WITHIN THE SAME SECOND -- `/graph/health` 200 beside `/graph/cypher` 502 is the same class as this project's own ten-hour outage, where `/health` 200 + `/mcp` 401 + ALB healthy stayed green while no one could sign in. A liveness check certifies the process, never the capability. COST: one journal read at the minute of a failure. NON-APPLICATION: a probe that exercises the capability itself."
+  },
+  {
+    "id": "NFRA_OPLGTW-S53",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-19T01:15Z",
+    "one_line": "S52's phrase 'the three days become eligible window material' is WRONG and R-OG-23A corrects it: a NAMED incident DISQUALIFIES any window containing it, naming was never a licence to excise minutes. The strict reading costs nothing -- and the 7-day clean window it names is REAL AND NOT VACUOUS, which the ruling asserted but did not measure: 09-11..09-17 carries 19473 requests with zero 5xx.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE CORRECTION, R-OG-23A @090e3b5e26: \"'FREE OF NAMED INCIDENTS' MEANS THE WINDOW CONTAINS NONE -- not that the ones it contains have been labelled ... A NAMED INCIDENT DISQUALIFIES ANY WINDOW CONTAINING IT.\" The reading it refuses is the one that would let 'zero failures' be satisfied over ANY data by naming and excising every failure -- a condition satisfiable by shrinking its own denominator, shrunk by the party that benefits.",
+        "THE CHECK THE RULING DID NOT RUN, and it is the one that could have made the remedy hollow: a window with zero failures and zero TRAFFIC passes vacuously. Measured by this lane (CloudWatch, same dimensions as S49, period 86400, 7 day-buckets 2026-09-11..2026-09-17): RequestCount 3323, 1123, 1142, 4309, 2778, 5017, 1781 -- every bucket non-zero, TOTAL 19473 requests. HTTPCode_Target_5XX_Count over the identical span: NO DATAPOINTS. So the clean run is clean AND loaded.",
+        "THE ARITHMETIC OF THE RUNS, from S49's own day-buckets rather than re-derived: non-zero on 09-04, 09-09, 09-10, 09-18; eleven of fifteen are true zeros; contiguous clean runs are 09-05..09-08 (four days) and 09-11..09-17 (SEVEN). The seven-day run is the longest available and needs no excision, no attribution argument and no judgment call.",
+        "WHAT S52 GOT RIGHT AND KEEPS: its operative sentence describes grading AC6 on a window that EXCLUDES the graph-swap days and the 09-18 outage, which is exactly what the strict reading requires. Only the label 'eligible window material' was loose, and only that is retracted here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R-OG-23A: the naming obligation is discharged and closed by S52, but 'free of NAMED incidents' means the window CONTAINS none; a 7-day contiguous clean span already exists.",
+    "world_is": "Accepted without reservation, and the span is verified non-vacuous on this lane's own instrument. OGR2-AC6 is gradeable in round 2 on 09-11..09-17 with the literal 'zero failures' bar intact over 19473 real requests. The AC6 re-grade is NOT performed here.",
+    "notes": "INERT. Supersedes S52's LABEL only; S52's enumeration, corroboration and cause-pinning stand unchanged. THE CARRY, and it is the second half of a trap this channel already knows: A BAR CAN BE WEAKENED AT ITS WINDOW'S EDGES WITHOUT EVER TOUCHING THE BAR -- 'zero failures on a window I choose' and 'zero failures' are different claims, and the first reads as the second in every record. THE MIRROR: the strict reading then needs its OWN check, because a window with no traffic has no failures either. So a clean-window claim prints TWO numbers -- the failure count AND the denominator that makes zero mean something. COST: one RequestCount query beside the failure query. NON-APPLICATION: a window whose traffic is the thing being measured anyway."
   }
 ]
 ```
