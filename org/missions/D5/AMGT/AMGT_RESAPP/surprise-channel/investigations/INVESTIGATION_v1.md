@@ -9091,6 +9091,74 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Section 3 of this order's own face: 'tests/test_management.py is ALSO appended by AMGT-rk-44 (a census test) and AMGT-rk-45 (pool tests) -- an append-only shared file inside one chain; add your classes at the END of the file and never reorder existing ones.'",
     "world_is": "'Append-only' bound the ORDERING of classes (no reordering, new classes at the end) so three workers' additions do not collide in one merge; it did not anticipate that building THIS cell's own required behaviour (item 5) would change the correct answer for one line ALREADY in the file, authored before this cell existed. Editing that one assertion was the only way to keep 'every test passes' (AC1) true while actually building item 5 as specified -- leaving it unedited would either fail AC1 or require NOT building the reference-pointer detector for exactly the sentence shape item 5 names.",
     "notes": "Class + hazard: OBSERVATION/INERT -- the edit is a one-line assertion fix inside a test this cell owns the correctness of, not a rewrite of another worker's class, and no reorder occurred. Remedy holder: none needed; recorded so the drain sees why one pre-existing assertion's expected string changed under a nominally append-only file."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W45-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~45",
+    "surfaced_at": "2026-09-19T03:20:00Z",
+    "one_line": "4 of 12 served management objects (BABA, BA, COST, HD -- all dated 2026-09-15, the pilot-name batch) carry ceo_public_profile.status=ABSENT, query SET, and absence_class NULL even though their own basis text describes exactly the CANNOT_SAY case ('the SERP returned N url(s) and none on <domain> -- ABSENT is the honest result, never confused with NOTHING_FOUND'); AMGT-rk-43's field-only reading (built BY SUBTRACTION over status/query/absence_class/basis, never a parsed sentence) correctly refuses to guess and reads these as UNREADABLE_OBJECT, not the order's own asserted SEARCHED_LINKS_UNREADABLE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "direct S3 read of management/v1/BA_US_Equity/2026-09-15.json (and BABA/COST/HD, same date): ceo_public_profile = {status: ABSENT, query: 'site:boeing.com \"Robert K. Ort...', absence_class: null, basis: 'the SERP returned 2 url(s) and none on boeing.com -- ABSENT is the honest result, ...'}",
+        "live post-deploy invoke of opal-amgt-scoped-api /thesis for all four keys: ceo_profile_reading.reading UNREADABLE_OBJECT, reading_basis 'status=ABSENT query=set absence_class=None', for all 4 of 4",
+        "enrich.py:436-441 (current producer, read at this cell's own HEAD): the host_ok-empty/urls-nonempty branch DOES set profile['absence_class'] = CEO_PROFILE_CANNOT_SAY ('CANNOT_SAY') -- so a name enriched by TODAY's producer would carry the field these four objects lack; the four are dated 2026-09-15, from a producer revision this cell did not audit for absence_class population, so this is a DATA-VINTAGE gap, not a defect in the deployed adapter code",
+        "AC1's own printed split under the order's own two-way test (CANNOT_SAY vs else-NOTHING_FOUND) reports these 4 as SEARCHED_NOTHING_FOUND, masking the null-vs-NOTHING_FOUND distinction that the adapter's own six-way, more exhaustive reading exposes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's THE MEASURED STATE section states '4 searched with links not resolved to the IR host (CANNOT_SAY)' as the live split at the cut, and the built reading's SUBTRACTION table names SEARCHED_LINKS_UNREADABLE as the outcome for 'status ABSENT, query set, absence_class CANNOT_SAY' -- implicitly assuming absence_class is always populated to NOTHING_FOUND or CANNOT_SAY when status is ABSENT and query is set.",
+    "world_is": "For these 4 of 12 names the field is null, not CANNOT_SAY, on the CURRENTLY SERVED object (no reproduction, no producer re-run happened here). The built reading (UNREADABLE_OBJECT, printing the fields it saw) is still HONEST -- it does not claim CONFIRMED or a specific search outcome the object does not evidence -- but it is a less informative rendering than the order anticipated for these 4 names, and the page will show the generic 'unreadable object -- status=ABSENT query=set absence_class=None' line rather than the 'search returned N link(s); none resolved...' sentence for exactly the case the order was written to make legible.",
+    "notes": "Not fixed here: this order's <paths> covers the adapter and the page, not lib/research/management/enrich.py or a producer re-run (explicitly barred: 'NO producer runs, NO pool write' per this order's own BOUNDS). Remedy is either (a) a future cell backfills these 4 objects by re-running the producer against the current enrich.py so absence_class populates, or (b) a ruling that null absence_class on an ABSENT+query object is read AS CANNOT_SAY by inference from the basis phrasing -- which would reintroduce exactly the sentence-parsing this order was cut to remove, so (a) is the more likely correct remedy. AC5 (judgment, CVO) should see this named so a headed review of these 4 names is not mistaken for a rendering defect in this order's own code."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W45-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~45",
+    "surfaced_at": "2026-09-19T03:25:00Z",
+    "one_line": "This worker's assigned worktree needed THREE undocumented environment repairs before the order's own named deploy mechanism would run: (1) portal/node_modules was a MALFORMED Windows junction (fsutil reparsepoint query showed a doubled substitute name 'C:\\C:\\Users\\...', confirmed via native fsutil, not a bash artifact) so `./node_modules/.bin/tsc` was absent -- repaired via the order's own authorized bun-install exception; (2) the portal worktree's git HEAD was DETACHED (not on a named branch, unlike sibling worker portal worktrees which all carry one) so the portal commit this order made was reachable via no ref but this worktree's own HEAD until a branch was created after the fact; (3) infra/aws/terraform/harvest had never been through `terraform init` in this worktree, and even after init, the FIRST plan attempt failed because .build/chatter-axis-producer.zip (an UNRELATED resource's build artifact, built by lambda_src/build_zip.py) did not exist, so no plan -- targeted or otherwise -- could render at all until that unrelated zip was built once.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fsutil reparsepoint query node_modules (before repair): Substitute Name '\\??\\C:\\C:\\Users\\Opal Bloomberg\\Desktop\\ajb_workspace\\portal\\node_modules\\' -- a literal doubled drive prefix",
+        "git -C portal status (before branch creation): 'Not currently on any branch.'; git worktree list showed this worktree as '(detached HEAD)' while sibling worktrees (e.g. C:/tmp/wk-aggfix-1-3/portal) carry a named branch",
+        "terraform plan in infra/aws/terraform/harvest (before build_zip.py ran): 'Call to function \"filebase64sha256\" failed: open .build\\chatter-axis-producer.zip: The system cannot find the path specified.' -- for aws_lambda_function.chatter_axis_producer, a resource this order never touches",
+        "repairs taken, each local/non-widening: rm -f (unlinked only the broken junction, target contents untouched) + bun install --frozen-lockfile against the existing lockfile (the order's own named exception); git branch wk-amgt-14-45-portal HEAD (preserves the portal commit under a ref); terraform init -plugin-dir=<cached provider dir> + one run of lambda_src/build_zip.py (both read-only/local, neither modifies a tracked path or any live resource)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker face states the worktree is 'ALREADY populated (a linked worktree of the nested portal repo at DEV 625a0888, with node_modules junctioned)' and directs running the deploy mechanism directly, implying no environment repair is needed before the order's own named commands would succeed.",
+    "world_is": "None of the three repairs touched this order's own surface (adapter code, page code, or the target Lambda); all three were pre-existing gaps in how this worker's worktree/portal-worktree pair was provisioned at spawn. Every repair is reproducible and is recorded above so the next AMGT_RESAPP round's spawn/provisioning step (COO~Z, L6) can fix the junction-writer and add a branch-on-checkout step, rather than every worker rediscovering the same three gaps.",
+    "notes": "Remedy holder: 2.0.0_SA_COO~Z's worker-provisioning mechanism for round 15+ -- (1) the portal junction writer should verify the reparse point resolves before declaring a worktree populated; (2) a portal linked-worktree should be created with -b <branch> per Rule 14b, never left detached; (3) infra/aws/terraform/harvest worktrees used for a targeted apply should either ship a pre-warmed .terraform/ + .build/ or the order should name the exact init/build steps needed. Not this worker's to fix upstream -- named as a row, not resolved."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W45-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~45",
+    "surfaced_at": "2026-09-19T03:35:00Z",
+    "one_line": "AMGT-rk-43's own edit correctly breaks 2 of 160 pre-existing lib/research/api/tests/test_generation_and_pool_routes.py assertions (test_13_management_is_M1_with_the_pool_average_at_the_same_as_of and test_13b_the_ceo_profile_reading_separates_the_two_absences) that assert the SUPERSEDED sentence-parsed two-value ceo_profile_reading contract (NOT_CONFIRMED_NOTHING_FOUND / NOT_CONFIRMED_INSTRUMENT_CANNOT_SAY) this order replaces by design with the six-value field-only contract; this order's <paths> grants lib/research/api/scoped_amgt.py only, not lib/research/api/tests/, so the tests cannot be updated here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest lib/research/api/tests/ -q, post-edit: 2 failed, 158 passed -- FAILED lib/research/api/tests/test_generation_and_pool_routes.py::test_13_management_is_M1_with_the_pool_average_at_the_same_as_of (assert 'NOT_SEARCHED' == 'NOT_CONFIRMED_NOTHING_FOUND'); FAILED ...::test_13b_the_ceo_profile_reading_separates_the_two_absences (same shape, twice)",
+        "test_generation_and_pool_routes.py:458-463: both failing assertions construct ceo_public_profile fixtures with status+basis ONLY, no query key at all -- under AMGT-rk-43's own subtraction table (status ABSENT, query null -> NOT_SEARCHED, checked before any basis/absence_class read) this is the textbook NOT_SEARCHED case, not a bug",
+        "this order's own <paths> lists lib/research/api/scoped_amgt.py, portal/src/pages/SecurityAnalysis/, org/critical_paths/, and this worker's own deliverables/surprise-channel/task-order/ledger paths -- lib/research/api/tests/ is not among them"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Nothing in this order names the unit-test suite; the order's own proof mechanism is the PROOF OF SPEC criteria (AC1-AC5), not lib/research/api/tests/, and section 1(a)'s SUBTRACTION table is stated as the new, correct contract, explicitly superseding the sentence-parsed one these two tests assert.",
+    "world_is": "The two failing tests are STALE fixtures of the superseded contract this order was cut to remove; they are not evidence against this order's own correctness (AC2's planted-negative fixtures, built to the NEW contract, pass 4 of 4). Left FAILING in the committed tree because updating them is outside this cell's <paths>.",
+    "notes": "Remedy holder: the next cell (or the COO directly) that holds lib/research/api/tests/ in its <paths> -- update the two assertions to the six-value contract (NOT_SEARCHED for a query-less fixture, SEARCHED_NOTHING_FOUND / SEARCHED_LINKS_UNREADABLE for query-bearing fixtures matching the new absence_class-based split). Not fixed here."
   }
 ]
 ```
