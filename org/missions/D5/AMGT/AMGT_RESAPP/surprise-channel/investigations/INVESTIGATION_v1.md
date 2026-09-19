@@ -9892,6 +9892,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "CTO msg 23867 (relayed via this cell's worker face): record ONE page-built call against a slashed key through the gateway as an observation -- whether %2F survives to rawPath or is normalised before routing.",
     "world_is": "The call was made as requested and answers NEITHER branch: the shared edge authorizer rejects every request with an identical 401 before this worker's instrument can see whether API Gateway's router matched a single-segment route. This reproduces, on a DIFFERENT instrument (an unauthenticated direct HTTP call vs the row's own DIRECT lambda.invoke), the CTO half's own stated limit (NEVER_WIDEN_ROUND14_CHAIN_T_CTO_HALVES.md AMGT-rk-61 section 4): 'whether a %2F from the portal's encodeURIComponent survives to rawPath as %2F, or is normalised by API Gateway into a path separator before routing' is NOT MEASURED by either half, and an authenticated edge capture (blocked by MFA per the row this cell closes) remains the only instrument that could resolve it.",
     "notes": "No action taken beyond the observation requested; not held against this cell (the ruling W27-S10 already named this exact residual question and ruled it out of this order's scope). Disarm owner would be whoever eventually runs the authenticated capture -- left unset (INERT) because nothing here is a hazard on the process's normal operation, only an open measurement."
-  }
+  },
+{
+  "id": "AMGT_RESAPP-Z-S179",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-19T10:47Z",
+  "one_line": "DISARMS Z-S177 (ARMED, disarm_owner 2.0.0_SA_COO~Z): the placeholder-shadows-accession composition is CLOSED AT HEAD by roster._is_accession_key + the accession-first pick (rk-46 item 7, landed 7e28fcb73d 04:10Z, drained before the row was filed at 08:05Z) -- the row cited roster.py:472-498 from W46-S2's vintage, the function sits at :841 at HEAD; one residual (doc- keys win by lexicographic accident, not by rule) is CARRIED to the slug.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/management/roster.py at HEAD f53abdf6ce: load_source_object() computes accession_keys = sorted(k for k in keys if _is_accession_key(k)) and picks accession_keys[-1] when any exists, sorted(keys)[-1] only when none does (the docstring names the placeholder case explicitly); _is_accession_key() is stem.isdigit(). git log -S on that pick: 7e28fcb73d by 0.9.0_WK_AMGT_RESAPP~48 (rk-46), committed 2026-09-19T04:10Z, drained to SITEZ @15b140014a before 04:55Z; Z-S177 surfaced_at 08:05Z reading roster.py:472-498, a line range from W46-S2 (the function is at :841 at HEAD). Key shapes at HEAD: digits-only accession (EDGAR), doc-<hex> (battery winner, rk-38/rk-40), UNRESOLVED-SOURCE (placeholder); ord(d)=100 > ord(U)=85 so a doc- key also outranks the placeholder under sorted()[-1], but by ordering, not by rule. The CVO measured 0 of 193 keys serving a placeholder; no round-14 act resolves any of the 177 placeholder-only keys (no fleet run, Andrew 2026-09-18)."
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "N/A -- a disarm row, not a new finding.",
+  "world_is": "The digit-accession half of the hazard is closed by rule at HEAD; the doc- half is closed by lexicographic order. Residual for the slug: _is_accession_key should admit the doc- shape as RESOLVED so the placeholder loses by rule for every winner shape (one predicate, one unit arm); not a round-14 act -- no cell is open on that surface except rk-49, whose reading of the LATEST object is already correct under the HEAD pick.",
+  "notes": "Vintage class: a row grounded on a worktree/citation vintage older than HEAD (the CVO's own Z-S178 names the same class). Adjudicated at the /canonical-drive tick 2026-09-19 ~10:2xZ; drive log names it."
+}
 ]
 ```
