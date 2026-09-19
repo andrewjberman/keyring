@@ -9367,6 +9367,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC7 asserts that after AC6, BA_US_Equity's served set carries served_without_span 0 -- i.e. that AC6's rebuild reaches BA_US_Equity.",
     "world_is": "AC6, per issuer bind D4 (which this same order carries and which the never-widen pair enforces), rewrites ONLY the three validation names; BA_US_Equity is a covered, non-validation key and is DRY-RUN only this round. AC6 therefore never touches BA_US_Equity's drafting/v1 object, and the deployed adapter continues to serve BA_US_Equity's PRE-HOLD object (served_without_span 21, unchanged before and after). AC7 is REFUSED on this measurement per the order's own REFUSAL CLAUSE -- not repaired by running a live rebuild of BA_US_Equity, which D4 explicitly bars this round -- and recorded as such in AC7's acceptance row and in the change-management entry's close checklist.",
     "notes": "Not a defect in this worker's build: the conflict is between AC7's literal expect text (written assuming the full covered-population rebuild) and issuer bind D4 (narrowing that rebuild to the three validation names, added later at re-signature to satisfy C-VALIDATION-NAMES). Re-opening AC7 for BA_US_Equity specifically needs either a fresh never-widen pair scoped to BA_US_Equity or the covered-population rebuild D4 defers to end-to-end validation. No remedy owner named beyond that; informational, and cited verbatim in the change-management entry's close section (org/critical_paths/change_management/amgt-rk-41-verbatim-gate-hold-rebuild-20260919.md)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W42-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~42",
+    "surfaced_at": "2026-09-19T00:00:00Z",
+    "one_line": "AMGT-rk-40's AC2-AC6 all assume AMGT-rk-39's local document-layer source object carries an 'excerpt' key; measured, it does not.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/filings/document.py:793-832 build_local_source_object() @249d6527bd (worktree HEAD) returns keys accession/battery/document_bytes/document_sha256/document_text/document_text_chars/family/family_evidence/filing_identity/language/language_shares/pages/period_end/reflow/retrieved_at/sections/security_key/status -- NO 'excerpt' key, only 'sections' keyed by item id ('risk'/'mdna'/'officers').",
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-39.document-layer-family-cut.md:183 (rk-39's own AC2) reads cut['sections'], never 'excerpt' -- rk-39 never promised the excerpt shape this order's AC2 assumes.",
+        "Measured live in this worktree: 'python -m lib.research.filings.document --pdf-url https://www.keyence.co.jp/pdf/AnnualSecuritiesReport_202606_ja.pdf --sha256 1defdb68a7ffd3b70317786dbb57b606ca5d46ef67844da9977dde6a0448cf9d --security-key 6861_JP_Equity --family auto --out-dir .scratch/docs' writes 6861_JP_Equity.source.json with no 'excerpt' key; AC2's own literal python -c snippet (src['excerpt']) then raises 'KeyError: excerpt', rc=1.",
+        "AC3's literal invocation (both --stage pass1 and the full run) raises the SAME KeyError at analyze.py main()'s 'excerpt = source_object[\"excerpt\"]' line, before any model call is reached -- USD 0.00 spent, no cache/analysis object ever written.",
+        "AC4, AC5 and AC6's literal invocations each then fail on FileNotFoundError for the analysis/translated-analysis objects AC3 never produced -- one root cause, four cascading failures, all measured this session."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2 asserts passages.build_passage_map(ex['text'], ex['items']) runs against src['excerpt'] read from AMGT-rk-39 CLI's own written .source.json; AC3-AC6 chain off that same file and its outputs.",
+    "world_is": "AMGT-rk-39's document.py CLI (the only fetch path for a non-EDGAR PDF such as Keyence's Yuho) never writes an 'excerpt' key -- only fetch.py's SEPARATE EDGAR path does, via a DIFFERENT builder (build_source_object) this worker does not own and this order does not name as a dependency to build. lib/research/filings/document.py, fetch.py, battery.py and batch.py are explicitly listed as NOT this worker's <paths>, so no adapter converting document.py's 'sections' shape into analyze.py's 'excerpt' contract can be built inside this task order's lane without widening it. AC2-AC6 are REFUSED on this measurement per the order's own REFUSAL CLAUSE -- never repaired by writing to document.py or fetch.py, which this order does not grant, and never satisfied by rewriting the order's own literal invocations.",
+    "notes": "AC1 (every unit test, model stubbed, independent of the live document-layer's actual shape) PASSES in full: the whole of section 1.2's build (Unicode passages, pre-cut citation blocks, language detection at the stage boundary, the character-level verbatim rule, the translation stage lib/research/filings/translate.py, and its controls) is implemented and unit-proven against fixtures. Only the LIVE Keyence validation half (AC2-AC6) is blocked by this one gap. Remedy is either (a) a follow-on cell building the document.py-to-excerpt adapter (naturally AMGT-rk-39's or a new integration cell's, since fetch.py/document.py are its files, or AMGT-rk-38's battery per the order's own 1.2.3 language-source alternative), or (b) a revision to this order's AC2-AC6 invocations to read document.py's actual 'sections' shape instead of 'excerpt'. Neither is this worker's call to make unilaterally -- filed per the surprise channel, not repaired."
   }
 ]
 ```
