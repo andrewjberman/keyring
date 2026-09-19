@@ -6034,6 +6034,69 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
       ]
     },
     "notes": "Formatting-only; no future harm named, so hazard_standing is INERT with no disarm_owner."
+  },
+  {
+    "id": "IRPT_BCKEND-S83",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:05:00Z",
+    "one_line": "The row-id form the IB-rtf-7 face mints for this seat, IRPT_BCKEND-A-S<k>, is refused by both the row schema and the row gate; this seat's rows are filed in the seat form IRPT_BCKEND-S<k> instead, numbered above CLOUD's highest (S82) because the worktree's copy stops at S80.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-7.step-4-attempted-by-every-credential-the-seat-holds.md, BOUNDS 'Surprises' bullet @4ee8426c72) says: id IRPT_BCKEND-A-S<k> with k continuing that coordinate's numbering (read the file's highest A-S<k> first).",
+    "world_is": "No A coordinate exists in the grammar. .tools/surprise-row-gate.py:104 @4ee8426c72 ID_RE admits only (Z-)?(W<n>-|C-)?S<k>, and org/surprise_channel/schemas/investigation_item.schema.json:18 @4ee8426c72 carries the same pattern, so an A-S<k> id is refused at commit. The channel holds 0 A-S rows at 4ee8426c72 and 0 at CLOUD ccbf4ac3cb. A seat's row carries no coordinate, so this seat files S83-S85. The worktree copy's highest seat id is S80; CLOUD ccbf4ac3cb already holds S81 and S82. Numbering continues above CLOUD's max, and the seat allocator can still collide with a concurrent minter until the drain.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/surprise-row-gate.py:104 @4ee8426c72: ID_RE = ^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$",
+        "org/surprise_channel/schemas/investigation_item.schema.json:18 @4ee8426c72: pattern ^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$",
+        "git show CLOUD:<channel> @ccbf4ac3cb, this session: highest seat id IRPT_BCKEND-S82, 0 IRPT_BCKEND-A-S ids"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer (2.0.0_SA_COO~B) either admits an A coordinate in the grammar (the schema's and the gate's owners' act) or cuts future AE-lane faces with the seat form."
+  },
+  {
+    "id": "IRPT_BCKEND-S84",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:05:00Z",
+    "one_line": "Arm (a)'s identity enumeration invocation, `aws configure list-profiles`, does not exist on this box's AWS CLI (v1.44.44), which rejects it with rc 2. The issuer's nudge then fixed the identity read to `sts get-caller-identity` alone, N = 1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-7.step-4-attempted-by-every-credential-the-seat-holds.md, THE CELL arm (a) @4ee8426c72) names `aws configure list-profiles` (through .tools/aws) as the enumeration of the identities the seat holds.",
+    "world_is": "`.tools/aws configure list-profiles` ran at ~07:5xZ 2026-09-19 and returned rc 2 with 'aws: error: argument subcommand: Invalid choice, valid choices are: list | get | set | add-model'. list-profiles is a CLI v2 subcommand, and the estate runs aws-cli/1.44.44. The issuer's nudge (2.0.0_SA_COO~B, this session) then fixed the command set to sts get-caller-identity plus delete-bucket-policy per bucket, with no `configure list` and no credential-file read. The battery's identity set is therefore the ambient default chain: N = 1, arn:aws:iam::313476888478:user/Andrew_Berman. Disclosed: before the nudge arrived, this seat ran `aws configure list` (key columns masked in output) and read only the section-header lines of ~/.aws/config and ~/.aws/credentials, which printed one [default] profile each and no values.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`.tools/aws --version`, this session: aws-cli/1.44.44 Python/3.12.10 Windows/10.0.26100 botocore/1.43.0",
+        "`.tools/aws configure list-profiles`, this session: rc 2, 'Invalid choice' naming list/get/set/add-model",
+        "IB-rtf-7_R64-AC1_battery_output.txt (this branch): identities enumerated: N = 1 -> arn:aws:iam::313476888478:user/Andrew_Berman"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-S85",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:05:00Z",
+    "one_line": "The face asks for the ledger entry to close 'as NO-CHANGE', but .tools/deploy_ledger.py close has one terminal status, 'CLOSED -- nothing stranded'. NO-CHANGE is carried in each leg's proof text instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-7.step-4-attempted-by-every-credential-the-seat-holds.md, THE CELL arm (b) @4ee8426c72): on AccessDenied everywhere the ledger entry closes as NO-CHANGE with the 2N of 2N denials recorded.",
+    "world_is": "`.tools/deploy_ledger.py` cmd_close (:454-469 @4ee8426c72) writes status 'CLOSED -- nothing stranded' unconditionally once every leg carries proof, and it has no no-change close. Entry org/critical_paths/change_management/20260919T0800Z_irpt-bckend-ib-rtf-7-step4-bucket-policy_deploy_completion.md reads 'CLOSED -- nothing stranded' at 20260919T080222Z. Both leg proofs begin 'NO-CHANGE:' and record the identity ARN, rc 255 and 'AccessDenied ... with an explicit deny in a resource-based policy', so the 2 of 2 denials are on the entry.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:462 @4ee8426c72: state['status'] = 'CLOSED -- nothing stranded'",
+        "the change_management entry above, this branch: L1/L2 proof 'NO-CHANGE: ... rc 255 AccessDenied'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
