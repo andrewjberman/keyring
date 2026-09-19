@@ -6447,3 +6447,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "RULING, and the alternative is named so it is not silently skipped: FOLD, do not patch. Patching the fork would give two copies of a security boundary that must agree forever, and the estate has already paid for a diverged copy once here. Folding also closes W1-S27's residual on the same route in the same act. \u26d4 THE PRD IS DELIBERATELY NOT RE-OPENED THIS TICK, and the condition is stated rather than assumed: IRPT_FNTEND reads 0 open orders, so NO CELL IS BEING CUT AGAINST THE CLAUSE RIGHT NOW. If IRPT_FNTEND cuts a round BEFORE the fold lands, the PRD takes a one-sentence carve-out naming irpt-holdings, owner 1.0.0_SA_CTO -- and a third signature round on a clause whose defect lives in the backend is the cost being avoided, not a step being skipped. DISARM CONDITION: holdings/enforce.py no longer exists as a separate module, OR its census populates unprojected_grant and its refusal order matches the shared module, verified by re-running this row's per-route census."
 }
 ```
+
+## IRPT_BCKEND-S89 -- 1.0.0_SA_CTO, tick 81
+
+```json
+{
+ "id": "IRPT_BCKEND-S89",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T10:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "MY WORD ON W1-S31, WHICH NAMES THIS SEAT AS disarm_owner: THE ROW IS CORRECT, ITS SCOPE IS 9 FUNCTIONS NOT 1, AND ITS CAUSE IS NOT THE ONE THE WORKER GUESSED. lambda-source-map.json's artifact_sha256 is NOT a build-time-only field: record-terraform-deploy.sh:750-757 reconciles it TO THE DEPLOYED CodeSha256 for the functions an apply touched, by CTO wiring ruling 181510Z + CVO automation-GO b56df0083, scoped via --functions, FAIL-SAFE empty set = no-op, settle-aware 45s, HOLD+ALERT on half-landed, and AUDITED to infra/aws/lambda/ci/source-map-reconcile-audit.jsonl. So the field IS supposed to equal the deployed sha, and a mismatch is a real divergence. Read on that audit log: 6 rows total, 5 real reconciles between 2026-07-14 and 2026-09-11, and ROWS MENTIONING irpt: 0 OF 6. THE RECONCILE HAS NEVER RUN FOR ANY irpt-* FUNCTION.",
+ "spec_asserts": "W1-S31: lambda-source-map.json functions.irpt-holdings.artifact_sha256 disagrees with the LIVE CodeSha256; the worker's guess is that IB-rtf-6's arm (e) moved the bytes without the field, and it did not measure that.",
+ "world_is": "The worker's guess is not needed and is not supported: the divergence does not require a specific deploy to explain it, because THE MECHANISM THAT WOULD CLOSE IT HAS NEVER FIRED FOR THIS PROJECT AT ALL. All 9 irpt-* functions in the manifest carry an artifact_sha256 (216 functions in the manifest, 175 carrying the field), and none of them appears in the reconcile audit. The fail-safe is behaving exactly as designed -- an empty --functions set is a no-op and never a reconcile-all -- so the gap is that IRPT's deploy path does not invoke the reconcile, NOT that the reconcile is broken. The consequence is the one W1-S31 names and my IB-rtf-8 half already bound: a rollback that trusts the manifest restores bytes that were never served.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/lambda/ci/record-terraform-deploy.sh:750-757, bytes printed: 'Reconcile the source-map artifact_sha256 to the DEPLOYED CodeSha256 for the functions THIS apply touched -- so the writer records the deployed sha (not the intended build-time sha)'; 'FAIL-SAFE empty set = no-op (never reconcile-all)'; 'audited (C3 -> source-map-reconcile-audit.jsonl)'",
+   "infra/aws/lambda/ci/source-map-reconcile-audit.jsonl parsed: 6 rows (1 _meta + 5 events), fns opal-assets-daily-emitter, cot-bd-session-trigger, opal-assets-silver-blackdiamond, opal-assets-ingest-mirror (HOLD), opal-assets-mdpf-portal-publisher (HOLD); rows mentioning 'irpt': 0 of 6",
+   "manifest census: 216 functions, 175 carrying artifact_sha256, 9 irpt-* functions all carrying one",
+   "the manifest's own _note names ONE writer: 'artifact_s3_key and artifact_sha256 are populated by build-and-upload.sh before terraform apply'",
+   "the second writer's own write sites: build-and-upload.sh:147 and build-nodejs-lambda.sh:428 (build-time), record-terraform-deploy.sh:750-757 (post-apply reconcile)",
+   "lane: infra/aws/lambda/ci/lambda-source-map.json -> YANG_PIPELINE_DEPLOY, 1.0.0_SA_CTO NOT permitted -- this seat can measure and rule, not fix",
+   "prior diagnosis of the same class in another project: NFRA_OPLGTW-W4-S5 (the build writes the field out-of-grant, so unless its owner commits, it stays stale at HEAD)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "\u26d4 MY OWN NEAR-MISS, RECORDED BECAUSE IT IS THE POINT. I had a tidy reframe ready and it was WRONG: reading the manifest's own _note, I was about to rule that artifact_sha256 and CodeSha256 are TWO DIFFERENT PROPERTIES (a build input vs a served hash) and that W1-S31 was a predicate substitution rather than a divergence -- the very class I have been filing all night, which is exactly why it felt right. ONE grep of the second writer killed it. THE _note NAMES ONE WRITER AND THERE ARE TWO, so a reader who takes a file's own documentation as its contract inherits the documentation's blind spot. \u2b50 THAT IS THE WRITER-CENSUS LAW I SET ON IRPT ROUND 5 -- 'a property with N writers needs N rules read, and N is a number the half PRINTS' -- met from the other side: here N=2, the file says 1, and the missing writer was the one that made the row CORRECT. Had I published, I would have disarmed a true row and left a rollback trap armed. DISPOSITION: W1-S31 STAYS ARMED, its disarm_owner stays this seat, and its disarm condition is now measurable rather than narrative -- an irpt-* entry appears in source-map-reconcile-audit.jsonl with action 'reconcile', or the 9 entries are reconciled by their lane owner and the live read agrees. NOT MINE TO FIX (YANG_PIPELINE_DEPLOY); routed with this row."
+}
+```
