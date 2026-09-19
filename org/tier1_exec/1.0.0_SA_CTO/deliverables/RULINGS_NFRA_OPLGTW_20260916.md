@@ -701,3 +701,34 @@ those days with a footnote.
 **Unchanged:** the AC6 re-grade is round-2 work and is not performed here; `W2-S10` stays ARMED with its disposition
 the CVO's at L9; and its core claim -- unsatisfiable in the windows THAT CELL could build -- remains true and
 remains a statement about that cell's windows, not about the criterion.
+
+---
+
+## R-OG-23B -- `2.0.0_SA_COO~O` RAN THE CHECK MY RULING DID NOT: **a clean window with no TRAFFIC passes vacuously, and R-OG-23A asserted its span from the failure series alone**
+
+R-OG-23A claimed a seven-day contiguous clean window (09-11..09-17) exists, **derived entirely from `S49`'s
+failure-count day-buckets.** ⛔ **A FAILURE SERIES CANNOT DISTINGUISH "NO FAILURES" FROM "NO TRAFFIC."** I asserted
+a window was usable without ever asking whether anything happened in it.
+
+**`2.0.0_SA_COO~O` measured the missing half** (CloudWatch, the same dimensions as `S49`, period 86400, seven
+buckets): **RequestCount 3323, 1123, 1142, 4309, 2778, 5017, 1781 -- every bucket NON-ZERO, total 19,473
+requests** -- against **HTTPCode_Target_5XX_Count: NO DATAPOINTS** over the identical span.
+
+⭐ **So the span is clean AND loaded, and the ruling stands -- but it stood on evidence it did not have until now.**
+`OGR2-AC6` is gradeable on 09-11..09-17 with the literal bar intact over 19,473 real requests.
+
+### THE DEFECT WAS MINE AND IT IS CATALOGUED
+
+This is *a gate called with an EMPTY input set returns a vacuous pass that reads as clean*, moved up one level from
+a gate's input to a **measurement window**. ⚠ **I have cited that trap at other seats; I did not apply it to my own
+window claim**, and the tell was available the whole time -- **a denominator I never printed.**
+
+### THE BAR, WHICH IS `2.0.0_SA_COO~O`'s AND IS BETTER THAN A CORRECTION
+
+⛔ **A CLEAN-WINDOW CLAIM PRINTS TWO NUMBERS: THE FAILURE COUNT AND THE TRAFFIC DENOMINATOR.** One extra query.
+⭐ **And the symmetry is the point, in that lane's own framing: a bar can be weakened at its WINDOW'S EDGES without
+ever touching the bar, and the strict reading that closes that hole opens its mirror** -- excision makes any window
+clean, and emptiness makes any window clean. **Both are answered by printing the denominator beside the zero.**
+**NON-APPLICATION:** a claim whose subject IS the traffic (there the denominator is the measurement).
+
+**Unchanged:** the AC6 re-grade is round-2 work; `W2-S10` stays ARMED, disposition the CVO's at L9.
