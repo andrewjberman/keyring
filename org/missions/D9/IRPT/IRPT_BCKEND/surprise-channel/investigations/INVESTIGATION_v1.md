@@ -6279,6 +6279,75 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-IB-rtf-8's own first-pass result.md (committed) reported 'stage.py --check reports 4 of 4 for the remaining staged contract + 3 modules byte-equal to their pins', and this order's arm (b) BOUNDS name only enforce.py/holdings imports/holdings tests/the manifest entry as in-scope.",
     "world_is": "On this second pass's override worktree (/c/tmp/wk-irpt-6-1d, cut fresh by the issuer from CLOUD HEAD d81cccbfe3), the SAME committed bytes check out with core.autocrlf=true converting the LF-committed contracts/HoldingsSnapshot.schema.json blob to CRLF on disk, so the raw-byte stage.py --check (which applies no clean filter) now reads 1 of 4 drifted -- a worktree-checkout artifact on a file wholly outside this order's BOUNDS, not a regression the fold introduced; content-based verification (git hash-object) shows no real drift."
+  },
+  {
+    "id": "IRPT_BCKEND-S93",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T11:29:00Z",
+    "one_line": "A THIRD cause beyond S90's two, found by IB-rtf-10's census: 4 of the 7 serving roles (irpt-narrative-role, irpt-export-render-role, irpt-performance-adapter-role, irpt-ycharts-generate-role) have NO s3:GetObject on any firm's directory objects. Their functions bind the shared _authz loader, which reads the directory BEFORE the ownership map. With this order's two keys applied, those four functions still fail load_directory and refuse UNEXPECTED; only directory-search and status resolve scope.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face (THE CELL, first paragraph @4ceb7f8361) names two causes (the ownership-map read, the bucket map), and arm (f) expects every affected route to read a scope-resolved answer, m of m, once they are fixed. BOUNDS: 'ONE new statement each, object-scoped'.",
+    "world_is": "simulate-principal-policy, s3:GetObject, one resource per call, on <bucket>/investor-reporting/directory/latest.json for 3 client firms x 7 roles: allowed 9 of 9 for irpt-directory-role, irpt-status-role and irpt-holdings-role; implicitDeny 12 of 12 for the four roles above. The missing-context values on narrative/export come from their unrelated ListBucket statements with s3:prefix conditions; read from the live inline policies, those roles hold no GetObject on any firm bucket at all. Their entries bind the shared loader: narrative/entry.py:124, export/entry.py:195, performance/entry.py:110 and ycharts/generate/entry.py:181 @4ceb7f8361 set deps=_loaders.deps. _authz/loaders.py:71-80 @4ceb7f8361 reads <bucket>/investor-reporting/directory/latest.json and the dated key it names, and served.py:624-630 turns the resulting AccessDenied into UNEXPECTED. The positive control (user Andrew_Berman) is allowed; the negative control (opalinvest-auth-lambda-role) is denied.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "simulate-principal-policy this session: 4 roles x 3 firms directory latest.json -> implicitDeny 12 of 12; directory/status/holdings roles -> allowed 9 of 9",
+        "infra/aws/lambda/investor-reporting/{narrative/entry.py:124,export/entry.py:195,performance/entry.py:110,ycharts/generate/entry.py:181} @4ceb7f8361: deps=_loaders.deps",
+        "infra/aws/lambda/investor-reporting/_authz/loaders.py:71-80 @4ceb7f8361: load_directory reads the pointer and the dated artifact"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT added to this order's packet: the face allows one object-scoped statement per role, and a directory-prefix read for four more roles is a second key. The packet names the gap in its 'does NOT cover' list. The issuer decides: amend the face so the packet carries a K-DIR key before the halves sign, or cut a separate cell."
+  },
+  {
+    "id": "IRPT_BCKEND-S94",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T11:29:00Z",
+    "one_line": "inflection has NO ownership map (s3://opal-data-inf/platinum/inflection/ownership_map.json -> 404 to an identity holding ListBucket). A serving role granted only object-scoped GetObject, with no ListBucket (the face bans ListBucket), reads a MISSING key as AccessDenied, not NoSuchKey. _authz/loaders.py treats only NoSuchKey as 'an absent map is an empty map' and re-raises everything else, so every inflection advisor stays UNEXPECTED after this packet.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "_authz/loaders.py:94-99 @4ceb7f8361: 'An ABSENT map is an EMPTY map ... an advisor with no grants and a firm with no map produce the same served answer'. And the face: 'never ListBucket'.",
+    "world_is": "HeadObject this session, as user Andrew_Berman (who holds ListBucket): 49financial map present (AES256, VersionId nR.FkCE1frsI9R5zRp2wJWB7vyMZ04NK, 438164 bytes), cottonwood map present (AES256, VersionId mmHeWGDyv1Z6RYUrsAV4QDFTNLn9mwkE, 107 bytes), inflection map -> 404. _authz/loaders.py:106-114 @4ceb7f8361 maps an exception to the empty map ONLY when its class is NoSuchKey, or it is a ClientError whose text contains NoSuchKey, and re-raises otherwise. S3 returns 403 AccessDenied, not 404, for a missing key when the caller lacks s3:ListBucket on the bucket (documented S3 behavior). So the designed 'absent = empty' branch is unreachable under an object-scoped grant, and the inflection tenant fails exactly as S90 did.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "s3api head-object this session: s3://opal-data-inf/platinum/inflection/ownership_map.json -> 404; 49financial and cottonwood maps present, SSE AES256",
+        "infra/aws/lambda/investor-reporting/_authz/loaders.py:94-116 @4ceb7f8361: only NoSuchKey maps to the empty map",
+        "S3 semantics (not exercised under a Lambda role here): GetObject on a missing key without s3:ListBucket returns 403 AccessDenied"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Remedies are not this seat's: the producer publishes an (empty) map for every client firm; or a ListBucket limited by an s3:prefix condition to exactly that key (the face bans ListBucket, so it needs the CTO's word); or the loader treats AccessDenied-on-absent as empty, which cannot be told apart from a real denial and is not recommended. Arm (f) with a 49financial principal cannot observe it."
+  },
+  {
+    "id": "IRPT_BCKEND-S95",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T11:33:00Z",
+    "one_line": "The six affected Terraform roots are NOT at rest. Planned with only IB-rtf-10's edits, 4 functions' plans also carry a CODE change (irpt-status, irpt-narrative, irpt-export-render, irpt-performance-adapter: source_code_hash differs from the live CodeSha256), and 2 carry an object-version bump with an unchanged hash (irpt-holdings, irpt-directory-refresh). Artifacts uploaded at 07:29-07:31Z and 10:44Z were never deployed. Applied as planned, arm (e)'s 'CodeSha256 unchanged 7 of 7' cannot hold, and the env var cannot be split from the code, since both are attributes of one aws_lambda_function.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face, arm (e) @4ceb7f8361: 'No function code is rebuilt by this order; an environment change re-deploys the configuration only (CodeSha256 unchanged, read before and after, 7 of 7)'. BOUNDS: 'no code rebuild'.",
+    "world_is": "terraform plan per root with the vendored binary at 11:2xZ. directory: 1 add, 1 change (module.irpt_directory_refresh: s3_object_version ugOhswez... -> FqfSKxD7..., hash unchanged). ops: 1 add, 1 change (env + s3_object_version 1mAANnjv... -> Fp_QWlcK..., source_code_hash LHprxKSP... -> xlFoIKtA...). holdings: 0 add, 1 change (env + s3_object_version aZqJ6bvX... -> XGnVW2ED..., hash unchanged 78XvypHO...). narrative: 1 add, 1 change (env + code sgolF/uX... -> UjxkAfk1...). export: 1 add, 1 change (env + code 4Dp6e0Vy... -> yBMiDv7t...). performance: 1 add, 1 change (env + code /Cn8XUZo... -> /CB3B9ir...). ycharts: 1 add, 1 change (env ONLY). 0 to destroy 7 of 7. The planned artifact versions carry content-sha256 metadata equal to the planned source_code_hash, uploaded 2026-09-19T07:29:41Z-07:31:20Z (performance, narrative, directory-refresh, export, status) and 10:44:14Z (holdings). The artifacts bucket carries no uploader field, so the writer is not identified by this census.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform show -json of each root's plan (.scratch/plans/<root>.tfplan, this session): per-update changed attributes; source_code_hash differs on 4 of 7 functions",
+        "s3api head-object on opal-313476888478-lambda-artifacts/investor-reporting/<fn>.zip at the planned VersionId: LastModified and content-sha256 metadata",
+        "lambda get-function-configuration this session: live CodeSha256 per function (irpt-status LHprxKSP..., irpt-narrative sgolF/uX..., irpt-export-render 4Dp6e0Vy..., irpt-performance-adapter /Cn8XUZo...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Choices for the issuer, not this seat: (i) the owner of those undeployed artifacts deploys them first (sequencing), and IB-rtf-10's plan is re-taken and becomes env + grant only; (ii) the halves sign a combined apply that NAMES the 4 code changes; (iii) the module pins s3_object_version to the deployed version for this apply (a module-input change the face does not grant)."
   }
 ]
 ```
