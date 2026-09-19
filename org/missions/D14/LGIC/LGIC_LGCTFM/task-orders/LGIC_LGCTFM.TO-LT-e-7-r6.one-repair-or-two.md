@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>pending</status>
+<status>complete -- verdict TWO_REPAIRS (0.9.0_WK_LGIC_LGCTFM~1, proof-of-spec-check rc=0 @2d7c6c509b)</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-e-7` (decomposition v1.7 s.17) | **outcome_ref:** FWD-1 | **depends_on:** none -- the only cell this round
 
