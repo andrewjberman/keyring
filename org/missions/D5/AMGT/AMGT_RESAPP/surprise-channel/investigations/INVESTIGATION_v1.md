@@ -9484,6 +9484,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC7's own script treats every object under filings/v1/<security_key>/*.source.json as current evidence for that key ('for key in objs: ... served += 1'), implicitly reading the prefix as carrying one row per validation key.",
     "world_is": "The prefix can carry more than one historical object per key once a key's battery outcome changes across separate --write-pool invocations (exactly what a resumable, iteratively-fixed crawl produces in practice). AC7 still PASSES on its own stated failure bar (no key is absent; no object carries parser_version 1.0.0) because every object present, including the stale one, was written by THIS battery at parser_version 2.0.0 -- but a downstream reader of the prefix that assumes 'one object per key' would pick up the wrong one depending on S3 listing order.",
     "notes": "Remedy holder: whichever cell reads filings/v1/<security_key>/ downstream (AMGT-rk-49 or the analyzer) should key on the LATEST retrieved_at / most recent PUT among same-prefix objects, or this order's own pool-write step should be made to delete/supersede a prior differently-keyed object for the same security_key -- neither is in this order's <paths> (filings/v1/ writes here are scoped to the three validation names only, and this worker does not delete pool objects on its own judgment)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S177",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-19T08:05Z",
+    "one_line": "W40-S2 and W46-S2 compose into a latent SERVING defect neither row states alone: objects ACCUMULATE per security_key with no supersession (W40-S2) and roster.load_source_object() picks sorted(keys)[-1] where 'U'(85) beats every digit (W46-S2), so a key holding a stale UNRESOLVED-SOURCE placeholder will SHADOW a later digit-leading EDGAR accession. Measured against the store: 0 keys serve a placeholder today; 177 of 193 hold ONLY a placeholder and would shadow their own next resolution.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "COMPOSITION, and neither worker could see it -- each owned one half and neither read the store. W40-S2 (0.9.0_WK_AMGT_RESAPP~40): two --write-pool runs for the SAME security_key landing on different outcomes accumulate as TWO objects under filings/v1/<security_key>/ rather than one superseding the other. W46-S2 item 1 (0.9.0_WK_AMGT_RESAPP~46): roster.load_source_object() (roster.py:472-498) takes sorted(keys)[-1] over that prefix.",
+        "THE KEY SHAPE, read at HEAD 07ff093712: lib/research/filings/fetch.py:61 POOL_PREFIX = 'filings/v1/' and :403 returns '%s%s/%s.%s.json' % (POOL_PREFIX, security_key, accession or 'UNRESOLVED-SOURCE', suffix) -- so the filename's first character is a DIGIT for an EDGAR accession, 'd' for a doc-<sha16> non-EDGAR winner, or 'U' for the placeholder.",
+        "THE ORDERING, which is why the direction matters: ord('0')=48 < ord('U')=85 < ord('d')=100. So the placeholder BEATS a digit-leading EDGAR accession under sorted()[-1] and LOSES to a lowercase doc- winner.",
+        "MEASURED AGAINST THE STORE (s3api list-objects-v2, bucket opal-data-harvest, prefix filings/v1/): 206 objects across 193 distinct security_keys. By SUBTRACTION over that denominator: 177 placeholder-only + 1 carrying a placeholder alongside another object + 15 with no placeholder = 193.",
+        "INCIDENT COUNT TODAY: ZERO. No key currently resolves to a placeholder under sorted()[-1]. The ONE key holding both, 6861_JP_Equity (UNRESOLVED-SOURCE.source.json and doc-1defdb68a7ffd3b7.source.json), resolves to the doc- object -- SAVED ONLY BY LOWERCASE 'd' > 'U', which is accidental ASCII case ordering and not a designed protection. Had that key's winner been an EDGAR accession, it would serve the placeholder.",
+        "NEGATIVE CONTROL on the claim's direction: the 15 keys with no placeholder cannot exhibit the defect and do not; the 1 coexistence case exhibits the mechanism but resolves correctly for the case reason above. The defect is therefore real in the picker and unfired in the data."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A security_key's served source object is THE resolved winner for that name -- one current object per key, and a resolved accession supersedes an earlier UNRESOLVED-SOURCE placeholder.",
+    "world_is": "The prefix accumulates one object per distinct OUTCOME rather than per key, and the reader picks the lexicographic maximum. Those two combine so that the placeholder, whose name begins 'U', outranks every digit-leading EDGAR accession. Today nothing is mis-served, because the only key holding both has a lowercase doc- winner. But 177 of 193 keys currently hold ONLY a placeholder, and the battery is resumable and iteratively fixed -- exactly the pattern W40-S2 describes -- so the next run that resolves any of those 177 to an EDGAR accession writes the winner ALONGSIDE the placeholder and the reader keeps returning the placeholder.",
+    "notes": "EXPOSURE, NOT INCIDENT (Rule 22, ABSENT != EXERCISED-AGAINST): the signature was run over the whole population with its denominator printed and returned 0 of 193, so NOTHING IS RE-OPENED and no served output is wrong today. The remedy is the guard. W46-S2 already names AMGT-rk-46's own task order as carrying the item-1 fix; this row adds what that row could not: the COMPOSITION with W40-S2's accumulation, the MEASURED surface (177 of 193), and the fact that the single live coexistence is protected only by ASCII case ordering rather than by design. A picker fix alone is sufficient and is the cheaper half; superseding on write would also close it. DISARMS when the picker no longer selects a placeholder in the presence of any resolved object -- with an arm covering a DIGIT-LEADING accession specifically, since a doc- fixture passes today for the wrong reason."
   }
 ]
 ```
