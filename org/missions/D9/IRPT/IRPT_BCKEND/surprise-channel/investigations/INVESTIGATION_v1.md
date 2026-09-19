@@ -6190,6 +6190,74 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No behaviour changes; the exposure 1.0.0_SA_CTO holds is unchanged in substance. Only the cited mechanism moves."
+  },
+  {
+    "id": "IRPT_BCKEND-S90",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T10:46:00Z",
+    "one_line": "MEASURED LIVE, first authenticated request ever sent through the real path: every FIRM_ADVISOR request on the deployed IRPT scoped routes is refused UNEXPECTED (state UNAVAILABLE, no firm_id) BEFORE the scope resolves. That covers 12 of 12 requests that passed the FIRM_BINDING check, across search, resolve, status, holdings and every foreign-id swap. The enforcer cannot be built for 49financial: the directory role cannot read the ownership map, and irpt-status and irpt-holdings carry no IRPT_DIRECTORY_BUCKET_MAP.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "IB-rtf-2 (DRAINED @4e6c6738c3, arm (e) PASS): 'abby_horton/49financial is SERVED (k=21 permitted, unprojected_grant count=12 of denominator=33)' through 'the REAL served.Entry.enforcer_for'. And the IB-rtf-3 face (arm (c)) expects FWD-1/2/5 exercised by real signed requests on the disclosed-partial path.",
+    "world_is": "A test principal minted by the real login (claims firmId=49financial, role=user, advisorId=abby_horton) sent real signed requests to https://opalinvest.dev at 10:25:58-10:26:09Z. Every one that passed served.py:614-616's FIRM_BINDING check came back as the boundary's pre-scope refusal (served.py:624-630 @9f72f4d6a4): public_reason_code UNEXPECTED, state UNAVAILABLE, no firm_id. That is the except-branch around enforcer_for(verified). CAUSES, per function. (1) irpt-directory-search (CodeSha256 aQxATFkc..., env IRPT_DIRECTORY_BUCKET_MAP {49financial: opal-data-bd}): iam simulate-principal-policy for role irpt-directory-role, s3:GetObject on opal-data-bd/platinum/49financial/ownership_map.json, reads implicitDeny, one resource per call, no missing context. The same role is allowed on both directory objects, and the positive control (user Andrew_Berman) is allowed on the map. _authz/loaders.py:93-116 @9f72f4d6a4 re-raises any error but NoSuchKey, so AccessDenied escapes enforcer_for. (2) irpt-status (ops/entry.py:97-98, shared _loaders) and (3) irpt-holdings (holdings/entry.py:83-85 -> holdings/handler.py:356-370): the deployed environment of both carries NO IRPT_DIRECTORY_BUCKET_MAP (read via get-function-configuration this run), and both bucket readers raise on an unmapped firm (loaders.py:46-56; holdings/handler.py:362-369). (3)'s cause is source + env, not simulated. CONSEQUENCE: the served IRPT path answers no FIRM_ADVISOR request at all. IB-rtf-2's arm (e) 'SERVED k=21' ran in-process under the operator's credentials, which CAN read the map, never under the Lambda roles, so its PASS did not measure the deployed path (bound 12's shape).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-3_R60-AC1_battery_output.txt blob 55a69d9e5558c4604912a36e3ad6c9eae7733295 @e7da534cc6: 12 of 12 scoped requests past the FIRM_BINDING check read 'public_reason_code UNEXPECTED'",
+        "iam simulate-principal-policy, this session: irpt-directory-role s3:GetObject opal-data-bd/platinum/49financial/ownership_map.json -> implicitDeny; same role on investor-reporting/directory/latest.json and .../2026-09-17/directory.json -> allowed; user/Andrew_Berman on the map -> allowed",
+        "lambda get-function-configuration, this session: irpt-directory-search env carries IRPT_DIRECTORY_BUCKET_MAP; irpt-status env carries only IRPT_DIRECTORY_KEY; irpt-holdings env carries IRPT_CONTRACTS_DIR/IRPT_DIRECTORY_KEY/IRPT_FIRM_REGISTRY/IRPT_HOLDINGS_PREFIX -- no bucket map in either",
+        "infra/aws/lambda/investor-reporting/_authz/served.py:624-630 @9f72f4d6a4: any non-AuthzError from enforcer_for -> refuse(..., None, 'UNEXPECTED')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this seat's to fix: IAM (the directory role's read of the ownership-map key) and the Lambda environments are other cells' surfaces. The issuer routes. FWD-1/2/5 can be exercised only after the fix; a re-run needs a new create-exercise-delete interval under the same packet."
+  },
+  {
+    "id": "IRPT_BCKEND-S91",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T10:46:00Z",
+    "one_line": "The served boundary records every internal error to a sink of None: served.py:628, :649 and :662 call _errors.record_internal(None, ...), so the exception behind each UNEXPECTED refusal goes nowhere. The correlation id in the response joins to no log line, and the S90 outage was undiagnosable from CloudWatch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "_authz/errors.py:162-172 @9f72f4d6a4, record_internal's own docstring: 'The SERVER-SIDE record: the correlation id plus what an operator actually needs ... it travels to an injected sink'.",
+    "world_is": "served.py:628, :649 and :662 @9f72f4d6a4 pass sink=None, and errors.py:191-192 calls the sink only if it is not None, so the record is built and dropped. CloudWatch for irpt-directory-search, irpt-holdings and irpt-status over 10:25:50-10:26:15Z (19 / 7 / 10 events) holds only START/END/REPORT lines, with no exception line for any of the 12 UNEXPECTED refusals. The operator's only route to the cause was re-deriving it (S90) by IAM simulation and environment reads.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/served.py:628,649,662 @9f72f4d6a4: _errors.record_internal(None, cid, operation, exc)",
+        "logs filter-log-events, this session, 10:25:50-10:26:15Z: 19/7/10 events, none but START/END/REPORT"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-S92",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T10:46:00Z",
+    "one_line": "LATENT, masked live by S90 and inferred from source: directory search reads event.get('q'/'limit') and resolve reads event.get('selection') from the TOP LEVEL of the raw event. The IRPT integrations are payload format 2.0, where the query sits under queryStringParameters and the body under body. So on the deployed path search ignores q and limit, and resolve always answers 'selection matches nothing'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "docs/contracts/investor-reporting/v1/routes.json (search(q) over the viewer-scoped projection), and FWD-1 'search -> select -> relationship + permitted accounts'.",
+    "world_is": "directory/entry.py:92-93 @9f72f4d6a4 calls _handler.search(..., event.get('q', ''), event.get('limit', DEFAULT_LIMIT)), and :136 calls _handler.resolve(..., event.get('selection') or {}). served.py:641 hands the compute the raw event, and infra/aws/terraform/investor-reporting/api/integrations.tf:57 @9f72f4d6a4 sets payload_format_version 2.0. With q empty, handler.search returns items[:limit], the first 20 of the projection (directory/handler.py:179-181). With the selection empty, resolve returns UNSUPPORTED 'selection matches nothing in the viewer's projection' (:255-259). The in-process tests pass events with top-level keys, which is why they do not see it. Not exercised live: S90 refuses before the compute runs.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/directory/entry.py:92-93,136 @9f72f4d6a4",
+        "infra/aws/terraform/investor-reporting/api/integrations.tf:57 @9f72f4d6a4: payload_format_version = \"2.0\"",
+        "infra/aws/lambda/investor-reporting/directory/handler.py:179-181,255-259 @9f72f4d6a4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Named now so the S90 fix is not graded as FWD-1 PASS on a search that silently ignores its query."
   }
 ]
 ```
