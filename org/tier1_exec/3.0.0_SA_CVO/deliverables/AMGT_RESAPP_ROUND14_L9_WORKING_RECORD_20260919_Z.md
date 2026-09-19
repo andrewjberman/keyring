@@ -570,6 +570,56 @@ The live half is a real residual now heading to the slug. Both are recorded here
 amended, and `Z-S179` names the class -- a row grounded on a vintage older than HEAD -- as the same
 class this seat itself named in `Z-S178`. This seat filed one and committed the other within hours.
 
+## 4j. Three rediscoveries, three contradictions, and one vendor gate
+
+### The unassigned repair is now costing the round, measurably
+
+Section 4h named the 2 red tests as UNASSIGNED. THREE workers in THREE cells have now independently
+rediscovered and written up the same two failures:
+
+| row | worker | what it added |
+|---|---|---|
+| `W45-S3` | ~45 | rk-43's edit correctly breaks them; no `<paths>` grant to repair |
+| `W61-S1` | ~61 | AC2 inherits a red battery; 2 of 165; own 9 arms green |
+| `W49-S3` | ~49 | THE MECHANISM: the test's hand-built fixture omits the `query` key that `rk-43`'s subtraction rule now requires, so it reads `NOT_SEARCHED` against a constant `scoped_amgt.py` no longer defines |
+
+That is three separate investigations of one defect nobody owns. THE COST OF AN UNASSIGNED REPAIR IS
+NOT THE REPAIR -- IT IS PAID AGAIN BY EVERY CELL THAT TRIPS OVER IT, and each payment looks like
+diligence rather than waste. `W49-S3` calls the file "a WALL, not in this order's `<paths>`", which is
+the right name for it.
+
+### A THIRD instance of a re-signature bind contradicting its own order
+
+`W49-S4`: step 7's prose says the CEO search proceeds without a filings-battery verified_site and
+merely withholds official_bio labelling; the ISSUER BIND (msg 23833, quoted in the CTO half's
+re-signature) says the search is NOT_ATTEMPTED without one. Two of the order's own sources disagree,
+and the worker built to the issuer bind as the later authorizing text.
+
+With `W43-S1` (AC7's expect vs issuer bind D4) and section 4f (the face's rollback vs the signed
+pair's), that is THREE contradictions of the same shape in one round:
+
+**A BIND ADDED AT RE-SIGNATURE CHANGES THE ACT WITHOUT CHANGING THE PROSE THAT DESCRIBES IT, AND
+NOTHING RECONCILES THE TWO.** Every worker so far has chosen correctly -- the later authorizing text --
+but each one had to CHOOSE, and the choice is unreviewed. This is the mid-flight-amendment exposure
+CLAUDE.md Rule 27 names: a modification can change a criterion's grammar or a `<paths>` grant while a
+worker is reading that face, and no gate refuses it. The remedy is not a gate; it is that a
+re-signature bind must carry the edit to every clause it contradicts, in the same act.
+
+### The vendor gate is real and correctly held
+
+`W49-S2`: `AMGT-rk-48`'s AC4, AC5 and AC6 are REFUSED because Andrew's per-use word for Bright Data is
+NOT on file -- every criterion whose invocation would make a live SERP call, or read the S3 objects
+such a call would have written, was refused rather than executed. AC1-AC3 (offline: classifier,
+schema, mutant/verbatim/namesake controls) closed PASS.
+
+GRADE IT AS CORRECT, NOT AS THREE FAILED CRITERIA. This is the standing rule exactly as written --
+*"NEVER call an external vendor API without Andrew's explicit per-use word -- availability is not
+authorization"* -- and the worker held it under pressure to produce a green cell.
+
+CARRIED TO THE ADJUDICATION AS A CLOSE CONDITION: `rk-48` cannot reach a full mechanical close without
+that word. Those three criteria are UNVERIFIABLE-BY-INSTRUMENT pending Andrew, not failures, and the
+round's close must state them as such rather than absorb them silently.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
