@@ -423,3 +423,182 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  }
 }
 ```
+
+## Round 3 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "LGIC_LGCTFM-S21",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A LIVE EventBridge rule can be ENABLED and DEAD at the same time when a backstop schedule fires the same target: opal-data-inf/gold/meta/pipeline-complete.json was last written 2026-09-05T12:52:20Z while gold/meta/pipeline-failed.json is written daily, so mdpf-feeder-accelerator (ENABLED, pattern on that key, target mdpf-feeder-trigger) has not fired for 13 days and nothing said so -- the Scheduler backstop mdpf-feeder-backstop-daily fires the same Lambda at 12:52Z and the Lambda's own pre-check reads the per-date sentinel instead.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S21",
+  "4.0.0_SA_CRO's RCN-0010 s.2.1 and the brief's IV.3 -- the corrected reading of the binding dependency"
+ ],
+ "remedy": "ROUTE IT, DO NOT FIX IT FROM HERE. This is a live-estate finding belonging to no LGIC round and to no seat that saw it, which is exactly the shape that decays: the CRO filed it off-task, LGCTFM has no write on the MDPF or INF pipelines, and the standing moratorium forbids building a monitor for it. What is owed is a ROUTING decision by 1.0.0_SA_CTO -- whose finding the daily failed marker is, whether it is already known, and which project owns it -- and that decision closes this row. The row explicitly does NOT ask for an alert, a checker or a comparator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v3"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S26",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A RULING THAT ARRIVES AFTER AN ISSUANCE BINDS THE NEXT ROUND, NEVER THE FROZEN ONE: R-81 landed @4443e7308e, 25 minutes after round 3's issuance @6139990fe7 and after LT-e-5's worker was spawned. The round is frozen and a worker cannot be messaged, so the face stood as issued and this row carried R-81 to the drain. Its drain test (S30) read NON-CONFORMANT on BOTH halves -- one leg reads a Terraform-plane comp-iam subcommand outside R-81's permitted set, and lambda-source-map.json is neither comp-lambdamap-guarded nor DECLARED with date, owner and un-defer condition.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S26",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S30 -- the drain test, NON-CONFORMANT on both halves",
+  "LGIC_LGCTFM.TO-LT-x-4-r3.coverage-run.md -- superseded, never spawned, reason on its own face"
+ ],
+ "remedy": "The conformance repair leads round 4 beside R-81's canonical manifest entry, and LT-x-4 is re-cut there. STAYS ARMED until both halves read conformant: the source_text leg's hand surface guarded or declared, and every instrument inside R-81's permitted set. The cell is not at fault and the row says so -- it could not have been built against a ruling that did not exist when it was dispatched. DISARM IS THE ISSUER'S, NOT THIS SEAT'S (R-19).",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v3"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S24",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "comp-trigger CARRIES NO TARGETS IN ITS LIST MODE AND NO PATH AT ALL FOR SCHEDULER SCHEDULES. Measured on the tool's own JSON: 167 entries (144 rules + 23 schedules), key-set Counter {(arn, kind, name, pattern, schedule, state): 167}. Targets come only from QUERY mode and only for kind == events-rule (match_triggers, org/modules/graph/comp_trigger.py:350-367), each query paying list-targets-by-rule across all 144 rules at about 110 seconds. So 23 of 167 triggers have targets no comp-trigger path can read.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S24",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S27 -- the issuer's independent measurement of the same fact",
+  "4.0.0_SA_CRO's RCN-0010 @ecf57e8806 -- the first surfacing"
+ ],
+ "remedy": "NOTHING IS BLOCKED AND THIS ROW DOES NOT ASK FOR A BUILD. The walk covered schedules through comp-kuzu TRIGGERS/EMITS_TO, so LGCTFM needs nothing. What is owed is that the comp-tool surface's owner decides whether comp-trigger should answer for Scheduler schedules at all, and that the answer is written where the next order that reaches for the tool will meet it -- the reason this row exists is that TWO separate parties wrote orders on the premise that --list carries targets.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v3"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S25",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE COMMIT GATE'S MANIFEST-ADVISORY READS A STRING'S PRESENCE, NOT ITS ROUTE: it flagged lib/opal_lgctfm.py:772 and :788 as 'embeds raw Cypher outside comp-kuzu ... Route graph queries through comp-kuzu' when both queries are argv handed TO .tools/comp-kuzu by kuzu_rows() -- exactly the route the advisory demands. The gate printed '2 graph-access finding(s) (2 would block in blocking mode). Advisory -- not blocking.' and rc 0.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S25",
+  "lib/opal_lgctfm.py@b736ee4fdf discover_involved() -- kuzu_rows() -> _bash_tool(COMP_KUZU, [query, --json, ...])"
+ ],
+ "remedy": "A CONFORMANT CALLER WOULD BE REFUSED THE DAY THE ADVISORY BECOMES BLOCKING, and the gate itself says so in its own output -- which is the whole reason this is worth carrying rather than shrugging at. What is owed, from the gate's owner: either the detector distinguishes a Cypher string PASSED to comp-kuzu from one executed beside it, or the blocking-mode promise is withdrawn. No edit to lib/opal_lgctfm.py is owed -- the file is already conformant.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v3"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-W1-S30",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE MACHINE ARTIFACT GAINED THE STEP RELATION AND THE HUMAN ONE STILL HAS NONE. The rename landed in 2 of the 3 sites the order named; the third, render_plan_md(), has NEVER printed the field under either spelling -- its only per-package line is package_id, the never-widen flag and objective (lib/opal_lgctfm.py:1762-1796 @f08295cc8f). So plan.json now carries step_dependencies and plan.md shows a package list with no ordering information at all.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-W1-S30",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.14 -- the disarm owner's word that the order-defect half needs no act",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/prd/LGIC_LGCTFM_PRD.md FWD-6 and row T6 -- plan.json and plan.md are both FWD-6's artifacts"
+ ],
+ "remedy": "THE ORDER-DEFECT HALF NEEDS NO ACT AND IS NOT WHAT THIS ROW CARRIES -- the cell renamed the two sites that existed and refused to invent the third, which is the right behaviour and is why the gap is visible at all. What is owed is the RENDERING half, and it belongs to FWD-6 (T6, 'the migration's work plan comes out of the run, in the order the canon requires') in a round, never as a rider on unrelated work: plan.md should render each package's step relation now that plan.json carries it. Cost is one line in render_plan_md(); the reason it is a row and not a fix is that nobody's <paths> grant covered it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v3"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S32",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A PINNED PROOF IS NOT RE-GRADED WHEN A FIXED INPUT MOVES UNDER IT. LT-e-5's instance records E5R3-AC4 FAIL at b736ee4fdf (16:27:12 -0400); the issuer repaired check_lt_r3.py at fd02b24c51 (17:09:25 -0400), 42 minutes later, for its own row S29; the same arm reads PASS-E5-SCHEMA rc 0 at HEAD. Both readings are correct at their own vintage, and no gate, notifier or limb closes the gap between them.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S32",
+  "3.0.0_SA_CVO's own run of check_lt_r3.py e5-schema at HEAD 7f48a0ff42"
+ ],
+ "remedy": "NO ARTIFACT CHANGES AND NO PROOF IS REWRITTEN -- a pinned proof is a record of a vintage and rewriting it would be the worse defect. What is owed is one sentence in round 4's issuance stating that E5R3-AC4 reads PASS at HEAD on the repaired checker, so the next reader of the instance is not left with a FAIL the estate has already answered. The transferable half, which is why this is a row rather than a footnote: WHEN AN ISSUER REPAIRS A FIXED INPUT MID-ROUND, THE PROOFS ALREADY PINNED AGAINST IT ARE STALE AND NOTHING SAYS SO -- the only instrument that catches it is re-running the arm at L9, which is not required by any limb today.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v3"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S33",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "_coverage_lines() emits 'short by N, named below' on the sole condition involved > rows, while the 'not covered' lines it points at are emitted per not_covered entry -- so a node_type that is short and carries no not_covered entries renders a promise with nothing after it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S33",
+  "lib/lgctfm_render.py@d701235a50 _coverage_lines",
+  "3.0.0_SA_CVO's direct call of _coverage_lines() at HEAD on a synthetic short block"
+ ],
+ "remedy": "UNREACHABLE TODAY AND THE ROW SAYS SO FIRST: 0 of 19 node_types on the one live coverage block can enter the branch, because all 19 have rows == involved. It becomes reachable the first time a walk reports a shortfall it cannot name -- which is precisely the case the coverage block exists for. The fix is one condition (name the shortfall, or say it cannot be named) on LT-r-2's own surface, and it belongs in the round that next opens lib/lgctfm_render.py, never as a rider. R2R3-AC4 is PASS with or without it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v3",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v3"
+ },
+ "closed": false
+}
+```

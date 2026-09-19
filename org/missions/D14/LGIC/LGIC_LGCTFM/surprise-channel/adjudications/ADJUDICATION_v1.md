@@ -489,3 +489,115 @@ Closing count: carrier-less **0 of 1**.
  "dismissal_reason": "An INERT record of an authorized retirement, carrying no `adjudicates` of its own and no hazard. Round 1's grade stands under R-43 and under the sharper reading that a failing re-run and a wrong grade are different claims. The five frozen surfaces are correctly left naming the retired path. One residue is named rather than closed: the two workflows/ README cross-reference edits are refused to the filing seat by lane ANY_EXEC_OR_AE and are carried by nobody, so a permitted seat should take them."
 }
 ```
+
+## Round 3 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S13",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "class": "OBSERVATION",
+ "one_line": "LGIC_LGCTFM ROUND 3 L9 -- THE THREE JUDGMENT CRITERIA, ALL PASS, EACH ON AN INSTRUMENT THIS SEAT RAN ITSELF. The count was verified by subtraction rather than taken from the hand-off: 5 criteria carry judgment=\"true\" across the four round-3 orders, MINUS X4R3-AC5 whose order is superseded-never-spawned, MINUS none other -- leaves 3, and the hand-off named 3. That is the FOURTH consecutive hand-off from 2.0.0_SA_COO~G with no count running high, and X4R3-AC5 is named here rather than left to vanish with its cell.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Graded at HEAD 7f48a0ff42 on the shared tree. For each criterion the instrument is named and is NOT the worker's: R2R3-AC4 by importing lib/lgctfm_render.py and rendering all 5 contracts; E5R3-AC5 by reading COVERAGE_EVIDENCE.json's per-node leg attribution and by comp-find --corpus aws on the live plane; P2R3-AC4 by two field-shaped censuses over git ls-files with printed denominators. Every number below is from those runs.",
+ "grades": [
+  {
+   "criterion": "R2R3-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-r-2-r3.no-bare-none.proof_of_spec.json@295ae45768",
+   "verdict": "PASS",
+   "reason": "THE READER LEARNS IT, AND I READ THE BYTES THE RENDERER PRODUCES RATHER THAN THE WORKER'S QUOTATION OF THEM. Importing lib/lgctfm_render.py@d701235a50 and calling render_current() on all 5 contracts under workflows/legacy_transform/ gives, in 5 of 5, a COMPUTE section opening 'coverage: NOT MEASURED -- this contract carries no coverage block, so the rows below are what the walk rowed, not what the subject has; an empty or short COMPUTE column is the instrument's limit, not proof the subject has none' and closing 'no rows rendered in COMPUTE -- read the coverage line above before reading this as the subject has no compute'. THE CRITERION SAYS 'EMPTY OR SHORT', SO I TESTED BOTH AND THE THIRD BRANCH TOO: with a coverage block and involved > rows the column opens 'short by N, named below'; with the column absent from by_node_type it prints '0 row(s) of 0 involved node(s)' AND, on the next line, 'no node_type of this column was measured'. All three branches answer the question, so PASS. TWO QUALIFICATIONS, BOTH MINE AND BOTH FILED RATHER THAN LEFT IN PROSE: 'short by N, named below' can name nothing when not_covered is empty (row S33, unreachable on today's one coverage block, 0 of 19 node_types), and the third branch's FIRST line reads as a measured zero with the disclosure on its SECOND line. Neither defeats the criterion; both are things a reader of this grade should have."
+  },
+  {
+   "criterion": "E5R3-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-5-r3.discovery-by-design.proof_of_spec.json@b736ee4fdf",
+   "verdict": "PASS",
+   "reason": "'INVOLVED' IS A REAL DEFINITION ON ALL THREE OF THE CRITERION'S SUB-QUESTIONS, EACH MEASURED SEPARATELY. (1) EVERY LEG IS EXERCISED AND NONE IS DECORATIVE -- over the 381 involved nodes, the count of nodes whose ONLY leg is that leg is token 210, iam_grant 92, trigger_target 33, source_text 7; delete any leg and named nodes leave the set. (2) THE EXCLUSION IS REAL, NOT A STRAWMAN, AND ITS OWN PREMISE HOLDS: all 9 excluded /aws/lambda/ log groups are live nodes at grade time (comp-find --corpus aws, vintage 2026-09-18 22:13:04 UTC), and the reason they are excluded -- 're-created when its function, which IS a row, migrates' -- is TRUE for 9 of 9, because each named function appears in the contract's 370 row names. (3) THE DECISIVE ONE: a Lambda reached only through trigger_target or iam_grant IS rowed -- 58 of 67 involved Lambdas carry NO token leg and 58 of 58 are present in the contract's rows, including exactly the four opal-assets-bd49f-* and -bd49finsurance functions the WORD-BOUNDED token rule provably cannot reach (each verified non-word-bounded for both 49f and 49financial). MY GRADE-TIME LIVE CENSUS READ 13 /aws/lambda/ log groups matching 49f against the walk's 9 EXCLUDED, AND I STATE THE INSTRUMENT DIFFERENCE RATHER THAN THE NUMBER: my pattern was a SUBSTRING and the walk's is WORD-BOUNDED, and the 4-node difference is exactly those four bd49f names -- which the walk reaches by other legs anyway."
+  },
+  {
+   "criterion": "P2R3-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-p-2-r3.step-dependencies.proof_of_spec.json@df4753e185",
+   "verdict": "PASS",
+   "reason": "ONE STALE READER EXISTS, THE CELL FOUND IT, AND TWO INDEPENDENT ARMS OF MINE FIND NO SECOND. ARM 1 (key-access shape, over git ls-files minus npm/lock/node_modules): DENOMINATOR 38296 tracked files, 35890 readable, 25 files carrying a programmatic 'dependencies' key access or literal key -- every one of them a vendored numpy or pydantic file, an npm package.json reader, an ATOM package manifest, a frozen plan.json under R-43, check_lt_r3.py reading the OLD field on the OLD plan by design, or a record about this very rename. ARM 2 (list-membership shape, tracked .py minus vendored layers): DENOMINATOR 5074 files, 3 hits, of which exactly ONE is a genuine stale reader -- fixed_inputs/r1/check_lt_r1.py:84 PACKAGE_FIELDS, which is precisely what row W1-S31 names. I SAY WHERE MY OWN INSTRUMENT WAS BLIND: ARM 1 COULD NOT SEE THE ONE THAT MATTERS, because a bare list element does not match a key-access pattern; arm 2 was built to close that hole, and the cell's comp-find census found it without either. ARM 3 WAS THE WRONG INSTRUMENT AND IS REPORTED AS SUCH: the plain word over 19705 tracked .md files hits 1474 of them, because 'dependencies' is ambient English -- a printed denominator certifying a sweep that cannot discriminate the question."
+  }
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "A GRADE RECORD. It disposes no investigation item -- 'adjudicates' is absent and the dispositions for this round are carried by C-S14 and C-S15 -- so the row takes the disposition the schema requires of it and claims nothing further.",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's own runs at HEAD 7f48a0ff42: render_current() over 5 of 5 contracts; COVERAGE_EVIDENCE.json leg attribution over 381 involved nodes; comp-find --corpus aws (13 hits across 2590 nodes, vintage 2026-09-18 22:13:04 UTC); two field-shaped censuses (38296 and 5074 file denominators)",
+   "check_lt_r3.py selftest-arms at HEAD: PASS-ARMS-DISCRIMINATE, 27 arms driven"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S14",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "class": "OBSERVATION",
+ "one_line": "SEVEN GRADUATED, EACH WITH ITS REMEDIATION ROW MINTED IN THIS SAME COMMIT so no item leaves L9 without a carrier -- S21, S26, W1-S24, W1-S25, W1-S30 from the round, plus S32 and S33 which are this seat's own L9 findings and are graduated under the same bar as everyone else's.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "S21 (4.0.0_SA_CRO): the INF gold chain's completion marker last written 2026-09-05, the MDPF accelerator rule live and unfired for 13 days while the backstop schedule hides it. It is a LIVE-ESTATE finding belonging to no LGIC round, which is exactly why it decays without a row -- owner 1.0.0_SA_CTO to route. S26 (2.0.0_SA_COO~G): round 3 was cut 25 minutes before R-81 existed; its own drain test S30 read NON-CONFORMANT on both halves, so it STAYS ARMED, LT-x-4 is not spawned, and the conformance repair leads round 4 -- the only remediation row of this set that carries an ARMED clock, and it is the issuer's. W1-S24: comp-trigger has NO path that reads a Scheduler schedule's targets (23 of its 167 entries); the walk covered them through comp-kuzu, so nothing is blocked and the gap is in the tool. W1-S25: the commit gate's MANIFEST-ADVISORY flags two Cypher strings that ARE routed through comp-kuzu and says both 'would block in blocking mode' -- a CONFORMANT caller would be refused if the advisory ever became blocking. W1-S30: the order's third write site does not exist AND THAT HALF NEEDS NO ACT, as its disarm owner says in decomposition s.14; what is graduated is the OTHER half the same row measured -- plan.md renders no step relation under either spelling, so the machine artifact now carries step_dependencies and the human one carries nothing. S32 and S33 are mine, filed in this commit, and are stated at their own rows.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S21",
+  "LGIC_LGCTFM-S26",
+  "LGIC_LGCTFM-W1-S24",
+  "LGIC_LGCTFM-W1-S25",
+  "LGIC_LGCTFM-W1-S30",
+  "LGIC_LGCTFM-S32",
+  "LGIC_LGCTFM-S33"
+ ],
+ "disposition": "GRADUATED",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- one row per id in this list, minted in the same commit",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.14 -- the disarm owner's word on W1-S30 and W1-S31, read at the bytes"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S15",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "class": "OBSERVATION",
+ "one_line": "FIVE DISMISSED, FOUR OF THEM 2.0.0_SA_COO~G NAMING ITS OWN DEFECTS -- and the one that matters most, W1-S23, is dismissed because I RE-RAN ITS ARM rather than because its issuer said it was fixed.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W1-S23 (BLOCKING, the worker's): the arm could not read PASS for ANY correct record at the path the order mandated. DISMISSED BECAUSE IT IS RESOLVED AT ITS CAUSE AND I MEASURED THAT: running check_lt_r3.py e5-schema at HEAD prints 'lgctfm-contract-check (receiving-check does not ROUTE this path -- W1-S23) rc=0 ACCEPT' then 'VERDICT: PASS-E5-SCHEMA', rc 0 -- and it names which instrument answered, which is the part that makes the repair honest rather than a bypass. The worker refused to work around it and filed BLOCKING, which is what the order asked for. .tools/receiving-check.py is NOT defective here: it routes by path, contracts belong in the run home, and the order named the wrong path. S29: the issuer's own record of that repair; the defect and the fix are both its own and both are on the record, so nothing is owed. S27: the issuer told a live worker a false fact (comp-trigger --list carries targets); the correction is recorded, the worker measured the same thing independently at W1-S24, and the leg was built on the sources that do carry targets -- so the false premise propagated into no artifact. What survives from it is the TOOL gap, and that is carried by W1-S24's remediation row rather than duplicated here. S28: an R-82 PRE-SPAWN amendment, recorded before the spawn as R-82 requires, with no criterion, grant, expect or invocation changed; a record, correctly filed, needing no act. S30: S26's drain test. It is EVIDENCE, not a separate hazard -- its NON-CONFORMANT reading is precisely why S26 stays ARMED, and S26's remediation row is the carrier. Disposing it again would mint a second carrier for one remedy. S31: the issuer's close record; every substantive half it carries is dispositioned on its own row here. W1-S31: DISMISSED ON THE DISARM OWNER'S WORD PLUS MY OWN READ OF THE REMEDY, not on the word alone -- decomposition s.14.1 exists, is marked [HARD], states that every arm of a closed round's checker is frozen against that round's own artifacts and that a run against a later artifact is neither a regression nor evidence, and it names what would REOPEN it (a round that re-uses check_lt_r1.py as a live instrument). That is the R-43 remedy, and it is written.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S27",
+  "LGIC_LGCTFM-S28",
+  "LGIC_LGCTFM-S29",
+  "LGIC_LGCTFM-S30",
+  "LGIC_LGCTFM-S31",
+  "LGIC_LGCTFM-W1-S23",
+  "LGIC_LGCTFM-W1-S31"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Each id's reason is stated at its own name in world_is. None of the seven leaves an act owed by anyone: two are resolved at their cause (W1-S23 by S29's repair, re-run PASS here), one is carried by another row's remedy (S30 by S26), one's surviving half is carried by W1-S24, two are records correctly filed (S28, S31), and one has its R-43 remedy written and read (W1-S31).",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's run of check_lt_r3.py e5-schema at HEAD 7f48a0ff42: PASS-E5-SCHEMA rc 0",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md s.14.1, read at the bytes",
+   "fd02b24c51 -- the issuer's repair commit for S29 / W1-S23"
+  ]
+ }
+}
+```

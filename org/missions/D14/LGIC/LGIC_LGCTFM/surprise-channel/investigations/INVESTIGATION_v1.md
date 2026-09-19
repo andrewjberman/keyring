@@ -1012,3 +1012,53 @@ PRD, so it is a row here, not a message.
  "notes": "Filed under LGIC_LGCTFM because the walk that found it is this project's substrate (the pipeline-walk brief, Amendment 1 O9/W14: LIVE-NEWER-THAN-RECORD is exactly this row's delta class). If the INF chain has a live owner project, the CVO may re-home the row; this seat does not. Off-task per CLAUDE.md s.2: one row, keep working."
 }
 ```
+
+## Round 3 L9 -- 3.0.0_SA_CVO's own findings from the grading
+
+```json
+{
+ "id": "LGIC_LGCTFM-S32",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "one_line": "LT-e-5's PINNED PROOF RECORDS E5R3-AC4 AS FAIL AND THE ARM READS PASS AT HEAD -- the issuer's own mid-round repair landed 42 MINUTES AFTER the worker pinned its proof, and NOTHING RE-GRADES A PINNED PROOF. The round's own record therefore understates the cell, and the only reason this is known is that L9 re-ran the arm instead of reading the instance.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-5-r3.discovery-by-design.proof_of_spec.json@b736ee4fdf E5R3-AC4 status FAIL",
+   "fd02b24c51 -- the issuer's repair of check_lt_r3.py, 42 minutes after b736ee4fdf",
+   "3.0.0_SA_CVO's own run of check_lt_r3.py e5-schema at HEAD 7f48a0ff42: PASS-E5-SCHEMA rc 0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A cell's proof-of-spec instance states its criteria as they stand when the round closes.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9 on the shared tree at HEAD 7f48a0ff42. The instance records E5R3-AC4 status FAIL, quoting 'receiving-check rc=0 NOT ACCEPT ... VERDICT: FAIL-E5-SCHEMA' at b736ee4fdf (2026-09-18 16:27:12 -0400). The ISSUER repaired the checker at fd02b24c51 (2026-09-18 17:09:25 -0400, its own row S29) -- 42 minutes LATER. Re-running the SAME arm, 'python .../fixed_inputs/r3/check_lt_r3.py e5-schema', prints 'new contract: lgctfm-contract-check (receiving-check does not ROUTE this path -- W1-S23) rc=0 ACCEPT: .../e5_walk/contract.json' then 'VERDICT: PASS-E5-SCHEMA', rc 0. BOTH READINGS ARE CORRECT AT THEIR OWN VINTAGE; what is absent is any limb that re-grades a pinned proof after a fixed input moves under it, and the proof is the artifact a later reader trusts. The other four e5 arms were re-run here too and read PASS (e5-floor '88 = rowed 79 + excluded 9 + unaccounted 0', e5-named-rowed, e5-coverage-shape, and selftest-arms PASS-ARMS-DISCRIMINATE over 27 arms)."
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S33",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "one_line": "_coverage_lines() PROMISES A NAMING IT MAY NOT DELIVER: 'short by N, named below' is emitted whenever involved > rows, while the 'not covered' lines after it are emitted only for node_types that carry not_covered entries. UNREACHABLE ON TODAY'S ONE COVERAGE BLOCK, and this row says so rather than reporting a live defect.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/lgctfm_render.py@d701235a50 _coverage_lines -- 'short by %d, named below' is unconditional on involved > rows; the not_covered lines are appended per entry",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/e5_walk/contract.json -- 19 of 19 node_types rows == involved, 0 not_covered",
+   "3.0.0_SA_CVO's direct call of _coverage_lines() at HEAD 7f48a0ff42 on a synthetic short block"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A coverage line that points a reader at names below it has names below it.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9 by importing lib/lgctfm_render.py at HEAD and calling _coverage_lines() directly -- the renderer's own function, not the checker's wrapper. On a synthetic block {LAMBDA: rows 2, involved 5, no not_covered} it returns '  coverage: 2 row(s) of 5 involved node(s) -- short by 3, named below' with NO 'not covered' line following. REACHABILITY MEASURED, NOT ASSUMED: the one live coverage block (e5_walk/contract.json) has rows == involved on 19 of 19 node_types and 0 not_covered entries, so 0 of 19 can enter the branch today. This does NOT move R2R3-AC4, which is graded PASS on the same instrument: the criterion asks whether the reader learns an empty or short column is the INSTRUMENT's limit, and 'short by 3' tells them; the unkept promise is the sentence after the one that answers the question."
+}
+```
