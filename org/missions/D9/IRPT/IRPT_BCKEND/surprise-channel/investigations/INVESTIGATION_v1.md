@@ -6144,6 +6144,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "TO-IB-rtf-8 arm (d): the packet's blast radius reads 'prior CodeSha256 read live'; CLAUDE.md's writers-census bound (Rule 5, never-widen sign-off) expects a named property's writers enumerated so a sign-off covers what actually moved it.",
     "world_is": "The two values name the SAME property (irpt-holdings' served CodeSha256) and disagree; this order's own packet is unaffected because it reads the LIVE value directly rather than the manifest field, but the manifest's own artifact_sha256 is stale relative to what AWS actually serves, for a reason this cell did not investigate (out of BOUNDS: no other route's bytes are touched by this order, and the manifest's artifact_sha256 for irpt-holdings is left exactly as found).",
     "notes": "Not this cell's to fix (BOUNDS: only the enforce.py member and its staged_from/prose are touched on this manifest entry). Routed to the CTO to reconcile the stale artifact_sha256 or name the deploy that moved served bytes without it."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T10:36:46Z",
+    "one_line": "TO-IB-rtf-8 second pass arm (b): holdings/stage.py --check reports 1 of 4 staged member(s) drifted (contracts/HoldingsSnapshot.schema.json) on this override worktree (/c/tmp/wk-irpt-6-1d) -- a RAW-BYTE check with no git clean-filter, and this worktree's core.autocrlf=true checks the LF-committed blob out as CRLF (34577 bytes on disk, 695 CRLF pairs, vs the committed 33882-byte LF blob), while git hash-object on the same worktree file (which applies the clean filter) equals the pinned blob's own hash exactly (9ec70af2ba0c71ea589dab48bd14407e111694a8 both) -- a worktree checkout artifact, not a real content drift, on a stage.py MEMBER this order's BOUNDS do not reach (not enforce.py, not a holdings import, not a test, not the manifest entry).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "py -3.12 infra/aws/lambda/investor-reporting/holdings/stage.py --check, this run, this worktree: 'ERROR: 1 of 4 staged member(s) differ from their pinned blob: [\\'contracts/HoldingsSnapshot.schema.json\\']'",
+        "git hash-object infra/aws/lambda/investor-reporting/holdings/contracts/HoldingsSnapshot.schema.json == git show 6e764ef0aa48a01f922931d66413477a2eff05a4:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json piped to git hash-object --stdin == 9ec70af2ba0c71ea589dab48bd14407e111694a8, this run",
+        "git config --get core.autocrlf == true, this worktree, this run; raw byte count on disk 34577 (695 CRLF pairs) vs the committed blob's 33882 LF-only bytes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rtf-8's own first-pass result.md (committed) reported 'stage.py --check reports 4 of 4 for the remaining staged contract + 3 modules byte-equal to their pins', and this order's arm (b) BOUNDS name only enforce.py/holdings imports/holdings tests/the manifest entry as in-scope.",
+    "world_is": "On this second pass's override worktree (/c/tmp/wk-irpt-6-1d, cut fresh by the issuer from CLOUD HEAD d81cccbfe3), the SAME committed bytes check out with core.autocrlf=true converting the LF-committed contracts/HoldingsSnapshot.schema.json blob to CRLF on disk, so the raw-byte stage.py --check (which applies no clean filter) now reads 1 of 4 drifted -- a worktree-checkout artifact on a file wholly outside this order's BOUNDS, not a regression the fold introduced; content-based verification (git hash-object) shows no real drift."
   }
 ]
 ```
