@@ -8884,6 +8884,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W58-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~58",
+    "surfaced_at": "2026-09-19T00:57:34Z",
+    "one_line": "AC2's own hardcoded fixture filename ('.fixture-AMGT-rk-58.direct-act.md') cannot pass to-pipeline-gate.py's check_file regardless of what the minter renders: check_project_stage's _project_of() requires the basename to start with an uppercase PROJECT code, and a leading '.' never matches, so the invocation prints gate_violations 1 of 1, not the 0 AC2's own expect names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC2's own literal invocation (this order, section 5) hardcodes fx = 'org/missions/D5/AMGT/AMGT_RESAPP/task-orders/.fixture-AMGT-rk-58.direct-act.md' and writes the minter's --dry-run rendered bytes there before calling to-pipeline-gate.py's check_file(root, fx) directly.",
+        ".tools/to-pipeline-gate.py:1843-1847 _project_of(): base = os.path.basename(rel); m = PROJECT_RE.match(base); return m.group(1) if m else None -- with PROJECT_RE = r'([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*)'. .match() anchors at index 0, and the fixture basename starts with '.', so _project_of returns None unconditionally, independent of file content.",
+        ".tools/to-pipeline-gate.py:1891-1897 check_project_stage(): 'if not code: return [\"%s: filename declares no PROJECT code -- a TO is named PROJECT.TO-NAME.md so its project is resolvable without opening it\" % rel]' -- fires before dep_stage, fabric or any other limb is read.",
+        "measured this session in the worker's own worktree, running AC2's invocation exactly as written: mint_rc 0, pair_line 1 of 1, invocation_tags 1, expect_tags 1, paths_block 1 -- every OTHER AC2 expectation held -- but gate_violations 1 of 1 fixture, the sole violation being the filename-declares-no-PROJECT-code message above.",
+        "confirmed filename-only and content-independent in isolation: re.compile(r'([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*)').match('.fixture-AMGT-rk-58.direct-act.md') returns None."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2's expect clause (this order, section 5): gate_violations 0 of 1 fixture from the L6 gate's own check_file on the rendered bytes at a tree path -- asserting the minter's rendered order, handed to the real gate at the literal fixture path AC2's own invocation hardcodes, passes with zero violations.",
+    "world_is": "The gate's check_project_stage refuses on the FILENAME alone (no leading PROJECT code before the first '.') before it ever reads the file's content, so ANY bytes written to '.fixture-AMGT-rk-58.direct-act.md' -- including a byte-for-byte copy of the real, already-committed AMGT_RESAPP.TO-AMGT-rk-58...md order this cell's own <paths> lists -- produce exactly this one violation. AC2 as literally invoked reads gate_violations 1, not 0; the minter itself is not the cause (its own naming convention, <CODE>.TO-<cell>.<slug>.md, is exactly the PROJECT.TO- shape the gate wants, and a real non-dry-run mint under that name clears this limb).",
+    "notes": "Not fixed here: THE GATE IS CALLED, NEVER EDITED (this order's own BOUNDS section), and the fixture filename is this order's own literal, not something this cell's <paths> lets it rename. Disarm owner is the issuer of any FUTURE direct-act order that asks a worker to hand the L6 gate a hidden-dot fixture filename for an AC2-shaped check: name a fixture filename that itself matches PROJECT.TO-NAME.md, or accept that check_project_stage will always fire on it, rather than repeating this exact literal."
   }
 ]
 ```
