@@ -673,3 +673,67 @@ rewriting one would be the worse defect. So no artifact changes and no proof is 
 issuance STATES that `E5R3-AC4` reads PASS at HEAD, that the pinned instance records FAIL at its own vintage,
 and that both are true of their own moments. It is written here rather than remembered, because a lesson
 written in a report is not a control and this one has exactly one place it can fire: the next cut.
+
+
+---
+
+## 15. v1.5 -- THE ROUND-4 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round analysis @`ba1dcf65e9`
+
+**Input.** `LGIC_LGCTFM_ROUND3_ANALYSIS.md` @`ba1dcf65e9` (msg 98094): coverage complete on both rounds, **NO
+PRD addendum owed**, neither round enters `/open-calls`. The four items s.14.2 already named are cut here in
+that order, and nothing else is.
+
+[HARD] **THE SENTENCE THIS ROUND OWES, DISCHARGED HERE AND IN THE ISSUANCE COMMIT.** `LT-e-5`'s PINNED PROOF
+records `E5R3-AC4` as **FAIL** at its own vintage (`b736ee4fdf`, 2026-09-18T16:27:12-04:00) while the arm
+reads **PASS** at HEAD, because the issuer's repair (`fd02b24c51`, 17:09:25-04:00) landed **42 minutes after
+the pin**. **BOTH ARE TRUE OF THEIR OWN MOMENTS.** No proof is rewritten and no artifact changes: a pinned
+proof is a record of a vintage, and rewriting one would be the worse defect (`3.0.0_SA_CVO` @`71d0c885fd`,
+adopted by the analysis).
+
+### 15.1 THE CELLS -- 3
+
+| cell | id | what it does | serves | source |
+|---|---|---|---|---|
+| 22 | `LT-m-1` | **THE MISSING CANONICAL ENTRY.** `comp-which` asked "what AWS resources exist" returns a SIX-WAY TIE with no winner; by NFRA_GRAPHS AC1 that is a missing canonical entry, not a ranking problem. One `cloud.inventory.*` entry naming R-81's assigned instrument, in the manifest's own 11-key shape, with every pre-existing entry byte-identical | the estate's own routing; R-81 cell one | R-81 |
+| 23 | `LT-e-6` | **THE TWO R-81 REPAIRS.** Re-point the `iam_grant` leg off `comp-iam role` (Terraform plane) onto `comp-iam live / reconcile / simulate`; and either GUARD `lambda-source-map.json` with comp-lambdamap or DECLARE it with date, owner and un-defer condition. A re-point MAY ADD involved nodes and MUST NOT silently remove any | FWD-1 | `S30` |
+| 24 | `LT-x-5` | **THE REAL RUN, RE-CUT.** One 49F run on the repaired engine; every floor node rowed or excluded with a reason; every NAMED class a ROW; no registry mark | FWD-1's ACCEPT arm | R-82 |
+
+```
+  slot ~1   LT-e-6  ->  LT-x-5      the engine, then the run on it
+  slot ~2   LT-m-1                   the manifest only, disjoint
+```
+
+`fanout: 2 slots over 3 cells, cap 8, reason: LT-x-5 RUNS the engine LT-e-6 repairs, so they queue on one
+slot; the manifest entry touches no engine file and runs beside them; levels L0 = {LT-e-6, LT-m-1},
+L1 = {LT-x-5}.` **`LT-x-5` IS SPAWNED ONLY AFTER `LT-e-6` DRAINS AND ITS TWO CONFORMANCE ARMS READ PASS** --
+R-82: a run on an unmeasured engine yields a green meaning the engine RAN, not that it was RIGHT.
+
+### 15.2 THE FIXED INPUT, AND THE FOUR RULES IT IS BUILT ON
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/` -- `R4_BASE.json` (the ONE carrier) and `check_lt_r4.py`,
+10 real arms and a 21-arm self-test with 8 positive-satisfiability arms, ruff clean.
+
+1. **THE COVERAGE CORES ARE IMPORTED FROM ROUND 3, NEVER RE-IMPLEMENTED** -- `check_lt_r3.py` is imported by
+   path and `core_cov_shape/floor/named` and `floor_now` are CALLED. A second copy of a grading rule is a
+   second thing to drift, and the self-test asserts the import itself.
+2. **A RE-POINT MAY ADD AND MUST NOT SILENTLY REMOVE.** `e6-no-loss` compares per-node_type `involved`
+   against round 3's measured figures (LAMBDA 67, IAM_ROLE 46, S3Key 154, ...) and admits a DROP only when
+   the record NAMES the node and the leg that used to reach it.
+3. **THE ROUTING LESSON IS BUILT IN** (`S23`/`S29`): the walk output is named `e6.lgctfm-contract.json`, so
+   the estate's path-router routes it. The defect that broke round 3's `e5-schema` cannot recur.
+4. **THE STALE-PROOF BAR** (`S32`) watches BOTH `r4`'s and `r3`'s fixed inputs -- this checker RUNS r3's
+   cores, so an r3 edit moves a round-4 arm's meaning exactly as an r4 edit would.
+
+**WIRING AT THE CUT: 8 of 10 arms FAIL** for their measured reasons (no `cloud.inventory.*` entry; 128
+entries where 129 is the bar; the method note still names `comp-iam role`; no hand-surface treatment; no
+walk output; no post-cut run). **TWO ARE GUARD-SHAPED AND READ PASS, DISCLOSED:** `x4-no-registry-move` and
+`r4-stale-proofs`.
+
+### 15.3 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** close FWD-1. `1.0.0_SA_CTO` re-grades the outcome at L10 against its ACCEPT.
+- It does **not** build the consumer walk: that is `4.0.0_SA_CRO`'s brief and `1.0.0_SA_CTO`'s carrier.
+- It does **not** carry `W1-S24`, `W1-S25` or `S21`: the analysis ROUTED all three out of this project.
+  `W1-S25` has a SCHEDULED ARMING -- the day the commit gate's advisory flips -- and is the one that cannot
+  be left to be rediscovered; it is named here so the routing is visible from this project's own record.
+- It does **not** move FWD-4, which stays APPLIED on Andrew's own read.
