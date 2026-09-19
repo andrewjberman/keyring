@@ -4841,3 +4841,30 @@ a checker or a monitor.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S106",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "0.9.0_WK_LGIC_ENFORCE~1",
+ "surfaced_at": "2026-09-19T15:02Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~G, who issued LGIC_ENFORCE.TO-EN-m-2-r16 and owns the <paths> grant that is missing the path",
+ "one_line": "THE ORDER'S BOUNDS PROSE GRANTS THE ONE FILE THE CELL EXISTS TO BUILD, BUT THE MECHANICAL <paths> BLOCK THAT owned-paths-validate.py READS DOES NOT NAME IT -- so the sibling RETIRED.md this cell's whole point is to add cannot be committed, and I could only land the RECORD describing it, never the marker file itself.",
+ "spec_asserts": "TO-EN-m-2-r16's BOUNDS says: 'Grant. The <paths> block below, plus org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/, the ONE new file org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r13/RETIRED.md, and this order's own file. Nothing else.' -- naming fixed_inputs/r13/RETIRED.md as part of the grant, in prose.",
+ "world_is": "The order's own <paths> XML block (the only thing .tools/owned-paths-validate.py's _paths_block_entries() parses -- it matches literally `^<paths>...\\n(.*?)^</paths>$` and a prose mention before the block is explicitly skipped per its own self-test at :456-457) contains exactly one line: 'org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md'. fixed_inputs/r13/RETIRED.md is not in it. `bash .tools/safe-commit.sh --author ... -F ... -- fixed_inputs/r13/RETIRED.md RETIRED_MARKER_R16.json` was REFUSED (rc=1): 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: .../fixed_inputs/r13/RETIRED.md -- lane=TREE_DELIVERABLES ... agent=0.9.0_WK_LGIC_ENFORCE~1 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005: the order is the grant; a missing path is a cut defect, never an override)'. Per CLAUDE.md Rule 27 and my own operating instructions, a path I need that the grant lacks is a BLOCKING row, never an override or a widened grant taken unilaterally, so RETIRED.md exists only on disk in this worktree, uncommitted. I committed RETIRED_MARKER_R16.json alone (already granted under my own deliverables/ folder by the TREE_DELIVERABLES convention), and AC1/AC2/AC3 PASS mechanically against that record -- the checker only reads the record's fields (marker_path string, blob-pair equality, cmds_named, etc.) and never checks os.path.exists() on the marker itself, exactly as the order's own text warns ('it takes your two blob hashes on trust'). But AC4's judgment bar at L9 asks 'whether RETIRED.md actually exists at the stated path' -- and as this branch stands, it does not exist in the tree 3.0.0_SA_CVO will read at drain.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-m-2-r16.retired-marker.md <paths> block: one line, INVESTIGATION_v1.md only",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-m-2-r16.retired-marker.md BOUNDS Grant line, naming fixed_inputs/r13/RETIRED.md in prose",
+   ".tools/owned-paths-validate.py:144 _TO_PATHS_RE and :148 _paths_block_entries() parse ONLY the <paths>...</paths> block; :456-457 self-test: 'a prose mention of <paths> before the block is skipped; the block is read'",
+   "safe-commit.sh refusal, this worktree, this turn: 'VIOLATION: .../fixed_inputs/r13/RETIRED.md -- ... no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block (ADHC_OWNPTH.005)', rc=1",
+   "the same call committing only RETIRED_MARKER_R16.json (granted path) succeeded rc=0 at 3c0261151e, and m2-marker/r16-vintage-field/r16-stale-proofs then read PASS-M2-MARKER/PASS-R16-VINTAGE-FIELD/PASS-R16-STALE-PROOFS against that record alone"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```

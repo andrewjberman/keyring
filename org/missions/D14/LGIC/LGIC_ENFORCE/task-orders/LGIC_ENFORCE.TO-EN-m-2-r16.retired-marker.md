@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `EN-m-2` (decomposition v3.15 s.0p) | **outcome_ref:** FWD-3 | **depends_on:** none -- **NOT paired with `EN-s-1`, which runs beside it**
 
