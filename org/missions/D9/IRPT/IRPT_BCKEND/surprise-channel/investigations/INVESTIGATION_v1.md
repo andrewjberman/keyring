@@ -6097,6 +6097,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-S86",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:30:00Z",
+    "one_line": "STOP before any write: the signed keys K1 + K2 cannot produce the session both halves sign. The deployed auth-handler takes the token's advisorKey/advisorId only from opal-partner-<firm> (GetItem Key {email}), never from the opal-users-v2 row, and 0 of 11 opal-partner-49financial rows bind any login to abby_horton. K1 + K2 would therefore mint a 49financial session with NO advisor claim. Reaching the signed shape needs a partner-table row the packet does not name.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The packet (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/NEVER_WIDEN_SIGNOFF_PACKET_IB-rte-1.md, blob 3d9f57335b9893753973132ba5c4958b2622e24f, key table K1) shapes K1 as ONE opal-users-v2 item carrying 'advisorKey/advisorId = abby_horton', and both halves sign its radius as 'a token minted against K1 carries exactly abby_horton's already-live entitlement in 49financial -- no broader and no narrower -- because no new grant is minted anywhere' (CTO half s.1 @482b2c627e; COO half key table @a0f05dda0c). The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-3.the-test-principal-exercised-on-the-disclosed-partial-path-and-deleted.md, THE CELL (b) @4ee8426c72) says to apply every key exactly as the packet names it.",
+    "world_is": "1) SERVED BYTES: the deployed opalinvest-auth-handler zip, downloaded and hashed at 08:28:40Z, has sha256(b64) h1tnQVRpRA52eWyfAia6CfBsJmn6xKwHa8IUC0zBSsQ=, equal to the live CodeSha256. Its dist/index.mjs builds the table name `opal-partner-${firm}` and reads it with GetItem Key {email}. Source: infra/aws/lambda/lib/partner/index.ts:21-37 @4ee8426c72 and infra/aws/opalinvest_dev/lambda/auth-handler/src/db.ts:29-54 @4ee8426c72. mintSession passes that result to generateAccessToken (auth.ts:202-216 @4ee8426c72), and the advisorKey/advisorId claims come only from it (jwt.ts:179-185 @4ee8426c72). 2) getUser()'s mapping of the opal-users-v2 row (db.ts:138-167 @6275297f0e) carries NO advisor field, so an advisorKey attribute written on K1 is never read. 3) opal-partner-49financial is keyed HASH=email, and a COUNT scan finds 0 of 11 rows with advisorKey = abby_horton. No login anywhere binds abby_horton today. 4) CONSEQUENCE: K1 (a new .test e-mail) + K2 mint firmId=49financial with no advisorKey/advisorId. On the IRPT scoped routes that principal classifies UNKNOWN, not FIRM_ADVISOR (_scope/resolve.py:193-196 @4ee8426c72), so none of FWD-1/2/5 can be exercised as abby_horton. On the older portal routes canAccessFirm admits it by firmId alone (lib/partner/index.ts:39-47 @4ee8426c72). That is an entitlement neither half signed. The signed shape needs an unnamed key: a partner-table row binding the test e-mail to advisorKey=abby_horton. That row would be the FIRST login binding for abby_horton anywhere, an identity-to-entitlement write, where the halves sign 'an authentication row; it adds no authorization'. CTO half s.1 @482b2c627e: a key the act discovers it needs is 'a STOP and a new packet, not a widening of this one'. NOTHING WAS WRITTEN: 0 of 2 keys applied, the principal's interval is EMPTY, no ledger entry was opened, no session was minted. Informational, and not the guard since no K1 exists: the live ownership map (VersionId nR.FkCE1frsI9R5zRp2wJWB7vyMZ04NK) carries abby_horton with 33 accounts / 18 relationships, against the packet's 43 / 18 (the move is already row W1-S30).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IB-rtf-3_R60-AC1_battery_output.txt, run 2026-09-19T08:28:40Z at HEAD 6275297f0e: deployed zip sha256 EQUALS live CodeSha256; partner-table name builder + GetItem Key {email:..} present in dist/index.mjs",
+        "same run: opal-partner-49financial key schema [{AttributeName: email, KeyType: HASH}]; rows with advisorKey=abby_horton 0 of 11 scanned",
+        "infra/aws/opalinvest_dev/lambda/auth-handler/src/db.ts:138-167 @6275297f0e: getUser() return mapping, no advisor field",
+        "infra/aws/lambda/lib/partner/index.ts:21-47 @4ee8426c72: getPartnerProfile GetItem Key {email}; canAccessFirm by firmId alone",
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py:193-196 @4ee8426c72: no advisorId claim -> principal class UNKNOWN"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: IB-rtf-3 stays open. The act needs a RE-CUT PACKET naming the partner-table key (with its own writer census and reader census of opal-partner-49financial, and its rollback) and both halves re-signed against the new blob, or a ruling that the four outcomes are exercised by some other principal. The CTO half s.1 routes the decision. Not this seat's to widen."
   }
 ]
 ```
