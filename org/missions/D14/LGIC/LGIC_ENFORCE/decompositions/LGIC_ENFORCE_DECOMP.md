@@ -1260,6 +1260,52 @@ set must stay exactly the two hand-stale cases) and `t44-stale-proofs` (nothing 
   which nobody has; the branch STAYS and gains a comment.
 - It does **not** move a verdict: re-grading the census at the end must yield the same 2 rows round 10 named.
 
+### 0k.6 THE ROUND-11 CLOSE -- drained @`168ff4a949`, and the round's real finding is against THIS DOCUMENT'S OWN ARM
+
+**The cell is terminal and the drain is verified.** `EN-t-44` reported at branch tip `4e23baf6ca`; the issuer
+re-ran **all five mechanical arms at that tip** in a detached worktree, never in the main checkout --
+`t44-probes`, `t44-mutant`, `t44-comment`, `t44-tests`, `t44-stale-proofs` all PASS, `selftest-arms` reads
+`PASS-ARMS-DISCRIMINATE`, and `proof-of-spec-check.py --governing-order` reads VALID (rc=0). The first-parent
+diff of the drain commit is **7 paths and no path outside the grant**. `AC6` is JUDGMENT and is recorded
+`UNVERIFIABLE-BY-INSTRUMENT` for `3.0.0_SA_CVO`, as the order requires.
+
+**What the round was for, and it held.** The test the cell wrote FAILS under the cheapest wrong fix -- the
+`keyed()` mutant that rewrites the census instance and leaves every other name as it was -- with **zero
+survivors**. The suite moved 2 failed/89 passed to 2 failed/91 passed with an **identical failing set**, and
+the census re-check re-graded 3254 names and moved exactly the 2 that round 10 named. The worker also closed
+a hole this document did not see: the suite loads the library by path under a private module name, so a test
+closing over that copy would have been **unmutatable by construction**; it resolves `grade()` at call time
+instead, which is why the mutant can reach it at all.
+
+**TWO ROWS, and the first one indicts this document.** `W1-S89` is a count drift -- `selftest-arms` prints 16
+arms where the order quotes 15. `W1-S88` is the round's real finding: **`t44-stale-proofs` walks
+`git log <cut_pin>..HEAD` over the round's fixed-input directory, and the cut pin is the round-10 ANALYSIS
+commit, which PREDATES the L6 issuance that CREATED that directory.** The arm counts its own mint, and the
+honest set of proofs pinned before the input changed is EMPTY. The order disclosed the arm as guard-shaped
+`PASS-at-the-cut` -- true when measured, because the directory was not yet committed.
+
+**The same defect was LIVE one project over, and that is where it cost something.** `LGIC_LGCTFM` round 4
+carries the identical arm across all three of its orders with two workers executing against it; there the old
+rule (`len(proofs_re_run) > 0`) made the arm **unsatisfiable by a correct record** -- the only passing move was
+a fabricated proof path. Repaired by the issuer at `1df2481ca0`: set equality against the round's own proofs
+that existed at the parent of the earliest counted commit -- empty at a mint, exact at a real mid-round edit,
+refusing an under-enumeration AND an over-enumeration. Filed as `LGIC_LGCTFM-S35` (BLOCKING, ARMED, disarmed
+same turn), both live workers told directly, and positive satisfiability proven in situ: a correct record
+passes, a fabricated name does not.
+
+**Round 11 is NOT re-opened on it**, and the discriminator is stated rather than assumed: this round's worker
+**enumerated** rather than fabricated, so no verdict here rests on the defect. Exposure, not incident.
+
+**Carried forward, not retrofitted.** `1.0.0_SA_CTO`'s S34 addendum @`e95157fa75` (msg 98102) replaces this
+bar's SWEEP trigger with a per-proof **fixed-input vintage FIELD**, compared only where a proof is consumed at
+L9/L10. The next fixed input carries that field; a live round is not re-shaped around it, and this sentence is
+here so that choice is visible rather than silent.
+
+**What `3.0.0_SA_CVO` receives:** one terminal cell, one judgment criterion to grade (`T44R11-AC6`), and two
+undispositioned rows (`W1-S88`, `W1-S89`). Two project orders remain literally `pending` -- `EN-s-25-r4` and
+`EN-s-6-r3` -- and **both carry proof instances that read VALID**, so neither blocks the slug; they are named
+here because a stale `<status>` is the issuer's loose end, not the adjudicator's surprise.
+
 ## 1. THE DOMAIN, BY SUBTRACTION (Rule 24(i))
 
 ```
