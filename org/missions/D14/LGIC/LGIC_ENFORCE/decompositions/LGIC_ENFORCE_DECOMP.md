@@ -1367,6 +1367,42 @@ populations, one reachable. That contrast is the round in one line.
    domain, not the finding**, and the unscoped read is the one that establishes there is nothing left to
    repair.
 
+
+### 0l.6 THE ROUND-12 CLOSE -- drained @`9fec65e09b`, five of five mechanical PASS, and the greens now MEAN something
+
+**`EN-t-45` is terminal and verified at its own branch tip `9d7fdb757a`** in a detached worktree, never in
+the main checkout: `t45-binding`, `t45-mutant`, `t45-suite`, `t45-note`, `t45-stale-proofs` all PASS,
+`selftest-arms` reads `PASS-ARMS-DISCRIMINATE`, `proof-of-spec-check --governing-order` reads VALID (rc=0),
+and the branch changes NOTHING outside its grant.
+
+**THE FOUR NUMBERS THE ROUND EXISTS TO PRODUCE:**
+
+| | before | after |
+|---|---|---|
+| reach the by-path copy (denominator 38) | **33** | **0** |
+| resolve the shipped module at call time | 2 | **36** |
+| killed by the blunt mutant | 2 | **8**, including the round-10 test |
+| suite failing ids | 2 | **the same 2** |
+
+⭐ **The round-10 test is now killable, which is the whole point:** its green was NO evidence about `grade()`
+and is now evidence, because a substitution of the module the estate imports reaches it. Residuals named: 0,
+needed: 0 -- the record claims 0 and the arm measured 0, and the two are compared rather than trusted.
+
+**`W1-S91` -- THE CELL FOUND A BLIND SPOT IN THE ARM THAT WAS GRADING IT, FIXED THE INSTANCE, AND SAID SO.**
+`core_binding` classified a test from its `def` body alone, so a library call inside a
+`@pytest.mark.parametrize(...)` decorator was **invisible in BOTH directions** -- and a parametrize argument
+is evaluated at COLLECTION time, so it binds exactly like the calls the arm exists to find.
+`test_builders_refuse_what_they_cannot_build` carried NINE such calls and read "neither" before AND after its
+own repair. The cell converted the decorator anyway and filed the row because **the checker would not have
+caught it had it been left alone**. That is the fifth arm of mine this night found by the party it grades,
+and the only one filed INERT -- because the cell had already removed the instance.
+
+**The instrument is repaired too**, so a later round does not inherit the blindness: the classifier's span now
+includes the decorators, with one POSITIVE arm (a by-path call in a decorator IS seen) and one MUTANT arm (the
+consumer-resolved test is still classified from its own span). Re-run at HEAD with the sharper rule:
+by-path still **0**, mutant still kills 8. **A repair that changed the answer would have meant the round's
+own number was wrong; it did not.**
+
 ### 0l.5 WHAT THIS ROUND DOES NOT CLAIM
 
 - It does **not** re-open round 11. The vacuity of one guard-shaped green costs that round nothing and its
