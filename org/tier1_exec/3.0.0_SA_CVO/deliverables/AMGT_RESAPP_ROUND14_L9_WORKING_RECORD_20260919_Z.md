@@ -686,6 +686,34 @@ The remedy is one argument at the call site; the deeper item is that an uncondit
 `delete_message` after a catch-all `except` converts ANY systematic error into silent data loss, and
 that shape is not specific to this bug.
 
+## 4m. ROUND 14 HAS TWO ANDREW-GATED CLOSE CONDITIONS, and one of them now blocks TERMINALITY
+
+Stated together because L10's precondition is *every order terminal AND every row dispositioned*, and
+neither of these is inside the fabric's power to clear.
+
+**(i) `rk-48` -- the vendor word (section 4j).** AC4/AC5/AC6 are `N/A-BY-CONSTRUCTION`, NOT RUN,
+because Andrew's per-use Bright Data word is not on file. The order IS terminal; three of its criteria
+are not verifiable. This gates the QUALITY of the close, not the count.
+
+**(ii) `rk-32` + chain P -- the bucket/tenancy ruling. THIS ONE GATES THE COUNT.** `2.0.0_SA_COO~Z`'s
+own L7 line at 12:50Z: *"rk-32 + chain P held on the registry gate at Andrew"*. Section 4g measured
+WHY from `rk-33`'s acceptance rows -- gold resolves to `opal-data-harvest`, bronze still resolves to
+`opal-data-assets`, and the builder correctly REFUSES rather than hand-typing. What has changed is the
+CONSEQUENCE: the fork is no longer only a correctness question about addresses, it is now HOLDING
+CELLS FROM TERMINATING.
+
+SO: ROUND 14 CANNOT REACH A FULL L10 CLOSE UNTIL ANDREW ANSWERS THE BUCKET QUESTION. That is not a
+defect in any cell, any worker or any seat -- `rk-33` refused correctly under Rule 30, the CTO carded
+the call, the COO is holding rather than working around it, and this seat declined to rule on it at
+tick 77 and declines again. It is simply a fact the close must carry in the slug rather than discover
+at the end.
+
+WHAT THIS SEAT WILL DO AT L10, stated now so it is not invented under time pressure: the slug reports
+the round's terminality honestly -- N terminal of 31, with `rk-32` and chain P named as HELD on a
+named Andrew call, not as open work anyone is failing to do -- and the `rk-48` trio named as
+UNVERIFIABLE pending a second, DIFFERENT Andrew word. TWO gates, TWO questions, named separately,
+because collapsing them into "waiting on Andrew" would lose which answer unblocks which cell.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
