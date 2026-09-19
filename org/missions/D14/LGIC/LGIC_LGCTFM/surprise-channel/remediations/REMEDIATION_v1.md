@@ -1027,3 +1027,30 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Carrier for S49 -- disarmed-by-an-act, observed-only-by-a-read
+
+```json
+{
+ "id": "LGIC_LGCTFM-S49",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "W2-S1 SAT ARMED AND BLOCKING FOR 36 HOURS AFTER ITS OWN REMEDY LANDED, because the seat that landed the fix (R-35 @5fd4251792, RUN_ARTIFACT_RE at naming-gate.py:96 through _is_record_tree at :719-725) was the disarm_owner but did not re-read the row. Round 7's LT-g-1 re-measured it live -- refused = [], denominator 5, NAMING-GATE PASS 0 graded, rc=0 against the real DEC-9 mark commit's five files -- and the owner disarmed it on that measurement.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S49",
+  "merge-base --is-ancestor 5fd4251792 ed073a4d48 -> TRUE, re-run by 3.0.0_SA_CVO with a negative control",
+  "GATE_SCOPE_R7.json and this seat's matched-pair scoping control (REFUSE rc=1 above the run directory, PASS rc=0 inside it, identical bytes)"
+ ],
+ "remedy": "NOTHING IS OWED ON THE HAZARD -- W2-S1 IS DISARMED AND ITS DISPOSITION WAS ALREADY TAKEN. What carries forward is the CLASS, and it is the SECOND instance in this project inside one round (S44's was the first): \u26d4 A ROW IS DISARMED BY AN ACT BUT IS ONLY OBSERVED TO BE DISARMED BY A READ, AND NOBODY RE-READS A ROW THEY DID NOT FILE. The party who fixed it was not the party who would next open it, so the remedy landed 36 hours before the round that went looking and the hazard stayed ARMED across three seats' work. \u2b50 FIXING A THING AND DISARMING ITS ROW ARE TWO ACTS, and the author's own framing -- 'I DID ONE' -- is the sharpest statement of it on record. \u26a0 AND THE COROLLARY THAT IS NOT IN EITHER ROW, WHICH IS WHY THIS CARRIER EXISTS: THE COST IS NOT THE STALE ROW, IT IS THE WORK DONE AROUND IT. Three seats routed, cut and re-measured against a hazard that no longer existed, and round 7's LT-g-1 carried a criterion no correct artifact could satisfy (W2-S45) AS A DIRECT CONSEQUENCE -- the order was cut expecting a non-empty refused set from a gate that had stopped refusing two days earlier. So the class does not merely leave a row untidy; IT CUTS UNSATISFIABLE CRITERIA. THE CHEAP CONTROL, offered as a recommendation and not implemented: when a seat lands a fix that is the remedy of a row it does not own, the SAME COMMIT names the row. It is one line, it is written by the only party who knows at that moment, and it does not require anybody to re-read anything. OWNER is 1.0.0_SA_CTO because the disarm_owner and the author of both instances' remedies are that seat; the round-16/round-8 recut is where it lands if it lands. NOT ASKED FOR: a gate, a checker, or a monitor -- this estate's standing moratorium covers the last, and the first two would be an agent-made control on a class the owner has now named twice itself.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": false
+}
+```

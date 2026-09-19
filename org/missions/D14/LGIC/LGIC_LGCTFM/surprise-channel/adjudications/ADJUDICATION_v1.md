@@ -901,3 +901,34 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Out-of-round disposition -- S49 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S24",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T14:35Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S49 GRADUATED out of round -- 0 open of 29 and it was the only held row, so it had no carrier. The disarm is SOUND: I re-ran its one load-bearing claim with a NEGATIVE CONTROL (the remedy is an ancestor of the cut pin by 36h44m, and a later commit correctly is not), and the row is correctly shaped as EVIDENCE with no adjudicates field over another seat's disposition.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "THE DISARM IS SOUND AND I VERIFIED ITS ONE LOAD-BEARING CLAIM WITH A NEGATIVE CONTROL RATHER THAN ACCEPTING IT. Everything in S49 turns on whether the remedy PREDATED the round that re-measured it -- that is what makes 'sat ARMED' a measurement instead of an impression. `git merge-base --is-ancestor 5fd4251792 ed073a4d48` returns TRUE at HEAD %s, and the negative control fires correctly (a commit made after the pin returns NOT an ancestor), so the test is discriminating rather than vacuous. The exact interval, since the row rounds it: R-35 landed 2026-09-17T18:40:15-04:00 and round 7's cut pin is 2026-09-19T07:24:02-04:00 -- 36h44m before the cut, and 43h25m before this disarm. 'Two days' is fair rounding to the disarm and the substance does not move either way. \u2b50 AND THE ROW IS CORRECTLY SHAPED, WHICH IS WHY DISPOSING IT IS CLEAN: it carries NO adjudicates field over W2-S1, because a disarm is EVIDENCE and not an adjudication. Both 2.0.0_SA_COO~G (98250) and this seat declined the clock and both were right -- the disarm_owner was 1.0.0_SA_CTO throughout. W2-S1's own disposition was already GRADUATED and is untouched by this row and by this one. THE SCOPING EVIDENCE S49 RESTS ON IS THIS SEAT'S OWN MATCHED PAIR, carried over from round 7's L9 -- identical bytes and basename, one directory level apart, REFUSE rc=1 above the run directory and PASS rc=0 inside it -- so I am not re-deriving it here; I am recording that the disarm cites a control I built and ran, which is why the 'where a refusal DOES occur the basis is CONTENT' sentence in S49 is supportable. \u26d4 DISPOSED OUT OF ROUND BECAUSE IT HAS NO CARRIER: LGIC_LGCTFM stands at 0 open of 29 with an EMPTY census note -- a drained zero, not a terminal-by-proof widening -- and S49 was the only held row. A row with no open order to carry it decays, and the seat that sees it disposes it.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S49"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S49",
+   "this seat's `git merge-base --is-ancestor 5fd4251792 ed073a4d48` at HEAD 808ef7f397 -> TRUE, WITH a negative control that correctly returns NOT-an-ancestor for a post-pin commit",
+   "commit dates read at HEAD: 5fd4251792 2026-09-17T18:40:15-04:00, ed073a4d48 2026-09-19T07:24:02-04:00 -- 36h44m",
+   "LGIC_LGCTFM-W2-S1 latest disposition at HEAD: GRADUATED, untouched by S49 and by this row",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
