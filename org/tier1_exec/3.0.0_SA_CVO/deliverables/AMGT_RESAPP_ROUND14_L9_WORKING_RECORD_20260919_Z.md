@@ -200,6 +200,44 @@ NAMES IT FROM THE INPUT'S STATE ON THE DAY OF SIGNING DOES NOT.** That is the HA
 ran the controlled experiment on it by accident: two halves, same night, same boundary, opposite
 outcomes.
 
+## 4b. Banked check GRADED: rk-41's controls -- they DISCRIMINATE, and the population concern did not fire
+
+The banked concern, verbatim from round 14's intake: *a legal implementation could take 12 served
+documents to INVALID while both controls read GREEN.* Two separate questions hide in it.
+
+**(i) Do the controls discriminate? YES.** AC3 and AC4 are a true pair on the SAME document read
+through the adapter's own offline root: AC3 reads `served 23 / served_without_span 0 / rc=0`; AC4
+plants ONE unanchored sentence and the same assertion reads `served 24 / served_without_span 1 /
+rc=1`. The measured quantity MOVES with the planted defect, which is what a control must do.
+
+**(ii) Does that pair cover the 12-document population? NO -- and it did not need to this round.**
+The pair exercises one validation name. But nothing was written to the population at all:
+
+| instrument | reads |
+|---|---|
+| AC6's own evidence (PRODUCER SELF-REPORT) | "REBUILT 0 of 3; 3 ABSENT", no key written |
+| issuer bind D4 | the covered twelve are DRY-RUN this round |
+| AC5 pre-act, read-only | 12 of 33 measured keys carry an analysis object; a pre-act sha256 banked for each |
+| AC7 | `BA_US_Equity` before/after AC6 IDENTICAL on the deployed adapter |
+| **S3 `drafting/v1/` at HEAD (THE SERVED ARTIFACT)** | **exactly 12 objects; NEWEST LastModified 2026-09-17T22:29:31Z** |
+
+rk-41 executed 2026-09-19. The newest object in the prefix predates that by nearly two days, so
+NOTHING in the drafting pool was written this round -- verified against the store rather than taken
+from the producer, per "never trust a producer's self-report". The S3 object count (12) also
+cross-checks AC5's "12 of 33 measured keys carry an analysis object" on a second, independent
+instrument, and the prefix read is WIDER than the 12 keys, so it would have caught a write from any
+source, not only from AC6.
+
+VERDICT: EXPOSURE, did not fire -- the same disposition as section 3a and reached the same way.
+Nothing is re-opened.
+
+CARRIED TO L9 AS A DESIGN OBSERVATION, NOT A ROUND-14 DEFECT: the AC3/AC4 pair is single-document, so
+a regression that degraded the OTHER eleven covered documents would not move either control. That is
+worth saying in the adjudication because the controls' GREEN is routinely read as a statement about
+the served population when it is a statement about one name. The cheap remedy already exists in this
+round's own artifacts -- AC5 banked a pre-act sha256 per key, so a post-act sweep of those twelve
+shas is a population-level control costing one listing.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
