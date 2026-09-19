@@ -79,17 +79,56 @@ he caught me in two hours ago, in the other direction.** Row filed.
 > birth, and proves the repair from an identity the repaired fence admits.**
 
 **Why not the alternative (keep the mint, delete and recreate):** it is available -- Andrew asked it
-directly -- but it is strictly worse here. The fence admits `arn:aws:iam::313476888478:role/*-inf-*` and
-`*-cot-*` **by construction**, and the bucket policy governs `s3:*` and **does not touch IAM**, so a role
-matching the glob is mintable by an identity the fence never sees. ⛔ **A delete-and-recreate spends a
-destructive act to reach a state a role mint reaches additively**, and the buckets are not empty of
-consequence: they are already declared in `s3-lgic-firm-buckets.tf` and already carry whatever `IB-rte-3`
-put in them. **Repair beats rebirth when the repair path is additive and measured.**
+directly -- but it is strictly worse here. ⛔ **A delete-and-recreate spends a destructive act to reach a
+state an additive repair reaches**, and the buckets are not empty of consequence: they are already declared
+in `s3-lgic-firm-buckets.tf`, already carry whatever `IB-rte-3` put in them, and their Terraform resources
+are TAINTED in remote state, so a destroy path re-opens a half-landed apply rather than closing it.
+**Repair beats rebirth when a repair path exists.**
 
 **AND THE REPAIR IS ITSELF FENCED, which the amended cell must carry:** re-applying the corrected fence is
 an `s3:*` action on a denied bucket, so **Terraform cannot repair its own apply** from an unadmitted
-identity either. The admitted-role mint is not a convenience; it is the only path that does not require
-Andrew's own credentials.
+identity.
+
+## 5a. ⛔ CORRECTING MY OWN CLAIM IN §5 BEFORE ANYONE ACTS ON IT: "THE FENCE ADMITS A ROLE WE CAN MINT" IS A **DESIRED-PLANE** READ
+
+**This ruling's first draft said the fence admits `role/*-inf-*` "BY CONSTRUCTION". I read that off
+`infra/aws/terraform/modules/opal_name/generated_locals.tf` -- which is the GENERATOR'S OUTPUT, i.e. the
+policy the NEXT apply will CREATE. It is not the policy ATTACHED to the bucket now, and I cannot read that
+one: `get-bucket-policy` is the call the fence denies me.** Rule 22's STATE axis, DESIRED vs APPLIED, on a
+claim I put in a ruling and a message inside one hour.
+
+⛔ **AND `IRPT_BCKEND.TO-IB-rtf-5` ALREADY CARRIES THE EXACT WARNING, IN ONE SENTENCE, IN ITS `<status>`:**
+
+> *"The DESIRED/APPLIED trap for any reader: `exemptions.json`'s three users are the exemptions of the
+> policy this apply will CREATE, not of the policy attached now (which admits nobody we hold)."*
+
+**A staged order I had not read was ahead of me on my own finding**, and `infra/logic/registry/exemptions.json`'s
+own `_about` says the same from the other side: *"No principal is exempt at this seed."*
+
+⭐ **THE CLAIM IS NOT FALSIFIED EITHER -- AND SAYING SO IS THE POINT.** My `AccessDenied` was against
+`arn:aws:iam::313476888478:user/Andrew_Berman`, **an IAM USER**. A pattern reading `role/*-inf-*` could not
+admit a user under any reading, so **my denial is evidence about the user path and says NOTHING about the
+role path in either direction.** The measurement I ran cannot discriminate the question I used it for.
+
+**THE ONE DISCRIMINATING TEST, NAMED SO IT HAS A CARRIER AND NOT RUN BY ME:** an `s3:*` call against either
+bucket from a principal whose ARN matches `role/*-inf-*`. **Nobody has run it.** `IB-rtf-7`
+(*step 4 attempted by every credential the seat holds*) is the order that owns the class -- ⛔ **and its
+framing is "every credential the seat HOLDS", which is exactly the boundary the AE measured correctly and
+the boundary my finding sits OUTSIDE: a role matching the glob is one this estate can MINT and does not
+hold.** Minting it is an `infra/aws/**` act in the CLOUD_OPS lane and is not mine; I surface it scoped.
+
+**SO THE RULING'S OPERATIVE PART STANDS UNCHANGED** -- F4 is ADOPT-AND-REPAIR because the buckets exist and
+are fenced, which is measured. **What does NOT stand is any sentence of mine promising a repair path that
+avoids Andrew's console act.** `IB-rtf-5` holds step 4 as a human act at the console, deliberately excludes
+the account root from the exemption set (*"the rollback path must not depend on an exemption, and nobody
+adds root to the list"*), and that ordering is the issuer's, not mine to relax from a `.tf` file.
+
+⛔ **THIS IS MY THIRD READING OF THE SAME TWO BUCKETS TODAY AND THE THIRD ONE I HAVE HAD TO NARROW.**
+root-is-the-path (inherited, wrong); the-buckets-do-not-exist (corpus zero, caught by a positive control);
+the-fence-admits-a-role-by-construction (DESIRED plane, caught by reading the order that owns the act).
+⭐ **Each was a faithful instrument answering a question slightly narrower than the sentence I wrote beside
+it. The pattern is not carelessness with instruments -- it is a SENTENCE WIDER THAN ITS MEASUREMENT, three
+times, on the same object.**
 
 ## 6. WHAT MOVES, AND WHOSE SIGNATURE IT RE-OPENS
 
