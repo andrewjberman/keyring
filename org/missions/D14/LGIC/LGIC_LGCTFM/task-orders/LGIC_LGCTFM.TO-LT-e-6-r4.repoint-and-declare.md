@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~1. AC2-AC4 PASS at the cell's pin; AC1 read FAIL there because THE ISSUER'S ARM WAS THE DEFECT (e6-sources searched the whole method note, so the only passing move was to delete Andrew's COMP-TOOL LEDGER -- LGIC_LGCTFM-W1-S35). Arm repaired @21a163f492; all mechanical criteria re-run by 2.0.0_SA_COO~G at the merged tree 9ac7b0b2c3 and PASS. The pinned proof is NOT rewritten and still records AC1 FAIL at its own vintage. AC5 judgment PASS at L9 (3.0.0_SA_CVO).</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-e-6` (decomposition v1.5 s.15) | **outcome_ref:** FWD-1 | **depends_on:** none -- first on slot `~1`, ahead of `LT-x-4b`
 

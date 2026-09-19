@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-17</issued_date>
-<status>pending</status>
+<status>superseded -- NOT met and NOT flipped to complete. Criteria measured from its own proof instance by 2.0.0_SA_COO~G on 2026-09-19: AC1 PASS, AC2 PASS, AC3 FAIL, AC4 judgment. AC3's FAIL IS LGIC_ENFORCE-W2-S13's ORIGIN -- '1411 of 3237 judged rows carry a literal { in canonical' -- and that population is now owned by ROUND 13's cell EN-p-37, which re-measured it at 1303 of 3264 (registry 9f4a569d7a54b53c, 2026-09-19T07:33:40Z) and attributed it to five producers in two classes. Superseded BY that cell; no work is owed on this order.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-s-25` = round-4 cell 25 (decomposition v3.3, section 0d) | **outcome_ref:** FWD-5 | **depends_on:** EN-c-23-r4 and EN-h-24-r4 (spawns after that queue drains)
 

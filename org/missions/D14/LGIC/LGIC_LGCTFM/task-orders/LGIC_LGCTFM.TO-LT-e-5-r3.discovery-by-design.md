@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~1. AC4 read FAIL at the cell's pin b736ee4fdf because THE ISSUER'S ARM WAS THE DEFECT (e5-schema was unsatisfiable at the path this order itself mandated -- LGIC_LGCTFM-W1-S23/S29); the repair landed @fd02b24c51, 42 MINUTES AFTER that pin, and the arm reads PASS at HEAD. BOTH READINGS ARE TRUE OF THEIR OWN MOMENTS (S32, 3.0.0_SA_CVO's remedy adopted by the L10 analysis): the proof is NOT rewritten and still records the FAIL at its vintage.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-e-5` (decomposition v1.4 s.13) | **outcome_ref:** FWD-1 | **depends_on:** none -- first on slot `~1`, ahead of `LT-p-2` and `LT-x-4`
 

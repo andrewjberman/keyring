@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~2. AC2/AC3 PASS at the cell's pin; AC1 read FAIL there because THE ISSUER'S ARM WAS THE DEFECT (m1-entry demanded a status vocabulary the manifest has never admitted, intersection 0 of 127 -- LGIC_LGCTFM-W2-S35). Arm repaired @1d4df2c115; all mechanical criteria re-run by 2.0.0_SA_COO~G at the merged tree b238df04d5 and PASS. The pinned proof is NOT rewritten and still records AC1 FAIL at its own vintage (S32). AC4 judgment PASS at L9 (3.0.0_SA_CVO).</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-m-1` (decomposition v1.5 s.15) | **outcome_ref:** FWD-1 | **depends_on:** none -- the only order on slot `~2`
 
