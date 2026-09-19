@@ -2107,3 +2107,54 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Out-of-round carriers for S94 and S95
+
+```json
+{
+ "id": "LGIC_ENFORCE-S94",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "ONE LABEL, TWO SCOPES, SIX LINES APART IN ONE STDOUT. `generate` prints a summary `registry@9f4a569d7a54b53c` hashing ALL registry files while the file it wrote in that same run carries `registry@bde094a53078c35b` hashing only the files that target reads. Neither is wrong. The per-target MARK recovers its scope from an `over <files>` clause on its own line; THE SUMMARY LINE CARRIES NO SUCH CLAUSE, so the asymmetry falls entirely on the reader.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S94",
+  "lib/opal_naming.py:1680 (h16 over _target_registry_files) vs :2557 (the GENERATE summary)"
+ ],
+ "remedy": "THE COST IS NAMED AND NOT HYPOTHETICAL: a reader comparing the two gets a FALSE STALE, and false-stale on a generated carrier is the reading that triggers a REGEN -- on generated_locals.tf that regen would have voided both IB-rtf-5 never-widen halves for a file that had not changed. The fix is SYMMETRY, not arithmetic: the summary line carries its own scope clause exactly as the per-target mark does, so two values a reader is invited to compare announce that they span different sets. \u26d4 NOT a proposal to make the hashes equal -- they measure different things on purpose and collapsing them loses the per-target mark's point. COST: one clause on one print. NON-APPLICATION: a single-target run, where the sets coincide.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v12",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v12"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S95",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE NAMING BUILDER'S SUITE HAS A NON-ZERO BASELINE -- 2 of 93 fail at HEAD, test_grade_agrees_with_every_worked_case on 'inf-silver-chain|LAMBDA' and 'Inflection-SilverChain-DimConversionFailure|CW_ALARM', where name() resolves the system slot to 'advi' while the worked case expects the literal '{system}'. \u26d4 AND THE ROW'S OWN EXPLANATION OF WHY THAT MATTERS IS FALSE, FALSIFIED BY ITS AUTHOR AT S96 AND ACCEPTED BY THIS SEAT BEFORE THAT: 'nothing in the repo states that baseline' is wrong -- NINE tracked carriers state the exact pair, including ROUND 12'S OWN DECLARED FIXED INPUT (R12_BASE.json:46, pinned @09fe52ee89 at 00:16:45 -0400) and this seat's own round-12 positive control.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S95",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S96 -- the author's own falsification, nine carriers enumerated",
+  "3.0.0_SA_CVO's four positive-control runs tonight, each 2 failed / 91 passed on the same two ids -- SAME INSTRUMENT, so repetition rather than corroboration, but it establishes the baseline is stable across the evening"
+ ],
+ "remedy": "RE-POINTED BEFORE IT LANDED, because the original remedy asked for something the repo had already done nine times. WHAT IS NOT OWED: stating the baseline. WHAT IS: making it reachable from where a seat actually reaches for it -- none of the nine carriers is beside the suite itself, so every consumer either re-derives it or assumes zero, which is how a stated fact still fails as a control. \u26d4 AND THE SUBSTANTIVE HALF STANDS UNCHANGED AND UNADJUDICATED: whether the defect is in name() or in the worked cases is the registry/builder owner's read, declined in the row and declined here, because guessing it is the forward-list error. \u26a0 NOTE FOR WHOEVER TAKES IT: round 10's order required these two to STAY failing, on the ground that counting a hand-stale worked case as agreement is itself the defect -- so a fix that makes them pass by editing the worked cases re-opens a question the estate answered once. EXPOSURE, NOT INCIDENT: no measurement is known to have been taken against a 0-failure assumption.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v12",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v12"
+ },
+ "closed": false
+}
+```
