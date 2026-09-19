@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.17",
+ "decomp_version": "v3.18",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1995,6 +1995,119 @@ measurement's label. `AC4` quantifies over **BOTH** dispositions per the round-8
 - **`LGIC_CANON-W3-S2`.** ⛔ It is `LGIC_CANON`'s. The round-17 analysis routes it and says folding
   another project's quality defect into an ENFORCE round is **the scope creep the round-16 cut was
   corrected for.**
+
+---
+
+## 0s. v3.18 -- THE ROUND-19 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-18 analysis @`a972a343bd`
+
+**ONE CELL. `EN-h-1` -- THE HAND-SIDE RE-MEASURE (FWD-5 clause 3).** The analysis s.4 names it *"the
+round's primary and sufficient work"* and closes with *"Nothing else. Round 18 drained clean on one cell
+and I am not manufacturing work."* This recut adds no second cell.
+
+**WHY THIS IS NOT A WAIT, which is the whole reason the round exists.** `LGIC_LGCTFM` was ruled
+HELD-AT-STOP in the same act, because two of its three outstanding outcomes bar on a sovereign read and
+on another project's wave. `LGIC_ENFORCE` is the opposite case and its own register says so: FWD-5
+clause 3's remedy is *"the HAND RANKING must be re-measured before the comparison can close anything"* --
+**an act a seat can take ON DEMAND.** Andrew-direct: *"no FWD is ever a 'wait' ... sprint, execute,
+validate, and close."*
+
+### 0s.1 ⛔ THE POPULATION IS THREE SURFACES, AND THE SINGULAR IS THE TRAP
+
+The analysis, the register and the outcome text all say **"the HAND RANKING"**, singular. It is three
+artifacts:
+
+| surface | carrier | compared | agree | disagree |
+|---|---|---|---|---|
+| worked cases | `GRADING_RULE.md` | 45 | 43 | **2** |
+| grader rows | `exercises/n6-grader-a.tsv` | 88 | 61 | **27** |
+| ranked surfaces | `TENSION_RANKING.md` | 10 | 5 | **5** |
+| | | **143** | **109** | **34** |
+
+⛔ **A CELL THAT READS THE SINGULAR LITERALLY RE-MEASURES 10 OF 143 AND REPORTS A CLOSED COMPARISON,
+WITH EVERY FIGURE IT PRINTS CORRECT.** That is the round-8 **PARTITION RULE** exactly: the defect's
+mechanism -- a 2026-09-13 pin against an estate that moved -- is **uniform over the three**, so the work
+quantifies over the **PARTITION**, not over `n6-grader-a.tsv` where the disagreement count is highest.
+`core_coverage` enforces it **by SUBTRACTION from the base's own declared set**, never as a forward list
+the checker happens to remember.
+
+⭐ **AND THE DECISIVE FACT IS NOT 109.** 30 of the 34 disagreements name the **HAND** side as the
+defective one (28 stale, 2 weaker). The machine side was right at the census vintage in 30 of 34. **The
+convenient reading -- counting census-right/hand-stale as agreement -- stays REFUSED: that is the graded
+party grading its own reference.**
+
+### 0s.2 ⛔ THE ROUTING RULING, WHICH IS MINE AND IS DISCLOSED RATHER THAN ASSUMED
+
+All three carriers are **`LGIC_NAMING`** deliverables, and `LGIC_NAMING` is **COMPLETE/CLOSED**. The cut
+question is whether the re-measure mutates them.
+
+⛔ **RULED: ADDITIVE SIBLINGS beside each original. The originals are READ-ONLY -- not one byte.**
+
+1. **FWD-5's ACCEPT names *"the ranking THE NAMING WORK produced by hand"*.** The surface must remain the
+   naming work's, so a re-measure parked in this project's own tree would satisfy the cell and **not the
+   outcome**.
+2. ⭐ **Mutating the originals DESTROYS THE DISCRIMINATOR.** The entire content of the 28 *"HAND SIDE
+   STALE"* findings is the **difference** between the 2026-09-13 figure and the current one. An in-place
+   edit deletes the left-hand side of every one of those comparisons.
+3. It is this estate's **own twice-ruled shape** -- `RETIRED.md` (ENFORCE r16) and `DRIFT_CAUSES.md`
+   (LGCTFM r10), both additive siblings that changed no pinned blob and were called decisive by the
+   grader **precisely because they did not**.
+
+**Grant mechanics, checked at the cut and not assumed:** a file directly under `deliverables/` with no
+`<SERIAL>` folder **matches nothing in the tree-deliverables lane and stays refused**
+(`.tools/owned-paths-validate.py:102-103`). The worker reaches these paths **only** through
+`worker_grant`, the fifth additive clause, which admits exactly the `<paths>` this order enumerates. The
+grant is therefore explicit, never conventional.
+
+⚠ **This is an L5 routing choice inside the analysis's scope, not a widening of it.** It is stated here
+and in the issuance so `1.0.0_SA_CTO` can overrule it cheaply. **It is not a gate and nothing waits on
+it.**
+
+### 0s.3 THE OWNER/WRITER SENTENCE THIS ROUND CARRIES (analysis s.1, RULED)
+
+> A card's `owner` is the **DECIDER** and is derived by a read that the reason **states**; where the
+> decider is not `permitted_agents` on the surface the remedy names, the card carries the **WRITER** too.
+
+It binds any card **this round** writes. ⛔ **It is NOT a re-issue of the 1303** -- those need only the
+additive writer field, which is a different act and not this round's.
+
+⭐ **The trap it closes:** *a citation to the rule a field violates is worse than no citation, because it
+certifies the field to every later reader.* The 1303 cards cite Rule 22a's *"a row's owner is READ, never
+guessed"* and then never show the read. **The tell is not the citation's accuracy -- it is whether the
+cited rule's TEST was RUN on the field beside it.**
+
+### 0s.4 THE ADDITIVITY ANCHOR, CORRECTED AGAINST THIS PROJECT'S OWN ROUND 16
+
+`H1R19-AC2` anchors additivity to the **ACTOR'S OWN BASE**, never to a round pin -- ruled by
+`1.0.0_SA_CTO` in the round-10 `LGIC_LGCTFM` analysis **against its own round-16 arm**. A round pin
+silently converts *"this cell was additive"* into *"this file is immutable"*; round 16's arm worked only
+because exactly one commit had ever touched the file it checked. `GRADING_RULE.md` and `n6-grader-a.tsv`
+carry their own legitimate histories, so a blob-vs-round-pin comparison here **would fail on honest
+history** -- a criterion no correct artifact could satisfy.
+
+### 0s.5 CRITERIA
+
+| id | kind | what it grades |
+|---|---|---|
+| `H1R19-AC1` | mechanical | all three surfaces carried, each with a denominator **re-derived at write time**, each key set equal to round 9's by **SET EQUALITY**; an empty population is **REFUSED**, never vacuous |
+| `H1R19-AC2` | mechanical | every revision names its **carrier**, its **sibling path** and the **census vintage** it was measured at; originals byte-unchanged at the **actor's own base** and HEAD |
+| `H1R19-AC3` | mechanical | totals **re-derived**, naming the re-run instrument; a triple reproducing round 9's on **all three** surfaces is refused as a copied total |
+| `H1R19-AC4` | **judgment** (`3.0.0_SA_CVO`) | whether each hand-side revision is **right at the bytes, across ALL THREE surfaces** -- the partition rule again, not the biggest bucket |
+
+**Instrument:** `deliverables/2.0.0_SA_COO~G/fixed_inputs/r19/{R19_BASE.json, check_en_r19.py}`.
+`selftest-arms` prints **`PASS-ARMS-DISCRIMINATE`** over **11 mutants and 3 positive controls** -- the
+positives are there because ⛔ **a mutant test cannot catch a vacuous pass (R-47)**: an unsatisfiable
+predicate refuses every mutant exactly as loudly as a sound arm does. All three arms were confirmed
+**RED at the cut**, each clearable by the worker's own record alone.
+
+⛔ **The run prints its own arm counts and this section does not quote them as a bar** (`W1-S37`).
+
+### 0s.6 WHAT THIS ROUND DOES NOT TOUCH
+
+- **Clause 2** (the unfillable forms). NOT MET, and the analysis says *"Nothing else."*
+- **Re-issuing the 1303.** Refused by the ruling itself.
+- **The registry and the builders.** Round 13's `no_repair` stands; nothing since reverses it.
+- **Re-grading the machine side.** It was right in 30 of 34. Re-running `grade()` to agree with a stale
+  hand side is the refused reading.
 
 ---
 
