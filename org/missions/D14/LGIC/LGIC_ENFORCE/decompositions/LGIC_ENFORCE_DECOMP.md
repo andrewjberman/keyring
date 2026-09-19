@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.16",
+ "decomp_version": "v3.17",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1917,6 +1917,84 @@ clause.**
 the order appears IN the `<paths>` block.** Prose beside the block is commentary. ⛔ The round-16 near
 miss is the reason -- the marker sat UNTRACKED in a worktree due for teardown while its record NAMED
 its path, so **a refusal that blocks a write is loud and the orphaned bytes it leaves behind are not.**
+
+---
+
+## 0r. v3.17 -- THE ROUND-18 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-17 analysis @`25bd9cb1fd`
+
+**Input.** `1.0.0_SA_CTO`'s round-17 analysis @`25bd9cb1fd` s.6 and its `W2-S13` ruling @`4a5b0cafa8`,
+plus `3.0.0_SA_CVO`'s L9 @`de73b9218a`. **Round 17 STANDS** -- `X1R17-AC4` PASS, no PRD addendum owed,
+scope 0 open of 72 at the cut.
+
+### 0r.1 THE CELL -- ONE, AND IT IS THE HALF R-38 HAS BEEN OWED SINCE ROUND 4
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| resolve and card | `EN-t-1` | re-derives the placeholder population from a DECLARED source and dispositions EVERY member RESOLVED or CARDED | `R-38`'s second half | `W2-S13` |
+
+**R-38 has two halves in different states.** *Re-measure your own denominator at write time* is
+**DISCHARGED** (the round-13 record: 1303 of 3264, inherited 1411, SHRANK). *Resolve the measured rows,
+card the rest, print resolved + carded* is **NOT DONE** -- that record states
+`no_repair.registry_or_builder_commits_by_this_cell = 0`. This cell is the second half.
+
+⚠ **AND THE ROW WAS NEARLY DISARMED ON A PATTERN.** Having found three genuine stale rows that day,
+this seat read `W2-S13` as a fourth. **It is not.** The negative arm was the finding, and it cost one
+record read -- **the class's DEFINITION, not its resemblance to the confirmed members.**
+
+### 0r.2 THE RETIRED INSTRUMENT IS NOT NEEDED, AND THE RE-DERIVATION PATH IS CLEAN
+
+`count_report()` -- and with it `p37-population`/`p37-tokens`/`p37-producers` -- was RETIRED at round 15
+because it regex-matched literal braces in the RENDERED table that round 14 escaped. ⭐ **That was never
+the only path.** `NAMING_CENSUS_REPORT.r13.md` carries ONE fenced JSON object with `rows[]` of 3264
+entries, each holding a **RAW `canonical`** field, and it lives in a **worker deliverables directory --
+not under any `fixed_inputs/`**, so reading it breaches no pin. Measured at the cut: **3264 judged,
+1303 carrying a literal token**, agreeing with the round-13 record exactly.
+
+### 0r.3 ⛔ THE POPULATION IS A MULTISET, AND MY FIRST CHECKER COLLAPSED IT
+
+| key | distinct |
+|---|---|
+| placeholder **ROWS** | **1303** |
+| `current` name | **630** |
+| `(current, plane, type)` | 1059 |
+| WHOLE ROW | 1200 |
+
+**No field combination makes it a set** -- there are genuine duplicate rows. **The ROW INDEX is its
+only stable key.**
+
+⭐ **`check_en_r18.py`'s first revision keyed on the NAME. Its own self-test printed `population 630`
+against the 1303 this seat had measured minutes earlier, and THE DISAGREEMENT BETWEEN TWO OF MY OWN
+READS IS THE ONLY THING THAT CAUGHT IT.** A name-keyed arm would have **PASSED a record dispositioning
+630 of 1303 with its arithmetic closing perfectly.** ⛔ **A COLLAPSING KEY DOES NOT ERROR -- IT RETURNS
+A SMALLER POPULATION AND EVERY DOWNSTREAM NUMBER AGREES WITH IT.** This is `3.0.0_SA_CVO`'s round-17
+basename collapse (13 keys for 14 entries), committed by me into an instrument within the hour.
+
+### 0r.4 THE PARTITION IS A SUBTRACTION -- R-38 NAMES THREE TOKENS AND THE POPULATION CARRIES NINE
+
+`{system}` 1119, `{scope}` 122, `{cadence}` 108, `{source}` 85, `{snap}` 7, `{dim_name}` 5, `{firm}` 1,
+`{d}` 1, `{dc}` 1 (token-INSTANCES; a row may carry several, so they do not sum to 1303).
+
+**A cell partitioning by the three named tokens would be using a FORWARD LIST as its domain** -- the
+defect this project has been corrected for four times, most recently in the round-16 analysis's own
+complement. **CARDED = POPULATION MINUS RESOLVED.** The checker REFUSES a `how_enumerated` that names
+the tokens without a subtraction, and a `WIRING` arm proves that naming them *with* one PASSES.
+
+### 0r.5 RESOLVED IS THE COSTLY CLASS TO ASSERT
+
+A `RESOLVED` row must name **the declared source its substitution was MEASURED from**; a `CARDED` row
+must name an **owner AND a reason**. Neither is assertable by shrugging, and **`RESOLVED` is the one
+that claims a measurement was taken** -- a row naming no source is an inference wearing a
+measurement's label. `AC4` quantifies over **BOTH** dispositions per the round-8 partition rule.
+
+### 0r.6 WHAT THIS ROUND DELIBERATELY DOES NOT DO
+
+- **Re-open round 13.** Refused by the ruling in terms; its half of R-38 is discharged.
+- **Edit `check_en_r13.py` or any pinned fixed input.** Round 16's additive-sibling ruling -- and the
+  retired `count_report()` is not needed, because the raw census rows re-derive the population.
+- **Repair the registry or the builders.** Round 13 recorded `no_repair` deliberately.
+- **`LGIC_CANON-W3-S2`.** ⛔ It is `LGIC_CANON`'s. The round-17 analysis routes it and says folding
+  another project's quality defect into an ENFORCE round is **the scope creep the round-16 cut was
+  corrected for.**
 
 ---
 
