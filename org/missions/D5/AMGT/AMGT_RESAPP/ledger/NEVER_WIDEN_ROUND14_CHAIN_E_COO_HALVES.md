@@ -155,8 +155,9 @@ the three-name dry run: `lusha client constructed 0 time(s); nothing written`) -
 word quoted in the order (*"2.) Yes full egress."*, ruled *"Lusha calls are authorized inside the instantiation validation
 (Caterpillar, CSL, Keyence) with NO credit ceiling"*, record @4de34f0d95): `enrich.main --enrich-only --skip-pool` on the
 three validation names; the ONE billable call is `prospecting_page` on the verified domain, so today ONE Lusha call
-(Keyence) and ZERO for CAT and CSL, which are written `lusha_enrichment.status SKIPPED` with reason `NO_VERIFIED_SITE`
-(`domains.json` is never a source for a validation name). Then a REWRITE of the three dated management keys
+(Keyence) and ZERO for CAT and CSL, which are written `lusha_enrichment.status SKIPPED` with `domain_for`'s own reason text (it names the missing
+`verified_site` and the battery winner step; `absence_reason_class pull-missed`) and every officer stamped
+`enrichment NOT-ATTEMPTED` (`domains.json` is RETIRED as a Lusha input by this cell's `domain_for`). Then a REWRITE of the three dated management keys
 `management/v1/{CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity}/<as_of>.json` (the objects `rk-47`/`rk-48` wrote): the
 `lusha_enrichment` block and, on the CALLED name, `officers[].profile_url / lusha_title / enrichment`. AC4 reads back.
 
@@ -167,11 +168,30 @@ untouched (`--skip-pool`; ETag EQUAL before and after). NO Lambda. NO covered na
 **WRITER CENSUS of those 3 keys: N = 1 active writer this round** (`crosswalk.write_pool` via `enrich`), three cells in
 sequence on the same keys (`rk-47`, `rk-48`, then `rk-49` reading `rk-48`'s object as its pre-act state). No schedule.
 
-**EXPECTED OUTCOME, both branches, read from `apply_lusha_enrichment`'s own rule.** A name with a `verified_site`:
-`status CALLED`, `credits_used` printed, officers enriched where Lusha matches, unmatched officers `pull-missed`. A name
-without one: `status SKIPPED`, `reason NO_VERIFIED_SITE`, `credits_used 0`, officers unchanged. A Lusha error: `status`
-FAILED with the error text, officers unchanged, the key still rewritten (the block records the attempt). In every branch
-the pre-existing `ceo_profile` / `ceo_public_profile` / `officers` content is preserved except the three enrichment fields.
+**VINTAGE OF THE PRODUCER -- read this before the branches.** The act runs on the cell's BRANCH bytes, `wk-amgt-14-50`
+at 311aa07b43 (build f21e991b6d), NOT on SITEZ HEAD. At HEAD `enrich.py` still gates Lusha on `domains.json` (a 5-name
+table that carries none of the three validation names) and would make ZERO calls; retiring that gate is exactly this
+cell's work. On the branch: the producer is `apply_lusha_enrichment(document, source_object, lusha_client, dry_run)`
+(`enrich.py:613-666`), reached from `--enrich-only` (`:969-1012`) on the NEWEST existing dated management object per
+key; the gate is `company_domain` from `domain_for(security_key, source_object)` (`:143-207`), which reads ONLY the
+filings object's `verified_site.host` (allow-listed leading label stripped, rule printed) and nothing else.
+
+**EXPECTED OUTCOME, every branch the code has, read from `apply_lusha_enrichment` (`:641-666`).** (a) officers AND
+`company_domain`: ONE `prospecting_page` call on that domain -> `status CALLED`, `credits_used` = the MEASURED charge
+(a WARN suffix if it exceeds `CREDIT_BOUND_PER_NAME`, never clipped), `results_returned / results_total`, officers
+matched by `attach_profiles` (`profile_url`, `lusha_title`, `enrichment MATCHED`), unmatched officers left `ABSENT`.
+(b) officers, NO `company_domain`: no call, `status SKIPPED`, `reason` = `domain_for`'s text, `absence_reason_class
+pull-missed`, EVERY officer stamped `enrichment NOT-ATTEMPTED`. (c) no officers, a domain: `SKIPPED`, `reason`
+"no officers to enrich". (d) no officers, no domain: `SKIPPED` with the domain reason. In every branch the document
+is scrubbed (`contact_keys_removed` counted; contact fields never stored), validated, and written ONLY with
+`--write-pool` after `validate()` passes (`BLOCKED`, nothing written, otherwise); `ceo_profile`, `ceo_public_profile`
+and the roster content are preserved except the enrichment fields named here. TODAY, measured at spawn by the
+worker on the branch's own dry run: CAT_US_Equity (b), CSL_AU_Equity (b), 6861_JP_Equity (a) -> ONE billable Lusha
+call, THREE rewrites (two SKIPPED, one CALLED). **EXCEPTION PATH, deliberately stated:** there is NO `FAILED` branch;
+an exception from `prospecting_page` PROPAGATES out of `apply_lusha_enrichment` and the `--enrich-only` path has no
+handler, so that key is NOT rewritten and the run exits non-zero with the traceback -- the worker records it, files a
+row, and the other keys' outcomes stand as written before it. A run that stops there is HALF-LANDED by count, never
+by content (each key is one atomic put), and the ledger entry closes only when all three keys carry a read-back.
 
 **PER-KEY ROLLBACK.** Pre-act: `get_object` bytes of each of the 3 keys saved to `.scratch/` with sha256 + VersionId
 printed into the entry (bucket versioned). Rollback = `copy_object` from the pre-act VersionId (or re-put the saved
@@ -180,5 +200,6 @@ bytes), read back sha256. `_pool/`: ETag compared, no write to roll back.
 **NOT COVERED:** any Lusha call on a name outside the three; any call on a name without a `verified_site`; a `_pool/`
 write; a Lambda; any run without the order's quoted word.
 
-Signed `2.0.0_SA_COO~Z`, 2026-09-19 ~13:5xZ, mid-round, before the cell's first live act; counterpart half owed by
-`1.0.0_SA_CTO~Z` (asked the same tick). The worker acts only when BOTH halves carry this section.
+Signed `2.0.0_SA_COO~Z`, 2026-09-19 ~13:5xZ, mid-round, before the cell's first live act; RE-CUT ~14:1xZ against the
+branch bytes after `1.0.0_SA_CTO~Z`'s refusal (msg 23886: the first cut named the producer and its branches from memory
+and read the SKIPPED reason wrong); counterpart half owed by `1.0.0_SA_CTO~Z`. The worker acts only when BOTH halves carry this section.
