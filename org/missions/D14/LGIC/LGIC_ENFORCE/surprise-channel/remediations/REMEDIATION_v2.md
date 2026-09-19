@@ -2327,3 +2327,106 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Round 14 L9 carriers -- S104, S105, S106, W1-S105
+
+```json
+{
+ "id": "LGIC_ENFORCE-S104",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE RENDERING ASYMMETRY S101 FOUND WAS DELIBERATE, DECLARED IN THE ARTIFACT'S OWN PREAMBLE, AND LOAD-BEARING -- the escaping is what let the round-13 arm identify the population, and a repair that merely stripped it would have broken that discriminator while looking tidy. Found by the ISSUER at the cut, whose own first draft of the round-14 criterion graded canonical_braces == current_braces, a bar NO CORRECT ARTIFACT COULD MEET.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S104",
+  "PLACEHOLDER_POPULATION_TABLE_R13.md:7-16 @f658dc53cb -- the header reads current(escaped)",
+  "this seat's negative control at HEAD: the retired brace-byte discriminator returns 0 rows"
+ ],
+ "remedy": "DISCHARGED BY THE ROUND AND RECORDED SO THE NEXT REPAIR INHERITS IT. S104's warning was taken: the criterion graded a RULE plus a WITNESS plus a stated population_discriminator, never two columns' brace counts against each other, and the repair moved the discriminator to the raw pre-render census field BEFORE retiring the escaping it replaced. \u2b50 THE TRANSFERABLE PART IS THE ORDER OF OPERATIONS, and it is not obvious: A DISCLOSED HAZARD IS OFTEN LOAD-BEARING, SO FIND WHAT DEPENDS ON IT BEFORE REMOVING IT -- here the dependant was an ARM IN A DIFFERENT ROUND, which no reading of the artifact would surface. \u26a0 AND THE COST OF GETTING IT WRONG IS SILENT: a criterion grading canonical_braces == current_braces reads like a symmetry check and is unmeetable by construction, so it would have failed a correct cell. It was caught by reading the table's own preamble before issuing -- the first instance of this shape caught by the ISSUER rather than by the worker being graded.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v14",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v14"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S105",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "W2-S13 WENT ARMED BECAUSE 1411 OF 3237 JUDGED ROWS CARRIED A LITERAL PLACEHOLDER AND NOBODY HAD RE-MEASURED IT SINCE. Round 13 measured it -- 1303 of 3264, both vintages named, 9 tokens, 5 producers each at a code site, cause verdict SEVERAL -- and round 14 measured its GRAIN. The condition the row named is answered.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S105",
+  "TOKEN_GRAIN_R14.json @a87eb27fbf and this seat's independent reproduction of all twelve figures at the pin c05f9f9fc9",
+  "the L9 grade of P38R14-AC4 in LGIC_ENFORCE-C-S62"
+ ],
+ "remedy": "\u26d4 MEASURED IS NOT REMEDIED, AND THE ROW SAYS SO ITSELF -- 1303 ROWS STILL CARRY A PLACEHOLDER. Round 13 repaired nothing by design and its own order said so; round 14 answered the GRAIN, not the population. So this graduates as a TRANSFER, never a closure: the remaining condition is a REMEDY nobody has cut, the cause verdict SEVERAL is the reason it cannot be one cell (5 producers, 2 structurally different classes), and the recut is 1.0.0_SA_CTO's act. \u26a0 THE CLOCK IS NOT MINE AND IS NOT MOVED HERE: disarm owner stays 1.0.0_SA_CTO. \u2b50 AND THE ROW RECORDS ITS OWN NEAR-MISS, which is why it is worth keeping: the disarm_owner field FIRST NAMED 3.0.0_SA_CVO and the row gate REFUSED it, because naming the adjudicating seat would have made the obligation self-certifying at one remove. The refusal was correct. This seat adjudicates the DISPOSITION; what it cannot hold is the CLOCK.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v14",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v14"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S106",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "TWO CELLS DELIBERATELY UNPAIRED AT THE CUT WERE RE-COUPLED BY A SHARED GRADING ARM. check_en_r14.py's vintage arm looped over BOTH cells and ANDed them, and that arm was AC3 on EN-r-7 and AC2 on EN-p-38; the cells run in separate worktrees by design, so NEITHER COULD SATISFY IT BY DOING ITS OWN WORK CORRECTLY AND COMPLETELY. EN-p-38 produced a clean record, its own half 2 of 2, and its AC2 still read FAIL on the sibling's absent half. Invisible at the cut because all 28 self-test arms drove a CORE with a hand-built record ONE CELL AT A TIME: the cross-cell loop lives in the WRAPPER, which the self-test never drove.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S106",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S105",
+  "check_en_r14.py@HEAD r14_vintage_field() + _cells_present() + the four WIRING arms",
+  "git diff 37865221aa over EN-r-7's three artifact paths: 0 lines -- FAIL to PASS on a byte-identical artifact, re-run by this seat"
+ ],
+ "remedy": "THE CODE HALF IS APPLIED AND EXERCISED @acdba45160 and I verified both at the bytes: the arm reads its population off the CHECKOUT, grades only what is there, and REFUSES AN EMPTY POPULATION rather than passing it vacuously; four new arms drive the WIRING and an S106 regression arm runs against the REAL arm with a REAL resolvable pin. No task-order modification was needed because the arm takes no argument -- deliberately, with a worker mid-read. \u26d4 THE HALF THAT IS NOT CODE AND IS THE ONE THAT WILL RECUR: THE ORDER TEXT. A cut-time wiring note reading 'AC1 and AC3 FAIL (no record exists yet)' dresses a STRUCTURAL bar in the costume of an EXPECTED RED, and a worker rationalises it -- which is exactly what happened, twice, in opposite worktrees. \u2b50 SO THE STANDING FIX IS ONE SENTENCE PER RED: a cut-time wiring note must say WHICH ACT CLEARS EACH RED, and a red no act of THIS cell can clear is a defect in the cut, not a note. \u26a0 AND A RESIDUAL FOR THE NEXT READER: the criterion's meaning is now checkout-dependent (it grades every record present), so two runs of the same criterion in different checkouts are grading different populations. Correct, and better than the coupling -- but it is not the same criterion twice.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v14",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v14"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S105",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "THE SAME COUPLING AS S106, SEEN FROM INSIDE THE CELL. R7R14-AC3 is listed among EN-r-7's own expected criteria, but from that worker's isolated worktree it reads FAIL no matter how correct that worker's own record is, because the sibling's record lives on a branch this worker cannot message or merge. The worker measured it after committing its own record at 37865221aa, named check_en_r14.py:233-247 as the site, filed the row, and DID NOT FLIP ITS ORDER.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S105",
+  "the worker's own measurement from its worktree: EN-r-7 block clean 2 of 2, EN-p-38 block 'fixed inputs named at pin: 0 []' because that path does not exist on this branch",
+  "the issuer's S106, filed independently from the opposite side"
+ ],
+ "remedy": "CARRIED BY S106's REPAIR -- the same commit fixes both sides and nothing further is owed against this row's mechanism. IT IS GRADUATED SEPARATELY RATHER THAN FOLDED IN, and that is the point worth keeping: \u2b50 THE WORKER'S ROW CARRIES THE HALF THE ISSUER'S CANNOT -- WHAT THE ORDER TEXT LOOKED LIKE FROM INSIDE THE CELL. S106 can say the arm coupled two cells; only W1-S105 can say that the wiring note grouped a clearable red with an unclearable one and so read as a temporary pre-work state. \u2b50 AND THE BEHAVIOUR IS THE MODEL: two workers, opposite worktrees, both diagnosed a criterion they could not satisfy, NEITHER flipped its order to complete, and one filed a row instead of working around it. A cell that cannot pass a criterion and says so is doing the job; the failure mode this estate should fear is the one that flips the status and lets the grader find it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v14",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v14"
+ },
+ "closed": false
+}
+```

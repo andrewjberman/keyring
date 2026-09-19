@@ -1588,3 +1588,82 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Round 14 L9 -- two judgment grades, four rows disposed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S62",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T11:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 14: BOTH judgment criteria PASS. R7R14-AC5 -- the table is byte-identical to what the named renderer rebuilds, and S101's 5 false negatives are now 0 on a full-population sweep. P38R14-AC4 -- every figure reproduced on my own counter, and the multiplicity was MEASURED, which matters because inference would have been wrong by exactly 8. S104 and S105 GRADUATED.",
+ "spec_asserts": "Judgment criteria are graded at L9 and never self-graded.",
+ "world_is": "PASS, and all four halves were re-measured on this seat's own instruments rather than read. (1) PRODUCED BY THE NAMED RENDERER -- BYTE-IDENTICAL. I imported load_rows() and build_table_bytes() from render_population_table_r14.py and rebuilt the table IN MEMORY, deliberately NOT running its main(): OUT_TABLE points at the committed artifact, so running the writer and then comparing would have compared the file to itself. Rebuilt 431654 bytes against 431654 committed, EQUAL. (2) THE WITNESS IS REAL AT BOTH COLUMNS: {snap}/(snap) occurs in 7 rows of `current` and 7 of `canonical`, over a denominator of 3264 data rows, before AND after. (3) THE POPULATION DISCRIMINATOR SURVIVES, AND ITS MOVE WAS REQUIRED RATHER THAN OPTIONAL -- this is the half that could have sunk the repair and it is the one I pressed hardest. The r13 arm identified the population by WHICH COLUMN STILL CARRIED BRACE BYTES; escape-everywhere zeroes canonical's braces, so that method is dead. NEGATIVE CONTROL, run by me on the repaired table: the retired discriminator returns 0 rows. The record moves it to the RAW census json's `canonical` field, pre-render, and I tested THAT claim directly on the raw rows -- 3264 rows, 1303 carrying a {token}, reproducing round 13's population EXACTLY. The renderer's own docstring names the retirement and the replacement in terms, so the move is deliberate and disclosed, not a side effect somebody will rediscover. (4) S101's FALSE NEGATIVE NOW RETURNS THE RIGHT ANSWER, measured as a BEFORE/AFTER pair on one instrument: comparing each row's `current` against its `canonical` both as TEXT and normalised AT THE VALUES, the round-13 pin c05f9f9fc9 reads 634 equal at the values but only 629 equal as text -- 5 FALSE NEGATIVES -- and the repaired table reads 634 and 634, ZERO. \u2b50 THE 5 IS S101's OWN COUNT, ARRIVED AT BY A DIFFERENT ROUTE: round 13 found it while grading five cited rows; this is a full-population sweep of 3264. Corroboration, not repetition. \u26a0 ONE CONSEQUENCE THE ROUND SHOULD CARRY FORWARD RATHER THAN DISCOVER: the repair BREAKS ANY INSTRUMENT THAT READS THE POPULATION OFF THE RENDERED TABLE'S BRACES -- including the one I used minutes earlier to grade P38R14-AC4 at the r13 pin, which returns 1303 there and would return 0 against the current table. That is correct behaviour and the record anticipates it; it is named here because the next seat to re-run EN-p-38's measurement against the CURRENT table gets a clean, denominator-bearing zero. || P38R14-AC4: PASS, every figure independently reproduced. I parsed the table at the pin c05f9f9fc9 with my own counter and matched all twelve published numbers: denominator 3264 data rows; 1303 rows carrying a placeholder; by-token sum 1449; distribution 1 token 1165 / 2 tokens 130 / 3 tokens 8; 138 rows carrying more than one; and all NINE per-token counts exactly ({system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1). \u26d4 MY FIRST PARSE RETURNED 0 OF 3264 AND THE ZERO WAS MY INSTRUMENT, NOT THE WORLD: I filtered data rows against a markdown separator matched by ^\\|[\\s:|-]+\\|$, and this table's header and separator DO NOT START WITH A PIPE at all, so my anchor list was empty and the comprehension returned nothing. I read the file's actual shape before reporting anything. \u2b50 AND THE SECOND WRONG INSTRUMENT WAS ONE I ALMOST USED: a brace-agnostic regex over the WHOLE LINE would have re-introduced exactly the double-count the r13 escaping exists to prevent, because a literal {snap} in the OBSERVED name appears in `current` too. The population is defined over `canonical`, so the count belongs on that column with real braces. THE HALF THE ORDER ASKS ME TO CHECK -- WAS THE MULTIPLICITY MEASURED OR INFERRED -- IS ANSWERED AGAINST THE CELL: sum minus rows is 1449-1303 = 146, the measured multi-token row count is 138, and they differ by exactly the 8 rows carrying THREE tokens, each over-contributing 2 instead of 1. The identity holds only when no row carries three or more, and the observed maximum is 3, so inference would have been WRONG BY 8 and would have looked perfectly arithmetical. The record states in terms that it was 'never inferred from by_token_sum minus rows_with_a_placeholder'. THE DISTRIBUTION IS COMPLETE AGAINST ITS DENOMINATOR on both closures: 1165+130+8 = 1303 closes the row denominator, and 1303 + 1961 = 3264 closes the judged population. THE RECONCILIATION SENTENCE FORECLOSES THE MISREADING rather than merely avoiding it -- it names both grains, gives the identity 130*1 + 8*2 = 146 = 1449-1303, and says explicitly that 138 is NOT the naive difference and why. \u2b50 AND ITS CROSS-CHECK IS CORROBORATION, NOT REPETITION, which is rarer than it sounds: it recomputes from the ROW-LEVEL TABLE and compares against the PRE-AGGREGATED JSON -- a different artifact, not the same command run twice.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S104",
+  "LGIC_ENFORCE-S105"
+ ],
+ "disposition": "GRADUATED",
+ "grades": [
+  {
+   "criterion": "R7R14-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-7-r14.one-render-path.proof_of_spec.json@85d622daf5",
+   "verdict": "PASS",
+   "reason": "PASS, and all four halves were re-measured on this seat's own instruments rather than read. (1) PRODUCED BY THE NAMED RENDERER -- BYTE-IDENTICAL. I imported load_rows() and build_table_bytes() from render_population_table_r14.py and rebuilt the table IN MEMORY, deliberately NOT running its main(): OUT_TABLE points at the committed artifact, so running the writer and then comparing would have compared the file to itself. Rebuilt 431654 bytes against 431654 committed, EQUAL. (2) THE WITNESS IS REAL AT BOTH COLUMNS: {snap}/(snap) occurs in 7 rows of `current` and 7 of `canonical`, over a denominator of 3264 data rows, before AND after. (3) THE POPULATION DISCRIMINATOR SURVIVES, AND ITS MOVE WAS REQUIRED RATHER THAN OPTIONAL -- this is the half that could have sunk the repair and it is the one I pressed hardest. The r13 arm identified the population by WHICH COLUMN STILL CARRIED BRACE BYTES; escape-everywhere zeroes canonical's braces, so that method is dead. NEGATIVE CONTROL, run by me on the repaired table: the retired discriminator returns 0 rows. The record moves it to the RAW census json's `canonical` field, pre-render, and I tested THAT claim directly on the raw rows -- 3264 rows, 1303 carrying a {token}, reproducing round 13's population EXACTLY. The renderer's own docstring names the retirement and the replacement in terms, so the move is deliberate and disclosed, not a side effect somebody will rediscover. (4) S101's FALSE NEGATIVE NOW RETURNS THE RIGHT ANSWER, measured as a BEFORE/AFTER pair on one instrument: comparing each row's `current` against its `canonical` both as TEXT and normalised AT THE VALUES, the round-13 pin c05f9f9fc9 reads 634 equal at the values but only 629 equal as text -- 5 FALSE NEGATIVES -- and the repaired table reads 634 and 634, ZERO. \u2b50 THE 5 IS S101's OWN COUNT, ARRIVED AT BY A DIFFERENT ROUTE: round 13 found it while grading five cited rows; this is a full-population sweep of 3264. Corroboration, not repetition. \u26a0 ONE CONSEQUENCE THE ROUND SHOULD CARRY FORWARD RATHER THAN DISCOVER: the repair BREAKS ANY INSTRUMENT THAT READS THE POPULATION OFF THE RENDERED TABLE'S BRACES -- including the one I used minutes earlier to grade P38R14-AC4 at the r13 pin, which returns 1303 there and would return 0 against the current table. That is correct behaviour and the record anticipates it; it is named here because the next seat to re-run EN-p-38's measurement against the CURRENT table gets a clean, denominator-bearing zero."
+  },
+  {
+   "criterion": "P38R14-AC4",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-p-38-r14.the-token-grain.proof_of_spec.json@27a8cec42d",
+   "verdict": "PASS",
+   "reason": "PASS, every figure independently reproduced. I parsed the table at the pin c05f9f9fc9 with my own counter and matched all twelve published numbers: denominator 3264 data rows; 1303 rows carrying a placeholder; by-token sum 1449; distribution 1 token 1165 / 2 tokens 130 / 3 tokens 8; 138 rows carrying more than one; and all NINE per-token counts exactly ({system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1). \u26d4 MY FIRST PARSE RETURNED 0 OF 3264 AND THE ZERO WAS MY INSTRUMENT, NOT THE WORLD: I filtered data rows against a markdown separator matched by ^\\|[\\s:|-]+\\|$, and this table's header and separator DO NOT START WITH A PIPE at all, so my anchor list was empty and the comprehension returned nothing. I read the file's actual shape before reporting anything. \u2b50 AND THE SECOND WRONG INSTRUMENT WAS ONE I ALMOST USED: a brace-agnostic regex over the WHOLE LINE would have re-introduced exactly the double-count the r13 escaping exists to prevent, because a literal {snap} in the OBSERVED name appears in `current` too. The population is defined over `canonical`, so the count belongs on that column with real braces. THE HALF THE ORDER ASKS ME TO CHECK -- WAS THE MULTIPLICITY MEASURED OR INFERRED -- IS ANSWERED AGAINST THE CELL: sum minus rows is 1449-1303 = 146, the measured multi-token row count is 138, and they differ by exactly the 8 rows carrying THREE tokens, each over-contributing 2 instead of 1. The identity holds only when no row carries three or more, and the observed maximum is 3, so inference would have been WRONG BY 8 and would have looked perfectly arithmetical. The record states in terms that it was 'never inferred from by_token_sum minus rows_with_a_placeholder'. THE DISTRIBUTION IS COMPLETE AGAINST ITS DENOMINATOR on both closures: 1165+130+8 = 1303 closes the row denominator, and 1303 + 1961 = 3264 closes the judged population. THE RECONCILIATION SENTENCE FORECLOSES THE MISREADING rather than merely avoiding it -- it names both grains, gives the identity 130*1 + 8*2 = 146 = 1449-1303, and says explicitly that 138 is NOT the naive difference and why. \u2b50 AND ITS CROSS-CHECK IS CORROBORATION, NOT REPETITION, which is rarer than it sounds: it recomputes from the ROW-LEVEL TABLE and compares against the PRE-AGGREGATED JSON -- a different artifact, not the same command run twice."
+  }
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S104",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S105",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-r-7-r14.one-render-path.proof_of_spec.json@85d622daf5 and org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~2/LGIC_ENFORCE.TO-EN-p-38-r14.the-token-grain.proof_of_spec.json@27a8cec42d -- both judgment rows UNVERIFIABLE-BY-INSTRUMENT naming 3.0.0_SA_CVO",
+   "this seat's in-memory rebuild of PLACEHOLDER_POPULATION_TABLE_R13.md: 431654 bytes, equal",
+   "this seat's before/after equality sweep over 3264 rows: 5 false negatives at c05f9f9fc9, 0 at HEAD",
+   "this seat's independent token counter at c05f9f9fc9: 1303 / 1449 / {1:1165, 2:130, 3:8} / 138, and 9 of 9 per-token counts matching",
+   "NEGATIVE CONTROL: the retired brace-byte discriminator returns 0 rows on the repaired table, while the raw census canonical field returns 1303 of 3264"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S63",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T11:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S106 and W1-S105 GRADUATED -- the same defect filed from the issuer's side and the worker's, and the repair is VERIFIED at the one place it could have been faked: EN-r-7's AC3 went FAIL to PASS while its artifact stayed BYTE-IDENTICAL to its first commit, so the flip is attributable to the checker and the drain, not to redone work.",
+ "spec_asserts": "Every criterion on an order can be satisfied by a correct artifact from the cell it is addressed to.",
+ "world_is": "One could not, and the issuer filed it against itself. THE REPAIR IS REAL AND I READ IT AT THE BYTES, not from the report: r14_vintage_field() at HEAD calls _cells_present() to read its population OFF THE CHECKOUT, grades those cells and only those, and \u2b50 REFUSES AN EMPTY POPULATION EXPLICITLY rather than passing it vacuously -- which is the trap this estate has been bitten by before and is the single best line in the repair. THE DISCRIMINATOR HOLDS AT MY OWN INSTRUMENT: `git diff 37865221aa` over EN-r-7's three artifact paths returns 0 LINES, so the FAIL-to-PASS flip happened on records that never changed. \u2b50 AND THE NEW ARMS ARE AIMED AT THE RIGHT TARGET: four WIRING arms now drive _cells_present() itself -- one-record-grades-only-it, the sibling alone, the merged tree, and empty-population-REFUSED -- plus an S106 regression arm run against the REAL arm with a REAL resolvable pin. The previous 28 arms all drove a CORE with a hand-built record ONE CELL AT A TIME, which is exactly why not one of them could see a defect that lived in the wrapper. An injected self-test certifies the ARMS, never the WIRING, and this repair is that lesson applied at the right layer rather than quoted. \u26a0 ONE RESIDUAL I NAME RATHER THAN GRADE: the criterion's MEANING is now checkout-dependent -- it grades 'every record present here', so it passes on one cell in a worktree and on both after the drain. That is the correct trade (the alternative re-couples the cells) and it needed no task-order modification because the arm takes no argument, but a future reader comparing two runs of the same criterion is comparing two populations. BOTH WORKERS BEHAVED CORRECTLY and that is worth recording: each diagnosed the coupling from its own worktree, NEITHER flipped its order to complete, and 0.9.0_WK_LGIC_ENFORCE~1 filed W1-S105 rather than working around it. W1-S105 and S106 are the same defect seen from opposite sides; I graduate both rather than folding one into the other, because the worker's row carries the half the issuer's cannot -- what the order TEXT looked like from inside the cell.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S106",
+  "LGIC_ENFORCE-W1-S105"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S106",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S105",
+   "check_en_r14.py@HEAD r14_vintage_field() + _cells_present(): population off the checkout, empty population REFUSED",
+   "check_en_r14.py@HEAD :406-440 -- the four WIRING arms and the S106 regression arm",
+   "git diff 37865221aa over EN-r-7's three artifact paths: 0 lines",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carriers, minted in this commit"
+  ]
+ }
+}
+```
