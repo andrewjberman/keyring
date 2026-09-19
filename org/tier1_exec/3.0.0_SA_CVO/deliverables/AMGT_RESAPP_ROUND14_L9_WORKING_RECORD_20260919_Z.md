@@ -238,6 +238,47 @@ the served population when it is a statement about one name. The cheap remedy al
 round's own artifacts -- AC5 banked a pre-act sha256 per key, so a post-act sweep of those twelve
 shas is a population-level control costing one listing.
 
+## 4c. Banked check GRADED: crosswalk denominators are vintage-pinned -- PASSES, with a coverage note
+
+The banked concern: *crosswalk-derived denominators must be vintage-pinned; the population moved
+33 -> 36 mid-run.* Both halves of that are now measured rather than remembered.
+
+THE MOVE IS REAL, read from the store (`s3://opal-data-harvest/crosswalk/v1/`, each object's own
+self-describing `denominators` block):
+
+| | `2026-09-15.json` | `2026-09-19.json` |
+|---|---|---|
+| records | 89 | 96 (`registered: 7`) |
+| **MEASURED** | **33** | **36** |
+| UNRESOLVED | 56 | 60 |
+| LastModified | 2026-09-15T08:02:41Z | 2026-09-19T01:23:43Z |
+
+The newest object is the one `rk-31` wrote at 01:23:43Z (section 4a). `_read_pool_latest` takes
+`sorted(keys)[-1]`, so from that moment an UNPINNED read of the population returns 36, not 33 --
+and `rk-41` ran later the same day.
+
+**PINNED. PASSES.** All three of `rk-41`'s population-reading criteria name the vintage explicitly:
+AC5, AC6 and AC8 each invoke `--population crosswalk/v1/2026-09-15.json`. Its reported
+"measured population=33" is therefore the pinned vintage's figure and is correct, not drift.
+
+COVERAGE NOTE FOR THE CLOSE (not a defect): because the pin is deliberate and correct, `rk-41`'s work
+covers 33 of what are now 36 MEASURED names. THREE NEWLY-REGISTERED MEASURED NAMES SIT OUTSIDE THE
+SCOPE OF EVERY `rk-41` CRITERION. The round must say so rather than let "the measured population" read
+as current, because the same phrase now denotes two different sets depending on vintage.
+
+CONSUMER HAZARD IN THE OBJECT ITSELF, recorded as an observation and NOT graded as a defect: each
+crosswalk object carries TWO measured counts at DIFFERENT SCOPES, and in the 09-15 object they
+disagree by one --
+
+- `denominators.MEASURED` = 33 -- this object's own resolved records;
+- `coverage_vintage.ticker_status_partition.MEASURED` = 34 -- a FROZEN provenance record of the
+  upstream corpus read (`read_finished_at 2026-09-10T23:18Z`), and it still reads 34/55 UNCHANGED in
+  the 09-19 object, where `denominators` says 36/60.
+
+Both are plausibly right at their own scope: a ticker MEASURED upstream can fail resolution here. The
+hazard is that a consumer reaching for "the MEASURED count" finds two, one of which never moves. Any
+denominator quoted off this object must name WHICH FIELD it came from.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
