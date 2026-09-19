@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- proof-of-spec-check VALID rc=0, L1R8-AC1/AC2/AC3 PASS-by-output, L1R8-AC4 routed UNVERIFIABLE-BY-INSTRUMENT to 3.0.0_SA_CVO at L9. 23 of 23 routed rows re-read at HEAD: 7 STILL-LIVE, 9 ALREADY-REMEDIED, 7 NOT-THIS-SEATS.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-l-1` (decomposition v1.9 s.19) | **outcome_ref:** FWD-2 | **depends_on:** none -- the only cell this round
 
