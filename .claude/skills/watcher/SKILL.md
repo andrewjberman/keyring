@@ -140,14 +140,25 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    the theft, `:124` echoes into a dead pipe). `kill` is named here so nobody re-adds it as the "portable"
    form. Enumerate on the Windows plane, SCRIPT ROWS ONLY, with the START TIME that identifies an orphan:
    ```powershell
-   Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
-     Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' -and $_.CommandLine -notmatch ' -c ' } |
-     Select-Object ProcessId, CreationDate | Sort-Object CreationDate
-   # ONE row  = healthy. REAP NOTHING.
-   # N>1 rows = REAP ONLY A SCRIPT ROW WHOSE CreationDate PREDATES YOUR CURRENT ARM. The live watcher is created
-   #            BY the current arm, so this selector can never pick it (4.0.0_SA_CRO 98376).
-   Stop-Process -Id <winpid-created-before-your-arm> -Force -Confirm:$false
+   $rows = @(Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
+     Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' -and $_.CommandLine -notmatch ' -c ' })
+   $rows | Select-Object ProcessId, CreationDate | Sort-Object CreationDate ; "script rows: $($rows.Count)"
+   # ONE row  = healthy. REAP NOTHING.  RIGHT AFTER YOU ARM, run this once and RECORD that row's ProcessId.
+   # N>1 rows = REAP BY PID-COMPLEMENT: script rows MINUS the pid you RECORDED at arm time.
+   # NO RECORDED PID = REAP NOTHING AND RE-ARM (then record the new one).
+   Stop-Process -Id <a-script-pid-that-is-NOT-your-recorded-pid> -Force -Confirm:$false
    ```
+   ⛔ **THE SUBTRACTED TERM MUST BE A PID YOU OBSERVED, NEVER AN ARM TIME YOU RECONSTRUCT.** "Created before my
+   current arm" is only safe if the seat HOLDS its arm time; reconstructed from a tick clock it is a guess, and
+   the error biases TOWARD REAPING -- a later guessed arm time selects more rows, the live one first. Measured
+   2026-09-19 by `2.0.0_SA_COO~G` (98392, row `LGIC_LGCTFM-S61`): it derived 19:05 for an arm that happened at
+   18:54:02 and the census condemned its one healthy watcher; it reaped nothing. A confident wrong answer does not
+   trigger an "if unsure" fallback, which is why the fallback is keyed on a RECORDED pid, not on confidence. The
+   banner cannot supply it: `parent-tied: pid <N>` is the WRAPPER's pid.
+   ⛔ **WRAP EVERY CIM QUERY IN `@( )`.** In Windows PowerShell 5.1 a SINGLE un-wrapped CimInstance returns EMPTY
+   for `.Count`, so a guard like `$stale.Count -eq 0` compares `$null -eq 0`, is FALSE, and prints "orphan present"
+   on a clean one-row serial -- it can never report "nothing to reap". Same seat, same message; not reproduced on
+   `Get-Process`.
    ⛔ **A DEAD PARENT IS NOT THE TEST -- IT IS THE NORMAL HEALTHY STATE.** The launching wrapper shell exits right
    after spawning the stream, so a LIVE watcher's script row reads `parent DEAD` seconds after arming. **The first
    version of this step (2026-09-19 @`138b3efd19`) defined an orphan as "a row whose parent no longer exists" and
@@ -155,9 +166,9 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    VERIFY-AFTER then passes.** `2.0.0_SA_COO~O` (98368) and `4.0.0_SA_CRO` (98369) each ran the census, found
    their ONE live script row with a dead parent, and stopped before acting; `0.0.0_AB_MSTR`'s own live watcher
    reads the same. The exercise that justified the first version could not see it: that orphan was 3.5 DAYS old,
-   where age and dead-parent agree. **THE DISCRIMINATOR IS AGE AGAINST YOUR LATEST ARM, AND IT IS A CONJUNCT, NOT
-   AN ASIDE.** The `-notmatch ' -c '` filter drops the two wrapper shells, which match only because their `-c`
-   string contains the script path. If you cannot say which row is newest-since-your-arm, REAP NOTHING and re-arm.
+   where age and dead-parent agree. **THE DISCRIMINATOR IS THE ROW YOUR CURRENT ARM CREATED -- HELD AS A RECORDED PID (above), never as a
+   property you infer and never as a time you reconstruct.** The `-notmatch ' -c '` filter drops the two wrapper shells, which match only because their `-c`
+   string contains the script path. If you hold no recorded pid, REAP NOTHING and re-arm.
    **VERIFY-AFTER, never skip it:** re-run the census and require exactly ONE script row, the newest; then after
    arming (step 2) read the new Monitor's banner for `parent-tied: pid <N>` and confirm an `[INBOX]` event still
    arrives. ⚠ **TWO BOUNDS.** The banner names the WRAPPER it is tied to, never the script row -- a live wrapper
