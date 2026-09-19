@@ -640,6 +640,52 @@ per-use word**, named in those words, so the CTO reads an outstanding dependency
 non-applicable criterion. No criticism of the worker attaches to this -- it picked a legal status,
 recorded the reason verbatim, and filed the row; the distinction is the adjudicator's to draw.
 
+## 4k. W39-S2 graded: the arity defect is REAL, would be SILENT, and has NEVER FIRED
+
+`W39-S2` (INERT) reports `pull_consumer.py` calling `stage_pull` with four positional arguments
+against a three-parameter signature. Graded in full, because "a pre-existing TypeError" understates
+what the code would do and overstates what it has done.
+
+**(1) THE DEFECT IS REAL** -- verified by AST, an instrument different from the row's read:
+`stage_pull(blp, s3, security)` has exactly 3 params, 0 defaults, no `*args`;
+`pull_consumer.py:99` passes 4 positional args. A guaranteed `TypeError` on call.
+
+**(2) IT IS ON THE PRIMARY PATH, NOT DEAD CODE.** Line 99 sits in `process_one()` (`:80-121`); the
+module carries `main`, `drain` and a `__main__` guard, and `infra/aws/terraform/harvest/sqs.tf:10`
+grants this consumer ReceiveMessage/DeleteMessage while `pull_enqueue/lambda_function.py:17` names it
+*"the box-side consumer ... drains it"*. Every message it processes would reach line 99.
+
+**(3) THE FAILURE WOULD BE SILENT, AND THIS IS THE PART NOBODY RECORDED.** The call sits inside
+`try:`, whose `except Exception` writes `state="FAILED"` with the exception text and then falls
+through to an UNCONDITIONAL `sqs.delete_message(...)`. The comment states the intent plainly -- *"any
+pull/derive failure is a MARKED status, never a crash-and-lose"* -- and that intent is right for a
+TRANSIENT failure. Against a SYSTEMATIC one it inverts: every enqueued request would be consumed,
+marked FAILED, and DESTROYED. No retry, no DLQ backlog, no crash-loop, no loud signal -- the queue
+would drain to nothing and the only trace would be one FAILED status per security.
+
+**(4) IT HAS NEVER WORKED** -- not a regression. `stage_pull`'s 3-param signature landed
+`6983401df7` 2026-09-10T19:33:48-04:00; the 4-arg call site landed `1a62bb9932` 2026-09-10T21:13:17-04:00,
+**1h40m LATER**. The call site was wrong from birth.
+
+**(5) AND IT HAS NEVER FIRED -- so INERT IS CORRECT.** The signature of a firing is a `status.json`
+whose reason carries the TypeError. Run over the population with its denominator printed:
+`s3://opal-data-harvest/packs/` holds **40 objects: 39 `input_ledger.json` and exactly ONE
+`status.json`**. That one, `packs/NVDA_US_Equity/status.json`, reads `state: LANDED`, `reason: None`,
+`updated_at 2026-09-11T00:54:02Z` -- **NINETEEN MINUTES BEFORE the defective call site was committed
+at 01:13:17Z.** No status object has been written since. The consumer has processed ZERO messages in
+the nine days the defect has existed.
+
+THIS SEAT'S OWN CORRECTION: on reading (2) and (3) this seat expected INERT to be understated and was
+going to say so. The measurement said otherwise. EXPOSURE, NEVER FIRED -- the same disposition as
+sections 3a, 4b and 4f, reached the same way, and the third time tonight a measurement has overturned
+this seat's hypothesis rather than confirming it.
+
+CARRIED TO L9: `W39-S2` is dispositioned with its standing UPHELD and its consequence NAMED -- the
+moment anyone starts that box-side consumer, every pull request is silently consumed and destroyed.
+The remedy is one argument at the call site; the deeper item is that an unconditional
+`delete_message` after a catch-all `except` converts ANY systematic error into silent data loss, and
+that shape is not specific to this bug.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
