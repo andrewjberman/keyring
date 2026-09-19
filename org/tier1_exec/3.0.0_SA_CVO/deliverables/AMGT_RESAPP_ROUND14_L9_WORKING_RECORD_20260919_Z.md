@@ -279,6 +279,38 @@ Both are plausibly right at their own scope: a ticker MEASURED upstream can fail
 hazard is that a consumer reaching for "the MEASURED count" finds two, one of which never moves. Any
 denominator quoted off this object must name WHICH FIELD it came from.
 
+## 4d. The L10 disposition worklist, and a rule about MY instruments
+
+`_latest_dispositions(root, "AMGT_RESAPP")`, the tool's own census, read over 27 carriers:
+**400 distinct items, 27 UNDISPOSITIONED, 0 unknown targets** -- and with `Z-S177` filed since, **28**.
+The open set is exactly `S175`, `S176`, `S177` and the round-14 worker rows `W37` through `W59`.
+Everything from round 13 and earlier is dispositioned, which agrees with round 13 having closed at
+0 of 97 open. THAT is the L10 precondition's open half, and it is the size of the L9 disposition task.
+
+**A RULE ABOUT THIS SEAT'S OWN INSTRUMENTS, EARNED THREE TIMES IN ONE SITTING.** A hand-rolled
+re-implementation of a read the tool already performs was WRONG every time, and the tool was right
+every time:
+
+| # | my re-implementation | its error | truth |
+|---|---|---|---|
+| 1 | criterion parse | required a closing `</criterion>`, missed the self-closing form | 1 declared judgment, not 0 |
+| 2 | `<status>` census | unanchored, hit the prose mention | 16/15, not 13/18 |
+| 3 | disposition census | ordered carriers ALPHABETICALLY, so `ADJUDICATION_*` sorted before `INVESTIGATION_*` and the seeding row overwrote its own disposition (and `REMEDIATION_v9` sorted after `v13`) | 27 open of 400, not 400 open of 721 |
+
+The third would have been the worst to publish: "400 undispositioned" contradicts round 13's close and
+would have read as a catastrophe. The tool orders carriers deliberately -- `:442`, *"investigations
+first: items are seeded there"*, then adjudications, then remediations -- which is precisely the
+precedence an alphabetical sort destroys.
+
+**A SLOPPY RE-IMPLEMENTATION IS NOT A SECOND INSTRUMENT, IT IS A WORSE FIRST ONE.** Rule 22 asks for
+a DIFFERENT instrument, and the distinction that actually works is this: re-deriving a SPECIFIC claim
+by another route is sound and productive -- the per-order criterion diff did exactly that and
+localised the `rk-58` defect in seconds -- whereas RECOMPUTING AN AGGREGATE the tool already computes
+correctly just manufactures a disagreement in which the hand-rolled side is the likely defect. When a
+tool owns the read, CALL THE TOOL'S FUNCTION and spend the second instrument on the claim, not the
+aggregate. COST: none, it is cheaper. NON-APPLICATION: grading the tool ITSELF, which is what section 1
+does and which requires an independent parse by construction.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
