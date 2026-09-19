@@ -9344,6 +9344,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The four listed ANNUAL-REPORT risk-heading phrases are the vocabulary a real annual report's risk section carries.",
     "world_is": "On the one ANNUAL-REPORT document this order actually validates against, none of the four phrases matches the report's own primary risk section title; one of them ('Risk management') happens to also be the real heading of a DIFFERENT, later section discussing the same general topic (enterprise risk management under Governance), and the cutter resolves to that section instead. This is not a wrong-object bug in the D9 sense (no story, no cross-reference, no table-of-contents entry was cut) -- it is a genuine heading that is thematically adjacent but not the report's own named risk-factors section.",
     "notes": "Remedy, if wanted: add 'Material Risks' (or a broader synonym set) to the declared ANNUAL-REPORT risk phrase list. Not done here -- the order names the four phrases explicitly and this worker does not widen a declared pattern list on its own judgment (the REFUSAL CLAUSE); AC4 is satisfied as measured either way."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W40-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~40",
+    "surfaced_at": "2026-09-19T06:35:50Z",
+    "one_line": "Bloomberg's own COMPANY_WEB_ADDRESS for CSL ('www.csl.com.au') resets the TCP connection on every GET this worker tried (default urllib, a curl-style UA, and fetch.py's SEC User-Agent, all timed out or RemoteDisconnected) while DNS resolves fine -- the ONE entity-tied seed step 4 has for CSL is unreachable from this box, so AC3 REFUSES rather than reaching investors.csl.com (the host the validation report itself names as the eventual winner).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: python -c urllib GET https://www.csl.com.au/ with fetch.py's SEC_USER_AGENT -> RuntimeError 'Remote end closed connection without response' after 2 attempts, reproduced 3 of 3 tries",
+        "measured: same URL with a curl/8.0.1 UA over an explicit ssl.create_default_context() -> identical RemoteDisconnected",
+        "measured: socket.gethostbyname('www.csl.com.au') resolves (12.3.33.221) and socket.gethostbyname('investors.csl.com') resolves (15.134.117.25) -- DNS is not the failure",
+        "measured: https://investors.csl.com/ (NOT a Bloomberg-supplied seed; no EDGAR website/investorWebsite field either, both blank on CIK 0001274152) answers 200 with fetch.py's own UA, 87330 bytes, in the same session -- so the block is specific to www.csl.com.au, not to this box's egress or UA generally",
+        "the task order's own 1.2.2 permits NO search primitive and no seed beyond COMPANY_WEB_ADDRESS + EDGAR website/investorWebsite -- with the sole seed unreachable, step 4 has no path to investors.csl.com and the order's own REFUSAL CLAUSE (section 4, and AC3's own expect text) names this exact outcome as the correct one, not a defect to route around"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 expects step 4 to reach investors.csl.com via the bounded, entity-tied crawl and pass the acceptance test there, 'the Bloomberg hint www.csl.com.au is NOT the host' (1.1's own measured narrative).",
+    "world_is": "The Bloomberg hint itself cannot be fetched from this box at all (connection-level reset, not a 403/404), so the crawl never gets a first page to harvest links from and never discovers investors.csl.com. AC3 is REFUSED with the crawl log per the order's own sanctioned outcome ('If the crawl cannot reach the document ... this criterion is REFUSED with the crawl log -- never passed on a typed URL') -- this worker did not hand-type investors.csl.com as a seed to route around the block.",
+    "notes": "Remedy holder: whoever can test this crawl from a different egress path (a different box, or a proxy) -- if www.csl.com.au blocks this box's IP/TLS fingerprint specifically, a re-run from elsewhere may reach it and let the crawl discover investors.csl.com on its own. Not attempted here: no alternate egress is in this order's bounds."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W40-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~40",
+    "surfaced_at": "2026-09-19T06:35:50Z",
+    "one_line": "The pool key for a battery-produced source object is derived from THAT RUN's own outcome (EDGAR accession, or doc-<sha16> for a non-EDGAR winner, or the literal string UNRESOLVED-SOURCE) -- so two --write-pool runs for the SAME security_key that land on DIFFERENT outcomes (an early UNRESOLVED-SOURCE before a code fix, then a RESOLVED winner after it) accumulate as TWO objects under filings/v1/<security_key>/ rather than one current object superseding the other.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: s3://opal-data-harvest/filings/v1/6861_JP_Equity/ carries BOTH UNRESOLVED-SOURCE.source.json (status UNRESOLVED-SOURCE, written before this worker's crawl-priority fix, when the bounded BFS crawl exhausted its 40-page cap on Keyence's own large nav tree before reaching /investor/library/securitiesreport.jsp) AND doc-1defdb68a7ffd3b7.source.json (status RESOLVED, written after the fix, winner step 4) -- confirmed via AC7's own listing script, 'objects read 4 of 3 validation keys'",
+        "fetch.py's pool_key(security_key, accession) keys strictly on `accession` (or the literal 'UNRESOLVED-SOURCE' when None) -- an UNRESOLVED-SOURCE run and a later RESOLVED run for the same security_key necessarily produce two DIFFERENT keys, never a single overwritten object",
+        "this is unrelated to crosswalk.write_pool's own put-only-if-changed guard (same document-sha256 skips the PUT) -- that guard prevents a re-run with an UNCHANGED outcome from re-writing; it does nothing when the outcome itself changed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC7's own script treats every object under filings/v1/<security_key>/*.source.json as current evidence for that key ('for key in objs: ... served += 1'), implicitly reading the prefix as carrying one row per validation key.",
+    "world_is": "The prefix can carry more than one historical object per key once a key's battery outcome changes across separate --write-pool invocations (exactly what a resumable, iteratively-fixed crawl produces in practice). AC7 still PASSES on its own stated failure bar (no key is absent; no object carries parser_version 1.0.0) because every object present, including the stale one, was written by THIS battery at parser_version 2.0.0 -- but a downstream reader of the prefix that assumes 'one object per key' would pick up the wrong one depending on S3 listing order.",
+    "notes": "Remedy holder: whichever cell reads filings/v1/<security_key>/ downstream (AMGT-rk-49 or the analyzer) should key on the LATEST retrieved_at / most recent PUT among same-prefix objects, or this order's own pool-write step should be made to delete/supersede a prior differently-keyed object for the same security_key -- neither is in this order's <paths> (filings/v1/ writes here are scoped to the three validation names only, and this worker does not delete pool objects on its own judgment)."
   }
 ]
 ```
