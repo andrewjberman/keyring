@@ -949,7 +949,106 @@ PRD, so it is a row here, not a message.
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "WHAT THE CELL DID: used the reserved-prefix override on the artifact commit, named this row in it, and did not touch infra/system/. WHAT IS OWED AND TO WHOM: the recompile commit (`comp-system`, then stage infra/system/06_current_state.{md,json} and the refreshed siblings) after this branch drains -- 2.0.0_SA_COO~G's to make or to route, which is why it is the disarm owner. TWO REMEDIES, both cheap, and the choice is not this cell's: (a) a round that grants a worker a path under org/modules/graph/ ALSO grants infra/system/06_current_state.{md,json} so the discharge is reachable; or (b) the drain owner treats a STRUCTURAL/rule-bank override as an explicit drain obligation, since the two-phase rule already makes post-landing the only correct moment. COST: one line in a grant, or one item on a drain checklist. NON-APPLICATION: a commit touching no comp-system _SOURCE, and any seat whose lane already covers infra/system/."
-  }
+  },
+ {
+  "id": "LGIC_LGCTFM-W1-S35",
+  "project": "LGIC_LGCTFM",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+  "surfaced_at": "2026-09-19T02:55Z",
+  "one_line": "E6R4-AC1's arm CANNOT BE SATISFIED BY A CORRECT REPAIR: core_sources() is a bare substring search over the whole method note, so it cannot tell a refused tool NAMED AS A SOURCE from one NAMED AS NOT USED -- and the three residual hits are all rows of the 78-row COMP-TOOL LEDGER whose verdict column literally reads NOT USED.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "The arm, verbatim: check_lt_r4.py:127-132 core_sources() -- 'hit = [r for r in refused if r in text]' over text_of('infra/logic/10_LEGACY_TRANSFORM.md') plus the contract's coverage block (e6_sources(), :199-206). A PASS requires ZERO occurrences of any REFUSED token.",
+    "Its output after the repair landed: 'R-81-refused discovery sources named in the design: 3 [comp-estate, comp-routes, comp-aws] / R-81-allowed authorization instrument(s) named: 3 [comp-iam live, comp-iam reconcile, comp-iam simulate] / VERDICT: FAIL-E6-SOURCES'. The repair's OWN target is gone: the two comp-iam-role-mode mentions the arm counted at the cut are removed and all three allowed instruments are now named.",
+    "The three residual hits, quoted from the file at their lines: ':329 | 3 | comp-aws | NOT USED -- the ENGINE that derives the graph, deprecated for agent use 2026-09-09; its output is read here through comp-kuzu.' / ':352 | 26 | comp-estate | NOT USED -- semantic descent over layers/definitions; ratified terms, not a resource population.' / ':385 | 59 | comp-routes | NOT USED -- CloudFront to origin to Lambda serving path; the edge Lambdas it names are reached by iam_grant here (candidate for client_facing).' Every one is a NOT-USED verdict, i.e. the design declaring it does not read that source.",
+    "Why no correct repair exists: that table is the COMP-TOOL LEDGER mandated by an Andrew-direct (~18:3xZ, msg 98038, record @c9e54d5c0f) -- a Rule-24 subtraction over a PRINTED denominator of 78 tools, '4 USED, 74 NOT USED, one reason each'. Satisfying the arm requires deleting or re-spelling three of those 78 rows, which destroys the subtraction and its denominator. That is the workaround the order forbids, so the arm is reported FAILING rather than worked around, and no fixed input was edited.",
+    "The perverse direction, which is the point: a design that DOCUMENTS having rejected a refused tool scores WORSE on this arm than one that never mentions it -- so the arm penalises exactly the Rule-24 evidence R-81 conformance is supposed to produce.",
+    "Scope, measured rather than assumed: the contract's coverage block carries ZERO refused tokens (0 of 8 over 11540 chars of coverage JSON); all 4 hits at the cut and all 3 now are in the method note, and 3 of 3 residual ones are inside the ledger table."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E6R4-AC1: 'cd <WS> && timeout 900 python <C> e6-sources' expects PASS-E6-SOURCES, and the order states that an arm a CORRECT repair cannot satisfy is a BLOCKING surprise row quoting the arm and its output -- never a workaround, never an edit to a fixed input.",
+  "world_is": "The arm reads FAIL-E6-SOURCES after a complete and correct repair. The two mentions the repair owned are gone and all three R-81-allowed instruments are named; the three remaining hits are NOT-USED rows of an Andrew-directed 78-tool ledger that a substring test cannot distinguish from a discovery source.",
+  "notes": "One remedy shape, for the disarm owner and not acted on here: the arm could read only the design sections (or exempt a line whose verdict column reads NOT USED) rather than the whole file. That is an edit to a fixed input and therefore the issuer's, not this worker's. AC2, AC3 and AC4 all read PASS on the same artifacts."
+ },
+ {
+  "id": "LGIC_LGCTFM-W1-S36",
+  "project": "LGIC_LGCTFM",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+  "surfaced_at": "2026-09-19T02:55Z",
+  "one_line": "THE CONTRACT SCHEMA CANNOT CARRY THE HAND-SURFACE GUARD: LGCTFM_CONTRACT.schema.json $defs.coverage is CLOSED (additionalProperties false, exactly five keys), so a contract carrying R-81's guard output inside its coverage block reads HAND BACK from the estate's own router.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "Measured, not predicted: a first build put the guard at coverage.hand_surfaces and .tools/receiving-check.py returned rc=1 'HAND BACK lgctfm-contract ... schema: coverage: Additional properties are not allowed (authorization_plane, hand_surfaces were unexpected)'.",
+    "The schema read directly: org/standards/LGCTFM_CONTRACT.schema.json $defs.coverage carries additionalProperties false with properties exactly [by_node_type, instrument, legs, token_floor, vintage] and all five required.",
+    "The route itself is FINE -- this is not round 3's W1-S23 recurring. The same run named e6.lgctfm-contract.json routes as 'lgctfm-contract' rather than UNCHECKED, and after the guard moved out it reads 'ACCEPT lgctfm-contract ... 1 ACCEPT | 0 HAND BACK | 0 UNCHECKED' (rc=0). The filename lesson landed; the schema is a different wall.",
+    "What was done instead, inside the grant: the guard travels as its own run sidecar HAND_SURFACES.json beside the contract, and the leg's PLANE statement rides in coverage.instrument, a REQUIRED key that needs no schema change. The order's GUARDED branch asks that the guard run as part of the walk and its output be carried; both hold.",
+    "Why it is ARMED rather than inert: org/standards/LGCTFM_CONTRACT.schema.json is outside this order's paths grant, and LT-x-5 runs this same engine into the run home next. Any later cell that reaches for coverage.hand_surfaces will meet the same refusal."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's GUARDED branch: 'run comp-lambdamap two-plane check as part of the walk and carry its output', with the walk's product a routable *.lgctfm-contract.json.",
+  "world_is": "The guard runs in the walk and its output is carried, but NOT inside the contract: the contract's coverage block is schema-closed and refuses any additive key, so the guard rides in a sidecar and the contract reads ACCEPT.",
+  "notes": "No schema edit was attempted -- that path is not in this order's grant, and a path the grant lacks is a row rather than an override. Whether coverage should gain a hand_surfaces key is the schema owner's call."
+ },
+ {
+  "id": "LGIC_LGCTFM-W1-S37",
+  "project": "LGIC_LGCTFM",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+  "surfaced_at": "2026-09-19T02:55Z",
+  "one_line": "THE ORDER'S ARM COUNT IS A MOVING NUMBER, NOT A CONSTANT: the worker face names '21 arms, 8 positive-satisfiability' and selftest-arms drove 24 and 8, because four of the arms are minted per round-4 order rather than fixed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "Run first, as the order requires: 'arms driven: 24 (8 POSITIVE-SATISFIABILITY, 16 mutant/other)' then 'VERDICT: PASS-ARMS-DISCRIMINATE'. The EXPECTATION the order states is the verdict token, and that is met; only the parenthesised count differs.",
+    "The mechanism: check_lt_r4.py selftest_arms() globs task-orders/LGIC_LGCTFM.TO-LT-*-r4.*.md and mints one S85-order-quotes-carrier arm PER ORDER plus one S85-every-order-quotes arm. With three round-4 orders that is 4 of the 24, so the total moves whenever an order is added or removed and no edit to the checker is involved.",
+    "Corroborated from a second direction the same night: the issuer's own mid-round notice reports the REPAIRED checker at '28 arms, 10 positive-satisfiability'. Three different numbers (21 stated, 24 measured here, 28 after the repair) for the same named control.",
+    "Positive-satisfiability held at 8 in this worktree, matching the order; it is the total that drifts."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: 'run python <C> selftest-arms FIRST and expect PASS-ARMS-DISCRIMINATE (21 arms, 8 positive-satisfiability)'.",
+  "world_is": "PASS-ARMS-DISCRIMINATE with 24 arms and 8 positive-satisfiability. No arm failed and nothing was worked around; the stated total is a snapshot of a count that varies with the number of round-4 orders on disk.",
+  "notes": "Filed because a reader who checks the parenthesised number against a run will find a mismatch that is not a defect, and the cheapest fix is for the face to quote the verdict token alone."
+ },
+ {
+  "id": "LGIC_LGCTFM-W1-S38",
+  "project": "LGIC_LGCTFM",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_LGCTFM~1",
+  "surfaced_at": "2026-09-19T02:55Z",
+  "one_line": "A PER-WORKTREE MEASUREMENT FEEDS A SHARED EQUALITY BAR: core_stale() requires the record's fixed_input_commits_since_cut to EQUAL a count it re-measures live, but the worker measures it against ITS OWN branch, which does not carry the issuer's mid-round repair commit -- so an honest record goes stale at the drain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "Measured in this worktree at record-write time: git log 87607a2a30..HEAD over R4_BASE.json stale_proof_bar.watched_paths returns exactly ONE commit, aad67ca4bc, the L6 issuance that MINTED the round-4 fixed input. Round-4 proofs existing at its parent: zero. So this record carries fixed_input_commits_since_cut 1 with proofs_re_run empty, which is the honest answer here and matches the repaired rule's mint case exactly.",
+    "The other half: the issuer's own notice states it repaired check_lt_r4.py at 1df2481ca0 and that 'N reads 2 as I write this'. That commit is REACHABLE in this worktree's object database (git cat-file -e succeeds) but is NOT an ancestor of this branch's HEAD (aad67ca4bc), so the same query cannot see it here and a worker cannot merge it in.",
+    "Why the value is perishable rather than wrong: core_stale() tests sp.get('fixed_input_commits_since_cut') == n where n is re-derived at GRADE time. Graded on the merged index the live n is 2 or more while this record says 1, so a record that was exact when written reads wrong when graded, and nothing in either number announces the scope it was measured in.",
+    "Not this order's criterion: r4-stale-proofs is not among E6R4-AC1..AC5. It is filed because r4_stale_proofs() reads whichever of the three round-4 records loads first, so this record's number can decide another cell's arm.",
+    "Verified rather than trusted, on the half that IS this order's: git diff of check_lt_r4.py between this HEAD and 1df2481ca0 touches ONLY core_stale, the new proofs_at_risk helper, the r4-stale-proofs arm and its self-test arms. core_sources, core_handsurface, core_no_loss and the e6 arms are byte-identical, so grading AC1-AC4 on this worktree's copy is grading them on the repaired checker."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The issuer's mid-round instruction: 'N is the count the arm itself prints -- MEASURE IT AT YOUR OWN WRITE TIME, do not copy a number from this message', against an arm that tests the recorded N for EQUALITY with a live re-derivation.",
+  "world_is": "Measured at this worker's own write time on its own branch, N is 1 and the at-risk set is empty. On the merged index the same query reads at least 2. Both are correct for their own scope and the arm can only be satisfied by one of them.",
+  "notes": "The record states its own scope in a _worktree_scoped field rather than guessing the post-drain number, so whoever grades r4-stale-proofs after the drain can re-measure rather than inherit. Instruction followed as written; no number was copied."
+ }
 ]
 ```
 
