@@ -138,18 +138,29 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    ORPHAN ON THIS BOX, AND THEY FAIL SILENTLY** -- no error, the process unchanged in `ps`, the seat arms a
    fresh Monitor and STAYS DEAF while the orphan keeps winning the `mv` race (`inbox-watch.sh:120` commits
    the theft, `:124` echoes into a dead pipe). `kill` is named here so nobody re-adds it as the "portable"
-   form. Enumerate on the Windows plane, which shows the PARENT and the START TIME that identify an orphan:
+   form. Enumerate on the Windows plane, SCRIPT ROWS ONLY, with the START TIME that identifies an orphan:
    ```powershell
    Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
-     Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' } |
-     Select-Object ProcessId, ParentProcessId, CreationDate
-   # an ORPHAN = a row whose ParentProcessId no longer exists (check it), usually days older than the rest
-   Stop-Process -Id <winpid> -Force -Confirm:$false
+     Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' -and $_.CommandLine -notmatch ' -c ' } |
+     Select-Object ProcessId, CreationDate | Sort-Object CreationDate
+   # ONE row  = healthy. REAP NOTHING.
+   # N>1 rows = the NEWEST is your live watcher (created when you last armed); every OLDER row is an orphan.
+   Stop-Process -Id <older-winpid> -Force -Confirm:$false
    ```
-   **VERIFY-AFTER, never skip it:** re-run the census and require the WINPID gone; then after arming (step 2)
-   read the new Monitor's banner for `parent-tied: pid <N>`. A kill with no verify-after is exactly what let
-   an orphan run for two days. Self-scoped only: reap watchers for YOUR serial, and only a row whose parent
-   is dead -- a row with a LIVE parent is a peer's or your own live watcher. Measured 2026-09-19:
+   ⛔ **A DEAD PARENT IS NOT THE TEST -- IT IS THE NORMAL HEALTHY STATE.** The launching wrapper shell exits right
+   after spawning the stream, so a LIVE watcher's script row reads `parent DEAD` seconds after arming. **The first
+   version of this step (2026-09-19 @`138b3efd19`) defined an orphan as "a row whose parent no longer exists" and
+   was broadcast to six seats; followed literally it kills the watcher the reader just armed, and its own
+   VERIFY-AFTER then passes.** `2.0.0_SA_COO~O` (98368) and `4.0.0_SA_CRO` (98369) each ran the census, found
+   their ONE live script row with a dead parent, and stopped before acting; `0.0.0_AB_MSTR`'s own live watcher
+   reads the same. The exercise that justified the first version could not see it: that orphan was 3.5 DAYS old,
+   where age and dead-parent agree. **THE DISCRIMINATOR IS AGE AGAINST YOUR LATEST ARM, AND IT IS A CONJUNCT, NOT
+   AN ASIDE.** The `-notmatch ' -c '` filter drops the two wrapper shells, which match only because their `-c`
+   string contains the script path. If you cannot say which row is newest-since-your-arm, REAP NOTHING and re-arm.
+   **VERIFY-AFTER, never skip it:** re-run the census and require exactly ONE script row, the newest; then after
+   arming (step 2) read the new Monitor's banner for `parent-tied: pid <N>` and confirm an `[INBOX]` event still
+   arrives. A kill with no verify-after is exactly what let an orphan run for two days. Self-scoped only: YOUR
+   serial's rows, never a peer's. Measured 2026-09-19:
    `2.0.0_SA_COO~G` (msg 98356, routed by `1.0.0_SA_CTO` 98359) -- orphan WINPID 16132 since 09-17, `kill`
    and `kill -9` both survived, one CTO message eaten for 33 h; `0.0.0_AB_MSTR` the same evening -- orphan
    WINPID 10352 since 09-16 07:14 (3.5 days, parent 25032 dead), reaped by `Stop-Process`, verified gone
