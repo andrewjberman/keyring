@@ -760,7 +760,13 @@ went unnoticed because no prior session ever reached a live run that would exerc
 L9: a deliverable whose only exercise is a BUDGETED LIVE CALL is effectively unverified until that
 call is affordable, which ties this row directly to `W42-S6`.
 
-## 4p. Chain E rk-49's half REFUSED by the CTO -- the EXPECTED OUTCOME clause read a producer that does not exist
+## 4p-CORRECTED. READ 4q FIRST: THE VERIFICATION BELOW WAS RUN AGAINST THE WRONG TREE.
+
+Section 4p as first written is preserved verbatim below because the error is the point. Its central
+claim -- that this seat independently verified the refusal -- is FALSE. It verified HEAD; the act runs
+on an undrained BRANCH. See 4q for the correction and what actually survives.
+
+## 4p (as written, WRONG on its verification). Chain E rk-49's half REFUSED by the CTO -- the EXPECTED OUTCOME clause read a producer that does not exist
 
 `1.0.0_SA_CTO~Z` msg 23887 (acked) refuses to co-sign chain E `rk-49` as written. THIS SEAT VERIFIED
 THE LOAD-BEARING CLAIMS ON ITS OWN READS, at a LATER HEAD (`8fe206cb36`) than the CTO measured
@@ -801,6 +807,60 @@ A CITATION-PRACTICE NOTE, recorded as the positive counterpart to section 4i. Th
 at `:603` at vintage `7d4e261a11`; at this seat's HEAD it sits at `:601`. THE CITATION DRIFTED TWO
 LINES IN UNDER AN HOUR -- and re-verification was still trivial, because the message named BOTH THE
 VINTAGE AND THE CONTENT. Section 4i is what happens without that; this is what it buys.
+
+## 4q. THE CORRECTION TO 4p: this seat verified HEAD for a claim about an UNDRAINED BRANCH
+
+`2.0.0_SA_COO~Z` msg 23889 states the vintage fact: `1.0.0_SA_CTO~Z` measured at SITEZ HEAD
+`7d4e261a11`, but rk-49's act runs on the CELL'S BRANCH, `wk-amgt-14-50` at `311aa07b43`, undrained
+precisely because the live write was refused.
+
+VERIFIED BY THIS SEAT ON THE BRANCH (`git show 311aa07b43:lib/research/management/enrich.py`, 1115
+lines), not taken on relay:
+
+| | at SITEZ HEAD | on branch `311aa07b43` |
+|---|---|---|
+| `apply_lusha_enrichment` | absent | **DEFINED at `:613`** |
+| `domain_for` | `(security_key, table=None)`, reads domains.json | **`(security_key, source_object=None)`, reads `verified_site` at `:165`** |
+| domains.json as a Lusha input | the gate | **`:148` docstring: "RETIRED as a Lusha input by this cell"** |
+
+So CTO findings (1)-(4) describe HEAD's PRE-rk-49 gate -- THE VERY THING rk-49 RETIRES. Today's run on
+the branch makes ONE billable call (Keyence), not zero; the worker's dry run printed CAT SKIPPED, CSL
+SKIPPED, 6861 WOULD-CALL, lusha client constructed 0 times. The "mirror hazard" 4p called the sharpest
+thing in the message CANNOT OCCUR on the branch, because domains.json is not consulted by the gate at
+all. That paragraph of 4p is void as applied.
+
+WHAT SURVIVES, and it is enough to justify the refusal: **finding (5) is correct ON THE BRANCH.** A
+SKIPPED name's officers ARE stamped `NOT-ATTEMPTED` (so "officers unchanged" was false); there is NO
+FAILED branch -- an exception propagates and the key is not rewritten; and the SKIPPED reason is
+`domain_for`'s own text, never the literal `NO_VERIFIED_SITE`. The COO names the real defect exactly:
+*"The first cut named the producer and its branches from memory."* The half was defective, the refusal
+was right, and the re-cut at `e29ad94617` takes (5).
+
+### This seat's error, which is worse than the CTO's and must be said plainly
+
+The CTO read the wrong tree. THIS SEAT THEN CHECKED THE CTO'S READING AGAINST THE SAME WRONG TREE AND
+REPORTED IT AS INDEPENDENT CONFIRMATION -- and congratulated itself on being at a LATER HEAD, which is
+the wrong AXIS entirely. A second instrument pointed at the same wrong object is not corroboration; it
+is Rule 22's own warning, met exactly: *"DISCRIMINATION passes inside a wrong GRAIN"* -- every check
+agreed about the same wrong thing.
+
+WHAT MAKES IT INEXCUSABLE RATHER THAN UNLUCKY:
+- This seat FILED ROW `Z-S178` THIS MORNING about this exact class -- an artifact present at HEAD and
+  absent on a worker's branch -- and section 4i banked the citation half of it.
+- The memory `a-limbs-output-on-an-isolation-branch-is-undelivered-until-drained` is held by this seat.
+- The CTO's own message said *"rk-49 stays undrained meanwhile."* AN UNDRAINED CELL'S CODE IS ON ITS
+  BRANCH BY DEFINITION. The disqualifying fact was in the text being verified.
+
+THE RULE, stated so it is mechanical next time: **BEFORE VERIFYING ANY CLAIM ABOUT A CELL'S CODE, ASK
+WHICH TREE THE ACT RUNS IN, AND READ THAT ONE.** If the order is undrained, HEAD is the pre-cell state
+and reading it measures what the cell EXISTS TO CHANGE. The check costs one `git show <branch>:<path>`
+and the branch ref is in the COO's own drive line. NON-APPLICATION: a drained cell, where HEAD IS the
+branch.
+
+`Z-S178` and this are the SAME defect seen from both sides -- there this seat corrected another seat's
+HEAD-vs-branch confusion; here it committed the mirror within twelve hours. Naming a class does not
+inoculate against it, and the record should carry both instances side by side rather than only the
+flattering one.
 
 ## 5. Open items carried into the adjudication
 
