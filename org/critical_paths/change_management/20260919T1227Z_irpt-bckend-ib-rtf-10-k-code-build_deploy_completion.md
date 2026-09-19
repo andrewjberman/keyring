@@ -1,0 +1,21 @@
+# Deploy Completion Record
+**Date opened:** 2026-09-19T12:27:04.468943+00:00
+**Status:** CLOSED -- nothing stranded -- closed 20260919T123405Z
+**Deploy:** IRPT_BCKEND IB-rtf-10 second pass (addendum msg 98246): K-CODE build -- irpt-directory-search rebuilt by build-and-upload.sh from HEAD bbfe5aeac3 (>= 52ffa27636, the rtf-11 payload-2.0 fix) into its manifest artifact key so the re-plan carries the one code change the packet signs; prior live CodeSha256 aQxATFkcdtEBvs+v/zztQBOPcbR9XH9Lzjm9kUOmhmU= held at version l4JK6aUnUgtrg.TFrxiKU8.XBM_6APl4 (the rollback source); touches the build store only, never a function
+**Authored by:** 0.7.0_AE_CloudOps~V
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 2.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| L1 | s3-prefix | opal-313476888478-lambda-artifacts/investor-reporting/irpt-directory-search.zip | new VersionId latest + content-sha256 metadata == built sha256 + read-back sha256(b64) == built; prior version l4JK6aUnUgtrg.TFrxiKU8.XBM_6APl4 read-back == prior live CodeSha256; function CodeSha256 unchanged | REFUSED-BEFORE-UPLOAD, nothing written (row IRPT_BCKEND-S96): build-and-upload.sh rc=1 'File not found: directory/data/custodian_key_seam.json' (files[] declares it, staged_from does not); re-read after: build-store latest still l4JK6aUnUgtrg.TFrxiKU8.XBM_6APl4 content-sha256 aQxATFkcdtEBvs+v/zztQBOPcbR9XH9Lzjm9kUOmhmU=, function CodeSha256 unchanged aQxATFkc...; lambda-source-map.json unchanged (git status clean) | CLOSED 20260919T123332Z |
+
+## Log
+
+- 20260919T122704Z OPENED by 0.7.0_AE_CloudOps~V with 1 leg(s)
+- 20260919T123332Z LEG L1 closed: REFUSED-BEFORE-UPLOAD, nothing written (row IRPT_BCKEND-S96): build-and-upload.sh rc=1 'File not found: directory/data/c
+- 20260919T123405Z CLOSED -- all 1 legs proven

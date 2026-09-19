@@ -6371,6 +6371,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not this seat's to fix (_authz/tests/ is outside this order's <paths>). This order's own directory/tests/test_entry.py (new, this cell) supplies the coverage the premise assumed already existed: it is the first directory/ test to call entry.search()/entry.resolve() at all, using the 2.0 fixture and the 9f72f4d6a4 mutant as the negative control."
+  },
+  {
+    "id": "IRPT_BCKEND-S96",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T12:33:03Z",
+    "one_line": "K-CODE cannot be built from HEAD. build-and-upload.sh REFUSES irpt-directory-search: its files[] declares data/custodian_key_seam.json, but the entry carries NO staged_from for that member (0 of 1), whereas 6 of 6 sibling functions stage it from _ids/data/custodian_key_seam.json. The build failed before upload, so nothing was written. The LIVE zip does carry the member, but as a CRLF worktree copy (197344 bytes, 6224 CR) rather than the committed blob (191120 bytes, sha256 87f2f92f...). The served build it replaces was therefore hand-materialized outside the manifest.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face, status line @77bd04ca41 (addendum): 'K-CODE: irpt-directory-search ONLY, rebuilt by build-and-upload.sh from a HEAD at or after 52ffa27636 ... served CodeSha256 == built by content'.",
+    "world_is": "bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-search from worktree HEAD bbfe5aeac3 (contains 52ffa27636), infra/aws/lambda/ clean. It staged 7 of 7 declared staged_from members, sha256 verified, then: 'ERROR: File not found: infra/aws/lambda/investor-reporting/directory/data/custodian_key_seam.json' -> 'PARTIAL -- 0 built, 1 failed', rc=1. lambda-source-map.json @bbfe5aeac3: irpt-directory-search files[] has 10 members including data/custodian_key_seam.json, and staged_from has 7 (no seam). irpt-status, irpt-holdings, irpt-narrative, irpt-export-render, irpt-performance-adapter and irpt-ycharts-generate each stage it: repo_path _ids/data/custodian_key_seam.json, pin c28c728a30, packaged_as data/custodian_key_seam.json, sha256 87f2f92f3c71.... Afterwards the build store latest is still version l4JK6aUnUgtrg.TFrxiKU8.XBM_6APl4 (05:22:21Z) and the function CodeSha256 is still aQxATFkcdtEBvs+v/zztQBOPcbR9XH9Lzjm9kUOmhmU= (read after the refusal). The bytes of that version equal the live CodeSha256 and list 10 entries. data/custodian_key_seam.json is 197344 bytes, sha256 8b077581adea..., which equals the CRLF worktree file (6224 CR), not git show HEAD:_ids/data/custodian_key_seam.json (191120 bytes, sha256 87f2f92f3c71...).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/kcode_build.txt (this seat's worktree): the builder's full output, rc=1",
+        "infra/aws/lambda/ci/lambda-source-map.json @bbfe5aeac3: functions.irpt-directory-search files[] vs staged_from; the six sibling entries' seam staged_from object",
+        "s3api get-object investor-reporting/irpt-directory-search.zip VersionId l4JK6aUnUgtrg.TFrxiKU8.XBM_6APl4: sha256(b64) == live CodeSha256; zip member list and per-member sha256",
+        "git show HEAD:infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json | sha256sum -> 87f2f92f...; the worktree file 197344 bytes with 6224 CR"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed here; the face bars a neighbouring fix and lambda-source-map.json is not in this order's grant. The remedy is ONE staged_from object on irpt-directory-search, identical to the six siblings'. After it, a rebuild ships the committed LF blob, so the served seam member changes CRLF -> LF. The content is the same JSON (the parse is identical), but the zip bytes and the CodeSha256 differ from any hand-built zip. Rejected workaround: copying the file onto disk by hand, as the 05:22Z build evidently did. The ledger irpt-bckend-ib-rtf-10-k-code-build closes with the leg recorded as REFUSED-BEFORE-UPLOAD. The rest of the re-cut (K-OM, K-DIR, K-ENV, the S95 restore) is unaffected."
   }
 ]
 ```
