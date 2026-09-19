@@ -96,6 +96,46 @@ single line. The evidence does satisfy the prose (178 == 178), so AC5 is a corre
 owed. The METHOD is what this round banks: at L9, for every mechanical PASS, check whether the regex
 encodes the criterion. Not measured yet -- most round-14 orders have no instance tracked.
 
+### 3a. EXPOSURE, not INCIDENT -- the signature run over round 14
+
+Rule 22's ABSENT != EXERCISED-AGAINST clause governs section 3 directly: it names this exact
+capability (`proof-of-spec-check` grading `<expect>` as an unanchored search over evidence the GRADED
+PARTY writes, measured `LGIC_ENFORCE-S79`/`S80`, 0 of 13 across rounds 6 and 7) and requires the
+defect's OWN SIGNATURE be run over the graded population before the gap is called anything. Section 3
+as first written asserted the exposure and never measured whether it FIRED. Measured now.
+
+SIGNATURE: a PASS row whose `expect` still matches while its `output_evidence` carries a FAIL token.
+
+| | |
+|---|---|
+| round-14 orders with a tracked instance | 15 of 31 |
+| acceptance rows across them | 80 |
+| rows carrying an `<expect>` -- THE DENOMINATOR | 53 |
+| raw signature hits | 10 |
+| genuine forged passes after classification | **0** |
+
+ALL TEN ARE LEGITIMATE, and they fall into three DISTINCT false-positive mechanisms, recorded because
+anyone re-running this screen will hit them and could over-report:
+
+1. **The negative control's REQUIRED outcome (7).** `rk-31` AC7 (a planted key collision must be
+   REFUSED before any write) and AC8 (both planted runs must REFUSE at rc non-zero); `rk-39` AC4
+   (under family 20-F every key must read FAILED with a reason); `rk-41` AC4 (the planted unanchored
+   sentence must exit rc 1) and AC8 (the entry point must refuse a bad call at rc=2); `rk-55` AC2 and
+   `rk-56` AC2 (each battery's own refusal arm, `-> rc=1`, IS the arm under test).
+2. **A NEGATED prose mention (1).** `rk-41` AC6's evidence reads "reported NOT ATTEMPTED with the
+   reason for each, NEVER A FAIL". The token screen matched the word inside a sentence asserting its
+   opposite.
+3. **Quoted document content (2).** `rk-58` AC2's FAILED sits inside the RENDERED FIXTURE ORDER's own
+   rollback clause ("the act is FAILED, not partially landed") -- text of a minted artifact, not a
+   result; `rk-58` AC3's REFUSED is its planted negative's required output.
+
+VERDICT: round 14 is an EXPOSURE. Nothing is re-opened. The remedy is the guard (a scrub on the
+graded party's evidence), and it belongs to whoever owns `proof-of-spec-check.py`, not to a re-run of
+round 14's work. The same shape as the law's own round-6/7 measurement.
+
+RE-MEASURE AT DRAIN-END: the denominator above is 53 over 15 instances. Sixteen orders had no
+instance when this ran, so the sweep is re-run over the full population before the slug.
+
 ## 4. rk-58 graded by hand (the sweep cannot see it)
 
 Re-run by this seat at HEAD aaeb02348b, independently of the worker's self-report:
