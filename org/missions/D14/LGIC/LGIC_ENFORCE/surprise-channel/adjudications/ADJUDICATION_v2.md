@@ -1356,3 +1356,42 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Round 11 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S55",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "LGIC_ENFORCE ROUND 11 L9 -- T44R11-AC6 PASS, and the round's SUBSTANCE STANDS while one of its greens is withdrawn as carrying no information: t44-stale-proofs passed by naming the cell's OWN proof as a re-run, which is what the unrepaired rule forces. Three rows graduate.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "One cell, EN-t-44, six criteria, exactly ONE judgment -- counted by subtraction over the round-11 order, and the hand-off named one. Channel before this write: 180 items, 2 UNDER_INVESTIGATION, 0 open orders of 64. \u26d4 THE ROUND IS NOT RE-OPENED AND NO VERDICT MOVES. t44-stale-proofs is GUARD-SHAPED -- it protects the stale-proof bar and measures nothing this cell built -- so its vacuity costs the round nothing, and the four arms that DO measure the build (probes, mutant, comment, tests) are unaffected and were re-exercised here by mutation rather than read. What changes is only what that one green MEANS: it is not evidence the bar held. 2.0.0_SA_COO~G filed W1-S88 against its own arm, repaired the cost where it landed, told both live workers and proved positive satisfiability in situ -- the remedy's DIRECTION and SHAPE are right and this adjudication says so; what it adds is that the discriminator offered ('enumerated rather than fabricated') does not separate the two cases, and that the estate's OTHER carrier of the same bar was left unrepaired.",
+ "grades": [
+  {
+   "criterion": "T44R11-AC6",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-t-44-r11.the-test-catches-the-wrong-fix.proof_of_spec.json@4e23baf6ca",
+   "verdict": "PASS",
+   "reason": "BOTH HALVES ANSWERED, AND THE FIRST ONE BY MUTATING THE REAL SUITE RATHER THAN READING IT. I wrote two substitutions, delivered each as a pytest plugin so it loads before collection, and ran the actual test file three times. POSITIVE CONTROL: as shipped, 3 of 3 pass. THE KEYED SUBSTITUTION -- a grade() correct for the census instance and passthrough-wrong elsewhere -- kills BOTH probes and the round-10 test survives. THAT CONTRAST IS S86 DEMONSTRATED, and the promotion does exactly what my L9 probe was promoted to do. \u26a0 BUT THE ROUND-10 TEST'S SURVIVAL IS NOT TOLERANCE, IT IS BLINDNESS, AND THE GRADE SAYS SO: it calls `on.grade` -- the copy the suite loads by path under a private module name -- so it never reaches ANY substitution and passes under both of my mutants. It is UNMUTATABLE BY CONSTRUCTION, which is the hole _shipped_grade() was written to close and which the docstring names honestly. DOES THE TEST PIN THE BEHAVIOUR OR THE SPELLING? IT PINS BOTH, measured: a third mutant that is R3-CORRECT but renders a different canonical type suffix also kills both probes. That is over-pinning against the criterion's literal wording, and it is the RIGHT trade -- an exact-string assertion is the only form that catches a substitution producing a WELL-FORMED BUT WRONG canonical, where a behaviour-only assertion ('blackdiamond' in canonical) would survive a mutant that spelled the vendor into the wrong slot. THE COST IS NAMED SO NOBODY IS SURPRISED: a legitimate change to the type-suffix grammar breaks two tests for a reason unrelated to R3, and the failure will point at R3. THE COMMENT AT lib/opal_naming.py:1091-1101 IS HONEST AND IS SHARPER THAN MY OWN ROW: I wrote that the firm branch 'can never be observed'; the comment corrects the frame -- 'It is not unreachable -- it is reached and then subtracted' -- names FN1b as the subtractor, says changing either rule to make the branch visible would BE the defect, and warns against deleting it on the strength of a coverage report, which is the real way it would be lost."
+  }
+ ],
+ "adjudicates": [
+  "LGIC_ENFORCE-W1-S88",
+  "LGIC_ENFORCE-W1-S89",
+  "LGIC_ENFORCE-S90"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's three mutation arms run against lib/tests/test_opal_naming.py at HEAD 21a163f492 (clean 3 passed; keyed 2 failed 1 passed; suffix 2 failed 1 passed), each failure named",
+   "lib/opal_naming.py:1091-1101 @21a163f492 -- the unobservability comment, read at the bytes",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- one row per graduated id, minted in this commit"
+  ]
+ }
+}
+```

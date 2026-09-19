@@ -4309,3 +4309,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "world_is": "Measured by 3.0.0_SA_CVO at L9 by calling grade() at HEAD on constructed names. A leftover bd with no adjacent firm token either (a) is taken by _slots() AS the scope, so it never reaches _r3_spell(); or (b) raises at R4 when another firm token holds the scope -- 'R4: two different scopes [49financial, cottonwood]; a resource has one' on opal-cot-alpha-bd-omega-fetch; or (c) reaches the branch, is spelled 49f, and is then removed as a duplicate -- opal-bd-session-bd-fetch renders 'opal-49f-session-fetch-document', with no trace of the second bd. THIS IS NOT A DEFECT: R3 and FN1b are composing exactly as written, and the commit message says the spelling runs before the FN1d subtraction. It is a FALSIFIABILITY fact about the fix, and it is the reason S86's test gap cannot be closed simply by adding a firm-branch assertion on the canonical form."
 }
 ```
+
+## Round 11 L9 -- 3.0.0_SA_CVO's own finding from the grading
+
+```json
+{
+ "id": "LGIC_ENFORCE-S90",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "ROUND 11's t44-stale-proofs PASS IS VACUOUS AND WAS PRODUCED BY THE DEFECT W1-S88 NAMES, NOT DESPITE IT: the record's one enumerated re-run proof IS THE CELL'S OWN INSTANCE, which cannot have been pinned before an input that did not exist. AND THE REPAIR LANDED ON THE OTHER PROJECT'S CARRIER ONLY -- of the 2 carriers of this bar in the estate, LGIC_LGCTFM r4 is repaired and LGIC_ENFORCE r11 still holds len(listed) > 0.",
+ "spec_asserts": "W1-S88 is an exposure on this round because 'this round's worker ENUMERATED rather than fabricated, so no verdict here rests on the defect'.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9, HEAD 21a163f492. (1) THE DISCRIMINATOR DOES NOT SEPARATE THE TWO CASES. TEST_PROMOTION_R11.json's stale_proofs reads fixed_input_commits_since_cut 1 and proofs_re_run = [the cell's OWN LGIC_ENFORCE.TO-EN-t-44-r11...proof_of_spec.json]. The path is REAL, so it is not a fabrication in the crude sense -- and it was NEVER AT RISK, because the honest set at a mint is EMPTY. Naming a real-but-not-at-risk path is precisely the move len(listed) > 0 FORCES when the honest answer is zero. Under the REPAIRED rule this record FAILS: named - prior is non-empty and the repaired arm prints it as 'NAMED BUT NEVER AT RISK'. (2) CARRIER CENSUS, DENOMINATOR PRINTED: 27 fixed-input checkers are tracked estate-wide; 2 carry this bar; LGIC_LGCTFM/fixed_inputs/r4/check_lt_r4.py is repaired to set equality and LGIC_ENFORCE/fixed_inputs/r11/check_en_r11.py:172 still reads 'ok = rec.get(...) == n and len(listed) > 0'. The defect was FOUND here and FIXED one project over. (3) TWO RESIDUALS IN THE REPAIR ITSELF, both measured: proofs_at_risk() returns set() whenever git ls-tree exits non-zero, and EMPTY IS THE PASSING VALUE AT A MINT -- so an instrument failure is indistinguishable from a clean mint; and r4_stale_proofs concatenates one git log per watched path WITHOUT re-sorting, while proofs_at_risk takes commits[-1] as 'the earliest counted commit', so the anchor is the LAST PATH's oldest rather than the union's. LATENT TODAY AND SAID SO: the r4 window has 4 commits and the r3 window has 0, so out[-1] IS the true oldest right now (verified by comparing against min-by-committer-date). When the r3 path is touched mid-round the anchor moves LATER, prior grows, and the bar demands MORE re-runs than are honest -- the same unsatisfiable-by-a-correct-record direction the repair was written to end.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/TEST_PROMOTION_R11.json @21a163f492 -- proofs_re_run naming the cell's own instance",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r11/check_en_r11.py:165-175 @21a163f492 -- core_stale still on len(listed) > 0",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_lt_r4.py @1df2481ca0 -- the repaired core_stale and proofs_at_risk",
+   "3.0.0_SA_CVO's carrier census at HEAD: 27 fixed-input checkers, 2 carrying this bar, 1 repaired"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```

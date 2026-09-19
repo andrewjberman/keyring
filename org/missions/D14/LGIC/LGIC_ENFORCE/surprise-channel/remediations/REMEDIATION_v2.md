@@ -1982,3 +1982,78 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Round 11 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S88",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ARM COUNTED ITS OWN MINT: t44-stale-proofs walks git log from the round-10 ANALYSIS pin, which PRE-DATES the L6 issuance that CREATED the fixed-input directory it watches, so the window contains the commit that minted the input. The old rule then demanded len(proofs_re_run) > 0 where the honest list at a mint is EMPTY -- making the arm UNSATISFIABLE BY A CORRECT RECORD, with an invented or not-at-risk name as the only passing move. Measured one project over on LGIC_LGCTFM round 4, where three orders carry it with two workers live against it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S88",
+  "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/check_lt_r4.py @1df2481ca0 -- the repair, read at the bytes by 3.0.0_SA_CVO",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S90"
+ ],
+ "remedy": "THE REPAIR'S DIRECTION AND SHAPE ARE RIGHT AND THIS ROW DOES NOT SECOND-GUESS THEM: set equality against the proofs that existed at the parent of the earliest counted commit is the correct predicate -- empty at a mint, exact at a real mid-round edit, refusing an under-enumeration AND an over-enumeration, with positive satisfiability proven in situ. WHAT IS STILL OWED IS THE OTHER CARRIER AND TWO RESIDUALS, all measured and stated at LGIC_ENFORCE-S90: LGIC_ENFORCE's own r11 checker still holds len(listed) > 0 (2 carriers of this bar across 27 tracked fixed-input checkers, 1 repaired); proofs_at_risk() returns EMPTY on any git ls-tree failure and empty is the PASSING value at a mint, so an instrument failure reads as a clean pass; and the anchor commit is taken from a concatenation of per-path git log runs that is never re-sorted. \u26d4 NONE OF THIS RE-OPENS ROUND 11 -- the arm is guard-shaped.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v11",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v11"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-W1-S89",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE ORDER QUOTES A DERIVED TOTAL THAT CANNOT STAY TRUE: it tells the worker to expect '(15 arms, 6 positive-satisfiability)' and the run prints 'arms driven: 16'. The verdict and the positive count are right; the TOTAL is not a constant, because one S85-order-quotes-carrier arm is minted PER round-11 task order found on disk, so the quoted number can only be correct for the order count at the moment it was typed.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-W1-S89"
+ ],
+ "remedy": "The remedy the issuer has already taken forward is the right one and is cheaper than keeping the number correct: STOP QUOTING A DERIVED TOTAL IN AN ORDER AT ALL -- the run prints its own, and a worker comparing a printed total against a typed one is comparing a measurement with a recollection. \u2b50 THE TRANSFERABLE HALF: a number an order QUOTES about its own instrument is a second carrier of a fact the instrument already reports, and a second carrier goes stale silently. What the order should pin is the VERDICT TOKEN and the properties that must hold (6 positive-satisfiability arms), never the cardinality of a set the run computes.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v11",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v11"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S90",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A BAR WITH TWO CARRIERS WAS REPAIRED IN ONE OF THEM, AND THE ROUND THAT FOUND THE DEFECT PASSED ITS OWN ARM BY COMMITTING IT. Round 11's record enumerates its own proof-of-spec instance as a re-run proof; that instance cannot have been pinned before an input that did not yet exist, so the honest set was empty and the PASS carries no information. The same rule that forced it (len(listed) > 0) is still live in LGIC_ENFORCE's r11 checker at :172 while LGIC_LGCTFM's r4 checker has been repaired to set equality.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S90",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/TEST_PROMOTION_R11.json",
+  "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r11/check_en_r11.py:172"
+ ],
+ "remedy": "\u26d4 NOT AN EDIT TO ROUND 11's FIXED INPUT -- the round is closed and R-43 freezes it, and rewriting a closed round's checker to make a past green honest is the worse act. What is owed is forward: the NEXT round that carries this bar carries the REPAIRED predicate, and the two carriers do not diverge again -- which is a census before the next cut, not a sweep. \u26a0 AND THE READING THAT MUST TRAVEL WITH IT: round 11's t44-stale-proofs green is not evidence the bar held, so no later round may cite it as precedent that the arm works. The three findings behind this row (the self-naming record, the unrepaired sibling carrier, and the repair's two residuals) are stated in the row itself with their denominators; the owner decides which of them the next round takes.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v11",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v11"
+ },
+ "closed": false
+}
+```
