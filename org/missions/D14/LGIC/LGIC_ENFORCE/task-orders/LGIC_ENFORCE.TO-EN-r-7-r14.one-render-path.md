@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- re-graded 2026-09-19 in worktree wk-lgic-enforce-14-1b (base 3948ba37d9) after LGIC_ENFORCE-S106 repaired check_en_r14.py's r14-vintage-field arm to grade records present in its checkout, and the drain (dda2125b35) landed EN-p-38's record on this branch: R7R14-AC1/AC2/AC3/AC4 all PASS by fresh output (this cell's own artifact unchanged, confirmed byte-identical to 37865221aa); R7R14-AC5 stays UNVERIFIABLE-BY-INSTRUMENT, routed to 3.0.0_SA_CVO at L9. proof_of_spec.json VALID rc=0 via proof-of-spec-check.py.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `EN-r-7` (decomposition v3.13 s.0n) | **outcome_ref:** FWD-3 | **depends_on:** none -- **NOT paired with `EN-p-38`, which runs beside it**
 
