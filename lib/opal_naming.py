@@ -146,13 +146,36 @@ def registry_hash(reg_dir=None, only=None):
     CRLF read as LF. Hex. `only`, when given, restricts the feeding to exactly those file names (still name
     order) -- the per-view hash EN-r-6 stamps each generated file with (row W1-S14)."""
     reg_dir = reg_dir or REGISTRY_DIR
-    names = sorted(only) if only is not None else sorted(n for n in os.listdir(reg_dir) if n.endswith(".json"))
+    names = sorted(only) if only is not None else registry_file_names(reg_dir)
     h = hashlib.sha256()
     for fname in names:
         h.update(fname.encode("utf-8") + b"\n")
         with open(os.path.join(reg_dir, fname), "rb") as fh:
             h.update(fh.read().replace(b"\r\n", b"\n"))
     return h.hexdigest()
+
+
+def registry_file_names(reg_dir=None):
+    """The *.json files registry_hash() feeds when `only` is not given. ONE definition, so a scope
+    label and the hash it labels cannot drift apart."""
+    reg_dir = reg_dir or REGISTRY_DIR
+    return sorted(n for n in os.listdir(reg_dir) if n.endswith(".json"))
+
+
+def registry_hash_scope(reg_dir=None):
+    """The `over ...` clause for an UNSCOPED registry_hash(), so a SUMMARY line discloses its scope
+    the way a per-target mark already does (:119 `over <file>[,<file>...]`).
+
+    WHY: one `generate` run prints registry@<a> in its summary while the file it wrote in the same run
+    carries registry@<b>. Both read `registry@`; the summary hashes ALL registry files and the mark only
+    the files its target reads. The mark printed its scope and the summary printed none, so the whole
+    asymmetry fell on the reader -- and a reader who compares them concludes STALE, which is the reading
+    that makes someone ACT. Measured 2026-09-19 by 1.0.0_SA_CTO, one diff short of reporting a stale
+    input on a SIGNED never-widen sign-off (LGIC_ENFORCE-S94, IRPT_BCKEND W3-S47).
+
+    The count rather than the file list is deliberate: it keeps a summary visibly DIFFERENT from a mark
+    at a glance, which is the distinction that was missing."""
+    return "all %d registry file(s)" % len(registry_file_names(reg_dir))
 
 
 def load_schema():
@@ -2432,7 +2455,8 @@ def census(names_file=None, live=False, repo=False, report=None, budget=600, not
                                 "judged_live": judged_live, "judged_repo": judged_repo,
                                 "live_not_graded_types": live_ng, "live_aws_fixed": live_fixed,
                                 "carded_live": carded_live, "carded_repo": carded_repo},
-               "registry": registry_hash()[:16], "stopped": stopped, "not_judged": not_judged or [], "rows": rows}
+               "registry": registry_hash()[:16], "registry_scope": registry_hash_scope(),
+               "stopped": stopped, "not_judged": not_judged or [], "rows": rows}
         census_report(report, doc, _census_prose(doc, stats, ng_counts, fixed_counts))
         out("CENSUS REPORT %s" % report)
     if stopped:
@@ -2453,7 +2477,8 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
     lines = [
         "# NAMING_CENSUS_REPORT -- census mode, the run (LGIC_ENFORCE EN-s-1, DEC-7)",
         "",
-        "Written by `python lib/opal_naming.py census --live --repo --report <this file>` at registry@%s." % doc["registry"],
+        "Written by `python lib/opal_naming.py census --live --repo --report <this file>` at registry@%s over %s."
+        % (doc["registry"], doc.get("registry_scope", "an unrecorded file set")),
         "Every number below is recomputable from the fenced json at the end.",
         "",
         "## Status",
@@ -2551,8 +2576,9 @@ def main(argv=None):
             print("VALIDATE: REFUSED %d refusal(s), %d warning(s)" % (len(refusals), len(warnings)))
             return 1
         reg = load_registry(reg_dir, a.systems_file)
-        print("VALIDATE: OK %d system row(s), %d scope row(s), %d warning(s) at registry@%s" % (
-            len(_systems(reg)), len(_scopes(reg)), len(warnings), registry_hash(reg_dir)[:16]))
+        print("VALIDATE: OK %d system row(s), %d scope row(s), %d warning(s) at registry@%s over %s" % (
+            len(_systems(reg)), len(_scopes(reg)), len(warnings), registry_hash(reg_dir)[:16],
+            registry_hash_scope(reg_dir)))
         return 0
     if a.cmd == "generate":
         try:
@@ -2562,9 +2588,10 @@ def main(argv=None):
             return 1
         for status, t, detail in results:
             print("%s %s (%s)" % (status, t, detail))
-        print("GENERATE: %d written, %d skipped, into %s at registry@%s" % (
-            sum(1 for r in results if r[0] == "WROTE"), sum(1 for r in results if r[0] == "SKIP"),
-            a.out, registry_hash()[:16]))
+        print("GENERATE: %d written, %d skipped, into %s at registry@%s over %s"
+              " -- each file's own mark is scoped to the registry files THAT target reads" % (
+                  sum(1 for r in results if r[0] == "WROTE"), sum(1 for r in results if r[0] == "SKIP"),
+                  a.out, registry_hash()[:16], registry_hash_scope()))
         return 0
     if a.cmd == "vectors":
         try:
