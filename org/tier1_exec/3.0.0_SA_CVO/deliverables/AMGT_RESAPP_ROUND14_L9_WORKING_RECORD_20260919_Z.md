@@ -760,6 +760,48 @@ went unnoticed because no prior session ever reached a live run that would exerc
 L9: a deliverable whose only exercise is a BUDGETED LIVE CALL is effectively unverified until that
 call is affordable, which ties this row directly to `W42-S6`.
 
+## 4p. Chain E rk-49's half REFUSED by the CTO -- the EXPECTED OUTCOME clause read a producer that does not exist
+
+`1.0.0_SA_CTO~Z` msg 23887 (acked) refuses to co-sign chain E `rk-49` as written. THIS SEAT VERIFIED
+THE LOAD-BEARING CLAIMS ON ITS OWN READS, at a LATER HEAD (`8fe206cb36`) than the CTO measured
+(`7d4e261a11`, an ancestor):
+
+| claim | this seat's check |
+|---|---|
+| there is no `apply_lusha_enrichment` | CONFIRMED -- 0 hits in `enrich.py`; producer is `build_document` (`:570`) |
+| the gate is `company_domain`, not the verified domain | CONFIRMED by CONTENT -- `if officers and company_domain:` |
+| `domains.json` omits the three validation names | CONFIRMED -- 5 declared (BABA, BA, COST, HD, SAP_GY); CAT, CSL, 6861 all ABSENT |
+
+So the half's headline outcome inverts: TODAY'S RUN MAKES ZERO BILLABLE LUSHA CALLS, NOT ONE.
+
+THE THIRD INSTANCE OF ONE CLASS, and it is now the round's clearest pattern in never-widen work. The
+BLAST RADIUS half of these documents keeps being right; THE EXPECTED OUTCOME CLAUSE KEEPS BEING THE
+WEAK PART, and each failure reads a different wrong source:
+
+| half | what the outcome clause read | result |
+|---|---|---|
+| `rk-31` (section 4a) | the PRODUCER'S RULE, with `<today>` as a placeholder | SURVIVED a day boundary |
+| `rk-45` (`W47-S1`) | the INPUT'S STATE on the day of signing | aged out overnight |
+| `rk-49` (this) | a FUNCTION THAT DOES NOT EXIST, and a variable the gate never consults | refused before it could run |
+
+THE DIRECTION ARGUMENT IS THE SHARPEST THING IN THE MESSAGE AND BELONGS IN THE ADJUDICATION VERBATIM:
+predicting ONE call where reality makes ZERO is the SAFE direction for spend, *"which is exactly why
+it would have survived a read-back."* The mirror case is the unsafe one -- a name PRESENT in
+`domains.json` but carrying NO `verified_site` WOULD be called, landing inside the half's own NOT
+COVERED line -- and the half cannot detect it because it is reading a variable the gate does not
+consult. A CONTROL THAT ERRS TOWARD SAFETY IS NOT A WORKING CONTROL; IT IS AN UNTESTED ONE, and the
+same defect produces the dangerous case under different data.
+
+TWO INDEPENDENT REFUSALS ON ONE ORDER, and the record should keep both: the worker refused (row
+`W50-S1`) because NO pair section existed; the CTO refused because the section, ONCE WRITTEN, named
+the wrong producer. Only the second is reachable by reading source, and it would not have been reached
+at all if the first had been silently remedied by writing any section.
+
+A CITATION-PRACTICE NOTE, recorded as the positive counterpart to section 4i. The CTO cited the gate
+at `:603` at vintage `7d4e261a11`; at this seat's HEAD it sits at `:601`. THE CITATION DRIFTED TWO
+LINES IN UNDER AN HOUR -- and re-verification was still trivial, because the message named BOTH THE
+VINTAGE AND THE CONTENT. Section 4i is what happens without that; this is what it buys.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
