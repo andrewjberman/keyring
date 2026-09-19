@@ -9846,6 +9846,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "This order's own chain names AMGT-rk-35 (per the COO half) as the cell that will pull+derive exactly these three keys once R14-I1 lands their identity -- this row records that the identity landing has ALREADY happened (ahead of the pull), sharing the raw/bloomberg/ prefix in a shape _latest_stamp cannot distinguish from a real raw landing.",
     "world_is": "Today the three keys' only stamp is identity-only, so any code path calling _latest_stamp on them (this worker's original builder, or model_block_pull.py's own stage_derive if invoked against these keys before their real pull lands) reads a stamp that exists but is not raw, and fails with an unhandled S3 exception rather than a clean 'no raw landed' state.",
     "notes": "This worker's own build_unit_map.py is hardened against this (verifies refdata.json+histdata.json presence per stamp, newest-first) and its AC4 dry run over these three names prints the correct explicit UNRESOLVED terminal state, not a crash. model_block_pull.py's stage_derive itself is unchanged and carries the same landmine -- owner: whoever next runs derive against a key that might carry an identity-only stamp (rk-35, or model_block_pull.py's own hardening as a future cell); not in this order's paths to fix beyond the new module."
-  }
+  },
+{
+  "id": "AMGT_RESAPP-Z-W39-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~39",
+  "surfaced_at": "2026-09-19T09:58:00Z",
+  "one_line": "AC4's negative-control script counts the 3 validation names among the crosswalk's 'covered names' population, so pulling/deriving on them (this order's own authorized act) reads served_stamps_moved 3 / raw_landings_newer_than_pre 3 instead of the criterion's literal expect of 0 -- the OTHER 33 (36 minus the 3 validation names) show zero movement, which is the substantive C-VALIDATION-NAMES protection AC4 aims to verify.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured (AC4 run byte-for-byte per this order): crosswalk crosswalk/v1/2026-09-19.json keyed_names 36, pre_act_recorded 36, served_stamps_moved 3 [6861_JP_Equity, CAT_US_Equity, CSL_AU_Equity], raw_landings_newer_than_pre 3 (same three)",
+      "measured: the same crosswalk minus the 3 validation names is exactly 33 names, and NONE of those 33 show a moved served stamp or a new raw landing (recomputed directly from the same pre_act_stamps.json and live listing)",
+      "the never-widen COO half for AMGT-rk-35 (org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND14_CHAIN_M_COO_HALVES.md, EXPECTED OUTCOME) states the 3 keys are UNSERVED \"until R14-I1 (rk-31) lands their identity AND that crosswalk object becomes newest; ... Both orderings are covered\" -- i.e. this exact race (rk-31 landing the validation names identity before rk-35 pulls/derives) is the SIGNED, anticipated branch, not a violation",
+      "AMGT_RESAPP-Z-W38-S4 (0.9.0_WK_AMGT_RESAPP~38) already recorded the crosswalk growing from 33 to 36 (the same 3 names) as identity-only entries BEFORE this order ran its own live act, confirming the growth predates rk-35 and is not caused by it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC4 expect: over the crosswalk's keyed names read fresh (33 at the cut), served_stamps_moved 0 and raw_landings_newer_than_pre 0 -- 'this order pulled and derived nothing for any covered name'.",
+  "world_is": "The live crosswalk (36 names) already includes the 3 validation names as identity-keyed entries at this worker's pre-act snapshot (recorded in pre_act_stamps.json before any live act, per this order's own BOUNDS instruction). Since AC4's literal script sweeps ALL crosswalk names undifferentiated, and this order's RULED act (item 7) REQUIRES pulling/deriving exactly those 3 names, AC4's own instrumentation necessarily reports them as 'moved' -- the criterion as scripted cannot distinguish 'this order's authorized act on the validation names' from 'a fleet re-run on a covered name', though the never-widen pair explicitly anticipated and signed this ordering.",
+  "notes": "Recorded as measured (the literal script output, not reinterpreted) per the REFUSAL CLAUSE; AC4 graded FAIL/REFUSED against its literal bar in this instance, with the full breakdown (0 movement on the other 33) recorded alongside so the substantive C-VALIDATION-NAMES claim can still be read off the evidence. Owner of the exclusion-list gap in the AC4 script: the L6 cut (rk-35 order text does not name an exclusion), same class as W38-S4."
+},
+{
+  "id": "AMGT_RESAPP-Z-W39-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~39",
+  "surfaced_at": "2026-09-19T09:59:00Z",
+  "one_line": "integrations/bloomberg/research/pull_consumer.py calls model_block_pull.stage_pull(blp, s3, ticker, pull_log) with FOUR positional arguments, but stage_pull's signature (unchanged by this order, and by rk-33/rk-34 before it) accepts only THREE (blp, s3, security) -- a pre-existing TypeError-on-call defect, not touched by this order's <paths> or RULED scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured: integrations/bloomberg/research/pull_consumer.py:98-99 constructs pull_log = {...} and calls mbp.stage_pull(blp, s3, ticker, pull_log) -- 4 positional args",
+      "measured: integrations/bloomberg/research/model_block_pull.py def stage_pull(blp, s3, security: str) -> dict: -- 3 parameters, both before and after this order (this order added no parameter to stage_pull)",
+      "git blame/log on both files shows pull_consumer.py (AMGT-s-2) and model_block_pull.py (AMGT-s-1) landed by different cells; the mismatch predates AMGT-rk-35 and is out of this order paths (pull_consumer.py is not named in <paths>)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "N/A -- found off-task while censusing every consumer of model_block_pull before editing it (this order item 1.2 discipline extended to a full-consumer check).",
+  "world_is": "A live SQS-driven pull_consumer.py invocation on any message would raise TypeError: stage_pull() takes 3 positional arguments but 4 were given, before ever reaching Bloomberg -- the pull consumer path is broken at HEAD independent of this order.",
+  "notes": "Not in this order paths (pull_consumer.py sits under integrations/bloomberg/research/, which IS a paths grant, but fixing an unrelated consumer is scope-widening this order does not authorize -- REFUSAL CLAUSE). Left for the owning cell/order."
+}
 ]
 ```
