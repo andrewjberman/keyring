@@ -311,6 +311,46 @@ tool owns the read, CALL THE TOOL'S FUNCTION and spend the second instrument on 
 aggregate. COST: none, it is cheaper. NON-APPLICATION: grading the tool ITSELF, which is what section 1
 does and which requires an independent parse by construction.
 
+## 4e. rk-53 completed with a BLOCKING never-widen row open -- and it is CORRECT. Do not re-open it.
+
+THE SHAPE THAT LOOKS LIKE A VIOLATION, and would be graded as one by a reader who stops a step early:
+`rk-53` flipped `complete` with 7 of 7 criteria PASS, while its worker had filed `W53-S1` (BLOCKING,
+ARMED) saying the chain L CTO half is absent, AND its worktree STILL lacks that half at this writing
+(`C:/tmp/wk-amgt-14-53`, HEAD `ba54734245`; `merge-base --is-ancestor ce9231d095 HEAD` FALSE).
+
+THE ORDER'S OWN CLAUSE IS THE DISCRIMINATOR (`:140-141`, verbatim): *"Either file absent or its
+`AMGT-rk-53` section missing: run the read-only, offline and in-process criteria, file a BLOCKING row
+(disarm_owner `2.0.0_SA_COO~Z`), and STOP -- never act on one half."* Immediately after it:
+*"ADAPTER SINGLE-WRITER QUEUE: this order does NOT redeploy `opal-amgt-scoped-api`; its adapter bytes
+reach the served plane in the NEXT adapter cell's redeploy (`AMGT-rk-61`) ... this order's
+served-behaviour claims are proven IN-PROCESS on the worktree bytes as the criteria state."*
+
+So the question is whether any criterion is a LIVE ACT. Measured -- all seven invocations:
+
+| criterion | invocation class |
+|---|---|
+| AC1, AC2, AC4 | `python -m pytest ...` -- offline |
+| AC3, AC5, AC7 | `python -c ...` -- in-process |
+| AC6 | `python -c ...` under `portal/` -- in-process |
+
+ZERO deploys, zero S3 writes, zero served-plane mutation. **Every criterion falls inside the class the
+absent-half path expressly permits.** The worker therefore did precisely what the order requires: ran
+the permitted set, filed the BLOCKING row with the named disarm owner, and acted on no half -- there
+was no live act in this order to act on. "STOP" bites on a live act that does not exist here.
+
+VERDICT: NOT a never-widen violation. `rk-53` is correctly complete, and nothing about it is re-opened.
+
+WHAT THE CO-SIGN ACTUALLY COVERS, and why the pair is still owed: the chain L pair covers the COO's
+CONSOLIDATED DEPLOY after the drains (`:21`, `:268`), not this worker's criteria. The pair IS on file
+in the estate (both halves; CTO half @`ce9231d095`, section 4a's sibling check), so the substantive
+requirement is already met -- only the worker's worktree is stale, which is what row `Z-S178` records.
+`W53-S1` can be disarmed by `2.0.0_SA_COO~Z` citing `Z-S178`, with no new half authored.
+
+CARRIED AS A GRADING NOTE: a BLOCKING row does NOT by itself make its order's completion invalid. The
+test is whether the acts the order actually performed fall inside the path its own refusal clause
+permits. Three facts had to be read together to get this right -- the clause, the criterion classes,
+and the worktree ancestry -- and any one of them alone points the wrong way.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
