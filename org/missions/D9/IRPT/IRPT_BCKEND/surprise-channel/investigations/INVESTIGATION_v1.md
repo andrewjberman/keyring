@@ -6488,6 +6488,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "The issuer's choices, not this seat's: (i) accept the seam member's CRLF->LF on the 5 as part of the act. The JSON parses identically, it is the committed blob replacing a hand copy, and K-CODE set the precedent under S96. The packet then names it per function. (ii) Leave those 5 functions' seam as served, which needs a manifest change to stage a CRLF copy -- re-staging a hand copy, which S96 rejected. This seat recommends (i). The build-reproducibility half is an estate question (an eol attribute on the Lambda source trees, or the index-sourced gate widened beyond declared_blobs), routed to the CTO and not ridden here."
+  },
+  {
+    "id": "IRPT_BCKEND-S102",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:41:12Z",
+    "one_line": "irpt-ycharts-generate can NOT be rebuilt from HEAD by build-and-upload.sh, so IB-rtf-12's K-CODE for that function is unreachable as ordered. Its files[] declares 2 members with no source on disk: firm_registry.json, whose served content exists as no blob anywhere in history (row W4-S34), and settings.json, never tracked and absent from the source dir. The live zip serves both (31 members).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (d): 'K-CODE x 7 -- each function rebuilt by build-and-upload.sh from a HEAD at or after this order's manifest commit'.",
+    "world_is": "lambda-source-map.json @dbf7667178, irpt-ycharts-generate files[]: 32 members including firm_registry.json and settings.json, neither in staged_from. On disk under infra/aws/lambda/investor-reporting/ycharts/generate/: firm_registry.json ABSENT, settings.json ABSENT. git ls-files: settings.json tracked nowhere; git log --diff-filter=AD on the path: 0 commits. The entry's own _staged_from_note: 'firm_registry.json ... does NOT exist as a git blob anywhere ... this function's build still fails on that one member' (row W4-S34). battery_ib_rtf_12.py arm (d): 'unresolvable [firm_registry.json, settings.json]' for irpt-ycharts-generate. Its live zip (sha256 == live CodeSha256) carries both. Its runtime registry resolves through IRPT_FIRM_REGISTRY=/var/task/firm_registry.json, the packaged copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @dbf7667178 functions.irpt-ycharts-generate (files[], staged_from, _staged_from_note)",
+        "os.path.exists on the source dir members; git ls-files; git log --diff-filter=AD",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_R69-AC1_battery_output.txt arm (d)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's to source: inventing the two files would be the hand copy S96 rejected. The issuer's choices: (i) route a cell that declares true sources for both members (staged_from from data/ for the registry, the settings' producer for settings.json), then K-CODE covers 7; or (ii) K-CODE covers 6 and ycharts-generate stays UNEXPECTED until then. The diagnostic shows ycharts needs ONLY raw_keys.json, because its registry resolves through the env to the packaged copy."
   }
 ]
 ```
