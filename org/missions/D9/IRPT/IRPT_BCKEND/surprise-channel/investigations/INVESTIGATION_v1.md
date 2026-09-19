@@ -5855,6 +5855,73 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "R61-AC1 (d): 'fmt/validate clean and the -refresh=false plan reading only policy-document changes, 0 to destroy beyond the recorded taint.'",
     "world_is": "validate is clean and the plan bound is met exactly; fmt is not clean, and was never clean for this specific generated file at any measured registry state -- a generator-output gap the criterion's literal wording did not anticipate as a standing condition.",
     "notes": "Routed to 1.0.0_SA_CTO as the registry/generator's L4-level owner: either the generator's HCL-rendering function should post-process through terraform fmt (or emit already-aligned literals), or this criterion's fmt bar should be scoped to files this order is authorized to fix. Not this cell's to widen or to silently pass."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T02:10:00Z",
+    "one_line": "The population moved wider than this order's own face names at the cut: a fresh census (live Code.Location, not the S3 artifact bucket) found 10 declared+served members across 3 functions (ids.py on irpt-performance-adapter/irpt-narrative/irpt-holdings; data/custodian_key_seam.json on all 7 non-intake-poller, non-directory-refresh functions) with NO staged_from declaration at all -- a NEW class introduced by IB-rte-6's manual deploy (row W1-S25's own seam wiring) after IB-rte-4's 147-member census was taken, never previously rowed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: baseline `bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting` on the unmodified (pre-this-order) manifest failed 8 of 9 functions, naming exactly these 10 members as `ERROR: File not found` (e.g. `infra/aws/lambda/investor-reporting/performance/ids.py`, `infra/aws/lambda/investor-reporting/ops/data/custodian_key_seam.json`).",
+        "this cell, this run: both canonical sources ARE tracked at HEAD (`infra/aws/lambda/investor-reporting/_ids/ids.py`, `infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json`) and their content is byte-identical to the LIVE DEPLOYED Lambda's own served bytes for every affected function (battery_ib_rtf_1.py part (a)/(b): 10 of 10 `DIFF: byte-identical`, fetched via `aws lambda get-function --query Code.Location`, never the S3 build-artifact bucket).",
+        "this order's own remedy commit declares all 10 via `staged_from` (pin c28c728a309ab0d83b2831c2972179791a2985fb, the branch's own cut commit -- content-identical to the exact last-touch commits 47f21dab95c28eec2476e9e5a30a9ebcc7efc78d for both files); battery_ib_rtf_1.py's mutant control removes them in a scratch-only manifest and the build fails with the exact same `File not found` lines, then succeeds again with the real manifest."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtf-1 face, THE POPULATION: 'Known at the cut: (i)...(iv)' names only the two no-source members and the W1-S26 six -- not this class; and 'a member the census finds that this list does not name is IN the population and a row.'",
+    "world_is": "IB-rte-6 (round 5, worker ~1) wired a NEW shared frontier (`_ids/data/custodian_key_seam.json`, per row W1-S25) into 7 of 9 functions' `files[]` and updated 3 functions' `files[]` to also need `_ids/ids.py`, but its own deploy used a manual packaging script (`rte6_package_deploy.py`), not `build-and-upload.sh`'s declarative `staged_from` mechanism -- so the LIVE served bytes already carry both files correctly, while the DECLARATIVE map never learned where they come from. This order's own re-run of IB-rte-4's census (at the CURRENT served bytes, per the face's own instruction that 'the population may have moved') is what surfaced it.",
+    "notes": "Disarmed same-turn: this order's own remedy commit (infra/aws/lambda/ci/lambda-source-map.json) adds all 10 staged_from declarations, verified by battery_ib_rtf_1.py's real build (arm b/d) and the mutant control (arm d) in the same run this row cites. No further action owed on this specific finding; filed per the population-subtraction bound so the face's own known-at-the-cut list is not silently treated as exhaustive."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T02:10:00Z",
+    "one_line": "18 EXISTING staged_from declarations across 7 functions (served.py x7, loaders.py x7, ids.py x4) were STALE: each pin resolved to content that no longer matches the LIVE DEPLOYED Lambda's own served bytes for that member, because the shared frontier files (_authz/served.py, _authz/loaders.py, _ids/ids.py) were edited AFTER the pin was set (by IB-rte-6's own projection-seam wiring, row W1-S25) and the declaration was never repointed -- a rebuild from the unmodified manifest would have silently SHIPPED THE OLD CONTENT, regressing a live function's behaviour without any build error.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: for each of the 18 members, the declared pin's blob content was self-consistent with its own declared sha256 (so `build-and-upload.sh` would stage it without error), but did NOT match the served member's sha256 read fresh from `aws lambda get-function --query Code.Location`; the CURRENT HEAD content of the SAME repo_path DID match the served bytes exactly (e.g. `_ids/ids.py`: declared pin 6e764ef0aa -> sha256 fc1017b2..., served/HEAD sha256 f1659861... -- different files, 19296 bytes each).",
+        "this cell, this run: `git log -1 --format=%H -- infra/aws/lambda/investor-reporting/_authz/served.py` -> 47f21dab95c28eec2476e9e5a30a9ebcc7efc78d; `-- .../_authz/loaders.py` -> 39cbad421487e8bcecd1bc61c48775dd19c55b96; `-- .../_ids/ids.py` -> 47f21dab95c28eec2476e9e5a30a9ebcc7efc78d -- all THREE post-date the stale pins (28ccac62c9/43560851/6e764ef0aa respectively), consistent with an edit after the original rte-4 declaration that nobody repointed.",
+        "battery_ib_rtf_1.py this run: all 18 classified TRACKED-ELSEWHERE-STALE-PIN, `DIFF: byte-identical (0 of N bytes differ)` against the CURRENT HEAD content once compared against the correct (not the stale-pinned) canonical; this order's remedy commit repoints all 18 to c28c728a309ab0d83b2831c2972179791a2985fb (content-identical to the exact last-touch commits above), and the mutant control (removing all 4 shared-frontier members per affected function) fails with the expected `File not found` lines, then the real manifest succeeds with none of those lines present."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtf-1 face, THE POPULATION: 'take every member NOT classed TRACKED-AT-PATH-EQUAL or declared through a VERIFIED staged_from' -- an entry whose pin content does not match the served bytes is not verified, and 'a member the census finds that this list does not name is IN the population and a row.'",
+    "world_is": "No function actually shipped stale content THIS turn (no deploy occurred and the served bytes were never touched), so this is a LATENT hazard rather than a realized one: the NEXT time someone ran `build-and-upload.sh` on the unmodified manifest and deployed the result, served.py/loaders.py/ids.py would have silently reverted to their pre-IB-rte-6 content on 7 functions, with the build reporting success throughout (self-consistent pin, no error). Caught here because this order's own census compares the pin's content against the LIVE served bytes, not merely against its own declared sha256.",
+    "notes": "Disarmed same-turn: this order's own remedy commit repoints all 18 entries to the branch's cut commit (content-verified equal to the exact last-touch commit for each of the three shared files), verified by battery_ib_rtf_1.py's real build and mutant control in the same run this row cites. Flagged for R58-AC2 (the CVO's judgment record) as a pattern worth a standing check (a stale-pin detector), since nothing in build-and-upload.sh's own success path currently distinguishes a self-consistent-but-stale pin from a genuinely correct one."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S41",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T05:45:00Z",
+    "one_line": "irpt-directory-search was redeployed at 2026-09-19T05:29:38Z -- 29 seconds before this order's own final graded battery run started -- by a SIBLING worker's in-flight commit (0.9.0_WK_IRPT_BCKEND~1, cell IB-rtf-2, commit b3a148044fa5699073e110126d0e6fc7d6b4fed5, editing the SAME shared _authz/enforce.py and _authz/served.py this order's own cell also declares from), moving this order's own population mid-run: an EARLIER run of this order's battery (minutes before) read enforce.py/served.py for this one function as resolvable; the FINAL graded run reads them TRACKED-ELSEWHERE-MISMATCH (canonical named, content differs -- NOT canonical-absent) because the sibling's edited content is not yet reachable from this branch's HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: `aws lambda get-function --function-name irpt-directory-search --query Configuration.[LastModified,CodeSha256]` -> `2026-09-19T05:29:38.000+0000  aQxATFkcdtEBvs+v/zztQBOPcbR9XH9Lzjm9kUOmhmU=`; this order's own final battery run's own printed timestamp: `run at 2026-09-19T05:30:07.463272+00:00` -- 29 seconds later.",
+        "this cell, this run: two consecutive runs of the SAME unmodified `battery_ib_rtf_1.py` against the SAME branch HEAD produced DIFFERENT census results for `irpt-directory-search` ONLY -- the earlier run (this order's own third attempt, prior to the lint-only final revision) read `enforce.py`/`served.py`/`data/custodian_key_seam.json` as resolvable (TRACKED-ELSEWHERE-VERIFIED / TRACKED-ELSEWHERE-STALE-PIN / TRACKED-ELSEWHERE-DISCOVERABLE, all byte-identical), the FINAL run (identical battery logic, no manifest edit to those entries in between) read the same three as UNRESOLVED / CANONICAL-ABSENT -- a result that cannot change without an external cause, since this battery never touches the live Lambda's deployed code itself.",
+        "this cell, this run, out-of-band (NOT part of the graded battery): `git rev-list --objects --all` finds the exact served `enforce.py`/`served.py` bytes (oids `79c9d9dee1b44ce3d40466466c37a95d452c88db` / `fd8b189e5c5f4dd39525fa7368c48cf9bb9240bf`) at `infra/aws/lambda/investor-reporting/_authz/enforce.py` / `.../served.py`; walking every commit touching that path (`git log --all --format=%H -- <path>` then `git rev-parse <commit>:<path>` per commit) finds the match at `b3a148044fa5699073e110126d0e6fc7d6b4fed5`, whose own subject line names `IRPT_BCKEND.TO-IB-rtf-2 first pass, 0.9.0_WK_IRPT_BCKEND~1` -- a SIBLING worker's own branch, reachable in the shared object database (worktrees share one `.git` object store) but not on THIS branch's `HEAD` (`c28c728a309ab0d83b2831c2972179791a2985fb`)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtf-1 face BOUNDS: 'the served functions are not redeployed' (by THIS order) and 'a member the census finds that this list does not name is IN the population and a row' -- this row is the second, not the first.",
+    "world_is": "This order never redeployed irpt-directory-search and never touched _authz/enforce.py or _authz/served.py's content. A SIBLING cell in the SAME round (IB-rtf-2, worker ~1), working the SAME shared pipeline concurrently, edited and (by some path -- a real build+upload to the SHARED S3 artifact bucket at minimum, and this function's LastModified timestamp is consistent with an actual redeploy) shipped a new enforce.py/served.py to a function THIS order's own cell also declares staged_from entries for. Rule 27's 'ONE ISSUANCE... a WORKSTREAM IS A SCOPE' and the seating discipline around disjoint write surfaces do not, on their own text, cover two DIFFERENT cells of the SAME issuance both holding legitimate, overlapping write access to the SAME shared _authz frontier and the SAME pipeline's live functions -- this is exactly that overlap, measured mid-flight rather than argued in the abstract.",
+    "notes": "Not this order's to fix: the correct remedy is SEQUENCING (IB-rtf-2 merges, this project's manifest is next re-declared against the merged HEAD, and irpt-directory-search's enforce.py/served.py re-resolve to TRACKED-ELSEWHERE-VERIFIED with no further action), which is the issuer's call, not a worker's. This order's own battery correctly reflects its OWN measurement at its OWN run time (rc=0, token printed, 3 of 32 population members packeted including these two) and is NOT re-run again chasing a moving target -- CLAUDE.md Rule 2's speed governor: a further re-run here would not change what this order does (it cannot merge a sibling's branch), only which timestamp its snapshot carries. The THIRD member on this function, data/custodian_key_seam.json, remains genuinely unresolved even under the out-of-band check (its oid is absent from the shared object graph) and is not explained by this same cause."
   }
 ]
 ```
