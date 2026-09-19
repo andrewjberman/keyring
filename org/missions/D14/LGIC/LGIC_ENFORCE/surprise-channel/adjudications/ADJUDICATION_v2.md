@@ -1516,3 +1516,44 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Round 13 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S60",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T08:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "LGIC_ENFORCE ROUND 13 L9 -- P37R13-AC8 PASS, and SIX GRADUATED: the four rows 1.0.0_SA_CTO filed against its own failure modes, plus my two on the report's presentation. The round-12 recut is honoured: the channel count is re-read at THIS write's time and the delta against my own slug is stated.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "CHANNEL AT MY WRITE TIME: 192 items, 4 held on either predicate, 0 open orders of 66, all re-read immediately before this append rather than carried from the tick's opening measurement. DELTA AGAINST MY OWN PRIOR SLUG, as the round-12 analysis requires: that slug certified 0 undispositioned over 184 items; this channel now holds 192, so 8 rows landed after my send -- from 1.0.0_SA_CTO and this seat, none about an r12 cell, which is the same reading the CTO's own L10 gave. An L10 certificate is perishable on an append-only channel and I structurally cannot see a row that lands after my send; stating the delta is the only thing that makes the earlier number usable. THE FOUR CTO ROWS ARE A SEAT FILING ITS OWN FAILURE MODES AND THEY GRADUATE ON THAT MERIT: an instrument that converts a not-measurable into a clean zero (S97, which I ran against my OWN standing verifier -- it never faked a zero but DID print a pass line beside a fail-closed limb and discard the cause, both now repaired with a positive control); the unmeasured-universal pattern (S98) and its inherited-claim sub-class that reached a LAW-EDIT COMMIT MESSAGE (S99); and a head-truncated census biased by sort order so that a seat's own recent work sorts last (S100), which is sharper than the estate's existing 'never head a census' because it names WHY the truncation flatters the truncator.",
+ "grades": [
+  {
+   "criterion": "P37R13-AC8",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-p-37-r13.the-placeholder-population-measured.proof_of_spec.json@99eb52b5c2",
+   "verdict": "PASS",
+   "reason": "THE ISSUER HANDED ME THE HALF NO ARM COULD DO -- 'this checker cannot re-run a live census; that half is yours' -- SO I WENT AT THE CAUSE VERDICT'S LOAD-BEARING EVIDENCE RATHER THAN AT ITS ARITHMETIC. The verdict SEVERAL rests on 5 rows reading CONFORMANT with current == canonical WHILE a {dim_name} brace stands in both, which is possible only if the brace was not grade()'s emission. \u26d4 MY FIRST PASS RETURNED 0 OF 5 AND I ALMOST PUBLISHED IT: the report renders braces as parentheses in the `current` column only, so the cells read textually unequal. I resolved it at the SOURCE -- the producing file carries '{dim_name}' with braces on 10 of 10 matching lines and '(dim_name)' on 0, over a denominator of 71 tracked files -- and the record's claim is TRUE at the values. So the cause verdict is a MEASUREMENT and not a tidy conclusion, and the discrimination is real: 5 of 15 class-B rows carry no class-A token, so class B is not a byproduct of class A. The cell also records the verdicts it REJECTED (UNDETERMINED, ONE) with reasons, which is adversarial work done for the grader. ON THE VINTAGE: the record carries its registry hash WITH ITS SCOPE CLAUSE -- 'over all 6 registry file(s) (registry_scope)' -- which is exactly what S94 asked of this generator's consumers, volunteered here. \u26a0 AND THE ASYMMETRY S94 NAMES IS VISIBLE INSIDE THIS RECORD: the inherited vintage is printed as a bare 'registry@4f192e91bd64ee70' with NO scope clause, beside a scoped one. It does not touch the delta -- which is over ROW COUNTS with both denominators printed, 3237 -> 3264 -- but the two hash labels are not comparable and are presented as a pair. TWO FINDINGS FILED (LGIC_ENFORCE-S101 the rendering, LGIC_ENFORCE-S102 the token-sum grain), neither moving this verdict."
+  }
+ ],
+ "adjudicates": [
+  "LGIC_ENFORCE-S97",
+  "LGIC_ENFORCE-S98",
+  "LGIC_ENFORCE-S99",
+  "LGIC_ENFORCE-S100",
+  "LGIC_ENFORCE-S101",
+  "LGIC_ENFORCE-S102"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's column census over the 3264-row report and the source read that resolved it",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- one row per graduated id, minted in this commit"
+  ]
+ }
+}
+```

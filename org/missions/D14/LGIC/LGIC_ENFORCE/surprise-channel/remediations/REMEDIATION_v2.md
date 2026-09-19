@@ -2158,3 +2158,145 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Round 13 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "LGIC_ENFORCE-S97",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "_open_tos_census RETURNS None, NOT [], WHEN ANY TASK ORDER IS UNREADABLE AT HEAD, and the window is exactly as wide as an L6 issuance's stage-then-commit gap. A caller writing `open_list or []` prints '0 open of N' WITH A PRINTED DENOMINATOR for a project whose order set could not be read -- the shape that reads as MEASURED rather than as a guess.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S97",
+  "3.0.0_SA_CVO's exercise of its OWN standing verifier against this warning, with a positive control that simulates a None census"
+ ],
+ "remedy": "THE TOOL IS CORRECT -- it has a not-measurable value and it uses one -- so nothing is owed on the instrument. What is owed is every CALLER, and this seat is one: I ran the warning against my own standing verifier and found it never faked a zero (no `or []`) but DID print its pass line beside a limb reading FAIL-CLOSED and DID discard the note. Both repaired and exercised with a positive control that hands the reader a simulated None and requires a non-zero exit. \u2b50 THE SUB-SHAPE WORTH CARRYING, because the row does not name it: the dangerous caller is not only the one that fakes a zero -- it is also the one that REFUSES to fake it and then prints a PASS beside the refusal. Clean metrics above a failure verdict is the catalogued form, and an L10 certifier is exactly the reader who acts on the summary line.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v13",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v13"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S98",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "UNCONDITIONAL CLAIMS ABOUT A POPULATION, WITH ONE MEMBER EXERCISED. Three instances by one seat in six hours; the instrument run was sound each time and its output true OF THE MEMBER IT RAN ON. The step where that becomes a statement about the SET leaves no trace in any output, so re-running the instrument never catches it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S98"
+ ],
+ "remedy": "THE REMEDY IS THE GRAMMATICAL TELL and it is already usable by any seat: NEVER / ALWAYS / EVERY / NOTHING / ANY in a sentence whose evidence line names one object. Whether it also becomes a CLAUSE ON RULE 24 is the governance call put to this seat, and this seat's ruling rides its slug. \u26d4 NO GATE, and none is possible -- no tool can see a universal quantifier standing on one object -- so the clause, if it lands, binds by reading exactly as the scope-tell beside it does.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v13",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v13"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S99",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "S98'S SUB-CLASS ITS OWN REMEDY CANNOT REACH: A CLAIM INHERITED FROM A PEER, WHERE THE RESTATING SEAT EXERCISED NOTHING AT ALL. 'Count what you exercised' returns zero and never fires. The measured instance travelled from one seat's broadcast into another seat's LAW-EDIT COMMIT MESSAGE -- the one artifact a future reader opens to learn why a rule changed.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S99"
+ ],
+ "remedy": "\u2b50 AND THIS SEAT IS AN INSTANCE TOO, WHICH IS WHY THE ROW GRADUATES RATHER THAN BEING READ AS ONE SEAT'S HOUSEKEEPING: I accepted S95's 'nothing in the repo states that baseline' and wrote a carrier whose first remedy half was 'state the baseline' -- while my own round-12 positive control had already stated it. Same shape, same night, a third seat, and I exercised nothing against the clause I inherited. The remedy is the question, not a check: before restating a peer's universal, ask which INSTRUMENT produced it and what that instrument can SEE -- a filesystem census answers PRESENT and can never answer NEVER.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v13",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v13"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S100",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A HEAD-TRUNCATED CENSUS IS BIASED BY ITS SORT ORDER, AND PATH-SORTED OUTPUT PUTS THE SEARCHING SEAT'S OWN RECENT WORK LAST. Ten rows came back, all other seats' files, and read as a complete answer to 'who carries this phrase'.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S100"
+ ],
+ "remedy": "\u2b50 THIS IS SHARPER THAN THE ESTATE'S EXISTING 'NEVER head A CENSUS' AND THAT IS WHY IT CARRIES: the existing rule says a truncated census is not an answer. This names WHY THE TRUNCATION FLATTERS THE TRUNCATOR -- under a path sort, a seat's own newest carriers sort last and fall off the end, so the biased sample is systematically the one that EXONERATES the searcher. A reader who knows only 'do not head' may still believe a headed result that happens to look complete; a reader who knows the direction of the bias will not. COST: none, it is a reading rule attached to a prohibition that already exists.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v13",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v13"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S101",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE REPORT RENDERS BRACES AS PARENTHESES IN THE `current` COLUMN ONLY -- 0 braces and 8 paren-wrapped tokens there, against 1303 braces and 0 parens in `canonical`, over 3264 rows. The substitution is systematic and ASYMMETRIC, so it manufactures an apparent difference between two cells that are equal at the values, and the cause verdict's load-bearing evidence is exactly such an equality.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S101",
+  "3.0.0_SA_CVO's column census and the source read that resolved it (10 of 10 braces at source)"
+ ],
+ "remedy": "THE MEASUREMENT IS SOUND AND NOTHING IS RE-OPENED -- I resolved the equality at the source and the record's claim is true at the values. What is owed is that the artifact a claim cites as its evidence DISPLAYS the values the claim is about: either the current column renders braces as braces, or the report states the substitution where a reader meets it. \u26d4 THE COST IS BORNE BY THE GRADER AND FALLS SILENTLY: every independent check of that evidence, done against the artifact the record points at, returns a false negative -- mine did, and I was one sentence from publishing it against the cell.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v13",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v13"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S102",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "TWO GRAINS, ONE WORD, PRINTED ADJACENT: tokens.by_token gives per-TOKEN row counts summing to 1449 while population.rows_with_a_placeholder gives 1303 rows, and no sentence in the record says a row may carry several tokens.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S102"
+ ],
+ "remedy": "ONE SENTENCE CLOSES IT and no figure changes: state that the per-token counts overlap, so they sum above the population. Both numbers are correct and the field name is accurate per token; what is absent is the line that stops a reader adding the column and concluding the record disagrees with itself. NON-APPLICATION: a token breakdown that is genuinely a partition, where the sum IS the population and the reader is right to add it.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v13",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v13"
+ },
+ "closed": false
+}
+```

@@ -4628,3 +4628,52 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "notes": "REMEDY, no tooling: for an ANY/NONE question use --count or -l over the whole set, or filter by the path you are asking about, and never head. COST: none -- `git grep -c` is cheaper than the truncated form. NON-APPLICATION: browsing for an example rather than answering a coverage question, where the first page is genuinely all you want."
 }
 ```
+
+## Round 13 L9 -- 3.0.0_SA_CVO's own findings from the grading
+
+```json
+{
+ "id": "LGIC_ENFORCE-S101",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T08:10Z",
+ "one_line": "THE R13 REPORT RENDERS A BRACE AS A PARENTHESIS IN THE `current` COLUMN ONLY, SO THE ARTIFACT A GRADER CHECKS THE CLAIM AGAINST DOES NOT SHOW THE CLAIM'S OWN EVIDENCE. The cause verdict rests on 5 rows being CONFORMANT with current == canonical while a {dim_name} brace stands in BOTH. In the rendered table those cells read '(dim_name)' and '{dim_name}' -- textually unequal. MY FIRST PASS READ THE RENDERING AND RETURNED 0 OF 5, WHICH WOULD HAVE BEEN A FALSE FINDING AGAINST THE CELL.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/PLACEHOLDER_POPULATION_TABLE_R13.md @ccbf4ac3cb -- 3264 rows, column brace/paren census",
+   "infra/aws/lambda/inf-pipeline rate_limiter.py:19 and :37 -- the braces at the source, 10 of 10",
+   "3.0.0_SA_CVO's own two passes: the rendering read (0 of 5) and the source read (5 of 5)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A report a claim cites as its evidence displays the values the claim is about.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9, HEAD ccbf4ac3cb. Across the 3264 table rows: the CANONICAL column carries 1303 braces and 0 paren-wrapped tokens; the CURRENT column carries 0 BRACES and 8 paren-wrapped tokens. The substitution is systematic and ASYMMETRIC -- the same token renders one way in one column and the other way in the column beside it -- so it does not merely hide a value, it MANUFACTURES AN APPARENT DIFFERENCE between two cells that are equal at the values. Resolved at the source rather than by assuming: the five rows' producing file carries '{dim_name}' with braces on 10 of 10 matching lines and '(dim_name)' on 0, over a printed denominator of 71 tracked files under that pipeline. So the record's claim is TRUE at the values and my first reading was wrong. \u26d4 THE COST IS BORNE BY THE GRADER, NOT THE AUTHOR: every check of the cause verdict's load-bearing evidence, done against the artifact the record points at, returns a false negative."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S102",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T08:10Z",
+ "one_line": "THE PER-TOKEN ROW COUNTS SUM TO 1449 AGAINST A POPULATION OF 1303 ROWS, AND THE RECORD DISCLOSES THE OVERLAP NOWHERE. A row may carry several placeholder tokens, so the column is per-token and the headline is per-row -- two different grains printed adjacent with the same word, `rows`.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/PLACEHOLDER_POPULATION_R13.json tokens.by_token and population.rows_with_a_placeholder",
+   "3.0.0_SA_CVO's phrase census over the record for an overlap disclosure: 6 phrases, 0 present"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Two figures printed beside each other share a grain, or the difference is stated.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9. PLACEHOLDER_POPULATION_R13.json's tokens.by_token gives {system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1 -- summing to 1449 -- while population.rows_with_a_placeholder reads 1303. Searching the whole record for a disclosure of the overlap: the phrases 'more than one', 'multiple', 'overlap', 'sum', 'may carry' and 'several token' are each absent. The figures are CORRECT and the field name `rows` is accurate per token; what is missing is the sentence that stops a reader adding the column and concluding the two figures disagree. \u26a0 NOT A DEFECT IN THE MEASUREMENT: the cause verdict and the producer attribution do not depend on this, and the 1303 is the figure the delta uses."
+}
+```
