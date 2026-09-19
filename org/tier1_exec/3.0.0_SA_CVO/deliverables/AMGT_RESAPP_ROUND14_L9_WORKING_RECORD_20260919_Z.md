@@ -924,6 +924,67 @@ HEAD is the pre-cell state, every gate reads HEAD, and nothing refuses a claim m
 careful seats walked into it the same afternoon on the same order. The remedy is procedural and cheap
 (name the tree before the read); the frequency is the argument for making it reflexive.
 
+## 4s. THE BRIGHT DATA GATE NOW COVERS FIVE CRITERIA ACROSS TWO CELLS, not three across one
+
+`2.0.0_SA_COO~Z` msg 23893 (acked), ruled at row `Z-S180` (`3cdfda92a0`). **Section 4m's figure is
+superseded: update the slug's count.**
+
+rk-49's live arm ran under the completed chain E pair and WROTE NOTHING -- 3 of 3 keys byte-identical
+pre=post (sha256 + VersionId per key), `_pool` ETag `7a1197377a...` equal, 0 credits, ledger CLOSED on
+four proven legs. The never-widen discipline held end to end.
+
+**BUT NOT FOR THE REASON SECTION 4r NAMES, AND THE DISTINCTION MATTERS.** `--enrich-only` validates the
+whole object BEFORE the write and refused CAT and CSL with *"'ceo_profile' is a required property"*;
+Keyence was withheld after an independent `validate()` pre-check proved the identical block. So:
+
+- section 4r's flag finding is STILL TRUE (the literal two-flag command writes nothing and exits 0),
+- but it was NOT the operative cause of this run writing nothing -- the schema block fired first.
+
+Both facts belong in the adjudication, and neither should be allowed to stand in for the other. A
+criterion that would have failed for two independent reasons has only been tested against one.
+
+**THE SEQUENCING, which is the substantive finding.** The `ceo_profile` block is `rk-48`'s schema
+requirement, and the ONLY writer of that block is `rk-48`'s live arm -- AC4-AC6, refused on Andrew's
+Bright Data word. So `rk-49`'s rewrite is SEQUENCED BEHIND `rk-48`'s, and both wait on the SAME word.
+
+| | before | now |
+|---|---|---|
+| criteria gated by the Bright Data word | 3 (`rk-48` AC4/AC5/AC6) | **5, across two cells** (+ `rk-49` AC3/AC4) |
+| re-open order on Andrew's word | -- | `rk-48` AC4-AC6 FIRST, then `rk-49` AC3/AC4, each under its own pair section and a fresh ledger entry |
+
+`rk-49` closes BY CONSTRUCTION like `rk-48` (AC3 REFUSED-BY-SEQUENCE, AC4 PASS on the unchanged
+read-back). The COO explicitly refused the two shortcuts that would have manufactured a green --
+no schema relaxation and no placeholder `ceo_profile` -- because both are served-content changes
+outside the signed pair. GRADE THAT AS CORRECT.
+
+### A disarm row can reach HEAD BEFORE the row it disarms -- measured
+
+`Z-S180` disarms `W50-S3`. Measured just now: `W50-S3` and `W50-S4` occur **0 times at HEAD and 0
+times at `311aa07b43`**, and all four `W50-S1..S4` are present at the ~50 worktree's current HEAD
+`6b1fd76215` -- the repair commit, still undrained.
+
+So the disarming row is in the shared channel while its subject is on a branch. The mechanism is
+plain: a SEAT commits to the shared tree immediately, a WORKER's rows ride its branch to the drain.
+
+WHY IT MATTERS AT L10, where the precondition is *every row dispositioned*: the census reads HEAD, so
+right now it sees the disarm and not the item. When ~50 drains, `W50-S3` and `W50-S4` ARRIVE AS NEW
+UNDISPOSITIONED ITEMS -- one of them already answered by a row that predates it in the channel. The
+count cannot go to zero prematurely, but it CAN LOOK TIDIER THAN IT IS between now and that drain.
+THE CLOSE MUST BE TAKEN AFTER THE LAST DRAIN, never merely when the census happens to read clean.
+
+### W50-S4: one CLI used two ways in one round, one of them broken
+
+`comp-secrets get <name> --reveal` prints a FOUR-LINE DESCRIPTOR BLOCK, never a bare value, so the
+`export KEY="$(comp-secrets get ... --reveal)"` idiom several orders used cannot yield a usable key.
+The worker obtained its value another way and charged nothing. `1.0.0_SA_CTO~Z` holds the row because
+the CLI's contract is its surface.
+
+WORTH KEEPING FOR THE ADJUDICATION, and the COO said it about its own cut rather than being told:
+`rk-40` AC3 used a WORKING form (`| grep '^value:' | sed ...`) and `rk-49` AC3 did not. THE SAME CLI,
+TWO CELLS, ONE ROUND, ONE IDIOM RIGHT AND ONE WRONG. That is an issuer-consistency defect at the cut
+as much as a CLI-shape defect, and it is only visible by comparing two orders -- no single cell's
+review could surface it.
+
 ## 5. Open items carried into the adjudication
 
 - **`W58-S2` (ARMED, `2.0.0_SA_COO~Z`) -- a cross-order conflict to adjudicate.** GATE (x)'s
