@@ -8884,6 +8884,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W41-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~41",
+    "surfaced_at": "2026-09-19T04:45:51Z",
+    "one_line": "The order's own D12 citation (9.3%/91.6% CSL, 1.8%/92.4% Keyence) reproduces almost exactly ONLY when passage coverage is scoped to the 'risk' item ALONE, not to the combined risk+mdna excerpt or the whole document -- the order names 'the excerpt' without saying which item(s) it means.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured on CSL (this cell's own CLI, --coverage): whole-document raw=45.97%/reflow=86.47%; risk+mdna combined raw=38.67%/reflow=86.63%; risk ALONE raw=8.94%/reflow=93.79% -- the order's cited figures are 9.3%/91.6%.",
+        "Measured on Keyence: risk ALONE raw=2.08%/reflow=94.41% against the order's cited 1.8%/92.4%, after also fixing a second defect (S2 below) in the coverage instrument itself.",
+        "AMGT-rk-39 face section 1.1: 'Raw PDF line text ... puts 9.3% (CSL) and 1.8% (Keyence) of the excerpt into passages ... the validation's block reflow ... lifted that to 91.6% and 92.4%' -- 'the excerpt' is never defined as risk-only, risk+mdna, or whole-document anywhere in the order text."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC2/AC3 read as if 'the excerpt' for the COVERAGE line is a single, order-legible scope that any reasonable implementation would land on.",
+    "world_is": "It is not order-legible; the scope had to be discovered empirically by trying whole-document, then risk+mdna, then risk alone, and comparing each against the order's own cited numbers. This worker scoped the CLI's --coverage output to the 'risk' item's own pages (document.py's _reflow_text_and_paragraph_pages + _pages_spanned), which is the scope that reproduces the cited figures; a different, equally defensible scope choice (e.g. risk+mdna) would have produced AC2/AC3 outputs that read as a FAIL against the order's own numeric bar.",
+    "notes": "Not fixed by widening the order; recorded so a future re-cut of this coverage line states its excerpt scope explicitly rather than leaving it to be re-discovered."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W41-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~41",
+    "surfaced_at": "2026-09-19T04:45:51Z",
+    "one_line": "CSL's own real risk-factors heading, verified against the actual reflowed PDF text, reads 'Material Risks' -- a phrase that is NOT a substring of any of the order's four declared ANNUAL-REPORT risk patterns ('Principal risks / Risk management / Key risks / Material business risks'); the cutter instead qualifies a genuinely different heading also literally named 'Risk management' inside CSL's Governance/ERMF section.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CSL_AU_Equity.source.json, family ANNUAL-REPORT, key 'risk': heading_matched 'Risk management' at reflow offset 180302; the document's own table of contents (reflow offset 9717) and section title (reflow offset 58707) both read 'Material Risks', which contains none of 'principal risks' / 'risk management' / 'key risks' / 'material business risks' as a contiguous compacted substring.",
+        "The order's own 1.2.6: patterns are matched by exact compacted-phrase substring (re.escape, spaces stripped), the same convention as the pre-existing 10-K/20-F patterns -- there is no fuzzy or partial-word matching declared, so 'Material Risks' can never qualify any of the four given phrases.",
+        "The section this cutter DOES resolve ('Risk management', CSL's enterprise risk management framework under Governance) is a real, substantial, on-topic heading -- chars 8192, opens 'CSL has adopted and follows a detailed and structured Enterprise Risk Management Framework' -- so AC4's qualitative bar ('a risk heading, not a story') is met, just not via the report's own investor-facing 'Material Risks' section."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The four listed ANNUAL-REPORT risk-heading phrases are the vocabulary a real annual report's risk section carries.",
+    "world_is": "On the one ANNUAL-REPORT document this order actually validates against, none of the four phrases matches the report's own primary risk section title; one of them ('Risk management') happens to also be the real heading of a DIFFERENT, later section discussing the same general topic (enterprise risk management under Governance), and the cutter resolves to that section instead. This is not a wrong-object bug in the D9 sense (no story, no cross-reference, no table-of-contents entry was cut) -- it is a genuine heading that is thematically adjacent but not the report's own named risk-factors section.",
+    "notes": "Remedy, if wanted: add 'Material Risks' (or a broader synonym set) to the declared ANNUAL-REPORT risk phrase list. Not done here -- the order names the four phrases explicitly and this worker does not widen a declared pattern list on its own judgment (the REFUSAL CLAUSE); AC4 is satisfied as measured either way."
   }
 ]
 ```
