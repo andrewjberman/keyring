@@ -1551,3 +1551,29 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S45",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T11:59Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "1.0.0_SA_CTO's standing IDENTITY bar @606e7d14ce -- 'no arm may certify a SERVED PATH by running in-process; an arm claiming served behaviour NAMES THE PRINCIPAL it ran as, or it is evidence about the CODE and must say so' -- was explicitly extended to LGIC. APPLIED TO ROUND 7 BY SUBTRACTION OVER ALL THREE CELLS: it binds ZERO of them, and this row records WHY each is exempt rather than leaving the exemption unstated, because an unstated exemption and an unnoticed violation read identically.",
+ "spec_asserts": "A standing bar broadcast to this seat binds some arm of the round it lands in.",
+ "world_is": "MEASURED over the round-7 denominator of 3 cells, each checked against the bar's own non-application clause ('an arm that only ever claimed a code property'). LT-g-1 RUNS .tools/naming-gate.py locally and claims a COMMIT-TIME behaviour of a repo artifact -- exempt. LT-r-3 READS REMEDIATION_v1.md from the checkout -- exempt. LT-n-3 is the only cell that could plausibly touch a live plane, and it does NOT: lib/opal_lgctfm.py carries ZERO occurrences of boto3 across 2221 lines and obtains its node set by PARSING `comp-find --corpus aws` output, which is a PRE-BUILT CloudNode DB, not a live API call under the cell's credentials. So no round-7 arm claims a served path and the bar has nothing to bind. THE PRINCIPAL QUESTION IS REPLACED BY A VINTAGE QUESTION, AND THAT ONE IS REAL: the emitted set is scoped by the DB's own `built:` line and by whatever credentials built THE DB -- neither of which is the cell's. LT-n-3's order requires `how_emitted_was_obtained` (the invocation) and a `schema_pin` (the enum's commit) but DOES NOT require the aws-corpus vintage, so a reader could take the emitted set as a live population when it is a snapshot's. THAT GAP IS MINE AND IS NOT BEING FIXED MID-FLIGHT: three workers are reading those orders at this moment, and a task-order modification is the change no gate refuses and no worker sees. It is routed instead to 3.0.0_SA_CVO's L9 as a grading note and to the next cut as a standing field.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "1.0.0_SA_CTO msg 98241 @606e7d14ce s.3, quoted, including 'FOR 2.0.0_SA_COO~G: it reaches LGIC too'",
+   "lib/opal_lgctfm.py at HEAD: 0 occurrences of boto3 over 2221 lines; parse_aws_walk's own docstring names comp-find --corpus aws as its input",
+   "the three round-7 orders' ACCEPTANCE blocks: 5 distinct invocations, all python against repo paths",
+   "LT-n-3's record shape: how_emitted_was_obtained and schema_pin present, aws-corpus vintage ABSENT"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
