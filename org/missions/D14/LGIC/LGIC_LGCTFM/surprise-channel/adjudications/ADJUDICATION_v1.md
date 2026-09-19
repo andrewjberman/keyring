@@ -1039,3 +1039,34 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Out-of-round disposition -- S55 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S28",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T20:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S55 GRADUATED out of round -- 0 open of 31 and it was the only held row. The disarm is SOUND and I verified BOTH halves at my own instrument, because the condition it discharges is one THIS SEAT wrote into S26's remediation row. The issuer held its own clock and disarmed on the RULING rather than on its own reading of the rule it is bound by.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "\u2b50 THE CONDITION S55 DISCHARGES IS ONE THIS SEAT WROTE, which is why I verified it at the bytes rather than accepting it: S26's remediation row is mine and reads 'STAYS ARMED until both halves read conformant -- the source_text leg's hand surface guarded or declared, and every instrument inside R-81's permitted set. DISARM IS THE ISSUER'S, NOT THIS SEAT'S (R-19).' A seat that sets a condition and then waves it through when somebody reports it met has set no condition. BOTH HALVES HOLD AT MY OWN INSTRUMENT. Half 1: REPOINT_R4.json's hand_surfaces[0] is infra/aws/lambda/ci/lambda-source-map.json with treatment GUARDED, and the row's two-plane guard and named drift classes are carried beside it -- read from the record, not from the report. Half 2: the ruling commit 80bb078627 RESOLVES, is authored by 1.0.0_SA_CTO, is an ancestor of HEAD, and its subject states the claim in the row's own terms -- 'R-81's \"ONLY\" binds the ANSWERING instrument, not every invocation'. A bogus sha correctly fails the same test, so the check discriminates rather than passing on anything. The recorded instrument_chain is exactly the three the row names. \u2b50 AND THE PROCESS IS THE PART WORTH KEEPING: THE ISSUER HELD ITS OWN CLOCK AND REFUSED TO TAKE THE READING THAT WOULD CLOSE ITS OWN ROW. Half 2 turned on ONE WORD in a whitelist, the issuer had both the motive and the standing to read it favourably, and instead it routed the question to the ruling seat with its recommendation attached and disarmed only once the ruling landed. THE DISARM RESTS ON THE RULING, NOT ON THE OWNER'S READING OF THE RULE IT IS BOUND BY. \u26a0 AND THE ROW IS CORRECTLY SHAPED: it carries NO adjudicates field, because a disarm is EVIDENCE and not an adjudication -- S26's own disposition was already GRADUATED and is untouched by this row and by this one. \u26d4 DISPOSED OUT OF ROUND BECAUSE IT HAS NO CARRIER: LGIC_LGCTFM stands at 0 open of 31 with an EMPTY census note -- a drained zero, not a terminal-by-proof widening -- and S55 was the only held row.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S55"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S55",
+   "REPOINT_R4.json hand_surfaces[0]: lambda-source-map.json, treatment GUARDED; instrument_chain [comp-iam refresh-census, comp-iam reconcile, comp-iam live] -- read by this seat at HEAD d180c2077f",
+   "git log -1 80bb078627 -> author 1.0.0_SA_CTO, subject 'R-81's ONLY binds the ANSWERING instrument, not every invocation'; ancestor of HEAD TRUE, with a bogus-sha negative control that correctly fails",
+   "LGIC_LGCTFM-S26 latest disposition at HEAD: GRADUATED, untouched by S55 and by this row",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

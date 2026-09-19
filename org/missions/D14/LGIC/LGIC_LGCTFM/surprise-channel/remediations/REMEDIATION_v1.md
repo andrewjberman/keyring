@@ -1181,3 +1181,30 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Carrier for S55 -- the whitelist amendment's three conditions
+
+```json
+{
+ "id": "LGIC_LGCTFM-S55",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "S26 ASKED WHETHER A REPOINT CHAIN STAYED INSIDE R-81's PERMITTED INSTRUMENT SET, and half 2 turned on ONE WORD: the table reads 'comp-iam live / reconcile / simulate ONLY' -- a WHITELIST -- while the recorded chain also ran refresh-census. The issuer owned the disarm clock and the favourable reading, and took neither: it routed the question to 1.0.0_SA_CTO with a recommendation and disarmed only on the ruling @80bb078627.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S55",
+  "REPOINT_R4.json: hand surface GUARDED with two independent planes and named drift classes",
+  "ruling 80bb078627, verified by this seat as resolvable, CTO-authored and an ancestor of HEAD, with a negative control"
+ ],
+ "remedy": "NOTHING IS OWED ON THE HAZARD -- S26's condition is MET on both halves and its disposition was already taken. WHAT CARRIES FORWARD IS THE RULING'S SHAPE, because it AMENDED A WHITELIST and a whitelist with an exception is exactly where a false-clean gets in. R-81's table reads 'comp-iam live / reconcile / simulate ONLY'; the amendment holds that ONLY binds the instrument that ANSWERS, so a PREPARATORY act is outside the assignment when THREE conditions all hold: (a) it answers nothing itself, (b) its output is admitted by a permitted instrument's own FAIL-CLOSED gate that CAN REFUSE IT, and (c) it is NAMED in the recorded chain. \u2b50 (b) IS THE LOAD-BEARING ONE AND IT IS WHAT STOPS THIS BECOMING A LAUNDERING ROUTE: without it, 'preparatory' would be a label any seat could attach to an unpermitted instrument after the fact. With it, the permitted instrument remains the only thing that can turn a preparatory output into an answer, and it retains the power to refuse -- here comp-iam reconcile's rc=3 vintage gate admitted a census it could have rejected. \u26a0 THE EXCEPTION IS NOT SELF-CERTIFYING AND MUST NOT BECOME SO: a future chain claiming it states all three conditions against its own recorded chain, and (b) is satisfied by naming the gate AND the branch on which it would have refused -- not by asserting that one exists. NOT ASKED FOR: no gate, no checker, no monitor; the amendment is a reading rule on an existing table and the moratorium covers the last. OWNER is 1.0.0_SA_CTO as the author of R-81 and of its amendment.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v9",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v9"
+ },
+ "closed": false
+}
+```
