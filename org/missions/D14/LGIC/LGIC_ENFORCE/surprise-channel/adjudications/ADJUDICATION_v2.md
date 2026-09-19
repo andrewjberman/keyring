@@ -1318,3 +1318,41 @@ both the owner move and the disarm word in one ruling, so both land together her
  "dismissal_reason": "Seven INERT rows carrying no `adjudicates`: two are an owner's disarm evidence, three are an issuer's self-named cut defect and its two worker instances, one corrects a relayed false premise, one is evidence carried inside C40's record. No residue beyond what the four graduated rows carry."
 }
 ```
+
+## Round 10 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S54",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "class": "OBSERVATION",
+ "one_line": "LGIC_ENFORCE ROUND 10 L9 -- G43R10-AC5 PASS: THE FIX IMPLEMENTS R3, NOT THE CENSUS INSTANCE, AND I PROVED IT ON NAMES THE CENSUS NEVER CONTAINED. Two rows graduate out of the grading itself (S86, S87), both about what the round's TEST can and cannot discriminate rather than about the change.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "One cell, EN-g-43, five criteria, exactly ONE judgment -- verified by subtraction over the round-10 order rather than taken from the hand-off, and the hand-off named one. The channel reads 176 items, 0 undispositioned and 0 open orders of 63 before this write, measured with the gate's own _latest_dispositions and _open_tos_for_project.",
+ "grades": [
+  {
+   "criterion": "G43R10-AC5",
+   "instance": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-g-43-r10.bd-is-blackdiamond.proof_of_spec.json@1cbc91d66a",
+   "verdict": "PASS",
+   "reason": "R3 AS WRITTEN, ON THREE INDEPENDENT GROUNDS. (1) THE PREDICATE IS SHARED, NOT RE-IMPLEMENTED: _r3_spell() calls _bd_is_vendor(toks, i, v), the same function _slots() already applies for R1 and R4, so the adjacency test cannot drift from the one the rest of the grader uses; its shape is literally R3's sentence -- 'toks[i-1] in v.firm or toks[i+1] in v.firm', which is adjacency and not position. (2) IT IS APPLIED BY INDEX TO EVERY LEFT-OVER TOKEN, in the resource function slot and in a secret's purpose segments, not to a matched name. (3) THE DECISIVE ONE -- I RAN grade() AT HEAD ON NAMES THE CENSUS DOES NOT CONTAIN, and both directions fire: 'opal-cot-session-bd-cot-fetch', whose leftover bd has a firm token ONLY AFTER it, and 'opal-cot-session-cot-bd-fetch', whose leftover bd has one ONLY BEFORE it, both render 'opal-cot-session-blackdiamond-fetch-document' -- at a token index the census instance never occupies. A substitution keyed to opal-cot-bd-session-fetch produces neither. TWO THINGS I FOUND WHILE PROVING IT, BOTH FILED RATHER THAN FOLDED INTO THIS REASON: the round's NEW TEST asserts only the census instance's own shape and would pass the substitution this criterion exists to rule out (S86), and R3's FIRM branch, while correctly implemented, is always subtracted by FN1b and so can never be observed in a canonical form (S87). Neither moves the verdict -- the criterion asks about the FIX, and the fix generalizes -- but a reader who takes the green as meaning 'the suite now guards this' would be wrong, and that is worth more than the green."
+  }
+ ],
+ "adjudicates": [
+  "LGIC_ENFORCE-S86",
+  "LGIC_ENFORCE-S87"
+ ],
+ "disposition": "GRADUATED",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's grade() runs at HEAD 7f48a0ff42 on six constructed names, both adjacency directions and the secret path",
+   "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md R3, read at the bytes",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- one row each for S86 and S87, minted in this same commit"
+  ]
+ }
+}
+```

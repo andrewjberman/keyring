@@ -1931,3 +1931,54 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  }
 }
 ```
+
+## Round 10 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "LGIC_ENFORCE-S86",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE TEST THAT CLOSES A ROW IS THE PART THAT OUTLIVES THE ROUND, AND THIS ONE DOES NOT DISCRIMINATE. test_r3_bd_left_in_the_function_is_spelled_blackdiamond asserts grade('opal-cot-bd-session-fetch', 'SSM_DOCUMENT') and grade('opal/cot/bd/credentials', 'SECRET'); in both, bd sits immediately after cot and takes the vendor branch. 0 arms for adjacency AFTER, 0 for the firm branch, 0 for a non-census name. The CODE generalizes -- measured -- but a later rewrite of _r3_spell() into a special case would keep this suite green.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S86",
+  "lib/tests/test_opal_naming.py@b3c8c1b94e",
+  "3.0.0_SA_CVO's grade() runs at HEAD on opal-cot-session-bd-cot-fetch and opal-cot-session-cot-bd-fetch"
+ ],
+ "remedy": "Two assertions, both already measured and printed at L9, close it: a leftover bd whose ONLY firm adjacency is AFTER it, and one at a token index the census instance does not use. Both render 'opal-cot-session-blackdiamond-fetch-document' today, so the arms are known-good before they are written and cannot be a fishing expedition. This belongs in the round that next opens lib/tests/test_opal_naming.py; G43R10-AC5 is PASS with or without it, and NOTHING HERE ASKS FOR THE GRADED CHANGE TO BE REOPENED.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S87",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "R3's FIRM READING IS UNOBSERVABLE BY CONSTRUCTION: a leftover bd with no adjacent firm token is either taken as the scope by _slots() (never reaching _r3_spell), or raises at R4 as two different scopes, or is spelled 49f and immediately subtracted by FN1b as a duplicate of the scope slot the same reading filled. Measured on three constructed names at HEAD.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S87",
+  "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md R3 and R4"
+ ],
+ "remedy": "NOT A REPAIR -- R3 and FN1b compose exactly as written, and changing either to make the branch visible would be the defect. What is owed is that the fact is CARRIED: the firm branch of _r3_spell() has no observable output, so no test of the canonical form can discriminate it, and the next seat asked to 'add a firm-branch test' will otherwise spend the round discovering this. One sentence beside the function or in the round-11 analysis closes it. The owner is named because the branch is LGIC_ENFORCE's to document, not because a change is wanted.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v10"
+ },
+ "closed": false
+}
+```

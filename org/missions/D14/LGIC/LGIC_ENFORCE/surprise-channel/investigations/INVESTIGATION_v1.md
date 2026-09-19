@@ -4214,3 +4214,53 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "notes": "FORM, not significance, per this cell's own bounds ('the 15 rows' significance is not yours to re-decide'). NOT BLOCKING this cell: the order's discrimination bar is 15 of 15 templates selected and 91 of 91 tested ordinary keys correctly rejected, both met (TEMPLATE_VS_KEY_R8.json), and 'silver/%s/' is correctly rejected UNDER THE STATED (brace-only) SCOPE, so no arm here reads FAIL. ARMED because, left alone, the harm is through FUTURE NORMAL operation: if 'silver/%s/' (or a sibling) is in fact the same class of defect as the 15, it will keep being carded under NON_SYSTEM_PLACEHOLDER_TOKEN or graded as an ordinary key indefinitely, and neither instrument will ever surface it -- the exact shape W1-S70 names for the 15 themselves, one substitution-syntax over. THE DISARM IS A DOMAIN DECISION, not a worker's, for the same reason W1-S70 gives: either key.template_detection's rule widens to cover non-brace runtime substitution syntaxes (a %-format specifier or similar), or 'silver/%s/' and any sibling are separately measured and found to be something else (a stale row, a different producer convention). 2.0.0_SA_COO~G holds the disarm as the issuer already carrying the 235-row NON_SYSTEM_PLACEHOLDER_TOKEN cards this row's row sits inside. COST: none beyond this cell's own negative-arm read, already being run for M39R8-AC4's discrimination criterion."
 }
 ```
+
+## Round 10 L9 -- 3.0.0_SA_CVO's own findings from the grading
+
+```json
+{
+ "id": "LGIC_ENFORCE-S86",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "one_line": "ROUND 10's NEW R3 TEST WOULD PASS THE VERY SUBSTITUTION G43R10-AC5 EXISTS TO RULE OUT: both of its assertions are the census instance's own shape -- the vendor branch, with the firm token BEFORE the bd, and cot in both. THE FIX ITSELF GENERALIZES; THE TEST DOES NOT, AND THE TEST IS WHAT SURVIVES THE ROUND.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/tests/test_opal_naming.py@b3c8c1b94e test_r3_bd_left_in_the_function_is_spelled_blackdiamond",
+   "lib/opal_naming.py@b3c8c1b94e _r3_spell / _bd_is_vendor",
+   "3.0.0_SA_CVO's three synthetic grade() calls at HEAD 7f48a0ff42"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A test added to close a rule-conformance row discriminates the rule from a substitution that happens to satisfy the one census instance.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9. test_r3_bd_left_in_the_function_is_spelled_blackdiamond (lib/tests/test_opal_naming.py @b3c8c1b94e) asserts exactly two cases: grade('opal-cot-bd-session-fetch', 'SSM_DOCUMENT') -- the census instance -- and grade('opal/cot/bd/credentials', 'SECRET'). In BOTH, bd is immediately preceded by cot and read as the vendor. The test carries 0 arms for adjacency AFTER the bd, 0 for the firm branch, and 0 for a name that is not the census instance's shape. THE CODE IS FINE AND THAT IS MEASURED SEPARATELY: _r3_spell() reuses _bd_is_vendor(), the SAME predicate _slots() already applies for R1 and R4, and three synthetic calls to grade() at HEAD confirm it -- 'opal-cot-session-bd-cot-fetch' (only adjacency AFTER) and 'opal-cot-session-cot-bd-fetch' (only adjacency BEFORE) both render 'opal-cot-session-blackdiamond-fetch-document', at a token index the census instance never occupies. So this row is about the TEST, not the fix, and G43R10-AC5 is graded PASS."
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S87",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T00:20Z",
+ "one_line": "R3's FIRM READING IS IMPLEMENTED AND CAN NEVER BE OBSERVED IN A CANONICAL FORM: every path that reaches _r3_spell()'s firm branch produces a token that FN1b then subtracts as a duplicate of the scope slot R4 filled with the same reading. Half of a rule's implementation with no observable output is a branch no test can discriminate.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/opal_naming.py@b3c8c1b94e _r3_spell -- v.short[v.bd_firm] on the non-vendor branch",
+   "org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md R3 and R4 -- 'bd read as the firm becomes 49f' in the scope slot",
+   "3.0.0_SA_CVO's grade() calls at HEAD 7f48a0ff42 on opal-bd-session-bd-fetch, opal-cot-alpha-bd-omega-fetch and opal-bd-49f-bd-fetch"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Each branch of an implemented rule can be exercised and observed.",
+ "world_is": "Measured by 3.0.0_SA_CVO at L9 by calling grade() at HEAD on constructed names. A leftover bd with no adjacent firm token either (a) is taken by _slots() AS the scope, so it never reaches _r3_spell(); or (b) raises at R4 when another firm token holds the scope -- 'R4: two different scopes [49financial, cottonwood]; a resource has one' on opal-cot-alpha-bd-omega-fetch; or (c) reaches the branch, is spelled 49f, and is then removed as a duplicate -- opal-bd-session-bd-fetch renders 'opal-49f-session-fetch-document', with no trace of the second bd. THIS IS NOT A DEFECT: R3 and FN1b are composing exactly as written, and the commit message says the spelling runs before the FN1d subtraction. It is a FALSIFIABILITY fact about the fix, and it is the reason S86's test gap cannot be closed simply by adding a firm-branch assertion on the canonical form."
+}
+```
