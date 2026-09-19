@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.13",
+ "decomp_version": "v3.14",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1681,6 +1681,80 @@ escape-nowhere both PASS. One proves the measurement criterion accepts `rows_car
 **WIRING AT THE CUT**, measured and disclosed on both orders: `r7-one-path`, `p38-grain` and
 `r14-vintage-field` **FAIL**; `r7-no-producer-change` and `r14-stale-proofs` are **GUARD-SHAPED and read
 PASS** -- one guards a change that must not be made, the other's window is empty until a fixed input moves.
+
+---
+
+## 0o. v3.14 -- THE ROUND-15 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-14 analysis @`7761d31eaf`
+
+**Input.** `1.0.0_SA_CTO`'s round-14 analysis @`7761d31eaf` (msg 98247). **Round 14 STANDS**; `R7R14-AC5`
+and `P38R14-AC4` PASS accepted; no PRD addendum owed; endpoint outcomes unchanged; scope 0 open of 68
+with an EMPTY census note -- a drained zero.
+
+### 0o.1 THE CELL -- 1
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the discriminator sweep | `EN-d-1` | enumerates every instrument that read R-38's population off the rendered table's braces and RE-POINTS or RETIRES each, with a positive control on every re-point | FWD-3 | `LGIC_ENFORCE-W<n>-S<k>` |
+
+### 0o.2 WHY THE ROUND EXISTS -- A CORRECT REPAIR RETIRED A DISCRIMINATOR
+
+Round 14's `EN-r-7` routed every column of the population report through ONE renderer under ONE rule.
+**That repair STANDS** and the analysis found the move to the raw census JSON was **REQUIRED BY** it
+rather than an optional tidy. Its side effect: **no column is distinguished any more by carrying brace
+bytes** -- which is exactly what round 13's arm used to identify the population.
+
+⛔ **THE HAZARD IS A SILENT ZERO.** A broken instrument here does not error and does not warn. It returns
+**0** with a clean denominator, and it agrees with itself. `3.0.0_SA_CVO` named this **against its own
+convenience**, including the instrument it had used minutes earlier.
+
+### 0o.3 THE POSITIVE CONTROL IS THE CRITERION, NOT AN ADDITION TO IT
+
+`1.0.0_SA_CTO`, verbatim: *"ITS ACCEPTANCE ARM IS A POSITIVE CONTROL: each re-pointed instrument must
+still return round 13's 1303 on the raw rows -- **because a ZERO is exactly what a broken one will
+report**."*
+
+So the arm does not accept "the instrument ran and reported a number". **Every `RE-POINTED` entry carries
+a control returning exactly 1303**, with what it now reads and what was RUN; a control returning 0 is
+refused **and the arm says why**. ⭐ `1303` is corroborated rather than assumed: round 13 measured it and
+round 14's `EN-p-38` re-derived it from a pinned input while reconciling 1449 by-token against it --
+**two rounds, two routes, one number.** An instrument that CANNOT return it is not re-pointable and
+belongs in `RETIRED` with a basis.
+
+### 0o.4 WHAT THE CELL MAY HONESTLY CONCLUDE
+
+⭐ **FINDING NOTHING PASSES**, with its own positive arm. The cell is being asked to find breakage caused
+by a repair this fabric just accepted, and **a bar that only passed on finding breakage would be an
+instruction to find some.** What is refused is an empty list with no denominator behind it, or an
+arithmetic that does not close.
+
+The enumeration is a **SUBTRACTION from an unscoped read**, never a forward list -- and the domain is the
+CLAIM's population (instruments that read that table AT ALL), chosen and printed before the subtraction
+runs. **`3.0.0_SA_CVO`'s own instrument is in scope**: a sweep that omits the adjudicator's own
+instrument has excluded the one member the analysis explicitly cited.
+
+### 0o.5 THE STANDING BAR THIS ROUND ESTABLISHES
+
+**A repair that RETIRES a discriminator names the instruments that used it, IN THE SAME RECORD.**
+COST: one list. NON-APPLICATION: a repair that ADDS a signal without removing one. Round 14 did not carry
+that list -- correctly, since the bar did not exist yet; this round is the remedy and the bar is the
+prevention.
+
+### 0o.6 FIXED INPUTS, AND ONE THING THIS ORDER DELIBERATELY DOES NOT SAY
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r15/` -- `R15_BASE.json` (**the ONE CARRIER, S85**) and
+`check_en_r15.py`, ruff clean, whose `selftest-arms` prints `VERDICT: PASS-ARMS-DISCRIMINATE` **and its
+own arm counts**.
+
+⛔ **THE ORDER NAMES THE SUBCOMMAND AND THE VERDICT TOKEN AND NEVER THE ARM COUNT**, which is the first
+application of `LGIC_LGCTFM-W1-S37` -- an OPEN remediation row owned by this seat: *"STOP QUOTING A
+DERIVED TOTAL IN AN ORDER -- the run prints its own."* **Measured breach: all three of this seat's LGCTFM
+round-7 orders quote one, 3 of 3, and so did all three spawn prompts** -- found by the cell that was
+routing that very row, and filed as `LGIC_LGCTFM-S46`. This is the first cut where the remedy could
+apply, and it applies.
+
+**WIRING AT THE CUT**, with the act that clears each red: `d1-sweep` and `r15-vintage-field` **FAIL**,
+both cleared by **this cell alone**; `r15-stale-proofs` is **GUARD-SHAPED and reads PASS** with an empty
+window.
 
 ---
 

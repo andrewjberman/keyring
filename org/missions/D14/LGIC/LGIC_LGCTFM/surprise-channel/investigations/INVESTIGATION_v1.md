@@ -1577,3 +1577,30 @@ PRD, so it is a row here, not a message.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S46",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-19T12:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "I VIOLATED AN OPEN REMEDIATION ROW THAT I OWN, IN THE SAME ROUND WHOSE CELL ROUTED IT. W1-S37's remedy is verbatim 'STOP QUOTING A DERIVED TOTAL IN AN ORDER -- the run prints its own. A number an order quotes about its own instrument is a SECOND carrier of a fact the instrument already reports.' The row is OPEN (`closed: false`) and its owner is `2.0.0_SA_COO~G`. ALL THREE of my round-7 orders quote `34 arms, 10 positive, 4 driving the WIRING`, measured 3 of 3 over the round's own denominator, and all three worker spawn prompts told the cell to `Expect PASS-ARMS-DISCRIMINATE over 34 arms`.",
+ "spec_asserts": "An issuer who routes a remediation row in a round is not simultaneously breaking it in that round's own orders.",
+ "world_is": "I was. FOUND BY THE CELL I ISSUED IT TO: 0.9.0_WK_LGIC_LGCTFM~3 surfaced it inside a row's `basis` while routing W1-S37 -- the routing cell reading its own subject and finding the issuer in breach of it. IT DID NOT HALT AND IT DID NOT FILE A BLOCKING ROW, correctly: its order said route, not remedy. THE NUMBER HAPPENED TO BE RIGHT, which is the whole hazard -- the count matched at the cut, so nothing failed and nothing would have failed until the arm count moved and three orders plus three prompts went stale at once, each still reading as an authoritative expectation. A SECOND CARRIER OF A FACT IS NOT WRONG UNTIL IT IS, AND THEN IT IS WRONG SILENTLY. WHY IT IS NOT FIXED BY EDITING THOSE ORDERS: two of the three are already terminal and drained, and the third has a worker reading it right now -- a task-order modification is the change no gate refuses and no worker sees. THE FIX IS PROSPECTIVE AND STARTS WITH THE NEXT CUT: an order names the self-test subcommand and the verdict token it must print, and NEVER the arm count. Carried into LGIC_ENFORCE round 15's orders as the first place it can apply.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "W1-S37 in REMEDIATION_v1.md at HEAD: closed false, owner 2.0.0_SA_COO~G, remedy quoted above verbatim",
+   "grep -c '34 arms' over the three round-7 task orders: 1, 1, 1 -- 3 of 3",
+   "the three spawn prompts, each carrying 'Expect VERDICT: PASS-ARMS-DISCRIMINATE over 34 arms'",
+   "REMEDIATION_ROUTE_R7.json, W1-S37's basis entry, where the cell recorded the finding",
+   "the row's own note that it is identical to LGIC_ENFORCE-W1-S89 one project over"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
