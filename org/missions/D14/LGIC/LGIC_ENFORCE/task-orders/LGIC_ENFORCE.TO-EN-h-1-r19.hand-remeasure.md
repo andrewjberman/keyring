@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>open</status>
+<status>complete -- 0.9.0_WK_LGIC_ENFORCE~1, 2026-09-19. H1R19-AC1 PASS-H1-COVERAGE, H1R19-AC2 PASS-H1-VINTAGE, H1R19-AC3 PASS-H1-REDERIVED (rc 0 each, run against the committed record); H1R19-AC4 UNVERIFIABLE-BY-INSTRUMENT (judgment, for 3.0.0_SA_CVO at L9 -- no verdict from this worker). Artifacts at b4ad2b4d2e: HAND_REMEASURE_R19.json, build_hand_remeasure_r19.py, hand-remeasure.r19.result.md and the THREE additive siblings (GRADING_RULE.REMEASURED_R19.md, TENSION_RANKING.REMEASURED_R19.md, exercises/n6-grader-a.REMEASURED_R19.tsv); the three ORIGINALS unmoved, blobs identical at this cell's base 3ed034c144 and at HEAD. The hand side re-measured across ALL THREE surfaces at the machine side's own census vintage (54659987c0): 45/45/0, 88/86/2, 10/9/1, TOTALS 143/140/3 against round 9's 143/109/34. Denominators re-derived at write time (45 -- not the 43 two carriers at HEAD still state -- 88, 10). grade() never called; 3 disagreements survive and none is a hand-side defect (2 machine-side departures from the written rule, 1 instrument gap at tension rank 5, deliberately not re-quoted). proof-of-spec-check.py rc=0 VALID. Proof instance: org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/LGIC_ENFORCE.TO-EN-h-1-r19.hand-remeasure.proof_of_spec.json</status>
 
 ---
 
