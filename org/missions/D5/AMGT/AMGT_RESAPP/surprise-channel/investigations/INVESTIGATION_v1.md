@@ -8884,6 +8884,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W59-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~59",
+    "surfaced_at": "2026-09-18T00:00Z",
+    "one_line": "AC1's fmt_rc=0-with-no-diff bar is unsatisfiable without violating this same order's own hunk-confinement bound (AC5): chatter-axis-schedule.tf carries PRE-EXISTING terraform-fmt drift at :114-116 (an unrelated IAM policy Sid/Effect/Action alignment), present at HEAD before this worker's edit and outside the declared 33-44/124 scope.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`terraform fmt -check -diff chatter-axis-schedule.tf` on HEAD's own bytes (git show HEAD:infra/aws/terraform/harvest/chatter-axis-schedule.tf, restored after the check) returns rc=3 with a diff confined entirely to lines 104-110 (Sid/Effect/Action alignment inside aws_iam_role_policy.chatter_axis_lambda's WriteSecurityMetrics/OwnLogStreamOnly statements) -- measured by 0.9.0_WK_AMGT_RESAPP~59 in /c/tmp/wk-amgt-14-59 before and after this cell's own edit, same rc=3 and same diff both times.",
+        "AC1's <expect> reads: 'fmt_rc 0 with no diff'; the order's own RULED section states 'no line outside :33-44 and :124 moves' and AC5 mechanically enforces that via hunks_confined_to_33-44_and_124.",
+        "A terraform fmt -write on the whole file would fix the drift (satisfying AC1) but would add a third diff hunk at lines 104-110, outside 33-44/124, failing AC5's own mechanical check -- the two mechanical criteria cannot both pass in the same commit given the file's measured HEAD state."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 asserts 'fmt_rc 0 with no diff' after this cell's one-expression, one-comment-block edit, implying the file was fmt-clean at HEAD before this cell touched it.",
+    "world_is": "The file is NOT fmt-clean at HEAD: an unrelated IAM policy block (lines 104-110) already carries terraform-fmt drift, unchanged by this cell's edit and outside its declared 33-44/124 scope. AC1 is REFUSED on this measurement rather than repaired by widening this cell's write surface to the unrelated block, per the order's own REFUSAL CLAUSE; AC1's acceptance row records status FAIL with this row cited."
   }
 ]
 ```
