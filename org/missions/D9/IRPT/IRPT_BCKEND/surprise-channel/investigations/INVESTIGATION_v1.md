@@ -5786,6 +5786,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "R56-AC1 is graded FAIL on this arm in the proof-of-spec instance; the order stays open per its own proof_of_spec contract. R56-AC2's judgment record states this finding in full for 3.0.0_SA_CVO and 1.0.0_SA_CTO -- whether the CTO's ruling on row W1-S25 changes this, and whether producer re-keying (alternative b) is now the load-bearing next cell, is the CTO's call."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T04:10:00Z",
+    "one_line": "CONSUMER OBLIGATION (IB-rtf-2 arm (c), CTO ruling @61627f39f9 condition 2): the served response envelope now carries a top-level, non-optional `unprojected_grant` field ({count, denominator, kinds}) on every scoped route through infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (7 of 7 entry.py -- directory, export, holdings, narrative, ops, performance, ycharts/generate -- import the shared served boundary and share its ONE call site). IRPT_FNTEND owes: render a VISIBLE partial indicator whenever unprojected_grant.count > 0, so that the day someone asks 'was the partial ever actually shown?' the answer is an artifact and not a recollection.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CTO ruling @61627f39f9 condition 2, carried verbatim on IRPT_BCKEND.TO-IB-rtf-2: \"A CONSUMER OBLIGATION IS FILED AGAINST IRPT_FNTEND IN THE SAME ROUND THE FIELD SHIPS ... a named, owned row\", and the ruling's own rendering test: render a visible partial indicator whenever count is greater than zero so the answer to 'was the partial ever actually shown?' is an artifact and not a recollection.",
+    "world_is": "This cell (IB-rtf-2) shipped the field this round -- infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (present-at-zero, non-optional), fed from infra/aws/lambda/investor-reporting/_authz/enforce.py's Enforcer.serve/submit_job/consume_job census -- and IRPT_FNTEND has not rendered anything against it yet: no consumer-side row, PRD clause or component visible from this worker's lane discharges the obligation. Filed BEFORE this cell's deploy per the ruling's condition 2, so the gap is a named, owned row rather than a fact a later reader would have to reconstruct.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (this cell's edit, this run) -- the field, present-at-zero, non-optional, docstring citing @61627f39f9",
+        "infra/aws/lambda/investor-reporting/_authz/tests/test_enforce.py test_a_partial_unprojected_grant_is_served_with_the_gap_disclosed / test_a_zero_unprojected_grant_is_served_with_count_zero_present, this run: 31 of 31 passed",
+        "comp-find 'import served' infra/aws/lambda/investor-reporting, this run: DENOMINATOR 10 hit(s), 7 SURFACED (directory, export, holdings, narrative, ops, performance, ycharts/generate entry.py) + 3 TEST; comp-find 'response_envelope\\(' infra/aws/lambda/investor-reporting, this run: DENOMINATOR 3 hit(s), 1 DEF (served.py:282) + 1 SURFACED call site (served.py:683) + 1 TEST -- the field reaches every route through the ONE shared construction"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This is the obligation the ruling requires filed, not a defect in this cell's own work. Disarm is the CTO's: routing this to IRPT_FNTEND's L4 (the same route the per-firm as-of consequence took, per the cell text) and closing it once IRPT_FNTEND renders the visible partial indicator. IRPT_BCKEND cannot disarm a consumer-side obligation on IRPT_FNTEND's own tree."
   }
 ]
 ```
