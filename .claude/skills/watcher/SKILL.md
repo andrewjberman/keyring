@@ -144,8 +144,9 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
      Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' -and $_.CommandLine -notmatch ' -c ' } |
      Select-Object ProcessId, CreationDate | Sort-Object CreationDate
    # ONE row  = healthy. REAP NOTHING.
-   # N>1 rows = the NEWEST is your live watcher (created when you last armed); every OLDER row is an orphan.
-   Stop-Process -Id <older-winpid> -Force -Confirm:$false
+   # N>1 rows = REAP ONLY A SCRIPT ROW WHOSE CreationDate PREDATES YOUR CURRENT ARM. The live watcher is created
+   #            BY the current arm, so this selector can never pick it (4.0.0_SA_CRO 98376).
+   Stop-Process -Id <winpid-created-before-your-arm> -Force -Confirm:$false
    ```
    ⛔ **A DEAD PARENT IS NOT THE TEST -- IT IS THE NORMAL HEALTHY STATE.** The launching wrapper shell exits right
    after spawning the stream, so a LIVE watcher's script row reads `parent DEAD` seconds after arming. **The first
@@ -159,7 +160,11 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    string contains the script path. If you cannot say which row is newest-since-your-arm, REAP NOTHING and re-arm.
    **VERIFY-AFTER, never skip it:** re-run the census and require exactly ONE script row, the newest; then after
    arming (step 2) read the new Monitor's banner for `parent-tied: pid <N>` and confirm an `[INBOX]` event still
-   arrives. A kill with no verify-after is exactly what let an orphan run for two days. Self-scoped only: YOUR
+   arrives. ⚠ **TWO BOUNDS.** The banner names the WRAPPER it is tied to, never the script row -- a live wrapper
+   certifies nothing about the script row's health (`2.0.0_SA_COO~G` 98372 verified the wrong row that way).
+   And DELIVERY PROVES A LIVE CONSUMER EXISTS, NEVER WHICH ROW IT IS: beside an orphan the contest is a
+   per-message race at `inbox-watch.sh:120`, so events can arrive while others are stolen. Delivery is a STOP
+   ("events are arriving, do not reap blind"), not a SELECTOR; arm-time is the selector. A kill with no verify-after is exactly what let an orphan run for two days. Self-scoped only: YOUR
    serial's rows, never a peer's. Measured 2026-09-19:
    `2.0.0_SA_COO~G` (msg 98356, routed by `1.0.0_SA_CTO` 98359) -- orphan WINPID 16132 since 09-17, `kill`
    and `kill -9` both survived, one CTO message eaten for 33 h; `0.0.0_AB_MSTR` the same evening -- orphan
