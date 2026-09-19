@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>issued</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~1 @1c9b926841. Population (7 STILL-LIVE, re-derived from ROUTED_ROW_LIVENESS_R8.json, set-equal to R9_BASE.json's framing list) dispositioned: EXECUTED 2 (W1-S30, S33 -- lib/opal_lgctfm.py, lib/lgctfm_render.py @09bf9c9308, each with a failing-before test), UNEXECUTABLE-AS-ROUTED 2 (S18, W1-S21 -- both name LGIC_ENFORCE round 16's additive-sibling ruling and the pinned check_lt_r1.py path), THE-ISSUERS-OWN-ACT 1 (S26), NOT-A-WORKERS-ACT 1 (W2-S36), NOT-WORK-A-DECISION 1 (S41). check_lt_r1.py and every pinned fixed input untouched. M1R9-AC1/AC2/AC3 PASS (base_sha 155b3bf938fbbb6e3194f8162c4459fba0a007a3 on every row); M1R9-AC4 UNVERIFIABLE-BY-INSTRUMENT, routed to 3.0.0_SA_CVO at L9. proof-of-spec-check: VALID (rc=0) @1c9b926841. Record: ROUTED_ROW_REMEDY_R9.json @58effd2aec.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-m-1` (decomposition v1.10 s.20) | **outcome_ref:** FWD-6 | **depends_on:** none -- **the only cell this round**
 
