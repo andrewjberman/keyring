@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-19T12:45:14.563041+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20260919T135752Z
 **Deploy:** AMGT-rk-36: forecasts FY1-FY3 (BEST_ + SA fallback) on the model block; read_model serves forecast_*; co-signed rk-36 pair
 **Authored by:** 0.9.0_WK_AMGT_RESAPP~39
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -13,11 +13,13 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | L1 | git | producer + fallback module + scopes + adapter committed | commit hash | commit 1de3fb108c (this worktree, wk-amgt-14-39) -- producer + fallback module + scopes + adapter + tests committed | CLOSED 20260919T130013Z |
-| L2 | activation | module.scoped_amgt_api.aws_lambda_function.this redeployed | TF apply 0 destroy + 0-diff replan + deployed CodeSha256 == uploaded sha |  | OPEN |
-| L3 | verify | 13 of 13 GET routes 200 pre/post, LOST=[] GAINED=[]; AC5 | census + AC5 output |  | OPEN |
+| L2 | activation | module.scoped_amgt_api.aws_lambda_function.this redeployed | TF apply 0 destroy + 0-diff replan + deployed CodeSha256 == uploaded sha | build 6Kr.kKS6nCiPwLaCJkz1vMLnexahBGcg sha256 7lAqBNEGJWmYGt87UpxFYobyA6jevkFxM5yoIIjB+WY=; targeted plan 0 add/1 change/0 destroy (source_code_hash+s3_object_version+last_modified only); HALT_ACK=1 safe-apply Apply complete 0 added 1 changed 0 destroyed; post-act get-function-configuration CodeSha256 7lAqBNEGJWmYGt87UpxFYobyA6jevkFxM5yoIIjB+WY= == uploaded sha; targeted replan No changes | CLOSED 20260919T135703Z |
+| L3 | verify | 13 of 13 GET routes 200 pre/post, LOST=[] GAINED=[]; AC5 | census + AC5 output | 13-route census: pre-deploy 13 of 13 200s, post-deploy 13 of 13 200s, LOST=[] GAINED=[]. AC5: BA_US_Equity 200/SERVED/has_forecast_keys True/forecast_figures 0/forecast_source_counts ABSENT:15/forecast_reason names missing bestdata.json (raw stamp 20260916T201824Z); check_face_len 179 == pre-deploy independent read (header+fiscal only, forecast 0) 179; fiscal_row_count 165 == independent direct read of the SAME unchanged _figures(model_block, fiscal_year_line_item) path. HOLLOW_NONEXISTENT_KEY_Equity 200/ABSENT/has_forecast_keys True/forecast_figures 0/forecast_reason 'no landed model block for this name'. Post-act CodeSha256 7lAqBNEGJWmYGt87UpxFYobyA6jevkFxM5yoIIjB+WY=. | CLOSED 20260919T135728Z |
 
 ## Log
 
 - 20260919T124514Z OPENED by 0.9.0_WK_AMGT_RESAPP~39 with 3 leg(s)
 - 20260919T130013Z LEG L1 closed: commit 1de3fb108c (this worktree, wk-amgt-14-39) -- producer + fallback module + scopes + adapter + tests committed
-- 20260919T1300Z STALE-BYTES CHECK (non-negotiable, before any build): `git merge-base HEAD SITEZ` = `7e3baf2b04c2196431d4fc7ac502b376ced288d3` (this worktree's own starting HEAD -- confirmed by the issuer as the SITEZ HEAD it was cut from); `git log --oneline $(git merge-base HEAD SITEZ)..SITEZ -- lib/research/api lib/research/checkface infra/aws/lambda/research/scoped_amgt_api infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh` printed NOTHING -- EMPTY, licensing the build. AC1/AC2/AC3 measured PASS on this worktree's own live pull/derive (CAT/CSL/6861, 15 of 15 forecast cells each, all sourced BBG, gaps_before 0 on all three -- Bloomberg had no gap to fall back on for any of the three validation names); AC4 measured PASS: `pytest integrations/bloomberg/research/tests/test_forecast_fallback.py lib/research/api/tests/test_fiscal_scope_contract.py` -> 22 passed, 0 failed, 0 errors.
+- 20260919T135703Z LEG L2 closed: build 6Kr.kKS6nCiPwLaCJkz1vMLnexahBGcg sha256 7lAqBNEGJWmYGt87UpxFYobyA6jevkFxM5yoIIjB+WY=; targeted plan 0 add/1 change
+- 20260919T135728Z LEG L3 closed: 13-route census: pre-deploy 13 of 13 200s, post-deploy 13 of 13 200s, LOST=[] GAINED=[]. AC5: BA_US_Equity 200/SERVED/ha
+- 20260919T135752Z CLOSED -- all 3 legs proven
