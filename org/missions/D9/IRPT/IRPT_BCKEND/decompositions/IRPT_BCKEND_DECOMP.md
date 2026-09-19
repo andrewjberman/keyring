@@ -55,6 +55,34 @@
 
 ---
 
+## R6. ROUND 6 -- THE RECUT ON THE ROUND-5 ANALYSIS (@81472c3a47, msg 98115; v0.6, 2026-09-19 ~03:4xZ, `2.0.0_SA_COO~B`)
+
+**Input:** six judgment PASS, 17 rows disposed (16 graduated with carriers, 3 dismissed), NO PRD addendum -- round 6 is a recut. Four round-5 orders closed on truthful FAILs and each FAIL is a cell here; S77 (the CVO) is the finding of the round: the cross-firm fence is stale while its stated cause is false, because the generator was never re-run after the flip -- the reader-census bar (the mirror of the writer census) is adopted on every face. The L4 rulings carried: @457cf494c6 (no-source members: measure, then branch), @61627f39f9 (partial projection: admit and disclose, three conditions). Corrections adopted: registry rows are the CRO's lane (`PLATFORM_LOGIC_DOCS`), landed @845343f925; a blob pin is written `blob <hash>`; no `memory/` path is cited on a face (S78).
+
+### R6.1 The rectangle (5 cells, id shape `IB-rtf-<n>`)
+
+| cell | owes | assignee | serves | supersedes |
+|---|---|---|---|---|
+| IB-rtf-1 | round-5 analysis s.5 item 1: the no-source members MEASURED then BRANCHED (W4-S34/S35 + W1-S26's six members + the 3 UNRESOLVED); DELTA=0 declares, DELTA!=0 packets and stops | WK~4 | provenance of every served function | IB-rte-4 |
+| IB-rtf-2 | s.5 item 2 / W1-S27: the ordering inversion in `enforce.py` with the disclosure field NON-OPTIONAL, the IRPT_FNTEND consumer-obligation row, the empty branch refusing; packet + halves BEFORE the deploy (a STOP at (d) is the expected first pass) | WK~1 | FWD-1, 2, 5 | IB-rte-6 |
+| IB-rtf-3 | IB-rte-2's re-cut: the principal created, the four outcomes exercised on the DISCLOSED-PARTIAL path, deleted | AE `~N` (staged, behind rtf-2) | FWD-1, 2, 5, 11 | IB-rte-2 |
+| IB-rtf-4 | s.5 item 3 / S77: every generated block re-derived from the registry at HEAD, the fence proven both signs, the flag's readers censused | WK~3 | FWD-1, 7, 10 | -- |
+| IB-rtf-5 | s.5 items 4-5: IB-rte-3's re-hand -- the re-apply after Andrew's step 4 under both halves naming the 4 tainted resources + the last 2 of 10 + the regenerated fence; the host control EXERCISED or UNEXERCISED, never simulated | WK~3 (staged, behind step 4 + rtf-4 + halves) | FWD-1, 7, 10 | IB-rte-3, IB-rte-7 |
+
+**Not cells of this project:** (b) of the partial-projection ruling (the ownership-map producer re-keyed to the Schwab spine) -- DS-owned, carried to `d08_firm_ownership_map.py`'s owner; the IRPT_FNTEND rendering obligation -- the CTO's L4 carrier in FNTEND's PRD (rtf-2 files the row); FWD-11's SSM roster parameter -- a separate act with its own sign-off; IB-rtd-7's port -- still superseded behind rtf-5, both halves and the FNTEND reader cell; starting host `i-02448edb624a7a7cf` -- operational, outside every cell (a REC to the CTO: it is the only closer of W3-S44).
+
+### R6.2 Edges and fanout
+
+Chains: A `rtf-1`; B `rtf-2 -> rtf-3`; C `rtf-4 -> rtf-5` (rtf-5 also behind Andrew's step 4 and both halves). **fanout: 3 of 3 chains, cap 8.** Handed now: rtf-1, rtf-2, rtf-4. rtf-3 on rtf-2's drain with arm (e) passing; rtf-5 on step 4 (the issuer measures `get-bucket-policy` at the hand-off), rtf-4's drain, and both halves. The DS lane holds no round-6 order.
+
+### R6.3 Bounds carried
+
+R-40, R-42, R-44, R-45; the forward-looking-criterion bar; S56's vintage pins; Rule 30; NEVER-1 on every served-behaviour change (rtf-2's deploy, rtf-5's apply: both halves at HEAD BEFORE the act); the reader-census bar; `blob <hash>` notation; no `memory/` citation on a face; no served bytes committed as source on any branch (rtf-1); the empty-set branch refuses on every path (rtf-2); nothing written to either bucket (rtf-5); no host start by any cell.
+
+### R6.4 Not decided here
+
+Whether `firm_registry.json` becomes a builder output (rtf-1's judgment); the disclosure field's `kinds` taxonomy (rtf-2's judgment, Rule 24 record); whether `bucket_managed_by` becomes a closed enum and whether generators re-run at commit time (rtf-4's judgment -- proposals for the CTO, never gates built here); what rtd-7's port lacks after rtf-5 (rtf-5's judgment).
+
 ## R5. ROUND 5 -- THE RECUT ON THE ROUND-4 ANALYSIS (@561d6e1cc9, msg 98036) AND ANDREW'S 17:3xZ APPROVAL (@af794c77e3)
 
 **Input:** seven judgment PASS, zero of ten FWDs REALIZED (all ten advisor-facing; the structural blocker is that no principal has ever existed to exercise them), S56 and S68 CLOSED, no PRD amendment; s.8 names six owed items; Andrew's verbatim *"Approved"* adopts the two `/open-calls` RECs (the two LGIC firm buckets NOW, creation only; a bounded test principal under both halves). The CTO's correction on W1-S20/W2-S59 changes the remedy: declare the true source in `files[]` / stage from a pinned blob, never a third copy.
