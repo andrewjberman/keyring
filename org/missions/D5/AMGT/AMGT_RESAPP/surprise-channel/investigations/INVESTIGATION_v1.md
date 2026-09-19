@@ -8884,6 +8884,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-26's order, and every frontend-dev constitution, assume a headless authenticated login via portal/.frontend-dev/auth -- W31-S3 measured the assumption false.",
     "world_is": "Under mandatory two-step MFA there is NO headless authenticated browser session, by Andrew's own decision. The wall is a property of that decision, not a defect to route around.",
     "notes": "THE RULE, for AMGT_RESAPP from round 14 on, binding this seat at L4 and the issuer at L6: (1) NO task order is cut whose criterion needs a HEADLESS AUTHENTICATED browser session. (2) A criterion that genuinely needs the authenticated page is written in one of two shapes only, and the order names which: HUMAN-IN-THE-LOOP -- a person completes the one-time code once in a HEADED session and the harness drives after it, which keeps MFA on for every user and exempts nobody; or JUDGMENT -- graded by a human at L9, never self-graded and never graded on a direct invoke or an unauthenticated render. (3) A criterion that only needs the DATA is written against the adapter directly (lambda:Invoke with the page's own key shape), which needs no login at all -- and must say it tests the adapter, not the page. WHAT THIS DOES NOT DO: it grants no credential, no bypass and no exemption, and reads none into Andrew's word. ⛔ THE ESTATE HALF IS NOT RULED HERE AND IS SURFACED TO ANDREW: W31-S3's own notes measure that the same login underlies roughly 27 other .frontend-dev/testing/*.json constitutions across OTHER projects, every one of which hits this wall if re-run today, and portal/.frontend-dev/auth/README.md still documents both accounts as working automation logins. That is outside this project's scope and it turns on his MFA decision, so it is his card: retire headless authenticated capture estate-wide and correct the README, or sanction an automation identity. Separately, the same README's credentials.json is TRACKED in the portal repo with two plaintext passwords -- already carried to him."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W57-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~57",
+    "surfaced_at": "2026-09-19T02:24:11Z",
+    "one_line": "AMGT-rk-57's own RULED text names the rk-30 page-half instance (AC1 PASS, AC2 FAIL) as the acceptance sweep's negative control, but that instance now reads AC1 PASS AND AC2 PASS at this worktree's HEAD (047aee5478) -- commit 9074091db1 fixed AC2 after the ROUND_ANALYSIS this cell cites and is an ancestor of the cut. The named fixture is stale; the sweep mechanism itself is correct and the disagreement it was built to expose is still live on three OTHER round-13 orders (below, AMGT_RESAPP-Z-W57-S2).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~31/AMGT_RESAPP.TO-AMGT-rk-30.page-scores-render.proof_of_spec.json at HEAD (047aee5478): acceptance[0].criterion_id=AC1 status=PASS; acceptance[1].criterion_id=AC2 status=PASS, status_reason 'GENUINE PASS on the corrected invocation. The prior FAIL was a discrimination failure of the literal npx invocation (Rule 22), never a defect in this order's own edited files'.",
+        "git log on that exact path: commit 9074091db1 'fix(AMGT_RESAPP round 13, 2.0.0_SA_COO~Z): rk-19 page half and rk-30 page half AC2 both genuinely PASS now -- ISSUER AMENDMENT corrects npx tsc -b to ./node_modules/.bin/tsc -b (banked estate defect, CTO msg 23637)', preceding commit 899ce56a2e's original 'order stays OPEN on AC2' recording.",
+        "git merge-base --is-ancestor 9074091db1 047aee5478 -> true (rc=0); the ROUND_ANALYSIS this cell's face cites is 9c8e04cd9a, itself an ancestor of 047aee5478 and older than the fix.",
+        "AMGT-rk-57's face, section 1: 'The negative control exists at HEAD: .../AMGT_RESAPP.TO-AMGT-rk-30.page-scores-render.proof_of_spec.json records AC1 PASS and AC2 FAIL (S169's own measurement)' -- measured false at this worktree's HEAD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-57's RULED text and its AC2 criterion both assert the rk-30 page-half instance currently classes AC2 FAIL, and build the acceptance-sweep battery's real-bytes demonstration on that assumption.",
+    "world_is": "That instance was amended (commit 9074091db1) between the ROUND_ANALYSIS this cell cites and this worktree's own cut; AC2 now reads PASS. `.tools/tests/test_acceptance_sweep.py` measures and states this directly (arm 5) rather than asserting the stale premise, and substitutes rk-20's still-genuinely-failing AC1 (one of the CTO's own three named criterion defects) as the live fixture for the sweep-vs-census disagreement demonstration (arms 6-7).",
+    "notes": "Not a defect in `_acceptance_sweep`/`_classify_acceptance` -- both correctly read the instance's current, amended content. Remedy holder: none needed; recorded per Rule 22 ('record the difference, do not force agreement', the same discipline this cell's own AC3 names for rk-26) so a later reader does not treat the RULED text's cited fixture as still-current."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W57-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~57",
+    "surfaced_at": "2026-09-19T02:24:11Z",
+    "one_line": "AMGT-rk-57's AC3 expects the round-13 acceptance sweep to name rk-23 AC1, rk-20 AC1 and rk-30 scores-adapter AC1 as FAIL rows (the CTO's three named criterion defects), but all three orders carry NO <round> tag at all -- they fall in the sweep's own 'unrounded' bucket, not round 13 -- so a --round 13 filtered sweep genuinely measures 0 FAILs even though the project-wide (unfiltered) sweep correctly lists exactly these three under FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT_RESAPP.TO-AMGT-rk-20.price-generation-contract.md, AMGT_RESAPP.TO-AMGT-rk-23.artifact-name-encoding.md and AMGT_RESAPP.TO-AMGT-rk-30.scores-adapter-model-tab.md at HEAD: no <round> tag (case-insensitive regex '(?i)<\\\\s*round\\\\s*>') and no <status> tag at all in any of the three -- confirmed by direct byte search, not the RULED text's own '94 of 97 orders at the cut carry one' residual count.",
+        "python .tools/surprise-row-gate.py --acceptance AMGT_RESAPP --round 13: 'PASS 25 / FAIL 0 / UNVERIFIABLE 3 of 28 criteria over 12 order(s); unrounded 3' -- e=12 matches AC3's own '12 at the cut' exactly, and FAIL is empty at this filter.",
+        "The SAME three criteria genuinely FAIL and ARE found on the unfiltered (round_n=None) sweep: rk-20.price-generation-contract:AC1, rk-23.artifact-name-encoding:AC1, rk-30.scores-adapter-model-tab:AC1 -- confirming `_acceptance_sweep`/`_classify_acceptance` read the instances correctly; only the round-13 FILTER excludes them, exactly as this cell's own RULED build spec defines round-reading (the order's own line-anchored <round>N</round>, orders without one falling into 'unrounded', 'printed, never dropped').",
+        "_open_tos_census(root, 'AMGT_RESAPP') note: all three orders appear in the terminal-by-proof list ('AMGT_RESAPP.TO-AMGT-rk-20...', '...rk-23...', '...rk-30.scores-adapter...') -- each carries a <no status tag> word and a VALID proof-of-spec instance, so all three ARE counted terminal despite the genuine AC1 FAIL, which is S169's underlying finding, live on exactly these three right now."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3's <expect> text: 'b at least 3 naming rk-23 AC1, rk-20 AC1 and rk-30 scores-adapter AC1 ... e the round-13 orders carrying <round>13</round> at HEAD (12 at the cut; re-measure)' -- asserting both that e is defined by the <round>13</round> tag AND that these three orders' FAILs are counted within that same e-set.",
+    "world_is": "The two halves of that assertion are mutually exclusive for these three orders: they carry no <round> tag, so they cannot be members of the <round>13</round>-defined e-set (measured e=12, matching the criterion's own '12 at the cut') and simultaneously supply FAIL rows counted within it. The CTO's hand sweep (ROUND_ANALYSIS.round13.md s.1) counted these three as round 13's by some OTHER attribution (issuance membership, not the order's own tag); this cell's own RULED build spec defines round strictly by the tag, so the tool's round-13-filtered read and the hand sweep's round-13 count disagree on precisely these three orders. Graded per this order's own precedent (rk-26, 'record the difference, do not force agreement'): AC3 is graded on its ACTUAL measured output, not the unmet 'at least 3' clause.",
+    "notes": "Not a defect in the sweep's implementation -- the unfiltered sweep correctly surfaces all three FAILs, and the round-13-filtered sweep correctly excludes orders that carry no round tag, exactly as this cell's own RULED text specifies ('orders without one fall in an unrounded bucket ... printed, never dropped'). The mismatch is between the CTO's hand-sweep round attribution and the tool's own <round>-tag-only definition. Remedy holder, if one is wanted: whoever next closes round 13/14's L10 should decide whether these three orders' RECORD FACE should be completed (a <round> and <status> tag appended) so a future --round filtered sweep can see them without falling back to the unfiltered read -- not done here (outside this cell's <paths> and its own bound against editing any order at HEAD)."
   }
 ]
 ```

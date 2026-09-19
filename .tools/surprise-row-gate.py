@@ -1164,6 +1164,246 @@ def _open_tos_census(root, code, merging=False):
     return open_ids, len(paths), note
 
 
+# =================================================================================================
+# THE ACCEPTANCE SWEEP (AMGT-rk-57, row AMGT_RESAPP-Z-S169, ruling s.3.3 @9c8e04cd9a `:81-85`)
+# =================================================================================================
+# VALID names well-formedness, not passing. `_open_tos_census` above counts an order terminal on a
+# VALID proof-of-spec instance whatever its criteria's own PASS/FAIL verdicts read -- that is the
+# spine's rule (:436, :487-488) and this sweep does NOT change it (see _open_tos_census, _proof_terminal,
+# _proof_verdict, all untouched). What was missing is a SECOND read, beside the census, that answers the
+# question the census's name suggests but its code does not: did the criteria actually PASS. This sweep
+# is that second read -- a DISCLOSURE at slug time and a CLI limb, never a violation (a slug cannot
+# remedy a FAILED criterion; the CVO grades acceptance at L9, the COO recuts at L10 -- see the
+# `_stale_open_row_violations` docstring's own rule, ~:991, "A GATE REFUSES AN ACT ONLY WHEN THAT ACT CAN
+# REMEDY THE GATE'S CONDITION").
+
+_PROOF_BLOCK_RE = re.compile(r"<proof_of_spec>(.*?)</proof_of_spec>", re.S)
+_CRITERION_OPEN_RE = re.compile(r"<criterion\b([^>]*)>")
+_CRITERION_ID_RE = re.compile(r'id\s*=\s*"([^"]+)"')
+_CRITERION_JUDGMENT_RE = re.compile(r'judgment\s*=\s*"true"', re.I)
+_ORDER_ROUND_RE = re.compile(r"^\s*<round>\s*([0-9]+)\s*</round>", re.M)
+
+
+def _order_criteria(text):
+    """[{'id': cid, 'judgment': bool}, ...] in document order, parsed from the order's FIRST
+    <proof_of_spec> block (falls back to the whole text when the block tag itself is missing, so a
+    malformed order still yields what it can rather than nothing). PURE: string in, list out."""
+    m = _PROOF_BLOCK_RE.search(text or "")
+    block = m.group(1) if m else (text or "")
+    out = []
+    for om in _CRITERION_OPEN_RE.finditer(block):
+        attrs = om.group(1)
+        idm = _CRITERION_ID_RE.search(attrs)
+        if not idm:
+            continue
+        out.append({"id": idm.group(1), "judgment": bool(_CRITERION_JUDGMENT_RE.search(attrs))})
+    return out
+
+
+def _order_round(text):
+    """int or None -- the order's own line-anchored <round>N</round> (its record face). PURE."""
+    m = _ORDER_ROUND_RE.search(text or "")
+    return int(m.group(1)) if m else None
+
+
+def _order_label(code, rel):
+    """'<order basename>' for a sweep row label: the order's file stem (no `.md`) with the leading
+    `<code>.TO-` prefix stripped, so the label names the exact order without repeating the whole
+    project code on every printed row. PURE."""
+    stem = os.path.basename(rel)
+    if stem.endswith(".md"):
+        stem = stem[:-3]
+    prefix = "%s.TO-" % code
+    if stem.startswith(prefix):
+        stem = stem[len(prefix):]
+    return stem
+
+
+def _acceptance_rows_from_instance(inst_text):
+    """({criterion_id: row}, error_or_None) parsed from an instance JSON blob's own `acceptance` array
+    (schema: org/standards/PROOF_OF_SPEC.schema.json:183-260). A row with no `criterion_id` is skipped;
+    a duplicate id keeps the LAST row (the schema does not forbid a duplicate id, so this is a reading
+    choice, not a validation -- proof-of-spec-check.py's own frames are the validator for that). A
+    non-parsing blob, or one whose `acceptance` is not a list, returns ({}, <reason>)."""
+    try:
+        obj = json.loads(inst_text)
+    except Exception as exc:  # noqa: BLE001
+        return {}, "instance JSON did not parse (%s)" % exc
+    acc = obj.get("acceptance") if isinstance(obj, dict) else None
+    if not isinstance(acc, list):
+        return {}, "instance carries no acceptance array"
+    rows = {}
+    for row in acc:
+        if isinstance(row, dict) and row.get("criterion_id"):
+            rows[row["criterion_id"]] = row
+    return rows, None
+
+
+def _classify_acceptance(rows_by_id, criteria):
+    """PURE. rows_by_id: {criterion_id: row-dict}; criteria: [{'id': cid, 'judgment': bool}, ...].
+    Returns (results, PASS, FAIL, UNVERIFIABLE): results is [{'id', 'status', 'reason'}, ...] in
+    criteria order. A JUDGMENT criterion is ALWAYS UNVERIFIABLE, even beside a PASS row -- the CVO
+    grades judgment at L9, never this sweep (schema :255). A criterion with no row (missing, or the
+    instance could not be read at all -- the caller passes rows_by_id={} for that) is UNVERIFIABLE, its
+    reason naming that. A row's own `status` of exactly PASS or FAIL maps 1:1; every other legal value
+    (UNCOMPUTABLE-BY-CONSTRUCTION, UNVERIFIABLE-BY-INSTRUMENT, N/A-BY-CONSTRUCTION, UNCOMPUTABLE) and any
+    unrecognised value is UNVERIFIABLE -- this sweep is not a second grader of those states, it only
+    separates PASS, FAIL and everything else."""
+    results = []
+    p = f = u = 0
+    for c in criteria:
+        cid = c["id"]
+        if c.get("judgment"):
+            results.append({"id": cid, "status": "UNVERIFIABLE",
+                            "reason": "judgment criterion, graded at L9, never self-graded"})
+            u += 1
+            continue
+        row = rows_by_id.get(cid)
+        if row is None:
+            results.append({"id": cid, "status": "UNVERIFIABLE", "reason": "no acceptance row for this id"})
+            u += 1
+            continue
+        st = row.get("status")
+        if st == "PASS":
+            results.append({"id": cid, "status": "PASS", "reason": ""})
+            p += 1
+        elif st == "FAIL":
+            results.append({"id": cid, "status": "FAIL", "reason": (row.get("status_reason") or "")[:200]})
+            f += 1
+        else:
+            results.append({"id": cid, "status": "UNVERIFIABLE", "reason": "row status=%r" % st})
+            u += 1
+    return results, p, f, u
+
+
+def _instance_for_order(root, rel, merging=False):
+    """(status, inst_path_or_None, payload) -- locate the order's proof-of-spec instance using the SAME
+    naming `_proof_terminal` uses (the two candidate names, `deliverables/*/`, tracked at the read ref),
+    duplicated here rather than called into so `_proof_terminal` stays byte-for-byte untouched (this
+    cell's own bound). status is one of:
+      OK          -- exactly one candidate, read cleanly; inst_path set, payload is its TEXT
+      ABSENT      -- no instance tracked; payload is the reason string
+      AMBIGUOUS   -- more than one candidate tracked; payload is the reason string
+      ERROR       -- git could not answer, or the blob could not be read; payload is the reason string
+    This is a DISCLOSURE read (for the acceptance sweep), never the terminality gate -- it does NOT
+    compare the instance/order text against the worktree the way `_proof_terminal` must."""
+    ref = "" if merging else "HEAD"
+    stem = os.path.basename(rel).rsplit(".md", 1)[0]
+    names = (stem + ".proof_of_spec.json", stem + "_PROOF_OF_SPEC.json")
+    to_dir = os.path.dirname(rel).replace("\\", "/")
+    if to_dir.endswith("/task-orders"):
+        specs = ["%s/deliverables/*/%s" % (to_dir[:-len("/task-orders")], n) for n in names]
+    else:
+        specs = ["%s/%s" % (to_dir.replace("task_orders", "deliverables"), n) for n in names]
+    try:
+        ls = subprocess.run(["git", "ls-files", "--"] + specs, cwd=root, capture_output=True, text=True,
+                            encoding="utf-8", errors="replace", timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return "ERROR", None, "instance census raised %s" % exc
+    if ls.returncode != 0:
+        return "ERROR", None, "instance census rc=%d" % ls.returncode
+    cands = sorted({p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()})
+    if not cands:
+        return "ABSENT", None, "no proof-of-spec instance tracked"
+    if len(cands) > 1:
+        return "AMBIGUOUS", None, "%d instances (%s) -- ambiguous" % (len(cands), ", ".join(cands))
+    inst = cands[0]
+    st, itext = _blob(root, ref, inst)
+    if st != "OK":
+        return "ERROR", inst, "%s not readable at %s (%s)" % (inst, "the merged index" if merging else "HEAD", st)
+    return "OK", inst, itext
+
+
+def _task_order_paths_for_sweep(root, code):
+    """(paths_or_None, note) -- the SAME two glob patterns `_open_tos_census` uses (tree + legacy flat),
+    kept as a SEPARATE literal here (not a shared call) so `_open_tos_census` stays byte-for-byte
+    untouched, per this cell's own bound."""
+    try:
+        ls = subprocess.run(["git", "ls-files", "--", "*/task_orders/%s.*.md" % code,
+                             "org/missions/D*/*/%s/task-orders/*.md" % code],
+                            cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+    except Exception as exc:  # noqa: BLE001
+        return None, "git ls-files raised %s" % exc
+    if ls.returncode != 0:
+        return None, "git ls-files rc=%d: %s" % (ls.returncode, ls.stderr.strip()[:120])
+    return sorted({p.strip().replace("\\", "/") for p in ls.stdout.splitlines() if p.strip()}), ""
+
+
+def _acceptance_sweep(root, code, round_n=None, merging=False, _paths=None):
+    """Over every tree task order of `code` (the SAME order listing `_open_tos_census` uses), classify
+    every criterion PASS / FAIL / UNVERIFIABLE (see `_classify_acceptance`) and return:
+      {"orders": [...], "criteria": n, "PASS": a, "FAIL": b, "UNVERIFIABLE": c,
+       "round": round_n, "unrounded": k}
+    `orders` holds one entry per order that carries at least one criterion:
+      {"order": rel, "label": <order basename>, "round": N or None, "results": [...]}
+    (results from `_classify_acceptance`). `round_n` filters to orders whose OWN <round> equals it;
+    None sweeps every round. An order without a <round> tag is counted in `unrounded` and EXCLUDED from
+    a round_n-filtered sweep (it cannot match a round it does not carry) but INCLUDED when round_n is
+    None -- printed, never dropped, per this cell's own rule. This is a READ: nothing here refuses
+    anything, and it never enters the violations list (see the caller in check_file).
+
+    `_paths` is INJECTABLE, same convention as `_route_precondition_violations`'s `open_tos=None`: every
+    production caller (the slug-time note, the `--acceptance` CLI) passes None and gets the full tree
+    listing below. A caller that supplies its own list gets exactly that list swept instead of the
+    project-wide `git ls-files` -- for a battery that needs ONE order's real bytes without the O(orders)
+    subprocess cost of sweeping all of them (measured ~160s unfiltered on AMGT_RESAPP's 127 orders,
+    against a 120s grading bound)."""
+    if _paths is not None:
+        paths, note = _paths, ""
+    else:
+        paths, note = _task_order_paths_for_sweep(root, code)
+    if paths is None:
+        return {"orders": [], "criteria": 0, "PASS": 0, "FAIL": 0, "UNVERIFIABLE": 0,
+                "round": round_n, "unrounded": 0, "error": note}
+    ref = "" if merging else "HEAD"
+    orders_out = []
+    total_p = total_f = total_u = 0
+    unrounded = 0
+    for rel in paths:
+        st, otext = _blob(root, ref, rel)
+        if st != "OK":
+            continue
+        order_round = _order_round(otext)
+        if order_round is None:
+            unrounded += 1
+        if round_n is not None and order_round != round_n:
+            continue
+        criteria = _order_criteria(otext)
+        if not criteria:
+            continue
+        inst_status, inst_path, payload = _instance_for_order(root, rel, merging=merging)
+        if inst_status == "OK":
+            rows_by_id, err = _acceptance_rows_from_instance(payload)
+            reason_override = err
+        else:
+            rows_by_id, reason_override = {}, payload
+        if reason_override:
+            results = [{"id": c["id"], "status": "UNVERIFIABLE", "reason": reason_override} for c in criteria]
+            total_u += len(criteria)
+        else:
+            results, p, f, u = _classify_acceptance(rows_by_id, criteria)
+            total_p += p
+            total_f += f
+            total_u += u
+        orders_out.append({"order": rel, "label": _order_label(code, rel), "round": order_round,
+                           "results": results})
+    return {"orders": orders_out, "criteria": total_p + total_f + total_u, "PASS": total_p,
+            "FAIL": total_f, "UNVERIFIABLE": total_u, "round": round_n, "unrounded": unrounded}
+
+
+def _flagged_rows(sweep, status):
+    """[str, ...] '<order basename>:<criterion-id> (<reason>)' for every criterion classed `status`
+    (FAIL or UNVERIFIABLE) in `sweep`'s orders, in order. PURE."""
+    out = []
+    for o in sweep.get("orders", []):
+        for r in o.get("results", []):
+            if r.get("status") == status:
+                reason = r.get("reason") or ""
+                out.append("%s:%s (%s)" % (o["label"], r["id"], reason) if reason
+                          else "%s:%s" % (o["label"], r["id"]))
+    return out
+
+
 # Andrew's call 1 YES, relayed by CTO 21533: POSN round 2 ONLY may route with
 # S2-1/S3-1 unrun. The immutable record pins all 19 authorized row contents,
 # their filing paths and the two unchanged order blobs. This is NOT the broad
@@ -1931,6 +2171,20 @@ def check_file(root, rel):
             elif not pre:
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
                 _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
+                # THE ACCEPTANCE SWEEP (S169, AMGT-rk-57): a NOTE beside the census note, never a
+                # violation -- a slug is not refused on a FAIL (the rule at ~:991). The round is the
+                # NEW remediation row's own `round`, the same field `_stale_open_row_violations` reads.
+                _acc_round = _round_num(row.get("round"))
+                _acc_sweep = _acceptance_sweep(root, folder_project, round_n=_acc_round, merging=_mrg)
+                _acc_fails = _flagged_rows(_acc_sweep, "FAIL")
+                _acc_unv = _flagged_rows(_acc_sweep, "UNVERIFIABLE")
+                notes.append("%s: ACCEPTANCE (round %s, the slug's own): PASS %d / FAIL %d / "
+                             "UNVERIFIABLE %d of %d criteria over %d order(s); unrounded %d; FAIL: %s; "
+                             "UNVERIFIABLE: %s"
+                             % (rel, _acc_round if _acc_round is not None else "?", _acc_sweep["PASS"],
+                                _acc_sweep["FAIL"], _acc_sweep["UNVERIFIABLE"], _acc_sweep["criteria"],
+                                len(_acc_sweep["orders"]), _acc_sweep["unrounded"],
+                                "; ".join(_acc_fails) or "none", "; ".join(_acc_unv) or "none"))
                 if _o:
                     _basis = ("LD-0562 / COO 22245 / " + POSN_R3_EXCEPTION_PIN
                               if _posn_round3_terminal_exception(root, rel, row, folder_project, _o, _t)
@@ -2676,6 +2930,40 @@ def _self_test(root):
         ("proof terminality READ: the invocation is the flip limb's (python <checker> <instance> --governing-order <order>)",
          lambda: '"--governing-order", rel]' in inspect.getsource(_proof_verdict)),
     ]
+    # THE ACCEPTANCE SWEEP (AMGT-rk-57, row AMGT_RESAPP-Z-S169, ruling s.3.3 @9c8e04cd9a `:81-85`): pure
+    # classifier fixtures first, then two LIVE arms on THIS project's own real bytes.
+    # THE REAL-BYTES CHECK (rk-30 page-half classifies AC1 PASS/AC2 FAIL, the round-13 sweep beside
+    # `_open_tos_census`'s note) is `.tools/tests/test_acceptance_sweep.py`'s job, NOT this arm list's --
+    # these classify arms stay PURE and read no repo, matching the self-test's own discipline (every
+    # other arm here that reads real git bytes is a PROOF TERMINALITY arm, a pre-existing exception this
+    # cell does not extend).
+    arms += [
+        ("acceptance classify: PASS and FAIL map 1:1 from the row's own status",
+         lambda: (lambda res, p, f, u: p == 1 and f == 1 and u == 0
+                  and res[0]["status"] == "PASS" and res[1]["status"] == "FAIL")(
+             *_classify_acceptance({"AC1": {"criterion_id": "AC1", "status": "PASS"},
+                                    "AC2": {"criterion_id": "AC2", "status": "FAIL", "status_reason": "x"}},
+                                   [{"id": "AC1", "judgment": False}, {"id": "AC2", "judgment": False}]))),
+        ("acceptance classify: every OTHER legal status (UNCOMPUTABLE-BY-CONSTRUCTION, "
+         "UNVERIFIABLE-BY-INSTRUMENT, N/A-BY-CONSTRUCTION, UNCOMPUTABLE) plus an unrecognised value "
+         "all map to UNVERIFIABLE",
+         lambda: all(_classify_acceptance({"AC1": {"criterion_id": "AC1", "status": s}},
+                                          [{"id": "AC1", "judgment": False}])[3] == 1
+                    for s in ("UNCOMPUTABLE-BY-CONSTRUCTION", "UNVERIFIABLE-BY-INSTRUMENT",
+                             "N/A-BY-CONSTRUCTION", "UNCOMPUTABLE", "SOMETHING-ELSE"))),
+        ("acceptance classify: a judgment criterion is UNVERIFIABLE even beside a PASS row (graded at "
+         "L9, never self-graded)",
+         lambda: _classify_acceptance({"AC1": {"criterion_id": "AC1", "status": "PASS"}},
+                                      [{"id": "AC1", "judgment": True}])[1:] == (0, 0, 1)),
+        ("acceptance classify: a criterion with no row at all is UNVERIFIABLE, reason-carrying",
+         lambda: (lambda res, p, f, u: u == 1 and "no acceptance row" in res[0]["reason"])(
+             *_classify_acceptance({}, [{"id": "AC9", "judgment": False}]))),
+        ("acceptance sweep: contributes NO violation -- check_file's own source only ever passes the "
+         "sweep's output to `notes`, never to `v`",
+         lambda: (lambda src: "_acceptance_sweep(" in src and "ACCEPTANCE (round" in src
+                  and not any(("v.append" in ln or "v.extend" in ln) and "_acc" in ln
+                             for ln in src.splitlines()))(inspect.getsource(check_file))),
+    ]
     failed = 0
     for name, fn in arms:
         ok = False
@@ -2702,10 +2990,39 @@ def _self_test(root):
     return 1 if failed else 0
 
 
+def _acceptance_cli(root, argv):
+    """`--acceptance <CODE> [--round N]`: read-only CLI limb -- the hand sweep, mechanized (S169,
+    AMGT_RESAPP-Z-S169, ruling s.3.3). Prints the sweep and ALWAYS returns 0: this is a disclosure,
+    never a gate -- a FAIL criterion does not refuse anything here or anywhere else in this module."""
+    try:
+        code = argv[argv.index("--acceptance") + 1]
+    except (ValueError, IndexError):
+        print("[surprise-row-gate] --acceptance needs a <CODE>", file=sys.stderr)
+        return 0
+    round_n = None
+    if "--round" in argv:
+        try:
+            round_n = int(argv[argv.index("--round") + 1])
+        except (ValueError, IndexError):
+            print("[surprise-row-gate] --round needs an integer", file=sys.stderr)
+            return 0
+    sweep = _acceptance_sweep(root, code, round_n=round_n)
+    fails = _flagged_rows(sweep, "FAIL")
+    unvs = _flagged_rows(sweep, "UNVERIFIABLE")
+    print("[surprise-row-gate] ACCEPTANCE %s (round %s): PASS %d / FAIL %d / UNVERIFIABLE %d of %d "
+          "criteria over %d order(s); unrounded %d; FAIL: %s; UNVERIFIABLE: %s"
+          % (code, round_n if round_n is not None else "ALL", sweep["PASS"], sweep["FAIL"],
+             sweep["UNVERIFIABLE"], sweep["criteria"], len(sweep["orders"]), sweep["unrounded"],
+             "; ".join(fails) or "none", "; ".join(unvs) or "none"))
+    return 0
+
+
 def main(argv):
     root = _repo_root()
     if "--self-test" in argv:
         return _self_test(root)
+    if "--acceptance" in argv:
+        return _acceptance_cli(root, argv)
     _disp, _src = _dispatched_from_argv_or_env(argv[1:])
     files = [a.replace("\\", "/") for a in _disp]
     targets = [f for f in files if CHANNEL_RE.search(f)]
