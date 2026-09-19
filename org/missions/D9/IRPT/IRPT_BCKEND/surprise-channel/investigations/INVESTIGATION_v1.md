@@ -6091,3 +6091,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-S80 -- 1.0.0_SA_CTO, tick 72
+
+```json
+{
+ "id": "IRPT_BCKEND-S80",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T06:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "THE WORD I OWE ON W3-S47, WHICH NAMES THIS SEAT AS disarm_owner: THE GENERATOR HALF IS REMEDIED AND THE REGEN HALF IS NOT MINE TO TAKE. lib/opal_naming.py::_hcl() now pads each map key to the widest key in its own dict, so terraform fmt -check on the generated output reads rc=0 where it read rc=3 at every registry state ever measured; diff -w against the committed file is rc=0, so the 88 changed lines are whitespace and nothing else (fix @9d876af0b0). W3-S47 IS NOT DISARMED BY THAT COMMIT, because the rc=3 the row asserts is measured on the COMMITTED file and the committed file has not moved -- and it will not move on my hand: infra/aws/terraform/modules/opal_name/generated_locals.tf resolves to infra/aws/** = lane CLOUD_OPS_OR_ETL, whose permitted_agents list does not contain 1.0.0_SA_CTO, while lib/opal_naming.py resolves to lib/** = BASE_EXEC, which does. THE GENERATOR'S OWNER IS MECHANICALLY BARRED FROM LANDING THE GENERATOR'S OUTPUT, and my own tick-70 and tick-71 logs both called this one lib/opal_naming.py edit mine -- half true, and the half they named is the half I can do.",
+ "spec_asserts": "W3-S47: R61-AC1 arm (d) requires terraform fmt -check clean on infra/aws/terraform/modules/opal_name/generated_locals.tf; the row routes the fix to this seat as the generator's owner and carries disarm_owner 1.0.0_SA_CTO.",
+ "world_is": "The renderer is fixed and proved on its own instrument, and the file it renders is committed by a lane this seat is refused. W3-S47 therefore stays open on a SECOND owner, and it is additionally HELD by this seat's own signature: blob 494ac9aa39 of generated_locals.tf is input #4 of the IB-rtf-5 never-widen halves, and the CTO half states that a plan read from different bytes for any of the first four is not what it signs. A whitespace-only regen landed before Andrew's step 4 would void both signed halves and buy nothing. THE UNBLOCKING CONDITION IS THEREFORE EXPLICIT AND FALSIFIABLE, not a seat's memory: an AE-lane seat regenerates and commits generated_locals.tf AFTER the IB-rtf-5 apply lands or that act is abandoned; W3-S47 disarms on the fmt -check rerun against the committed file at that point, not on this row.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "terraform fmt -check -diff on the patched generator's output: rc=0 (the pre-fix run on the committed file: rc=3, alignment-only, as W3-S47 records)",
+   "diff -w committed vs patched output: rc=0, zero semantic delta; 88 lines changed, all whitespace",
+   "lane resolution on the live .owned-paths.yaml, most-specific rule, permitted_agents printed: generated_locals.tf -> infra/aws/** -> CLOUD_OPS_OR_ETL, 1.0.0_SA_CTO NOT in permitted_agents; lib/opal_naming.py -> lib/** -> BASE_EXEC, 1.0.0_SA_CTO IS in permitted_agents",
+   "_hcl( call-site census in lib/opal_naming.py: 9 sites, every one inside _gen_locals, so generated_locals.tf is the renderer's only consumer and no other carrier's bytes move",
+   "pytest lib/tests/test_opal_naming.py: 2 failed / 91 passed, IDENTICAL against HEAD's unpatched blob restored as a negative control -- the edit adds no failure",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-5_BUCKET_REAPPLY.md s.1 (the five input blobs) and its line refusing a plan read from different bytes",
+   "fix commit 9d876af0b0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```

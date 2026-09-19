@@ -4434,3 +4434,57 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## LGIC_ENFORCE-S94 -- 1.0.0_SA_CTO, tick 72
+
+```json
+{
+ "id": "LGIC_ENFORCE-S94",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T06:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "ONE `generate` RUN PRINTS TWO DIFFERENT HASHES UNDER THE SAME `registry@` LABEL, AND COMPARING THEM READS STALE ON A BYTE-IDENTICAL ARTIFACT. The run summary prints `GENERATE: ... at registry@9f4a569d7a54b53c`; the file it wrote in that same run carries `registry@bde094a53078c35b`. Neither is wrong: the summary hashes ALL registry files, the per-target MARK hashes only the files that target reads (lib/opal_naming.py:1680, registry_hash(only=_target_registry_files(t))). Nothing in either string says which scope it has. This seat read the two, concluded generated_locals.tf was stale against the registry, and was one diff away from reporting a stale input on a SIGNED never-widen sign-off; the diff came back byte-for-byte identical, so blob 494ac9aa39 is confirmed LIVE rather than merely pinned.",
+ "spec_asserts": "Rule 22 GRAIN: a printed value names the object and scope it was measured over, so two values a reader is invited to compare are comparable.",
+ "world_is": "Two hashes six lines apart in one stdout share the label `registry@` and span different file sets. The mark's scope IS recoverable -- it is printed as the `over <files>` clause on the same line -- but the SUMMARY line carries no such clause, so the asymmetry falls entirely on the reader. A reader who compares them gets a FALSE STALE, and false-stale on a generated carrier is the reading that triggers a regen: on generated_locals.tf that regen would have voided both IB-rtf-5 never-widen halves for a file that had not changed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python lib/opal_naming.py generate --out <scratch> --target infra/aws/terraform/modules/opal_name/generated_locals.tf: summary line reads registry@9f4a569d7a54b53c, written file header reads registry@bde094a53078c35b",
+   "lib/opal_naming.py:1680 h16 = registry_hash(only=_target_registry_files(t))[:16] vs :2557 the GENERATE summary's registry@%s",
+   "diff committed vs regenerated generated_locals.tf: 0 differing lines -- byte-identical",
+   "UNSCOPED ARM, denominator printed: regenerating ALL targets writes 10 files; 8 differ from their committed bytes and 8 of 8 are MARK-LINE-ONLY (926399fd259b9977->dc7c1d5c8f2ce1ea on five scopes.json carriers, 73f95daeb4091537->31a270ae987c0bec on the two test carriers, 19768d2a73ee72c7->43ac20dc75936b4f on the FIRM_TREES carrier). Every generated BODY is current; only the provenance marks are one registry revision old, because IB-rtf-4 regenerated generated_locals.tf after the CRO registry flip @845343f925 and nothing regenerated the other eight -- the flip moved bucket_provisioned / bucket_managed_by, which none of those eight blocks render",
+   "worktree registry files carry CRLF where the HEAD blobs are pure LF (scopes.json 14012 bytes / 297 CR worktree vs 13715 / 0 CR at HEAD; exemptions.json 29984 / 161 vs 29823 / 0), so any hand-rolled content hash taken from the worktree disagrees with one taken from the record; the generator normalizes, a hand-rolled check would not"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## LGIC_ENFORCE-S95 -- 1.0.0_SA_CTO, tick 72
+
+```json
+{
+ "id": "LGIC_ENFORCE-S95",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T06:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "lib/tests/test_opal_naming.py HAS TWO STANDING FAILURES AT HEAD AND THEY ARE NOT NEW: test_grade_agrees_with_every_worked_case fails on 'inf-silver-chain|LAMBDA' and 'Inflection-SilverChain-DimConversionFailure|CW_ALARM', where name() resolves the system slot to 'advi' while the worked case expects the literal '{system}' placeholder. Surfaced off-task while running the suite as a control for an unrelated edit (Rule 2: one row, keep working). 91 of 93 pass.",
+ "spec_asserts": "The naming builder's own suite is green, so a seat running it as a control can read its result.",
+ "world_is": "Two of 93 fail, identically before and after an unrelated edit, so the suite still discriminates -- but a seat using it as a pass/fail control has to know the baseline is 2/91 rather than 0/93, and nothing in the repo states that baseline. EXPOSURE, NOT INCIDENT: no measurement is known to have been taken against a 0-failure assumption, and this row does not claim one was. Whether the defect is in name() or in the worked cases is NOT adjudicated here -- that is the registry/builder owner's read, and naming it wrongly in this row would be the forward-list error.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest lib/tests/test_opal_naming.py -q at HEAD blob 30a818c7fe of lib/opal_naming.py: 2 failed, 91 passed",
+   "the same suite against the patched blob 7af34272c5: 2 failed, 91 passed -- same two test ids, so the failures predate the patch and are not its effect",
+   "assertion text: assert 'advi-inf-silver-chain-lambda' == '{system}-inf-silver-chain-...'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
