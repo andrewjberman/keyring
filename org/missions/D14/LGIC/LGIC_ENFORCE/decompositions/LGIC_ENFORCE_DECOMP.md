@@ -6,7 +6,7 @@
  "directive": "D14",
  "macro": "LGIC",
  "fabric": "laptop",
- "decomp_version": "v3.14",
+ "decomp_version": "v3.15",
  "step": 5,
  "prd_ref": "org/missions/D14/LGIC/LGIC_ENFORCE/prd/LGIC_ENFORCE_PRD.md@09bde3126c",
  "prd_half_hashes": {"ratified-text": "SIGNED 3.0.0_SA_CVO @daeeb1f437, current at v1.2 (the half is unchanged)", "brief": "SIGNED 4.0.0_SA_CRO @e848967b3f, re-signed at v1.2"},
@@ -1755,6 +1755,84 @@ apply, and it applies.
 **WIRING AT THE CUT**, with the act that clears each red: `d1-sweep` and `r15-vintage-field` **FAIL**,
 both cleared by **this cell alone**; `r15-stale-proofs` is **GUARD-SHAPED and reads PASS** with an empty
 window.
+
+---
+
+## 0p. v3.15 -- THE ROUND-16 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-15 analysis @`f818ebd12b`
+
+**Input.** `1.0.0_SA_CTO`'s round-15 analysis @`f818ebd12b`, plus the LGCTFM round-7 analysis s.5 item 4
+landed in the same commit. **Round 15 STANDS**; `D1R15-AC4` PASS accepted; no PRD addendum owed; scope 0
+open of 69 at the cut.
+
+### 0p.1 THE CELLS -- 2, UNPAIRED AT THE CRITERION AS WELL AS AT THE CELL
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the retired marker | `EN-m-2` | adds a `RETIRED.md` SIBLING in `fixed_inputs/r13/` -- **additively, proven by a blob pair** -- naming every retired CMD and its retiring record | FWD-3 | `LGIC_ENFORCE-W<n>-S<k>` |
+| the retired-but-runnable census | `EN-s-1` | measures the CLASS across **both projects'** `fixed_inputs/`: retired in a record, still runnable from the tree | FWD-3 | `LGIC_ENFORCE-W<n>-S<k>` |
+
+`fanout: 2 slots over 2 cells, cap 8`. No dependency edge; two disjoint deliverable directories. ⚠ One
+**read/write overlap is disclosed rather than engineered away**: `EN-m-2` writes into `fixed_inputs/r13/`
+while `EN-s-1` reads that directory. The census order tells its cell to **record what it measured and
+when** rather than coordinate, because a coordination instruction between two unpaired cells is the
+coupling this round is built to avoid.
+
+### 0p.2 `EN-m-2` -- THE RESIDUAL A GRADER COULD ONLY NAME
+
+`3.0.0_SA_CVO`'s round-15 L9: *"'RETIRED' IS A FACT ABOUT THE SWEEP RECORD AND NOT A FACT ABOUT THE
+INSTRUMENT. `p37-producers` still sits in the tree and still returns PASS to anyone who runs it -- I just
+did."*
+
+⛔ **AND THE OBVIOUS FIX IS BARRED.** Those CMDs live in a **PINNED FIXED INPUT OF A CLOSED ROUND**;
+editing it is the stale-proof hazard, and the L9's words are that it *"would ACTIVELY ENDANGER something
+graded."* So the act is a **SIBLING**, not an edit.
+
+⭐ **THE CRITERION PROVES THE ADDITIVITY RATHER THAN ASKING FOR IT.** The record carries
+`check_en_r13.py`'s blob **at its round-13 pin** and **at HEAD**, and the arm refuses unless they are
+IDENTICAL. **An "additive" cell that quietly edited the pinned input reads EXACTLY like one that did not
+-- the blob pair is the only thing that separates them.**
+
+### 0p.3 `EN-s-1` -- THE GENERALISATION, AND ITS DOMAIN IS THE TRAP
+
+The CTO: *"the class is AN INSTRUMENT THAT HAS BEEN RETIRED IN A RECORD BUT IS STILL RUNNABLE FROM THE
+TREE. Round 15 found one BY ACCIDENT, because the CVO re-ran it."*
+
+⛔ **"The subtraction's domain is `fixed_inputs/` ACROSS THE PROJECT, NOT THE RETIRED LIST -- reading the
+retired list can only find retirements someone already wrote down, which is the
+UNDERSTATED-BY-ITS-OWN-INSTRUMENT shape this project has now hit twice."** The arm therefore **reads
+`how_enumerated` and REFUSES a domain described as the retired list** -- a census that starts from the
+known retirements returns a confident number that cannot contain anything new.
+
+⚠ **CUT ONCE ACROSS BOTH PROJECTS**, per the LGCTFM r7 analysis: the denominator spans `LGIC_ENFORCE` and
+`LGIC_LGCTFM`, and the arm refuses a census carrying no instrument from one of them.
+
+Three classes, MECE over the printed denominator: `RETIRED-AND-DISCLOSED`, `RETIRED-BUT-SILENT` (the
+hazard) and `LIVE`. ⭐ **"Discloses" means a reader OF THE INSTRUMENT learns it** -- a retiring record
+living elsewhere is exactly what does not count, and that is the whole finding. ⭐ **Finding nothing
+further PASSES**, with its own positive arm: a bar that only passed on finding more would be an
+instruction to find more.
+
+### 0p.4 THE CUT RULE ADOPTED FROM THE SIBLING PROJECT
+
+`1.0.0_SA_CTO` bound itself to this the same day and this seat adopts it: **a cell whose success will not
+move the metric its sponsor watches must SAY SO IN THE CELL.** COST: one sentence. NON-APPLICATION: a
+cell whose output IS the metric.
+
+**Applied, not merely quoted.** `EN-m-2`'s order says in its own words that **the marker does NOT make
+`p37-producers` stop returning PASS** -- only a reader who opens the *directory* learns otherwise, so if
+the metric watched is "does the instrument mislead a runner", **this cell does not move it.** `EN-s-1`
+falls under the non-application clause and says so rather than leaving it silent.
+
+### 0p.5 FIXED INPUTS, AND WHAT THE ORDERS DELIBERATELY DO NOT SAY
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r16/` -- `R16_BASE.json` (**the ONE CARRIER, S85**) and
+`check_en_r16.py`, ruff clean, whose `selftest-arms` prints `VERDICT: PASS-ARMS-DISCRIMINATE` **and its
+own arm counts**. ⛔ **Neither order quotes those counts** -- `LGIC_LGCTFM-W1-S37`, applied for the second
+consecutive round.
+
+**WIRING AT THE CUT**, with the act that clears each red: `m2-marker`, `s1-census` and
+`r16-vintage-field` **FAIL**, each cleared by **its own cell alone**; `r16-stale-proofs` is
+**GUARD-SHAPED and reads PASS** on an empty window.
 
 ---
 
