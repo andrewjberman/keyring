@@ -1481,6 +1481,46 @@ SEMANTICS:** read the population's distribution before quoting a predicate, or t
 An L10 certificate is PERISHABLE on an append-only channel, and the adjudicator structurally cannot see a row
 that lands after its send.
 
+
+### 0m.6 THE ROUND-13 CLOSE -- drained @`60ce3b24ab`, seven of seven PASS, and R-38's population finally has a NUMBER WITH A VINTAGE
+
+`EN-p-37` is terminal and verified at its branch tip `99eb52b5c2`: all seven mechanical arms PASS,
+`selftest-arms` reads `PASS-ARMS-DISCRIMINATE`, proof VALID (rc=0), nothing written outside the grant. **No
+rows filed**, and the cell says why -- one off-task oddity (463 carded against a 462-entry not-judged list)
+was investigated inline and resolved to expected many-to-one name matching, not a defect.
+
+**THE MEASUREMENT, WITH BOTH VINTAGES, WHICH IS WHAT THE ROUND WAS FOR:**
+
+| | rows with a placeholder | denominator | registry vintage | measured |
+|---|---|---|---|---|
+| INHERITED (round-4 census, `W2-S13`) | 1411 | 3237 | `4f192e91bd64ee70` | 2026-09-17T18:30Z |
+| **NOW** (this cell's own live census) | **1303** | **3264** | `9f4a569d7a54b53c` | 2026-09-19T07:33:40Z |
+
+**Direction: SHRANK.** ⭐ And note what the denominator did -- it GREW, 3237 to 3264 -- so the population
+fell against a LARGER judged set than the one it was inherited from. A delta naming one vintage would have
+hidden both halves of that.
+
+**NINE DISTINCT TOKENS, by subtraction from the report's own denominator:** `{system}` 1119, `{scope}` 122,
+`{cadence}` 108, `{source}` 85, `{snap}` 7, `{dim_name}` 5, `{firm}` 1, `{d}` 1, `{dc}` 1.
+
+**FIVE PRODUCERS IN TWO STRUCTURALLY DISTINCT CLASSES, zero unattributed:**
+
+- **Class A -- GRADER SYNTHESIS.** `{system}` at `lib/opal_naming.py:1187` (`_slots()`), `{scope}` at
+  `:1489`/`:1507` and `{source}` at `:1487` (`_grade_key()`), `{cadence}` at `:1229` (`_cadence_slot()`).
+  Attributed by direct source reads with `comp-find` corroboration per token, including the DENOMINATOR of
+  hits and how many were executable rather than comment or docstring.
+- **Class B -- PRE-EXISTING SOURCE TEMPLATE TEXT.** `{snap}`, `{dim_name}`, `{firm}`, `{d}`, `{dc}` across
+  five sites in four application files: `str.format()`-style variables ALREADY IN THE OBSERVED NAME, never
+  synthesised by the grader.
+
+⭐ **THE CAUSE VERDICT IS `SEVERAL`, AND THE EVIDENCE DISCRIMINATES RATHER THAN ASSERTS.** The classes do
+not always co-occur -- **5 of 15 class-B rows carry no class-A token**, so class B is not a byproduct of
+class A -- and the proof that class B is untouched by the grader is five rows reading CONFORMANT with
+`current == canonical` **while `{dim_name}` still stands in both.** The cell records that it considered
+`UNDETERMINED` and rejected it because the evidence separates cleanly, and rejected `ONE` because no single
+remedy site can reach the disjoint rows. **That is the shape the round was cut to produce: a repair cell
+would have written one fix and made the numbers agree.**
+
 ### 0m.5 WHAT THIS ROUND DOES NOT CLAIM
 
 - It does **not** fill a single placeholder, and names no remedy.
