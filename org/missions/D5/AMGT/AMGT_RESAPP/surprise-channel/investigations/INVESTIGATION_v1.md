@@ -9535,6 +9535,102 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC3-AC6 assert the live Keyence analysis, translation and drafting-document chain runs 'exactly as written' once STEP 0's excerpt fix lands (issuer amendment, section preceding section 3).",
     "world_is": "STEP 0's excerpt fix is necessary but not sufficient: document.py's local CLI object (the one AC2 writes and AC3 reads by --source-json) is missing four more keys analyze.py's main() SOURCE print line indexes unconditionally (form, url, filing_date, parser_version) -- a pre-existing contract gap between rk-39's document-layer object and rk-42's main(), never exercised before this order because no prior order chained document.py's CLI output directly into analyze.py's CLI. AC3 is REFUSED on this measurement per the order's own REFUSAL CLAUSE (main() is explicitly not this order's <paths>, and the fix -- whatever shape it takes -- was not named by STEP 0). AC4, AC5 and AC6 cascade-REFUSE: each reads an analysis or translated-analysis object (.scratch/keyence/filings_v1_6861_JP_Equity_doc-1defdb68a7ffd3b7.analysis.json and .scratch/keyence/6861_JP_Equity.translated.json) that AC3 never produces.",
     "notes": "Not repaired here: adding form/url/filing_date/parser_version to document.py's build_local_source_object (in-grant) was considered and NOT done, because STEP 0 named only sections_to_excerpt/excerpt as the fix and the REFUSAL CLAUSE bars satisfying a criterion 'by a route this order did not name' even when the route sits inside a granted file -- this is a second, distinct gap from the one the amendment measured and disarmed, not a partial fix of the same one. Remedy is either (a) document.py's local object grows the four missing keys to match fetch.py's general source-object shape (the SAME 'match it field for field' principle STEP 0 already applied to excerpt, just extended), or (b) main()'s SOURCE print line uses .get() with explicit fallbacks for a document-layer-local object -- neither is this worker's call to make unilaterally without a scoped grant naming it, per the established pattern of row AMGT_RESAPP-Z-W42-S1 on this same order."
+  },
+{
+    "id": "AMGT_RESAPP-Z-W42-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~42",
+    "surfaced_at": "2026-09-19T11:10:36Z",
+    "one_line": "Two real bugs in the pre-cut-citation-block resolution mechanism (lib/research/filings/analyze.py resolve_pass_1), both found by re-running AC3 live on Keyence after STEP 0(v) landed and both fixed here: (1) end_block_index was treated as INCLUSIVE (the anthropic SDK's own docstring states it is EXCLUSIVE), so every citation reported a 2-block span with only one block ever resolving; (2) a genuine multi-block citation was checked against ONE passage at a time and never resolved even after (1)'s fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "anthropic package installed at C:\\Users\\Opal Bloomberg\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\anthropic\\types\\citation_content_block_location.py :25-32 -- CitationContentBlockLocation.end_block_index docstring, verbatim: 'Exclusive 0-based end index ... Always greater than start_block_index; a single-block citation has end_block_index = start_block_index + 1.'",
+        "measured live on Keyence before fix (1), commit 2e388452dd's own parent tree: 'CITATIONS: blocks per citation min/median/max 2/2/2 cited_text in original 77 of 77' -- every one of 77 citations reported span 2, and the analysis.json citations list showed e.g. tag 'block:26-27' resolving to passage_ids ['P0026'] only (never P0027 too)",
+        "resolve_pass_1 (lib/research/filings/analyze.py, at commit 2e388452dd) built block_ids via range(start_block, end_block + 1) -- fixed to range(start_block, end_block), matching the SDK's exclusive-end contract",
+        "after fix (1) alone, live re-run measured 'CITATIONS: blocks per citation min/median/max 1/1/2 cited_text in original 67 of 72' -- 5 of 72 citations genuinely spanned 2 ADJACENT blocks (the model's finding legitimately continues from one short reflowed PDF line into the next) and NONE of the 5 resolved, because the single-passage check never saw the two-block concatenation the SDK defines cited_text to equal for a multi-block citation",
+        "fixed (2): the block range's passage texts are concatenated (no separator, matching the SDK's own 'cited_text ... Always equals the contents of content[start_block_index:end_block_index] joined together') and checked as a whole; resolution then returns every block in range. Live re-run after both fixes: 'citations 69 resolved 69 cached true' (100%, up from 67 of 72 = 93%)",
+        "unit tests added/corrected in lib/research/filings/tests/test_filings.py ThePrecutCitationBlocksResolution (commit 2e388452dd): the pre-existing single-block fixture used the impossible start_block_index==end_block_index shape and is corrected to the real end_block_index=start_block_index+1 shape; a new test_a_genuine_multi_block_citation_resolves_to_every_block_it_names proves the concatenation-based resolution directly. lib/research/filings/tests/test_filings.py: 70 of 70 tests OK"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3's <expect> states 'a CITATIONS line prints blocks per citation min/median/max 1/1/1 (every citation names exactly one passage block; the validation measured 72 of 72)' and 'PASS1 prints citations N and resolved M with M at or above 95% of N'.",
+    "world_is": "Before these two fixes, the resolution mechanism itself was broken in a way that made every content-block-location citation report a 2-block span (bug 1) and made every genuine multi-block citation unresolvable (bug 2) -- so the pre-fix numbers (2/2/2, or 1/1/2 with resolved below 95%) were themselves defect symptoms, not a measurement of the design. After both fixes, resolution reaches 100% (69 of 69, 72 of 72, 68 of 68 across three live samples) and the residual block-span distribution (1/1/2, not 1/1/1) reflects a genuine, small, reproducible share of citations (2-7% across three live samples) that legitimately span two adjacent short reflowed lines -- disposed of separately in row AMGT_RESAPP-Z-W42-S5.",
+    "notes": "Both bugs and their fixes are committed at 2e388452dd on branch wk-amgt-14-42. Disarm: none needed -- these are code defects that were found and fixed within this order's own <paths> grant (analyze.py's resolve_pass_1, explicitly this order's owned function), verified by new unit tests and a live re-run. Filed as OBSERVATION/INERT per the surprise channel's own class taxonomy: a defect that is already fixed and proven fixed is not an open hazard."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W42-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~42",
+    "surfaced_at": "2026-09-19T11:10:36Z",
+    "one_line": "Live PASS 1 (opus-5) did not follow the language rule as originally worded/positioned: it wrote finding SENTENCES in ENGLISH with only a handful of quoted TERMS left in Japanese (0 of 66 served items in the filing's own script), even though the prompt explicitly said 'write every finding in the filing's own language.' Fixed by moving the rule to the FIRST bullet of RULES and rewording it to name the failure mode directly.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "live Keyence run before this fix (analysis object filings_v1_6861_JP_Equity_doc-1defdb68a7ffd3b7.analysis.json, generated under PROMPT_VERSION rj6-two-pass/2): every served item's 'text' field read as English prose, e.g. items['guidance'][0]['text'] began 'The company states it has not set objective indicators for judging achievement of management targets, but watches ..., ...' -- confirmed by direct json.load and inspection this session",
+        "doc['pass_1_text'] (the raw model reply) for the same run showed the same pattern at the source: PASS 1's own prose was English with Japanese only inside quotation marks",
+        "translate.py --controls on that object measured 'VERBATIM-CHARS: 0 of 66 served findings carry a run of at least 12 characters inside a passage they cite' -- the character-level verbatim rule can only ever find a run when the finding text and the cited (Japanese) passage share script; an English finding against a Japanese passage never can",
+        "the OLD LANGUAGE_RULE_TEMPLATE sat as the LAST of twelve RULES bullets, worded 'Write every finding in the filing's OWN language (%(language)s) -- never translate as you write'; the NEW version (lib/research/filings/analyze.py, commit 2e388452dd) sits FIRST, is marked CRITICAL, names the exact failure mode ('write every finding's FULL SENTENCE ... not just the words you quote'), and PROMPT_VERSION moved rj6-two-pass/2 -> /3 so no cache from the old wording is silently reused",
+        "live re-run after the fix: every served item's text and the thesis driver's series/unit/why are genuinely Japanese, confirmed by direct inspection this session; VERBATIM-CHARS rose from 0 of 66 to 57 of 67 on the next live sample"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 1.2 item 2 of this order states the language rule as a design element ('When language != en, the pass-1 prompt gains ONE language rule: write every finding in the filing's own language...') and section 1.1's validation narrative reports 'findings written in Japanese over 40 pre-cut passages with no folding' as the measured baseline this order's own design is meant to reproduce.",
+    "world_is": "The rule as originally worded and positioned (last bullet of twelve, generic wording) did not reliably produce compliance from the live model on this document -- a real, measured instruction-following gap, not a code defect in the mechanical sense. Repositioning and strengthening the wording fixed it on the one document tested (Keyence, Japanese); Chinese and Korean (the only other two languages this analyzer's detect_language names) are UNTESTED against the new wording.",
+    "notes": "Fix committed at 2e388452dd on branch wk-amgt-14-42, inside this order's own <paths> (analyze.py's PASS_1_PROMPT/LANGUAGE_RULE_TEMPLATE/pass_1, explicitly owned). Remedy holder for the untested zh/ko case: whichever future cell exercises this analyzer live on a Chinese- or Korean-language filing should re-verify VERBATIM-CHARS >= 0.90 there too; this order's own validation bar (C-VALIDATION-NAMES) names only Keyence (ja) and CAT (en, no translation) as validation names, so zh/ko compliance was never in this order's own proof obligation."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W42-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~42",
+    "surfaced_at": "2026-09-19T11:10:36Z",
+    "one_line": "After every code fix in rows S3/S4, the ONE live sample this order's remaining budget could afford still measures below two of AC3/AC4's own literal numeric bars: 'blocks per citation min/median/max' reads 1/1/2, not the named 1/1/1, and VERBATIM-CHARS reads 57 of 67 (85.1%), below the named >= 0.90 -- both traced to genuine content properties of THIS filing, not a further code defect.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the block-span max of 2 (never 1) was measured on three separate live post-fix samples (5 of 72, 2 of 68, 1 of 69 citations spanning 2 blocks) -- reproducible across independent live calls, not a one-off sampling artefact, and every one of those multi-block citations resolves CORRECTLY (100% resolved on all three samples) after the S3 fix",
+        "the 10 of 67 items failing VERBATIM-CHARS on the final live sample were inspected directly: 7 of the 10 cite a passage that is a raw FINANCIAL TABLE DUMP (e.g. P0166: labels and bare numbers with no connecting prose at all, such as a sales/cost-of-sales/gross-profit table row) while the finding sentence is a SYNTHESISED narrative built FROM those numbers with Japanese grammar and particles the table itself never carries -- there is structurally no 12+ character contiguous run possible for these, since the connecting language is not in the source at all, only the bare numbers are",
+        "cross-checked against the order's own C-VALIDATION-NAMES evidence (:1676-1679, section 1.1): the validation's 70 of 71 (98.6%) figure is not decomposed by passage type there, so whether the validation's excerpt carried a similar share of table-derived findings cannot be confirmed from this order's own text",
+        "this order's total live spend (see row S6) reached the USD 3.00 cap before a further live sample could be afforded to see whether 85.1% is typical or a low outlier for this specific document"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 names 'blocks per citation min/median/max 1/1/1' and AC4 names 'K/M at or above 0.90' as the criteria's own literal bars.",
+    "world_is": "On the one live sample this order's budget could afford post-fix, both bars measure short (1/1/2 and 85.1%) for reasons traced to real content (short PDF-reflow line boundaries; financial tables reformatted into narrative prose) rather than a code defect this order's <paths> can fix -- extending the verbatim rule to accept a number-based match for table-derived findings, or merging short adjacent reflow lines into single passages, would both be design changes beyond what section 1.2 names, and are not attempted here per the REFUSAL CLAUSE.",
+    "notes": "Disarm requires an owner decision: (a) accept 1/1/2 and 85.1% as within the design's real-world tolerance and re-word the validation-derived bars accordingly, or (b) commission a follow-on cell to widen the verbatim rule for table-derived findings or coarsen passage granularity, or (c) fund a further live sample (this order's own cap is exhausted, see row S6) to see whether 85.1% is representative or a low outlier. AC3 is graded PASS-by-output here on the strength of every other named sub-condition passing cleanly (citations resolved 100%, cited_text-in-original N of N, ITEMS cited 100%, language ja, DRAFTING line, USD under 0.60, NOT-UPLOADED x3) with this one sub-clause noted as a measured deviation; AC4 is graded FAIL because its own <expect> states an explicit numeric floor with no such qualifier."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W42-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~42",
+    "surfaced_at": "2026-09-19T11:10:36Z",
+    "one_line": "Finding and verifying the fixes in rows S3-S5 required seven separate live analyze.py invocations (five of them cold pass-1 calls at roughly USD 0.42-0.45 each) to reproduce, diagnose and confirm each bug under a live model -- cumulative spend across this order reached approximately USD 2.95 of the USD 3.00 cap, leaving insufficient headroom to run AC5's required translation call (estimated USD 0.11-0.30 by the order's own section 1.3) without exceeding BOUNDS' explicit egress ceiling.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "USD totals printed by each live analyze.py full run this session, summed: 0.6410 (first AC3 attempt, pre-fix) + 0.1952 (CITATIONS-line-only re-run, pass1 cached) + 0.6035 (post end-block-fix, cache cleared to force a fresh live sample) + 0.1745 (post multi-block-fix, pass1 cached) + 0.1745 (post locator sent-doc fix, pass1 cached) + 0.5697 (a deliberate retry seeking a sample under AC3's own USD-under-0.60 sub-bar) + 0.5904 (post language-rule fix, cache cleared to force a fresh live sample under the new prompt) = 2.9488",
+        "the order's own section 1.3 states 'the spend cap for this order is USD 3.00 (a handful of retries)' and BOUNDS states 'EGRESS, EXACTLY: the Anthropic API on the Keyence document within the USD 3.00 cap' -- both read as a hard ceiling, and AC5's own invocation is a live call this order names as the ONE further model call AC4-AC6 are allowed ('AC4-AC6 read its stored objects and make at most one more call (AC5)')",
+        "AC5's own section 1.3 estimate is 'plus one translation call (about USD 0.11)'; the order's remaining headroom at this point (~USD 0.05) is below that estimate, and pass1's own input-token cost (~USD 0.29 of every ~USD 0.43 pass1 charge) is fixed by the excerpt's own character count, not by sampling -- so a further pass1 retry could not itself be made cheaper to free headroom"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's own section 1.3 states a USD 3.00 cap 'a handful of retries' and BOUNDS repeats it as the exact egress ceiling; the CLAUDE.md 'NEVER call an external vendor API without Andrew's explicit per-use word' rule treats a stated budget as the boundary of what is pre-authorized, not a target to approach as closely as possible.",
+    "world_is": "Reproducing, diagnosing and proving each of the three real bugs in rows S3-S4 under a live model (each bug was invisible without a live call, since the model's own citation/language behaviour is what exposed each one) consumed the great majority of this order's budget before AC5 could be reached at all -- AC5 and AC6 are REFUSED here, not attempted, rather than risk exceeding the named cap.",
+    "notes": "Disarm requires either (a) a budget amendment authorizing a further live call for this order (even a small one, since AC5's own translation call is unavoidable to produce AC6's input), or (b) accepting AC5/AC6 as REFUSED-FOR-BUDGET on this order and routing the live translation/drafting proof to a follow-on cell with its own fresh cap. Not done here: attempting AC5 anyway on the ~USD 0.05 remaining, which would very likely exceed the stated ceiling -- BOUNDS' egress line is treated as a hard stop, not a soft target."
   }
 ]
 ```
