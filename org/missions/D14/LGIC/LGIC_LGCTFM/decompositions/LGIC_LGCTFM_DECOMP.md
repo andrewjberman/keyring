@@ -820,6 +820,50 @@ vs unique) rather than two independent external causes. **That is exactly the di
 a measurement cell to protect** -- a repair cell would have written two fixes for one root, or one fix for
 what looked like two.
 
+
+## 17. v1.7 -- THE ROUND-6 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-5 analysis @`cf0cf68868`
+
+**Input.** `LGIC_LGCTFM_ROUND5_ANALYSIS` @`cf0cf68868` (msg 98202). Round 5 STANDS; no PRD addendum owed;
+scope 0 open of 155. ONE cell.
+
+### 17.1 THE CELL -- 1, AND THE TRAP THE ANALYSIS NAMED WITH IT
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| one repair or two | `LT-e-7` | ESTABLISHES whether a single repair at the portal-stitch ingestion removes BOTH classes of bucketless row -- and lands nothing | FWD-1 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+⛔ **The recut's own sentence:** *the record says 'plausibly', which is a hypothesis the round EARNED, not a
+finding; **a cell that assumes it will report agreement rather than measure it.*** Round 5 established the
+population, the two sites and the instruments. It did NOT establish that one repair reaches both.
+
+### 17.2 WHY THE ANSWER MATTERS, WHICH IS WHY THE ROUND IS WORTH ITS COST
+
+If the hypothesis holds, the remedy is one change at one site. ⭐ **If it does not, a single-change remedy
+ships a fix that LOOKS COMPLETE AND LEAVES A CLASS BEHIND -- and the leftover class is the one nobody
+re-measures, because the count moved.** That is the failure this round exists to make impossible, and it is
+cheaper to measure now than to discover from a register that already reads clean.
+
+### 17.3 THE BAR, WITH THE SHAPE IT TAKES HERE
+
+The CTO's cut-time bar is *can a CORRECT artifact satisfy this?* -- and in a round whose job is to test a
+hypothesis the bar has a specific form: **EVERY VERDICT VALUE MUST BE REACHABLE.** `ONE_REPAIR`,
+`TWO_REPAIRS` and `UNDETERMINED` each pass the verdict arm on their own evidence, proven by ONE POSITIVE
+ARM EACH in the checker's self-test. ⛔ **A criterion that only passed on `ONE_REPAIR` would be an
+instruction to confirm the hypothesis**, which is precisely what the analysis forbids -- and it is the
+cheapest way for a round like this to produce a comfortable answer instead of a true one.
+
+Two refusals make the arm bite rather than merely permit: `ONE_REPAIR` is REFUSED on the counts while either
+class still carries rows after the change, and any verdict whose evidence names only ONE class is refused,
+because the question is about BOTH sites.
+
+### 17.4 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** land a repair. The engine has no writer; `e7-no-landed-repair` grades the CELL'S OWN
+  commits by author (`W1-S39`'s shape), so another seat's commit there cannot fail this cell.
+- It does **not** presume the shared root is real. Round 5's sentence is an INHERITED UNIVERSAL under Rule
+  24's new clause @`cf0cf68868`, and this round is cut to EXERCISE it rather than restate it.
+- It does **not** touch the 130 S3Key rows that resolve to a bucket.
+
 ### 16.5 WHAT THIS ROUND DOES NOT CLAIM
 
 - It does **not** repair a single bucketless row, and it does not name a remedy.
