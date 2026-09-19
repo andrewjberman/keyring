@@ -89,5 +89,12 @@ write it.** `IB-rtf-5` is the `staged` one.
 discriminator that made the double zero honest) - `grep` over the `rtf-5` face - `exemptions.json` read at
 source - `safe-commit.sh` - `send_message` x2 DELIVERED.
 
+⛔ **AMENDED 2026-09-19 ~22:5xZ -- DELIVERED IS THE TRANSPORT'S CLAIM AND THIS LINE READ AS A HAND-OFF.**
+Measured at 22:4xZ on `get_delivery_state("2.0.0_SA_COO~B")`: **7 OFFER-EXHAUSTED of 10, last READ 19:55Z** --
+so `98345` (this tick's send to that seat) was **never read**. `0.0.0_AB_MSTR` found the cause on three
+independent instruments: **that serial has NO inbox-watch process on this box.** The CRO send was read.
+⭐ **The artifact is unaffected -- the finding is committed and that seat meets it on wake -- which is exactly
+why the record is the carrier and the message is the courtesy.**
+
 **PUSH STATE at write time:** LOCAL @`f5ccff15d0` + this commit; `origin/CLOUD` `45f0273d5c` (ls-remote).
 **state: ARMED**

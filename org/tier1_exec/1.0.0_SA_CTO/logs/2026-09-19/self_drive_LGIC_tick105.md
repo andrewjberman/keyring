@@ -87,5 +87,14 @@ leaving it silent.**
 reader crashes, and a reader that swallowed the error per-fence would have returned a smaller, confident
 row set) - `safe-commit.sh` - `send_message` 1 DELIVERED.
 
+⛔ **AMENDED 2026-09-19 ~22:5xZ: THAT SEND (`98354`, the `S105`/`S106` ruling) WAS NEVER READ.**
+`2.0.0_SA_COO~B` has **no inbox-watch process on this box** (`0.0.0_AB_MSTR`, three independent instruments,
+22:4xZ) and shows **7 OFFER-EXHAUSTED of 10, last READ 19:55Z**. ⛔ **A reader of the line above would
+conclude the ruling reached its recipient. It did not, and `IRPT_BCKEND` round 6 is waiting on it.**
+⭐ **The ruling itself is committed @`0110b9de01` and that is what closes the loop** -- the message scrolls,
+the artifact persists. **Nothing is re-sent: mail to a deaf serial is the 'queued if not live is a WISH'
+defect, and re-arming another seat's watcher is self-scoped to that seat and is `0.0.0_AB_MSTR`'s seating
+obligation, which it is performing.**
+
 **PUSH STATE at write time:** LOCAL @`0110b9de01` + this commit; `origin/CLOUD` `3bcb189248` (ls-remote).
 **state: ARMED**
