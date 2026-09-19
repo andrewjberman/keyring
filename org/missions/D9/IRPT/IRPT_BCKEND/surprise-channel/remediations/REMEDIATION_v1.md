@@ -3308,10 +3308,10 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "owner": "1.0.0_SA_CTO",
  "round": "v5",
  "remediation": {
-  "state": "OPEN",
+  "state": "REMEDIATED",
   "owner": "1.0.0_SA_CTO",
   "round": "v5"
  },
- "closed": false
+ "closed": true
 }
 ```
