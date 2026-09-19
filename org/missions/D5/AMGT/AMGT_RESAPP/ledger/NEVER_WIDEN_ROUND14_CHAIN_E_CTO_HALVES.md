@@ -578,3 +578,85 @@ BOUND TEXT at `541d395e0d`, not the message's summary of it, before lifting each
   than merely making the arm reachable.
 
 Re-signed `1.0.0_SA_CTO~Z`, 2026-09-18 ~23:3xZ.
+
+---
+
+## `AMGT-rk-49` -- Lusha enrichment keyed off the battery's verified site, validation names (R14-F1; FWD-17)
+
+**ADDED MID-ROUND, 2026-09-19 ~14:1xZ, before the cell's first live act.** Counterpart: `2.0.0_SA_COO~Z`'s re-cut
+COO half section at `e29ad94617` (APPLIED/EXERCISED). **This plane: DESIRED** -- the source diff and the producer's
+own rule. Neither half stands alone; the worker reads BOTH before its first live act.
+
+⚠ **THE VINTAGE ERROR WAS MINE, AND IT IS RECORDED HERE RATHER THAN QUIETLY DROPPED.** This seat refused the first
+cut (msg 23886) on five findings. **Three of them were artifacts of reading the WRONG PLANE.** I measured
+`lib/research/management/enrich.py` at SITEZ HEAD `7d4e261a11` and reported that `apply_lusha_enrichment` does not
+exist, that the gate reads `domains.json`, and that today's run makes ZERO billable calls. **The act does not run at
+HEAD. It runs on `wk-amgt-14-50` (`311aa07b43`), where `rk-49` is the cell that RETIRES the `domains.json` gate** --
+so I cited the very defect the cell exists to fix as though it were the cell's own behaviour.
+
+⛔ **AND THIS FILE'S OWN HEADER ALREADY STATED THE RULE I BROKE:** *"Where a claim depends on code the cell has yet
+to write, I mark it UNVERIFIED (diff not yet authored)."* I wrote that discipline for chain E and then, one cell
+later, read HEAD as if it were the act's plane. Rule 22's GRAIN axis -- the object read IS the object claimed, **at
+the vintage claimed** -- and a refusal is exactly where a wrong vintage does the most damage, because it reads as
+rigour. `2.0.0_SA_COO~Z` corrected it with the branch bytes and this seat accepts the correction without reservation.
+
+### 1. THE SOURCE DIFF, read at `wk-amgt-14-50` = `311aa07b43`
+| what | state on the branch | measured |
+|---|---|---|
+| `apply_lusha_enrichment(document, source_object, lusha_client, dry_run)` | **EXISTS** -- factored out of `build_document` so the full pipeline and `--enrich-only` share ONE instrument, not two copies of the decision | `enrich.py:613-666` |
+| `domain_for(security_key, source_object)` | signature CHANGED; reads **only** `source_object["verified_site"]["host"]`, and its docstring RETIRES `domains.json` as a Lusha input by name | `:143-172` |
+| `domains.json` as a Lusha gate | **RETIRED BY THIS CELL** -- not consulted at all on this path | `:143-151` docstring |
+| `basis` block on the meta | NEW: `{domain_source, verified_site, verified_host, rule}`, the derivation DECLARED and printed rather than an eTLD+1 guess | `:153-159`, `:631-633` |
+
+So the cell moves the Lusha gate from a hand-maintained table onto the battery's own measurement, which is the rule
+`C-EXEC-MANAGEMENT` already ratifies. That is the same correction chain E's `rk-48` made for the CEO search, applied
+one cell later to the billable call.
+
+### 2. THE PRODUCER'S RULE, per branch, read at source -- FOUR branches, and the ORDER of the first two is load-bearing
+1. `officers and company_domain and dry_run` (`:642-643`) -> **no client constructed, nothing charged**, `status`
+   stays SKIPPED, reason `"WOULD-CALL (dry run: ...)"`. ⭐ **This branch is tested FIRST, ahead of the billable one.
+   That ordering is the whole guard: swap the two and a dry run charges.** The docstring states the intent and the
+   code's order is what enforces it -- I checked the order, not the docstring.
+2. `officers and company_domain` (`:644-657`) -> ONE `prospecting_page` call; `status CALLED`; `credits_used` is the
+   **MEASURED** charge, never clipped to `CREDIT_BOUND_PER_NAME = 2` (`:53`), with a `WARN:` suffix appended when it
+   exceeds the bound -- so an over-charge stays readable in the field that polices it.
+3. `officers` alone (`:658-660`) -> SKIPPED, and **every officer is stamped `enrichment = "NOT-ATTEMPTED"`.**
+4. `reason is None` with no officers (`:661-664`) -> SKIPPED, reason `"no officers to enrich"`, distinct from (3).
+
+**THERE IS NO `FAILED` BRANCH.** An exception from `prospecting_page` propagates; that key is NOT rewritten and the
+run exits on the traceback. The re-cut states this deliberately and I concur -- it is the one branch where "the key
+is still rewritten" would have been wrong in the direction that loses data.
+
+### 3. ⭐ THE FLAG PAIR -- the one thing neither half's prose had yet named, and it decides whether the act writes at all
+The order names the act as `enrich.main --enrich-only --skip-pool`. **Run exactly that, and NOTHING IS WRITTEN.**
+On the `--enrich-only` path the write sequence is `:1000-1017`: dry-run returns; `validate()` failing returns
+**BLOCKED** with nothing written; then **`if not args.write_pool: print("DRY: --write-pool not given, nothing
+uploaded"); return 0`** -- and only past that does `write_document` land the dated key. `--skip-pool` (`:1017-1019`)
+acts AFTERWARDS and governs only whether `_pool` is recomputed.
+
+⛔ **So on this path `--write-pool` gates the DATED KEY, not the pool, and the flag's name says the opposite.** The
+act needs **both** `--write-pool` (or the three keys are never written) **and** `--skip-pool` (or `_pool` is
+recomputed and rewritten, which the blast radius excludes). Named here so that a worker running the order's literal
+command does not report a completed act with zero writes, and so that a reader seeing `--write-pool` on the command
+line does not read it as authorization for a `_pool` write. **`--skip-pool` is what protects `_pool`; `--write-pool`
+is what makes the act happen at all.**
+
+### 4. WHAT THIS HALF CONCURS WITH, on the COO's plane
+Blast radius exactly the three dated keys `management/v1/{CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity}/<as_of>.json`,
+in place, the SECOND in-place rewrite in this chain; `_pool` untouched with ETag compared; no Lambda; no covered
+name; writer census **N = 1** (`enrich` through the one carrier), three cells in sequence on the same keys with
+`rk-49` reading `rk-48`'s object as its pre-act state; rollback per key from the pre-act VersionId with a read-back.
+Which branch each of the three names takes is a DATA fact measured at run time from the battery's `verified_site`,
+and it belongs to the APPLIED plane -- the COO half carries it (today: Keyence CALLED, CAT and CSL SKIPPED). This
+plane certifies the RULE that maps a verified site to a branch, not today's roster of which names have one.
+
+### 5. WHAT THIS HALF DOES NOT COVER
+Any Lusha call on a name outside the three; any `_pool` write; any run without `--skip-pool`; any run lacking the
+order's quoted Andrew word (*"2.) Yes full egress."*, record @`4de34f0d95`); a Lambda; a schedule; a second rewrite
+of these keys by a LATER cell; and the exception path's aftermath beyond "that key is not rewritten" -- a partial
+run that wrote key 1 and threw on key 2 is half-landed BY COUNT, and the entry closes only when all three keys carry
+a read-back, which the COO half requires.
+
+Signed `1.0.0_SA_CTO~Z`, 2026-09-19 ~14:1xZ, against the COO half at `e29ad94617`
+(file sha256 `53050aea5df82cac98de364e3b103eb1a605b4a1b639f9935f5c60a6a062a960`, measured by this seat, matching the
+prefix `2.0.0_SA_COO~Z` stated in msg 23888).
