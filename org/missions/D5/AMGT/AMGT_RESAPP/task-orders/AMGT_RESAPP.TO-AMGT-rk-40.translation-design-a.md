@@ -125,7 +125,7 @@ produced LOCALLY by `AMGT-rk-39`'s CLI (`python -m lib.research.filings.document
 .scratch/docs`, the invocation in that order's AC3) -- so this order depends on `AMGT-rk-39` having landed, and on
 `lib/research/filings/document.py` being present in your worktree; if it is absent, STOP with a BLOCKING row. The
 analysis is a live two-pass run on Keyence (about USD 0.20) plus one translation call (about USD 0.11); **the spend cap
-for this order is USD 3.00** (a handful of retries), recorded per call. NO fleet run, NO run on any of the covered 33,
+for this order is USD 5.00** (AMENDMENT 3, 2.0.0_SA_COO~Z 2026-09-19 ~12:0xZ, row W42-S6: raised from 3.00 -- three live sessions spent ~2.95 finding and proving the bugs rows S3/S4 name; AC5 and AC6 each run ONCE off the CACHED analysis file, AC3's live pass-1 is NOT re-run; the cumulative figure is printed on every call), recorded per call. NO fleet run, NO run on any of the covered 33,
 NO re-run. The key: `export ANTHROPIC_API_KEY="$(comp-secrets get anthropic-api-key --reveal | grep '^value:' | sed
 's/^value:[[:space:]]*//')"` in the SAME call, per `analyze.py:226-231`.
 
@@ -142,6 +142,40 @@ fields). `AMGT-rk-42` makes `ANALYZER_VERSION` MOVE with the contract (a fingerp
 before you, its test fails until you bump `ANALYZER_VERSION` and the fingerprint together -- do that (`2.0.0` ->
 `2.1.0`). If it has not, bump `ANALYZER_VERSION` `analyze.py:60` to `1.1.0` yourself; whichever lands second reconciles.
 
+**ISSUER AMENDMENT on row AMGT_RESAPP-Z-W42-S1 (`2.0.0_SA_COO~Z`, 2026-09-19 ~07:4xZ) -- THE EXCERPT CONTRACT GAP, DISARMED HERE:**
+MEASURED by the issuer on the pool: `filings/v1/6861_JP_Equity/doc-1defdb68a7ffd3b7.source.json` (rk-38's RESOLVED YUHO object,
+parser 2.0.0) carries `excerpt: None` and no `sections`, while `filings/v1/CAT_US_Equity/000001823026000008.source.json` (the EDGAR
+path) carries `excerpt {items, item_keys, text, chars, excerpt_sha256, truncated_items, item_chars, item_full_chars}`; rk-39's
+`document.py` CLI writes `sections` (risk/mdna/officers) and nothing assembles them into the analyzer's `excerpt` shape
+(`analyze.py:955/1015/1251` read `source_object["excerpt"]`). Both owning cells (rk-38, rk-39) are drained; no live writer holds
+those files. RULED: (i) your `<paths>` are WIDENED to `lib/research/filings/document.py`, `lib/research/filings/fetch.py` and
+`lib/research/filings/battery.py` for this one purpose; (ii) STEP 0, before AC2: implement `document.sections_to_excerpt(sections,
+family)` producing the analyzer's exact `excerpt` shape (items in the fixed order risk, mdna, officers -- each item `{key, text}` --
+`item_keys`, joined `text`, `chars`, `excerpt_sha256` over `text`, `truncated_items`, `item_chars`, `item_full_chars`; the EDGAR path
+in `fetch.build_source_object` is the reference shape, read it and match it field for field), call it from BOTH the `document.py`
+CLI (so `.scratch/docs/<key>.source.json` carries `excerpt`) and `fetch.build_battery_source_object` (so a battery landing carries
+`excerpt` for every family, never `None` on a RESOLVED object), with a unit arm on the Keyence fixture asserting `excerpt` is
+present, non-empty and sha-stable; (iii) then RE-LAND the Keyence pool object with the battery CLI exactly as rk-38's AC4 ran it
+(`python -m lib.research.filings.battery --security-key 6861_JP_Equity ... --write-pool`; a validation-name pool write on an
+unserved key, rk-38's own act shape, no pair owed; print the pool receipt and read it back: `excerpt` non-empty), and record the
+Keyence object's new key in your report; (iv) AC2-AC6 then run exactly as written. Nothing here touches a covered name or any
+served route.
+
+**AMENDMENT 2 (issuer, 2.0.0_SA_COO~Z, 2026-09-19 ~09:0xZ, disarming row `AMGT_RESAPP-Z-W42-S2`).** The row is correct: AC3's
+literal invocation feeds `analyze.py` the LOCAL object (`--source-json .scratch/docs/6861_JP_Equity.source.json`, AC2's own
+output), and `main()` reads `form`, `filing_date`, `url` and `parser_version` unconditionally (`analyze.py:1079-1091`, `:1158`,
+`:1408-1411`) because the analyzer's contract is the shape `fetch.build_battery_source_object` returns. The gap is on the
+PRODUCER side, so the remedy is SCHEMA PARITY in `document.py` (already in your `<paths>`), never a tolerance edit in `main()`,
+which stays `AMGT-rk-42`'s wall. RULED: **(v) STEP 0, before AC3:** `build_local_source_object` carries every key the analyzer
+reads that the battery object carries, with local values: `form` = the detected family token (the object's own `family`),
+`filing_date` = `period_end["date"]` (None when unknown), `url` = None (the object is document-layer-local; you MAY add
+`local_source` naming the input path), `parser_version` = a `PARSER_VERSION` constant defined IN `document.py` (a string,
+e.g. `"document-layer-local/1"`; do not import it from `fetch.py`, which imports `document.py`), plus `entity_name`,
+`entity_evidence`, `verified_site`, `verified_site_reason`, `officer_section` = None when the local path cannot know them.
+Extend the STEP 0 unit arm: the local object's key set is a SUPERSET of the keys `main()` indexes (assert each of the four
+is present; `form` equals `family`; `parser_version` is a non-empty string). Then AC3-AC6 run exactly as written; the row's
+`disarm` is this amendment (cite it in your report). Nothing else in the order changes.
+
 ## 3. SURFACES -- what you may read and write
 
 <paths>
@@ -157,6 +191,9 @@ lib/research/drafting/tests/test_drafting.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~42/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-40.translation-design-a.md
+lib/research/filings/document.py
+lib/research/filings/fetch.py
+lib/research/filings/battery.py
 </paths>
 
 - **A SURFACE NOT NAMED IN `<paths>` IS A WALL.** A READ needs no grant; this block governs WRITES. In `analyze.py` you
@@ -204,8 +241,8 @@ cjk_src = sum(1 for ch in ex['text'] if ord(ch) > 127)
 cjk_kept = sum(1 for p in pm for ch in p['text'] if ord(ch) > 127)
 print('passages', len(pm), 'empty', sum(1 for p in pm if not p['text'].strip()), 'pct_excerpt_chars_in_passages', round(100.0 * covered / max(nonblank, 1), 1), 'pct_passage_chars_kept', round(100.0 * kept / max(covered, 1), 1), 'non_ascii_kept', cjk_kept, 'of', cjk_src)
 "</invocation><expect>precondition (i) on the real Yuho excerpt: passages N (the validation built 28 with 7 stored empty), empty 0, pct_passage_chars_kept at or above 99.0 (the validation measured 6.8% surviving to_ascii), non_ascii_kept equal to the non-ASCII count of the passage-covered text -- printed with both denominators. Language on the source object reads ja</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-rk-40"><invocation>cd "$(git rev-parse --show-toplevel)" && export ANTHROPIC_API_KEY="$(comp-secrets get anthropic-api-key --reveal | grep '^value:' | sed 's/^value:[[:space:]]*//')" && python -m lib.research.filings.analyze --security-key 6861_JP_Equity --source-json .scratch/docs/6861_JP_Equity.source.json --no-fetch --cache-dir .scratch/filings_cache --out-dir .scratch/keyence --stage pass1 2>&1 | tail -4 && python -m lib.research.filings.analyze --security-key 6861_JP_Equity --source-json .scratch/docs/6861_JP_Equity.source.json --no-fetch --cache-dir .scratch/filings_cache --out-dir .scratch/keyence 2>&1 | tail -12</invocation><expect>precondition (ii) live on Keyence (the two invocations are the pass-1 cache split the 115 s bound already forced, analyze.py:308-317; the second reads cached true): PASS1 prints citations N and resolved M with M at or above 95% of N; a CITATIONS line prints "blocks per citation min/median/max 1/1/1" (every citation names exactly one passage block; the validation measured 72 of 72) and "cited_text in original N of N"; ITEMS prints total and cited with cited at or above 90% and language ja; the DRAFTING line prints; USD printed under 0.60 for this run; NOT-UPLOADED lines for the three objects (no --write-pool)</expect></criterion>
-  <criterion id="AC4" cell_refs="AMGT-rk-40"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.filings.translate --analysis .scratch/keyence/filings_v1_6861_JP_Equity_doc-1defdb68a7ffd3b7.analysis.json --controls 2>&1 | tail -8</invocation><expect>precondition (iii) and the two discriminating controls, denominators printed: "VERBATIM-CHARS: K of M served findings carry a run of at least 12 characters inside a passage they cite" with K/M at or above 0.90 (the validation held 70 of 71); "NEIGHBOUR-CONTROL: refused K of K"; "MUTATION-CONTROL: refused K of K" (the validation refused 70/70 and 68/68) -- a control that refuses fewer than all fails this criterion; and "VERBATIM-WORDS: 0 findings graded on the token rule" (the sentence script is unspaced, so the character rule ran). The analysis file name is the out-dir rendering of the pool key (key.replace('/', '_'), analyze.py:1220); record the actual file name if the accession differs</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-rk-40"><invocation>cd "$(git rev-parse --show-toplevel)" && export ANTHROPIC_API_KEY="$(comp-secrets get anthropic-api-key --reveal | grep '^value:' | sed 's/^value:[[:space:]]*//')" && python -m lib.research.filings.analyze --security-key 6861_JP_Equity --source-json .scratch/docs/6861_JP_Equity.source.json --no-fetch --cache-dir .scratch/filings_cache --out-dir .scratch/keyence --stage pass1 2>&1 | tail -4 && python -m lib.research.filings.analyze --security-key 6861_JP_Equity --source-json .scratch/docs/6861_JP_Equity.source.json --no-fetch --cache-dir .scratch/filings_cache --out-dir .scratch/keyence 2>&1 | tail -12</invocation><expect>precondition (ii) live on Keyence (the two invocations are the pass-1 cache split the 115 s bound already forced, analyze.py:308-317; the second reads cached true): PASS1 prints citations N and resolved M with M at or above 95% of N; a CITATIONS line prints "blocks per citation min/median/max" with min 1, median 1 and max AT MOST 2, and beside it "two_block_citations K of N" with K/N at or below 0.10 (AMENDMENT 3, row W42-S5: the validation measured 1/1/1 on a different document; a genuine two-block span resolved correctly is the fixed behaviour of row S3, not a defect -- the literal 1/1/1 was a measurement, never a rule) and "cited_text in original N of N"; ITEMS prints total and cited with cited at or above 90% and language ja; the DRAFTING line prints; USD printed under 0.60 for this run; NOT-UPLOADED lines for the three objects (no --write-pool)</expect></criterion>
+  <criterion id="AC4" cell_refs="AMGT-rk-40"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.filings.translate --analysis .scratch/keyence/filings_v1_6861_JP_Equity_doc-1defdb68a7ffd3b7.analysis.json --controls 2>&1 | tail -8</invocation><expect>precondition (iii) and the two discriminating controls, denominators printed: "VERBATIM-CHARS: K of M served findings carry a run of at least 12 characters inside a passage they cite" with K/M at or above 0.90 (the validation held 70 of 71) -- AMENDMENT 3, row W42-S5: the floor binds the PROSE-CITED findings. Print in addition "TABLE-DERIVED: T of M findings" listing each finding id whose cited passages carry no run of 12 characters of non-numeric text (a passage whose characters are more than half digits, punctuation or whitespace is a table line), and grade the floor as K / (M - T) at or above 0.90; a table-derived finding is served with its `verbatim` field reading table_derived and the number(s) it carries located in the cited passage (a NUMBER-CONTROL line: "found N of T"; any not found FAILS); "NEIGHBOUR-CONTROL: refused K of K"; "MUTATION-CONTROL: refused K of K" (the validation refused 70/70 and 68/68) -- a control that refuses fewer than all fails this criterion; and "VERBATIM-WORDS: 0 findings graded on the token rule" (the sentence script is unspaced, so the character rule ran). The analysis file name is the out-dir rendering of the pool key (key.replace('/', '_'), analyze.py:1220); record the actual file name if the accession differs</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-rk-40"><invocation>cd "$(git rev-parse --show-toplevel)" && export ANTHROPIC_API_KEY="$(comp-secrets get anthropic-api-key --reveal | grep '^value:' | sed 's/^value:[[:space:]]*//')" && python -m lib.research.filings.translate --analysis .scratch/keyence/filings_v1_6861_JP_Equity_doc-1defdb68a7ffd3b7.analysis.json --out .scratch/keyence/6861_JP_Equity.translated.json 2>&1 | tail -8</invocation><expect>the translation of the OUTPUT, live: "TRANSLATED: N of N lines" (every served item plus the driver's series, unit and why), each line carrying translated true, source_language ja, translator model and prompt_version rj6-translate/1, translated_at, and the original text with its passage_ids beside it; "RELOCATE-CONTROL: 0 of N translations found verbatim in the original" (the validation measured 0 of 71 -- a translation that relocates would mean the analysis was not in the original language); USD printed under 0.30; the running total for this order printed and under 3.00</expect></criterion>
   <criterion id="AC6" cell_refs="AMGT-rk-40"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "
 import json
@@ -235,7 +272,7 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~42</slot>
 <fabric>site-z</fabric>
