@@ -6511,6 +6511,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not this order's to source: inventing the two files would be the hand copy S96 rejected. The issuer's choices: (i) route a cell that declares true sources for both members (staged_from from data/ for the registry, the settings' producer for settings.json), then K-CODE covers 7; or (ii) K-CODE covers 6 and ycharts-generate stays UNEXPECTED until then. The diagnostic shows ycharts needs ONLY raw_keys.json, because its registry resolves through the env to the packaged copy."
+  },
+  {
+    "id": "IRPT_BCKEND-S103",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T17:44:29Z",
+    "one_line": "With raw_keys.json served, directory SEARCH now resolves its scope and then raises in its own compute on every call: directory/entry.py:64-83 _document_fields reads DirectoryEntry.schema.json from the CHECKOUT path (docs/contracts/investor-reporting/v1/, which exists only in the repo) or IRPT_CONTRACTS_DIR. irpt-directory-search has no layer and no IRPT_CONTRACTS_DIR, and the irpt-common:5 layer carries 5 schemas, none of them DirectoryEntry. RuntimeError 'BLOCKED: the DirectoryEntry contract is not readable from this runtime' -> UNEXPECTED, firm_id present. This is the S98 class again (a file the repo has beside the code and the zip does not), in a module outside _ids/, so outside IB-rtf-12's census.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (f): 'every request on a firm whose map EXISTS reads a SCOPE-RESOLVED answer and never UNEXPECTED'; the search route WITH a query records S92 FIXED or not.",
+    "world_is": "Battery @110f596a97, arm (f), 17:31Z, as the rtf-9 principal through the deployed route: GET directory/search q=a -> UNEXPECTED http 200 firm_id PRESENT (the scope resolved; the compute raised). The same for q=zzqqxxnomatch. DIAGNOSTIC (the DEPLOYED zip PUjH3OjD..., in-process outside the repository at C:\\d12, the recorder patched, the edge's header set incl. x-user-email): builtins.RuntimeError BLOCKED ... at entry.py:81 _document_fields <- entry.py:146 search <- served.py:641 <- enforce.py:618. The zip's members carry no DirectoryEntry.schema.json. get-function-configuration irpt-directory-search: layers [], env IRPT_DIRECTORY_BUCKET_MAP + IRPT_DIRECTORY_PREFIX only. The irpt-common:5 layer's python/irpt_contracts/ holds ExportBundle, ExportReceipt, NarrativePacket, PerformanceReport and RenderPackage. The same entry.py (and the same absence) is in the prior live zip HOpXPDo..., so this act did not introduce it; it made it reachable. resolve on the same function is SERVED (firm_id present).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_R69-AC1_battery_output.txt arm (f) request lines",
+        "infra/aws/lambda/investor-reporting/directory/entry.py:59-83 @110f596a97 (_CONTRACT and _document_fields)",
+        "the diagnostic run of .scratch/diag_rtf12.py on irpt-directory-search with q=a (the deployed zip, outside the tree)",
+        "lambda get-layer-version-by-arn irpt-common:5 member list (python/irpt_contracts/: 5 schemas)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's: the remedy is staging DirectoryEntry.schema.json into the zip (staged_from docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json) plus IRPT_CONTRACTS_DIR pointing at it, or a layer carrying it -- a manifest + Terraform env change, which the face bars. S92 stays unmeasurable until search is served. The R69-AC2 build contract (a census of __file__-relative opens keyed on the import) would have caught this one too."
+  },
+  {
+    "id": "IRPT_BCKEND-S104",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T17:44:29Z",
+    "one_line": "With raw_keys.json served, irpt-export-render's receipt route resolves its scope and then raises in the evidence-bucket READ, UNDER ITS OWN ROLE only. A lambda:InvokeFunction pair on the deployed function, as its execution role, isolates it: the same event reads UNEXPECTED (firm_id present) when entry.py:97-107 reads s3://opal-data-ycharts/<receipt key>, and reads normally (no refusal code, firm_id present) when receipt_fixture bypasses the read. Under operator credentials in-process, the same read maps to NOT_FOUND. The swallowed class is outside the handler's own mapping ('NoSuchKey', 'ClientError'), and the None sink (S91) keeps it unnamed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (f): 'every request on a firm whose map EXISTS reads a SCOPE-RESOLVED answer and never UNEXPECTED'.",
+    "world_is": "Battery @110f596a97, arm (f), 17:31Z: GET export/EXP-<random> -> UNEXPECTED http 200 firm_id PRESENT. CloudWatch REPORT 1203 ms, so not a timeout (timeout 120 s, no VPC). The invoke pair (.scratch/invoke_export_pair.py, as irpt-export-render-role): 'S3 receipt read (as deployed) -> code UNEXPECTED, firm_id present'; 'receipt_fixture {} (no S3 read) -> code None, firm_id present'. IRPT_EVIDENCE_BUCKET = opal-data-ycharts, default encryption aws:kms (key 7f4d3042-...). The diagnostic under operator credentials: NOT_FOUND ('no receipt is recorded for this export under this firm'). The same entry.py is in the prior live zip 4Dp6e0Vy..., so this act did not introduce it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_R69-AC1_battery_output.txt arm (f) request lines",
+        "the lambda:InvokeFunction pair on irpt-export-render (with and without receipt_fixture), this session",
+        "infra/aws/lambda/investor-reporting/export/entry.py:85-108 @110f596a97",
+        "s3api get-bucket-encryption opal-data-ycharts; CloudWatch /aws/lambda/irpt-export-render REPORT 17:31:49Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's: likely a role grant on the evidence bucket or its KMS key (the class to name needs S91's sink, or a role-scoped diagnostic). Neither an IAM nor a source change is in this order's bounds. A receipt that does not exist should read NOT_FOUND, the handler's own designed refusal."
   }
 ]
 ```
