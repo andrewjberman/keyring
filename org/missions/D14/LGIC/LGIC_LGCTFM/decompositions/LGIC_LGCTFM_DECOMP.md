@@ -784,6 +784,42 @@ the COMMIT it invoked it at, and `r5-vintage-field` requires both fixed inputs t
 to RESOLVE against its path. ⭐ This is what retires the sweep: **an arm that walks a log from a pin can
 always be aimed at the wrong window; a proof that carries the commit of the input it invoked cannot be.**
 
+
+### 16.6 THE ROUND-5 CLOSE -- drained @`c70d22c3a8`, five of five PASS, and the analysis's own characterisation FALSIFIED
+
+`LT-m-2` is terminal and verified at its branch tip `ba22177c0a` AND again at the merged tree: `s41-population`,
+`s41-producers`, `s41-no-repair`, `r5-vintage-field`, `r5-stale-proofs` all PASS, `selftest-arms` reads
+`PASS-ARMS-DISCRIMINATE`, proof VALID (rc=0), nothing written outside the grant. **No rows filed, and the
+cell says why: no criterion an honest correct record could not satisfy, and no row needed the `unattributed`
+escape.** The bar held from the other side.
+
+**THE MEASUREMENT, and it is the round's whole product:** 24 of 154 S3Key rows resolve to no bucket
+(denominator 404 contract rows), **matching the issuer's cut-time count exactly** -- 23 tier-prefixed (gold
+10, platinum 12, silver 1) and 1 firm-prefixed.
+
+⭐ **THE ANALYSIS'S 24th-ROW CHARACTERISATION IS FALSIFIED WITH A DENOMINATOR.** The cell hunted the bare
+`s3:` shape across **all 6 runs under the only workflow home -- 0 found in any run, 6 of 6 swept.** The
+issuer's cut-time disagreement is therefore not a one-run artifact: no measured run has ever carried that
+shape. The order told the cell to HUNT rather than CONFIRM, and hunting is what produced the negative with
+its denominator instead of a shrug.
+
+**TWO PRODUCERS, BOTH INSTRUMENT-ATTRIBUTED, ZERO UNATTRIBUTED:**
+
+1. `lib/opal_lgctfm.py:374-380` (`parse_aws_walk()`) plus `:956-964` (`resolve()`'s ambiguous-candidate
+   fallback) -- **23 tier-prefixed rows.** Attributed by RUNNING `comp-find --corpus aws` on all 23 bare
+   keys (each returns three same-name S3Key candidates) and `comp-kuzu` MATCH on all 23, confirming
+   `props.source='portal-stitch'`, `origin_reason='ambiguous-across-firms'`, `arn=''`.
+2. `lib/opal_lgctfm.py:929-930` (kuzu-native ingestion inside `discover_involved()`) -- **the 1
+   firm-prefixed row**, `R-0060`, `origin_reason='no-canonical-s3-key'`.
+
+⭐ **THE ANSWER TO THE ANALYSIS'S REAL QUESTION IS NEITHER "ONE" NOR "TWO":** the two shapes come from
+**different code sites** -- two producers by the cell's own definition -- but **both trace to the SAME
+upstream root**: the served graph's portal-stitch S3Key ingestion leaves `arn` empty whenever it cannot
+resolve a single firm-writer bucket, and the shape difference is a DOWNSTREAM BRANCH (ambiguous name-count
+vs unique) rather than two independent external causes. **That is exactly the distinction the analysis cut
+a measurement cell to protect** -- a repair cell would have written two fixes for one root, or one fix for
+what looked like two.
+
 ### 16.5 WHAT THIS ROUND DOES NOT CLAIM
 
 - It does **not** repair a single bucketless row, and it does not name a remedy.
