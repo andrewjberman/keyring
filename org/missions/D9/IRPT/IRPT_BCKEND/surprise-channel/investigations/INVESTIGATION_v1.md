@@ -6395,6 +6395,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not fixed here; the face bars a neighbouring fix and lambda-source-map.json is not in this order's grant. The remedy is ONE staged_from object on irpt-directory-search, identical to the six siblings'. After it, a rebuild ships the committed LF blob, so the served seam member changes CRLF -> LF. The content is the same JSON (the parse is identical), but the zip bytes and the CodeSha256 differ from any hand-built zip. Rejected workaround: copying the file onto disk by hand, as the 05:22Z build evidently did. The ledger irpt-bckend-ib-rtf-10-k-code-build closes with the leg recorded as REFUSED-BEFORE-UPLOAD. The rest of the re-cut (K-OM, K-DIR, K-ENV, the S95 restore) is unaffected."
+  },
+  {
+    "id": "IRPT_BCKEND-S98",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T14:52:28Z",
+    "one_line": "After IB-rtf-10's apply (7 of 7 roots, 0-diff 7 of 7; every grant, bucket map and CodeSha256 read back as signed), the live path is STILL UNEXPECTED on 9 of 10 requests across the 7 functions. The remaining cause is not IAM. _ids/ids.py raw_keys() opens raw_keys.json BESIDE the module, but 0 of 7 deployed zips carry it and 0 of 7 manifest entries declare it, while 7 of 7 stage _ids/ids.py. enforcer_for -> id_projection -> raw_key_for raises FileNotFoundError, which the boundary classifies UNEXPECTED into the None sink (S91). This is S90's third cause, invisible to simulation and to every in-process proof, because in the repo raw_keys.json DOES sit beside _ids/ids.py.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face, arm (f): 'ONE authenticated request per affected route ... reading a SCOPE-RESOLVED answer ... and NEVER UNEXPECTED, m of m'. Packet c3a44074d2 section 7, GRANTED branch: with K-OM + K-DIR + K-ENV + K-CODE applied, 'a FIRM_ADVISOR request resolves its scope ... never UNEXPECTED'.",
+    "world_is": "Battery @314435ba8f, arm (f), 14:36Z, as the rtf-9 principal (firmId 49financial, advisorKey abby_horton), through https://opalinvest.dev/api/scoped/investor-reporting/*: 9 of 10 requests read UNEXPECTED with no firm_id (directory search x2, resolve, status, analysis sections, performance, narrative, export receipt, analysis submit). Holdings read FIRM_BINDING with no firm_id, on a random account id, because the search that supplies a permitted id was itself UNEXPECTED. Arm (e) of the same run: K-OM allowed 18 of 18, directory allowed 21 of 21, negatives denied 27 of 27, bucket map 7 of 7, CodeSha256 7 of 7 as signed. DIAGNOSTIC (operator credentials, the DEPLOYED zip bytes and the DEPLOYED environment, in-process, the boundary's recorder patched to print the swallowed exception): irpt-status GET status -> UNEXPECTED; traceback served.py:625 handle -> :582 enforcer_for -> ids.py:408 projection_for_firm -> :170 raw_key_for -> :162 raw_keys -> FileNotFoundError '<package>/raw_keys.json'. The SAME run with ONLY the HEAD blob of _ids/raw_keys.json (6492 bytes) placed beside ids.py -> the scope RESOLVES (firm_id fir_c9fc04650e2134d6ea033da2 present, a policy code), for irpt-status AND irpt-directory-search. Census over the 7 deployed zips and lambda-source-map.json @HEAD: raw_keys.json present 0 of 7, declared 0 of 7; _ids/ids.py staged 7 of 7. ids.py:64 RAW_KEYS_PATH = os.path.join(HERE, 'raw_keys.json'), introduced @6806f529ac. The dependency was wired into all entry points by the shared Entry.enforcer_for @47f21dab95 (IB-rte-6).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-10_R67-AC1_battery_output.txt (this pass): arm (e) and arm (f) lines",
+        "lambda get-function Code.Location for the 7 functions, zip member census: raw_keys.json 0 of 7, ids.py 7 of 7",
+        "infra/aws/lambda/ci/lambda-source-map.json @HEAD: raw_keys absent from files[] and staged_from on 7 of 7; _ids/ids.py staged 7 of 7",
+        "the in-process diagnostic pair (the deployed zip + env, recorder patched): without raw_keys.json -> FileNotFoundError -> UNEXPECTED; with it -> firm_id present, policy code"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed here; the face bars a neighbouring fix, and the remedy is a CODE deploy on 7 functions. The remedy has the shape of S96: ONE staged_from object per function, for _ids/raw_keys.json packaged as raw_keys.json at its pin with its sha256, then a rebuild of the 7 and a new never-widen packet (six of them change served code). WHY every earlier proof passed: the in-process harness imports _ids/ids.py from the REPOSITORY, where raw_keys.json sits beside it, so HERE resolves to a directory that HAS the file. The zip flattens ids.py to the package root without it. The same code has two file layouts, and only the deployed one is broken. That is a sharper form of the identity bar: a served-path proof must run the deployed BYTES, not just the deployed role. The apply itself stands and is not rolled back: every key reads back as signed, and the path was UNEXPECTED before it (S90 12 of 12) and after it, so the apply moved no served answer. S92 could not be measured, because no directory request reached the compute."
   }
 ]
 ```
