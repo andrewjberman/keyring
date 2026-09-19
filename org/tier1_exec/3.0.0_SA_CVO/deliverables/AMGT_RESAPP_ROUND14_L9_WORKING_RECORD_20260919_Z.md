@@ -34,6 +34,34 @@ its own closeout names AC1..AC4. That false positive was resolved before the row
 
 STANDING: this seat does not accept the sweep's denominator as round 14's coverage.
 
+### 1a. The general shape: an unanchored parser vs. an order that quotes its own record face
+
+`rk-58` is not a one-off. Round 14 contains GOVERNANCE orders whose SUBJECT is the record face --
+`rk-55` (one-issuer-per-round), `rk-56` (status-element-at-issuance), `rk-57` (acceptance-read-at-l10),
+`rk-58` (direct-act-minted-order) -- and they necessarily quote `<round>`, `<status>` and
+`<proof_of_spec>` in their own prose, including a literal parsing regex. ANY UNANCHORED FIRST-MATCH
+READ OF A RECORD-FACE TAG IS THEREFORE WRONG ON EXACTLY THESE ORDERS, and wrong silently.
+
+Three instruments hit it in one sitting:
+
+| instrument | anchored? | result |
+|---|---|---|
+| the tool's `_order_round` (`:1184`, `^\s*<round>`) | YES | correct on all 31 |
+| the tool's `_order_criteria` (`:1180`, unanchored) | NO | `rk-58` drops 5 criteria -- row `Z-S176` |
+| this seat's first status census (unanchored) | NO | `rk-56` and `rk-58` misread as pending |
+
+The status census is corrected by anchoring and taking the LAST match (the record face): round 14 at
+HEAD `433fb20178` is 15 complete / 16 pending. The first, unanchored cut of that same census said 13
+complete / 18 pending and this seat nearly reported it. Recorded because the error is this seat's own
+and because the tool already demonstrates the remedy one function above the defect.
+
+A round-tag census must also be FILE-scoped: occurrence-scoped counting returns 139 tags over 128
+order files, because those same governance orders carry several apiece.
+
+NOTE ON WHAT STATUS IS WORTH: per the spine, `<status>` is the stalest carrier in its own document and
+terminality is read from proof instances at HEAD. The 15/16 figure is a DRAIN-PROGRESS indicator, not
+the L10 terminality read.
+
 ## 2. Judgment criteria -- one declared, and the screen that does not work
 
 Declared `judgment="true"` in round 14: ONE, `rk-43` AC5, a self-closing
