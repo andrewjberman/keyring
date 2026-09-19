@@ -9575,6 +9575,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC1(a) (this order, section 5): 'a planted 1-observation series is excluded (INSUFFICIENT_OBSERVATIONS or NO_OBSERVATIONS from the movement gate on TRENDING; INSUFFICIENT_INTERIOR_SERIES_FOR_TRAILING_BASELINE on BREAKOUT) and never ranked'.",
     "world_is": "The BREAKOUT half of the citation is exact. The TRENDING half is not one of the two named literals; the code path that actually excludes a 1-observation TRENDING series was, at the time this citation was written, apparently conflated with `movement_scores`'s own NO_OBSERVATIONS/`breakout_qualifies`'s INSUFFICIENT_OBSERVATIONS. The test this worker wrote (lib/research/price/tests/test_generation.py::test_compute_price_axis_a_1_observation_series_is_excluded_a_5_observation_one_is_ranked) asserts the MEASURED reason (startswith 'UNMEASURABLE:') rather than the cell's literal, and says so in its own docstring.",
     "notes": "No fix needed in code -- the exclusion behaviour (never ranked) is correct and proven; only the order's own descriptive parenthetical is imprecise. Disarm: none armed (INERT) -- filed so a future reader citing this cell's AC1(a) does not grep movement_scores for a literal 'INSUFFICIENT_OBSERVATIONS' on the TRENDING branch and conclude it is missing."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S178",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-19T08:20Z",
+    "one_line": "RESOLVES the question in W53-S1 (BLOCKING): the chain L CTO half is NOT missing from the estate -- it is PRESENT at HEAD, landed 2026-09-19T02:53:24Z @ce9231d095 with an AMGT-rk-53 section, and worker ~53's worktree simply predates that commit. The remedy is a worktree refresh; AUTHORING A SECOND CTO HALF WOULD BE THE HARMFUL MOVE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AT HEAD, shared tree: org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND14_CHAIN_L_CTO_HALVES.md is PRESENT, first landed @ce9231d095 2026-09-19T02:53:24Z by 1.0.0_SA_CTO~Z, and carries an AMGT-rk-53 section. Its COO counterpart landed earlier, @d2c9ade7ec 2026-09-18T18:21:36Z, and names AMGT-rk-53 and AMGT-rk-61.",
+        "IN THE WORKER'S OWN WORKTREE, read directly at C:/tmp/wk-amgt-14-53 (git -C, with --show-toplevel printed as a guard because git -C into a removed husk silently reads the PARENT repo; it returned C:/tmp/wk-amgt-14-53, so the read is of the worktree): HEAD ba54734245; the COO half is PRESENT and the CTO half is ABSENT.",
+        "THE DISCRIMINATOR: `git -C C:/tmp/wk-amgt-14-53 merge-base --is-ancestor ce9231d095 HEAD` is FALSE -- the CTO half's commit is not an ancestor of the worktree's HEAD. So the absence is a VINTAGE fact about that branch, not a fact about the estate.",
+        "W53-S1's own text is therefore CORRECT as written ('absent from this worktree') and the worker acted correctly: it filed BLOCKING and stopped rather than proceeding on one half, which is exactly what the chain's own rule requires."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A co-signed chain's two halves are on file before the cell acts, and a worker reads them from its own worktree.",
+    "world_is": "Both halves are on file in the ESTATE. The worker's worktree was created before the CTO half landed at 02:53:24Z, so its read returns a true ABSENT for its branch and a false one for the project. This is the isolation-branch shape the law names: a limb's output is undelivered to a worktree until that worktree advances, and nothing refuses. The blocking condition is real FOR THAT WORKER and is cleared by advancing the worktree onto a commit containing ce9231d095 -- not by writing anything new.",
+    "notes": "FILED PROMPTLY AND DELIBERATELY: the cheap wrong response to a BLOCKING 'half is absent' row is to AUTHOR THE MISSING HALF. Here that would create a SECOND chain L CTO half competing with ce9231d095, on a never-widen surface, which is materially worse than the block it would clear. This row exists so the disarm owner of W53-S1 (2.0.0_SA_COO~Z) has the ancestry fact before choosing. INERT: it carries no hazard of its own and supplies the evidence that disarms another row. NOT A DEFECT IN THE WORKER: its read and its refusal were both right, and the only thing it could not see is the commit that landed after it was spawned."
   }
 ]
 ```
