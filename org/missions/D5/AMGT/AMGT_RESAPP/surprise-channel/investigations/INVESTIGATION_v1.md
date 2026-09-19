@@ -9392,6 +9392,123 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC2 asserts passages.build_passage_map(ex['text'], ex['items']) runs against src['excerpt'] read from AMGT-rk-39 CLI's own written .source.json; AC3-AC6 chain off that same file and its outputs.",
     "world_is": "AMGT-rk-39's document.py CLI (the only fetch path for a non-EDGAR PDF such as Keyence's Yuho) never writes an 'excerpt' key -- only fetch.py's SEPARATE EDGAR path does, via a DIFFERENT builder (build_source_object) this worker does not own and this order does not name as a dependency to build. lib/research/filings/document.py, fetch.py, battery.py and batch.py are explicitly listed as NOT this worker's <paths>, so no adapter converting document.py's 'sections' shape into analyze.py's 'excerpt' contract can be built inside this task order's lane without widening it. AC2-AC6 are REFUSED on this measurement per the order's own REFUSAL CLAUSE -- never repaired by writing to document.py or fetch.py, which this order does not grant, and never satisfied by rewriting the order's own literal invocations.",
     "notes": "AC1 (every unit test, model stubbed, independent of the live document-layer's actual shape) PASSES in full: the whole of section 1.2's build (Unicode passages, pre-cut citation blocks, language detection at the stage boundary, the character-level verbatim rule, the translation stage lib/research/filings/translate.py, and its controls) is implemented and unit-proven against fixtures. Only the LIVE Keyence validation half (AC2-AC6) is blocked by this one gap. Remedy is either (a) a follow-on cell building the document.py-to-excerpt adapter (naturally AMGT-rk-39's or a new integration cell's, since fetch.py/document.py are its files, or AMGT-rk-38's battery per the order's own 1.2.3 language-source alternative), or (b) a revision to this order's AC2-AC6 invocations to read document.py's actual 'sections' shape instead of 'excerpt'. Neither is this worker's call to make unilaterally -- filed per the surprise channel, not repaired."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S176",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-19T06:29Z",
+    "one_line": "The round-14 acceptance sweep silently omits AMGT-rk-58's five criteria: _order_criteria scopes to the FIRST <proof_of_spec> span in the document, and rk-58's first such span is a PROSE mention whose captured body is the literal '...', so the real block is never read -- the five criteria are not UNVERIFIABLE, they are absent from the sweep and from its denominator.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "MECHANISM, read at HEAD 249d6527bd: .tools/surprise-row-gate.py:1180 _PROOF_BLOCK_RE = re.compile(r\"<proof_of_spec>(.*?)</proof_of_spec>\", re.S) -- non-greedy, unanchored; :1191 m = _PROOF_BLOCK_RE.search(text) takes the FIRST span in the whole document. The docstring's fallback to whole text fires only when the block tag is MISSING (:1189), so a wrong-but-present first span defeats it.",
+        "THE SPAN: AMGT_RESAPP.TO-AMGT-rk-58.direct-act-minted-order.md:80 carries `<proof_of_spec>...</proof_of_spec>` inside prose backticks. The regex ignores backticks; the captured group is the literal three-character string '...'. The real block is :191-241 and holds five criteria at :192, :193, :221, :234, :235.",
+        "DISCRIMINATING PAIR, run this session against rk-58's HEAD bytes via the tool's own _order_criteria: as-is returns 0 criteria; with that single prose line removed and nothing else changed it returns 5. Positive control: the file carries 5 <criterion tags by direct count.",
+        "COVERAGE: all 128 tree task orders of AMGT_RESAPP enumerated by the tool's OWN _task_order_paths_for_sweep and read at HEAD; exactly ONE order is affected. rk-57 reads parsed=4 raw=5 and is NOT affected -- its fifth <criterion at :93 is a prose `<criterion-id>` mention and the order's own closeout at :193 names AC1,AC2,AC3,AC4. That false positive was checked before this row was filed.",
+        "THE PRINTED EFFECT: `python .tools/surprise-row-gate.py --acceptance AMGT_RESAPP --round 14` prints 'PASS 59 / FAIL 1 / UNVERIFIABLE 100 of 160 criteria over 30 order(s); unrounded 0' while 31 order files carry <round>14</round> (file-scoped count, native Grep). The 1-order / 5-criterion gap is exactly rk-58, and it is NOT surfaced in `unrounded`, which correctly reads 0 because rk-58 does carry <round>14</round> at :262."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-rk-57's cell (R14-T3, from row AMGT_RESAPP-Z-S169) asserts the acceptance sweep classifies EVERY criterion of every order of the round into PASS / FAIL / UNVERIFIABLE, each UNVERIFIABLE carrying its reason -- so a criterion is never silently dropped and the printed denominator is the round's true coverage.",
+    "world_is": "An order whose prose mentions <proof_of_spec>...</proof_of_spec> ABOVE its real block has its criteria scoped to the prose span. rk-58's five criteria are omitted entirely. The omission is invisible in the sweep's own output on both available denominators: _acceptance_sweep's orders_out holds one entry per order carrying AT LEAST ONE criterion (:1337), so rk-58 drops out of the order count, and `unrounded` counts only orders with NO <round> tag (:1340), which rk-58 has. The sweep therefore reads complete at 160 criteria over 30 orders when the round's true figures are 165 over 31.",
+    "notes": "REMEDY, one line at :1191, narrowest form: anchor the block tag to line start (^<proof_of_spec>$) -- both real blocks in this project satisfy it and no prose mention does; this matches _order_round's own line-anchored idiom at :1184. Alternatives: take the LAST span, or the first span that actually contains a <criterion tag. NOT FIXED IN THIS ROW: rk-57 is complete and its AC1 --self-test and AC2 battery pin current behaviour, so the fix must land with a self-test arm covering a prose-mention order and belongs to an owner named at L9. DISARM OWNER is 1.0.0_SA_CTO~Z, the gate's owner -- the first cut of this row named this seat and the row gate refused it (R-19: a disarm owner is never the writer of the disarm clock). STANDING: this seat will not accept the sweep's denominator as round 14's coverage; rk-58's five criteria are graded by hand at L9. DISARMS when either the parser carries that arm, or rk-58's five criteria are graded and recorded in the round-14 adjudication."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W47-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~47",
+    "surfaced_at": "2026-09-19T05:35:00Z",
+    "one_line": "AMGT-rk-45's never-widen halves and order text describe the pool write as OVERWRITING today's null-valued _pool/<today>.json (true at the 2026-09-18 cut); this worker's UTC today is 2026-09-19, one day later, and management/v1/_pool/2026-09-19.json is 404 -- the act is a NEW key, not an in-place overwrite, so there are no pre-act bytes to snapshot and the pool leg's rollback is delete-object, not re-put.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "NEVER_WIDEN_ROUND14_CHAIN_E_COO_HALVES.md AMGT-rk-45 section, THE ACT (i): 'OVERWRITING today's null-value pool object (the state at the cut: `_pool/2026-09-18.json` carries `pool_avg null`)'.",
+        "NEVER_WIDEN_ROUND14_CHAIN_E_COO_HALVES.md AMGT-rk-45 section, BLAST RADIUS: 'Pool: ONE object, `_pool/<today>.json`, rewritten in place (the ONE in-place overwrite in this chain).'",
+        "measured this session: `date -u +%F` -> 2026-09-19; `aws s3api head-object --bucket opal-data-harvest --key management/v1/_pool/2026-09-19.json` -> 404 Not Found (rc 254 via the aws shim's error-exit convention).",
+        "AC2's own live listing (this session) shows only `_pool/2026-09-15.json` and `_pool/2026-09-18.json` under management/v1/_pool/ -- no 2026-09-19 object exists to overwrite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The co-signed halves state the act's blast radius and per-key rollback against an IN-PLACE OVERWRITE of today's pool key, with pre-act bytes to snapshot and re-put on rollback.",
+    "world_is": "A day has elapsed between the halves' signing (2026-09-18) and this worker's execution (2026-09-19 UTC); 'today' for THIS act is a key that does not yet exist, so the write is a fresh PUT, not an overwrite, and the per-key rollback this worker recorded in the change-management entry is delete-object on the new key (restoring the pre-act ABSENCE) rather than a re-put of saved bytes. The substance of the halves (blast radius = the pool line of every served management block; N=3 writers; the outcome stated against the changed compute_pool) is unaffected -- only the ONE mechanical fact of overwrite-vs-create for the specific key touched on this calendar day.",
+    "notes": "Not a defect in this cell's own work: the change-management entry (org/critical_paths/change_management/20260919T0530Z_amgt-rk45-one-pool_deploy_completion.md) records the 404 and the corrected rollback before any write. Disarm owner for the GENERAL pattern (a never-widen half naming an in-place overwrite by a calendar-relative key that a later-running worker may find absent) is whichever seat next authors a never-widen half for a date-keyed object -- state the rollback for BOTH the overwrite and the fresh-create branch, the way Rule 5's sign-off discipline already requires for a producer's two branches."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W47-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~47",
+    "surfaced_at": "2026-09-19T06:25:00Z",
+    "one_line": "lib/research/api/tests/test_generation_and_pool_routes.py::test_13's own comment ('the pool object at the name's own as_of, not the other one') describes the PRE-AC5 adapter semantics this order retires (scoped_amgt.py:2431 now reads read_pool_object without as_of, i.e. the NEWEST pool object, never the name's own as_of); the assertion still passes only because the fixture's two planted pool dates happen to make newest == the name's own as_of, so the test is now a coincidental pass on a stale rationale, not a regression.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "test_generation_and_pool_routes.py:433-449 plants management/v1/_pool/2026-09-14.json (pool_avg_tenure_years 9.99) and management/v1/_pool/2026-09-15.json (pool_avg_tenure_years 4.08), then asserts block['pool_avg_tenure_years'] == 4.08 with the comment 'the pool object at the name's own as_of, not the other one' -- the name's own as_of in this fixture (CTRL_US_Equity) is also 2026-09-15.",
+        "This order's AC5/ledger diff (lib/research/api/scoped_amgt.py:2431, this commit): pool_document, pool_record = read_pool_object(MANAGEMENT_PREFIX, MANAGEMENT_POOL_NAME) -- as_of dropped, so read_pool_object always resolves the NEWEST object under the prefix (its own docstring :1153-1156), never the caller's as_of.",
+        "measured this session: python -m pytest lib/research/api/tests/ -q -> 158 passed, 2 failed (test_13 and test_13b, both failing on the SAME pre-existing ceo_profile_reading assertion documented by AMGT-rk-43/row AMGT_RESAPP-Z-W45-S3, not on the pool_avg_tenure_years line) -- confirms this order's change did not flip test_13's pool assertion, only because 2026-09-15 sorts as both the newest pool date AND the name's own as_of in this fixture."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Nothing in this order names lib/research/api/tests/; the order's own <paths> lists lib/research/api/scoped_amgt.py but not its tests directory, and this order's own AC5 is the proof mechanism for the adapter change, not this pre-existing suite.",
+    "world_is": "test_13's comment states a rationale ('the name's own as_of, not the other one') that is no longer what the code does after this order's own change; the test does not currently discriminate between the old semantics (name's own as_of) and the new one (newest overall) because its two fixture dates are ordered so both semantics agree. A future fixture with the name's own as_of OLDER than the pool's newest date would silently start reading the wrong branch's expectation into a passing-for-the-wrong-reason test.",
+    "notes": "Not fixed here: THE PATHS GRANT does not extend to lib/research/api/tests/ (same exclusion AMGT-rk-43 recorded as row AMGT_RESAPP-Z-W45-S3 for a different pre-existing failure in the same file). Disarm owner is the next cell holding lib/research/api/tests/ in its <paths>: replant test_13 with the pool's newest date OLDER than the name's own as_of (or vice versa) so the assertion actually discriminates newest-object-per-name from same-as_of, and update the comment to state the current (newest-wins) contract."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W40-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~40",
+    "surfaced_at": "2026-09-19T06:35:50Z",
+    "one_line": "Bloomberg's own COMPANY_WEB_ADDRESS for CSL ('www.csl.com.au') resets the TCP connection on every GET this worker tried (default urllib, a curl-style UA, and fetch.py's SEC User-Agent, all timed out or RemoteDisconnected) while DNS resolves fine -- the ONE entity-tied seed step 4 has for CSL is unreachable from this box, so AC3 REFUSES rather than reaching investors.csl.com (the host the validation report itself names as the eventual winner).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: python -c urllib GET https://www.csl.com.au/ with fetch.py's SEC_USER_AGENT -> RuntimeError 'Remote end closed connection without response' after 2 attempts, reproduced 3 of 3 tries",
+        "measured: same URL with a curl/8.0.1 UA over an explicit ssl.create_default_context() -> identical RemoteDisconnected",
+        "measured: socket.gethostbyname('www.csl.com.au') resolves (12.3.33.221) and socket.gethostbyname('investors.csl.com') resolves (15.134.117.25) -- DNS is not the failure",
+        "measured: https://investors.csl.com/ (NOT a Bloomberg-supplied seed; no EDGAR website/investorWebsite field either, both blank on CIK 0001274152) answers 200 with fetch.py's own UA, 87330 bytes, in the same session -- so the block is specific to www.csl.com.au, not to this box's egress or UA generally",
+        "the task order's own 1.2.2 permits NO search primitive and no seed beyond COMPANY_WEB_ADDRESS + EDGAR website/investorWebsite -- with the sole seed unreachable, step 4 has no path to investors.csl.com and the order's own REFUSAL CLAUSE (section 4, and AC3's own expect text) names this exact outcome as the correct one, not a defect to route around"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 expects step 4 to reach investors.csl.com via the bounded, entity-tied crawl and pass the acceptance test there, 'the Bloomberg hint www.csl.com.au is NOT the host' (1.1's own measured narrative).",
+    "world_is": "The Bloomberg hint itself cannot be fetched from this box at all (connection-level reset, not a 403/404), so the crawl never gets a first page to harvest links from and never discovers investors.csl.com. AC3 is REFUSED with the crawl log per the order's own sanctioned outcome ('If the crawl cannot reach the document ... this criterion is REFUSED with the crawl log -- never passed on a typed URL') -- this worker did not hand-type investors.csl.com as a seed to route around the block.",
+    "notes": "Remedy holder: whoever can test this crawl from a different egress path (a different box, or a proxy) -- if www.csl.com.au blocks this box's IP/TLS fingerprint specifically, a re-run from elsewhere may reach it and let the crawl discover investors.csl.com on its own. Not attempted here: no alternate egress is in this order's bounds."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W40-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~40",
+    "surfaced_at": "2026-09-19T06:35:50Z",
+    "one_line": "The pool key for a battery-produced source object is derived from THAT RUN's own outcome (EDGAR accession, or doc-<sha16> for a non-EDGAR winner, or the literal string UNRESOLVED-SOURCE) -- so two --write-pool runs for the SAME security_key that land on DIFFERENT outcomes (an early UNRESOLVED-SOURCE before a code fix, then a RESOLVED winner after it) accumulate as TWO objects under filings/v1/<security_key>/ rather than one current object superseding the other.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured: s3://opal-data-harvest/filings/v1/6861_JP_Equity/ carries BOTH UNRESOLVED-SOURCE.source.json (status UNRESOLVED-SOURCE, written before this worker's crawl-priority fix, when the bounded BFS crawl exhausted its 40-page cap on Keyence's own large nav tree before reaching /investor/library/securitiesreport.jsp) AND doc-1defdb68a7ffd3b7.source.json (status RESOLVED, written after the fix, winner step 4) -- confirmed via AC7's own listing script, 'objects read 4 of 3 validation keys'",
+        "fetch.py's pool_key(security_key, accession) keys strictly on `accession` (or the literal 'UNRESOLVED-SOURCE' when None) -- an UNRESOLVED-SOURCE run and a later RESOLVED run for the same security_key necessarily produce two DIFFERENT keys, never a single overwritten object",
+        "this is unrelated to crosswalk.write_pool's own put-only-if-changed guard (same document-sha256 skips the PUT) -- that guard prevents a re-run with an UNCHANGED outcome from re-writing; it does nothing when the outcome itself changed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC7's own script treats every object under filings/v1/<security_key>/*.source.json as current evidence for that key ('for key in objs: ... served += 1'), implicitly reading the prefix as carrying one row per validation key.",
+    "world_is": "The prefix can carry more than one historical object per key once a key's battery outcome changes across separate --write-pool invocations (exactly what a resumable, iteratively-fixed crawl produces in practice). AC7 still PASSES on its own stated failure bar (no key is absent; no object carries parser_version 1.0.0) because every object present, including the stale one, was written by THIS battery at parser_version 2.0.0 -- but a downstream reader of the prefix that assumes 'one object per key' would pick up the wrong one depending on S3 listing order.",
+    "notes": "Remedy holder: whichever cell reads filings/v1/<security_key>/ downstream (AMGT-rk-49 or the analyzer) should key on the LATEST retrieved_at / most recent PUT among same-prefix objects, or this order's own pool-write step should be made to delete/supersede a prior differently-keyed object for the same security_key -- neither is in this order's <paths> (filings/v1/ writes here are scoped to the three validation names only, and this worker does not delete pool objects on its own judgment)."
   }
 ]
 ```
