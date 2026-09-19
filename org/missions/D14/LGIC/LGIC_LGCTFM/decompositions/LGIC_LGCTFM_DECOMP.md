@@ -1023,3 +1023,65 @@ POSITIVE-SATISFIABILITY and 4 driving the WIRING**, ruff clean.
 `r3-route` and `r7-vintage-field` **FAIL** and are cleared by **that cell alone**; `r7-stale-proofs` is
 **GUARD-SHAPED and reads PASS** with an empty window.
 
+---
+
+## 19. v1.9 -- THE ROUND-8 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-7 analysis @`f818ebd12b` and `3.0.0_SA_CVO`'s S49 @`938ea238ed`
+
+**Input.** Round 7 STANDS; all three judgment criteria PASS; no PRD addendum owed; scope 0 open of 29.
+
+### 19.1 THE CELL -- 1, AND ITS ORDER IS THE FINDING
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the routed-row liveness re-read | `LT-l-1` | re-reads EVERY routed row at HEAD and answers one question per row: is the condition it describes STILL TRUE? | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+⛔ **WHY MEASUREMENT AND NOT REMEDY.** `S49`: *"A ROW IS DISARMED BY AN ACT BUT IS ONLY OBSERVED TO BE
+DISARMED BY A READ, AND NOBODY RE-READS A ROW THEY DID NOT FILE ... THE COST IS NOT THE STALE ROW, IT IS
+THE WORK DONE AROUND IT ... round 7's `LT-g-1` carried a criterion no correct artifact could satisfy AS A
+DIRECT CONSEQUENCE."*
+
+⭐ **THAT CRITERION WAS MINE.** Round 8's input is a set of ROUTED ROWS -- exactly the shape that produced
+it. **Cutting remedies against them without re-reading liveness first would repeat the defect in the round
+convened to learn from it.** So the remedies are round 9's, cut on this measurement rather than on the
+route's vintage.
+
+### 19.2 THE COUNT IS AN OWNERSHIP COUNT, MEASURED BEFORE THE CUT
+
+The analysis says *"the 18 rows routed to `2.0.0_SA_COO~G`"*. Measured over `REMEDIATION_ROUTE_R7.json`,
+**denominator 23**: **18** name this seat as owner, but **only 11 are ACTS** -- the other 7 carry
+`next_act = RETIRE`, whose act is a DISPOSITION and not work. **EIGHTEEN IS THE OWNERSHIP COUNT**, and a
+cell taking it as its population would carry a subset measurement as a population -- the third instance of
+that shape in this project. The block is a CONTROL ON THE FRAMING; the cell re-measures at its own write
+time.
+
+### 19.3 WHAT THE ARM GRADES, AND WHAT IT REFUSES TO
+
+⭐ **THE DIRECTION OF THE ANSWER IS NEVER GRADED.** All-STILL-LIVE passes; all-ALREADY-REMEDIED passes and
+is **the more valuable result**. A bar leaning either way would be an instruction, and the previous round
+already paid for one wrong lean.
+
+⛔ **EVERY VERDICT CARRIES WHAT WAS READ AT HEAD.** A row re-classified from the route record's own prose
+is not a re-read -- it is the route quoted back, which is the move that produced the cost. `ALREADY-REMEDIED`
+additionally requires `closed_by`, because *"it looks fine now"* is the read that let the last one go stale.
+
+⚠ **AND THE PIN-DETECTOR WAS ITSELF DEFECTIVE AT FIRST DRAFT.** It asked `any(ch.isdigit())` and was
+satisfied by the **"7" in `REMEDIATION_ROUTE_R7.json`** -- a detector that cannot tell a commit from a
+filename. **Caught by this round's own `MUTANT-source-record-unpinned` arm before the order shipped**, and
+repaired to require a hex run of at least 7.
+
+### 19.4 WHAT THIS ROUND DOES NOT DO
+
+It remedies nothing, disarms nothing (a disarm is the row owner's act, R-19), and **does not build S49's
+recommended control** -- that is assigned to `1.0.0_SA_CTO`, and S49 says in terms that a gate, a checker
+or a monitor is not asked for. Several routed acts name `check_lt_r1.py`, a PINNED input of a CLOSED round
+-- **the identical hazard `LGIC_ENFORCE` round 16 is handling additively.** The cell RECORDS that
+collision; it does not resolve it.
+
+### 19.5 FIXED INPUTS
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r8/` -- `R8_BASE.json` (**the ONE CARRIER, S85**) and
+`check_lt_r8.py`, ruff clean, whose `selftest-arms` prints `VERDICT: PASS-ARMS-DISCRIMINATE` and its own
+counts. ⛔ **The order does not quote those counts** (`W1-S37`, third consecutive round).
+
+**WIRING AT THE CUT**, each red naming the act that clears it: `l1-liveness` and `r8-vintage-field`
+**FAIL**, both cleared by this cell alone; `r8-stale-proofs` is **GUARD-SHAPED and reads PASS**.
