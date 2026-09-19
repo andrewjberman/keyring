@@ -143,7 +143,11 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    $rows = @(Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
      Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' -and $_.CommandLine -notmatch ' -c ' })
    $rows | Select-Object ProcessId, CreationDate | Sort-Object CreationDate ; "script rows: $($rows.Count)"
-   # ONE row  = healthy. REAP NOTHING.  RIGHT AFTER YOU ARM, run this once and RECORD that row's ProcessId.
+   # ONE row  = healthy. REAP NOTHING -- this branch needs no arm time, no recorded pid and no second count;
+   #            the guard sits on CARDINALITY, upstream of every other defect (1.0.0_SA_CTO 98399).
+   # RIGHT AFTER EVERY ARM -- first arm AND every 30-minute re-arm -- run this and RE-RECORD that row's
+   #            ProcessId: each arm creates a NEW script pid, so a pid recorded one arm ago names a dead
+   #            process and the complement would select your live watcher (4.0.0_SA_CRO 98397: 34892 -> 12888).
    # N>1 rows = REAP BY PID-COMPLEMENT: script rows MINUS the pid you RECORDED at arm time.
    # NO RECORDED PID = REAP NOTHING AND RE-ARM (then record the new one).
    Stop-Process -Id <a-script-pid-that-is-NOT-your-recorded-pid> -Force -Confirm:$false
