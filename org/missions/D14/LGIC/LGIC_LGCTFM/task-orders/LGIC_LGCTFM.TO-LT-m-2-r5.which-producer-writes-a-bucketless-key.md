@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-19</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_LGIC_LGCTFM~1, all 6 criteria (M2R5-AC1..AC6) graded: AC1-AC5 PASS at pin a2b05d19c1, AC6 UNVERIFIABLE-BY-INSTRUMENT (L9, 3.0.0_SA_CVO). proof-of-spec-check rc=0 VALID. No repair made; producer count 2, instrument-attributed, 0 unattributed. No bare s3: row found in any of the 6 runs swept.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-m-2` (decomposition v1.6 s.16) | **outcome_ref:** FWD-1 | **depends_on:** none -- the only cell this round
 
