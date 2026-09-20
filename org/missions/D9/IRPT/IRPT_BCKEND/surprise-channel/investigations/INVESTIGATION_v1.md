@@ -6707,6 +6707,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both reconciling applies completed successfully (rc=0, 0 destroy) and changed NOTHING functional -- no code, no config, no IAM, only an S3 object-version pointer this worker's own prior re-runs had drifted. Nothing was left half-landed at any point (CLAUDE.md's NEVER-law), and the FINAL state matches the FIRST, correctly-ledgered apply's intended shape exactly (re-verified 0-diff, CodeSha256==built, member+env present, after the second reconciling apply). But the PROCEDURE was not followed for these two acts: no ledger entry named them, so a reader scanning only org/critical_paths/ for this project's deploy history would see one ledgered apply and miss two more terraform-apply invocations that happened in between.",
   "notes": "Not remedied with a backdated ledger entry (that would misstate the record's own timeline -- the ledger was genuinely closed before these ran). Recorded so the class is visible: an idempotent-rebuild side effect that forces a RECONCILING apply mid-verification is a real deploy act and needs its own ledger discipline, even when it is corrective and non-functional. The precondition fix in row W1-S40 (skip-rebuild-when-already-served) also prevents this class going forward, since a clean re-run no longer drifts and therefore never needs a reconciling apply."
 }
+,
+{
+  "id": "IRPT_BCKEND-W3-S48",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+  "surfaced_at": "2026-09-20T15:20:00Z",
+  "one_line": "IB-rtg-3's bound confines the source edit to `performance/tenants.py` (+ `_ids/` only if it already exposes the mapping), and that confined fix is CORRECT for R74-AC1 (route_for now resolves a TenantRoute for the boundary's real opaque id, battery PASS, 0 fourth-id-space literals) -- but `performance/handler.py:42-46`'s OWN firm-keyed dict, `RECORDED_LABELS`, is ALSO keyed on the SAME retired third spelling (`F-49F`/`F-INF`; `F-COT` deliberately absent) that this order reconciles in tenants.py, and handler.py is OUTSIDE this order's confined edit. Reconciling only ROUTES leaves RECORDED_LABELS unreachable by any real opaque firm id: `handler.run`'s `labels = labels if labels is not None else RECORDED_LABELS.get(firm_id)` now returns None for all 3 registry firms once a real, authorized request's `firm_id` is the opaque id -- so under the DEFAULT transport mode (`recorded`, `DEFAULT_MODE = os.environ.get('IRPT_PERF_TRANSPORT_MODE', 'recorded')`), a served request that used to reach the captured-evidence replay (or, pre-fix, DEPENDENCY_UNAVAILABLE) now instead returns the NO-CAPTURE branch (report: None, coverage.outcome NO-CAPTURE) for EVERY firm, every time, once this fix is applied and the mode is left at its default.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "infra/aws/lambda/investor-reporting/performance/handler.py:42-46 @8ba74b3130423f6d1ca7ce4e5f2b24bb82dc8664 -- `RECORDED_LABELS = {\"F-49F\": {...}, \"F-INF\": {...}}`, read at handler.py:85 via `RECORDED_LABELS.get(firm_id)` where `firm_id` is the SAME value handler.py:79-80 hands to `tenants.route_for`",
+    "this cell, this run: infra/aws/lambda/investor-reporting/performance/tests/test_performance_adapters.py updated to call `tenants.route_for`/`scope_for` with the NEW opaque ids (required, since `ROUTES` no longer accepts the retired short tokens) -- `timeout 120 py -3.12 -m pytest infra/aws/lambda/investor-reporting/performance/tests -q` then reports 5 of 28 FAILED, every failure a `RECORDED_LABELS.get(firm_id)` miss surfacing as `report: None` or a NO-CAPTURE-shaped absence set, never an UnknownTenant/DEPENDENCY_UNAVAILABLE -- confirming route resolution itself is fixed and the label lookup is the orphaned dependency",
+    "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_R74-AC1_battery_output.txt, this run: `tenants.route_for` resolves a TenantRoute for all 3 registry firms via their real opaque ids, so R74-AC1's own bar (no DEPENDENCY_UNAVAILABLE) is UNAFFECTED by this finding"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-rtg-3 BOUNDS: 'The ONLY code that deploys: irpt-performance-adapter rebuilt with the reconciliation; the served-byte delta exactly that or STOP' and 'a source change confined to performance/tenants.py (+ _ids/ only if it already exposes the mapping)'.",
+  "world_is": "A second firm-keyed dict sharing the exact retired id space this order was cut to reconcile (handler.py's RECORDED_LABELS) sits OUTSIDE the confined edit, so the confined fix is locally correct and globally incomplete: it trades a DEPENDENCY_UNAVAILABLE failure mode for a NO-CAPTURE one on every real request, under the function's own DEFAULT transport mode, the moment this build is applied.",
+  "notes": "Not fixed here: touching handler.py would violate this order's own served-byte-delta bound ('exactly that or STOP'), so this is filed rather than repaired in-cell. Disarm needs either a follow-on order reconciling RECORDED_LABELS to the same opaque id space (the same `_ids.opaque_firm` calls this row's evidence already computed), or an explicit ruling that NO-CAPTURE is an acceptable interim outcome for the recorded/default transport mode. Whichever branch, arm (d)/(e) of THIS order do not run this pass (never-widen halves ABSENT, STOP-and-report per the face), so nothing ships on this finding before a reviewer sees it."
+}
 ]
 ```
 
