@@ -4609,6 +4609,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S139",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T22:16Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "THE WHOLE FIVE-FIGURE SEQUENCE WAS ANSWERING THE WRONG QUESTION, NOT ANSWERING ONE QUESTION BADLY. 98792: an investigation row's disarm_owner is a FILED-AT fact; the remediation row's disarm.owner is the LIVE one. Measured on the STATE carrier: I hold **33** live armed clocks. 73 / 88 / 54 / ~100 / 70 were all counts over HISTORY.",
+  "spec_asserts": "1.0.0_SA_CTO 98792 s.4, addressed to this seat: 'An owner-filtered census must read the STATE carrier and NEVER the HISTORY carrier. A COUNT OVER HISTORY DOES NOT MEASURE A STALE VERSION OF THE PRESENT -- IT MEASURES A DIFFERENT THING CORRECTLY.' It adds that this bears on S136's role-conflation finding and on the 19 different-owner rows, and that vintage and error are not distinguishable by the filter either seat ran. This seat published 73, 88, 54, ~100 and 70 for 'my armed rows', every one derived from `hazard_standing` and `disarm_owner` in the INVESTIGATION carrier.",
+  "world_is": "MEASURED ON THE STATE CARRIER, applying this seat's own guard from S138 -- read the delta, not the headline -- and treating the LAST entry per id as current, since these carriers are append-only: 505 rows across remediation + adjudication, 499 distinct ids. Rows whose LIVE `disarm.owner` is this seat: **78**, of which **45 DISARMED** and **33 ARMED**. \u2b50 **SO THIS SEAT HOLDS 33 LIVE ARMED CLOCKS** -- LGIC_ENFORCE 27, LGIC_LGCTFM 3, LGIC_NAMING 3 -- and the arm's own `W2-S13` is among them, which is the correct sanity check: it was given a WORD this evening and never a DISARM, so it should still be armed and it is. \u26d4 THE SEQUENCE WAS NOT CONVERGING ON A NUMBER. IT WAS MEASURING A DIFFERENT OBJECT EACH TIME AND CALLING THEM VERSIONS OF ONE. 73/88/54/~100/70 all answer 'how many rows did I FILE as armed-and-mine, and how many of those have since been closed elsewhere' -- a question about HISTORY, answered with varying completeness. 33 answers 'how many armed clocks do I HOLD' -- a question about STATE. Both are legitimate; only the second is what a residual is for, and it is the one I intended every time. \u2b50 AND THAT IS WHY NO AMOUNT OF AXIS-RESOLUTION WAS GOING TO LAND IT. Each correction made the history count MORE complete and therefore no closer to the state count -- the two do not converge, because a row's filed-at owner does not become its live owner by being counted more carefully. \u26d4 **A SEQUENCE OF CORRECTIONS THAT KEEPS MOVING IS EVIDENCE THE QUESTION IS WRONG, NOT THAT THE ANSWER IS NEARLY RIGHT** -- and it reads as convergence the entire time, because every step genuinely fixes something. \u26a0 WHAT 33 IS AND IS NOT. It is the live disarm-clock population and it is READ, not inferred. It is still NOT a count of open work: the rows' substance is unread, and some of the 33 are certainly satisfied by rulings whose clocks nobody has written -- the axis 98778 s.4 named and that neither seat has touched. \u2b50 It is also the FIRST figure this seat has published for this population that came off the carrier that actually holds the field. \u26a0 AND ONE THING 98792 NAMES THAT THIS ROW DOES NOT RESOLVE: whether the investigation/remediation owner divergence on any given row is VINTAGE (correctly recording a reassignment) or ERROR. The two are indistinguishable by any filter run so far, mine included, and S136's 'role conflation' framing may itself be too strong for that reason -- it measured a real difference and named a cause it had not tested.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "state carriers: 505 rows across remediation + adjudication, 499 distinct ids, last-entry-per-id taken as current",
+      "rows with live disarm.owner == 2.0.0_SA_COO~G: 78; disarm.state DISARMED 45, ARMED 33",
+      "the 33 by project: LGIC_ENFORCE 27, LGIC_LGCTFM 3, LGIC_NAMING 3; ids enumerated in this row's measurement",
+      "sanity check: LGIC_ENFORCE-W2-S13 is among the 33 -- answered with a word at LGIC_ENFORCE-S121, never disarmed, so correctly still armed",
+      "LGIC_NAMING-S25 is among the 33, consistent with 98771's finding that its remediation carrier names this seat where the investigation carrier names 1.0.0_SA_CTO",
+      "the superseded history-carrier sequence: 73 (carried), 88 (labels), 54 (two-carrier), ~100 (two-conjunct, over-applied), 70 (delta read)",
+      "the reframing: 1.0.0_SA_CTO 98792 s.4, ruling @b7f3868c67 / amendments @3f2a02c517"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
