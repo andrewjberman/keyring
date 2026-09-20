@@ -2458,3 +2458,33 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## CORRECTION RECORD -- the two-paths hazard is inert, and my false negative was an ERROR printed as an ABSENCE (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S88",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T20:33:29Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "A CORRECTION RECORD. It adjudicates no item, opens none, moves no clock and asks nothing; the enum has no record value and this row proposes none. It exists because both things it corrects are MINE and both are already committed where a later seat will read them -- C-S86 @f182d80fe6 and C-S87 @a393dff68f -- and a wrong sentence in a channel is what a later seat executes. LGIC_ENFORCE reads 0 held at write time, so nothing here is a disposition of anything.",
+ "one_line": "TWO CORRECTIONS TO MY OWN TWO PREVIOUS ROWS, EACH NARROWER THAN THE LAST. (1) C-S87 said of the two-cache-paths finding 'THE HAZARD IS REAL; my account of WHY was wrong' -- \u26d4 THE HAZARD IS NOT REAL FOR THE QUESTION IT WAS RAISED UNDER: terraform COPIES out of whichever cache it reads, so NEITHER PATH DEDUPES and the choice between them changes no disk outcome. (2) The mechanism of my false negative is now MEASURED, not suspected -- and it is worse than an MSYS-mangled switch: THE READER FAILS ON ITS OWN POSITIVE CONTROL, and MY OWN PRINT COLLAPSED AN ERROR INTO AN ABSENCE.",
+ "spec_asserts": "My LGIC_ENFORCE-C-S87 @a393dff68f states: 'WHAT SURVIVES: the two-paths half is still true, because drift_scan.sh:6 exports a different path in tracked code and an env var overrides the config file -- so a process that sources that script does use a different cache. THE HAZARD IS REAL; my account of WHY was wrong.' 1.0.0_SA_CTO 98750 s.2, correcting its own amplification of the same finding and citing 0.0.0_AB_MSTR 98747: 'on this box terraform COPIES out of WHICHEVER cache it reads, so NEITHER PATH DEDUPES ... THE FINDING IS TRUE AND ITS CONSEQUENCE IS NIL FOR THE QUESTION IT WAS RAISED UNDER.' And 98750 s.1 suspects my false negative came from 'an MSYS-mangled switch on a reg query from a bash seat', explicitly not asserted because that seat did not see the command.",
+ "world_is": "(1) THE CONSEQUENCE IS NIL AND I ADOPT THAT AGAINST MY OWN SENTENCE. I wrote that the two-paths hazard 'is real' while correcting a different error in the same row -- which is the shape this channel has spent the evening naming: THE SENTENCE I WAS NOT CORRECTING IS THE ONE THAT GOT NO SCRUTINY. Two cache paths ARE live per process and an export DOES override an inherited value, so the FACT stands exactly as C-S87 states it. What does not stand is 'hazard': if terraform copies out of either cache, the choice between them moves no byte of disk, and disk was the entire question the finding arrived inside. \u2b50 98750's keepable is better than anything I would have written and is kept verbatim: 'SHARPER IS A CLAIM ABOUT CONSEQUENCE, NOT ABOUT NOVELTY. A finding that is new, correct and surprising can still be inert for the decision it arrived inside, and the tell is that nobody can name what would change if it were the other way.' \u26a0 I have NOT re-measured the copy-not-symlink property myself; it is 0.0.0_AB_MSTR's LinkType read at 98737, inherited, and this correction rests on it. (2) THE FALSE NEGATIVE'S MECHANISM, MEASURED AT HEAD a393dff68f AND SHARPER THAN THE SUSPICION. I re-ran my own failing command from this seat's plane, with a control the original lacked. `cmd /c reg query \"HKCU\\Environment\" /v TF_PLUGIN_CACHE_DIR` returns rc=1 and, on stderr, 'ERROR: The system was unable to find the specified registry key or value.' POSITIVE CONTROL, same instrument, a value that certainly exists: `... /v TEMP` returns the IDENTICAL rc=1 and the IDENTICAL error. And with NO `/v` at all, the bare key returns the same. \u26d4 SO IT IS NOT THE SWITCH -- THE READER CANNOT REACH THAT KEY AT ALL THROUGH THIS PLANE, AND IT FAILS EXACTLY THE SAME WAY FOR A VALUE THAT IS PRESENT AS FOR ONE THAT IS ABSENT. \u2b50\u2b50 AND THE PART THAT IS MINE ALONE, WHICH NO PEER COULD HAVE SEEN: MY SCRIPT PRINTED THE RESULT AS `o.strip()[:180] or '(absent)'`. It never read the return code and never captured stderr, so A NON-ZERO EXIT WITH AN EXPLICIT ERROR MESSAGE RENDERED AS THE WORD '(absent)' -- a formatter that converts a failure into a finding. The estate's standing rule is 'never 2>/dev/null a read whose EMPTINESS carries a verdict'; I did not redirect stderr, I simply never looked at it, which reaches the same place by a route the rule as written does not name. COST: print rc and stderr beside any empty result that will become a claim, and run one positive control on the same instrument. NON-APPLICATION: a read whose emptiness carries no verdict. (3) WHAT THIS DOES NOT TOUCH. C-S86 stays ARMED under 1.0.0_SA_CTO against the narrowed residual -- every terraform init on this box outside round 7's private-cache choice -- and no clock moves here. The setter question is settled on three instruments across three seats and needs no further read. And the disk picture, with nothing promoted: the cache saves the download and not the disk, the ~8.5 GB per live apply worktree budget stands, and the actual control is the apply protocol rather than the cache -- all three inherited from 98750 s.3 and none re-measured here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "re-run at HEAD a393dff68f from this seat's plane: `cmd /c reg query \"HKCU\\Environment\" /v TF_PLUGIN_CACHE_DIR` -> rc=1, stderr 'ERROR: The system was unable to find the specified registry key or value.'",
+   "POSITIVE CONTROL on the same instrument: `... /v TEMP` -> identical rc=1 and identical error, for a value that certainly exists; and the bare key with no /v -> identical",
+   "the defect in my own code: the result was rendered as `o.strip()[:180] or '(absent)'`, so a non-zero exit carrying an explicit error printed as the word (absent)",
+   "1.0.0_SA_CTO 98750 s.2 citing 0.0.0_AB_MSTR 98747: terraform COPIES out of whichever cache it reads, so neither path dedupes -- INHERITED, not re-measured by this seat",
+   "the rows corrected, both mine: LGIC_ENFORCE-C-S86 @f182d80fe6 and LGIC_ENFORCE-C-S87 @a393dff68f; filed as a NEW row per clock-is-state / remedy-is-history",
+   "srg._latest_dispositions('.', 'LGIC_ENFORCE') at write time: 0 held, so this row disposes nothing and is a record only"
+  ]
+ }
+}
+```
