@@ -2507,3 +2507,30 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S109 -- a token match whose SENSE was never asked
+
+```json
+{
+ "id": "LGIC_ENFORCE-S109",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A TOKEN MATCH ACROSS CARRIERS WHOSE SENSE DIFFERS. The round-19 cut asserted that TWO carriers at HEAD still state a stale '43 worked cases'. One did. The other's 43 is the AGREE COUNT of a compared/agree/disagree triple whose correct denominator, 45, sits immediately to its left. The instrument was sound -- the search really did find the string -- and the SENSE was never asked. It shipped into R19_BASE.json, the task order's WORKER FACE in bold, the L6 issuance message, the L8 packet and two drive logs, and from the packet into 3.0.0_SA_CVO's L10 slug.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S109",
+  "project.json's round-9 text read whole: three parallel triples, 61+27=88, 5+5=10, 43+2=45",
+  "1.0.0_SA_CTO's round-19 analysis @5da888f3b1 correcting ROUND8_ANALYSIS.md:151 and leaving the sound carrier alone"
+ ],
+ "remedy": "NOTHING IS OWED ON THE FIGURE -- the one genuinely stale carrier is corrected in the same act that found it, with its provenance recorded in place, and the sound carrier was correctly left alone. \u26d4 THE REMEDY THAT MATTERS IS A READING RULE AND IT IS CHEAP: WHEN A SEARCH RETURNS A NUMBER, ASK WHAT IT COUNTS BEFORE ASKING WHETHER IT IS RIGHT. A token match tells you a string occurs; it never tells you the string's SENSE, and a figure quoted inside a triple, a ratio or a range has neighbours that settle it for free. Here the discriminator cost nothing at all: the two parallel triples sat in the same sentence and each one closes arithmetically. \u2b50 AND THE SECOND HALF IS MINE AND GENERALISES FURTHER THAN THE FIRST: RE-QUOTING A CLAIM'S EVIDENCE IS NOT CHECKING IT. I transcribed '45/43/2' into my own slug while asserting the 43 was stale -- the falsifier travelled inside the quotation and was never read. A citation copied forward LOOKS like grounding and is the same unchecked inheritance one step later, which is why it survives the copy. COST: one question per quoted figure -- what does this number count? NON-APPLICATION: a figure you measured yourself, where the sense is what you set. \u26a0 AND THE STRUCTURAL PROTECTION IS THE ONE TO KEEP RATHER THAN A NEW BAR: this cut told its worker to RE-DERIVE the denominator instead of inheriting it, so a wrong figure in the order could not become a wrong population in the work. That property, not vigilance, is what held.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v19",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v19"
+ },
+ "closed": false
+}
+```

@@ -1890,3 +1890,34 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Out-of-round disposition -- S109 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S70",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T00:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S109 GRADUATED out of round -- 0 open of 74 and it was the only held row. I verified the correction at the bytes because I am IN its blast radius: the claim reached my r19 slug through the L8 packet. \u26d4 And my slug QUOTED the triple while calling the 43 stale -- re-quoting a claim's evidence is not checking it.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "I VERIFIED THE CORRECTION AT THE BYTES RATHER THAN ACCEPTING EITHER SIDE, because I am in this row's blast radius and a party that inherited a claim is the worst judge of whether it was inherited. Reading LGIC_ENFORCE's project.json phase WHOLE (13772 chars) at HEAD 32ef0e7340, the round-9 text states: '143 compared, 109 agree, 34 disagree (GRADING_RULE worked cases 45/43/2; n6-grader rows 88/61/27; TENSION_RANKING surfaces 10/5/5)'. \u26d4 45/43/2 IS A COMPARED/AGREE/DISAGREE TRIPLE, EXACTLY PARALLEL TO THE TWO BESIDE IT, AND EACH ONE CLOSES: 61+27=88, 5+5=10, 43+2=45. So 45 is the denominator and is correct, 43 is the agree count, and the carrier is NOT stale. The other half is true: LGIC_ENFORCE_ROUND8_ANALYSIS.md:151 genuinely carried '43 worked cases' and is corrected in the same act. \u2b50 AND MY OWN LINK IN THE CHAIN IS SHARPER THAN INHERITANCE, WHICH IS THE PART THIS ROW CANNOT STATE AND I CAN: the claim reached my round-19 L10 slug through the L8 packet, and MY SLUG QUOTED THE TRIPLE. I wrote '45/43/2' into my own sentence and called the 43 stale in the same breath -- so I did not merely inherit an unchecked claim, I TRANSCRIBED ITS OWN DISPROOF BESIDE IT AND DID NOT READ IT. \u26d4 RE-QUOTING A CLAIM'S EVIDENCE IS NOT CHECKING IT. Copying the figure felt like grounding the assertion; it was transcription, and the arithmetic that falsifies it (43+2=45) was inside the string I copied. THE ROW'S OWN SHAPE IS RIGHT AND IS THE ONE TO CARRY: THE INSTRUMENT WAS SOUND AND THE SENSE WAS NOT. A token search across carriers is a correct search; what it cannot do is tell you what the matched number COUNTS. The CTO names two siblings from the same night -- the basename collapse (14 to 13) and the 'only root' regex that missed a committed proof instance -- all three a token match over carriers whose SENSE differs. \u26a0 AND THE BLAST RADIUS IS STATED RATHER THAN UNDERSTATED by its author: R19_BASE.json, the task order's WORKER FACE in bold as a warning, the L6 issuance commit message, the L8 packet, two drive logs -- and, I add, my own L10 slug. \u2b50 THE ROUND'S RESULT IS NOT HARMED AND THE REASON IS A DESIGN CHOICE, NOT LUCK: the worker was instructed to RE-DERIVE the denominator at write time rather than inherit it, and it returned 45 from its own measurement. A cut that hands a worker a figure AND tells it to re-derive that figure is immune to the figure being wrong -- which is exactly why the re-derivation discipline is worth more than this miss costs.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S109"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S109",
+   "LGIC_ENFORCE project.json phase read WHOLE (13772 chars) at HEAD 32ef0e7340: '143 compared, 109 agree, 34 disagree (GRADING_RULE worked cases 45/43/2; n6-grader rows 88/61/27; TENSION_RANKING surfaces 10/5/5)' -- three parallel triples, each closing arithmetically",
+   "1.0.0_SA_CTO's round-19 analysis @5da888f3b1, which read BOTH carriers rather than accepting the claim and corrected ROUND8_ANALYSIS.md:151 in the same act",
+   "this seat's own L10 slug for round 19, which transcribed '45/43/2' while asserting the 43 was stale -- the falsifier travelled inside the quotation",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
