@@ -7196,3 +7196,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "NOT A REQUEST TO RE-OPEN ANY GRADED ARM, and this row does not assert that any entitlement gap is UNenforced -- it asserts that the estate currently holds NO EVIDENCE either way on this route, which is a different and weaker claim than the controls have been reporting. The remedy is not a better control: it is S100. DISARM CONDITION, measurable and inherited rather than invented: when S100 disarms, re-run any one holdings negative control TOGETHER WITH a permitted-account request and require the two codes to DIFFER; that pair is the discrimination the control has been missing. Until then, a holdings refusal may be recorded but must not be cited as proof that a scope boundary was enforced. GENERAL FORM, offered for the round analysis and not filed as a second row: a negative control is only evidence when the POSITIVE case is exercised beside it on the same instrument in the same run -- otherwise a globally-broken route manufactures PASSes for every control pointed at it."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W2-S60",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+  "surfaced_at": "2026-09-20T16:05:00Z",
+  "one_line": "irpt-status's OWN lambda-source-map.json note claims artifact_sha256 EQUALS the live CodeSha256, but MEASURED this turn the two disagree: the field this order found at HEAD before its own edit does not match the live function's CodeSha256, nor the S3 object version that DOES match it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status.note (pre-edit, HEAD @764b4a83d2's parent 8ba74b3130): \"artifact_sha256 is DELIBERATELY NOT MOVED: it equals the S3 object and the live CodeSha256, and this order deploys nothing under the managed wind-down.\" The field's own value at that HEAD was artifact_sha256=xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=.",
+  "world_is": "aws lambda get-function --function-name irpt-status (this turn) reads CodeSha256=O3TyGqfqjiwZP9OSXmryonnAst+SbYMLzyuSGphOyCE=, LastModified=2026-09-19T17:16:34Z -- NOT xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=. The live value is instead found at S3 object version z8VnRXEPFTioTwjwWlR_TCCQYiqU6mmV (uploaded 2026-09-19T15:58:00Z), whose Metadata.content-sha256 matches CodeSha256 exactly. The claimed-equal value (xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=) was not found on any of the ~20 most recent object versions sampled (2026-09-11 through 2026-09-20). So between the IB-rt-9 wind-down note being written and this turn, the function was rebuilt and re-applied at least once (2026-09-19T15:58-17:16Z) without the note's own claim being re-verified or updated -- a DESIRED-plane sentence (the note) silently outliving the APPLIED-plane fact it asserted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function --function-name irpt-status --query Configuration.{CodeSha256,LastModified} (this turn, 2026-09-20): CodeSha256=O3TyGqfqjiwZP9OSXmryonnAst+SbYMLzyuSGphOyCE=, LastModified=2026-09-19T17:16:34.000+0000",
+      "git show 8ba74b3130:infra/aws/lambda/ci/lambda-source-map.json -- functions.irpt-status.artifact_sha256 = xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=, functions.irpt-status.note quoted in spec_asserts",
+      "aws s3api list-object-versions --bucket opal-313476888478-lambda-artifacts --prefix investor-reporting/irpt-status.zip (31 versions, this turn) + aws s3api head-object --version-id z8VnRXEPFTioTwjwWlR_TCCQYiqU6mmV -> Metadata.content-sha256=O3TyGqfqjiwZP9OSXmryonnAst+SbYMLzyuSGphOyCE= (exact match to CodeSha256, uploaded 2026-09-19T15:58:00Z, 15h18m before this row)",
+      "aws s3api head-object --version-id <each of the 8 versions clustered 2026-09-18T21:06-23:07Z> -> Metadata.content-sha256=fm7iq9IgZWvYjMvCyOpcw4VwO8f6eMLgMVU8Ki5PsGk= for all 8 -- none match xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s= either"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found incidentally while reading the PRIOR live CodeSha256 as this order's own K-CODE rollback source (NEVER_WIDEN_SIGNOFF_PACKET_IB-rtg-2.md) -- not this order's defect and not fixed here (never fix a neighbouring defect). This order's own packet uses the LIVE-MEASURED CodeSha256 and its matching S3 version directly, never the stale note, so this order's rollback citation is unaffected. Remedy, offered not assumed: whoever next rebuilds irpt-status should re-verify (or drop) the note's equality claim rather than propagate it; a `note`/`_note` field asserting DESIRED-plane equality with an APPLIED-plane fact needs the SAME re-verification-at-use discipline as any other value under CLAUDE.md's STATE axis (Rule 22), and nothing here re-checks it automatically."
+}
+```
