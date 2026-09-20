@@ -44,12 +44,29 @@ marked OPEN AT THE CTO and named -- that is not the same as a fork this draft ma
    `prepared`, `:904` `rendered`), and `:885` raises `LIMIT_EXCEEDED` **AFTER** `:872` has already
    materialised the set -- so an over-ceiling request pays the full memory cost and is THEN refused.
    ⚠ `S57` is a SOURCE READ, not a memory profile; it does not claim those three lines are the whole ratio.
-3. ⛔ **OPEN AT THE CTO, AND THIS DRAFT MAY NOT ANSWER IT:** is 250,000 rows / 50 MiB a CONSUMER REQUIREMENT
-   or an aspiration? R-OG-22 blocks any contract lowering on it, because **if a real consumer needs 250k rows,
-   lowering the contract relabels that consumer's problem instead of solving it** -- and streaming is then the
-   only member of the set that serves it. The L4 revision is the CTO's and is not cut.
-4. **If it is an aspiration**, the pair is stated **WITH MARGIN, never at the observed maximum** (the largest
-   completed run sat at 214065152 against a 268435456 cap), and it is **MEASURED, never interpolated** --
+3. ⛔ ~~**OPEN AT THE CTO:** is 250,000 a CONSUMER REQUIREMENT or an aspiration?~~ **RULED 2026-09-20 by
+   msg 98499 -- 250,000 IS AN AUTHORED ENGINEERING BOUND, NOT AN ELICITED CONSUMER REQUIREMENT**, and is to be
+   treated as one until a consumer record exists. Provenance: `git log --all -S'export_rows'` on the contract
+   returns ONE commit, `2af252cb39`, authored by **`1.0.0_SA_CTO~A`** -- a lane of the CTO's own serial, the
+   same lane ruled unseated earlier that day -- "Register D9 NFRA_OPLGTW and author its Gateway PRD", never
+   modified since. ⚠ **STATUS, NOT TRUTH:** absence of a record is not absence of a consumer; what flips is
+   the DEFAULT TREATMENT, not the fact.
+   ⭐⭐ **AND THAT PUTS A BRANCH ON THE TABLE THAT NOBODY HAS COSTED, INCLUDING R-OG-22 ITSELF.** R-OG-22
+   framed the set as "streaming is the only member that serves the requirement". **If the bound has no
+   consumer behind it, the cheapest remedy is NEITHER streaming NOR re-architecture -- it is LOWERING THE
+   BOUND to a figure the current in-memory path serves comfortably. A requirement must be met; an authored
+   bound can be RE-AUTHORED.**
+   ⛔ **THE NEW NUMBER IS NOT SET AND IS NOT THIS DRAFT'S TO SET.** The CTO carded it to Andrew on a
+   **MISSING-INPUT** basis, explicitly distinguished from a reserved class: the class is adjudicable (no
+   NEVER-class citation exists for an export ceiling), but a defensible ceiling needs one fact about real
+   consumers that **the repository has now been measured not to contain**.
+   ⭐ **AND `S59` MAKES THE FALLBACK CHEAP ENOUGH THAT THE DECISION IS LOW-STAKES EITHER WAY** -- if the
+   answer is "a consumer does need 250k", the streaming branch costs a producer change and no writer change.
+4. **ON THE RE-AUTHORING PATH** (now the live one per point 3), the pair is stated **WITH MARGIN, never at
+   the observed maximum** (the largest completed run sat at 214065152 against a 268435456 cap), and it is
+   **MEASURED, never interpolated** -- ⛔ **AND THE PRD MAY NOT BE CITED AS A CONSTRAINT ON THE PRODUCER**,
+   ratified by 98499 so nobody re-cites it: `NFRA_OPLGTW_PRD.md:181` constrains ORDER, not RESIDENCY, and
+   expects local export files to exist; it does not mandate the in-memory form --
    62,500 rows completing does NOT license "125,000 probably completes".
 
 **The two branches below are kept as the original text for provenance and are SUPERSEDED by the four points
