@@ -29,7 +29,8 @@ sanitized server correlation, plus ofid_ if supplied."*
 
 The two inputs, both required at HEAD before you are spawned:
 - **G-E** `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~A/G-E_PILOT_IDENTITY_AND_GRANT.md` -- Menachem's
-  verified `tid`/`oid`, the identity and data administrator's approved account/date/field grant, and the activation's
+  verified `tid`/`oid`, the identity and data administrator's approved account/date/field grant (⭐ **that administrator
+  is `0.7.0_AE_CloudOps`** -- Andrew-direct 2026-09-20 ~18:0xZ, same record as G-C, @`768e6df290`), and the activation's
   operator audit reference (owner `1.0.0_SA_CTO` -- re-assigned from `1.0.0_SA_CTO~A`, which is not seated,
   by CTO ruling msg 98451 @`a0e4748ac2`, carried here by the issuer under Rule 27; ⛔ the G-E PATH above is
   UNCHANGED and still reads `1.0.0_SA_CTO~A/` deliberately, for the same seal reason as G-C -- row S54;

@@ -37,6 +37,15 @@ The two inputs, both required at HEAD before you are spawned:
   issuer under Rule 27. ⛔ THE PATH ABOVE IS UNCHANGED AND STILL READS `1.0.0_SA_CTO~A/` DELIBERATELY:
   it is pinned by `SEALED_EXPECTED.json`'s pre-seal absence check at commit `15edf9f07b` and by
   `probes/og_v4.py:27` `GC_PATH`, so moving it would break the seal PHASE 1 exists to hold -- row S54).
+  ⭐ **AND THE EVIDENCE-SUPPLYING PARTY IS NOW ASSIGNED: `0.7.0_AE_CloudOps`** -- ANDREW-DIRECT
+  2026-09-20 ~18:0xZ, VERBATIM *"0.7.0_AE_CloudOps is the admin. Should be the default admin for all
+  testing tasks of cloud projects/workflows/resources."* (record
+  `org/tier1_exec/2.0.0_SA_COO/ANDREW_DIRECT_20260920_180xZ_O_IDENTITY_ADMIN_IS_CLOUDOPS_DEFAULT_FOR_CLOUD_TESTING.md`
+  @`768e6df290`). The decomposition's G-C owner column names TWO parties -- the CLOSING owner and
+  *"the identity administrator supplying the evidence"* -- and R-OG-26 measured that the PRD named
+  the second role and never assigned it. **It is assigned now.** ⛔ This does NOT change the closing
+  owner, does NOT move the path, and does NOT make G-C exist: it is still a person's act against the
+  live tenant, and Andrew's word was *"we will handle that shortly"*.
 - **G-D** `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/CONTROLLED_WALKTHROUGH_RECORD.md` -- the
   walkthrough record, in `OG-v-1`'s template.
 
