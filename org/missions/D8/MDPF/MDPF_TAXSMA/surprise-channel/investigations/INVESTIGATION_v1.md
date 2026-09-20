@@ -190,6 +190,28 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "Amended TXP1-AC10 admits AC7's one send-command only if its script makes 'no redirect or write to any path outside the SSM agent's own working directory'.",
     "world_is": "The script's only redirect to a path is '>/dev/null', which discards bytes and creates or modifies no file. /dev/null is still a path outside the agent's working directory, so the clause read literally is not met; read as 'the script only reads', it is. The worker's probe graded it as the null device, printed that reading in the evidence and filed this row rather than choosing silently. TXP1-AC10 prints PASS under that reading.",
     "notes": "OBSERVATION: whether the literal or the purposive reading binds belongs to the L9 adjudicator (3.0.0_SA_CVO) and the ruling's author (1.0.0_SA_CTO, 97255), not to the worker. If the literal reading is ruled, TXP1-AC10 is FAIL and TO-TX-p-1's complete flip is withdrawn; no new AWS act would change the recorded script. INERT: the redirect wrote nothing on the Gateway host."
+  },
+  {
+   "id": "MDPF_TAXSMA-S4",
+   "project": "MDPF_TAXSMA",
+   "fabric": "laptop",
+   "surfaced_by": "0.0.0_AB_MSTR",
+   "surfaced_at": "2026-09-20T19:25:00Z",
+   "one_line": "TX-g-1 was completed by its worker on 2026-09-15 and never drained: the order reads pending on origin/CLOUD and complete at f2cac74c60, whose three commits exist only in the worktree /c/tmp/wk-taxsma-1.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disposition": "UNDER_INVESTIGATION",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "GIT: `git rev-list f2cac74c60 --not origin/CLOUD origin/SITEZ` = 3 (6abf60e5d5, 8dce9aeb0b, f2cac74c60), run by 0.0.0_AB_MSTR from the shared checkout after a fetch of both branches, 2026-09-20 ~19:0xZ; origin/CLOUD @8c6f223092, origin/SITEZ @047aee5478.",
+     "BYTES: org/missions/D8/MDPF/MDPF_TAXSMA/task-orders/MDPF_TAXSMA.TO-TX-g-1.workbook-capability.md reads <status>pending on origin/CLOUD and <status>complete at f2cac74c60 -- 1.0.0_SA_CTO msg 98700, a second seat on a different read.",
+     "PACKET: org/tier0_exec/0.0.0_AB_MSTR/deliverables/CVO_REVIEW_PACKET_UNMERGED_WORKTREES_20260920.md@423d855bf7."
+    ]
+   },
+   "spec_asserts": "Spine L7-L8: a worker's completed cell reaches the shared branch by the issuer's drain, and the order's <status> on CLOUD is what every census reads as the project's open work.",
+   "world_is": "git rev-list f2cac74c60 --not origin/CLOUD origin/SITEZ returns 3: 6abf60e5d5 feat (GET /ms/taxsma-workbook capability, route, config keys, tests), 8dce9aeb0b fix, f2cac74c60 complete -- all 0.9.0_WK_MDPF_TAXSMA~1, 2026-09-15. The same order file reads <status>pending on origin/CLOUD and <status>complete at f2cac74c60 (1.0.0_SA_CTO msg 98700, read at the bytes). The worktree also holds 2 dirty paths, unread here. So the open-order census over-counts this project by one and the only copy of the cell is one directory on one disk that reached 0 bytes free on 2026-09-20.",
+   "notes": "PARKED with an owner and a condition because 2.0.0_SA_COO~T is not seated and mail to it would be a silent hole: OWNER the MDPF_TAXSMA issuer; UN-PARKS when that lane is next seated. Drain, re-cut or supersede is the issuer's call and is not decided here. The worktree is in 3.0.0_SA_CVO's review packet @423d855bf7 (LD-0595) and is NOT to be removed on any verdict short of the issuer's own word. Found by 0.0.0_AB_MSTR's /cleanup sweep; confirmed by 1.0.0_SA_CTO."
   }
 ]
 ```
