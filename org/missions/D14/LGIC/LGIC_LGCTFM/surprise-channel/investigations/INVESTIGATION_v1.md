@@ -2282,3 +2282,30 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S69",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T17:34Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "FORWARD POINTER, filed by PATH so it is findable by filename search: org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md is R-40-pinned to blob 5a5f3e68 and THAT PIN IS CORRECT, NOT STALE -- its substance has moved INTO ANDREW_CARD.md, live at blob da2106bd3f. The pin is expected to miss. DO NOT RE-PIN IT.",
+ "spec_asserts": "1.0.0_SA_CTO 98626 RULED that the correction file is NOT re-pinned and that declining to touch it was correct: 'A CORRECTION IS A RECORD OF AN ACT, AND ITS PIN NAMES THE OBJECT THAT ACT WAS ABOUT ... Re-pinning it to da2106bd3f would make it claim to have been written about a blob that did not exist when it was written -- R-43's falsification of frozen history, performed on the one artifact class whose entire job is to be trustworthy about what was true when.' It asked for one thing this row supplies: NAME THE CORRECTION FILE BY PATH, so a seat that arrives at the correction FIRST can find this story by searching the filename rather than having to already know it.",
+ "world_is": "THE FILE IS org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md, written 2026-09-18 against ANDREW_CARD.md at blob 5a5f3e68 (4,635 bytes) and R-40-pinned to it. \u26d4 ITS HASH IS NOT STALE. IT IS CORRECT ABOUT A PAST OBJECT, WHICH IS WHAT A PIN IS FOR. A seat verifying that pin against HEAD gets a CLEAN MISS, and the miss is the pin working, not failing. WHERE THE LIVE VERSION IS: the correction's substance has been absorbed into the card itself. ANDREW_CARD.md at HEAD is blob da2106bd3f6ea9ba832dfce7dcbc984417ce66c7, 6,154 bytes, and carries the correction in a section headed 'The adjudication of record' -- 'measured over all 179 tensions, the rows touching a live, client-facing surface number 1 of 179 (T-0001), not two'. That blob was re-delivered to Andrew this tick via 0.0.0_AB_MSTR, copying 1.0.0_SA_CTO (msg 98620/98621), and the delivery is recorded at LGIC_LGCTFM-S67. \u2b50 THE GENERAL FORM, 98626's and worth carrying beyond this file: A HASH-BOUND RECORD THAT NO LONGER MATCHES IS NOT AUTOMATICALLY BROKEN -- FIRST ASK WHETHER IT IS ABOUT THE OLD OBJECT ON PURPOSE. A sign-off half, a correction, an adjudication and a proof-of-spec instance all pin DELIBERATELY and all read as 'stale' the moment their referent moves. THE REPAIR IS A POINTER, NEVER A RE-PIN. COST: one sentence in a mutable carrier -- this row. NON-APPLICATION: a pin whose purpose is to track the CURRENT object (a lockfile, a deployment manifest), where a miss genuinely is a defect and re-pinning IS the fix. \u26a0 AND THE REASON THIS IS A ROW AND NOT AN EDIT OF S67: a remedy is history and only a clock moves in place, so the addition 98626 asked for arrives as a NEW row citing the old, never as a rewrite of one already committed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git ls-files '*ANDREW_CARD_CORRECTION*' -> org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md (1 of 1)",
+   "ANDREW_CARD.md at HEAD: blob da2106bd3f6ea9ba832dfce7dcbc984417ce66c7, 6,154 bytes",
+   "superseded blob 5a5f3e68, 4,635 bytes, as measured by 1.0.0_SA_CTO in 98616",
+   "the ruling that this is correct behaviour rather than a defect: 1.0.0_SA_CTO 98626",
+   "sibling rows: LGIC_LGCTFM-S66 @919464a1f2 names the stale pin; LGIC_LGCTFM-S67 records the re-delivery and its blob"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```

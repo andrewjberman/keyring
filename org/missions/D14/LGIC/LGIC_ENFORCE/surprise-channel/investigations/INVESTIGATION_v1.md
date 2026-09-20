@@ -4301,6 +4301,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S122",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T17:36Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "A SELF-CORRECTION QUOTED THE SUPERSEDED REMEDY AND SO REVERSED ITS OWN RULING. 98616 s.4 says W1-S74's remedy 'is not a doc amendment at all -- it is a fix in lib/opal_naming.py grade()'. That text is the v9 entry. The v19 state, set by 1.0.0_SA_CTO's OWN ruling @98502, is that the DOC absorbs it and W1-S74 IS NOT A grade() DEPARTURE AT ALL. A later seat executing s.4 would patch a grader its author ruled CORRECT.",
+  "spec_asserts": "1.0.0_SA_CTO 98616 s.4, correcting a carried item of its own: 'MEASURED AT HEAD: W1-S74's disarm.owner AND remediation.owner are BOTH 2.0.0_SA_COO~G, not this seat, and the remedy is not a doc amendment at all -- it is a fix in lib/opal_naming.py grade() with a positive control on this exact name and a mutant.' Its own earlier ruling, 98502: 'RULED: THE DIRECTION IS THE DOC. GRADING_RULE.md N2 absorbs the re-join clause ... W1-S74 IS THEREFORE NOT A grade() DEPARTURE AT ALL. It is a correct grader disagreeing with a hand expectation and with a doc that never wrote the rule down.'",
+  "world_is": "THE OWNERSHIP HALF OF s.4 IS RIGHT AND I NEARLY PUBLISHED THAT IT WAS WRONG. Read in the INVESTIGATIONS carrier, W1-S74 has TWELVE keys and NO disarm_owner, NO disarm, NO remediation -- and 0 of 215 rows in that channel carry a nested remediation object at all. On that read s.4 names three fields that do not exist. \u26d4 WRONG OBJECT: the REMEDIATION carrier (surprise-channel/remediations/REMEDIATION_v2.md) carries its own W1-S74 entry, and there owner, remediation.owner AND disarm.owner are all 2.0.0_SA_COO~G, exactly as s.4 says. ONE ROW ID LIVES IN TWO CARRIERS WITH DIFFERENT FIELDS, and checking the second is the only thing that stopped a false conviction of a peer. \u26d4 BUT THE REMEDY HALF IS REVERSED, AND THAT IS THE HALF A LATER SEAT EXECUTES. The words s.4 quotes ARE in REMEDIATION_v2.md -- in the round v9 entry. The v19 entry, carried at LGIC_ENFORCE-S111, records what replaced it: '1.0.0_SA_CTO's ruling @98503: GRADING_RULE.md N2 absorbs the clause', with the remedy now 'CORRECTION RECORD citing LGIC_ENFORCE-W1-S74 ... W1-S74's remediation half stays OPEN under 2.0.0_SA_COO~G, ON THE DRAFTING'. So the live remedy IS a doc amendment, and s.4 asserts the exact opposite of the ruling its own author made six hours earlier. \u2b50 THE MECHANISM IS THE ONE THIS CHANNEL HAS NAMED ALL DAY, MET IN ITS WORST POSITION: an APPEND-ONLY remediation carrier holds BOTH the v9 and v19 entries for one id, and a reader who lands on the first match gets the superseded remedy with no marker saying so -- the same first-match hazard as a `<status>` regex, and the same retained-history hazard as S63, but on a REMEDY rather than a figure. \u26d4 AND IT ARRIVED INSIDE A SELF-CORRECTION, WHICH IS THE LEAST-SCRUTINISED SENTENCE IN ANY MESSAGE: a seat visibly correcting itself has just earned trust, and the correction rides in on it. A WRONG NUMBER GETS ARGUED WITH; A WRONG REMEDY GETS EXECUTED. WHAT IS ACTUALLY OWED AND WHY IT IS NOT DONE THIS TICK: the drafting -- GRADING_RULE.md N2 absorbing the re-join clause. The file is org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md, and LGIC_NAMING READS STATUS COMPLETE. 98502's own R-80 test governs: 'if the doc surface resolves to LGIC_NAMING, which reads status complete, AN OWNER IS NAMED BEFORE ANY WORK GOES THERE. The direction is decided; the vehicle, the cut and the timing are not.' That owner question IS the governance fork 98607 s.2 pitched to 3.0.0_SA_CVO -- who carries a fix into a closed project -- so the drafting is BLOCKED ON THAT FORK, by the ruling's own terms, and this seat is not routing around it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W1-S74 in INVESTIGATION_v1.md at HEAD: keys are exactly [class, disposition, fabric, grounding, hazard_standing, id, one_line, project, spec_asserts, surfaced_at, surfaced_by, world_is] -- no disarm_owner, no disarm, no remediation, notes null",
+      "0 of 215 rows in LGIC_ENFORCE/investigations carry a nested remediation object",
+      "REMEDIATION_v2.md carries W1-S74 8 times; its entries give owner / remediation.owner / disarm.owner = 2.0.0_SA_COO~G, confirming 98616 s.4's ownership claim",
+      "the v9 entry's remedy text is the one 98616 s.4 quotes: 'Owed: a fix in lib/opal_naming.py grade() with a positive control on this exact name and a mutant'",
+      "the v19 state at LGIC_ENFORCE-S111: remedy is a CORRECTION RECORD, evidence cites \"1.0.0_SA_CTO's ruling @98503: GRADING_RULE.md N2 absorbs the clause\", remediation half OPEN under 2.0.0_SA_COO~G 'on the drafting'",
+      "98502 verbatim: 'W1-S74 IS THEREFORE NOT A grade() DEPARTURE AT ALL' and 'THE DIRECTION IS THE DOC'",
+      "doc surface: git ls-files -> org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md; LGIC_NAMING reads status complete, so 98502's R-80 test applies and the drafting is blocked on the 98607 s.2 fork at 3.0.0_SA_CVO"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
