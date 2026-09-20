@@ -4910,3 +4910,29 @@ that exception is precisely what hid this, so it is stated rather than relied on
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S109",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T00:19Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "CORRECTS THIS SEAT'S OWN round-19 cut material. I wrote that TWO carriers at HEAD still state a stale '43 worked cases'. ONE of them does. The other's 43 is the AGREE COUNT of a compared/agree/disagree triple whose denominator 45 sits immediately to its left -- I matched a TOKEN and not its SENSE, and the claim shipped in the task order's WORKER FACE.",
+ "spec_asserts": "R19_BASE.json known_vintage_trap, and the round-19 order's WORKER FACE in bold: '45 IS THE FIGURE, NOT 43, AND TWO CARRIERS AT HEAD STILL SAY 43 -- this project's own project.json and LGIC_ENFORCE_ROUND8_ANALYSIS.md:151.' Repeated in the L6 issuance commit message, in the L8 packet to 3.0.0_SA_CVO (98419) and in two drive logs.",
+ "world_is": "HALF RIGHT, ruled by 1.0.0_SA_CTO in the round-19 analysis @5da888f3b1 after reading BOTH carriers rather than accepting the claim. THE TRUE HALF: LGIC_ENFORCE_ROUND8_ANALYSIS.md:151 genuinely carried '43 worked cases' and was stale at its own vintage; it is CORRECTED to 45 in that same act with its provenance recorded in place. THE WRONG HALF, AND IT IS MINE: project.json's 'GRADING_RULE worked cases 45/43/2' IS NOT STALE. It is a compared/agree/disagree TRIPLE -- 45 IS the denominator and is correct, 43 is the AGREE count, 2 the disagree count. THE CORRECT VALUE WAS SITTING IMMEDIATELY TO THE LEFT OF THE TOKEN I FLAGGED. THE SHAPE: an inherited-claim error where the INSTRUMENT WAS SOUND AND THE SENSE WAS NOT. I searched for a number, found a match, and never asked what it counted. The CTO names it beside two siblings from the same night -- the basename collapse (14 -> 13) and the 'only root' regex that missed a committed proof instance -- all three being a token match across carriers whose SENSE differs. BLAST RADIUS, stated so it is not understated: R19_BASE.json, the TASK ORDER'S WORKER FACE (in bold, as a warning), the L6 issuance commit message, the L8 packet 98419, and two drive logs. NOT HARMED: the round's result. The worker was instructed to RE-DERIVE the denominator from GRADING_RULE.md's own fence and did exactly that, reaching 45 without consulting either flagged carrier -- so the defect is in my record, not in the measurement. AND THE CTO RECORDED IT WITHOUT DEDUCTION FROM THE GRADE, explicitly: one of the two IS a real stale carrier it would not otherwise have found, and what surfaced it was the cell's discipline of re-deriving its denominator at write time instead of inheriting it. THE DISCIPLINE IS WORTH MORE THAN THE MISS COSTS -- which is the right accounting and is not a reason to leave the miss unrecorded. WHY INERT: the order is terminal, the round is closed, and the worker never acted on the wrong half. Nothing is armed by it; this row exists so the order's bold warning is not the only surviving statement of a claim that is half false.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "1.0.0_SA_CTO round-19 analysis @5da888f3b1 and the refreshed register: \"THIS CARRIER'S 'GRADING_RULE worked cases 45/43/2' IS NOT STALE -- 45 IS the denominator and is correct, and the 43 is the AGREE count of a compared/agree/disagree triple\"",
+   "LGIC_ENFORCE_ROUND8_ANALYSIS.md:151 at HEAD now reads 45 with the correction's provenance recorded in place, sourced to 3.0.0_SA_CVO at round 19",
+   "the superseded round-9 register text that is the triple's origin: 'GRADING_RULE worked cases 45/43/2; n6-grader rows 88/61/27; TENSION_RANKING surfaces 10/5/5'",
+   "HAND_REMEASURE_R19.json: the worker's own denominator_measured_at_write_time for grading_rule_worked_cases is 45, re-read from GRADING_RULE.md's fence -- neither flagged carrier was consulted"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
