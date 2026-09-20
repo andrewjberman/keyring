@@ -4661,6 +4661,34 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S142",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T22:52Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "THE REGISTER'S 'TWO REAL grade() DEPARTURES CARRIED IN A PRODUCTION BUILDER' IS ONE, NOT TWO. W1-S73 IS REPAIRED AT HEAD and verified correct on a four-arm control set; W1-S74 IS LIVE and its controls settle the ruling it says is owed -- the CODE is coherent and the WRITTEN RULE is the incomplete half.",
+  "spec_asserts": "project.json `blocking` (tail, AMENDED 2026-09-20 ~14:3xZ by 1.0.0_SA_CTO) lists what ROUND 10 OWES, item (3): 'W1-S73 and W1-S74 -- two real grade() departures carried INERT/OPEN in a PRODUCTION BUILDER.' Both rows carry `disarm_owner: null`, so no seat holds a clock on either, and INERT is UNVERIFIED rather than dormant. 1.0.0_SA_CTO 98798 s.4 sets the cost of checking: one read -- here one EXERCISE -- of the named object.",
+  "world_is": "EXERCISED `lib.opal_naming.grade()` AT HEAD (80b70adfbb) ON BOTH ROWS' OWN SUBJECTS. THE TWO SPLIT. \u2b50 **W1-S73 IS REPAIRED, AND CORRECTLY.** The row says grade() 'keeps the refused token bd' and returns a canonical form the hand grader (n6) disagrees with. At HEAD, `grade('opal-cot-bd-session-fetch','SSM_DOCUMENT')` returns `('OUT-OF-PATTERN','opal-cot-blackdiamond-session-fetch-document')` -- **the hand grader's exact answer**, and the one the row quotes GRADING_RULE.md R3 as requiring. Code, hand grader and written rule now agree on all three. FOUR-ARM CONTROL SET, each arm able to come back the other way: `opal-cot-bd-...` -> blackdiamond (the row's case, fixed); `opal-inf-bd-...` -> blackdiamond (bd beside a DIFFERENT firm token, same vendor reading); `opal-bd-session-fetch` -> **49f**, NOT blackdiamond (bd in the SYSTEM slot resolves as the firm, so the alias is SLOT-SENSITIVE exactly as R3's 'bd NEXT TO a firm token is the vendor' says); and `opal-cot-session-fetch` -> unchanged (no spurious insertion). \u26d4 The third arm is the one that matters: a blanket bd->blackdiamond alias would have been a NEW defect wearing this row's fix, and it is what a two-arm check would have certified. \u26d4 **W1-S74 IS LIVE, UNCHANGED, AND ITS CONTROLS SETTLE THE OPEN RULING.** `grade('ExecIncrParityFailure',...)` returns `{system}-exec-incrparity-failure-document` -- the RE-JOINED form -- where written N2 (GRADING_RULE.md :106-108, 'Split before each capital that follows a lowercase letter or a digit ...', with no re-join clause at HEAD) gives `exec-incr-parity-failure`. The row asks which side is authoritative and says it is a ruling, not its cell's. \u2b50 THE CONTROLS ANSWER IT: `IncrParity` alone -> `incrparity` (re-joined in isolation, so the behaviour is not context-dependent on Exec/Failure), while `ExecParityFailure` -> `exec-parity-failure` (**NOT** re-joined). So the re-join fires exactly when adjacent camel pieces concatenate to a REGISTERED token and not otherwise. And the fourth arm RAISED, which is the decisive evidence: `ParityIncrExec` -> `RaiseDefect: R1.f: 'parity' is in no vocabulary; no registry row resolves it`. **`parity` is not a vocabulary word and `incrparity` is -- so the re-join is not a bug, it is what keeps grade() from raising on a name the registry can resolve.** \u2b50 THE CODE IS COHERENT AND THE WRITTEN RULE IS THE INCOMPLETE HALF. The remedy is a clause added to N2, NOT a patch to the grader -- which is the direction `EN-n-2`'s prepared checker already encodes (`doc-clause` RED at the cut, `code-frozen` GREEN as a REFUSAL arm against a worker inheriting the superseded v9 remedy and patching a grader the CTO ruled CORRECT). That cell stays PREPARED-NOT-ISSUED on its disk condition; this row does not un-park it, it supplies the measurement the cell was cut to rest on. \u26d4 **AND THE REGISTER OVERSTATES THE REMAINING WORK BY ONE ITEM, IN THE SAME DIRECTION AS S141's W1-S66.** A seat sizing round 10 from `blocking` item (3) would seat work for a defect that is already repaired -- and would do it while reading a field a Tier-1 seat amended today. \u2b50 THE PATTERN ACROSS S141 AND THIS ROW IS ONE THING SAID TWICE: **A ROW AND A REGISTER FIELD ARE BOTH RECORDS OF WHEN SOMEONE LAST LOOKED, AND NEITHER IS A READ OF THE WORLD.** Of the five items I have now exercised at 98798's cost -- S55, W1-S67, W1-S66, W1-S73, W1-S74 -- **two were stale in the record's favour** (S55's first-order half, W1-S73 entirely) and **one had a stale figure whose remedy would have corrected a correct path** (W1-S66). COST: one exercise each. NON-APPLICATION: a row whose subject is not runnable. \u26a0 NOTHING IS DISPOSED. W1-S73 and W1-S74 carry `disarm_owner: null` and this seat does not self-appoint to a clock it was not given; the disposition of both, and the N2 ruling W1-S74 needs, are 1.0.0_SA_CTO's. This row is the measurement, sent with a recommendation and not a decision.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "exercised at HEAD 80b70adfbb: lib/opal_naming.py grade() at :1548, signature (name, type)",
+      "W1-S73: grade('opal-cot-bd-session-fetch','SSM_DOCUMENT') == ('OUT-OF-PATTERN','opal-cot-blackdiamond-session-fetch-document') -- the hand grader n6's form the row cites as the discrepancy",
+      "W1-S73 controls: opal-inf-bd-... -> blackdiamond; opal-bd-session-fetch -> 49f (slot-sensitive, NOT a blanket alias); opal-cot-session-fetch -> unchanged",
+      "W1-S74: grade('ExecIncrParityFailure','SSM_DOCUMENT') == ('OUT-OF-PATTERN','{system}-exec-incrparity-failure-document') -- re-joined, unchanged from the row",
+      "W1-S74 controls: IncrParity -> incrparity (re-joins in isolation); ExecParityFailure -> exec-parity-failure (does NOT re-join)",
+      "W1-S74 decisive raise: grade('ParityIncrExec',...) raises RaiseDefect at opal_naming.py:1202 'R1.f: parity is in no vocabulary; no registry row resolves it'",
+      "written N2 at HEAD: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md:106-108, no re-join clause",
+      "the register claim under test: LGIC_ENFORCE project.json `blocking` tail, ROUND 10 OWES item (3)",
+      "both rows' disarm_owner field: null, read from the investigation carrier"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
