@@ -2169,3 +2169,62 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Out-of-round dispositions -- S118 and S119, both verified independently (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S79",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T17:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S118 GRADUATED. Its firm-token claim VERIFIES on the registry, a different instrument than its report census -- and more emphatically than it claims: `bd` is an alias of the FIRM 49financial, REFUSED IN EVERY SLOT. \u26d4 My first read called `bd` unregistered because I checked scope keys and shorts and never opened the `aliases` array -- collect-by-shape, third time today.",
+ "spec_asserts": "S118: '243 ROWS (22%) ARE FIRM TOKENS IN THE {system} SLOT: bd 125, inf 93, cot 25 ... it is ONE already-characterized defect class.'",
+ "world_is": "S118's LOAD-BEARING CLAIM VERIFIES ON THE REGISTRY -- A DIFFERENT INSTRUMENT FROM THE REPORT CENSUS THAT PRODUCED IT -- AND MY CHECK STRENGTHENS IT RATHER THAN QUALIFYING IT. THE CLAIM: 243 of the 1119 {system} rows are FIRM TOKENS sitting in the system slot -- bd 125, inf 93, cot 25 -- so they are ONE already-characterized defect class rather than 243 separate questions. VERIFIED AT infra/logic/registry/ AT HEAD f3584d887f: `inf` and `cot` are registered FIRM scope shorts (class FIRM), and NEITHER is among systems.json's 25 system keys. Positive controls beside them: `advi` IS a system key and `49financial` IS a scope key, so the two lookups discriminate rather than answering False to everything. \u26d4 AND MY FIRST READ OF `bd` -- THE LARGEST COMPONENT, 125 OF 243 -- WAS WRONG, IN THE SHAPE I HAVE HIT THREE TIMES TODAY. I checked scope KEYS and scope SHORTS, found `bd` in neither, and had begun to treat it as unregistered and therefore a different remedy class from the other two. IT IS IN THE `aliases` ARRAY, WHICH I HAD NOT LOOKED AT. Collect-by-shape again: I enumerated the two fields I expected the answer to live in and read their absence as the answer. \u2b50 AND THE REGISTRY IS MORE EMPHATIC THAN S118 CLAIMS, WHICH IS WHY THE CHECK WAS WORTH RUNNING: `bd` is an alias of the FIRM scope `49financial` on the serving-route and tree-token planes, and it is EXPLICITLY REFUSED -- 'NAMING_SCHEMA.json refused_tokens: refused in every slot; the vendor is blackdiamond, the firm is 49financial'. So those 125 rows are not merely firm-shaped; they carry a token the schema already refuses everywhere, and the registry names the exact confusion that produces it. A rule already exists; what is missing is its application to these names. That makes the 243 MORE tractable than the row argues, not less. \u26a0 ONE FIGURE S118 LEAVES UNRECONCILED AND I DO NOT SMOOTH: it cites LGIC_NAMING's TENSION_RANKING as naming 'the firm is the first token ... in ~210 names' while measuring 243 itself. Different corpora and different vintages are the likely reason and neither is asserted stale; the gap is named so a later reader does not treat 243 and ~210 as the same measurement. \u26d4 AND S118's OWN BOUNDS ARE THE BEST THING IN IT AND I ADOPT THEM WITHOUT SOFTENING. A NAME FAMILY IS NOT A DECISION: families may MERGE or SPLIT, so 169 is a structural fact about names and not an answer to 'how many rulings'. The row says so in terms and refuses to let the number read wider -- which is the discipline that has been missing from every sizing of this backlog today, including two of mine. Scope is the {system} half only, 1119 of 1298; {scope} 122, {cadence} 108 and {source} 85 are NOT analysed. The corpus is r13, a FLOOR rather than today's live figure. WHAT IT CHANGES IS THE INPUT AND NOTHING ELSE: '1298 registry decisions' reads as 1298 independent judgments, and the population measurably does not have that shape -- 72% of rows in 40 families, only 13 families appearing once. A seat sizing from the row count alone is sizing a flat set that is not flat. The sizing itself remains 1.0.0_SA_CTO's and the seating is Andrew's open call; neither is touched here.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S118"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S118",
+   "infra/logic/registry/scopes.json at HEAD f3584d887f: `inf` and `cot` are FIRM scope shorts; `bd` is an alias of scope 49financial (planes serving-route, tree-token) carrying refused: 'NAMING_SCHEMA.json refused_tokens: refused in every slot; the vendor is blackdiamond, the firm is 49financial'",
+   "infra/logic/registry/systems.json: 25 system keys, none of bd/inf/cot among them",
+   "positive controls: `advi` IS a system key, `49financial` IS a scope key -- the lookups discriminate",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S80",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T17:20Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "S119 GRADUATED. The arithmetic CHECKS and the identity closes: 1119 + 179 = 1298, so the card's ~877 applies the {system}-HALF remainder to the WHOLE residual and silently drops 179 rows. The correct bound is ~1056. \u26d4 A 20% error on a figure going to Andrew, in the direction that makes the work look SMALLER.",
+ "spec_asserts": "The card to Andrew: clause 2's upper bound is '~877'.",
+ "world_is": "VERIFIED BY ARITHMETIC, WHICH IS THE RIGHT INSTRUMENT HERE BECAUSE THE DEFECT IS ARITHMETIC RATHER THAN A CENSUS. Re-running the r13 census would be repetition; re-deriving the numbers from the row's own figures is the independent check, and it closes: the residual is 1298 rows, 1119 carry {system}, 179 carry none, and 1119 + 179 = 1298 EXACTLY -- so the partition is real and the 179 are not an artifact. 1119 - 243 = 876, the figure behind '~877'. 1298 - 243 = 1055, the actual population outside the known firm-as-system class. THE CORRECT UPPER BOUND IS ~1056, counting the firm class as one decision. The error is 179 rows, 20%% of the stated bound. \u26d4 AND IT MOVES IN THE DIRECTION THAT MAKES THE WORK LOOK SMALLER, ON A FIGURE GOING TO ANDREW. That is the direction a sizing error should never drift by accident, and it is the reason this row is BLOCKING rather than an observation. \u2b50 THE KEEPABLE IS SHARPER THAN THE ARITHMETIC AND IT IS THE AUTHOR'S OWN: A STATED SCOPE CAVEAT DOES NOT TRAVEL WITH THE NUMBER. The caveat -- 'this covers the {system} HALF ONLY (1119 of 1298)' -- was explicit, prominent and IN THE SAME MESSAGE, and the figure was still applied to the wider population in the very next reply. \u26d4 THIS IS ONE HOP PAST 'a printed denominator certifies its own sweep': THERE THE SWEEP WAS UNDISCLOSED; HERE IT WAS DISCLOSED AND THE DISCLOSURE STILL DID NOT BIND. The mechanism is that a caveat qualifies a SENTENCE while the number gets lifted out of it. What would have bound is naming the population INSIDE THE FIGURE -- '169 families over the 1119 {system} rows' rather than '169 families' with a scope note below. \u26a0 AND I ADD ONE THING THE ROW DOES NOT SAY, MEASURED: THE no-{system} SUB-COUNTS DO NOT PARTITION THEIR OWN SET. {scope} 122 + {source} 85 + {cadence} 57 + {snap} 7 + {firm} 1 + {d} 1 + {dc} 1 = 274 over 179 rows, so a row carries several and the categories OVERLAP. Anyone subtracting them from 179, or summing them as a population, gets a wrong number -- the same per-occurrence-versus-per-row trap S118 flagged one row earlier, surviving into the correction that fixes S118's sizing. \u26a0 AND THE ROW DISCLOSES ITS OWN SHARE OF THE DEFECT rather than only the recipient's, which is what makes it usable: its earlier scope note carried {cadence} 108 where the ROW count is 57, because the first was per-occurrence. THE CORRECTION USES ROW COUNTS THROUGHOUT and says so.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S119"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S119",
+   "this seat's re-derivation at HEAD f3584d887f: 1119 + 179 = 1298 (identity closes); 1119 - 243 = 876; 1298 - 243 = 1055; error 179 rows = 20% of the stated ~877",
+   "no-{system} sub-counts sum to 274 over 179 rows -- they overlap and do not partition",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

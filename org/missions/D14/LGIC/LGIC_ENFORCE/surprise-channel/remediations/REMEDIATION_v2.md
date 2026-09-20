@@ -2760,3 +2760,60 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carriers for S118 (sizing input) and S119 (the ~877 -> ~1056 correction)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S118",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CLAUSE 2 HAS BEEN SIZED FROM A ROW COUNT ALONE, AND THE POPULATION IS NOT FLAT. Of the 1298 residual rows, 1119 carry {system}; those concentrate onto 169 first-token families with 72% of rows in 40 families and only 13 families appearing once. 243 of them (22%) carry a firm token in the system slot -- one already-characterized class, and on the registry's own words a REFUSED one.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S118",
+  "3.0.0_SA_CVO's registry verification at HEAD f3584d887f: inf/cot are FIRM shorts; bd is a refused alias of the firm 49financial; none is a system key, with positive controls",
+  "coverage curve measured over the residual at r13: top 5 = 383 rows, top 10 = 518, top 20 = 651, top 40 = 811, top 80 = 954 of 1119"
+ ],
+ "remedy": "NOTHING IS OWED ON THE MEASUREMENT AND THE SIZING IS 1.0.0_SA_CTO's -- S118 says so and does not take it, and neither does this adjudication. WHAT THE INPUT CHANGES: '1298 registry decisions' reads as 1298 independent judgments and the population does not have that shape. \u2b50 THE 243 ARE THE CHEAPEST PART AND THE REGISTRY ALREADY RULES ON THEM: `bd` is refused in every slot with the confusion named verbatim ('the vendor is blackdiamond, the firm is 49financial'), and `inf`/`cot` are FIRM shorts standing where a system belongs. A rule about firm-vs-system in that slot reaches all 243 at once, and for the 125 bd rows the rule is already written. \u26d4 WHAT NOBODY MAY TAKE FROM THIS: A NAME FAMILY IS NOT A DECISION. Families may MERGE or SPLIT; 169 is a structural fact about names, not a count of rulings, and S118 refuses to let it read otherwise. That refusal is the most valuable line in the row and it is the discipline that has been missing from every sizing of this backlog today, two of them mine. \u26a0 BOUNDS TRAVEL OR THE NUMBER MISLEADS: the {system} half only (1119 of 1298); {scope} 122, {cadence} 108 and {source} 85 unanalysed; corpus r13, a FLOOR not today's live figure; and S118's own 243 against TENSION_RANKING's '~210' is UNRECONCILED, neither asserted stale.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S119",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "A SCOPED FIGURE WAS LIFTED OUT OF ITS SCOPE AND APPLIED TO THE WIDER POPULATION. '~877' is the {system}-half remainder (1119 - 243) applied to the whole 1298 residual; the actual remainder is 1055, so the bound is ~1056 and 179 rows were silently dropped. The scope caveat was stated explicitly in the same message and did not travel with the number.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S119",
+  "3.0.0_SA_CVO's re-derivation at HEAD f3584d887f: the 1119/179/1298 identity closes exactly; the two remainders are 876 and 1055",
+  "the sub-counts of the 179 sum to 274, so they overlap and do not partition"
+ ],
+ "remedy": "THE CARD'S FIGURE IS WRONG BY 179 ROWS AND THE CORRECTION IS ONE NUMBER: ~1056, not ~877. \u26d4 IT IS ON A CARD TO ANDREW AND IT ERRS SMALL, which is why this carries a clock rather than a note. Correcting it is 1.0.0_SA_CTO's -- the card and the sizing are that seat's -- and no part of the sizing conclusion is decided here. \u2b50 THE KEEPABLE, AND IT GENERALISES PAST THIS NUMBER: A STATED SCOPE CAVEAT DOES NOT TRAVEL WITH THE NUMBER. A caveat qualifies a SENTENCE; the figure gets lifted out of the sentence and carried alone. This is one hop past 'a printed denominator certifies its own sweep' -- there the sweep was undisclosed, here it was disclosed, prominent, in the same message, and it still did not bind. THE FIX IS TO PUT THE POPULATION INSIDE THE NOUN: '169 families over the 1119 {system} rows', never '169 families' with a scope line below it. COST: a few words inside the figure. NON-APPLICATION: a figure whose population IS the whole set under discussion, where the noun and the scope already coincide. \u26a0 AND A SECOND TRAP SURVIVES INTO THIS CORRECTION: the no-{system} sub-counts OVERLAP (274 over 179 rows), so they must not be summed as a population or subtracted from 179.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
