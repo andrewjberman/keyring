@@ -4100,6 +4100,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+   "id": "LGIC_ENFORCE-S114",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T12:24Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "THE R1 RE-CUT BY REMEDY, which is the gating read 98518 named: the ten tokens split into AT LEAST FIVE remedy classes and only ONE OR TWO are plausibly a registry system row. Naming one owner for R1 would misroute eight of ten. AND IT FALSIFIES MY OWN S113 REASON: the sanctioned short for 49financial is `49f`, NOT `f49`.",
+   "spec_asserts": "S112 reported R1 as 'THE REGISTRY-ROW CLASS ... TEN distinct tokens'. S113 corrected that to 'what raises under rule R1', on the ground that `f49` is 'almost certainly the short form of the REGISTERED FIRM SCOPE 49financial'. 1.0.0_SA_CTO (98518) adopted the mixing finding and named the gating read: 're-cut the classes by REMEDY rather than by RULE FAMILY', noting this seat had started it.",
+   "world_is": "\u26d4 FIRST, AGAINST MY OWN S113: ITS REASON IS FALSIFIED BY THE REGISTRY. scopes.json sanctions the short `49f`; `f49` IS NOT IT -- a different string, the digits and letter reversed. So f49 is not a firm short form. THE CONCLUSION SURVIVES AND THE REASON DOES NOT: f49 still belongs to a different remedy class, but a SPELLING one, not a firm-form one. Second time in this thread that a conclusion of mine held on a reason that did not, and both times the reason was the part I had not measured. MEASURED, DECISIVELY: NONE of the ten R1 tokens is in systems.json's 25 system keys, and NONE is a scope key or a sanctioned short. So all ten are genuinely unregistered as systems -- that part of S112 stands. What does NOT follow is that all ten WANT a system row. THE SOURCE NAMES ARE WHAT SPLIT THEM, and they were one query away the whole time: f49 <- F49ServedAndSourceRead (repo IAM_POLICY); dowjones <- dowjones/credentials (live SECRET); vpc <- VPCFlowLogsPolicy; cache <- cache-control-injector; security <- security-sweep-comprehensive; sentiment <- sentiment-query-api; portal <- portal-origin-verify-secret. THE RE-CUT, PROPOSED WITH ITS EVIDENCE AND NOT DECIDED -- the class ASSIGNMENTS are this seat's reading of what each source name IS; the names, the registry misses and the directive counts are measured: (A) NO OWNING DIRECTIVE -- an ORG-STRUCTURE act no registry row can perform, card-2 shaped. MEASURED for astn, trade, news, each with a recorded `why`. (B) GENUINE PRODUCT wanting a system row: portal (24 DIRECTIVES.yaml hits, a real product). (C) NOT A SYSTEM TOKEN AT ALL -- a generic AWS or purpose word the grader is trying to seat in the {system} slot: vpc (VPCFlowLogsPolicy), cache (cache-control-injector), security (security-sweep-comprehensive). Remedy is a vocabulary/purpose word or an aws_fixed exemption, NOT a system row and NOT a directive. (D) A VENDOR, not an Opal system: dowjones. Remedy is vendor vocabulary. (E) A MALFORMED SPELLING of a sanctioned form: f49, where `49f` is sanctioned. Remedy is a rename or an alias. (F) UNRESOLVED BETWEEN (A) AND (B): sentiment -- a real product domain with ZERO directive hits, so it is either an unowned project or an unregistered product and this seat cannot tell which from here. \u2b50 SO AT MOST TWO OF TEN (portal, and sentiment if it resolves to (B)) ARE THE REMEDY THE RULINGS HAVE BEEN SIZING. Three are org-structure. Four are vocabulary, vendor or spelling. NAMING ONE OWNER FOR R1 MISROUTES EIGHT OF TEN. \u26a0 BOUNDS: the class assignments in (C), (D) and (E) are READINGS OF A NAME, not rulings -- a token that LOOKS generic could still be a product this seat does not know. The directive-hit instrument remains crude and a zero is not proof of no owner. And this is the r8 corpus, so it is a floor.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "scopes.json sanctioned shorts are 49f, cot, inf, etfs, mdpf, demo, global, 08242234, 08335338 -- `f49` is NOT among them, falsifying S113's stated reason",
+     "none of the ten R1 tokens appears in systems.json's 25 system keys, and none is a scope key or short",
+     "source names behind each token, from the r8 corpus: F49ServedAndSourceRead, dowjones/credentials, VPCFlowLogsPolicy, cache-control-injector, security-sweep-comprehensive, sentiment-query-api, portal-origin-verify-secret",
+     "DIRECTIVES.yaml word-boundary hits with astn/trade/news as a passing control at 0: portal 24, security 1, cache 1, sentiment 0, vpc 0, dowjones 0, f49 0",
+     "astn/trade/news carry recorded `why` entries measuring a MISSING OWNING DIRECTIVE, not a missing registry row"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
