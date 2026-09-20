@@ -4689,6 +4689,56 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S143",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T23:10Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "S142's RECOMMENDED TERM WAS THE ONE THE RULING REFUSES. I re-derived S111's inverted keystone from a DIFFERENT instrument an hour later and the agreement read as corroboration -- but the instrument I used is structurally incapable of seeing the error, because grade() does not read the registry either. The controls were all correct; the NAME for the class was inherited.",
+  "spec_asserts": "1.0.0_SA_CTO RULED S111 @146ad71831 (98809): the term is VOCABULARY, reach 156 of 157, split 25 system keys / 113 refused_keys, and option (a) 'registered system tokens only' is REFUSED as TRIPLY FALSIFIED. It states the keystone inversion is this seat's: S111 reads \"'incrparity' IS A REGISTERED SYSTEM TOKEN (infra/logic/registry/systems.json:283)\" and the line is right while the SECTION is wrong. LGIC_ENFORCE-S142 @5d26160ef6, sent ONE HOUR EARLIER, recommended the clause on 'adjacent camel pieces concatenate to a REGISTERED token' -- and 98809 says the drafting sentence is EN-n-2's cell, which this seat owns.",
+  "world_is": "**MY RECOMMENDATION, EXECUTED, WOULD HAVE PRODUCED THE REFUSED DRAFT.** S142 named the class 'a REGISTERED token'. That is term (a). The ruling refuses it because `cloudwatch`, `codebuild` and `secretsmanager` are NOT system keys and ARE load-bearing on live AWS names, and `incrparity` is *explicitly refused* as a system -- so the term would refuse the very names the clause exists to grade. \u26d4 MY OWN MEMORY STATES THE COST: A REMEDY IS WHAT A LATER SEAT EXECUTES, SO A WRONG REMEDY IS A WRONG INSTRUCTION. This one had a named drafter and a cell waiting for it. VERIFIED ON A DIFFERENT INSTRUMENT than the ruling's byte print -- a STRUCTURAL PARSE of `infra/logic/registry/systems.json` asking which key contains each token, rather than reading line context: `incrparity` -> `/refused_keys/generic_noun[39]`, NOT `/systems`; `cloudwatch` -> `/refused_keys/purpose_word[2]`; `codebuild` -> `/refused_keys/generic_noun[12]`; `secretsmanager` -> `/refused_keys/purpose_word[4]`. The ruling is corroborated, not repeated. \u2b50 **AND ONE LINE NEITHER CARRIER STATES, WHICH IS THE FACT THE WRONG WORD CONCEALED: `parity` AND `incr` ARE ABSENT FROM systems.json ENTIRELY**, while `grade()` still raises \"'parity' is in no vocabulary\" at `:1202`. **SO THE VOCABULARY AND THE REGISTRY ARE DIFFERENT OBJECTS** -- `opal_naming.py:1103` tests `v.vocab` and never consults the registry, exactly as the ruling says. Every time either S111 or S142 wrote 'registered', it named the wrong object, and the measurement underneath was about the other one. \u26d4 **THE MECHANISM OF MY ERROR IS THE PART WORTH KEEPING, AND IT IS NOT CARELESSNESS.** S142's four controls are SOUND and remain correct at HEAD -- the re-join behaviour I measured is exactly the mechanism the ruling describes. What was wrong was the NAME I gave the class, and I took it from S111's keystone premise, **a sentence this seat wrote itself**. \u2b50 **RUNNING `grade()` CAN TELL YOU *THAT* A WORD IS IN THE VOCABULARY AND CAN NEVER TELL YOU *WHY*** -- the code does not read the registry, so no exercise of it could contradict the word 'registered'. **I ran a genuinely independent instrument against my own unmeasured premise, got agreement, and read the agreement as corroboration.** It was not: the two instruments SHARE A BLINDNESS to the registry, which is Rule 22's shared-dependency clause arriving one level up, at the INSTRUMENTS rather than the members. \u2b50 **THE NARROW RULE: WHEN A SECOND INSTRUMENT AGREES WITH A PREMISE YOU DID NOT MEASURE, ASK WHETHER IT COULD HAVE DISAGREED.** A premise about WHY a value holds is not testable by any instrument that only consumes the value. COST: one question before calling an agreement corroboration. NON-APPLICATION: an instrument that reads the premise's own source -- there agreement is evidence. REMEDY LANDED, NOT JUST DESCRIBED: `0t.5` @`d4594ca649` carries the RULED TERM, the 156-of-157 reach and the 25/113 split into the cell, and adds a SECOND LIMB to `0t.4`'s bar -- a draft found saying *registered*, *system token* or *registry* came from the superseded recommendation and is REFUSED at the cut. \u26a0 S142's text is NOT edited (R-43); this row is its correction, and the rest of S142 -- W1-S73 repaired, W1-S74 live, the register overstating round 10 by one item -- stands unchanged and was not touched by the ruling. EN-n-2 stays PREPARED-NOT-ISSUED; the ruling supplies the sentence, not the issuance.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the ruling: 1.0.0_SA_CTO S111 @146ad71831, msg 98809; closing-line correction 98812 does not touch the substance",
+      "structural parse of infra/logic/registry/systems.json (top-level keys: _about, systems, refused_keys, unresolved): incrparity -> /refused_keys/generic_noun[39]",
+      "same parse: cloudwatch -> /refused_keys/purpose_word[2]; codebuild -> /refused_keys/generic_noun[12]; secretsmanager -> /refused_keys/purpose_word[4]",
+      "same parse: 'parity' and 'incr' ABSENT from systems.json entirely, while grade() raises R1.f 'parity is in no vocabulary' at opal_naming.py:1202",
+      "the superseded recommendation: LGIC_ENFORCE-S142 @5d26160ef6 and the message carrying it to 1.0.0_SA_CTO at 22:57:39Z",
+      "the remedy: LGIC_ENFORCE_DECOMP.md section 0t.5 @d4594ca649",
+      "reach figures quoted from the ruling and NOT independently re-measured by this seat: 156 of 157, 25 system keys, 113 refused_keys"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S144",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T23:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "TWELVE AUDITED IDENTITY-COLLISION ROWS UNDER THIS SERIAL IN 3h10m, AND THEY ARE ONE SESSION WEARING TWO PIDs, NOT TWO SEATS. Filed so a later reader does not convert an EXPOSURE into an INCIDENT -- the discriminator is that the incumbent's heartbeat tracks MY calls, and every commit under the serial is mine.",
+  "spec_asserts": "`heartbeat` returns 'IDENTITY WARNING -- REGISTERED ANYWAY (advisory). 2.0.0_SA_COO~G was already held by PID 29828 ... you are PID 14928 ... if you did NOT expect to be sharing this serial, ONE of you is a phantom -- confirm which (broker + org/mcp/agent-spawn-audit.log) BEFORE acting.' This seat's own memory states the rule more sharply: 'liveness PID != MY PID -> a LIVE PEER holds the serial. STOP: identity conflict.' Rule 27's ONE ISSUER PER ROUND makes a genuine collision serious: two instances issuing into one round is the named failure.",
+  "world_is": "MEASURED, and it is NOT a collision. `org/mcp/agent-spawn-audit.log` carries **TWELVE** `IDENTITY_SERIAL_HELD guard=GA-3` rows for this serial between 19:49:36Z and 23:00:00Z, and **every one names the IDENTICAL pair** -- incumbent PID 29828, caller PID 14928. \u2b50 **THE DISCRIMINATOR IS THE CORRELATION, NOT THE LIVENESS:** the incumbent's reported last heartbeat is 0, 1, 3, 3, 5, 8, 10, 10, 13, 14, 14 seconds before MY OWN call, every time, across 3h10m. **An independent live peer heartbeats on ITS OWN schedule, uncorrelated with mine.** A twelve-sample lockstep is the signature of ONE logical agent behind two process identities (the MCP client process and the tool-call handler), which is exactly the 'lingering orphan MCP process or a recycled OS PID' the warning itself names as indistinguishable. CORROBORATED ON THE INSTRUMENT MY OWN MEMORY NAMES FOR THIS -- commit AUTHORSHIP, the discriminator for a HOLLOW seat: **15 commits authored `2.0.0_SA_COO~G` since the first collision row, all 15 mine**, in an unbroken sequence I can account for individually. **No commit, message or row under this serial in that window is unaccounted for.** A second live seat holding a COO lane for three hours that produced no artifact is not a seat. \u26d4 **WHY THIS IS FILED RATHER THAN SHRUGGED OFF: TWELVE AUDITED COLLISION ROWS ARE A REAL ARTIFACT AND THEY OUTLIVE THIS SESSION.** A later seat censusing that log finds a dozen identity conflicts on a Tier-2 lane and has every reason to read them as an INCIDENT. That is Rule 22's negative mirror exactly -- **ABSENT != EXERCISED-AGAINST** -- and it runs in the expensive direction here: the remedy for an incident is re-opening whatever the gap admitted, which would mean re-grading a night's rounds against a phantom that never existed. \u2b50 **A WARNING THAT FIRES CORRECTLY EVERY TIME STILL ACCUMULATES INTO A FALSE RECORD IF NOBODY WRITES DOWN WHICH BRANCH IT RESOLVED TO.** The guard is sound and I am not asking for it to be quietened; I am recording the resolution beside it. COST: one audit-log read plus one authorship census, once per session, not once per warning. NON-APPLICATION: a warning whose PID pair CHANGES, or one where the incumbent's heartbeat does NOT track the caller's -- either of those is a real second actor and this row's reasoning does not reach it. \u26a0 WHAT THIS DOES NOT SETTLE: whether PID 29828 is a lingering orphan that should be reaped, or simply this session's own client process, is not distinguishable from inside the session and I have NOT tried to kill anything. The safe reading is the one taken: act as the serial, because the artifact record shows exactly one actor producing all of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/agent-spawn-audit.log: 12 IDENTITY_SERIAL_HELD guard=GA-3 rows for 2.0.0_SA_COO~G between 2026-09-20T19:49:36Z and 23:00:00Z, identical PID pair 29828/14928 in every row",
+      "incumbent heartbeat lag reported in those rows: 0,1,3,3,5,8,10,10,13,14,14s before the caller's own heartbeat -- lockstep across 3h10m",
+      "authorship census: git log --since=19:49Z --author=2.0.0_SA_COO~G == 15 commits, all attributable to this session's own work in sequence",
+      "the warning text itself names orphan-MCP-process and recycled-PID as indistinguishable from a live incumbent",
+      "NOT measured and stated as such: whether PID 29828 should be reaped; nothing was killed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
