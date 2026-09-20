@@ -32,7 +32,11 @@ none of the walkthrough yourself.
 
 The two inputs, both required at HEAD before you are spawned:
 - **G-C** `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~A/G-C_CONTROLLED_IDENTITY_AND_GRANT.md` -- the
-  controlled identity's verified `tid`/`oid` and its approved grant (owner `1.0.0_SA_CTO~A`).
+  controlled identity's verified `tid`/`oid` and its approved grant (owner `1.0.0_SA_CTO` -- re-assigned
+  from `1.0.0_SA_CTO~A`, which is not seated, by CTO ruling msg 98451 @`a0e4748ac2`, carried here by the
+  issuer under Rule 27. ⛔ THE PATH ABOVE IS UNCHANGED AND STILL READS `1.0.0_SA_CTO~A/` DELIBERATELY:
+  it is pinned by `SEALED_EXPECTED.json`'s pre-seal absence check at commit `15edf9f07b` and by
+  `probes/og_v4.py:27` `GC_PATH`, so moving it would break the seal PHASE 1 exists to hold -- row S54).
 - **G-D** `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/CONTROLLED_WALKTHROUGH_RECORD.md` -- the
   walkthrough record, in `OG-v-1`'s template.
 
@@ -166,7 +170,7 @@ output.**
 ## RECORD FACE
 
 <preflight>
-comp-schedule: RUN at L5 -- --budget 540, 5 of 5 carriers scanned (C1 230, C2 8, C3 12, C4 21, C5 334), 27 gates armed, none naming NFRA_OPLGTW. This cell is HELD on project gates G-C (owner 1.0.0_SA_CTO~A) and G-D (the operator's record, landed by 2.0.0_SA_COO~O); the vendor-egress moratorium is why the walkthrough is a person's act and not a worker's.
+comp-schedule: RUN at L5 -- --budget 540, 5 of 5 carriers scanned (C1 230, C2 8, C3 12, C4 21, C5 334), 27 gates armed, none naming NFRA_OPLGTW. This cell is HELD on project gates G-C (owner 1.0.0_SA_CTO, re-assigned from 1.0.0_SA_CTO~A by ruling 98451 @a0e4748ac2) and G-D (the operator's record, landed by 2.0.0_SA_COO~O); the vendor-egress moratorium is why the walkthrough is a person's act and not a worker's.
 comp-iam: DECLARED-NOT-APPLICABLE -- this cell reads records, the audit sink and bucket settings with existing read access; it adds no AWS operation, policy, principal or role.
 comp-adversary: RUN at L5 on the PRD v0.2 (@f0aa50dbc0) -- 4 of 4 cited commits verified; 7 cited paths, 6 stable, 1 GONE (an external RFC URL parsed as a repo path). Blindness stated: T11, filesystem adjacency stands as its neighborhood.
 lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).

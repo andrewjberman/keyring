@@ -3383,6 +3383,30 @@ name the one known failure instead of silently inheriting it.
     "spec_asserts": "R-OG-23A: the naming obligation is discharged and closed by S52, but 'free of NAMED incidents' means the window CONTAINS none; a 7-day contiguous clean span already exists.",
     "world_is": "Accepted without reservation, and the span is verified non-vacuous on this lane's own instrument. OGR2-AC6 is gradeable in round 2 on 09-11..09-17 with the literal 'zero failures' bar intact over 19473 real requests. The AC6 re-grade is NOT performed here.",
     "notes": "INERT. Supersedes S52's LABEL only; S52's enumeration, corroboration and cause-pinning stand unchanged. THE CARRY, and it is the second half of a trap this channel already knows: A BAR CAN BE WEAKENED AT ITS WINDOW'S EDGES WITHOUT EVER TOUCHING THE BAR -- 'zero failures on a window I choose' and 'zero failures' are different claims, and the first reads as the second in every record. THE MIRROR: the strict reading then needs its OWN check, because a window with no traffic has no failures either. So a clean-window claim prints TWO numbers -- the failure count AND the denominator that makes zero mean something. COST: one RequestCount query beside the failure query. NON-APPLICATION: a window whose traffic is the thing being measured anyway."
+  },
+  {
+    "id": "NFRA_OPLGTW-S54",
+    "project": "NFRA_OPLGTW",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~O",
+    "surfaced_at": "2026-09-20T09:45Z",
+    "one_line": "G-C/G-E's OWNER re-assignment (ruling 98451) MUST NOT become a PATH re-assignment: the retired lane serial `1.0.0_SA_CTO~A` is a PATH COMPONENT of both gate deliverables, and three of its occurrences sit inside `SEALED_EXPECTED.json`'s pre-seal absence check -- a HASH-BOUND artifact whose whole property is that those exact paths were measured ABSENT at a named commit. Moving the path to match the new owner would destroy the seal PHASE 1 of OG-v-4 exists to hold, and it would look like tidy-up.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "THE RULING'S OWN SCOPE, and this is not a criticism of it -- it named THREE sites: `1.0.0_SA_CTO` msg 98451 @`a0e4748ac2`, VERBATIM: \"The order still names 1.0.0_SA_CTO~A at :34, at :169, and in the decomp's section 6. AMENDING IT IS 2.0.0_SA_COO~O's ACT AS THE ISSUER UNDER RULE 27, NEVER MINE.\" All three are OWNER ATTRIBUTIONS and all three are correct.",
+        "THE UNSCOPED CENSUS THE ISSUER RAN BEFORE EDITING (native Grep over `org/missions/D9/NFRA/NFRA_OPLGTW/`, no head, denominator PRINTED): the token `1.0.0_SA_CTO~A` occurs across THIRTEEN files, not three sites. The extra hits are NOT more owner attributions -- they are a DIFFERENT KIND OF OBJECT: the serial is a directory component of the gate deliverables' own paths, `deliverables/1.0.0_SA_CTO~A/G-C_CONTROLLED_IDENTITY_AND_GRANT.md` and `.../G-E_PILOT_IDENTITY_AND_GRANT.md`.",
+        "THE THREE THAT MAKE IT LOAD-BEARING, read at the bytes: `deliverables/0.9.0_WK_NFRA_OPLGTW~6/SEALED_EXPECTED.json` carries the G-C path at `:9` (`paths_checked`), `:15` (`reads[].path`) and `:18` (inside the captured `stderr` of `git cat-file -e`), all under `preseal_absence_check.commit = 15edf9f07b1bbea17f1a23fe1697f532ae20ff93`. Its own note states the property: both paths were measured ABSENT at the moment the seal was cut, which is the precondition PHASE 1 requires. A path edit there is not a rename, it is a forged measurement.",
+        "THE FOURTH, LIVE RATHER THAN HISTORICAL: `deliverables/0.9.0_WK_NFRA_OPLGTW~6/probes/og_v4.py:27` hardcodes `GC_PATH = \"org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~A/G-C_CONTROLLED_IDENTITY_AND_GRANT.md\"`. That probe is the invocation for every mechanical criterion of OG-v-4 PHASE 2, which has not run. So the path is not merely recorded in history -- it is what the grader will read.",
+        "WHAT WAS ACTUALLY EDITED, so the amendment's own scope is falsifiable: OWNER ATTRIBUTIONS ONLY, at TO-OG-v-4 `:35` and `:169`, TO-OG-v-5 `:33` and `:115`, and DECOMP `:783`, `:785`, `:896`. Every PATH string was left byte-identical, and each amended site now says so inline. `project.json:25` and the PRD's accountable-CTO line were NOT touched: those are L3/L4 carriers and belong to `1.0.0_SA_CTO`, not to the issuer."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling 98451: G-C's owner is re-assigned from `1.0.0_SA_CTO~A` to `1.0.0_SA_CTO`, and the issuer carries the change into the carriers.",
+    "world_is": "Carried, but NARROWER than a naive reading of 'carry it into the carriers' would license. OWNER moved at seven sites; PATH moved at zero, deliberately, because the retired serial is load-bearing as a path in a hash-bound seal and in the unrun grader's own source. The two readings are indistinguishable in the ruling's words and differ in whether OG-v-4's seal survives.",
+    "notes": "INERT -- nothing is armed; no remediation is owed and none is claimed. THE CARRY, and it is the sharpest form of a trap this channel already knows: A RENAME IS A CENSUS PROBLEM WEARING A TIDY-UP'S CLOTHES. When an IDENTIFIER is re-assigned, ask of every occurrence whether it NAMES THE PARTY or ADDRESSES A LOCATION -- the first follows the re-assignment, the second must not, and a global replace cannot tell them apart while looking maximally diligent. ⭐ The discriminator is one unscoped census with its denominator printed, run BEFORE the first edit, and then INSPECTING WHAT IT FOUND OUTSIDE THE NAMED SITES rather than counting them: here 3 named sites vs 13 files, and the decisive four were all outside. COST: one census plus reading its false positives. NON-APPLICATION: an identifier that appears only in prose, and a re-assignment whose new value is intended to move the storage too -- there the seal question is the whole decision and must be asked out loud."
   }
 ]
 ```

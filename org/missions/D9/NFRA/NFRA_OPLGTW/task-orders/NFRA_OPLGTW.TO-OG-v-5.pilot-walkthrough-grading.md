@@ -30,7 +30,10 @@ sanitized server correlation, plus ofid_ if supplied."*
 The two inputs, both required at HEAD before you are spawned:
 - **G-E** `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/1.0.0_SA_CTO~A/G-E_PILOT_IDENTITY_AND_GRANT.md` -- Menachem's
   verified `tid`/`oid`, the identity and data administrator's approved account/date/field grant, and the activation's
-  operator audit reference (owner `1.0.0_SA_CTO~A`; activation by an authorized operator through
+  operator audit reference (owner `1.0.0_SA_CTO` -- re-assigned from `1.0.0_SA_CTO~A`, which is not seated,
+  by CTO ruling msg 98451 @`a0e4748ac2`, carried here by the issuer under Rule 27; ⛔ the G-E PATH above is
+  UNCHANGED and still reads `1.0.0_SA_CTO~A/` deliberately, for the same seal reason as G-C -- row S54;
+  activation by an authorized operator through
   `infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py`).
 - **G-F** `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/PILOT_WALKTHROUGH_RECORD.md` -- the pilot
   walkthrough record, in `OG-v-1`'s template.
@@ -112,7 +115,7 @@ flip. Every `judgment="true"` criterion is recorded `UNVERIFIABLE-BY-INSTRUMENT`
 ## RECORD FACE
 
 <preflight>
-comp-schedule: RUN at L5 -- --budget 540, 5 of 5 carriers scanned (C1 230, C2 8, C3 12, C4 21, C5 334), 27 gates armed, none naming NFRA_OPLGTW. This cell is HELD on project gates G-E (owner 1.0.0_SA_CTO~A; the PRD's runtime input) and G-F (the pilot record, landed by 2.0.0_SA_COO~O).
+comp-schedule: RUN at L5 -- --budget 540, 5 of 5 carriers scanned (C1 230, C2 8, C3 12, C4 21, C5 334), 27 gates armed, none naming NFRA_OPLGTW. This cell is HELD on project gates G-E (owner 1.0.0_SA_CTO, re-assigned from 1.0.0_SA_CTO~A by ruling 98451 @a0e4748ac2; the PRD's runtime input) and G-F (the pilot record, landed by 2.0.0_SA_COO~O).
 comp-iam: DECLARED-NOT-APPLICABLE -- this cell reads records, one table record and the audit sink with existing read access; it adds no AWS operation, policy, principal or role.
 comp-adversary: RUN at L5 on the PRD v0.2 (@f0aa50dbc0) -- 4 of 4 cited commits verified; 7 cited paths, 6 stable, 1 GONE (an external RFC URL parsed as a repo path). Blindness stated: T11, filesystem adjacency stands as its neighborhood.
 lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant).
