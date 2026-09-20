@@ -4052,6 +4052,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+   "id": "LGIC_ENFORCE-S112",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T12:04Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "The naming-conformance backlog has been carried as ONE thing with an UNMEASURED denominator. Measured: 462 raises over 3716 names fall into EIGHT rule families and AT LEAST FOUR DISTINCT REMEDY CLASSES, only one of which is registry rows. The registry-row class (R1) is TEN distinct tokens, and the registry's own `unresolved` list declares only THREE of them.",
+   "spec_asserts": "1.0.0_SA_CTO's ruling @1cc791ee55 and CANON row LGIC_CANON-S22 hold the naming backlog at 'AT LEAST TWO raises, denominator UNMEASURED', on the sound ground that a stop-on-first-raise census cannot report how many raises remain. LGIC_ENFORCE-W7-S4's remedy names 'Registry rows (infra/logic/registry/systems.json) or rule steps for the 115 raising system tokens, ruled at the round-1 analysis'. LGIC_ENFORCE's blocking field carries the backlog as clause-2 work whose 'OWNER IS STILL A CATEGORY'.",
+   "world_is": "THE DENOMINATOR IS MEASURABLE WITHOUT RE-RUNNING THE STOPPING CENSUS, because the stop is a property of the census DRIVER and not of grade(). Grading every name in the r8 census corpus directly and collecting the exceptions gives the whole raise population in one pass. DENOMINATOR 3716 = 3254 graded rows + 462 carded. RESULT: the 3254 graded names raise ZERO and ALL 462 carded names raise -- so the carded set IS exactly the raise set, which is itself worth recording: the census carded precisely what raises. 462 RAISES, EIGHT RULE FAMILIES: R1 184 (10 distinct tokens), K1 166 (31), B2 45 (9), K3 39 (8), R2 16 (2), R8 5 (5), L2 4 (3), K4 3 (2). \u26d4 AND THESE ARE NOT ONE BACKLOG. R1/R2 are unresolved SYSTEM/SOURCE tokens, whose remedy is a registry row per Rule 30. K1/K3/K4 are S3 KEY-PATH rules -- 'segment 1 config is neither a source nor a tier', 'session-trigger-mode.json is not a tier' -- whose remedy is a key or a tier decision, not a registry row. B2 is a BUCKET SCOPE key. L2 is a SERVICE-to-resource-type mapping. R8 is policy placement. Calling all 462 'the naming backlog' and sizing its remedy as registry rows would quantify over the MEMBER rather than the PARTITION. THE REGISTRY-ROW CLASS, WHICH IS THE ONE THE RULINGS ACTUALLY DISCUSS: R1 = TEN distinct tokens -- news 81, trade 42, astn 31, security 10, portal 7, cache 5, sentiment 4, vpc 2, dowjones 1, f49 1. \u2b50 AND THE REGISTRY'S OWN `unresolved` ARRAY DECLARES ONLY THREE (astn, trade, news). SEVEN RAISE AND ARE UNDECLARED: cache, dowjones, f49, portal, security, sentiment, vpc. So the hand-maintained list is NOT a census of what raises, and reading it as the backlog understates it by seven tokens -- including `sentiment`, the token CANON's step-13 census actually halted on. That is corroboration on a DIFFERENT instrument and a different vintage: the CANON census (live, 2026-09-20 06:00Z) halted on sentiment then trade, and both are in this R1 set. \u26a0 VINTAGE IS MIXED AND I STATE IT RATHER THAN LETTING THE NUMBER READ AS LIVE: the NAMES are the r8 census corpus (estate as of 2026-09-18 12:17:28Z) and the GRADER is HEAD. A name minted or retired since 09-18 is not in this denominator. \u26a0 AND W7-S4's '115 raising system tokens' DOES NOT RECONCILE WITH 10, at either grain (10 distinct tokens / 184 raises). It is round-1 vintage against an r8 corpus and I have NOT established what it counted; it is flagged as unreconciled rather than asserted stale. \u26a0 ONE GRAIN CAVEAT ON MY OWN NUMBERS: the per-family 'distinct token' counts come from the first quoted string in each exception message. For R1/R2/B2/K1/K3 that string IS the offending token; for R8 it is a RESOURCE NAME, so R8's '5 distinct' is 5 names, not 5 tokens.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "every name in NAMING_CENSUS_REPORT.r8.md graded at HEAD: 3254 graded rows raise 0, all 462 carded raise; denominator 3716 printed",
+     "raises split by rule family: R1 184/10, K1 166/31, B2 45/9, K3 39/8, R2 16/2, R8 5/5, L2 4/3, K4 3/2 -- 462 total, families disjoint by their own rule prefix",
+     "R1 distinct tokens: news, trade, astn, security, portal, cache, sentiment, vpc, dowjones, f49",
+     "infra/logic/registry/systems.json `unresolved` array holds exactly 3 entries (astn, trade, news); set difference against the R1 tokens leaves 7 undeclared",
+     "corroboration on a different instrument and vintage: the CANON step-13 census (live 2026-09-20 06:00:55Z) halted on sentiment-query-api then trade-submission-api; both tokens are in this R1 set"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
