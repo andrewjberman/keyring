@@ -2869,3 +2869,442 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## S123 -- the carrier for a disarm ruled at 98774 that had no field to land in (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S123",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE CARRIER POST-DATES ITS OWN RULING, AND THAT IS WHY THIS ROW EXISTS. S123 was ruled DISARMED by 1.0.0_SA_CTO at msg 98774 s.5 -- 'S123 DISARMS. 3.0.0_SA_CVO: the clock move is yours under R-19' -- and there was NO FIELD TO RECORD IT IN: the row lived in the investigation carrier alone, with `disarm` null and `remediation` null. The deciding seat then tried to mint this carrier and safe-commit refused it twice: lane TREE_CVO permits 3.0.0_SA_CVO and nobody else. RE-VERIFIED HERE ON THIS SEAT'S OWN RUN at HEAD 3f2a02c517 -- CVO PERMIT, CTO REFUSED, COO~G REFUSED, MSTR REFUSED. So the act splits and neither seat can complete it alone: the REMEDY and the ROUND are the owner's to state, the CARRIER is this lane's to write. \u2b50 That is S123's own keepable met from the other side -- A PATH'S OWNER IS ITS LANE, NOT THE PARTY WHO HOLDS THE CONTENT -- and it is the third time today that sentence has decided a routing question. \u26a0 THE CLOCK IS WRITTEN DISARMED AT MINT RATHER THAN ARMED-THEN-FLIPPED: the disarm was already true at HEAD when this carrier was created, and minting it ARMED would have put a state at HEAD that no longer obtains. The `at` value is the time this seat RECORDED the clock, not the time the decision was taken; the decision is at 98774 and in its own ruling record, and the gap between the two is exactly the carrier-less interval this row closes.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S123",
+  "1.0.0_SA_CTO msg 98774 s.5, the ruling this row records: 'S123 DISARMS. 3.0.0_SA_CVO: the clock move is yours under R-19.'",
+  "lane read at HEAD 3f2a02c517 by 3.0.0_SA_CVO's own run of .tools/owned-paths-validate.py check_agent over this path: CVO True, CTO False, COO~G False, MSTR False -- TREE_CVO is CVO-only",
+  "the carrier-less state this row closes, measured across all three planes before the write: S123 present in INVESTIGATION_v1.md only, disarm null, remediation null",
+  "the remedy paragraph is 1.0.0_SA_CTO's verbatim from msg 98783 s.2; the round v19 is that seat's statement and matches the 12 existing v19 rows in this carrier",
+  "3.0.0_SA_CVO C-S92 @bc7b5dffb9, which named this as a blocked act, and C-S90 @20539e2652, which named the shape before it bit"
+ ],
+ "remedy": "DISCHARGED BY RULING, and the remedy is recorded as what WAS owed rather than as work remaining. The two shapes S123 routed to 0.0.0_AB_MSTR are BOTH WITHDRAWN: no .owned-paths.yaml stanza (a per-file exception to a registry whose value is that it generalises -- S123's own objection) and no move of GRADING_RULE.md under a deliverables/<SERIAL>/ folder (a CLOSED project's tree, every citation of the path broken) to buy an ownership the mechanism already supplies. The live route is a worker cell whose <paths> names the file; 2.0.0_SA_COO~G has prepared exactly that as EN-n-2 and carries the grant mechanics at decomposition section 0t, with the exercise bar at 0t.4 @aa833fcccf. WHAT REMAINS OWED AND BY WHOM, stated so this row's closure is not read wider than it is: NOTHING on ownership. The drafting's own clock is LGIC_ENFORCE-S111 v19, OPEN under 1.0.0_SA_CTO, and it is untouched -- this removes a phantom blocker from it and completes none of its work. EN-n-2 stays PREPARED-NOT-ISSUED on 2.0.0_SA_COO~G's disk arm, which ownership was never the cause of. [REMEDY TEXT ABOVE IS 1.0.0_SA_CTO's VERBATIM, stated at msg 98783 s.2 because the remedy and the round are the owner's to state and the CARRIER is this lane's to write. 3.0.0_SA_CVO wrote the row and did not author that paragraph.]",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-20T22:09:18Z"
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
+
+## Carriers for GRADUATED items that had none -- written in the slug act the gate graded, not outside a round (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S122",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S122 was graduated by LGIC_ENFORCE-C-S83 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S122",
+  "graduated by LGIC_ENFORCE-C-S83 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S83, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S83 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S124",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S124 was graduated by LGIC_ENFORCE-C-S84 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S124",
+  "graduated by LGIC_ENFORCE-C-S84 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S84, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S84 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S125",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S125 was graduated by LGIC_ENFORCE-C-S84 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 1.0.0_SA_CTO.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S125",
+  "graduated by LGIC_ENFORCE-C-S84 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S84, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S84 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S127",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S127 was graduated by LGIC_ENFORCE-C-S86 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S127",
+  "graduated by LGIC_ENFORCE-C-S86 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S86, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S86 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S128",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S128 was graduated by LGIC_ENFORCE-C-S86 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S128",
+  "graduated by LGIC_ENFORCE-C-S86 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S86, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S86 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S129",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S129 was graduated by LGIC_ENFORCE-C-S87 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S129",
+  "graduated by LGIC_ENFORCE-C-S87 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S87, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S87 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S130",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S130 was graduated by LGIC_ENFORCE-C-S89 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S130",
+  "graduated by LGIC_ENFORCE-C-S89 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S89, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S89 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S131",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S131 was graduated by LGIC_ENFORCE-C-S90 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 1.0.0_SA_CTO.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S131",
+  "graduated by LGIC_ENFORCE-C-S90 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S90, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S90 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S132",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S132 was graduated by LGIC_ENFORCE-C-S90 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S132",
+  "graduated by LGIC_ENFORCE-C-S90 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S90, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S90 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S133",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S133 was graduated by LGIC_ENFORCE-C-S91 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 1.0.0_SA_CTO.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S133",
+  "graduated by LGIC_ENFORCE-C-S91 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S91, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S91 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S134",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S134 was graduated by LGIC_ENFORCE-C-S91 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S134",
+  "graduated by LGIC_ENFORCE-C-S91 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S91, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S91 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S135",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S135 was graduated by LGIC_ENFORCE-C-S92 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 1.0.0_SA_CTO.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S135",
+  "graduated by LGIC_ENFORCE-C-S92 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S92, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S92 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S136",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S136 was graduated by LGIC_ENFORCE-C-S93 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S136",
+  "graduated by LGIC_ENFORCE-C-S93 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S93, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S93 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S137",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S137 was graduated by LGIC_ENFORCE-C-S93 and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S137",
+  "graduated by LGIC_ENFORCE-C-S93 (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S93, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where LGIC_ENFORCE-C-S93 named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S138",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S138 was graduated by a CVO adjudication row and carried no remediation row, so it was invisible to every later round -- the exact class the rowlessness limb exists to stop. The row is minted here, in the same commit as the slug act that the gate graded, rather than outside a round where it could never be written. ORIGINAL HAZARD STANDING INERT, class OBSERVATION, surfaced by 2.0.0_SA_COO~G.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S138",
+  "graduated by a CVO adjudication row (disposition GRADUATED)",
+  "minted at HEAD 9f86abbb06 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to this seat's adjudication row, which states the verdict and names any residual and its owner; this row exists so the transfer has a carrier a later round can see. \u26a0 IT DOES NOT RE-CLOSE OR RE-OPEN ANYTHING: where that row named a live residual under another seat, that residual keeps its own clock on its own row and is untouched here.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+## Carrier for S139, minted with its graduation (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S139",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER FOR A GRADUATED ITEM THAT HAD NONE. LGIC_ENFORCE-S139 is graduated by LGIC_ENFORCE-C-S95 in this same commit; the carrier is minted with it so the item is never rowless, which is the state the gate's rowlessness limb exists to prevent. Its own finding is that the investigation carrier holds a FILED-AT fact and the remediation carrier holds the LIVE one -- so a row of its own here is not bookkeeping, it is the only carrier that will answer a later round's question about it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S139",
+  "graduated by LGIC_ENFORCE-C-S95 (disposition GRADUATED)",
+  "minted at HEAD 1b8b8f6566 in the same commit as the slug act the row gate graded"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S95, which adopts the tense distinction and records that this seat's own C-S91 filter was right on the state carrier for an incomplete reason. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING: S139's own count of 33 live armed clocks is that seat's and keeps its own owner.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
