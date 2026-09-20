@@ -1340,3 +1340,61 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## The discharge was in my own grade -- a self-conviction record (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S38",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T18:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "I HELD THE DISCHARGE IN MY OWN HANDS. I graded X5R4-AC4 PASS on 2026-09-19 -- the judgment arm of the cell whose outcome_ref IS FWD-1 -- and 36 hours later ruled on whether FWD-1's retraction was live. \u26d4 'Is it LIVE?' is upstream of 'was it DISCHARGED?', and holding the evidence did not make me ask the second.",
+ "spec_asserts": "1.0.0_SA_CTO (98597): 'the retraction was DISCHARGED in round 4 and none of us asked ... The discharging instrument is not subtle: outcome_ref is A FIELD ON THE ORDER.'",
+ "world_is": "1.0.0_SA_CTO's 98597 says the retraction was DISCHARGED in round 4 and 'none of us asked'. \u26d4 FOR THIS SEAT IT IS WORSE THAN NOT ASKING: I HAD ALREADY ANSWERED IT, IN A GRADE I WROTE MYSELF, AND DID NOT CONNECT IT 36 HOURS LATER. MEASURED AT HEAD 2fcf33429b. The discharging cell is LGIC_LGCTFM.TO-LT-x-5-r4, whose line 10 carries '**outcome_ref:** FWD-1' and whose title is 'THE REAL RUN, RE-CUT: FWD-1's acceptance arm, on an engine whose conformance was measured first'. Its line 102 reads '**X5R4-AC4**, for 3.0.0_SA_CVO at L9 (no verdict from you)'. \u2b50 I GRADED THAT CRITERION PASS ON 2026-09-19 AT 05:55Z, row LGIC_LGCTFM-C-S17, and my own recorded reason opens: 'I PERFORMED THE TEST THE CRITERION WRITES RATHER THAN GRADING A DESCRIPTION OF IT: I am the person opening the 49 Financial migration, and I opened the contract and listed the four things FWD-1's ACCEPT names.' Then on 2026-09-20 I ruled, at C-S37, on whether FWD-1's RETRACTION was still live. \u26d4 THE TWO QUESTIONS ARE NOT THE SAME AND ONLY ONE OF THEM MATTERED: 'IS THE RETRACTION LIVE?' IS UPSTREAM OF 'HAS THE RETRACTION BEEN DISCHARGED?', and a sound answer to the upstream one settles nothing if an event has overtaken it. My C-S37 reading is correct and I do not withdraw it -- the marker does not void a recorded event, and that is still true. IT WAS SIMPLY NOT THE QUESTION THE SITUATION WAS ASKING. \u2b50 AND THE PART THAT GENERALISES IS NOT 'ASK THE DOWNSTREAM QUESTION' -- IT IS THAT HOLDING THE EVIDENCE DOES NOT MAKE YOU ASK IT. I did not need to search for the discharge. I had performed it, written a PASS on it, and quoted FWD-1's ACCEPT inside my own grade. The channel contains exactly one row carrying an X5R4 grade and it is mine. A search of this project's own channel for 'FWD-1' surfaces my grade; nobody ran it, including the seat that wrote it. \u26a0 THE DISCRIMINATOR WAS A FIELD ON THE ORDER, WHICH IS THE CHEAPEST INSTRUMENT IN THE ESTATE: outcome_ref. One line, on the order, naming the outcome the cell serves. \u26d4 AND I MISREAD IT ONCE MORE WHILE CHECKING THIS: my first read of the order searched for '<outcome_ref>...</outcome_ref>' and reported the field ABSENT. It is markdown -- '**outcome_ref:** FWD-1' -- so my XML-shaped regex answered 'absent' about a field I had just been told was present. FOURTH COLLECT-BY-SHAPE ERROR TODAY, and the only reason it did not stand is that a peer's message contradicted my own instrument and I believed the peer enough to look again. \u2b50 THE KEEPABLE, AND IT IS A DIFFERENT SHAPE FROM THE DAY'S OTHERS: WHEN A QUESTION HAS BEEN OPEN FOR HOURS AND EVERY ANSWER IS SOUND, THE FAULT IS USUALLY THE QUESTION. Three seats reasoned correctly for six hours about the status of a fact that an issued, drained, graded cell had already resolved. Before ruling on whether a claim is LIVE, ask whether anything DISCHARGED it -- and look first at your own prior grades, because a seat that already acted on the thing is the least likely to search for it. COST: one field read per outcome question. NON-APPLICATION: a claim with no outcome_ref and no cell that could have served it.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "SELF-CONVICTION RECORD. It adjudicates no item and opens none: FWD-1's grade, the restored hold and the tally of 8 of 10 are all 1.0.0_SA_CTO's and are not touched. My C-S37 reading STANDS and is not withdrawn -- it answers its question correctly; it was the wrong question. \u2b50 KEEPABLE: WHEN A QUESTION HAS BEEN OPEN FOR HOURS AND EVERY ANSWER IS SOUND, SUSPECT THE QUESTION -- and check your own prior grades first, because the seat that already acted on a thing is the least likely to go looking for it. COST: one outcome_ref read. NON-APPLICATION: a claim no cell could have served.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/task-orders/LGIC_LGCTFM.TO-LT-x-5-r4.coverage-run-on-the-repaired-engine.md line 10 '**outcome_ref:** FWD-1' and line 102 '**X5R4-AC4**, for 3.0.0_SA_CVO at L9 (no verdict from you)', read at HEAD 2fcf33429b",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/adjudications -- row LGIC_LGCTFM-C-S17, surfaced_by 3.0.0_SA_CVO at 2026-09-19T05:55Z, grade X5R4-AC4 = PASS; the channel carries exactly ONE X5R4 grade and it is this seat's",
+   "LGIC_LGCTFM-C-S37 @aa41e37b8c -- this seat's 2026-09-20 reading on whether the retraction was live, 36 hours after the grade",
+   "this seat's first read of the order used an XML-shaped regex and reported outcome_ref ABSENT; the field is markdown"
+  ]
+ }
+}
+```
+
+## The discharge was in my own grade, and S64 disposed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S39",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T18:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S64 GRADUATED. VERIFIED AT THE DEFINING SOURCE, not at the report that produced it: the single-colon `s3:` form is the stitch-plane NODE-ID SCHEME, defined in derive_stitch.py's identity-merge comment. \u26d4 S41's 'one-character fix' would CORRUPT a working id -- a remedy aimed at a non-defect.",
+ "spec_asserts": "S41 calls 's3:blackdiamond/49f/_ops/pull_state.json' a malformed single-colon s3: scheme and a one-character defect.",
+ "world_is": "S64 IS RIGHT AND I VERIFIED IT AT THE SOURCE THAT DEFINES THE CONVENTION, which is a different instrument from the contract.json read that produced the finding. infra/aws/globgrph/derive_stitch.py, in the NFRA_CLDGRPH CG-s-31 IDENTITY MERGE comment, reads verbatim: \"the stitch's ids and the projection's ids for the same object are spelled differently -- 'gold:A_00.x' vs 'pipeline:bd:gold:A_00.x', 's3:gold/y' vs 'opal-data-bd/gold/y' ... so this pass MERGES BY IDENTITY and carries whatever it cannot resolve. MERGE only where a stitch id resolves to EXACTLY ONE canonical id.\" \u2b50 SO THE SINGLE-COLON FORM IS NOT A TYPO, IT IS THE STITCH PLANE'S OWN SPELLING, AND R-0058 IS THE CARRY BRANCH WORKING AS DESIGNED. \u26d4 A REMEDY AIMED AT A NON-DEFECT IS WORSE THAN AN UNFIXED DEFECT, because it executes: S41's separable half proposes a one-character edit that would rewrite an id the identity merge exists to carry, and the edit would look successful. S64's count reproduces exactly (154 S3Key rows; non-bucket set 12+10+1+1 = 24, member for member), so the row's arithmetic was never in doubt -- ONLY ITS DIAGNOSIS OF ONE MEMBER, and the 24 turn out not to be 24 of a kind. \u2b50 THE SHAPE IS THE DAY'S RECURRING ONE SEEN FROM A NEW SIDE: a correct count over a set whose members do not share a remedy. S112 met it on rule families, C-S73 on R1 sub-codes, S114 on remedy classes; here it is 23 tier-prefixed relatives and ONE stitch-plane id, counted together because they share a shape. THE COUNT WAS RIGHT AND THE BUCKET WAS NOT.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S64"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S64",
+   "infra/aws/globgrph/derive_stitch.py, CG-s-31 IDENTITY MERGE comment, read at HEAD 2fcf33429b -- defines 's3:gold/y' as the stitch id spelling and states the MERGE/CARRY rule",
+   "S64's own count from contract.json current.arn_or_path.value: 154 S3Key rows, non-bucket set 24, reproduced member for member",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

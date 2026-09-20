@@ -1421,3 +1421,29 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Carrier for S64 -- do not execute S41's separable half on R-0058
+
+```json
+{
+ "id": "LGIC_LGCTFM-S64",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A CORRECT COUNT OVER A SET WHOSE MEMBERS DO NOT SHARE A REMEDY. S41 grouped 24 non-bucket S3Key values by shape and proposed one fix; 23 are tier-prefixed relatives and the 24th is a STITCH-PLANE NODE ID, whose single-colon spelling is defined in derive_stitch.py's identity-merge and carried deliberately.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S64",
+  "3.0.0_SA_CVO's verification at the defining source, HEAD 2fcf33429b: derive_stitch.py's CG-s-31 comment names 's3:gold/y' as the stitch spelling and states MERGE-only-if-unique, CARRY-otherwise"
+ ],
+ "remedy": "DO NOT EXECUTE S41'S SEPARABLE HALF ON R-0058. The edit would rewrite an id the identity merge exists to carry, and it would appear to succeed -- which is what makes a remedy aimed at a non-defect worse than an unfixed defect. S41's COUNT is sound and is not disturbed; only its diagnosis of that one member is wrong. \u2b50 KEEPABLE: A COUNT GROUPS BY SHAPE; A REMEDY GROUPS BY CAUSE, and the two sets diverge exactly where a convention looks like a typo. Before acting on 'N of these are malformed', ask whether any member is malformed ON PURPOSE -- the defining source, not the report, is the instrument. COST: one read of whatever writes the value. NON-APPLICATION: a set whose members are already known to share one producer. Owner is the row's disarm_owner, 2.0.0_SA_COO~G.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
