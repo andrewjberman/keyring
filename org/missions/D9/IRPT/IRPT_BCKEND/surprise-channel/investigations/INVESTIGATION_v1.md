@@ -7196,3 +7196,114 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "NOT A REQUEST TO RE-OPEN ANY GRADED ARM, and this row does not assert that any entitlement gap is UNenforced -- it asserts that the estate currently holds NO EVIDENCE either way on this route, which is a different and weaker claim than the controls have been reporting. The remedy is not a better control: it is S100. DISARM CONDITION, measurable and inherited rather than invented: when S100 disarms, re-run any one holdings negative control TOGETHER WITH a permitted-account request and require the two codes to DIFFER; that pair is the discrimination the control has been missing. Until then, a holdings refusal may be recorded but must not be cited as proof that a scope boundary was enforced. GENERAL FORM, offered for the round analysis and not filed as a second row: a negative control is only evidence when the POSITIVE case is exercised beside it on the same instrument in the same run -- otherwise a globally-broken route manufactures PASSes for every control pointed at it."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S42",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:10:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "S105'S LITERAL WORDING (\"align to firms/{firm}/generations/.../exports/{rev}/\") NAMES SEGMENTS THE READER'S REQUEST NEVER CARRIES -- THE FIX IMPLEMENTED IS A DIFFERENT, WORKING ADDRESS AND THE SIGNERS NEED TO SEE THE SUBSTITUTION BEFORE THEY SIGN IT",
+  "spec_asserts": "This order's arm (b)(i): 'align RECEIPT_KEY_TEMPLATE (export/entry.py:63-64) to the firms/{firm}/generations/.../exports/{rev}/ family the writer produces'. The CTO ruling and row S105 both use the same shape in prose ('read <generations prefix>/exports/{revision}/receipt.json').",
+  "world_is": "entry.py's export-receipt route (_export_id, _load_receipt) resolves a receipt from exactly TWO values: the VERIFIED tenant and a caller-supplied export_id (GET /export/{exportId}, one path segment, no generation_id/attempt/export_revision anywhere in the v1 route or the request). handler.py's bundle_key/artifact_key build their address from generation_id+attempt+export_revision, none of which identity.py's export_id (a hash of bundle_sha256+contract_version, identity.py:78-84) encodes or lets a reader recover. So the literal 'firms/{firm}/generations/{gen}/attempts/{a}/exports/{rev}/receipt.json' address is NOT reconstructable by this route from what it is given -- reading it verbatim would require either a new lookup (out of this order's two-edit scope) or a new request parameter (a v1 contract change, also out of scope). IMPLEMENTED INSTEAD: a shallow address in the SAME declared 'generations' family (core/layout.json / _keys.PREFIX_FAMILIES), keyed by (firm, export_id) alone -- handler.py's new receipt_key()/persist_receipt() write it in finalize_export beside the bundle's own directory tree (same family, same s3_evidence_key() builder), and entry.py's RECEIPT_KEY_TEMPLATE is aligned to the IDENTICAL string (proved equal this run: firms/49financial/generations/EXP-a...a/receipt.json on both sides). This closes S105's MEASURED defect (the old address matched 0 of 7 GetObject ARNs and KeyCount 0 under its whole prefix) with a real writer and a real, computable reader -- but it is not the literal directory the writer ALSO builds for the bundle/artifact, and a signer reading only the order's prose would expect the deeper path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py _export_id()/_load_receipt() @ this cell's HEAD -- the only inputs are event-derived export_id and ctx.tenant; no generation_id/attempt/export_revision carrier exists in either function",
+      "infra/aws/lambda/investor-reporting/export/identity.py:78-84 -- export_id = f(bundle_sha256, contract_version); no positional information about generation_id/attempt/export_revision survives in it",
+      "infra/aws/lambda/investor-reporting/export/handler.py bundle_key()/artifact_key() (pre-existing) vs the new receipt_key() -- the former need generation_id+attempt+export_revision, the latter needs only tenant+export_id, by construction",
+      "verification run this session: handler_mod.receipt_key('49financial', 'EXP-'+'a'*32) == entry_mod.RECEIPT_KEY_TEMPLATE.format(firm='49financial', export_id='EXP-'+'a'*32) -> True, both = 'firms/49financial/generations/EXP-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/receipt.json'",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_S105_S106_EXPORT_RECEIPT_CONTRACT_20260919.md @0110b9de01 -- rules the REMEDY PAIR (align + write) but does not address the reader's available parameters"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT A REQUEST TO WIDEN THIS ORDER. The two source edits landed exactly as bounded (entry.py + handler.py only, no new route parameter, no IAM widening beyond the one narrow grant this same address needs -- see W1-S44 below). This row exists so the never-widen halves are signed against what the code ACTUALLY does, not against the order's prose reading, since the CTO ruling's own S3 (the acceptance) and this order's arm (e) both describe a round trip that this address does satisfy (a submit that persists a receipt, a read that finds the SAME object) -- the substitution changes WHICH string the address is, never WHETHER the round trip can work. DISARM CONDITION: the CTO (or a COO amendment) reads this row and either ratifies the shallow (firm, export_id) address as satisfying S105's intent, or names a different one -- at which point the row graduates to whichever face carries that decision."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S43",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:15:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "EVEN AFTER S105+S106 DEPLOY, THIS ORDER'S ARM (e) ROUND TRIP CANNOT BE EXERCISED ON THE DEPLOYED PATH: entry.py's OWN submit_export (the one actually WIRED into the served ENTRY.operations table) unconditionally raises _ExportNotWiredHere and never calls handler.py at all",
+  "spec_asserts": "This order's arm (e): 'an exercised submit-export -> export-receipt round trip on the REAL path returns the just-written receipt'. handler.py's own module docstring and finalize_export's docstring both describe a working controller that persists a bundle and (after this cell) a receipt.",
+  "world_is": "infra/aws/terraform/investor-reporting/export/lambda.tf:46 sets handler = \"entry.lambda_handler\" -- the SERVED entry point is export/entry.py's `_entry.lambda_entry(ENTRY)`, and ENTRY.operations[OPERATION_SUBMIT] is entry.py's OWN module-level submit_export (entry.py:157-168), NOT handler.py's submit_export. entry.py's submit_export body is: \"raise _ExportNotWiredHere('the export controller is owned and being changed by another cell in this window; this entry authorizes the route and does not call it')\" -- unconditional, no branch. The comment naming 'another cell in this window' (IB-rt-4) is from an EARLIER round (handler.py has since been fully built out as 'Cell IB-rt-8 (re-purposed)', a real controller with persist/dispatch/finalize) and was never updated once that cell landed. So on the LIVE, deployed function, EVERY submit-export call -- today, and after this order's own deploy, unchanged -- returns NOT_READY and never reaches handler.py's persist_bundle/finalize_export/persist_receipt at all. This order's two edits (S105 align + S106 taxonomy) are real and correct on their own terms, and the OFFLINE unit tests for handler.py pass (68 of 68, this run), but the LIVE round trip arm (e) asks for is blocked by a THIRD gap this order's <paths>/BOUNDS do not name and its two-edit scope does not authorize touching (wiring entry.py's submit_export to handler.py's is a THIRD source change, and BOUNDS states 'the served-byte delta is exactly those edits [the two] or STOP').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/export/lambda.tf:46 @HEAD -- handler = \"entry.lambda_handler\"",
+      "infra/aws/lambda/investor-reporting/export/entry.py:157-168 @ this cell's HEAD (unedited by this order) -- submit_export's body, verbatim, is the unconditional raise quoted above",
+      "infra/aws/lambda/investor-reporting/export/entry.py:190-201 @HEAD -- ENTRY = _entry.Entry(..., operations={OPERATION_SUBMIT: submit_export, ...}) binds OPERATION_SUBMIT to THIS module's function, not handler.py's",
+      "infra/aws/lambda/investor-reporting/_authz/served.py Entry.handle() @HEAD -- compute = self.operations.get(operation); the dispatch never imports or calls handler.py",
+      "infra/aws/lambda/investor-reporting/export/handler.py header @HEAD -- 'Cell IB-rt-8 (re-purposed)... Round 2 makes that honest by SPLITTING THE JOB' -- the controller that exists but is never reached from the served entry point",
+      "68 of 68 offline tests pass this run (py -3.12 -m pytest infra/aws/lambda/investor-reporting/export/tests/ -q) -- confirms handler.py's OWN logic works when called directly; it is never called from the deployed handler"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHY BLOCKING AND NOT MERELY OBSERVATION: it blocks this VERY cell's own arm (e) from EVER passing on the deployed path, not just this pass's (expected-STOP) pass -- so even a future pass that gets both never-widen halves signed and applies S105+S106 will still measure a NOT_READY on submit and cannot close R72-AC1's live half. WHY NOT MINE TO FIX HERE: this order's BOUNDS name exactly two source edits (S106's except clause, S105's template+write) and REFUSE any served-byte delta beyond them; wiring entry.py's submit_export to handler.py's submit_export/finalize_export is a THIRD, undeclared source change on a function BOUNDS already restricts, and doing it unasked is the 'fix a neighbouring defect' this channel's own rule forbids a worker. ROUTES TO THE COO (Rule 27, decomposition) rather than the CTO: the CTO's ruling already decided the CONTRACT question for S105/S106; whether/how to cut a follow-on cell that wires the submit route is a DECOMP question. DISARM CONDITION, measurable: entry.py's submit_export operation calls handler.py's submit_export/finalize_export (under whatever cell authorizes that edit) and an exercised submit-export invocation on the deployed function returns something other than NOT_READY/_ExportNotWiredHere."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S44",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:20:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE DEPLOYED irpt-export-render ZIP HAS NEVER PACKAGED keys.py, SO handler.py's PRE-EXISTING bundle_key()/artifact_key() (AND THIS CELL'S NEW receipt_key()) WOULD ImportError AT RUNTIME -- FOUND AND FIXED IN THIS SAME COMMIT, NOT THIS ORDER'S OWN REMEDY",
+  "spec_asserts": "This order's arm (b) names two source edits (S105, S106) and arm (c) requires 'the served-byte delta EXACTLY the edited members'. Nothing in the order anticipates a THIRD, non-code manifest change.",
+  "world_is": "infra/aws/lambda/ci/lambda-source-map.json's irpt-export-render entry (files[] and staged_from[], read at this cell's HEAD before this edit) carried NEITHER 'keys.py' in files[] NOR a staged_from entry for _keys/keys.py -- unlike the four sibling investor-reporting functions (directory, holdings, narrative, performance) that all stage the SAME _keys/keys.py. handler.py's bundle_key()/artifact_key() (pre-existing, unedited by this order) already do 'import keys as _keys' lazily, and build-and-upload.sh's own zipping loop (infra/aws/lambda/ci/build-and-upload.sh:317-368) copies ONLY files[] plus materialized staged_from members into the artifact -- a member absent from both is absent from the zip, which is this same script's own documented incident class (comment at :331-337, citing the 2026-05-13 smartx ingestion ImportError). This cell's own S105 write path (handler.py's new receipt_key()) calls the identical import, so closing this gap was necessary for THIS cell's fix to run at all, not optional polish. FIXED, this commit: keys.py added to both files[] and staged_from[] (same pin/sha256 the four sibling functions already use -- verified byte-identical to the current _keys/keys.py, sha256 56ee3cc2...df08ab2a) and the build re-run: 'OK: staged keys.py <- .../_keys/keys.py@6e764ef0aa ... sha256 verified' and 'OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json 'irpt-export-render' entry, read at this cell's pre-edit HEAD: files[] = [assets.py...raw_keys.json], no 'keys.py'; staged_from[] carries enforce.py/errors.py/resolve.py/ids.py/raw_keys.json/loaders.py/served.py/custodian_key_seam.json -- 8 entries, none for _keys/keys.py",
+      "the SAME file's 'irpt-directory-search'/'irpt-holdings'/'irpt-narrative'/'irpt-performance-adapter' entries (grep this run) each DO carry a staged_from entry for infra/aws/lambda/investor-reporting/_keys/keys.py, pin 6e764ef0aa, sha256 56ee3cc2...df08ab2a",
+      "infra/aws/lambda/ci/build-and-upload.sh:317-329 (files existence check) and :349-368 (disk<->manifest parity check) -- both read ONLY files[]/staged_from[], confirming a member absent from both never reaches the zip",
+      "this session's build output after the fix: 'OK: staged keys.py <- infra/aws/lambda/investor-reporting/_keys/keys.py@6e764ef0aa (29894 bytes, sha256 verified...)' and 'OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied'",
+      "byte-hash diff of the old vs new deployed zip this session: ADDED=['keys.py'], REMOVED=[], CHANGED=['entry.py','handler.py'] -- confirms keys.py is a genuinely NEW member, not a pre-existing one this session merely re-verified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "CLASS is BLOCKING because, left unfound, it would have blocked this order's own fix from working at all (handler.py's finalize_export would ImportError the first time persist_receipt ran, and the PRE-EXISTING bundle_key()/artifact_key() calls carried the same latent failure before this order ever touched this function). HAZARD_STANDING is INERT because the fix landed in this same commit, inside this order's granted <paths> (infra/aws/lambda/ci/lambda-source-map.json is explicitly listed). NOT this order's own remedy (S105/S106 are the named fix; this is a necessary companion this seat found while proving the build), which is why it is filed as a row rather than folded silently into the packet's own prose. NO DISARM OWNER: already disarmed, same commit."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S45",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "A SIBLING WORKER'S build-and-upload.sh RUN IS VISIBLE IN EVERY OTHER WORKER'S terraform plan IMMEDIATELY -- BEFORE ANY COMMIT, MERGE OR APPLY -- BECAUSE THE ARTIFACT BUCKET IS SHARED AWS STATE, NOT WORKTREE-ISOLATED",
+  "spec_asserts": "This order's arm (c) asks for 'THE OTHER ROOTS RE-TAKEN' style evidence that only THIS cell's function changed (implicit in 'no other function's bytes' and the R7.2 fanout note that the four round-7 chains have DISJOINT write surfaces).",
+  "world_is": "Running a real (backend-attached) terraform plan in THIS worker's own worktree against the holdings/ops/performance roots -- none of which this order's <paths> grant, and none of which this worker touched -- showed EACH one planning exactly ONE Lambda function update (source_code_hash + s3_object_version changing), matching the shape of the SAME round's sibling cells (IB-rtg-2 status/ops, IB-rtg-3 performance, IB-rtg-4 holdings). The most likely explanation, not itself independently confirmed by this row: a sibling worker in a DIFFERENT worktree already ran build-and-upload.sh for its own function, and that script uploads straight to the SHARED s3://opal-313476888478-lambda-artifacts bucket -- a step that has NOTHING to do with git, so it is visible from any worktree's terraform plan the moment it happens, regardless of whether anyone has committed, merged, or is anywhere near an apply. This means 'no changes on the other roots' is NOT a safe assumption to print in a packet during a multi-worker round purely from a clean git diff -- a real plan read can show drift that is a SIBLING's legitimate in-flight work, not a defect of the reading worker's own act, and a reader of a packet who does not know this could mis-attribute the diff.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this session: `terraform plan` (real backend, no -out needed for the read) in infra/aws/terraform/investor-reporting/{holdings,ops,performance} each printed 'Plan: 0 to add, 1 to change, 0 to destroy' against module.irpt_holdings.aws_lambda_function.this / module.irpt_status.aws_lambda_function.this / module.irpt_performance_adapter.aws_lambda_function.this respectively -- each ONLY its own function's source_code_hash/s3_object_version, nothing else",
+      "the SAME session's plan against directory/intake/narrative/ycharts/core/api roots (also untouched by this order) printed 'No changes. Your infrastructure matches the configuration.' -- the clean baseline this row contrasts against",
+      "this worker's OWN worktree (wk-irpt-7-1) carries no edits to holdings/, ops/, or performance/ source (git status this session: only export/iam.tf modified) -- so the drift those three roots show cannot be an effect of anything this worker wrote",
+      "R7.1's own decomp table names IB-rtg-2 (ops/status), IB-rtg-3 (performance), IB-rtg-4 (holdings) as the round's other three cells, each a 'served-path handler deploy' per R7.2 -- i.e. each is expected to run its own build-and-upload.sh independently, in its own worktree, in the same window"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT A DEFECT OF NEVER-2 OR safe-apply.sh -- no apply happened anywhere in this observation, and Terraform's OWN plan is exactly the read-only comparison it is supposed to be. THE GAP is that a worker's never-widen packet (this order's arm (c) genre) can read 'the other roots are clean' as evidence of ISOLATION when a live multi-worker round means that read's DENOMINATOR (which roots are genuinely untouched) can shift between two reads for reasons that have nothing to do with the act being packeted. OFFERED FOR THE ROUND, not claimed as measured beyond this session: whether this is already known/accepted practice for round 7's parallel cells, or whether a packet's 'other roots' section should name this explicitly whenever a round runs >1 worker concurrently. DISARM CONDITION: a ruling or a doctrine note states whether/how a never-widen packet's 'other roots re-taken' evidence should be qualified during a multi-worker round, OR this class of read is shown to already be handled some other way this row did not find."
+}
+```
