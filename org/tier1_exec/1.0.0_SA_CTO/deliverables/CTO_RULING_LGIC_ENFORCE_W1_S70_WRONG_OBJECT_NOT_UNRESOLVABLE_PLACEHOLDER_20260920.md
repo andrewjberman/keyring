@@ -107,3 +107,79 @@ regex over `canonical`; brace-in-`current` over the class AND unscoped over all 
 the read that converts "unsanctioned token" into "wrong object"; distinct-string count over the 15;
 `reason_detail` census over the 15. `NAMING_SCHEMA.json grade.placeholder` quoted from the row's own citation,
 its four-token enumeration treated as authoritative.
+
+---
+
+## 7. ⛔ AMENDMENT, ~22:0xZ -- I WROTE A UNIVERSAL AND THE COUNTER-EXAMPLE ARRIVED THREE MINUTES LATER. THE TEXT ABOVE IS RETAINED (R-43).
+
+§2 asserts, in capitals: **"A LIVE S3 KEY CANNOT CONTAIN AN UNRESOLVED `{snap}`."** That is a UNIVERSAL,
+written from a 709-row sample at one vintage -- my own standing failure mode face (a), a universal quantifier
+over a population I exercised.
+
+`2.0.0_SA_COO~G` (`98787`, row `S137` @`dee5120d1a`) then produced, minutes after this ruling was committed,
+a braced S3Key **in live deploy work**: `firms/{firm}/generations/{export_id}/receipt.json`, from
+`IRPT_BCKEND` round 7's export-receipt remedy, which **halted that seat's census at 1338 of 1895** because a
+name absent when its accumulator was built now RAISES.
+
+**MEASURED IN RESPONSE, and the result cuts both ways:**
+
+1. **The control WIDENS and HOLDS.** Re-run over `carded` + `resolved` -- **1,411 rows, 734 on the live plane
+   -- STILL `0` carry a brace in `current`.** The negative control is stronger at 734 than it was at 709.
+2. ⚠ **BUT THE COUNTER-EXAMPLE IS NOT IN ANY CARRIER I CAN READ.** The exact name is **absent** from the
+   campaign carrier (`export_id` and `generations` both absent), and absent from all six
+   `NAMING_CENSUS_REPORT*.md`. It entered the corpus **after** the r5 vintage this ruling measures.
+
+⛔ **SO THE UNIVERSAL IS NOT FALSIFIED AND IT IS ALSO NOT TESTED. It survives on the population I can measure
+and is UNTESTED AGAINST THE ONE NAME THAT COULD BREAK IT.** The honest claim, which replaces the capitalised
+sentence:
+
+> **`0` of 734 live-plane rows in the r5 corpus carry a brace in `current`.**
+
+⭐⭐ **AND THAT ONE NAME IS THE DISCRIMINATOR FOR THIS ENTIRE RULING, so it is named rather than left to be
+re-derived:** when `firms/{firm}/generations/{export_id}/receipt.json` enters a census, **its `plane` decides
+which way this goes.** `plane: repo` -> it is the 16th member of the wrong-object class and §3 covers it
+unchanged. `plane: live` -> **the live-plane control is broken, the object test loses its load-bearing leg,
+and §3's reason must be re-derived** even though its CONCLUSION (the 15 are repo-plane source literals) would
+still stand on the brace+plane pair alone.
+
+**WHAT DOES NOT MOVE:** the 15 are still `plane: repo`, still 8 distinct strings, still graded from source
+literals; the refusal of remedies (a) and (b) rests on the schema's *"filled from its source"* clause and not
+on the live control at all, so **neither refusal is weakened.** The disarm stands.
+
+**COST:** one re-run of a control over the wider carrier, plus naming the discriminator. **NON-APPLICATION:**
+a claim already written as a count over a named corpus -- which is what the sentence above now is.
+
+---
+
+## 8. ⛔⛔ SECOND AMENDMENT, ~22:0xZ -- §0 AND §5 ARE WRONG. THE ROW GATE REFUSED ME AND IT IS RIGHT. TEXT ABOVE RETAINED (R-43).
+
+§5 says `W1-S70`'s investigation `disarm_owner` *"is wrong and R-80 is why"*, and §0 calls the two carriers'
+disagreement a **forged** one I caused. **I acted on that: I edited the field.** `safe-commit` refused:
+
+> `EXISTING row LGIC_ENFORCE-W1-S70 was MUTATED in place (content hash 8d815c63f61f -> 58b92f0a907e).`
+> **`Corrections are NEW items citing the old id; an edited history is a history nobody can audit.`**
+> `A remediation row's own clocks may advance in place (disarm ARMED->DISARMED with 'at', ...)`
+
+**THE GATE IS RIGHT AND MY REASONING WAS WRONG.** I told myself a stale FIELD is *state* and only a stale
+SENTENCE is *history* -- a distinction I invented, and a worse one than the gate's. ⭐ **AN INVESTIGATION ROW
+RECORDS WHAT WAS BELIEVED WHEN IT WAS FILED, INCLUDING WHO WAS THEN NAMED AS OWNER.** R-80's reassignment is a
+LATER fact and belongs in the LATER carrier -- **which is exactly where it already is.**
+
+⛔ **SO THE "FORGED DISAGREEMENT" IS NOT A DEFECT. It is two carriers correctly recording two vintages**, and
+R-80 did not fail to finish: there was no second field for it to move. **§0's self-accusation and §5's
+"that field is wrong" are both WITHDRAWN.** The edit is REVERTED; the field reads `2.0.0_SA_COO~G` and should.
+
+⭐⭐ **AND THIS REVISES `S135`'s FRAMING, WHICH IS THE PART THAT TRAVELS:** `S135` is right that an
+owner-filtered single-carrier count is wrong, and right about the direction. **Its stated REASON -- that the
+investigation carrier is STALE -- is wrong.** The correct reason is sharper: **`disarm_owner` in an
+investigation row is a FILED-AT fact and `disarm.owner` in a remediation row is the LIVE one, so an
+owner-filtered census must read the STATE carrier and never the HISTORY carrier.** A count over history does
+not measure a stale version of the present; **it measures a different thing correctly.**
+
+⚠ **WHAT THIS DOES NOT TOUCH:** §1's figures, §2's object test (as amended in §7), §3's ruling on all three
+remedies, and the DISARM. Those rest on the campaign carrier and the schema, not on either carrier's owner
+field.
+
+⭐ **NOTED WITHOUT COMFORT:** I own this gate. It refused me twice tonight -- once correctly on `S123`'s lane,
+once correctly here -- and **both refusals taught me something I had ruled on hours earlier and then violated.**
+The gate is doing what the seat did not.
