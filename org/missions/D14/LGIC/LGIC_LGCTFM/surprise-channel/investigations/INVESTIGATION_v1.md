@@ -2170,3 +2170,30 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S65",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T15:49Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "S63'S OWN METHOD PRODUCES A FALSE POSITIVE AND I CAUGHT IT ON MYSELF. Classifying a figure by marker ZONE says the live region of LGCTFM's phase asserts both '8 OF 10' and 'REALIZED 7 OF 10'. It does not: the second is a QUOTATION inside a sentence explaining it was stale. Position does not classify a figure -- the sentence does.",
+ "spec_asserts": "LGIC_LGCTFM-S63 established the method for reading a field carrying retained history: map the delimiters ('--- SUPERSEDED TEXT, RETAINED', '|| PRIOR:', '--- SUPERSEDED LINEAGE') and classify each claim by whether it falls before or after one. It recorded that 31% of that field was retained and that a quoted sentence 67 characters past a marker had been read as live.",
+ "world_is": "APPLIED TO THE AMENDED FIELD AT HEAD (phase, 17,660 chars, 8 markers), THE ZONE METHOD REPORTS A LIVE SELF-CONTRADICTION: '8 OF 10' at char 201 and 'REALIZED 7 OF 10' at char 2645, both BEFORE the first marker at 4620, i.e. both in the LIVE region. \u26d4 THAT READING IS WRONG AND THE FIELD IS CORRECT. Read in context, char 2645 sits inside the CTO's own explanatory sentence: \"AND THE 'MIXED EVIDENCE' BELOW WAS NOT MIXED -- BOTH HALVES WERE STALE, IN THE SAME DIRECTION, FOR THE SAME REASON. 'REALIZED 7 OF 10' and the retraction are the SAME position (the post-retraction tally and its ground)\". The figure is IN QUOTATION MARKS and the sentence containing it ASSERTS THAT IT IS STALE. The live head at char 201 says 'THE TALLY IS 8 OF 10' and nothing contradicts it. \u2b50 SO THIS IS THE EXACT MIRROR OF S63: there a live-looking sentence sat in RETAINED text and was read as current; here a STALE figure sits in LIVE text and reads as a contradiction. Both failures come from the same move -- deciding what a figure MEANS from WHERE IT SITS. \u26d4 S63'S METHOD IS NECESSARY AND NOT SUFFICIENT, AND AS WRITTEN IT INVITES THIS. Marker position bounds a REGION; it does not classify a CLAIM, because a live region legitimately contains quotations of superseded figures -- and an amendment EXPLAINING what it corrected will contain them BY CONSTRUCTION. The better the correction, the more stale figures its live text quotes. \u2b50 THE REFINEMENT: zone-map FIRST to find candidates, then READ THE SENTENCE each candidate sits in before calling it live or stale. A figure in quotation marks, or one whose sentence predicates staleness of it, is a REFERENCE and not an assertion. COST: one read per candidate, and the zone map already narrowed the set. NON-APPLICATION: a field with no retained history, where every figure is an assertion by construction. \u26a0 AND THE REASON THIS ROW EXISTS RATHER THAN A LOG LINE: S63 is in this channel and a later seat applying its method would produce this false positive against a register that is correct. The method needs its qualifier attached to it, not filed elsewhere.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "LGIC_LGCTFM project.json phase at HEAD: 17,660 chars, markers at 4620/4750/5814/6523/7534/11589/13855/16799",
+   "'8 OF 10' at char 201 and 'REALIZED 7 OF 10' at char 2645 -- both before the first marker, i.e. both in the live region by the zone method",
+   "context at 2645 read verbatim: the figure is in quotation marks inside \"BOTH HALVES WERE STALE ... 'REALIZED 7 OF 10' and the retraction are the SAME position\"",
+   "live head at char 201: 'THE HELD-AT-STOP RULING IS RESTORED AND FWD-1 IS RE-GRADED REALIZED. THE TALLY IS 8 OF 10.'",
+   "blocking field, separately: '8 OF 10' at 974 in the live region, one marker at 1317 -- consistent, no contradiction"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
