@@ -2511,3 +2511,27 @@ its tip and requiring them IDENTICAL.** The cell is documentation-only, and the 
 mechanically rather than in prose.
 
 `EN-n-2` owns no other cell's surface; no round is open on this project; `§5`'s levels are untouched.
+
+### 0t.4 ⛔ THE EXERCISE BAR, CARRIED HERE SO IT CANNOT BE LOST BETWEEN PREPARATION AND THE CUT
+
+`1.0.0_SA_CTO` ruled `LGIC_ENFORCE-S123` **against itself** @`9b595b2832` and the correction changes
+this cell's footing. S123 said *"THE FILE IS WRITABLE BY NO SERIAL"*; that subject was **too wide**.
+⭐ **`permitted_agents: []` IS AN EMPTY LIST, NOT A CLOSED DOOR:** `check_agent` enters the list
+branch, falls through clauses 1-4, and **REACHES CLAUSE 5 -- the worker grant.** A
+`0.9.0_WK_<CODE>~<n>` named by a NON-TERMINAL order whose `<paths>` names this file is **PERMITTED**.
+So `§0t.2`'s routing is confirmed and **the drafting was never blocked on ownership at all** -- its
+only condition is this seat's disk arm, which is unmet, and that ruling does not un-park it.
+
+⚠ **AND THE ROUTE IS UNEXERCISED ON THIS SHAPE.** Measured at HEAD by that seat: **45 non-terminal
+orders across 19 codes, ZERO naming a bare `deliverables/<file>` path.** The W1-S106/S108 precedent is
+clause **4** both ways -- a worker refused on a FOREIGN serial's folder, permitted on its OWN -- and
+is **not** clause 5 on an empty enumeration. The ruling therefore rests on a SOURCE READ plus a
+control on a DIFFERENT clause.
+
+⛔ **THE BAR, WHICH BINDS THE ISSUER OF THIS CELL AND IS THIS SEAT:** after the order is at HEAD and
+**BEFORE any reliance on the grant**, run `.tools/owned-paths-validate.py` for
+`0.9.0_WK_LGIC_ENFORCE~<n>` against
+`org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md` and **confirm PERMIT**, with a
+negative control on a serial the order does not name. **If it REFUSES, file a BLOCKING row and do not
+work around it.** ⭐ A MECHANISM READ FROM SOURCE IS **DESIRED**; THE COMMIT IS **EXERCISED**, and
+this cell does not conflate them -- the first cut IS the exercise.
