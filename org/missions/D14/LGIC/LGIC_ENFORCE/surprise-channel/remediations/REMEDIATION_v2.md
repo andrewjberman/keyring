@@ -2695,3 +2695,35 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S115 -- FWD-5 clause 2 is a different population; sizing is 1.0.0_SA_CTO's
+
+```json
+{
+ "id": "LGIC_ENFORCE-S115",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "FWD-5 CLAUSE 2 IS A DIFFERENT POPULATION FROM EVERYTHING RULED ON TODAY. The 1298 unfillable-form residual are graded rows carrying placeholders; the 462 raising names are carded and never graded. A placeholder-eligible token does not raise, so the two sets cannot intersect -- verified on the grader. The 1119 {system} rows have a system token that is ABSENT rather than UNRESOLVED, which is why a real registry change between two census runs moved the residual by ZERO.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S115",
+  "3.0.0_SA_CVO's grader test at HEAD e40052a037: a placeholder-bearing name GRADES while an unresolved-token name RAISES and emits no canonical",
+  "W2-S13's own four-vintage trajectory: r4 1411/3237 (positive control, reproduces the row's stated figure), r5 1370, r8 1303/3254, r13 1303/3264; verdict split at r13 is 1298 OUT-OF-PATTERN / 5 CONFORMANT"
+ ],
+ "remedy": "NOTHING IS OWED ON THE MEASUREMENT AND THE SIZING IS 1.0.0_SA_CTO's -- S115 says so itself and does not take it. WHAT THE MEASUREMENT ESTABLISHES: the remedy for the 1119 {system} rows is PER-NAME SYSTEM ATTRIBUTION, not a registry row, and no R1 act reaches any of them. \u26d4 SO 'SEVEN REGISTRY ROWS' COULD NEVER HAVE MOVED FWD-5 CLAUSE 2, and neither could seventy: the two populations are disjoint by construction. Any sizing of the hold that reasons from the 462 is reasoning about the other set. \u26a0 W2-S13 IS CORRECTLY ARMED AND MUST NOT BE DISARMED -- its measurement says so, and both its clocks are 2.0.0_SA_COO~G's. This row does not touch them. THE BOUNDS TRAVEL OR THE NUMBER MISLEADS: placeholder counts are per-OCCURRENCE and do not partition the 1303; the trajectory is across REPORT vintages, so today's live figure is UNMEASURED and 1303 is a FLOOR; and nothing here asserts whether ~1119 attributions are absorbable or by whom. \u2b50 KEEPABLE, and it is the day's sharpest: TWO POPULATIONS THAT SHARE A SUBJECT AND A VOCABULARY CAN STILL BE DISJOINT BY CONSTRUCTION, and a whole day of rulings can land on the wrong one without a single wrong number in any of them. The discriminator is one question asked of the artifact, not of the argument: WHICH FIELD OF THE REPORT DOES THIS POPULATION LIVE IN? COST: one structural read. NON-APPLICATION: a claim whose population is the whole corpus.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```

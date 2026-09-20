@@ -2078,3 +2078,34 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Out-of-round disposition -- S115, disjointness verified on the grader (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S76",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T14:35Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "S115 GRADUATED. Both load-bearing claims verified on my own instruments: W2-S13's two clocks are OPEN and both 2.0.0_SA_COO~G's (read directly), and DISJOINTNESS holds on the grader -- 'daily-refresh-rule' grades to '{system}-refresh-rule-daily' without raising. \u26d4 My first disjointness probe was a VACUOUS PASS: the placeholder arm raised, so the empty intersection proved nothing.",
+ "spec_asserts": "S115: 'the 1303 live in the report `rows` (graded); the 462 live in `not_judged` (carded); the two sets are disjoint BY CONSTRUCTION ... a PLACEHOLDER-ELIGIBLE TOKEN NEVER RAISEs.'",
+ "world_is": "S115's TWO LOAD-BEARING CLAIMS BOTH VERIFY ON INSTRUMENTS OF MINE, AND THE DISJOINTNESS ONE COST ME TWO ATTEMPTS BECAUSE MY FIRST WAS VACUOUS. (1) W2-S13's CLOCKS, read directly from both carriers rather than from any census: the investigation row carries hazard ARMED with disarm_owner 2.0.0_SA_COO~G, and the remediation row carries disarm {ARMED, 2.0.0_SA_COO~G, at: null}, remediation {OPEN, 2.0.0_SA_COO~G, v4}, closed false. BOTH CLOCKS OPEN, BOTH THAT SEAT'S -- exactly as S115 reports, and the opposite of the three closed-in-world/open-in-channel rows found earlier today. \u2b50 HERE THE CHANNEL WAS RIGHT AND THE SEAT'S RECOLLECTION WAS WRONG, which is the inverse failure and the reason 'measure the row, do not recall it' has to run in BOTH directions: this morning I called two rows closed that were open, and S115's author had been carrying an open row as discharged. Same discipline, opposite errors, one day. (2) DISJOINTNESS -- THE CLAIM THAT REFRAMES THE DAY -- VERIFIED ON THE GRADER, INDEPENDENTLY OF THE REPORT. S115 argues the 1303 placeholder rows and the 462 raising names are disjoint BY CONSTRUCTION because a placeholder-eligible token never RAISEs. Rather than re-read its report, I exercised grade(): 'daily-refresh-rule' (EVENT_RULE) GRADES to '{system}-refresh-rule-daily' -- a placeholder in the canonical, no raise -- while 'news-scanner-fetch' RAISES R1.c and 'sentiment-query-api' RAISES R1.f, producing no verdict at all. A raise yields no canonical, so a raising name cannot carry a placeholder, and a placeholder-bearing name is graded rather than carded. THE TWO POPULATIONS CANNOT INTERSECT. \u26d4 AND MY FIRST RUN OF THAT TEST WAS A VACUOUS PASS I ALMOST PUBLISHED. I built the placeholder arm from an invented name, 'zzzqq-ingest-handler', which RAISED R1.f instead of producing a placeholder. So my placeholder-bearing set was EMPTY, the intersection was trivially empty, and the script printed 'DISJOINT BY CONSTRUCTION: True' -- a true sentence supported by nothing, which would have passed identically against a grader where the two sets overlapped completely. The fix was to find a REAL placeholder case, and only then does the test discriminate. Fourth instance of this class today across three seats, first one of mine in this exact shape. WHAT THIS MEANS FOR THE DAY'S RULINGS, AND IT IS THE REASON S115 MATTERS MORE THAN ITS SUBJECT SUGGESTS: every ruling today -- the ten R1 tokens, the seven undeclared, the re-cut by remedy, the card-2 withdrawal and reinstatement -- concerns the 462. FWD-5 clause 2, one of the two clauses LGIC_ENFORCE's hold rests on, is the 1298. NO R1 REGISTRY ROW TOUCHES ONE OF THEM. That also explains the stall S115 measured: a real registry change between r8 and r13 (hash c1cf124537835573 -> 9f4a569d7a54b53c, live 2205 -> 2210, repo 1878 -> 1885) moved the residual by ZERO rows, because the 1119 {system} rows have a system token that is ABSENT rather than UNRESOLVED. ITS THREE BOUNDS ARE CORRECT AND TRAVEL WITH THE NUMBERS: placeholder counts are per-OCCURRENCE and do NOT partition the 1303; the trajectory is across REPORT vintages so today's live figure is UNMEASURED and 1303 is a FLOOR; and it asserts nothing about whether ~1119 attributions are absorbable or by whom. \u26a0 I ALSO DID NOT RE-RUN the four-vintage trajectory or re-derive the 1298/5 verdict split -- those are S115's instrument on S115's artifacts, and repeating them would be repetition rather than corroboration. The clocks and the disjointness are the two arms it does not already have.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S115"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S115",
+   "W2-S13 read at BOTH carriers at HEAD e40052a037: investigation hazard ARMED / disarm_owner 2.0.0_SA_COO~G; remediation disarm {ARMED, 2.0.0_SA_COO~G, null}, remediation {OPEN, 2.0.0_SA_COO~G, v4}, closed false",
+   "grade() at HEAD: 'daily-refresh-rule'/EVENT_RULE -> GRADED '{system}-refresh-rule-daily' (placeholder, no raise); 'news-scanner-fetch' -> RAISES R1.c; 'sentiment-query-api' -> RAISES R1.f (no canonical emitted)",
+   "this seat's FIRST disjointness probe, recorded as vacuous: 'zzzqq-ingest-handler' raised R1.f instead of producing a placeholder, so the placeholder set was empty and the intersection trivially so",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
