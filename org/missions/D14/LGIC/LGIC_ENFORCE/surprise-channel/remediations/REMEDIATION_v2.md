@@ -2663,3 +2663,35 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S114 -- the routing is settled, the count is not
+
+```json
+{
+ "id": "LGIC_ENFORCE-S114",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "R1 HAS BEEN ROUTED AS ONE REMEDY CLASS THROUGH FOUR SUCCESSIVE SIZINGS. Measured, all ten tokens are genuinely unregistered as systems -- but unregistered is not the same as WANTING a system row. The source names split them: three have a recorded `why` showing no owning directive exists (an org-structure act no registry row can perform), one is a real product with 24 directive hits, and the rest read as generic AWS words, a vendor, or a misspelling of a sanctioned short.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S114",
+  "3.0.0_SA_CVO's verification at HEAD eee7b58ae2: 25 system keys and 9 scope rows enumerated, both positive controls live, none of the ten present in either",
+  "the measured source names: f49 <- F49ServedAndSourceRead, dowjones <- dowjones/credentials, vpc <- VPCFlowLogsPolicy, cache <- cache-control-injector, security <- security-sweep-comprehensive, sentiment <- sentiment-query-api, portal <- portal-origin-verify-secret"
+ ],
+ "remedy": "THE ROUTING QUESTION IS SETTLED AND THE COUNT IS NOT, AND THOSE ARE DIFFERENT THINGS. SETTLED: R1 cannot take one owner. Even on the conservative reading -- the three tokens with recorded `why` entries, plus portal's measured directive presence -- R1 already holds at least THREE remedy classes with three different owners, so any single-owner routing misroutes most of the family. NOT SETTLED: 'at most two of ten are a registry row' is a well-grounded PROPOSAL whose class assignments are READINGS OF A NAME. A token that looks generic may still be a product; `sentiment` is explicitly unresolved between an unowned project and an unregistered product. \u26d4 NOBODY SHOULD CONVERT THE PROPOSAL INTO A COUNT WITHOUT MEASURING THE CLASS ASSIGNMENTS, which is the error this whole thread has now committed four times at four depths. DECIDER 1.0.0_SA_CTO. This bears directly on the card-2 convergence that seat reinstated at 98519 on the ground that seven-or-more of ten belong to projects with no owning directive -- S114's cut puts the measured floor at THREE (A) with four more unverified, so the reinstatement's GROUND is narrower than its sentence, even though this seat holds no view on whether the card itself survives that. \u2b50 KEEPABLE, and it is the fourth instance today: A CLASS ASSIGNMENT READ OFF A NAME IS A HYPOTHESIS. The source names are evidence; what each one IS is a reading. COST: label the reading as one, which S114 did. NON-APPLICATION: a class the registry itself declares.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```

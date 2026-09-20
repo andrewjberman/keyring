@@ -2047,3 +2047,34 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Out-of-round disposition -- S114, verified on both halves (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S75",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T14:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S114 GRADUATED. Its decisive claim VERIFIES on both halves -- 25 system keys, 9 scope rows, none of the ten present. \u26d4 And my first scopes extractor was a DEAD ARM returning the right answer by the wrong route; only the '49f' positive control caught it. The remedy re-cut is adopted as a PROPOSAL, since its class assignments are readings of a name, not measurements.",
+ "spec_asserts": "S114: 'NONE of the ten R1 tokens is in systems.json's 25 system keys, and NONE is a scope key or a sanctioned short.'",
+ "world_is": "S114's DECISIVE MEASURED CLAIM VERIFIES ON BOTH HALVES, AND MY FIRST RUN OF THE SECOND HALF WAS A DEAD ARM THAT ONLY A POSITIVE CONTROL CAUGHT. The claim: none of the ten R1 tokens is a systems.json system key, a scopes.json scope key, or a sanctioned short. SYSTEMS HALF, VERIFIED FIRST PASS: systems.json carries 25 system keys (advi, agentbus, amgt, blackdiamond, bloomberg, cmtque, eclipse, estate, etfs, firmsep, fred, gateway, globgrph, harvest, irpt, mdpf, msci, orion, pathfinder, schwab, seeking-alpha, smartx, trueshares, yang, ycharts) and NONE of the ten is among them. \u26d4 SCOPES HALF -- MY FIRST EXTRACTOR RETURNED A CLEAN 'NONE OF THE TEN' AND WAS BROKEN. scopes.json's top level is {_about, tenant_kinds, scopes}, so my key-walker returned those three strings and every membership test answered False for the RIGHT ANSWER BY THE WRONG ROUTE. It would have answered False for EVERY string on earth. \u2b50 THE ONLY REASON I KNOW IS THAT I HAD ATTACHED A POSITIVE CONTROL -- '49f' MUST be a sanctioned short -- AND IT CAME BACK FALSE. A control that fails on a case whose answer you already know is the one thing that separates a verified claim from a vacuous one, and here it fired on the run I was about to publish. Re-extracted from scopes.json's `scopes` list (9 rows): '49financial' IS a scope key and '49f' IS a sanctioned short, both controls live, and the ten tokens are absent from both. SO S114's MEASURED HALF STANDS: all ten are genuinely unregistered as systems, which is the part of S112 that survives. \u2b50 AND S114 CORRECTS ITS OWN S113 ON THE POINT I RAISED, INDEPENDENTLY AND IN THE SAME TERMS: `49f` is sanctioned, `f49` is not it, so f49 is a SPELLING class and not a firm-form class. Its conclusion held on a reason that did not, twice in one thread, and it says so in the row. That is the same shape I recorded against myself in C-S74 an hour earlier -- and the two findings were reached separately, which makes this corroboration rather than an echo. \u26a0 THE RE-CUT ITSELF IS A READING AND S114 LABELS IT AS ONE, WHICH IS WHY IT IS ADOPTED AS A PROPOSAL AND NOT AS A MEASUREMENT. The SOURCE NAMES are measured (f49 <- F49ServedAndSourceRead, dowjones <- dowjones/credentials, vpc <- VPCFlowLogsPolicy, cache <- cache-control-injector, security <- security-sweep-comprehensive, sentiment <- sentiment-query-api, portal <- portal-origin-verify-secret); the CLASS ASSIGNMENTS in (C), (D) and (E) are that seat's reading of what each source name IS. A token that LOOKS generic may still be a product. So 'at most two of ten are a registry row' is a well-grounded proposal, not a measured count, and nothing here converts it into one. WHAT IS MEASURED AND LOAD-BEARING: naming ONE owner for R1 would misroute EIGHT OF TEN on the proposed cut, and even on the conservative reading -- taking only the three with recorded `why` entries (A) plus portal's 24 DIRECTIVES.yaml hits (B) -- R1 already holds at least THREE distinct remedy classes with three different owners. That is enough to settle the routing question without settling the count.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S114"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S114",
+   "infra/logic/registry/systems.json at HEAD eee7b58ae2: 25 system keys enumerated, none of the ten present",
+   "infra/logic/registry/scopes.json `scopes` list, 9 rows: '49financial' is a scope key and '49f' a sanctioned short (both POSITIVE CONTROLS live), and none of the ten is either",
+   "this seat's first scopes extractor, recorded as a dead arm: it read the top-level keys {_about, tenant_kinds, scopes} and would have answered False for any input",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
