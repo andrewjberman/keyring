@@ -4274,6 +4274,33 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S121",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T17:14Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "THE WORD I OWE ON W2-S13: ITS FINDING STANDS AT HEAD AND ITS UNIT DOES NOT. The repo half is 637 occurrences of 502 DISTINCT names, not 652 decisions -- and 15 further occurrences carry the brace in the SOURCE STRING, 5 of which grade CONFORMANT because current == canonical IS the conformance test, so a template grades PASS *because* it could not be resolved. W2-S13 STAYS ARMED.",
+  "spec_asserts": "LGIC_ENFORCE-W2-S13 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~G, surfaced 2026-09-17 by 0.9.0_WK_LGIC_ENFORCE~2) reports that round 4's completed census fails S25R4-AC3 because 1411 of 3237 judged rows carry a literal '{' in canonical, against the cell's rule 'NO PLACEHOLDER reaches a report row (W2-S10's rule): no row's canonical may contain {'. The 30m DIRECTED arm names W2-S13 as a row this seat still owes a word on, and names round 5/11 as the cut that sizes that population. Since W2-S13 was written, lib/opal_naming.py was REPAIRED by this seat @169e8ce368 under 1.0.0_SA_CTO's Rule 30 authorization -- a fix that moved 2,007 gradings.",
+  "world_is": "W2-S13'S FINDING STANDS AT HEAD AND THE GRADER REPAIR DID NOT ABSORB IT. Re-measured three days later through the repaired grader: 652 of 1563 judged repo-plane rows carry '{' in canonical. THE DISCRIMINATING DETAIL IS THE ONE THE REPAIR WAS MOST LIKELY TO MOVE AND DID NOT -- W2-S13 reports repo S3Key 106, and repo S3Key is 106 at HEAD, unchanged. The repair corrected a trailing {entity}={id} PARTITION being read as a file leaf; it never touched the unresolved SYSTEM token that produces these placeholders. The hypothesis that the repair closed W2-S13 is falsified, and it was worth falsifying because the two defects wear the same brace. \u26a0 THIS IS THE REPO HALF ONLY AND IS NOT A RE-MEASUREMENT OF THE 1411. W2-S13's number is --live --repo; the live plane costs a 600s pull and is the NON-APPLICATION case for the accumulator loop (S120). The live half is UNMEASURED THIS TICK and this row makes no claim about it. \u26d4 AND ITS UNIT IS OCCURRENCES, WHICH IS NOT THE UNIT THE CUT NEEDS. MECE subtraction over the printed 652 by WHERE THE BRACE SITS, negative control included: (a) 637 occurrences / 502 DISTINCT NAMES -- current is a clean name, canonical carries the brace, ALL 637 OUT-OF-PATTERN. THIS IS THE REGISTRY-DECISION POPULATION, and it is 502, not 652 and not 1411. (b) 15 occurrences / 8 DISTINCT NAMES -- the brace is in the SOURCE STRING ITSELF, runtime format templates lifted out of .py (bronze/assets/{snap}.parquet, platinum/{firm}/ownership_map.json, schwab/silver/rps/date={dc}/data.parquet and five more). 10 OUT-OF-PATTERN, 5 CONFORMANT. These are an EXTRACTOR-SCOPE question -- whether a runtime template is a NAME at all -- and not registry decisions; counting them as decisions inflates the backlog by 8 names. (a) + (b) = 652 exactly, and the NEGATIVE CONTROL returns 0: there is no row whose current carries a brace while its canonical does not. \u2b50 THE FIVE CONFORMANT ARE THE FIND, AND THEY ARE SHARPER THAN W2-S13. All five are ONE name -- 'orion/rate_limit_state_{dim_name}.json' at rate_limiter.py:37 in five inf-pipeline lambdas -- and for all five current == canonical. EQUALITY IS THE CONFORMANCE TEST, so the grader returns CONFORMANT *BECAUSE* IT COULD NOT RESOLVE THE TEMPLATE: it echoes the unresolved string back and then agrees with itself. A PASS PRODUCED BY THE INABILITY TO GRADE. \u26d4 W2-S13'S OWN RULE CATCHES THESE AND A PLAUSIBLE SUBSTITUTE FOR IT DOES NOT. The cell reads CANONICAL for a brace, which is correct and finds all five. A consumer who instead filters verdict != CONFORMANT to find the work -- the obvious shortcut -- MISSES EXACTLY THESE FIVE, the only ones the grader actively vouched for. THE WEAKEST ROWS ARE THE ONES CARRYING THE PASS. \u26d4 W2-S13 STAYS ARMED AND ITS CLOCK STAYS WITH THIS SEAT. Nothing about the mechanism changed: 652 placeholders still reach report rows and S25R4-AC3 still fails. This row measures the population; it does not remediate it, and 1.0.0_SA_CTO's keepable from 98611 is the reason the distinction is stated rather than assumed -- DISARM ON THE MECHANISM, NEVER ON YOUR OWN SUCCESSFUL MEASUREMENT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`python lib/opal_naming.py census --repo --not-judged <accum> --report <path>` at HEAD, accumulator from S120's loop: rc=0, one fence, 1563 rows",
+      "652 of 1563 rows carry '{' in canonical (W2-S10's own substring test on r.get('canonical'))",
+      "per-type at HEAD vs W2-S13's round-4 repo figures: S3Key 106 vs 106 UNCHANGED; IAM_POLICY 264 vs 266; EVENT_RULE 71 vs 76; IAM_ROLE 47 vs 57; SECRET 34 vs 34; S3_BUCKET 20 vs 20",
+      "MECE subtraction by brace position: canonical-only 637 (502 distinct, all OUT-OF-PATTERN) + current-too 15 (8 distinct, 10 OUT-OF-PATTERN / 5 CONFORMANT) = 652, sum asserted in code",
+      "NEGATIVE CONTROL: rows where current carries a brace and canonical does not = 0",
+      "the 5 CONFORMANT rows are one name, 'orion/rate_limit_state_{dim_name}.json', at infra/aws/lambda/inf-pipeline/{inf-accounts-v2-daily,inf-api-assets-v2,inf-api-positions,inf-api-reps,inf-api-txn}/rate_limiter.py:37, current == canonical for all five",
+      "distinct-vs-occurrence across the whole placeholder set: 510 distinct names across 652 occurrences; by source kind .tf 498 / .py 154 against a 1563-row control of .tf 1066 / .py 493 / .js 3 / .mjs 1",
+      "SCOPE: repo plane only. W2-S13's 1411 is --live --repo; the live half is unmeasured this tick and no claim is made about it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
