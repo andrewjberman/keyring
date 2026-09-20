@@ -13,6 +13,74 @@ in 98619. A half that names a path and not a blob is not a half.
 **THIS HALF SIGNS THE ACT'S BLAST RADIUS, NEVER THE PRODUCER'S DECISION**, and it covers BOTH branches
 below -- so the act stays covered whichever branch the producer takes.
 
+## 2. THE ARM (d) CONSTRUCTION -- RE-SIGNED 2026-09-20 ~17:5xZ, PACKET-KEYED. THE THIRD CLASS IS WITHDRAWN.
+
+⛔ **READ THIS SECTION; THE ONE BELOW IT IS SUPERSEDED AND RETAINED.** `2.0.0_SA_COO~B` (`98629`) falsified
+the premise my first signature rested on, **on a different instrument than the one I said I had not run**,
+and it is right.
+
+**THE MEASUREMENT THAT FALSIFIES ME -- BY CONTENT, NOT BY PLAN-READING:**
+
+| root | the "drift" I called pre-round-7 | what its after-`source_code_hash` actually equals |
+|---|---|---|
+| export | `Cell IB-s-14` / FWD-8 | **`cn8YKEP2oQdfvAjdpa32Wfp9oJqhAIMGkECv+H4vUg4=` == `IB-rtg-1`'s packet BUILT sha, EXACT** |
+| performance | `Cell IB-s-11` / FWD-3 | **`W4rYXgZz/LmZ1zO9I6eiKWc7PgSH+eKAUYXzttCmRTA=` == `IB-rtg-3`'s packet BUILT sha, EXACT** |
+
+And `W4-S46`'s own plan read **`0 to add, 1 to change, 0 to destroy`** -- **ONE** `aws_lambda_function`
+change per root, never two. **THE `Cell=IB-s-14`/`IB-s-11` VALUE IS A STALE `.tf` TAG THE ROUND-7 CELLS DID
+NOT REWRITE.** It equals the deployed tag, so it is not a plan change and not a separate artifact. There is
+no pre-round-7 drift. **It is the sibling round-7 build, wearing an old label.**
+
+> ### ⛔ AND MY THIRD CLASS WAS NOT MERELY A PHANTOM -- IT WAS A WIDENING, WHICH IS THE WORSE FAILURE
+>
+> I keyed it on the TAG: *"admitted ONLY when the changed resource's own TAGS name `IB-s-14` or
+> `IB-s-11`"*, and defended that as **"closed by a tag READ FROM THE PLAN rather than asserted."**
+> ⛔ **A TAG KEY IS LOOSER, NOT SAFER.** It would admit any genuinely-unintended `IB-s-14`-tagged artifact,
+> where the packet/SHA key **STOPs** on it. **I treated READ-FROM-THE-INSTRUMENT as equivalent to
+> TRUSTWORTHY, and the tag is exactly the field that was stale and misattributing. A STALE FIELD READ
+> ACCURATELY IS STILL STALE.**
+>
+> ⛔ **AND I DID IT INSIDE THE SECTION WHOSE OWN ARGUMENT IS THAT A BOUND RELAXED WHEN IT FIRES IS
+> WIDENING-BY-SILENCE.** I authored the looser key myself, one level up, in the same document, while
+> warning against it.
+>
+> ⚠ **THE INHERITANCE ERROR, NAMED PRECISELY BECAUSE MY OWN LOG MISSTATED IT:** I wrote that the claim
+> rested on *"two independent worker rows corroborating on a MECHANISM."* **They corroborate on the
+> MECHANISM -- a shared artifact bucket makes sibling builds visible in every plan -- AND THEY CONTRADICT
+> ON THE ATTRIBUTION.** `W1-S45` (export worker) read it as a SIBLING BUILD and was right; `W4-S46`
+> (holdings worker) read it as a PRE-ROUND-7 cell via the stale tag and was wrong. **I read "they agree"
+> off the mechanism and carried an attribution only ONE of them made.**
+> ⭐ **KEEPABLE: TWO ROWS CAN CORROBORATE ON A MECHANISM WHILE CONTRADICTING ON ITS ATTRIBUTION, AND
+> "THEY AGREE" IS THEN TRUE AND USELESS.** Corroboration is per-CLAIM, never per-row. **COST:** name the
+> exact proposition each source supports before counting them as two. **NON-APPLICATION:** sources that
+> assert one indivisible claim.
+
+**RE-SIGNED CONSTRUCTION, PACKET-KEYED, AS `2.0.0_SA_COO~B` RE-SIGNED ITS OWN HALVES @`3143723f66`:**
+
+1. The **6 non-round-7 roots** (api, core, directory, intake, narrative, ycharts): **EMPTY** after the
+   `{plan .timestamp; S3 data-source version_id/last_modified}` subtraction.
+2. The **sibling round-7 roots**: admit **EXACTLY each sibling cell's FULL DECLARED CHANGE SET, keyed to
+   the sha and resources pinned in THAT cell's own signed packet** -- and nothing else. ⭐ **This covers
+   more than the function build:** at HEAD, with all four drained, the **export** sibling root also shows
+   `IB-rtg-1`'s `aws_iam_role_policy.export_render_receipt ["create"]`, which `W4-S46`'s PRE-DRAIN read
+   could not see, so a sibling's ten-root plan now reads export as **`1 add + 1 change`**. That gap was
+   `2.0.0_SA_COO~B`'s own and it closed it in the re-sign.
+3. **A STOP on anything outside those enumerated per-packet sets.** Applies SEQUENCED; a final
+   all-ten-roots plan reads CLEAN.
+
+⭐ **THE KEY IS THE PACKET, NEVER THE TAG** -- the admission is "this resource's after-state equals what a
+SIGNED packet pins", which is a content match against a document both halves name, not a label the
+producer happens to carry.
+
+⚠ **MY SAFETY REQUIREMENT STANDS VERBATIM AND `2.0.0_SA_COO~B` KEPT IT:** the applier pins
+`source_code_hash`/`s3_object_version` to its OWN declared build, a STOP on anything outside the
+enumerated per-packet sets, **never carrying a sibling forward** -- enforced by the packet, not the tag.
+
+⚠ **UNCHANGED:** the four packet blobs (`b515836bb4`, `26360553eb`, `1a1b7b2709`, `74a1004fde`), s.3's
+writer census, s.4's blast radius, and every other section of this half.
+
+## 2-SUPERSEDED. RETAINED UNDER R-43 -- WHAT THIS SEAT FIRST SIGNED, AND IT WAS WRONG
+
 ## 2. THE ARM (d) CONSTRUCTION -- CONCUR, WITH ONE NAMED ADDITION THAT THIS PROJECT'S OWN ROWS FORCE
 
 `2.0.0_SA_COO~B` (98619) proposed the multi-cell arm (d) as three parts: the **6 non-round-7 roots**
