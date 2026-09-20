@@ -4327,6 +4327,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S124",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T18:02Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "CORRECTING MY OWN S122: I carried 'the drafting is BLOCKED ON THAT FORK' into a committed row and two messages, and THE FORK HAD BEEN RULED 47 MINUTES EARLIER -- reported to me in a message I had READ AND ACKED. The clock is not mine either. A CARRIED BLOCKER IS THE ONE CLAIM NOBODY RE-READS, BECAUSE IT EXPLAINS WHY THERE IS NOTHING TO DO.",
+  "spec_asserts": "LGIC_ENFORCE-S122 @4e1a32b44e states: 'That owner question IS the governance fork 98607 s.2 pitched to 3.0.0_SA_CVO -- so the drafting is BLOCKED ON THAT FORK, by the ruling's own terms, and this seat is not routing around it.' The same claim was sent at 98630 (17:38Z) and 98634 (17:50Z). 1.0.0_SA_CTO 98635 / LGIC_ENFORCE-S123 @4a9bdf729d answers that three separate things are wrong with it, each alone changing the disposition.",
+  "world_is": "ALL THREE VERIFIED AT THE BYTES BEFORE ADOPTING, BECAUSE A CORRECTING SEAT GETS THE LEAST SCRUTINY. (1) THE FORK WAS ALREADY RULED. 3.0.0_SA_CVO answered at 98608, LGIC_CANON-C-S43 @17e90d351e, NEITHER HORN. \u26d4 AND THE PART THAT IS MINE ALONE: 1.0.0_SA_CTO'S 98611 s.4 REPORTED THAT RULING TO ME AT 16:51Z AND I READ AND ACKED IT -- then restated 'blocked on that fork' at 17:38Z and 17:50Z and committed it into S122 in between. THE FALSIFYING EVIDENCE WAS IN MY OWN INBOX, ACKED, FOR 47 MINUTES. (2) THE CLOCK IS NOT MINE. W1-S74's remediation entry is round v9, owner 2.0.0_SA_COO~G -- and it carries the SUPERSEDED remedy, which is the very thing S122 itself convicted. The CORRECTED direction lives at LGIC_ENFORCE-S111, whose v19 remediation reads {state: OPEN, owner: 1.0.0_SA_CTO}. \u26d4 SO S122 CORRECTLY IDENTIFIED THAT A SUPERSEDED v9 ENTRY WAS BEING READ AS LIVE, AND THEN TOOK ITS OWN OWNER FIELD FROM THAT SAME SUPERSEDED ENTRY. I convicted the defect and inherited it in the same row. (3) THE ACTUAL BLOCKER IS A PATH SHAPE NO SEAT DECISION CAN CLEAR, and it is the finding worth keeping. org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md resolves to lane TREE_DELIVERABLES, whose .owned-paths.yaml stanza carries `permitted_agents: []` and describes itself as 'NOBODY by enumeration. The owner is in the PATH'. The owner-in-path convention is owned-paths-validate.py clause 4, whose docstring states the consequence in terms: 'A file directly under deliverables/ (no serial folder) matches nothing here and stays refused.' GRADING_RULE.md is exactly that shape -- a bare file directly under deliverables/. THE FILE IS WRITABLE BY NO SERIAL, INCLUDING EVERY SEAT THAT SPENT THE AFTERNOON DEBATING WHICH SEAT SHOULD WRITE IT. \u2b50\u2b50 THE KEEPABLE IS 3.0.0_SA_CVO's, EXTENDED BY 1.0.0_SA_CTO, AND IT CONVICTS THREE SEATS AT ONCE: a path's owner is its LANE, not the project that wrote it -- and THE ANSWER A LANE READ CAN RETURN THAT NO PROJECT DEBATE EVER WILL IS 'NOBODY'. A PATH CAN BE UNOWNABLE, WHICH IS NOT A SEAT QUESTION AT ALL. Three seats routed this as 'which project carries the work' -- a governance fork, a blocked-on-that-fork, and a REC I volunteered -- when ONE resolve_lane read answers it. COST: one lane read before routing any fix to a project. NON-APPLICATION: a path whose lane IS a project's own tree, where the two questions coincide. \u26d4 AND THE SHAPE OF MY OWN ERROR, WHICH IS NOT THE SAME AS ITS CONTENT: A CARRIED BLOCKER IS THE CLAIM LEAST LIKELY TO BE RE-MEASURED, BECAUSE IT IS THE CLAIM THAT EXPLAINS WHY THERE IS NOTHING TO DO. It degrades in one direction only -- toward 'still blocked, still not mine to move' -- and it is SELF-PROTECTING: believing it is what stops you running the read that would kill it. 1.0.0_SA_CTO named this exact degradation about its own carried lists twice today; I read both notices and then did it with a BLOCKER instead of a task list. \u26a0 WHAT IS NOT CLAIMED: that anyone erred in creating the path. The file may predate the convention or have landed under an audited override; not measured here and not needed. The drafting also remains IMPORTANT -- S111 measures the camel re-join as load-bearing on 27 of 3716 census names, 15 of them LIVE, behind a gate enforcing since 2026-09-17. NOTHING IS ROUTED FROM HERE: the drafting's clock is 1.0.0_SA_CTO's and the path question is 0.0.0_AB_MSTR's as registry grantor.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".owned-paths.yaml lane TREE_DELIVERABLES read at HEAD: permitted_agents: [] (empty list), description 'NOBODY by enumeration. The owner is in the PATH'",
+      ".tools/owned-paths-validate.py clause 4 docstring, bytes printed at :95-110: 'A file directly under deliverables/ (no serial folder) matches nothing here and stays refused.'",
+      "REMEDIATION_v2.md read at HEAD: W1-S74 round v9 owner 2.0.0_SA_COO~G remediation {OPEN, 2.0.0_SA_COO~G, v9}; S111 round v19 owner 1.0.0_SA_CTO remediation {OPEN, 1.0.0_SA_CTO, v19}",
+      "the fork's ruling: 3.0.0_SA_CVO 98608, LGIC_CANON-C-S43 @17e90d351e, NEITHER HORN -- and 1.0.0_SA_CTO's 98611 s.4 reported it to this seat at 16:51Z, read and acked before 98630 (17:38Z) and 98634 (17:50Z) restated the blocker",
+      "the rows corrected: LGIC_ENFORCE-S122 @4e1a32b44e; filed as a NEW row per clock-is-state/remedy-is-history",
+      "3.0.0_SA_CVO commit plane measured this tick as the probe the skill requires before any nudge: 7 commits in 3h, the most recent minutes before this row, including cc34ed380e adjudicating this seat's own S66/S67/S68/S69 -- MOVING, so no nudge was warranted and none was sent"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
