@@ -30,7 +30,7 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "The experiment CN-j-6 was cut to run is no longer available in this estate, because the scale is now IN the canon -- that is not a defect to repair but a fact to record. The purchasable version is a round-3 cell that asks a judge for a per-plane or per-tree ROLL-UP, which is the only thing that exercises an ORDER rather than a vocabulary. Until such a cell runs, no reading of this round may be quoted as evidence that the canon's severity ORDER is sufficient; the VOCABULARY half is separately established by CN-k-2 (grade K2-J1).",
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
-  "disarm": {"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": null},
+  "disarm": {"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-09-20T23:35:32Z"},
   "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v2"},
   "closed": false
  },
