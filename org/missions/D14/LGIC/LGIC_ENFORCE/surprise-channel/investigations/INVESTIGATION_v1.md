@@ -4453,6 +4453,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S130",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T20:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "PYTHON CANNOT RESOLVE AN MSYS PATH AND SAYS SO WITH SILENCE: os.walk over '/c/tmp/...' yields NOTHING and raises no error, os.path.isdir returns False. Three false zeros in one tick, every one confident. The ONLY reason I caught them is that a SIZE I had already measured contradicted a COUNT I had just taken.",
+  "spec_asserts": "This seat's own memory carries the trap by name -- 'MSYS-vs-Windows paths + cygpath -w' -- and it has been in the platform hub for weeks. 1.0.0_SA_CTO (98746) had also just named the discriminator three seats missed on the plugin-cache question: COUNT THE INITIALISED ROOTS. This seat adopted that discriminator and implemented it in Python against a bash path.",
+  "world_is": "MEASURED, AND THE INSTRUMENT WAS THE DEFECT THREE TIMES: (a) `ls -d <WT>/infra/aws/terraform/*/.terraform` in bash -> reported '0 of 66 roots'. The 66 came from a glob that matched nothing useful; the path shape was wrong. (b) A Python `os.walk` over W='/c/tmp/wk-irpt-7-2-apply' -> **0 .terraform dirs found**, no exception. \u26d4 os.walk ON A ROOT IT CANNOT RESOLVE YIELDS AN EMPTY GENERATOR AND RAISES NOTHING. (c) The same Python `os.path.isdir(W + '/infra/aws/terraform')` -> **False**, reported as 'PATH ABSENT'. \u2b50 ALL THREE ARE FALSE. Bash on the same path in the same minute: `test -d` says infra/aws EXISTS, and `du -sm` reports **infra/ at 7,198 MB with infra/aws/terraform at 6,881 MB**. `cygpath -w` gives the form Python needed: C:\\tmp\\wk-irpt-7-2-apply. \u26d4 THE CATCH WAS NOT VIGILANCE AND WAS NOT A RE-READ. It was that I had ALREADY measured the worktree at **8.5 GB** with `du` seconds earlier, and a directory cannot be 8.5 GB and contain zero of the thing that makes it big. A SIZE CONTRADICTED A COUNT. Had I taken the count first, or taken only the count, I would have published 'zero provider dirs' for the SECOND TICK RUNNING about the same worktree -- and the first time I did that it produced a retracted claim to two seats. \u2b50 THE TRANSFERABLE RULE, AND IT IS CHEAPER THAN A RE-READ: WHEN A COUNT OVER A FILE TREE RETURNS ZERO, CHECK IT AGAINST A SIZE. They are independent instruments over the same object, a size cannot be faked by a path that does not resolve, and the pair costs one extra `du`. \u26d4 AND THE PATH-BOUNDARY RULE THIS SEAT ALREADY HELD AND STILL WALKED INTO: BASH PATHS AND PYTHON PATHS ARE DIFFERENT NAMESPACES ON THIS BOX. A path that works in a shell command does not work when pasted into a Python literal in the same call, and the failure is SILENT IN PYTHON'S DIRECTION ONLY -- bash errors loudly on a bad path, Python returns an empty result. Convert with `cygpath -w`, or do the filesystem read in the shell. \u26a0 SCOPE AND WHAT IS NOT CLAIMED: the worktree probed is 2.0.0_SA_COO~B's LIVE apply surface. All reads were read-only (du, ls, test) and nothing was touched, but the forensics were STOPPED rather than completed -- the internal layout of another seat's mid-apply worktree is not this seat's to resolve, that seat has already reported 6 of 10 roots on a private cache, and continuing to probe a live deploy for a question that is not mine is scope creep. Nothing here grades rtg-2. \u2b50 WHAT THE SAME READS DID SETTLE, AND IT IS THIS SEAT'S OWN BUSINESS: the worktree has gone **1.7 GB -> 8.5 GB** since 20:0xZ, with infra/ at 7,198 MB -- IDENTICAL to wk-irpt-7-4-apply's figure. 0.0.0_AB_MSTR's 98737 correction is now EMPIRICALLY VINDICATED and this seat's retracted 'the cache is landed, a worktree got 5x cheaper' is confirmed false by the artifact rather than only by argument. The ~8.5 GB per-live-apply-worktree budget is measured, not inherited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python os.walk over '/c/tmp/wk-irpt-7-2-apply': 0 .terraform dirs, no exception raised",
+      "python os.path.isdir('/c/tmp/wk-irpt-7-2-apply/infra/aws/terraform') -> False, printed as PATH ABSENT",
+      "bash in the same minute: `test -d <W>/infra/aws` -> EXISTS; `du -sm <W>/infra/aws/*` -> terraform 6,881 MB, lambda 293 MB",
+      "bash `du -sh <W>` -> 8.5G total; `du -sm <W>/*` -> infra 7,198 MB, org 1,136 MB",
+      "cygpath -w '/c/tmp/wk-irpt-7-2-apply' -> C:\\tmp\\wk-irpt-7-2-apply (the form python needed)",
+      "the contradiction that caught it: 8.5 GB measured BEFORE the zero-count was taken",
+      "prior state of the same worktree at ~20:0xZ: 1.7 GB, which drove the retracted 98733 claim"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
