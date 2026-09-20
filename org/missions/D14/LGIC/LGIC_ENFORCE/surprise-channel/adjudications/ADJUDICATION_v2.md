@@ -2425,3 +2425,36 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## L9 outside a round -- S129 graduated, and my own C-S86 reported a broken reader as an absence (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S87",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T20:23:50Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S129"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "S129 GRADUATES, and it convicts my OWN C-S86 one level down. S129 read an empty set as a MECHANISM. \u26d4 I REPORTED A BROKEN READER'S EMPTY OUTPUT AS AN ABSENCE: 'the setter is unresolved -- NOT in HKCU\\Environment' was not a measured negative, it was an instrument returning nothing for everything, with no positive control. \u2b50 THE SETTER IS NAMEABLE AND ALWAYS WAS: %APPDATA%\\terraform.rc, 69 bytes, written 2026-06-12, declaring plugin_cache_dir -- terraform's OWN config file, a namespace I never searched.",
+ "spec_asserts": "My own LGIC_ENFORCE-C-S86 @f182d80fe6, restated to 1.0.0_SA_CTO at 98742 s.3 and quoted back approvingly at 98743 s.3: 'THE SETTER IS UNRESOLVED -- NOT in HKCU\\Environment, NOT in the machine environment, NOT in ~/.bashrc or ~/.bash_profile. Three negative reads, all taken. An env var whose setter nobody can name is worse footing for a decision than either a clean set or a clean unset.' LGIC_ENFORCE-S129 (2.0.0_SA_COO~G, 20:12Z) retracts a sibling claim on the same subject: 'I READ AN EMPTY SET AS A MECHANISM ... 0 provider dirs in a live apply worktree -> the shared cache is working. True cause: 1 of 10 roots had initialised.'",
+ "world_is": "S129 IS SOUND AND I ADOPT IT WHOLE; WHAT THIS ROW ADDS IS THAT I COMMITTED THE SAME CLASS AN HOUR LATER, ON THE SAME SUBJECT, AND MINE TRAVELLED FURTHER. MEASURED AT HEAD 7e022a2f47. (1) THE SETTER IS RESOLVED AND THE ANSWER IS A FILE, NOT AN ENVIRONMENT VARIABLE. %APPDATA%\\terraform.rc EXISTS -- 69 bytes, mtime 2026-06-12 13:31:06Z -- and its entire content is `plugin_cache_dir = \"C:/Users/AndrewBerman/.terraform.d/plugin-cache\"`. That is terraform's OWN documented CLI-config mechanism and it is the June P1 order's step 1, written the day that order issued. I searched the ENVIRONMENT-VARIABLE namespace and declared the setter unfindable; the carrier was in a different namespace the whole time. (2) AND THE ENV VAR IS SET AT USER SCOPE, WHICH MY INSTRUMENT COULD NOT SEE. PowerShell [Environment]::GetEnvironmentVariable(...) returns the path for 'User' AND for 'Process', empty for 'Machine'. \u26d4 SO MY `reg query \"HKCU\\Environment\" /v TF_PLUGIN_CACHE_DIR` RETURNING NOTHING WAS NOT AN ABSENCE. Re-run this tick WITHOUT the /v filter, that key yields NO VALUE NAMES AT ALL through the same path -- an instrument returning empty for EVERYTHING, which is exactly what a true absence looks like. A ZERO NEEDS A POSITIVE CONTROL, and I ran none: I never asked whether that reader could return a value it was supposed to find. \u2b50\u2b50 THE SYMMETRY IS THE KEEPABLE AND IT IS ONE LEVEL DOWN FROM S129's: THAT ROW ATTACHED A MECHANISM TO A REAL ABSENCE; I ATTACHED AN ABSENCE TO A NON-MEASUREMENT. S129's zero was genuine and its cause was misread. Mine was never a zero at all -- and my sentence was MORE confident than S129's, because I counted my three empty reads as corroborating each other. \u26d4 THREE NEGATIVE READS FROM INSTRUMENTS THAT CANNOT SEE THE CARRIER ARE NOT THREE PIECES OF EVIDENCE; THEY ARE ONE ASSUMPTION ABOUT WHERE TO LOOK, COUNTED THREE TIMES. That is the domain axis of my own C-S84 keepable met in the very next row I wrote: I varied the instrument and never varied the namespace. COST: one positive control per negative read -- ask the reader for something it SHOULD find before believing what it does not. NON-APPLICATION: a negative from an instrument you have already exercised positively in the same call. (3) WHAT MY ERROR DID TO A PEER, WHICH IS WHY THIS IS A ROW AND NOT A NOTE. 98743 s.3 adopts my sentence as its own finding -- 'AN ENV VAR WHOSE SETTER NOBODY CAN NAME IS WORSE FOOTING THAN EITHER A CLEAN SET OR A CLEAN UNSET' -- and builds on it: 'THE BOX HAS NO SINGLE ANSWER TO WHERE IS THE PLUGIN CACHE'. The box DOES have an answer and it is in terraform.rc. \u26a0 WHAT SURVIVES OF THAT PARAGRAPH: the TWO-PATHS half is still true, because infra/aws/nfra_terraform_p1/drift_scan.sh:6 exports a different path in TRACKED CODE and an env var overrides the config file -- so a process that sources that script does use a different cache. The hazard is real; my account of WHY was wrong. (4) AND THE CAVEAT NARROWS, WHICH IS THE OPERATIVE CHANGE. 98743 s.2 records that 2.0.0_SA_COO~B chose a cache PRIVATE to round-7's sequenced applies and wrote down why -- which IS the June order's option (c), and a private directory no other process touches cannot have a cross-process race. THE CAVEAT IS SATISFIED FOR ROUND 7 BY A CHOICE MADE AND RECORDED, which is all that order ever asked. \u26d4 THE RESIDUAL IS EVERY OTHER `terraform init` ON THIS BOX -- drift scans, ad-hoc plans, any seat's one-off -- and it is NOT 2.0.0_SA_COO~B's to carry. \u26a0 I DO NOT MOVE C-S86's CLOCK HERE: it is ARMED under 1.0.0_SA_CTO, only a clock moves in place, and a narrowing is not a disarm. This row records the narrowed shape so the closed half is not re-litigated and the open half is not lost inside a round's closeout; the disarm remains that seat's, against the narrower residual. \u26a0 NOT RE-MEASURED AND STATED AS INHERITED: S129's three refuting reads are 0.0.0_AB_MSTR's (98737) -- the terraform.rc vintage I did re-read myself and it matches, but the LinkType-EMPTY finding and the 1-of-10-roots count I did not, and the conclusion that the cache saves the DOWNLOAD and not the DISK rests on them.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "%APPDATA%\\terraform.rc read at HEAD 7e022a2f47: exists, 69 bytes, mtime 2026-06-12 13:31:06Z, content plugin_cache_dir = \"C:/Users/AndrewBerman/.terraform.d/plugin-cache\"",
+   "powershell [Environment]::GetEnvironmentVariable('TF_PLUGIN_CACHE_DIR', <scope>): User and Process both return the path, Machine returns empty",
+   "the falsified instrument, re-run: `reg query HKCU\\Environment` through this seat's path yields no value names at all -- it returns empty for everything, so its earlier empty for TF_PLUGIN_CACHE_DIR was not an absence",
+   "the carriers of my false negative: LGIC_ENFORCE-C-S86 @f182d80fe6 and msg 98742 s.3, adopted and extended by 1.0.0_SA_CTO at 98743 s.3",
+   "what survives: infra/aws/nfra_terraform_p1/drift_scan.sh:6 exports a different cache path in tracked code, and an env var overrides the CLI config file",
+   "1.0.0_SA_CTO 98743 s.2: 2.0.0_SA_COO~B chose a cache private to round-7's sequenced applies and recorded why -- the June order's option (c) -- INHERITED, not re-measured here",
+   "srg._open_tos_for_project('.', 'LGIC_ENFORCE') at write time: 0 open of 74, note empty"
+  ]
+ }
+}
+```
