@@ -6684,6 +6684,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "For irpt-directory-search's own module, no data.aws_s3_object entry is ever a separate resource_changes member (its read is fully resolved during refresh and folded directly into the lambda resource's own before/after) -- so the named example case never fires, and the two named fields live one level up, as attributes of the SAME entry that also carries the substantive source_code_hash. The literal signed term does not reach them. This worker did NOT widen the subtraction set to cover this case (that is the issuer's/CTO's call per the order's own bound); instead it removed the PRECONDITION that manufactures the drift -- both arm (c) and arm (d) now check whether the function already serves the manifest's/signed built sha before calling build-and-upload.sh again, so a re-run of this battery in an already-applied state no longer mints a new S3 version and no longer sees this drift. The REAL apply (this pass's first execution) landed and verified cleanly, matching the signed shape exactly, before this class of re-run churn was ever introduced.",
   "notes": "Remedy carried, not applied here: either (a) build-and-upload.sh should skip re-uploading when the computed content sha256 already matches the currently-uploaded latest version's content (idempotent at the S3-object level, not just the manifest level), which would make this whole class structurally impossible, or (b) the CTO's compared-object term is amended to also subtract s3_object_version/last_modified when they appear as attributes of the SAME entry as an unchanged source_code_hash (a narrower, named widening, requiring re-signature per the order's own bound). This worker's own fix (skip-rebuild-when-already-served in arm (c) and arm (d)) is a workaround inside this cell's own battery, not a change to the shared build tool or the signed gate construction."
 }
+,
+{
+  "id": "IRPT_BCKEND-W1-S41",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T10:10:00Z",
+  "one_line": "This worker ran TWO reconciling `terraform apply` acts on the directory root (pointer-only: s3_object_version/last_modified, 0 added/1 changed/0 destroyed each, no functional change) AFTER the change-management ledger irpt-bckend-ib-rtf-13-apply had already been CLOSED, with no ledger entry of their own -- a self-identified gap against this order's bound 4 (a change-management entry opened at the start and closed at completion of every deploy).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/apply_output2.txt and .scratch/apply_output3.txt (this worker's own session scratch, not committed -- .scratch/ is gitignored): two 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' outputs on infra/aws/terraform/investor-reporting/directory, both AFTER the CLOSE commit 9974760d44",
+      "git log --oneline: the ledger's OPEN (022a24690e) and CLOSE (9974760d44) commits both precede the two reconciling applies in wall-clock time; no third org/critical_paths/.open_deploys/*.json or change_management/*.md entry was opened for either",
+      "the drift each reconciling apply corrected was ITSELF a side effect of this worker's own re-runs of the battery's arm (c)/(d), which called build-and-upload.sh unconditionally before the skip-rebuild fix landed (row IRPT_BCKEND-W1-S40) -- the CAUSE and the RECONCILIATION are both this worker's own acts within the same session"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This order's 'Bounds every order carries' item 4: 'a change-management entry opened at the start ... and its OPEN sentinel ... COMMITTED IMMEDIATELY ... before the act; the entry closed at completion and COMMITTED BEFORE the reads that grade the act'.",
+  "world_is": "Both reconciling applies completed successfully (rc=0, 0 destroy) and changed NOTHING functional -- no code, no config, no IAM, only an S3 object-version pointer this worker's own prior re-runs had drifted. Nothing was left half-landed at any point (CLAUDE.md's NEVER-law), and the FINAL state matches the FIRST, correctly-ledgered apply's intended shape exactly (re-verified 0-diff, CodeSha256==built, member+env present, after the second reconciling apply). But the PROCEDURE was not followed for these two acts: no ledger entry named them, so a reader scanning only org/critical_paths/ for this project's deploy history would see one ledgered apply and miss two more terraform-apply invocations that happened in between.",
+  "notes": "Not remedied with a backdated ledger entry (that would misstate the record's own timeline -- the ledger was genuinely closed before these ran). Recorded so the class is visible: an idempotent-rebuild side effect that forces a RECONCILING apply mid-verification is a real deploy act and needs its own ledger discipline, even when it is corrective and non-functional. The precondition fix in row W1-S40 (skip-rebuild-when-already-served) also prevents this class going forward, since a clean re-run no longer drifts and therefore never needs a reconciling apply."
+}
 ]
 ```
 
