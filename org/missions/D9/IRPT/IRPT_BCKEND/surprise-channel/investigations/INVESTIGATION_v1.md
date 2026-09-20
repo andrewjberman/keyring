@@ -6632,6 +6632,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION",
   "notes": "Recorded for completeness of this order's arm (a) denominator (it explains why one enumerated call site sits outside the three-way classification), not a defect: an unreachable helper with a caller-supplied path is inert by construction."
 }
+,
+{
+  "id": "IRPT_BCKEND-W1-S39",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T09:10:00Z",
+  "one_line": "Rows IRPT_BCKEND-W1-S37 and IRPT_BCKEND-W1-S38, which both never-widen halves name as the ARMED rows they supersede and disarm 'at the v2 apply, by the row's own disarm act', are ABSENT from this channel at this worktree's HEAD -- they exist only on an undrained branch, lost when a DIFFERENT branch (carrying only the first pass) was drained under the same descriptive commit message.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --oneline --all -S\"W1-S37\" -- org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md, this worktree: hits 27ed75f57d (adds W1-S37) and 39e269aa06 (references W1-S37, adds W1-S38), both on local branch wk-irpt_bckend-6-1f",
+      "git rev-parse HEAD:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md at commit dd4cfbecd5 (this worktree's HEAD): grep for 'W1-S37' -> 0 matches, 'W1-S38' -> 0 matches",
+      "git log --oneline b6ede3ac5c..dd4cfbecd5 -- <the channel file>: the two commits between the drain and HEAD (f5ccff15d0, 30d612d5e5) touch an unrelated project (ADVI_FIRMBKTS), so the rows were never re-added after the drain",
+      "the DRAIN commit b6ede3ac5c ('drain: merge wk-irpt_bckend-6-1f') has TWO PARENTS, 4332e74b03 and a42181055c0f -- a42181055c0f is 'proof-of-spec(IRPT_BCKEND.TO-IB-rtf-13 first pass...)', NOT 39e269aa06 (the third-pass commit carrying W1-S38) -- so the branch actually merged at that drain point was an EARLIER tip of a same-named local branch, not the tip that carries the second/third-pass rows",
+      "local branch wk-irpt_bckend-6-1f's CURRENT tip (2021547ff6, 'proof(...) IB-rtf-13 third pass...') is NOT an ancestor of dd4cfbecd5 (git merge-base --is-ancestor 2021547ff6 dd4cfbecd5 -> false), so the second/third-pass work, including rows W1-S37/W1-S38 and the v1 packet sign-offs at blob fb833bc620, was never merged into CLOUD under this lineage",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-13_DIRECTORY_CONTRACT_STAGED.md:107-108 (v2, at HEAD dd4cfbecd5): 'W1-S37 and W1-S38 are superseded by this v2 gate and disarm at the v2 apply, by the row's own disarm act -- never in prose'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Rule 22 (an ARMED row graduates only via a closing carrier, never in prose) and both v2 never-widen halves' own text naming W1-S37/W1-S38 as rows this apply's own act disarms.",
+  "world_is": "The two rows those halves point to do not exist in the channel this worker (or the issuer's own drain) can read at HEAD. The disarm act this pass performs (the v2 apply, arm d) cannot graduate a row it cannot find -- there is nothing at this coordinate for a gate or a later reader to match against 'W1-S37'/'W1-S38', so the halves' own disposition instruction is currently unsatisfiable by any mechanical reader of this channel. This is a MERGE-LOSS defect in a shared, branch-scoped surprise channel (a class Rule 14b's guidance for append-only shared files does not by itself prevent when two DIFFERENTLY-NAMED-but-same-prefix branches exist and only one is drained), not a defect in this order's own act.",
+  "notes": "Not remedied here: this worker cannot cherry-pick another branch's commits into the shared channel without widening this order's <paths> grant or acting outside its own worktree. The evidentiary content those two rows carried (v1's whole-planfile digest proven UNSATISFIABLE across 5 runs, culminating in a fifth distinct digest value) is independently RESTATED and relied upon by both signed v2 halves' own prose (CTO half section 1; COO half's 'WHY v2 EXISTS' section), so the SUBSTANCE is not lost -- only the CHANNEL ROW mechanics that were supposed to formally disarm it. Disarm owner is the issuer per both halves' own text; the remedy is likely to re-file the substance as a fresh row at the issuer's own coordinate (S<k>) citing this row, or to cherry-pick 27ed75f57d/39e269aa06's row content from local branch wk-irpt_bckend-6-1f (still present as of this writing) into the drained tree."
+},
+{
+  "id": "IRPT_BCKEND-W1-S40",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T10:05:00Z",
+  "one_line": "The subtraction gate's signed subtraction set (a data.aws_s3_object read entry's version_id/last_modified) is INERT for the directory root's own resource_changes -- 0 of 0 mode==\"data\" entries appear there on every plan measured -- because those two fields instead surface as ATTRIBUTES of module.irpt_directory_search.aws_lambda_function.this itself (s3_object_version, last_modified), and build-and-upload.sh's unconditional per-run S3 re-upload (byte-identical content, new VersionId every call) manufactures a phantom 'update' there on ANY re-run after the real apply, even though before.source_code_hash == after.source_code_hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: for each of the 7 investor-reporting roots' terraform show -json <planfile>, [e for e in resource_changes if e.get('mode')=='data'] -> 0 entries, every root, 3 separate full-battery runs this session (full_battery_run3/4 and a standalone check)",
+      "python diff of before vs after on module.irpt_directory_search.aws_lambda_function.this in .scratch/plans_rtf13/directory.tfplan (full_battery_run3's plan): only differing keys were last_modified (2026-09-20T09:32:07.000+0000 -> None) and s3_object_version (lmtGc0EZIOaQqObYWVjYxBnRkoui7LfX -> fD_BVPLgQ.JCOyE0oiBiEHnKnYSNyo1x) -- source_code_hash identical on both sides (76LeVyYNfhdyDnQNXR3LzrqSv7k7Vr3POSjpcBzww6E=)",
+      ".tools/aws.cmd s3api list-object-versions --bucket opal-313476888478-lambda-artifacts --prefix investor-reporting/irpt-directory-search.zip: 5 distinct VersionIds minted between 09:16:20Z and 10:01:39Z this session (one per build-and-upload.sh invocation across the manual apply pass and 3 full battery runs), all sha256(b64)=76LeVyYNfhdyDnQNXR3LzrqSv7k7Vr3POSjpcBzww6E= (byte-identical content, distinct S3 versions)",
+      "org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_PACKET_IB-rtf-13_v2.md:82-84: 'the gate above does not turn on the build's byte-identity, only on the substantive source_code_hash transition it produces' -- read as anticipating exactly this non-substantive drift, but the SIGNED subtraction-set TERM (org/tier1_exec/1.0.0_SA_CTO/deliverables/..._CTO_HALF..._DIRECTORY_CONTRACT_STAGED.md:46-49) names only 'a data.aws_s3_object entry carrying actions [read] with version_id/last_modified', which this module's plan never produces",
+      "battery_ib_rtf_13.py arm (d), first re-run after the real apply (this worker's own instrument): STOPPED correctly on this exact content, per the order's own rule ('a REFUSAL is EVIDENCE... NEVER widen the subtraction set at the terminal') -- the gate did not fail open"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-13_DIRECTORY_CONTRACT_STAGED.md section 2: 'THE COMPARED OBJECT IS resource_changes, PER ROOT, AND NOTHING ELSE... a data.aws_s3_object entry carrying actions [read] with version_id/last_modified is exactly such a case'.",
+  "world_is": "For irpt-directory-search's own module, no data.aws_s3_object entry is ever a separate resource_changes member (its read is fully resolved during refresh and folded directly into the lambda resource's own before/after) -- so the named example case never fires, and the two named fields live one level up, as attributes of the SAME entry that also carries the substantive source_code_hash. The literal signed term does not reach them. This worker did NOT widen the subtraction set to cover this case (that is the issuer's/CTO's call per the order's own bound); instead it removed the PRECONDITION that manufactures the drift -- both arm (c) and arm (d) now check whether the function already serves the manifest's/signed built sha before calling build-and-upload.sh again, so a re-run of this battery in an already-applied state no longer mints a new S3 version and no longer sees this drift. The REAL apply (this pass's first execution) landed and verified cleanly, matching the signed shape exactly, before this class of re-run churn was ever introduced.",
+  "notes": "Remedy carried, not applied here: either (a) build-and-upload.sh should skip re-uploading when the computed content sha256 already matches the currently-uploaded latest version's content (idempotent at the S3-object level, not just the manifest level), which would make this whole class structurally impossible, or (b) the CTO's compared-object term is amended to also subtract s3_object_version/last_modified when they appear as attributes of the SAME entry as an unchanged source_code_hash (a narrower, named widening, requiring re-signature per the order's own bound). This worker's own fix (skip-rebuild-when-already-served in arm (c) and arm (d)) is a workaround inside this cell's own battery, not a change to the shared build tool or the signed gate construction."
+}
 ]
 ```
 
