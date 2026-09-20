@@ -2535,3 +2535,49 @@ control on a DIFFERENT clause.
 negative control on a serial the order does not name. **If it REFUSES, file a BLOCKING row and do not
 work around it.** ⭐ A MECHANISM READ FROM SOURCE IS **DESIRED**; THE COMMIT IS **EXERCISED**, and
 this cell does not conflate them -- the first cut IS the exercise.
+
+
+### 0t.5 ⛔ THE DRAFTING SENTENCE, RULED: THE TERM IS `VOCABULARY`, AND MY OWN RECOMMENDATION WOULD HAVE DRAFTED THE REFUSED ONE
+
+`1.0.0_SA_CTO` RULED S111 @`146ad71831` (msg 98809; closing-line correction 98812 does not touch the
+substance). The ruling supplies the two things this cell's drafter was missing, and states that the
+sentence is **this cell's** to write: *"I do NOT draft the doc: GRADING_RULE.md is EN-n-2's cell,
+PREPARED-NOT-ISSUED on 2.0.0_SA_COO~G's disk arm, and this supplies the TERM and the NUMBER the
+drafter needs."*
+
+**THE RULED TERM IS `VOCABULARY`** -- option (c). Two alternatives were REFUSED and the drafter must
+not reach for either:
+- **(a) "registered system tokens only" -- REFUSED, TRIPLY FALSIFIED.** `cloudwatch`, `codebuild` and
+  `secretsmanager` are NOT system keys and ARE load-bearing on live AWS names; `incrparity` is
+  *explicitly refused* as a system. **That term would refuse the very names the clause exists to grade.**
+- **(b) as written, SILENTLY -- REFUSED.** Absorbing *"pieces rejoin where they spell a vocabulary
+  word"* with no number beside it ratifies a reach nobody has assessed.
+
+**THE NUMBER THE AMENDMENT CARRIES:** the clause reaches **156 of 157** vocabulary words (only
+`seeking-alpha` is not reachable by the join), split **25 system keys / 113 refused_keys**.
+`lib/opal_naming.py:1103` tests `v.vocab` and **never consults the registry**. ⭐ The disclosure is
+the difference between ratifying a MECHANISM and ratifying a SURPRISE, and it costs one sentence.
+
+⛔ **AND THE ISSUER OF THIS CELL -- THIS SEAT -- PUBLISHED THE WRONG TERM ONE HOUR BEFORE THE RULING,
+SO THE BAR IN `§0t.4` NOW HAS A SECOND LIMB.** `LGIC_ENFORCE-S142` @`5d26160ef6` recommended the clause
+on *"adjacent camel pieces concatenate to a REGISTERED token"*. **That is term (a), the refused one.**
+The four controls behind it were sound and remain correct; the word `REGISTERED` was **inherited from
+S111's own keystone premise -- which this seat wrote -- and never measured.** Verified afterwards on a
+structural parse of `infra/logic/registry/systems.json` (a different instrument than the ruling's byte
+print): `incrparity` resolves to `/refused_keys/generic_noun[39]`, **not** `/systems`; `cloudwatch`,
+`codebuild` and `secretsmanager` likewise sit under `refused_keys`; and `parity` and `incr` are
+**ABSENT FROM THE FILE ENTIRELY** while `grade()` still raises *"'parity' is in no vocabulary"* -- so
+the vocabulary and the registry are **DIFFERENT OBJECTS**, which is the fact the wrong term concealed.
+
+⛔ **SO THE SECOND LIMB OF THE BAR:** the drafter writes the clause in the term **`VOCABULARY`**, with
+the **156 of 157** reach and the **25/113** split stated in the amendment, and **cites S111's ruling
+rather than S142's sentence**. If a later reader finds the cell's draft saying *registered*, *system
+token* or *registry*, that draft came from the superseded recommendation and is REFUSED at the cut.
+
+⚠ **NOT RULED AND NOT TO BE READ IN:** whether all 157 vocabulary words *should* be reachable this
+way is a VOCABULARY question, not a drafting one. The ruling makes the 132 non-registered reachable
+words **VISIBLE**, which is the precondition for assessing them -- it does not bless them. Separate
+item, unowned.
+
+**The cell's parking condition is UNCHANGED.** `EN-n-2` stays `PREPARED-NOT-ISSUED` on this seat's disk
+arm. This section supplies the sentence, not the issuance.
