@@ -1202,6 +1202,30 @@ not a message.
    },
    "disposition": "UNDER_INVESTIGATION",
    "notes": "Filed BLOCKING because it misstates the outstanding-work list that three seats are actively reasoning from this morning. Not cut as a round in the same act: 1.0.0_SA_CTO is mid-tick on 98449's measurements and a cut landing underneath a ruling it is writing would be the round-N+1-before-round-N's-slug shape (LD-0521's sibling). The cut is this seat's under Rule 27 and is taken once that lands."
+  },
+  {
+   "id": "LGIC_CANON-S22",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T09:48Z",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "STEP 13 BARS ON AN UNMEASURED NAMING-CONFORMANCE BACKLOG, NOT ON ONE REGISTRY ROW -- and the instrument is why all three of us undercounted it: A STOP-ON-FIRST-RAISE CENSUS CANNOT REPORT HOW MANY RAISES REMAIN. Its output reads 'one problem' at every point in an arbitrarily long queue, with a perfectly accurate line.",
+   "spec_asserts": "C6_RUN_RECORD.json's step-13 reason names the blocker as 'the unrelated RAISE, fixed at its own registry row per Rule 30'. This seat's 98452 sized it as 'One row rather than 1298, same shape'. 1.0.0_SA_CTO's 00:35Z ruling sized it as a single in-engine confirmation.",
+   "world_is": "FALSIFIED BY ONE RUN, USING THE TOOL'S OWN FLAG, by 1.0.0_SA_CTO. `census --not-judged` exists to card a name so a RAISE on it does not stop the run. It carded the one known raise and re-ran: 'CENSUS CARDED live API_GW sentiment-query-api -- NOT-JUDGED (R-29) / CENSUS RAISE live API_GW trade-submission-api -- R1.c: trade is an unresolved token / CENSUS: STOPPED on the first RAISE after 3 judged (1 carded)'. CLEARING THE ONE KNOWN RAISE DID NOT REACH THE END. It stopped on a second immediately. THE STRUCTURAL FINDING, and it is the keepable part: A STOP-ON-FIRST-RAISE INSTRUMENT CANNOT REPORT HOW MANY RAISES REMAIN. The worker who wrote the step-13 reason, this seat, and 1.0.0_SA_CTO all saw ONE named obstacle and estimated ONE row. NOBODY MISREAD ANYTHING -- the instrument manufactures an appearance of near-completion out of a perfectly accurate line. The discriminator is one run with --not-judged. SIZING, BOUNDED RATHER THAN EXTRAPOLATED: 2 raises measured in ~6 judged of 1852 to judge. 1.0.0_SA_CTO explicitly refused to write '~600' on that basis, naming it as the sentence-wider-than-its-measurement error inside the ruling that names it. AT LEAST TWO; DENOMINATOR UNMEASURED. First two members: 'sentiment' (sentiment-query-api, R1.f -- in no vocabulary, no registry row resolves it) and 'trade' (trade-submission-api, R1.c -- unresolved token). CONSEQUENCE FOR THIS PROJECT: step 13 is not one decision away. It bars on a backlog of name-resolution work of unknown size, DECIDER 1.0.0_SA_CTO and WRITER 4.0.0_SA_CRO under the round-18 owner/writer ruling, since infra/logic/** is lane PLATFORM_LOGIC_DOCS. IT CONVERGES WITH CARD 2 AT ANDREW rather than raising a new card -- seat a named project for the 1298, FWD-5 clause 2 -- because it is the same shape: an unmeasured backlog of name-resolution work that no single cell can absorb. A second measured instance strengthens that card; it is not a third. TERMINALITY IS NOT SETTLED BY THIS ROW AND IS NOT THIS SEAT'S TO SETTLE. 1.0.0_SA_CTO routed it to 3.0.0_SA_CVO as a governance fork, on the ground that a terminal scope frees THIS seat and an open scope justifies ITS loop -- two interested parties, and 'two interested seats agreeing is not corroboration; it is the same interest twice'.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "1.0.0_SA_CTO's ruling @1cc791ee55, quoting its own --not-judged run: CARDED sentiment-query-api, then RAISE trade-submission-api, STOPPED after 3 judged (1 carded)",
+     "this seat's own re-run at HEAD ~09:3xZ against a census built 2026-09-20 06:00:55 UTC: STOPPED on the first RAISE, sentiment-query-api, 0 carded after 3 judged, 2231 live nodes / 1852 to judge",
+     "C6_RUN_RECORD.json .carded[1].reason clause 2 -- the run 'stopped before reaching any 49financial/49f-carrying row'",
+     "lib/opal_naming.py census --not-judged: the flag exists precisely so a RAISE on a carded name does not stop the run (R-29)"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "Filed by 2.0.0_SA_COO~G because 1.0.0_SA_CTO's ruling says so in terms -- 'The surprise ROW is right and is COO~G's to file, since nothing currently clocks these and this ruling is not a clock.' disarm_owner is 1.0.0_SA_CTO as the backlog's DECIDER, not this seat: the remedy is registry rows it decides and 4.0.0_SA_CRO writes, and a clock held by a party who cannot perform the remedy is the UNEXECUTABLE-AS-ROUTED shape its own round-18 ruling names."
   }
 ]
 ```
