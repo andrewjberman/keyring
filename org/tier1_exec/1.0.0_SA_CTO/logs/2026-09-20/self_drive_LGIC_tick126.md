@@ -60,8 +60,15 @@ Re-sent as pure third-person fact; delivered.
 It returned and immediately ruled `IB-rtf-5`'s step-4 unblock (98433) -- **built on my 19:5xZ message,
 and its own push-state line says so: *"origin/CLOUD @`ec68e2e420` (your 19:5xZ read, cited)".***
 
-⛔ **My corrections (98345, 98349, ~21:2xZ and ~21:4xZ) went `OFFER-EXHAUSTED` into the stranded set
-and are still unread there.** The ruling quotes back the exact sentence I retracted:
+⛔ **AMENDED @08:3xZ -- THE SENTENCE THIS SECTION SHIPPED WITH WAS STALE, AND I REPEATED IT AFTER IT
+WAS MEASURABLY FALSE.** It read *"my corrections 98345/98349 went `OFFER-EXHAUSTED` into the stranded set
+and are still unread there."* **Measured on `get_delivery_state`, denominator 12: both read
+`READ@2026-09-20T08:12:12.693440Z`.** ⭐ **THE REPLACEMENT IS A SHARPER MEASUREMENT OF THE SAME CLAIM: `98433`
+was CREATED at `08:09:02.840671Z`; that inbox's backlog was EMITTED at `08:09:42.862408Z` -- FORTY SECONDS
+LATER -- and READ at `08:12:12.693440Z`. So the ruling predates its author's sight of the corrections by a
+MEASURED INTERVAL, which is strictly better evidence than "unread" ever was.** ⚠ **The sentence was TRUE
+when composed (08:10:28Z) and went false at 08:12:12Z, INSIDE THE GAP before my own message was OFFERED at
+08:13:33Z** -- see §4. The ruling quotes back the exact sentence I retracted:
 *"the fence admits `role/*-inf-*` BY CONSTRUCTION"* -- **a DESIRED-plane read; UNPROVEN in both
 directions; the discriminating `s3:*` call from a glob-matching principal has never been run.**
 
@@ -79,6 +86,35 @@ filed as `S107`/`S109`. **New to me:** `exemptions.json` carries 16 rows includi
 ⭐ **And the card to Andrew needs ONE WORD changed: *a measured non-console path is PLAUSIBLE and
 UNPROVEN*, not *exists*.** He reasoned about this personally, **and that distinction is exactly what
 I have been wrong about three times in two days on these two buckets.**
+
+## ⭐ 4. THE INSTRUMENT FINDINGS THE AMENDMENT PRODUCED -- three, all measured on those 12 rows
+
+⛔ **1. `OFFER-EXHAUSTED` IS NOT A DEAD-LETTER STATE, AND I HAVE WRITTEN IT AS ONE IN SEVERAL CARRIERS.**
+All ELEVEN stranded rows RE-OFFERED on that seat's return, at an IDENTICAL `EMITTED` timestamp
+(`08:09:42.862408`, to the microsecond, across every row). **The stranded set drains on return; it does not
+need a re-send.**
+
+⛔ **2. AND THAT SIGNATURE IS R-59's PATHOLOGY SIGNATURE, PRODUCED BY THE HEALTHY CASE.** This estate reads
+*"IDENTICAL sub-ms `EMITTED` across a BATCH = not consuming, something external drained it."* These eleven
+rows match it exactly while being a seat correctly draining its own backlog. ⭐ **THE SEPARATOR IS THE `READ`
+COLUMN, NOT THE `EMITTED` ONE: identical-batch `EMITTED` FOLLOWED BY a matching `READ` is a returning seat;
+identical-batch `EMITTED` with NO `READ` is the pathology.** `EMITTED` identity alone does not discriminate
+them, and I have been quoting it as though it did.
+**COST:** none -- read the column already printed beside it. **NON-APPLICATION:** none.
+
+⛔ **3. A DELIVERY-STATE CLAIM CAN GO STALE BETWEEN THE SEND AND THE OFFER.** My `98435` was composed at
+`08:10:28Z` and OFFERED at `08:13:33Z`; the fact it asserted changed at `08:12:12Z`, **inside that gap.**
+⭐ **This estate has a standing rule to re-measure PUSH state at send time and NO SIBLING FOR DELIVERY STATE
+-- which is strictly more perishable, because a returning seat drains its WHOLE backlog at once rather than
+a row at a time.** ⚠ **The send is forgivable; the LOG is not** -- I repeated it at ~08:2xZ, when a single
+call would have shown it false, in the same document where I had just re-measured the push-state line and
+caught a real error there. **I applied the rule to one line and not to the line beneath it.**
+
+⭐ **AND ONE BANNED ORACLE CONFIRMED LIVE, WHICH IS WHY THE BROKER IS THE INSTRUMENT:** `98435` sits in that
+inbox's `read/` directory RIGHT NOW while the broker reports it `OFFER-EXHAUSTED`. `inbox-watch.sh:120` moved
+it there BEFORE the `:124` echo. **`read/` observes the WATCHER, never the agent.**
+
+**Correction sent to `2.0.0_SA_COO~B` as `98436`-class carrier @08:2xZ, before it acted on the stale sentence.**
 
 ## ⚠ 3. TWO ERRORS OF MINE THIS TICK, BOTH CAUGHT BY GATES
 
