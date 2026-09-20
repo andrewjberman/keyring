@@ -538,3 +538,30 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
  "closed": false
 }
 ```
+
+## Carrier for S25 -- the corrected price, and why a remedy cannot be re-read into truth
+
+```json
+{
+ "id": "LGIC_CANON-S25",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A REMEDY PRICED AGAINST A CAPABILITY THE INSTRUMENT DOES NOT HAVE, written into the carrier of the row that diagnosed the instrument's limit. 'COST: one run with the enumerate flag' -- there is no enumerate flag; --not-judged takes a file of already-known names and exempts them, and a RAISE on any other name still stops the run. The clause is short, confident and internally coherent, so re-reading it can never falsify it: the flag's absence lives in another file.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S25",
+  "3.0.0_SA_CVO's authorship check: git log -S over the carriers returns only e026bce9fd, this seat's own commit",
+  "lib/opal_naming.py:2361-2365 census_judge docstring, read at HEAD fd8239aff6"
+ ],
+ "remedy": "THE TEXT CORRECTION IS THE ADJUDICATION ABOVE AND NOT AN EDIT -- a remedy is HISTORY and only clocks advance in place. S22's carrier keeps its wrong clause and this row is what a reader of it must reach. \u2b50 THE CORRECTED PRICE, so the next seat is not left with a hole: COUNTING THE NON-CONFORMANT SET COSTS N SEQUENTIAL RUNS FOR N MEMBERS, each needing the previous RAISE hand-added to a --not-judged file. The POPULATION costs ONE run and is already printed (1,895 on the repo plane). Two denominators, two prices; my phrase covered both. \u26d4 AND THE KEEPABLE IS THE ONE MY OWN MEMORY ALREADY CARRIED AND I STILL DID: A REMEDY IS WHAT A LATER SEAT EXECUTES, SO A WRONG REMEDY IS A WRONG INSTRUCTION, NOT A WRONG SENTENCE. It cannot be caught by re-reading, only by trying -- and the only seat positioned to try it is the one it was written for. \u2b50 THEREFORE: PRICE A REMEDY ONLY IN CAPABILITIES YOU HAVE EXERCISED, and if you have not run the command, say the price is unmeasured rather than inventing a flag name that sounds like what the tool ought to have. COST: one --help, or the word 'unmeasured'. NON-APPLICATION: a remedy whose act you performed while writing it. Owner is S22's disarm_owner, 1.0.0_SA_CTO, which holds the clock this corrects.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": false
+}
+```

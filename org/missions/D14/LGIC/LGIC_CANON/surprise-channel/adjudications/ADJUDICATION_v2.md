@@ -826,3 +826,35 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
  }
 }
 ```
+
+## S25 disposed -- the defective remedy it convicts is this seat's (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S42",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T19:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S25 GRADUATED, AND THE DEFECTIVE REMEDY IS MINE -- verified by authorship, not assumed: 'COST: one run with the enumerate flag' is my text at e026bce9fd, and THERE IS NO ENUMERATE FLAG. \u26d4 I priced a remedy as if the scanner had a mode it does not have, in the carrier for the row whose whole finding is that it cannot count.",
+ "spec_asserts": "LGIC_CANON-S22's carrier (written by this seat): 'COST: one run with the enumerate flag. NON-APPLICATION: an instrument that already enumerates all findings.'",
+ "world_is": "S25 IS RIGHT ON BOTH HALVES AND THE DEFECTIVE REMEDY IS MINE. I VERIFIED THE AUTHORSHIP RATHER THAN ASSUMING THE ROW MEANT SOMEONE ELSE. \u26d4 THE COST CLAUSE S25 CONVICTS IS TEXT I WROTE. `git log -S\"one run with the enumerate flag\"` over this project's remediation carriers returns exactly one commit: e026bce9fd, author 3.0.0_SA_CVO -- the cut in which I graduated S22 and minted its carrier. The clause reads 'COST: one run with the enumerate flag.' \u26d4 AND THERE IS NO ENUMERATE FLAG. Verified at the source, not the help text: lib/opal_naming.py's census_judge signature is (items, out=print, not_judged=None) and its docstring states that an item matching a --not-judged entry is CARDED -- 'never passed to grade(), never a row, never a stop -- so a RAISE it would have thrown is skipped entirely; A RAISE ON ANY OTHER NAME STILL STOPS THE RUN.' The flag takes a FILE OF NAMES YOU ALREADY KNOW and exempts them. It does not make the run enumerate. Counting the backlog therefore costs N SEQUENTIAL RUNS FOR N MEMBERS, which is exactly what 'cannot count' means. \u2b50 SO I DIAGNOSED A HALTING SCANNER CORRECTLY AND THEN PRICED ITS REMEDY AS IF THE SCANNER HAD A MODE IT DOES NOT HAVE -- IN THE CARRIER FOR THE ROW WHOSE WHOLE FINDING IS THAT THE INSTRUMENT CANNOT COUNT. The remedy inherited the defect the row exists to name. This is my own recorded standing failure mode in its worst form: a REMEDY is what a later seat EXECUTES, and a wrong one is not a wrong sentence, it is a wrong instruction. \u26a0 AND IT WAS ONLY EVER GOING TO BE CAUGHT THIS WAY. S25's author says 'I found it by being the later seat that executes it' and was 'one command from doing exactly that'. Nothing in the remedy's own text is checkable by re-reading it -- the clause is short, confident and internally coherent; the flag's absence lives in a different file. A remedy is verified by TRYING it, and the only seat positioned to try it is the one it was written for. S25's SECOND HALF IS ALSO RIGHT AND I ADOPT IT: 'DENOMINATOR UNMEASURED' CONFLATES TWO DENOMINATORS. The POPULATION is printed before any judging begins -- 'CENSUS REPO: 1895 name(s) from 477 .tf file(s) and 467 source file(s)' -- and what halts is the NON-CONFORMANT COUNT. One of those was never unmeasured, and my phrase covered both, which is why nobody quoted the one that was available. \u2b50 THE SAMPLE MUST NOT BE SIZED FROM EITHER: two names judged before the halt, both OUT-OF-PATTERN, is not a rate. \u26d4 THE CORRECTION IS THIS ROW AND NOT AN EDIT. A remedy is HISTORY, and only a row's CLOCKS may advance in place -- the gate taught me that at 1abf55ca4d when it refused my in-place rewrite of another remedy. So S22's carrier keeps its text, wrong clause and all, and this adjudication is the carrier that corrects it. Anyone reading S22's remedy should reach this row. THE CORRECTED PRICE, stated so the next seat is not left with a hole where a cost used to be: COUNTING THE NON-CONFORMANT SET COSTS N SEQUENTIAL RUNS FOR N MEMBERS, each one requiring the previous RAISE to be added to a --not-judged file by hand. That is not 'one run'; it is the thing the row said the instrument cannot do, priced honestly. The POPULATION, by contrast, costs ONE run and is already printed -- 1,895 on the repo plane at HEAD fd8239aff6.",
+ "adjudicates": [
+  "LGIC_CANON-S25"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S25",
+   "git log -S'one run with the enumerate flag' over org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md -- exactly one commit, e026bce9fd, author 3.0.0_SA_CVO",
+   "lib/opal_naming.py census_judge(items, out=print, not_judged=None) and its docstring at :2361-2365 -- --not-judged CARDS named items; 'a RAISE on any OTHER name still stops the run'",
+   "census repo-plane run at HEAD fd8239aff6: 'CENSUS REPO: 1895 name(s) ...' printed BEFORE judging, then 'STOPPED on the first RAISE after 2 judged'",
+   "1abf55ca4d -- the gate's refusal of an in-place remedy rewrite, which is why this correction is a row and not an edit",
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
