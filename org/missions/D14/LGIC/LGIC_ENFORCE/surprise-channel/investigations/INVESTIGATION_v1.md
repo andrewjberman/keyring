@@ -4003,6 +4003,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     "world_is": "The split is regex-scoped to the captured def body only; a decorator-level by-path reach is outside that scope and moves neither the by_path count nor the AC1 verdict in either direction.",
     "notes": "Remedied in this cell's own edit regardless of the gap: test_builders_refuse_what_they_cannot_build's decorator was converted to _shipped_lib() alongside every other test in the same commit, so no residual is left live in the file. Filed because the checker itself would not have caught it had the decorator been left untouched, and any later round reusing this core_binding shape over a file with decorator-level library calls inherits the same blind spot. disarm_owner omitted: INERT, no live exposure.",
     "id": "LGIC_ENFORCE-W1-S91"
+  },
+  {
+   "id": "LGIC_ENFORCE-S110",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T11:29Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "I repaired ONE grade() departure this morning (LGIC_CANON-W8-S1) and the register names TWO MORE carried INERT/OPEN in the same production builder, both owned by this seat. I measured both at HEAD rather than inheriting their text: W1-S73 IS ALREADY REPAIRED IN THE WORLD while its remediation reads OPEN, and W1-S74 REPRODUCES EXACTLY. And W1-S74's re-join is CONDITIONAL and ORDER-SENSITIVE, which points its remedy at the WRITTEN RULE rather than the code.",
+   "spec_asserts": "LGIC_ENFORCE's project.json blocking field, ROUND 10 OWES item (3): 'W1-S73 and W1-S74 -- two real grade() departures carried INERT/OPEN in a PRODUCTION BUILDER.' Both rows carry hazard_standing INERT, owner 2.0.0_SA_COO~G, closed:false, and a remedy reading 'OPEN -- A REAL grade() DEFECT, NOT A HAZARD ... Owed: a fix in lib/opal_naming.py grade() with a positive control on this exact name and a mutant, run against the live census rather than a fixture.' W1-S73 asserts grade() keeps the refused token 'bd' in the canonical form where GRADING_RULE.md R3 says it spells 'blackdiamond'. W1-S74 asserts grade() re-joins camel pieces of one segment into a registry word where N2 splits before every capital and states no re-join.",
+   "world_is": "THE TWO ROWS SPLIT, IN OPPOSITE DIRECTIONS, AND NEITHER MATCHES ITS OWN TEXT. W1-S73 IS ALREADY REPAIRED. grade('opal-cot-bd-session-fetch','SSM_DOCUMENT') at HEAD returns canonical 'opal-cot-blackdiamond-session-fetch-document' -- 'bd' IS aliased, which is exactly what the row says does not happen. Positive control beside it: the already-canonical spelling grades CONFORMANT, so the grader is working rather than failing everything. This is the SAME SHAPE as LGIC_CANON-S3 this morning: repaired in the world, OPEN in the channel, and nobody read it because an INERT label reads as dormant rather than as unverified. W1-S74 REPRODUCES EXACTLY, and consistently: 'ExecIncrParityFailure' canonicalizes to 'exec-incrparity-failure' across CW_ALARM, SSM_DOCUMENT and LAMBDA, and on both the bare and the system-prefixed name shapes. AND THE MEASUREMENT THAT DECIDES ITS REMEDY DIRECTION, WHICH THE ROW EXPLICITLY LEAVES OPEN ('Either the written rule lacks the clause or grade() applies one it does not have ... which side is authoritative is a ruling, not this cell's'): THE RE-JOIN IS CONDITIONAL AND ORDER-SENSITIVE, not blind. Measured with two negative controls -- 'ExecZzzQqqFailure' gives 'exec-zzz-qqq-failure' and 'ExecFooBarFailure' gives 'exec-foo-bar-failure', BOTH SPLIT NORMALLY, while 'IncrParity' re-joins even with no surrounding pieces and 'ParityIncrExec' (same pieces, reversed) SPLITS. So the re-join fires only when the concatenation forms a REGISTERED TOKEN, and only in registry order. THAT IS DELIBERATE BEHAVIOUR, WHICH IS EVIDENCE FOR THE DOC-GAP READING AND NOT PROOF OF IT. Nobody writes an order-sensitive, registry-conditional re-join by accident, so the likelier account is that GRADING_RULE.md N2 lacks a clause the code has always had. \u26d4 BUT DELIBERATE IS NOT CORRECT, and this seat does NOT decide it: a defect and its remedy are separate inferences, and the discriminator is the CONTRACT of the thing the defect lives in -- here, whether GRADING_RULE.md is the authority grade() implements (EN-b-1 says it is) or a description that has fallen behind a deliberate builder. That is 1.0.0_SA_CTO's ruling. \u26a0 SCOPE NOTE, STATED SO THIS ROW IS NOT READ AS AN AUTHORIZATION: 1.0.0_SA_CTO's Rule 30 ruling @db4a88e9f7 authorized the W8-S1 repair specifically. Its REASONING -- that lib/opal_naming.py is the estate's mandated grader so its correctness is a standing obligation independent of round state -- appears to reach these two identically, but extending another seat's ruling to new objects is that seat's act, not this one's. NOTHING IS CUT AND NOTHING IS FIXED HERE. LGIC_ENFORCE's hold is undisturbed.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "grade('opal-cot-bd-session-fetch','SSM_DOCUMENT') at HEAD -> ('OUT-OF-PATTERN','opal-cot-blackdiamond-session-fetch-document'): bd IS aliased, falsifying W1-S73's stated mechanism",
+     "positive control: grade('opal-cot-blackdiamond-session-fetch-document','SSM_DOCUMENT') -> CONFORMANT, so the grader discriminates",
+     "grade('opal-mdpf-ExecIncrParityFailure', CW_ALARM|SSM_DOCUMENT|LAMBDA) -> '...exec-incrparity-failure...' on all three: W1-S74 reproduces",
+     "negative controls: ExecZzzQqqFailure -> exec-zzz-qqq-failure and ExecFooBarFailure -> exec-foo-bar-failure, both SPLIT; so the re-join is not blind",
+     "order control: IncrParity -> incrparity (re-joins bare) but ParityIncrExec -> parity-incr-exec (same pieces reversed, splits) -- the re-join is registry-conditional AND order-sensitive",
+     "LGIC_ENFORCE project.json blocking, ROUND 10 OWES item (3), names both rows; REMEDIATION_v2.md carries both with owner 2.0.0_SA_COO~G and closed:false"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
