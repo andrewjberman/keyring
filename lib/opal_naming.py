@@ -1412,6 +1412,14 @@ def _new_served(rest, prefix):
     leaf = None if prefix or not rest else len(rest) - 1
     if leaf == 0 and "." not in rest[0]:
         leaf = None
+    # A TRAILING {entity}={id} IS A PARTITION, NOT THE FILE LEAF (LGIC_CANON-W8-S1). address() writes
+    # .../advisors/advisor_id=A123 and this function read that last segment as the leaf, so it kebab-lowered
+    # the entity id's own bytes -- grading the builder's own output OUT-OF-PATTERN and contradicting
+    # NAMING_SCHEMA key.partition's example. The dot test is :1413's, reused deliberately rather than
+    # replaced: a segment carrying a dot stays a leaf, so a malformed file like `foo=bar.json` is graded
+    # exactly as before and this does not widen what the grader accepts.
+    if leaf is not None and "." not in rest[leaf] and _ENTITY.match(rest[leaf]):
+        leaf = None
     for i, s in enumerate(rest):
         if i == leaf:
             probe = _VAR_RE.sub("x", s)
