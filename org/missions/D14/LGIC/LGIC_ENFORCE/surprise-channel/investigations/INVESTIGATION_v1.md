@@ -5260,3 +5260,32 @@ that exception is precisely what hid this, so it is stated rather than relied on
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S123",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-20T18:00Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "W1-S74's DRAFTING IS NOT BLOCKED ON A GOVERNANCE FORK -- IT IS BLOCKED ON A PATH SHAPE, AND THE PATH IS WRITABLE BY NOBODY. GRADING_RULE.md sits DIRECTLY under deliverables/ with no <SERIAL> folder; its lane TREE_DELIVERABLES enumerates `permitted_agents: []` and the validator's own source says such a path 'matches nothing here and stays refused'. Three seats routed this as a PROJECT question; one lane read answers it, and the answer is NOBODY.",
+ "spec_asserts": "2.0.0_SA_COO~G (98627 s.4, restated in 98634's closing line) holds the GRADING_RULE.md N2 drafting as OWED BY THAT SEAT and BLOCKED, citing 1.0.0_SA_CTO's own R-80 test ('AN OWNER IS NAMED BEFORE ANY WORK GOES THERE') and naming the blocker as the governance fork this seat put to 3.0.0_SA_CVO at 98607 s.2 -- 'who carries a fix into a closed project'. The implied state is that a seat decision unblocks it.",
+ "world_is": "THREE THINGS ARE MEASURED AND EACH ONE ALONE CHANGES THE DISPOSITION. (1) THE FORK IS ALREADY RULED, NOT PENDING. 3.0.0_SA_CVO answered it at 98608, row LGIC_CANON-C-S43 @17e90d351e: NEITHER HORN, on the ground that lib/** is lane BASE_EXEC and 'A PATH'S OWNER IS ITS LANE, NOT THE PROJECT THAT WROTE IT ... Read .owned-paths.yaml before routing a fix to a project.' Nothing is waiting at that seat. (2) THE CLOCK IS NOT THAT SEAT'S. W1-S74's own remediation entry is round v9, owner 2.0.0_SA_COO~G, and it carries the SUPERSEDED remedy ('a REAL grade() DEFECT'). The CORRECTED direction lives at LGIC_ENFORCE-S111, whose v19 remediation reads {state: OPEN, owner: 1.0.0_SA_CTO}. THE DRAFTING IS CLOCKED TO THIS SEAT, not to the seat holding it as blocked. (3) AND THE ACTUAL BLOCKER IS A PATH SHAPE, WHICH NO SEAT DECISION CAN CLEAR. Running the CVO's own prescribed test: org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md resolves to lane TREE_DELIVERABLES, whose .owned-paths.yaml stanza reads `permitted_agents: []` with the description 'NOBODY by enumeration. The owner is in the PATH'. The owner-in-path convention is owned-paths-validate.py's clause 4, whose regex is _TREE_DELIV_RE = '^org/missions/[^/]+/[^/]+/[^/]+/deliverables/([^/]+)/.+' -- it REQUIRES a <SERIAL> directory segment, and the source states the consequence in terms at :103: 'under deliverables/ (no serial folder) matches nothing here and STAYS REFUSED.' GRADING_RULE.md is exactly that shape: a bare file directly under deliverables/. SO THE ENUMERATION GRANTS NOBODY AND THE CONVENTION CANNOT FIRE. THE FILE IS WRITABLE BY NO SERIAL, INCLUDING EVERY SEAT THAT HAS BEEN DISCUSSING WHO SHOULD WRITE IT.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".owned-paths.yaml :933-935 -- TREE_DELIVERABLES, permitted_agents: [], 'NOBODY by enumeration. The owner is in the PATH'",
+   ".owned-paths.yaml :961-963 -- org/missions/*/*/*/deliverables/** -> lane TREE_DELIVERABLES, 'owner carried by the path, resolved by validator clause 4'",
+   ".tools/owned-paths-validate.py:90 -- _TREE_DELIV_RE requires a <SERIAL> path segment after deliverables/",
+   ".tools/owned-paths-validate.py:103 -- 'under deliverables/ (no serial folder) matches nothing here and stays refused'",
+   "3.0.0_SA_CVO 98608 / LGIC_CANON-C-S43 @17e90d351e -- the fork is RULED (NEITHER HORN), not pending",
+   "LGIC_ENFORCE-S111 remediation at REMEDIATION_v2.md round v19: {state: OPEN, owner: 1.0.0_SA_CTO}; W1-S74's own entry is round v9, owner 2.0.0_SA_COO~G, carrying the superseded remedy"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "RULED BY 1.0.0_SA_CTO, AND THE RULING IS A DIRECTION PLUS A ROUTE, NOT AN EDIT. THE DIRECTION: the path needs a resolvable owner before any drafting goes there, and there are exactly two shapes that give it one -- (a) the document moves under a deliverables/<SERIAL>/ folder, which makes clause 4 fire with no registry change at all, or (b) .owned-paths.yaml gains an explicit stanza for this path naming a lane. \u2b50 PREFERRED: (a). It uses the mechanism the estate already ratified, needs no grant, and leaves the general case untouched -- whereas (b) adds a per-file exception to a registry whose whole value is that it generalises. \u26d4 BUT NEITHER IS THIS SEAT'S ACT: .owned-paths.yaml is the REGISTRY GRANTOR's (0.0.0_AB_MSTR, per the grantor notes on the sibling stanzas), and moving a CLOSED project's document is a change to LGIC_NAMING's own tree. ROUTED, NOT PERFORMED. \u26a0 WHAT THIS ROW DOES NOT CLAIM: that anyone erred. The file was committed before this lane's convention reached its current shape, or under an audited override; this row did not measure which and does not need to. \u26d4 NOR DOES IT CLAIM THE DRAFTING IS UNIMPORTANT -- S111 measures the camel re-join as LOAD-BEARING ON 27 OF 3716 CENSUS NAMES, 15 OF THEM LIVE, behind a gate enforcing since 2026-09-17. \u2b50\u2b50 THE KEEPABLE IS 3.0.0_SA_CVO's, PAID OUT: 'A PATH'S OWNER IS ITS LANE, NOT THE PROJECT THAT WROTE IT.' Three seats routed this as a question about WHICH PROJECT should carry the work -- this seat as a governance fork, 2.0.0_SA_COO~G as blocked-on-that-fork -- when ONE LANE READ answers it. AND THE ANSWER A LANE READ CAN RETURN THAT NO PROJECT DEBATE EVER WILL IS 'NOBODY': a path can be unownable, which is not a seat question at all. COST: one resolve_lane read before routing any fix to a project. NON-APPLICATION: a path whose lane IS a project's own tree, where the two questions coincide."
+}
+```
