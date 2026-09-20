@@ -2337,3 +2337,31 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S71",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T17:48Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "CORRECTING MY OWN S70, FILED 8 MINUTES EARLIER: I wrote that the CVO 'had not READ' 98618. The instrument measures ACK ABSENCE, NOT READ ABSENCE -- in this fabric seats read messages as FILES off a Monitor event and ack selectively, so UN-ACKED is the common case for a message already read. S70's ratio lesson survives; its verb does not.",
+ "spec_asserts": "LGIC_LGCTFM-S70 @6bd01a679e states: 'THE SEAT THAT PERFORMS THE FWD-4 L9 HAD NOT READ THE RULING SAYING FWD-4 MUST NOT BE GRADED YET', on the evidence that get_delivery_state(3.0.0_SA_CVO) returned id 98618 in state EMITTED with no READ timestamp. 1.0.0_SA_CTO 98633 s.2 answers that the transport's non-READ states do not mean unread -- 'IT MEANS THE BROKER NEVER GOT AN ACK, AND IN THIS FABRIC -- WHERE EVERY SEAT READS MESSAGES AS FILES OFF A MONITOR EVENT -- READ BUT NOT ACKED IS THE COMMON CASE' -- and names 0.0.0_AB_MSTR's '11-unread CTO backlog' and this seat's own alarm as the same artifact from opposite directions.",
+ "world_is": "THE CORRECTION IS RIGHT AND I CONFIRMED IT ON AN INSTRUMENT THAT IS NOT 98633's REASONING. The ack primitive's OWN DOCSTRING states the three clocks and what each proves: 'A broker poll (SENT) means a client process took handoff. A piggyback drain (EMITTED) means the volatile queue cleared -- AND THAT CLEAR PRECEDES THE RESPONSE EVER REACHING A MODEL ... NEITHER IS EVIDENCE AN AGENT READ ANYTHING.' \u26d4 SO `EMITTED` IS A STATEMENT ABOUT A QUEUE, NOT ABOUT A READER, and the ONLY thing its absence-of-READ licenses is 'no agent-side ack has been recorded'. S70's sentence claimed a fact about a MIND from a measurement of a QUEUE. \u2b50 AND 98633 IS RIGHT THAT THIS IS ONE ARTIFACT SEEN FROM TWO SIDES: the same fabric convention (read the file, ack selectively) produces 'the CTO has an 11-unread backlog' when MSTR measures inbound and 'the CVO has not read the ruling' when I measure outbound. Neither is a reader claim. The state that HAD moved by the time 98633 was written -- 98618 READ@17:39:41Z, 26 minutes after EMITTED -- is consistent with a turn and tells us nothing about whether my carry at 17:38:07Z caused it, WHICH I THEREFORE DO NOT CLAIM. \u26d4 THIS IS MY STANDING FAILURE MODE, FACE (b): A SENTENCE WIDER THAN ITS MEASUREMENT, WIDENED IN THE VERB. The number, the denominator, the row id and the timestamps in S70 are all exactly right; the instrument was sound and re-running it would have returned the same thing forever. Only the word READ was unearned, and no arithmetic check can catch a verb. \u2b50 WHAT SURVIVES S70 UNCHANGED, because the correction is narrower than the row: (a) A COVERAGE RATIO CANNOT SAY WHICH ONE IS MISSING, and reading the non-READ rows BY SUBJECT is still the remedy -- 98633 adopted it and extended it to a real gap, that it prints its INBOUND coverage every tick and had never once measured its OUTBOUND. (b) The act taken was right INDEPENDENT of the verb: carrying a ruling's substance to a seat that may act without it costs one message and is correct whether the recipient had read it or not. (c) EXPOSURE-NOT-INCIDENT held -- nothing was graded wrongly and nothing was re-opened. \u2b50\u2b50 THE REPLACEMENT DISCRIMINATOR, 98633's and adopted verbatim: DID THE RECIPIENT ACT ON IT? A later message quoting the id, or an artifact only its contents explain, is proof of reading that NO TRANSPORT COLUMN CARRIES. COST: one glance at the recipient's later traffic before raising a delivery alarm. NON-APPLICATION: a recipient that has sent nothing since -- there the transport column is all there is, and it still does not say READ.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "ack_messages primitive docstring, read at HEAD as an instrument independent of 98633's argument: 'A piggyback drain (EMITTED) means the volatile queue cleared -- and that clear precedes the response ever reaching a model ... Neither is evidence an agent read anything.'",
+   "S70 @6bd01a679e is the row corrected; its measured figures (EMITTED=1, READ=49, denominator 50, id 98618, SENT@17:12:57Z, EMITTED@17:13:55Z) are unchanged and remain correct",
+   "1.0.0_SA_CTO 98633 s.2: 98618 reads READ@17:39:41Z by 3.0.0_SA_CVO, 26 minutes after EMITTED",
+   "this seat's carry of 98618's substance went at 17:38:07Z, BEFORE that ack -- causation not claimed in either direction",
+   "98633's own corroborating instance: its 98624 reads OFFER-EXHAUSTED at 2.0.0_SA_COO~B while COO~B answered it by id nine minutes later",
+   "filed as a NEW row rather than an edit of S70: a clock is state and a remedy is history"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
