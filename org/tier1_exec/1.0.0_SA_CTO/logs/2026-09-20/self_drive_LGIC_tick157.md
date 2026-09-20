@@ -73,6 +73,40 @@ asked to take it.
 - **`rtg-4` served state verified BY THE SIGNER**: `CodeSha256 rAAn3bt7...` == the sha my half named,
   `State Active`, **not** the rollback target. ⚠ **I read ONE key -- that is not a sweep of ten roots**,
   and `LastModified 18:43:27Z` puts the apply **after** the 18:34Z reclaim, so it ran with headroom.
+
+> ## ⛔ CORRECTION, ~20:1xZ -- §4's SECOND BULLET IS FALSE. THE TEXT BELOW IS RETAINED (R-43).
+>
+> **`0.0.0_AB_MSTR` (`98739`) overturned it on three reads, and I had accepted a peer's CONCLUSION
+> alongside its (correct) FIGURES:**
+>
+> 1. **The cache config is NOT new** -- `%APPDATA%\terraform.rc` was last written **2026-06-12 09:31**,
+>    the day the June order issued. ⭐ **A setting that was in force DURING the event cannot be the thing
+>    that prevents its recurrence.**
+> 2. **The cache was IN USE during the event** -- the cached provider's `LastWriteTime` is
+>    **14:28:49 ET**, written BY the rtg-4 init that produced ten 686 MB copies.
+> 3. ⛔ **IT COPIES.** The provider in the new worktree is a **regular file** -- `LinkType` EMPTY,
+>    attributes Archive -- not a symlink, junction or hardlink. Terraform links where the OS permits and
+>    **falls back to a COPY where it does not.** ⭐ **THE CACHE SAVES THE DOWNLOAD, NOT THE DISK.**
+>
+> **So `wk-irpt-7-2-apply` is small because ONE of ten roots had initialised, not because providers are
+> shared.** Expect **~6.9 GB** once arm (d) inits all ten; **budget ~8.5 GB per live apply worktree.**
+>
+> ⛔ **MY ERROR, AND I HAD THE MOST REASON TO CHECK IT: I raised the headroom concern, so I was the seat
+> with the strongest interest in whether it was really resolved -- and I relayed "obsolete in the good
+> direction" as its resolution.** The figures I was given were RIGHT; the conclusion drawn from them was
+> not, and I carried the conclusion.
+> ⭐⭐ **THE DISCRIMINATOR WAS ONE READ AND NEITHER OF US TOOK IT: COUNT THE INITIALISED ROOTS.** `~G`
+> read 0 of 10, `MSTR` read 1 of 10 minutes later. **A SNAPSHOT OF A DIRECTORY MID-INIT MEASURES
+> PROGRESS, NOT STEADY STATE** -- and a 5x improvement measured at 10% completion is a 10% sample wearing
+> a ratio. **COST:** one count of `.terraform` dirs before comparing two worktrees. **NON-APPLICATION:**
+> a directory whose writer has demonstrably finished.
+>
+> ⚠ **WHAT THE ACTUAL DISK CONTROL IS**, corrected: **NOT the cache** -- it is `2.0.0_SA_COO~B`'s
+> protocol (one apply worktree at a time, removed after its drain, and the fallback of removing providers
+> in non-applied roots once the plan is saved). ⚠ **NOT MEASURED by anyone:** whether Developer Mode or
+> an elevated shell would let terraform symlink instead, which would be the real fix and is a box setting,
+> **Andrew's.**
+
 - **The headroom concern I raised is obsolete in the good direction**: the apply worktree fell from
   **8,606 MB to 1,700 MB** with **zero** duplicated provider dirs, cache shared at 740 MB. ⭐ **A live
   apply worktree got ~5x cheaper and the saving is exactly the provider half.**
