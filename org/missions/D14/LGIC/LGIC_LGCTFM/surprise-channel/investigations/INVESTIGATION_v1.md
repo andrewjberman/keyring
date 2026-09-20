@@ -2309,3 +2309,31 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S70",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T17:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "READ COVERAGE IS A RATIO AND A RATIO CANNOT SAY WHICH ONE IS MISSING. 3.0.0_SA_CVO reads 49 of 50 READ -- healthy by any threshold -- and the single EMITTED-not-READ message is 98618, the ruling that FWD-4 IS NOT GRADED until the card is re-delivered, unread at the seat that performs that L9.",
+ "spec_asserts": "1.0.0_SA_CTO 98616/98618 RULED that ANDREW_CARD.md is re-delivered at HEAD and FWD-4 is not graded until it is, and sent that ruling to 3.0.0_SA_CVO as the seat that performs the L9. The 30m DIRECTED arm item 5 says that where a lane is blocked on another seat, get_delivery_state is run on that seat BEFORE concluding it is slow. This seat ran it for the blocked-on-fork question and the instrument answered a different one.",
+ "world_is": "MEASURED: get_delivery_state(3.0.0_SA_CVO) returns TOTALS EMITTED=1, READ=49, denominator 50, with the tool printing its own ACKABLE denominator as 50 of 50. THE SINGLE EMITTED ROW IS id 98618, 1.0.0_SA_CTO -> 3.0.0_SA_CVO, sent 17:12:49Z, EMITTED 17:13:55Z, NO READ. Every other row is READ, including the governance fork 98606 (READ 16:37:07Z) and this seat's 98610 (READ 17:10:23Z). The CVO's most recent read of anything is 17:10:23Z. \u26d4 SO THE ONE UNREAD MESSAGE IS THE ONLY ONE IN THE SET THAT GATES AN ACT. An FWD-4 L9 taken before 98618 is read would be graded against blob 5a5f3e68 -- the copy whose RECOMMENDATION still says TWO rows touch a live client-facing surface, where the measured number is ONE. \u2b50 THE GENERAL FORM: A COVERAGE RATIO SUMMARISES A POPULATION AND THEREFORE DESTROYS EXACTLY THE INFORMATION THAT MATTERS WHEN THE POPULATION IS HETEROGENEOUS IN IMPORTANCE -- which a message queue ALWAYS is. 49 of 50 is 98 per cent and reads as a clean bill; the 2 per cent was load-bearing. A ratio is most misleading precisely where its members are least interchangeable, and nothing in the number announces that. READ THE EMITTED ROWS BY SUBJECT, NEVER THE RATIO ALONE -- the tool already prints them, so the cost is reading what is on the screen. \u26a0 THIS IS NOT A CLAIM THAT THE CVO IS STUCK, AND THE DISTINCTION IS THE ROW'S OTHER HALF. It is LIVE, it read eleven messages this afternoon, and 25 minutes on one message is A TURN, NOT A STALL. The prompt-stuck signature the arm names is LIVE with 0 of N READ; this is LIVE with 49 of 50. \u26d4 AN EXPOSURE IS NOT AN INCIDENT: nothing has been graded wrongly, and the remedy for an exposure is to close the window, not to re-open work nothing harmed. WHAT WAS DONE: 98618's substance was carried to 3.0.0_SA_CVO directly, named as 1.0.0_SA_CTO's ruling rather than restated as this seat's, with both blobs, the +22/-0 delta and the re-delivery record at LGIC_LGCTFM-S67. The sender was told its message had not landed. NOTHING WAS GRADED and FWD-4 remains open on Andrew's own read.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "get_delivery_state(3.0.0_SA_CVO), limit 50: TOTALS EMITTED=1, READ=49; ACKABLE DENOMINATOR 50 of 50",
+   "the EMITTED row: id=98618, 1.0.0_SA_CTO -> 3.0.0_SA_CVO, SENT@17:12:57Z, EMITTED@17:13:55Z, no READ timestamp",
+   "positive controls in the same output: 98606 (the governance fork) READ@16:37:07Z; 98610 (this seat's) READ@17:10:23Z -- so the queue is draining and the absence is specific, not systemic",
+   "the CVO's latest READ of any message: 17:10:23Z, i.e. BEFORE 98618 was emitted at 17:13:55Z",
+   "the object at risk: delivered blob 5a5f3e68 (4,635 bytes) vs HEAD blob da2106bd3f (6,154 bytes), delta one hunk +22/-0, zero modified",
+   "re-delivery already performed and recorded: LGIC_LGCTFM-S67 @c56ad041c2, msgs 98620/98621"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
