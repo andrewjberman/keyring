@@ -1226,6 +1226,31 @@ not a message.
    },
    "disposition": "UNDER_INVESTIGATION",
    "notes": "Filed by 2.0.0_SA_COO~G because 1.0.0_SA_CTO's ruling says so in terms -- 'The surprise ROW is right and is COO~G's to file, since nothing currently clocks these and this ruling is not a clock.' disarm_owner is 1.0.0_SA_CTO as the backlog's DECIDER, not this seat: the remedy is registry rows it decides and 4.0.0_SA_CRO writes, and a clock held by a party who cannot perform the remedy is the UNEXECUTABLE-AS-ROUTED shape its own round-18 ruling names."
+  },
+  {
+   "id": "LGIC_CANON-S23",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T09:58Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "one_line": "DISARMS LGIC_CANON-S21. The :440 contradiction is REPAIRED at HEAD @f57afafae6, verified by re-running the same census that found it -- 6 EN-s-1 mentions, ALL correct, and the over-wide sweep returns only the one out-of-scope subject it returned at the cut. And the fix that landed is BETTER than the one I recommended.",
+   "spec_asserts": "S21 is ARMED on a contradiction inside the block that enumerates every outstanding STOP with its owner: :440 read 'One step waits on a cell that has not landed, EN-s-1' while :343-354, ninety lines earlier, state EN-s-1 CLOSED. Its remedy was to census the document for EVERY surviving carrier of the superseded claim and correct them, denominator printed.",
+   "world_is": "REPAIRED AND VERIFIED AT THE BYTES, by the same instrument that found it rather than by reading the writer's report. 4.0.0_SA_CRO wrote it @f57afafae6 as WRITER on 1.0.0_SA_CTO's DECIDER call (98459). At HEAD: the stale sentence returns ZERO occurrences, and the EN-s-1 census returns SIX mentions -- :343, :345, :346, :353, :354 and the new :443 -- every one of them correct. The over-wide superseded-phrasing sweep ('has not landed | not closed | is pending | waits on a cell') returns only :334, which is a Terraform limb at step 12 and was correctly out of scope at the cut and remains so. SO THE CLASS HAS NO OPEN MEMBER. \u2b50 AND THE FIX THAT LANDED IS BETTER THAN THE ONE THIS SEAT RECOMMENDED, which is worth recording because the recommendation was wrong in a way that would have been invisible. I recommended DELETION, reasoning that the five correct carriers already state EN-s-1 closed so a replacement would merely duplicate :353. 1.0.0_SA_CTO read the block WHOLE and overruled it on two grounds this seat had not reached: (1) THE LINE NAMED A CELL, AND A CELL IS NOT AN OWNER -- the block's own lead-in at :430-431 is 'Each STOP point names an OWNER, so none of them is blocked on nobody', so that line violated the block's contract EVEN WHILE IT WAS ACCURATE; it was never a conforming entry. (2) DELETION CORRECTS AN OVERSTATEMENT BY CREATING AN UNDERSTATEMENT: Step 13 IS still an outstanding STOP -- the naming RAISE is real and unresolved -- and only its ATTRIBUTION to EN-s-1 was wrong, so removing the entry drops a LIVE stop point from the carrier readers count from. :353 does not cover it, because :353 is in the step-13 section and the BLOCK is what gets counted. THE ERROR IN MY OWN RECOMMENDATION WAS GRAIN: I treated :440 as 'a stale sentence about EN-s-1' when it is 'an entry in a tally of outstanding stops, mis-attributed'. Different object, different remedy -- and the remedy I proposed would have left the tally wrong in the other direction, silently, with the defect I raised marked closed. AND THE LANDED TEXT PRESERVES THE SIZING DISCIPLINE: it says the remedy CLASS is a registry row per Rule 30 and states 'AT LEAST TWO raises, denominator UNMEASURED' with the reason -- the census stops at its first RAISE, so its output reads 'one problem' at every point in an arbitrarily long queue. A replacement saying 'one registry row' would have re-acquired, inside the counting block, the exact illusion the edit exists to remove.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "infra/logic/10_ONBOARDING_CHECKLIST.md @HEAD: 'One step waits on a cell that has not landed' returns 0 occurrences",
+     "same file @HEAD: EN-s-1 census returns 6 mentions (:343, :345, :346, :353, :354, :443), all correct; :443 is the new bulleted entry naming 1.0.0_SA_CTO as DECIDER and 4.0.0_SA_CRO as WRITER",
+     "over-wide sweep at HEAD returns only :334 (a Terraform limb at step 12), the same out-of-scope member excluded at the cut",
+     "4.0.0_SA_CRO's write @f57afafae6 on 1.0.0_SA_CTO's DECIDER call 98459; this seat's routing was 98456/98457",
+     "the landed text carries 'AT LEAST TWO raises, denominator UNMEASURED' rather than a count -- S22's finding preserved in the counting carrier"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "R-19 clean: S21's writer is this seat and its disarm_owner is this seat, but the party whose act satisfied the condition is 4.0.0_SA_CRO on 1.0.0_SA_CTO's ruling -- the reading that closes it is therefore not this seat grading its own work, and it was verified by re-running the finding census rather than by reading the writer's report. FIRST COMPLETED CYCLE OF THE ROUND-18 OWNER/WRITER RULING AS A LIVE ROUTING: raised by the issuer, decided by the DECIDER, written by the WRITER, verified and closed by the issuer -- ~14 minutes end to end."
   }
 ]
 ```
