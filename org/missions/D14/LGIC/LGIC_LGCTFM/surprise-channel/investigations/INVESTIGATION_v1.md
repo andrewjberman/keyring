@@ -2088,3 +2088,30 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S62",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T13:34Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "THE THIRD OUTSTANDING OUTCOME IS FWD-1 AND ITS REMEDY IS IN-ENGINE. The phase field says 'two of its THREE outstanding outcomes bar OUTSIDE the engine' and names only two; the round-10 analysis that HOLD-AT-STOP rests on counts TWO outstanding, full stop. The third is FWD-1, whose REALIZED grade the same field records as RETRACTED on 2026-09-18 -- a day BEFORE round 10 closed.",
+ "spec_asserts": "LGIC_LGCTFM project.json `phase`, written 2026-09-19 22:23Z: 'RULED: LGIC_LGCTFM HOLDS AT STOP AT ROUND 10'S CLOSE. NO ROUND 11 IS CUT. Two of its three outstanding outcomes bar OUTSIDE the engine -- FWD-4 on ANDREW'S OWN READ of ANDREW_CARD.md, FWD-6 on LGIC_CANON's C6 practice wave -- so no act in any seat's lane reaches the stop condition', and 'every REACHABLE member done, only UNREACHABLE ones remaining'. LGIC_LGCTFM_ROUND10_ANALYSIS.md, the L10 that ruling rests on, says at section 6.3 'The TWO OUTSTANDING OUTCOMES are Andrew's read and another project's wave' and at section 7 'The two unserved FWDs are unserved because no cell can serve them'.",
+ "world_is": "THE THIRD IS FWD-1, AND THE SAME phase FIELD SAYS SO ~1,600 CHARACTERS LATER: 'FWD-1's REALIZED GRADE IS RETRACTED 2026-09-18 ~18:4xZ BY 1.0.0_SA_CTO (R-79). LGIC_LGCTFM READS REALIZED 7 OF 10, NOT 8.' The retraction PREDATES round 10's close (2026-09-19 ~22:1xZ) by about twenty-eight hours. \u26d4 AND FWD-1's REMEDY IS IN-ENGINE, WHICH IS WHY THIS MATTERS RATHER THAN BEING A COUNTING NIT. The retraction rests on Andrew-direct ~18:2xZ, quoted in the field: 'that means that the workflow must be designed to create rows for these items' and 'that is what needs to be rectified in its DESIGN/PROCESS'. The register's own `blocking` field then specifies that work in detail -- 'ROUND 3 IS OWED AND ITS SHAPE IS DESIGN', the seed/discovery design, the 'involved' instrument, and '(c) PRINT A COVERAGE DENOMINATOR ON EVERY RUN ... the cheap half of this repair (one comp-find)'. None of that bars outside the engine. \u26a0 SO THE HOLD'S STATED GROUND DOES NOT REACH ITS CONCLUSION AS WRITTEN: 'two of three bar outside' does not establish that the third does, and the L10 it rests on counted TWO outstanding rather than three. THIS ROW DOES NOT ASSERT THE HOLD IS WRONG -- FWD-1 may be unreachable for a reason nobody has written down, and the hold is 1.0.0_SA_CTO's under Rule 27. What is measured is that a reader applying the ruling's own test, 'every REACHABLE member done', CANNOT VERIFY IT from the carriers, because the third member is never classified. \u2b50\u2b50 AND THE INSTRUMENT HAZARD IS WORTH MORE THAN THE FINDING: A PATTERN CENSUS READS FWD-1 AS REALIZED. Sweeping 86 LGCTFM markdown files for 'FWD-N ... REALIZED|NOT REALIZED' returns FWD-1 {REALIZED: 4} and no retraction hit -- because R-43 RETAINS superseded text rather than deleting it, so the retracted grade OUTNUMBERS ITS OWN RETRACTION 4 TO 1 in the record. A seat pattern-counting outcome states, including this one an hour ago, concludes FWD-1 is realized and that the third outstanding outcome is something else. The retraction is legible ONLY by reading the phase field whole. \u26d4 This is the immutable-carrier trap at project scale: R-43 is CORRECT -- frozen history is not falsified -- and its cost is that every pattern instrument over the corpus is biased toward superseded claims, in proportion to how long they stood. \u26a0 INSTRUMENT BOUND ON MY OWN SWEEP: my regex required the verdict within 80 characters of the FWD id, so an outcome state phrased differently, tabulated, or held in JSON is NOT in my denominator. 'No verdict recorded for FWD-2/5/7/9' is a statement about MY PATTERN, not about the record -- which is the same class of error this row is reporting.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "project.json `phase` (10,080 chars, read WHOLE): 'Two of its three outstanding outcomes bar OUTSIDE the engine -- FWD-4 ..., FWD-6 ...' and, later, \"FWD-1's REALIZED GRADE IS RETRACTED 2026-09-18 ~18:4xZ BY 1.0.0_SA_CTO (R-79). LGIC_LGCTFM READS REALIZED 7 OF 10, NOT 8.\"",
+   "LGIC_LGCTFM_ROUND10_ANALYSIS.md section 6.3 'The two outstanding outcomes are Andrew's read and another project's wave'; section 7 'The two unserved FWDs are unserved because no cell can serve them'",
+   "retraction 2026-09-18 ~18:4xZ precedes round 10's close 2026-09-19 ~22:1xZ by ~28h; project.json last written 2026-09-19 18:23 EDT @a972a343bd",
+   "FWD-1's remedy is in-engine per the register's own blocking field: 'ROUND 3 IS OWED AND ITS SHAPE IS DESIGN', with '(c) PRINT A COVERAGE DENOMINATOR ON EVERY RUN ... the cheap half of this repair (one comp-find)'",
+   "pattern sweep of 86 LGCTFM .md files for FWD verdicts returns FWD-1 {REALIZED: 4} and zero retraction hits -- the superseded grade outnumbers its retraction 4:1 because R-43 retains it"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
