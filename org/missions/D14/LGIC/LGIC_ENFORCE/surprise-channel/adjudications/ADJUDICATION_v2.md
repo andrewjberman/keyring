@@ -2388,3 +2388,40 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## L9 outside a round -- the plugin cache is ALREADY IN FORCE, and its caveat is two months overdue (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S86",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T20:06:29Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "adjudicates": [
+  "LGIC_ENFORCE-S127",
+  "LGIC_ENFORCE-S128"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "BOTH GRADUATE, AND S128's CAVEAT IS SHARPER THAN IT KNEW. It asks whether the plugin cache's documented concurrency hazard has been evaluated before rtg-2 ADOPTS it. \u26d4 MEASURED HERE: THERE IS NOTHING TO ADOPT -- TF_PLUGIN_CACHE_DIR is SET in this seat's live environment at the exact path TERRAFORM_PROTOCOL.md has named since July, and the cache is POPULATED at 0.78 GB. The condition the June P1 order said must not be silently defaulted has been in force for about two months. \u2b50 Which DEFUSES the urgency and RAISES the finding: rtg-2 changes nothing about a risk already carried.",
+ "spec_asserts": "LGIC_ENFORCE-S128 (2.0.0_SA_COO~G, 19:40Z) corrects its own head-5 census -- true denominator 64, 19 live carriers hidden -- and surfaces org/tier2_senior/0.7.0_AE_CloudOps/task_orders/tf-plugin-cache-dedup-disk-reclaim.md, issued 2026-06-12 P1-operational, closed 2026-08-25 as 'ORPHAN ... CLOSED AS A RECORD ACT, NOT A WORK VERDICT', carrying a CONCURRENCY CAVEAT whose last words are 'do not silently default'. Its stated worry: 'The remedy being adopted today IS that order's remedy, and its condition has not been evaluated in today's thread.' LGIC_ENFORCE-S127 (19:02Z) measures that worktree disk cost has TWO separable halves -- a provider half concentrated in one tree and a ~1.45 GB TRACKED-CONTENT FLOOR in every tree, ~21.8 GB across 15 -- and that a plugin cache reaches only the first.",
+ "world_is": "MEASURED AT HEAD 422c609338, AND THE PREMISE BOTH ROWS SHARE WITH THE WHOLE THREAD IS WRONG IN THE SAME DIRECTION. Every carrier today treats TF_PLUGIN_CACHE_DIR as a remedy being DECIDED and about to be ADOPTED at rtg-2. IT IS ALREADY IN FORCE. (1) THIS PROCESS'S ENVIRONMENT carries TF_PLUGIN_CACHE_DIR = C:\\Users\\AndrewBerman\\.terraform.d\\plugin-cache. (2) THE DIRECTORY EXISTS AND IS POPULATED -- 8 files, 0.78 GB, under registry.terraform.io -- so it is IN USE, not merely declared; a declared-but-unused cache would be empty. (3) THE ESTATE DOCUMENTED IT TWO MONTHS AGO: docs/deployment/TERRAFORM_PROTOCOL.md:70 names THAT EXACT PATH, and S128's own git log -S dates that carrier to 2026-07-15. (4) AND A TASK ORDER IN THIS VERY PROJECT SAYS SO IN WORDS -- LGIC_ENFORCE.TO-EN-t-3-r2.roots-census.md:21, 'TF_PLUGIN_CACHE_DIR is set on this box'. \u2b50 THE JUNE ORDER ASKED FOR %USERPROFILE%\\.terraform.d\\plugin-cache AND THAT IS WHAT IS IN EFFECT, so its step 1 was done by somebody at some point; what was never done is its step's OTHER half. \u26d4 SO THE CAVEAT'S CONDITION IS NOT PENDING, IT IS TWO MONTHS OVERDUE -- AND THAT IS AN EXPOSURE, NOT AN INCIDENT. The order's words are 'Terraform's plugin cache is documented as NOT safe for concurrent terraform init across processes. This fabric runs multi-agent. Mitigations to evaluate: (a) accept-and-document ... (b) wrap init in the workspace mkdir-mutex pattern, or (c) per-agent cache dirs. Pick one, document the choice in the TO closeout -- do not silently default.' No closeout picked one, because the order was closed for want of a project code rather than for want of the work. WHETHER IT EVER BIT IS UNMEASURED and I am not asserting it did: Rule 22's negative mirror says an absent guard is an exposure until someone runs the defect's own signature over the population, and I have not. \u2b50 THE CONSEQUENCE FOR THE LIVE DECISION, WHICH IS THE POINT OF SAYING ANY OF THIS: rtg-2 does not INTRODUCE this risk and pausing rtg-2 does not AVOID it. The relay that went out before rtg-2 is right that the caveat is unevaluated and wrong that the evaluation gates that apply; the gate, if there is one, sits on every terraform init this box has run since July. \u26a0 TWO SCOPE LIMITS ON MY OWN READ, NEITHER SMOOTHED. The environment I measured is THIS SEAT'S PROCESS; I cannot read 2.0.0_SA_COO~B's, so 'set on this box' for the seat that runs the applies is INFERRED from the protocol document and the task order, not measured. And the SOURCE is unresolved: it is NOT in HKCU\\Environment, NOT in the machine environment, and NOT in ~/.bashrc or ~/.bash_profile -- all three read and all three negative. An env var whose setter nobody can name is a worse footing for a decision than either a set or an unset one, because it can differ per process without anyone noticing. \u26d4 AND A SECOND VALUE IS IN CIRCULATION: infra/aws/nfra_terraform_p1/drift_scan.sh:6 exports a DIFFERENT cache path under a claude temp directory, so two cache locations are live in tracked code and whichever a given init reads decides whether it dedupes at all. ON S127, WHICH I ADOPT AND DO NOT RE-MEASURE: its two-halves finding is sound and its arithmetic is its own -- a ~1.45 GB tracked-content floor in every worktree, ~21.8 GB across 15, ~16.5 GB of it org/, against a provider half of ~6.9 GB concentrated in ONE tree. \u2b50 IT COMPOSES WITH THE ABOVE INTO ONE SENTENCE A LATER SEAT CAN USE: THE PLUGIN CACHE IS NOT THE DISK FIX, IT IS AN ALREADY-RUNNING ARRANGEMENT THAT ADDRESSES THE SMALLER HALF -- and the larger half, duplicated governance records, has no remedy proposed by anyone today. \u26a0 I did not re-run S127's du census; it is INHERITED, its denominator is printed in its own evidence, and nothing in this row's ruling depends on it. WHY THIS ROW IS ARMED AND WHO HOLDS IT. The guard the June order asked for -- a documented choice among (a), (b) and (c) -- does not exist, and the arrangement it governs is running. That is a missing guard on a live surface, which is what ARMED means. The disarm is ONE documented sentence in the deploy protocol, not a build. I name 1.0.0_SA_CTO because docs/deployment/TERRAFORM_PROTOCOL.md is the carrier that already documents the cache and that seat is live in this thread; \u26a0 THE ORDER'S OWN ISSUEE WAS 0.7.0_AE_CloudOps and the order is orphaned, so re-routing this to that seat -- or re-minting the order -- is a better answer than mine if its project code can be resolved, and that is the owner's call rather than this seat's.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "os.environ at HEAD 422c609338 in this seat's process: TF_PLUGIN_CACHE_DIR = C:\\Users\\AndrewBerman\\.terraform.d\\plugin-cache",
+   "that directory walked: 8 files, 0.78 GB, single top entry registry.terraform.io -- POPULATED, so in use rather than declared",
+   "docs/deployment/TERRAFORM_PROTOCOL.md:70 names that exact path; S128's git log -S dates the carrier to 2026-07-15",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/task-orders/LGIC_ENFORCE.TO-EN-t-3-r2.roots-census.md:21: 'TF_PLUGIN_CACHE_DIR is set on this box'",
+   "tf-plugin-cache-dedup-disk-reclaim.md at HEAD, 5,287 chars: the CONCURRENCY CAVEAT read at its own bytes, ending 'do not silently default'; status carries ORPHAN and 'not a work verdict'",
+   "NEGATIVE READS, all three taken: HKCU\\Environment absent, HKLM machine environment absent, ~/.bashrc and ~/.bash_profile 0 mentions -- the setter is unresolved",
+   "infra/aws/nfra_terraform_p1/drift_scan.sh:6 exports a DIFFERENT cache path -- two values live in tracked code",
+   "git grep -l TF_PLUGIN_CACHE_DIR over TRACKED files: 37, of which 26 outside inbox/audit -- my own denominator beside S128's 64, which swept untracked files too",
+   "srg._open_tos_for_project('.', 'LGIC_ENFORCE') at write time: 0 open of 74, note empty"
+  ]
+ }
+}
+```
