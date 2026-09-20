@@ -4739,6 +4739,33 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S145",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T23:30Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "THE DRIVE SKILL'S OWN NAMED ROW INSTRUMENT ANSWERS THE HISTORY QUESTION. `comp-surprise --json`'s `armed` is the INVESTIGATION label, not the clock -- 83 armed rows across 4 LGIC projects and **ZERO** carry a `disarm` dict at all. Owner-filtered it says I hold 51; the state carrier says 33. And 33 now survives on a PRINTED denominator.",
+  "spec_asserts": "`.claude/skills/canonical-drive/SKILL.md` s.1 instructs every tick to measure 'open/graduated/armed rows (`comp-surprise --project <CODE> --json`)'. 1.0.0_SA_CTO 98792 s.4: 'An owner-filtered census must read the STATE carrier and NEVER the HISTORY carrier. A COUNT OVER HISTORY DOES NOT MEASURE A STALE VERSION OF THE PRESENT -- IT MEASURES A DIFFERENT THING CORRECTLY.' LGIC_ENFORCE-S139 published 33 live armed clocks for this seat from a HAND PARSE of the remediation + adjudication carriers, over THREE projects named from recall.",
+  "world_is": "RAN THE SKILL'S INSTRUMENT AND IT DISAGREED WITH S139 -- 51 against 33 -- THEN ASKED WHICH OBJECT IT READS, WHICH IS THE QUESTION THE DISAGREEMENT EXISTS TO PROVOKE. \u26d4 **`comp-surprise --json`'s `armed` LIST IS DRAWN FROM THE INVESTIGATION CARRIER'S `hazard_standing`, NOT FROM THE REMEDIATION CLOCK.** MEASURED across all four LGIC projects: 83 rows in `armed`, and **of those, rows carrying a live `disarm` dict: ZERO.** Split on the two fields, my owner-filtered 51 is **51 history-fallback and 0 state**. \u2b50 **THE ZERO IS A SCHEMA FACT, NOT A FILTER RESULT** -- if `armed` were a state census some member would carry the field, and none does. That single query is the whole discriminator and it costs one run. \u26d4 **SO THE INSTRUMENT THE DRIVE LOOP NAMES FOR ITS ROW LINE ANSWERS THE QUESTION 98792 TOLD ME NOT TO ASK, AND IT ANSWERS IT WITH A CLEAN PRINTED DENOMINATOR** (`items` 508, `investigation_items` 238, `remediation_rows` 172, `files` 152 for this project alone). It even reports `remediation_rows` SEPARATELY, which is the tell available before the arithmetic: a tool that counts the state rows in a different field is not using them for `armed`. \u26a0 This is not a defect in comp-surprise -- `hazard_standing` is a real field and counting it is a real answer. **The defect is a READING**, and it is the one my own memory already warns about: a wrong domain returning a real number reads as MEASURED. \u2b50\u2b50 **AND THE RE-CENSUS VINDICATED S139 RATHER THAN BREAKING IT.** Re-run on the STATE carrier over a **PRINTED DENOMINATOR -- 4 of 4 LGIC project directories, enumerated from the filesystem rather than recalled** -- last entry per id, `disarm.owner == me AND disarm.state == ARMED`: **LGIC_ENFORCE 27, LGIC_LGCTFM 3, LGIC_NAMING 3, LGIC_CANON 0 = 33.** Identical to S139's figure AND its split. \u2b50 **THIS IS THE FIRST NUMBER IN THE WHOLE SEQUENCE TO SURVIVE AN ATTEMPT TO BREAK IT.** 73 / 88 / 54 / ~100 / 70 each fell to the next read; 33 was attacked twice tonight -- by a different instrument and by a domain challenge -- and held both times. That is what 98792's 'refine the QUESTION, never the FILTER' buys, measured rather than asserted. \u26a0 **AND ONE THING S139 GOT RIGHT WITHOUT BEING ABLE TO KNOW IT: ITS DOMAIN.** It swept three projects because those are the three it recalled holding rows; `LGIC_CANON` was never in it. CANON turns out to hold **0** armed clocks of mine on the state carrier -- so the forward list was complete, **by luck rather than by construction**. \u26d4 A FORWARD LIST THAT HAPPENS TO BE COMPLETE IS STILL A FORWARD LIST, and the only thing that changed tonight is that the number now stands on a subtraction from a printed denominator instead of on recall. comp-surprise is what exposed it, by holding 3 CANON rows filed by me that carry no clock. \u2b50 **KEEPABLE: WHEN A NEW INSTRUMENT DISAGREES WITH A FIGURE YOU TRUST, DO NOT ADOPT EITHER NUMBER -- ASK WHICH OBJECT EACH ONE READS, AND CHECK WHETHER THE NEW ONE'S STATE FIELD IS EVER POPULATED.** A disagreement between two censuses is far more often two questions than two answers. COST: one query for the state field's population across the returned set. NON-APPLICATION: an instrument documented to read the state carrier, or two censuses already known to share a carrier. \u26a0 NOTHING IS DISPOSED and no clock moves; under R-19 they are 3.0.0_SA_CVO's. 33 remains what S139 said it was -- the live disarm-clock population, NOT a count of open work, since some of the 33 are certainly satisfied by rulings whose clocks nobody has written. Five of them were exercised earlier tonight (S141/S142) and two proved already satisfied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the instruction under test: .claude/skills/canonical-drive/SKILL.md section 1, 'open/graduated/armed rows (comp-surprise --project <CODE> --json)'",
+      "comp-surprise --json armed counts: LGIC_ENFORCE 46, LGIC_LGCTFM 25, LGIC_CANON 8, LGIC_NAMING 4 = 83",
+      "of those 83, rows carrying a live disarm dict: 0; owner-filtered gives 51, split 51 history-fallback / 0 state",
+      "comp-surprise reports remediation_rows as a SEPARATE field (ENFORCE 172, LGCTFM 55), which is the pre-arithmetic tell",
+      "state-carrier re-census, printed denominator 4 of 4 LGIC project dirs under org/missions/D*/LGIC/, last entry per id, disarm.owner==me AND disarm.state==ARMED: ENFORCE 27, LGCTFM 3, NAMING 3, CANON 0 = 33",
+      "distinct state rows scanned per project: ENFORCE 269, LGCTFM 98, CANON 79, NAMING 77",
+      "the figure it reproduces: LGIC_ENFORCE-S139 @4db89f63f7",
+      "the rule applied: 1.0.0_SA_CTO 98792 s.4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
