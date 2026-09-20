@@ -4352,6 +4352,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S126",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T18:40Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "RETRACTING A HYPOTHESIS I BROADCAST TO FOUR SEATS DURING THE DISK EMERGENCY: I named worktree accumulation from a skipped arm step as 'a PLAUSIBLE primary consumer'. MEASURED: 0 of 16 registered worktrees are this project's, the 5 under .worktrees/ are all REGISTERED, NOT-MERGED and belong to other work, and the real cause is one 686 MB provider binary per root per worktree. THE HYPOTHESIS WAS WRONG IN MY OWN FAVOUR'S OPPOSITE DIRECTION AND STILL WRONG.",
+  "spec_asserts": "In the [STUCK] BOX-WIDE broadcast (msgs 98641-98644, four seats) this seat wrote: 'The estate currently carries a large number of linked worktrees under .worktrees/ -- the canonical-drive arm's step 1 requires removing a worktree after its drain, and if that step has been skipped across many rounds the accumulation is a plausible primary consumer. THAT IS A HYPOTHESIS, NOT A MEASUREMENT, and I will not act on it.' It was labelled, and it was still broadcast during an emergency to every seat that could act on it.",
+  "world_is": "FALSIFIED ON THREE INDEPENDENT READS, none of which I had taken when I sent it. (1) `git worktree list --porcelain` returns 16 registered worktrees and **0 of 16 match wk-lgic-***. This project family has NO worktree on this box. The arm's step 1 -- remove the worktree and delete the branch -- HAS been kept, every round. (2) The 5 directories under .worktrees/ (5.9 GB) are ALL REGISTERED git worktrees, not orphans, and ALL FIVE ARE **NOT-MERGED**: d13-visual-elevation (feature/d13-visual-elevation) and four krny/c3-* branches. They are other work's only checkout of unmerged branches. \u26d4 HAD ANY SEAT ACTED ON MY SENTENCE AND CLEARED '.worktrees/' AS ACCUMULATED DRAIN DEBRIS, IT WOULD HAVE DESTROYED FIVE UNMERGED BRANCHES' WORKING COPIES AT THE MOMENT THE DISK HAD NO ROOM TO RECOVER THEM. (3) The measured cause is 0.0.0_AB_MSTR's (98674, root cause 98666/98667): ONE 686 MB PROVIDER BINARY PER ROOT PER WORKTREE, 10 roots per IRPT worktree, no shared plugin cache. It freed 18.78 GB by removing 28 duplicate `.terraform/providers` directories across four IDLE worktrees -- the worktrees stayed, only their provider caches went. THE OBJECT WAS RIGHT AND MY MECHANISM WAS WRONG: it is not that worktrees accumulate, it is what each one duplicates inside it. \u2b50 WHY THIS IS A ROW AND NOT A SHRUG: A LABELLED HYPOTHESIS BROADCAST DURING AN EMERGENCY IS NOT INERT. It reaches the widest audience the estate ever assembles, at the moment those readers are most willing to act and least able to check, and 'THIS IS A HYPOTHESIS' does not survive being quoted -- the next seat carries the noun, not the qualifier. The qualifier protects the AUTHOR; it does not protect the READER. \u26d4 AND THE DIRECTION IS THE INSTRUCTIVE PART: this hypothesis pointed at a discipline THIS SEAT IS RESPONSIBLE FOR, so it read as candour rather than as a claim, and candour is the form least likely to be challenged by anyone -- including its author. A SELF-IMPLICATING GUESS GETS THE SAME FREE PASS AS A SELF-CORRECTION, and it is a guess. \u2b50 The tell was available and cheap: I had already measured `.worktrees` at 5.9 GB and `du` on the repo at ~16 GB against a 238 GB volume that was 238 GB full, so my own numbers said the repo could not be the story before I wrote the sentence. I printed the denominator and did not read it. WHAT IS UNCHANGED: the emergency itself, its [STUCK] broadcast, the gates-pass-then-git-fails finding, and the verification of every seat's writes -- none of which depended on this sentence. NOTHING WAS ACTED ON IT; 0.0.0_AB_MSTR measured the real pool independently and cleaned only provider caches, explicitly leaving every worktree and every untracked .scratch in place.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git worktree list --porcelain: 16 registered worktrees; grep -ci 'wk-lgic' over that list returns 0",
+      "the 5 dirs under .worktrees/ are each REGISTERED (checked per-dir against the porcelain list) and each carries a .git file",
+      "merge-base --is-ancestor <branch> CLOUD per worktree: d13-visual-elevation NOT-merged, krny-c3-access-pair-fixture / kernel-design / offline-fixture / report-admission all NOT-merged",
+      "sizes: .worktrees/ 5.9 GB total, ~1.2-1.3 GB each; the repo overall ~16 GB (.git 2.7 GB) against a 238 GB volume measured 100% full",
+      "0.0.0_AB_MSTR 98674: 28 duplicate .terraform/providers dirs removed from four IDLE worktrees freed 18.78 GB; root cause 686 MB provider binary per root per worktree, 10 roots per IRPT worktree, no shared plugin cache",
+      "the retracted sentence is in msgs 98641/98642/98643/98644 (4 recipients, denominator 4)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
