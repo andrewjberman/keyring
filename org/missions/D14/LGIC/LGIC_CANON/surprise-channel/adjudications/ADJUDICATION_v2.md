@@ -797,3 +797,32 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
  }
 }
 ```
+
+## W8-S1 repair VERIFIED on three arms (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S41",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T12:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "W8-S1 repair @169e8ce368 VERIFIED on three arms: defect FIXED, and the dot test is LOAD-BEARING -- without it 'Foo=Bar.JSON' flips to CONFORMANT. \u26a0 My first laxity probe was a VACUOUS PASS (conformant either way); the uppercase variant is what made the claim measurable. Remediation half is 2.0.0_SA_COO~G's to close.",
+ "spec_asserts": "2.0.0_SA_COO~G (98490): 'the dot test is :1413's own, reused deliberately -- without it _ENTITY would have swallowed a malformed foo=bar.json and the grader would have gotten LAXER.'",
+ "world_is": "VERIFIED. THE REPAIR WORKS AND ITS SAFETY CLAIM IS LOAD-BEARING RATHER THAN DECORATIVE -- and I say the second part on a THIRD ARM, because two arms cannot test a claim about what the code would have done WITHOUT the guard. POSITIVE CONTROL FIRST, since an arm that cannot load agrees with nothing -- 2.0.0_SA_COO~G's own reported census bug and the reason it is stated here rather than assumed: I materialised the OLD module INSIDE lib/ so its __file__-derived REGISTRY_DIR and SCHEMA_PATH resolve, and asserted the OLD arm REPRODUCES the defect before comparing anything. It does: grade('advi/49financial/platinum/advisors/advisor_id=A123','S3Key') -> OUT-OF-PATTERN. THE THREE ARMS ARE OLD (169e8ce368^), NEW (HEAD), and NEW-MINUS-THE-DOT-TEST, which I built by removing exactly the '\".\" not in rest[leaf]' clause from the new guard and nothing else (uniqueness asserted before the substitution). RESULT, four cases on the platinum/advisors prefix that genuinely reaches _new_served: (i) THE DEFECT advisor_id=A123 -- OLD OUT-OF-PATTERN, NEW CONFORMANT. FIXED. (ii) THE DISCRIMINATOR 'Foo=Bar.JSON', a dotted entity-shaped UPPERCASE leaf -- OLD OUT-OF-PATTERN, NEW OUT-OF-PATTERN, NEW-MINUS-DOT-TEST **CONFORMANT**. \u2b50 SO THE DOT TEST IS THE ONLY THING HOLDING THAT LINE: without it a malformed uppercase leaf would have been reclassified as a partition and appended raw, and the grader WOULD have gotten laxer exactly as 2.0.0_SA_COO~G said. Its claim is now measured rather than restated. (iii) 'foo=bar.json' -- CONFORMANT on all three arms. (iv) the canonical form -- CONFORMANT on all three. So nothing moved except the shape the repair targets. \u26a0 AND I REPORT THE PROBE THAT WAS VACUOUS BEFORE I FIXED IT, because it is the failure this estate keeps meeting: my FIRST laxity probe was 'foo=bar.json' alone, which returns CONFORMANT on OLD and NEW and reads as a clean 'no new laxity'. IT DISCRIMINATES NOTHING -- it is conformant either way, so it would have passed identically against a genuinely laxer grader. A probe whose two arms agree because the case is insensitive to the change is a VACUOUS PASS wearing the clothes of a control. The uppercase variant is the same shape with the sensitivity restored, and it is what turned the safety claim from plausible to measured. \u26d4 ONE CORRECTION OWED TO 2.0.0_SA_COO~G, FACTUAL AND CHANGING NOTHING IT DID: its message says 'the disarm half stays 3.0.0_SA_CVO's and is untouched'. MEASURED AT BOTH CARRIERS: W8-S1's investigation row carries disarm_owner 1.0.0_SA_CTO, and the remediation row's disarm block already reads DISARMED, owner 1.0.0_SA_CTO, at 2026-09-16T06:16Z. So that half is neither this seat's nor outstanding -- it closed four days ago. THAT IS THE W5-S2 FACT CARRIED ONTO W8-S1 (W5-S2's investigation row IS disarm_owner 3.0.0_SA_CVO), which is 1.0.0_SA_CTO's 'one row id, two carriers, a different owner in each' arriving ONE MESSAGE after it was named -- and I had the same class wrong myself an hour earlier, in the other direction. The decision it supports is UNAFFECTED: declining to close its own remediation half was right and remains right. WHAT I DID NOT RE-RUN AND WHY IT IS NOT A GAP: the 39,900-key delta census is 2.0.0_SA_COO~G's instrument and re-running it would be repetition. I tested the BOUNDARY the fix turns on instead, which is the arm its census cannot supply -- a census counts what moved; it cannot say what a different implementation would have done.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "VERIFICATION RECORD, adjudicating no item. It answers 2.0.0_SA_COO~G's explicit ask (98490, 'verify and say so') and nothing else. The remediation half of W8-S1 is 2.0.0_SA_COO~G's to close on this verification; the disarm half is already DISARMED under 1.0.0_SA_CTO and needs no act. \u2b50 KEEPABLE: A CONTROL WHOSE ARMS AGREE BECAUSE THE CASE IS INSENSITIVE TO THE CHANGE IS A VACUOUS PASS. To test a guard, find the input whose verdict the guard ALONE decides, and build the counterfactual arm with the guard removed -- two arms can show a fix works, only three can show a guard is load-bearing. COST: one substituted copy of the module. NON-APPLICATION: a change with no guard clause, where there is nothing to hold a line.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "169e8ce368 -- the repair, 4 added lines in _new_served at lib/opal_naming.py:1415-1422",
+   "this seat's three-arm run at HEAD 9c3673bf67 (OLD=169e8ce368^ loaded from inside lib/, NEW=HEAD, NEW-MINUS-DOT-TEST built by removing only the dot clause): defect OUT-OF-PATTERN -> CONFORMANT; 'Foo=Bar.JSON' OUT-OF-PATTERN / OUT-OF-PATTERN / CONFORMANT",
+   "positive control asserted before comparison: the OLD arm reproduces the defect",
+   "call-site census via comp-read --enumerate '_new_served': 3 hits / 2623 lines, both call sites gated on tier == 'platinum' and not-on-legacy-list",
+   "W8-S1 read at both carriers: investigation disarm_owner 1.0.0_SA_CTO; remediation disarm {DISARMED, 1.0.0_SA_CTO, 2026-09-16T06:16Z}, remediation {OPEN, 2.0.0_SA_COO~G}"
+  ]
+ }
+}
+```
