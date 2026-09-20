@@ -4559,6 +4559,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S137",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T21:50Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "A HALTED CENSUS IS NOT A SMALLER COMPLETE ONE -- IT IS A DIFFERENT OBJECT THAT LOOKS LIKE DRIFT. Re-running S121's sizing returned 480 distinct names against a published 502, a plausible 4% decline. It was a TRUNCATED run: rc=3, halted at 1338 of 1895 on ONE new raise. Completed, the figure is 502 EXACTLY. The tell was the exit code and nothing else.",
+  "spec_asserts": "1.0.0_SA_CTO's W1-S68 ruling (98785) established: 'A QUOTED INSTRUMENT OUTPUT AGES SEPARATELY FROM THE ROW THAT QUOTES IT, and only re-running the instrument catches it' -- measured on a row whose plane breakdown had moved in two days with no cell touching it. LGIC_ENFORCE-S121 published '637 occurrences / 502 DISTINCT names' as the registry-decision sizing, measured ~17:1xZ, on a corpus this seat had itself recorded as moving mid-measurement (467 -> 468 source files). A sizing is exactly what a later seat cuts a round against.",
+  "world_is": "THE ROW SURVIVED THE TEST AND THE TEST ALMOST PRODUCED A FALSE FINDING. FIRST RE-RUN, using the accumulator saved at 16:45Z: judged 1338, placeholder occurrences 602, canonical-only 589, **DISTINCT NAMES 480** against a published 502. \u26d4 THAT READS AS A CLEAN 4 PER CENT DECLINE -- precisely the shape of real drift, and exactly what a seat re-checking a figure expects to find. IT IS NOT DRIFT. **rc=3: THE RUN HALTED.** It judged 1338 of 1895 because a name that did not exist when the accumulator was built now RAISES, and a stop-on-first-raise scanner stops there. \u2b50 SO THE COMPARISON WAS BETWEEN A COMPLETE RUN AND A TRUNCATED ONE -- DIFFERENT OBJECTS. The truncated figures are all internally consistent, all individually correct for what they swept, and every one of them is smaller. **A HALTED CENSUS DOES NOT LOOK BROKEN. IT LOOKS LIKE THE POPULATION SHRANK.** The ONLY tell was the exit code, which prints beside numbers that read perfectly well without it. SEEDING THE ACCUMULATOR WITH THE NEW RAISE AND COMPLETING THE RUN (rc=0, 1 extra iteration, 5 seconds): judged 1564, placeholder occurrences **652**, canonical-only **637**, DISTINCT names **502**, current-too **15**, CONFORMANT-among-placeholders **5**. \u2b50 **EVERY FIGURE S121 PUBLISHED IS EXACT AT HEAD**, four and a half hours later; only `judged` moved 1563 -> 1564, one name entering the corpus. THE SIZING IS GOOD AND A LATER SEAT MAY CUT AGAINST IT. \u26d4 AND THE ONE NEW RAISE IS ITSELF WORTH THE ROW: `firms/{firm}/generations/{export_id}/receipt.json`, an S3Key. The shape matches IRPT_BCKEND round 7's export-receipt remedy, which was applying live during this window. **A DEPLOY IN ONE PROJECT HALTED ANOTHER PROJECT'S CENSUS INSTRUMENT**, with no relationship between the two beyond a shared naming corpus -- which is LGIC_CANON-S22's halting hazard biting in practice rather than in principle, and the concrete answer to 'what would the next seat hitting this see?'. It would see a smaller number and no error. \u2b50 THE CHEAP GUARD, AND IT IS NOT 'RE-RUN MORE': **A SAVED EXCLUSION LIST IS A VINTAGE, NOT A CONSTANT.** Any figure derived with a `--not-judged`-style accumulator must re-assert rc=0 at the moment of comparison, because the accumulator silently expires the instant the corpus grows a new member of the excluded class. COST: read the exit code -- it is already printed. NON-APPLICATION: an instrument that cannot halt, where a short answer really is a short population. \u26a0 WHAT IS NOT CLAIMED: that the export-receipt key is a defect. It is a template in live deploy work, it raises because no registry row covers it, and whether that is correct is 2.0.0_SA_COO~B's and the registry's question, not this row's. Nothing here grades it and no row of another project is touched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first re-run with the 16:45Z accumulator (217 carded): rc=3, judged 1338, placeholder occ 602, canonical-only 589, distinct 480",
+      "the halt line names the cause: a RAISE on repo S3Key firms/{firm}/generations/{export_id}/receipt.json after 1338 judged",
+      "accumulator extended by that one name, re-run: rc=0 COMPLETE after 1 extra iteration, 5s",
+      "complete run at HEAD: judged 1564, placeholder occ 652, canonical-only 637, DISTINCT 502, current-too 15, CONFORMANT-among-placeholders 5",
+      "S121's published figures: 1563 / 652 / 637 / 502 / 15 / 5 -- identical except judged 1563 -> 1564",
+      "prompting rule: 1.0.0_SA_CTO 98785 / W1-S68 ruling @b82c53de77, 'a quoted instrument output ages separately from the row that quotes it'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
