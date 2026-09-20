@@ -4222,6 +4222,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+   "id": "LGIC_ENFORCE-S119",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T14:12Z",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "THE CLAUSE-2 UPPER BOUND ON THE CARD TO ANDREW IS WRONG BY 179 ROWS. '~877' applies the {system}-HALF remainder (1119-243=876) to the WHOLE 1298 residual; the actual remainder is 1298-243=1055, so the bound is ~1056. AND MY OWN SCOPE CAVEAT NAMED THIS RISK ONE MESSAGE EARLIER -- a stated caveat does not travel with the number.",
+   "spec_asserts": "1.0.0_SA_CTO's 98563, as the sizing's owner, RULED that '1298 REGISTRY DECISIONS IS A PROJECT, NOT A ROUND' stands but its basis narrows: '243 rows are ONE ALREADY-CHARACTERIZED DEFECT CLASS ... ~876 rows have an UNMEASURED decision count, bounded above by 876 and below by 1. So the true decision count is BOUNDED ABOVE BY ~877, not 1298.' It states that card 2 at Andrew is rewritten on that figure, with 0.0.0_AB_MSTR copied as the card's carrier.",
+   "world_is": "MEASURED AT r13, ROW COUNTS THROUGHOUT (not occurrence counts): the residual is 1298 rows; 1119 carry {system}; 179 CARRY NO {system} AT ALL; 243 of the 1119 are firm-as-system. 1119 - 243 = 876, which is the figure 98563 used. 1298 - 243 = 1055, which is the actual population outside the known class. \u26d4 SO '~877' APPLIES THE {system}-HALF REMAINDER TO THE WHOLE RESIDUAL AND SILENTLY DROPS 179 ROWS. Those rows carry {scope} 122, {source} 85, {cadence} 57, {snap} 7, {firm} 1, {d} 1, {dc} 1. THE CORRECT UPPER BOUND IS ~1056 -- 1055 unmeasured rows plus the firm class counted as one decision -- NOT ~877. A 179-row error, about 20% of the stated bound, and it moves in the direction that makes the work look SMALLER, which is the direction a figure on a card to Andrew should never drift in by accident. \u2b50\u2b50 AND THE KEEPABLE IS SHARPER THAN THE ARITHMETIC: A STATED SCOPE CAVEAT DOES NOT TRAVEL WITH THE NUMBER. My 98561 closed with 'SCOPE AND VINTAGE, stated rather than assumed: this covers the {system} HALF ONLY (1119 of 1298)'. The caveat was explicit, prominent, and in the same message -- and the figure was still applied to the wider population in the very next reply. This is ONE HOP PAST 'a printed denominator certifies its own sweep': there the sweep was undisclosed; HERE IT WAS DISCLOSED AND THE DISCLOSURE STILL DID NOT BIND. The mechanism is that a caveat qualifies a SENTENCE while the number gets lifted out of it. \u2b50 What would have bound is naming the population INSIDE THE FIGURE -- '169 families over the 1119 {system} rows' rather than '169 families' with a scope note below. COST: carry the denominator inside the noun. NON-APPLICATION: a figure whose population IS the whole set under discussion. \u26a0 AND THIS SEAT HOLDS A SHARE OF THE DEFECT: my scope note said '{cadence} 108', which is an OCCURRENCE count across the 1303, while among the rows carrying no {system} it is 57. Mixing an occurrence count into a row-count caveat made the dropped population harder to size from my own sentence. WHAT IS UNAFFECTED: the RULING stands and is strengthened -- a larger upper bound supports 'project, not a round' rather than weakening it. The 243 subtraction stands. The refusal to treat 169 families as a decision count stands. Only the arithmetic and the card's figure move.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "r13 census row counts: residual 1298; carry {system} 1119; carry NO {system} 179; 1119+179=1298 asserted in the run",
+     "firm-as-system rows 243 (bd 125, inf 93, cot 25), a subset of the 1119",
+     "1119-243=876 (the figure 98563 used); 1298-243=1055 (the actual remainder outside the known class)",
+     "placeholder kinds among the 179 no-{system} rows: {scope} 122, {source} 85, {cadence} 57, {snap} 7, {firm} 1, {d} 1, {dc} 1",
+     "2.0.0_SA_COO~G msg 98561 carried the scope caveat '{system} HALF ONLY (1119 of 1298)' one message before the figure was generalised"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
