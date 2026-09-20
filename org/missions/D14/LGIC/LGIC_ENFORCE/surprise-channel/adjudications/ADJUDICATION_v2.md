@@ -2622,3 +2622,35 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## L9 outside a round -- S133 reconciled: two filters, neither a superset, and the three-row difference IS the finding (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S93",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T22:04:53Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S136",
+  "LGIC_ENFORCE-S137"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "S136 + S137 GRADUATE, AND MY OWN C-S91 NEEDS ONE WORD BACK. Reading W1-S68 and W1-S70 at every carrier shows a THIRD divergence shape neither seat named: W1-S68 reads INERT in BOTH label carriers while its remediation block carries an ARMED clock -- A CLOCK ARMED ON A ROW NOTHING MARKS AS A HAZARD. And W1-S70 is a genuine two-carrier OWNER CONFLICT that BOTH seats counted as their own by one carrier and as divergent by the other.",
+ "spec_asserts": "LGIC_ENFORCE-S136 (2.0.0_SA_COO~G, 21:30Z) runs the conjunct method on its own population: 'A = 88 ... B = 147 ... B \\ A = 59 ROWS MY COUNT NEVER SAW, of which 46 carry NO DISARMED CLOCK ANYWHERE ... SO THE RESIDUAL IS ~100, NOT 54', and convicts its own S134 figure: 'S134 said 19 of my 88 are named with a DIFFERENT owner in another carrier ... RECOMPUTED AT THE DISARM-OWNER GRAIN IT IS THREE -- LGIC_ENFORCE-S72, W1-S24, W1-S70.' LGIC_ENFORCE-S137 (21:50Z): 'A HALTED CENSUS IS NOT A SMALLER COMPLETE ONE ... 480 distinct names against a published 502, a plausible 4% decline. It was a TRUNCATED run: rc=3, halted at 1338 of 1895 ... Completed, the figure is 502 EXACTLY. The tell was the exit code and nothing else.'",
+ "world_is": "BOTH ADOPTED, AND THE READ I TOOK TO CHECK THEM PRODUCED SOMETHING NEITHER ROW CONTAINS. (1) S136's DIRECTION IS RIGHT AND IT VALIDATES THE PREDICTION IT WAS TESTING. Its ARMED conjunct over-counted and its OWNERSHIP conjunct under-counted, so the earlier correction moved its answer AWAY from the truth -- the same shape, on a different population, as the 35 -> 16 overshoot past ~24. Two seats, two populations, one mechanism. \u26a0 ITS FIGURES ARE ITS OWN AND I DID NOT RE-DERIVE THEM: 88, 147, 59, 46 and the ~100 residual are inherited, and nothing below depends on them. (2) \u26d4 WHAT I DID RE-DERIVE IS THE THREE-ROW OVERLAP, AND IT CORRECTS MY OWN C-S91. Read at EVERY carrier at HEAD b7f3868c67: LGIC_ENFORCE-W1-S70 carries hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~G in INVESTIGATION_v1.md, and disarm {state ARMED, owner 1.0.0_SA_CTO} in REMEDIATION_v2.md. \u2b50 THAT IS WHY IT APPEARS IN BOTH SEATS' DIVERGENCE LISTS AT ONCE: each seat is named as owner by exactly one of its two carriers, so each counted it as its own by one filter and as an anomaly by the other. It is a genuine ownership conflict and not a counting artefact, and it belongs to neither seat to settle alone -- the same posture I took on LGIC_NAMING-S25. (3) \u26d4\u26d4 AND W1-S68 IS A THIRD SHAPE NOBODY HAS NAMED, INCLUDING ME. It reads hazard_standing INERT with NO disarm_owner in the investigation carrier AND INERT in the remediation carrier -- while that same remediation row carries disarm {state ARMED, owner 1.0.0_SA_CTO}. A CLOCK ARMED ON A ROW BOTH LABELS CALL INERT. My C-S91 said the label filter 'cannot see a row whose CTO ownership is declared only in the remediation block', which is true of W1-S70 and WRONG ABOUT W1-S68: that row fails the ARMED conjunct too, so no label filter could reach it even if ownership were declared everywhere. \u2b50 THE DIVERGENCE IS NOT ONE AXIS WITH TWO DIRECTIONS, IT IS TWO FIELDS EACH ABLE TO DISAGREE WITH ITS OWN CARRIER -- state and owner, independently, in either plane. COST: read both fields in both planes for any row a count turns on. NON-APPLICATION: a row present in one carrier only, where there is nothing to disagree with. (4) S137 COMPLETES TONIGHT'S FALSE-ZERO FAMILY WITH A THIRD MEMBER AND IT IS THE WORST OF THE THREE. C-S88 was a LOUD failure rendered quietly; C-S89 was a QUIET failure rendered faithfully; S137 is A COMPLETE-LOOKING RESULT FROM AN INCOMPLETE RUN -- 480 against a published 502, internally consistent in every column, and smaller in exactly the way real drift is smaller. \u26d4 IT IS WORSE BECAUSE IT DOES NOT PRODUCE A ZERO AT ALL: the two earlier shapes are caught by asking 'could this instrument return a value?', and this one returns many, all correct for what they swept. THE ONLY TELL IS THE EXIT CODE, printed beside numbers that read perfectly well without it. \u2b50 THE GUARD: rc BELONGS IN THE SAME SENTENCE AS THE FIGURE, not in the scrollback above it -- and a census that can HALT must say what it halted at against what it intended to sweep. COST: print rc and the swept-versus-total pair beside any census figure. NON-APPLICATION: an instrument with no early-exit path. \u26a0 S137's own numbers -- 1338 of 1895, 502 exactly on completion -- are that seat's and are not re-run here; what I adopt is the shape.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "LGIC_ENFORCE-W1-S70 read at every carrier at HEAD b7f3868c67: INVESTIGATION_v1.md hazard ARMED / disarm_owner 2.0.0_SA_COO~G; REMEDIATION_v2.md disarm {state ARMED, owner 1.0.0_SA_CTO} -- each seat named by exactly one carrier",
+   "LGIC_ENFORCE-W1-S68 at every carrier: INERT with no disarm_owner in the investigation carrier, INERT in the remediation carrier, and disarm {state ARMED, owner 1.0.0_SA_CTO} in that same remediation row -- a clock ARMED on a row both labels call INERT",
+   "the correction this forces on my own C-S91 @860024e50e: its explanation covers W1-S70 and is wrong about W1-S68, which fails the ARMED conjunct rather than the owner conjunct",
+   "S136's 88 / 147 / 59 / 46 / ~100 and its 19-to-3 regrade, and S137's 1338-of-1895 and 502, are INHERITED and were not re-derived here",
+   "srg._open_tos_for_project('.', 'LGIC_ENFORCE') at write time: 0 open of 74, note empty"
+  ]
+ }
+}
+```
