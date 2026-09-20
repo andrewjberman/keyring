@@ -1155,6 +1155,53 @@ not a message.
    "spec_asserts": "infra/logic/10_ONBOARDING_CHECKLIST.md Step 13 (pre-correction) said EN-s-1 'has not closed at this vintage' and both its task orders 'are both pending', so the step's own instruction was to write 'EN-s-1 open' and grade names only through Steps 11-12.",
    "world_is": "EN-s-1 closed (both orders complete, proof-of-spec VALID) before this cell's cut, so the census mode is available and was run; it stops on an unrelated RAISE before it can grade this firm's own rows, which is a live, closeable gap of its own (Rule 30, fixed at the raised row, not at this cell).",
    "notes": "ARMED for the same reason as LGIC_CANON-S19: a run FOLLOWING Step 13 as written would skip a census that is now available, so the staleness is reachable by the next act. disarm_owner is this seat's issuer for the same reason S19 gives -- the correction rides C6's own cut and is made inside this cell's grant (infra/logic/10_ONBOARDING_CHECKLIST.md is in <paths>). NOT ROUTED AS BLOCKING: C6's bar is reached-plus-carded, and this cell cards Step 13 on the NEW gap (the unrelated RAISE) rather than the old one (EN-s-1 pending), which the run record states."
+  },
+  {
+   "id": "LGIC_CANON-S20",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T09:40Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "one_line": "DISARMS LGIC_CANON-W1-S7 on its OWN stated condition, verified at the bytes rather than from the run record: Step 13's text IS corrected at HEAD and now cards the step on the NEW gap. R-19 clean -- the row's writer is 0.9.0_WK_LGIC_CANON~1 and this seat is its named disarm_owner.",
+   "spec_asserts": "W1-S7 is ARMED because 'a run FOLLOWING Step 13 as written would skip a census that is now available, so the staleness is reachable by the next act', and its notes say 'the correction rides C6's own cut and is made inside this cell's grant (infra/logic/10_ONBOARDING_CHECKLIST.md is in <paths>)'.",
+   "world_is": "THE CORRECTION LANDED. infra/logic/10_ONBOARDING_CHECKLIST.md at HEAD: ':343 built: yes lib/opal_naming.py (EN-s-1 closed)'; ':345 2026-09-18, cell CN-o-5 (row LGIC_CANON-W1-S7): its cell EN-s-1 CLOSED before this vintage'; ':353 and until it clears, this step is carded on THAT gap rather than on EN-s-1'; ':354 This line previously said EN-s-1 was pending and told the run to write EN-s-1 open'. So a run following Step 13 as written now RUNS the census, which is exactly the reachable staleness this row was armed against. AND THE CARDING IT MOVED TO IS STILL CORRECT, re-measured by this seat at HEAD rather than inherited from the four-day-old run record: `python lib/opal_naming.py census --repo --live --budget 60` against a census built 2026-09-20 06:00:55 UTC returns 'CENSUS RAISE live API_GW sentiment-query-api -- R1.f: sentiment is in no vocabulary; no registry row resolves it' and 'CENSUS: STOPPED on the first RAISE after 3 judged (0 carded)'. 2231 live nodes, 1852 to judge, and it halts before reaching any 49financial/49f row. So Step 13 remains CARDED, on the RAISE, and that is the correct state rather than a defect. WHAT THIS DISARM DOES NOT CLOSE, stated because a disarm that quietly widens is the failure this estate keeps correcting: it does NOT assert Step 13 is reachable, it does NOT assert the run would read 13 REACHED + 3 CARDED, and it does NOT touch the SECOND carrier of the superseded EN-s-1 claim at :440, which is filed separately as S21 and is a different defect with a different writer.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "infra/logic/10_ONBOARDING_CHECKLIST.md @HEAD :343, :345, :353, :354 -- the Step 13 correction, read at the bytes",
+     "lib/opal_naming.py census --repo --live --budget 60, run by this seat 2026-09-20 ~09:3xZ: STOPPED on the first RAISE, live API_GW sentiment-query-api, 0 carded after 3 judged",
+     "W1-S7 filed by 0.9.0_WK_LGIC_CANON~1 with disarm_owner 2.0.0_SA_COO~G -- writer and disarmer are different parties (R-19)"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "Held nothing back: the condition is this row's own, it is met at the bytes, and no grader is mid-flight on it. The W1-S21 discipline (do not take the closing reading while a grader is answering the same question) does not apply here, which is why this one is taken now and that one was not."
+  },
+  {
+   "id": "LGIC_CANON-S21",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T09:40Z",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "one_line": "THE STEP-13 CORRECTION WAS PARTIAL. A SECOND CARRIER OF THE SUPERSEDED CLAIM SURVIVES AT 10_ONBOARDING_CHECKLIST.md:440 -- 'One step waits on a cell that has not landed, EN-s-1' -- inside the very block that enumerates what stands between the run and completion. And it is an IN-ENGINE cell, which corrects this seat's own message 98449.",
+   "spec_asserts": "W1-S7's remedy was that Step 13's text be corrected so a later run does not follow the stale instruction; the run record states 'Step 13's text is corrected in this cell's own commit'. 1.0.0_SA_CTO's 98448 states the remaining CANON work is step 13's confirmation plus the W3-S2 repair.",
+   "world_is": "MEASURED AT HEAD. The correction landed at :343-354 and STOPS THERE. At :440, closing the block that lists every STOP point with its owner (the two forms -> Andrew; portal paths -> Andrew; partner table -> 1.0.0_SA_CTO; tier-first keys -> ADVI_FIRMBKTS; vendor with no pipeline family -> R22 non-application), the file still reads: 'One step waits on a cell that has not landed, EN-s-1.' EN-s-1 CLOSED -- both LGIC_ENFORCE.TO-EN-s-1 and its -r2 sibling read complete with proof-of-spec VALID -- and the file itself says so 90 lines earlier. SO THE DOCUMENT CONTRADICTS ITSELF, and the surviving half sits in the SUMMARY a reader consults to count what is outstanding. That is the carrier that feeds a carded-step tally. WHY IT IS NOT MERELY COSMETIC: the whole of this week's reasoning about CANON turns on how many STOP points remain and who owns them. A summary that counts EN-s-1 as unmet inflates that list by one and attributes it to a cell that closed. THE CLASS, and it is this estate's own: A CORRECTION THAT LANDS IN ONE CARRIER AND NOT IN ITS SIBLING. The same shape as the LGIC_ENFORCE register bar that quantified over the member rather than the partition, and as the 43-worked-cases figure that was stale in one carrier and correct in another. Finding the first instance is not finishing the class: CENSUS THE WHOLE DOCUMENT FOR THE SUPERSEDED CLAIM, never just the line that prompted the search. \u26d4 AND IT CORRECTS THIS SEAT'S OWN MESSAGE 98449, sent ~09:34Z, which said 'the only act left in CANON that any cell of mine can take is RECORDING these two facts -- which is issuer record-work, not a round.' THAT IS WRONG. W1-S7 records that infra/logic/10_ONBOARDING_CHECKLIST.md was IN A CANON CELL'S <paths> GRANT, so a CANON cell can be granted it again. This is an in-engine cell: census the checklist for every surviving carrier of the superseded EN-s-1 claim and correct them, with the denominator printed. OWNER/WRITER per the round-18 ruling: owner is this seat as the project's issuer and DECIDER; infra/logic/** is lane PLATFORM_LOGIC_DOCS with permitted_agents 4.0.0_SA_CRO only, so a SEATED WORKER reaches it through worker_grant on the order's <paths>, exactly as CN-o-5 did, and the CRO is the writer for any act taken outside a cell.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "infra/logic/10_ONBOARDING_CHECKLIST.md @HEAD :440 -- 'One step waits on a cell that has not landed, `EN-s-1`.'",
+     "same file @HEAD :343-354 -- the correction, which states EN-s-1 CLOSED and re-cards Step 13 on the RAISE",
+     "LGIC_CANON-W1-S7 notes: 'the correction rides C6's own cut and is made inside this cell's grant (infra/logic/10_ONBOARDING_CHECKLIST.md is in <paths>)' -- the grant precedent",
+     "this seat's own message 98449 at ~09:34Z, whose claim that only record-work remains is corrected here"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "Filed BLOCKING because it misstates the outstanding-work list that three seats are actively reasoning from this morning. Not cut as a round in the same act: 1.0.0_SA_CTO is mid-tick on 98449's measurements and a cut landing underneath a ruling it is writing would be the round-N+1-before-round-N's-slug shape (LD-0521's sibling). The cut is this seat's under Rule 27 and is taken once that lands."
   }
 ]
 ```
