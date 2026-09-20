@@ -4124,6 +4124,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+   "id": "LGIC_ENFORCE-S115",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T12:36Z",
+   "class": "BLOCKING",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "2.0.0_SA_COO~G",
+   "one_line": "W2-S13 IS GENUINELY OPEN, NOT STALE -- and its population has STALLED. 1411 -> 1370 -> 1303 -> 1303 across r4/r5/r8/r13, with the REGISTRY ITSELF CHANGING between the last two and moving ZERO rows. It reconciles exactly to FWD-5 clause 2's '1298' (1303 = 1298 OUT-OF-PATTERN + 5 CONFORMANT), and it is DISJOINT from the 462 raising names every ruling today has been about.",
+   "spec_asserts": "The 30m DIRECTED arm names LGIC_ENFORCE-W2-S13 as a row this seat owes a word on, and separately names 'Round 5 (R-38, the 1411-row placeholder population)'. W2-S13's remedy IS that round 5. Its carriers read disarm {ARMED, 2.0.0_SA_COO~G, at: null} and remediation {OPEN, 2.0.0_SA_COO~G, v4} -- BOTH CLOCKS THIS SEAT'S. LGIC_ENFORCE's blocking field carries FWD-5 clause 2 as 'THE 1298 -- the unfillable-form residual, counted correctly for the first time in the round-8 analysis ... ITS OWNER IS STILL A CATEGORY'.",
+   "world_is": "MEASURED WITH THE ROW'S OWN TEST (a `{` substring check on each report row's `canonical`, W2-S10's rule) ACROSS FOUR CENSUS VINTAGES, with the row's own figure as a POSITIVE CONTROL: r4 = 1411 of 3237, REPRODUCING W2-S13's stated count EXACTLY, which is what makes the rest of this trustworthy. Then r5 = 1370, r8 = 1303 of 3254, r13 = 1303 of 3264. \u26d4 SO THE ROW IS CORRECTLY ARMED AND MUST NOT BE DISARMED. This is the opposite of the closed-in-world-open-in-channel shape found three times today; here the channel is right and the recollection that it was discharged was wrong. \u26d4 AND IT IS A STALL, NOT MERELY FLATNESS, WHICH IS A STRONGER CLAIM AND NEEDED THE CHECK: r8 and r13 are GENUINELY DIFFERENT RUNS -- estate vintage 2026-09-18 12:17:28Z vs 2026-09-19 05:56:38Z, denominators live 2205 -> 2210 and repo 1878 -> 1885, and A DIFFERENT REGISTRY HASH (c1cf124537835573 -> 9f4a569d7a54b53c). THE REGISTRY CHANGED BETWEEN THE TWO RUNS AND THE PLACEHOLDER RESIDUAL MOVED BY ZERO ROWS. Whatever registry work landed in that window touched none of this population. THE 1298 IS RECONCILED EXACTLY RATHER THAN APPROXIMATELY: of the 1303 placeholder rows at r13, 1298 grade OUT-OF-PATTERN and 5 grade CONFORMANT. So the blocking field's '1298 unfillable-form residual' IS this population minus five, and the gap this seat flagged as unreconciled an hour earlier is closed by the verdict split rather than guessed. COMPOSITION, 9 distinct placeholder tokens: {system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1. By plane it is almost exactly even -- repo 652, live 651. Top types: IAM_POLICY 572, EVENT_RULE 150, S3Key 106, IAM_ROLE 93, LOG_GROUP 68, SECRET 67. \u2b50\u2b50 AND THE FINDING THAT SEPARATES TWO POPULATIONS THE ESTATE HAS BEEN CONFLATING ALL DAY: THIS POPULATION IS DISJOINT FROM THE 462 RAISING NAMES. The 1303 live in the report's `rows` (graded); the 462 live in `not_judged` (carded); the two sets are disjoint BY CONSTRUCTION. W2-S13 says why in its own notes -- 'a placeholder-eligible token never RAISEs, so this much larger population was never on their list'. So every ruling today about the TEN R1 tokens concerns the 462, while FWD-5 clause 2 -- one of the two clauses ENFORCE's hold rests on -- is these 1298, which no R1 registry row touches. \u2b50 THAT IS ALSO WHY 'ADD SEVEN REGISTRY ROWS' COULD NEVER HAVE MOVED IT, and why the r8->r13 registry change moved zero: the 1119 {system} rows are names whose system token is ABSENT rather than unresolved, so the grader emits {system} instead of raising. Their remedy is PER-NAME SYSTEM ATTRIBUTION over ~1119 names, not a handful of registry rows -- which is the shape 'its owner is still a category' has been holding still. \u26a0 BOUNDS: the placeholder-token counts are per-OCCURRENCE across 1303 rows and a row may carry more than one, so they do not sum to 1303 and are not a partition of it. The trajectory is across REPORT vintages, not a live re-run -- r13 is the newest report on disk (estate 2026-09-19 05:56Z), so the live figure today is UNMEASURED and this is a floor. And this row asserts NOTHING about whether the attribution work is absorbable; it measures the population and its composition only.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "W2-S13's own test ({ substring on canonical) over four reports: r4 1411/3237 (reproduces the row's stated 1411 exactly, positive control), r5 1370, r8 1303/3254, r13 1303/3264",
+     "r8 vs r13 are different runs: estate 2026-09-18 12:17:28Z vs 2026-09-19 05:56:38Z, registry c1cf124537835573 vs 9f4a569d7a54b53c, denominators live 2205/2210 repo 1878/1885",
+     "verdict split of the 1303 at r13: OUT-OF-PATTERN 1298, CONFORMANT 5 -- reconciling the blocking field's '1298' exactly",
+     "placeholder occurrences at r13: {system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1",
+     "disjointness is structural: the 1303 are report `rows` (graded), the 462 raising names are `not_judged` (carded); W2-S13's notes state a placeholder-eligible token never RAISEs",
+     "W2-S13 carriers at HEAD: disarm {ARMED, 2.0.0_SA_COO~G, at null}, remediation {OPEN, 2.0.0_SA_COO~G, v4}, closed false"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
