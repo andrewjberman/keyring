@@ -4149,6 +4149,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+   "id": "LGIC_ENFORCE-S116",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T13:05Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "CORRECTS S115 AND VINDICATES THE phase FIELD. My '9 placeholder kinds' mixed two populations: {dim_name} 5 are CONFORMANT source-format variables, not residual. The phase field's EIGHT kinds are correctly scoped to the 1298 and my independent sweep reproduces all eight exactly. AND THE HOLD IS NARROWER THAN THE FABRIC HAS BEEN SAYING: clause 3 is SERVED; clause 2 alone blocks FWD-5.",
+   "spec_asserts": "S115 reported 'COMPOSITION, 9 distinct placeholder tokens: {system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {dim_name} 5, {firm} 1, {d} 1, {dc} 1' as the make-up of the 1303. LGIC_ENFORCE project.json's `phase` field, RULED 2026-09-20 ~00:3xZ, enumerates EIGHT and omits {dim_name}. That field states its own consumer: 'A PEER'S STOP CONDITION READS IT'. Separately 1.0.0_SA_CTO's 98479 (~10:56Z) states FWD-5 is 'NOT REALIZED on clauses 2 AND 3'.",
+   "world_is": "\u26d4 THE GRAIN ERROR IS MINE, NOT THE FIELD'S. The 5 {dim_name} rows ARE the 5 CONFORMANT rows -- all of them the same repo S3Key, `orion/rate_limit_state_{dim_name}.json`, a SOURCE-CODE FORMAT VARIABLE where canonical == current and the grader correctly passes it. They are not unfilled canonicals and belong to no residual. The phase field's EIGHT kinds are correctly scoped to the 1298 OUT-OF-PATTERN rows, and my independent sweep at r13 reproduces every one of its eight figures EXACTLY ({system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {firm} 1, {d} 1, {dc} 1). S115 presented a CONFORMANT set as part of a failing population, which is the member-for-partition error this seat has spent the day naming in others. RECONCILED EXACTLY, denominator 3264 rows at r13: 1303 rows carry `{` in canonical (W2-S13's own stated test). Of those, 1288 carry it in CANONICAL ONLY and are OUT-OF-PATTERN 1288 of 1288; 15 carry it in BOTH current and canonical. 1288 + 10 of the 15 = 1298, the phase field's residual. The remaining 5 are the CONFORMANT {dim_name} rows. \u2b50 SO W2-S13's OWN TEST OVER-COUNTS THE RESIDUAL BY EXACTLY FIVE, which is why S115's 1303 and the ruling's 1298 differed. \u26d4 AND A RULE I ALMOST WROTE IS FALSE: 'a brace in `current` too means a source variable, graded CONFORMANT'. Of the 15 rows with a brace in BOTH, TEN are OUT-OF-PATTERN and five are CONFORMANT. I inferred the rule from the five I had looked at and the ten falsify it. I do NOT have the discriminator and am not supplying one. \u26a0 AND THE HOLD IS NARROWER THAN THE FABRIC HAS BEEN SAYING, INCLUDING BY THIS SEAT. The phase field, ruled 00:3xZ, is explicit: 'Clause 1 MET since round 4; clause 3 SERVED at round 19; clause 4 RETIRED at round 7; clause 2 NOT MET', and 'clause 3 WAS the in-engine half and it is served'. 1.0.0_SA_CTO's 98479 at ~10:56Z -- TEN HOURS LATER -- says 'NOT REALIZED on clauses 2 AND 3', and THIS SEAT REPEATED IT in two tick logs today without checking the field. The field warns against exactly this in its own text: 'A seat reading 6 of 7 here is reading a MEASURED figure, not a CARRIED one.' \u2b50 So the blocker is ONE clause, not two, and it is the 1298 -- the population measured in S115 and ruled '1298 REGISTRY DECISIONS IS A PROJECT, NOT A ROUND'. \u26a0 ONE UNRECONCILED FIGURE, STATED RATHER THAN SMOOTHED: the phase field says '2474 OUT-OF-PATTERN rows'; r13 counts 2475. A one-row difference across report vintages, not investigated, and it does not touch the 1298.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "r13 census: 1303 rows carry { in canonical; 1288 canonical-only (OUT-OF-PATTERN 1288 of 1288); 15 in both (OUT-OF-PATTERN 10, CONFORMANT 5); 1288 + 10 = 1298",
+     "all 5 CONFORMANT placeholder rows are repo S3Key `orion/rate_limit_state_{dim_name}.json` with canonical == current -- a source-code format variable, correctly passed",
+     "independent reproduction of the phase field's eight kinds at r13: {system} 1119, {scope} 122, {cadence} 108, {source} 85, {snap} 7, {firm} 1, {d} 1, {dc} 1 -- every figure identical",
+     "LGIC_ENFORCE project.json `phase` @HEAD: 'Clause 1 MET since round 4; clause 3 SERVED at round 19; clause 4 RETIRED at round 7; clause 2 NOT MET'",
+     "1.0.0_SA_CTO msg 98479 (~10:56Z) states 'NOT REALIZED on clauses 2 AND 3'; the phase ruling predates it by ~10h and says clause 3 is SERVED",
+     "the clause enumeration is defined in LGIC_ENFORCE_DECOMP.md section 0i.1, NOT inferable from the PRD ACCEPT's prose order -- clause 2 is 'each paired with its CORRECT form', clause 3 is 'totals agree with the hand ranking'"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
