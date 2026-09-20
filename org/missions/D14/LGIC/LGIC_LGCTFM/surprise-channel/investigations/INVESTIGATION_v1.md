@@ -2226,3 +2226,59 @@ to take was the correct one** -- which is the case where declining is hardest an
  "notes": "RULED BY 1.0.0_SA_CTO, AS THE L4 AUTHOR AND THE ADJUDICATOR OF RECORD AT 662d53b793: THE CARD IS RE-DELIVERED AT HEAD, AND FWD-4 IS NOT GRADED UNTIL IT IS. This is not a re-scope of FWD-4 and not a PRD amendment -- 98606/98607 refused that route and the refusal stands. It is the opposite: the ACCEPT is graded against the artifact it names, so the artifact he holds must BE that artifact. Grading 'he has read the list' against a blob that omits the correction would certify a read of the uncorrected recommendation. THE DELIVERY ACT IS NOT THIS SEAT'S -- 2.0.0_SA_COO~G carried the card and is asked to re-carry the HEAD blob with the added section named; no seat here messages Andrew directly. \u26a0 WHAT THIS ROW DOES NOT CLAIM: that the ranking is wrong (it is byte-identical and independently reproduced), that the card is defective (it is strictly better at HEAD), or that anyone erred in delivering it -- at ~00:36Z the delivered blob WAS current. NOBODY MADE A MISTAKE AND THE DEFECT IS REAL, which is the whole shape: AN ARTIFACT DELIVERED OUT OF A REPOSITORY KEEPS IMPROVING AFTER IT LEAVES, AND THE RECIPIENT'S COPY IS FROZEN AT THE WORST MOMENT -- before the correction that was already being written when it went. KEEPABLE: WHEN AN OUTCOME'S ACCEPT NAMES A HUMAN READING A DOCUMENT, THE GRADE IS AGAINST THE BLOB THAT HUMAN RECEIVED, NEVER THE PATH. Record the delivered blob id in the outcome's own carrier at delivery time, and re-deliver on any change to it. COST: one `git rev-parse HEAD:<path>` recorded beside the delivery line. NON-APPLICATION: an outcome closed by an act rather than a read, and a document delivered by reference (a live link) rather than by copy. SIBLING, AND IT IS WHY THE CARD'S OWN HANDLING WAS RIGHT: the card ABSORBED its correction inline and said so -- 'left standing here as written rather than silently rewritten' -- which is R-43 applied correctly by a worker. The standalone correction file is the carrier that went stale, not the card."
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S67",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T17:26Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "DELIVERY RECORD, filed because 98616's keepable says a delivered BLOB is the thing FWD-4 grades against and nothing was recording it: ANDREW_CARD.md re-delivered at blob da2106bd3f (6,154 bytes), superseding blob 5a5f3e68 (4,635) carried ~00:36Z 2026-09-18. FWD-4 IS NOT GRADED BY THE RE-DELIVERY.",
+ "spec_asserts": "1.0.0_SA_CTO 98616 RULED, as L4 author and the adjudicator of record at 662d53b793: the card is re-delivered at HEAD with the added section named, and FWD-4 is not graded until it is -- explicitly NOT a re-scope and NOT a PRD amendment, since 98606/98607 refused that route and the refusal stands. Its keepable: WHEN AN OUTCOME'S ACCEPT NAMES A HUMAN READING A DOCUMENT, THE GRADE IS AGAINST THE BLOB THAT HUMAN RECEIVED, NEVER THE PATH -- record the delivered blob id in the outcome's carrier at delivery time and re-deliver on any change.",
+ "world_is": "EXECUTED THIS TICK. The card was re-delivered to 0.0.0_AB_MSTR as the route that reaches Andrew, copying 1.0.0_SA_CTO in the same act per Andrew's ~23:5xZ word and exactly as at the first carry (msg 98620/98621). DELIVERED BLOB da2106bd3f6ea9ba832dfce7dcbc984417ce66c7, 6,154 bytes, read at HEAD at delivery time. SUPERSEDES blob 5a5f3e68, 4,635 bytes. WHY THE RE-DELIVERY WAS OWED: the first copy is frozen BEFORE commit f3cfbabebb, whose added 22 lines carry the correction. The copy Andrew holds says in its RECOMMENDATION that 'the TWO rows touching a live, client-facing surface sit above everything else'; the measured number is ONE of 179 (T-0001), and HIS COPY CONTAINS NOTHING SAYING SO. The delta is ONE hunk at line 13, +22/-0, ZERO lines modified, 61 to 83 lines -- the ranking table, the rule and the recommendation text are byte-identical, so nothing was rewritten under him. \u2b50 THE GENERAL SHAPE, which is why this is a row and not a log line: AN ARTIFACT DELIVERED OUT OF A REPOSITORY KEEPS IMPROVING AFTER IT LEAVES, AND THE RECIPIENT'S COPY IS FROZEN AT THE WORST MOMENT -- immediately before the correction that was already being written when it went. Nobody erred: at ~00:36Z the delivered blob WAS current. A path-based grade cannot see this at all, because the path is still correct. \u26a0 AND A SECOND CARRIER IS NOW MISLEADING IN THE OPPOSITE DIRECTION, named so a later reader is not fooled: the standalone ANDREW_CARD_CORRECTION file is R-40-pinned to the SUPERSEDED blob, so verifying its pin returns a CLEAN MISS about a correction whose substance is live and has moved INTO the card. Not this seat's to repin and it was not touched. \u26d4 WHAT THIS ROW DOES NOT DO: FWD-4 IS NOT GRADED, not by the ruling and not by the delivery. The card's own closing line governs -- it is APPLIED, not EXERCISED, until Andrew has read it, and a report standing in for his read does not close it. LGIC_LGCTFM stays 8 of 10, HELD-AT-STOP.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git rev-parse HEAD:org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/ANDREW_CARD.md -> da2106bd3f6ea9ba832dfce7dcbc984417ce66c7; git cat-file -s -> 6154",
+   "98616 measured the delivered blob as 5a5f3e68 / 4,635 bytes and the two commits as a5cef2724f (delivery) and f3cfbabebb (after it)",
+   "card read at HEAD this tick: the correction sits in a section headed 'The adjudication of record' -- 'measured over all 179 tensions, the rows touching a live, client-facing surface number 1 of 179 (T-0001), not two'",
+   "the uncorrected claim is still in the live RECOMMENDATION at lines 6-9, left standing rather than silently rewritten, which is why both appear and the card says which is right",
+   "first carry recorded at org/tier1_exec/2.0.0_SA_COO/drive_log_20260918T0130Z.md:19 -- 'ANDREW_CARD.md carried to Andrew, copying 1.0.0_SA_CTO in the same act per his ~23:5xZ word'",
+   "re-delivery msg ids 98620 (0.0.0_AB_MSTR) / 98621 (1.0.0_SA_CTO), 2 DELIVERED of denominator 2"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S68",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T17:29Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "W2-S2's BLOCKING CLAIM IS FALSE AT HEAD AND ITS SCHEMA HALF IS STILL TRUE. 'No real contract this engine produces can ever validate' -- 6 of 6 contracts now validate with 0 errors, INCLUDING THE EXACT INSTANCE THE ROW CITED AS FAILING. LT-e-4 put the plant behind an opt-in. The enum is still 33 and still lacks COGNITO_USER_POOL, so the OPT-IN PATH remains unvalidatable.",
+ "spec_asserts": "LGIC_LGCTFM-W2-S2 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~G, surfaced 2026-09-17 by 0.9.0_WK_LGIC_LGCTFM~2) states that EVERY walk emits a COGNITO_USER_POOL row outside org/standards/LGCTFM_CONTRACT.schema.json's 33-value node_type enum, 'SO NO REAL CONTRACT lib/opal_lgctfm.py PRODUCES CAN EVER VALIDATE AGAINST ITS OWN SCHEMA', because cmd_walk() ALWAYS injects the plant. It cites a measured instance: check_lt_r1.py against 20260917T202556Z-bb29248/contract.json printing 'schema errors on its contract: 1' at ['rows', 184], row_id R-0185. The 30m DIRECTED arm names W2-S2 as a row this seat owes a word on, and names LT-e-4 as 'the untypeable opt-in amendment'.",
+ "world_is": "THE BLOCKING HALF IS CLOSED AND THE MECHANISM IS WHAT CHANGED, WHICH IS THE ONLY GROUND A DISARM MAY REST ON. cmd_walk() no longer plants unconditionally: lib/opal_lgctfm.py now guards the injection with `if getattr(args, \"plant_untypeable\", False):`, and its own comment names the reason -- 'R-36: keeping this plant UNCONDITIONAL broke every contract the engine writes'. MEASURED AT THE ARTIFACTS, NOT AT THE SOURCE: all 6 contract.json files under workflows/legacy_transform/ validate against the schema at HEAD with 0 jsonschema errors and 0 out-of-enum node_types, over 184/184/184/185/184/404 rows. \u2b50 THE POSITIVE CONTROL IS THE ROW'S OWN NAMED INSTANCE: 20260917T202556Z-bb29248/contract.json, which W2-S2 measured at 'schema errors: 1' on row index 184, now carries 184 rows (indices 0-183) and validates clean -- the planted row is GONE FROM THE ARTIFACT, not merely tolerated. A row whose own cited instance flips is falsified on the instrument that convicted it. \u26d4 AND THE SCHEMA HALF IS UNTOUCHED, SO THE HAZARD NARROWED RATHER THAN VANISHED. The enum is STILL 33 values and STILL lacks COGNITO_USER_POOL; there is no 34th untypeable value and no opt-in branch in the schema (tokens: opt_in 0, optin 0). The plant still sets untypeable_type = 'COGNITO_USER_POOL'. SO ANY RUN PASSING --plant-untypeable STILL PRODUCES AN UNVALIDATABLE CONTRACT -- and that flag exists precisely to demonstrate that an untypeable resource is returned NOT_COVERED rather than dropped, so the feature remains self-defeating for the one use it was built for. \u26a0 THAT RESIDUAL IS READ FROM SOURCE AND IS NOT EXERCISED: no run with the flag was made this tick, so it is INFERRED, not MEASURED, and is stated at that grade. \u26d4 WHY THIS IS NOT A DISARM OF W2-S2. Two halves with different answers cannot share one verdict. The row as WRITTEN is a universal ('no real contract ... can ever validate') and that universal is FALSE at HEAD; the row's UNDERLYING defect -- an enum that never grew to admit the type the engine chose to plant -- is TRUE at HEAD. Disarming on the first reading would close a live defect; leaving it BLOCKING on the second would keep a false universal in the channel. The disposition owed is a GRADUATION of the blocking claim with the schema residual carried as its own item, and that is the word this row files rather than takes: 98616's keepable cuts both ways, and the mechanism that changed is not the mechanism the residual rests on.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/opal_lgctfm.py at HEAD: the injection is guarded by `if getattr(args, \"plant_untypeable\", False):`; PLANT_UNTYPEABLE occurs 4x, COGNITO_USER_POOL 2x, legacy-user-pool 1x",
+   "the guard's own comment cites R-36: 'keeping this plant UNCONDITIONAL broke every contract the engine writes'",
+   "org/standards/LGCTFM_CONTRACT.schema.json $defs.node_type.enum at HEAD: 33 values, 'COGNITO_USER_POOL' in enum -> False, no UNTYPEABLE/NOT_COVERED/UNKNOWN member",
+   "jsonschema Draft7Validator over all 6 workflows/legacy_transform/*/*/contract.json at HEAD: 0 errors each; out-of-enum node_type count 0 each; row counts 184, 184, 184, 185, 184, 404",
+   "POSITIVE CONTROL -- W2-S2's own cited instance 20260917T202556Z-bb29248/contract.json: 184 rows, 0 errors (the row measured 1 error at ['rows', 184], an index that no longer exists)",
+   "RESIDUAL IS INFERRED FROM SOURCE, NOT EXERCISED: no --plant-untypeable run was made this tick"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
