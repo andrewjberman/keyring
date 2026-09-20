@@ -3387,3 +3387,135 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": true
 }
 ```
+
+## Carriers minted WITH the graduation (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S143",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S143 is graduated by LGIC_ENFORCE-C-S99 in this same commit, so it is never rowless -- the remedy for the fourteen carrier-less graduations this seat left earlier tonight.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S143",
+  "graduated by LGIC_ENFORCE-C-S99 in the same commit",
+  "minted at HEAD e7d7ec7030"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S99. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S144",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S144 is graduated by LGIC_ENFORCE-C-S99 in this same commit, so it is never rowless -- the remedy for the fourteen carrier-less graduations this seat left earlier tonight.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S144",
+  "graduated by LGIC_ENFORCE-C-S99 in the same commit",
+  "minted at HEAD e7d7ec7030"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S99. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S145",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S145 is graduated by LGIC_ENFORCE-C-S99 in this same commit, so it is never rowless -- the remedy for the fourteen carrier-less graduations this seat left earlier tonight.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S145",
+  "graduated by LGIC_ENFORCE-C-S99 in the same commit",
+  "minted at HEAD e7d7ec7030"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S99. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S146",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S146 is graduated by LGIC_ENFORCE-C-S99 in this same commit, so it is never rowless -- the remedy for the fourteen carrier-less graduations this seat left earlier tonight.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S146",
+  "graduated by LGIC_ENFORCE-C-S99 in the same commit",
+  "minted at HEAD e7d7ec7030"
+ ],
+ "remedy": "ARMED AT SURFACING AND FALSIFIED BY ITS OWN AUTHOR AT LGIC_ENFORCE-S147, confirmed on this seat's own run of the ledger: no forged entry exists and the write-once guard held. NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S99. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true,
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": "2026-09-20T23:50:41Z"
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S147",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S147 is graduated by LGIC_ENFORCE-C-S99 in this same commit, so it is never rowless -- the remedy for the fourteen carrier-less graduations this seat left earlier tonight.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S147",
+  "graduated by LGIC_ENFORCE-C-S99 in the same commit",
+  "minted at HEAD e7d7ec7030"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S99. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
