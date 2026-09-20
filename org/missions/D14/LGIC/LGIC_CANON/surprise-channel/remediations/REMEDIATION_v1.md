@@ -266,11 +266,11 @@ STATES: `closed` is false on every row -- the CTO's round-1 analysis grades the 
    "at": "2026-09-16T06:16Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~G",
    "round": "v1"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "LGIC_CANON-C-S9",

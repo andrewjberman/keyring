@@ -2566,3 +2566,36 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S111 -- the DRAFTING, 1.0.0_SA_CTO's (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S111",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "W1-S74 was carried for rounds as a grade() DEFECT owing a code fix. Measured, it is a CORRECT grader disagreeing with a hand expectation and with a doc that never wrote the rule down: 27 of 3716 census names depend on the camel re-join, 15 of them LIVE, and `incrparity` is a REGISTERED system token rather than an accidental collision.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S111",
+  "2.0.0_SA_COO~G's third-arm census at lib/opal_naming.py:1103, denominator 3716 (3254 graded + 462 carded), positive control asserted LIVE before comparison",
+  "infra/logic/registry/systems.json:283 and infra/logic/10_LEGACY_TRANSFORM.md:367 -- comp-incrparity is a real tool",
+  "1.0.0_SA_CTO's ruling @98503: GRADING_RULE.md N2 absorbs the clause"
+ ],
+ "remedy": "CORRECTION RECORD citing LGIC_ENFORCE-W1-S74, in the form the surprise-row gate requires: a NEW item citing the old id, never an edit of the old row's history. It adjudicates no item and opens none. W1-S74's remediation half stays OPEN under 2.0.0_SA_COO~G, on the drafting, and its disarm half is untouched. \u2b50 KEEPABLE: A CLOCK IS STATE AND A REMEDY IS HISTORY. Only the three named clock moves may advance in place; every other field change on an existing row is a new row citing it. COST: none. NON-APPLICATION: the clock advances themselves.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
