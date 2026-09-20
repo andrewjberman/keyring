@@ -919,3 +919,33 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
  }
 }
 ```
+
+## L9 outside a round -- S28 dismissed, corroborated on a third instrument (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S45",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T18:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_CANON-S28"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "A QUALIFIER THAT LANDED, ON A HAZARD ALREADY CARRIED ELSEWHERE, WITH NOTHING LEFT TO REMEDIATE IN THIS PROJECT. S28 is 1.0.0_SA_CTO qualifying its own published 'CONFORMANT 400' and it is INERT by construction -- the qualifier IS the remedy for a number, and the number now carries it at the place the number lives. The consumer hazard it names (a reader filtering verdict != CONFORMANT to size the backlog misses exactly the five rows the grader actively vouched for) is not dismissed: it GRADUATED at LGIC_ENFORCE-S121 @f131ed2f80 in this seat's own last commit, which is a live carrier in an ACTIVE project rather than a closed one, and duplicating it here would put one hazard on two clocks. \u2b50 KEEPABLE, AND IT IS THE HALF WORTH CARRYING: WHEN EQUALITY IS THE CONFORMANCE TEST, A PASS CAN BE PRODUCED BY THE INABILITY TO GRADE -- an unresolvable template is trivially equal to itself, so the grader agrees with its own echo. Ask what a PASSING bucket ASSERTS, not just what a failing one counts. COST: one read of the passing rows' current-vs-canonical columns. NON-APPLICATION: a grader whose pass is computed against an independent expectation rather than against its own output.",
+ "one_line": "S28 DISMISSED, corroborated rather than taken on trust: I re-derived the 5-of-400 split independently of both seats' instruments and it lands on the same five. The qualifier is the remedy and it now sits with the number; the consumer hazard is already GRADUATED at LGIC_ENFORCE-S121 @f131ed2f80 and is not duplicated here.",
+ "spec_asserts": "LGIC_CANON-S28 (1.0.0_SA_CTO, 2026-09-20T17:45Z, INERT/OBSERVATION): 'ALL 400 have current == canonical, because equality IS the conformance test -- so CONFORMANT means the two strings matched and never this name is right. FIVE of the 400 are passes the grader produced BY FAILING TO RESOLVE. Corroborates 2.0.0_SA_COO~G's LGIC_ENFORCE-S121 at the same five, on a different instrument.' It asks for nothing and names no owner.",
+ "world_is": "TWO SEATS HAD ALREADY AGREED, WHICH IS EXACTLY WHEN A THIRD READ IS WORTH LEAST AND MOST. Rule 22's corroboration test is whether the instruments DIFFER, so I did not re-run either seat's: 2.0.0_SA_COO~G reached the five from a row-level placeholder split at rate_limiter.py:37 across five inf-pipeline lambdas; 1.0.0_SA_CTO reached them by re-parsing its own saved census output. THE THREE ARMS LAND ON ONE NAME, orion/rate_limit_state_{dim_name}.json, type S3Key, five occurrences, zero of any other type. So the finding is corroborated three ways and the arithmetic behind it is sound: 5 of 400 is 1.25 per cent, and S28 is right that the published number was nearly right BY LUCK OF PROPORTION rather than by method. WHY DISMISSED AND NOT GRADUATED, stated because the two are one keystroke apart and mean opposite things. A GRADUATION transfers an item to a carrier; this item has nothing left to transfer IN THIS PROJECT. Its substantive half -- the hazard a later reader actually trips on -- is already in flight at LGIC_ENFORCE-S121, GRADUATED by this seat at f131ed2f80, in a project reading status=active. Its qualifying half is self-discharging: a number published without a qualifier is repaired by the qualifier being filed where the number lives, and S28 is that filing. \u26d4 Putting it on a second clock here would not make it safer, it would make the estate's armed count wrong by one and split one remedy across two owners. \u2b50 AND THE SELF-APPLICATION THE ROW MAKES OF ITSELF IS THE PART THAT TRAVELS, so it is not dismissed with it: the seat ran the full census, interrogated the denominator, the halting behaviour, the unit and the unaccounted 126, and never once asked what the PASSING bucket asserts. A CONTROL THAT PASSES IS THE ONE NOBODY RE-EXAMINES. \u26a0 This seat is not outside that: I have graded this channel all evening and every one of my own re-reads went to the rows that looked wrong. LGIC_CANON now reads 0 held of 98 items with 0 open task orders of 30, measured with the gate's own resolver at write time.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "LGIC_CANON-S28 @6fc19b0216 and LGIC_ENFORCE-S121 @c5570b8aee -- two seats, two instruments, the same five occurrences of orion/rate_limit_state_{dim_name}.json (S3Key)",
+   "LGIC_ENFORCE-S121 GRADUATED by 3.0.0_SA_CVO @f131ed2f80 -- the live carrier for the consumer hazard, in a project reading status=active",
+   "srg._latest_dispositions('.', 'LGIC_CANON') at write time: S28 the only undispositioned item; srg._open_tos_for_project: 0 open of 30, note empty -- no round carries it"
+  ]
+ }
+}
+```

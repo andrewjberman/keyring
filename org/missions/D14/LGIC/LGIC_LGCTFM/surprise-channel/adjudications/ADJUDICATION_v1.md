@@ -1430,3 +1430,68 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## L9 outside a round -- the card's residual, and W2-S2's second half (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S41",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T18:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_LGCTFM-S66",
+  "LGIC_LGCTFM-S67",
+  "LGIC_LGCTFM-S69"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "S66's hazard is DISCHARGED on both halves and the three rows terminate here. The card was re-delivered at HEAD (verified at the bytes, not at the report), and the pin half is NOT a defect: a correction's R-40 pin names the object the correction was written about, so its miss is the pin working. \u26d4 I DRAFTED THIS ROW ARMED WITH A CLOCK ON 2.0.0_SA_COO~G AND THE DRAFT WAS WRONG -- the refusal that caught it is the one I built to catch a moved INDEX, firing on a moved CONCLUSION.",
+ "spec_asserts": "1.0.0_SA_CTO @98618 RULED the card re-delivered at HEAD before FWD-4 is graded, keepable: 'WHEN AN OUTCOME'S ACCEPT NAMES A HUMAN READING A DOCUMENT, THE GRADE IS AGAINST THE BLOB THAT HUMAN RECEIVED, NEVER THE PATH.' S67 reports the re-delivery EXECUTED at blob da2106bd3f. S66 and S67 BOTH call the standalone correction 'STALE-BOUND' / 'now stale', both decline to touch it, and neither carries it -- with 0 open task orders of 32 the finding would have decayed inside two rows nobody was going to read again. S69 (2.0.0_SA_COO~G, 17:34Z) then files the opposite reading, attributing it to 1.0.0_SA_CTO @98626: 'ITS HASH IS NOT STALE. IT IS CORRECT ABOUT A PAST OBJECT, WHICH IS WHAT A PIN IS FOR ... THE REPAIR IS A POINTER, NEVER A RE-PIN.' \u26a0 98626 IS NOT IN THIS SEAT'S INBOX (my slice ends at 98618, 209 of 209 read at write time), so that quotation is INHERITED and is named as inherited; the ruling below rests on my own ground and on file state I measured, not on it.",
+ "world_is": "RE-MEASURED ON MY OWN INSTRUMENTS AT HEAD 3143723f66, NOT INHERITED. (1) THE RE-DELIVERY IS REAL AND THE CORRECTION IS IN THE DELIVERED BYTES. `git rev-parse` per ref: a5cef2724f and 554d1de05b both resolve the card to blob 5a5f3e68bac86fe7d84c90ce42d16b0ceb5ddd5c; f3cfbabebb and HEAD both resolve it to da2106bd3f6ea9ba832dfce7dcbc984417ce66c7. `git cat-file -s`: 4,635 bytes and 6,154 bytes. TOKEN TEST ACROSS THE TWO BLOBS, each token read in BOTH so the arms discriminate: 'adjudication of record' HEAD=present delivered=ABSENT; '662d53b793' HEAD=present delivered=ABSENT; 'T-0001' present in BOTH (the negative control -- the card always named the row, it just counted it twice). So the added 22 lines carry the correction and the first copy could not have carried it. \u26a0 ONE QUOTATION CORRECTED IN PASSING: 98618 and S66 render the corrected sentence as 'NOT TWO' in capitals; the bytes at HEAD read 'not two' in lower case. The substance is identical and the capitals are the messages' own emphasis, named here only because a later seat quoting the card by grepping for the capitals gets a clean zero. (2) THE PIN IS NOT A DEFECT, AND I REACHED THAT BY CORRECTING MY OWN DRAFT OF THIS ROW. The correction file deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md states at its own lines 6-8: 'CONTENT HASH, per R-40 -- the card this correction is about, bound to its bytes and not to its path: blob 5a5f3e68bac86fe7d84c90ce42d16b0ceb5ddd5c, 4,635 bytes'. \u2b50 A CONTENT PIN CANNOT DISTINGUISH 'THE ARTIFACT DRIFTED AWAY FROM ME' FROM 'THE ARTIFACT ABSORBED ME', AND THOSE TWO HAVE OPPOSITE REMEDIES. Here it is ABSORPTION: the correction won, its substance is inline in the card, and the pin is correct about the object the correction was written against. A record of an act is SUPPOSED to name the object that act was about; its miss against a later HEAD is the pin working. So there is nothing to repin and nothing to disarm. \u26d4 AND THE PART THAT IS MINE TO OWN: I HAD THAT EXACT DISTINCTION IN THE DRAFT OF THIS ROW AND TOOK THE WRONG BRANCH OF IT. The draft carried hazard_standing ARMED with disarm_owner 2.0.0_SA_COO~G and a remedy of 'ONE LINE at the top of the correction file'. Two things are wrong with it. First, it put an EDIT on a record of an act, which is the same R-43 objection one notch weaker -- a pointer belongs in a mutable carrier, and S69 is that carrier. Second, and worse, IT MINTED A CLOCK ON ANOTHER SEAT FOR WORK THAT WAS ALREADY DONE: S69 was committed at 4e1a32b44e while I was measuring, and it names the correction file BY PATH precisely so a seat arriving at the correction first can find the story. \u2b50 THE CATCH IS THE TRANSFERABLE PART. My cut re-measures the held set at WRITE time and refuses if it moved -- built against a moved INDEX, the check-then-act window of Rule 14b. It fired on a moved CONCLUSION: the new row was not a collision, it was the row that reversed my verdict. A PRECONDITION RE-READ IS ALSO A RE-READ OF YOUR REASONS, and that is the only reason this row is not a clock on a peer for a thing they had already finished. COST: none -- the check was already there. NON-APPLICATION: a cut whose preconditions cannot express the thing that would change the verdict, where the re-read comes back clean and tells you nothing. (3) WHAT I DO NOT DO. I do not touch the correction file. I do not grade FWD-4: its ACCEPT is Andrew's personal read, the card's own closing line makes it APPLIED and not EXERCISED until he reads it, and no report stands in for that. LGIC_LGCTFM stays 8 of 10, HELD-AT-STOP, exactly as S67 says. \u26a0 AND THE DELIVERED BLOB OF RECORD IS NOW da2106bd3f, 6,154 bytes -- whoever grades FWD-4 grades against THAT, and if the card moves again before he reads it, this row's shape repeats.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git rev-parse <ref>:org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/ANDREW_CARD.md at HEAD 3143723f66 -- 554d1de05b and a5cef2724f -> 5a5f3e68bac86fe7d84c90ce42d16b0ceb5ddd5c; f3cfbabebb and HEAD -> da2106bd3f6ea9ba832dfce7dcbc984417ce66c7",
+   "git cat-file -s: 5a5f3e68 = 4635 bytes, da2106bd3f = 6154 bytes -- the two sizes S66/S67 quote, re-derived rather than carried",
+   "token test over both blobs: 'adjudication of record' and '662d53b793' present at HEAD and ABSENT in the delivered blob; 'T-0001' present in BOTH (negative control)",
+   "ANDREW_CARD_CORRECTION_20260918.md lines 6-8 at HEAD: R-40 pin to blob 5a5f3e68..., 4,635 bytes; line 3 cites the card @554d1de05b, which resolves to that same blob -- the file is internally consistent and stale only against today's HEAD",
+   "the same file's lines 10-14 already disclose the instrument trap beside the pin (git hash-object returns the same blob id, wc -c reports 4,696 under core.autocrlf) -- so the 4,696 figure in that file is a CRLF caveat and not a second pin",
+   "LGIC_LGCTFM-S69 @4e1a32b44e -- the pointer carrier, filed by PATH, which landed while this row was being measured and reversed its draft verdict; its 98626 quotation is INHERITED here because 98626 is not in this seat's inbox slice (209 of 209 read, max id 98618)",
+   "srg._open_tos_for_project('.', 'LGIC_LGCTFM') at write time: 0 open of 32, note empty -- no round carries these rows"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S42",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T18:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_LGCTFM-S68"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "S68 asked for the word rather than taking it, and this is it: W2-S2's UNIVERSAL is FALSE at HEAD and its SCHEMA half is TRUE, so the blocking claim closes and the residual graduates here as its own item -- EXERCISED, not inferred. \u26d4 And the reason it had no carrier is structural: W2-S2 already reads GRADUATED to every consumer BECAUSE AN ISSUER'S REMEDIATION ROW BEARS ITS ID, which is a transfer to nobody once the remedy closes only one of two halves.",
+ "spec_asserts": "LGIC_LGCTFM-S68 (2.0.0_SA_COO~G, 2026-09-20T17:29Z): 'The disposition owed is a GRADUATION of the blocking claim with the schema residual carried as its own item, and that is the word this row files rather than takes.' Its residual half is stated at its own declared grade: 'THAT RESIDUAL IS READ FROM SOURCE AND IS NOT EXERCISED: no run with the flag was made this tick, so it is INFERRED, not MEASURED.' W2-S2 asserted the universal 'SO NO REAL CONTRACT lib/opal_lgctfm.py PRODUCES CAN EVER VALIDATE AGAINST ITS OWN SCHEMA'.",
+ "world_is": "GRADED IN TWO HALVES BECAUSE THE ROW HAS TWO AND THEY HAVE OPPOSITE ANSWERS. HALF ONE -- THE UNIVERSAL IS FALSE AND ITS OWN CITED INSTANCE FALSIFIES IT. Validated all 6 contract.json under workflows/legacy_transform/ against org/standards/LGCTFM_CONTRACT.schema.json with jsonschema Draft7 at HEAD 3143723f66: 0 errors each, over 184/184/184/185/184/404 rows, and COGNITO_USER_POOL absent from the node_type set of every one. The row's OWN named instance, 20260917T202556Z-bb29248 -- which W2-S2 measured at 'schema errors: 1' on row index 184 -- now carries 184 rows and validates clean. That corroborates S68 on a second instrument (S68 read the guard in source; this is the validator run over the artifacts), and a universal falsified by the instance its own author chose is falsified as hard as it can be. HALF TWO -- THE SCHEMA RESIDUAL IS TRUE AND I EXERCISED IT RATHER THAN READING IT. The 8 enums in the schema were enumerated (denominator printed, not recalled): $defs/node_type is 33 values, contains S3Key, and does NOT contain COGNITO_USER_POOL. POSITIVE CONTROL, on the row's own named instance: flipping ONE existing row's node_type from CLOUDFRONT_DISTRIBUTION to COGNITO_USER_POOL takes the contract from 0 errors to exactly 1, at ['rows', 0]; restoring the original value returns it to 0. So the schema DOES reject the planted type -- measured, and the mutation is what moves it. The plant's other half is a source read and is stated as one: lib/opal_lgctfm.py :1410 guards the injection with `if getattr(args, \"plant_untypeable\", False):` and :1412 sets `untypeable_type = \"COGNITO_USER_POOL\"`, with :1397's own comment recording '33 of 33'. \u26a0 WHAT IS STILL NOT EXERCISED, NAMED SO NOBODY INHERITS IT AS MEASURED: I did not run a walk WITH --plant-untypeable end to end. The two halves are each measured and they compose by reading; the composition itself is INFERRED. WHY INERT RATHER THAN ARMED, which is the part that decides whether anyone owes a clock: the standing test is harm through the process's FUTURE NORMAL operation, and normal operation does not pass the flag -- 6 of 6 real contracts are clean, which is the same measurement that falsified half one. The flag exists ONLY to demonstrate that an untypeable resource is returned NOT_COVERED rather than dropped, so what survives is a diagnostic that defeats itself: the one run built to prove the engine handles an untypeable type produces a contract the schema refuses. \u26d4 IT RE-ARMS THE MOMENT THE FLAG REACHES A NON-DIAGNOSTIC PATH -- a scheduled run, a CI arm or a default flip -- and that is the condition to watch, not a date. \u26d4 AND THE STRUCTURAL FINDING, WHICH IS WHY THIS RESIDUAL WAS INVISIBLE RATHER THAN IGNORED. W2-S2 resolves to GRADUATED for every consumer of the gate's own resolver, and NOT because any CVO adjudicated it: srg._resolve_latest sets an item to GRADUATED whenever a REMEDIATION row bears its id, and the remediation row here is the ISSUER'S OWN -- disarm DISARMED / remediation REMEDIATED, both owner 2.0.0_SA_COO~G, at 2026-09-18T02:05Z. R-19 says an issuer's disarm is EVIDENCE, not a disposition; the resolver cannot express that distinction, so a half-remedy reads exactly like a full one. \u2b50 THE TELL IS NOT IN THE ROW, IT IS IN THE ARITHMETIC: a remedy that closes ONE of a row's TWO claims still flips the whole row closed, and nothing counts claims. The gate's own author found this shape already -- `_remediation_ids_for_project` exists precisely because 'both paths land on the identical string GRADUATED in latest, so nothing downstream of _resolve_latest can tell them apart' (S74's structural finding) -- so the discriminating read EXISTS and nothing in this channel's normal traffic calls it. COST of calling it: one census. NON-APPLICATION: a row carrying a single claim, where the remedy and the row are the same size.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "jsonschema Draft7 over 6 of 6 workflows/legacy_transform/*/*/contract.json at HEAD 3143723f66: 0 errors each; rows 184/184/184/185/184/404; COGNITO_USER_POOL in none",
+   "org/standards/LGCTFM_CONTRACT.schema.json: 8 enums enumerated; $defs/node_type n=33, S3Key True, COGNITO_USER_POOL False",
+   "POSITIVE CONTROL on 20260917T202556Z-bb29248 (W2-S2's own cited instance): rows[0].node_type CLOUDFRONT_DISTRIBUTION -> COGNITO_USER_POOL gives 1 error at ['rows', 0]; restoring returns 0",
+   "lib/opal_lgctfm.py :1397 comment '33 of 33', :1410 `if getattr(args, \"plant_untypeable\", False):`, :1412 `untypeable_type = \"COGNITO_USER_POOL\"` -- source read, stated as such",
+   "LGIC_LGCTFM-W2-S2 remediation row: disarm {state DISARMED, owner 2.0.0_SA_COO~G, at 2026-09-18T02:05Z}, remediation {state REMEDIATED, owner 2.0.0_SA_COO~G, round v1}; srg._latest_dispositions resolves W2-S2 to GRADUATED at HEAD",
+   ".tools/surprise-row-gate.py _resolve_latest -- 'for rid in remediation_ids: if rid in latest: latest[rid] = GRADUATED' -- and _remediation_ids_for_project's docstring naming the same indistinguishability (S74's structural finding)"
+  ]
+ }
+}
+```
