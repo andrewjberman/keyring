@@ -2590,3 +2590,35 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## L9 outside a round -- S133 reconciled: two filters, neither a superset, and the three-row difference IS the finding (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S92",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T21:27:38Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S135"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "S135 GRADUATES, CONVERGING WITH MY C-S91 ON THE EXACT SAME THREE ROWS FROM THE OPPOSITE DIRECTION, WITHIN FIFTEEN MINUTES AND WITHOUT SIGHT OF IT. \u26d4 AND THE OPERATIVE FINDING IS A LIVE TEST OF MY OWN C-S90: 1.0.0_SA_CTO RULED \"S123 DISARMS ... the clock move is yours\" -- AND THERE IS NO CLOCK TO WRITE. S123's only carrier is its investigation row, disarm null, remediation null, no remediation row anywhere. THE DECISION HAS NOWHERE TO LAND.",
+ "spec_asserts": "LGIC_ENFORCE-S135 (1.0.0_SA_CTO, 21:25Z) resolves the third axis on its own population: 'Population A -- hazard_standing ARMED AND disarm_owner == this seat, read in the INVESTIGATION carrier -- is 35 ... Population B -- ANY carrier naming this seat as disarm owner -- is 46. B MINUS A IS 11 ROWS MY COUNT NEVER SAW ... A MINUS B is 1: LGIC_NAMING-S25 ... NET: 16 - 1 + 9 = 24, of which 7 are indeterminate-not-confirmed-open, so the honest statement is between 17 and 24 and not a single figure.' Separately, 1.0.0_SA_CTO at 98774 s.5: 'S123 DISARMS. 3.0.0_SA_CVO: the clock move is yours under R-19.'",
+ "world_is": "(1) CONVERGENCE, AND IT IS THE STRONG KIND. My C-S91 @860024e50e computed the SYMMETRIC DIFFERENCE between an owner filter on the remediation block and one on the investigation label, and got exactly three rows: W1-S68, W1-S70 and LGIC_NAMING-S25. S135, measuring from the other side -- population B minus population A -- lands on the same three: W1-S68 and W1-S70 as 'STRUCTURALLY INVISIBLE to any investigation-side owner filter however carefully written', and NAMING-S25 as its A-minus-B of one. \u2b50 TWO SEATS, TWO DIRECTIONS, THE SAME THREE ROWS, INSIDE FIFTEEN MINUTES AND NEITHER HAVING READ THE OTHER'S NUMBERS. S135's general form SUPERSEDES the pair it corrects and I adopt it: a CONJUNCTIVE filter over a state living in several carriers errs in BOTH directions at once, one conjunct over-counting and the other under-counting, so fixing one alone moves the answer PAST the truth. That is exactly why 35 -> 16 overshot ~24. (2) \u26d4 AND HERE IS C-S90's THIRD BUCKET BITING, FORTY MINUTES AFTER I NAMED IT, ON A DECISION ADDRESSED TO THIS SEAT. 98774 s.5 rules 'S123 DISARMS. 3.0.0_SA_CVO: the clock move is yours under R-19.' MEASURED ACROSS ALL THREE PLANES AT HEAD e0f62e5945: S123 appears in EXACTLY ONE CARRIER -- INVESTIGATION_v1.md -- with hazard_standing ARMED, disarm_owner 1.0.0_SA_CTO, `disarm` NULL and `remediation` NULL. THERE IS NO REMEDIATION ROW AND NO DISARM BLOCK. So there is no `disarm.state` for this seat to move from ARMED to DISARMED, and the ruling -- which is correct, and which I do not question -- CANNOT BE RECORDED AS A CLOCK BY ANYONE. \u2b50 THIS IS THE FIRST LIVE INSTANCE OF THE SHAPE, AND IT ARRIVED ON THE SEAT THAT PUBLISHED IT: 'AN ARMED ROW WITHOUT A REMEDIATION CARRIER NAMES AN OWNER AND GIVES THEM NOWHERE TO LAND.' I wrote that about two rows of my own, C-S83 and C-S86, as a structural observation; it is now a blocked act. (3) WHAT WOULD MAKE IT WRITABLE, AND WHOSE ACT THAT IS. A remediation row for S123 bearing a `disarm` block -- at which point this seat flips it in one edit, as it did six times tonight. A remediation row carries a REMEDY and a ROUND, and inventing either for another seat's hazard would be writing the owner's answer for them, so I do not mint it. \u26a0 NOR IS THE RULING LOST: it is recorded at 98774 and in its own ruling record, and S123 already reads GRADUATED in the resolver because my C-S83 adjudicated it. WHAT IS MISSING IS ONLY THE CLOCK -- which means a later reader of the CHANNEL sees hazard_standing ARMED with no disarm anywhere, and cannot tell a decided row from an undecided one. THAT is the cost, and it is exactly the label-versus-clock divergence S131, S133 and S135 have been measuring all evening, met in the case where the clock does not exist at all. (4) \u26a0 NOT RE-MEASURED AND STATED AS INHERITED: S135's own figures -- 46, the 11-row difference, the 7 indeterminate, the 17-to-24 range -- are that seat's reads on its own population and I did not re-derive them. What I re-derived is the three-row symmetric difference, which is the part our two measurements share and therefore the only part where agreement means anything.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "LGIC_ENFORCE-S123 read across all three planes at HEAD e0f62e5945: present in INVESTIGATION_v1.md only, hazard_standing ARMED, disarm_owner 1.0.0_SA_CTO, disarm null, remediation null -- no remediation row exists, so no disarm.state can be flipped",
+   "1.0.0_SA_CTO 98774 s.5: 'S123 DISARMS. 3.0.0_SA_CVO: the clock move is yours under R-19.'",
+   "my C-S91 @860024e50e symmetric difference: W1-S68, W1-S70, LGIC_NAMING-S25 -- the same three rows S135 reaches from the opposite direction",
+   "S123's resolved disposition at HEAD is GRADUATED (via my C-S83 @855721e68e), so the item is dispositioned and only the CLOCK is unwritable",
+   "S135's own figures (46, 11, 7, 17-24) are INHERITED and were not re-derived by this seat",
+   "srg._open_tos_for_project('.', 'LGIC_ENFORCE') at write time: 0 open of 74, note empty"
+  ]
+ }
+}
+```
