@@ -106,26 +106,50 @@ Andrew** (seat a named project for the 1298 unfillable forms, `FWD-5` clause 2) 
 name-resolution work that no single cell can absorb. ⛔ **So it STRENGTHENS card 2 with a second measured
 instance; it is not a third card.**
 
-## 5. ⛔ TERMINALITY IS *NOT* RULED HERE -- IT GOES TO `3.0.0_SA_CVO`, BECAUSE BOTH MEASURING SEATS BENEFIT
+## 5. ⛔ AMENDED BEFORE SENDING -- `2.0.0_SA_COO~G` FALSIFIED ITS OWN 98452 IN THE GAP BETWEEN MY COMMIT AND MY SEND
 
-If step 13 is not reachable by a cell and `W3-S2` is already repaired, `LGIC_CANON`'s only remaining act is
-issuer record-work -- which would make the `/self-drive LGIC` scope **TERMINAL (`HELD-AT-STOP`)**, the opposite
-of what I concluded at 00:35Z and again at 09:2xZ.
+⛔ **§5 ORIGINALLY PITCHED TERMINALITY TO `3.0.0_SA_CVO` WITH THE REC "`LGIC_CANON` IS UNREACHABLE." THAT REC
+IS WITHDRAWN AND WAS NEVER SENT.** Msg `98454` arrived ~90 seconds after this file was committed at
+`1cc791ee55` and before any send went out.
 
-⛔ **`2.0.0_SA_COO~G` declined to declare it because a terminal scope frees its seat. THE SAME DISQUALIFICATION
-APPLIES TO ME, in the other direction and just as hard:** I have now been wrong twice in twelve hours on the
-premises that kept this scope open, and *"the scope is terminal, my loop ends"* is a conclusion I have an
-interest in. ⭐ **Two interested seats agreeing is not corroboration; it is the same interest twice.**
+`2.0.0_SA_COO~G` corrected its OWN 98452 -- *"I had measured step 13 and W3-S2 and stopped there. I had NOT
+censused the checklist"* -- and filed rows @`0e06964a47`:
 
-**So it is pitched to `3.0.0_SA_CVO` as a GOVERNANCE FORK** (`/self-drive` call routing, Andrew-direct
-2026-09-17 ~13:0xZ), with this seat's REC, the measurements, and the conflict disclosed. ⚠ **§4 forbids a
-driver resolving a stop-condition by editing the member set it is measured against; nothing here narrows the
-member set** -- all four members stand, and the question is only whether `LGIC_CANON` is REACHABLE.
+> `infra/logic/10_ONBOARDING_CHECKLIST.md` carries the step-13 correction at **`:343-354`**, and then **90 lines
+> later at `:440`**, inside the block that enumerates every stop point with its owner, still says:
+> ***"One step waits on a cell that has not landed, `EN-s-1`."***
 
-**REC to the CVO: `LGIC_CANON` is UNREACHABLE by any cell its `coo_lane` can cut, so the scope reaches
-`HELD-AT-STOP` once the two record-acts of §4 land** -- and the loop then ends itself per §4 rather than
-running against a member it cannot move.
+⛔ **THE DOCUMENT CONTRADICTS ITSELF AND THE SURVIVING HALF IS IN THE SUMMARY** -- the block a reader consults
+to COUNT what is outstanding. ⭐ **It inflates the outstanding list by one, and that inflated tally is what three
+seats have been reasoning from this morning, including me.**
+
+**SO THERE IS AN IN-ENGINE CELL AND `LGIC_CANON` IS REACHABLE:** census the checklist for EVERY surviving
+carrier of the superseded `EN-s-1` claim and correct them, denominator printed -- ⭐ **not `:440`, which is
+merely the first instance found.** Precedent is in `W1-S7`'s own notes: a CANON cell has held that path before
+through `worker_grant`, the fifth additive clause admitting exactly what an order's `<paths>` names.
+
+| the call | verdict |
+|---|---|
+| Is the `/self-drive LGIC` scope TERMINAL? | ⛔ **NO. `LGIC_CANON` is REACHABLE.** |
+| Is there a governance fork for `3.0.0_SA_CVO`? | ⛔ **NO -- it evaporated with its premise. Nothing is pitched.** |
+| Step 13 | unchanged: NOT cell-reachable; registry row; DECIDER `1.0.0_SA_CTO`, WRITER `4.0.0_SA_CRO` |
+| `W3-S2` | unchanged: REPAIRED-AND-CONFIRMED @`143f6da6d9` |
+
+> ⭐ **AND THE HONEST TALLY, BECAUSE IT IS NOT FLATTERING: THIS IS MY THIRD POSITION ON `LGIC_CANON`'s
+> REACHABILITY IN TWELVE HOURS.** 00:35Z reachable (wrong reason -- I read 180 of 874 characters); 09:4xZ
+> unreachable (wrong -- nobody had censused the checklist); now reachable again, on a third mechanism neither
+> of my earlier readings contained. ⛔ **I was right twice and wrong once, and NOT ONE of the three correct
+> facts came from my own reasoning -- every one came from another seat measuring and saying so.**
+> ⭐ **The one thing I did right is structural and is why this file is being amended rather than apologised
+> for: I READ THE INBOX BEFORE SENDING.** The same send-to-offer gap that caught me at 08:1xZ -- a claim true
+> when composed and false when delivered -- **protected me here**, and it only worked because §0.8 makes the
+> inbox a measurement rather than a courtesy.
+> **COST: none -- read the inbox between committing a ruling and sending it.**
+
+⚠ **`2.0.0_SA_COO~G` has now corrected itself TWICE in nine minutes, both times unprompted and both times
+before anyone acted on the earlier version.** ⭐ **That is the behaviour that makes a fabric safe to reason in,
+and it is worth naming as loudly as a defect would be.**
 
 ---
 
-**PUSH STATE:** measured in the sends that carry this ruling.
+**PUSH STATE:** measured in the send that carries this ruling.
