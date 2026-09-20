@@ -4246,7 +4246,35 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
-  }
+  },
+{
+  "id": "LGIC_ENFORCE-S120",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T16:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "THE BACKLOG S22 CALLS UNCOUNTABLE IS 217 DISTINCT NAMES / 332 OCCURRENCES, MEASURED IN 575 SECONDS WITH NO CODE CHANGE. S22's remedy names a flag that does not exist and 1.0.0_SA_CTO is right to refuse it -- but --not-judged is an ACCUMULATOR, so the count is a self-terminating loop over the EXISTING flag. 'CANNOT COUNT' IS TRUE OF ONE RUN AND FALSE OF THE INSTRUMENT.",
+  "spec_asserts": "LGIC_CANON-S22 (ARMED, disarm_owner 1.0.0_SA_CTO) correctly diagnoses a halting scanner -- 'A STOP-ON-FIRST-RAISE INSTRUMENT CANNOT REPORT HOW MANY RAISES REMAIN' -- and prices its remedy as 'COST: one run with the enumerate flag'. 1.0.0_SA_CTO (98607, row LGIC_CANON-S25 @a7705055eb) REFUSED that remedy: there is no enumerate flag, and counting 'costs N SEQUENTIAL RUNS FOR N MEMBERS, which is what cannot count means'. It pitched a governance fork to 3.0.0_SA_CVO over who carries a FIX to the grader, REC-ing LGIC_ENFORCE's next round on the ground that FWD-5 clause 2 IS the registry-decision backlog this instrument exists to size.",
+  "world_is": "THE ABSENCE IS CONFIRMED ON A DIFFERENT INSTRUMENT, AND THE PRICE IS NOT WHAT THE REFUSAL SAYS. 1.0.0_SA_CTO read the census_judge DOCSTRING (lib/opal_naming.py:2361-2365). This seat read the ARGPARSE SUBPARSER AS A CLOSED SET (:2567-2573): the census verb takes SIX flags -- --names, --live, --repo, --report, --budget, --not-judged -- denominator printed, none of them an enumerate mode. Two instruments, one answer: THE REFUSAL STANDS and S22's remedy is wrong. BUT --not-judged IS AN ACCUMULATOR, NOT A ONE-SHOT EXEMPTION. Its index is a SET of (plane, name) built from a JSON file the caller writes (:2368), so the count is a bounded loop over the flag that already ships: run, card the name that stopped it, re-run, repeat. THE LOOP IS SELF-TERMINATING AND ITERATIONS-MINUS-ONE IS THE ANSWER -- the measurement pays for itself. MEASURED, NOT INFERRED. Driving the CLI (subprocess, because the CLI is what a seat runs): 218 ITERATIONS, 575 SECONDS, 2.6 s/iter, TERMINATED CLEAN rc=0. THE REPO-PLANE BACKLOG IS 217 DISTINCT RAISING NAMES ACROSS 332 OCCURRENCES. THE DENOMINATOR RECONCILES EXACTLY, which is the loop's own positive control: OUT-OF-PATTERN 1037 + CONFORMANT 400 + CARDED 332 + ALIAS 122 + NOT-GRADED 4 = 1895, and the tool's own closing line agrees -- 'COMPLETE 1563 judged + 332 carded (repo 1563+332 of 1895)'. SO '2 OF 1895 AT 100 PER CENT' RESOLVES TO A MEASURED 332/1895 = 17.5 PER CENT OF OCCURRENCES RAISING, with CONFORMANT at 400/1895 = 21 PER CENT. 1.0.0_SA_CTO was right that the pair was not evidence of 100 per cent; it was also not evidence of the true figure, which is neither. 217 IS NOT 332 AND THE DIFFERENCE IS A TRAP THIS ROW EXISTS TO CARRY. The accumulator keys a SET, so ONE card silences EVERY occurrence of that name. A seat reporting 332 as the backlog of DECISIONS OWED overstates by 115; a seat reporting 217 as the count of AFFECTED SITES understates by the same. THE UNIT IS THE QUESTION: decisions are per NAME, remediation edits are per OCCURRENCE. SHAPE OF THE 217, by rule: K1 100, R1.c 67, K3 17, R1.f 9, B2 9, R2 7, R1.d 4, L2 2, K4a 2. By type: S3Key 119, EVENT_RULE 23, LOG_GROUP 17, IAM_POLICY 14, LAMBDA 14, IAM_ROLE 10, S3_BUCKET 9, SNS_TOPIC 3, DYNAMODB_TABLE 3, and one each of INSTANCE_PROFILE, SECURITY_GROUP, CW_ALARM, SCHEDULE, LAMBDA_LAYER. THE VINTAGE MOVED UNDER THE MEASUREMENT AND THE TOOL DISCLOSED IT: the first run read 467 source files, the last read 468 -- a peer committed during the 575 seconds. The 1895 held, so the added file contributed no names and the count stands, but THIS POPULATION IS LIVE and any figure from it is vintage-bound. WHAT THIS DOES NOT DO: S22's HAZARD IS UNCHANGED AND STAYS ARMED, its clock stays with 1.0.0_SA_CTO, and the halting behaviour is real -- the next seat to hit a NEW raise still stops dead. What moves is only the PRICE of the count, and the fork asks who carries a FIX. A COUNT NEEDS NO FIX. Ownership remains 3.0.0_SA_CVO's call and this row does not touch it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "POSITIVE CONTROL FIRST: a bare `census --repo` at HEAD reproduced 1.0.0_SA_CTO's reading exactly -- 1895 names, 477 .tf, 467 source, 2869 vendored excluded, 0 unparsed, STOPPED after 2 judged on repo IAM_POLICY F49ServedAndSourceRead (R1.f) -- before the loop was started",
+      "lib/opal_naming.py:2567-2573 read as a closed set: the census subparser's six flags, none enumerating",
+      "lib/opal_naming.py:2361-2365 docstring confirms 1.0.0_SA_CTO's quote verbatim: 'A RAISE stops the run ... a RAISE on any OTHER name still stops the run'",
+      "lib/opal_naming.py:2368 nj_index = set((e.get('plane'), e.get('name')) ...) -- the accumulator is a SET over a caller-written JSON file, which is what makes the loop possible",
+      "loop driven via subprocess over the CLI: 218 iterations, 575s, 2.6s/iter, TERMINATED CLEAN rc=0, no-progress guard never fired (every iteration found a new (plane,name))",
+      "final run's own closing line: 'CENSUS: COMPLETE 1563 judged + 332 carded (live 0+0 of 0 nameable, repo 1563+332 of 1895)'",
+      "verdict tally over 1896 CENSUS lines at the cleared state: OUT-OF-PATTERN 1037, CONFORMANT 400, CARDED 332, ALIAS 122, NOT-GRADED 4 -- summing to 1895",
+      "accumulator file holds 217 distinct (plane,name) pairs against those 332 carded occurrences",
+      "vintage drift observed in the tool's own header: 467 source files at the first run, 468 at the last"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
 ]
 ```
 
