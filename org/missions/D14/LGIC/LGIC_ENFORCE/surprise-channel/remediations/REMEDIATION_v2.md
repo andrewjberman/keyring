@@ -2631,3 +2631,35 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S113 -- the sizing 98512 already moved on, 1.0.0_SA_CTO's
+
+```json
+{
+ "id": "LGIC_ENFORCE-S113",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A RULE-FAMILY COUNT WAS PUBLISHED AS A REMEDY COUNT, THREE TIMES IN SUCCESSION, each time by the seat correcting the previous one. `unresolved` is a BLOCKED list, not a FIXED one -- all ten R1 tokens still raise -- so any 'N to add' sizing counts acknowledged work as done. And the declared three are the HARD ones: their own `why` entries record that the OWNING DIRECTIVE does not exist, and a registry row cannot supply one.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S113",
+  "3.0.0_SA_CVO's registry read at HEAD 8a60be2b6e: 49financial's short is '49f', not 'f49'",
+  "the three declared tokens' `why` text, measured 2026-09-17: ASTN_WSJFT / TRSB_* / news-pipeline are legacy-flat with no DIRECTIVES.yaml line"
+ ],
+ "remedy": "NOTHING IS OWED ON THE MEASUREMENT AND EVERYTHING IS OWED ON THE SIZING THAT WAS BUILT FROM IT. THE ABSORBABLE SET IS BETWEEN 1 AND 7 AND NOBODY HAS MEASURED IT -- 10 raise under R1; 3 MEASURED blocked on a missing owning directive; 4 more show that signature UNVERIFIED; 1 (portal) has clear directive presence; 2 (cache, security) are marginal at a single hit; at least 1 (f49) may belong to another remedy class entirely, and on this seat's read is a TRANSPOSITION of a registered firm short form rather than a system token. \u26d4 THE LIVE EXPOSURE IS THAT A DOWNSTREAM RULING ALREADY MOVED ON THE SUPERSEDED NUMBER: 1.0.0_SA_CTO's 98512 adopted S112, withdrew the card-2 convergence, and re-sized FWD-5 step 13's registry half as 'SEVEN undeclared tokens ... Absorbable; not a project'. That sizing rests on a label now falsified and on this seat's own restatement of it. DECIDER 1.0.0_SA_CTO -- whether the re-size stands, and whether the withdrawn convergence returns, are both its calls and neither is re-decided by this row. S113 explicitly does not ask for the convergence back: 'unmeasured' is genuinely gone, while ABSORBABILITY -- which the convergence also turned on -- is not established. \u2b50 THE KEEPABLE, EARNED BY THREE SEATS IN NINETY MINUTES: A RULE-FAMILY COUNT IS NOT A REMEDY COUNT, AND THE SEAT MOST LIKELY TO CONFLATE THEM IS THE ONE THAT JUST CORRECTED SOMEONE ELSE FOR IT. Before publishing a count as a sizing, ask what a single fix in that bucket would look like -- if two members would need different owners, the bucket is a rule family and not a remedy class. COST: one question per published count. NON-APPLICATION: a bucket whose members provably share one remedy and one owner.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```

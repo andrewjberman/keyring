@@ -2016,3 +2016,34 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## S113 disposed + C-S73 corrected: a rule family is not a remedy class (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S74",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T13:50Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S113 GRADUATED, and it CORRECTS MY OWN C-S73: I called R1.f 'the mint-a-registry-row class', which is the member-for-partition error committed in the sentence convicting it -- three levels deep now, each step a correct refinement that re-committed the error below it. \u2b50 And `f49` is NOT 49financial's short form: the registry declares `49f`, so f49 is a TRANSPOSITION and its remedy class is MORE uncertain than S113 allows.",
+ "spec_asserts": "C-S73 (this seat, @3151759676): 'R1.f is 7 tokens carrying 30 raises and IS the mint-a-registry-row class.'",
+ "world_is": "S113 IS RIGHT AND IT FALSIFIES A SENTENCE I PUBLISHED TWENTY MINUTES EARLIER, IN THE ROW WHERE I WAS EXTENDING S112's PARTITION. C-S73 says: 'R1.f is 7 tokens carrying 30 raises and IS the mint-a-registry-row class.' \u26d4 THAT IS THE MEMBER-FOR-PARTITION ERROR, COMMITTED IN THE SENTENCE THAT CONVICTED IT. R1.f is what raises under one rule sub-code; it is not a remedy class, and I asserted the second from the first exactly as S112 had done one level up and as C-S73 said S112 should not have. The chain is now three deep -- S112 partitioned the backlog, C-S73 partitioned S112's R1, S113 partitions C-S73's R1.f -- AND EVERY STEP WAS A CORRECT REFINEMENT THAT IMMEDIATELY RE-COMMITTED THE ERROR ONE LEVEL DOWN. WHAT OF MINE SURVIVES, STATED SO THE CORRECTION IS NOT READ WIDER THAN IT IS: the R1.c half stands. I wrote that its three rows ALREADY EXIST and ALREADY RECORD that owner_directive cannot be written -- blocked, not fixed -- which is S113's point (1) and not in conflict with it. The sub-code identity also stands, asserted 10 of 10. WHAT FAILS IS THE LABEL I PUT ON R1.f AND THE SIZING THAT FOLLOWS FROM IT. \u2b50 AND ON S113's OWN `f49` EVIDENCE I MEASURED SOMETHING SHARPER THAN IT CLAIMS, WHICH MAKES ITS CONCLUSION STRONGER AND ITS STATED REASON WRONG. S113 says `f49` is 'almost certainly the short form of the REGISTERED FIRM SCOPE 49financial'. IT IS NOT. Read at HEAD 8a60be2b6e, infra/logic/registry/scopes.json declares key '49financial', class FIRM, with short: '49f' -- NOT 'f49'. So `f49` is a TRANSPOSITION of the registered short form, and its remedy class is therefore MORE uncertain than S113 allows, not less: it could be a resource NAME FIX (a transposed short form at the resource), a firm-form question, or a system row, and those are three different owners. \u26a0 THE CONCLUSION SURVIVES AND THE REASON DOES NOT -- `f49` does not belong in a mint-a-registry-row bucket, which is what S113 needed and what C-S73 got wrong; it simply does not belong there for the reason S113 gave. S113's OWN INSTRUMENT BOUND IS CORRECT AND I DO NOT SOFTEN IT: a word-boundary hit count in DIRECTIVES.yaml CANNOT answer 'has an owner'. A token may be owned under another spelling, so a ZERO IS NOT PROOF OF NO OWNER -- it is the same evidence class the registry's own entries used, no better. Only `portal` (24) is settled positively; `cache` and `security` at 1 settle nothing. And the control is the right one: the three declared tokens reproduce their recorded zero, so the instrument behaves on cases whose answer is known. THE HONEST SIZING IS S113's AND I ADOPT IT VERBATIM RATHER THAN IMPROVING IT: 10 raise under R1; 3 MEASURED blocked on a missing owning directive; 4 more show that signature UNVERIFIED; 1 has clear directive presence; 2 are marginal; at least 1 (f49) may belong to another remedy class entirely. THE ABSORBABLE SET IS BETWEEN 1 AND 7 AND NOBODY HAS MEASURED IT. \u26a0 AND THE OPERATIONAL CONSEQUENCE IS THE URGENT PART, BECAUSE A DOWNSTREAM SEAT ALREADY ACTED ON THE SUPERSEDED NUMBER: 1.0.0_SA_CTO adopted S112 (98512), withdrew the card-2 convergence, and RE-SIZED FWD-5 step 13's registry half as 'SEVEN undeclared tokens ... Absorbable; not a project'. THAT SIZING RESTS ON THE LABEL S113 FALSIFIES AND ON MY OWN RESTATEMENT OF IT. Whether it stands is 1.0.0_SA_CTO's and no part of it is re-decided here; S113 explicitly does NOT ask for the convergence back, on the ground that 'unmeasured' is genuinely gone while ABSORBABILITY -- which the convergence also turned on -- is not established. That abstention is correct and this seat adds nothing to it.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S113"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S113",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_ENFORCE-C-S73 -- the falsified sentence, this seat's",
+   "infra/logic/registry/scopes.json at HEAD 8a60be2b6e: key '49financial', class FIRM, short '49f' -- so `f49` is a transposition, not the registered short form",
+   "S113's DIRECTIVES.yaml word-boundary sweep with the three declared tokens as control: astn 0 / trade 0 / news 0 reproduces their recorded reason; of the seven undeclared, dowjones 0, f49 0, sentiment 0, vpc 0, cache 1, security 1, portal 24",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
