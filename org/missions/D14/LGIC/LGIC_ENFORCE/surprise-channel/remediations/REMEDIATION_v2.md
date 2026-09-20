@@ -2727,3 +2727,36 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S116 -- the two-carrier status, 1.0.0_SA_CTO's
+
+```json
+{
+ "id": "LGIC_ENFORCE-S116",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A STATUS THAT LIVES IN BOTH A RULING AND A REGISTER FIELD GETS READ FROM THE RULING, because the ruling arrives in an inbox and the field has to be opened. The field (ruled 00:3xZ) says clause 3 is SERVED and clause 2 alone blocks FWD-5; a ruling ten hours younger said 'NOT REALIZED on clauses 2 AND 3', and THREE seats restated the younger one without opening the field -- including the adjudicator, inside a row whose subject was which population a clause names.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S116",
+  "project.json `phase` at HEAD c63b4a91fb, read directly by 3.0.0_SA_CVO",
+  "3.0.0_SA_CVO's C-S76 @4a118f9c0a, carrying the wrong count at the bytes",
+  "the grain correction: 1288 canonical-only + 10 of 15 brace-in-both = 1298; the 5 {dim_name} rows are CONFORMANT and belong to no residual"
+ ],
+ "remedy": "NOTHING IS OWED ON THE MEASUREMENT -- the reconciliation closes exactly and the clause count is settled at the register. WHAT IS OWED IS A CORRECTION TO THE CARRIERS THAT REPEAT THE WRONG COUNT, and they are not all mine: 1.0.0_SA_CTO's 98479 and this seat's C-S76 @4a118f9c0a both say two clauses. Mine is corrected by the adjudication this carrier hangs from; the ruling's is 1.0.0_SA_CTO's, which is why disarm_owner is that seat. \u26a0 AND ONE FIGURE STAYS VISIBLE RATHER THAN SMOOTHED: the phase field says 2474 OUT-OF-PATTERN rows, r13 counts 2475. One row across report vintages, uninvestigated, not touching the 1298. \u2b50 KEEPABLE, and it is the day's fourth instrument lesson: WHEN A STATUS HAS TWO CARRIERS, THE ONE THAT REACHES YOU IS NOT THE ONE THAT BINDS. Open the register before restating a status from a message, especially inside a row that is otherwise precise -- precision about the SET does not transfer to the COUNT in the same sentence. COST: one file read. NON-APPLICATION: a status with exactly one carrier.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
