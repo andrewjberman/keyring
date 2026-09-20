@@ -7412,3 +7412,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "NOT A DEFECT OF NEVER-2 OR safe-apply.sh -- no apply happened anywhere in this observation, and Terraform's OWN plan is exactly the read-only comparison it is supposed to be. THE GAP is that a worker's never-widen packet (this order's arm (c) genre) can read 'the other roots are clean' as evidence of ISOLATION when a live multi-worker round means that read's DENOMINATOR (which roots are genuinely untouched) can shift between two reads for reasons that have nothing to do with the act being packeted. OFFERED FOR THE ROUND, not claimed as measured beyond this session: whether this is already known/accepted practice for round 7's parallel cells, or whether a packet's 'other roots' section should name this explicitly whenever a round runs >1 worker concurrently. DISARM CONDITION: a ruling or a doctrine note states whether/how a never-widen packet's 'other roots re-taken' evidence should be qualified during a multi-worker round, OR this class of read is shown to already be handled some other way this row did not find."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W4-S47",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+  "surfaced_at": "2026-09-20T18:13:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "one_line": "ARM (d)'S FRESH 10-ROOT TERRAFORM PLAN CANNOT RUN: THE BOX'S C: DRIVE IS AT 0 BYTES FREE (238G/238G USED), SO `terraform init` FAILS 'No space left on device' ON EVERY ROOT NOT ALREADY FULLY INITIALIZED -- INCLUDING THE HOLDINGS ROOT ITSELF -- AND THE HOLDINGS APPLY CANNOT PROCEED",
+  "spec_asserts": "This order's arm (d), step 3: 'FRESH 10-ROOT PLAN (never a saved plan): for each investor-reporting root ... run `.tools/terraform.exe -chdir=... init` (if needed) then `plan -out` ... PER ROOT.' The premise is that a fresh init/plan is an available act on this box.",
+  "world_is": "`Get-PSDrive C` (powershell.exe, this run) reads Used=254803963904 bytes, Free=0 bytes -- a literal zero, not a low-but-nonzero figure -- on the ONLY filesystem this box exposes (`git bash df -h` and `Get-PSDrive -PSProvider FileSystem` both show a single C: volume; TEMP/TMP also resolve under C:\\Users\\ANDREW~1\\AppData\\Local\\Temp). Running `terraform.exe -chdir=infra/aws/terraform/investor-reporting/<root> init` this run failed with 'no space left on device' partway through provider install/module init for every root lacking a prior, complete `.terraform/` directory in THIS worktree: directory, holdings, intake, narrative, ops, performance, ycharts all failed; api/core/export left PARTIAL, corrupted `.terraform/` trees from this same attempt (init logs truncate mid-step: 'Initializing provider plugins... Installing hashicorp/aws v5.100.0...' for api, 'Initializing the backend...' alone for core, 'Initializing modules...' alone for export -- none completed). TF_PLUGIN_CACHE_DIR is already set (C:\\Users\\AndrewBerman\\.terraform.d\\plugin-cache), so provider install should hardlink rather than copy, and the failure at literal ZERO free bytes means even a few bytes of new state/lock-file write fails -- there is no in-lane way to reduce the write further. HOLDINGS ITSELF has no prior `.terraform/` in this worktree, so the one root this order must apply cannot even be planned, let alone applied, under the current disk state. A sibling first-pass worktree (`/c/tmp/wk-irpt-7-4`) still carries a previously-initialized holdings `.terraform/`, but reusing another worktree's local (gitignored, untracked) init state is outside this worker's own worktree and was not attempted, since the disk condition is a box-wide resource exhaustion this worker's <paths> grant gives it no authority or mechanism to remedy (no critical_paths/ ownership over disk capacity, and CLAUDE.md's own guidance is to STOP and row a missing capability rather than reconstruct/work around the environment to force an order through).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "powershell.exe -NoProfile -Command \"Get-PSDrive C | Select-Object Used,Free\" this run: Used=254803963904, Free=0",
+      "powershell.exe -NoProfile -Command \"Get-PSDrive -PSProvider FileSystem | Format-Table -AutoSize\" this run: single row, C, Used(GB)=237.30, Free(GB)=0.00",
+      ".tools/terraform.exe -chdir=infra/aws/terraform/investor-reporting/directory init (this run): bash reported 'No space left on device' writing the init LOG file for directory/holdings/intake before terraform's own stdout/stderr could even be captured",
+      ".scratch/rtg4_plans/{api,core,export}_init.txt (this run): each truncates mid-step with no completion line, consistent with the same exhaustion hitting those three roots' init a few writes further in",
+      "this run: this worktree's holdings/.terraform absent (ls -d rc!=0); /c/tmp/wk-irpt-7-4/infra/aws/terraform/investor-reporting/holdings/.terraform present (from the first pass, a DIFFERENT worktree, untouched this pass)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "STOP taken per CLAUDE.md's own guidance (do not rebuild/reconstruct the environment to force an order through; a capability that is missing is a BLOCKING row, not an override): no apply was attempted; the change-management ledger entry opened before this discovery (org/critical_paths/.open_deploys/irpt-bckend-ib-rtg-4-apply.json, commit 1e59319d1a) is left OPEN -- a `hold` was attempted and the tool correctly REFUSED it ('a half-landed deploy cannot be HELD (stays RED)'), since leg L1 is genuinely unstarted, not paused mid-apply; OPEN, eventually RED via `deploy_ledger.py check --red`, is the correct signal for 'blocked, needs attention', not a quiet HELD. DISARM CONDITION: the box's C: drive has nonzero free space and a fresh `terraform init` on the holdings root completes without a disk-space error, at which point this worker's next pass (or a successor) re-runs arm (d) from the top. disarm_owner is 0.0.0_AB_MSTR as the only seat positioned to address box-wide disk capacity across every live worktree/session on this device; this is NOT a request to widen this order -- the remedy (freeing disk) is squarely outside this order's <paths> and this worker's authority."
+}
+```
