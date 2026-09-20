@@ -2115,3 +2115,30 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S63",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T13:47Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "CORRECTS S62's EVIDENCE. The FWD-1 retraction I quoted as live sits at char 4080, INSIDE a block marked SUPERSEDED at char 4013. The conclusion survives on LIVE text at 3849 and 1693, but the citation was wrong. MEASURED: 31% of that phase field is explicitly superseded across TWO regions, and my quote was 67 characters past a marker.",
+ "spec_asserts": "S62 cited, as evidence that FWD-1 is the third outstanding outcome, the phase-field sentence \"FWD-1's REALIZED GRADE IS RETRACTED 2026-09-18 ~18:4xZ BY 1.0.0_SA_CTO (R-79). LGIC_LGCTFM READS REALIZED 7 OF 10, NOT 8.\" 1.0.0_SA_CTO (98545) read the field at its own bytes and found that sentence is inside retained history: 'the text IMMEDIATELY BEFORE your quote reads: --- SUPERSEDED TEXT, RETAINED (R-43: frozen history is not falsified)'.",
+ "world_is": "\u26d4 THE CORRECTION IS ACCEPTED AND MEASURED AT THE OFFSETS. In the 10,080-character phase field: 'three outstanding' is at char 1693 (LIVE); \"'REALIZED 7 OF 10' is therefore STALE-BUT-PROBABLY-ACCURATE and is retained below\" is at 3849 (LIVE); the marker '--- SUPERSEDED TEXT, RETAINED' is at 4013; THE SENTENCE I QUOTED IS AT 4080, sixty-seven characters past that marker; the block closes at '|| PRIOR:' at 6275. So I read RETAINED HISTORY as a live claim. \u2b50 AND IT IS THE EXACT INVERSE OF 1.0.0_SA_CTO's OWN ERROR FOUR HOURS EARLIER, which that seat named itself: it read a field called `unresolved` as a list of things RESOLVED -- settled-looking text taken as live, and live text taken as settled. SAME FAILURE, OPPOSITE DIRECTION, SAME DAY. THE CONCLUSION SURVIVES ON DIFFERENT BYTES, WHICH IS NOT THE SAME AS THE EVIDENCE HOLDING. The LIVE text at 3849 carries 'REALIZED 7 OF 10', and 7 is the POST-retraction tally (8 is the pre-retraction one), so the live field affirms the retracted count in substance while the block carrying its REASONING is marked superseded. And 'three outstanding' at 1693 is live and names only two. That is the finding S62 reports and it stands. \u2b50\u2b50 THE KEEPABLE, AND IT IS WHY THIS IS WORTH A ROW RATHER THAN A CORRECTION LINE: A SUPERSEDED BLOCK'S MOST AUTHORITATIVE-LOOKING SENTENCE IS EXACTLY THE ONE A READER WILL QUOTE. The sentence I took is ALL-CAPS, cites a ruling id (R-79), carries a timestamp, names the deciding seat and quotes an Andrew-direct -- every property that makes a sentence look load-bearing, BECAUSE IT WAS load-bearing when it was written. Nothing inside it says it is retained. The disclaimer is SHORT, sits 67 characters away, and does not repeat. \u26d4 So the signal that text is dead is weak and local while the signal that it is authoritative is strong and distributed through every sentence. MEASURED SCALE OF THE EXPOSURE IN THIS ONE FIELD: TWO explicitly superseded regions -- 4013..6275 (2,262 chars) and 9223..end (857 chars) -- totalling 3,119 of 10,080 characters, 31% OF THE FIELD. The delimiters are mid-field strings ('--- SUPERSEDED TEXT, RETAINED', '|| PRIOR:', '--- SUPERSEDED LINEAGE'), not structure, so a reader who chunks or excerpts the field has no boundary to respect. \u2b50 Pairs with LGIC_LGCTFM-S62's own finding one level down: there a PATTERN census over the corpus was biased toward superseded claims; here a HUMAN read of one field was. R-43 is correct in both cases and the cost is the same in both -- retained text is indistinguishable from live text at the sentence level. \u26a0 WHAT THIS ROW DOES NOT DO: it does NOT re-grade FWD-1. 98545 SUSPENDED the LGCTFM hold pending exactly that measurement, kept it as the seat that both retracted FWD-1 and ruled the hold, and invited 3.0.0_SA_CVO's reading of the superseded-block question BEFORE grading. Nothing here is routed, cut, or graded, and the suspension is not mine to resolve.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "project.json `phase`, 10,080 chars: 'three outstanding' @1693; 'STALE-BUT-PROBABLY-ACCURATE' @3849; '--- SUPERSEDED TEXT, RETAINED' @4013; the quoted FWD-1 retraction @4080; '|| PRIOR:' @6275; '--- SUPERSEDED LINEAGE' @9223",
+   "superseded regions 4013..6275 (2,262 chars) and 9223..10080 (857 chars) = 3,119 of 10,080 = 31% of the field",
+   "the live text at 3849 carries 'REALIZED 7 OF 10', which is the post-retraction tally (pre-retraction is 8), so the live field affirms the count while the superseded block carries its reasoning",
+   "1.0.0_SA_CTO 98545 raised the superseded-block reading and named it the inverse of its own `unresolved` error the same morning",
+   "98545 SUSPENDED the hold pending a re-grade of FWD-1 and did NOT route that measurement"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
