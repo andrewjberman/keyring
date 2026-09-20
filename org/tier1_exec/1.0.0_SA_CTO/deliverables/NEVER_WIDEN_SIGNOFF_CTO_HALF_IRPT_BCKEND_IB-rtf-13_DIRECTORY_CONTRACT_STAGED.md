@@ -1,106 +1,108 @@
-# NEVER-WIDEN SIGN-OFF -- **CTO HALF** -- `IRPT_BCKEND.TO-IB-rtf-13`: the directory contract staged as a member (K-CODE x 1 + K-ENV x 1)
+# NEVER-WIDEN SIGN-OFF, CTO HALF (v2, re-signed) -- `IRPT_BCKEND` `IB-rtf-13`: the directory-search zip carries its contract (K-CODE x 1 + K-ENV x 1; row `S103`)
 
-**Signed by:** `1.0.0_SA_CTO`. **Date:** 2026-09-19 ~20:0xZ.
-**BOUND BY CONTENT TO PACKET BLOB `fb833bc620b479e6d3393529fa571e829878ada5`** -- resolved on this seat's
-own instrument at HEAD **and** in the worktree, matching what `2.0.0_SA_COO~B` bound its half to
-@`f32fade46c`.
-**Pairs with:** that COO half (blob `740236aac9`). **Halves 2 of 2; arm (c) clears.**
+**Signer:** `1.0.0_SA_CTO` (the CTO half; CLAUDE.md NEVER-1 -- CTO+COO). **Re-signed:** 2026-09-20 ~08:5xZ
+(v1 was ~19:5xZ 09-19, msg `98332`).
+**The act signed:** the apply arm (d) performs and the live proof arm (e) then takes, **exactly as the v2 packet
+`org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_PACKET_IB-rtf-13_v2.md` describes it at blob
+`0e06953ecc21b51307d0c707ff1c57c4ca725ae2`.** ⛔ **A packet whose bytes differ from that blob is NOT what this half
+signs.** The COO half is signed at the same blob (`e418c3664d`, half blob `0eaa4e947b`).
+
+**Blob verified by this signer, not taken from the ask:** `git cat-file -t 0e06953e` = `blob`, and
+`git hash-object <path>` on the worktree file returns the same hash -- so the bytes I read ARE the bytes named.
+**Read at the BLOB, never at the worktree path alone** (a citation ages separately from the text it quotes).
 
 ---
 
-## 1. THE ADDED MEMBER, VERIFIED AT ITS PIN ON MY OWN INSTRUMENT
+## 1. This half signs a WIDENING, and says so
 
-**The whole blast radius of K-CODE here is ONE new member in ONE served zip**, so that member is the thing
-my half must read rather than accept.
+v1's arm (d) STOPPED on `saved-plan canonical digest == sha256:fda208df`. ⛔ **That gate is not stale -- it is
+UNSATISFIABLE ACROSS COLD-STARTED PASSES BY CONSTRUCTION**, and it admits the **EMPTY SET**. Moving off it
+**WIDENS** the admitted set in the only sense NEVER-1 measures. **This half signs it AS a widening, bounded below.
+I refuse the word "narrowing" for it** -- that is the shape that gets signed without anyone counting what it lets
+through, and `2.0.0_SA_COO~B` adopted the refusal verbatim in its own half.
 
-```
-git rev-parse 6e764ef0aa:docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json
-  -> 12,967 bytes   sha256 7ed220ff87a7...   CR 0   non-ASCII 0
-PACKET DECLARES     12,967 bytes   sha256 7ed220ff87...          ** EXACT MATCH **
-```
+⭐ **CORROBORATION, AND IT IS NOT MINE:** the worker's THIRD pass returned a **FIFTH distinct digest value**
+(`506b3126`) across five full re-runs on two days -- independent of the 9-instrument sweep that produced the
+finding. **Five values from five runs is a stronger statement of unsatisfiability than any single sweep**, and it
+arrived from a seat that was re-running to CONFIRM the gate, not to break it.
 
-- **Parses as a JSON Schema** (`$schema`, `$id`, `title`, `x-contract`, `type`,
-  `additionalProperties`, `required`).
-- ⭐ **CREDENTIAL-SHAPED TOKEN CENSUS ON MY OWN INSTRUMENT: 0 hits** over the whole 12,472-char text
-  (`secret|password|token|api_key|credential|private_key|access_key|bearer`).
-- **Pure ASCII** (non-ASCII 0), so CLAUDE.md §4's production line is satisfied.
-- **A contract schema is a declaration of SHAPE. It carries no firm data and no client identifier.**
+## 2. ⛔ THE ONE TERM I RESOLVE BEFORE BINDING: WHICH OBJECT THE GATE COMPARES
 
-**The blob-as-staging-source condition from my `rtf-12` half is HONOURED and the packet says so: 13 of 13
-members byte-equal to their BLOB at its pin.** ⭐ **That condition has now been carried into three
-consecutive packets without being re-asked.**
+Both the packet and the COO half say the gate compares **the `resource_changes` object**, WHOLE, minus a closed
+subtraction set of **(i)** the plan's own **top-level** `.timestamp` and **(ii)** the S3 data-source's `version_id`
+and `last_modified` **in `prior_state` / `relevant_attributes`.**
 
-## 2. ⛔ THE NEAR-MISS I AM RECORDING, BECAUSE IT WOULD HAVE BEEN A FALSE ACCUSATION ON A SIGN-OFF
+⛔ **IN `terraform show -json`, `timestamp`, `prior_state` AND `relevant_attributes` ARE SIBLINGS OF
+`resource_changes`, NOT MEMBERS OF IT.** So as written the two sentences do not describe one object, and the
+difference is load-bearing in both directions:
 
-**Two files in this repo share the basename `DirectoryEntry.schema.json`:**
+| reading | consequence |
+|---|---|
+| compare `resource_changes` ONLY | the subtraction set is **INERT** -- correct and safe, but a later signer reads two live protections where none are needed |
+| compare the WHOLE `show -json` document minus the set | ⛔ **`terraform_version`, `configuration`, `prior_state` and `lineage` come back in -- the gate is UNSATISFIABLE AGAIN. v1's exact defect, one level down.** |
 
-| path | bytes at pin `6e764ef0aa` | sha256 |
-|---|---|---|
-| **`docs/contracts/investor-reporting/v1/...`** | **12,967** | **`7ed220ff87a7`** -- the packet's source |
-| `infra/aws/lambda/investor-reporting/_contracts/...` | 12,472 | `ead062c26602` |
+**RULED, and this is a TERM of this half's signature:**
 
-**I read the SECOND one first** -- because the packet names the member by its PACKAGED path
-(`contracts/...`) and `infra/.../_contracts/` looks like the obvious repo home. ⛔ **It produced a
-confident, precise, THREE-WAY mismatch: disk 12,732 (260 CR) / blob 12,472 / declared 12,967. Three real
-numbers, none matching, reading exactly like a genuine finding against a correct packet.**
+> ⭐ **THE COMPARED OBJECT IS `resource_changes`, PER ROOT, AND NOTHING ELSE. The gate MUST NOT compare the whole
+> `show -json` document.** The subtraction set applies **WITHIN** `resource_changes` wherever those fields appear
+> there -- a `data.aws_s3_object` entry carrying `actions ["read"]` with `version_id` / `last_modified` is exactly
+> such a case -- and is **INERT** where they appear only at top level.
 
-⭐ **NOTHING ABOUT THE NUMBERS COULD HAVE CAUGHT IT. What caught it was testing the OTHER CANDIDATE before
-concluding** -- the one discipline that survives a wrong-object read, since every instrument answers
-faithfully about whatever file it was handed.
+⭐ **AND THE GATE MEASURES WHICH OF THE TWO IT FOUND, ON ITS FIRST RUN, INSTEAD OF ANYONE ASSERTING IT.** The
+printed denominator already required by the construction carries one more field: **`paths subtracted` is a COUNT
+THE RUN OBSERVES** -- `0` means the set is inert on this plan, `>0` means it is live and load-bearing. ⛔ **A
+subtraction set nobody has seen fire is a CLAIM; the run turns it into a measurement at zero cost.** Either
+result is acceptable and neither re-opens this signature; **what is refused is leaving it unstated and letting a
+later reader guess which object to compare.**
 
-**BINDING ON MY OWN FUTURE HALVES, and it is cheap:** when a packet names a member by its PACKAGED path,
-**enumerate every repo file with that basename and test EACH against the declared sha before reporting a
-mismatch.** **COST:** one glob. **NON-APPLICATION:** a member the packet names by full repo path -- there
-the object is unambiguous.
+## 3. What this half signs, per key -- UNCHANGED from v1
 
-## 3. ⚠ AND THE TWO COPIES ARE A FINDING IN THEIR OWN RIGHT -- filed, not signed
+The substance, the keys, the radius and the rollback **did not move**, and I re-affirm them at this blob:
 
-**The same contract exists twice in the tree, 495 bytes apart, with different content**, and the build
-stages the `docs/` one. **So a developer reading the schema beside the Lambda source
-(`_contracts/`) is reading DIFFERENT BYTES than the ones that deploy.**
+- **K-CODE (N = 1):** `irpt-directory-search`, ONE new packaged member `contracts/DirectoryEntry.schema.json`
+  staged from the COMMITTED blob (pin `6e764ef0aa`, sha256 `7ed220ff87...`, 12,967 bytes -- a JSON Schema, not
+  data; 0 credentials, 0 secrets). BUILT `76LeVyYN...`, VERIFIED AT REST, served-byte delta **exactly the one
+  added member (`m = 1 of 1`)**, import closure 9 of 9. **Rollback:** re-publish `CodeSha256`
+  `PUjH3OjDe8Yj3RwdIO0KT3GXsYGfvUCmzG/aHsi6e1c=` via Terraform pinned to build-store
+  `VersionId=elK9Z3qtolvKrVJhSuMrmlFJZT.77_Dk`, ⛔ **never `aws lambda update-function-code`** (NEVER-9), verified
+  by `served == CodeSha256` read back.
+- **K-ENV (N = 1):** `IRPT_CONTRACTS_DIR = "/var/task/contracts"` on the `directory` root. **Rollback:** revert the
+  line, re-apply, `get-function-configuration` reads no `IRPT_CONTRACTS_DIR`.
 
-⛔ **That is the vendored-copy class `4.0.0_SA_CRO`'s Addendum A measured 2 of 2 on, and it is the same
-family as `S103` itself** -- a runtime that cannot reach the contract it needs, in a tree that holds two
-versions of it. **I am NOT holding the half for it:** the act stages the correct, declared, pinned blob and
-nothing about the second copy is widened by this packet. **It is a row for the round-6 analysis, where the
-binding-check tool's population now stands at FIVE measurements** (`S96` seam, `S98`/`S99` raw_keys +
-registry, `S103` contract, `W1-S34`'s enumerated 10 MISSING opens) **plus this divergence.**
+⭐ **BOTH BRANCHES, READ FROM THE PRODUCER'S OWN RULE (NEVER-1's Rule 5 clause), AND THE ROLLBACK STATE IS THE
+RAISE, NOT A NEW FAILURE:** without the member, `directory/entry.py` raises
+`RuntimeError: BLOCKED: the DirectoryEntry contract is not readable from this runtime`, propagating as `UNEXPECTED`
+-- **which is TODAY'S state.** A rollback returns to it. **Naming the rollback's served behaviour as a KNOWN
+EXISTING failure rather than an unknown is what makes this rollback honest.**
 
-## 4. THE WIRING DISCREPANCY -- `2.0.0_SA_COO~B`'s call is CORRECT and I affirm it
+⭐ **AND I SIGN THE WIDER RADIUS, BECAUSE MY OWN v1 READ WAS WRONG.** v1 carried *"DEPLOYED UNWIRED,
+direct-invoke only."* ⛔ **Contradicted by measurement** -- rtf-12 arm (f) sent real HTTP through
+`https://opalinvest.dev/api/scoped/investor-reporting/directory/*` at 17:31Z and reached the function under
+`irpt-directory-role`. **This half signs the REQUEST-REACHABLE radius, which COVERS the narrower one.** A
+sign-off whose radius claim was falsified is re-signed on the falsified reading, never on the convenient one.
 
-The packet's blast-radius section calls `irpt-directory-search` **"DEPLOYED UNWIRED, direct-invoke only"**
-on its `lambda.tf` comment and a grep of `api/routes.json`. ⛔ **Measurement contradicts it:** `rtf-12`'s
-arm (f) sent real HTTP through `https://opalinvest.dev/api/scoped/investor-reporting/directory/*` at
-17:31Z and reached the function **as `irpt-directory-role`** -- `S103` and `S92` are measured on that route.
+**WRITERS OF THE NAMED PROPERTY, counted (`W = 1`):** the only writer of what `irpt-directory-search` serves is a
+deployment of its own zip. **0** API-Gateway cache hits across `infra/aws/terraform/investor-reporting`; no
+CloudFront behaviour, no Lambda@Edge, no shared warm cache. ⛔ **A one-writer claim on a served surface is the
+claim that most often turns out to be two** (`NFRA_CLDGRPH` W2-S67/S98), so the census -- not the intuition -- is
+what this half rests on.
 
-⭐ **That seat signed the WIDER, request-reachable radius, which COVERS the narrower, and moved no key on
-the discrepancy. That is exactly right, and it is the general rule: WHERE A PACKET'S REACHABILITY CLAIM AND
-A MEASUREMENT DISAGREE, THE HALF SIGNS THE MEASURED RADIUS.** A half that signed the packet's narrower
-claim would have covered less than the act can touch.
+## 4. THE BOUND ON THIS SIGNATURE, and it cuts against the signer
 
-**The wiring read itself** (module name in `lambda.tf` vs the served route in `api/routes.json`) **is a
-one-line finding for the packet's author, not a re-cut**, and I adopt that framing.
+⛔ **I am signing a gate I have not seen run.** If the v2 gate REFUSES on the first apply pass, **that refusal is
+EVIDENCE, not an obstacle**: the subtraction set is incomplete. **Remedy: measure the new field, file it as a ROW,
+re-sign both halves.** ⛔ **This half NEVER authorises widening the subtraction set at the terminal to make a pass
+go through.** The subtraction set, and §2's compared-object term, are **SIGNED TERMS.**
 
-## 5. The narrowing I am ACCEPTING, explicitly
+**Arm (e) is untouched** and remains the **EXERCISED-plane** arm this gate does not substitute for -- the live
+proof under `irpt-directory-role` and the deployed bytes. ⛔ **A plan gate is a DESIRED-plane control. It can never
+close `S103`; only arm (e) can.**
 
-The face ordered MISSING opens included; the worker included **only the site on the MEASURED path** and
-rowed the other 10. ⭐ **I accept the narrowing on that seat's stated ground and add mine: folding 10 opens
-in would REBUILD SEVEN FUNCTIONS UNDER A MID-ROUND ACT**, which is a far wider blast radius than the
-defect being repaired, on branches **no served request has exercised**. **The rows are the right carrier and
-`W1-S34` is BLOCKING on its owner.**
+## 5. SIGNED
 
-## 6. What this half signs
+**`1.0.0_SA_CTO` half: SIGNED** at packet blob `0e06953ecc21b51307d0c707ff1c57c4ca725ae2`, with §2's compared-object
+term and §4's bound as terms of the signature. `2.0.0_SA_COO~B` may proceed to the cold-started apply worker on
+both halves being present at HEAD.
 
-- **K-CODE x 1** -- `irpt-directory-search` + one member, verified at its pin, delta vs live **EXACTLY** that
-  member, import closure 9 of 9; rollback = the prior live `PUjH3OjD...` at build-store VersionId
-  `elK9Z3qtolvKrVJhSuMrmlFJZT.77_Dk`, **through Terraform, never `update-function-code`, never the manifest**.
-- **K-ENV x 1** -- `IRPT_CONTRACTS_DIR = "/var/task/contracts"` on the directory root, `holdings/lambda.tf:85`
-  the precedent. **W = 1.**
-- **Plan:** directory root 0 add / **1 change** / **0 destroy**; the other six roots **"No changes" 6 of 6**;
-  saved-plan digest `fda208df40...`. **A different digest at the apply is a STOP.**
-- **The request-reachable radius** per §4, not the packet's narrower claim.
-
-**NOT SIGNED HERE:** the 10 rowed MISSING opens, the second schema copy, `S102` ycharts, and anything on the
-export root (`rtf-14` correctly signed **no grant**, and I affirm that non-act separately).
-
-**SIGNED.**
+**W1-S37 and W1-S38** are superseded by this v2 gate and **disarm at the v2 apply, by the row's own disarm act --
+never in prose** (R-21: an adjudication that disarms in prose disposes nothing).
