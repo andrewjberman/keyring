@@ -1384,9 +1384,9 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "owner": "1.0.0_SA_CTO",
  "round": "v10",
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "1.0.0_SA_CTO",
-  "at": null
+  "at": "2026-09-20T19:21:05Z"
  },
  "remediation": {
   "state": "OPEN",
