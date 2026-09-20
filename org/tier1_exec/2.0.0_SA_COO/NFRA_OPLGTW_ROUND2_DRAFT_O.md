@@ -169,6 +169,26 @@ instances (`export_rows`:845, `ticket_seconds`:790) are the same shape, and `S58
 the instance count a **FLOOR, not a total** -- a per-instance fix would need re-running every time the census
 widens; a shared read helper would not. **The cut, its shape and its timing are this lane's under Rule 27.**
 
+### R2-j -- SIZING the email-to-`principal_key` re-key (NEW, from ruling 98508 on `S61`)
+
+⭐ **THE DIRECTION IS ALREADY DECIDED AND THIS CELL DOES NOT RE-OPEN IT.** Ruling 98508 (carrier
+`CTO_RULING_NFRA_OPLGTW_S61_..._20260920.md` @`7bf359863c`): **AUTHORIZATION KEYS ON `principal_key`, NEVER
+ON `email`** -- and it is NOT a design fork, because `app/context.py:44` already DECLARED the rule on the
+type itself (`email ... never an authorization key`) and the code departed from it.
+⛔ **THE DISCRIMINATOR WORTH KEEPING: A DESCRIPTION OF A VIOLATION IS NOT AN AUTHORITY FOR IT.**
+`config.py:233`'s SECURITY-CRITICAL marker makes that text IMPORTANT, not NORMATIVE -- it describes what the
+code does; `context.py:44` declares what the field may be USED FOR.
+
+**WHAT THE CELL DOES -- SIZING ONLY, which is the half the ruling explicitly did NOT supply** ("THE
+DIRECTION FOLLOWS FROM THE CONTRACT; THE SIZING DOES NOT, and this ruling supplies only the first"):
+enumerate every call site that resolves or consumes a tier, determine whether `principal_key` is AVAILABLE
+at each, and state what the roster becomes (`MASTER_ADMIN_EMAILS` / `WRITE_CAPABLE_EMAILS` are email lists;
+a principal-keyed roster is a different object with a different provisioning story). Known starting set from
+`S61`, a FLOOR not a total: `guard.py:75`, `integrations/base.py:128`, `token_broker.py:143`, `tools.py:124`.
+⚠ **`token_broker.py:143` is the one that sets the urgency** -- it feeds `_scopes_for_tier()`, so the
+email-derived tier decides SCOPES MINTED INTO A TOKEN, and a token OUTLIVES the request that minted it.
+⛔ **IT IS A MEASUREMENT CELL AND CUTS NO CODE.** The re-key itself is a separate cell that this one sizes.
+
 ### R2-f -- sentinel `"*"` and populated-roster cleanup, ready but VALUE-BLOCKED
 
 The correctness half proceeds: an EMPTY roster means UNCONFIGURED and fails CLOSED, never tenant-wide.
@@ -221,13 +241,29 @@ R2-i landed from ruling 98487. The count is now EIGHT: R2-a, R2-b, R2-c, R2-d, R
 cell left and one arrived. A number that did not move is exactly the one to re-derive rather than carry**,
 and it has now moved.
 
-R2-d, R2-e, R2-f and R2-i have no unmet dependency today. Chains: R2-h -> R2-a -> R2-b is ONE chain (the
-materialisation measurement feeds the cap decision feeds the reserve -- **R2-h sits at its head, where R2-a
-used to**); R2-c stands ALONE (R2-g, its former chain partner, is discharged); R2-d follows R2-e; R2-i stands
-alone and touches no other cell's surface. **Cap 8, stated here and restated in the issuance commit** --
-⚠ **and eight cells against a cap of 8 is now AT the cap, not under it, so the next addition forces either a
-raise stated in the issuance commit or a second round.** Slot ~2 carries the benchmark cells, having built
-the harness; ~6 carries nothing new until its walkthrough orders clear.
+R2-d, R2-e, R2-f, R2-i and R2-j have no unmet dependency today.
+
+⛔ **CORRECTION, 2026-09-20 ~12:1xZ, AND IT IS MINE: I WROTE "EIGHT CELLS IS AT THE CAP OF 8" AND THAT
+CONFLATED TWO DIFFERENT THINGS.** The cap bounds **CHAINS (concurrent fan-out)**, never the CELL COUNT.
+Rule 27: *"fan-out derived from the decomp's dependency chains and stated as `fanout:` data in the issuance
+commit, default cap 8"*; `/canonical-drive` obligation 2: *"fan-out `N of M chains, cap K`"*. **N of M
+CHAINS.** ⚠ I stated the wrong reading to `1.0.0_SA_CTO` in msg 98507 and it was repeated back to me in
+98508, so the error had already propagated one hop before I caught it -- corrected in both places.
+
+**CHAINS (the thing the cap actually bounds), NINE cells in SIX chains:**
+| chain | cells |
+|---|---|
+| 1 | R2-h -> R2-a -> R2-b (the materialisation measurement feeds the bound decision feeds the reserve; **R2-h sits at the head, where R2-a used to**) |
+| 2 | R2-e -> R2-d |
+| 3 | R2-c (alone; R2-g, its former chain partner, is DISCHARGED) |
+| 4 | R2-f (alone) |
+| 5 | R2-i (alone; touches no other cell's surface) |
+| 6 | R2-j (alone; a measurement, see below) |
+
+**SIX chains against a default cap of 8 -- comfortably UNDER, and adding R2-j did not change that.** The
+`fanout:` line is re-derived from the decomp at HEAD at issuance time and restated in the issuance commit;
+this table is the draft's estimate, never the issuance's authority. Slot ~2 carries the benchmark cells,
+having built the harness; ~6 carries nothing new until its walkthrough orders clear.
 
 ## What must be true before this is cut
 
