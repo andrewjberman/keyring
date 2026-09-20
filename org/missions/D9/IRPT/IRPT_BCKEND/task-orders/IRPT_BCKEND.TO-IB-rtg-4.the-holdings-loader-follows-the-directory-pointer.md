@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-20</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-20 (round 7, the recut on the round-6 analysis @fa2ff4f0dd). The holdings entitlement defect S100 is one of round 7's four backend cells (S100's disarm_owner is already this seat); scope confirmed by investigation a7edd66ed0. Served-path handler deploy -> both never-widen halves at HEAD BEFORE any apply.</status>
+<status>complete -- second pass, 0.9.0_WK_IRPT_BCKEND~4, 2026-09-20. Both never-widen halves verified at HEAD naming packet blob b515836bb4db340dd1a4a6fb630ab70627432f3a; fresh 10-root plan + arm-(d) subtraction gate PASS (132 entries compared, 10 subtracted); holdings root applied under change-management ledger irpt-bckend-ib-rtg-4-apply (opened 1e59319d1a, closed 8a30151cca), served CodeSha256 == built, post-apply 0-diff; arm (e) live proof (ledger irpt-bckend-ib-rtg-4-live-principal, 6 of 6 legs) reads a granted account's holdings request as HTTP 200 class POLICY code NOT_AUTHORIZED with firm_id PRESENT, never FIRM_BINDING with firm_id absent. R75-AC1 PASS-by-output; R75-AC2 UNVERIFIABLE-BY-INSTRUMENT (CVO judgment at L9). proof_of_spec instance validates (rc=0 unbound and --governing-order-bound).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 7 (the CTO's round-6 analysis @fa2ff4f0dd) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 | **Round-6 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND6_ANALYSIS.md` @fa2ff4f0dd | **Decomp cell:** `IB-rtg-4` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.7 @a1c21f1424, s.R7.1) | **outcome_ref:** FWD-5
 
