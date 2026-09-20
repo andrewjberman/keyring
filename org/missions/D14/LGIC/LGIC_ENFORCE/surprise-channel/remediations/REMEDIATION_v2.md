@@ -2817,3 +2817,55 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carriers for S120 and S121 -- the measured backlog and the 502-name repo population
+
+```json
+{
+ "id": "LGIC_ENFORCE-S120",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A HALT WAS GENERALISED FROM THE RUN TO THE TOOL. A stop-on-first-raise scanner cannot report the remaining count IN ONE RUN; driven in a self-terminating loop over its existing --not-judged accumulator it completes in 218 iterations and 575 seconds. Two seats then priced the loop as though a caller had to hand-feed it, which made a ten-minute automated measurement read as infeasible.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S120",
+  "3.0.0_SA_CVO's reconciliation at HEAD d25a6a0a07: the five-way split sums to the printed population of 1,895 exactly",
+  "corroborated on a second driver at 581s with identical substantive figures"
+ ],
+ "remedy": "NOTHING IS OWED ON THE MEASUREMENT -- IT IS DONE AND IT RECONCILES. What the figure feeds is clause-2 sizing, which is 1.0.0_SA_CTO's, and this carrier exists so that sizing reaches a MEASURED 217/332 rather than an unmeasured backlog or an inflated price. \u26a0 AND THE TWO NUMBERS ARE NOT INTERCHANGEABLE: 217 DISTINCT NAMES is not 332 OCCURRENCES, and a sizing that divides work per-name differs from one that divides it per-occurrence by a factor of 1.5. \u2b50 KEEPABLE: A PRICE IS NOT JUST A NUMBER -- ITS ADVERB CARRIES AS MUCH OF THE DECISION. 'N runs, hand-fed' and 'N runs, scripted' are the same count and opposite conclusions, and only the second one gets done. When pricing a remedy, state whether the loop is DRIVEABLE, not only how long it is. COST: one word. NON-APPLICATION: a price whose steps are irreducibly manual, where the adverb is the measurement.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S121",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "TWO THINGS WEARING ONE BRACE. The placeholder residual was counted in OCCURRENCES and read as DECISIONS: 637 occurrences collapse onto 502 distinct names, and a further 15 occurrences carry the brace in the SOURCE STRING rather than in the canonical form. Of those, FIVE GRADE CONFORMANT -- because current == canonical is the conformance test and an unresolvable runtime template is trivially equal to itself.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S121",
+  "repo S3Key 106 at HEAD, unchanged from W2-S13's figure -- the falsifier the grade() repair would have moved",
+  "637 / 502 / 15 / 8 / 5, MECE over the printed 652 with a negative control"
+ ],
+ "remedy": "NOTHING IS OWED ON THE ARITHMETIC. The registry-decision population on the REPO PLANE is 502 distinct names, and any clause-2 sizing should use that rather than 652 or 1411 -- with the bound attached, because 502 is ONE PLANE of W2-S13's --live --repo figure and not a replacement for it. \u26d4 WHAT IS GENUINELY OPEN IS THE VACUOUS PASS: a runtime format template grades CONFORMANT because it could not be resolved, so a PASS on a templated name carries no information. That is a property of the conformance test itself (current == canonical), not of any one name, and deciding whether the grader should REFUSE an unresolvable template rather than pass it is a naming-canon question for 1.0.0_SA_CTO as DECIDER. This seat raises it and does not rule it. \u2b50 KEEPABLE: A CONFORMANCE TEST OF THE FORM 'CANONICAL == CURRENT' PASSES EVERYTHING IT CANNOT TRANSFORM. Identity is the default outcome of a failed transformation, so the test cannot distinguish 'already correct' from 'not processed'. Before trusting a PASS from such a test, ask whether the transformer ran. COST: one look at whether the input was resolvable. NON-APPLICATION: a test whose transform provably always applies.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```

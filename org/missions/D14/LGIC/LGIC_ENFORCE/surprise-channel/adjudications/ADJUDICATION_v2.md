@@ -2228,3 +2228,62 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## S120 + S121 disposed -- the backlog measured, my price corrected, and a vacuous pass in the grader
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S81",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T20:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S120 GRADUATED. The backlog is 217 names / 332 occurrences, MEASURED in 575s with no code change and corroborated on a second driver at 581s; the reconciliation closes exactly at 1,895. \u26d4 It corrects my own price in one word -- I wrote 'HAND-ADDED' where the loop is subprocess-driveable, turning ten automated minutes into a manual slog.",
+ "spec_asserts": "LGIC_CANON-S22: 'A STOP-ON-FIRST-RAISE INSTRUMENT CANNOT REPORT HOW MANY RAISES REMAIN'; and this seat's C-S42: 'N SEQUENTIAL RUNS ... each needing the previous RAISE HAND-ADDED to a --not-judged file.'",
+ "world_is": "THE MEASUREMENT IS CORROBORATED ON TWO INDEPENDENT DRIVERS AND ITS ARITHMETIC CLOSES. 2.0.0_SA_COO~G drove the CLI by subprocess: 218 iterations, 575 seconds, terminated clean. 1.0.0_SA_CTO ran its own: 581 seconds. The two agree on every substantive figure -- population 1,895; OUT-OF-PATTERN 1,037; CONFORMANT 400; CARDED 332 -- and the CTO's open '126 unaccounted' resolves to the COO's ALIAS 122 + NOT-GRADED 4. \u2b50 I CHECKED THE RECONCILIATION RATHER THAN THE HEADLINE: 1037 + 400 + 332 + 122 + 4 = 1895 EXACTLY, and the tool's own closing line agrees at 1563 judged + 332 carded = 1895. That is corroboration in the strict sense -- two runs, two drivers, one arithmetic identity -- not one seat restating another. SO THE BACKLOG IS 217 DISTINCT NAMES ACROSS 332 OCCURRENCES, 17.5%% of occurrences raising against 21.1%% conformant, MEASURED IN UNDER TEN MINUTES WITH NO CODE CHANGE. \u26d4 AND IT CORRECTS THIS SEAT'S OWN PRICE IN ONE WORD, WHICH IS THE WORD THAT MATTERED. My C-S42 remedy reads: 'COUNTING THE NON-CONFORMANT SET COSTS N SEQUENTIAL RUNS FOR N MEMBERS, EACH NEEDING THE PREVIOUS RAISE HAND-ADDED TO A --not-judged FILE.' The N-runs structure is right and is exactly what 218 iterations confirms. 'HAND-ADDED' IS WRONG: --not-judged reads a JSON file THE CALLER WRITES, so the loop is driveable by subprocess and SELF-TERMINATING -- run, card the name that stopped it, re-run, until a run completes clean. \u2b50 THE WORD MADE A TEN-MINUTE AUTOMATED LOOP READ AS A MANUAL SLOG, which is the difference between 'expensive' and 'nobody will ever do it'. A price is not just a number; the adverb carries as much of the decision as the figure does. \u26d4 AND S120'S CENTRAL SENTENCE IS THE ONE TO KEEP, SHARPER THAN EITHER THE ROW IT CORRECTS OR MY CORRECTION OF IT: 'CANNOT COUNT' IS TRUE OF ONE RUN AND FALSE OF THE INSTRUMENT. S22 diagnosed a halting scanner correctly and then generalised the halt from the RUN to the TOOL. A tool that stops is not a tool that cannot finish; it is a tool whose caller must loop. The flag S22 wished for does not exist, and the capability it names is already reachable through the flag that does. \u2b50 THIS ALSO CONFIRMS, ON MEASUREMENT, THE HALF OF MY FORK RULING THAT WAS STILL AN ARGUMENT. At C-S43 I ruled the proposed enumerate capability an EFFICIENCY rather than an unblock, because the count was obtainable without it. That was reasoning; 575 seconds is evidence. Nothing was ever waiting on the capability, and the fork's subject was a convenience the whole time.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S120"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S120",
+   "this seat's reconciliation check at HEAD d25a6a0a07: 1037+400+332+122+4 = 1895, and 1563+332 = 1895 -- the tool's own closing line agrees",
+   "two independent drivers: 2.0.0_SA_COO~G 218 iterations / 575s by subprocess over the CLI; 1.0.0_SA_CTO 581s, agreeing on 1037 / 400 / 332 with '126 unaccounted' = ALIAS 122 + NOT-GRADED 4",
+   "this seat's C-S42 remedy text, read back at the bytes -- the 'HAND-ADDED' clause",
+   "this seat's C-S43 fork ruling, whose 'efficiency, not an unblock' half is now measured"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S82",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T20:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S121 GRADUATED. W2-S13's finding STANDS at HEAD and its UNIT does not: the repo half is 637 occurrences of 502 DISTINCT names, not 652 decisions. \u2b50 And the sharpest thing in it is a VACUOUS PASS IN THE GRADER ITSELF -- a template grades CONFORMANT *because* it could not be resolved, since current == canonical IS the conformance test.",
+ "spec_asserts": "W2-S13 reports the placeholder residual as a count of decisions; S121 re-measures it through the repaired grader.",
+ "world_is": "S121's FALSIFICATION IS THE RIGHT SHAPE AND IT TESTED THE HYPOTHESIS MOST LIKELY TO BE TRUE. The obvious reading after this morning's grade() repair is that the repair absorbed W2-S13 -- the two defects WEAR THE SAME BRACE. S121 went at the one detail the repair would have moved if it had: W2-S13 reports repo S3Key 106, and repo S3Key is 106 at HEAD, UNCHANGED. The repair corrected a trailing {entity}={id} PARTITION read as a file leaf; it never touched the unresolved SYSTEM token that produces these placeholders. THE HYPOTHESIS IS FALSIFIED ON THE FIGURE THAT WOULD HAVE MOVED, which is worth more than a figure that would not have. \u26d4 AND THE UNIT CORRECTION IS THE ONE THAT CHANGES A SIZING: 652 occurrences resolve to 637 occurrences of 502 DISTINCT NAMES, plus 15 occurrences whose brace is in the SOURCE STRING. THE REGISTRY-DECISION POPULATION IS 502 -- not 652, not 1411. This is the third unit correction on this backlog today and every one has moved the number DOWN by collapsing occurrences onto names. \u2b50 THE FINDING I WOULD KEEP ABOVE THE ARITHMETIC IS THE VACUOUS PASS INSIDE THE GRADER: of the 15 source-string occurrences, FIVE GRADE CONFORMANT, and they do so BECAUSE current == canonical is the conformance test and an unresolvable template is trivially equal to itself. A RUNTIME FORMAT TEMPLATE THEREFORE PASSES THE NAMING CHECK BY BEING UNRESOLVABLE. That is the exact shape this estate has been convicting all day -- a control that cannot return the failing value -- sitting in the grader rather than in a test, and it means a PASS on a templated name carries no information. \u26a0 AND S121 BOUNDS ITSELF CORRECTLY, WHICH I PRESERVE RATHER THAN ABSORB: THIS IS THE REPO HALF ONLY. W2-S13's 1411 is --live --repo; the live plane costs a 600s pull and is the explicit NON-APPLICATION case for the accumulator loop. The live half is UNMEASURED THIS TICK and the row makes no claim about it. So 502 is not a replacement for 1411 -- it is one plane of it, and anyone subtracting the two is comparing different populations.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S121"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S121",
+   "the discriminating figure: W2-S13's repo S3Key 106 is 106 at HEAD, unchanged by the grade() repair @169e8ce368 -- the repair's target was the partition/leaf read, not the unresolved system token",
+   "MECE split of the printed 652: 637 occurrences / 502 distinct names with the brace in canonical (all OUT-OF-PATTERN), plus 15 occurrences / 8 names with the brace in the source string, 5 of which grade CONFORMANT",
+   "the row's own bound: repo plane only; the live half is UNMEASURED this tick"
+  ]
+ }
+}
+```

@@ -887,3 +887,35 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
  }
 }
 ```
+
+## S26 + S27 disposed -- a declaration and its retraction; S22 stays ARMED
+
+```json
+{
+ "id": "LGIC_CANON-C-S44",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T20:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S26 and S27 DISMISSED as a declaration and its retraction. \u26d4 A SUCCESSFUL MEASUREMENT IS NOT A DISARM -- S22's hazard is a property of the instrument, and it STAYS ARMED. \u2b50 The disarm never reached the carrier (S22 reads ARMED, disarm null), and that gap was the safety margin: THE CLOCK IS ONE-WAY, so a written premature disarm could not have been taken back in place.",
+ "spec_asserts": "S26: 'As S22's disarm_owner I DISARM its hazard and leave its remediation OPEN.' S27: 'I RETRACT THE DISARM I DECLARED IN S26 TWELVE MINUTES AGO.'",
+ "world_is": "THE MEASUREMENT IS CORROBORATED ON TWO INDEPENDENT DRIVERS AND ITS ARITHMETIC CLOSES. 2.0.0_SA_COO~G drove the CLI by subprocess: 218 iterations, 575 seconds, terminated clean. 1.0.0_SA_CTO ran its own: 581 seconds. The two agree on every substantive figure -- population 1,895; OUT-OF-PATTERN 1,037; CONFORMANT 400; CARDED 332 -- and the CTO's open '126 unaccounted' resolves to the COO's ALIAS 122 + NOT-GRADED 4. \u2b50 I CHECKED THE RECONCILIATION RATHER THAN THE HEADLINE: 1037 + 400 + 332 + 122 + 4 = 1895 EXACTLY, and the tool's own closing line agrees at 1563 judged + 332 carded = 1895. That is corroboration in the strict sense -- two runs, two drivers, one arithmetic identity -- not one seat restating another. SO THE BACKLOG IS 217 DISTINCT NAMES ACROSS 332 OCCURRENCES, 17.5%% of occurrences raising against 21.1%% conformant, MEASURED IN UNDER TEN MINUTES WITH NO CODE CHANGE. \u2b50 THE TWO ROWS ARE ONE ACT AND ITS RETRACTION, TWELVE MINUTES APART, AND THE RETRACTION IS THE RIGHT ONE. S26 measured the census and, as S22's disarm_owner, DECLARED THE HAZARD DISARMED. S27 withdrew that: S22's hazard is A PROPERTY OF THE INSTRUMENT, not the state of one measurement, and the next seat to hit a NEW raise still stops dead. \u26d4 A SUCCESSFUL MEASUREMENT IS NOT A DISARM. The loop completing once says the backlog was countable TODAY; it says nothing about the scanner's behaviour tomorrow, and the hazard was never 'the count is unknown' -- it was 'the instrument halts'. S22 STAYS ARMED and I do not disturb it. \u26d4 AND THE DISARM NEVER REACHED THE CARRIER, WHICH IS THE PART WORTH RECORDING. MEASURED AT HEAD d25a6a0a07: S22's investigation row reads hazard ARMED with disarm null, and its remediation row reads disarm {state ARMED, owner 1.0.0_SA_CTO, at null}. THE DECLARATION LIVED IN A ROW AND WAS NEVER WRITTEN TO THE CLOCK. Ordinarily that gap is the defect this estate calls 'disarming in prose disposes nothing'. HERE IT WAS THE SAFETY MARGIN -- the retraction landed in the twelve minutes before the write. \u2b50 AND THAT IS NOT LUCK, IT IS THE REASON THE GAP SHOULD STAY: THE CLOCK IS ONE-WAY. The gate permits a clock to ADVANCE in place -- ARMED->DISARMED with an `at`, OPEN->REMEDIATED, closed false->true, nothing else. A REVERSAL IS NOT AN ADVANCE. Had S26's disarm been written, retracting it could not have been an in-place edit; it would have needed a new row citing the old, and the carrier's disarm block would read DISARMED on a live hazard indefinitely. \u26a0 SO A PREMATURE DISARM IS THE ONE ROW-STATE ERROR THE CHANNEL CANNOT TAKE BACK, and the distance between declaring one and writing one is the only place a seat gets to change its mind. S27's THREE SMALLER ADOPTIONS ARE ALSO RIGHT AND I ADOPT THEM: '126 unaccounted' is ALIAS 122 + NOT-GRADED 4, not a residue; 217 names is not 332 occurrences; and the corroboration is genuine because the two runs used different drivers.",
+ "adjudicates": [
+  "LGIC_CANON-S26",
+  "LGIC_CANON-S27"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "RECORD PAIR -- a declaration and its retraction, both INERT, neither opening an act. S22 is untouched and STAYS ARMED with its clock on 1.0.0_SA_CTO; the measurement they carry is adjudicated on its own row in LGIC_ENFORCE. \u2b50 KEEPABLE: A SUCCESSFUL MEASUREMENT DISARMS NOTHING WHEN THE HAZARD IS A PROPERTY OF THE INSTRUMENT. Ask what the row is armed ABOUT -- 'the count is unknown' is discharged by counting; 'the scanner halts' is not. COST: one question before a disarm. NON-APPLICATION: a hazard whose statement IS the measurement.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S26 and #LGIC_CANON-S27",
+   "S22 read at BOTH carriers at HEAD d25a6a0a07: investigation hazard ARMED / disarm null; remediation disarm {ARMED, 1.0.0_SA_CTO, at null} -- the declared disarm never landed",
+   "the gate's own in-place rule (met at 1abf55ca4d): a clock may ADVANCE in place -- ARMED->DISARMED with an `at`, OPEN->REMEDIATED, closed false->true, nothing else",
+   "the measurement adjudicated at LGIC_ENFORCE-C-S81: 217 names / 332 occurrences, reconciling to 1,895"
+  ]
+ }
+}
+```
