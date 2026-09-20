@@ -1333,3 +1333,112 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
  }
 }
 ```
+
+## Round 6 L9 -- the ROW half: 40 graduated, 12 dismissed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S109",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T16:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 6, ROW half: 40 of 52 held rows GRADUATE, each with its own carrier minted in this commit (0 of 52 had one). 34 stay ARMED -- \u26d4 THE GRADUATION TRANSFERS THE CLOCK AND DISARMS NOTHING. The round's result in one sentence: THE SCOPE PLANE WORKS AND THE DATA PLANE DOES NOT.",
+ "spec_asserts": "Spine v3 L9: every row is dispositioned before the slug; an ARMED row GRADUATES and never dismisses (R-21); a GRADUATED item carries a remediation row.",
+ "world_is": "52 HELD ROWS, ALL CARRIER-LESS, DISPOSITIONED AT L9 ROUND 6. This row carries the 40 that GRADUATE; the 12 evidence/process records are dismissed on their own row, because a compound disposition under one verdict is a defect this seat has already been convicted of (C-S32). \u26d4 EVERY ONE OF THE 40 GETS ITS OWN CARRIER, MINTED IN THIS COMMIT, WITH ITS OWN MECHANISM AND ITS OWN OWNER. 0 of 52 carried a remediation row before this cut, so a graduation without a minted carrier would have dropped the finding entirely -- and the gate refuses exactly that. 34 are ARMED and keep an ARMED disarm block: THE GRADUATION TRANSFERS THE CLOCK AND DISARMS NOTHING. OWNERSHIP IS READ FROM EACH ROW, NEVER ASSUMED: 21 carriers to 2.0.0_SA_COO~B, 12 to 1.0.0_SA_CTO, the rest to the issuer by default where the row names none. \u26a0 ONE ROW'S `disarm_owner` IS A PROSE PARAGRAPH RATHER THAN A SERIAL -- W1-S31 reads '1.0.0_SA_CTO (reconcile which act moved the served bytes...)'. I parsed the serial off the front and say so, because anything routing on that field mechanically would misroute it, and the row is otherwise correct: S89 widens its scope to 9 functions and corrects its guessed cause. THE PACKET'S FOUR NAMED ROWS ARE HANDLED AS IT ASKS AND ONE IS MY OWN CALL: W1-S39 and W1-S40 graduate on 2.0.0_SA_COO~B's disarm evidence @671477f407 (the v1-digest premise superseded by a v2 gate that PASSED; the S3-churn phantom diff where the gate STOPPED correctly). W1-S41 carries the ledger-retroactive exposure to the L10. \u2b50 AND S110 I GRADUATE RATHER THAN DISMISS: a control that cannot return the failing value is not a control, so the refusal side of rtf-10/rtf-12 arm-(f) certifies nothing while S100 is armed. Dismissing it would have converted an unmeasured control into a clean one by silence. The AE's own bound travels with it -- served-path grants UNAFFECTED, 'no evidence either way', NOT a claim the gap is unenforced. \u2b50 THE SHAPE OF THE 40 IS THE ROUND'S REAL RESULT AND IT IS ONE SENTENCE: THE SCOPE PLANE WORKS AND THE DATA PLANE DOES NOT. An advisor is identified, firm-bound, scope-resolved and told exactly how much of the book is withheld -- and then served no data on any tab. S100 is FWD-5's whole cause and is not an entitlement decision; S104/S105/S106 are the two export routes still answering UNEXPECTED, and S106 is the one that makes the served answer UNTRUE by deciding a refusal from an exception's CLASS NAME against a two-name list that botocore does not raise for a 403. \u26a0 AND A CLASS THAT FOUR ROWS NOW NAME: the runtime-open member. S96, S98, S103 and then W1-S34 -- the fourth found by the census cut to END the class -- plus W1-S36 in all 7 serving functions' copies of keys.py. A census run to close a class found the class still open one layer further out, which is why the remedy is a builder gate keyed on the OPENS rather than a filename list. \u26d4 WHAT THIS ROW DOES NOT DO: it does not grade the round's outcomes, it does not disarm anything, and it does not re-decide any finding's substance. The 47 AC2 judgment grades landed separately at C-S108 @3d0c05cfd3 with their own coverage statement. With this cut the round is fully dispositioned and the slug to 1.0.0_SA_CTO is the remaining act.",
+ "adjudicates": [
+  "IRPT_BCKEND-S100",
+  "IRPT_BCKEND-S101",
+  "IRPT_BCKEND-S102",
+  "IRPT_BCKEND-S103",
+  "IRPT_BCKEND-S104",
+  "IRPT_BCKEND-S105",
+  "IRPT_BCKEND-S106",
+  "IRPT_BCKEND-S107",
+  "IRPT_BCKEND-S108",
+  "IRPT_BCKEND-S109",
+  "IRPT_BCKEND-S110",
+  "IRPT_BCKEND-S82",
+  "IRPT_BCKEND-S86",
+  "IRPT_BCKEND-S87",
+  "IRPT_BCKEND-S90",
+  "IRPT_BCKEND-S91",
+  "IRPT_BCKEND-S92",
+  "IRPT_BCKEND-S93",
+  "IRPT_BCKEND-S94",
+  "IRPT_BCKEND-S95",
+  "IRPT_BCKEND-S96",
+  "IRPT_BCKEND-S97",
+  "IRPT_BCKEND-S98",
+  "IRPT_BCKEND-S99",
+  "IRPT_BCKEND-W1-S28",
+  "IRPT_BCKEND-W1-S29",
+  "IRPT_BCKEND-W1-S31",
+  "IRPT_BCKEND-W1-S34",
+  "IRPT_BCKEND-W1-S35",
+  "IRPT_BCKEND-W1-S36",
+  "IRPT_BCKEND-W1-S39",
+  "IRPT_BCKEND-W1-S40",
+  "IRPT_BCKEND-W1-S41",
+  "IRPT_BCKEND-W3-S46",
+  "IRPT_BCKEND-W3-S47",
+  "IRPT_BCKEND-W4-S39",
+  "IRPT_BCKEND-W4-S40",
+  "IRPT_BCKEND-W4-S41",
+  "IRPT_BCKEND-W4-S42",
+  "IRPT_BCKEND-W4-S43"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- the 52 held rows, enumerated with the gate's own resolver",
+   "org/missions/D9/IRPT/IRPT_BCKEND/ledger/IRPT_BCKEND_ROUND6_L8_COMPILE.md blob 1fbf9c07971667e691dc11c2981bff04ca4ad8f2 -- the L8 packet at its cited pin",
+   "terminality at HEAD bac07f66dc: 0 open TOs of 75, 7 terminal by a VALID proof-of-spec",
+   "C-S108 @3d0c05cfd3 -- the 47 AC2 judgment grades, landed separately"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S110",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T16:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 6: 12 INERT evidence and process records DISMISSED -- three seats' words on rows naming them, four face-versus-tool notes with N=1, three instrument-condition notes, one self-retraction, and S79, which convicts THIS SEAT of certifying a closure on inherited names.",
+ "spec_asserts": "Spine v3 L9: every row is dispositioned before the slug; an ARMED row GRADUATES and never dismisses (R-21); a GRADUATED item carries a remediation row.",
+ "world_is": "TWELVE INERT ROWS DISMISSED AS EVIDENCE AND PROCESS RECORDS. Every one is INERT, checked before the cut -- an ARMED row GRADUATES and never dismisses (R-21), and the script refuses if any of the twelve reads ARMED. THREE ARE SEATS' WORDS ON ROWS THAT NAME THEM AS disarm_owner, which is EVIDENCE for a later disarm rather than an act: S80 (the generator half of W3-S47 remedied, the regen half not that seat's to take), S81 (W1-S27's cause repaired on 6 of 7 routes and live on the seventh), S89 (W1-S31 is correct, its scope is 9 functions not 1, and its cause is not the one the worker guessed). \u2b50 S89 IS THE MOST USEFUL OF THE THREE and it corrects a document's self-description: lambda-source-map.json's artifact_sha256 is NOT build-time-only as its own `_note` claims -- record-terraform-deploy.sh:750-757 reconciles it to the DEPLOYED CodeSha256 post-apply. A file's own note names the writers its author knew. FOUR ARE INSTRUMENT AND PROCESS NOTES WITH N=1 AND NOTHING OWED: S83 (the face minted a row-id form both the schema and the gate refuse), S84 (`aws configure list-profiles` does not exist on this box's CLI v1.44.44), S85 (the face asked for a ledger status the tool does not have), W4-S44 (the face asked for LF in a file that is CRLF throughout, and the worker matched the file rather than corrupt its EOLs). Each is a FACE-versus-TOOL mismatch the worker resolved correctly and recorded; none carries a defect. THREE ARE MEASUREMENT NOTES THAT EXPLAIN A DELTA RATHER THAN REPORT ONE: W1-S30 (the live numbers differ from the packet's because a CONCURRENT scheduled refresh rewrote the ownership map mid-window -- which is also the round's 'the grant MOVED' carry), W1-S32 (a raw-byte staging check on an autocrlf worktree reports drift that is an EOL artifact, not a moved member), W1-S33 (the arm's premise named a member to rewrite that never existed). \u26a0 ALL THREE ARE THE SAME SHAPE -- AN INSTRUMENT REPORTING ITS OWN CONDITIONS AS A FINDING -- and each was caught by its own author. ONE IS A CORRECTION TO ITS OWN AUTHOR'S EARLIER ROW: S88, which retracts the mechanism S86 cited (canAccessFirm has 0 callers in production) while keeping the admission itself as real. \u2b50 AND ONE IS MINE: S79 RECORDS THAT A CLOSURE I CERTIFIED AT 3e92decbef WAS PREMATURE, and that the defect was in MY VERIFICATION rather than in the closure mechanism -- I checked that the citations' PLANE was honest and INHERITED THEIR NAMES UNEXAMINED, and one of the two names had never existed on this box, 0 of 1447. It is dismissed as a record because its remedy is a reading rule I now carry and not an act anyone owes; it is NOT dismissed as unimportant, and I am the seat it convicts.",
+ "adjudicates": [
+  "IRPT_BCKEND-S79",
+  "IRPT_BCKEND-S80",
+  "IRPT_BCKEND-S81",
+  "IRPT_BCKEND-S83",
+  "IRPT_BCKEND-S84",
+  "IRPT_BCKEND-S85",
+  "IRPT_BCKEND-S88",
+  "IRPT_BCKEND-S89",
+  "IRPT_BCKEND-W1-S30",
+  "IRPT_BCKEND-W1-S32",
+  "IRPT_BCKEND-W1-S33",
+  "IRPT_BCKEND-W4-S44"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- the 52 held rows, enumerated with the gate's own resolver",
+   "org/missions/D9/IRPT/IRPT_BCKEND/ledger/IRPT_BCKEND_ROUND6_L8_COMPILE.md blob 1fbf9c07971667e691dc11c2981bff04ca4ad8f2 -- the L8 packet at its cited pin",
+   "terminality at HEAD bac07f66dc: 0 open TOs of 75, 7 terminal by a VALID proof-of-spec",
+   "C-S108 @3d0c05cfd3 -- the 47 AC2 judgment grades, landed separately"
+  ]
+ },
+ "dismissal_reason": "EVIDENCE AND PROCESS RECORDS. None is ARMED (checked before the cut, R-21), none opens an act, and each was resolved or corrected by its own author. They are dismissed as RECORDS, not as unimportant: S79 is this seat's own premature closure and S89 corrects a document's self-description about who writes a field. \u2b50 KEEPABLE: A FACE-VERSUS-TOOL MISMATCH IS A RECORD, NOT A DEFECT, WHEN THE WORKER RESOLVED IT AND SAID SO -- four of these twelve are exactly that, and dismissing them without naming the class would lose the fact that faces keep asking for tool behaviour the tools do not have."
+}
+```
