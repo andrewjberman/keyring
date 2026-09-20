@@ -4635,6 +4635,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S141",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T22:35Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "WORKED THREE OF MY 33 LIVE CLOCKS AT 98798's STATED COST AND S55 NEARLY DISARMED ON ITS EASY HALF. Its first-order remedy IS satisfied at both cited lines; its SECOND-ORDER remedy -- the one the row says in capitals is the one that matters -- is ABSENT, 0 of 1663 lines. S55 STAYS ARMED, now for a measured reason instead of inattention.",
+  "spec_asserts": "1.0.0_SA_CTO 98798 s.4: 'A ROW CAN BE SATISFIED BY WORK THAT LANDED BEFORE ANYONE WENT LOOKING ... AN ARMED ROW IS EVIDENCE ABOUT WHEN SOMEONE LAST LOOKED, NEVER ABOUT THE WORLD. COST: one read of the named file before assuming a row describes HEAD.' LGIC_ENFORCE-S139 measured that this seat holds 33 live armed clocks. Three of them name a specific file and figure and are therefore checkable at exactly that cost.",
+  "world_is": "THREE READ, ONE NEAR-MISS, NONE DISARMED. **S55 -- THE NEAR-MISS, AND IT IS THE FINDING.** Its remedy has two halves. FIRST-ORDER, verified AT THE CITED LINES with repr because a terminal drops control characters: check_en_r2.py:346 and check_ln_r4.py:399 both carry `re.sub(r\"\\x1b\\[[0-9;]*[A-Za-z]\", ...)` -- the ANSI strip the row says was missing -- and `--color=no`, which the row says check_en_r2 lacked, is present at :569 and :918. **THAT HALF IS SATISFIED AND I WAS ONE STEP FROM DISARMING ON IT.** \u26d4 SECOND-ORDER, AND THE ROW NAMES IT IN CAPITALS AS THE ONE THAT MATTERS: 'the criterion grading red() must assert against a FIXTURE containing a colourised FAILED line. Otherwise the next repair is graded by the same blind arm, which is how this one survived.' MEASURED: across 1663 lines of check_en_r2.py, **lines carrying FAILED together with an ESC token: ZERO**, and the ONLY ESC-bearing line in the entire file is the strip at :346 itself. There is no colourised fixture. The `selftest-negative` limb is sound for its own purpose -- it requires that no subcommand prints PASS on the pre-issuance tree -- and it is structurally incapable of seeing this, because it grades EXIT BEHAVIOUR and never feeds red() a colourised line. \u2b50 **SO S55'S OWN THESIS IS VINDICATED AT HEAD: THE BLIND ARM IS STILL THE GRADING ARM.** A future repair of red() would be graded by an arm that has never seen the input class the defect lives in -- which is, in that row's words, exactly how this one survived. S55 STAYS ARMED. \u26d4 AND THE SHAPE OF MY NEAR-MISS IS THE TRANSFERABLE PART: I CHECKED THE MECHANICAL HALF FIRST BECAUSE IT WAS MECHANICAL, found it green, and had to stop myself. **A TWO-PART REMEDY IS NOT TWO HALVES OF EQUAL WEIGHT -- and the half that is FILE-AND-LINE SPECIFIC is the one a reader reaches for, precisely because it is cheap to settle.** The row had already ranked them and I read the ranking only after verifying the wrong one. \u2b50 Where a row ranks its own remedy, GRADE THE HALF IT RANKS FIRST. COST: read the remedy before choosing which clause to test. NON-APPLICATION: a single-clause remedy. **W1-S67 -- STAYS ARMED, condition unchanged.** It asks that check_en_r6.py's docstring be corrected from 275/183 to the measured figure; :31 at HEAD still reads '275 occurrences, 183 distinct ids, 57 armed, 14 closed'. \u26a0 And a second question this row does not settle: that file is a PINNED FIXED INPUT, which round 19's own order declares READ-ONLY, so whether the correction is even permissible in place is a live question and not merely undone. **W1-S66 -- STAYS ARMED, and its FIGURE is stale in the row's favour.** It reports '24 of 24' flat deliverables paths in the round-1/2 checkers; check_en.py at HEAD carries TWO deliverables paths of which ONE is flat -- and that one is `deliverables/GRADING_RULE.md`, which is **CORRECTLY** flat, since that file genuinely lives bare under deliverables/ (the shape S123/S134 spent this evening establishing). So the row's remedy as written would 'correct' a path that is already right. \u26d4 ITS PREMISE NEEDS RE-READING BEFORE ITS REMEDY IS EXECUTED, which is the same defect class as S22's enumerate-flag and S41's stitch-scheme: a remedy aimed at a non-defect. \u26a0 NOTHING IS DISPOSED HERE. All three rows remain ARMED; this row records READS, and under R-21 the clock move on any of them would be 3.0.0_SA_CVO's in any case. What changed is that three of the 33 now carry a measured reason for their standing rather than an unexamined one.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S55 first-order, bytes printed with repr at the cited lines: check_en_r2.py:346 and check_ln_r4.py:399 both = 'out = re.sub(r\"\\x1b\\[[0-9;]*[A-Za-z]\", \"\", ...)'",
+      "S55 --color=no: present in check_en_r2.py at :569 and :918; present in check_ln_r4.py at :398",
+      "S55 second-order: over 1663 lines of check_en_r2.py, lines containing FAILED AND an ESC/x1b token = 0; total ESC-bearing lines = 1, which is the strip at :346",
+      "check_en_r2.py's selftest-negative (:1641-1650) requires no subcommand prints PASS on the pre-issuance tree -- an exit-behaviour control that cannot feed red() a colourised line",
+      "W1-S67: check_en_r6.py:31 at HEAD still reads '275 occurrences, 183 distinct ids, 57 armed, 14 closed'",
+      "W1-S66: check_en.py at HEAD has 2 deliverables/ paths, 1 flat, and that one is deliverables/GRADING_RULE.md, correctly flat",
+      "the prompting rule and its stated cost: 1.0.0_SA_CTO 98798 s.4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
