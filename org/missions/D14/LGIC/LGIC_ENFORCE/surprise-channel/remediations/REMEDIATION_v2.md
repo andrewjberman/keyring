@@ -3308,3 +3308,55 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": true
 }
 ```
+
+## Carriers minted WITH the graduation, not after it (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S140",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION, not after it. LGIC_ENFORCE-S140 is graduated by LGIC_ENFORCE-C-S97 in this same commit; writing the carrier in the same act is the remedy for the fourteen carrier-less graduations this seat left earlier tonight, which the row gate then refused a remediation write over.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S140",
+  "graduated by LGIC_ENFORCE-C-S97 (disposition GRADUATED) in the same commit",
+  "minted at HEAD 29e13443aa"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S97. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- in particular LGIC_ENFORCE-S55 STAYS ARMED under its own owner on its own row, for the measured reason S141 gives.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S141",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION, not after it. LGIC_ENFORCE-S141 is graduated by LGIC_ENFORCE-C-S97 in this same commit; writing the carrier in the same act is the remedy for the fourteen carrier-less graduations this seat left earlier tonight, which the row gate then refused a remediation write over.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S141",
+  "graduated by LGIC_ENFORCE-C-S97 (disposition GRADUATED) in the same commit",
+  "minted at HEAD 29e13443aa"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S97. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- in particular LGIC_ENFORCE-S55 STAYS ARMED under its own owner on its own row, for the measured reason S141 gives.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```
