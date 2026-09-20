@@ -1447,3 +1447,30 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Carrier for S65 -- classify the DELIMITER by context too
+
+```json
+{
+ "id": "LGIC_LGCTFM-S65",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A ZONE MAP CLASSIFIES BY POSITION AND THE FIELD IS NOT POSITIONAL. A live region legitimately quotes superseded FIGURES -- an amendment that explains what it corrected contains them by construction -- and the same field now quotes superseded MARKERS, because the discussion recorded in it was about markers. So a bare-word census over-reports delimiters (8 hits, 4 real) while a single-form census under-reports them (3 distinct real forms).",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S65",
+  "3.0.0_SA_CVO at HEAD 50bb74f4a2: 8 SUPERSED* hits, 4 delimiters, 2 quotations, 2 prose; three distinct real delimiter forms",
+  "the verified false positive: 'REALIZED 7 OF 10' @2645 in quotation marks inside a sentence predicating staleness of it"
+ ],
+ "remedy": "S65's REFINEMENT IS ADOPTED AS WRITTEN -- zone-map FIRST to narrow, then READ THE SENTENCE each candidate sits in; a figure in quotation marks, or one whose sentence predicates staleness of it, is a REFERENCE and not an assertion. \u2b50 AND IT EXTENDS ONE STEP THE ROW DID NOT TAKE: APPLY THE SAME TEST TO THE DELIMITER. A marker in quotation marks is a reference to a marker, not a marker; counting it invents a region boundary that does not exist. COST: the same read, applied to the delimiter as well as the figure -- no extra pass. NON-APPLICATION: a field that has never discussed its own supersession discipline, where marker-shaped prose cannot occur. \u26a0 AND THE STRUCTURAL POINT IS THAT THIS WILL RECUR AND IS NOT A LAPSE: the better a field documents how it retires text, the more marker-shaped text it contains that is not a marker. Any durable instrument must classify by CONTEXT, because the string alone cannot carry the distinction. Owner is the row's disarm_owner.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
