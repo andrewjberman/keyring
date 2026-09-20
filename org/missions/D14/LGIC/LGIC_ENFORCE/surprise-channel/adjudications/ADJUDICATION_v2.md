@@ -1985,3 +1985,34 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Out-of-round disposition -- S112, and R1 splits again (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S73",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T13:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S112 GRADUATED out of round (0 open of 74, sole held row). Its 3-declared / 7-undeclared split CONFIRMED on the registry file. \u2b50 AND R1 IS ITSELF TWO REMEDY CLASSES: the raise sub-code tracks the declaration exactly 10 of 10, so R1.c is 3 tokens / 154 raises whose rows ALREADY EXIST and are blocked on a DIRECTIVE decision, and only R1.f (7 tokens / 30 raises) is registry work.",
+ "spec_asserts": "S112: 'The registry-row class (R1) is TEN distinct tokens, and the registry's own `unresolved` list declares only THREE of them.'",
+ "world_is": "S112's CENTRAL CLAIM IS CONFIRMED ON A DIFFERENT INSTRUMENT THAN THE ONE THAT PRODUCED IT, AND ITS OWN THESIS GOES ONE LEVEL DEEPER THAN IT STATES. S112 measured by GRADING a corpus; I read the REGISTRY FILE and exercised the grader per token, which is a different object and a different failure surface. CONFIRMED: infra/logic/registry/systems.json's `unresolved` array declares EXACTLY THREE tokens -- astn, news, trade -- and SEVEN of S112's ten R1 tokens raise while undeclared: cache, dowjones, f49, portal, security, sentiment, vpc. The ten R1 raise counts sum to 184, matching S112's R1 total. Positive control: all three declared tokens are inside the claimed set, so the two lists are comparable rather than disjoint. \u26d4 AND MY FIRST RUN OF THIS CHECK RETURNED A FALSE 10-OF-10 UNDECLARED, WHICH I REPORT BECAUSE IT IS S112's AUTHOR'S OWN CONFESSED TRAP ARRIVING IN MY HANDS WITHIN THE HOUR: the `unresolved` entries are OBJECTS carrying a `token` key, and I collected the entries themselves, so every comparison against a bare token string missed and every claimed token read as undeclared. COLLECT-BY-SHAPE, exactly as 2.0.0_SA_COO~G described it on its own census -- and the wrong answer was the MORE ALARMING one, which is the direction that gets published. \u2b50 THE EXTENSION, MEASURED AND NOT INFERRED: R1 IS ITSELF TWO REMEDY CLASSES, AND THE RAISE SUB-CODE TRACKS THE REGISTRY DECLARATION EXACTLY, 10 OF 10. R1.c fires for the three DECLARED tokens ('news' -> \"R1.c: 'news' is an unresolved token (V2)\") and R1.f for all seven UNDECLARED ones ('sentiment' -> \"R1.f: 'sentiment' is in no vocabulary; no registry row resolves it\"). The discriminator was asserted rather than eyeballed: sub-code == R1.c iff the token is in `unresolved`, true for all ten. \u2b50 SO THE SIZING CHANGES IN A SPECIFIC WAY AND THIS IS THE PART THAT MATTERS FOR THE RULINGS: R1.c is 3 tokens carrying 154 of the 184 R1 raises, and those three registry rows ALREADY EXIST -- each with a measured `why` recording that `owner_directive` CANNOT BE WRITTEN because the underlying projects are legacy-flat with no DIRECTIVES.yaml line. That is not registry work at all; it is a DIRECTIVE-OWNERSHIP decision. R1.f is 7 tokens carrying 30 raises and IS the mint-a-registry-row class. \u26d4 SO 'FIX THE BACKLOG WITH REGISTRY ROWS' IS WRONG ON 154 OF 184 R1 RAISES, AND THE 84 PERCENT THAT IS NOT REGISTRY WORK IS THE PART ALREADY DOCUMENTED AS BLOCKED. S112's own principle -- quantify over the PARTITION, not the MEMBER -- applied to S112's own partition. ITS THREE DISCLOSED BOUNDS ARE CORRECT AND I PRESERVE THEM RATHER THAN ABSORBING THEM: the VINTAGE IS MIXED (names from the r8 corpus at 2026-09-18 12:17Z, grader at HEAD), so a name minted or retired since is outside the denominator; W7-S4's '115 raising system tokens' does NOT reconcile with 10 at either grain and is flagged UNRECONCILED rather than asserted stale; and R8's '5 distinct' counts resource NAMES, not tokens, because the first quoted string in that family's message is a name. \u26a0 ONE THING I DID NOT DO AND IT IS NOT A GAP: I did not re-grade the 3716-name corpus. That is S112's instrument and re-running it would be repetition; the registry read and the per-token sub-code partition are the arms it does not have.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S112"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S112",
+   "infra/logic/registry/systems.json `unresolved` read at HEAD 7df8de94d9: exactly 3 entries, tokens astn / news / trade, each carrying a measured `why` stating owner_directive cannot be written because the underlying projects are legacy-flat with no DIRECTIVES.yaml line",
+   "per-token grade() at HEAD, 10 of 10: R1.c for astn/news/trade (declared), R1.f for cache/dowjones/f49/portal/security/sentiment/vpc (undeclared); the identity sub-code==R1.c iff token in `unresolved` was asserted, not eyeballed",
+   "R1 raise counts sum to 184, matching S112's R1 total; R1.c carries 154 and R1.f carries 30",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

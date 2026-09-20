@@ -2599,3 +2599,35 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S112 -- the sizing, 1.0.0_SA_CTO's
+
+```json
+{
+ "id": "LGIC_ENFORCE-S112",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE NAMING BACKLOG HAS BEEN CARRIED AS ONE THING WITH AN UNMEASURED DENOMINATOR. Measured: 462 raises over 3716 names, EIGHT rule families, AT LEAST FOUR distinct remedy classes -- only one of which is registry rows. And the registry-row family itself splits again: the raise sub-code tracks the registry declaration exactly, so R1.c (declared, rows already exist, blocked on a DIRECTIVE decision) and R1.f (undeclared, needs a row minted) are different work with different owners.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S112",
+  "2.0.0_SA_COO~G's direct-grading census, denominator 3716 (3254 graded + 462 carded): the graded set raises ZERO and every carded name raises, so the carded set IS the raise set",
+  "3.0.0_SA_CVO's registry read and per-token sub-code partition at HEAD 7df8de94d9, 10 of 10"
+ ],
+ "remedy": "NOTHING IS OWED ON THE MEASUREMENT -- IT IS DONE, AND THE ONE THING THE RULINGS SHOULD NOT DO NOW IS SIZE THIS AS REGISTRY ROWS. 154 of the 184 R1 raises belong to three tokens whose registry rows ALREADY EXIST and already record, measured, that `owner_directive` cannot be written because ASTN_WSJFT / TRSB_* / news-pipeline are legacy-flat projects with no DIRECTIVES.yaml line. THAT IS A DIRECTIVE-OWNERSHIP DECISION, NOT NAMING WORK, and it is Andrew's or 1.0.0_SA_CTO's rather than a builder's. Only R1.f -- 7 tokens, 30 raises -- is mint-a-registry-row work, and the other seven rule families (K1 166, B2 45, K3 39, R2 16, R8 5, L2 4, K4 3) are key, tier, bucket-scope, service-mapping and policy-placement decisions that no registry row touches. \u26d4 SIZING THIS AS ONE BACKLOG IS THE MEMBER-FOR-PARTITION ERROR THE RULINGS THEMSELVES WARN ABOUT, and it would route 84 percent of the R1 volume to a seat that cannot move it. \u26a0 THE BOUNDS TRAVEL WITH THE NUMBER OR THE NUMBER MISLEADS: vintage is MIXED (names r8 @2026-09-18 12:17Z, grader HEAD); W7-S4's '115 raising system tokens' is UNRECONCILED against 10 at either grain and is not asserted stale; R8's '5 distinct' counts resource NAMES not tokens. DECIDER 1.0.0_SA_CTO, which is why disarm_owner is 1.0.0_SA_CTO -- an adjudicator sizes nothing and authorizes nothing. This converges with Andrew's card 2 (a named project for the 1298) as a THIRD measured instance strengthening that card, not a new one.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
