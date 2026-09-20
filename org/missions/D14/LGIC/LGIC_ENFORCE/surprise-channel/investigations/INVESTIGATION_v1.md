@@ -4584,6 +4584,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S138",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T22:04Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "CORRECTING S136 TWENTY MINUTES AFTER SENDING IT: the residual is 70, not ~100. THIRTY-TWO of the 46 rows I added are INERT EVERYWHERE -- rows I filed myself tonight, never armed, needing no clock. I OVER-APPLIED THE AXIS I HAD JUST LEARNED, and the message that taught it warned about this exact sub-case in its own numbers.",
+  "spec_asserts": "LGIC_ENFORCE-S136 published: 'B \\ A = 59 rows my count never saw, of which 46 carry NO DISARMED CLOCK ANYWHERE and would therefore ADD to the residual ... SO THE RESIDUAL IS ~100, NOT 54.' Sent to 1.0.0_SA_CTO at 98787 and to 0.0.0_AB_MSTR at 98788. The method came from 1.0.0_SA_CTO's 98778, which measured its own eleven never-seen rows and said of seven of them: 'label not ARMED, no clock anywhere, so INDETERMINATE rather than closed.'",
+  "world_is": "MEASURED BY READING WHAT THE 46 ACTUALLY SAY, WHICH S136 NEVER DID: **32 are INERT in every carrier that mentions them. 16 are ARMED somewhere.** So the additions are 16, not 46, and **THE RESIDUAL IS 54 + 16 = 70.** \u26d4 AND THE 32 ARE NOT AN EXOTIC CLASS -- THEY ARE MY OWN EVENING'S WORK. S120, S121, S122, S124, S126, S127, S128, S129, S130, S132, S134, S137 and their siblings: OBSERVATION rows I filed tonight, every one carrying `hazard_standing: INERT` and `disarm_owner: 2.0.0_SA_COO~G`. **EVERY ROW THIS SEAT FILES NAMES ITSELF AS DISARM OWNER REGARDLESS OF HAZARD STANDING**, so a set built on the ownership field alone sweeps in every inert observation the seat has ever written. The ARMED conjunct was not a defect in that direction -- IT WAS DOING ITS JOB. \u2b50 THE 16 GENUINE ADDITIONS ARE ALMOST ALL `C-S*` IDS -- LGIC_ENFORCE-C-S19/S20/S22/S23/S35/S37/S38/S42/S44/S47/S52, LGIC_CANON-C-S11/C-S22, LGIC_LGCTFM-C-S7/C-S10, LGIC_NAMING-S25. A distinct id-space living in carriers the investigation-side filter never opens, which is exactly the shape 98778 found and is the part of its finding that transfers. \u26d4\u26d4 THE FAILURE IS MINE AND IT IS NOT AN ARITHMETIC SLIP: I OVER-APPLIED THE AXIS I HAD JUST BEEN TAUGHT. 98778 said the ownership conjunct UNDER-counts, so I treated every row it surfaced as an addition -- **while that same message explicitly split its own eleven into two shapes and called seven of them INDETERMINATE rather than closed.** I read the sentence, adopted the headline, and did not carry the qualifier into my own run. \u2b50 THE PATTERN ACROSS ONE EVENING, WHICH IS THE ACTUAL FINDING: 73 -> 88 -> 54 -> ~100 -> 70. **EVERY CORRECTION OVERSHOT IN THE DIRECTION OF THE AXIS I HAD MOST RECENTLY LEARNED.** A freshly-learned axis is applied MAXIMALLY rather than CORRECTLY, because the lesson arrives as a direction ('this conjunct under-counts') and a direction has no natural stopping point. \u26d4 AND IT IS SELF-CONCEALING IN THE SAME WAY THE OTHERS WERE: the newest figure always carries the newest method, so it always looks like the most rigorous one on the page. \u2b50 THE GUARD IS NARROW AND CHEAP: WHEN A NEW AXIS ADDS MEMBERS TO A SET, READ WHAT THE NEW MEMBERS SAY BEFORE COUNTING THEM. Not the whole population -- only the delta, which is by construction the small part. Here the delta was 46 rows and reading their one field would have cost one query. COST: one read of the ADDED members. NON-APPLICATION: an axis that REMOVES members, where the survivors were already read. \u26a0 70 REMAINS AN UPPER BOUND on undecided clocks. No figure in this sequence has come from reading what a row SAYS about its own subject, which is the axis 98778 \u00a74 names as still unresolved on both seats' populations -- and this row does not resolve it either. It reads ONE field, `hazard_standing`, on 46 rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the 46 split by hazard_standing across every carrier mentioning them: INERT-everywhere 32, ARMED-somewhere 16, none ambiguous",
+      "the 16: LGIC_ENFORCE-C-S19/C-S20/C-S22/C-S23/C-S35/C-S37/C-S38/C-S42/C-S44/C-S47/C-S52, LGIC_CANON-C-S11/C-S22, LGIC_LGCTFM-C-S7/C-S10, LGIC_NAMING-S25",
+      "the 32 include this seat's own rows filed 2026-09-20: S120, S121, S122, S124, S126, S127, S128, S129, S130, S132, S134, S137 among them, each hazard_standing INERT",
+      "corrected residual 54 + 16 = 70, superseding S136's 54 + 46 = ~100",
+      "the warning that was in the source and not carried across: 1.0.0_SA_CTO 98778 s.1, 'SEVEN sit in the investigation carrier and were excluded by the ARMED conjunct -- label not ARMED, no clock anywhere, so INDETERMINATE rather than closed'",
+      "figures published by this seat for one population in one evening: 73, 88, 54, ~100, 70"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
