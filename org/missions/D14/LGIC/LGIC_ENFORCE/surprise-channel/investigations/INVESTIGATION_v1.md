@@ -4377,6 +4377,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S127",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T19:02Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "WORKTREE DISK COST HAS TWO SEPARABLE HALVES AND THE FIX BEING DEPLOYED ADDRESSES ONLY ONE. Terraform providers are 6.9 GB above floor in ONE worktree; the TRACKED-CONTENT FLOOR is ~1.45 GB in EVERY worktree -- ~21.8 GB across 15, of which ~16.5 GB is org/ alone. A plugin cache does NOTHING for a worktree that never runs terraform, and most of this estate's worktrees do not.",
+  "spec_asserts": "0.0.0_AB_MSTR's measured root cause (98666/98667/98674): 'one 686 MB provider binary per ROOT per WORKTREE, 10 roots per IRPT worktree, no shared plugin cache', with the ask being 'a shared TF_PLUGIN_CACHE_DIR or one reused apply worktree'. 2.0.0_SA_COO~B plans rtg-2 as 'fresh worktree + TF_PLUGIN_CACHE_DIR'. That diagnosis is CORRECT and this row does not dispute it; it measures what the remedy does not reach. This seat also owed itself the check, having sized its own parked cell's worktree at '~1.2-1.7 GB measured across the five on this box' without asking WHAT that 1.2 GB is made of.",
+  "world_is": "MEASURED ACROSS ALL 16 REGISTERED WORKTREES, org/ and infra/ per tree, denominator printed: EVERY worktree carries ~1.1 GB of org/ and ~0.32 GB of infra/ -- A ~1.45 GB FLOOR THAT IS INDEPENDENT OF WHETHER IT EVER RUNS TERRAFORM. The 11 non-IRPT trees range 1,190-1,734 MB total with infra/ at a flat 317-325 MB, and NONE carries a .terraform provider directory. THE PROVIDER HALF IS REAL AND IS CONCENTRATED IN ONE TREE: wk-irpt-7-4-apply totals 8,606 MB with infra/ at 7,198 MB -- roughly 6.9 GB ABOVE the 325 MB floor every other tree shows. That single tree is the plugin cache's whole target, and MSTR already freed 18.78 GB of exactly this class from four idle trees. \u2b50 BUT THE FLOOR IS THE LARGER NUMBER IN AGGREGATE AND NOBODY HAS COUNTED IT: 15 non-main worktrees x ~1.45 GB is ~21.8 GB of DUPLICATED TRACKED CONTENT, of which ~16.5 GB is org/ alone. org/ IS THE GOVERNANCE TREE -- task orders, surprise channels, deliverables, drive logs -- and every worker worktree carries a full copy of EVERY project's records, including every project the worker is forbidden to touch. \u26d4 SO THE TWO HALVES DO NOT SHARE A REMEDY. A shared TF_PLUGIN_CACHE_DIR collapses the provider half and leaves the floor untouched, and for a LGIC, CANON or OPLGTW worker worktree -- which never invokes terraform -- IT CHANGES NOTHING AT ALL. A seat reading 'the disk problem is the plugin cache' and sizing future headroom on that basis will under-count every non-terraform worktree it creates by ~1.45 GB. \u26a0 AND THIS CORRECTS THE MECHANISM BEHIND MY OWN PARKED CELL, though not its arithmetic. I sized that cell's worktree at 1.2-1.7 GB from the five trees on this box -- the FIGURE was measured and survives -- but I let it sit beside a disk conversation whose entire subject was provider binaries, which invites the reading that a LGIC worktree is expensive for the same reason an IRPT one is. IT IS NOT. It is expensive because it copies org/, and that cost does not fall when the plugin cache lands. THE NUMBER WAS RIGHT AND THE IMPLIED CAUSE WAS WRONG, which is the same shape as S126 one week's worth of hours later in the same afternoon. \u26d4 NO REMEDY IS PROPOSED AND THAT IS DELIBERATE. A defect and its remedy are separate inferences, and the discriminator is the CONTAINER's contract, not the defect: whether a worker worktree SHOULD carry every project's org/ is a question about what a worker is entitled to read, which is a lane and spine question owned by 0.0.0_AB_MSTR and 1.0.0_SA_CTO, not a disk question. Sparse-checkout, a narrower worker grant and doing nothing are all live readings and this row picks none of them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "du -sm over org/ and infra/ for each of the 16 worktrees from `git worktree list --porcelain`: org/ 715-1,136 MB and infra/ 317-325 MB in 15 of 16",
+      "the 11 non-IRPT trees: d13-visual-elevation 1,251 MB; four krny-c3-* 1,190-1,199 MB; wk-oplgtw-2r2 1,732 MB; wk-oplgtw-6v4p2 1,706 MB; wk-taxsma-1 1,431 MB; verify-m1 1,622 MB -- infra/ flat at 317-325 MB in every one",
+      "wk-irpt-7-4-apply: total 8,606 MB, infra/ 7,198 MB, org/ 1,136 MB -- ~6.9 GB above the infra floor, the provider half",
+      "composition of one non-terraform tree read directly: org/ 715 MB + infra/ 317 MB = 1.03 GB of a 1.19 GB total; no .terraform directory present",
+      "main checkout for contrast: org/ 2,310 MB, infra/ 3,898 MB -- larger than any worktree because it also holds untracked/gitignored content (inboxes, scratch, audit) that worktrees do not",
+      "0.0.0_AB_MSTR 98674 freed 18.78 GB by removing 28 duplicate .terraform/providers dirs from four IDLE worktrees, leaving every worktree in place -- the provider half, measured by its owner"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
