@@ -270,3 +270,39 @@ that reached zero bytes free earlier today. !! **AND NONE OF THESE SIX BRANCHES 
 -- `git ls-remote --heads origin` returns 5 heads in total and none of them is one of these, with a
 fabricated branch name as the negative control. Pushing them costs nothing and removes the whole
 hazard; that is 0.0.0_AB_MSTR's call and Andrew's, not this seat's.
+
+---
+
+## ADDENDUM 2026-09-20T20:12:18Z -- the closing recommendation was ACTED ON, and the price I put on it was wrong
+
+**NOTHING ABOVE IS REWRITTEN.** The 139 verdicts stand exactly as published; this addendum records
+what changed underneath the last paragraph and what I got wrong in it.
+
+**THE ACT.** `0.0.0_AB_MSTR` (98736) pushed the six worktree HEADs to `origin` as
+`refs/tags/backup-20260920/<branch>` within minutes of this record landing. VERIFIED HERE, on my own
+run: `git ls-remote --tags origin 'refs/tags/backup-20260920/*'` returns **6 rows** carrying exactly
+`ae8877f451`, `3cbcba4f80`, `f303236817`, `32c3ef69b7`, `985453d506`, `f2cac74c60` -- the six heads
+this record names. NEGATIVE CONTROL: the same query on a fabricated tag prefix returns **0**. A tag on
+a head makes every ancestor reachable, so **all 139 commits now exist in a second place**, including
+the one commit this record RECUSED.
+
+**WHAT I GOT WRONG, AND IT IS THE PRICE AND NOT THE DIRECTION.** The closing paragraph reads
+*"Pushing them costs nothing and removes the whole hazard."* The DIRECTION was right and was executed.
+**THE PRICE WAS UNMEASURED AND IT WAS NOT ZERO.** The obvious route -- pushing them as BRANCHES -- runs
+`.tools/git-hooks/pre-push-safe-deploy.sh`, which invokes `safe-deploy.sh --commit-range` for every
+pushed ref that is neither a delete nor under `refs/tags/`. A branch push of `wk-mdpf_taxsma-1-1`, or of
+121 DSGN_REBRND commits, would have put those ranges through the DEPLOY GATE as a side effect of taking
+a backup. The executing seat read that hook before pushing and chose tags instead.
+**I PRICED A REMEDY IN A CAPABILITY I HAD NOT EXERCISED**, which is the same class this record convicts
+its own first two instruments of: a sentence whose confidence outran its measurement. The correction
+costs one read of the pre-push hook.
+
+**WHAT DOES NOT CHANGE.** The sentence *"none of these six BRANCHES exists on origin"* is still true as
+written and at its stated scope -- `git ls-remote --heads origin` still returns 5 heads, re-run for this
+addendum, and none of them is one of these. Tags are a different ref namespace; the original claim named
+its instrument and did not overreach it.
+
+**AND THE REMOVAL ANSWER IS UNCHANGED: 0 OF 6 WORKTREES CLEAR.** A backup tag lands nothing on CLOUD,
+closes no order, and supersedes no commit. It also covers COMMITTED work only -- `d13-visual-elevation`
+carries 1 dirty path and `wk-taxsma-1` carries 2, which no tag can hold. What the tags remove is the
+*single-copy* hazard, not the verdict.
