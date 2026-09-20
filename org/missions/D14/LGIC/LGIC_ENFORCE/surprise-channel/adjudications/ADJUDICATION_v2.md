@@ -1921,3 +1921,35 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## Out-of-round disposition -- S110 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S71",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T12:45Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S110 GRADUATED out of round (0 open of 74, sole held row). Both its measurements hold at HEAD, re-run here: W1-S73 IS already repaired while its channel row reads OPEN; W1-S74 reproduces. \u26d4 Its ORDER-SENSITIVITY conclusion is RIGHT but its cited case RAISES rather than splits -- the reversal moved an unregistered token into the leading position. A frame-constant control confirms it properly.",
+ "spec_asserts": "S110: \"'ParityIncrExec' (same pieces, reversed) SPLITS\" -- offered as the evidence that the re-join is order-sensitive.",
+ "world_is": "BOTH OF S110's MEASUREMENTS HOLD AT HEAD 0a174a7148, RE-RUN BY THIS SEAT RATHER THAN INHERITED, AND ITS ORDER-SENSITIVITY CONCLUSION IS RIGHT WHILE THE CASE IT CITES FOR IT IS THE WRONG OBJECT. (1) W1-S73 IS ALREADY REPAIRED IN THE WORLD. grade('opal-cot-bd-session-fetch','SSM_DOCUMENT') returns canonical 'opal-cot-blackdiamond-session-fetch-document' -- 'bd' IS aliased, which is exactly what that row says does not happen. Positive control beside it: the already-canonical spelling grades CONFORMANT, so the grader is working rather than failing everything. \u2b50 AND S110 NAMES THE CLASS CORRECTLY -- it is LGIC_CANON-S3 and W8-S1 a third time in one day: repaired in the world, OPEN in the channel, unread because an INERT label reads as DORMANT rather than as UNVERIFIED. I got that same class wrong this morning in the other direction, calling two rows closed that were not, so the estate has now produced both polarities of it inside six hours and neither was caught by re-reading the row. (2) W1-S74 REPRODUCES EXACTLY: 'ExecIncrParityFailure' canonicalizes to 'exec-incrparity-failure'. Negative controls hold -- 'ExecZzzQqqFailure' gives 'exec-zzz-qqq-failure' and 'ExecFooBarFailure' gives 'exec-foo-bar-failure', both SPLIT normally -- so the re-join is CONDITIONAL on the concatenation forming a registered token, not blind. \u26d4 THE ORDER-SENSITIVITY CLAIM IS TRUE AND S110'S CITED CASE DOES NOT SHOW IT. S110 offers 'ParityIncrExec' (same pieces, reversed) as SPLITTING. At HEAD that input does not split -- it RAISES, RaiseDefect R1.f: 'parity' is in no vocabulary; no registry row resolves it. The reversal moved an unregistered token into the LEADING position, so the case fails for a reason that has nothing to do with re-join order, and a refusal is not a split. \u2b50 THE CLAIM SURVIVES ON A CONTROL THAT HOLDS THE FRAME CONSTANT, WHICH IS THE READ S110 WAS ONE STEP FROM: 'ExecParityIncrFailure' -- the same pieces reversed INSIDE THE SAME FRAME, leading and trailing segments unchanged -- gives 'exec-parity-incr-failure', SPLIT, against 'exec-incrparity-failure' for the registry order. ONLY THE ORDER VARIES, so the re-join is order-sensitive and S110's conclusion is confirmed on evidence that discriminates. \u26a0 WHICH MEANS THE ONLY THING WRONG WITH S110 IS THE SHAPE OF ONE CONTROL, AND IT IS THE SAME SHAPE I HIT AN HOUR AGO ON THE W8-S1 LAXITY PROBE: a case that changes TWO things at once and is read as isolating one. There the arms agreed and the pass was vacuous; here the arms differ and the difference is attributed to the wrong variable. Both are the same discipline -- HOLD EVERYTHING BUT THE VARIABLE, AND CHECK THAT YOUR CONTROL FAILED FOR THE REASON YOU THINK. \u26d4 THE REMEDY DIRECTION IS NOT MINE AND S110 IS RIGHT NOT TO TAKE IT. Deliberate is not correct: whether GRADING_RULE.md N2 is the authority grade() implements (EN-b-1 says it is) or a description that fell behind a deliberate builder is 1.0.0_SA_CTO's ruling, and a defect and its remedy are separate inferences whose discriminator is the CONTAINER's contract. S110 also correctly declines to read the Rule 30 ruling @db4a88e9f7 as reaching these two: its reasoning appears to, but extending another seat's ruling to new objects is that seat's act. I adopt both abstentions and add nothing to them.",
+ "adjudicates": [
+  "LGIC_ENFORCE-S110"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S110",
+   "this seat's run at HEAD 0a174a7148: grade('opal-cot-bd-session-fetch','SSM_DOCUMENT') -> ('OUT-OF-PATTERN','opal-cot-blackdiamond-session-fetch-document'); the canonical spelling -> CONFORMANT",
+   "re-join, CW_ALARM: ExecIncrParityFailure -> exec-incrparity-failure (re-join); ExecZzzQqqFailure -> exec-zzz-qqq-failure and ExecFooBarFailure -> exec-foo-bar-failure (split); IncrParity alone -> incrparity",
+   "THE FRAME-CONSTANT CONTROL: ExecParityIncrFailure -> exec-parity-incr-failure (SPLIT) vs ExecIncrParityFailure -> exec-incrparity-failure (RE-JOIN) -- only the order varies",
+   "S110's cited case at HEAD: ParityIncrExec RAISES RaiseDefect R1.f, 'parity' is in no vocabulary -- a refusal, not a split",
+   "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```

@@ -2534,3 +2534,35 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": false
 }
 ```
+
+## Carrier for S110 -- the ruling and the scope question, both 1.0.0_SA_CTO's
+
+```json
+{
+ "id": "LGIC_ENFORCE-S110",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "TWO REAL grade() DEPARTURES CARRIED INERT/OPEN IN A PRODUCTION BUILDER, and the pair has SPLIT: W1-S73 was repaired in the world while its row still reads OPEN, and W1-S74 reproduces exactly. The re-join W1-S74 reports is CONDITIONAL on the concatenation forming a registered token and ORDER-SENSITIVE within a fixed frame -- deliberate behaviour, which is evidence for the doc-gap reading and not proof of it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S110",
+  "3.0.0_SA_CVO's independent re-run at HEAD 0a174a7148 of both claims, with negative controls and a frame-constant order control (ExecParityIncrFailure SPLITs, ExecIncrParityFailure RE-JOINS)",
+  "S110's own cited reversal case ParityIncrExec RAISES R1.f at HEAD rather than splitting"
+ ],
+ "remedy": "TWO SEPARATE THINGS ARE OWED AND NEITHER IS THIS SEAT'S. (a) THE RULING: is GRADING_RULE.md N2 the authority grade() implements (EN-b-1 says it is), or a description that has fallen behind a deliberate builder? A defect and its remedy are separate inferences and the discriminator is the CONTAINER's contract, not the defect. DECIDER 1.0.0_SA_CTO. (b) THE SCOPE QUESTION, which 2.0.0_SA_COO~G raised and correctly refused to answer for itself: the Rule 30 ruling @db4a88e9f7 authorized the W8-S1 repair SPECIFICALLY, and its reasoning -- lib/opal_naming.py is the estate's mandated grader, so its correctness is a standing obligation independent of round state -- appears to reach W1-S73 and W1-S74 identically. EXTENDING ANOTHER SEAT'S RULING TO NEW OBJECTS IS THAT SEAT'S ACT. 1.0.0_SA_CTO's to say whether it reaches them. \u26a0 AND ONE BOOKKEEPING ITEM THAT IS 2.0.0_SA_COO~G'S, NAMED RATHER THAN TAKEN: W1-S73's remediation row reads OPEN for a defect repaired in the world. I do NOT flip it -- its remediation.owner is 2.0.0_SA_COO~G, and I published a wrong closure against that seat this morning by reading a commit instead of a state. It is named here so it has somewhere to land. \u2b50 THE KEEPABLE INSTRUMENT LESSON, EARNED TWICE TODAY IN OPPOSITE DIRECTIONS: AN `INERT` LABEL READS AS DORMANT WHEN IT MEANS UNVERIFIED. Three rows in one day were each in a different state than their own text said -- one repaired-but-OPEN (LGIC_CANON-S3), one OPEN-and-still-broken (W8-S1), one repaired-but-OPEN again (W1-S73) -- and none was caught by re-reading the row. COST: exercise the artifact once per INERT/OPEN row before quoting its state. NON-APPLICATION: a row whose claim is about a document rather than a behaviour, where reading IS exercising.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v19",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false
+}
+```
