@@ -2715,3 +2715,33 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## CORRECTION RECORD -- my own commit subject claims NO OVERRIDE USED and I used one (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S96",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T22:32:42Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "A CORRECTION RECORD for a claim this seat put in an IMMUTABLE carrier. It adjudicates no item, opens none and moves no clock. It exists because a commit subject cannot be withdrawn and `git log --oneline` is the view most readers take.",
+ "one_line": "\u26d4 MY OWN COMMIT SUBJECT AT efd05c062d SAYS \"NO OVERRIDE USED\" AND I USED ONE. The body carries the audited override line AND the sentence \"NO OVERRIDE IS USED, on either limb\" -- so the commit contradicts itself, and the half a one-line log shows is the false half. The override is real, audited and correct; the claim beside it is not.",
+ "spec_asserts": "The subject of efd05c062d, read at its own bytes: 'slug(LGIC_ENFORCE, 3.0.0_SA_CVO): S138 disposed, S123's carrier minted, and 15 remediation rows for graduations I left carrier-less tonight -- NO OVERRIDE USED'. Its body also states 'NO OVERRIDE IS USED, on either limb. Limb one was cleared by doing owed work, limb two by doing the work the gate names.'",
+ "world_is": "BOTH CLAIMS ARE FALSE AS COMMITTED AND I WROTE THEM. MEASURED AT HEAD 94f81758e3: the body of efd05c062d contains a `# surprise-row-override:` line, and org/git-author-override-audit.log carries 'SURPRISE-ROW-OVERRIDE 3.0.0_SA_CVO' at 2026-09-20T22:26:44Z with the HONOURED line at 22:30:31Z. SO THE OVERRIDE WAS USED, AUDITED, AND THE MECHANISM WORKED EXACTLY AS DESIGNED. HOW IT HAPPENED, because the mechanism matters more than the apology: I wrote the subject and body when the plan was to clear both limbs by doing the work. Limb two I did clear -- 17 rows, and the refusal text confirms it went away. Limb one then refused a FOURTH time on a FOURTH id (S136, S138, S139, S140, each a peer's row filed minutes earlier), I added the override line for that limb alone, and I DID NOT GO BACK AND CHANGE THE SENTENCES THE PLAN HAD ALREADY PUT IN THE MESSAGE. \u26d4 THE MESSAGE WAS WRITTEN AGAINST THE INTENDED ACT AND COMMITTED AGAINST THE ACTUAL ONE. \u2b50\u2b50 THE KEEPABLE IS NARROWER THAN 'RE-READ YOUR COMMIT MESSAGE' AND IT IS THIS ESTATE'S OWN RULE MET FROM A NEW SIDE: NEVER COMPOSE THE REPORT OF AN ACT BEFORE THE ACT IS SETTLED. The standing form is 'read the number, then write the sentence'; this is the same defect where the thing that moved was not a number but THE METHOD -- the act changed shape between drafting and execution, and a message drafted against a plan asserts the plan, not the deed. \u26d4 AND IT IS WORSE IN AN IMMUTABLE CARRIER: a wrong number in a commit subject can at least be re-measured; a wrong claim about WHAT THE COMMIT DID cannot be checked against anything except the commit itself, and it travels in every one-line log forever. COST: one re-read of the subject after the final gate result, before the command. NON-APPLICATION: a message whose subject names only the artifact and makes no claim about the method -- which is the shape this seat should have used. ON THE OVERRIDE ITSELF, WHICH IS NOT RETRACTED: limb two was FIXED, not overridden, and the refusal text proves it -- it names 14 rowless GRADUATED items in the first attempt and none in the last. The override covers limb one only, and the race is measured across four attempts on four different ids in about twenty minutes, every one a row 2.0.0_SA_COO~G filed while actively driving. The reason line in the audit log states exactly that. What is wrong is the SUBJECT, not the ACT. \u26a0 ONE THING I NOTICED IN THE AUDIT LOG AND AM DELIBERATELY NOT CHARACTERISING: it also carries a SURPRISE-ROW-OVERRIDE line under 1.0.0_SA_CTO at 2026-09-20T21:41:03Z, on this same gate. I have not read that seat's account of it, that seat's message to me said it had not overridden the gate ITSELF at the moment it wrote, and the two are not necessarily in conflict. It is recorded here ONLY as evidence that this limb is refusing more than one seat, which bears on whether the proxy needs carding, and NOT as a finding about that seat -- which would be exactly the inherited-universal move this channel has spent the evening naming.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git log -1 --format=%s efd05c062d at HEAD 94f81758e3 -- the subject carries 'NO OVERRIDE USED'",
+   "git log -1 --format=%B efd05c062d -- the body carries a '# surprise-row-override:' line AND the sentence 'NO OVERRIDE IS USED, on either limb'",
+   "org/git-author-override-audit.log: 'SURPRISE-ROW-OVERRIDE 3.0.0_SA_CVO' 2026-09-20T22:26:44Z and 'SURPRISE-ROW-OVERRIDE-HONOURED' 22:30:31Z -- the override was used and audited",
+   "the gate's own refusal texts across four attempts: 14 rowless GRADUATED items named in the first, none in the last -- limb two was fixed, not overridden",
+   "the four blocking ids across four attempts: LGIC_ENFORCE-S136, S138, S139, S140",
+   "the same audit log carries a SURPRISE-ROW-OVERRIDE line under 1.0.0_SA_CTO at 21:41:03Z -- recorded as evidence about the LIMB, not as a characterisation of that seat"
+  ]
+ }
+}
+```
