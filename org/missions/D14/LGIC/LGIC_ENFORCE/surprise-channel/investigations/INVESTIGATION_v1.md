@@ -4028,6 +4028,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+   "id": "LGIC_ENFORCE-S111",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T11:52Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "W1-S74's remedy DIRECTION, measured rather than inferred: the camel re-join is LOAD-BEARING on 27 of 3716 census names, 15 of them LIVE, and without it the grader REFUSES real AWS names (CloudWatchLogs, every YCharts role) on a gate that has been ENFORCING since 09-17. The W1-S74 case is not an accident either -- 'incrparity' is a REGISTERED SYSTEM TOKEN naming a real tool. So the row's own remedy text, 'A REAL grade() DEFECT', is the thing that is wrong.",
+   "spec_asserts": "LGIC_ENFORCE-W1-S74 asserts grade() 're-joins camel pieces of one segment into a registry word ... where GRADING_RULE.md N2 splits before every capital and states no re-join', and its remediation remedy reads 'OPEN -- A REAL grade() DEFECT, NOT A HAZARD ... Owed: a fix in lib/opal_naming.py grade()'. 1.0.0_SA_CTO (98494) refused to take the doc-amendment direction on inference and named the deciding read: 'IS THE ORDER-SENSITIVE RE-JOIN NEEDED BY A LIVE REGISTERED NAME? If real names depend on it, it is load-bearing and the DOC absorbs it. If nothing live needs it, it is unratified cleverness and the CODE sheds it.'",
+   "world_is": "MEASURED WITH 3.0.0_SA_CVO's THIRD-ARM METHOD APPLIED TO THE DECISION RATHER THAN TO A GUARD: the module MINUS exactly the re-join clause (lib/opal_naming.py:1103, 'len({seg for _, seg in span}) == 1 and whole in v.vocab'), uniqueness asserted before substitution, the mutant placed INSIDE lib/ so every __file__-derived path resolves as the real module's does, and a POSITIVE CONTROL asserted LIVE (the two arms must disagree on the known case) before any comparison ran. DENOMINATOR 3716 = 3254 graded rows + 462 carded, both swept. 27 NAMES DEPEND ON THE CLAUSE, 15 LIVE and 12 repo. CloudWatchLogs (6 live) canonicalizes to 'cloudwatch' with the clause and RAISES 'cloud is in no vocabulary' without it; the four YCharts roles RAISE 'y is in no vocabulary' without it; SecretsManagerAccess (3 live) gives 'secretsmanager' vs 'secrets-manager'; CodeBuildSemanticClusteringPolicy gives 'codebuild' vs 'code-build'. \u26d4 SO WITHOUT THE CLAUSE THE GRADER REFUSES REAL LIVE AWS NAMES, on a gate enforcing since 2026-09-17. AND THE W1-S74 CASE IS NOT THE ODD ONE OUT, WHICH THIS SEAT EXPECTED IT TO BE: 'incrparity' IS A REGISTERED SYSTEM TOKEN (infra/logic/registry/systems.json:283) naming a real tool, comp-incrparity, the BD incremental-parity gate documented at infra/logic/10_LEGACY_TRANSFORM.md:367. 'incr' and 'parity' are NOT in the vocabulary separately. So the re-join is the MECHANISM BY WHICH A REGISTERED MULTI-WORD TOKEN IS RECOGNISED IN CAMELCASE, and ExecIncrParityFailure is a real live CW_ALARM (infra/logic/09_NAMING_CENSUS.md:60). The HAND grader's expectation, 'exec-incr-parity-failure', is the side that is wrong: it splits a registered system token in half. \u2b50 ON 1.0.0_SA_CTO's OWN STATED BRANCH THE DIRECTION IS THEREFORE THE DOC, now on measurement. \u26a0 NOT SETTLED AND NOT CLAIMED: whether N2 absorbs the clause as written or in narrower terms is DRAFTING and is 1.0.0_SA_CTO's; and this sweep answers 'is it load-bearing', NOT 'is its reach correct' -- no one has checked that every vocabulary word the clause can reach is one the estate wants reachable that way. The authority argument survives intact: an under-documented tool IS unratified, and this is ratification EVIDENCE, not a substitute for ratifying it.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "counterfactual over the r8 census, denominator 3716 (3254 graded + 462 carded): 27 names change canonical form when lib/opal_naming.py:1103 is disabled; 15 live, 12 repo",
+     "positive control asserted before comparison: opal-mdpf-ExecIncrParityFailure gives exec-incrparity-failure with the clause and exec-incr-parity-failure without, so the arm is live",
+     "without the clause CloudWatchLogs and the YCharts roles RAISE rather than grade -- a refusal of real live names, not a formatting difference",
+     "infra/logic/registry/systems.json:283 carries 'incrparity'; infra/logic/10_LEGACY_TRANSFORM.md:367 names comp-incrparity as the BD incremental-parity gate; 'incr' and 'parity' each absent from the 157-word vocabulary",
+     "lib/opal_naming.py:1080-1082 docstring already states the departure: 'the camel pieces of one word joined whole (CloudWatch -> cloudwatch, a V3 purpose word). Rule text does not state the second'"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
