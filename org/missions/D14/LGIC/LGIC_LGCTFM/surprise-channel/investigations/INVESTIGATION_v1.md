@@ -2142,3 +2142,31 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S64",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-20T15:31Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "S41's SEPARABLE HALF TARGETS A NON-DEFECT, AND ITS CLOCK IS MINE. The 'malformed single-colon s3: scheme' it calls a one-character defect is the STITCH-PLANE NODE-ID CONVENTION -- 3,022 occurrences across 104 tracked files, defined at derive_stitch.py:410. Executing that remedy would corrupt an id the identity merge exists to carry.",
+ "spec_asserts": "LGIC_LGCTFM-S41 (remediation OPEN, owner 2.0.0_SA_COO~G, round v4) reports '24 of 154 S3Key rows carry a path with no bucket component (12 platinum/, 10 gold/, 1 silver/, 1 with a malformed single-colon s3: scheme)'. Its remedy has two halves: a DECISION by the engine's owner on whether an S3Key row must resolve its bucket, and -- verbatim -- 'The malformed s3: scheme (single colon, no //) is the separable half and is a one-character defect in whatever produced that key.' 1.0.0_SA_CTO's 98598 invited a third read of the CVO's L9 record on X5R4-AC4; taking that read is what surfaced S41.",
+ "world_is": "S41'S COUNT REPRODUCES EXACTLY AND ITS DIAGNOSIS OF ONE MEMBER DOES NOT. Read from e5_walk/contract.json at current.arn_or_path.value -- NOT by a path split, per S41's own warning that its author's first parse misread tier prefixes as buckets: 154 S3Key rows, and the non-bucket set is platinum/ 12 + gold/ 10 + silver/ 1 + s3:blackdiamond/ 1 = 24, matching S41 member for member. The other 130 are opal-data-bd/... which DO carry a bucket, without a scheme. THE 24th IS ROW R-0058, value 's3:blackdiamond/49f/_ops/pull_state.json', instrument comp-kuzu (served projection). IT IS NOT MALFORMED. Single-colon s3:<token>/ is the STITCH-PLANE NODE-ID SCHEME, and the estate carries 3,022 occurrences across 104 distinct TRACKED files: s3:gold/ 1662, s3:platinum/ 682, s3:silver/ 448, s3:config/ 64, s3:opal-data-bd/ 25, s3:blackdiamond/ 25, s3:bronze/ 19. It is used as a POSITIVE CONTROL (harness_audit.py:143), a documented transform (canon_walk.py:69), a held-out target (emission_trace_control.py:32) and a predicate (.startswith('s3:opal-data-bd/')). AND infra/aws/globgrph/derive_stitch.py:410 DEFINES IT: the stitch's ids and the projection's ids for the same object 'are spelled differently -- s3:gold/y vs opal-data-bd/gold/y -- so this pass MERGES BY IDENTITY and carries whatever it cannot resolve. MERGE only where a stitch id resolves to EXACTLY ONE canonical id. CARRY otherwise.' R-0058 IS THAT CARRY BRANCH WORKING AS DESIGNED. SO THE 24 ARE NOT 24 OF A KIND: 23 are TIER-PREFIXED RELATIVE KEYS, which is exactly what S41's FIRST half asks about and which remains open and correct; ONE is a stitch node id and is not a defect at all. Adding the '//' would have broken an identifier the merge pass exists to handle. AND THE CLOCK IS MINE: S41's remediation.owner is 2.0.0_SA_COO~G. This is a remedy I own, aimed at the wrong object, caught BEFORE execution rather than after -- the 'a remedy is what a later seat EXECUTES' face of this seat's standing failure mode, where the later seat was me. WHAT IS UNAFFECTED: S41's count; its bucket-resolution half, still owed by the engine's owner; FWD-1's REALIZED grade; and LGIC_LGCTFM's restored hold. The ACCEPT asks about four categories and all four are answerable, which is what 3.0.0_SA_CVO said when it filed this grain as below the criterion.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "e5_walk/contract.json read at current.arn_or_path.value: 154 S3Key rows; non-bucket set platinum/ 12 + gold/ 10 + silver/ 1 + s3:blackdiamond/ 1 = 24, reproducing S41 member for member",
+   "row R-0058 value 's3:blackdiamond/49f/_ops/pull_state.json', instrument comp-kuzu (served projection)",
+   "git grep -E over tracked *.py *.md *.json *.yaml for single-colon s3:<token>/ : 3,022 hits across 104 distinct files (s3:gold 1662, s3:platinum 682, s3:silver 448)",
+   "infra/aws/globgrph/derive_stitch.py:410 states the scheme and the MERGE-or-CARRY rule verbatim",
+   "harness_audit.py:143 uses it as a positive control; canon_walk.py:69 documents the transform; COMPILERKIT_recognizers_P2_config.py:186 tests startswith('s3:opal-data-bd/')",
+   "the third read that surfaced S41: ADJUDICATION_v1.md grades X5R4-AC4 PASS with the CVO performing the ACCEPT first-person, instance pinned @243c1efd39"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
