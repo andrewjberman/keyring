@@ -463,7 +463,22 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     do NOT pre-`git add`; `-F` not `-m`** — and the message file must be written by a NON-SHELL writer
     (Write tool / python): a `printf`/heredoc-built file re-opens the injection one step earlier. `--force`
     bypasses only contamination checks, never a lane refusal — that escape is `GIT_COMMIT_AUTHOR_OVERRIDE=
-    <LANE>`, audited, SINGULAR (N lanes = N commits). `docs/architecture/ADHC_OWNPTH.md`.
+    <LANE>`, audited, SINGULAR (N lanes = N commits). ⛔ **OF THOSE THREE PROPERTIES ONLY *AUDITED* IS
+    MECHANICAL, AND THIS LINE READ AS THOUGH ALL THREE WERE UNTIL 2026-09-20 — THE SAME LAW-STRONGER-THAN-TOOL
+    SHAPE RULE 27 CARRIES.** `.tools/git-hooks/owned-paths-check.sh:118-122` is the entire consumer: `-n
+    "$OVERRIDE"` is the whole test and `exit 0` is the whole consequence, so the value is interpolated into the
+    AUDIT LINE and read nowhere else — no lane lookup, no path resolution, no comparison against the agent, and
+    the exit covers the **ENTIRE STAGED SET**. So `=<LANE>` is not validated (any non-empty string passes, a
+    typo included) and **SINGULAR IS A HUMAN DISCIPLINE, NOT A MECHANISM**: a commit spanning four lanes passes
+    exactly as one spanning a single lane. ⭐ **AUDITED is real and is the half that works — the row is always
+    written, which is why the log is the instrument for asking who used it.** Measured 2026-09-20 by
+    `2.0.0_SA_COO~O` at the RUNNING bytes (`core.hooksPath` → `.git/hooks`, whose `pre-commit:73-74` invokes the
+    `.tools/` copy by reference rather than carrying its own) with a 2-file consumer census, and corroborated on
+    a DIFFERENT instrument by `1.0.0_SA_CTO`: `org/git-author-override-audit.log` carries OVERRIDE rows at **2,
+    3, … up to 273 files**, more of them multi-file than single. ⚠ **That corroboration proves MULTI-FILE, not
+    MULTI-LANE** — it settles that the exit is not per-file, and no measurement here shows anyone has yet
+    crossed lanes under one override. **COST: none — a do-not-believe.** **NON-APPLICATION: the AUDITED half,
+    which behaves as written.** `docs/architecture/ADHC_OWNPTH.md`.
 14b. **While other seats are LIVE, commit anything bigger than a one-file edit in YOUR OWN linked
     worktree and merge it back in a gap** — five seats plus their worker subagents share ONE MUTABLE
     INDEX, so the check-then-act window is now shorter than the staging cadence: `2.0.0_SA_COO` measured
