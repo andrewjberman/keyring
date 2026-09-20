@@ -4198,6 +4198,30 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
    },
    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+   "id": "LGIC_ENFORCE-S118",
+   "project": "LGIC_ENFORCE",
+   "fabric": "laptop",
+   "surfaced_by": "2.0.0_SA_COO~G",
+   "surfaced_at": "2026-09-20T14:02Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "one_line": "SIZING INPUT FOR CLAUSE 2, WHICH CURRENTLY RESTS ON A ROW COUNT ALONE. The 1298 is not 1298 independent judgments: its {system} half (1119 rows) concentrates onto 169 first-token families, 72% of rows covered by 40 of them, and 22% is a SINGLE known defect class -- firm tokens sitting in the system slot. This does NOT say it is a round rather than a project.",
+   "spec_asserts": "LGIC_ENFORCE's `phase`, ruled ~00:3xZ: 'Clause 2 is the 1298 unfillable-form residual ... the round-8 analysis already ruled its owner IS A CATEGORY that TRANSFERS TO A NAMED PROJECT THE TICK ONE IS SEATED, AND NOT BEFORE. AND THE REASON IS STRONGER THAN IT BARS OUTSIDE THE ENGINE: 1298 REGISTRY DECISIONS IS A PROJECT, NOT A ROUND.' The hold rests on that sizing, and the seating it waits on is an open call at Andrew.",
+   "world_is": "MEASURED OVER THE RESIDUAL ITSELF at r13, denominator 1298 OUT-OF-PATTERN placeholder rows, of which 1119 carry {system}: THE POPULATION IS HEAVILY CONCENTRATED, NOT FLAT. 169 distinct first-token name families across the 1119. Coverage curve: top 5 families = 383 rows (34%), top 10 = 518 (46%), top 20 = 651 (58%), top 40 = 811 (72%), top 80 = 954 (85%). Only 13 families appear exactly once -- 8% of families and 13 of 1119 rows -- so this is NOT a long tail of one-offs, which is the shape a per-name judgment would produce. \u2b50 AND 243 ROWS (22%) ARE FIRM TOKENS IN THE {system} SLOT: bd 125, inf 93, cot 25. That is not 243 separate questions -- it is ONE already-characterized defect class, the 'firm-as-system' row that LGIC_NAMING's TENSION_RANKING names first ('the firm is the first token, where the system should be, in ~210 names'). A rule about firm-vs-system in that slot reaches all 243 at once. \u26d4 WHAT THIS DOES NOT ESTABLISH, AND I WILL NOT LET THE NUMBER READ WIDER THAN IT IS: A NAME FAMILY IS NOT A DECISION. Families may MERGE (several could resolve to one owning system) or SPLIT (one family could need several). The proxy is a grouping of resource names, not an enumeration of judgments, and the true decision count is NOT measured here. 169 is a structural fact about the names; it is not an answer to 'how many rulings'. \u26d4 AND THIS ROW DOES NOT ARGUE THE HOLD IS WRONG OR THAT CLAUSE 2 IS A ROUND. That sizing is 1.0.0_SA_CTO's and the seating is Andrew's open call. What it changes is the INPUT: '1298 registry decisions' reads as 1298 independent judgments, and the population it names does not have that shape. A seat sizing the work from the row count alone is sizing a flat set that is measurably not flat. \u26a0 SCOPE AND VINTAGE: this covers the {system} half only (1119 of 1298). {scope} 122, {cadence} 108 and {source} 85 are NOT analysed. The corpus is the r13 report (estate 2026-09-19 05:56Z), so it is a floor rather than today's live figure.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "r13 census, 1298 OUT-OF-PATTERN placeholder rows; 1119 carry {system}",
+     "169 distinct first-token families over those 1119; coverage top5 383 (34%), top10 518 (46%), top20 651 (58%), top40 811 (72%), top80 954 (85%)",
+     "13 families appear exactly once (8% of families, 13 rows) -- not a long tail of one-offs",
+     "firm tokens in the {system} slot: bd 125, inf 93, cot 25 = 243 rows, 22% of the {system} half",
+     "TENSION_RANKING.md row 1 already characterizes firm-as-system: 'the firm is the first token (it sits where the system should) in ~210 names'"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
