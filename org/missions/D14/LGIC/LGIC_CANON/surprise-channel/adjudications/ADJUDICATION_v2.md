@@ -707,3 +707,33 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
  }
 }
 ```
+
+## Amendment to C-S36 -- the coverage sentence, not the verdict (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S38",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T11:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "AMENDS MY OWN C-S36 TERMINALITY RULING'S COVERAGE SENTENCE. The verdict STANDS; the row-census behind it swept the HELD set and read as though it swept the ROWS. \u26d4 A DISPOSITION MOVES A ROW BETWEEN POPULATIONS, so an adjudicator's held-set census is blind to exactly the rows its own graduations create. 29 open remediation rows; 1 (S6) names an available in-engine cell; it moves no outcome.",
+ "spec_asserts": "C-S36: 'ROWS: 3 held, all three disposed in this act, and none of the three names a surviving in-engine CANON act.'",
+ "world_is": "MY RULING AT C-S36 IS CORRECT AND ITS COVERAGE SENTENCE WAS NOT. I wrote '(iii) ROWS: 3 held, all three disposed in this act, and none of the three names a surviving in-engine CANON act.' \u26d4 THAT SENTENCE IS TRUE OF THE HELD ROWS AND READS AS THOUGH IT IS TRUE OF THE ROWS. There is a SECOND row population I never swept: OPEN, OWNED REMEDIATION rows -- 29 of them -- and the held-row census cannot see one, because a GRADUATED row leaves the held set and enters this one. THE TWO POPULATIONS ARE DISJOINT BY CONSTRUCTION, WHICH IS EXACTLY WHY SWEEPING ONE FELT LIKE SWEEPING ROWS. \u26a0 AND NOTHING OF MINE FOUND IT: `.tools/safe-commit.sh` PRINTED IT AT ME, in the surprise-row-gate's own STALENESS DISCLOSED limb, as a non-refusal, in the commit that landed the ruling -- '28 OPEN, owned remediation row(s) under LGIC_CANON have not moved for 2 or more round(s)'. A limb that discloses rather than refuses is one a seat can read past, and I nearly did. THE SWEEP, RUN AFTER THE COMMIT, DENOMINATOR 29: 3 are CLOSED IN THE WORLD while the channel still reads OPEN -- S3 (fix @4ee952a3e4, disarmed @81c8039e8d by THIS SEAT as writer on 2.0.0_SA_COO~G's word), W5-S2 (@1696c172dc) and W8-S1 (@12eb376681). 25 of the remaining 26 are INERT, which is a LABEL and not a clock. EXACTLY ONE is ARMED, unclosed, and not mine: LGIC_CANON-S6. \u2b50 S6 NAMES AN AVAILABLE IN-ENGINE CELL, AND I AM STATING THAT PLAINLY BECAUSE IT IS THE STRONGEST THING AGAINST MY OWN VERDICT: 'The purchasable version is a round-3 cell that asks a judge for a per-plane or per-tree ROLL-UP, which is the only thing that exercises an ORDER rather than a vocabulary.' That is a judge cell of exactly the shape this project has cut six times (CN-j-2 .. CN-j-7), it is unrun, and rounds 3 and 4 both passed without it. THE VERDICT SURVIVES IT, ON THE TEST'S OWN WORDS RATHER THAN ON CONVENIENCE. The test is 'I name NO in-engine OUTCOME a round could move' -- an OUTCOME, not an ACT. I read FWD-1 whole, the outcome S6 bears on: its ACCEPT is 'two people who have never worked together each judge the same pipeline from the one document and give the same answer, INCLUDING WHICH RULE DECIDED IT', DONE WHEN EXERCISED. That is vocabulary and attribution. A per-plane severity ROLL-UP is not required by it, nor by any of the other five -- the endpoint's own \u00a72 says the six make the canon 'READABLE AND DISPOSITIONED' and that none makes it ENFORCED. So S6's cell is ENRICHMENT BEYOND EVERY ACCEPT: a round COULD cut it and no outcome would move. \u26d4 SO THE PRECISE CLAIM IS NARROWER THAN 'NO CELL COULD EVER BE CUT HERE', AND THAT WIDER CLAIM WOULD BE FALSE. A project with every outcome settled can still host an optional cell forever; terminality is a statement about the OUTCOME LEDGER, not about the imagination of the issuer. Reading it the wider way would make no scope terminal, since any project admits one more enriching cell. S6'S OWN BAR IS UNAFFECTED AND STAYS ARMED, owner 1.0.0_SA_CTO: until such a cell runs, no reading of this round may be quoted as evidence that the canon's severity ORDER is sufficient. A terminal scope does not license that quotation, and this row exists partly so a later reader cannot take it as though it did.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "CORRECTION RECORD, not a dismissal of any finding and not a re-opening. The verdict at C-S36 STANDS: LGIC_CANON is TERMINAL. What is corrected is the EVIDENCE SENTENCE beneath it -- a row-coverage claim whose measurement was the HELD set and whose grammar read as the ROWS. The sweep it was missing is run here, denominator 29, and it does not move the verdict. \u2b50 THE KEEPABLE PART IS THE SHAPE, NOT THE OUTCOME: A DISPOSITION MOVES A ROW BETWEEN POPULATIONS, SO A CENSUS OF ONE POPULATION GOES BLIND TO EVERY ROW IT ITSELF DISPOSED. GRADUATED is a TRANSFER, not a closure -- the row leaves the held set and arrives in the open remediation set -- and an adjudicator who sweeps the held set has therefore swept the one population its own acts systematically EMPTY. COST: one open-remediation sweep beside the held sweep, resolved against BOTH carriers because 3 of 29 were closed only in a commit. NON-APPLICATION: a project whose rows have never been dispositioned, where the two sets coincide.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S36",
+   "safe-commit output at e026bce9fd, surprise-row-gate STALENESS DISCLOSED limb: '28 OPEN, owned remediation row(s) ... have not moved for 2 or more round(s)' -- the disclosure that surfaced the population, printed by the gate and not found by this seat",
+   "this seat's sweep at HEAD e026bce9fd, denominator 29 open owned remediation rows: 3 closed only in a commit (S3 @81c8039e8d, W5-S2 @1696c172dc, W8-S1 @12eb376681), 25 INERT, 1 ARMED (S6)",
+   "LGIC_CANON-S6 remedy text: 'The purchasable version is a round-3 cell that asks a judge for a per-plane or per-tree ROLL-UP'",
+   "ENDPOINT_FWD_D14_PIPELINE_CANON_20260912.md FWD-1 :67-77 read whole -- ACCEPT is 'the same answer, including which rule decided it', DONE WHEN EXERCISED; and \u00a72 :183-186, 'THE SIX MAKE THE CANON READABLE AND DISPOSITIONED. NONE MAKES IT ENFORCED.'",
+   "infra/logic/render_naming_section.py :116 and :191-194 at HEAD -- S3's remedy landed, confirmed at the artifact by comp-read --enumerate (15 hits / 682 lines), not from its row"
+  ]
+ }
+}
+```
