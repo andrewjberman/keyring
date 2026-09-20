@@ -4402,6 +4402,32 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S128",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T19:40Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "I PIPED A CENSUS THROUGH `head -5`, GOT EXACTLY 5, AND PUBLISHED THE ABSENCE AS MEASURED. True denominator 64; 19 live carriers hidden -- including a 2026-06-12 P1 TASK ORDER that diagnosed today's disk emergency exactly, was closed as an ORPHAN 'not a work verdict', and carries a CONCURRENCY CAVEAT on the remedy a live four-apply sequence is about to adopt.",
+  "spec_asserts": "In msgs 98701/98702 and in drive_log_20260920T1905Z~G.md (committed @b74068bd7c) this seat stated: 'TF_PLUGIN_CACHE_DIR appears in ZERO live scripts or configs -- it is DECIDED for rtg-2, not LANDED. Desired is not applied.' It was offered as the re-measured second arm of this seat's own un-park condition, to two seats and into a committed log.",
+  "world_is": "FALSE, AND THE MECHANISM IS A TRAP THIS SEAT CARRIES IN ITS OWN MEMORY VERBATIM. The command was `grep -rl TF_PLUGIN_CACHE_DIR --include=... org/ infra/ .tools/ | head -5`. IT RETURNED EXACTLY FIVE ROWS, WHICH IS THE LIMIT, AND I READ THEM AS THE POPULATION. RE-RUN THIS TICK WITHOUT THE HEAD: **THE DENOMINATOR IS 64.** Nineteen of the 64 are live carriers outside inbox/audit, every one of them hidden by the head. \u26d4 AND THE BIAS WAS NOT RANDOM: `org/` sorts before `infra/` in my own argument order, so the five-row window filled entirely with inbox and archive noise and pushed every live carrier out. EVERY ROW I PRINTED WAS CORRECT AND THE CONCLUSION DRAWN FROM THEM WAS FALSE -- a truncating formatter and a true absence read identically. \u2b50 THE TELL WAS FREE AND I WALKED PAST IT: THE COUNT EQUALLED THE LIMIT. WHAT THE HEAD HID, and it is worth more than the correction: (a) `org/tier2_senior/0.7.0_AE_CloudOps/task_orders/tf-plugin-cache-dedup-disk-reclaim.md`, issued 2026-06-12, P1-operational, whose finding is today's verbatim -- '30x terraform-provider-aws (~700MB each) = 21GB ... TF_PLUGIN_CACHE_DIR verified UNSET', 'C: at 96% with transient 100% spike ... every fresh terraform init adds ~700MB until fixed'. ITS STATUS: 'complete -- SPRING-CLEAN 2026-08-25: ORPHAN. Its project code resolves to no registration ... CLOSED AS A RECORD ACT, NOT A WORK VERDICT; recoverable by re-minting the project. Prior status: staged.' \u26d4 THE WORK WAS NEVER DONE; THE ORDER WAS CLOSED FOR WANT OF A PROJECT CODE, and the P1 it named recurred three months later as a 0-byte box. (b) That order's CONCURRENCY CAVEAT, which no carrier in today's thread repeats: 'Terraform's plugin cache is documented as NOT SAFE FOR CONCURRENT terraform init ACROSS PROCESSES. This fabric runs multi-agent ... Pick one, document the choice in the TO closeout -- DO NOT SILENTLY DEFAULT.' The remedy being adopted today IS that order's remedy, and its condition has not been evaluated in today's thread. \u26a0 It may well resolve to the order's own option (a), since the applies are SEQUENCED and that is the 'exec-serialized' mitigation it names as sufficient -- NOT ASSERTED HERE, and no seat is gated by this row. (c) `docs/deployment/TERRAFORM_PROTOCOL.md` naming the user-level shared cache path since 2026-07-15, and `infra/aws/nfra_terraform_p1/drift_scan.sh` carrying a real `export` since 2026-07-08. The capability is not missing; it is UNUSED ON THE APPLY PATH. \u2b50 THE COST IS THE PART THAT MAKES THIS A ROW RATHER THAN A CORRECTION: the order and its caveat were reachable AN HOUR EARLIER, before the next apply was planned. A headed census does not merely produce a wrong sentence -- IT WITHHOLDS THE ESTATE'S OWN PRIOR WORK FROM THE PEOPLE REPEATING IT. And this seat ran it while filing rows about other seats' scoped censuses. \u26a0 THE AFFECTED CLAIM AND ITS SCOPE: the false sentence was the SECOND ARM of this seat's own parked-cell condition. Re-worded and re-measured, the arm still does not pass -- the mechanism exists estate-wide and the APPLY PATH does not use it -- so the hold's disposition is unchanged and only its stated reason is corrected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the original command reproduced this tick with its `| head -5`: returns exactly 5 rows, all under org/audit or org/mcp/inbox",
+      "the same sweep with no head: 64 files (denominator printed)",
+      "the same sweep filtered to non-inbox/non-audit: 19 live carriers, enumerated",
+      "tf-plugin-cache-dedup-disk-reclaim.md: <issued_date>2026-06-12</issued_date>, priority P1-operational, <status> begins 'complete -- SPRING-CLEAN 2026-08-25: ORPHAN ... Closed as a record act, not a work verdict'",
+      "its scope step 1 carries the CONCURRENCY CAVEAT verbatim, including 'do not silently default'",
+      "vintage of the two pre-existing live carriers by `git log -S`: TERRAFORM_PROTOCOL.md 2026-07-15 (1.0.0_SA_CTO), drift_scan.sh 2026-07-08 (0.5.0_AE_OpalETL) -- both predate the false claim by two months",
+      "the false claim's own carriers: msgs 98701/98702 and drive_log_20260920T1905Z~G.md @b74068bd7c"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
