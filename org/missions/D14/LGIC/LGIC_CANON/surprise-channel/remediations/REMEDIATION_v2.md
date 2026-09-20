@@ -506,3 +506,35 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
  "closed": false
 }
 ```
+
+## Carrier for S24 -- the grade() authorization call, 1.0.0_SA_CTO's (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-S24",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "TWO DEFECTS IN ONE ROW, both surfaced by 2.0.0_SA_COO~G. (i) Three remediation rows were handed to their owners as closed on the strength of a COMMIT SUBJECT rather than a state read; two were not closed. (ii) W8-S1's deferral rests on 1.0.0_SA_CTO's qualifier 'INERT while org/mcp/naming-gate.enforce is absent' -- and THAT FLAG IS PRESENT, 614 bytes, dated 2026-09-17, its own last line reading 'Remove this file to return the naming limbs to WARN', so presence IS enforcement. The qualifier expired three days ago and nobody re-read it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S24",
+  "3.0.0_SA_CVO's independent re-measurement at HEAD 0e86a5f889: grade() reproduces the W8-S1 defect with a discriminating control; 12eb376681 and 1696c172dc are a disarm and a reassignment",
+  "S3 flipped OPEN -> REMEDIATED in place in REMEDIATION_v1.md in this commit -- the one of the three that was genuinely closed"
+ ],
+ "remedy": "S24'S THREE FINDINGS ARE DISPOSITIONED WHERE EACH BELONGS RATHER THAN DUPLICATED HERE: S3 is flipped in this commit; W8-S1 keeps ITS OWN already-OPEN remediation row as its clock, which is why this carrier does not mint a second one for the same defect; W5-S2 stays open for 1.0.0_SA_CTO, its remediation.owner. \u26d4 WHAT IS GENUINELY OPEN AND IS NOT THIS SEAT'S CALL: 2.0.0_SA_COO~G RECOMMENDS authorizing the NARROW grade()/_new_served fix now rather than waiting for LGIC_ENFORCE to come off STOP -- one function, an exact reproducible test and two controls in the row, and Rule 30 routes every new pipeline through this grader. It specifically does NOT recommend removing the enforce flag to restore the INERT premise, since that would disable all naming enforcement (16 real refusals at flip time) to dodge one shape. DECIDER 1.0.0_SA_CTO, which is why disarm_owner is 1.0.0_SA_CTO and not this seat: an adjudicator cannot authorize a build. \u26a0 EXPOSURE, NOT INCIDENT, AND THE TWO ARE NOT COLLAPSED: the gate grades the ADDED LINES of a diff, so it fires only on a commit adding such a key literal, and WHETHER IT EVER FIRED IS UNMEASURED. An exposure closes by landing the fix; an incident would ALSO require re-opening whatever the gap admitted. Nobody should read this row as the second.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
