@@ -7196,3 +7196,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "notes": "NOT A REQUEST TO RE-OPEN ANY GRADED ARM, and this row does not assert that any entitlement gap is UNenforced -- it asserts that the estate currently holds NO EVIDENCE either way on this route, which is a different and weaker claim than the controls have been reporting. The remedy is not a better control: it is S100. DISARM CONDITION, measurable and inherited rather than invented: when S100 disarms, re-run any one holdings negative control TOGETHER WITH a permitted-account request and require the two codes to DIFFER; that pair is the discrimination the control has been missing. Until then, a holdings refusal may be recorded but must not be cited as proof that a scope boundary was enforced. GENERAL FORM, offered for the round analysis and not filed as a second row: a negative control is only evidence when the POSITIVE case is exercised beside it on the same instrument in the same run -- otherwise a globally-broken route manufactures PASSes for every control pointed at it."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-W4-S45",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+  "surfaced_at": "2026-09-20T15:40:34Z",
+  "one_line": "TO IB-rtg-4's own IDENTITY section says 'build-and-upload.sh from /c/', but running build-and-upload.sh with cwd=/c/ (a bare drive-root path outside any git repository) makes infra/aws/lambda/ci/manifest-index-check.py's git-show calls fail with 'not a git repository', which the gate reads as 'NO BLOB' for every vendored member and REFUSES the build -- even though the vendored bytes are byte-identical to the pinned blob. Running from cwd=/c/tmp/wk-irpt-7-4 (still a /c/-prefixed path, but inside the repo) builds cleanly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's IDENTITY/WORKTREE section: 'Python: py -3.12. AWS .tools/aws. .tools/terraform.exe by path. Recursive grep/find rail-DENIED; Read/Grep tools. build-and-upload.sh from /c/.' -- read literally this instructs cwd=/c/ for the build invocation.",
+  "world_is": "cd /c/ && bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings REFUSED at the INDEX-SOURCED MANIFEST GATE: 'NO BLOB' for errors.py, resolve.py and handler.py at a pin (ccbf4ac3cb5c20ffd7ad937221a562b87abf9c76) that DOES exist and IS an ancestor of HEAD (git merge-base --is-ancestor confirmed) -- the failure is cwd, not the pin or the blob. git rev-parse --show-toplevel from cwd=/c/ returns 'fatal: not a git repository'; manifest-index-check.py's _index_blob() runs subprocess.run(['git','show', pin:path]) with no cwd= argument, so it inherits whatever cwd invoked python, and only returns bytes when that cwd sits inside a git worktree. Re-running the IDENTICAL command from cwd=/c/tmp/wk-irpt-7-4 (this worktree's root, itself under /c/) produced 'MATCH' on all 3 members and a clean build (SHA256 rAAn3bt7MZXpxFgric7LlrNW9uv0xXgpiZmb+MOf/y0=, size 132K).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this run: cd /c/ && bash /c/tmp/wk-irpt-7-4/infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings -> REFUSED: 3 finding(s) over a denominator of 3, each \"no index blob at ccbf4ac3cb5c20ffd7ad937221a562b87abf9c76:<path>\"",
+      "this run: cd /c/tmp/wk-irpt-7-4 && bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings -> OK: 3 of 3 members index-equal, manifest-equal, and LF (0 CR bytes); Complete - 1 function(s) built and uploaded",
+      "this run: cd /c/ && git rev-parse --show-toplevel -> fatal: not a git repository (or any of the parent directories): .git",
+      "infra/aws/lambda/ci/manifest-index-check.py:61-65 _index_blob(): subprocess.run([\"git\",\"show\",\"%s:%s\" % (pin, path)], ...) with NO cwd= kwarg -- inherits the caller process cwd",
+      "IRPT_BCKEND.TO-IB-rtg-4.the-holdings-loader-follows-the-directory-pointer.md IDENTITY section, this order's own text: 'build-and-upload.sh from /c/'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DISARMED FOR THIS RUN by this seat: the build in this order's own deliverable was run from cwd=/c/tmp/wk-irpt-7-4 (still under /c/, satisfying the spirit of avoiding a C:\\-style Windows path, but inside the repo so git-show resolves), not from bare /c/. The hazard remains ARMED for the other three round-7 sibling cells (IB-rtg-1/2/3), each of which will invoke this same script under the same order-template wording, and for any future order copying this IDENTITY block verbatim. DISARM CONDITION: the IDENTITY template wording is corrected to name a cwd inside the worktree (e.g. 'build-and-upload.sh, cwd inside the worktree, never bare /c/'), or manifest-index-check.py's _index_blob() is fixed to pass cwd=REPO explicitly so the gate cannot silently mis-fire on caller cwd."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W4-S46",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+  "surfaced_at": "2026-09-20T15:40:34Z",
+  "one_line": "This order's arm (c) never-widen ten-root Terraform plan (the scope check confirming ONLY the holdings root changes) found TWO OTHER roots, export and performance, ALSO carrying a pending 'Plan: 0 to add, 1 to change, 0 to destroy' -- but their diffs are tagged Cell IB-s-14/Outcome FWD-8 (export) and Cell IB-s-11/Outcome FWD-3 (performance), NOT this round's cells, so this drift PRE-DATES round 7 and is unrelated to this order's holdings edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's arm (c) plan step asks for the OTHER roots to be 'RE-TAKEN' as a never-widen scope check, implicitly expecting 'No changes' on every root but the one this act touches (the rtf-13 precedent packet states exactly that for its own six other roots).",
+  "world_is": "terraform plan on export and performance (this worktree, vendored .tools/terraform.exe, no apply) each show ONE substantive aws_lambda_function.this update whose before/after source_code_hash and s3_object_version do not correspond to anything this order built; the changed resource's own tags name Cell IB-s-14 (export) and Cell IB-s-11 (performance) -- pre-round-7 cells -- meaning an earlier build was uploaded to the shared S3 artifact bucket but never applied, or the deployed function has since drifted from its own declared artifact. This order's holdings root shows the expected single substantive change (uS+WBeNxiCkYU2pdGalaONZ74SvoWEiYx669KWYKQDA= -> rAAn3bt7MZXpxFgric7LlrNW9uv0xXgpiZmb+MOf/y0=, tagged Cell IB-rt-7/Outcome FWD-2, this order's own cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this run: terraform plan (no apply) on infra/aws/terraform/investor-reporting/export -> Plan: 0 to add, 1 to change, 0 to destroy; show -json: aws_lambda_function.this source_code_hash 9IMayS94if11cyKq51TbcyBG8cUwbbUWlQMlT9XhiaQ= -> cn8YKEP2oQdfvAjdpa32Wfp9oJqhAIMGkECv+H4vUg4=, tags.Cell=IB-s-14, tags.Outcome=FWD-8",
+      "this run: terraform plan (no apply) on infra/aws/terraform/investor-reporting/performance -> Plan: 0 to add, 1 to change, 0 to destroy; show -json: aws_lambda_function.this source_code_hash IHosoGqGUxh2M/UjefNnmbLSXVgTxlNG76cGPjEd1tw= -> W4rYXgZz/LmZ1zO9I6eiKWc7PgSH+eKAUYXzttCmRTA=, tags.Cell=IB-s-11, tags.Outcome=FWD-3",
+      "this run: terraform plan on the other 7 roots (api, core, directory, holdings[expected change], intake, narrative, ops, ycharts) -> holdings is the only round-7 cell change; api/core/directory/intake/narrative/ops/ycharts read No changes",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/NEVER_WIDEN_SIGNOFF_PACKET_IB-rtf-13.md 'THE OTHER SIX ROOTS RE-TAKEN ... each read No changes ... (the rtf-12-class artifact drift the round-6 face names elsewhere is not reproduced here)' -- naming a KNOWN prior class of exactly this drift on a DIFFERENT pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT this order's defect and NOT fixed here: this order's <paths> grant does not reach export/ or performance/'s Lambda source, and this cell's own confined bound is holdings/entry.py only. Filed because a FUTURE never-widen packet on ANY investor-reporting root that asserts 'all other N roots show No changes' needs to account for this pre-existing drift or it overclaims -- exactly the class the rtf-13 packet's own parenthetical already flagged once. DISARM CONDITION: the export and performance drift is resolved (applied or the stale artifact reverted) by whichever cell/order owns those roots, or a standing note is added naming this drift so no future packet cites a false 'No changes' on those two roots."
+}
+```
+
