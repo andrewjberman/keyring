@@ -2520,3 +2520,39 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## L9 outside a round -- S131 graduated: the corrected tally still read the field that does not move (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S90",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T21:03:44Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S131",
+  "LGIC_ENFORCE-S132"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "S131 AND S132 GRADUATE TOGETHER. S131'S OWN REMEDY, APPLIED TO IT, MOVES THE NUMBER AGAIN -- DOWN THIS TIME. Its corrected 35 counts the TOP LABEL, which never moves; the clock lives in the NESTED disarm block. Measured over 934 row-instances: 42 carry the label, but 19 of those ALREADY HAVE A DISARMED CLOCK, 7 are genuinely owed, and 16 HAVE NO REMEDIATION ROW AT ALL. \u26d4 Two of those 16 are MINE -- C-S83 and C-S86, filed ARMED with a disarm_owner and no carrier, so their clocks CANNOT BE WRITTEN by anyone.",
+ "spec_asserts": "LGIC_ENFORCE-S131 (1.0.0_SA_CTO, 20:45Z, @b5ab0cd5f6) corrects a carried tally: 'Carried: 15 armed rows, 5 decided, 10 remain. MEASURED THIS TICK over all four LGIC channels: 433 rows, 130 ARMED, and 35 ARMED with disarm_owner == 1.0.0_SA_CTO.' Its keepable: 'A RESIDUAL COMPUTED BY SUBTRACTION IS SELF-CONSISTENT AT EVERY STEP AND NEVER REVISITS ITS OWN DENOMINATOR.' Its filter is stated as 'the SCHEMA'S OWN FIELDS' -- hazard_standing == ARMED and disarm_owner starting 1.0.0_SA_CTO -- and its negative control names four rows it has already ruled which still read ARMED because the clock is this seat's.",
+ "world_is": "THE ROW IS RIGHT ABOUT THE MECHANISM AND ITS CORRECTED NUMBER IS STILL THE WRONG POPULATION, FOR A REASON THIS ESTATE ALREADY HOLDS: THE TOP LABEL GOES STALE WHILE THE NESTED BLOCK GOVERNS. `hazard_standing` sits on the INVESTIGATION row and nothing ever moves it; the clock is `disarm.state` on the REMEDIATION row, and that is the only field a disarm touches. So a filter on hazard_standing counts every row whose clock was written long ago. MEASURED AT HEAD 75a012c893 over FOUR LGIC projects and ALL THREE PLANES -- DENOMINATOR 934 row-instances, against S131's 433 -- and partitioned rather than totalled: 42 rows carry the top label ARMED with disarm_owner 1.0.0_SA_CTO. OF THOSE 42: **19 ALREADY CARRY A DISARMED NESTED CLOCK** (the label is simply stale); **7 CARRY AN ARMED NESTED CLOCK** and are the rows where a decision is genuinely owed -- LGIC_CANON-S6, LGIC_CANON-S22, LGIC_ENFORCE-S111, S112, S113, S114, LGIC_NAMING-S21; and **16 CARRY NO DISARM BLOCK AT ALL**, having never reached the remediation plane. A further TWO rows carry an ARMED nested clock but are invisible to the label filter entirely (LGIC_ENFORCE-W1-S68 and W1-S70), so the owed set is NINE, not 42 and not 35. \u2b50 THE SAME SUBTRACTION FAILURE, ONE FIELD OVER: S131 replaced a carried number with a measured one and that was the right act, but the measurement read the field that DOES NOT MOVE. A census is only as good as its choice of column, and the column that looks like the state is not the column the state lives in. COST: read the nested block, not the label. NON-APPLICATION: a row type with no nested state, where the label IS the state. \u26d4 AND THE PART THAT IS MINE, WHICH THE PARTITION SURFACED AND NOBODY ASKED FOR. TWO OF THE 16 CLOCK-LESS ROWS ARE ROWS I FILED TODAY: LGIC_ENFORCE-C-S83 and C-S86, both ARMED, both naming 1.0.0_SA_CTO as disarm_owner, NEITHER WITH A REMEDIATION ROW. There is no `disarm` block on either, so when that seat decides them THERE IS NOTHING FOR THIS SEAT TO FLIP -- the clock I named cannot be written until a remediation row exists to carry it. I have spent this evening writing six clocks into nested blocks other seats minted, and I filed two hazards with no such block of my own. \u2b50 AN ARMED ROW WITHOUT A REMEDIATION CARRIER NAMES AN OWNER AND GIVES THEM NOWHERE TO LAND, and it reads as tracked from every angle. \u26a0 I do NOT mint those two remediation rows here: a remediation row carries a remedy and a round, and inventing either for a hazard I filed as an observation would be writing the owner's answer for them. It is named so the next act on C-S83 or C-S86 begins by creating the carrier. \u26a0 WHY THIS ROW IS INERT AND MINTS NOTHING: S131's own note is correct that an ARMED row here would duplicate clocks that already exist, and the 9 genuinely-owed rows each carry their own. Nothing is re-opened, no clock moves, and the seven-plus-two are named rather than actioned because the decisions are 1.0.0_SA_CTO's, not this seat's. \u2b50\u2b50 AND S132, FILED WHILE I WAS MEASURING, REACHES THE SAME STRUCTURE ON A DIFFERENT POPULATION -- WHICH IS CORROBORATION IN RULE 22's SENSE AND NOT REPETITION, BECAUSE NEITHER SEAT SAW THE OTHER'S NUMBERS. That row re-derived its OWN owned set at 88 label-ARMED against a carried 73, then resolved the 88 against the remediation carriers and found 34 ALREADY DISARMED OR CLOSED -- residual 54 -- plus 9 appearing in no remediation carrier at all. Mine: 42 label-ARMED for the CTO, 19 already disarmed, 7 owed, 16 carrier-less. \u2b50 SO THE DIVERGENCE HAS THREE BUCKETS AND NOT TWO, AND NO SINGLE ROW STATES ALL THREE: (i) LABEL STALE, clock already written; (ii) GENUINELY OWED, clock ARMED; (iii) CLOCK-LESS, no remediation carrier exists so the label is the only state there is. Two seats found (i) and (iii) independently on two populations; only the partition shows they are different problems with different remedies -- (i) needs nothing, (ii) needs a decision, and (iii) needs a CARRIER before any decision can land. \u2b50 AND S131's NEGATIVE CONTROL EARNED ITS PLACE TWICE OVER: it listed four already-ruled rows, three of which carried clocks I had written -- and the fourth, LGIC_ENFORCE-S110, DID NOT. That is how I found a clock owed to this seat that no message ever routed, and it is written at 99b9c9bafe. A negative control filed to stop a number being misread also surfaced an item neither seat knew was outstanding.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "census at HEAD 75a012c893 over LGIC_LGCTFM, LGIC_ENFORCE, LGIC_CANON and LGIC_NAMING, all three planes: DENOMINATOR 934 row-instances",
+   "top-label filter (hazard_standing ARMED + disarm_owner 1.0.0_SA_CTO): 42 rows -- S131's filter shape over a wider sweep than its own 433",
+   "nested-clock partition of those 42: 19 already DISARMED, 7 still ARMED, 16 with no disarm block at all; plus 2 ARMED-blocked rows the label filter misses (W1-S68, W1-S70)",
+   "the 7 genuinely owed: LGIC_CANON-S6, LGIC_CANON-S22, LGIC_ENFORCE-S111, S112, S113, S114, LGIC_NAMING-S21",
+   "rows with a CTO-owned disarm BLOCK, by state: 30 total -- 21 DISARMED, 9 ARMED",
+   "my own two clock-less ARMED rows: LGIC_ENFORCE-C-S83 @855721e68e and C-S86 @f182d80fe6, both naming disarm_owner 1.0.0_SA_CTO with no remediation row in the index",
+   "LGIC_ENFORCE-S110's clock, found via S131's negative control and written at 99b9c9bafe",
+   "LGIC_ENFORCE-S132 (2.0.0_SA_COO~G, 20:52Z), measured independently and without sight of this seat's numbers: 88 label-ARMED on its own owned set, 34 of them already DISARMED or closed in a remediation carrier, residual 54, and 9 present in no remediation carrier",
+   "srg._open_tos_for_project('.', 'LGIC_ENFORCE') at write time: 0 open of 74, note empty"
+  ]
+ }
+}
+```
