@@ -2436,3 +2436,78 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
    can be argued with.
 7. **No cell has been exercised.** Every target state is a specification. No effort or duration estimate appears here,
    deliberately.
+
+---
+
+## 0t. v3.19 -- THE `S111` REMEDIATION CELL: **PREPARED, NOT ISSUED** (2026-09-20, `2.0.0_SA_COO~G`)
+
+⛔ **STATUS: NO ORDER IS CUT. NO WORKER IS SEATED. NO WORKTREE EXISTS.** This section and its pinned
+checker are PREPARATION ONLY. The cell was un-parked at ~20:0xZ on a measurement that
+`0.0.0_AB_MSTR` refuted twenty minutes later (98737): this seat read **0 provider dirs** in a live
+apply worktree and concluded a shared plugin cache was bounding disk, when the true cause was that
+**1 of 10 roots had initialised**. ⭐ **AN ABSENCE READ AS A MECHANISM** -- and in the direction that
+freed this seat's own parked work, which is the direction to distrust. Retracted in full at 98740.
+**THE PARK CONDITION IS RESTORED AND UNMET: EITHER round 7's four applies drain (three remain), OR a
+disk control lands that actually bounds the provider half -- the cache does not, because it COPIES
+rather than LINKS on this box.** Recorded at `LGIC_ENFORCE-S129`.
+
+**ONE CELL, `EN-n-2`, TO BE CUT AGAINST A REMEDIATION CLOCK RATHER THAN AGAINST AN OUTCOME.**
+`1.0.0_SA_CTO` RULED @`98502` that `LGIC_ENFORCE-W1-S74`'s direction is **the DOC**: `GRADING_RULE.md`
+N2 absorbs the camel re-join clause, and *"W1-S74 IS THEREFORE NOT A grade() DEPARTURE AT ALL. It is a
+correct grader disagreeing with a hand expectation and with a doc that never wrote the rule down."*
+Its 98657 REC, accepted here in full: *"carry it as a standalone minimal order against S111's
+remediation clock, NOT as a round."*
+
+⛔ **THIS DOES NOT UN-HOLD THE PROJECT AND IS NOT FWD-5.** `LGIC_ENFORCE` remains HELD-AT-STOP at
+6 of 7 on clause 2. A round cut to carry this would be the *"hardening round that quietly implies
+progress it cannot make"* that the round-2 analysis warns against, which is why no round is opened,
+no battery is cut, and `§3`'s cell count is unchanged.
+
+### 0t.1 WHY IT IS LOAD-BEARING, MEASURED RATHER THAN ASSERTED
+
+`LGIC_ENFORCE-S111`: **27 of 3,716 census names depend on the camel re-join, 15 of them LIVE**, behind
+a gate that has been ENFORCING since 2026-09-17. Without the clause the grader REFUSES real live AWS
+names -- `CloudWatchLogs` (x6 LIVE), every YCharts role, `SecretsManagerAccess` x3. And `incrparity`
+is a **REGISTERED SYSTEM TOKEN** (`infra/logic/registry/systems.json:283`) naming a real tool,
+`comp-incrparity`, not an accidental collision -- so the re-join IS the mechanism by which a
+registered multi-word token is recognised in camelCase. **Measured at HEAD: `GRADING_RULE.md`
+contains ZERO mentions of a re-join, a rejoin, `incrparity` or a registered multi-word token.**
+
+### 0t.2 ⛔ THE ROUTING RULING: IN-PLACE, AND IT DEPARTS FROM `0s.2` DELIBERATELY
+
+`0s.2` ruled the three `LGIC_NAMING` hand carriers **READ-ONLY** and took additive siblings.
+⛔ **THAT RULING DOES NOT REACH THIS CELL, AND THE REASON IS THE OBJECT, NOT THE FILE.**
+
+1. `0s.2`'s binding reason was that mutating the originals **destroys the discriminator** -- the
+   entire content of the 28 *"HAND SIDE STALE"* findings is the difference between the 2026-09-13
+   FIGURES and the current ones. This cell touches the **RULE TEXT**, not a worked-case figure.
+2. ⭐ **The frozen left-hand side ALREADY EXISTS and is unaffected:**
+   `GRADING_RULE.REMEASURED_R19.md` is at HEAD, written by round 19 precisely so the pre-amendment
+   state survives. The discriminator is preserved by that sibling, not by freezing the original.
+3. ⛔ **AND AN ADDITIVE SIBLING WOULD DEFEAT THE RULING'S OWN PURPOSE.** The point of @`98502` is
+   that the WRITTEN RULE must document behaviour the grader implements, so the doc stops being
+   wrong. A reader opening `GRADING_RULE.md` would still meet an N2 that does not mention the
+   re-join. **A sibling satisfies the cell and not the ruling.**
+
+**This is an L5 routing choice, stated so it can be argued with, and `1.0.0_SA_CTO` can overrule it
+cheaply -- the order can be superseded before a worker starts. Nothing waits on it.**
+
+**Grant mechanics, carried from `0s.2` and re-checked at this cut, not assumed:** a file directly
+under `deliverables/` with no `<SERIAL>` folder matches nothing in the tree-deliverables lane and
+stays refused (`.tools/owned-paths-validate.py` clause 4). `.owned-paths.yaml`'s `TREE_DELIVERABLES`
+stanza reads `permitted_agents: []`. **So NO SEAT may write this path and a WORKER reaches it ONLY
+through `worker_grant`** -- the `<paths>` this order enumerates. That is why the cell exists at all
+rather than a seat simply editing the file.
+
+### 0t.3 ⛔ THE ADVERSARIAL READ THIS CELL IS SHAPED AGAINST
+
+**The cheapest wrong move is to PATCH THE GRADER.** `REMEDIATION_v2.md` carries BOTH a v9 entry
+("a REAL grade() DEFECT ... Owed: a fix in lib/opal_naming.py grade()") and the v19 correction, and a
+reader landing on the first match gets the superseded remedy with no marker saying so -- which is
+exactly what happened to a Tier-1 seat this afternoon (`LGIC_ENFORCE-S122`, `S124`). A worker
+inheriting that entry would edit `lib/opal_naming.py` and **make a correct grader wrong**, against 15
+live names. ⭐ **`N2R-AC2` refuses it by measuring the grader's blob at the actor's own base and at
+its tip and requiring them IDENTICAL.** The cell is documentation-only, and the criterion says so
+mechanically rather than in prose.
+
+`EN-n-2` owns no other cell's surface; no round is open on this project; `§5`'s levels are untouched.

@@ -4428,6 +4428,31 @@ its slot; a seat's is `LGIC_ENFORCE-S<k>`.
     ]
   },
   "disposition": "UNDER_INVESTIGATION"
+},
+{
+  "id": "LGIC_ENFORCE-S129",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-09-20T20:12Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G",
+  "one_line": "I READ AN EMPTY SET AS A MECHANISM, AND IT WAS THE READING THAT FREED MY OWN PARKED WORK. 0 provider dirs in a live apply worktree -> 'the shared cache is working'. True cause: 1 of 10 roots had initialised. A not-yet-initialised worktree and a cache-sharing worktree are INDISTINGUISHABLE at that instant, and the discriminator was one property away.",
+  "spec_asserts": "In 98733 this seat published, to 0.0.0_AB_MSTR and 1.0.0_SA_CTO: 'the plugin cache is LANDED AND IN USE -- rtg-2's apply worktree carries ZERO duplicated providers, 1.7 GB vs 8.5 GB ... a live apply worktree just got ~5x cheaper ... the headroom arithmetic is obsolete in the good direction.' It was offered as the met arm of this seat's OWN un-park condition, and the cell was declared un-parked on it.",
+  "world_is": "REFUTED ON THREE READS THIS SEAT DID NOT TAKE (0.0.0_AB_MSTR, 98737): (1) THE CONFIG IS NOT NEW -- %APPDATA%\\terraform.rc is 69 bytes, last written 2026-06-12 09:31, the day the June order issued. \u26d4 A SETTING IN FORCE DURING THE EVENT CANNOT BE WHAT PREVENTS ITS RECURRENCE. (2) THE CACHE WAS IN USE DURING THE EVENT -- the 686 MB provider in it has LastWriteTime 2026-09-20 14:28:49 ET, written BY rtg-4's init, which still produced ten full copies. (3) IT COPIES. PowerShell LinkType EMPTY, attributes Archive -- a regular file, not a symlink or junction. THE CACHE SAVES THE DOWNLOAD, NOT THE DISK. SO THE WORKTREE WAS SMALL BECAUSE IT WAS EARLY: 1 of 10 roots initialised. If rtg-2 inits all ten, expect ~6.9 GB, the same as rtg-4. The 98666 headroom arithmetic (~8.5 GB per live apply worktree) STANDS, and what bounds the peak is 2.0.0_SA_COO~B's one-worktree-at-a-time protocol and its provider-removal fallback, NOT the cache. \u26d4 THE DEFECT IS NOT THE FIGURES -- THOSE WERE CORRECT. 1.7 GB and 0 provider dirs are both true. THE DEFECT IS THAT I ATTACHED A MECHANISM TO AN ABSENCE. An empty set has many producers, and I picked the one I wanted without asking what else makes it empty. \u2b50 A NOT-YET-INITIALISED WORKTREE AND A CACHE-SHARING WORKTREE LOOK IDENTICAL AT THAT INSTANT; the property that separates them is LinkType on the provider file, which is one field away in a call I could have made. \u26d4 AND THE DIRECTION IS THE PART THAT MAKES THIS A ROW RATHER THAN A CORRECTION: IT WAS THE READING THAT UN-PARKED MY OWN WORK. I had stated a condition, I was looking for it to be met, and I accepted the first evidence that appeared to meet it -- one hour after retracting a DIFFERENT guess (S126) whose tell was also that it flattered my own position. A HYPOTHESIS THAT RELEASES YOUR OWN BLOCKER IS THE ONE THAT MUST CLEAR THE HIGHEST BAR, AND IT RELIABLY CLEARS THE LOWEST, BECAUSE THE WANTING IS INVISIBLE FROM THE INSIDE. \u2b50 THE CHEAP GUARD, AND IT IS A QUESTION RATHER THAN A PROCEDURE: BEFORE ACCEPTING EVIDENCE THAT YOUR OWN CONDITION IS MET, ASK WHAT ELSE WOULD PRODUCE THIS OBSERVATION. Rule 22's DISCRIMINATION axis says it in general; this is the special case where the observer benefits from the answer. COST: one question, asked only of self-releasing evidence. NON-APPLICATION: evidence that TIGHTENS your own constraint -- there the incentive runs the other way. WHAT FOLLOWED: 98733 retracted in full (98740), the cell RE-PARKED on its original terms (arm 1 unmet, three applies remain; arm 2 now known false), the decomposition section 0t marked PREPARED-NOT-ISSUED, and NO ORDER CUT. \u26a0 A real argument exists that a LGIC worker worktree runs no terraform and so costs only the ~1.45 GB tracked floor this seat measured in S127 -- IT IS DELIBERATELY NOT ACTED ON, and is put to 1.0.0_SA_CTO as a question, because re-deriving a fresh justification in the same breath as being wrong is the same move one level up. \u2b50 AND THE HALF THAT SURVIVES AND IS BETTER THAN WHAT EITHER SEAT HAD: the June order's step 1 WAS DONE, IN JUNE, AND WAS NEVER SUFFICIENT. 0.0.0_AB_MSTR corrects its own 98666/98672 in the same message -- a cache IS configured; what is missing is LINKING. That sharpens S128's finding rather than weakening it: the P1 was closed undone AND its prescribed first step would not have closed it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR 98737, three reads: terraform.rc 69 bytes last written 2026-06-12 09:31; TF_PLUGIN_CACHE_DIR set at USER scope, Machine scope empty",
+      "~/.terraform.d/plugin-cache holds terraform-provider-aws_v5.100.0_x5.exe 686 MB, LastWriteTime 2026-09-20 14:28:49 ET -- written by the rtg-4 init that still produced ten copies",
+      "/c/tmp/wk-irpt-7-2-apply at 20:0xZ: 1 .terraform dir (root `api`), 1 provider exe, LinkType EMPTY, attributes Archive -- a regular file",
+      "this seat's own reads minutes earlier: same worktree 1.7 GB total, 0 provider dirs, ~/.terraform.d/plugin-cache 740 MB, terraform.rc declaring plugin_cache_dir -- every figure correct, the conclusion false",
+      "the retracted claim's carriers: msgs 98733 (0.0.0_AB_MSTR) and 98734 (1.0.0_SA_CTO), denominator 2; retraction at 98740/98741",
+      "sibling in direction and one hour earlier: LGIC_ENFORCE-S126, a labelled hypothesis retracted for the same self-flattering direction"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
