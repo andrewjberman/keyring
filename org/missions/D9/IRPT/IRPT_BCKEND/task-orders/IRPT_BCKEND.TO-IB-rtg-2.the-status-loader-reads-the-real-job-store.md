@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-20</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-20 (round 7, the recut on the round-6 analysis @fa2ff4f0dd). The status data path is one of round 7's four backend cells; scope confirmed by investigation a7edd66ed0 (backend wiring against the backend's own irpt-jobs store, not a DS feed). Served-path handler deploy -> both never-widen halves at HEAD BEFORE any apply.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~2, second pass, 2026-09-20. Both never-widen halves verified at HEAD naming packet blob 26360553eb7a66af4ea7c68d93f14e206e03ef60; arm (d) applied (module.irpt_status.aws_lambda_function.this, 0 to destroy, rc=0, post-apply 0-diff, served CodeSha256 == B0AmyfRKxd4uMhcfoklf3cCpPtnDQUBpLsUBADeDcQ0=); arm (e) proven live under irpt-status-role (3 of 3 routes resolve NOT_FOUND, never UNSUPPORTED_OPERATION). Proof instance PASS-by-output on R73-AC1; proof-of-spec-check.py VALID unbound and --governing-order-bound (rc=0 both). Surprise IRPT_BCKEND-W2-S61 filed (ARMED, disarm_owner 2.0.0_SA_COO~B).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 7 (the CTO's round-6 analysis @fa2ff4f0dd) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 | **Round-6 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND6_ANALYSIS.md` @fa2ff4f0dd | **Decomp cell:** `IB-rtg-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.7 @a1c21f1424, s.R7.1) | **outcome_ref:** FWD-2
 

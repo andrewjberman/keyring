@@ -6730,7 +6730,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "spec_asserts": "IB-rtg-3 BOUNDS: 'The ONLY code that deploys: irpt-performance-adapter rebuilt with the reconciliation; the served-byte delta exactly that or STOP' and 'a source change confined to performance/tenants.py (+ _ids/ only if it already exposes the mapping)'.",
   "world_is": "A second firm-keyed dict sharing the exact retired id space this order was cut to reconcile (handler.py's RECORDED_LABELS) sits OUTSIDE the confined edit, so the confined fix is locally correct and globally incomplete: it trades a DEPENDENCY_UNAVAILABLE failure mode for a NO-CAPTURE one on every real request, under the function's own DEFAULT transport mode, the moment this build is applied.",
   "notes": "Not fixed here: touching handler.py would violate this order's own served-byte-delta bound ('exactly that or STOP'), so this is filed rather than repaired in-cell. Disarm needs either a follow-on order reconciling RECORDED_LABELS to the same opaque id space (the same `_ids.opaque_firm` calls this row's evidence already computed), or an explicit ruling that NO-CAPTURE is an acceptable interim outcome for the recorded/default transport mode. Whichever branch, arm (d)/(e) of THIS order do not run this pass (never-widen halves ABSENT, STOP-and-report per the face), so nothing ships on this finding before a reviewer sees it."
-}
+},
+  {
+    "id": "IRPT_BCKEND-W2-S61",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-20T21:05:37Z",
+    "one_line": "Second-pass arm (e) battery for IB-rtg-2 wrote a NEW battery_ib_rtg_2.py at the SAME path pass-1 committed, overwriting pass-1's 4-arm/12-check offline composition battery (mutant, MemoryStore-backed RUNNING/UNCERTAIN/never-READY, negative controls) with a different live-HTTP battery; the offline coverage is no longer present at HEAD under this filename, only recoverable via git history.",
+    "spec_asserts": "The task order arm (e) instruction (face @HEAD) says to reuse ../deliverables/0.7.0_AE_CloudOps~V/battery_ib_rtf_10.py -- the bounded test-principal MECHANISM, a NEW epoch, the full lifecycle -- for the live proof; it names no filename for THIS order's own battery and does not address what happens to a prior pass's already-committed battery under the SAME conventional name.",
+    "world_is": "Pass 1 (this same assignee, 0.9.0_WK_IRPT_BCKEND~2) had already committed org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py at 27c5e480b3 (blob f4748140f5c3c391d1d6caf5dd3511ee463cb11d): a 4-arm, 12-sub-check, network-free battery exercising status_loader.py directly against checkpoint.MemoryStore() fixtures (the pre-fix mutant shape, a claimed-lease RUNNING envelope, an expired-lease UNCERTAIN envelope, never-READY, and two negative controls). This second pass wrote a DIFFERENT battery under the identical path to perform the live HTTP proof arm (e) names, committed at 53721f1f6f -- overwriting the offline battery's content at HEAD. Both versions independently satisfy the task order's <criterion id=\"R73-AC1\"> invocation+<expect> (same path, same token IBR73-STATUS-LOADER-SERVES-ENVELOPE), so the mechanical criterion is not affected; what is lost from the WORKING TREE is the offline, network-free regression coverage of status_loader.py's own state-transition rules (RUNNING/UNCERTAIN/never-READY), still fully recoverable at `git show 27c5e480b3:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 27c5e480b3:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py -- 298 lines, 4 arms (arm_a_mutant, arm_b_composition_direct, arm_c_negative_control, arm_d_wiring_end_to_end), 12 named sub-checks, no network/AWS call",
+        "git show 53721f1f6f:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py -- the second-pass replacement: packet/K-CODE/precondition/live-HTTP-proof arms, real AWS + real HTTP calls, no MemoryStore composition-level checks of status_loader.py's own RUNNING/UNCERTAIN/never-READY branches",
+        "both versions print the identical token IBR73-STATUS-LOADER-SERVES-ENVELOPE on their own PASS, so proof-of-spec-check.py grading R73-AC1 against the task order's <expect> pattern is unaffected either way"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not remedied in this order: BOUNDS forbid widening this order's own deliverable beyond arms (d)/(e), and reconstructing/merging pass-1's offline battery back into this file is exactly the kind of neighbouring-defect fix this worker is told not to perform. Filed for the issuer to decide whether a follow-on cell should carry the offline composition-level regression coverage forward (e.g. a separate battery_ib_rtg_2_offline.py, or a merge of both arm sets into one file) so status_loader.py's RUNNING/UNCERTAIN/never-READY state-machine rules are exercised by something other than a live network call against the one production lease row this order's own WRITERS census names."
+  }
 ]
 ```
 
