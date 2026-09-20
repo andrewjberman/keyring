@@ -129,6 +129,29 @@ this cell.** It is drafted as a CHECK whose result lands in an existing gate or 
 as an alarm, an SNS topic or a notification. **If the cell cannot be built without a notification surface, it
 becomes a card for Andrew and stays uncut.**
 
+### R2-i -- contract-read provenance disclosure (NEW, RULED DIRECTION from msg 98487)
+
+⭐ **RULED BY `1.0.0_SA_CTO` (98487): THE DEFAULTS DO NOT CHANGE AND THE READ DISCLOSES.** Fail-closed was
+REFUSED as the remedy -- it is a behaviour change on a production serving path (today a contract lacking
+`export_rows` serves with a sane ceiling; fail-closed would refuse) and nobody ratified that availability
+change. ⭐ **And the mirroring convention is a GOOD PROPERTY, not the defect: it makes a missing key degrade
+to CORRECT behaviour rather than wrong behaviour, which most defaults do not do.** The defect is PURELY
+EPISTEMIC -- HELD and ABSENT are indistinguishable TO A READER while the served result is identical.
+
+**So the cell PRESERVES the mirroring and ADDS the distinguishability**: when a contract read falls back to
+its literal default, that fact is recorded at the call site so a later reader can tell which state produced
+the value. Same ceiling, same refusal, same latency, same everything a consumer sees. Governing law is the
+estate's own -- **a value must carry its claim, in a field a consumer can reject on**, and the consuming half
+is the whole mechanism.
+
+⛔ **NOT AN ALERT, ALARM, NOTIFICATION OR MONITOR, and the ruling says so explicitly** -- it is a provenance
+field on a value the code already computes. **Wiring it to a send is a separate call and it is Andrew's.**
+
+⭐ **FIXED ONCE AT THE PATTERN, NOT TWICE AT THE INSTANCES** (98487 adopting `S58`'s reasoning): the two known
+instances (`export_rows`:845, `ticket_seconds`:790) are the same shape, and `S58`'s 24 unmeasured keys make
+the instance count a **FLOOR, not a total** -- a per-instance fix would need re-running every time the census
+widens; a shared read helper would not. **The cut, its shape and its timing are this lane's under Rule 27.**
+
 ### R2-f -- sentinel `"*"` and populated-roster cleanup, ready but VALUE-BLOCKED
 
 The correctness half proceeds: an EMPTY roster means UNCONFIGURED and fails CLOSED, never tenant-wide.
@@ -145,7 +168,7 @@ pinned at the minute (`/graph/health` 200 beside `/graph/cypher` 502, retry 200 
 window on the graph store, **outside this project's boundary**). R-OG-23 s.3's naming obligation is
 discharged. ⛔ **DO NOT RE-CUT THIS CELL.** Its content folded into R2-c's window determination.
 
-### R2-h -- the export path's whole-result-set materialisation (NEW, from `S57`)
+### R2-h -- the export path's whole-result-set materialisation (NEW, from `S57` + `S59`)
 
 Candidate cell, drafted only. Falsify or confirm by MEASUREMENT what `S57` established by SOURCE READ: profile
 the allocation on the production export path and size the three representations against the 22.6:1 ratio, so
@@ -154,17 +177,40 @@ the streaming branch of R-OG-22 is costed rather than asserted. ⚠ **It does NO
 MEASUREMENT cell, not a rewrite:** re-architecting the exporter to stream is not drafted here and is not this
 lane's to choose.
 
+⭐ **`S59` @`(this commit)` MAKES THE BRANCH MUCH CHEAPER THAN "RE-ARCHITECT THE EXPORTER", AND THE CELL MUST
+BE SIZED AGAINST THE CHEAP SHAPE, NOT THE EXPENSIVE ONE:**
+- `export.py:203-210` `write_csv` ALREADY consumes **row by row** (`for row in rows: writer.writerow(...)`) and
+  never indexes or `len()`s its input. **If `export_query` YIELDED instead of RETURNING a list, the writer
+  needs no change at all.**
+- `export.py:257-264` `generate_csv` calls `export_query` at `:261` and `write_csv` at `:264` -- so the
+  download route CALLS the in-memory path and then writes its result. **One path, not two**; the file write
+  happens AFTER the memory cost, not instead of it. (The `:915` docstring names a second caller, which was a
+  reason to CHECK for a second path, never evidence one existed.)
+- ⛔ **AND THE PRD DOES NOT MANDATE THE IN-MEMORY FORM** -- kill this misreading before anyone cites it.
+  `NFRA_OPLGTW_PRD.md:181` says "Generate and validate a bounded CSV completely before starting its response;
+  then reauthorize and stream without buffering it on the event loop" and expects local export files to exist
+  and be deleted. **That constrains ORDER, not RESIDENCY**, and the response layer already satisfies it.
+- **PROVENANCE of the 250000, for R-OG-22 question 2:** `git log --all -S'export_rows'` on the contract returns
+  EXACTLY ONE commit -- `2af252cb39 [1.0.0_SA_CTO~A] Register D9 NFRA_OPLGTW and author its Gateway PRD`. The
+  value was AUTHORED at PRD time and never modified. ⚠ **That is not proof no consumer needs 250k** -- absence
+  of a record is not absence of a consumer -- but the archive supports "authored" and holds nothing supporting
+  "elicited", so the question now belongs to Andrew or a named consumer rather than to the repository.
+
 ## Fan-out, when this is cut
 
-⚠ **RE-DERIVED 2026-09-20 ~11:1xZ, because the cell set changed: R2-g is DISCHARGED and R2-h is NEW, so the
-count is SEVEN again by coincidence and not by stasis -- a number that did not move is exactly the one to
-re-derive rather than carry.** Cells: R2-a, R2-b, R2-c, R2-d, R2-e, R2-f, R2-h.
+⚠ **RE-DERIVED TWICE ON 2026-09-20 -- at ~11:1xZ (R2-g discharged, R2-h added) and again at ~11:3xZ when
+R2-i landed from ruling 98487. The count is now EIGHT: R2-a, R2-b, R2-c, R2-d, R2-e, R2-f, R2-h, R2-i.**
+⭐ At the first re-derivation it came back SEVEN, unchanged from the original -- **by coincidence, since one
+cell left and one arrived. A number that did not move is exactly the one to re-derive rather than carry**,
+and it has now moved.
 
-R2-d, R2-e and R2-f have no unmet dependency today. Chains: R2-a, R2-b and R2-h are ONE chain (the
-materialisation measurement feeds the cap decision feeds the reserve -- R2-h now sits at its head, where R2-a
-used to); R2-c stands ALONE (R2-g, its former chain partner, is discharged); R2-d follows R2-e. **Cap 8,
-stated here and restated in the issuance commit.** Slot ~2 carries the benchmark cells, having built the
-harness; ~6 carries nothing new until its walkthrough orders clear.
+R2-d, R2-e, R2-f and R2-i have no unmet dependency today. Chains: R2-h -> R2-a -> R2-b is ONE chain (the
+materialisation measurement feeds the cap decision feeds the reserve -- **R2-h sits at its head, where R2-a
+used to**); R2-c stands ALONE (R2-g, its former chain partner, is discharged); R2-d follows R2-e; R2-i stands
+alone and touches no other cell's surface. **Cap 8, stated here and restated in the issuance commit** --
+⚠ **and eight cells against a cap of 8 is now AT the cap, not under it, so the next addition forces either a
+raise stated in the issuance commit or a second round.** Slot ~2 carries the benchmark cells, having built
+the harness; ~6 carries nothing new until its walkthrough orders clear.
 
 ## What must be true before this is cut
 
