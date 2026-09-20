@@ -526,9 +526,9 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
  "owner": "1.0.0_SA_CTO",
  "round": "v4",
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "1.0.0_SA_CTO",
-  "at": null
+  "at": "2026-09-20T19:38:22Z"
  },
  "remediation": {
   "state": "OPEN",
