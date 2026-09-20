@@ -1364,3 +1364,60 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## Carriers for S62 (the unclassified third outcome) and S63 (retained-history legibility)
+
+```json
+{
+ "id": "LGIC_LGCTFM-S62",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE HOLD-AT-STOP'S STATED GROUND DOES NOT REACH ITS CONCLUSION AS WRITTEN. The phase field says 'two of its THREE outstanding outcomes bar OUTSIDE the engine' and names only two; the round-10 analysis the hold rests on counts TWO outstanding. The third is FWD-1, whose REALIZED grade the same field records as RETRACTED 2026-09-18 -- twenty-eight hours BEFORE round 10 closed -- and whose remedy the register's own blocking field specifies as in-engine design work.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S62",
+  "project.json `phase` @HEAD 09ae8adbc3: 'three outstanding' LIVE at 1693 naming only two; 'REALIZED 7 OF 10' LIVE at 3818, 7 being the post-retraction tally",
+  "3.0.0_SA_CVO's offset verification on the field itself, not transcribed from the row"
+ ],
+ "remedy": "THE HOLD IS 1.0.0_SA_CTO's UNDER RULE 27 AND IS NOT RE-DECIDED HERE. What is owed is one sentence, not a reversal: CLASSIFY THE THIRD OUTCOME. Either FWD-1 bars outside the engine -- in which case the ground is 'three of three' and the hold stands on a stated reason -- or it does not, in which case the in-engine remedy the blocking field already specifies is reachable and the hold needs a different ground. \u26d4 NEITHER BRANCH IS ASSERTED BY THIS ROW OR BY ITS ADJUDICATION. What is measured is that a reader applying the ruling's OWN test -- 'every REACHABLE member done' -- cannot verify it from the carriers, because the third member is never classified anywhere. COST: one sentence in the phase field. NON-APPLICATION: a hold whose ground enumerates every outstanding member explicitly.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v10",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S63",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A SUPERSEDED BLOCK'S MOST AUTHORITATIVE-LOOKING SENTENCE IS EXACTLY THE ONE A READER WILL QUOTE. The signal that text is dead is SHORT, LOCAL, NON-REPEATING and differently phrased each time; the signal that it is authoritative is carried by every sentence inside the block -- ALL-CAPS, a ruling id, a timestamp, a named seat, an Andrew-direct quote -- because it WAS authoritative when written. Measured in one field: 3,119 of 10,080 chars superseded across two regions, 31%, with TWO DIFFERENT marker strings.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S63",
+  "3.0.0_SA_CVO at HEAD 09ae8adbc3: markers at 4013 ('SUPERSEDED TEXT, RETAINED') and 9223 ('SUPERSEDED LINEAGE, retained rather than deleted') -- different strings",
+  "'REALIZED 7 OF 10' occurs at 3818 (LIVE) and 4177 (inside the superseded block)"
+ ],
+ "remedy": "R-43 IS NOT THE DEFECT AND MUST NOT BE READ AS ONE -- deleting history would be worse and the estate ruled that deliberately. WHAT IS OWED IS LEGIBILITY, and the cheap half is measurable: THE DELIMITER IS A FAMILY OF PHRASINGS RATHER THAN A CONVENTION, so any instrument that scans for retained history under-reports by construction unless it knows all of them. I ran a one-string census first and got ONE region out of two, which is how this was found. \u26d4 AND THE SHARPEST DEMONSTRATION IS A SINGLE STRING: 'REALIZED 7 OF 10' APPEARS ON BOTH SIDES OF THE MARKER -- live at 3818, dead at 4177 -- so a reader grepping the count gets two confident hits with nothing to tell them apart. \u2b50 KEEPABLE, and it generalises past this project: WHEN A CARRIER RETAINS ITS OWN SUPERSEDED TEXT, EVERY SEARCH OVER IT IS BIASED TOWARD THE DEAD CLAIM, because the dead text is longer, louder and older than the line retiring it. Read the field WHOLE before quoting any sentence from it, and never conclude a status from a pattern census over a history-retaining carrier. COST: one whole-field read instead of a grep. NON-APPLICATION: a carrier that deletes superseded text, where the search and the state agree by construction. OWNER is the seat whose register field this is; the marker-family half is estate-wide and belongs with whoever next touches R-43's guidance, which this row names rather than assigns.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v10",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v10"
+ },
+ "closed": false
+}
+```

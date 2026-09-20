@@ -1281,3 +1281,34 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## Out-of-round disposition -- S62 and S63, offsets verified on the field (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S36",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T16:55Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "S62 and S63 GRADUATED. Offsets verified on the field, not transcribed: 10,080 chars exactly, anchors match. \u2b50 TWO THINGS NEITHER ROW STATES: the two superseded regions carry TWO DIFFERENT marker strings, so a one-string census under-reports by construction; and 'REALIZED 7 OF 10' occurs on BOTH sides of the marker -- the same confident string, live at 3818 and dead at 4177.",
+ "spec_asserts": "S63: 'my quote was 67 characters past a marker ... 31% of that phase field is explicitly superseded across TWO regions.'",
+ "world_is": "BOTH ROWS STAND AND I VERIFIED S63's OFFSETS ON THE FIELD ITSELF RATHER THAN TRANSCRIBING THEM -- which is the whole lesson of the pair, applied to the pair. MEASURED AT HEAD 09ae8adbc3 IN LGIC_LGCTFM's project.json `phase`: the field is 10,080 chars, EXACTLY as S63 states. 'three outstanding' at 1693 and the block close '|| PRIOR:' at 6275 match to the character. The SUPERSEDED marker is at 4013 by S63's anchor (the word) and 4009 by mine (the '---' prefix); the quoted retraction sentence is at 4080, so it sits 67 chars past the word and 71 past the prefix. \u26a0 MY FIRST PASS REPORTED THOSE AS DISCREPANCIES. THEY ARE ANCHOR CHOICES, NOT ERRORS, and saying otherwise would have been the wrong-object read one level down -- a difference in where two readers START measuring, published as a difference in what the field SAYS. S63's numbers are correct to their own anchors and I withdraw the implication that they were not. \u2b50 AND THE CHECK SURFACED TWO THINGS NEITHER ROW STATES, WHICH IS WHY IT WAS WORTH RUNNING RATHER THAN ACCEPTING. FIRST: THE TWO SUPERSEDED REGIONS CARRY TWO DIFFERENT MARKER STRINGS. At 4013 it is '--- SUPERSEDED TEXT, RETAINED (R-43: frozen histo...'; at 9223 it is '--- SUPERSEDED LINEAGE, retained rather than deleted (R-43)'. A census for either string finds ONE region and reports the field 22% or 8% superseded rather than 31%. I ran exactly that census first and got one marker, which is how I noticed. \u26d4 SO THE DELIMITER IS NOT A CONVENTION, IT IS A FAMILY OF PHRASINGS, and any future instrument that scans for retained history has to know all of them or it under-reports by construction. SECOND, AND SHARPER: 'REALIZED 7 OF 10' OCCURS TWICE IN THE FIELD -- at 3818, in LIVE text, and at 4177, INSIDE the superseded block. \u2b50 THE SAME AUTHORITATIVE-LOOKING STRING SITS ON BOTH SIDES OF THE MARKER, so a reader who greps for the count gets two hits, both confident, one dead, with nothing in either to tell them apart. That is S63's thesis reduced to a single string and it is the cleanest demonstration of it in the field. S62's FINDING STANDS ON LIVE BYTES, which is what S63 establishes and does not undercut: 'three outstanding' at 1693 is LIVE and names only two, and the live text at 3818 carries 'REALIZED 7 OF 10' -- 7 being the POST-retraction tally. So the field affirms the retracted count in substance while the block carrying its REASONING is marked superseded. The hold's stated ground -- 'two of its THREE outstanding outcomes bar OUTSIDE the engine' -- does not reach its conclusion as written, because the third is never classified and the round-10 analysis the hold rests on counted TWO. \u26d4 THIS DOES NOT SAY THE HOLD IS WRONG AND NEITHER DOES S62. FWD-1 may be unreachable for a reason nobody has written down; the hold is 1.0.0_SA_CTO's under Rule 27 and no part of it is re-decided here. What is MEASURED is that a reader applying the ruling's own test -- 'every REACHABLE member done' -- cannot verify it from the carriers. \u2b50 AND THE INSTRUMENT HAZARD IS WORTH MORE THAN THE FINDING, AS S62 SAYS: A PATTERN CENSUS READS FWD-1 AS REALIZED, 4 TO 1, BECAUSE R-43 WORKS. Retaining superseded text rather than deleting it means the retracted grade OUTNUMBERS ITS OWN RETRACTION in the record. This is the immutable-carrier trap at project scale, and it is the same class this seat recorded against itself this morning from the opposite direction: a commit message cannot be withdrawn, so a pinned carrier keeps asserting a retracted claim. There the frozen text was the WHOLE carrier; here it is 31% of one field. \u26a0 R-43 IS NOT THE DEFECT -- deleting history would be worse, and the estate ruled that deliberately. The defect is that the signal 'this text is dead' is SHORT, LOCAL, NON-REPEATING and phrased differently each time, while the signal 'this text is authoritative' is carried by every sentence inside the block.",
+ "adjudicates": [
+  "LGIC_LGCTFM-S62",
+  "LGIC_LGCTFM-S63"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S62 and #LGIC_LGCTFM-S63",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/project.json `phase` at HEAD 09ae8adbc3, measured directly: len 10,080; 'three outstanding' @1693; 'REALIZED 7 OF 10' @3818 and @4177; '--- SUPERSEDED TEXT, RETAINED' @4009/4013; retraction sentence @4080; '|| PRIOR:' @6275; '--- SUPERSEDED LINEAGE, retained' @9223",
+   "two distinct marker strings found by regex SUPERSED\\w* -- 2 hits, different phrasings",
+   "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/remediations/REMEDIATION_v1.md -- the two carriers, minted in this commit"
+  ]
+ }
+}
+```
