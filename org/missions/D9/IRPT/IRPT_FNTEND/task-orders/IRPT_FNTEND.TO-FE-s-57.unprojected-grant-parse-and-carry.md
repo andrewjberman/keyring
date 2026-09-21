@@ -131,11 +131,57 @@ RECORD; NO VERDICT.
 - ⛔ **THIS IS THE ROOT OF WAVE B (FE-s-58, 59, 60 depend on it).** Report your commit hash clearly in your
   final message so the COO can seat wave B against it without re-deriving it.
 
+⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-21 ~14:15Z; row IRPT_FNTEND-W7-S1 ARMED, disarm owner this seat; this
+order is REOPENED; ~15 test directories added to the grant, none removed).** Your first pass built exactly what
+BOUNDS demands (the unconditional throw) and correctly made `unprojectedGrant` OPTIONAL on `Availability` rather
+than forcing a premise your own typecheck disproved -- both calls stand. The genuine gap your own measurement
+found: the PRD's own premise is that the backend ALREADY ships `unprojected_grant` PRESENT-AT-ZERO on every
+real, non-refused response; the ~15 pre-existing test directories that build a response body BY HAND without
+that key are what is STALE, not your throw. **The remedy is to update those fixtures to match production
+reality, not to weaken the parser.**
+
+- Your grant now includes every one of the test directories your own F57-AC6/AC7 runs named as failing:
+  `fe-s-1, fe-s-14, fe-s-19, fe-s-25, fe-s-26, fe-s-30, fe-s-31, fe-s-33, fe-s-34, fe-s-35, fe-s-39, fe-s-41,
+  fe-s-42, fe-s-48, fe-s-49` (see `<paths>` below for the exact directory list -- re-run F57-AC6/AC7 first and
+  use YOUR OWN fresh failure output as the authoritative list of files/lines to touch, since a re-run may
+  surface a slightly different set than your first pass if anything shifted upstream).
+- For EVERY hand-built response body in those directories that is NON-REFUSED (carries `data`, no dispatcher
+  refusal code) and currently lacks `unprojected_grant`, add `unprojected_grant: { count: 0, denominator: <a
+  real, sensible value for that fixture's own shape -- e.g. the count of items the fixture itself enumerates,
+  or 0 if none apply>, kinds: [] }` at the SAME level as `data`/`status`/`contract_version` in that body.
+  **Never add it to a REFUSED body** (one that carries a dispatcher refusal code and no `data`) -- absence
+  there is correct per F57-AC5's own rule; if a file mixes both shapes, touch only the non-refused ones.
+- **Do not touch test ASSERTIONS unless a test explicitly asserts on the ABSENCE of `unprojected_grant`** (which
+  would now be wrong) -- most tests assert on other fields and simply need the fixture body completed, not the
+  assertions rewritten.
+- Re-run F57-AC6 then F57-AC7 after each directory or in batches; do not wait until all ~15 are done to run
+  either for the first time -- if one directory's fix reveals a DIFFERENT, unrelated failure, STOP on that
+  directory, file a row, and continue with the rest.
+- Once F57-AC6 and F57-AC7 both read `0 fail`, flip `<status>` to `complete`, file your proof-of-spec instance,
+  commit, and send your FINAL WORKER REPORT once. **Still report your final portal commit hash clearly** --
+  wave B seats against it.
+
 <paths>
 portal/src/pages/InvestorReporting/contracts/index.ts
 portal/src/pages/InvestorReporting/contracts/adapt.ts
 portal/src/pages/InvestorReporting/contracts/envelope.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-57/
+portal/src/pages/InvestorReporting/__tests__/fe-s-1/
+portal/src/pages/InvestorReporting/__tests__/fe-s-14/
+portal/src/pages/InvestorReporting/__tests__/fe-s-19/
+portal/src/pages/InvestorReporting/__tests__/fe-s-25/
+portal/src/pages/InvestorReporting/__tests__/fe-s-26/
+portal/src/pages/InvestorReporting/__tests__/fe-s-30/
+portal/src/pages/InvestorReporting/__tests__/fe-s-31/
+portal/src/pages/InvestorReporting/__tests__/fe-s-33/
+portal/src/pages/InvestorReporting/__tests__/fe-s-34/
+portal/src/pages/InvestorReporting/__tests__/fe-s-35/
+portal/src/pages/InvestorReporting/__tests__/fe-s-39/
+portal/src/pages/InvestorReporting/__tests__/fe-s-41/
+portal/src/pages/InvestorReporting/__tests__/fe-s-42/
+portal/src/pages/InvestorReporting/__tests__/fe-s-48/
+portal/src/pages/InvestorReporting/__tests__/fe-s-49/
+portal/src/pages/InvestorReporting/fixtures/
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
