@@ -5289,6 +5289,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S70",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-21T23:46:00Z",
+    "one_line": "PageSurfaceControl's surfaceBase carries font-medium (weight 500) although DESIGN.md C1 allows weights 400 and 700 only; the primitive has six production importers, four of them AdvisorIntelligence partner dashboards outside the IRPT product, so restyling it is not an IRPT change. 1.0.0_SA_CTO (msg 99324) ruled it out of round 11 and parked it for a portal-wide design pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "portal/DESIGN.md C1: Lato is the only typeface, at weights 400 and 700 only.",
+    "world_is": "Read at portal DEV 243089eb: src/components/ui/PageSurfaceControl.tsx:13 surfaceBase is 'inline-flex items-center justify-center rounded-[3px] text-xs font-medium ...' (Tailwind font-medium is weight 500). Production importers, counted by import STATEMENT read line by line and not by name match: pages/ModelPortfolios.tsx:49, pages/InvestorReporting/header/FirmDropdown.tsx:30, pages/AdvisorIntelligence/_partners/inflection/index.tsx:19, .../_partners/demo/index.tsx:15, .../_partners/cottonwood/index.tsx:28, .../_partners/49financial/index.tsx:16 (six files); components/ui/__tests__/PageSurfaceControl.demo.tsx:2 is a demo. Files that match the NAME but do not import it: pages/Positioning/Positioning.tsx:59 (commented-out import), App.tsx:27 and :490 (lazy-loads the demo page), pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx:1032 (JSX comment). NOT measured: whether each of the six call sites passes a className that overrides the weight, and what weight each renders. Round-11 cell FE-s-69 exports a class token for exactly two of the six call sites (FirmDropdown and ModelPortfolios) and does not touch surfaceBase. Owner per the CTO ruling: 1.0.0_SA_CTO, un-parks when Andrew's IRPT-only priority lifts or a portal design project opens.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/components/ui/PageSurfaceControl.tsx:13 @243089eb",
+        "portal src/pages/ModelPortfolios.tsx:49 and src/pages/InvestorReporting/header/FirmDropdown.tsx:30 @243089eb",
+        "portal src/pages/AdvisorIntelligence/_partners/{inflection/index.tsx:19,demo/index.tsx:15,cottonwood/index.tsx:28,49financial/index.tsx:16} @243089eb",
+        "1.0.0_SA_CTO msg 99324 (ruling: out of IRPT scope, parked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
