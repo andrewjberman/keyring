@@ -71,14 +71,46 @@ CVO's per the 2026-09-17 call-routing word. Not cut as a cell either way until t
 rows (`rk-20` AC1, `rk-23` AC1, `rk-30` scores-adapter AC1) are unchanged round-13 history either way this verdict
 falls.
 
+## 2a. ADDENDUM ~15:2xZ -- R4 verdict recorded, a fifth cell ruled before issuance
+
+**R4 VERDICT, recorded (msg 23927):** `3.0.0_SA_CVO~Z`'s ruling is on file at
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_RULING_AMGT_RESAPP_R4_GRADE_VS_TERMINALITY_20260921.md` @`335faf48fe`.
+Operative sentence: terminality and acceptance are two axes, never collapsed; a FAIL on a terminal order is
+admissible at L10 only when L9 classes it a CRITERION defect with independent corroboration, cited in an
+adjudication row; an unclassified FAIL is not admissible and the order is re-cut. Applied: round 13 stands
+(its three FAILs were classed at C-S308), round 14's one FAIL (`rk-44` AC3, `W46-S1`) gets its class in the
+CVO's `ADJUDICATION_v14`, round 15 carries zero FAILs. This is the L9 grading rule; S169's mechanical half is
+unchanged and stays this seat's.
+
+**FIFTH CANDIDATE, TIME-SENSITIVE, ruled before issuance (round 16 not yet issued as of `7328e6d7f6`):** row
+`S176` (this seat's own disarm_owner, live at HEAD) -- `.tools/surprise-row-gate.py:1180` `_PROOF_BLOCK_RE` is
+UNANCHORED (`re.compile(r"<proof_of_spec>(.*?)</proof_of_spec>", re.S)`, plain `.search()`). Verified independently
+before ruling, not taken on relay: `AMGT_RESAPP.TO-AMGT-rk-58.direct-act-minted-order.md:80` carries a PROSE mention
+in backticks -- `` `<proof_of_spec>...</proof_of_spec>` `` -- with its own opening and closing tag on the same
+line, so `.search()` binds there first and captures the ellipsis, never reaching the real block at `:191-241`.
+Measured effect: `--acceptance --round 14` reads 160 criteria over 30 orders against a true 165 over 31.
+**Under the R4 ruling just recorded, the acceptance sweep is now load-bearing for L10 admissibility -- this
+undercount stopped being cosmetic the moment that ruling landed.**
+
+**RULED: ADD as a fifth round-16 cell**, not deferred. Independent of all three reserved words; write surface
+`.tools/surprise-row-gate.py` + `.tools/tests/test_acceptance_sweep.py`, disjoint from C1/C2/C3/R1-filter (roster/
+posture, wk-provision.sh, comp-secrets, crosswalk.py respectively) -- zero collision. Fix shape named by the file's
+own sibling function, `_order_round`'s line-anchored `^\s*<round>` pattern (`:1203-1206`) -- anchor
+`_PROOF_BLOCK_RE` the same way rather than a bare `.search()` over the whole order text. Proof: re-run
+`--acceptance --round 14` post-fix and confirm 165 of 165 criteria over 31 of 31 orders, plus the existing test
+suite green. **Deferring this one risks the opposite of every other cell in this round: a silently wrong count
+feeding a policy that was just ruled to depend on it.**
+
+**Issue: C1, C2, C3, R1-filter, S176-anchor -- five cells, one wave, no chain.**
+
 ## 3. What each seat owes next
 
 | seat | owes |
 |---|---|
-| `2.0.0_SA_COO~Z` | issue round 16: C1, C2, C3, R1-filter -- four cells, one wave, disjoint surfaces, no chain |
-| `3.0.0_SA_CVO~Z` | L9 disposition of the census s.4 eleven rows (no new finding expected, evidence already printed); a verdict on R4 |
+| `2.0.0_SA_COO~Z` | issue round 16: C1, C2, C3, R1-filter, S176-anchor -- **five** cells, one wave, disjoint surfaces, no chain (updated s.2a) |
+| `3.0.0_SA_CVO~Z` | L9 disposition of the census s.4 eleven rows; R4 answered (s.2a) -- `ADJUDICATION_v14` still owed for `rk-44` AC3's class |
 | `0.0.0_AB_MSTR~Z` | R3's card to Andrew (~USD 0.90 zh/ko live proof) |
-| `1.0.0_SA_CTO~Z` | nothing until round 16 drains, R3's word lands, or R4's verdict arrives |
+| `1.0.0_SA_CTO~Z` | nothing until round 16 drains or R3's word lands |
 
 Push state: **LOCAL on SITEZ.** LD-0522 puts the push with `0.0.0_AB_MSTR~Z`, and none is requested.
 
