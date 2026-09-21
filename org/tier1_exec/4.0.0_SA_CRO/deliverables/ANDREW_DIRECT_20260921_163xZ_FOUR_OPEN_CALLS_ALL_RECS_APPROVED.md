@@ -75,6 +75,26 @@
 - Brief family A4 (10 `opal*` rows) was in the brief's "four rules" and was NOT among these calls.
   Family A5 (650 rows) is the fifth decision and comes back as its own card after sub-clustering.
 
+## Addendum ~17:2xZ -- second /open-calls round: CALLS 2 and 3 APPROVED, CALL 1 SENT BACK FOR DETAIL
+
+Cards put to him (verbatim calls): CALL 1 *"Firm-pipeline resources (~300 rows ...): (a) name each one's system in
+the registry, or (b) let a firm-scoped name drop the {system} slot entirely?"*; CALL 2 *"Approve the 19 system
+groups in the recount's s.4 table as the owner mapping, including ~10 NEW system keys (news, market, cloudops, find,
+...)?"*; CALL 3 *"Does ruling 3 also cover inline policy names (CloudWatchLogs, S3Access, invoke-*: 79 rows) and
+library Lambda layers (pandas: 5)?"*
+
+His answer, VERBATIM AND ENTIRE:
+
+> "Im good with your rec on calls 2 and 3. Regarding call 1, need more detail exactly. I think you would need to
+> include both vendor and firm in the nomenclature for these things, not picking one or the other."
+
+**Reading, narrow:**
+- CALL 2 APPROVED: the 19 families in `LGIC_PLACEHOLDER_RECOUNT_AND_A5_FAMILIES_20260921.md` s.4 as the owner
+  mapping, the new system keys included; registry rows written in batches, census re-run after each.
+- CALL 3 APPROVED: ruling 3 extends to inline/console policy names (79 rows) and library-named Lambda layers (5).
+- CALL 1 OPEN: he wants more detail, and gives a direction -- the name carries BOTH vendor and firm. Not a ruling
+  between (a) and (b); the card comes back to him.
+
 ## CORRECTION ~17:1xZ -- rulings 2 and 4 move ZERO rows; the cards that produced them were built wrong
 
 **By 4.0.0_SA_CRO, against its own cards. The rulings STAND as his words; what was wrong is the row counts this
