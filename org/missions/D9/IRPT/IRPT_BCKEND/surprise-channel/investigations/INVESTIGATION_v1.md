@@ -7716,3 +7716,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "WHAT THIS SEAT DID WITH IT: proceeded with the 6 built functions only -- each function is an independent key and both halves sign all 7, so 6 is inside the signed blast radius; irpt-ycharts-generate is left at its current live bytes (its no-change branch, which both halves also cover; it has no route, schedule or event source, so inflection's served route does not pass through it). Nothing was hand-packaged: a zip patched outside build-and-upload.sh is exactly the builder-refusal workaround the halves do not enumerate. CONSEQUENCE FOR THE CRITERION: battery_ib_rth_1.py arm (d) reads at most 6 of 7 and so never reaches arm (e) or prints IBR76-INFLECTION-ROUTE-RESOLVES-LIVE-3-OF-3; the live mechanism (IB-rtg-3_arm_e_live_proof.py) is run directly and reported beside it as evidence, never as the criterion's PASS. DISARM CONDITION: 2.0.0_SA_COO~B rules one of (i) resolve S102 (a declared true source for both members, then rebuild ycharts-generate and apply it under these same halves), (ii) re-scope the criterion's arm (d) denominator to the 6 buildable functions with ycharts-generate carried to S102, or (iii) another route it names. Mid-round the order and battery are frozen, so this seat edits neither."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-S112",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~V",
+  "surfaced_at": "2026-09-21T15:36:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "R76-AC1's invocation CANNOT complete arm (e) by construction: the face wraps the battery in `timeout 1800` and the battery runs the live proof with subprocess timeout=1200, but the named live-proof mechanism waits for each firm's deleted-principal access token to EXPIRE (exp + 10 s, ~905-913 s) and does so for 3 firms in sequence -- ~46 minutes. Arm (e) raises TimeoutExpired at 20 minutes (uncaught, so the battery dies before writing its output) and the outer timeout would kill it at 30 regardless. The token IBR76-INFLECTION-ROUTE-RESOLVES-LIVE-3-OF-3 is unreachable whatever the live result is.",
+  "spec_asserts": "TO-IB-rth-1 face, criterion R76-AC1: <invocation>timeout 1800 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rth_1.py</invocation>; battery_ib_rth_1.py arm_e(): `subprocess.run([sys.executable, LIVE_PROOF_SCRIPT], ..., timeout=1200)`, the live proof being ../0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_arm_e_live_proof.py (the face's 'full lifecycle incl. delete').",
+  "world_is": "IB-rtg-3_arm_e_live_proof.py rollback(): after the deletes and the refused refresh, `wait = exp + 10 - time.time(); time.sleep(wait)` then one GET to prove the token is refused 401 -- per firm, sequentially over the 3 registry firms. Its own recorded run (IB-rtg-3_arm_e_live_proof_output.txt, run at 2026-09-20T23:30:04Z) logs 'waiting 911 s', 'waiting 913 s', 'waiting 913 s' -- ~2737 s of sleep alone. This session: a direct run at 15:13:20Z printed 'waiting 905 s' after its first firm; the ruling-scoped battery started 15:29:22Z spawned the live-proof child at 15:29:49Z, which would have hit the 1200 s subprocess timeout at ~15:49:49Z. The battery was never written to handle a live proof longer than 20 minutes because, until this session, no run had ever reached arm (e) (every prior run stopped at (c) or (d)).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rth_1.py arm_e(): subprocess timeout=1200 (at this row's HEAD)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_arm_e_live_proof.py rollback(): 'waiting %.0f s for the access token's exp + 10 s' then time.sleep(wait)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_arm_e_live_proof_output.txt: three waits of 911/913/913 s in one run",
+      "the TO face's R76-AC1 <invocation>: 'timeout 1800 py -3.12 ...battery_ib_rth_1.py'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHAT THIS SEAT DID: stopped the ruling-scoped battery run at 15:30:49Z, 60 s after its live-proof child started, inside the first firm's post-delete sleep (that firm's create-request-delete takes ~15 s: 15:13:20Z start -> 'waiting 905 s' in the direct run); the first direct run was likewise stopped at 15:25:49Z inside the same sleep. Residue census after both: opal-users-v2 PK begins_with USER#usr_irptrtg3_ 0 of 79, email begins_with irpt-rtg3-test- 0 of 79, and the three partner tables 0 of 11 / 0 of 4 / 0 of 7. Then ran the live proof DIRECTLY, stdout to deliverables/0.7.0_AE_CloudOps~V/IB-rth-1_arm_e_live_proof_stdout.txt -- the actual answer to whether inflection now resolves, reported as evidence, never as the criterion's PASS. Neither the face nor the battery's timeout is edited by this seat: the face is frozen and ruling 99069 re-scoped arm (d) only. DISARM CONDITION -- 2.0.0_SA_COO~B rules one of: (i) amend R76-AC1's invocation to a bound the mechanism fits (e.g. `timeout 3600`) and authorise raising the battery's inner subprocess timeout to match (e.g. 3300) -- a task-order MODIFICATION, which LIMB 6 does not grade, so it is the issuer's discipline; then one battery run (~48 min) grades the criterion inline, the strongest form; (ii) arm (e) reads the live-proof output recorded after this apply, pinned by content hash and bounded to after ledger irpt-bckend-ib-rth-1-apply closed -- faster, weaker, because the graded party writes the evidence the check reads; (iii) another route it names. Recommendation: (i)."
+}
+```
