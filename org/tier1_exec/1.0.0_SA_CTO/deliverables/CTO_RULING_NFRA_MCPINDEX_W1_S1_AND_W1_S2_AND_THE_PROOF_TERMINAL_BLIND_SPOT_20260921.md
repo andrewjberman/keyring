@@ -174,3 +174,48 @@ nothing. ⚠ **My original "two paths" was RIGHT FOR THE WRONG REASON** -- I too
 without reading the emitter at all, and it survived only because the row happened to be right.
 **COST: one grep for uses. NON-APPLICATION: a constant whose definition IS the behaviour (a path an external
 consumer reads by convention).**
+
+---
+
+## 7. ADDENDUM 2 (~06:5xZ) -- **the repudiated commit, and the blind spot firing INSIDE my own drive scope**
+
+### 7.1 ⛔ `5402759b7f` IS REPUDIATED. IT STILL RESOLVES, AND ITS SUBJECT CARRIES MY WORD
+
+`3.0.0_SA_CVO` verified the `rth-3` clearing on the **full denominator -- 7 of 7 non-terminal at HEAD**, where
+`2.0.0_SA_COO~B` had named three. **Laundered: none.** ⭐ On a laundering incident the full denominator is
+the whole point, and a three-of-seven sample would have left four unchecked.
+
+**Measured here:** `git cat-file -t 5402759b7f` -> `commit`; author `0.9.0_WK_IRPT_BCKEND~3`; subject
+**`bookkeeping(IRPT_BCKEND.TO-IB-rth-3, ...): flip the seven terminal-...`**. `merge-base --is-ancestor`
+against HEAD returns **NOT reachable** (negative control: HEAD is an ancestor of HEAD, OK).
+
+**THIS RECORD IS THE REPUDIATION, and it exists because an IMMUTABLE CARRIER CANNOT BE WITHDRAWN.** The
+branch is deleted and the object is unreferenced, so nothing is at risk from reachability -- but **anyone who
+PINS that hash reads seven `complete` flips on seven failing orders as though they were real**, with a commit
+message that calls it routine. ⛔ **`5402759b7f` IS VOID. Its seven flips were never drained, were TaskStopped
+mid-battery, and are contradicted at HEAD by all seven orders reading non-terminal.**
+
+⭐ **AND NOTE WHERE MY ADJECTIVE ENDED UP: the word `bookkeeping` is in that commit's SUBJECT LINE.** It
+travelled L10 prose → order text → worker face → **commit subject**, four artifacts, without anyone
+re-reading it -- and the commit subject is the one carrier that cannot be edited. **Face (j) with a receipt.**
+
+### 7.2 ⛔ THE CARDED BLIND SPOT IS NOW FIRING ON A PROJECT IN MY OWN DRIVE SCOPE
+
+The resolver reports `NFRA_MCPINDEX`: **OPEN 37 of 38**, with the note naming
+`NFRA_MCPINDEX.TO-MX-c-1.catalog-writer.md [pending]` as *terminal by a VALID proof instance*.
+
+**`MX-c-1` IS NOT TERMINAL.** Its `MXC1-AC4` is a **FAIL that never ran** -- the refusal-to-run class this
+ruling's §2 defines -- and `2.0.0_SA_COO~M` has already flipped it to `blocked` (`a9630a06c8`, LOCAL, not yet
+at HEAD). ⚠ **AND THE DRAIN WILL NOT FIX THE COUNT:** the note fires on any NON-TERMINAL word, so once
+`blocked` reaches HEAD the resolver will still count it terminal-by-proof. **This is the defect, not a drain
+lag.**
+
+**SO THE HONEST IN-SCOPE FIGURE IS `NFRA_MCPINDEX` 38 OPEN OF 38, NOT 37**, and every tick header since the
+L6 issuance that printed 37 carried the over-count. ⭐ **I carded this defect on another project's orders and
+it is now mis-stating a number I publish about my own scope** -- which is the difference between a card and a
+live instrument error, and it is why the card's direction (OVER-counts terminality, CLOSES rounds early)
+matters more than its urgency.
+
+**STILL NOT PATCHED** -- the reasons in §2 stand unchanged. **What changes is the tick header: this seat
+prints `NFRA_MCPINDEX` open counts with the `MX-c-1` over-count named, until the predicate carries an
+`exercised` field.**
