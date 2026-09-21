@@ -4172,3 +4172,51 @@ fanout:
   wave_3: [rk-78]                   # after rk-77 drains (its AC1 reads rk-77's served shape)
   no_fleet_run: true
 ```
+
+## 28. ROUND 20 -- FROM THE CTO'S ROUND-19 ANALYSIS @`e25b2bee60` (`1.0.0_SA_CTO~Z`, msg 24058) + rulings msgs 24049, 24055
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 19 closed 4 of 4 and ratified (26/0/0). PRD v0.16 is ADMITTED (CVO @4e83003847,
+CRO @85c4ec503a). The analysis cut two cells, disjoint by repo:
+- **R20-A + R20-B, folded into ONE cell.** Both edit lib/research/management/roster.py -- the CTO's fold condition in
+  msg 24055.
+- **R20-C,** the portal.
+
+Andrew-direct ~19:5xZ ("Yes on Keyence") is the per-use vendor word for rk-79's ONE Bright Data search, on 6861 only.
+The three open points were ruled in msg 24058:
+- (a) no new EDGAR fetch -- CAT's stored filing lacks Item 1D, so CAT is served INCOMPLETE with a readable reason;
+- (b) every RESOLVED-with-no-CEO hit joins the write set -- census 1 of 15, CAT;
+- (c) no adapter redeploy -- `roster_status` passes verbatim in the DEPLOYED bytes (sha256 of the deployed
+  scoped_amgt.py equals the repo's).
+
+**Both orders were drafted in parallel and are issued in ONE commit with this section** (Andrew-direct ~15:12Z).
+
+### 28a. THE MAPPING
+
+| CTO cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| R20-A + R20-B | `AMGT-rk-79` | ~79 | none | PRD v0.16 C-EXEC-MANAGEMENT (JP-President CEO rule; readable reasons) + rows Z-S197, Z-S200, Z-S202 -- readable roster/CEO reasons at roster.py:937, :943-947, ceo_search.py:741; the JP rule; ONE Bright Data CEO search for 6861 (<=3 SERP requests, <=USD 1.00, en-US); CSL roster_reason + absence_reason_evidence re-derived from the current filings object; an executive-officer pointer check so CAT's Item-10-to-Item-1D roster is `roster_status INCOMPLETE-NO-CEO`, never RESOLVED with no CEO; exactly 3 S3 writes (6861, CSL, CAT) | pair `NEVER_WIDEN_ROUND20_RK79_{COO,CTO}_HALF.md` |
+| R20-C | `AMGT-rk-80` | ~80 | none | row Z-S201 -- the Exec Management tab ends the CEO line in one period (`endSentence()`), and the panel subtitle names a Bloomberg-fallback source; built on portal DEV containing rk-78's `95d96edb`; amends rk-78's `resolved_unchanged` check to set aside the CEO line it legitimately changes | none (no live act) |
+
+### 28b. SURFACE CENSUS (measured at the cut)
+
+| cell | files_written | live acts | measured at the cut |
+|---|---|---|---|
+| `AMGT-rk-79` | lib/research/management/{roster.py, ceo_search.py, enrich.py, management.schema.json} + tests | 4: ONE Bright Data search (6861); 3 conditional puts on management/v1/{6861_JP_Equity,CSL_AU_Equity,CAT_US_Equity}/2026-09-19.json | pre-act VersionIds 6861 `1Hm1g.Mqx...`, CSL `u_iDxPeX...`, CAT `tJMJuD2o...`; no-CEO census 1 of 15 (CAT); the UNRESOLVED-sentence rule over 180 unresolved filings objects prints 0 `None`; pointer check fires on 1 of 8 RESOLVED sections (CAT), negative control BA/HD/VLO unchanged; the other 12 served blocks are hash-compared pre/post |
+| `AMGT-rk-80` | portal/src/pages/SecurityAnalysis/{tabs/ExecManagementTab.tsx, tabs/... subtitle site, __harness__/execText.harness.cjs (new), __harness__/execFallback.harness.cjs (one check)} | 0 (portal branch commit, no push) | probe: tsc rc 0; execText 5/5 with the fix, 3/5 without; execFallback 5/5 with the amendment; provisioning with `core.autocrlf=false` gives 0 CRLF |
+
+**Files written by more than one cell:** none (disjoint repos). **Collision with the held `wk-amgt-14-50` branch:**
+rk-79 shares the FILE NAMES enrich.py and management.schema.json with it (names only; the branch was not read and is
+not drained).
+
+### 28c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # stated
+  orders_total: 2                   # rk-79, rk-80 -- written in parallel, issued in one commit
+  slots_total: 2                    # ~79, ~80
+  chains_total: 2                   # disjoint repos, no depends_on edge
+  wave_1: [rk-80, rk-79]            # rk-80 at once; rk-79 once its pair carries both halves signed
+  wave_2: []
+  no_fleet_run: true
+```
