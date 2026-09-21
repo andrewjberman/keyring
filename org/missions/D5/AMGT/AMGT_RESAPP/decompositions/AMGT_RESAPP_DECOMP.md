@@ -3972,3 +3972,60 @@ fanout:
   carried_as_data: []
   deferred_named: []                # rk-32/chain P, rk-48's live arm, rk-49's rewrite and drain -- held on their own named Andrew word, not deferred by this seat's choice
 ```
+
+## 24. ROUND 16 -- FROM THE CTO'S ROUND-16 RULINGS @`dcd88f0acc` (`1.0.0_SA_CTO~Z`, msg 23921), answering the COO's census @`a0d593560c`
+
+**Cut by `2.0.0_SA_COO~Z`, post-reboot.** Round 16 exists because the round-15 analysis's "every item independent of
+the three words is now closed" (s.2) was tested by SUBTRACTION over the 26 ids round 14 carried to the slug, and did
+not hold: seven read-only drafters, run in parallel under Andrew-direct ~14:58Z (*"allocate broadly ... as many
+subagents as you reasonably can"*, record @9bf58c4b95), found four real, independent items. The CTO ratified all four
+as one wave (rulings s.1-s.2) and banked the correction (*"a forward list omits silently; a subtraction from a printed
+denominator cannot"*, s.0). **All four orders were drafted in one parallel batch and are issued in ONE commit with this
+section**, per Andrew-direct ~15:12Z (*"You need to have all task orders created from outset for a given round ...
+you write them in slugs"*, record @1e2a54bf0f).
+
+Round 14 still does NOT close: `rk-32` + chain P hold the count on the bucket/tenancy word; `rk-48`'s live arm and
+`rk-49` wait on the Bright Data and rotate/rewrite words. Round 16 touches none of them.
+
+### 24a. THE MAPPING -- CTO cell -> COO id and slot
+
+| CTO cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| R16-C1 | `AMGT-rk-65` | ~65 | none | `Z-S179` residual + `W46-S2` item 2 -- one accession-ranking rule in both readers (a LIVE wrong answer in the posture batch) | no |
+| R16-C2 | `AMGT-rk-66` | ~66 | none | `W60-S3`'s hazard class, residual in `cmd_self_test` (unconditional prune of the REAL repos) | no |
+| R16-C3 | `AMGT-rk-67` | ~67 | none | `W50-S4`'s two CLI findings -- `comp-secrets --json --reveal` contract (the CTO's own hold LIFTED, rulings s.1) | no |
+| R16-R1 | `AMGT-rk-68` | ~68 | none | `W54-S2` -- crosswalk key-shape filter + resolved key recorded; newest-wins stays (rulings s.2) | no |
+
+Ids continue the disjoint range: round 15 ended at `rk-64`. **Not cells, and why (rulings s.2):** R2 (`W54-S1`, five
+new names) is OUT OF SCOPE under Andrew's standing *"no fleet re-runs until validated"* word -- parked, not carded; R3
+(`W42-S4` zh/ko live proof, ~USD 0.90 Anthropic egress) is a CARD at `0.0.0_AB_MSTR~Z` for Andrew's per-use word; R4
+(`S169`, grade-vs-terminality) is a governance fork routed to `3.0.0_SA_CVO~Z`. If R3's word lands, its cell is cut in
+the NEXT round, never added to this one.
+
+### 24b. SURFACE CENSUS
+
+| cell | files_written | pool prefixes written | vendor calls | live AWS acts |
+|---|---|---|---|---|
+| `AMGT-rk-65` | 4: lib/research/management/roster.py; lib/research/management/tests/test_management.py; integrations/bloomberg/research/management_posture_batch.py; integrations/bloomberg/research/tests/test_management_posture_batch.py (new) | none | none | 0: stub S3 only |
+| `AMGT-rk-66` | 1: .tools/wk-provision.sh | none | none | 0 (the self-test creates and removes its OWN local worktrees; the fix makes it stop pruning anyone else's) |
+| `AMGT-rk-67` | 2: .tools/comp-secrets; .tools/tests/test_comp_secrets.py (new) | none | none | 0: stubbed secrets client, a sentinel value -- no real secret is read or printed |
+| `AMGT-rk-68` | 2 (+ one writer file only if the non-persistence invariant requires a strip there, named in its order): lib/research/identity/crosswalk.py; lib/research/identity/tests/test_crosswalk.py | none | none | 0: mocked paginator. DEPLOYS NOTHING -- but crosswalk.py is imported by the page route, so the NEXT adapter redeploy carries it and that redeploy's never-widen pair must name it |
+
+**Files written by more than one cell:** none. **Collision with the held `wk-amgt-14-50` branch** (its 9 changed
+paths, names only: `lib/research/management/{domains.json,enrich.py,management.schema.json,tests/test_lusha_domain.py}`
+plus its own deliverables, change-management entry, order and the channel file): none -- every round-16 write surface
+is disjoint from those four library paths.
+
+### 24c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # default stated; NOT the binding constraint -- 4 of 4 cells fit one wave
+  orders_total: 4                   # rk-65..rk-68, all written in one batch and issued in one commit (Andrew ~15:12Z)
+  slots_total: 4                    # ~65..~68
+  chains_total: 4                   # pairwise-disjoint write surfaces (24b), no depends_on edge
+  wave_1: [rk-65, rk-66, rk-67, rk-68]   # all four spawn together (Andrew ~14:58Z: as wide as the dependencies allow)
+  wave_2: []
+  no_fleet_run: true
+  held_not_cut: [R3 card at MSTR (vendor egress), R4 at CVO (governance fork), R2 parked on the standing word]
+```
