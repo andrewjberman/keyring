@@ -8090,3 +8090,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Documentation-only; no build behaviour depends on the note."
 }
 ```
+```json
+[
+  {
+    "id": "IRPT_BCKEND-W11-S1",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~11",
+    "surfaced_at": "2026-09-21T22:45:00Z",
+    "one_line": "IB-rti-3 L4: no existing non-exempt principal the seat can assume holds s3:ListBucket on opal-data-inflection or opal-data-cottonwood -- L4 cannot be discriminatingly exercised without a new grant (both buckets); routed to 1.0.0_SA_CTO.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~11/principal.out (battery_ib_rti_3.py --arm principal, 2026-09-21 ~22:4xZ): census 258 roles + 7 users; both live policies' full ArnNotLike lists printed (4 entries each); 12 roles carry seat-admitting trust (10 unconditioned, 2 with seat-satisfiable Conditions), every one iam:SimulatePrincipalPolicy implicitDeny for s3:ListBucket on both buckets; simulator positive control opal-news-lambda-role = allowed via AmazonS3ReadOnlyAccess (trust: lambda service, not assumable by the seat).",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~11/exercise.out: exercise arm printed NONE ELIGIBLE for both buckets and NO discrimination token; no call was made to either bucket as a non-exempt identity."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order IB-rti-3 (e) and the issuer's amendment: a principal exists that is not on the live exemption list and whose IAM already grants ListBucket/HeadObject reaching the target bucket, e.g. a role of a different firm.",
+    "world_is": "No such assumable identity exists. Roles that would hold the grant (e.g. opal-news-lambda-role, AmazonS3ReadOnlyAccess) have trust the seat cannot meet; roles the seat can assume hold no s3 List grant on either bucket. Both live policies are the single DenyForeignFirmPrincipals statement (no Allow), so an identity with no grant of its own would be denied by IAM, not by the fence: an un-attributable control. Non-verdict; L4 left OPEN.",
+    "notes": "Owner 1.0.0_SA_CTO: a discriminating L4 needs a grant the CTO chooses to create; this cell created and widened nothing."
+  }
+]
+```

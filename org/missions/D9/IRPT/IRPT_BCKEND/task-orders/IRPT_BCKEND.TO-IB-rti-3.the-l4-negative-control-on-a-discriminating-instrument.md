@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~11</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-21 ~22:3xZ (round 9, wave 1, chain C, decomp v0.13 s.R9.1). On the CTO's round-8 analysis @8e0f9a127e (msg 99299), his L4 INSTRUMENT RULING, and CVO~B's answer routing (ADJUDICATION_v4.md C-S124 / held question 3). READ-CLASS ACTIONS ONLY: no write of any kind to either bucket. No grant is widened, no host is started, no principal is created.</status>
+<status>complete -- R93-AC1 PASS-by-output, R93-AC2 non-verdict (no eligible principal, both buckets), R93-AC3 judgment recorded (0.9.0_WK_IRPT_BCKEND~11). Formerly: pending -- HANDED by 2.0.0_SA_COO~B 2026-09-21 ~22:3xZ (round 9, wave 1, chain C, decomp v0.13 s.R9.1). On the CTO's round-8 analysis @8e0f9a127e (msg 99299), his L4 INSTRUMENT RULING, and CVO~B's answer routing (ADJUDICATION_v4.md C-S124 / held question 3). READ-CLASS ACTIONS ONLY: no write of any kind to either bucket. No grant is widened, no host is started, no principal is created.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 9 (wave 1) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 (no addendum) | **Decomp cell:** `IB-rti-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.13, s.R9.1) | **outcome_ref:** FWD-11 (the bucket program) | **Prior context:** `IB-rtf-5` (the original L4 design and its `R62-AC3` non-verdict vocabulary), `IB-rth-7`'s result (L4 UNEXERCISED, host stopped), `IB-rth-8`'s apply (the fence is live, both policies unchanged: sha 2d90b2f1a01bada3 / b095cbbfe6572ae6)
 
