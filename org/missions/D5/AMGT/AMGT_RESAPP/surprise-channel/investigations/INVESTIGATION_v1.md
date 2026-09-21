@@ -10737,6 +10737,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC1's <expect>: 'rk75_headings 1 of 1' -- one heading naming AMGT-rk-75 per never-widen half.",
     "world_is": "Each half's own title line (H1) and its `## AMGT-rk-75 -- ...` section heading (H2) both start with '#' and both name AMGT-rk-75, so a literal count of lines matching `^#.*AMGT-rk-75` is 2, not 1, on both halves; the file's own structure (title + one section) is by design, and the criterion's REFUSAL condition never named a 2-heading case as a failure.",
     "notes": "No worker action was blocked by this; AC1 PASSED under its own stated refusal rule and AC4-AC7 proceeded. Recorded because the <expect> prose describes an exact denominator ('1 of 1') that the measured shape of a two-heading document (title + section) cannot literally satisfy -- future never-widen halves written with this same title+section shape will repeat the same 2-of-1 read unless the expect text or the regex is narrowed to the H2 section heading only."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S197",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T19:35:00Z",
+    "one_line": "Now MANAGER-VISIBLE after AMGT-rk-77: Keyence's served roster_reason reads 'the persisted None filing doc-1defdb68a7ffd3b7 carries an EMPTY officer section (no item label): the item was not cut from the primary document' -- roster.py:944-947 formats source_object.get('form') with %s, and a non-EDGAR doc- source object carries form None, so the literal 'None' and an internal id reach the page. Before rk-77 this text sat behind a withheld block; rk-78 renders roster_reason verbatim beside the fallback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/management/roster.py:943-947 @03af0dd7a9: roster_reason = 'the persisted %s filing %s carries an EMPTY officer section (%s): the item was not cut from the primary document' % (source_object.get('form'), source_object.get('accession'), section.get('item') or 'no item label') -- no fallback for a None form.",
+        "Stored s3://opal-data-harvest/management/v1/6861_JP_Equity/2026-09-19.json roster_reason, read 2026-09-21 ~19:30Z: 'the persisted None filing doc-1defdb68a7ffd3b7 carries an EMPTY officer section (no item label): ...'.",
+        "Served live after rk-77 (CodeSha256 hP+6OO5P..., this seat's direct invoke of /api/scoped/amgt/security/6861_JP_Equity/thesis): management_status SERVED, roster_source BLOOMBERG_FALLBACK, roster_reason beginning 'the persisted None filing doc-1defdb68a7ffd3b7 car...'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-EXEC-MANAGEMENT: the fallback never hides why the filing failed -- the reason is shown to the reader.",
+    "world_is": "The reason is shown, but for a non-EDGAR source it reads 'the persisted None filing doc-<16hex>', which is not readable by a manager (the same class the CTO ruled on for the CEO sentence, msg 24015: 'the reader sentence must be plain English').",
+    "notes": "INERT: nothing false is served; the text is unreadable, not wrong. Remedy is producer wording (a readable sentence when form is None, the internal id kept in its own field) plus a re-projection of 6861's roster_reason under a pair -- the rk-75 shape. Candidate for the next round's slug; the CTO's call. Filed at the rk-77 drain by this seat's own served read."
   }
 ]
 ```
