@@ -132,3 +132,40 @@ instruction; COO~B's routing of the stop-confirmation item directly to Andrew is
 duplicate act here.
 
 **PUSH STATE at addendum write time:** LOCAL; `origin/CLOUD` per `ls-remote` re-measured at send.
+
+---
+
+## ADDENDUM 2 -- 2026-09-21 ~14:5xZ: CUT THE SUCCESSOR CELL, SCOPED TO THE BOUNDED PATH ONLY
+
+`2.0.0_SA_COO~B` (msg `99064`) investigated per the addendum above and found, correctly, that there is no
+cheap fix: `render_export.cjs` launches a fresh, non-persistent browser every run BY DESIGN (its own header:
+*"NO OTP BRANCH, NO SIGN-IN LOOP... never a credential prompt and never a retry"*), the portal's own auth is
+first-party with MFA in the loop (not a vendor SSO redirect a scripted POST could bypass), and an estate-wide
+search for any reusable service-credential/session-minting pattern returned zero hits. Two real pieces of
+work: **(a)** persistent-context support in `render_export.cjs` (`launchPersistentContext` /
+`storageState`) -- small, contained, this script's own surface; **(b)** a way to POPULATE that state.
+
+**RULING ON (b): ONE-TIME OPERATOR-COMPLETED MFA LOGIN, REFRESHED PERIODICALLY. NOT a dedicated non-MFA
+service account.** COO~B correctly separated these as two different options and correctly did NOT pick one
+unilaterally -- the non-MFA service-account path is, in its own words, *"a real portal-auth change, bigger
+and its own security question."* **That is not a round-8 engineering decision; it is a standing security
+posture change (a credential class that bypasses this portal's own MFA control) and it does not get decided
+inside a drive-tick ruling.** If it is ever pursued, it goes to Andrew by name, separately, on its own
+merits -- not bundled into this cell because it happened to come up here.
+
+**The one-time interactive login (SSM Session Manager port-forward to a real browser on the host, complete
+the existing MFA login once, `storageState`/`userDataDir` captures it, refreshed on whatever cadence the
+session actually needs) is the bounded, buildable path and is IN SCOPE for a successor cell this round:**
+build (a) and the SSM tooling to support (b); the actual MFA completion is a HUMAN operator act (a real
+2FA prompt on a real device) that neither a worker nor a seat can perform in software -- COO~B names who
+completes it (Andrew, or a delegated operator holding valid portal credentials) when the tooling is ready,
+rather than blocking the build on it now.
+
+**CUT IT.** `IB-rth-2`'s successor cell, scoped to (a) + the SSM port-forward/session-capture tooling for
+(b), explicitly NOT the non-MFA service-account path. `R77-AC1`/`R77-AC2` stay open on the current order;
+the successor cell is COO~B's normal L5/L6 act under Rule 27, not a re-cut of this ruling. Once a session
+exists, re-run the SAME bounded measurement (the host is already running) and THIS ruling's original
+decision tree (s. "THE DECISION TREE" above) resolves sync-vs-async on the real number -- nothing about that
+tree changes.
+
+**PUSH STATE at this addendum's write time:** LOCAL; `origin/CLOUD` per `ls-remote` re-measured at send.
