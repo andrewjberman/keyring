@@ -10853,6 +10853,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC6's <expect>, by naming the two edited files' CRLF count as '0 and 0 at db1c5f64', assumes a checkout whose on-disk EOL matches the committed blob's EOL.",
     "world_is": "On a worktree provisioned with `core.autocrlf=true` and no overriding `.gitattributes`, `git worktree add`/checkout converts an LF blob to CRLF on disk while the git index and every future commit still store LF (the clean filter runs on add/commit) -- so a raw-bytes read of the working tree (as AC6's invocation does) and a read of the committed blob (as `git show`/`git cat-file` do) can disagree on EOL for the SAME file at the SAME commit, on this exact class of device/repo-config pairing.",
     "notes": "No commit was needed to fix this: the rewritten disk bytes are byte-identical to what was already committed (verified above), so the existing portal commit 95d96edb on wk-amgt-19-78-portal needed no amendment. Flagged as a class other never-widen/AC6-style CRLF checks on this device may hit: a criterion that reads disk bytes directly, rather than `git show`/`git diff`, is silently coupled to the checking worktree's `core.autocrlf` setting."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S201",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T20:20:00Z",
+    "one_line": "The Exec Management tab prints the CEO line with a DOUBLE full stop on every NOT_SEARCHED name ('... so the CEO web search was not run..'): AMGT-rk-75's approved table sentences end in a period and the tab appends another after the reason. Also seen: the panel subtitle 'Officers from the filing, with tenure against the pool' is false on a Bloomberg-fallback roster (CSL, 6861).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's /frontend-dev screenshots of portal branch wk-amgt-19-78-portal @95d96edb against live thesis bodies (session scratchpad r19_exec_CSL_AU_Equity.png, r19_exec_CAT_US_Equity.png, ~20:15Z): CSL 'CEO public profile (Gordon Naylor): not searched -- No verified company website was found, so the CEO web search was not run..'; CAT 'CEO public profile: not searched -- No officer on the roster has a chief-executive title, so the CEO web search was not run..'.",
+        "The served basis (rk-75, merged @f33b359869) ends in exactly one period; the second is the tab's own template. The subtitle is the panel header text in both screenshots, unchanged by rk-78."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.16 C-EXEC-MANAGEMENT readable reasons; the page labels a Bloomberg fallback as such.",
+    "world_is": "A doubled period on every not-searched CEO line, and a 'from the filing' subtitle over a Bloomberg table.",
+    "notes": "Cosmetic, manager-visible. A portal-side fix (drop the appended period when the reason already ends in one; make the subtitle source-aware) -- a small portal cell, the CTO's call for round 20 or 21. Not rk-78's defect: rk-78 changed neither line."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S202",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T20:20:00Z",
+    "one_line": "CAT_US_Equity, a VALIDATION name, serves ONE officer (Derek Owens, Chief Legal Officer) as its whole RESOLVED roster -- so it reads NO_CEO_ON_ROSTER and has no CEO on the page -- because its 10-K's Item 10 says 'Information required by this Item appears in Item 1D of this Form 10-K' and the roster parser does not follow that cross-reference: it parsed Item 10's 27,766 chars of incorporation-by-reference text and caught one stray officer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/management/v1/CAT_US_Equity/2026-09-19.json: officers = [('Derek Owens', 'Chief Legal Officer and General Counsel')], roster_status RESOLVED, source_item 'Item 10. Directors, Executive Officers and Corporate Governance', source_accession 000001823026000008.",
+        "s3://opal-data-harvest/filings/v1/CAT_US_Equity/000001823026000008.source.json officer_section: item 'Item 10. ...', 27766 chars, text includes 'Identification of Executive Officers and Business Experience | Information required by this Item appears in Item 1D of this Form 10-K.'",
+        "this seat's /frontend-dev screenshots of portal branch wk-amgt-19-78-portal @95d96edb against live thesis bodies (session scratchpad r19_exec_CSL_AU_Equity.png, r19_exec_CAT_US_Equity.png, ~20:15Z): CAT tab shows '1 OFFICER(S) FROM ITEM 10 ...' and the single Chief Legal Officer row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-EXEC-MANAGEMENT: the roster is every officer from the filing's officer section, and the CEO is the officer with a chief-executive title.",
+    "world_is": "For a 10-K that places its executive officers in Item 1D (Part I) and cross-references it from Item 10, the cut takes Item 10 and misses the roster; a RESOLVED roster of 1 is served as complete.",
+    "notes": "ARMED: it is live on the manager-review path, for a validation name, and it is FALSE-COMPLETE (served as RESOLVED, not flagged). Also likely feeds W45-S1-class coverage elsewhere (other 10-K filers using 'Information about our Executive Officers' in Part I) -- a census over the pool's RESOLVED rosters with officer_count <= 2 would size it; not run here. Remedy is a spec + producer call (follow the Item 10 -> Item 1D/Part I cross-reference) plus a re-derivation of CAT; the CTO's call. Found reading this seat's own round-19 screenshot."
   }
 ]
 ```
