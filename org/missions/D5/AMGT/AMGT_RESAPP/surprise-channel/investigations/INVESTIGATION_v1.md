@@ -11162,6 +11162,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "TO-AMGT-rk-84 section 5 instructs 'every invocation is LITERAL; record it byte-for-byte' and the top-level worker instructions require running 'its literal invocation from inside your worktree' for each criterion, AC3 included.",
     "world_is": "On this device/Bash-tool, typing AC3's invocation exactly as the order gives it does NOT produce the order's own <expect>: a transport-level collapse of every doubled backslash to a single backslash, applied before bash/python ever parse the command, turns the mutant's intended two-character escape text b\"\\r\\n\" into an actual embedded CR+LF byte pair inside the generated mutant .py file, which then fails to PARSE (SyntaxError, rc 2) rather than producing '1 failed' (rc 1). Doubling every double-backslash in the same invocation before typing it (a purely mechanical compensation, no semantic change) reproduces the order's <expect> exactly on both mutant arms.",
     "notes": "Not blocking this order: AC3 was satisfied by the compensated (semantically-identical) command, and the worker report records both the literal-as-typed failure and the compensated pass. Flagging because ANY future worker order on this device whose <invocation> embeds a double-backslash byte-escape (e.g. b\"\\\\r\\\\n\") inside a `python -c` argument will silently get the WRONG denominator (a SyntaxError misread as a mutant failure, or worse, a collapsed escape that happens to still parse but changes runtime behavior) unless it knows to compensate -- the task order's own 'record it byte-for-byte' instruction cannot be honoured literally on this device without this workaround, and nothing in the order or CLAUDE.md names it. Worth confirming whether the MEMORY.md lesson's heredoc-only scoping should widen, and whether this is a Bash-tool-wide transport property or specific to this invocation shape."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S207",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T23:05:00Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-W84-S1 (disarm owner this seat): the doubled-backslash collapse that broke rk-84 AC3's literal invocation is a KNOWN tool-transport trait on site Z (the harness unescapes a doubled backslash before bash/python parse the command), not a defect in rk-84's code or mutants. The issuer's fix is procedural and forward: a criterion whose invocation carries escape sequences (\r, \n, \\) is run FROM A FILE (python <file>), never inlined in a python -c, so the graded bytes survive transport. rk-84's AC3 result stands: the worker re-ran it byte-compensated, both mutants fired (rc 1), and recorded that it did so.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W84-S1 (rk-84 worker): AC3 typed byte-for-byte turned the mutant's b\"\r\n\" escape text into an embedded CR+LF and raised SyntaxError (rc 2); the compensated re-run gave m1 rc 1 and m2 rc 1.",
+        "This seat's memory already records the class: 'Harness heredoc unescapes \\' (site-Z device notes), found earlier in this estate.",
+        "rk-84 merged @fb8ff7fd28 with AC1-AC6 PASS and proof VALID rc 0; the issuer's own probe routed CAT's live filings object to 'sec' and refused CSL's UNRESOLVED marker with NoVendorSourceError."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The hazard is the transport of an inline criterion, not the cell; its remedy (escape-bearing criteria run from a file) binds this seat's future orders, and a grader re-running rk-84 AC3 is told in the round-21 packet to use the compensated form the worker recorded.",
+    "spec_asserts": "Every criterion invocation is literal and reproducible by any seat typing it.",
+    "world_is": "An inline python -c carrying escape sequences does not survive this device's tool transport byte-for-byte.",
+    "notes": "Filed by the named owner at rk-84's drain."
   }
 ]
 ```
