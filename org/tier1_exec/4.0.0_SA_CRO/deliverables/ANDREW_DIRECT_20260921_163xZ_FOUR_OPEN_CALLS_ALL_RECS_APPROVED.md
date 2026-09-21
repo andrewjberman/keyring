@@ -155,6 +155,12 @@ self-resolves, so the fix is a checker change (row outranks a later-found system
 CTO change the checker ...; or (b) hold both keys until that checker change lands?"*, REC (b). The edit was reverted
 from the shared tree after it blocked 0.7.0_AE_CloudOps~V's graded commit (99165) and is held outside the repo.
 
+His answer, VERBATIM AND ENTIRE: **"rec approved"** (~19:1xZ). **(b): `portal` and `website` are HELD** until
+`1.0.0_SA_CTO` lands the checker change (a `resources.json` row outranks a system word found later in the name; the
+redundant-row check adjusted to match). The held edit is preserved as
+`org/tier1_exec/4.0.0_SA_CRO/drafts/HELD_PORTAL_WEBSITE_KEYS_20260921.patch` (applies cleanly to HEAD at this write);
+it lands with, or after, that change. Until then the 18 `gateway` rows stay, marked wrong in this record.
+
 ## CORRECTION ~18:5xZ -- 18 rows filed under `gateway` are the WRONG SYSTEM; this seat misread the key
 
 **By 4.0.0_SA_CRO, against its own batches.** `infra/logic/registry/systems.json` `gateway` is *long*
