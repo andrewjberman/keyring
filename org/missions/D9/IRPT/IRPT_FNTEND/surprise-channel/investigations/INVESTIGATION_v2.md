@@ -4767,6 +4767,30 @@
     "disposition": "UNDER_INVESTIGATION"
   },
   {
+    "id": "IRPT_FNTEND-W7-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T14:01:20Z",
+    "one_line": "IRPT_FNTEND.TO-FE-s-57's own BOUNDS mandates an indiscriminate parseIrEnvelope throw on a missing unprojected_grant key, and its own F57-AC6/AC7 demand 0 fail on the existing suite; both cannot hold at once inside this cell's <paths> grant, because ~52 pre-existing tests across ~20 files this cell may not touch build non-refused response bodies with no unprojected_grant key. Also: the order's literal `unprojectedGrant: UnprojectedGrant | null` (non-optional) on Availability fails typecheck against Availability-typed fixtures outside the grant (e.g. fe-s-9/receipt.test.ts, fe-s-42/every-site.test.ts), so the member was built OPTIONAL instead, matching producerState/sourceDate's own established pattern.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-57 BOUNDS: 'THE THROW ON A MISSING KEY BINDS EVERY NON-REFUSED RESPONSE, HOLDINGS INCLUDED ... Do not special-case holdings in parseIrEnvelope; F57-AC3 already proves the general rule handles it correctly.' F57-AC4: 'a non-refused response body with NO unprojected_grant key at all throws EnvelopeMismatch(...)', no exception named for any other route or caller. F57-AC6: 'every existing adapter/envelope test is UNCHANGED ... 0 fail'. F57-AC7: 'the whole IRPT_FNTEND suite is green' (expect '0 fail'). Grant (<paths>): three contracts files plus this cell's own __tests__/fe-s-57/ and the surprise-channel file -- no other test file is writable.",
+    "world_is": "Implemented exactly as BOUNDS requires (envelope.ts:242-252 at portal b92448f3: the throw fires whenever 'unprojected_grant' is absent or misshapen on a non-refused response, unconditionally, holdings included -- confirmed passing at F57-AC3 with no special case). F57-AC1..AC5 measure PASS (typecheck rc=0; carry.test.ts 4 pass/0 fail, printing the four expected strings verbatim). F57-AC6 as literally invoked (bun test .../fe-s-1 .../fe-s-14, which bun's substring path-matching also pulls in every fe-s-1X folder) measures 263 pass / 2 skip / 11 fail of 276 at portal b92448f3, every failure an EnvelopeMismatch('unprojected_grant') thrown by a pre-existing fixture (fe-s-1/adapter.test.ts, fe-s-14/envelope.test.ts x3, fe-s-14/header.test.ts, fe-s-14/one-firm.test.ts x3, fe-s-19/network-state.test.ts, fe-s-19/pre-envelope.test.ts, and a job-states test) that builds a response body with no unprojected_grant key, none of them in this cell's <paths>. F57-AC7 (whole suite) measures 532 pass / 21 skip / 52 fail / 1 error of 605 at the same commit, same root cause, spanning fe-s-1, fe-s-14, fe-s-19, fe-s-25, fe-s-26, fe-s-30, fe-s-31, fe-s-33, fe-s-34, fe-s-35, fe-s-39, fe-s-41, fe-s-42, fe-s-48 and fe-s-49 -- 51 distinct failing test titles plus one unhandled-error-between-tests, all citing envelope.ts:249. Softening the throw to satisfy AC6/AC7 would falsify AC4/BOUNDS as written; satisfying AC4/BOUNDS as written falsifies AC6/AC7 as measured; fixing the ~20 pre-existing fixtures is outside this cell's <paths>. F57-AC6 and F57-AC7 are FAILED as measured and reported so; the order stays open (status not flipped).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal b92448f3:src/pages/InvestorReporting/contracts/envelope.ts:242-252 the unconditional throw, and :69-76 IrEnvelopeField gains 'unprojected_grant'",
+        "portal b92448f3:src/pages/InvestorReporting/contracts/index.ts the Availability.unprojectedGrant member built OPTIONAL (`unprojectedGrant?: UnprojectedGrant | null`), and portal src/pages/InvestorReporting/__tests__/fe-s-9/receipt.test.ts:56, fe-s-42/every-site.test.ts:302 constructing Availability-typed literals with no unprojectedGrant member (outside this cell's <paths>)",
+        "<WS>/.scratch or /c/tmp/ac6_full.log (bun test src/pages/InvestorReporting/__tests__/fe-s-1 src/pages/InvestorReporting/__tests__/fe-s-14 at portal b92448f3): '263 pass', '2 skip', '11 fail', 'Ran 276 tests across 38 files', rc=1; 11 of 11 failures cite EnvelopeMismatch at envelope.ts:249",
+        "/c/tmp/final_ac7.log (bun test src/pages/InvestorReporting at portal b92448f3): '532 pass', '21 skip', '52 fail', '1 error', 'Ran 605 tests across 107 files', rc=1; 106 EnvelopeMismatch citations, one 'Unhandled error between tests' also citing envelope.ts:249 (directory-search)",
+        "F57-AC3's own passing measurement (HOLDINGS ROUTE, count:0, NO THROW: yes) confirms the general (non-special-cased) rule is what BOUNDS asked for and what is implemented"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
     "id": "IRPT_FNTEND-W3-S43",
     "project": "IRPT_FNTEND",
     "fabric": "laptop",
@@ -4786,6 +4810,30 @@
         "portal/eslint.config.js:12 'files: [\"**/*.{ts,tsx}\"]' is the only files restriction in the one exported config object; :10 globalIgnores(['dist', '.runtmp/**', '.frontend-dev/**']) does not name .vite",
         "rm -rf portal/.vite; bun run lint -> '✖ 79 problems (0 errors, 79 warnings)', rc=0, no .vite/deps file header present",
         "ls -la portal/.vite (before removal): deps/ subdir mtimes ~09:38 local, same session, pre-dating this worker's own edits -- consistent with an earlier bun test run in this worktree that starts a real vite dev server (src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts, fe-s-45/dev-script-writes.mjs)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T15:03:52Z",
+    "one_line": "AMENDMENT 1 closed F57-AC6 (0 fail) and cut F57-AC7's residual from 52 fail/1 error to 5 fail/1 error, but three of the remaining problems trace to files OUTSIDE this cell's <paths> in every version of the grant: src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json (2 problems: its own directory's test, and F41-AC5 reading it as one of FROZEN_MAPS) needs the same unprojected_grant completion as its sibling fe-s-18-holdings-*.json maps, which THIS cell's in-grant fix to those siblings now makes visible; fe-s-47/no-status-reason.test.ts:191 throws at MODULE LOAD (an 'Unhandled error between tests', not a named test) on the same missing-key rule; and fe-s-49/admin-gate.test.ts F49-AC8 fails on 2 unrelated App.tsx hunks, pre-existing and unrelated to unprojected_grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-57 AMENDMENT 1: 'For EVERY hand-built response body in those directories [fe-s-1, fe-s-14, fe-s-19, fe-s-25, fe-s-26, fe-s-30, fe-s-31, fe-s-33, fe-s-34, fe-s-35, fe-s-39, fe-s-41, fe-s-42, fe-s-48, fe-s-49] that is NON-REFUSED ... add unprojected_grant.' F57-AC7: 'the whole IRPT_FNTEND suite is green' (expect '0 fail'). BOUNDS (unchanged): the paths grant is the write surface; a path needed that it lacks is a BLOCKING row, never an override.",
+    "world_is": "At portal 9094772a: F57-AC6 (fe-s-1 + fe-s-14, bun's substring match) measures '274 pass / 2 skip / 0 fail' -- CLOSED. F57-AC7 (whole suite) measures '579 pass / 21 skip / 5 fail / 1 error' of 605, down from the pre-amendment '532 pass / 21 skip / 52 fail / 1 error'. The residual, named precisely: (1) fe-s-32/holdings-in-a-browser.test.ts 'the four scenario maps > the NO-ANSWER map is the observed map with ONE member changed: the holdings status' -- this cell's in-grant fix added unprojected_grant to ALL 9 members of fe-s-18-holdings-observed.json (required by F26-AC4's own '27 of 27' bar), but fe-s-32's holdings-no-answer.json (out of grant, derived from the observed map with only the holdings status changed) was not touched, so 8 of 9 members now differ where the test expects only 1; (2)/(3) fe-s-41/one-writer.test.ts F41-AC5's two subtests read fe-s-32/holdings-no-answer.json as one of FROZEN_MAPS and its narrative-packet envelope throws EnvelopeMismatch('unprojected_grant') on parse, so 'bound' reads 4 of 5 where 5 of 5 is required; (4) fe-s-47/no-status-reason.test.ts:191 throws the same EnvelopeMismatch at MODULE EVALUATION time (before any test() runs), reported by bun as 'Unhandled error between tests' rather than a named failing test -- present in the ORIGINAL pre-amendment run too (portal b92448f3, confirmed by re-grep), so it is not a regression this session introduced, only newly attributable; (5) fe-s-49/admin-gate.test.ts F49-AC8 fails because HEAD App.tsx carries 2 hunks ('ArrowLeftRight' import, a 'Trade Submission' nav mark) that do not belong to this order and were never this cell's to add or remove -- confirmed unrelated to unprojected_grant (its own printed diff names the two hunks explicitly) and present in the ORIGINAL pre-amendment run. None of __tests__/fe-s-32/, __tests__/fe-s-47/ or src/App.tsx is in this cell's <paths> in the original order OR amendment 1. F57-AC7 is FAILED as measured; F57-AC6 is CLOSED. <status> stays open pending a further grant widening or a decision to accept these five as a separately-owned residual.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 9094772a:src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json (unmodified; outside every version of this cell's <paths>) vs portal 9094772a:src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json (modified this session, all 9 members carry unprojected_grant)",
+        "/c/tmp/final3_ac7.log (bun test src/pages/InvestorReporting at portal 9094772a): '579 pass', '21 skip', '5 fail', '1 error', 'Ran 605 tests across 107 files', rc=1; four named ✗ lines (fe-s-32 scenario-maps, F41-AC5 x2, F49-AC8) plus the fe-s-47 module-level 'Unhandled error between tests' citing envelope.ts:249 and no-status-reason.test.ts:191",
+        "/c/tmp/final_ac7.log (the FIRST, pre-amendment whole-suite run at portal b92448f3): the SAME fe-s-47/no-status-reason.test.ts:191 unhandled-error citation and the SAME F49-AC8 failure with the SAME two unrelated App.tsx hunks named -- confirming both predate this session's edits",
+        "cd <WS>/portal && timeout 60 bun test 'src/pages/InvestorReporting/__tests__/fe-s-32/' -> 'the four scenario maps > the NO-ANSWER map is the observed map with ONE member changed: the holdings status' FAILS, printing 8 of 9 route members differing (expected [HOLDINGS_KEY] only)",
+        "cd <WS>/portal && timeout 60 bun test 'src/pages/InvestorReporting/__tests__/fe-s-49/' -> F49-AC8 FAILS, 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0)'"
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
@@ -4833,6 +4881,28 @@
         "cd <WS>/portal && timeout 60 bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts (standalone) -> '6 pass', '0 fail', 'Ran 6 tests across 1 file. [31.89s]'; residuals.test.ts:48-52 imports only node:child_process, node:fs, node:process, node:url -- no import of contracts/envelope.ts or any file this cell touches",
         "IRPT_FNTEND.TO-FE-s-54.status-document-own-stated-state.md <paths>: portal/src/pages/InvestorReporting/__tests__/fe-s-47/ is not a member",
         "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-W4-S22 (same worker, prior cell): the identical shape one level up (FE-s-53 breaking F47-AC6's classification), resolved there only via an AMENDMENT widening <paths> to the test file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T15:37:33Z",
+    "one_line": "AMENDMENT 2's fix (completing fe-s-47/no-status-reason.test.ts's envelopeBody() with unprojected_grant) broke a THIRD test in the same file, F47-AC9, whose own extraction control re-executes only carryAvailabilityFromStatus standalone and compares it against the FULL parseIrEnvelope pipeline's output -- the two now differ on unprojectedGrant alone, since the full pipeline's separate carryUnprojectedGrant step is never modeled by the standalone extraction. Fixed within grant (the whole fe-s-47 file was granted) by excluding unprojectedGrant from both sides of the comparison; the RULES table was not touched.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDMENT 2: 'Add unprojected_grant: { count: 0, denominator: <sensible>, kinds: [] } to envelopeBody()'s returned object ... Do not touch the RULES table FE-s-53 added.' Silent on any other part of the file; F47-AC9 is not named.",
+    "world_is": "portal b8c5df09 (before: 0cb9b2ba): after envelopeBody() gained unprojected_grant, `bun test src/pages/InvestorReporting/__tests__/fe-s-47/` read 7 pass / 1 fail (F47-AC9 -- 'a document's own reason survives a missing status'), printing 'EXTRACTION CONTROL HEAD's carry, extracted the same way, equals the real parseIrEnvelope data: BROKEN'. Root cause: F47-AC9 extracts ONLY carryAvailabilityFromStatus's source from the committed blob, transpiles it standalone, and runs it on a freshly-adapted document (`adapted`, never touched by carryUnprojectedGrant, so its unprojectedGrant is null); it compares that (`headDirect`) against `stated.data`, the output of the REAL parseIrEnvelope('resolve-scope', statedBody) -- which since envelopeBody() now supplies unprojected_grant, runs BOTH carryAvailabilityFromStatus AND the separate carryUnprojectedGrant, so `stated.data.availability.unprojectedGrant` carries the real grant object while `headDirect`'s stays null. The comparison (`show(headDirect) === show(stated.data)`) fails on this ONE field, unrelated to the control's own stated claim (the partialReason/state carry, RULING V). Fixed by stripping `unprojectedGrant` from both sides before the string comparison (`stripGrant` helper, portal b8c5df09); re-run: 8 pass / 0 fail, 'EXTRACTION CONTROL ... holds'. The RULES table (F47-AC6, FE-s-53's addition) is byte-unchanged -- confirmed by re-reading it in the same run (unaffected, still prints its own census).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 0cb9b2ba:src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:585-589 (before this row's fix) -- headDirect vs stated.data compared directly via show()",
+        "portal b8c5df09:src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts -- the stripGrant helper and its use in extractionHolds",
+        "cd <WS>/portal && bun test 'src/pages/InvestorReporting/__tests__/fe-s-47/' at 0cb9b2ba: '7 pass', '1 fail' (F47-AC9), 'EXTRACTION CONTROL ... BROKEN'; at b8c5df09: '8 pass', '0 fail', 'EXTRACTION CONTROL ... holds'",
+        "cd <WS>/portal && bun run typecheck at b8c5df09: rc=0"
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
