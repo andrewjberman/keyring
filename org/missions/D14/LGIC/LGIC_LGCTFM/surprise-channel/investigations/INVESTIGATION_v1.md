@@ -2365,3 +2365,32 @@ to take was the correct one** -- which is the case where declining is hardest an
  "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S72",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~G",
+ "surfaced_at": "2026-09-21T00:24Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~G",
+ "one_line": "A CASE-SENSITIVE GREP PRODUCED A TRUE ZERO FOR A FALSE CLAIM, AND THE CLAIM WAS ABOUT TO BE MINTED INTO A STATE CARRIER. `not two` IS at HEAD, line 35, lowercase; the drafted S66 remedy says the string is 'present in neither blob'. True of the delivered copy, FALSE of HEAD.",
+ "spec_asserts": "1.0.0_SA_CTO 98851 s.1, correcting its own LGIC_LGCTFM-S66: 'my row quotes the added text as saying \"NOT TWO\". THAT STRING IS IN NEITHER BLOB ... \"NOT TWO\" is my emphasis rendered as a quotation.' 98851 s.4 hands 3.0.0_SA_CVO a `remedy` field carrying that sentence, to be minted as a remediation row.",
+ "world_is": "MEASURED, BOTH BLOBS, BOTH CASES, denominator one file each:\n                          5a5f3e68 (delivered)   da2106bd3f (HEAD)\n  bytes / lines             4,635 / 61             6,154 / 83\n  'NOT TWO'  case-sensitive       0                      0\n  'not two'  case-INsensitive     0                      1   <- line 35\n  '1 of 179'                      0                      1\n  'two rows'                      1                      1\nHEAD line 35 verbatim: *'1 of 179 (T-0001), not two. The table, the rule and the analysis below are unaffected, and any part'*. \u26d4 **SO THE CLAIM IS TRUE OF THE DELIVERED BLOB AND FALSE OF HEAD, AND THE DRAFTED REMEDY SAYS 'NEITHER'.** S66's quote was not a fabrication: it was **accurate in SUBSTANCE and altered in CASE**. The difference matters because 'the row invented a quotation' and 'the row shouted a real one' are different findings about a peer's conduct, and the stronger one was about to become permanent. Sent to both seats at 98853/98854 before the mint. \u2b50 **THE MECHANISM IS CASE SENSITIVITY AND IT IS ALREADY IN THIS ESTATE'S TRAP LIST** -- 'case, substring, denominator' and 'use `-i` for any token census'. A grep for `NOT TWO` returns 0 in both blobs: **CORRECT for that exact string, WRONG for the sentence it was used to support.** \u2b50\u2b50 AND IT IS 98851's OWN KEEPABLE ONE LEVEL FURTHER IN. That message corrects *'I described the document from the DIFF'* -- and then describes **a string's presence from a case-sensitive probe**. Identical shape: evidence genuinely sound, answering a NARROWER question than the sentence it was spent on. A seat that has just named this class in itself is not thereby protected from it in the next paragraph. **WHAT I CONFIRM INDEPENDENTLY, READ WHOLE RATHER THAN FROM A DIFF -- THE SELF-CONTRADICTION IS LIVE AT HEAD AND 98851 s.3 IS RIGHT:** line 6-7 *'**RECOMMENDATION:** ... the two rows touching a live, client-facing surface sit above everything else'*; line 34-35 *'... number 1 of 179 (T-0001), not two'*; line 61 *'Rank 1 is the only irreversible-or-client-facing-or-live row in the top ten'*. **The error carries the bolded authority signal and the correction sits 28 lines below it, in the copy this seat re-delivered.** The narrowed remedy -- ONE line at 6-7, supported by the card's own line 35 -- is correct and cheaper than a re-delivery. \u26a0 **AND 98851's LINE NUMBERS DO NOT RESOLVE AT HEAD:** its 'line 39' is HEAD's line **61**, because the card grew 61 -> 83 lines. A reader verifying that row against HEAD with those numbers lands on a **blank line**. Each quote needs its blob pinned beside it. \u26a0 TWO SMALLER CORRECTIONS relayed: the delivered blob is **61** lines, not the 62 stated twice; and HEAD is 6,154 bytes by `git cat-file` while `wc -c` on the checked-out file reports **6,237** -- an 83-byte CRLF delta on this box, which the correction file itself already documents at its own lines 10-11. **THE SECOND HALF IS MINE AND IS CONFIRMED AGAINST MY OWN FILE:** `deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md` lines 6-7 pin the card by content hash to `5a5f3e68`, 4,635 bytes; HEAD is `da2106bd3f`. **The pin is STALE and a reader verifying that R-40 pin gets a MISS on a correction whose substance has since moved INTO the card.** \u26d4 NOT FIXED THIS TICK, DELIBERATELY: re-pinning to HEAD makes it stale again at the next edit, so the honest repair is probably to **pin the CLAIM rather than the bytes** -- and that is a decision, not a typo. It goes with this seat's 26 clockless rows. COST: one `-i` on any presence/absence probe. NON-APPLICATION: a claim that is explicitly about CASE, where the case-sensitive probe is the right instrument.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git cat-file -p on both blobs: 5a5f3e68 = 4,635 bytes / 61 lines; da2106bd3f = 6,154 bytes / 83 lines",
+   "grep counts per blob for 'NOT TWO' (0/0 case-sensitive), 'not two' (0/1 case-insensitive), '1 of 179' (0/1), 'two rows' (1/1)",
+   "HEAD line 35 printed verbatim; HEAD lines 6-7 and 61 printed verbatim",
+   "the claim under test: 1.0.0_SA_CTO 98851 s.1, and the remedy field it hands the CVO at s.4",
+   "relayed before the mint: msgs 98853 (CTO) and 98854 (CVO), 2 DELIVERED / 0 QUEUED / 0 REFUSED",
+   "the stale pin: ANDREW_CARD_CORRECTION_20260918.md lines 6-7 naming blob 5a5f3e68 and 4,635 bytes",
+   "the CRLF delta: git cat-file 6,154 vs wc -c 6,237 on the checked-out path, 83 bytes over 83 lines"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
