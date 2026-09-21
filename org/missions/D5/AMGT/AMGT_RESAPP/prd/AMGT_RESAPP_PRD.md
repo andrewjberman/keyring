@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.14",
+  "prd_version": "v0.15",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,14 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.15 CHANGE NOTE -- 2026-09-21 ~17:5xZ, `1.0.0_SA_CTO~Z`: the six format contracts move to CONTRACTS
+
+v0.14 put the six format contracts in section 11, which the sign-off hashes as the brief half, so the ratified-text
+reviewer never saw them; `3.0.0_SA_CVO~Z` caught it (msg 23999). They now sit in the CONTRACTS section. The same
+edit takes the reviews' conditions: bronze takes three forms (the brief reviewer's refusal, msg 24001); one writer
+per fetch key; a moved path retires in the same window; the home is conditional in its own sentence; platinum at R6's
+home, as the drafted tenancy lands it (msg 24000); never-kept bronze filled by a first fetch. BOTH halves move.
 
 ### v0.14 CHANGE NOTE -- 2026-09-21 ~17:4xZ, `1.0.0_SA_CTO~Z`: the harvest storage format (section 11)
 
@@ -817,6 +825,46 @@ binds the MODEL-BLOCK PRODUCER, not only the page** -- a page-side guard would l
 the store and be read by anything else. Verbatim source: the Divergence record @`287d2c2619` ("sd(D) across
 universe < 0.25 -- drivers likely seeded from consensus; factor is not measuring disagreement"), read narrowly
 at the same record and repeated in the CTO adjudication call 4 @`1685652d6e`.
+
+
+**C-HARVEST-HOME (the storage home; CONDITIONAL until the tenancy lands in this fabric's registry).** AMGT_RESAPP's
+bronze, silver, gold, state and code live in `opal-data-harvest` under scope `harvest`; platinum lives at the canon's
+general platinum home (R6) exactly as the builder prints it. The vendor is `{source}` for bronze and silver; `amgt` is
+`{source}` for gold, platinum, state and code. Every address is `lib/opal_naming.py address()` output and every
+resource name is `name()` output; a builder refusal is a missing registry row, never a hand-typed key.
+`opal-data-assets` holds client/partner custodial information only. ⛔ **For bronze and silver this contract is NOT
+MET until this fabric's registry carries a tenancy that homes them by scope:** until then the builder prints
+`opal-data-assets` for both, and no bronze or silver writer is cut against this contract.
+
+**C-BRONZE-AS-RECEIVED.** Bronze is the response bytes exactly as received -- no parsing, trimming or
+re-serialising -- one object per fetch, never overwritten, with the channel's FETCH key in the partition, in one of
+three forms: (a) an entity fetched repeatedly: `{vendor}/harvest/bronze/{request}/{entity}={id}/{YYYYMMDDTHHMMSSZ}.{ext}`;
+(b) an immutable document: `{vendor}/harvest/bronze/{request}/{entity}={id}/{document id}/{vendor file name}`;
+(c) a request: `{vendor}/harvest/bronze/{request}/date=YYYY-MM-DD/{request hash or file}.{ext}`. Every bronze
+address a writer uses is one the builder printed; the measured outputs are listed in section 11.
+
+**C-SILVER-PARQUET.** Silver is parquet with every vendor field kept and typed, partitioned `date=` by fetch date,
+one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_hash` (sha256 of the row's vendor
+fields).
+
+**C-DEDUPE-BY-KEY (one writer per fetch key).** Each channel names a FETCH key and a RECORD key. Before any vendor
+call, the writer checks the bucket for the fetch key. ⛔ **Exactly one writer holds a channel's fetch keys at a
+time**, so no two writers can both read "absent" and both pay; a fan-out assigns a channel to one worker, never
+splits it. A silver writer skips an unchanged `(record key, record_hash)` and writes a changed row as a new row,
+never an update; a reader takes the newest `fetched_at` per record key. The bucket is the authority for what has
+been fetched, never a file on one desktop.
+
+**C-SLASH-SAFE-KEY.** One slash-safe security key is minted in the crosswalk module and used everywhere downstream.
+An entity id sits in a partition, never in the builder's free-form `object` argument.
+
+**C-FORMAT-SEQUENCE.** The backfill's gate is bronze and silver only: the tenancy act, the vendor registry rows, the
+bronze writers, the silver writers with their record keys, and the fetch-key check. Gold (parquet) and platinum (a
+JSON publisher the API reads) are rebuilt from silver after the backfill. Existing objects move by COPY with their
+vintage, never by re-fetch or re-derivation; bronze that was never kept is filled by the backfill's FIRST fetch
+under its fetch key, which is a first fetch, not a re-fetch. ⛔ **Each move of served objects carries its own never-widen pair, and
+the source path's readers switch and the source path retires in the SAME window** -- a copy that leaves the old
+path serving beside the new one is a standing duplicate output path, which the shadow-pipeline veto forbids. The
+move is its own chain, not a rider on another cell.
 
 
 ## 2. THE BOUNDARY
@@ -1692,30 +1740,32 @@ for the round-14 cell, not a rule.
   tickers were measured to resolve as `<TICKER> US Equity` with no mapping step. The L4 reading in that clause is
   `1.0.0_SA_CTO~Z`'s.
 
-## 11. ADDENDUM v0.14 -- THE HARVEST STORAGE FORMAT (Andrew-direct 2026-09-21 ~17:2xZ)
+## 11. ADDENDUM v0.14 / v0.15 -- THE HARVEST STORAGE FORMAT: evidence and open items (Andrew-direct 2026-09-21 ~17:2xZ)
 
-The coordinated backfill is held until this format is settled. The channel-by-channel specification is
-`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md` @`bc8c18a28f`. This section
-fixes the contracts it rests on. Where the plan and this section disagree, this section binds.
+The coordinated backfill is held until the harvest storage format is settled. The six format contracts --
+`C-HARVEST-HOME`, `C-BRONZE-AS-RECEIVED`, `C-SILVER-PARQUET`, `C-DEDUPE-BY-KEY`, `C-SLASH-SAFE-KEY`, `C-FORMAT-SEQUENCE` --
+sit in the CONTRACTS section, where the ratified-text reviewer reads them. This section holds only their evidence and
+what they leave open.
 
-- **`C-HARVEST-HOME`** -- every AMGT_RESAPP tier lives in `opal-data-harvest` under scope `harvest`. The vendor is
-  `{source}` for bronze and silver; `amgt` is `{source}` for gold, platinum, state and code. Every address is
-  `lib/opal_naming.py address()` output (Rule 30); a builder refusal is a missing registry row, never a hand-typed key.
-  `opal-data-assets` holds client/partner custodial information only (Andrew 2026-09-18).
-- **`C-BRONZE-AS-RECEIVED`** -- bronze is the response bytes exactly as received, one object per fetch, never
-  overwritten: `{vendor}/harvest/bronze/{request}/{entity}={id}/{YYYYMMDDTHHMMSSZ}.{ext}`.
-- **`C-SILVER-PARQUET`** -- silver is parquet with every vendor field kept and typed, partitioned `date=` by fetch date,
-  one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_hash`.
-- **`C-DEDUPE-BY-KEY`** -- each channel names a FETCH key and a RECORD key (plan s.5). Before any vendor call, the
-  writer checks the bucket for the fetch key. A silver writer skips an unchanged `(record key, record_hash)` and writes
-  a changed row as a new row, never an update. A reader takes the newest `fetched_at` per record key. **The bucket is
-  the authority**, not a desktop file; the empty `opal-harvest-articles` table retires.
-- **`C-SLASH-SAFE-KEY`** -- one slash-safe security key is minted in `lib/research/identity/crosswalk.py`. An entity id
-  sits in a partition, never in the free-form `object` argument.
-- **`C-FORMAT-SEQUENCE`** -- the backfill's gate is bronze and silver only: the tenancy act, the vendor registry rows,
-  the bronze writers, the silver writers with their record keys, and the fetch-key check. Gold (parquet) and platinum
-  (a JSON publisher the API reads) are rebuilt from silver AFTER the backfill. Existing objects move by copy with their
-  vintage, never by re-fetch or re-derivation. The move is its own chain, not a rider on another cell (R19).
-- **Not decided here:** the tenancy act and the five vendor rows are the laptop `4.0.0_SA_CRO` lane's
-  (`PLATFORM_LOGIC_DOCS`). Andrew acknowledges the drafted departure text under R20. Whether Lusha keeps bronze is
+**Specification.** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md`
+@`d61c888552` (the plan as corrected: bronze takes three forms, and never-kept bronze is filled by a first fetch). It
+gives each channel's fetch key, record key, readers and freshness. Where it and the contracts disagree, the contracts
+bind.
+
+**Builder output the contracts cite (measured in the plan, one per bronze form, plus silver):**
+- (a) entity: `s3://opal-data-harvest/bloomberg/harvest/bronze/refdata/security_key=CSL_AU_Equity/20260921T162530Z.json`
+- (b) document: `s3://opal-data-harvest/sec/harvest/bronze/filing/cik=0000012927/000162828026004357/ba-20251231.htm`
+- (c) request: `s3://opal-data-harvest/sec/harvest/bronze/company_tickers/date=2026-09-21/sec_ticker_cik_cache.json`
+- silver: `s3://opal-data-harvest/bloomberg/harvest/silver/model_block/date=2026-09-21/part-20260921T162530Z.parquet`
+Each prints `opal-data-harvest` only under the simulated tenancy (plan s.3.2; 59 of 60 addresses, controls unmoved).
+At this version the live registry still prints `opal-data-assets` for bronze and silver.
+
+**Open, and not decided by this PRD:**
+- The tenancy and the five `systems.json` vendor rows (`barrons`, `wsj`, `ft`, `filings-xbrl`, `issuer-site`) are
+  the laptop `4.0.0_SA_CRO` lane's (`PLATFORM_LOGIC_DOCS`). A GENERAL tenancy carrying `harvest` is reported drafted on
+  the laptop fabric (`1675a8f631`, local, unpushed, not readable here); it homes platinum under R6, which
+  `C-HARVEST-HOME` adopts. The vendor rows are not drafted.
+- Whether Lusha keeps bronze, and whether its silver drops contact fields (an exception to `C-SILVER-PARQUET`), is
   Andrew's call.
+- Retiring the empty `opal-harvest-articles` table is a table deletion and needs a human's word when executed; the
+  contracts record the intent, not the authority.
