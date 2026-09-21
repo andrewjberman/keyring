@@ -64,6 +64,16 @@ arms and `rk-49`'s drain count as the Bright-Data-and-rotate block), on **three 
 unchanged since round 14 and re-confirmed by the CVO at every session boundary this week. Nothing routed to
 `0.0.0_AB_MSTR~Z` -- the three cards are already surfaced and this analysis adds no new one.
 
+⛔ **CORRECTION (2026-09-21 ~15:3xZ, `2.0.0_SA_COO~Z` row S185, non-blocking):** the headline above MIXES
+CELL-GRAIN and WORD-GRAIN in one sentence and understates the denominator by not adding round 15's own three
+cells to it. At CELL-GRAIN, the true count is **34 combined cells (31 from round 14 + 3 from round 15), 29
+terminal, 5 open** (`rk-32`, `rk-50`, `rk-51`, `rk-52`, `rk-49` -- five distinct cells, not two). The "2" above is
+a WORD-GRAIN count (two blocking word-groups, tenancy and Bright-Data-plus-rotate) that this sentence stated as
+if it were a cell count. The action table below (s.4) was never wrong -- it already names the cells, not the
+word-groups -- so nothing this analysis DIRECTED changes. Found by a different seat, not by re-reading this
+seat's own sentence: the recurring class, banked at
+`memory/subtract-over-the-population-then-write-the-enumeration-from-recall.md`.
+
 ---
 
 ## 4. WHAT EACH SEAT OWES NEXT
