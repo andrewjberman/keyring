@@ -5019,6 +5019,69 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W12-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~12",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "The FE-s-62 order's own fixtures (fe-s-6-ready.json, fe-s-7-smartx.json) are keyed by OPERATION NAME ('/api/scoped/investor-reporting/resolve-scope', 'investor-reporting/holdings-snapshot' ...) but the wire URLs are IR_ROUTE_BASE + '/directory/resolve', '/holdings/{id}' etc, so ui-smoke prints 'FIXTURES: 4 declared; 0 matched' and FIXTURE-DEAD for all four: the criteria's four captures render the unfixtured failure state ('Scope could not be resolved', Holdings 'Failed'), not a READY page. F62-AC2..AC7 still print their CLICKED/CANVAS lines.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order F62-AC2..AC7 name fe-s-6-ready.json / fe-s-7-smartx.json as producing the Analysis and Holdings states the closing pass reads.",
+    "world_is": "Measured: ui-smoke run with fe-s-7-smartx.json + --click Holdings prints 'FIXTURE-DEAD ... /api/scoped/investor-reporting/resolve-scope | performance-report | analysis-requests | holdings-snapshot'; endpoints/investor-reporting.ts:180-190 route templates are /directory/resolve, /holdings/{accountSetId}. Supplementary captures with wire-keyed fe-s-18-holdings-observed.json / fe-s-18-frozen.json (3 of 9 keys matched) do show the READY Holdings and populated Analysis; they are in the deliverables folder as supp_*. Fixture files are outside this order's paths so not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/api/endpoints/investor-reporting.ts:180-190 @ddb172bf",
+        "deliverables/0.9.0_WK_IRPT_FNTEND~12/ac2_3.txt and ac5_6.txt (CLICKED and CANVAS lines) plus the FIXTURE-DEAD output in this worker's run",
+        "src/pages/InvestorReporting/fixtures/smoke/fe-s-7-smartx.json keys read directly"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W12-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~12",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "Holdings tab, real render (supp_holdings_observed_1440.png): the 'Asset category views' block is a dark #0A1733-style navy card with light ink nested inside a white panel, from the shared CategoryViewTree (imported at tabs/holdings/DrillTree.tsx:60); the pie legend and 'A-0001' link text render in indigo purple. Cites C3 (dark card on a light panel; a second dark band beside the page's band) and C8 (indigo beyond the six identity accents). The fix lives in shared @/components/CategoryViewTree, outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DESIGN.md C3: navy is text and hairline only, never a container fill; C8: purple only for one action plus the named identity accents.",
+    "world_is": "Read from the PNG at 1440 and 390: the navy gradient card holds Total Assets, Models, SMAs, Client tiles; legend 'Client / Models / SMA' and the 'A-0001' label are purple. Not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_FNTEND~12/supp_holdings_observed_1440.png and _390.png",
+        "portal src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:60 (import of CategoryViewTree)",
+        "portal DESIGN.md C3, C8 @ddb172bf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W12-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~12",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "Holdings slice table at 1440 (supp_holdings_observed_1440.png): the rightmost column header reads 'Provenan' and its cells 'investor' -- clipped, and the Advisory column wraps to six lines; at 390 the table scrolls sideways off the Denominator column. Cites C10 (dense table cells, no clipped content). Also red-800 error text on canvas-level lines in analysis/GenerateComposer.tsx (:237,:280,:346) and holdings/DrillTree.tsx:234 is a text-only red, where C12 asks for a danger icon beside navy text. Not fixed: SliceTable's layout is coupled to the FE-s-55 withheld rendering the order says not to change, and the red lines are one error-state design, not a one-clause repair.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DESIGN.md C10 and C12 (ERROR state: status.danger icon beside navy text).",
+    "world_is": "Read from the PNGs; source lines named. Not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_FNTEND~12/supp_holdings_observed_1440.png",
+        "portal src/pages/InvestorReporting/tabs/analysis/GenerateComposer.tsx:237,280,346 @ddb172bf",
+        "portal src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:234 @ddb172bf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
