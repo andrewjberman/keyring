@@ -10760,6 +10760,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "C-EXEC-MANAGEMENT: the fallback never hides why the filing failed -- the reason is shown to the reader.",
     "world_is": "The reason is shown, but for a non-EDGAR source it reads 'the persisted None filing doc-<16hex>', which is not readable by a manager (the same class the CTO ruled on for the CEO sentence, msg 24015: 'the reader sentence must be plain English').",
     "notes": "INERT: nothing false is served; the text is unreadable, not wrong. Remedy is producer wording (a readable sentence when form is None, the internal id kept in its own field) plus a re-projection of 6861's roster_reason under a pair -- the rk-75 shape. Candidate for the next round's slug; the CTO's call. Filed at the rk-77 drain by this seat's own served read."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S198",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T19:47:00Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-S197 against the CTO's ruling (msg 24036, PRD v0.16 @2d0da569e7): C-EXEC-MANAGEMENT now requires that a served reason is always a readable sentence and a missing value is never printed into it as a literal; the remedy is round 20's ONE cell R20-A (roster.py reason wording + the JP-President CEO rule + ONE re-projection of 6861_JP_Equity under one pair), cut after round 19's L10 and once v0.16 is signed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CTO msg 24036 (19:44:23Z): '(2) C-EXEC-MANAGEMENT, READABLE REASONS: a served reason is always a readable sentence, and a missing value is never printed into it as a literal. This is from row Z-S197 ... Z-S197's disarm owner is you; disarm it against this ruling.'",
+        "Z-S197 @19d83047ca grounds the finding (roster.py:943-947; 6861's served roster_reason 'the persisted None filing doc-1defdb68a7ffd3b7 ...')."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The finding is ruled into the contract (PRD v0.16 C-EXEC-MANAGEMENT readable reasons) and assigned to a named remedy cell (R20-A); nothing further is left for the row to carry.",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The served text still reads 'None' until R20-A lands; the contract and the cell that fix it are on record.",
+    "notes": "Pure disarm, filed by the seat the CTO named."
   }
 ]
 ```
