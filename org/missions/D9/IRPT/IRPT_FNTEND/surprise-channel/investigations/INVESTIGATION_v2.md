@@ -4906,6 +4906,49 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W10-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~10",
+    "surfaced_at": "2026-09-21T16:46:06Z",
+    "one_line": "TO-FE-s-60 directs confirming the ir-note/ir-muted color law by reading `src/index.css`'s `.ir-note` rule, but `src/index.css` carries no `.ir-note` or `.ir-muted` rule at all -- both classes are defined in `render/print.css`, resolving to `#595959`, not the interactive-canvas navy `#163372` portal `CLAUDE.md`'s color law names for text ink.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-60 WORKER FACE, EXACT CHANGES item 1: 'navy-ink-on-white per portal CLAUDE.md's color law (this page's ir-* classes already resolve to that palette -- confirm by reading src/index.css's .ir-note rule rather than assuming).'",
+    "world_is": "portal 15ceef79: `src/index.css` (806 lines) contains zero occurrences of `ir-note` or `ir-muted` (Grep, both patterns, 'No matches found'). The two classes are instead defined in `portal/src/pages/InvestorReporting/render/print.css:272-277` (`.ir-note { font-size: 11px; line-height: 1.45; color: #595959; margin: 6px 0; }`) and `:285-287` (`.ir-muted { color: #595959; }`). `#595959` is a dark grey, not the app-canvas ink `#163372` (navy) portal `CLAUDE.md:23,36-37` names, nor exactly the panel-secondary `#6B7280` it names either -- it is `render/print.css`'s own pre-existing PDF/export-document convention (this cell reuses it verbatim per the cell's own instruction, and does not introduce a new color). Whether a printed-document stylesheet is in scope for the interactive-canvas color law (`CLAUDE.md`'s table is headed 'page canvas' / 'panel' / 'band', none obviously naming a print/export sheet) is left for L9 (F60-AC6, judgment).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep pattern '\\.ir-note|\\.ir-muted' over portal/src/index.css (15ceef79) -> 'No matches found'",
+        "Grep pattern 'ir-note' over portal/src (15ceef79), files_with_matches -> 8 files, none is src/index.css; render/print.css is one of them",
+        "portal/src/pages/InvestorReporting/render/print.css:272-277 and :285-287 (15ceef79), read directly: `.ir-note { ... color: #595959; ... }` and `.ir-muted { color: #595959; }`",
+        "portal/CLAUDE.md:21-37 (workspace worktree), color law table: page canvas ink 'navy only (#163372)'; panel ink 'navy; secondary #6B7280 on a panel only'; neither row names #595959"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W10-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~10",
+    "surfaced_at": "2026-09-21T16:46:06Z",
+    "one_line": "TO-FE-s-60's BOUNDS requires 'render and read a screenshot before reporting F60-AC6', but this worker's tool set (Bash/Read/Write/Edit/Glob/Grep only) carries no browser/screenshot capability and the portal package has no playwright/puppeteer dependency -- F60-AC6 is recorded from renderToStaticMarkup output + direct CSS-source citation instead, never a rendered screenshot.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-60 BOUNDS: 'Color law (portal CLAUDE.md). Navy-on-white text, never light text on light background; render and read a screenshot before reporting F60-AC6.'",
+    "world_is": "This worker's available tools this session are Bash, Read, Write, Edit, Glob, Grep only -- no browser-automation or screenshot tool is present. `grep`/read of portal/package.json and portal/bun.lock for 'playwright'/'puppeteer'/'screenshot' returns no matches, so no in-repo mechanism produces one either. F60-AC6 is therefore recorded (judgment, no verdict per schema) from (1) `renderToStaticMarkup` output of the new node (the same evidence AC2/AC3/AC4 already print) and (2) a direct read of the CSS rule the node's classes resolve to (render/print.css:272-277,285-287), rather than a rendered screenshot. A sibling deliverable in this same project (0.9.0_WK_IRPT_FNTEND~4, FE-s-7, F7-AC7) DID attach two PNG screenshots to its judgment record, so screenshot capability has existed for at least one worker session on this project; whether that reflects a different tool grant to that session or a capability this session lacks is not established here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own tool manifest for the session (Bash, Read, Edit, Write, Glob, Grep) carries no browser/screenshot tool.",
+        "cd <WS>/portal && grep -n \"playwright\\|puppeteer\\|screenshot\" package.json bun.lock -> no output (0 matches)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-7.holdings-tab.proof_of_spec.json, F7-AC7's invocation: 'Read of ... fe-s-7_holdings_smartx_1440.png and fe-s-7_holdings_cottonwood_390.png' -- a screenshot WAS produced and read by a different worker session on this same project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
