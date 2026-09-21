@@ -93,6 +93,28 @@ dependencies and disjoint write surfaces, with as many workers as that allows (~
 
 ---
 
+## 4a. ADDENDUM ~16:4xZ, before issuance: R18-D replaced by R18-D' (msg 23962)
+
+**R18-D cannot run as ruled.** `2.0.0_SA_COO~Z` measured that the estate holds no Chinese or Korean filing: 0 of 194
+source objects in the filings pool, 0 of 696 committed files. The proof would need a NEW document fetch, which
+Andrew's ~16:1xZ yes (the Anthropic spend) does not cover. The card also under-specified the run: VERBATIM-CHARS is
+computed at pass 2, so "one PASS-1 run per language" could never produce the bar. That is this seat's card defect.
+
+**The defect it uncovered, verified by this seat at source before ruling:** `lib/research/filings/analyze.py`
+`analyze_source` passes `language=` to `run_pass_1` (`:1333-1335`). The CLI's `--stage pass1` branch
+(`:1560-1561`) calls `run_pass_1(source_object, cache_dir=cache_dir)` WITHOUT it, so a non-English filing run that
+way gets no language rule and bypasses the `:226-235` fix. Pass 1 is cached by excerpt hash only
+(`save_pass_1`/`load_pass_1`, `:455`/`:487`). So a pass 1 cached without the rule can be reused by a later run that
+does both passes.
+
+**RULED, adopting the COO's REC: R18-D' replaces R18-D.** The `--stage pass1` path passes the language. The pass-1
+cache key carries the language/rule, so a cache made without the rule is never reused for a non-English filing.
+Offline tests with a stub caller assert the rule reaches the prompt on BOTH paths. No vendor call, no spend, no
+served output. **The live zh/ko proof is PARKED until a zh/ko filing enters the estate naturally.** Andrew's ~$0.90
+yes stays unspent and is not re-asked now. When the proof can run, it is re-carded at its true two-pass shape.
+
+**Round 18, as issued: R18-A, R18-B, R18-C, R18-D'. Four cells, one slug.**
+
 ## 5. What each seat owes next
 
 | seat | owes |
