@@ -74,3 +74,17 @@
   `infra/logic/**` lane. Who writes that change is not decided here.
 - Brief family A4 (10 `opal*` rows) was in the brief's "four rules" and was NOT among these calls.
   Family A5 (650 rows) is the fifth decision and comes back as its own card after sub-clustering.
+
+## Addendum ~16:4xZ -- the R4 draft text APPROVED for landing
+
+Card put to him (verbatim): *"Land the R4 draft as written @2d07cf1bcc: yes / no?"* -- the draft
+`org/tier1_exec/4.0.0_SA_CRO/drafts/R4_NARROWING_GENERAL_TENANCY_DRAFT_20260921.md`, REC yes.
+
+His answer, VERBATIM AND ENTIRE:
+
+> "Yes do it"
+
+**Reading, narrow:** land EDITS A-C of the draft as written (R4 narrowed + R8 + the pattern table in
+`02_DOCTRINE.md`; the GENERAL tenancy in `tiers.json`; the `harvest` row in `scopes.json`), and no R20
+entry (draft s.3). The draft's open questions -- whether `mdpf`/`etfs`/`global` bronze and silver are
+custodial, and what "custodial" covers -- are NOT answered by this word.
