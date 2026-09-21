@@ -74,4 +74,6 @@ before. The viewer population is unchanged (Dev+admin only).
 
 ## Status
 
-**CLOSED -- COMPLETE** at 2026-09-21T17:3xZ, apart from the inert worktree residue in row 14.
+**Status:** CLOSED 2026-09-21T17:38Z -- COMPLETE, apart from the inert worktree residue in row 14.
+(Marker re-cut 2026-09-21T23:5xZ: the original bare `## Status` heading carried no parseable status, so
+`deploy_ledger.py list` read this entry as UNINDEXED OPEN for 6.3h. Content unchanged.)
