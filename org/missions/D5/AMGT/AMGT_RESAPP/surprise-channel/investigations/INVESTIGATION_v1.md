@@ -10692,6 +10692,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD C-EXEC-MANAGEMENT's CEO web search runs for the roster's chief executive.",
     "world_is": "A roster whose chief executive is titled 'President' (the Japanese convention, and common elsewhere) has no CEO for the search, so it is NOT_SEARCHED / NO_CEO_ON_ROSTER.",
     "notes": "INERT: the served reading is truthful (NOT_SEARCHED), nothing is served wrong. Remedy is a spec call for the CTO (whether a sole or top-listed 'President' counts as CEO, possibly jurisdiction-aware) and ACTING on it for Keyence means a live CEO web search -- vendor egress beyond Andrew's one-time Bright Data word of ~16:1xZ, so it needs a fresh per-use word. Not a round-19 cell."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S196",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T18:40:00Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-S195 against the CTO's ruling (msg 24019, ROUND_ANALYSIS.round18.md s.5 @3bfdf0a3a3): for a Japanese-listed issuer with no chief-executive title on the roster, a 'President' or 'Representative Director and President' counts as the CEO; not generalized beyond JP. The rule lands in C-EXEC-MANAGEMENT at the next PRD bump (CVO signs), not in a round-19 order. Running it for Keyence is a live CEO web search beyond Andrew's one-time Bright Data word and waits on his card.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CTO msg 24019 (18:27:55Z), recorded ROUND_ANALYSIS.round18.md s.5 @3bfdf0a3a3: 'Z-S195: RULED jurisdiction-aware ... Disarm Z-S195 against this ruling (DISMISSED_WITH_REASON under the disarm contract), and note that the act waits on his card.'",
+        "Z-S195 @d93868c547 grounds the finding (6861's one stored officer is role 'President'; ceo_search.py:503)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The spec question Z-S195 raised is RULED (JP 'President' counts as CEO when no chief-executive title is on the roster) and routed to the next PRD bump; the only remaining act, a live CEO search for Keyence, is carded to Andrew as vendor egress. Nothing is left for a row to carry.",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The ruling is recorded; the producer still applies the old rule until the PRD bump and a later cell implement it, and Keyence's served reading stays NOT_SEARCHED (truthful) until Andrew's word.",
+    "notes": "Pure disarm; filed by the seat the CTO named."
   }
 ]
 ```
