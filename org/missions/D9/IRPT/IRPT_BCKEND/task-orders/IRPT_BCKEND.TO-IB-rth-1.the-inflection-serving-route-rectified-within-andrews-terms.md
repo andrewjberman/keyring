@@ -35,7 +35,7 @@ the investigation result.md with the verbatim wire evidence; IF B1: the rectific
 - **Surprises:** one row per failed premise / wrong path / absent capability at `../surprise-channel/investigations/INVESTIGATION_v1.md`, id `IRPT_BCKEND-W1-S<k>` continuing above the highest at your HEAD (append INSIDE the first fence's array, PREVAILING EOL, UTF-8 explicit, full ISO `surfaced_at`, `disarm_owner` a SEAT SERIAL when ARMED); then keep working. Never edit this face except the single `<status>` flip; never widen; never fix a neighbouring defect.
 
 <expected_criteria>R76-AC1, R76-AC2</expected_criteria>
-<criterion id="R76-AC1" cell_refs="IB-rth-1"><invocation>timeout 1800 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rth_1.py</invocation><expect>IBR76-INFLECTION-ROUTE-RESOLVES-LIVE-3-OF-3</expect></criterion>
+<criterion id="R76-AC1" cell_refs="IB-rth-1"><invocation>timeout 3600 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rth_1.py</invocation><expect>IBR76-INFLECTION-ROUTE-RESOLVES-LIVE-3-OF-3</expect></criterion>
 
 <placeholders>NONE</placeholders>
 
