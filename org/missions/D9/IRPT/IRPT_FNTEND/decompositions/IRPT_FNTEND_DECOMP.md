@@ -1,21 +1,21 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 8 -- v0.8
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 9 -- v0.9
 
 ```json
 {
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "round": 2,
- "decomp_version": "v0.8",
+ "round": 9,
+ "decomp_version": "v0.9",
  "round_1_header_retained_below": true,
- "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@62301f71e0",
- "prd_version": "v0.4",
+ "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@5fd2dc9ab5",
+ "prd_version": "v0.9",
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-11", "FWD-12"],
  "cells": 11,
  "cell_id_shape": "FE-s-<n>",
- "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @5907cbca)",
- "record_repo": "workspace (branch CLOUD @62301f71e0)"
+ "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @be8cf21874)",
+ "record_repo": "workspace (branch CLOUD @df19cec4e8)"
 }
 ```
 
@@ -1866,3 +1866,150 @@ so it is its own chain and ready root`. Max width 4.
 - Moves: the page's access plane toward EXERCISABLE.
 - Does NOT move: the backend's own admin gating (read-only census in F49-AC9); the d13 branch (2.0.0_SA_COO~D's own
   commit, identical lines); every other `FIRM_ALLOWED_PATHS` entry; the portal freeze.
+
+## R9 -- ROUND 9: THE CTO'S NAMED SEVEN + THE PRD'S NEW CROSS-CUTTING OBLIGATION
+
+**Two inputs, folded into ONE issuance (COO's own choice, spine v3.0 L10: re-decomposition, not a bare re-issue,
+because the PRD moved past what round 8's analysis answered).**
+
+1. `ROUND_ANALYSIS_IRPT_FNTEND_ROUND8_20260915.md` (`1.0.0_SA_CTO`, @unrecorded commit, read at HEAD 2026-09-21),
+   section "Round 9 -- ONE issuance of seven small cells" (cells A-G below).
+2. PRD addenda v0.7 (`unprojected_grant`, envelope-level field), v0.8 (the two-shape branch: response-envelope
+   PRESENT-AT-ZERO vs. refusal ABSENT-BY-DESIGN) and v0.9 (the `irpt-holdings` fork carve-out, owner
+   `1.0.0_SA_CTO`, un-park condition `IRPT_BCKEND.TO-IB-rtf-8`) -- landed since round 8's analysis and never
+   folded into a decomposition. Reaches PRD cells F2, F4, F5, F6, F7, F8, F10, F11, F12 (PRD `CONTRACTS` section,
+   the `unprojected_grant` paragraph).
+
+### R9.1 THE RECTANGLE -- eleven new cells
+
+**MECE by subtraction:** round 8 answered 7 named items (A-G) + the CTO's own round-8 lint addendum already
+folded into round 8's cell C's scope; the PRD's `unprojected_grant` paragraph names 9 PRD cells it reaches
+(F2,F4,F5,F6,F7,F8,F10,F11,F12) minus F9 (the RenderPackage itself is not named) and minus F12 read as the
+PARSING layer (its own cell, not a "reach" target) = 8 reachable VIEW surfaces. Of those 8, F4/F5/F6/F7/F8
+already share ONE render surface (`tabs/StatusPanel.tsx`, confirmed by source read: it is imported by
+`ReportingTab.tsx`, `AnalysisTab.tsx`, `HoldingsTab.tsx`, `ExportModal.tsx`, `ReceiptPanel.tsx`, `TabShell.tsx`,
+`index.tsx` and `render/Page.tsx` -- 8 of 8 grep hits, portal DEV be8cf21874), so ONE cell wired there closes
+five PRD cells at once; F11 (Global) reuses the SAME tab bodies per its own PRD row ("uses all three tabs and
+export"), so it is CLOSED BY VERIFICATION under that cell, not a separate cut (checked, not assumed --
+FE-s-58's own acceptance exercises Global mode). F2 (`header/ScopeSummary.tsx`) and F10
+(`render/narrative/PeriodInContextPage.tsx`) each read their contract's `.availability` directly, outside
+`TabEnvelope`, so each needs its own cell. **8 reachable surfaces - 5 (closed by the shared cell) - 1 (F11,
+closed by verification, not a cut) = 2 cells (F2, F10) plus the shared cell plus the parsing root = 4 cells
+for the whole obligation.**
+
+| cell | write surface | serves | source of the fix | wave | slot |
+|---|---|---|---|---|---|
+| `FE-s-50` | `portal/src/pages/InvestorReporting/__tests__/fe-s-1/gen-wire.test.ts` (new); `contracts/gen-wire.ts` if it exists as a script, else the generator it names | FWD-1, FWD-11 (evidence) | round-8 analysis item 6 (S68): `gen-wire.ts` CRLF-normalizes before hashing | A | ~1 |
+| `FE-s-51` | a verification-only test under `__tests__/` naming the ancestry check | FWD-12 (evidence) | round-8 analysis item 9 (F49-AC8): the carried-hunks arm keyed to `c29a8b86` ancestry | A | ~2 |
+| `FE-s-52` | `__tests__/fe-s-5/alias-probe.test.ts`; `__tests__/fe-s-19/pre-envelope.test.ts`; `export/ExportButton.tsx`; `src/components/market-performance/SentimentGauge.tsx` (DSGN_REBRND's file, carried under round-8's ruling) | FWD-12 (portal DEV CI green) | round-8 analysis item 8 + ADDENDUM 12:3xZ (0.0.0_AB_MSTR 97061): five lint errors | A | ~3 |
+| `FE-s-53` | `contracts/adapt.ts` (`adaptStatusEnvelope`, `wireEnvelope`'s `NO_STATUS_REASON` path) | FWD-6 | round-8 analysis item 2 (W3-S37): the reason travels with the explicit unknown on every path the grant excluded | A | ~4 |
+| `FE-s-54` | `contracts/adapt.ts` (`adaptStatusEnvelope`'s `status-summary`/`status-job` handling) | FWD-6 | round-8 analysis item 3 (W3-S38): a stated PARTIAL at the top level is the response's stated state; first act is the read 3.0.0_SA_CVO did not make (which production components render those two operations' state) | A | ~5 |
+| `FE-s-55` | `tabs/holdings/slices.ts:100-102` | FWD-5 | round-8 analysis item 5 (W4-S19): a non-authoritative Holdings partition reads "withheld", not "unknown" | A | ~6 |
+| `FE-s-56` | `__tests__/fe-s-14/` (the control's git-form re-point); `fixtures/index.ts:77` | FWD-12 (evidence prose) | round-8 analysis items 6-7 (W2-S35, W4-S20): `2.0.0_SA_COO~F`'s two rows, one cell | A | ~7 |
+| `FE-s-57` | `contracts/index.ts` (`Availability`, new `UnprojectedGrant` type); `contracts/adapt.ts` (`wireEnvelope`, new `carryUnprojectedGrant`); `contracts/envelope.ts` (`parseIrEnvelope`) | FWD-3, FWD-4, FWD-5, FWD-6, FWD-8, FWD-11 (the carrying half; no rendering yet) | PRD v0.7/v0.8/v0.9 `unprojected_grant` paragraph | A (ROOT) | ~8 |
+| `FE-s-58` | `state/status.ts` (`AvailabilityLike`, `TabEnvelope`, `envelopeFromAvailability`, `envelopeFromRefusal`); `tabs/StatusPanel.tsx` | FWD-3, FWD-4, FWD-5, FWD-6, FWD-8 (rendering half); FWD-11 (verified, not cut) | PRD v0.7/v0.8/v0.9, closes F4/F5/F6/F7/F8 via the shared panel | B (dep FE-s-57) | ~1 |
+| `FE-s-59` | `header/ScopeSummary.tsx` | FWD-1, FWD-11 | PRD v0.7/v0.8/v0.9, closes F2 | B (dep FE-s-57) | ~2 |
+| `FE-s-60` | `render/narrative/PeriodInContextPage.tsx` (+ `compose.ts` if the packet's field needs surfacing there first) | FWD-8 | PRD v0.7/v0.8/v0.9, closes F10 | B (dep FE-s-57) | ~3 |
+
+**11 of 11 evaluated, 0 NOT-EVALUATED. Coverage by subtraction: round-8's 7 named items - 7 cut (A-G) = 0
+uncovered; the PRD's 9-cell reach - 5 (shared panel) - 1 (F11, verified) - 2 (F2, F10, own cells) - 1 (F12, the
+root itself) = 0 uncovered.**
+
+### R9.2 THE CELLS
+
+**FE-s-50 through FE-s-56** carry the CTO's own diagnosis verbatim (round-8 analysis items 1-9 quoted above);
+each worker's task order inlines the exact file, line and remedy the analysis already named, so no further
+design judgment is exercised at L5 for these seven -- the cut is the analysis restated as a cell boundary.
+
+**FE-s-57 (the root).** `contracts/index.ts:110-134`'s `Availability` gains one new member,
+`unprojectedGrant: UnprojectedGrant | null`, and a new exported type `UnprojectedGrant { readonly count:
+number; readonly denominator: number; readonly kinds: readonly string[] }`, disjoint from every existing
+member. `contracts/adapt.ts`'s `wireEnvelope()` (`:220-258`) gains an optional part `unprojectedGrant?:
+UnprojectedGrant | null`, defaulted to `null` (the explicit unknown for "not yet attached" -- every existing
+adapter call site is UNCHANGED, since the parameter is optional and every one of the ten document adapters
+already flows through `wireEnvelope`). A NEW function, `carryUnprojectedGrant<T>(view: T, grant:
+UnprojectedGrant | null): T`, mirrors `carryAvailabilityFromStatus`'s array/object recursion exactly (same
+shape, same null-safety, stamping `view.availability.unprojectedGrant = grant` and nothing else).
+`contracts/envelope.ts`'s `parseIrEnvelope()` (`:180-237`): on the REFUSED branch (`:195-208`), no change --
+absence is by design and the function already returns `data: null`. On the non-refused branch, after `const
+data = carryAvailabilityFromStatus(...)` (`:219`), read `body.unprojected_grant`; if it is not
+`{count: number, denominator: number, kinds: string[]}`-shaped, throw `EnvelopeMismatch('unprojected_grant',
+operation)` (mirroring the file's own established idiom -- ⛔ the `irpt-holdings` route's fork bug still SENDS
+the key, always `{count: 0, ...}` per the PRD's v0.9 paragraph, so this throw fires only on a route that omits
+the key entirely, which the PRD calls a genuine backend defect, never on holdings); else call
+`carryUnprojectedGrant(data, grant)` before returning. `IrEnvelopeField` (`:69`) gains `'unprojected_grant'`.
+**Bound: this cell renders NOTHING.** It is the carrying half only; FE-s-58/59/60 are the rendering half, and
+the split exists so the parsing contract can be graded (12 of 12 `RESPONSE_OPERATIONS`, present-at-zero on
+every non-refused response) independently of any pixel.
+
+**FE-s-58.** `state/status.ts`'s `AvailabilityLike` (`:204-212`) and `TabEnvelope` (`:77-89`) each gain
+`unprojectedGrant?: UnprojectedGrant | null`; `envelopeFromAvailability` (`:215-230`) copies
+`availability.unprojectedGrant` across; `envelopeFromRefusal` (`:258-267`) sets it to `null` explicitly (a
+refusal's `publicReasonCode` -- `UNPROJECTED_GRANT` included -- already renders verbatim via the EXISTING
+`reason-code` slot at `StatusPanel.tsx:70-79`, confirmed by source read: no new code needed for the refusal
+branch). `tabs/StatusPanel.tsx` gains a new slot, `data-slot="partial-disclosure"`, rendered when
+`envelope.unprojectedGrant && envelope.unprojectedGrant.count > 0`, showing the count, denominator and kinds
+list in the panel's existing visual idiom (a `<p>` beside the reason-code slot, same text sizing, navy ink on
+the white panel per portal `CLAUDE.md`'s color law -- never a light-on-light badge). **Acceptance must exercise
+Global mode** (`global/useFirmContext.ts` + the shared tab bodies) to CONFIRM F11's coverage is inherited, not
+assumed -- a positive control render under a cross-firm selection, count>0, badge visible.
+
+**FE-s-59.** `header/ScopeSummary.tsx` takes `scope: ResolvedScope | null` directly (`:41`); render the same
+badge idiom reading `scope?.availability.unprojectedGrant`, placed beside the existing `Fact` grid (`:72-86`),
+never inside the cohort blocks (a different concern, not to be conflated per this file's own withheld/unknown
+distinction).
+
+**FE-s-60.** `render/narrative/PeriodInContextPage.tsx` composes from `NarrativePacket` (`:51`); render the
+same badge reading `packet.availability.unprojectedGrant`, on the page itself (this IS the exported-PDF path,
+so the badge must appear in BOTH the on-screen preview and the printed PDF -- one render, both consumers, no
+second copy).
+
+### R9.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-50 <- (none)   READY ROOT   wave A
+  FE-s-51 <- (none)   READY ROOT   wave A
+  FE-s-52 <- (none)   READY ROOT   wave A
+  FE-s-53 <- (none)   READY ROOT   wave A
+  FE-s-54 <- (none)   READY ROOT   wave A
+  FE-s-55 <- (none)   READY ROOT   wave A
+  FE-s-56 <- (none)   READY ROOT   wave A
+  FE-s-57 <- (none)   READY ROOT   wave A
+  FE-s-58 <- FE-s-57  wave B, seated on FE-s-57's drain
+  FE-s-59 <- FE-s-57  wave B, seated on FE-s-57's drain
+  FE-s-60 <- FE-s-57  wave B, seated on FE-s-57's drain
+
+  weakly connected components: 8   ready roots at issuance: 8
+  wave A = {50,51,52,53,54,55,56,57}   max concurrent width: 8
+  wave B = {58,59,60}   max concurrent width: 3, seated only after 57 merges
+```
+
+Disjoint by FILE within wave A: `gen-wire.ts`/tests (50), a new verification test (51), the five lint files
+(52), `contracts/adapt.ts` for TWO disjoint functions -- `adaptStatusEnvelope`'s no-status branch (53) and its
+status-summary/status-job branch (54) -- **same file, two cells: SERIALIZED, not concurrent** (see below),
+`tabs/holdings/slices.ts` (55), `__tests__/fe-s-14/` + `fixtures/index.ts` (56), and the three `contracts/*`
+files (57, none shared with 50-56). **53 and 54 share `contracts/adapt.ts` and are NOT disjoint by file --
+seated in the SAME wave-A slot sequence (~4 then ~5), never concurrently, same worker or a hand-off commit
+between them; this is the one exception to "wave A is 8 concurrent" and is stated here rather than silently
+assumed.**
+
+**Fan-out: `8 of 8 chains, cap 8, reason: seven independent items from the CTO's round-8 analysis with no
+shared file (save 53/54, sequenced within the same chain) plus one new root for the PRD's carrying half; the
+rendering half (58, 59, 60) has no ready root until 57 drains, so it seats in wave B, width 3`.**
+
+### R9.4 RULE 24 RECORD (round 9)
+
+| postulate | how |
+|---|---|
+| (i) MECE | round-8's 7 named items: 7-7=0 uncovered (R9.1). The PRD's 9-cell reach: 9-5(shared panel)-1(F11, verified not cut)-2(F2,F10)-1(F12 root)=0 uncovered. |
+| (ii) same grain | every wave-A cell is a (file, named defect) pair at the FILE grain; wave-B cells are (file, new-field-consumption) pairs at the same grain. |
+| (iii) intent | 50-56: each restates ONE ruling from round 8's analysis, one axis each (hashing, ancestry, lint, reason-carriage x2, withheld-text, control re-point). 57: parse and carry, never render. 58-60: render only, never re-derive the count. |
+| (iv) state | Moves: FWD-1,3,4,5,6,8,11,12 toward EXERCISABLE evidence (fixture-bound; EXERCISED proofs still wait on IRPT_BCKEND per SEQUENCE.yaml, unchanged from round 8). Does NOT move: the `irpt-holdings` route's own fork bug (CTO-owned, `IB-rtf-8`, PARKED); the portal freeze; any grade to REALIZED; 3.0.0_SA_CVO's backfill question (at Andrew); S66 the backend admin wall (still at Andrew per round-8 item 1, unanswered as of this cut). |
+
+### R9.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push and no SITEZ merge until Andrew's word.
+- **The seat.** Re-seated on IRPT_FNTEND as this session's sole focus, Andrew-direct 2026-09-21 ~12:37Z
+  (`org/tier1_exec/2.0.0_SA_COO~F/deliverables/ANDREW_DIRECT_20260921_1237Z_COOF_SOLE_FOCUS_IRPT_FNTEND_CANONICAL_FLOW_THEN_DRIVE.md`),
+  superseding the 2026-09-15 free-after-round-8 plan.
+- **S66 (the backend admin wall) stays at Andrew**, unadjudicated by this cut; it names no cell here.
