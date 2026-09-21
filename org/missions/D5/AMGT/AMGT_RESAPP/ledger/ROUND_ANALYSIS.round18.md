@@ -55,3 +55,35 @@ those files' paths anyway, and doing R18-B first would move them twice. W45-S1 i
 Push state: **LOCAL on SITEZ.**
 
 -- `1.0.0_SA_CTO~Z`
+
+## 4. ADDENDUM ~18:1xZ, before issuance -- two calls ruled (msg 24013), R19-B's token accepted (msg 24014)
+
+**CALL 1 -- R19-A: RULED re-projection, not a re-run.** A plain `enrich --write-pool` re-run would rebuild CSL's roster
+from the filings object `rk-72` just rewrote, make a LIVE Bloomberg call for CSL and 6861, and write new
+`raw/bloomberg/` stamps (`enrich.py:859-860`). That is the exact out-of-radius class Z-S192 caught on `rk-48`.
+`--reproject-public-profile` replaces `ceo_public_profile` only (a readable basis plus a new `reason_code` field):
+exactly 3 conditional puts, no vendor, roster or pool call, `ceo_profile` byte-equal (simulated on the 3 live
+objects). It is a strict subset of the ruled re-run's writes and serves the whole ruled outcome. `management.schema.json`
+gains `reason_code`. The pair covers the 3 management keys only. **The reader sentence must be plain English:**
+CSL's stored reason uses internal terms ("verified_site ... filings battery") and becomes VISIBLE once R19-C serves
+its roster. So the re-projection writes, for CSL: "No verified company website was found, so the CEO web search was
+not run." The code stays in `reason_code`, never in the sentence.
+
+**CALL 2 -- Z-S194: RULED remedy (a), serve the fallback roster, labelled.** `C-EXEC-MANAGEMENT` (PRD :738-747, from
+Andrew's 2026-09-18 card 1) already says it: when the filing yields no RESOLVED roster, Bloomberg's
+`COMPANY_EXEC_OFFICERS` fills the table (name and title only), every object carries `roster_source`, and the fallback
+never hides why the filing failed. Only a roster with ZERO officers is withheld. The adapter
+(`scoped_amgt.py:2520-2533`) instead withholds every non-RESOLVED roster and hard-codes `officer_count: 0`, so CSL (14
+officers) and 6861 (1 officer) read "zero officers". **That is the adapter violating a ratified contract, not a
+choice between remedies.** Cell **R19-C**:
+- a non-empty BLOOMBERG_FALLBACK roster is SERVED with `roster_source` and the filing's own failure reason;
+- `officer_count` is always the real count;
+- an ABSENT label is TRUE in every branch (`ZERO_OFFICERS` only when there are zero officers; an unresolved source
+  with no fallback says so).
+It is an adapter redeploy under a never-widen pair; I owe the CTO half. **Sequenced behind R19-B inside the round**,
+and its pair names R19-B's `crosswalk.py` commit as carry-along.
+
+**R19-B's token `-SLASH-` is accepted** (census: 36 keys, 2 slashed, 36 of 36 round-trip, 0 collisions, 0 served
+keys changed).
+
+**Round 19 as issued: R19-A (re-projection), R19-B, then R19-C. One slug; R19-C sequenced behind R19-B.**
