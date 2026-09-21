@@ -6777,6 +6777,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "No impact on this cell's own grading: rule (b)'s honest-word logic already falls through to 'LEFT NON-TERMINAL' when neither `complete` nor `superseded` is honest, and that is exactly this worker's disposition for all seven (see commit 023b4697df and battery_ib_rth_3.py's per-order table). Filed because the order's own premise ('true for some of the seven') does not match this worker's measurement of the decomp's own `supersedes` column plus a project-wide text search, per CLAUDE.md's own instruction on this exact bullet ('never assumed'). Routed to 2.0.0_SA_COO~B (the issuer) to confirm whether the clause described a different, unnamed seven-member set, a planned-but-not-yet-cut round-9 supersession, or is itself the thing needing correction."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S46",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "IB-rth-1's own face (and round-7's W3-S50) name `opal-data-inflection` as 'the locked bucket (FWD-11)' blocking inflection's ownership map. MEASURED: the live serving path reads a DIFFERENT bucket, `opal-data-inf` (the legacy three-letter code, same shape as 49financial/opal-data-bd and cottonwood/opal-data-cot), which is NOT locked; `opal-data-inflection` is a separate, unrelated D14-migration bucket the serving path never touches.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "IB-rth-1 face, <to_id> line and (a)(ii): 'the blocker is the locked opal-data-inflection bucket (FWD-11)'; 'on WHICH bucket (opal-data-inflection per FWD-11)'.",
+    "world_is": "data/firm_registry.json (HEAD): inflection -> bucket 'opal-data-inf'. Live env var on irpt-performance-adapter, IRPT_DIRECTORY_BUCKET_MAP == {'49financial':'opal-data-bd','cottonwood':'opal-data-cot','inflection':'opal-data-inf'} -- EQUAL to the registry. `.tools/aws s3api get-bucket-policy --bucket opal-data-inf` (this session, as Andrew_Berman) succeeds and returns two Allow statements (a CloudFront OAI and a CloudFront distribution on gold/*), no Deny -- the bucket is readable and not locked. By contrast `get-bucket-policy --bucket opal-data-inflection` returns AccessDenied 'with an explicit deny in a resource-based policy', even for Andrew_Berman (INVESTIGATION_v1.md:7178, this same file, an earlier row); `s3api list-buckets` shows opal-data-inflection and opal-data-cottonwood both created 2026-09-18T20:05:17Z, the same second, one apply -- a D14 full-name-migration pair the serving path's env var never names. The actual live blocker (measured this session: a session scoped to exactly the deployed role's own GetObject-only, no-ListBucket grant on `opal-data-inf/platinum/inflection/ownership_map.json`, a genuinely-missing key, gets HTTP 403 AccessDenied, S3's own existence-masking behaviour for a caller without ListBucket) is entirely inside `opal-data-inf`, and `_authz/loaders.py::load_ownership`'s exception handler not recognising that shape (fixed this cell; see IB-rth-1_investigation.md sections 3-5).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "py -3.12 -c \"json.load(open('data/firm_registry.json'))['firms']\" this worktree HEAD: inflection bucket == 'opal-data-inf'",
+        ".tools/aws lambda get-function-configuration --function-name irpt-performance-adapter --query Environment.Variables.IRPT_DIRECTORY_BUCKET_MAP (this session): {\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+        ".tools/aws s3api get-bucket-policy --bucket opal-data-inf (this session): two Allow statements, no Deny, rc=0",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md:7178-7179 (this file, an earlier round-7 row): opal-data-inflection get-bucket-policy -> AccessDenied 'explicit deny in a resource-based policy'; list-buckets shows opal-data-inflection/opal-data-cottonwood both CreationDate 2026-09-18T20:05:17Z",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IB-rth-1_investigation.md sections 1 and 3 (this cell's own investigation, same commit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Does not change this cell's own conclusion or branch (the AccessDenied-under-opal-data-inf mechanism is the same one row IRPT_BCKEND-S94/W3-S50 already names, and this cell's rectification targets that, not FWD-11's locked bucket). Filed because a later reader following the face's own words would go looking for a fix on the wrong bucket. Routed to 2.0.0_SA_COO~B (the issuer, same pattern as W3-S50/S94) to correct the FWD-11 cross-reference on a future PRD/face touch."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S47",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-21T13:05:00Z",
+    "one_line": "Committing this cell's own, otherwise-correct and fully-tested `_authz/loaders.py` fix was REFUSED by .tools/naming-gate.py -- not for the fix itself, but because the file's PRE-EXISTING `bucket_for` GENERATED-block marker cited a stale registry hash unrelated to this cell's edit; the gate diffs the WHOLE FILE against a fresh regen, so any edit anywhere in a file with a stale marker is refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "Task order IB-rth-1 names no naming-gate interaction; CLAUDE.md Rule 30's own bound: 'a builder REFUSAL is a missing registry row to add ... never a hand-typed workaround' -- this refusal was neither: the row exists, the target is a known generator output, and the ONLY difference from a fresh regen was the marker's cited registry hash.",
+    "world_is": "`.tools/safe-commit.sh` on this cell's diff (touching only `load_ownership`, well below the `bucket_for` GENERATED block at lines 43-57) was BLOCKED: '[naming-gate] NAMING REFUSE infra/aws/lambda/investor-reporting/_authz/loaders.py:43 <generated-file-edit> ... a hand edit to a GENERATED file: its bytes differ from the generator's output from line 43'. Measured: `py -3.12 lib/opal_naming.py generate --out <scratch> --target infra/aws/lambda/investor-reporting/_authz/loaders.py` then `diff` against the working file showed exactly ONE line differing -- the marker comment's cited registry hash (`926399fd259b9977` on disk vs `dc7c1d5c8f2ce1ea` freshly generated); the `bucket_for` function BODY (lines 44-56) was byte-identical, and this cell's own hand edit (well outside the marked range) survived the regen unchanged (the generator reads hand-kept sections from the post-image). Applying the regenerated file (marker refreshed, fix preserved, confirmed by diff before applying) let the commit-gate and naming-gate both pass. `.tools/naming-gate.py:679-692` (`generated_ranges`) and `:695-715`/`:914-926` (`generator_output`/`grade_file`) confirm the mechanism: the WHOLE FILE is regenerated and compared byte-for-byte, not just the touched hunk.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/.. safe-commit output this session (first attempt): '[naming-gate] NAMING REFUSE infra/aws/lambda/investor-reporting/_authz/loaders.py:43 <generated-file-edit>'",
+        "py -3.12 lib/opal_naming.py generate --out .scratch/gen_check --target infra/aws/lambda/investor-reporting/_authz/loaders.py (this session): 'WROTE ... (9779 bytes)'",
+        "diff .scratch/gen_check/infra/aws/lambda/investor-reporting/_authz/loaders.py infra/aws/lambda/investor-reporting/_authz/loaders.py (this session): exactly 1 line differs -- the GENERATED marker's registry hash",
+        ".tools/naming-gate.py:679-715, 905-926 (generated_ranges/generator_output/grade_file), read at HEAD this session: the check regenerates and compares the FULL post_text, not a sliced range"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Resolved for THIS file, THIS cell, by refreshing the marker before commit (see the committed loaders.py and the packet's amended COMMITTED-FILE-SHA256 note). ARMED because this is a GENERAL, project/fabric-wide condition, not particular to this file: ANY other generated file whose marker predates the current registry hash will refuse the NEXT hand edit any worker makes to it, for a reason invisible from the edit's own diff -- a worker unfamiliar with lib/opal_naming.py could spend real time diagnosing a refusal that names line 43 while their own change is at line 130. Routed to 2.0.0_SA_COO~B (the issuer) as an LGIC_ENFORCE / naming-gate hygiene item: either a periodic marker-refresh sweep, or the gate's own message naming this exact remedy explicitly (it currently prints the regenerate command but not the 'this may be pre-existing drift, unrelated to your edit' framing). DISARM CONDITION: a project-wide (or fabric-wide) sweep confirms every GENERATED marker's cited registry hash is current, or a ruling states this is accepted friction with the existing message as sufficient guidance."
   }
 ]
 ```
