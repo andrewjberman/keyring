@@ -10646,6 +10646,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The rk-72 order's RULED item 4: the discriminating arm loads 'HEAD's battery.py bytes via git show HEAD:... (merge-base with SITEZ if HEAD has moved -- record which)'.",
     "world_is": "A 'before this cell' read expressed as HEAD or merge-base is true only on the cell's own branch; once merged the same expression names the cell's own code. A permanent test must pin the pre-change commit by hash.",
     "notes": "Pure disarm of a hazard this seat's order created, filed with the fix in one commit, so DISMISSED_WITH_REASON per the round-16 disarm-record contract. Lesson for any future order asking for a 'HEAD copy' discriminator: pin the parent commit of the change, never HEAD or a merge-base. The worker's own row W72-S1 (AC3 omits `domicile`, so step 5 prints 'jurisdiction UNKNOWN') is separate and the CVO's to disposition."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S194",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T18:10:00Z",
+    "one_line": "2 of the 3 VALIDATION names serve NO management to a manager, under a label that is false for the stored object: scoped_amgt.read_management serves management_status ABSENT / absent_because ZERO_OFFICERS / officer_count 0 whenever roster_status != RESOLVED (scoped_amgt.py:2519-2533), and CSL_AU_Equity stores 14 officers and 6861_JP_Equity 1 officer (roster_status UNRESOLVED-SOURCE, officers from the Bloomberg fallback rk-47 wrote). The served page says the roster has zero officers when the object carries 14.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live, by direct invoke of opal-amgt-scoped-api /api/scoped/amgt/security/<key>/thesis (2026-09-21 ~18:05Z): CAT_US_Equity management_status SERVED roster_status RESOLVED; CSL_AU_Equity management_status ABSENT roster_status UNRESOLVED-SOURCE; 6861_JP_Equity management_status ABSENT roster_status UNRESOLVED-SOURCE.",
+        "Stored objects s3://opal-data-harvest/management/v1/<key>/2026-09-19.json (latest version): CAT roster_status RESOLVED officers 1; CSL roster_status UNRESOLVED-SOURCE officers 14, fallback block carries entries_returned/officers_parsed/raw_key; 6861 roster_status UNRESOLVED-SOURCE officers 1, same fallback block.",
+        "The rule at HEAD, scoped_amgt.py:2519-2533: `if roster_status != \"RESOLVED\" or not officers:` -> management_status ABSENT, absent_because ZERO_OFFICERS, officer_count 0. The comment above it (:2513-2517) cites PRD v0.13 C-EXEC-MANAGEMENT :731-732 'A roster with ZERO officers is NOT SERVED' -- the rule is wider than the contract it cites: it also withholds a NON-empty fallback roster and labels it zero."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-EXEC-MANAGEMENT (as cited at scoped_amgt.py:2513-2517): a roster with ZERO officers is NOT SERVED; it is ABSENT with its reason.",
+    "world_is": "A roster with 14 (CSL) or 1 (6861) stored officers from the Bloomberg fallback is also withheld, and the served reason says ZERO_OFFICERS with officer_count 0 -- false for the object read. Whether a fallback roster SHOULD be served (with its provenance) is a spec call; that the label is false is not.",
+    "notes": "Surfaced by the round-19 R19-A drafter while measuring the rk-75 served effect, confirmed live by this seat. ARMED because it is live on the manager-review path Andrew named the priority (~16:5xZ); disarm_owner is the CTO because the remedy is a spec ruling (serve the fallback roster with its provenance, or keep withholding it under a TRUE reason such as ROSTER_UNRESOLVED) and either remedy is an adapter change plus redeploy. Pitched to 1.0.0_SA_CTO~Z before round 19 is issued, so it can ride the slug if ruled."
   }
 ]
 ```
