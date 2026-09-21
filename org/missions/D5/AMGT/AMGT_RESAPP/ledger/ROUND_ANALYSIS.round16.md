@@ -110,11 +110,25 @@ routes every tenancy's bronze/silver to `opal-data-assets` (`:11-36`, spot-check
 The 2026-09-18 ~23:2xZ harvest-scope-row commits (`e44380a9d1`/`d388423a95`) did not touch the homes table.
 
 **RULED: `rk-32`+chain P are held on an UNLANDED IMPLEMENTATION ACT, not an open Andrew word.** The RESERVED list
-in this seat's arming record is corrected accordingly (amended separately, same turn). **Routed to
-`0.0.0_AB_MSTR~Z`, same turn:** is the option-(ii) doctrine placement queued, or held on an unresolved question back
-to Andrew? If queued, this seat asks it be prioritized -- it is the one act between `rk-32`/chain P and a cut,
-sitting 2.5 days since the word landed. If held on something, name it so it can be tracked honestly rather than
-mislabeled a third round running.
+in this seat's arming record is corrected accordingly (amended separately, same turn).
+
+**FURTHER CORRECTED, same turn, by `0.0.0_AB_MSTR~Z`:** the placement is NOT that seat's either. Measured against
+the enforced gate: `.owned-paths.yaml` `PLATFORM_LOGIC_DOCS` permits only `4.0.0_SA_CRO` (base) and its LAPTOP tilde
+lanes (`~A`-`~D`) -- zero MSTR entries, and the lane's own note excludes site-Z (`~Y`/`~Z`) by name. The 2026-09-18
+CRO~Z record's "the placement is `0.0.0_AB_MSTR~Z`'s" does not survive a gate check. Further, per CRO~Z's own
+read-document (`LGIC_NAMING_STANDARD_READ_20260918.md` @`c8989376`, a measurement, not a plan), this is not a
+one-row registry edit: gold/state/code need one new `scopes.json` row (no departure); platinum needs that row plus
+a tenancy change (departs R6); silver needs a declared R8 departure (the canon already permits this class); **bronze
+is the hard case -- R4's own non-application text says bronze may NOT leave `opal-data-assets` under R8's free axis
+at all, so landing bronze in `opal-data-harvest` is either a straight VIOLATION or requires R4's OWN TEXT to change.**
+Andrew's "opal-data-assets is very specifically for client/partner custodial information" reads as a NARROWING of
+R4 itself -- doctrine authorship, not a mechanical exception. **This is squarely a laptop CRO lane's to author**
+(CLAUDE.md: a doctrine folder has a named writer), with Andrew's R20 acknowledgment of the specific bronze/silver
+departure TEXT still owed once drafted -- a fresh, narrow card, not the same item re-asked. `0.0.0_AB_MSTR~Z` is
+relaying to the laptop MSTR to route to a laptop CRO lane, with CRO~Z's read-document as the starting evidence.
+
+**TRACK AS: held on a laptop CRO lane's doctrine-authorship act, never "MSTR" and never "Andrew."** `rk-32`+chain P
+stay held until that lands and, per R20, until Andrew acknowledges the drafted departure text.
 
 ## 4. What each seat owes next
 
