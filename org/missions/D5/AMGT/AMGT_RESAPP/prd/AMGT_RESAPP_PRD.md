@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.13",
+  "prd_version": "v0.14",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,14 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.14 CHANGE NOTE -- 2026-09-21 ~17:4xZ, `1.0.0_SA_CTO~Z`: the harvest storage format (section 11)
+
+Andrew-direct ~17:2xZ (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260921_172xZ_AMGT_RESAPP_PROMOTE_IF_FEATURES_NO_WATER_IN_PIPES_BACKFILL_HELD_FOR_BRONZE_SILVER_SHAPE.md`
+@`e70b949ba0`): the coordinated backfill is held until the bronze/silver format of `opal-data-harvest` per ingestion
+channel is settled. `4.0.0_SA_CRO~Z`'s plan (`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md`
+@`bc8c18a28f`) is adopted as the channel-by-channel specification, and section 11 carries the contracts. The ENDPOINT
+and the CONTRACTS section do not move. Only the brief half re-opens.
 
 ### v0.13 CHANGE NOTE -- 2026-09-18 ~20:1xZ, `1.0.0_SA_CTO~Z`: ratified-text hygiene, and Andrew clears SA's terms
 
@@ -1683,3 +1691,31 @@ for the round-14 cell, not a rule.
 - `C-PEERS-V-FLOORS`: the floors sit at `lib/research/scores/peers_v.py:62-70`, the measure's `FIELDS` at `:74-82`; SA peer
   tickers were measured to resolve as `<TICKER> US Equity` with no mapping step. The L4 reading in that clause is
   `1.0.0_SA_CTO~Z`'s.
+
+## 11. ADDENDUM v0.14 -- THE HARVEST STORAGE FORMAT (Andrew-direct 2026-09-21 ~17:2xZ)
+
+The coordinated backfill is held until this format is settled. The channel-by-channel specification is
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md` @`bc8c18a28f`. This section
+fixes the contracts it rests on. Where the plan and this section disagree, this section binds.
+
+- **`C-HARVEST-HOME`** -- every AMGT_RESAPP tier lives in `opal-data-harvest` under scope `harvest`. The vendor is
+  `{source}` for bronze and silver; `amgt` is `{source}` for gold, platinum, state and code. Every address is
+  `lib/opal_naming.py address()` output (Rule 30); a builder refusal is a missing registry row, never a hand-typed key.
+  `opal-data-assets` holds client/partner custodial information only (Andrew 2026-09-18).
+- **`C-BRONZE-AS-RECEIVED`** -- bronze is the response bytes exactly as received, one object per fetch, never
+  overwritten: `{vendor}/harvest/bronze/{request}/{entity}={id}/{YYYYMMDDTHHMMSSZ}.{ext}`.
+- **`C-SILVER-PARQUET`** -- silver is parquet with every vendor field kept and typed, partitioned `date=` by fetch date,
+  one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_hash`.
+- **`C-DEDUPE-BY-KEY`** -- each channel names a FETCH key and a RECORD key (plan s.5). Before any vendor call, the
+  writer checks the bucket for the fetch key. A silver writer skips an unchanged `(record key, record_hash)` and writes
+  a changed row as a new row, never an update. A reader takes the newest `fetched_at` per record key. **The bucket is
+  the authority**, not a desktop file; the empty `opal-harvest-articles` table retires.
+- **`C-SLASH-SAFE-KEY`** -- one slash-safe security key is minted in `lib/research/identity/crosswalk.py`. An entity id
+  sits in a partition, never in the free-form `object` argument.
+- **`C-FORMAT-SEQUENCE`** -- the backfill's gate is bronze and silver only: the tenancy act, the vendor registry rows,
+  the bronze writers, the silver writers with their record keys, and the fetch-key check. Gold (parquet) and platinum
+  (a JSON publisher the API reads) are rebuilt from silver AFTER the backfill. Existing objects move by copy with their
+  vintage, never by re-fetch or re-derivation. The move is its own chain, not a rider on another cell (R19).
+- **Not decided here:** the tenancy act and the five vendor rows are the laptop `4.0.0_SA_CRO` lane's
+  (`PLATFORM_LOGIC_DOCS`). Andrew acknowledges the drafted departure text under R20. Whether Lusha keeps bronze is
+  Andrew's call.
