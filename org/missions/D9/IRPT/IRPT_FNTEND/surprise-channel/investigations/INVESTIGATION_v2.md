@@ -4655,6 +4655,30 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T15:03:52Z",
+    "one_line": "AMENDMENT 1 closed F57-AC6 (0 fail) and cut F57-AC7's residual from 52 fail/1 error to 5 fail/1 error, but three of the remaining problems trace to files OUTSIDE this cell's <paths> in every version of the grant: src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json (2 problems: its own directory's test, and F41-AC5 reading it as one of FROZEN_MAPS) needs the same unprojected_grant completion as its sibling fe-s-18-holdings-*.json maps, which THIS cell's in-grant fix to those siblings now makes visible; fe-s-47/no-status-reason.test.ts:191 throws at MODULE LOAD (an 'Unhandled error between tests', not a named test) on the same missing-key rule; and fe-s-49/admin-gate.test.ts F49-AC8 fails on 2 unrelated App.tsx hunks, pre-existing and unrelated to unprojected_grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-57 AMENDMENT 1: 'For EVERY hand-built response body in those directories [fe-s-1, fe-s-14, fe-s-19, fe-s-25, fe-s-26, fe-s-30, fe-s-31, fe-s-33, fe-s-34, fe-s-35, fe-s-39, fe-s-41, fe-s-42, fe-s-48, fe-s-49] that is NON-REFUSED ... add unprojected_grant.' F57-AC7: 'the whole IRPT_FNTEND suite is green' (expect '0 fail'). BOUNDS (unchanged): the paths grant is the write surface; a path needed that it lacks is a BLOCKING row, never an override.",
+    "world_is": "At portal 9094772a: F57-AC6 (fe-s-1 + fe-s-14, bun's substring match) measures '274 pass / 2 skip / 0 fail' -- CLOSED. F57-AC7 (whole suite) measures '579 pass / 21 skip / 5 fail / 1 error' of 605, down from the pre-amendment '532 pass / 21 skip / 52 fail / 1 error'. The residual, named precisely: (1) fe-s-32/holdings-in-a-browser.test.ts 'the four scenario maps > the NO-ANSWER map is the observed map with ONE member changed: the holdings status' -- this cell's in-grant fix added unprojected_grant to ALL 9 members of fe-s-18-holdings-observed.json (required by F26-AC4's own '27 of 27' bar), but fe-s-32's holdings-no-answer.json (out of grant, derived from the observed map with only the holdings status changed) was not touched, so 8 of 9 members now differ where the test expects only 1; (2)/(3) fe-s-41/one-writer.test.ts F41-AC5's two subtests read fe-s-32/holdings-no-answer.json as one of FROZEN_MAPS and its narrative-packet envelope throws EnvelopeMismatch('unprojected_grant') on parse, so 'bound' reads 4 of 5 where 5 of 5 is required; (4) fe-s-47/no-status-reason.test.ts:191 throws the same EnvelopeMismatch at MODULE EVALUATION time (before any test() runs), reported by bun as 'Unhandled error between tests' rather than a named failing test -- present in the ORIGINAL pre-amendment run too (portal b92448f3, confirmed by re-grep), so it is not a regression this session introduced, only newly attributable; (5) fe-s-49/admin-gate.test.ts F49-AC8 fails because HEAD App.tsx carries 2 hunks ('ArrowLeftRight' import, a 'Trade Submission' nav mark) that do not belong to this order and were never this cell's to add or remove -- confirmed unrelated to unprojected_grant (its own printed diff names the two hunks explicitly) and present in the ORIGINAL pre-amendment run. None of __tests__/fe-s-32/, __tests__/fe-s-47/ or src/App.tsx is in this cell's <paths> in the original order OR amendment 1. F57-AC7 is FAILED as measured; F57-AC6 is CLOSED. <status> stays open pending a further grant widening or a decision to accept these five as a separately-owned residual.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 9094772a:src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json (unmodified; outside every version of this cell's <paths>) vs portal 9094772a:src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json (modified this session, all 9 members carry unprojected_grant)",
+        "/c/tmp/final3_ac7.log (bun test src/pages/InvestorReporting at portal 9094772a): '579 pass', '21 skip', '5 fail', '1 error', 'Ran 605 tests across 107 files', rc=1; four named ✗ lines (fe-s-32 scenario-maps, F41-AC5 x2, F49-AC8) plus the fe-s-47 module-level 'Unhandled error between tests' citing envelope.ts:249 and no-status-reason.test.ts:191",
+        "/c/tmp/final_ac7.log (the FIRST, pre-amendment whole-suite run at portal b92448f3): the SAME fe-s-47/no-status-reason.test.ts:191 unhandled-error citation and the SAME F49-AC8 failure with the SAME two unrelated App.tsx hunks named -- confirming both predate this session's edits",
+        "cd <WS>/portal && timeout 60 bun test 'src/pages/InvestorReporting/__tests__/fe-s-32/' -> 'the four scenario maps > the NO-ANSWER map is the observed map with ONE member changed: the holdings status' FAILS, printing 8 of 9 route members differing (expected [HOLDINGS_KEY] only)",
+        "cd <WS>/portal && timeout 60 bun test 'src/pages/InvestorReporting/__tests__/fe-s-49/' -> F49-AC8 FAILS, 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
