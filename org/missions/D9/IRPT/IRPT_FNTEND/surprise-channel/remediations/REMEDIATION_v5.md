@@ -158,11 +158,11 @@ STATES: 8 rows OPEN. 2 read REMEDIATED -- W1-S74 and W3-S40, the two ARMED rows,
   "owner": "2.0.0_SA_COO~F",
   "round": "v8",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~F",
    "round": "v8"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_FNTEND-W3-S41",
@@ -206,11 +206,11 @@ STATES: 8 rows OPEN. 2 read REMEDIATED -- W1-S74 and W3-S40, the two ARMED rows,
   "owner": "1.0.0_SA_CTO",
   "round": "v8",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v8"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_FNTEND-W4-S20",
@@ -230,11 +230,11 @@ STATES: 8 rows OPEN. 2 read REMEDIATED -- W1-S74 and W3-S40, the two ARMED rows,
   "owner": "2.0.0_SA_COO~F",
   "round": "v8",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~F",
    "round": "v8"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_FNTEND-S68",
@@ -254,11 +254,17 @@ STATES: 8 rows OPEN. 2 read REMEDIATED -- W1-S74 and W3-S40, the two ARMED rows,
   "owner": "1.0.0_SA_CTO",
   "round": "v8",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO",
    "round": "v8"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
+
+## Round 9 closure note (3.0.0_SA_CVO, 2026-09-21T19:00:39Z)
+
+Four rows above (`IRPT_FNTEND-W2-S35`, `IRPT_FNTEND-W4-S19`, `IRPT_FNTEND-W4-S20`, `IRPT_FNTEND-S68`) close this round: `remediation.state` OPEN -> REMEDIATED, `closed` false -> true, nothing else changed (the gate's own admitted move). Full disposition, evidence and the closing cell for each: `ADJUDICATION_v3.md` (same slug), section 4. `IRPT_FNTEND-W3-S41` is untouched -- no round-9 cell reaches `.tools/proof-of-spec-check.py`; it stays OPEN.
+
+Two NEW remediation rows are minted in `REMEDIATION_v6.md` for round 9's own ARMED findings (`IRPT_FNTEND-W3-S43`, `IRPT_FNTEND-W8-S2`) -- new ids, not a mutation of this file.
