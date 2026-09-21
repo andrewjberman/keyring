@@ -95,6 +95,40 @@ His answer, VERBATIM AND ENTIRE:
 - CALL 1 OPEN: he wants more detail, and gives a direction -- the name carries BOTH vendor and firm. Not a ruling
   between (a) and (b); the card comes back to him.
 
+## Addendum ~17:3xZ -- CALL 1 answered in detail: 1a and 1b APPROVED, and SmartX is a 49 Financial vendor
+
+Cards put to him (verbatim calls): 1a *"Derived resources that may draw on two vendors (65 names at 49F and
+Inflection): which vendor goes in the name? (a) the vendor the resource actually reads, and where it reads both,
+the firm's primary one (49F: blackdiamond, Inflection: orion); (b) both vendors in the name ..."*, REC (a); 1b
+*"Platform resources with no vendor (19 names): name the platform system plus the firm, e.g.
+gateway-inf-otp-state-change, cloudops-inf-ec2-launch-monitor-policy?"*, REC yes. Context shown: the registry
+vendors per firm, 49 Financial blackdiamond + schwab, Inflection orion + eclipse, Cottonwood blackdiamond.
+
+His answer, VERBATIM AND ENTIRE:
+
+> "Yes this is correct, I would add SmartX to 49 Financial as well. The rest are correct on vendors in registry.
+> Any SmartX product in the cloud is tied to 49 Financial currently. Eventually that may change but not yet. With
+> that said, yes, both of your recommendations are approved."
+
+**Reading, narrow:**
+- The grammar reading is confirmed: vendor in the `{system}` slot, firm in the scope slot -- no grammar change.
+- **1a APPROVED:** a firm-pipeline resource names the vendor it actually reads; where it reads more than one, the
+  firm's PRIMARY vendor (49F `blackdiamond`, Inflection `orion`). Verified per resource against its code first.
+- **1b APPROVED:** a firm resource with no vendor names the platform system that runs it, the firm in its slot.
+- **49 Financial's vendors are blackdiamond, schwab AND smartx.** *"Any SmartX product in the cloud is tied to 49
+  Financial currently"* -- a statement about TODAY; *"Eventually that may change but not yet."* The other firms'
+  vendor lists are confirmed as the registry states them.
+- NOT said: that SmartX is 49F's PRIMARY vendor (1a's primary for 49F stays blackdiamond), nor in which registry
+  field SmartX is recorded -- that placement is this seat's, measured before it is written.
+- **PLACEMENT, measured:** NOT in `scopes.json` `monolith_scopes`. That field records the SPELLING a vendor's
+  monolith tree uses for the firm, and `aws s3 ls s3://opal-data-assets/smartx/` returns `account/ allocation/
+  model/ platform/` -- no firm segment exists (positive control: `blackdiamond/` returns `49f/ 49financial/
+  cottonwood/`). A spelling there would assert a path that is not in S3 and feed the separation lists a prefix
+  that never matches. The known grammar break is already DECIDED MIGRATE (`06_CONFORMANCE_LEDGER.md` rows for
+  `smartx/{model,account,allocation}/{uuid}`). His sentence instead ANSWERS the canon's standing open question --
+  tick-list row 10, *"whether SmartX is a product beyond 49F"* -- so it is recorded there
+  (`04_SCOPE_TICKLIST.md` s.4) and in `05_IDENTITY_SPINE.md` (the VENDORS table and s.5).
+
 ## CORRECTION ~17:1xZ -- rulings 2 and 4 move ZERO rows; the cards that produced them were built wrong
 
 **By 4.0.0_SA_CRO, against its own cards. The rulings STAND as his words; what was wrong is the row counts this
