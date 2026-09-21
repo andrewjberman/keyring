@@ -7692,6 +7692,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 ```
 ```json
 {
+  "id": "IRPT_BCKEND-S113",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T15:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "IB-rth-5's never-widen packet's COMMITTED-FILE-SHA256 table computed its `capture-session.cjs` entry from the GIT BLOB (LF), not a disk read -- inconsistent with the SAME table's `render_export.cjs`/`package.json` entries, which match a DISK read on this autocrlf=true box. Whoever deploys IB-rth-5's files via a raw `aws s3 cp` from a Windows checkout would upload DIFFERENT bytes/hash for `capture-session.cjs` than the packet names -- the S68/CRLF class this project already tracks, one file over.",
+  "spec_asserts": "NEVER_WIDEN_SIGNOFF_PACKET_IB-rth-5.md section 2 states one `COMMITTED-FILE-SHA256` per file, implicitly as one consistent reference a deploy-time verify step compares against; section 8 says both halves sign against these values.",
+  "world_is": "Independent re-derivation, this session, on THIS box (core.autocrlf=true, confirmed `git config --get core.autocrlf`): a plain disk read (`open(path,'rb')`) of `render_export.cjs`, `capture-session.sh`, `package.json`, `run-export-render.sh` matches the packet's claimed sha256 EXACTLY (4 of 4). The SAME disk read of `capture-session.cjs` gives 5650 bytes / sha256 `16d420e75e6fd13a8390613197d85ac3d348777043dd845f5c9c9a3f6432655e` -- NOT the packet's claimed 5544 bytes / `edf76b2d...`. `git cat-file -p HEAD:infra/aws/ec2/investor-reporting-export/capture-session.cjs | sha256sum` gives 5544 bytes / `edf76b2d...` -- MATCHES the packet exactly. `git check-attr text eol -- capture-session.cjs` reads `unspecified`/`unspecified` (no `.gitattributes` protection); `capture-session.sh` reads `text: set, eol: lf` (protected, which is why its disk read matched cleanly -- the LF is forced regardless of platform). `git diff HEAD -- render_export.cjs` is clean despite a 240-byte blob-vs-disk gap for THAT file too (12929 blob vs 13169 disk) -- `git diff` applies the SAME clean/smudge filter to both sides of its comparison, so it cannot see this class of gap; only a raw byte comparison across the two extraction methods does. This project's OWN established Lambda deploy mechanism (`build-and-upload.sh`, cited in row W1-S48 above) reads `git show <pin>:<path>` -- the BLOB, never the worktree -- precisely to avoid this class; the EC2-script deploy path for this directory (`aws s3 cp`, per the packet's own rollback section, citing the IB-rt-8 deploy-completion record) has no equivalent documented safeguard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this session: `python -c \"hashlib.sha256(open(f,'rb').read())\"` on all 5 touched/new files -- 4 of 5 match the packet's table exactly (render_export.cjs, capture-session.sh, package.json, run-export-render.sh); `capture-session.cjs` reads 5650/`16d420e7...`, not 5544/`edf76b2d...`",
+      "`git cat-file -p HEAD:infra/aws/ec2/investor-reporting-export/capture-session.cjs | sha256sum` this session: 5544 bytes, `edf76b2d...` -- exact match to the packet",
+      "`git cat-file -p HEAD:infra/aws/ec2/investor-reporting-export/render_export.cjs | sha256sum` this session: 12929 bytes, `fe2af007...` -- differs from BOTH the packet's claim (13169/`7df36a96...`) AND matches neither extraction method consistently across files, confirming the gap is real and not specific to one file",
+      "`git check-attr text eol -- infra/aws/ec2/investor-reporting-export/capture-session.cjs`: unspecified/unspecified; `... capture-session.sh`: text: set / eol: lf; `... render_export.cjs`: unspecified/unspecified; `... package.json`: unspecified/unspecified",
+      "`git config --get core.autocrlf` this session: true"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT a blocker to signing IB-rth-5's never-widen packet -- Node.js tolerates CRLF in `.cjs` source without functional breakage, and `capture-session.sh` (the one file where CRLF WOULD break execution, a shebang script) is already `.gitattributes`-protected. This is a bookkeeping/verification-integrity gap: the packet's own hash table is not a reliable deploy-time verify target for `capture-session.cjs` specifically, on this box, via a naive `aws s3 cp`. DISARM CONDITION: whichever seat executes IB-rth-5's eventual arm (e)/deploy either (a) uploads via `git show HEAD:<path>` bytes (matching this project's own Lambda-deploy discipline) rather than a raw local-disk `aws s3 cp`, and verifies the uploaded object's sha256 against the git-blob value, or (b) adds a `.gitattributes eol=lf` rule for `capture-session.cjs` (and ideally `render_export.cjs`, which shows the identical class) before the deploy, closing the platform-dependency at its source. Named in the COO half sign-off as a required deploy-time step, not re-litigated there."
+}
+```
+```json
+{
   "id": "IRPT_BCKEND-S111",
   "project": "IRPT_BCKEND",
   "fabric": "laptop",
