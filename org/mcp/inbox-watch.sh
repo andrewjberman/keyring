@@ -157,6 +157,18 @@ if [ "$MODE" = "stream" ]; then
         if [ "$_NOSPAWN" -eq 1 ]; then read -rt 5 -u 9 _ 2>/dev/null || true; else sleep 5; fi
     }
     echo "inbox-watch: STREAM mode for $SERIAL watching $WATCH_DIR (persistent; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"); wait=$([ "$_NOSPAWN" -eq 1 ] && echo no-spawn || echo sleep))" >&2
+    # EXPIRY ALERT (Andrew-direct 2026-09-21 ~01:4xZ): the harness KILLS every Monitor at its
+    # timeout (cap 30 min) and a killed watcher says nothing -- the seat goes deaf on an expiry
+    # notice it skims past. So the watcher announces its own end: INBOX_WATCH_EXPIRY_SECS
+    # (default 1770 = 30 s inside the 30-min cap) after launch it emits ONE stdout line --
+    # one Monitor event -- telling the agent to re-run /watcher, then EXITS. Exiting rather
+    # than waiting to be killed makes the alert the LAST event of the stream and guarantees
+    # no overlap between this watcher and its successor (so /watcher never sees two script
+    # rows of its own making). Arm the Monitor with timeout_ms 1800000 or the harness wins
+    # the race and this line never prints. 0 disables the alert.
+    _EXPIRY_SECS="${INBOX_WATCH_EXPIRY_SECS:-1770}"
+    case "$_EXPIRY_SECS" in (*[!0-9]*|"") _EXPIRY_SECS=1770 ;; esac
+    SECONDS=0
     while true; do
         if [ "$PARENT_CHECK" -eq 1 ] && ! kill -0 "$WATCH_PARENT" 2>/dev/null; then
             ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown-ts)"
@@ -175,6 +187,12 @@ if [ "$MODE" = "stream" ]; then
             # agent to read the message from read/ and act.
             echo "[INBOX] $base"
         done
+        if [ "$_EXPIRY_SECS" -gt 0 ] && [ "$SECONDS" -ge "$_EXPIRY_SECS" ]; then
+            echo "[WATCHER-EXPIRED] inbox watcher for $SERIAL is ENDING NOW after ${SECONDS}s (Monitors are killed at 30 min). YOU ARE NOT RECEIVING MAIL. RE-RUN /watcher NOW to arm a new Monitor -- do not wait for a quiet moment."
+            ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown-ts)"
+            echo "$ts  WATCHER-EXPIRY-EXIT  serial=$SERIAL  after=${SECONDS}s" >> "$SCRIPT_DIR/orphan-audit.log" 2>/dev/null || true
+            exit 0
+        fi
         _wait5
     done
     # unreachable
