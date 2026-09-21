@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~9</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-21 ~22:3xZ (round 9, wave 1, chain A, decomp v0.13 s.R9.1). On the CTO's round-8 analysis @8e0f9a127e (msg 99299) and CVO~B's L9 rows C-S125/126/127. TWO-PASS: arms (a)-(e) are source + battery + a never-widen packet; the first pass STOPS at the packet unless both halves are at HEAD; arm (f), the S3 publish, runs ONLY once both halves are at HEAD naming the packet blob.</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 9 (wave 1) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 (no addendum) | **Decomp cell:** `IB-rti-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.13, s.R9.1) | **outcome_ref:** FWD-2 (serving; unblocks the `IB-rti-6` chain) | **Rows:** `IRPT_BCKEND-C-S125`, `C-S126`, `C-S127` (`../surprise-channel/adjudications/ADJUDICATION_v4.md`), `R80-AC2` FAIL | **Ruling:** the CTO's round-8 analysis wave 1 item 1 | **Reference (READ-ONLY, never edited by this cell):** `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R8_CAPTURE_DIAGNOSTIC.cjs` @06fe4f1848
 
