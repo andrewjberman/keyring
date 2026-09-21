@@ -137,6 +137,56 @@ readable sentence (the code in the reason, the sentence for the reader), re-run 
       "AMGT_RESAPP-Z-W71-S1"
     ],
     "dismissal_reason": "Same incident as S192 (C-S349), which carries the remedy."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-C-S351",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-21T17:10Z",
+    "one_line": "DISMISSED: rk-48's round-14 refusal of AC4-AC6 for want of Andrew's Bright Data word was correct, and the word has since landed and the live arm has run (C-S348).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ANDREW_DIRECT_20260921_161xZ_AMGT_RESAPP_BRIGHT_DATA_AND_ZHKO_SPEND_YES.md @0cab82a4f9: 'Yes to both on these calls', one-time, the three validation names.",
+        "The direct act ran @71f9a1e027, drained @5a2ebfa1e1: 0 of 9 SERP requests, all three NOT_SEARCHED."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "W49-S2: AC4-AC6 cannot run without Andrew's per-use word.",
+    "world_is": "The word is on file and the arm ran; its grade is C-S348.",
+    "notes": "The refusal was the standing rule working under pressure (ADJUDICATION_v14 context).",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W49-S2"
+    ],
+    "dismissal_reason": "The blocking word landed and the act ran; the refusal was correct at the time."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-C-S352",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-09-21T17:10Z",
+    "one_line": "DISMISSED: whether the CEO search may run without a verified site is answered by the live run -- CSL, which has none, read NOT_SEARCHED / NO_VERIFIED_SITE with nothing searched: the built behaviour is the issuer bind's stricter reading.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CSL_AU_Equity latest ceo_public_profile basis: 'NOT_SEARCHED / NO_VERIFIED_SITE -- 0 url(s), 0 fact(s) verified of 0 proposed' (read by VersionId, 154cb8e5c4).",
+        "The code is built to require_verified_domain=True (ceo_search.py:459, :512; census s.3)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "spec_asserts": "W49-S4: step 7's prose lets the search run without a verified site; the issuer bind says it does not.",
+    "world_is": "The running system follows the bind; the prose was the loser and no search ran on the one name that tests it.",
+    "notes": "Instance of the re-signature-bind class carried at C-S337.",
+    "adjudicates": [
+      "AMGT_RESAPP-Z-W49-S4"
+    ],
+    "dismissal_reason": "Answered by the live run on CSL; the bind's stricter reading is what is built."
   }
 ]
 ```
