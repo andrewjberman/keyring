@@ -4074,3 +4074,48 @@ fanout:
   wave_2: []
   no_fleet_run: true
 ```
+
+## 26. ROUND 18 -- FROM THE CTO'S ROUND-17 ANALYSIS @`4a2f054389` + s.4a @`16ff1b4a0f` + s.4b @`c5532df80a` (`1.0.0_SA_CTO~Z`, msgs 23958, 23963, 23965)
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 17 closed 2 of 2 and ratified (8/0/0). The analysis chose four cells by
+subtraction over ADJUDICATION_v14's 12 graduated items; s.4a replaced R18-D (the zh/ko live proof: no zh/ko filing
+exists in the estate) with R18-D' (the pass-1 language-rule fix); then **Andrew-direct ~16:5xZ** (record
+@c5532df80a, VERBATIM *"These edge cases (foreign translation) are not a priority ... the major work here is getting
+a functional product live and ready for review for the managers"*) re-ruled the round BEFORE issuance to the two
+cells that change what a manager sees. **R18-D' is parked** (its drafter stopped, nothing written). **R18-B is
+deferred past manager review** -- its census (24 files; 18 live, 6 comment-only; 2 live non-.py surfaces; 5 packaged
+in Lambdas; 11 run-record/log writes with no named home; a pip-download egress in any zip byte-identity proof) is
+held at the COO's scratch and reported to the CTO (msg to `1.0.0_SA_CTO~Z`, 16:46Z), not cut. **Both orders were
+drafted in one parallel batch and are issued in ONE commit with this section** (Andrew-direct ~15:12Z).
+
+### 26a. THE MAPPING
+
+| CTO cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| R18-A | `AMGT-rk-74` | ~74 | none | row W54-S2's second half -- the served identity block carries `crosswalk_source` (`crosswalk.loaded_from()`) beside `crosswalk_vintage`; adapter redeploy | pair `NEVER_WIDEN_ROUND18_R18A_{COO,CTO}_HALF.md` |
+| R18-C | `AMGT-rk-72` | ~72 | none | row W40-S1 -- CSL's second sanctioned step-4 seed (the exchange listing page, by rule), else UNRESOLVED-SOURCE by design carrying every attempt; one pool write | pair `NEVER_WIDEN_ROUND18_R18C_CSL_POOL_HALVES.md` |
+
+Slot ~73 is VOID (R18-D', parked before issuance); no order carries it.
+
+### 26b. SURFACE CENSUS (measured at the cut)
+
+| cell | files_written | live acts | measured at the cut |
+|---|---|---|---|
+| `AMGT-rk-74` | 2: lib/research/api/scoped_amgt.py; lib/research/api/tests/test_crosswalk_source_field.py (new) | 1: adapter redeploy (artifact key + targeted safe-apply) | served CodeSha256 `QwET8XtX...GME=`, artifact VersionId `YjjMpD9U...Q_l8k`; carry-along over all 58 packaged paths since served source `55e3a56854` = exactly `0164b134ac` (rk-68, crosswalk.py); 13 of 13 GET routes 200; 7 of 8 security leaves return an identity block, 0 carry the field; crosswalk prefix 2 of 2 clean |
+| `AMGT-rk-72` | 2: lib/research/filings/battery.py; lib/research/filings/tests/test_battery.py | 1: ONE pool write under `filings/v1/CSL_AU_Equity/` | battery.py's only S3 writer is `:1244` (the act's write set is 1 key; no Bloomberg call, keys re-read from committed rk-38 evidence); placeholder latest VersionId `OGe4GT77...HvDJ`, 3 versions, versioning Enabled; suites 16 / 73 passed |
+
+**Files written by more than one cell:** none. **Collision with the held `wk-amgt-14-50` branch:** none (names only).
+**Z-S192 applied at the cut:** both pairs census the ACT's OWN write set, not only the writers of the named key.
+
+### 26c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # stated; 2 of 2 cells fit one wave
+  orders_total: 2                   # rk-72, rk-74 -- written in one batch, issued in one commit
+  slots_total: 2                    # ~72, ~74 (~73 void)
+  chains_total: 2                   # disjoint write surfaces, no depends_on edge
+  wave_1: [rk-72, rk-74]            # each spawns once its pair carries BOTH halves signed (CTO halves owed)
+  wave_2: []
+  no_fleet_run: true
+```
