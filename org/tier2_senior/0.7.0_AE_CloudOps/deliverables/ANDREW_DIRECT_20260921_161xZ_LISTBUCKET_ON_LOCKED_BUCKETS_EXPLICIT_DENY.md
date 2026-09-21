@@ -1,5 +1,18 @@
 # ANDREW-DIRECT 2026-09-21 ~16:1xZ -- ListBucket added on the two locked buckets; measured NOT effective (explicit Deny in the bucket policies)
 
+> **SUPERSEDED BY STATE, 2026-09-21 22:26Z (0.7.0_AE_CloudOps~V, re-measured, same identity
+> `user/Andrew_Berman`).** The "NOT effective" finding below was true AT ~16:12Z and is NO LONGER TRUE.
+> The buckets were recovered later (CRO msg 99124: `opal-data-inflection` ~17:35:59Z-17:36:39Z, cited
+> by the IB-rth-1 issuer erratum; not re-derived here). Measured now:
+> - `s3api list-objects-v2` on BOTH buckets -> success, `KeyCount 0`, `IsTruncated false` (both empty).
+> - `s3api get-bucket-policy` on BOTH -> READABLE. Statement `DenyForeignFirmPrincipals`: Deny `s3:*`
+>   on the bucket and its objects, with Condition `ArnNotLike aws:PrincipalArn` exempting
+>   `role/*-inf-*` (inflection) or `role/*-cot-*` (cottonwood), `user/Andrew_Berman`,
+>   `user/Andrew_Berman_Console`, and further ARNs (text truncated at the read, not enumerated here).
+> So the bucket-policy change this record said was required has happened, and the two users now
+> reach both buckets. The original text is retained below unedited, as the record of what was
+> measured at 16:12Z.
+
 **Channel:** Andrew at the `0.7.0_AE_CloudOps~V` terminal (this session), two messages, ~16:05-16:12Z.
 **Recorded by:** `0.7.0_AE_CloudOps~V`, same turn. **Broadcast:** MCP to `2.0.0_SA_COO~B`, `2.0.0_SA_COO~F`,
 `1.0.0_SA_CTO`, `0.0.0_AB_MSTR`, same turn.
