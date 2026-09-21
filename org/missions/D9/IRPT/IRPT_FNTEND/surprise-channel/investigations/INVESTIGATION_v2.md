@@ -4906,6 +4906,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W10-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~10",
+    "surfaced_at": "2026-09-21T16:46:06Z",
+    "one_line": "TO-FE-s-60 directs confirming the ir-note/ir-muted color law by reading `src/index.css`'s `.ir-note` rule, but `src/index.css` carries no `.ir-note` or `.ir-muted` rule at all -- both classes are defined in `render/print.css`, resolving to `#595959`, not the interactive-canvas navy `#163372` portal `CLAUDE.md`'s color law names for text ink.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-60 WORKER FACE, EXACT CHANGES item 1: 'navy-ink-on-white per portal CLAUDE.md's color law (this page's ir-* classes already resolve to that palette -- confirm by reading src/index.css's .ir-note rule rather than assuming).'",
+    "world_is": "portal 15ceef79: `src/index.css` (806 lines) contains zero occurrences of `ir-note` or `ir-muted` (Grep, both patterns, 'No matches found'). The two classes are instead defined in `portal/src/pages/InvestorReporting/render/print.css:272-277` (`.ir-note { font-size: 11px; line-height: 1.45; color: #595959; margin: 6px 0; }`) and `:285-287` (`.ir-muted { color: #595959; }`). `#595959` is a dark grey, not the app-canvas ink `#163372` (navy) portal `CLAUDE.md:23,36-37` names, nor exactly the panel-secondary `#6B7280` it names either -- it is `render/print.css`'s own pre-existing PDF/export-document convention (this cell reuses it verbatim per the cell's own instruction, and does not introduce a new color). Whether a printed-document stylesheet is in scope for the interactive-canvas color law (`CLAUDE.md`'s table is headed 'page canvas' / 'panel' / 'band', none obviously naming a print/export sheet) is left for L9 (F60-AC6, judgment).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep pattern '\\.ir-note|\\.ir-muted' over portal/src/index.css (15ceef79) -> 'No matches found'",
+        "Grep pattern 'ir-note' over portal/src (15ceef79), files_with_matches -> 8 files, none is src/index.css; render/print.css is one of them",
+        "portal/src/pages/InvestorReporting/render/print.css:272-277 and :285-287 (15ceef79), read directly: `.ir-note { ... color: #595959; ... }` and `.ir-muted { color: #595959; }`",
+        "portal/CLAUDE.md:21-37 (workspace worktree), color law table: page canvas ink 'navy only (#163372)'; panel ink 'navy; secondary #6B7280 on a panel only'; neither row names #595959"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
