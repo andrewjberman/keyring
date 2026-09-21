@@ -8,7 +8,7 @@
   "directive": "D9",
   "fabric": "laptop",
   "round": 8,
-  "decomp_version": "0.11",
+  "decomp_version": "0.12",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -60,7 +60,8 @@
   "cell_id_shape_round8": "IB-rth-<n>",
   "round8_mid_round_addition_1": "IB-rth-5, ~14:5xZ 2026-09-21, on row W3-S52 and CTO ruling addendum 2 @afc015b4b2 (msg 99068)",
   "round8_mid_round_addition_2": "IB-rth-6, ~16:2xZ 2026-09-21, Andrew-direct @fb8c7a574c -- create opal-data-inflectionwealth + opal-data-cottonwoodcapital -- CLOSED SUPERSEDED ~17:5xZ on CRO msg 99124 @a0097b1ef4, the need was met another way",
-  "round8_mid_round_addition_3": "IB-rth-7, ~18:0xZ 2026-09-21, on CRO msg 99124 + CTO msg 99128 -- reconcile Terraform state (ledger legs L1/L3/L4) against the manually-recovered bucket policy; carries row S116 (fence_patterns hyphen gap)"
+  "round8_mid_round_addition_3": "IB-rth-7, ~18:0xZ 2026-09-21, on CRO msg 99124 + CTO msg 99128 -- reconcile Terraform state (ledger legs L1/L3/L4) against the manually-recovered bucket policy; carries row S116 (fence_patterns hyphen gap); found real drift, row W7-S2",
+  "round8_mid_round_addition_4": "IB-rth-8, ~19:1xZ 2026-09-21, on row W7-S2 -- never-widen packet + sign-off + apply to clear 4 tainted lgic_firm resources found by IB-rth-7's plan"
 }
 ```
 
@@ -187,6 +188,39 @@ packet), `org/critical_paths/change_management/`, `org/critical_paths/.open_depl
 task-order/investigation faces. NOT authorized: any change to `fence_patterns()` or any other firm's
 bucket policy; starting the host; any IAM role/user creation (Andrew's own break-glass roles stay as they
 are, deletable later once L3 reads clean, not this cell's to touch).
+
+### R8.9 MID-ROUND ADDITION (~19:1xZ 2026-09-21) -- on row `IRPT_BCKEND-W7-S2` (`IB-rth-7`'s honest STOP: arm (a)'s fresh plan is NOT 0/0/0)
+
+`IB-rth-8` (WK): `IB-rth-7`'s own worker measured real drift, exactly the contingency its order anticipated
+in advance -- a fresh Terraform plan on the `shared-infra` root shows FOUR `lgic_firm` resources TAINTED
+(`aws_s3_bucket_policy.lgic_firm["inflection"/"cottonwood"]`, `aws_s3_bucket_versioning.lgic_firm[same]`),
+leftover from the original 2026-09-18 half-landed apply (row W3-S45), each forcing a REPLACE
+(destroy-then-create). The live bucket policy is already correct (CRO's console PUT, msg 99124) and both
+buckets remain empty (0 keys, re-confirmed multiple times) -- so a replace cycle carries no DATA exposure
+risk, but a policy-resource destroy-then-create still opens a real WINDOW with no explicit Deny on the
+bucket, and this project's own doctrine (`IB-rtf-5`'s own task order text) names exactly this ordering
+hazard: *"a root delete-bucket-policy run AFTER the apply strips the new fence and no arm can prevent
+it."* This is a never-widen act (CLAUDE.md NEVER-1) -- CTO+COO halves signed BEFORE any apply, same
+discipline as `IB-rtf-5`. Three arms: (a) MEASURE the actual provider-level semantics of the replace for
+BOTH resource types before writing the packet -- does `aws_s3_bucket_policy`'s destroy actually call
+`DeleteBucketPolicy` (removing the fence) before the create's `PutBucketPolicy` restores it, and does
+`aws_s3_bucket_versioning`'s destroy call anything at all against a live bucket (AWS has no "delete
+versioning" API -- versioning is only Enabled/Suspended, so the provider's destroy behavior needs reading,
+not assuming) -- `terraform plan -json` inspected for the exact per-resource action sequence, printed; (b)
+THE PACKET naming the measured window precisely (both halves sign at HEAD against this packet's blob, per
+NEVER-1's writer-census discipline), rollback (buckets are empty -- if anything looks wrong post-replace,
+re-apply the fence policy immediately, no data can have been lost); this cell STOPS here if both halves
+are not obtained same-pass -- commit the packet, leave the order open, report what's owed, exactly as
+`IB-rtf-5`'s own precedent; (c) ONLY once both halves are signed at HEAD: `.tools/safe-apply.sh` on
+EXACTLY the four tainted resources (a plan naming any other resource, or `demo`/`49financial`, is a STOP),
+immediate post-apply verification (get-bucket-policy both buckets, matching the CRO's already-live policy,
+0 keys re-confirmed, re-plan `0/0/0`), close ledger legs L1 and L3 with the apply output + resource list +
+plan output as proof, disarm row `IRPT_BCKEND-W7-S2` by citation. Leg L4 (the negative control) stays
+whatever `IB-rth-7` left it -- UNEXERCISED, host stopped, not this cell's to force. Chain H (independent,
+following `IB-rth-7`'s drain). fanout 1 of 1 this addition. Grant: `infra/aws/terraform/shared-infra/`,
+`org/critical_paths/change_management/`, `org/critical_paths/.open_deploys/`, this project's own
+task-order/investigation/deliverables faces. NOT authorized: touching any resource outside the four named;
+starting the host; any change to `fence_patterns()`, exemptions.json, or scopes.json.
 
 ## R7. ROUND 7 -- THE RECUT ON THE ROUND-6 ANALYSIS (@fa2ff4f0dd, msg 98554; v0.7, 2026-09-20, `2.0.0_SA_COO~B`)
 
