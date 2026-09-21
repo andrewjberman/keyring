@@ -8,7 +8,7 @@
   "directive": "D9",
   "fabric": "laptop",
   "round": 8,
-  "decomp_version": "0.9",
+  "decomp_version": "0.10",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -56,9 +56,10 @@
   "cell_id_shape_round7": "IB-rtg-<n>",
   "round7_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND7_ANALYSIS.md @0d400d5c07",
   "round7_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v3.md @357565e863",
-  "cells_round8": 5,
+  "cells_round8": 6,
   "cell_id_shape_round8": "IB-rth-<n>",
-  "round8_mid_round_addition_1": "IB-rth-5, ~14:5xZ 2026-09-21, on row W3-S52 and CTO ruling addendum 2 @afc015b4b2 (msg 99068)"
+  "round8_mid_round_addition_1": "IB-rth-5, ~14:5xZ 2026-09-21, on row W3-S52 and CTO ruling addendum 2 @afc015b4b2 (msg 99068)",
+  "round8_mid_round_addition_2": "IB-rth-6, ~16:2xZ 2026-09-21, Andrew-direct @fb8c7a574c -- create opal-data-inflectionwealth + opal-data-cottonwoodcapital"
 }
 ```
 
@@ -96,6 +97,47 @@ Whether the inflection bucket CAN be rectified without the console (rth-1's read
 ### R8.6 MID-ROUND ADDITION (~14:5xZ 2026-09-21) -- on row W3-S52 (the render-host SESSION_ABSENT finding) and the CTO's ruling addendum 2 (@afc015b4b2, msg 99068)
 
 `IB-rth-5` (WK~5): rth-2's build STOPPED honestly on a THIRD structural blocker beyond the two the CTO's original ruling (CTO_RULING_IRPT_BCKEND_W2-S62...) named -- the render host has no authenticated portal session, and `render_export.cjs` deliberately implements no login capability at all ("NO OTP BRANCH, NO SIGN-IN LOOP... never a credential prompt and never a retry"). The COO's own follow-on investigation (msg 99064) found: (1) the script launches a fresh, non-persistent browser context every run -- no session-reuse mechanism exists to exploit, not merely an unused one; (2) the portal's own auth is first-party with MFA, ruling out a trivial scripted login; (3) zero hits estate-wide for a reusable service-credential/session-minting pattern (the closest precedent, `IB-rte-2`'s bounded test principal, is API-level and does not transfer to a browser-session mechanism). CTO ruling addendum 2 (99068): CUT this as the successor cell, bounded to (a) persistent-context support in `render_export.cjs` (`launchPersistentContext`/`storageState`) and (b) SSM port-forward/session-capture tooling supporting a ONE-TIME operator-completed MFA login, refreshed on whatever cadence the session needs. **NOT authorized: a non-MFA service-account path** -- a standing portal security-posture decision, Andrew's to make on its own merits if ever pursued, never bundled into this cell. The actual MFA completion is a human act neither this cell nor its worker performs; the deliverable ends at tooling-ready + naming who must complete it (Andrew or a delegated operator holding valid portal creds), never at forcing a session through. Once a session exists (by the human step, outside this cell), rth-2's original bounded measurement re-runs unchanged and the sync-vs-async decision tree resolves on the real number -- this cell does not touch that tree. Chain E (independent of A-D, and of rth-1/rth-2 which continue on their own tracks): `rth-5` alone, no dependency. fanout 5 of 5 chains this round (A `rth-1`, B `rth-2`, C `rth-3` CLOSED, D `rth-4` CLOSED, E `rth-5`), cap 8. Grant: `infra/aws/ec2/investor-reporting-export/`, the SSM document/runbook home, this project's own deliverables/investigation faces -- no portal auth-system source (`portal/src/contexts/AuthContext*`, `portal/src/App.tsx` login route) is in grant; a change there is a STOP and a carry, not this cell's to make.
+
+### R8.7 MID-ROUND ADDITION (~16:2xZ 2026-09-21) -- Andrew-direct @fb8c7a574c: create opal-data-inflectionwealth + opal-data-cottonwoodcapital
+
+`IB-rth-6` (WK~6): Andrew-direct, VERBATIM: *"We need to keep moving so if there is no mechanism for us to
+access these buckets, and our work is dependent on these buckets existing, then we need to create
+opal-data-inflectionwealth and opal-data-cottonwoodcapital and take care to not create them with
+restrictive bucket policies that land us in this situation."* Root cause, CTO-researched and COO-verified
+this tick against the live registry: `infra/logic/registry/exemptions.json`'s `opal-data-inflection`/
+`opal-data-cottonwood` rows already carry the fix that should have shipped originally -- three operator
+identities (`Andrew_Berman`, `Andrew_Berman_Console`, `Opal_Terminal`, confirmed 3 of 3 each) exempt from
+the per-firm Deny fence -- but `IB-rte-3`'s original apply shipped with an EMPTY exemption list, so the
+fence denied every identity the estate holds, including the one that would need to sign and re-apply the
+fix; the deploy ledger sentinel (`org/critical_paths/.open_deploys/irpt-bckend-ib-rte-3-lgic-firm-buckets.json`,
+confirmed still present/open this tick) has sat RED since 2026-09-18 for exactly this reason. **The new
+buckets exist to route around a lockout, not to repeat it: the exemption rows go in at the FIRST apply,
+never as a later patch.**
+
+Cell, exactly as Andrew's ruled fix specifies (his four points, restated as the cell's own arms):
+(a) registry-addressed via `lib/opal_naming.py address()`, NEVER hand-typed (Rule 30) -- update the
+`bucket` field on the `inflection`/`cottonwood` entries in `infra/logic/registry/scopes.json` to the new
+long-form names (verified live this tick: `bucket_provisioned: true`, `bucket_managed_by:
+s3-lgic-firm-buckets.tf` on both, matching the 49financial pattern `bucket = opal-data-<long>` in shape
+though the new names are NOT `opal-data-<long>` -- they are Andrew's own two names, verified against
+whatever the naming tool actually derives; a mismatch is a STOP, not a silent override), set
+`bucket_provisioned: false` until built; do NOT rename the firms' `key`/`short`/`aliases` (referenced
+estate-wide; Andrew asked for new buckets, not a firm rename). (b) copy the SAME three-identity exemption
+rows from `exemptions.json`'s `opal-data-inflection`/`opal-data-cottonwood` entries into new
+`opal-data-inflectionwealth`/`opal-data-cottonwoodcapital` rows -- load-bearing that these ship in the
+FIRST apply. (c) mark the old buckets abandoned in `scopes.json` (NO delete -- confirmation-gated,
+nothing asks for it), correct the stale "opal-data-inflection does not exist yet" alias note while in that
+file. (d) standard mechanism: ledger entry opened before apply with its OPEN sentinel committed
+immediately, `safe-apply.sh` only, both never-widen halves before the apply.
+
+Chain F (independent of A/B/C/D/E -- different write surface, `infra/logic/registry/` + a new Terraform
+apply on `s3-lgic-firm-buckets.tf`, no dependency on rth-1/rth-2's still-open work). fanout 6 of 6 chains
+this round (A `rth-1` near-terminal, B `rth-2` parked on the human MFA step, C `rth-3` CLOSED, D `rth-4`
+CLOSED, E `rth-5` CLOSED, F `rth-6`), cap 8. Andrew's own sequencing rec: ahead of anything else
+non-blocking, since `IB-rtf-5`/`rtf-7` (and whatever else needs these buckets) are stalled on exactly
+this. Grant: `infra/logic/registry/`, `infra/aws/terraform/**/s3-lgic-firm-buckets.tf` (or wherever that
+root actually lives -- confirm, do not assume), `org/critical_paths/change_management/`,
+`org/critical_paths/.open_deploys/`, this project's own task-order/investigation faces.
 
 ## R7. ROUND 7 -- THE RECUT ON THE ROUND-6 ANALYSIS (@fa2ff4f0dd, msg 98554; v0.7, 2026-09-20, `2.0.0_SA_COO~B`)
 
