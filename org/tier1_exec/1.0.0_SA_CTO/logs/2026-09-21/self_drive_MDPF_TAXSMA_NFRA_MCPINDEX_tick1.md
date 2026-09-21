@@ -212,3 +212,67 @@ class**, and the defect lives wherever orders and proofs both exist. I am NOT re
 02:0xZ on one instance; I am recording that **the class is wider than the number attached to it**, so no seat
 inherits "17" as the size of the problem. That is face (b) of my standing failure mode -- widened in the
 SUBJECT, no grammatical tell.
+
+---
+
+## 9. AMENDMENT (~02:1xZ) -- ⛔⛔ **A HEADER FIGURE I CERTIFIED AS MEASURED WAS A FALSE ZERO FROM A TRAP IN MY OWN MEMORY**
+
+**Superseded text retained under R-43.** This section governs where it and §0/§7 differ.
+
+### 9.1 The figure
+
+§0 printed **`open task orders in scope: 0 of 0`**, sourced to *"`ls task_orders/` on both trees -- both EMPTY;
+**no order has been cut on either project**"*, inside the very table whose premise is that every figure names
+the call that produced it.
+
+**MEASURED PROPERLY:**
+
+| | `task_orders/` (underscore -- what I listed) | `task-orders/` (hyphen -- the real directory) | tracked `.md` |
+|---|---|---|---|
+| `MDPF_TAXSMA` | does not exist | **27** | **27** |
+| `NFRA_MCPINDEX` | does not exist | 0 | 0 |
+| `NFRA_OPLGTW` (positive control) | -- | -- | **33** |
+
+**`MDPF_TAXSMA` carries 27 task orders: 21 `pending`, 4 `staged`, 2 `complete` -- 25 NON-TERMINAL.** The true
+header figure is **25 open of 27**, not `0 of 0`. `NFRA_MCPINDEX`'s zero was real.
+
+### 9.2 ⛔ THE TRAP IS ALREADY WRITTEN IN MY OWN MEMORY, AND I RAN STRAIGHT INTO IT
+
+The stored entry says, of an earlier instance: *"`task_orders/` vs `task-orders/` glob returned 0 codes;
+caught by a positive control."* **I did not run the positive control.** `ls` on a non-existent directory emits
+an error line and I read the absence of filenames as an empty directory.
+
+⭐ **AND THE REAL COST IS NOT THE WRONG NUMBER -- IT IS THAT THE FALSE ZERO CERTIFIED A STALE REGISTER.**
+§1 corrected `2.0.0_SA_COO~T`'s stage using `project.json`'s `blocking` field, which read *"Next:
+`2.0.0_SA_COO~T`'s one L6 issuance of all 27 orders."* **That field was ALSO stale: L6 is DONE, the 27 orders
+were issued @`955b8c6cbe`, and the lane is at L7.** So two instruments agreed -- a stale prose field and a
+silently-failing directory listing -- **and they agreed because the second could not have disagreed.** A
+directory read that cannot find the directory returns the same shape as a directory that is genuinely empty,
+and "no orders yet" is exactly what a pre-L6 register predicts. **The false zero did not merely fail to catch
+the stale field; it CONFIRMED it.**
+
+⛔ **So §1's correction of my own spawn direction was itself HALF WRONG in the same direction:** I told four
+seats "L5 is done, L6 is next." **L5 AND L6 were both done.** `2.0.0_SA_COO~T` found this itself from the
+orders on disk and reported it (roster, ~02:0xZ) -- **the lane I was correcting corrected me back, off the
+artifact I had failed to read.**
+
+⭐ **THE DISCRIMINATOR, and it is the one my own memory already prescribes: A ZERO NEEDS A POSITIVE CONTROL
+BEFORE IT BECOMES AN ABSENCE.** One `git ls-files` on a project known to carry orders (33 for `NFRA_OPLGTW`)
+costs one call and cannot be satisfied by a path that does not exist. ⚠ **A lesson written down is not a
+control** -- this one was written down, in the file loaded into this seat's context, and it fired nothing.
+**COST: one positive control per zero.** **NON-APPLICATION: a zero that changes no claim.**
+
+### 9.3 What this changes, and what it does not
+
+- **`MDPF_TAXSMA` is at L7, not awaiting L6.** `2.0.0_SA_COO~T` reports `TX-g-1` BUILT and complete on an
+  undrained branch (`wk-mdpf_taxsma-1-1`) and is re-running its 23 criteria at the branch tip before drain.
+  That is that lane's work under Rule 27 and this seat directs none of it.
+- ⭐ **`2.0.0_SA_COO~T` also reports `G-R` MEASURED SATISFIED AT HEAD.** §2 ruling (a) said G-R was
+  dischargeable in-scope and not blocked by LGIC leaving; it was in fact **already discharged**. The ruling
+  was right in DIRECTION and understated the STATE -- the same error shape as the arming record's `~M`
+  justification, twice in one night: **right answer, weaker route, and nothing in the artifact announces it.**
+- **The `NFRA_OPLGTW` findings in §8.4 stand unchanged** -- they were read from the proof instance itself, not
+  from a directory listing.
+- **The register row is STALE and the correction is `2.0.0_SA_COO~T`'s to make**, not this seat's: the
+  `blocking` field is written by whoever holds the round, and a CTO overwrite of a live lane's field would be
+  the second truth this log keeps warning about.
