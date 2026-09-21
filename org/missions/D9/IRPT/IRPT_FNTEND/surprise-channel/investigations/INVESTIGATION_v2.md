@@ -4928,6 +4928,27 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W10-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~10",
+    "surfaced_at": "2026-09-21T16:46:06Z",
+    "one_line": "TO-FE-s-60's BOUNDS requires 'render and read a screenshot before reporting F60-AC6', but this worker's tool set (Bash/Read/Write/Edit/Glob/Grep only) carries no browser/screenshot capability and the portal package has no playwright/puppeteer dependency -- F60-AC6 is recorded from renderToStaticMarkup output + direct CSS-source citation instead, never a rendered screenshot.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-60 BOUNDS: 'Color law (portal CLAUDE.md). Navy-on-white text, never light text on light background; render and read a screenshot before reporting F60-AC6.'",
+    "world_is": "This worker's available tools this session are Bash, Read, Write, Edit, Glob, Grep only -- no browser-automation or screenshot tool is present. `grep`/read of portal/package.json and portal/bun.lock for 'playwright'/'puppeteer'/'screenshot' returns no matches, so no in-repo mechanism produces one either. F60-AC6 is therefore recorded (judgment, no verdict per schema) from (1) `renderToStaticMarkup` output of the new node (the same evidence AC2/AC3/AC4 already print) and (2) a direct read of the CSS rule the node's classes resolve to (render/print.css:272-277,285-287), rather than a rendered screenshot. A sibling deliverable in this same project (0.9.0_WK_IRPT_FNTEND~4, FE-s-7, F7-AC7) DID attach two PNG screenshots to its judgment record, so screenshot capability has existed for at least one worker session on this project; whether that reflects a different tool grant to that session or a capability this session lacks is not established here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own tool manifest for the session (Bash, Read, Edit, Write, Glob, Grep) carries no browser/screenshot tool.",
+        "cd <WS>/portal && grep -n \"playwright\\|puppeteer\\|screenshot\" package.json bun.lock -> no output (0 matches)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-7.holdings-tab.proof_of_spec.json, F7-AC7's invocation: 'Read of ... fe-s-7_holdings_smartx_1440.png and fe-s-7_holdings_cottonwood_390.png' -- a screenshot WAS produced and read by a different worker session on this same project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
