@@ -10601,6 +10601,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "NEVER_WIDEN_ROUND14_CHAIN_E_COO_HALVES.md, signed AMGT-rk-48 section: BLAST RADIUS = the 3 management keys rk-47 wrote, `_pool/` untouched; EXPECTED OUTCOME for a name with no verified_site: nothing searched, nothing rewritten for it; offline branch: ceo_public_profile unchanged.",
     "world_is": "The act searched nothing and spent nothing, but it rewrote all 3 keys (ceo_profile added, ceo_public_profile's absence class moved to CANNOT_SAY), and for CSL and 6861 enrich's Bloomberg fallback re-pulled exec_officers and wrote 2 new raw stamps outside the named radius.",
     "notes": "EXPOSURE vs INCIDENT: this is an INCIDENT (the out-of-radius writes fired), with no rollback proposed by this seat. (a) The 2 raw stamps are ADDITIVE (new keys, nothing overwritten) and carry exec_officers only, so AMGT-rk-70's NoRawStampError guard rejects them as model-block stamps -- the W38-S5 trigger the CVO recorded live at 16:25Z in ADJUDICATION_v16 is these two writes. Deleting them is an S3 delete and needs Andrew's word; none is asked. (b) CANNOT_SAY is the truthful class for a name that was never searched (NOTHING_FOUND claimed a search that did not run), so rolling the 3 keys back would restore the less accurate value; the per-key rollback (re-put by pre-act VersionId) stays available. LESSON for any future never-widen half on an enrich run: census the ACT's write set (every writer the invoked entry point reaches, incl. fallback pulls), not only the writers of the keys the act targets. The worker's own row W71-S1 named the rewrite and the reason codes but not the raw writes or the ceo_public_profile change. For the CVO's L9 on rk-48."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W72-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~72",
+    "surfaced_at": "2026-09-21T17:20:44Z",
+    "one_line": "AC3's own literal derivation script (order AMGT-rk-72 section 5) never extracts a `domicile` key, so AC4's live run prints step 5 as 'no adapter for jurisdiction UNKNOWN' instead of matching the rk-38 committed record's 'no adapter for jurisdiction AU' -- AC4's expect text asserts steps 1-3 and 5 'matching the rk-38 record in section 1', which step 5's wording does not do verbatim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The order's AC3 invocation (task-orders/AMGT_RESAPP.TO-AMGT-rk-72.csl-second-sanctioned-seed.md, proof_of_spec AC3) builds `k` with exactly the keys legal_name, ticker_root, exchange, cik, lei, web_address, source (plus `<field>_reason` for the four regex-derived fields) -- no `domicile` key is built or written to .scratch/r72/csl_keys.json at any point in that script.",
+        "battery.py `_step5_national_regulator(keys)`: `jurisdiction = keys.get(\"domicile\") or \"UNKNOWN\"` -- absent `domicile`, step 5's reason is always 'no adapter for jurisdiction UNKNOWN'.",
+        "AC4 run, this worker, 2026-09-21: STEP 5 line reads 'reason=no adapter for jurisdiction UNKNOWN'; the committed rk-38 evidence (section 1 of this order) reads 'step 5 no adapter for AU'. Steps 1-3 matched the rk-38 record verbatim (name guard REFUSED 10438 rows; CIK 1274152 = 'CSL LTD' no 10-K, 11 filings of 5 distinct forms; LEI 529900ECSECK5ZDQTE14 HTTP 404); step 5 alone diverges, traced to the missing domicile key, not to any change in battery.py's own step-5 logic (unmodified by this cell)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4 <expect>: 'OR UNRESOLVED-SOURCE BY DESIGN: 5 STEP lines, steps 1-3 and 5 matching the rk-38 record in section 1 ... and step 4 naming both seeds'.",
+    "world_is": "Running AC3 and AC4 exactly as literally written (no route this order did not name), step 5's printed reason is 'no adapter for jurisdiction UNKNOWN', not 'no adapter for jurisdiction AU' -- because AC3's own regex script, as specified, never derives `domicile` from the committed rk-38 evidence. The divergence is confined to step 5's free-text `reason` string; it changes no test outcome (step 5 was never going to pass either way) and the overall AC4 outcome (UNRESOLVED-SOURCE BY DESIGN, both seeds tried and logged) still matches the sanctioned shape."
   }
 ]
 ```
