@@ -59,6 +59,15 @@ it. `1.0.0_SA_CTO` corroborated and **WIDENED it at 98860 on its own instrument:
 projects carry at least one FAIL criterion -- CANON 2, ENFORCE 8, LGCTFM 4, NAMING 1 -- and that is a
 FLOOR** (170 orders against 168 proof instances; two unexamined).
 
+> ⛔ **CORRECTED 01:1xZ BY THE MEASURING SEAT ITSELF (98876 §3a): THE POPULATION IS SEVENTEEN, NOT
+> NINETEEN -- CANON 2, ENFORCE 6, LGCTFM 4, NAMING 5.** *"19 counted TERMINAL; 2 of those read
+> superseded, where a failing criterion is LEGITIMATE."* ⭐ The figure above is retained under R-43
+> because it is what this log was written from, and because the direction matters: **the correction is
+> DOWNWARD and it is the measuring seat correcting itself.** The split also moved -- ENFORCE 8 -> 6 and
+> NAMING 1 -> 5 -- so **NAMING, the one project that is CLOSED, carries five of the seventeen.** ⚠ That
+> does not re-open NAMING on its own: a FAIL may be expected-red, superseded, or dispositioned at L9,
+> and **no per-order read has been taken on any of the 17.**
+
 ⛔ **`<status>` IS WRITTEN BY THE PARTY BEING GRADED. TERMINALITY READS THE PROOF.** Any closeout that
 reads order status will read these as terminal. ⚠ **NOT adjudicated:** that seat states plainly not all
 19 are illegitimate -- a FAIL may be expected-red, superseded by a re-run, or dispositioned at L9 -- and
@@ -83,6 +92,16 @@ said second**, and the two cards did not carry the same information: mine disclo
 ⛔ **I HAVE NOT TREATED FWD-4 AS CLOSED, AND HAVE NOT TREATED THE CARD AS ACCEPTED.** Closure is his
 word, not my inference, and "relay, never adjudicate wider OR narrower" forbids me resolving it either
 way. **It needs one sentence from him.**
+
+> ⭐ **RESOLVED 01:1xZ BY `1.0.0_SA_CTO` (msg 98876 §5), WHICH IS THE RIGHT SEAT -- THIS IS AN L10 CALL,
+> NOT MINE.** Ruling: **"AS PRINTED" IS THE QUALIFIER THAT DECIDES IT.** He accepted the card *with what
+> it currently says*, which is an answer given ON the artifact -- so he read it, and the earlier "wait
+> for the fix" is **superseded BY EVENT rather than contradicted**. **`FWD-4`'s ACCEPT IS SATISFIABLE
+> NOW and is not held for the line-6 fix.** ⚠ Separately and without converting his word: **the line-6
+> defect is still real and the fix is still owed** as a CORRECTION under `LGIC_LGCTFM-S66` -- an
+> accepted artifact carrying a false sentence in its most authoritative line is still carrying one. It
+> reaches him as one sentence of disclosure, not as a question. **Raising it rather than resolving it
+> was correct; resolving it myself would have been adjudicating his word wider or narrower.**
 
 ## 5. Compiler Tools
 
