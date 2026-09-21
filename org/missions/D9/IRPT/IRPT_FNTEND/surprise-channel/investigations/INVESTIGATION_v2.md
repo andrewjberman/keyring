@@ -4655,6 +4655,28 @@
     "disposition": "UNDER_INVESTIGATION"
   },
   {
+    "id": "IRPT_FNTEND-W5-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "F55-AC5 ('the whole IRPT_FNTEND suite is green', expect 0 fail) CANNOT be satisfied as written: the whole-suite run carries ONE pre-existing failure, fe-s-49/admin-gate.test.ts F49-AC8, unrelated to Holdings/classification and unchanged by this cell's edit (identical before and after). Its own reader shows the cause -- two UNRELATED App.tsx hunks (a Trade Submission nav entry / ArrowLeftRight icon import) carried into HEAD alongside FE-s-49's three gate hunks -- and App.tsx is not in this order's <paths>, so this worker cannot fix it. F55-AC5 is measured FAIL by its printed output, not PASS.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-55 F55-AC5: 'the whole IRPT_FNTEND suite is green', invocation `bun test src/pages/InvestorReporting`, expect `(?<![0-9])0 fail`.",
+    "world_is": "PRE-EDIT (portal HEAD be8cf21874, before this cell's source edit): `bun test src/pages/InvestorReporting` -> 586 pass / 21 skip / 1 fail / 608 total, the one fail named 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'. POST-EDIT (this cell's full remedy applied, portal worktree uncommitted): 590 pass / 21 skip / 1 fail / 612 total (the +4 are this cell's own new fe-s-55 tests, all passing) -- the SAME single failure, same test name, same assertion (`expect(carried.length).toBe(0)`, received 2). The test's own printed evidence names the two carried hunks as an ArrowLeftRight icon import and a Trade Submission nav entry -- neither touches Holdings, classification, slices.ts, SliceTable.tsx, contracts/index.ts or HoldingsTab.tsx. src/App.tsx is not in IRPT_FNTEND.TO-FE-s-55's <paths> grant, so this worker cannot commit a fix to it even having found the cause.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal (worktree wk-irpt_fntend-9-6-fe-s-55-portal), before any FE-s-55 edit: `timeout 600 bun test src/pages/InvestorReporting` -> '586 pass', '21 skip', '1 fail', 'Ran 608 tests across 106 files'; the one red line: 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'.",
+        "same command, after this cell's full remedy (uncommitted): '590 pass', '21 skip', '1 fail', 'Ran 612 tests across 107 files'; same one red line, same file:line (admin-gate.test.ts:582:28), same 'Expected: 0 / Received: 2'.",
+        "admin-gate.test.ts's own console output (both runs, byte-identical): 'GATE HUNK 1/2/3: found at HEAD App.tsx:97/424/576 ... THE THREE GATE HUNKS ARE BYTE-IDENTICAL TO 2.0.0_SA_COO~D'S c29a8b86: 3 of 3' followed by 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' naming '+| ArrowLeftRight,' and '+| // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. / { path: \\'/trade-submission\\', label: \\'Trade Submission\\', icon: ArrowLeftRight },'.",
+        "IRPT_FNTEND.TO-FE-s-55.holdings-non-authoritative-withheld.md <paths>: src/App.tsx is not a member; this worker's write grant does not reach the failing file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
     "id": "IRPT_FNTEND-W6-S2",
     "project": "IRPT_FNTEND",
     "fabric": "laptop",
@@ -4672,6 +4694,29 @@
         "cd <WS>/portal && bun test src/pages/InvestorReporting -> run 1 (before the fe-s-14 control fix): '584 pass', '21 skip', '3 fail' ('Ran 608 tests across 106 files'); run 2 (after, same App.tsx/fe-s-49 bytes): '586 pass', '21 skip', '1 fail' ('Ran 608 tests across 106 files'), the surviving fail line reading 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'",
         "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md rows IRPT_FNTEND-W1-S67 ('F45-AC2 debug run...') and IRPT_FNTEND-W1-S69 (process.release.name discriminator) already document fe-s-45's dev-server tests as port/load sensitive",
         "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-51.carried-hunks-ancestry-aware.md exists in-tree, naming 'carried hunks' as its own subject"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-21T00:05:00Z",
+    "one_line": "fe-s-32/holdings-in-a-browser.test.ts F32-AC3 hardcodes the OLD behavior this cell retires: it asserts `r.supervision === 'unknown' && r.advisory === 'unknown'` on every row of the 'missing-attribution' (non-authoritative) scenario, read off a REAL rendered page. After this cell's fix those rows render 'withheld'. The assertion is currently unreachable ONLY because its own declared PRECONDITION (a dev server on this worktree) is ABSENT in this environment, so F32-AC2..AC6 print SKIPPED with 0 failures both before and after this cell's edit -- the suite reads green today, but the assertion is FALSE the moment the precondition is MET (a CI run, or a worker with the dev server up). __tests__/fe-s-32/ is not in IRPT_FNTEND.TO-FE-s-55's <paths>, so this worker cannot update it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "fe-s-32/holdings-in-a-browser.test.ts's own header: 'THE PRECONDITION IS DECLARED ... ABSENT -> the five browser criteria render SKIPPED, by name, with 0 failures. MET -> they run, and a broken gate, a hidden gap or a clipped label fails.' FE-s-55's remedy step 4 requires updating 'EVERY test found in step 1' that expects 'unknown' on a non-authoritative classification; this file's assertion was not found by step 1's grep because it is scoped to __tests__/fe-s-7/ (this order's <paths>), and fe-s-32/ was never in scope to search or edit.",
+    "world_is": "portal (worktree, uncommitted FE-s-55 edit) src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:322: `const unknownOnEveryRow = rows.length > 0 && rows.every((r) => r.supervision === 'unknown' && r.advisory === 'unknown' && r.authoritative === 'false')`, read from `results.get('missing-attribution@'+viewport)`, itself read off a real Chromium render of `SliceTable`'s DOM (holdings-driver.mjs). `renderedClassification`'s non-authoritative branch (tabs/holdings/slices.ts) now returns `{ supervision: 'withheld', advisory: 'withheld' }`, so `unknownOnEveryRow` would read false once the precondition is met -- confirmed by this cell's OWN fe-s-55/withheld-vs-unknown.test.ts, which renders the same non-authoritative shape and asserts the opposite: 'withheld' present, 'unknown' absent. Both whole-suite runs in this session (row S8's evidence) printed 'PRECONDITION: dev server on http://localhost:5426 -- ABSENT' for fe-s-32/holdings-in-a-browser.test.ts and 'PRECONDITION ABSENT -> 5 criteria SKIPPED, 0 failures. This is not a code defect.', so F55-AC5 does not currently see this gap -- it is latent, not yet exercised.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:322 (uncommitted worktree, unchanged by this cell): the literal `r.supervision === 'unknown' && r.advisory === 'unknown'` check inside describe 'F32-AC3 -- PARTIAL: the holdings are shown, the classification gap labelled as unknown'.",
+        "tabs/holdings/slices.ts's renderedClassification (this cell's edit): non-authoritative branch returns 'withheld', not 'unknown' -- verified by fe-s-55/withheld-vs-unknown.test.ts, 4 pass / 0 fail, printed 'WITHHELD DISTINCT FROM ASSERTED UNKNOWN: yes'.",
+        "whole-suite run (both pre- and post-edit), fe-s-32 section: 'PRECONDITION: dev server on http://localhost:5426 -- ABSENT (ECONNREFUSED ...)' then 'PRECONDITION ABSENT -> 5 criteria SKIPPED, 0 failures. This is not a code defect.' -- so F32-AC3 did not execute in this session's F55-AC5 measurement.",
+        "IRPT_FNTEND.TO-FE-s-55.holdings-non-authoritative-withheld.md <paths>: __tests__/fe-s-32/ is not a member."
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
