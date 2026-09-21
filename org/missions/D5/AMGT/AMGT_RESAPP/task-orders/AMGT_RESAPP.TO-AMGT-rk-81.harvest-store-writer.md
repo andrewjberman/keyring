@@ -266,7 +266,7 @@ never `git stash`, never `git show :path`.
 - Wave 1 runs beside `AMGT-rk-82` (H0-iam, `infra/aws/terraform/harvest/*.tf`), with a disjoint write surface.
 - Wave 2 channel cells may be SPAWNED only after this cell DRAINS, because they import `lib.research.harvest.store`.
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~81</slot>
 <fabric>site-z</fabric>
