@@ -75,6 +75,27 @@
 - Brief family A4 (10 `opal*` rows) was in the brief's "four rules" and was NOT among these calls.
   Family A5 (650 rows) is the fifth decision and comes back as its own card after sub-clustering.
 
+## CORRECTION ~17:1xZ -- rulings 2 and 4 move ZERO rows; the cards that produced them were built wrong
+
+**By 4.0.0_SA_CRO, against its own cards. The rulings STAND as his words; what was wrong is the row counts this
+seat attached to them.** Measured at `lib/opal_naming.py` @`0f1caafb1d`, read at the bytes by this seat:
+
+- **Ruling 4 (log groups graded after `/aws/<svc>/` only) is ALREADY the grader's behavior.** `_grade_log_group`
+  `:1335-1341` strips `/aws/<service>/` and grades only the tail. The 67 rows carry `{system}` because the TAIL has
+  none (`/aws/lambda/access-anomaly-scanner` -> `/aws/lambda/{system}-access-anomaly-scanner-lambda`). CALL 4 said
+  "67 rows"; the ruling settles 0. Those rows fold into the other families by their tail.
+- **Ruling 2 (bd / inf / cot are a firm field, not a {system}) is ALREADY the grader's behavior.** `:1210-1212` puts
+  `bd` in the SCOPE slot; the 217 rows are `{system}` because nothing says WHICH SYSTEM a firm-pipeline resource
+  belongs to (`bd-gold-qa-runner-forgotten` -> `{system}-49f-gold-qa-runner-forgotten-alarm`). CALL 2 said "217 rows
+  turn on this one answer"; the ruling settles 0 of them.
+- **Ruling 3 (an AWS service name is never a {system}) is the only one that moves rows as written** -- 174 at HEAD,
+  and it needs a grader change plus a new verdict value (a schema change) outside this seat's lane.
+
+**How it happened:** this seat carried the brief's s.9 framing onto the cards without reading the grader the brief
+names. The brief put those questions as open; the code had answered two of them already. The recount
+(`deliverables/LGIC_PLACEHOLDER_RECOUNT_AND_A5_FAMILIES_20260921.md`) found it; this seat then read `:1180-1214` and
+`:1316-1345` itself before writing this correction.
+
 ## Addendum ~16:4xZ -- the R4 draft text APPROVED for landing
 
 Card put to him (verbatim): *"Land the R4 draft as written @2d07cf1bcc: yes / no?"* -- the draft
