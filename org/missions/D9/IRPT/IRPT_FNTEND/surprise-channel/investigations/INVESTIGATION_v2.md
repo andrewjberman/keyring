@@ -4811,6 +4811,31 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S77",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-21T14:20:00Z",
+    "one_line": "FE-s-54's required fix (contracts/envelope.ts's parseIrEnvelope, NOT adaptStatusEnvelope) breaks fe-s-47/no-status-reason.test.ts's F47-AC6 (18->16 carries) AND F47-AC7 (9->7 control-refused), because both assertions' uniform 'every status-optional operation, with no status, defaults to explicit-UNCERTAIN' premise is exactly the bug this cell fixes for status-summary/status-job -- the SAME class as the already-filed IRPT_FNTEND-W4-S22 (FE-s-53 vs F47-AC6), one cell later, on the same out-of-grant file.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-54 F54-AC4: 'the existing envelope/status suites are unaffected', invocation `bun test .../fe-s-14 .../fe-s-47`, expect `(?<![0-9])0 fail`. Also F54-AC5 (whole suite, same expect).",
+    "world_is": "At this worktree's portal HEAD ce53801c plus this cell's ONLY edit (contracts/envelope.ts's parseIrEnvelope: for status-summary/status-job, when no separate response-level `status` arrived, the freshly adapted document now stands in as its own `status` for `carryAvailabilityFromStatus`, so the document's own stated state -- e.g. PARTIAL -- is carried onto its own availability unchanged instead of being clobbered to the generic 'no status' default UNCERTAIN+NO_STATUS_REASON), `bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47` reads '26 pass', '2 fail' (was '28 pass', '0 fail' before this cell's edit). Both fails are in fe-s-47/no-status-reason.test.ts and BOTH are the direct, predicted, mechanical consequence of correctly implementing FE-s-54 (round-8 analysis item 3: 'a stated state wins, wherever the response states it'), not a regression: (1) F47-AC6's 'no status' trigger for status-summary/status-job now correctly reads 'state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING' (printed: 'F47-AC6 REACH status-summary, no status: state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING'; carries dropped from 18 to 16 of 18); F47-AC6's own RULES table (:348-350) already documents this exact mechanism as 'OVERWRITTEN on every in-contract response ... parseIrEnvelope's carryAvailabilityFromStatus (:219) always runs on data afterward with the SEPARATE status field, which these two operations leave absent -- so carryAvailabilityFromStatus's own statedState === null branch re-derives both state and partialReason regardless of what this line set' -- i.e. this row's fix is exactly what that comment names as the (previously unaddressed) mechanism. (2) F47-AC7's control ('every status-optional operation, with every reason stripped, is refused as reasonless-UNCERTAIN') now correctly reads 'no' for status-summary/status-job because their state is genuinely PARTIAL (not UNCERTAIN) once no-status defaulting stops clobbering it, so validate.ts's reasonless-UNCERTAIN check (which only fires on EXPLICIT_UNKNOWN_STATE) no longer trips (controlRefused dropped from 9 to 7 of 9). fe-s-47/no-status-reason.test.ts is NOT in IRPT_FNTEND.TO-FE-s-54's <paths>, so this worker cannot update its RULES table or F47-AC7's per-operation assumption. F54-AC5 (whole suite) shows 3 fail: these same 2, plus 1 pre-existing, unrelated, load-sensitive fe-s-45/residuals.test.ts F45-AC9 failure (passes 6/6 standalone in 31.89s; fails only inside the whole-suite run, matching the already-filed pattern IRPT_FNTEND-W1-S67/W1-S69 -- confirmed unrelated by import isolation: residuals.test.ts imports only node:child_process/node:fs/node:process/node:url, nothing from contracts/, so this cell's envelope.ts edit cannot reach it).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && timeout 300 bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47 (portal ce53801c + this cell's uncommitted envelope.ts edit) -> '26 pass', '2 fail', 'Ran 28 tests across 6 files.'; same invocation before the edit (git stash not used -- confirmed by re-reading the pre-edit file via the file's own prior baseline run this session) -> '28 pass', '0 fail'",
+        "F47-AC6 printed line: 'F47-AC6 REACH status-summary, no status: state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING' and 'F47-AC6 REACH status-job, no status: state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING'; 'F47-AC6 SUBTRACTION: 33 sites - 32 subtracted - 0 unclassified = 1 kept' unchanged, but expect(carries).toBe(arms) reads Expected 18 Received 16",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:348-350 (the RULES table, unedited): the 'OVERWRITTEN on every in-contract response' bucket's own reason text names parseIrEnvelope's carryAvailabilityFromStatus re-deriving state/partialReason for status-summary/status-job 'regardless of what this line set' -- the exact mechanism this row's fix changes",
+        "F47-AC7 printed line: 'F47-AC7 POPULATION: 11 status-optional - 2 without an availability = 9; control refused when stripped: 7 of 9', expect(controlRefused).toBe(population) Expected 9 Received 7",
+        "cd <WS>/portal && timeout 60 bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts (standalone) -> '6 pass', '0 fail', 'Ran 6 tests across 1 file. [31.89s]'; residuals.test.ts:48-52 imports only node:child_process, node:fs, node:process, node:url -- no import of contracts/envelope.ts or any file this cell touches",
+        "IRPT_FNTEND.TO-FE-s-54.status-document-own-stated-state.md <paths>: portal/src/pages/InvestorReporting/__tests__/fe-s-47/ is not a member",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-W4-S22 (same worker, prior cell): the identical shape one level up (FE-s-53 breaking F47-AC6's classification), resolved there only via an AMENDMENT widening <paths> to the test file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
