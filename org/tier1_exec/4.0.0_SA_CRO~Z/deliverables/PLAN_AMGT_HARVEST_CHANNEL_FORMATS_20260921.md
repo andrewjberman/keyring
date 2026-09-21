@@ -21,9 +21,16 @@ act from plain registry rows. This document supersedes its s.4 table and keeps i
    (`scopes.json` row landed @`e44380a9d1`). The **vendor is the `{source}` for bronze and silver**; **`amgt` is the
    `{source}` for gold, platinum, state and code**. So the tier and the origin can be read from the first three segments
    of every key.
-2. **Bronze** = the vendor's bytes exactly as they came back, **one object per fetch, never overwritten**, under an
-   entity partition with a compact UTC stamp as the leaf:
-   `{vendor}/harvest/bronze/{request}/{entity}={id}/{YYYYMMDDTHHMMSSZ}.{ext}`.
+2. **Bronze** = the vendor's bytes exactly as they came back, **one object per fetch, never overwritten**, with the
+   channel's FETCH KEY in the partition. Three leaf forms, chosen by what the fetch key is (s.5 per channel):
+   - **(a) an entity fetched repeatedly** (Bloomberg requests, Seeking Alpha endpoints, publisher articles):
+     `{vendor}/harvest/bronze/{request}/{entity}={id}/{YYYYMMDDTHHMMSSZ}.{ext}`;
+   - **(b) an immutable document** (an SEC accession, an issuer or ESEF document): the document id and the vendor's
+     own file name as the leaf, under the entity partition, e.g. `sec/harvest/bronze/filing/cik={cik}/{accession}/{primary_document}`;
+   - **(c) a request, not an entity** (SERP, social snapshot, Lusha, the SEC ticker table):
+     `{vendor}/harvest/bronze/{request}/date=YYYY-MM-DD/{request_sha256 or file}.{ext}`.
+   **Correction 2026-09-21 ~17:5xZ:** this item first gave form (a) alone, which seven s.5 bronze addresses do not follow (SEC filing, SEC ticker table, issuer document, ESEF filing, social snapshot, SERP, Lusha); found
+   by this seat while reviewing PRD v0.14, which quoted form (a) as the whole contract.
 3. **Silver** = typed **parquet** (R10), `date=` partitions, **one `part-<run stamp>.parquet` per run** (append-only,
    so it can never overwrite), deduplicated on a **record key** stated per channel below.
    `{vendor}/harvest/silver/{table}/date=YYYY-MM-DD/part-{stamp}.parquet`.
@@ -107,8 +114,8 @@ lane's call; `PRODUCT-CONTAINED` is only the simulation's placeholder. The doctr
 **Bronze (R9).** The response bytes exactly as they arrived: JSON stays JSON, PDF stays PDF, a zip stays a zip. No
 parsing, no trimming, no re-serialising (today `json.dumps` of a parsed response is NOT the bytes; the bronze writer
 stores the body as received). One object per fetch, and the leaf is the compact UTC fetch stamp, so **a write can never
-land on an existing key**. The partition is the vendor's own entity key (`security_key=`, `cik=`, `article_hash=`),
-because that is how every reader asks for it.
+land on an existing key**. The partition carries the channel's fetch key -- an entity key (`security_key=`, `cik=`, `article_hash=`)
+where the channel fetches an entity, `date=` where it fetches a request (s.1 item 2, forms a-c).
 
 **Silver (R10).** Parquet. Every vendor field kept, typed; no filtering to "what Opal cares about". `date=` is the
 FETCH date. One part file per run. Every row carries `bronze_key` (the object it came from), `fetched_at` and
