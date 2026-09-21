@@ -323,6 +323,29 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "TXA1-AC2 (decomp s.3 TX-a-1 acceptance, this cell's task order): 'Tax is added exactly once at Tax, SMA, ALT Strategies and 49financial' -- read literally, this names four distinct levels/series.",
     "world_is": "This cell's write surface (dim_mdpf_aggregate_aua_timeseries.py, data/mdpf/tests/taxsma/test_taxsma_aggregate.py) carries no separate SMA or ALT Strategies series; the four levels collapse to one addition on Tax's single registered rollup path, verified against the registry rather than assumed, and a 5th field beyond the contract's named four (aua_including_tax) was added to make that one addition checkable end to end.",
     "notes": "OBSERVATION, not a refusal: the criterion was satisfied under this reading rather than refused, because the alternative (minting a new SMA/ALT Strategies series in a file whose write grant does not cover that grain) would widen the cell past its <paths>. Whether a node-level TAXSMA rollup belongs in mdpf_aggregate_aua.py/category_views is a question for that file's owning cell (likely TX-a-2 or a category-views cell), not this one."
+  },
+  {
+    "id": "MDPF_TAXSMA-W2-S2",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~2",
+    "surfaced_at": "2026-09-21T09:30:00Z",
+    "one_line": "Neither the contract nor the decomp names the Gold Lambda's OWN env-var config for calling S02 live; TX-a-2 mints TAXSMA_GATEWAY_BASE_URL/TAXSMA_CAPABILITY_BEARER itself, so TX-i-3/TX-r-3's Terraform wiring must match these exact names or the prelude stays silently DISABLED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CONTRACT org/standards/MDPF_TAXSMA_DATA_CONTRACT.json@671925aecc capability.identity_configuration='TAXSMA_WORKBOOK_IDENTITY' and capability.credential_configuration='TAXSMA_WORKBOOK_BEARER' are read at infra/aws/ec2/opal-gateway/app/config.py:228-229 -- the GATEWAY's own config, validating the CALLER's presented bearer server-side.",
+        "DECOMP org/missions/D8/MDPF/MDPF_TAXSMA/decompositions/MDPF_TAXSMA_DECOMP.md@7f65001ab3 s.3 TX-i-1 acceptance names 'the contract's runtime_access_matrix Gold-prelude actions on exact resource ARNs' but no env-var name for the Gold Lambda's own copy of the base URL/bearer it must present when calling the route.",
+        "CODE data/mdpf/scripts/gold/mdpf_gold_consolidator.py taxsma_capability_configured() reads os.environ['TAXSMA_GATEWAY_BASE_URL'] and ['TAXSMA_CAPABILITY_BEARER'] -- names this cell minted itself, cited in the result record s.2 as a Rule 24(i)/(iii) declared-not-hidden design decision.",
+        "TEST data/mdpf/tests/taxsma/test_taxsma_consolidator.py::TXA2AC11Disabled::test_unconfigured_env_is_not_configured proves both must be set together or the prelude reads DISABLED (AC11), which is the correct default until TX-i-3/TX-r-3 populate them."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's <paths>/bound text implies the prelude's capability-configured check is this cell's mechanical concern with no named authority for the config-key names it reads.",
+    "world_is": "No spec names the Gold-side config keys, so this cell declared two of its own; TX-i-3 (the capability bearer secret + Gateway root) and TX-r-3 (activation) must either read this cell's source to match these exact names, or a later cell should be free to rename them in one commit -- this row exists so that decision is visible before either lands rather than discovered as a silent DISABLED in production.",
+    "notes": "INERT: today, absent both env vars, the prelude is correctly DISABLED by construction (AC11), which is TX-r-1's own stated plan. Whether the config names should instead be declared in the contract (matching capability.identity_configuration's own pattern) is a question for the contract owner, not this cell's <paths> grant."
   }
 ]
 ```
