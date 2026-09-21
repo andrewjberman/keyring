@@ -116,6 +116,12 @@ prose-`<proof_of_spec>`-before-the-real-block pattern that hit `rk-58` -- protec
 the identical defect class, separate from the round-17 cell. **Issue, as actually spawned: C1, C2, C3, R1-filter --
 four cells, one wave, no chain. `S176-anchor` is round 17's.**
 
+**DILIGENCE CLOSED (msg 23933):** the COO checked all four issued orders (`rk-65`-`rk-68`) with the sweep's own
+regex, plus a positive control on `rk-58` to prove the instrument discriminates (mentions `[80, 191]`, binds `80`,
+real `191`, criteria `0 of 5` -- correctly flags the known defect). All four round-16 orders read clean: one
+`<proof_of_spec>` mention each, bind matches the real block, full criteria count seen (4/4, 3/3, 3/3, 6/6 = 16 of
+16). **Round 16's own L10 acceptance read is unaffected by S176; nothing further owed on this thread.**
+
 ## 3. What each seat owes next
 
 | seat | owes |
