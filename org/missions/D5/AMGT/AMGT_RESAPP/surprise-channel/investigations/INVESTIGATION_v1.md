@@ -11139,6 +11139,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The order's MEASURED STATE section: 'rk-81 adds 10 arms'; AC2's <expect> parenthetical: '10 + 55 + 9 = 74 if rk-81 landed its 10 arms'.",
     "world_is": "lib/research/harvest/tests/test_store.py collects 11 arms at rk-81's own landed commit 03419bc8a9 and unchanged at this worker's HEAD 0731c87fca; AC2's actual re-measured-at-spawn total is 75, not 74.",
     "notes": "No action needed beyond this row: AC2 is graded PASS against the observed 75-passed line per the criterion's own re-measure rule, not against the stale parenthetical example."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W84-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~84",
+    "surfaced_at": "2026-09-21T22:20:00Z",
+    "one_line": "AC3's literal python -c invocation (containing embedded b\"\\\\r\\\\n\" / b\"\\\\n\" double-backslash byte-literal escapes) does not run as typed on this Bash tool: a transport layer between the typed command and the shell collapses every doubled backslash to a single backslash BEFORE bash/python see it, so the mutant's b\"\\\\r\\\\n\" becomes a literal embedded CR+LF byte pair inside the generated .py source rather than the two-character escape text -- which then fails to PARSE (SyntaxError: unterminated string literal) instead of producing the expected '1 failed'. Compensating by doubling every double-backslash in the invocation (b\"\\\\\\\\r\\\\\\\\n\" / b\"\\\\\\\\n\") before it is typed reproduces the order's exact expected output (both mutant arms: rc 1, '1 failed').",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Isolated repro: `python -c 'x = \"b\\\\\"\\\\\\\\r\\\\\\\\n\\\\\"\"; print(repr(x))'` (one compensating level) printed `'b\"\\\\r\\\\n\"'` (literal backslash-r backslash-n text, the intended source bytes), while the uncompensated form (matching the task order's literal text exactly) printed `'b\"\\r\\n\"'` -- Python's repr notation for an ACTUAL embedded carriage-return + linefeed pair, proving one level of backslash was silently lost before Python's own parser ever saw the argument.",
+        "Running AC3's invocation exactly as written in TO-AMGT-rk-84 (this worker's worktree, HEAD at time of run) produced `m1 test_bronze_bytes_as_received rc 2 ... 1 error` (a SyntaxError at exec_module: 'unterminated string literal', from the mutant .py file literally containing a raw CR+LF byte pair mid-token) instead of the order's expected `rc 1 ... 1 failed`; after doubling every double-backslash in the same invocation (no other change), the run produced `m1 ... rc 1 ... 1 failed` and `m2 ... rc 1 ... 1 failed`, matching the order's <expect> exactly.",
+        "This matches the class of the banked site-Z lesson 'Harness heredoc unescapes double-backslash' (MEMORY.md) but is NOT a heredoc here -- it is a direct single-command `python -c '...'` argument to the Bash tool, so the collapse is broader than the heredoc-only framing that lesson currently states."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-84 section 5 instructs 'every invocation is LITERAL; record it byte-for-byte' and the top-level worker instructions require running 'its literal invocation from inside your worktree' for each criterion, AC3 included.",
+    "world_is": "On this device/Bash-tool, typing AC3's invocation exactly as the order gives it does NOT produce the order's own <expect>: a transport-level collapse of every doubled backslash to a single backslash, applied before bash/python ever parse the command, turns the mutant's intended two-character escape text b\"\\r\\n\" into an actual embedded CR+LF byte pair inside the generated mutant .py file, which then fails to PARSE (SyntaxError, rc 2) rather than producing '1 failed' (rc 1). Doubling every double-backslash in the same invocation before typing it (a purely mechanical compensation, no semantic change) reproduces the order's <expect> exactly on both mutant arms.",
+    "notes": "Not blocking this order: AC3 was satisfied by the compensated (semantically-identical) command, and the worker report records both the literal-as-typed failure and the compensated pass. Flagging because ANY future worker order on this device whose <invocation> embeds a double-backslash byte-escape (e.g. b\"\\\\r\\\\n\") inside a `python -c` argument will silently get the WRONG denominator (a SyntaxError misread as a mutant failure, or worse, a collapsed escape that happens to still parse but changes runtime behavior) unless it knows to compensate -- the task order's own 'record it byte-for-byte' instruction cannot be honoured literally on this device without this workaround, and nothing in the order or CLAUDE.md names it. Worth confirming whether the MEMORY.md lesson's heredoc-only scoping should widen, and whether this is a Bash-tool-wide transport property or specific to this invocation shape."
   }
 ]
 ```
