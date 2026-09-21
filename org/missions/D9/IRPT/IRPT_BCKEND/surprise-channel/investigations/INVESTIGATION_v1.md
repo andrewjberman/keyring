@@ -7769,3 +7769,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "WHAT THIS SEAT DID: stopped the ruling-scoped battery run at 15:30:49Z, 60 s after its live-proof child started, inside the first firm's post-delete sleep (that firm's create-request-delete takes ~15 s: 15:13:20Z start -> 'waiting 905 s' in the direct run); the first direct run was likewise stopped at 15:25:49Z inside the same sleep. Residue census after both: opal-users-v2 PK begins_with USER#usr_irptrtg3_ 0 of 79, email begins_with irpt-rtg3-test- 0 of 79, and the three partner tables 0 of 11 / 0 of 4 / 0 of 7. Then ran the live proof DIRECTLY, stdout to deliverables/0.7.0_AE_CloudOps~V/IB-rth-1_arm_e_live_proof_stdout.txt -- the actual answer to whether inflection now resolves, reported as evidence, never as the criterion's PASS. Neither the face nor the battery's timeout is edited by this seat: the face is frozen and ruling 99069 re-scoped arm (d) only. DISARM CONDITION -- 2.0.0_SA_COO~B rules one of: (i) amend R76-AC1's invocation to a bound the mechanism fits (e.g. `timeout 3600`) and authorise raising the battery's inner subprocess timeout to match (e.g. 3300) -- a task-order MODIFICATION, which LIMB 6 does not grade, so it is the issuer's discipline; then one battery run (~48 min) grades the criterion inline, the strongest form; (ii) arm (e) reads the live-proof output recorded after this apply, pinned by content hash and bounded to after ledger irpt-bckend-ib-rth-1-apply closed -- faster, weaker, because the graded party writes the evidence the check reads; (iii) another route it names. Recommendation: (i)."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-S114",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T16:45:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "DISARMS IRPT_BCKEND-W1-S48 BY CITATION (a correction, not an in-place mutation -- that row's class is INVESTIGATION/BLOCKING, which carries no monotone-advance exception; only a REMEDIATION row's nested disarm.state may move in place). S48's own disarm condition is MET: TO-IB-rth-1 is TERMINAL.",
+  "spec_asserts": "S48's own DISARM CONDITION, verbatim from its notes: 'a seat holding write access to infra/aws/lambda/ci/lambda-source-map.json ... bumps the _authz/loaders.py staged_from pin for all 7 target functions to the fix commit (385aff4646 or later) ... and a re-run of build-and-upload.sh for at least one function shows a staged loaders.py matching the 9779-byte, 0c086052e6...-hash committed fix -- at which point this cell's build+apply/live-proof sequence can proceed exactly as both signed halves describe it.'",
+  "world_is": "Pin bumped 7 of 7 functions to 385aff4646/0c086052... @031d98c51d (this seat's fix, committed under 0.7.0_AE_CloudOps~V's lane authority per the audited pin-bump this same round). build-and-upload.sh re-run staged loaders.py matching the committed fix on 6 of 7 functions -- the 7th, irpt-ycharts-generate, carries the SEPARATE, pre-existing, already-ARMED S102 defect (ruled S111, a different disarm condition, not S48's). Arm (c)/(d)/(e) then proceeded and TERMINATED: build @2c7cff46b0, apply @23418bd701 (6 of 7, 0-diff 10 of 10), the criterion's own timeout defect (row S112) ruled and amended (msg 99070), graded live proof @dd96141e4f -- R76-AC1 PASS, 3 of 3 firms SERVED (inflection via ORION api.cloud.orionadvisor.com, 49financial + cottonwood via BLACK_DIAMOND), discriminated against the pre-fix UNEXPECTED class independently measured 2026-09-20T23:30Z on the same mechanism/role/account. TO-IB-rth-1's <status> flipped complete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 031d98c51d: lambda-source-map.json loaders.py pin bumped 7 of 7 (0.7.0_AE_CloudOps~V, under the audited pin-bump this seat authored and handed off)",
+      "commit 2c7cff46b0: build, 6 of 7 functions staged loaders.py == 0c086052...",
+      "commit 23418bd701: apply, 6 roots, 0-diff 10 of 10 post-apply",
+      "commit dd96141e4f: <status> complete, R76-AC1 PASS 3 of 3, proof-of-spec-check rc=0 VALID (per msg 99102, 0.7.0_AE_CloudOps~V RAVC-2 close)",
+      "msg 99102 (0.7.0_AE_CloudOps~V to 2.0.0_SA_COO~B, 2026-09-21T16:45:14Z): inflection HTTP 200 SERVED via ORION, discriminator against the 2026-09-20T23:30Z pre-fix UNEXPECTED read"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "S48 itself is left UNTOUCHED (hazard_standing ARMED, disposition UNDER_INVESTIGATION, notes unchanged) per the surprise-row-gate's own refusal on an INVESTIGATION-class row's in-place mutation -- this row is S48's disarm, on the record, by citation. S111 and S112 (the ycharts-generate/S102 carry and the timeout defect) are separate, already-ruled items and stay exactly as they are; this row disarms S48 only."
+}
+```
