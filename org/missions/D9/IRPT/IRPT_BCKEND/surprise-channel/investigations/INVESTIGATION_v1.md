@@ -8013,3 +8013,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Untested-until-exercised is the class: the battery's post-hoc branch had no positive control before this run. The apply itself was performed by hand via .tools/safe-apply.sh and never depended on the battery."
 }
 ```
+
+## Round 9, IB-rti-1 -- worker 0.9.0_WK_IRPT_BCKEND~9's rows
+
+```json
+{
+  "id": "IRPT_BCKEND-W9-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~9",
+  "surfaced_at": "2026-09-21T22:58:00Z",
+  "one_line": "IB-rti-1 arm (d) says the capture helper's origin allowlist must EQUAL the one render_export.cjs enforces, but render_export.cjs holds NO fixed origin allowlist: it holds a vendor DENYlist (VENDOR_HOSTS, 4 entries) and takes its one allowed origin as a run parameter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-export/render_export.cjs:48-50 @ eecaad4985 -- VENDOR_HOSTS is the only fixed list; :141 origin = need('IRPT_PORTAL_ORIGIN'); :146 allowedHost = assertNoVendorHost(target) (a denylist check, then the parameter is the allowed host).",
+      "Resolution taken (smallest that keeps the drift detector meaningful): capture-session.cjs carries VENDOR_HOSTS copied verbatim (battery --arm origin asserts the two 4-entry lists EQUAL) plus its OWN ALLOWED_ORIGINS = ['https://opalinvest.dev'] (the README's only example origin), not env-overridable. Whether other portal origins (a DEV site) must be admitted is the CTO's call; the list is one line."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-rti-1 arm (d): 'The allowlist must equal the one render_export.cjs already enforces: read its guard ... give the helper the same values, plus a battery arm that asserts the two lists are EQUAL.'",
+  "world_is": "render_export.cjs enforces a 4-entry vendor denylist and 'the origin it is handed'; no origin allowlist exists to be equal to. The equality arm therefore covers the vendor list only; the positive allowlist is new and single-valued."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W9-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~9",
+  "surfaced_at": "2026-09-21T22:59:00Z",
+  "one_line": "The CVO diagnostic, run UNMODIFIED against the repaired source, refuses cases 1 and 2 for the S125 reason (no IRPT_CAPTURE_INSTANCE_ID in its env stub) and never reaches the readiness code, so on its own it cannot show S126 repaired; the battery therefore also runs a copy differing only by that one env entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R8_CAPTURE_DIAGNOSTIC.cjs:30 @ 06fe4f1848 -- env: { IRPT_CAPTURE_PORTAL_ORIGIN: origin } is the whole stub env.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~9/battery_ib_rti_1.py --arm diagnostic output: unmodified run, cases 1-2 errors 'BLOCKED: INSTANCE_ID_MISSING_OR_INVALID', navigations=0; the +ID copy: case 2 status=500 navs=2 writes=0.",
+      "Mutation controls run by the worker on the readiness/origin arms (marker, status, sign-in, hop checks each removed in turn) each turned the battery FAIL; the CVO file was never edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-rti-1 arm (e): 'The HTTP 500 case and the arbitrary-origin case must now REFUSE (0 writes, no success).'",
+  "world_is": "Both hold under the unmodified diagnostic, but case 2 holds because the tool refuses a missing instance id first; the discriminating evidence for the 500 case is the +ID copy."
+}
+```
