@@ -10898,6 +10898,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "C-EXEC-MANAGEMENT: the roster is every officer from the filing's officer section, and the CEO is the officer with a chief-executive title.",
     "world_is": "For a 10-K that places its executive officers in Item 1D (Part I) and cross-references it from Item 10, the cut takes Item 10 and misses the roster; a RESOLVED roster of 1 is served as complete.",
     "notes": "ARMED: it is live on the manager-review path, for a validation name, and it is FALSE-COMPLETE (served as RESOLVED, not flagged). Also likely feeds W45-S1-class coverage elsewhere (other 10-K filers using 'Information about our Executive Officers' in Part I) -- a census over the pool's RESOLVED rosters with officer_count <= 2 would size it; not run here. Remedy is a spec + producer call (follow the Item 10 -> Item 1D/Part I cross-reference) plus a re-derivation of CAT; the CTO's call. Found reading this seat's own round-19 screenshot."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W80-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~80",
+    "surfaced_at": "2026-09-21T21:05:00Z",
+    "one_line": "safe-commit.sh's naming limb (org/mcp/naming-gate.enforce present, ENFORCE mode) BLOCKS committing this cell's own proof_of_spec.json deliverable, and would block ANY .py/.js/.mjs/.ts/.tf/.json/.yaml/.yml commit fabric-wide right now, because lib/opal_naming.py's validate() precondition runs on the WHOLE registry before grading the staged diff and refuses on 4 pre-existing rows in infra/logic/registry/resources.json (indices 197, 215, 216, 226, each 'already resolves a system from its own tokens (type SECRET); a row for it is redundant'), committed at b282500581 ('registry(batch 2, 4.0.0_SA_CRO)') -- unrelated to AMGT_RESAPP or this cell's portal-only diff.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "4.0.0_SA_CRO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~80 <...>\" -F <msgfile> -- <TO.md> <proof_of_spec.json>: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' followed by '[naming-gate] NAMING ERROR the registry is refused by validate (4 refusal(s)): resources.json[197].name: ...'; files unstaged, the .md re-staged and committed separately (workspace commit c5c8d8a1b4), the .json left uncommitted on disk.",
+        "python -c \"import lib.opal_naming as onm; refusals,_=onm.validate(); print(len(refusals))\" from the repo root: 4, all four rows of the form resources.json[N].name '<key> already resolves a system from its own tokens (type SECRET); a row for it is redundant' -- reproduced independent of any diff, confirming the failure is a registry precondition, not a grade of this cell's staged content.",
+        "git status --porcelain -- infra/logic/registry/: empty in this worktree (no local edit); git log -1 -- infra/logic/registry/resources.json: b282500581 'registry(batch 2, 4.0.0_SA_CRO)' -- the 4 refusals are already committed at HEAD, not introduced this session.",
+        "git log -1 -- org/mcp/naming-gate.enforce: d181e0ac5a 'flip(LGIC_ENFORCE 2b, 2.0.0_SA_COO~G as issuer): ... present -- the naming limbs REFUSE from here' -- ENFORCE is a deliberate prior flip, not this session's state.",
+        ".tools/naming-gate.py:79-82 states the INTENT that a record-tree path (org/**, docs/**) is 'never opened ... regardless of suffix', but :1000 calls mod.validate() unconditionally as soon as ANY graded-extension file (incl. a record-tree .json like this cell's own proof instance) is in the diff, before any per-file exemption check runs -- so the record-tree exemption does not reach this precondition."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 6 of this TO: write the proof_of_spec.json instance, then 'commit the superproject files with safe-commit (never staging portal)'; Rule 14a: commit ONLY via safe-commit.sh, no bare git commit.",
+    "world_is": "safe-commit.sh refuses to commit the .json deliverable (or any other graded-extension file) while org/mcp/naming-gate.enforce is present and infra/logic/registry/resources.json carries its 4 pre-existing REFUSE-class rows -- a repo-wide precondition failure, not a defect in this cell's diff, and outside this order's <paths> to fix.",
+    "notes": "Did NOT edit infra/logic/registry/resources.json, .tools/naming-gate.py, or org/mcp/naming-gate.enforce (all outside <paths>, and disabling/relaxing the gate is not this worker's call). Worked around within the already-granted write surface: committed the TO status-flip (.md, not a graded extension, unaffected) separately as workspace commit c5c8d8a1b4 on branch wk-amgt-20-80; the proof_of_spec.json deliverable itself is written and VALID (python .tools/proof-of-spec-check.py ... rc=0) but stays UNCOMMITTED on disk in this worktree pending either (a) the registry fix landing, or (b) an owner-directed route this order did not name. Flagged as a fabric-wide capability gap: EVERY worker committing a .json/.py/.ts/.tf/.yaml/.yml deliverable right now hits the same wall until resources.json's 4 rows are fixed or the enforce flag is lifted."
   }
 ]
 ```
