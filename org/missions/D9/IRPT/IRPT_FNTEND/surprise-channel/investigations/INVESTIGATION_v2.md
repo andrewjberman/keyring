@@ -5019,6 +5019,86 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "TO-FE-s-61's named fixture fe-s-10-global.json answers NONE of the routes the page requests (FIXTURES: 4 declared, 0 matched), so F61-AC2/AC3 capture the scope-failed state, not a scoped Reporting tab.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 THE CELL: 'reached through the default state of the route with fe-s-10-global.json answering the scoped routes'.",
+    "world_is": "portal ddb172bf, dev server on 5471: ui-smoke prints 'FIXTURES: 4 declared; 0 matched >=1 URL' and FIXTURE-DEAD for all four keys (resolve-scope, performance-report, analysis-requests, holdings-snapshot). A --netlog run shows the page actually requests POST /api/scoped/investor-reporting/directory/resolve and GET .../performance/bootstrap?start&end and .../holdings/bootstrap (all 401 unfixtured). The page then paints 'Scope could not be resolved. Nothing below is scoped' and a StatusPanel 'Failed IR-REQUEST-FAILED'. The same stale keys are in fe-s-2/3/5/6/7/9/10 smoke files (dead-key census by name only, not run). Only fe-s-14-global.json matched (3 of 4 keys) and was used for supplementary captures fe-s-61_reporting_{1440,390}_live-fixture*.png; it answers with an UNCERTAIN report, so Summary, CumulativeReturnChart, PeriodResults and AccountDetail did NOT render in any capture of this pass. fe-s-13-wire, fe-s-15-clean, fe-s-15-needs-correction and fe-s-16-ready each matched 3 keys but still painted scope-failed. Files are outside this order's paths (fixtures/), so not edited.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_IRPT_FNTEND~11/smoke_1440.txt and smoke_390.txt: 'FIXTURES: 4 declared; 0 matched'",
+        "netlog probe of the same route (scratch, 17:0xZ): request URLs listed above"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "The Reporting tab's summary cards, chart and period results are not exercised by any capture: no current smoke fixture reaches an answer-bearing report on the real route.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 F61-AC5: 'the Reporting tab (summary cards, chart, period results, status panel) ... read against DESIGN.md'.",
+    "world_is": "Six smoke fixture files tried on the real route at 1440 (fe-s-10-global, fe-s-14-global, fe-s-13-wire, fe-s-15-clean, fe-s-15-needs-correction, fe-s-16-ready): the body sections render only when the report availability is answer-bearing; the best reachable state was fe-s-14-global's UNCERTAIN which rendered StatusPanel ('Uncertain / Business date age: 13d / Reload'). Those sections are therefore UNREAD by eye in this pass; the printed .ir-page render components sit under render/performance/ (not on this order's write surface).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fe-s-61_reporting_1440_live-fixture.png",
+        "fe-s-61_reporting_390_live-fixture.png"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "Defects seen on the header/Reporting route whose fix needs files outside this order's paths: index.tsx scope-error text is red on canvas (C12), StatusPanel Retry/Reload are filled purple second actions (C8).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 HOW 6: a defect needing any other file is ONE surprise row.",
+    "world_is": "1440 capture fe-s-61_reporting_1440.png: 'Scope could not be resolved...' (src/pages/InvestorReporting/index.tsx:105) paints dark-red text with no status.danger icon, C12 ERROR state says a status.danger icon beside NAVY text, never a red block of text. Same capture: StatusPanel's Retry button and, in the live-fixture capture, Reload, are filled #5F3BE3 buttons beside the Export primary; C8 grants ONE filled purple action per view. StatusPanel.tsx and index.tsx are READ-ONLY to this cell. Also the first-arm evidence for the retired canvas: FE-s-11 printed CANVAS: rgb(195, 202, 218); this pass prints CANVAS: rgb(244, 246, 250) at 1440 and 390.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "fe-s-61_reporting_1440.png",
+        "fe-s-61_reporting_1440_live-fixture.png"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W11-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~11",
+    "surfaced_at": "2026-09-21T17:35:00Z",
+    "one_line": "Unfixed findings ON this cell's own files that tests outside its grant pin, plus the firm dropdown's verbatim Model Portfolios styling: cohort chip rounded-md (C11), FirmDropdown rounded-lg/shadow-sm/font-semibold (C11, C1), slate-* ink in ScopeSummary/PeriodControls.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-61 HOW 6: if a fix breaks a test outside the grant, keep the finding and file a row.",
+    "world_is": "ScopeSummary.tsx cohort buttons carry rounded-md; fe-s-42/every-site.test.ts:132 and fe-s-48/withheld.test.ts:219 assert the exact class string, so a fix is not possible inside this grant (not attempted). FirmDropdown.tsx PRIMARY_ON_SILVER_CLASS is a byte copy of ModelPortfolios.tsx:1268-1275 (both import PageSurfaceControl from @/components/ui/PageSurfaceControl, ModelPortfolios.tsx:49; FirmDropdown.tsx imports the same) and carries rounded-lg (8px), shadow-sm (C11 only box-shadow is focus) and font-semibold 600 (C1); fe-s-3/dropdown-class.test.ts:73 pins the primary-text class. Changing only this copy would make the two dropdowns differ, which FWD-12 is about; the defect belongs to both. ScopeSummary/PeriodControls text uses slate-600/900 rather than navy #163372 on panel (C3 allows secondary #6B7280 on panel only; slate-600 is #475569, not a contract colour).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "src/pages/InvestorReporting/header/FirmDropdown.tsx PRIMARY_ON_SILVER_CLASS",
+        "src/pages/ModelPortfolios.tsx:1268-1275"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
