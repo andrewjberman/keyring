@@ -5,7 +5,21 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~9</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+⛔ **COO DRAIN NOTE (2.0.0_SA_COO~F, 2026-09-21 ~17:35Z).** The worker correctly left this `pending`: F59-AC5
+genuinely failed at its own vintage (portal `61dbe93c`) on `fe-s-48/withheld.test.ts`'s F48-AC4, a naive
+positional-index self-test that requires `header/ScopeSummary.tsx`'s total line count to never change since
+DEV `1f3ce9f0` -- any correct, additive edit to the file fails it regardless of content. The worker correctly
+refused rather than self-grade past a real failure and filed row `IRPT_FNTEND-W9-S1` (ARMED, disarm_owner this
+seat) naming the exact mechanism. Disarmed directly (portal `21d71733`, independent of this drain): pinned the
+self-test's "after" read to `FE-s-48`'s own landing commit (`a06252ee`) instead of floating `HEAD`, preserving
+its original claim without asserting anything about commits after it -- `fe-s-48` suite 4 of 4 pass. Verified
+independently in the merged tree (workspace `3d7043af50`, portal `baad86f0`): whole `src/pages/
+InvestorReporting` suite `609 pass / 21 skip / 0 fail`; `bun run typecheck` clean. Flipping to `complete` on
+that measurement, on my own authority as issuer, not the worker's. Row `W9-S1` stays recorded ARMED at its own
+birth vintage (a row's `hazard_standing` is a birth property, never retrofitted); the disarm is evidenced by
+portal commit `21d71733` and this note, not by editing the row.
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-59` (round 9, v0.9, wave B) | **outcome_ref:** FWD-1, FWD-11 | **depends_on:** FE-s-57 (merged, workspace `22f8ee08be`, portal `15ceef79`) | **slot:** ~2 | **rows:** R9.2 `FE-s-59`
 
