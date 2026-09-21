@@ -8,7 +8,7 @@
   "directive": "D9",
   "fabric": "laptop",
   "round": 8,
-  "decomp_version": "0.8",
+  "decomp_version": "0.9",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -56,8 +56,9 @@
   "cell_id_shape_round7": "IB-rtg-<n>",
   "round7_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND7_ANALYSIS.md @0d400d5c07",
   "round7_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v3.md @357565e863",
-  "cells_round8": 4,
-  "cell_id_shape_round8": "IB-rth-<n>"
+  "cells_round8": 5,
+  "cell_id_shape_round8": "IB-rth-<n>",
+  "round8_mid_round_addition_1": "IB-rth-5, ~14:5xZ 2026-09-21, on row W3-S52 and CTO ruling addendum 2 @afc015b4b2 (msg 99068)"
 }
 ```
 
@@ -91,6 +92,10 @@ Whether the inflection bucket CAN be rectified without the console (rth-1's read
 
 ### R8.5 Four-postulate record (Rule 24 over the round-8 cell set)
 (i) MECE over the DECLARED domain = the round-7 carries {W3-S50 inflection, W1-S43 submit-wiring, status-word hygiene, the 110 stale rows} MINUS {FWD-5 realization (IRPT_FNTEND), the broader FWD-11 (Andrew), the DS producer re-key} -> the four cells remain, none uncovered. (ii) SAME GRAIN: each is one bounded remediation -- two served-path fixes, two records-hygiene sweeps. (iii) INTENT COHERENCE: one axis -- close what round 7 left open and make the records read true. (iv) STATE COHERENCE: a cell disposing rows or flipping status words does NOT move any FWD; rth-1/rth-2 ADVANCE FWD-2's serving half but do NOT alone realize it (containment already REALIZED round 6; FWD-5 untouched, its exercise is IRPT_FNTEND's).
+
+### R8.6 MID-ROUND ADDITION (~14:5xZ 2026-09-21) -- on row W3-S52 (the render-host SESSION_ABSENT finding) and the CTO's ruling addendum 2 (@afc015b4b2, msg 99068)
+
+`IB-rth-5` (WK~5): rth-2's build STOPPED honestly on a THIRD structural blocker beyond the two the CTO's original ruling (CTO_RULING_IRPT_BCKEND_W2-S62...) named -- the render host has no authenticated portal session, and `render_export.cjs` deliberately implements no login capability at all ("NO OTP BRANCH, NO SIGN-IN LOOP... never a credential prompt and never a retry"). The COO's own follow-on investigation (msg 99064) found: (1) the script launches a fresh, non-persistent browser context every run -- no session-reuse mechanism exists to exploit, not merely an unused one; (2) the portal's own auth is first-party with MFA, ruling out a trivial scripted login; (3) zero hits estate-wide for a reusable service-credential/session-minting pattern (the closest precedent, `IB-rte-2`'s bounded test principal, is API-level and does not transfer to a browser-session mechanism). CTO ruling addendum 2 (99068): CUT this as the successor cell, bounded to (a) persistent-context support in `render_export.cjs` (`launchPersistentContext`/`storageState`) and (b) SSM port-forward/session-capture tooling supporting a ONE-TIME operator-completed MFA login, refreshed on whatever cadence the session needs. **NOT authorized: a non-MFA service-account path** -- a standing portal security-posture decision, Andrew's to make on its own merits if ever pursued, never bundled into this cell. The actual MFA completion is a human act neither this cell nor its worker performs; the deliverable ends at tooling-ready + naming who must complete it (Andrew or a delegated operator holding valid portal creds), never at forcing a session through. Once a session exists (by the human step, outside this cell), rth-2's original bounded measurement re-runs unchanged and the sync-vs-async decision tree resolves on the real number -- this cell does not touch that tree. Chain E (independent of A-D, and of rth-1/rth-2 which continue on their own tracks): `rth-5` alone, no dependency. fanout 5 of 5 chains this round (A `rth-1`, B `rth-2`, C `rth-3` CLOSED, D `rth-4` CLOSED, E `rth-5`), cap 8. Grant: `infra/aws/ec2/investor-reporting-export/`, the SSM document/runbook home, this project's own deliverables/investigation faces -- no portal auth-system source (`portal/src/contexts/AuthContext*`, `portal/src/App.tsx` login route) is in grant; a change there is a STOP and a carry, not this cell's to make.
 
 ## R7. ROUND 7 -- THE RECUT ON THE ROUND-6 ANALYSIS (@fa2ff4f0dd, msg 98554; v0.7, 2026-09-20, `2.0.0_SA_COO~B`)
 
