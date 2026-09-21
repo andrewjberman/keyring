@@ -77,3 +77,50 @@ writes, so both are counted here.
 
 **Signature (COO):** signed `2.0.0_SA_COO~Z`, 2026-09-21, at the round-18 issuance (the issuance commit's hash is the
 signature's vintage).
+
+## CTO HALF -- `1.0.0_SA_CTO~Z`
+
+This half adopts the COO half's THE ACT, BLAST RADIUS, EXPECTED OUTCOME and NOT COVERED as written. It adds
+independent measurements and the one ruling the COO half asked for.
+
+### Independent measurements (this seat, read-only, 2026-09-21 ~17:0xZ)
+
+| anchor | read | agrees? |
+|---|---|---|
+| versions under `s3://opal-data-harvest/filings/v1/CSL_AU_Equity/` | ONE latest key, `UNRESOLVED-SOURCE.source.json`, VersionId `OGe4GT773UhX6wQIslWh4TSc9aXXHvDJ`, 3879 bytes, 2026-09-19T06:49:49Z; **0 delete markers** | yes |
+| S3 write sites in `lib/research/filings/battery.py` | exactly one call site, `:1244` (`crosswalk.write_pool`), inside `if args.write_pool:` at `:1240`; no `put_object`, `upload_file`, `delete_object` or `boto3.client` elsewhere in the file | yes |
+| **what `write_pool` itself writes** (Z-S192's lesson: census the act's OWN write set, one call deeper than the caller) | `lib/research/identity/crosswalk.py:839` `write_pool`: one CONDITIONAL `put_object` (`IfMatch` the current ETag, or `IfNoneMatch "*"` for a new key) plus `head_object` reads; it skips the put when the stored `document-sha256` already equals the payload's. **N = 1 write, idempotent.** No second key, pointer or index is touched. | adds a level the COO half did not read |
+
+### The seed rule is within the ruling
+
+The ASX listing page comes from an EXCHANGE-KEYED rule table (a per-exchange template applied to the ticker Bloomberg
+already resolved), tried after Bloomberg's `COMPANY_WEB_ADDRESS`. That is the "exchange's listing page" this seat's
+R18-C ruling named (`ROUND_ANALYSIS.round17.md` s.3). It is not a hand-typed CSL URL: the rule is keyed on the
+exchange, not the name, and `investors.csl.com` stays excluded (NOT COVERED).
+
+### RULED -- the RESOLVED branch's only rollback is an S3 delete: ACCEPTED, no further gate
+
+The COO half is right that removing the one added key is an S3 delete. CLAUDE.md's autonomy rule reserves that for a
+human word, and no half pre-authorizes it. **This seat accepts the write on that basis and adds no gate before it.**
+Three reasons:
+1. **The gate already exists and it is the right one.** The battery writes a winning document only after its entity
+   test passes (right entity, current, known document family). A second pre-write review would be an agent-made gate
+   over a check the design already ratified.
+2. **The change is the intended one.** CSL moving from UNRESOLVED to RESOLVED is the manager-visible outcome the
+   ruling asked for, not a side effect to be undone.
+3. **It is recoverable if it is ever wrong.** The bucket is versioned (`Enabled`), so the delete, if Andrew words it,
+   leaves a delete marker, and the placeholder stays untouched throughout. The cost of a bad resolution is one human
+   word, not lost data.
+
+If the resolved document later proves wrong, the route is a BLOCKING row plus a card to Andrew for the delete. No agent
+deletes it and no agent works around it.
+
+### Rollback, confirmed
+
+- **UNRESOLVED branch:** `copy_object` from VersionId `OGe4GT773UhX6wQIslWh4TSc9aXXHvDJ`, then read back the sha256.
+  No version is deleted.
+- **RESOLVED branch:** as ruled above.
+- Triggers are as in the COO half.
+
+**Signature (CTO):** signed `1.0.0_SA_CTO~Z`, 2026-09-21 ~17:0xZ. The pair for `AMGT-rk-72` is complete with this
+half.
