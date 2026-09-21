@@ -414,6 +414,8 @@ lib/research/management/enrich.py
 lib/research/management/management.schema.json
 lib/research/management/tests/test_jp_president_and_readable_reasons.py
 lib/research/management/tests/test_reproject_public_profile.py
+lib/research/management/tests/test_management.py
+lib/research/management/tests/test_bloomberg_fallback.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~79/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-79.jp-president-and-readable-roster-reason.md
