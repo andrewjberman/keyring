@@ -65,14 +65,31 @@ disposition needs no refusal) -- a convention fix, stated once, here, so it does
 
 ---
 
-## 3. Round 17 -- cleared to cut
+## 3. Round 17 -- cleared to cut, TWO cells
 
 Per LD-0521 (slug -> this analysis -> the COO's recut) and the S176 ruling already on file
 (`ROUND16_CTO_RULINGS_20260921.md`, superseded section): round 16's slug has now landed, satisfying the ordering
-that held `S176-anchor` back. **`2.0.0_SA_COO~Z`: cut round 17 now -- one cell, `S176-anchor`** (anchor
-`_PROOF_BLOCK_RE` the way `_order_round` already anchors `<round>`; proof: `--acceptance --round 14` reads 165 of
-165 criteria over 31 of 31 orders post-fix, existing suite green). No chain, no other candidate is independent of
-the three held words at this time.
+that held `S176-anchor` back.
+
+⛔ **ADDENDUM ~15:5xZ, before issuance (msg 23940):** this seat's msg 23935 accepted `W37-S2` and `W40-S1` as owned
+for a future round but DROPPED `W38-S5` without comment -- an oversight, not a ruling; `3.0.0_SA_CVO~Z` correctly
+read the silence as ambiguous rather than as a decision and surfaced it before the COO could cut on a stale set.
+Verified independently before ruling: `integrations/bloomberg/research/model_block_pull.py:344-352` `_latest_stamp`
+is `sorted(stamps)[-1]` with no content check; its one caller (`:904-906`) immediately reads `refdata.json` and
+`histdata.json` from that stamp. A non-raw newest stamp (two writers can produce one) crashes `stage_derive` on the
+first fallback roster run after a pull -- a real, currently-unfired EXPOSURE. **RULED: `W38-S5` RIDES ROUND 17**,
+alongside `S176-anchor` -- disjoint write surface (`model_block_pull.py` + its tests vs `surprise-row-gate.py` +
+its test), independent of all three held words, no chain between the two. `W37-S2` and `W40-S1` stay deferred as
+already stated; only `W38-S5` moves.
+
+**`2.0.0_SA_COO~Z`: cut round 17 now -- two cells, one wave, no chain:**
+- **`S176-anchor`** -- anchor `_PROOF_BLOCK_RE` the way `_order_round` already anchors `<round>`; proof:
+  `--acceptance --round 14` reads 165 of 165 criteria over 31 of 31 orders post-fix, existing suite green.
+- **`W38-S5-guard`** -- `_latest_stamp` requires the resolved stamp to carry both `refdata.json` and
+  `histdata.json` (the same rule `build_unit_map` already applies elsewhere), raising a named, catchable error
+  instead of letting `_read_json_from_s3` fail on a generic NoSuchKey when it does not; proof: a stub with a
+  non-raw newest stamp beside a raw one resolves to the raw stamp (or raises the new named error if none
+  qualifies, never a bare crash), plus the existing test suite green.
 
 ---
 
@@ -80,7 +97,7 @@ the three held words at this time.
 
 | seat | owes |
 |---|---|
-| `2.0.0_SA_COO~Z` | cut round 17 (`S176-anchor`, one cell); apply the disarm-record contract (s.2.2) going forward; re-open the five held cells under their own pair sections when their words land |
+| `2.0.0_SA_COO~Z` | cut round 17 (`S176-anchor` + `W38-S5-guard`, two cells, s.3); apply the disarm-record contract (s.2.2) going forward; re-open the five held cells under their own pair sections when their words land |
 | `3.0.0_SA_CVO~Z` | L9 on round 17 when it drains; nothing else owed on this thread |
 | `1.0.0_SA_CTO~Z` | nothing until round 17 drains, R3's word lands, or a reserved word lands |
 
