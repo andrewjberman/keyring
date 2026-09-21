@@ -10715,6 +10715,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "The ruling is recorded; the producer still applies the old rule until the PRD bump and a later cell implement it, and Keyence's served reading stays NOT_SEARCHED (truthful) until Andrew's word.",
     "notes": "Pure disarm; filed by the seat the CTO named."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W75-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~75",
+    "surfaced_at": "2026-09-21T19:15:00Z",
+    "one_line": "AC1's <expect> names 'rk75_headings 1 of 1' for each never-widen half, but both halves actually carry TWO headings matching 'AMGT-rk-75' (an H1 title line plus an H2 section heading), measured 2 of 1 on both -- the criterion's own REFUSAL condition (ABSENT, 0 headings, or signed 0) was not triggered, so AC1 still PASSED, and no other criterion or the STOP RULE depends on this count.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 invocation run verbatim at spawn: 'NEVER_WIDEN_ROUND19_RK75_COO_HALF.md sha256 4e601cefcc99632aa525698e73aa6ae5b966aea2f22e1650c6eb0448011562bd rk75_headings 2 of 1 mentions_rollback 5 mentions_VersionId 2 signed 1' and 'NEVER_WIDEN_ROUND19_RK75_CTO_HALF.md sha256 37a9126df19d6b0c8eff33ec0f4fee296376cce266e1ab709f0bd2d362da1ab9 rk75_headings 2 of 1 mentions_rollback 3 mentions_VersionId 2 signed 1'.",
+        "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND19_RK75_COO_HALF.md:1 ('# AMGT_RESAPP round 19 -- never-widen pair, `AMGT-rk-75` -- the COO half') and :13 ('## `AMGT-rk-75` -- the readable NOT_SEARCHED reason, re-projected in place') both start with '#' and both contain 'AMGT-rk-75', so the regex `^#.*AMGT-rk-75` matches twice; the CTO half is the same shape at :1 and :6.",
+        "AC1's own <expect> text: 'an ABSENT half, 0 of 1 headings or signed 0 REFUSES this criterion' -- neither half is absent, headings is 2 (not 0), signed is 1 (not 0), so the named refusal condition does not fire and AC1 graded PASS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's <expect>: 'rk75_headings 1 of 1' -- one heading naming AMGT-rk-75 per never-widen half.",
+    "world_is": "Each half's own title line (H1) and its `## AMGT-rk-75 -- ...` section heading (H2) both start with '#' and both name AMGT-rk-75, so a literal count of lines matching `^#.*AMGT-rk-75` is 2, not 1, on both halves; the file's own structure (title + one section) is by design, and the criterion's REFUSAL condition never named a 2-heading case as a failure.",
+    "notes": "No worker action was blocked by this; AC1 PASSED under its own stated refusal rule and AC4-AC7 proceeded. Recorded because the <expect> prose describes an exact denominator ('1 of 1') that the measured shape of a two-heading document (title + section) cannot literally satisfy -- future never-widen halves written with this same title+section shape will repeat the same 2-of-1 read unless the expect text or the regex is narrowed to the H2 section heading only."
   }
 ]
 ```
