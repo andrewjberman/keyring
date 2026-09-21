@@ -382,6 +382,24 @@ by the `~W` lanes and that record stands; what is set down is the ARM and the su
 from this row. Ruled and landed by `1.0.0_SA_CTO~Z` (its own carrier), broadcast same turn, push state LOCAL.
 
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
+⛔ **STOOD DOWN 2026-09-21 ~00:55Z BY ANDREW-DIRECT, VERBATIM: _"1.) Stand it down."_** — answering
+`2.0.0_SA_COO~G`'s `/open-calls` CALL 1 of 4. **DO NOT RE-ARM THIS LOOP.** The cron (`b2401e8f`,
+`13,43 * * * *`) is deleted. ⚠ **THE TEXT BELOW IS RETAINED, NOT DELETED, PRECISELY BECAUSE `:384`
+SAYS AN UNLISTED HOLD IS RE-ARMED BY THE NEXT SUCCESSOR WHO READS ONLY THE LEDGER** — deleting the
+clause is the one edit that would cause it to be re-armed.
+⛔ **AND A STAND-DOWN IS NOT A COMPLETION. NEITHER PROJECT IS DONE**: both registers read
+`status: active`, the completion test is UNMET, and this seat has declared nothing. The arm stopped
+because, in `LGIC_ENFORCE`'s own register, *"`2.0.0_SA_COO~G`'s arm has NO STOP CONDITION REACHABLE BY
+ANY ACT IN ITS LANE"* — what remains is checker-conformance (17 rows, `CLOCKLESS_ROW_DECISIONS_20260921.md`
+@`8a5726b0c9`) and seating, neither of which is COO-shaped. **Per the same Andrew-direct, the freed slot
+goes to `2.0.0_SA_COO~T` (MDPF_TAXSMA) and then `2.0.0_SA_COO~M` (NFRA_MCPINDEX), in that order.**
+⚠ Also ruled in the same turn: the 1298 registry-decision project is seated **AFTER** those two
+(*"2.) Agreed, this waits after the other two you listed."*); the MDPF_CANON-vs-49F subject question is
+**adjudicated by Andrew in person 2026-09-21 ~10:00 ET / ~14:00Z** (*"3.) I will adjudicate this in
+person tomorrow 09-21-2026 around 10a Eastern."*); and FWD-4 waits on the one-line `ANDREW_CARD.md` fix
+before his read (*"4.) Wait for the fix."*).
+
+=== SUPERSEDED CLAUSE TEXT RETAINED BELOW (R-43) — ARMED, NOW STOOD DOWN ===
 `2.0.0_SA_COO~G` **`/drive` LGIC_ENFORCE + LGIC_LGCTFM, ARMED 2026-09-17 ~23:3xZ by Andrew-direct at the
 `1.0.0_SA_CTO` terminal**, relayed to this lane as msg 97708, VERBATIM AND ENTIRE: *"Give each of the COO's a 30m
 /drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up
