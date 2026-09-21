@@ -10997,6 +10997,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD v0.16/v0.17 C-EXEC-MANAGEMENT: a served reason is always a readable sentence.",
     "world_is": "Both served reasons are readable sentences; neither prints 'None'.",
     "notes": "CAT_US_Equity also reads INCOMPLETE-NO-CEO with its readable reason (Z-S202's condition, holder 2.0.0_SA_COO~Z). rk-79's AC2 test failure (W79-S1) is a wording pin in two tests, not a served defect."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S205",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-21T21:45:00Z",
+    "one_line": "DISARM RECORD for AMGT_RESAPP-Z-S203: 4.0.0_SA_CRO's 10bace8916 (merged to SITEZ via b832f7b03e) deleted the stale PRODUCT-tenancy harvest scope row; at SITEZ 5912b7d107 lookup('harvest') returns the GENERAL row and address() prints opal-data-harvest for bronze, silver, gold and platinum, so C-HARVEST-HOME (PRD v0.17) is MET.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "4.0.0_SA_CRO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SITEZ 5912b7d107: scopes.json carries 1 'harvest' row; lib.opal_naming.lookup('harvest')['tenancy'] == 'GENERAL'; validate() 0 refusals.",
+        "address('lusha','harvest',t,'officers','dt=2026-09-19'): bronze/silver/gold/platinum all s3://opal-data-harvest/lusha/harvest/<tier>/officers/dt=2026-09-19; control address('bloomberg','etfs','silver',...) still s3://opal-data-assets/... (unmoved).",
+        "grade('find-insure/bright-data/api-key','SECRET') and grade('find-insure/lusha-ai/api-key','SECRET') now canonicalise under 'prospecting' (the grader edit (2) arrived with the CLOUD merge ec4e000709)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A disarm record only: S203's remedy (delete row [8]) landed by its disarm owner's lane; this row records the read-back on this fabric. The second half of S203's remedy -- a duplicate-scope-key refusal in validate() -- is NOT measured here and stays with the registry lane.",
+    "spec_asserts": "PRD v0.17 C-HARVEST-HOME: every AMGT tier lives where the builder prints it, opal-data-harvest under GENERAL.",
+    "world_is": "The builder prints opal-data-harvest for every AMGT tier; other pipelines' homes unmoved.",
+    "notes": "Round 21's gate (ii) is met. No harvest writer has run; the exposure closed before any write."
   }
 ]
 ```
