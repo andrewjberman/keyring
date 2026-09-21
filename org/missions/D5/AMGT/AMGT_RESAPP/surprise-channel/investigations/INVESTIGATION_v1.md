@@ -10531,6 +10531,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "The code-comment-says-disarmed but channel-says-open split is closed: the source and the channel now agree.",
     "notes": "The source carried 'disarmed here' since rk-53's drain; the channel never did. Found by the same subtraction census as S189."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S191",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T15:45:37Z",
+    "one_line": "DISARMS W46-S2 item 2 (disarm_owner 2.0.0_SA_COO~Z for item 2) and closes the doc- residual Z-S179 carried: ONE accession-ranking rule, roster.pick_source_key, now decides both readers -- EDGAR digit accession > doc-<16 hex> > placeholder by explicit class, and management_posture_batch.filed_status imports it instead of bare-sorting. Cell AMGT-rk-65, merged 87972d37f0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rk-65 proof instance VALID rc=0; this seat's own re-run at drain: lib/research/management/tests + integrations/bloomberg/research/tests/test_management_posture_batch.py -> 79 passed (73 baseline + 4 AccessionPlaceholderTest arms + 2 new batch arms); diff scope exactly the four granted code paths, no WALL touched.",
+        "The census's own disagreement probe, re-run by this seat against the merged code with a stub S3 client (one name holding 000000000000000001.source.json RESOLVED and UNRESOLVED-SOURCE.source.json): roster.load_source_object -> 000000000000000001.source.json; posture filed_status -> RESOLVED; posture filed_names -> ['X_US_Equity'] -- AGREE (at HEAD before the cell: UNRESOLVED-SOURCE and [], the live wrong answer).",
+        "The doc- id shape was read at its generators, not a row: lib/research/filings/document.py:880 and battery.py:1050 both emit 'doc-%s' % sha256[:16] (16 lowercase hex)."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "Both readers of the accession rule now read one implementation; a doc- winner no longer depends on 'd' sorting after 'U', and the posture batch no longer drops a name roster resolves.",
+    "notes": "W46-S2 item 1 (roster placeholder priority) was fixed earlier by rk-46 and is the CVO's to disposition from the census s.5 evidence; this row closes item 2 only. lib/research/filings/analyze.py:1410 (source_from_pool) carries the same bare-sort pattern with a fallback rather than a wrong answer -- named in rk-65's order as out of scope, not filed as new."
   }
 ]
 ```
