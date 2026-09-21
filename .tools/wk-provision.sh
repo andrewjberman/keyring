@@ -259,7 +259,7 @@ cmd_self_test() {
   nested="$main/portal"
 
   local fail=0
-  local total=7
+  local total=8
 
   local wt1="$tmp_base/wt1"
   local wt2="$tmp_base/wt2"
@@ -385,16 +385,54 @@ cmd_self_test() {
   git worktree remove --force "$wt2" >/dev/null 2>&1
   git worktree remove --force "$wt3" >/dev/null 2>&1
   git worktree remove --force "$wt4" >/dev/null 2>&1
-  git worktree prune
+  # NEVER a repo-wide "git worktree prune" here (superproject): the leftovers check below (the
+  # tmp_base / branch --list greps) is what catches a failed explicit removal above -- a
+  # repo-wide prune would silently erase the evidence of that failure, and it would also erase
+  # every OTHER seat's own prunable worktree registrations in this same repository.
+  local arm7_ok="true"
   # Swept by PATTERN, not by one hardcoded name per arm: a hardcoded list silently misses any
   # branch a later arm creates (measured -- "wk-selftest-rk60-4-portal", created by ARM6's own
   # provision call, was never in this list and survived every prior version of this cleanup).
   # This is the self-test's OWN cleanup of ITS manufactured orphan entry (ARM6), never the
-  # `remove` verb's behavior under test (which is proven by ARM6 to never prune). It runs BEFORE
-  # the nested branch-delete loop below: a branch still referenced by a prunable-but-unpruned
-  # worktree admin entry is still "used by worktree" as far as `branch -D` is concerned, so
-  # pruning first is what lets the orphan's own branch delete succeed.
-  git -C "$nested" worktree prune
+  # `remove` verb's behavior under test (which is proven by ARM6 to never prune). A repo-wide
+  # "git -C $nested worktree prune" would clear ARM6's own orphan so the orphan's own branch
+  # (wk-selftest-rk60-orphan-portal) can be deleted by the branch-delete loop below -- but it
+  # would ALSO clear every OTHER prunable entry in the nested repository, which is exactly the
+  # W60-S3-class hazard this arm exists to close. So locate and remove ONLY the ONE admin entry
+  # that is ARM6's own orphan: read every
+  # "$(git -C "$nested" rev-parse --absolute-git-dir)/worktrees/*/gitdir" file (the gitdir file
+  # names "<worktree path>/.git") and select the entry whose target, normalized, equals
+  # $orphan_portal normalized -- this box's git prints "C:/..." forward-slash paths while
+  # $orphan_portal may carry the same path in the MSYS "/c/..." form, so both sides are run
+  # through "cygpath -m" before comparing. This runs BEFORE the branch-delete loop below: a
+  # branch still referenced by a prunable-but-unpruned worktree admin entry is still "used by
+  # worktree" as far as `branch -D` is concerned, so removing the orphan's own admin entry first
+  # is what lets its branch delete succeed. If the match is not exactly one, this is an ARM7
+  # FAIL naming the count -- never a fallback to a repo-wide prune.
+  local nested_git_dir orphan_norm match_count match_admin_dir gitdir_file entry_target entry_norm
+  nested_git_dir="$(git -C "$nested" rev-parse --absolute-git-dir)"
+  orphan_norm="$(cygpath -m "$orphan_portal" 2>/dev/null || echo "$orphan_portal")"
+  match_count=0
+  match_admin_dir=""
+  if [ -d "$nested_git_dir/worktrees" ]; then
+    for gitdir_file in "$nested_git_dir"/worktrees/*/gitdir; do
+      [ -e "$gitdir_file" ] || continue
+      entry_target="$(cat "$gitdir_file" 2>/dev/null)"
+      entry_target="${entry_target%/.git}"
+      entry_norm="$(cygpath -m "$entry_target" 2>/dev/null || echo "$entry_target")"
+      if [ "$entry_norm" = "$orphan_norm" ]; then
+        match_count=$((match_count + 1))
+        match_admin_dir="$(dirname "$gitdir_file")"
+      fi
+    done
+  fi
+  echo "ORPHAN_ADMIN_MATCH: count=$match_count dir=$match_admin_dir orphan_norm=$orphan_norm"
+  if [ "$match_count" -eq 1 ]; then
+    rm -rf "$match_admin_dir"
+  else
+    echo "ERROR: expected exactly 1 admin entry matching the orphan, found $match_count"
+    arm7_ok="false"
+  fi
   local b
   for b in $(git branch --list 'wk-selftest-rk60-*' | awk '{print $NF}'); do
     git branch -D "$b" >/dev/null 2>&1
@@ -404,12 +442,21 @@ cmd_self_test() {
   done
   rm -rf "$tmp_base"
 
-  local arm7_ok="true"
   if git worktree list | grep -F -q "$tmp_base"; then arm7_ok="false"; fi
   if git -C "$nested" worktree list | grep -F -q "$tmp_base"; then arm7_ok="false"; fi
   if git branch --list 'wk-selftest-rk60-*' | grep -q .; then arm7_ok="false"; fi
   if git -C "$nested" branch --list 'wk-selftest-rk60-*-portal' | grep -q .; then arm7_ok="false"; fi
   if [ "$arm7_ok" = "true" ]; then echo "ARM7: PASS"; else echo "ARM7: FAIL"; fail=$((fail + 1)); fi
+
+  echo "== ARM 8: cmd_self_test's own body invokes no git worktree prune =="
+  local arm8_ok="true"
+  local self_test_prune_invocations
+  self_test_prune_invocations="$(sed -n '/^cmd_self_test()/,/^}/p' "$0" | grep -v '^[[:space:]]*#' | grep -cE '^[[:space:]]*git( -C [^ ]+)? worktree prune')"
+  if [ "$self_test_prune_invocations" -ne 0 ]; then
+    echo "ERROR: cmd_self_test's own body still invokes \"worktree prune\" ($self_test_prune_invocations time(s))"
+    arm8_ok="false"
+  fi
+  if [ "$arm8_ok" = "true" ]; then echo "ARM8: PASS"; else echo "ARM8: FAIL"; fail=$((fail + 1)); fi
 
   echo "RESULT: $fail arm(s) failed of $total"
   [ "$fail" -eq 0 ]
