@@ -11021,6 +11021,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD v0.17 C-HARVEST-HOME: every AMGT tier lives where the builder prints it, opal-data-harvest under GENERAL.",
     "world_is": "The builder prints opal-data-harvest for every AMGT tier; other pipelines' homes unmoved.",
     "notes": "Round 21's gate (ii) is met. No harvest writer has run; the exposure closed before any write."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W79-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~79",
+    "surfaced_at": "2026-09-21T21:10:00Z",
+    "one_line": "TO-AMGT-rk-79 RULED item 1a fixes roster.py:943-947's empty-officer-section sentence as EXACTLY 'The {label} was found, but its officer section is empty, so no officers could be read from the filing.', which no longer contains the substring 'EMPTY officer section' the OLD sentence carried -- this breaks 5 tests in test_management.py and test_bloomberg_fallback.py (both WALLS, outside this order's <paths>) that assertIn('EMPTY officer section', ...) against that exact old wording, so the order's own AC2 bar ('95 passed... 0 failed') cannot be met as written: measured 79 passed, 8 subtests passed, 5 FAILED after the RULED edit (baseline was 84 passed/0 failed at the cut).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/management/tests/test_management.py:188 (unmodified since HEAD a294e8d83c, this order's <paths> does not grant it): `self.assertIn(\"EMPTY officer section\", document[\"roster_reason\"])` inside MissingSectionTest.test_empty_section_is_unresolved_source_with_a_reason.",
+        "lib/research/management/tests/test_bloomberg_fallback.py:51 (unmodified since HEAD a294e8d83c, not in <paths>): `assert \"EMPTY officer section\" in document[\"roster_reason\"], document[\"roster_reason\"]` inside the shared _unresolved_empty_document() fixture helper, called by 4 tests in that file.",
+        "timeout 60 python -m pytest lib/research/management/tests -q -p no:cacheprovider (this worktree, after the roster.py RULED-item-1a edit, before any test-file edit): '5 failed, 79 passed, 8 subtests passed in 5.04s' -- the 5 failures are exactly the two sites above (test_management.py x1, test_bloomberg_fallback.py x4), each with AssertionError showing the new sentence 'The 10-K filing was found, but its officer section is empty, so no officers could be read from the filing.' in place of the old substring.",
+        "lib/research/management/roster.py's new empty-section branch (this worktree, uncommitted): builds the sentence via _filing_label() + the fixed template RULED item 1a quotes verbatim -- there is no remaining code path that would print 'EMPTY officer section' for this branch, so the break is a necessary consequence of the literal wording, not an implementation choice."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-79 RULED item 1a: the sentence 'becomes EXACTLY' the quoted text (no discretion); the order's SURFACES section: 'every other existing test is a WALL: if one breaks, that is a finding (row), not an edit'; AC2's <expect>: 'baseline plus 11, failures 0'.",
+    "world_is": "RULED item 1a's exact required sentence and the WALL-test discipline are jointly unsatisfiable for this cell: the literal wording necessarily removes the one substring two un-editable WALL tests pin from the OLD sentence, so AC2 cannot read 0 failed without either violating the EXACTLY wording or editing a WALL.",
+    "notes": "Graded here as AC2 FAIL (measured output recorded verbatim, not fudged) per the order's own REFUSAL CLAUSE ('a criterion you cannot satisfy AS WRITTEN is REFUSED with its measurement and a row; never repaired, widened, or satisfied by a route this order did not name'). Remedy is the CTO's: a follow-on cell with test_management.py/test_bloomberg_fallback.py in its <paths> to move the two assertions onto the new sentence (or a substring both sentences share, e.g. 'officer section' + 'empty'), or an amendment naming the break as accepted debt. No production code widened or altered to chase this; roster.py keeps the exact RULED text."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W79-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~79",
+    "surfaced_at": "2026-09-21T21:15:00Z",
+    "one_line": "TO-AMGT-rk-79 RULED item 4b self-contradicts on the same paragraph: it says '--rederive-roster-reason' both 'It re-runs build_roster on the source object for its REASON FIELDS ONLY' AND, four sentences later, 'It never calls ceo_search.*, build_roster, build_document, ...' -- and RULED item 5's test-arm description for test_rederive_roster_reason_writes_once_and_touches_two_fields independently repeats 'build_roster' in its own patched-to-RAISE list, so this is not a stray typo caught once.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-79.jp-president-and-readable-roster-reason.md RULED item 4b (worker face, this order @ spawn HEAD a294e8d83c): 'It re-runs `build_roster` on the source object for its REASON FIELDS ONLY, applies RULED item 7's guard, ...' immediately followed, same paragraph, by '... It never calls `ceo_search.*`, `build_roster`, `build_document`, `apply_bloomberg_fallback`, ... or `write_pool_object`.'",
+        "same file, RULED item 5's bullet for test_rederive_roster_reason_writes_once_and_touches_two_fields: '`ceo_search.ceo_profile`, `build_roster`, `build_document`, `apply_bloomberg_fallback`, `prospecting_page`, `_lusha_client`, `compute_pool` and `write_pool_object` patched to RAISE' -- the SAME token appears in a second, independently-worded location."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RULED item 4b: --rederive-roster-reason re-runs build_roster for its reason fields, AND never calls build_roster, in the same paragraph.",
+    "world_is": "The literal instruction is unsatisfiable as ONE function call graph (a mode cannot both call and never call the same symbol); resolved by REFACTOR, not by picking one half and ignoring the other: `roster.build_roster` is now a thin wrapper over a new public `roster.derive_roster`, identical body, so EVERY existing caller (batch.py, enrich.build_document, the WALL tests) is behaviourally unchanged, and enrich.py's two new modes (--research-stored-ceo, --rederive-roster-reason) call `roster.derive_roster` directly -- so a test that patches `roster.build_roster` to RAISE literally never reaches either new mode's logic, satisfying the 'never calls build_roster' half by SYMBOL, while the 're-runs build_roster['s logic]' half is satisfied functionally. This worker's own new test file follows that reading (patches roster.build_roster to RAISE, not roster.derive_roster) rather than choosing one contradictory clause over the other.",
+    "notes": "INERT: a naming/wording defect in the order text, not a hazard in served output -- resolved by a symbol split that changes no existing behaviour (roster.build_roster's signature, docstring intent and every caller's result are unchanged). Cost: one refactor (rename body to derive_roster, build_roster becomes a one-line delegator) instead of a straight edit. Flagged so the CTO can correct the ruling text for future cells rather than have each re-derive this same resolution."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W79-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~79",
+    "surfaced_at": "2026-09-21T21:40:00Z",
+    "one_line": "AMGT_RESAPP-Z-W79-S1 is DISARMED: 1.0.0_SA_CTO~Z ruled on this row (msg 24100) to widen TO-AMGT-rk-79's <paths> by EXACTLY lib/research/management/tests/test_management.py and lib/research/management/tests/test_bloomberg_fallback.py, committed by the issuer as the amendment @34fa89b46c; with the widened grant, the two assertions that pinned the retired substring 'EMPTY officer section' (test_management.py:188, test_bloomberg_fallback.py:51) were moved onto RULED item 1a's exact new sentence fragment 'officer section is empty', and the order's own AC2 literal invocation now measures 95 passed / 0 failed in lib/research/management/tests (the 84 baseline plus this cell's 11 new arms) and 191 passed / 0 failed in lib/research/api/tests, exactly the bar AC2's text describes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-79.jp-president-and-readable-roster-reason.md, msg 24100 (1.0.0_SA_CTO~Z, ruling on row AMGT_RESAPP-Z-W79-S1): widen rk-79's <paths> by EXACTLY the two named test files; amendment committed @34fa89b46c.",
+        "lib/research/management/tests/test_management.py:188 (this commit): `self.assertIn(\"officer section is empty\", document[\"roster_reason\"])` -- was `self.assertIn(\"EMPTY officer section\", document[\"roster_reason\"])`.",
+        "lib/research/management/tests/test_bloomberg_fallback.py:51 (this commit): `assert \"officer section is empty\" in document[\"roster_reason\"], document[\"roster_reason\"]` -- was `assert \"EMPTY officer section\" in document[\"roster_reason\"], document[\"roster_reason\"]`.",
+        "timeout 120 python -m pytest lib/research/management/tests -q -p no:cacheprovider (this worktree, after both assertion edits): '95 passed, 13 subtests passed in 5.44s', 0 failed; python -m pytest lib/research/management/tests/test_jp_president_and_readable_reasons.py -v -p no:cacheprovider: '11 passed, 5 subtests passed in 0.40s', all 11 named arms individually PASSED; python -m pytest lib/research/api/tests -q -p no:cacheprovider: '191 passed in 2.54s', unchanged."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The CTO ruled on row AMGT_RESAPP-Z-W79-S1 (msg 24100) to widen TO-AMGT-rk-79's <paths> by EXACTLY lib/research/management/tests/test_management.py and lib/research/management/tests/test_bloomberg_fallback.py; the issuer committed that amendment @34fa89b46c. With the widened grant, the ONE assertion each file pinned to the retired substring 'EMPTY officer section' was moved onto RULED item 1a's exact new sentence fragment 'officer section is empty' (each assertion's form and message argument unchanged), and AC2's exact literal invocation now measures 95 passed / 0 failed in lib/research/management/tests and 191 passed / 0 failed in lib/research/api/tests -- the bar the order's own text describes. S1 is therefore disarmed; disarm_owner is 2.0.0_SA_COO~Z because a worker cannot hold disarm duty.",
+    "spec_asserts": "AMGT_RESAPP-Z-W79-S1's spec_asserts (TO-AMGT-rk-79 RULED item 1a's EXACTLY-wording plus the order's WALL-test discipline) still hold verbatim; only <paths> moved, by the issuer's own ruling, not by this worker widening its own grant.",
+    "world_is": "The two WALL tests are WALLS no longer: the issuer's ruling on S1 made them part of this order's <paths>, so the assertion move is an in-scope edit, not a repair of a WALL. AC2 now measures the bar its own text names.",
+    "notes": "A worker cannot hold disarm duty; disarm_owner is 2.0.0_SA_COO~Z per this order's spawn instructions. S1's own row is left unedited; this row is the resolving act."
   }
 ]
 ```
