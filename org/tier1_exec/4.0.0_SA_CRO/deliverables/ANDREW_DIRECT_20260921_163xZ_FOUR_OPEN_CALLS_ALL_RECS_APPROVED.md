@@ -129,6 +129,23 @@ His answer, VERBATIM AND ENTIRE:
   tick-list row 10, *"whether SmartX is a product beyond 49F"* -- so it is recorded there
   (`04_SCOPE_TICKLIST.md` s.4) and in `05_IDENTITY_SPINE.md` (the VENDORS table and s.5).
 
+## Addendum ~18:0xZ -- the re-carded SY1 call and the 8 system keys: "recs approved"
+
+Cards (after he asked "give me examples of both", and was shown real names under each option): CALL 1
+*"Firm resources that combine vendors' data (e.g. 49F gold runners): (a) keep the existing rule SY1: the owning
+product + firm, e.g. advi-49f-gold-qa-runner-...; or (b) primary vendor + firm, which means changing SY1 and
+re-pointing the 76 existing rows?"*, REC (a); CALL 2 *"New system keys: approve prospecting, news, marketdata,
+cloudops, secops, deckgen, tradeops, cicd?"*, REC yes.
+
+His answer, VERBATIM AND ENTIRE:
+
+> "recs approved"
+
+**Reading, narrow:** SY1 STANDS -- a firm resource that combines feeds, or that a product owns, takes the owning
+PRODUCT + firm; a resource that is one vendor's integration takes that VENDOR + firm. 1a's primary-vendor rule is
+SUPERSEDED by this word; the 76 existing rows stay. The 8 keys are approved as named. Batch 1 (CALL 2's 233 rows +
+CALL 1's 6 PLATFORM rows) lands; CALL 1's 72 vendor-mapped rows are HELD for re-mapping under SY1.
+
 ## CORRECTION ~17:4xZ -- CALL 1a's REC contradicted standing naming law; NOTHING WRITTEN from it, re-carded
 
 **By 4.0.0_SA_CRO, against its own card.** 1a recommended that a firm resource reading SEVERAL vendors take the
