@@ -3902,3 +3902,73 @@ fanout:
   carried_as_data: [W27-S3 residue: 11 drafting/v1 objects, re-opened after rk-42; two further C-PRODUCTION-HOME instances found at the cut (lib/opal_data_harvest/config.json universe_source -> deliverables/~3/universe.json; infra/aws/terraform/harvest/lambda_src/build_zip.py:91 -> deliverables/~4/universe.json) -- rows for rk-54/rk-33 to file, not orders]
   deferred_named: [AMGT-rk-27 (ledger stages; Refresh-queue L4 definition first), AMGT-rk-29 (house forecast; Posture brief first)]
 ```
+
+## 23. ROUND 15 -- FROM THE L10 ROUND-14 ANALYSIS @`93cb6416e4` (`1.0.0_SA_CTO~Z`), msg 23907
+
+**Cut by `2.0.0_SA_COO~Z`, post-reboot relaunch, per LD-0521 order (cut only after the round-14 analysis is on file).**
+Round 14 does NOT close this round: `rk-32` + chain P still hold the count open on the bucket/tenancy word (analysis
+s.1), and TERMINALITY cannot stamp while they stand. Round 15 is therefore **deliberately narrow** -- the analysis's
+own s.3: three cells, **independent of every open word and of each other, no chain, no deploy, no served output
+moved** ("None writes served output; no never-widen pair is needed unless the cutting decomposition finds
+otherwise" -- this decomposition finds no need for one).
+
+**THE THREE CELLS, each closing a named row:**
+- **R15-T1** closes `AMGT_RESAPP-Z-W58-S2` (analysis s.2.1): GATE (x)'s missing-`<round>` branch refuses the exact
+  shape `AMGT-rk-58`'s own direct-act minter emits by design. RULED: a narrow exemption for an order that
+  EXPLICITLY declares itself round-less (a line-anchored `<direct_act>true</direct_act>` element), never a general
+  weakening of one-issuer-per-round; a bare omission is refused exactly as today.
+- **R15-M1** closes the UNASSIGNED half of `AMGT_RESAPP-Z-W39-S5` / `Z-S181` (disarmed, GRADUATED, owner named by the
+  analysis s.2.2): `rk-61`'s carried repair of the two orphaned assertions in
+  `lib/research/api/tests/test_generation_and_pool_routes.py` that still check the RETIRED two-value sentence-parsed
+  contract (`NOT_CONFIRMED_NOTHING_FOUND`) instead of the six-value field-only contract `AMGT-rk-43` introduced
+  (`ceo_profile_reading`, `lib/research/api/scoped_amgt.py:2377-2459`). Confirmed reproducing at this cut:
+  `python -m pytest lib/research/api/tests/test_generation_and_pool_routes.py -q` -> 2 failed, 22 passed, both
+  asserting `'NOT_SEARCHED' == 'NOT_CONFIRMED_NOTHING_FOUND'`.
+- **R15-T2** closes `AMGT_RESAPP-Z-W39-S2` (analysis s.2.3): `integrations/bloomberg/research/pull_consumer.py`
+  calls `mbp.stage_pull(blp, s3, ticker, pull_log)` -- 4 positional args against `stage_pull`'s 3-parameter signature
+  (`model_block_pull.py:371`, `def stage_pull(blp, s3, security: str) -> dict`) -- inside a `try/except` that marks
+  FAILED and unconditionally deletes the SQS message. EXPOSURE class (Rule 22's negative mirror), never fired:
+  the served `packs/` prefix carries exactly one `status.json`, written before the defective call site was
+  committed. The unused local `pull_log` dict (line 98) is dead beyond that stray argument.
+
+### 23a. THE MAPPING -- CTO cell -> COO id and slot
+
+| CTO cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| R15-T1 | `AMGT-rk-62` | ~62 | none (independent) | W58-S2, unblocks `rk-58`'s minter | no |
+| R15-M1 | `AMGT-rk-63` | ~63 | none (independent) | W39-S5 / Z-S181's carried repair | no |
+| R15-T2 | `AMGT-rk-64` | ~64 | none (independent) | W39-S2, EXPOSURE closed before first real traffic | no |
+
+**Thirty-one to thirty-four:** round 14 minted `rk-31`..`rk-61`; round 15 continues the same disjoint id range,
+`AMGT-rk-62`..`AMGT-rk-64`, worker slots `~62`..`~64`. No chain: the analysis names all three "independent of
+every open word and of each other" (s.3), and this seat's own census below confirms disjoint file sets.
+
+### 23b. SURFACE CENSUS
+
+| cell | CTO | co-sign | depends_on | files_written | pool prefixes written | vendor calls | live AWS acts |
+|---|---|---|---|---|---|---|---|
+| `AMGT-rk-62` | R15-T1 | no | none | 3: .tools/to-pipeline-gate.py; .tools/direct-act-order.py; .tools/tests/test_gate_x_round_issuer.py | none | none | 0: none |
+| `AMGT-rk-63` | R15-M1 | no | none | 1: lib/research/api/tests/test_generation_and_pool_routes.py | none | none | 0: none |
+| `AMGT-rk-64` | R15-T2 | no | none | 2: integrations/bloomberg/research/pull_consumer.py; integrations/bloomberg/research/tests/test_pull_consumer_arity.py | none (the live proof writes ONE synthetic status.json under `packs/ZZZTEST_US_Equity/` and deletes it in the same act -- no residue) | none | 1: one real SQS SendMessage/ReceiveMessage/DeleteMessage round trip on `opal-research-pull-requests` (a synthetic, non-production ticker), plus one S3 put_object/delete_object pair on the same synthetic key. No Lambda, no Terraform, no IAM, no Bloomberg call (the worker MONKEYPATCHES `mbp._load_blp_client`/`stage_pull`/`stage_derive` in its own process; nothing it does reaches the real Bloomberg terminal) |
+
+**Files written by more than one cell:** none -- all three cells are disjoint, matching the analysis's "independent
+... of each other".
+
+**Not cells, and why:** `rk-32`/chain P, `rk-48`'s live arm, `rk-49`'s second in-place rewrite and `rk-49`'s drain
+all wait on their own named Andrew word (analysis s.3, "Not cut, and why"); this seat re-opens each under its own
+pair section when its word lands -- unchanged by this round.
+
+### 23c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # default; 3 of 3 independent cells fit one wave
+  orders_total: 3                   # rk-62..rk-64
+  slots_total: 3                    # ~62..~64
+  chains_total: 3                   # each cell is its own chain -- no shared file, no depends_on edge
+  wave_1: [rk-62, rk-63, rk-64]      # all three spawn together; nothing holds any of them
+  wave_2: []
+  no_fleet_run: true
+  carried_as_data: []
+  deferred_named: []                # rk-32/chain P, rk-48's live arm, rk-49's rewrite and drain -- held on their own named Andrew word, not deferred by this seat's choice
+```
