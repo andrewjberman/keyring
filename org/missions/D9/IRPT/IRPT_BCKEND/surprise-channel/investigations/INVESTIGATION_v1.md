@@ -6753,6 +6753,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not remedied in this order: BOUNDS forbid widening this order's own deliverable beyond arms (d)/(e), and reconstructing/merging pass-1's offline battery back into this file is exactly the kind of neighbouring-defect fix this worker is told not to perform. Filed for the issuer to decide whether a follow-on cell should carry the offline composition-level regression coverage forward (e.g. a separate battery_ib_rtg_2_offline.py, or a merge of both arm sets into one file) so status_loader.py's RUNNING/UNCERTAIN/never-READY state-machine rules are exercised by something other than a live network call against the one production lease row this order's own WRITERS census names."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S51",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-21T07:16:02Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "IB-rth-3's OWN FACE ASSERTS `superseded` IS 'TRUE FOR SOME OF THE SEVEN, FALSE FOR OTHERS' -- MEASURED AGAINST THE DECOMP'S OWN `supersedes` COLUMN ACROSS ROUNDS 3-8 PLUS A PROJECT-WIDE TEXT SEARCH: TRUE FOR ZERO OF THE SEVEN, FALSE FOR ALL SEVEN.",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rth-3....md line 24 (arm (b), the `superseded` bullet): \"`superseded` is written ONLY where a LATER round actually RE-CUT that cell -- a FACT to READ (`supersedes` in the decomp, or a later order naming it), never assumed. True for some of the seven, false for others.\"",
+    "world_is": "Read (never assumed, per the rule's own instruction) org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md's `supersedes` column for every rectangle table, rounds R3 through R8 (the only rounds after the seven's own round-of-origin that could name them): R6.1 (rtf-1..rtf-5, the seven's own round) shows rtf-3 SUPERSEDES IB-rte-2 (rtf-3 as SOURCE, not target) and rtf-1/rtf-4 supersedes '--'; R7.1 (rtg-1..rtg-4) shows `supersedes` '--' on all four; R8.1 (rth-1..rth-4) shows `supersedes` '--' on three and `IB-rtg-1` on rth-2 (an unrelated pair -- rtg-1 is a round-7 cell, not one of the seven). No rectangle table in rounds 3, 4, 5, 6, 7 or 8 names rt-6, rtf-3, rtf-4, rtf-7, rtf-10, rtf-12 or rtf-14 as the TARGET of a `supersedes` entry. A project-wide case-insensitive text search for \"supersed\" against each of the seven ids, across org/missions/D9/IRPT/IRPT_BCKEND/ (task-orders/, decompositions/, surprise-channel/), returns matches only for: rte-4's own status line (an unrelated order, correctly superseded by rtf-1 -- the template this rule's `superseded` branch describes), rtf-5's/rtf-2's own bodies (their OWN supersedes-column entries, naming rte-3/rte-7/rte-6 as targets, not naming any of the seven as a target), rtf-10's status text (an internal packet-blob superseded by a later packet blob, not an order-level supersession), rte-2's decomp cell text, and rth-3 itself (this cell's own face, the source of the claim). None resolves to a LATER round re-cutting any of the seven cells. So this worker's honest-word disposition for all seven is LEFT NON-TERMINAL with `superseded` explicitly refused on each (recorded in each face's own appended ISSUER-CORRECTION clause, commit 023b4697df), which is consistent with a TRUE-FOR-ZERO reading -- but the order's own text asserts TRUE FOR SOME, which this worker's measurement does not confirm.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md R6.1 table (`IB-rtf-1`..`IB-rtf-5` rows): `supersedes` column = 'IB-rte-4' / 'IB-rte-6' / 'IB-rte-2' / '--' / 'IB-rte-3, IB-rte-7' -- rtf-3's entry names IB-rte-2 as what RTF-3 supersedes, not the reverse; rtf-4's entry is '--'",
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md R7.1 table (`IB-rtg-1`..`IB-rtg-4`): `supersedes` column = '--' on all four rows",
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md R8.1 table (`IB-rth-1`..`IB-rth-4`): `supersedes` column = '--', 'IB-rtg-1', '--', '--' -- only rth-2 carries a target, and it is IB-rtg-1 (round 7), not one of the seven",
+        "Grep 'supersed' (case-insensitive) over org/missions/D9/IRPT/IRPT_BCKEND/task-orders/ this session: 8 files matched (rt-7, rt-8, rt-9, rtc-4, rtd-7, rte-2, rte-3, rte-7, rte-6, rte-4, rtf-10, rtf-13, rtf-2, rtf-5, rtf-3, rth-2, rth-3) -- none names rt-6, rtf-4, rtf-7, rtf-12 or rtf-14 as a supersession TARGET; rtf-3's only hit is its own metadata line",
+        "commit 023b4697df (this worker, this drive): each of the seven faces' own <status> now carries an ISSUER-CORRECTION clause explicitly stating '`superseded` is refused too' with the specific reason per order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No impact on this cell's own grading: rule (b)'s honest-word logic already falls through to 'LEFT NON-TERMINAL' when neither `complete` nor `superseded` is honest, and that is exactly this worker's disposition for all seven (see commit 023b4697df and battery_ib_rth_3.py's per-order table). Filed because the order's own premise ('true for some of the seven') does not match this worker's measurement of the decomp's own `supersedes` column plus a project-wide text search, per CLAUDE.md's own instruction on this exact bullet ('never assumed'). Routed to 2.0.0_SA_COO~B (the issuer) to confirm whether the clause described a different, unnamed seven-member set, a planned-but-not-yet-cut round-9 supersession, or is itself the thing needing correction."
   }
 ]
 ```
