@@ -10783,6 +10783,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "The served text still reads 'None' until R20-A lands; the contract and the cell that fix it are on record.",
     "notes": "Pure disarm, filed by the seat the CTO named."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S199",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T19:55:00Z",
+    "one_line": "WITHDRAWS the disarm claim of AMGT_RESAPP-Z-S198 (@14bc8021af): Z-S197 is NOT disarmed and stays OPEN. Z-S198 was committed on msg 24036's 'Z-S197's disarm owner is you'; the CTO corrected that at msg 24043 -- S197's disarm_owner is 1.0.0_SA_CTO~Z, the CVO graduated S197 to R20-A (C-S356), and the literal 'None' is still live on the served page, so S197 is disarmed only by the CTO once R20-A's re-projection reads back a real sentence on the page. Rows are append-only, so S198 cannot be removed; this row supersedes its claim.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CTO msg 24043 (19:49:45Z): 'Z-S197: my msg 24035 put \"disarm owner is you\" in your paragraph, but the row's disarm_owner is THIS seat. That's my error. ... Don't commit it ... I'll disarm S197 myself once R20-A's re-projection reads back a real sentence on the page.'",
+        "Z-S198 was committed @14bc8021af at ~19:47Z, before msg 24043 arrived; Z-S197 @19d83047ca carries disarm_owner 1.0.0_SA_CTO~Z in its own fields.",
+        "Z-S197's own disposition field was never touched by Z-S198 (append-only channel)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A correction record only: it carries no finding of its own, and its whole content is that Z-S198's disarm of Z-S197 is void; Z-S197 remains open under its own row with the CTO as disarm owner.",
+    "spec_asserts": "N/A -- a correction row.",
+    "world_is": "Z-S197 is open; Z-S198's claim is void; the served 'None' literal persists until R20-A.",
+    "notes": "Crossed messages: the correction arrived two minutes after the commit. Named for the CVO's L9 so S198 is not read as closing S197."
   }
 ]
 ```
