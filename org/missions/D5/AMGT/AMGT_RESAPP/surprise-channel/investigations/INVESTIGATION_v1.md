@@ -10669,6 +10669,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD C-EXEC-MANAGEMENT (as cited at scoped_amgt.py:2513-2517): a roster with ZERO officers is NOT SERVED; it is ABSENT with its reason.",
     "world_is": "A roster with 14 (CSL) or 1 (6861) stored officers from the Bloomberg fallback is also withheld, and the served reason says ZERO_OFFICERS with officer_count 0 -- false for the object read. Whether a fallback roster SHOULD be served (with its provenance) is a spec call; that the label is false is not.",
     "notes": "Surfaced by the round-19 R19-A drafter while measuring the rk-75 served effect, confirmed live by this seat. ARMED because it is live on the manager-review path Andrew named the priority (~16:5xZ); disarm_owner is the CTO because the remedy is a spec ruling (serve the fallback roster with its provenance, or keep withholding it under a TRUE reason such as ROSTER_UNRESOLVED) and either remedy is an adapter change plus redeploy. Pitched to 1.0.0_SA_CTO~Z before round 19 is issued, so it can ride the slug if ruled."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S195",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T18:35:00Z",
+    "one_line": "Keyence (6861_JP_Equity, a VALIDATION name) reads NO_CEO_ON_ROSTER although its one stored officer is Tetsuya Nakano, role 'President' (source bloomberg): the CEO rule requires a chief-executive title, and for a Japanese issuer the President (shacho) is the chief executive, so the CEO web search is never attempted for the validation name that most needs it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-harvest/management/v1/6861_JP_Equity/2026-09-19.json (latest): officers = [{name 'Tetsuya Nakano', title None, role 'President', source 'bloomberg'}]; ceo_profile status NOT_SEARCHED, reason_code NO_CEO_ON_ROSTER, ceo_name None.",
+        "lib/research/management/ceo_search.py:503 writes reason 'no officer on the roster carries a chief-executive title'; the CEO test matches a chief-executive title, and the tests (test_ceo_search.py:292/:365, test_management.py:32/:39) exercise 'President and Chief Executive Officer' / 'Chairman, President and CEO' only -- no bare 'President' case, no jurisdiction-aware rule.",
+        "Surfaced by the R19-C drafter while measuring served per-name output; confirmed by this seat's own read of the object and the source line."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-EXEC-MANAGEMENT's CEO web search runs for the roster's chief executive.",
+    "world_is": "A roster whose chief executive is titled 'President' (the Japanese convention, and common elsewhere) has no CEO for the search, so it is NOT_SEARCHED / NO_CEO_ON_ROSTER.",
+    "notes": "INERT: the served reading is truthful (NOT_SEARCHED), nothing is served wrong. Remedy is a spec call for the CTO (whether a sole or top-listed 'President' counts as CEO, possibly jurisdiction-aware) and ACTING on it for Keyence means a live CEO web search -- vendor egress beyond Andrew's one-time Bright Data word of ~16:1xZ, so it needs a fresh per-use word. Not a round-19 cell."
   }
 ]
 ```
