@@ -4906,6 +4906,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W8-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~8",
+    "surfaced_at": "2026-09-21T13:20:00Z",
+    "one_line": "F58-AC6 ('the whole IRPT_FNTEND suite is green', expect 0 fail) measures '622 pass, 4 skip, 2 fail' -- both fails are fe-s-32/holdings-in-a-browser.test.ts's F32-AC3 and F32-AC5, confirmed by HEAD-restore isolation to be PRE-EXISTING and unrelated to this cell's state/status.ts + StatusPanel.tsx edits: this is IRPT_FNTEND-W5-S9's already-ARMED hazard ('the assertion is FALSE the moment the precondition is MET ... latent, not yet exercised') FIRING FOR REAL for the first time in this channel, because this worker started its own worktree's vite dev server to satisfy F58-AC5's own precondition, and the whole-suite run inherited that same live server.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-58 F58-AC6: <invocation>cd <WS>/portal && timeout 600 bun test src/pages/InvestorReporting</invocation> <expect>(?<![0-9])0 fail</expect> -- 'the whole IRPT_FNTEND suite is green'.",
+    "world_is": "Measured at portal 15ceef79 + this worker's uncommitted state/status.ts + StatusPanel.tsx edits: 'bun test src/pages/InvestorReporting' (IRPT_FE_DEV_PORT=5707, this worktree's own vite dev server, started to satisfy F58-AC5's own declared precondition) prints '622 pass', '4 skip', '2 fail', 'Ran 628 tests across 112 files', rc=1. The two failing tests: 'F32-AC3 -- PARTIAL: the holdings are shown, the classification gap labelled as unknown > read off the rendered page at 390 and 1440, beside the observed map as its control' (expect(shown).toBe(true) received false) and 'F32-AC5 -- each Holdings capture carries the fields its claim declares, in the rendered DOM > FE-s-22 claims model (unedited), joined by criterion through the round-2 manifest' (expect(found).toBe(total): expected 6, received 5, the missing field being the claims model's 'unknown/unknown' classification text against a page that now renders 'withheld/withheld' per the FE-s-55 fix). ISOLATION: restored src/pages/InvestorReporting/state/status.ts and tabs/StatusPanel.tsx to their committed HEAD bytes (git show HEAD:<path> > <path>, confirmed by git diff --stat reporting no content delta beyond a CRLF/LF warning) and re-ran 'bun test src/pages/InvestorReporting/__tests__/fe-s-32' alone against that clean baseline: SAME 2 fail, SAME two test names, SAME assertion (expect(shown).toBe(true) received false; expect(found).toBe(6) received 5) -- then restored this worker's own edits from a backup copy and re-verified (grep) both edits are back. So neither failure is caused by, or fixable within, this cell's <paths> grant (__tests__/fe-s-32/ is not in it). F58-AC6 is measured, not satisfied as literally invoked, and is REFUSED on that ground in this worker's proof-of-spec and final report -- the refusal is this worker's own act; this row records the measurement only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && IRPT_FE_DEV_PORT=5707 timeout 600 bun test src/pages/InvestorReporting -> '622 pass', '4 skip', '2 fail', 'Ran 628 tests across 112 files', rc=1; the two named failing tests are F32-AC3 and F32-AC5 in __tests__/fe-s-32/holdings-in-a-browser.test.ts",
+        "cd <WS>/portal && IRPT_FE_DEV_PORT=5707 timeout 90 bun test src/pages/InvestorReporting/__tests__/fe-s-32 -> SAME '6 pass', '2 fail' with state/status.ts and StatusPanel.tsx TEMPORARILY RESTORED to committed HEAD bytes (git show HEAD:<path>), before this worker's own edits were restored from a backup copy",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-W5-S9 (surfaced_by 0.9.0_WK_IRPT_FNTEND~5, FE-s-55): 'the assertion is currently unreachable ONLY because its own declared PRECONDITION (a dev server on this worktree) is ABSENT in this environment ... the assertion is FALSE the moment the precondition is MET' -- this row is that prediction MEASURED TRUE for the first time in this channel",
+        "src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts (RULING U): this worker started its OWN worktree's vite dev server on the RULING-U derived port (probeDevServer() -> MET, served from worktree C:/tmp/wk-irpt_fntend-9-58-fe-s-58/portal) so F58-AC5's own declared precondition could be genuinely exercised, and the same live server then answered every OTHER file's probeDevServer() call in the same whole-suite run, including fe-s-32's"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
