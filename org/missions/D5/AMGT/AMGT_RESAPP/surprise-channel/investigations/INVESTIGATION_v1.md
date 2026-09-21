@@ -10554,6 +10554,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "Both readers of the accession rule now read one implementation; a doc- winner no longer depends on 'd' sorting after 'U', and the posture batch no longer drops a name roster resolves.",
     "notes": "W46-S2 item 1 (roster placeholder priority) was fixed earlier by rk-46 and is the CVO's to disposition from the census s.5 evidence; this row closes item 2 only. lib/research/filings/analyze.py:1410 (source_from_pool) carries the same bare-sort pattern with a fallback rather than a wrong answer -- named in rk-65's order as out of scope, not filed as new."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W71-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~71",
+    "surfaced_at": "2026-09-21T16:32:50Z",
+    "one_line": "rk-48's signed COO half predicted a no-verified_site name reads NOT_ATTEMPTED with nothing rewritten; the live run shows the real token is NOT_SEARCHED (NOT_ATTEMPTED occurs nowhere in the codebase) and a rewrite DOES happen (a new ceo_profile field is added even when nothing is searched), and 2 of 3 names hit an earlier, unnamed NO_CEO_ON_ROSTER gate the CTO half's branch-2 analysis did not predict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order AMGT_RESAPP.TO-AMGT-rk-48.live-ceo-search-validation-names.md@71f9a1e027, COO half EXPECTED OUTCOME: 'A name with no verified_site: NOT_ATTEMPTED / NO_VERIFIED_SITE, nothing searched, nothing rewritten for it.'",
+        "comp-find \"NOT_ATTEMPTED\" lib/research/management/ at 71f9a1e027: DENOMINATOR 0 hit(s) across 19 file(s) scanned -- the token does not exist; lib/research/management/ceo_search.py at HEAD: STATUS_NOT_SEARCHED == \"NOT_SEARCHED\", matching AMGT_RESAPP_PRD.md:748 ('NOT SEARCHED, with the reason').",
+        "AC4 read-back this session (worker 0.9.0_WK_AMGT_RESAPP~71, 2026-09-21): all 3 objects (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity) print rewritten True despite status NOT_SEARCHED on all three -- rk-47's pre-act objects carried no ceo_profile field at all, so adding one is a genuine non-identical byte change under crosswalk.write_pool's write-if-changed rule.",
+        "AC3 live run this session: CAT reason_code NO_CEO_ON_ROSTER, CSL reason_code NO_VERIFIED_SITE, 6861 reason_code NO_CEO_ON_ROSTER -- 2 of 3 hit an earlier gate than the CTO half's section-3 prediction that branch 2 (no declared/verified domain) fires first on all three validation names."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "COO half EXPECTED OUTCOME (task order section 1): a name with no verified_site reads NOT_ATTEMPTED / NO_VERIFIED_SITE, nothing searched, nothing rewritten for it; CTO half section 3 predicts branch 2 (no verified domain) fires FIRST on all three validation names.",
+    "world_is": "The real status token is NOT_SEARCHED (NOT_ATTEMPTED occurs nowhere in the codebase); a rewrite DOES occur for a no-verified-site/no-CEO name because the ceo_profile field itself is newly added; and 2 of 3 validation names (CAT, 6861) resolve NOT_SEARCHED/NO_CEO_ON_ROSTER rather than the predicted NO_VERIFIED_SITE, because their filed rosters carry no officer identifiable as CEO -- a gate that fires before the domain check and that neither signed half named.",
+    "notes": "Did not block AC3/AC4 grading: both criteria's own <expect> text is written broadly enough to cover NOT_SEARCHED with either reason_code and either rewritten value, so this is a mismatch between the SIGNED PAIR's illustrative prose and the measured system, not a criterion failure. No rollback fired; no cap breach; no secret leaked."
   }
 ]
 ```
