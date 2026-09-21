@@ -248,6 +248,7 @@ def render_order(code, slot, cell, title, coo_text, cto_text, section, paths, pr
     lines.append(RECORD_FACE_MARKER)
     lines.append("")
     lines.append("<status>pending</status>")
+    lines.append("<direct_act>true</direct_act>")
     lines.append("<slot>~%s</slot>" % slot)
     lines.append("<fabric>%s</fabric>" % fabric)
     lines.append("")
@@ -535,6 +536,31 @@ def _self_test_no_round_element():
     return "<round>" not in rendered and "</round>" not in rendered
 
 
+def _self_test_direct_act_element():
+    """Row AMGT_RESAPP-Z-W58-S2's repair (GATE (x)'s narrow exemption): a DIRECT act's render must now carry a
+    line-anchored <direct_act>true</direct_act> element on its own line, so GATE (x)'s missing-<round> branch
+    can read it as an explicit round-less declaration rather than an omission."""
+    coo_text = "# NEVER-WIDEN CO-SIGN -- COO HALF. The `fixture/path.py` grant.\nbody coo fixture/path.py\n"
+    cto_text = "# NEVER-WIDEN CO-SIGN -- CTO HALF. The `fixture/path.py` grant.\nbody cto fixture/path.py\n"
+    section = "fixture/path.py"
+    preflight_text = ("comp-schedule: DECLARED-NOT-APPLICABLE fixture\n"
+                       "comp-iam: RUN -- (fixture: 1 of 1)\n"
+                       "comp-adversary: DECLARED-NOT-APPLICABLE fixture\n")
+    criteria_text = ("<proof_of_spec>\n"
+                      "  <criterion id=\"AC1\" cell_refs=\"C-1\"><invocation>echo hi</invocation>"
+                      "<expect>prints hi</expect></criterion>\n"
+                      "</proof_of_spec>\n")
+    order_path = "org/missions/D9/FIX/FIXPRJ/task-orders/FIXPRJ.TO-C-1.fixture-unrounded.md"
+    inv_path = "org/missions/D9/FIX/FIXPRJ/surprise-channel/investigations/INVESTIGATION_v1.md"
+    rendered = render_order(code="FIXPRJ", slot="9", cell="C-1", title="fixture unrounded",
+                             coo_text=coo_text, cto_text=cto_text, section=section,
+                             paths=["fixture/path.py"], preflight_text=preflight_text,
+                             criteria_text=criteria_text, round_n="14", fabric="site-z",
+                             decomp_doc="org/missions/D9/FIX/FIXPRJ/decompositions/FIXPRJ_DECOMP.md",
+                             order_path=order_path, d="D9", macro="FIX", investigation_path=inv_path)
+    return "\n<direct_act>true</direct_act>\n" in rendered or rendered.count("<direct_act>true</direct_act>") == 1
+
+
 def self_test():
     arms = []
 
@@ -572,6 +598,9 @@ def self_test():
 
     arms.append(("a DIRECT act is UNROUNDED -- the render emits no <round> element",
                  _self_test_no_round_element()))
+
+    arms.append(("a DIRECT act declares itself round-less -- the render emits <direct_act>true</direct_act> (row AMGT_RESAPP-Z-W58-S2)",
+                _self_test_direct_act_element()))
 
     failed = 0
     for name, passed in arms:

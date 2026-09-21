@@ -10353,6 +10353,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "The repair is landed, re-verified by the worker's own re-run against the repaired bytes, and rk-60 closed terminal on it; nothing further is owed on this row.",
     "notes": "Closing adjudication row named by the round-14 analysis (ROUND_ANALYSIS.round14.md s.2.4) and the L9 adjudication (s.5): 'the two W60-S2/S4 closing rows (channel hygiene, not a cell)'. Filed at /canonical-drive tick 1, post-reboot, 2026-09-21."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W62-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~62",
+    "surfaced_at": "2026-09-21T18:20Z",
+    "one_line": "AC5's literal <expect> ('non_ascii_bytes 0' for all three files) is unsatisfiable AS WRITTEN because .tools/to-pipeline-gate.py already carries 8 non-ASCII bytes (four pre-existing U+26D4 glyphs, unrelated to GATE (x)) at HEAD before this cell touched it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC5's literal invocation, run against a pre-edit snapshot (.scratch/rk-62-snapshot/to-pipeline-gate.py.orig, taken before any change under the mutation discipline), measures non_ascii_bytes 8 for .tools/to-pipeline-gate.py; the post-edit measurement is also non_ascii_bytes 8 -- delta 0.",
+        "The four non-ASCII characters are U+26D4 at lines 539, 567, 3010 and 3025 of the file, all outside this cell's edited regions (former :1835 constant, former :1874-1902 function, former :917-934 arms list); `diff .scratch/rk-62-snapshot/to-pipeline-gate.py.orig .tools/to-pipeline-gate.py` carries no line containing U+26D4.",
+        "AC5's own <expect> text carries the qualifying clause 'carry no non-ASCII or CRLF this cell introduced'; this row reads that clause as the actual bar and grades AC5 PASS on it, recording the raw non-zero count verbatim rather than silently rounding it to 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5 <expect>: 'all three files print compiles True, non_ascii_bytes 0 (pure ASCII) and crlf 0 (LF only)' -- read plainly, a literal zero count for every one of the three named files including .tools/to-pipeline-gate.py.",
+    "world_is": ".tools/to-pipeline-gate.py carried 8 non-ASCII bytes at HEAD before this cell existed (pre-existing glyphs unrelated to GATE (x)) and still carries exactly 8 after this cell's edits (delta 0) -- the file was never pure ASCII, so the literal zero cannot be produced without an out-of-<paths>-scope edit stripping pre-existing content this order neither grants nor names.",
+    "notes": "Graded AC5 PASS against the criterion's own qualifying clause ('no non-ASCII or CRLF this cell introduced'), never against the unqualified literal zero, and never repaired by stripping the pre-existing glyphs (the REFUSAL CLAUSE forbids satisfying a criterion by a route the order did not name). Rule 27's citation-staleness class, one level down: the TO's numeric bar assumed a pure-ASCII baseline for a file it never measured before writing the bar."
   }
 ]
 ```
