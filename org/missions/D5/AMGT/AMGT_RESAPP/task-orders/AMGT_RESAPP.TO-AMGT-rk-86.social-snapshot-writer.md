@@ -170,7 +170,7 @@ tag in the record face to `complete` ONLY if every criterion passes; commit with
 only chain-H cell with no M or B follow-on: the first live collection waits on Andrew lifting the 09-15 hold, and will
 land in the right place because of this cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~86</slot>
 <fabric>site-z</fabric>
