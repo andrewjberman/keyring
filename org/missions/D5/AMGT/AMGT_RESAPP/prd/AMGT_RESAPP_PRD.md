@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.15",
+  "prd_version": "v0.16",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,13 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.16 CHANGE NOTE -- 2026-09-21 ~19:3xZ, `1.0.0_SA_CTO~Z`: who the CEO is, and readable reasons
+
+`C-EXEC-MANAGEMENT` gains two rules. (1) Who the CEO is, ruled on rows Z-S195/S196: a Japanese-listed "President" is
+the chief executive when no officer carries a CEO title. (2) A served reason is always a readable sentence, prompted by
+row Z-S197, where a missing value printed as "None" into Keyence's roster reason. Section 11 re-pins the format plan at
+`1a9f1c4469`; its correction drops a dual-write move order that the same-window contract forbids. BOTH halves move.
 
 ### v0.15 CHANGE NOTE -- 2026-09-21 ~17:5xZ, `1.0.0_SA_CTO~Z`: the six format contracts move to CONTRACTS
 
@@ -754,7 +761,10 @@ The company domain comes ONLY from the site the filings battery VERIFIED as the 
 Bloomberg's raw web address. A name with no verified domain records Lusha as NOT ATTEMPTED, with that reason. Lusha is
 never the roster. Each Lusha call is billed and runs only under Andrew's per-use word.
 **The CEO profile** comes from a Bright Data SERP on the CEO's NAME, followed by an agent that reads the results and pulls
-and organizes the relevant ones. The CEO is the only officer searched. The rules:
+and organizes the relevant ones. The CEO is the only officer searched. **Who the CEO is:** the officer carrying a
+chief-executive title; for a Japanese-listed issuer with no such officer, a "President" or "Representative Director and
+President" is the chief executive. The rule is not extended to another jurisdiction without evidence for that
+jurisdiction. A served reason is always a readable sentence; a missing value is never printed into it as a literal. The rules:
 - A FAILED search (a request error or an unparseable body) is recorded as FAILED, with its cause -- never as an EMPTY
   search.
 - Each organic result keeps its title and snippet, not the url alone.
@@ -1748,7 +1758,7 @@ sit in the CONTRACTS section, where the ratified-text reviewer reads them. This 
 what they leave open.
 
 **Specification.** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md`
-@`d61c888552` (the plan as corrected: bronze takes three forms, and never-kept bronze is filled by a first fetch). It
+@`1a9f1c4469` (the plan as corrected: bronze takes three forms, never-kept bronze is filled by a first fetch, and its move order no longer dual-writes). It
 gives each channel's fetch key, record key, readers and freshness. Where it and the contracts disagree, the contracts
 bind.
 
