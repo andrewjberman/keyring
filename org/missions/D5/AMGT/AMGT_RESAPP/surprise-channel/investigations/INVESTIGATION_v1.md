@@ -11092,6 +11092,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT_RESAPP-Z-W79-S1's spec_asserts (TO-AMGT-rk-79 RULED item 1a's EXACTLY-wording plus the order's WALL-test discipline) still hold verbatim; only <paths> moved, by the issuer's own ruling, not by this worker widening its own grant.",
     "world_is": "The two WALL tests are WALLS no longer: the issuer's ruling on S1 made them part of this order's <paths>, so the assertion move is an in-scope edit, not a repair of a WALL. AC2 now measures the bar its own text names.",
     "notes": "A worker cannot hold disarm duty; disarm_owner is 2.0.0_SA_COO~Z per this order's spawn instructions. S1's own row is left unedited; this row is the resolving act."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S206",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T22:05:00Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-S202 (disarm owner this seat, per the CTO's round-19 analysis msg 24058: 'S202 is 2.0.0_SA_COO~Z's (CAT reads either with a CEO or as incomplete, never RESOLVED with no CEO)'): after AMGT-rk-79 (merged @a13b0fc140) CAT is served ABSENT / ROSTER_UNRESOLVED_NO_FALLBACK with roster_status INCOMPLETE-NO-CEO and the reason 'The 10-K lists its executive officers in Item 1D, which was not read, so this roster is incomplete.' -- never RESOLVED with no CEO; the RESOLVED-with-no-CEO census reads 0 of 15.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's direct invoke of opal-amgt-scoped-api /api/scoped/amgt/security/CAT_US_Equity/thesis (~21:35Z): management_status ABSENT, absent_because ROSTER_UNRESOLVED_NO_FALLBACK, roster_status INCOMPLETE-NO-CEO, reason as quoted.",
+        "rk-79's AC8 post-act census over the 15 stored management objects: RESOLVED-with-no-CEO 1 of 15 (CAT) before, 0 of 15 after; the CTO read the stored objects directly as a second instrument (row Z-S204 @5912b7d107).",
+        "Merged tree @a13b0fc140: rk-79's order complete, AC1-AC10 PASS, proof VALID rc 0."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Z-S202's condition -- a roster served as complete when it lacks the CEO -- no longer holds for CAT or any of the 15 names; a real CAT roster (Item 1D) is a named follow-on under Andrew's optional EDGAR card, not this row.",
+    "spec_asserts": "N/A -- a disarm row.",
+    "world_is": "CAT is served as incomplete with a readable reason; its officer table is withheld until a real roster exists.",
+    "notes": "Pure disarm, filed by the named owner."
   }
 ]
 ```
