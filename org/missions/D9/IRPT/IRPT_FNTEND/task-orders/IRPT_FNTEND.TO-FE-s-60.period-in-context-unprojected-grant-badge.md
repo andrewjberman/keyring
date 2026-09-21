@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~10</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-60` (round 9, v0.9, wave B) | **outcome_ref:** FWD-8 | **depends_on:** FE-s-57 (merged, workspace `22f8ee08be`, portal `15ceef79`) | **slot:** ~3 | **rows:** R9.2 `FE-s-60`
 
