@@ -258,7 +258,7 @@ move the superproject gitlink in its own commit; run `/frontend-dev` on the Secu
 CSL (the portal `CLAUDE.md` verification law: a static harness is not a screenshot) before calling the page ready.
 **PROD promote: carded to Andrew by `1.0.0_SA_CTO~Z` (msg 24019) -- not on the 17:2xZ word.**
 
-<status>pending</status>
+<status>complete</status>
 <round>19</round>
 <slot>~78</slot>
 <fabric>site-z</fabric>

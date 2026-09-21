@@ -10830,6 +10830,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD v0.16 C-EXEC-MANAGEMENT: a served reason is always a readable sentence, and a missing value is never printed into it as a literal.",
     "world_is": "CSL serves a multi-step technical attempt log as its roster reason, and one that is a round stale.",
     "notes": "INERT (nothing false about the managers' question -- the filing did fail). Pitched to the CTO with R20-A: either R20-A widens to a second key (CSL re-projection of roster_reason from the CURRENT filings object, same readable-sentence rule, no search) or it is its own round-20 cell. Found beside the R20-A draft's None-literal census."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W78-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~78",
+    "surfaced_at": "2026-09-21T19:51:30Z",
+    "one_line": "AC6's <expect> ('the two edited .ts/.tsx files measured 0 and 0 at db1c5f64') reads the working-tree disk bytes, but this worktree's `core.autocrlf=true` had already checked out ExecManagementTab.tsx and types.ts as CRLF (222 and 996 CRLF respectively) BEFORE any edit -- so AC6 as first run showed crlf 234/1023 on the two edited files even though the committed blob at db1c5f64 and at HEAD both measured 0 CRLF (git's clean filter normalizes to LF on add/commit regardless of on-disk EOL). Fixed by rewriting the two files' on-disk bytes to LF, which is a NO-OP against the index (git diff --exit-code rc 0, index blob byte-identical to the rewritten disk file, no new commit) -- AC6 then read crlf 0 for all 7 files as recorded in the proof instance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file -p db1c5f64d19880cda50d6969ded3c3af26c92630:src/pages/SecurityAnalysis/tabs/ExecManagementTab.tsx | python: 'blob crlf 0'; same for types.ts.",
+        "Pre-edit snapshot at C:/tmp/wk-amgt-19-78/.scratch/r78/pre_edit/{ExecManagementTab.tsx.orig,types.ts.orig} (copied from the working tree before any edit): ExecManagementTab.tsx.orig crlf 222 (222 lines, all CRLF); types.ts.orig crlf 996 -- so the CRLF was present at checkout, not introduced by this worker's edits.",
+        "git config --get core.autocrlf in <wt>/portal: 'true'; no .gitattributes entry for these two paths (git check-attr text/eol both 'unspecified').",
+        "After normalizing the two files' on-disk bytes to LF: `git diff --exit-code -- <both files>` rc 0 (zero content difference); `git show :<file>` bytes == `open(file,'rb').read()` bytes exactly for both files (byte-for-byte equal, lengths 10333 and 40441)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6's <expect>, by naming the two edited files' CRLF count as '0 and 0 at db1c5f64', assumes a checkout whose on-disk EOL matches the committed blob's EOL.",
+    "world_is": "On a worktree provisioned with `core.autocrlf=true` and no overriding `.gitattributes`, `git worktree add`/checkout converts an LF blob to CRLF on disk while the git index and every future commit still store LF (the clean filter runs on add/commit) -- so a raw-bytes read of the working tree (as AC6's invocation does) and a read of the committed blob (as `git show`/`git cat-file` do) can disagree on EOL for the SAME file at the SAME commit, on this exact class of device/repo-config pairing.",
+    "notes": "No commit was needed to fix this: the rewritten disk bytes are byte-identical to what was already committed (verified above), so the existing portal commit 95d96edb on wk-amgt-19-78-portal needed no amendment. Flagged as a class other never-widen/AC6-style CRLF checks on this device may hit: a criterion that reads disk bytes directly, rather than `git show`/`git diff`, is silently coupled to the checking worktree's `core.autocrlf` setting."
   }
 ]
 ```
