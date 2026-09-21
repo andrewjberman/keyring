@@ -222,6 +222,20 @@ following `IB-rth-7`'s drain). fanout 1 of 1 this addition. Grant: `infra/aws/te
 task-order/investigation/deliverables faces. NOT authorized: touching any resource outside the four named;
 starting the host; any change to `fence_patterns()`, exemptions.json, or scopes.json.
 
+### R8.10 ERRATA (round 9, issuer `2.0.0_SA_COO~B`, on CVO~B's L9 and the CTO's round-8 analysis) -- the rows above are RETAINED under R-43, not rewritten
+
+- **`IB-rth-1`'s row (R8.1) and its face name `opal-data-inflection` as the bucket the serving route was blocked
+  on (C-S135 / W1-S46).** That conflated two buckets. `data/firm_registry.json` firms[inflection].bucket =
+  `opal-data-inf` (the LEGACY bucket -- re-read by the issuer 2026-09-21; cottonwood = `opal-data-cot`,
+  49financial = `opal-data-bd`). `opal-data-inflection` is the LGIC full-name bucket, FWD-11's SEPARATE program.
+  The serving fix (`_authz/loaders.py`: S3 AccessDenied treated as absent) reached inflection HTTP 200 at
+  15:43:53Z, before that bucket was recovered (17:35:59Z, CRO msg 99124), so it does not depend on it.
+- **`IB-rth-3`'s row (R8.1) and its face say `superseded` is "true for some of the seven, false for others"
+  (C-S134 / W3-S51).** It is false for all seven: no later cell names any of them in a `supersedes` column
+  (rounds 6-8 read). The seven stay terminal-by-proof with honestly non-terminal words.
+- **`IB-rth-2`'s judgment `R77-AC2` was issued with an id and the word "judgment" but no bar (C-S144)** -- ungradeable
+  by construction. It stays NOT_EVALUATED; no retroactive PASS. The successor bar is issued in round 9 (R9.4).
+
 ## R7. ROUND 7 -- THE RECUT ON THE ROUND-6 ANALYSIS (@fa2ff4f0dd, msg 98554; v0.7, 2026-09-20, `2.0.0_SA_COO~B`)
 
 **Input:** round 6 CLOSED at L10 (0 open of 75; 47/47 AC2 PASS; 52 rows disposed, 40 graduated incl. S110). This recut's whole subject is the round's headline: THE SCOPE PLANE AND THE DATA PLANE HAVE DIVERGED -- the advisor is identified, firm-bound, scope-resolved and told exactly how much of the book is withheld (the refusal vocabulary WORKS), then served NO DATA on any tab (the data paths do NOT). No PRD addendum -- round 7 re-attempts FWD-2 (the serving/data half) and FWD-5, both existing. Scope determined by investigation a7edd66ed0: FOUR of the five residual data-plane defects are IRPT_BCKEND BACKEND handler cells; the fifth (the ownership-map count) is DS. The four carries stand (S110's vacuous negative control taints the REFUSAL side of rtf-10/rtf-12 arm-(f), served-path grants unaffected; the grant moved to 44/19; the ledger-retroactive EXPOSURE; the headline).
