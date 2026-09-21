@@ -4274,3 +4274,61 @@ fanout:
   wave_2: [rk-83, rk-84, rk-85, rk-86]   # after rk-81 drains (each AC0 STOPs until store.py is at HEAD)
   no_fleet_run: true
 ```
+
+## 30. ROUND 22 -- FROM THE CTO'S ROUND-21 ANALYSIS @`739eb5f288` (`1.0.0_SA_CTO~Z`, msg 24119) + rulings msgs 24123, 24125
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 21 closed 6 of 6 and ratified (43/0/0). The harvest layer is built and IDLE:
+0 bronze or silver objects exist bucket-wide.
+
+The analysis named seven cells. Two rulings changed that before the cut:
+- **msg 24123 (Q1, option a):** `derived/model_block/` (122 objects) does NOT move in round 22. It keeps serving from its
+  one JSON path, and its migration rides CHAIN G as silver parquet plus a served GOLD JSON projection. There is no pyarrow
+  in the adapter closure, so M1 is a PARTIAL move.
+- **msg 24125:** M4 (`AMGT-rk-93`, publications) MOVES TO CHAIN G. Its reader is packaged in both Lambdas and needs the
+  platinum JSON that chain G builds. Issuing it now would park this round's L10 on an event nobody controls. Its draft is
+  kept for chain G.
+
+**Round 22 is SIX cells, issued in ONE commit with this section** (Andrew-direct ~15:12Z).
+
+**Cutting rules binding from this round** (analysis s.1):
+- A cross-module test patch imports the QUALIFIED `lib.<pkg>.<mod>` name and carries one `is` identity arm (W85-S1).
+- An escape-bearing criterion is written as a FILE (W84-S1).
+- An order that retires a pinned phrase censuses the tests that pin it.
+- Test suites are run ONE pytest call per test directory: a multi-directory call trips the W85-S1 module-identity clash,
+  10 failed of 178.
+
+### 30a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| PROD promote | `AMGT-rk-89` | ~89 | none | the AMGT page to PROD by `0.2.0_DT_PortfolioAnalytics`'s `/prod-deploy` (DEV `f22e369c`+, rk-78 + rk-80; `App.tsx` gate identical; ledger opened BEFORE the push). Standing adjudication @`c7bbb53f2a` item 1; the seating lint reads 0 open DT holdings | none |
+| H4 | `AMGT-rk-87` | ~87 | none | C-LUSHA-EXCEPTION -- a Lusha silver writer, code only, 0 calls, on a fresh branch with no ancestry in `wk-amgt-14-50`. A zero result is a placeholder SILVER row carrying its fetch key (ruled) | none |
+| H5 | `AMGT-rk-88` | ~88 | none | a Bright Data SERP writer, code only. Bronze keeps the raw public results body; silver is scrubbed (ruled) | none |
+| M1 | `AMGT-rk-90` | ~90 | move head | `raw/bloomberg/`, 119 objects: 110 go to `bloomberg/harvest/bronze/` as received, and 9 `pull_log` go to `amgt/harvest/state/pull_log/`. Readers and writers switch in one window; the adapter is redeployed. No IAM change (the `raw/` grant is shared with `raw/seekingalpha/` and retires at M3). NO S3 delete | pair `NEVER_WIDEN_ROUND22_RK90_{COO,CTO}_HALF.md` |
+| M2 | `AMGT-rk-91` | ~91 | after rk-90 | `filings/v1/*.source.json`: 14 go to `filing_source` silver, and 180 UNRESOLVED go to `amgt/harvest/state/filing_attempt/`. `.analysis.json` (12, gold) stays for chain G. Order: add the state grant, re-read it, redeploy, THEN remove `filings/v1/`. The rollback target is the state M1 leaves | pair `NEVER_WIDEN_ROUND22_RK91_{COO,CTO}_HALF.md` |
+| M3 | `AMGT-rk-92` | ~92 | after rk-91 | `raw/seekingalpha/`, 18 objects, go to `seeking-alpha/harvest/bronze/`. Readers `scoped_amgt.py:3085/3231`, `build_view.py:188`, `run_reader.py:86`. The adapter is redeployed; `"raw/"` is removed only after the new grant is re-read; `bright-data/harvest/bronze/` is ADDED (an empty prefix, accepted). NO SA silver is built (a derivation; the backfill fills it) | pair `NEVER_WIDEN_ROUND22_RK92_{COO,CTO}_HALF.md` |
+
+### 30b. CHAIN G, recorded now so it is not rediscovered (after the backfill; not cut)
+
+- `derived/model_block/`: silver parquet as the system of record, plus a served GOLD JSON projection the adapter reads.
+  Readers switch and the old path retires in one window (msg 24123).
+- M4 publications (`AMGT-rk-93`, draft kept): `publications/v1/` becomes silver and `publication-links/v1/` becomes gold.
+  Its reader is `pool_reader.py:73-74`, in BOTH Lambdas. It serves from platinum JSON. It needs the chatter role's
+  `bloomberg/harvest/silver/` grant (missing today).
+- `filings/v1/*.analysis.json` (12) becomes gold.
+- **THE CHATTER LAMBDA'S PENDING CARRY-ALONG:** rk-68 (`0164b134ac`, the crosswalk-load change) and rk-76 (`a8b0eb58b7`,
+  slash-safe keys) are merged but deployed NOWHERE since 2026-09-19 09:49Z. The FIRST chatter redeploy, whichever cell it
+  is, names BOTH in its pair's blast radius (msg 24125).
+
+### 30c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # stated
+  orders_total: 6                   # rk-87, rk-88, rk-89, rk-90, rk-91, rk-92 -- issued in one commit
+  chains_total: 4                   # {rk-87} ; {rk-88} ; {rk-89} ; {rk-90 -> rk-91 -> rk-92}
+  wave_1: [rk-87, rk-88, rk-89, rk-90]   # rk-90 once its pair is signed
+  wave_2: [rk-91]                   # after rk-90 drains, on its pair (signed against the state rk-90 leaves)
+  wave_3: [rk-92]                   # after rk-91 drains, on its pair
+  no_fleet_run: true
+```
