@@ -4119,3 +4119,56 @@ fanout:
   wave_2: []
   no_fleet_run: true
 ```
+
+## 27. ROUND 19 -- FROM THE CTO'S ROUND-18 ANALYSIS @`ac58e01116` + s.4 @`5f10ddf969` + s.5 @`3bfdf0a3a3` (`1.0.0_SA_CTO~Z`, msgs 24011, 24015, 24019)
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 18 closed 2 of 2 and ratified (12/0/0). PRD v0.15 is ADMITTED (CVO @a986a03423,
+CRO @c894c62896). The analysis cut two cells (R19-A, R19-B). Two calls this seat pitched before the cut added two more:
+- **R19-C** is row Z-S194's remedy (a), ruled in s.4. Two of the three validation names served NO management, under a
+  false ZERO_OFFICERS label.
+- **R19-D** is the page half of C-EXEC-MANAGEMENT, ruled in s.5.
+
+Three things were ruled before the cut rather than adding cells:
+- **R19-A** was ruled as a RE-PROJECTION, not a re-run, and every NOT_SEARCHED sentence is plain English from ONE table.
+- **Z-S195** (a Japanese "President" counts as CEO) was ruled to the next PRD bump, with its Keyence act carded to
+  Andrew (disarm row Z-S196).
+- **Held, per the analysis:** ingestion, migration and backfill, until the tenancy lands on SITEZ's registry. R18-B is
+  deferred, and W45-S1 is held.
+
+**All four orders were drafted in parallel and are issued in ONE commit with this section** (Andrew-direct ~15:12Z).
+
+### 27a. THE MAPPING
+
+| CTO cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| R19-A | `AMGT-rk-75` | ~75 | none | the rk-48 as-landed pair's remedy -- a readable NOT_SEARCHED `basis` from one reason_code table (the CTO's CSL sentence verbatim), `reason_code` in its own field; a `--reproject-public-profile` rewrite of the 3 validation keys (3 conditional puts; no Bloomberg/Lusha/SERP/roster/pool call) | pair `NEVER_WIDEN_ROUND19_RK75_{COO,CTO}_HALF.md` |
+| R19-B | `AMGT-rk-76` | ~76 | head of B->C->D | C-SLASH-SAFE-KEY -- additive slash-safe key functions in crosswalk.py, token `-SLASH-`; no served key changes (34 of 34 slash-free keys unchanged; BP/_LN_Equity, NG/_LN_Equity the 2 slash keys) | none (no live act) |
+| R19-C | `AMGT-rk-77` | ~77 | after rk-76 | Z-S194 remedy (a) -- read_management serves a non-empty Bloomberg fallback roster with roster_source + the filing's reason, the real officer_count, a true ABSENT label in every branch; adapter redeploy carrying rk-76's crosswalk.py commit | pair `NEVER_WIDEN_ROUND19_R19C_{COO,CTO}_HALF.md` |
+| R19-D | `AMGT-rk-78` | ~78 | after rk-77 | C-EXEC-MANAGEMENT page clause -- the Exec Management tab renders roster_source + the filing's roster_status/roster_reason on a SERVED fallback block, and a Bloomberg officer's Confirmed cell reads "per Bloomberg, not the filing" (this seat's L5 ruling; the tab today would say "confirmed from the filing" 14 times for CSL); portal DEV branch commit, no push by the worker; the PROD promote is carded to Andrew | none (no live act) |
+
+### 27b. SURFACE CENSUS (measured at the cut)
+
+| cell | files_written | live acts | measured at the cut |
+|---|---|---|---|
+| `AMGT-rk-75` | lib/research/management/{ceo_search.py, enrich.py, management.schema.json} + tests | 1: 3 conditional puts on management/v1/{CAT_US_Equity,CSL_AU_Equity,6861_JP_Equity}/2026-09-19.json | NOT_SEARCHED codes by subtraction: 11 in the pool, minus 7 that occur only with another status, leaves 4; simulated on the 3 live objects, only `basis` + `reason_code` move, ceo_profile byte-equal, the patched schema 0 errors; adapter closure holds no lib/research/management path |
+| `AMGT-rk-76` | lib/research/identity/crosswalk.py; lib/research/identity/tests/test_slash_safe_key.py (new) | 0 | crosswalk 96 records / 36 keys / 2 slash keys; 36 of 36 round-trip; 45 existing top-level names unchanged |
+| `AMGT-rk-77` | lib/research/api/scoped_amgt.py + a new test file | 1: adapter redeploy (artifact key + targeted safe-apply) | served CodeSha256 `P4n1bVaa...`, artifact `o5x2gdqq...`; 15 served names: 2 change class, 8 gain 2 keys, 5 byte-equal; carry-along admits only rk-76's crosswalk.py commit(s) + this cell's |
+| `AMGT-rk-78` | portal/src/pages/SecurityAnalysis/{tabs/ExecManagementTab.tsx, types.ts, __harness__/execFallback.harness.cjs, 4 fixtures} | 0 (portal branch commit, no push) | portal DEV `db1c5f64`; tsc rc 0; the portal worktree + node_modules junction probed and removed |
+
+**Files written by more than one cell:** none. **Collision with the held `wk-amgt-14-50` branch:** rk-75 shares the
+FILE NAMES enrich.py and management.schema.json with it (names only; the branch was not read). The held branch is not
+drained this round.
+
+### 27c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # stated
+  orders_total: 4                   # rk-75, rk-76, rk-77, rk-78 -- written in parallel, issued in one commit
+  slots_total: 4                    # ~75, ~76, ~77, ~78
+  chains_total: 2                   # {rk-75} ; {rk-76 -> rk-77 -> rk-78} (deploy carry-along, then render-on-served-shape)
+  wave_1: [rk-76, rk-75]            # rk-76 at once; rk-75 once its pair carries both halves signed
+  wave_2: [rk-77]                   # after rk-76 drains, and its pair complete
+  wave_3: [rk-78]                   # after rk-77 drains (its AC1 reads rk-77's served shape)
+  no_fleet_run: true
+```
