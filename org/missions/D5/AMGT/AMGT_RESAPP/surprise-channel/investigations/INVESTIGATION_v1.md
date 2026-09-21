@@ -10898,6 +10898,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "C-EXEC-MANAGEMENT: the roster is every officer from the filing's officer section, and the CEO is the officer with a chief-executive title.",
     "world_is": "For a 10-K that places its executive officers in Item 1D (Part I) and cross-references it from Item 10, the cut takes Item 10 and misses the roster; a RESOLVED roster of 1 is served as complete.",
     "notes": "ARMED: it is live on the manager-review path, for a validation name, and it is FALSE-COMPLETE (served as RESOLVED, not flagged). Also likely feeds W45-S1-class coverage elsewhere (other 10-K filers using 'Information about our Executive Officers' in Part I) -- a census over the pool's RESOLVED rosters with officer_count <= 2 would size it; not run here. Remedy is a spec + producer call (follow the Item 10 -> Item 1D/Part I cross-reference) plus a re-derivation of CAT; the CTO's call. Found reading this seat's own round-19 screenshot."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S203",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-21T21:12:00Z",
+    "one_line": "infra/logic/registry/scopes.json at SITEZ HEAD carries TWO 'harvest' scope rows ([8] tenancy PRODUCT, [10] tenancy GENERAL); lookup() takes the first, so address() prints AMGT bronze and silver into opal-data-assets -- the bucket Andrew vetoed for this pipeline -- and platinum into opal-data-portal-v2; validate() accepts the duplicate, so it sat green.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "4.0.0_SA_CRO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SITEZ HEAD 55c24a8b8a: scopes.json 11 rows, key 'harvest' at [8] (tenancy PRODUCT) and [10] (tenancy GENERAL); lib.opal_naming.lookup('harvest') returns [8]; validate() 0 refusals.",
+        "address('lusha','harvest',t,'officers','dt=2026-09-19') at HEAD: bronze s3://opal-data-assets/..., silver s3://opal-data-assets/..., gold s3://opal-data-harvest/..., platinum s3://opal-data-portal-v2/...",
+        "same call on a scratch registry copy with ONLY [8] deleted: validate() 0 refusals, all four tiers s3://opal-data-harvest/...; 4.0.0_SA_CRO~Z (msg 24080) re-ran it independently with controls (bloomberg/etfs/silver, bloomberg/mdpf/bronze, schwab/49financial/bronze stay opal-data-assets; mdpf/global/platinum stays portal-v2).",
+        "0.0.0_AB_MSTR~Z 21:12Z: its CLOUD-into-SITEZ merge's dedup was never staged; HEAD has carried both rows since."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.16 C-HARVEST-HOME: AMGT's bronze and silver live in opal-data-harvest at the address the builder prints; Andrew 2026-09-18 ~21:45Z 'opal-data-assets is solely for client data'.",
+    "world_is": "The builder prints opal-data-assets for AMGT bronze/silver because a stale PRODUCT-tenancy harvest row precedes the GENERAL one, and the validator does not refuse a repeated scope key.",
+    "notes": "EXPOSURE, not an incident: no format writer is cut and the backfill is held, so nothing has written to the vetoed home through address(). ARMED because any harvest writer cut before the fix builds against it; 2.0.0_SA_COO~Z cuts none until [8] is deleted (msg 24084). Remedy (lane PLATFORM_LOGIC_DOCS: 4.0.0_SA_CRO, ~A-~D; not ~Z): delete row [8] only; plus a duplicate-key refusal in validate(). Once landed, C-HARVEST-HOME's registry precondition is MET (tiers.json GENERAL and the five vendor rows are already on SITEZ, per 4.0.0_SA_CRO~Z msg 24080)."
   }
 ]
 ```
