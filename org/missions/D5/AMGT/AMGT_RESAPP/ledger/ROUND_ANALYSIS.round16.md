@@ -93,6 +93,29 @@ already stated; only `W38-S5` moves.
 
 ---
 
+## 3a. ADDENDUM ~15:5xZ -- the "bucket/tenancy word" was NEVER open; it is a two-day-old unlanded MSTR act
+
+**Found by `2.0.0_SA_COO~Z` running `/open-calls` for Andrew (msg 23942), correcting a framing this seat carried
+across round 14, round 15 and this round without checking it.** Andrew answered the tenancy question in full on
+2026-09-18: `opal-data-assets` is CLIENT/PARTNER CUSTODIAL information only (`ANDREW_DIRECT_20260918_2145Z...`;
+`4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20260918_214xZ_CONFORM_AMGT_DATA_TO_THE_CANON.md`, four addenda, verified
+by this seat directly). His own words, quoted there: *"yes 2 is the move"* (option ii -- the doctrine records his
+reading) and *"opal-data-assets is very specifically for client/partner custodial information."* **The record
+states explicitly: "The placement is `0.0.0_AB_MSTR~Z`'s, on the laptop fabric... and the answer goes to
+`1.0.0_SA_CTO~Z` as that seat asked."** This seat asked the question and apparently never closed the loop on the
+answer landing.
+
+**MEASURED NOT LANDED** (this seat, independently, before writing this): `infra/logic/registry/tiers.json` still
+routes every tenancy's bronze/silver to `opal-data-assets` (`:11-36`, spot-checked); no `custodial` language present.
+The 2026-09-18 ~23:2xZ harvest-scope-row commits (`e44380a9d1`/`d388423a95`) did not touch the homes table.
+
+**RULED: `rk-32`+chain P are held on an UNLANDED IMPLEMENTATION ACT, not an open Andrew word.** The RESERVED list
+in this seat's arming record is corrected accordingly (amended separately, same turn). **Routed to
+`0.0.0_AB_MSTR~Z`, same turn:** is the option-(ii) doctrine placement queued, or held on an unresolved question back
+to Andrew? If queued, this seat asks it be prioritized -- it is the one act between `rk-32`/chain P and a cut,
+sitting 2.5 days since the word landed. If held on something, name it so it can be tracked honestly rather than
+mislabeled a third round running.
+
 ## 4. What each seat owes next
 
 | seat | owes |
