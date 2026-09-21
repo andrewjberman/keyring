@@ -149,4 +149,46 @@ Rows filed: ENFORCE `S141`-`S148`, `S150`; LGCTFM `S72`; decomp `0t.5` @`d4594ca
 - **[3.0.0_SA_CVO]** Exactly ONE clock owed: `LGIC_ENFORCE-S104` disarms.
 - **[Andrew]** One sentence to settle the §4 conflict; FWD-6 in person ~14:00Z.
 
+---
+
+## APPENDIX A -- THE "1,055 PLACEHOLDER ROWS", MEASURED AT ANDREW'S ASK (~01:3xZ)
+
+Appended after he asked what these items actually are. **His framing was "unclear
+lineage/provenance." That is wrong, and usefully so.**
+
+**THE PROVENANCE IS MEASURED, NOT UNCLEAR.** `PLACEHOLDER_POPULATION_R13.json` carries a `producers`
+block attributing every token to a **named file and line** -- 5 producers, all identified.
+
+**WHAT THEY ACTUALLY ARE: the checker could not resolve a slot, so it printed a placeholder instead
+of a name.** Of 1,303 rows, **1,302 carry the IDENTICAL reason** -- *"no row of any of the 6 registry
+files under `infra/logic/registry/` resolves this."* ⭐ **It is ONE question asked 1,302 times, not
+1,303 puzzles.** All 1,303 read `CARDED`, `resolved = 0`, owner `1.0.0_SA_CTO`.
+
+**TWO STRUCTURALLY DIFFERENT CLASSES, AND THE SMALL ONE IS THE REAL DEFECT:**
+- **Class A, ~1,288 rows** -- the grader emitted `{system}`/`{scope}`/`{cadence}`/`{source}` at four
+  code branches when a registry lookup failed. **A data backlog.**
+- ⛔ **Class B, 15 rows** -- a literal template variable (`{dim_name}`, `{snap}`, `{firm}`, `{d}`,
+  `{dc}`) is sitting in the REAL name, written by application source at **4 files / 5 sites**. The
+  grader never touched these. **5 of the 15 are graded CONFORMANT** -- the checker passes a name with
+  a brace still standing in it. **This is a code defect, it is separable, and nobody had split it out.**
+
+**THE CLUSTERING PASS THAT HAD NEVER BEEN RUN.** Of the 1,119 rows needing a `{system}` answer:
+`A1` firm-as-system (`bd`/`inf`/`cot`) **217** · `A3` AWS service name **175** · `A2` log-group path
+**67** · `A4` `opal*` **10** · `A5` everything else **650** across **155** distinct leading tokens.
+⭐ **A1-A4 = 469 rows (42%) that plausibly collapse to FOUR rules**, and A1's collapse to one class
+was already established previously -- which is the evidence the method works.
+
+⚠ **STATED AS A LIMIT ON MY OWN NUMBER:** clustering by LEADING TOKEN is a **PROXY** for "one
+decision," not a measurement of one. It is good enough to plan from and **not** good enough to report
+as a decision count. The register's own words remain the honest ceiling: *"1055 rows of UNMEASURED
+decision count."*
+
+**DELIVERABLE WRITTEN AT HIS ASK:**
+`docs/briefs/lgic-enforce-registry-assigning-brief-20260921.md` -- an OPERATOR TASK SPEC for his desk
+tomorrow, explicitly **not** an L1 commissioning brief (L1 is the CRO's lane and both real D14 briefs
+were authored there). ⚠ **He asked for it as `lgic_canon_registry_assigning`; I named it
+`lgic-enforce-...` because THE WORK IS ENFORCE, NOT CANON** -- the population, the checker and the
+blocked outcome (FWD-5) all live in ENFORCE, and filing it under CANON would send a later reader to
+the wrong project. He said "or something like that"; the subject is what I changed, not the ask.
+
 `2.0.0_SA_COO~G`
