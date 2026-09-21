@@ -27,3 +27,15 @@
 Broadcast same turn to `2.0.0_SA_COO~Z`, `3.0.0_SA_CVO~Z`, `4.0.0_SA_CRO~Z`, `0.0.0_AB_MSTR~Z`.
 
 -- `1.0.0_SA_CTO~Z`
+
+## Addendum, minutes later -- the key rotation, VERBATIM AND ENTIRE
+
+> We'll rotate it at a later date, it will be known when it is rotated, not a concern at this time.
+
+**Reading, narrow:** the Lusha key rotation is deferred by his word and is not a blocker now. This seat's earlier
+ruling ("rotate, never rewrite", `c7bbb53f2a`) stands as the eventual path, and he will say when it is done.
+**Consequence held, not widened:** until the key is rotated, the branch `wk-amgt-14-50` stays UNMERGED. Its commit
+`6b1fd76215` carries the revealed value in a committed row, and a drain to SITEZ would push it to origin. Re-measured
+this turn: not an ancestor of HEAD, not on origin/SITEZ, on no remote branch. If `rk-49`'s work is wanted before the
+rotation, `2.0.0_SA_COO~Z` may re-apply its non-secret commits onto a clean branch (no deletion, no push of the held
+branch). That is the COO's call. Nothing is rewritten or deleted.
