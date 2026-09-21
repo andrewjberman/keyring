@@ -1,4 +1,4 @@
-# NFRA_MCPINDEX -- DECOMPOSITION (L5) -- round 1 -- v1
+# NFRA_MCPINDEX -- DECOMPOSITION (L5) -- round 1 -- v2
 
 ```json
 {
@@ -7,8 +7,8 @@
  "macro": "NFRA",
  "fabric": "laptop",
  "round": 1,
- "decomp_version": "v1",
- "supersedes": null,
+ "decomp_version": "v2",
+ "supersedes": "v1 @020ab35a75 (frozen, never issued; recut on 1.0.0_SA_CTO 98944, offers A and B ruled before L6)",
  "step": 5,
  "prd_ref": "org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md@b7dc80e2cc",
  "prd_version": "v0.5",
@@ -43,6 +43,17 @@ read; the brief was read at its pin; the research record was read AS RESEARCH (V
 LGIC naming; versioned in S3; D9; Opal staff only, beta one at a time; portal reads precomputed, silver queried live.
 ~02:4xZ 2026-09-21 via 0.0.0_AB_MSTR (98917), verbatim: *"we try to stay light for the remainder of the session as far as
 new spawns"* -- this binds the L6 fan-out's first wave (s.5), never the cut.
+
+**v2 against v1, on 1.0.0_SA_CTO's rulings 98944 (both before L6; v1 was never issued).** Offer A: *"A HOME IS
+DEFINED BY WHAT READS IT AT RUNTIME"* -- the repository `CAT` stays the ONE home and the source; S3 carries IMMUTABLE
+VERSIONS, write-once, and is NEVER read on the serving path; if any runtime reader is ever pointed at the S3 copy the
+ruling is VIOLATED. So `MX-c-3` no longer touches the load path, and its judgment criterion becomes a mechanical one.
+Whether S3 versions are written this round was left to this seat: **they are**, because FWD-10's ACCEPT names "the
+catalog is versioned in S3 at a builder-named address". Offer B: *"C2 CONSTRAINS THE TOOL'S PROPERTIES, NOT THE FILE THEY
+ARE TYPED INTO"* -- the composed design is ADOPTED, with the bar that every tool is resolvable through BOTH registries
+by name, PROVEN by an exercised lookup over the printed denominator, and that a composed path which can ship a tool
+resolving through neither FAILS C2. `MX-c-4` and `MX-v-2` carry that bar as criteria. The cell set, edges and chain
+read are unchanged from v1.
 
 **Frozen at the cut.** A cell that looks wrong mid-round is a **surprise row, never an edit**
 (`org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md`).
@@ -241,7 +252,7 @@ parallel width, and it is what FWD-10 is graded on. s.10 choice 1.
 |---|---|---|---|---|
 | `MX-c-1` | the live catalog writer confirmed by census and exercised once; the stale docstring corrected | C1, V.1, FWD-10 | `EMIT/emit_catalog_v02.py` (the module docstring, lines 1-10, ONLY) | OPEN |
 | `MX-c-2` | the catalog schema extended to silver datasets, one source file per entry, through the one writer | C1, V.1, FWD-1, FWD-10 | `EMIT/emit_catalog_v02.py` (the entry reader and field emission), `EMIT/validate_catalog_v02.py`, `EMIT/battery_catalog_v02.py`, `EMIT/catalog_entries/` (new, one file per dataset entry), `CAT` (emitter output only), `EMIT/tests/test_catalog_silver_entries.py` (new) | OPEN |
-| `MX-c-3` | the versioned S3 home at a builder-named address, with ONE runtime home | C1, FWD-10 | `EMIT/publish_catalog_version.py` (new), `APP/query_v0.py` and `APP/graphql_plumbing/catalog_gate.py` (the catalog load path only), `EMIT/tests/test_catalog_home.py` (new) | OPEN |
+| `MX-c-3` | immutable catalog versions archived in S3 at a builder-named address; the repository file stays the ONE runtime home (CTO 98944) | C1, FWD-10 | `EMIT/publish_catalog_version.py` (new), `EMIT/tests/test_catalog_home.py` (new) | OPEN |
 | `MX-c-4` | classification and registration compose from each integration's declaration; a tool with no catalog entry or no classification is REFUSED at registration | C2, V.4, A11, FWD-10 | `APP/destructive_ops.py`, `APP/data_entitlement.py` (tool-class composition only), `INT/base.py`, `INT/registry.py`, `TST/test_entitlement_admin.py` (the :332 pin only), `TST/test_tool_classification_composition.py` (new) | OPEN |
 
 **`MX-c-1` acceptance**
@@ -264,15 +275,17 @@ parallel width, and it is what FWD-10 is graded on. s.10 choice 1.
 - the Rule 24 four-postulate record for the entry schema's value sets (firm-scope rule, never-sum rules, freshness field kinds) is written in the cell's deliverable with a word-boundary token census
 
 **`MX-c-3` acceptance**
-- the catalog's S3 key is `address()` output at the cell's HEAD, the call and its return printed, and the module computes the key only through that call
+- the archive's S3 key is `address()` output at the cell's HEAD, the call and its return printed, and the module computes the key only through that call
 - the chosen tier (platinum or silver at scope `global`, the two the builder resolves) is stated with one reason, and the two refused tiers are recorded as refused
-- exactly ONE runtime home is loaded by the Gateway, named, and `query_v0` and `catalog_gate` both read from it
-- (difference) a planted second catalog load path is refused by the cell's test while the one named path passes, in the same test module (the two-homes class, `DESIGN.md:69`)
+- the publisher's only input is the repository file `CAT`, and a published object's SHA-256 equals `CAT`'s at the publishing commit
 - a version, once written, is never overwritten: a second publish of the same version with different bytes is refused, and a publish of new bytes mints a new version
 - the publish opens its change-management entry and commits the OPEN sentinel before the S3 write, and closes both before the read that grades it
-- one published version is read back from S3 with its object version id, SHA-256 and LastModified, and the SHA-256 equals the emitter's output at the cell's HEAD
-- the published key is under a prefix the Gateway role already reads, or the cell names the missing grant as a row for `MX-i-1` and does not widen a policy itself
-- `J` the cell's reconciliation of C1's "versioned in S3" with the catalog's own HOME RULE ("one catalog home, no staged copy", `CAT:7-9`) is one home, not two
+- one published version is read back from S3 with its object version id, SHA-256 and LastModified, and the SHA-256 equals `CAT`'s at the publishing commit
+- exactly ONE runtime reader of the catalog exists and its path resolves to the repository `CAT`: every catalog load under `infra/aws/ec2/opal-gateway/app` is censused by code read (open, `yaml` load, `CATALOG_PATH`), denominator printed, and each resolves to `CAT`
+- zero readers of the archive exist on the serving path: the archive's bucket-and-prefix string is censused over `infra/aws/ec2/opal-gateway`, denominator printed, and occurs only in this cell's publisher and its test
+- (difference) the cell's test fails when a planted runtime loader pointed at the S3 archive is added under `infra/aws/ec2/opal-gateway/app`, and passes with the plant removed (CTO 98944: a runtime reader of the S3 copy VIOLATES the ruling)
+- no statement is added to `opal-gateway-role` for the archive, compared by name against `MX-p-1`'s 14 statements
+- no file under `infra/aws/ec2/opal-gateway/app` changes (`git diff --stat` over that directory, printed empty)
 
 **`MX-c-4` acceptance**
 - `IntegrationSpec` (`INT/base.py`) carries a per-tool classification and a per-tool catalog-entry reference, and `validate_integration_spec` refuses a spec with either missing
@@ -285,6 +298,8 @@ parallel width, and it is what FWD-10 is graded on. s.10 choice 1.
 - `J` `read_teams_attachment`'s classification is correct for a tool that reads the content of a Teams attachment by URL, and it neither widens what any tier can reach nor reads as a write
 - the pinned count at `TST/test_entitlement_admin.py:332` becomes a derived count that asserts, by name, every registered tool against its integration's own pinned list, and it still fails when a tool is registered without being pinned (difference: one planted unpinned tool fails it; removing the plant passes)
 - the Gateway suite's collected, passed and failed counts are printed before and after the edit, and no test that passed before fails after
+- C2's bar, EXERCISED (CTO 98944): for every registered tool, denominator printed, a lookup by name through `destructive_ops.classify` returns its declared class and a lookup by name through `data_entitlement` returns its tool class, and the tool's catalog-entry reference resolves to an entry in `CAT` -- zero tools fail any of the three
+- (difference) a planted tool reachable by the composed registration path but resolving through neither registry is REFUSED at registration, while the same tool with both declarations registers (a composed path that could ship it FAILS C2)
 
 ### C3 -- naming
 
@@ -331,7 +346,7 @@ parallel width, and it is what FWD-10 is graded on. s.10 choice 1.
 | `MX-d-1` | the discover family under the `opal` system, reading the ONE catalog | S2, FWD-1, A1 | `INT/opal_discover/` (new), `TST/test_opal_discover.py` (new) | OPEN |
 
 **`MX-d-1` acceptance**
-- the family reads the catalog through its one runtime home (`MX-c-3`), never a copy, and reuses `APP/graphql_plumbing/catalog_gate.py` for the firm gate rather than re-implementing it
+- the family reads the catalog through the existing load path, which resolves to the repository `CAT` (the ONE home, CTO 98944), never the S3 archive, and reuses `APP/graphql_plumbing/catalog_gate.py` for the firm gate rather than re-implementing it
 - for a catalogued dataset, the answer names the property, the dataset, its freshness field and latest value, its firm scope, its caveats and the next tool to call
 - (difference) for an uncatalogued subject, the answer says it is not catalogued and names no dataset and no tool, while a catalogued subject in the same test returns a named tool
 - every tool name passes `MX-n-1`'s validator and every tool carries its classification and catalog reference (`MX-c-4`)
@@ -530,6 +545,7 @@ one writer. `CAT` is never hand-merged; a conflict on it resolves by re-emission
 - the author authored none of `MX-c-4`, `MX-n-1`, `MX-g-1`, `MX-g-2`, `MX-d-1`, `MX-q-1`, `MX-t-*`, `MX-e-1`, `MX-h-2`, `MX-h-3`
 - every tool this project registers is enumerated from the running registry, denominator printed, and each is called at least once
 - the count of registered tools without a catalog entry or without a classification is zero, denominator printed (A11)
+- every registered tool is looked up BY NAME through both `destructive_ops` and `data_entitlement`, each lookup exercised in the harness and its result printed, and every tool's catalog-entry reference resolves in `CAT` (C2's bar, CTO 98944)
 - every registered tool name passes the C3 rule, and a planted non-conforming name is refused in the same run (A12)
 - (difference) for every tool, a call outside the caller's grant is refused and a call inside it passes, in one harness (C7)
 - every answer carries the C4 envelope, and a planted empty date renders as no data, never zero, for every data tool
@@ -575,7 +591,7 @@ one writer. `CAT` is never hand-merged; a conflict on it resolves by re-emission
 - the deploy runs through `infra/aws/ec2/safe-ec2-deploy.sh` only
 - the deployed package's member list carries every new integration directory, each file's SHA-256 equal to the source at the cell's HEAD, compared with LF-normalised bytes and the normalisation stated (OG-r-1 AC4's CRLF class)
 - (difference) the registered tool list for a non-admitted principal and for an admitted principal equals `MX-p-1`'s list by name after the deploy, and the host's `ENABLED_INTEGRATIONS` is unchanged -- DELTA=0 on the served tool surface
-- the deployed catalog's SHA-256 equals the one runtime home `MX-c-3` names
+- the deployed catalog's SHA-256 equals the repository `CAT` at the cell's HEAD, and equals a version `MX-c-3` archived (so the served catalog is always one that exists as an immutable version)
 - the Gateway service is active after the deploy, read through SSM, and the rollback to the prior artifact is stated as a command, not exercised
 
 **`MX-r-2` acceptance**
@@ -819,7 +835,7 @@ tools.
 **(iv) STATE COHERENCE, and what each remedy does NOT move:**
 - `MX-c-1` changes a docstring and moves **no catalog row and no writer**.
 - `MX-c-2` extends the schema and moves **none of the 36 existing rows**.
-- `MX-c-3` adds a versioned home and moves **no second runtime home into being** (one home, proven by a planted second path).
+- `MX-c-3` archives immutable versions and moves **no runtime reader** (the repository file stays the one home; a planted S3 reader fails its test).
 - `MX-c-4` changes how classification composes and moves **no existing tool's class** (49 of 49 compared).
 - `MX-n-1` refuses non-conforming new names and moves **no existing tool name** (grandfathered by name).
 - `MX-g-1` composes grant scope and moves **no Schwab grant** (its tests unchanged).
@@ -839,8 +855,8 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
    `MX-g-1`).** FWD-10's PROOF ("the added property's diff (catalog entry + tool, nothing else)") cannot pass while
    adding a property edits four shared registry files. C2's letter is kept: every tool is still resolvable through
    `destructive_ops` and `data_entitlement` by name, and each tool cell still moves its own pinned count. What changes
-   is **where the data lives**, not what C2 requires. If the CTO reads C2 as requiring the entries to be typed into those
-   two files, this choice is the one to re-cut.
+   is **where the data lives**, not what C2 requires. **RULED ADOPTED by 1.0.0_SA_CTO 98944** ("C2 constrains the tool's
+   properties, not the file they are typed into"), with C2's letter as the bar, proven by an exercised lookup by name.
 2. **The catalog's per-entry source is one file per dataset (`MX-c-2`),** so "one catalog entry" is one file in a
    diff, and the generated catalog is re-emitted rather than hand-merged.
 3. **Read roles are GENERATED from catalog entries (`MX-i-1`) and applied once (`MX-i-3`),** rather than hand-written per
@@ -878,12 +894,10 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
    cadence: its last exercise was the 2026-08-20 port, so C1's EXERCISE bar still stands. `MX-c-1` confirms and corrects.
    **No PRD edit is asked for.** C1's obligation is satisfiable as written; this changes how cheap it is. If the CTO reads
    it as a ratified-text defect, that is an L10 addendum.
-2. **C1's "versioned in S3" and the catalog's own HOME RULE are in tension, and the PRD does not surface it.** `CAT:7-9`
-   and `DESIGN.md:69` say *one home, no staged copy, "a second home is the two-homes drift class; do not add one"*.
-   Andrew said "Versioned in S3 works". `MX-c-3` must reconcile them as ONE runtime home, with a `J` criterion so the
-   reconciliation is graded, not assumed. If the CTO wants to rule the shape (S3 as the runtime home, or the repository
-   file as the source with S3 carrying immutable versions), a ruling before `MX-c-3` spawns removes a judgment call from a
-   worker.
+2. **RULED by 1.0.0_SA_CTO 98944 before L6: the tension dissolves on the right axis.** "A home is defined by what reads
+   it at runtime": the repository `CAT` is the ONE home and the source; S3 carries immutable versions and is never read on
+   the serving path, and a runtime reader of the S3 copy VIOLATES the ruling. `MX-c-3` was recut to that shape (v2), and
+   its judgment criterion became a mechanical one with a planted-reader difference control.
 3. **S4's `fact_trn` does not exist; the transaction table is `dim_transaction`** (`schwab_projections.py:55`). The PRD's
    intent is unambiguous and `MX-t-2` names the real table. A PRD wording carry for its next substantive bump.
 4. **S9, V.6, A7 and brief-coverage row 10 carry a DISCHARGED gate.** Entity resolution's D3 enum gate was discharged
@@ -905,7 +919,8 @@ Each is this seat's call at L5, stated so it can be argued with, and revertible 
    AC10 exposure belongs to NFRA_OPLGTW's release, which is closing tonight. **If nobody owns making the current
    release restorable, `MX-r-1` will refuse, correctly, and every live FWD in this project waits behind it.** That is the
    one cross-project dependency here with no owner at the cut. EXPOSURE, not INCIDENT: whether a rollback was ever needed
-   and failed is unmeasured.
+   and failed is unmeasured. **1.0.0_SA_CTO 98944 routes the repair to Andrew** (rec: the rollback repair is the FIRST act of whatever seat next holds
+   NFRA_OPLGTW) and rules that `MX-r-1` refusing until then "is the system working ... not a blockage to route around".
 10. **Whether a worker can hold a live-session principal is unmeasured.** FWD-1 and FWD-6's PROOF need "a live session
     by a non-author". If the Gateway's identity model has no sanctioned test principal, the live exercises are an
     admitted person's acts and the worker records and grades them. `MX-v-3` names which it was.
