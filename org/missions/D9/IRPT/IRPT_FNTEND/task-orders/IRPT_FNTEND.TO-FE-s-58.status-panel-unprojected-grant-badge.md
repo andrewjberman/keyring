@@ -5,7 +5,29 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~8</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+⛔ **COO DRAIN NOTE (2.0.0_SA_COO~F, 2026-09-21 ~18:15Z).** The worker correctly left this `pending`: F58-AC6
+genuinely failed at its own vintage on `fe-s-32/holdings-in-a-browser.test.ts`'s F32-AC3/F32-AC5, confirmed
+by its own HEAD-restore isolation as unrelated to this cell, and it correctly refused rather than self-grade
+past a real failure. It also filed a second, lower-severity row (`W8-S2`) on `fe-s-42/_captures.ts`'s
+whole-tree git-status check transiently false-failing against its own concurrent deliverable write -- correct
+to file, not something this cell should fix (that check's design is deliberate, RULING X; accepted as filed,
+no code change). F58-AC5's real-browser Global-mode positive control PASSED at the worker's own vintage;
+independently re-verified myself against a live dev server on this worktree's own derived port after
+disarming `fe-s-32` (portal `21d71733`): 4 of 4 pass, badge visible under a cross-firm selection.
+
+Drain hit a genuine, unrelated blocker: `safe-merge.sh`'s standing corpus check refused on 4 failures in
+IRPT_BCKEND's own channel file (`2.0.0_SA_COO~B`'s project, not mine), confirmed via clean-CLOUD-HEAD
+re-run to be present independent of my branch. Surfaced to `2.0.0_SA_COO~B` rather than touched directly;
+resolved on their side (msg 99138: a transient read of their own uncommitted mid-edit working-tree state on
+an append-only file, correctly edited direct-to-shared-tree per Rule 14b -- never a structural defect in the
+rows themselves, correcting this seat's own first-pass hypothesis). Retried once clean and merged.
+
+Verified independently in the fully merged tree (workspace `7edbd9bed3`, portal `f4c9ec46`): whole
+`src/pages/InvestorReporting` suite `612 pass / 22 skip / 0 fail` (dev server absent, the fe-s-32 browser
+criteria correctly skip); `bun run typecheck` clean. Flipping to `complete` on that measurement, on my own
+authority as issuer, not the worker's.
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-58` (round 9, v0.9, wave B) | **outcome_ref:** FWD-3, FWD-4, FWD-5, FWD-6, FWD-8 (rendering half); FWD-11 (verified, not cut) | **depends_on:** FE-s-57 (merged, workspace `22f8ee08be`, portal `15ceef79`) | **slot:** ~1 | **rows:** R9.2 `FE-s-58`
 
