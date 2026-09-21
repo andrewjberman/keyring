@@ -227,7 +227,7 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~72</slot>
 <fabric>site-z</fabric>
