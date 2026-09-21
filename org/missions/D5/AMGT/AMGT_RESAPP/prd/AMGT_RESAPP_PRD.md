@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.16",
+  "prd_version": "v0.17",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,22 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.17 CHANGE NOTE -- 2026-09-21 ~21:3xZ, `1.0.0_SA_CTO~Z`: platinum's home, Lusha's exception, and what "retire" means
+
+The format contracts take five changes.
+- **Platinum.** `C-HARVEST-HOME` puts platinum where the builder prints it, not at R6. The landed GENERAL tenancy homes
+  every tier by scope, which is Andrew's "whole pipeline in harvest", and its only remaining condition is the duplicate
+  `harvest` scope row (row Z-S203).
+- **Lusha.** It takes Andrew's R20 exception (~19:5xZ, *"Yes on Exception"*): silver only, contact fields dropped, no
+  bronze.
+- **Retire.** `C-FORMAT-SEQUENCE` defines "retire" (readers switched, writers stopped and read grant removed in one
+  window; deletion is a separate human word).
+- **Re-serialisation.** It counts a lossless re-serialisation as a copy.
+- **filings/v1.** Its DERIVED records go to silver.
+
+These answer the COO's four calls (msg 24087). Section 11 records that the tenancy and the five vendor rows have landed
+on SITEZ. BOTH halves move.
 
 ### v0.16 CHANGE NOTE -- 2026-09-21 ~19:3xZ, `1.0.0_SA_CTO~Z`: who the CEO is, and readable reasons
 
@@ -837,14 +853,15 @@ universe < 0.25 -- drivers likely seeded from consensus; factor is not measuring
 at the same record and repeated in the CTO adjudication call 4 @`1685652d6e`.
 
 
-**C-HARVEST-HOME (the storage home; CONDITIONAL until the tenancy lands in this fabric's registry).** AMGT_RESAPP's
-bronze, silver, gold, state and code live in `opal-data-harvest` under scope `harvest`; platinum lives at the canon's
-general platinum home (R6) exactly as the builder prints it. The vendor is `{source}` for bronze and silver; `amgt` is
-`{source}` for gold, platinum, state and code. Every address is `lib/opal_naming.py address()` output and every
-resource name is `name()` output; a builder refusal is a missing registry row, never a hand-typed key.
-`opal-data-assets` holds client/partner custodial information only. ⛔ **For bronze and silver this contract is NOT
-MET until this fabric's registry carries a tenancy that homes them by scope:** until then the builder prints
-`opal-data-assets` for both, and no bronze or silver writer is cut against this contract.
+**C-HARVEST-HOME (the storage home; CONDITIONAL until the registry resolves `harvest` to ONE scope row).** AMGT_RESAPP's
+bronze, silver, gold, platinum, state and code live exactly where the builder prints them. Under scope `harvest` and
+its GENERAL tenancy, that is `opal-data-harvest` for every tier, which is Andrew's "the whole pipeline lives in
+opal-data-harvest". The vendor is `{source}` for bronze and silver; `amgt` is `{source}` for gold, platinum, state and
+code. Every address is `lib/opal_naming.py address()` output and every resource name is `name()` output; a builder
+refusal is a missing registry row, never a hand-typed key. `opal-data-assets` holds client/partner custodial
+information only. ⛔ **This contract is NOT MET while the registry carries more than one `harvest` scope row:** the
+builder takes the first, a PRODUCT-tenancy row, and prints `opal-data-assets` for bronze and silver. No harvest writer
+is cut against this contract until only the GENERAL row remains (row Z-S203).
 
 **C-BRONZE-AS-RECEIVED.** Bronze is the response bytes exactly as received -- no parsing, trimming or
 re-serialising -- one object per fetch, never overwritten, with the channel's FETCH key in the partition, in one of
@@ -856,6 +873,12 @@ address a writer uses is one the builder printed; the measured outputs are liste
 **C-SILVER-PARQUET.** Silver is parquet with every vendor field kept and typed, partitioned `date=` by fetch date,
 one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_hash` (sha256 of the row's vendor
 fields).
+
+**C-LUSHA-EXCEPTION (a declared departure, Rule 30 R20; Andrew-direct 2026-09-21 ~19:5xZ, *"Yes on Exception"*).**
+Lusha keeps NO bronze, and its silver DROPS every contact field (emails, phone numbers and any other channel for
+reaching a person). It keeps the officer match, profile link, title and the fields the page shows. This departs from
+`C-BRONZE-AS-RECEIVED` and `C-SILVER-PARQUET` for Lusha only. Its silver rows carry `fetched_at` and `record_hash`, and
+`bronze_key` is null by rule. The R20 register entry is the registry lane's to write, citing Andrew's record.
 
 **C-DEDUPE-BY-KEY (one writer per fetch key).** Each channel names a FETCH key and a RECORD key. Before any vendor
 call, the writer checks the bucket for the fetch key. ⛔ **Exactly one writer holds a channel's fetch keys at a
@@ -875,6 +898,13 @@ under its fetch key, which is a first fetch, not a re-fetch. ⛔ **Each move of 
 the source path's readers switch and the source path retires in the SAME window** -- a copy that leaves the old
 path serving beside the new one is a standing duplicate output path, which the shadow-pipeline veto forbids. The
 move is its own chain, not a rider on another cell.
+- **"Retire" means** that in the move's window the old path's readers are switched, its writers are stopped, and its
+  read grant is removed. It does NOT mean deletion. No move performs an S3 delete; deleting retired prefixes is ONE
+  batched act on a human's word.
+- **A lossless re-serialisation is a copy.** An existing JSON object re-written as parquet silver, with every field
+  kept, counts as a copy under this contract, not a re-derivation. Each object is graded by a round-trip equality check.
+- **Derived records are silver.** Records the pipeline derived from documents it never stored (the `filings/v1`
+  objects) move to silver. Their bronze is filled only by the backfill's first fetch of the document.
 
 
 ## 2. THE BOUNDARY
@@ -1768,14 +1798,20 @@ bind.
 - (c) request: `s3://opal-data-harvest/sec/harvest/bronze/company_tickers/date=2026-09-21/sec_ticker_cik_cache.json`
 - silver: `s3://opal-data-harvest/bloomberg/harvest/silver/model_block/date=2026-09-21/part-20260921T162530Z.parquet`
 Each prints `opal-data-harvest` only under the simulated tenancy (plan s.3.2; 59 of 60 addresses, controls unmoved).
-At this version the live registry still prints `opal-data-assets` for bronze and silver.
+
+**Landed on SITEZ at v0.17 (measured at HEAD `39731fbda7`):** `tiers.json` carries the GENERAL tenancy (every tier
+home:scope), and `systems.json` carries the five vendor rows (`barrons`, `wsj`, `ft`, `filings-xbrl`,
+`issuer-site`). Both arrived through the CLOUD merge. The builder still prints `opal-data-assets` for bronze and silver
+(and `opal-data-portal-v2` for platinum), for one reason: `scopes.json` holds TWO `harvest` rows, and `lookup()` takes
+the PRODUCT one (row Z-S203). With that row alone removed, on a scratch registry, every tier prints
+`opal-data-harvest`, validate returns 0 refusals, and the controls for other pipelines are unmoved (`1.0.0_SA_CTO~Z`,
+and `4.0.0_SA_CRO~Z` msg 24080). S3 census 21:19Z (`2.0.0_SA_COO~Z` msg 24087): 1,461 objects in `opal-data-harvest`
+and 0 AMGT objects in the vetoed buckets, so the migration renames keys inside one bucket.
+
+**Closed at v0.17:** Lusha's bronze and contact fields, now `C-LUSHA-EXCEPTION`, on Andrew's word.
 
 **Open, and not decided by this PRD:**
-- The tenancy and the five `systems.json` vendor rows (`barrons`, `wsj`, `ft`, `filings-xbrl`, `issuer-site`) are
-  the laptop `4.0.0_SA_CRO` lane's (`PLATFORM_LOGIC_DOCS`). A GENERAL tenancy carrying `harvest` is reported drafted on
-  the laptop fabric (`1675a8f631`, local, unpushed, not readable here); it homes platinum under R6, which
-  `C-HARVEST-HOME` adopts. The vendor rows are not drafted.
-- Whether Lusha keeps bronze, and whether its silver drops contact fields (an exception to `C-SILVER-PARQUET`), is
-  Andrew's call.
+- Deleting the duplicate `harvest` row is the registry lane's act (`PLATFORM_LOGIC_DOCS`; `~Z` is not in it).
+- The R20 register entry for `C-LUSHA-EXCEPTION`, by the same lane.
 - Retiring the empty `opal-harvest-articles` table is a table deletion and needs a human's word when executed; the
   contracts record the intent, not the authority.
