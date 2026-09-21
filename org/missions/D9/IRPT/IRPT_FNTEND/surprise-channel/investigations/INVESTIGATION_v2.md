@@ -4677,6 +4677,29 @@
     "disposition": "UNDER_INVESTIGATION"
   },
   {
+    "id": "IRPT_FNTEND-W3-S42",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-21T13:42:29Z",
+    "one_line": "FE-s-52's F52-AC4 (whole IRPT_FNTEND suite, 0 fail) shows 1 pre-existing fail unrelated to this order's four files (alias-probe.test.ts, pre-envelope.test.ts, ExportButton.tsx, SentimentGauge.tsx): __tests__/fe-s-49/admin-gate.test.ts's F49-AC8 assertion `expect(carried.length).toBe(0)` reads 2, because src/App.tsx (never in this order's grant) at HEAD carries two 'unrelated' nav hunks (an ArrowLeftRight import and a /trade-submission route) that F49-AC8 treats as hunks that should not have landed. This is a DIFFERENT assertion than the already-filed IRPT_FNTEND-S67 (which named F49-AC10's timeout); S67 does not cover this one.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-52 F52-AC4: 'the whole IRPT_FNTEND suite is unaffected by the ExportButton/useExportAnchor refactor (F52's own export/ tests included)', invocation `bun test src/pages/InvestorReporting`, expect `(?<![0-9])0 fail`.",
+    "world_is": "At workspace be8cf218 (portal be8cf218743af0c04a4d57b908b28cf7435e119d, this worker's only edits: alias-probe.test.ts, pre-envelope.test.ts, ExportButton.tsx, SentimentGauge.tsx -- confirmed by `git status --short` showing exactly those four paths), `bun test src/pages/InvestorReporting` reads 586 pass / 21 skip / 1 fail of 608. The one fail is admin-gate.test.ts's F49-AC8 ('the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'): the gate-hunk sub-assertions (`gateHunks.length===3`, `identical===3`) PASS, but `expect(carried.length).toBe(0)` at admin-gate.test.ts:582 reads 2. The test's own log names the carried hunks: '+|  ArrowLeftRight,' and '+|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. / { path: \"/trade-submission\", label: \"Trade Submission\", icon: ArrowLeftRight },'. `grep -n \"ArrowLeftRight|trade-submission\" src/App.tsx` confirms both lines present at this worktree's HEAD (:52, :126, :475) -- App.tsx is not in this worker's `<paths>` grant and this worker made no edit to it. F52-AC3 (this order's own two test files, isolated) and typecheck and lint (F52-AC1, F52-AC2) are all clean; only the whole-suite run surfaces this unrelated fail.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && git status --short: ' M src/components/market-performance/SentimentGauge.tsx', ' M src/pages/InvestorReporting/__tests__/fe-s-19/pre-envelope.test.ts', ' M src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts', ' M src/pages/InvestorReporting/export/ExportButton.tsx' -- no App.tsx, no admin-gate.test.ts",
+        "bun test src/pages/InvestorReporting output: '586 pass', '21 skip', '1 fail', 'Ran 608 tests across 106 files.'; the sole fail line: \"FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86\" at admin-gate.test.ts:582:28, 'Expected: 0 Received: 2'",
+        "admin-gate.test.ts console output: 'THE THREE GATE HUNKS ARE BYTE-IDENTICAL TO 2.0.0_SA_COO~D'S c29a8b86: 3 of 3' (this half passes) followed by 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of ... (expected 0: they are not this order's)' naming ArrowLeftRight / /trade-submission",
+        "portal/src/App.tsx:52,126,475 (this worktree HEAD be8cf218): ArrowLeftRight import, /trade-submission route entry and its Route element, all present",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md IRPT_FNTEND-S67 (already filed): names F49-AC10's timeout only, not F49-AC8's carried-hunks assertion -- a distinct failure mode on the same file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
     "id": "IRPT_FNTEND-W6-S2",
     "project": "IRPT_FNTEND",
     "fabric": "laptop",
@@ -4717,6 +4740,30 @@
         "tabs/holdings/slices.ts's renderedClassification (this cell's edit): non-authoritative branch returns 'withheld', not 'unknown' -- verified by fe-s-55/withheld-vs-unknown.test.ts, 4 pass / 0 fail, printed 'WITHHELD DISTINCT FROM ASSERTED UNKNOWN: yes'.",
         "whole-suite run (both pre- and post-edit), fe-s-32 section: 'PRECONDITION: dev server on http://localhost:5426 -- ABSENT (ECONNREFUSED ...)' then 'PRECONDITION ABSENT -> 5 criteria SKIPPED, 0 failures. This is not a code defect.' -- so F32-AC3 did not execute in this session's F55-AC5 measurement.",
         "IRPT_FNTEND.TO-FE-s-55.holdings-non-authoritative-withheld.md <paths>: __tests__/fe-s-32/ is not a member."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S43",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-21T13:58:12Z",
+    "one_line": "portal's eslint.config.js scopes its one config object to `files: ['**/*.{ts,tsx}']`, but `bun run lint` (`eslint .`) also lints whatever sits in the gitignored `portal/.vite/deps/*.js` cache vite's dev server writes (left behind by an earlier whole-suite test run that spins up a real dev server, e.g. fe-s-27/_dev-server.ts), and reports 10-15 'Definition for rule ... was not found' ERRORS from those minified vendor bundles' own embedded eslint-disable comments -- rules like react-hooks/exhaustive-deps that ARE configured for .ts/.tsx but are not loaded for a .js file outside that files glob. This inflated F52-AC2's error count from 0 to 15 on one run, before the cache directory was deleted (a gitignored build artifact, safe to remove) and lint re-ran clean at 0 errors / 79 warnings. Not caused by this order's edits; not previously filed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "TO-FE-s-52 F52-AC2: 'the portal's own lint script ... returns clean. Print the FULL error count before your fix (baseline) and after (must be the pre-fix count minus exactly 5, with 0 new errors introduced)'.",
+    "world_is": "At workspace be8cf218 / portal be8cf218 (this worker's 4 edited files only): `bun run lint` after the fix read '99 problems (15 errors, 84 warnings)' while `portal/.vite/deps/` existed (created by an intervening `bun test src/pages/InvestorReporting` whole-suite run), with every extra error located in `.vite/deps/@headlessui_react.js`, `chunk-BDZO4Y2N.js`, `chunk-XRJMR4A3.js`, `recharts.js` at line numbers in the thousands (minified vendor bundles), each message 'Definition for rule ... was not found' for a rule this repo's config only declares under `files: ['**/*.{ts,tsx}']`. `rm -rf portal/.vite` (confirmed `git check-ignore -v .vite/deps/@headlessui_react.js` -> `.gitignore:17:.vite`) then `bun run lint` read '79 problems (0 errors, 79 warnings)', matching this order's own clean post-fix count with no intervening cache. The failure is intermittent, keyed to whether `.vite/deps` happens to exist when lint runs, not to source content -- any dev-server-spinning test run before a lint run can reproduce it. ARMED: eslint.config.js's file-matching gap is a standing config defect (not this order's grant) that will re-fire the same way for the next seat who runs lint after any test that starts a real vite dev server.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun run lint (contaminated): '✖ 99 problems (15 errors, 84 warnings)', 4 file headers under portal\\.vite\\deps\\, each error 'Definition for rule '...' was not found' naming react-hooks/exhaustive-deps, react-hooks/rules-of-hooks, jsx-a11y/anchor-has-content, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-unused-vars, @typescript-eslint/ban-types, @typescript-eslint/no-non-null-asserted-optional-chain",
+        "git check-ignore -v .vite/deps/@headlessui_react.js -> '.gitignore:17:.vite'",
+        "portal/eslint.config.js:12 'files: [\"**/*.{ts,tsx}\"]' is the only files restriction in the one exported config object; :10 globalIgnores(['dist', '.runtmp/**', '.frontend-dev/**']) does not name .vite",
+        "rm -rf portal/.vite; bun run lint -> '✖ 79 problems (0 errors, 79 warnings)', rc=0, no .vite/deps file header present",
+        "ls -la portal/.vite (before removal): deps/ subdir mtimes ~09:38 local, same session, pre-dating this worker's own edits -- consistent with an earlier bun test run in this worktree that starts a real vite dev server (src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts, fe-s-45/dev-script-writes.mjs)"
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
