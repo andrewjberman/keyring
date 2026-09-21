@@ -87,3 +87,33 @@ and its pair names R19-B's `crosswalk.py` commit as carry-along.
 keys changed).
 
 **Round 19 as issued: R19-A (re-projection), R19-B, then R19-C. One slug; R19-C sequenced behind R19-B.**
+
+## 5. ADDENDUM ~18:3xZ, before issuance -- R19-C's three calls and row Z-S195 (msg 24018)
+
+**CALL 1 -- R19-D: RULED IN, this round.** `C-EXEC-MANAGEMENT` says the fallback "never hides why the filing
+failed", and the page's SERVED branch renders neither `roster_status` nor `roster_reason`. Call 2's served
+`source_item` makes the source line true but does not say WHY the filing roster failed. So R19-D renders
+`roster_source`, `roster_status` and `roster_reason` on a SERVED fallback block (`src/pages/SecurityAnalysis`).
+It is disjoint from A/B/C and sequenced after R19-C drains, since it renders R19-C's fields. It is a DEV push. **Its
+PROD promote is carded to Andrew** (below). Leaving the gap for a round would put the contract short in front of the
+managers, which is exactly the review his ~16:5xZ word made the priority.
+
+**CALL 2 -- the served `source_item`: ACCEPTED.** It serves what the officers actually came from ("Bloomberg
+COMPANY_EXEC_OFFICERS (fallback: no RESOLVED filing roster)"); the stored filing values travel as `filing_source_*`.
+The served value differs from the stored one because the stored one describes the filing and the served line
+describes the officers. Truth over byte-parity.
+
+**CALL 3 -- the absent labels: ACCEPTED.** The four branches key on officer count first, and every label is true. The
+5 genuine zero-officer names stay byte-equal, 2 change class (CSL, 6861), 8 gain `roster_source` and
+`roster_source_basis`, and 0 names hit ROSTER_UNRESOLVED_NO_FALLBACK today.
+
+**ROW Z-S195 (disarm owner: this seat) -- the title rule RULED, the act carded.** Keyence's one officer is "President"
+(Bloomberg). For a Japanese issuer the President (shacho) is the chief executive; for a US issuer "President" often is
+not (President and COO). **RULED, jurisdiction-aware:** for a Japanese-listed issuer with no officer carrying a
+chief-executive title, a "President" or "Representative Director and President" counts as the chief executive. It is
+not generalized to other jurisdictions without evidence. It lands in `C-EXEC-MANAGEMENT` at the next PRD bump (ratified
+text, so the CVO signs). **Acting on it for Keyence means a live CEO web search**, beyond Andrew's one-time Bright Data
+word on 2026-09-21, which ran 0 searches. That is a card, not a cell. Until then 6861 truthfully reads NOT_SEARCHED.
+
+**Round 19 as issued: R19-A, R19-B, R19-C, R19-D.** B first; A once its pair completes; C after B drains, with its
+pair; D after C drains.
