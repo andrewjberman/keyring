@@ -5,9 +5,9 @@
  "macro_code": "MDPF",
  "fabric": "laptop",
  "dep_stage": "EXECUTING",
- "status": "scoping",
+ "status": "active",
  "name": "Tax SMA: reconciled traded-account membership and daily additive assets",
  "generated_from": "org/missions/D8/MDPF/MDPF_TAXSMA/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-15T20:33:11Z"
+ "generated_at": "2026-09-21T03:04:03Z"
 }

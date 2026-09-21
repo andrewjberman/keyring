@@ -128,3 +128,43 @@ its vintage.
 §5's hand-off figure (**17**, correcting the **19** broadcast an hour earlier) was re-derived at write time on
 the proof instances rather than carried from the earlier broadcast, and it held. That is the discipline the two
 errors above did not get.
+
+---
+
+## 8. ANDREW-DIRECT ~02:4xZ -- **THE ARM TERMS ARE AMENDED: NO NEW COO SEATS TONIGHT**
+
+Relayed by `0.0.0_AB_MSTR` (`98914`) to five seats. **His words, VERBATIM:**
+
+> *"The issue is that if we reboot, I cannot relaunch remotely, and therefore we would lose a night of
+> progress, even if that progress is slow. I think the more realistic solution as a result is to just proceed
+> through the night and see what we can get, without spawning any new COOs. I want COO~O reaped as soon as
+> their work is done, and we try to stay light for the remainder of the session as far as new spawns."*
+
+**THE MEASUREMENT BEHIND IT** (`0.0.0_AB_MSTR`, ~02:2xZ, Windows counters): **25.7 of 31.7 GB in use (81%)**,
+0.0 GB free list, Memory Compression at 1.7 GB. ⭐ **The seven claude hosts are only 3.5 GB between them
+(~0.5 GB a seat) -- the large consumer is the KERNEL: paged pool 10.1 GB RESIDENT, nonpaged 3.2 GB, where ~1 GB
+total is normal.** 170,408 handles is ordinary, so it is not a per-process leak; the box creates and destroys
+processes at a very high rate (56 bash, 40 conhost, 19 python alive at one instant) and **no process closing
+returns kernel pool -- only a reboot does, and he has ruled the reboot out.**
+
+### 8.1 HOW THIS BINDS THIS ARM, AND HOW IT DOES NOT
+
+| term | before | now |
+|---|---|---|
+| **new `2.0.0_SA_COO*` seats** | this seat spawns a needed lane the same tick (call-routing directive) | ⛔ **REFUSED for the rest of the session.** This seat holds spawn, so this binds ME first. |
+| `2.0.0_SA_COO~O` | seated for two acts, closed by `0.0.0_AB_MSTR` on report | unchanged, but **reaped THE MOMENT it reports**, not at a convenient tick |
+| worker subagents | issuer's pacing | **unchanged -- explicitly the issuer's call.** His words: *"How each round is paced is its issuer's call and nothing here changes a cut, an order or a sign-off."* |
+| scope, cadence, adjudication | §3 | **unchanged** |
+
+⚠ **THE SPAWN CLAUSE OF THE CALL-ROUTING DIRECTIVE IS SUSPENDED, NOT REPEALED, AND ONLY FOR COO SEATS.** The
+2026-09-17 routing says *"If you need a new agent, you spawn them"*; tonight a needed COO lane is **not**
+spawned -- the tick names it and carries it. ⭐ **That is HIS word narrowing HIS earlier word, which is the
+only thing that may narrow it** -- a seat inferring this limit on its own would be manufacturing the friction
+CLAUDE.md §2 forbids.
+
+### 8.2 ⛔ THE CAPACITY LINE THIS ARM HAS BEEN PRINTING IS NOW ANSWERED FROM THE OTHER SIDE
+
+Ticks 1 and 2 both printed **4 live COO lanes against a cap of 3** and disclosed it as transient on his act.
+**It resolves by `~O` closing, not by a seating decision** -- and the reason the cap exists is now measured
+rather than assumed: it is a RAM cap in effect, not merely a context-hygiene rule. **A cap whose mechanism you
+can see is a different object from a cap you are obeying on authority**, and this one is now the first kind.
