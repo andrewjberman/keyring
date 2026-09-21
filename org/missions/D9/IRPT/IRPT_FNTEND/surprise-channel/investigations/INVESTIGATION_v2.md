@@ -4631,6 +4631,50 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S21",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-21T13:42:31Z",
+    "one_line": "F53-AC4 ('the whole IRPT_FNTEND suite' at 0 fail) cannot pass on portal be8cf21874 through no act of this cell's: fe-s-49/admin-gate.test.ts's F49-AC8 fails because HEAD's App.tsx carries 2 hunks from commit c29a8b86 the test calls unrelated to the admin gate (an ArrowLeftRight icon import and a Trade Submission nav item), which the test asserts must NOT survive into HEAD. src/App.tsx and __tests__/fe-s-49/ are outside FE-s-53's grant (adapt.ts's adaptStatusEnvelope only) and this class of FE-s-49 fragility is already tracked as BLOCKING/held-from-drain by row IRPT_FNTEND-S67 -- this is a DIFFERENT concrete assertion in the same file (F49-AC8's gate-hunk census, not F49-AC10's timeout), so it gets its own row rather than being folded into S67's.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-53 F53-AC4: <invocation>cd <WS>/portal && bun test src/pages/InvestorReporting</invocation> <expect>(?<![0-9])0 fail</expect> -- 'the whole IRPT_FNTEND suite'.",
+    "world_is": "cd <WS>/portal && bun test src/pages/InvestorReporting (with this cell's fix to adaptStatusEnvelope in place, and the new fe-s-53 test passing 4/4) reads '590 pass', '21 skip', '1 fail', 'Ran 612 tests across 107 files.', rc=1. The one failure: 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86', printed line 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' with 'not ours: +|ArrowLeftRight' and 'not ours: +|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. /       { path: '/trade-submission', label: 'Trade Submission', icon: ArrowLeftRight },', expect(carried.length).toBe(0) received 2. `git status --porcelain -- src/App.tsx src/pages/InvestorReporting/__tests__/fe-s-49` is empty in this worktree (nothing of mine touches either), and the test reads committed git blobs (git show --format= c29a8b86 -- src/App.tsx, and HEAD's App.tsx), so the failure is a property of the committed tree at be8cf21874, not of this run. Re-running fe-s-49/admin-gate.test.ts alone reproduces the identical failure (9 pass / 1 fail). A census of both investigation files for 'ArrowLeftRight', 'Trade Submission' and 'UNRELATED HUNKS'/'gateHunks'/'c29a8b86' found row S67 (same test file, a timeout on F49-AC10, 'FE-s-49 is held from drain') but no prior row on this specific F49-AC8 assertion.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && timeout 600 bun test src/pages/InvestorReporting -> '590 pass', '21 skip', '1 fail', 'Ran 612 tests across 107 files.', rc=1",
+        "cd <WS>/portal && timeout 60 bun test src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts -> 'F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86' FAIL, 'Expected: 0', 'Received: 2', 9 pass / 1 fail",
+        "cd <WS>/portal && git status --porcelain -- src/App.tsx src/pages/InvestorReporting/__tests__/fe-s-49 -> (empty)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-S67 (surfaced_by 2.0.0_SA_COO~F): 'FE-s-49 is held from drain' -- same file, a different symptom (F49-AC10 timeout, not F49-AC8's gate-hunk census)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S22",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-21T13:42:31Z",
+    "one_line": "FE-s-53's required fix breaks fe-s-47/no-status-reason.test.ts's F47-AC6 (a git-grep subtraction census of every 'UNCERTAIN'/EXPLICIT_UNKNOWN_STATE reference in the committed portal tree outside __tests__/, classified against a hardcoded per-line RULES table). The fix's new line in adaptStatusEnvelope (adapt.ts:566, `wire.state === 'UNCERTAIN' ? (reason ?? NO_STATUS_REASON) : null`) is a NEW, correct site naming the wire's own explicit-unknown token; the census matches it (the pattern is literally `EXPLICIT_UNKNOWN_STATE|'UNCERTAIN'|\"UNCERTAIN\"`) but no RULES entry classifies it, so it prints UNCLASSIFIED and F47-AC6's `breaks` goes from 0 to 1. fe-s-47's RULES table is outside FE-s-53's grant (adapt.ts's adaptStatusEnvelope only; fe-s-47's test file is not in <paths>), so this cell cannot add the classification entry the new site needs. This is a DIRECT, mechanical CONSEQUENCE of correctly implementing the cell (not a pre-existing condition like IRPT_FNTEND-W4-S21's fe-s-49 finding): before this cell's fix, the same census reads 0 breaks (F47-AC9's own BEFORE arm, run moments earlier in the same file, still shows the constant's OLD site count).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-53 F53-AC3: <invocation>bun test .../fe-s-14 .../fe-s-47</invocation> <expect>(?<![0-9])0 fail</expect> -- 'the existing envelope/status suites (fe-s-14, fe-s-47) are unaffected -- this cell adds a path, it does not change any already-passing case.' The cell's own REMEDY text requires exactly the kind of new site F47-AC6 cannot yet classify: 'mirror carryAvailabilityFromStatus's own statedState === null gate, adapted to whatever the equivalent no-state-stated condition is on THIS function's own inputs -- ground it in the wire type.'",
+    "world_is": "cd <WS>/portal && bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47 (portal a26d791a, this cell's fix committed) reads '27 pass', '1 fail', 'Ran 28 tests across 6 files.'; the one failure is 'FE-s-47 ... > F47-AC6 -- the reach, by subtraction over the committed tree', printed line 'F47-AC6 UNCLASSIFIED src/pages/InvestorReporting/contracts/adapt.ts:566: partialReason: wire.state === 'UNCERTAIN' ? (reason ?? NO_STATUS_REASON) : null,' and 'F47-AC6 KEPT SITES: 1; census breaks: 1', expect(breaks).toBe(0) received 1. The census: 'git grep -n -E EXPLICIT_UNKNOWN_STATE|'UNCERTAIN'|\"UNCERTAIN\" HEAD ... 81 lines, 48 under __tests__/, 33 outside' (was 29 outside / 0 breaks before this commit, per the same test's own earlier passing run captured in this cell's RED transcript, portal be8cf21874). Considered and rejected: rewriting the check as `wire.state === STATE_FOR_WIRE.UNCERTAIN` (dot access, no quoted 'UNCERTAIN' substring and no EXPLICIT_UNKNOWN_STATE token) would dodge the grep pattern and pass F47-AC6 without changing behaviour -- but that optimizes for evading a census whose entire purpose is to force acknowledgment of a new explicit-unknown site, which is worse than reporting the true mechanical conflict here for the RULES table's owner to resolve.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && timeout 300 bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47 (portal a26d791a) -> '27 pass', '1 fail', 'Ran 28 tests across 6 files.'",
+        "same run, F47-AC6 test body: 'F47-AC6 UNCLASSIFIED src/pages/InvestorReporting/contracts/adapt.ts:566: partialReason: wire.state === 'UNCERTAIN' ? (reason ?? NO_STATUS_REASON) : null,' and 'F47-AC6 KEPT SITES: 1; census breaks: 1'",
+        "cd <WS>/portal && git show a26d791a --stat -- src/pages/InvestorReporting/contracts/adapt.ts (the only adapt.ts hunk this commit adds is inside adaptStatusEnvelope, :536-569, per BOUNDS)",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:333-350 (the RULES table) names no entry whose text regex matches the new line"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
