@@ -10375,6 +10375,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC5 <expect>: 'all three files print compiles True, non_ascii_bytes 0 (pure ASCII) and crlf 0 (LF only)' -- read plainly, a literal zero count for every one of the three named files including .tools/to-pipeline-gate.py.",
     "world_is": ".tools/to-pipeline-gate.py carried 8 non-ASCII bytes at HEAD before this cell existed (pre-existing glyphs unrelated to GATE (x)) and still carries exactly 8 after this cell's edits (delta 0) -- the file was never pure ASCII, so the literal zero cannot be produced without an out-of-<paths>-scope edit stripping pre-existing content this order neither grants nor names.",
     "notes": "Graded AC5 PASS against the criterion's own qualifying clause ('no non-ASCII or CRLF this cell introduced'), never against the unqualified literal zero, and never repaired by stripping the pre-existing glyphs (the REFUSAL CLAUSE forbids satisfying a criterion by a route the order did not name). Rule 27's citation-staleness class, one level down: the TO's numeric bar assumed a pure-ASCII baseline for a file it never measured before writing the bar."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S184",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T14:18:49Z",
+    "one_line": "DISARMS W62-S1 (OBSERVATION, INERT): the worker's disposition is correct and this seat's own AC5 numeral was the defect, not the code. Re-derived on a DIFFERENT instrument (a diff-scoped added-lines character scan, not the worker's own before/after byte count) -- delta 0 confirmed independently.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff HEAD~1 HEAD -- .tools/to-pipeline-gate.py .tools/direct-act-order.py .tools/tests/test_gate_x_round_issuer.py`, added lines only (lines starting '+', excluding the '+++' header), decoded and scanned character-by-character: 95 added lines, 0 non-ASCII characters among them.",
+        "`.tools/to-pipeline-gate.py` non_ascii_bytes measured independently at the parent commit (git show HEAD~1:<path>) and at the current commit: 8 and 8 -- byte-identical, confirming the worker's before/after comparison on a second, unrelated instrument (diff-scoped content vs whole-file byte count at two named commits).",
+        "This seat authored AC5's literal '<expect>...non_ascii_bytes 0...</expect>' without first measuring .tools/to-pipeline-gate.py's actual baseline -- the exact 'a bar copied from a validation measurement reads as a rule at the cut' class the round-14 analysis's own findings s.1 names, one level down (a bar authored WITHOUT ever measuring, not one copied from a measurement)."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The worker's PASS on AC5, graded against the criterion's own qualifying clause, is the correct disposition; the round-15 findings for the CTO's analysis carry this as a criterion-authoring lesson (measure the baseline before writing a zero-count bar), not a code defect and not a round-16 cell.",
+    "notes": "Filed at drain (AMGT-rk-62, worker 0.9.0_WK_AMGT_RESAPP~62, commit 8f59342ee4, merged a495e551de). No repair needed to AC5's text -- the instance already grades correctly against the qualifying clause, and a future reader of this TO should read AC5 the same way."
   }
 ]
 ```
