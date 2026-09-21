@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-20</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-20 (round 7, the recut on the round-6 analysis @fa2ff4f0dd). The export data path is one of round 7's four backend cells; scope confirmed by investigation a7edd66ed0. Served-path handler deploy -> both never-widen halves at HEAD BEFORE any apply (arm (c) STOP is the expected first pass).</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~1, 2026-09-21. Second pass: both never-widen halves verified PRESENT at HEAD naming packet blob 74a1004fde6e649c321f43d62cfbda5b61489b98; arm (d) applied the export root under ledger irpt-bckend-ib-rtg-1-export-apply (OPENED b2b2912e91, CLOSED 0330c5b79c) -- served CodeSha256 cn8YKEP2oQdfvAjdpa32Wfp9oJqhAIMGkECv+H4vUg4=, IAM policy export_render_receipt live; arm (e) battery_ib_rtg_1.py PASSED 8 of 8 arms, 0 UNEXPECTED, token IBR72-EXPORT-RECEIPT-ALIGNED-AND-TAXONOMY-BY-CODE, graded on the disclosed-partial's exercisable substance (row W1-S43: submit-wiring remains a named follow-on, NOT_READY confirmed live, excluded by name). proof_of_spec: R72-AC1 PASS-by-output, both unbound and --governing-order-bound VALID rc=0.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 7 (the CTO's round-6 analysis @fa2ff4f0dd) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 | **Round-6 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND6_ANALYSIS.md` @fa2ff4f0dd | **CTO S105/S106 ruling:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_S105_S106_EXPORT_RECEIPT_CONTRACT_20260919.md` @0110b9de01 | **Decomp cell:** `IB-rtg-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.7 @a1c21f1424, s.R7.1) | **outcome_ref:** FWD-2
 
