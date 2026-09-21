@@ -11186,6 +11186,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Every criterion invocation is literal and reproducible by any seat typing it.",
     "world_is": "An inline python -c carrying escape sequences does not survive this device's tool transport byte-for-byte.",
     "notes": "Filed by the named owner at rk-84's drain."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W85-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~85",
+    "surfaced_at": "2026-09-21T23:20:00Z",
+    "one_line": "lib/opal_data_harvest/ has no lib/__init__.py, so a test file UNDER that package (relative import) and any OTHER caller using the absolute `lib.opal_data_harvest.X` path load the SAME source as TWO SEPARATE module objects -- a monkeypatch on one is invisible to code reached through the other.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`python -m pytest lib/opal_data_harvest/test_harvest_grammar.py::test_slash_key_is_a_partition -v -p no:cacheprovider --collect-only` (this worktree) prints `<Package opal_data_harvest>` at the tree root, not `<Package lib><Package opal_data_harvest>` -- pytest's 'prepend' import mode stops walking for a package root at the first parent directory lacking __init__.py, and `test -f lib/__init__.py` is absent in this worktree.",
+        "Building AC1's test_one_writer_for_both_channels arm: `from . import harvest_grammar` at the top of lib/opal_data_harvest/test_harvest_grammar.py resolves to module `opal_data_harvest.harvest_grammar` (bare); `integrations/seekingalpha/rest_fetch.py`'s own `_load_harvest_grammar()` always does `import lib.opal_data_harvest.harvest_grammar as harvest_grammar` (qualified) because it is a plain script with no package of its own. Patching the bare-named module and then calling `rest_fetch.land_harvest(...)` left `calls == []` (both first-draft runs failed: `AssertionError: assert ('sa', '777') in []` and, for the pinned-import arm, `AssertionError: assert not True` where the 'pinned' `uploads.py` returned the ALREADY-CACHED real module because `opal_data_harvest.uploads` was already in sys.modules under the bare name from pytest's own collection).",
+        "Fix landed in this commit: lib/opal_data_harvest/test_harvest_grammar.py's test_one_writer_for_both_channels now imports `lib.opal_data_harvest.harvest_grammar as hg_abs` explicitly and patches THAT object (matching rest_fetch.py's own resolution); integrations/seekingalpha/tests/test_rest_harvest.py's test_pinned_base_has_no_harvest_path renames the extracted pin copy's package directory to `opal_data_harvest_pin_check` before importing it, so it cannot collide with either the bare or the qualified real-module cache. Both arms then PASS: `python -m pytest integrations/seekingalpha/tests/test_rest_harvest.py lib/opal_data_harvest/test_harvest_grammar.py -v -p no:cacheprovider` -> '12 passed'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's WHAT YOU BUILD section (ruling 2) describes ONE writer function reached by both channels, and expects that to be provable by ordinary means (a test naming both call sites, AC1's test_one_writer_for_both_channels among the required arms) -- an ordinary monkeypatch on the imported name being the obvious way to prove it.",
+    "world_is": "This worktree's lib/opal_data_harvest/ package has no lib/__init__.py, so pytest's own collection of ANY lib/opal_data_harvest/test_*.py file registers that package under the BARE name `opal_data_harvest`, a DIFFERENT sys.modules identity than the ABSOLUTE `lib.opal_data_harvest` every non-test caller (rest_fetch.py, and any code using the repo's own established `import lib....` convention) resolves to -- the same source file loaded twice as independent module objects with independent globals. A future test under lib/opal_data_harvest/ that monkeypatches a dependency via a bare/relative import and asserts on behavior reached through the qualified path (or vice versa) can pass green while proving nothing, silently.",
+    "notes": "Disarmed for THIS cell's own two files by importing the qualified `lib.opal_data_harvest...` name explicitly wherever a test needs to affect code outside its own package (see the fix evidence above). The underlying repo-wide trap (no lib/__init__.py) is untouched -- this worker's <paths> does not include lib/__init__.py or a repo-wide fix, and adding one is a structural call for the disarm_owner, not a worker's own widening."
   }
 ]
 ```
