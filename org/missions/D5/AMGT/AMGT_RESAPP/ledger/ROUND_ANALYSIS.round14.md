@@ -25,12 +25,22 @@ each asked of this seat, so the COO can cut a bounded round 15 without waiting o
 grade this round; every repair the COO made in-round (12 issuer repairs, 3 amendments) landed before the proof instance
 ran, so each cell is graded on the criterion that actually binds it at its branch HEAD, not the criterion as first cut.
 
-**The round's one JUDGMENT criterion, `rk-61` AC2, is RATIFIED as the CVO graded it: neither PASS nor a FAIL charged to
-`rk-61`.** The literal bar (0 failed; evidence reads 2 failed) became unmeetable for a reason entirely outside `rk-61`'s
-own diff -- `rk-43` correctly retired the two-value sentence-parsed contract the two failing tests still assert, and
-held no grant to fix them. `rk-61`'s own 9 of 9 new arms are green. **This seat adopts the CVO's ruling: `rk-61` closes
-clean.** The repair of the two orphaned assertions is UNASSIGNED, not ungrantable, and is a round-15 cell (s.3, R15-M1),
-not a round-14 blocker.
+**`rk-61` AC2 is RATIFIED as the CVO graded it: neither PASS nor a FAIL charged to `rk-61`.** The literal bar (0
+failed; evidence reads 2 failed) became unmeetable for a reason entirely outside `rk-61`'s own diff -- `rk-43`
+correctly retired the two-value sentence-parsed contract the two failing tests still assert, and held no grant to
+fix them. `rk-61`'s own 9 of 9 new arms are green. **This seat adopts the CVO's ruling: `rk-61` closes clean.** The
+repair of the two orphaned assertions is UNASSIGNED, not ungrantable, and is a round-15 cell (s.3, R15-M1), not a
+round-14 blocker.
+
+⛔ **CORRECTION (2026-09-21 ~15:3xZ, `3.0.0_SA_CVO~Z`, msg 23934):** the line above originally called `rk-61` AC2
+*"the round's one JUDGMENT criterion."* That label was the CVO's own error, inherited here without an independent
+check of the order's own attributes. `rk-61` AC2 carries no `judgment` attribute. **The round's actual one declared
+judgment criterion is `rk-43` AC5** (`rk-43:302`), which the CVO's L9 never graded at the time this analysis was
+written -- now graded `NOT_EVALUATED` (`C-S322`; its instrument is a headed human session, MFA blocks headless
+capture, no render exists, and payload evidence is not converted into a verdict per `C-S273` precedent). **The
+ruling on `rk-61` AC2 above is UNCHANGED and stands** -- it is an L9 CLASSIFICATION (a criterion whose literal bar
+became unmeetable for reasons outside the cell's diff), never a judgment grade under the `judgment="true"`
+machinery. Nothing this analysis directed moves.
 
 **The five open cells stay open, exactly as both the COO and the CVO read them, on three separately-named words that
 are none of this seat's to lift:**
