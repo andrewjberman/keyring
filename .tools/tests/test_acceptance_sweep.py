@@ -27,7 +27,9 @@ Exit 0 = every arm PASS. Exit 1 otherwise.
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 TOOLS = Path(__file__).resolve().parent.parent
@@ -44,6 +46,13 @@ def check(name: str, ok: bool, detail: str = "") -> bool:
 
 def _load_gate():
     spec = importlib.util.spec_from_file_location("surprise_row_gate_under_test", str(GATE_PATH))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _load_gate_from_path(path, modname):
+    spec = importlib.util.spec_from_file_location(modname, str(path))
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -131,6 +140,68 @@ def main() -> int:
          % (fail_hit or "NOT FOUND", terminal_ok, terminal_why),
          bool(fail_hit) and terminal_ok is True,
          "fail_rows=%r terminal_ok=%r terminal_why=%r" % (fail_rows, terminal_ok, terminal_why))
+
+    # ARM 8 (a) -- THE DISCRIMINATING ARM (AMGT-rk-69, row AMGT_RESAPP-Z-S176): a fixture order whose
+    # prose names the tag INLINE, both open and close, in backticks, BEFORE its real block of 3
+    # criteria -- the exact shape rk-58's own order carries at its line 80 (`<proof_of_spec>...
+    # </proof_of_spec>` block the ISSUER wrote ...). Proven against HEAD's OWN COPY of the gate
+    # (`git show HEAD:.tools/surprise-row-gate.py` into a temp file) so the "before" half is measured,
+    # not assumed: HEAD's unanchored _PROOF_BLOCK_RE binds to the prose's own inline open+close pair
+    # (the non-greedy body is just the ellipsis between them) and _order_criteria returns 0. The
+    # currently-loaded, edited gate's line-anchored pattern skips the prose line (it is not ALONE on
+    # its line) and finds the real block, returning all 3.
+    prose_first_fixture = (
+        "Some intro text mentions `<proof_of_spec>...</proof_of_spec>` inline before the real block "
+        "below, exactly as rk-58's own order does at its line 80.\n\n"
+        "<proof_of_spec>\n"
+        '  <criterion id="X1"><invocation>true</invocation><expect>ok</expect></criterion>\n'
+        '  <criterion id="X2"><invocation>true</invocation><expect>ok</expect></criterion>\n'
+        '  <criterion id="X3"><invocation>true</invocation><expect>ok</expect></criterion>\n'
+        "</proof_of_spec>\n"
+    )
+    head_bytes = subprocess.run(
+        ["git", "show", "HEAD:.tools/surprise-row-gate.py"], cwd=root,
+        capture_output=True).stdout
+    with tempfile.TemporaryDirectory() as td:
+        head_copy = Path(td) / "surprise_row_gate_head_copy.py"
+        head_copy.write_bytes(head_bytes)
+        gate_head = _load_gate_from_path(head_copy, "surprise_row_gate_head_copy")
+    head_crit = gate_head._order_criteria(prose_first_fixture)
+    new_crit = gate._order_criteria(prose_first_fixture)
+    check("DISCRIMINATING: prose-first fixture -- HEAD's unanchored pattern returns 0 criteria "
+         "(swallowed by the inline open+close prose mention), the edited line-anchored pattern "
+         "returns all 3",
+         len(head_crit) == 0 and len(new_crit) == 3,
+         "head_crit=%r new_crit=%r" % (head_crit, new_crit))
+
+    # ARM 9 (b) -- a normal order (real block only, no prose mention of the tag) -> the edited
+    # pattern's count is UNCHANGED from HEAD's.
+    normal_fixture = (
+        "Ordinary lead-in prose with no tag mention at all.\n\n"
+        "<proof_of_spec>\n"
+        '  <criterion id="Y1"><invocation>true</invocation><expect>ok</expect></criterion>\n'
+        '  <criterion id="Y2"><invocation>true</invocation><expect>ok</expect></criterion>\n'
+        "</proof_of_spec>\n"
+    )
+    head_normal_crit = gate_head._order_criteria(normal_fixture)
+    new_normal_crit = gate._order_criteria(normal_fixture)
+    check("NORMAL: block-only fixture -- unchanged count between HEAD's pattern and the edited one",
+         len(head_normal_crit) == len(new_normal_crit) == 2,
+         "head=%r new=%r" % (head_normal_crit, new_normal_crit))
+
+    # ARM 10 (c) -- an order with NO <proof_of_spec> block tag at all -> the whole-text fallback
+    # (:1192, untouched by this cell) still yields its criteria.
+    no_block_fixture = (
+        "This malformed order never opens a proof_of_spec block, but still lists its criteria "
+        "directly in the body.\n\n"
+        '<criterion id="Z1"><invocation>true</invocation><expect>ok</expect></criterion>\n'
+        '<criterion id="Z2"><invocation>true</invocation><expect>ok</expect></criterion>\n'
+    )
+    fallback_crit = gate._order_criteria(no_block_fixture)
+    check("FALLBACK PRESERVED: no-block-tag fixture -- the whole-text fallback still yields its "
+         "criteria",
+         [c["id"] for c in fallback_crit] == ["Z1", "Z2"],
+         "fallback_crit=%r" % fallback_crit)
 
     print()
     for nm, ok, detail in results:
