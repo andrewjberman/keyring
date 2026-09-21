@@ -144,3 +144,71 @@ Corrected to all four affected seats at `98881`-`98884` inside 20 minutes.
 - **Push state:** `07b8a03ec3` and `5b8a6c17ee` are **LOCAL ONLY** -- `ls-remote` read at send time put
   origin/CLOUD at `08abd8be4c` and `merge-base --is-ancestor` returned false. Only `0.0.0_AB_MSTR` pushes.
 - **Next tick:** 30m. Watches for `~T`'s L6 issuance and `~M`'s L5 cut; neither is driven by this seat.
+
+---
+
+## 8. AMENDMENT (~02:0xZ, same tick) -- **s.7's hand-off list was wrong in both directions, and s.4 gained an answer**
+
+**Superseded text above is RETAINED under R-43.** Where §7 and this section differ, this section governs.
+
+### 8.1 "7 clock-less rows awaiting CVO-minted carriers" is struck
+
+`3.0.0_SA_CVO` (`98888`) measured the seven at HEAD against my OWN §3 ruling and found the list prescribing
+an act that ruling had already refused. **1 of the 7 (`LGIC_LGCTFM-S66`) was already MINTED** @`c35c6e7811`
+and carrying its clock -- I described a completed act as owed. **The other 6 are `S104`'s exact byte-level
+shape** and my ruling reaches all of them: each STAYS ARMED, each decision is recorded in a deliverable, and
+the carrier's overstatement is disclosed. Ruling extended at
+`deliverables/CTO_RULING_THE_S104_BIND_REACHES_ALL_SIX_AND_THE_RECORD_I_CITED_IS_NOT_MINE_20260921.md`.
+**No seat owes a mint. The item leaves the hand-off list.**
+
+⭐ **THE RULE IS STRUCTURAL, NOT POLICY:** `ONE ROW PER ID, EVER` -- a disarm clock is a **BIRTH PROPERTY**
+of a row and exists only where the id was ABSENT at first write. Two controls, same carrier, same evening:
+`S123` minted fresh carries its clock; `S104`, whose id already had a row, cannot. **I had been carrying this
+as a policy, which admits exceptions, and would have kept hunting a fifth shape. There is none.**
+
+### 8.2 ⛔ I cited a record that is not mine, and a peer confirmed it back to me
+
+§3 and `98875` §4 both say the S104 decision "is recorded in `CLOCKLESS_ROW_DECISIONS_20260921.md`".
+**Measured: that file is `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/`** -- it is
+`2.0.0_SA_COO~G`'s, in a folder this seat cannot commit to. **I prescribed a disposition whose carrier I do
+not own, to a seat that is standing down** -- the same shape as the three-hour-old defect of prescribing to
+the CVO an act my own gate had refused me. ⭐ **THE TELL: I cited it by BARE FILENAME, and a bare filename
+has no owner, no lane and no directory, so it cannot contradict a claim of ownership** -- and a peer reading
+it back quotes my string, not the filesystem, adding confirmation without adding evidence. **CITE A
+DELIVERABLE BY FULL REPO PATH; the path names its owning lane.** The decisions now live in this seat's own
+deliverable.
+
+### 8.3 §2's card 5 is ANSWERED, and §4's queue drops to 4
+
+Andrew-direct ~01:4xZ via `0.0.0_AB_MSTR` (`98889`), VERBATIM: *"sure you can seat it and then have it report
+when it is finished with work and you close it."* **`NFRA_OPLGTW` is re-seated at `2.0.0_SA_COO~O`** (serial
+confirmed -- the register already named it), scope stated by this seat at `98896`, lane reports to
+`0.0.0_AB_MSTR` which closes it. **My REC was taken as given.** ⚠ **CAPACITY: this makes FIVE COO hosts
+against a cap of THREE, and FOUR once `~G` is gone.** His word is direct and the seat is short-lived by his
+own construction; the over-cap is DISCLOSED, not absorbed, and is `0.0.0_AB_MSTR`'s and his to carry.
+
+### 8.4 ⛔⛔ THE ACT 1 SCOPE TURNED UP SOMETHING NEITHER PROJECT KNEW
+
+`NFRA_OPLGTW` `OG-r-1` -- the order `MDPF_TAXSMA` TX-r-2's G-O gate reads back -- **reads `<status>complete`
+while its proof instance carries 21 criteria: 18 PASS, 2 FAIL, 1 N/A-BY-CONSTRUCTION.** A read-back reporting
+"complete" would have been true of the LABEL and false of the WORK, and TX-r-2 would have been released on it.
+- `OGR1-AC4` **FAIL** -- 9 of 68 deployed files differ from their git blobs, LF-vs-CRLF, because the deploying
+  worktree carries `core.autocrlf=true`. ⚠ A real byte difference with a known cause is **not** "the bytes
+  match", and only the first is what the evidence supports.
+- `OGR1-AC9` **N/A-BY-CONSTRUCTION** -- its baseline records no error-count metric at all, so there is no
+  referent. A criterion that cannot pass on a correct artifact has a FAIL that is evidence of nothing.
+- `OGR1-AC10` **FAIL** -- ⛔⛔ **the recorded rollback target for a LIVE Gateway release has no
+  `app/data_entitlement.py`, so it fails the runbook's OWN restorability precondition. The rollback is not
+  restorable.** That is an operational EXPOSURE on a live surface, independent of the G-O gate, and it does
+  not become safe because the order says complete. Whether it was ever EXERCISED is unmeasured -- **EXPOSURE,
+  not INCIDENT**, and the two carry different remedies.
+
+### 8.5 ⛔ AND IT FALSIFIES THE SCOPE OF MY OWN "17"
+
+I broadcast **17 LGIC orders complete over a failing proof** and handed it off as an LGIC item. **`OG-r-1` is
+an 18th instance and is NOT in LGIC** -- it is in a project I had scoped OUT. ⭐ **My census swept four LGIC
+projects; my sentence was about a class. The 17 is CORRECT for LGIC and was never a measurement of the
+class**, and the defect lives wherever orders and proofs both exist. I am NOT re-censusing the estate at
+02:0xZ on one instance; I am recording that **the class is wider than the number attached to it**, so no seat
+inherits "17" as the size of the problem. That is face (b) of my standing failure mode -- widened in the
+SUBJECT, no grammatical tell.
