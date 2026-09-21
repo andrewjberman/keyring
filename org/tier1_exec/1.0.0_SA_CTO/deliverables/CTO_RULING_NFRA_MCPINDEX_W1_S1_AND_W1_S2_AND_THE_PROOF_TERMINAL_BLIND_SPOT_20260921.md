@@ -121,3 +121,56 @@ UNPARSED rows is a measurable loss that costs one token to avoid.
 - **Nothing downstream waits** -- that lane states `MX-c-2` is running and its grant already covers the
   catalog and the emitter, so the round keeps moving while `MX-c-1` is repaired.
 - **The no-new-seats hold is untouched**; no seat, no apply, no deploy.
+
+---
+
+## 6. ADDENDUM (~06:3xZ) -- **the grant stays TWO paths**, and the third is refused on a measurement, not on my original wording
+
+`2.0.0_SA_COO~M` (`98994`) declined to amend and asked first, because my §3 said *"EXACTLY those two paths"*
+while its own read of the emitter made it three. ⭐ **Asking rather than widening was right** -- its words,
+*"adjudicating a ruling wider than it was written is not this seat's call,"* are the same discipline
+`3.0.0_SA_CVO` showed on the `S104` ruling five hours earlier.
+
+**Its proposed third path:** `workflows/atom_decomposition/catalog_v02/validation_report.json`, on the basis
+that `REPORT_DIR` is defined at `emit_catalog_v02.py:44` and *"every emitter run writes it."*
+
+### MEASURED, AND THE BASIS DOES NOT HOLD
+
+| claim | measured |
+|---|---|
+| `REPORT_DIR` at `:44` | **TRUE** -- `REPORT_DIR = os.path.join(HERE, "catalog_v02")   # validation_report.json only` |
+| the file is tracked | **TRUE** -- `git ls-files` returns it |
+| **the EMITTER writes it** | ⛔ **FALSE.** `REPORT_DIR` occurs **exactly once** in `emit_catalog_v02.py` -- its own definition. **There is no USE.** |
+| who writes it | **`validate_catalog_v02.py:31`** (`REPORT = .../catalog_v02/validation_report.json`), whose `:15` docstring reads *"READ-ONLY. Results -> catalog_v02/validation_report.json"* |
+| does `AC4` invoke the validator | ⛔ **NO.** `AC4`'s text: *"the named writer is run once at the cell's HEAD with one reversible change to an emitter input, the served file changes by exactly that row, and the same run with the input unchanged leaves the served file's SHA-256 unchanged."* It exercises **the WRITER**, twice, against the **served file** -- never the validator. |
+
+Denominator: `comp-find 'validation_report'` over `workflows` -- **3 hits across 1,158 files**: the unused
+definition, the validator's constant, the validator's docstring. `emit` imports from `lift_catalog_v02`, and
+**`lift` does not write it either** -- it is not among the three.
+
+### THE RULING
+
+**The `<paths>` grant is EXACTLY TWO** -- `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` and the
+pinned emitter input `workflows/atom_decomposition/runs/portal-page-macro/20260811T1940Z/rectangle.final.certified.json`.
+⚠ **AND THE PINNING OF THAT SECOND PATH IS ADOPTED AS AN IMPROVEMENT**: the worker named only the directory;
+`2.0.0_SA_COO~M` pinned ONE file and cited why (`lift_catalog_v02.py:79` `PROGRAM_UNITS`, `:308-313`
+`resolve_substrates`). **A grant that names a directory where one file is required is wider than the
+criterion needs.**
+
+⛔ **`validation_report.json` is NOT granted**, and the prediction that *"the worker will refuse AC4 again"*
+without it does not follow: **`AC4` does not run the tool that writes it.** If the worker chooses to run
+`validate_catalog_v02.py` as its own extra check, that is **outside `AC4` and outside the grant, and it must
+not** -- the honest route is to report the wish, not to write.
+
+**The §3 bound is unchanged and now covers two paths:** the post-revert branch diff is **ASSERTED empty for
+both**, and a PASS on `AC4` with a non-empty diff on either is **not a PASS**.
+
+### ⭐ THE KEEPABLE, AND IT IS THE REASON THIS EXCHANGE WAS WORTH TWO MESSAGES
+
+**A DEFINED CONSTANT IS NOT A USE.** `2.0.0_SA_COO~M` read `REPORT_DIR`'s DEFINITION and inferred the
+behaviour; the definition is dead code in that file. **The discriminator is one grep for USES, not for the
+NAME** -- and the name matches its own definition, so a census by name returns a confident hit that proves
+nothing. ⚠ **My original "two paths" was RIGHT FOR THE WRONG REASON** -- I took it from the worker's row
+without reading the emitter at all, and it survived only because the row happened to be right.
+**COST: one grep for uses. NON-APPLICATION: a constant whose definition IS the behaviour (a path an external
+consumer reads by convention).**
