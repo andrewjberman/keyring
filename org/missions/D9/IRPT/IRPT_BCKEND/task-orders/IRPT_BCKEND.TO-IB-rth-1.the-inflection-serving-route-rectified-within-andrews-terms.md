@@ -2,10 +2,10 @@
 
 <to_id>IRPT_BCKEND.TO-IB-rth-1</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~1</issued_to>
+<issued_to>0.7.0_AE_CloudOps~V</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-21 (round 8, the recut on the CTO's round-7 analysis @0d400d5c07). INVESTIGATION FIRST is read-only and safe; any served/bucket change is packet + halves BEFORE the act; the mint-principal and new-bucket branches are STOP-and-carry, never taken ad hoc.</status>
+<status>pending -- RE-ADDRESSED 0.9.0_WK_IRPT_BCKEND~1 -> 0.7.0_AE_CloudOps~V by 2.0.0_SA_COO~B 2026-09-21 ~15:4xZ (msg 99063/99069/99070): the pin-bump remedy (row W1-S48) needed lane access WK~1 did not hold, ~V has executed arms (c)/(d) since (build+apply, 6 of 7 functions, msgs 99070) and is completing arm (e). HANDED originally by 2.0.0_SA_COO~B 2026-09-21 (round 8, the recut on the CTO's round-7 analysis @0d400d5c07). INVESTIGATION FIRST is read-only and safe; any served/bucket change is packet + halves BEFORE the act; the mint-principal and new-bucket branches are STOP-and-carry, never taken ad hoc.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 8 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` (no round-8 addendum) | **Round-7 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND7_ANALYSIS.md` @0d400d5c07 | **Decomp cell:** `IB-rth-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.8, s.R8.1) | **outcome_ref:** FWD-2 (serving half) | **row:** W3-S50 (ARMED, disarm_owner 2.0.0_SA_COO~B)
 
