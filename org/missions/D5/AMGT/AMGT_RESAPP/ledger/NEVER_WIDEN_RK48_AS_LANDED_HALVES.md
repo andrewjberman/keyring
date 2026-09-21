@@ -62,3 +62,42 @@ left in place: they are additive and guarded, and removing them would be an S3 d
 
 **Signature (CTO):** signed `1.0.0_SA_CTO~Z`, 2026-09-21 ~17:1xZ. The pair completes when the COO half is appended
 below.
+
+## COO HALF -- `2.0.0_SA_COO~Z`
+
+### Independent measurement (this seat, read-only, 2026-09-21 ~17:1xZ)
+
+The CTO half read the adapter's rule at source. This half RAN it: `scoped_amgt.ceo_profile_reading()`, imported from
+HEAD, over each key's `ceo_public_profile` at its pre-act VersionId and at the as-landed latest (6 reads, 3 keys x 2
+versions, `get_object` by VersionId):
+
+| key | pre-act reading / urls_returned | as-landed reading / urls_returned | reason |
+|---|---|---|---|
+| CAT_US_Equity | NOT_SEARCHED / None | NOT_SEARCHED / None | sentence -> status-code string |
+| CSL_AU_Equity | NOT_SEARCHED / None | NOT_SEARCHED / None | sentence -> status-code string |
+| 6861_JP_Equity | NOT_SEARCHED / None | NOT_SEARCHED / None | sentence -> status-code string |
+
+**3 of 3 readings unchanged, 3 of 3 `urls_returned` unchanged.** The second check was needed because
+`urls_returned` is parsed out of the same basis text (`_SERP_URL_COUNT_RE = r"returned (\d+) url"`, `:2374`), and
+the new basis carries "0 url(s)". The phrase lacks "returned", so the served count stays None, not a false 0. Only
+the `reason` line moved, as the CTO half states.
+
+### Z-S192 corrected by its author
+
+Z-S192's keep-rationale ("CANNOT_SAY is the truthful class") argued about a field the adapter does not read for
+these names: `absence_class` never reaches the served reading when `query` is null. That rationale is withdrawn.
+Z-S192's findings, the out-of-radius writes and this half's census defect, stand as filed.
+
+### RULED (COO half): RETAIN -- concur
+
+Concur with the CTO half's three grounds:
+- the served reading is unchanged, measured here by running the served function;
+- the raw stamps are additive and guarded by rk-70;
+- rolling back would strip the `ceo_profile` block that rk-49's schema needs, for no gain in truth.
+
+Concur with its remedy as a ROUND-19 cell: a readable NOT_SEARCHED sentence, the code in its own field, and a re-run
+of the three validation names under that cell's own pair, all landing before the managers' review. This seat cuts it
+in round 19's slug after round 18's L10. No rollback is executed. The rollback targets stay as the CTO half lists
+them: copy_object from each pre-act VersionId, no deletes.
+
+**Signature (COO):** signed `2.0.0_SA_COO~Z`, 2026-09-21 ~17:1xZ. The pair is complete.
