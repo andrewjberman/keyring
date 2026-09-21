@@ -10622,6 +10622,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "AC4 <expect>: 'OR UNRESOLVED-SOURCE BY DESIGN: 5 STEP lines, steps 1-3 and 5 matching the rk-38 record in section 1 ... and step 4 naming both seeds'.",
     "world_is": "Running AC3 and AC4 exactly as literally written (no route this order did not name), step 5's printed reason is 'no adapter for jurisdiction UNKNOWN', not 'no adapter for jurisdiction AU' -- because AC3's own regex script, as specified, never derives `domicile` from the committed rk-38 evidence. The divergence is confined to step 5's free-text `reason` string; it changes no test outcome (step 5 was never going to pass either way) and the overall AC4 outcome (UNRESOLVED-SOURCE BY DESIGN, both seeds tried and logged) still matches the sanctioned shape."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S193",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T17:55:00Z",
+    "one_line": "DISARMED SAME TURN: AMGT-rk-72's discriminator arm test_head_copy_has_no_exchange_seed read the base copy of battery.py from `git merge-base HEAD SITEZ`, which predates the exchange-seed rule only while the cell is unmerged -- on SITEZ after the drain @c1fdd952e1 it read the rule's own copy and FAILED on every tree (lib/research/filings/tests 1 failed / 78 passed), so every later worker's 'baseline failures 0' bar would have started red. The defect is the issuing order's (this seat's): its RULED item 4 specified 'HEAD's battery.py (merge-base with SITEZ if HEAD has moved)'. Disarm: the arm now pins PRE_EXCHANGE_SEED_COMMIT = 154cb8e5c4, the parent of a486c3854b, the commit that added the rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Post-merge run on SITEZ @c1fdd952e1: python -m pytest lib/research/filings/tests -q -> 1 failed, 78 passed; the failure is TheHeadCopyDiscriminatorArm::test_head_copy_has_no_exchange_seed, AssertionError 'base commit c1fdd952e1... (merge-base with SITEZ; HEAD moved: False) must predate the exchange-seed rule' (test_battery.py:408).",
+        "After the pin: lib/research/filings/tests -> 79 passed, 0 failed; the arm alone -> 1 passed. `git log --format=%H -1 a486c3854b^` = 154cb8e5c440248df4e8ad8a35745ed2d9176c2c, the worktree base the worker was spawned on, which carries no EXCHANGE_LISTING_PAGES.",
+        "The arm still discriminates: it loads a copy that provably lacks the rule and asserts step 4 tries only the web_address seed; the worker's mutant control (disabling _exchange_listing_seed failed 5 of 6 new arms) is unaffected."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in the same commit that files this row: the arm now pins the pre-rule commit 154cb8e5c4, and lib/research/filings/tests reads 79 passed, 0 failed on SITEZ.",
+    "spec_asserts": "The rk-72 order's RULED item 4: the discriminating arm loads 'HEAD's battery.py bytes via git show HEAD:... (merge-base with SITEZ if HEAD has moved -- record which)'.",
+    "world_is": "A 'before this cell' read expressed as HEAD or merge-base is true only on the cell's own branch; once merged the same expression names the cell's own code. A permanent test must pin the pre-change commit by hash.",
+    "notes": "Pure disarm of a hazard this seat's order created, filed with the fix in one commit, so DISMISSED_WITH_REASON per the round-16 disarm-record contract. Lesson for any future order asking for a 'HEAD copy' discriminator: pin the parent commit of the change, never HEAD or a merge-base. The worker's own row W72-S1 (AC3 omits `domicile`, so step 5 prints 'jurisdiction UNKNOWN') is separate and the CVO's to disposition."
   }
 ]
 ```
