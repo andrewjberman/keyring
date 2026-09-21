@@ -129,6 +129,88 @@ His answer, VERBATIM AND ENTIRE:
   tick-list row 10, *"whether SmartX is a product beyond 49F"* -- so it is recorded there
   (`04_SCOPE_TICKLIST.md` s.4) and in `05_IDENTITY_SPINE.md` (the VENDORS table and s.5).
 
+## Addendum ~18:5xZ -- the legacy-name registry is to be COMPILED, not handwritten: "b"
+
+His question, VERBATIM: *"Are you building an official registry? if so, is it a compiled or handwritten registry? I
+am hoping this is a rulesbased op from LGIC and none of it is handwritten aside from maybe this pass."*
+
+This seat answered that canonical names and the 10 generated carriers are compiled, the vocabulary files
+(`systems.json`, `scopes.json`, `tiers.json`) are handwritten rulings, and `infra/logic/registry/resources.json` (the
+legacy name -> system lookup) is HANDWRITTEN and was being grown by this pass. Card put (verbatim call): *"Registry of
+legacy names: (a) keep this pass as a one-time handwritten backfill (commit batch 2 now, ~500 rows); or (b) replace
+resources.json with a compiled list from a Terraform-folder -> system map, keeping only the exceptions handwritten?"*,
+REC *"(b), with batch 2 committed now as its reference answers ... The compiler is lib/opal_naming.py code, outside my
+lane, so it would go to the CTO as a build."*
+
+His answer, VERBATIM AND ENTIRE:
+
+> "b"
+
+**Reading, narrow:** option (b) -- `resources.json`'s legacy rows are to be COMPILED from a small handwritten
+Terraform-root -> system map, with only genuine exceptions (a root hosting more than one system, e.g. SY1's
+ingest-vs-product split inside `inf-pipeline/`) handwritten. Batch 2 is committed as the REFERENCE ANSWERS the compiler
+must reproduce (the REC's own adjunct; reversible). The compiler is `lib/opal_naming.py` code -> `1.0.0_SA_CTO`'s build;
+the root map is registry vocabulary -> drafted by this seat.
+
+## Addendum ~18:4xZ -- /open-calls: firm INGEST takes the VENDOR; deletions go to CloudOps -- "recs approved"
+
+He also said *"CAN USE POSN FOR POSITIONING PRODUCT KEY"* (~18:3xZ, answering the positioning key).
+
+Cards put to him (verbatim calls): CALL 1 *"Firm INGEST jobs (pulls, bronze/silver): (a) the vendor, per SY1, e.g.
+orion-inf-api-positions-daily; or (b) advi, as the registry already has for Inflection?"*, REC (a); CALL 2 *"Delete
+these? unknown-alarm, unknown-topic, test-alarm, /aws/lambda/test-yfinance-simple, and the consolidation-gold-runner
+box plus its roles (tagged "PARALLEL/NOT-served", project closed 8/25)."*, REC *"Yes, but not by me. Hand the list to
+CloudOps under a change record, with one check each that nothing reads or triggers it first."*
+
+His answer, VERBATIM AND ENTIRE:
+
+> "recs approved"
+
+**Reading, narrow:**
+- CALL 1: a firm INGEST job (a pull, a bronze or silver step) takes the VENDOR + firm (SY1's first clause), and the
+  existing Inflection ingest rows written as `advi` are re-pointed to `orion`. Product-owned jobs stay product + firm.
+- CALL 2: the deletions are APPROVED IN PRINCIPLE and ROUTED -- CloudOps executes under a change record after a
+  per-resource no-consumer check. This seat deletes nothing.
+- The positioning product key is `posn`.
+- Stated in the same /open-calls output as DECIDED (not carded): harvest platinum lives in `opal-data-harvest`, on
+  his 2026-09-18 ~21:45Z word at the 2.0.0_SA_COO~Z terminal, *"... the whole pipeline will exist within
+  opal-data-harvest"* (quoted in origin/SITEZ `infra/logic/registry/scopes.json`, harvest row note).
+
+## Addendum ~18:2xZ -- twelve residue questions answered (non-firm names still {system} after batch 1)
+
+He said *"ask me any questions you have about the residue/unclear resources, i can claify as needed"*; this seat
+put 12 numbered questions, each with a guess. His answers, VERBATIM (two messages; the repeated line in 1, 2, 3
+and 8 is text he pasted as his answer, reproduced as he sent it):
+
+> "1) NEED TO COMP-READ THE CODE. 2) NEED TO COMP-READ THE CODE. 3) NEED TO COMP-READ THE CODE. 4) ETF-CLASSIFICATIONS
+> AND A LOT OF THESE ARE POSITIONING PAGE FROM DSAHBOARD, POSITIONING  PRODUCT, THE OPAL-DATA-ETFS STUFF IS FOR OPAL
+> ASSET MANAGEMENT BUSINESS AND ACCOUNTING. 5) YES 6) WE COULD GROUP THESE AS OPENAI AND ANTHROPIC RESPECTIVELY. 7)
+> TEXT OTP SERVICE. 8) NOT SURE NEED TO COMP-READ THE CODE. 9) CANNOT BE DELETED, THEY ARE OPAL-DATA-HARVEST
+> CREDENTIALS. 10) POTENTIALLY DELETE"
+
+> "GUESS IS RIGHT FOR 11 AND 12"
+
+The questions, for the reading: 1 `consolidation-gold-runner`; 2 `gldinc-ss4c-canary`; 3 `opalinvest-auth-handler` et
+al.; 4 `etf-classifications`, `etf-positioning-producer-daily`, `etf-ownership-dashboard-daily` (guess: `etfs`); 5
+`demo-transform-runner` (guess: `advi` + `demo`); 6 `anthropic-api-key`, `openai-api-key`, `ai/claude-api-key`,
+`anthropic-sdk-deps`; 7 `quo/api-key`; 8 `multi-threadv2`; 9 `google/andrew-goldengate/credentials`,
+`google/officialmadeaux/credentials`; 10 `unknown-alarm`, `unknown-topic`, `test-alarm`,
+`/aws/lambda/test-yfinance-simple`; 11 `outset-drift-publisher-laptop` (guess: `globgrph`); 12
+`us-east-1.tier-router-edge` (guess: `gateway`).
+
+**Reading, narrow:**
+- 1, 2, 3, 8: this seat reads the code (comp-read) and places them; no answer from him.
+- 4: those ETF resources belong to the POSITIONING product (the dashboard's positioning page), NOT `etfs`;
+  `opal-data-etfs` is Opal Asset Management's business and accounting. Guess REJECTED. Whether other rows already
+  mapped to `etfs` are also positioning is NOT decided by this word -- measured before any existing row moves.
+- 5: `demo-transform-runner` -> `advi` + `demo`. CONFIRMED.
+- 6: the AI credentials group by vendor: `openai` and `anthropic` (`ai/claude-api-key` is Anthropic's).
+- 7: Quo is the text OTP service.
+- 9: the two `google/*` credentials are opal-data-harvest's and must NOT be deleted.
+- 10: `unknown-*`, `test-alarm`, `test-yfinance-simple` are POTENTIAL deletions -- listed for whoever owns cleanup;
+  this seat deletes nothing.
+- 11: `outset-drift-publisher-laptop` -> `globgrph`. 12: `us-east-1.tier-router-edge` -> `gateway`. CONFIRMED.
+
 ## Addendum ~18:0xZ -- the re-carded SY1 call and the 8 system keys: "recs approved"
 
 Cards (after he asked "give me examples of both", and was shown real names under each option): CALL 1
