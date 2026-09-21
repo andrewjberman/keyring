@@ -4738,9 +4738,9 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  "owner": "0.0.0_AB_MSTR",
  "round": "v7",
  "disarm": {
-  "state": "ARMED",
+  "state": "DISARMED",
   "owner": "0.0.0_AB_MSTR",
-  "at": null
+  "at": "2026-09-21T04:52Z"
  },
  "remediation": {
   "state": "OPEN",
