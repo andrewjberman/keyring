@@ -1,11 +1,12 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.13",
-  "prd_pin": "16999602615f9643385bc571748aa7a25079baf0",
+  "prd_version": "v0.14",
+  "prd_pin": "c09b35ee5ae40d144cb905b41dbb11544bce41a6",
   "half": "brief",
-  "half_hash": "c0d38674e972ab06a34099389758510b7eb047454f74ce3bcb1860898bd69418",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.11_BRIEF_HALF.md@8a788d2eaf",
+  "half_hash": "57b77104c1c0acc8f41529479a59bc567195fa3ec4c3b3ac587ea6e04aa970eb",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_AMGT_RESAPP_v0.14_BRIEF_HALF.md@d61c888552",
   "signed_by": "4.0.0_SA_CRO~Z",
-  "signed_at": "2026-09-18T20:33:46Z"
+  "signed_at": "2026-09-21T17:39:11Z",
+  "reason": "C-BRONZE-AS-RECEIVED (:1705-1706) gives one bronze template and :1699 binds it over the plan; 7 plan s.5 bronze addresses use two other forms; replacement text in the review"
 }
