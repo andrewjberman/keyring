@@ -61,7 +61,7 @@ before. The viewer population is unchanged (Dev+admin only).
 | 13 | Served bytes | `https://opalinvest.dev/index.html` 200, Last-Modified 17:29:27Z, entry `assets/index-DTWT90UL.js`; 54 referenced chunks fetched; two literals new in this payload (`SEARCHED_LINKS_UNREADABLE`, `the payload carries no reading for this score`) are ABSENT from `a580bbb4` src and PRESENT in 1 served chunk each. A third new string matched 0 served chunks: it lives only in comments (`ModelTab.tsx:25`, `types.ts:900`), which the build strips | EXERCISED |
 | 14 | Worktree torn down | `worktree remove` failed `Filename too long`; `worktree prune` run, 0 tracking entries remain; physical dir persists (gitignored `.gitignore:438`, inert). Main tree on DEV @ `db1c5f64`, porcelain 0 | PARTIAL |
 | 15 | Workspace portal gitlink `2453a7b4` -> `db1c5f64` (DEV tip) | committed with this entry, LOCAL on SITEZ; push is `0.0.0_AB_MSTR~Z`'s | APPLIED (local) |
-| 16 | Freeze released | msg to `2.0.0_SA_COO~Z`, `1.0.0_SA_CTO~Z`, `0.0.0_AB_MSTR~Z` | pending at write |
+| 16 | Freeze released | msgs 23996 `2.0.0_SA_COO~Z`, 23997 `1.0.0_SA_CTO~Z`, 23998 `0.0.0_AB_MSTR~Z`, all DELIVERED | APPLIED |
 
 ## Not covered by this act
 
