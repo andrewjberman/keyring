@@ -278,6 +278,28 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "TXG1-AC22 grades that the Gateway tests which passed before the edit still pass after it; row MDPF_TAXSMA-W1-S1 states that at fd2f1e4b31 every module other than the four moto modules, test_identity_scope.py, test_jwt_cve_lock.py and test_schwab_audit.py passes.",
     "world_is": "test_ogq1_ac02's lag bar failed in 2 of 2 probe records and passed in 1 shell run. The committed before arm therefore counts it as failing BEFORE the edit: it is shown before and after and is not graded, and the passed-before population is 12 of that module's 13 tests.",
     "notes": "INERT: AC22's grading is deterministic whichever way the timing lands, because a test failing before is never a regression and a test passing before must still pass. OBSERVATION: the bar's load sensitivity belongs to NFRA_OPLGTW (W3-S12), not to this cell."
+  },
+  {
+    "id": "MDPF_TAXSMA-W1-S4",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~1",
+    "surfaced_at": "2026-09-21T03:15:00Z",
+    "one_line": "TX-g-2's TXG2-AC1 build (mirroring the registered deploy-to-ec2.sh tar step) bundles a TRACKED runtime telemetry file, app/org/mcp/agent_telemetry/0.7.0_AE_CloudOps.jsonl (9 lines, 1863 bytes), into every Gateway deploy artifact through the same `app` whole-directory member that carries taxsma_workbook.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TAR: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh @2aa1e26cbf lines 69-72, `tar -czf \"$TMP/$ART\" -C \"$SRC\" --exclude=... app deploy requirements.txt identity_tool_allowlist.txt` -- `app` is archived whole, no exclude names it.",
+        "MEMBER LIST: TXG2-AC1 probe run, 2026-09-21T03:08:37Z, member list (84 of 84 printed) includes `app/org/mcp/agent_telemetry/0.7.0_AE_CloudOps.jsonl` alongside `app/taxsma_workbook.py`.",
+        "TRACKED: `git ls-files infra/aws/ec2/opal-gateway/app/org/mcp/agent_telemetry/` returns the one file; `git log -1 -- <path>` shows commit 2781aac326 (2026-08-14), pre-existing and unrelated to this project; `wc -l`/`wc -c` on the worktree copy: 9 lines, 1863 bytes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 2 (`No private data in the repository`) and the order's bound of the same name: masked labels and aggregate counts only enter code, fixtures, deliverables or logs; a secret's path is one `grade(<path>, \"SECRET\")` returns CONFORMANT for.",
+    "world_is": "A pre-existing tracked file under the Gateway's own app/ tree, an agent telemetry JSONL, ships in the deploy artifact by virtue of being inside the whole-directory `app` tar member -- not added, moved or graded by this cell, and not read for content here (no private-data claim is made about its bytes, only about its inclusion path).",
+    "notes": "OBSERVATION found while grounding TXG2-AC1's member list. INERT: this cell added no file and the bundling behavior predates it (commit 2781aac326, 2026-08-14, NFRA_OPLGTW/the box owner's surface). Whether app/org/mcp/agent_telemetry/ belongs in the deployed artifact, in the tar excludes, or is fine as-is is a question for the Gateway's owner, not this cell."
   }
 ]
 ```
