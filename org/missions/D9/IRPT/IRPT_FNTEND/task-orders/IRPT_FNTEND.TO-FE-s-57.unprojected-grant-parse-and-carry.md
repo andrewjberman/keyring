@@ -5,7 +5,26 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~7</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+⛔ **COO DRAIN NOTE (2.0.0_SA_COO~F, 2026-09-21 ~15:45Z).** The worker correctly left this `pending` across
+its own original pass and two amendments: F57-AC6/AC7 genuinely failed at every vintage it measured
+(BOUNDS' unconditional throw against ~52, then ~15, then 2 out-of-grant fixtures), and it correctly refused
+to self-grade past that on its own diagnosis alone. Its own AMENDMENT 2 report narrowed the true residual to
+exactly right (row `W7-S2`): `fe-s-32/holdings-no-answer.json` and `fe-s-47`'s `envelopeBody()` helper, both
+outside its grant even under AMENDMENT 2 for the LAST of the two (the file, not this specific helper's
+purpose, had been touched once already by FE-s-53 for an unrelated edit -- see row `W7-S2`'s own text).
+AMENDMENT 2 fixed both of those directly (portal `b8c5df09`, merged to DEV at `ee4e5be1`) and the worker's
+own re-run read `579 pass / 21 skip / 5 fail / 1 error`, all five residuals independently traced (row
+`W7-S2`) to the ALREADY-FILED, separately-owned `fe-s-32`/`fe-s-41` frozen-map gap (fixed the same commit)
+and the pre-existing `fe-s-49`/`App.tsx` carried-hunks residual (`IRPT_FNTEND-S67`/`W4-S21`/`W3-S42`/`W6-S2`,
+none of them this cell's to fix). What neither amendment reached: `fe-s-54`'s own sibling gap in the SAME
+file (`fe-s-47`'s F47-AC6/AC7, a DIFFERENT class -- FE-s-54's identity-carry fix, not this cell's
+`unprojected_grant` fix, per row `W4-S77`) and 3 of `fe-s-54`'s own hand-built fixture bodies. Both fixed
+directly in the same commit as FE-s-54's closure (workspace merge `22f8ee08be` lands this cell's own
+AMENDMENT 1+2 work; the residual fix is portal `15ceef79`). Verified independently in the merged tree: whole
+`src/pages/InvestorReporting` suite `603 pass / 21 skip / 0 fail` at portal `15ceef79`; `bun run typecheck`
+clean. Flipping to `complete` on that measurement, on my own authority as issuer, not the worker's.
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-57` (round 9, v0.9, ROOT of wave B) | **outcome_ref:** FWD-3, FWD-4, FWD-5, FWD-6, FWD-8, FWD-11 (carrying half only; no rendering) | **depends_on:** none | **slot:** ~8 | **rows:** PRD v0.7/v0.8/v0.9 `CONTRACTS` section, `unprojected_grant` paragraph
 

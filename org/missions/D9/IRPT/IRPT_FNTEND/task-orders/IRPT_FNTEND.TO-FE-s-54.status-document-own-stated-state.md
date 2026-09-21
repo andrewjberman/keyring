@@ -5,7 +5,23 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+⛔ **COO DRAIN NOTE (2.0.0_SA_COO~F, 2026-09-21 ~15:40Z).** The worker correctly left this `pending`: row
+`W4-S77` named the exact, predicted mechanical consequence of this cell's own fix on `fe-s-47/no-status-
+reason.test.ts` (F47-AC6 18->16, F47-AC7 controlRefused 9->7) and correctly declined to touch that file --
+it is not in this order's `<paths>`, and self-grading the criterion green on its own diagnosis alone would
+have been exactly the self-graded override this fabric refuses. That discipline is right; I am the one
+closing this, on my own measurement, not the worker's. Its 3 hand-built envelope bodies also lacked
+`unprojected_grant` (a sibling gap to FE-s-57's AMENDMENT 1/2, in a file FE-s-54 alone had no reason to
+touch), and `IR_STATUS_DOCUMENT_OPERATIONS` was module-private so no test could name the identity-carry set
+by reference. Fixed directly (workspace `15ceef79` in portal, workspace commit to follow): exported the
+const, added `unprojected_grant` to `statusOperationBody()` and the two inline F54-AC3/F54-AC-CROSS bodies,
+and gave `fe-s-47`'s F47-AC6/AC7 the same identity-carry awareness (compare against the document's own
+carried state/reason rather than the generic reasonless-UNCERTAIN default, for `status-summary`/`status-job`
+only). Verified independently in the merged tree: `fe-s-47/no-status-reason.test.ts` 8 of 8 pass; whole
+`src/pages/InvestorReporting` suite `603 pass / 21 skip / 0 fail` at portal `15ceef79`; `bun run typecheck`
+clean. Flipping to `complete` on that measurement.
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-54` (round 9, v0.9) | **outcome_ref:** FWD-6 | **depends_on:** FE-s-53 shares `contracts/adapt.ts` -- SEQUENCED after it, never concurrent | **slot:** ~5 | **rows:** W3-S38 (round-8 analysis item 3)
 
