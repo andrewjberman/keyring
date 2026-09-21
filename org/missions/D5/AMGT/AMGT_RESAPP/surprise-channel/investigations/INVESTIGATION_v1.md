@@ -11116,6 +11116,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row.",
     "world_is": "CAT is served as incomplete with a readable reason; its officer table is withheld until a real roster exists.",
     "notes": "Pure disarm, filed by the named owner."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W83-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~83",
+    "surfaced_at": "2026-09-21T22:20:00Z",
+    "one_line": "TO-AMGT-rk-83's own MEASURED STATE section (\"Test baselines at HEAD 5912b7d107\") states 'rk-81 adds 10 arms' to lib/research/harvest/tests, and AC2's expect parenthetical computes 10 + 55 + 9 = 74 on that basis; the merged store.py test file (lib/research/harvest/tests/test_store.py, landed by rk-81 at 03419bc8a9 and present unchanged at this worker's HEAD 0731c87fca) actually collects 11 arms, not 10, so the correct re-measured total is 11 + 55 + 9 = 75.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-83.bloomberg-harvest-writer.md:101-103 @0731c87fca: 'rk-81 adds 10 arms' and AC2's <expect> parenthetical '(10 + 55 + 9 = 74 if rk-81 landed its 10 arms and identity is unmoved)'.",
+        "python -m pytest lib/research/harvest/tests/test_store.py -q -p no:cacheprovider --collect-only at this worker's HEAD 0731c87fca: '11 tests collected' -- test_address_is_builder_output, test_refuses_when_builder_prints_another_bucket, test_bronze_bytes_as_received, test_bronze_never_overwritten, test_forms_abc_objects, test_security_key_partition_is_slash_safe, test_fetch_key_exists, test_silver_append_lineage_and_one_part_per_date, test_silver_skips_unchanged_and_appends_changed, test_lusha_exception, test_bronze_metadata_merged_reserved_refused.",
+        "AC2's literal invocation, run at this worker's HEAD: 'AWS_PROFILE=rk83-no-such-profile ... python -m pytest lib/research/harvest/tests lib/research/identity/tests -q -p no:cacheprovider' -> '75 passed', consistent with 11 (store, re-measured) + 55 (identity, unmoved) + 9 (this cell's own new arms)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "AC2's own <expect> text names the rule as 're-measured at spawn', not the parenthetical example number, and this worker followed that rule: it re-measured the harvest baseline live at spawn (11, not the order's stated 10) and graded AC2's PASS against the observed '75 passed' line, which is exactly 11+55+9. No repair, widening or route outside the order was needed; the order's own criterion text already anticipates the baseline moving. Filed as OBSERVATION because a reader who trusts the parenthetical '74' without re-running AC0/AC2's own 're-measured at spawn' instruction would wrongly flag a correct 75-passed result as a miscount.",
+    "spec_asserts": "The order's MEASURED STATE section: 'rk-81 adds 10 arms'; AC2's <expect> parenthetical: '10 + 55 + 9 = 74 if rk-81 landed its 10 arms'.",
+    "world_is": "lib/research/harvest/tests/test_store.py collects 11 arms at rk-81's own landed commit 03419bc8a9 and unchanged at this worker's HEAD 0731c87fca; AC2's actual re-measured-at-spawn total is 75, not 74.",
+    "notes": "No action needed beyond this row: AC2 is graded PASS against the observed 75-passed line per the criterion's own re-measure rule, not against the stale parenthetical example."
   }
 ]
 ```

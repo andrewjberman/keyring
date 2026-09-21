@@ -280,7 +280,7 @@ never `git stash`, never `git show :path`.
   ruling says the BRONZE object records it.
 - `pull_log` to STATE and `model_block_fye` retirement are named here and done by M1.
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~83</slot>
 <fabric>site-z</fabric>
