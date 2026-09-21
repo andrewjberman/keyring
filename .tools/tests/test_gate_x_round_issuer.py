@@ -19,6 +19,11 @@ EVERY ARM RUNS IN A REAL GIT INDEX, THROUGH THE GATE'S OWN CLI, ON REAL ORDER BY
   GREEN MODIFY NOT GRADED  the committed round-13 order staged as MODIFIED (a status flip) --
                        this limb does not grade it (main() feeds it only the newly-added set).
   RED  MISSING KEY      a new order with NO <round> element -- REFUSED naming the missing key.
+  GREEN DIRECT-ACT TRUE  a new order with NO <round> but a line-anchored
+                       <direct_act>true</direct_act> -- ADMITTED by this limb (row
+                       AMGT_RESAPP-Z-W58-S2, the narrow exemption; other limbs' output tolerated).
+  RED  DIRECT-ACT FALSE  the same shape with <direct_act>false</direct_act> -- does NOT exempt;
+                       REFUSED naming the missing key, same as no element at all.
 
 Scratch repos live under <WS>/.scratch/ and are removed at the end.
 Run: python .tools/tests/test_gate_x_round_issuer.py
@@ -84,7 +89,7 @@ def _status(repo: Path, rel: str) -> str:
     return next((ln.split("\t")[0] for ln in st.splitlines() if ln.split("\t")[-1] == rel), "?")
 
 
-def _order_text(round_line, status="issued") -> str:
+def _order_text(round_line, status="issued", direct_act_line=None) -> str:
     lines = [
         "<decomp_ref>",
         "<decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>",
@@ -96,6 +101,8 @@ def _order_text(round_line, status="issued") -> str:
     ]
     if round_line is not None:
         lines.append(round_line)
+    if direct_act_line is not None:
+        lines.append(direct_act_line)
     lines += [
         "<preflight>",
         "comp-schedule: DECLARED-NOT-APPLICABLE -- fixture, no cadence",
@@ -181,6 +188,34 @@ def main() -> int:
         print("  %-4s order with no <round> element staged %s -> rc=%d; %s" % (
             "PASS" if ok4 else "FAIL", st4, rc4, (lines4[0][:160] if lines4 else "no round-issuer refusal")))
         check("RED: a new order with NO <round> element -> REFUSED naming the missing key", ok4)
+
+        # ---- GREEN: a new order with NO <round> but a line-anchored <direct_act>true</direct_act>
+        # is ADMITTED by this limb (row AMGT_RESAPP-Z-W58-S2, the narrow exemption)
+        rel_direct_true = TO_DIR + "AMGT_RESAPP.TO-AMGT-rk-102.direct-act-true.md"
+        repo5 = _repo("green-direct-act-true")
+        _place(repo5, rel_direct_true, _order_text(None, direct_act_line="<direct_act>true</direct_act>"))
+        _git(repo5, "add", rel_direct_true)
+        st5 = _status(repo5, rel_direct_true)
+        rc5, out5 = _gate(repo5, [rel_direct_true])
+        lines5 = _round_lines(out5, rel_direct_true)
+        ok5 = st5 == "A" and not lines5
+        print("  %-4s order with <direct_act>true</direct_act> and no <round> staged %s -> rc=%d "
+              "(other limbs tolerated); round-issuer lines: %d" % (
+                  "PASS" if ok5 else "FAIL", st5, rc5, len(lines5)))
+        check("GREEN: <direct_act>true</direct_act> with no <round> -> ADMITTED by this limb (row AMGT_RESAPP-Z-W58-S2)", ok5)
+
+        # ---- RED: <direct_act>false</direct_act> does not exempt -- still REFUSED naming the missing key
+        rel_direct_false = TO_DIR + "AMGT_RESAPP.TO-AMGT-rk-103.direct-act-false.md"
+        repo6 = _repo("red-direct-act-false")
+        _place(repo6, rel_direct_false, _order_text(None, direct_act_line="<direct_act>false</direct_act>"))
+        _git(repo6, "add", rel_direct_false)
+        st6 = _status(repo6, rel_direct_false)
+        rc6, out6 = _gate(repo6, [rel_direct_false])
+        lines6 = _round_lines(out6, rel_direct_false)
+        ok6 = st6 == "A" and rc6 == 1 and any("line-anchored" in ln for ln in lines6)
+        print("  %-4s order with <direct_act>false</direct_act> and no <round> staged %s -> rc=%d; %s" % (
+            "PASS" if ok6 else "FAIL", st6, rc6, (lines6[0][:160] if lines6 else "no round-issuer refusal")))
+        check("RED: <direct_act>false</direct_act> does not exempt -- REFUSED naming the missing key, same as no element", ok6)
     finally:
         shutil.rmtree(SCRATCH, ignore_errors=True)
 

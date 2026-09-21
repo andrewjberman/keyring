@@ -932,6 +932,18 @@ def _self_test():
         ("round-issuer: a prose mention of <round> is inert -- not read as the key, still refused as missing",
          lambda: any("line-anchored" in x for x in
                      _round_issuer_violations(tree, "the `<round>` element names the round\n" + v3, {}))),
+        ("round-issuer GREEN: no <round> but a line-anchored <direct_act>true</direct_act> -> admitted (row AMGT_RESAPP-Z-W58-S2)",
+         lambda: _round_issuer_violations(tree, "<direct_act>true</direct_act>\n" + v3, {}) == []),
+        ("round-issuer RED: a prose mention of <direct_act>true</direct_act> is inert -- still refused as missing",
+         lambda: any("line-anchored" in x for x in
+                     _round_issuer_violations(tree, "this order sets <direct_act>true</direct_act> nowhere\n" + v3, {}))),
+        ("round-issuer RED: <direct_act>false</direct_act> does not exempt -- declares NOT round-less, still refused as missing",
+         lambda: any("line-anchored" in x for x in
+                     _round_issuer_violations(tree, "<direct_act>false</direct_act>\n" + v3, {}))),
+        ("round-issuer RED: <round>13</round> together with <direct_act>true</direct_act> does not exempt -- round collision still enforced (an order cannot claim direct-act to dodge collision review)",
+         lambda: any("round 13" in x and "S154" in x for x in
+                     _round_issuer_violations(tree, "<direct_act>true</direct_act>\n<round>13</round>\n" + v3,
+                                              {13: ["org/missions/D0/X/X_PRJ/task-orders/X_PRJ.TO-0.md"]}))),
         # GATE (xi) -- THE STATUS-ELEMENT LIMB (row AMGT_RESAPP-Z-S153; cell AMGT-rk-56). Pure arms;
         # the real-index battery (a scratch git repo, the gate's own CLI, real committed bytes)
         # lives in .tools/tests/test_gate_xi_status_element.py.
@@ -1834,6 +1846,13 @@ def _output_vocabulary_violations(root, rel, text):
 # flip and a COO re-cut of an existing order are modifications by construction (Rule 27).
 ROUND_ELEMENT_RE = re.compile(r"^[ \t]*<round>\s*([0-9]+)\s*</round>[ \t]*$", re.M)
 
+# THE NARROW EXEMPTION (row AMGT_RESAPP-Z-W58-S2; ROUND_ANALYSIS.round14.md s.2.1): an order that
+# declares itself round-less EXPLICITLY, via a line-anchored <direct_act>true</direct_act> element
+# (same discipline as ROUND_ELEMENT_RE -- a prose mention is inert), is exempted from the missing-
+# <round> refusal below; the round-collision branch is UNCHANGED, so <direct_act>true</direct_act>
+# alongside a <round> element never dodges collision review.
+DIRECT_ACT_ELEMENT_RE = re.compile(r"^[ \t]*<direct_act>\s*true\s*</direct_act>[ \t]*$", re.M)
+
 _HEAD_ROUNDS_CACHE = {}
 
 
@@ -1876,19 +1895,26 @@ def _round_issuer_violations(rel, text, head_rounds):
     TREE orders TRACKED AT HEAD (the caller's census, see _head_rounds_census). [] when `rel` is not
     a tree order (the flat-root legacy population is not graded). Otherwise the order MUST carry a
     line-anchored <round>N</round> element -- a prose mention of the tag is not the element and is
-    not read as one; missing -> REFUSED naming the missing key. And its round must carry NO order at
-    HEAD yet -- found -> REFUSED naming every colliding order in that round in ONE message, so the
-    issuer sees the whole set, and citing row AMGT_RESAPP-Z-S154."""
+    not read as one; missing -> REFUSED naming the missing key, UNLESS the order carries a line-
+    anchored <direct_act>true</direct_act> element (row AMGT_RESAPP-Z-W58-S2: a narrow exemption for
+    an order that declares itself round-less by design, not a general weakening -- see
+    DIRECT_ACT_ELEMENT_RE above). And its round must carry NO order at HEAD yet -- found -> REFUSED
+    naming every colliding order in that round in ONE message, so the issuer sees the whole set, and
+    citing row AMGT_RESAPP-Z-S154."""
     rel = rel.replace("\\", "/")
     m_code = TREE_TO_RE.search(rel)
     if not m_code:
         return []
     m = ROUND_ELEMENT_RE.search(text or "")
     if not m:
+        if DIRECT_ACT_ELEMENT_RE.search(text or ""):
+            return []
         return ["%s: NO line-anchored <round>N</round> element -- ONE ISSUER PER ROUND is keyed to "
                 "the ROUND, never the serial (Rule 27; row AMGT_RESAPP-Z-S154), and this limb needs "
                 "the key on its own line to enforce it. A prose mention of <round> elsewhere in the "
-                "face is not the element. Add '<round>N</round>' naming this order's round." % rel]
+                "face is not the element. Add '<round>N</round>' naming this order's round, or a "
+                "line-anchored '<direct_act>true</direct_act>' declaring this order round-less by "
+                "design (row AMGT_RESAPP-Z-W58-S2)." % rel]
     n = int(m.group(1))
     existing = (head_rounds or {}).get(n) or []
     if existing:
