@@ -1,0 +1,67 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "IRPT_FNTEND",
+ "round": 9,
+ "graded_by": "1.0.0_SA_CTO",
+ "graded_utc": "2026-09-21T20:35Z",
+ "report_ref": "org/missions/D9/IRPT/IRPT_FNTEND/ledger/COMPLETION_REPORT.round9.json@db877fd3fb",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-2.route-shell-header-search.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "Frontend half built and exercised against fixtures only: 31 criteria across 4 cited cells, 0 invocations that reach a live route (census over every cited proof; positive control: the same matcher finds 11 live exercises in IRPT_BCKEND's 170 criteria). The card CROSSES (IRPT_BCKEND supplies the permitted account set, the directory as-of and the zero-vendor-request guarantee) and the DONE WHEN is an advisor's search-select-show on the real route. No artifact covers that limb, and PRD row 20 (IV.4) says synthetic fixtures cannot close end-to-end acceptance. A closing-pass exercise is owed once IRPT_BCKEND serves its half."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-5.reporting-tab.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "Fixture-only: 33 criteria, 0 live. The DONE WHEN carries a CAPTURED provider response to a rendered view and a PDF for each supported partner and scope, and the card puts the PDF in the counterpart's worker and the certified fixture in IRPT_BCKEND. Neither limb exists as an artifact from this project. IV.4 names F5 PDF parity as open. Closing pass owed on the counterpart's delivery."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~3/IRPT_FNTEND.TO-FE-s-6.analysis-tab.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "Fixture-only: 43 criteria, 0 live. The DONE WHEN replays an approved variant from analyst-approved input through its captured request/job/result chain to the tab and the PDF, and that chain is the counterpart's (card CROSSES). IRPT_BCKEND's export submit controller (IB-rth-2) is still pending in round 8, so the chain cannot be replayed yet. Closing pass owed on the counterpart's delivery."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-7.holdings-tab.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "Fixture-only: 29 criteria, 0 live. The DONE WHEN replays dated holdings and model snapshots for all three registry firms, with the reconcile control and denominators supplied by IRPT_BCKEND (card CROSSES). No cross-firm replay artifact exists. Also bound: PRD v0.9 names irpt-holdings' unprojected_grant.count as structurally zero until IRPT_BCKEND.TO-IB-rtf-8 folds the fork, so a holdings view reading count 0 is not yet evidence of health. Closing pass owed on the counterpart's delivery."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-54.status-document-own-stated-state.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "Fixture-only: 37 criteria, 0 live. The frontend's race and clear behaviour is well tested against fixtures (switch-before-fetch, out-of-order completion). But the DONE WHEN deliberately fails a real provider and switches a client mid-request, and the StatusEnvelope states and as-of come from IRPT_BCKEND (card CROSSES). IV.4 names F6's real partial/stale states as open. Closing pass owed on the counterpart's delivery."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~2/IRPT_FNTEND.TO-FE-s-8.narrative-page.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "Fixture-only: 50 criteria, 0 live. The DONE WHEN replays a KNOWN drawdown window twice against the dated topic history and diffs the selected moments. Inflection selection, the frozen bundle and execution are the counterpart's lambda (card CROSSES), and this project's artifacts render a frozen fixture bundle, not a selection. Closing pass owed on the counterpart's delivery."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-10.global-view.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "Fixture-only: 41 criteria, 0 live; FE-s-10's own captures run ui-smoke with --fixtures. The view, the selector, the firm attribution and the firm-advisor refusal arm are built and fixture-tested (PARITY: identical, on fixtures). The DONE WHEN has an Opal user run a report AND an export on a client at a second firm, and the cross-firm entitlement class and api/scoped routes are IRPT_BCKEND's (card CROSSES). No artifact shows a report or export run on a second-firm client. Closing pass owed on the counterpart's delivery."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~1/IRPT_FNTEND.TO-FE-s-11.design-conformity-census.proof_of_spec.json@d228ce5cb2",
+   "state_observed": "APPLIED",
+   "note": "The only card that does NOT cross (IRPT_BCKEND NOT ENGAGED). The PROOF limbs are present: a component census of 65 components (27 REUSED, 38 NEW, all 11 PRD reuse rows accounted), a brand review, and the Model Portfolios dropdown reused. The DONE WHEN limb is not covered: no artifact shows an advisor using all three tabs and the export on the real route. The captures are fixture-driven at 390px, and IV.4 names F13's real-route narrow-viewport repeat as open. VINTAGE FINDING: F11-AC4's recorded CANVAS is rgb(195, 202, 218), the silver ground the 2026-09-11 ruling retired; portal/CLAUDE.md now requires rgb(244, 246, 250). So the design-conformity evidence of record predates the current contract, and round 9's CVO left F60-AC6's color-law question open. Because this card needs no counterpart half, its closing pass can be cut NOW: the real route, all three tabs and the export, read against DESIGN.md at the current vintage."
+  }
+ ]
+}

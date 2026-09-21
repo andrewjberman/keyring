@@ -7934,3 +7934,82 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Whether the remedy is terraform untaint (a state-only bookkeeping fix, arguably NOT an apply in the sense BOUNDS forbids, but still a state mutation BOUNDS also forbids outright: no state mutation of any kind, regardless of what arm (a) finds) or something else is for the COO/CTO to rule -- not decided or landed by this cell. This is the SAME shape as W3-S45 (the original taint-causing event); routed alongside it. Leg L1's own resolution (arm c's judgment question) is a separate, still-open question this row does not answer."
 }
 ```
+
+## Round 8, IB-rth-8 -- worker 0.9.0_WK_IRPT_BCKEND~8's row (wk-irpt_bckend-8-8c): the battery's own SIGNED detector rejected both real halves
+
+```json
+{
+  "id": "IRPT_BCKEND-W8-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~8",
+  "surfaced_at": "2026-09-21T20:25:51Z",
+  "one_line": "The prior pass's battery_ib_rth_8.py --arm apply gate detector demanded the literal upper-case token SIGNED; both real never-widen halves (CTO: 'SIGNS', COO: 'Signed:') failed it, so the gate read 'signed=False' with both candidates found. Detector corrected (case-insensitive sign word AND the packet blob named); the halves' substance was never in doubt.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~8/battery_ib_rth_8.py find_never_widen_halves()/is_signed @50f5520156: re.search(r'\bSIGNED\b', out) is case-sensitive; run fresh this session printed 'CTO half candidates at HEAD (1)', 'COO half candidates at HEAD (1)', then 'CTO half: None signed=False' and 'COO half: None signed=False' (2 of 2 candidates rejected).",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rth-8_TAINT_CLEAR.md@50f5520156 reads '`1.0.0_SA_CTO` SIGNS, against the exact blob named above' and names blob 0ca08bdf9ca6833ec79cbd3a30f10224b624e03c; org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_COO_HALF_IRPT_BCKEND_IB-rth-8_TAINT_CLEAR.md@50f5520156 reads '**Signed:** 2026-09-21 ~20:1xZ' and names the same blob; `git rev-parse HEAD:<packet>` = 0ca08bdf9ca6833ec79cbd3a30f10224b624e03c (3 of 3 agree)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "battery_ib_rth_8.py docstring, arm apply step 1: finds a CTO half and a COO half naming IB-rth-8 and this packet's blob hash, each containing a SIGNED verdict.",
+  "world_is": "The detector never checked the blob hash it claims to check, and matched only the upper-case literal SIGNED, which neither real half contains. Fixed in this worktree before the apply: it now requires the HEAD packet blob named in the half AND a case-insensitive sign/signed/signs word AND no REFUSED verdict (strictly tighter on the blob, wider only on case). The gate was never bypassed: the fix is to the instrument, and the human reading of both halves (verdict + blob) was done first.",
+  "notes": "An instrument that fails closed on the real artifact is the safe direction, so no state was ever at risk; the cost was one rerun. Not a blocker for arm (c)."
+}
+```
+
+## Round 8, IB-rth-8 -- worker 0.9.0_WK_IRPT_BCKEND~8's row: disarm of IRPT_BCKEND-W7-S2 by citation (apply landed, plan 0/0/0, no taint)
+
+```json
+{
+  "id": "IRPT_BCKEND-W8-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~8",
+  "surfaced_at": "2026-09-21T20:40:18Z",
+  "one_line": "DISARM BY CITATION of IRPT_BCKEND-W7-S2 (ARMED, disarm_owner 2.0.0_SA_COO~B): the four tainted lgic_firm resources are cleared by a signed-off safe-apply; the shared-infra root re-plans 'No changes', 0 tainted. W7-S2 is never edited; this row carries the disarm evidence, and its disposition remains for 3.0.0_SA_CVO.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~8/IB-rth-8_apply_output.txt (sha256 ad0c7f6d745a15c82347eaa4f8ea0f308c2a64e26dbe7008598aa4005f1b264c): .tools/safe-apply.sh apply of a saved plan of exactly 4 non-no-op resources of 242, rc=0, 'Apply complete! Resources: 4 added, 0 changed, 4 destroyed.'; the four are aws_s3_bucket_policy.lgic_firm[inflection|cottonwood] and aws_s3_bucket_versioning.lgic_firm[inflection|cottonwood], 4 of 4 'Creation complete'.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~8/IB-rth-8_postapply_replan.txt (sha256 0f36ae104708266260cb92b9625cc5b7b5016f58bdc454b16c481c9ce20665a9): fresh 'terraform plan -refresh=true' rc=0, 'No changes. Your infrastructure matches the configuration.' -- the exact condition W7-S2 recorded as not met (was 'Plan: 4 to add, 0 to change, 4 to destroy'). terraform show over the whole state: 0 '(tainted)' markers of 8952 lines, 251 state entries.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~8/IB-rth-8_postapply_reads.txt (sha256 9626a005197d627f52ee6685aff810c096a0397f8403abe2d6039b96511e266d): both buckets get-bucket-policy sha256 equal to the pre-apply value (inflection 2d90b2f1a01bada3..., cottonwood b095cbbfe6572ae6...), list-objects-v2 0 keys both, get-bucket-versioning Enabled both, all re-measured after the apply (2 of 2 buckets, 3 of 3 reads each).",
+      "org/critical_paths/change_management/20260918T1949Z_irpt-bckend-ib-rte-3-lgic-firm-buckets_deploy_completion.md: legs L1 and L3 CLOSED with the above as proof; L4 remains UNEXERCISED (host stopped), unchanged and not this row's to close. Authorization: both never-widen halves at HEAD 50f5520156 naming packet blob 0ca08bdf9ca6833ec79cbd3a30f10224b624e03c."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-rth-8 arm (c): 'Disarm row IRPT_BCKEND-W7-S2 by citation (a new row ... BLOCKING/INVESTIGATION-class rows are never mutated in place).'",
+  "world_is": "W7-S2's ARMED hazard (a shared-infra plan that replaces 4 tainted resources, a delete-then-create that a later careless apply would have run without sign-off) no longer exists: no tainted resource remains and the plan is 0/0/0. This row disarms by citation only; it does not use the CVO's `adjudicates` carrier and does not disposition W7-S2, which stays with 3.0.0_SA_CVO at L9. Observed replace window, for R85-AC3's record: per-resource policy destroy and create each completed in 0s, versioning destroy 0-1s and create 1-2s, all four ran concurrently; the versioning-destroy mechanism (state-only vs Suspend call) was still not observed and stays UNRESOLVED."
+}
+```
+
+## Round 8, IB-rth-8 -- worker 0.9.0_WK_IRPT_BCKEND~8's row: the battery's post-apply verification path was unreachable and its ledger predicate could not match
+
+```json
+{
+  "id": "IRPT_BCKEND-W8-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~8",
+  "surfaced_at": "2026-09-21T20:44:39Z",
+  "one_line": "Two more defects in the prior pass's battery_ib_rth_8.py --arm apply, found only once the apply had landed: the post-apply verification path was UNREACHABLE (the bound check demanded exactly 4 changing resources, so a converged 0-change plan hit FAIL/STOP first), and the ledger-closed regex required '| CLOSED |' while the real state cell reads '| CLOSED <timestamp> |'. Both fixed; the verifier now also re-reads policy sha256, 0 keys, versioning and the taint census live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~8/IB-rth-8_R85-AC2_battery_output.txt as first produced this pass (before the fix): 'Pre-apply plan: 0 non-no-op resources, 0 outside the 4 named.' then 'FAIL/STOP: pre-apply plan does not show EXACTLY the four named resources changing', rc=1, on a plan that read 'No changes. Your infrastructure matches the configuration.' (line 79 of that output) -- a correct converged state graded as a stop.",
+      "org/critical_paths/change_management/20260918T1949Z_irpt-bckend-ib-rte-3-lgic-firm-buckets_deploy_completion.md: the L1/L3 manifest rows end '| CLOSED 20260921T203659Z |' / '| CLOSED 20260921T203700Z |' (read this pass, 4 of 4 leg rows listed), which the original pattern (a pipe directly after CLOSED) cannot match; the L2 row closed earlier on the same shape."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "battery_ib_rth_8.py docstring, arm apply: 'a fresh re-plan reading 0/0/0, and terraform state list showing no tainted resource. Then closes ledger legs L1 and L3 ... Token prints only when every read is clean.'",
+  "world_is": "The token path was dead code: it sat behind a check that rejects the very state it verifies, and its ledger predicate could never match the tool-written cell. Both are the fail-closed direction (no false PASS was ever possible), found because the apply was run by hand and the battery was then run against a real converged state instead of being reasoned about. Fixed in this worktree; the token now prints only after live policy-sha/0-keys/versioning reads, a 0-tainted census and both ledger legs CLOSED.",
+  "notes": "Untested-until-exercised is the class: the battery's post-hoc branch had no positive control before this run. The apply itself was performed by hand via .tools/safe-apply.sh and never depended on the battery."
+}
+```

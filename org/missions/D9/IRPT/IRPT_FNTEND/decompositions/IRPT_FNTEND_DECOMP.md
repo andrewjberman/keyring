@@ -1,21 +1,21 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 9 -- v0.9
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 10 -- v0.10
 
 ```json
 {
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "round": 9,
- "decomp_version": "v0.9",
+ "round": 10,
+ "decomp_version": "v0.10",
  "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@5fd2dc9ab5",
  "prd_version": "v0.9",
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-11", "FWD-12"],
- "cells": 11,
+ "cells": 4,
  "cell_id_shape": "FE-s-<n>",
- "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @be8cf21874)",
- "record_repo": "workspace (branch CLOUD @df19cec4e8)"
+ "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @ddb172bf)",
+ "record_repo": "workspace (branch CLOUD @e3fdcb516d)"
 }
 ```
 
@@ -2013,3 +2013,94 @@ rendering half (58, 59, 60) has no ready root until 57 drains, so it seats in wa
   (`org/tier1_exec/2.0.0_SA_COO~F/deliverables/ANDREW_DIRECT_20260921_1237Z_COOF_SOLE_FOCUS_IRPT_FNTEND_CANONICAL_FLOW_THEN_DRIVE.md`),
   superseding the 2026-09-15 free-after-round-8 plan.
 - **S66 (the backend admin wall) stays at Andrew**, unadjudicated by this cut; it names no cell here.
+
+
+---
+
+## R10 -- ROUND 10: FWD-12'S CLOSING PASS, THE ONE CARD THAT DOES NOT CROSS TO IRPT_BCKEND
+
+**Source.** `1.0.0_SA_CTO`'s grades on this project's round-9 completion report
+(`ledger/COMPLETION_GRADES.round9.json` @4030dac, msg 99254): 8 of 8 outcomes `NOT_EVALUATED`, none `NOT_REALIZED`, so no L5
+recut and no SCOPE_CHANGE. Every cited proof is fixture-bound (303 criteria across 19 proofs, 0 reaching a live route). Seven cards
+(FWD-1, 3, 4, 5, 6, 8, 11) CROSS to IRPT_BCKEND and their closing passes wait on its half. **FWD-12 is the one card whose PRD row
+says `IRPT_BCKEND is NOT ENGAGED`, so its closing pass is cuttable now.** The grader's spec: *"the real route, all three tabs plus
+the export, read against DESIGN.md at the CURRENT vintage."* One finding bears on it: FE-s-11's recorded `CANVAS` is
+`rgb(195, 202, 218)`, the silver ground the 2026-09-11 ruling retired; `portal/CLAUDE.md` now requires `rgb(244, 246, 250)`. The same
+pass answers round 9's open `F60-AC6` color-law question.
+
+**A correction to this seat's own round-9 read.** This seat told the CTO "no PRD-endpoint gap to cut a cell for." That was true on the
+COVERAGE axis and this seat over-extended it to "nothing left to build." The REALIZATION axis, read against the exercised artifact,
+found a cuttable gap. The two axes are separate documents for exactly this reason.
+
+### R10.1 THE RECTANGLE -- four cells
+
+**MECE by subtraction.** The surfaces FWD-12's DONE WHEN names (an advisor uses all three tabs and the export) are five: the header
+(scope and search), the Reporting tab, the Analysis tab, the Holdings tab, the export (modal, preview, print page). 5 named surfaces
+- 5 assigned = 0 uncovered. The census cell is not a sixth surface: it is the PRD's own FWD-12 PROOF limb ("a census of EVERY
+component the page uses ... denominator printed"), refreshed at the current vintage.
+
+| cell | write surface | serves | source | wave | slot |
+|---|---|---|---|---|---|
+| `FE-s-61` | evidence: `deliverables/0.9.0_WK_IRPT_FNTEND~11/`; portal: `header/` and `tabs/reporting/` only | FWD-12 | the grade's spec: the real route, header and Reporting tab, read against DESIGN.md at the current vintage | A | ~1 |
+| `FE-s-62` | evidence: `deliverables/0.9.0_WK_IRPT_FNTEND~12/`; portal: `tabs/analysis/` and `tabs/holdings/` only | FWD-12 | the same, Analysis and Holdings tabs | A | ~2 |
+| `FE-s-63` | evidence: `deliverables/0.9.0_WK_IRPT_FNTEND~13/`; portal: `export/` and `render/` only | FWD-12 | the same, the export modal, the preview and the print page; also round 9's open `F60-AC6` | A | ~3 |
+| `FE-s-64` | evidence ONLY: `deliverables/0.9.0_WK_IRPT_FNTEND~14/`; NO portal write | FWD-12 | the PRD's FWD-12 PROOF limb: the component census and the colour-law scan, at the current vintage | A | ~4 |
+
+**Not cut, and why.** FWD-1, 3, 4, 5, 6, 8, 11: each card names what IRPT_BCKEND supplies and the PRD says a frontend mock cannot close
+that half. `IB-rth-2` (the export submit controller) is still pending in IRPT_BCKEND round 8, and FWD-5 is also bound by PRD v0.9's
+`irpt-holdings` count-0 exemption until `IB-rtf-8`. Cutting a fixture-fed pass for them would repeat exactly what the grades found
+insufficient. They wait, named here so the wait is a record and not an omission.
+
+### R10.2 BOUNDS -- ALL ROUND-10 CELLS (rounds 1-9 bounds stand)
+
+```
+  what a closing pass is  EXERCISE the real route with the round's fixtures fed at the network layer (ui-smoke --fixtures), READ every
+                          capture, and record what it shows against DESIGN.md at the CURRENT vintage. It is evidence first.
+  fixture-fed, said so    these passes do not reach a live route (none can: IRPT_BCKEND is not serving). Each result file says so in
+                          its first paragraph; FWD-12's DONE WHEN limb (familiarity on the real route) needs no counterpart half, which
+                          is why fixture-fed evidence is the correct kind HERE and insufficient for the other seven.
+  canvas                  every capture's `CANVAS:` line must read rgb(244, 246, 250). The FE-s-11 capture recorded rgb(195, 202, 218);
+                          both values are quoted side by side in the result, so the check has an arm that can fail.
+  fixes                   a defect a capture in THIS pass demonstrates, on the cell's OWN surface (its portal write surface above), may be
+                          fixed by the cell, with a BEFORE capture kept and an AFTER capture beside it, one fix per finding. A defect
+                          whose fix needs any other file (StatusPanel.tsx, state/, src/index.css, App.tsx, any file outside
+                          InvestorReporting/, or another cell's surface) is ONE ROW and the cell keeps going. Never widen your own grant.
+  dev server              start your worktree's own vite dev server on its own derived port (export IRPT_FE_DEV_PORT), and STOP IT before
+                          the whole-suite criterion; verify the port is closed. A live server makes the browser-gated suites run instead
+                          of skip, which is a different measurement (measured this round: rows W8-S1, W9-S1).
+  judgment                the last criterion of each order is a JUDGMENT criterion: RECORD the evidence, give NO verdict. It is graded
+                          by the CVO at L9 and is never self-graded.
+```
+
+### R10.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-61 <- (none)   READY ROOT   wave A
+  FE-s-62 <- (none)   READY ROOT   wave A
+  FE-s-63 <- (none)   READY ROOT   wave A
+  FE-s-64 <- (none)   READY ROOT   wave A
+
+  weakly connected components: 4   ready roots at issuance: 4   max concurrent width: 4
+```
+
+Disjoint by FILE: portal write surfaces are `header/`+`tabs/reporting/` (61), `tabs/analysis/`+`tabs/holdings/` (62), `export/`+`render/` (63),
+none (64). Every shared file (`tabs/StatusPanel.tsx`, `state/`, `contracts/`, `src/index.css`, `src/App.tsx`) is read-only to all four. The
+one shared write is the append-only `INVESTIGATION_v2.md`, which conflicts at every concurrent drain and is resolved as union.
+
+**Fan-out: `4 of 4 chains, cap 8, reason: four independent surfaces of one card with no shared write file; the count is the number of
+surfaces FWD-12's DONE WHEN names plus its census limb, not a cap-fill`.**
+
+### R10.4 RULE 24 RECORD (round 10)
+
+| postulate | how |
+|---|---|
+| (i) MECE | FWD-12's named surfaces: 5 - 5 assigned = 0 uncovered; the census is the PROOF limb, not a surface. The other seven cards: 7 - 0 cut = 7 deliberately not cut, each with its counterpart dependency named. |
+| (ii) same grain | every cell is a (surface, closing-pass) pair at the surface grain. |
+| (iii) intent | one axis per cell: what the real route SHOWS at the current vintage (61-63), and what the tree CONTAINS at the current vintage (64). |
+| (iv) state | Moves: FWD-12 from `APPLIED` toward `EXERCISED` on the real route. Does NOT move: FWD-1, 3, 4, 5, 6, 8, 11 (counterpart-dependent); any grade to `REALIZED` (the CTO's, on the exercised artifact); the portal freeze; `W3-S41` (no cell reaches `proof-of-spec-check.py`). |
+
+### R10.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word.
+- **`COMPLETION_REPORT.round1.json`** is ungraded history, superseded by round 9 (CTO, msg 99254). Left as it is.
+- **The CVO seat for this project is `3.0.0_SA_CVO~F`** (Andrew-direct 2026-09-21; identity resolved to the Codex seat, PID 28148).
