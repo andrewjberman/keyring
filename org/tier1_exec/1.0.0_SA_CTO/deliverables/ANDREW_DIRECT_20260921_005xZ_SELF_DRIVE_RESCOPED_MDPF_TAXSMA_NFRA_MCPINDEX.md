@@ -168,3 +168,36 @@ Ticks 1 and 2 both printed **4 live COO lanes against a cap of 3** and disclosed
 **It resolves by `~O` closing, not by a seating decision** -- and the reason the cap exists is now measured
 rather than assumed: it is a RAM cap in effect, not merely a context-hygiene rule. **A cap whose mechanism you
 can see is a different object from a cap you are obeying on authority**, and this one is now the first kind.
+
+---
+
+## STOP -- **HELD-AT-STOP**, appended 2026-09-21 ~10:3xZ by `1.0.0_SA_CTO` (skill s.5)
+
+**This loop is STOPPED. It is NOT DONE, and it was NOT stood down by the driver's own judgment.**
+
+**CAUSE: Andrew wound down BOTH lanes in this scope, each at its own terminal, each word committed verbatim.**
+
+| lane | project | his word, VERBATIM | carrier |
+|---|---|---|---|
+| `2.0.0_SA_COO~T` | `MDPF_TAXSMA` | *"take note of your position on TAXSMA and wind down your team at the next logical checkpoint."* | `cbfeeef31f` |
+| `2.0.0_SA_COO~M` | `NFRA_MCPINDEX` | *"take note of your position on MCPINDEX and wind down your team at the next logical checkpoint"* / *"I will allow your agents time to finish"* | `99031`, position @`7466d470e1` |
+
+Combined with his ~02:4xZ direct barring any new `2.0.0_SA_COO*` seat this session, and Rule 27 giving this
+seat no L5/L6/L7, **every remaining act on both projects belongs to a lane that is stood down on his word.**
+
+**REACHABILITY AT STOP: 0 REACHABLE, 2 UNREACHABLE.** The member set was NOT edited -- both projects remain
+in scope and counted, each named UNREACHABLE with its reason. A stop-condition satisfiable by shrinking its
+own denominator is not a stop-condition.
+
+**STATE AT STOP** (each figure from a call in tick 20): `MDPF_TAXSMA` **15 open of 27** (13 pending, 2
+staged, 12 complete); `NFRA_MCPINDEX` **29 open of 38** (9 complete). Cron `a18b29c0` DELETED. Final log:
+`logs/2026-09-21/self_drive_MDPF_TAXSMA_NFRA_MCPINDEX_tick20_HELD_AT_STOP.md`.
+
+**RESUME CONDITION -- his word, one of two:** lift the no-new-COO-seats hold, or name the seat that resumes
+each project. **A successor MUST NOT re-arm this scope off this record while the stop above stands** (skill
+s.0.4: re-arm only where the newest log reads `state: ARMED`; this one reads `HELD-AT-STOP`).
+
+**OWED AT RESUME, already ruled so nothing is re-derived:** `MXC4-AC11` is ruled @`5f3b4a20c6` (catalog limb
+struck and relocated; FAIL vacated as a cut defect; re-cut is the issuer's). `wk-nfra_mcpindex-1-1d`
+@`119a49eef0` stays UNMERGED -- it carries ARMED row `W1-S5` and a live Gateway behaviour change ahead of
+both its gates.
