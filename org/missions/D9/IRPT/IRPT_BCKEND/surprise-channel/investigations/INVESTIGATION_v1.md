@@ -7826,3 +7826,50 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "WHAT THIS SEAT DID: measured the conflict via a trial edit to scopes.json (bucket field only, on the 'inflection' row), ran `python lib/opal_naming.py validate`, observed the REFUSED verdict quoted above, then reverted the edit immediately (no commit, no exemptions.json edit, no terraform plan/apply attempted -- the premise the apply depends on never reached a valid state). NOTHING in infra/logic/registry/ or infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf differs from CLOUD HEAD at this row's filing. STOPPED per arm (b)'s own protocol ('if the tool gives you something else, STOP -- do not override the tool's output by hand ... file a row with the discrepancy and carry it to the COO') and arm (d)'s honest-STOP allowance, even though this is one step upstream of the arm(b) naming-mismatch case (address()/name() were never reached -- the conflict surfaces at validate(), before any name is derived) -- the same class of tool-refusal the arm anticipates. DISARM CONDITION: 2.0.0_SA_COO~B (or 1.0.0_SA_CTO) rules one of: (i) authorize a genuine key+long rename of the 'inflection'/'cottonwood' scope rows to 'inflectionwealth'/'cottonwoodcapital' -- NOTE this cascades far beyond scopes.json's two rows (cottonwood's own pipeline_trees.separated_from names 'inflection' by spelling; monolith_scopes on both rows name themselves by long form for orion/eclipse/blackdiamond consumers; every place that resolves lookup('inflection') would need the new spelling or a preserved alias) and is a MUCH larger blast radius than 'a bucket swap, not a firm rename' contemplated; (ii) register a declared exception letting these two FIRM rows' bucket diverge from opal-data-{long} (requires amending lib/opal_naming.py validate()'s :365-366 rule or its NAMING_SCHEMA.json source, both Rule-30 canon, and Andrew's acknowledgment per doctrine R20's bar for a declared departure); (iii) keep the SAME bucket names Andrew already has live (opal-data-inflection/opal-data-cottonwood) and resolve the ORIGINAL lockout by fixing the exemption list in place (the fix row IB-rte-3-era S43 already diagnosed: an empty exemption list denied the operator identity) rather than creating replacement buckets at all -- Andrew's own words named the new-bucket path as the fallback IF 'there is no mechanism for us to access these buckets'; a mechanism (the exemption-list fix, unblocked once L1-L4 of the IB-rte-3 ledger are actually driven) may still exist and has not been re-attempted since row S43 filed; (iv) another route the COO/CTO names. Recommendation: measure (iii) first (cheapest, zero new infrastructure, no rename cascade) before committing to (i) or (ii)."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-S115",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T17:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4.0.0_SA_CRO msg 99124 (@a0097b1ef4), VERBATIM: 'IB-rth-6 ... and the naming-exception card this seat carried to Andrew for it are MOOT -- his instruction was new buckets only \"if it cannot be done\", and it could. The re-cut is yours.'",
+      "the same message's AFTER-read: get-bucket-policy rc=0 matching rendered policy, head-bucket 200, versioning Enabled, public-access-block True x4, 0 keys each, as user/Andrew_Berman with no role, 2 of 2 buckets"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "DISARMS IRPT_BCKEND-W6-S1 BY CITATION (a correction, not an in-place mutation -- W6-S1 is class BLOCKING with flat hazard_standing, no monotone-advance exception; that exception is REMEDIATION-only, per S114's own precedent). W6-S1's own finding stands as CORRECT and UNCHANGED -- the naming-law wall it measured is real. What changed is the PREMISE the wall was measured against: TO-IB-rth-6 itself is now superseded, so nothing needs the wall crossed.",
+  "spec_asserts": "TO-IB-rth-6's header: Andrew's ruling authorized replacement buckets conditionally -- 'if there is no mechanism for us to access these buckets' -- never as a first choice.",
+  "world_is": "4.0.0_SA_CRO msg 99124 (@a0097b1ef4): Andrew personally recovered opal-data-inflection/opal-data-cottonwood at the console, ~17:2xZ, VERBATIM 'See if we can somehow get the original -inflection and -cottonwood buckets sorted now' / 'go ahead you have egress as needed'. Mechanism: the live Deny admitted ONLY role/*-inf-* (resp. role/*-cot-*), no user -- Andrew created firmsep-inf-bucket-recovery-role / firmsep-cot-bucket-recovery-role in console (Rule-30-conformant names), each role PUT the TF-rendered policy (fence_patterns(firm) + exemptions.json's 3 users) 17:35:59Z-17:36:39Z. AFTER-read as user/Andrew_Berman with NO role: get-bucket-policy rc=0 matching rendered policy, head-bucket 200, versioning Enabled, public-access-block True x4, 0 keys each (2 of 2 buckets) -- the exact mechanism the naming-law wall existed to avoid needing. So the condition in TO-IB-rth-6's own header was never met: the original buckets COULD be recovered, and were. CRO msg 99124 verbatim: 'IB-rth-6 ... and the naming-exception card this seat carried to Andrew for it are MOOT ... The re-cut is yours.'",
+  "notes": "W6-S1 required no fix and gets none -- the registry validator's key==long / bucket==opal-data-{long} invariant for FIRM rows is UNCHANGED and remains correct estate law; this row records only that the cell needing it to bend is withdrawn. TO-IB-rth-6's <status> flipped to superseded citing this row and msg 99124 directly (commit alongside). Remaining bucket-program work (deploy ledger legs L1/L3/L4, a fresh Terraform plan/negative-control check) is NOT disposed by this row -- see IB-rth-7 (decomp s.R8.8) and row S116."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-S116",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T17:56:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "4.0.0_SA_CRO msg 99124 (@a0097b1ef4), 'ONE FINDING FOR THE FENCE'S OWNER (not acted on)': fence_patterns() = role/*-inf-* / role/*-cot-* needs a hyphen BEFORE the firm token, so the firm's OWN pipeline roles (inf-gold-layer-lambda-role, inf-api-positions-role ... 28 inf-* roles; cot-* likewise) do NOT match"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "CARRIED FROM 4.0.0_SA_CRO msg 99124, 'ONE FINDING FOR THE FENCE'S OWNER (not acted on)': s3-lgic-firm-buckets.tf's fence_patterns() admits role/*-inf-* / role/*-cot-* with NO HYPHEN before the firm token, so this project's OWN pipeline roles (inf-gold-layer-lambda-role, inf-api-positions-role, ... 28 inf-* roles; cot-* likewise) do NOT match the pattern and remain DENIED on their own now-partially-recovered firm bucket. Only opal-inf-* / opal-cot-* / bd-cot-* style names pass. This is an EXPOSURE (a real gap, not yet measured as fired) -- no inf-/cot- pipeline has yet attempted a write since the recovery to convert it to an INCIDENT.",
+  "spec_asserts": "CLAUDE.md Rule 22, the negative mirror: 'A guard that is MISSING, or a hazard that is REAL, is an EXPOSURE until someone measures whether it ever FIRED; only then is it an INCIDENT.' fence_patterns()'s own pattern text, quoted verbatim in msg 99124: 'role/*-inf-*' / 'role/*-cot-*', no hyphen before the firm token.",
+  "world_is": "UNMEASURED by this seat this tick -- carried, not verified independently. 0.7.0_AE_CloudOps~V's prior 99084 read ('no IAM grant passes the Deny') was correct for USERS; the CRO's 99124 states the condition admits matching ROLES and that the firm's own role-naming convention (inf-*, not *-inf-*) falls outside the admitted pattern. Whether IB-rth-7 needs to fix fence_patterns() itself, or whether this is squarely the shared-infra module owner's (outside IRPT_BCKEND's own lane) is NOT decided by this row.",
+  "notes": "It matters the moment an inf-/cot- pipeline actually writes to opal-data-inflection/opal-data-cottonwood post-recovery -- until then it is real but unexercised. Tracked here because it directly affects whether this project's own future platinum/gold writers to these two buckets will work; disposition (fix in fence_patterns(), a registry-side role-naming fix, or explicitly out of this project's lane) is for IB-rth-7's cut or the CTO/CRO's ruling, not decided unilaterally here."
+}
+```

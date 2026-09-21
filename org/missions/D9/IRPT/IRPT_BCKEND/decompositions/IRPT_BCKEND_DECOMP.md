@@ -8,7 +8,7 @@
   "directive": "D9",
   "fabric": "laptop",
   "round": 8,
-  "decomp_version": "0.10",
+  "decomp_version": "0.11",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -59,7 +59,8 @@
   "cells_round8": 6,
   "cell_id_shape_round8": "IB-rth-<n>",
   "round8_mid_round_addition_1": "IB-rth-5, ~14:5xZ 2026-09-21, on row W3-S52 and CTO ruling addendum 2 @afc015b4b2 (msg 99068)",
-  "round8_mid_round_addition_2": "IB-rth-6, ~16:2xZ 2026-09-21, Andrew-direct @fb8c7a574c -- create opal-data-inflectionwealth + opal-data-cottonwoodcapital"
+  "round8_mid_round_addition_2": "IB-rth-6, ~16:2xZ 2026-09-21, Andrew-direct @fb8c7a574c -- create opal-data-inflectionwealth + opal-data-cottonwoodcapital -- CLOSED SUPERSEDED ~17:5xZ on CRO msg 99124 @a0097b1ef4, the need was met another way",
+  "round8_mid_round_addition_3": "IB-rth-7, ~18:0xZ 2026-09-21, on CRO msg 99124 + CTO msg 99128 -- reconcile Terraform state (ledger legs L1/L3/L4) against the manually-recovered bucket policy; carries row S116 (fence_patterns hyphen gap)"
 }
 ```
 
@@ -114,7 +115,22 @@ confirmed still present/open this tick) has sat RED since 2026-09-18 for exactly
 buckets exist to route around a lockout, not to repeat it: the exemption rows go in at the FIRST apply,
 never as a later patch.**
 
-Cell, exactly as Andrew's ruled fix specifies (his four points, restated as the cell's own arms):
+**R8.7 CLOSED SUPERSEDED (~17:5xZ 2026-09-21, `2.0.0_SA_COO~B`, on `4.0.0_SA_CRO` msg 99124 @`a0097b1ef4`).**
+`IB-rth-6`'s own conditional premise -- new buckets "if there is no mechanism for us to access these
+buckets" -- was never met: Andrew personally recovered `opal-data-inflection`/`opal-data-cottonwood` at
+the console (break-glass IAM roles `firmsep-inf-bucket-recovery-role`/`firmsep-cot-bucket-recovery-role`
+matching the fence's own `role/*-inf-*`/`role/*-cot-*` admit-pattern; PUT the same TF-rendered policy this
+cell's arm (d) would have produced, with the same 3-identity exemption; AFTER-read clean as
+`user/Andrew_Berman` with no role, 2 of 2 buckets). `IB-rth-6` never reached arm (c); the worker's honest
+STOP on the registry naming-law wall (row `IRPT_BCKEND-W6-S1`) is disarmed by citation, not overwritten
+(row `IRPT_BCKEND-S115`). No new buckets, no naming exception, no registry edit. The cell text below is
+kept verbatim as the historical record of what was staged; none of it executed. Remaining bucket-program
+work -- deploy ledger legs L1/L3/L4 (a Terraform plan should now read 0 change on `aws_s3_bucket_policy.
+lgic_firm`; the negative control), and the CRO's disclosed-but-unmeasured `fence_patterns()` hyphen gap
+(row `IRPT_BCKEND-S116`) -- is picked up fresh, not as this cell's continuation: see R8.8, `IB-rth-7`.
+
+Cell, exactly as Andrew's ruled fix specifies (his four points, restated as the cell's own arms) --
+**STAGED ONLY, SUPERSEDED BEFORE EXECUTION, kept for record:**
 (a) registry-addressed via `lib/opal_naming.py address()`, NEVER hand-typed (Rule 30) -- update the
 `bucket` field on the `inflection`/`cottonwood` entries in `infra/logic/registry/scopes.json` to the new
 long-form names (verified live this tick: `bucket_provisioned: true`, `bucket_managed_by:
@@ -138,6 +154,39 @@ non-blocking, since `IB-rtf-5`/`rtf-7` (and whatever else needs these buckets) a
 this. Grant: `infra/logic/registry/`, `infra/aws/terraform/**/s3-lgic-firm-buckets.tf` (or wherever that
 root actually lives -- confirm, do not assume), `org/critical_paths/change_management/`,
 `org/critical_paths/.open_deploys/`, this project's own task-order/investigation faces.
+
+### R8.8 MID-ROUND ADDITION (~18:0xZ 2026-09-21) -- on `4.0.0_SA_CRO` msg 99124 (@a0097b1ef4) and `1.0.0_SA_CTO` msg 99128, superseding `IB-rth-6` (R8.7)
+
+`IB-rth-7` (WK): the bucket LOCKOUT itself is now recovered (R8.7's closure note above) -- what remains is
+RECONCILIATION, not creation. Three arms, all VERIFY-CLASS, no apply unless a plan shows drift: (a) a fresh
+Terraform plan on the `shared-infra` root (the `s3-lgic-firm-buckets.tf` module) reads `0 to add / 0 to
+change / 0 to destroy` on `aws_s3_bucket_policy.lgic_firm` for both `opal-data-inflection` and
+`opal-data-cottonwood` -- the manually-applied policy (CRO's PUT) must match byte-for-byte what the
+generator renders, since Terraform's own state never saw the apply; a NON-ZERO plan is a STOP (report the
+diff, do not `apply` to force convergence without a fresh packet) -- this closes deploy ledger leg L3
+(`org/critical_paths/change_management/20260918T1949Z_irpt-bckend-ib-rte-3-lgic-firm-buckets_deploy_completion.md`).
+(b) the negative control (leg L4): from host `i-02448edb624a7a7cf` if RUNNING, the host role's write to
+`opal-data-inflection` and the 49f principal's read of `opal-data-cottonwood` both DENIED, 2 of 2 -- same
+UNEXERCISED-not-FAIL vocabulary as `IB-rtf-5`'s `R62-AC3` if the host is STOPPED (this order does not start
+it). (c) leg L1 (the original 10-resource activation) is a JUDGMENT call for the CVO, not self-graded by
+the worker: does a clean L3 plan (0 change) mean L1 is satisfied BY CONVERGENCE even though no
+`safe-apply.sh` ever ran against this state, or does L1 require an actual Terraform apply to bring the
+state file itself current (`terraform import` / a no-op apply that only updates state) before it can close
+-- state the tradeoff, do not rule it unilaterally. (d) IF (a) finds drift: STOP, file a row, do not
+apply without a fresh never-widen packet -- the CRO's manual PUT was itself a never-widen act authorized
+directly by Andrew ("go ahead you have egress as needed"), and a worker-initiated apply on TOP of it is a
+NEW act needing its own halves. (e) SEPARATELY, carry row `IRPT_BCKEND-S116` (the `fence_patterns()`
+hyphen-gap: `role/*-inf-*`/`role/*-cot-*` does not match this firm's own `inf-*`/`cot-*` pipeline role
+names) -- MEASURE whether it is real (does any of this project's own served Lambda roles or a Terraform
+`aws_iam_role` in this estate actually need to write to these two buckets, and does its role name in fact
+fail the pattern -- printed, not assumed) and report to the COO; fixing `fence_patterns()` itself is
+OUTSIDE this project's lane (a shared-infra module owned elsewhere) and is a carry, never a fix landed
+here. Chain G (independent of A-F). fanout 1 of 1 this addition (rth-6 CLOSED SUPERSEDED, not counted).
+Grant: `infra/aws/terraform/shared-infra/` (plan only; no apply unless (d) authorizes one under a fresh
+packet), `org/critical_paths/change_management/`, `org/critical_paths/.open_deploys/`, this project's own
+task-order/investigation faces. NOT authorized: any change to `fence_patterns()` or any other firm's
+bucket policy; starting the host; any IAM role/user creation (Andrew's own break-glass roles stay as they
+are, deletable later once L3 reads clean, not this cell's to touch).
 
 ## R7. ROUND 7 -- THE RECUT ON THE ROUND-6 ANALYSIS (@fa2ff4f0dd, msg 98554; v0.7, 2026-09-20, `2.0.0_SA_COO~B`)
 
