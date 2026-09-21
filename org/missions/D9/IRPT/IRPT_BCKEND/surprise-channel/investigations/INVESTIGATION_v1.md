@@ -8164,3 +8164,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both hold under the unmodified diagnostic, but case 2 holds because the tool refuses a missing instance id first; the discriminating evidence for the 500 case is the +ID copy."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W9-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~9",
+  "surfaced_at": "2026-09-21T23:25:00Z",
+  "one_line": "battery_ib_rti_1.py --arm publish (first-pass code, never exercised past its gate) launched the extensionless .tools/aws shell shim via subprocess and raised WinError 193 before any S3 write; S3 verified unchanged, the battery's launch is corrected to .tools/aws.cmd and re-run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~9/battery_ib_rti_1.py:349 @ d164790a5c -- subprocess.run([REPO/.tools/aws, ...]) -> OSError [WinError 193] (the extensionless file is a POSIX shim; CreateProcess cannot run it).",
+      "Post-failure read: list-object-versions on both keys still shows the pre-publish VersionIds CiH2g8AtMA7Ag9bwNrroTDkBRzSMLvBW (cjs) and L.dAfivZB6itaQ4j.aWZ3_g9pEJLQR98 (sh), IsLatest=True -- no object was written by the failed launch.",
+      ".tools/aws.cmd exists beside .tools/aws (ls .tools/aws*)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-rti-1 R91-AC6: the publish arm runs the upload and S3 readback and prints the token only when sha256 matches.",
+  "world_is": "The publish arm's subprocess launch could not start the aws shim on this Windows box; the arm's gate and byte-derivation logic ran but the upload never did. The worker fixed only the launch path (aws.cmd) in the battery, a file in its own deliverables folder; no source or published byte logic changed."
+}
+```
