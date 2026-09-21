@@ -8013,3 +8013,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Untested-until-exercised is the class: the battery's post-hoc branch had no positive control before this run. The apply itself was performed by hand via .tools/safe-apply.sh and never depended on the battery."
 }
 ```
+
+## Round 9, IB-rti-2 -- worker 0.9.0_WK_IRPT_BCKEND~10's row IRPT_BCKEND-W10-S1
+
+```json
+{
+  "id": "IRPT_BCKEND-W10-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~10",
+  "surfaced_at": "2026-09-21T22:58:00Z",
+  "one_line": "Row W4-S34's premise (firm_registry.json's served content 'does not exist as a git blob anywhere in reachable history') is FALSE: it is the git blob 7c483504766345e4c73a7aad355ba9e5ca1e3edc, tracked at data/firm_registry.json in commit 1f54e16dfd; the live member is that blob with CRLF line endings (as is settings.json with the tracked intake/settings.json blob at dc5d119b84). The lookup missed it because git normalizes CRLF to LF on hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~10/ac1_output.txt: CANDIDATE lines, match_crlf=True for firm_registry.json@1f54e16dfd and settings.json@HEAD; 'git ls-tree 1f54e16dfd data/firm_registry.json' = blob 7c483504766345e4c73a7aad355ba9e5ca1e3edc",
+      "git log --all --find-object=7c483504766345e4c73a7aad355ba9e5ca1e3edc = 1f54e16dfd, 12aa323be0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "lambda-source-map.json irpt-ycharts-generate _staged_from_note @eecaad4985: 'its exact content does NOT exist as a git blob anywhere in this repository's reachable history (content-addressed blob lookup, row IRPT_BCKEND-W4-S34) -- no true source is declared for it'.",
+  "world_is": "sha256 of `git show 1f54e16dfd:data/firm_registry.json` with LF->CRLF = cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3 = the live zip member (5229 bytes; LF blob 5094 bytes, 135 lines). git hash-object of the live bytes = 7c483504... = the tree entry at 1f54e16dfd. settings.json: LF blob at dc5d119b84 sha c493ea6e..., CRLF form a05bcea4... = live. Both now declared in staged_from (blob pins, sha256 of the LF blob, verified by the builder). Consequence: a rebuild through staged_from (git show) is LF while the live JSON members were CRLF copies from an autocrlf worktree, so firm_registry.json, settings.json and the already-declared data/custodian_key_seam.json differ from live by CRLF only -- content-identical, not byte-identical. Whether that residual counts as 'byte-identical' for R92-AC3 is the CVO's judgment.",
+  "notes": "The tracked producer at HEAD (data/firm_registry.json is now a generated view carrying a _generated header line) does NOT reproduce the served bytes; the pinned historical blob does."
+}
+```
+
+## Round 9, IB-rti-2 -- worker 0.9.0_WK_IRPT_BCKEND~10's row IRPT_BCKEND-W10-S2
+
+```json
+{
+  "id": "IRPT_BCKEND-W10-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~10",
+  "surfaced_at": "2026-09-21T22:58:00Z",
+  "one_line": "The local rebuild from HEAD is NOT member-identical to live: staged_from loaders.py pins 385aff4646 (IB-rth-1's B1 edit, 2026-09-21), the live zip (LastModified 2026-09-19T14:29:32Z) serves loaders.py at its 39cbad4214 version (sha 49c290f6ac45); a rebuild+deploy would change served behaviour, so R92-AC2 prints no token and the order stays open.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~10/ac2_output.txt: 'loaders.py DIFF UNEXPLAINED rebuilt=0c086052e6e65d2c live=49c290f6ac457d46', 'SUMMARY identical=27 unexplained=1'",
+      "get-function-configuration irpt-ycharts-generate: CodeSha256 1L60sG1G9IaFfwe+LPNdE84DarlWCHKkdE8M5CyVI8o=, LastModified 2026-09-19T14:29:32.000+0000, read this pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order R92-AC2: every member's sha256 equals the live zip's, or each difference is named with a cause that does not change served behaviour.",
+  "world_is": "27 of 32 rebuilt members byte-identical; 3 CRLF-only (custodian_key_seam.json, firm_registry.json, settings.json); 1 declared-not-live (raw_keys.json, declared after the live build); 1 CONTENT difference (loaders.py, 39 insertions/3 deletions between 39cbad4214 and 385aff4646, the AccessDenied recognition). I did not touch the loaders.py pin: it is another cell's declaration and re-pinning it would be outside my write grant's two staged_from declarations. Serving the rebuilt package is a served change and its own packet.",
+  "notes": "Also: the live zip has no raw_keys.json while the entry declares it, and the function env IRPT_FIRM_REGISTRY=/var/task/firm_registry.json (packaged copy). Whether firm_registry.json/settings.json/raw_keys.json are required at runtime is a finding for the CTO and issuer, not decided here."
+}
+```
+
+## Round 9, IB-rti-2 -- worker 0.9.0_WK_IRPT_BCKEND~10's row IRPT_BCKEND-W10-S3
+
+```json
+{
+  "id": "IRPT_BCKEND-W10-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~10",
+  "surfaced_at": "2026-09-21T22:58:00Z",
+  "one_line": "The entry's _staged_from_note in lambda-source-map.json still says no true source is declared for firm_registry.json and that the build still fails on that member; after this cell's declarations the sentence is false. I left it unedited because the order bounds the write to the two staged_from declarations.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json, irpt-ycharts-generate entry, key _staged_from_note (quoted string 'this function's build still fails on that one member')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order (b)/BOUNDS: the ONLY writes are the two staged_from declarations, touching nothing else in the source map.",
+  "world_is": "A stale note beside the now-correct declaration reads as the current state. Needs a follow-up edit by whoever holds the grant.",
+  "notes": "Documentation-only; no build behaviour depends on the note."
+}
+```
