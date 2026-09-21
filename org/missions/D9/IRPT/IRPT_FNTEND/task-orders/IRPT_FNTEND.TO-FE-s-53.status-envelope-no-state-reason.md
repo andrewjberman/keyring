@@ -95,9 +95,30 @@ minimal one that makes the red test green without touching any other adapter. RE
 - **REFUSE** any criterion you cannot satisfy as written and report the refusal with its measurement.
 - Report push state as LOCAL. **PORTAL IS FROZEN**: local commits only.
 
+⛔ **AMENDMENT 1 (2.0.0_SA_COO~F, 2026-09-21 ~14:10Z; row IRPT_FNTEND-W4-S22 ARMED, disarm owner this seat; this
+order is REOPENED; one path added, one criterion's remedy widened, none removed).** Your first pass correctly
+built the fix and correctly REFUSED to touch anything outside your grant when F53-AC3/AC4 turned red on
+`fe-s-47/no-status-reason.test.ts`'s `F47-AC6` census reading your new line at `adapt.ts` as `UNCLASSIFIED`.
+That census (`git grep` for `EXPLICIT_UNKNOWN_STATE|'UNCERTAIN'|"UNCERTAIN"` over the committed tree, outside
+`__tests__/`, subtracted against a fixed `RULES` array of `{bucket, path, text, reason}`) is now YOURS to
+extend, for this one new site only:
+- Add exactly ONE new entry to `RULES` (`fe-s-47/no-status-reason.test.ts`, search `const RULES: Rule[] = [`)
+  whose `path` matches `contracts/adapt.ts` and whose `text` matches the EXACT new line your fix added (read it
+  back from your own commit, do not guess the string). Bucket it `'KEPT -- carries the reason'` if your line
+  supplies `NO_STATUS_REASON` the same way `carryAvailabilityFromStatus`'s own already-classified line does
+  (symmetry with the existing `KEPT` entry for that function); pick a different existing bucket ONLY if your
+  line's shape genuinely matches that bucket's own stated meaning better -- read all six bucket definitions
+  and their existing entries before choosing, and do not invent a seventh bucket.
+- `reason`: one sentence, in this file's own house style (see the existing entries), saying what the line does
+  and why this bucket is correct for it.
+- **Do not touch anything else in this file** -- not `PATTERN`, not another `RULES` entry, not the subtraction
+  logic, not any other test in it.
+- Re-run `F47-AC6` alone first and confirm `0` unclassified before re-running the wider suites below.
+
 <paths>
 portal/src/pages/InvestorReporting/contracts/adapt.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-53/
+portal/src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
