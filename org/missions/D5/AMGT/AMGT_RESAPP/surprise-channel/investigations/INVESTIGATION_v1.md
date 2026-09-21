@@ -10398,6 +10398,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "The worker's PASS on AC5, graded against the criterion's own qualifying clause, is the correct disposition; the round-15 findings for the CTO's analysis carry this as a criterion-authoring lesson (measure the baseline before writing a zero-count bar), not a code defect and not a round-16 cell.",
     "notes": "Filed at drain (AMGT-rk-62, worker 0.9.0_WK_AMGT_RESAPP~62, commit 8f59342ee4, merged a495e551de). No repair needed to AC5's text -- the instance already grades correctly against the qualifying clause, and a future reader of this TO should read AC5 the same way."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S185",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T14:28:40Z",
+    "one_line": "ROUND_ANALYSIS.round15.md s.3's project-state sentence ('29 of 31 cells terminal ... 2 remain open') mixes two grains in one claim: the numerator (29) includes round 15's 3 new cells but the denominator (31) does not, and '2 remain' counts blocking ANDREW WORDS, not open CELLS. The true combined round-14+15 cell population is 34 (31+3), with 5 cells genuinely open (rk-32, rk-49, rk-50, rk-51, rk-52), grouped under 2 words.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Decomposition census (this seat, this session): round-14 population AMGT-rk-31..rk-61 = 31 distinct cell ids; round-15 population AMGT-rk-62..rk-64 = 3 distinct cell ids; combined = 34, not 31.",
+        "The round-14 L8 packet's own open-cell table (ROUND14_L8_PACKET_20260919.md s.1) names FIVE open cells verbatim: rk-32, rk-50, rk-51, rk-52 (chain P) and rk-49 -- unchanged by round 15, which touched none of them. 34 - 5 = 29 terminal, matching the analysis's numerator but not its denominator or its '2 remain' cell-count reading.",
+        "The analysis's own s.3 parenthetical bundles the 5 cells into 2 GROUPS by blocking word ('rk-32+chain P counts as the single tenancy-word block'; 'rk-48/rk-49's live arms and rk-49's drain count as the Bright-Data-and-rotate block') -- a legitimate word-grain summary, but stated in the same sentence as a cell-count ('29 of 31 ... terminal') without naming the shift in grain, which is exactly the SAME-GRAIN postulate CLAUDE.md Rule 24 names."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ROUND_ANALYSIS.round15.md s.3, verbatim: '26 (round 14) + 3 (round 15) = 29 of 31 cells terminal ... 2 remain open'.",
+    "world_is": "29 of 34 cells terminal (31 round-14 + 3 round-15 cells, minus the 5 still open); the printed denominator 31 excludes the round-15 cells its own numerator counts, and '2 remain' is a word-grain count of blocking Andrew words, not a cell-grain count of the 5 genuinely open cells.",
+    "notes": "NOT operational: the analysis's own s.4 action table names all 5 cells correctly (rk-32/chain P, rk-48/rk-49's live arms, rk-49's drain) and this seat's next act is unchanged by the error -- nothing is re-cut or re-adjudicated on it. Surfaced because the sentence becomes the PROJECT STATE record a future round cites; a reader trusting '2 remain' at face value undercounts the open set by 3. disarm_owner is the CTO as the document's author; this seat took no action to correct the file itself (not this seat's document to edit) and keeps working."
   }
 ]
 ```
