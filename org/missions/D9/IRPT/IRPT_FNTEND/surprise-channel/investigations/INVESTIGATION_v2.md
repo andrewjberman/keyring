@@ -4631,6 +4631,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S76",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "FE-s-50's AC4 invocation (`git status --porcelain` then `git diff --stat`) reports contracts/wire/index.ts as M even though its clean-filtered bytes are byte-identical to the committed blob -- a stat-level false-dirty flag on a CRLF checkout, not a real change.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FE-s-50 AC4: 'print whatever the regeneration changed (may legitimately be empty on this checkout) ... Report the git diff --stat output in your result file whichever way it reads.' AC5 (judgment): 'the regenerated headers (if any changed) are the ONLY diff in contracts/wire/.'",
+    "world_is": "After running gen-wire.ts's generate(), `git status --porcelain src/pages/InvestorReporting/contracts/wire/` listed index.ts as ` M` alongside the 12 files whose sha256 comment genuinely changed. But `git diff` and `git diff --cached` on index.ts were both EMPTY, and `git hash-object src/pages/InvestorReporting/contracts/wire/index.ts` (896fb846d00b9de863bbf9a94e2cb993a00de79b) equalled `git ls-files -s`'s staged blob for the same path -- i.e. the clean-filtered working-tree content equals the committed blob exactly. `git diff-index --raw HEAD` still flagged it M with an all-zero working-tree sha (stat-dirty, not content-verified). `git update-index --refresh` reported it 'needs update' but did not clear the flag. `safe-commit.sh`'s own `git add -f` (which recomputes the blob) then found nothing to stage for index.ts: the landed commit (portal 57251c1a) touched 14 files -- gen-wire.ts, the new test, the 11 document wire types and responses.ts -- and index.ts is NOT among them, confirming the status M was a false positive rather than a withheld real change. A reader who trusted `git status --porcelain`'s literal listing (as AC4's own invocation does) would believe index.ts changed when it did not; AC5's 'the regenerated headers are the ONLY diff' claim is true only once this quirk is read past.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && git status --porcelain src/pages/InvestorReporting/contracts/wire/index.ts -> ' M src/pages/InvestorReporting/contracts/wire/index.ts' (repeated after git update-index --refresh)",
+        "cd <WS>/portal && git diff -- src/pages/InvestorReporting/contracts/wire/index.ts and git diff --cached -- src/pages/InvestorReporting/contracts/wire/index.ts -> both empty",
+        "cd <WS>/portal && git hash-object src/pages/InvestorReporting/contracts/wire/index.ts -> 896fb846d00b9de863bbf9a94e2cb993a00de79b, equal to git ls-files -s's staged entry for the same path",
+        "portal commit 57251c1a (14 files changed) does not list index.ts -- safe-commit.sh's git add found no change to stage"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
