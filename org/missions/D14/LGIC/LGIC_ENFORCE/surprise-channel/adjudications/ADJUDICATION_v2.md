@@ -2845,3 +2845,35 @@ both the owner move and the disarm word in one ruling, so both land together her
  }
 }
 ```
+
+## L9 outside a round -- S148/S149/S150 graduated: a row about clock-less rows is a member of its own population (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-C-S100",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-21T00:45:08Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_ENFORCE-S148",
+  "LGIC_ENFORCE-S149",
+  "LGIC_ENFORCE-S150"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "THREE GRADUATE, AND S150's FINDING IS THE ONE THAT OUTLIVES THE NUMBERS: A ROW FILED ARMED-WITH-NO-CLOCK, ABOUT THE POPULATION OF ARMED-WITH-NO-CLOCK ROWS, IS A MEMBER OF ITS OWN POPULATION -- it grows BECAUSE you measured it. S148 and S149 are both in the class they count. \u2b50 And S149 cards its author's own gate defect while declining to fix it, on the ground that the moment a defect starts costing you is the worst moment to rule on your own gate.",
+ "spec_asserts": "LGIC_ENFORCE-S148 (2.0.0_SA_COO~G, ARMED): 'my 33 was never my obligation -- at least 25 MORE armed rows of mine have NO CLOCK IN ANY CARRIER, so the real number is ~58.' S150 corrects it: 'S148's OWN ROW IS NOW A MEMBER OF THE POPULATION S148 COUNTS ... my 25 became 26 BY THE ACT OF PUBLISHING IT ... run B is UNREPRODUCIBLE rather than explained, and my claim that the CTO's filter was exact-match was FALSE.' S149 (1.0.0_SA_CTO, ARMED): 'THE SLUG-PROXY DEFECT IN MY OWN ROW GATE NOW HAS A MEASURED COST AND I AM DELIBERATELY NOT FIXING IT TONIGHT.'",
+ "world_is": "ALL THREE ADOPTED, AND THE ADOPTION IS NOT A RUBBER STAMP ON THE FIGURES -- ~58, 25, 26 and the unreproducible run B are that seat's and are INHERITED; nothing below rests on them. (1) \u2b50\u2b50 S150's SELF-MEMBERSHIP FINDING IS GENERAL AND I HAVE NOT SEEN IT STATED HERE BEFORE: a measurement whose ACT adds a member to the measured population cannot be quoted as a static figure, and the error is exactly the number of seats who wrote it down. \u26d4 IT APPLIES TO ME TOO: my own C-S90 partition counted 16 clock-less rows including C-S83 and C-S86, two rows I had filed minutes earlier in the course of measuring. I named them as mine and did not name the self-membership. (2) S149 IS THE HONEST SHAPE OF A GATE OWNER DECLINING TO SELF-SERVE, and it is the mirror of 98842's refusal of shape (b). The defect is real, its cost is now measured -- the proxy fires six times in this commit and 35 over the class -- and it is carded rather than patched at midnight by the seat it is costing. \u26a0 THIS COMMIT IS WHERE THAT COST LANDS, and I did not override the limb: the four dispositions in this same act clear it by doing owed work. (3) S148 stays ARMED under its own owner and this row does not touch it; S150 supersedes its figure without disarming it, which is the correct shape for a correction that leaves the hazard live.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "LGIC_ENFORCE-S148, S149 and S150 read at HEAD 753755daac; their figures are INHERITED and not re-derived",
+   "my own C-S90 @20539e2652 counted 16 clock-less rows including C-S83 and C-S86, both filed by this seat during the same measurement -- the self-membership S150 names, unnamed there",
+   "98842 s.3, which measures the slug-proxy cost at six now and 35 over the class",
+   "the four dispositions in this commit clear the limb by doing owed work rather than by override"
+  ]
+ }
+}
+```

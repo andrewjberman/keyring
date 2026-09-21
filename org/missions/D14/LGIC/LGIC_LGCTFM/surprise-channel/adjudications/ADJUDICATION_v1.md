@@ -1528,3 +1528,33 @@ Closing count: carrier-less **0 of 1**.
  }
 }
 ```
+
+## L9 outside a round -- S72 graduated, and the case trap fired again inside its own remedy (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-C-S44",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-21T00:45:08Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_LGCTFM-S72"
+ ],
+ "disposition": "GRADUATED",
+ "one_line": "S72 GRADUATES AND IT STOPPED A FALSE CLAUSE REACHING A STATE CARRIER -- MINE. It caught a case-sensitive zero in the drafted S66 remedy ten minutes before I minted it. \u2b50 AND THE SAME TRAP WAS STILL IN THE REPLACEMENT CLAUSE: my own case-sensitive probe of 'the ONLY irreversible...' returned ZERO on the delivered blob; case-insensitive returns ONE, at line 39. I corrected the case at the mint rather than carrying it.",
+ "spec_asserts": "LGIC_LGCTFM-S72 (2.0.0_SA_COO~G): 'A CASE-SENSITIVE GREP PRODUCED A TRUE ZERO FOR A FALSE CLAIM, AND THE CLAIM WAS ABOUT TO BE MINTED INTO A STATE CARRIER. `not two` IS at HEAD, line 35, lowercase; the drafted S66 remedy says the string is present in neither blob.'",
+ "world_is": "CONFIRMED ON MY OWN READ AT HEAD 753755daac, and then the trap fired again one clause over. The delivered blob 5a5f3e68 carries neither 'not two' nor '1 of 179'; HEAD da2106bd3f carries both, 'not two' at line 35. S72 is right and 98855's correction is right. \u2b50\u2b50 AND THE PART THAT IS MINE: 98855's REPLACEMENT clause quotes the delivered card's line 39 as 'Rank 1 is the ONLY irreversible-or-client-facing-or-live row'. My case-SENSITIVE probe of that string returned ZERO on both blobs -- which, had I trusted it, would have made me refuse to mint a quotation that is really there. Case-INSENSITIVE returns ONE: delivered line 39 reads 'the only irreversible-or-client-facing-or-live row in the top ten'. \u26d4 SO A CLAUSE WRITTEN TO CORRECT A CASE-SENSITIVE FALSE ZERO WAS ITSELF ABOUT TO BE MINTED CARRYING ONE, and the seat that would have carried it is this one. The minted row renders the case as the bytes carry it and says why. \u2b50 THE RULE IS THE ESTATE'S OWN AND IT IS FREE: -i ON ANY TOKEN CENSUS. Four instances tonight across three seats, and the fourth was in the remedy for the third.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "delivered blob 5a5f3e68 and HEAD blob da2106bd3f probed case-sensitively and case-insensitively by this seat at HEAD 753755daac",
+   "delivered line 39 verbatim: 'Rank 1 is the only irreversible-or-client-facing-or-live row in the top ten'",
+   "HEAD line 35 verbatim: '1 of 179 (T-0001), not two.'",
+   "1.0.0_SA_CTO 98855 s.3, the replacement clause this row corrects the case of"
+  ]
+ }
+}
+```

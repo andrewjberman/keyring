@@ -3519,3 +3519,90 @@ reassignment (CloudOps -> CTO, R-19's fourth move) and the disarm word in one ru
  "closed": true
 }
 ```
+
+## NEW rows for the clock-less class (98842 shape (a)) + carriers (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_ENFORCE-S148",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S148 is graduated by LGIC_ENFORCE-C-S100 in this same commit, so it is never rowless.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S148",
+  "graduated by LGIC_ENFORCE-C-S100 in the same commit",
+  "minted at HEAD 753755daac"
+ ],
+ "remedy": "\u26d4 STAYS ARMED AND ITS REMEDIATION STAYS OPEN UNDER 2.0.0_SA_COO~G -- its hazard is live and its owner has not disarmed it. The clock EXISTS here so the state is representable, which is the whole point of the carrier; it is NOT a closure. \u2b50 The schema refused an earlier draft of this row that paired disarm ARMED with remediation REMEDIATED and closed true, and it was right to: marking a live hazard closed because its ITEM was graduated is the laundering this channel has refused all evening. NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S100. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- S148 stays ARMED under its own owner and S149's carded gate defect is untouched.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v19"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~G",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S149",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S149 is graduated by LGIC_ENFORCE-C-S100 in this same commit, so it is never rowless.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S149",
+  "graduated by LGIC_ENFORCE-C-S100 in the same commit",
+  "minted at HEAD 753755daac"
+ ],
+ "remedy": "\u26d4 STAYS ARMED AND ITS REMEDIATION STAYS OPEN UNDER 1.0.0_SA_CTO -- its hazard is live and its owner has not disarmed it. The clock EXISTS here so the state is representable, which is the whole point of the carrier; it is NOT a closure. \u2b50 The schema refused an earlier draft of this row that paired disarm ARMED with remediation REMEDIATED and closed true, and it was right to: marking a live hazard closed because its ITEM was graduated is the laundering this channel has refused all evening. NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S100. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- S148 stays ARMED under its own owner and S149's carded gate defect is untouched.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v19"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_ENFORCE-S150",
+ "project": "LGIC_ENFORCE",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_ENFORCE-S150 is graduated by LGIC_ENFORCE-C-S100 in this same commit, so it is never rowless.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_ENFORCE/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_ENFORCE-S150",
+  "graduated by LGIC_ENFORCE-C-S100 in the same commit",
+  "minted at HEAD 753755daac"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_ENFORCE-C-S100. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- S148 stays ARMED under its own owner and S149's carded gate defect is untouched.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v19",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v19"
+ },
+ "closed": true
+}
+```

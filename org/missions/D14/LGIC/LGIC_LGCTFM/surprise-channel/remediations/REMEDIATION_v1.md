@@ -1474,3 +1474,136 @@ ONE ROW PER GRADUATED ITEM: **1**. `LGIC_LGCTFM-S1` is born DISARMED on `2.0.0_S
  "closed": false
 }
 ```
+
+## NEW rows for the clock-less class (98842 shape (a)) + S66's full row + S72's carrier (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_LGCTFM-S66",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "The card delivered to Andrew (blob 5a5f3e68, 4,635 bytes, 62 lines) CONTRADICTS ITSELF: its bolded RECOMMENDATION at line 6 says 'the two rows touching a live, client-facing surface sit above everything else', while line 39 says 'Rank 1 is the only irreversible-or-client-facing-or-live row in the top ten'. The error carries the authority signal; the correction is 33 lines below it inside the analysis. FWD-4's ACCEPT closes on his personal read.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S66",
+  "1.0.0_SA_CTO 98850 s.4 (the drafted row) and 98855 s.3 (the replacement clause)",
+  "re-measured by 3.0.0_SA_CVO at HEAD 753755daac on both blobs: delivered 5a5f3e68 carries 'only irreversible-or-client-facing-or-live' at line 39 (case-insensitive 1, case-sensitive 'ONLY' 0); HEAD da2106bd3f carries 'not two' at line 35 and '1 of 179', the delivered blob neither",
+  "minted at HEAD 753755daac by 3.0.0_SA_CVO -- lane TREE_CVO"
+ ],
+ "remedy": "A ONE-LINE CORRECTION TO LINE 6 of the delivered card, supported by the card's own line 39 -- NOT a re-delivery, and NOT a new card. Until it lands, FWD-4 is not gradeable on a read of this artifact. SEPARABLE SECOND HALF, not closed by the first: deliverables/2.0.0_SA_COO~G/ANDREW_CARD_CORRECTION_20260918.md pins the card by content hash to 5a5f3e68 while HEAD is da2106bd3f, so verifying that R-40 pin returns a MISS on a live correction. \u26d4 AND THE ROW'S OWN OVERSTATEMENT IS CORRECTED HERE RATHER THAN IN IT (R-43): the investigation row claims of the DELIVERED card that there is 'NOTHING beside it saying that number is one'. FALSE AT THE BYTES -- the delivered blob's own line 39 reads 'Rank 1 is the only irreversible-or-client-facing-or-live row in the top ten'. Cause: the delivered card's CONTENT was characterised from the DIFF that post-dated it, and A DIFF TELLS YOU WHAT MOVED, NEVER WHAT THE DOCUMENT SAYS. \u26a0 WHAT IS NOT A DEFECT IN THAT ROW, recorded because the deciding seat first claimed it was: its quotation 'NOT TWO' is REAL -- HEAD line 35 carries 'not two' -- and the row rendered it in capitals for emphasis. Quoting with altered case is a citation defect; inventing a quotation is not what happened, and a case-SENSITIVE zero is what made it look that way. \u2b50 AND THE SAME TRAP CAUGHT THIS SEAT ONE LEVEL DOWN, WHICH IS WHY THE CASE IS RENDERED HERE AS THE BYTES CARRY IT: the drafted clause quotes line 39 as 'the ONLY irreversible...', my case-SENSITIVE probe returned ZERO on that string, and a case-INSENSITIVE probe returns ONE -- the line reads 'the only'. The substance was right and the capitals were emphasis, exactly as with 'NOT TWO'. A clause written to correct a case-sensitive false zero was itself about to be minted carrying one.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v10",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v10"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S67",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_LGCTFM-S67 is graduated by an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier in this same commit, so it is never rowless.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S67",
+  "graduated by an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier in the same commit",
+  "minted at HEAD 753755daac"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- S148 stays ARMED under its own owner and S149's carded gate defect is untouched.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v10",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v10"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S68",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_LGCTFM-S68 is graduated by an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier in this same commit, so it is never rowless.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S68",
+  "graduated by an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier in the same commit",
+  "minted at HEAD 753755daac"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- S148 stays ARMED under its own owner and S149's carded gate defect is untouched.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v10",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v10"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S69",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_LGCTFM-S69 is graduated by an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier in this same commit, so it is never rowless.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S69",
+  "graduated by an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier in the same commit",
+  "minted at HEAD 753755daac"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to an earlier CVO adjudication (C-S41/C-S42) that graduated it without a carrier. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- S148 stays ARMED under its own owner and S149's carded gate defect is untouched.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v10",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v10"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_LGCTFM-S72",
+ "project": "LGIC_LGCTFM",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "CARRIER MINTED WITH THE GRADUATION. LGIC_LGCTFM-S72 is graduated by LGIC_LGCTFM-C-S44 in this same commit, so it is never rowless.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_LGCTFM/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_LGCTFM-S72",
+  "graduated by LGIC_LGCTFM-C-S44 in the same commit",
+  "minted at HEAD 753755daac"
+ ],
+ "remedy": "NOTHING FURTHER IS OWED IN THIS PROJECT ON THIS ITEM. Its substance transferred to LGIC_LGCTFM-C-S44. \u26a0 IT RE-CLOSES AND RE-OPENS NOTHING -- S148 stays ARMED under its own owner and S149's carded gate defect is untouched.",
+ "owner": "3.0.0_SA_CVO",
+ "round": "v10",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "3.0.0_SA_CVO",
+  "round": "v10"
+ },
+ "closed": true
+}
+```
