@@ -5268,6 +5268,27 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-S69",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~F",
+    "surfaced_at": "2026-09-21T22:59:19Z",
+    "one_line": "The export modal's receipt card reads 'Loading / No source age yet' before anyone presses Create export, beside a fully rendered Ready preview: export/ReceiptPanel.tsx:42-44 hard-codes the LOADING state whenever there is no receipt, so an idle panel reads as a request in flight.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "export/ReceiptPanel.tsx's own header (FE-s-9, FE-s-16): the receipt and the status envelope drive the job state through StatusPanel. PRD FWD-12 DONE WHEN: an advisor has used the export without being shown anything new to learn.",
+    "world_is": "Read at portal DEV 8894e765: export/ReceiptPanel.tsx:42-44 builds { state: 'LOADING', sourceAsOf: null, safeActions: [], publicReasonCode: null } when `receipt` is null and hands it to the shared StatusPanel. In deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_export_1440.png, read by 2.0.0_SA_COO~F, the card's status row shows 'Loading' and 'No source age yet' beside the 'Create export' button while the preview beneath it renders a Ready performance report. The run printed 'FIXTURES: 3 declared; 3 matched', so this is not a dead-fixture artifact, and this seat's own re-run on merged DEV 243089eb printed the same 3 of 3. NOT measured: whether the state ever leaves LOADING once Create export is pressed (no capture presses it), and whether an existing StatusPanel state fits an idle receipt (the state/ enum is unread). Any fix is a new idle state in shared state/ or tabs/StatusPanel.tsx, both read-only to every round-10 cell, so this is a row and not a fix. Worker 0.9.0_WK_IRPT_FNTEND~13 recorded the same reading in its result file as an observation and filed no row.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/export/ReceiptPanel.tsx:42-44 @8894e765",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_export_1440.png",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/ac2_3.out (FIXTURES: 3 declared; 3 matched)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
