@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-21 (round 8, recut on the CTO's round-7 analysis @0d400d5c07). Records-only: no source, no build, no deploy, no served change.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~3, 2026-09-21. R78-AC1 PASS-by-output (battery_ib_rth_3.py, token IBR78-STATUS-WORD-AND-PROOF-RESOLVER-AGREE): the resolver's proven-set for IRPT_BCKEND is exactly the same seven cells (IB-rt-6, rtf-3, rtf-4, rtf-7, rtf-10, rtf-12, rtf-14) this worker left LEFT NON-TERMINAL per the honest-word rule (CTO ruling 98990/98993) -- none flipped to `complete` (no order's own bound admits completion with a disclosed FAIL) and none to `superseded` (no later round's decomp cell names any of the seven; filed as surprise row IRPT_BCKEND-W3-S51 against the order's own contrary premise). Proof instance VALID rc=0 both unbound and --governing-order-bound. Commits: 023b4697df (the seven annotations), 7a74155d0e (the surprise row), 973e82c883 (battery+output+result), and this instance+flip.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 8 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` | **Round-7 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND7_ANALYSIS.md` @0d400d5c07 (s.4, s.8) | **Decomp cell:** `IB-rth-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.8, s.R8.1) | **outcome_ref:** records integrity
 
