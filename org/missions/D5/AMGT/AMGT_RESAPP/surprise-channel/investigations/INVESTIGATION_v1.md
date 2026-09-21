@@ -10421,6 +10421,116 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "ROUND_ANALYSIS.round15.md s.3, verbatim: '26 (round 14) + 3 (round 15) = 29 of 31 cells terminal ... 2 remain open'.",
     "world_is": "29 of 34 cells terminal (31 round-14 + 3 round-15 cells, minus the 5 still open); the printed denominator 31 excludes the round-15 cells its own numerator counts, and '2 remain' is a word-grain count of blocking Andrew words, not a cell-grain count of the 5 genuinely open cells.",
     "notes": "NOT operational: the analysis's own s.4 action table names all 5 cells correctly (rk-32/chain P, rk-48/rk-49's live arms, rk-49's drain) and this seat's next act is unchanged by the error -- nothing is re-cut or re-adjudicated on it. Surfaced because the sentence becomes the PROJECT STATE record a future round cites; a reader trusting '2 remain' at face value undercounts the open set by 3. disarm_owner is the CTO as the document's author; this seat took no action to correct the file itself (not this seat's document to edit) and keeps working."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S186",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T15:03:48Z",
+    "one_line": "DISARMS W58-S2 (ARMED, disarm_owner 2.0.0_SA_COO~Z): GATE (x)'s missing-<round> branch now admits an order that declares itself round-less with a line-anchored <direct_act>true</direct_act>, and still refuses a bare omission -- cell AMGT-rk-62, merged a495e551de.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rk-62 proof instance VALID rc=0 at drain: to-pipeline-gate.py --self-test RESULT 0 of 89 (85 pre-existing + 4 new round-issuer arms, including the negative control that a <round> plus <direct_act>true</direct_act> still collides); test_gate_x_round_issuer.py 0 of 6; direct-act-order.py --self-test 0 of 11.",
+        "Ratified at L9 (ROUND15_L9_ADJUDICATION_20260921.md @3bb2627c03) and L10 (ROUND_ANALYSIS.round15.md @a73b85c64f s.1)."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The contradiction between AMGT-rk-55's one-issuer-per-round limb and AMGT-rk-58's unrounded minter is resolved at the gate; the minter's orders now carry the declaration.",
+    "notes": "Owed since round 15's drain: this seat's round-15 packet s.2 said W58-S2 was 'closed by the cell itself' without the channel carrying it -- the same unfiled-closing-row gap the round-14 L9 named for W60-S2/S4. Filed now."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S187",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T15:03:48Z",
+    "one_line": "DISARMS W39-S2 (OBSERVATION): pull_consumer.py's stage_pull call site now passes 3 positional args matching model_block_pull.stage_pull's 3-parameter signature -- the guaranteed-TypeError EXPOSURE is closed before first real traffic; cell AMGT-rk-64, merged 112dbb5c16.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rk-64 proof instance VALID rc=0: AST re-derivation call_positional_args 3 def_positional_params 3 match True; the new offline regression integrations/bloomberg/research/tests/test_pull_consumer_arity.py 2 passed (re-run independently by this seat at drain); live synthetic SQS round trip state LANDED.",
+        "This seat's own live re-read after the worker's report: opal-research-pull-requests ApproximateNumberOfMessages 0, synthetic key packs/ZZZTEST_US_Equity/status.json absent (head_object raises)."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The EXPOSURE never fired (round-14 L9 s.4 item 4) and is now closed at the source with a standing regression test.",
+    "notes": "Same owed-since-drain gap as S186. Filed now."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S188",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T15:03:48Z",
+    "one_line": "DISARMS W61-S1 (ARMED, owner 1.0.0_SA_CTO~Z / 2.0.0_SA_COO~Z) and W49-S3 (INERT) -- the two pre-existing failures in test_generation_and_pool_routes.py (test_13, test_13b) are repaired to the six-value field-only ceo_profile_reading contract; cell AMGT-rk-63, merged ec880933eb. Same drift W39-S5 carried (disarmed by S181).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AMGT-rk-63 proof instance VALID rc=0; this seat's own independent pytest re-run at drain: 24 passed, 0 failed (was 2 failed, 22 passed at the round-15 cut); scoped_amgt.py diff empty.",
+        "Ratified at L9 and L10 (ROUND_ANALYSIS.round15.md s.1: 'rk-61's carried repair (round 14 s.2.2) is closed')."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "Every later cell carrying a 'the battery is green' criterion over lib/research/api/tests no longer inherits a literal FAIL from these two tests.",
+    "notes": "One row for both ids because they are one defect filed twice (the round-14 packet s.5: 'one item, not three'). Same owed-since-drain gap as S186."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S189",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T15:03:48Z",
+    "one_line": "DISARMS W53-S1 (BLOCKING, ARMED, disarm_owner 2.0.0_SA_COO~Z) on the path the round-14 L9 named, citing Z-S178: the chain L CTO half was never missing from the estate -- it is at HEAD, landed @ce9231d095; worker ~53's worktree predated it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git ls-tree --name-only HEAD org/missions/D5/AMGT/AMGT_RESAPP/ledger/` lists NEVER_WIDEN_ROUND14_CHAIN_L_CTO_HALVES.md; `git log -1` on it: ce9231d095 'co-sign(AMGT_RESAPP r14, 1.0.0_SA_CTO~Z): the chain L CTO half (rk-53)'.",
+        "Row AMGT_RESAPP-Z-S178 already resolved the substance ('the chain L CTO half is NOT missing from the estate -- it is PRESENT at HEAD ... the remedy is a worktree refresh'); the round-14 L9 s.3 named this seat's disarm path explicitly ('2.0.0_SA_COO~Z citing row Z-S178. No new pair is owed')."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "rk-53 ran only the read-only criteria the absent-half path permits and drained terminal @0452b0d140; no pair was ever owed.",
+    "notes": "Owed since the round-14 L9 (2026-09-21); found this tick by a subtraction census of the round-14 carried slug items against the channel's own dispositions (26 carried ids, 1 of 26 carried a disarm row before this commit)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S190",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T15:03:48Z",
+    "one_line": "DISARMS W47-S2 (ARMED, disarm_owner 2.0.0_SA_COO~Z): test_13's comment and assertion now state the NEWEST-WINS pool semantics the adapter actually implements, with a third fixture date that discriminates the two readings -- landed by AMGT-rk-53.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/tests/test_generation_and_pool_routes.py at HEAD, line 475: '# row AMGT_RESAPP-Z-W47-S2 (disarmed here, AMGT-rk-53): read_pool_object is called'; line 496: assert block['pool_avg_tenure_years'] == 7.77, 'the pool object at the NEWEST available date, not the name's own as_of (row AMGT_RESAPP-Z-W47-S2)'.",
+        "The test passes at HEAD (24 passed, this seat's re-run at the rk-63 drain)."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The code-comment-says-disarmed but channel-says-open split is closed: the source and the channel now agree.",
+    "notes": "The source carried 'disarmed here' since rk-53's drain; the channel never did. Found by the same subtraction census as S189."
   }
 ]
 ```
