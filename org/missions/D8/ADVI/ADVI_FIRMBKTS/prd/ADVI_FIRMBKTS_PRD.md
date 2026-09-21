@@ -5,13 +5,15 @@
  "project": "ADVI_FIRMBKTS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v1.2",
+ "prd_version": "v1.3",
  "step": 4,
  "brief_ref": "docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md@2b64208047",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
  "status": "RATIFIED"
 }
 ```
+
+⛔ **v1.3 (2026-09-19 ~21:0xZ, `1.0.0_SA_CTO`) -- THE PREMISE REPAIR. F4 CHANGES FROM *MINT* TO *ADOPT-AND-REPAIR*.** `opal-data-inflection` and `opal-data-cottonwood` were created `2026-09-18T20:05:17Z` by `IRPT_BCKEND` `IB-rte-3`, born with the fence, and the fence denies `s3:*` to every identity this estate holds -- measured at EXERCISED. **The register's ordering precondition (*the fence lands on the template BEFORE this project mints the two buckets*) is therefore CONSUMED, not late.** ⭐ **And F4's old acceptance was SATISFIABLE BY THE BROKEN WORLD:** *'both buckets exist born with the fence'* reads TRUE against a fence that locks us out, because a birth-property claim cannot see a guard that fences out its own operator. The acceptance now names an ADMITTED IDENTITY and an act it can perform. **THE BRIEF HALF IS RE-OWED; the RATIFIED-TEXT half reads `current` and is NOT re-asked** -- measured by `python .tools/prd-signoff.py status ADVI_FIRMBKTS`, not predicted: all three edits land in `CELL CANDIDATES`, `PATHS` and `SURFACE MANIFEST`, and `RATIFIED_SECTIONS` is the literal two-tuple `('ENDPOINT', 'CONTRACTS')`. ⛔ The partition is by TOP-LEVEL SECTION, never by subject matter -- a never-widen row that reads like a contract is still BRIEF if it sits under `SURFACE MANIFEST`. Ruling: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_ADVI_FIRMBKTS_F4_ADOPT_AND_REPAIR_NOT_MINT_20260919.md`.
 
 **Brief:** `docs/briefs/d8-legacy-firm-buckets-migration-brief-20260913.md` @`2b64208047`, author `4.0.0_SA_CRO~D`.
 - That is its latest content. The last touch adds only a note that the ruled key is the five segments, with the bucket
@@ -293,8 +295,10 @@ ruled window, carried as a CONTRACTS row.
 **Arc:**
 1. The censuses and the mapping table (F1, F2); they need no builder to be read and drafted.
 2. The reading exercise (F3).
-3. Once the builders and the fence exist: the two buckets and the serving grants (F4), the registry repoint (F5), and
-   the router and guard (F6).
+3. Once the builders exist: the two buckets are ADOPTED and their fence REPAIRED, then the serving grants (F4), the
+   registry repoint (F5), and the router and guard (F6). ⛔ The old ordering read *'once the builders and the fence
+   exist'* and placed the fence BEFORE this project's mint; the mint has already happened, with the fence, by another
+   project, so the precondition is CONSUMED and the sequence starts from the repair.
 4. The three cutovers, one firm at a time (F7 to F9), each with its triggers (F10) and its bronze and silver (F11).
 5. Per bucket, after its cutover: the 45-day record and the retirement (F12).
 6. The two dispositions at Andrew (F13).
@@ -310,7 +314,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | F1 the censuses | FWD-2, FWD-3, FWD-5, FWD-6 | IV.1; IV.2; IV.3; IV.12; Part VII | -- | `comp-find` over the repo and the live plane; card 3's read logging | `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/CENSUS.md` | the definition sites; the live nodes; the 228 attributed keys by class; the records and holds; every lifecycle rule read (Part VII); the readers seen on each bucket since read logging went live | every set is printed with its denominator and its instrument; a name census is never offered as proof of absence |
 | F2 the mapping table | FWD-2 | O2; IV.3; IV.6 | P the mapping table | the 228 keys (F1) | `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/MAPPING_TABLE.md` and its data twin | each legacy key class placed by the table; a second worker places the whole set alone | every key lands in exactly one destination or RETIRE; the second placement matches; an unplaceable key is logged as a table fault |
 | F3 the reading exercise | FWD-1 | O1; Part III O1/O2 | C the key string | the destinations F2 produces | `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/` | two workers who never worked together read the same list of new locations | for every location both name the same system, firm, tier and contents |
-| F4 the two buckets and the serving grants | FWD-4, FWD-6 | IV.9; Part V bullets 3-4 | C the fence, the template; P the buckets and grants | `infra/aws/terraform/shared-infra/s3-49financial.tf` | the two new buckets' Terraform | after `LGIC_ENFORCE` E5; a plan per bucket; the selector ordered after creation; a probe read after the apply | both buckets exist born with the fence, read logging, versioning and blocked public access; each carries the serving grants on exactly its served `{source}/{firm}/platinum/*` prefixes and no bucket-wide grant; each has an observed-live stamp; before any router row flips, representative mapped keys read through the CloudFront access principal and the page's own route, and another firm's session is refused |
+| F4 ADOPT the two buckets and REPAIR their fence, then the serving grants | FWD-4, FWD-6 | IV.9; Part V bullets 3-4 | C the fence, the template; P the fence repair and the grants | `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf`, `infra/aws/terraform/modules/opal_name/generated_locals.tf` | the two buckets' EXISTING Terraform, amended | **THIS CELL NO LONGER MINTS.** Both buckets already exist, created `2026-09-18T20:05:17Z` by `IRPT_BCKEND` `IB-rte-3`, born with the fence, and the fence DENIES `s3:*` to every identity this estate holds -- measured at EXERCISED, `get-bucket-policy` refusing `user/Andrew_Berman` by an explicit resource-based deny (CTO ruling `CTO_RULING_ADVI_FIRMBKTS_F4_ADOPT_AND_REPAIR_NOT_MINT_20260919.md`). The cell FIRST mints a role matching the fence's own admit glob (the bucket policy governs `s3:*` and does not touch IAM, so this path is open to an identity the fence never sees), THEN repairs the fence from it, because re-applying the corrected fence is itself an `s3:*` act on a denied bucket and Terraform cannot repair its own apply from outside. A plan per bucket; the selector ordered after the repair; a probe read after the apply | ⛔ **THE ACCEPTANCE NO LONGER ASKS WHETHER THE FENCE EXISTS -- IT ASKS WHOM THE FENCE ADMITS.** A bare `both buckets exist born with the fence` reads TRUE against the locked-out world and would grade a lockout as a success. So: **an identity this estate holds performs a named `s3:*` act on each bucket and succeeds, printed with the identity's ARN**; and the fence still REFUSES a principal from the other firm, printed as the negative control. Beside that: read logging, versioning and blocked public access each measured on the live bucket rather than read from the plan; each carries the serving grants on exactly its served `{source}/{firm}/platinum/*` prefixes and no bucket-wide grant; each has an observed-live stamp; before any router row flips, representative mapped keys read through the CloudFront access principal and the page's own route, and another firm's session is refused |
 | F5 the registry repoint | FWD-3 | O3; IV.1 (the DEF band); IV.7 | C the registry, `key()`, `address()` | the DEF band's definition sites | -- | each consumer that computes a firm's location, repointed to read the registry or the builders | changing one firm's row changes every place that serves, guards or directs its data, with no second edit |
 | F6 the router, the guard and the tenant grain | FWD-4 | IV.7; Part V bullets 4-5 | C the registry's generated views; P the tenant assertion | `infra/aws/lambda-edge/shared-advisor-router/`, `shared-advisor-router-response/` | -- | the rewrite targets moved to `advi/{firm}/platinum/...`; the guard's list re-derived on its own | through the page's own request path: a firm's own session and its alias are served; an internal staff session with its selection is served; another firm's session is refused; every served key's `{scope}` is the resolved firm |
 | F7 49 Financial's cutover | FWD-4 | O4; Part V | C the mapping table, `address()`; P served bytes | `opal-data-bd`, `opal-data-49financial` | the destination keys | a ledger entry; never-widen sign-off naming every served key and its rollback; the data-bearing comparison before and after | every served key answers identically from the new bucket; the old bucket is untouched through the rollback window |
@@ -325,7 +329,7 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 
 | kind | path | cell | use |
 |---|---|---|---|
-| new | `s3://opal-data-inflection/`, `s3://opal-data-cottonwood/` and their Terraform on the template | F4 | the two new firm buckets |
+| EXISTING, ADOPTED | `s3://opal-data-inflection/`, `s3://opal-data-cottonwood/` and their Terraform on the template | F4 | ⛔ **NOT NEW AND NOT THIS PROJECT'S TO CREATE.** Both were created `2026-09-18T20:05:17Z` by `IRPT_BCKEND` `IB-rte-3`. This project ADOPTS them and REPAIRS the fence applied at their birth |
 | new | `s3://opal-data-{firm}/{source}/{firm}/{gold,platinum,state}/...` | F7-F9 | the destination keys, generated by the builders; the code family is held on LGIC_NAMING-S7 |
 | new | `s3://opal-data-assets/{vendor}/{firm}/{bronze,silver}/...` | F11 | the ingest tiers' home |
 | new | `org/missions/D8/ADVI/ADVI_FIRMBKTS/deliverables/` | F1-F3, F12, F13 | the censuses, the table, the exercises, the proofs |
@@ -384,7 +388,7 @@ Surfaces this project writes, reads or executes.
 
 | surface | kind | cell | owner |
 |---|---|---|---|
-| `opal-data-inflection`, `opal-data-cottonwood` | APPLIED: two new buckets on the template | F4 | ADVI_FIRMBKTS, through the infrastructure lane and `safe-apply` |
+| `opal-data-inflection`, `opal-data-cottonwood` | APPLIED: the FENCE REPAIRED and the serving grants added on two buckets that ALREADY EXIST (created `2026-09-18T20:05:17Z`, not by this project); no bucket is created here | F4 | ADVI_FIRMBKTS, through the infrastructure lane and `safe-apply`, from an identity the repaired fence admits |
 | the serving grants on each firm bucket's served `{source}/{firm}/platinum/*` prefixes | APPLIED: bucket-policy grants, never bucket-wide | F4 | ADVI_FIRMBKTS, through the infrastructure lane |
 | the destination keys in the three firm buckets | APPLIED: served data moves; never-widen sign-off per served key | F7-F9 | ADVI_FIRMBKTS |
 | `opal-data-assets/{vendor}/{firm}/{bronze,silver}/` | APPLIED: ingest tiers move home; inf's bronze re-landed on Andrew's per-use word | F11 | ADVI_FIRMBKTS |

@@ -190,6 +190,185 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "Amended TXP1-AC10 admits AC7's one send-command only if its script makes 'no redirect or write to any path outside the SSM agent's own working directory'.",
     "world_is": "The script's only redirect to a path is '>/dev/null', which discards bytes and creates or modifies no file. /dev/null is still a path outside the agent's working directory, so the clause read literally is not met; read as 'the script only reads', it is. The worker's probe graded it as the null device, printed that reading in the evidence and filed this row rather than choosing silently. TXP1-AC10 prints PASS under that reading.",
     "notes": "OBSERVATION: whether the literal or the purposive reading binds belongs to the L9 adjudicator (3.0.0_SA_CVO) and the ruling's author (1.0.0_SA_CTO, 97255), not to the worker. If the literal reading is ruled, TXP1-AC10 is FAIL and TO-TX-p-1's complete flip is withdrawn; no new AWS act would change the recorded script. INERT: the redirect wrote nothing on the Gateway host."
+  },
+  {
+   "id": "MDPF_TAXSMA-S4",
+   "project": "MDPF_TAXSMA",
+   "fabric": "laptop",
+   "surfaced_by": "0.0.0_AB_MSTR",
+   "surfaced_at": "2026-09-20T19:25:00Z",
+   "one_line": "TX-g-1 was completed by its worker on 2026-09-15 and never drained: the order reads pending on origin/CLOUD and complete at f2cac74c60, whose three commits exist only in the worktree /c/tmp/wk-taxsma-1.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disposition": "UNDER_INVESTIGATION",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "GIT: `git rev-list f2cac74c60 --not origin/CLOUD origin/SITEZ` = 3 (6abf60e5d5, 8dce9aeb0b, f2cac74c60), run by 0.0.0_AB_MSTR from the shared checkout after a fetch of both branches, 2026-09-20 ~19:0xZ; origin/CLOUD @8c6f223092, origin/SITEZ @047aee5478.",
+     "BYTES: org/missions/D8/MDPF/MDPF_TAXSMA/task-orders/MDPF_TAXSMA.TO-TX-g-1.workbook-capability.md reads <status>pending on origin/CLOUD and <status>complete at f2cac74c60 -- 1.0.0_SA_CTO msg 98700, a second seat on a different read.",
+     "PACKET: org/tier0_exec/0.0.0_AB_MSTR/deliverables/CVO_REVIEW_PACKET_UNMERGED_WORKTREES_20260920.md@423d855bf7."
+    ]
+   },
+   "spec_asserts": "Spine L7-L8: a worker's completed cell reaches the shared branch by the issuer's drain, and the order's <status> on CLOUD is what every census reads as the project's open work.",
+   "world_is": "git rev-list f2cac74c60 --not origin/CLOUD origin/SITEZ returns 3: 6abf60e5d5 feat (GET /ms/taxsma-workbook capability, route, config keys, tests), 8dce9aeb0b fix, f2cac74c60 complete -- all 0.9.0_WK_MDPF_TAXSMA~1, 2026-09-15. The same order file reads <status>pending on origin/CLOUD and <status>complete at f2cac74c60 (1.0.0_SA_CTO msg 98700, read at the bytes). The worktree also holds 2 dirty paths, unread here. So the open-order census over-counts this project by one and the only copy of the cell is one directory on one disk that reached 0 bytes free on 2026-09-20.",
+   "notes": "PARKED with an owner and a condition because 2.0.0_SA_COO~T is not seated and mail to it would be a silent hole: OWNER the MDPF_TAXSMA issuer; UN-PARKS when that lane is next seated. Drain, re-cut or supersede is the issuer's call and is not decided here. The worktree is in 3.0.0_SA_CVO's review packet @423d855bf7 (LD-0595) and is NOT to be removed on any verdict short of the issuer's own word. Found by 0.0.0_AB_MSTR's /cleanup sweep; confirmed by 1.0.0_SA_CTO."
+  },
+  {
+    "id": "MDPF_TAXSMA-W1-S1",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~1",
+    "surfaced_at": "2026-09-15T21:37Z",
+    "one_line": "TXG1-AC22 names two moto-dependent Gateway test modules as NOT-EVALUATED; at the cut base fd2f1e4b31 four fail collection on moto, and two collected modules already fail or error.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: 'py -3.12 -m pytest infra/aws/ec2/opal-gateway/tests -q -p no:cacheprovider' at HEAD fd2f1e4b31, 2026-09-15T21:20:52Z, Gateway tree untouched: 'Interrupted: 4 errors during collection', each 'ModuleNotFoundError: No module named moto': tests/test_access_state.py, tests/test_browser_oidc.py, tests/test_oauth_durable.py, tests/test_principal_cutover.py.",
+        "RUN: the same 14 modules one process each at fd2f1e4b31: tests/test_identity_scope.py '1 failed, 5 passed' (test_scoped_deny_by_default, AssertionError: opal_data_refresh_upload); tests/test_jwt_cve_lock.py '5 passed, 1 error' (test_control_valid_token_accepted, No module named moto at :43); tests/test_schwab_audit.py '1 skipped' (could not import moto); the other 7 modules pass.",
+        "ORDER: org/missions/D8/MDPF/MDPF_TAXSMA/task-orders/MDPF_TAXSMA.TO-TX-g-1.workbook-capability.md@50b8910af4 TXG1-AC22, '(the two moto-dependent modules named as NOT-EVALUATED on this box)'; row MDPF_TAXSMA-S2 measured '90 tests collected, 2 errors' at bd2fa195c0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TXG1-AC22 compares the Gateway modules that collected and passed before the edit with after, naming the two moto-dependent modules (row MDPF_TAXSMA-S2: test_access_state.py, test_oauth_durable.py) as NOT-EVALUATED on this box.",
+    "world_is": "At fd2f1e4b31 four modules fail collection on moto, because test_principal_cutover.py and test_browser_oidc.py landed with NFRA_OPLGTW after S2's measurement, and all four are named NOT-EVALUATED. The comparison runs per TEST, not per module: test_identity_scope.py carries 1 pre-existing failure and test_jwt_cve_lock.py 1 pre-existing moto fixture error. Both are shown before and after and are not graded, and every test that passed before must still pass.",
+    "notes": "INERT: the criterion is graded on the population as measured, with the before arm recorded at fd2f1e4b31 in deliverables/0.9.0_WK_MDPF_TAXSMA~1/probes/ac22_before.json before any Gateway edit. OBSERVATION: the identity_scope failure and the missing moto belong to NFRA_OPLGTW and the box owner, not to this cell."
+  },
+  {
+    "id": "MDPF_TAXSMA-W1-S2",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~1",
+    "surfaced_at": "2026-09-15T22:02Z",
+    "one_line": "Running the Gateway test modules from the Gateway directory, as TXG1-AC22 requires, appends to the TRACKED file infra/aws/ec2/opal-gateway/audit.jsonl, which is outside this order's grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: the pre-edit per-module baseline at fd2f1e4b31 (cwd infra/aws/ec2/opal-gateway) left 'M infra/aws/ec2/opal-gateway/audit.jsonl', '3 insertions(+)', 0 deletions: three '_ratelimit_control' alarm records ('per-IP-AUTH', 'per-IP-global' and 'per-identity limiter error ... induced'), written by tests/test_ratelimit.py through the default AUDIT_PATH './audit.jsonl' (app/config.py:279 @fd2f1e4b31).",
+        "RESTORE: the file was rewritten with its own HEAD blob's bytes (git show HEAD:<path>): git hash-object = git rev-parse HEAD:<path> = 3c69355bcda895e2e0fbd9fef0d18284534d6dd0, 'git diff --quiet HEAD -- infra/aws/ec2/opal-gateway' rc=0, 0 untracked; porcelain status still reads ' M' from a stale stat entry on this core.autocrlf=true box, so the probe tests content equality instead.",
+        "PROBE: deliverables/0.9.0_WK_MDPF_TAXSMA~1/probes/tx_g_1.py now points every pytest it starts at a scratch AUDIT_PATH, so neither AC22 arm writes the tracked file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TX-g-1's write grant is its <paths> block plus its deliverables folder, and TXG1-AC22 runs the Gateway test modules before and after the edit.",
+    "world_is": "One of those modules (test_ratelimit.py) writes three records into the tracked Gateway audit.jsonl whenever it runs from the Gateway directory, so running the criterion as written touched a file outside the grant. The worker restored the file's bytes to HEAD (blob 3c69355bcd), commits nothing under that path, and runs its own measurements with AUDIT_PATH redirected to scratch.",
+    "notes": "INERT for this cell once the file is back at its HEAD blob and every later run redirects AUDIT_PATH. OBSERVATION: whether test_ratelimit.py should patch AUDIT_PATH, and whether audit.jsonl should be tracked at all, belongs to NFRA_OPLGTW."
+  },
+  {
+    "id": "MDPF_TAXSMA-W1-S3",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~1",
+    "surfaced_at": "2026-09-15T22:35Z",
+    "one_line": "The TXG1-AC22 before-record at fd2f1e4b31 reads tests/test_schwab_engine.py::test_ogq1_ac02 FAILED in both probe records (bar 0.25 s) though the first shell run passed it, so row W1-S1's 'the other 7 modules pass' holds for 6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RUN: shell loop, one process per module, finished 2026-09-15T21:36Z at fd2f1e4b31: tests/test_schwab_engine.py '13 passed in 41.02s'.",
+        "RUN: probes/tx_g_1.py AC22 --record-before at fd2f1e4b31, Gateway tree content-equal to HEAD: first record (the module beside the others) 'assert 1.005868499991484 < 0.25'; second record (the module alone, first) 'assert 0.48001869998755864 < 0.25', recorded_at 2026-09-15T22:35:23Z in deliverables/0.9.0_WK_MDPF_TAXSMA~1/probes/ac22_before.json.",
+        "TEST: tests/test_schwab_engine.py:259 @fd2f1e4b31 'assert child_lag < 0.25'; row NFRA_OPLGTW-W3-S12 records that module's lag bar as load-sensitive."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TXG1-AC22 grades that the Gateway tests which passed before the edit still pass after it; row MDPF_TAXSMA-W1-S1 states that at fd2f1e4b31 every module other than the four moto modules, test_identity_scope.py, test_jwt_cve_lock.py and test_schwab_audit.py passes.",
+    "world_is": "test_ogq1_ac02's lag bar failed in 2 of 2 probe records and passed in 1 shell run. The committed before arm therefore counts it as failing BEFORE the edit: it is shown before and after and is not graded, and the passed-before population is 12 of that module's 13 tests.",
+    "notes": "INERT: AC22's grading is deterministic whichever way the timing lands, because a test failing before is never a regression and a test passing before must still pass. OBSERVATION: the bar's load sensitivity belongs to NFRA_OPLGTW (W3-S12), not to this cell."
+  },
+  {
+    "id": "MDPF_TAXSMA-W1-S4",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~1",
+    "surfaced_at": "2026-09-21T03:15:00Z",
+    "one_line": "TX-g-2's TXG2-AC1 build (mirroring the registered deploy-to-ec2.sh tar step) bundles a TRACKED runtime telemetry file, app/org/mcp/agent_telemetry/0.7.0_AE_CloudOps.jsonl (9 lines, 1863 bytes), into every Gateway deploy artifact through the same `app` whole-directory member that carries taxsma_workbook.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TAR: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh @2aa1e26cbf lines 69-72, `tar -czf \"$TMP/$ART\" -C \"$SRC\" --exclude=... app deploy requirements.txt identity_tool_allowlist.txt` -- `app` is archived whole, no exclude names it.",
+        "MEMBER LIST: TXG2-AC1 probe run, 2026-09-21T03:08:37Z, member list (84 of 84 printed) includes `app/org/mcp/agent_telemetry/0.7.0_AE_CloudOps.jsonl` alongside `app/taxsma_workbook.py`.",
+        "TRACKED: `git ls-files infra/aws/ec2/opal-gateway/app/org/mcp/agent_telemetry/` returns the one file; `git log -1 -- <path>` shows commit 2781aac326 (2026-08-14), pre-existing and unrelated to this project; `wc -l`/`wc -c` on the worktree copy: 9 lines, 1863 bytes."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Rule 2 (`No private data in the repository`) and the order's bound of the same name: masked labels and aggregate counts only enter code, fixtures, deliverables or logs; a secret's path is one `grade(<path>, \"SECRET\")` returns CONFORMANT for.",
+    "world_is": "A pre-existing tracked file under the Gateway's own app/ tree, an agent telemetry JSONL, ships in the deploy artifact by virtue of being inside the whole-directory `app` tar member -- not added, moved or graded by this cell, and not read for content here (no private-data claim is made about its bytes, only about its inclusion path).",
+    "notes": "OBSERVATION found while grounding TXG2-AC1's member list. INERT: this cell added no file and the bundling behavior predates it (commit 2781aac326, 2026-08-14, NFRA_OPLGTW/the box owner's surface). Whether app/org/mcp/agent_telemetry/ belongs in the deployed artifact, in the tar excludes, or is fine as-is is a question for the Gateway's owner, not this cell."
+  },
+  {
+    "id": "MDPF_TAXSMA-W2-S1",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~2",
+    "surfaced_at": "2026-09-21T08:05:00Z",
+    "one_line": "TXA1-AC2 names four rollup levels (Tax, SMA, ALT Strategies, 49financial) but dim_mdpf_aggregate_aua_timeseries.py has no SMA/ALT Strategies series of its own, so this cell reads the four as one arithmetic identity on the single registered path and adds one field beyond the contract's four to make it checkable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py at cell HEAD f8d419c9f0 has no field or function named sma/SMA or alt_strategies anywhere (comp-find-equivalent read of the whole file); its per-firm/Global return dicts carry model_aua, non_model_aua, opal_aggregate_aua and by_model only -- node-level SMA/ALT Strategies rollup lives in the sibling data/mdpf/scripts/gold/mdpf_aggregate_aua.py (imported by mdpf_category_registry.py for RECON_TOLERANCE), which is outside this cell's <paths> grant.",
+        "REGISTRY: mdpf_category_registry.resolve('tax').view_path == 'SMA > ALT Strategies' -- ONE unbranched path, no fork, so 'added once at every level' is a single arithmetic fact on this path, not four independent claims.",
+        "CONTRACT: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json@<worktree> categories.timeseries_extension_fields lists exactly 4 fields (aggregate_basis, base_excluding_tax_aua, tax_additive_aua, tax_coverage) and names no combined-total field at this grain -- TXA1-AC2/AC3's 'added exactly once' arithmetic is unverifiable from those 4 fields alone, so the added module (dim_mdpf_aggregate_aua_timeseries.py, this commit) also returns a 5th field, aua_including_tax = base_excluding_tax_aua + tax_additive_aua, documented in tax_additive_overlay()'s docstring.",
+        "TEST: data/mdpf/tests/taxsma/test_taxsma_aggregate.py::test_ac2_known_tax_cents_added_exactly_once_along_the_single_registered_path asserts the registry path explicitly before trusting the collapse."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TXA1-AC2 (decomp s.3 TX-a-1 acceptance, this cell's task order): 'Tax is added exactly once at Tax, SMA, ALT Strategies and 49financial' -- read literally, this names four distinct levels/series.",
+    "world_is": "This cell's write surface (dim_mdpf_aggregate_aua_timeseries.py, data/mdpf/tests/taxsma/test_taxsma_aggregate.py) carries no separate SMA or ALT Strategies series; the four levels collapse to one addition on Tax's single registered rollup path, verified against the registry rather than assumed, and a 5th field beyond the contract's named four (aua_including_tax) was added to make that one addition checkable end to end.",
+    "notes": "OBSERVATION, not a refusal: the criterion was satisfied under this reading rather than refused, because the alternative (minting a new SMA/ALT Strategies series in a file whose write grant does not cover that grain) would widen the cell past its <paths>. Whether a node-level TAXSMA rollup belongs in mdpf_aggregate_aua.py/category_views is a question for that file's owning cell (likely TX-a-2 or a category-views cell), not this one."
+  },
+  {
+    "id": "MDPF_TAXSMA-W2-S2",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~2",
+    "surfaced_at": "2026-09-21T09:30:00Z",
+    "one_line": "Neither the contract nor the decomp names the Gold Lambda's OWN env-var config for calling S02 live; TX-a-2 mints TAXSMA_GATEWAY_BASE_URL/TAXSMA_CAPABILITY_BEARER itself, so TX-i-3/TX-r-3's Terraform wiring must match these exact names or the prelude stays silently DISABLED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CONTRACT org/standards/MDPF_TAXSMA_DATA_CONTRACT.json@671925aecc capability.identity_configuration='TAXSMA_WORKBOOK_IDENTITY' and capability.credential_configuration='TAXSMA_WORKBOOK_BEARER' are read at infra/aws/ec2/opal-gateway/app/config.py:228-229 -- the GATEWAY's own config, validating the CALLER's presented bearer server-side.",
+        "DECOMP org/missions/D8/MDPF/MDPF_TAXSMA/decompositions/MDPF_TAXSMA_DECOMP.md@7f65001ab3 s.3 TX-i-1 acceptance names 'the contract's runtime_access_matrix Gold-prelude actions on exact resource ARNs' but no env-var name for the Gold Lambda's own copy of the base URL/bearer it must present when calling the route.",
+        "CODE data/mdpf/scripts/gold/mdpf_gold_consolidator.py taxsma_capability_configured() reads os.environ['TAXSMA_GATEWAY_BASE_URL'] and ['TAXSMA_CAPABILITY_BEARER'] -- names this cell minted itself, cited in the result record s.2 as a Rule 24(i)/(iii) declared-not-hidden design decision.",
+        "TEST data/mdpf/tests/taxsma/test_taxsma_consolidator.py::TXA2AC11Disabled::test_unconfigured_env_is_not_configured proves both must be set together or the prelude reads DISABLED (AC11), which is the correct default until TX-i-3/TX-r-3 populate them."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The task order's <paths>/bound text implies the prelude's capability-configured check is this cell's mechanical concern with no named authority for the config-key names it reads.",
+    "world_is": "No spec names the Gold-side config keys, so this cell declared two of its own; TX-i-3 (the capability bearer secret + Gateway root) and TX-r-3 (activation) must either read this cell's source to match these exact names, or a later cell should be free to rename them in one commit -- this row exists so that decision is visible before either lands rather than discovered as a silent DISABLED in production.",
+    "notes": "INERT: today, absent both env vars, the prelude is correctly DISABLED by construction (AC11), which is TX-r-1's own stated plan. Whether the config names should instead be declared in the contract (matching capability.identity_configuration's own pattern) is a question for the contract owner, not this cell's <paths> grant."
+  },
+  {
+    "id": "MDPF_TAXSMA-S5",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-21T20:02:00Z",
+    "one_line": "The EC2 mdpf-daily-runner's Stage 6 (REVAMP) has failed at IMPORT since TX-a-1's timeseries module reached its S3 code prefix at 2026-09-21T08:55:37Z: dim_mdpf_aggregate_aua_timeseries.py:75 imports taxsma_assets, whose :95 `from lib.opal_naming import address` resolves on the repo path but not in the runner tree (/opt/mdpf/scripts), so Stage 6 dies in 1 s before building anything.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-mdpf/telemetry/mdpf-daily-runner/logs/mdpf_daily_20260921_125229.log: 'File \"/opt/mdpf/scripts/gold/build_mdpf_spine.py\", line 51 ... import dim_mdpf_aggregate_aua_timeseries as spine' -> 'dim_mdpf_aggregate_aua_timeseries.py, line 75 ... import taxsma_assets' -> 'taxsma_assets.py, line 95 ... from lib.opal_naming import address' -> 'ModuleNotFoundError: No module named 'lib.opal_naming'' -> '[mdpf-dispatch] step STAGE6-REVAMP rc=1 dur=1s status=error'",
+        "s3://opal-data-mdpf/code/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py VersionId syiCAA6n7.C9SSVDvJiQ1MLiPGn7ITJQ, LastModified 2026-09-21T08:55:37Z, 193,801 B, git blob 3e1423e4a1 == CLOUD 5e8ba0e1d4 (bound(MDPF_TAXSMA W2-S1, 2.0.0_SA_COO~T))",
+        "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:122-125 syncs s3://opal-data-mdpf/code/scripts/ -> /opt/mdpf/scripts/ --delete; lib/ is not under that prefix"
+      ]
+    },
+    "spec_asserts": "TX-a-1 (MDPF_TAXSMA_DATA_CONTRACT v0.5.0) adds the Tax overlay to the firm/Global aggregate in dim_mdpf_aggregate_aua_timeseries.py, a module the EC2 runner's Stage 6 imports as its library (build_mdpf_spine.py:51) and that the gold Lambda's consolidator also imports (mdpf_gold_consolidator.py:79).",
+    "world_is": "On the EC2 path the new import chain cannot resolve lib.opal_naming, so Stage 6 fails before its first write. The dispatch logs it 'NON-FATAL build-alongside; legacy chain + serving UNAFFECTED; no marker written', which is why nothing louder fired. Measured on today's 12:52Z run only; earlier runs were not read. The gold Lambda is NOT affected today: its running bundle is pin 48b8671569, which predates TX-a-1, and the Cottonwood deploy's pin 74d7efe144 does not carry TX-a-1 either.",
+    "notes": "Surfaced while preparing the mdpf-gold-lambda Cottonwood auto-custom deploy (packet @f8c960746b, LEG B s.5); not chased. The Cottonwood code on the EC2 path runs only inside Stage 6, AFTER this import, so this break also masks whether that path would pass. DISARM: 2.0.0_SA_COO~T decides whether the runner tree gets lib/opal_naming.py (a code-prefix sync of lib/) or taxsma_assets resolves its address another way on the runner, then one Stage 6 run on the runner shows the import pass. ALSO OWED BEFORE ANY LAMBDA BUILD FROM A PIN AT OR AFTER TX-a-1: the same import in the flat Lambda zip (lib/ is not a PACKAGE member there either) -- that seat's build-time check, not this row's."
   }
 ]
 ```

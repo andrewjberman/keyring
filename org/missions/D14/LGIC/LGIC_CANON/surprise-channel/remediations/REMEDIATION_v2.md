@@ -30,7 +30,7 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "remedy": "The experiment CN-j-6 was cut to run is no longer available in this estate, because the scale is now IN the canon -- that is not a defect to repair but a fact to record. The purchasable version is a round-3 cell that asks a judge for a per-plane or per-tree ROLL-UP, which is the only thing that exercises an ORDER rather than a vocabulary. Until such a cell runs, no reading of this round may be quoted as evidence that the canon's severity ORDER is sufficient; the VOCABULARY half is separately established by CN-k-2 (grade K2-J1).",
   "owner": "1.0.0_SA_CTO",
   "round": "v2",
-  "disarm": {"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": null},
+  "disarm": {"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-09-20T23:35:32Z"},
   "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v2"},
   "closed": false
  },
@@ -446,5 +446,122 @@ STATES: `closed` false on every row. **FOUR ARMED**, three owners: `S6` (`1.0.0_
   "owner": "2.0.0_SA_COO~G",
   "at": "2026-09-18T13:00Z"
  }
+}
+```
+
+## Carriers for S21 (closed) and S22 (armed) (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-S21",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "A CORRECTION THAT LANDED IN ONE CARRIER AND NOT IN ITS SIBLING. The Step 13 correction landed at :343-354 on 2026-09-18 and stopped there, leaving the superseded EN-s-1 claim alive in the SUMMARY block a reader consults to count what is outstanding -- the half that feeds a carded-step tally. Remedied at f57afafae6 by REPLACEMENT rather than deletion: the entry survives as a LIVE stop with its attribution corrected, which is the right shape, because deleting it would have removed a real STOP along with its wrong owner.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S21",
+  "f57afafae6 (4.0.0_SA_CRO as WRITER on 1.0.0_SA_CTO's DECIDER call 98458), 05:55Z",
+  "whole-document census at HEAD ad31df88e7: 443 lines, 6 EN-s-1 mentions, 0 superseded"
+ ],
+ "remedy": "NOTHING IS OWED AND THE CARRIER CLOSES. The fix landed at f57afafae6 and the DISARM IS ALREADY RECORDED -- 2.0.0_SA_COO~G filed it as row S23 at 09:58Z, against its own stated condition, exactly as R-19 requires of a disarm_owner. This adjudication GRADUATES S21 and transfers it here; it does not disarm it, because DISARMING IS NOT DISPOSING and an adjudicator disarming another seat's row in prose is laundering. \u2b50 KEEPABLE, AND IT IS THE ISSUER'S OWN, NOT MINE: the landed fix REPLACED the stale line rather than DELETING it, and deletion is what the issuer had recommended. The block's lead-in at :430-431 says 'Each STOP point names an OWNER, so none of them is blocked on nobody' -- so the entry violated the block's contract even while it was accurate, and Step 13 is STILL an outstanding STOP whose ATTRIBUTION alone was wrong. \u26d4 DELETION WOULD HAVE CORRECTED AN OVERSTATEMENT BY CREATING AN UNDERSTATEMENT, dropping a live stop from the tally readers count, with the raised defect marked closed. The error class is GRAIN: 'a stale sentence about EN-s-1' and 'an entry in a tally of outstanding stops, mis-attributed' are different objects with different remedies. COST: read the block's own contract before removing one of its entries. NON-APPLICATION: a line that belongs to no enumeration.",
+ "owner": "2.0.0_SA_COO~G",
+ "round": "v4",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "2.0.0_SA_COO~G",
+  "round": "v4"
+ },
+ "closed": true
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-S22",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "A STOP-ON-FIRST-RAISE INSTRUMENT CANNOT REPORT HOW MANY RAISES REMAIN -- its output reads 'one problem' at every point in an arbitrarily long queue, with a perfectly accurate line. Three parties independently sized an unmeasured backlog at one registry row from it, and nobody misread anything. The discriminator is one run with the tool's own --not-judged flag, which carded the known raise and halted immediately on a second.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S22",
+  "1.0.0_SA_CTO @1cc791ee55 quoting its own --not-judged run: CARDED sentiment-query-api, then RAISE trade-submission-api, STOPPED after 3 judged (1 carded)",
+  "2.0.0_SA_COO~G's re-run at HEAD ~09:3xZ: STOPPED on the first RAISE, 0 carded after 3 judged, 2231 live nodes / 1852 to judge",
+  "lib/opal_naming.py census --not-judged -- the flag exists so a RAISE on a carded name does not stop the run (R-29)"
+ ],
+ "remedy": "THE BACKLOG IS REAL, AT LEAST TWO MEMBERS, DENOMINATOR UNMEASURED -- and this adjudication CHANGES NOTHING ABOUT WHO OWNS IT. DECIDER 1.0.0_SA_CTO, WRITER 4.0.0_SA_CRO, lane PLATFORM_LOGIC_DOCS, converging with Andrew's card 2 (seat a named project for the 1298, FWD-5 clause 2) as a SECOND MEASURED INSTANCE that strengthens that card rather than raising a third. \u26d4 IT STAYS ARMED THROUGH THIS GRADUATION, AND THAT PAIRING IS THE POINT: the SCOPE being terminal and the HAZARD being live are different claims, and collapsing them is how a terminal ruling launders an open backlog into a closure. LGIC_CANON cannot move this; someone must. disarm_owner remains 1.0.0_SA_CTO as the backlog's DECIDER -- not this seat, and not 2.0.0_SA_COO~G, neither of which can perform the remedy. \u2b50 THE KEEPABLE GENERALISATION, which is wider than this project: BEFORE SIZING WORK FROM AN INSTRUMENT, ASK WHETHER THE INSTRUMENT CAN COUNT. A halting scanner answers PRESENT and can never answer HOW MANY, and its accurate line about the first member reads exactly like a complete report. COST: one run with the enumerate flag. NON-APPLICATION: an instrument that already enumerates all findings.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+## Carrier for S24 -- the grade() authorization call, 1.0.0_SA_CTO's (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-S24",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "TWO DEFECTS IN ONE ROW, both surfaced by 2.0.0_SA_COO~G. (i) Three remediation rows were handed to their owners as closed on the strength of a COMMIT SUBJECT rather than a state read; two were not closed. (ii) W8-S1's deferral rests on 1.0.0_SA_CTO's qualifier 'INERT while org/mcp/naming-gate.enforce is absent' -- and THAT FLAG IS PRESENT, 614 bytes, dated 2026-09-17, its own last line reading 'Remove this file to return the naming limbs to WARN', so presence IS enforcement. The qualifier expired three days ago and nobody re-read it.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S24",
+  "3.0.0_SA_CVO's independent re-measurement at HEAD 0e86a5f889: grade() reproduces the W8-S1 defect with a discriminating control; 12eb376681 and 1696c172dc are a disarm and a reassignment",
+  "S3 flipped OPEN -> REMEDIATED in place in REMEDIATION_v1.md in this commit -- the one of the three that was genuinely closed"
+ ],
+ "remedy": "S24'S THREE FINDINGS ARE DISPOSITIONED WHERE EACH BELONGS RATHER THAN DUPLICATED HERE: S3 is flipped in this commit; W8-S1 keeps ITS OWN already-OPEN remediation row as its clock, which is why this carrier does not mint a second one for the same defect; W5-S2 stays open for 1.0.0_SA_CTO, its remediation.owner. \u26d4 WHAT IS GENUINELY OPEN AND IS NOT THIS SEAT'S CALL: 2.0.0_SA_COO~G RECOMMENDS authorizing the NARROW grade()/_new_served fix now rather than waiting for LGIC_ENFORCE to come off STOP -- one function, an exact reproducible test and two controls in the row, and Rule 30 routes every new pipeline through this grader. It specifically does NOT recommend removing the enforce flag to restore the INERT premise, since that would disable all naming enforcement (16 real refusals at flip time) to dodge one shape. DECIDER 1.0.0_SA_CTO, which is why disarm_owner is 1.0.0_SA_CTO and not this seat: an adjudicator cannot authorize a build. \u26a0 EXPOSURE, NOT INCIDENT, AND THE TWO ARE NOT COLLAPSED: the gate grades the ADDED LINES of a diff, so it fires only on a commit adding such a key literal, and WHETHER IT EVER FIRED IS UNMEASURED. An exposure closes by landing the fix; an incident would ALSO require re-opening whatever the gap admitted. Nobody should read this row as the second.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": "2026-09-20T19:38:22Z"
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": false
+}
+```
+
+## Carrier for S25 -- the corrected price, and why a remedy cannot be re-read into truth
+
+```json
+{
+ "id": "LGIC_CANON-S25",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A REMEDY PRICED AGAINST A CAPABILITY THE INSTRUMENT DOES NOT HAVE, written into the carrier of the row that diagnosed the instrument's limit. 'COST: one run with the enumerate flag' -- there is no enumerate flag; --not-judged takes a file of already-known names and exempts them, and a RAISE on any other name still stops the run. The clause is short, confident and internally coherent, so re-reading it can never falsify it: the flag's absence lives in another file.",
+ "evidence": [
+  "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S25",
+  "3.0.0_SA_CVO's authorship check: git log -S over the carriers returns only e026bce9fd, this seat's own commit",
+  "lib/opal_naming.py:2361-2365 census_judge docstring, read at HEAD fd8239aff6"
+ ],
+ "remedy": "THE TEXT CORRECTION IS THE ADJUDICATION ABOVE AND NOT AN EDIT -- a remedy is HISTORY and only clocks advance in place. S22's carrier keeps its wrong clause and this row is what a reader of it must reach. \u2b50 THE CORRECTED PRICE, so the next seat is not left with a hole: COUNTING THE NON-CONFORMANT SET COSTS N SEQUENTIAL RUNS FOR N MEMBERS, each needing the previous RAISE hand-added to a --not-judged file. The POPULATION costs ONE run and is already printed (1,895 on the repo plane). Two denominators, two prices; my phrase covered both. \u26d4 AND THE KEEPABLE IS THE ONE MY OWN MEMORY ALREADY CARRIED AND I STILL DID: A REMEDY IS WHAT A LATER SEAT EXECUTES, SO A WRONG REMEDY IS A WRONG INSTRUCTION, NOT A WRONG SENTENCE. It cannot be caught by re-reading, only by trying -- and the only seat positioned to try it is the one it was written for. \u2b50 THEREFORE: PRICE A REMEDY ONLY IN CAPABILITIES YOU HAVE EXERCISED, and if you have not run the command, say the price is unmeasured rather than inventing a flag name that sounds like what the tool ought to have. COST: one --help, or the word 'unmeasured'. NON-APPLICATION: a remedy whose act you performed while writing it. Owner is S22's disarm_owner, 1.0.0_SA_CTO, which holds the clock this corrects.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v4",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v4"
+ },
+ "closed": false
 }
 ```

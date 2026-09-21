@@ -37,3 +37,29 @@ Removed at ~18:17Z with `git worktree remove --force`:
 **Branches kept:** `wk-nfra_oplgtw-2a`, `wk-oplgtw-6-reseal` and `wk-oplgtw-1-i4` were not deleted, because his word named the folders.
 
 **Result:** `git worktree list` now shows one NFRA_OPLGTW worktree, `C:/tmp/wk-oplgtw-2r2`, where OG-r-2 is running.
+
+---
+
+# ANDREW-DIRECT 2026-09-18 ~21:1xZ -- both remaining cards closed at this terminal
+
+**Channel:** Andrew, directly, replying to `/open-calls` run at this lane ~21:1xZ (card 1 the spend limit, card 2 the roster population).
+
+## His words, VERBATIM AND ENTIRE
+
+> I will handle that spend limit issue, take it off the open calls list. Call 2 does not matter for us at this time.
+
+## What each settles
+
+### CARD 1 -- THE SPEND LIMIT IS HIS, AND OFF THIS QUEUE
+
+He owns the remedy. This lane does not list it again, does not propose a workaround, and does not treat a future 429 as a new call -- a worker killed by one is re-spawned on the existing pickup pattern (measured tonight: OG-r-2 killed 18:55Z, re-spawned after the reset with its uncommitted work inherited).
+
+### CARD 2 -- THE ROSTER POPULATION QUESTION IS DEFERRED, NOT ANSWERED
+
+"Does not matter for us at this time" sets PRIORITY, not the VALUE. So:
+
+- The employees-vs-accounts question stays OPEN and unasked. It is not re-raised at him.
+- **The tenant-wide wildcard is still NOT set.** Nothing in this sentence authorizes it, and his ~18:1xZ audience word ("all opal employees") is unchanged.
+- The sprint roster stays a round-2 carry, and its correctness fix -- an empty roster means UNCONFIGURED and fails closed -- proceeds on its own merit.
+
+⛔ A deferral is not a licence to pick the wider value while nobody is watching. The value is set when he answers, or not at all.

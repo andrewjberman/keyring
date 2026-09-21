@@ -1,11 +1,11 @@
 {
   "prd": "ADVI_FIRMBKTS_PRD.md",
-  "prd_version": "v1.1",
-  "prd_pin": "2a9ae97c19ecd305071d690620869ad737854cf1",
+  "prd_version": "v1.3",
+  "prd_pin": "30d612d5e5f6e026151c29550bf848fedf1f8be8",
   "half": "brief",
-  "half_hash": "0b4ef28db943290817f4b634ca89eb39c1135734b8e0fac65649957f4cbefde0",
+  "half_hash": "969090f836c030b491390521fd2e6f4af756c424eec6a14b9f52eea87cc8d60d",
   "verdict": "SIGNED",
-  "review_ref": "docs/briefs/sources/ADVI_FIRMBKTS_L4_BRIEF_REVIEW_v1_1_20260914.md@46548c7b1f757f7cb3d0023a8c8efb4d96e21767",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO/deliverables/PRD_REVIEW_ADVI_FIRMBKTS_v1_3_BRIEF_HALF_20260919.md@f63da2b879",
   "signed_by": "4.0.0_SA_CRO",
-  "signed_at": "2026-09-14T10:17:55Z"
+  "signed_at": "2026-09-19T21:23:02Z"
 }

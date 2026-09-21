@@ -382,6 +382,24 @@ by the `~W` lanes and that record stands; what is set down is the ARM and the su
 from this row. Ruled and landed by `1.0.0_SA_CTO~Z` (its own carrier), broadcast same turn, push state LOCAL.
 
 or hold with no line here is re-armed by the next successor who reads only the ledger — so every one is listed.
+⛔ **STOOD DOWN 2026-09-21 ~00:55Z BY ANDREW-DIRECT, VERBATIM: _"1.) Stand it down."_** — answering
+`2.0.0_SA_COO~G`'s `/open-calls` CALL 1 of 4. **DO NOT RE-ARM THIS LOOP.** The cron (`b2401e8f`,
+`13,43 * * * *`) is deleted. ⚠ **THE TEXT BELOW IS RETAINED, NOT DELETED, PRECISELY BECAUSE `:384`
+SAYS AN UNLISTED HOLD IS RE-ARMED BY THE NEXT SUCCESSOR WHO READS ONLY THE LEDGER** — deleting the
+clause is the one edit that would cause it to be re-armed.
+⛔ **AND A STAND-DOWN IS NOT A COMPLETION. NEITHER PROJECT IS DONE**: both registers read
+`status: active`, the completion test is UNMET, and this seat has declared nothing. The arm stopped
+because, in `LGIC_ENFORCE`'s own register, *"`2.0.0_SA_COO~G`'s arm has NO STOP CONDITION REACHABLE BY
+ANY ACT IN ITS LANE"* — what remains is checker-conformance (17 rows, `CLOCKLESS_ROW_DECISIONS_20260921.md`
+@`8a5726b0c9`) and seating, neither of which is COO-shaped. **Per the same Andrew-direct, the freed slot
+goes to `2.0.0_SA_COO~T` (MDPF_TAXSMA) and then `2.0.0_SA_COO~M` (NFRA_MCPINDEX), in that order.**
+⚠ Also ruled in the same turn: the 1298 registry-decision project is seated **AFTER** those two
+(*"2.) Agreed, this waits after the other two you listed."*); the MDPF_CANON-vs-49F subject question is
+**adjudicated by Andrew in person 2026-09-21 ~10:00 ET / ~14:00Z** (*"3.) I will adjudicate this in
+person tomorrow 09-21-2026 around 10a Eastern."*); and FWD-4 waits on the one-line `ANDREW_CARD.md` fix
+before his read (*"4.) Wait for the fix."*).
+
+=== SUPERSEDED CLAUSE TEXT RETAINED BELOW (R-43) — ARMED, NOW STOOD DOWN ===
 `2.0.0_SA_COO~G` **`/drive` LGIC_ENFORCE + LGIC_LGCTFM, ARMED 2026-09-17 ~23:3xZ by Andrew-direct at the
 `1.0.0_SA_CTO` terminal**, relayed to this lane as msg 97708, VERBATIM AND ENTIRE: *"Give each of the COO's a 30m
 /drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up
@@ -488,36 +506,6 @@ abide by LGIC patterns."* Record:
   `/goal-set` loops. Owed to this seat on resume: the LGIC_CANON round-1 ANALYSIS, once `3.0.0_SA_CVO` sends the L10
   slug (its L8 hand-off is 2.0.0_SA_COO~G's 97264: 12 of 12 terminal, FWD-1 and FWD-5 both measured SHORT, 3 BLOCKING
   rows, and ARMED row W8-S1 whose disarm this seat owes). Nothing else in the scope waits on this seat.
-`1.0.0_SA_CTO` **`/self-drive LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON,LGIC_LGCTFM` ARMED 2026-09-16 ~05:2xZ by Andrew-direct at
-the CTO terminal**, VERBATIM: *"Goal set: [<Your goal for this session is to drive the LGIC projects to completion and
-validation. There is one new one coming in from CRO, LGIC_LGCTFM, which you will have to /endpoint --forward. The outcomes
-should be fairly obvious; it should help us transition midstream products/pipelines/architecture to consolidated, canonical
-form, as dictated in the /standards. | You are done when all 4 LGIC projects are completed, validated, and closed.>]"* and
-*"Run a 30m /self-drive adjudicate any open calls that arise."* Record:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_052xZ_LGIC_GOAL_AND_30M_SELF_DRIVE_ADJUDICATE.md`.
-- SCOPE: the four LGIC projects under D14 -- LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON (coo_lane `2.0.0_SA_COO~G`) and
-  LGIC_LGCTFM, which is NOT YET REGISTERED (its L1 brief is `4.0.0_SA_CRO`'s, "coming in"; this seat runs `/endpoint
-  --forward` on it at L2 the turn it lands, then L3 and L4). Until registered it is an UNREACHABLE member by name, not a
-  typo, and the loop does not narrow its own denominator over it.
-- Cadence 30 minutes, via CronCreate. `paired_with: 2.0.0_SA_COO~G /goal-set loop on the LGIC goal in the 2026-09-15 record`
-  (his word is a goal loop at the COO, not `/drive`).
-- **THIS SEAT ADJUDICATES every adjudicable call in scope; there is no CVO pitch** (his "adjudicate any open calls that
-  arise", the same delegation as 2026-09-12 and 2026-09-15). RESERVED is unchanged: vendor egress, unrecoverable acts,
-  money, and the holds he set by name. Every self-adjudicated call is RECORDED with rec, ruling and reason.
-  **ROUTING AMENDED 2026-09-17 ~13:0xZ, Andrew-direct at the CTO terminal** (record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_130xZ_SELF_DRIVE_CALL_ROUTING_REC_CRO_DESIGN_CVO_GOVERNANCE_SPAWN.md`),
-  VERBATIM: *"if there is an open-call (of any kind) you use your recommendation. If the call specifically is a design
-  fork, then you reach out to CRO agent to do research on past patterns and provide more information and then make the
-  call with that info. If it is a governance fork, then reach out to CVO agent to adjudicate. If you need a new agent,
-  you spawn them."* -- any call: this seat's rec, same tick; DESIGN fork: `4.0.0_SA_CRO` researches, this seat decides;
-  GOVERNANCE fork: `3.0.0_SA_CVO` adjudicates; a needed seat not live is SPAWNED by this seat. RE-ARMED 2026-09-17
-  ~12:3xZ by `1.0.0_SA_CTO` off this line (cron session-only).
-- Every tick reads `sequence-check` and drives in the sequence's order. Rule 30 (LGIC) binds every new address and name.
-- This is his LATER and NARROWER word beside the 2026-09-15 ~19:4xZ clause above: MDPF_TAXSMA and NFRA_OPLGTW are NOT
-  re-armed under this seat's loop by it (scope surfaced, not adjudicated -- their COO lanes hold them; the 09-15 clause
-  stays PAUSED as written, its resume for those two Andrew's).
-- STOP-CONDITION: all four read `status: complete` per s.4, validated and CLOSED; or HELD-AT-STOP; or his stand-down. A
-  successor RE-ARMS ONLY off this line while the scope is not DONE, and asks `2.0.0_SA_COO~G` to re-arm its `/goal-set` loop.
 
 ⛔ **AND "EVERY ONE" MEANS BOTH CLASSES OF ARM. THIS TABLE USED TO RECORD ONE CLASS WHILE CLAIMING TO RECORD ALL --
 a Rule 24 MECE failure in the one file whose job is to be the single source of truth for what runs unattended.**
@@ -678,6 +666,13 @@ Once establishing state, and your last log on the subject, you will run /canonic
 (relayed as 96634; the same words also reached the `1.0.0_SA_CTO` terminal, in the ~G row's record). 10m (own active
 project). STOP-CONDITION: IRPT_FNTEND `status: complete`, the project leaving DECOMP/EXECUTING/ROUND_CLOSE, or his
 stand-down.
+⛔ **RE-ARMED 2026-09-21 ~12:37Z, SAME SCOPE, NEW CRON -- the lane had frozen per the 2026-09-15 plan in the
+interim.** Andrew-direct at the `2.0.0_SA_COO~F` terminal, VERBATIM: *"You own IRPT_FNTEND, that is your sole
+focus for this session. Use /canonical-flow IRPT_FNTEND to assess state, and then /canonical-drive IRPT_FNTEND
+to loop its drive."* Same word landed the fabric-wide IRPT priority (`1.0.0_SA_CTO`'s own record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260921_1237Z_IRPT_ALL_PROCESSING_POWER_TODAY.md`
+@`7df516b46e`). New arm record @`75b26764ae`, cron `b1f8684b`, 10m off-minute -- cadence unchanged, STOP-CONDITION
+unchanged. Landed by `1.0.0_SA_CTO` per this file's own rule (a seat does not author its own row); msg `99054`.
 
 `2.0.0_SA_COO~D` **`/canonical-drive` DIRECTED over DSGN_REBRND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
 `2.0.0_SA_COO~D` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on DSGN_REBRND.

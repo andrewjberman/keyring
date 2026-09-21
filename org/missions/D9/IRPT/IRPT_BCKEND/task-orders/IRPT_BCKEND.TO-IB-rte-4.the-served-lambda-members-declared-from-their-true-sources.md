@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T19:0xZ to slot ~4 (cold start) on the round-4 analysis s.8 item 4 and rows W1-S20 / W2-S59 (ARMED, disarm_owner 2.0.0_SA_COO~B).</status>
+<status>superseded -- CLOSED for round 5 by 2.0.0_SA_COO~B at 2026-09-19T03:4xZ: its FAIL (2 of 9 functions with no-source members) is round 6's FIRST cell, IB-rtf-1, on the CTO's L4 ruling @457cf494c6; the 48 declarations and the pinned-blob mechanism stand at HEAD. Was: pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T19:0xZ to slot ~4 (cold start) on the round-4 analysis s.8 item 4 and rows W1-S20 / W2-S59 (ARMED, disarm_owner 2.0.0_SA_COO~B).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 5 (the CTO's round-4 analysis @561d6e1cc9, msg 98036) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 4) | **Round-4 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND4_ANALYSIS.md` @561d6e1cc9 | **Andrew-direct:** 2026-09-18 ~17:3xZ "Approved" (record `org/tier1_exec/2.0.0_SA_COO~B/deliverables/ANDREW_DIRECT_20260918_173xZ_TWO_OPEN_CALLS_APPROVED_IRPT_BCKEND.md` @af794c77e3) | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar; Rule 30 | **Decomp cell:** `IB-rte-4` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.5, s.R5) | **outcome_ref:** FWD-1, FWD-7 (the served functions' provenance)
 

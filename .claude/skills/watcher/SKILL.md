@@ -1,6 +1,6 @@
 ---
 name: watcher
-description: Ensure this seat is reachable: registered LIVE on the broker with exactly one persistent inbox Monitor armed for this session -- armed once at load, one notification per inbox message, survives compaction, never exits; no recurring loop. Run at session start, after a window exit or restart, or whenever reachability is in doubt. Self-scoped.
+description: Ensure this seat is reachable: registered LIVE on the broker with exactly one persistent inbox Monitor armed for this session -- armed at load and RE-ARMED on every 30-minute expiry (the watcher prints [WATCHER-EXPIRED] and exits -- re-run /watcher that same turn), one notification per inbox message, survives compaction; no recurring loop. Run at session start, after a window exit or restart, or whenever reachability is in doubt. Self-scoped.
 ---
 
 # /watcher — Inbox Reachability (persistent-Monitor model, arm-at-load)
@@ -15,6 +15,40 @@ The inbox watcher is a **persistent Monitor task** running
 `inbox-watch.sh <serial> stream`. The Monitor tool turns every stdout line the
 script emits (`[INBOX] <file>`) into a chat notification, so you are interrupted
 **per message while you keep working** — and the script **never exits**.
+
+## THE WATCHER EXPIRES EVERY 30 MINUTES -- AND IT TELLS YOU WHEN IT DOES
+
+**Andrew-direct 2026-09-21 ~01:4xZ at the `0.0.0_AB_MSTR` terminal, VERBATIM:** *"now that the monitors time out,
+it is important that it is explicit in the watcher itself that when it times out that it alerts the agent to
+re-run the /watcher to set a new monitor."*
+
+The harness KILLS every Monitor at its `timeout_ms`, and the cap is **30 minutes (1,800,000 ms)** -- a larger
+value is silently capped. "Persistent" means the script never exits on its own account; it does NOT mean the
+Monitor lives forever. **A seat that arms once and never again is DEAF from minute 30.**
+
+So the watcher announces its own end. `org/mcp/inbox-watch.sh` in stream mode emits exactly one line, 1770 s
+after launch (30 s inside the cap), and then EXITS:
+
+```
+[WATCHER-EXPIRED] inbox watcher for <serial> is ENDING NOW after 1770s (Monitors are killed at 30 min).
+YOU ARE NOT RECEIVING MAIL. RE-RUN /watcher NOW to arm a new Monitor -- do not wait for a quiet moment.
+```
+
+⛔ **WHEN YOU SEE `[WATCHER-EXPIRED]`, RUN `/watcher` IN THAT SAME TURN -- before finishing whatever you were
+doing.** It arrives as an ordinary Monitor event, the LAST one of that stream; the "stream ended" notice follows
+it. Mail sent while no watcher runs is not lost (it waits as a file in your inbox and the next arm emits it),
+but nothing WAKES you for it, so every minute un-armed is a minute a peer waits on a seat that reads as live.
+
+- **It exits rather than waiting to be killed**, so the alert is always delivered and the old watcher is gone
+  before you arm the next one -- the Step 3.1 census reads ZERO rows, then ONE after the arm, never two of your
+  own making.
+- **Arm with `timeout_ms: 1800000`.** A shorter Monitor timeout (the tool default is 5 minutes) kills the
+  watcher BEFORE its alert can print; then the only signal is the harness line `[Monitor expired after ...
+  Re-arm it if you still need the watch.]` -- which means exactly the same thing: **re-run `/watcher`.**
+- `INBOX_WATCH_EXPIRY_SECS=<n>` overrides the 1770 (testing); `0` disables the alert. Exercised 2026-09-21 on
+  `0.0.0_AB_MSTR` at 40 s: the line printed, the stream ended, the census read zero rows.
+- The `agentbus` consumer (`/agentbus`) is a SEPARATE Monitor with the same 30-minute death and no such alert
+  yet; on its harness expiry notice, re-arm it too.
 
 ## ORPHAN HAZARD
 
@@ -72,7 +106,7 @@ an empty `TaskList`, and never conclude "reachable" off (3) alone.
 |---|---|
 | `/watcher` | Arm-at-load check, **once**. Register if STALE; arm the Monitor if absent; pull inbox; report. **No loop is armed** — the persistent Monitor is the standing mechanism. |
 | `/watcher status` | Report-only: registration + Monitor presence + inbox. No changes. |
-| `/watcher rearm` | Force a clean re-arm: TaskStop the existing Monitor, **then `ps` for its bash child and KILL IT**, then arm a fresh stream Monitor. **DO NOT SKIP THE CHILD KILL — `TaskStop` DOES NOT REAP IT.** |
+| `/watcher rearm` | Force a clean re-arm: TaskStop the existing Monitor, **then find its bash child by WINPID and reap it with PowerShell `Stop-Process`** (Step 3.1 -- MSYS `kill` is KNOWN-INEFFECTIVE on an aged orphan here and FAILS SILENTLY), then arm a fresh stream Monitor and **VERIFY-AFTER on the arm banner's `parent-tied: pid <N>`**. **DO NOT SKIP THE CHILD KILL — `TaskStop` DOES NOT REAP IT.** |
 | `/watcher off` / `stop` / `Nm` / `10m` (legacy interval forms) | **Deprecated, accepted gracefully.** There is no loop to start or stop. Run the one-shot check, then if a stale `/watcher` CronCreate job exists, cancel it (Step 5) and say so. |
 
 ## When to invoke
@@ -133,10 +167,65 @@ Monitor is still running and `ps` confirms it. Re-arm only when `ps` shows none.
    kill:
    ```bash
    bash org/mcp/watcher-status.sh {serial}   # lists any legacy watcher PIDs
-   kill <pid> [<pid> ...]                     # if any were listed
    ```
+   ⛔ **REAP BY WINPID WITH `Stop-Process`. MSYS `kill` AND `kill -9` ARE KNOWN-INEFFECTIVE ON AN AGED
+   ORPHAN ON THIS BOX, AND THEY FAIL SILENTLY** -- no error, the process unchanged in `ps`, the seat arms a
+   fresh Monitor and STAYS DEAF while the orphan keeps winning the `mv` race (`inbox-watch.sh:120` commits
+   the theft, `:124` echoes into a dead pipe). `kill` is named here so nobody re-adds it as the "portable"
+   form. Enumerate on the Windows plane, SCRIPT ROWS ONLY, with the START TIME that identifies an orphan:
+   ```powershell
+   $rows = @(Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
+     Where-Object { $_.CommandLine -match 'inbox-watch\.sh {serial} stream' -and $_.CommandLine -notmatch ' -c ' })
+   $rows | Select-Object ProcessId, CreationDate | Sort-Object CreationDate ; "script rows: $($rows.Count)"
+   # ZERO rows = NO WATCHER. Nothing to reap is NOT healthy: go to step 2 below and ARM ONE (Step 2 case 2).
+   #            This block was broadcast standalone and was silent at zero, which is exactly the state of a
+   #            seat whose watcher died (1.0.0_SA_CTO 98410; 2.0.0_SA_COO~B read N=0 the same evening).
+   # ONE row  = healthy. REAP NOTHING -- this branch needs no arm time, no recorded pid and no second count;
+   #            the guard sits on CARDINALITY, upstream of every other defect (1.0.0_SA_CTO 98399).
+   # RIGHT AFTER EVERY ARM -- first arm AND every 30-minute re-arm -- run this and RE-RECORD that row's
+   #            ProcessId: each arm creates a NEW script pid, so a pid recorded one arm ago names a dead
+   #            process and the complement would select your live watcher (4.0.0_SA_CRO 98397: 34892 -> 12888).
+   # N>1 rows = REAP BY PID-COMPLEMENT: script rows MINUS the pid you RECORDED at arm time.
+   # NO RECORDED PID = REAP NOTHING AND RE-ARM (then record the new one).
+   Stop-Process -Id <a-script-pid-that-is-NOT-your-recorded-pid> -Force -Confirm:$false
+   ```
+   ⛔ **THE SUBTRACTED TERM MUST BE A PID YOU OBSERVED, NEVER AN ARM TIME YOU RECONSTRUCT.** "Created before my
+   current arm" is only safe if the seat HOLDS its arm time; reconstructed from a tick clock it is a guess, and
+   the error biases TOWARD REAPING -- a later guessed arm time selects more rows, the live one first. Measured
+   2026-09-19 by `2.0.0_SA_COO~G` (98392, row `LGIC_LGCTFM-S61`): it derived 19:05 for an arm that happened at
+   18:54:02 and the census condemned its one healthy watcher; it reaped nothing. A confident wrong answer does not
+   trigger an "if unsure" fallback, which is why the fallback is keyed on a RECORDED pid, not on confidence. The
+   banner cannot supply it: `parent-tied: pid <N>` is the WRAPPER's pid.
+   ⛔ **WRAP EVERY CIM QUERY IN `@( )`.** In Windows PowerShell 5.1 a SINGLE un-wrapped CimInstance returns EMPTY
+   for `.Count`, so a guard like `$stale.Count -eq 0` compares `$null -eq 0`, is FALSE, and prints "orphan present"
+   on a clean one-row serial -- it can never report "nothing to reap". Same seat, same message; not reproduced on
+   `Get-Process`.
+   ⛔ **A DEAD PARENT IS NOT THE TEST -- IT IS THE NORMAL HEALTHY STATE.** The launching wrapper shell exits right
+   after spawning the stream, so a LIVE watcher's script row reads `parent DEAD` seconds after arming. **The first
+   version of this step (2026-09-19 @`138b3efd19`) defined an orphan as "a row whose parent no longer exists" and
+   was broadcast to six seats; followed literally it kills the watcher the reader just armed, and its own
+   VERIFY-AFTER then passes.** `2.0.0_SA_COO~O` (98368) and `4.0.0_SA_CRO` (98369) each ran the census, found
+   their ONE live script row with a dead parent, and stopped before acting; `0.0.0_AB_MSTR`'s own live watcher
+   reads the same. The exercise that justified the first version could not see it: that orphan was 3.5 DAYS old,
+   where age and dead-parent agree. **THE DISCRIMINATOR IS THE ROW YOUR CURRENT ARM CREATED -- HELD AS A RECORDED PID (above), never as a
+   property you infer and never as a time you reconstruct.** The `-notmatch ' -c '` filter drops the two wrapper shells, which match only because their `-c`
+   string contains the script path. If you hold no recorded pid, REAP NOTHING and re-arm.
+   **VERIFY-AFTER, never skip it:** re-run the census and require exactly ONE script row, the newest; then after
+   arming (step 2) read the new Monitor's banner for `parent-tied: pid <N>` and confirm an `[INBOX]` event still
+   arrives. ⚠ **TWO BOUNDS.** The banner names the WRAPPER it is tied to, never the script row -- a live wrapper
+   certifies nothing about the script row's health (`2.0.0_SA_COO~G` 98372 verified the wrong row that way).
+   And DELIVERY PROVES A LIVE CONSUMER EXISTS, NEVER WHICH ROW IT IS: beside an orphan the contest is a
+   per-message race at `inbox-watch.sh:120`, so events can arrive while others are stolen. Delivery is a STOP
+   ("events are arriving, do not reap blind"), not a SELECTOR; arm-time is the selector. A kill with no verify-after is exactly what let an orphan run for two days. Self-scoped only: YOUR
+   serial's rows, never a peer's. Measured 2026-09-19:
+   `2.0.0_SA_COO~G` (msg 98356, routed by `1.0.0_SA_CTO` 98359) -- orphan WINPID 16132 since 09-17, `kill`
+   and `kill -9` both survived, one CTO message eaten for 33 h; `0.0.0_AB_MSTR` the same evening -- orphan
+   WINPID 10352 since 09-16 07:14 (3.5 days, parent 25032 dead), reaped by `Stop-Process`, verified gone
+   (MSTR did not re-test `kill`, so the ineffectiveness is one seat's measurement; the remedy is two).
+   COST: one census + one read. NON-APPLICATION: a box with no aged watcher -- the census prints only live rows.
 2. **Arm the Monitor** — use the **Monitor tool**, `persistent: true`,
-   `timeout_ms: 3600000`:
+   `timeout_ms: 1800000` (the cap -- anything larger is silently capped, anything SHORTER kills the
+   watcher before its `[WATCHER-EXPIRED]` alert can print):
    - **RESOLVE THE DRIVE PREFIX FIRST — DO NOT HARDCODE EITHER FORM.** Both may be mounted; `/c` is a
      non-`auto` user mount that has vanished at reboot; `/cygdrive/c` is the system-provided
      `auto,noumount` mount. The Monitor needs an **absolute** path (the guard hook blocks the relative

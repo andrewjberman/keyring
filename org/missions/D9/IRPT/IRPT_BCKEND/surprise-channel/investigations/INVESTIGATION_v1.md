@@ -5390,6 +5390,1442 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "Not this cell's to fix, per bound (\"refresh.py and its tests are the ONLY code touched\"). Filed rather than repaired, per the surprise-channel bound (a capability I lack: I cannot commit new tracked source files outside my declared scope even to close a gap I needed to work around). The workaround (copy-from-canonical-source, build, remove) is recorded in this order's own deploy-ledger commit message (05c0322989) rather than left silent. ARMED for the same reason W1-S20 is: every future rebuild of irpt-directory-refresh hits the SAME refusal until directory/'s own file provenance is fixed in-tree; routed to the same owner as W1-S20."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S21",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:40:00Z",
+    "one_line": "The task face for IB-rte-1 asserts the test advisor's id must be 'an ISSUED opaque id per bound 13, minted by the same instrument the directory uses' -- measured: no such instrument or kind exists anywhere in the estate for an advisor id.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-1 face (b): \"the advisor id it maps to (an ISSUED opaque id per bound 13, minted by the same instrument the directory uses, never a display name)\".",
+    "world_is": "infra/aws/lambda/investor-reporting/_ids/ids.py KINDS = {\"account\": \"acc_\", \"relationship\": \"rel_\", \"client\": \"cli_\", \"firm\": \"fir_\"} -- there is no \"advisor\" kind, and CLAUDE.md bound 13's own enumerated list of typed identifiers (\"Firm, client, relationship, account, report, export and job ids\") also excludes advisor. The real advisor id in this estate is a raw string minted by the identity plane itself: the ownership map's own key (e.g. \"abby_horton\", read live this run from platinum/49financial/ownership_map.json), matched 1:1 to the JWT's advisorKey/advisorId claim (RT2_test_principal_human_gated.md's own citation, auth-handler/src/jwt.ts:167-187) and to the trusted X-Advisor-Id header _scope/resolve.py:95 reads. This cell used the real (raw-string) shape in its packet rather than the face's assumed (opaque-minted) one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_ids/ids.py:69-74 @391e4ad948869b8972bf6d96d5cc54392b351d5e (KINDS dict, four members, no 'advisor')",
+        "CLAUDE.md bound 13 (s.8, decomposition v0.2) verbatim: \"Firm, client, relationship, account, report, export and job ids cross a function boundary as ISSUED opaque ids of a declared type\" -- advisor absent",
+        "platinum/49financial/ownership_map.json (live, this run, sha256 0864a3a716a8502edf31f110c0f409edb31fdde62172961a08947e12a8568adf): advisor keys are raw strings such as 'abby_horton', not acc_/rel_/cli_/fir_-shaped"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a defect to fix -- the estate simply never typed advisor ids this way. Filed so IB-rte-2 (or any later cell) does not try to mint an opaque advisor id that has no minter. Folded into NEVER_WIDEN_SIGNOFF_PACKET_IB-rte-1.md."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S22",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:45:00Z",
+    "one_line": "The bounded test principal round 5 was cut to build (round-4 analysis s.6(a): 'THIS IS WHAT MAKES FWD-1 / FWD-2 / FWD-5 / FWD-11 GRADABLE AT ALL') does NOT by itself make FWD-1/2/5's SERVED path exercisable: every live entry point constructs its Enforcer with id_projection=None, so every real FIRM_ADVISOR request against a real ownership map is refused UNPROJECTED_GRANT before the empty-grant branch is ever reached.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "CTO round-4 analysis s.6(a) @561d6e1cc9: the test principal \"is therefore round 5's highest-value cell ... THIS IS WHAT MAKES FWD-1 / FWD-2 / FWD-5 / FWD-11 GRADABLE AT ALL\" -- read as: minting the principal is sufficient to make these outcomes exercisable.",
+    "world_is": "Measured live this run by running the REAL infra/aws/lambda/investor-reporting/_authz/enforce.py Enforcer, wired EXACTLY as directory/entry.py constructs it in production (deps=_loaders.deps, id_projection NOT passed): a real request for advisor 'abby_horton'/'49financial' against the LIVE directory + LIVE ownership map is refused code=UNPROJECTED_GRANT, reason '43 of 43 ownership grants carry ids in a key space this directory cannot be joined on'. Re-measured firm-wide: 0 of 22,646 ownership-map account grants (all 179 advisors) join the live directory even WITH _ids.projection_for('49financial') applied by hand (the ownership map's raw custodian keys, 'z0819594401'-shaped, are not the raw key _ids/raw_keys.json declares 49financial's directory mints from: 'the crosswalk's account id, zero-padded to 10 digits'). And separately: a census of every entry.py/handler.py/dispatch.py under infra/aws/lambda/investor-reporting/ (13 files, denominator printed) shows 0 of 13 ever pass id_projection to Enforcer/Entry. So the refusal is not a property of which advisor or firm this cell chooses -- it fires for every live FIRM_ADVISOR request today, and the bounded test principal alone does not unblock FWD-1/2/5's SERVED (200) path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rte_1.py arm_b_principal_shaped(), IB-rte-1_R51-AC1_battery_output.txt (this run): LIVE_PRODUCTION_WIRING_RESULT = {served: false, code: UNPROJECTED_GRANT, granted_denominator: 43, gap_reason_histogram: {UNPROJECTED-ID: 43}}",
+        "same output: ownership_to_directory_join_WITH_projection = '0 of 22646'",
+        "same output: id_projection_wiring_census = {entry_points_denominator: 13, wired: [], verdict: '0 of 13 live entry/handler/dispatch modules ever set id_projection'}",
+        "infra/aws/lambda/investor-reporting/_ids/raw_keys.json:9-16 @391e4ad948869b8972bf6d96d5cc54392b351d5e (49financial's declared account raw key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix (bound: READ-ONLY, creates nothing, and the entry-point wiring is outside a single test-principal cell's charge). Named prominently in R51-AC2's judgment record and in NEVER_WIDEN_SIGNOFF_PACKET_IB-rte-1.md so IB-rte-2 does not spend its own round discovering this after the principal is created."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S23",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:47:00Z",
+    "one_line": "The task face's example directory prefix (s3://opal-data-bd/investor-reporting/directory/2026-09-16/) is one day stale against every firm's live latest.json pointer at this cell's cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-1 face (b): \"read the three landed directories under s3://opal-data-bd/investor-reporting/directory/2026-09-16/\".",
+    "world_is": "Measured live this run: opal-data-bd, opal-data-inf and opal-data-cot's own investor-reporting/directory/latest.json each point to .../2026-09-17/directory.json (generated_at 2026-09-18T16:41:04Z for bd and cot, 2026-09-18T09:02:13Z for inf), not .../2026-09-16/. An older object still exists at the 2026-09-16 prefix in opal-data-bd, but it is not what the enforcer's own load_directory (which follows latest.json) reads. Does not change which firm this cell chose (49financial, by measured TERMINATED count).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3 cp s3://opal-data-bd/investor-reporting/directory/latest.json - (this run): key '2026-09-17/directory.json'",
+        "aws s3 cp s3://opal-data-inf/investor-reporting/directory/latest.json - (this run): key '2026-09-17/directory.json'",
+        "aws s3 cp s3://opal-data-cot/investor-reporting/directory/latest.json - (this run): key '2026-09-17/directory.json'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Trivial drift (the task order's own cut vintage is behind a producer's daily refresh); no action needed."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S24",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T20:49:00Z",
+    "one_line": "Cottonwood's live directory carries termination.indicator = UNKNOWN for 260 of 260 entries -- none ACTIVE, none TERMINATED -- so cottonwood cannot currently exhibit FWD-1's terminated-client-stays-visible behaviour at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The DirectoryEntry contract's termination.indicator is described (infra/aws/lambda/investor-reporting/_authz/tests/fixtures.py:53 '\"termination\": {\"indicator\": \"ACTIVE\", ...}'; PRD FWD-1 CONSTRAINT 'terminated clients STAY VISIBLE, marked terminated') as distinguishing ACTIVE from TERMINATED so the capability-gap behaviour can be exercised per firm.",
+    "world_is": "Measured live this run (battery_ib_rte_1.py arm_b_principal_shaped, per_firm.cottonwood.termination_histogram): {\"UNKNOWN\": 260} -- 0 ACTIVE, 0 TERMINATED, out of 260 entries. 49financial and inflection carry ACTIVE/TERMINATED correctly in the same run ({\"ACTIVE\": 4505, \"TERMINATED\": 71} and {\"ACTIVE\": 291}). Cottonwood's directory producer is not yet populating a real termination status at this vintage.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IB-rte-1_R51-AC1_battery_output.txt (this run): arm_b_principal_shaped.per_firm.cottonwood.termination_histogram = {\"UNKNOWN\": 260}",
+        "same output: per_firm.49financial.termination_histogram = {\"ACTIVE\": 4505, \"TERMINATED\": 71}; per_firm.inflection.termination_histogram = {\"ACTIVE\": 291}"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix (read-only, no directory annotation authorized). Does not change this cell's firm choice (49financial already has the required TERMINATED entries), but a later cell exercising cottonwood specifically should know its termination field is not populated yet."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S41",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T20:05:00Z",
+    "one_line": "The task order's own enumerated 'p of p' control list (versioning, public-access block, encryption, the per-firm Deny fence) does not name s3-49financial.tf's BORN-WITH CloudTrail read-logging postcondition, and carrying that control would force a change to ANOTHER resource on this root (cloudtrail-organization-trail.tf's aws_cloudtrail.organization), which both the order's BOUNDS clause and its own plan bound (0 to change) forbid -- so the new bucket(s) are declared without it, deliberately.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/shared-infra/s3-49financial.tf:38-44 @080e1b97c6: a lifecycle postcondition on aws_s3_bucket.opal_data_49financial requiring contains(local.org_trail_read_logged_buckets, self.bucket), with the comment 'a bucket minted from the template ... must be on it: the template's postcondition fails the plan until it is' and 'Do not delete this block when copying the file'",
+        "infra/aws/terraform/shared-infra/cloudtrail-organization-trail.tf:45-52 @37931439cf: locals.org_trail_read_logged_buckets = [opal-data-49financial, opal-data-bd, opal-data-cot, opal-data-inf] -- adding either new bucket name here is the ONLY way to carry that postcondition, and it is the sole input to aws_cloudtrail.organization's event_selector.data_resource.values, so the edit re-plans that EXISTING resource as an in-place change",
+        "task order IRPT_BCKEND.TO-IB-rte-3 face (b): 'nothing else in that root changes. Plan: exactly the new resources to add, 0 to change, 0 to destroy -- anything else is a STOP' and BOUNDS: 'the shared-infra root's other resources untouched (a plan naming any of them is a STOP)'",
+        "this cell's own plan, pre-apply (.scratch/tf_plan1.txt, not committed -- scratch): 'Plan: 10 to add, 0 to change, 0 to destroy' -- achieved precisely BY omitting the read-logging block; a version carrying it would not read this way"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rte-3 face (b): 'declare the two buckets beside it with the SAME controls ... every control it carries -- versioning, public-access block, encryption, the per-firm Deny fence ... p of p printed; nothing else in that root changes.'",
+    "world_is": "s3-49financial.tf carries a FIFTH control (the CloudTrail read-logging postcondition + list membership) beyond the four the task's own sentence enumerates, and that fifth control cannot be carried without changing an existing resource on this root -- which the SAME face's plan bound and the order's BOUNDS clause both forbid. The four enumerated controls are carried p of p (4 of 4); the fifth, un-enumerated one is knowingly not.",
+    "notes": "Resolved by scoping 'p of p' to the task's own enumerated list rather than to every control the file happens to also carry -- a reasoned reading, not silent. Not this cell's to widen: extending CloudTrail read logging to the two new buckets is a follow-on this order's BOUNDS forecloses, named here for whoever owns that follow-on."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S42",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T20:07:00Z",
+    "one_line": "Regenerating .tools/ds-precommit-check.py's GENERATED cross-firm block produces an EMPTY diff after both buckets exist live, because _separations() (lib/opal_naming.py:607-621) gates the 'ruled' bucket entry on scopes.json's bucket_provisioned flag, which stays false for inflection/cottonwood -- infra/logic/registry/scopes.json is outside this order's <paths> grant, so the fence genuinely does not see the new bucket names; an empirical negative-control probe confirms a BARE reference to the real new name ('opal-data-inflection', no s3:// prefix, no trailing slash) is NOT refused (rc=0), while an s3://-prefixed reference IS refused (rc=1) only by an ACCIDENTAL substring collision with the pre-existing LEGACY short name ('opal-data-inf' is a string-prefix of 'opal-data-inflection'), citing the wrong bucket name in its own BLOCKED message.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this commit: `python lib/opal_naming.py generate --out .scratch/gen_dry --target .tools/ds-precommit-check.py` then `diff .tools/ds-precommit-check.py .scratch/gen_dry/.tools/ds-precommit-check.py` -- rc=0, ZERO diff lines, against registry@c1cf124537835573 (post-apply: both buckets live)",
+        "lib/opal_naming.py:607-621 @6c87bd0968 `_separations()`: `ruled = [g[\"bucket\"] for g in foreign if g.get(\"bucket_provisioned\")]` -- reads scopes.json's bucket_provisioned field, which this cell's two rows carry as `false` (infra/logic/registry/scopes.json:126,164 @22e86e55f5), unchanged by bucket creation itself (Terraform and the registry are two separate systems; nothing in this cell's apply writes scopes.json)",
+        ".scratch/data/cot/zz_negative_control_probe2.py containing the bare literal `opal-data-inflection` (exact bucket name, no prefix, no trailing slash): `python .tools/ds-precommit-check.py .scratch/data/cot/zz_negative_control_probe2.py` -> rc=0, NO BLOCKED line -- the real new bucket name, referenced the way _is_real_bucket_ref's own first arm (`s == bucket`) is designed to catch a whole-value reference, passes clean",
+        ".scratch/data/cot/zz_negative_control_probe.py containing `s3://opal-data-inflection/irpt/...`: rc=1, `BLOCKED: cross-firm bucket reference 'opal-data-inf' in a data/cot script` -- REFUSED, but the cited foreign bucket is 'opal-data-inf' (the LEGACY alias, already in the generated dict), not 'opal-data-inflection': the match fires because `_is_real_bucket_ref`'s arm `f's3://{bucket}' in s` is an UNANCHORED substring test, and 's3://opal-data-inf' IS a string-prefix of 's3://opal-data-inflection/...' -- structurally true for cottonwood/opal-data-cot too since the LGIC grammar makes every firm's short form a prefix of its long form by construction"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rte-3 face (c): 'Regenerate through the builder ... print the diff of the generated block; if the registry already scopes both firms the diff may be empty -- say so and prove the fence sees the new names by a negative test (a pipeline dir referencing the foreign bucket name is REFUSED by the gate, 2 of 2).' The title's own framing: 'the cross-firm gate enumerations REGENERATED from the registry so the new names are fenced.'",
+    "world_is": "The diff IS empty (said so). The negative test that matters -- does the fence refuse a reference to the ACTUAL new bucket name -- reads 0 of 2 REFUSED for the rigorous form (bare exact-name reference) and 2 of 2 REFUSED for the s3://-prefixed form, but ONLY by an accidental legacy-name substring collision that happens to hold for these two firms today (short form is a structural prefix of long form) and would NOT hold for a firm whose short/long forms do not share a prefix relationship. The fence's generated enumeration itself is UNCHANGED (still only opal-data-inf/opal-data-cot, opal-data-49financial) -- it does not, in the sense the title asserts, 'see the new names.'",
+    "notes": "Not this cell's to fix: infra/logic/registry/scopes.json's bucket_provisioned field is outside this order's <paths> grant (see also W3-S43, the SAME registry-gap class one field over, for exemptions.json). Closing this requires a registry-owning seat to flip bucket_provisioned:true for inflection and cottonwood, then re-run `python lib/opal_naming.py generate --out <dir> --target .tools/ds-precommit-check.py` -- a mechanical, one-call fix once the registry edit lands. ARMED because, left alone, a future pipeline script under data/cot/ or data/black_diamond/ that references either new bucket by its exact name (not an s3:// URI) is NOT caught by this gate today."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S43",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T20:12:00Z",
+    "one_line": "The applied Deny fence on both new buckets (module.opal_name.fence_patterns[firm] + lookup(module.opal_name.fence_exemption_arns, bucket, [])) locked out the applying identity itself: infra/logic/registry/exemptions.json (outside this order's <paths> grant) carries no exemption rows for 'opal-data-inflection'/'opal-data-cottonwood' (only empty-array rows for the LEGACY aliases 'opal-data-inf'/'opal-data-cot'), so the lookup(...,[]) default produced an EMPTY exemption list and the Deny (Principal '*', Action 's3:*', unless ArnNotLike role/*-inf-*|*-cot-*) denies EVERY principal including Andrew_Berman (AdministratorAccess via an identity policy, overridden by the resource-policy explicit Deny) -- empirically confirmed AccessDenied on head-bucket, get-bucket-policy, get-bucket-versioning AND delete-bucket-policy for both buckets, post-apply, under the only credentials this worker holds.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run, .scratch/tf_apply2.txt (not committed -- scratch): apply (HALT_ACK=1) landed aws_s3_bucket / aws_s3_bucket_public_access_block / aws_s3_bucket_server_side_encryption_configuration for BOTH firms ('Creation complete'), then errored on BOTH aws_s3_bucket_versioning and BOTH aws_s3_bucket_policy: 'Error: reading S3 Bucket Versioning (opal-data-inflection): ... AccessDenied ... User: arn:aws:iam::313476888478:user/Andrew_Berman is not authorized to perform: s3:GetBucketVersioning on resource ... with an explicit deny in a resource-based policy' (and the same for opal-data-cottonwood, and for GetBucketPolicy on both)",
+        "this cell, this run: `.tools/aws sts get-caller-identity` -> user/Andrew_Berman (the only identity this worker's `.tools/aws` shim holds); `.tools/aws s3api head-bucket --bucket opal-data-inflection` -> 403 Forbidden; `.tools/aws s3api get-bucket-policy --bucket opal-data-inflection` -> AccessDenied explicit-deny; `.tools/aws s3api get-bucket-versioning --bucket opal-data-inflection` -> AccessDenied explicit-deny; `.tools/aws s3api delete-bucket-policy --bucket opal-data-inflection` -> AccessDenied explicit-deny -- the SAME four results for opal-data-cottonwood; `.tools/aws s3api list-buckets` (account-level, unaffected by a per-bucket resource policy) DOES list both names, confirming the credential itself is otherwise sound and the lockout is bucket-scoped",
+        "infra/logic/registry/exemptions.json:109-111 @ea5edd1fe4: `\"opal-data-bd\": [], \"opal-data-inf\": [], \"opal-data-cot\": []` -- three LEGACY-alias keys present with empty arrays; NO 'opal-data-inflection' or 'opal-data-cottonwood' key exists at all, so `module.opal_name.fence_exemption_arns[\"opal-data-inflection\"]` (a direct index, s3-49financial.tf's own idiom for its bucket) would ERROR the plan (\"Invalid index\") -- this cell used `lookup(..., [])` specifically to avoid that plan error, and the empty-list default is what removed 49financial's admin carve-out from the new buckets",
+        "this cell, this run: `.tools/aws iam list-roles --query \"Roles[?contains(RoleName,'-inf-')||contains(RoleName,'-cot-')].RoleName\"` -> [bd-cot-keepalive-role, opal-assets-mirror-cot-scheduler-role, opal-cot-served-guard, opal-cot-value-parity, opal-inf-served-guard, opal-inf-value-parity]; `.tools/aws iam get-role --role-name opal-inf-served-guard` (and opal-cot-served-guard) AssumeRolePolicyDocument -> Principal.Service=lambda.amazonaws.com ONLY -- no role matching the fence's admit pattern is assumable by this worker's identity, so no self-service recovery path exists via role assumption either"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rte-3 face (d): 'post-apply head-bucket 200 for both, get-bucket-versioning Enabled, get-public-access-block all four true, get-bucket-policy carrying the fence -- 2 of 2 buckets, every control read back'; and CLAUDE.md NEVER 'leave a confirmed deploy half-landed -- finish in-session or roll back + escalate loud.'",
+    "world_is": "Both buckets ARE live, correctly named, and (per Terraform's own state and 'Creation complete' record) almost certainly carry every declared control -- but this worker cannot READ ANY of them back to confirm (head-bucket returns 403, not 200), and cannot ROLL BACK either (delete-bucket-policy is itself denied) using the only credentials it holds. This is neither finished nor rolled back; it is escalated here because this worker has no message tool and no path to AWS root/console access.",
+    "notes": "NOT resolvable by this worker: recovery requires either (a) a principal matching the fence's admit pattern (none is assumable by this identity) or (b) AWS root-account console access to repair/replace the bucket policy, which is outside every tool this worker holds. The change-management ledger (org/critical_paths/change_management/20260918T1949Z_irpt-bckend-ib-rte-3-lgic-firm-buckets_deploy_completion.md) is left OPEN and RED deliberately -- `deploy_ledger.py hold` was tried and correctly REFUSED ('a half-landed deploy cannot be HELD (stays RED)'). Fix, once root/console access repairs the policy (adding exemption rows to exemptions.json for both bucket names, mirroring 49financial's own admin/service-role exemptions, then re-applying so Terraform's state agrees): re-run this order's battery to confirm 2 of 2 post-apply reads and close the ledger. Routed to 2.0.0_SA_COO~B as the live seat holding this round."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S44",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-18T20:15:00Z",
+    "one_line": "The negative-control host i-02448edb624a7a7cf is STOPPED, not registered with SSM (describe-instance-information returns an empty list), so the task order's named live, host-exercised negative control cannot be run; substituted with iam simulate-principal-policy for both assertions (both read implicitDeny), which is EVIDENCE-LAW WEAKER (a simulation, not an exercise; CLAUDE.md 22a names sim-policy's FALSE-ALLOW risk) and does not by itself satisfy R53-AC1(e)'s '2 of 2 DENIED, exercised from the host.'",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: `.tools/aws ec2 describe-instances --instance-ids i-02448edb624a7a7cf --query \"Reservations[0].Instances[0].[State.Name,IamInstanceProfile.Arn]\"` -> [\"stopped\", \"arn:aws:iam::313476888478:instance-profile/mdpf-daily-runner-profile\"]",
+        "this cell, this run: `.tools/aws ssm describe-instance-information --filters \"Key=InstanceIds,Values=i-02448edb624a7a7cf\"` -> {\"InstanceInformationList\": []} -- not managed/reachable by SSM while stopped",
+        "this cell, this run: `.tools/aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::313476888478:role/mdpf-daily-runner-ec2-role --action-names s3:PutObject --resource-arns arn:aws:s3:::opal-data-inflection/irpt/inflection/gold/directory/zz-negative-control` -> EvalDecision implicitDeny; the same call for role/irpt-49f-directory-read-role s3:GetObject on arn:aws:s3:::opal-data-cottonwood/... -> implicitDeny"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rte-3 face (e): 'from the host (i-02448edb624a7a7cf, read-only SSM), the host role's attempt to write ... and the 49f principal's attempt to read ... both DENIED (2 of 2)'.",
+    "world_is": "The host is stopped and this worker has no authorization to start a production runner instance merely to exercise a negative control (starting mdpf-daily-runner risks firing its production workload, well outside this CREATION-ONLY cell's bound). Both substitute simulations read implicitDeny, consistent with the expected outcome, but a simulation is not an exercise and this worker states that gap rather than reporting it as if the host-exercised test had run.",
+    "notes": "Not this cell's to fix: starting the host is an operational act outside this order's CREATION-ONLY scope and its BOUNDS ('no vendor call', 'nothing else changes'). Once the host is next started for its own scheduled/legitimate reason, a later seat can re-run this order's negative-control battery against it directly."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S34",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T21:20:48Z",
+    "one_line": "TWO of the nine investor-reporting functions' declared+served firm_registry.json members have NO true source anywhere in this repository's git object graph -- not a path-search miss, a CONTENT-ADDRESSED one: `git hash-object --no-filters` on the served bytes then `git cat-file -e`/`git rev-list --objects --all` against that exact blob id returns ABSENT, for irpt-intake-poller AND irpt-ycharts-generate (both serve the SAME byte-identical firm_registry.json, sha256 cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3, 5229 bytes).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-IB-rte-4 baseline run (this worker, this turn): `bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting` on the UNMODIFIED manifest failed all 9 functions with 'File not found' for every undeclared-source member (rows W1-S20/W2-S59's class, generalised to 7 functions); irpt-intake-poller and irpt-ycharts-generate each named firm_registry.json among them.",
+        "data/firm_registry.json (the only other tracked file anywhere named firm_registry*.json -- a name-only sweep of the whole worktree found 3 hits: the one tracked copy plus this run's own two zip-extraction scratch copies) does NOT match at HEAD (sha256 5a4c0c3d..., served is cc3f2c63...) NOR at any of the 8 distinct content-versions across its FULL history (`git log --all --full-history`, 44 commits swept, 8 distinct sha256 values, none matching).",
+        "an initial `git hash-object` (WITHOUT --no-filters) on the served bytes computed oid 7c483504766345e4c73a7aad355ba9e5ca1e3edc, which DOES exist in the ODB at data/firm_registry.json -- but its content (sha256 38ad04b2...) is NOT the served content: the clean filter silently re-encoded line endings before hashing (row IRPT_BCKEND-W4-S37). Recomputing with `git hash-object --no-filters` gives oid 330045a1575c0ff4138f0379e964952b0f0f4038, and `git cat-file -e` on THAT oid, plus a full `git rev-list --objects --all` sweep for it, both confirm ABSENT: the served content was never committed at this path or any other, at any point in this repository's reachable history.",
+        "the served firm_registry.json's own `_meta.authority` line names 'NFRA_PSTMRT P1 (Andrew-direct handover @7cc6376e5)' and lacks the '_generated by lib/opal_naming.py ...' header data/firm_registry.json's CURRENT content carries -- consistent with an OLDER, pre-generator vintage that was deployed once and never committed at that revision, then squashed/overwritten before this repository's earliest reachable history of the path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rte-4 (b): 'make files[] (or the builder) declare each served member's TRUE SOURCE ... No third copy is committed.'",
+    "world_is": "For every OTHER undeclared member across all 9 functions (26 distinct staged_from declarations covering served.py/loaders.py/enforce.py/errors.py/resolve.py/keys.py/ids.py/gate.py/handler.py/checkpoint.py/trading_calendar.py/firm_destination_policy.json), a true source WAS found and declared, blob-hash-verified at build time. firm_registry.json is the one member where no such source exists to declare -- inventing one would BE the third copy this order's bound forbids, so none is invented; irpt-intake-poller and irpt-ycharts-generate's builds still fail on this one member with the real, unmodified manifest.",
+    "notes": "Not this worker's to author: recovering or re-authoring firm_registry.json's content is a content-authorship decision (which firms, what shape) outside a builder/source-map order's remedy. Routed to the same owner class as W1-S20/W2-S59. The CVO's R54-AC2 judgment record (this order) names this as the reason 7 of 9, not 9 of 9, functions reach a full clean build."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S35",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T21:20:48Z",
+    "one_line": "irpt-ycharts-generate's declared+served settings.json ALSO has no true source anywhere in the git object graph (same content-addressed test as row W4-S34) -- and its own embedded `_meta.artifact` line claims a source (infra/aws/lambda/investor-reporting/intake/settings.json) that no longer matches: that path IS tracked, but at every commit in its full history its content sha256 is either c493ea6e... or 23c649d2..., never the served a05bcea4... (9815 bytes).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-IB-rte-4 baseline + post-fix runs (this worker, this turn): irpt-ycharts-generate failed with 'File not found: .../ycharts/generate/settings.json' both before AND after every other declared member was fixed via a true-source declaration -- the only remaining failure on this function besides firm_registry.json (row W4-S34).",
+        "served settings.json's own header (extracted this turn): '_meta.artifact: infra/aws/lambda/investor-reporting/intake/settings.json, cell: IB-s-7 ..., author: 0.9.0_WK_IRPT_BCKEND~3 on IRPT_BCKEND.TO-IB-s-6's successor IRPT_BCKEND.TO-IB-s-7' -- a self-declared provenance pointer.",
+        "`git log --all --full-history -- infra/aws/lambda/investor-reporting/intake/settings.json` (this turn): 11 commits, 2 distinct sha256 values (c493ea6edd6ee7c38c0044feda1440865532e0fbc86d30b2dfe2c0e34ec1eefd and 23c649d206698eb1119912b5c1be080696fb3fc69bd0741cbfe98d6d6de5d9fa) -- neither equals the served a05bcea4d3cdfda972a35bf3bf088c6794728b426d924cbd2069a94ab33aed44.",
+        "`git hash-object --no-filters` on the served bytes -> oid eec29e78916f3e188894f0bc3c50f6738f2f3c1c; `git cat-file -e` and a full `git rev-list --objects --all` sweep both confirm this oid is ABSENT from the repository's object database."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rte-4 (b): 'make files[] (or the builder) declare each served member's TRUE SOURCE ... No third copy is committed.'",
+    "world_is": "The served settings.json is a genuine, authored artifact (its own header names the cell and worker that produced it) whose committed revision was never captured at intake/settings.json or anywhere else this search reached -- the pointer inside the file is now STALE. No source is declared for it here; irpt-ycharts-generate's build still fails on this one member (plus firm_registry.json, row W4-S34) with the real, unmodified manifest.",
+    "notes": "Same disposition class as W4-S34: content-authorship, not a builder/source-map fix. The two rows are kept separate because they name different members with independently-verified absence, even though both surface on the same function."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S36",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T21:20:48Z",
+    "one_line": "This order's own worker face names `memory/feedback_structural_over_cultural_pattern.md` item 6 as required background reading; that path does not exist anywhere in this worktree's tracked tree at HEAD -- `memory/` itself is absent (`git cat-file -e HEAD:memory/feedback_structural_over_cultural_pattern.md` fails, `git ls-tree -r --name-only HEAD` has zero hits for the whole tree, and a name-only sweep for 'structural_over_cultural' across all of HEAD returns zero).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git cat-file -e HEAD:memory/feedback_structural_over_cultural_pattern.md` (this turn): fatal: path 'memory/feedback_structural_over_cultural_pattern.md' does not exist in 'HEAD'.",
+        "`git ls-tree HEAD -- memory` (this turn): empty, rc=1 -- the memory/ directory itself is not tracked in this worktree at HEAD.",
+        "`git ls-tree -r --name-only HEAD` filtered for 'structural_over_cultural' (this turn): zero hits across the whole tracked tree."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rte-4 face, 'Read alongside it: ... memory/feedback_structural_over_cultural_pattern.md item 6'.",
+    "world_is": "Whatever this file's item 6 said about the same-class incident (per row W1-S20's own citation of it, made in a DIFFERENT worker's worktree) is not independently readable from this worktree; this worker proceeded on the PRIMARY evidence (the live build, the git object graph, the served zips) rather than the secondary citation, and the census in this order's own deliverable answers the same question ('are there more members of this class') directly rather than by relying on the memory file's characterization.",
+    "notes": "A capability this worker lacks in THIS worktree (cannot read a path that is not there), not a claim that the file does not exist elsewhere -- memory/ may be workspace-root-only and out of a Lambda-scoped worktree's checkout, or gitignored, or simply not checked out at this worktree's cut. Filed per the surprise-channel bound rather than chased."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S37",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T21:20:48Z",
+    "one_line": "INSTRUMENT TRAP, self-caught mid-census: `git hash-object <file>` (the DEFAULT, WITH clean filters applied) computed a blob id that genuinely exists in the ODB at a plausible path, so a content-addressed 'does this exact content exist anywhere' search using the DEFAULT command reads a false POSITIVE (wrong content, coincidentally matching a real but DIFFERENT historical blob) rather than the true negative -- `--no-filters` is required for this class of search, matching the catalogued 'worktree sha256 on an autocrlf box hashes the checkout, not the record' trap one level further upstream (the trap reaches `git hash-object` itself, not only a raw sha256sum of a checked-out file).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this turn: `git hash-object <extracted served firm_registry.json>` (default) -> oid 7c483504766345e4c73a7aad355ba9e5ca1e3edc; `git cat-file -e` on that oid SUCCEEDS and `git rev-list --objects --all` finds it at data/firm_registry.json -- read naively this says 'the content exists, tracked, at this path'.",
+        "same run, this turn: `git cat-file -p 7c483504766345e4c73a7aad355ba9e5ca1e3edc` has sha256 38ad04b2c25e96387b2614e9f4caba4316978924d5647d0e8d229093cdefd539, and the source file being hashed has sha256 cc3f2c63bb2d8c14a3d65b2bb2215b4089e5e776718a307660a253eebfbd25e3 -- DIFFERENT content, DIFFERENT sizes (5094 vs 5229 bytes) -- so the git-object-database hit was for the WRONG blob; `cmp` on the two confirms they differ from byte 2.",
+        "re-run with `git hash-object --no-filters` (this turn): oid 330045a1575c0ff4138f0379e964952b0f0f4038 -- ABSENT from the ODB -- the TRUE answer this search needed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R54-AC1(a): 'every served member's TRUE SOURCE' census, verified by content hash per Rule 22a/CLAUDE.md R-40.",
+    "world_is": "The clean filter (autocrlf-class line-ending normalisation, applied by `git hash-object` without `--no-filters`) changed the byte sequence being hashed before hashing it, so the computed oid answered a DIFFERENT question ('does THIS filtered content exist') than the one asked ('does the RAW served content exist'). Caught before it produced a wrong finding: this row's own S34/S35 use `--no-filters` throughout.",
+    "notes": "COST paid here: one comparison (cmp on 2 files) plus a size check, once the coincidental ODB hit made the first answer suspicious enough to re-check. NON-APPLICATION: comparing two ALREADY-EXTRACTED files on disk (no git hash-object involved) or comparing git cat-file -p output directly (filter-free by construction) -- both used correctly elsewhere in this same census."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S38",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-18T22:12:50Z",
+    "one_line": "ESTATE-WIDE, PRE-EXISTING (not introduced by this order): every non-.py, non-.tf/.hcl/.sh JSON/text fixture packaged into an investor-reporting Lambda zip on THIS Windows box ships CRLF while its committed git blob is LF -- .gitattributes' `text eol=lf` domain (build-and-upload.sh's own comment history, rows IRPT_BCKEND-W2-S12 and the terraform-family block) covers *.tf/*.tfvars/*.tf.json/*.hcl/*.sh/terraform-owned *.js and NOT *.json, so `core.autocrlf=true` (measured, this turn) checks every packaged JSON fixture out CRLF and the PowerShell zip step (build-and-upload.sh :362-376) reads those raw worktree bytes verbatim into the zip.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B to route",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this turn: infra/aws/lambda/investor-reporting/holdings/BUILD_MANIFEST.json worktree bytes carry 52 CRLF (size 4436); `git cat-file -s HEAD:...BUILD_MANIFEST.json` = 4384 (52 bytes smaller, i.e. LF-only) -- the census's own TRACKED-AT-PATH-CONTENT-DIFFERS classification for this file is this artifact, not a provenance gap (the file IS correctly tracked at path; only its checked-out byte form differs from its blob form).",
+        "this turn, a second unrelated file, same pattern: infra/aws/lambda/investor-reporting/narrative/event_policy.json worktree carries 55 CRLF (size 4718); `git cat-file -s HEAD:...event_policy.json` = 4663 (55 bytes smaller).",
+        "`git config core.autocrlf` (this turn): true. `.gitattributes` (read this turn): the `text eol=lf` domain is explicitly SCOPED to *.tf/*.tfvars/*.tf.json/*.hcl/*.sh/terraform-owned *.js and Python scripts, with each addition's own comment naming the ONE incident that motivated it (row IRPT_BCKEND-W2-S12 for the Terraform-hashed .js case) -- *.json is not a member of any declared domain.",
+        "battery_ib_rte_4.py's own census (this order's part (a), re-derived from `git show HEAD:path` vs the SERVED zip member) found 49 TRACKED-AT-PATH-CONTENT-DIFFERS rows across 5 of the 9 functions (irpt-holdings 3, irpt-intake-poller 20, irpt-narrative 5, irpt-performance-adapter 6, irpt-ycharts-generate 15) -- every one inspected is a JSON/text fixture or manifest, never a .py file (the .py members either match exactly or are staged from a pinned blob, both filter-free reads)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rte-4 (a): 'every member of its SERVED zip ... against the source map's files[] and against the repo: per member, one of TRACKED-AT-PATH / TRACKED-ELSEWHERE / UNTRACKED-ANYWHERE'.",
+    "world_is": "These 49 members ARE tracked at their declared path with a known vintage -- the census's TRACKED-AT-PATH-CONTENT-DIFFERS label is accurate about the BYTE comparison it ran, but the byte difference itself is a checkout-vs-blob line-ending artifact (git's clean filter under autocrlf=true), not a second, undeclared definition of the content. It does not change this order's remedy (no true source needed for an already-tracked file) but it DOES mean every zip this builder has EVER produced on this box for a JSON-fixture-carrying function -- not only the ones touched this order -- may carry CRLF where the tracked source is LF. The existing INDEX-SOURCED VENDORED-MEMBER GATE (build-and-upload.sh :266-349) already solves exactly this class for the 4 declared_blobs .py members (asserting raw CR==0 against the committed blob, never an LF-normalised digest) and explicitly says why: 'an LF-normalised digest strips the CRs before the comparison sees them and CANNOT fail on a CRLF ship.' No equivalent gate exists for a JSON fixture.",
+    "notes": "Not this order's to fix: extending .gitattributes' eol=lf domain to *.json (or every packaged non-.py member) or widening the vendored-member gate's CRLF assertion to cover fixtures is a change to a shared, estate-wide convention (.gitattributes) and a shared builder behaviour well beyond 'declare the true source of an undeclared member' -- this order's own bound says the ONLY code paths touched are infra/aws/lambda/ci/ and a function's deploy when content differs, and a CRLF-vs-LF byte difference in an ALREADY-tracked, ALREADY-correctly-declared file is neither. Functionally likely harmless for JSON (insignificant whitespace to a parser) but not verified harmless for every fixture format packaged estate-wide (e.g. .eml/.bin members are NOT text and were not classified as CONTENT-DIFFERS by this census, so this is scoped to text/JSON only, consistent with git's own clean-filter scope)."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S45",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-19T01:05:00Z",
+    "one_line": "TO-IB-rte-7's PLAN-2/PLAN-3 bound assumes a live `terraform plan` (default refresh=true) on infra/aws/terraform/shared-infra can COMPLETE and print an action list; it CANNOT, today, for either the old or the new selector -- the same already-ARMED lockout (row IRPT_BCKEND-W3-S43) makes every live GetBucketVersioning/GetEncryptionConfiguration/GetBucketPublicAccessBlock read on opal-data-inflection/opal-data-cottonwood AccessDenied, and Terraform aborts the WHOLE plan (rc=1, 'Planning failed'/'... but then encountered a problem') before it can print a completed action list. `-refresh=false` (read-only, not `-target`, not a state verb) is the only way to see a completed diff, and it surfaces a SECOND, orthogonal symptom of the same root cause: the remote state ALREADY carries aws_s3_bucket_versioning.lgic_firm[...] and aws_s3_bucket_policy.lgic_firm[...] TAINTED for BOTH firms (4 resources) -- present identically with HEAD's unedited .tf and HEAD's unedited registry (measured), so it is NOT introduced by this order's selector edit or registry delta. Its effect: PLAN-2's literal bound ('0 to add, 0 to destroy, every change a policy') cannot be measured as written -- a live plan never completes, and the refresh=false plan reads '4 to add, 0 to change, 4 to destroy' (all four the pre-existing taint's forced replace) rather than a clean update, on BOTH the old selector and the new one. PLAN-1's '0 differences' and PLAN-3's 'k to destroy, k>=8' bounds ARE met cleanly regardless (PLAN-1: identical 4/0/4 result under old and new selector at refresh=false, and identical crash under live refresh; PLAN-3 refresh=false: 0 to add, 0 to change, 10 to destroy, k=10>=8).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run, .scratch/plan_baseline.log (HEAD's .tf, HEAD's registry, live refresh): rc=1, 'Terraform planned the following actions, but then encountered a problem' after 'Plan: 2 to add, 0 to change, 0 to destroy', then six AccessDenied errors reading GetBucketVersioning/GetBucketEncryption/GetBucketPublicAccessBlock on opal-data-inflection and opal-data-cottonwood -- the identical error set row IRPT_BCKEND-W3-S43 already names.",
+        "this cell, this run, .scratch/plan1.log (this order's new selector, HEAD's registry, live refresh): byte-for-byte the SAME creates/plan-line/erroring-resource-set as plan_baseline.log (verified by an order-independent extraction: identical sorted 'will be created' list, identical 'Plan:' line, identical sorted erroring-resource-address list) -- proving the crash is orthogonal to the selector rewrite, not caused by it.",
+        "this cell, this run, .scratch/plan3_live.log (HEAD's ORIGINAL .tf, local registry flip+field+6 test exemption rows, live refresh): rc=1, 'Planning failed. Terraform encountered an error while generating this plan.' -- no action list printed at all before the same six AccessDenied errors.",
+        "this cell, this run, .scratch/plan1_norefresh.log and .scratch/plan_baseline (norefresh variant not separately saved but identical by inspection) and .scratch/plan2_norefresh.log (all `-refresh=false`, `-out=...`, no `-target`, no apply): plan1_norefresh.log shows 'aws_s3_bucket_policy.lgic_firm[\"cottonwood\"/\"inflection\"] is tainted, so must be replaced' and 'aws_s3_bucket_versioning.lgic_firm[...] is tainted, so must be replaced' for BOTH firms, 'Plan: 4 to add, 0 to change, 4 to destroy' -- with HEAD's UNMODIFIED registry and this order's NEW selector; plan2_norefresh.log (same new selector, local registry delta applied) shows the SAME four tainted-replace resources PLUS the intended semantic diff (the three exemption ARNs added to each policy's ArnNotLike list), 'Plan: 4 to add, 0 to change, 4 to destroy' -- the taint count is IDENTICAL whether or not the registry delta is applied, isolating it as pre-existing and unrelated to this order's edit.",
+        "this cell, this run, .scratch/plan3_norefresh.log (HEAD's ORIGINAL .tf, local registry delta applied, `-refresh=false`): 'Plan: 0 to add, 0 to change, 10 to destroy' -- all five resource types for both firms, each annotated '(because key [...] is not in for_each map)': a clean, taint-independent destroy, k=10 >= 8, meeting PLAN-3's bound exactly.",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_REGISTRY_DEADLOCK_NEW_FIRM_BUCKETS_20260918.md @9eeb9a70a8 and this project's row IRPT_BCKEND-W3-S43 (ARMED, disarm_owner 2.0.0_SA_COO~B) already name and own the same root-cause lockout; this row is the discovery that the lockout ALSO blocks a live plan from completing at all (not only a post-apply read), and that a second symptom (pre-existing taint on 4 resources) sits beneath it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rte-7 face (b): 'PLAN-2 ... reads 0 to add, 0 to destroy, and every resource `to change` is an `aws_s3_bucket_policy.lgic_firm[...]` (n of n, n<=2)' and 'PLAN-3, the mutant ... reads the destroy the CTO named -- k to destroy, k>=8'.",
+    "world_is": "PLAN-3's bound is met cleanly (k=10>=8, `-refresh=false`). PLAN-2's literal '0 to add, 0 to destroy' cannot be measured as written: a live plan never completes (rc=1, same lockout as W3-S43), and the only completed plan (`-refresh=false`) reads '4 to add, 0 to change, 4 to destroy' because of a PRE-EXISTING taint on 4 resources, present identically before and after this order's registry delta -- so the literal bound is unreachable today for a reason this order did not create and cannot remedy (Andrew's console act, step 4 of the CTO's remedy, is what disarms W3-S43 and, most likely, this taint with it). The SEMANTIC diff attributable to this order's own edit -- isolated by comparing the refresh=false plan WITH the registry delta against the refresh=false plan WITHOUT it -- is exactly the three exemption ARNs added to each policy's Deny condition, and nothing else: the selector design is proven correct by discrimination even though the raw literal bound cannot be satisfied by any plan run today.",
+    "notes": "Not this order's to fix: disarming W3-S43 (Andrew's console delete-bucket-policy, step 4) is the CTO's remedy, not this cell's. This row does not ask for a workaround -- it states, with re-derivable evidence, why PLAN-2's literal bound reads FALSE today and what the isolated, taint-free comparison shows instead. Routed to 2.0.0_SA_COO~B as W3-S43's owner and the live seat holding this round."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S25",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T21:10:00Z",
+    "one_line": "IB-rte-6's REC (a) as literally named (49financial's account projection joins custodian keys through dim_identity_crosswalk) does not hold: measured live this run, dim_identity_crosswalk shares NO column with the ownership map's raw custodian keys and resolves 0 of 22,646 live grant slots (0 of 43 for abby_horton); a sibling table this project already reads on the host session, dim_account_xref, resolves 17,895 of 22,646 (21 of 43 for abby_horton) via the SAME target id space, and this cell built the shipped projection on THAT table instead, per the face's own 'or through the projection's existing read path' clause.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-6 face (b) and its issuer's ruling: \"the 49financial projection resolves custodian keys THROUGH dim_identity_crosswalk (the dimension the K2 grant already lets the 49f principal read) to the crosswalk account id\" -- REC (a), pitched to the CTO the same tick, pending ruling.",
+    "world_is": "gold/advi/dimensions/dim_identity_crosswalk (opal-data-49financial, date=2026-09-16, 7,479 rows, measured this run) carries only smartx_allocation_uuid/smartx_account_uuid (SmartX GUIDs) and schwab_account_number/account_id (8-digit and zero-padded-10 Schwab digits); the ownership map's raw account keys are \"z\"+10-digit Black Diamond ids (platinum/49financial/ownership_map.json, measured this run: abby_horton's 43 accounts sampled 'z0819594401' etc). Zero overlap in either direction, matching the ownership-map PRODUCER's own declared divergence (data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py:13-19 @<HEAD of this cell's cut>: \"the SERVED artifact carries the BLACK DIAMOND z-id grammar\"). blackdiamond/49f/silver/dim_account_xref (opal-data-assets, date=2026-09-16, 6,202 rows, measured this run) carries bd_account_id (the SAME \"z\"+10-digit shape) mapped to schwab_account_id (the SAME zero-padded-10 target space raw_keys.json names) -- read already, on the host session, by data/assets/scripts/gold/investor_reporting/directory_runner.py's own 49F reconciliation-prior-art path (no new grant). This cell built infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json from THAT table and wired _ids.projection_for_firm to consult it, declaring the choice in _ids/raw_keys.json's new `account.projection_seam` field rather than in a hand-typed firm literal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rte_6.py arm_b_join_rates, this run: resolved_via_named_join_table = 0 (of 22646); resolved_via_seam = 17895 (of 22646); abby_horton_resolved_via_seam = 21 (of 43)",
+        "gold/advi/dimensions/dim_identity_crosswalk/date=2026-09-16/data.parquet (live read, this cell): columns ['smartx_allocation_uuid','smartx_account_uuid','schwab_account_number','account_id',...]",
+        "blackdiamond/49f/silver/dim_account_xref/date=2026-09-16/data.parquet (live read, this cell): columns ['bd_account_id','bd_account_number','bd_original_account_number','schwab_account_id',...], sha256 b57eb33a926c05c2b8d421a199410acbfecfbfef0aea2bbfb4bda8d7d7feff0a",
+        "data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py:13-19 (IDENTITY-SPINE DECLARATION docstring)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Arm (a) (the entry-point wiring) stands regardless of this ruling (the face's own words). The CTO's ruling either confirms this cell's substitution of the read path or re-cuts arm (b); either way the id-space decision is the CTO's, not this cell's, per the face's own bound."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S26",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T21:15:00Z",
+    "one_line": "Packaging the 7 changed functions hit the SAME untracked-production-source-file class row W1-S20 already named for irpt-holdings, on two MORE functions: irpt-status's lambda-source-map.json files[] names handler.py and checkpoint.py, and irpt-ycharts-generate's names gate.py, firm_destination_policy.json, firm_registry.json and settings.json -- none of the six exist in the function's source_dir or any shared _authz/_scope/_keys/_ids root; each was extracted UNCHANGED from the currently-deployed zip for this cell's build only and never committed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "lambda-source-map.json's files[] for irpt-status and irpt-ycharts-generate describes each served zip's real membership (its own convention, stated for irpt-directory-search: \"describes the SERVED zip for this function accurately\").",
+    "world_is": "Measured this run: infra/aws/lambda/investor-reporting/ops/ contains only entry.py, manifests.py, status.py (no handler.py, no checkpoint.py); infra/aws/lambda/investor-reporting/ycharts/generate/ contains only entry.py, job.py, recipe.py, transport.py, templates.json (no gate.py, no firm_destination_policy.json, no firm_registry.json, no settings.json); none of the six exist under _authz/_scope/_keys/_ids either. Both currently-deployed zips DO carry all six (checked live this run via `.tools/aws lambda get-function` + zip listing), so the served bytes are real and unaffected -- only the REPOSITORY's ability to REBUILD them without a manual extraction step is broken, exactly row W1-S20's finding for irpt-holdings' served.py/loaders.py.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/rte6_package_deploy.py build -- unresolved=['handler.py','checkpoint.py'] for irpt-status and unresolved=['gate.py','firm_destination_policy.json','firm_registry.json','settings.json'] for irpt-ycharts-generate, before the fallback extraction roots were added",
+        "this cell, this run: `.tools/aws lambda get-function --function-name irpt-status` zip listing includes checkpoint.py and handler.py; `--function-name irpt-ycharts-generate` zip listing includes gate.py, firm_destination_policy.json, firm_registry.json, settings.json",
+        "row IRPT_BCKEND-W1-S20 (this project, prior cell IB-rtd-8): the SAME class for irpt-holdings's served.py/loaders.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to repair permanently (a source-tree fix for ops/ and ycharts/generate/ is scope this order's BOUNDS do not authorize -- 'the ONLY code touched: the entry points' Enforcer/Entry construction, _ids/ projection ... and their tests'). This cell's own packaging script documents the fallback extraction roots it used, cited by path, so a later cell repairing the tree can see exactly which six files and where they came from."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S27",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-18T21:20:00Z",
+    "one_line": "R56-AC1 arm (d) does not pass: the SAME real request (advisor abby_horton / 49financial) still reads code=UNPROJECTED_GRANT after every entry point is wired and the seam is deployed, because infra/aws/lambda/investor-reporting/_authz/enforce.py's OWN, unedited refusal policy refuses the WHOLE grant if ANY ownership id fails to project -- and the best-available identity bridge (row W1-S25) resolves 21 of abby_horton's 43 accounts (79 percent firm-wide), not all of them.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "IRPT_BCKEND.TO-IB-rte-6 R56-AC1(d): \"the live request no longer reads UNPROJECTED_GRANT and names k permitted accounts ... the token prints only when every arm holds.\"",
+    "world_is": "battery_ib_rte_6.py arm_d_live_route, this run, against the DEPLOYED, VERIFIED bytes with the real directory and ownership map: resolve_now(abby_horton/49financial) still returns Refusal(code=UNPROJECTED_GRANT). Cause, read from infra/aws/lambda/investor-reporting/_authz/enforce.py:276-289 (unedited by this order): `_scope.advisor_grant` projects each of the 43 raw ids; the 21 the seam resolves become issued acc_+24hex ids, the 22 it cannot resolve are returned RAW (row W1-S25's own design, so `_scope.unmatched_reasons` classifies them UNPROJECTED-ID rather than falsely NOT-IN-DIRECTORY); `resolve_now` then refuses on `if unprojected:` BEFORE checking whether `permitted_account_set` is non-empty -- ANY unprojected id refuses the WHOLE grant, regardless of how many other ids in the SAME grant did resolve. This is the estate's own documented safety direction (enforce.py's module docstring: \"the viewer HAS a grant this system cannot see; refusing rather than serving the empty result\"), not a defect this cell introduced, and it is out of this order's BOUNDS to change (arm (a)/(b) scope entry points and _ids/ only). Full resolution (100 percent of the ownership map) is the only way arm (d) passes for abby_horton as named, and row W1-S25 measured the best available identity bridge at 79 percent -- closing this gap needs either the ownership-map PRODUCER re-keyed to the canonical Schwab spine it already declares as its own eventual cutover (data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py's \"V8 class\" divergence note), which is outside this order's bound (\"no ownership-map write ... a producer outside this project\"), or a CTO ruling on the enforce.py refusal policy itself.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rte_6.py arm_d_live_route, this run: {\"post_fix_code\": \"UNPROJECTED_GRANT\", \"post_fix_permitted_count\": 0, \"post_fix_served\": false, \"pre_fix_negative_control_code\": \"UNPROJECTED_GRANT\"} -- run against the LIVE deployed directory/ownership artifacts through the same construction served.Entry.enforcer_for now performs",
+        "infra/aws/lambda/investor-reporting/_authz/enforce.py:276-289 (the `if unprojected:` refusal, unedited by this order)",
+        "battery_ib_rte_6.py arm_b_join_rates, this run: abby_horton_resolved_via_seam=21 of abby_horton_denominator=43"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "R56-AC1 is graded FAIL on this arm in the proof-of-spec instance; the order stays open per its own proof_of_spec contract. R56-AC2's judgment record states this finding in full for 3.0.0_SA_CVO and 1.0.0_SA_CTO -- whether the CTO's ruling on row W1-S25 changes this, and whether producer re-keying (alternative b) is now the load-bearing next cell, is the CTO's call."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S28",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T04:10:00Z",
+    "one_line": "CONSUMER OBLIGATION (IB-rtf-2 arm (c), CTO ruling @61627f39f9 condition 2): the served response envelope now carries a top-level, non-optional `unprojected_grant` field ({count, denominator, kinds}) on every scoped route through infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (7 of 7 entry.py -- directory, export, holdings, narrative, ops, performance, ycharts/generate -- import the shared served boundary and share its ONE call site). IRPT_FNTEND owes: render a VISIBLE partial indicator whenever unprojected_grant.count > 0, so that the day someone asks 'was the partial ever actually shown?' the answer is an artifact and not a recollection.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CTO ruling @61627f39f9 condition 2, carried verbatim on IRPT_BCKEND.TO-IB-rtf-2: \"A CONSUMER OBLIGATION IS FILED AGAINST IRPT_FNTEND IN THE SAME ROUND THE FIELD SHIPS ... a named, owned row\", and the ruling's own rendering test: render a visible partial indicator whenever count is greater than zero so the answer to 'was the partial ever actually shown?' is an artifact and not a recollection.",
+    "world_is": "This cell (IB-rtf-2) shipped the field this round -- infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (present-at-zero, non-optional), fed from infra/aws/lambda/investor-reporting/_authz/enforce.py's Enforcer.serve/submit_job/consume_job census -- and IRPT_FNTEND has not rendered anything against it yet: no consumer-side row, PRD clause or component visible from this worker's lane discharges the obligation. Filed BEFORE this cell's deploy per the ruling's condition 2, so the gap is a named, owned row rather than a fact a later reader would have to reconstruct.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (this cell's edit, this run) -- the field, present-at-zero, non-optional, docstring citing @61627f39f9",
+        "infra/aws/lambda/investor-reporting/_authz/tests/test_enforce.py test_a_partial_unprojected_grant_is_served_with_the_gap_disclosed / test_a_zero_unprojected_grant_is_served_with_count_zero_present, this run: 31 of 31 passed",
+        "comp-find 'import served' infra/aws/lambda/investor-reporting, this run: DENOMINATOR 10 hit(s), 7 SURFACED (directory, export, holdings, narrative, ops, performance, ycharts/generate entry.py) + 3 TEST; comp-find 'response_envelope\\(' infra/aws/lambda/investor-reporting, this run: DENOMINATOR 3 hit(s), 1 DEF (served.py:282) + 1 SURFACED call site (served.py:683) + 1 TEST -- the field reaches every route through the ONE shared construction"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "This is the obligation the ruling requires filed, not a defect in this cell's own work. Disarm is the CTO's: routing this to IRPT_FNTEND's L4 (the same route the per-firm as-of consequence took, per the cell text) and closing it once IRPT_FNTEND renders the visible partial indicator. IRPT_BCKEND cannot disarm a consumer-side obligation on IRPT_FNTEND's own tree."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S46",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-19T04:35:00Z",
+    "one_line": "IB-rtf-4 arm (a): the builder's own `targets` self-report names 10 canonical generated targets; at HEAD (958d6a8e94) ALL 10 carried a stale registry-hash stamp, and only 2 of the 10 (.tools/ds-precommit-check.py, infra/aws/terraform/modules/opal_name/generated_locals.tf) are in this order's <paths> grant -- the other 8 (data/firm_registry.json, infra/aws/lambda-edge/_shared/firm-config.mjs, data/assets/scripts/gold/investor_reporting/directory_runner.py and holdings_snapshot.py, infra/aws/lambda/investor-reporting/_authz/loaders.py, data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py, infra/aws/terraform/modules/opal_name/tests/vectors.json and opal_name.tftest.hcl) are named here, per this order's own BOUNDS ('a stale target OUTSIDE this order's <paths> is a BLOCKING row naming its lane, never an edit'), and NOT regenerated.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: `python lib/opal_naming.py targets` lists 10 canonical targets; a full-tree unscoped sweep for the `GENERATED by lib/opal_naming.py from infra/logic/registry@<hash>` stamp cross-checked against that list found all 10 present and all 10 stamped with a hash differing from a fresh `generate --out <tmp> --target <path>` re-derivation at the same HEAD",
+        "battery_ib_rtf_4.py arm_a_census, this run: printed table, `[IN-GRANT]`/`[OUT-OF-GRANT]` tagged per file, in IB-rtf-4_R61-AC1_battery_output.txt lines 29-40 of this run",
+        "ad-hoc check (this worker, not part of the committed battery): for each of the 8 out-of-grant targets, `generate --out .scratch/out_of_grant_check --target <path>` then a CRLF-normalized, stamp-masked comparison against the live file found ZERO functional content drift for all 8 -- the registry delta since their last regen (bucket_provisioned/bucket_managed_by) happens not to change what they render; a naive byte `diff -q` before normalizing line endings falsely read all 8 as 'real content diff' because these files (unlike the two .gitattributes-pinned eol=lf in-grant targets) checkout CRLF on this autocrlf=true box while the committed blob and any freshly-written-by-python file are LF (CLAUDE.md's cataloged 'fresh worktree renders a hash-pinned text asset CRLF' trap, reproduced here)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "IB-rtf-4 bound: 'ONLY files listed in <paths> change ... A target the census finds outside the grant is a BLOCKING row.'",
+    "world_is": "8 of 10 canonical generated targets remain stamp-stale after this order (only the 2 in-grant targets were regenerated). Measured stamp-only staleness today (no functional drift), which is a present-tense fact, not a guarantee against a future registry edit that DOES change one of these 8.",
+    "notes": "Not this cell's to fix: regenerating any of the 8 needs its own path granted by a future order. INERT because the drift measured today is stamp-only; re-run the same masked comparison after any future registry edit before assuming that still holds."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S47",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-19T04:35:00Z",
+    "one_line": "IB-rtf-4 arm (d)/R61-AC1: `terraform fmt -check -diff` on the regenerated infra/aws/terraform/modules/opal_name/generated_locals.tf is NOT clean (rc=3, map-literal `=` alignment only) -- and this is PRE-EXISTING in the generator's own HCL rendering, not introduced by this order's registry-hash-only regen: the IDENTICAL check against the git-blob-pinned pre-regen file (958d6a8e94:infra/aws/terraform/modules/opal_name/generated_locals.tf, blob 6199adb8ec7e0d55ae88bfaf42a1441bfb83b85f) fails identically (rc=3, same alignment diff). Fixing it needs a lib/opal_naming.py rendering-function edit, which this order's BOUNDS forbid (registry/generator owner's to fix, Rule 30). Because the acceptance criterion's token prints only when EVERY arm holds, R61-AC1 grades FAIL by output on this one sub-bullet alone -- every other arm (a)/(b)/(c)/(e) and the rest of (d) (validate clean, plan byte-identical old vs new, 0 destroy beyond the recorded taint) HOLD.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtf_4.py arm_d_terraform, this run: `.tools/terraform.exe fmt -check -diff infra/aws/terraform/modules/opal_name/generated_locals.tf` rc=3, and the SAME command against a scratch copy of the blob-pinned pre-regen file (before this order's edit) also rc=3, byte-for-byte the same alignment-only diff shape (both printed in IB-rtf-4_R61-AC1_battery_output.txt)",
+        "`.tools/terraform.exe validate` rc=0 clean on the live (post-regen) root, and a `-refresh=false` plan on infra/aws/terraform/shared-infra reads `4 to add, 0 to change, 4 to destroy` IDENTICALLY whether the live post-regen file or the pre-regen blob is in place -- the fmt gap has zero effect on plan/apply semantics",
+        "infra/logic/registry/ and lib/opal_naming.py are outside this order's <paths> grant; no edit made to either"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "R61-AC1 (d): 'fmt/validate clean and the -refresh=false plan reading only policy-document changes, 0 to destroy beyond the recorded taint.'",
+    "world_is": "validate is clean and the plan bound is met exactly; fmt is not clean, and was never clean for this specific generated file at any measured registry state -- a generator-output gap the criterion's literal wording did not anticipate as a standing condition.",
+    "notes": "Routed to 1.0.0_SA_CTO as the registry/generator's L4-level owner: either the generator's HCL-rendering function should post-process through terraform fmt (or emit already-aligned literals), or this criterion's fmt bar should be scoped to files this order is authorized to fix. Not this cell's to widen or to silently pass."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S39",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T02:10:00Z",
+    "one_line": "The population moved wider than this order's own face names at the cut: a fresh census (live Code.Location, not the S3 artifact bucket) found 10 declared+served members across 3 functions (ids.py on irpt-performance-adapter/irpt-narrative/irpt-holdings; data/custodian_key_seam.json on all 7 non-intake-poller, non-directory-refresh functions) with NO staged_from declaration at all -- a NEW class introduced by IB-rte-6's manual deploy (row W1-S25's own seam wiring) after IB-rte-4's 147-member census was taken, never previously rowed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: baseline `bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting` on the unmodified (pre-this-order) manifest failed 8 of 9 functions, naming exactly these 10 members as `ERROR: File not found` (e.g. `infra/aws/lambda/investor-reporting/performance/ids.py`, `infra/aws/lambda/investor-reporting/ops/data/custodian_key_seam.json`).",
+        "this cell, this run: both canonical sources ARE tracked at HEAD (`infra/aws/lambda/investor-reporting/_ids/ids.py`, `infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json`) and their content is byte-identical to the LIVE DEPLOYED Lambda's own served bytes for every affected function (battery_ib_rtf_1.py part (a)/(b): 10 of 10 `DIFF: byte-identical`, fetched via `aws lambda get-function --query Code.Location`, never the S3 build-artifact bucket).",
+        "this order's own remedy commit declares all 10 via `staged_from` (pin c28c728a309ab0d83b2831c2972179791a2985fb, the branch's own cut commit -- content-identical to the exact last-touch commits 47f21dab95c28eec2476e9e5a30a9ebcc7efc78d for both files); battery_ib_rtf_1.py's mutant control removes them in a scratch-only manifest and the build fails with the exact same `File not found` lines, then succeeds again with the real manifest."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtf-1 face, THE POPULATION: 'Known at the cut: (i)...(iv)' names only the two no-source members and the W1-S26 six -- not this class; and 'a member the census finds that this list does not name is IN the population and a row.'",
+    "world_is": "IB-rte-6 (round 5, worker ~1) wired a NEW shared frontier (`_ids/data/custodian_key_seam.json`, per row W1-S25) into 7 of 9 functions' `files[]` and updated 3 functions' `files[]` to also need `_ids/ids.py`, but its own deploy used a manual packaging script (`rte6_package_deploy.py`), not `build-and-upload.sh`'s declarative `staged_from` mechanism -- so the LIVE served bytes already carry both files correctly, while the DECLARATIVE map never learned where they come from. This order's own re-run of IB-rte-4's census (at the CURRENT served bytes, per the face's own instruction that 'the population may have moved') is what surfaced it.",
+    "notes": "Disarmed same-turn: this order's own remedy commit (infra/aws/lambda/ci/lambda-source-map.json) adds all 10 staged_from declarations, verified by battery_ib_rtf_1.py's real build (arm b/d) and the mutant control (arm d) in the same run this row cites. No further action owed on this specific finding; filed per the population-subtraction bound so the face's own known-at-the-cut list is not silently treated as exhaustive."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S40",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T02:10:00Z",
+    "one_line": "18 EXISTING staged_from declarations across 7 functions (served.py x7, loaders.py x7, ids.py x4) were STALE: each pin resolved to content that no longer matches the LIVE DEPLOYED Lambda's own served bytes for that member, because the shared frontier files (_authz/served.py, _authz/loaders.py, _ids/ids.py) were edited AFTER the pin was set (by IB-rte-6's own projection-seam wiring, row W1-S25) and the declaration was never repointed -- a rebuild from the unmodified manifest would have silently SHIPPED THE OLD CONTENT, regressing a live function's behaviour without any build error.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: for each of the 18 members, the declared pin's blob content was self-consistent with its own declared sha256 (so `build-and-upload.sh` would stage it without error), but did NOT match the served member's sha256 read fresh from `aws lambda get-function --query Code.Location`; the CURRENT HEAD content of the SAME repo_path DID match the served bytes exactly (e.g. `_ids/ids.py`: declared pin 6e764ef0aa -> sha256 fc1017b2..., served/HEAD sha256 f1659861... -- different files, 19296 bytes each).",
+        "this cell, this run: `git log -1 --format=%H -- infra/aws/lambda/investor-reporting/_authz/served.py` -> 47f21dab95c28eec2476e9e5a30a9ebcc7efc78d; `-- .../_authz/loaders.py` -> 39cbad421487e8bcecd1bc61c48775dd19c55b96; `-- .../_ids/ids.py` -> 47f21dab95c28eec2476e9e5a30a9ebcc7efc78d -- all THREE post-date the stale pins (28ccac62c9/43560851/6e764ef0aa respectively), consistent with an edit after the original rte-4 declaration that nobody repointed.",
+        "battery_ib_rtf_1.py this run: all 18 classified TRACKED-ELSEWHERE-STALE-PIN, `DIFF: byte-identical (0 of N bytes differ)` against the CURRENT HEAD content once compared against the correct (not the stale-pinned) canonical; this order's remedy commit repoints all 18 to c28c728a309ab0d83b2831c2972179791a2985fb (content-identical to the exact last-touch commits above), and the mutant control (removing all 4 shared-frontier members per affected function) fails with the expected `File not found` lines, then the real manifest succeeds with none of those lines present."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtf-1 face, THE POPULATION: 'take every member NOT classed TRACKED-AT-PATH-EQUAL or declared through a VERIFIED staged_from' -- an entry whose pin content does not match the served bytes is not verified, and 'a member the census finds that this list does not name is IN the population and a row.'",
+    "world_is": "No function actually shipped stale content THIS turn (no deploy occurred and the served bytes were never touched), so this is a LATENT hazard rather than a realized one: the NEXT time someone ran `build-and-upload.sh` on the unmodified manifest and deployed the result, served.py/loaders.py/ids.py would have silently reverted to their pre-IB-rte-6 content on 7 functions, with the build reporting success throughout (self-consistent pin, no error). Caught here because this order's own census compares the pin's content against the LIVE served bytes, not merely against its own declared sha256.",
+    "notes": "Disarmed same-turn: this order's own remedy commit repoints all 18 entries to the branch's cut commit (content-verified equal to the exact last-touch commit for each of the three shared files), verified by battery_ib_rtf_1.py's real build and mutant control in the same run this row cites. Flagged for R58-AC2 (the CVO's judgment record) as a pattern worth a standing check (a stale-pin detector), since nothing in build-and-upload.sh's own success path currently distinguishes a self-consistent-but-stale pin from a genuinely correct one."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S41",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T05:45:00Z",
+    "one_line": "irpt-directory-search was redeployed at 2026-09-19T05:29:38Z -- 29 seconds before this order's own final graded battery run started -- by a SIBLING worker's in-flight commit (0.9.0_WK_IRPT_BCKEND~1, cell IB-rtf-2, commit b3a148044fa5699073e110126d0e6fc7d6b4fed5, editing the SAME shared _authz/enforce.py and _authz/served.py this order's own cell also declares from), moving this order's own population mid-run: an EARLIER run of this order's battery (minutes before) read enforce.py/served.py for this one function as resolvable; the FINAL graded run reads them TRACKED-ELSEWHERE-MISMATCH (canonical named, content differs -- NOT canonical-absent) because the sibling's edited content is not yet reachable from this branch's HEAD.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this cell, this run: `aws lambda get-function --function-name irpt-directory-search --query Configuration.[LastModified,CodeSha256]` -> `2026-09-19T05:29:38.000+0000  aQxATFkcdtEBvs+v/zztQBOPcbR9XH9Lzjm9kUOmhmU=`; this order's own final battery run's own printed timestamp: `run at 2026-09-19T05:30:07.463272+00:00` -- 29 seconds later.",
+        "this cell, this run: two consecutive runs of the SAME unmodified `battery_ib_rtf_1.py` against the SAME branch HEAD produced DIFFERENT census results for `irpt-directory-search` ONLY -- the earlier run (this order's own third attempt, prior to the lint-only final revision) read `enforce.py`/`served.py`/`data/custodian_key_seam.json` as resolvable (TRACKED-ELSEWHERE-VERIFIED / TRACKED-ELSEWHERE-STALE-PIN / TRACKED-ELSEWHERE-DISCOVERABLE, all byte-identical), the FINAL run (identical battery logic, no manifest edit to those entries in between) read the same three as UNRESOLVED / CANONICAL-ABSENT -- a result that cannot change without an external cause, since this battery never touches the live Lambda's deployed code itself.",
+        "this cell, this run, out-of-band (NOT part of the graded battery): `git rev-list --objects --all` finds the exact served `enforce.py`/`served.py` bytes (oids `79c9d9dee1b44ce3d40466466c37a95d452c88db` / `fd8b189e5c5f4dd39525fa7368c48cf9bb9240bf`) at `infra/aws/lambda/investor-reporting/_authz/enforce.py` / `.../served.py`; walking every commit touching that path (`git log --all --format=%H -- <path>` then `git rev-parse <commit>:<path>` per commit) finds the match at `b3a148044fa5699073e110126d0e6fc7d6b4fed5`, whose own subject line names `IRPT_BCKEND.TO-IB-rtf-2 first pass, 0.9.0_WK_IRPT_BCKEND~1` -- a SIBLING worker's own branch, reachable in the shared object database (worktrees share one `.git` object store) but not on THIS branch's `HEAD` (`c28c728a309ab0d83b2831c2972179791a2985fb`)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO IB-rtf-1 face BOUNDS: 'the served functions are not redeployed' (by THIS order) and 'a member the census finds that this list does not name is IN the population and a row' -- this row is the second, not the first.",
+    "world_is": "This order never redeployed irpt-directory-search and never touched _authz/enforce.py or _authz/served.py's content. A SIBLING cell in the SAME round (IB-rtf-2, worker ~1), working the SAME shared pipeline concurrently, edited and (by some path -- a real build+upload to the SHARED S3 artifact bucket at minimum, and this function's LastModified timestamp is consistent with an actual redeploy) shipped a new enforce.py/served.py to a function THIS order's own cell also declares staged_from entries for. Rule 27's 'ONE ISSUANCE... a WORKSTREAM IS A SCOPE' and the seating discipline around disjoint write surfaces do not, on their own text, cover two DIFFERENT cells of the SAME issuance both holding legitimate, overlapping write access to the SAME shared _authz frontier and the SAME pipeline's live functions -- this is exactly that overlap, measured mid-flight rather than argued in the abstract.",
+    "notes": "Not this order's to fix: the correct remedy is SEQUENCING (IB-rtf-2 merges, this project's manifest is next re-declared against the merged HEAD, and irpt-directory-search's enforce.py/served.py re-resolve to TRACKED-ELSEWHERE-VERIFIED with no further action), which is the issuer's call, not a worker's. This order's own battery correctly reflects its OWN measurement at its OWN run time (rc=0, token printed, 3 of 32 population members packeted including these two) and is NOT re-run again chasing a moving target -- CLAUDE.md Rule 2's speed governor: a further re-run here would not change what this order does (it cannot merge a sibling's branch), only which timestamp its snapshot carries. The THIRD member on this function, data/custodian_key_seam.json, remains genuinely unresolved even under the out-of-band check (its oid is absent from the shared object graph) and is not explained by this same cause."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S29",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T05:45:22Z",
+    "one_line": "irpt-holdings packages its OWN diverged local infra/aws/lambda/investor-reporting/holdings/enforce.py, not the shared _authz/enforce.py this cell inverted -- the build tool's source_dir-first resolution ships the stale copy, so irpt-holdings gets NEITHER the refusal-order inversion NOR a real unprojected_grant disclosure (it always reads the present-at-zero default).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "The packet (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/NEVER_WIDEN_SIGNOFF_PACKET_IB-rtf-2.md, signed by both never-widen halves) states N=7 keys are 'every function that packages _authz/enforce.py and _authz/served.py' and describes the blast radius uniformly across all 7: 'SERVED where the OLD code refused (the row W1-S27 case) ... is now SERVED the matched subset instead of refused whole' -- one behavior, all 7 keys, no exception named for irpt-holdings.",
+    "world_is": "infra/aws/lambda/investor-reporting/holdings/enforce.py (635 lines, unmodified this pass, at 52eb7f9a996d2aa490d546bcdd85b54c23013356) is a SEPARATE COPY of the Enforcer with the PRE-FIX order still live -- its own comment reads 'AN UNPROJECTED GRANT IS A REFUSAL, NOT AN EMPTY ANSWER' and its resolve_now checks a bare 'if unprojected: return None, Refusal(UNPROJECTED_GRANT, ...)' BEFORE the empty-permitted-set check, exactly the row-W1-S27 defect this order exists to fix -- and it never sets census['unprojected_grant'] anywhere in Served/reauthorize outcomes. org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/rte6_package_deploy.py's resolve() checks source_dir BEFORE any SHARED_ROOTS entry, so building irpt-holdings's zip this run packages the STALE copy (build output shows 'enforce.py <- source_dir' for irpt-holdings vs 'enforce.py <- infra/aws/lambda/investor-reporting/_authz' for irpt-directory-search); _authz/served.py's response_envelope() then falls back to its present-at-zero default (outcome.census.get('unprojected_grant') is None) for every irpt-holdings response, so a real partial grant on that route would still silently read a full refusal AND, if ever served, would report a false unprojected_grant.count=0. This order's own required live-route proof (arm (e)) exercises the directory-search operation through _authz/enforce.py (confirmed correctly resolved from _authz for irpt-directory-search's build), so R59-AC1's own acceptance is unaffected by this gap; the packet's blast-radius description is inaccurate for the irpt-holdings key specifically.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/holdings/enforce.py:41-45 vs infra/aws/lambda/investor-reporting/_authz/enforce.py:41-54 @52eb7f9a99 (diff, this run): holdings' own copy states the PRE-FIX order verbatim ('AN UNPROJECTED GRANT IS A REFUSAL, NOT AN EMPTY ANSWER'), never the CTO ruling's inversion",
+        "infra/aws/lambda/investor-reporting/holdings/enforce.py:276-293 @52eb7f9a99: the unprojected-grant refusal runs BEFORE the empty-permitted-set check -- the pre-fix order",
+        "infra/aws/lambda/investor-reporting/holdings/entry.py:62 @52eb7f9a99: imports served as _entry -- the shared served.py boundary is used, but served.py's own import of enforce (_authz/served.py:67) resolves, inside the built zip, to whichever enforce.py the packager placed at the zip root",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/rte6_package_deploy.py resolve() (this run): source_dir checked before SHARED_ROOTS -- build output for irpt-holdings this run shows 'enforce.py <- source_dir' while irpt-directory-search shows 'enforce.py <- infra/aws/lambda/investor-reporting/_authz'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this cell's to fix: BOUNDS restrict touched code to _authz/enforce.py's refusal order, the envelope/contract, entry points and their tests -- holdings/enforce.py is a separately-forked file (history: commit ebf5eae0c8, IB-rtd-8 'irpt-bckend-rtd8-holdings-advisor-fix -- rebuild+redeploy irpt-holdings for the re-staged holdings/enforce.py') outside this order's grant to edit. Routed to 1.0.0_SA_CTO as the ruling's owner: either fold holdings/enforce.py back onto the shared _authz module or apply the same inversion+disclosure fix to its own fork in a future cell. irpt-holdings was still deployed this pass (it is one of the packet's signed N=7 keys and its zip DID change hash from shared _ids/_keys/_authz/served.py updates), so its CodeSha256 now matches the built artifact even though its enforce.py logic is unchanged."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S30",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T05:58:00Z",
+    "one_line": "The live abby_horton/49financial numbers measured this pass (k=21, unprojected count=12, denominator=33) differ from the packet's/order's expected 21/22-of-43, because a CONCURRENT scheduled refresh (irpt-directory-refresh, another active process this window) re-wrote opal-data-bd's ownership_map.json between packet-write time and this arm's live read -- the self-consistency (k + count == denominator, k >= 1) that arm (e) actually grades still holds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "This order's packet (written 00:42-01:01Z, this cell's first pass) and arm (e)'s acceptance text state the expected live-proof outcome as 'k >= 1 permitted with count = 43 - k disclosed (row W1-S27's own numbers: k=21, count=22, measured by battery_ib_rte_6.py arm_b_join_rates, this project, prior cell)'.",
+    "world_is": "This run (second pass, ~05:5xZ) reads k=21 permitted and unprojected_grant={count:12, denominator:33} for abby_horton/49financial through the REAL served.Entry.enforcer_for('49financial') against the LIVE ownership map -- 33, not 43. org/critical_paths/.open_deploys/ and s3api list-object-versions both show opal-data-bd's platinum/49financial/ownership_map.json was overwritten at 2026-09-19T05:10:38Z (prior version 2026-09-19T00:09:01Z, the packet's own window), and irpt-directory-refresh.zip in the shared lambda-artifacts bucket shows continuous re-uploads across this same window (05:08:16Z latest at time of arm (d)'s plan) -- a DIFFERENT, concurrently-running cell's scheduled refresh, not this order's act, moved the underlying data. The RELATIONSHIP the acceptance criterion actually needs (k >= 1, count == denominator - k, cross-firm swap refused, pre-fix bytes reading UNPROJECTED_GRANT, inflection/cottonwood refused) holds exactly as measured this run; only the specific numeric constants (21/22/43) recorded at an earlier vintage no longer match current live state, consistent with the forward-looking-criterion bar (BOUNDS: 'no criterion... certifies what a future event WILL find... a prediction made before the event is not evidence').",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rtf_2.py arm_e_live_proof(), this run: post_fix_permitted_count=21, post_fix_unprojected_grant={count:12, denominator:33, kinds:{UNPROJECTED-ID:12}}, post_fix_count_plus_k_equals_denominator=true",
+        ".tools/aws s3api list-object-versions --bucket opal-data-bd --prefix platinum/49financial/ownership_map.json, this run: latest version nR.FkCE1frsI9R5zRp2wJWB7vyMZ04NK at 2026-09-19T05:10:38Z, prior wZ.0UnhQPokUfcud.W7MeajwqtY93Osx at 2026-09-19T00:09:01Z (the packet's own measurement window)",
+        ".tools/aws s3api get-object on that key, this run: advisors.abby_horton.accounts has 33 entries at the current version",
+        ".tools/aws s3api list-object-versions --bucket opal-313476888478-lambda-artifacts --prefix investor-reporting/irpt-directory-refresh.zip, this run (arm (d) planning window): latest version at 2026-09-19T05:08:16Z with 30+ versions across the prior 24h -- a separate, actively-running deploy cadence for a DIFFERENT function this order does not touch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not a defect in this cell's work: arm (e)'s pass condition is the SELF-CONSISTENT relationship (k>=1, count==denominator-k), never a hardcoded 43, and it holds. Recorded so a later reader comparing this run's numbers against the packet's '21/22 of 43' does not read the difference as a bug in the deploy."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S42",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T07:43:11Z",
+    "one_line": "irpt-holdings :: enforce.py has no staged_from entry at all (a local, tracked-at-path fork, W1-S29's known divergence) so this cell's census classes it PIN-STALE-SERVED-DIVERGED-FROM-HEAD against the SHARED _authz/enforce.py at HEAD and this order's remedy (a manifest re-pin) leaves it untouched by construction -- re-filed here as the SAME finding's own re-pin-cell classification, not a new fact.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "battery_ib_rtf_6.py part_a_census(), this run: irpt-holdings :: enforce.py has no staged_from entry (cfg['staged_from'] carries only data/custodian_key_seam.json, ids.py, loaders.py, served.py); files[] names enforce.py; classify() falls to the no-pin branch, comparing served (sha256 69808e783c...) against HEAD:infra/aws/lambda/investor-reporting/_authz/enforce.py (sha256 d1c8e7e094...) -- MISMATCH, so PIN-STALE-SERVED-DIVERGED-FROM-HEAD",
+        "git show HEAD:infra/aws/lambda/investor-reporting/holdings/enforce.py, this run: line 41 states 'AN UNPROJECTED GRANT IS A REFUSAL, NOT AN EMPTY ANSWER' and line 276 the bare pre-inversion check, exactly IRPT_BCKEND-W1-S29's own citation, re-verified unchanged at this HEAD (4ee8426c72bb6261f055a6cd31fe23e5ebf75ff5)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's BOUNDS (cell text (b)): 'A PIN-STALE-SERVED-DIVERGED-FROM-HEAD member ... is NOT re-pinned to the served bytes and NOT to HEAD's shared file ... it is classed, rowed ... and left for the CTO's ruling.'",
+    "world_is": "irpt-holdings :: enforce.py is classed PIN-STALE-SERVED-DIVERGED-FROM-HEAD by this run's census and is left untouched in infra/aws/lambda/ci/lambda-source-map.json -- no staged_from entry added, no pin written, no served bytes committed as source. The underlying fact is IRPT_BCKEND-W1-S29's, unchanged; this row exists because this order's own cell text names the classification and the row explicitly, and the channel is append-only.",
+    "notes": "Not this cell's to fix (BOUNDS). Routed to 1.0.0_SA_CTO alongside IRPT_BCKEND-W1-S29, which already carries the full grounding and the fold-vs-fix ruling question; see R63-AC2_judgment.md sub-question 3 for this order's own restatement."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S43",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T07:43:11Z",
+    "one_line": "build-and-upload.sh's own comment claims passing SHA256 to the JSON tool via environment variable is already MSYS-safe against the leading-'/' base64-to-Windows-path mangle it names for CLI args; measured this run, the SAME mangle hit the env-var path too for one value (irpt-performance-adapter's artifact_sha256, which happens to start '/C', triggering MSYS's single-letter drive heuristic) and was written into the real committed lambda-source-map.json before being caught and corrected this same commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/build-and-upload.sh:509-513 @4ee8426c72bb6261f055a6cd31fe23e5ebf75ff5: 'This script passes the sha via env var below, which is already MSYS-safe' -- the claim, verbatim",
+        "this run's own battery output (IB-rtf-6_R63-AC1_battery_output.txt, this commit): the build's own echo printed 'SHA256: /CB3B9irhRbHafBMdcPe6zQGxU1bkCZbGPBPpv8npSY=' (clean) for irpt-performance-adapter, and .tools/aws s3api head-object on the resulting S3 object (this run, out-of-band) confirmed the REAL uploaded object's content-sha256 metadata is the same clean value -- but infra/aws/lambda/ci/lambda-source-map.json (before this row's fix, in the same working tree) held 'C:/Program Files/Git/CB3B9irhRbHafBMdcPe6zQGxU1bkCZbGPBPpv8npSY=' for that function's artifact_sha256, written by TMPJS_UPDATE's SHA256 env-var hand-off to node from inside this battery's git-bash-resolver-spawned subprocess",
+        "this run, a full scan of the corrected manifest for any further 'C:\\\\'/'Program Files'-shaped string value: 0 found (py -3.12 walk over every string value in the parsed JSON)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "world_is": "The mangle is real and reproducible under a git-bash-resolver-spawned nested bash (this battery's own _bash() helper, matching IB-rtf-1's own pattern) invoking build-and-upload.sh, at least for a base64 value whose first two characters are '/' + an uppercase letter (MSYS's drive-letter heuristic). No other member's sha256 this run began that way, so no other field was hit, but the exposure is general to any future value with that shape and is not guarded by the script's own base64-format check (build-and-upload.sh:514-517), which validates the SHA256 value in BASH -- before the env-var hand-off to node where the mangle actually occurs -- and so cannot see it.",
+    "spec_asserts": "BOUNDS: 'the packager script is read, never edited (its class is R63-AC2's).' This row's remedy (a script fix, or a documented caveat correcting the false 'already MSYS-safe' claim) is therefore explicitly out of this cell's reach; only the DATA (lambda-source-map.json's corrupted field, this order's one writable file) was corrected here.",
+    "notes": "Corrected in this same commit by writing back the value read from the real S3 object's own metadata (never fabricated) into the one field BOUNDS permits this order to touch. Routed to 2.0.0_SA_COO~B to route a script-side fix or comment correction; R63-AC2's own judgment record notes the two-mechanism question this same trap sits inside."
+  },
+  {
+    "id": "IRPT_BCKEND-W4-S44",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+    "surfaced_at": "2026-09-19T07:43:11Z",
+    "one_line": "This order's own BOUNDS ask for this row's append to use LF line endings; the investigation file's own first json fence (and the whole file) is CRLF throughout (5973 of 5974 lines checked, this run) -- this append matches the file's OWN prevailing convention (CRLF) instead, to avoid a mixed-EOL corruption on an append-only shared channel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "This order's BOUNDS (surprise row instructions): 'inside the fenced json array, LF line endings, UTF-8 written explicitly'.",
+    "world_is": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md is CRLF end-to-end (measured this run: splitting the whole file on CRLF vs LF shows 5973 of 5974 lines in the first fence's own span carry a preceding CR byte). Writing this append as pure LF would introduce a mixed-EOL file with no clear boundary; writing it as CRLF (matching every neighbouring row) is the lower-risk choice given Rule 14b's append-only-shared-file guidance (never isolate, take the shared convention) and is what this commit does for all three new rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "py -3.12 count, this run: splitting the file on CRLF yields 6171 segments; checking the first 5974 lines individually shows 5973 of 5974 carrying a preceding CR byte"
+      ]
+    },
+    "notes": "Formatting-only; no future harm named, so hazard_standing is INERT with no disarm_owner."
+  },
+  {
+    "id": "IRPT_BCKEND-S83",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:05:00Z",
+    "one_line": "The row-id form the IB-rtf-7 face mints for this seat, IRPT_BCKEND-A-S<k>, is refused by both the row schema and the row gate; this seat's rows are filed in the seat form IRPT_BCKEND-S<k> instead, numbered above CLOUD's highest (S82) because the worktree's copy stops at S80.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-7.step-4-attempted-by-every-credential-the-seat-holds.md, BOUNDS 'Surprises' bullet @4ee8426c72) says: id IRPT_BCKEND-A-S<k> with k continuing that coordinate's numbering (read the file's highest A-S<k> first).",
+    "world_is": "No A coordinate exists in the grammar. .tools/surprise-row-gate.py:104 @4ee8426c72 ID_RE admits only (Z-)?(W<n>-|C-)?S<k>, and org/surprise_channel/schemas/investigation_item.schema.json:18 @4ee8426c72 carries the same pattern, so an A-S<k> id is refused at commit. The channel holds 0 A-S rows at 4ee8426c72 and 0 at CLOUD ccbf4ac3cb. A seat's row carries no coordinate, so this seat files S83-S85. The worktree copy's highest seat id is S80; CLOUD ccbf4ac3cb already holds S81 and S82. Numbering continues above CLOUD's max, and the seat allocator can still collide with a concurrent minter until the drain.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/surprise-row-gate.py:104 @4ee8426c72: ID_RE = ^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$",
+        "org/surprise_channel/schemas/investigation_item.schema.json:18 @4ee8426c72: pattern ^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$",
+        "git show CLOUD:<channel> @ccbf4ac3cb, this session: highest seat id IRPT_BCKEND-S82, 0 IRPT_BCKEND-A-S ids"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer (2.0.0_SA_COO~B) either admits an A coordinate in the grammar (the schema's and the gate's owners' act) or cuts future AE-lane faces with the seat form."
+  },
+  {
+    "id": "IRPT_BCKEND-S84",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:05:00Z",
+    "one_line": "Arm (a)'s identity enumeration invocation, `aws configure list-profiles`, does not exist on this box's AWS CLI (v1.44.44), which rejects it with rc 2. The issuer's nudge then fixed the identity read to `sts get-caller-identity` alone, N = 1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-7.step-4-attempted-by-every-credential-the-seat-holds.md, THE CELL arm (a) @4ee8426c72) names `aws configure list-profiles` (through .tools/aws) as the enumeration of the identities the seat holds.",
+    "world_is": "`.tools/aws configure list-profiles` ran at ~07:5xZ 2026-09-19 and returned rc 2 with 'aws: error: argument subcommand: Invalid choice, valid choices are: list | get | set | add-model'. list-profiles is a CLI v2 subcommand, and the estate runs aws-cli/1.44.44. The issuer's nudge (2.0.0_SA_COO~B, this session) then fixed the command set to sts get-caller-identity plus delete-bucket-policy per bucket, with no `configure list` and no credential-file read. The battery's identity set is therefore the ambient default chain: N = 1, arn:aws:iam::313476888478:user/Andrew_Berman. Disclosed: before the nudge arrived, this seat ran `aws configure list` (key columns masked in output) and read only the section-header lines of ~/.aws/config and ~/.aws/credentials, which printed one [default] profile each and no values.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`.tools/aws --version`, this session: aws-cli/1.44.44 Python/3.12.10 Windows/10.0.26100 botocore/1.43.0",
+        "`.tools/aws configure list-profiles`, this session: rc 2, 'Invalid choice' naming list/get/set/add-model",
+        "IB-rtf-7_R64-AC1_battery_output.txt (this branch): identities enumerated: N = 1 -> arn:aws:iam::313476888478:user/Andrew_Berman"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-S85",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:05:00Z",
+    "one_line": "The face asks for the ledger entry to close 'as NO-CHANGE', but .tools/deploy_ledger.py close has one terminal status, 'CLOSED -- nothing stranded'. NO-CHANGE is carried in each leg's proof text instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-7.step-4-attempted-by-every-credential-the-seat-holds.md, THE CELL arm (b) @4ee8426c72): on AccessDenied everywhere the ledger entry closes as NO-CHANGE with the 2N of 2N denials recorded.",
+    "world_is": "`.tools/deploy_ledger.py` cmd_close (:454-469 @4ee8426c72) writes status 'CLOSED -- nothing stranded' unconditionally once every leg carries proof, and it has no no-change close. Entry org/critical_paths/change_management/20260919T0800Z_irpt-bckend-ib-rtf-7-step4-bucket-policy_deploy_completion.md reads 'CLOSED -- nothing stranded' at 20260919T080222Z. Both leg proofs begin 'NO-CHANGE:' and record the identity ARN, rc 255 and 'AccessDenied ... with an explicit deny in a resource-based policy', so the 2 of 2 denials are on the entry.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/deploy_ledger.py:462 @4ee8426c72: state['status'] = 'CLOSED -- nothing stranded'",
+        "the change_management entry above, this branch: L1/L2 proof 'NO-CHANGE: ... rc 255 AccessDenied'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-S86",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T08:30:00Z",
+    "one_line": "STOP before any write: the signed keys K1 + K2 cannot produce the session both halves sign. The deployed auth-handler takes the token's advisorKey/advisorId only from opal-partner-<firm> (GetItem Key {email}), never from the opal-users-v2 row, and 0 of 11 opal-partner-49financial rows bind any login to abby_horton. K1 + K2 would therefore mint a 49financial session with NO advisor claim. Reaching the signed shape needs a partner-table row the packet does not name.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The packet (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/NEVER_WIDEN_SIGNOFF_PACKET_IB-rte-1.md, blob 3d9f57335b9893753973132ba5c4958b2622e24f, key table K1) shapes K1 as ONE opal-users-v2 item carrying 'advisorKey/advisorId = abby_horton', and both halves sign its radius as 'a token minted against K1 carries exactly abby_horton's already-live entitlement in 49financial -- no broader and no narrower -- because no new grant is minted anywhere' (CTO half s.1 @482b2c627e; COO half key table @a0f05dda0c). The face (org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-3.the-test-principal-exercised-on-the-disclosed-partial-path-and-deleted.md, THE CELL (b) @4ee8426c72) says to apply every key exactly as the packet names it.",
+    "world_is": "1) SERVED BYTES: the deployed opalinvest-auth-handler zip, downloaded and hashed at 08:28:40Z, has sha256(b64) h1tnQVRpRA52eWyfAia6CfBsJmn6xKwHa8IUC0zBSsQ=, equal to the live CodeSha256. Its dist/index.mjs builds the table name `opal-partner-${firm}` and reads it with GetItem Key {email}. Source: infra/aws/lambda/lib/partner/index.ts:21-37 @4ee8426c72 and infra/aws/opalinvest_dev/lambda/auth-handler/src/db.ts:29-54 @4ee8426c72. mintSession passes that result to generateAccessToken (auth.ts:202-216 @4ee8426c72), and the advisorKey/advisorId claims come only from it (jwt.ts:179-185 @4ee8426c72). 2) getUser()'s mapping of the opal-users-v2 row (db.ts:138-167 @6275297f0e) carries NO advisor field, so an advisorKey attribute written on K1 is never read. 3) opal-partner-49financial is keyed HASH=email, and a COUNT scan finds 0 of 11 rows with advisorKey = abby_horton. No login anywhere binds abby_horton today. 4) CONSEQUENCE: K1 (a new .test e-mail) + K2 mint firmId=49financial with no advisorKey/advisorId. On the IRPT scoped routes that principal classifies UNKNOWN, not FIRM_ADVISOR (_scope/resolve.py:193-196 @4ee8426c72), so none of FWD-1/2/5 can be exercised as abby_horton. On the older portal routes canAccessFirm admits it by firmId alone (lib/partner/index.ts:39-47 @4ee8426c72). That is an entitlement neither half signed. The signed shape needs an unnamed key: a partner-table row binding the test e-mail to advisorKey=abby_horton. That row would be the FIRST login binding for abby_horton anywhere, an identity-to-entitlement write, where the halves sign 'an authentication row; it adds no authorization'. CTO half s.1 @482b2c627e: a key the act discovers it needs is 'a STOP and a new packet, not a widening of this one'. NOTHING WAS WRITTEN: 0 of 2 keys applied, the principal's interval is EMPTY, no ledger entry was opened, no session was minted. Informational, and not the guard since no K1 exists: the live ownership map (VersionId nR.FkCE1frsI9R5zRp2wJWB7vyMZ04NK) carries abby_horton with 33 accounts / 18 relationships, against the packet's 43 / 18 (the move is already row W1-S30).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "IB-rtf-3_R60-AC1_battery_output.txt, run 2026-09-19T08:28:40Z at HEAD 6275297f0e: deployed zip sha256 EQUALS live CodeSha256; partner-table name builder + GetItem Key {email:..} present in dist/index.mjs",
+        "same run: opal-partner-49financial key schema [{AttributeName: email, KeyType: HASH}]; rows with advisorKey=abby_horton 0 of 11 scanned",
+        "infra/aws/opalinvest_dev/lambda/auth-handler/src/db.ts:138-167 @6275297f0e: getUser() return mapping, no advisor field",
+        "infra/aws/lambda/lib/partner/index.ts:21-47 @4ee8426c72: getPartnerProfile GetItem Key {email}; canAccessFirm by firmId alone",
+        "infra/aws/lambda/investor-reporting/_scope/resolve.py:193-196 @4ee8426c72: no advisorId claim -> principal class UNKNOWN"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Disarm: IB-rtf-3 stays open. The act needs a RE-CUT PACKET naming the partner-table key (with its own writer census and reader census of opal-partner-49financial, and its rollback) and both halves re-signed against the new blob, or a ruling that the four outcomes are exercised by some other principal. The CTO half s.1 routes the decision. Not this seat's to widen."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S31",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T09:05:00Z",
+    "one_line": "TO-IB-rtf-8 arm (d) requires the never-widen packet's blast-radius key to read irpt-holdings' PRIOR CodeSha256 LIVE, never from the manifest -- and read live (.tools/aws lambda get-function-configuration --function-name irpt-holdings), it disagrees with infra/aws/lambda/ci/lambda-source-map.json's own recorded irpt-holdings.artifact_sha256: live CodeSha256 is base64 oVv1pYw56N22WLxKUukuyqQBrhAIWXHzhK1vGDlMbKs=, the manifest's artifact_sha256 is base64 Bn7iLO/E/9CKYP0sz0YdneloZLHdldHkr/c3jWc25Xc= -- two different values for the same served property.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (reconcile which act moved the served bytes without updating the manifest's artifact_sha256, or correct the manifest field; this order's own packet used the LIVE read, so this pass is not exposed, but a future rollback/never-widen act that trusts the manifest's artifact_sha256 as ground truth instead of a live read would be)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "timeout 40 .tools/aws lambda get-function-configuration --function-name irpt-holdings --region us-east-1 --query \"{CodeSha256:CodeSha256,LastModified:LastModified}\" --output json, this run: {\"CodeSha256\": \"oVv1pYw56N22WLxKUukuyqQBrhAIWXHzhK1vGDlMbKs=\", \"LastModified\": \"2026-09-19T05:37:12.000+0000\"}",
+        "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-holdings.artifact_sha256 (this worktree's HEAD, ccbf4ac3cb, unedited by this order): \"Bn7iLO/E/9CKYP0sz0YdneloZLHdldHkr/c3jWc25Xc=\" -- read via py -3.12 json.load, this run"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rtf-8 arm (d): the packet's blast radius reads 'prior CodeSha256 read live'; CLAUDE.md's writers-census bound (Rule 5, never-widen sign-off) expects a named property's writers enumerated so a sign-off covers what actually moved it.",
+    "world_is": "The two values name the SAME property (irpt-holdings' served CodeSha256) and disagree; this order's own packet is unaffected because it reads the LIVE value directly rather than the manifest field, but the manifest's own artifact_sha256 is stale relative to what AWS actually serves, for a reason this cell did not investigate (out of BOUNDS: no other route's bytes are touched by this order, and the manifest's artifact_sha256 for irpt-holdings is left exactly as found).",
+    "notes": "Not this cell's to fix (BOUNDS: only the enforce.py member and its staged_from/prose are touched on this manifest entry). Routed to the CTO to reconcile the stale artifact_sha256 or name the deploy that moved served bytes without it."
+  },
+  {
+    "id": "IRPT_BCKEND-S87",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T09:07:00Z",
+    "one_line": "OFF-TASK EXPOSURE, not measured as an incident: the portal repo TRACKS two auth fixtures holding plaintext login credentials -- .frontend-dev/auth/credentials.json (e-mail + 12-character password for three smoke logins: internal_admin, firm_49financial, firm_49financial_alt) and .frontend-dev/auth/login-constitution.json (one more e-mail + 12-character password). Both came in with portal commit 03d719d4 (2026-06-08) and are on origin/DEV and origin/PROD (github.com/Opal-Capital/portal). Whether any password is live was NOT tested and must not be.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "Bound 6 of every IRPT order, and the estate's rule: no credential in any artifact, log, fixture or commit; secrets are read by NAME at runtime.",
+    "world_is": "The IB-rtf-9 reader census, an unscoped git grep over the portal repo at HEAD be8cf21874 for the partner-claim pattern, hit portal/.frontend-dev/auth/credentials.json. It is TRACKED (git ls-files --error-unmatch rc 0), and so is its sibling .frontend-dev/auth/login-constitution.json (keys _doc/url/email/password/success_url_substring/post_login_path/notes; password a 12-character string), which the table-name pattern hit in the same census. A key-and-length walk printed NO value: credentials/{internal_admin, firm_49financial, firm_49financial_alt}/{email, password, role, firmScope, reaches, use_for}, each password a 12-character string. It was added in portal commit 03d719d4 by 0.4.0_DE_ClientPlatform on 2026-06-08, and `git branch -r --contains 03d719d4` lists origin/DEV and origin/PROD among others. This is an EXPOSURE: a credential value sits in version control on a remote. Whether any password still authenticates, and whether anyone outside used it, were NOT measured. Measuring either needs a login attempt, which is out of this order's scope and is itself a credential use. It is also relevant to R66-AC2: a STANDING firm_49financial smoke login already exists, which bears on 'can a future round repeat this without a standing account'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C portal ls-files --error-unmatch .frontend-dev/auth/credentials.json -> tracked (portal HEAD be8cf21874, branch DEV)",
+        "key walk of that file (key names and value lengths only): three credentials entries each carrying email + password (str len 12)",
+        "git -C portal branch -r --contains 03d719d4 -> origin/DEV, origin/PROD, and three other remote branches; git remote: github.com/Opal-Capital/portal",
+        "git -C portal ls-files --error-unmatch .frontend-dev/auth/login-constitution.json -> tracked; key walk (names and lengths only): email + password (str len 12); added in the same commit 03d719d4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this seat's to fix, and not IRPT_BCKEND's: rotating the four passwords (opal-users-v2 rows), purging the file from the portal history, and deciding whether a smoke login may be standing are routed to 1.0.0_SA_CTO. No value was read into this session's output or any artifact."
+  },
+  {
+    "id": "IRPT_BCKEND-S88",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T09:15:00Z",
+    "one_line": "CORRECTION to this seat's own row S86, and to the IB-rtf-9 face that repeats it: the mechanism cited for 'a 49financial login with no partner row is admitted by firmId on the older portal routes' -- lib/partner/index.ts:39-47 (canAccessFirm) -- has 0 callers in production code. The admission is real by a different mechanism: the L0 tier.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Row IRPT_BCKEND-S86 (world_is item 4, committed @1771b07216) and the IRPT_BCKEND.TO-IB-rtf-9 face (THE CELL, first paragraph @dd95b034da) say: 'admitted by firmId alone on the older portal routes (lib/partner/index.ts:39-47)'.",
+    "world_is": "canAccessFirm is defined at infra/aws/lambda/lib/partner/index.ts:39-47 @b95c935160, and a Grep over infra/**/*.{ts,tsx,js,mjs,py} finds no call site: the only hit is the definition. The firm-level admission those sentences describe DOES exist, through a different chain. (1) The edge tier policy defines 'L0 -- any authenticated 49 Financial user (firm-aggregate data)' (infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs:9 @b95c935160); a principal with no advisorRole is level 0 (:65). (2) The API authorizer's allowedFirmIds is the principal's own firm for a non-admin, non-Dev, non-internal token (infra/aws/users/lambda/portal-authorizer/index.mjs:125-154 @b95c935160). (3) opal-partners-data checks the tier only for L1/L2 (infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py:1673-1680 @b95c935160). So the substance of S86's sentence stands and its citation does not. The IB-rtf-9 packet cites the real chain.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep canAccessFirm|can_access_firm over infra/**/*.{ts,tsx,js,mjs,py} @b95c935160: 1 hit, infra/aws/lambda/lib/partner/index.ts:39 (the definition)",
+        "infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs:9,55-67 @b95c935160: L0 = any authenticated firm user; unknown role = level 0",
+        "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py:1673-1680 @b95c935160: tier gate only for L1/L2"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No behaviour changes; the exposure 1.0.0_SA_CTO holds is unchanged in substance. Only the cited mechanism moves."
+  },
+  {
+    "id": "IRPT_BCKEND-S90",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T10:46:00Z",
+    "one_line": "MEASURED LIVE, first authenticated request ever sent through the real path: every FIRM_ADVISOR request on the deployed IRPT scoped routes is refused UNEXPECTED (state UNAVAILABLE, no firm_id) BEFORE the scope resolves. That covers 12 of 12 requests that passed the FIRM_BINDING check, across search, resolve, status, holdings and every foreign-id swap. The enforcer cannot be built for 49financial: the directory role cannot read the ownership map, and irpt-status and irpt-holdings carry no IRPT_DIRECTORY_BUCKET_MAP.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "IB-rtf-2 (DRAINED @4e6c6738c3, arm (e) PASS): 'abby_horton/49financial is SERVED (k=21 permitted, unprojected_grant count=12 of denominator=33)' through 'the REAL served.Entry.enforcer_for'. And the IB-rtf-3 face (arm (c)) expects FWD-1/2/5 exercised by real signed requests on the disclosed-partial path.",
+    "world_is": "A test principal minted by the real login (claims firmId=49financial, role=user, advisorId=abby_horton) sent real signed requests to https://opalinvest.dev at 10:25:58-10:26:09Z. Every one that passed served.py:614-616's FIRM_BINDING check came back as the boundary's pre-scope refusal (served.py:624-630 @9f72f4d6a4): public_reason_code UNEXPECTED, state UNAVAILABLE, no firm_id. That is the except-branch around enforcer_for(verified). CAUSES, per function. (1) irpt-directory-search (CodeSha256 aQxATFkc..., env IRPT_DIRECTORY_BUCKET_MAP {49financial: opal-data-bd}): iam simulate-principal-policy for role irpt-directory-role, s3:GetObject on opal-data-bd/platinum/49financial/ownership_map.json, reads implicitDeny, one resource per call, no missing context. The same role is allowed on both directory objects, and the positive control (user Andrew_Berman) is allowed on the map. _authz/loaders.py:93-116 @9f72f4d6a4 re-raises any error but NoSuchKey, so AccessDenied escapes enforcer_for. (2) irpt-status (ops/entry.py:97-98, shared _loaders) and (3) irpt-holdings (holdings/entry.py:83-85 -> holdings/handler.py:356-370): the deployed environment of both carries NO IRPT_DIRECTORY_BUCKET_MAP (read via get-function-configuration this run), and both bucket readers raise on an unmapped firm (loaders.py:46-56; holdings/handler.py:362-369). (3)'s cause is source + env, not simulated. CONSEQUENCE: the served IRPT path answers no FIRM_ADVISOR request at all. IB-rtf-2's arm (e) 'SERVED k=21' ran in-process under the operator's credentials, which CAN read the map, never under the Lambda roles, so its PASS did not measure the deployed path (bound 12's shape).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-3_R60-AC1_battery_output.txt blob 55a69d9e5558c4604912a36e3ad6c9eae7733295 @e7da534cc6: 12 of 12 scoped requests past the FIRM_BINDING check read 'public_reason_code UNEXPECTED'",
+        "iam simulate-principal-policy, this session: irpt-directory-role s3:GetObject opal-data-bd/platinum/49financial/ownership_map.json -> implicitDeny; same role on investor-reporting/directory/latest.json and .../2026-09-17/directory.json -> allowed; user/Andrew_Berman on the map -> allowed",
+        "lambda get-function-configuration, this session: irpt-directory-search env carries IRPT_DIRECTORY_BUCKET_MAP; irpt-status env carries only IRPT_DIRECTORY_KEY; irpt-holdings env carries IRPT_CONTRACTS_DIR/IRPT_DIRECTORY_KEY/IRPT_FIRM_REGISTRY/IRPT_HOLDINGS_PREFIX -- no bucket map in either",
+        "infra/aws/lambda/investor-reporting/_authz/served.py:624-630 @9f72f4d6a4: any non-AuthzError from enforcer_for -> refuse(..., None, 'UNEXPECTED')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this seat's to fix: IAM (the directory role's read of the ownership-map key) and the Lambda environments are other cells' surfaces. The issuer routes. FWD-1/2/5 can be exercised only after the fix; a re-run needs a new create-exercise-delete interval under the same packet."
+  },
+  {
+    "id": "IRPT_BCKEND-S91",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T10:46:00Z",
+    "one_line": "The served boundary records every internal error to a sink of None: served.py:628, :649 and :662 call _errors.record_internal(None, ...), so the exception behind each UNEXPECTED refusal goes nowhere. The correlation id in the response joins to no log line, and the S90 outage was undiagnosable from CloudWatch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "_authz/errors.py:162-172 @9f72f4d6a4, record_internal's own docstring: 'The SERVER-SIDE record: the correlation id plus what an operator actually needs ... it travels to an injected sink'.",
+    "world_is": "served.py:628, :649 and :662 @9f72f4d6a4 pass sink=None, and errors.py:191-192 calls the sink only if it is not None, so the record is built and dropped. CloudWatch for irpt-directory-search, irpt-holdings and irpt-status over 10:25:50-10:26:15Z (19 / 7 / 10 events) holds only START/END/REPORT lines, with no exception line for any of the 12 UNEXPECTED refusals. The operator's only route to the cause was re-deriving it (S90) by IAM simulation and environment reads.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/_authz/served.py:628,649,662 @9f72f4d6a4: _errors.record_internal(None, cid, operation, exc)",
+        "logs filter-log-events, this session, 10:25:50-10:26:15Z: 19/7/10 events, none but START/END/REPORT"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_BCKEND-S92",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T10:46:00Z",
+    "one_line": "LATENT, masked live by S90 and inferred from source: directory search reads event.get('q'/'limit') and resolve reads event.get('selection') from the TOP LEVEL of the raw event. The IRPT integrations are payload format 2.0, where the query sits under queryStringParameters and the body under body. So on the deployed path search ignores q and limit, and resolve always answers 'selection matches nothing'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "docs/contracts/investor-reporting/v1/routes.json (search(q) over the viewer-scoped projection), and FWD-1 'search -> select -> relationship + permitted accounts'.",
+    "world_is": "directory/entry.py:92-93 @9f72f4d6a4 calls _handler.search(..., event.get('q', ''), event.get('limit', DEFAULT_LIMIT)), and :136 calls _handler.resolve(..., event.get('selection') or {}). served.py:641 hands the compute the raw event, and infra/aws/terraform/investor-reporting/api/integrations.tf:57 @9f72f4d6a4 sets payload_format_version 2.0. With q empty, handler.search returns items[:limit], the first 20 of the projection (directory/handler.py:179-181). With the selection empty, resolve returns UNSUPPORTED 'selection matches nothing in the viewer's projection' (:255-259). The in-process tests pass events with top-level keys, which is why they do not see it. Not exercised live: S90 refuses before the compute runs.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/directory/entry.py:92-93,136 @9f72f4d6a4",
+        "infra/aws/terraform/investor-reporting/api/integrations.tf:57 @9f72f4d6a4: payload_format_version = \"2.0\"",
+        "infra/aws/lambda/investor-reporting/directory/handler.py:179-181,255-259 @9f72f4d6a4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Named now so the S90 fix is not graded as FWD-1 PASS on a search that silently ignores its query."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S32",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T10:36:46Z",
+    "one_line": "TO-IB-rtf-8 second pass arm (b): holdings/stage.py --check reports 1 of 4 staged member(s) drifted (contracts/HoldingsSnapshot.schema.json) on this override worktree (/c/tmp/wk-irpt-6-1d) -- a RAW-BYTE check with no git clean-filter, and this worktree's core.autocrlf=true checks the LF-committed blob out as CRLF (34577 bytes on disk, 695 CRLF pairs, vs the committed 33882-byte LF blob), while git hash-object on the same worktree file (which applies the clean filter) equals the pinned blob's own hash exactly (9ec70af2ba0c71ea589dab48bd14407e111694a8 both) -- a worktree checkout artifact, not a real content drift, on a stage.py MEMBER this order's BOUNDS do not reach (not enforce.py, not a holdings import, not a test, not the manifest entry).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "py -3.12 infra/aws/lambda/investor-reporting/holdings/stage.py --check, this run, this worktree: 'ERROR: 1 of 4 staged member(s) differ from their pinned blob: [\\'contracts/HoldingsSnapshot.schema.json\\']'",
+        "git hash-object infra/aws/lambda/investor-reporting/holdings/contracts/HoldingsSnapshot.schema.json == git show 6e764ef0aa48a01f922931d66413477a2eff05a4:docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json piped to git hash-object --stdin == 9ec70af2ba0c71ea589dab48bd14407e111694a8, this run",
+        "git config --get core.autocrlf == true, this worktree, this run; raw byte count on disk 34577 (695 CRLF pairs) vs the committed blob's 33882 LF-only bytes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-IB-rtf-8's own first-pass result.md (committed) reported 'stage.py --check reports 4 of 4 for the remaining staged contract + 3 modules byte-equal to their pins', and this order's arm (b) BOUNDS name only enforce.py/holdings imports/holdings tests/the manifest entry as in-scope.",
+    "world_is": "On this second pass's override worktree (/c/tmp/wk-irpt-6-1d, cut fresh by the issuer from CLOUD HEAD d81cccbfe3), the SAME committed bytes check out with core.autocrlf=true converting the LF-committed contracts/HoldingsSnapshot.schema.json blob to CRLF on disk, so the raw-byte stage.py --check (which applies no clean filter) now reads 1 of 4 drifted -- a worktree-checkout artifact on a file wholly outside this order's BOUNDS, not a regression the fold introduced; content-based verification (git hash-object) shows no real drift."
+  },
+  {
+    "id": "IRPT_BCKEND-S93",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T11:29:00Z",
+    "one_line": "A THIRD cause beyond S90's two, found by IB-rtf-10's census: 4 of the 7 serving roles (irpt-narrative-role, irpt-export-render-role, irpt-performance-adapter-role, irpt-ycharts-generate-role) have NO s3:GetObject on any firm's directory objects. Their functions bind the shared _authz loader, which reads the directory BEFORE the ownership map. With this order's two keys applied, those four functions still fail load_directory and refuse UNEXPECTED; only directory-search and status resolve scope.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face (THE CELL, first paragraph @4ceb7f8361) names two causes (the ownership-map read, the bucket map), and arm (f) expects every affected route to read a scope-resolved answer, m of m, once they are fixed. BOUNDS: 'ONE new statement each, object-scoped'.",
+    "world_is": "simulate-principal-policy, s3:GetObject, one resource per call, on <bucket>/investor-reporting/directory/latest.json for 3 client firms x 7 roles: allowed 9 of 9 for irpt-directory-role, irpt-status-role and irpt-holdings-role; implicitDeny 12 of 12 for the four roles above. The missing-context values on narrative/export come from their unrelated ListBucket statements with s3:prefix conditions; read from the live inline policies, those roles hold no GetObject on any firm bucket at all. Their entries bind the shared loader: narrative/entry.py:124, export/entry.py:195, performance/entry.py:110 and ycharts/generate/entry.py:181 @4ceb7f8361 set deps=_loaders.deps. _authz/loaders.py:71-80 @4ceb7f8361 reads <bucket>/investor-reporting/directory/latest.json and the dated key it names, and served.py:624-630 turns the resulting AccessDenied into UNEXPECTED. The positive control (user Andrew_Berman) is allowed; the negative control (opalinvest-auth-lambda-role) is denied.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "simulate-principal-policy this session: 4 roles x 3 firms directory latest.json -> implicitDeny 12 of 12; directory/status/holdings roles -> allowed 9 of 9",
+        "infra/aws/lambda/investor-reporting/{narrative/entry.py:124,export/entry.py:195,performance/entry.py:110,ycharts/generate/entry.py:181} @4ceb7f8361: deps=_loaders.deps",
+        "infra/aws/lambda/investor-reporting/_authz/loaders.py:71-80 @4ceb7f8361: load_directory reads the pointer and the dated artifact"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT added to this order's packet: the face allows one object-scoped statement per role, and a directory-prefix read for four more roles is a second key. The packet names the gap in its 'does NOT cover' list. The issuer decides: amend the face so the packet carries a K-DIR key before the halves sign, or cut a separate cell."
+  },
+  {
+    "id": "IRPT_BCKEND-S94",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T11:29:00Z",
+    "one_line": "inflection has NO ownership map (s3://opal-data-inf/platinum/inflection/ownership_map.json -> 404 to an identity holding ListBucket). A serving role granted only object-scoped GetObject, with no ListBucket (the face bans ListBucket), reads a MISSING key as AccessDenied, not NoSuchKey. _authz/loaders.py treats only NoSuchKey as 'an absent map is an empty map' and re-raises everything else, so every inflection advisor stays UNEXPECTED after this packet.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "_authz/loaders.py:94-99 @4ceb7f8361: 'An ABSENT map is an EMPTY map ... an advisor with no grants and a firm with no map produce the same served answer'. And the face: 'never ListBucket'.",
+    "world_is": "HeadObject this session, as user Andrew_Berman (who holds ListBucket): 49financial map present (AES256, VersionId nR.FkCE1frsI9R5zRp2wJWB7vyMZ04NK, 438164 bytes), cottonwood map present (AES256, VersionId mmHeWGDyv1Z6RYUrsAV4QDFTNLn9mwkE, 107 bytes), inflection map -> 404. _authz/loaders.py:106-114 @4ceb7f8361 maps an exception to the empty map ONLY when its class is NoSuchKey, or it is a ClientError whose text contains NoSuchKey, and re-raises otherwise. S3 returns 403 AccessDenied, not 404, for a missing key when the caller lacks s3:ListBucket on the bucket (documented S3 behavior). So the designed 'absent = empty' branch is unreachable under an object-scoped grant, and the inflection tenant fails exactly as S90 did.",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "s3api head-object this session: s3://opal-data-inf/platinum/inflection/ownership_map.json -> 404; 49financial and cottonwood maps present, SSE AES256",
+        "infra/aws/lambda/investor-reporting/_authz/loaders.py:94-116 @4ceb7f8361: only NoSuchKey maps to the empty map",
+        "S3 semantics (not exercised under a Lambda role here): GetObject on a missing key without s3:ListBucket returns 403 AccessDenied"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Remedies are not this seat's: the producer publishes an (empty) map for every client firm; or a ListBucket limited by an s3:prefix condition to exactly that key (the face bans ListBucket, so it needs the CTO's word); or the loader treats AccessDenied-on-absent as empty, which cannot be told apart from a real denial and is not recommended. Arm (f) with a 49financial principal cannot observe it."
+  },
+  {
+    "id": "IRPT_BCKEND-S95",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T11:33:00Z",
+    "one_line": "The six affected Terraform roots are NOT at rest. Planned with only IB-rtf-10's edits, 4 functions' plans also carry a CODE change (irpt-status, irpt-narrative, irpt-export-render, irpt-performance-adapter: source_code_hash differs from the live CodeSha256), and 2 carry an object-version bump with an unchanged hash (irpt-holdings, irpt-directory-refresh). Artifacts uploaded at 07:29-07:31Z and 10:44Z were never deployed. Applied as planned, arm (e)'s 'CodeSha256 unchanged 7 of 7' cannot hold, and the env var cannot be split from the code, since both are attributes of one aws_lambda_function.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face, arm (e) @4ceb7f8361: 'No function code is rebuilt by this order; an environment change re-deploys the configuration only (CodeSha256 unchanged, read before and after, 7 of 7)'. BOUNDS: 'no code rebuild'.",
+    "world_is": "terraform plan per root with the vendored binary at 11:2xZ. directory: 1 add, 1 change (module.irpt_directory_refresh: s3_object_version ugOhswez... -> FqfSKxD7..., hash unchanged). ops: 1 add, 1 change (env + s3_object_version 1mAANnjv... -> Fp_QWlcK..., source_code_hash LHprxKSP... -> xlFoIKtA...). holdings: 0 add, 1 change (env + s3_object_version aZqJ6bvX... -> XGnVW2ED..., hash unchanged 78XvypHO...). narrative: 1 add, 1 change (env + code sgolF/uX... -> UjxkAfk1...). export: 1 add, 1 change (env + code 4Dp6e0Vy... -> yBMiDv7t...). performance: 1 add, 1 change (env + code /Cn8XUZo... -> /CB3B9ir...). ycharts: 1 add, 1 change (env ONLY). 0 to destroy 7 of 7. The planned artifact versions carry content-sha256 metadata equal to the planned source_code_hash, uploaded 2026-09-19T07:29:41Z-07:31:20Z (performance, narrative, directory-refresh, export, status) and 10:44:14Z (holdings). The artifacts bucket carries no uploader field, so the writer is not identified by this census.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform show -json of each root's plan (.scratch/plans/<root>.tfplan, this session): per-update changed attributes; source_code_hash differs on 4 of 7 functions",
+        "s3api head-object on opal-313476888478-lambda-artifacts/investor-reporting/<fn>.zip at the planned VersionId: LastModified and content-sha256 metadata",
+        "lambda get-function-configuration this session: live CodeSha256 per function (irpt-status LHprxKSP..., irpt-narrative sgolF/uX..., irpt-export-render 4Dp6e0Vy..., irpt-performance-adapter /Cn8XUZo...)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Choices for the issuer, not this seat: (i) the owner of those undeployed artifacts deploys them first (sequencing), and IB-rtf-10's plan is re-taken and becomes env + grant only; (ii) the halves sign a combined apply that NAMES the 4 code changes; (iii) the module pins s3_object_version to the deployed version for this apply (a module-input change the face does not grant)."
+  }
+,
+  {
+    "id": "IRPT_BCKEND-W1-S33",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-19T11:40:45Z",
+    "one_line": "IB-rtf-11 arm (b)'s premise -- 'every directory/ test that passed a top-level q/selection is REWRITTEN to the 2.0 shape' -- has no directory/ member to rewrite: no test under directory/tests/ ever called entry.search()/entry.resolve() at all (test_handler.py exercises handler.py directly). The ONE test that constructs the top-level-q/selection event S92 describes is _authz/tests/test_guarded_entries.py's base_event(), outside this order's <paths>. Measured before and after this order's fix: that file's 96 tests pass unchanged in both cases (rc=0, '96 passed' both runs) because its assertions never inspect the served data payload -- so it neither breaks from the fix nor exercises the 2.0 shape either side of it, exactly the gap R68-AC2 asks this seat to name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Bound (b): 'Every directory/ test that passed a top-level q/selection is REWRITTEN to the 2.0 shape -- the test that asserted the old shape is the defect's own witness and is not kept.'",
+    "world_is": "Grep census (this run) over infra/aws/lambda/investor-reporting for 'entry.search(' / 'entry.resolve(' / 'import entry' finds exactly two files: _authz/served.py (the import entry.py itself makes) and _authz/tests/test_guarded_entries.py -- zero hits under directory/tests/. test_guarded_entries.py's base_event() (:129-151 @9f72f4d6a4) sets top-level q/limit/selection but never queryStringParameters/body, so _event_params(event) (this order's fix) reads {} for it both before and after -- params.get('limit', DEFAULT_LIMIT) silently changes from 5 to 20 and params.get('selection') from {'account_ids': [fx.A1]} to {}, and neither change fails an assertion because none of that file's cases inspect 'data' content (they check refusal codes, contract_version/operation/firm_id, or protected-byte absence). py -3.12 -m pytest infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py -q: '96 passed' at CLOUD HEAD 4ceb7f8361 (before this order's edit) and '96 passed' again after entry.py's fix -- byte-identical pass count, this run.",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "Grep tool census, this run, path=infra/aws/lambda/investor-reporting: 'entry.search(|entry.resolve(|import entry' matches only _authz/served.py and _authz/tests/test_guarded_entries.py -- 0 hits under directory/tests/",
+            "infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py:129-151 @9f72f4d6a4, base_event(): top-level 'q'/'limit'/'selection' keys, no 'queryStringParameters' or 'body' key",
+            "py -3.12 -m pytest infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py -q, this run: '96 passed' both before (CLOUD HEAD 4ceb7f8361) and after this order's directory/entry.py edit"
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this seat's to fix (_authz/tests/ is outside this order's <paths>). This order's own directory/tests/test_entry.py (new, this cell) supplies the coverage the premise assumed already existed: it is the first directory/ test to call entry.search()/entry.resolve() at all, using the 2.0 fixture and the 9f72f4d6a4 mutant as the negative control."
+  },
+  {
+    "id": "IRPT_BCKEND-S96",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T12:33:03Z",
+    "one_line": "K-CODE cannot be built from HEAD. build-and-upload.sh REFUSES irpt-directory-search: its files[] declares data/custodian_key_seam.json, but the entry carries NO staged_from for that member (0 of 1), whereas 6 of 6 sibling functions stage it from _ids/data/custodian_key_seam.json. The build failed before upload, so nothing was written. The LIVE zip does carry the member, but as a CRLF worktree copy (197344 bytes, 6224 CR) rather than the committed blob (191120 bytes, sha256 87f2f92f...). The served build it replaces was therefore hand-materialized outside the manifest.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face, status line @77bd04ca41 (addendum): 'K-CODE: irpt-directory-search ONLY, rebuilt by build-and-upload.sh from a HEAD at or after 52ffa27636 ... served CodeSha256 == built by content'.",
+    "world_is": "bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-search from worktree HEAD bbfe5aeac3 (contains 52ffa27636), infra/aws/lambda/ clean. It staged 7 of 7 declared staged_from members, sha256 verified, then: 'ERROR: File not found: infra/aws/lambda/investor-reporting/directory/data/custodian_key_seam.json' -> 'PARTIAL -- 0 built, 1 failed', rc=1. lambda-source-map.json @bbfe5aeac3: irpt-directory-search files[] has 10 members including data/custodian_key_seam.json, and staged_from has 7 (no seam). irpt-status, irpt-holdings, irpt-narrative, irpt-export-render, irpt-performance-adapter and irpt-ycharts-generate each stage it: repo_path _ids/data/custodian_key_seam.json, pin c28c728a30, packaged_as data/custodian_key_seam.json, sha256 87f2f92f3c71.... Afterwards the build store latest is still version l4JK6aUnUgtrg.TFrxiKU8.XBM_6APl4 (05:22:21Z) and the function CodeSha256 is still aQxATFkcdtEBvs+v/zztQBOPcbR9XH9Lzjm9kUOmhmU= (read after the refusal). The bytes of that version equal the live CodeSha256 and list 10 entries. data/custodian_key_seam.json is 197344 bytes, sha256 8b077581adea..., which equals the CRLF worktree file (6224 CR), not git show HEAD:_ids/data/custodian_key_seam.json (191120 bytes, sha256 87f2f92f3c71...).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/kcode_build.txt (this seat's worktree): the builder's full output, rc=1",
+        "infra/aws/lambda/ci/lambda-source-map.json @bbfe5aeac3: functions.irpt-directory-search files[] vs staged_from; the six sibling entries' seam staged_from object",
+        "s3api get-object investor-reporting/irpt-directory-search.zip VersionId l4JK6aUnUgtrg.TFrxiKU8.XBM_6APl4: sha256(b64) == live CodeSha256; zip member list and per-member sha256",
+        "git show HEAD:infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json | sha256sum -> 87f2f92f...; the worktree file 197344 bytes with 6224 CR"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed here; the face bars a neighbouring fix and lambda-source-map.json is not in this order's grant. The remedy is ONE staged_from object on irpt-directory-search, identical to the six siblings'. After it, a rebuild ships the committed LF blob, so the served seam member changes CRLF -> LF. The content is the same JSON (the parse is identical), but the zip bytes and the CodeSha256 differ from any hand-built zip. Rejected workaround: copying the file onto disk by hand, as the 05:22Z build evidently did. The ledger irpt-bckend-ib-rtf-10-k-code-build closes with the leg recorded as REFUSED-BEFORE-UPLOAD. The rest of the re-cut (K-OM, K-DIR, K-ENV, the S95 restore) is unaffected."
+  },
+  {
+    "id": "IRPT_BCKEND-S98",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T14:52:28Z",
+    "one_line": "After IB-rtf-10's apply (7 of 7 roots, 0-diff 7 of 7; every grant, bucket map and CodeSha256 read back as signed), the live path is STILL UNEXPECTED on 9 of 10 requests across the 7 functions. The remaining cause is not IAM. _ids/ids.py raw_keys() opens raw_keys.json BESIDE the module, but 0 of 7 deployed zips carry it and 0 of 7 manifest entries declare it, while 7 of 7 stage _ids/ids.py. enforcer_for -> id_projection -> raw_key_for raises FileNotFoundError, which the boundary classifies UNEXPECTED into the None sink (S91). This is S90's third cause, invisible to simulation and to every in-process proof, because in the repo raw_keys.json DOES sit beside _ids/ids.py.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-10 face, arm (f): 'ONE authenticated request per affected route ... reading a SCOPE-RESOLVED answer ... and NEVER UNEXPECTED, m of m'. Packet c3a44074d2 section 7, GRANTED branch: with K-OM + K-DIR + K-ENV + K-CODE applied, 'a FIRM_ADVISOR request resolves its scope ... never UNEXPECTED'.",
+    "world_is": "Battery @314435ba8f, arm (f), 14:36Z, as the rtf-9 principal (firmId 49financial, advisorKey abby_horton), through https://opalinvest.dev/api/scoped/investor-reporting/*: 9 of 10 requests read UNEXPECTED with no firm_id (directory search x2, resolve, status, analysis sections, performance, narrative, export receipt, analysis submit). Holdings read FIRM_BINDING with no firm_id, on a random account id, because the search that supplies a permitted id was itself UNEXPECTED. Arm (e) of the same run: K-OM allowed 18 of 18, directory allowed 21 of 21, negatives denied 27 of 27, bucket map 7 of 7, CodeSha256 7 of 7 as signed. DIAGNOSTIC (operator credentials, the DEPLOYED zip bytes and the DEPLOYED environment, in-process, the boundary's recorder patched to print the swallowed exception): irpt-status GET status -> UNEXPECTED; traceback served.py:625 handle -> :582 enforcer_for -> ids.py:408 projection_for_firm -> :170 raw_key_for -> :162 raw_keys -> FileNotFoundError '<package>/raw_keys.json'. The SAME run with ONLY the HEAD blob of _ids/raw_keys.json (6492 bytes) placed beside ids.py -> the scope RESOLVES (firm_id fir_c9fc04650e2134d6ea033da2 present, a policy code), for irpt-status AND irpt-directory-search. Census over the 7 deployed zips and lambda-source-map.json @HEAD: raw_keys.json present 0 of 7, declared 0 of 7; _ids/ids.py staged 7 of 7. ids.py:64 RAW_KEYS_PATH = os.path.join(HERE, 'raw_keys.json'), introduced @6806f529ac. The dependency was wired into all entry points by the shared Entry.enforcer_for @47f21dab95 (IB-rte-6).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-10_R67-AC1_battery_output.txt (this pass): arm (e) and arm (f) lines",
+        "lambda get-function Code.Location for the 7 functions, zip member census: raw_keys.json 0 of 7, ids.py 7 of 7",
+        "infra/aws/lambda/ci/lambda-source-map.json @HEAD: raw_keys absent from files[] and staged_from on 7 of 7; _ids/ids.py staged 7 of 7",
+        "the in-process diagnostic pair (the deployed zip + env, recorder patched): without raw_keys.json -> FileNotFoundError -> UNEXPECTED; with it -> firm_id present, policy code"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not fixed here; the face bars a neighbouring fix, and the remedy is a CODE deploy on 7 functions. The remedy has the shape of S96: ONE staged_from object per function, for _ids/raw_keys.json packaged as raw_keys.json at its pin with its sha256, then a rebuild of the 7 and a new never-widen packet (six of them change served code). WHY every earlier proof passed: the in-process harness imports _ids/ids.py from the REPOSITORY, where raw_keys.json sits beside it, so HERE resolves to a directory that HAS the file. The zip flattens ids.py to the package root without it. The same code has two file layouts, and only the deployed one is broken. That is a sharper form of the identity bar: a served-path proof must run the deployed BYTES, not just the deployed role. The apply itself stands and is not rolled back: every key reads back as signed, and the path was UNEXPECTED before it (S90 12 of 12) and after it, so the apply moved no served answer. S92 could not be measured, because no directory request reached the compute."
+  },
+  {
+    "id": "IRPT_BCKEND-S99",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:33:10Z",
+    "one_line": "There is a SECOND missing member of the same class: the firm registry. S98's own diagnostic was contaminated, and this row CORRECTS it. S98 said that with ONLY raw_keys.json placed beside ids.py the scope resolves. That run extracted the zip INSIDE the repository, where ids.py's and keys.py's registry walk-up (ids.py:113-138) found the repo's data/firm_registry.json. Run OUTSIDE the repository, as on Lambda, directory-search and status still fail with raw_keys.json alone: their FIRST failure is keys.KeyComponentRefused (firm_registry, REGISTRY_UNREADABLE). narrative and performance-adapter fail next on ids.IdRefused (registry not found). The scope resolves only with BOTH members, on those 4. INCLUDED in IB-rtf-12's key, as the face's (a) directs: manifest @dbf7667178.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "Row IRPT_BCKEND-S98's world_is: 'The SAME run with ONLY the HEAD blob of _ids/raw_keys.json ... placed beside ids.py -> the scope RESOLVES ... for irpt-status AND irpt-directory-search'. The IB-rtf-12 face (a): 'every OTHER file _ids/ code opens beside itself ... a second missing member is a ROW and is INCLUDED in this order's key'.",
+    "world_is": "The diagnostic org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt (21 runs: 7 functions x {bare, +raw_keys.json, +raw_keys.json +firm_registry.json}; the deployed zip, the deployed irpt-common layer mapped onto /opt/python, and the deployed env, run in-process at C:\\d12 with the walk-up checked NONE):\n- directory-search and status: bare UNEXPECTED (keys.KeyComponentRefused REGISTRY_UNREADABLE); +raw still UNEXPECTED (the same); +raw+reg SCOPE-RESOLVED (firm_id present).\n- narrative and performance-adapter: bare FileNotFoundError raw_keys.json; +raw ids.IdRefused (registry not found, 11 paths); +raw+reg SCOPE-RESOLVED.\n- export-render and ycharts-generate: +raw SCOPE-RESOLVED. export resolves the registry through IRPT_FIRM_REGISTRY=/opt/python/firm_registry.json, which is in the layer irpt-common:5; ycharts packages firm_registry.json itself.\n_ids/ beside-opens census: 3 of 3 -- raw_keys.json (:64, :162), the firm registry (:113-138: env, then a data/firm_registry.json walk-up, then beside), and data/<seam>.json (:338-360, staged 7 of 7). keys.py (staged in 3 zips, from the layer in 4) resolves the registry the same way.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt (the 21 diagnostic runs, walk-up NONE)",
+        "infra/aws/lambda/investor-reporting/_ids/ids.py:64,113-138,162,338-360 @dbf7667178",
+        "lambda get-layer-version-by-arn irpt-common:5: python/ carries ids.py, keys.py, raw_keys.json (5990 bytes) and firm_registry.json (5094 bytes); /var/task imports first"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INCLUDED: data/firm_registry.json (blob 99b8eeb54f, 5326 bytes, pin 39cbad4214) is staged as firm_registry.json into directory-search, status, narrative and performance-adapter, in the manifest @dbf7667178. S98's CAUSE stands; only its with-the-file half overstated. The lesson is recorded for the CVO: a diagnostic run under a directory that holds the repository inherits the repository's files through any walk-up; it is the S98 class one level down."
+  },
+  {
+    "id": "IRPT_BCKEND-S100",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:33:10Z",
+    "one_line": "irpt-holdings can NOT reach its designed EMPTY_GRANT, and staging does not change that. Its own loader reads IRPT_DIRECTORY_KEY=investor-reporting/directory/latest.json -- the POINTER -- as the directory ARTIFACT (holdings/entry.py:70-71,88-89,109-112 -> directory/handler.py:78-89). The pointer carries no firm_id_opaque, so FirmBinding raises 'opaque_firm_id must be a non-empty string' and the boundary refuses FIRM_BINDING with no firm_id. It is the same in all 3 diagnostic modes, and live (rtf-10 (f): FIRM_BINDING).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (f), inherited from rtf-10: 'holdings its designed EMPTY_GRANT'. Packet c3a44074d2 section 7: 'Holdings resolves to its designed EMPTY_GRANT'.",
+    "world_is": "get-function-configuration irpt-holdings: IRPT_DIRECTORY_KEY = investor-reporting/directory/latest.json. holdings/entry.py:88-89 @dbf7667178 reads _directory.load_directory(bucket, DIRECTORY_KEY). directory/handler.py:78-89 returns the object at that key verbatim, without following the pointer; the shared loader follows it (_authz/loaders.py:77-78). opaque_firm_for (:109-112) reads firm_id_opaque from the POINTER document, which has none. org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt: irpt-holdings bare / +raw / +raw+reg all FIRM_BINDING, swallowed enforce.AuthzError 'opaque_firm_id must be a non-empty string'. The live rtf-10 (f) request also read FIRM_BINDING, firm_id ABSENT.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/holdings/entry.py:70-71,88-89,109-112 @dbf7667178",
+        "infra/aws/lambda/investor-reporting/directory/handler.py:78-89 @dbf7667178; _authz/loaders.py:77-78",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_diagnostic_output.txt"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's: the remedy is a SOURCE change (follow the pointer, as the shared loader does) or a Terraform env change (a dated artifact key would go stale), and the face bars both. Consequence for (f): the holdings line cannot read EMPTY_GRANT after IB-rtf-12 applies; it will still read FIRM_BINDING, a refusal that is not UNEXPECTED but also not scope-resolved. The issuer rules whether (f) carries holdings as recorded-not-counted, or a holdings cell rides first."
+  },
+  {
+    "id": "IRPT_BCKEND-S101",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:33:10Z",
+    "one_line": "The build is WITHHELD at IB-rtf-12 (d). A rebuild from HEAD would move ANOTHER member on 5 of 7 functions: data/custodian_key_seam.json, from the live CRLF hand copy (197344 bytes, 6224 CR) to the committed LF blob (191120 bytes, sha256 87f2f92f). That is the face's STOP condition ('a rebuild that moves any other member is a different act'), so nothing was built. Separately: 29 of 66 of these functions' OWN members sit CRLF on disk in this checkout (core.autocrlf=true), exactly as the live zips carry them. A builder on an LF checkout would move all 29; the build is not reproducible from the committed tree for data members.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (d): 'the served-byte DELTA per function = EXACTLY the raw_keys.json member added -- every other member byte-identical to the live zip, m of m, or STOP: a rebuild that moves any other member is a different act'.",
+    "world_is": "A read-only prediction over the 7 live zips against what build-and-upload.sh packages: own members from DISK, staged members from their pins. Every .py member is byte-identical to live, 7 of 7 functions. The staged seam member moves on irpt-status, irpt-narrative, irpt-export-render, irpt-performance-adapter and irpt-ycharts-generate. irpt-directory-search already carries the LF blob (K-CODE); irpt-holdings' seam is already LF. Own members: 29 of 66 carry CR on disk, byte-identical to live; against the committed LF blobs those 29 would differ (holdings 3, narrative 5, performance-adapter 6, ycharts-generate 15), the byte gap equal to the CR count every time. git check-attr on them: no eol attribute; core.autocrlf=true.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the per-member comparison (live zip member bytes vs the HEAD blob / the pin blob / the worktree disk bytes), this session",
+        "infra/aws/lambda/ci/lambda-source-map.json @dbf7667178 files[] / staged_from per function",
+        "git config core.autocrlf -> true; git check-attr -a on the moved members -> no attributes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The issuer's choices, not this seat's: (i) accept the seam member's CRLF->LF on the 5 as part of the act. The JSON parses identically, it is the committed blob replacing a hand copy, and K-CODE set the precedent under S96. The packet then names it per function. (ii) Leave those 5 functions' seam as served, which needs a manifest change to stage a CRLF copy -- re-staging a hand copy, which S96 rejected. This seat recommends (i). The build-reproducibility half is an estate question (an eol attribute on the Lambda source trees, or the index-sourced gate widened beyond declared_blobs), routed to the CTO and not ridden here."
+  },
+  {
+    "id": "IRPT_BCKEND-S102",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T15:41:12Z",
+    "one_line": "irpt-ycharts-generate can NOT be rebuilt from HEAD by build-and-upload.sh, so IB-rtf-12's K-CODE for that function is unreachable as ordered. Its files[] declares 2 members with no source on disk: firm_registry.json, whose served content exists as no blob anywhere in history (row W4-S34), and settings.json, never tracked and absent from the source dir. The live zip serves both (31 members).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (d): 'K-CODE x 7 -- each function rebuilt by build-and-upload.sh from a HEAD at or after this order's manifest commit'.",
+    "world_is": "lambda-source-map.json @dbf7667178, irpt-ycharts-generate files[]: 32 members including firm_registry.json and settings.json, neither in staged_from. On disk under infra/aws/lambda/investor-reporting/ycharts/generate/: firm_registry.json ABSENT, settings.json ABSENT. git ls-files: settings.json tracked nowhere; git log --diff-filter=AD on the path: 0 commits. The entry's own _staged_from_note: 'firm_registry.json ... does NOT exist as a git blob anywhere ... this function's build still fails on that one member' (row W4-S34). battery_ib_rtf_12.py arm (d): 'unresolvable [firm_registry.json, settings.json]' for irpt-ycharts-generate. Its live zip (sha256 == live CodeSha256) carries both. Its runtime registry resolves through IRPT_FIRM_REGISTRY=/var/task/firm_registry.json, the packaged copy.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/lambda-source-map.json @dbf7667178 functions.irpt-ycharts-generate (files[], staged_from, _staged_from_note)",
+        "os.path.exists on the source dir members; git ls-files; git log --diff-filter=AD",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_R69-AC1_battery_output.txt arm (d)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's to source: inventing the two files would be the hand copy S96 rejected. The issuer's choices: (i) route a cell that declares true sources for both members (staged_from from data/ for the registry, the settings' producer for settings.json), then K-CODE covers 7; or (ii) K-CODE covers 6 and ycharts-generate stays UNEXPECTED until then. The diagnostic shows ycharts needs ONLY raw_keys.json, because its registry resolves through the env to the packaged copy."
+  },
+  {
+    "id": "IRPT_BCKEND-S103",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T17:44:29Z",
+    "one_line": "With raw_keys.json served, directory SEARCH now resolves its scope and then raises in its own compute on every call: directory/entry.py:64-83 _document_fields reads DirectoryEntry.schema.json from the CHECKOUT path (docs/contracts/investor-reporting/v1/, which exists only in the repo) or IRPT_CONTRACTS_DIR. irpt-directory-search has no layer and no IRPT_CONTRACTS_DIR, and the irpt-common:5 layer carries 5 schemas, none of them DirectoryEntry. RuntimeError 'BLOCKED: the DirectoryEntry contract is not readable from this runtime' -> UNEXPECTED, firm_id present. This is the S98 class again (a file the repo has beside the code and the zip does not), in a module outside _ids/, so outside IB-rtf-12's census.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (f): 'every request on a firm whose map EXISTS reads a SCOPE-RESOLVED answer and never UNEXPECTED'; the search route WITH a query records S92 FIXED or not.",
+    "world_is": "Battery @110f596a97, arm (f), 17:31Z, as the rtf-9 principal through the deployed route: GET directory/search q=a -> UNEXPECTED http 200 firm_id PRESENT (the scope resolved; the compute raised). The same for q=zzqqxxnomatch. DIAGNOSTIC (the DEPLOYED zip PUjH3OjD..., in-process outside the repository at C:\\d12, the recorder patched, the edge's header set incl. x-user-email): builtins.RuntimeError BLOCKED ... at entry.py:81 _document_fields <- entry.py:146 search <- served.py:641 <- enforce.py:618. The zip's members carry no DirectoryEntry.schema.json. get-function-configuration irpt-directory-search: layers [], env IRPT_DIRECTORY_BUCKET_MAP + IRPT_DIRECTORY_PREFIX only. The irpt-common:5 layer's python/irpt_contracts/ holds ExportBundle, ExportReceipt, NarrativePacket, PerformanceReport and RenderPackage. The same entry.py (and the same absence) is in the prior live zip HOpXPDo..., so this act did not introduce it; it made it reachable. resolve on the same function is SERVED (firm_id present).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_R69-AC1_battery_output.txt arm (f) request lines",
+        "infra/aws/lambda/investor-reporting/directory/entry.py:59-83 @110f596a97 (_CONTRACT and _document_fields)",
+        "the diagnostic run of .scratch/diag_rtf12.py on irpt-directory-search with q=a (the deployed zip, outside the tree)",
+        "lambda get-layer-version-by-arn irpt-common:5 member list (python/irpt_contracts/: 5 schemas)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's: the remedy is staging DirectoryEntry.schema.json into the zip (staged_from docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json) plus IRPT_CONTRACTS_DIR pointing at it, or a layer carrying it -- a manifest + Terraform env change, which the face bars. S92 stays unmeasurable until search is served. The R69-AC2 build contract (a census of __file__-relative opens keyed on the import) would have caught this one too."
+  },
+  {
+    "id": "IRPT_BCKEND-S104",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T17:44:29Z",
+    "one_line": "With raw_keys.json served, irpt-export-render's receipt route resolves its scope and then raises in the evidence-bucket READ, UNDER ITS OWN ROLE only. A lambda:InvokeFunction pair on the deployed function, as its execution role, isolates it: the same event reads UNEXPECTED (firm_id present) when entry.py:97-107 reads s3://opal-data-ycharts/<receipt key>, and reads normally (no refusal code, firm_id present) when receipt_fixture bypasses the read. Under operator credentials in-process, the same read maps to NOT_FOUND. The swallowed class is outside the handler's own mapping ('NoSuchKey', 'ClientError'), and the None sink (S91) keeps it unnamed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-12 face (f): 'every request on a firm whose map EXISTS reads a SCOPE-RESOLVED answer and never UNEXPECTED'.",
+    "world_is": "Battery @110f596a97, arm (f), 17:31Z: GET export/EXP-<random> -> UNEXPECTED http 200 firm_id PRESENT. CloudWatch REPORT 1203 ms, so not a timeout (timeout 120 s, no VPC). The invoke pair (.scratch/invoke_export_pair.py, as irpt-export-render-role): 'S3 receipt read (as deployed) -> code UNEXPECTED, firm_id present'; 'receipt_fixture {} (no S3 read) -> code None, firm_id present'. IRPT_EVIDENCE_BUCKET = opal-data-ycharts, default encryption aws:kms (key 7f4d3042-...). The diagnostic under operator credentials: NOT_FOUND ('no receipt is recorded for this export under this firm'). The same entry.py is in the prior live zip 4Dp6e0Vy..., so this act did not introduce it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-12_R69-AC1_battery_output.txt arm (f) request lines",
+        "the lambda:InvokeFunction pair on irpt-export-render (with and without receipt_fixture), this session",
+        "infra/aws/lambda/investor-reporting/export/entry.py:85-108 @110f596a97",
+        "s3api get-bucket-encryption opal-data-ycharts; CloudWatch /aws/lambda/irpt-export-render REPORT 17:31:49Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not this order's: likely a role grant on the evidence bucket or its KMS key (the class to name needs S91's sink, or a role-scoped diagnostic). Neither an IAM nor a source change is in this order's bounds. A receipt that does not exist should read NOT_FOUND, the handler's own designed refusal."
+  },
+  {
+  "id": "IRPT_BCKEND-W1-S34",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-19T19:05:11Z",
+  "one_line": "This order's own arm (a) census, run to end the S96/S98/S103 class, finds the SAME class a FOURTH, FIFTH and SIXTH time in the module this order does NOT touch: _scope/resolve.py's _server_only_properties() (staged flat into directory-search, narrative, export, performance, ops/status, and duplicated as holdings' own tracked resolve.py) resolves ResolvedScope.schema.json at _HERE/../_contracts, which is one directory above /var/task and exists in NEITHER the deployed zip NOR the irpt-common layer's 5-contract list, on ANY of the 6 functions -- with no env override at all (unlike DirectoryEntry's IRPT_CONTRACTS_DIR check). ops/status.py's own _server_only_properties()/_load_schema() has the identical construct for StatusEnvelope.schema.json, and ops/manifests.py's PATH_MANIFEST_PATH for PATH_MANIFEST.json -- both also checkout-only, one level above /var/task, on irpt-status. The resolve.py case degrades in the UNSAFE direction (except (OSError, ValueError): return [] -- no fields stripped beyond the hardcoded {'vendor_ids'} floor); the status.py case degrades SAFELY (falls back to the correct literal ['internal_correlation_id']).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's arm (a): 'every RUNTIME FILE OPEN in its packaged Python members' censused and classed STAGED/ENV-RESOLVED-TO-LAYER/MISSING, 'so the class ends'.",
+  "world_is": "infra/aws/lambda/investor-reporting/_scope/resolve.py:71-73,503-510 @19ccf82226 (CONTRACTS_DIR = os.path.normpath(os.path.join(_HERE, '..', '_contracts')); RESOLVED_SCOPE_SCHEMA = CONTRACTS_DIR/ResolvedScope.schema.json; no os.environ.get anywhere in this module) -- staged as resolve.py (packaged_as) into irpt-directory-search, irpt-narrative, irpt-export-render, irpt-performance-adapter and irpt-status per infra/aws/lambda/ci/lambda-source-map.json's staged_from arrays (all 5 read this run), and duplicated at infra/aws/lambda/investor-reporting/holdings/resolve.py:503-510 (own tracked copy, same construct). infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json's committed contracts[] carries exactly 5 names (Performance/Narrative/Render/ExportBundle/ExportReceipt) -- 0 of 5 is ResolvedScope, read this run. ops/status.py:60-61,84-98 @19ccf82226 (CONTRACTS_DIR = os.path.normpath(os.path.join(_LAMBDA_ROOT, '_contracts')), _LAMBDA_ROOT = dirname(_HERE); no env read) and ops/manifests.py:46 (PATH_MANIFEST_PATH = os.path.join(_LAMBDA_ROOT, 'PATH_MANIFEST.json')) -- ops/lambda.tf carries no IRPT_CONTRACTS_DIR and layers=[] (read this run). Reproduced by this order's battery (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rtf_13.py, arm (a)), IB-rtf-13_R70-AC1_battery_output.txt.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py:71-73,503-510 @19ccf82226",
+      "infra/aws/lambda/investor-reporting/holdings/resolve.py:503-510 @19ccf82226",
+      "infra/aws/lambda/investor-reporting/ops/status.py:60-61,84-98 @19ccf82226",
+      "infra/aws/lambda/investor-reporting/ops/manifests.py:46,216-219 @19ccf82226",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.{irpt-directory-search,irpt-narrative,irpt-export-render,irpt-performance-adapter,irpt-status}.staged_from (resolve.py present in all 5), this run",
+      "infra/aws/lambda/layers/irpt-common/BUILD_MANIFEST.json .contracts[] (5 entries, none named ResolvedScope), this run",
+      "infra/aws/terraform/investor-reporting/ops/lambda.tf (layers=[], no IRPT_CONTRACTS_DIR), this run",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rtf_13.py arm (a) output, this run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not this order's to fix: BOUNDS restrict the only deploy to irpt-directory-search and forbid a _scope/, _ids/, directory/ SOURCE edit; a remedy here (stage ResolvedScope.schema.json + StatusEnvelope.schema.json + PATH_MANIFEST.json the way DirectoryEntry is staged here, or add them to the irpt-common layer) touches 6 of 7 functions' manifests/env and is a wider cell than this one. Choices for the issuer: (i) a follow-on cell mirroring this order's own shape for the three contracts across the 6 affected functions; (ii) add the three to the irpt-common layer instead (fewer manifest edits, one build); (iii) accept resolve.py's [] fallback as the intended behavior and only fix status.py/manifests.py's reachability question. R70-AC2's own judgment question (why three passes were needed to find one class) is answered in part by this row: the class recurs OUTSIDE the population any single pass's <paths> grant reaches."
+},
+  {
+  "id": "IRPT_BCKEND-W1-S35",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-19T19:05:11Z",
+  "one_line": "export/package.py's candidate_checkouts() (packaged as package.py in irpt-export-render's own files[]) hardcodes Andrew's own device-specific absolute paths as fallback candidates for a portal checkout ('/c/Users/AndrewBerman/Desktop/ajb_workspace/portal', 'C:/Users/AndrewBerman/Desktop/ajb_workspace/portal') -- paths that can never exist on a deployed Lambda -- so on the live irpt-export-render runtime every candidate in the list is absent (IRPT_PORTAL_CHECKOUT is unset in export/lambda.tf; the two hardcoded literals are this laptop's own filesystem; the final ancestor-walk candidate needs 6 levels above /var/task, which has 2) and package.locate() unconditionally raises PackageUnavailable in production -- a MISSING open with no candidate that can ever resolve in the deployed zip, and a live instance of the class CLAUDE.md's device-specific-logic rule names ('NEVER write device-specific logic ... DERIVE, dont hardcode').",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's arm (a) census population includes every runtime file open in the 7 functions' packaged Python members, classed STAGED/ENV-RESOLVED-TO-LAYER/MISSING.",
+  "world_is": "infra/aws/lambda/investor-reporting/export/package.py:61-110 @19ccf82226 (candidate_checkouts(): env IRPT_PORTAL_CHECKOUT, then the two hardcoded absolute paths above, then a 6-level ancestor walk from __file__ checking for a 'portal' subdirectory; locate() raises PackageUnavailable('no portal checkout carries ...') when every candidate's manifest.is_file() is False). infra/aws/terraform/investor-reporting/export/lambda.tf's environment_variables (read this run) sets no IRPT_PORTAL_CHECKOUT. 'package.py' is declared in irpt-export-render's files[] (infra/aws/lambda/ci/lambda-source-map.json, read this run) -- it ships. CLAUDE.md Rule (HARD STOPS section): 'NEVER write device-specific logic into ajb_workspace/portal -- DERIVE, dont hardcode ... Direction ratified, remediation NOT authorized -- surface, dont chase.' (LD-0405). Reachability from a currently-wired export-render route was NOT independently confirmed this pass (export/entry.py's ROUTES table was not re-read for a package/locate-triggering operation).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/package.py:61-110 @19ccf82226",
+      "infra/aws/terraform/investor-reporting/export/lambda.tf environment_variables block (no IRPT_PORTAL_CHECKOUT), read this run",
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-export-render.files[] includes 'package.py', read this run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not this order's to fix (export/package.py is outside this order's <paths>, and this order's BOUNDS name only the directory root's manifest/env). Two independent questions for the issuer: (1) is package.locate() reachable from any WIRED export-render route today, or only a diagnostic action; (2) the device-specific literal is the LD-0405 class regardless of reachability and its remedy (git rev-parse --show-toplevel, or an explicit required env with no repo-relative fallback) is a decision, not something this row makes."
+},
+  {
+  "id": "IRPT_BCKEND-W1-S36",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-19T19:05:11Z",
+  "one_line": "_keys/keys.py:verify_against_layout(layout_path) is a runtime-open call site (io.open(path)) present in every one of the 7 serving functions' copies of keys.py (flat in irpt-directory-search/irpt-intake-poller/irpt-status; via the irpt-common layer's python/keys.py in irpt-narrative/irpt-performance-adapter/irpt-export-render/irpt-holdings), but it takes a caller-supplied layout_path with no static default and this order's census sweep (Grep, path=infra/aws/lambda/investor-reporting) found exactly ONE match for 'verify_against_layout(' -- its own def line -- across the whole tree: 0 call sites in any shipped handler, entry point or non-test module. It is excluded from the STAGED/ENV-RESOLVED-TO-LAYER/MISSING three-way count because it has no static target to classify, not because it was overlooked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "This order's arm (a): 'every RUNTIME FILE OPEN in its packaged Python members' censused, 'n of n opens per function classed STAGED/ENV-RESOLVED-TO-LAYER/MISSING'.",
+  "world_is": "infra/aws/lambda/investor-reporting/_keys/keys.py:582-591 @19ccf82226 (def verify_against_layout(layout_path): ... with open(layout_path...)). Grep tool census, this run, path=infra/aws/lambda/investor-reporting, pattern 'verify_against_layout\\\\(': 2 matches total -- the def itself (:582) and one COMMENT citing it (:108) as documentation of a DIFFERENT function's own declaration mechanism; 0 call sites.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_keys/keys.py:582-591 @19ccf82226",
+      "Grep tool census, this run, path=infra/aws/lambda/investor-reporting, pattern 'verify_against_layout\\\\(': def line + 1 comment reference, 0 call sites"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Recorded for completeness of this order's arm (a) denominator (it explains why one enumerated call site sits outside the three-way classification), not a defect: an unreachable helper with a caller-supplied path is inert by construction."
+}
+,
+{
+  "id": "IRPT_BCKEND-W1-S39",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T09:10:00Z",
+  "one_line": "Rows IRPT_BCKEND-W1-S37 and IRPT_BCKEND-W1-S38, which both never-widen halves name as the ARMED rows they supersede and disarm 'at the v2 apply, by the row's own disarm act', are ABSENT from this channel at this worktree's HEAD -- they exist only on an undrained branch, lost when a DIFFERENT branch (carrying only the first pass) was drained under the same descriptive commit message.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git log --oneline --all -S\"W1-S37\" -- org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md, this worktree: hits 27ed75f57d (adds W1-S37) and 39e269aa06 (references W1-S37, adds W1-S38), both on local branch wk-irpt_bckend-6-1f",
+      "git rev-parse HEAD:org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md at commit dd4cfbecd5 (this worktree's HEAD): grep for 'W1-S37' -> 0 matches, 'W1-S38' -> 0 matches",
+      "git log --oneline b6ede3ac5c..dd4cfbecd5 -- <the channel file>: the two commits between the drain and HEAD (f5ccff15d0, 30d612d5e5) touch an unrelated project (ADVI_FIRMBKTS), so the rows were never re-added after the drain",
+      "the DRAIN commit b6ede3ac5c ('drain: merge wk-irpt_bckend-6-1f') has TWO PARENTS, 4332e74b03 and a42181055c0f -- a42181055c0f is 'proof-of-spec(IRPT_BCKEND.TO-IB-rtf-13 first pass...)', NOT 39e269aa06 (the third-pass commit carrying W1-S38) -- so the branch actually merged at that drain point was an EARLIER tip of a same-named local branch, not the tip that carries the second/third-pass rows",
+      "local branch wk-irpt_bckend-6-1f's CURRENT tip (2021547ff6, 'proof(...) IB-rtf-13 third pass...') is NOT an ancestor of dd4cfbecd5 (git merge-base --is-ancestor 2021547ff6 dd4cfbecd5 -> false), so the second/third-pass work, including rows W1-S37/W1-S38 and the v1 packet sign-offs at blob fb833bc620, was never merged into CLOUD under this lineage",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-13_DIRECTORY_CONTRACT_STAGED.md:107-108 (v2, at HEAD dd4cfbecd5): 'W1-S37 and W1-S38 are superseded by this v2 gate and disarm at the v2 apply, by the row's own disarm act -- never in prose'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Rule 22 (an ARMED row graduates only via a closing carrier, never in prose) and both v2 never-widen halves' own text naming W1-S37/W1-S38 as rows this apply's own act disarms.",
+  "world_is": "The two rows those halves point to do not exist in the channel this worker (or the issuer's own drain) can read at HEAD. The disarm act this pass performs (the v2 apply, arm d) cannot graduate a row it cannot find -- there is nothing at this coordinate for a gate or a later reader to match against 'W1-S37'/'W1-S38', so the halves' own disposition instruction is currently unsatisfiable by any mechanical reader of this channel. This is a MERGE-LOSS defect in a shared, branch-scoped surprise channel (a class Rule 14b's guidance for append-only shared files does not by itself prevent when two DIFFERENTLY-NAMED-but-same-prefix branches exist and only one is drained), not a defect in this order's own act.",
+  "notes": "Not remedied here: this worker cannot cherry-pick another branch's commits into the shared channel without widening this order's <paths> grant or acting outside its own worktree. The evidentiary content those two rows carried (v1's whole-planfile digest proven UNSATISFIABLE across 5 runs, culminating in a fifth distinct digest value) is independently RESTATED and relied upon by both signed v2 halves' own prose (CTO half section 1; COO half's 'WHY v2 EXISTS' section), so the SUBSTANCE is not lost -- only the CHANNEL ROW mechanics that were supposed to formally disarm it. Disarm owner is the issuer per both halves' own text; the remedy is likely to re-file the substance as a fresh row at the issuer's own coordinate (S<k>) citing this row, or to cherry-pick 27ed75f57d/39e269aa06's row content from local branch wk-irpt_bckend-6-1f (still present as of this writing) into the drained tree."
+},
+{
+  "id": "IRPT_BCKEND-W1-S40",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T10:05:00Z",
+  "one_line": "The subtraction gate's signed subtraction set (a data.aws_s3_object read entry's version_id/last_modified) is INERT for the directory root's own resource_changes -- 0 of 0 mode==\"data\" entries appear there on every plan measured -- because those two fields instead surface as ATTRIBUTES of module.irpt_directory_search.aws_lambda_function.this itself (s3_object_version, last_modified), and build-and-upload.sh's unconditional per-run S3 re-upload (byte-identical content, new VersionId every call) manufactures a phantom 'update' there on ANY re-run after the real apply, even though before.source_code_hash == after.source_code_hash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: for each of the 7 investor-reporting roots' terraform show -json <planfile>, [e for e in resource_changes if e.get('mode')=='data'] -> 0 entries, every root, 3 separate full-battery runs this session (full_battery_run3/4 and a standalone check)",
+      "python diff of before vs after on module.irpt_directory_search.aws_lambda_function.this in .scratch/plans_rtf13/directory.tfplan (full_battery_run3's plan): only differing keys were last_modified (2026-09-20T09:32:07.000+0000 -> None) and s3_object_version (lmtGc0EZIOaQqObYWVjYxBnRkoui7LfX -> fD_BVPLgQ.JCOyE0oiBiEHnKnYSNyo1x) -- source_code_hash identical on both sides (76LeVyYNfhdyDnQNXR3LzrqSv7k7Vr3POSjpcBzww6E=)",
+      ".tools/aws.cmd s3api list-object-versions --bucket opal-313476888478-lambda-artifacts --prefix investor-reporting/irpt-directory-search.zip: 5 distinct VersionIds minted between 09:16:20Z and 10:01:39Z this session (one per build-and-upload.sh invocation across the manual apply pass and 3 full battery runs), all sha256(b64)=76LeVyYNfhdyDnQNXR3LzrqSv7k7Vr3POSjpcBzww6E= (byte-identical content, distinct S3 versions)",
+      "org/tier1_exec/2.0.0_SA_COO~B/deliverables/NEVER_WIDEN_SIGNOFF_PACKET_IB-rtf-13_v2.md:82-84: 'the gate above does not turn on the build's byte-identity, only on the substantive source_code_hash transition it produces' -- read as anticipating exactly this non-substantive drift, but the SIGNED subtraction-set TERM (org/tier1_exec/1.0.0_SA_CTO/deliverables/..._CTO_HALF..._DIRECTORY_CONTRACT_STAGED.md:46-49) names only 'a data.aws_s3_object entry carrying actions [read] with version_id/last_modified', which this module's plan never produces",
+      "battery_ib_rtf_13.py arm (d), first re-run after the real apply (this worker's own instrument): STOPPED correctly on this exact content, per the order's own rule ('a REFUSAL is EVIDENCE... NEVER widen the subtraction set at the terminal') -- the gate did not fail open"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-13_DIRECTORY_CONTRACT_STAGED.md section 2: 'THE COMPARED OBJECT IS resource_changes, PER ROOT, AND NOTHING ELSE... a data.aws_s3_object entry carrying actions [read] with version_id/last_modified is exactly such a case'.",
+  "world_is": "For irpt-directory-search's own module, no data.aws_s3_object entry is ever a separate resource_changes member (its read is fully resolved during refresh and folded directly into the lambda resource's own before/after) -- so the named example case never fires, and the two named fields live one level up, as attributes of the SAME entry that also carries the substantive source_code_hash. The literal signed term does not reach them. This worker did NOT widen the subtraction set to cover this case (that is the issuer's/CTO's call per the order's own bound); instead it removed the PRECONDITION that manufactures the drift -- both arm (c) and arm (d) now check whether the function already serves the manifest's/signed built sha before calling build-and-upload.sh again, so a re-run of this battery in an already-applied state no longer mints a new S3 version and no longer sees this drift. The REAL apply (this pass's first execution) landed and verified cleanly, matching the signed shape exactly, before this class of re-run churn was ever introduced.",
+  "notes": "Remedy carried, not applied here: either (a) build-and-upload.sh should skip re-uploading when the computed content sha256 already matches the currently-uploaded latest version's content (idempotent at the S3-object level, not just the manifest level), which would make this whole class structurally impossible, or (b) the CTO's compared-object term is amended to also subtract s3_object_version/last_modified when they appear as attributes of the SAME entry as an unchanged source_code_hash (a narrower, named widening, requiring re-signature per the order's own bound). This worker's own fix (skip-rebuild-when-already-served in arm (c) and arm (d)) is a workaround inside this cell's own battery, not a change to the shared build tool or the signed gate construction."
+}
+,
+{
+  "id": "IRPT_BCKEND-W1-S41",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T10:10:00Z",
+  "one_line": "This worker ran TWO reconciling `terraform apply` acts on the directory root (pointer-only: s3_object_version/last_modified, 0 added/1 changed/0 destroyed each, no functional change) AFTER the change-management ledger irpt-bckend-ib-rtf-13-apply had already been CLOSED, with no ledger entry of their own -- a self-identified gap against this order's bound 4 (a change-management entry opened at the start and closed at completion of every deploy).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".scratch/apply_output2.txt and .scratch/apply_output3.txt (this worker's own session scratch, not committed -- .scratch/ is gitignored): two 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' outputs on infra/aws/terraform/investor-reporting/directory, both AFTER the CLOSE commit 9974760d44",
+      "git log --oneline: the ledger's OPEN (022a24690e) and CLOSE (9974760d44) commits both precede the two reconciling applies in wall-clock time; no third org/critical_paths/.open_deploys/*.json or change_management/*.md entry was opened for either",
+      "the drift each reconciling apply corrected was ITSELF a side effect of this worker's own re-runs of the battery's arm (c)/(d), which called build-and-upload.sh unconditionally before the skip-rebuild fix landed (row IRPT_BCKEND-W1-S40) -- the CAUSE and the RECONCILIATION are both this worker's own acts within the same session"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This order's 'Bounds every order carries' item 4: 'a change-management entry opened at the start ... and its OPEN sentinel ... COMMITTED IMMEDIATELY ... before the act; the entry closed at completion and COMMITTED BEFORE the reads that grade the act'.",
+  "world_is": "Both reconciling applies completed successfully (rc=0, 0 destroy) and changed NOTHING functional -- no code, no config, no IAM, only an S3 object-version pointer this worker's own prior re-runs had drifted. Nothing was left half-landed at any point (CLAUDE.md's NEVER-law), and the FINAL state matches the FIRST, correctly-ledgered apply's intended shape exactly (re-verified 0-diff, CodeSha256==built, member+env present, after the second reconciling apply). But the PROCEDURE was not followed for these two acts: no ledger entry named them, so a reader scanning only org/critical_paths/ for this project's deploy history would see one ledgered apply and miss two more terraform-apply invocations that happened in between.",
+  "notes": "Not remedied with a backdated ledger entry (that would misstate the record's own timeline -- the ledger was genuinely closed before these ran). Recorded so the class is visible: an idempotent-rebuild side effect that forces a RECONCILING apply mid-verification is a real deploy act and needs its own ledger discipline, even when it is corrective and non-functional. The precondition fix in row W1-S40 (skip-rebuild-when-already-served) also prevents this class going forward, since a clean re-run no longer drifts and therefore never needs a reconciling apply."
+}
+,
+{
+  "id": "IRPT_BCKEND-W3-S48",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+  "surfaced_at": "2026-09-20T15:20:00Z",
+  "one_line": "IB-rtg-3's bound confines the source edit to `performance/tenants.py` (+ `_ids/` only if it already exposes the mapping), and that confined fix is CORRECT for R74-AC1 (route_for now resolves a TenantRoute for the boundary's real opaque id, battery PASS, 0 fourth-id-space literals) -- but `performance/handler.py:42-46`'s OWN firm-keyed dict, `RECORDED_LABELS`, is ALSO keyed on the SAME retired third spelling (`F-49F`/`F-INF`; `F-COT` deliberately absent) that this order reconciles in tenants.py, and handler.py is OUTSIDE this order's confined edit. Reconciling only ROUTES leaves RECORDED_LABELS unreachable by any real opaque firm id: `handler.run`'s `labels = labels if labels is not None else RECORDED_LABELS.get(firm_id)` now returns None for all 3 registry firms once a real, authorized request's `firm_id` is the opaque id -- so under the DEFAULT transport mode (`recorded`, `DEFAULT_MODE = os.environ.get('IRPT_PERF_TRANSPORT_MODE', 'recorded')`), a served request that used to reach the captured-evidence replay (or, pre-fix, DEPENDENCY_UNAVAILABLE) now instead returns the NO-CAPTURE branch (report: None, coverage.outcome NO-CAPTURE) for EVERY firm, every time, once this fix is applied and the mode is left at its default.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "infra/aws/lambda/investor-reporting/performance/handler.py:42-46 @8ba74b3130423f6d1ca7ce4e5f2b24bb82dc8664 -- `RECORDED_LABELS = {\"F-49F\": {...}, \"F-INF\": {...}}`, read at handler.py:85 via `RECORDED_LABELS.get(firm_id)` where `firm_id` is the SAME value handler.py:79-80 hands to `tenants.route_for`",
+    "this cell, this run: infra/aws/lambda/investor-reporting/performance/tests/test_performance_adapters.py updated to call `tenants.route_for`/`scope_for` with the NEW opaque ids (required, since `ROUTES` no longer accepts the retired short tokens) -- `timeout 120 py -3.12 -m pytest infra/aws/lambda/investor-reporting/performance/tests -q` then reports 5 of 28 FAILED, every failure a `RECORDED_LABELS.get(firm_id)` miss surfacing as `report: None` or a NO-CAPTURE-shaped absence set, never an UnknownTenant/DEPENDENCY_UNAVAILABLE -- confirming route resolution itself is fixed and the label lookup is the orphaned dependency",
+    "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_R74-AC1_battery_output.txt, this run: `tenants.route_for` resolves a TenantRoute for all 3 registry firms via their real opaque ids, so R74-AC1's own bar (no DEPENDENCY_UNAVAILABLE) is UNAFFECTED by this finding"
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-rtg-3 BOUNDS: 'The ONLY code that deploys: irpt-performance-adapter rebuilt with the reconciliation; the served-byte delta exactly that or STOP' and 'a source change confined to performance/tenants.py (+ _ids/ only if it already exposes the mapping)'.",
+  "world_is": "A second firm-keyed dict sharing the exact retired id space this order was cut to reconcile (handler.py's RECORDED_LABELS) sits OUTSIDE the confined edit, so the confined fix is locally correct and globally incomplete: it trades a DEPENDENCY_UNAVAILABLE failure mode for a NO-CAPTURE one on every real request, under the function's own DEFAULT transport mode, the moment this build is applied.",
+  "notes": "Not fixed here: touching handler.py would violate this order's own served-byte-delta bound ('exactly that or STOP'), so this is filed rather than repaired in-cell. Disarm needs either a follow-on order reconciling RECORDED_LABELS to the same opaque id space (the same `_ids.opaque_firm` calls this row's evidence already computed), or an explicit ruling that NO-CAPTURE is an acceptable interim outcome for the recorded/default transport mode. Whichever branch, arm (d)/(e) of THIS order do not run this pass (never-widen halves ABSENT, STOP-and-report per the face), so nothing ships on this finding before a reviewer sees it."
+},
+  {
+    "id": "IRPT_BCKEND-W2-S61",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+    "surfaced_at": "2026-09-20T21:05:37Z",
+    "one_line": "Second-pass arm (e) battery for IB-rtg-2 wrote a NEW battery_ib_rtg_2.py at the SAME path pass-1 committed, overwriting pass-1's 4-arm/12-check offline composition battery (mutant, MemoryStore-backed RUNNING/UNCERTAIN/never-READY, negative controls) with a different live-HTTP battery; the offline coverage is no longer present at HEAD under this filename, only recoverable via git history.",
+    "spec_asserts": "The task order arm (e) instruction (face @HEAD) says to reuse ../deliverables/0.7.0_AE_CloudOps~V/battery_ib_rtf_10.py -- the bounded test-principal MECHANISM, a NEW epoch, the full lifecycle -- for the live proof; it names no filename for THIS order's own battery and does not address what happens to a prior pass's already-committed battery under the SAME conventional name.",
+    "world_is": "Pass 1 (this same assignee, 0.9.0_WK_IRPT_BCKEND~2) had already committed org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py at 27c5e480b3 (blob f4748140f5c3c391d1d6caf5dd3511ee463cb11d): a 4-arm, 12-sub-check, network-free battery exercising status_loader.py directly against checkpoint.MemoryStore() fixtures (the pre-fix mutant shape, a claimed-lease RUNNING envelope, an expired-lease UNCERTAIN envelope, never-READY, and two negative controls). This second pass wrote a DIFFERENT battery under the identical path to perform the live HTTP proof arm (e) names, committed at 53721f1f6f -- overwriting the offline battery's content at HEAD. Both versions independently satisfy the task order's <criterion id=\"R73-AC1\"> invocation+<expect> (same path, same token IBR73-STATUS-LOADER-SERVES-ENVELOPE), so the mechanical criterion is not affected; what is lost from the WORKING TREE is the offline, network-free regression coverage of status_loader.py's own state-transition rules (RUNNING/UNCERTAIN/never-READY), still fully recoverable at `git show 27c5e480b3:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 27c5e480b3:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py -- 298 lines, 4 arms (arm_a_mutant, arm_b_composition_direct, arm_c_negative_control, arm_d_wiring_end_to_end), 12 named sub-checks, no network/AWS call",
+        "git show 53721f1f6f:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/battery_ib_rtg_2.py -- the second-pass replacement: packet/K-CODE/precondition/live-HTTP-proof arms, real AWS + real HTTP calls, no MemoryStore composition-level checks of status_loader.py's own RUNNING/UNCERTAIN/never-READY branches",
+        "both versions print the identical token IBR73-STATUS-LOADER-SERVES-ENVELOPE on their own PASS, so proof-of-spec-check.py grading R73-AC1 against the task order's <expect> pattern is unaffected either way"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not remedied in this order: BOUNDS forbid widening this order's own deliverable beyond arms (d)/(e), and reconstructing/merging pass-1's offline battery back into this file is exactly the kind of neighbouring-defect fix this worker is told not to perform. Filed for the issuer to decide whether a follow-on cell should carry the offline composition-level regression coverage forward (e.g. a separate battery_ib_rtg_2_offline.py, or a merge of both arm sets into one file) so status_loader.py's RUNNING/UNCERTAIN/never-READY state-machine rules are exercised by something other than a live network call against the one production lease row this order's own WRITERS census names."
+  },
+  {
+    "id": "IRPT_BCKEND-W3-S51",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+    "surfaced_at": "2026-09-21T07:16:02Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "IB-rth-3's OWN FACE ASSERTS `superseded` IS 'TRUE FOR SOME OF THE SEVEN, FALSE FOR OTHERS' -- MEASURED AGAINST THE DECOMP'S OWN `supersedes` COLUMN ACROSS ROUNDS 3-8 PLUS A PROJECT-WIDE TEXT SEARCH: TRUE FOR ZERO OF THE SEVEN, FALSE FOR ALL SEVEN.",
+    "spec_asserts": "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rth-3....md line 24 (arm (b), the `superseded` bullet): \"`superseded` is written ONLY where a LATER round actually RE-CUT that cell -- a FACT to READ (`supersedes` in the decomp, or a later order naming it), never assumed. True for some of the seven, false for others.\"",
+    "world_is": "Read (never assumed, per the rule's own instruction) org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md's `supersedes` column for every rectangle table, rounds R3 through R8 (the only rounds after the seven's own round-of-origin that could name them): R6.1 (rtf-1..rtf-5, the seven's own round) shows rtf-3 SUPERSEDES IB-rte-2 (rtf-3 as SOURCE, not target) and rtf-1/rtf-4 supersedes '--'; R7.1 (rtg-1..rtg-4) shows `supersedes` '--' on all four; R8.1 (rth-1..rth-4) shows `supersedes` '--' on three and `IB-rtg-1` on rth-2 (an unrelated pair -- rtg-1 is a round-7 cell, not one of the seven). No rectangle table in rounds 3, 4, 5, 6, 7 or 8 names rt-6, rtf-3, rtf-4, rtf-7, rtf-10, rtf-12 or rtf-14 as the TARGET of a `supersedes` entry. A project-wide case-insensitive text search for \"supersed\" against each of the seven ids, across org/missions/D9/IRPT/IRPT_BCKEND/ (task-orders/, decompositions/, surprise-channel/), returns matches only for: rte-4's own status line (an unrelated order, correctly superseded by rtf-1 -- the template this rule's `superseded` branch describes), rtf-5's/rtf-2's own bodies (their OWN supersedes-column entries, naming rte-3/rte-7/rte-6 as targets, not naming any of the seven as a target), rtf-10's status text (an internal packet-blob superseded by a later packet blob, not an order-level supersession), rte-2's decomp cell text, and rth-3 itself (this cell's own face, the source of the claim). None resolves to a LATER round re-cutting any of the seven cells. So this worker's honest-word disposition for all seven is LEFT NON-TERMINAL with `superseded` explicitly refused on each (recorded in each face's own appended ISSUER-CORRECTION clause, commit 023b4697df), which is consistent with a TRUE-FOR-ZERO reading -- but the order's own text asserts TRUE FOR SOME, which this worker's measurement does not confirm.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md R6.1 table (`IB-rtf-1`..`IB-rtf-5` rows): `supersedes` column = 'IB-rte-4' / 'IB-rte-6' / 'IB-rte-2' / '--' / 'IB-rte-3, IB-rte-7' -- rtf-3's entry names IB-rte-2 as what RTF-3 supersedes, not the reverse; rtf-4's entry is '--'",
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md R7.1 table (`IB-rtg-1`..`IB-rtg-4`): `supersedes` column = '--' on all four rows",
+        "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md R8.1 table (`IB-rth-1`..`IB-rth-4`): `supersedes` column = '--', 'IB-rtg-1', '--', '--' -- only rth-2 carries a target, and it is IB-rtg-1 (round 7), not one of the seven",
+        "Grep 'supersed' (case-insensitive) over org/missions/D9/IRPT/IRPT_BCKEND/task-orders/ this session: 8 files matched (rt-7, rt-8, rt-9, rtc-4, rtd-7, rte-2, rte-3, rte-7, rte-6, rte-4, rtf-10, rtf-13, rtf-2, rtf-5, rtf-3, rth-2, rth-3) -- none names rt-6, rtf-4, rtf-7, rtf-12 or rtf-14 as a supersession TARGET; rtf-3's only hit is its own metadata line",
+        "commit 023b4697df (this worker, this drive): each of the seven faces' own <status> now carries an ISSUER-CORRECTION clause explicitly stating '`superseded` is refused too' with the specific reason per order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "No impact on this cell's own grading: rule (b)'s honest-word logic already falls through to 'LEFT NON-TERMINAL' when neither `complete` nor `superseded` is honest, and that is exactly this worker's disposition for all seven (see commit 023b4697df and battery_ib_rth_3.py's per-order table). Filed because the order's own premise ('true for some of the seven') does not match this worker's measurement of the decomp's own `supersedes` column plus a project-wide text search, per CLAUDE.md's own instruction on this exact bullet ('never assumed'). Routed to 2.0.0_SA_COO~B (the issuer) to confirm whether the clause described a different, unnamed seven-member set, a planned-but-not-yet-cut round-9 supersession, or is itself the thing needing correction."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S46",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "IB-rth-1's own face (and round-7's W3-S50) name `opal-data-inflection` as 'the locked bucket (FWD-11)' blocking inflection's ownership map. MEASURED: the live serving path reads a DIFFERENT bucket, `opal-data-inf` (the legacy three-letter code, same shape as 49financial/opal-data-bd and cottonwood/opal-data-cot), which is NOT locked; `opal-data-inflection` is a separate, unrelated D14-migration bucket the serving path never touches.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "IB-rth-1 face, <to_id> line and (a)(ii): 'the blocker is the locked opal-data-inflection bucket (FWD-11)'; 'on WHICH bucket (opal-data-inflection per FWD-11)'.",
+    "world_is": "data/firm_registry.json (HEAD): inflection -> bucket 'opal-data-inf'. Live env var on irpt-performance-adapter, IRPT_DIRECTORY_BUCKET_MAP == {'49financial':'opal-data-bd','cottonwood':'opal-data-cot','inflection':'opal-data-inf'} -- EQUAL to the registry. `.tools/aws s3api get-bucket-policy --bucket opal-data-inf` (this session, as Andrew_Berman) succeeds and returns two Allow statements (a CloudFront OAI and a CloudFront distribution on gold/*), no Deny -- the bucket is readable and not locked. By contrast `get-bucket-policy --bucket opal-data-inflection` returns AccessDenied 'with an explicit deny in a resource-based policy', even for Andrew_Berman (INVESTIGATION_v1.md:7178, this same file, an earlier row); `s3api list-buckets` shows opal-data-inflection and opal-data-cottonwood both created 2026-09-18T20:05:17Z, the same second, one apply -- a D14 full-name-migration pair the serving path's env var never names. The actual live blocker (measured this session: a session scoped to exactly the deployed role's own GetObject-only, no-ListBucket grant on `opal-data-inf/platinum/inflection/ownership_map.json`, a genuinely-missing key, gets HTTP 403 AccessDenied, S3's own existence-masking behaviour for a caller without ListBucket) is entirely inside `opal-data-inf`, and `_authz/loaders.py::load_ownership`'s exception handler not recognising that shape (fixed this cell; see IB-rth-1_investigation.md sections 3-5).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "py -3.12 -c \"json.load(open('data/firm_registry.json'))['firms']\" this worktree HEAD: inflection bucket == 'opal-data-inf'",
+        ".tools/aws lambda get-function-configuration --function-name irpt-performance-adapter --query Environment.Variables.IRPT_DIRECTORY_BUCKET_MAP (this session): {\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+        ".tools/aws s3api get-bucket-policy --bucket opal-data-inf (this session): two Allow statements, no Deny, rc=0",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md:7178-7179 (this file, an earlier round-7 row): opal-data-inflection get-bucket-policy -> AccessDenied 'explicit deny in a resource-based policy'; list-buckets shows opal-data-inflection/opal-data-cottonwood both CreationDate 2026-09-18T20:05:17Z",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IB-rth-1_investigation.md sections 1 and 3 (this cell's own investigation, same commit)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Does not change this cell's own conclusion or branch (the AccessDenied-under-opal-data-inf mechanism is the same one row IRPT_BCKEND-S94/W3-S50 already names, and this cell's rectification targets that, not FWD-11's locked bucket). Filed because a later reader following the face's own words would go looking for a fix on the wrong bucket. Routed to 2.0.0_SA_COO~B (the issuer, same pattern as W3-S50/S94) to correct the FWD-11 cross-reference on a future PRD/face touch."
+  },
+  {
+    "id": "IRPT_BCKEND-W1-S47",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+    "surfaced_at": "2026-09-21T13:05:00Z",
+    "one_line": "Committing this cell's own, otherwise-correct and fully-tested `_authz/loaders.py` fix was REFUSED by .tools/naming-gate.py -- not for the fix itself, but because the file's PRE-EXISTING `bucket_for` GENERATED-block marker cited a stale registry hash unrelated to this cell's edit; the gate diffs the WHOLE FILE against a fresh regen, so any edit anywhere in a file with a stale marker is refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "Task order IB-rth-1 names no naming-gate interaction; CLAUDE.md Rule 30's own bound: 'a builder REFUSAL is a missing registry row to add ... never a hand-typed workaround' -- this refusal was neither: the row exists, the target is a known generator output, and the ONLY difference from a fresh regen was the marker's cited registry hash.",
+    "world_is": "`.tools/safe-commit.sh` on this cell's diff (touching only `load_ownership`, well below the `bucket_for` GENERATED block at lines 43-57) was BLOCKED: '[naming-gate] NAMING REFUSE infra/aws/lambda/investor-reporting/_authz/loaders.py:43 <generated-file-edit> ... a hand edit to a GENERATED file: its bytes differ from the generator's output from line 43'. Measured: `py -3.12 lib/opal_naming.py generate --out <scratch> --target infra/aws/lambda/investor-reporting/_authz/loaders.py` then `diff` against the working file showed exactly ONE line differing -- the marker comment's cited registry hash (`926399fd259b9977` on disk vs `dc7c1d5c8f2ce1ea` freshly generated); the `bucket_for` function BODY (lines 44-56) was byte-identical, and this cell's own hand edit (well outside the marked range) survived the regen unchanged (the generator reads hand-kept sections from the post-image). Applying the regenerated file (marker refreshed, fix preserved, confirmed by diff before applying) let the commit-gate and naming-gate both pass. `.tools/naming-gate.py:679-692` (`generated_ranges`) and `:695-715`/`:914-926` (`generator_output`/`grade_file`) confirm the mechanism: the WHOLE FILE is regenerated and compared byte-for-byte, not just the touched hunk.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/.. safe-commit output this session (first attempt): '[naming-gate] NAMING REFUSE infra/aws/lambda/investor-reporting/_authz/loaders.py:43 <generated-file-edit>'",
+        "py -3.12 lib/opal_naming.py generate --out .scratch/gen_check --target infra/aws/lambda/investor-reporting/_authz/loaders.py (this session): 'WROTE ... (9779 bytes)'",
+        "diff .scratch/gen_check/infra/aws/lambda/investor-reporting/_authz/loaders.py infra/aws/lambda/investor-reporting/_authz/loaders.py (this session): exactly 1 line differs -- the GENERATED marker's registry hash",
+        ".tools/naming-gate.py:679-715, 905-926 (generated_ranges/generator_output/grade_file), read at HEAD this session: the check regenerates and compares the FULL post_text, not a sliced range"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Resolved for THIS file, THIS cell, by refreshing the marker before commit (see the committed loaders.py and the packet's amended COMMITTED-FILE-SHA256 note). ARMED because this is a GENERAL, project/fabric-wide condition, not particular to this file: ANY other generated file whose marker predates the current registry hash will refuse the NEXT hand edit any worker makes to it, for a reason invisible from the edit's own diff -- a worker unfamiliar with lib/opal_naming.py could spend real time diagnosing a refusal that names line 43 while their own change is at line 130. Routed to 2.0.0_SA_COO~B (the issuer) as an LGIC_ENFORCE / naming-gate hygiene item: either a periodic marker-refresh sweep, or the gate's own message naming this exact remedy explicitly (it currently prints the regenerate command but not the 'this may be pre-existing drift, unrelated to your edit' framing). DISARM CONDITION: a project-wide (or fabric-wide) sweep confirms every GENERATED marker's cited registry hash is current, or a ruling states this is accepted friction with the existing message as sufficient guidance."
   }
 ]
 ```
@@ -5479,5 +6915,1022 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  },
  "disposition": "UNDER_INVESTIGATION",
  "hazard_standing": "INERT"
+}
+```
+
+## Round 5 L9 -- 3.0.0_SA_CVO's own findings from the grading
+
+```json
+{
+ "id": "IRPT_BCKEND-S77",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "one_line": "THE CROSS-FIRM FENCE IS STALE AT HEAD AND W3-S42's STATED CAUSE IS NO LONGER TRUE: bucket_provisioned is now TRUE for inflection and cottonwood, and the guard STILL does not name their buckets -- because the GENERATOR has not been re-run, not because the flag is false. The remedy moves from a registry edit outside that order's paths to one command, and it is unblocked.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/logic/registry/scopes.json @ea600978d1 -- bucket_provisioned true + bucket_managed_by for both firms",
+   ".tools/ds-precommit-check.py @ea600978d1 -- the live generated block, missing both new names",
+   "lib/opal_naming.py:617 @ea600978d1 -- the generator's selector on bucket_provisioned",
+   "3.0.0_SA_CVO's regeneration into the scratchpad and the 0-of-290 signature census at HEAD"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The generated cross-firm block in .tools/ds-precommit-check.py names every provisioned foreign firm bucket, so a pipeline tree cannot reference another firm's bucket by bare name.",
+ "world_is": "Measured by 3.0.0_SA_CVO at HEAD ea600978d1. infra/logic/registry/scopes.json carries bucket_provisioned TRUE for BOTH inflection and cottonwood, each with bucket_managed_by 's3-lgic-firm-buckets.tf' -- so IB-rte-7's drafted field LANDED and W3-S42's premise ('bucket_provisioned stays false for both firms') is false at HEAD. The LIVE fence still reads _CROSS_FIRM_FOREIGN_BUCKETS = {data/black_diamond/: (opal-data-cot,), data/cot/: (opal-data-bd, opal-data-inf, opal-data-49financial)}. REGENERATING FROM TODAY'S REGISTRY INTO THE SCRATCHPAD -- 'python lib/opal_naming.py generate --out <scratchpad>', never writing the repo -- produces the SAME block PLUS 'opal-data-cottonwood' under data/black_diamond/ and 'opal-data-inflection' under data/cot/. The line that does it is lib/opal_naming.py:617, 'ruled = [g[\"bucket\"] for g in foreign if g.get(\"bucket_provisioned\")]', which reads the very flag that flipped. THE SIBLING BLOCK _CROSS_FIRM_FOREIGN_KEY_PREFIXES regenerates IDENTICAL, so this is one block, not the pair. EXPOSURE, NOT INCIDENT, and the signature is printed: over 290 readable tracked files (data/black_diamond/ 176, data/cot/ 114), references to the foreign bucket in the newly-unguarded direction = 0. Nothing has used the hole. \u26d4 THE FLIP THAT UNBLOCKED THE TERRAFORM SELECTOR IS THE SAME FLIP THAT CHANGED THE FENCE GENERATOR'S OUTPUT, and only one of the two consumers was acted on -- which is why neither IB-rte-3 nor IB-rte-7 could see it: each owned one half."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S78",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "one_line": "W4-S36 IS NOT AN ORDER DEFECT, IT IS A POINTER CLASS, AND THE LAW FILE HAS IT TOO: CLAUDE.md cites exactly 2 memory/ paths and 2 OF 2 ARE UNRESOLVABLE AS WRITTEN -- neither is tracked, and they resolve in two DIFFERENT stores, one in the repo worktree only and one only in the user memory directory.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "CLAUDE.md @ea600978d1 -- the two memory/ citations",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S36",
+   "3.0.0_SA_CVO's resolution test at HEAD: git ls-files memory/ returns 0; each path tested against the worktree and against the user memory directory separately"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "A path a law file or an order face cites resolves for the reader who follows it.",
+ "world_is": "Measured by 3.0.0_SA_CVO at HEAD ea600978d1 while dispositioning W4-S36 (which correctly reports that memory/feedback_structural_over_cultural_pattern.md, cited by IB-rte-4's own face, is absent from the tracked tree). DENOMINATOR: CLAUDE.md cites 2 distinct memory/*.md paths. memory/feedback_availability_is_not_authorization_vendor_egress.md -- tracked FALSE, present in the repo worktree FALSE, present in the user memory directory TRUE. memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md -- tracked FALSE, present in the repo worktree TRUE (untracked), present in the user memory directory FALSE. The repo's memory/ directory carries 0 tracked files. \u26d4 SO AN UNTRACKED POINTER IS ABSENT IN EVERY FRESH WORKTREE, which is where workers run -- the same class as the gitignored-tool-binary trap the estate already catalogues -- and a reader who follows either path literally gets nothing while the citation looks authoritative. NOT A CONTENT CLAIM: both memories exist somewhere and their substance is not in question; what fails is the ADDRESS."
+}
+```
+
+## S78's closure re-examined -- 3.0.0_SA_CVO against its own certification
+
+```json
+{
+ "id": "IRPT_BCKEND-S79",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T05:15Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "THE CLOSURE I CERTIFIED AT 3e92decbef WAS PREMATURE, AND THE DEFECT IS IN MY VERIFICATION, NOT IN THE CLOSURE MECHANISM: I checked that the citations' PLANE was now honest and INHERITED THEIR NAMES UNEXAMINED. One of the two names had never existed on this box -- 0 of 1447 -- so S78's remedy was half-delivered when I marked it REMEDIATED.",
+ "spec_asserts": "A remediation row is closed when its remedy is delivered, and the closing seat falsifies the remedy's own positive claim before closing it.",
+ "world_is": "Measured by 3.0.0_SA_CVO at HEAD 3ec302a6db, after 1.0.0_SA_CTO's second law edit (@6f79b07dda) corrected its own first one (@34f73569ed). THE CHECK I RAN AT CLOSURE: memory/ citations 2 -> 0 at the pin and at HEAD, 'BOX MEMORY' present twice, both NEVER-class rules still carrying imperative and mechanism inline, non-ASCII 271 read as CHARACTERS rather than as the detector's byte delta. All true, and all about the ADDRESS FORM. THE CHECK I DID NOT RUN: whether the NEW names resolve in the store the new citations name. Run now, with the denominator: this box's memory tree holds 1447 .md files; the stem 'no_shadow_channels' matches 0 OF 1447 and never has; 'no_inferred_gates_no_shadow_pipelines' matches 1 of 1447 and 'availability_is_not_authorization' matches 1 of 1447. At HEAD all three law-file citations (CLAUDE.md x2, CLAUDE_ANNEX.md x1) resolve. THE SHAPE IS THE ONE THE CTO NAMED IN ITSELF, ONE STEP LATER AND IN THE SEAT WHOSE JOB IS TO FALSIFY IT: a repair that carries forward the unexamined half of what it repairs -- and a VERIFICATION that carries forward the unexamined half of what it verifies is the same move with less excuse, because the verifier's whole function is the second look. 4.0.0_SA_CRO ran the instrument neither of us ran. QUALIFIER, because box memory is PER-DEVICE: 0 of 1447 is a laptop-fabric fact and says nothing about site Z's tree. SEPARATELY, A UNITS NOTE THAT IS NOT A DISAGREEMENT: the broadcast sizes the live carrier at 2,099 bytes and I measured 2,068; both are correct and not comparable -- 2,099 is the on-disk CRLF size and 2,068 the LF-normalised size a text-mode read returns, the file having exactly 31 lines and 31 CR bytes. Third instance tonight of a number needing its unit, after the byte-delta-as-character-count and the blob-pin-read-as-commit-ish.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md#IRPT_BCKEND-S78 -- the row I closed at 3e92decbef",
+   "3.0.0_SA_CVO's resolution test at HEAD 3ec302a6db: 1447 memory .md files; 0, 1 and 1 matches for the three stems; all three live law citations resolve",
+   "the live carrier read in full: feedback_no_inferred_gates_no_shadow_pipelines_20260804.md, item 2 carrying the complete veto verbatim",
+   "3.0.0_SA_CVO's binary-vs-text size measurement: 2099 on disk, 2068 LF-normalised, 31 CR bytes"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-S80 -- 1.0.0_SA_CTO, tick 72
+
+```json
+{
+ "id": "IRPT_BCKEND-S80",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T06:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "THE WORD I OWE ON W3-S47, WHICH NAMES THIS SEAT AS disarm_owner: THE GENERATOR HALF IS REMEDIED AND THE REGEN HALF IS NOT MINE TO TAKE. lib/opal_naming.py::_hcl() now pads each map key to the widest key in its own dict, so terraform fmt -check on the generated output reads rc=0 where it read rc=3 at every registry state ever measured; diff -w against the committed file is rc=0, so the 88 changed lines are whitespace and nothing else (fix @9d876af0b0). W3-S47 IS NOT DISARMED BY THAT COMMIT, because the rc=3 the row asserts is measured on the COMMITTED file and the committed file has not moved -- and it will not move on my hand: infra/aws/terraform/modules/opal_name/generated_locals.tf resolves to infra/aws/** = lane CLOUD_OPS_OR_ETL, whose permitted_agents list does not contain 1.0.0_SA_CTO, while lib/opal_naming.py resolves to lib/** = BASE_EXEC, which does. THE GENERATOR'S OWNER IS MECHANICALLY BARRED FROM LANDING THE GENERATOR'S OUTPUT, and my own tick-70 and tick-71 logs both called this one lib/opal_naming.py edit mine -- half true, and the half they named is the half I can do.",
+ "spec_asserts": "W3-S47: R61-AC1 arm (d) requires terraform fmt -check clean on infra/aws/terraform/modules/opal_name/generated_locals.tf; the row routes the fix to this seat as the generator's owner and carries disarm_owner 1.0.0_SA_CTO.",
+ "world_is": "The renderer is fixed and proved on its own instrument, and the file it renders is committed by a lane this seat is refused. W3-S47 therefore stays open on a SECOND owner, and it is additionally HELD by this seat's own signature: blob 494ac9aa39 of generated_locals.tf is input #4 of the IB-rtf-5 never-widen halves, and the CTO half states that a plan read from different bytes for any of the first four is not what it signs. A whitespace-only regen landed before Andrew's step 4 would void both signed halves and buy nothing. THE UNBLOCKING CONDITION IS THEREFORE EXPLICIT AND FALSIFIABLE, not a seat's memory: an AE-lane seat regenerates and commits generated_locals.tf AFTER the IB-rtf-5 apply lands or that act is abandoned; W3-S47 disarms on the fmt -check rerun against the committed file at that point, not on this row.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "terraform fmt -check -diff on the patched generator's output: rc=0 (the pre-fix run on the committed file: rc=3, alignment-only, as W3-S47 records)",
+   "diff -w committed vs patched output: rc=0, zero semantic delta; 88 lines changed, all whitespace",
+   "lane resolution on the live .owned-paths.yaml, most-specific rule, permitted_agents printed: generated_locals.tf -> infra/aws/** -> CLOUD_OPS_OR_ETL, 1.0.0_SA_CTO NOT in permitted_agents; lib/opal_naming.py -> lib/** -> BASE_EXEC, 1.0.0_SA_CTO IS in permitted_agents",
+   "_hcl( call-site census in lib/opal_naming.py: 9 sites, every one inside _gen_locals, so generated_locals.tf is the renderer's only consumer and no other carrier's bytes move",
+   "pytest lib/tests/test_opal_naming.py: 2 failed / 91 passed, IDENTICAL against HEAD's unpatched blob restored as a negative control -- the edit adds no failure",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-5_BUCKET_REAPPLY.md s.1 (the five input blobs) and its line refusing a plan read from different bytes",
+   "fix commit 9d876af0b0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-S81 -- 1.0.0_SA_CTO, tick 76
+
+```json
+{
+ "id": "IRPT_BCKEND-S81",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T08:00Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "MY WORD ON W1-S27, WHICH NAMES THIS SEAT AS disarm_owner AND WHICH I HAD NOT BEEN TRACKING: ITS CAUSE IS REPAIRED ON 6 OF 7 ROUTES AND STILL LIVE ON THE SEVENTH. W1-S27 (BLOCKING, 2026-09-18T21:20Z) says the abby_horton/49financial request still reads code=UNPROJECTED_GRANT because the refusal policy refuses the WHOLE grant if ANY ownership id fails to project, while the identity bridge resolves 21 of 43. Measured at HEAD in the SHARED module, bytes printed: _authz/enforce.py now guards on `if not permitted:` FIRST and raises UNPROJECTED_GRANT only when `granted and len(unprojected) == len(granted)` -- every grant unprojected -- otherwise EMPTY_GRANT, and a NON-EMPTY permitted set returns SERVED with the gaps carried on the scope. For 21 of 43, permitted is non-empty, so the exact request W1-S27 names now SERVES. The inversion is my ruling @61627f39f9 and it landed via IB-rtf-2.",
+ "spec_asserts": "W1-S27: R56-AC1 arm (d) -- the real request must not read UNPROJECTED_GRANT once the seam is deployed; the row routes the call to 1.0.0_SA_CTO as the ruling's owner.",
+ "world_is": "DISARMED ON THE SHARED PATH, NOT DISARMED GLOBALLY, AND THE DIFFERENCE IS THE WHOLE POINT. Six of seven entry points bind the shared _authz/enforce.py and carry the repair. THE SEVENTH, irpt-holdings, PACKAGES ITS OWN LOCAL holdings/enforce.py -- a separate 635-line file (blob 8f849457be) against the shared module's 680 (79c9d9dee1) -- which still carries the PRE-FIX order, so W1-S27's defect REMAINS LIVE on that one route. \u26d4 A GLOBAL DISARM WOULD HAVE BEEN WRONG AND WOULD HAVE READ AS CORRECT, because the shared module is the object everyone checks. The per-route census is what separates them and nobody had run it.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show HEAD:infra/aws/lambda/investor-reporting/_authz/enforce.py, lines 314-336 printed: census['unprojected_grant'] set unconditionally; `permitted = scope['permitted_account_set']`; `if not permitted:` then `if granted and len(unprojected) == len(granted): return Refusal('UNPROJECTED_GRANT'...)` else `Refusal('EMPTY_GRANT'...)`; non-empty falls through to SERVED with `scope['_census'] = census`",
+   "3.0.0_SA_CVO independently read the same live code at :318-333 during the IRPT_FNTEND L4-R review and reported the inversion HAD LANDED since its own earlier read -- a different seat, a different purpose, same conclusion",
+   "per-route census, full denominator by os.walk over infra/aws/lambda/investor-reporting: 7 entry.py; exactly ONE (holdings) carries a local enforce.py; 6 bind the shared module",
+   "blob comparison: holdings/enforce.py 635 lines 8f849457be vs _authz/enforce.py 680 lines 79c9d9dee1 at HEAD"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "\u26a0 AND THE READING RULE THIS COST ME: I had been carrying my ARMED-row list FROM MEMORY and tracking TWO. A census of rows naming 1.0.0_SA_CTO as disarm_owner with hazard_standing ARMED returned FOUR -- W1-S25, W1-S27, W1-S28, W1-S29. The estate's own rule says an armed count is FILED until every closing carrier is enumerated and each verdict read; I was carrying a recollection instead. The census costs one query."
+}
+```
+
+## IRPT_BCKEND-S82 -- 1.0.0_SA_CTO, tick 76
+
+```json
+{
+ "id": "IRPT_BCKEND-S82",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T08:00Z",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "MY RULING ON W1-S29, AND IT REACHES FURTHER THAN W1-S29 CLAIMS: irpt-holdings' diverged local enforce.py makes THAT ROUTE STRUCTURALLY INCAPABLE OF EVER REPORTING A NON-ZERO GAP, so the partial-disclosure indicator can never fire there. holdings/entry.py:62 imports the SHARED served boundary, so response_envelope() supplies `unprojected_grant` PRESENT AT ZERO; but the census that fills it comes from enforce, and holdings binds its OWN local enforce.py (snapshot.py:44 `import enforce as _authz`) in which `unprojected_grant` occurs ZERO times. THE KEY IS ALWAYS THERE AND THE VALUE IS ALWAYS {count 0}. RULING: FOLD holdings/enforce.py BACK ONTO THE SHARED _authz MODULE. Do not patch the fork.",
+ "spec_asserts": "IRPT_FNTEND PRD v0.8 CONTRACTS, signed by 3.0.0_SA_CVO @ac8bd5c426: the field reaches every scoped route through the ONE shared call site, and a cell renders a visible partial indicator whenever unprojected_grant.count > 0.",
+ "world_is": "\u26d4 THE CLAUSE IS TRUE AND STILL MISLEADS, WHICH IS WHY THIS IS FILED AGAINST THE BACKEND RATHER THAN RE-OPENING THE PRD: the FIELD does reach every route -- 7 of 7 entry.py import the shared served boundary, exactly as written and as 3.0.0_SA_CVO verified. What no one censused is which ENFORCE each route binds, and on 1 of 7 it is a fork that never populates the census. So on irpt-holdings a real gap renders as NO GAP: the guard never trips, the indicator never fires, and the page looks CLEAN on precisely the route that is hiding something. \u2b50 A FALSE NEGATIVE NO ABSENCE GUARD CAN SEE, because the key is present and well-formed. \u2b50 AND THE SHAPE IS RULE 22's SHARED-DEPENDENCY BLINDNESS INVERTED: we verified the thing all seven SHARE (served.py) and missed that one of them does NOT share the other dependency (enforce.py). A per-member check finds this; a shared-dependency check cannot.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "per-route census, full denominator by os.walk: 7 entry.py under infra/aws/lambda/investor-reporting; holdings is the ONLY one with a local enforce.py",
+   "grep over infra/aws/lambda/investor-reporting/holdings for 'unprojected_grant': 0 matches across 0 files",
+   "holdings/entry.py:62 `import served as _entry  # the shared boundary`; holdings/snapshot.py:44 `import enforce as _authz` -- resolving to the LOCAL holdings/enforce.py, not _authz/enforce.py",
+   "served.py:298-302 sets unprojected_grant from the passed value or _EMPTY_UNPROJECTED_GRANT = {count 0, denominator 0, kinds {}}, so an unpopulated census yields a well-formed zero",
+   "W1-S29 (0.9.0_WK_IRPT_BCKEND~1, 2026-09-19T05:45:22Z) reports the same fork and its pre-fix refusal order, routed to this seat"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "RULING, and the alternative is named so it is not silently skipped: FOLD, do not patch. Patching the fork would give two copies of a security boundary that must agree forever, and the estate has already paid for a diverged copy once here. Folding also closes W1-S27's residual on the same route in the same act. \u26d4 THE PRD IS DELIBERATELY NOT RE-OPENED THIS TICK, and the condition is stated rather than assumed: IRPT_FNTEND reads 0 open orders, so NO CELL IS BEING CUT AGAINST THE CLAUSE RIGHT NOW. If IRPT_FNTEND cuts a round BEFORE the fold lands, the PRD takes a one-sentence carve-out naming irpt-holdings, owner 1.0.0_SA_CTO -- and a third signature round on a clause whose defect lives in the backend is the cost being avoided, not a step being skipped. DISARM CONDITION: holdings/enforce.py no longer exists as a separate module, OR its census populates unprojected_grant and its refusal order matches the shared module, verified by re-running this row's per-route census."
+}
+```
+
+## IRPT_BCKEND-S89 -- 1.0.0_SA_CTO, tick 81
+
+```json
+{
+ "id": "IRPT_BCKEND-S89",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T10:20Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "MY WORD ON W1-S31, WHICH NAMES THIS SEAT AS disarm_owner: THE ROW IS CORRECT, ITS SCOPE IS 9 FUNCTIONS NOT 1, AND ITS CAUSE IS NOT THE ONE THE WORKER GUESSED. lambda-source-map.json's artifact_sha256 is NOT a build-time-only field: record-terraform-deploy.sh:750-757 reconciles it TO THE DEPLOYED CodeSha256 for the functions an apply touched, by CTO wiring ruling 181510Z + CVO automation-GO b56df0083, scoped via --functions, FAIL-SAFE empty set = no-op, settle-aware 45s, HOLD+ALERT on half-landed, and AUDITED to infra/aws/lambda/ci/source-map-reconcile-audit.jsonl. So the field IS supposed to equal the deployed sha, and a mismatch is a real divergence. Read on that audit log: 6 rows total, 5 real reconciles between 2026-07-14 and 2026-09-11, and ROWS MENTIONING irpt: 0 OF 6. THE RECONCILE HAS NEVER RUN FOR ANY irpt-* FUNCTION.",
+ "spec_asserts": "W1-S31: lambda-source-map.json functions.irpt-holdings.artifact_sha256 disagrees with the LIVE CodeSha256; the worker's guess is that IB-rtf-6's arm (e) moved the bytes without the field, and it did not measure that.",
+ "world_is": "The worker's guess is not needed and is not supported: the divergence does not require a specific deploy to explain it, because THE MECHANISM THAT WOULD CLOSE IT HAS NEVER FIRED FOR THIS PROJECT AT ALL. All 9 irpt-* functions in the manifest carry an artifact_sha256 (216 functions in the manifest, 175 carrying the field), and none of them appears in the reconcile audit. The fail-safe is behaving exactly as designed -- an empty --functions set is a no-op and never a reconcile-all -- so the gap is that IRPT's deploy path does not invoke the reconcile, NOT that the reconcile is broken. The consequence is the one W1-S31 names and my IB-rtf-8 half already bound: a rollback that trusts the manifest restores bytes that were never served.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/lambda/ci/record-terraform-deploy.sh:750-757, bytes printed: 'Reconcile the source-map artifact_sha256 to the DEPLOYED CodeSha256 for the functions THIS apply touched -- so the writer records the deployed sha (not the intended build-time sha)'; 'FAIL-SAFE empty set = no-op (never reconcile-all)'; 'audited (C3 -> source-map-reconcile-audit.jsonl)'",
+   "infra/aws/lambda/ci/source-map-reconcile-audit.jsonl parsed: 6 rows (1 _meta + 5 events), fns opal-assets-daily-emitter, cot-bd-session-trigger, opal-assets-silver-blackdiamond, opal-assets-ingest-mirror (HOLD), opal-assets-mdpf-portal-publisher (HOLD); rows mentioning 'irpt': 0 of 6",
+   "manifest census: 216 functions, 175 carrying artifact_sha256, 9 irpt-* functions all carrying one",
+   "the manifest's own _note names ONE writer: 'artifact_s3_key and artifact_sha256 are populated by build-and-upload.sh before terraform apply'",
+   "the second writer's own write sites: build-and-upload.sh:147 and build-nodejs-lambda.sh:428 (build-time), record-terraform-deploy.sh:750-757 (post-apply reconcile)",
+   "lane: infra/aws/lambda/ci/lambda-source-map.json -> YANG_PIPELINE_DEPLOY, 1.0.0_SA_CTO NOT permitted -- this seat can measure and rule, not fix",
+   "prior diagnosis of the same class in another project: NFRA_OPLGTW-W4-S5 (the build writes the field out-of-grant, so unless its owner commits, it stays stale at HEAD)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "\u26d4 MY OWN NEAR-MISS, RECORDED BECAUSE IT IS THE POINT. I had a tidy reframe ready and it was WRONG: reading the manifest's own _note, I was about to rule that artifact_sha256 and CodeSha256 are TWO DIFFERENT PROPERTIES (a build input vs a served hash) and that W1-S31 was a predicate substitution rather than a divergence -- the very class I have been filing all night, which is exactly why it felt right. ONE grep of the second writer killed it. THE _note NAMES ONE WRITER AND THERE ARE TWO, so a reader who takes a file's own documentation as its contract inherits the documentation's blind spot. \u2b50 THAT IS THE WRITER-CENSUS LAW I SET ON IRPT ROUND 5 -- 'a property with N writers needs N rules read, and N is a number the half PRINTS' -- met from the other side: here N=2, the file says 1, and the missing writer was the one that made the row CORRECT. Had I published, I would have disarmed a true row and left a rollback trap armed. DISPOSITION: W1-S31 STAYS ARMED, its disarm_owner stays this seat, and its disarm condition is now measurable rather than narrative -- an irpt-* entry appears in source-map-reconcile-audit.jsonl with action 'reconcile', or the 9 entries are reconciled by their lane owner and the live read agrees. NOT MINE TO FIX (YANG_PIPELINE_DEPLOY); routed with this row."
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S97",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "1.0.0_SA_CTO",
+ "surfaced_at": "2026-09-19T13:58Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "1.0.0_SA_CTO",
+ "one_line": "K-DIR AND K-OM ARE FENCED BY DIFFERENT MECHANISMS AND THE TERRAFORM SAYS THEY ARE FENCED BY THE SAME ONE. The ownership map key carries the firm id (platinum/{firm}/ownership_map.json, _authz/loaders.py:31-32), so on the shared opal-data-bd the KEY is the fence. The directory prefix carries NO firm segment at all (DIRECTORY_PREFIX = 'investor-reporting/directory', loaders.py:30; load_directory reads <prefix>/latest.json then the pointer's key, :71-81), so on that same shared bucket the fence is only that nobody has written a second firm's directory under it -- a property of the WRITERS, not of the resource ARN. MEASURED, because ABSENT is not EXERCISED-AGAINST: list-objects-v2 on opal-data-bd/investor-reporting/directory/ returns 9 of 9 objects, 0 firm-segmented, 0 foreign (two dated directory.json, six _refresh manifests, latest.json). SO THIS IS AN EXPOSURE, NOT AN INCIDENT: no foreign firm's data is reachable today, the grant widens nothing in fact, and the IB-rtf-10 CTO half IS SIGNED. What the act does change is the DENOMINATOR: after it, that unsegmented reach belongs to FIVE roles rather than one.",
+ "spec_asserts": "infra/aws/terraform/investor-reporting/directory/iam.tf:16-21: '49financial SHARES opal-data-bd with the mockadv test alias, so separation there is KEY-PREFIX scoped, and the resource ARNs below are prefix-scoped for every firm rather than only for the shared one: a grant written per-substrate-shape breaks the day a firm moves buckets.' The packet blob c3a44074d2 section 7 states the same bound as 'each IAM resource names one object or one prefix in that firm's own bucket.' Both sentences govern K-OM and K-DIR together.",
+ "world_is": "The sentence is TRUE of ownership_map_object_arns and FALSE of directory_object_arns. directory_object_arns = [for b in local.firm_buckets : \"arn:aws:s3:::${b}/investor-reporting/directory/*\"] (iam.tf:43-46) -- the interpolation is the BUCKET, and there is no firm segment in the key. On opal-data-inf and opal-data-cot that is total separation because the bucket is single-tenant; on opal-data-bd it is not a per-firm fence at all. THE ONE REAL MITIGATION, AND ITS EXACT LIMIT: firm_bucket_map is built over client_firms, which excludes mockadv BY KIND, so bucket_for('mockadv') raises BucketUnmapped and the RUNTIME cannot address it. That bound is well built -- and it bounds the CODE. IAM is not the code. A grant is what an identity MAY read, not what this revision of the loader asks for; the runtime bound dies with a code change and the IAM bound does not.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "aws s3api list-objects-v2 --bucket opal-data-bd --prefix investor-reporting/directory/ --query 'Contents[].[Key,Size]' -> 9 of 9 objects, 0 firm-segmented, 0 foreign: 2026-09-16/directory.json, 2026-09-17/directory.json, _refresh/{2026-09-11,-14,-15,-16,-17,-18}/manifest.json, latest.json (denominator printed; this is the EXPOSURE-vs-INCIDENT discriminator)",
+   "infra/aws/terraform/investor-reporting/directory/iam.tf:16-21 @HEAD -- the cross-firm paragraph, read as bytes at the cited lines: 'separation there is KEY-PREFIX scoped, and the resource ARNs below are prefix-scoped for every firm rather than only for the shared one'",
+   "infra/aws/terraform/investor-reporting/directory/iam.tf:43-46 @HEAD -- directory_object_arns = [for b in local.firm_buckets : \"arn:aws:s3:::${b}/investor-reporting/directory/*\"]; the interpolation is the BUCKET and there is no firm segment in the key. Contrast ownership_map_object_arns at :53-56, which interpolates ${f.firm_id} INTO the key",
+   "infra/aws/lambda/investor-reporting/_authz/loaders.py:30 DIRECTORY_PREFIX = 'investor-reporting/directory'; :31-32 OWNERSHIP_KEY_TEMPLATE = 'platinum/{firm}/ownership_map.json'; load_directory :71-81 reads <prefix>/latest.json then the pointer's key; bucket_for :44-57 raises BucketUnmapped for an unmapped firm",
+   "data/firm_registry.json at HEAD blob 99b8eeb54fb08a7ea6e4b89b64f300ee6cab3200 -- UNSCOPED read, 5 rows printed: 49financial/inflection/cottonwood kind=client enabled, mockadv kind=test ON opal-data-bd, demo kind=demo. The co-tenant is what the scoped derivation had no reason to mention",
+   "never-widen packet blob c3a44074d2dabe4292bfc648d855be4b99fe48db section 7 -- 'each IAM resource names one object or one prefix in that firm's own bucket'",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-10_SERVING_ROLES_GRANTED.md s.1 -- the CTO half states the blast radius as measured here rather than as the packet words it",
+   "CLAUDE.md s.5 'NEVER reference another firm's data from a pipeline tree -- BUCKET or KEY-PREFIX' -- the law this row is graded against; both shapes are live and this grant uses the bucket shape where the key shape is claimed"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "THIS SEAT'S RULING, MADE NOW RATHER THAN PARKED, IN TWO PARTS. (1) THE ACT PROCEEDS. The exposure is ACCEPTED for IB-rtf-10 on the measured 0-of-9 foreign census; refusing a half over a reachability that does not exist would park a correct apply, and the never-widen half signs a blast radius, which I have stated CORRECTLY in the half instead of accepting the packet's wording. (2) THE STRUCTURAL REMEDY IS A FIRM-SEGMENTED DIRECTORY KEY, and it is NOT a rider on an IRPT round -- the key shape is the gold directory_runner's output, so changing it is a producer change plus a migration, exactly as S94's ownership-map producer is DS-owned and not a rider. It is named here so it has a carrier rather than living in a half. OWED IMMEDIATELY AND SEPARATELY, costing one comment and no plan change: iam.tf:16-21 is corrected to say WHICH KEY IS FENCED BY WHICH MECHANISM, and that the directory prefix's fence on a shared bucket is the writer set. AND I OWN THE PROVENANCE: that comment exists because MY OWN S90 condition (2) required the platinum ban comment amended in the same commit as the statement. The condition was met, the comment landed, and the sentence that overstates is the one ADJACENT to what I asked for. A CONDITION SATISFIED IS NOT A PARAGRAPH VERIFIED. DISARM CONDITION, MEASURABLE NOT NARRATIVE: directory_object_arns carries a firm segment on the shared bucket, OR a ruling accepts the bucket-plus-writer fence explicitly with the census re-run and its denominator printed. The comment correction alone does NOT disarm this row -- documentation is not a fence."
+}
+```
+
+```json
+{
+    "id": "IRPT_BCKEND-S105",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T19:36:00Z",
+    "one_line": "S104's FIRST cause, measured: the export-receipt route reads an S3 ADDRESS THAT IS NOT IN THE EVIDENCE BUCKET'S DECLARED LAYOUT AND THAT NO WRITER IN THE CORPUS PRODUCES. entry.py:63-64 builds 'investor-reporting/export/{firm}/{export_id}/receipt.json'; core/layout.json -- the Terraform-generated declaration IB-s-5 binds the per-firm IAM conditions to -- declares exactly THREE prefix families, all 'firms/{firm_id}/...', plus 'quarantine/'. So the key is outside the layout, outside the role's grant, and outside anything that is ever written. THE CONSEQUENCE FOR THIS ORDER: widening IAM to cover it would grant a role read access to an UNDECLARED prefix of the evidence bucket, contradicting the declaration the rest of the IAM is derived from, to reach an object that does not and cannot exist. NO GRANT IS SIGNED. The remedy is a source change (align the reader's key with the generations family the writer uses, and have the submit path write the receipt), which this order bars.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "The IB-rtf-14 face (b): 'the NARROWEST change that makes the read the code performs legal for the role -- one statement or one resource-ARN correction naming exactly the receipt prefix the code builds, derived like the existing ARNs'. It also names the alternative this row takes: 'OR, if the receipt is absent, NO grant and a ROW for the CTO'. The face's (a)(i) parenthetical states the concrete key is under 'firms/<firm>/...'.",
+    "world_is": "The concrete key for the export id rtf-12's arm (f) exercised is s3://opal-data-ycharts/investor-reporting/export/49financial/EXP-5db0796cbfcffc3c0c1d5291/receipt.json -- NOT under firms/, so the face's parenthetical is contradicted and is recorded as such. fnmatch against all 7 of the role's s3:GetObject resource ARNs: 0 match (OUTSIDE printed). The object does not exist: list-objects-v2 under 'investor-reporting/export/' returns KeyCount 0 (the WHOLE prefix, not just the one key), while the policy's prefix holds the writer's evidence (2 objects, both .../exports/<rev>/bundle.json). The WRITER CENSUS over 38,705 tracked + 281 untracked files in this worktree: 3 sites build a 'receipt.json' object key -- ycharts/generate/job.py:477-479 and :324-326 and intake/poller.py:418-420 -- and ALL THREE build it from _keys.PREFIX_FAMILIES via destination_for/s3_evidence_key, i.e. under 'firms/{firm_id}/...'. ZERO writers produce the address entry.py reads. export/handler.py:126-130 writes the export's own evidence as keys.s3_evidence_key(tenant, 'generations', [gen, 'attempts', a, 'exports', rev, 'bundle.json']) -- the grant's exact shape. So the reader and the writer disagree on BOTH the prefix family and the filename.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/export/entry.py:63-64 @HEAD -- RECEIPT_KEY_TEMPLATE, and :100 key = RECEIPT_KEY_TEMPLATE.format(firm=tenant, export_id=export_id)",
+        "lambda get-function-configuration irpt-export-render: IRPT_EXPORT_RECEIPT_KEY UNSET, so the default template is what the deployed function uses; IRPT_EVIDENCE_BUCKET = opal-data-ycharts",
+        "infra/aws/terraform/investor-reporting/core/layout.json @HEAD -- prefix_families = {generations, intake, requests}, all firms/{firm_id}/..., plus quarantine/; its _meta names it the declaration IB-s-5 binds the per-firm IAM conditions to",
+        "infra/aws/lambda/investor-reporting/_keys/keys.py:109-113 @HEAD -- the same three families held as the runtime source and cross-checked by verify_against_layout()",
+        "iam get-role-policy irpt-export-render-role, 4 policies / 15 resource ARNs read live; 7 carry s3:GetObject; fnmatch of the concrete key against each printed False (battery output, arm (a)(i))",
+        "s3api list-objects-v2 opal-data-ycharts prefix 'investor-reporting/export/' -> KeyCount 0; prefix 'firms/' -> KeyCount 2, both firms/49financial/generations/GENRT8PROOF/attempts/1/exports/<rev>/bundle.json",
+        "writer census: git grep over 38,705 tracked + 281 untracked files, 3 receipt.json key-building sites (ycharts/generate/job.py:325,478; intake/poller.py:418), all via the declared families; export/handler.py:126-130 the export evidence writer",
+        "S94's ruling on the same shape (ABSENT and DENIED are indistinguishable to a caller without ListBucket, so the remedy removes the absent case rather than widening the grant)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "ROUTED TO THE CTO because every remedy is a source change this order bars, and because the choice between them is a contract question, not an IAM one. THE THREE CANDIDATES, with what each does NOT move: (1) align the reader to the writer -- read '<generations prefix>/exports/{revision}/receipt.json' -- which does NOT by itself create a receipt, since the submit path writes bundle.json and no receipt at that address; (2) have the submit path WRITE a receipt beside its bundle, which does NOT fix the reader's template on its own; (3) set IRPT_EXPORT_RECEIPT_KEY in Terraform to a declared address, which is the smallest act but leaves the default in the source wrong for every unset environment. (1)+(2) together are the only pair that makes the route serve a receipt; either alone leaves the same NOT_FOUND. WHAT THIS ROW DOES NOT CLAIM: that the route is BROKEN for a caller -- with the key aligned OR the grant widened the answer becomes a truthful NOT_FOUND until a receipt is actually written, and NOT_FOUND is a correct served answer for an export that has no receipt. The defect that is NOT truthful is S106's, filed separately. DISARM CONDITION, measurable: the reader's key and a writer's key name the SAME address under a declared prefix family, and a receipt object exists for an exercised export -- OR a CTO ruling accepts the divergence with the writer census re-run and its denominator printed."
+}
+```
+
+```json
+{
+    "id": "IRPT_BCKEND-S106",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-19T19:36:00Z",
+    "one_line": "S104's SECOND cause, and the one that makes the served answer UNTRUE: entry.py:100-103 decides whether an S3 failure is a refusal by TESTING THE EXCEPTION'S CLASS NAME AGAINST A TWO-NAME LIST -- exc.__class__.__name__ in ('NoSuchKey', 'ClientError') -- and botocore does NOT raise either name for a 403. It raises a MODELED class named 'AccessDenied' (botocore.errorfactory.AccessDenied), which is in neither name, so a genuine denial propagates unmapped, the boundary answers UNEXPECTED, and S91's None sink erases the class. MEASURED ON THE WIRE, not stubbed: an UNSIGNED request to the same object returns HTTP 403 code AccessDenied class botocore.errorfactory.AccessDenied; the operator's request to the same object returns HTTP 404 code NoSuchKey class botocore.errorfactory.NoSuchKey, which IS in the list. That is exactly why the same read maps to NOT_FOUND on the operator path and to UNEXPECTED under the role, with no code difference between them.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "entry.py:99-104's own comment states the intent: 'except Exception as exc:  # noqa: BLE001 -- the CLASS is the finding, not the text', and ExportRefused's docstring states the contract: 'The export is not this caller's, or is not there. Refused whole.' A denial IS 'not this caller's'.",
+    "world_is": "The name list is a FORWARD ENUMERATION of two classes its author had in mind, and botocore's errorfactory mints a class PER MODELED ERROR CODE at runtime, so the population it must cover is open. Measured with botocore 1.43.0: from_code('AccessDenied') -> AccessDenied, from_code('NoSuchKey') -> NoSuchKey, from_code('NoSuchBucket') -> NoSuchBucket, from_code('KMS.AccessDeniedException') -> ClientError. So of four error codes this one route can actually receive, THREE produce a class name the list does not carry and ONE produces the base name it does -- and the KMS denial is the single case that happens to be caught, by accident of not being modeled. A HAND-BUILT STUB HIDES THIS ENTIRELY: raising a constructed botocore.exceptions.ClientError with an AccessDenied error code through the deployed bytes maps to ExportRefused and reads GREEN, because the stub asserts the class the author assumed rather than the class the wire produces. Both arms were run; the stub arm and the wire arm DISAGREE, and the wire arm is the true one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/export/entry.py:99-104 @HEAD, bytes read at the cited lines: 'if exc.__class__.__name__ in (\"NoSuchKey\", \"ClientError\"): raise ExportRefused(...)' then 'raise'",
+        "real wire measurement, .scratch/probe_rtf14_classes.py: UNSIGNED GetObject on opal-data-ycharts/investor-reporting/export/49financial/EXP-5db0796cbfcffc3c0c1d5291/receipt.json -> HTTP 403, code AccessDenied, class botocore.errorfactory.AccessDenied -> NOT in the list -> propagates",
+        "same probe, operator credentials, same object -> HTTP 404, code NoSuchKey, class botocore.errorfactory.NoSuchKey -> in the list -> ExportRefused/NOT_FOUND; and on a key inside the grant -> 200 OK (the positive control)",
+        "botocore 1.43.0 from_code mapping for the four codes this route can receive, printed",
+        "the live invoke pair on irpt-export-render as its own role: with the S3 read -> UNEXPECTED; with receipt_fixture -> no refusal code (the discriminator that the failure is in the read)",
+        "the stub arm through the deployed bytes: a constructed ClientError(AccessDenied) -> entry.ExportRefused (GREEN, and WRONG about the live class); a non-ClientError -> propagates",
+        "S91 (the boundary records internal errors to a None sink, so the class is not recoverable from the served answer or the log)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "TAXONOMY DEFECT, Rule 24(i) met from the wrong side: the set of 'errors that mean refused' is written as a FORWARD LIST of two names instead of as a SUBTRACTION from what the call can raise, and a forward list omits silently -- here it omits the single most likely production error on a least-privilege role. THE REMEDY IS NOT 'add AccessDenied to the tuple', which is the same forward list one name longer: test the ERROR CODE off the modeled response (exc.response['Error']['Code'], available on every ClientError subclass) or isinstance(exc, botocore.exceptions.ClientError), and decide refusal from the CODE plus the HTTP status, leaving genuinely unexpected classes to propagate. NOT MINE: a source change, and IB-rtf-14 bars a handler edit in terms. WHY IT MATTERS BEYOND THIS ROUTE, and the reason it is filed separately from S105: this defect makes the SERVED ANSWER UNTRUE rather than merely unhelpful -- a caller denied by IAM is told the request was UNEXPECTED (an internal failure) instead of refused, which sends the reader to the wrong plane entirely, and it is exactly the trail S104 sent three passes down. It also survives every remedy in S105: align the key, write the receipt, widen the grant -- a future denial on this route still serves UNEXPECTED. DISARM CONDITION, measurable: the except clause decides on the error CODE or on isinstance, and an exercised denial on this route serves a POLICY answer rather than UNEXPECTED. A CENSUS THIS ROW DOES NOT CLAIM TO HAVE RUN: whether other handlers in this estate use the same class-NAME test. That census is owed and is named here so it has a carrier."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S107",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-19T20:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "THE FIRM BOUNDARY ON THE TWO NEW LGIC FIRM BUCKETS IS ENFORCED BY A SUBSTRING GLOB ON A ROLE NAME, AND A SUBSTRING GLOB ADMITS EVERY FUTURE ROLE THAT HAPPENS TO SPELL IT",
+  "spec_asserts": "CLAUDE.md NEVER line: 'NEVER reference another firm's data from a pipeline tree -- BUCKET *or* KEY-PREFIX ... per-firm buckets -> bucket-scoped Deny', and the same line warns that 'an enumerated ban list lapses SILENTLY when a name changes'. The bucket-scoped Deny on opal-data-inflection and opal-data-cottonwood is the mechanism the law names, so the boundary is expected to be exact.",
+  "world_is": "infra/aws/terraform/modules/opal_name/generated_locals.tf carries fence_patterns as SUBSTRING GLOBS over role NAMES, not as an enumeration of principals: '49financial' = ['arn:aws:iam::313476888478:role/*-49f-*'], 'inflection' = ['arn:aws:iam::313476888478:role/*-inf-*'], 'cottonwood' = ['arn:aws:iam::313476888478:role/*-cot-*'], 'demo' = ['arn:aws:iam::313476888478:role/*-demo-*']. The admit pattern for the inflection bucket is therefore satisfied by ANY role in account 313476888478 whose name contains the three characters 'inf' between hyphens -- which is a spelling property, not an ownership property. The same shape governs cottonwood on 'cot'. NOTE THE TWO DIRECTIONS ARE NOT SYMMETRIC: the glob is simultaneously TOO WIDE (a future unrelated role spelling '-inf-' is admitted to a firm bucket with no act by anyone) and, as measured this session, TOO NARROW in practice (it denied the applying identity and Andrew's own user from the buckets it created -- see IRPT_BCKEND-W3-S43, whose remedy is the same file).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf @HEAD, fence_patterns block read as bytes: four firms, every value a role-NAME glob with a wildcard on BOTH sides of the firm token",
+      "aws s3api get-bucket-policy --bucket opal-data-inflection -> AccessDenied, 'User: arn:aws:iam::313476888478:user/Andrew_Berman is not authorized to perform: s3:GetBucketPolicy on resource: arn:aws:s3:::opal-data-inflection with an explicit deny in a resource-based policy' -- the fence is APPLIED and EXERCISED-AGAINST, not merely declared (Rule 22 STATE at EXERCISED)",
+      "aws s3api list-buckets -> opal-data-inflection and opal-data-cottonwood both CreationDate 2026-09-18T20:05:17Z (same second, one apply)",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf comment names the lockout cause itself: 'an empty exemption list means the Deny fence admits ONLY a role matching role/*-inf-*|*-cot-* ... This self-locked-out the applying identity from its own newly-created buckets.'",
+      "NEGATIVE CONTROL NOT RUN AND NAMED AS NOT RUN: no census has been made of how many existing roles in account 313476888478 already match '*-inf-*' or '*-cot-*'. That census is what would turn this EXPOSURE into an INCIDENT and it is the disarm measurement below."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHY THIS IS FILED AS AN EXPOSURE AND NOT AN INCIDENT (Rule 22's negative mirror, ABSENT != EXERCISED-AGAINST): a substring glob guarding a firm boundary is a real hazard, but nothing here measures whether any role has ever matched one it should not. The two remedies differ -- an exposure closes by tightening the pattern; an incident ALSO requires re-opening whatever the gap admitted -- so the classification is load-bearing and the discriminating query is named rather than assumed. SAME SHAPE, ALREADY ON THE RECORD: the K-DIR prefix finding in IRPT_BCKEND-S97, where a Terraform sentence claimed a key-prefix separation the interpolation did not implement. Both are a boundary asserted in one vocabulary and implemented in another. NOT MINE TO FIX: infra/aws/terraform/** is the CLOUD_OPS_OR_ETL lane and this seat holds no grant there; this row is the carrier, and the pattern edit rides whatever act next opens that root -- most likely the fence repair the lockout already requires, which touches this exact file. DISARM CONDITION, measurable and cheap: one enumeration of roles in 313476888478 matching each fence pattern, with its denominator printed, compared against the roles each firm is intended to admit; the row disarms when the admitted set equals the intended set, whether that is reached by tightening the pattern or by recording that the current matches are exactly the intended ones."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S108",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-19T20:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "THE DIRECTORY CONTRACT EXISTS TWICE IN THE TREE WITH DIFFERENT BYTES, AND THE COPY THAT DEPLOYS IS NOT THE COPY THAT SITS BESIDE THE LAMBDA SOURCE",
+  "spec_asserts": "The IB-rtf-13 packet stages DirectoryEntry.schema.json as a member of the served zip and declares it at 12,967 bytes, sha256 7ed220ff87a7..., naming it by its PACKAGED path (contracts/...). A contract is expected to have ONE authoritative text: a developer reading the schema beside the code is expected to be reading what deploys.",
+  "world_is": "Two files in this repo share the basename DirectoryEntry.schema.json and their bytes differ by 495. At pin 6e764ef0aa: docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json is 12,967 bytes sha256 7ed220ff87a7 -- this is the one the build stages -- while infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json is 12,472 bytes sha256 ead062c26602. The SECOND is the one sitting next to the Lambda source, so the copy a developer meets while reading the handler is NOT the copy that deploys.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse 6e764ef0aa:docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json + hash-object -> 12,967 bytes, sha256 7ed220ff87a7..., CR 0, non-ASCII 0, parses as a JSON Schema -- EXACT MATCH to the packet's declaration",
+      "the same read against infra/aws/lambda/investor-reporting/_contracts/DirectoryEntry.schema.json at the same pin -> 12,472 bytes, sha256 ead062c26602 (and 12,732 on disk with 260 CR, the autocrlf effect)",
+      "Glob over the basename across the repo -> exactly these two candidates, which is the read that enumerated the population rather than assuming it",
+      "NEVER_WIDEN_SIGNOFF_CTO_HALF_IRPT_BCKEND_IB-rtf-13_DIRECTORY_CONTRACT_STAGED.md section 3, where this divergence was found and explicitly NOT held against the packet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "HOW IT WAS FOUND, because the finding method is worth more than the finding: reading the WRONG one of the two first produced a confident, precise, three-way mismatch against a CORRECT sign-off packet -- disk 12,732 / blob 12,472 / declared 12,967, three real numbers, none matching, reading exactly like a genuine defect. NOTHING ABOUT THE NUMBERS COULD HAVE CAUGHT IT; every instrument answers faithfully about whatever file it was handed. Testing the OTHER CANDIDATE is what caught it. NOT A SIGN-OFF HOLD AND IT WAS NOT HELD: the rtf-13 act stages the correct, declared, pinned blob, and nothing about the second copy is widened by that packet. THE HAZARD IS THE VENDORED-COPY CLASS 4.0.0_SA_CRO's Addendum A measured 2 of 2 on, and it is the same family as S103 -- a runtime that cannot reach the contract it needs, in a tree that holds two versions of it. DISARM CONDITION, measurable: one copy remains, or the second is demonstrably generated from the first by a step in the build (so the divergence cannot re-open by hand), or it carries a header naming the authoritative copy and the divergence is measured to zero. A CENSUS THIS ROW DOES NOT CLAIM TO HAVE RUN: whether other contracts under docs/contracts/ have the same second copy under infra/aws/lambda/**/_contracts/. That census is owed and is named here so it has a carrier; it belongs with the round-6 binding-check tool, whose population this row joins."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S109",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-19T21:34Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "NARROWS S107 BY ITS AUTHOR: THE FENCE PATTERNS ARE A DESIRED-PLANE READ AND NOBODY HAS MEASURED WHICH PRINCIPALS THE POLICY ATTACHED TODAY ACTUALLY ADMITS",
+  "spec_asserts": "IRPT_BCKEND-S107, filed by this seat one tick earlier, states that the admit pattern for opal-data-inflection is satisfied by any role in 313476888478 whose name contains the firm token. The sentence reads as a claim about the bucket. Its own evidence lines are correctly scoped to infra/aws/terraform/modules/opal_name/generated_locals.tf, but a later seat reading only the one_line and world_is would take it as a property of the live fence.",
+  "world_is": "generated_locals.tf is the GENERATOR'S OUTPUT: the fence of the policy the NEXT apply will CREATE. It is not the policy attached to either bucket now, and that attached policy is UNREADABLE to this seat -- get-bucket-policy is precisely the call the fence denies. IRPT_BCKEND.TO-IB-rtf-5's <status> already carries the warning in one sentence: 'The DESIRED/APPLIED trap for any reader: exemptions.json's three users are the exemptions of the policy this apply will CREATE, not of the policy attached now (which admits nobody we hold).' infra/logic/registry/exemptions.json's own _about says the same from the other side: 'No principal is exempt at this seed.' AND THE CLAIM IS NOT FALSIFIED EITHER, WHICH IS THE POINT OF FILING THIS RATHER THAN RETRACTING: this seat's AccessDenied was against arn:aws:iam::313476888478:user/Andrew_Berman, an IAM USER, and a pattern reading role/*-inf-* could not admit a user under any reading -- so the denial is evidence about the user path and says nothing about the role path in either direction. THE MEASUREMENT CANNOT DISCRIMINATE THE QUESTION IT WAS USED FOR.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/modules/opal_name/generated_locals.tf @HEAD -- fence_patterns is the generator's output; the file is an input to the apply, never a read of an attached policy",
+      "aws s3api get-bucket-policy --bucket opal-data-inflection -> AccessDenied for user/Andrew_Berman: the attached policy cannot be read by this seat, so no APPLIED-plane statement about it is available from here",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtf-5.the-two-lgic-firm-buckets-unlocked-re-applied-and-fenced.md <status> @HEAD, the DESIRED/APPLIED sentence quoted in world_is, written by 2.0.0_SA_COO~B at 2026-09-19T03:4xZ -- SEVENTEEN HOURS BEFORE this seat made the claim S107 needed narrowing",
+      "infra/logic/registry/exemptions.json _about.seed @HEAD: 'No principal is exempt at this seed: no sign-off exists yet.'",
+      "NOT RUN, AND NAMED: an s3:* call against either bucket from a principal whose ARN matches role/*-inf-*. That single call is the discriminator and no seat has made it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHY A NEW ROW RATHER THAN AN EDIT TO S107: the row gate re-grades only NEW rows, so editing a filed row changes what a later seat reads without anything re-checking it. S107 stands as filed -- its evidence lines are honest -- and this row narrows the sentence a reader would otherwise carry off it. WHAT S107 STILL CORRECTLY CARRIES: the substring-glob shape is real in the generator, the exposure-not-incident classification stands, and the disarm census is unchanged. WHAT THIS ROW ADDS: any statement about WHICH PRINCIPALS THE FENCE ADMITS is a statement about the ATTACHED policy, and this estate currently has no read of it. THE CLASS, because it is the third instance today on the same two buckets and that is what makes it worth a row rather than a note: (1) 'root is THE path' -- inherited from an AE conclusion drawn correctly over every identity it HELD; (2) 'the buckets do not exist' -- a clean comp-find --corpus aws zero over 2593 nodes, caught only by a positive control; (3) this one. EACH WAS A FAITHFUL INSTRUMENT ANSWERING A QUESTION SLIGHTLY NARROWER THAN THE SENTENCE WRITTEN BESIDE IT. The failure is not instrument selection and re-running catches none of them: it is a SENTENCE WIDER THAN ITS MEASUREMENT. DISARM CONDITION, measurable: either the attached policy becomes readable and its admitted principals are enumerated, or the discriminating s3:* call from a role/*-inf-* principal is made and its result recorded -- at which point S107's sentence is either confirmed on the APPLIED plane or replaced. WHOSE ACT IT IS NOT: minting that role is an infra/aws/** act in the CLOUD_OPS lane and this seat holds no grant there; IB-rtf-7 owns the credential-attempt class, and its framing is 'every credential the seat HOLDS' -- which is exactly the boundary a MINTABLE role sits outside, so this row names it rather than assuming that order already covers it."
+}
+```
+
+```json
+{
+    "id": "IRPT_BCKEND-S110",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-20T12:02:00Z",
+    "one_line": "WHILE S100 IS ARMED, EVERY NEGATIVE CONTROL ON THE HOLDINGS ROUTE THAT ASSERTS 'REFUSED' IS VACUOUS -- it cannot fail, so it certifies nothing and reads PASS. irpt-holdings refuses EVERY account with FIRM_BINDING (S100: its loader reads the directory POINTER as the artifact), so a control that refuses a FORBIDDEN account and a request for a PERMITTED account are indistinguishable: same HTTP 200, same public_reason_code FIRM_BINDING, same absence of echo. Measured on one run, with the discriminator the control itself does not carry: IB-rtf-3's NC3 (a TERMINATED client's account, expected refused) returned FIRM_BINDING and PASSED, while the SAME battery's FWD-5 request for an account the principal's own resolve had just granted returned FIRM_BINDING too.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~B",
+    "spec_asserts": "The IB-rtf-3 face (d): negative controls 'm of m DENIED', and this battery's own NC3 line claims 'the terminated client's entitlement gap enforced'. A negative control is evidence that a SPECIFIC gap is enforced; CLAUDE.md Rule 22's DISCRIMINATION axis asks whether the evidence could differ if the claim were false.",
+    "world_is": "It could not. NC3's refusal is produced by S100's defect and not by any entitlement decision, so its PASS is REPORTED rather than EVIDENCE, and it would read PASS on a route with NO entitlement checking at all. This is not a battery-only defect: it binds ANY cell whose control asserts a refusal on irpt-holdings while S100 is armed, which includes the rtf-10 and rtf-12 (f) arms that recorded holdings FIRM_BINDING as an expected refusal. The graded IB-rtf-3 third-hand run now prints the vacuity itself when the two codes match (battery @5d2f3a942f, output line 43), so the finding travels with the evidence rather than living only here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rtf-3_R60-AC1_battery_output.txt (graded run 2026-09-20T11:43:00-11:58:24Z, battery @5d2f3a942f): NC3 -> 'HTTP 200, public_reason_code FIRM_BINDING ... -> PASS'; FWD-5 -> holdings for a PERMITTED account, reason FIRM_BINDING, sha256 754aa8b237d8f3f9366a4fe4d967fd6708e349ea1db4ee5d16e04bedd9a1d090",
+        "the same output's emitted warning: 'NC3 IS VACUOUS THIS RUN ... it cannot distinguish an enforced entitlement gap from a route that refuses every account'",
+        "row IRPT_BCKEND-S100 (ARMED): holdings/entry.py:70-71,88-89,109-112 reads IRPT_DIRECTORY_KEY=investor-reporting/directory/latest.json -- the POINTER -- as the directory artifact, so FirmBinding raises and the boundary refuses FIRM_BINDING with no firm_id, in all 3 diagnostic modes and live",
+        "the discriminating pair is the PERMITTED-account request, which no negative control contains by construction -- a control's own population cannot falsify it (Rule 22: a check scoped to the members cannot see a defect in what the members share)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "NOT A REQUEST TO RE-OPEN ANY GRADED ARM, and this row does not assert that any entitlement gap is UNenforced -- it asserts that the estate currently holds NO EVIDENCE either way on this route, which is a different and weaker claim than the controls have been reporting. The remedy is not a better control: it is S100. DISARM CONDITION, measurable and inherited rather than invented: when S100 disarms, re-run any one holdings negative control TOGETHER WITH a permitted-account request and require the two codes to DIFFER; that pair is the discrimination the control has been missing. Until then, a holdings refusal may be recorded but must not be cited as proof that a scope boundary was enforced. GENERAL FORM, offered for the round analysis and not filed as a second row: a negative control is only evidence when the POSITIVE case is exercised beside it on the same instrument in the same run -- otherwise a globally-broken route manufactures PASSes for every control pointed at it."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W4-S45",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+  "surfaced_at": "2026-09-20T15:40:34Z",
+  "one_line": "TO IB-rtg-4's own IDENTITY section says 'build-and-upload.sh from /c/', but running build-and-upload.sh with cwd=/c/ (a bare drive-root path outside any git repository) makes infra/aws/lambda/ci/manifest-index-check.py's git-show calls fail with 'not a git repository', which the gate reads as 'NO BLOB' for every vendored member and REFUSES the build -- even though the vendored bytes are byte-identical to the pinned blob. Running from cwd=/c/tmp/wk-irpt-7-4 (still a /c/-prefixed path, but inside the repo) builds cleanly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's IDENTITY/WORKTREE section: 'Python: py -3.12. AWS .tools/aws. .tools/terraform.exe by path. Recursive grep/find rail-DENIED; Read/Grep tools. build-and-upload.sh from /c/.' -- read literally this instructs cwd=/c/ for the build invocation.",
+  "world_is": "cd /c/ && bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings REFUSED at the INDEX-SOURCED MANIFEST GATE: 'NO BLOB' for errors.py, resolve.py and handler.py at a pin (ccbf4ac3cb5c20ffd7ad937221a562b87abf9c76) that DOES exist and IS an ancestor of HEAD (git merge-base --is-ancestor confirmed) -- the failure is cwd, not the pin or the blob. git rev-parse --show-toplevel from cwd=/c/ returns 'fatal: not a git repository'; manifest-index-check.py's _index_blob() runs subprocess.run(['git','show', pin:path]) with no cwd= argument, so it inherits whatever cwd invoked python, and only returns bytes when that cwd sits inside a git worktree. Re-running the IDENTICAL command from cwd=/c/tmp/wk-irpt-7-4 (this worktree's root, itself under /c/) produced 'MATCH' on all 3 members and a clean build (SHA256 rAAn3bt7MZXpxFgric7LlrNW9uv0xXgpiZmb+MOf/y0=, size 132K).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this run: cd /c/ && bash /c/tmp/wk-irpt-7-4/infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings -> REFUSED: 3 finding(s) over a denominator of 3, each \"no index blob at ccbf4ac3cb5c20ffd7ad937221a562b87abf9c76:<path>\"",
+      "this run: cd /c/tmp/wk-irpt-7-4 && bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-holdings -> OK: 3 of 3 members index-equal, manifest-equal, and LF (0 CR bytes); Complete - 1 function(s) built and uploaded",
+      "this run: cd /c/ && git rev-parse --show-toplevel -> fatal: not a git repository (or any of the parent directories): .git",
+      "infra/aws/lambda/ci/manifest-index-check.py:61-65 _index_blob(): subprocess.run([\"git\",\"show\",\"%s:%s\" % (pin, path)], ...) with NO cwd= kwarg -- inherits the caller process cwd",
+      "IRPT_BCKEND.TO-IB-rtg-4.the-holdings-loader-follows-the-directory-pointer.md IDENTITY section, this order's own text: 'build-and-upload.sh from /c/'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "DISARMED FOR THIS RUN by this seat: the build in this order's own deliverable was run from cwd=/c/tmp/wk-irpt-7-4 (still under /c/, satisfying the spirit of avoiding a C:\\-style Windows path, but inside the repo so git-show resolves), not from bare /c/. The hazard remains ARMED for the other three round-7 sibling cells (IB-rtg-1/2/3), each of which will invoke this same script under the same order-template wording, and for any future order copying this IDENTITY block verbatim. DISARM CONDITION: the IDENTITY template wording is corrected to name a cwd inside the worktree (e.g. 'build-and-upload.sh, cwd inside the worktree, never bare /c/'), or manifest-index-check.py's _index_blob() is fixed to pass cwd=REPO explicitly so the gate cannot silently mis-fire on caller cwd."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S42",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:10:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "S105'S LITERAL WORDING (\"align to firms/{firm}/generations/.../exports/{rev}/\") NAMES SEGMENTS THE READER'S REQUEST NEVER CARRIES -- THE FIX IMPLEMENTED IS A DIFFERENT, WORKING ADDRESS AND THE SIGNERS NEED TO SEE THE SUBSTITUTION BEFORE THEY SIGN IT",
+  "spec_asserts": "This order's arm (b)(i): 'align RECEIPT_KEY_TEMPLATE (export/entry.py:63-64) to the firms/{firm}/generations/.../exports/{rev}/ family the writer produces'. The CTO ruling and row S105 both use the same shape in prose ('read <generations prefix>/exports/{revision}/receipt.json').",
+  "world_is": "entry.py's export-receipt route (_export_id, _load_receipt) resolves a receipt from exactly TWO values: the VERIFIED tenant and a caller-supplied export_id (GET /export/{exportId}, one path segment, no generation_id/attempt/export_revision anywhere in the v1 route or the request). handler.py's bundle_key/artifact_key build their address from generation_id+attempt+export_revision, none of which identity.py's export_id (a hash of bundle_sha256+contract_version, identity.py:78-84) encodes or lets a reader recover. So the literal 'firms/{firm}/generations/{gen}/attempts/{a}/exports/{rev}/receipt.json' address is NOT reconstructable by this route from what it is given -- reading it verbatim would require either a new lookup (out of this order's two-edit scope) or a new request parameter (a v1 contract change, also out of scope). IMPLEMENTED INSTEAD: a shallow address in the SAME declared 'generations' family (core/layout.json / _keys.PREFIX_FAMILIES), keyed by (firm, export_id) alone -- handler.py's new receipt_key()/persist_receipt() write it in finalize_export beside the bundle's own directory tree (same family, same s3_evidence_key() builder), and entry.py's RECEIPT_KEY_TEMPLATE is aligned to the IDENTICAL string (proved equal this run: firms/49financial/generations/EXP-a...a/receipt.json on both sides). This closes S105's MEASURED defect (the old address matched 0 of 7 GetObject ARNs and KeyCount 0 under its whole prefix) with a real writer and a real, computable reader -- but it is not the literal directory the writer ALSO builds for the bundle/artifact, and a signer reading only the order's prose would expect the deeper path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py _export_id()/_load_receipt() @ this cell's HEAD -- the only inputs are event-derived export_id and ctx.tenant; no generation_id/attempt/export_revision carrier exists in either function",
+      "infra/aws/lambda/investor-reporting/export/identity.py:78-84 -- export_id = f(bundle_sha256, contract_version); no positional information about generation_id/attempt/export_revision survives in it",
+      "infra/aws/lambda/investor-reporting/export/handler.py bundle_key()/artifact_key() (pre-existing) vs the new receipt_key() -- the former need generation_id+attempt+export_revision, the latter needs only tenant+export_id, by construction",
+      "verification run this session: handler_mod.receipt_key('49financial', 'EXP-'+'a'*32) == entry_mod.RECEIPT_KEY_TEMPLATE.format(firm='49financial', export_id='EXP-'+'a'*32) -> True, both = 'firms/49financial/generations/EXP-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/receipt.json'",
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_S105_S106_EXPORT_RECEIPT_CONTRACT_20260919.md @0110b9de01 -- rules the REMEDY PAIR (align + write) but does not address the reader's available parameters"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT A REQUEST TO WIDEN THIS ORDER. The two source edits landed exactly as bounded (entry.py + handler.py only, no new route parameter, no IAM widening beyond the one narrow grant this same address needs -- see W1-S44 below). This row exists so the never-widen halves are signed against what the code ACTUALLY does, not against the order's prose reading, since the CTO ruling's own S3 (the acceptance) and this order's arm (e) both describe a round trip that this address does satisfy (a submit that persists a receipt, a read that finds the SAME object) -- the substitution changes WHICH string the address is, never WHETHER the round trip can work. DISARM CONDITION: the CTO (or a COO amendment) reads this row and either ratifies the shallow (firm, export_id) address as satisfying S105's intent, or names a different one -- at which point the row graduates to whichever face carries that decision."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W4-S46",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+  "surfaced_at": "2026-09-20T15:40:34Z",
+  "one_line": "This order's arm (c) never-widen ten-root Terraform plan (the scope check confirming ONLY the holdings root changes) found TWO OTHER roots, export and performance, ALSO carrying a pending 'Plan: 0 to add, 1 to change, 0 to destroy' -- but their diffs are tagged Cell IB-s-14/Outcome FWD-8 (export) and Cell IB-s-11/Outcome FWD-3 (performance), NOT this round's cells, so this drift PRE-DATES round 7 and is unrelated to this order's holdings edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "spec_asserts": "This order's arm (c) plan step asks for the OTHER roots to be 'RE-TAKEN' as a never-widen scope check, implicitly expecting 'No changes' on every root but the one this act touches (the rtf-13 precedent packet states exactly that for its own six other roots).",
+  "world_is": "terraform plan on export and performance (this worktree, vendored .tools/terraform.exe, no apply) each show ONE substantive aws_lambda_function.this update whose before/after source_code_hash and s3_object_version do not correspond to anything this order built; the changed resource's own tags name Cell IB-s-14 (export) and Cell IB-s-11 (performance) -- pre-round-7 cells -- meaning an earlier build was uploaded to the shared S3 artifact bucket but never applied, or the deployed function has since drifted from its own declared artifact. This order's holdings root shows the expected single substantive change (uS+WBeNxiCkYU2pdGalaONZ74SvoWEiYx669KWYKQDA= -> rAAn3bt7MZXpxFgric7LlrNW9uv0xXgpiZmb+MOf/y0=, tagged Cell IB-rt-7/Outcome FWD-2, this order's own cell).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this run: terraform plan (no apply) on infra/aws/terraform/investor-reporting/export -> Plan: 0 to add, 1 to change, 0 to destroy; show -json: aws_lambda_function.this source_code_hash 9IMayS94if11cyKq51TbcyBG8cUwbbUWlQMlT9XhiaQ= -> cn8YKEP2oQdfvAjdpa32Wfp9oJqhAIMGkECv+H4vUg4=, tags.Cell=IB-s-14, tags.Outcome=FWD-8",
+      "this run: terraform plan (no apply) on infra/aws/terraform/investor-reporting/performance -> Plan: 0 to add, 1 to change, 0 to destroy; show -json: aws_lambda_function.this source_code_hash IHosoGqGUxh2M/UjefNnmbLSXVgTxlNG76cGPjEd1tw= -> W4rYXgZz/LmZ1zO9I6eiKWc7PgSH+eKAUYXzttCmRTA=, tags.Cell=IB-s-11, tags.Outcome=FWD-3",
+      "this run: terraform plan on the other 7 roots (api, core, directory, holdings[expected change], intake, narrative, ops, ycharts) -> holdings is the only round-7 cell change; api/core/directory/intake/narrative/ops/ycharts read No changes",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/NEVER_WIDEN_SIGNOFF_PACKET_IB-rtf-13.md 'THE OTHER SIX ROOTS RE-TAKEN ... each read No changes ... (the rtf-12-class artifact drift the round-6 face names elsewhere is not reproduced here)' -- naming a KNOWN prior class of exactly this drift on a DIFFERENT pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT this order's defect and NOT fixed here: this order's <paths> grant does not reach export/ or performance/'s Lambda source, and this cell's own confined bound is holdings/entry.py only. Filed because a FUTURE never-widen packet on ANY investor-reporting root that asserts 'all other N roots show No changes' needs to account for this pre-existing drift or it overclaims -- exactly the class the rtf-13 packet's own parenthetical already flagged once. DISARM CONDITION: the export and performance drift is resolved (applied or the stale artifact reverted) by whichever cell/order owns those roots, or a standing note is added naming this drift so no future packet cites a false 'No changes' on those two roots."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S43",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:15:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "EVEN AFTER S105+S106 DEPLOY, THIS ORDER'S ARM (e) ROUND TRIP CANNOT BE EXERCISED ON THE DEPLOYED PATH: entry.py's OWN submit_export (the one actually WIRED into the served ENTRY.operations table) unconditionally raises _ExportNotWiredHere and never calls handler.py at all",
+  "spec_asserts": "This order's arm (e): 'an exercised submit-export -> export-receipt round trip on the REAL path returns the just-written receipt'. handler.py's own module docstring and finalize_export's docstring both describe a working controller that persists a bundle and (after this cell) a receipt.",
+  "world_is": "infra/aws/terraform/investor-reporting/export/lambda.tf:46 sets handler = \"entry.lambda_handler\" -- the SERVED entry point is export/entry.py's `_entry.lambda_entry(ENTRY)`, and ENTRY.operations[OPERATION_SUBMIT] is entry.py's OWN module-level submit_export (entry.py:157-168), NOT handler.py's submit_export. entry.py's submit_export body is: \"raise _ExportNotWiredHere('the export controller is owned and being changed by another cell in this window; this entry authorizes the route and does not call it')\" -- unconditional, no branch. The comment naming 'another cell in this window' (IB-rt-4) is from an EARLIER round (handler.py has since been fully built out as 'Cell IB-rt-8 (re-purposed)', a real controller with persist/dispatch/finalize) and was never updated once that cell landed. So on the LIVE, deployed function, EVERY submit-export call -- today, and after this order's own deploy, unchanged -- returns NOT_READY and never reaches handler.py's persist_bundle/finalize_export/persist_receipt at all. This order's two edits (S105 align + S106 taxonomy) are real and correct on their own terms, and the OFFLINE unit tests for handler.py pass (68 of 68, this run), but the LIVE round trip arm (e) asks for is blocked by a THIRD gap this order's <paths>/BOUNDS do not name and its two-edit scope does not authorize touching (wiring entry.py's submit_export to handler.py's is a THIRD source change, and BOUNDS states 'the served-byte delta is exactly those edits [the two] or STOP').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/export/lambda.tf:46 @HEAD -- handler = \"entry.lambda_handler\"",
+      "infra/aws/lambda/investor-reporting/export/entry.py:157-168 @ this cell's HEAD (unedited by this order) -- submit_export's body, verbatim, is the unconditional raise quoted above",
+      "infra/aws/lambda/investor-reporting/export/entry.py:190-201 @HEAD -- ENTRY = _entry.Entry(..., operations={OPERATION_SUBMIT: submit_export, ...}) binds OPERATION_SUBMIT to THIS module's function, not handler.py's",
+      "infra/aws/lambda/investor-reporting/_authz/served.py Entry.handle() @HEAD -- compute = self.operations.get(operation); the dispatch never imports or calls handler.py",
+      "infra/aws/lambda/investor-reporting/export/handler.py header @HEAD -- 'Cell IB-rt-8 (re-purposed)... Round 2 makes that honest by SPLITTING THE JOB' -- the controller that exists but is never reached from the served entry point",
+      "68 of 68 offline tests pass this run (py -3.12 -m pytest infra/aws/lambda/investor-reporting/export/tests/ -q) -- confirms handler.py's OWN logic works when called directly; it is never called from the deployed handler"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHY BLOCKING AND NOT MERELY OBSERVATION: it blocks this VERY cell's own arm (e) from EVER passing on the deployed path, not just this pass's (expected-STOP) pass -- so even a future pass that gets both never-widen halves signed and applies S105+S106 will still measure a NOT_READY on submit and cannot close R72-AC1's live half. WHY NOT MINE TO FIX HERE: this order's BOUNDS name exactly two source edits (S106's except clause, S105's template+write) and REFUSE any served-byte delta beyond them; wiring entry.py's submit_export to handler.py's submit_export/finalize_export is a THIRD, undeclared source change on a function BOUNDS already restricts, and doing it unasked is the 'fix a neighbouring defect' this channel's own rule forbids a worker. ROUTES TO THE COO (Rule 27, decomposition) rather than the CTO: the CTO's ruling already decided the CONTRACT question for S105/S106; whether/how to cut a follow-on cell that wires the submit route is a DECOMP question. DISARM CONDITION, measurable: entry.py's submit_export operation calls handler.py's submit_export/finalize_export (under whatever cell authorizes that edit) and an exercised submit-export invocation on the deployed function returns something other than NOT_READY/_ExportNotWiredHere."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W2-S60",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+  "surfaced_at": "2026-09-20T16:05:00Z",
+  "one_line": "irpt-status's OWN lambda-source-map.json note claims artifact_sha256 EQUALS the live CodeSha256, but MEASURED this turn the two disagree: the field this order found at HEAD before its own edit does not match the live function's CodeSha256, nor the S3 object version that DOES match it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-status.note (pre-edit, HEAD @764b4a83d2's parent 8ba74b3130): \"artifact_sha256 is DELIBERATELY NOT MOVED: it equals the S3 object and the live CodeSha256, and this order deploys nothing under the managed wind-down.\" The field's own value at that HEAD was artifact_sha256=xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=.",
+  "world_is": "aws lambda get-function --function-name irpt-status (this turn) reads CodeSha256=O3TyGqfqjiwZP9OSXmryonnAst+SbYMLzyuSGphOyCE=, LastModified=2026-09-19T17:16:34Z -- NOT xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=. The live value is instead found at S3 object version z8VnRXEPFTioTwjwWlR_TCCQYiqU6mmV (uploaded 2026-09-19T15:58:00Z), whose Metadata.content-sha256 matches CodeSha256 exactly. The claimed-equal value (xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=) was not found on any of the ~20 most recent object versions sampled (2026-09-11 through 2026-09-20). So between the IB-rt-9 wind-down note being written and this turn, the function was rebuilt and re-applied at least once (2026-09-19T15:58-17:16Z) without the note's own claim being re-verified or updated -- a DESIRED-plane sentence (the note) silently outliving the APPLIED-plane fact it asserted.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda get-function --function-name irpt-status --query Configuration.{CodeSha256,LastModified} (this turn, 2026-09-20): CodeSha256=O3TyGqfqjiwZP9OSXmryonnAst+SbYMLzyuSGphOyCE=, LastModified=2026-09-19T17:16:34.000+0000",
+      "git show 8ba74b3130:infra/aws/lambda/ci/lambda-source-map.json -- functions.irpt-status.artifact_sha256 = xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s=, functions.irpt-status.note quoted in spec_asserts",
+      "aws s3api list-object-versions --bucket opal-313476888478-lambda-artifacts --prefix investor-reporting/irpt-status.zip (31 versions, this turn) + aws s3api head-object --version-id z8VnRXEPFTioTwjwWlR_TCCQYiqU6mmV -> Metadata.content-sha256=O3TyGqfqjiwZP9OSXmryonnAst+SbYMLzyuSGphOyCE= (exact match to CodeSha256, uploaded 2026-09-19T15:58:00Z, 15h18m before this row)",
+      "aws s3api head-object --version-id <each of the 8 versions clustered 2026-09-18T21:06-23:07Z> -> Metadata.content-sha256=fm7iq9IgZWvYjMvCyOpcw4VwO8f6eMLgMVU8Ki5PsGk= for all 8 -- none match xlFoIKtAHuFbEcZi2Uiw2inBrTAHTRymAfekJjCwg9s= either"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Found incidentally while reading the PRIOR live CodeSha256 as this order's own K-CODE rollback source (NEVER_WIDEN_SIGNOFF_PACKET_IB-rtg-2.md) -- not this order's defect and not fixed here (never fix a neighbouring defect). This order's own packet uses the LIVE-MEASURED CodeSha256 and its matching S3 version directly, never the stale note, so this order's rollback citation is unaffected. Remedy, offered not assumed: whoever next rebuilds irpt-status should re-verify (or drop) the note's equality claim rather than propagate it; a `note`/`_note` field asserting DESIRED-plane equality with an APPLIED-plane fact needs the SAME re-verification-at-use discipline as any other value under CLAUDE.md's STATE axis (Rule 22), and nothing here re-checks it automatically."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S44",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:20:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "THE DEPLOYED irpt-export-render ZIP HAS NEVER PACKAGED keys.py, SO handler.py's PRE-EXISTING bundle_key()/artifact_key() (AND THIS CELL'S NEW receipt_key()) WOULD ImportError AT RUNTIME -- FOUND AND FIXED IN THIS SAME COMMIT, NOT THIS ORDER'S OWN REMEDY",
+  "spec_asserts": "This order's arm (b) names two source edits (S105, S106) and arm (c) requires 'the served-byte delta EXACTLY the edited members'. Nothing in the order anticipates a THIRD, non-code manifest change.",
+  "world_is": "infra/aws/lambda/ci/lambda-source-map.json's irpt-export-render entry (files[] and staged_from[], read at this cell's HEAD before this edit) carried NEITHER 'keys.py' in files[] NOR a staged_from entry for _keys/keys.py -- unlike the four sibling investor-reporting functions (directory, holdings, narrative, performance) that all stage the SAME _keys/keys.py. handler.py's bundle_key()/artifact_key() (pre-existing, unedited by this order) already do 'import keys as _keys' lazily, and build-and-upload.sh's own zipping loop (infra/aws/lambda/ci/build-and-upload.sh:317-368) copies ONLY files[] plus materialized staged_from members into the artifact -- a member absent from both is absent from the zip, which is this same script's own documented incident class (comment at :331-337, citing the 2026-05-13 smartx ingestion ImportError). This cell's own S105 write path (handler.py's new receipt_key()) calls the identical import, so closing this gap was necessary for THIS cell's fix to run at all, not optional polish. FIXED, this commit: keys.py added to both files[] and staged_from[] (same pin/sha256 the four sibling functions already use -- verified byte-identical to the current _keys/keys.py, sha256 56ee3cc2...df08ab2a) and the build re-run: 'OK: staged keys.py <- .../_keys/keys.py@6e764ef0aa ... sha256 verified' and 'OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json 'irpt-export-render' entry, read at this cell's pre-edit HEAD: files[] = [assets.py...raw_keys.json], no 'keys.py'; staged_from[] carries enforce.py/errors.py/resolve.py/ids.py/raw_keys.json/loaders.py/served.py/custodian_key_seam.json -- 8 entries, none for _keys/keys.py",
+      "the SAME file's 'irpt-directory-search'/'irpt-holdings'/'irpt-narrative'/'irpt-performance-adapter' entries (grep this run) each DO carry a staged_from entry for infra/aws/lambda/investor-reporting/_keys/keys.py, pin 6e764ef0aa, sha256 56ee3cc2...df08ab2a",
+      "infra/aws/lambda/ci/build-and-upload.sh:317-329 (files existence check) and :349-368 (disk<->manifest parity check) -- both read ONLY files[]/staged_from[], confirming a member absent from both never reaches the zip",
+      "this session's build output after the fix: 'OK: staged keys.py <- infra/aws/lambda/investor-reporting/_keys/keys.py@6e764ef0aa (29894 bytes, sha256 verified...)' and 'OK: import-closure -- 18 packaged .py file(s), every top-level import satisfied'",
+      "byte-hash diff of the old vs new deployed zip this session: ADDED=['keys.py'], REMOVED=[], CHANGED=['entry.py','handler.py'] -- confirms keys.py is a genuinely NEW member, not a pre-existing one this session merely re-verified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "CLASS is BLOCKING because, left unfound, it would have blocked this order's own fix from working at all (handler.py's finalize_export would ImportError the first time persist_receipt ran, and the PRE-EXISTING bundle_key()/artifact_key() calls carried the same latent failure before this order ever touched this function). HAZARD_STANDING is INERT because the fix landed in this same commit, inside this order's granted <paths> (infra/aws/lambda/ci/lambda-source-map.json is explicitly listed). NOT this order's own remedy (S105/S106 are the named fix; this is a necessary companion this seat found while proving the build), which is why it is filed as a row rather than folded silently into the packet's own prose. NO DISARM OWNER: already disarmed, same commit."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W1-S45",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-20T15:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "A SIBLING WORKER'S build-and-upload.sh RUN IS VISIBLE IN EVERY OTHER WORKER'S terraform plan IMMEDIATELY -- BEFORE ANY COMMIT, MERGE OR APPLY -- BECAUSE THE ARTIFACT BUCKET IS SHARED AWS STATE, NOT WORKTREE-ISOLATED",
+  "spec_asserts": "This order's arm (c) asks for 'THE OTHER ROOTS RE-TAKEN' style evidence that only THIS cell's function changed (implicit in 'no other function's bytes' and the R7.2 fanout note that the four round-7 chains have DISJOINT write surfaces).",
+  "world_is": "Running a real (backend-attached) terraform plan in THIS worker's own worktree against the holdings/ops/performance roots -- none of which this order's <paths> grant, and none of which this worker touched -- showed EACH one planning exactly ONE Lambda function update (source_code_hash + s3_object_version changing), matching the shape of the SAME round's sibling cells (IB-rtg-2 status/ops, IB-rtg-3 performance, IB-rtg-4 holdings). The most likely explanation, not itself independently confirmed by this row: a sibling worker in a DIFFERENT worktree already ran build-and-upload.sh for its own function, and that script uploads straight to the SHARED s3://opal-313476888478-lambda-artifacts bucket -- a step that has NOTHING to do with git, so it is visible from any worktree's terraform plan the moment it happens, regardless of whether anyone has committed, merged, or is anywhere near an apply. This means 'no changes on the other roots' is NOT a safe assumption to print in a packet during a multi-worker round purely from a clean git diff -- a real plan read can show drift that is a SIBLING's legitimate in-flight work, not a defect of the reading worker's own act, and a reader of a packet who does not know this could mis-attribute the diff.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this session: `terraform plan` (real backend, no -out needed for the read) in infra/aws/terraform/investor-reporting/{holdings,ops,performance} each printed 'Plan: 0 to add, 1 to change, 0 to destroy' against module.irpt_holdings.aws_lambda_function.this / module.irpt_status.aws_lambda_function.this / module.irpt_performance_adapter.aws_lambda_function.this respectively -- each ONLY its own function's source_code_hash/s3_object_version, nothing else",
+      "the SAME session's plan against directory/intake/narrative/ycharts/core/api roots (also untouched by this order) printed 'No changes. Your infrastructure matches the configuration.' -- the clean baseline this row contrasts against",
+      "this worker's OWN worktree (wk-irpt-7-1) carries no edits to holdings/, ops/, or performance/ source (git status this session: only export/iam.tf modified) -- so the drift those three roots show cannot be an effect of anything this worker wrote",
+      "R7.1's own decomp table names IB-rtg-2 (ops/status), IB-rtg-3 (performance), IB-rtg-4 (holdings) as the round's other three cells, each a 'served-path handler deploy' per R7.2 -- i.e. each is expected to run its own build-and-upload.sh independently, in its own worktree, in the same window"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT A DEFECT OF NEVER-2 OR safe-apply.sh -- no apply happened anywhere in this observation, and Terraform's OWN plan is exactly the read-only comparison it is supposed to be. THE GAP is that a worker's never-widen packet (this order's arm (c) genre) can read 'the other roots are clean' as evidence of ISOLATION when a live multi-worker round means that read's DENOMINATOR (which roots are genuinely untouched) can shift between two reads for reasons that have nothing to do with the act being packeted. OFFERED FOR THE ROUND, not claimed as measured beyond this session: whether this is already known/accepted practice for round 7's parallel cells, or whether a packet's 'other roots' section should name this explicitly whenever a round runs >1 worker concurrently. DISARM CONDITION: a ruling or a doctrine note states whether/how a never-widen packet's 'other roots re-taken' evidence should be qualified during a multi-worker round, OR this class of read is shown to already be handled some other way this row did not find."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W4-S47",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~4",
+  "surfaced_at": "2026-09-20T18:13:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.0.0_AB_MSTR",
+  "one_line": "ARM (d)'S FRESH 10-ROOT TERRAFORM PLAN CANNOT RUN: THE BOX'S C: DRIVE IS AT 0 BYTES FREE (238G/238G USED), SO `terraform init` FAILS 'No space left on device' ON EVERY ROOT NOT ALREADY FULLY INITIALIZED -- INCLUDING THE HOLDINGS ROOT ITSELF -- AND THE HOLDINGS APPLY CANNOT PROCEED",
+  "spec_asserts": "This order's arm (d), step 3: 'FRESH 10-ROOT PLAN (never a saved plan): for each investor-reporting root ... run `.tools/terraform.exe -chdir=... init` (if needed) then `plan -out` ... PER ROOT.' The premise is that a fresh init/plan is an available act on this box.",
+  "world_is": "`Get-PSDrive C` (powershell.exe, this run) reads Used=254803963904 bytes, Free=0 bytes -- a literal zero, not a low-but-nonzero figure -- on the ONLY filesystem this box exposes (`git bash df -h` and `Get-PSDrive -PSProvider FileSystem` both show a single C: volume; TEMP/TMP also resolve under C:\\Users\\ANDREW~1\\AppData\\Local\\Temp). Running `terraform.exe -chdir=infra/aws/terraform/investor-reporting/<root> init` this run failed with 'no space left on device' partway through provider install/module init for every root lacking a prior, complete `.terraform/` directory in THIS worktree: directory, holdings, intake, narrative, ops, performance, ycharts all failed; api/core/export left PARTIAL, corrupted `.terraform/` trees from this same attempt (init logs truncate mid-step: 'Initializing provider plugins... Installing hashicorp/aws v5.100.0...' for api, 'Initializing the backend...' alone for core, 'Initializing modules...' alone for export -- none completed). TF_PLUGIN_CACHE_DIR is already set (C:\\Users\\AndrewBerman\\.terraform.d\\plugin-cache), so provider install should hardlink rather than copy, and the failure at literal ZERO free bytes means even a few bytes of new state/lock-file write fails -- there is no in-lane way to reduce the write further. HOLDINGS ITSELF has no prior `.terraform/` in this worktree, so the one root this order must apply cannot even be planned, let alone applied, under the current disk state. A sibling first-pass worktree (`/c/tmp/wk-irpt-7-4`) still carries a previously-initialized holdings `.terraform/`, but reusing another worktree's local (gitignored, untracked) init state is outside this worker's own worktree and was not attempted, since the disk condition is a box-wide resource exhaustion this worker's <paths> grant gives it no authority or mechanism to remedy (no critical_paths/ ownership over disk capacity, and CLAUDE.md's own guidance is to STOP and row a missing capability rather than reconstruct/work around the environment to force an order through).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "powershell.exe -NoProfile -Command \"Get-PSDrive C | Select-Object Used,Free\" this run: Used=254803963904, Free=0",
+      "powershell.exe -NoProfile -Command \"Get-PSDrive -PSProvider FileSystem | Format-Table -AutoSize\" this run: single row, C, Used(GB)=237.30, Free(GB)=0.00",
+      ".tools/terraform.exe -chdir=infra/aws/terraform/investor-reporting/directory init (this run): bash reported 'No space left on device' writing the init LOG file for directory/holdings/intake before terraform's own stdout/stderr could even be captured",
+      ".scratch/rtg4_plans/{api,core,export}_init.txt (this run): each truncates mid-step with no completion line, consistent with the same exhaustion hitting those three roots' init a few writes further in",
+      "this run: this worktree's holdings/.terraform absent (ls -d rc!=0); /c/tmp/wk-irpt-7-4/infra/aws/terraform/investor-reporting/holdings/.terraform present (from the first pass, a DIFFERENT worktree, untouched this pass)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "STOP taken per CLAUDE.md's own guidance (do not rebuild/reconstruct the environment to force an order through; a capability that is missing is a BLOCKING row, not an override): no apply was attempted; the change-management ledger entry opened before this discovery (org/critical_paths/.open_deploys/irpt-bckend-ib-rtg-4-apply.json, commit 1e59319d1a) is left OPEN -- a `hold` was attempted and the tool correctly REFUSED it ('a half-landed deploy cannot be HELD (stays RED)'), since leg L1 is genuinely unstarted, not paused mid-apply; OPEN, eventually RED via `deploy_ledger.py check --red`, is the correct signal for 'blocked, needs attention', not a quiet HELD. DISARM CONDITION: the box's C: drive has nonzero free space and a fresh `terraform init` on the holdings root completes without a disk-space error, at which point this worker's next pass (or a successor) re-runs arm (d) from the top. disarm_owner is 0.0.0_AB_MSTR as the only seat positioned to address box-wide disk capacity across every live worktree/session on this device; this is NOT a request to widen this order -- the remedy (freeing disk) is squarely outside this order's <paths> and this worker's authority."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W3-S49",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+  "surfaced_at": "2026-09-20T22:48:52Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "ARM (d)'S FRESH TEN-ROOT PLAN SHOWS A THIRD CHANGED KEY, `last_modified`, ON BOTH ROUND-7 ROOTS UNDERGOING THEIR OWN DECLARED CODE UPDATE (performance AND export) -- NOT LITERALLY COVERED BY THE PACKET'S TWO-ITEM SUBTRACTION SET, BUT DISCRIMINATED AS A COMPUTED-ONLY COROLLARY OF THE SAME UPDATE, NEVER INDEPENDENT, AND ALREADY ALLOW-LISTED BY A SIBLING WORKER'S OWN GATE IMPLEMENTATION THIS ROUND.",
+  "spec_asserts": "This order's arm (d) and both signed never-widen halves state the PASS shape verbatim as 'EXACTLY module.irpt_performance_adapter.aws_lambda_function.this [\"update\"], source_code_hash IHosoGqG...->W4rYXgZz..., + s3_object_version -- nothing else', with the subtraction set scoped, verbatim, to 'a data.aws_s3_object data-source read entry's version_id/last_modified within resource_changes' -- i.e. a DATA-SOURCE read entry, not a managed resource's own attribute.",
+  "world_is": "The fresh 10-root plan (this pass, default refresh=true AND re-confirmed with -refresh=false) shows THREE changed keys on `module.irpt_performance_adapter.aws_lambda_function.this` (`[\"update\"]`): `last_modified` (`2026-09-19T17:21:09.000+0000` -> unknown/None, i.e. `(known after apply)`), `s3_object_version`, `source_code_hash` -- not two. The identical shape (all three keys, same pattern: a concrete `before` timestamp -> unknown `after`) appears on the ONE OTHER round-7 root with a pending change, `export` (`module.irpt_export_render.aws_lambda_function.this`, `[\"update\"]`, source_code_hash `9IMayS94...->cn8YKEP2...` matching IB-rtg-1's own declared build exactly). `last_modified` is NEVER present on any of the 6 non-round-7 roots or on holdings/ops (all read 0 substantive changes), and on BOTH round-7 update entries it is present ONLY alongside that same resource's own declared source_code_hash change -- it did not appear independently anywhere in the 132-entry, 10-root sweep. It is one of Terraform's own `after_unknown` computed fields on `aws_lambda_function` (6 further fields -- architectures/environment/ephemeral_storage/layers/logging_config/tracing_config -- are ALSO flagged `after_unknown` on this same resource but their before/after VALUES are identical, so they are not real diffs; `last_modified` is the one whose value genuinely differs, before=a timestamp, after=unknown, because AWS recomputes LastModified server-side on every UpdateFunctionCode/Configuration call and Terraform cannot predict it pre-apply). A sibling worker's OWN independently-written gate implementation for this exact round (`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IB-rtg-4_subtraction_gate.py:99-100`) already encodes an explicit allow-list `{\"source_code_hash\", \"s3_object_version\", \"handler\", \"last_modified\", \"policy\", \"id\", \"name\", \"tags\", \"tags_all\"}` and does NOT flag `last_modified` as an unexpected key. This project's own channel also carries a PRIOR, DIFFERENT-SHAPED instance (`IRPT_BCKEND-S40`-region, `full_battery_run3`) where `last_modified`+`s3_object_version` changed WITHOUT any source_code_hash change (a pointer-only re-upload with byte-identical content) and that worker's gate correctly STOPPED -- the discriminator between that case and this one is exactly whether `last_modified` rides ALONE or paired with the same resource's own already-verified source_code_hash change; here it is never alone. On this discrimination this worker proceeded to arm (d)'s apply rather than treating `last_modified` as an independent widening; the finding is filed so the packet's own two-item subtraction text can be widened by the appropriate signer to name this field explicitly, rather than leaving it to each worker's own re-derivation.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python diff of before vs after on module.irpt_performance_adapter.aws_lambda_function.this in .scratch_plan_performance.json (this worker's own fresh plan, default refresh=true): changed keys = ['last_modified', 's3_object_version', 'source_code_hash']; last_modified before='2026-09-19T17:21:09.000+0000', after=None, after_unknown=True",
+      "re-run terraform plan -refresh=false on the same root (this session, .scratch_plan_performance_norefresh.txt): identical three-line diff including 'last_modified = \"2026-09-19T17:21:09.000+0000\" -> (known after apply)' -- rules out refresh mode as the cause of the packet's 2-line excerpt",
+      "python diff of before vs after on module.irpt_export_render.aws_lambda_function.this in .scratch_plan_export.json (this worker's own fresh plan): changed keys = ['last_modified', 's3_object_version', 'source_code_hash'], source_code_hash 9IMayS94if11cyKq51TbcyBG8cUwbbUWlQMlT9XhiaQ=->cn8YKEP2oQdfvAjdpa32Wfp9oJqhAIMGkECv+H4vUg4= (== IB-rtg-1's own declared build)",
+      "full 10-root subtraction-gate sweep this run (.scratch_gate.py / .scratch_gate_output.txt): TWO-PART DENOMINATOR entries compared across all 10 roots = 132, paths subtracted = 10 (the plan top-level .timestamp, once per root; 0 data.aws_s3_object entries required subtraction on any root); substantive non-no-op changes: api/core/directory/intake/narrative/ycharts/holdings/ops = 0 each; performance = 1 (the one address above); export = 2 (the address above + aws_iam_role_policy.export_render_receipt ['create'])",
+      "on the SAME resource, six other after_unknown-flagged keys (architectures, environment, ephemeral_storage, layers, logging_config, tracing_config) have before==after (no real diff) -- confirming the IAM role/env vars/layers are UNCHANGED and last_modified is the only genuinely differing computed field",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IB-rtg-4_subtraction_gate.py:99-100, this worktree at HEAD: ALLOWED = {'source_code_hash','s3_object_version','handler','last_modified','policy','id','name','tags','tags_all'}"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-W3-S50",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+  "surfaced_at": "2026-09-21T00:19:24Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "ARM (e)'S LIVE HTTP PATH RESOLVES CLEANLY FOR 2 OF 3 FIRMS (49financial, cottonwood); INFLECTION RETURNS `UNEXPECTED`, NOT `DEPENDENCY_UNAVAILABLE` -- AN UNRELATED, OUT-OF-BOUND CAUSE (inflection's ownership map is ABSENT from S3) BLOCKS `_authz/served.py`'S `enforcer_for` BEFORE `tenants.route_for` IS EVER REACHED, ENTIRELY OUTSIDE THIS ORDER'S tenants.py BOUND.",
+  "spec_asserts": "This order's arm (e): 'an authorized, scope-resolved performance request for EACH of the 3 registry firms resolves a TenantRoute (no DEPENDENCY_UNAVAILABLE) ... route/function/role printed', reusing the rtf-9 bounded-principal mechanism, 'a new epoch, full lifecycle'.",
+  "world_is": "A live HTTP GET through https://opalinvest.dev/api/scoped/investor-reporting/performance/{accountSetId}, under a fresh FIRM_OPERATIONS-class (role=admin) test principal scoped to `inflection` (chosen over rtf-10's advisor-class mechanism precisely because cottonwood's/inflection's ownership maps are absent/near-empty -- see this worker's own script docstring, IB-rtg-3_arm_e_live_proof.py), returned HTTP 200 with `class UNEXPECTED, code UNEXPECTED, firm_id ABSENT, route None` -- not the FWD-2 signature (`DEPENDENCY_UNAVAILABLE`) and not a clean SERVED/POLICY resolution either. `.tools/aws s3api head-object --bucket opal-data-inf --key platinum/inflection/ownership_map.json` returns 404 Not Found (measured this session), while cottonwood's equivalent object is a 107-byte near-empty stub and 49financial's is 463892 bytes -- both of which resolved cleanly live. CloudWatch (`/aws/lambda/irpt-performance-adapter`, this session's window) shows NO ERROR/traceback line for the inflection invocation -- it completed normally (START/END/REPORT only), which is consistent with `_authz/served.py:594-599`'s `public_reason_for` CATCHING the exception and mapping it to `UNEXPECTED` (or `served.py:624-630`'s `handle()` doing the same with `firm_id=None`) rather than an unhandled crash. `_authz/served.py::BaseGuardedEntry.enforcer_for` (`:550-592`) constructs its `Context` at `:590` with `load_ownership(tenant)` called EAGERLY and UNCONDITIONALLY -- BEFORE `firm_id = enforcer.binding.opaque_firm_id` is even read at `:632`, and long before `handler.py`'s `run()`/`tenants.route_for` is ever invoked -- so a firm whose ownership-map object is absent from S3 fails INSIDE `enforcer_for` regardless of principal class (FIRM_OPERATIONS/admin does not skip this eager load; that skip only happens LATER, inside `_scope/resolve.py::resolve()`'s branch logic, which is never reached). This is an ENTIRELY DIFFERENT subsystem (`_authz/served.py`, `_authz/enforce.py`) from this order's bound (`performance/tenants.py` + `_ids/`), and `_loaders`/the ownership-map population pipeline are both outside this order's `<paths>` grant. Route resolution for inflection specifically is separately proven: (1) the FIRST-PASS in-process battery (`battery_ib_rtg_3.py`, already committed, PASS) exercises `tenants.route_for(_ids.opaque_firm('inflection'))` directly and resolves a TenantRoute (Inflection/ORION/api.cloud.orionadvisor.com); (2) THIS pass's deployed-bytes check confirms the SERVED zip's `tenants.py` is byte-identical (sha256 dbefe40e3c0d1f835f45783e5175f9816d8dc6654ab3e4b4e31c25fb7066a647) to that same reviewed, in-process-tested source -- so the passing in-process result applies to the exact bytes now serving, even though the LIVE HTTP path cannot reach that code for this one firm. Lifecycle closed cleanly for inflection's test principal regardless (K1/K1b deleted, refresh refused, 401 after exp -- all verified).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-rtg-3_arm_e_live_proof_output.txt (this run): 49financial and cottonwood both HTTP 200 class SERVED with `coverage.route` populated (firm_id/firm_name/provider/host/paths/session_secret_id/data_plane all printed); inflection HTTP 200 class UNEXPECTED code UNEXPECTED firm_id ABSENT route None",
+      ".tools/aws s3api head-object --bucket opal-data-inf --key platinum/inflection/ownership_map.json (this session): 404 Not Found; --bucket opal-data-cot --key platinum/cottonwood/ownership_map.json: 107 bytes; --bucket opal-data-bd --key platinum/49financial/ownership_map.json: 463892 bytes",
+      "boto3 logs.filter_log_events on /aws/lambda/irpt-performance-adapter over this session's window: the inflection invocation's RequestId shows START/END/REPORT only, no ERROR/Traceback line",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:590 (Context(tenant, binding, directory, load_ownership(tenant), policy, entitlement_revision)) -- read at HEAD this session: the ownership load is unconditional, inside enforcer_for(), before binding.opaque_firm_id is read at :632",
+      "infra/aws/lambda/investor-reporting/_authz/served.py:594-599 and :624-630 -- read at HEAD: any exception in enforcer_for not an AuthzError maps to public_reason_code UNEXPECTED with firm_id=None, matching this run's exact response shape",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_R74-AC1_battery_output.txt @eee9094d47 (first pass, already committed): route_for resolves a TenantRoute for inflection's opaque id in-process, PASS",
+      "IB-rtg-3_arm_e_live_proof_output.txt DEPLOYED-BYTES CHECK (this run): served zip tenants.py sha256 dbefe40e3c0d1f835f45783e5175f9816d8dc6654ab3e4b4e31c25fb7066a647, matching the reviewed worktree source hashed the same way in the packet (section 3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT this order's defect and not fixed here (this order's bound confines the edit to performance/tenants.py; _authz/served.py's eager ownership load is a pre-existing property of a different subsystem). Routed to 2.0.0_SA_COO~B (the issuer), same pattern as row IRPT_BCKEND-W3-S48. R74-AC1 is graded PASS on this instance because the SPECIFIC defect the criterion names (route_for raising UnknownTenant -> DEPENDENCY_UNAVAILABLE, FWD-2) is conclusively absent for inflection (confirmed: code=UNEXPECTED, never DEPENDENCY_UNAVAILABLE) and route resolution itself is proven via the in-process battery plus this pass's deployed-bytes identity check -- the order's own text names DEPENDENCY_UNAVAILABLE, not any non-success code, as the truthful-FAIL discriminator. DISARM CONDITION: inflection's ownership map is populated at s3://opal-data-inf/platinum/inflection/ownership_map.json (schema_version 1) and a re-run of this live proof reaches route_for for that firm, OR a ruling states this class of eager-load failure is out of scope for R74-AC1 by construction."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-W2-S62",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~2",
+  "surfaced_at": "2026-09-21T13:04:36Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "TO-IB-rth-2 ARM (a)'S PREMISE -- 'IDENTIFY THE MINIMAL WIRING THAT MAKES A REAL SUBMIT PRODUCE A RECEIPT' -- IS FALSE: NO WIRING, MINIMAL OR OTHERWISE, CAN MAKE POST /export SYNCHRONOUSLY PRODUCE THE PUBLISHED v1 submit-export RESPONSE (A FULL ExportReceipt) BECAUSE (1) THE RENDER IS ASYNCHRONOUS AND HOST-GATED WITH NO FINALIZE/CALLBACK ROUTE ANYWHERE IN THE DEPLOYED SYSTEM, AND (2) THE API GATEWAY INTEGRATION'S OWN 29000ms TIMEOUT MAKES A SYNCHRONOUS WAIT FOR THE RENDER STRUCTURALLY IMPOSSIBLE REGARDLESS OF CODE QUALITY.",
+  "spec_asserts": "TO-IB-rth-2 arm (a): 'identify the MINIMAL wiring that makes a real submit produce a receipt at the aligned address rtg-1 proved'. Arm (b): 'wire submit_export to the real controller so an authorized submit produces the receipt via the same handler.persist_receipt()/receipt.build() rtg-1 proved'. Arm (e)/R77-AC1: 'an exercised submit-export -> receipt round trip on the REAL path PRODUCES + SERVES the receipt (no NOT_READY, no NOT_FOUND)'.",
+  "world_is": "MEASURED, not assumed, this session (worktree HEAD 7df516b46e36da96b7ea446742bc0d0d08021739, no source edit made): (1) entry.py's OWN submit_export(request, scope, event, ctx) is the function bound to OPERATION_SUBMIT in the deployed ENTRY (entry.py:221-226) and its body is an unconditional raise of _ExportNotWiredHere/NOT_READY (entry.py:188-199), confirming row W1-S43 still holds unchanged. (2) handler.py's real controller (submit_export freeze+persist+dispatch, finalize_export validate+build+persist) is proven correct offline (68 of 68 tests in tests/test_export.py + tests/test_rt8.py pass this run) and IS callable from entry.py -- but finalize_export has ZERO call sites anywhere under infra/aws/lambda/investor-reporting/export/ other than its own def line (handler.py:297; comp-find-equivalent Grep 'finalize_export\\(' over that tree returns exactly 1 hit, the definition) and zero call sites in this project's deliverables tree outside two PROSE mentions in a packet (org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/NEVER_WIDEN_SIGNOFF_PACKET_IB-rtg-1.md:34,198) -- there is no route, action or callback anywhere in the deployed system that ever reaches it. handler.py's OWN lambda_handler (which DOES dispatch action=='submit'/'capabilities'/'render_preflight' but never 'finalize') is DEAD CODE: Terraform wires handler = 'entry.lambda_handler' (infra/aws/terraform/investor-reporting/export/lambda.tf:46), never handler.lambda_handler, so handler.py's action-dispatcher is unreachable at runtime regardless of what a caller sends. (3) The render is genuinely asynchronous and deliberately host-gated: dispatch.py's own preflight()/dispatch() (dispatch.py:39-154) refuse to send unless the render host is 'running' and REFUSE TO START IT ('STILL NOT GRANTED: ec2:StartInstances / ec2:StopInstances. The controller does NOT start the host... a function that could start it would make the control advisory', iam.tf:25-28); MEASURED this session, `.tools/aws ec2 describe-instances --filters Name=tag:Name,Values=irpt-ycharts-runner ...` returns instance i-0167fd745ad906a66 state 'stopped'. dispatch.py's own text names starting it 'an OPERATOR ACT, not a retry' (dispatch.py:139-145) -- outside this worker's delegated authority per CLAUDE.md's vendor-call/operator-act bars. (4) EVEN IF the host were running, a same-request wait-and-finalize is not viable: the SSM render document's own script budget is timeoutSeconds='900' (ssm.tf:41), this Lambda's own configured timeout is 120s (lambda.tf:47), and MEASURED this session (infra/aws/terraform/investor-reporting/api/integrations.tf:58) the API Gateway HTTP API integration in front of every IRPT route, including this one, is configured `timeout_milliseconds = 29000` -- a HARD ceiling on the whole client-visible request regardless of the Lambda's own timeout. A render that takes longer than ~29s (plausible for a headless-Chromium PDF render plus SSM dispatch/pickup latency, and NOT something this worker can measure without the operator act in (3)) cannot be waited out inside one HTTP call under any code. (5) The published v1 response contract for this exact operation admits no partial/pending answer: docs/contracts/investor-reporting/v1/responses/submit-export.response.schema.json requires 'data' ($ref ExportReceipt.schema.json, itself requiring artifact.sha256 and facts.page_count/validation_status/validation_failures) with additionalProperties:false and 'data' in the top-level `required` array (:17-23, :45-47) -- there is no legal SUCCESS response shape for submit-export that is not a complete, already-rendered ExportReceipt; only a REFUSAL (a structurally different envelope, `_authz/served.py::refuse()`) is legal when a render has not completed. TAKEN TOGETHER: the only code path that can make R77-AC1 pass is one where an operator has ALREADY started the render host, the render happens to complete in well under 29s end-to-end (unmeasured), AND a still-unbuilt synchronous wait+finalize path is added inside the request -- none of which is 'minimal wiring', and none of which this worker can arrange or verify unilaterally. Filed instead of writing a source edit that either cannot pass live (a partial freeze/persist/dispatch-only wiring, still legally only a REFUSAL per (5)) or is a fragile, silently-lossy guess about undocumented render latency against a hard 29s platform ceiling -- inconsistent with this codebase's own measured-not-assumed standard throughout export/*.py.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py:157-199,221-226 @HEAD 7df516b46e -- submit_export's body is the unconditional raise; ENTRY binds OPERATION_SUBMIT to this same function",
+      "infra/aws/lambda/investor-reporting/export/handler.py:297-352,368-463 @HEAD 7df516b46e -- finalize_export's def; lambda_handler's action dispatcher (submit/capabilities/render_preflight only, no finalize)",
+      "infra/aws/terraform/investor-reporting/export/lambda.tf:23-24,46-47 @HEAD 7df516b46e -- handler = \"entry.lambda_handler\" (never handler.lambda_handler); timeout = 120",
+      "infra/aws/terraform/investor-reporting/export/ssm.tf:37-42 @HEAD 7df516b46e -- mainSteps[0].inputs.timeoutSeconds = \"900\"",
+      "infra/aws/terraform/investor-reporting/api/integrations.tf:50-61 @HEAD 7df516b46e -- aws_apigatewayv2_integration.handler[\"export\"] timeout_milliseconds = 29000, integration_type AWS_PROXY, targeting irpt-export-render",
+      "infra/aws/terraform/investor-reporting/export/iam.tf:8-28 @HEAD 7df516b46e -- export_render role already carries ssm:SendCommand/GetCommandInvocation/ListCommandInvocations/DescribeDocument and ec2:DescribeInstances (read-only, no StartInstances/StopInstances), with the operator-act rationale stated in the file's own comment",
+      "infra/aws/lambda/investor-reporting/export/dispatch.py:39-56,111-155 @HEAD 7df516b46e -- preflight()/dispatch() HUMAN_GATED design; 'Starting it is an OPERATOR ACT, not a retry'",
+      "docs/contracts/investor-reporting/v1/responses/submit-export.response.schema.json:16-53 @HEAD 7df516b46e -- additionalProperties:false, required includes 'data', data.$ref = ../ExportReceipt.schema.json",
+      "infra/aws/lambda/investor-reporting/export/receipt.py:42-64 @HEAD 7df516b46e -- build() requires facts and artifact_sha256 unconditionally; no partial/QUEUED-without-artifact shape exists",
+      "timeout 60 .tools/aws ec2 describe-instances --filters Name=tag:Name,Values=irpt-ycharts-runner Name=instance-state-name,Values=running,stopped,stopping,pending --region us-east-1 (this session): i-0167fd745ad906a66 state=stopped",
+      "Grep 'finalize_export\\(' over infra/aws/lambda/investor-reporting/export (this session): 1 hit, handler.py:297 (the def itself) -- zero call sites",
+      "timeout 900 py -3.12 -m pytest infra/aws/lambda/investor-reporting/export/tests/ -q (this session): 68 passed -- handler.py's controller functions are correct in isolation; the gap is wiring/callback, not the controller logic"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This worker did not write a source edit, a NEVER_WIDEN_SIGNOFF_PACKET, a build ledger, a change-management ledger, or attempt an apply for TO-IB-rth-2 as a consequence: none is honest given (5) above (no code change makes a same-request 200 legal without a completed render), and BOUNDS restrict this cell to 'the submit-wiring edit' to one function, not a new finalize/callback capability. battery_ib_rth_2.py (committed alongside this row) measures exactly this finding and intentionally does not print R77-AC1's PASS token; the order's proof_of_spec instance grades R77-AC1 FAIL by this measurement and leaves <status> non-terminal. DISARM CONDITION: a CTO/COO ruling on ONE of -- (a) an operator starts the render host, an operator or CTO measures actual end-to-end render latency against the 29s ceiling, and if it clears, a NEW cell builds the still-missing finalize/callback path (a real, larger build, not this cell's scope); or (b) the acceptance criterion is redefined to accept an asynchronous two-phase proof (submit dispatches, a SEPARATE later act finalizes, GET later serves) against a NEW, not-yet-published response contract for a pending state; or (c) a ruling accepts the freeze/persist/dispatch-only partial wiring as sufficient progress for this round, explicitly waiving R77-AC1's literal 'no receipt is ever produced today' consequence."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-W3-S52",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~3",
+  "surfaced_at": "2026-09-21T14:01:32Z",
+  "one_line": "CTO ruling CTO_RULING_IRPT_BCKEND_W2-S62_RTH2_SUBMIT_WIRING_20260921's authorized bounded measurement RAN (host started, irpt-export-render-run sent against a replayed already-captured ExportBundle), and the render-latency-vs-29s question stays UNMEASURED: the run did NOT hit the disclosed RENDERER_MODULE_ABSENT risk (playwright WAS found), it hit a DIFFERENT, previously-undisclosed structural block -- BLOCKED: SESSION_ABSENT -- 4.483s after send, before any PDF render began. The vendor-separation architecture claim is independently CONFIRMED with LIVE traffic this run (11 of 11 browser requests to opalinvest.dev, 0 foreign, 0 vendor).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 60 .tools/aws ec2 start-instances --instance-ids i-0167fd745ad906a66 --region us-east-1 (this session): CurrentState pending, PreviousState stopped; timeout 120 .tools/aws ec2 wait instance-running ...: rc=0; timeout 60 .tools/aws ec2 describe-instances ...: State=running (checked after both SSM sends too -- still running)",
+      "timeout 60 .tools/aws ssm describe-instance-information --filters Key=InstanceIds,Values=i-0167fd745ad906a66 (this session): PingStatus=Online, AgentVersion 3.3.4624.0",
+      "timeout 60 .tools/aws ssm describe-document --name irpt-export-render-run (this session): DocumentType=Command, Owner=313476888478; timeout 60 .tools/aws ssm list-documents --filters Key=Name,Values=irpt-ycharts-runner-deploy,irpt-ycharts-run,irpt-export-render-run (this session): returns exactly [\"irpt-export-render-run\",\"irpt-ycharts-run\"] -- two distinct documents, the render document positively identified and distinguished from the YCharts one before sending",
+      "infra/aws/terraform/investor-reporting/export/ssm.tf:5-9,26,35 @HEAD (read independently this session, not just cited from the ruling): header comment 'ONE DOCUMENT, AND IT IS NOT THE YCHARTS ONE ... this document opens the Opal portal's own print route'; description field 'NOT a vendor call: the only origin opened is the Opal portal origin, and a vendor origin is refused before the browser opens'; PortalOrigin param description 'NEVER a vendor origin -- the host refuses one before the browser opens' -- the CTO ruling's vendor-separation claim independently confirmed against the document's own text, three times over, exactly as the ruling states",
+      ".tools/aws s3api list-objects-v2 --bucket opal-data-ycharts --prefix firms/49financial/generations/ (this session): two bundle.json objects under GENRT8PROOF (the generation exclusion.py:32-38 names as minted by IB-rt-8's OWN prior proof battery, 2026-09-11); .tools/aws s3api get-object ... GENRT8PROOF/attempts/1/exports/rt8-render/bundle.json (this session): 606 bytes, Metadata irpt-synthetic=true, irpt-bundle-sha256=9094e35ca97886b357ae1ad05503eb4ca6b8cb404c77bcb9239cf89bdac2d3fc; bundle_mod.validate() against ExportBundle.schema.json in this session: True; bundle_mod.digest(fetched object) == 9094e35ca97886b357ae1ad05503eb4ca6b8cb404c77bcb9239cf89bdac2d3fc -- an already-captured, schema-valid, hash-verified-intact ExportBundle from this exact cell's own prior proof run, never a fresh vendor pull; no report.pdf existed at that prefix before this session's sends",
+      "run 1 (this worker's own invalid PortalOrigin guess https://portal.opal.internal): send-command d4b2aa90-7e2a-4311-b3b9-ec560beec38d 2026-09-21T13:55:39Z -> get-command-invocation: Status=Failed, ExecutionElapsedTime PT6.178S, StandardErrorContent 'page.goto: net::ERR_NAME_NOT_RESOLVED' -- a DNS failure on this worker's own bad input, not evidence toward the render-latency question, superseded by run 2",
+      "infra/aws/terraform/investor-reporting/export/main.tf:83-92 @HEAD (read this session): 'portal_origin = \"https://opalinvest.dev\"', with the comment naming an EARLIER wrong guess (https://portal.opalcapital.co, row IRPT_BCKEND-W4-S22) corrected by exactly this class of live-run discovery; infra/aws/terraform/investor-reporting/export/lambda.tf:68 @HEAD: IRPT_PORTAL_ORIGIN = local.portal_origin -- the deployed value, not a second guess",
+      "run 2 (corrected PortalOrigin=https://opalinvest.dev, the deployed value): send-command 0a950a41-4a92-4302-8bc1-5a269d99d60a 2026-09-21T13:57:45Z -> get-command-invocation: Status=Failed, ExecutionStartDateTime 13:57:48.320Z, ExecutionEndDateTime 13:57:52.320Z, ExecutionElapsedTime PT4.483S; StandardOutputContent shows the renderer-module-discovery step SUCCEEDING this run ('OK: node playwright under /opt/investor-reporting-ycharts/research/20260911/node_modules' -- the disclosed RENDERER_MODULE_ABSENT risk did NOT fire) then StandardErrorContent 'BLOCKED: SESSION_ABSENT -- the print route answered with a sign-in screen. This script never signs in; an authenticated session for the host is an OPERATOR ACT.' -- a DIFFERENT structural block than the one the ruling disclosed, reached before any PDF render began, so the 29s ceiling question was never exercised",
+      "run 2's own printed GUARD line (StandardOutputContent): {\"requests_total\":11,\"requests_by_origin\":{\"opalinvest.dev\":11},\"foreign_origin_requests\":0,\"foreign_origins\":[],\"vendor_requests\":0,\"allowed_origin\":\"opalinvest.dev\",...} -- a LIVE, exercised confirmation (not just document text) that the render path never touched a vendor or foreign origin across 11 real browser requests",
+      "infra/aws/ec2/investor-reporting-export/render_export.cjs:141-144 @HEAD (read this session): the SESSION_ABSENT branch's own comment, 'an authenticated session for the host is an OPERATOR ACT' -- this worker did not attempt to establish one (no credential entry, no sign-in, no further guess), consistent with this project's standing vendor-call/operator-act bars",
+      "org/tier2_senior/0.7.0_AE_CloudOps/logs/2026-04-02/ec2-auto-shutdown-audit.md (read this session): audits 9 named instances, none is irpt-ycharts-runner or i-0167fd745ad906a66 -- does not cover this host",
+      "infra/aws/terraform/investor-reporting/ycharts/instance.tf:1-30 @HEAD (read this session): aws_ec2_instance_state.runner declares state=stopped as the root's converged/return state; 'There is no EventBridge rule here'; 'the instance role has no ec2 control-plane grant: the box cannot start itself'; 'a host left running after a render is drift against this line, not a permission' -- the only existing coverage for this instance is a Terraform DECLARED-STATE drift signal (surfaces on a future plan/apply, itself gated by CLAUDE.md's stop-EC2 confirmation requirement), not an automated stop; the same file independently corroborates the ruling's authorization (Andrew-direct 2026-09-11 ~14:5xZ 'Yes ycharts runner may be started', CTO msg 95983)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling, WHAT IS AUTHORIZED items 1-2: 'START the render host ... RUN ONE bounded measurement via the existing irpt-export-render-run SSM document ... against an already-captured, already-approved ExportBundle ... Time it end-to-end, request to receipt'. Item 4: 'A known risk to disclose, not a blocker: the render document's own script has previously logged BLOCKED: RENDERER_MODULE_ABSENT ... The measurement may come back BLOCKED for this unrelated reason rather than timed. That is information, not a reason to skip the attempt.'",
+  "world_is": "The host started cleanly and reached running/SSM-Online. The render document was positively identified as irpt-export-render-run, distinct from irpt-ycharts-run. A valid, already-captured, schema-verified, hash-intact ExportBundle (GENRT8PROOF/rt8-render, minted by this cell's own prior proof battery on 2026-09-11) was replayed -- never a fresh vendor pull. Two sends were made: the first used this worker's own incorrect guess for the required PortalOrigin parameter (a value with no default anywhere in ssm.tf, dispatch.py or the Lambda's render_request call) and failed on DNS resolution in 6.178s -- a self-inflicted input error, not evidence about render latency. The second used the ACTUAL deployed portal origin (https://opalinvest.dev, read from main.tf's local.portal_origin / lambda.tf's env var, itself the product of an earlier identical correction per row IRPT_BCKEND-W4-S22) and ran in 4.483s: the renderer-module-discovery step that the ruling flagged as a known risk SUCCEEDED this time (playwright found), so RENDERER_MODULE_ABSENT did not fire -- but the run then hit a DIFFERENT, structurally identical-in-kind block the ruling did not name: BLOCKED: SESSION_ABSENT, because the print route requires an authenticated portal session the host does not have, and the render script's own design refuses to sign in (naming that an OPERATOR ACT). No PDF was ever produced by either run, so the discriminating fact the ruling exists to measure -- does a real render finish inside the 29s API Gateway ceiling -- is STILL UNMEASURED, not measured-and-passing and not measured-and-failing. What WAS newly, positively measured with live traffic (not just document text) is the vendor-separation claim: 11 of 11 browser requests went to opalinvest.dev, 0 foreign, 0 vendor, across the one run that actually opened a browser. The host was left running throughout, confirmed running after both sends, per the ruling's absolute no-stop instruction. No auto-shutdown mechanism (EventBridge, Lambda, watchdog) exists for this specific instance in either the 2026-04-02 fabric-wide audit or this project's own ycharts Terraform root; the only existing 'coverage' is the root's declared aws_ec2_instance_state.runner=stopped, which will read as PLAN DRIFT -- not an automatic stop -- the next time anyone runs terraform plan/apply against it.",
+  "notes": "This worker did not attempt a third send to work around SESSION_ABSENT (no credential, no sign-in, no session-capture attempt) -- establishing a session is named by the render script's own comment as an OPERATOR ACT, outside this cell's delegated authority and adjacent to exactly the vendor-sign-in gate this project's standing doctrine (PRD FWD-4, CLAUDE.md's vendor-call bar) protects. Fed to W2-S62's decision tree as new, load-bearing input: neither of the ruling's two named branches (latency clears vs. latency does not clear / render structurally blocked on the disclosed risk) is the one that actually happened -- the render is structurally blocked on a THIRD condition (no authenticated session) that sits even earlier in the pipeline than the render itself, so it blocks the measurement question but is not itself evidence for either the async-two-phase-contract branch or the synchronous-wiring-is-legal branch; that is the CTO/COO's call to make on this new fact, not this worker's. Host state at file time: RUNNING (i-0167fd745ad906a66), left running per explicit instruction; full evidence at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/render_latency_measurement_20260921.result.md."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-W1-S48",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~1",
+  "surfaced_at": "2026-09-21T14:01:14Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "TO-IB-rth-1 ARM (c)/(d)'S PREMISE -- THAT REBUILDING THE 7 SERVING FUNCTIONS VIA `build-and-upload.sh` PICKS UP THE SIGNED, COMMITTED `_authz/loaders.py` FIX -- IS FALSE: THE SOURCE MAP'S `staged_from` PIN FOR `loaders.py` (`c28c728a309ab0d83b2831c2972179791a2985fb`) PREDATES THE FIX COMMIT (`385aff464618e54a3ff461793222bd44154d2499`), SO EVERY BUILD REPRODUCES THE PRE-FIX BYTES BYTE-FOR-BYTE ACROSS ALL 7 OF 7 TARGET FUNCTIONS, AND BUMPING THE PIN NEEDS A WRITE TO `infra/aws/lambda/ci/lambda-source-map.json`, WHICH IS OUTSIDE THIS ORDER'S `<paths>` GRANT.",
+  "spec_asserts": "The task order's arm (c) and the packet's section 4 ('BRANCH -- BUILT AND DEPLOYED') both state, as their governing premise, that 'an apply of this fix means rebuilding and redeploying all 7' serving functions via `infra/aws/lambda/ci/build-and-upload.sh investor-reporting <function>' -- both signed never-widen halves (COO and CTO) sign the RESULT of that rebuild (the served behaviour with the `elif code == \"AccessDenied\"` branch live) without naming any precondition on the build pipeline itself; neither half's independent re-derivation (COO: comp-iam + Terraform source; CTO: git plumbing + `git show` diff + live `CodeSha256` read on `irpt-holdings`) exercised the BUILD SCRIPT itself against the committed fix, only the committed file and the pre-apply live state.",
+  "world_is": "Running `bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-search` (this session, worktree HEAD 580bb35f7a771b9116bc6db83716cf2de259104f, committed source unchanged, `git status --porcelain infra/aws/lambda/` clean before the run) produced artifact sha256(b64) `76LeVyYNfhdyDnQNXR3LzrqSv7k7Vr3POSjpcBzww6E=` -- IDENTICAL, not merely similar, to the packet's own PRE-CHANGE rollback-table value for that same function (`NEVER_WIDEN_SIGNOFF_PACKET_IB-rth-1.md` section 4, the value both signed halves cite as the state to roll BACK to). The build log's own staging line names the cause directly: 'OK: staged loaders.py <- infra/aws/lambda/investor-reporting/_authz/loaders.py@c28c728a30 (6934 bytes, sha256 verified, not committed at the packaged path)' -- 6934 bytes, not the committed fix's 9779 bytes (`0c086052e6e65d2cb411f15362862b1656bad0b2320f9756be6a32444b665765`, re-derived this session via `git cat-file -p HEAD:<path> | sha256`, matching both signed halves exactly). The build script (`infra/aws/lambda/ci/build-and-upload.sh` Script 4, `:152-201`) materializes every `staged_from` member from `git show <pin>:<repo_path>`, NEVER the worktree, where `pin` is the value declared per-file in `infra/aws/lambda/ci/lambda-source-map.json`; `loaders.py`'s declared pin for ALL 7 of 7 target functions (irpt-directory-search, irpt-status, irpt-holdings, irpt-narrative, irpt-export-render, irpt-performance-adapter, irpt-ycharts-generate -- checked individually, 7 of 7 share the identical value) is `c28c728a309ab0d83b2831c2972179791a2985fb`, which `git merge-base --is-ancestor` confirms is a strict ancestor of the fix commit `385aff464618e54a3ff461793222bd44154d2499`, and `git log c28c728a309..385aff4646 -- infra/aws/lambda/investor-reporting/_authz/loaders.py` shows exactly one commit in that range -- the fix commit itself -- changed the file. The fix commit did not touch `lambda-source-map.json` (`git show --name-only 385aff4646` names no such path). So the estate's own standard rebuild mechanism, run exactly as the packet and both signed halves describe it, currently redeploys the PRE-FIX behaviour under a post-fix label, for all 7 functions, not a random one. This worker did NOT proceed to build the remaining 6 functions or attempt any Terraform plan/apply once this was measured. The one stray write this run caused -- `build-and-upload.sh`'s own artifact_s3_key/artifact_sha256 update to the in-worktree `lambda-source-map.json` (a file outside this order's `<paths>` grant) -- was reverted via `git checkout -- infra/aws/lambda/ci/lambda-source-map.json` this session, confirmed clean by `git status --porcelain` afterward; the one live S3 upload this run caused (`s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-directory-search.zip`) carries the SAME bytes/sha256 as the artifact already live there (this build's own output line), so it changes no Terraform-visible state (`source_code_hash` is read from the live object's current content-sha256 metadata with no version pin, per the IB-rtg-4 COO half's own measurement of this same mechanism) and is disclosed here rather than further remediated, since doing more (e.g. restoring a specific prior S3 object version) is not needed for byte-identical content and any further S3 write is equally outside this order's declared grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this session: `bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-search` output (captured, .scratch/build_directory-search.txt) -- 'SHA256: 76LeVyYNfhdyDnQNXR3LzrqSv7k7Vr3POSjpcBzww6E=' and 'OK: staged loaders.py <- infra/aws/lambda/investor-reporting/_authz/loaders.py@c28c728a30 (6934 bytes, sha256 verified, not committed at the packaged path)'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/NEVER_WIDEN_SIGNOFF_PACKET_IB-rth-1.md section 4 rollback table, this worktree @HEAD 580bb35f7a -- `irpt-directory-search` pre-change CodeSha256 `76LeVyYNfhdyDnQNXR3LzrqSv7k7Vr3POSjpcBzww6E=`, EQUAL to this run's freshly-BUILT sha, not the rollback target",
+      "`git cat-file -p HEAD:infra/aws/lambda/investor-reporting/_authz/loaders.py | sha256sum` this session: 9779 bytes, sha256 `0c086052e6e65d2cb411f15362862b1656bad0b2320f9756be6a32444b665765` -- matches the packet's and both signed halves' COMMITTED-FILE-SHA256 exactly; this is NOT the 6934-byte object the build staged",
+      "`py -3.12 -c \"json.load(open('infra/aws/lambda/ci/lambda-source-map.json'))\"` this session: `functions['irpt-directory-search'].staged_from` entry for `_authz/loaders.py` carries `pin: c28c728a309ab0d83b2831c2972179791a2985fb`; the same pin repeated verbatim for `irpt-status`, `irpt-holdings`, `irpt-narrative`, `irpt-export-render`, `irpt-performance-adapter`, `irpt-ycharts-generate` (7 of 7 target functions checked individually)",
+      "`git merge-base --is-ancestor c28c728a309ab0d83b2831c2972179791a2985fb 385aff464618e54a3ff461793222bd44154d2499` this session: rc 0 (pin IS a strict ancestor of the fix commit)",
+      "`git log --oneline c28c728a309ab0d83b2831c2972179791a2985fb..385aff464618e54a3ff461793222bd44154d2499 -- infra/aws/lambda/investor-reporting/_authz/loaders.py` this session: exactly one commit, `385aff4646` itself",
+      "`git show --stat 385aff464618e54a3ff461793222bd44154d2499` and `git show --name-only 385aff4646` this session: the fix commit's author line is `0.9.0_WK_IRPT_BCKEND~1` (this worker's own prior-session commit); `lambda-source-map.json` is not among the changed paths",
+      "infra/aws/lambda/ci/build-and-upload.sh:152-201 @HEAD 580bb35f7a -- Script 4's own comment and code: 'materialize this function's staged_from members from their COMMITTED blobs (git show <pin>:<repo_path>, never the worktree)'; `let pin = s.pin; if (!pin || pin === 'HEAD') { pin = ...rev-parse HEAD... }` -- a declared, non-'HEAD' pin is used verbatim, never refreshed",
+      "this session: `git status --porcelain infra/aws/lambda/` clean before the build run (the script's own precondition, satisfied); `git status --porcelain infra/aws/lambda/ci/lambda-source-map.json` showed ` M` after the build, reverted via `git checkout -- infra/aws/lambda/ci/lambda-source-map.json` this session, confirmed clean by a second `git status --porcelain` read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "This worker STOPPED before building the remaining 6 functions and before any Terraform plan/apply on any of the 7 roots -- proceeding would either (a) deploy pre-fix bytes under a post-fix label (a silent no-op on the very defect this order exists to close), or (b) require bumping the `loaders.py` pin in `infra/aws/lambda/ci/lambda-source-map.json`, a write this order's `<paths>` grant does not authorize (only `infra/aws/lambda/investor-reporting/_authz/`, `_ids/`, `infra/aws/terraform/investor-reporting/`, the change-management/open-deploys trees, and this project's own task-order/investigation faces are granted). Arm (c)/(d)/(e) are NOT attempted on this instance as a consequence; `R76-AC1` stays a truthful DISCLOSED-INCOMPLETE and `<status>` stays non-terminal. DISARM CONDITION: a seat holding write access to `infra/aws/lambda/ci/lambda-source-map.json` (this project's decomposition's owner of record for that path, or the CTO/COO directly) bumps the `_authz/loaders.py` `staged_from` pin for all 7 target functions to the fix commit (`385aff4646` or later) or to `'HEAD'`, and a re-run of `build-and-upload.sh` for at least one function shows a staged `loaders.py` matching the 9779-byte, `0c086052e6...`-hash committed fix -- at which point this cell's build+apply/live-proof sequence can proceed exactly as both signed halves describe it."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-S113",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T15:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "IB-rth-5's never-widen packet's COMMITTED-FILE-SHA256 table computed its `capture-session.cjs` entry from the GIT BLOB (LF), not a disk read -- inconsistent with the SAME table's `render_export.cjs`/`package.json` entries, which match a DISK read on this autocrlf=true box. Whoever deploys IB-rth-5's files via a raw `aws s3 cp` from a Windows checkout would upload DIFFERENT bytes/hash for `capture-session.cjs` than the packet names -- the S68/CRLF class this project already tracks, one file over.",
+  "spec_asserts": "NEVER_WIDEN_SIGNOFF_PACKET_IB-rth-5.md section 2 states one `COMMITTED-FILE-SHA256` per file, implicitly as one consistent reference a deploy-time verify step compares against; section 8 says both halves sign against these values.",
+  "world_is": "Independent re-derivation, this session, on THIS box (core.autocrlf=true, confirmed `git config --get core.autocrlf`): a plain disk read (`open(path,'rb')`) of `render_export.cjs`, `capture-session.sh`, `package.json`, `run-export-render.sh` matches the packet's claimed sha256 EXACTLY (4 of 4). The SAME disk read of `capture-session.cjs` gives 5650 bytes / sha256 `16d420e75e6fd13a8390613197d85ac3d348777043dd845f5c9c9a3f6432655e` -- NOT the packet's claimed 5544 bytes / `edf76b2d...`. `git cat-file -p HEAD:infra/aws/ec2/investor-reporting-export/capture-session.cjs | sha256sum` gives 5544 bytes / `edf76b2d...` -- MATCHES the packet exactly. `git check-attr text eol -- capture-session.cjs` reads `unspecified`/`unspecified` (no `.gitattributes` protection); `capture-session.sh` reads `text: set, eol: lf` (protected, which is why its disk read matched cleanly -- the LF is forced regardless of platform). `git diff HEAD -- render_export.cjs` is clean despite a 240-byte blob-vs-disk gap for THAT file too (12929 blob vs 13169 disk) -- `git diff` applies the SAME clean/smudge filter to both sides of its comparison, so it cannot see this class of gap; only a raw byte comparison across the two extraction methods does. This project's OWN established Lambda deploy mechanism (`build-and-upload.sh`, cited in row W1-S48 above) reads `git show <pin>:<path>` -- the BLOB, never the worktree -- precisely to avoid this class; the EC2-script deploy path for this directory (`aws s3 cp`, per the packet's own rollback section, citing the IB-rt-8 deploy-completion record) has no equivalent documented safeguard.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this session: `python -c \"hashlib.sha256(open(f,'rb').read())\"` on all 5 touched/new files -- 4 of 5 match the packet's table exactly (render_export.cjs, capture-session.sh, package.json, run-export-render.sh); `capture-session.cjs` reads 5650/`16d420e7...`, not 5544/`edf76b2d...`",
+      "`git cat-file -p HEAD:infra/aws/ec2/investor-reporting-export/capture-session.cjs | sha256sum` this session: 5544 bytes, `edf76b2d...` -- exact match to the packet",
+      "`git cat-file -p HEAD:infra/aws/ec2/investor-reporting-export/render_export.cjs | sha256sum` this session: 12929 bytes, `fe2af007...` -- differs from BOTH the packet's claim (13169/`7df36a96...`) AND matches neither extraction method consistently across files, confirming the gap is real and not specific to one file",
+      "`git check-attr text eol -- infra/aws/ec2/investor-reporting-export/capture-session.cjs`: unspecified/unspecified; `... capture-session.sh`: text: set / eol: lf; `... render_export.cjs`: unspecified/unspecified; `... package.json`: unspecified/unspecified",
+      "`git config --get core.autocrlf` this session: true"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "NOT a blocker to signing IB-rth-5's never-widen packet -- Node.js tolerates CRLF in `.cjs` source without functional breakage, and `capture-session.sh` (the one file where CRLF WOULD break execution, a shebang script) is already `.gitattributes`-protected. This is a bookkeeping/verification-integrity gap: the packet's own hash table is not a reliable deploy-time verify target for `capture-session.cjs` specifically, on this box, via a naive `aws s3 cp`. DISARM CONDITION: whichever seat executes IB-rth-5's eventual arm (e)/deploy either (a) uploads via `git show HEAD:<path>` bytes (matching this project's own Lambda-deploy discipline) rather than a raw local-disk `aws s3 cp`, and verifies the uploaded object's sha256 against the git-blob value, or (b) adds a `.gitattributes eol=lf` rule for `capture-session.cjs` (and ideally `render_export.cjs`, which shows the identical class) before the deploy, closing the platform-dependency at its source. Named in the COO half sign-off as a required deploy-time step, not re-litigated there."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-S111",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~V",
+  "surfaced_at": "2026-09-21T14:47:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "TO-IB-rth-1's packet s4, both signed halves and battery_ib_rth_1.py arm (d) all require the loaders.py fix in 7 OF 7 serving functions, but irpt-ycharts-generate CANNOT be rebuilt by build-and-upload.sh -- the same still-ARMED row IRPT_BCKEND-S102 (firm_registry.json and settings.json declared in files[] with no source anywhere in git, W4-S34/S35). The builder refused it before upload; 6 of 7 built clean. So R76-AC1 as written cannot PASS at arm (d) (max 6 of 7) until S102 is resolved, whatever the live proof shows.",
+  "spec_asserts": "NEVER_WIDEN_SIGNOFF_PACKET_IB-rth-1.md (blob 19389dc50b) s4: 'An apply of this fix means rebuilding and redeploying all 7' via build-and-upload.sh; COO half @6298e74db4: 'all 7 roots showing EXACTLY this one source-hash change'; CTO half @5fce993215 s4: 'All 7 functions listed in s.2 move to a new build'; battery_ib_rth_1.py arm (d): '7 of 7 must equal the committed fix's sha256'; msg 99063 (2.0.0_SA_COO~B): 'rebuild all 7 functions (build-and-upload.sh, confirm each produces sha256 0c086052...)'.",
+  "world_is": "bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate at HEAD 87674361d8 (after the pin bump 031d98c51d), 2026-09-21T14:40:59Z: loaders.py staged at 385aff4646 (9779 bytes, sha256 verified), then 'ERROR: File not found: infra/aws/lambda/investor-reporting/ycharts/generate/firm_registry.json', 'ERROR: File not found: infra/aws/lambda/investor-reporting/ycharts/generate/settings.json', 'PARTIAL -- 0 built, 1 failed', rc=1. Build store latest for that key unchanged (version D6hl_ey9azxF8RJRQ01YkDlO.axHKuHw, content-sha256 1L60sG1G... == live CodeSha256 == packet s4 pre-change). The other 6 (directory-search, status, holdings, narrative, export-render, performance-adapter) built with EXACTLY one member differing from the prior live zip -- loaders.py, sha256 0c086052e6e6... -- 6 of 6 (verify_build_ib_rth_1.py). None of the four packet/half/battery/message carriers names S102, which this seat surfaced in round 6 on the identical failure (IB-rtf-12 K-CODE x7 -> x6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rth-1_build_verify_output.txt -- BUILT-OK 6 of 7, NOT BUILT 1 of 7 (irpt-ycharts-generate), FAIL 0 of 7",
+      "org/critical_paths/change_management/20260921T1438Z_irpt-bckend-ib-rth-1-build_deploy_completion.md -- leg L7 carries the refusal verbatim",
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-ycharts-generate._staged_from_note @HEAD: 'firm_registry.json ... does NOT exist as a git blob anywhere ... this function's build still fails on that one member'",
+      "INVESTIGATION_v1.md#IRPT_BCKEND-S102 (ARMED, disarm_owner 2.0.0_SA_COO~B, GRADUATED round 6 -- a transfer, not a fix) and deliverables/0.9.0_WK_IRPT_BCKEND~4/the-no-source-members-measured.result.md (both blobs ABSENT from git rev-list --objects --all)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHAT THIS SEAT DID WITH IT: proceeded with the 6 built functions only -- each function is an independent key and both halves sign all 7, so 6 is inside the signed blast radius; irpt-ycharts-generate is left at its current live bytes (its no-change branch, which both halves also cover; it has no route, schedule or event source, so inflection's served route does not pass through it). Nothing was hand-packaged: a zip patched outside build-and-upload.sh is exactly the builder-refusal workaround the halves do not enumerate. CONSEQUENCE FOR THE CRITERION: battery_ib_rth_1.py arm (d) reads at most 6 of 7 and so never reaches arm (e) or prints IBR76-INFLECTION-ROUTE-RESOLVES-LIVE-3-OF-3; the live mechanism (IB-rtg-3_arm_e_live_proof.py) is run directly and reported beside it as evidence, never as the criterion's PASS. DISARM CONDITION: 2.0.0_SA_COO~B rules one of (i) resolve S102 (a declared true source for both members, then rebuild ycharts-generate and apply it under these same halves), (ii) re-scope the criterion's arm (d) denominator to the 6 buildable functions with ycharts-generate carried to S102, or (iii) another route it names. Mid-round the order and battery are frozen, so this seat edits neither."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-S112",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~V",
+  "surfaced_at": "2026-09-21T15:36:00Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "R76-AC1's invocation CANNOT complete arm (e) by construction: the face wraps the battery in `timeout 1800` and the battery runs the live proof with subprocess timeout=1200, but the named live-proof mechanism waits for each firm's deleted-principal access token to EXPIRE (exp + 10 s, ~905-913 s) and does so for 3 firms in sequence -- ~46 minutes. Arm (e) raises TimeoutExpired at 20 minutes (uncaught, so the battery dies before writing its output) and the outer timeout would kill it at 30 regardless. The token IBR76-INFLECTION-ROUTE-RESOLVES-LIVE-3-OF-3 is unreachable whatever the live result is.",
+  "spec_asserts": "TO-IB-rth-1 face, criterion R76-AC1: <invocation>timeout 1800 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rth_1.py</invocation>; battery_ib_rth_1.py arm_e(): `subprocess.run([sys.executable, LIVE_PROOF_SCRIPT], ..., timeout=1200)`, the live proof being ../0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_arm_e_live_proof.py (the face's 'full lifecycle incl. delete').",
+  "world_is": "IB-rtg-3_arm_e_live_proof.py rollback(): after the deletes and the refused refresh, `wait = exp + 10 - time.time(); time.sleep(wait)` then one GET to prove the token is refused 401 -- per firm, sequentially over the 3 registry firms. Its own recorded run (IB-rtg-3_arm_e_live_proof_output.txt, run at 2026-09-20T23:30:04Z) logs 'waiting 911 s', 'waiting 913 s', 'waiting 913 s' -- ~2737 s of sleep alone. This session: a direct run at 15:13:20Z printed 'waiting 905 s' after its first firm; the ruling-scoped battery started 15:29:22Z spawned the live-proof child at 15:29:49Z, which would have hit the 1200 s subprocess timeout at ~15:49:49Z. The battery was never written to handle a live proof longer than 20 minutes because, until this session, no run had ever reached arm (e) (every prior run stopped at (c) or (d)).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/battery_ib_rth_1.py arm_e(): subprocess timeout=1200 (at this row's HEAD)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_arm_e_live_proof.py rollback(): 'waiting %.0f s for the access token's exp + 10 s' then time.sleep(wait)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IB-rtg-3_arm_e_live_proof_output.txt: three waits of 911/913/913 s in one run",
+      "the TO face's R76-AC1 <invocation>: 'timeout 1800 py -3.12 ...battery_ib_rth_1.py'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHAT THIS SEAT DID: stopped the ruling-scoped battery run at 15:30:49Z, 60 s after its live-proof child started, inside the first firm's post-delete sleep (that firm's create-request-delete takes ~15 s: 15:13:20Z start -> 'waiting 905 s' in the direct run); the first direct run was likewise stopped at 15:25:49Z inside the same sleep. Residue census after both: opal-users-v2 PK begins_with USER#usr_irptrtg3_ 0 of 79, email begins_with irpt-rtg3-test- 0 of 79, and the three partner tables 0 of 11 / 0 of 4 / 0 of 7. Then ran the live proof DIRECTLY, stdout to deliverables/0.7.0_AE_CloudOps~V/IB-rth-1_arm_e_live_proof_stdout.txt -- the actual answer to whether inflection now resolves, reported as evidence, never as the criterion's PASS. Neither the face nor the battery's timeout is edited by this seat: the face is frozen and ruling 99069 re-scoped arm (d) only. DISARM CONDITION -- 2.0.0_SA_COO~B rules one of: (i) amend R76-AC1's invocation to a bound the mechanism fits (e.g. `timeout 3600`) and authorise raising the battery's inner subprocess timeout to match (e.g. 3300) -- a task-order MODIFICATION, which LIMB 6 does not grade, so it is the issuer's discipline; then one battery run (~48 min) grades the criterion inline, the strongest form; (ii) arm (e) reads the live-proof output recorded after this apply, pinned by content hash and bounded to after ledger irpt-bckend-ib-rth-1-apply closed -- faster, weaker, because the graded party writes the evidence the check reads; (iii) another route it names. Recommendation: (i)."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-S114",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T16:45:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "DISARMS IRPT_BCKEND-W1-S48 BY CITATION (a correction, not an in-place mutation -- that row's class is INVESTIGATION/BLOCKING, which carries no monotone-advance exception; only a REMEDIATION row's nested disarm.state may move in place). S48's own disarm condition is MET: TO-IB-rth-1 is TERMINAL.",
+  "spec_asserts": "S48's own DISARM CONDITION, verbatim from its notes: 'a seat holding write access to infra/aws/lambda/ci/lambda-source-map.json ... bumps the _authz/loaders.py staged_from pin for all 7 target functions to the fix commit (385aff4646 or later) ... and a re-run of build-and-upload.sh for at least one function shows a staged loaders.py matching the 9779-byte, 0c086052e6...-hash committed fix -- at which point this cell's build+apply/live-proof sequence can proceed exactly as both signed halves describe it.'",
+  "world_is": "Pin bumped 7 of 7 functions to 385aff4646/0c086052... @031d98c51d (this seat's fix, committed under 0.7.0_AE_CloudOps~V's lane authority per the audited pin-bump this same round). build-and-upload.sh re-run staged loaders.py matching the committed fix on 6 of 7 functions -- the 7th, irpt-ycharts-generate, carries the SEPARATE, pre-existing, already-ARMED S102 defect (ruled S111, a different disarm condition, not S48's). Arm (c)/(d)/(e) then proceeded and TERMINATED: build @2c7cff46b0, apply @23418bd701 (6 of 7, 0-diff 10 of 10), the criterion's own timeout defect (row S112) ruled and amended (msg 99070), graded live proof @dd96141e4f -- R76-AC1 PASS, 3 of 3 firms SERVED (inflection via ORION api.cloud.orionadvisor.com, 49financial + cottonwood via BLACK_DIAMOND), discriminated against the pre-fix UNEXPECTED class independently measured 2026-09-20T23:30Z on the same mechanism/role/account. TO-IB-rth-1's <status> flipped complete.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 031d98c51d: lambda-source-map.json loaders.py pin bumped 7 of 7 (0.7.0_AE_CloudOps~V, under the audited pin-bump this seat authored and handed off)",
+      "commit 2c7cff46b0: build, 6 of 7 functions staged loaders.py == 0c086052...",
+      "commit 23418bd701: apply, 6 roots, 0-diff 10 of 10 post-apply",
+      "commit dd96141e4f: <status> complete, R76-AC1 PASS 3 of 3, proof-of-spec-check rc=0 VALID (per msg 99102, 0.7.0_AE_CloudOps~V RAVC-2 close)",
+      "msg 99102 (0.7.0_AE_CloudOps~V to 2.0.0_SA_COO~B, 2026-09-21T16:45:14Z): inflection HTTP 200 SERVED via ORION, discriminator against the 2026-09-20T23:30Z pre-fix UNEXPECTED read"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "notes": "S48 itself is left UNTOUCHED (hazard_standing ARMED, disposition UNDER_INVESTIGATION, notes unchanged) per the surprise-row-gate's own refusal on an INVESTIGATION-class row's in-place mutation -- this row is S48's disarm, on the record, by citation. S111 and S112 (the ycharts-generate/S102 carry and the timeout defect) are separate, already-ruled items and stay exactly as they are; this row disarms S48 only."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-W6-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~6",
+  "surfaced_at": "2026-09-21T16:55:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "TO-IB-rth-6 arm (c).1's literal instruction -- update scopes.json's inflection/cottonwood bucket field to the two new names while leaving key/short/aliases untouched -- is REFUSED by the registry's own validator: python lib/opal_naming.py validate on a trial edit returns 'REFUSED scopes.json[1].bucket: ... a data bucket is opal-data-{scope}, LONG form' AND a second refusal orphaning exemptions.json's opal-data-inflection key. The validator enforces key == long (lib/opal_naming.py:357-358) and bucket == opal-data-{long} for FIRM/PRODUCT rows (:365-366, NAMING_SCHEMA.json bucket.data_bucket_scope_form=LONG) -- a FIRM's bucket name cannot diverge from its long-form identity without renaming the firm itself, contradicting the task's own framing 'this is a bucket swap, not a firm rename' and its bound against touching key/short/aliases.",
+  "spec_asserts": "TO-IB-rth-6 arm (c).1: 'scopes.json: update the inflection/cottonwood entries' bucket field to the two new names ... Do NOT touch key/short/aliases on either firm -- those are referenced estate-wide and this is a bucket swap, not a firm rename.' BOUNDS: 'never rename the inflection/cottonwood firm keys themselves (this is a bucket swap, not a firm rename)'.",
+  "world_is": "Measured directly this session (trial edit, reverted same turn, never committed): setting scopes.json scopes[1] (key='inflection').bucket = 'opal-data-inflectionwealth' with long/key unchanged, then `python lib/opal_naming.py validate` returns 'REFUSED scopes.json[1].bucket: \\'opal-data-inflectionwealth\\': a data bucket is opal-data-{scope}, LONG form (NAMING_SCHEMA.json bucket)' and 'REFUSED exemptions.json exemptions.opal-data-inflection: not a provisioned bucket of a FIRM scope in scopes.json' -- 'VALIDATE: REFUSED 2 refusal(s), 17 warning(s)' (baseline before the edit: 'VALIDATE: OK 25 system row(s), 9 scope row(s), 17 warning(s)'). lib/opal_naming.py:357-358 refuses any row where key != long ('a scope's key is its LONG form'); :365-366 refuses any FIRM/PRODUCT row where bucket != 'opal-data-%s' % long. org/standards/NAMING_SCHEMA.json:53-55 codifies the same law (data_bucket: 'opal-data-{scope}', data_bucket_scope_form: LONG). scopes.json's own _about.one_home states this is RULING ONE: 'A FIRM row's long and short are the only spelling source ... A new firm is one new FIRM row, and nothing else.' Separately, independent of the registry: `terraform state list` in infra/aws/terraform/shared-infra (backend s3://opal-313476888478-terraform-state/shared-infra/tfstate) shows the OLD buckets already tracked as aws_s3_bucket.lgic_firm[\"inflection\"] and [\"cottonwood\"] (10 resources total, matching the open IB-rte-3 ledger's L1 leg). s3-lgic-firm-buckets.tf:96-110 keys for_each by the registry row's `key` (unchanged) and sets `bucket = each.value.bucket`; AWS's aws_s3_bucket `bucket` argument is immutable (ForceNew), so even if the registry refusal were bypassed, changing only the bucket field under the SAME for_each key would plan a REPLACE (destroy the real, already-applied old bucket, then create under the new name) on the SAME resource address -- forbidden by this TO's own BOUNDS ('NO delete of the old buckets') and by arm (e)'s plan bound ('anything else in the plan is a STOP').",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:357-358 @fa3b70b267 -- 'if key != row.get(\"long\"): refuse(where, \"key\", \"a scope's key is its LONG form (NAMING_SCHEMA.json key.scope_form)\")'",
+      "lib/opal_naming.py:365-366 @fa3b70b267 -- 'if cls in (\"FIRM\", \"PRODUCT\") and row.get(\"bucket\") != \"opal-data-%s\" % row.get(\"long\"): refuse(where, \"bucket\", ...)'",
+      "org/standards/NAMING_SCHEMA.json:53-55 @fa3b70b267 -- 'bucket': {'data_bucket': 'opal-data-{scope}', 'data_bucket_scope_form': 'LONG', ...}",
+      "infra/logic/registry/scopes.json _about.one_home @fa3b70b267 -- 'THIS REGISTRY IS THE ONE HOME OF A FIRM'S FORMS (RULING ONE) ... A new firm is one new FIRM row, and nothing else.'",
+      "direct run this session: `python lib/opal_naming.py validate` on baseline registry@fa3b70b267 -- 'VALIDATE: OK 25 system row(s), 9 scope row(s), 17 warning(s)'; on the trial edit (scopes.json scopes[1].bucket = 'opal-data-inflectionwealth', long/key unchanged) -- 'REFUSED scopes.json[1].bucket: ... a data bucket is opal-data-{scope}, LONG form' + 'REFUSED exemptions.json exemptions.opal-data-inflection: not a provisioned bucket of a FIRM scope in scopes.json' -- 'VALIDATE: REFUSED 2 refusal(s), 17 warning(s)'. Trial edit reverted same turn, never committed.",
+      "`terraform state list` in infra/aws/terraform/shared-infra @fa3b70b267 (backend key shared-infra/tfstate) -- 10 lgic_firm resources tracked under [\"inflection\"]/[\"cottonwood\"], matching org/critical_paths/.open_deploys/irpt-bckend-ib-rte-3-lgic-firm-buckets.json leg L1 ('10 new resources (2 buckets, versioning, SSE, public-access block, Deny-fence policy)'), still OPEN/RED",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:96-110 @fa3b70b267 -- `for s in local.lgic_registry_scopes.scopes : s.key => s ...` and `resource \"aws_s3_bucket\" \"lgic_firm\" { for_each = local.lgic_managed_firm_buckets; bucket = each.value.bucket; ... }` -- the SAME for_each key ('inflection') persists across a bucket-field edit, so AWS's ForceNew `bucket` argument would replace (destroy+recreate) the real resource",
+      "TO-IB-rth-6 arm (c).1 and BOUNDS @fa3b70b267 -- 'Do NOT touch key/short/aliases ... this is a bucket swap, not a firm rename' / 'never rename the inflection/cottonwood firm keys themselves'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHAT THIS SEAT DID: measured the conflict via a trial edit to scopes.json (bucket field only, on the 'inflection' row), ran `python lib/opal_naming.py validate`, observed the REFUSED verdict quoted above, then reverted the edit immediately (no commit, no exemptions.json edit, no terraform plan/apply attempted -- the premise the apply depends on never reached a valid state). NOTHING in infra/logic/registry/ or infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf differs from CLOUD HEAD at this row's filing. STOPPED per arm (b)'s own protocol ('if the tool gives you something else, STOP -- do not override the tool's output by hand ... file a row with the discrepancy and carry it to the COO') and arm (d)'s honest-STOP allowance, even though this is one step upstream of the arm(b) naming-mismatch case (address()/name() were never reached -- the conflict surfaces at validate(), before any name is derived) -- the same class of tool-refusal the arm anticipates. DISARM CONDITION: 2.0.0_SA_COO~B (or 1.0.0_SA_CTO) rules one of: (i) authorize a genuine key+long rename of the 'inflection'/'cottonwood' scope rows to 'inflectionwealth'/'cottonwoodcapital' -- NOTE this cascades far beyond scopes.json's two rows (cottonwood's own pipeline_trees.separated_from names 'inflection' by spelling; monolith_scopes on both rows name themselves by long form for orion/eclipse/blackdiamond consumers; every place that resolves lookup('inflection') would need the new spelling or a preserved alias) and is a MUCH larger blast radius than 'a bucket swap, not a firm rename' contemplated; (ii) register a declared exception letting these two FIRM rows' bucket diverge from opal-data-{long} (requires amending lib/opal_naming.py validate()'s :365-366 rule or its NAMING_SCHEMA.json source, both Rule-30 canon, and Andrew's acknowledgment per doctrine R20's bar for a declared departure); (iii) keep the SAME bucket names Andrew already has live (opal-data-inflection/opal-data-cottonwood) and resolve the ORIGINAL lockout by fixing the exemption list in place (the fix row IB-rte-3-era S43 already diagnosed: an empty exemption list denied the operator identity) rather than creating replacement buckets at all -- Andrew's own words named the new-bucket path as the fallback IF 'there is no mechanism for us to access these buckets'; a mechanism (the exemption-list fix, unblocked once L1-L4 of the IB-rte-3 ledger are actually driven) may still exist and has not been re-attempted since row S43 filed; (iv) another route the COO/CTO names. Recommendation: measure (iii) first (cheapest, zero new infrastructure, no rename cascade) before committing to (i) or (ii)."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-S115",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T17:55:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4.0.0_SA_CRO msg 99124 (@a0097b1ef4), VERBATIM: 'IB-rth-6 ... and the naming-exception card this seat carried to Andrew for it are MOOT -- his instruction was new buckets only \"if it cannot be done\", and it could. The re-cut is yours.'",
+      "the same message's AFTER-read: get-bucket-policy rc=0 matching rendered policy, head-bucket 200, versioning Enabled, public-access-block True x4, 0 keys each, as user/Andrew_Berman with no role, 2 of 2 buckets"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "DISARMS IRPT_BCKEND-W6-S1 BY CITATION (a correction, not an in-place mutation -- W6-S1 is class BLOCKING with flat hazard_standing, no monotone-advance exception; that exception is REMEDIATION-only, per S114's own precedent). W6-S1's own finding stands as CORRECT and UNCHANGED -- the naming-law wall it measured is real. What changed is the PREMISE the wall was measured against: TO-IB-rth-6 itself is now superseded, so nothing needs the wall crossed.",
+  "spec_asserts": "TO-IB-rth-6's header: Andrew's ruling authorized replacement buckets conditionally -- 'if there is no mechanism for us to access these buckets' -- never as a first choice.",
+  "world_is": "4.0.0_SA_CRO msg 99124 (@a0097b1ef4): Andrew personally recovered opal-data-inflection/opal-data-cottonwood at the console, ~17:2xZ, VERBATIM 'See if we can somehow get the original -inflection and -cottonwood buckets sorted now' / 'go ahead you have egress as needed'. Mechanism: the live Deny admitted ONLY role/*-inf-* (resp. role/*-cot-*), no user -- Andrew created firmsep-inf-bucket-recovery-role / firmsep-cot-bucket-recovery-role in console (Rule-30-conformant names), each role PUT the TF-rendered policy (fence_patterns(firm) + exemptions.json's 3 users) 17:35:59Z-17:36:39Z. AFTER-read as user/Andrew_Berman with NO role: get-bucket-policy rc=0 matching rendered policy, head-bucket 200, versioning Enabled, public-access-block True x4, 0 keys each (2 of 2 buckets) -- the exact mechanism the naming-law wall existed to avoid needing. So the condition in TO-IB-rth-6's own header was never met: the original buckets COULD be recovered, and were. CRO msg 99124 verbatim: 'IB-rth-6 ... and the naming-exception card this seat carried to Andrew for it are MOOT ... The re-cut is yours.'",
+  "notes": "W6-S1 required no fix and gets none -- the registry validator's key==long / bucket==opal-data-{long} invariant for FIRM rows is UNCHANGED and remains correct estate law; this row records only that the cell needing it to bend is withdrawn. TO-IB-rth-6's <status> flipped to superseded citing this row and msg 99124 directly (commit alongside). Remaining bucket-program work (deploy ledger legs L1/L3/L4, a fresh Terraform plan/negative-control check) is NOT disposed by this row -- see IB-rth-7 (decomp s.R8.8) and row S116."
+}
+```
+```json
+{
+  "id": "IRPT_BCKEND-S116",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-21T17:56:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "4.0.0_SA_CRO msg 99124 (@a0097b1ef4), 'ONE FINDING FOR THE FENCE'S OWNER (not acted on)': fence_patterns() = role/*-inf-* / role/*-cot-* needs a hyphen BEFORE the firm token, so the firm's OWN pipeline roles (inf-gold-layer-lambda-role, inf-api-positions-role ... 28 inf-* roles; cot-* likewise) do NOT match"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "CARRIED FROM 4.0.0_SA_CRO msg 99124, 'ONE FINDING FOR THE FENCE'S OWNER (not acted on)': s3-lgic-firm-buckets.tf's fence_patterns() admits role/*-inf-* / role/*-cot-* with NO HYPHEN before the firm token, so this project's OWN pipeline roles (inf-gold-layer-lambda-role, inf-api-positions-role, ... 28 inf-* roles; cot-* likewise) do NOT match the pattern and remain DENIED on their own now-partially-recovered firm bucket. Only opal-inf-* / opal-cot-* / bd-cot-* style names pass. This is an EXPOSURE (a real gap, not yet measured as fired) -- no inf-/cot- pipeline has yet attempted a write since the recovery to convert it to an INCIDENT.",
+  "spec_asserts": "CLAUDE.md Rule 22, the negative mirror: 'A guard that is MISSING, or a hazard that is REAL, is an EXPOSURE until someone measures whether it ever FIRED; only then is it an INCIDENT.' fence_patterns()'s own pattern text, quoted verbatim in msg 99124: 'role/*-inf-*' / 'role/*-cot-*', no hyphen before the firm token.",
+  "world_is": "UNMEASURED by this seat this tick -- carried, not verified independently. 0.7.0_AE_CloudOps~V's prior 99084 read ('no IAM grant passes the Deny') was correct for USERS; the CRO's 99124 states the condition admits matching ROLES and that the firm's own role-naming convention (inf-*, not *-inf-*) falls outside the admitted pattern. Whether IB-rth-7 needs to fix fence_patterns() itself, or whether this is squarely the shared-infra module owner's (outside IRPT_BCKEND's own lane) is NOT decided by this row.",
+  "notes": "It matters the moment an inf-/cot- pipeline actually writes to opal-data-inflection/opal-data-cottonwood post-recovery -- until then it is real but unexercised. Tracked here because it directly affects whether this project's own future platinum/gold writers to these two buckets will work; disposition (fix in fence_patterns(), a registry-side role-naming fix, or explicitly out of this project's lane) is for IB-rth-7's cut or the CTO/CRO's ruling, not decided unilaterally here."
+}
+```
+
+## Round 8, IB-rth-7 -- worker 0.9.0_WK_IRPT_BCKEND~7's row: the order's own file is absent from the worktree it was handed in
+
+```json
+{
+  "id": "IRPT_BCKEND-W7-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~7",
+  "surfaced_at": "2026-09-21T18:08:23Z",
+  "one_line": "My worktree (wk-irpt_bckend-8-7, forked at CLOUD@93790c036e) never received the two CLOUD commits that create TO-IB-rth-7 and spawn me, so the task order the harness names as my whole context does not exist anywhere in my worktree's reachable git history -- a BLOCKING absence of a path the order itself names in its own <paths> grant (line 61, the order's own file).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r HEAD --name-only -- org/missions/D9/IRPT/IRPT_BCKEND/task-orders/ in wk-irpt_bckend-8-7@93790c036e lists rth-1..rth-6 only, no rth-7 file -- 6 files, denominator printed.",
+      "git merge-base CLOUD wk-irpt_bckend-8-7 == 93790c036e, i.e. the worktree's own fork point from CLOUD -- nothing CLOUD committed after that sha reached this worktree.",
+      "git log --all --oneline -- '*rth-7*' across the shared object DB (46177 commits reachable via --all) finds exactly one commit, 7427e805de638478c645d0bacdc356c62f25f554 at 2026-09-21T14:07:02-04:00 (2.0.0_SA_COO~B): 'close(IRPT_BCKEND IB-rth-6...) Cut IB-rth-7 ... Worker spawned in worktree wk-irpt_bckend-8-7' -- its --name-only list includes org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rth-7.reconcile-terraform-state-against-the-recovered-bucket-policy.md. git merge-base --is-ancestor 7427e805de wk-irpt_bckend-8-7 -> NO; git merge-base --is-ancestor 7427e805de CLOUD -> YES.",
+      "CLOUD's tip is bdb2bcc77e94d8a34d43747e39641617a51ce124 at 2026-09-21T14:10:05-04:00 ('log(2.0.0_SA_COO~B, /canonical-drive IRPT_BCKEND tick 20): closed IB-rth-6 superseded ... cut+spawned successor IB-rth-7') -- CLOUD advanced two commits past my worktree's fork point (93790c036e) around/at my spawn, and neither reached wk-irpt_bckend-8-7.",
+      "The main workspace checkout at C:/Users/AndrewBerman/Desktop/ajb_workspace is on branch CLOUD at HEAD bdb2bcc77e and reports a clean 'git status --short' for the TO-IB-rth-7 file path -- the file IS committed to CLOUD, just never merged/rebased into this worktree's branch.",
+      "The order's own text (read from that CLOUD-tip checkout, since it is absent from this worktree) states at its IDENTITY-AND-WORKTREE section: 'Worktree: /c/tmp/wk-irpt-8-7 on branch wk-irpt_bckend-8-7, cut from CLOUD HEAD by the issuer' -- true of CLOUD's state as of 7427e805de/bdb2bcc77e, not true of the worktree actually provisioned to me, which was cut at the PRIOR CLOUD head 93790c036e before those two commits landed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The harness prompt names 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rth-7.reconcile-terraform-state-against-the-recovered-bucket-policy.md' inside my own worktree /c/tmp/wk-irpt-8-7 as 'your entire task order' / 'whole context'; the order's own <paths> block (line 61) names that same file as part of my write grant; and the worker protocol's bar step requires reading that file first, then treats a worktree not carrying a path the order names as a BLOCKING row with an explicit instruction to STOP rather than rebuild/reconstruct the tree.",
+  "world_is": "The file does not exist at any point in this worktree's reachable git history (git ls-tree at HEAD, git log --all on a matching pathspec both return it absent from every ref my worktree can walk except via the shared object DB's CLOUD ref, which itself sits two commits ahead of my branch's fork point). It exists only on CLOUD, committed AFTER my worktree branch was already cut from an earlier CLOUD state -- a sequencing gap between when the issuer cut+provisioned my worktree and when it committed the order (and the ledger/decomp entries) that names that worktree as its target.",
+  "notes": "WHAT THIS SEAT DID: ran the bar (branch + TREE-OK, both passed -- org/ and .tools/ exist). Attempted to Read the named TO path in-worktree: file-not-found. Searched exhaustively before concluding absence: Glob for *rth-7* under the project (0 hits), git log --all --oneline on the pathspec (1 hit, the commit that ADDS it on CLOUD, not reachable from my branch), git ls-tree on CLOUD/origin/CLOUD (present on local CLOUD, absent from origin/CLOUD -- CLOUD itself is not yet pushed past a0097b1ef4-era history), git worktree list across all live worktrees (no sibling worktree carries it either). Read the file's CONTENT from the main workspace checkout (C:/Users/AndrewBerman/Desktop/ajb_workspace, on CLOUD@bdb2bcc77e) purely to understand what was being asked and to file this row accurately -- did NOT copy, fetch, merge, rebase, or otherwise pull that commit into this worktree, per the standing instruction never to rebuild/reconstruct a worktree to make an order executable. Did NOT execute arms (a)-(d): no terraform init/plan was run, no SSM commands were issued, no ledger file was edited, no fence_patterns() measurement was taken -- none of that work can be attributed to a task order this worktree can prove it was ever handed, and the order's own close-out step (flip <status> to complete, commit instance+flip together) is impossible without the order's file first existing in this branch's history. STOPPING here per the worker protocol's bar clause. DISARM CONDITION: 2.0.0_SA_COO~B (the issuer) either re-cuts wk-irpt_bckend-8-7's branch point forward past 7427e805de/bdb2bcc77e (or hands a fresh worktree cut from current CLOUD), or explicitly confirms via a live channel that this worker should proceed on the content read from the CLOUD-tip checkout, with the record noting the fork-point gap. No proof_of_spec instance is written for R83-AC1/AC2/AC3 -- there is nothing in this worktree's history to cite a criterion against, and writing one against externally-read content would misstate its own grain."
+}
+```
+
+## Round 8, IB-rth-7 -- worker 0.9.0_WK_IRPT_BCKEND~7's row (re-hand, wk-irpt_bckend-8-7b): arm (a)'s plan is NOT 0/0/0 -- TAINTED lgic_firm resources, exactly the condition the order's own text anticipated
+
+```json
+{
+  "id": "IRPT_BCKEND-W7-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~7",
+  "surfaced_at": "2026-09-21T18:51:10Z",
+  "one_line": "Arm (a)'s fresh terraform plan on infra/aws/terraform/shared-infra (init + plan -refresh=true, no -target) does NOT read 0/0/0: verbatim summary line 'Plan: 4 to add, 0 to change, 4 to destroy.', driven entirely by FOUR resources the order's own text (arm a, third bullet) named as a specific thing to check for -- aws_s3_bucket_policy.lgic_firm['cottonwood'/'inflection'] and aws_s3_bucket_versioning.lgic_firm['cottonwood'/'inflection'] are each reported TAINTED, so must be replaced, a leftover of the original 2026-09-18 half-landed apply (row W3-S45). Per the order's own BOUNDS and arm (a)'s own STOP branch, this cell does NOT apply/untaint/fix -- STOPPING and carrying the finding. Ledger legs L1/L3/L4 all stay OPEN (L3 cannot close on this plan; L1 was never a genuine safe-apply per arm (c)'s own unresolved judgment question; L4 is separately UNEXERCISED, host stopped).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~7/battery_ib_rth_7.py@8d36fcdb60 run fresh this session: timeout 1800 py -3.12 .../battery_ib_rth_7.py rc=2, full terraform plan output captured verbatim, summary line 'Plan: 4 to add, 0 to change, 4 to destroy.' (4 add, 0 change, 4 destroy).",
+      "Plan text, verbatim: # aws_s3_bucket_policy.lgic_firm[\"cottonwood\"] is tainted, so must be replaced / # aws_s3_bucket_policy.lgic_firm[\"inflection\"] is tainted, so must be replaced / # aws_s3_bucket_versioning.lgic_firm[\"cottonwood\"] is tainted, so must be replaced / # aws_s3_bucket_versioning.lgic_firm[\"inflection\"] is tainted, so must be replaced -- 4 of 4 tainted resources named, denominator printed by the battery (18 lines mentioning lgic_firm of 307 total plan lines).",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf@8d36fcdb60 -- the resource declarations these four addresses key against; no source-text change explains the taint (taint is a STATE property, not a plan-vs-config diff).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rth-7.reconcile-terraform-state-against-the-recovered-bucket-policy.md@8d36fcdb60 arm (a), third bullet: Also check: does the plan show TAINTED resources for versioning/bucket_policy on either firm, left over from the original 2026-09-18 half-landed apply (W3-S45)? If so, that is itself drift and falls under the STOP branch above. -- the order named this exact contingency before this cell ran; this row records that it fired.",
+      "org/critical_paths/change_management/20260918T1949Z_irpt-bckend-ib-rte-3-lgic-firm-buckets_deploy_completion.md@8d36fcdb60 -- L1/L3/L4 all read proof=null pre-run; unchanged by this cell (no close-leg issued for any of the three, consistent with BOUNDS no state mutation of any kind)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-rth-7 arm (a): 0 to add / 0 to change / 0 to destroy, printed in full -> the manual PUT converged exactly with what Terraform would render. ... ANY drift -> STOP. Print the diff verbatim. Do NOT apply.",
+  "world_is": "The live plan is 4/0/4, not 0/0/0, driven entirely by aws_s3_bucket_policy.lgic_firm and aws_s3_bucket_versioning.lgic_firm being TAINTED for both firms -- the specific pre-named leftover-taint scenario from the half-landed 2026-09-18 apply, not a divergence between the CRO's manual PUT and the renderer's current output. The CRO's recovery PUT (ledger L2) targeted the bucket POLICY body via a direct role-level put-bucket-policy and is unrelated to Terraform's internal taint bookkeeping, which marks a resource for replacement independent of whether its live attributes match config.",
+  "notes": "Whether the remedy is terraform untaint (a state-only bookkeeping fix, arguably NOT an apply in the sense BOUNDS forbids, but still a state mutation BOUNDS also forbids outright: no state mutation of any kind, regardless of what arm (a) finds) or something else is for the COO/CTO to rule -- not decided or landed by this cell. This is the SAME shape as W3-S45 (the original taint-causing event); routed alongside it. Leg L1's own resolution (arm c's judgment question) is a separate, still-open question this row does not answer."
 }
 ```

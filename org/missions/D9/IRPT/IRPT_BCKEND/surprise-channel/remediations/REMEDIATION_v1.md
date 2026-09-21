@@ -2862,3 +2862,1891 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  }
 }
 ```
+
+## Round 5 L9 -- one remediation row per GRADUATED item
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S42",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE FENCE CANNOT RECOGNISE THE NEW BUCKET NAMES AND THE CAUSE HAS MOVED SINCE THIS ROW WAS WRITTEN. The row says scopes.json's bucket_provisioned stays false for both firms; at HEAD it is TRUE for both. The guard is still stale, because lib/opal_naming.py's generator has not been re-run, not because the flag is false.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S42",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "One command, now unblocked and no longer outside anyone's paths: re-run the generator against today's registry and commit the regenerated block. The diff is already known -- opal-data-cottonwood joins data/black_diamond/ and opal-data-inflection joins data/cot/ -- because this seat regenerated it into a scratchpad to measure it. See IRPT_BCKEND-S77, which carries the measurement and the 0-of-290 exposure census.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S43",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE APPLIED DENY FENCE LOCKED THE APPLYING IDENTITY OUT OF BOTH NEW BUCKETS: exemptions.json carries no rows for either name, so head-bucket, get-bucket-policy, get-bucket-versioning and delete-bucket-policy all read AccessDenied for the account admin itself -- measured live by the cell.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S43",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "Exemption rows for both new bucket names mirroring 49financial's (at least the three admin identities), plus the console/root repair of the applied policy. The console step is Andrew's; the registry rows are the CTO's under Rule 30 and are already handed to the CRO. Until both land, NOTHING can be granted on or read back from either bucket -- this row is the reason IB-rte-3's re-hand cannot simply be re-run.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S45",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A LIVE terraform plan ON shared-infra CANNOT COMPLETE TODAY for either selector (the same lockout W3-S43 names), and the only completed plan (-refresh=false) surfaces a SECOND, orthogonal, pre-existing taint on 4 resources that is identical with or without this order's registry delta.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S45",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "PLAN-2's literal '0 to add, 0 to destroy' bound cannot be measured until the lockout is repaired; the registry edit's own isolated effect is already proven correct, so what is owed is the RE-MEASUREMENT after W3-S43, not a re-design. \u26a0 The orthogonal 4-resource taint is a SEPARATE finding that survives this round and must not be absorbed into the lockout's repair -- it was there before this order and will be there after.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S21",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE ORDER FACE'S ADVISOR-ID ASSUMPTION DOES NOT HOLD: it assumed an ISSUED opaque id per bound 13, minted by the instrument the directory uses; _ids.py has no 'advisor' kind and bound 13's own list excludes advisor. The real advisor id is a raw identity-plane string.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S21",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "The face is frozen and is not edited. What is owed is that round 6's cells inherit the CORRECTED premise rather than the face's -- an advisor id is a raw identity-plane string, so any cell reasoning about projection must treat it as such. This is the premise W1-S25's seam and the CTO's L4 ruling both rest on, so it is load-bearing rather than a footnote.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S22",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE BOUNDED TEST PRINCIPAL DOES NOT BY ITSELF MAKE THE SERVED PATH EXERCISABLE: at the time of filing, 0 of 13 live modules passed id_projection, so every live FIRM_ADVISOR request against real ownership-map data was refused UNPROJECTED_GRANT -- measured on the real Enforcer wired as production wires it.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S22",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "\u2b50 PARTLY OVERTAKEN AND THE ROW SHOULD BE READ WITH ITS VINTAGE: at HEAD 7 of 7 entry.py modules pass id_projection (IB-rte-6's wiring arm landed after this row was written), and the 6 handler/dispatch modules structurally cannot carry the property. What REMAINS true is the half the wiring does not fix -- the refusal fires on the grant's own shape, so the served path stays unreachable for a real advisor until the CTO's ordering inversion ships. Disarm belongs to the owner, not to this seat (R-19).",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S24",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "cottonwood's LIVE directory carries termination.indicator = UNKNOWN for 260 of 260 entries -- none ACTIVE, none TERMINATED -- so cottonwood cannot exhibit FWD-1's terminated-client-stays-visible behaviour at all.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S24",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "A PRODUCER gap, not a consumer one, and it bounds what any future cell can grade at cottonwood: no principal and no wiring change can exercise FWD-1's CONSTRAINT there until the field is populated upstream. What is owed is that the producer is identified and the limitation is stated wherever FWD-1's coverage is claimed, so a 2-of-3-firms result is not read as 3 of 3.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S26",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "TWO MORE UNTRACKED-PRODUCTION-SOURCE-FILE GAPS surfaced while packaging (irpt-status's handler.py and checkpoint.py; irpt-ycharts-generate's gate.py and three json fixtures) -- the same class as W1-S20 and W2-S59.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S26",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "Carried into round 6's FIRST cell as members of its population, NOT a new cell -- this is 1.0.0_SA_CTO's own disposition of the class in its 98087 ruling and its L4 ruling repeats it. What this row adds is the two named members, so the round-6 population is a subtraction from a known list rather than a fresh hunt.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S34",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "firm_registry.json (packaged into BOTH irpt-intake-poller and irpt-ycharts-generate) has NO true source anywhere in this repository's reachable git object graph -- established by a content-addressed search, not by filename.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S34",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "A served artifact whose source cannot be found cannot be rebuilt, so the Rule-10 rebuild invariant does not hold for these two functions. What is owed is either a located source (another store, another repo) or a declared one committed with its provenance -- and until one exists, any claim that these functions are reproducible from the repo is false. \u26a0 NOTE the file shares a NAME with a generated artifact the naming builder writes (data/firm_registry.json), which is exactly how a missing source stays invisible.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S35",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "settings.json (irpt-ycharts-generate) likewise has no true source anywhere, and its own embedded provenance pointer is STALE -- so the artifact carries a claim about where it came from that does not resolve.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S35",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "Same class as W4-S34 and the same remedy, with one addition that makes it worse rather than equal: a stale embedded pointer is more dangerous than an absent one, because a reader who follows it concludes the provenance was checked. The pointer is corrected or removed in the same act that declares the source.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S38",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "AN ESTATE-WIDE, PRE-EXISTING CRLF checkout-vs-LF-blob artifact affects every non-.py, non-.tf/.hcl/.sh text fixture packaged into a Lambda zip on this box: .gitattributes' eol=lf domain covers *.tf, *.tfvars, *.tf.json, infra/aws/terraform/**/*.js, *.hcl, *.sh, *.py, Dockerfile and one prompts path, and NO general *.json -- verified at HEAD by this seat. 49 of 147 census rows are this artifact, not a provenance gap.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S38",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "\u26d4 DO NOT WIDEN THE DOMAIN TO *.json AND CALL IT CLOSED -- that is the third widening to the member that bit, and the file's own comments record the first two (the *.tf case, the terraform-root *.js case on W2-S12), each naming its incident and leaving the next member uncovered. The remedy is the SUBTRACTION Rule 24 asks for: enumerate every text extension packaged into a deployed artifact, print the denominator, and declare the domain as that set minus what is deliberately excluded. Owner is the estate's, since the domain spans every Lambda family.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S25",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE ISSUER'S OWN RECOMMENDED JOIN RESOLVED ZERO AND THE CELL SAID SO: REC (a) through dim_identity_crosswalk resolves 0 of 22,646 live grant slots (SmartX GUIDs and Schwab digits against Black Diamond z+10-digit keys, a divergence the map's producer declares at d08_firm_ownership_map.py:13-19). The cell substituted the face's own stated alternative, dim_account_xref, and resolved 17,895 of 22,646.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S25",
+  "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_L4_RULING_PARTIAL_PROJECTION_20260919.md @61627f39f9"
+ ],
+ "remedy": "RULED BY 1.0.0_SA_CTO AND THE RULING IS READ AT THE BYTES HERE: the seam STANDS as this round's declared projection source, dated and declared as it is, and it does NOT become the id space by being used. The durable answer is (b) -- re-key the ownership-map producer to the Schwab spine its own d08 note already names as the eventual cutover -- and that is DS-owned and CARRIED to that owner rather than absorbed. This row stays open until the carry is made to a named DS seat; the routing is the CTO's, which is why the owner is the CTO and not a project code.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S27",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE SERVED PATH REFUSES A 79-PERCENT-COMPLETE BRIDGE ENTIRELY: abby_horton still reads UNPROJECTED_GRANT after full wiring and the deployed seam, because _authz/enforce.py's resolve_now runs the unprojected check at :283 BEFORE the empty-permitted-set check at :291, with the file's own comment at :276 stating that order deliberately. The 21 resolved accounts never reach permitted_account_set.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S27",
+  "infra/aws/lambda/investor-reporting/_authz/enforce.py:276-294 @ea600978d1 -- read at the bytes by 3.0.0_SA_CVO",
+  "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_L4_RULING_PARTIAL_PROJECTION_20260919.md @61627f39f9"
+ ],
+ "remedy": "RULED (c) BY 1.0.0_SA_CTO: (a) now, (b) as the durable fix, with a BINDING CONDITION the original call did not name -- the unprojected count and kinds are NON-OPTIONAL in the payload including when zero, the EMPTY-projected-set branch KEEPS refusing, and a consumer obligation is filed against IRPT_FNTEND in the same round the field ships. \u26d4 THE CONDITION IS THE PART THIS ROW MUST CARRY FORWARD: a disclosure field that no consumer renders degrades to exactly the silent partial the policy forbids, and it degrades INVISIBLY because the backend's own evidence shows the field present and correct. The change is one refusal ORDER, not a loosening of the fence -- verified here that the cross-firm refusal and the empty-set refusal both stand on their own lines. The cell, its deploy ledger and its never-widen halves are round 6's.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S41",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "49financial's CloudTrail read-logging is a BORN-WITH control its declaration carries and the two new buckets do not: the cell could not copy it without changing another resource on the root, which its own BOUNDS forbade, so it scoped it out deliberately and said so.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S41",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "A REAL GAP the new buckets should close in a follow-on, and the row is right that scoping it out was correct rather than a miss -- an enumerated 'p of p' control list that silently grew would have been the worse act. What is owed is that the follow-on names read-logging explicitly, so the new buckets reach 49financial's actual control set and not just its enumerated four.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S44",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "THE NEGATIVE-CONTROL HOST IS STOPPED AND UNREACHABLE VIA SSM, so the cell substituted a weaker simulate-principal-policy check rather than starting a production runner outside its scope. The substitution is disclosed, not hidden.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S44",
+  "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md@82ecb14d32"
+ ],
+ "remedy": "\u26d4 THE ARM IS UNEXERCISED, NOT PASSED, and IB-rte-3's re-hand owes it -- R57-AC2 names it explicitly as part of what the re-hand still lacks. A simulate-policy check and a live host denial are different claims (the estate's own catalogue records simulate-policy returning FALSE ALLOW), so the weaker check cannot close the stronger arm. Either the host is started for the measurement or the arm is re-cut against an instrument that can actually answer it.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v5"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S77",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "ONE REGISTRY FLIP MEANS TWO DIFFERENT THINGS TO TWO CONSUMERS AND ONLY ONE WAS ACTED ON. s3-lgic-firm-buckets.tf reads bucket_provisioned as 'not managed here' and has been re-keyed onto bucket_managed_by; lib/opal_naming.py:617 reads it as 'real, so the cross-firm fence must name it' and still keys on the flag alone. Flipping it to true therefore un-blocked Terraform and simultaneously changed the fence generator's output, and the generator was never re-run.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S77",
+  "lib/opal_naming.py:617 and .tools/ds-precommit-check.py's generated block @ea600978d1",
+  "3.0.0_SA_CVO's scratchpad regeneration and 0-of-290 exposure census at HEAD"
+ ],
+ "remedy": "Re-run the generator and commit the block -- the diff is already measured. \u26d4 AND THE STANDING HAZARD IS THE PART THAT OUTLIVES THIS ROUND: CLAUDE.md already says an enumerated ban list lapses SILENTLY when a name changes and that a new firm name is a GATE EDIT. This is that sentence firing for real, with the twist that nobody typed a new name -- a FLAG FLIP moved the enumeration's input, so even the discipline of 'a new firm is a gate edit' would not have caught it. Whether the fence generator should get its own predicate rather than borrowing bucket_provisioned is the owner's call and is the R57-AC2 question one level down. EXPOSURE only today: 0 of 290.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S78",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "A POINTER THAT RESOLVES IN NEITHER STORE THE READER HAS. CLAUDE.md cites 2 memory/ paths; 2 of 2 are untracked; one exists only in the repo worktree (so absent in every fresh worktree, which is where workers run) and one only in the user memory directory (so absent from the repo entirely). An order face inherited the same convention and cited a third path that exists in neither.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S78",
+  "CLAUDE.md @ea600978d1 -- the two citations, each tested against both stores"
+ ],
+ "remedy": "NOT A CONTENT FIX -- both memories exist and their substance is not in question; what fails is the ADDRESS. The owner decides whether the law file's memory/ pointers are tracked into the repo, rewritten to name the store they actually live in, or dropped in favour of the rule text they support. \u26d4 NO GATE IS PROPOSED AND NONE SHOULD BE INFERRED: this is a citation-hygiene call on a constitutional file, and designing an enforcement surface for it from this seat would be an agent-made gate. COST of the check itself: one resolution test per pointer, 2 pointers.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v5",
+ "remediation": {
+  "state": "REMEDIATED",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v5"
+ },
+ "closed": true
+}
+```
+
+## Round 6 L9 carriers -- one per graduated row (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "IRPT_BCKEND-S100",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "irpt-holdings can NOT reach its designed EMPTY_GRANT, and staging does not change that. Its own loader reads IRPT_DIRECTORY_KEY=investor-reporting/directory/latest.json -- the POINTER -- as the directory ARTIFACT (holdings/entry.py:70-71,88-89,109-112 -> directory/handler.py:78-89). The pointer carries no firm_id_opaque, so FirmBinding raises 'opaque_firm_id must be a non-empty string' and the boundary refuses FIRM_BINDING with no firm_id. It is the same in all 3 diagnostic modes, and live (rtf-10 (f): FIRM_BINDING).",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S100",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"irpt-holdings can NOT reach its designed EMPTY_GRANT, and staging does not change that. Its own loader reads IRPT_DIRECTORY_KEY=investor-reporting/directory/latest.json -- the POINTER -- as the directory ARTIFACT (holdings/entry.py:70-71,88-89,109-112 -> directory/handler.py:78-89). The pointer carries no firm_id_opaque, so FirmBinding raises 'opaque_firm_id must be a non-empty string' and the boundary refuses FIRM_BINDING with no firm_id. It is the same in all 3 diagnostic modes, and live (rtf-10 (f): FIRM_BINDING).\" THIS IS FWD-5's WHOLE CAUSE and the round's headline defect. It is not an entitlement decision and no grant fixes it: the loader reads the POINTER as the ARTIFACT, so FirmBinding can never see a firm_id_opaque. Until it moves, every negative control on the holdings route is vacuous (S110). \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S101",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "The build is WITHHELD at IB-rtf-12 (d). A rebuild from HEAD would move ANOTHER member on 5 of 7 functions: data/custodian_key_seam.json, from the live CRLF hand copy (197344 bytes, 6224 CR) to the committed LF blob (191120 bytes, sha256 87f2f92f). That is the face's STOP condition ('a rebuild that moves any other member is a different act'), so nothing was built. Separately: 29 of 66 of these functions' OWN members sit CRLF on disk in this checkout (core.autocrlf=true), exactly as the live zips carry them. A builder on an LF checkout would move all 29; the build is not reproducible from the committed tree for data members.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S101",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"The build is WITHHELD at IB-rtf-12 (d). A rebuild from HEAD would move ANOTHER member on 5 of 7 functions: data/custodian_key_seam.json, from the live CRLF hand copy (197344 bytes, 6224 CR) to the committed LF blob (191120 bytes, sha256 87f2f92f). That is the face's STOP condition ('a rebuild that moves any other member is a different act'), so nothing was built. Separately: 29 of 66 of these functions' OWN members sit CRLF on disk in this checkout (core.autocrlf=true), exactly as the live zips carry them. A builder on an LF checkout would move all 29; the build is not reproducible from the co\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S102",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "irpt-ycharts-generate can NOT be rebuilt from HEAD by build-and-upload.sh, so IB-rtf-12's K-CODE for that function is unreachable as ordered. Its files[] declares 2 members with no source on disk: firm_registry.json, whose served content exists as no blob anywhere in history (row W4-S34), and settings.json, never tracked and absent from the source dir. The live zip serves both (31 members).",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S102",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"irpt-ycharts-generate can NOT be rebuilt from HEAD by build-and-upload.sh, so IB-rtf-12's K-CODE for that function is unreachable as ordered. Its files[] declares 2 members with no source on disk: firm_registry.json, whose served content exists as no blob anywhere in history (row W4-S34), and settings.json, never tracked and absent from the source dir. The live zip serves both (31 members).\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S103",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "With raw_keys.json served, directory SEARCH now resolves its scope and then raises in its own compute on every call: directory/entry.py:64-83 _document_fields reads DirectoryEntry.schema.json from the CHECKOUT path (docs/contracts/investor-reporting/v1/, which exists only in the repo) or IRPT_CONTRACTS_DIR. irpt-directory-search has no layer and no IRPT_CONTRACTS_DIR, and the irpt-common:5 layer carries 5 schemas, none of them DirectoryEntry. RuntimeError 'BLOCKED: the DirectoryEntry contract is not readable from this runtime' -> UNEXPECTED, firm_id present. This is the S98 class again (a file the repo has beside the code and the zip does not), in a module outside _ids/, so outside IB-rtf-12's census.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S103",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"With raw_keys.json served, directory SEARCH now resolves its scope and then raises in its own compute on every call: directory/entry.py:64-83 _document_fields reads DirectoryEntry.schema.json from the CHECKOUT path (docs/contracts/investor-reporting/v1/, which exists only in the repo) or IRPT_CONTRACTS_DIR. irpt-directory-search has no layer and no IRPT_CONTRACTS_DIR, and the irpt-common:5 layer carries 5 schemas, none of them DirectoryEntry. RuntimeError 'BLOCKED: the DirectoryEntry contract is not readable from this runtime' -> UNEXPECTED, firm_id present. This is the S98 class again (a file\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S104",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "With raw_keys.json served, irpt-export-render's receipt route resolves its scope and then raises in the evidence-bucket READ, UNDER ITS OWN ROLE only. A lambda:InvokeFunction pair on the deployed function, as its execution role, isolates it: the same event reads UNEXPECTED (firm_id present) when entry.py:97-107 reads s3://opal-data-ycharts/<receipt key>, and reads normally (no refusal code, firm_id present) when receipt_fixture bypasses the read. Under operator credentials in-process, the same read maps to NOT_FOUND. The swallowed class is outside the handler's own mapping ('NoSuchKey', 'ClientError'), and the None sink (S91) keeps it unnamed.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S104",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"With raw_keys.json served, irpt-export-render's receipt route resolves its scope and then raises in the evidence-bucket READ, UNDER ITS OWN ROLE only. A lambda:InvokeFunction pair on the deployed function, as its execution role, isolates it: the same event reads UNEXPECTED (firm_id present) when entry.py:97-107 reads s3://opal-data-ycharts/<receipt key>, and reads normally (no refusal code, firm_id present) when receipt_fixture bypasses the read. Under operator credentials in-process, the same read maps to NOT_FOUND. The swallowed class is outside the handler's own mapping ('NoSuchKey', 'Clien\" One of the two export routes still reading UNEXPECTED rather than a declared refusal. Its two causes are carried separately as S105 (the address is in no declared layout and no writer produces it) and S106 (the 403 is misclassified), and S106 is the one that makes the served answer UNTRUE. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S105",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "S104's FIRST cause, measured: the export-receipt route reads an S3 ADDRESS THAT IS NOT IN THE EVIDENCE BUCKET'S DECLARED LAYOUT AND THAT NO WRITER IN THE CORPUS PRODUCES. entry.py:63-64 builds 'investor-reporting/export/{firm}/{export_id}/receipt.json'; core/layout.json -- the Terraform-generated declaration IB-s-5 binds the per-firm IAM conditions to -- declares exactly THREE prefix families, all 'firms/{firm_id}/...', plus 'quarantine/'. So the key is outside the layout, outside the role's grant, and outside anything that is ever written. THE CONSEQUENCE FOR THIS ORDER: widening IAM to cover it would grant a role read access to an UNDECLARED prefix of the evidence bucket, contradicting the declaration the rest of the IAM is derived from, to reach an object that does not and cannot exist. NO GRANT IS SIGNED. The remedy is a source change (align the reader's key with the generations fami",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S105",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"S104's FIRST cause, measured: the export-receipt route reads an S3 ADDRESS THAT IS NOT IN THE EVIDENCE BUCKET'S DECLARED LAYOUT AND THAT NO WRITER IN THE CORPUS PRODUCES. entry.py:63-64 builds 'investor-reporting/export/{firm}/{export_id}/receipt.json'; core/layout.json -- the Terraform-generated declaration IB-s-5 binds the per-firm IAM conditions to -- declares exactly THREE prefix families, all 'firms/{firm_id}/...', plus 'quarantine/'. So the key is outside the layout, outside the role's grant, and outside anything that is ever written. THE CONSEQUENCE FOR THIS ORDER: widening IAM to cover\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S106",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "S104's SECOND cause, and the one that makes the served answer UNTRUE: entry.py:100-103 decides whether an S3 failure is a refusal by TESTING THE EXCEPTION'S CLASS NAME AGAINST A TWO-NAME LIST -- exc.__class__.__name__ in ('NoSuchKey', 'ClientError') -- and botocore does NOT raise either name for a 403. It raises a MODELED class named 'AccessDenied' (botocore.errorfactory.AccessDenied), which is in neither name, so a genuine denial propagates unmapped, the boundary answers UNEXPECTED, and S91's None sink erases the class. MEASURED ON THE WIRE, not stubbed: an UNSIGNED request to the same object returns HTTP 403 code AccessDenied class botocore.errorfactory.AccessDenied; the operator's request to the same object returns HTTP 404 code NoSuchKey class botocore.errorfactory.NoSuchKey, which IS in the list. That is exactly why the same read maps to NOT_FOUND on the operator path and to UNEXPEC",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S106",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"S104's SECOND cause, and the one that makes the served answer UNTRUE: entry.py:100-103 decides whether an S3 failure is a refusal by TESTING THE EXCEPTION'S CLASS NAME AGAINST A TWO-NAME LIST -- exc.__class__.__name__ in ('NoSuchKey', 'ClientError') -- and botocore does NOT raise either name for a 403. It raises a MODELED class named 'AccessDenied' (botocore.errorfactory.AccessDenied), which is in neither name, so a genuine denial propagates unmapped, the boundary answers UNEXPECTED, and S91's None sink erases the class. MEASURED ON THE WIRE, not stubbed: an UNSIGNED request to the same object\" THE SHARPEST OF THE EXPORT DEFECTS: a refusal decided by testing an exception's CLASS NAME against a two-name list, where botocore raises a MODELED class for a 403. The estate already carries this trap -- a constructed exception stub asserts the class you chose, not the one the wire raises -- and here it reaches a SERVED answer rather than a test. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S107",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE FIRM BOUNDARY ON THE TWO NEW LGIC FIRM BUCKETS IS ENFORCED BY A SUBSTRING GLOB ON A ROLE NAME, AND A SUBSTRING GLOB ADMITS EVERY FUTURE ROLE THAT HAPPENS TO SPELL IT",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S107",
+  "surfaced by 1.0.0_SA_CTO; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"THE FIRM BOUNDARY ON THE TWO NEW LGIC FIRM BUCKETS IS ENFORCED BY A SUBSTRING GLOB ON A ROLE NAME, AND A SUBSTRING GLOB ADMITS EVERY FUTURE ROLE THAT HAPPENS TO SPELL IT\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S108",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "THE DIRECTORY CONTRACT EXISTS TWICE IN THE TREE WITH DIFFERENT BYTES, AND THE COPY THAT DEPLOYS IS NOT THE COPY THAT SITS BESIDE THE LAMBDA SOURCE",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S108",
+  "surfaced by 1.0.0_SA_CTO; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"THE DIRECTORY CONTRACT EXISTS TWICE IN THE TREE WITH DIFFERENT BYTES, AND THE COPY THAT DEPLOYS IS NOT THE COPY THAT SITS BESIDE THE LAMBDA SOURCE\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S109",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "NARROWS S107 BY ITS AUTHOR: THE FENCE PATTERNS ARE A DESIRED-PLANE READ AND NOBODY HAS MEASURED WHICH PRINCIPALS THE POLICY ATTACHED TODAY ACTUALLY ADMITS",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S109",
+  "surfaced by 1.0.0_SA_CTO; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"NARROWS S107 BY ITS AUTHOR: THE FENCE PATTERNS ARE A DESIRED-PLANE READ AND NOBODY HAS MEASURED WHICH PRINCIPALS THE POLICY ATTACHED TODAY ACTUALLY ADMITS\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S110",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "WHILE S100 IS ARMED, EVERY NEGATIVE CONTROL ON THE HOLDINGS ROUTE THAT ASSERTS 'REFUSED' IS VACUOUS -- it cannot fail, so it certifies nothing and reads PASS. irpt-holdings refuses EVERY account with FIRM_BINDING (S100: its loader reads the directory POINTER as the artifact), so a control that refuses a FORBIDDEN account and a request for a PERMITTED account are indistinguishable: same HTTP 200, same public_reason_code FIRM_BINDING, same absence of echo. Measured on one run, with the discriminator the control itself does not carry: IB-rtf-3's NC3 (a TERMINATED client's account, expected refused) returned FIRM_BINDING and PASSED, while the SAME battery's FWD-5 request for an account the principal's own resolve had just granted returned FIRM_BINDING too.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S110",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"WHILE S100 IS ARMED, EVERY NEGATIVE CONTROL ON THE HOLDINGS ROUTE THAT ASSERTS 'REFUSED' IS VACUOUS -- it cannot fail, so it certifies nothing and reads PASS. irpt-holdings refuses EVERY account with FIRM_BINDING (S100: its loader reads the directory POINTER as the artifact), so a control that refuses a FORBIDDEN account and a request for a PERMITTED account are indistinguishable: same HTTP 200, same public_reason_code FIRM_BINDING, same absence of echo. Measured on one run, with the discriminator the control itself does not carry: IB-rtf-3's NC3 (a TERMINATED client's account, expected refuse\" GRADUATED RATHER THAN DISMISSED ON THIS SEAT'S OWN CALL, which the packet left to me. A control that cannot return the failing value is not a control, so the refusal side of rtf-10/rtf-12 arm-(f) certifies NOTHING while S100 stands. \u26a0 THE BOUND TRAVELS WITH IT AND IS THE AE's OWN: served-path grants are UNAFFECTED and this is 'no evidence either way', NOT a claim the gap is unenforced. Dismissing it would have converted an unmeasured control into a clean one by silence. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S82",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "MY RULING ON W1-S29, AND IT REACHES FURTHER THAN W1-S29 CLAIMS: irpt-holdings' diverged local enforce.py makes THAT ROUTE STRUCTURALLY INCAPABLE OF EVER REPORTING A NON-ZERO GAP, so the partial-disclosure indicator can never fire there. holdings/entry.py:62 imports the SHARED served boundary, so response_envelope() supplies `unprojected_grant` PRESENT AT ZERO; but the census that fills it comes from enforce, and holdings binds its OWN local enforce.py (snapshot.py:44 `import enforce as _authz`) in which `unprojected_grant` occurs ZERO times. THE KEY IS ALWAYS THERE AND THE VALUE IS ALWAYS {count 0}. RULING: FOLD holdings/enforce.py BACK ONTO THE SHARED _authz MODULE. Do not patch the fork.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S82",
+  "surfaced by 1.0.0_SA_CTO; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"MY RULING ON W1-S29, AND IT REACHES FURTHER THAN W1-S29 CLAIMS: irpt-holdings' diverged local enforce.py makes THAT ROUTE STRUCTURALLY INCAPABLE OF EVER REPORTING A NON-ZERO GAP, so the partial-disclosure indicator can never fire there. holdings/entry.py:62 imports the SHARED served boundary, so response_envelope() supplies `unprojected_grant` PRESENT AT ZERO; but the census that fills it comes from enforce, and holdings binds its OWN local enforce.py (snapshot.py:44 `import enforce as _authz`) in which `unprojected_grant` occurs ZERO times. THE KEY IS ALWAYS THERE AND THE VALUE IS ALWAYS {cou\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S86",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "STOP before any write: the signed keys K1 + K2 cannot produce the session both halves sign. The deployed auth-handler takes the token's advisorKey/advisorId only from opal-partner-<firm> (GetItem Key {email}), never from the opal-users-v2 row, and 0 of 11 opal-partner-49financial rows bind any login to abby_horton. K1 + K2 would therefore mint a 49financial session with NO advisor claim. Reaching the signed shape needs a partner-table row the packet does not name.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S86",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"STOP before any write: the signed keys K1 + K2 cannot produce the session both halves sign. The deployed auth-handler takes the token's advisorKey/advisorId only from opal-partner-<firm> (GetItem Key {email}), never from the opal-users-v2 row, and 0 of 11 opal-partner-49financial rows bind any login to abby_horton. K1 + K2 would therefore mint a 49financial session with NO advisor claim. Reaching the signed shape needs a partner-table row the packet does not name.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S87",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "OFF-TASK EXPOSURE, not measured as an incident: the portal repo TRACKS two auth fixtures holding plaintext login credentials -- .frontend-dev/auth/credentials.json (e-mail + 12-character password for three smoke logins: internal_admin, firm_49financial, firm_49financial_alt) and .frontend-dev/auth/login-constitution.json (one more e-mail + 12-character password). Both came in with portal commit 03d719d4 (2026-06-08) and are on origin/DEV and origin/PROD (github.com/Opal-Capital/portal). Whether any password is live was NOT tested and must not be.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S87",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"OFF-TASK EXPOSURE, not measured as an incident: the portal repo TRACKS two auth fixtures holding plaintext login credentials -- .frontend-dev/auth/credentials.json (e-mail + 12-character password for three smoke logins: internal_admin, firm_49financial, firm_49financial_alt) and .frontend-dev/auth/login-constitution.json (one more e-mail + 12-character password). Both came in with portal commit 03d719d4 (2026-06-08) and are on origin/DEV and origin/PROD (github.com/Opal-Capital/portal). Whether any password is live was NOT tested and must not be.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S90",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "MEASURED LIVE, first authenticated request ever sent through the real path: every FIRM_ADVISOR request on the deployed IRPT scoped routes is refused UNEXPECTED (state UNAVAILABLE, no firm_id) BEFORE the scope resolves. That covers 12 of 12 requests that passed the FIRM_BINDING check, across search, resolve, status, holdings and every foreign-id swap. The enforcer cannot be built for 49financial: the directory role cannot read the ownership map, and irpt-status and irpt-holdings carry no IRPT_DIRECTORY_BUCKET_MAP.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S90",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"MEASURED LIVE, first authenticated request ever sent through the real path: every FIRM_ADVISOR request on the deployed IRPT scoped routes is refused UNEXPECTED (state UNAVAILABLE, no firm_id) BEFORE the scope resolves. That covers 12 of 12 requests that passed the FIRM_BINDING check, across search, resolve, status, holdings and every foreign-id swap. The enforcer cannot be built for 49financial: the directory role cannot read the ownership map, and irpt-status and irpt-holdings carry no IRPT_DIRECTORY_BUCKET_MAP.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S91",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The served boundary records every internal error to a sink of None: served.py:628, :649 and :662 call _errors.record_internal(None, ...), so the exception behind each UNEXPECTED refusal goes nowhere. The correlation id in the response joins to no log line, and the S90 outage was undiagnosable from CloudWatch.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S91",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"The served boundary records every internal error to a sink of None: served.py:628, :649 and :662 call _errors.record_internal(None, ...), so the exception behind each UNEXPECTED refusal goes nowhere. The correlation id in the response joins to no log line, and the S90 outage was undiagnosable from CloudWatch.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S92",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "LATENT, masked live by S90 and inferred from source: directory search reads event.get('q'/'limit') and resolve reads event.get('selection') from the TOP LEVEL of the raw event. The IRPT integrations are payload format 2.0, where the query sits under queryStringParameters and the body under body. So on the deployed path search ignores q and limit, and resolve always answers 'selection matches nothing'.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S92",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"LATENT, masked live by S90 and inferred from source: directory search reads event.get('q'/'limit') and resolve reads event.get('selection') from the TOP LEVEL of the raw event. The IRPT integrations are payload format 2.0, where the query sits under queryStringParameters and the body under body. So on the deployed path search ignores q and limit, and resolve always answers 'selection matches nothing'.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S93",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "A THIRD cause beyond S90's two, found by IB-rtf-10's census: 4 of the 7 serving roles (irpt-narrative-role, irpt-export-render-role, irpt-performance-adapter-role, irpt-ycharts-generate-role) have NO s3:GetObject on any firm's directory objects. Their functions bind the shared _authz loader, which reads the directory BEFORE the ownership map. With this order's two keys applied, those four functions still fail load_directory and refuse UNEXPECTED; only directory-search and status resolve scope.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S93",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"A THIRD cause beyond S90's two, found by IB-rtf-10's census: 4 of the 7 serving roles (irpt-narrative-role, irpt-export-render-role, irpt-performance-adapter-role, irpt-ycharts-generate-role) have NO s3:GetObject on any firm's directory objects. Their functions bind the shared _authz loader, which reads the directory BEFORE the ownership map. With this order's two keys applied, those four functions still fail load_directory and refuse UNEXPECTED; only directory-search and status resolve scope.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S94",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "inflection has NO ownership map (s3://opal-data-inf/platinum/inflection/ownership_map.json -> 404 to an identity holding ListBucket). A serving role granted only object-scoped GetObject, with no ListBucket (the face bans ListBucket), reads a MISSING key as AccessDenied, not NoSuchKey. _authz/loaders.py treats only NoSuchKey as 'an absent map is an empty map' and re-raises everything else, so every inflection advisor stays UNEXPECTED after this packet.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S94",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"inflection has NO ownership map (s3://opal-data-inf/platinum/inflection/ownership_map.json -> 404 to an identity holding ListBucket). A serving role granted only object-scoped GetObject, with no ListBucket (the face bans ListBucket), reads a MISSING key as AccessDenied, not NoSuchKey. _authz/loaders.py treats only NoSuchKey as 'an absent map is an empty map' and re-raises everything else, so every inflection advisor stays UNEXPECTED after this packet.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S95",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "The six affected Terraform roots are NOT at rest. Planned with only IB-rtf-10's edits, 4 functions' plans also carry a CODE change (irpt-status, irpt-narrative, irpt-export-render, irpt-performance-adapter: source_code_hash differs from the live CodeSha256), and 2 carry an object-version bump with an unchanged hash (irpt-holdings, irpt-directory-refresh). Artifacts uploaded at 07:29-07:31Z and 10:44Z were never deployed. Applied as planned, arm (e)'s 'CodeSha256 unchanged 7 of 7' cannot hold, and the env var cannot be split from the code, since both are attributes of one aws_lambda_function.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S95",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"The six affected Terraform roots are NOT at rest. Planned with only IB-rtf-10's edits, 4 functions' plans also carry a CODE change (irpt-status, irpt-narrative, irpt-export-render, irpt-performance-adapter: source_code_hash differs from the live CodeSha256), and 2 carry an object-version bump with an unchanged hash (irpt-holdings, irpt-directory-refresh). Artifacts uploaded at 07:29-07:31Z and 10:44Z were never deployed. Applied as planned, arm (e)'s 'CodeSha256 unchanged 7 of 7' cannot hold, and the env var cannot be split from the code, since both are attributes of one aws_lambda_function.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S96",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "K-CODE cannot be built from HEAD. build-and-upload.sh REFUSES irpt-directory-search: its files[] declares data/custodian_key_seam.json, but the entry carries NO staged_from for that member (0 of 1), whereas 6 of 6 sibling functions stage it from _ids/data/custodian_key_seam.json. The build failed before upload, so nothing was written. The LIVE zip does carry the member, but as a CRLF worktree copy (197344 bytes, 6224 CR) rather than the committed blob (191120 bytes, sha256 87f2f92f...). The served build it replaces was therefore hand-materialized outside the manifest.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S96",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"K-CODE cannot be built from HEAD. build-and-upload.sh REFUSES irpt-directory-search: its files[] declares data/custodian_key_seam.json, but the entry carries NO staged_from for that member (0 of 1), whereas 6 of 6 sibling functions stage it from _ids/data/custodian_key_seam.json. The build failed before upload, so nothing was written. The LIVE zip does carry the member, but as a CRLF worktree copy (197344 bytes, 6224 CR) rather than the committed blob (191120 bytes, sha256 87f2f92f...). The served build it replaces was therefore hand-materialized outside the manifest.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S97",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "K-DIR AND K-OM ARE FENCED BY DIFFERENT MECHANISMS AND THE TERRAFORM SAYS THEY ARE FENCED BY THE SAME ONE. The ownership map key carries the firm id (platinum/{firm}/ownership_map.json, _authz/loaders.py:31-32), so on the shared opal-data-bd the KEY is the fence. The directory prefix carries NO firm segment at all (DIRECTORY_PREFIX = 'investor-reporting/directory', loaders.py:30; load_directory reads <prefix>/latest.json then the pointer's key, :71-81), so on that same shared bucket the fence is only that nobody has written a second firm's directory under it -- a property of the WRITERS, not of the resource ARN. MEASURED, because ABSENT is not EXERCISED-AGAINST: list-objects-v2 on opal-data-bd/investor-reporting/directory/ returns 9 of 9 objects, 0 firm-segmented, 0 foreign (two dated directory.json, six _refresh manifests, latest.json). SO THIS IS AN EXPOSURE, NOT AN INCIDENT: no foreign",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S97",
+  "surfaced by 1.0.0_SA_CTO; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"K-DIR AND K-OM ARE FENCED BY DIFFERENT MECHANISMS AND THE TERRAFORM SAYS THEY ARE FENCED BY THE SAME ONE. The ownership map key carries the firm id (platinum/{firm}/ownership_map.json, _authz/loaders.py:31-32), so on the shared opal-data-bd the KEY is the fence. The directory prefix carries NO firm segment at all (DIRECTORY_PREFIX = 'investor-reporting/directory', loaders.py:30; load_directory reads <prefix>/latest.json then the pointer's key, :71-81), so on that same shared bucket the fence is only that nobody has written a second firm's directory under it -- a property of the WRITERS, not of\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S98",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "After IB-rtf-10's apply (7 of 7 roots, 0-diff 7 of 7; every grant, bucket map and CodeSha256 read back as signed), the live path is STILL UNEXPECTED on 9 of 10 requests across the 7 functions. The remaining cause is not IAM. _ids/ids.py raw_keys() opens raw_keys.json BESIDE the module, but 0 of 7 deployed zips carry it and 0 of 7 manifest entries declare it, while 7 of 7 stage _ids/ids.py. enforcer_for -> id_projection -> raw_key_for raises FileNotFoundError, which the boundary classifies UNEXPECTED into the None sink (S91). This is S90's third cause, invisible to simulation and to every in-process proof, because in the repo raw_keys.json DOES sit beside _ids/ids.py.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S98",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"After IB-rtf-10's apply (7 of 7 roots, 0-diff 7 of 7; every grant, bucket map and CodeSha256 read back as signed), the live path is STILL UNEXPECTED on 9 of 10 requests across the 7 functions. The remaining cause is not IAM. _ids/ids.py raw_keys() opens raw_keys.json BESIDE the module, but 0 of 7 deployed zips carry it and 0 of 7 manifest entries declare it, while 7 of 7 stage _ids/ids.py. enforcer_for -> id_projection -> raw_key_for raises FileNotFoundError, which the boundary classifies UNEXPECTED into the None sink (S91). This is S90's third cause, invisible to simulation and to every in-pr\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-S99",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "There is a SECOND missing member of the same class: the firm registry. S98's own diagnostic was contaminated, and this row CORRECTS it. S98 said that with ONLY raw_keys.json placed beside ids.py the scope resolves. That run extracted the zip INSIDE the repository, where ids.py's and keys.py's registry walk-up (ids.py:113-138) found the repo's data/firm_registry.json. Run OUTSIDE the repository, as on Lambda, directory-search and status still fail with raw_keys.json alone: their FIRST failure is keys.KeyComponentRefused (firm_registry, REGISTRY_UNREADABLE). narrative and performance-adapter fail next on ids.IdRefused (registry not found). The scope resolves only with BOTH members, on those 4. INCLUDED in IB-rtf-12's key, as the face's (a) directs: manifest @dbf7667178.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S99",
+  "surfaced by 0.7.0_AE_CloudOps~V; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"There is a SECOND missing member of the same class: the firm registry. S98's own diagnostic was contaminated, and this row CORRECTS it. S98 said that with ONLY raw_keys.json placed beside ids.py the scope resolves. That run extracted the zip INSIDE the repository, where ids.py's and keys.py's registry walk-up (ids.py:113-138) found the repo's data/firm_registry.json. Run OUTSIDE the repository, as on Lambda, directory-search and status still fail with raw_keys.json alone: their FIRST failure is keys.KeyComponentRefused (firm_registry, REGISTRY_UNREADABLE). narrative and performance-adapter fai\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S28",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "CONSUMER OBLIGATION (IB-rtf-2 arm (c), CTO ruling @61627f39f9 condition 2): the served response envelope now carries a top-level, non-optional `unprojected_grant` field ({count, denominator, kinds}) on every scoped route through infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (7 of 7 entry.py -- directory, export, holdings, narrative, ops, performance, ycharts/generate -- import the shared served boundary and share its ONE call site). IRPT_FNTEND owes: render a VISIBLE partial indicator whenever unprojected_grant.count > 0, so that the day someone asks 'was the partial ever actually shown?' the answer is an artifact and not a recollection.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S28",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"CONSUMER OBLIGATION (IB-rtf-2 arm (c), CTO ruling @61627f39f9 condition 2): the served response envelope now carries a top-level, non-optional `unprojected_grant` field ({count, denominator, kinds}) on every scoped route through infra/aws/lambda/investor-reporting/_authz/served.py response_envelope() (7 of 7 entry.py -- directory, export, holdings, narrative, ops, performance, ycharts/generate -- import the shared served boundary and share its ONE call site). IRPT_FNTEND owes: render a VISIBLE partial indicator whenever unprojected_grant.count > 0, so that the day someone asks 'was the partial\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S29",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "irpt-holdings packages its OWN diverged local infra/aws/lambda/investor-reporting/holdings/enforce.py, not the shared _authz/enforce.py this cell inverted -- the build tool's source_dir-first resolution ships the stale copy, so irpt-holdings gets NEITHER the refusal-order inversion NOR a real unprojected_grant disclosure (it always reads the present-at-zero default).",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S29",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"irpt-holdings packages its OWN diverged local infra/aws/lambda/investor-reporting/holdings/enforce.py, not the shared _authz/enforce.py this cell inverted -- the build tool's source_dir-first resolution ships the stale copy, so irpt-holdings gets NEITHER the refusal-order inversion NOR a real unprojected_grant disclosure (it always reads the present-at-zero default).\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S31",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "TO-IB-rtf-8 arm (d) requires the never-widen packet's blast-radius key to read irpt-holdings' PRIOR CodeSha256 LIVE, never from the manifest -- and read live (.tools/aws lambda get-function-configuration --function-name irpt-holdings), it disagrees with infra/aws/lambda/ci/lambda-source-map.json's own recorded irpt-holdings.artifact_sha256: live CodeSha256 is base64 oVv1pYw56N22WLxKUukuyqQBrhAIWXHzhK1vGDlMbKs=, the manifest's artifact_sha256 is base64 Bn7iLO/E/9CKYP0sz0YdneloZLHdldHkr/c3jWc25Xc= -- two different values for the same served property.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S31",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"TO-IB-rtf-8 arm (d) requires the never-widen packet's blast-radius key to read irpt-holdings' PRIOR CodeSha256 LIVE, never from the manifest -- and read live (.tools/aws lambda get-function-configuration --function-name irpt-holdings), it disagrees with infra/aws/lambda/ci/lambda-source-map.json's own recorded irpt-holdings.artifact_sha256: live CodeSha256 is base64 oVv1pYw56N22WLxKUukuyqQBrhAIWXHzhK1vGDlMbKs=, the manifest's artifact_sha256 is base64 Bn7iLO/E/9CKYP0sz0YdneloZLHdldHkr/c3jWc25Xc= -- two different values for the same served property.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S34",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "This order's own arm (a) census, run to end the S96/S98/S103 class, finds the SAME class a FOURTH, FIFTH and SIXTH time in the module this order does NOT touch: _scope/resolve.py's _server_only_properties() (staged flat into directory-search, narrative, export, performance, ops/status, and duplicated as holdings' own tracked resolve.py) resolves ResolvedScope.schema.json at _HERE/../_contracts, which is one directory above /var/task and exists in NEITHER the deployed zip NOR the irpt-common layer's 5-contract list, on ANY of the 6 functions -- with no env override at all (unlike DirectoryEntry's IRPT_CONTRACTS_DIR check). ops/status.py's own _server_only_properties()/_load_schema() has the identical construct for StatusEnvelope.schema.json, and ops/manifests.py's PATH_MANIFEST_PATH for PATH_MANIFEST.json -- both also checkout-only, one level above /var/task, on irpt-status. The resolve.p",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S34",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"This order's own arm (a) census, run to end the S96/S98/S103 class, finds the SAME class a FOURTH, FIFTH and SIXTH time in the module this order does NOT touch: _scope/resolve.py's _server_only_properties() (staged flat into directory-search, narrative, export, performance, ops/status, and duplicated as holdings' own tracked resolve.py) resolves ResolvedScope.schema.json at _HERE/../_contracts, which is one directory above /var/task and exists in NEITHER the deployed zip NOR the irpt-common layer's 5-contract list, on ANY of the 6 functions -- with no env override at all (unlike DirectoryEntry\" The FOURTH member of the runtime-open class (S96, S98, S103 were the first three), found by the census cut to END that class -- which is itself the finding: a census run to close a class found the class still open one layer further out. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S35",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "export/package.py's candidate_checkouts() (packaged as package.py in irpt-export-render's own files[]) hardcodes Andrew's own device-specific absolute paths as fallback candidates for a portal checkout ('/c/Users/AndrewBerman/Desktop/ajb_workspace/portal', 'C:/Users/AndrewBerman/Desktop/ajb_workspace/portal') -- paths that can never exist on a deployed Lambda -- so on the live irpt-export-render runtime every candidate in the list is absent (IRPT_PORTAL_CHECKOUT is unset in export/lambda.tf; the two hardcoded literals are this laptop's own filesystem; the final ancestor-walk candidate needs 6 levels above /var/task, which has 2) and package.locate() unconditionally raises PackageUnavailable in production -- a MISSING open with no candidate that can ever resolve in the deployed zip, and a live instance of the class CLAUDE.md's device-specific-logic rule names ('NEVER write device-specific",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S35",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"export/package.py's candidate_checkouts() (packaged as package.py in irpt-export-render's own files[]) hardcodes Andrew's own device-specific absolute paths as fallback candidates for a portal checkout ('/c/Users/AndrewBerman/Desktop/ajb_workspace/portal', 'C:/Users/AndrewBerman/Desktop/ajb_workspace/portal') -- paths that can never exist on a deployed Lambda -- so on the live irpt-export-render runtime every candidate in the list is absent (IRPT_PORTAL_CHECKOUT is unset in export/lambda.tf; the two hardcoded literals are this laptop's own filesystem; the final ancestor-walk candidate needs 6 \" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S36",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "_keys/keys.py:verify_against_layout(layout_path) is a runtime-open call site (io.open(path)) present in every one of the 7 serving functions' copies of keys.py (flat in irpt-directory-search/irpt-intake-poller/irpt-status; via the irpt-common layer's python/keys.py in irpt-narrative/irpt-performance-adapter/irpt-export-render/irpt-holdings), but it takes a caller-supplied layout_path with no static default and this order's census sweep (Grep, path=infra/aws/lambda/investor-reporting) found exactly ONE match for 'verify_against_layout(' -- its own def line -- across the whole tree: 0 call sites in any shipped handler, entry point or non-test module. It is excluded from the STAGED/ENV-RESOLVED-TO-LAYER/MISSING three-way count because it has no static target to classify, not because it was overlooked.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S36",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"_keys/keys.py:verify_against_layout(layout_path) is a runtime-open call site (io.open(path)) present in every one of the 7 serving functions' copies of keys.py (flat in irpt-directory-search/irpt-intake-poller/irpt-status; via the irpt-common layer's python/keys.py in irpt-narrative/irpt-performance-adapter/irpt-export-render/irpt-holdings), but it takes a caller-supplied layout_path with no static default and this order's census sweep (Grep, path=infra/aws/lambda/investor-reporting) found exactly ONE match for 'verify_against_layout(' -- its own def line -- across the whole tree: 0 call sites\" The same runtime-open class again, in all 7 serving functions' copies of keys.py. Its breadth is what makes it a builder fix rather than a per-cell patch. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S39",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "Rows IRPT_BCKEND-W1-S37 and IRPT_BCKEND-W1-S38, which both never-widen halves name as the ARMED rows they supersede and disarm 'at the v2 apply, by the row's own disarm act', are ABSENT from this channel at this worktree's HEAD -- they exist only on an undrained branch, lost when a DIFFERENT branch (carrying only the first pass) was drained under the same descriptive commit message.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S39",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"Rows IRPT_BCKEND-W1-S37 and IRPT_BCKEND-W1-S38, which both never-widen halves name as the ARMED rows they supersede and disarm 'at the v2 apply, by the row's own disarm act', are ABSENT from this channel at this worktree's HEAD -- they exist only on an undrained branch, lost when a DIFFERENT branch (carrying only the first pass) was drained under the same descriptive commit message.\" GRADUATED ON THE ISSUER'S DISARM EVIDENCE as the packet asks: the absent W1-S37/S38 finding (the v1 whole-planfile digest unsatisfiable) is durably captured in the v2 packet @9f8d73490a plus the CTO ruling @0a7f61ae86, and the v2 gate PASSED, superseding the premise. The graduation transfers the clock; the DISARM remains 2.0.0_SA_COO~B's own act. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S40",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The subtraction gate's signed subtraction set (a data.aws_s3_object read entry's version_id/last_modified) is INERT for the directory root's own resource_changes -- 0 of 0 mode==\"data\" entries appear there on every plan measured -- because those two fields instead surface as ATTRIBUTES of module.irpt_directory_search.aws_lambda_function.this itself (s3_object_version, last_modified), and build-and-upload.sh's unconditional per-run S3 re-upload (byte-identical content, new VersionId every call) manufactures a phantom 'update' there on ANY re-run after the real apply, even though before.source_code_hash == after.source_code_hash.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S40",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"The subtraction gate's signed subtraction set (a data.aws_s3_object read entry's version_id/last_modified) is INERT for the directory root's own resource_changes -- 0 of 0 mode==\"data\" entries appear there on every plan measured -- because those two fields instead surface as ATTRIBUTES of module.irpt_directory_search.aws_lambda_function.this itself (s3_object_version, last_modified), and build-and-upload.sh's unconditional per-run S3 re-upload (byte-identical content, new VersionId every call) manufactures a phantom 'update' there on ANY re-run after the real apply, even though before.source_c\" GRADUATED ON THE ISSUER'S DISARM EVIDENCE as the packet asks: the S3-churn phantom diff -- the gate STOPPED correctly, fails closed, the precondition is fixed and the subtraction set never widened. A gate that stopped is the control working, not a defect. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S41",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "This worker ran TWO reconciling `terraform apply` acts on the directory root (pointer-only: s3_object_version/last_modified, 0 added/1 changed/0 destroyed each, no functional change) AFTER the change-management ledger irpt-bckend-ib-rtf-13-apply had already been CLOSED, with no ledger entry of their own -- a self-identified gap against this order's bound 4 (a change-management entry opened at the start and closed at completion of every deploy).",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W1-S41",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~1; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"This worker ran TWO reconciling `terraform apply` acts on the directory root (pointer-only: s3_object_version/last_modified, 0 added/1 changed/0 destroyed each, no functional change) AFTER the change-management ledger irpt-bckend-ib-rtf-13-apply had already been CLOSED, with no ledger entry of their own -- a self-identified gap against this order's bound 4 (a change-management entry opened at the start and closed at completion of every deploy).\" THE LEDGER-RETROACTIVE CLASS (NEVER-2 shape), and the packet carries it to the L10 for that reason: two reconciling applies ran AFTER their change-management ledger had closed, with no entry of their own. EXPOSURE, not incident -- final state verified at CodeSha256 76LeVyYN and no functional change -- but the uncovered window was real and the remedy is the entry, not a re-run. \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S46",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "IB-rtf-4 arm (a): the builder's own `targets` self-report names 10 canonical generated targets; at HEAD (958d6a8e94) ALL 10 carried a stale registry-hash stamp, and only 2 of the 10 (.tools/ds-precommit-check.py, infra/aws/terraform/modules/opal_name/generated_locals.tf) are in this order's <paths> grant -- the other 8 (data/firm_registry.json, infra/aws/lambda-edge/_shared/firm-config.mjs, data/assets/scripts/gold/investor_reporting/directory_runner.py and holdings_snapshot.py, infra/aws/lambda/investor-reporting/_authz/loaders.py, data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py, infra/aws/terraform/modules/opal_name/tests/vectors.json and opal_name.tftest.hcl) are named here, per this order's own BOUNDS ('a stale target OUTSIDE this order's <paths> is a BLOCKING row naming its lane, never an edit'), and NOT regenerated.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S46",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~3; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"IB-rtf-4 arm (a): the builder's own `targets` self-report names 10 canonical generated targets; at HEAD (958d6a8e94) ALL 10 carried a stale registry-hash stamp, and only 2 of the 10 (.tools/ds-precommit-check.py, infra/aws/terraform/modules/opal_name/generated_locals.tf) are in this order's <paths> grant -- the other 8 (data/firm_registry.json, infra/aws/lambda-edge/_shared/firm-config.mjs, data/assets/scripts/gold/investor_reporting/directory_runner.py and holdings_snapshot.py, infra/aws/lambda/investor-reporting/_authz/loaders.py, data/assets/scripts/gold/runners_49f/perfrp_firm_pin.py, infr\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S47",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "mechanism": "IB-rtf-4 arm (d)/R61-AC1: `terraform fmt -check -diff` on the regenerated infra/aws/terraform/modules/opal_name/generated_locals.tf is NOT clean (rc=3, map-literal `=` alignment only) -- and this is PRE-EXISTING in the generator's own HCL rendering, not introduced by this order's registry-hash-only regen: the IDENTICAL check against the git-blob-pinned pre-regen file (958d6a8e94:infra/aws/terraform/modules/opal_name/generated_locals.tf, blob 6199adb8ec7e0d55ae88bfaf42a1441bfb83b85f) fails identically (rc=3, same alignment diff). Fixing it needs a lib/opal_naming.py rendering-function edit, which this order's BOUNDS forbid (registry/generator owner's to fix, Rule 30). Because the acceptance criterion's token prints only when EVERY arm holds, R61-AC1 grades FAIL by output on this one sub-bullet alone -- every other arm (a)/(b)/(c)/(e) and the rest of (d) (validate clean, plan byte-identica",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W3-S47",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~3; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"IB-rtf-4 arm (d)/R61-AC1: `terraform fmt -check -diff` on the regenerated infra/aws/terraform/modules/opal_name/generated_locals.tf is NOT clean (rc=3, map-literal `=` alignment only) -- and this is PRE-EXISTING in the generator's own HCL rendering, not introduced by this order's registry-hash-only regen: the IDENTICAL check against the git-blob-pinned pre-regen file (958d6a8e94:infra/aws/terraform/modules/opal_name/generated_locals.tf, blob 6199adb8ec7e0d55ae88bfaf42a1441bfb83b85f) fails identically (rc=3, same alignment diff). Fixing it needs a lib/opal_naming.py rendering-function edit, whi\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S39",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "The population moved wider than this order's own face names at the cut: a fresh census (live Code.Location, not the S3 artifact bucket) found 10 declared+served members across 3 functions (ids.py on irpt-performance-adapter/irpt-narrative/irpt-holdings; data/custodian_key_seam.json on all 7 non-intake-poller, non-directory-refresh functions) with NO staged_from declaration at all -- a NEW class introduced by IB-rte-6's manual deploy (row W1-S25's own seam wiring) after IB-rte-4's 147-member census was taken, never previously rowed.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S39",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~4; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"The population moved wider than this order's own face names at the cut: a fresh census (live Code.Location, not the S3 artifact bucket) found 10 declared+served members across 3 functions (ids.py on irpt-performance-adapter/irpt-narrative/irpt-holdings; data/custodian_key_seam.json on all 7 non-intake-poller, non-directory-refresh functions) with NO staged_from declaration at all -- a NEW class introduced by IB-rte-6's manual deploy (row W1-S25's own seam wiring) after IB-rte-4's 147-member census was taken, never previously rowed.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S40",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "mechanism": "18 EXISTING staged_from declarations across 7 functions (served.py x7, loaders.py x7, ids.py x4) were STALE: each pin resolved to content that no longer matches the LIVE DEPLOYED Lambda's own served bytes for that member, because the shared frontier files (_authz/served.py, _authz/loaders.py, _ids/ids.py) were edited AFTER the pin was set (by IB-rte-6's own projection-seam wiring, row W1-S25) and the declaration was never repointed -- a rebuild from the unmodified manifest would have silently SHIPPED THE OLD CONTENT, regressing a live function's behaviour without any build error.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S40",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~4; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"18 EXISTING staged_from declarations across 7 functions (served.py x7, loaders.py x7, ids.py x4) were STALE: each pin resolved to content that no longer matches the LIVE DEPLOYED Lambda's own served bytes for that member, because the shared frontier files (_authz/served.py, _authz/loaders.py, _ids/ids.py) were edited AFTER the pin was set (by IB-rte-6's own projection-seam wiring, row W1-S25) and the declaration was never repointed -- a rebuild from the unmodified manifest would have silently SHIPPED THE OLD CONTENT, regressing a live function's behaviour without any build error.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S41",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "irpt-directory-search was redeployed at 2026-09-19T05:29:38Z -- 29 seconds before this order's own final graded battery run started -- by a SIBLING worker's in-flight commit (0.9.0_WK_IRPT_BCKEND~1, cell IB-rtf-2, commit b3a148044fa5699073e110126d0e6fc7d6b4fed5, editing the SAME shared _authz/enforce.py and _authz/served.py this order's own cell also declares from), moving this order's own population mid-run: an EARLIER run of this order's battery (minutes before) read enforce.py/served.py for this one function as resolvable; the FINAL graded run reads them TRACKED-ELSEWHERE-MISMATCH (canonical named, content differs -- NOT canonical-absent) because the sibling's edited content is not yet reachable from this branch's HEAD.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S41",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~4; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"irpt-directory-search was redeployed at 2026-09-19T05:29:38Z -- 29 seconds before this order's own final graded battery run started -- by a SIBLING worker's in-flight commit (0.9.0_WK_IRPT_BCKEND~1, cell IB-rtf-2, commit b3a148044fa5699073e110126d0e6fc7d6b4fed5, editing the SAME shared _authz/enforce.py and _authz/served.py this order's own cell also declares from), moving this order's own population mid-run: an EARLIER run of this order's battery (minutes before) read enforce.py/served.py for this one function as resolvable; the FINAL graded run reads them TRACKED-ELSEWHERE-MISMATCH (canonica\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S42",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "irpt-holdings :: enforce.py has no staged_from entry at all (a local, tracked-at-path fork, W1-S29's known divergence) so this cell's census classes it PIN-STALE-SERVED-DIVERGED-FROM-HEAD against the SHARED _authz/enforce.py at HEAD and this order's remedy (a manifest re-pin) leaves it untouched by construction -- re-filed here as the SAME finding's own re-pin-cell classification, not a new fact.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S42",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~4; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"irpt-holdings :: enforce.py has no staged_from entry at all (a local, tracked-at-path fork, W1-S29's known divergence) so this cell's census classes it PIN-STALE-SERVED-DIVERGED-FROM-HEAD against the SHARED _authz/enforce.py at HEAD and this order's remedy (a manifest re-pin) leaves it untouched by construction -- re-filed here as the SAME finding's own re-pin-cell classification, not a new fact.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 1.0.0_SA_CTO's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S43",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "build-and-upload.sh's own comment claims passing SHA256 to the JSON tool via environment variable is already MSYS-safe against the leading-'/' base64-to-Windows-path mangle it names for CLI args; measured this run, the SAME mangle hit the env-var path too for one value (irpt-performance-adapter's artifact_sha256, which happens to start '/C', triggering MSYS's single-letter drive heuristic) and was written into the real committed lambda-source-map.json before being caught and corrected this same commit.",
+ "evidence": [
+  "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-W4-S43",
+  "surfaced by 0.9.0_WK_IRPT_BCKEND~4; adjudicated at L9 round 6 by 3.0.0_SA_CVO at HEAD bac07f66dc",
+  "round 6 terminal: 0 open TOs of 75 by the gate's own proof read"
+ ],
+ "remedy": "WHAT THE ROW ESTABLISHES, in its own words: \"build-and-upload.sh's own comment claims passing SHA256 to the JSON tool via environment variable is already MSYS-safe against the leading-'/' base64-to-Windows-path mangle it names for CLI args; measured this run, the SAME mangle hit the env-var path too for one value (irpt-performance-adapter's artifact_sha256, which happens to start '/C', triggering MSYS's single-letter drive heuristic) and was written into the real committed lambda-source-map.json before being caught and corrected this same commit.\" \u26d4 THIS GRADUATION TRANSFERS THE CLOCK AND FIXES NOTHING. GRADUATED is a TRANSFER, not a closure: the finding leaves the held set and arrives here with an owner, and its DISARM stays 2.0.0_SA_COO~B's own act -- disarming is not disposing (R-19/R-21). No part of this row's substance is re-decided by the adjudicator.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v6",
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v6"
+ },
+ "closed": false,
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ }
+}
+```
+
+## Round-7 L9 carriers for the nine GRADUATED items (3.0.0_SA_CVO, 2026-09-21T04:26Z)
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S42",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "Export receipt resolves from tenant + caller export_id only; the key-template alignment the arm named is a different shape from what the route actually reads. Round-8 export-contract work.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W1-S42 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S43",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "Deployed submit_export raises NOT_READY, so the submit -> receipt round trip is unwired on the served path. The receipt CONTRACT is proven; the producer is not. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W1-S43 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S45",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A real plan on three roots this order neither granted nor touched shows each with changes -- plan noise on untouched roots defeats the never-widen scope check as written. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W1-S45 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W2-S61",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The arm named a battery to REUSE; a battery was re-authored under the same assignee instead. The evidence stands, the instruction-versus-artifact gap does not. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W2-S61 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S48",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A second firm-keyed dict (handler.py RECORDED_LABELS) shares the retired id space this cell was cut to reconcile and sits OUTSIDE the confined edit: locally correct, globally incomplete. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W3-S48 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S50",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "Inflection's performance route fails on an S3 404 in _authz/served.py::enforcer_for, UPSTREAM of route_for and outside this cell's bound. The remedy is the FWD-11 bucket rectification, co-held. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W3-S50 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S45",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "build-and-upload.sh from /c/ was REFUSED at the index-sourced manifest gate (NO BLOB for three files at a pin). A build recipe the order states literally does not run as written. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W4-S45 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S46",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "Plans on export and performance each show an aws_lambda_function update whose before/after source_code_hash do not match this act -- the same untouched-root plan-noise class as W1-S45. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W4-S46 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S47",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "Get-PSDrive C reads Free=0 bytes -- a LITERAL zero, not a low figure -- on the only filesystem this box exposes. This is FABRIC LOAD, not project work, and its owner is the fabric seat.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W4-S47 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "0.0.0_AB_MSTR",
+ "round": "v7",
+ "disarm": {
+  "state": "DISARMED",
+  "owner": "0.0.0_AB_MSTR",
+  "at": "2026-09-21T04:52Z"
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "0.0.0_AB_MSTR",
+  "round": "v7"
+ },
+ "closed": false
+}
+```

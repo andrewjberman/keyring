@@ -327,7 +327,23 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     halves (`IRPT_BCKEND-S73`) — same tool, one path disclosing and one silent. COST: one question per
     CLAIM, no re-read. NON-APPLICATION: a sentence whose subject IS the swept set ("of the 210 roles
     comp-iam lists, 13 are irpt-*") — there the denominator and the sentence share a scope by
-    construction. (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
+    construction.
+    ⛔ **AND A CLAIM YOU INHERITED FROM A PEER HAS NO DENOMINATOR TO NARROW -- the subtraction cannot fire,
+    because you exercised NOTHING.** An inherited SENTENCE does not look like an inherited NUMBER: there is
+    no figure beside it to interrogate, so a careful reader walks straight past it. ⭐ **THE TELL IS
+    GRAMMATICAL, NOT NUMERICAL: NEVER / ALWAYS / EVERY / NOTHING / ANY in a sentence whose evidence line
+    names ONE object, or none.** Before restating a peer's universal, ask which INSTRUMENT produced it and
+    what that instrument can SEE -- a filesystem census answers PRESENT and can never answer NEVER. Measured
+    2026-09-19, **THREE SEATS**, each found by the seat it convicted: *"one file that has never existed on
+    this box"* came off a `find`, was restated by a second seat into a **LAW-EDIT COMMIT MESSAGE**
+    (permanent, unlike the broadcast it also rode), and the same shape sits in that seat's own commits **six
+    weeks earlier** on an unrelated subject. ⛔ **THE THIRD CHANNEL IS THE WORST AND IT IS NOT A RESTATEMENT
+    AT ALL: a seat INHERITED an unmeasured universal INTO A REMEDY** -- writing *"state the baseline"* as the
+    fix for a claim that nothing stated it, while its own positive control had already stated it -- **and a
+    remedy is what a later seat EXECUTES.** COST: one question per universal quantifier, asked of a sentence
+    already in front of you, so it is bounded in a way a census clause is not. NON-APPLICATION: a sentence
+    whose subject IS the exercised object (*"`response_envelope()` never omits the key"*).
+    (ii) SAME GRAIN; (iii) INTENT COHERENCE (one axis, one intent);
     (iv) STATE COHERENCE (name which values one remedy does NOT move). **Outcome arrays, typed-result sets
     and predicates ARE schemas.** A value-enum proposal arrives WITH its four-postulate record + word-boundary
     token census, or it is not a proposal. `rcg/rulings/RULINGS.jsonl` R-0006/R-0009.
@@ -417,7 +433,8 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
   a `comp-freshness` entry lacking `freshness_basis: trading-day-frontier` false-alarms every Monday.
 - **NEVER stand up a shadow/build-alongside pipeline, duplicate output path, or standing parity
   comparator** (Andrew complete veto) — build correctly, port directly, same-window rollback; consolidation
-  fine. `memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md`.
+  fine. Record: BOX MEMORY (per-device, NOT in the repo -- a fresh worktree will not have it)
+  `feedback_no_inferred_gates_no_shadow_pipelines_20260804` (item 2 is the veto verbatim).
 - **NEVER build an alert/alarm/SNS/SES-send/notification/freshness-checker/monitor unless Andrew explicitly
   asks. Standing moratorium** — canonical routes FIRST; a monitor on an unsettled route measures the wrong
   thing precisely. Findings land as gates or owned blocking items. `docs/architecture/MDPF_DEBTCLEAN_PRD.md` §11–12.
@@ -446,7 +463,22 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
     do NOT pre-`git add`; `-F` not `-m`** — and the message file must be written by a NON-SHELL writer
     (Write tool / python): a `printf`/heredoc-built file re-opens the injection one step earlier. `--force`
     bypasses only contamination checks, never a lane refusal — that escape is `GIT_COMMIT_AUTHOR_OVERRIDE=
-    <LANE>`, audited, SINGULAR (N lanes = N commits). `docs/architecture/ADHC_OWNPTH.md`.
+    <LANE>`, audited, SINGULAR (N lanes = N commits). ⛔ **OF THOSE THREE PROPERTIES ONLY *AUDITED* IS
+    MECHANICAL, AND THIS LINE READ AS THOUGH ALL THREE WERE UNTIL 2026-09-20 — THE SAME LAW-STRONGER-THAN-TOOL
+    SHAPE RULE 27 CARRIES.** `.tools/git-hooks/owned-paths-check.sh:118-122` is the entire consumer: `-n
+    "$OVERRIDE"` is the whole test and `exit 0` is the whole consequence, so the value is interpolated into the
+    AUDIT LINE and read nowhere else — no lane lookup, no path resolution, no comparison against the agent, and
+    the exit covers the **ENTIRE STAGED SET**. So `=<LANE>` is not validated (any non-empty string passes, a
+    typo included) and **SINGULAR IS A HUMAN DISCIPLINE, NOT A MECHANISM**: a commit spanning four lanes passes
+    exactly as one spanning a single lane. ⭐ **AUDITED is real and is the half that works — the row is always
+    written, which is why the log is the instrument for asking who used it.** Measured 2026-09-20 by
+    `2.0.0_SA_COO~O` at the RUNNING bytes (`core.hooksPath` → `.git/hooks`, whose `pre-commit:73-74` invokes the
+    `.tools/` copy by reference rather than carrying its own) with a 2-file consumer census, and corroborated on
+    a DIFFERENT instrument by `1.0.0_SA_CTO`: `org/git-author-override-audit.log` carries OVERRIDE rows at **2,
+    3, … up to 273 files**, more of them multi-file than single. ⚠ **That corroboration proves MULTI-FILE, not
+    MULTI-LANE** — it settles that the exit is not per-file, and no measurement here shows anyone has yet
+    crossed lanes under one override. **COST: none — a do-not-believe.** **NON-APPLICATION: the AUDITED half,
+    which behaves as written.** `docs/architecture/ADHC_OWNPTH.md`.
 14b. **While other seats are LIVE, commit anything bigger than a one-file edit in YOUR OWN linked
     worktree and merge it back in a gap** — five seats plus their worker subagents share ONE MUTABLE
     INDEX, so the check-then-act window is now shorter than the staging cadence: `2.0.0_SA_COO` measured
@@ -490,7 +522,8 @@ unenforced provenance field drifts to unpopulated. `docs/doctrine/A_VALUE_MUST_C
 **Excluded: all egress off Opal infrastructure.** Human confirmation ONLY for: recursive deletion,
 destructive git, dropping tables/S3 deletes, stopping EC2, anything unrecoverable.
 - **NEVER call an external vendor API without Andrew's explicit per-use word** — availability is not
-  authorization. `memory/feedback_availability_is_not_authorization_vendor_egress.md`.
+  authorization. Record: BOX MEMORY (per-device, NOT in the repo -- a fresh worktree will not have it)
+  `feedback_availability_is_not_authorization_vendor_egress`.
 
 **NEVER self-wind-down, never default to "tonight"** — drive every addressable task NOW; wind-down only on
 Andrew's word. **"Waiting for the scheduled run" is the same coast-failure** — fire the ad-hoc QA run (it

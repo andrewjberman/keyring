@@ -48,3 +48,50 @@ not tidied.
 - `org/XXX.md` Step 1b-F: one new DIRECTED row for `1.0.0_SA_CTO` naming this record, the scope, the cadence and the
   stop-condition; the 09-15 row is left PAUSED as written.
 - Same-turn MCP broadcast to the live seats: `0.0.0_AB_MSTR`, `2.0.0_SA_COO~G`, `3.0.0_SA_CVO`, `4.0.0_SA_CRO`.
+
+---
+
+## ARM TERMS -- migrated here from `org/XXX.md` on 2026-09-18 ~21:2xZ, and the XXX.md row is STRUCK
+
+⛔ **THE CARRIER MOVED, ON ANDREW'S WORD.** Andrew-direct 2026-09-17 at the `1.0.0_SA_CTO~Z` terminal, VERBATIM:
+*"xxx.md is not a journal"*, *"you dont write temporal info there"*, *"that whole block you added is temporal info
+... when I explicitly say it is not an incident reporting doc"* and *"update the self-drive skill to stop writing to
+XXX.md"*. The `/self-drive` skill's §5 now names **this record** as the durable carrier and adds a standing guard:
+*"Never write to `org/XXX.md` -- no arming, stopping, status or dated history, even though earlier versions of this
+skill did."*
+
+⚠ **SO THIS RECORD'S OWN s.48-49 IS SUPERSEDED.** It instructed *"one new DIRECTED row for `1.0.0_SA_CTO`"* in
+`org/XXX.md`; that row existed at `XXX.md:491-520` and is **struck in the same commit that adds this section.**
+⭐ **The content moves in ONE act, so there is no window in which it lives nowhere** -- which is the whole reason the
+strike and this append are one commit rather than two.
+
+| term | value |
+|---|---|
+| **scope** | `LGIC_NAMING`, `LGIC_ENFORCE`, `LGIC_CANON`, `LGIC_LGCTFM` (D14) |
+| **cadence** | 30 minutes |
+| **paired_with** | `2.0.0_SA_COO~G` `/goal-set` loop on the LGIC goal in the 2026-09-15 record -- **his word is a goal loop at the COO, not `/drive`** |
+| **adjudication** | ⛔ **THIS SEAT ADJUDICATES every adjudicable call in scope; there is NO CVO pitch** (his *"adjudicate any open calls that arise"*) |
+| **RESERVED** | vendor egress off Opal infrastructure; unrecoverable acts; money; the holds he set by name. Every self-adjudicated call is RECORDED with rec, ruling and reason |
+| **STOP-CONDITION** | all four read `status: complete` per §4, validated and CLOSED; or `HELD-AT-STOP`; or his stand-down |
+
+**ROUTING AMENDED 2026-09-17 ~13:0xZ**, Andrew-direct at the CTO terminal, own record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_130xZ_SELF_DRIVE_CALL_ROUTING_REC_CRO_DESIGN_CVO_GOVERNANCE_SPAWN.md`,
+VERBATIM: *"if there is an open-call (of any kind) you use your recommendation. If the call specifically is a design
+fork, then you reach out to CRO agent to do research on past patterns and provide more information and then make the
+call with that info. If it is a governance fork, then reach out to CVO agent to adjudicate. If you need a new agent,
+you spawn them."* -- any call: this seat's rec, same tick; DESIGN fork: `4.0.0_SA_CRO` researches, this seat decides
+the tick it lands; GOVERNANCE fork: `3.0.0_SA_CVO` adjudicates; a needed seat not live is SPAWNED by this seat.
+
+**RELATIONSHIP TO THE 2026-09-15 ~19:4xZ ARMING:** this is his LATER and NARROWER word. `MDPF_TAXSMA` and
+`NFRA_OPLGTW` are **NOT** re-armed under this loop by it -- their scope is surfaced, never adjudicated here, because
+their COO lanes hold them. **The 09-15 arming stays PAUSED as written and its resume for those two is Andrew's.**
+
+**A SUCCESSOR RE-ARMS off THIS record** while the scope is not DONE (skill §0.4), and asks `2.0.0_SA_COO~G` to
+re-arm its `/goal-set` loop. ⚠ **It does NOT re-arm off `org/XXX.md`, which no longer carries this loop.**
+
+⚠ **NOT STRUCK, AND NAMED SO THE GAP IS NOT MISTAKEN FOR A SWEEP:** `org/XXX.md` still carries `/self-drive` arming
+rows for OTHER scopes and other lanes -- this seat's older `D9 IRPT` (`:371`), the all-laptop-directives row
+(`:444`), the 2026-09-15 `MDPF_TAXSMA,NFRA_OPLGTW,...` row (`:462`), and site Z's `~Z` / `~W` rows (`:373`, `:374`).
+**Only the row for the scope this seat is currently driving is struck here.** The others are the same class and the
+same guard reaches them, but they belong to arming words this tick is not executing -- and a lane's row is not mine
+to strike from another lane's fabric. **Named as owed, not swept silently.**

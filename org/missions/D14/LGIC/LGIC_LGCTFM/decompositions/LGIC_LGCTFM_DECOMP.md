@@ -610,3 +610,624 @@ works; none measures the round's work.
   project is `1.0.0_SA_CTO`'s. Cutting it here would pre-empt both. What round 3 DOES take from the same
   word is its first sentence -- *"work in all the comp-tools to this process"* -- as `LT-e-5`'s COMP-TOOL
   LEDGER: every listed comp-tool, USED or NOT USED with a reason, denominator printed.
+
+
+---
+
+## 14. ROUND 3 AS IT ACTUALLY CLOSED (2026-09-18 ~23:1xZ, `2.0.0_SA_COO~G`)
+
+```
+  LT-e-5  DRAINED @2b10693186   discovery by design; four arms PASS on the merged tree
+  LT-r-2  DRAINED @20464bafee   no bare "(none)"; three arms PASS at its own tip
+  LT-p-2  DRAINED @7e0c52281b   step_dependencies; three arms PASS at its own tip
+  LT-x-4  SUPERSEDED, NEVER SPAWNED -> re-cut in round 4 (row S30, ratified by R-82)
+```
+
+**WHY `LT-x-4` DID NOT RUN.** `S26` recorded that R-81 landed 25 minutes after the issuance; `S30` ran its
+drain test and read NON-CONFORMANT on both halves -- the `iam_grant` leg reads `comp-iam role` (Terraform
+plane, outside R-81's `live / reconcile / simulate ONLY`) and `lambda-source-map.json` carries neither the
+comp-lambdamap guard nor a dated declaration. `1.0.0_SA_CTO` ratified the consequence rather than merely
+permitting it (R-82): a real run on an unmeasured engine produces a green that means the engine RAN, not
+that it was RIGHT. The cell is not at fault -- it could not have been built against a ruling that did not
+exist when it was dispatched.
+
+### 14.1 `LGIC_LGCTFM-W1-S31`, THE DISARM OWNER'S WORD -- AND THE LIVE-DIRECTION STATEMENT ITSELF
+
+`W1-S31` is this lane's, and the row's own analysis is adopted: round 1's `check_lt_r1.py` names
+`dependencies` in `PACKAGE_FIELDS`; its `p1-fields` arm reads the FROZEN `plan_r1/plan.json` and so reads
+PASS (1626 packages, 0 missing), while the same core over a FRESHLY BUILT plan reports 1074 of 1074 missing.
+That is an EXPOSURE, not an INCIDENT: nothing was admitted, and round 1's graded evidence stands.
+
+[HARD] **THE STATEMENT, WHICH IS THE REMEDY R-43 ALLOWS AND THE ONLY ONE THIS ROUND TAKES: EVERY ARM OF A
+CLOSED ROUND'S CHECKER IS FROZEN AGAINST THAT ROUND'S OWN ARTIFACTS, AND A RUN OF IT AGAINST A LATER
+ARTIFACT IS NOT A REGRESSION AND NOT EVIDENCE ABOUT ANYTHING.** `check_lt_r1.py` is a FIXED INPUT of a
+CLOSED, GRADED round; R-43 scopes a frozen-history defect's remedy to ONE LIVE-DIRECTION DOCUMENT and never
+to a sweep over rounds already closed -- this section is that document, and the r1 checker is NOT edited.
+The same reading retires the hazard for every later rename: a field the engine no longer writes will always
+"break" a closed round's checker against a fresh artifact, by construction. **WHAT WOULD REOPEN IT:** a
+round that RE-USES `check_lt_r1.py` as a live instrument rather than as a record. That round owns the edit.
+COST: none -- a reading rule. NON-APPLICATION: a checker still cited as live by an OPEN order.
+
+`W1-S30` (the order named three write sites and `render_plan_md()` was never one) is INERT and needs no act:
+the cell renamed the two that existed and refused to invent the third, which is the same restraint
+`WHAT YOU BUILD 4` asks for. Whether `plan.md` should print a step relation at all belongs to FWD-6's
+`resource_dependencies`, not here.
+
+### 14.2 WHAT ROUND 4 OPENS WITH, IN ORDER
+
+```
+  1  the canonical graph-call-manifest.yaml entry for the AWS-inventory question   R-81, cell one
+  2  re-point the iam_grant leg to comp-iam live (or reconcile/simulate)           S30 half one
+  3  guard (comp-lambdamap) or DECLARE (date, owner, un-defer) the source map      S30 half two
+  4  LT-x-4 re-cut: the real 49F run on the repaired engine                        FWD-1's ACCEPT arm
+```
+
+Item 4 is cut only after 2 and 3 drain, for the reason R-82 ratified. Items 2 and 3 are small and share one
+file, so they queue on one slot; item 1 touches only the manifest and runs beside them.
+
+[HARD] **AND ROUND 4's ISSUANCE CARRIES ONE SENTENCE THAT IS OWED, NOT OPTIONAL** -- `3.0.0_SA_CVO`'s round-3
+L9 (@`71d0c885fd`) measured it and set the remedy: **`LT-e-5`'s PINNED PROOF RECORDS `E5R3-AC4` AS FAIL WHILE
+THE ARM READS PASS AT HEAD.** The instance was pinned at `b736ee4fdf` and the issuer's repair landed at
+`fd02b24c51`, 42 minutes later; **A PINNED PROOF IS NOT RE-GRADED WHEN A FIXED INPUT MOVES UNDER IT**, and
+rewriting one would be the worse defect. So no artifact changes and no proof is rewritten -- round 4's
+issuance STATES that `E5R3-AC4` reads PASS at HEAD, that the pinned instance records FAIL at its own vintage,
+and that both are true of their own moments. It is written here rather than remembered, because a lesson
+written in a report is not a control and this one has exactly one place it can fire: the next cut.
+
+
+---
+
+## 15. v1.5 -- THE ROUND-4 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round analysis @`ba1dcf65e9`
+
+**Input.** `LGIC_LGCTFM_ROUND3_ANALYSIS.md` @`ba1dcf65e9` (msg 98094): coverage complete on both rounds, **NO
+PRD addendum owed**, neither round enters `/open-calls`. The four items s.14.2 already named are cut here in
+that order, and nothing else is.
+
+[HARD] **THE SENTENCE THIS ROUND OWES, DISCHARGED HERE AND IN THE ISSUANCE COMMIT.** `LT-e-5`'s PINNED PROOF
+records `E5R3-AC4` as **FAIL** at its own vintage (`b736ee4fdf`, 2026-09-18T16:27:12-04:00) while the arm
+reads **PASS** at HEAD, because the issuer's repair (`fd02b24c51`, 17:09:25-04:00) landed **42 minutes after
+the pin**. **BOTH ARE TRUE OF THEIR OWN MOMENTS.** No proof is rewritten and no artifact changes: a pinned
+proof is a record of a vintage, and rewriting one would be the worse defect (`3.0.0_SA_CVO` @`71d0c885fd`,
+adopted by the analysis).
+
+### 15.1 THE CELLS -- 3
+
+| cell | id | what it does | serves | source |
+|---|---|---|---|---|
+| 22 | `LT-m-1` | **THE MISSING CANONICAL ENTRY.** `comp-which` asked "what AWS resources exist" returns a SIX-WAY TIE with no winner; by NFRA_GRAPHS AC1 that is a missing canonical entry, not a ranking problem. One `cloud.inventory.*` entry naming R-81's assigned instrument, in the manifest's own 11-key shape, with every pre-existing entry byte-identical | the estate's own routing; R-81 cell one | R-81 |
+| 23 | `LT-e-6` | **THE TWO R-81 REPAIRS.** Re-point the `iam_grant` leg off `comp-iam role` (Terraform plane) onto `comp-iam live / reconcile / simulate`; and either GUARD `lambda-source-map.json` with comp-lambdamap or DECLARE it with date, owner and un-defer condition. A re-point MAY ADD involved nodes and MUST NOT silently remove any | FWD-1 | `S30` |
+| 24 | `LT-x-5` | **THE REAL RUN, RE-CUT.** One 49F run on the repaired engine; every floor node rowed or excluded with a reason; every NAMED class a ROW; no registry mark | FWD-1's ACCEPT arm | R-82 |
+
+```
+  slot ~1   LT-e-6  ->  LT-x-5      the engine, then the run on it
+  slot ~2   LT-m-1                   the manifest only, disjoint
+```
+
+`fanout: 2 slots over 3 cells, cap 8, reason: LT-x-5 RUNS the engine LT-e-6 repairs, so they queue on one
+slot; the manifest entry touches no engine file and runs beside them; levels L0 = {LT-e-6, LT-m-1},
+L1 = {LT-x-5}.` **`LT-x-5` IS SPAWNED ONLY AFTER `LT-e-6` DRAINS AND ITS TWO CONFORMANCE ARMS READ PASS** --
+R-82: a run on an unmeasured engine yields a green meaning the engine RAN, not that it was RIGHT.
+
+### 15.2 THE FIXED INPUT, AND THE FOUR RULES IT IS BUILT ON
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r4/` -- `R4_BASE.json` (the ONE carrier) and `check_lt_r4.py`,
+10 real arms and a 21-arm self-test with 8 positive-satisfiability arms, ruff clean.
+
+1. **THE COVERAGE CORES ARE IMPORTED FROM ROUND 3, NEVER RE-IMPLEMENTED** -- `check_lt_r3.py` is imported by
+   path and `core_cov_shape/floor/named` and `floor_now` are CALLED. A second copy of a grading rule is a
+   second thing to drift, and the self-test asserts the import itself.
+2. **A RE-POINT MAY ADD AND MUST NOT SILENTLY REMOVE.** `e6-no-loss` compares per-node_type `involved`
+   against round 3's measured figures (LAMBDA 67, IAM_ROLE 46, S3Key 154, ...) and admits a DROP only when
+   the record NAMES the node and the leg that used to reach it.
+3. **THE ROUTING LESSON IS BUILT IN** (`S23`/`S29`): the walk output is named `e6.lgctfm-contract.json`, so
+   the estate's path-router routes it. The defect that broke round 3's `e5-schema` cannot recur.
+4. **THE STALE-PROOF BAR** (`S32`) watches BOTH `r4`'s and `r3`'s fixed inputs -- this checker RUNS r3's
+   cores, so an r3 edit moves a round-4 arm's meaning exactly as an r4 edit would.
+
+**WIRING AT THE CUT: 8 of 10 arms FAIL** for their measured reasons (no `cloud.inventory.*` entry; 128
+entries where 129 is the bar; the method note still names `comp-iam role`; no hand-surface treatment; no
+walk output; no post-cut run). **TWO ARE GUARD-SHAPED AND READ PASS, DISCLOSED:** `x4-no-registry-move` and
+`r4-stale-proofs`.
+
+
+
+## 16. v1.6 -- THE ROUND-5 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round analysis @`abea09f936`
+
+**Input.** `LGIC_LGCTFM_ROUND4_ANALYSIS.md` @`abea09f936` (msg 98152). Round 4 STANDS; no PRD addendum owed;
+endpoint outcomes unchanged. The recut is ONE cell and the analysis names its shape: **a MEASUREMENT cell,
+not a repair cell.**
+
+### 16.1 THE CELL -- 1
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the bucketless keys | `LT-m-2` | measures WHICH producer writes an S3Key with no bucket and HOW MANY producers there are -- and repairs nothing | FWD-1 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+⛔ **WHY MEASUREMENT AND NOT REPAIR, in the analysis's own words:** *the shapes are plausibly TWO causes, and
+a cell that assumes one remedy will make the NUMBERS agree rather than the DATA.* A remedy is the next
+round's question.
+
+### 16.2 THE POPULATION AT THE CUT, AND WHERE THIS SEAT'S MEASUREMENT DISAGREES WITH THE ANALYSIS
+
+Measured from the round-4 run's own contract at `a25a11ab75`, NOT inherited: 404 contract rows, **154
+S3Key**, all with a string path; leading segment after `s3:` is `opal-data-bd` 130, `platinum` 12, `gold`
+10, `silver` 1, `blackdiamond` 1 -- so **24 of 154 resolve to no bucket.**
+
+⚠ **The analysis calls the 24th row a malformed single-colon `s3:`. In the run this seat read there is NO
+bare `s3:` row:** the 24th is `s3:blackdiamond/49f/_ops/pull_state.json`, FIRM-prefixed. The total and the
+tier split (12/10/1) agree exactly; only that row's characterisation differs -- **a different shape with a
+plausibly different producer.** The disagreement is written into the order so the cell HUNTS rather than
+CONFIRMS, and so that a bare `s3:` row in a run this seat did not read is still findable.
+
+### 16.3 THE BAR THIS ROUND'S CRITERIA WERE BUILT AGAINST
+
+⭐ The CTO's bar from round 4, binding at CUT time: **can a CORRECT artifact satisfy this? Where the honest
+answer is no, THE CRITERION IS THE DEFECT, NOT THE CELL.** Round 4 shipped FOUR criteria no correct record
+could satisfy, and in each the cheapest satisfying move was to damage something -- up to reverting another
+project's commit.
+
+So every round-5 criterion was checked against a **hand-built CORRECT record** before the cut, and that
+record is driven in the checker's own self-test as a POSITIVE-SATISFIABILITY arm (`_correct()`): the bar is
+EXERCISED, not promised. Two consequences visible in the arms:
+
+1. **An UNATTRIBUTED row is admissible when NAMED with its reason.** A cell that genuinely cannot reach a
+   producer must be able to say so without fabricating one; what the arm refuses is SILENCE -- a row in
+   neither list. A criterion demanding attribution of every row would be precisely the unsatisfiable shape.
+2. **`s41-no-repair` grades the CELL'S OWN COMMITS BY AUTHOR**, carried forward from `W1-S39` rather than
+   re-learned: another seat's registry commit is excused and PRINTED, never charged to this cell.
+
+### 16.4 THE VINTAGE FIELD LANDS HERE
+
+`1.0.0_SA_CTO` ADDENDUM 3 @`b1693a5b79` ruled the per-proof fixed-input vintage FIELD into **round 5's
+carrier**, and this is that carrier. `record.fixed_inputs_at_pin` maps each fixed input the cell invoked to
+the COMMIT it invoked it at, and `r5-vintage-field` requires both fixed inputs to be named AND each commit
+to RESOLVE against its path. ⭐ This is what retires the sweep: **an arm that walks a log from a pin can
+always be aimed at the wrong window; a proof that carries the commit of the input it invoked cannot be.**
+
+
+### 16.6 THE ROUND-5 CLOSE -- drained @`c70d22c3a8`, five of five PASS, and the analysis's own characterisation FALSIFIED
+
+`LT-m-2` is terminal and verified at its branch tip `ba22177c0a` AND again at the merged tree: `s41-population`,
+`s41-producers`, `s41-no-repair`, `r5-vintage-field`, `r5-stale-proofs` all PASS, `selftest-arms` reads
+`PASS-ARMS-DISCRIMINATE`, proof VALID (rc=0), nothing written outside the grant. **No rows filed, and the
+cell says why: no criterion an honest correct record could not satisfy, and no row needed the `unattributed`
+escape.** The bar held from the other side.
+
+**THE MEASUREMENT, and it is the round's whole product:** 24 of 154 S3Key rows resolve to no bucket
+(denominator 404 contract rows), **matching the issuer's cut-time count exactly** -- 23 tier-prefixed (gold
+10, platinum 12, silver 1) and 1 firm-prefixed.
+
+⭐ **THE ANALYSIS'S 24th-ROW CHARACTERISATION IS FALSIFIED WITH A DENOMINATOR.** The cell hunted the bare
+`s3:` shape across **all 6 runs under the only workflow home -- 0 found in any run, 6 of 6 swept.** The
+issuer's cut-time disagreement is therefore not a one-run artifact: no measured run has ever carried that
+shape. The order told the cell to HUNT rather than CONFIRM, and hunting is what produced the negative with
+its denominator instead of a shrug.
+
+**TWO PRODUCERS, BOTH INSTRUMENT-ATTRIBUTED, ZERO UNATTRIBUTED:**
+
+1. `lib/opal_lgctfm.py:374-380` (`parse_aws_walk()`) plus `:956-964` (`resolve()`'s ambiguous-candidate
+   fallback) -- **23 tier-prefixed rows.** Attributed by RUNNING `comp-find --corpus aws` on all 23 bare
+   keys (each returns three same-name S3Key candidates) and `comp-kuzu` MATCH on all 23, confirming
+   `props.source='portal-stitch'`, `origin_reason='ambiguous-across-firms'`, `arn=''`.
+2. `lib/opal_lgctfm.py:929-930` (kuzu-native ingestion inside `discover_involved()`) -- **the 1
+   firm-prefixed row**, `R-0060`, `origin_reason='no-canonical-s3-key'`.
+
+⭐ **THE ANSWER TO THE ANALYSIS'S REAL QUESTION IS NEITHER "ONE" NOR "TWO":** the two shapes come from
+**different code sites** -- two producers by the cell's own definition -- but **both trace to the SAME
+upstream root**: the served graph's portal-stitch S3Key ingestion leaves `arn` empty whenever it cannot
+resolve a single firm-writer bucket, and the shape difference is a DOWNSTREAM BRANCH (ambiguous name-count
+vs unique) rather than two independent external causes. **That is exactly the distinction the analysis cut
+a measurement cell to protect** -- a repair cell would have written two fixes for one root, or one fix for
+what looked like two.
+
+
+## 17. v1.7 -- THE ROUND-6 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-5 analysis @`cf0cf68868`
+
+**Input.** `LGIC_LGCTFM_ROUND5_ANALYSIS` @`cf0cf68868` (msg 98202). Round 5 STANDS; no PRD addendum owed;
+scope 0 open of 155. ONE cell.
+
+### 17.1 THE CELL -- 1, AND THE TRAP THE ANALYSIS NAMED WITH IT
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| one repair or two | `LT-e-7` | ESTABLISHES whether a single repair at the portal-stitch ingestion removes BOTH classes of bucketless row -- and lands nothing | FWD-1 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+⛔ **The recut's own sentence:** *the record says 'plausibly', which is a hypothesis the round EARNED, not a
+finding; **a cell that assumes it will report agreement rather than measure it.*** Round 5 established the
+population, the two sites and the instruments. It did NOT establish that one repair reaches both.
+
+### 17.2 WHY THE ANSWER MATTERS, WHICH IS WHY THE ROUND IS WORTH ITS COST
+
+If the hypothesis holds, the remedy is one change at one site. ⭐ **If it does not, a single-change remedy
+ships a fix that LOOKS COMPLETE AND LEAVES A CLASS BEHIND -- and the leftover class is the one nobody
+re-measures, because the count moved.** That is the failure this round exists to make impossible, and it is
+cheaper to measure now than to discover from a register that already reads clean.
+
+### 17.3 THE BAR, WITH THE SHAPE IT TAKES HERE
+
+The CTO's cut-time bar is *can a CORRECT artifact satisfy this?* -- and in a round whose job is to test a
+hypothesis the bar has a specific form: **EVERY VERDICT VALUE MUST BE REACHABLE.** `ONE_REPAIR`,
+`TWO_REPAIRS` and `UNDETERMINED` each pass the verdict arm on their own evidence, proven by ONE POSITIVE
+ARM EACH in the checker's self-test. ⛔ **A criterion that only passed on `ONE_REPAIR` would be an
+instruction to confirm the hypothesis**, which is precisely what the analysis forbids -- and it is the
+cheapest way for a round like this to produce a comfortable answer instead of a true one.
+
+Two refusals make the arm bite rather than merely permit: `ONE_REPAIR` is REFUSED on the counts while either
+class still carries rows after the change, and any verdict whose evidence names only ONE class is refused,
+because the question is about BOTH sites.
+
+### 17.4 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** land a repair. The engine has no writer; `e7-no-landed-repair` grades the CELL'S OWN
+  commits by author (`W1-S39`'s shape), so another seat's commit there cannot fail this cell.
+- It does **not** presume the shared root is real. Round 5's sentence is an INHERITED UNIVERSAL under Rule
+  24's new clause @`cf0cf68868`, and this round is cut to EXERCISE it rather than restate it.
+- It does **not** touch the 130 S3Key rows that resolve to a bucket.
+
+### 16.5 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** repair a single bucketless row, and it does not name a remedy.
+- It does **not** decide whether the tier-prefixed and firm-prefixed shapes share a producer -- that is the
+  measurement's OUTPUT, and pre-deciding it is the failure the analysis names.
+- It does **not** touch the engine, the registries or `LEGACY_SERVED_PATHS.json`.
+- It does **not** re-open round 4, whose three cells stand as graded.
+
+### 15.4 THE ROUND-4 CLOSE -- three cells drained, and FOUR of this seat's own arms were repaired mid-round
+
+| cell | drain | arms at the MERGED tree | proof |
+|---|---|---|---|
+| `LT-m-1` | `b238df04d5` | `m1-entry`, `m1-untouched`, `r4-stale-proofs` PASS | VALID (rc=0) |
+| `LT-e-6` | `9ac7b0b2c3` | `e6-sources`, `e6-handsurface`, `e6-coverage`, `e6-no-loss`, `r4-stale-proofs` PASS | VALID (rc=0) |
+| `LT-x-5` | `5755205bed` | `x4-run`, `x4-floor`, `x4-no-registry-move`, `r4-stale-proofs` PASS | VALID (rc=0) |
+
+**What the round was for, and it landed.** The engine is R-81-conformant on both halves `S30` measured
+NON-CONFORMANT: the `iam_grant` leg reads the LIVE plane through `comp-iam reconcile` (its own report:
+`live roles (census) 256 | TF-parsed 210 | matched 206`), and the hand surface is GUARDED by `comp-lambdamap`
+with 12 findings in 2 drift classes. ⭐ **The second-order tell is sharper than the count:**
+`granting_roles_not_in_the_live_graph` is now EMPTY where round 3 had to carry `opal-49f-value-parity` as a
+declared-but-not-live granting role -- **a result a live-plane read cannot produce by construction.**
+Involved **381 -> 402**, seven node types grew, twelve held, **ZERO dropped**. The manifest carries exactly one
+`cloud.inventory.*` entry, 128 -> 129, with the pre-existing digest `697f4e9d80df` unchanged. The real run
+`20260919T034609Z-c28c728` accounts **90 of 90** floor nodes (81 rowed + 9 excluded + 0 unaccounted).
+
+⛔ **FOUR OF MY OWN ARMS GRADED THE WRONG OBJECT, AND EVERY ONE WAS FOUND BY THE WORKER IT WAS GRADING.**
+Not one was worked around; each arrived as a BLOCKING row with its discriminator already measured.
+
+| row | the arm | what it graded | what it should have graded | repair |
+|---|---|---|---|---|
+| `S35`/`W1-S88` | `r4-stale-proofs` | a window that counted its own mint | the proofs that could BE stale | `1df2481ca0` |
+| `W2-S35` | `m1-entry` | a status vocabulary the file has never admitted (intersection **0** of 127) | the manifest's own enum | `1d4df2c115` |
+| `W1-S35` | `e6-sources` | every mention of a refused tool, including Andrew's LEDGER naming it as refused | the DESIGN half only | `21a163f492` |
+| `W1-S39` | `x4-no-registry-move` | the whole TREE, so another project's commit failed my cell | the commits THIS CELL authored | `d08be0b693` |
+
+⭐ **THE COMMON SHAPE, STATED ONCE: AN ARM THAT GRADES TEXT, A NUMBER OR A TREE INSTEAD OF THE CLAIM.** In every
+case a CORRECT record could not pass, so the cheapest satisfying move was to damage something -- fabricate a
+proof path, write a status the file forbids, delete a truthful record, or **revert another project's work.**
+`W1-S39` is the worst of the four for exactly that reason: its cheapest green costs a seat that is not even in
+this round.
+
+**Two more of mine, repaired without a row because the CTO's analysis named them first** (@`84b02d1573`):
+`proofs_at_risk()` returned an EMPTY SET on a failed `git ls-tree` -- and empty is the value that PASSES at a
+mint, so an instrument failure was indistinguishable from a clean one -- and the commit list was a per-path
+concatenation whose `[-1]` was the oldest of the LAST path only. Both at `eda1e967d0`, the first with a LIVE
+positive control that hands the real function a bogus commit-ish and requires it to raise.
+
+**No pinned proof was rewritten.** `LT-m-1`'s instance still records `AC1` FAIL and `LT-x-5`'s still records
+`AC3` FAIL, each at its own vintage -- the UNDERSTATE direction of the `S32` bar -- and the issuer's re-runs at
+the merged trees are recorded in `S36`, `S37`, `S38` and `S39` rather than by editing a worker's artifact.
+
+### 15.3 WHAT THIS ROUND DOES NOT CLAIM
+
+- It does **not** close FWD-1. `1.0.0_SA_CTO` re-grades the outcome at L10 against its ACCEPT.
+- It does **not** build the consumer walk: that is `4.0.0_SA_CRO`'s brief and `1.0.0_SA_CTO`'s carrier.
+- It does **not** carry `W1-S24`, `W1-S25` or `S21`: the analysis ROUTED all three out of this project.
+  `W1-S25` has a SCHEDULED ARMING -- the day the commit gate's advisory flips -- and is the one that cannot
+  be left to be rediscovered; it is named here so the routing is visible from this project's own record.
+- It does **not** move FWD-4, which stays APPLIED on Andrew's own read.
+---
+
+## 18. v1.8 -- THE ROUND-7 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-6 analysis @`ed073a4d48`
+
+**Input.** `1.0.0_SA_CTO`'s round-6 analysis @`ed073a4d48` (msg 98235). **Round 6 STANDS**; `E7R6-AC7`
+PASS accepted; no PRD addendum owed; endpoint outcomes unchanged; scope 0 open of 26 at the cut.
+**The analysis ADOPTED this seat's ranking and MADE the one decision this seat handed up.**
+
+### 18.1 THE CELLS -- 3, AND THE NON-PAIRING NOW BINDS THE CRITERION
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the node-type population | `LT-n-3` | measures which `node_type`s the engine ACTUALLY emits against the schema enum, BY SUBTRACTION both ways -- and decides the fork for nobody | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+| the gate scope | `LT-g-1` | measures WHICH paths `.tools/naming-gate.py` refuses, by which predicate at `file:line`, on what BASIS, with a path it ADMITS | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+| the remediation route | `LT-r-3` | gives every unmoved remediation row a NEXT ACT or an explicit retirement -- and remedies none of them | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+**Levels.** All three at L0. `fanout: 3 slots over 3 cells, cap 8`. No dependency edge: three disjoint
+deliverable directories, three disjoint read surfaces, and **no arm reads a second cell's record.**
+
+⛔ **THE INSTRUCTION THAT SHAPES EVERY CRITERION HERE**, `1.0.0_SA_CTO` verbatim: *"AND 'DO NOT PAIR'
+BINDS THE CRITERION, NOT ONLY THE CELL. `S106` is that instruction defeated one level down: two
+correctly separated cells re-coupled by a shared grading arm that ANDs both."* So the two round-wide
+arms (`r7-vintage-field`, `r7-stale-proofs`) grade **the records PRESENT IN THE CHECKOUT** -- a worker's
+worktree carries exactly its own, the merged tree carries all three -- and an EMPTY population is
+REFUSED rather than vacuously passed. **That is `S106`'s repair carried into the cut instead of
+re-learned after it**, and four of the checker's arms drive that WRAPPER, which is the thing the
+previous round's 28 arms could not see.
+
+### 18.2 `LT-n-3` -- THE MEASUREMENT THAT DECIDES NOTHING
+
+`W2-S2` has been ARMED and BLOCKING since round 2 and rounds 4, 5 and 6 did not move it (`S44`). The
+analysis: *"Cut it as a MEASUREMENT of which node types the engine ACTUALLY emits against the enum's
+33, read BY SUBTRACTION from the emitted set, not by checking the ones anybody remembers ... The fork
+(widen the enum vs refuse at the producer) is decided ON that measurement, not before it."*
+
+BOTH sets are denominators and BOTH differences are recorded: `emitted_minus_declared` (the violation
+class) and `declared_minus_emitted` (**a finding, not a defect claim**). **The arm RE-DERIVES both from
+the record's own lists** and refuses a stated difference the lists do not support -- the one thing a
+reader cannot check without re-deriving it. ⭐ **A ZERO answer PASSES**, with its own positive arm: the
+enum may have moved since round 2, and a bar that only passed on a violation would be an instruction to
+find one.
+
+### 18.3 `LT-g-1` -- THE REFUSAL, PLUS THE CONTROL THAT MAKES IT MEAN SOMETHING
+
+`W2-S1` is ARMED and BLOCKING with **`1.0.0_SA_CTO` as its disarm owner**, so this cell measures and
+proposes no gate edit. Beyond the refused set it records the refusing predicate at `file:line`, a
+`gate_pin` (the gate is another seat's LIVE artifact and moves), and the **REFUSAL BASIS --
+`FILENAME` / `PATH` / `CONTENT`, exactly one -- which is the field that decides whether a RENAME lapses
+the guard silently.**
+
+⛔ **AND AN ADMITTING CONTROL IS MANDATORY: without a path the gate ADMITS, a scoped guard and a gate
+that refuses everything read IDENTICALLY.** The arm also refuses a control whose path appears in the
+refused list.
+
+⚠ **ONE RESIDUAL IS DISCLOSED AT THE CUT RATHER THAN DISCOVERED LATER:** the arm requires a NON-EMPTY
+refused set, so if the gate has since been widened and refuses nothing, **a correct artifact cannot
+satisfy `AC1`.** The order tells the worker to file that BLOCKING instead of manufacturing a refusal,
+and names it as the ISSUER's defect to fix. That is the `S106` lesson applied forward: **a red must
+name the act that clears it, and a red no act of the cell's can clear must say so.**
+
+### 18.4 `LT-r-3` -- THE ROUTE, AND THE INHERITED NUMBER MEASURED BEFORE IT SHIPPED
+
+The analysis made the call this seat handed up: **CENSUS-AND-ROUTE, not fix-them-all** -- *"nineteen
+unrelated remedies in one order"* is not a cell.
+
+⭐ **THE NINETEEN IS AN INHERITED COUNT AND THIS SEAT MEASURED IT AT THE CUT**, over `REMEDIATION_v1.md`,
+denominator **35 rows**: *not closed* = **23**; *not closed AND round <= v4* = 20; *not closed AND
+`disarm` empty* = **19**; *INERT and not closed* = **19**. **Nineteen is real under TWO predicates and
+twenty-three is the broader unclosed set** -- the number is not wrong, it is PREDICATE-DEPENDENT. So the
+arm refuses a record with no stated predicate, and the cell re-measures at its own write time.
+
+⚠ **AND ONE PREMISE OF THE FRAMING IS ALREADY SATISFIED: 35 of 35 rows carry a non-empty `owner`.** So
+"each row gets a named owner" is not the gap -- **THE GAP IS THE NEXT ACT**, and the order says so, so
+the round is not spent re-assigning owners that already exist.
+
+`unroutable` is explicitly admissible with a reason and has its own positive arm: **inventing a next act
+for a row nobody understands is worse than saying so.** The route is EVIDENCE -- the remediation rows
+stay `3.0.0_SA_CVO`'s to write (R-19).
+
+### 18.5 THE NEW BAR THIS ROUND CARRIES
+
+`1.0.0_SA_CTO` adopted `S43`'s carrier over this seat's weaker version: an order permitting an
+out-of-repo instrument names where it LANDS **and its FIXTURES cite the committed measurement each one
+encodes** -- *"an instrument whose fixtures cite nothing is UNGRADEABLE EVEN WHEN PRESERVED PERFECTLY."*
+Its sibling from the same analysis: **the record names every site where the instrument DIVERGES from the
+code it models, and what each divergence ASSUMES** -- round 6's script copied three sites verbatim and
+REWROTE a fourth, and the rewritten site is by construction the interesting one. All three orders carry
+both halves. **No cell here needs an out-of-repo instrument**; each measures the live artifact directly.
+
+### 18.6 FIXED INPUTS
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r7/` -- `R7_BASE.json` (**the ONE CARRIER, S85**; each order
+quotes ONLY its own cell's half) and `check_lt_r7.py`: 5 real arms, **34 self-test arms with 10
+POSITIVE-SATISFIABILITY and 4 driving the WIRING**, ruff clean.
+
+**WIRING AT THE CUT**, and each order states WHICH ACT CLEARS EACH RED: `n3-population`, `g1-scope`,
+`r3-route` and `r7-vintage-field` **FAIL** and are cleared by **that cell alone**; `r7-stale-proofs` is
+**GUARD-SHAPED and reads PASS** with an empty window.
+
+---
+
+## 19. v1.9 -- THE ROUND-8 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-7 analysis @`f818ebd12b` and `3.0.0_SA_CVO`'s S49 @`938ea238ed`
+
+**Input.** Round 7 STANDS; all three judgment criteria PASS; no PRD addendum owed; scope 0 open of 29.
+
+### 19.1 THE CELL -- 1, AND ITS ORDER IS THE FINDING
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| the routed-row liveness re-read | `LT-l-1` | re-reads EVERY routed row at HEAD and answers one question per row: is the condition it describes STILL TRUE? | FWD-2 | `LGIC_LGCTFM-W<n>-S<k>` |
+
+⛔ **WHY MEASUREMENT AND NOT REMEDY.** `S49`: *"A ROW IS DISARMED BY AN ACT BUT IS ONLY OBSERVED TO BE
+DISARMED BY A READ, AND NOBODY RE-READS A ROW THEY DID NOT FILE ... THE COST IS NOT THE STALE ROW, IT IS
+THE WORK DONE AROUND IT ... round 7's `LT-g-1` carried a criterion no correct artifact could satisfy AS A
+DIRECT CONSEQUENCE."*
+
+⭐ **THAT CRITERION WAS MINE.** Round 8's input is a set of ROUTED ROWS -- exactly the shape that produced
+it. **Cutting remedies against them without re-reading liveness first would repeat the defect in the round
+convened to learn from it.** So the remedies are round 9's, cut on this measurement rather than on the
+route's vintage.
+
+### 19.2 THE COUNT IS AN OWNERSHIP COUNT, MEASURED BEFORE THE CUT
+
+The analysis says *"the 18 rows routed to `2.0.0_SA_COO~G`"*. Measured over `REMEDIATION_ROUTE_R7.json`,
+**denominator 23**: **18** name this seat as owner, but **only 11 are ACTS** -- the other 7 carry
+`next_act = RETIRE`, whose act is a DISPOSITION and not work. **EIGHTEEN IS THE OWNERSHIP COUNT**, and a
+cell taking it as its population would carry a subset measurement as a population -- the third instance of
+that shape in this project. The block is a CONTROL ON THE FRAMING; the cell re-measures at its own write
+time.
+
+### 19.3 WHAT THE ARM GRADES, AND WHAT IT REFUSES TO
+
+⭐ **THE DIRECTION OF THE ANSWER IS NEVER GRADED.** All-STILL-LIVE passes; all-ALREADY-REMEDIED passes and
+is **the more valuable result**. A bar leaning either way would be an instruction, and the previous round
+already paid for one wrong lean.
+
+⛔ **EVERY VERDICT CARRIES WHAT WAS READ AT HEAD.** A row re-classified from the route record's own prose
+is not a re-read -- it is the route quoted back, which is the move that produced the cost. `ALREADY-REMEDIED`
+additionally requires `closed_by`, because *"it looks fine now"* is the read that let the last one go stale.
+
+⚠ **AND THE PIN-DETECTOR WAS ITSELF DEFECTIVE AT FIRST DRAFT.** It asked `any(ch.isdigit())` and was
+satisfied by the **"7" in `REMEDIATION_ROUTE_R7.json`** -- a detector that cannot tell a commit from a
+filename. **Caught by this round's own `MUTANT-source-record-unpinned` arm before the order shipped**, and
+repaired to require a hex run of at least 7.
+
+### 19.4 WHAT THIS ROUND DOES NOT DO
+
+It remedies nothing, disarms nothing (a disarm is the row owner's act, R-19), and **does not build S49's
+recommended control** -- that is assigned to `1.0.0_SA_CTO`, and S49 says in terms that a gate, a checker
+or a monitor is not asked for. Several routed acts name `check_lt_r1.py`, a PINNED input of a CLOSED round
+-- **the identical hazard `LGIC_ENFORCE` round 16 is handling additively.** The cell RECORDS that
+collision; it does not resolve it.
+
+### 19.5 FIXED INPUTS
+
+`deliverables/2.0.0_SA_COO~G/fixed_inputs/r8/` -- `R8_BASE.json` (**the ONE CARRIER, S85**) and
+`check_lt_r8.py`, ruff clean, whose `selftest-arms` prints `VERDICT: PASS-ARMS-DISCRIMINATE` and its own
+counts. ⛔ **The order does not quote those counts** (`W1-S37`, third consecutive round).
+
+**WIRING AT THE CUT**, each red naming the act that clears it: `l1-liveness` and `r8-vintage-field`
+**FAIL**, both cleared by this cell alone; `r8-stale-proofs` is **GUARD-SHAPED and reads PASS**.
+
+
+---
+
+## 20. v1.10 -- THE ROUND-9 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-8 analysis @`b24a81c4d3`
+
+**Input.** `1.0.0_SA_CTO`'s round-8 analysis @`b24a81c4d3` and `3.0.0_SA_CVO`'s L9 @`2bb57f01f8`.
+**Round 8 STANDS** -- `L1R8-AC4` PASS, five rows GRADUATED (`S50`-`S54`), no PRD addendum owed, scope 0
+open of 30 at the cut.
+
+⚠ **A CITATION CORRECTION AGAINST s.19's OWN HEADER.** That header calls the controlling row
+*"`3.0.0_SA_CVO`'s S49"*. **It is `1.0.0_SA_CTO`'s.** Measured: FOUR rows answer to `-S49` across the
+LGIC channels, and `LGIC_LGCTFM-S49` reads `surfaced_by: 1.0.0_SA_CTO` in both its investigation and
+remediation carriers; the CVO GRADUATED it at round 8's L9 and did not surface it. ⭐ **The cause is
+worth more than the correction: I read that row inside commit `938ea238ed`, which IS a CVO commit, and
+attributed the row to the seat whose commit I read it in. On a shared append-only channel the COMMIT
+AUTHOR IS NOT THE ROW'S `surfaced_by`.** s.19 is not rewritten -- it stands at its vintage.
+
+### 20.1 THE CELL -- ONE, AND THE POPULATION IS THE SEVEN
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| remedy-and-disposition | `LT-m-1` | executes the routed acts that are executable and dispositions ALL SEVEN `STILL-LIVE` rows with a class and a reason | the round-7 routing table's remaining live half | `S18` `W1-S21` `S26` `W1-S30` `S33` `W2-S36` `S41` |
+
+The analysis s.5 item 3 reads *"Nothing else."* One cell, one worker, no second lane.
+
+### 20.2 ⛔ THE SEVEN ROUTED ACTS ARE NOT SEVEN OF THE SAME THING, AND TWO CANNOT BE DONE AS WRITTEN
+
+Measured at the cut, reading all seven `next_act` fields at HEAD:
+
+| class | rows | why |
+|---|---|---|
+| executable code remedy on a LIVE library | `W1-S30`, `S33` | `lib/opal_lgctfm.py`, `lib/lgctfm_render.py` -- not pinned, tests exist |
+| **UNEXECUTABLE AS ROUTED** | `S18`, `W1-S21` | both ask for arms in **`check_lt_r1.py`, a CLOSED round's PINNED fixed input** |
+| NOT WORK -- a DECISION | `S41` | *"the engine's owner decides"* |
+| NOT A WORKER'S ACT | `W2-S36` | a mechanics/law edit, whose broadcast surface a worker cannot discharge |
+| THE ISSUER'S OWN ACT | `S26` | verify-then-disarm, and a disarm is the row owner's under R-19 |
+
+⭐ **THE COLLISION IS THE FINDING AND THE ROUTE DID NOT SEE IT.** `LGIC_ENFORCE` round 16 ruled -- and
+its L9 and L10 upheld -- that an annotation is recorded by an **ADDITIVE SIBLING** and **never** by an
+edit to a pinned fixed input, because editing it after that round's proofs pinned against it is the
+stale-proof hazard. **Two routed acts ask for exactly that edit.** Round 8's liveness cell RECORDED the
+collision and correctly did not resolve it; this cell classes it and still does not resolve it.
+
+⚠ **`UNEXECUTABLE-AS-ROUTED` IS THE CLASS A CELL COULD HIDE UNFINISHED WORK BEHIND**, so the checker
+makes it the costliest to assert: a row in that class must NAME the blocking ruling **and** a pinned
+`fixed_inputs/` path the act would edit, or the arm FAILS.
+
+### 20.3 EVERY VERDICT LINE STATES ITS BASE SHA
+
+The analysis s.4 adopts the CVO's sentence as the ruling: **"A LIVENESS CELL CANNOT BE ISOLATED --
+ISOLATION IS EXACTLY THE THING IT IS MEASURING AGAINST. The remedy is the CUT, not the worker: such a
+cell runs IN THE SHARED TREE, or STATES ITS BASE SHA IN EVERY VERDICT LINE."**
+
+This worker holds a worktree -- ⛔ **Rule 14b is NOT traded away; the carve-out is one cell class, not a
+weakening of 14b** -- so the second branch binds, mechanically: **every row carries `base_sha`, and a
+row without one FAILS.** A header-only sha is refused too, and a label (`HEAD`) is refused because **a
+label is not a tree.** Round 8's 2-of-23 miss was invisible precisely because no verdict line said
+which tree it was read in.
+
+**And any liveness re-read uses the WINDOW method** (s.3): enumerate the commit window and inspect what
+each commit touched, never a grep of commit SUBJECTS for a row id. ⭐ The CVO ruled against its own
+instrument here -- a subject grep is an AUTHOR-COOPERATION instrument and returned **0 for `S42`**, the
+row two seats confirmed was falsified.
+
+### 20.4 THE JUDGMENT CRITERION QUANTIFIES OVER THE PARTITION
+
+Taken from the round-8 analysis s.2, the bar-writing rule its own author took against himself: **when a
+defect's mechanism is UNIFORM over a partition, the criterion quantifies over the PARTITION, not over
+the bucket where the cost is highest.** `M1R9-AC4` therefore names **all five classes** -- a remedy
+wrongly marked `EXECUTED` is exactly as bad as one wrongly marked `UNEXECUTABLE`, and last round both
+misses landed in the one bucket the criterion did not name. **COST: one clause.**
+
+### 20.5 WHAT THIS ROUND DELIBERATELY DOES NOT DO
+
+- **Edit `check_lt_r1.py`.** Refused by name; the cell records the collision instead.
+- **Disarm any row.** All seven name `2.0.0_SA_COO~G`, and an issuer's worker disarming rows that
+  issuer routed is self-certification at two removes. `EXECUTED` records that the ACT was done; the
+  DISARM stays the issuer's and the DISPOSITION stays `3.0.0_SA_CVO`'s at L9.
+- **The `W2-S36` mechanics edit.** A law edit carries three surfaces including a same-turn broadcast,
+  and a worker has no send tool -- so it is classed and routed, never performed here.
+- **Anything outside the seven.**
+
+
+---
+
+## 21. v1.11 -- THE ROUND-10 RECUT (2026-09-19, `2.0.0_SA_COO~G`), on the L10 round-9 analysis @`25bd9cb1fd`
+
+**Input.** `1.0.0_SA_CTO`'s round-9 analysis @`25bd9cb1fd` s.2 and s.6, and `3.0.0_SA_CVO`'s L9
+@`dbd706fcea`. **Round 9 STANDS** -- `M1R9-AC4` PASS across all five classes, no PRD addendum owed,
+scope 0 open of 31 at the cut.
+
+### 21.1 THE CELL -- ONE, AND IT BOTH RE-CLASSES AND ACTS
+
+| cell | id | what it does | serves | rows |
+|---|---|---|---|---|
+| split and re-route | `LT-r-1` | re-classes the two rows carrying the flat `UNEXECUTABLE-AS-ROUTED` value, and PERFORMS `W1-S21`'s conformant re-route | FWD-6 | `S18` `W1-S21` |
+
+### 21.2 ⛔ THE CLASS SPLITS, AND BOTH HALVES MUST NAME SOMETHING
+
+`3.0.0_SA_CVO`'s finding, adopted by the CTO as a taxonomy act:
+
+> ⛔ *"THE RECORD FLATTENS A DISTINCTION THAT MATTERS: a future round reading
+> `UNEXECUTABLE-AS-ROUTED x2` will treat both as equally blocked when **ONE HAS A CHEAP ADDITIVE
+> RE-ROUTE AND THE OTHER HAS NONE.**"*
+
+| row | asks for | conformant alternative |
+|---|---|---|
+| `S18` | an **ARM** in `check_lt_r1.py` | **NONE** -- an arm must be dispatched by the checker's own CMD table, and no sibling can add one |
+| `W1-S21` | **DOCUMENTATION**, carried *"where a later re-derivation will meet them"* | ⭐ **EXISTS** -- a sibling document in `fixed_inputs/r1/`, the `RETIRED.md` shape |
+
+**The class name was still right** -- *"AS ROUTED"* is the operative qualifier, and as routed into
+*"that arm's own carrier"* `W1-S21` does require the barred edit. **The round-9 cell was correct; the
+RECORD was lossy.**
+
+⚠ **`UNEXECUTABLE-IN-PRINCIPLE` IS WHERE A CELL COULD PARK WORK IT DID NOT WANT TO DO**, so the
+checker requires **BOTH** classes to NAME something: RE-ROUTABLE names the alternative, IN-PRINCIPLE
+names what would have to change for one to exist. **A row that says only "blocked" satisfies neither.**
+
+### 21.3 ⛔ THE ADDITIVITY BAR IS ANCHORED TO THE CELL'S OWN BASE, NOT TO A ROUND PIN
+
+`LGIC_ENFORCE` round 16 proved additivity by comparing `check_en_r13.py`'s blob **at its round-13 pin**
+against HEAD -- and they matched because **exactly ONE commit had ever touched that file.**
+
+**Measured here: `check_lt_r1.py` has SIX commits touching it** (`ef8197ed07`, `56dbaee026`,
+`60aac06844`, `8db9eb1bd9`, `e1ffe52bdf`, `39e6977e95`) -- legitimate repairs and amendments **during**
+round 1, before it closed. ⛔ **So a blob-vs-round-1-pin comparison would FAIL ON HONEST HISTORY and be
+a criterion no correct artifact could satisfy.**
+
+⭐ **THE GENERAL RULE, and it is worth more than this round:** **an additivity proof is anchored to the
+ACTOR'S OWN BASE, never to a round pin.** A round pin conflates *"this cell did not edit it"* with
+*"nobody ever edited it"*, and **only the first is the cell's to guarantee.** The arm compares the
+blob at the cell's `base_sha` against the blob at its HEAD, and separately checks the record's claimed
+HEAD blob against the TREE so the record cannot assert additivity by writing the same string twice.
+
+### 21.4 WHAT THIS ROUND DELIBERATELY DOES NOT DO
+
+- **Edit `check_lt_r1.py`.** Refused by name, and the re-route's own arm PROVES the cell did not.
+- **Add an arm to satisfy `S18`.** Impossible without the barred edit -- which is precisely why `S18`
+  is `UNEXECUTABLE-IN-PRINCIPLE`. ⭐ **A cell that found a way to do it would have falsified the class
+  rather than satisfied the round.**
+- **Disarm `S18` or `W1-S21`.** Both name `2.0.0_SA_COO~G`; a disarm is the row owner's act (R-19).
+- **`S26`.** ⭐ **CLOSED** at `LGIC_LGCTFM-S55` @`d180c2077f`, on `1.0.0_SA_CTO`'s R-81 scope ruling
+  @`80bb078627` -- *the ONLY binds the instrument that ANSWERS, and a PREPARATORY act is outside the
+  assignment when it answers nothing, its output is admitted by a permitted instrument's own
+  fail-closed gate, and it is NAMED in the chain.* The analysis says in terms it is not round 10's.

@@ -146,13 +146,36 @@ def registry_hash(reg_dir=None, only=None):
     CRLF read as LF. Hex. `only`, when given, restricts the feeding to exactly those file names (still name
     order) -- the per-view hash EN-r-6 stamps each generated file with (row W1-S14)."""
     reg_dir = reg_dir or REGISTRY_DIR
-    names = sorted(only) if only is not None else sorted(n for n in os.listdir(reg_dir) if n.endswith(".json"))
+    names = sorted(only) if only is not None else registry_file_names(reg_dir)
     h = hashlib.sha256()
     for fname in names:
         h.update(fname.encode("utf-8") + b"\n")
         with open(os.path.join(reg_dir, fname), "rb") as fh:
             h.update(fh.read().replace(b"\r\n", b"\n"))
     return h.hexdigest()
+
+
+def registry_file_names(reg_dir=None):
+    """The *.json files registry_hash() feeds when `only` is not given. ONE definition, so a scope
+    label and the hash it labels cannot drift apart."""
+    reg_dir = reg_dir or REGISTRY_DIR
+    return sorted(n for n in os.listdir(reg_dir) if n.endswith(".json"))
+
+
+def registry_hash_scope(reg_dir=None):
+    """The `over ...` clause for an UNSCOPED registry_hash(), so a SUMMARY line discloses its scope
+    the way a per-target mark already does (:119 `over <file>[,<file>...]`).
+
+    WHY: one `generate` run prints registry@<a> in its summary while the file it wrote in the same run
+    carries registry@<b>. Both read `registry@`; the summary hashes ALL registry files and the mark only
+    the files its target reads. The mark printed its scope and the summary printed none, so the whole
+    asymmetry fell on the reader -- and a reader who compares them concludes STALE, which is the reading
+    that makes someone ACT. Measured 2026-09-19 by 1.0.0_SA_CTO, one diff short of reporting a stale
+    input on a SIGNED never-widen sign-off (LGIC_ENFORCE-S94, IRPT_BCKEND W3-S47).
+
+    The count rather than the file list is deliberate: it keeps a summary visibly DIFFERENT from a mark
+    at a glance, which is the distinction that was missing."""
+    return "all %d registry file(s)" % len(registry_file_names(reg_dir))
 
 
 def load_schema():
@@ -794,9 +817,17 @@ def _render_view(path, syntax, tags, reg, h16):
 
 
 def _hcl(obj, indent=0):
+    """HCL literal, rendered fmt-canonical: `terraform fmt` aligns an attribute group's `=` on the
+    widest key, so a renderer emitting exactly one space produces a file `fmt -check` refuses at
+    EVERY registry state -- alignment only, plan byte-identical (IRPT_BCKEND-W3-S47, rc=3 measured
+    against both the live file and the pre-regen blob 6199adb8ec). The oracle is `terraform fmt
+    -check` run on the generated file; this padding rule is never the evidence for itself."""
     pad = " " * indent
     if isinstance(obj, dict):
-        items = ["%s  %s = %s" % (pad, json.dumps(k), _hcl(v, indent + 2)) for k, v in obj.items()]
+        keys = {k: json.dumps(k) for k in obj}
+        width = max((len(v) for v in keys.values()), default=0)
+        items = ["%s  %s%s = %s" % (pad, keys[k], " " * (width - len(keys[k])), _hcl(v, indent + 2))
+                 for k, v in obj.items()]
         return "{\n%s\n%s}" % ("\n".join(items), pad)
     if isinstance(obj, list):
         return "[%s]" % ", ".join(_hcl(x) for x in obj)
@@ -1084,6 +1115,26 @@ def _bd_is_vendor(toks, i, v):
     return (i > 0 and toks[i - 1] in v.firm) or (i + 1 < len(toks) and toks[i + 1] in v.firm)
 
 
+def _r3_spell(toks, i, v):
+    """R3 in a slot _slots() did not take: bd is refused in every slot, so a bd left in the function (or a
+    secret's purpose) is spelled as the canonical form spells it -- blackdiamond when a firm token is next
+    to it, else the firm's short form (the form R4 gives it). Any other token is returned unchanged."""
+    # LGIC_ENFORCE-S87: THE FIRM BRANCH BELOW (`v.short[v.bd_firm]`) HAS NO OBSERVABLE OUTPUT TODAY, AND IT
+    # STAYS. It is not unreachable -- it is reached and then subtracted. R3 spells a leftover bd with no
+    # adjacent firm token as the firm's own short form; that is the SAME reading R4 has already written into
+    # the scope slot, so FN1b (a function token equal to a token already written in the system or scope slot
+    # is dropped) removes it, and no canonical form this function feeds can ever print it. Every other path
+    # to a lone bd is taken by _slots() as the scope, or raises at R4 as two scopes. R3 and FN1b compose
+    # exactly as written, so this is NOT a defect and NOT a repair site: changing either rule to make the
+    # branch visible would be the defect. Removing the branch would need a proof that the composition can
+    # never change, which nobody has -- so the fact is carried here instead, where whoever opens the file
+    # reads it. Record: LGIC_ENFORCE-S87 (surfaced by 3.0.0_SA_CVO at L9, round 10) and the round-10
+    # analysis section 3. Do not re-derive it; do not delete the branch on the strength of a coverage report.
+    if toks[i] != "bd":
+        return toks[i]
+    return v.bd_vendor if _bd_is_vendor(toks, i, v) else v.short[v.bd_firm]
+
+
 def _system_of(toks, i, v):
     t = toks[i]
     if t in v.v1:
@@ -1222,7 +1273,7 @@ def _grade_resource(nm, typ, v):
     if not toks:
         raise RaiseDefect("G3: %r has no token" % nm)
     sysv, out, scope_long, placeholder = _slots(nm, toks, typ, v)  # R1-R4
-    func = [t for i, t in enumerate(toks) if i not in out]
+    func = [_r3_spell(toks, i, v) for i in range(len(toks)) if i not in out]  # R3: bd spelled in every slot
     if typ in ("EVENT_RULE", "SCHEDULE"):
         func, last, ph2 = _cadence_slot(func, v)  # R7
         placeholder = placeholder or ph2
@@ -1253,7 +1304,7 @@ def _grade_secret(nm, v):
     purpose = {}
     for i, t in enumerate(flat):
         if i not in out:
-            purpose.setdefault(where[i], []).append(t)
+            purpose.setdefault(where[i], []).append(_r3_spell(flat, i, v))  # R3: bd spelled in every slot
     # S4: the purpose is every remaining segment, each lowercase kebab, joined by /.
     parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + ["-".join(purpose[k]) for k in sorted(purpose)]
     raw = [seg.split("-") for seg in nm.split("/")]
@@ -1360,6 +1411,14 @@ def _new_served(rest, prefix):
     out = []
     leaf = None if prefix or not rest else len(rest) - 1
     if leaf == 0 and "." not in rest[0]:
+        leaf = None
+    # A TRAILING {entity}={id} IS A PARTITION, NOT THE FILE LEAF (LGIC_CANON-W8-S1). address() writes
+    # .../advisors/advisor_id=A123 and this function read that last segment as the leaf, so it kebab-lowered
+    # the entity id's own bytes -- grading the builder's own output OUT-OF-PATTERN and contradicting
+    # NAMING_SCHEMA key.partition's example. The dot test is :1413's, reused deliberately rather than
+    # replaced: a segment carrying a dot stays a leaf, so a malformed file like `foo=bar.json` is graded
+    # exactly as before and this does not widen what the grader accepts.
+    if leaf is not None and "." not in rest[leaf] and _ENTITY.match(rest[leaf]):
         leaf = None
     for i, s in enumerate(rest):
         if i == leaf:
@@ -2404,7 +2463,8 @@ def census(names_file=None, live=False, repo=False, report=None, budget=600, not
                                 "judged_live": judged_live, "judged_repo": judged_repo,
                                 "live_not_graded_types": live_ng, "live_aws_fixed": live_fixed,
                                 "carded_live": carded_live, "carded_repo": carded_repo},
-               "registry": registry_hash()[:16], "stopped": stopped, "not_judged": not_judged or [], "rows": rows}
+               "registry": registry_hash()[:16], "registry_scope": registry_hash_scope(),
+               "stopped": stopped, "not_judged": not_judged or [], "rows": rows}
         census_report(report, doc, _census_prose(doc, stats, ng_counts, fixed_counts))
         out("CENSUS REPORT %s" % report)
     if stopped:
@@ -2425,7 +2485,8 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
     lines = [
         "# NAMING_CENSUS_REPORT -- census mode, the run (LGIC_ENFORCE EN-s-1, DEC-7)",
         "",
-        "Written by `python lib/opal_naming.py census --live --repo --report <this file>` at registry@%s." % doc["registry"],
+        "Written by `python lib/opal_naming.py census --live --repo --report <this file>` at registry@%s over %s."
+        % (doc["registry"], doc.get("registry_scope", "an unrecorded file set")),
         "Every number below is recomputable from the fenced json at the end.",
         "",
         "## Status",
@@ -2523,8 +2584,9 @@ def main(argv=None):
             print("VALIDATE: REFUSED %d refusal(s), %d warning(s)" % (len(refusals), len(warnings)))
             return 1
         reg = load_registry(reg_dir, a.systems_file)
-        print("VALIDATE: OK %d system row(s), %d scope row(s), %d warning(s) at registry@%s" % (
-            len(_systems(reg)), len(_scopes(reg)), len(warnings), registry_hash(reg_dir)[:16]))
+        print("VALIDATE: OK %d system row(s), %d scope row(s), %d warning(s) at registry@%s over %s" % (
+            len(_systems(reg)), len(_scopes(reg)), len(warnings), registry_hash(reg_dir)[:16],
+            registry_hash_scope(reg_dir)))
         return 0
     if a.cmd == "generate":
         try:
@@ -2534,9 +2596,10 @@ def main(argv=None):
             return 1
         for status, t, detail in results:
             print("%s %s (%s)" % (status, t, detail))
-        print("GENERATE: %d written, %d skipped, into %s at registry@%s" % (
-            sum(1 for r in results if r[0] == "WROTE"), sum(1 for r in results if r[0] == "SKIP"),
-            a.out, registry_hash()[:16]))
+        print("GENERATE: %d written, %d skipped, into %s at registry@%s over %s"
+              " -- each file's own mark is scoped to the registry files THAT target reads" % (
+                  sum(1 for r in results if r[0] == "WROTE"), sum(1 for r in results if r[0] == "SKIP"),
+                  a.out, registry_hash()[:16], registry_hash_scope()))
         return 0
     if a.cmd == "vectors":
         try:

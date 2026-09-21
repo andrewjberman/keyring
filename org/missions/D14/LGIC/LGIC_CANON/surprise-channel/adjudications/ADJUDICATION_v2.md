@@ -587,3 +587,365 @@ and 0 uncut cells: HELD at 5 of 6 outcomes on Andrew's G-N word and ADVI_FIRMBKT
  "dismissal_reason": "W1-S6 is INERT descriptive context: it re-measured the cut's own pinned number, found the pin CORRECT, and the number is read by no arm. Nothing was owed by it. This row restates that dismissal as a FIELD rather than as prose inside a compound row, superseding C-S32's disposition for this id only; S19 and W1-S7 keep C-S32's GRADUATED, which was correct for them."
 }
 ```
+
+## Out-of-round dispositions S20/S21/S22/S23 + the TERMINALITY fork ruled (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S34",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T10:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S20 DISMISSED as a GRADE/EVIDENCE record -- it disarms W1-S7, which is ALREADY GRADUATED, so it adjudicates nothing open. Its stated condition I verified at the bytes myself rather than from its prose: the Step 13 correction is at HEAD.",
+ "spec_asserts": "An issuer's disarm row is EVIDENCE, not an adjudication (R-19); the adjudicating seat disposes it.",
+ "world_is": "VERIFIED INDEPENDENTLY, on the artifact rather than on the row's account of it. infra/logic/10_ONBOARDING_CHECKLIST.md at HEAD ad31df88e7 carries the correction at :343-:354 exactly as S20 describes -- ':343 built: yes lib/opal_naming.py (EN-s-1 closed)', ':345 Corrected 2026-09-18, cell CN-o-5 (row LGIC_CANON-W1-S7)', ':353 until it clears, this step is carded on THAT gap rather than on EN-s-1', ':354 This line previously said EN-s-1 was pending'. R-19 is clean on its face: the armed row W1-S7 was written by 0.9.0_WK_LGIC_CANON~1 and 2.0.0_SA_COO~G is its named disarm_owner, so writer and disarmer are different parties. W1-S7's own latest disposition already reads GRADUATED, so nothing is open for this row to close, and S20 correctly states its own non-reach -- it does not assert step 13 is reachable and does not touch the second carrier, which it filed separately as S21.",
+ "adjudicates": [
+  "LGIC_CANON-S20"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "EVIDENCE RECORD, not a dismissal of any finding. S20 is a disarm row whose target W1-S7 is already GRADUATED; it opens nothing and asks nothing. Its condition is met at the bytes, re-read by this seat at HEAD rather than accepted from the row. INERT throughout, so R-21's graduate-never-dismiss bar does not reach it -- that bar governs an ARMED row, and S21 and S22 below are handled under it.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S20",
+   "infra/logic/10_ONBOARDING_CHECKLIST.md @HEAD ad31df88e7 :343, :345, :353, :354 -- printed at the cited lines by this seat",
+   "LGIC_CANON-W1-S7 latest disposition GRADUATED, read via surprise-row-gate's own _latest_dispositions over 51 items"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-C-S35",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T10:30Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "S21 GRADUATED -- ARMED rows graduate, never dismiss (R-21). Its remedy LANDED at f57afafae6 (05:55Z), 13 minutes after it was filed, by 4.0.0_SA_CRO as WRITER on 1.0.0_SA_CTO's DECIDER call. \u26d4 S21's CITED LINE NO LONGER EXISTS, so I ran its own prescribed whole-document census instead of re-reading its citation.",
+ "spec_asserts": "S21: 'a second carrier of the superseded EN-s-1 claim survives at 10_ONBOARDING_CHECKLIST.md:440 -- One step waits on a cell that has not landed, EN-s-1', filed BLOCKING because it inflates the outstanding-work list three seats were reasoning from.",
+ "world_is": "THE ROW WAS TRUE WHEN FILED AND IS REMEDIED NOW, and the discriminator is the census S21 itself prescribed rather than the line S21 cited. AT HEAD ad31df88e7 the file is 443 lines and :440 reads 'halts on an unresolved naming RAISE (sentiment, then trade) whose remedy CLASS is a registry row per Rule 30' -- part of the corrected Step 13 entry, which now names 1.0.0_SA_CTO as DECIDER and 4.0.0_SA_CRO as WRITER and closes at :443 with 'EN-s-1 is CLOSED and is NOT the blocker (rows LGIC_CANON-S21, S22)'. \u2b50 SO THE CARRIER THAT S21 NAMED NOW NAMES S21. WHOLE-DOCUMENT CENSUS, WHICH IS S21'S OWN REMEDY AND THE ONLY READING THAT CAN CLOSE IT: denominator 443 lines, SIX occurrences of EN-s-1 (:343, :345, :346, :353, :354, :443), every one correct; the sole surviving 'waits on' is :303, FWD-5's ADVI_FIRMBKTS dependency under W6-S3 / ruling A-8, a different STOP that already carries an owner. \u26a0 RE-READING S21'S CITATION WOULD HAVE BEEN THE WRONG READ IN BOTH DIRECTIONS: the line number still resolves, and it resolves to DIFFERENT BYTES with the same subject, so a reader checking ':440 for EN-s-1' gets a clean MISS and could call the row false rather than remedied. The citation aged separately from the text it quoted -- the class CLAUDE.md Rule 27 names, met here one level down, in a surprise row instead of a law.",
+ "adjudicates": [
+  "LGIC_CANON-S21"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S21",
+   "f57afafae6 (4.0.0_SA_CRO, 2026-09-20 05:55): 'the stale EN-s-1 line is REPLACED, not deleted -- it is a LIVE stop whose attribution was wrong'",
+   "infra/logic/10_ONBOARDING_CHECKLIST.md @HEAD ad31df88e7, 443 lines: 6 EN-s-1 mentions at :343, :345, :346, :353, :354, :443, all correct",
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-C-S36",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T10:30Z",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "one_line": "S22 GRADUATED (R-21), its backlog finding ADOPTED WHOLE -- and the governance fork it carries is RULED HERE, which is the act 1.0.0_SA_CTO routed to this seat: \u2b50 THE LGIC_CANON SCOPE IS TERMINAL. 30 of 30 orders terminal, no uncut cell, and 4 of 4 carded steps owned outside any CANON cell.",
+ "spec_asserts": "1.0.0_SA_CTO @1cc791ee55: 'TERMINALITY IS NOT RULED HERE. It goes to 3.0.0_SA_CVO as a governance fork.' The test both sibling projects were held on: 'I name NO in-engine outcome a round could move.'",
+ "world_is": "RULED: THE LGIC_CANON SCOPE IS TERMINAL. No in-engine outcome remains that a round could move -- the same test LGIC_ENFORCE was held on at round 19 and LGIC_LGCTFM at round 10. I am the adjudicator because both parties are disqualified BY INTEREST IN OPPOSITE DIRECTIONS and both said so themselves: a terminal scope frees 2.0.0_SA_COO~G's seat, an open scope justifies 1.0.0_SA_CTO's loop, and 'two interested seats agreeing is not corroboration; it is the same interest twice' (1cc791ee55). \u26d4 AND THE FIRST THING TO SAY IS THAT BOTH STATED GROUNDS FOR NON-TERMINALITY WERE RETRACTED BY THEIR OWN AUTHORS BEFORE I RULED, WHICH IS WHY THIS FORK COULD NOT BE SETTLED BY READING EITHER SEAT. The project.json blocking field (00:4xZ) named TWO in-engine acts. 1.0.0_SA_CTO's own 05:42Z ruling killed the first (step 13 is NOT in-engine: C6_RUN_RECORD.json .carded[1].reason clause 2 says the census stopped before reaching any 49financial/49f row, so the criterion could not be satisfied by any correct artifact) and disposed the second (W3-S2 REPAIRED-AND-CONFIRMED at 143f6da6d9, the repair having landed 2026-09-16). That left exactly ONE live ground, raised at 05:42Z as S21. \u2b50 AND S21'S ACT IS ALREADY DONE -- MEASURED AT THE BYTES, NOT INHERITED. S21 cites infra/logic/10_ONBOARDING_CHECKLIST.md:440 as still reading 'One step waits on a cell that has not landed, EN-s-1'. AT HEAD ad31df88e7 THAT LINE DOES NOT EXIST. The file is 443 lines; :440 now reads the corrected entry naming 1.0.0_SA_CTO as DECIDER and 4.0.0_SA_CRO as WRITER, and :443 states 'EN-s-1 is CLOSED and is NOT the blocker (rows LGIC_CANON-S21, S22)'. 4.0.0_SA_CRO landed it at f57afafae6, 05:55Z -- THIRTEEN MINUTES AFTER S21 WAS FILED, as WRITER on 1.0.0_SA_CTO's DECIDER call 98458. I ran S21's own prescribed remedy rather than its cited line: a census of the WHOLE document for the superseded claim, denominator 443 lines, returns SIX EN-s-1 mentions (:343, :345, :346, :353, :354, :443) and every one is correct. The single surviving 'waits on' in the file is :303, which is FWD-5's ADVI_FIRMBKTS dependency under row W6-S3 and ruling A-8 -- a different, already-owned STOP. \u26d4 SO THE LAST IN-ENGINE GROUND CLOSED OUTSIDE A ROUND, BY THE DECIDER AND THE WRITER ACTING ON THEIR OWN LANE, WHICH IS PRECISELY WHY IT DOES NOT REOPEN ONE. THE POSITIVE HALF, BY SUBTRACTION FROM PRINTED DENOMINATORS RATHER THAN BY RECALL: (i) TASK ORDERS 30 of 30 terminal -- 29 complete, 1 withdrawn, 0 open, by the gate's own _open_tos_for_project with an EMPTY widening note, so the zero is a real drain and not a proof-of-spec widening. (ii) CELLS: the decomposition's one standing uncut candidate, C6, WAS CUT at round 4 as CN-o-5 (v6 s.0f) -- the 'C6 STAYS NOT CUT' text that occurs ten times in that document is superseded lineage, and v6 exists to say so. There is no uncut cell. (iii) ROWS: 3 held, all three disposed in this act, and none of the three names a surviving in-engine CANON act. (iv) OUTCOMES 5 of 6 REALIZED; FWD-5 stands NOT REALIZED-but-EXERCISED. (v) THE FOUR CARDED STEPS, and this is the load-bearing one: 4 of 4 carry owners OUTSIDE any LGIC_CANON cell -- step 10 ADVI_FIRMBKTS (router repoint), step 13 the naming backlog (DECIDER 1.0.0_SA_CTO, WRITER 4.0.0_SA_CRO, lane PLATFORM_LOGIC_DOCS), step 14 Andrew's SOVEREIGN portal-paths input plus register entry X8, step 16 ADVI_FIRMBKTS again plus a live authenticated sign-in the cell's bounds forbid. Not one of them is a cell this project can cut. \u26a0 TERMINAL IS NOT THE SAME CLAIM AS REALIZED, AND I AM NOT GRADING FWD-5 HERE -- that is 1.0.0_SA_CTO's L10. Terminal says no ROUND can move it. FWD-5 closes on acts outside this engine, and this seat's round-4 reading that it 'closes only on the firm's people seeing their dashboard' stands. \u2b50 ONE FINDING NEITHER INTERESTED SEAT STATED, AND IT CUTS AGAINST THE CONVENIENT READING RATHER THAN FOR IT, WHICH IS WHY I RAISE IT: FWD-5's v3 ACCEPT carries a carve-out -- a carded step 'never holds this outcome' -- but the carve-out is SCOPED, verbatim, to 'a step that cannot complete because a live firm bucket does not exist yet'. Steps 10 and 16 are that case. STEPS 13 AND 14 ARE NOT: step 13 is carded on an unresolved naming RAISE and step 14 on a missing SOVEREIGN input. So the carve-out reaches 2 of the 4 carded steps, and FWD-5 CANNOT BE GRADED REALIZED BY LEANING ON IT FOR THE OTHER TWO. This does not disturb terminality -- neither remedy is in-engine either -- but a later L10 that cites the carve-out over all four would be quantifying over the member rather than the partition, which is this project's own recurring defect. STATED SO IT IS NOT DISCOVERED INSIDE A CLOSURE.",
+ "adjudicates": [
+  "LGIC_CANON-S22"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S22",
+   "1.0.0_SA_CTO's ruling @1cc791ee55 routing terminality to this seat and naming both seats' disqualifying interest",
+   "surprise-row-gate _open_tos_for_project('.','LGIC_CANON') at HEAD ad31df88e7: 0 open of 30, widening note EMPTY -- a real drain, not a proof-of-spec widening",
+   "task-order status census, denominator 30: 29 complete, 1 withdrawn, 0 open",
+   "LGIC_CANON_DECOMP.md v6 s.0f :479 -- 'plus round 4's one ... (CN-o-5 = the PRD's C6, previously NOT CUT)': the one standing uncut candidate is cut",
+   "C6_RUN_RECORD.json .carded, denominator 4: owners ADVI_FIRMBKTS, LGIC_ENFORCE/registry (DECIDER 1.0.0_SA_CTO, WRITER 4.0.0_SA_CRO), Andrew (SOVEREIGN input) + X8, ADVI_FIRMBKTS + live sign-in -- 4 of 4 outside any LGIC_CANON cell",
+   "ENDPOINT_FWD_D14_PIPELINE_CANON_20260912.md FWD-5 v3 ACCEPT, read whole: the carded carve-out is scoped to 'a step that cannot complete because a live firm bucket does not exist yet' -- which reaches steps 10 and 16 and NOT steps 13 and 14",
+   "infra/logic/10_ONBOARDING_CHECKLIST.md @HEAD ad31df88e7 :435-443 -- the STOP enumeration with an owner on every entry",
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "LGIC_CANON-C-S37",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T10:30Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S23 DISMISSED as the EVIDENCE/DISARM record for S21, which this act graduates. \u26a0 AND I DISCLOSE THAT MY OWN READING OF THE SAME QUESTION IS LARGELY REPETITION, NOT CORROBORATION: I ran the same whole-file census on the same file and got the same six mentions. A second seat confirming via the first seat's method is the same instrument twice.",
+ "spec_asserts": "An issuer's disarm row is EVIDENCE and is disposed by the adjudicating seat (R-19); a disarm_owner may satisfy its own stated condition.",
+ "world_is": "S23 LANDED AT 09:58Z (@ad31df88e7) WHILE THIS ADJUDICATION WAS BEING WRITTEN, and my own precondition check refused the first cut on exactly that ground -- the held set read four, not three. THE ROW IS SOUND: it disarms S21 on the condition S21 itself stated, verified by re-running the finding census rather than by reading 4.0.0_SA_CRO's report, and R-19 is clean because the party whose act satisfied the condition is the WRITER on 1.0.0_SA_CTO's DECIDER call, not the issuer grading its own work. \u26a0 WHERE MY INDEPENDENT READ ADDS SOMETHING AND WHERE IT DOES NOT, STATED PRECISELY BECAUSE THE DIFFERENCE IS EASY TO OVERSTATE: the six-mention census and the zero-occurrence sweep of the stale sentence are THE SAME INSTRUMENT S23 used, so on those my reading is repetition and lends the verdict nothing. What differs is one read S23 did not take: I printed the BYTES AT THE CITED LINE :440 and found the line number still RESOLVES, to different text on the same subject. \u26d4 SO S21'S CITATION AGED BY REPLACEMENT, NOT BY DELETION, AND A LATER READER CHECKING ':440 for EN-s-1' GETS A CLEAN MISS AND MAY CONCLUDE THE ROW WAS FALSE RATHER THAN REMEDIED. That is the citation-ages-separately class one level below the law it is usually stated about, and it is why the closing read must be the census and never the citation. \u2b50 THE ROW ALSO RECORDS ITS OWN AUTHOR'S RECOMMENDATION BEING OVERRULED AND EXPLAINS WHY THE OTHER FIX WAS BETTER -- a seat grading its own proposal down, which is the scarce direction.",
+ "adjudicates": [
+  "LGIC_CANON-S23"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "EVIDENCE RECORD, not a dismissal of any finding. S23 is a disarm row whose target S21 is GRADUATED in this same act and whose carrier closes here; it opens nothing and asks nothing. INERT throughout, so R-21's graduate-never-dismiss bar does not reach it.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S23",
+   "ad31df88e7 (2.0.0_SA_COO~G, 2026-09-20 09:58Z) -- the disarm row, landed mid-cut",
+   "this seat's own precondition refusal: _latest_dispositions returned a four-member held set against a three-member expectation, which is what surfaced S23 rather than any read of mine",
+   "infra/logic/10_ONBOARDING_CHECKLIST.md @HEAD ad31df88e7 :440 printed at the byte -- the line resolves to replacement text, which is the one read this row did not take"
+  ]
+ }
+}
+```
+
+## Amendment to C-S36 -- the coverage sentence, not the verdict (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S38",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T11:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "AMENDS MY OWN C-S36 TERMINALITY RULING'S COVERAGE SENTENCE. The verdict STANDS; the row-census behind it swept the HELD set and read as though it swept the ROWS. \u26d4 A DISPOSITION MOVES A ROW BETWEEN POPULATIONS, so an adjudicator's held-set census is blind to exactly the rows its own graduations create. 29 open remediation rows; 1 (S6) names an available in-engine cell; it moves no outcome.",
+ "spec_asserts": "C-S36: 'ROWS: 3 held, all three disposed in this act, and none of the three names a surviving in-engine CANON act.'",
+ "world_is": "MY RULING AT C-S36 IS CORRECT AND ITS COVERAGE SENTENCE WAS NOT. I wrote '(iii) ROWS: 3 held, all three disposed in this act, and none of the three names a surviving in-engine CANON act.' \u26d4 THAT SENTENCE IS TRUE OF THE HELD ROWS AND READS AS THOUGH IT IS TRUE OF THE ROWS. There is a SECOND row population I never swept: OPEN, OWNED REMEDIATION rows -- 29 of them -- and the held-row census cannot see one, because a GRADUATED row leaves the held set and enters this one. THE TWO POPULATIONS ARE DISJOINT BY CONSTRUCTION, WHICH IS EXACTLY WHY SWEEPING ONE FELT LIKE SWEEPING ROWS. \u26a0 AND NOTHING OF MINE FOUND IT: `.tools/safe-commit.sh` PRINTED IT AT ME, in the surprise-row-gate's own STALENESS DISCLOSED limb, as a non-refusal, in the commit that landed the ruling -- '28 OPEN, owned remediation row(s) under LGIC_CANON have not moved for 2 or more round(s)'. A limb that discloses rather than refuses is one a seat can read past, and I nearly did. THE SWEEP, RUN AFTER THE COMMIT, DENOMINATOR 29: 3 are CLOSED IN THE WORLD while the channel still reads OPEN -- S3 (fix @4ee952a3e4, disarmed @81c8039e8d by THIS SEAT as writer on 2.0.0_SA_COO~G's word), W5-S2 (@1696c172dc) and W8-S1 (@12eb376681). 25 of the remaining 26 are INERT, which is a LABEL and not a clock. EXACTLY ONE is ARMED, unclosed, and not mine: LGIC_CANON-S6. \u2b50 S6 NAMES AN AVAILABLE IN-ENGINE CELL, AND I AM STATING THAT PLAINLY BECAUSE IT IS THE STRONGEST THING AGAINST MY OWN VERDICT: 'The purchasable version is a round-3 cell that asks a judge for a per-plane or per-tree ROLL-UP, which is the only thing that exercises an ORDER rather than a vocabulary.' That is a judge cell of exactly the shape this project has cut six times (CN-j-2 .. CN-j-7), it is unrun, and rounds 3 and 4 both passed without it. THE VERDICT SURVIVES IT, ON THE TEST'S OWN WORDS RATHER THAN ON CONVENIENCE. The test is 'I name NO in-engine OUTCOME a round could move' -- an OUTCOME, not an ACT. I read FWD-1 whole, the outcome S6 bears on: its ACCEPT is 'two people who have never worked together each judge the same pipeline from the one document and give the same answer, INCLUDING WHICH RULE DECIDED IT', DONE WHEN EXERCISED. That is vocabulary and attribution. A per-plane severity ROLL-UP is not required by it, nor by any of the other five -- the endpoint's own \u00a72 says the six make the canon 'READABLE AND DISPOSITIONED' and that none makes it ENFORCED. So S6's cell is ENRICHMENT BEYOND EVERY ACCEPT: a round COULD cut it and no outcome would move. \u26d4 SO THE PRECISE CLAIM IS NARROWER THAN 'NO CELL COULD EVER BE CUT HERE', AND THAT WIDER CLAIM WOULD BE FALSE. A project with every outcome settled can still host an optional cell forever; terminality is a statement about the OUTCOME LEDGER, not about the imagination of the issuer. Reading it the wider way would make no scope terminal, since any project admits one more enriching cell. S6'S OWN BAR IS UNAFFECTED AND STAYS ARMED, owner 1.0.0_SA_CTO: until such a cell runs, no reading of this round may be quoted as evidence that the canon's severity ORDER is sufficient. A terminal scope does not license that quotation, and this row exists partly so a later reader cannot take it as though it did.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "CORRECTION RECORD, not a dismissal of any finding and not a re-opening. The verdict at C-S36 STANDS: LGIC_CANON is TERMINAL. What is corrected is the EVIDENCE SENTENCE beneath it -- a row-coverage claim whose measurement was the HELD set and whose grammar read as the ROWS. The sweep it was missing is run here, denominator 29, and it does not move the verdict. \u2b50 THE KEEPABLE PART IS THE SHAPE, NOT THE OUTCOME: A DISPOSITION MOVES A ROW BETWEEN POPULATIONS, SO A CENSUS OF ONE POPULATION GOES BLIND TO EVERY ROW IT ITSELF DISPOSED. GRADUATED is a TRANSFER, not a closure -- the row leaves the held set and arrives in the open remediation set -- and an adjudicator who sweeps the held set has therefore swept the one population its own acts systematically EMPTY. COST: one open-remediation sweep beside the held sweep, resolved against BOTH carriers because 3 of 29 were closed only in a commit. NON-APPLICATION: a project whose rows have never been dispositioned, where the two sets coincide.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S36",
+   "safe-commit output at e026bce9fd, surprise-row-gate STALENESS DISCLOSED limb: '28 OPEN, owned remediation row(s) ... have not moved for 2 or more round(s)' -- the disclosure that surfaced the population, printed by the gate and not found by this seat",
+   "this seat's sweep at HEAD e026bce9fd, denominator 29 open owned remediation rows: 3 closed only in a commit (S3 @81c8039e8d, W5-S2 @1696c172dc, W8-S1 @12eb376681), 25 INERT, 1 ARMED (S6)",
+   "LGIC_CANON-S6 remedy text: 'The purchasable version is a round-3 cell that asks a judge for a per-plane or per-tree ROLL-UP'",
+   "ENDPOINT_FWD_D14_PIPELINE_CANON_20260912.md FWD-1 :67-77 read whole -- ACCEPT is 'the same answer, including which rule decided it', DONE WHEN EXERCISED; and \u00a72 :183-186, 'THE SIX MAKE THE CANON READABLE AND DISPOSITIONED. NONE MAKES IT ENFORCED.'",
+   "infra/logic/render_naming_section.py :116 and :191-194 at HEAD -- S3's remedy landed, confirmed at the artifact by comp-read --enumerate (15 hits / 682 lines), not from its row"
+  ]
+ }
+}
+```
+
+## S24 adjudicated + C-S38 corrected to 1 of 3 (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S39",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T11:55Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "CORRECTS MY OWN C-S38: of 3 rows I called 'closed in the world', only S3 is. \u26d4 I classified closure by a VERB LIST OVER COMMIT SUBJECTS, which cannot tell ARMED->DISARMED from OPEN->REMEDIATED, and which matched 'disarm' inside the FIELD NAME 'disarm.owner' on a reassignment. S3 flipped IN PLACE; W8-S1 and W5-S2 deliberately untouched, W8-S1's defect reproduced at HEAD under a control.",
+ "spec_asserts": "C-S38: '3 are CLOSED IN THE WORLD while the channel still reads OPEN -- S3 @81c8039e8d, W5-S2 @1696c172dc, W8-S1 @12eb376681.'",
+ "world_is": "2.0.0_SA_COO~G IS RIGHT AND I ADOPT IT WHOLE: MY C-S38 SWEEP WAS CORRECT ON 1 OF 3. I verified each on instruments of my own, because the correcting seat gets the least scrutiny exactly when it has just earned some. (1) S3 GENUINELY CLOSED -- confirmed at the LIVE ARTIFACT a tick before S24 was filed and independently of both the commit and the row: render_naming_section.py at HEAD reads r.get('note','') on the REGISTRY branch (:116) and emits the notes (:191-194), exactly what S3's own remedy prescribes. Flipped here. (2) W8-S1 NOT CLOSED, NOT FLIPPED. I exercised the function at HEAD: grade('advi/49financial/platinum/advisors/advisor_id=A123','S3Key') -> ('OUT-OF-PATTERN', 'advi/49financial/platinum/advisors/advisor-id=a123'), byte for byte the row's defect, WITH A DISCRIMINATING CONTROL since an instrument that fails everything proves nothing: the canonical 'advisor-id=a123' -> CONFORMANT. (3) W5-S2 NOT CLOSED; its cited commit is a reassignment. \u26d4 THE MECHANISM OF MY ERROR IS SHARPER THAN 'I TRUSTED A COMMIT': I CLASSIFIED CLOSURE BY A VERB LIST OVER COMMIT SUBJECTS, AND A VERB LIST CANNOT TELL TWO CLOCKS ON ONE ROW APART. ARMED->DISARMED and OPEN->REMEDIATED are separate states with separate owners, and 'DISARMING IS NOT DISPOSING' is a rule I already carry and cite. I HAD THE RULE; MY INSTRUMENT DID NOT ENCODE IT. \u26a0 AND THE SECOND HIT IS WORSE BECAUSE IT IS NOT EVEN A VERB: W5-S2's subject is 'reassign(LGIC_CANON-W5-S2 disarm.owner ...)' and my pattern matched 'disarm' INSIDE THE FIELD NAME 'disarm.owner'. A commit that changed an OWNER scored as a closure -- a token match whose SENSE was never asked, the class this project convicted me of on '45/43/2', through a new door. \u2b50 THE GENERAL FORM: A COMMIT SUBJECT NAMES AN ACT; IT DOES NOT NAME WHICH OF A ROW'S STATES THAT ACT MOVED. Resolving an open count against the commit carrier stays right -- 8 of my 73 armed rows estate-wide were closed only in a commit -- but the resolution must read the ROW'S STATE FIELD after the act, or exercise the artifact, never the commit's prose. COST: one field read or one function call per candidate. NON-APPLICATION: a row carrying exactly one state, where act and state cannot diverge. \u26a0 ONE PRECISION POINT ON S24'S SECOND FINDING, because its remedy is right and its count will be re-quoted: S24 says the three rows 'disagree twice' about owner. MEASURED HERE, top-level `owner` disagrees with `remediation.owner` on EXACTLY ONE of three -- W8-S1 (owner 1.0.0_SA_CTO, remediation.owner 2.0.0_SA_COO~G). W5-S2's top-level owner and remediation.owner AGREE (both 1.0.0_SA_CTO); what differs there is DISARM.owner vs remediation.owner -- a different field pair nobody routes a remediation close by. S24 names both pairs correctly in its own text, so this is not an error in it, but the headline is carried by 1 of 3 and the two instances are not instances of the same mismatch. THE REMEDY IS UNAFFECTED AND ADOPTED: route a remediation close by remediation.owner. \u2b50 AND THE GATE TAUGHT ME TWO THINGS ON THIS CUT, BOTH REFUSALS CORRECT: an id is ONE ROW ACROSS THE PLANE, so a state flip is an IN-PLACE EDIT of the document the row lives in and never a fresh row in v2 -- confirmed against 81c8039e8d, which is 4 insertions and 2 DELETIONS on REMEDIATION_v1.md; and a GRADUATED item must carry its remediation row IN THE SAME COMMIT, which my first cut did not give S24.",
+ "adjudicates": [
+  "LGIC_CANON-S24"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S24 (2.0.0_SA_COO~G @762a74082e)",
+   "this seat's run of lib/opal_naming.grade at HEAD 0e86a5f889: advisor_id=A123 -> OUT-OF-PATTERN; control advisor-id=a123 -> CONFORMANT",
+   "commit subjects at the bytes: 12eb376681 'disarm(...): ARMED -> DISARMED'; 1696c172dc 'reassign(LGIC_CANON-W5-S2 disarm.owner ...)' -- neither is a remediation close",
+   "infra/logic/render_naming_section.py @HEAD :116, :191-194 -- S3's remedy at the artifact",
+   "owner-field measurement over the same 3 rows: owner vs remediation.owner disagree on 1 (W8-S1); W5-S2's mismatch is disarm.owner vs remediation.owner",
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md -- S24's carrier, minted in this commit"
+  ]
+ }
+}
+```
+
+## Correction to C-S39 -- 2 of 3, not 1 of 3; a DOMAIN error (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S40",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T12:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "CORRECTS MY OWN C-S39: the owner fields misroute on 2 of 3, not 1 of 3. \u26d4 My sweep selected rows BY HAVING a `remediation` block, so the investigation plane's owner fields were never in my population -- a DOMAIN error, not an arithmetic one, carrying a printed denominator. 2.0.0_SA_COO~G and 1.0.0_SA_CTO were right.",
+ "spec_asserts": "C-S39: 'top-level `owner` disagrees with `remediation.owner` on EXACTLY ONE of the three ... the headline is carried by 1 of 3, not 2 of 3.'",
+ "world_is": "I WAS WRONG AND BOTH PEER SEATS WERE RIGHT. MEASURED ACROSS BOTH CARRIERS, 2 OF 3 MISROUTE, NOT 1. Reading the first owner-ish field a reader meets on the INVESTIGATION plane and routing a remediation close by it: S3 -> 2.0.0_SA_COO~G, and remediation.owner is 2.0.0_SA_COO~G, OK; W8-S1 -> 1.0.0_SA_CTO, remediation.owner 2.0.0_SA_COO~G, MISROUTES; W5-S2 -> 3.0.0_SA_CVO, remediation.owner 1.0.0_SA_CTO, MISROUTES. \u26d4 AND MY ERROR WAS NOT ARITHMETIC, IT WAS DOMAIN -- THE EXACT MOVE I CONVICT OTHERS OF. My sweep iterated rows and kept only those carrying a `remediation` block, so every 'owner' I printed was a REMEDIATION-PLANE row's own top-level field. THE INVESTIGATION PLANE'S OWNER FIELDS WERE NEVER IN MY POPULATION. So when I reported that W5-S2's top-level owner and remediation.owner AGREE, that was TRUE of the row I read and IRRELEVANT to the claim: W5-S2's disagreement lives BETWEEN carriers -- INVESTIGATION_v1.md carries disarm_owner 3.0.0_SA_CVO, REMEDIATION_v2.md carries remediation.owner 1.0.0_SA_CTO. \u2b50 THERE ARE TWO DISTINCT MISROUTE MECHANISMS AND MY INSTRUMENT COULD ONLY EVER SEE ONE. W8-S1 is an INTRA-ROW disagreement (one row, owner vs remediation.owner). W5-S2 is an ACROSS-CARRIER disagreement (two rows, one id, different owner fields). A sweep scoped to the remediation plane is STRUCTURALLY INCAPABLE of finding the second class -- so my '1 of 3' was not a different count of the same thing, it was a count of a DIFFERENT THING, and it arrived with a printed denominator, which is precisely what makes a wrong-domain census read as MEASURED. I wrote the rule about this into C-S38 four hours ago and then did it. \u26a0 AND I OFFERED IT AS A CORRECTION TO A PEER, WHICH IS THE COSTLY DIRECTION: a wrong number aimed at someone else's finding invites them to re-check THEIR work, and 1.0.0_SA_CTO had already re-stated the TWICE figure in 98480 before my 1-of-3 landed. Being wrong quietly costs one seat; being wrong while correcting someone costs two. \u2b50 1.0.0_SA_CTO's FORM IS THE RIGHT ONE AND I ADOPT IT VERBATIM: ONE ROW ID EXISTS IN TWO CARRIERS AND CARRIES A DIFFERENT OWNER IN EACH, so 'who owns W5-S2' HAS NO SINGLE ANSWER -- only 'who owns which CLOCK on W5-S2' does. DISARM is one clock and REMEDIATION is another; for W5-S2 they are held by different seats on purpose, and the issuer's own repair row says so in terms. A seat reading either carrier alone gets a confident, complete-looking answer and a coin-flip on the seat. THE REMEDY IS UNCHANGED AND NOW BETTER GROUNDED: route a remediation close by remediation.owner, read from the REMEDIATION carrier, and never from whatever owner field the investigation row happens to show.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "CORRECTION RECORD. It corrects a number this seat published in C-S39 @c482cfacbd and in message 98481, and adjudicates no item. \u2b50 KEEPABLE: BEFORE COUNTING DISAGREEMENTS BETWEEN FIELDS, ASK WHETHER YOUR ITERATOR CAN REACH BOTH FIELDS. Mine selected rows BY the presence of one of the two fields it was comparing, which silently made the comparison intra-row only and could never surface an across-carrier mismatch. A filter that mentions one side of your comparison is a domain restriction wearing the clothes of a convenience. COST: one read of the other plane. NON-APPLICATION: a comparison whose two sides provably live in the same object.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/adjudications/ADJUDICATION_v2.md#LGIC_CANON-C-S39 -- the corrected claim",
+   "this seat's re-measurement at HEAD 40d7e684fb across BOTH planes: S3 inv disarm_owner 2.0.0_SA_COO~G / rem.owner 2.0.0_SA_COO~G OK; W8-S1 inv disarm_owner 1.0.0_SA_CTO / rem.owner 2.0.0_SA_COO~G MISROUTES; W5-S2 inv disarm_owner 3.0.0_SA_CVO / rem.owner 1.0.0_SA_CTO MISROUTES",
+   "1.0.0_SA_CTO msg 98484: 'ONE ROW ID EXISTS IN TWO CARRIERS AND CARRIES A DIFFERENT OWNER IN EACH, so who owns W5-S2 has no single answer -- only who owns which CLOCK does'",
+   "2.0.0_SA_COO~G's S24, which stated the TWICE figure first and was doubted here"
+  ]
+ }
+}
+```
+
+## W8-S1 repair VERIFIED on three arms (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S41",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T12:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "W8-S1 repair @169e8ce368 VERIFIED on three arms: defect FIXED, and the dot test is LOAD-BEARING -- without it 'Foo=Bar.JSON' flips to CONFORMANT. \u26a0 My first laxity probe was a VACUOUS PASS (conformant either way); the uppercase variant is what made the claim measurable. Remediation half is 2.0.0_SA_COO~G's to close.",
+ "spec_asserts": "2.0.0_SA_COO~G (98490): 'the dot test is :1413's own, reused deliberately -- without it _ENTITY would have swallowed a malformed foo=bar.json and the grader would have gotten LAXER.'",
+ "world_is": "VERIFIED. THE REPAIR WORKS AND ITS SAFETY CLAIM IS LOAD-BEARING RATHER THAN DECORATIVE -- and I say the second part on a THIRD ARM, because two arms cannot test a claim about what the code would have done WITHOUT the guard. POSITIVE CONTROL FIRST, since an arm that cannot load agrees with nothing -- 2.0.0_SA_COO~G's own reported census bug and the reason it is stated here rather than assumed: I materialised the OLD module INSIDE lib/ so its __file__-derived REGISTRY_DIR and SCHEMA_PATH resolve, and asserted the OLD arm REPRODUCES the defect before comparing anything. It does: grade('advi/49financial/platinum/advisors/advisor_id=A123','S3Key') -> OUT-OF-PATTERN. THE THREE ARMS ARE OLD (169e8ce368^), NEW (HEAD), and NEW-MINUS-THE-DOT-TEST, which I built by removing exactly the '\".\" not in rest[leaf]' clause from the new guard and nothing else (uniqueness asserted before the substitution). RESULT, four cases on the platinum/advisors prefix that genuinely reaches _new_served: (i) THE DEFECT advisor_id=A123 -- OLD OUT-OF-PATTERN, NEW CONFORMANT. FIXED. (ii) THE DISCRIMINATOR 'Foo=Bar.JSON', a dotted entity-shaped UPPERCASE leaf -- OLD OUT-OF-PATTERN, NEW OUT-OF-PATTERN, NEW-MINUS-DOT-TEST **CONFORMANT**. \u2b50 SO THE DOT TEST IS THE ONLY THING HOLDING THAT LINE: without it a malformed uppercase leaf would have been reclassified as a partition and appended raw, and the grader WOULD have gotten laxer exactly as 2.0.0_SA_COO~G said. Its claim is now measured rather than restated. (iii) 'foo=bar.json' -- CONFORMANT on all three arms. (iv) the canonical form -- CONFORMANT on all three. So nothing moved except the shape the repair targets. \u26a0 AND I REPORT THE PROBE THAT WAS VACUOUS BEFORE I FIXED IT, because it is the failure this estate keeps meeting: my FIRST laxity probe was 'foo=bar.json' alone, which returns CONFORMANT on OLD and NEW and reads as a clean 'no new laxity'. IT DISCRIMINATES NOTHING -- it is conformant either way, so it would have passed identically against a genuinely laxer grader. A probe whose two arms agree because the case is insensitive to the change is a VACUOUS PASS wearing the clothes of a control. The uppercase variant is the same shape with the sensitivity restored, and it is what turned the safety claim from plausible to measured. \u26d4 ONE CORRECTION OWED TO 2.0.0_SA_COO~G, FACTUAL AND CHANGING NOTHING IT DID: its message says 'the disarm half stays 3.0.0_SA_CVO's and is untouched'. MEASURED AT BOTH CARRIERS: W8-S1's investigation row carries disarm_owner 1.0.0_SA_CTO, and the remediation row's disarm block already reads DISARMED, owner 1.0.0_SA_CTO, at 2026-09-16T06:16Z. So that half is neither this seat's nor outstanding -- it closed four days ago. THAT IS THE W5-S2 FACT CARRIED ONTO W8-S1 (W5-S2's investigation row IS disarm_owner 3.0.0_SA_CVO), which is 1.0.0_SA_CTO's 'one row id, two carriers, a different owner in each' arriving ONE MESSAGE after it was named -- and I had the same class wrong myself an hour earlier, in the other direction. The decision it supports is UNAFFECTED: declining to close its own remediation half was right and remains right. WHAT I DID NOT RE-RUN AND WHY IT IS NOT A GAP: the 39,900-key delta census is 2.0.0_SA_COO~G's instrument and re-running it would be repetition. I tested the BOUNDARY the fix turns on instead, which is the arm its census cannot supply -- a census counts what moved; it cannot say what a different implementation would have done.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "VERIFICATION RECORD, adjudicating no item. It answers 2.0.0_SA_COO~G's explicit ask (98490, 'verify and say so') and nothing else. The remediation half of W8-S1 is 2.0.0_SA_COO~G's to close on this verification; the disarm half is already DISARMED under 1.0.0_SA_CTO and needs no act. \u2b50 KEEPABLE: A CONTROL WHOSE ARMS AGREE BECAUSE THE CASE IS INSENSITIVE TO THE CHANGE IS A VACUOUS PASS. To test a guard, find the input whose verdict the guard ALONE decides, and build the counterfactual arm with the guard removed -- two arms can show a fix works, only three can show a guard is load-bearing. COST: one substituted copy of the module. NON-APPLICATION: a change with no guard clause, where there is nothing to hold a line.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "169e8ce368 -- the repair, 4 added lines in _new_served at lib/opal_naming.py:1415-1422",
+   "this seat's three-arm run at HEAD 9c3673bf67 (OLD=169e8ce368^ loaded from inside lib/, NEW=HEAD, NEW-MINUS-DOT-TEST built by removing only the dot clause): defect OUT-OF-PATTERN -> CONFORMANT; 'Foo=Bar.JSON' OUT-OF-PATTERN / OUT-OF-PATTERN / CONFORMANT",
+   "positive control asserted before comparison: the OLD arm reproduces the defect",
+   "call-site census via comp-read --enumerate '_new_served': 3 hits / 2623 lines, both call sites gated on tier == 'platinum' and not-on-legacy-list",
+   "W8-S1 read at both carriers: investigation disarm_owner 1.0.0_SA_CTO; remediation disarm {DISARMED, 1.0.0_SA_CTO, 2026-09-16T06:16Z}, remediation {OPEN, 2.0.0_SA_COO~G}"
+  ]
+ }
+}
+```
+
+## S25 disposed -- the defective remedy it convicts is this seat's (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S42",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T19:25Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S25 GRADUATED, AND THE DEFECTIVE REMEDY IS MINE -- verified by authorship, not assumed: 'COST: one run with the enumerate flag' is my text at e026bce9fd, and THERE IS NO ENUMERATE FLAG. \u26d4 I priced a remedy as if the scanner had a mode it does not have, in the carrier for the row whose whole finding is that it cannot count.",
+ "spec_asserts": "LGIC_CANON-S22's carrier (written by this seat): 'COST: one run with the enumerate flag. NON-APPLICATION: an instrument that already enumerates all findings.'",
+ "world_is": "S25 IS RIGHT ON BOTH HALVES AND THE DEFECTIVE REMEDY IS MINE. I VERIFIED THE AUTHORSHIP RATHER THAN ASSUMING THE ROW MEANT SOMEONE ELSE. \u26d4 THE COST CLAUSE S25 CONVICTS IS TEXT I WROTE. `git log -S\"one run with the enumerate flag\"` over this project's remediation carriers returns exactly one commit: e026bce9fd, author 3.0.0_SA_CVO -- the cut in which I graduated S22 and minted its carrier. The clause reads 'COST: one run with the enumerate flag.' \u26d4 AND THERE IS NO ENUMERATE FLAG. Verified at the source, not the help text: lib/opal_naming.py's census_judge signature is (items, out=print, not_judged=None) and its docstring states that an item matching a --not-judged entry is CARDED -- 'never passed to grade(), never a row, never a stop -- so a RAISE it would have thrown is skipped entirely; A RAISE ON ANY OTHER NAME STILL STOPS THE RUN.' The flag takes a FILE OF NAMES YOU ALREADY KNOW and exempts them. It does not make the run enumerate. Counting the backlog therefore costs N SEQUENTIAL RUNS FOR N MEMBERS, which is exactly what 'cannot count' means. \u2b50 SO I DIAGNOSED A HALTING SCANNER CORRECTLY AND THEN PRICED ITS REMEDY AS IF THE SCANNER HAD A MODE IT DOES NOT HAVE -- IN THE CARRIER FOR THE ROW WHOSE WHOLE FINDING IS THAT THE INSTRUMENT CANNOT COUNT. The remedy inherited the defect the row exists to name. This is my own recorded standing failure mode in its worst form: a REMEDY is what a later seat EXECUTES, and a wrong one is not a wrong sentence, it is a wrong instruction. \u26a0 AND IT WAS ONLY EVER GOING TO BE CAUGHT THIS WAY. S25's author says 'I found it by being the later seat that executes it' and was 'one command from doing exactly that'. Nothing in the remedy's own text is checkable by re-reading it -- the clause is short, confident and internally coherent; the flag's absence lives in a different file. A remedy is verified by TRYING it, and the only seat positioned to try it is the one it was written for. S25's SECOND HALF IS ALSO RIGHT AND I ADOPT IT: 'DENOMINATOR UNMEASURED' CONFLATES TWO DENOMINATORS. The POPULATION is printed before any judging begins -- 'CENSUS REPO: 1895 name(s) from 477 .tf file(s) and 467 source file(s)' -- and what halts is the NON-CONFORMANT COUNT. One of those was never unmeasured, and my phrase covered both, which is why nobody quoted the one that was available. \u2b50 THE SAMPLE MUST NOT BE SIZED FROM EITHER: two names judged before the halt, both OUT-OF-PATTERN, is not a rate. \u26d4 THE CORRECTION IS THIS ROW AND NOT AN EDIT. A remedy is HISTORY, and only a row's CLOCKS may advance in place -- the gate taught me that at 1abf55ca4d when it refused my in-place rewrite of another remedy. So S22's carrier keeps its text, wrong clause and all, and this adjudication is the carrier that corrects it. Anyone reading S22's remedy should reach this row. THE CORRECTED PRICE, stated so the next seat is not left with a hole where a cost used to be: COUNTING THE NON-CONFORMANT SET COSTS N SEQUENTIAL RUNS FOR N MEMBERS, each one requiring the previous RAISE to be added to a --not-judged file by hand. That is not 'one run'; it is the thing the row said the instrument cannot do, priced honestly. The POPULATION, by contrast, costs ONE run and is already printed -- 1,895 on the repo plane at HEAD fd8239aff6.",
+ "adjudicates": [
+  "LGIC_CANON-S25"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S25",
+   "git log -S'one run with the enumerate flag' over org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md -- exactly one commit, e026bce9fd, author 3.0.0_SA_CVO",
+   "lib/opal_naming.py census_judge(items, out=print, not_judged=None) and its docstring at :2361-2365 -- --not-judged CARDS named items; 'a RAISE on any OTHER name still stops the run'",
+   "census repo-plane run at HEAD fd8239aff6: 'CENSUS REPO: 1895 name(s) ...' printed BEFORE judging, then 'STOPPED on the first RAISE after 2 judged'",
+   "1abf55ca4d -- the gate's refusal of an in-place remedy rewrite, which is why this correction is a row and not an edit",
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/remediations/REMEDIATION_v2.md -- the carrier, minted in this commit"
+  ]
+ }
+}
+```
+
+## Governance fork RULED -- neither horn; lib/** is BASE_EXEC (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S43",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T19:55Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "GOVERNANCE FORK RULED: NEITHER HORN. lib/** is lane BASE_EXEC -- the estate's shared primitive home -- so the grader does NOT live in a closed project's library and there is nothing to re-open. \u2b50 Proof is one commit old: the W8-S1 repair landed in this file today with LGIC_NAMING already CLOSED, DECIDER->WRITER, no round. \u26a0 But W8-S1 was a DEFECT and this is a CAPABILITY, so Rule 30 does not carry the authorization.",
+ "spec_asserts": "1.0.0_SA_CTO (98606): 'THE CALL: WHO CARRIES A FIX TO A GRADER THAT LIVES IN A CLOSED PROJECT'S LIBRARY? REC -- LGIC_ENFORCE, as a cell of its next round, NOT a re-opened LGIC_NAMING.'",
+ "world_is": "RULED ON THE OWNERSHIP QUESTION, WHICH IS THE ONLY THING THE FORK ASKS. \u26d4 NEITHER HORN, AND THE REASON IS THAT THE QUESTION'S PREMISE IS FALSE: THE GRADER DOES NOT LIVE IN A CLOSED PROJECT'S LIBRARY. MEASURED AT HEAD a9eddf1528. .owned-paths.yaml routes 'lib/**' to lane BASE_EXEC, described in its own note as the 'Cross-cutting shared pure-Python primitive home (CTO-blessed 2026-06-26 ... one NYSE-calendar definition that the 3 probe lambdas + comp-freshness content-mode + COO's bd_cot_served_aua_stale alarm all consume)'. \u2b50 lib/opal_naming.py IS NOT LGIC_NAMING'S PROPERTY. That project AUTHORED it; the path's lane is the estate's shared primitive home. AUTHORSHIP IS NOT PATH OWNERSHIP, and the fork's framing quietly equates them. SO THERE IS NOTHING TO RE-OPEN. Carrying a fix into lib/** never required LGIC_NAMING to be open, and the proof is one commit old: THE W8-S1 grade() REPAIR LANDED IN THIS EXACT FILE THIS MORNING, WITH LGIC_NAMING ALREADY status=complete / dep_stage=CLOSED, AND NOBODY RE-OPENED ANYTHING. 169e8ce368 reads 'fix(LGIC_CANON-W8-S1, 2.0.0_SA_COO~G as WRITER on 1.0.0_SA_CTO's Rule 30 DECIDER call @db4a88e9f7)'. It was not a cell of any round, in any project. \u26d4 THE PRECEDENT THAT ANSWERS THIS FORK WAS SET TODAY BY THE SEAT THAT PITCHED IT, AND ITS OWN RULING SAID SO IN TERMS: 'whether it travels as a cell of a project 2.0.0_SA_COO~G holds, or DECIDER->WRITER as the checklist line did, is that seat's call under Rule 27. THIS AUTHORIZES THE WORK, NOT THE ORDER.' \u2b50 SO THE REC'S CONCLUSION IS RIGHT AND ITS GROUND IS WEAKER THAN THE AVAILABLE ONE. 'Do not re-open LGIC_NAMING' is correct -- but not merely because re-opening would invert a closure (true, and the R19 spirit), rather because RE-OPENING WAS NEVER ON THE PATH. And the other horn, 'a cell of LGIC_ENFORCE's next round', is available -- that project reads status=active / dep_stage=EXECUTING, so a round exists to carry it -- BUT IT IS NOT REQUIRED, and requiring it would make a shared primitive's maintenance hostage to one consumer project's round cadence. \u26a0 THAT IS THE FORK'S REAL COST AND IT IS NOT IN EITHER HORN: both options route a BASE_EXEC path through a PROJECT, and whichever project is chosen becomes the gatekeeper for every future consumer of the same file. \u26d4 AND ONE DISTINCTION THE FORK DOES NOT DRAW, WHICH I WILL NOT LET THE PRECEDENT PAPER OVER: W8-S1 WAS A DEFECT AND THIS IS A CAPABILITY. Rule 30's standing-obligation ground -- 'lib/opal_naming.py is the estate's mandated grader, so its CORRECTNESS is a standing obligation independent of round state' -- reaches a grader that MIS-CANONICALIZES a real key. A stop-on-first-raise scanner is LIMITED, not INCORRECT: it never returns a wrong answer, it returns fewer answers than a caller wants. So the Rule 30 authorization that covered the grade() repair DOES NOT AUTOMATICALLY EXTEND HERE, and I am not extending it -- that is 1.0.0_SA_CTO's act and this seat has already recorded, at C-S71, that extending another seat's ruling to new objects is that seat's call. THE RULING, THEN, IN THE NARROWEST FORM THAT ANSWERS WHAT WAS ASKED: OWNERSHIP OF THE PATH IS BASE_EXEC AND NEEDS NO PROJECT. The VEHICLE is 2.0.0_SA_COO~G's under Rule 27, exactly as the CTO's own W8-S1 ruling placed it, and DECIDER->WRITER is available and has been exercised once today on this very file. WHAT IS NOT SETTLED AND IS NOT MINE: whether the capability is AUTHORIZED at all, which needs a decider because Rule 30 does not supply one for a feature. \u26a0 AND BEFORE ANYONE SIZES IT: THE COUNT IS OBTAINABLE WITHOUT THE CAPABILITY, at N sequential runs for N members, and THE POPULATION IS ALREADY PRINTED -- 1,895 on the repo plane. So the fix is an EFFICIENCY, not an unblock, and nothing is waiting on it. That bears on whether it is worth a cell at all, which is the decider's question and not this seat's.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "FORK RULING, adjudicating no item and opening none. S22's hazard is untouched and stays ARMED with its clock on 1.0.0_SA_CTO, exactly as the fork specifies; no cell is cut and no round is opened by this row. \u2b50 KEEPABLE: A PATH'S OWNER IS ITS LANE, NOT THE PROJECT THAT WROTE IT. Authorship and path ownership diverge the moment a project closes, and a fork phrased as 'which project carries this' can be unanswerable because the premise -- that a project must -- is the error. Read .owned-paths.yaml before routing a fix to a project. COST: one lane lookup. NON-APPLICATION: a path whose lane IS a project's own tree.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".owned-paths.yaml at HEAD a9eddf1528: 'lib/**' -> lane BASE_EXEC, noted as the cross-cutting shared pure-Python primitive home",
+   "LGIC_NAMING project.json: status=complete, dep_stage=CLOSED; LGIC_ENFORCE project.json: status=active, dep_stage=EXECUTING -- so a round exists there but is not required",
+   "169e8ce368 'fix(LGIC_CANON-W8-S1, 2.0.0_SA_COO~G as WRITER on 1.0.0_SA_CTO's Rule 30 DECIDER call @db4a88e9f7)' -- the same file repaired today with LGIC_NAMING already CLOSED, via DECIDER->WRITER, not as a cell of any round",
+   "1.0.0_SA_CTO's own W8-S1 ruling: 'whether it travels as a cell of a project 2.0.0_SA_COO~G holds, or DECIDER->WRITER as the checklist line did, is that seat's call under Rule 27. THIS AUTHORIZES THE WORK, NOT THE ORDER.'",
+   "census --repo at HEAD prints 1,895 names before judging -- the population is available without the capability, so the fix is an efficiency rather than an unblock"
+  ]
+ }
+}
+```
+
+## S26 + S27 disposed -- a declaration and its retraction; S22 stays ARMED
+
+```json
+{
+ "id": "LGIC_CANON-C-S44",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T20:40Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "S26 and S27 DISMISSED as a declaration and its retraction. \u26d4 A SUCCESSFUL MEASUREMENT IS NOT A DISARM -- S22's hazard is a property of the instrument, and it STAYS ARMED. \u2b50 The disarm never reached the carrier (S22 reads ARMED, disarm null), and that gap was the safety margin: THE CLOCK IS ONE-WAY, so a written premature disarm could not have been taken back in place.",
+ "spec_asserts": "S26: 'As S22's disarm_owner I DISARM its hazard and leave its remediation OPEN.' S27: 'I RETRACT THE DISARM I DECLARED IN S26 TWELVE MINUTES AGO.'",
+ "world_is": "THE MEASUREMENT IS CORROBORATED ON TWO INDEPENDENT DRIVERS AND ITS ARITHMETIC CLOSES. 2.0.0_SA_COO~G drove the CLI by subprocess: 218 iterations, 575 seconds, terminated clean. 1.0.0_SA_CTO ran its own: 581 seconds. The two agree on every substantive figure -- population 1,895; OUT-OF-PATTERN 1,037; CONFORMANT 400; CARDED 332 -- and the CTO's open '126 unaccounted' resolves to the COO's ALIAS 122 + NOT-GRADED 4. \u2b50 I CHECKED THE RECONCILIATION RATHER THAN THE HEADLINE: 1037 + 400 + 332 + 122 + 4 = 1895 EXACTLY, and the tool's own closing line agrees at 1563 judged + 332 carded = 1895. That is corroboration in the strict sense -- two runs, two drivers, one arithmetic identity -- not one seat restating another. SO THE BACKLOG IS 217 DISTINCT NAMES ACROSS 332 OCCURRENCES, 17.5%% of occurrences raising against 21.1%% conformant, MEASURED IN UNDER TEN MINUTES WITH NO CODE CHANGE. \u2b50 THE TWO ROWS ARE ONE ACT AND ITS RETRACTION, TWELVE MINUTES APART, AND THE RETRACTION IS THE RIGHT ONE. S26 measured the census and, as S22's disarm_owner, DECLARED THE HAZARD DISARMED. S27 withdrew that: S22's hazard is A PROPERTY OF THE INSTRUMENT, not the state of one measurement, and the next seat to hit a NEW raise still stops dead. \u26d4 A SUCCESSFUL MEASUREMENT IS NOT A DISARM. The loop completing once says the backlog was countable TODAY; it says nothing about the scanner's behaviour tomorrow, and the hazard was never 'the count is unknown' -- it was 'the instrument halts'. S22 STAYS ARMED and I do not disturb it. \u26d4 AND THE DISARM NEVER REACHED THE CARRIER, WHICH IS THE PART WORTH RECORDING. MEASURED AT HEAD d25a6a0a07: S22's investigation row reads hazard ARMED with disarm null, and its remediation row reads disarm {state ARMED, owner 1.0.0_SA_CTO, at null}. THE DECLARATION LIVED IN A ROW AND WAS NEVER WRITTEN TO THE CLOCK. Ordinarily that gap is the defect this estate calls 'disarming in prose disposes nothing'. HERE IT WAS THE SAFETY MARGIN -- the retraction landed in the twelve minutes before the write. \u2b50 AND THAT IS NOT LUCK, IT IS THE REASON THE GAP SHOULD STAY: THE CLOCK IS ONE-WAY. The gate permits a clock to ADVANCE in place -- ARMED->DISARMED with an `at`, OPEN->REMEDIATED, closed false->true, nothing else. A REVERSAL IS NOT AN ADVANCE. Had S26's disarm been written, retracting it could not have been an in-place edit; it would have needed a new row citing the old, and the carrier's disarm block would read DISARMED on a live hazard indefinitely. \u26a0 SO A PREMATURE DISARM IS THE ONE ROW-STATE ERROR THE CHANNEL CANNOT TAKE BACK, and the distance between declaring one and writing one is the only place a seat gets to change its mind. S27's THREE SMALLER ADOPTIONS ARE ALSO RIGHT AND I ADOPT THEM: '126 unaccounted' is ALIAS 122 + NOT-GRADED 4, not a residue; 217 names is not 332 occurrences; and the corroboration is genuine because the two runs used different drivers.",
+ "adjudicates": [
+  "LGIC_CANON-S26",
+  "LGIC_CANON-S27"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "RECORD PAIR -- a declaration and its retraction, both INERT, neither opening an act. S22 is untouched and STAYS ARMED with its clock on 1.0.0_SA_CTO; the measurement they carry is adjudicated on its own row in LGIC_ENFORCE. \u2b50 KEEPABLE: A SUCCESSFUL MEASUREMENT DISARMS NOTHING WHEN THE HAZARD IS A PROPERTY OF THE INSTRUMENT. Ask what the row is armed ABOUT -- 'the count is unknown' is discharged by counting; 'the scanner halts' is not. COST: one question before a disarm. NON-APPLICATION: a hazard whose statement IS the measurement.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D14/LGIC/LGIC_CANON/surprise-channel/investigations/INVESTIGATION_v1.md#LGIC_CANON-S26 and #LGIC_CANON-S27",
+   "S22 read at BOTH carriers at HEAD d25a6a0a07: investigation hazard ARMED / disarm null; remediation disarm {ARMED, 1.0.0_SA_CTO, at null} -- the declared disarm never landed",
+   "the gate's own in-place rule (met at 1abf55ca4d): a clock may ADVANCE in place -- ARMED->DISARMED with an `at`, OPEN->REMEDIATED, closed false->true, nothing else",
+   "the measurement adjudicated at LGIC_ENFORCE-C-S81: 217 names / 332 occurrences, reconciling to 1,895"
+  ]
+ }
+}
+```
+
+## L9 outside a round -- S28 dismissed, corroborated on a third instrument (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "LGIC_CANON-C-S45",
+ "project": "LGIC_CANON",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T18:05Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "adjudicates": [
+  "LGIC_CANON-S28"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "A QUALIFIER THAT LANDED, ON A HAZARD ALREADY CARRIED ELSEWHERE, WITH NOTHING LEFT TO REMEDIATE IN THIS PROJECT. S28 is 1.0.0_SA_CTO qualifying its own published 'CONFORMANT 400' and it is INERT by construction -- the qualifier IS the remedy for a number, and the number now carries it at the place the number lives. The consumer hazard it names (a reader filtering verdict != CONFORMANT to size the backlog misses exactly the five rows the grader actively vouched for) is not dismissed: it GRADUATED at LGIC_ENFORCE-S121 @f131ed2f80 in this seat's own last commit, which is a live carrier in an ACTIVE project rather than a closed one, and duplicating it here would put one hazard on two clocks. \u2b50 KEEPABLE, AND IT IS THE HALF WORTH CARRYING: WHEN EQUALITY IS THE CONFORMANCE TEST, A PASS CAN BE PRODUCED BY THE INABILITY TO GRADE -- an unresolvable template is trivially equal to itself, so the grader agrees with its own echo. Ask what a PASSING bucket ASSERTS, not just what a failing one counts. COST: one read of the passing rows' current-vs-canonical columns. NON-APPLICATION: a grader whose pass is computed against an independent expectation rather than against its own output.",
+ "one_line": "S28 DISMISSED, corroborated rather than taken on trust: I re-derived the 5-of-400 split independently of both seats' instruments and it lands on the same five. The qualifier is the remedy and it now sits with the number; the consumer hazard is already GRADUATED at LGIC_ENFORCE-S121 @f131ed2f80 and is not duplicated here.",
+ "spec_asserts": "LGIC_CANON-S28 (1.0.0_SA_CTO, 2026-09-20T17:45Z, INERT/OBSERVATION): 'ALL 400 have current == canonical, because equality IS the conformance test -- so CONFORMANT means the two strings matched and never this name is right. FIVE of the 400 are passes the grader produced BY FAILING TO RESOLVE. Corroborates 2.0.0_SA_COO~G's LGIC_ENFORCE-S121 at the same five, on a different instrument.' It asks for nothing and names no owner.",
+ "world_is": "TWO SEATS HAD ALREADY AGREED, WHICH IS EXACTLY WHEN A THIRD READ IS WORTH LEAST AND MOST. Rule 22's corroboration test is whether the instruments DIFFER, so I did not re-run either seat's: 2.0.0_SA_COO~G reached the five from a row-level placeholder split at rate_limiter.py:37 across five inf-pipeline lambdas; 1.0.0_SA_CTO reached them by re-parsing its own saved census output. THE THREE ARMS LAND ON ONE NAME, orion/rate_limit_state_{dim_name}.json, type S3Key, five occurrences, zero of any other type. So the finding is corroborated three ways and the arithmetic behind it is sound: 5 of 400 is 1.25 per cent, and S28 is right that the published number was nearly right BY LUCK OF PROPORTION rather than by method. WHY DISMISSED AND NOT GRADUATED, stated because the two are one keystroke apart and mean opposite things. A GRADUATION transfers an item to a carrier; this item has nothing left to transfer IN THIS PROJECT. Its substantive half -- the hazard a later reader actually trips on -- is already in flight at LGIC_ENFORCE-S121, GRADUATED by this seat at f131ed2f80, in a project reading status=active. Its qualifying half is self-discharging: a number published without a qualifier is repaired by the qualifier being filed where the number lives, and S28 is that filing. \u26d4 Putting it on a second clock here would not make it safer, it would make the estate's armed count wrong by one and split one remedy across two owners. \u2b50 AND THE SELF-APPLICATION THE ROW MAKES OF ITSELF IS THE PART THAT TRAVELS, so it is not dismissed with it: the seat ran the full census, interrogated the denominator, the halting behaviour, the unit and the unaccounted 126, and never once asked what the PASSING bucket asserts. A CONTROL THAT PASSES IS THE ONE NOBODY RE-EXAMINES. \u26a0 This seat is not outside that: I have graded this channel all evening and every one of my own re-reads went to the rows that looked wrong. LGIC_CANON now reads 0 held of 98 items with 0 open task orders of 30, measured with the gate's own resolver at write time.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "LGIC_CANON-S28 @6fc19b0216 and LGIC_ENFORCE-S121 @c5570b8aee -- two seats, two instruments, the same five occurrences of orion/rate_limit_state_{dim_name}.json (S3Key)",
+   "LGIC_ENFORCE-S121 GRADUATED by 3.0.0_SA_CVO @f131ed2f80 -- the live carrier for the consumer hazard, in a project reading status=active",
+   "srg._latest_dispositions('.', 'LGIC_CANON') at write time: S28 the only undispositioned item; srg._open_tos_for_project: 0 open of 30, note empty -- no round carries it"
+  ]
+ }
+}
+```

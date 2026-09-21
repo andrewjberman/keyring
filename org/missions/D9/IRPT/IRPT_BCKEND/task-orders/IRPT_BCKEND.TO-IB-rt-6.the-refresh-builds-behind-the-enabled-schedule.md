@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~2</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-11</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-12T05:48:29Z. Its gate ('after IB-rt-2, IB-rt-3 and IB-rt-5 are terminal and merged') is SATISFIED on all three, each proof-of-spec instance re-graded VALID rc=0 at HEAD by the issuer rather than taken from a report. Third order of slot ~2.</status>
+<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-12T05:48:29Z. Its gate ('after IB-rt-2, IB-rt-3 and IB-rt-5 are terminal and merged') is SATISFIED on all three, each proof-of-spec instance re-graded VALID rc=0 at HEAD by the issuer rather than taken from a report. Third order of slot ~2. ISSUER-CORRECTION (round 8 IB-rth-3, ruling 98990/98993): LEFT NON-TERMINAL, word unchanged -- RT6-AC1's own status_reason reads "BLOCKED, not unattempted... the order stays open"; no bound admits `complete` on a disclosed FAIL (no OG-r-1/R-58 shape) and no later round's decomp cell names IB-rt-6 in a `supersedes` column (rounds 3-8 read, plus a project-wide text search) -- `superseded` is refused too.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 2 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.13 @e6ba5d9878 (ADMITTED, both L4-R halves SIGNED) | **Round-1 analysis:** `../ledger/ROUND_ANALYSIS.round1.md` @0d57ceb2f9, ruling 3(a) | **Slug rows this cell closes:** C-S73 (refresh half) | **Decomp cell:** `IB-rt-6` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.2, s.1 + s.2) | **outcome_ref:** FWD-7 (own), FWD-1 | **PRD candidate:** B4
 

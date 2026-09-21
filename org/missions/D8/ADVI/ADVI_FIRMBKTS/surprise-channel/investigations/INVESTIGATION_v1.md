@@ -260,3 +260,30 @@ write: **1 row** (`S1`).
   }
 ]
 ```
+
+```json
+{
+  "id": "ADVI_FIRMBKTS-S10",
+  "project": "ADVI_FIRMBKTS",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-09-19T20:58Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "one_line": "THE AWS CORPUS RETURNS A CONFIDENT MEASURED ZERO FOR TWO BUCKETS THAT HAD BEEN LIVE FOR SIXTEEN HOURS BEFORE THAT CORPUS WAS BUILT, AND drift_class CANNOT FLAG IT",
+  "spec_asserts": "CLAUDE.md Rule 21: 'comp-find --corpus aws: the LIVE AWS plane -- regex over every aws CloudNode's name+arn+props ... drift_class per hit (LIVE-no-DECLARED = in AWS, not in the repo), denominator = nodes scanned, vintage = the DB's own built: line.' The LIVE-no-DECLARED class exists precisely so that a resource present in AWS and absent from the repo is VISIBLE rather than silent.",
+  "world_is": "comp-find 'opal-data-(inflection|cottonwood)' --corpus aws returns 0 hits across 2593 aws nodes, vintage 'Built from the estate as of 2026-09-19 12:21:32 UTC'. Both buckets were created 2026-09-18T20:05:17Z -- SIXTEEN HOURS BEFORE that build -- so this is not a vintage lag. POSITIVE CONTROL, run before concluding: opal-data-bd returns 159 hits with band S3_BUCKET=1, so the corpus DOES model S3 buckets and the zero is a genuine absence rather than an unmodelled class. AND drift_class IS STRUCTURALLY UNABLE TO SURFACE IT: LIVE-no-DECLARED is a property OF A NODE THAT IS IN THE GRAPH, so a resource missing from the graph altogether is classed as nothing at all and reads as absence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find 'opal-data-(inflection|cottonwood)' --corpus aws --limit 30 -> DENOMINATOR: 0 hit(s) across 2593 aws node(s); VINTAGE: 2026-09-19 12:21:32 UTC; stitch source stitch-codebuild built 2026-09-19T03:01:13Z; manifest ee32ba01e5e6",
+      "POSITIVE CONTROL: comp-find 'opal-data-bd' --corpus aws --limit 6 -> 159 hit(s) across the same 2593 nodes, BANDS include S3_BUCKET=1 -- the class is modelled",
+      "aws s3api list-buckets --query \"Buckets[?starts_with(Name,'opal-data-')].[Name,CreationDate]\" -> opal-data-inflection and opal-data-cottonwood, both 2026-09-18T20:05:17Z, in a printed list of 22 opal-data-* buckets",
+      "aws s3api get-bucket-policy --bucket opal-data-inflection -> AccessDenied by an explicit deny in a resource-based policy: the buckets are not merely present, they are actively refusing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHY IT IS FILED HERE RATHER THAN AGAINST THE TOOL'S OWN PROJECT: it BOUNDS THIS PROJECT'S CENSUSES. ADVI_FIRMBKTS F1 is a census cell and its PRD names the aws corpus among the reading instruments; a cell that asks 'does this firm bucket exist' through the corpus gets a clean, denominator-bearing NO for exactly the two buckets this project is about. The tool defect is not this project's to repair and its owner is unchanged; the BOUND is this project's and needs a carrier here. WHAT IT COST ME, recorded because the near-miss is the evidence: I ran the corpus read FIRST and it returned zero. Had I stopped there I would have told Andrew the two buckets do not exist -- the exact mirror, in the opposite direction, of telling him two hours earlier that root was the only path to them. BOTH ERRORS HAVE ONE SHAPE: a faithful instrument answering a question about a population it could not see, with nothing in the output to say so. THE ONLY THING THAT SEPARATED THEM WAS THE POSITIVE CONTROL, and it cost one call. DISARM CONDITION, measurable: the corpus holds a node for each of the two buckets, or the corpus documents which resource classes its build can miss and under what condition, so a zero from it can be read correctly. UNTIL EITHER HOLDS: any ADVI_FIRMBKTS census over --corpus aws states in its own output that the corpus is not authoritative for bucket EXISTENCE and names the live-plane read it was corroborated against."
+}
+```

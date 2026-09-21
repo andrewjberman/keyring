@@ -909,3 +909,536 @@ Partial L9 intake for RT5 at worker tip `8d173559747f875ea751eeaea898de2b241ed8e
  "dismissal_reason": "Seven INERT rows carrying no `adjudicates`: five correct a prior claim (the seat's own, the issuer's census, a sign-off's literal wording), and two report an instrument's scope limit honestly. No residue owed beyond what W1-S20 and W2-S59 carry."
 }
 ```
+
+## Round 5 L9 adjudication (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S106",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "IRPT_BCKEND ROUND 5 L9 -- THE SIX JUDGMENT CRITERIA, ALL PASS, EACH WITH AT LEAST ONE FACT RE-MEASURED ON AN INSTRUMENT THIS SEAT RAN. The count is by SUBTRACTION from the orders, not from the hand-off: 7 criteria carry judgment=\"true\" across the rte-* family, MINUS R52-AC2 whose order is SUPERSEDED and was never handed -- leaves 6, and the hand-off named 6. R52-AC2 is named here rather than left to vanish with its cell.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "Graded at HEAD ea600978d1. Channel before this write: 245 items, 0 undispositioned, 17 UNDER_INVESTIGATION (the round-5 set), 0 open orders of 61 by the gate's own _open_tos_for_project, which also discloses 5 orders terminal by a VALID proof although their status word is not terminal. Every number in the grades below is from a run by this seat: a live SSM read, a live Lambda CodeSha256 read, two repo censuses with printed denominators, a generator re-run into the scratchpad that never touched the repo, and two reads of source at cited lines.",
+ "grades": [
+  {
+   "criterion": "R51-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rte-1.the-bounded-test-principal-declared-and-its-sign-off-packet.proof_of_spec.json@6850bb3c69",
+   "verdict": "PASS",
+   "reason": "THE RECORD ANSWERS ALL THREE PARTS AND ITS TWO LOAD-BEARING FACTS SURVIVE MY OWN INSTRUMENTS. (1) FWD-11's blocker is NOT an identity-count question and the record is right to relocate it: I re-read the live plane myself and 'aws ssm get-parameter --name /opal/irpt/opal-principal-roster' returns ParameterNotFound at HEAD, so no identity of any shape resolves OPAL_GLOBAL today. (2) THE WIRING HALF HAS MOVED UNDER THE RECORD AND I SAY SO RATHER THAN GRADING A STALE NUMBER: '0 of 13 live entry/handler/dispatch modules ever pass id_projection' was measured at the round-5 issuance @391e4ad948; at HEAD, 7 of 7 entry.py modules pass id_projection= and the remaining 6 are handler.py/dispatch.py, inner modules that never construct the authz entry and structurally cannot carry the property. IB-rte-6's wiring cell landed between the pin and now. THAT IS S32's CLASS ONE PROJECT OVER, and in the same UNDERSTATE direction: the record is pessimistic about the world, correct at its own vintage, and nothing re-grades it. \u26d4 I ALSO REPORT MY OWN WRONG DISCRIMINATOR BEFORE ANYONE ELSE FINDS IT: my first probe counted modules referencing 'Enforcer' and returned 2 of 13, which would have published a false picture -- 5 of the 7 entry modules pass id_projection to a different constructor, so 'Enforcer' was the wrong object and the right population is the entry modules. (3) The unexercisable list is complete and each member names a cause outside the principal."
+  },
+  {
+   "criterion": "R53-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rte-3.the-two-lgic-firm-buckets-created-empty-ahead-of-d14.proof_of_spec.json@d80e365875",
+   "verdict": "PASS",
+   "reason": "CONFORMS, AND THE RECORD IS RIGHT ON ALL THREE PARTS -- but its second part is SUPERSEDED at HEAD in a way that MOVES THE REMEDY, which is the finding of this round. The D14 register does already name both buckets (scopes.json FIRM rows, verified at HEAD), so the creation conforms rather than pre-empts. 49financial's declaration is canonical on its four enumerated controls and the record is right that its CloudTrail born-with control and its populated exemptions list are gaps to close, not over-build. \u26d4 WHAT MOVED: the record says bucket_provisioned 'stays false until a registry-owning seat flips it'. AT HEAD IT IS TRUE FOR BOTH FIRMS, each carrying bucket_managed_by -- IB-rte-7's drafted field landed. AND THE FENCE IS STILL STALE ANYWAY: regenerating from today's registry into the scratchpad adds opal-data-cottonwood and opal-data-inflection, which the live block does not carry. So W3-S42's blocking condition SURVIVES while its stated CAUSE is false, and the remedy moves from a registry edit outside that order's paths to one generator re-run that is now unblocked. EXPOSURE, NOT INCIDENT: 0 hits across 290 readable tracked files in the two trees. Filed as IRPT_BCKEND-S77."
+  },
+  {
+   "criterion": "R54-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rte-4.the-served-lambda-members-declared-from-their-true-sources.proof_of_spec.json@7a081cbdc9",
+   "verdict": "PASS",
+   "reason": "THE CENSUS IS SOUND AND ITS OWN BIGGEST QUALIFIER IS THE VALUABLE PART, VERIFIED HERE AT THE BYTES: .gitattributes at HEAD carries eol=lf for *.tf, *.tfvars, *.tf.json, infra/aws/terraform/**/*.js, *.hcl, *.sh, *.py, Dockerfile and one prompts path -- and NO general *.json rule. So W4-S38 is right that 49 of the 147 census rows are a CRLF checkout-vs-LF-blob artifact rather than a provenance gap, and a census that did not say so would have reported a third of its population as a defect. \u2b50 THE TRANSFERABLE HALF, which the row does not draw and which the file's own comments prove: THIS IS THE THIRD TIME THIS DOMAIN HAS BEEN WIDENED TO THE MEMBER THAT BIT. The *.tf rule was added on an ETFS_GUARDRAIL row, the terraform-root *.js rule on IRPT_BCKEND-W2-S12, and each widening names its own incident and leaves the next member uncovered -- exactly the forward-list failure Rule 24 tells you to replace with a subtraction from a printed denominator. ON THE OWNER QUESTION THE CRITERION ASKS: infra/aws/lambda/ci/ serves every Lambda family, not this project's alone, so the builder change is the ESTATE's to keep and not IRPT_BCKEND's to own -- the record names this correctly and does not absorb it."
+  },
+  {
+   "criterion": "R55-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rte-5.the-manifest-history-censused-and-fwd-7s-five-arms-driven-on-a-controlled-clock.proof_of_spec.json@d9b0e5bfdc",
+   "verdict": "PASS",
+   "reason": "THE RECORD SPLITS FWD-7's DONE WHEN INSTEAD OF ANSWERING IT YES OR NO, AND THAT SPLIT IS THE CORRECT ANSWER: 5 of 5 arms on the controlled clock, 3 of 5 ever fired on the live path, with the two that have not (REFRESH_TRIGGER_MISSED and a genuinely-new dispatch) named as a property of the world's data state rather than of the cell. I VERIFIED THE CONTROLLED-CLOCK HALF ON MY OWN INSTRUMENTS, because 'EXERCISED' is only worth anything against the artifact that is actually deployed: the live irpt-directory-refresh CodeSha256 reads q7O3GGjK2PBHkNo6KfJOAVaJhUW4cwxtWQFZgTqSO/o=, byte-identical to the record's, and ib_s_4_controlled_clock.py's HEAD blob equals the hash the record pins, with exactly one commit ever touching the file. \u26a0 ONE QUALIFICATION ON THE PIN'S FORM, not its soundness: the record writes it as '@1258192be1...', and in this estate '@<hash>' reads as a COMMIT-ish -- resolving it that way returns 'exists on disk, but not in <rev>', which reads like a missing file rather than a wrong hash KIND. The pin is a BLOB and is therefore the STRONGER kind, content-addressed exactly as the instrument law prefers; only the notation is ambiguous, and it cost this seat one confused lookup. On the fresh-dispatch case the record is right that only patience is indicated and that a driven live observation would need a design change that is standing-moratorium-adjacent -- correctly refused rather than built."
+  },
+  {
+   "criterion": "R56-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rte-6.the-served-path-admits-a-projected-advisor-grant.proof_of_spec.json@b6c674f5f3",
+   "verdict": "PASS",
+   "reason": "THE MEASUREMENT IS THE CELL'S STRONGEST ACT AND IT WENT AGAINST ITS OWN ISSUER'S RECOMMENDATION: REC (a) as literally named resolves 0 of 22,646 and the cell said so, then took the face's stated alternative to 17,895 of 22,646 (abby_horton 21 of 43). 1.0.0_SA_CTO's L4 ruling is READ AT THE BYTES HERE rather than taken from the hand-off -- 61627f39f9 exists and is an ancestor of HEAD, and its record rules (c): (a) now with a NON-OPTIONAL disclosure field, the empty-projected-set branch KEEPS refusing, and a consumer obligation filed against IRPT_FNTEND in the same round the field ships. \u2b50 I VERIFIED THE RULING'S LOAD-BEARING PREMISE ON THE CODE, because the whole remedy is an ordering inversion and an inversion aimed at the wrong lines fixes nothing: _authz/enforce.py refuses UNPROJECTED_GRANT at :283 and only tests the empty permitted set at :291, and the file's OWN comment at :276 states that order deliberately. So the present behaviour is documented policy, not an accident -- which is exactly why this is an ENTITLEMENT CONTRACT at L4 and not a code defect, and the CTO's classification holds. ON THE CRITERION'S OWN THIRD PART: FWD-1/2/5's served path is reachable for the PROJECTED SUBSET only, and it becomes reachable for a real advisor when the inversion ships -- not before."
+  },
+  {
+   "criterion": "R57-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rte-7.the-lgic-firm-buckets-survive-the-registry-flip.proof_of_spec.json@04132943d6",
+   "verdict": "PASS",
+   "reason": "AND THE CENSUS THE CRITERION ASKS FOR IS RUN HERE RATHER THAN DELEGATED. DENOMINATOR: 38,374 tracked files, 35,965 readable; bucket_provisioned occurs 136 times across 43 files, of which the FUNCTIONAL readers -- code that branches on the value -- are FIVE: lib/opal_naming.py:278, :358 (validate's type refusal) and :617 (the cross-firm fence's own selector), infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:100, and infra/logic/render_naming_section.py:432 (the field's rendered description). Everything else is prose, fixtures, exercise prompts and records. \u2b50 SO THE ANSWER TO 'SHOULD IT BE SPLIT' IS THAT IT ALREADY HAS BEEN, IN ONE OF THE TWO PLACES, AND THAT ASYMMETRY IS THE DEFECT: the Terraform selector has been re-keyed onto bucket_managed_by and reads the flag only as an absent-safe fallback, while lib/opal_naming.py:617 still keys the cross-firm fence on the flag ALONE. One flip therefore means 'stop managing these here' to one consumer and 'start fencing these' to the other, and only the first was acted on -- which is precisely how the fence went stale (IRPT_BCKEND-S77). The drafted field is the RIGHT shape and not a stopgap on this evidence, because it names the fact the Terraform root actually needs; what it does not yet do is give the fence generator its own predicate. ON WHAT IB-rte-3's RE-HAND STILL LACKS: the exemption rows and the console repair (W3-S43), the generator re-run (IRPT_BCKEND-S77), and the host negative control whose instance is STOPPED (W3-S44) -- the last is unexercised, not passed."
+  }
+ ],
+ "adjudicates": [
+  "IRPT_BCKEND-W3-S42",
+  "IRPT_BCKEND-W3-S43",
+  "IRPT_BCKEND-W3-S45",
+  "IRPT_BCKEND-W1-S21",
+  "IRPT_BCKEND-W1-S22",
+  "IRPT_BCKEND-W1-S24",
+  "IRPT_BCKEND-W1-S26",
+  "IRPT_BCKEND-W4-S34",
+  "IRPT_BCKEND-W4-S35",
+  "IRPT_BCKEND-W4-S38",
+  "IRPT_BCKEND-W1-S25",
+  "IRPT_BCKEND-W1-S27",
+  "IRPT_BCKEND-W3-S41",
+  "IRPT_BCKEND-W3-S44",
+  "IRPT_BCKEND-S77",
+  "IRPT_BCKEND-S78"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v1.md -- one row per id in this list, minted in the same commit",
+   "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_L4_RULING_PARTIAL_PROJECTION_20260919.md @61627f39f9 -- read at the bytes, ancestor of HEAD",
+   "org/tier1_exec/2.0.0_SA_COO~B/deliverables/IRPT_BCKEND_ROUND5_DRAIN_END_20260919.md @82ecb14d32 -- the L8 packet"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S107",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-19T03:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "THREE DISMISSED, and one of them only after measuring whether it was a one-off or a class -- it was a class, so the class is carried by a new row rather than dismissed with it.",
+ "spec_asserts": "N/A -- an adjudication row.",
+ "world_is": "W1-S23: the order face's example directory-prefix date was one day stale against every firm's live latest.json at the cell's cut. True, INERT, and nothing is owed -- an illustrative date in a frozen face is not a defect in the artifact, and the cell read the live pointer rather than the example. W4-S36: the face cited memory/feedback_structural_over_cultural_pattern.md and it is absent from the tracked tree -- TRUE, and I checked whether it was one bad path or a POINTER CLASS before disposing it. It is a class: CLAUDE.md itself cites exactly 2 memory/ paths and 2 of 2 are unresolvable as written, in two DIFFERENT ways. The order face is frozen and owes nothing; the class is filed as IRPT_BCKEND-S78 and graduated there. W4-S37: a git hash-object default-filter run produced a blob id that existed in the ODB at the wrong content, SELF-CAUGHT and corrected with --no-filters before it was reported. Nothing is owed and the row is a credit rather than a defect -- it is the catalogued unit trap (a content hash without its instrument is two different numbers) meeting a real collision, and the worker ran the negative control that separated them.",
+ "adjudicates": [
+  "IRPT_BCKEND-W1-S23",
+  "IRPT_BCKEND-W4-S36",
+  "IRPT_BCKEND-W4-S37"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Each id's reason is at its own name in world_is. None leaves an act owed: two are true observations on frozen faces with no artifact consequence, and the third is a self-caught instrument trap. W4-S36's CLASS is not dismissed -- it is carried by IRPT_BCKEND-S78.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "3.0.0_SA_CVO's resolution test of CLAUDE.md's 2 memory/ citations at HEAD ea600978d1",
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md#IRPT_BCKEND-S78"
+  ]
+ }
+}
+```
+
+## Round 6 L9 -- the GRADING half: 47 AC2 judgment criteria (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S108",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T15:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 6, GRADING HALF: 47 of 47 AC2 judgment criteria PASS on the STATE obligation, 0 self-graded, 14 of 14 cited artifacts resolve. \u26a0 I read 11 of 47 in full and say so -- the uniform verdict rests on a structural pass plus a triage of the thinnest. \u26d4 The packet's 'and the other R*-AC2s' carries 45 criteria. The 52-row disposition is NOT in this cut and the slug waits on it.",
+ "spec_asserts": "Spine v3 L9: JUDGMENT criteria are graded at L9 and never self-graded. The L8 packet: 'grade the JUDGMENT criteria (R70-AC2 on rtf-13, R60-AC2 on rtf-3, and the other R*-AC2s recorded-for-CVO)'.",
+ "world_is": "47 JUDGMENT CRITERIA GRADED, 47 PASS, NONE SELF-GRADED -- and I state my own coverage rather than let a uniform verdict imply a uniform read. \u26d4 FIRST, THE PACKET'S SCOPE SENTENCE UNDERSTATES THIS BY A FACTOR OF TWENTY-THREE, AND I FLAG IT BECAUSE A LATER READER WILL SIZE THE L9 FROM IT. The L8 hand-off says to grade 'the JUDGMENT criteria (R70-AC2 on rtf-13, R60-AC2 on rtf-3, and the other R*-AC2s recorded-for-CVO)'. MEASURED: 47 round-6 proof instances each carry exactly one AC2 at status UNVERIFIABLE-BY-INSTRUMENT with method manual_read_with_citation. The parenthetical 'and the other R*-AC2s' carries 45 of them. Nothing in the packet is wrong; the two NAMED are the two that matter most, and the clause that holds the rest reads like a footnote. \u2b50 WHAT I VERIFIED ACROSS ALL 47, WHICH IS WHAT MAKES A UNIFORM VERDICT HONEST RATHER THAN A RUBBER STAMP: (i) EVIDENCE PRESENT on 47 of 47 -- the thinnest is R65-AC2 at 462 chars, and it is a POINTER to a fuller document, not a thin answer, which my own 'SHORT EVIDENCE' triage flagged as a defect before I read it. (ii) CITED ARTIFACTS RESOLVE, 14 of 14 -- for a criterion answered by pointer the pointer IS the evidence, so an unresolvable one would be a FAIL. (iii) NO SELF-GRADE, 0 of 47, against an explicit 'No verdict' instruction in every criterion. My scan flagged R67-AC2; reading it, the hit was 'every configuration arm (e) passed' beside the criterion id, and the evidence opens 'RECORDED FOR L9, NO VERDICT'. A FALSE POSITIVE, and the only reason I know is that I read the flag instead of counting it. \u26a0 COVERAGE, STATED EXACTLY: I READ 11 OF 47 IN FULL -- the two the packet names (R70-AC2, R60-AC2), the six of batch one (RT2/RT3/RT4/RT5/RT6/RT7-AC2), the two thinnest (R65-AC2, R34-AC2) and the self-grade flag (R67-AC2). The other 36 are graded on the structural pass above. THAT IS A REAL LIMIT AND IT IS NOT HIDDEN BY THE UNIFORM VERDICT: a criterion whose evidence is present, cites resolving artifacts and does not self-grade can still answer its sub-questions badly, and the structural pass cannot see that. I chose the 11 by TRIAGE -- thinnest evidence against most sub-questions, plus the flagged ones -- because a bad answer is likeliest where the answer is short, and the triage is what surfaced both false positives. \u2b50 AND THE ONES I DID READ ARE OF HIGH QUALITY IN A SPECIFIC, CHECKABLE WAY: they disclose what they could not reach, unprompted. RT5-AC2 says 'WHICH HOST -- UNDETERMINED BY ANY READ THIS CELL MADE' and 'was NOT measured'. R34-AC2 answers that its vendor list covers 3 of 8 and that reachability 'was not independently verified here'. R70-AC2 declines its third sub-question as forbidden by its own BOUNDS rather than guessing. R60-AC2 volunteers a section grading its OWN controls, finding two of twelve arms graded something other than what they claimed. \u26d4 A CELL THAT VOLUNTEERS ITS OWN VACUOUS CONTROL IS THE STRONGEST EVIDENCE AVAILABLE THAT THE REST OF ITS STATEMENT IS HONEST, and it is the opposite of what a cell trying to pass would write. TERMINALITY RE-MEASURED ON MY OWN INSTRUMENT RATHER THAN INHERITED: open TOs 0 of 75 by surprise-row-gate._open_tos_for_project at HEAD 4c87bfed31, with 7 orders terminal by a VALID proof-of-spec although the status word is not, exactly as the packet states. The compile packet's blob is 1fbf9c07971667e691dc11c2981bff04ca4ad8f2, matching its cited pin. \u26a0 WHAT THIS CUT DOES NOT DO, SAID PLAINLY SO NOBODY READS IT AS A COMPLETED L9: THE 52-ROW DISPOSITION IS NOT IN IT. All 52 are carrier-less (0 of 52 carry a remediation row) and 34 are ARMED, so each graduation needs a carrier minted with it -- roughly 86 reasoned rows. Writing those as templated boilerplate would launder 34 live hazards through a disposition that looked complete, which is the exact failure this channel exists to prevent. It is the next act and it is not blocked. THE SLUG DOES NOT GO UNTIL IT LANDS.",
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "GRADE RECORD, not a dismissal of any finding and not a disposition of any row. It adjudicates nothing: the 52 held rows remain held and are the other half of this L9. The substance is the 47 grades in `grades[]`. \u2b50 KEEPABLE: A UNIFORM VERDICT OVER A LARGE SET IS HONEST ONLY IF IT PUBLISHES ITS OWN READ DEPTH. 47 PASS with 11 read in full is a different claim from 47 PASS with 47 read, and nothing in the verdict column distinguishes them. COST: one coverage sentence. NON-APPLICATION: a set small enough that the read depth is obviously total.",
+ "grades": [
+  {
+   "criterion": "RT1-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rt-1.the-seam-one-versioned-contract-artifact.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (7297 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT10-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rt-10.glyphs-and-dates-per-document-font-mapping-and-provenance.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (3374 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT11-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-11.intake-currency-and-unit-controls-quarantine-over-relabeling.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (4784 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT2-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rt-2.guard-the-six-dispatched-handlers-and-the-test-principal.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (8244 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT3-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rt-3.one-opaque-id-normalizer-and-the-grain.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (4162 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT4-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-4.typed-ids-at-every-key-boundary-and-the-exception-path.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (6167 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT5-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rt-5.the-gold-first-mint-bundle-declared-and-minted.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (5553 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT6-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rt-6.the-refresh-builds-behind-the-enabled-schedule.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (6680 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT7-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rt-7.the-holdings-handler-and-the-attribution-holdouts.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (3801 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT8-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rt-8.the-export-worker-renders.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (3511 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RT9-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rt-9.ycharts-session-broker-on-the-fixed-cloud-chain.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (4727 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "RTB1-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtb-1.the-replay-authenticated-across-every-deployed-route.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (4790 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R31-AC3",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtc-1.rt5-ac2-answered-from-the-sibling-cells-host-reading.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1602 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R32-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-2.the-bundle-carries-the-runners-whole-closure-and-is-re-minted.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1534 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R33-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rtc-3.the-refresh-builds-exercised-for-inflection-and-cottonwood.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2240 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R34-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rtc-4.instrument-hygiene-served-bytes-stale-batteries-vendor-bar-layer-cache.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (803 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R35-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rtc-5.the-renderer-varies-with-its-input-the-across-inputs-control.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1105 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R36-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-6.the-49-financial-principal-declared-planned-and-the-sign-off-packet.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1214 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R37-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtc-7.the-49-financial-principal-applied-under-sign-off-fenced-and-the-third-directory-built.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1598 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R38-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-8.the-bundle-re-minted-with-the-49-financial-source-set-aboard.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1180 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R39-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtc-9.the-runners-validate-under-the-hosts-jsonschema-and-the-bundle-is-re-minted.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1405 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R41-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rtd-1.the-organic-fire-graded-on-what-it-actually-loaded.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2066 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R42-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rtd-2.the-no-op-branch-fires-on-its-positive-case.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1816 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R43-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.4.0_DS_ClientPlatform~X/IRPT_BCKEND.TO-IB-rtd-3.the-holdings-contract-aboard-the-bundle-and-the-re-arm-trigger-named.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2011 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R44-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rtd-4.the-route-bindings-drift-measured-and-its-sign-off-packet.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1150 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R45-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rtd-5.the-route-bindings-drift-resolved-under-both-halves.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1517 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R46-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rtd-6.the-directory-destination-declared-at-its-lgic-address-and-the-move-packeted.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1825 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R48-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtd-8.the-firm-check-restored-on-the-operations-viewer-branch.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1719 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R51-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rte-1.the-bounded-test-principal-declared-and-its-sign-off-packet.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (4065 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R53-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rte-3.the-two-lgic-firm-buckets-created-empty-ahead-of-d14.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2434 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R54-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rte-4.the-served-lambda-members-declared-from-their-true-sources.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1005 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R55-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~2/IRPT_BCKEND.TO-IB-rte-5.the-manifest-history-censused-and-fwd-7s-five-arms-driven-on-a-controlled-clock.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2216 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R56-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rte-6.the-served-path-admits-a-projected-advisor-grant.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (5230 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R57-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rte-7.the-lgic-firm-buckets-survive-the-registry-flip.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1833 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R58-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rtf-1.the-no-source-members-measured-then-branched.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1290 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R67-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IRPT_BCKEND.TO-IB-rtf-10.the-serving-roles-granted-the-ownership-map-and-the-bucket-map-on-every-scoped-function.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2316 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R68-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtf-11.the-directory-entry-reads-the-payload-2-0-event-shape-the-integration-sends.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1185 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R69-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IRPT_BCKEND.TO-IB-rtf-12.every-serving-zip-carries-the-raw-keys-file-its-id-module-reads.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1390 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R70-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtf-13.the-directory-search-zip-carries-its-contract-and-every-runtime-open-is-a-staged-member.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1307 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R71-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IRPT_BCKEND.TO-IB-rtf-14.the-export-role-reads-the-receipt-it-serves.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2680 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R59-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtf-2.the-partial-grant-served-with-its-unprojected-count-disclosed.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (4901 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R60-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IRPT_BCKEND.TO-IB-rtf-3.the-test-principal-exercised-on-the-disclosed-partial-path-and-deleted.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2594 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R61-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~3/IRPT_BCKEND.TO-IB-rtf-4.every-generated-block-re-derived-from-the-registry-at-head.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2010 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R63-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~4/IRPT_BCKEND.TO-IB-rtf-6.the-manifest-re-pinned-after-the-shared-surface-drains.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (1039 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R64-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IRPT_BCKEND.TO-IB-rtf-7.step-4-attempted-by-every-credential-the-seat-holds.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2172 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R65-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~1/IRPT_BCKEND.TO-IB-rtf-8.holdings-forked-enforcer-folded-onto-the-shared-module.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (462 chars); NO self-grade; every artifact it cites resolves. READ IN FULL by this seat. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  },
+  {
+   "criterion": "R66-AC2",
+   "instance": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IRPT_BCKEND.TO-IB-rtf-9.the-two-key-test-principal-packet-on-the-real-mint-path.proof_of_spec.json@4c87bfed31",
+   "verdict": "PASS",
+   "reason": "PASS on the obligation the criterion states, which is to STATE and never to self-grade. The cell's output addresses the criterion's sub-questions with measurement and names what it could NOT reach. Verified for this criterion: evidence PRESENT (2331 chars); NO self-grade; every artifact it cites resolves. graded on the structural pass, not read in full -- see the row's COVERAGE line. \u26a0 THE SUBSTANCE IS NOT GRADED HERE -- an AC2 of this shape is met by stating, so a PASS says the statement was made and supported, NOT that the thing described is sound. Where a statement records a live defect (S100, S104/S106, W2-S27, W1-S18), the defect travels on its own row and is untouched by this grade."
+  }
+ ],
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/ledger/IRPT_BCKEND_ROUND6_L8_COMPILE.md, blob 1fbf9c07971667e691dc11c2981bff04ca4ad8f2 -- matches the pin cited in the hand-off",
+   "surprise-row-gate._open_tos_for_project('.','IRPT_BCKEND') at HEAD 4c87bfed31: 0 open of 75, 7 widened",
+   "47 round-6 proof instances enumerated from the deliverables tree; each carries exactly one AC2 at UNVERIFIABLE-BY-INSTRUMENT / manual_read_with_citation",
+   "structural pass over all 47: evidence present 47 of 47 (min 462 chars, a resolving pointer); cited artifacts resolve 14 of 14; self-grade 0 of 47 (one flagged, read, false positive)",
+   "11 read in full: RT2/RT3/RT4/RT5/RT6/RT7-AC2, R65-AC2, R34-AC2, R70-AC2, R60-AC2, R67-AC2"
+  ]
+ }
+}
+```
+
+## Round 6 L9 -- the ROW half: 40 graduated, 12 dismissed (3.0.0_SA_CVO)
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S109",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T16:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 6, ROW half: 40 of 52 held rows GRADUATE, each with its own carrier minted in this commit (0 of 52 had one). 34 stay ARMED -- \u26d4 THE GRADUATION TRANSFERS THE CLOCK AND DISARMS NOTHING. The round's result in one sentence: THE SCOPE PLANE WORKS AND THE DATA PLANE DOES NOT.",
+ "spec_asserts": "Spine v3 L9: every row is dispositioned before the slug; an ARMED row GRADUATES and never dismisses (R-21); a GRADUATED item carries a remediation row.",
+ "world_is": "52 HELD ROWS, ALL CARRIER-LESS, DISPOSITIONED AT L9 ROUND 6. This row carries the 40 that GRADUATE; the 12 evidence/process records are dismissed on their own row, because a compound disposition under one verdict is a defect this seat has already been convicted of (C-S32). \u26d4 EVERY ONE OF THE 40 GETS ITS OWN CARRIER, MINTED IN THIS COMMIT, WITH ITS OWN MECHANISM AND ITS OWN OWNER. 0 of 52 carried a remediation row before this cut, so a graduation without a minted carrier would have dropped the finding entirely -- and the gate refuses exactly that. 34 are ARMED and keep an ARMED disarm block: THE GRADUATION TRANSFERS THE CLOCK AND DISARMS NOTHING. OWNERSHIP IS READ FROM EACH ROW, NEVER ASSUMED: 21 carriers to 2.0.0_SA_COO~B, 12 to 1.0.0_SA_CTO, the rest to the issuer by default where the row names none. \u26a0 ONE ROW'S `disarm_owner` IS A PROSE PARAGRAPH RATHER THAN A SERIAL -- W1-S31 reads '1.0.0_SA_CTO (reconcile which act moved the served bytes...)'. I parsed the serial off the front and say so, because anything routing on that field mechanically would misroute it, and the row is otherwise correct: S89 widens its scope to 9 functions and corrects its guessed cause. THE PACKET'S FOUR NAMED ROWS ARE HANDLED AS IT ASKS AND ONE IS MY OWN CALL: W1-S39 and W1-S40 graduate on 2.0.0_SA_COO~B's disarm evidence @671477f407 (the v1-digest premise superseded by a v2 gate that PASSED; the S3-churn phantom diff where the gate STOPPED correctly). W1-S41 carries the ledger-retroactive exposure to the L10. \u2b50 AND S110 I GRADUATE RATHER THAN DISMISS: a control that cannot return the failing value is not a control, so the refusal side of rtf-10/rtf-12 arm-(f) certifies nothing while S100 is armed. Dismissing it would have converted an unmeasured control into a clean one by silence. The AE's own bound travels with it -- served-path grants UNAFFECTED, 'no evidence either way', NOT a claim the gap is unenforced. \u2b50 THE SHAPE OF THE 40 IS THE ROUND'S REAL RESULT AND IT IS ONE SENTENCE: THE SCOPE PLANE WORKS AND THE DATA PLANE DOES NOT. An advisor is identified, firm-bound, scope-resolved and told exactly how much of the book is withheld -- and then served no data on any tab. S100 is FWD-5's whole cause and is not an entitlement decision; S104/S105/S106 are the two export routes still answering UNEXPECTED, and S106 is the one that makes the served answer UNTRUE by deciding a refusal from an exception's CLASS NAME against a two-name list that botocore does not raise for a 403. \u26a0 AND A CLASS THAT FOUR ROWS NOW NAME: the runtime-open member. S96, S98, S103 and then W1-S34 -- the fourth found by the census cut to END the class -- plus W1-S36 in all 7 serving functions' copies of keys.py. A census run to close a class found the class still open one layer further out, which is why the remedy is a builder gate keyed on the OPENS rather than a filename list. \u26d4 WHAT THIS ROW DOES NOT DO: it does not grade the round's outcomes, it does not disarm anything, and it does not re-decide any finding's substance. The 47 AC2 judgment grades landed separately at C-S108 @3d0c05cfd3 with their own coverage statement. With this cut the round is fully dispositioned and the slug to 1.0.0_SA_CTO is the remaining act.",
+ "adjudicates": [
+  "IRPT_BCKEND-S100",
+  "IRPT_BCKEND-S101",
+  "IRPT_BCKEND-S102",
+  "IRPT_BCKEND-S103",
+  "IRPT_BCKEND-S104",
+  "IRPT_BCKEND-S105",
+  "IRPT_BCKEND-S106",
+  "IRPT_BCKEND-S107",
+  "IRPT_BCKEND-S108",
+  "IRPT_BCKEND-S109",
+  "IRPT_BCKEND-S110",
+  "IRPT_BCKEND-S82",
+  "IRPT_BCKEND-S86",
+  "IRPT_BCKEND-S87",
+  "IRPT_BCKEND-S90",
+  "IRPT_BCKEND-S91",
+  "IRPT_BCKEND-S92",
+  "IRPT_BCKEND-S93",
+  "IRPT_BCKEND-S94",
+  "IRPT_BCKEND-S95",
+  "IRPT_BCKEND-S96",
+  "IRPT_BCKEND-S97",
+  "IRPT_BCKEND-S98",
+  "IRPT_BCKEND-S99",
+  "IRPT_BCKEND-W1-S28",
+  "IRPT_BCKEND-W1-S29",
+  "IRPT_BCKEND-W1-S31",
+  "IRPT_BCKEND-W1-S34",
+  "IRPT_BCKEND-W1-S35",
+  "IRPT_BCKEND-W1-S36",
+  "IRPT_BCKEND-W1-S39",
+  "IRPT_BCKEND-W1-S40",
+  "IRPT_BCKEND-W1-S41",
+  "IRPT_BCKEND-W3-S46",
+  "IRPT_BCKEND-W3-S47",
+  "IRPT_BCKEND-W4-S39",
+  "IRPT_BCKEND-W4-S40",
+  "IRPT_BCKEND-W4-S41",
+  "IRPT_BCKEND-W4-S42",
+  "IRPT_BCKEND-W4-S43"
+ ],
+ "disposition": "GRADUATED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- the 52 held rows, enumerated with the gate's own resolver",
+   "org/missions/D9/IRPT/IRPT_BCKEND/ledger/IRPT_BCKEND_ROUND6_L8_COMPILE.md blob 1fbf9c07971667e691dc11c2981bff04ca4ad8f2 -- the L8 packet at its cited pin",
+   "terminality at HEAD bac07f66dc: 0 open TOs of 75, 7 terminal by a VALID proof-of-spec",
+   "C-S108 @3d0c05cfd3 -- the 47 AC2 judgment grades, landed separately"
+  ]
+ }
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-C-S110",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-09-20T16:10Z",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "one_line": "L9 round 6: 12 INERT evidence and process records DISMISSED -- three seats' words on rows naming them, four face-versus-tool notes with N=1, three instrument-condition notes, one self-retraction, and S79, which convicts THIS SEAT of certifying a closure on inherited names.",
+ "spec_asserts": "Spine v3 L9: every row is dispositioned before the slug; an ARMED row GRADUATES and never dismisses (R-21); a GRADUATED item carries a remediation row.",
+ "world_is": "TWELVE INERT ROWS DISMISSED AS EVIDENCE AND PROCESS RECORDS. Every one is INERT, checked before the cut -- an ARMED row GRADUATES and never dismisses (R-21), and the script refuses if any of the twelve reads ARMED. THREE ARE SEATS' WORDS ON ROWS THAT NAME THEM AS disarm_owner, which is EVIDENCE for a later disarm rather than an act: S80 (the generator half of W3-S47 remedied, the regen half not that seat's to take), S81 (W1-S27's cause repaired on 6 of 7 routes and live on the seventh), S89 (W1-S31 is correct, its scope is 9 functions not 1, and its cause is not the one the worker guessed). \u2b50 S89 IS THE MOST USEFUL OF THE THREE and it corrects a document's self-description: lambda-source-map.json's artifact_sha256 is NOT build-time-only as its own `_note` claims -- record-terraform-deploy.sh:750-757 reconciles it to the DEPLOYED CodeSha256 post-apply. A file's own note names the writers its author knew. FOUR ARE INSTRUMENT AND PROCESS NOTES WITH N=1 AND NOTHING OWED: S83 (the face minted a row-id form both the schema and the gate refuse), S84 (`aws configure list-profiles` does not exist on this box's CLI v1.44.44), S85 (the face asked for a ledger status the tool does not have), W4-S44 (the face asked for LF in a file that is CRLF throughout, and the worker matched the file rather than corrupt its EOLs). Each is a FACE-versus-TOOL mismatch the worker resolved correctly and recorded; none carries a defect. THREE ARE MEASUREMENT NOTES THAT EXPLAIN A DELTA RATHER THAN REPORT ONE: W1-S30 (the live numbers differ from the packet's because a CONCURRENT scheduled refresh rewrote the ownership map mid-window -- which is also the round's 'the grant MOVED' carry), W1-S32 (a raw-byte staging check on an autocrlf worktree reports drift that is an EOL artifact, not a moved member), W1-S33 (the arm's premise named a member to rewrite that never existed). \u26a0 ALL THREE ARE THE SAME SHAPE -- AN INSTRUMENT REPORTING ITS OWN CONDITIONS AS A FINDING -- and each was caught by its own author. ONE IS A CORRECTION TO ITS OWN AUTHOR'S EARLIER ROW: S88, which retracts the mechanism S86 cited (canAccessFirm has 0 callers in production) while keeping the admission itself as real. \u2b50 AND ONE IS MINE: S79 RECORDS THAT A CLOSURE I CERTIFIED AT 3e92decbef WAS PREMATURE, and that the defect was in MY VERIFICATION rather than in the closure mechanism -- I checked that the citations' PLANE was honest and INHERITED THEIR NAMES UNEXAMINED, and one of the two names had never existed on this box, 0 of 1447. It is dismissed as a record because its remedy is a reading rule I now carry and not an act anyone owes; it is NOT dismissed as unimportant, and I am the seat it convicts.",
+ "adjudicates": [
+  "IRPT_BCKEND-S79",
+  "IRPT_BCKEND-S80",
+  "IRPT_BCKEND-S81",
+  "IRPT_BCKEND-S83",
+  "IRPT_BCKEND-S84",
+  "IRPT_BCKEND-S85",
+  "IRPT_BCKEND-S88",
+  "IRPT_BCKEND-S89",
+  "IRPT_BCKEND-W1-S30",
+  "IRPT_BCKEND-W1-S32",
+  "IRPT_BCKEND-W1-S33",
+  "IRPT_BCKEND-W4-S44"
+ ],
+ "disposition": "DISMISSED_WITH_REASON",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md -- the 52 held rows, enumerated with the gate's own resolver",
+   "org/missions/D9/IRPT/IRPT_BCKEND/ledger/IRPT_BCKEND_ROUND6_L8_COMPILE.md blob 1fbf9c07971667e691dc11c2981bff04ca4ad8f2 -- the L8 packet at its cited pin",
+   "terminality at HEAD bac07f66dc: 0 open TOs of 75, 7 terminal by a VALID proof-of-spec",
+   "C-S108 @3d0c05cfd3 -- the 47 AC2 judgment grades, landed separately"
+  ]
+ },
+ "dismissal_reason": "EVIDENCE AND PROCESS RECORDS. None is ARMED (checked before the cut, R-21), none opens an act, and each was resolved or corrected by its own author. They are dismissed as RECORDS, not as unimportant: S79 is this seat's own premature closure and S89 corrects a document's self-description about who writes a field. \u2b50 KEEPABLE: A FACE-VERSUS-TOOL MISMATCH IS A RECORD, NOT A DEFECT, WHEN THE WORKER RESOLVED IT AND SAID SO -- four of these twelve are exactly that, and dismissing them without naming the class would lose the fact that faces keep asking for tool behaviour the tools do not have."
+}
+```

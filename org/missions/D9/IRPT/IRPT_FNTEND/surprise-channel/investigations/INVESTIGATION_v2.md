@@ -4631,6 +4631,394 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W1-S76",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~1",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "FE-s-50's AC4 invocation (`git status --porcelain` then `git diff --stat`) reports contracts/wire/index.ts as M even though its clean-filtered bytes are byte-identical to the committed blob -- a stat-level false-dirty flag on a CRLF checkout, not a real change.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FE-s-50 AC4: 'print whatever the regeneration changed (may legitimately be empty on this checkout) ... Report the git diff --stat output in your result file whichever way it reads.' AC5 (judgment): 'the regenerated headers (if any changed) are the ONLY diff in contracts/wire/.'",
+    "world_is": "After running gen-wire.ts's generate(), `git status --porcelain src/pages/InvestorReporting/contracts/wire/` listed index.ts as ` M` alongside the 12 files whose sha256 comment genuinely changed. But `git diff` and `git diff --cached` on index.ts were both EMPTY, and `git hash-object src/pages/InvestorReporting/contracts/wire/index.ts` (896fb846d00b9de863bbf9a94e2cb993a00de79b) equalled `git ls-files -s`'s staged blob for the same path -- i.e. the clean-filtered working-tree content equals the committed blob exactly. `git diff-index --raw HEAD` still flagged it M with an all-zero working-tree sha (stat-dirty, not content-verified). `git update-index --refresh` reported it 'needs update' but did not clear the flag. `safe-commit.sh`'s own `git add -f` (which recomputes the blob) then found nothing to stage for index.ts: the landed commit (portal 57251c1a) touched 14 files -- gen-wire.ts, the new test, the 11 document wire types and responses.ts -- and index.ts is NOT among them, confirming the status M was a false positive rather than a withheld real change. A reader who trusted `git status --porcelain`'s literal listing (as AC4's own invocation does) would believe index.ts changed when it did not; AC5's 'the regenerated headers are the ONLY diff' claim is true only once this quirk is read past.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && git status --porcelain src/pages/InvestorReporting/contracts/wire/index.ts -> ' M src/pages/InvestorReporting/contracts/wire/index.ts' (repeated after git update-index --refresh)",
+        "cd <WS>/portal && git diff -- src/pages/InvestorReporting/contracts/wire/index.ts and git diff --cached -- src/pages/InvestorReporting/contracts/wire/index.ts -> both empty",
+        "cd <WS>/portal && git hash-object src/pages/InvestorReporting/contracts/wire/index.ts -> 896fb846d00b9de863bbf9a94e2cb993a00de79b, equal to git ls-files -s's staged entry for the same path",
+        "portal commit 57251c1a (14 files changed) does not list index.ts -- safe-commit.sh's git add found no change to stage"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S8",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "F55-AC5 ('the whole IRPT_FNTEND suite is green', expect 0 fail) CANNOT be satisfied as written: the whole-suite run carries ONE pre-existing failure, fe-s-49/admin-gate.test.ts F49-AC8, unrelated to Holdings/classification and unchanged by this cell's edit (identical before and after). Its own reader shows the cause -- two UNRELATED App.tsx hunks (a Trade Submission nav entry / ArrowLeftRight icon import) carried into HEAD alongside FE-s-49's three gate hunks -- and App.tsx is not in this order's <paths>, so this worker cannot fix it. F55-AC5 is measured FAIL by its printed output, not PASS.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-55 F55-AC5: 'the whole IRPT_FNTEND suite is green', invocation `bun test src/pages/InvestorReporting`, expect `(?<![0-9])0 fail`.",
+    "world_is": "PRE-EDIT (portal HEAD be8cf21874, before this cell's source edit): `bun test src/pages/InvestorReporting` -> 586 pass / 21 skip / 1 fail / 608 total, the one fail named 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'. POST-EDIT (this cell's full remedy applied, portal worktree uncommitted): 590 pass / 21 skip / 1 fail / 612 total (the +4 are this cell's own new fe-s-55 tests, all passing) -- the SAME single failure, same test name, same assertion (`expect(carried.length).toBe(0)`, received 2). The test's own printed evidence names the two carried hunks as an ArrowLeftRight icon import and a Trade Submission nav entry -- neither touches Holdings, classification, slices.ts, SliceTable.tsx, contracts/index.ts or HoldingsTab.tsx. src/App.tsx is not in IRPT_FNTEND.TO-FE-s-55's <paths> grant, so this worker cannot commit a fix to it even having found the cause.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal (worktree wk-irpt_fntend-9-6-fe-s-55-portal), before any FE-s-55 edit: `timeout 600 bun test src/pages/InvestorReporting` -> '586 pass', '21 skip', '1 fail', 'Ran 608 tests across 106 files'; the one red line: 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'.",
+        "same command, after this cell's full remedy (uncommitted): '590 pass', '21 skip', '1 fail', 'Ran 612 tests across 107 files'; same one red line, same file:line (admin-gate.test.ts:582:28), same 'Expected: 0 / Received: 2'.",
+        "admin-gate.test.ts's own console output (both runs, byte-identical): 'GATE HUNK 1/2/3: found at HEAD App.tsx:97/424/576 ... THE THREE GATE HUNKS ARE BYTE-IDENTICAL TO 2.0.0_SA_COO~D'S c29a8b86: 3 of 3' followed by 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' naming '+| ArrowLeftRight,' and '+| // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. / { path: \\'/trade-submission\\', label: \\'Trade Submission\\', icon: ArrowLeftRight },'.",
+        "IRPT_FNTEND.TO-FE-s-55.holdings-non-authoritative-withheld.md <paths>: src/App.tsx is not a member; this worker's write grant does not reach the failing file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S21",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-21T13:42:31Z",
+    "one_line": "F53-AC4 ('the whole IRPT_FNTEND suite' at 0 fail) cannot pass on portal be8cf21874 through no act of this cell's: fe-s-49/admin-gate.test.ts's F49-AC8 fails because HEAD's App.tsx carries 2 hunks from commit c29a8b86 the test calls unrelated to the admin gate (an ArrowLeftRight icon import and a Trade Submission nav item), which the test asserts must NOT survive into HEAD. src/App.tsx and __tests__/fe-s-49/ are outside FE-s-53's grant (adapt.ts's adaptStatusEnvelope only) and this class of FE-s-49 fragility is already tracked as BLOCKING/held-from-drain by row IRPT_FNTEND-S67 -- this is a DIFFERENT concrete assertion in the same file (F49-AC8's gate-hunk census, not F49-AC10's timeout), so it gets its own row rather than being folded into S67's.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-53 F53-AC4: <invocation>cd <WS>/portal && bun test src/pages/InvestorReporting</invocation> <expect>(?<![0-9])0 fail</expect> -- 'the whole IRPT_FNTEND suite'.",
+    "world_is": "cd <WS>/portal && bun test src/pages/InvestorReporting (with this cell's fix to adaptStatusEnvelope in place, and the new fe-s-53 test passing 4/4) reads '590 pass', '21 skip', '1 fail', 'Ran 612 tests across 107 files.', rc=1. The one failure: 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86', printed line 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' with 'not ours: +|ArrowLeftRight' and 'not ours: +|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. /       { path: '/trade-submission', label: 'Trade Submission', icon: ArrowLeftRight },', expect(carried.length).toBe(0) received 2. `git status --porcelain -- src/App.tsx src/pages/InvestorReporting/__tests__/fe-s-49` is empty in this worktree (nothing of mine touches either), and the test reads committed git blobs (git show --format= c29a8b86 -- src/App.tsx, and HEAD's App.tsx), so the failure is a property of the committed tree at be8cf21874, not of this run. Re-running fe-s-49/admin-gate.test.ts alone reproduces the identical failure (9 pass / 1 fail). A census of both investigation files for 'ArrowLeftRight', 'Trade Submission' and 'UNRELATED HUNKS'/'gateHunks'/'c29a8b86' found row S67 (same test file, a timeout on F49-AC10, 'FE-s-49 is held from drain') but no prior row on this specific F49-AC8 assertion.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && timeout 600 bun test src/pages/InvestorReporting -> '590 pass', '21 skip', '1 fail', 'Ran 612 tests across 107 files.', rc=1",
+        "cd <WS>/portal && timeout 60 bun test src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts -> 'F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86' FAIL, 'Expected: 0', 'Received: 2', 9 pass / 1 fail",
+        "cd <WS>/portal && git status --porcelain -- src/App.tsx src/pages/InvestorReporting/__tests__/fe-s-49 -> (empty)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-S67 (surfaced_by 2.0.0_SA_COO~F): 'FE-s-49 is held from drain' -- same file, a different symptom (F49-AC10 timeout, not F49-AC8's gate-hunk census)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S42",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-21T13:42:29Z",
+    "one_line": "FE-s-52's F52-AC4 (whole IRPT_FNTEND suite, 0 fail) shows 1 pre-existing fail unrelated to this order's four files (alias-probe.test.ts, pre-envelope.test.ts, ExportButton.tsx, SentimentGauge.tsx): __tests__/fe-s-49/admin-gate.test.ts's F49-AC8 assertion `expect(carried.length).toBe(0)` reads 2, because src/App.tsx (never in this order's grant) at HEAD carries two 'unrelated' nav hunks (an ArrowLeftRight import and a /trade-submission route) that F49-AC8 treats as hunks that should not have landed. This is a DIFFERENT assertion than the already-filed IRPT_FNTEND-S67 (which named F49-AC10's timeout); S67 does not cover this one.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-52 F52-AC4: 'the whole IRPT_FNTEND suite is unaffected by the ExportButton/useExportAnchor refactor (F52's own export/ tests included)', invocation `bun test src/pages/InvestorReporting`, expect `(?<![0-9])0 fail`.",
+    "world_is": "At workspace be8cf218 (portal be8cf218743af0c04a4d57b908b28cf7435e119d, this worker's only edits: alias-probe.test.ts, pre-envelope.test.ts, ExportButton.tsx, SentimentGauge.tsx -- confirmed by `git status --short` showing exactly those four paths), `bun test src/pages/InvestorReporting` reads 586 pass / 21 skip / 1 fail of 608. The one fail is admin-gate.test.ts's F49-AC8 ('the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'): the gate-hunk sub-assertions (`gateHunks.length===3`, `identical===3`) PASS, but `expect(carried.length).toBe(0)` at admin-gate.test.ts:582 reads 2. The test's own log names the carried hunks: '+|  ArrowLeftRight,' and '+|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. / { path: \"/trade-submission\", label: \"Trade Submission\", icon: ArrowLeftRight },'. `grep -n \"ArrowLeftRight|trade-submission\" src/App.tsx` confirms both lines present at this worktree's HEAD (:52, :126, :475) -- App.tsx is not in this worker's `<paths>` grant and this worker made no edit to it. F52-AC3 (this order's own two test files, isolated) and typecheck and lint (F52-AC1, F52-AC2) are all clean; only the whole-suite run surfaces this unrelated fail.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && git status --short: ' M src/components/market-performance/SentimentGauge.tsx', ' M src/pages/InvestorReporting/__tests__/fe-s-19/pre-envelope.test.ts', ' M src/pages/InvestorReporting/__tests__/fe-s-5/alias-probe.test.ts', ' M src/pages/InvestorReporting/export/ExportButton.tsx' -- no App.tsx, no admin-gate.test.ts",
+        "bun test src/pages/InvestorReporting output: '586 pass', '21 skip', '1 fail', 'Ran 608 tests across 106 files.'; the sole fail line: \"FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86\" at admin-gate.test.ts:582:28, 'Expected: 0 Received: 2'",
+        "admin-gate.test.ts console output: 'THE THREE GATE HUNKS ARE BYTE-IDENTICAL TO 2.0.0_SA_COO~D'S c29a8b86: 3 of 3' (this half passes) followed by 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of ... (expected 0: they are not this order's)' naming ArrowLeftRight / /trade-submission",
+        "portal/src/App.tsx:52,126,475 (this worktree HEAD be8cf218): ArrowLeftRight import, /trade-submission route entry and its Route element, all present",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md IRPT_FNTEND-S67 (already filed): names F49-AC10's timeout only, not F49-AC8's carried-hunks assertion -- a distinct failure mode on the same file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W6-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~6",
+    "surfaced_at": "2026-09-21T13:52:00Z",
+    "one_line": "F56-AC5 ('bun test src/pages/InvestorReporting' 0 fail) reads a stable 1-fail residual outside this cell's grant: fe-s-49/admin-gate.test.ts F49-AC8 finds 2 of 2 UNRELATED App.tsx hunks from 2.0.0_SA_COO~D's c29a8b86 still carried into HEAD (an ArrowLeftRight icon import and a /trade-submission route, neither naming /investor-reporting) where the test expects 0. App.tsx and __tests__/fe-s-49/ are not in this order's <paths>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-56 F56-AC5: 'the whole IRPT_FNTEND suite is green', expect '(?<![0-9])0 fail'.",
+    "world_is": "Two runs of 'bun test src/pages/InvestorReporting' at this worker's HEAD (before and after the fe-s-14 control fix, neither touching App.tsx or fe-s-49/) read 3 fail then 1 fail with no source change to the failing files in between -- F45-AC2 and F45-AC10 (fe-s-45, port-bound dev-server spawns) cleared on the second run, matching the already-filed INERT rows IRPT_FNTEND-W1-S67/W1-S69 (load/port sensitivity, not a regression). The one STABLE failure both runs share is FE-s-49 F49-AC8: its own printed 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' names an ArrowLeftRight import and a /trade-submission Route line, both from c29a8b86's App.tsx diff and both still present at HEAD. A sibling task order (IRPT_FNTEND.TO-FE-s-51, title 'carried-hunks-ancestry-aware') exists in this project's task-orders/ directory, consistent with this being a known, separately-owned residual rather than something this cell caused or can fix under its grant (fixtures/index.ts one proves-string, __tests__/fe-s-14/).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && bun test src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts -t 'F49-AC8' -> 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' / 'not ours: +|  ArrowLeftRight,' / \"not ours: +|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. /       { path: '/trade-submission', label: 'Trade Submission', icon: ArrowLeftRight },\" / expect(carried.length).toBe(0) received 2, rc=1",
+        "cd <WS>/portal && bun test src/pages/InvestorReporting -> run 1 (before the fe-s-14 control fix): '584 pass', '21 skip', '3 fail' ('Ran 608 tests across 106 files'); run 2 (after, same App.tsx/fe-s-49 bytes): '586 pass', '21 skip', '1 fail' ('Ran 608 tests across 106 files'), the surviving fail line reading 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md rows IRPT_FNTEND-W1-S67 ('F45-AC2 debug run...') and IRPT_FNTEND-W1-S69 (process.release.name discriminator) already document fe-s-45's dev-server tests as port/load sensitive",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-51.carried-hunks-ancestry-aware.md exists in-tree, naming 'carried hunks' as its own subject"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W5-S9",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~5",
+    "surfaced_at": "2026-09-21T00:05:00Z",
+    "one_line": "fe-s-32/holdings-in-a-browser.test.ts F32-AC3 hardcodes the OLD behavior this cell retires: it asserts `r.supervision === 'unknown' && r.advisory === 'unknown'` on every row of the 'missing-attribution' (non-authoritative) scenario, read off a REAL rendered page. After this cell's fix those rows render 'withheld'. The assertion is currently unreachable ONLY because its own declared PRECONDITION (a dev server on this worktree) is ABSENT in this environment, so F32-AC2..AC6 print SKIPPED with 0 failures both before and after this cell's edit -- the suite reads green today, but the assertion is FALSE the moment the precondition is MET (a CI run, or a worker with the dev server up). __tests__/fe-s-32/ is not in IRPT_FNTEND.TO-FE-s-55's <paths>, so this worker cannot update it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "fe-s-32/holdings-in-a-browser.test.ts's own header: 'THE PRECONDITION IS DECLARED ... ABSENT -> the five browser criteria render SKIPPED, by name, with 0 failures. MET -> they run, and a broken gate, a hidden gap or a clipped label fails.' FE-s-55's remedy step 4 requires updating 'EVERY test found in step 1' that expects 'unknown' on a non-authoritative classification; this file's assertion was not found by step 1's grep because it is scoped to __tests__/fe-s-7/ (this order's <paths>), and fe-s-32/ was never in scope to search or edit.",
+    "world_is": "portal (worktree, uncommitted FE-s-55 edit) src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:322: `const unknownOnEveryRow = rows.length > 0 && rows.every((r) => r.supervision === 'unknown' && r.advisory === 'unknown' && r.authoritative === 'false')`, read from `results.get('missing-attribution@'+viewport)`, itself read off a real Chromium render of `SliceTable`'s DOM (holdings-driver.mjs). `renderedClassification`'s non-authoritative branch (tabs/holdings/slices.ts) now returns `{ supervision: 'withheld', advisory: 'withheld' }`, so `unknownOnEveryRow` would read false once the precondition is met -- confirmed by this cell's OWN fe-s-55/withheld-vs-unknown.test.ts, which renders the same non-authoritative shape and asserts the opposite: 'withheld' present, 'unknown' absent. Both whole-suite runs in this session (row S8's evidence) printed 'PRECONDITION: dev server on http://localhost:5426 -- ABSENT' for fe-s-32/holdings-in-a-browser.test.ts and 'PRECONDITION ABSENT -> 5 criteria SKIPPED, 0 failures. This is not a code defect.', so F55-AC5 does not currently see this gap -- it is latent, not yet exercised.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:322 (uncommitted worktree, unchanged by this cell): the literal `r.supervision === 'unknown' && r.advisory === 'unknown'` check inside describe 'F32-AC3 -- PARTIAL: the holdings are shown, the classification gap labelled as unknown'.",
+        "tabs/holdings/slices.ts's renderedClassification (this cell's edit): non-authoritative branch returns 'withheld', not 'unknown' -- verified by fe-s-55/withheld-vs-unknown.test.ts, 4 pass / 0 fail, printed 'WITHHELD DISTINCT FROM ASSERTED UNKNOWN: yes'.",
+        "whole-suite run (both pre- and post-edit), fe-s-32 section: 'PRECONDITION: dev server on http://localhost:5426 -- ABSENT (ECONNREFUSED ...)' then 'PRECONDITION ABSENT -> 5 criteria SKIPPED, 0 failures. This is not a code defect.' -- so F32-AC3 did not execute in this session's F55-AC5 measurement.",
+        "IRPT_FNTEND.TO-FE-s-55.holdings-non-authoritative-withheld.md <paths>: __tests__/fe-s-32/ is not a member."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T14:01:20Z",
+    "one_line": "IRPT_FNTEND.TO-FE-s-57's own BOUNDS mandates an indiscriminate parseIrEnvelope throw on a missing unprojected_grant key, and its own F57-AC6/AC7 demand 0 fail on the existing suite; both cannot hold at once inside this cell's <paths> grant, because ~52 pre-existing tests across ~20 files this cell may not touch build non-refused response bodies with no unprojected_grant key. Also: the order's literal `unprojectedGrant: UnprojectedGrant | null` (non-optional) on Availability fails typecheck against Availability-typed fixtures outside the grant (e.g. fe-s-9/receipt.test.ts, fe-s-42/every-site.test.ts), so the member was built OPTIONAL instead, matching producerState/sourceDate's own established pattern.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-57 BOUNDS: 'THE THROW ON A MISSING KEY BINDS EVERY NON-REFUSED RESPONSE, HOLDINGS INCLUDED ... Do not special-case holdings in parseIrEnvelope; F57-AC3 already proves the general rule handles it correctly.' F57-AC4: 'a non-refused response body with NO unprojected_grant key at all throws EnvelopeMismatch(...)', no exception named for any other route or caller. F57-AC6: 'every existing adapter/envelope test is UNCHANGED ... 0 fail'. F57-AC7: 'the whole IRPT_FNTEND suite is green' (expect '0 fail'). Grant (<paths>): three contracts files plus this cell's own __tests__/fe-s-57/ and the surprise-channel file -- no other test file is writable.",
+    "world_is": "Implemented exactly as BOUNDS requires (envelope.ts:242-252 at portal b92448f3: the throw fires whenever 'unprojected_grant' is absent or misshapen on a non-refused response, unconditionally, holdings included -- confirmed passing at F57-AC3 with no special case). F57-AC1..AC5 measure PASS (typecheck rc=0; carry.test.ts 4 pass/0 fail, printing the four expected strings verbatim). F57-AC6 as literally invoked (bun test .../fe-s-1 .../fe-s-14, which bun's substring path-matching also pulls in every fe-s-1X folder) measures 263 pass / 2 skip / 11 fail of 276 at portal b92448f3, every failure an EnvelopeMismatch('unprojected_grant') thrown by a pre-existing fixture (fe-s-1/adapter.test.ts, fe-s-14/envelope.test.ts x3, fe-s-14/header.test.ts, fe-s-14/one-firm.test.ts x3, fe-s-19/network-state.test.ts, fe-s-19/pre-envelope.test.ts, and a job-states test) that builds a response body with no unprojected_grant key, none of them in this cell's <paths>. F57-AC7 (whole suite) measures 532 pass / 21 skip / 52 fail / 1 error of 605 at the same commit, same root cause, spanning fe-s-1, fe-s-14, fe-s-19, fe-s-25, fe-s-26, fe-s-30, fe-s-31, fe-s-33, fe-s-34, fe-s-35, fe-s-39, fe-s-41, fe-s-42, fe-s-48 and fe-s-49 -- 51 distinct failing test titles plus one unhandled-error-between-tests, all citing envelope.ts:249. Softening the throw to satisfy AC6/AC7 would falsify AC4/BOUNDS as written; satisfying AC4/BOUNDS as written falsifies AC6/AC7 as measured; fixing the ~20 pre-existing fixtures is outside this cell's <paths>. F57-AC6 and F57-AC7 are FAILED as measured and reported so; the order stays open (status not flipped).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal b92448f3:src/pages/InvestorReporting/contracts/envelope.ts:242-252 the unconditional throw, and :69-76 IrEnvelopeField gains 'unprojected_grant'",
+        "portal b92448f3:src/pages/InvestorReporting/contracts/index.ts the Availability.unprojectedGrant member built OPTIONAL (`unprojectedGrant?: UnprojectedGrant | null`), and portal src/pages/InvestorReporting/__tests__/fe-s-9/receipt.test.ts:56, fe-s-42/every-site.test.ts:302 constructing Availability-typed literals with no unprojectedGrant member (outside this cell's <paths>)",
+        "<WS>/.scratch or /c/tmp/ac6_full.log (bun test src/pages/InvestorReporting/__tests__/fe-s-1 src/pages/InvestorReporting/__tests__/fe-s-14 at portal b92448f3): '263 pass', '2 skip', '11 fail', 'Ran 276 tests across 38 files', rc=1; 11 of 11 failures cite EnvelopeMismatch at envelope.ts:249",
+        "/c/tmp/final_ac7.log (bun test src/pages/InvestorReporting at portal b92448f3): '532 pass', '21 skip', '52 fail', '1 error', 'Ran 605 tests across 107 files', rc=1; 106 EnvelopeMismatch citations, one 'Unhandled error between tests' also citing envelope.ts:249 (directory-search)",
+        "F57-AC3's own passing measurement (HOLDINGS ROUTE, count:0, NO THROW: yes) confirms the general (non-special-cased) rule is what BOUNDS asked for and what is implemented"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W3-S43",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~3",
+    "surfaced_at": "2026-09-21T13:58:12Z",
+    "one_line": "portal's eslint.config.js scopes its one config object to `files: ['**/*.{ts,tsx}']`, but `bun run lint` (`eslint .`) also lints whatever sits in the gitignored `portal/.vite/deps/*.js` cache vite's dev server writes (left behind by an earlier whole-suite test run that spins up a real dev server, e.g. fe-s-27/_dev-server.ts), and reports 10-15 'Definition for rule ... was not found' ERRORS from those minified vendor bundles' own embedded eslint-disable comments -- rules like react-hooks/exhaustive-deps that ARE configured for .ts/.tsx but are not loaded for a .js file outside that files glob. This inflated F52-AC2's error count from 0 to 15 on one run, before the cache directory was deleted (a gitignored build artifact, safe to remove) and lint re-ran clean at 0 errors / 79 warnings. Not caused by this order's edits; not previously filed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "TO-FE-s-52 F52-AC2: 'the portal's own lint script ... returns clean. Print the FULL error count before your fix (baseline) and after (must be the pre-fix count minus exactly 5, with 0 new errors introduced)'.",
+    "world_is": "At workspace be8cf218 / portal be8cf218 (this worker's 4 edited files only): `bun run lint` after the fix read '99 problems (15 errors, 84 warnings)' while `portal/.vite/deps/` existed (created by an intervening `bun test src/pages/InvestorReporting` whole-suite run), with every extra error located in `.vite/deps/@headlessui_react.js`, `chunk-BDZO4Y2N.js`, `chunk-XRJMR4A3.js`, `recharts.js` at line numbers in the thousands (minified vendor bundles), each message 'Definition for rule ... was not found' for a rule this repo's config only declares under `files: ['**/*.{ts,tsx}']`. `rm -rf portal/.vite` (confirmed `git check-ignore -v .vite/deps/@headlessui_react.js` -> `.gitignore:17:.vite`) then `bun run lint` read '79 problems (0 errors, 79 warnings)', matching this order's own clean post-fix count with no intervening cache. The failure is intermittent, keyed to whether `.vite/deps` happens to exist when lint runs, not to source content -- any dev-server-spinning test run before a lint run can reproduce it. ARMED: eslint.config.js's file-matching gap is a standing config defect (not this order's grant) that will re-fire the same way for the next seat who runs lint after any test that starts a real vite dev server.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bun run lint (contaminated): '✖ 99 problems (15 errors, 84 warnings)', 4 file headers under portal\\.vite\\deps\\, each error 'Definition for rule '...' was not found' naming react-hooks/exhaustive-deps, react-hooks/rules-of-hooks, jsx-a11y/anchor-has-content, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-unused-vars, @typescript-eslint/ban-types, @typescript-eslint/no-non-null-asserted-optional-chain",
+        "git check-ignore -v .vite/deps/@headlessui_react.js -> '.gitignore:17:.vite'",
+        "portal/eslint.config.js:12 'files: [\"**/*.{ts,tsx}\"]' is the only files restriction in the one exported config object; :10 globalIgnores(['dist', '.runtmp/**', '.frontend-dev/**']) does not name .vite",
+        "rm -rf portal/.vite; bun run lint -> '✖ 79 problems (0 errors, 79 warnings)', rc=0, no .vite/deps file header present",
+        "ls -la portal/.vite (before removal): deps/ subdir mtimes ~09:38 local, same session, pre-dating this worker's own edits -- consistent with an earlier bun test run in this worktree that starts a real vite dev server (src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts, fe-s-45/dev-script-writes.mjs)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T15:03:52Z",
+    "one_line": "AMENDMENT 1 closed F57-AC6 (0 fail) and cut F57-AC7's residual from 52 fail/1 error to 5 fail/1 error, but three of the remaining problems trace to files OUTSIDE this cell's <paths> in every version of the grant: src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json (2 problems: its own directory's test, and F41-AC5 reading it as one of FROZEN_MAPS) needs the same unprojected_grant completion as its sibling fe-s-18-holdings-*.json maps, which THIS cell's in-grant fix to those siblings now makes visible; fe-s-47/no-status-reason.test.ts:191 throws at MODULE LOAD (an 'Unhandled error between tests', not a named test) on the same missing-key rule; and fe-s-49/admin-gate.test.ts F49-AC8 fails on 2 unrelated App.tsx hunks, pre-existing and unrelated to unprojected_grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-57 AMENDMENT 1: 'For EVERY hand-built response body in those directories [fe-s-1, fe-s-14, fe-s-19, fe-s-25, fe-s-26, fe-s-30, fe-s-31, fe-s-33, fe-s-34, fe-s-35, fe-s-39, fe-s-41, fe-s-42, fe-s-48, fe-s-49] that is NON-REFUSED ... add unprojected_grant.' F57-AC7: 'the whole IRPT_FNTEND suite is green' (expect '0 fail'). BOUNDS (unchanged): the paths grant is the write surface; a path needed that it lacks is a BLOCKING row, never an override.",
+    "world_is": "At portal 9094772a: F57-AC6 (fe-s-1 + fe-s-14, bun's substring match) measures '274 pass / 2 skip / 0 fail' -- CLOSED. F57-AC7 (whole suite) measures '579 pass / 21 skip / 5 fail / 1 error' of 605, down from the pre-amendment '532 pass / 21 skip / 52 fail / 1 error'. The residual, named precisely: (1) fe-s-32/holdings-in-a-browser.test.ts 'the four scenario maps > the NO-ANSWER map is the observed map with ONE member changed: the holdings status' -- this cell's in-grant fix added unprojected_grant to ALL 9 members of fe-s-18-holdings-observed.json (required by F26-AC4's own '27 of 27' bar), but fe-s-32's holdings-no-answer.json (out of grant, derived from the observed map with only the holdings status changed) was not touched, so 8 of 9 members now differ where the test expects only 1; (2)/(3) fe-s-41/one-writer.test.ts F41-AC5's two subtests read fe-s-32/holdings-no-answer.json as one of FROZEN_MAPS and its narrative-packet envelope throws EnvelopeMismatch('unprojected_grant') on parse, so 'bound' reads 4 of 5 where 5 of 5 is required; (4) fe-s-47/no-status-reason.test.ts:191 throws the same EnvelopeMismatch at MODULE EVALUATION time (before any test() runs), reported by bun as 'Unhandled error between tests' rather than a named failing test -- present in the ORIGINAL pre-amendment run too (portal b92448f3, confirmed by re-grep), so it is not a regression this session introduced, only newly attributable; (5) fe-s-49/admin-gate.test.ts F49-AC8 fails because HEAD App.tsx carries 2 hunks ('ArrowLeftRight' import, a 'Trade Submission' nav mark) that do not belong to this order and were never this cell's to add or remove -- confirmed unrelated to unprojected_grant (its own printed diff names the two hunks explicitly) and present in the ORIGINAL pre-amendment run. None of __tests__/fe-s-32/, __tests__/fe-s-47/ or src/App.tsx is in this cell's <paths> in the original order OR amendment 1. F57-AC7 is FAILED as measured; F57-AC6 is CLOSED. <status> stays open pending a further grant widening or a decision to accept these five as a separately-owned residual.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 9094772a:src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json (unmodified; outside every version of this cell's <paths>) vs portal 9094772a:src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json (modified this session, all 9 members carry unprojected_grant)",
+        "/c/tmp/final3_ac7.log (bun test src/pages/InvestorReporting at portal 9094772a): '579 pass', '21 skip', '5 fail', '1 error', 'Ran 605 tests across 107 files', rc=1; four named ✗ lines (fe-s-32 scenario-maps, F41-AC5 x2, F49-AC8) plus the fe-s-47 module-level 'Unhandled error between tests' citing envelope.ts:249 and no-status-reason.test.ts:191",
+        "/c/tmp/final_ac7.log (the FIRST, pre-amendment whole-suite run at portal b92448f3): the SAME fe-s-47/no-status-reason.test.ts:191 unhandled-error citation and the SAME F49-AC8 failure with the SAME two unrelated App.tsx hunks named -- confirming both predate this session's edits",
+        "cd <WS>/portal && timeout 60 bun test 'src/pages/InvestorReporting/__tests__/fe-s-32/' -> 'the four scenario maps > the NO-ANSWER map is the observed map with ONE member changed: the holdings status' FAILS, printing 8 of 9 route members differing (expected [HOLDINGS_KEY] only)",
+        "cd <WS>/portal && timeout 60 bun test 'src/pages/InvestorReporting/__tests__/fe-s-49/' -> F49-AC8 FAILS, 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0)'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S22",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-21T13:42:31Z",
+    "one_line": "FE-s-53's required fix breaks fe-s-47/no-status-reason.test.ts's F47-AC6 (a git-grep subtraction census of every 'UNCERTAIN'/EXPLICIT_UNKNOWN_STATE reference in the committed portal tree outside __tests__/, classified against a hardcoded per-line RULES table). The fix's new line in adaptStatusEnvelope (adapt.ts:566, `wire.state === 'UNCERTAIN' ? (reason ?? NO_STATUS_REASON) : null`) is a NEW, correct site naming the wire's own explicit-unknown token; the census matches it (the pattern is literally `EXPLICIT_UNKNOWN_STATE|'UNCERTAIN'|\"UNCERTAIN\"`) but no RULES entry classifies it, so it prints UNCLASSIFIED and F47-AC6's `breaks` goes from 0 to 1. fe-s-47's RULES table is outside FE-s-53's grant (adapt.ts's adaptStatusEnvelope only; fe-s-47's test file is not in <paths>), so this cell cannot add the classification entry the new site needs. This is a DIRECT, mechanical CONSEQUENCE of correctly implementing the cell (not a pre-existing condition like IRPT_FNTEND-W4-S21's fe-s-49 finding): before this cell's fix, the same census reads 0 breaks (F47-AC9's own BEFORE arm, run moments earlier in the same file, still shows the constant's OLD site count).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-53 F53-AC3: <invocation>bun test .../fe-s-14 .../fe-s-47</invocation> <expect>(?<![0-9])0 fail</expect> -- 'the existing envelope/status suites (fe-s-14, fe-s-47) are unaffected -- this cell adds a path, it does not change any already-passing case.' The cell's own REMEDY text requires exactly the kind of new site F47-AC6 cannot yet classify: 'mirror carryAvailabilityFromStatus's own statedState === null gate, adapted to whatever the equivalent no-state-stated condition is on THIS function's own inputs -- ground it in the wire type.'",
+    "world_is": "cd <WS>/portal && bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47 (portal a26d791a, this cell's fix committed) reads '27 pass', '1 fail', 'Ran 28 tests across 6 files.'; the one failure is 'FE-s-47 ... > F47-AC6 -- the reach, by subtraction over the committed tree', printed line 'F47-AC6 UNCLASSIFIED src/pages/InvestorReporting/contracts/adapt.ts:566: partialReason: wire.state === 'UNCERTAIN' ? (reason ?? NO_STATUS_REASON) : null,' and 'F47-AC6 KEPT SITES: 1; census breaks: 1', expect(breaks).toBe(0) received 1. The census: 'git grep -n -E EXPLICIT_UNKNOWN_STATE|'UNCERTAIN'|\"UNCERTAIN\" HEAD ... 81 lines, 48 under __tests__/, 33 outside' (was 29 outside / 0 breaks before this commit, per the same test's own earlier passing run captured in this cell's RED transcript, portal be8cf21874). Considered and rejected: rewriting the check as `wire.state === STATE_FOR_WIRE.UNCERTAIN` (dot access, no quoted 'UNCERTAIN' substring and no EXPLICIT_UNKNOWN_STATE token) would dodge the grep pattern and pass F47-AC6 without changing behaviour -- but that optimizes for evading a census whose entire purpose is to force acknowledgment of a new explicit-unknown site, which is worse than reporting the true mechanical conflict here for the RULES table's owner to resolve.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && timeout 300 bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47 (portal a26d791a) -> '27 pass', '1 fail', 'Ran 28 tests across 6 files.'",
+        "same run, F47-AC6 test body: 'F47-AC6 UNCLASSIFIED src/pages/InvestorReporting/contracts/adapt.ts:566: partialReason: wire.state === 'UNCERTAIN' ? (reason ?? NO_STATUS_REASON) : null,' and 'F47-AC6 KEPT SITES: 1; census breaks: 1'",
+        "cd <WS>/portal && git show a26d791a --stat -- src/pages/InvestorReporting/contracts/adapt.ts (the only adapt.ts hunk this commit adds is inside adaptStatusEnvelope, :536-569, per BOUNDS)",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:333-350 (the RULES table) names no entry whose text regex matches the new line"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W4-S77",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~4",
+    "surfaced_at": "2026-09-21T14:20:00Z",
+    "one_line": "FE-s-54's required fix (contracts/envelope.ts's parseIrEnvelope, NOT adaptStatusEnvelope) breaks fe-s-47/no-status-reason.test.ts's F47-AC6 (18->16 carries) AND F47-AC7 (9->7 control-refused), because both assertions' uniform 'every status-optional operation, with no status, defaults to explicit-UNCERTAIN' premise is exactly the bug this cell fixes for status-summary/status-job -- the SAME class as the already-filed IRPT_FNTEND-W4-S22 (FE-s-53 vs F47-AC6), one cell later, on the same out-of-grant file.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-54 F54-AC4: 'the existing envelope/status suites are unaffected', invocation `bun test .../fe-s-14 .../fe-s-47`, expect `(?<![0-9])0 fail`. Also F54-AC5 (whole suite, same expect).",
+    "world_is": "At this worktree's portal HEAD ce53801c plus this cell's ONLY edit (contracts/envelope.ts's parseIrEnvelope: for status-summary/status-job, when no separate response-level `status` arrived, the freshly adapted document now stands in as its own `status` for `carryAvailabilityFromStatus`, so the document's own stated state -- e.g. PARTIAL -- is carried onto its own availability unchanged instead of being clobbered to the generic 'no status' default UNCERTAIN+NO_STATUS_REASON), `bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47` reads '26 pass', '2 fail' (was '28 pass', '0 fail' before this cell's edit). Both fails are in fe-s-47/no-status-reason.test.ts and BOTH are the direct, predicted, mechanical consequence of correctly implementing FE-s-54 (round-8 analysis item 3: 'a stated state wins, wherever the response states it'), not a regression: (1) F47-AC6's 'no status' trigger for status-summary/status-job now correctly reads 'state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING' (printed: 'F47-AC6 REACH status-summary, no status: state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING'; carries dropped from 18 to 16 of 18); F47-AC6's own RULES table (:348-350) already documents this exact mechanism as 'OVERWRITTEN on every in-contract response ... parseIrEnvelope's carryAvailabilityFromStatus (:219) always runs on data afterward with the SEPARATE status field, which these two operations leave absent -- so carryAvailabilityFromStatus's own statedState === null branch re-derives both state and partialReason regardless of what this line set' -- i.e. this row's fix is exactly what that comment names as the (previously unaddressed) mechanism. (2) F47-AC7's control ('every status-optional operation, with every reason stripped, is refused as reasonless-UNCERTAIN') now correctly reads 'no' for status-summary/status-job because their state is genuinely PARTIAL (not UNCERTAIN) once no-status defaulting stops clobbering it, so validate.ts's reasonless-UNCERTAIN check (which only fires on EXPLICIT_UNKNOWN_STATE) no longer trips (controlRefused dropped from 9 to 7 of 9). fe-s-47/no-status-reason.test.ts is NOT in IRPT_FNTEND.TO-FE-s-54's <paths>, so this worker cannot update its RULES table or F47-AC7's per-operation assumption. F54-AC5 (whole suite) shows 3 fail: these same 2, plus 1 pre-existing, unrelated, load-sensitive fe-s-45/residuals.test.ts F45-AC9 failure (passes 6/6 standalone in 31.89s; fails only inside the whole-suite run, matching the already-filed pattern IRPT_FNTEND-W1-S67/W1-S69 -- confirmed unrelated by import isolation: residuals.test.ts imports only node:child_process/node:fs/node:process/node:url, nothing from contracts/, so this cell's envelope.ts edit cannot reach it).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && timeout 300 bun test src/pages/InvestorReporting/__tests__/fe-s-14 src/pages/InvestorReporting/__tests__/fe-s-47 (portal ce53801c + this cell's uncommitted envelope.ts edit) -> '26 pass', '2 fail', 'Ran 28 tests across 6 files.'; same invocation before the edit (git stash not used -- confirmed by re-reading the pre-edit file via the file's own prior baseline run this session) -> '28 pass', '0 fail'",
+        "F47-AC6 printed line: 'F47-AC6 REACH status-summary, no status: state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING' and 'F47-AC6 REACH status-job, no status: state PARTIAL, partialReason null (expected NO_STATUS_REASON) -> MISSING'; 'F47-AC6 SUBTRACTION: 33 sites - 32 subtracted - 0 unclassified = 1 kept' unchanged, but expect(carries).toBe(arms) reads Expected 18 Received 16",
+        "portal src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:348-350 (the RULES table, unedited): the 'OVERWRITTEN on every in-contract response' bucket's own reason text names parseIrEnvelope's carryAvailabilityFromStatus re-deriving state/partialReason for status-summary/status-job 'regardless of what this line set' -- the exact mechanism this row's fix changes",
+        "F47-AC7 printed line: 'F47-AC7 POPULATION: 11 status-optional - 2 without an availability = 9; control refused when stripped: 7 of 9', expect(controlRefused).toBe(population) Expected 9 Received 7",
+        "cd <WS>/portal && timeout 60 bun test src/pages/InvestorReporting/__tests__/fe-s-45/residuals.test.ts (standalone) -> '6 pass', '0 fail', 'Ran 6 tests across 1 file. [31.89s]'; residuals.test.ts:48-52 imports only node:child_process, node:fs, node:process, node:url -- no import of contracts/envelope.ts or any file this cell touches",
+        "IRPT_FNTEND.TO-FE-s-54.status-document-own-stated-state.md <paths>: portal/src/pages/InvestorReporting/__tests__/fe-s-47/ is not a member",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-W4-S22 (same worker, prior cell): the identical shape one level up (FE-s-53 breaking F47-AC6's classification), resolved there only via an AMENDMENT widening <paths> to the test file"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T15:37:33Z",
+    "one_line": "AMENDMENT 2's fix (completing fe-s-47/no-status-reason.test.ts's envelopeBody() with unprojected_grant) broke a THIRD test in the same file, F47-AC9, whose own extraction control re-executes only carryAvailabilityFromStatus standalone and compares it against the FULL parseIrEnvelope pipeline's output -- the two now differ on unprojectedGrant alone, since the full pipeline's separate carryUnprojectedGrant step is never modeled by the standalone extraction. Fixed within grant (the whole fe-s-47 file was granted) by excluding unprojectedGrant from both sides of the comparison; the RULES table was not touched.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDMENT 2: 'Add unprojected_grant: { count: 0, denominator: <sensible>, kinds: [] } to envelopeBody()'s returned object ... Do not touch the RULES table FE-s-53 added.' Silent on any other part of the file; F47-AC9 is not named.",
+    "world_is": "portal b8c5df09 (before: 0cb9b2ba): after envelopeBody() gained unprojected_grant, `bun test src/pages/InvestorReporting/__tests__/fe-s-47/` read 7 pass / 1 fail (F47-AC9 -- 'a document's own reason survives a missing status'), printing 'EXTRACTION CONTROL HEAD's carry, extracted the same way, equals the real parseIrEnvelope data: BROKEN'. Root cause: F47-AC9 extracts ONLY carryAvailabilityFromStatus's source from the committed blob, transpiles it standalone, and runs it on a freshly-adapted document (`adapted`, never touched by carryUnprojectedGrant, so its unprojectedGrant is null); it compares that (`headDirect`) against `stated.data`, the output of the REAL parseIrEnvelope('resolve-scope', statedBody) -- which since envelopeBody() now supplies unprojected_grant, runs BOTH carryAvailabilityFromStatus AND the separate carryUnprojectedGrant, so `stated.data.availability.unprojectedGrant` carries the real grant object while `headDirect`'s stays null. The comparison (`show(headDirect) === show(stated.data)`) fails on this ONE field, unrelated to the control's own stated claim (the partialReason/state carry, RULING V). Fixed by stripping `unprojectedGrant` from both sides before the string comparison (`stripGrant` helper, portal b8c5df09); re-run: 8 pass / 0 fail, 'EXTRACTION CONTROL ... holds'. The RULES table (F47-AC6, FE-s-53's addition) is byte-unchanged -- confirmed by re-reading it in the same run (unaffected, still prints its own census).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 0cb9b2ba:src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:585-589 (before this row's fix) -- headDirect vs stated.data compared directly via show()",
+        "portal b8c5df09:src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts -- the stripGrant helper and its use in extractionHolds",
+        "cd <WS>/portal && bun test 'src/pages/InvestorReporting/__tests__/fe-s-47/' at 0cb9b2ba: '7 pass', '1 fail' (F47-AC9), 'EXTRACTION CONTROL ... BROKEN'; at b8c5df09: '8 pass', '0 fail', 'EXTRACTION CONTROL ... holds'",
+        "cd <WS>/portal && bun run typecheck at b8c5df09: rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W10-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~10",
+    "surfaced_at": "2026-09-21T16:46:06Z",
+    "one_line": "TO-FE-s-60 directs confirming the ir-note/ir-muted color law by reading `src/index.css`'s `.ir-note` rule, but `src/index.css` carries no `.ir-note` or `.ir-muted` rule at all -- both classes are defined in `render/print.css`, resolving to `#595959`, not the interactive-canvas navy `#163372` portal `CLAUDE.md`'s color law names for text ink.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-60 WORKER FACE, EXACT CHANGES item 1: 'navy-ink-on-white per portal CLAUDE.md's color law (this page's ir-* classes already resolve to that palette -- confirm by reading src/index.css's .ir-note rule rather than assuming).'",
+    "world_is": "portal 15ceef79: `src/index.css` (806 lines) contains zero occurrences of `ir-note` or `ir-muted` (Grep, both patterns, 'No matches found'). The two classes are instead defined in `portal/src/pages/InvestorReporting/render/print.css:272-277` (`.ir-note { font-size: 11px; line-height: 1.45; color: #595959; margin: 6px 0; }`) and `:285-287` (`.ir-muted { color: #595959; }`). `#595959` is a dark grey, not the app-canvas ink `#163372` (navy) portal `CLAUDE.md:23,36-37` names, nor exactly the panel-secondary `#6B7280` it names either -- it is `render/print.css`'s own pre-existing PDF/export-document convention (this cell reuses it verbatim per the cell's own instruction, and does not introduce a new color). Whether a printed-document stylesheet is in scope for the interactive-canvas color law (`CLAUDE.md`'s table is headed 'page canvas' / 'panel' / 'band', none obviously naming a print/export sheet) is left for L9 (F60-AC6, judgment).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep pattern '\\.ir-note|\\.ir-muted' over portal/src/index.css (15ceef79) -> 'No matches found'",
+        "Grep pattern 'ir-note' over portal/src (15ceef79), files_with_matches -> 8 files, none is src/index.css; render/print.css is one of them",
+        "portal/src/pages/InvestorReporting/render/print.css:272-277 and :285-287 (15ceef79), read directly: `.ir-note { ... color: #595959; ... }` and `.ir-muted { color: #595959; }`",
+        "portal/CLAUDE.md:21-37 (workspace worktree), color law table: page canvas ink 'navy only (#163372)'; panel ink 'navy; secondary #6B7280 on a panel only'; neither row names #595959"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W10-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~10",
+    "surfaced_at": "2026-09-21T16:46:06Z",
+    "one_line": "TO-FE-s-60's BOUNDS requires 'render and read a screenshot before reporting F60-AC6', but this worker's tool set (Bash/Read/Write/Edit/Glob/Grep only) carries no browser/screenshot capability and the portal package has no playwright/puppeteer dependency -- F60-AC6 is recorded from renderToStaticMarkup output + direct CSS-source citation instead, never a rendered screenshot.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-60 BOUNDS: 'Color law (portal CLAUDE.md). Navy-on-white text, never light text on light background; render and read a screenshot before reporting F60-AC6.'",
+    "world_is": "This worker's available tools this session are Bash, Read, Write, Edit, Glob, Grep only -- no browser-automation or screenshot tool is present. `grep`/read of portal/package.json and portal/bun.lock for 'playwright'/'puppeteer'/'screenshot' returns no matches, so no in-repo mechanism produces one either. F60-AC6 is therefore recorded (judgment, no verdict per schema) from (1) `renderToStaticMarkup` output of the new node (the same evidence AC2/AC3/AC4 already print) and (2) a direct read of the CSS rule the node's classes resolve to (render/print.css:272-277,285-287), rather than a rendered screenshot. A sibling deliverable in this same project (0.9.0_WK_IRPT_FNTEND~4, FE-s-7, F7-AC7) DID attach two PNG screenshots to its judgment record, so screenshot capability has existed for at least one worker session on this project; whether that reflects a different tool grant to that session or a capability this session lacks is not established here.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This worker's own tool manifest for the session (Bash, Read, Edit, Write, Glob, Grep) carries no browser/screenshot tool.",
+        "cd <WS>/portal && grep -n \"playwright\\|puppeteer\\|screenshot\" package.json bun.lock -> no output (0 matches)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~4/IRPT_FNTEND.TO-FE-s-7.holdings-tab.proof_of_spec.json, F7-AC7's invocation: 'Read of ... fe-s-7_holdings_smartx_1440.png and fe-s-7_holdings_cottonwood_390.png' -- a screenshot WAS produced and read by a different worker session on this same project."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W9-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~9",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "FE-s-59's correctly-scoped, additive render (unprojectedGrant badge, sited beside the Fact grid, outside the cohort blocks) breaks fe-s-48/withheld.test.ts's F48-AC4 self-test, which is out of this cell's <paths> grant: that test diffs ScopeSummary.tsx against DEV 1f3ce9f0 by NAIVE POSITIONAL INDEX (`a[i] !== b[i]`, no LCS/diff), so ANY future line-count change to the file -- inserted before its checked line -- makes it register nearly the whole file as changed, independent of whether the new code is correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-59 F59-AC5: 'the whole IRPT_FNTEND suite is green', invocation `cd <WS>/portal && bun test src/pages/InvestorReporting`, expect `(?<![0-9])0 fail`.",
+    "world_is": "At portal HEAD 61dbe93c (this cell's own commit -- header/ScopeSummary.tsx's PartialDisclosureFact addition plus the new __tests__/fe-s-59/ test, both within this cell's <paths>), `cd <WS>/portal && bun test src/pages/InvestorReporting` reads '605 pass', '21 skip', '1 fail', '2562 expect() calls', 'Ran 627 tests across 112 files.' -- so F59-AC5's `0 fail` expectation is NOT met, by one test: `fe-s-48/withheld.test.ts` F48-AC4 ('the arm that can say no: DEV 1f3ce9f0 built the withheld fact'). Root cause, confirmed rather than assumed: F48-AC4's own `onlyTheFact` check requires `a.length === b.length` (the file's TOTAL code-line count unchanged since DEV 1f3ce9f0) AND exactly one index differs; before this cell's commit the printed line read 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 1 of 111 [only the withheld fact: yes]' (this worker's own pre-commit run, working copy against the then-current committed HEAD); after this cell's commit, the SAME invocation over the SAME two fixed vintages (DEV 1f3ce9f0 and the file's OWN prior blob is unchanged -- only HEAD moved) reads 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 102 of 138 [only the withheld fact: NO]'. This cell added ~27 net lines (a new import member, a 21-line documented `PartialDisclosureFact` function, and a 3-line render call) ABOVE the withheld-fact line's position; because the comparator is a raw per-index array compare rather than a diff, every line from the insertion point onward reads as 'changed' purely from the resulting shift in array index, not from any actual content difference at those positions (F48's OWN functional assertions -- F48-AC2, F48-AC3, the withheld-vs-unknown rendering behavior -- still PASS at this same HEAD; only AC4's positional self-test fails). fe-s-48/withheld.test.ts is NOT in IRPT_FNTEND.TO-FE-s-59's <paths> (`portal/src/pages/InvestorReporting/header/ScopeSummary.tsx`, `portal/src/pages/InvestorReporting/__tests__/fe-s-59/`, and this project's surprise-channel investigation file only), so this worker cannot repair the comparator or rebase its DEV_BEFORE pin without exceeding its grant. hazard_standing ARMED: the same naive-diff shape will refuse ANY future cell that adds or removes even one line from ScopeSummary.tsx above F48-AC4's checked position, regardless of correctness -- this is the first cell to do so since fe-s-48 landed (every intervening cell, e.g. FE-s-57's type-only import edit, happened not to change the file's total line count), so the fragility was latent, not previously exercised. F59-AC5 is REFUSED as written on this measurement; F59-AC1/AC2/AC3/AC4 all PASS-by-output and are unaffected.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-irpt_fntend-9-59-fe-s-59-portal @61dbe93c (this cell's own commit): `cd <WS>/portal && timeout 600 bun test src/pages/InvestorReporting` -> '605 pass', '21 skip', '1 fail', '2562 expect() calls', 'Ran 627 tests across 112 files.'",
+        "the single fail line, verbatim: 'F48-AC4 -- the arm that can say no: DEV 1f3ce9f0 built the withheld fact \": unknown\" > the withheld fact line in each committed blob, and no other code line moved' at src/pages/InvestorReporting/__tests__/fe-s-48/withheld.test.ts:306:25, `expect(onlyTheFact).toBe(true)` Expected true Received false",
+        "printed diagnostic post-commit: 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 102 of 138 [only the withheld fact: NO]'; same invocation pre-commit (working copy vs then-HEAD, before this cell's commit): 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 1 of 111 [only the withheld fact: yes]' -- the ONLY variable between the two runs is this cell's own commit landing",
+        "src/pages/InvestorReporting/__tests__/fe-s-48/withheld.test.ts:295-300 @61dbe93c, read directly: `const changed: number[] = []; for (let i = 0; i < Math.max(a.length, b.length); i++) if (a[i] !== b[i]) changed.push(i); const onlyTheFact = a.length === b.length && changed.length === 1 && ...` -- a positional index compare, not a diff (no LCS, no common-subsequence alignment)",
+        "F48-AC2 and F48-AC3 (the same file's functional assertions on withheld-vs-unknown rendering) both PASS at portal HEAD 61dbe93c, printing 'NON-AUTHORITATIVE COHORT READS WITHHELD ON EVERY AXIS: 5 of 5' and 'IN-ENUM AUTHORITATIVE ADVISORY UNCHANGED: 3 of 3' -- so this is not a functional regression in ScopeSummary.tsx's rendering, only in F48-AC4's own line-position self-test",
+        "IRPT_FNTEND.TO-FE-s-59.scope-summary-unprojected-grant-badge.md <paths>: portal/src/pages/InvestorReporting/__tests__/fe-s-48/ is not a member"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W8-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~8",
+    "surfaced_at": "2026-09-21T13:20:00Z",
+    "one_line": "F58-AC6 ('the whole IRPT_FNTEND suite is green', expect 0 fail) measures '622 pass, 4 skip, 2 fail' -- both fails are fe-s-32/holdings-in-a-browser.test.ts's F32-AC3 and F32-AC5, confirmed by HEAD-restore isolation to be PRE-EXISTING and unrelated to this cell's state/status.ts + StatusPanel.tsx edits: this is IRPT_FNTEND-W5-S9's already-ARMED hazard ('the assertion is FALSE the moment the precondition is MET ... latent, not yet exercised') FIRING FOR REAL for the first time in this channel, because this worker started its own worktree's vite dev server to satisfy F58-AC5's own precondition, and the whole-suite run inherited that same live server.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-58 F58-AC6: <invocation>cd <WS>/portal && timeout 600 bun test src/pages/InvestorReporting</invocation> <expect>(?<![0-9])0 fail</expect> -- 'the whole IRPT_FNTEND suite is green'.",
+    "world_is": "Measured at portal 15ceef79 + this worker's uncommitted state/status.ts + StatusPanel.tsx edits: 'bun test src/pages/InvestorReporting' (IRPT_FE_DEV_PORT=5707, this worktree's own vite dev server, started to satisfy F58-AC5's own declared precondition) prints '622 pass', '4 skip', '2 fail', 'Ran 628 tests across 112 files', rc=1. The two failing tests: 'F32-AC3 -- PARTIAL: the holdings are shown, the classification gap labelled as unknown > read off the rendered page at 390 and 1440, beside the observed map as its control' (expect(shown).toBe(true) received false) and 'F32-AC5 -- each Holdings capture carries the fields its claim declares, in the rendered DOM > FE-s-22 claims model (unedited), joined by criterion through the round-2 manifest' (expect(found).toBe(total): expected 6, received 5, the missing field being the claims model's 'unknown/unknown' classification text against a page that now renders 'withheld/withheld' per the FE-s-55 fix). ISOLATION: restored src/pages/InvestorReporting/state/status.ts and tabs/StatusPanel.tsx to their committed HEAD bytes (git show HEAD:<path> > <path>, confirmed by git diff --stat reporting no content delta beyond a CRLF/LF warning) and re-ran 'bun test src/pages/InvestorReporting/__tests__/fe-s-32' alone against that clean baseline: SAME 2 fail, SAME two test names, SAME assertion (expect(shown).toBe(true) received false; expect(found).toBe(6) received 5) -- then restored this worker's own edits from a backup copy and re-verified (grep) both edits are back. So neither failure is caused by, or fixable within, this cell's <paths> grant (__tests__/fe-s-32/ is not in it). F58-AC6 is measured, not satisfied as literally invoked, and is REFUSED on that ground in this worker's proof-of-spec and final report -- the refusal is this worker's own act; this row records the measurement only.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && IRPT_FE_DEV_PORT=5707 timeout 600 bun test src/pages/InvestorReporting -> '622 pass', '4 skip', '2 fail', 'Ran 628 tests across 112 files', rc=1; the two named failing tests are F32-AC3 and F32-AC5 in __tests__/fe-s-32/holdings-in-a-browser.test.ts",
+        "cd <WS>/portal && IRPT_FE_DEV_PORT=5707 timeout 90 bun test src/pages/InvestorReporting/__tests__/fe-s-32 -> SAME '6 pass', '2 fail' with state/status.ts and StatusPanel.tsx TEMPORARILY RESTORED to committed HEAD bytes (git show HEAD:<path>), before this worker's own edits were restored from a backup copy",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md row IRPT_FNTEND-W5-S9 (surfaced_by 0.9.0_WK_IRPT_FNTEND~5, FE-s-55): 'the assertion is currently unreachable ONLY because its own declared PRECONDITION (a dev server on this worktree) is ABSENT in this environment ... the assertion is FALSE the moment the precondition is MET' -- this row is that prediction MEASURED TRUE for the first time in this channel",
+        "src/pages/InvestorReporting/__tests__/fe-s-27/_dev-server.ts (RULING U): this worker started its OWN worktree's vite dev server on the RULING-U derived port (probeDevServer() -> MET, served from worktree C:/tmp/wk-irpt_fntend-9-58-fe-s-58/portal) so F58-AC5's own declared precondition could be genuinely exercised, and the same live server then answered every OTHER file's probeDevServer() call in the same whole-suite run, including fe-s-32's"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W8-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~8",
+    "surfaced_at": "2026-09-21T14:05:00Z",
+    "one_line": "fe-s-32/holdings-in-a-browser.test.ts's F42-AC7 ('the captures go OUTSIDE every committed deliverables folder') reads git status --porcelain over the WHOLE org/missions/D9/IRPT/IRPT_FNTEND/deliverables/ tree, before and after ITS OWN driver run, unscoped to what that driver actually wrote -- so ANY OTHER concurrent write into that shared tree during the same window (in this case, this worker's own result.md, written moments earlier in the SAME worktree, for a DIFFERENT criterion) reads as a false positive: 'before 0 path(s) ... after 1 path(s) ... CHANGED', naming this worker's own unrelated file. A clean re-run with nothing else touching deliverables/ in the window passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "fe-s-32/holdings-in-a-browser.test.ts F42-AC7's own assertion (verdict = captureVerdict(CAPTURES, deliverablesBefore, deliverablesAfter, files); expect(verdict.pass).toBe(true)) -- read as asserting THIS DRIVER's captures land outside every committed deliverables folder.",
+    "world_is": "Measured twice in the SAME session, same portal HEAD 6b206370, same dev server: run 1 (immediately after this worker wrote status-panel-unprojected-grant-badge.result.md into org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~8/, still untracked) printed 'DELIVERABLES TREE ... before 0 path(s) listed [e3b0c44298fc1c14], after 1 path(s) listed [e43a90232e4d04cf] -> CHANGED / after: ?? org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~8/status-panel-unprojected-grant-badge.result.md' and FAILED ('621 pass, 4 skip, 3 fail'); run 2, with no file written into deliverables/ anywhere in the whole run's window, printed the SAME 'before 0 ... after 0' shape it always has and PASSED ('622 pass, 4 skip, 2 fail' -- the same two pre-existing, unrelated fe-s-32 failures named in IRPT_FNTEND-W8-S1, and nothing else). The check's git-status read is over the WHOLE deliverables/ tree, not scoped to any path this driver itself is capable of writing (its own captures go to .scratch/, never deliverables/), so it cannot distinguish 'this driver polluted deliverables/' from 'a concurrent, unrelated actor wrote there for its own reason' -- a shared-dependency-blindness shape (CLAUDE.md Rule 22): the check is CORRECT about the tree's state and WRONG about attributing that state to its own driver.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/tmp/f58_final_ac6.log:1229-1238 (run 1, portal 6b206370): 'DESTINATION INSIDE A FOLDER NAMED deliverables: no', 'DELIVERABLES TREE ... before 0 path(s) listed [e3b0c44298fc1c14], after 1 path(s) listed [e43a90232e4d04cf] -> CHANGED', 'after: ?? org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~8/status-panel-unprojected-grant-badge.result.md', 'CAPTURES OUTSIDE EVERY COMMITTED DELIVERABLES FOLDER: no', then the F42-AC7 assertion failure at holdings-in-a-browser.test.ts:549",
+        "/tmp/f58_final_ac6_clean.log (run 2, SAME portal HEAD 6b206370, nothing written to deliverables/ during the window): '622 pass', '4 skip', '2 fail', rc=1 -- the SAME two named failures as run 1 (F32-AC3, F32-AC5) and F42-AC7 absent from the fail list",
+        "src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:544-549 (captureVerdict call over deliverablesBefore/deliverablesAfter, both read as a whole-tree git status --porcelain snapshot, never scoped to a path this driver's own capture destination -- .scratch/ -- could touch)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```

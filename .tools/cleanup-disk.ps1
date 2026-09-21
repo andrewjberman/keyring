@@ -17,6 +17,17 @@
 #                                            does not exit perfectly clean leaves one behind; ~149 MB
 #                                            each; 53 of them were 5.92 GB on this box alone.
 #
+#   terraform-provider-cache  AUTO-DELETE   `.terraform/providers` directories under a NON-LIVE linked
+#                                            worktree's infra/aws/terraform tree. `terraform init`
+#                                            writes one full copy of the AWS provider (686 MB at
+#                                            v5.100.0) PER ROOT PER WORKTREE with no shared plugin
+#                                            cache -- 10 roots = 6.71 GB per worktree. Measured
+#                                            2026-09-20: 28 such dirs in four idle worktrees were
+#                                            18.78 GB and took this box to 0 bytes free mid-round.
+#                                            Re-creatable by `terraform init` from the committed
+#                                            lock file; NO state, planfile or scratch is touched.
+#                                            The main checkout and any LIVE worktree are skipped.
+#
 #   orphaned-worktree-dirs    AUTO-DELETE   directories that SIT INSIDE a known worktree-staging
 #                                            root (wherever `git worktree list` currently has
 #                                            entries, plus .worktrees/ and C:\tmp as defaults) but
@@ -70,7 +81,7 @@
 [CmdletBinding()]
 param(
     [switch]$DryRun,
-    [string[]]$Pool = @('terraform-provider-temp', 'orphaned-worktree-dirs', 'merged-worktrees', 'unmerged-worktrees'),
+    [string[]]$Pool = @('terraform-provider-temp', 'terraform-provider-cache', 'orphaned-worktree-dirs', 'merged-worktrees', 'unmerged-worktrees'),
     [int]$LiveWindowHours = 6,
     [string[]]$ExcludePath = @(),
     [string]$RepoRoot = $(Split-Path -Parent $PSScriptRoot)
@@ -136,7 +147,7 @@ function Invoke-PoolTerraformTemp {
     $items = Get-ChildItem -LiteralPath $temp -Force -ErrorAction SilentlyContinue |
         Where-Object { $_.Name -like 'terraform-provider*' -and -not (Test-Excluded $_.FullName) }
     $totalBytes = 0
-    foreach ($f in $items) { $totalBytes += (if ($f.PSIsContainer) { Get-DirSizeBytes $f.FullName } else { $f.Length }) }
+    foreach ($f in $items) { $totalBytes += $(if ($f.PSIsContainer) { Get-DirSizeBytes $f.FullName } else { $f.Length }) }
     Write-Output ("[terraform-provider-temp] found {0} item(s), {1}" -f $items.Count, (Format-GB $totalBytes))
     if ($items.Count -eq 0) { return }
     if ($DryRun) { Write-Output "[terraform-provider-temp] DRY RUN -- would delete all of the above"; return }
@@ -146,6 +157,43 @@ function Invoke-PoolTerraformTemp {
         catch { $skipped++; Write-Output ("[terraform-provider-temp] SKIPPED (in use): {0} -- {1}" -f $f.Name, $_.Exception.Message) }
     }
     Write-Output ("[terraform-provider-temp] removed {0}, skipped {1} (locked by a live process)" -f $removed, $skipped)
+}
+
+# =================================================================================================
+# POOL: terraform-provider-cache
+# =================================================================================================
+function Invoke-PoolTerraformProviderCache {
+    $mainRoot = (& git rev-parse --show-toplevel 2>$null)
+    if ($mainRoot) { $mainRoot = $mainRoot.Replace('\', '/').TrimEnd('/').ToLowerInvariant() }
+    $targets = @(); $liveSkipped = 0; $totalBytes = 0
+    foreach ($row in (Get-WorktreeTable)) {
+        $norm = $row.Path.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
+        if ($norm -eq $mainRoot) { continue }                      # the shared checkout is never touched
+        $tfRoot = Join-Path $row.Path 'infra/aws/terraform'
+        if (-not (Test-Path -LiteralPath $tfRoot)) { continue }
+        $dirs = @(Get-ChildItem -LiteralPath $tfRoot -Recurse -Directory -Force -Filter '.terraform' -ErrorAction SilentlyContinue |
+            ForEach-Object { Join-Path $_.FullName 'providers' } | Where-Object { Test-Path -LiteralPath $_ })
+        if ($dirs.Count -eq 0) { continue }
+        if (Test-WorktreeLive $row.Path) {
+            $liveSkipped++
+            Write-Output ("[terraform-provider-cache] LIVE (written inside the {0}h window) -- untouched: {1}  ({2} provider dir(s))" -f $LiveWindowHours, $row.Path, $dirs.Count)
+            continue
+        }
+        $bytes = 0; foreach ($d in $dirs) { $bytes += Get-DirSizeBytes $d }
+        $totalBytes += $bytes
+        $targets += [PSCustomObject]@{ Path = $row.Path; Dirs = $dirs; Bytes = $bytes }
+    }
+    $dirCount = 0; foreach ($x in $targets) { $dirCount += $x.Dirs.Count }
+    Write-Output ("[terraform-provider-cache] found {0} provider dir(s) in {1} non-live worktree(s), {2}; {3} live worktree(s) skipped" -f $dirCount, $targets.Count, (Format-GB $totalBytes), $liveSkipped)
+    foreach ($x in $targets) { Write-Output ("   {0,10}   {1,2} dir(s)   {2}" -f (Format-GB $x.Bytes), $x.Dirs.Count, $x.Path) }
+    if ($targets.Count -eq 0) { return }
+    if ($DryRun) { Write-Output "[terraform-provider-cache] DRY RUN -- would delete the provider dirs above (terraform init restores them)"; return }
+    $removed = 0; $skipped = 0
+    foreach ($x in $targets) { foreach ($d in $x.Dirs) {
+        try { Remove-Item -LiteralPath $d -Recurse -Force -ErrorAction Stop; $removed++ }
+        catch { $skipped++; Write-Output ("[terraform-provider-cache] SKIPPED (in use): {0} -- {1}" -f $d, $_.Exception.Message) }
+    } }
+    Write-Output ("[terraform-provider-cache] removed {0}, skipped {1} (locked by a live process)" -f $removed, $skipped)
 }
 
 # =================================================================================================
@@ -183,7 +231,14 @@ function Invoke-PoolOrphanedDirs {
         if (-not (Test-Path $root)) { continue }
         Get-ChildItem -LiteralPath $root -Force -Directory -ErrorAction SilentlyContinue | ForEach-Object {
             $n = $_.FullName.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
-            if (($registeredNorm -notcontains $n) -and -not (Test-Excluded $_.FullName)) { $orphans += $_ }
+            if (($registeredNorm -notcontains $n) -and -not (Test-Excluded $_.FullName)) {
+                # The live window binds THIS pool too. Measured 2026-09-18: a dry run listed
+                # .worktrees\verify-lt-3-1 for deletion 30 minutes after its last write -- an
+                # unregistered directory is not a DEAD one; a seat's scratch checkout looks identical.
+                if (Test-WorktreeLive $_.FullName) {
+                    Write-Output ("[orphaned-worktree-dirs] LIVE (written inside the {0}h window) -- untouched: {1}" -f $LiveWindowHours, $_.FullName)
+                } else { $orphans += $_ }
+            }
         }
     }
     $totalBytes = 0
@@ -278,6 +333,7 @@ Write-Output ("pools: {0}{1}" -f ($Pool -join ', '), $(if ($DryRun) { '  (DRY RU
 Write-Output ""
 
 if ($Pool -contains 'terraform-provider-temp') { Invoke-PoolTerraformTemp; Write-Output "" }
+if ($Pool -contains 'terraform-provider-cache') { Invoke-PoolTerraformProviderCache; Write-Output "" }
 if ($Pool -contains 'orphaned-worktree-dirs')  { Invoke-PoolOrphanedDirs; Write-Output "" }
 $runMerged = $Pool -contains 'merged-worktrees'
 $runUnmerged = $Pool -contains 'unmerged-worktrees'

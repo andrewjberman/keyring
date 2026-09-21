@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 5,
-  "decomp_version": "0.5",
+  "round": 8,
+  "decomp_version": "0.12",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -46,14 +46,262 @@
   "cells_round4": 8,
   "cell_id_shape_round4": "IB-rtd-<n>",
   "round4_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND4_ANALYSIS.md @561d6e1cc9",
-  "cells_round5": 5,
-  "cell_id_shape_round5": "IB-rte-<n>"
+  "cells_round5": 6,
+  "cell_id_shape_round5": "IB-rte-<n>",
+  "cells_round6": 14,
+  "cell_id_shape_round6": "IB-rtf-<n>",
+  "round5_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND5_ANALYSIS.md@81472c3a47",
+  "round6_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND6_ANALYSIS.md@fa2ff4f0dd",
+  "cells_round7": 4,
+  "cell_id_shape_round7": "IB-rtg-<n>",
+  "round7_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND7_ANALYSIS.md @0d400d5c07",
+  "round7_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v3.md @357565e863",
+  "cells_round8": 6,
+  "cell_id_shape_round8": "IB-rth-<n>",
+  "round8_mid_round_addition_1": "IB-rth-5, ~14:5xZ 2026-09-21, on row W3-S52 and CTO ruling addendum 2 @afc015b4b2 (msg 99068)",
+  "round8_mid_round_addition_2": "IB-rth-6, ~16:2xZ 2026-09-21, Andrew-direct @fb8c7a574c -- create opal-data-inflectionwealth + opal-data-cottonwoodcapital -- CLOSED SUPERSEDED ~17:5xZ on CRO msg 99124 @a0097b1ef4, the need was met another way",
+  "round8_mid_round_addition_3": "IB-rth-7, ~18:0xZ 2026-09-21, on CRO msg 99124 + CTO msg 99128 -- reconcile Terraform state (ledger legs L1/L3/L4) against the manually-recovered bucket policy; carries row S116 (fence_patterns hyphen gap); found real drift, row W7-S2",
+  "round8_mid_round_addition_4": "IB-rth-8, ~19:1xZ 2026-09-21, on row W7-S2 -- never-widen packet + sign-off + apply to clear 4 tainted lgic_firm resources found by IB-rth-7's plan"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R8. ROUND 8 -- THE RECUT ON THE ROUND-7 ANALYSIS (@0d400d5c07, msg 98978; v0.8, 2026-09-21, `2.0.0_SA_COO~B`)
+
+**Input:** round 7 CLOSED at L10 (0 open of 79 proof-based; 4/4 AC2 PASS, none self-graded; CVO slug @`357565e863` -- 12 rows, 9 GRADUATED / 3 DISMISSED). The CTO's analysis @`0d400d5c07` affirms the CVO's grades: **FWD-5 ADVANCED-NOT-REALIZED** (the refusal affirmed over the completion report's headline -- ⭐ *"removing a blocker is not realizing an outcome"*; the S100 fix is real work graded at R75-AC2 PASS, but FWD-5's own DONE WHEN names a three-firm replay with reconcile-before-and-after and denominators that nobody has run); **FWD-2 SPLIT** (containment REALIZED round 6, serving ADVANCED-NOT-REALIZED on W3-S50 + W1-S43). No PRD addendum. Round 8 closes the two disclosed serving-half gaps and the records-hygiene the round-7 close surfaced.
+
+### R8.1 The rectangle (4 cells, id shape `IB-rth-<n>`)
+
+| cell | owes | assignee | serves | supersedes |
+|---|---|---|---|---|
+| IB-rth-1 | INFLECTION serving route (W3-S50): the live 2-of-3 shortfall is an S3 404 in `_authz/served.py::enforcer_for`'s eager ownership-map load for inflection, UPSTREAM of `route_for`. INVESTIGATE FIRST (read-only): whether inflection's ownership-map object can be produced/read on the EXISTING `opal-data-inflection` bucket without the console -- a discriminating s3 call, the wire result verbatim. ⚠ BOUNDED BY ANDREW-DIRECT 98869 answer 2, HIS TERMS NOT WIDENED: rectify the EXISTING bucket FIRST; a minted principal ONLY if rectification cannot be done; new buckets the LAST resort and he said he would prefer not; **the root console is NOT an option**. If the fix needs the mint-principal or new-bucket branch, STOP and carry to the CTO/Andrew with the discriminating evidence -- never taken ad hoc. Any served/bucket change is packet + halves BEFORE the act. Acceptance: inflection's live performance request resolves a TenantRoute end-to-end (no S3 404, no UNEXPECTED), 3-of-3 firms live. | WK | FWD-2 (serving) | -- |
+| IB-rth-2 | EXPORT SUBMIT-WIRING (W1-S43): the deployed `submit_export` raises NOT_READY -- the receipt CONTRACT is proven (round-7 rtg-1 R72 PASS) but the submit controller that produces a receipt in production is not wired. Wire it; packet + halves BEFORE the deploy (the rtg-1 shape); acceptance: an exercised submit-export -> receipt round trip on the REAL path produces + serves the receipt (no NOT_READY), the S105/S106 taxonomy unchanged. | WK | FWD-2 (serving) | IB-rtg-1 (the submit half rtg-1 disclosed) |
+| IB-rth-3 | STATUS-WORD HYGIENE: the 7 orders terminal-by-proof at HEAD whose `<status>` word is not terminal (`IB-rt-6`, `rtf-3`, `rtf-4`, `rtf-7`, `rtf-10`, `rtf-12`, `rtf-14`) -- flip each face's `<status>` to a terminal word citing its VALID proof instance, changing NOTHING else. ⚠ BOOKKEEPING, NOT RE-WORK: the proofs are VALID at HEAD and terminality already reads from them; this only stops a status-word census returning a wrong number (the §4 class three projects over). Acceptance: the status-word count and the gate's proof-based resolver AGREE for IRPT_BCKEND. | WK | records integrity | -- |
+| IB-rth-4 | THE 110 STALE OWNED REMEDIATION ROWS (2+ rounds unmoved; the gate's 9x non-refusal disclosure) -- a DISPOSITION-PER-ROW cell, owned by `2.0.0_SA_COO~B` as issuer. ⛔ NOT a bulk close; ⛔ NO row closed by AGE (staleness is a PROCESS signal, never HAZARD evidence -- the label-vs-evidence inversion); each row on its OWN evidence, a still-live row STAYS live and says so; the cell PRINTS its denominator + per-disposition counts so the next round can tell a real fall from a narrowed census. | WK | channel hygiene | -- |
+
+**Not cells of this project:** FWD-5's REALIZATION exercise -- its OWNER line names `IRPT_FNTEND` for the three-firm replay; this project holds join correctness, the reconcile control, the denominators and the revision-bound `HoldingsSnapshot`, which round 8 MAY build as this project's SHARE but which CANNOT realize FWD-5 alone (a round-8 report claiming FWD-5 REALIZED is refused on the round-7 grounds). The broader FWD-11 bucket program beyond inflection's serving path (Andrew). The `opal-data-inflection` ownership-map PRODUCER re-key, if the map is missing at source (DS `d08`).
+
+### R8.2 Edges and fanout
+Four INDEPENDENT chains (disjoint write surfaces -- inflection authz/bucket; export submit; order faces; the surprise channel): A `rth-1`; B `rth-2`; C `rth-3`; D `rth-4`. **fanout: 4 of 4 chains, cap 8.** No cross-cell dependency. ⚠ **EXECUTION PACED ONE WORKER AT A TIME** under Andrew's ~02:4xZ stay-light hold (98915/98916): the issuance cuts all four; the COO spawns them SERIALLY, reusing one worktree per slot, the two records-hygiene cells (rth-3, rth-4 -- no served change) ahead of the two served-change cells (rth-1, rth-2).
+
+### R8.3 Bounds carried
+NEVER-1 (packet + CTO+COO halves at HEAD BEFORE any served/bucket change -- rth-1's rectification if it writes, rth-2's deploy); the arm-(d) SUBTRACTION gate; the LEDGER OPENED BEFORE the act; R-40 (content hash per run/artifact); S56 vintage pins; the forward-looking-criterion bar; the identity bar (arm-(e) live proof under the DEPLOYED role + bytes); **Andrew-direct 98869 answer 2's inflection ladder** (rectify existing FIRST / mint only if not / new buckets LAST / NEVER the root console -- rth-1); the **110-row disposition bounds** (per-row on its own evidence, NO age-close, print denominator + per-disposition counts -- rth-4); ⭐ **"REMOVING A BLOCKER IS NOT REALIZING AN OUTCOME"** -- no round-8 report claims FWD-5 REALIZED, and the CTO's standing read applies (*"has this EVER been graded" vs "does THIS round contain it"*).
+
+### R8.4 Not decided here
+Whether the inflection bucket CAN be rectified without the console (rth-1's read-only investigation determines it; the mint-principal and new-bucket branches are Andrew's/the CTO's, carried with evidence, never cut ad hoc); the submit controller's production shape (rth-2's judgment, Rule 24 record); which of the 110 rows dispose vs stay live (rth-4's per-row evidence).
+
+### R8.5 Four-postulate record (Rule 24 over the round-8 cell set)
+(i) MECE over the DECLARED domain = the round-7 carries {W3-S50 inflection, W1-S43 submit-wiring, status-word hygiene, the 110 stale rows} MINUS {FWD-5 realization (IRPT_FNTEND), the broader FWD-11 (Andrew), the DS producer re-key} -> the four cells remain, none uncovered. (ii) SAME GRAIN: each is one bounded remediation -- two served-path fixes, two records-hygiene sweeps. (iii) INTENT COHERENCE: one axis -- close what round 7 left open and make the records read true. (iv) STATE COHERENCE: a cell disposing rows or flipping status words does NOT move any FWD; rth-1/rth-2 ADVANCE FWD-2's serving half but do NOT alone realize it (containment already REALIZED round 6; FWD-5 untouched, its exercise is IRPT_FNTEND's).
+
+### R8.6 MID-ROUND ADDITION (~14:5xZ 2026-09-21) -- on row W3-S52 (the render-host SESSION_ABSENT finding) and the CTO's ruling addendum 2 (@afc015b4b2, msg 99068)
+
+`IB-rth-5` (WK~5): rth-2's build STOPPED honestly on a THIRD structural blocker beyond the two the CTO's original ruling (CTO_RULING_IRPT_BCKEND_W2-S62...) named -- the render host has no authenticated portal session, and `render_export.cjs` deliberately implements no login capability at all ("NO OTP BRANCH, NO SIGN-IN LOOP... never a credential prompt and never a retry"). The COO's own follow-on investigation (msg 99064) found: (1) the script launches a fresh, non-persistent browser context every run -- no session-reuse mechanism exists to exploit, not merely an unused one; (2) the portal's own auth is first-party with MFA, ruling out a trivial scripted login; (3) zero hits estate-wide for a reusable service-credential/session-minting pattern (the closest precedent, `IB-rte-2`'s bounded test principal, is API-level and does not transfer to a browser-session mechanism). CTO ruling addendum 2 (99068): CUT this as the successor cell, bounded to (a) persistent-context support in `render_export.cjs` (`launchPersistentContext`/`storageState`) and (b) SSM port-forward/session-capture tooling supporting a ONE-TIME operator-completed MFA login, refreshed on whatever cadence the session needs. **NOT authorized: a non-MFA service-account path** -- a standing portal security-posture decision, Andrew's to make on its own merits if ever pursued, never bundled into this cell. The actual MFA completion is a human act neither this cell nor its worker performs; the deliverable ends at tooling-ready + naming who must complete it (Andrew or a delegated operator holding valid portal creds), never at forcing a session through. Once a session exists (by the human step, outside this cell), rth-2's original bounded measurement re-runs unchanged and the sync-vs-async decision tree resolves on the real number -- this cell does not touch that tree. Chain E (independent of A-D, and of rth-1/rth-2 which continue on their own tracks): `rth-5` alone, no dependency. fanout 5 of 5 chains this round (A `rth-1`, B `rth-2`, C `rth-3` CLOSED, D `rth-4` CLOSED, E `rth-5`), cap 8. Grant: `infra/aws/ec2/investor-reporting-export/`, the SSM document/runbook home, this project's own deliverables/investigation faces -- no portal auth-system source (`portal/src/contexts/AuthContext*`, `portal/src/App.tsx` login route) is in grant; a change there is a STOP and a carry, not this cell's to make.
+
+### R8.7 MID-ROUND ADDITION (~16:2xZ 2026-09-21) -- Andrew-direct @fb8c7a574c: create opal-data-inflectionwealth + opal-data-cottonwoodcapital
+
+`IB-rth-6` (WK~6): Andrew-direct, VERBATIM: *"We need to keep moving so if there is no mechanism for us to
+access these buckets, and our work is dependent on these buckets existing, then we need to create
+opal-data-inflectionwealth and opal-data-cottonwoodcapital and take care to not create them with
+restrictive bucket policies that land us in this situation."* Root cause, CTO-researched and COO-verified
+this tick against the live registry: `infra/logic/registry/exemptions.json`'s `opal-data-inflection`/
+`opal-data-cottonwood` rows already carry the fix that should have shipped originally -- three operator
+identities (`Andrew_Berman`, `Andrew_Berman_Console`, `Opal_Terminal`, confirmed 3 of 3 each) exempt from
+the per-firm Deny fence -- but `IB-rte-3`'s original apply shipped with an EMPTY exemption list, so the
+fence denied every identity the estate holds, including the one that would need to sign and re-apply the
+fix; the deploy ledger sentinel (`org/critical_paths/.open_deploys/irpt-bckend-ib-rte-3-lgic-firm-buckets.json`,
+confirmed still present/open this tick) has sat RED since 2026-09-18 for exactly this reason. **The new
+buckets exist to route around a lockout, not to repeat it: the exemption rows go in at the FIRST apply,
+never as a later patch.**
+
+**R8.7 CLOSED SUPERSEDED (~17:5xZ 2026-09-21, `2.0.0_SA_COO~B`, on `4.0.0_SA_CRO` msg 99124 @`a0097b1ef4`).**
+`IB-rth-6`'s own conditional premise -- new buckets "if there is no mechanism for us to access these
+buckets" -- was never met: Andrew personally recovered `opal-data-inflection`/`opal-data-cottonwood` at
+the console (break-glass IAM roles `firmsep-inf-bucket-recovery-role`/`firmsep-cot-bucket-recovery-role`
+matching the fence's own `role/*-inf-*`/`role/*-cot-*` admit-pattern; PUT the same TF-rendered policy this
+cell's arm (d) would have produced, with the same 3-identity exemption; AFTER-read clean as
+`user/Andrew_Berman` with no role, 2 of 2 buckets). `IB-rth-6` never reached arm (c); the worker's honest
+STOP on the registry naming-law wall (row `IRPT_BCKEND-W6-S1`) is disarmed by citation, not overwritten
+(row `IRPT_BCKEND-S115`). No new buckets, no naming exception, no registry edit. The cell text below is
+kept verbatim as the historical record of what was staged; none of it executed. Remaining bucket-program
+work -- deploy ledger legs L1/L3/L4 (a Terraform plan should now read 0 change on `aws_s3_bucket_policy.
+lgic_firm`; the negative control), and the CRO's disclosed-but-unmeasured `fence_patterns()` hyphen gap
+(row `IRPT_BCKEND-S116`) -- is picked up fresh, not as this cell's continuation: see R8.8, `IB-rth-7`.
+
+Cell, exactly as Andrew's ruled fix specifies (his four points, restated as the cell's own arms) --
+**STAGED ONLY, SUPERSEDED BEFORE EXECUTION, kept for record:**
+(a) registry-addressed via `lib/opal_naming.py address()`, NEVER hand-typed (Rule 30) -- update the
+`bucket` field on the `inflection`/`cottonwood` entries in `infra/logic/registry/scopes.json` to the new
+long-form names (verified live this tick: `bucket_provisioned: true`, `bucket_managed_by:
+s3-lgic-firm-buckets.tf` on both, matching the 49financial pattern `bucket = opal-data-<long>` in shape
+though the new names are NOT `opal-data-<long>` -- they are Andrew's own two names, verified against
+whatever the naming tool actually derives; a mismatch is a STOP, not a silent override), set
+`bucket_provisioned: false` until built; do NOT rename the firms' `key`/`short`/`aliases` (referenced
+estate-wide; Andrew asked for new buckets, not a firm rename). (b) copy the SAME three-identity exemption
+rows from `exemptions.json`'s `opal-data-inflection`/`opal-data-cottonwood` entries into new
+`opal-data-inflectionwealth`/`opal-data-cottonwoodcapital` rows -- load-bearing that these ship in the
+FIRST apply. (c) mark the old buckets abandoned in `scopes.json` (NO delete -- confirmation-gated,
+nothing asks for it), correct the stale "opal-data-inflection does not exist yet" alias note while in that
+file. (d) standard mechanism: ledger entry opened before apply with its OPEN sentinel committed
+immediately, `safe-apply.sh` only, both never-widen halves before the apply.
+
+Chain F (independent of A/B/C/D/E -- different write surface, `infra/logic/registry/` + a new Terraform
+apply on `s3-lgic-firm-buckets.tf`, no dependency on rth-1/rth-2's still-open work). fanout 6 of 6 chains
+this round (A `rth-1` near-terminal, B `rth-2` parked on the human MFA step, C `rth-3` CLOSED, D `rth-4`
+CLOSED, E `rth-5` CLOSED, F `rth-6`), cap 8. Andrew's own sequencing rec: ahead of anything else
+non-blocking, since `IB-rtf-5`/`rtf-7` (and whatever else needs these buckets) are stalled on exactly
+this. Grant: `infra/logic/registry/`, `infra/aws/terraform/**/s3-lgic-firm-buckets.tf` (or wherever that
+root actually lives -- confirm, do not assume), `org/critical_paths/change_management/`,
+`org/critical_paths/.open_deploys/`, this project's own task-order/investigation faces.
+
+### R8.8 MID-ROUND ADDITION (~18:0xZ 2026-09-21) -- on `4.0.0_SA_CRO` msg 99124 (@a0097b1ef4) and `1.0.0_SA_CTO` msg 99128, superseding `IB-rth-6` (R8.7)
+
+`IB-rth-7` (WK): the bucket LOCKOUT itself is now recovered (R8.7's closure note above) -- what remains is
+RECONCILIATION, not creation. Three arms, all VERIFY-CLASS, no apply unless a plan shows drift: (a) a fresh
+Terraform plan on the `shared-infra` root (the `s3-lgic-firm-buckets.tf` module) reads `0 to add / 0 to
+change / 0 to destroy` on `aws_s3_bucket_policy.lgic_firm` for both `opal-data-inflection` and
+`opal-data-cottonwood` -- the manually-applied policy (CRO's PUT) must match byte-for-byte what the
+generator renders, since Terraform's own state never saw the apply; a NON-ZERO plan is a STOP (report the
+diff, do not `apply` to force convergence without a fresh packet) -- this closes deploy ledger leg L3
+(`org/critical_paths/change_management/20260918T1949Z_irpt-bckend-ib-rte-3-lgic-firm-buckets_deploy_completion.md`).
+(b) the negative control (leg L4): from host `i-02448edb624a7a7cf` if RUNNING, the host role's write to
+`opal-data-inflection` and the 49f principal's read of `opal-data-cottonwood` both DENIED, 2 of 2 -- same
+UNEXERCISED-not-FAIL vocabulary as `IB-rtf-5`'s `R62-AC3` if the host is STOPPED (this order does not start
+it). (c) leg L1 (the original 10-resource activation) is a JUDGMENT call for the CVO, not self-graded by
+the worker: does a clean L3 plan (0 change) mean L1 is satisfied BY CONVERGENCE even though no
+`safe-apply.sh` ever ran against this state, or does L1 require an actual Terraform apply to bring the
+state file itself current (`terraform import` / a no-op apply that only updates state) before it can close
+-- state the tradeoff, do not rule it unilaterally. (d) IF (a) finds drift: STOP, file a row, do not
+apply without a fresh never-widen packet -- the CRO's manual PUT was itself a never-widen act authorized
+directly by Andrew ("go ahead you have egress as needed"), and a worker-initiated apply on TOP of it is a
+NEW act needing its own halves. (e) SEPARATELY, carry row `IRPT_BCKEND-S116` (the `fence_patterns()`
+hyphen-gap: `role/*-inf-*`/`role/*-cot-*` does not match this firm's own `inf-*`/`cot-*` pipeline role
+names) -- MEASURE whether it is real (does any of this project's own served Lambda roles or a Terraform
+`aws_iam_role` in this estate actually need to write to these two buckets, and does its role name in fact
+fail the pattern -- printed, not assumed) and report to the COO; fixing `fence_patterns()` itself is
+OUTSIDE this project's lane (a shared-infra module owned elsewhere) and is a carry, never a fix landed
+here. Chain G (independent of A-F). fanout 1 of 1 this addition (rth-6 CLOSED SUPERSEDED, not counted).
+Grant: `infra/aws/terraform/shared-infra/` (plan only; no apply unless (d) authorizes one under a fresh
+packet), `org/critical_paths/change_management/`, `org/critical_paths/.open_deploys/`, this project's own
+task-order/investigation faces. NOT authorized: any change to `fence_patterns()` or any other firm's
+bucket policy; starting the host; any IAM role/user creation (Andrew's own break-glass roles stay as they
+are, deletable later once L3 reads clean, not this cell's to touch).
+
+### R8.9 MID-ROUND ADDITION (~19:1xZ 2026-09-21) -- on row `IRPT_BCKEND-W7-S2` (`IB-rth-7`'s honest STOP: arm (a)'s fresh plan is NOT 0/0/0)
+
+`IB-rth-8` (WK): `IB-rth-7`'s own worker measured real drift, exactly the contingency its order anticipated
+in advance -- a fresh Terraform plan on the `shared-infra` root shows FOUR `lgic_firm` resources TAINTED
+(`aws_s3_bucket_policy.lgic_firm["inflection"/"cottonwood"]`, `aws_s3_bucket_versioning.lgic_firm[same]`),
+leftover from the original 2026-09-18 half-landed apply (row W3-S45), each forcing a REPLACE
+(destroy-then-create). The live bucket policy is already correct (CRO's console PUT, msg 99124) and both
+buckets remain empty (0 keys, re-confirmed multiple times) -- so a replace cycle carries no DATA exposure
+risk, but a policy-resource destroy-then-create still opens a real WINDOW with no explicit Deny on the
+bucket, and this project's own doctrine (`IB-rtf-5`'s own task order text) names exactly this ordering
+hazard: *"a root delete-bucket-policy run AFTER the apply strips the new fence and no arm can prevent
+it."* This is a never-widen act (CLAUDE.md NEVER-1) -- CTO+COO halves signed BEFORE any apply, same
+discipline as `IB-rtf-5`. Three arms: (a) MEASURE the actual provider-level semantics of the replace for
+BOTH resource types before writing the packet -- does `aws_s3_bucket_policy`'s destroy actually call
+`DeleteBucketPolicy` (removing the fence) before the create's `PutBucketPolicy` restores it, and does
+`aws_s3_bucket_versioning`'s destroy call anything at all against a live bucket (AWS has no "delete
+versioning" API -- versioning is only Enabled/Suspended, so the provider's destroy behavior needs reading,
+not assuming) -- `terraform plan -json` inspected for the exact per-resource action sequence, printed; (b)
+THE PACKET naming the measured window precisely (both halves sign at HEAD against this packet's blob, per
+NEVER-1's writer-census discipline), rollback (buckets are empty -- if anything looks wrong post-replace,
+re-apply the fence policy immediately, no data can have been lost); this cell STOPS here if both halves
+are not obtained same-pass -- commit the packet, leave the order open, report what's owed, exactly as
+`IB-rtf-5`'s own precedent; (c) ONLY once both halves are signed at HEAD: `.tools/safe-apply.sh` on
+EXACTLY the four tainted resources (a plan naming any other resource, or `demo`/`49financial`, is a STOP),
+immediate post-apply verification (get-bucket-policy both buckets, matching the CRO's already-live policy,
+0 keys re-confirmed, re-plan `0/0/0`), close ledger legs L1 and L3 with the apply output + resource list +
+plan output as proof, disarm row `IRPT_BCKEND-W7-S2` by citation. Leg L4 (the negative control) stays
+whatever `IB-rth-7` left it -- UNEXERCISED, host stopped, not this cell's to force. Chain H (independent,
+following `IB-rth-7`'s drain). fanout 1 of 1 this addition. Grant: `infra/aws/terraform/shared-infra/`,
+`org/critical_paths/change_management/`, `org/critical_paths/.open_deploys/`, this project's own
+task-order/investigation/deliverables faces. NOT authorized: touching any resource outside the four named;
+starting the host; any change to `fence_patterns()`, exemptions.json, or scopes.json.
+
+## R7. ROUND 7 -- THE RECUT ON THE ROUND-6 ANALYSIS (@fa2ff4f0dd, msg 98554; v0.7, 2026-09-20, `2.0.0_SA_COO~B`)
+
+**Input:** round 6 CLOSED at L10 (0 open of 75; 47/47 AC2 PASS; 52 rows disposed, 40 graduated incl. S110). This recut's whole subject is the round's headline: THE SCOPE PLANE AND THE DATA PLANE HAVE DIVERGED -- the advisor is identified, firm-bound, scope-resolved and told exactly how much of the book is withheld (the refusal vocabulary WORKS), then served NO DATA on any tab (the data paths do NOT). No PRD addendum -- round 7 re-attempts FWD-2 (the serving/data half) and FWD-5, both existing. Scope determined by investigation a7edd66ed0: FOUR of the five residual data-plane defects are IRPT_BCKEND BACKEND handler cells; the fifth (the ownership-map count) is DS. The four carries stand (S110's vacuous negative control taints the REFUSAL side of rtf-10/rtf-12 arm-(f), served-path grants unaffected; the grant moved to 44/19; the ledger-retroactive EXPOSURE; the headline).
+
+### R7.1 The rectangle (4 cells, id shape `IB-rtg-<n>`)
+
+| cell | owes | assignee | serves | supersedes |
+|---|---|---|---|---|
+| IB-rtg-1 | EXPORT S105+S106 (ONE cell, CTO ruling @0110b9de01): align `export/entry.py:63-64,100` `RECEIPT_KEY_TEMPLATE` to the writer's `firms/{firm}/generations/.../exports/{rev}/` family AND write the receipt beside the bundle in `export/handler.py:126-130`, AND rewrite `export/entry.py:104-105`'s `except` to decide refusal off `exc.response['Error']['Code']` + HTTP status not the class name. S106 FIRST-OR-WITH S105, never after; `IRPT_EXPORT_RECEIPT_KEY` Terraform override REFUSED. Packet + halves BEFORE the deploy; acceptance on a REAL wire error (403/AccessDenied -> policy code; 404/NoSuchKey -> NOT_FOUND), never a constructed stub | WK | FWD-2 | -- |
+| IB-rtg-2 | STATUS: write the real `status_loader` in `ops/` (reads TenantLease/checkpoint + `ops/manifests.py` against the backend's OWN `irpt-jobs` store) and wire it into `ops/entry.py` in place of `ops/status.py:338`'s always-raising `_default_status_loader`. Packet + halves; acceptance: an exercised status-summary for a real job returns a validated StatusEnvelope, not UNSUPPORTED_OPERATION | WK | FWD-2 | -- |
+| IB-rtg-3 | PERFORMANCE (W2-S27): reconcile `performance/tenants.py:81-101` `route_for` to the id space the boundary binds on via the ESTATE'S EXISTING `_ids` normalizer -- NEVER a fourth firm-token mapping. BOUND: if the fix cannot be done without minting a new lookup, it is FirmBinding's axis (W2-S9) and is ROUTED to the CTO, not cut ad hoc. Packet + halves; acceptance: an authorized, scope-resolved performance request for each of the 3 registry firms resolves a TenantRoute, 0 fourth-id-space literals | WK | FWD-2 | -- |
+| IB-rtg-4 | HOLDINGS S100 (this seat's own row): make `holdings/entry.py:88` `_load_directory` FOLLOW the `latest.json` pointer the way `_authz/loaders.py:71-78` does (holdings reads the pointer doc as the artifact). Packet + halves; acceptance: an exercised holdings request for an account the principal's own resolve granted reads a scope-resolved answer, never FIRM_BINDING with firm_id absent | WK | FWD-5 | -- |
+
+**Not cells of this project:** the OWNERSHIP-MAP COUNT (44/19 live vs 33/18) -- DS gold, `data/assets/scripts/gold/runners_49f/d08_firm_ownership_map.py`; backend only READS it (object-scoped GetObject) and round 7's cells RE-DERIVE the count at build/measure time, NEVER inherit 33/18. FWD-11 / rtf-5 -- PARKED on Andrew's security re-scope (un-park condition + owner on the order @919a261242, not re-opened here). The S100/S110 control-repair EVIDENCE (not a cell) un-taints when IB-rtg-4 moves S100.
+
+### R7.2 Edges and fanout
+Four INDEPENDENT chains (four different handlers, disjoint write surfaces): A `rtg-1`; B `rtg-2`; C `rtg-3`; D `rtg-4`. **fanout: 4 of 4 chains, cap 8.** No cross-cell dependency (the S106-first-or-with-S105 ordering is INTERNAL to rtg-1). Each is a served-path handler deploy and STOPs at its never-widen halves on the first pass (the rtf-13 shape).
+
+### R7.3 Bounds carried
+NEVER-1 (packet + CTO+COO halves at HEAD BEFORE every deploy -- all four change served behaviour); the arm-(d) SUBTRACTION gate (the W1-S37 lesson: compare `resource_changes` per root minus a CLOSED PRINTED volatile set, never a whole-planfile digest); THE 44/19 RE-DERIVE CONSTRAINT (read the ownership map live and print the count, never inherit 33/18); R-40 (content hash per run/artifact); S56 vintage pins; the forward-looking-criterion bar; the reader-census bar; the LEDGER OPENED BEFORE the act (the W1-S41 / rtf-3 exposure -- no principal/apply cycle without a pre-opened change-management ledger); no served bytes committed as source; the identity bar (arm (e) runs the DEPLOYED role + bytes).
+
+### R7.4 Not decided here
+Whether IB-rtg-3's reconciliation needs a new firm-token mapping (if so -> the CTO, W2-S9 axis, not cut here); the status_loader's manifest shape (rtg-2's judgment, Rule 24 record); the ownership-map producer's re-key (DS, d08's owner); anything about FWD-11 (Andrew).
+
+### R7.5 Four-postulate record (Rule 24 over the round-7 cell set)
+(i) MECE over the DECLARED domain = round-6 residue section 5 MINUS {parked, DS, evidence-not-cells}: the owed set is {export S105/S106, status, performance, holdings S100, ownership-map count}; SUBTRACT the ownership-map count (DS) and FWD-11 (Andrew, parked) and the S110 evidence (un-taints via holdings) -> the four backend cells remain, none uncovered. (ii) SAME GRAIN: each cell is one handler's served-behaviour fix. (iii) INTENT COHERENCE: one axis -- make the DATA paths serve. (iv) STATE COHERENCE: a cell realizing its serving does NOT move FWD-11 (parked) or the DS count (re-derived, not fixed here).
+
+## R6. ROUND 6 -- THE RECUT ON THE ROUND-5 ANALYSIS (@81472c3a47, msg 98115; v0.6, 2026-09-19 ~03:4xZ, `2.0.0_SA_COO~B`)
+
+**Input:** six judgment PASS, 17 rows disposed (16 graduated with carriers, 3 dismissed), NO PRD addendum -- round 6 is a recut. Four round-5 orders closed on truthful FAILs and each FAIL is a cell here; S77 (the CVO) is the finding of the round: the cross-firm fence is stale while its stated cause is false, because the generator was never re-run after the flip -- the reader-census bar (the mirror of the writer census) is adopted on every face. The L4 rulings carried: @457cf494c6 (no-source members: measure, then branch), @61627f39f9 (partial projection: admit and disclose, three conditions). Corrections adopted: registry rows are the CRO's lane (`PLATFORM_LOGIC_DOCS`), landed @845343f925; a blob pin is written `blob <hash>`; no `memory/` path is cited on a face (S78).
+
+### R6.1 The rectangle (5 cells, id shape `IB-rtf-<n>`)
+
+| cell | owes | assignee | serves | supersedes |
+|---|---|---|---|---|
+| IB-rtf-1 | round-5 analysis s.5 item 1: the no-source members MEASURED then BRANCHED (W4-S34/S35 + W1-S26's six members + the 3 UNRESOLVED); DELTA=0 declares, DELTA!=0 packets and stops | WK~4 | provenance of every served function | IB-rte-4 |
+| IB-rtf-2 | s.5 item 2 / W1-S27: the ordering inversion in `enforce.py` with the disclosure field NON-OPTIONAL, the IRPT_FNTEND consumer-obligation row, the empty branch refusing; packet + halves BEFORE the deploy (a STOP at (d) is the expected first pass) | WK~1 | FWD-1, 2, 5 | IB-rte-6 |
+| IB-rtf-3 | IB-rte-2's re-cut: the principal created, the four outcomes exercised on the DISCLOSED-PARTIAL path, deleted | AE `~N` (staged, behind rtf-2) | FWD-1, 2, 5, 11 | IB-rte-2 |
+| IB-rtf-4 | s.5 item 3 / S77: every generated block re-derived from the registry at HEAD, the fence proven both signs, the flag's readers censused | WK~3 | FWD-1, 7, 10 | -- |
+| IB-rtf-5 | s.5 items 4-5: IB-rte-3's re-hand -- the re-apply after Andrew's step 4 under both halves naming the 4 tainted resources + the last 2 of 10 + the regenerated fence; the host control EXERCISED or UNEXERCISED, never simulated | WK~3 (staged, behind step 4 + rtf-4 + halves) | FWD-1, 7, 10 | IB-rte-3, IB-rte-7 |
+
+**Not cells of this project:** (b) of the partial-projection ruling (the ownership-map producer re-keyed to the Schwab spine) -- DS-owned, carried to `d08_firm_ownership_map.py`'s owner; the IRPT_FNTEND rendering obligation -- the CTO's L4 carrier in FNTEND's PRD (rtf-2 files the row); FWD-11's SSM roster parameter -- a separate act with its own sign-off; IB-rtd-7's port -- still superseded behind rtf-5, both halves and the FNTEND reader cell; starting host `i-02448edb624a7a7cf` -- operational, outside every cell (a REC to the CTO: it is the only closer of W3-S44).
+
+### R6.2 Edges and fanout
+
+Chains: A `rtf-1`; B `rtf-2 -> rtf-3`; C `rtf-4 -> rtf-5` (rtf-5 also behind Andrew's step 4 and both halves). **fanout: 3 of 3 chains, cap 8.** Handed now: rtf-1, rtf-2, rtf-4. rtf-3 on rtf-2's drain with arm (e) passing; rtf-5 on step 4 (the issuer measures `get-bucket-policy` at the hand-off), rtf-4's drain, and both halves. The DS lane holds no round-6 order.
+
+### R6.3 Bounds carried
+
+R-40, R-42, R-44, R-45; the forward-looking-criterion bar; S56's vintage pins; Rule 30; NEVER-1 on every served-behaviour change (rtf-2's deploy, rtf-5's apply: both halves at HEAD BEFORE the act); the reader-census bar; `blob <hash>` notation; no `memory/` citation on a face; no served bytes committed as source on any branch (rtf-1); the empty-set branch refuses on every path (rtf-2); nothing written to either bucket (rtf-5); no host start by any cell.
+
+### R6.5 MID-ROUND ADDITIONS (~06:4xZ 2026-09-19) -- on rows W4-S41 / W1-S29 and the Andrew-direct ~06:3xZ
+
+`IB-rtf-6` (WK~4, `wk-irpt-6-4b`): the manifest re-pinned after the shared-surface drains. rtf-1 pinned the shared `_authz/` files to `c28c728a30`'s blobs; rtf-2 changed `enforce.py`/`served.py` and deployed through `rte6_package_deploy.py`, which bypasses the pins -- the declared source and the served bytes disagree, and a `build-and-upload.sh` from HEAD would stage the PRE-inversion bytes (a regression of @61627f39f9 by build). Re-pin to the served-matching HEAD blobs, prove the regression on the mutant, deploy nothing; the diverged `holdings/enforce.py` (W1-S29) is rowed, never pinned. Grant: `infra/aws/lambda/ci/` + the channel. The two-packager class is R63-AC2's for L4.
+`IB-rtf-7` (AE `~V`, first on that seat): Andrew-direct ~06:3xZ (record `ANDREW_DIRECT_20260919_063xZ_STEP4_BUCKET_POLICY_AE_ATTEMPT_THEN_PROCEED.md`, verbatim *"have an AE deal with it. if they cant for whateve rreason, proceed and note it for later"*): step 4 -- the bucket ACCESS POLICY removed, never the bucket -- attempted with every identity the seat holds, each response verbatim under a ledger entry; success unblocks rtf-5 that tick; AccessDenied everywhere is the truthful result (only root escapes a `Principal: *` Deny), the round proceeds, and "step 4 -- Andrew at the console when next present" is carried on the drain-end packet and the slug as a PARKED item with owner and un-park condition.
+`IB-rtf-3` RE-ADDRESSED `~N` -> `~V`: the /mstr-spawn 1d census found `~N` encumbered by `ETFS_POSITIONING.TO-14-AE` (site Z, 2026-08-29, ACTIVE) -- the Tier-2 one-project rule; `~V` reads 0 orders / 0 processes / 0 markers / 0 armed disarm rows / no inbox. Chains now: A `rtf-1 -> rtf-6`; B `rtf-2 -> rtf-7 -> rtf-3` (one AE seat, rtf-7 first); C `rtf-4 -> rtf-5` (rtf-5 behind step 4, whichever hand performs it). fanout 3 of 3 chains, cap 8.
+
+### R6.6 MID-ROUND ADDITION (~08:1xZ 2026-09-19) -- on the CTO's ruling S82 (@b37fdfd5cd, msg 98178)
+
+`IB-rtf-8` (WK~1, `wk-irpt-6-1c`): holdings' forked enforcer folded onto the shared module. The per-route census (7 `entry.py`, `os.walk`) found EXACTLY ONE local `enforce.py` -- `holdings/` -- bound by `holdings/snapshot.py:44` (`blob 8f849457be`, 635 lines, the pre-ruling refusal order, `unprojected_grant` never populated) while the shared `served.py` supplies the field present at zero: on that route a real gap renders as NO gap and no absence guard can see it -- Rule 22's shared-dependency blindness INVERTED (seven routes share `served.py`; one does not share `enforce.py`). The CTO's ruling: FOLD, never patch the fork; the fold also closes W1-S27's residual on the same route (S81: disarmed on the shared path, live on holdings). Shape: diff the fork before deleting it (a load-bearing fork-only behaviour is a STOP, never a silent drop), re-bind, re-declare the manifest member, the census as the acceptance instrument, packet + halves BEFORE the deploy (the rtf-2 shape), then the live holdings request reading `count > 0` where the fork read zero. Chains: B `rtf-2 -> rtf-8` beside `rtf-7 -> rtf-3`; fanout 3 of 3 chains, cap 8. The Surprises clause on this face names the channel's PREVAILING EOL (CRLF, measured at HEAD every line; W4-S44) rather than round 1's "LF".
+
+### R6.7 MID-ROUND ADDITION (~08:5xZ 2026-09-19) -- on row S86 (IB-rtf-3's STOP @f60b3f0942)
+
+`IB-rtf-9` (AE `~V`, declare-only): the two-key test-principal packet on the REAL mint path. IB-rtf-3 stopped before any write: the deployed auth-handler mints the token's advisor claim ONLY from `opal-partner-<firm>` keyed by e-mail; the first packet's K1 field (`advisorKey` on the user row) is never read, so K1 + K2 would mint a 49financial session with NO advisor claim -- UNKNOWN on the scoped routes. The CTO half's own rule (s.1 @482b2c627e): a discovered key is a STOP and a NEW packet. rtf-9 re-declares three keys (K1 the user item as the reader reads it, K1b the partner-table binding with its OWN writer/reader census and `DeleteItem` rollback, K2 the ephemeral session), both branches per key, the exercise plan restated on the two keys, `0` writes measured; both halves re-sign against its blob; IB-rtf-3 is then re-handed against that packet. Andrew's 17:3xZ approval covers the bounded principal under both halves; the partner binding is the part the first packet mis-located, not a new act. The exposure rtf-3 named (a firm login with no book admitted by firmId on the older portal routes) is the CTO's. Chain B: `rtf-2 -> rtf-7 -> rtf-9 -> rtf-3`. fanout 3 of 3 chains, cap 8.
+
+### R6.8 MID-ROUND ADDITION (~11:2xZ 2026-09-19) -- on rows S90 (BLOCKING) and S92 (IB-rtf-3's re-hand @dddf5ef318)
+
+The first authenticated requests ever sent through the REAL path (the bounded principal minted by the real login, rtf-3 re-hand) were refused UNEXPECTED before the scope resolved, 12 of 12 -- an OUTAGE, not a policy refusal. Two causes: the directory role bans `platinum/` by design (IB-s-1) while the `_authz` loader reads the ownership map from there; `irpt-status`/`irpt-holdings` carry no `IRPT_DIRECTORY_BUCKET_MAP`. Every earlier "SERVED" proof ran in-process under operator credentials (rtf-2 (e), rtf-8 (e) `declared_exclusions`) -- the deployed roles were never exercised. Two cells, NOT paired (infra vs code; they share nothing but the route): `IB-rtf-10` (AE `~V`): the census of the 7 serving functions' grants/environments, the PACKET (object-scoped GetObject on each client firm's `ownership_map.json`, derived from the registry; the bucket map on every serving function), plan with `0 to destroy`, STOP at the halves on the first pass, then apply under ledger and PROVE the path under the deployed roles with the bounded principal (rtf-9 blob, new epoch). The design question (the deliberate `platinum/` ban vs the map's home) is pitched to the CTO with the issuer's recommendation; the CTO half on the packet is the ruling. `IB-rtf-11` (WK~1): `directory/entry.py` reads `q`/`limit`/`selection` from the payload-2.0 shape the integration sends, proven on a real fixture with the pre-fix entry as the mutant; no deploy (rides rtf-10's second pass). Chain D: `rtf-3 (FAIL S90) -> rtf-11 -> rtf-10 -> rtf-3 (third hand, same packet, new epoch)`. fanout 4 of 4 chains, cap 8. S91 (the None error sink) is the CTO's. Also carried, not cut: `holdings/entry.py`'s `_no_grant` wiring (IB-rt-7's decision) means the deployed holdings route serves nothing even after S90 -- rtf-8's live proof was in-process for that reason (declared exclusion); the CTO's round-6 analysis reads rt-7.
+
+### R6.9 MID-ROUND ADDITION (~15:1xZ 2026-09-19) -- on row S98 (IB-rtf-10's fourth pass @4ce6319d03)
+
+rtf-10's grants APPLIED exactly as signed (7 of 7 roots, 0-diff after; map allowed 18 of 21, directory 21 of 21, bucket map 7 of 7, negatives denied 27 of 27, `CodeSha256` 7 of 7) and the live proof under the deployed roles STILL read UNEXPECTED 9 of 10: S90's THIRD cause -- `_ids/ids.py` opens `raw_keys.json` beside itself at runtime and that file is in 0 of 7 deployed zips and 0 of 7 manifest entries (every zip flattens `ids.py` without it; every in-process proof passed because the repo has the file beside the module). `IB-rtf-12` (AE `~V`, the S96 shape): the premise re-measured incl. a census of every `__file__`-relative open under `_ids/`; the file DESCRIBED for the halves (shape, firm-attributability, credential NONE, writers); ONE sibling-identical `staged_from` object per function (7); the seven rebuilt under a build ledger with the per-function served delta verified as EXACTLY the added member; a NEW never-widen packet (K-CODE x 7, rollback = the prior live `CodeSha256` per function); STOP at the halves; on the re-hand apply + rtf-10's arm (f) unchanged. rtf-10's apply stands. Chain D becomes `rtf-3 -> rtf-11 -> rtf-10 -> rtf-12 -> rtf-3 (third hand)`. fanout 4 of 4 chains, cap 8. Carried for the analysis: a build-time check that a `__file__`-relative open is a staging member by construction (the binding-check class @3580608505, a third population row); the identity bar's "deployed BYTES" clause.
+
+### R6.10 MID-ROUND ADDITION (~18:1xZ 2026-09-19) -- on rows S103/S104 (IB-rtf-12's third pass @7db8f2c67b)
+
+rtf-12 applied the six as signed and the scope now RESOLVES on 8 of 8 counted requests (S90's three causes closed on the deployed path); two defects that lived in the prior live bytes became reachable: S103 -- directory search reads `DirectoryEntry.schema.json` from the checkout path or `IRPT_CONTRACTS_DIR`, and `irpt-directory-search` has neither (the S98/S96 class a third time, outside rtf-12's `_ids/` census); S104 -- the export receipt route's evidence-bucket read fails under `irpt-export-render-role` only (an IAM/key-prefix question; under operator credentials the read is NOT_FOUND). The rollback on rtf-12 was ruled NOT executed: the apply did what the halves signed and rolling back regresses resolve; a defect made reachable is an exposure the act uncovered. Two cells, disjoint surfaces, in parallel: `IB-rtf-13` (WK~1, the manifest + the directory root): a census of EVERY runtime file open across the seven functions against their staged members (the class-ending arm), the contract staged as a member with `IRPT_CONTRACTS_DIR` set the way holdings does, ONE rebuild under a packet (K-CODE + K-ENV), STOP at the halves, apply + prove search/resolve under the deployed role and bytes. `IB-rtf-14` (AE `~V`, the export root): the cause MEASURED (the concrete receipt key vs the policy's ARNs; the swallowed denial printed as the role; the receipt's existence), the narrowest grant as a packet (or the no-grant case rowed for the CTO), STOP at the halves, apply + prove the receipt route as the role. Chain D: `... -> rtf-12 -> rtf-13 -> rtf-3 (third hand)`; chain E: `rtf-12 -> rtf-14`. fanout 5 of 5 chains, cap 8.
+
+### R6.4 Not decided here
+
+Whether `firm_registry.json` becomes a builder output (rtf-1's judgment); the disclosure field's `kinds` taxonomy (rtf-2's judgment, Rule 24 record); whether `bucket_managed_by` becomes a closed enum and whether generators re-run at commit time (rtf-4's judgment -- proposals for the CTO, never gates built here); what rtd-7's port lacks after rtf-5 (rtf-5's judgment).
 
 ## R5. ROUND 5 -- THE RECUT ON THE ROUND-4 ANALYSIS (@561d6e1cc9, msg 98036) AND ANDREW'S 17:3xZ APPROVAL (@af794c77e3)
 
@@ -78,6 +326,14 @@ Chains: A `rte-1 -> rte-2`; B `rte-3`; C `rte-4`; D `rte-5`. **fanout: 4 of 4 ch
 ### R5.3 Bounds carried
 
 R-40, R-42, R-44, R-45; the forward-looking-criterion bar and S56's vintage pins on every face; Rule 30 on every name (builder output or a drafted registry row); NEVER-1 on the principal (both halves before creation; deletion inside the same order); creation-only on the buckets (no object, no cut-over, no legacy retirement -- Andrew's prior word stands); no third copy of a served member; read-only on every served bucket in rte-5 (a reconciliation is declared, never performed).
+
+### R5.5 MID-ROUND ADDITION on row W1-S22 (IB-rte-1 @01ba67fe65) -- the issuer's ruling, ~22:0xZ
+
+`IB-rte-6` -- the served path admits a projected advisor grant. Today EVERY live FIRM_ADVISOR request is refused `UNPROJECTED_GRANT`: 0 of 13 entry points pass `id_projection`, and 0 of 22,646 ownership grants join the directory even with the projection applied (custodian keys vs the crosswalk id the directory mints from). RULED: the wiring half ADJUDICABLE (L5/L6) and cut; the id-space half PITCHED to `1.0.0_SA_CTO` with REC (a) -- resolve custodian keys through `dim_identity_crosswalk` (already readable under K2) -- carried on the face as arm (b), a MEASUREMENT the ruling confirms or re-cuts. Seat WK~1 (`wk-irpt-5-1b`). Edge: `rte-6 -> rte-2` (the exercise cannot pass on a path that refuses every advisor). fanout stays 4 of 4 chains, cap 8 (rte-6 is chain A's new middle). Carried INERT: W1-S21 (advisor ids are raw ownership-map keys, never opaque-minted -- my face assumed otherwise), W1-S24 (cottonwood's termination field unpopulated). The live incident on IB-rte-3 (W3-S42/S43/S44: the new buckets' Deny fence locked out the applying identity; ledger OPEN RED) is ESCALATED `[STUCK]` to the CTO + MSTR (98062/98063) -- root `delete-bucket-policy` + two registry edits outside any worker's grant; rte-3 stays open and is re-handed after.
+
+### R5.6 MID-ROUND ADDITION on the CTO's registry-deadlock record (@9eeb9a70a8, msg 98087) -- the issuer's ruling, ~00:1xZ 2026-09-19
+
+`IB-rte-7` -- the LGIC firm buckets survive the registry flip. The CTO answered the rte-3 incident's registry half by RUNNING the gate: the two registry edits are mutually blocking -- `s3-lgic-firm-buckets.tf:70-73` selects on `bucket_provisioned == false` (flipping it stages a DESTROY of the 8 landed resources), and the naming gate refuses an exemption row for a bucket whose flag is false. Its remedy is five steps and step 1 is a Terraform change: a cell, RULED adjudicable at L5/L6 and cut. The issuer's measurement that re-shapes step 1: `scopes.json` @ea5edd1fe4 carries FOUR FIRM rows and two of them (`49financial`, `demo`) are `bucket_provisioned: true` with their buckets declared elsewhere IN THE SAME ROOT (`s3-49financial.tf`, `s3.tf`), so the CTO's "block keyed on PROVISIONED FIRM rows, with `moved` blocks" would plan `2 to add` -- the membership is re-keyed on a DRAFTED registry field (read with `lookup`, absent-safe) OR the unflipped flag, instance keys unchanged, no `moved` block, no state verb; proven by three plans (HEAD-identical; the flip applied locally reading `0 add / 0 destroy / <=2 policy changes`; the mutant on HEAD's Terraform reading the destroy) and never applied. Seat WK~3 (`wk-irpt-5-3b`, cold start). Grant: the one Terraform file + the channel; the registry is deliberately NOT granted (Rule 30, the CTO's, and its stated intent at 98087 -- it lands steps 2-3 on rte-7's drafted delta). Chain B becomes `rte-7 -> [CTO registry] -> [Andrew step 4, delete-bucket-policy] -> rte-3 re-hand (step 5)`; fanout stays 4 of 4 chains, cap 8. rte-3 stays open by its own FAIL; its ledger entry and sentinel stay OPEN RED. Carried to the CTO the same tick: the `demo`/`49financial` measurement, so its step-1 shape is re-cut on the fact and not on the record.
 
 ### R5.4 Not decided here
 

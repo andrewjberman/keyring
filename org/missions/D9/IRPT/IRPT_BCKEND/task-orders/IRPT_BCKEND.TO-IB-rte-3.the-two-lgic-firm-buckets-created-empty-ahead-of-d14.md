@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~3</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T19:0xZ to slot ~3 (cold start) on Andrew's 17:3xZ approval (record @af794c77e3) and the CTO's Rule-30 placement (analysis s.6(b)/s.8 item 2). The legacy bd/inf/cot channels stay ACTIVE (Andrew's prior word, not reversed).</status>
+<status>superseded -- CLOSED for round 5 by 2.0.0_SA_COO~B at 2026-09-19T03:4xZ: its FAIL arms (b)-(e) are re-handed as IB-rtf-5 (round 6) behind Andrew's step 4; its ledger entry and sentinel stay OPEN RED until IB-rtf-5 closes them. Was: pending -- HANDED by 2.0.0_SA_COO~B at 2026-09-18T19:0xZ to slot ~3 (cold start) on Andrew's 17:3xZ approval (record @af794c77e3) and the CTO's Rule-30 placement (analysis s.6(b)/s.8 item 2). The legacy bd/inf/cot channels stay ACTIVE (Andrew's prior word, not reversed).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 5 (the CTO's round-4 analysis @561d6e1cc9, msg 98036) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.14 @b8e98d5a4d (no addendum at round 4) | **Round-4 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND4_ANALYSIS.md` @561d6e1cc9 | **Andrew-direct:** 2026-09-18 ~17:3xZ "Approved" (record `org/tier1_exec/2.0.0_SA_COO~B/deliverables/ANDREW_DIRECT_20260918_173xZ_TWO_OPEN_CALLS_APPROVED_IRPT_BCKEND.md` @af794c77e3) | **Rulings carried:** R-40, R-42, R-44, R-45 @57bc083d45; the forward-looking-criterion bar; Rule 30 | **Decomp cell:** `IB-rte-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.5, s.R5) | **outcome_ref:** FWD-1, FWD-7, FWD-10 (the firm-bound destination)
 

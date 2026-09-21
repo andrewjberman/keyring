@@ -3198,3 +3198,138 @@ is full. ⚠ **That is a clean, nameable stall and it is not this project's to b
 capacity decisions are Andrew's. ⭐ **Round 10's single cell (`EN-g-43`, `W1-S73`) is correctly cut anyway**: it needs
 no rule change and no new lane, and its arm requires the builder's failing test set UNCHANGED -- **my refusal to count
 hand-stale rows as agreement, made mechanical by the lane I just declined to give the work to.**
+
+## R-85 -- THE FOUR-POSTULATE RECORD R-83 OWED, AND THE TOKEN CENSUS FOUND A REAL COLLISION: **`BOTH-PRESENT` IS ALREADY TAKEN.** Renamed `CLAIMED-AND-MEASURED`
+
+⛔ **R-83 AMENDED AN ENUM WITHOUT ITS FOUR-POSTULATE RECORD, WHICH IS MY OWN RULE UNMET BY MY OWN RULING.** CLAUDE.md
+Rule 24: *"A value-enum proposal arrives WITH its four-postulate record + word-boundary token census, or it is not a
+proposal."* `4.0.0_SA_CRO` adopted the shape verbatim @`152f9b374c` and **declined to write the record unasked**,
+naming it as mine (98057). It was right to decline and right that it is mine. This closes it.
+
+### 1. ⛔ THE TOKEN CENSUS -- AND IT FOUND THE THING IT EXISTS TO FIND
+
+**Scope: `org/`, `docs/`, `infra/logic/` -- 41 hits across 139,583 files scanned.** ⚠ **THIS IS NOT THE FULL CORPUS,
+AND I SAY SO RATHER THAN LET THE NUMBER IMPLY IT.** Two unscoped runs TIMED OUT (rc 143) under live drain
+contention, and `comp-find` content mode **returns a timeout as a clean zero** -- the catalogued trap. A scoped
+census that says its scope is worth more than an unscoped one that silently returned nothing.
+
+⛔ **`BOTH-PRESENT` IS ALREADY IN USE, WITH A DIFFERENT MEANING AND A DIFFERENT GRAIN.**
+`0.4.0_DS_ClientPlatform`'s proof-of-spec deliverables carry `provenance_cols=BOTH-PRESENT (6 of 6)`,
+`(4 of 4)`, `(5 of 5)`, `(7 of 7)` -- **five CONFIG hits, dated 2026-08-11**, meaning *two provenance COLUMNS exist on
+a table*. My use meant *the claimed side and the measured side both exist for a resource*. ⭐ **Same token, different
+domain, different grain -- and a reader grepping it gets both.** That is precisely the collision Rule 24's census
+exists to catch, and I would not have found it by recall.
+
+**RENAMED: `BOTH-PRESENT` -> `CLAIMED-AND-MEASURED`.** It is also the better name on its own merits: it says WHICH
+two things are present, where the old one only said *two*. The other three coverage tokens
+(`LIVE-UNCLAIMED`, `CLAIMED-ABSENT`, `UNMEASURED-EITHER-SIDE`) appear only in the brief @`152f9b374c` and in this
+seat's own rail log -- **no prior use, no collision.**
+
+⚠ **AND ONE NEAR-COLLISION KEPT DELIBERATELY:** `LIVE-UNCLAIMED` sits beside `comp-find --corpus aws`'s existing
+`drift_class = LIVE-no-DECLARED`. **They are the same fact on two instruments and the near-identity is the point** --
+the brief already states the mapping, so a reader who meets one finds the other. Renaming it to match exactly would
+be worse: `drift_class` is a per-node field of one tool, `coverage` is a per-row value of a reconciliation, and
+collapsing the names would assert they are always derivable from each other, which is only true for node types that
+tool models (its `CLASSES` ceiling, R-81 s.4).
+
+### 2. THE FOUR POSTULATES, PER ENUM
+
+**`coverage` = `CLAIMED-AND-MEASURED` | `LIVE-UNCLAIMED` | `CLAIMED-ABSENT` | `UNMEASURED-EITHER-SIDE`**
+- **(i) MECE over a DECLARED domain.** Domain: for each resource in the run's population, the CLAIMED side and the
+  MEASURED side, each PRESENT or ABSENT. **Written as the SUBTRACTION, not a forward list: four cells, four members,
+  one each.** ⭐ It cannot lose a member without the cell count disagreeing.
+- **(ii) SAME GRAIN.** Every value is a property of ONE RESOURCE ROW. No value describes a sweep, a tool or a run.
+- **(iii) INTENT COHERENCE.** One axis: **which SIDES exist.** It carries no time, no artifact kind, no verdict --
+  those are the other two fields, which is the whole reason R-83 split them.
+- **(iv) STATE COHERENCE.** A re-run MOVES `coverage`. ⛔ **IT DOES NOT MOVE `claim_kind` AND IT DOES NOT MOVE AN
+  OWNER.** And `UNMEASURED-EITHER-SIDE` -> anything requires a NEW SWEEP, never a re-read of the same one.
+
+**`delta` = `AGREE` | `RECORD-NEWER-THAN-LIVE` | `LIVE-NEWER-THAN-RECORD`** (populated only when
+`coverage = CLAIMED-AND-MEASURED`)
+- **(i)** MECE over the declared domain *both sides present*: equal, or unequal with one of exactly two directions.
+  ⚠ **The uncovered member I hunted and did NOT find a use for: "unequal, direction UNDETERMINABLE" -- both sides
+  present but neither carries a vintage.** It is REAL and it is NOT a member, because under R-83's own rule a side
+  with no vintage cannot be claimed as measured; such a row is `UNMEASURED-EITHER-SIDE` at `coverage` grain. **Named
+  here so a later seat does not add it as a fourth delta and break (ii).**
+- **(ii)** Same grain: one resource row.
+- **(iii)** One axis: **TIME.** Never kind, never coverage.
+- **(iv)** A re-run moves `delta`. A remedy that fixes the RECORD moves it to `AGREE`; a remedy that fixes the LIVE
+  side moves it to `AGREE` too -- **so `delta` alone never tells you which side was repaired, and the row's owner
+  and `claim_kind` are what carry that.**
+
+**`claim_kind` = `RECORD` | `DECLARATION`**
+- **(i)** MECE over the declared domain *the claimed artifact*: a dated record of an act, or an in-source/in-config
+  assertion about the world. ⭐ **Every claimed side is one or the other; there is no third claimant.**
+- **(ii)** Same grain: the CLAIMANT, not the resource and not the run.
+- **(iii)** One axis: **what KIND of thing is claiming.**
+- **(iv)** ⛔ **A RE-RUN NEVER MOVES IT.** Only rewriting the claimant does. **That is why "declaration stale" is
+  `claim_kind = DECLARATION` AND `delta != AGREE` rather than a delta value** -- and why such a row is still owed
+  after the next run reproduces it.
+
+### 3. WHAT THIS BINDS
+
+`4.0.0_SA_CRO` re-cuts O9/W14 to `CLAIMED-AND-MEASURED` in the brief; the two members' evidence
+(`LIVE-no-DECLARED` 15 of 217; source-map orphans 9 of 216) is unchanged and still correct. **No gate is created.**
+⚠ **And the census scope stands as a declared limit, not a clean bill:** if a fourth token collides outside `org/`,
+`docs/` and `infra/logic/`, this record did not look there, and the honest remedy is one unscoped run when the
+estate is quiet rather than a stronger claim now.
+
+---
+
+## R-85A -- TWO AMENDMENTS TO R-85 FROM `4.0.0_SA_CRO`'s EXECUTION: **the COUNT was right and the QUOTED KEY covers 4 of 5**, and **the deferred census remainder is CLOSED and was EMPTY**
+
+The rename is APPLIED @`dfb2930bce` -- `BOTH-PRESENT` -> `CLAIMED-AND-MEASURED`, 9 occurrences across 8 lines, all
+inside O9 (`:169-189`) and W14 (`:375-381`), post-edit enumerate confirming `BOTH-PRESENT` ABSENT from that file and
+the other three coverage tokens present and untouched. **The deliberate near-collision with `drift_class =
+LIVE-no-DECLARED` is KEPT, with `:171` still stating the mapping** so nobody "fixes" it later.
+
+### 1. ⛔ AMENDMENT: THE QUOTED KEY COVERS **FOUR OF FIVE**, THOUGH THE COUNT AND THE CLAIM ARE BOTH RIGHT
+
+R-85 §1 says the DS deliverables carry **`provenance_cols=BOTH-PRESENT`** and lists four parentheticals --
+`(6 of 6)`, `(4 of 4)`, `(5 of 5)`, `(7 of 7)` -- while stating **five** CONFIG hits.
+
+**The fifth is real and the sentence is what is imprecise:**
+`PROOF_OF_SPEC_P1_COT_PARQUET-WRITER-FORMAT_20260811.json:53` writes **`provenance BOTH-PRESENT:`** with **NO
+`provenance_cols=` prefix** -- same domain, same grain, same date, a genuine fifth member of the collision.
+
+⛔ **SO IF THAT SENTENCE IS EVER CITED AS THE PATTERN TO GREP, THE GREP RETURNS FOUR.** The count (5) stands, the
+collision claim stands, and **the quoted KEY is amended: the token appears under two spellings, `provenance_cols=`
+on four and a bare `provenance ` on one.**
+
+⭐ **AND THE NEAR-MISS IS MORE USEFUL THAN THE AMENDMENT.** `4.0.0_SA_CRO` re-measured rather than taking R-85 on
+report, and its FIRST probe -- the narrower literal `provenance_cols=BOTH-PRESENT`, unscoped, 168,465 files --
+returned **CONFIG = 4**. It had a correction against R-85 drafted. The bare-token probe returned **5**.
+⛔ **A PROBE SCOPED NARROWER THAN THE SENTENCE IT GRADES ARRIVES WITH A REAL PRINTED DENOMINATOR AND THEREFORE READS
+AS MEASURED -- and it would have survived any re-run of itself.** What caught it was **running the bare-token census
+BESIDE the anchored one rather than instead of it** -- and, in that seat's own words, *"the four-item list in R-85 is
+what made me look twice, so the ruling's own ENUMERATION is what protected it, not its number."*
+⭐ **That is the argument for enumerating members beside a count, stated by the instrument that nearly tripped.**
+
+### 2. THE DECLARED SCOPE LIMIT IS **LIFTED TO A CLEAN BILL ON THIS TOKEN**
+
+R-85 §3 held its scope open as a limit: *"if a fourth token collides outside `org/`, `docs/` and `infra/logic/`,
+this record did not look there, and the honest remedy is one unscoped run when the estate is quiet."*
+
+**That run is done.** `comp-find 'BOTH-PRESENT' --files --all`, no pathspec: **48 hits across 168,466 files**,
+corpus=all, with 68,661 ephemeral-floor / 13 unreadable / 4,887 binary **disclosed as NOT searched**. It did not
+time out -- the budget was set explicitly rather than reading `rc=0`-with-zero-bytes as absence.
+
+⭐ **NOT ONE FILE SITS OUTSIDE `org/`, `docs/` OR `infra/logic/`.** The 14 files partition as 5 CONFIG (the DS
+deliverables -- the collision), 6 DOC (the brief, four inbox carriers, this ruling), and 3 SURFACED which are **that
+seat's own telemetry from tonight's censuses -- noise that did not exist when R-85 was written.**
+**So the deferred remainder was EMPTY: the scoped census found every real member, and the unscoped run CONFIRMS it
+rather than extending it.**
+
+⚠ **THE QUALIFIER IS KEPT BECAUSE IT WAS OFFERED, AND IT IS THE RIGHT ONE:** this is `comp-find` content mode, the
+**same instrument family** as R-85's -- so it is a **WIDER sweep, not an INDEPENDENT one**, and if comp-find's own
+corpus definition excludes a plane, both runs are blind to it identically. The 68,661 ephemeral-floor files are
+disclosed as unsearched; `--corpus raw` would read them and was not run. **The clean bill is on THIS token, on THIS
+denominator, at THIS vintage, on ONE instrument family.**
+
+### 3. WHAT IS DELIBERATELY NOT DONE
+
+⛔ **The five DS proof-of-spec JSONs KEEP their own prior, legitimate use of the token.** Renaming those would be a
+newer claimant rewriting an older seat's records to make its own enum fit. **The collision is resolved by moving the
+NEWER claimant, which is what R-85 did.** This ruling's own text at `:3217` still carries `BOTH-PRESENT` as the
+historical name, and that is correct -- a ruling that renamed its own subject out of its own record would leave a
+later reader unable to find what was renamed.

@@ -514,3 +514,221 @@ The IAM action is exercised; the `/callback` path is not. Disarm condition, read
 journal shows one `GET /callback` answering 30x then one `POST /token` 200 after 16:37Z. Andrew is the expected producer
 (reconnect from Claude). `NFRA_OPLGTW-S46` @`5efdc94d2f` carries it, disarm owner `2.0.0_SA_COO~O`. **The act is proven
 at the permission and UNPROVEN at the outcome, and those are different claims.**
+
+---
+
+## R-OG-22 -- CALL 1 (AC4): the REC is adopted AGAINST raising the cap, but the call offers a FALSE BINARY and the third branch is the one the measurements actually point at
+
+**The call:** the contract asks 250,000 rows / 50 MiB per export; the job cap is `job_memory_bytes = 268435456`. The measured export peaked at **270,581,760** and ended `LIMIT_EXCEEDED`. The largest export that COMPLETED was **62,500 rows / 9,468,970 bytes at 214,065,152 peak RSS**. `2.0.0_SA_COO~O`'s REC: a PRD revision lowering `export_rows`/`export_utf8_bytes` to a measured-achievable pair, rather than raising `job_memory_bytes`.
+
+### The half of the rec I adopt outright
+
+⛔ **`job_memory_bytes` DOES NOT MOVE.** The rec's reason is correct and it is the blast-radius reason: the cap is a **multi-tenant ADMISSION parameter** on a 1,936,322,560-byte host where two jobs already reserve 912,624,640, while the export size is a **single-feature contract term**. Widening a shared admission parameter to fit one feature re-prices every other tenant's admission -- the wider radius, chosen to fix the narrower problem. That is settled and no revision may quietly take the other route.
+
+### ⛔ THE BRANCH NEITHER THE CALL NOR THE REC NAMES, AND RULE 24 IS WHY I LOOKED FOR IT
+
+The call is framed as a two-member set -- *lower the contract* or *raise the cap*. Rule 24 (i): **hunt the uncovered member, and hunt it by SUBTRACTION.** The domain is not "which of the two numbers do we edit"; it is **every way peak RSS can be brought under the cap at contract scale.** Subtracting the two named members leaves one:
+
+⭐ **CHANGE NEITHER NUMBER -- MAKE PEAK RSS STOP BEING A FUNCTION OF EXPORT SIZE.** And the cell's own measurements are what point there: **9,468,970 bytes of output cost 214,065,152 bytes of peak RSS -- a ratio of about 22.6 to 1.** A writer that streamed rows would not carry that ratio; a resident result set does. **The measured evidence is more consistent with "the whole result set is materialised in memory" than with "the contract is too big."** I have NOT confirmed that read -- it is an inference from a ratio, and I am labelling it as one -- but it is a cheap thing to falsify and it is not in the record at all.
+
+### THE RULING
+
+1. **`job_memory_bytes` stays at 268435456.** Not a revision candidate.
+2. ⛔ **BEFORE any contract number is lowered, the revision ANSWERS ONE QUESTION: is 250,000 rows / 50 MiB a CONSUMER REQUIREMENT or an aspiration?** The two answers have different remedies and the record currently supports neither, because nobody has asked. **If a real consumer needs 250k rows, lowering the contract does not solve that consumer's problem -- it relabels it**, and the streaming branch is the only member of the set that serves it.
+3. **If it is an aspiration**, the rec lands exactly as written -- and the achievable pair is stated **with margin, never at the observed maximum**: the largest completed run sat at 214,065,152 against a 268,435,456 cap, and a pair pinned to an observed peak has no headroom for the next input that is 5% larger.
+4. **The pair is MEASURED, never interpolated.** 62,500 rows completing does not license "125,000 rows probably completes"; the ratio above is the reason that interpolation is unsafe.
+
+**I own the revision (L4) and I am not cutting it this tick** -- it is blocked on question 2, which is a question about a consumer, not about this cell. `2.0.0_SA_COO~O` is not blocked by that: nothing in OG-r-2 waits on the revision.
+
+---
+
+## R-OG-23 -- CALL 2 (AC6): the REVISED rec is adopted, the criterion is NOT weakened, and `2.0.0_SA_COO~O`'s correction of its own call is the finding of this round
+
+**Superseded first:** call 2 as written at 22:11Z argued from "an ambient background rate" to weakening the bar. `2.0.0_SA_COO~O` corrected itself at 22:47Z (msg 98070, row `S49` @`6acc95cba2`) before I ruled, and the correction reverses its own recommendation. ⭐ **I am ruling on the CORRECTED call, and the correction is right.**
+
+### WHY THE ORIGINAL REC WAS WRONG IN A WAY THIS ESTATE HAS A NAME FOR
+
+The first rec rested on a **14-day SUM**. The correction read the same metric **per day-bucket (denominator 15)** and found the events are **EPISODIC**: non-zero on FOUR days (09-04 = 3, 09-09 = 3, 09-10 = 13, 09-18 = 2), **true zeros on ELEVEN** while `RequestCount` is non-zero on all fifteen; at period 3600 they are bursts inside single hours, never a rate.
+
+⛔ **THIS IS RULE 24'S SCOPE-TELL EXACTLY: A REAL DENOMINATOR SUPPORTING A SENTENCE ABOUT A DIFFERENT POPULATION.** A sum over 14 days is a true number that cannot distinguish "irreducible ambient rate" from "four bad days and eleven clean ones" -- and **those two have opposite remedies.** "Ambient" means irreducible, which argues for replacing the bar with a rate comparison. **Episodic means a zero-failure window is CONSTRUCTIBLE**, which is the opposite conclusion from the same instrument at a finer grain.
+
+### THE RULING
+
+1. ⛔ **AC6's literal "zero failures" STANDS. It is not amended, not weakened to a rate, and not given a delta bar.** Eleven clean days of fifteen are the proof that the bar is satisfiable, and **a bar is not unsatisfiable because one cell could not build a window that met it.**
+2. **It is graded on a window free of NAMED incidents, each named IN THE RECORD with its cause.** That is the corrected rec and I adopt it verbatim.
+3. ⛔ **THE 19 ERRORS OF 09-04 / 09-09 / 09-10 ARE NOT NAMED.** `2.0.0_SA_COO~O` says so itself and declines to claim a cause it did not read. **So those three days are NOT eligible window material until named** -- a window is "free of named incidents" only when the incidents in it have actually been named, and an unexamined burst is not a clean day.
+4. **Today's two ARE named and ARE ours:** the 14:00Z and 15:00Z buckets correspond to `GET /callback` 503s at 14:55:37Z and 15:16:07Z during the `DeleteItem` outage (row `S46`, a different plane, same two events). ⭐ **Two instruments, independently derived, agreeing on the same two events is CORROBORATION rather than repetition** -- the CloudWatch metric and the journal read share no method. 09-18 is therefore an eligible day for a window that EXCLUDES the outage interval, and a named incident of our own making is precisely what the clause is for.
+5. **Row `W2-S10` stays ARMED and its disposition remains the CVO's at L9.** Its core claim -- *the criterion is unsatisfiable in the windows THAT CELL could build* -- is TRUE and is not disturbed by this ruling. ⚠ **It is a claim about the cell's windows, not about the criterion**, and the two must not be collapsed when the row is dispositioned.
+
+⭐ **RECORDED AS CREDIT, NOT COURTESY:** a seat that re-measures its own recommendation at a finer grain and publishes the reversal before the ruling lands is doing the thing the correcting-seat trap says is hardest. The correction cost one metric call and changed the remedy.
+
+---
+
+## R-OG-24 -- CALL 3 (AC2): the rec is adopted -- the bar IS "never exceeds", so the PASS is VACUOUS -- and the defect is in a SHARED LIMB, which makes it bigger than AC2
+
+**The call:** `onhost_bench.py:418-421` grades `cap_respected` by comparing RSS **only when the job succeeded**; a job ending `LIMIT_EXCEEDED` is graded `True` with its RSS unread. The maximal job peaked at **282,021,888** against the **268,435,456** cap -- 5.06% over -- and PASSES, while AC4's export job FAILS at a SMALLER 270,581,760 only because AC4's text also demands the CSV be generated.
+
+### THE RULING
+
+1. ⛔ **AC2's BAR IS "NEVER EXCEEDS." The PASS IS A DISCLOSED FAIL.** Adopted as recommended.
+2. ⛔ **AND IT IS WORSE THAN AMBIGUOUS -- IT IS VACUOUS.** A limb that reads the guarded property **only on the success path cannot return non-zero on the positive case it exists to catch**: the jobs most likely to breach a memory cap are exactly the jobs that die of it. This is the catalogued *detector that cannot fire* shape, and the verdict it produces is not evidence of compliance in either direction.
+3. ⭐ **THE DEFECT IS IN A SHARED LIMB, SO THE SCOPE IS NOT AC2.** Rule 22: *a check scoped to the members cannot see a defect in what the members share.* **Every criterion whose verdict reads `cap_respected` inherits this, and each one currently reads PASS or FAIL on a limb that is blind on the failure path.** ⛔ **CENSUS `cap_respected`'s CONSUMERS BEFORE ANY OF THEM IS QUOTED AGAIN, AND PRINT THE DENOMINATOR.** I am not naming a count, because I have not run it and a number I did not measure is exactly what this ruling convicts.
+4. **The instrument is repaired, not worked around:** `cap_respected` reads peak RSS on **every** terminal path, `LIMIT_EXCEEDED` included. A grader that must be read together with a caveat is a grader that will be quoted without one.
+5. **Admission arithmetic is priced against transient overshoot**, as recommended -- a child that transiently reaches about 1.05x the cap.
+
+### ⚠ ONE NUMBER IN THE CALL DOES NOT RECONCILE, AND IT IS CHEAP TO FIX
+
+The call says two such children reach **562,036,736** against a reserve computed at 375,753,728. But **2 x 282,021,888 = 564,043,776**, not 562,036,736 -- a difference of **2,007,040**, which means the two figures rest on DIFFERENT child values (562,036,736 is the double of 281,018,368, not of 282,021,888). **Neither is necessarily wrong** -- one may be the measured maximum and the other a different run's peak -- **but the doubling must print its own input.** ⛔ **The conclusion is unaffected: on either figure two children exceed the 375,753,728 reserve by more than 185 MB**, so the admission finding stands and this is a provenance repair, not a reversal.
+
+**Nothing here re-grades a criterion or moves a cap.** AC2 becomes a disclosed FAIL and joins AC4 as the second input to R-OG-22's revision; the `cap_respected` repair and its consumer census are `2.0.0_SA_COO~O`'s to place in a cell.
+
+---
+
+## R-OG-25 -- THE LOST SALT (row `S42`): the RE-SEAL IS ORDERED NOW and **`G-C` IS NOT SCHEDULED UNTIL IT LANDS** -- plus the falsifiable ordering test, because a late re-seal and an honest one look identical in the record
+
+**The finding (`2.0.0_SA_COO~O`, row `NFRA_OPLGTW-S42` @`28f12de3b0`, ARMED and BLOCKING):** `SEALED_EXPECTED.json` is committed at HEAD and names its own missing input -- `sha256(salt || canonical_json(answer))`, salt at `C:/tmp/nfra-oplgtw-sealed/expected/SALT.txt`, **outside the repository. The tree does not exist.** Measured on two independent path planes (bash `test -d` ABSENT, PowerShell `Test-Path` False) while `C:\tmp` itself holds 36 children, none matching `nfra*`. `OG-v-3` put the values and the salt there and nowhere else, with retention *"until OG-v-4 has graded"*; `OG-v-4` has not graded, **so the tree went EARLY -- before the clause governing it allowed.**
+
+Blast radius **ONE criterion** -- `OGV4-AC5` -- after `2.0.0_SA_COO~O` corrected its own sweep from 2 to 1 (the `OGV4-J2` hit was its own regex catching a trailing `<expected_criteria>` list). ⭐ **The correction is in the right direction: it made the finding SMALLER, which is the direction a seat has no incentive to move its own number.**
+
+### 1. THE RULING ON THE PART THAT IS MINE -- `G-C`'s TIMING
+
+⛔ **THE RE-SEAL IS ORDERED, AND `G-C` IS NOT SCHEDULED UNTIL THE RE-SEAL COMMIT HAS LANDED.**
+
+The reasoning is entirely `2.0.0_SA_COO~O`'s and I adopt it without dilution: the seal exists so the grader cannot tune expectations to the result. **A re-seal TODAY preserves that property exactly, because the walkthrough has not happened** -- `G-C`, `G-D`, `G-E` and `G-F` are all absent at HEAD, verified this tick, all four owning deliverables directories at 0 files. **The same re-seal AFTER the walkthrough would be worthless.**
+
+⚠ **THIS IS A SEQUENCING ORDER ON TWO ACTS THIS SEAT ALREADY OWNS, NOT A NEW APPROVAL GATE.** CLAUDE.md forbids implementing an approval gate Andrew did not ask for. Nothing here adds a permission step: `G-C`'s timing was already mine, the re-seal was already owed, and I am stating which comes first. No seat needs anyone's sign-off that it did not need yesterday.
+
+⛔ **AND IF THE ROUND'S ARITHMETIC CANNOT DRAIN IN TIME, `G-C` IS WHAT MOVES, NOT THE RE-SEAL.** `2.0.0_SA_COO~O` declined to cut the cell in-round on LD-0521's arithmetic -- *"I am not going to argue the exception into existence for my own finding"* -- and that restraint is correct and is not to be undone by me. **The window is protected from the other end: I hold `G-C`, so I delay `G-C`.**
+
+### 2. ⛔ IT IS A RE-SEAL, NOT A RECOVERY, AND THE RECORD MUST NEVER READ OTHERWISE
+
+`SEALED_EXPECTED.json` records key AND `version_id` for every source object plus the exact instrument, so **the ANSWERS recompute from identical versioned objects.** ⛔ **THE COMMITTED HASHES CAN NEVER BE MATCHED** -- a new salt yields different digests. Any repair produces **NEW hashes**.
+
+So: the new artifact **supersedes** the old and says so in its own bytes, naming the old digests as **RETIRED, never as "verified"**. ⚠ **A future reader who finds two sets of digests and no supersession note will assume the first set was checked.** The retirement line is the only thing standing between this incident and that misreading.
+
+### 3. ⭐ THE ORDERING TEST -- because "we re-sealed before the walkthrough" is a CLAIM, and the whole point is that it cannot be taken on trust
+
+An honest early re-seal and a worthless late one **look identical in the record**, which is exactly the property the seal was built to deny. So the re-seal carries a discriminator a later reader can run without trusting anyone:
+
+**The re-seal commit MUST be a git ANCESTOR of the first commit in `G-C`'s deliverables directory, and the row cites BOTH hashes.** Falsifiable in one command (`git merge-base --is-ancestor <reseal> <first G-C artifact>`), by any seat, at any later date, on an ordering **no party to the grading can back-date.** ⛔ **A DATE TYPED INTO THE ARTIFACT IS NOT THIS TEST** -- the artifact is written by the party that benefits; the ancestry is not.
+
+### 4. THE STANDING BAR THIS EARNS -- `2.0.0_SA_COO~O`'s carry, sharpened
+
+Its generalisation is right and is the durable part: ⭐ ***"AN OUT-OF-REPO INPUT SITS OUTSIDE EVERY GUARD THIS ESTATE HAS."*** No gate, no freeze, no worktree and no commit protects `C:/tmp`, **and a held cell depending on one is trusting a path nothing defends for exactly as long as it stays held** -- which is longest precisely when a cell is blocked, i.e. when nobody is looking.
+
+⛔ **BAR: AN INPUT A HELD OR SEALED CELL WILL NEED AT GRADING TIME LIVES IN A DEFENDED STORE WITH A NAMED RETENTION OWNER -- NEVER A TEMP PATH.**
+
+⚠ **AND THE OBVIOUS REMEDY IS WRONG HERE, WHICH IS WHY THE BAR NAMES A STORE RATHER THAN "COMMIT IT":** committing the salt in clear would destroy what the salt buys. The hashes' integrity comes from the COMMIT (they were fixed before the answers were known), but **the SALT's secrecy is what stops a low-entropy answer being brute-forced out of its own digest** -- and this seal's answers are business-date-shaped, i.e. low entropy. A published salt would let a party recover the expected answer from the committed hash and then build to return it, which inverts the threat rather than closing it. **So: an Opal-owned defended store (SSM SecureString / Secrets Manager), never the repo in clear and never `/tmp`.** COST: one parameter write per seal. NON-APPLICATION: an input a cell consumes and grades in the same act, which is never held.
+
+### 5. WHAT IS NOT CLAIMED
+
+**Nothing about WHAT removed the tree.** A temp sweep, a reboot, a cleanup -- unmeasured, and `2.0.0_SA_COO~O` declines to claim it. ⭐ **The remedy does not depend on the cause, which is why the ruling does not wait for it.** And per Rule 22's negative mirror: this is an **EXPOSURE that FIRED** -- the guard was missing AND the loss occurred -- so it is an INCIDENT, and the re-opening it requires is exactly `OGV4-AC5`'s re-seal. Nothing else was admitted by the gap, because `OG-v-4` never graded.
+
+---
+
+## R-OG-25A -- CORRECTION TO R-OG-25, BY THIS SEAT: **I ORDERED AN ACT THAT HAD ALREADY LANDED, AND HELD `G-C` ON A PRECONDITION ALREADY MET.** `G-C` IS RELEASED
+
+**`G-C` IS SCHEDULABLE NOW.** The hold R-OG-25 placed on it is LIFTED, and it was never correctly placed.
+
+### 1. WHAT I GOT WRONG
+
+R-OG-25 (23:24:57Z) ordered a re-seal and held `G-C` until the re-seal commit landed. **The re-seal landed at 13:53:17Z the same day -- nine and a half hours BEFORE the ruling was written.**
+
+Verified on this seat's own instrument, not on the report that told me:
+- `git log -1 d5af54a90a` -> `2026-09-18T09:53:17-04:00` (= **13:53:17Z**), author `2.0.0_SA_COO~O`, *"drain: merge wk-oplgtw-6-reseal (row gate clean on the merged index)"*
+- `git show --stat d5af54a90a` -> carries `.../0.9.0_WK_NFRA_OPLGTW~6/SEALED_EXPECTED.json` (+36/-6) and `probes/og_v4.py` (+177)
+- `git merge-base --is-ancestor d5af54a90a HEAD` -> **true**
+
+⛔ **THE DEFECT IS MINE AND IT IS NOT "THE ROW WAS STALE."** `2.0.0_SA_COO~O` offers me that exit -- *"the ruling reasons from row S42 as filed at 12:22Z and could not see a remediation that landed after it"* -- and **I decline it, because it is not what happened.** The row was filed at 12:22Z; the remediation landed at 13:53Z; **the message carrying the row to me quoted a push state read at 17:57Z**, and I ruled at 23:24Z. The information needed to catch this was available for nine hours and the check costs one `git log`.
+
+⛔ **I RULED ON A BLOCKING CLAIM ABOUT THE WORLD WITHOUT MEASURING THE WORLD.** Rule 22 sizes verification by who eats the error: an ORDER to another seat is the world axis, which requires DISCRIMINATION -- *could the evidence differ if the claim were false?* I ran no check that could have come back "already done." **This is the same shape as the open-deploy-entry rule I cite in my own rulings:** *an entry a device left OPEN proves only that THIS device saw no completion -- before acting on any open entry, MEASURE THE ARTIFACT.* An ARMED row is exactly such an entry. ⚠ **A row's ARMED state is the FILER'S claim at FILING TIME, and it does not age with the world.**
+
+### 2. THE COST, STATED PLAINLY
+
+`G-C` is, in `2.0.0_SA_COO~O`'s words, *"the last non-spec gate between round 1 and its close."* **I held it from 23:24Z on a condition that was already satisfied.** Nothing else was damaged: the re-seal was not re-run (the lane read the ruling correctly and reported rather than re-executed), and no act was taken twice.
+
+⭐ **AND THE HOLD WAS THE ONLY WRONG LIMB.** The ancestry test and the standing bar were not wasted, and I am not retracting them:
+- **The ancestry test is SATISFIED BY CONSTRUCTION, which is stronger than satisfied by promise.** `d5af54a90a` is already in `CLOUD`'s history, so **every future commit in `G-C`'s deliverables directory necessarily descends from it.** Nobody can back-date around that -- the test needs no further act by anyone, ever.
+- **The standing bar was being violated AS I WROTE IT, and worse than I knew.** `C:/tmp/nfra-oplgtw-sealed/expected/` held `SALT.txt` **and `RQ1..RQ6.txt` -- the six REAL ANSWERS in clear.** ⛔ **That is the worse half and my ruling did not see it: the salt only protects the DIGESTS; the answer files were the answers themselves, undefended.** All seven now sit in SSM SecureString under `/opal/nfra_oplgtw/ogv4/reseal_20260918/`, read back with `--with-decryption` and compared by sha256 against the local bytes, **7 of 7 MATCH**, with no value reaching a transcript, log or commit -- only names, byte lengths and hash-equality booleans. Retention owner: that lane, until `OGV4-AC9` commits them as drain evidence. **Temp copies deliberately NOT deleted, and that judgment is correct**: the probe still reads that path, and deleting the working copy before the cell is re-handed would repeat `S42` from the other direction.
+
+### 3. WHAT BINDS NOW
+
+1. ⛔ **`G-C` IS RELEASED AND SCHEDULABLE ON THE EXISTING EVIDENCE, NOT ON A NEW ACT.** No further re-seal, no further verification, no new gate.
+2. **R-OG-25's standing bar STANDS** (an input a HELD or SEALED cell needs at grading time lives in a DEFENDED store with a named retention owner, never a temp path) -- now with the sharper statement that **the bar covers the ANSWERS, not merely the salt.**
+3. ⭐ **THE CHECK THIS EARNS, AND IT COSTS ONE COMMAND: BEFORE ORDERING AN ACT ON THE STRENGTH OF AN ARMED ROW OR AN OPEN ENTRY, MEASURE WHETHER THE ACT IS ALREADY DONE.** COST: one `git log` / one artifact read. NON-APPLICATION: an order whose act is inherently unrepeatable-by-others, or a row filed and ruled inside the same tick.
+
+⚠ **AND THE ROUTE MATTERS MORE THAN THE ANSWER HERE:** R-OG-25 reached a defensible bar by a method that could equally have ordered a second re-seal on top of a good one. **A right answer reached without the discriminating check is a lucky one**, and it is the route that gets graded.
+
+---
+
+## R-OG-23A -- CLARIFYING MY OWN CLAUSE BEFORE IT IS GRADED ON: **NAMING AN INCIDENT DOES NOT MAKE ITS DAY COUNTABLE AS CLEAN.** The window is CONTIGUOUS and a named incident DISQUALIFIES it
+
+`2.0.0_SA_COO~O` discharged R-OG-23 s.3's naming obligation completely (`S52` @`5f57597894`), and the row is better
+than the obligation required: retention checked FIRST so a zero would have meant zero; **19 of 19 on one endpoint,
+zero exceptions**, enumerated to the second; corroborated across two instruments sharing no mechanism (journal vs
+the ALB metric in `S49`); the cause pinned at the minute (`/graph/health` 200 beside `POST /graph/cypher` 502, retry
+200 six seconds later -- a swap window on the graph store); and an explicit statement of what it does NOT claim.
+**The naming obligation is CLOSED.**
+
+⚠ **BUT THE ROW READS MY CLAUSE ONE WAY AND I MEANT THE OTHER, AND THE DIFFERENCE DECIDES A GRADE.** It writes
+*"the three days become eligible window material."* My clause was *"graded on a window free of NAMED incidents."*
+
+⛔ **"FREE OF NAMED INCIDENTS" MEANS THE WINDOW CONTAINS NONE -- NOT THAT THE ONES IT CONTAINS HAVE BEEN LABELLED.**
+Naming was never a way to make a dirty day usable. It was the check that a day called clean is clean *because
+somebody looked*, not because nobody did -- an unexamined burst is not a clean day, and a named burst is not one
+either. **A named incident DISQUALIFIES any window containing it.**
+
+### ⛔ AND THE READING I AM REFUSING IS THE ONE THAT DESTROYS THE BAR
+
+If naming let us excise an incident's minutes from inside a window, **"zero failures" would be satisfiable over ANY
+data by excising every failure** -- the bar would measure nothing but our willingness to name things. That is
+exactly the shape the skill's own stop-condition clause forbids: *a condition satisfiable by shrinking its own
+denominator is not a condition, and the party doing the shrinking is the party that benefits.* **I kept the literal
+bar in R-OG-23 against a rate; I am not now reintroducing the weakening through the window's edges.**
+
+### ⭐ AND NOTHING IS LOST BY THE STRICT READING -- A QUALIFYING WINDOW ALREADY EXISTS
+
+From `S49`'s own day-buckets, non-zero on **09-04, 09-09, 09-10, 09-18**; the other eleven of fifteen are true
+zeros. The contiguous clean runs are **09-05..09-08 (4 days)** and **09-11..09-17 (SEVEN days)**.
+⭐ **So `OGR2-AC6` can be graded on a seven-day contiguous window with the literal "zero failures" bar intact, no
+excision, no attribution argument and no judgment call.** The strict reading costs the round nothing.
+
+**So `S52`'s operative sentence is right and its label is loose:** the round-2 cell grades AC6 on a window that
+**EXCLUDES** the graph-swap days and the 09-18 outage -- which is what the row actually describes doing. I am
+correcting the phrase *"eligible window material"* only so the next reader does not take it as licence to include
+those days with a footnote.
+
+**Unchanged:** the AC6 re-grade is round-2 work and is not performed here; `W2-S10` stays ARMED with its disposition
+the CVO's at L9; and its core claim -- unsatisfiable in the windows THAT CELL could build -- remains true and
+remains a statement about that cell's windows, not about the criterion.
+
+---
+
+## R-OG-23B -- `2.0.0_SA_COO~O` RAN THE CHECK MY RULING DID NOT: **a clean window with no TRAFFIC passes vacuously, and R-OG-23A asserted its span from the failure series alone**
+
+R-OG-23A claimed a seven-day contiguous clean window (09-11..09-17) exists, **derived entirely from `S49`'s
+failure-count day-buckets.** ⛔ **A FAILURE SERIES CANNOT DISTINGUISH "NO FAILURES" FROM "NO TRAFFIC."** I asserted
+a window was usable without ever asking whether anything happened in it.
+
+**`2.0.0_SA_COO~O` measured the missing half** (CloudWatch, the same dimensions as `S49`, period 86400, seven
+buckets): **RequestCount 3323, 1123, 1142, 4309, 2778, 5017, 1781 -- every bucket NON-ZERO, total 19,473
+requests** -- against **HTTPCode_Target_5XX_Count: NO DATAPOINTS** over the identical span.
+
+⭐ **So the span is clean AND loaded, and the ruling stands -- but it stood on evidence it did not have until now.**
+`OGR2-AC6` is gradeable on 09-11..09-17 with the literal bar intact over 19,473 real requests.
+
+### THE DEFECT WAS MINE AND IT IS CATALOGUED
+
+This is *a gate called with an EMPTY input set returns a vacuous pass that reads as clean*, moved up one level from
+a gate's input to a **measurement window**. ⚠ **I have cited that trap at other seats; I did not apply it to my own
+window claim**, and the tell was available the whole time -- **a denominator I never printed.**
+
+### THE BAR, WHICH IS `2.0.0_SA_COO~O`'s AND IS BETTER THAN A CORRECTION
+
+⛔ **A CLEAN-WINDOW CLAIM PRINTS TWO NUMBERS: THE FAILURE COUNT AND THE TRAFFIC DENOMINATOR.** One extra query.
+⭐ **And the symmetry is the point, in that lane's own framing: a bar can be weakened at its WINDOW'S EDGES without
+ever touching the bar, and the strict reading that closes that hole opens its mirror** -- excision makes any window
+clean, and emptiness makes any window clean. **Both are answered by printing the denominator beside the zero.**
+**NON-APPLICATION:** a claim whose subject IS the traffic (there the denominator is the measurement).
+
+**Unchanged:** the AC6 re-grade is round-2 work; `W2-S10` stays ARMED, disposition the CVO's at L9.

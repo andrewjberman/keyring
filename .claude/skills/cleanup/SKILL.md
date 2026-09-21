@@ -21,6 +21,7 @@ reading its output.
 | Pool | Policy | Why it keeps coming back |
 |---|---|---|
 | `terraform-provider-temp` | **AUTO-DELETE** | Every `terraform` invocation (incl. `safe-apply.sh`) that does not exit perfectly clean leaves a `terraform-provider<random>` file in `%LOCALAPPDATA%\Temp` -- ~149 MB each. 53 of them were 5.92 GB on this box alone, all from two days of ordinary apply traffic. |
+| `terraform-provider-cache` | **AUTO-DELETE** | `terraform init` writes one full AWS provider (686 MB at v5.100.0) into `.terraform/providers` PER ROOT PER WORKTREE -- 10 roots = 6.71 GB per worktree, no shared plugin cache. Measured 2026-09-20: 28 such dirs in four idle worktrees were 18.78 GB and took the box to 0 bytes free mid-round. Removed only in NON-LIVE linked worktrees, never the shared checkout; `terraform init` restores them from the committed lock file, and no state, planfile or scratch is touched. The prevention is the issuer's: `TF_PLUGIN_CACHE_DIR`, one apply worktree at a time, removed after its drain. |
 | `orphaned-worktree-dirs` | **AUTO-DELETE** | A worktree directory removed by hand (`rm -rf` instead of `git worktree remove`) leaves a dangling admin entry git still half-tracks, or the reverse -- a directory with no git claim on it at all. Either way there is nothing left to lose; `git worktree prune` closes the bookkeeping. |
 | `merged-worktrees` | **AUTO-DELETE** | A worker's worktree whose branch is fully merged into **both** `origin/CLOUD` and `origin/SITEZ` is a complete duplicate of content already safe on the remote. Nobody drains these once the round closes; they just sit. |
 | `unmerged-worktrees` | **REVIEW ONLY -- never auto-deleted** | A worktree carrying a commit that is on **neither** shared branch is the *only copy* of that commit. This is the pool Andrew named explicitly. See below. |
@@ -65,7 +66,7 @@ the window. Do not narrow it below a round's real cadence without measuring that
 
 | Form | Behavior |
 |---|---|
-| `/cleanup` | Run every registered pool: auto-remediate the safe three, list (never touch) the unmerged-worktree pool. |
+| `/cleanup` | Run every registered pool: auto-remediate the safe four, list (never touch) the unmerged-worktree pool. |
 | `/cleanup --dry-run` | Same scan, zero deletions anywhere -- prints exactly what each pool would do. Use this first on an unfamiliar box or after adding a pool. |
 | `/cleanup <pool-name>` | Run one pool only, e.g. `/cleanup terraform-provider-temp`. |
 | `/cleanup --window <hours>` | Override the live-worktree recency window (default 6). |

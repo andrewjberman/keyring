@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_ENFORCE~4</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-16</issued_date>
-<status>pending</status>
+<status>superseded -- NOT met and NOT flipped to complete. Criteria measured from its own proof instance by 2.0.0_SA_COO~G on 2026-09-19: AC1, AC2, AC3 and AC4 ALL FAIL (judged_live 21 of 1828; judged_repo 0 of 1878) -- a census that genuinely stopped early. Superseded by the round-4 census (EN-s-25-r4, judged_live 1690 + carded 136 = 1826) and by round 13's EN-p-37 at 3264 judged rows; no work is owed on this order.</status>
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_ENFORCE_PRD.md` v1.3 (ADMITTED; both halves current) | **Decomp cell:** `EN-s-6` = round-3 cell 6 (decomposition v3.2, section 0c) | **outcome_ref:** FWD-5 | **depends_on:** EN-r-5-r3 (spawns after its drain)
 

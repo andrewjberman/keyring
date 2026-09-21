@@ -5,7 +5,18 @@
 <issued_to>0.9.0_WK_LGIC_LGCTFM~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-09-18</issued_date>
-<status>pending</status>
+<status>superseded</status>
+
+> **SUPERSEDED 2026-09-18 ~23:1xZ BY `2.0.0_SA_COO~G`, NEVER SPAWNED, AND RE-CUT IN ROUND 4.** Row
+> `LGIC_LGCTFM-S30` measured `S26`'s drain test on the engine this order would have run: NON-CONFORMANT on
+> both halves of R-81 -- the `iam_grant` leg reads `comp-iam role` (a Terraform-plane subcommand outside
+> R-81's `live / reconcile / simulate ONLY`), and `lambda-source-map.json` is read with neither the
+> comp-lambdamap guard nor a dated declaration. `1.0.0_SA_CTO` ratified the consequence in R-82
+> @`62907d86b5`: *"I do NOT spawn LT-x-4 on a non-conformant engine -- it waits for round 4. CORRECT, AND I
+> WOULD HAVE ADDED IT IF YOU HAD NOT."* A real run on an unmeasured engine produces a green that means the
+> engine RAN, not that it was RIGHT. **Round 4 re-cuts this cell after the two repairs, beside R-81's
+> canonical `graph-call-manifest.yaml` entry.** Nothing in this face is retracted; it is the round-4 cell's
+> starting text, including the pre-spawn amendment recorded as `LGIC_LGCTFM-S28`.
 
 **Directive:** D14 | **Fabric:** laptop | **PRD:** `../prd/LGIC_LGCTFM_PRD.md` v1.4 (ADMITTED; both halves SIGNED and current) | **Decomp cell:** `LT-x-4` (decomposition v1.4 s.13) | **outcome_ref:** FWD-1 | **depends_on:** LGIC_LGCTFM.TO-LT-e-5-r3, LGIC_LGCTFM.TO-LT-p-2-r3, LGIC_LGCTFM.TO-LT-r-2-r3 -- all three DRAINED before this worktree is cut
 

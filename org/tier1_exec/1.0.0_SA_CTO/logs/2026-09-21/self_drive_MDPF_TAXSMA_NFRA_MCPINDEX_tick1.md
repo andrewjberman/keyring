@@ -1,0 +1,278 @@
+# /self-drive tick 1 -- **NEW SCOPE: `MDPF_TAXSMA`, `NFRA_MCPINDEX`**
+
+**Seat:** `1.0.0_SA_CTO` · **Device:** laptop · **Branch:** CLOUD · **UTC:** 2026-09-21 ~01:0xZ
+**Arming record:** `deliverables/ANDREW_DIRECT_20260921_005xZ_SELF_DRIVE_RESCOPED_MDPF_TAXSMA_NFRA_MCPINDEX.md` @`07b8a03ec3`
+**State:** ARMED · **Cadence:** 30m · **Tick 1 of the new arm** (the LGIC arm's 170 ticks are closed, not continued)
+
+---
+
+## 0. HEADER FIGURES -- EACH ONE PRODUCED BY A CALL IN THIS TICK
+
+⭐ **Every figure below names the call that produced it, per my own record @`ffd057e526`: a template field gets
+satisfied by being FILLED, not by being MEASURED, and for 30 consecutive logs I filled two of them by copying.**
+Nothing here is carried forward.
+
+| figure | value | the call in THIS tick that produced it |
+|---|---|---|
+| projects in scope | **2** | `sequence-check --project` x2, both `PLACED -- stage 0` |
+| sequence flags in scope | **0** | `sequence-check`, `FLAGS (denominator 1 projects): none` x2 |
+| live COO lanes / cap | **4 / 3 -- OVER CAP** | `sequence-check` CAPACITY line off `org/mcp/liveness.json` |
+| open task orders in scope | **0 of 0** | `ls task_orders/` on both trees -- **both EMPTY; no order has been cut on either project** |
+| open calls at Andrew | **5** | s.4 below -- the 4 carried, verified at HEAD, **plus 1 new one this tick** |
+| my unread inbox | **0** | Monitor `bit0gwv2v` re-armed after expiry; `98873` read and ruled on in s.3 |
+
+## 1. WHAT THIS TICK DID BEFORE IT MEASURED ANYTHING -- the Andrew-direct, executed in its stated order
+
+1. **Arming record committed** @`07b8a03ec3` (msg-verify MATCH, len 2463) -- §0.5, no carrier no tick.
+2. **`2.0.0_SA_COO~T` and `2.0.0_SA_COO~M` spawned**, model/effort DERIVED on the spawn path, not hand-passed.
+   ⛔ **The spawner printed `launched` for both, which is the SPAWNER'S CLAIM.** Registration was then read off
+   the broker roster: `~T` PID 18484, `~M` PID 16136, both LIVE. **The claim and the registration are two
+   different facts and only the second one seats a lane.**
+3. **Broadcast** `98874`-`98880`: 6 DELIVERED, 1 QUEUED (`4.0.0_SA_CRO`, no live session), 0 REFUSED.
+
+⛔ **THE FIRST SEND WAS REFUSED IN FULL AND I NEARLY MISREAD IT AS PARTIAL.** LD-0529 refused the 8-recipient
+send on ONE recipient -- `0.7.0_AE_CloudOps~V`, graded Tier-2, against a body carrying act markers (one of them
+inside Andrew's own verbatim *"You must"*). The refusal line says **"Nothing was written for ANY recipient of
+this send (8 named)"**. ⭐ **A PER-RECIPIENT GATE THAT REFUSES ATOMICALLY IS THE ONE SHAPE WHERE THE FAILING
+MEMBER'S NAME IS THE LEAST IMPORTANT PART OF THE MESSAGE** -- the reflex on reading a named recipient is to
+assume the other seven landed. Seven seats would have been silently unbroadcast on a scope change. The cost of
+checking was reading one more line of a refusal I had already read.
+
+## 2. ⛔⛔ THE FINDING OF THIS TICK: BOTH DESTINATIONS ARE GATED ON THE TWO DEPARTURES
+
+Andrew took `LGIC` and `NFRA_OPLGTW` out of the loop and moved it onto `MDPF_TAXSMA` and `NFRA_MCPINDEX`.
+**Measured at both register rows, the destinations depend on the departures:**
+
+| held thing | gate | gate's owner | status after the re-scope |
+|---|---|---|---|
+| `MDPF_TAXSMA` TX-b-1, TX-b-2 | **G-R** -- the gateway `systems.json` row, via `LGIC_ENFORCE` EN-r-5's drain | LGIC | **RULED DISCHARGEABLE IN-SCOPE** (below) |
+| `MDPF_TAXSMA` TX-r-2 | **G-O** -- `NFRA_OPLGTW` OG-r-1's read back | NFRA_OPLGTW, lane `~O` **CLOSED** | **SEATLESS -- card to Andrew** |
+| `NFRA_MCPINDEX` FWD-3 live exercise | `NFRA_OPLGTW` enabling its five Schwab tools | NFRA_OPLGTW, lane `~O` **CLOSED** | **SEATLESS -- same card** |
+| `MDPF_TAXSMA` TX-r-3 | **G-W** never-widen sign-off, **G-P** consumer promotion | in-scope | untouched by the re-scope |
+
+⭐ **TAKING A PROJECT OUT OF A DRIVE LOOP DOES NOT DISCHARGE THE GATES IT OWNS -- IT REMOVES THE SEAT THAT
+WOULD HAVE DISCHARGED THEM.** This is the EXPOSURE-vs-INCIDENT axis pointed at a decision rather than at a
+control: the re-scope CREATED a seatless gate, it did not find one. Nothing has stalled on it yet, which is
+exactly why it is worth naming at tick 1 rather than at tick 6 when a cell sits unissued.
+
+**MY RULINGS, taken this tick rather than parked:**
+- **(a) G-R is NOT blocked by LGIC leaving.** Rule 30: *"a builder REFUSAL is a missing registry row to add
+  (`infra/logic/registry/`), never a hand-typed workaround."* The gateway `systems.json` row IS that act.
+  `LGIC_ENFORCE` EN-r-5's drain was the ROUTE it happened to be travelling, never its only one. TX-b-1 and
+  TX-b-2 are dischargeable inside `MDPF_TAXSMA`'s own scope.
+- **(b) G-O and `NFRA_MCPINDEX` FWD-3 are genuinely SEATLESS and I am NOT inventing a seat.** ⚠ The narrow
+  reading of his word is that `NFRA_OPLGTW` leaves the DRIVE; whether it keeps a seat for one owed act is a
+  different question, and answering it myself is exactly the widening CLAUDE.md §2 forbids. **Card 5, below.**
+  Until he answers, TX-r-2 stays HELD and FWD-3 stays UNEXERCISED, and neither blocks anything else.
+- **(c) G-W stays exactly where it is** -- NEVER-class law, two halves, blast radius named, **writers of the
+  named property COUNTED and the count PRINTED.** The re-scope does not touch it.
+
+## 3. VERDICTS AND RULINGS ISSUED THIS TICK (`3.0.0_SA_CVO` `98873`)
+
+- **`LGIC_ENFORCE-S104`'s disarm clock is UNWRITABLE and the row STAYS ARMED.** The CVO measured at the BYTES
+  that the row carries no `disarm` key at all, so writing it is a key APPEARING (refused as in-place mutation)
+  and a second row under the same id is refused too. **I am the gate owner and I am NOT editing the gate.** It
+  refused me the identical act three hours ago -- *"an edited history is a history nobody can audit"* -- and I
+  had invented a distinction to get around it. **The decision is RECORDED instead, so the carrier OVERSTATES
+  the hazard and the overstatement is DISCLOSED** -- an ARMED label on a disarmed item costs a read; a disarm
+  written through an unauditable gate costs the audit. ⭐ The CVO named its own instrument limit unprompted:
+  `.get("disarm") -> None` and `"disarm": null` are the SAME VALUE and DIFFERENT ACTS, and only the raw bytes
+  separate a flip from an add.
+- **`FWD-4`: the two ~00:5xZ relays are reconcilable and the NARROWER reading resolves them.** His *"Accept as
+  printed"* (via `0.0.0_AB_MSTR` `98868`, routed explicitly against blob `da2106bd3f`, the HEAD blob) is an
+  answer given ON the artifact, so *"he will not read the card until the fix lands"* is superseded BY EVENT.
+  **"AS PRINTED" is the qualifier that decides it** -- he accepted the card with what it currently says.
+  FWD-4's ACCEPT is satisfiable now. ⚠ **AND THE LINE-6 DEFECT IS STILL REAL:** HEAD line 6 says *"the two
+  rows touching a live, client-facing surface"* while lines 35 and 39 say one. An accepted artifact carrying a
+  false sentence in its most authoritative line is still carrying one. The fix lands as a CORRECTION under
+  `LGIC_LGCTFM-S66`, **not as a gate on his answer and not as a re-opening of it.**
+
+## 4. OPEN CALLS AT ANDREW -- **5**, measured this tick, not carried
+
+The four verified at HEAD when he ran `/open-calls` at this lane, **plus one this tick created**:
+1. `ADVI_FIRMBKTS` seating. 2. Sovereign portal-paths input, `LGIC_CANON` step 14 (row `W6-S2`). 3. Card 2's
+backlog seat. 4. The `MDPF_CANON`-vs-49-Financial subject question.
+5. ⭐ **NEW: does `NFRA_OPLGTW` keep a seat for the ONE owed act (OG-r-1's read back / the five Schwab tools),
+   or do `MDPF_TAXSMA` TX-r-2 and `NFRA_MCPINDEX` FWD-3 stay held until he re-arms it?** **REC: seat it for
+   the single act and close it again** -- two in-scope projects are held on it, the act is bounded and already
+   specified, and he has just made both of those projects the loop's whole subject.
+
+⚠ Three of his seven `/open-calls` answers at `98868` bear on calls 1-4 and are NOT folded in here, because
+they arrived addressed to other seats' cards and folding them in myself is the adjudication §2 forbids.
+
+## 5. REGISTER WRITES THIS TICK
+
+- **`NFRA_MCPINDEX` `coo_lane`: `null` -> `2.0.0_SA_COO~M`** @`5b8a6c17ee`, with the stale SEATING sentence
+  REPLACED VERBATIM rather than deleted. `NEEDS-SLOT` **verified cleared on the instrument** afterwards
+  (`flags=-`), not assumed from the edit.
+- ⛔ **CORRECTION TO THE ARMING RECORD, SAME TICK IT WAS WRITTEN:** the record justified `~M` as *"free,
+  mnemonic"*. **The register had ALREADY NAMED IT** -- `NFRA_MCPINDEX`'s own `blocking` field carried Andrew's
+  2026-09-18 ~23:3xZ order naming `2.0.0_SA_COO~M` for this project by letter. So BOTH lanes were pre-named by
+  him and my record understated its own evidence on one of them. ⭐ **The error is in the SAFE direction and
+  that is precisely why it would have survived: a weaker reason for a right answer never announces itself.**
+  Amended at §7 of the record under R-43.
+- ⛔ **CAPACITY IS OVER CAP RIGHT NOW AND THE RECORD SAID IT WOULD NOT BE.** The record wrote *"after `~G`
+  closes: `~B` + `~T` + `~M` = 3, at the cap"*, which is true of the state Andrew DESCRIBED and false of the
+  state measured 20 minutes later: **4 live against a cap of 3.** `2.0.0_SA_COO~G` is standing down on his
+  word with its cron deleted, so the over-cap is transient on HIS act. **I am not closing that lane.** ⭐ A
+  sentence about a state that has not happened yet reads exactly like a measurement of one that has.
+
+## 6. MY OWN ERROR THIS TICK, AND ITS SHAPE
+
+⛔ **The spawn direction I wrote for `2.0.0_SA_COO~T` said "then L5 decomp on the admitted PRD". L5 v2 WAS
+ALREADY COMPLETE** -- 27 cells, 39 edges, 21 maximal paths, a 14-cell critical path, recut against the ADMITTED
+PRD, 76,532 bytes on disk. Followed literally it would have superseded a finished decomposition with a second
+truth beside it.
+
+⭐ **WHY, and it is a reading defect rather than a carelessness one: I wrote the direction from the SEQUENCE
+READER'S `dep_stage` and the PRD sign-off state.** Both are TRUE. Neither names the decomposition. **A stage
+label answers *how far has this got*; a `blocking` field answers *what is the next act*; I took the first as
+the second.** The `blocking` field's own words were *"Next: `2.0.0_SA_COO~T`'s one L6 issuance of all 27
+orders"* -- the answer was one `project.json` read away and I sent two spawn directions without taking it.
+**COST: one register read per spawn direction. NON-APPLICATION: a project with no register row.**
+Corrected to all four affected seats at `98881`-`98884` inside 20 minutes.
+
+## 7. STATE AT TICK END
+
+- **`MDPF_TAXSMA`:** L5 v2 COMPLETE. Next act is `2.0.0_SA_COO~T`'s ONE L6 issuance of 27 orders -- **that
+  lane's under Rule 27, and this seat directs none of it.** 4 cells held, 3 of them on s.2's gates.
+- **`NFRA_MCPINDEX`:** L4-R DONE, both halves SIGNED and current. Next act is `2.0.0_SA_COO~M`'s L5 decomp.
+  No decomposition on disk yet (`decompositions/` does not exist).
+- **LGIC + `NFRA_OPLGTW` hand-off** (owed, out of scope, NOT abandoned): 17 orders `complete` over a failing
+  proof; `LGIC_CANON-S22`'s open clock; 7 clock-less rows awaiting CVO-minted carriers; `LGIC_LGCTFM-S66`;
+  `LGIC_ENFORCE-S149`, the slug-proxy defect that is the real remedy for s.3's S104 bind.
+- **Push state:** `07b8a03ec3` and `5b8a6c17ee` are **LOCAL ONLY** -- `ls-remote` read at send time put
+  origin/CLOUD at `08abd8be4c` and `merge-base --is-ancestor` returned false. Only `0.0.0_AB_MSTR` pushes.
+- **Next tick:** 30m. Watches for `~T`'s L6 issuance and `~M`'s L5 cut; neither is driven by this seat.
+
+---
+
+## 8. AMENDMENT (~02:0xZ, same tick) -- **s.7's hand-off list was wrong in both directions, and s.4 gained an answer**
+
+**Superseded text above is RETAINED under R-43.** Where §7 and this section differ, this section governs.
+
+### 8.1 "7 clock-less rows awaiting CVO-minted carriers" is struck
+
+`3.0.0_SA_CVO` (`98888`) measured the seven at HEAD against my OWN §3 ruling and found the list prescribing
+an act that ruling had already refused. **1 of the 7 (`LGIC_LGCTFM-S66`) was already MINTED** @`c35c6e7811`
+and carrying its clock -- I described a completed act as owed. **The other 6 are `S104`'s exact byte-level
+shape** and my ruling reaches all of them: each STAYS ARMED, each decision is recorded in a deliverable, and
+the carrier's overstatement is disclosed. Ruling extended at
+`deliverables/CTO_RULING_THE_S104_BIND_REACHES_ALL_SIX_AND_THE_RECORD_I_CITED_IS_NOT_MINE_20260921.md`.
+**No seat owes a mint. The item leaves the hand-off list.**
+
+⭐ **THE RULE IS STRUCTURAL, NOT POLICY:** `ONE ROW PER ID, EVER` -- a disarm clock is a **BIRTH PROPERTY**
+of a row and exists only where the id was ABSENT at first write. Two controls, same carrier, same evening:
+`S123` minted fresh carries its clock; `S104`, whose id already had a row, cannot. **I had been carrying this
+as a policy, which admits exceptions, and would have kept hunting a fifth shape. There is none.**
+
+### 8.2 ⛔ I cited a record that is not mine, and a peer confirmed it back to me
+
+§3 and `98875` §4 both say the S104 decision "is recorded in `CLOCKLESS_ROW_DECISIONS_20260921.md`".
+**Measured: that file is `org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/`** -- it is
+`2.0.0_SA_COO~G`'s, in a folder this seat cannot commit to. **I prescribed a disposition whose carrier I do
+not own, to a seat that is standing down** -- the same shape as the three-hour-old defect of prescribing to
+the CVO an act my own gate had refused me. ⭐ **THE TELL: I cited it by BARE FILENAME, and a bare filename
+has no owner, no lane and no directory, so it cannot contradict a claim of ownership** -- and a peer reading
+it back quotes my string, not the filesystem, adding confirmation without adding evidence. **CITE A
+DELIVERABLE BY FULL REPO PATH; the path names its owning lane.** The decisions now live in this seat's own
+deliverable.
+
+### 8.3 §2's card 5 is ANSWERED, and §4's queue drops to 4
+
+Andrew-direct ~01:4xZ via `0.0.0_AB_MSTR` (`98889`), VERBATIM: *"sure you can seat it and then have it report
+when it is finished with work and you close it."* **`NFRA_OPLGTW` is re-seated at `2.0.0_SA_COO~O`** (serial
+confirmed -- the register already named it), scope stated by this seat at `98896`, lane reports to
+`0.0.0_AB_MSTR` which closes it. **My REC was taken as given.** ⚠ **CAPACITY: this makes FIVE COO hosts
+against a cap of THREE, and FOUR once `~G` is gone.** His word is direct and the seat is short-lived by his
+own construction; the over-cap is DISCLOSED, not absorbed, and is `0.0.0_AB_MSTR`'s and his to carry.
+
+### 8.4 ⛔⛔ THE ACT 1 SCOPE TURNED UP SOMETHING NEITHER PROJECT KNEW
+
+`NFRA_OPLGTW` `OG-r-1` -- the order `MDPF_TAXSMA` TX-r-2's G-O gate reads back -- **reads `<status>complete`
+while its proof instance carries 21 criteria: 18 PASS, 2 FAIL, 1 N/A-BY-CONSTRUCTION.** A read-back reporting
+"complete" would have been true of the LABEL and false of the WORK, and TX-r-2 would have been released on it.
+- `OGR1-AC4` **FAIL** -- 9 of 68 deployed files differ from their git blobs, LF-vs-CRLF, because the deploying
+  worktree carries `core.autocrlf=true`. ⚠ A real byte difference with a known cause is **not** "the bytes
+  match", and only the first is what the evidence supports.
+- `OGR1-AC9` **N/A-BY-CONSTRUCTION** -- its baseline records no error-count metric at all, so there is no
+  referent. A criterion that cannot pass on a correct artifact has a FAIL that is evidence of nothing.
+- `OGR1-AC10` **FAIL** -- ⛔⛔ **the recorded rollback target for a LIVE Gateway release has no
+  `app/data_entitlement.py`, so it fails the runbook's OWN restorability precondition. The rollback is not
+  restorable.** That is an operational EXPOSURE on a live surface, independent of the G-O gate, and it does
+  not become safe because the order says complete. Whether it was ever EXERCISED is unmeasured -- **EXPOSURE,
+  not INCIDENT**, and the two carry different remedies.
+
+### 8.5 ⛔ AND IT FALSIFIES THE SCOPE OF MY OWN "17"
+
+I broadcast **17 LGIC orders complete over a failing proof** and handed it off as an LGIC item. **`OG-r-1` is
+an 18th instance and is NOT in LGIC** -- it is in a project I had scoped OUT. ⭐ **My census swept four LGIC
+projects; my sentence was about a class. The 17 is CORRECT for LGIC and was never a measurement of the
+class**, and the defect lives wherever orders and proofs both exist. I am NOT re-censusing the estate at
+02:0xZ on one instance; I am recording that **the class is wider than the number attached to it**, so no seat
+inherits "17" as the size of the problem. That is face (b) of my standing failure mode -- widened in the
+SUBJECT, no grammatical tell.
+
+---
+
+## 9. AMENDMENT (~02:1xZ) -- ⛔⛔ **A HEADER FIGURE I CERTIFIED AS MEASURED WAS A FALSE ZERO FROM A TRAP IN MY OWN MEMORY**
+
+**Superseded text retained under R-43.** This section governs where it and §0/§7 differ.
+
+### 9.1 The figure
+
+§0 printed **`open task orders in scope: 0 of 0`**, sourced to *"`ls task_orders/` on both trees -- both EMPTY;
+**no order has been cut on either project**"*, inside the very table whose premise is that every figure names
+the call that produced it.
+
+**MEASURED PROPERLY:**
+
+| | `task_orders/` (underscore -- what I listed) | `task-orders/` (hyphen -- the real directory) | tracked `.md` |
+|---|---|---|---|
+| `MDPF_TAXSMA` | does not exist | **27** | **27** |
+| `NFRA_MCPINDEX` | does not exist | 0 | 0 |
+| `NFRA_OPLGTW` (positive control) | -- | -- | **33** |
+
+**`MDPF_TAXSMA` carries 27 task orders: 21 `pending`, 4 `staged`, 2 `complete` -- 25 NON-TERMINAL.** The true
+header figure is **25 open of 27**, not `0 of 0`. `NFRA_MCPINDEX`'s zero was real.
+
+### 9.2 ⛔ THE TRAP IS ALREADY WRITTEN IN MY OWN MEMORY, AND I RAN STRAIGHT INTO IT
+
+The stored entry says, of an earlier instance: *"`task_orders/` vs `task-orders/` glob returned 0 codes;
+caught by a positive control."* **I did not run the positive control.** `ls` on a non-existent directory emits
+an error line and I read the absence of filenames as an empty directory.
+
+⭐ **AND THE REAL COST IS NOT THE WRONG NUMBER -- IT IS THAT THE FALSE ZERO CERTIFIED A STALE REGISTER.**
+§1 corrected `2.0.0_SA_COO~T`'s stage using `project.json`'s `blocking` field, which read *"Next:
+`2.0.0_SA_COO~T`'s one L6 issuance of all 27 orders."* **That field was ALSO stale: L6 is DONE, the 27 orders
+were issued @`955b8c6cbe`, and the lane is at L7.** So two instruments agreed -- a stale prose field and a
+silently-failing directory listing -- **and they agreed because the second could not have disagreed.** A
+directory read that cannot find the directory returns the same shape as a directory that is genuinely empty,
+and "no orders yet" is exactly what a pre-L6 register predicts. **The false zero did not merely fail to catch
+the stale field; it CONFIRMED it.**
+
+⛔ **So §1's correction of my own spawn direction was itself HALF WRONG in the same direction:** I told four
+seats "L5 is done, L6 is next." **L5 AND L6 were both done.** `2.0.0_SA_COO~T` found this itself from the
+orders on disk and reported it (roster, ~02:0xZ) -- **the lane I was correcting corrected me back, off the
+artifact I had failed to read.**
+
+⭐ **THE DISCRIMINATOR, and it is the one my own memory already prescribes: A ZERO NEEDS A POSITIVE CONTROL
+BEFORE IT BECOMES AN ABSENCE.** One `git ls-files` on a project known to carry orders (33 for `NFRA_OPLGTW`)
+costs one call and cannot be satisfied by a path that does not exist. ⚠ **A lesson written down is not a
+control** -- this one was written down, in the file loaded into this seat's context, and it fired nothing.
+**COST: one positive control per zero.** **NON-APPLICATION: a zero that changes no claim.**
+
+### 9.3 What this changes, and what it does not
+
+- **`MDPF_TAXSMA` is at L7, not awaiting L6.** `2.0.0_SA_COO~T` reports `TX-g-1` BUILT and complete on an
+  undrained branch (`wk-mdpf_taxsma-1-1`) and is re-running its 23 criteria at the branch tip before drain.
+  That is that lane's work under Rule 27 and this seat directs none of it.
+- ⭐ **`2.0.0_SA_COO~T` also reports `G-R` MEASURED SATISFIED AT HEAD.** §2 ruling (a) said G-R was
+  dischargeable in-scope and not blocked by LGIC leaving; it was in fact **already discharged**. The ruling
+  was right in DIRECTION and understated the STATE -- the same error shape as the arming record's `~M`
+  justification, twice in one night: **right answer, weaker route, and nothing in the artifact announces it.**
+- **The `NFRA_OPLGTW` findings in §8.4 stand unchanged** -- they were read from the proof instance itself, not
+  from a directory listing.
+- **The register row is STALE and the correction is `2.0.0_SA_COO~T`'s to make**, not this seat's: the
+  `blocking` field is written by whoever holds the round, and a CTO overwrite of a live lane's field would be
+  the second truth this log keeps warning about.

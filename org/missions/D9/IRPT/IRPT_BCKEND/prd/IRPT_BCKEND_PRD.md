@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.14",
+ "prd_version": "v0.15",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -147,6 +147,32 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
 | `StatusEnvelope` | BCKEND B16 | FNTEND | B16 | operation + revision; queued/running/ready/partial/stale/unavailable/needs-correction/uncertain/failed; source dates -- the business date is REQUIRED on an ANSWER-BEARING state (ready, partial, stale, needs-correction, uncertain) and MAY BE ABSENT, never null, on a NO-ANSWER state (queued, running, unavailable, failed) where no source read has occurred; safe retry/recovery actions; public reason code; internal correlation id |
 | `RenderPackage` | FNTEND | BCKEND B14 | B14 (consumer) | supported contract/template versions; deterministic screen/print components; fonts/assets requirements; print entry point; visual fixtures -- BK packages and executes the compatible version |
+
+⛔ **(v0.15) THE OWNERSHIP MAP IS A CONSUMED ENTITLEMENT SOURCE AND ITS EXISTENCE IS AN INVARIANT, NOT A
+LIKELIHOOD: `platinum/<firm_id>/ownership_map.json` EXISTS FOR EVERY CLIENT FIRM THE REGISTRY ENABLES -- an
+EMPTY map where a firm has no advisors, never an absent key.** ⭐ **THE INVARIANT IS NOT A CONVENIENCE; IT
+REMOVES A CASE THE SERVING SIDE CANNOT DECIDE.** Under the object-scoped `s3:GetObject` this PRD's serving
+roles hold (CTO ruling `S90` @`606e7d14ce`) **and WITHOUT `ListBucket`, a MISSING key returns `AccessDenied`,
+not `NoSuchKey`** -- and `_authz/loaders.py:106-114` re-raises anything but `NoSuchKey`, so an absent map and a
+genuine denial are **indistinguishable to the loader** and both surface as `UNEXPECTED`. Measured: `inflection`
+has no map at `opal-data-inf/platinum/inflection/ownership_map.json` (404), so inflection advisors stay
+`UNEXPECTED` even with the grant in place.
+
+⛔ **TWO ALTERNATIVES ARE REFUSED BY NAME SO NEITHER IS RE-PROPOSED.** (a) **A key-scoped `ListBucket`** so the
+loader can tell absent from denied -- **that is the `ListBucket` `S90` bars**, and on a platinum prefix the key
+names are themselves firm-attributable. (b) **A loader that reads `AccessDenied` as "no map"** -- ⛔ **that
+MASKS A REAL DENIAL, converting an entitlement failure into a silent empty answer**, which is the false-clean
+class this PRD's counterpart already carries a carve-out for. ⚠ **THE LOADER'S BEHAVIOUR DOES NOT CHANGE UNDER
+THIS CLAUSE.**
+
+**CONSEQUENCE FOR THE SERVED ANSWER, and it is an improvement rather than a workaround:** with the map always
+present, a firm with no advisors yields an **EMPTY map -> `EMPTY_GRANT` by policy, carrying its `firm_id`** --
+⭐ **a truthful, diagnosable refusal instead of an ambiguous `UNEXPECTED`.** **PRODUCER: DS-owned** (`W1-S30`'s
+scheduled refresh). ⛔ **THE PRODUCTION IS NOT A RIDER ON AN IRPT ROUND -- it is cut in the producer's own lane;
+what this PRD owns is the INVARIANT it consumes, stated here so a cell is cut from ratified text rather than
+from a channel.** **ACCEPTANCE SHAPE: the invariant carries a DENOMINATOR -- `n of N` registry-enabled client
+firms have a map -- and `N` is read from the registry, never from a list anyone types.** Source: `S90`'s ruling
+and `IRPT_BCKEND-S94`.
 
 **v0.5 field additions from the supplement, no new browser contract:** `AnalysisReport` carries the generation attempt, vendor-object ownership and transformation provenance beside the vendor artifact hash (SUPP O5); `AnalysisRequest.stage` maps to the public states queued / preparing analysis / generating / input needed / retryable delay / ready (SUPP IV.5); the session bundle, the request ledger and the account coordinator are SERVER-ONLY records produced and consumed inside B8/B9/B16/B17 and never reach the browser.
 

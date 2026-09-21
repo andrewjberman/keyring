@@ -323,7 +323,7 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
   (tests, exercised tie-outs, an ad-hoc QA read — run-and-read, nothing standing), then a DIRECT port on the
   production schedule with same-window rollback. Do NOT manufacture a replacement verification gate around
   the port. A consolidation (one canonical builder replacing N) is fine; the veto hits the standing
-  second-channel delivery mechanism. Why: `memory/feedback_no_shadow_channels_veto_build_correctly_and_port.md`.
+  second-channel delivery mechanism. Why: BOX MEMORY (per-device, NOT in the repo) `feedback_no_inferred_gates_no_shadow_pipelines_20260804` (item 2).
 - **NEVER BUILD AN ALERT, ALARM, SNS TOPIC, SES SEND, NOTIFICATION, FRESHNESS CHECKER OR MONITOR UNLESS
   ANDREW EXPLICITLY ASKS. Standing moratorium.** *"It is an anti-pattern, and a waste of time for all
   parties."* **WHAT TO DO INSTEAD, and it is the reason this is an anti-pattern rather than merely
