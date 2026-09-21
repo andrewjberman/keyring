@@ -7873,3 +7873,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "It matters the moment an inf-/cot- pipeline actually writes to opal-data-inflection/opal-data-cottonwood post-recovery -- until then it is real but unexercised. Tracked here because it directly affects whether this project's own future platinum/gold writers to these two buckets will work; disposition (fix in fence_patterns(), a registry-side role-naming fix, or explicitly out of this project's lane) is for IB-rth-7's cut or the CTO/CRO's ruling, not decided unilaterally here."
 }
 ```
+
+## Round 8, IB-rth-7 -- worker 0.9.0_WK_IRPT_BCKEND~7's row: the order's own file is absent from the worktree it was handed in
+
+```json
+{
+  "id": "IRPT_BCKEND-W7-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~7",
+  "surfaced_at": "2026-09-21T18:08:23Z",
+  "one_line": "My worktree (wk-irpt_bckend-8-7, forked at CLOUD@93790c036e) never received the two CLOUD commits that create TO-IB-rth-7 and spawn me, so the task order the harness names as my whole context does not exist anywhere in my worktree's reachable git history -- a BLOCKING absence of a path the order itself names in its own <paths> grant (line 61, the order's own file).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-tree -r HEAD --name-only -- org/missions/D9/IRPT/IRPT_BCKEND/task-orders/ in wk-irpt_bckend-8-7@93790c036e lists rth-1..rth-6 only, no rth-7 file -- 6 files, denominator printed.",
+      "git merge-base CLOUD wk-irpt_bckend-8-7 == 93790c036e, i.e. the worktree's own fork point from CLOUD -- nothing CLOUD committed after that sha reached this worktree.",
+      "git log --all --oneline -- '*rth-7*' across the shared object DB (46177 commits reachable via --all) finds exactly one commit, 7427e805de638478c645d0bacdc356c62f25f554 at 2026-09-21T14:07:02-04:00 (2.0.0_SA_COO~B): 'close(IRPT_BCKEND IB-rth-6...) Cut IB-rth-7 ... Worker spawned in worktree wk-irpt_bckend-8-7' -- its --name-only list includes org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rth-7.reconcile-terraform-state-against-the-recovered-bucket-policy.md. git merge-base --is-ancestor 7427e805de wk-irpt_bckend-8-7 -> NO; git merge-base --is-ancestor 7427e805de CLOUD -> YES.",
+      "CLOUD's tip is bdb2bcc77e94d8a34d43747e39641617a51ce124 at 2026-09-21T14:10:05-04:00 ('log(2.0.0_SA_COO~B, /canonical-drive IRPT_BCKEND tick 20): closed IB-rth-6 superseded ... cut+spawned successor IB-rth-7') -- CLOUD advanced two commits past my worktree's fork point (93790c036e) around/at my spawn, and neither reached wk-irpt_bckend-8-7.",
+      "The main workspace checkout at C:/Users/AndrewBerman/Desktop/ajb_workspace is on branch CLOUD at HEAD bdb2bcc77e and reports a clean 'git status --short' for the TO-IB-rth-7 file path -- the file IS committed to CLOUD, just never merged/rebased into this worktree's branch.",
+      "The order's own text (read from that CLOUD-tip checkout, since it is absent from this worktree) states at its IDENTITY-AND-WORKTREE section: 'Worktree: /c/tmp/wk-irpt-8-7 on branch wk-irpt_bckend-8-7, cut from CLOUD HEAD by the issuer' -- true of CLOUD's state as of 7427e805de/bdb2bcc77e, not true of the worktree actually provisioned to me, which was cut at the PRIOR CLOUD head 93790c036e before those two commits landed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The harness prompt names 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rth-7.reconcile-terraform-state-against-the-recovered-bucket-policy.md' inside my own worktree /c/tmp/wk-irpt-8-7 as 'your entire task order' / 'whole context'; the order's own <paths> block (line 61) names that same file as part of my write grant; and the worker protocol's bar step requires reading that file first, then treats a worktree not carrying a path the order names as a BLOCKING row with an explicit instruction to STOP rather than rebuild/reconstruct the tree.",
+  "world_is": "The file does not exist at any point in this worktree's reachable git history (git ls-tree at HEAD, git log --all on a matching pathspec both return it absent from every ref my worktree can walk except via the shared object DB's CLOUD ref, which itself sits two commits ahead of my branch's fork point). It exists only on CLOUD, committed AFTER my worktree branch was already cut from an earlier CLOUD state -- a sequencing gap between when the issuer cut+provisioned my worktree and when it committed the order (and the ledger/decomp entries) that names that worktree as its target.",
+  "notes": "WHAT THIS SEAT DID: ran the bar (branch + TREE-OK, both passed -- org/ and .tools/ exist). Attempted to Read the named TO path in-worktree: file-not-found. Searched exhaustively before concluding absence: Glob for *rth-7* under the project (0 hits), git log --all --oneline on the pathspec (1 hit, the commit that ADDS it on CLOUD, not reachable from my branch), git ls-tree on CLOUD/origin/CLOUD (present on local CLOUD, absent from origin/CLOUD -- CLOUD itself is not yet pushed past a0097b1ef4-era history), git worktree list across all live worktrees (no sibling worktree carries it either). Read the file's CONTENT from the main workspace checkout (C:/Users/AndrewBerman/Desktop/ajb_workspace, on CLOUD@bdb2bcc77e) purely to understand what was being asked and to file this row accurately -- did NOT copy, fetch, merge, rebase, or otherwise pull that commit into this worktree, per the standing instruction never to rebuild/reconstruct a worktree to make an order executable. Did NOT execute arms (a)-(d): no terraform init/plan was run, no SSM commands were issued, no ledger file was edited, no fence_patterns() measurement was taken -- none of that work can be attributed to a task order this worktree can prove it was ever handed, and the order's own close-out step (flip <status> to complete, commit instance+flip together) is impossible without the order's file first existing in this branch's history. STOPPING here per the worker protocol's bar clause. DISARM CONDITION: 2.0.0_SA_COO~B (the issuer) either re-cuts wk-irpt_bckend-8-7's branch point forward past 7427e805de/bdb2bcc77e (or hands a fresh worktree cut from current CLOUD), or explicitly confirms via a live channel that this worker should proceed on the content read from the CLOUD-tip checkout, with the record noting the fork-point gap. No proof_of_spec instance is written for R83-AC1/AC2/AC3 -- there is nothing in this worktree's history to cite a criterion against, and writing one against externally-read content would misstate its own grain."
+}
+```
