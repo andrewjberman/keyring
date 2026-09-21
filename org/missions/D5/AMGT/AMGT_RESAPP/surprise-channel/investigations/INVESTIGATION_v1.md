@@ -10807,6 +10807,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a correction row.",
     "world_is": "Z-S197 is open; Z-S198's claim is void; the served 'None' literal persists until R20-A.",
     "notes": "Crossed messages: the correction arrived two minutes after the commit. Named for the CVO's L9 so S198 is not read as closing S197."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S200",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T20:05:00Z",
+    "one_line": "CSL's SERVED roster_reason (visible since AMGT-rk-77) is both STALE and not a readable sentence under PRD v0.16 C-EXEC-MANAGEMENT 'readable reasons': management/v1/CSL_AU_Equity/2026-09-19.json was derived before rk-72 rewrote CSL's filings object (so it describes only the csl.com.au step-4 seed, not the ASX listing seed rk-72 added), and it is the battery's raw attempt log ('the persisted filing is itself UNRESOLVED-SOURCE: every declared step failed or found no key/seed -- step 1 (edgar-ticker): name guard REFUSED: SEC ticker table names CARLISLE COMPANIES INC ...').",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Stored management object CSL (read ~20:00Z): roster_reason begins 'the persisted filing is itself UNRESOLVED-SOURCE: every declared step failed or found no key/seed -- step 1 (edgar-ticker): name guard REFUSED: ...' (roster.py:937 prefixes the filings object's own reason).",
+        "Current filings object filings/v1/CSL_AU_Equity/UNRESOLVED-SOURCE.source.json (rk-72, VersionId GzAiBH5L..., 17:22Z) carries a step-4 attempt naming BOTH seeds; the management object's copy predates it (management written 2026-09-19, rk-75 re-projected only ceo_public_profile).",
+        "Served since rk-77 (CodeSha256 hP+6OO5P...): CSL management_status SERVED, roster_source BLOOMBERG_FALLBACK, roster_reason = that string (this seat's direct invoke of the thesis leaf, ~19:25Z). Surfaced by the R20-A drafter; confirmed by this seat."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.16 C-EXEC-MANAGEMENT: a served reason is always a readable sentence, and a missing value is never printed into it as a literal.",
+    "world_is": "CSL serves a multi-step technical attempt log as its roster reason, and one that is a round stale.",
+    "notes": "INERT (nothing false about the managers' question -- the filing did fail). Pitched to the CTO with R20-A: either R20-A widens to a second key (CSL re-projection of roster_reason from the CURRENT filings object, same readable-sentence rule, no search) or it is its own round-20 cell. Found beside the R20-A draft's None-literal census."
   }
 ]
 ```
