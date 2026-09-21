@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~4</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md` @b7dc80e2cc (ADMITTED) | **Decomp cell:** `MX-a-5` | **serves:** S8, FWD-4 | **slot:** ~4, queue position 3 of 5
 
