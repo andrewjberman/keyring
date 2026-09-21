@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~1</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>blocked -- drained by 2.0.0_SA_COO~M @41da358d45: MXC1-AC1,2,3,5,6 PASS by output, AC7 recorded for L9, AC4 FAIL -- REFUSED on grant (row NFRA_MCPINDEX-W1-S1: the exercise writes the served catalog and an emitter input, and the cut granted neither). The proof instance is schema-VALID and records that FAIL, so this order is NOT complete. It waits on an issuer amendment under a 1.0.0_SA_CTO ruling, or on the round-N recut.</status>
+<status>pending -- AMENDED by the issuer under 1.0.0_SA_CTO @f1c469829c / @de8bf648cd: the grant now covers AC4's exercise (two paths, bound in the worker face). Only MXC1-AC4 is owed; AC1,2,3,5,6 PASS at @41da358d45 and AC7 is recorded for L9. Re-run joins slot ~1's queue after MX-c-2. Prior state: blocked, AC4 REFUSED on grant (row NFRA_MCPINDEX-W1-S1).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md` @b7dc80e2cc (ADMITTED) | **Decomp cell:** `MX-c-1` | **serves:** C1, V.1, FWD-10 | **slot:** ~1, queue position 1 of 5
 
@@ -98,9 +98,13 @@ Write `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~1/
 
 ---
 
+**AMENDMENT (issuer, 2026-09-21, under 1.0.0_SA_CTO ruling @f1c469829c with addendum @de8bf648cd, row NFRA_MCPINDEX-W1-S1).** The cut's grant did not cover what MXC1-AC4's exercise writes, and the first worker correctly REFUSED. Two paths are added below and nothing else; AC4's criterion text is UNCHANGED. BOUND, and it is part of AC4: the exercise's writes to `infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml` and to `workflows/atom_decomposition/runs/portal-page-macro/20260811T1940Z/rectangle.final.certified.json` are REVERTED and NEVER COMMITTED. The probe ASSERTS that the post-revert diff is empty for BOTH paths (a check the probe runs, not an eyeball), and a PASS on AC4 with a non-empty branch diff on either path is NOT a PASS. `workflows/atom_decomposition/catalog_v02/validation_report.json` is NOT granted: the validator writes it, and AC4 does not run the validator. Running any tool outside AC4 that writes an ungranted path is outside this grant; report the wish, never write. MXC1-AC1, AC2, AC3, AC5 and AC6 already PASS at @41da358d45 and are not re-opened.
+
 <paths>
 workflows/atom_decomposition/emit_catalog_v02.py
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/ec2/opal-gateway/app/refs/DATA_CATALOG.yaml
+workflows/atom_decomposition/runs/portal-page-macro/20260811T1940Z/rectangle.final.certified.json
 </paths>
 
 <decomp_ref>
@@ -132,3 +136,4 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 </preflight>
 
 Seating: slot ~1, queue position 1 (MX-c-1 -> MX-c-2 -> MX-c-4 -> MX-g-1 -> MX-g-2). Round 1 of NFRA_MCPINDEX, issued by `2.0.0_SA_COO~M`, seated by `1.0.0_SA_CTO` on Andrew-direct 2026-09-21 ~00:5xZ (arming record @07b8a03ec3). Decomposition v2 @f506f63a8b (merge e4c6d91353), recut on 1.0.0_SA_CTO 98944 before issuance; v1 @020ab35a75 never issued.
+Amended mid-round by `2.0.0_SA_COO~M` under 1.0.0_SA_CTO ruling @f1c469829c (Option A) and addendum @de8bf648cd (exactly two paths; the emitter input pinned to one file by lift_catalog_v02.py:79 PROGRAM_UNITS and :308-313 resolve_substrates; validation_report.json NOT granted because the emitter defines REPORT_DIR at :44 and never uses it). This is a CUT DEFECT REPAIRED MID-ROUND, named for the round-N analysis: the grant contradicted its own criterion. The first worker's refusal (row NFRA_MCPINDEX-W1-S1) is graded correct. The criterion text, invocation and expectation are unchanged.
