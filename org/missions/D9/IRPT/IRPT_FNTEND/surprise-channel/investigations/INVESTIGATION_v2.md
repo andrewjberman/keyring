@@ -4929,6 +4929,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W8-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~8",
+    "surfaced_at": "2026-09-21T14:05:00Z",
+    "one_line": "fe-s-32/holdings-in-a-browser.test.ts's F42-AC7 ('the captures go OUTSIDE every committed deliverables folder') reads git status --porcelain over the WHOLE org/missions/D9/IRPT/IRPT_FNTEND/deliverables/ tree, before and after ITS OWN driver run, unscoped to what that driver actually wrote -- so ANY OTHER concurrent write into that shared tree during the same window (in this case, this worker's own result.md, written moments earlier in the SAME worktree, for a DIFFERENT criterion) reads as a false positive: 'before 0 path(s) ... after 1 path(s) ... CHANGED', naming this worker's own unrelated file. A clean re-run with nothing else touching deliverables/ in the window passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "fe-s-32/holdings-in-a-browser.test.ts F42-AC7's own assertion (verdict = captureVerdict(CAPTURES, deliverablesBefore, deliverablesAfter, files); expect(verdict.pass).toBe(true)) -- read as asserting THIS DRIVER's captures land outside every committed deliverables folder.",
+    "world_is": "Measured twice in the SAME session, same portal HEAD 6b206370, same dev server: run 1 (immediately after this worker wrote status-panel-unprojected-grant-badge.result.md into org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~8/, still untracked) printed 'DELIVERABLES TREE ... before 0 path(s) listed [e3b0c44298fc1c14], after 1 path(s) listed [e43a90232e4d04cf] -> CHANGED / after: ?? org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~8/status-panel-unprojected-grant-badge.result.md' and FAILED ('621 pass, 4 skip, 3 fail'); run 2, with no file written into deliverables/ anywhere in the whole run's window, printed the SAME 'before 0 ... after 0' shape it always has and PASSED ('622 pass, 4 skip, 2 fail' -- the same two pre-existing, unrelated fe-s-32 failures named in IRPT_FNTEND-W8-S1, and nothing else). The check's git-status read is over the WHOLE deliverables/ tree, not scoped to any path this driver itself is capable of writing (its own captures go to .scratch/, never deliverables/), so it cannot distinguish 'this driver polluted deliverables/' from 'a concurrent, unrelated actor wrote there for its own reason' -- a shared-dependency-blindness shape (CLAUDE.md Rule 22): the check is CORRECT about the tree's state and WRONG about attributing that state to its own driver.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/tmp/f58_final_ac6.log:1229-1238 (run 1, portal 6b206370): 'DESTINATION INSIDE A FOLDER NAMED deliverables: no', 'DELIVERABLES TREE ... before 0 path(s) listed [e3b0c44298fc1c14], after 1 path(s) listed [e43a90232e4d04cf] -> CHANGED', 'after: ?? org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~8/status-panel-unprojected-grant-badge.result.md', 'CAPTURES OUTSIDE EVERY COMMITTED DELIVERABLES FOLDER: no', then the F42-AC7 assertion failure at holdings-in-a-browser.test.ts:549",
+        "/tmp/f58_final_ac6_clean.log (run 2, SAME portal HEAD 6b206370, nothing written to deliverables/ during the window): '622 pass', '4 skip', '2 fail', rc=1 -- the SAME two named failures as run 1 (F32-AC3, F32-AC5) and F42-AC7 absent from the fail list",
+        "src/pages/InvestorReporting/__tests__/fe-s-32/holdings-in-a-browser.test.ts:544-549 (captureVerdict call over deliverablesBefore/deliverablesAfter, both read as a whole-tree git status --porcelain snapshot, never scoped to a path this driver's own capture destination -- .scratch/ -- could touch)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
