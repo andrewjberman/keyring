@@ -4679,6 +4679,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T15:37:33Z",
+    "one_line": "AMENDMENT 2's fix (completing fe-s-47/no-status-reason.test.ts's envelopeBody() with unprojected_grant) broke a THIRD test in the same file, F47-AC9, whose own extraction control re-executes only carryAvailabilityFromStatus standalone and compares it against the FULL parseIrEnvelope pipeline's output -- the two now differ on unprojectedGrant alone, since the full pipeline's separate carryUnprojectedGrant step is never modeled by the standalone extraction. Fixed within grant (the whole fe-s-47 file was granted) by excluding unprojectedGrant from both sides of the comparison; the RULES table was not touched.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "AMENDMENT 2: 'Add unprojected_grant: { count: 0, denominator: <sensible>, kinds: [] } to envelopeBody()'s returned object ... Do not touch the RULES table FE-s-53 added.' Silent on any other part of the file; F47-AC9 is not named.",
+    "world_is": "portal b8c5df09 (before: 0cb9b2ba): after envelopeBody() gained unprojected_grant, `bun test src/pages/InvestorReporting/__tests__/fe-s-47/` read 7 pass / 1 fail (F47-AC9 -- 'a document's own reason survives a missing status'), printing 'EXTRACTION CONTROL HEAD's carry, extracted the same way, equals the real parseIrEnvelope data: BROKEN'. Root cause: F47-AC9 extracts ONLY carryAvailabilityFromStatus's source from the committed blob, transpiles it standalone, and runs it on a freshly-adapted document (`adapted`, never touched by carryUnprojectedGrant, so its unprojectedGrant is null); it compares that (`headDirect`) against `stated.data`, the output of the REAL parseIrEnvelope('resolve-scope', statedBody) -- which since envelopeBody() now supplies unprojected_grant, runs BOTH carryAvailabilityFromStatus AND the separate carryUnprojectedGrant, so `stated.data.availability.unprojectedGrant` carries the real grant object while `headDirect`'s stays null. The comparison (`show(headDirect) === show(stated.data)`) fails on this ONE field, unrelated to the control's own stated claim (the partialReason/state carry, RULING V). Fixed by stripping `unprojectedGrant` from both sides before the string comparison (`stripGrant` helper, portal b8c5df09); re-run: 8 pass / 0 fail, 'EXTRACTION CONTROL ... holds'. The RULES table (F47-AC6, FE-s-53's addition) is byte-unchanged -- confirmed by re-reading it in the same run (unaffected, still prints its own census).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 0cb9b2ba:src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts:585-589 (before this row's fix) -- headDirect vs stated.data compared directly via show()",
+        "portal b8c5df09:src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts -- the stripGrant helper and its use in extractionHolds",
+        "cd <WS>/portal && bun test 'src/pages/InvestorReporting/__tests__/fe-s-47/' at 0cb9b2ba: '7 pass', '1 fail' (F47-AC9), 'EXTRACTION CONTROL ... BROKEN'; at b8c5df09: '8 pass', '0 fail', 'EXTRACTION CONTROL ... holds'",
+        "cd <WS>/portal && bun run typecheck at b8c5df09: rc=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
