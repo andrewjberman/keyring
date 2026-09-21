@@ -161,6 +161,14 @@ redundant-row check adjusted to match). The held edit is preserved as
 `org/tier1_exec/4.0.0_SA_CRO/drafts/HELD_PORTAL_WEBSITE_KEYS_20260921.patch` (applies cleanly to HEAD at this write);
 it lands with, or after, that change. Until then the 18 `gateway` rows stay, marked wrong in this record.
 
+**LANDED ~21:2xZ, the hold's condition met.** `1.0.0_SA_CTO` landed the grader change @`8a4cb70499` (a registered row
+outranks a later-found token; validate refuses a row only when it agrees with the tokens). The held edit was re-applied by
+script (the patch no longer applied textually after @`f21b66d1e4`'s vendor keys), not hand-edited. Measured before commit
+over the 1,738 graded names: 57 canonicals change -- 18 rows to `portal` (17 from `gateway`, 1 from `{system}`), 21
+`opal-portal-*` + 7 `opal-website-*` to `portal`/`website` (conforming -> rename backlog, correct law), 1 `estate` ->
+`website`, 10 `/aws/...` log groups following their resources; **the 7 publishers keep advi/news**; 0 RAISE before or
+after; validate OK, 0 refusals. The 18 `gateway` rows are now `portal`; `gateway` again means only the Opal Gateway.
+
 ## CORRECTION ~18:5xZ -- 18 rows filed under `gateway` are the WRONG SYSTEM; this seat misread the key
 
 **By 4.0.0_SA_CRO, against its own batches.** `infra/logic/registry/systems.json` `gateway` is *long*

@@ -344,6 +344,7 @@ def validate(reg_dir=None, systems_file=None):
 
     # scopes.json
     by_spelling = {}
+    seen_scope_keys = set()
     firm_rows = {s.get("key"): s for s in scopes if s.get("class") == "FIRM"}
     for i, row in enumerate(scopes):
         where = "scopes.json[%d]" % i
@@ -351,6 +352,12 @@ def validate(reg_dir=None, systems_file=None):
             if not isinstance(row.get(f), str) or not row.get(f):
                 refuse(where, f, "missing or empty")
         key, cls = row.get("key"), row.get("class")
+        # The spelling check below compares a spelling to its OWNER key, so a key repeated across two rows
+        # collides with nothing and passed silently -- and lookup() takes the FIRST match, so the second row
+        # is dead while its tenancy/bucket disagree (SITEZ's two 'harvest' rows, 2026-09-21).
+        if key in seen_scope_keys:
+            refuse(where, "key", "%r is a repeated scope key; lookup() would use only the first row" % key)
+        seen_scope_keys.add(key)
         if cls not in schema["key"]["scope_classes"]:
             refuse(where, "class", "%r is not one of NAMING_SCHEMA.json key.scope_classes" % cls)
         if row.get("tenancy") not in homes:
