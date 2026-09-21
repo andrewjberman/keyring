@@ -86,6 +86,10 @@ tenancy set to `NOSUCHTENANCY` returns **1 refusal** (`'NOSUCHTENANCY' has no ti
 | gold, state, code | `s3://opal-data-harvest/...` | yes |
 | platinum | `s3://opal-data-portal-v2/...` | **NO** -- *"the whole pipeline will exist within opal-data-harvest"* (quoted in the `harvest` row's own note) |
 
+**Superseded for platinum by PRD v0.15:** `1.0.0_SA_CTO~Z` ruled platinum follows the canon's R6 general home as the
+builder prints it (`opal-data-portal-v2`), and is surfacing to Andrew that this departs from his "whole pipeline"
+phrasing. The platinum rows below (s.1 item 5, s.5.9) are this plan's original recommendation; the PRD contract binds.
+
 ### 3.2 Recommendation on the R4 act: a new tenancy, never an edit of PRODUCT
 
 **Recommend: add a fifth tenancy with all six cells `home: scope`, and move only the `harvest` row onto it.**
@@ -433,8 +437,12 @@ step, after the backfill, not a precondition of it.
 
 ## 7. Order of the move
 
-The 09-18 plan's s.6 order stands (registry, then writers dual-write for one cycle, then readers with fallback, then
-backfill, then cut the fallback, then retire the old prefixes after a census reads zero). Two additions:
+**Corrected 2026-09-21 ~17:5xZ** (PRD v0.15 `C-FORMAT-SEQUENCE`, which binds): this section first carried the 09-18
+plan's order -- writers dual-write for one cycle, readers fall back, the old prefixes stay until a census reads zero.
+**That leaves the old path serving beside the new one, a standing duplicate output path the shadow-pipeline veto
+forbids.** The order is instead: registry first; then per served prefix, ONE move under its own never-widen pair in
+which the objects are copied with their vintage, the readers switch, and the source path retires, all in the SAME
+window, with same-window rollback. Two additions:
 
 1. **The backfill's gate is bronze + silver only:** the R4 act, the five rows, the bronze writers for 5.1-5.8, the
    silver writers with their record keys, and the fetch-key check against the bucket. Gold and platinum can be rebuilt
