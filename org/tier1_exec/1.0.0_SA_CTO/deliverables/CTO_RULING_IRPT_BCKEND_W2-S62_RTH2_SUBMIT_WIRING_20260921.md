@@ -79,3 +79,56 @@ timed result and I rule the contract question the same tick it lands, or COO~B p
 wiring build if the bound clears.
 
 **PUSH STATE at write time:** LOCAL; `origin/CLOUD` per `ls-remote` re-measured at send, not carried forward.
+
+---
+
+## ADDENDUM -- 2026-09-21 ~14:2xZ: THE MEASUREMENT RAN AND FOUND A DIFFERENT BLOCKER. R77-AC1 IS **NOT** REDEFINED YET, AND HERE IS WHY THE OBVIOUS NEXT MOVE IS WRONG.
+
+`2.0.0_SA_COO~B` (msg `99058`/`99059`, result: `render_latency_measurement_20260921.result.md`, row
+`IRPT_BCKEND-W3-S52`) ran the authorized measurement cleanly -- host started, never stopped, vendor
+separation independently re-confirmed with LIVE traffic (11 of 11 requests to `opalinvest.dev`, 0
+foreign), the disclosed `RENDERER_MODULE_ABSENT` risk did NOT fire. But the render never reached the
+timing question at all: it was blocked by `SESSION_ABSENT` -- the print route demanded an authenticated
+portal session the host does not have, and `render_export.cjs` correctly refused to fake one. **The 29s
+question is UNMEASURED, not measured-and-passing, and not measured-and-failing either.**
+
+**COO~B's REC was to proceed straight to redefining `R77-AC1` for the async two-phase pattern, reading
+this as the ruling's "structurally blocked" branch. I DECLINE THAT REC, and the reason is load-bearing:**
+
+⛔ **ASYNC DOES NOT FIX `SESSION_ABSENT`.** The async two-phase pattern (submit accepts, a later
+poll/callback produces the receipt) relaxes the TIME budget -- it trades a 29-second synchronous wait for
+an unbounded asynchronous one. **It does nothing whatsoever about AUTHENTICATION.** Whether the render
+runs synchronously inside one HTTP call or asynchronously behind a poll, the render host still has to
+reach the portal's print route, and the print route still demands a session neither path currently
+supplies. Redefining the contract right now would consume a real PRD amendment and produce a system that
+**still cannot render**, for a reason the contract change never touches. This is the same class of error
+the estate's own doctrine names repeatedly: a fix that removes a DIFFERENT blocker from the one actually
+in front of the outcome.
+
+**So the two questions are ORTHOGONAL, not sequential-with-async-as-the-fallback:**
+1. **Can this host authenticate to the portal's own print route at all?** -- unanswered, and it is a
+   buildable capability (an Opal-internal auth question, not a vendor one -- FWD-4's vendor bar does not
+   reach it), not a hard physical ceiling like the API Gateway's 29s.
+2. **Does a real render finish inside 25-29s once it CAN authenticate?** -- still genuinely unmeasured,
+   and still the fact that decides sync vs. async.
+
+**RULING: pursue (1) before ruling on (2) or touching `R77-AC1` at all.** COO~B's own message named the
+right first move and then recommended against taking it: *"If there's a cheap way to get one authenticated
+session established (a service account, an existing credential we're not using), that's worth 30 seconds
+to check."* **Take that 30 seconds.** This is an infrastructure/engineering question -- whether an
+existing service credential, a scoped test account, or a short-lived session-minting path already exists
+for this render host -- and it is COO~B's L5/L6 call how to investigate and who executes it, not a spec
+question for this seat. If a cheap path exists, re-run the SAME bounded measurement (host is already
+running) and this ruling's original decision tree resolves on the real number. If no cheap path exists,
+report back what establishing one would actually require (a new cell, its own bound), and the async
+question is decided **on top of that answer**, not as a substitute for it -- because a `NOT_READY` refusal
+for "no session" and a `NOT_READY` refusal for "session existed, render still can't finish in time" are
+different defects with different owners, and this project's own row `IRPT_BCKEND-W2-S62` should not
+conflate them.
+
+**R77-AC1/AC2 stay open, exactly as before.** Nothing in this addendum authorizes a build, a session
+capture, or a contract edit. The EC2 host stays running per the original ruling's absolute no-stop
+instruction; COO~B's routing of the stop-confirmation item directly to Andrew is correct and needs no
+duplicate act here.
+
+**PUSH STATE at addendum write time:** LOCAL; `origin/CLOUD` per `ls-remote` re-measured at send.
