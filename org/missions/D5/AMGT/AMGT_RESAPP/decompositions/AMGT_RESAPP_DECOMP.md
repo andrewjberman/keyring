@@ -4029,3 +4029,48 @@ fanout:
   no_fleet_run: true
   held_not_cut: [R3 card at MSTR (vendor egress), R4 at CVO (governance fork), R2 parked on the standing word]
 ```
+
+## 25. ROUND 17 -- FROM THE CTO'S ROUND-16 ANALYSIS @`cc3657503f` + s.3 @`1764686f10` (`1.0.0_SA_CTO~Z`, msgs 23938, 23943)
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 16 closed 4 of 4 and ratified (analysis s.1). Round 17 is the two items the
+analysis cleared: S176-anchor, deferred from round 16 when the CTO's fifth-cell ruling crossed round 16's issuance
+(msgs 23928, 23931 -- *"no late order into an issued round"*, per Andrew-direct ~15:12Z), and W38-S5-guard, added by
+msg 23943 after `3.0.0_SA_CVO~Z` (msg 23940) found the round-16 analysis had dropped it without comment. **Both orders
+were drafted in one parallel batch and are issued in ONE commit with this section** (Andrew-direct ~15:12Z, record
+@1e2a54bf0f). The project's TERMINALITY is unchanged: `rk-32` + chain P are held on a laptop CRO lane's
+doctrine-authorship act (an R4 narrowing, routed by `0.0.0_AB_MSTR~Z`; corrected tracking @2f1c84d185), and `rk-48` /
+`rk-49` on two Andrew words (Bright Data; Lusha rotation).
+
+### 25a. THE MAPPING
+
+| CTO cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| R17-S176 | `AMGT-rk-69` | ~69 | none | row S176 -- the L10 acceptance sweep reads the REAL `<proof_of_spec>` block (load-bearing under the CVO's R4 ruling @335faf48fe) | no |
+| R17-W38-S5 | `AMGT-rk-70` | ~70 | none | row W38-S5 -- `_latest_stamp` requires the refdata+histdata pair; a named error, never a bare NoSuchKey (an unfired EXPOSURE) | no |
+
+### 25b. SURFACE CENSUS (measured at the cut, both cells)
+
+| cell | files_written | live acts | measured at the cut |
+|---|---|---|---|
+| `AMGT-rk-69` | 2: .tools/surprise-row-gate.py; .tools/tests/test_acceptance_sweep.py | 0 | a line-anchored `<proof_of_spec>` pattern checked against ALL 135 tree orders: 134 same position, 1 differs (rk-58: 0 -> 5 criteria), 0 missed; a scratch-patched sweep prints round 14 as PASS 131 / FAIL 1 / UNVERIFIABLE 33 of 165 over 31 (HEAD: 126/1/33 of 160 over 30) -- all five recovered rk-58 criteria PASS |
+| `AMGT-rk-70` | 2: integrations/bloomberg/research/model_block_pull.py; integrations/bloomberg/research/tests/test_latest_stamp_raw_pair.py (new) | 0 | `_latest_stamp` has one caller (stage_derive's fallback); the consumer path passes raw_stamp and never hits it; suite baseline 3 failed / 30 passed with two modules uncollectable (all pre-existing, named); the mirrored rule carries a parity arm against build_unit_map's copy (the import would be circular) |
+
+**Files written by more than one cell:** none. **Collision with the held `wk-amgt-14-50` branch:** none.
+
+**A cut-time instrument trap, recorded because it nearly shipped:** a `$(` inside a DOUBLE-QUOTED `python -c` is bash
+command substitution -- this seat's first census of rk-69 had its regex silently gutted (`.*?` globbed to `.claude`,
+substituted empty) and reported 135 of 135 missed. Both orders' criteria are single-quoted or run from files, and
+rk-69's order carries the rule for its worker.
+
+### 25c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # stated; 2 of 2 cells fit one wave
+  orders_total: 2                   # rk-69, rk-70 -- written in one batch, issued in one commit
+  slots_total: 2                    # ~69, ~70
+  chains_total: 2                   # disjoint write surfaces, no depends_on edge
+  wave_1: [rk-69, rk-70]
+  wave_2: []
+  no_fleet_run: true
+```
