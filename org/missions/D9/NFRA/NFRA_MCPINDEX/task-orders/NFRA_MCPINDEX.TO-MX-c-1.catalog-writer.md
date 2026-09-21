@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~1</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- AMENDED by the issuer under 1.0.0_SA_CTO @f1c469829c / @de8bf648cd: the grant now covers AC4's exercise (two paths, bound in the worker face). Only MXC1-AC4 is owed; AC1,2,3,5,6 PASS at @41da358d45 and AC7 is recorded for L9. Re-run joins slot ~1's queue after MX-c-2. Prior state: blocked, AC4 REFUSED on grant (row NFRA_MCPINDEX-W1-S1).</status>
+<status>complete -- MXC1-AC4 re-run under the AMENDMENT (1.0.0_SA_CTO @f1c469829c / @de8bf648cd) and PASSES: the writer was run 3x (baseline / one reversible change to RECT / reverted) in worktree wk-mcpindex-1c, the served file (CAT) changed by exactly the mac.01.macro-data business_meaning row on the change, SHA-256 returned to baseline on revert, and both granted paths (CAT, RECT) show an empty `git diff --stat` post-exercise (never committed). AC1,2,3,5,6 stand PASS as pinned @41da358d45 (not re-run); AC7 recorded for L9. Proof instance updated (AC4 row replaced; declared_exclusions/surprises annotated SUPERSEDED, not deleted) and re-validated: `.tools/proof-of-spec-check.py` VALID rc=0 on all 7 ids. Row NFRA_MCPINDEX-W1-S4 filed (portal/ provisioning needed to exercise the writer, not in <paths>, resolved without touching any tracked byte of the workspace repo).</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md` @b7dc80e2cc (ADMITTED) | **Decomp cell:** `MX-c-1` | **serves:** C1, V.1, FWD-10 | **slot:** ~1, queue position 1 of 5
 
