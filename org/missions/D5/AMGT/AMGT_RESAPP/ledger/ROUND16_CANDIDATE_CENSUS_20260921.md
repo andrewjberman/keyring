@@ -51,10 +51,35 @@ bucket/tenancy word verbatim, and its write surface collides with held cell `rk-
 | `W57-S1` | criterion defect of terminal rk-57, repaired (AC2 now uses rk-20 AC1 as the control); `.tools/tests/test_acceptance_sweep.py` 0 of 7 failed |
 | `W57-S2` | record-face gap, repaired (rk-20/rk-23/rk-30 carry `<round>13</round>` with comments citing W57-S2); `--acceptance --round 13` rc 0, unrounded 0. Residual is R4 |
 
-## 5. Pending
+## 5. Drafter F (the management segment), landed after the first write -- and it UPGRADES C1
 
-Drafter F (the management segment: `W44-S1`, `W46-S2`, `W48-S1`) had not reported at this write; its result is
-appended below when it lands.
+- **`W46-S2` item (2) is a LIVE WRONG ANSWER, not an exposure.** rk-46 fixed only roster's copy of the accession rule;
+  `integrations/bloomberg/research/management_posture_batch.py:105` `filed_status()` still takes bare `sorted(keys)[-1]`
+  (docstring `:97-98` claims parity with roster -- false). Measured offline with a stub S3 client, one name holding both
+  a RESOLVED `000000000000000001.source.json` and `UNRESOLVED-SOURCE.source.json`:
+  `roster.load_source_object -> 000000000000000001.source.json` / `posture batch filed_status -> UNRESOLVED-SOURCE` /
+  `posture batch filed_names -> []` -- the posture batch DROPS a filed name roster resolves. Whether any live name has
+  both objects is unmeasured (no S3 call was made). Same pattern at `lib/research/filings/analyze.py:1410`
+  (`source_from_pool`), where it only causes a fallback, not a wrong answer.
+- **C1 therefore becomes ONE cell owning the accession-ranking rule in BOTH readers** -- roster.py (admit `doc-<hex>`
+  as resolved, rank EDGAR digit accessions before `doc-` by explicit rule) and `management_posture_batch.filed_status`
+  (import roster's rule, never a copy). Split into two cells they would be a CHAIN (the batch imports what roster
+  changes) -- the "stepping on each other's work" case Andrew's word names. Write surface: `roster.py`,
+  `lib/research/management/tests/test_management.py`, `integrations/bloomberg/research/management_posture_batch.py`,
+  new `integrations/bloomberg/research/tests/test_management_posture_batch.py`. Overlap with `rk-49`: zero
+  (`integrations/` is a named WALL in rk-49's order; its management edits are `enrich.py`, `management.schema.json`,
+  `domains.json`). Baseline: `python -m pytest lib/research/management/tests -q` 73 passed.
+- **NOTHING-TO-CUT:** `W44-S1` (our code already reads the real bytes for a BOM, `lib/research/filings/batch.py:279-310`;
+  an untested branch, low value); `W46-S2` item (1) (fixed, `roster.py:831-838`, `:869-870`); `W48-S1` (the intended
+  rk-46 incorporate-by-reference behaviour, `roster.py:258`, `:811`; 73 passed).
+- **A correction to this seat's own drafter prompts:** they called `wk-amgt-14-48`/`-49` "held and unmerged". Both
+  are fully merged (`merge-base --is-ancestor` rc 0); branches are named by WORKER SLOT, not cell. The only held
+  branch is `wk-amgt-14-50` (rk-49). Two drafters caught this independently.
+
+**FINAL COUNT, by subtraction over the 26 carried ids:** 6 disarmed by this seat (S186-S190, plus S181 before); 3
+CUT-NOW (C1 now covering `Z-S179`'s residual AND `W46-S2` item 2, C2, C3); 4 CTO-ruling (R1-R4); 3 HELD (`W37-S1`,
+`W49-S2`, `W49-S4`); 11 NOTHING-TO-CUT with evidence (s.4 plus `W44-S1`, `W46-S2`(1), `W48-S1`); `W50-S4` lives only on
+the held branch (its two CLI findings ARE C3).
 
 ## 6. This seat's REC
 
@@ -65,6 +90,7 @@ appended below when it lands.
 2. **Rule R1** (vintage contract). This seat's REC: newest-wins stays (batch.py depends on it) but the resolved key is
    RECORDED on the returned document and the key-shape filter lands now -- cut as a fourth cell. R2/R3/R4 are
    Andrew-adjacent or policy; park or rule at the CTO's discretion.
-3. **Fan-out:** C1/C2/C3(/R1-filter) are pairwise disjoint (roster.py; wk-provision.sh; comp-secrets; crosswalk.py) --
+3. **Fan-out:** C1/C2/C3(/R1-filter) are pairwise disjoint (roster.py + management_posture_batch.py; wk-provision.sh;
+   comp-secrets; crosswalk.py) --
    one wave, every cell spawned at once, no chain. The width is small because the independent backlog is small, not
    because of a cap.
