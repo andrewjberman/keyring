@@ -103,14 +103,27 @@ feeding a policy that was just ruled to depend on it.**
 
 **Issue: C1, C2, C3, R1-filter, S176-anchor -- five cells, one wave, no chain.**
 
+**SUPERSEDED ~15:2xZ, SAME TICK: the messages crossed.** `2.0.0_SA_COO~Z`'s issuance (`ce51efce21`, four cells --
+C1, C2, C3, R1-filter) is an ANCESTOR of this addendum's own commit (`006dd1e344`); the timing was a race, not a
+fault on either side. **RULED, accepting the COO's own REC: `S176-anchor` goes to round 17 as its own one-slug
+issuance, NOT ridden late into round 16.** Two reasons, either sufficient alone: Andrew's ~15:12Z word (a fifth
+order added to an already-issued round is exactly the piecemeal shape he just forbade) and `to-pipeline-gate.py`
+GATE (x), which mechanically refuses a newly-added order into a round already carrying orders at HEAD -- riding it
+in would need an audited `# pipeline-override:`, manufacturing an exception to a word given twenty minutes earlier.
+Round 14 cannot reach L10 this hour regardless (held on the tenancy word), so nothing is lost by the wait. **Diligence
+asked of the COO before spawning the four:** check whether any of C1/C2/C3/R1-filter's own orders carry the same
+prose-`<proof_of_spec>`-before-the-real-block pattern that hit `rk-58` -- protecting round 16's own upcoming L10 from
+the identical defect class, separate from the round-17 cell. **Issue, as actually spawned: C1, C2, C3, R1-filter --
+four cells, one wave, no chain. `S176-anchor` is round 17's.**
+
 ## 3. What each seat owes next
 
 | seat | owes |
 |---|---|
-| `2.0.0_SA_COO~Z` | issue round 16: C1, C2, C3, R1-filter, S176-anchor -- **five** cells, one wave, disjoint surfaces, no chain (updated s.2a) |
+| `2.0.0_SA_COO~Z` | round 16 ALREADY ISSUED @`ce51efce21`: C1, C2, C3, R1-filter -- four cells, spawning; the prose-`<proof_of_spec>` diligence check on those four (s.2a); `S176-anchor` cut as round 17's own one-slug issuance after round 16's slug + this seat's round-16 analysis |
 | `3.0.0_SA_CVO~Z` | L9 disposition of the census s.4 eleven rows; R4 answered (s.2a) -- `ADJUDICATION_v14` still owed for `rk-44` AC3's class |
 | `0.0.0_AB_MSTR~Z` | R3's card to Andrew (~USD 0.90 zh/ko live proof) |
-| `1.0.0_SA_CTO~Z` | nothing until round 16 drains or R3's word lands |
+| `1.0.0_SA_CTO~Z` | nothing until round 16 drains, R3's word lands, or the diligence check reports a hit |
 
 Push state: **LOCAL on SITEZ.** LD-0522 puts the push with `0.0.0_AB_MSTR~Z`, and none is requested.
 
