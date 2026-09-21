@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 7,
-  "decomp_version": "0.7",
+  "round": 8,
+  "decomp_version": "0.8",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -53,13 +53,44 @@
   "round5_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND5_ANALYSIS.md@81472c3a47",
   "round6_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND6_ANALYSIS.md@fa2ff4f0dd",
   "cells_round7": 4,
-  "cell_id_shape_round7": "IB-rtg-<n>"
+  "cell_id_shape_round7": "IB-rtg-<n>",
+  "round7_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND7_ANALYSIS.md @0d400d5c07",
+  "round7_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v3.md @357565e863",
+  "cells_round8": 4,
+  "cell_id_shape_round8": "IB-rth-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R8. ROUND 8 -- THE RECUT ON THE ROUND-7 ANALYSIS (@0d400d5c07, msg 98978; v0.8, 2026-09-21, `2.0.0_SA_COO~B`)
+
+**Input:** round 7 CLOSED at L10 (0 open of 79 proof-based; 4/4 AC2 PASS, none self-graded; CVO slug @`357565e863` -- 12 rows, 9 GRADUATED / 3 DISMISSED). The CTO's analysis @`0d400d5c07` affirms the CVO's grades: **FWD-5 ADVANCED-NOT-REALIZED** (the refusal affirmed over the completion report's headline -- ⭐ *"removing a blocker is not realizing an outcome"*; the S100 fix is real work graded at R75-AC2 PASS, but FWD-5's own DONE WHEN names a three-firm replay with reconcile-before-and-after and denominators that nobody has run); **FWD-2 SPLIT** (containment REALIZED round 6, serving ADVANCED-NOT-REALIZED on W3-S50 + W1-S43). No PRD addendum. Round 8 closes the two disclosed serving-half gaps and the records-hygiene the round-7 close surfaced.
+
+### R8.1 The rectangle (4 cells, id shape `IB-rth-<n>`)
+
+| cell | owes | assignee | serves | supersedes |
+|---|---|---|---|---|
+| IB-rth-1 | INFLECTION serving route (W3-S50): the live 2-of-3 shortfall is an S3 404 in `_authz/served.py::enforcer_for`'s eager ownership-map load for inflection, UPSTREAM of `route_for`. INVESTIGATE FIRST (read-only): whether inflection's ownership-map object can be produced/read on the EXISTING `opal-data-inflection` bucket without the console -- a discriminating s3 call, the wire result verbatim. ⚠ BOUNDED BY ANDREW-DIRECT 98869 answer 2, HIS TERMS NOT WIDENED: rectify the EXISTING bucket FIRST; a minted principal ONLY if rectification cannot be done; new buckets the LAST resort and he said he would prefer not; **the root console is NOT an option**. If the fix needs the mint-principal or new-bucket branch, STOP and carry to the CTO/Andrew with the discriminating evidence -- never taken ad hoc. Any served/bucket change is packet + halves BEFORE the act. Acceptance: inflection's live performance request resolves a TenantRoute end-to-end (no S3 404, no UNEXPECTED), 3-of-3 firms live. | WK | FWD-2 (serving) | -- |
+| IB-rth-2 | EXPORT SUBMIT-WIRING (W1-S43): the deployed `submit_export` raises NOT_READY -- the receipt CONTRACT is proven (round-7 rtg-1 R72 PASS) but the submit controller that produces a receipt in production is not wired. Wire it; packet + halves BEFORE the deploy (the rtg-1 shape); acceptance: an exercised submit-export -> receipt round trip on the REAL path produces + serves the receipt (no NOT_READY), the S105/S106 taxonomy unchanged. | WK | FWD-2 (serving) | IB-rtg-1 (the submit half rtg-1 disclosed) |
+| IB-rth-3 | STATUS-WORD HYGIENE: the 7 orders terminal-by-proof at HEAD whose `<status>` word is not terminal (`IB-rt-6`, `rtf-3`, `rtf-4`, `rtf-7`, `rtf-10`, `rtf-12`, `rtf-14`) -- flip each face's `<status>` to a terminal word citing its VALID proof instance, changing NOTHING else. ⚠ BOOKKEEPING, NOT RE-WORK: the proofs are VALID at HEAD and terminality already reads from them; this only stops a status-word census returning a wrong number (the §4 class three projects over). Acceptance: the status-word count and the gate's proof-based resolver AGREE for IRPT_BCKEND. | WK | records integrity | -- |
+| IB-rth-4 | THE 110 STALE OWNED REMEDIATION ROWS (2+ rounds unmoved; the gate's 9x non-refusal disclosure) -- a DISPOSITION-PER-ROW cell, owned by `2.0.0_SA_COO~B` as issuer. ⛔ NOT a bulk close; ⛔ NO row closed by AGE (staleness is a PROCESS signal, never HAZARD evidence -- the label-vs-evidence inversion); each row on its OWN evidence, a still-live row STAYS live and says so; the cell PRINTS its denominator + per-disposition counts so the next round can tell a real fall from a narrowed census. | WK | channel hygiene | -- |
+
+**Not cells of this project:** FWD-5's REALIZATION exercise -- its OWNER line names `IRPT_FNTEND` for the three-firm replay; this project holds join correctness, the reconcile control, the denominators and the revision-bound `HoldingsSnapshot`, which round 8 MAY build as this project's SHARE but which CANNOT realize FWD-5 alone (a round-8 report claiming FWD-5 REALIZED is refused on the round-7 grounds). The broader FWD-11 bucket program beyond inflection's serving path (Andrew). The `opal-data-inflection` ownership-map PRODUCER re-key, if the map is missing at source (DS `d08`).
+
+### R8.2 Edges and fanout
+Four INDEPENDENT chains (disjoint write surfaces -- inflection authz/bucket; export submit; order faces; the surprise channel): A `rth-1`; B `rth-2`; C `rth-3`; D `rth-4`. **fanout: 4 of 4 chains, cap 8.** No cross-cell dependency. ⚠ **EXECUTION PACED ONE WORKER AT A TIME** under Andrew's ~02:4xZ stay-light hold (98915/98916): the issuance cuts all four; the COO spawns them SERIALLY, reusing one worktree per slot, the two records-hygiene cells (rth-3, rth-4 -- no served change) ahead of the two served-change cells (rth-1, rth-2).
+
+### R8.3 Bounds carried
+NEVER-1 (packet + CTO+COO halves at HEAD BEFORE any served/bucket change -- rth-1's rectification if it writes, rth-2's deploy); the arm-(d) SUBTRACTION gate; the LEDGER OPENED BEFORE the act; R-40 (content hash per run/artifact); S56 vintage pins; the forward-looking-criterion bar; the identity bar (arm-(e) live proof under the DEPLOYED role + bytes); **Andrew-direct 98869 answer 2's inflection ladder** (rectify existing FIRST / mint only if not / new buckets LAST / NEVER the root console -- rth-1); the **110-row disposition bounds** (per-row on its own evidence, NO age-close, print denominator + per-disposition counts -- rth-4); ⭐ **"REMOVING A BLOCKER IS NOT REALIZING AN OUTCOME"** -- no round-8 report claims FWD-5 REALIZED, and the CTO's standing read applies (*"has this EVER been graded" vs "does THIS round contain it"*).
+
+### R8.4 Not decided here
+Whether the inflection bucket CAN be rectified without the console (rth-1's read-only investigation determines it; the mint-principal and new-bucket branches are Andrew's/the CTO's, carried with evidence, never cut ad hoc); the submit controller's production shape (rth-2's judgment, Rule 24 record); which of the 110 rows dispose vs stay live (rth-4's per-row evidence).
+
+### R8.5 Four-postulate record (Rule 24 over the round-8 cell set)
+(i) MECE over the DECLARED domain = the round-7 carries {W3-S50 inflection, W1-S43 submit-wiring, status-word hygiene, the 110 stale rows} MINUS {FWD-5 realization (IRPT_FNTEND), the broader FWD-11 (Andrew), the DS producer re-key} -> the four cells remain, none uncovered. (ii) SAME GRAIN: each is one bounded remediation -- two served-path fixes, two records-hygiene sweeps. (iii) INTENT COHERENCE: one axis -- close what round 7 left open and make the records read true. (iv) STATE COHERENCE: a cell disposing rows or flipping status words does NOT move any FWD; rth-1/rth-2 ADVANCE FWD-2's serving half but do NOT alone realize it (containment already REALIZED round 6; FWD-5 untouched, its exercise is IRPT_FNTEND's).
 
 ## R7. ROUND 7 -- THE RECUT ON THE ROUND-6 ANALYSIS (@fa2ff4f0dd, msg 98554; v0.7, 2026-09-20, `2.0.0_SA_COO~B`)
 
