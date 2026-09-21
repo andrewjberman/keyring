@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~14</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-64` (round 10, v0.10) | **outcome_ref:** FWD-12 | **depends_on:** none | **slot:** ~4 | **rows:** CTO grades `ledger/COMPLETION_GRADES.round9.json` @4030dac, FWD-12 row; CTO msg 99254
 

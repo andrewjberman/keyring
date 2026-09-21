@@ -5019,6 +5019,46 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W14-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~14",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "fe-s-11/census.test.ts grades the COMMITTED component-census.json, not the live tree, so it passed (70) while the tree now census 73 (REUSED 28, NEW 45)",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FE-s-64 HOW step 4 expects census.test.ts to fail if the tree moved since it was pinned; F11-AC2 says it grades what census.ts produces.",
+    "world_is": "census.test.ts reads deliverables/0.9.0_WK_IRPT_FNTEND~1/component-census.json (test line 20) and never runs the census, so it prints 'COMPONENTS: 70 (REUSED 27, NEW 43)' with 87 pass 0 fail at portal ddb172bf while a fresh run of the copied census.ts prints 'COMPONENTS: 73 (REUSED 28, NEW 45)': AnswerStatus, PanelEmpty, UnnamedReasonCodeFlag were added since that file was last re-run at FE-s-18 (899b41d773). Also the order's baseline of 65 is round 1; the committed file already says 70.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/__tests__/fe-s-11/census.test.ts:2-20,72 @ddb172bf",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~14/closing-pass-component-census-and-colour-law-refresh.result.md (bun test output and census run, rc=0 each)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W14-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~14",
+    "surfaced_at": "2026-09-21T15:00:00Z",
+    "one_line": "census records: 45 NEW components carry role labels not stated needs, and UnnamedReasonCodeFlag's reason is copied from PageSheet",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "PRD FWD-12 CONSTRAINT: a new component requires a stated need the existing set cannot meet; F13 says each NEW carries a reviewable reason.",
+    "world_is": "In the refreshed census the NEW reason strings are mostly 'FE-s-N -- <what it is>' with no statement of what the existing set cannot do; UnnamedReasonCodeFlag (render/Page.tsx:115) carries PageSheet's reason text ('the page frame both templates share: sheet, header, footer'); ExportButton and ExportModalPanel are counted with usedIn '(self -- no import statement)' though the script header defines the census as imports. Thin wrappers over REUSED parts (TabShell, ClientSearch, FirmDropdown) are classed NEW.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~14/component-census.json (73 components, 45 NEW)",
+        "portal src/pages/InvestorReporting/render/Page.tsx:110-115 @ddb172bf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
