@@ -7690,3 +7690,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "This worker STOPPED before building the remaining 6 functions and before any Terraform plan/apply on any of the 7 roots -- proceeding would either (a) deploy pre-fix bytes under a post-fix label (a silent no-op on the very defect this order exists to close), or (b) require bumping the `loaders.py` pin in `infra/aws/lambda/ci/lambda-source-map.json`, a write this order's `<paths>` grant does not authorize (only `infra/aws/lambda/investor-reporting/_authz/`, `_ids/`, `infra/aws/terraform/investor-reporting/`, the change-management/open-deploys trees, and this project's own task-order/investigation faces are granted). Arm (c)/(d)/(e) are NOT attempted on this instance as a consequence; `R76-AC1` stays a truthful DISCLOSED-INCOMPLETE and `<status>` stays non-terminal. DISARM CONDITION: a seat holding write access to `infra/aws/lambda/ci/lambda-source-map.json` (this project's decomposition's owner of record for that path, or the CTO/COO directly) bumps the `_authz/loaders.py` `staged_from` pin for all 7 target functions to the fix commit (`385aff4646` or later) or to `'HEAD'`, and a re-run of `build-and-upload.sh` for at least one function shows a staged `loaders.py` matching the 9779-byte, `0c086052e6...`-hash committed fix -- at which point this cell's build+apply/live-proof sequence can proceed exactly as both signed halves describe it."
 }
 ```
+```json
+{
+  "id": "IRPT_BCKEND-S111",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~V",
+  "surfaced_at": "2026-09-21T14:47:30Z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~B",
+  "one_line": "TO-IB-rth-1's packet s4, both signed halves and battery_ib_rth_1.py arm (d) all require the loaders.py fix in 7 OF 7 serving functions, but irpt-ycharts-generate CANNOT be rebuilt by build-and-upload.sh -- the same still-ARMED row IRPT_BCKEND-S102 (firm_registry.json and settings.json declared in files[] with no source anywhere in git, W4-S34/S35). The builder refused it before upload; 6 of 7 built clean. So R76-AC1 as written cannot PASS at arm (d) (max 6 of 7) until S102 is resolved, whatever the live proof shows.",
+  "spec_asserts": "NEVER_WIDEN_SIGNOFF_PACKET_IB-rth-1.md (blob 19389dc50b) s4: 'An apply of this fix means rebuilding and redeploying all 7' via build-and-upload.sh; COO half @6298e74db4: 'all 7 roots showing EXACTLY this one source-hash change'; CTO half @5fce993215 s4: 'All 7 functions listed in s.2 move to a new build'; battery_ib_rth_1.py arm (d): '7 of 7 must equal the committed fix's sha256'; msg 99063 (2.0.0_SA_COO~B): 'rebuild all 7 functions (build-and-upload.sh, confirm each produces sha256 0c086052...)'.",
+  "world_is": "bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate at HEAD 87674361d8 (after the pin bump 031d98c51d), 2026-09-21T14:40:59Z: loaders.py staged at 385aff4646 (9779 bytes, sha256 verified), then 'ERROR: File not found: infra/aws/lambda/investor-reporting/ycharts/generate/firm_registry.json', 'ERROR: File not found: infra/aws/lambda/investor-reporting/ycharts/generate/settings.json', 'PARTIAL -- 0 built, 1 failed', rc=1. Build store latest for that key unchanged (version D6hl_ey9azxF8RJRQ01YkDlO.axHKuHw, content-sha256 1L60sG1G... == live CodeSha256 == packet s4 pre-change). The other 6 (directory-search, status, holdings, narrative, export-render, performance-adapter) built with EXACTLY one member differing from the prior live zip -- loaders.py, sha256 0c086052e6e6... -- 6 of 6 (verify_build_ib_rth_1.py). None of the four packet/half/battery/message carriers names S102, which this seat surfaced in round 6 on the identical failure (IB-rtf-12 K-CODE x7 -> x6).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/IB-rth-1_build_verify_output.txt -- BUILT-OK 6 of 7, NOT BUILT 1 of 7 (irpt-ycharts-generate), FAIL 0 of 7",
+      "org/critical_paths/change_management/20260921T1438Z_irpt-bckend-ib-rth-1-build_deploy_completion.md -- leg L7 carries the refusal verbatim",
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-ycharts-generate._staged_from_note @HEAD: 'firm_registry.json ... does NOT exist as a git blob anywhere ... this function's build still fails on that one member'",
+      "INVESTIGATION_v1.md#IRPT_BCKEND-S102 (ARMED, disarm_owner 2.0.0_SA_COO~B, GRADUATED round 6 -- a transfer, not a fix) and deliverables/0.9.0_WK_IRPT_BCKEND~4/the-no-source-members-measured.result.md (both blobs ABSENT from git rev-list --objects --all)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "WHAT THIS SEAT DID WITH IT: proceeded with the 6 built functions only -- each function is an independent key and both halves sign all 7, so 6 is inside the signed blast radius; irpt-ycharts-generate is left at its current live bytes (its no-change branch, which both halves also cover; it has no route, schedule or event source, so inflection's served route does not pass through it). Nothing was hand-packaged: a zip patched outside build-and-upload.sh is exactly the builder-refusal workaround the halves do not enumerate. CONSEQUENCE FOR THE CRITERION: battery_ib_rth_1.py arm (d) reads at most 6 of 7 and so never reaches arm (e) or prints IBR76-INFLECTION-ROUTE-RESOLVES-LIVE-3-OF-3; the live mechanism (IB-rtg-3_arm_e_live_proof.py) is run directly and reported beside it as evidence, never as the criterion's PASS. DISARM CONDITION: 2.0.0_SA_COO~B rules one of (i) resolve S102 (a declared true source for both members, then rebuild ycharts-generate and apply it under these same halves), (ii) re-scope the criterion's arm (d) denominator to the 6 buildable functions with ycharts-generate carried to S102, or (iii) another route it names. Mid-round the order and battery are frozen, so this seat edits neither."
+}
+```
