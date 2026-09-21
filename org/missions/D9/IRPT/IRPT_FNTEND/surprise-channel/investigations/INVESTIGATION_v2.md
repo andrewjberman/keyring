@@ -5019,6 +5019,72 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~13",
+    "surfaced_at": "2026-09-21T16:00:00Z",
+    "id": "IRPT_FNTEND-W13-S1",
+    "one_line": "TO-FE-s-63's F63-AC5/AC6 print invocation cannot print 'REFS RESOLVED: 1 of 1' at portal HEAD: the fixtures it names (fe-s-11-print.json, fe-s-9-modal.json) key on retired route names and every key prints FIXTURE-DEAD, and the print route also needs ?tenant=&scope=&revision= that the invocation does not carry.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "Order FE-s-63 F63-AC5/F63-AC6 (and the fixture of AC2-AC4) assert that fe-s-11-print.json / fe-s-9-modal.json, run against investor-reporting/print?bundle=perf-narrative-fixture-1 and investor-reporting --click Export, construct the READY state and print 'REFS RESOLVED: 1 of 1'.",
+    "world_is": "At portal DEV ddb172bf (dev server 5483): AC5 and AC6 as written print NO 'REFS RESOLVED' line; the page renders 'This bundle was not rendered ... perf-narrative-fixture-1 is absent'; the run prints 'FIXTURES: 3 declared; 0 matched >=1 URL' and FIXTURE-DEAD for all three keys. AC2/AC3/AC4 print CLICKED: Export and CANVAS: rgb(244, 246, 250) but 'FIXTURES: 5 declared; 0 matched' (the modal shows 'carries no performanceReport'), so the state read is a fixture-less one. The v1 LiveClient (FE-s-14) requests /api/scoped/investor-reporting/performance/{scope}, /directory/resolve, /holdings/, /narrative/ (netlog: performance/bootstrap, directory/resolve, holdings/bootstrap all 401), and PrintEntry sends tenant/scope/revision as empty strings unless the URL carries them. Even the working-shape invocation of F18-AC12 (fe-s-16-print-narrative.json with tenant=F-49F&scope=fp-49f-0824&revision=rev-49f-000091) now prints 'rev-49f-000091 is absent' and no REFS RESOLVED (diag_print_1440.out): FIXTURES 2 declared, 1 matched (performance/ answered 200 twice with start=&end=), narrative/ dead. I did not find which step rejects the answered fixture (resolveOne swallows the cause). F63-AC5 and F63-AC6 are REFUSED, not graded PASS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/ac5.out and ac6.out (no REFS RESOLVED line; FIXTURE-DEAD x3)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/ac2_3.out (FIXTURES: 5 declared; 0 matched)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/diag_print_1440.out (working-shape fixture, same refusal)",
+        "portal src/api/endpoints/investor-reporting.ts:1333-1353 (LiveClient unless VITE_IR_USE_FIXTURES) and render/PrintEntry.tsx:105-124 (tenant/scope/revision default to empty)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~13",
+    "surfaced_at": "2026-09-21T16:00:00Z",
+    "id": "IRPT_FNTEND-W13-S2",
+    "one_line": "render/print.css carried the retired silver ground #c4cbdb as the screen page field of the print route (DESIGN.md C3 canvas is #F4F6FA) while ui-smoke's CANVAS line printed rgb(244, 246, 250) for the same capture: the CANVAS line does not measure the print route's own ground.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "Order FE-s-63 F63-AC3..AC6 read the printed 'CANVAS: rgb(244, 246, 250)' as the page's ground.",
+    "world_is": "BEFORE capture fe-s-63_fix1_before_print_ground_1440.png shows the print route ground as silver (about rgb(196, 203, 219) = #c4cbdb, print.css:139 .ir-print-root, comment 'the silver canvas') while the same run printed 'CANVAS: rgb(244, 246, 250)': the smoke instrument measures the app body, not .ir-print-root. Fixed in print.css (screen ground only; @media print already paints white): AFTER capture fe-s-63_fix1_after_print_ground_1440.png reads as the light canvas. The fix is visible only on the refusal panel because no document renders (see S1). The stylesheet header still states 'COLOUR LAW: the canvas is the silver cool grey' and brand.tokens.json cool_grey is untouched.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_fix1_before_print_ground_1440.png",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~13/fe-s-63_fix1_after_print_ground_1440.png",
+        "portal src/pages/InvestorReporting/render/print.css:16-18 and :138-140 @ DEV ddb172bf"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~13",
+    "surfaced_at": "2026-09-21T16:00:00Z",
+    "id": "IRPT_FNTEND-W13-S3",
+    "one_line": "F60-AC6 (period-in-context partial-disclosure note colour) could NOT be rendered and read: no print document renders at portal HEAD from any fixture I could construct, so the note's on-screen appearance is unread; source-level findings only.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "Order FE-s-63 F63-AC8(2) asserts the note (classes ir-note ir-muted, #595959) is RENDERED and READ.",
+    "world_is": "Not rendered (S1). From source only: print.css :272-276 .ir-note and :285-287 .ir-muted are #595959 on the white .ir-page sheet (#FFFFFF), not on the ground; DESIGN.md has no clause naming a print sheet: C3 names page, panel, band, sunken, and C9's secondary ink #6B7280 is 'on a panel only', so #595959 appears in no C3/C9 table. Also in print.css and not read in a capture: box-shadow at :520 (C11) and 'Consolas' monospace at :290 .ir-mono (C1/C2).",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "portal src/pages/InvestorReporting/render/print.css:272-290,518-522 @ DEV ddb172bf",
+        "portal DESIGN.md C1,C2,C3,C9,C11"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
