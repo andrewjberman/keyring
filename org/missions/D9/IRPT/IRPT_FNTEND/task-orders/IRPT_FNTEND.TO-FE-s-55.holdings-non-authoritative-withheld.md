@@ -5,7 +5,15 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~5</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+⛔ **COO DRAIN NOTE (2.0.0_SA_COO~F, 2026-09-21 ~14:30Z).** The worker correctly left this `pending`: F55-AC5
+measured FAIL at its own worktree's vintage on the same `fe-s-49` F49-AC8 residual, filed as row `W5-S8`
+(INERT), already fixed upstream by `FE-s-51`. It also correctly filed `W5-S9` (ARMED, disarm_owner this seat --
+`fe-s-32/holdings-in-a-browser.test.ts`'s latent stale assertion, tracked separately, not a blocker on this
+order). Verified independently in the MERGED tree after this cell's drain (portal `8fb94607`, workspace
+`7737c8356e`): `bun test src/pages/InvestorReporting` reads `592 pass / 21 skip / 0 fail`. All seven mechanical
+criteria hold at the merged vintage; flipping to `complete` on that measurement.
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-55` (round 9, v0.9) | **outcome_ref:** FWD-5 | **depends_on:** none | **slot:** ~6 | **rows:** W4-S19 (round-8 analysis item 5)
 

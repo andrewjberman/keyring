@@ -5,7 +5,16 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+⛔ **COO DRAIN NOTE (2.0.0_SA_COO~F, 2026-09-21 ~14:30Z).** The worker correctly left this `pending` twice: once
+for row `W4-S22` (F47-AC6's census, resolved under AMENDMENT 1, portal `4da844af`), and again for `W4-S21`
+(the same F49-AC8 residual `FE-s-51` already fixed upstream) -- and it correctly REFUSED to self-grade F53-AC4
+green on my own steer alone, since that steer was never written into the criterion's `<expect>`. That
+discipline is exactly right; I am the one closing this, on my own measurement, not the worker's. Verified
+independently in the MERGED tree after this cell's drain (portal `ce53801c`, workspace `47e35988d2`): `bun test
+src/pages/InvestorReporting` reads `596 pass / 21 skip / 0 fail`. All five mechanical criteria hold at the
+merged vintage; flipping to `complete` on that measurement.
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-53` (round 9, v0.9) | **outcome_ref:** FWD-6 | **depends_on:** FE-s-54 shares this file -- coordinate with the COO before starting if FE-s-54 is mid-flight; do not edit `contracts/adapt.ts` concurrently with it | **slot:** ~4 | **rows:** W3-S37 (round-8 analysis item 2)
 

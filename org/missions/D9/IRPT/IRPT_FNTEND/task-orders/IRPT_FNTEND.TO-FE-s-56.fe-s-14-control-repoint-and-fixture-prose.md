@@ -5,7 +5,14 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~6</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
+
+⛔ **COO DRAIN NOTE (2.0.0_SA_COO~F, 2026-09-21 ~14:30Z).** The worker correctly left this `pending`: F56-AC5
+measured FAIL at its own worktree's vintage on the same `fe-s-49` F49-AC8 residual, filed as row `W6-S2`
+(OBSERVATION, and correctly named `FE-s-51` as the sibling cell owning it). Verified independently in the
+MERGED tree after this cell's drain (portal `2e69645c`, workspace `f079b3f61b`): `bun test
+src/pages/InvestorReporting` reads `592 pass / 21 skip / 0 fail`. All six mechanical criteria hold at the
+merged vintage; flipping to `complete` on that measurement.
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-56` (round 9, v0.9) | **outcome_ref:** FWD-12 (evidence) | **depends_on:** none | **slot:** ~7 | **rows:** W2-S35, W4-S20 (round-8 analysis item 7)
 
