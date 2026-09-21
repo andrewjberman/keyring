@@ -313,7 +313,8 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>AMGT-rk-85 (H3) and AMGT-rk-83 (H1): its own text lands bronze at .../bronze/peers/CAT_US_Equity (an unnamed entity in the partition slot, no fetch timestamp), which breaks C-BRONZE-AS-RECEIVED form (a) and C-SLASH-SAFE-KEY. RULED by 1.0.0_SA_CTO~Z, ROUND_ANALYSIS.round20.md s.2 @ab54fb15e0 (msg 24109): SUPERSEDED is terminal, not acceptance (R4); the remedy stays owed by the successor. Flipped in the round-21 issuance by 2.0.0_SA_COO~Z.</superseded_by>
 <round>14</round>
 <slot>~51</slot>
 <fabric>site-z</fabric>

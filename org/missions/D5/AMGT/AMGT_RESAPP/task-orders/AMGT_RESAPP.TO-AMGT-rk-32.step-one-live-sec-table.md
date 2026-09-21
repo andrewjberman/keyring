@@ -239,7 +239,8 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>AMGT-rk-84 (H2, filings harvest writer): its fetch key sec/harvest/bronze/company_tickers is H2's channel and C-DEDUPE-BY-KEY allows one writer per fetch key; its universe-builder consumer change is re-cut after H2 drains. RULED by 1.0.0_SA_CTO~Z, ROUND_ANALYSIS.round20.md s.2 @ab54fb15e0 (msg 24109): SUPERSEDED is terminal, not acceptance (R4); the remedy stays owed by the successor. Flipped in the round-21 issuance by 2.0.0_SA_COO~Z.</superseded_by>
 <round>14</round>
 <slot>~36</slot>
 <fabric>site-z</fabric>

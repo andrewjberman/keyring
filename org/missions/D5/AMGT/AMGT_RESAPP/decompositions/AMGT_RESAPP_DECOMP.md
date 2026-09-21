@@ -4220,3 +4220,57 @@ fanout:
   wave_2: []
   no_fleet_run: true
 ```
+
+## 29. ROUND 21 -- FROM THE CTO'S ROUND-20 ANALYSIS @`ab54fb15e0` (`1.0.0_SA_CTO~Z`, msg 24109) + rulings msgs 24090, 24106
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 20 closed 2 of 2 and ratified (17/0/0). C-HARVEST-HOME is MET: row Z-S203 was
+disarmed by Z-S205 after the duplicate `harvest` scope row was deleted @`10bace8916`. The live builder prints
+opal-data-harvest for every AMGT tier, and PRD v0.17 is ADMITTED @`1f7459456a`.
+
+Round 21 is the harvest chain's waves 1-2, less the two cells that share rk-79's files: H0-store, H0-iam and the channel
+writers H1, H2, H3, H6. These come from the decomposition proposal the CTO accepted at msg 24090, with the five spec
+calls ruled at msg 24106.
+
+**H4 (Lusha) and H5 (SERP) are drafted but NOT in this round** (analysis s.3). The moves, the backfill runs and the
+reader re-cuts are later rounds.
+
+**Four round-14 orders are flipped SUPERSEDED in this commit** (analysis s.2):
+- rk-32 is superseded by rk-84.
+- rk-50 is superseded by rk-85 and rk-83.
+- rk-51 and rk-52 are superseded by reader re-cuts on silver.
+
+Each carries a `<superseded_by>` naming its successor. rk-49 stays HELD.
+
+**All six orders were drafted in parallel and are issued in ONE commit with this section** (Andrew-direct ~15:12Z).
+
+### 29a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| H0-store | `AMGT-rk-81` | ~81 | head | C-BRONZE-AS-RECEIVED, C-SILVER-PARQUET, C-DEDUPE-BY-KEY, C-SLASH-SAFE-KEY, C-LUSHA-EXCEPTION -- `lib/research/harvest/store.py`, 23 public names: bronze write-once with optional metadata, silver parquet append with unchanged-row skip, a fetch-key check, Lusha rules. Contact fields are matched by NORMALISED name (issuer L5 at the cut) | none (code only) |
+| H0-iam | `AMGT-rk-82` | ~82 | none | read grants on the harvest homes, additive, both limbs: +8 prefixes on opal-amgt-scoped-api-grants, +4 on amgt-resapp-chatter-axis-lambda-policy; targeted apply, 0/2/0 | pair `NEVER_WIDEN_ROUND21_RK82_{COO,CTO}_HALF.md` |
+| H1 | `AMGT-rk-83` | ~83 | after rk-81 | Bloomberg writer: bronze for 6 requests as the deterministic client JSON (`received-form: bbg-client-json`, msg 24106 item 2); model_block silver as a lossless copy | none |
+| H2 | `AMGT-rk-84` | ~84 | after rk-81 | filings writer: SEC/issuer/ESEF bronze; `filing_source` silver, lossless; UNRESOLVED markers go to state (item 3); succeeds rk-32 | none |
+| H3 | `AMGT-rk-85` | ~85 | after rk-81 | Seeking Alpha + publications writer: `sa:` hash prefix (item 1); a new `harvest_grammar.py`; the six Lambda-packaged harvester files are WALLS, and neither Lambda's DERIVED build-input list changes (item 5, Rule 22a: adapter 57, chatter 18) | none |
+| H6 | `AMGT-rk-86` | ~86 | after rk-81 | social snapshot writer, format only; collection stays OFF (0 schedules or triggers across 8,616 tracked files) | none |
+
+### 29b. SURFACE CENSUS (measured at the cut)
+
+- **Code paths:** no code path is written by more than one of rk-81..86, per a `<paths>` census of all six orders.
+- **Writers:** every channel writer is CODE ONLY and off by default, has 0 live S3 writes, and has no production caller
+  until its move cell.
+- **Addresses:** every address in every order is live-builder output.
+- **Held branch:** no collision with `wk-amgt-14-50`, by name.
+
+### 29c. FAN-OUT
+
+```
+fanout:
+  cap: 8                            # stated
+  orders_total: 6                   # rk-81..86 -- written in parallel, issued in one commit
+  slots_total: 6
+  chains_total: 2                   # {rk-81 -> rk-83, rk-84, rk-85, rk-86} ; {rk-82}
+  wave_1: [rk-81, rk-82]            # rk-81 at once; rk-82 once its pair carries both halves signed
+  wave_2: [rk-83, rk-84, rk-85, rk-86]   # after rk-81 drains (each AC0 STOPs until store.py is at HEAD)
+  no_fleet_run: true
+```
