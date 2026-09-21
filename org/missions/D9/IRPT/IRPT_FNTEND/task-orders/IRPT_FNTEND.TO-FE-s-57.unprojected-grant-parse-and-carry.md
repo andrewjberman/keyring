@@ -161,6 +161,30 @@ reality, not to weaken the parser.**
   commit, and send your FINAL WORKER REPORT once. **Still report your final portal commit hash clearly** --
   wave B seats against it.
 
+⛔ **AMENDMENT 2 (2.0.0_SA_COO~F, 2026-09-21 ~15:05Z; row IRPT_FNTEND-W7-S2 ARMED, disarm owner this seat; this
+order is REOPENED; 2 more files added to the grant).** Re-verified in the shared tree after merging your
+AMENDMENT 1 work (portal `d67d550f`, includes `FE-s-51` and `FE-s-53`'s sibling fixes): F57-AC7 is down to
+exactly 4 fail + 1 error, and BOTH trace to the SAME root cause your own diagnosis named but didn't yet reach:
+
+1. **`__tests__/fe-s-32/holdings-no-answer.json` still lacks `unprojected_grant`.** This is the DIRECT cause
+   of `fe-s-32/holdings-in-a-browser.test.ts`'s one failure (the fixture's response, once parsed, no longer
+   matches the expected route-member diff because the parse changed shape) AND `fe-s-41/one-writer.test.ts`'s
+   TWO failures (`F41-AC5`'s frozen-map count reads the SAME shared fixture and its count is now off by one
+   because that fixture fails to parse where it used to). Fix the ONE fixture file; do not touch either test
+   file's assertions -- both should go green once the fixture itself carries the field, matching the pattern
+   from your AMENDMENT 1 work.
+2. **`__tests__/fe-s-47/no-status-reason.test.ts`'s own `envelopeBody()` helper (around `:138-147`) builds a
+   synthetic envelope with no `unprojected_grant` member, evaluated at MODULE LOAD time** (`NO_STATUS_BODY` /
+   `NO_STATUS_PARSED` at `:190-192` call `parseIrEnvelope` at the top level, so the missing key throws before
+   any test runs, crashing the whole file as one `error` rather than one test failure). This is NOT a
+   pre-existing defect as your report guessed -- it is the exact same class of gap as everything in AMENDMENT
+   1, just in a file AMENDMENT 1 didn't grant you for THIS purpose (FE-s-53 touched this same file for a
+   DIFFERENT edit, the F47-AC6 RULES table, already merged and unrelated to this). Add `unprojected_grant:
+   { count: 0, denominator: <sensible>, kinds: [] }` to `envelopeBody()`'s returned object, at the same level
+   as `contract_version`/`operation`/`firm_id`/`data`/`status`. Do not touch the RULES table FE-s-53 added.
+
+Re-run F57-AC6 and F57-AC7 after both fixes. If they read `0 fail`, close as AMENDMENT 1 already instructs.
+
 <paths>
 portal/src/pages/InvestorReporting/contracts/index.ts
 portal/src/pages/InvestorReporting/contracts/adapt.ts
@@ -173,12 +197,14 @@ portal/src/pages/InvestorReporting/__tests__/fe-s-25/
 portal/src/pages/InvestorReporting/__tests__/fe-s-26/
 portal/src/pages/InvestorReporting/__tests__/fe-s-30/
 portal/src/pages/InvestorReporting/__tests__/fe-s-31/
+portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-no-answer.json
 portal/src/pages/InvestorReporting/__tests__/fe-s-33/
 portal/src/pages/InvestorReporting/__tests__/fe-s-34/
 portal/src/pages/InvestorReporting/__tests__/fe-s-35/
 portal/src/pages/InvestorReporting/__tests__/fe-s-39/
 portal/src/pages/InvestorReporting/__tests__/fe-s-41/
 portal/src/pages/InvestorReporting/__tests__/fe-s-42/
+portal/src/pages/InvestorReporting/__tests__/fe-s-47/no-status-reason.test.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-48/
 portal/src/pages/InvestorReporting/__tests__/fe-s-49/
 portal/src/pages/InvestorReporting/fixtures/
