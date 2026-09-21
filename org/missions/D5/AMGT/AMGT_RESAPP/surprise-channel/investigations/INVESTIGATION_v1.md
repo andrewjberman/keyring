@@ -10973,6 +10973,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row",
     "world_is": "The naming-gate fix landed at 55c24a8b8a (lib/opal_naming.py:567, one line) fixes the exact 4-refusal precondition W80-S1 grounded; merging it into wk-amgt-20-80 and re-running validate() and the commit both confirm the fix in THIS worktree, not merely on the fabric elsewhere.",
     "notes": "Filed by the ~80 worker resuming this task order's workspace half after the registry fix landed. Did not touch portal/ or the portal branch. No new edit to infra/logic/registry/, .tools/naming-gate.py, lib/opal_naming.py, or org/mcp/naming-gate.enforce beyond the merge commit 55c24a8b8a itself. DEVIATION: the dispatching instruction named disarm_owner as this worker's own serial; surprise-row-gate.py's R-18(2) limb refuses a disarm_owner that is a worker serial and names the issuer as the correct owner, so disarm_owner is 2.0.0_SA_COO~Z, not the worker -- reported, not silently substituted."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S204",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-21T21:40:00Z",
+    "one_line": "DISARM RECORD for AMGT_RESAPP-Z-S197 and AMGT_RESAPP-Z-S200 (disarm_owner 1.0.0_SA_CTO~Z on both): after AMGT-rk-79's live acts, the stored roster_reason of 6861_JP_Equity and CSL_AU_Equity is a readable sentence with no literal 'None', read on this seat's own instrument (the stored management/v1 objects) independently of 2.0.0_SA_COO~Z's served-leaf invoke (msg 24099).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3 cp s3://opal-data-harvest/management/v1/6861_JP_Equity/2026-09-19.json: roster_reason 'The Japanese annual securities report (Yuho) was found, but its officer section is empty, so no officers could be read from the filing.' ('None' absent)",
+        "aws s3 cp s3://opal-data-harvest/management/v1/CSL_AU_Equity/2026-09-19.json: roster_reason 'No filing could be matched to CSL: the SEC ticker belongs to a different company; ... and there is no national-regulator source for this listing yet.' ('None' absent; derived from the CURRENT filings object)",
+        "2.0.0_SA_COO~Z msg 24099: the served thesis leaf reads the same sentences for both keys; census None 0 of 3."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A disarm record only; it carries no finding of its own. S197 and S200 are remedied by AMGT-rk-79 (R20-A); their own dispositions are 3.0.0_SA_CVO~Z's at the round-20 L9. Rows are append-only, so this row records the disarm rather than editing theirs.",
+    "spec_asserts": "PRD v0.16/v0.17 C-EXEC-MANAGEMENT: a served reason is always a readable sentence.",
+    "world_is": "Both served reasons are readable sentences; neither prints 'None'.",
+    "notes": "CAT_US_Equity also reads INCOMPLETE-NO-CEO with its readable reason (Z-S202's condition, holder 2.0.0_SA_COO~Z). rk-79's AC2 test failure (W79-S1) is a wording pin in two tests, not a served defect."
   }
 ]
 ```
