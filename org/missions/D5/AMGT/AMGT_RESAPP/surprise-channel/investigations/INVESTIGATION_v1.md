@@ -10577,6 +10577,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "COO half EXPECTED OUTCOME (task order section 1): a name with no verified_site reads NOT_ATTEMPTED / NO_VERIFIED_SITE, nothing searched, nothing rewritten for it; CTO half section 3 predicts branch 2 (no verified domain) fires FIRST on all three validation names.",
     "world_is": "The real status token is NOT_SEARCHED (NOT_ATTEMPTED occurs nowhere in the codebase); a rewrite DOES occur for a no-verified-site/no-CEO name because the ceo_profile field itself is newly added; and 2 of 3 validation names (CAT, 6861) resolve NOT_SEARCHED/NO_CEO_ON_ROSTER rather than the predicted NO_VERIFIED_SITE, because their filed rosters carry no officer identifiable as CEO -- a gate that fires before the domain check and that neither signed half named.",
     "notes": "Did not block AC3/AC4 grading: both criteria's own <expect> text is written broadly enough to cover NOT_SEARCHED with either reason_code and either rewritten value, so this is a mismatch between the SIGNED PAIR's illustrative prose and the measured system, not a criterion failure. No rollback fired; no cap breach; no secret leaked."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S192",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T16:58:00Z",
+    "one_line": "The rk-48 direct act wrote OUTSIDE what both signed chain E halves covered, and this seat's own COO half is the defect: (1) two NEW raw objects, raw/bloomberg/CSL_AU_Equity/20260921T162530Z/exec_officers.json and raw/bloomberg/6861_JP_Equity/20260921T162534Z/exec_officers.json, written by enrich's Bloomberg fallback re-pull -- the half's BLAST RADIUS named only the 3 dated management keys and its writer census counted writers OF those keys, never the act's own full write set; (2) ceo_public_profile CHANGED on all 3 keys (absence_class NOTHING_FOUND -> CANNOT_SAY, basis rewritten), where the half's expected outcome said 'ceo_public_profile unchanged' and 'nothing rewritten' for a NOT_SEARCHED name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's own read-back (boto3 list_object_versions + get_object by VersionId, a different instrument from the worker's enrich.validate()), 2026-09-21 ~16:55Z: each of the 3 keys has exactly 2 versions and 0 delete markers -- pre-act (CAT PO0KN5ZW..., CSL pNV1.QMgs..., 6861 ntH46iAf...) and one new latest at 16:25:31-38Z. Top-level diff per key: added ['ceo_profile'], removed [], changed ceo_public_profile + generated_at (+ fallback on CSL and 6861).",
+        "Leaf diff: ceo_public_profile.absence_class NOTHING_FOUND -> CANNOT_SAY on 3 of 3; ceo_public_profile.basis replaced by 'NOT_SEARCHED / <reason_code> -- 0 url(s), 0 fact(s) verified of 0 proposed'; fallback.pulled_at and fallback.raw_key re-pointed to the 2026-09-21 stamps on CSL and 6861 (CAT's name_source is FILING, no fallback, no raw write).",
+        "list_objects_v2 over raw/bloomberg/<key>/2026092* : CAT 0, CSL 1, 6861 1 -- the two new exec_officers.json objects above, 16:25:35Z and 16:25:37Z.",
+        "_pool/ untouched: 3 objects, newest management/v1/_pool/2026-09-19.json ETag 7a1197377a0fff0e4e861ebc5208cf4a, LastModified 2026-09-19T05:39:03Z -- equal to AC1's baseline. SERP 0 of 9, model USD 0.00 of 2.00 (worker report)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "NEVER_WIDEN_ROUND14_CHAIN_E_COO_HALVES.md, signed AMGT-rk-48 section: BLAST RADIUS = the 3 management keys rk-47 wrote, `_pool/` untouched; EXPECTED OUTCOME for a name with no verified_site: nothing searched, nothing rewritten for it; offline branch: ceo_public_profile unchanged.",
+    "world_is": "The act searched nothing and spent nothing, but it rewrote all 3 keys (ceo_profile added, ceo_public_profile's absence class moved to CANNOT_SAY), and for CSL and 6861 enrich's Bloomberg fallback re-pulled exec_officers and wrote 2 new raw stamps outside the named radius.",
+    "notes": "EXPOSURE vs INCIDENT: this is an INCIDENT (the out-of-radius writes fired), with no rollback proposed by this seat. (a) The 2 raw stamps are ADDITIVE (new keys, nothing overwritten) and carry exec_officers only, so AMGT-rk-70's NoRawStampError guard rejects them as model-block stamps -- the W38-S5 trigger the CVO recorded live at 16:25Z in ADJUDICATION_v16 is these two writes. Deleting them is an S3 delete and needs Andrew's word; none is asked. (b) CANNOT_SAY is the truthful class for a name that was never searched (NOTHING_FOUND claimed a search that did not run), so rolling the 3 keys back would restore the less accurate value; the per-key rollback (re-put by pre-act VersionId) stays available. LESSON for any future never-widen half on an enrich run: census the ACT's write set (every writer the invoked entry point reaches, incl. fallback pulls), not only the writers of the keys the act targets. The worker's own row W71-S1 named the rewrite and the reason codes but not the raw writes or the ceo_public_profile change. For the CVO's L9 on rk-48."
   }
 ]
 ```
