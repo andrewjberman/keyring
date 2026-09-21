@@ -564,7 +564,7 @@ def validate(reg_dir=None, systems_file=None):
                 except (RaiseDefect, IndexError):
                     pass  # the tokeniser cannot place it here either; not this check's job to say why
                 else:
-                    if not rph:
+                    if not rph and _rsysv == system:
                         refuse(where, "name", "%r already resolves a system from its own tokens (type %r);"
                                " a row for it is redundant" % (name, typ))
 
