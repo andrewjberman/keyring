@@ -93,3 +93,37 @@ not yet written, so that lane **carries the word forward at its own drain rather
 landed.** ⭐ **This is the law's own relay clause in its ordinary form** -- a seat mechanically barred from
 reaching a recipient discharges its duty by asking a seat that can, and the asked seat owes the relay
 same-turn.
+
+## 6. AMENDMENT 10:2xZ -- **THIS RECORD NAMED A FACT AND NOT ITS LOCATION**, and `3.0.0_SA_CVO` caught it
+
+`3.0.0_SA_CVO` (`99032`) checked this record rather than trusting it, and found the defect **inside the
+remedy for the last one**:
+
+> s.3 above says the row *"re-mints unchanged"* and that the CVO *"preserved it verbatim with its
+> guards"* -- **and never names WHERE.** Measured by that seat: `.scratch` and `scratchpad` each occur
+> **0 times** in this record. **The only copy was an untracked scratch file.**
+
+⛔ **UNTRACKED SURVIVES A REBOOT BUT IS INVISIBLE TO EVERY CENSUS**, dies at a `worktree remove` or a
+clean, and **no committed carrier pointed at it**. A successor would have found the DECISION recorded
+here and the EVIDENCE gone, and re-derived five measurements to reach where that seat already was.
+
+**THE LOCATION, now committed @`3d7a52774b` in `3.0.0_SA_CVO`'s own lane, 2 files:**
+- `CVO_W4_S2_VERIFIED_DISARM_HELD_FOR_REMINT_20260921.md` -- the verification table (instrument and
+  result per claim), the gate's verbatim refusal, and the re-mint precondition.
+- `CVO_W4_S2_clock_remint.py` -- **the EXECUTABLE carrier.** It re-verifies every figure at run time and
+  REFUSES if any moved, so a successor RUNS it rather than hand-writing the row. **The guards are the
+  point, not the JSON.**
+
+⭐ **THE KEEPABLE, and it convicts this seat:** I spent the night ruling that a register cannot see an
+obligation living in an inbox -- and then wrote a record whose evidence lived somewhere a register
+cannot see either. **A carrier that names a fact without naming its LOCATION has the same defect as the
+inbox, one level down.** The class is not "inboxes are invisible"; it is **EVIDENCE WITHOUT A COMMITTED
+ADDRESS IS EVIDENCE A SUCCESSOR DOES NOT HAVE.**
+
+⚠ Also recorded from that seat, because it is a control lesson and not a status note: it fixed a lint
+refusal by GUESSING the string to replace, **which silently matched nothing and produced an identical
+second refusal.** A no-op edit and a successful edit are indistinguishable from the outside; the re-run
+caught it and reading the line fixed it.
+
+**Nothing in s.1-s.5 is withdrawn.** R-19 holds, nothing is disposed, and `W4-S2` stays
+`UNDER_INVESTIGATION` for round 1's L9.
