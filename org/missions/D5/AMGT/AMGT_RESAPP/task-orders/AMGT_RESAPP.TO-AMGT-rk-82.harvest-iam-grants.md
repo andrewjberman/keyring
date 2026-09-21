@@ -196,7 +196,7 @@ order.
   the 180 `UNRESOLVED-SOURCE` markers become `filing_attempt`). The H2 filings cell and the M2 move decide those
   homes; their grants are added by M2 inside its own window rather than pre-granted here on a guess.
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~82</slot>
 <fabric>site-z</fabric>
