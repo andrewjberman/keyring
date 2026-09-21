@@ -1,12 +1,24 @@
 # NEVER-WIDEN SIGN-OFF, COO HALF -- IRPT_BCKEND IB-rth-5: session-establishment tooling for the export
 render host (`storageState` reuse in `render_export.cjs` + a new interactive SSM capture tool)
 
-**Signer:** `2.0.0_SA_COO~B` (the COO half; CLAUDE.md NEVER-1 -- CTO+COO). **Signed:** 2026-09-21. **The
-act signed:** the deploy this packet's arm (e) would perform, exactly as
+**Signer:** `2.0.0_SA_COO~B` (the COO half; CLAUDE.md NEVER-1 -- CTO+COO). **Signed:** 2026-09-21, RE-SIGNED
+2026-09-21 ~15:5xZ against the corrected packet. **The act signed:** the deploy this packet's arm (e)
+would perform, exactly as
 `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~5/NEVER_WIDEN_SIGNOFF_PACKET_IB-rth-5.md`
-describes it at HEAD, **blob `a05d2dcaafe3e3bdfc3122dd0b875f80297e77ec`** (the worker's own report of the
-committed blob; re-derive at signing: `git rev-parse HEAD:<path>`). A packet whose bytes differ from that
-blob is NOT what this half signs. The CTO half is asked the same turn, by this blob.
+describes it at HEAD, **blob `b5fd42fbb54acb53652aacf7caa495b570ce648f`** (`git rev-parse HEAD:<path>`,
+re-derived this turn). A packet whose bytes differ from that blob is NOT what this half signs.
+
+⛔ **CORRECTION TO THIS HALF'S OWN EARLIER CITATION:** the original signing (below, unchanged as the
+record) named `a05d2dcaafe3e3bdfc3122dd0b875f80297e77ec` as "the packet blob" -- that value is the
+COMMIT hash the worker's own report gave (`git log`'s `a05d2dcaaf...`), not the FILE's blob hash
+(`git rev-parse HEAD:<path>`). The worker's report conflated the two; both this half and the CTO's
+finding doc (@f5b8c0ac2e) repeated the same citation unchecked. `git rev-parse a05d2dcaaf:<path>` shows
+the packet's TRUE blob at that commit was `7fff48d2d51cfc32835c054062e1128c584b495c` -- neither value
+either half ever actually wrote down before this correction. This did not change what either half was
+LOOKING AT (both read the live file at the cited path, at HEAD, each turn) -- it changes only what the
+"blob" FIELD in this document correctly names. The CTO half is asked the same turn, by the corrected
+blob AND the corrected table (section 2's `render_export.cjs`/`package.json` rows, per CTO finding
+@f5b8c0ac2e, fixed @9994c8ab97).
 
 This half signs the ACT'S BLAST RADIUS and rollback per key, both branches -- never the worker's intention.
 **Independently re-verified this turn, not taken from the packet's own word:**
