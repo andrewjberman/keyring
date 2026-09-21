@@ -1177,7 +1177,7 @@ def _open_tos_census(root, code, merging=False):
 # `_stale_open_row_violations` docstring's own rule, ~:991, "A GATE REFUSES AN ACT ONLY WHEN THAT ACT CAN
 # REMEDY THE GATE'S CONDITION").
 
-_PROOF_BLOCK_RE = re.compile(r"<proof_of_spec>(.*?)</proof_of_spec>", re.S)
+_PROOF_BLOCK_RE = re.compile(r"^[ \t]*<proof_of_spec>[ \t]*$(.*?)^[ \t]*</proof_of_spec>", re.M | re.S)
 _CRITERION_OPEN_RE = re.compile(r"<criterion\b([^>]*)>")
 _CRITERION_ID_RE = re.compile(r'id\s*=\s*"([^"]+)"')
 _CRITERION_JUDGMENT_RE = re.compile(r'judgment\s*=\s*"true"', re.I)
@@ -1187,7 +1187,10 @@ _ORDER_ROUND_RE = re.compile(r"^\s*<round>\s*([0-9]+)\s*</round>", re.M)
 def _order_criteria(text):
     """[{'id': cid, 'judgment': bool}, ...] in document order, parsed from the order's FIRST
     <proof_of_spec> block (falls back to the whole text when the block tag itself is missing, so a
-    malformed order still yields what it can rather than nothing). PURE: string in, list out."""
+    malformed order still yields what it can rather than nothing). PURE: string in, list out.
+    _PROOF_BLOCK_RE is line-anchored on both the opening and closing tag (the way _ORDER_ROUND_RE
+    already anchors <round>), so a prose mention of the tag earlier in the order text -- backticked,
+    mid-sentence -- can no longer swallow the real block (row AMGT_RESAPP-Z-S176)."""
     m = _PROOF_BLOCK_RE.search(text or "")
     block = m.group(1) if m else (text or "")
     out = []
