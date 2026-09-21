@@ -5996,3 +5996,28 @@ that exception is precisely what hid this, so it is stated rather than relied on
   "notes": "⛔ FILED ARMED AND DELIBERATELY NOT FIXED, AND THE REASON IS THE POINT: `.tools/surprise-row-gate.py` is lane LOOP_MECHANISM, permitted_agents ['1.0.0_SA_CTO','3.0.0_SA_CVO'] -- I CAN edit it tonight, which is exactly why I should not. THE MOMENT A DEFECT STARTS COSTING ME IS THE WORST MOMENT FOR ME TO RULE ON MY OWN GATE, and I have already refused one alternative (a gate amendment admitting an appearing key) on that same ground within the hour. ⭐ THE KEEPABLE, WIDER THAN THIS GATE: A RULE LEARNED AS A PERSONAL PROHIBITION DOES NOT TRANSFER TO AN INSTRUCTION YOU GIVE SOMEONE ELSE. This gate refused THIS SEAT an in-place row edit at ~22:0xZ; the seat ruled on that refusal, logged it and broadcast it -- and then, three hours later, INSTRUCTED ANOTHER SEAT TO PERFORM THE SAME ACT SIX TIMES. Nothing fired, because the rule had been internalised as 'do not edit a committed row' -- a constraint on MY HANDS -- while the gate's rule is a property of THE BYTES and binds whoever types them. COST: when you write an instruction, ask whether you would be permitted to execute it yourself. NON-APPLICATION: an act whose permission genuinely depends on the actor, such as a lane grant, where the answer is legitimately different for a different seat. ⚠ WHAT THIS ROW DOES NOT CLAIM: that the proxy is wrong. It may be right that a new remediation row IS a slug in the general case; what is measured is only that it fires on a carrier-minting act that closes no round, and that the population needing such acts is 35. The fix -- if any -- is a decision for daylight and not for the seat that is currently paying the toll."
 }
 ```
+
+```json
+{
+  "id": "LGIC_ENFORCE-S151",
+  "project": "LGIC_ENFORCE",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~X",
+  "surfaced_at": "2026-09-21T19:50Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "record-terraform-deploy.sh cannot record an inf-pipeline deploy: the CHANGELOG entry it regenerates sweeps git history back weeks across OTHER functions, and the LGIC_ENFORCE naming gate REFUSES that commit on 61 lines of pre-existing inf-* names, so the deploy's CHANGELOG step is blocked for every seat.",
+  "spec_asserts": "The Lambda deploy sequence (infra/aws/lambda/ci/build-and-upload.sh header, step 7) says to run record-terraform-deploy.sh after every apply, and it commits CHANGELOG.json plus lambda-source-map.json. The naming gate's EXISTING-carrier rule grades pre-existing names as WARN, not REFUSE.",
+  "world_is": "Run 2026-09-21 ~19:47Z for inf-pipeline-v1.7.101, with --function scoped to 2 functions: the tool wrote a v1.7.101 CHANGELOG entry whose change list reached back to 2026-08-01 and named other functions (inf-otp-relay, inf-api-txn, inf-silver-chain, inf-api-eclipse, inf-bronze-complete-emitter, ...). The commit was refused: 'NAMING-GATE: REFUSE 61 graded' and 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' Lines like CHANGELOG.json:229 'inf-api-eclipse' graded 'NEW hand-kept carrier', because the regenerated entry is new text even though the names are old.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "EXERCISED: bash infra/aws/lambda/ci/record-terraform-deploy.sh inf-pipeline --function inf-ec2-launch-monitor,inf-ec2-retry-launch --version inf-pipeline-v1.7.101 --author '0.7.0_AE_CloudOps~X <...>' -> rc=1, REFUSE 61 graded, commit aborted",
+      "the generated CHANGELOG diff (+235 lines) is kept in this seat's scratchpad as CHANGELOG.generated.diff; CHANGELOG.json was restored to HEAD and the source-map half was committed alone @75e31a784b",
+      "the deploy itself is unaffected: inf-launch-texts-20260921 ledger CLOSED 3 of 3 legs; the refusal hits only the record step"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the refusal is loud and nothing is served from CHANGELOG.json. The cost is that every inf-pipeline deploy leaves its CHANGELOG unrecorded, or a seat reaches for an override. Two remedies, not this seat's to pick: have the record tool write only the functions in --function (the sweep is also a mis-attribution, since it records other seats' changes under the recording seat's version), or have the naming gate grade a regenerated block of pre-existing names as EXISTING. Owners: the naming gate's (LGIC_ENFORCE) and record-terraform-deploy.sh's."
+}
+```
