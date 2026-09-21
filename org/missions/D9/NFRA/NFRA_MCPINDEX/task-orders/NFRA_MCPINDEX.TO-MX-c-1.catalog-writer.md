@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_MCPINDEX~1</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>blocked -- drained by 2.0.0_SA_COO~M @41da358d45: MXC1-AC1,2,3,5,6 PASS by output, AC7 recorded for L9, AC4 FAIL -- REFUSED on grant (row NFRA_MCPINDEX-W1-S1: the exercise writes the served catalog and an emitter input, and the cut granted neither). The proof instance is schema-VALID and records that FAIL, so this order is NOT complete. It waits on an issuer amendment under a 1.0.0_SA_CTO ruling, or on the round-N recut.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `org/missions/D9/NFRA/NFRA_MCPINDEX/prd/NFRA_MCPINDEX_PRD.md` @b7dc80e2cc (ADMITTED) | **Decomp cell:** `MX-c-1` | **serves:** C1, V.1, FWD-10 | **slot:** ~1, queue position 1 of 5
 
