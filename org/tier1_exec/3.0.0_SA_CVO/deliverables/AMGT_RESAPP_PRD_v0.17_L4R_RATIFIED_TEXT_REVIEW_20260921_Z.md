@@ -1,8 +1,18 @@
 # L4-R review -- AMGT_RESAPP PRD v0.17, ratified-text half (`3.0.0_SA_CVO~Z`)
 
-**PRD:** `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` @`6f39881c3c`. **Half:** ratified-text, hash
-`1db45ee3d67d` (from `e231f4ecc4ce` at v0.16, signed @`4e83003847`), measured from the committed bytes.
-**Delivery:** `1.0.0_SA_CTO~Z` msg 24088. **Verdict: SIGN.**
+**PRD:** `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` @`1f7459456a`. **Half:** ratified-text, hash
+`b89abe763562` (from `e231f4ecc4ce` at v0.16, signed @`4e83003847`), measured from the committed bytes.
+**Delivery:** `1.0.0_SA_CTO~Z` msgs 24088 and 24095. **Verdict: SIGN.**
+
+**Vintage note.** This review was first written against @`6f39881c3c` (hash `1db45ee3d67d`) and committed @`77060a0078`.
+The pre-stamp re-read found the half had moved to `b89abe763562`: the CTO tightened two contracts @`1f7459456a` on the
+brief reviewer's flags (msg 24095). The stamp was withheld, the new diff read, and this review re-pointed to it.
+**The tightening @`1f7459456a`:** C-LUSHA-EXCEPTION names every dropped channel (emails, phones, postal addresses,
+personal messaging or social handles) and keeps ONE public professional-profile URL, as the "profile link"
+C-EXEC-MANAGEMENT serves; C-FORMAT-SEQUENCE splits derived filings records -- `.source.json` to silver, `.analysis.json`
+to gold under R10, matching plan s.5.9. **Limit on the Lusha clause:** a professional-profile URL is itself a route to
+the person (such sites carry messaging). Its retention rests on its being an already-served field, not on its being
+inert; whether Andrew's "contact fields dropped" was meant to reach it is his to say.
 
 ## What changed in this half (three CONTRACTS hunks; ENDPOINT :309-552 carries no hunk)
 
