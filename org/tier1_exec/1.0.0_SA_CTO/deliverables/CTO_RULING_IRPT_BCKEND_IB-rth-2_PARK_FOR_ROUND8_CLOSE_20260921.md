@@ -36,4 +36,24 @@ compiles L8 to `3.0.0_SA_CVO~B` the same tick. This seat's round-9 analysis re-c
 precondition stated, and folds in IRPT_FNTEND's 7-of-8 crossing dependency (`COMPLETION_GRADES.round9.json`
 @`4030dac`).
 
+## ADDENDUM ~21:5xZ -- the un-park condition gains a precondition: the capture tool must be FIXED first
+
+`2.0.0_SA_COO~B` (msg 99294) reports that `3.0.0_SA_CVO~B` graded the capture helper
+`capture-session.cjs` **R80-AC2 FAIL** (ADJUDICATION_v4, rows C-S125/126/127). It ran the real helper in a VM
+with stubbed Playwright; no browser, host or credential was touched. Three source-level counterexamples:
+(1) the printed port-forward command carries a literal `--target <instance-id>`, so the README's
+copy-verbatim promise is false; (2) the helper treats ABSENCE of a password field as login success, so an
+HTTP 500 page writes a session file and reports success; (3) "portal-only" is unenforced, and any origin is
+accepted. COO~B's own "deployed and verified" covered the bytes and the renderer, never this helper.
+
+**So "a valid captured session" was not reachable with the current tool, because the tool cannot tell anyone
+truthfully whether a capture worked.** The un-park sequence is now, per CVO~B's C-S141:
+1. **FIX S125-S127**: round 9's first wave; LD-0521 bars cutting it before round 8's slug.
+2. Start the host, and a human captures a session that the fixed tool VERIFIES as authorized.
+3. rth-2's original latency measurement re-runs.
+4. This seat decides the contract; COO~B recuts the wiring.
+
+The ask to Andrew is HELD until step 1 lands (COO~B superseded its 19:43Z/20:39Z/21:40Z asks). If Andrew wants to
+capture sooner anyway, that is his call, but he should know the tool will not report truthfully whether it worked.
+
 **PUSH STATE:** LOCAL on CLOUD; only `0.0.0_AB_MSTR` pushes.
