@@ -4906,6 +4906,31 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W9-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~9",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "FE-s-59's correctly-scoped, additive render (unprojectedGrant badge, sited beside the Fact grid, outside the cohort blocks) breaks fe-s-48/withheld.test.ts's F48-AC4 self-test, which is out of this cell's <paths> grant: that test diffs ScopeSummary.tsx against DEV 1f3ce9f0 by NAIVE POSITIONAL INDEX (`a[i] !== b[i]`, no LCS/diff), so ANY future line-count change to the file -- inserted before its checked line -- makes it register nearly the whole file as changed, independent of whether the new code is correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-59 F59-AC5: 'the whole IRPT_FNTEND suite is green', invocation `cd <WS>/portal && bun test src/pages/InvestorReporting`, expect `(?<![0-9])0 fail`.",
+    "world_is": "At portal HEAD 61dbe93c (this cell's own commit -- header/ScopeSummary.tsx's PartialDisclosureFact addition plus the new __tests__/fe-s-59/ test, both within this cell's <paths>), `cd <WS>/portal && bun test src/pages/InvestorReporting` reads '605 pass', '21 skip', '1 fail', '2562 expect() calls', 'Ran 627 tests across 112 files.' -- so F59-AC5's `0 fail` expectation is NOT met, by one test: `fe-s-48/withheld.test.ts` F48-AC4 ('the arm that can say no: DEV 1f3ce9f0 built the withheld fact'). Root cause, confirmed rather than assumed: F48-AC4's own `onlyTheFact` check requires `a.length === b.length` (the file's TOTAL code-line count unchanged since DEV 1f3ce9f0) AND exactly one index differs; before this cell's commit the printed line read 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 1 of 111 [only the withheld fact: yes]' (this worker's own pre-commit run, working copy against the then-current committed HEAD); after this cell's commit, the SAME invocation over the SAME two fixed vintages (DEV 1f3ce9f0 and the file's OWN prior blob is unchanged -- only HEAD moved) reads 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 102 of 138 [only the withheld fact: NO]'. This cell added ~27 net lines (a new import member, a 21-line documented `PartialDisclosureFact` function, and a 3-line render call) ABOVE the withheld-fact line's position; because the comparator is a raw per-index array compare rather than a diff, every line from the insertion point onward reads as 'changed' purely from the resulting shift in array index, not from any actual content difference at those positions (F48's OWN functional assertions -- F48-AC2, F48-AC3, the withheld-vs-unknown rendering behavior -- still PASS at this same HEAD; only AC4's positional self-test fails). fe-s-48/withheld.test.ts is NOT in IRPT_FNTEND.TO-FE-s-59's <paths> (`portal/src/pages/InvestorReporting/header/ScopeSummary.tsx`, `portal/src/pages/InvestorReporting/__tests__/fe-s-59/`, and this project's surprise-channel investigation file only), so this worker cannot repair the comparator or rebase its DEV_BEFORE pin without exceeding its grant. hazard_standing ARMED: the same naive-diff shape will refuse ANY future cell that adds or removes even one line from ScopeSummary.tsx above F48-AC4's checked position, regardless of correctness -- this is the first cell to do so since fe-s-48 landed (every intervening cell, e.g. FE-s-57's type-only import edit, happened not to change the file's total line count), so the fragility was latent, not previously exercised. F59-AC5 is REFUSED as written on this measurement; F59-AC1/AC2/AC3/AC4 all PASS-by-output and are unaffected.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal worktree wk-irpt_fntend-9-59-fe-s-59-portal @61dbe93c (this cell's own commit): `cd <WS>/portal && timeout 600 bun test src/pages/InvestorReporting` -> '605 pass', '21 skip', '1 fail', '2562 expect() calls', 'Ran 627 tests across 112 files.'",
+        "the single fail line, verbatim: 'F48-AC4 -- the arm that can say no: DEV 1f3ce9f0 built the withheld fact \": unknown\" > the withheld fact line in each committed blob, and no other code line moved' at src/pages/InvestorReporting/__tests__/fe-s-48/withheld.test.ts:306:25, `expect(onlyTheFact).toBe(true)` Expected true Received false",
+        "printed diagnostic post-commit: 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 102 of 138 [only the withheld fact: NO]'; same invocation pre-commit (working copy vs then-HEAD, before this cell's commit): 'CODE LINES CHANGED OUTSIDE THE HEADER COMMENT: 1 of 111 [only the withheld fact: yes]' -- the ONLY variable between the two runs is this cell's own commit landing",
+        "src/pages/InvestorReporting/__tests__/fe-s-48/withheld.test.ts:295-300 @61dbe93c, read directly: `const changed: number[] = []; for (let i = 0; i < Math.max(a.length, b.length); i++) if (a[i] !== b[i]) changed.push(i); const onlyTheFact = a.length === b.length && changed.length === 1 && ...` -- a positional index compare, not a diff (no LCS, no common-subsequence alignment)",
+        "F48-AC2 and F48-AC3 (the same file's functional assertions on withheld-vs-unknown rendering) both PASS at portal HEAD 61dbe93c, printing 'NON-AUTHORITATIVE COHORT READS WITHHELD ON EVERY AXIS: 5 of 5' and 'IN-ENUM AUTHORITATIVE ADVISORY UNCHANGED: 3 of 3' -- so this is not a functional regression in ScopeSummary.tsx's rendering, only in F48-AC4's own line-position self-test",
+        "IRPT_FNTEND.TO-FE-s-59.scope-summary-unprojected-grant-badge.md <paths>: portal/src/pages/InvestorReporting/__tests__/fe-s-48/ is not a member"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
