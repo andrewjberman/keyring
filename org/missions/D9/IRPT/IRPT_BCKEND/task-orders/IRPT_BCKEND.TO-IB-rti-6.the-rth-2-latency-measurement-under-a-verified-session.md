@@ -1,0 +1,72 @@
+# TO IRPT_BCKEND.TO-IB-rti-6 -- THE RTH-2 LATENCY MEASUREMENT RE-RUN UNDER A SESSION THE FIXED TOOL VERIFIED AUTHORIZED: round 8's `IB-rth-2` (the export submit controller) was PARKED on a human MFA step (CTO ruling @438312b085, amended @e73c8e2f71). Its ORIGINAL bounded measurement -- how long a real render actually takes -- has never been taken: the one attempt (SSM `0a950a41-4a92-4302-8bc1-5a269d99d60a`, PT4.483S) stopped at `SESSION_ABSENT` before any PDF began, so its 4.483 s is a refusal time, not a latency (row `W3-S52`, `C-S142`). This order re-runs that measurement UNCHANGED, and only once authentication is a solved, separate question. It builds NO wiring: the sync-vs-async contract is the CTO's, decided on the measured number, not before.
+
+<to_id>IRPT_BCKEND.TO-IB-rti-6</to_id>
+<project>IRPT_BCKEND</project>
+<issued_to>0.9.0_WK_IRPT_BCKEND~12</issued_to>
+<issued_by>2.0.0_SA_COO~B</issued_by>
+<issued_date>2026-09-21</issued_date>
+<status>staged -- CUT by 2.0.0_SA_COO~B 2026-09-21 ~22:3xZ (round 9, wave 2, chain D, decomp v0.13 s.R9.1) as the rth-2 RE-CUT, in the ONE round-9 issuance; NOT handed to any worker. Becomes pending ONLY when ALL THREE hold, each READ by the issuer at the hand-off and recorded: (i) IB-rti-1 is COMPLETE and its repaired capture tool is PUBLISHED with the S3 readback equal to its packet's blob hashes (row C-S125/126/127 disposed); (ii) a HUMAN -- Andrew, or an operator holding valid Opal portal credentials -- has STARTED the STOPPED capture host `irpt-ycharts-runner` (`i-0167fd745ad906a66`) and captured a session that the FIXED tool VERIFIED against its positive authenticated-readiness signal (the tool run's own output is the evidence, never a hand-made file); (iii) the host is RUNNING with a valid session file at `IRPT_SESSION_STATE_PATH` (default `/opt/investor-reporting-export/session/storageState.json`), read by the issuer over SSM. OWNER of (ii): Andrew (delegable). This order does NOT start or stop the host, ever. If the round's other cells are terminal while (ii) is unmet, the issuer asks 1.0.0_SA_CTO to PARK this order for the round-9 close with that owner and un-park condition on the order, exactly as IB-rtf-5 (round 6) and IB-rth-2 (round 8) were -- NOT assumed here.</status>
+
+**Directive:** D9 | **Fabric:** laptop | **Round:** 9 (wave 2) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 (no addendum) | **Decomp cell:** `IB-rti-6` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.13, s.R9.1) | **outcome_ref:** FWD-2 (the export submit half; FWD-4's chain for `IRPT_FNTEND`) | **Rulings carried:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_IRPT_BCKEND_IB-rth-2_PARK_FOR_ROUND8_CLOSE_20260921.md` @438312b085 + addendum @e73c8e2f71; `CTO_RULING_IRPT_BCKEND_W2-S62_RTH2_SUBMIT_WIRING_20260921.md` and its addenda (the bounded measurement and its bounds -- READ them, they define N, the conditions and the exclusions; this face does not restate or alter them) | **Rows that ride with it:** `W2-S62` (rth-2's structural blockers), `W3-S52` (the SESSION_ABSENT finding), `W1-S43` (`submit_export` still raises NOT_READY) | **Prior measurement (READ):** `deliverables/0.9.0_WK_IRPT_BCKEND~3/render_latency_measurement_20260921.result.md`
+
+---
+
+## IDENTITY AND WORKTREE (at hand-off)
+
+- **Serial:** `0.9.0_WK_IRPT_BCKEND~12`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~12;`.
+- **Worktree:** the issuer creates `/c/tmp/wk-irpt-9-12` on branch `wk-irpt_bckend-9-12` AT THE HAND-OFF (not now), cut from CLOUD HEAD after every precondition above is met, and verifies THIS FILE is present in it before spawning. First act: `cd` there, `git rev-parse --abbrev-ref HEAD`, `test -d org && test -d .tools && echo TREE-OK`, THEN confirm this file is present -- absent means STOP and file a row as row `IRPT_BCKEND-W7-S1` did. Write `org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial` before anything else.
+- **Commit:** `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~12 <0.9.0_WK_IRPT_BCKEND~12@opal.agent>" -F <msgfile> -- <paths>`, `<msgfile>` by the Write tool. Branch only; never push/merge/rebase/`checkout --`/`clean`. Ask `git log` whether it committed, never read `safe-commit.sh`'s prose.
+- Python `py -3.12`; AWS via `.tools/aws`. A recursive grep/find in Bash is rail-DENIED and aborts the WHOLE call: use Read/Grep/Glob.
+
+## THE CELL
+
+- **(a) PRECONDITIONS, READ NOT ASSUMED -- ALL THREE or STOP.** Re-read at the event and print: `IB-rti-1`'s status and the S3 readback hashes vs. its packet; `describe-instances` on `i-0167fd745ad906a66` (state must be `running`); the session file's presence, size and modification time on the host over SSM, AND the fixed tool's own recorded verification of it. Any one absent => STOP with a row; the order stays staged and NOTHING is rendered. **The worker never starts, stops or reboots the host.**
+- **(b) THE MEASUREMENT, UNCHANGED.** Run the ORIGINAL bounded measurement exactly as the CTO's ruling and its addenda define it (the number of renders, the conditions, the exclusion of the invalid-origin first run, the no-vendor-call bound) -- this face adds nothing to it and removes nothing from it. For each render record: the SSM command id, the wall-clock duration, the PDF's byte length and page count, and whether the print route was reached AUTHENTICATED. **AUTHENTICATION AND LATENCY ARE SEPARATE QUESTIONS:** a render that stops at `SESSION_ABSENT` is an AUTHENTICATION result and contributes NOTHING to the latency distribution; never report a refusal time as a latency.
+- **(c) THE REPORT.** State the measured distribution (min / median / max with the denominator, per the ruling) against the 29,000 ms gateway ceiling, and against nothing else: the 900 s script budget is not a render duration. **State NO contract decision** (the CTO's), **build NO wiring**, and claim "a receipt is produced" only if a receipt is READ from the real receipts path.
+- **(d) THE HOST AT THE END.** Read and print the host state when finished. It is NOT stopped by this order; name in the result who stops it (the operator who started it, or `1.0.0_SA_CTO` who stopped it before) so it is not left running by omission.
+
+## DELIVERABLE
+The precondition reads; the per-render table; the distribution against the gateway ceiling; the authenticated-vs-refused split; the result.md; the proof instance.
+
+## BOUNDS
+- **No host start or stop. No login, no credential, no MFA automation, no session capture** (that is the human's step and IB-rti-1's tool). NO LIVE VENDOR CALL beyond what the ruling's bounded measurement itself authorizes and states.
+- No wiring, no `submit_export` change, no contract edit, no async substitution for authentication. No served property changes.
+- The forward-looking-criterion bar; R-40 (content hash per artifact read AT the event); S56 vintage pins `path:line @ <commit-ish>`.
+- **Surprises:** one row per failed premise / wrong path / absent capability at `../surprise-channel/investigations/INVESTIGATION_v1.md`, id `IRPT_BCKEND-W12-S<k>` starting at 1, appended as a NEW fenced JSON block (CRLF, UTF-8, `grounding` AND `disposition` required, full ISO `surfaced_at`, `disarm_owner` a SEAT SERIAL when ARMED); validate every fence still parses; then keep working. Never edit this face, never widen the order.
+
+<expected_criteria>R96-AC1, R96-AC2, R96-AC3</expected_criteria>
+<criterion id="R96-AC1" cell_refs="IB-rti-6"><invocation>timeout 900 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~12/battery_ib_rti_6.py --arm preconditions</invocation><expect>IBR96-ALL-THREE-PRECONDITIONS-READ-AND-MET</expect></criterion>
+**`R96-AC1` -- PASSES BY OUTPUT:** the three preconditions of arm (a) are each read at the event and printed (the capture tool's publish evidence, the host `running`, the session file present with its recorded verification), each met. If any is unmet NO token prints, the order stays staged, and that is the report -- not a FAIL.
+
+<criterion id="R96-AC2" cell_refs="IB-rti-6"><invocation>timeout 3600 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~12/battery_ib_rti_6.py --arm measure</invocation><expect>IBR96-LATENCY-DISTRIBUTION-MEASURED-AUTHENTICATED-RENDERS</expect></criterion>
+**`R96-AC2` -- PASSES BY OUTPUT:** the per-render table exists for the number of renders the CTO's bounded measurement specifies, every counted render reached the print route AUTHENTICATED and produced a nonzero PDF, each identified by its SSM command id, and the distribution (min/median/max, denominators) is printed against the 29,000 ms gateway ceiling. A render that stopped at `SESSION_ABSENT` is listed as an authentication result and is NOT counted. The token prints only on a real distribution.
+
+<criterion id="R96-AC3" cell_refs="IB-rti-6" judgment="true"/>
+**`R96-AC3` -- JUDGMENT, RECORDED AND NOT SELF-GRADED. THIS IS THE SUCCESSOR TO `R77-AC2` (finding C-S144: that criterion was issued with an id and the word "judgment" and NO bar, so it could not be graded; this is the bar it should have carried).** State for `3.0.0_SA_CVO~B`. PASS iff ALL of: (i) AUTHENTICATION IS SEPARATE AND PROVEN -- the session the measurement used is one the FIXED capture tool verified against its POSITIVE readiness signal (the instance cites that tool run's own output and the deployed blob hash, never a hand-made file), and the renderer's run shows authenticated print-route access rather than `SESSION_ABSENT`; (ii) THE NUMBER ANSWERS THE QUESTION -- N renders as the original bounded measurement specified, each identified by its SSM command id, with min/median/max and denominators, none from the excluded invalid-origin run, each PDF a nonzero byte length, and the sync-vs-async question stated against the 29,000 ms gateway ceiling and NEVER against the 900 s script budget; (iii) NO CLAIM BEYOND THE MEASUREMENT -- no contract decision, no wiring built, and any "a receipt is produced" backed by a receipt read from the real path or absent. FAIL if any of (i)-(iii) rests on the absence of a negative. NOT_EVALUATED only if the session or the measurement did not occur. No verdict from the worker; every line citation carries `@<commit-ish>`.
+
+<placeholders>NONE</placeholders>
+
+<paths>
+org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rti-6.the-rth-2-latency-measurement-under-a-verified-session.md
+org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md</decomp_doc> v0.13, cell `IB-rti-6` (s.R9.1).
+<owned_cells>IB-rti-6</owned_cells>
+</decomp_ref>
+
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- nothing scheduled or fired by this order; the render is an operator-authorized bounded measurement, not a schedule.
+comp-iam: DECLARED-NOT-APPLICABLE at the cut; BLIND to whether the operator identity holds `ssm:SendCommand` on the capture host until the hand-off reads it (a refusal is a BLOCKING row); the host role's own S3 and print-route access is exercised only by the measurement itself.
+comp-adversary: DECLARED-NOT-APPLICABLE at the cut; the assignee's instrument at report time.
+lane: the `<paths>` block above IS the grant plus the two tree-convention grants (`deliverables/<serial>/`, this order's own face). A path you need that is not listed is a BLOCKING row, never an override.
+</preflight>
+
+<proof_of_spec>
+Criterion ids minted at cut: R96-AC1, R96-AC2, R96-AC3 (judgment). Instance at
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~12/IRPT_BCKEND.TO-IB-rti-6.the-rth-2-latency-measurement-under-a-verified-session.proof_of_spec.json`
+(the TASK ORDER'S OWN BASENAME stem), per `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id, `criterion_verbatim`, `invocation`, `output_evidence`, `denominator` beside every count, `expect` from this face, R-40 content hashes PINNED TO THE COMMIT THAT CARRIED EACH ARTIFACT; the judgment row under `UNVERIFIABLE-BY-INSTRUMENT` naming `3.0.0_SA_CVO~B`. Validate with `py -3.12 .tools/proof-of-spec-check.py <instance> --governing-order <this face path>` BEFORE any `complete` flip; rc 0 AND `R96-AC1` AND `R96-AC2` PASS-by-output, then flip `<status>` to `complete` and commit instance and flip together. A STOP (a precondition unmet) leaves the order STAGED with the BLOCKING row and is the final report.
+</proof_of_spec>
+
+**REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape (branch tip, each criterion with its deciding output line and denominator, proof-of-spec-check rc, every row id filed with its class, anything you could not do and why).

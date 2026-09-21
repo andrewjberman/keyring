@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 8,
-  "decomp_version": "0.12",
+  "round": 9,
+  "decomp_version": "0.13",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -61,13 +61,81 @@
   "round8_mid_round_addition_1": "IB-rth-5, ~14:5xZ 2026-09-21, on row W3-S52 and CTO ruling addendum 2 @afc015b4b2 (msg 99068)",
   "round8_mid_round_addition_2": "IB-rth-6, ~16:2xZ 2026-09-21, Andrew-direct @fb8c7a574c -- create opal-data-inflectionwealth + opal-data-cottonwoodcapital -- CLOSED SUPERSEDED ~17:5xZ on CRO msg 99124 @a0097b1ef4, the need was met another way",
   "round8_mid_round_addition_3": "IB-rth-7, ~18:0xZ 2026-09-21, on CRO msg 99124 + CTO msg 99128 -- reconcile Terraform state (ledger legs L1/L3/L4) against the manually-recovered bucket policy; carries row S116 (fence_patterns hyphen gap); found real drift, row W7-S2",
-  "round8_mid_round_addition_4": "IB-rth-8, ~19:1xZ 2026-09-21, on row W7-S2 -- never-widen packet + sign-off + apply to clear 4 tainted lgic_firm resources found by IB-rth-7's plan"
+  "round8_mid_round_addition_4": "IB-rth-8, ~19:1xZ 2026-09-21, on row W7-S2 -- never-widen packet + sign-off + apply to clear 4 tainted lgic_firm resources found by IB-rth-7's plan",
+  "round8_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_8_20260921.md @8e0f9a127e (msg 99299)",
+  "round8_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v2.md @9d7a369b38",
+  "cells_round9": 6,
+  "cell_id_shape_round9": "IB-rti-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R9. ROUND 9 -- THE RECUT ON THE ROUND-8 ANALYSIS (@8e0f9a127e, msg 99299; slug @9d7a369b38; v0.13, 2026-09-21, `2.0.0_SA_COO~B`)
+
+Round 8 closed with NO PRD addendum and no outcome REALIZED (FWD-2 SPLIT and NOT_REALIZED; FWD-11's backend half
+ADVANCED, NOT_REALIZED). Round 9 is the CTO's wave-1/wave-2 carry, cut in ONE issuance. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R9.1 The rectangle (6 cells, id shape `IB-rti-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rti-1` | CAPTURE-TOOL REPAIR (C-S125/126/127; R80-AC2 FAIL): the emitted port-forward command executable verbatim and the README matching it; a POSITIVE authenticated-readiness signal that refuses error, redirect and 5xx pages; the portal origin ENFORCED. Acceptance includes CVO~B's own VM diagnostic (`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R8_CAPTURE_DIAGNOSTIC.cjs` @06fe4f1848): its HTTP500 and arbitrary-origin counterexamples must REFUSE, its password-present control must still pass. No host start, credential or live login. Two-pass: source + packet, STOP for both never-widen halves, then S3 publish. | WK~9 | FWD-2 (serving; unblocks the rth-2 chain) | -- |
+| `IB-rti-2` | S102, THE YCHARTS MISSING-SOURCE BUILD DEFECT: `irpt-ycharts-generate` cannot be rebuilt from HEAD (its `files[]` declares `firm_registry.json` and `settings.json`, neither with a tracked source). CVO confirmed NOT fixed (S111 amended the DENOMINATOR only). INVESTIGATE FIRST, read-only; a member is declared from a TRUE source or the cell STOPS -- never a hand copy of served bytes (S96). Rebuild-and-compare only; NO apply. | WK~10 | FWD-2 / FWD-4 (the export chain) | -- |
+| `IB-rti-3` | L4 NEGATIVE CONTROL, INSTRUMENT REVISED BY THE CTO'S RULING: for each of 2 buckets, an EXISTING non-exempt principal whose IAM already allows the exact action, a POSITIVE arm outside the fence, a NEGATIVE arm attributable to the bucket policy (never the bare error code). If none exists the honest result is "cannot discriminate without a new grant" -- a finding routed to the CTO, not a PASS. No grant widened, no host started. | WK~11 | FWD-11 | -- |
+| `IB-rti-4` | C-S144: THE R77 SUCCESSOR BAR. **ISSUER-DISCHARGED AT THE CUT -- no worker order:** a judgment bar is the issuer's to write. It is issued as `R96-AC3` on `IB-rti-6`'s face (R9.4 below); `R77-AC2` stays NOT_EVALUATED, no retroactive PASS. | issuer | FWD-2 | -- |
+| `IB-rti-5` | PREMISE CORRECTIONS (W3-S51 / C-S134, W1-S46 / C-S135). **ISSUER-DISCHARGED AT THE CUT -- no worker order:** errata on the faces and R8.10 above, commit `ca91fbc11b` (originals retained under R-43; nothing flipped to `complete`). | issuer | records integrity | -- |
+| `IB-rti-6` | WAVE 2 -- THE RTH-2 RE-CUT: rth-2's ORIGINAL bounded latency measurement re-run unchanged, under a session the FIXED tool verified authorized (ruling @438312b085 + addendum @e73c8e2f71). Rows W2-S62, W3-S52, W1-S43 ride with it. **Authentication and render latency stay SEPARATE questions.** The sync-vs-async contract is the CTO's, decided on the measured number, not before; NO wiring is built here. **STAGED**: becomes pending only when `IB-rti-1` is complete and deployed AND a human has started the host and captured a session. | WK~12 (staged) | FWD-2 | `IB-rti-1`, a human session |
+
+### R9.2 Edges and fanout
+
+Chains (an edge chain is a chain; an issuer-discharged cell is not): **A** `rti-1`; **B** `rti-2`; **C** `rti-3`;
+**D** `rti-6 <- rti-1 (+ a human session)`. `rti-4` and `rti-5` are discharged at the cut and carry no worker.
+**fanout: 3 of 4 chains at the hand-off, cap 8, reason: chain D is gated on chain A and on Andrew's session;
+`rti-4`/`rti-5` are issuer acts.** A, B, C are independent (disjoint write surfaces: the capture tooling directory;
+the ycharts source dir + source map; read-only IAM census) and run in parallel -- the parallelism the CTO named.
+
+⚠ **ROUND-OPEN IMPLICATION, stated so it is not discovered later:** `rti-6` is a STAGED order; the refuser counts it
+open, so round 9 cannot close until it drains or is disposed. If waves 1's cells are terminal and the human session
+has not landed, the round would be held by a human calendar exactly as round 8 was. The remedy is the same one that
+worked: ask the CTO to PARK `rti-6` for the round-9 close with owner and un-park condition on the order. Raised with
+the CTO in the issuance message; NOT assumed.
+
+### R9.3 Bounds carried (every order)
+
+The forward-looking-criterion bar; R-40 (content hash per run/artifact READ AT the event); S56 vintage pins
+`path:line @ <commit-ish>`; NO LIVE VENDOR CALL; no host is started or stopped by any cell; no grant widened; a
+served-property change is packet + both never-widen halves BEFORE the act; a lane refusal on a granted path is a
+BLOCKING row, never an override (row W1-S48's lesson: the source map is lane-gated).
+
+### R9.4 The R77 successor bar (C-S144) -- issued as `R96-AC3`
+
+PASS iff ALL of: (i) AUTHENTICATION IS SEPARATE AND PROVEN -- the session the measurement used is one the FIXED
+capture tool verified against its POSITIVE readiness signal (the instance cites that tool run's own output and the
+deployed blob hash, never a hand-made file), and the renderer's run shows authenticated print-route access rather than
+SESSION_ABSENT; (ii) THE NUMBER ANSWERS THE QUESTION -- N renders as the original bounded measurement specified, each
+identified by its SSM command id, with min/median/max and denominators, none from the excluded invalid-origin run, each
+PDF a nonzero byte length; the sync-vs-async question stated against the 29,000 ms gateway ceiling, never against the
+900 s script budget; (iii) NO CLAIM BEYOND THE MEASUREMENT -- no contract decision (the CTO's), no wiring built, and any
+"a receipt is produced" backed by a receipt read from the real path or absent. FAIL if any of the three rests on the
+absence of a negative. NOT_EVALUATED only if the session or the measurement did not occur.
+
+### R9.5 Not decided here, and named so it is not silently adopted
+
+The sync-vs-async contract (CTO). `S116` and `W1-S47` (`lib/opal_naming.py`, the CTO's own lane, LGIC_ENFORCE). Deleting
+the two break-glass roles (CRO / Andrew). The 150 older rows rth-4 carried stay open -- no bulk close. FWD-5's
+realization exercise (no claim this round). NOT re-dispatched, REMEDIATED in-round: W1-S48, S111, S112, S113, W7-S2, W8-S2.
+
+### R9.6 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-8 analysis, wave 1 (5 items) + wave 2 (1 item) = 6. MINUS the REMEDIATED-in-round set
+(6 rows, excluded by the CTO's own ruling) MINUS the external set (S116, W1-S47, role deletion, the 150 rows) = 6 cells,
+0 uncovered, 0 invented by this seat. SAME GRAIN: each cell is one repairable defect or one measurement. INTENT: `rti-1`
+repairs, `rti-2` investigates-then-builds, `rti-3` measures, `rti-6` measures. STATE COHERENCE: a cell that finds it cannot
+proceed (no eligible principal; a member with no true source; no session) records that as its result and does NOT
+manufacture a pass -- the one remedy each names.
 
 ## R8. ROUND 8 -- THE RECUT ON THE ROUND-7 ANALYSIS (@0d400d5c07, msg 98978; v0.8, 2026-09-21, `2.0.0_SA_COO~B`)
 
