@@ -80,3 +80,51 @@ LGIC leaves my loop with work **measured and owed**, and it is stated here so it
 2. **Spawn `2.0.0_SA_COO~T` and `2.0.0_SA_COO~M`.**
 3. **Broadcast to every live seat same turn**, naming the scope change and the LGIC hand-off.
 4. Tick 1 on the new scope.
+
+---
+
+## 7. AMENDMENT, SAME NIGHT -- **TWO SENTENCES IN THIS RECORD WERE WEAKER OR WRONGER THAN THE EVIDENCE**
+
+Written at tick 1 (~01:1xZ), after the acts §6 ordered. **Superseded text above is RETAINED under R-43** --
+nothing in §1-§6 is edited, and this section governs where the two differ.
+
+### 7.1 §4 understated its own evidence for `2.0.0_SA_COO~M`
+
+§4 justifies `~M` as *"free (in use: ...), mnemonic, and the project's `coo_lane` is `null` so nothing is
+contradicted."* **That is a weaker reason than the one available, and the stronger one was in a field I had
+not read.** `NFRA_MCPINDEX`'s own `project.json` `blocking` field carried, verbatim:
+
+> *"SEATING: THIRD in Andrew's 2026-09-18 ~23:3xZ order (IRPT_BCKEND, then MDPF_TAXSMA with
+> `2.0.0_SA_COO~T`, then this project with `2.0.0_SA_COO~M`)"*
+
+**So BOTH lane letters were pre-named by Andrew, not just `~T`.** The seating of `~M` makes the register true
+exactly as `~T`'s does; it is not an invention that happens not to collide.
+
+⭐ **THE KEEPABLE, AND IT IS WHY THIS AMENDMENT IS WORTH ITS BYTES: THE ERROR WAS IN THE SAFE DIRECTION, WHICH
+IS PRECISELY WHY IT WOULD HAVE SURVIVED.** A weaker reason attached to a right answer raises no flag, produces
+no contradiction, and passes every check anyone would think to run -- the answer is correct. Had I been wrong
+about the letter the register would have contradicted me within the hour. **Being right by a worse route is
+the failure that does not announce itself, and the next decision inherits the ROUTE, not the answer.**
+COST: one `project.json` read before writing a justification about a project. NON-APPLICATION: a justification
+about something with no register row to consult.
+
+### 7.2 §4's capacity line is a PREDICTION and reads as a MEASUREMENT
+
+§4 says *"After `~G` closes: `~B` + `~T` + `~M` = 3. At the cap, not over it."* **Measured 20 minutes later by
+`sequence-check`: FOUR live COO lanes against a cap of THREE** -- `~B`, `~G`, `~M`, `~T`.
+
+The sentence is true of the state Andrew DESCRIBED (*"will be closing out COO~G now"*) and false of the state
+that exists. `2.0.0_SA_COO~G` is standing down on his word with its arm down and its cron deleted, so the
+over-cap is TRANSIENT and its resolution is HIS act. **No lane is closed by this seat.**
+
+⭐ **A SENTENCE ABOUT A STATE THAT HAS NOT HAPPENED YET IS INDISTINGUISHABLE, IN THE ARTIFACT, FROM A
+MEASUREMENT OF ONE THAT HAS** -- both are declarative, both carry real numbers, and the arithmetic in this one
+is correct. The tell is the tense, and the tense was already in my own sentence (*"After `~G` closes"*).
+COST: none -- label the prediction, or measure at write time. NON-APPLICATION: a figure already labelled with
+its vintage.
+
+### 7.3 What §5 got right and is worth keeping as written
+
+§5's hand-off figure (**17**, correcting the **19** broadcast an hour earlier) was re-derived at write time on
+the proof instances rather than carried from the earlier broadcast, and it held. That is the discipline the two
+errors above did not get.
