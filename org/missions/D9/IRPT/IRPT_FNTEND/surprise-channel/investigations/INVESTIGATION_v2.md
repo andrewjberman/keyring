@@ -4653,6 +4653,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W6-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~6",
+    "surfaced_at": "2026-09-21T13:52:00Z",
+    "one_line": "F56-AC5 ('bun test src/pages/InvestorReporting' 0 fail) reads a stable 1-fail residual outside this cell's grant: fe-s-49/admin-gate.test.ts F49-AC8 finds 2 of 2 UNRELATED App.tsx hunks from 2.0.0_SA_COO~D's c29a8b86 still carried into HEAD (an ArrowLeftRight icon import and a /trade-submission route, neither naming /investor-reporting) where the test expects 0. App.tsx and __tests__/fe-s-49/ are not in this order's <paths>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-56 F56-AC5: 'the whole IRPT_FNTEND suite is green', expect '(?<![0-9])0 fail'.",
+    "world_is": "Two runs of 'bun test src/pages/InvestorReporting' at this worker's HEAD (before and after the fe-s-14 control fix, neither touching App.tsx or fe-s-49/) read 3 fail then 1 fail with no source change to the failing files in between -- F45-AC2 and F45-AC10 (fe-s-45, port-bound dev-server spawns) cleared on the second run, matching the already-filed INERT rows IRPT_FNTEND-W1-S67/W1-S69 (load/port sensitivity, not a regression). The one STABLE failure both runs share is FE-s-49 F49-AC8: its own printed 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' names an ArrowLeftRight import and a /trade-submission Route line, both from c29a8b86's App.tsx diff and both still present at HEAD. A sibling task order (IRPT_FNTEND.TO-FE-s-51, title 'carried-hunks-ancestry-aware') exists in this project's task-orders/ directory, consistent with this being a known, separately-owned residual rather than something this cell caused or can fix under its grant (fixtures/index.ts one proves-string, __tests__/fe-s-14/).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cd <WS>/portal && bun test src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts -t 'F49-AC8' -> 'UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)' / 'not ours: +|  ArrowLeftRight,' / \"not ours: +|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. /       { path: '/trade-submission', label: 'Trade Submission', icon: ArrowLeftRight },\" / expect(carried.length).toBe(0) received 2, rc=1",
+        "cd <WS>/portal && bun test src/pages/InvestorReporting -> run 1 (before the fe-s-14 control fix): '584 pass', '21 skip', '3 fail' ('Ran 608 tests across 106 files'); run 2 (after, same App.tsx/fe-s-49 bytes): '586 pass', '21 skip', '1 fail' ('Ran 608 tests across 106 files'), the surviving fail line reading 'FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are byte-identical to 2.0.0_SA_COO~D's c29a8b86'",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md rows IRPT_FNTEND-W1-S67 ('F45-AC2 debug run...') and IRPT_FNTEND-W1-S69 (process.release.name discriminator) already document fe-s-45's dev-server tests as port/load sensitive",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-51.carried-hunks-ancestry-aware.md exists in-tree, naming 'carried hunks' as its own subject"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
