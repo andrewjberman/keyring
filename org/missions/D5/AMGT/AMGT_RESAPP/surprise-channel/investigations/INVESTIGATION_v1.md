@@ -10307,6 +10307,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "N/A -- a disarm row, not a new finding.",
     "world_is": "Three workers filed the same two failures under three ids; the L10 slug should carry ONE item: the two tests are coupled to live pool state and need a fixture or a state pin (owner: the CTO's round-15 analysis).",
     "notes": "Adjudicated at the /canonical-drive tick 2026-09-19 ~17:0xZ after rk-37's drain @ba25e6f4d7; the drive log names it."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S182",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T13:40:22Z",
+    "one_line": "DISARMS W60-S2 (ARMED, disarm_owner 2.0.0_SA_COO~Z): the issuer repair fae9316edb routes both AC3 tsc invocations through bash -c instead of native-Python CreateProcess, and rk-60's own re-run measured AC3 PASS on the repaired bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Repair commit fae9316edb2aeeddbcc3c955453ec2cd246d7d24 (subject: 'fix(AMGT_RESAPP round 14, 2.0.0_SA_COO~Z): acceptance repair on rk-60 -- AC3 invokes the tsc shim through bash -c ... row W60-S2'), landed on AMGT_RESAPP.TO-AMGT-rk-60.portal-worktree-provisioning.md, 7 insertions 5 deletions.",
+        "rk-60's own proof_of_spec instance (org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~60/AMGT_RESAPP.TO-AMGT-rk-60.portal-worktree-provisioning.proof_of_spec.json), criterion AC3: status PASS, output_evidence 'node_modules_is_link_or_dir True bin_tsc True\\ntsc_rc 0 Version 5.9.3\\nmain_tree_tsc Version 5.9.3 same_version True', re-run twice in a fresh worker session with identical output both times.",
+        "rk-60 is terminal in the round-14 L8 packet (ledger/ROUND14_L8_PACKET_20260919.md s.1: drain b01a10ed75, 'AC3 re-run after the second repair')."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The repair is landed, re-verified by the worker's own re-run, and rk-60 closed terminal on it; nothing further is owed on this row.",
+    "notes": "Closing adjudication row named by the round-14 analysis (ROUND_ANALYSIS.round14.md s.2.4) and the L9 adjudication (s.5): 'the two W60-S2/S4 closing rows (channel hygiene, not a cell)'. Filed at /canonical-drive tick 1, post-reboot, 2026-09-21."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S183",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-21T13:40:22Z",
+    "one_line": "DISARMS W60-S4 (ARMED, disarm_owner 2.0.0_SA_COO~Z): the issuer's second repair 928352b513 anchors AC3's comparison call's `git worktree list` at the superproject (`-C` the parent of portal/) instead of the nested repository, and rk-60's own re-run measured AC3 PASS on the repaired bytes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Repair commit 928352b513368fbfe2178df85e4d08e99c3e4f42 (subject: 'fix(AMGT_RESAPP round 14, 2.0.0_SA_COO~Z): rk-60 AC3 second repair -- the comparison call anchors the superproject worktree list from portal/ parent ... row W60-S4'), 2 insertions 2 deletions.",
+        "rk-60's own proof_of_spec instance, criterion AC3, status_reason: 'ISSUER REPAIR 2 (928352b513) fixes the SECOND defect row W60-S4 named: the comparison call's own git worktree list --porcelain now runs with -C os.path.dirname(os.getcwd())... All four measured values now match the criterion exactly... Row AMGT_RESAPP-Z-W60-S4 stands as the historical record of the pre-repair crash; this re-run is against the repaired bytes at 928352b513 and PASSES.'",
+        "Same terminal drain as S182 above: rk-60 closed b01a10ed75, AC3 re-run after the second repair."
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "N/A -- a disarm row, not a new finding.",
+    "world_is": "The repair is landed, re-verified by the worker's own re-run against the repaired bytes, and rk-60 closed terminal on it; nothing further is owed on this row.",
+    "notes": "Closing adjudication row named by the round-14 analysis (ROUND_ANALYSIS.round14.md s.2.4) and the L9 adjudication (s.5): 'the two W60-S2/S4 closing rows (channel hygiene, not a cell)'. Filed at /canonical-drive tick 1, post-reboot, 2026-09-21."
   }
 ]
 ```
