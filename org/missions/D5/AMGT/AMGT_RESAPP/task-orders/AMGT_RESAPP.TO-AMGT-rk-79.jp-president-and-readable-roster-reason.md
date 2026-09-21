@@ -618,7 +618,7 @@ v0.16's readable-reasons rule. The issuer pins `ROUND_ANALYSIS.round19.md`'s com
 draft). Not in scope and routed elsewhere: rendering CAT's new reason on the RESOLVED path is unnecessary (CAT serves
 ABSENT, whose reason the page already prints); the portal text fixes are AMGT-rk-80's.
 
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~79</slot>
 <fabric>site-z</fabric>
