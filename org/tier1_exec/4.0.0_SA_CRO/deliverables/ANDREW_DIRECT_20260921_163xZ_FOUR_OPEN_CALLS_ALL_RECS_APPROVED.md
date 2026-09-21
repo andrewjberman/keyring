@@ -129,6 +129,46 @@ His answer, VERBATIM AND ENTIRE:
   tick-list row 10, *"whether SmartX is a product beyond 49F"* -- so it is recorded there
   (`04_SCOPE_TICKLIST.md` s.4) and in `05_IDENTITY_SPINE.md` (the VENDORS table and s.5).
 
+## Addendum ~19:0xZ -- `portal` and `website` keys: "yes agreed on both"
+
+He first said *"use comp-read comp-find for more context on these resources"*; this seat comp-read each Terraform
+root (portal-auth, portal-content, trade-pipeline tagged `Project = "OpalPortal"`; ticket-center `OpalPortal` /
+`TicketCenter`; portal-notifications the event-trigger owner on opal-data-portal-v2; website = NFRA_WEBSITE, the public
+WordPress marketing site) and put two cards (verbatim calls): CALL 1 *"New platform key `portal` for the Opal portal's
+own infrastructure (Project = OpalPortal: sign-in, OTP, JWT, edge router, content, ticket center, notification bus)?
+It replaces my 18 mis-filed `gateway` rows."*, REC yes; CALL 2 *"Public marketing site (NFRA_WEBSITE, WordPress): key
+`website`, taken off the refused list the way anthropic/openai were?"*, REC yes.
+
+His answer, VERBATIM AND ENTIRE:
+
+> "yes agreed on both"
+
+**Reading, narrow:** `portal` (PLATFORM_SUBSYSTEM) is minted and the 18 `gateway` rows are re-pointed to it; `gateway`
+keeps its registered meaning (the Opal Gateway, NFRA_OPLGTW). `website` is minted and removed from
+`refused_keys.generic_noun`. `trade-pipeline` goes to `tradeops` on this seat's own reading (stated to him, not carded).
+
+**NOT YET LANDED -- measured side effects put back to him (~19:1xZ).** Applied in the working tree and graded over all
+1,738 names: 67 canonicals change -- 17 gateway->portal (intended); 21 `opal-portal-*` and 7 `opal-website-*` names flip
+from CONFORMANT to rename backlog (a leading `opal-` before a real system is a null prefix); and **7 publishers that
+write TO the portal (5 news, 2 advi) are wrongly attributed to `portal`** -- a registry row cannot override a name that
+self-resolves, so the fix is a checker change (row outranks a later-found system word). Card: *"(a) yes, and have the
+CTO change the checker ...; or (b) hold both keys until that checker change lands?"*, REC (b). The edit was reverted
+from the shared tree after it blocked 0.7.0_AE_CloudOps~V's graded commit (99165) and is held outside the repo.
+
+## CORRECTION ~18:5xZ -- 18 rows filed under `gateway` are the WRONG SYSTEM; this seat misread the key
+
+**By 4.0.0_SA_CRO, against its own batches.** `infra/logic/registry/systems.json` `gateway` is *long*
+`opal-gateway`, owned via NFRA_OPLGTW: *"Opal Gateway: authorized Schwab questions and CSV downloads in Claude"*. This
+seat used it for PORTAL SIGN-IN / TEXT-OTP / EDGE ROUTING, reading the key by its word, not its registered meaning. All
+18 `gateway` rows in resources.json are this session's (0 existed at `d32d3ad8b8`): batch 1 F16 (`auth-validator-edge`,
+`inf/otp-relay/token`, `jwt-public-key-secret`, `jwt-trigger-invoke`, `sms-send-text-message`, `twilio/credentials`,
+`twilio/recovery-code`, `user-permissions`) and CALL 1b (`inf-andrew-otp-write`, `inf-otp-alert`,
+`inf-otp-state-change`), batch 2 residue (`opalinvest-auth-handler` + role + policy + 2 secrets, `quo/api-key`,
+`tier-router-edge`). His approvals of 1b and Q12 were given on cards that described these as "the gateway's" -- so
+the rulings stand as to GROUPING (they belong together, with the firm in its slot) but the SYSTEM KEY was this seat's
+error, and it goes back to him as a card. The rows are left in place until he answers (one card), marked here; the
+Terraform root `opal-gateway` DOES fit `gateway` and is the key's true population.
+
 ## Addendum ~18:5xZ -- the legacy-name registry is to be COMPILED, not handwritten: "b"
 
 His question, VERBATIM: *"Are you building an official registry? if so, is it a compiled or handwritten registry? I
