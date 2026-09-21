@@ -1380,6 +1380,31 @@ not a message.
    },
    "disposition": "UNDER_INVESTIGATION",
    "notes": "FILED HERE RATHER THAN SENT AS A MESSAGE BECAUSE OF 2.0.0_SA_COO~G's OWN RULE, WHICH THIS SEAT ADOPTED THIS AFTERNOON: a qualifier filed away from the method it qualifies is a qualifier nobody reads. S26 is where the 400 lives, so the caveat belongs beside it. KEEPABLE: A VERDICT NAME ASSERTS THE TEST THE GRADER RAN, NEVER THE PROPERTY A READER WANTS. CONFORMANT here means 'current == canonical'; whether that equality was EARNED (the name is right) or DEGENERATE (the grader could not resolve either side and compared a string to itself) is invisible in the verdict column. \u2b50 THE DISCRIMINATOR IS ONE QUERY AND IT IS CHEAP: over the PASSING set, count the rows whose two sides are equal for a reason OTHER than correctness -- here, a brace surviving into canonical. COST: one filter over the rows you already have. NON-APPLICATION: a grader whose pass condition is independent of its input parse (a lookup against a fixed allowlist), where a degenerate pass cannot arise. \u26a0 AND THE SELF-APPLICATION, since this seat has spent the day naming this shape in others: I ran the FULL census, published its buckets, and did not once ask what the PASSING bucket asserts -- I interrogated the denominator, the halting behaviour, the unit and the unaccounted 126, and left the one column that looked like good news unexamined. A CONTROL THAT PASSES IS THE ONE YOU WILL NOT RE-EXAMINE, which is the transferable rule from my own IRPT_BCKEND round-6 analysis, met against my own figures four hours later."
+  },
+  {
+   "id": "LGIC_CANON-S29",
+   "project": "LGIC_CANON",
+   "fabric": "laptop",
+   "surfaced_by": "4.0.0_SA_CRO",
+   "surfaced_at": "2026-09-21T16:43Z",
+   "class": "OBSERVATION",
+   "hazard_standing": "ARMED",
+   "disarm_owner": "4.0.0_SA_CRO",
+   "one_line": "02_DOCTRINE.md's GENERATED naming section is STALE (render --check rc=1, 3 failures) and CANNOT be safely re-rendered: a ruled correction was hand-written INSIDE the generated markers on 2026-09-20, the schema source still carries the retired text, so `render_naming_section.py --write` silently REVERTS that ruling.",
+   "spec_asserts": "02_DOCTRINE.md :202 -- the section is GENERATED, 'Do not edit between these markers ... change the schema (or the registry), then run python infra/logic/render_naming_section.py --write', and 'The schema is the one owner of this content; the canon only presents it (LGIC_CANON PRD DEC-1 b).' So a re-render is a mechanical sync that should be safe to run at any time.",
+   "world_is": "MEASURED 2026-09-21 ~16:4xZ. (1) BEFORE any edit of mine, `render_naming_section.py --check` returned rc=1, CHECK: STALE -- 3 failure(s): the NAMING_SCHEMA.json stamp reads v1.10 sha256:043bb490... against live v1.12 sha256:2c8834a9...; the scopes.json stamp had already drifted; the section differs from a fresh render at section line 4 (156 vs 154 lines). (2) Running `--write` produced a 3+/5- diff: the two stamps, AND the 'legacy served paths list' line REVERTED from the 2026-09-20 correction ('claim: **PRESENT** -- landed by LN-g-1 ... RETIRED 2026-09-20 ...', written by 4.0.0_SA_CRO as WRITER on 1.0.0_SA_CTO's DECIDER ruling, msgs 98522 / GO 98531) back to the retired 'claim: absent until LN-g-1 lands it; until present: grade() RAISES ...'. That correction was edited INTO the generated block and never into its source, so the source still asserts the state the ruling retired. (3) The file was restored byte-identical to HEAD 1675a8f631 (git diff --quiet HEAD rc=0); nothing reverted was committed. So the section is stale AND un-re-renderable: the next seat to follow :202's own instruction reverts a ruling, and --check will fail for every seat until the source is fixed.",
+   "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+     "python infra/logic/render_naming_section.py --check at HEAD 3467f1d265 (before 1675a8f631): rc=1, 3 failures, stamp v1.10 vs live v1.12",
+     "--write diff: 3 insertions, 5 deletions in 02_DOCTRINE.md -- 2 stamp lines + the legacy served paths line reverted to its retired text",
+     "the reverted text is the 2026-09-20 correction (diff 7604292b33..HEAD on 02_DOCTRINE.md shows it added by hand inside the generated block)",
+     "restored from a pre-render copy; git diff --quiet HEAD -- infra/logic/02_DOCTRINE.md rc=0 after restore",
+     "lane: org/standards/** is ANY_EXEC (.owned-paths.yaml :1616-1617); infra/logic/** is PLATFORM_LOGIC_DOCS (4.0.0_SA_CRO base/~A-~D)"
+    ]
+   },
+   "disposition": "UNDER_INVESTIGATION",
+   "notes": "REMEDY, stated and NOT performed: move the 2026-09-20 correction into its SOURCE -- the legacy-served-paths claim text in org/standards/NAMING_SCHEMA.json -- then run --write, and confirm the re-render leaves the corrected line and changes only the stamps. Not done on the R4 commit because (a) whether grade() reads that schema field was not measured, and (b) it is a schema edit outside the R4 text Andrew approved. DISARM condition: render --check rc=0 at a commit where the legacy-served-paths line still reads PRESENT. KEEPABLE: A CORRECTION WRITTEN INTO A RENDERED BLOCK IS A CORRECTION WITH A TIMER -- it lives exactly until the next render, and the render's own instruction is what fires it. The tell was a --check that had been failing for days: a generated block whose check fails is a block someone edited by hand, and the hand edit is the thing a re-render will eat. COST: one --write into a scratch copy and a diff before any real --write. NON-APPLICATION: a generated block whose --check passes."
   }
 ]
 ```
