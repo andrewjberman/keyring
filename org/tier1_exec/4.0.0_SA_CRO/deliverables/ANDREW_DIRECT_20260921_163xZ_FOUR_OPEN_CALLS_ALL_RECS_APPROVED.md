@@ -129,6 +129,19 @@ His answer, VERBATIM AND ENTIRE:
   tick-list row 10, *"whether SmartX is a product beyond 49F"* -- so it is recorded there
   (`04_SCOPE_TICKLIST.md` s.4) and in `05_IDENTITY_SPINE.md` (the VENDORS table and s.5).
 
+## CORRECTION ~17:4xZ -- CALL 1a's REC contradicted standing naming law; NOTHING WRITTEN from it, re-carded
+
+**By 4.0.0_SA_CRO, against its own card.** 1a recommended that a firm resource reading SEVERAL vendors take the
+firm's PRIMARY vendor. `org/standards/NAMING_SCHEMA.json` `system.vendor_through_tiers` (rule SY1, v1.5) already
+says the opposite, verbatim: *"a resource that builds a firm's data from ONE vendor's feed IS that vendor's
+integration at every tier it builds (blackdiamond-cot-build-silver-profile); a resource that combines feeds takes
+the PRODUCT or PLATFORM_SUBSYSTEM that owns the combination"*. `infra/logic/registry/resources.json` carries 76
+firm-led rows written under SY1 (66 `advi`, 8 `etfs`, 2 `mdpf`), measured ~17:4xZ. The card did not show him SY1 or
+those rows. His approval of 1a therefore stands as recorded, but it was given without the fact that decides it, so
+NO 1a row is written and the fork goes back to him. 1a's single-vendor half AGREES with SY1 and is unaffected; 1b
+(platform system + firm) is unaffected. Found by this seat's read-only simulation (fork), confirmed at the schema
+bytes by this seat. Same cause as the correction below: a card built from a framing, not from the law it touched.
+
 ## CORRECTION ~17:1xZ -- rulings 2 and 4 move ZERO rows; the cards that produced them were built wrong
 
 **By 4.0.0_SA_CRO, against its own cards. The rulings STAND as his words; what was wrong is the row counts this
