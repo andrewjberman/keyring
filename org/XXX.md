@@ -666,6 +666,13 @@ Once establishing state, and your last log on the subject, you will run /canonic
 (relayed as 96634; the same words also reached the `1.0.0_SA_CTO` terminal, in the ~G row's record). 10m (own active
 project). STOP-CONDITION: IRPT_FNTEND `status: complete`, the project leaving DECOMP/EXECUTING/ROUND_CLOSE, or his
 stand-down.
+⛔ **RE-ARMED 2026-09-21 ~12:37Z, SAME SCOPE, NEW CRON -- the lane had frozen per the 2026-09-15 plan in the
+interim.** Andrew-direct at the `2.0.0_SA_COO~F` terminal, VERBATIM: *"You own IRPT_FNTEND, that is your sole
+focus for this session. Use /canonical-flow IRPT_FNTEND to assess state, and then /canonical-drive IRPT_FNTEND
+to loop its drive."* Same word landed the fabric-wide IRPT priority (`1.0.0_SA_CTO`'s own record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260921_1237Z_IRPT_ALL_PROCESSING_POWER_TODAY.md`
+@`7df516b46e`). New arm record @`75b26764ae`, cron `b1f8684b`, 10m off-minute -- cadence unchanged, STOP-CONDITION
+unchanged. Landed by `1.0.0_SA_CTO` per this file's own rule (a seat does not author its own row); msg `99054`.
 
 `2.0.0_SA_COO~D` **`/canonical-drive` DIRECTED over DSGN_REBRND ONLY.** Andrew-direct 2026-09-14 ~16:3xZ at the
 `2.0.0_SA_COO~D` terminal, VERBATIM: *"yes you will be continuing where you left off with /canonical-flow on DSGN_REBRND.
