@@ -294,7 +294,7 @@ never `git stash`, never `git show :path`.
      (C-BRONZE-AS-RECEIVED) and switch the reader at M2; the function takes `object_name` explicitly so neither is
      baked in.
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~84</slot>
 <fabric>site-z</fabric>
