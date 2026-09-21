@@ -252,7 +252,7 @@ standing word"), executed by the DT owner.
 **L5 wording to name for the CTO at issuance:** the fallback subtitle "Officers from the Bloomberg fallback list -- the
 filing roster did not resolve".
 
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~80</slot>
 <fabric>site-z</fabric>
