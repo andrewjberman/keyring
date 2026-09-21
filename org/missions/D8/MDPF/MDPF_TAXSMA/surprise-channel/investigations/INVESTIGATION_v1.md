@@ -346,6 +346,29 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "The task order's <paths>/bound text implies the prelude's capability-configured check is this cell's mechanical concern with no named authority for the config-key names it reads.",
     "world_is": "No spec names the Gold-side config keys, so this cell declared two of its own; TX-i-3 (the capability bearer secret + Gateway root) and TX-r-3 (activation) must either read this cell's source to match these exact names, or a later cell should be free to rename them in one commit -- this row exists so that decision is visible before either lands rather than discovered as a silent DISABLED in production.",
     "notes": "INERT: today, absent both env vars, the prelude is correctly DISABLED by construction (AC11), which is TX-r-1's own stated plan. Whether the config names should instead be declared in the contract (matching capability.identity_configuration's own pattern) is a question for the contract owner, not this cell's <paths> grant."
+  },
+  {
+    "id": "MDPF_TAXSMA-S5",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~V",
+    "surfaced_at": "2026-09-21T20:02:00Z",
+    "one_line": "The EC2 mdpf-daily-runner's Stage 6 (REVAMP) has failed at IMPORT since TX-a-1's timeseries module reached its S3 code prefix at 2026-09-21T08:55:37Z: dim_mdpf_aggregate_aua_timeseries.py:75 imports taxsma_assets, whose :95 `from lib.opal_naming import address` resolves on the repo path but not in the runner tree (/opt/mdpf/scripts), so Stage 6 dies in 1 s before building anything.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~T",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-mdpf/telemetry/mdpf-daily-runner/logs/mdpf_daily_20260921_125229.log: 'File \"/opt/mdpf/scripts/gold/build_mdpf_spine.py\", line 51 ... import dim_mdpf_aggregate_aua_timeseries as spine' -> 'dim_mdpf_aggregate_aua_timeseries.py, line 75 ... import taxsma_assets' -> 'taxsma_assets.py, line 95 ... from lib.opal_naming import address' -> 'ModuleNotFoundError: No module named 'lib.opal_naming'' -> '[mdpf-dispatch] step STAGE6-REVAMP rc=1 dur=1s status=error'",
+        "s3://opal-data-mdpf/code/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py VersionId syiCAA6n7.C9SSVDvJiQ1MLiPGn7ITJQ, LastModified 2026-09-21T08:55:37Z, 193,801 B, git blob 3e1423e4a1 == CLOUD 5e8ba0e1d4 (bound(MDPF_TAXSMA W2-S1, 2.0.0_SA_COO~T))",
+        "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:122-125 syncs s3://opal-data-mdpf/code/scripts/ -> /opt/mdpf/scripts/ --delete; lib/ is not under that prefix"
+      ]
+    },
+    "spec_asserts": "TX-a-1 (MDPF_TAXSMA_DATA_CONTRACT v0.5.0) adds the Tax overlay to the firm/Global aggregate in dim_mdpf_aggregate_aua_timeseries.py, a module the EC2 runner's Stage 6 imports as its library (build_mdpf_spine.py:51) and that the gold Lambda's consolidator also imports (mdpf_gold_consolidator.py:79).",
+    "world_is": "On the EC2 path the new import chain cannot resolve lib.opal_naming, so Stage 6 fails before its first write. The dispatch logs it 'NON-FATAL build-alongside; legacy chain + serving UNAFFECTED; no marker written', which is why nothing louder fired. Measured on today's 12:52Z run only; earlier runs were not read. The gold Lambda is NOT affected today: its running bundle is pin 48b8671569, which predates TX-a-1, and the Cottonwood deploy's pin 74d7efe144 does not carry TX-a-1 either.",
+    "notes": "Surfaced while preparing the mdpf-gold-lambda Cottonwood auto-custom deploy (packet @f8c960746b, LEG B s.5); not chased. The Cottonwood code on the EC2 path runs only inside Stage 6, AFTER this import, so this break also masks whether that path would pass. DISARM: 2.0.0_SA_COO~T decides whether the runner tree gets lib/opal_naming.py (a code-prefix sync of lib/) or taxsma_assets resolves its address another way on the runner, then one Stage 6 run on the runner shows the import pass. ALSO OWED BEFORE ANY LAMBDA BUILD FROM A PIN AT OR AFTER TX-a-1: the same import in the flat Lambda zip (lib/ is not a PACKAGE member there either) -- that seat's build-time check, not this row's."
   }
 ]
 ```
