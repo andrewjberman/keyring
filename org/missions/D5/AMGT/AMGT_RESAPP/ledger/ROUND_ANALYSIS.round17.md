@@ -113,7 +113,28 @@ Offline tests with a stub caller assert the rule reaches the prompt on BOTH path
 served output. **The live zh/ko proof is PARKED until a zh/ko filing enters the estate naturally.** Andrew's ~$0.90
 yes stays unspent and is not re-asked now. When the proof can run, it is re-carded at its true two-pass shape.
 
-**Round 18, as issued: R18-A, R18-B, R18-C, R18-D'. Four cells, one slug.**
+**Round 18, as issued: R18-A, R18-B, R18-C, R18-D'. Four cells, one slug.** (Superseded by s.4b.)
+
+## 4b. RE-RULED ~16:5xZ on Andrew's priority word, before issuance
+
+Andrew-direct ~16:5xZ, verbatim: *"These edge cases (foreign translation) are not a priority. We can revisit that
+kind of operation at any time downstream. the major work here is getting a functional product live and ready for
+review for the managers."* Record: `ANDREW_DIRECT_20260921_165xZ_AMGT_RESAPP_TRANSLATION_NOT_A_PRIORITY_PRODUCT_LIVE_FOR_MANAGER_REVIEW.md`.
+
+- **R18-D' comes OUT.** It is a foreign-translation edge case, the exact class he named. Parked on the record, not
+  dropped.
+- **R18-B is DEFERRED** until after manager review. It moves config in 24 production files, including code inside
+  deployed Lambdas. That means redeploys and pairs, and no manager sees any change. Redeploy churn under a product
+  heading into review is the wrong direction for his stated priority. C-PRODUCTION-HOME still binds, and this is
+  sequencing, not dropping.
+- **R18-A and R18-C stay.** Both change what a manager sees. R18-A shows which crosswalk vintage answered on the
+  served page. R18-C gives CSL, a validation name, a real filings leg or an honest UNRESOLVED-by-design.
+- **The reachability acts are Andrew's and are carded**, not cut: promoting the 5 AMGT portal commits from
+  `origin/DEV` to PROD, and widening PROD's "Dev + admin ONLY" gate (`d8135e0a`) to the managers.
+
+**Round 18 as re-ruled: R18-A and R18-C. Two cells, one slug.** Pending a word on the cards, this seat's next L10
+work is a readiness read: what a manager opening each of the three validation names sees today, panel by panel,
+against the PRD's DONE-WHEN lines. That read decides round 19, rather than the hygiene backlog doing it.
 
 ## 5. What each seat owes next
 
