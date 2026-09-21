@@ -10922,6 +10922,57 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "PRD v0.16 C-HARVEST-HOME: AMGT's bronze and silver live in opal-data-harvest at the address the builder prints; Andrew 2026-09-18 ~21:45Z 'opal-data-assets is solely for client data'.",
     "world_is": "The builder prints opal-data-assets for AMGT bronze/silver because a stale PRODUCT-tenancy harvest row precedes the GENERAL one, and the validator does not refuse a repeated scope key.",
     "notes": "EXPOSURE, not an incident: no format writer is cut and the backfill is held, so nothing has written to the vetoed home through address(). ARMED because any harvest writer cut before the fix builds against it; 2.0.0_SA_COO~Z cuts none until [8] is deleted (msg 24084). Remedy (lane PLATFORM_LOGIC_DOCS: 4.0.0_SA_CRO, ~A-~D; not ~Z): delete row [8] only; plus a duplicate-key refusal in validate(). Once landed, C-HARVEST-HOME's registry precondition is MET (tiers.json GENERAL and the five vendor rows are already on SITEZ, per 4.0.0_SA_CRO~Z msg 24080)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W80-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~80",
+    "surfaced_at": "2026-09-21T21:05:00Z",
+    "one_line": "safe-commit.sh's naming limb (org/mcp/naming-gate.enforce present, ENFORCE mode) BLOCKS committing this cell's own proof_of_spec.json deliverable, and would block ANY .py/.js/.mjs/.ts/.tf/.json/.yaml/.yml commit fabric-wide right now, because lib/opal_naming.py's validate() precondition runs on the WHOLE registry before grading the staged diff and refuses on 4 pre-existing rows in infra/logic/registry/resources.json (indices 197, 215, 216, 226, each 'already resolves a system from its own tokens (type SECRET); a row for it is redundant'), committed at b282500581 ('registry(batch 2, 4.0.0_SA_CRO)') -- unrelated to AMGT_RESAPP or this cell's portal-only diff.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "4.0.0_SA_CRO",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~80 <...>\" -F <msgfile> -- <TO.md> <proof_of_spec.json>: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.' followed by '[naming-gate] NAMING ERROR the registry is refused by validate (4 refusal(s)): resources.json[197].name: ...'; files unstaged, the .md re-staged and committed separately (workspace commit c5c8d8a1b4), the .json left uncommitted on disk.",
+        "python -c \"import lib.opal_naming as onm; refusals,_=onm.validate(); print(len(refusals))\" from the repo root: 4, all four rows of the form resources.json[N].name '<key> already resolves a system from its own tokens (type SECRET); a row for it is redundant' -- reproduced independent of any diff, confirming the failure is a registry precondition, not a grade of this cell's staged content.",
+        "git status --porcelain -- infra/logic/registry/: empty in this worktree (no local edit); git log -1 -- infra/logic/registry/resources.json: b282500581 'registry(batch 2, 4.0.0_SA_CRO)' -- the 4 refusals are already committed at HEAD, not introduced this session.",
+        "git log -1 -- org/mcp/naming-gate.enforce: d181e0ac5a 'flip(LGIC_ENFORCE 2b, 2.0.0_SA_COO~G as issuer): ... present -- the naming limbs REFUSE from here' -- ENFORCE is a deliberate prior flip, not this session's state.",
+        ".tools/naming-gate.py:79-82 states the INTENT that a record-tree path (org/**, docs/**) is 'never opened ... regardless of suffix', but :1000 calls mod.validate() unconditionally as soon as ANY graded-extension file (incl. a record-tree .json like this cell's own proof instance) is in the diff, before any per-file exemption check runs -- so the record-tree exemption does not reach this precondition."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 6 of this TO: write the proof_of_spec.json instance, then 'commit the superproject files with safe-commit (never staging portal)'; Rule 14a: commit ONLY via safe-commit.sh, no bare git commit.",
+    "world_is": "safe-commit.sh refuses to commit the .json deliverable (or any other graded-extension file) while org/mcp/naming-gate.enforce is present and infra/logic/registry/resources.json carries its 4 pre-existing REFUSE-class rows -- a repo-wide precondition failure, not a defect in this cell's diff, and outside this order's <paths> to fix.",
+    "notes": "Did NOT edit infra/logic/registry/resources.json, .tools/naming-gate.py, or org/mcp/naming-gate.enforce (all outside <paths>, and disabling/relaxing the gate is not this worker's call). Worked around within the already-granted write surface: committed the TO status-flip (.md, not a graded extension, unaffected) separately as workspace commit c5c8d8a1b4 on branch wk-amgt-20-80; the proof_of_spec.json deliverable itself is written and VALID (python .tools/proof-of-spec-check.py ... rc=0) but stays UNCOMMITTED on disk in this worktree pending either (a) the registry fix landing, or (b) an owner-directed route this order did not name. Flagged as a fabric-wide capability gap: EVERY worker committing a .json/.py/.ts/.tf/.yaml/.yml deliverable right now hits the same wall until resources.json's 4 rows are fixed or the enforce flag is lifted."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W80-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~80",
+    "surfaced_at": "2026-09-21T21:20:00Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-W80-S1: the naming-gate registry precondition (4 refusals in infra/logic/registry/resources.json) is fixed by lib/opal_naming.py:567 @55c24a8b8a (1.0.0_SA_CTO~Z, one line), merged into this worktree; validate() now returns 0 refusals and the proof_of_spec.json deliverable committed clean via safe-commit at d0ae517a67.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "surprise-row-gate.py _owner_field_violations (R-18(2)) refused this row's first draft, which named the worker serial 0.9.0_WK_AMGT_RESAPP~80 as disarm_owner: 'names a WORKER serial. A worker is terminal at its drain and can never send the owner's word, so the duty passes to its ISSUER (R-18): name the issuer.' Substituted 2.0.0_SA_COO~Z, the round-20 issuer per commit 22a1fc5d0e ('issue(AMGT_RESAPP round 20, 2.0.0_SA_COO~Z)').",
+        "git -C C:/tmp/wk-amgt-20-80 merge --no-edit 55c24a8b8a: 'Merge made by the ort strategy.' lib/opal_naming.py | 2 +-, no conflicts, rc=0.",
+        "python -c \"import sys; sys.path.insert(0,'.'); import lib.opal_naming as n; r=n.validate(); print('refusals', len(r[0]) if isinstance(r, tuple) else r)\" from the merged worktree: 'refusals 0' (was 4 before the merge, per W80-S1's own evidence).",
+        "python .tools/proof-of-spec-check.py org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~80/AMGT_RESAPP.TO-AMGT-rk-80.exec-tab-text-fixes.proof_of_spec.json AC0,AC1,AC2,AC3,AC4,AC5,AC6: 'VALID (rc=0)', acceptance rows=7, violations=0.",
+        "bash .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~80 <0.9.0_WK_AMGT_RESAPP~80@opal.agent>\" -F .scratch/commit-msg-proof.txt -- <proof_of_spec.json>: '[naming-gate] NAMING-GATE: PASS 0 graded' then '[wk-amgt-20-80 d0ae517a67] deliver(...)', '[msg-verify] MATCH'; git log --oneline -1 -- <path> confirms d0ae517a67."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "the blocking cause named in AMGT_RESAPP-Z-W80-S1 (naming-gate registry precondition, 4 refusals) is fixed on SITEZ at commit 55c24a8b8a and this worktree merged that fix, then committed the previously-blocked proof_of_spec.json clean at d0ae517a67 -- the ARMED hazard is now retired by the act it named as its own remedy, not merely observed absent.",
+    "spec_asserts": "N/A -- a disarm row",
+    "world_is": "The naming-gate fix landed at 55c24a8b8a (lib/opal_naming.py:567, one line) fixes the exact 4-refusal precondition W80-S1 grounded; merging it into wk-amgt-20-80 and re-running validate() and the commit both confirm the fix in THIS worktree, not merely on the fabric elsewhere.",
+    "notes": "Filed by the ~80 worker resuming this task order's workspace half after the registry fix landed. Did not touch portal/ or the portal branch. No new edit to infra/logic/registry/, .tools/naming-gate.py, lib/opal_naming.py, or org/mcp/naming-gate.enforce beyond the merge commit 55c24a8b8a itself. DEVIATION: the dispatching instruction named disarm_owner as this worker's own serial; surprise-row-gate.py's R-18(2) limb refuses a disarm_owner that is a worker serial and names the issuer as the correct owner, so disarm_owner is 2.0.0_SA_COO~Z, not the worker -- reported, not silently substituted."
   }
 ]
 ```
