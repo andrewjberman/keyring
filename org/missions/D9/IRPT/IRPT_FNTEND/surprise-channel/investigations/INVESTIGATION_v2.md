@@ -4631,6 +4631,30 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W7-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~7",
+    "surfaced_at": "2026-09-21T14:01:20Z",
+    "one_line": "IRPT_FNTEND.TO-FE-s-57's own BOUNDS mandates an indiscriminate parseIrEnvelope throw on a missing unprojected_grant key, and its own F57-AC6/AC7 demand 0 fail on the existing suite; both cannot hold at once inside this cell's <paths> grant, because ~52 pre-existing tests across ~20 files this cell may not touch build non-refused response bodies with no unprojected_grant key. Also: the order's literal `unprojectedGrant: UnprojectedGrant | null` (non-optional) on Availability fails typecheck against Availability-typed fixtures outside the grant (e.g. fe-s-9/receipt.test.ts, fe-s-42/every-site.test.ts), so the member was built OPTIONAL instead, matching producerState/sourceDate's own established pattern.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-57 BOUNDS: 'THE THROW ON A MISSING KEY BINDS EVERY NON-REFUSED RESPONSE, HOLDINGS INCLUDED ... Do not special-case holdings in parseIrEnvelope; F57-AC3 already proves the general rule handles it correctly.' F57-AC4: 'a non-refused response body with NO unprojected_grant key at all throws EnvelopeMismatch(...)', no exception named for any other route or caller. F57-AC6: 'every existing adapter/envelope test is UNCHANGED ... 0 fail'. F57-AC7: 'the whole IRPT_FNTEND suite is green' (expect '0 fail'). Grant (<paths>): three contracts files plus this cell's own __tests__/fe-s-57/ and the surprise-channel file -- no other test file is writable.",
+    "world_is": "Implemented exactly as BOUNDS requires (envelope.ts:242-252 at portal b92448f3: the throw fires whenever 'unprojected_grant' is absent or misshapen on a non-refused response, unconditionally, holdings included -- confirmed passing at F57-AC3 with no special case). F57-AC1..AC5 measure PASS (typecheck rc=0; carry.test.ts 4 pass/0 fail, printing the four expected strings verbatim). F57-AC6 as literally invoked (bun test .../fe-s-1 .../fe-s-14, which bun's substring path-matching also pulls in every fe-s-1X folder) measures 263 pass / 2 skip / 11 fail of 276 at portal b92448f3, every failure an EnvelopeMismatch('unprojected_grant') thrown by a pre-existing fixture (fe-s-1/adapter.test.ts, fe-s-14/envelope.test.ts x3, fe-s-14/header.test.ts, fe-s-14/one-firm.test.ts x3, fe-s-19/network-state.test.ts, fe-s-19/pre-envelope.test.ts, and a job-states test) that builds a response body with no unprojected_grant key, none of them in this cell's <paths>. F57-AC7 (whole suite) measures 532 pass / 21 skip / 52 fail / 1 error of 605 at the same commit, same root cause, spanning fe-s-1, fe-s-14, fe-s-19, fe-s-25, fe-s-26, fe-s-30, fe-s-31, fe-s-33, fe-s-34, fe-s-35, fe-s-39, fe-s-41, fe-s-42, fe-s-48 and fe-s-49 -- 51 distinct failing test titles plus one unhandled-error-between-tests, all citing envelope.ts:249. Softening the throw to satisfy AC6/AC7 would falsify AC4/BOUNDS as written; satisfying AC4/BOUNDS as written falsifies AC6/AC7 as measured; fixing the ~20 pre-existing fixtures is outside this cell's <paths>. F57-AC6 and F57-AC7 are FAILED as measured and reported so; the order stays open (status not flipped).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal b92448f3:src/pages/InvestorReporting/contracts/envelope.ts:242-252 the unconditional throw, and :69-76 IrEnvelopeField gains 'unprojected_grant'",
+        "portal b92448f3:src/pages/InvestorReporting/contracts/index.ts the Availability.unprojectedGrant member built OPTIONAL (`unprojectedGrant?: UnprojectedGrant | null`), and portal src/pages/InvestorReporting/__tests__/fe-s-9/receipt.test.ts:56, fe-s-42/every-site.test.ts:302 constructing Availability-typed literals with no unprojectedGrant member (outside this cell's <paths>)",
+        "<WS>/.scratch or /c/tmp/ac6_full.log (bun test src/pages/InvestorReporting/__tests__/fe-s-1 src/pages/InvestorReporting/__tests__/fe-s-14 at portal b92448f3): '263 pass', '2 skip', '11 fail', 'Ran 276 tests across 38 files', rc=1; 11 of 11 failures cite EnvelopeMismatch at envelope.ts:249",
+        "/c/tmp/final_ac7.log (bun test src/pages/InvestorReporting at portal b92448f3): '532 pass', '21 skip', '52 fail', '1 error', 'Ran 605 tests across 107 files', rc=1; 106 EnvelopeMismatch citations, one 'Unhandled error between tests' also citing envelope.ts:249 (directory-search)",
+        "F57-AC3's own passing measurement (HOLDINGS ROUTE, count:0, NO THROW: yes) confirms the general (non-special-cased) rule is what BOUNDS asked for and what is implemented"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
