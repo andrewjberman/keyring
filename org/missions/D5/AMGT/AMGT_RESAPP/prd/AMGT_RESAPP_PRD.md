@@ -875,8 +875,10 @@ one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_
 fields).
 
 **C-LUSHA-EXCEPTION (a declared departure, Rule 30 R20; Andrew-direct 2026-09-21 ~19:5xZ, *"Yes on Exception"*).**
-Lusha keeps NO bronze, and its silver DROPS every contact field (emails, phone numbers and any other channel for
-reaching a person). It keeps the officer match, profile link, title and the fields the page shows. This departs from
+Lusha keeps NO bronze, and its silver DROPS every contact field: emails, phone numbers, postal addresses, and any
+personal messaging or social handle. It keeps the officer match, the title, and ONE public professional-profile URL.
+That URL is the "profile link" `C-EXEC-MANAGEMENT` enriches with and the page shows; it is kept because it is that
+served field, not as a channel for reaching the person. Nothing else a person could be reached through is kept. This departs from
 `C-BRONZE-AS-RECEIVED` and `C-SILVER-PARQUET` for Lusha only. Its silver rows carry `fetched_at` and `record_hash`, and
 `bronze_key` is null by rule. The R20 register entry is the registry lane's to write, citing Andrew's record.
 
@@ -903,8 +905,10 @@ move is its own chain, not a rider on another cell.
   batched act on a human's word.
 - **A lossless re-serialisation is a copy.** An existing JSON object re-written as parquet silver, with every field
   kept, counts as a copy under this contract, not a re-derivation. Each object is graded by a round-trip equality check.
-- **Derived records are silver.** Records the pipeline derived from documents it never stored (the `filings/v1`
-  objects) move to silver. Their bronze is filled only by the backfill's first fetch of the document.
+- **Derived records split by what they are.** The `filings/v1` `.source.json` objects (the filing's own sections,
+  cut from a document the pipeline never stored) move to SILVER. The `.analysis.json` objects (the model's reading)
+  are what Opal cares about, so they are GOLD under R10 and follow the gold chain after the backfill. The document's
+  bronze is filled only by the backfill's first fetch of it.
 
 
 ## 2. THE BOUNDARY
