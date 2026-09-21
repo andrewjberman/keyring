@@ -300,6 +300,29 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "Rule 2 (`No private data in the repository`) and the order's bound of the same name: masked labels and aggregate counts only enter code, fixtures, deliverables or logs; a secret's path is one `grade(<path>, \"SECRET\")` returns CONFORMANT for.",
     "world_is": "A pre-existing tracked file under the Gateway's own app/ tree, an agent telemetry JSONL, ships in the deploy artifact by virtue of being inside the whole-directory `app` tar member -- not added, moved or graded by this cell, and not read for content here (no private-data claim is made about its bytes, only about its inclusion path).",
     "notes": "OBSERVATION found while grounding TXG2-AC1's member list. INERT: this cell added no file and the bundling behavior predates it (commit 2781aac326, 2026-08-14, NFRA_OPLGTW/the box owner's surface). Whether app/org/mcp/agent_telemetry/ belongs in the deployed artifact, in the tar excludes, or is fine as-is is a question for the Gateway's owner, not this cell."
+  },
+  {
+    "id": "MDPF_TAXSMA-W2-S1",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_TAXSMA~2",
+    "surfaced_at": "2026-09-21T08:05:00Z",
+    "one_line": "TXA1-AC2 names four rollup levels (Tax, SMA, ALT Strategies, 49financial) but dim_mdpf_aggregate_aua_timeseries.py has no SMA/ALT Strategies series of its own, so this cell reads the four as one arithmetic identity on the single registered path and adds one field beyond the contract's four to make it checkable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "READ: data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py at cell HEAD f8d419c9f0 has no field or function named sma/SMA or alt_strategies anywhere (comp-find-equivalent read of the whole file); its per-firm/Global return dicts carry model_aua, non_model_aua, opal_aggregate_aua and by_model only -- node-level SMA/ALT Strategies rollup lives in the sibling data/mdpf/scripts/gold/mdpf_aggregate_aua.py (imported by mdpf_category_registry.py for RECON_TOLERANCE), which is outside this cell's <paths> grant.",
+        "REGISTRY: mdpf_category_registry.resolve('tax').view_path == 'SMA > ALT Strategies' -- ONE unbranched path, no fork, so 'added once at every level' is a single arithmetic fact on this path, not four independent claims.",
+        "CONTRACT: org/standards/MDPF_TAXSMA_DATA_CONTRACT.json@<worktree> categories.timeseries_extension_fields lists exactly 4 fields (aggregate_basis, base_excluding_tax_aua, tax_additive_aua, tax_coverage) and names no combined-total field at this grain -- TXA1-AC2/AC3's 'added exactly once' arithmetic is unverifiable from those 4 fields alone, so the added module (dim_mdpf_aggregate_aua_timeseries.py, this commit) also returns a 5th field, aua_including_tax = base_excluding_tax_aua + tax_additive_aua, documented in tax_additive_overlay()'s docstring.",
+        "TEST: data/mdpf/tests/taxsma/test_taxsma_aggregate.py::test_ac2_known_tax_cents_added_exactly_once_along_the_single_registered_path asserts the registry path explicitly before trusting the collapse."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TXA1-AC2 (decomp s.3 TX-a-1 acceptance, this cell's task order): 'Tax is added exactly once at Tax, SMA, ALT Strategies and 49financial' -- read literally, this names four distinct levels/series.",
+    "world_is": "This cell's write surface (dim_mdpf_aggregate_aua_timeseries.py, data/mdpf/tests/taxsma/test_taxsma_aggregate.py) carries no separate SMA or ALT Strategies series; the four levels collapse to one addition on Tax's single registered rollup path, verified against the registry rather than assumed, and a 5th field beyond the contract's named four (aua_including_tax) was added to make that one addition checkable end to end.",
+    "notes": "OBSERVATION, not a refusal: the criterion was satisfied under this reading rather than refused, because the alternative (minting a new SMA/ALT Strategies series in a file whose write grant does not cover that grain) would widen the cell past its <paths>. Whether a node-level TAXSMA rollup belongs in mdpf_aggregate_aua.py/category_views is a question for that file's owning cell (likely TX-a-2 or a category-views cell), not this one."
   }
 ]
 ```
