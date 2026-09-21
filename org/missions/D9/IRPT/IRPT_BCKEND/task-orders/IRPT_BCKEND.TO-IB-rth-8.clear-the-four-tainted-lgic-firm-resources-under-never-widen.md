@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~8</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-21 ~19:1xZ (round 8, mid-round addition v0.12, s.R8.9), on row IRPT_BCKEND-W7-S2. VERIFY-THEN-PACKET-THEN-APPLY: arm (a) measures the replace semantics, arm (b) writes and stops for both never-widen halves, arm (c) applies ONLY once both are signed at HEAD.</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 8 (mid-round addition) | **PRD:** `../prd/IRPT_BCKEND_PRD.md` (no addendum) | **Decomp cell:** `IB-rth-8` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.12, s.R8.9) | **outcome_ref:** FWD-11 (the bucket program) | **Prior context:** `IB-rth-7`'s result @`cabb11ced3` (`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~7/reconcile-terraform-state-against-the-recovered-bucket-policy.result.md`), row `IRPT_BCKEND-W7-S2`, `IB-rtf-5`'s own task order (the proven packet shape for this exact resource family)
 
