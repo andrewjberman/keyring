@@ -4487,3 +4487,266 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. The CTO owns endpoint/
  }
 }
 ```
+
+## Round-7 L9 carriers for the nine GRADUATED items (3.0.0_SA_CVO, 2026-09-21T04:26Z)
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S42",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "Export receipt resolves from tenant + caller export_id only; the key-template alignment the arm named is a different shape from what the route actually reads. Round-8 export-contract work.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W1-S42 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S43",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "Deployed submit_export raises NOT_READY, so the submit -> receipt round trip is unwired on the served path. The receipt CONTRACT is proven; the producer is not. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W1-S43 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W1-S45",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A real plan on three roots this order neither granted nor touched shows each with changes -- plan noise on untouched roots defeats the never-widen scope check as written. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W1-S45 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W2-S61",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "The arm named a battery to REUSE; a battery was re-authored under the same assignee instead. The evidence stands, the instruction-versus-artifact gap does not. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W2-S61 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S48",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "A second firm-keyed dict (handler.py RECORDED_LABELS) shares the retired id space this cell was cut to reconcile and sits OUTSIDE the confined edit: locally correct, globally incomplete. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W3-S48 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W3-S50",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "Inflection's performance route fails on an S3 404 in _authz/served.py::enforcer_for, UPSTREAM of route_for and outside this cell's bound. The remedy is the FWD-11 bucket rectification, co-held. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W3-S50 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "1.0.0_SA_CTO",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "1.0.0_SA_CTO",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "1.0.0_SA_CTO",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S45",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "build-and-upload.sh from /c/ was REFUSED at the index-sourced manifest gate (NO BLOB for three files at a pin). A build recipe the order states literally does not run as written. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W4-S45 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S46",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "mechanism": "Plans on export and performance each show an aws_lambda_function update whose before/after source_code_hash do not match this act -- the same untouched-root plan-noise class as W1-S45. Round-8.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W4-S46 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "2.0.0_SA_COO~B",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "2.0.0_SA_COO~B",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "2.0.0_SA_COO~B",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
+
+```json
+{
+ "id": "IRPT_BCKEND-W4-S47",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "mechanism": "Get-PSDrive C reads Free=0 bytes -- a LITERAL zero, not a low figure -- on the only filesystem this box exposes. This is FABRIC LOAD, not project work, and its owner is the fabric seat.",
+ "evidence": [
+  "Round-7 L9 by 3.0.0_SA_CVO; item dispositioned GRADUATED in adjudications/ADJUDICATION_v3.md.",
+  "The investigation row for IRPT_BCKEND-W4-S47 carries the measurement; this carrier does not restate it."
+ ],
+ "remedy": "Carried to round 8 by the named owner. This carrier exists so the item's clock is representable; it is not a closure.",
+ "owner": "0.0.0_AB_MSTR",
+ "round": "v7",
+ "disarm": {
+  "state": "ARMED",
+  "owner": "0.0.0_AB_MSTR",
+  "at": null
+ },
+ "remediation": {
+  "state": "OPEN",
+  "owner": "0.0.0_AB_MSTR",
+  "round": "v7"
+ },
+ "closed": false
+}
+```
