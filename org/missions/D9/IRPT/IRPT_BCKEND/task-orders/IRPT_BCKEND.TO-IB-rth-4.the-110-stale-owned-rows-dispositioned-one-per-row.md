@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~4</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-21 (round 8, recut on the CTO's round-7 analysis @0d400d5c07 s.6). Records-only: no source, no build, no deploy, no served change. A DISPOSITION-PER-ROW, never a bulk close.</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~4, 2026-09-21. R79-AC1 PASS-by-output (battery_ib_rth_4.py, token IBR79-EVERY-ROW-DISPOSITIONED-COUNTS-SUM-TO-DENOMINATOR): the gate's own resolver (srg._stale_open_row, current_round=8) RE-MEASURED the denominator at 150 (not the inherited, already-stale 110 -- confirmed the same instrument reproduces 110 exactly at current_round=7). All 150 dispositioned CARRIED (0 DISARMED, 0 STAYS-ARMED), owner extracted per-row from each row's own disarm.owner/remediation.owner schema field (113 -> 2.0.0_SA_COO~B, 37 -> 1.0.0_SA_CTO), never a bulk or age-based close. Proof instance VALID rc=0 both unbound and --governing-order-bound. Commit: b30017444a (build/battery/record/result) and this instance+flip.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 8 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` | **Round-7 analysis:** `../deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND7_ANALYSIS.md` @0d400d5c07 (s.6) | **Decomp cell:** `IB-rth-4` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.8, s.R8.1) | **outcome_ref:** channel hygiene
 
