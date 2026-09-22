@@ -269,7 +269,7 @@ pays again; the alternative is a state object under `amgt/harvest/state/`; (2) t
 snake_case set, while Lusha returns camelCase (`emailAddresses`, `phoneNumbers`) -- this cell's ALLOW-LIST keeps those
 out regardless, but the store's own guard would not catch them; named for rk-81's owner.
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~87</slot>
 <fabric>site-z</fabric>
