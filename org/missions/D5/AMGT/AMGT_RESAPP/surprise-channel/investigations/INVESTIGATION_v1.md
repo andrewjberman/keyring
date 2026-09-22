@@ -11560,6 +11560,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Section 1 RULED item 3 / the never-widen COO half's ACT step 2: 'SWITCH every reader and writer of filings/v1/*.source.json ... in one commit' -- silent on WHICH modules the new address may import.",
     "world_is": "The adapter Lambda's deployable closure is a walked AST closure with exactly one admitted non-pure wheel; a reader switch that imports a module carrying an unvendored compiled dependency at module scope is a request-time (or, if imported eagerly, cold-start) break the closure walk's own FATAL/missing accounting is built to catch -- but only at BUILD time, after the code is already written the risky way.",
     "notes": "General lesson for any future switch touching this adapter: prefer lib.opal_naming + crosswalk directly over lib.research.harvest.store for address-only needs; reserve the store import for code that actually reads/writes silver (which genuinely needs pyarrow) and runs OFF the adapter (the harvest box, the local batch)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W91-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~91",
+    "surfaced_at": "2026-09-22T04:05:00Z",
+    "one_line": "A REAL live 500 was served by opal-amgt-scoped-api for a short window after the redeploy that fixed W91-S2's pyarrow-avoidance: the FIX ITSELF (lib.opal_naming, called directly to avoid store.py) is ALSO outside the adapter's vendored closure (CLOSURE_ROOTS names only lib.research/lib.opal_data_harvest; lib.opal_naming is a bare top-level module matching neither) -- ModuleNotFoundError on every /thesis invoke, measured live via CloudWatch, for the three validation names and any other request landing in that window. This is the SAME class rk-90's own row W90-S3 hit independently (build_view.py -> lib.opal_naming) -- a recurring hazard on this one adapter's closure boundary, not a one-off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch `/aws/lambda/opal-amgt-scoped-api` (live read, this worktree) -- 4 consecutive invocations (RequestIds 35363efd-a521-4ac8-8c5b-0ad05467e2bf, b3194251-a50a-451c-bcc0-2a1ec65268c9, 2b2691d8-d033-4bb4-9432-f6b7aaa629ac, c5666035-1d0b-4fda-8a82-4c3bb5a74c89) each logging 'ERROR: unhandled exception in opal-amgt-scoped-api ... type=ModuleNotFoundError detail=No module named lib.opal_naming', all within the window between the first M2 redeploy (CodeSha256 ZZ4/pEXNhyac9SISWHJLzbMK06w1MTGA67rZCfeBw0s=) and the second (vsWWFL9jRKHbQb9WP7x2Ob1Qv02nQpAOJkPcQk8/nkA=).",
+        "`filter_log_events` over the 15 minutes surrounding this window found 0 INVOKE events from any OTHER caller besides this worker's own diagnostic invokes -- EXPOSURE-vs-INCIDENT (CLAUDE.md Rule 22's negative mirror): the defect fired (4 real 500s, this worker's own probes), but no third-party/portal traffic is measured to have hit it.",
+        "Fixed at commit ce16181ffb (this worktree): FILING_ATTEMPT_STATE_PREFIX, a hand-typed constant (mirroring MODEL_BLOCK_POOL_PREFIX, the file's own existing precedent for this exact constraint) + the already-imported crosswalk.security_key_partition + pool_reader.POOL_BUCKET -- no import outside the vendored closure. Rebuilt (VERIFY: missing [] both scopes), redeployed (CodeSha256 vsWWFL9jRKHbQb9WP7x2Ob1Qv02nQpAOJkPcQk8/nkA=), re-invoked: all three validation names 200, management_status/roster_status match the pre-existing persisted documents (as_of 2026-09-19, untouched by this move)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Fixed same-turn, redeployed, re-verified 200 on all three validation names before this order's AC6/AC7/AC8 were graded. Measured EXPOSURE-that-fired (4 real 500s) but no evidence of third-party traffic in the window -- an INCIDENT by the letter (it fired) with no measured blast beyond this worker's own probes.",
+    "spec_asserts": "AC6's <expect>: 'a direct invoke of the thesis leaf for CSL_AU_Equity, 6861_JP_Equity and CAT_US_Equity returns 200 ... after 4(b)' -- implicitly assuming the FIRST post-redeploy invoke succeeds.",
+    "world_is": "The first post-4(b) invoke for all three names was a 500 (ModuleNotFoundError), not a 200 -- because the reader-switch fix itself (S2's own remedy) used a module outside the adapter's build closure, a hazard identical in KIND to S2's but in a DIFFERENT module (lib.opal_naming, not lib.research.harvest.store) and not caught before the live act this time, only after.",
+    "notes": "Recurs across TWO task orders on the SAME adapter (rk-90's W90-S3, build_view.py; this row, scoped_amgt.py directly) -- both times lib.opal_naming specifically. A standing lesson for this adapter, not filed as a fix to the build script itself (out of this order's <paths>): any NEW code path in lib.research.api.scoped_amgt.py or anything it imports needs either (a) a module already inside CLOSURE_ROOTS (lib.research.*, lib.opal_data_harvest.*), or (b) pure computation with no cross-tree import, before its first live invoke -- never lib.opal_naming or lib.research.harvest.store directly."
   }
 ]
 ```
