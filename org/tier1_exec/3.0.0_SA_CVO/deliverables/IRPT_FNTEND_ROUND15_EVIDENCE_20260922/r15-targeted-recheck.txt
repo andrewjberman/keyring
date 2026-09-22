@@ -1,0 +1,533 @@
+bun test v1.3.9 (cf6cdbbb)
+bun.exe : 
+At line:2 char:1
++ & C:/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+src\pages\InvestorReporting\__tests__\fe-s-45\residuals.test.ts:
+  dev line -- committed at HEAD: "vite --configLoader runner"; working copy: "vite --configLoader runner"; at 35797660: "vite"
+  node_modules: C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules -> resolves to C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules
+  ARM NEW DEV SCRIPT (the portal's own `dev`): bun run dev --port 5900 --strictPort
+    port 5900 before start: ECONNREFUSED in 204 ms
+    answered: HTTP 200 after 6038 ms
+    served from: PROBE UNREACHABLE no HTTP answer within 4000ms from http://localhost:5900/
+    GET /api/auth/me -> null; GET /fe-s-45-not-proxied (no proxy entry) -> 200
+    listening on 5900: pid 2788 node.exe
+    runtime record of the listener: {"pid":2788,"ppid":25196,"release":"node","bun":null,"exec":"C:\\Program Files\\nodejs\\node.exe"}
+    watched C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/.vite-temp
+    .vite-temp BEFORE: []  AFTER: []
+    writes seen: 0 []
+    stopped: port 5900 after stop: ECONNREFUSED in 324 ms
+    | $ vite --configLoader runner --port "5900" --strictPort
+    | (node:2788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+    | (Use `node --trace-warnings ...` to show where the warning was created)
+    | (node:2788) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+    | VITE v7.3.5  ready in 2267 ms
+  ARM RUNTIME NEGATIVE CONTROL (the first run's rejected dev line "bun --bun vite --configLoader native"): bun --bun vite --configLoader native --port 5901 --strictPort
+    port 5901 before start: ECONNREFUSED in 181 ms
+    answered: HTTP 200 after 16425 ms
+    listening on 5901: pid 37648 bun.exe
+    runtime record of the listener: NONE (0 record(s) from other pids)
+    watched C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/.vite-temp
+    .vite-temp BEFORE: []  AFTER: []
+    writes seen: 0 []
+    stopped: port 5901 after stop: ECONNREFUSED in 114 ms
+    | Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+    | at warnOnDeactivatedColors (internal:tty:33:24)
+    | at getColorDepth (internal:tty:46:39)
+    | at shouldColorize (internal:util/colors:14:109)
+    | at refresh (internal:util/colors:18:31)
+  ARM BUILD (the committed build script's config-loading segment "vite build --configLoader runner", under node, into scratch): node C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/vite/bin/vite.js build --configLoader runner --outDir C:/Users/AndrewBerman/Desktop/ajb_workspace/.scratch/fe-s-45-build-Wloupn --emptyOutDir
+    exit: TIMEOUT after 240000 ms after 243479 ms; index.html built: NO
+    | (node:24356) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead. | vite v7.3.5 building client environment for production... | transforming...
+    watched C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/.vite-temp
+    .vite-temp BEFORE: []  AFTER: []
+    writes seen: 0 []
+  ARM PREVIEW: 
+    ERROR: not run: no build to serve
+  ARM PROGRAMMATIC (fe-s-38/resolve-config.mjs, under node): node C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\src\pages\InvestorReporting\__tests__\fe-s-38\resolve-config.mjs C:/Users/AndrewBerman/Desktop/ajb_workspace/portal
+    exit: 0 after 8589 ms; RESOLVED_JSON: yes
+    | vite cacheDir (resolveConfig): C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/.vite -> resolves to C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/.vite (exists=true) inside=yes
+    watched C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/.vite-temp
+    .vite-temp BEFORE: []  AFTER: []
+    writes seen: 0 []
+  ARM POSITIVE CONTROL (the old dev script "vite"): bun run vite --port 5902 --strictPort
+    port 5902 before start: ECONNREFUSED in 67 ms
+    answered: HTTP 200 after 8169 ms
+    served from: PROBE UNREACHABLE no HTTP answer within 4000ms from http://localhost:5902/
+    GET /api/auth/me -> null; GET /fe-s-45-not-proxied (no proxy entry) -> 200
+    listening on 5902: pid 5200 node.exe
+    runtime record of the listener: {"pid":5200,"ppid":35680,"release":"node","bun":null,"exec":"C:\\Program Files\\nodejs\\node.exe"}
+    watched C:/Users/AndrewBerman/Desktop/ajb_workspace/portal/node_modules/.vite-temp
+    .vite-temp BEFORE: []  AFTER: []
+    writes seen: 3 ["rename:vite.config.ts.timestamp-1790113676982-b28dff5c2233c8.mjs","change:vite.config.ts.timestamp-1790113676982-b28dff5c2233c8.mjs","rename:vite.config.ts.timestamp-1790113676982-b28dff5c2233c8.mjs"]
+    stopped: port 5902 after stop: ECONNREFUSED in 5 ms
+    | (node:5200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+    | (Use `node --trace-warnings ...` to show where the warning was created)
+    | (node:5200) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+    | VITE v7.3.5  ready in 3543 ms
+    | ➜  Local:   http://localhost:5902/
+  (node:24864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  (Use `node --trace-warnings ...` to show where the warning was created)
+  DRIVER EXIT: 0; arms reported: 6 of 6
+  POSITIVE CONTROL -- the old script "vite": 3 write(s) under .vite-temp during its start (FIRED)
+  THE NEW SCRIPT "vite --configLoader runner": 0 write(s); answered HTTP 200; NOT shown to serve this worktree; stopped and port closed
+  working dev line equals the committed one: yes
+DEV SCRIPT WRITES NOTHING THROUGH THE JUNCTION: no
+221 |     console.log(`  working dev line equals the committed one: 
+${sameLine ? 'yes' : 'NO'}`)
+222 |     console.log(`DEV SCRIPT WRITES NOTHING THROUGH THE JUNCTION: 
+${mineClean && controlFired && sameLine ? 'yes' : 'no'}`)
+223 |     expect(sameLine).toBe(true)
+224 |     expect(controlFired).toBe(true)
+225 |     expect(served(mine)).toBe(true)
+226 |     expect(ours(mine)).toBe(true)
+                             ^
+error: expect(received).toBe(expected)
+
+Expected: true
+Received: false
+
+      at <anonymous> (C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\
+[0msrc\pages\InvestorReporting\__tests__\fe-s-45\residuals.test.ts:226:24)[
+0m
+✗ F45-AC2 -- the dev script writes nothing through the junction (row W1-S63) > the new 
+script answers, serves this worktree and writes nothing to node_modules/.vite-temp; the old script does
+  portal HEAD 8e6e2e38: 1530 tracked paths; 35797660: 1463
+  src/pages/InvestorReporting/__tests__/fe-s-31/vite.worktree.config.mjs: HEAD absent; 35797660 PRESENT
+  src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts: HEAD absent; 35797660 PRESENT
+  src/pages/InvestorReporting/__tests__/fe-s-39/vite.worktree.config.mjs: HEAD absent; 35797660 PRESENT
+  src/pages/InvestorReporting/__tests__/fe-s-40/vite.worktree.config.mjs: HEAD absent; 35797660 PRESENT
+  CONTROL -- the same rule at 35797660, before FE-s-45: 4 of 4 present
+  any committed vite*.config.* under __tests__/ at HEAD: 0
+PER-CELL VITE OVERRIDES REMAINING: 0 of 4
+✓ F45-AC3 -- the four per-cell vite overrides are retired (row W1-S65), read from the committed 
+tree > git ls-tree -r HEAD holds none of the four; the same rule at the pre-FE-s-45 commit finds all 
+four [937.00ms]
+  HEAD:src/pages/InvestorReporting/__tests__/fe-s-19/mounted-from-wire.test.ts -- 1 paragraph(s) name the helper:
+    "AND THE PORT IS NO LONGER A LITERAL. It was a hard-coded constant in this file, which made these two criteria unrunnable from any slot but the one that happened to own that port. (The number is deliberately not repeated here: F27-AC5 scans this whole folder for it and expects zero, with a positive control on a seeded copy so the scan cannot read clean by failing to fire.) It now comes from `../fe-s-27/_dev-server.ts` -- `IRPT_FE_DEV_PORT` first, else a port derived from this worktree, else the helper REFUSES: it has no fallback port (1.0.0_SA_CTO RULING U; this line re-worded at FE-s-45). ==========================================================================="
+  CONTROL -- 35797660:src/pages/InvestorReporting/__tests__/fe-s-19/mounted-from-wire.test.ts -- 1 paragraph(s):
+    "AND THE PORT IS NO LONGER A LITERAL. It was a hard-coded constant in this file, which made these two criteria unrunnable from any slot but the one that happened to own that port. (The number is deliberately not repeated here: F27-AC5 scans this whole folder for it and expects zero, with a positive control on a seeded copy so the scan cannot read clean by failing to fire.) It now comes from `../fe-s-27/_dev-server.ts` -- environment first, documented default second. ==========================================================================="
+  CONTROL verdict before FE-s-45: NAMES A DEFAULT
+  the committed paragraph names the refusal: yes
+fe-s-19 NAMES NO DEFAULT PORT: yes
+✓ F45-AC4 -- fe-s-19 names no default port (row W1-S64), read from the committed blob > 
+the committed header says what the helper does; the same rule over the pre-FE-s-45 blob says it did not 
+[391.00ms]
+  SCRIPTS at 35797660: 8 minus 5 that load no vite config = 3 (dev, build, preview)
+  SCRIPTS at HEAD: 8 minus 5 that load no vite config (preinstall, typecheck, lint, test:provenance-guard, test:provenance-read) = 3 (dev, build, preview)
+  PROGRAMMATIC at 35797660: git grep -E 'resolveConfig|loadConfigFromFile|configLoader|createServer\(' -> 13 line(s); 4 call(s) minus 1 plain node createServer = 3
+    .frontend-dev/runners/category-views-fixture-proxy.mjs:72 (plain, subtracted)
+    src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts:48 (vite loader)
+    src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs:59 (vite loader)
+    src/pages/InvestorReporting/__tests__/fe-s-39/vite.worktree.config.mjs:33 (vite loader)
+  PROGRAMMATIC at HEAD: 20 line(s); 2 call(s) minus 1 plain = 1
+    .frontend-dev/runners/category-views-fixture-proxy.mjs:72 (plain, subtracted)
+    src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs:63 (vite loader)
+  THE REACH: 6 loader(s) -- 4 kept, 2 retired
+  DISPOSITION script dev ("vite --configLoader runner"): runner; 0 write(s) under .vite-temp; answered HTTP 200, stopped closed
+  DISPOSITION script build ("tsc -b && vite build --configLoader runner"): runner; 0 write(s) under .vite-temp; exit TIMEOUT after 240000 ms, index.html NOT built
+  DISPOSITION script preview ("vite preview --configLoader runner"): runner; 0 write(s) under .vite-temp; NOT RUN (not run: no build to serve)
+  DISPOSITION src/pages/InvestorReporting/__tests__/fe-s-32/vite.worktree.config.ts:48: RETIRED (deleted from the committed tree, W1-S65)
+  DISPOSITION src/pages/InvestorReporting/__tests__/fe-s-38/resolve-config.mjs:63: runner; 0 write(s) under .vite-temp; exit 0, RESOLVED_JSON yes
+  DISPOSITION src/pages/InvestorReporting/__tests__/fe-s-39/vite.worktree.config.mjs:33: RETIRED (deleted from the committed tree, W1-S65)
+  NAMED RESIDUALS (a caller left on another loader): none
+  dev -- committed "vite --configLoader runner"; working "vite --configLoader runner"
+  build -- committed "tsc -b && vite build --configLoader runner"; working "tsc -b && vite build --configLoader runner"
+  preview -- committed "vite preview --configLoader runner"; working "vite preview --configLoader runner"
+  working dev, build and preview lines equal the committed ones: yes
+  OLD-SCRIPT CONTROL on the same tree ("vite"): 3 write(s) (FIRED)
+EVERY CONFIG LOADER IN THE REACH WRITES NOTHING THROUGH THE JUNCTION: no -- 2 clean among 4 kept; control fired
+434 |     expect(base.status).toBe(0)
+435 |     expect(head.status).toBe(0)
+436 |     expect(sameLines).toBe(true)
+437 |     expect(controlFired).toBe(true)
+438 |     expect(residuals).toHaveLength(0)
+439 |     expect(clean).toBe(kept.length)
+                        ^
+error: expect(received).toBe(expected)
+
+Expected: 4
+Received: 2
+
+      at <anonymous> (C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\
+[0msrc\pages\InvestorReporting\__tests__\fe-s-45\residuals.test.ts:439:19)[
+0m
+✗ F45-AC9 -- every config loader in the reach writes nothing through the junction (RULING (B)) 
+> the reach by subtraction, each disposition, each kept loader run under a watch; the old dev script 
+writes [1140.00ms]
+  this test process: process.release.name "node", process.versions.bun "1.3.9" -- so the name alone cannot tell the runtimes apart
+  dev script "vite --configLoader runner": listener [2788] ["node.exe"]; record {"pid":2788,"ppid":25196,"release":"node","bun":null,"exec":"C:\\Program Files\\nodejs\\node.exe"}
+  process.release.name of the dev server: node; process.versions.bun: absent
+  NEGATIVE CONTROL "bun --bun vite --configLoader native" (at df3a3353): answered HTTP 200; listener [37648] ["bun.exe"]; record null
+  NEGATIVE CONTROL reads bun: yes
+THE DEV SERVER RUNS ON NODE: yes
+✓ F45-AC10 -- the dev script's server runs on node (RULING (B)) > the listener is 
+node.exe and reports process.release.name "node" with no bun; the first run's bun line reads bun 
+[16.00ms]
+  route /api/auth/me: vite.config.ts at HEAD proxies it through its '/api/auth': entry (a rewrite function to /auth/*)
+  NEW "vite --configLoader runner" on port 5900: null; unproxied /fe-s-45-not-proxied -> 200
+  OLD "vite" on port 5902: null; unproxied /fe-s-45-not-proxied -> 200
+  answered upstream, not by vite: new NO; old NO
+A PROXIED /api ROUTE ANSWERS THE SAME STATUS UNDER THE NEW AND OLD DEV SCRIPTS: no
+487 |     const proxied = (arm: Arm | undefined): boolean => 
+typeof arm?.apiStatus === 'number' && arm.apiStatus !== arm.notProxiedStatus
+488 |     const same = typeof dev?.apiStatus === 'number' && 
+dev.apiStatus === old?.apiStatus
+489 |     console.log(`  answered upstream, not by vite: new ${proxied(dev) ? 
+'yes' : 'NO'}; old ${proxied(old) ? 'yes' : 
+'NO'}`)
+490 |     console.log(`A PROXIED /api ROUTE ANSWERS THE SAME STATUS UNDER THE NEW 
+AND OLD DEV SCRIPTS: ${same && proxied(dev) && proxied(old) && config.includes(entry) ? 
+'yes' : 'no'}`)
+491 |     expect(config.includes(entry)).toBe(true)
+492 |     expect(proxied(dev)).toBe(true)
+                               ^
+error: expect(received).toBe(expected)
+
+Expected: true
+Received: false
+
+      at <anonymous> (C:\Users\AndrewBerman\Desktop\ajb_workspace\portal\
+[0msrc\pages\InvestorReporting\__tests__\fe-s-45\residuals.test.ts:492:26)[
+0m
+✗ F45-AC11 -- a proxied /api route answers the same status under the new and old dev scripts 
+> both statuses printed; each differs from vite's own answer for an unproxied path 
+[94.00ms]
+
+src\pages\InvestorReporting\__tests__\fe-s-47\no-status-reason.test.ts:
+F47-AC2 BODY: committed fixtures/wire/DirectoryEntry.valid.json['instance'] in a v1 envelope, 'status' in body: false
+F47-AC2 ENTRIES ADAPTED: 1
+F47-AC2 ENTRY[0] carried state: UNCERTAIN; carried partialReason: "The response carried no status stating its state, so its state is unknown."; publicReasonCode: null
+F47-AC2 VALIDATE -> problems list: []
+A NO-STATUS DIRECTORY BODY THROUGH parseIrEnvelope AND validateContract READS 0 PROBLEMS: yes
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC2 -- a 
+no-status directory body through parseIrEnvelope and validateContract [16.00ms]
+F47-AC3 ARM directory-search, status QUEUED, no reason code: carried state LOADING (stated LOADING); carried partialReason null (the document's own: null); publicReasonCode null; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status RUNNING, no reason code: carried state LOADING (stated LOADING); carried partialReason null (the document's own: null); publicReasonCode null; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status READY, no reason code: carried state READY (stated READY); carried partialReason null (the document's own: null); publicReasonCode null; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status PARTIAL, public_reason_code SOURCE_PARTITION_INCOMPLETE: carried state PARTIAL (stated PARTIAL); carried partialReason null (the document's own: null); publicReasonCode "SOURCE_PARTITION_INCOMPLETE"; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status STALE, public_reason_code SOURCE_PARTITION_INCOMPLETE: carried state STALE (stated STALE); carried partialReason null (the document's own: null); publicReasonCode "SOURCE_PARTITION_INCOMPLETE"; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status UNAVAILABLE, public_reason_code SOURCE_PARTITION_INCOMPLETE: carried state UNAVAILABLE (stated UNAVAILABLE); carried partialReason null (the document's own: null); publicReasonCode "SOURCE_PARTITION_INCOMPLETE"; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status NEEDS_CORRECTION, public_reason_code SOURCE_PARTITION_INCOMPLETE: carried state NEEDS-CORRECTION (stated NEEDS-CORRECTION); carried partialReason null (the document's own: null); publicReasonCode "SOURCE_PARTITION_INCOMPLETE"; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status UNCERTAIN, public_reason_code SOURCE_PARTITION_INCOMPLETE: carried state UNCERTAIN (stated UNCERTAIN); carried partialReason null (the document's own: null); publicReasonCode "SOURCE_PARTITION_INCOMPLETE"; validate problems [] -> HELD
+F47-AC3 ARM directory-search, status FAILED, public_reason_code SOURCE_PARTITION_INCOMPLETE: carried state FAILED (stated FAILED); carried partialReason null (the document's own: null); publicReasonCode "SOURCE_PARTITION_INCOMPLETE"; validate problems [] -> HELD
+F47-AC3 ARM resolve-scope (the document states partial_reason), status READY: carried state READY (stated READY); carried partialReason "one account of four is outside the advisor's grant" (the document's own: "one account of four is outside the advisor's grant"); publicReasonCode null; validate problems [] -> HELD
+F47-AC3 ARM resolve-scope (the document states partial_reason), status PARTIAL: carried state PARTIAL (stated PARTIAL); carried partialReason "one account of four is outside the advisor's grant" (the document's own: "one account of four is outside the advisor's grant"); publicReasonCode "SOURCE_PARTITION_INCOMPLETE"; validate problems [] -> HELD
+A STATED STATE NEVER CARRIES THE NO-STATUS REASON: 11 of 11
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC3 -- a 
+stated state never carries the no-status reason
+F47-AC4 STRIPPED availability: {"state":"UNCERTAIN","sourceAsOf":null,"partialReason":null,"publicReasonCode":null,"unprojectedGrant":{"count":0,"denominator":1,"kinds":[]},"sourceDate":{"fact":"PRESENT","businessAsOf":"2026-09-09"}}
+F47-AC4 PROBLEMS: ["DirectoryEntry[0].availability: state 'UNCERTAIN' carries NEITHER partialReason NOR publicReasonCode"]
+THE SAME DOCUMENT WITH ITS REASON STRIPPED IS REFUSED: yes
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC4 -- the 
+same document with its reason stripped is refused
+F47-AC5 HEAD:src/pages/InvestorReporting/contracts/validate.ts = 4fc0a042ae9c8bc02cef78af409a60e1628cc7e7
+F47-AC5 1f3ce9f0:src/pages/InvestorReporting/contracts/validate.ts = 4fc0a042ae9c8bc02cef78af409a60e1628cc7e7
+F47-AC5 working copy status: (clean)
+validate.ts UNCHANGED FROM DEV 1f3ce9f0: yes
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC5 -- 
+validate.ts unchanged from DEV 1f3ce9f0 [219.00ms]
+F47-AC6 CENSUS: git grep -n -E "EXPLICIT_UNKNOWN_STATE|'UNCERTAIN'|"UNCERTAIN"" HEAD over the committed portal tree: 89 lines, 57 under __tests__/, 32 outside
+F47-AC6 NOT A WRITE                                contracts/adapt.ts:22 -- a comment or docstring
+F47-AC6 NOT A WRITE                                contracts/adapt.ts:168 -- the constant's own declaration; its uses are the sites
+F47-AC6 OVERWRITTEN on every in-contract response  contracts/adapt.ts:245 -- wireEnvelope's default: measured below, both ways it reaches a response
+F47-AC6 NOT A WRITE                                contracts/adapt.ts:300 -- a comment or docstring
+F47-AC6 KEPT -- carries the reason                 contracts/adapt.ts:313 -- carryAvailabilityFromStatus, the seam parseIrEnvelope runs for every operation
+F47-AC6 STATED, NOT SUPPLIED                       contracts/adapt.ts:400 -- STATE_FOR_WIRE renames a state the PRODUCER stated; the adapter supplies nothing, and the reason is the producer's own
+F47-AC6 NOT A WRITE                                contracts/adapt.ts:596 -- a comment or docstring
+F47-AC6 NOT A WRITE                                contracts/adapt.ts:597 -- a comment or docstring
+F47-AC6 NOT A WRITE                                contracts/adapt.ts:598 -- a comment or docstring
+F47-AC6 OVERWRITTEN on every in-contract response  contracts/adapt.ts:602 -- adaptStatusEnvelope's own explicit-unknown reason (FE-s-53, row IRPT_FNTEND-W3-S37): for status-summary/status-job this builds `data`, and parseIrEnvelope's carryAvailabilityFromStatus (:219) always runs on `data` afterward with the SEPARATE `status` field, which these two operations leave absent -- so carryAvailabilityFromStatus's own `statedState === null` branch re-derives both state and partialReason regardless of what this line set, the same way wireEnvelope's default is overwritten above
+F47-AC6 NOT A STATE                                contracts/adapt.ts:830 -- a finding SEVERITY compared, not a state
+F47-AC6 NOT A WRITE                                contracts/envelope.ts:46 -- a member of envelope.ts's import list
+F47-AC6 NOT AN AVAILABILITY                        contracts/envelope.ts:296 -- IrParsedEnvelope.state: its type has no reason member, so it is not an Availability
+F47-AC6 NOT A WRITE                                contracts/index.ts:64 -- a member of a declared state vocabulary (a union or a list), not a value given to a document
+F47-AC6 NOT A WRITE                                contracts/index.ts:75 -- a member of a declared state vocabulary (a union or a list), not a value given to a document
+F47-AC6 NOT A WRITE                                contracts/index.ts:86 -- a member of a declared state vocabulary (a union or a list), not a value given to a document
+F47-AC6 NOT A STATE                                contracts/wire/AnalysisRequest.ts:62 -- a finding SEVERITY union, not a state
+F47-AC6 NOT A WRITE                                contracts/wire/StatusEnvelope.ts:18 -- a member of a declared state vocabulary (a union or a list), not a value given to a document
+F47-AC6 NOT AN AVAILABILITY                        export/submit.ts:220 -- envelopeFromReceipt returns a TabEnvelope (the panel shape, no partialReason member) for the receipt's own 'unknown' job state
+F47-AC6 STATED, NOT SUPPLIED                       fixtures/directory.unknown-cohort.json:22 -- a committed fixture document that states UNCERTAIN itself
+F47-AC6 STATED, NOT SUPPLIED                       fixtures/fe-s-15/job.waf-refresh.json:42 -- a committed fixture document that states UNCERTAIN itself
+F47-AC6 STATED, NOT SUPPLIED                       fixtures/fe-s-6/request.uncertain.json:20 -- a committed fixture document that states UNCERTAIN itself
+F47-AC6 STATED, NOT SUPPLIED                       fixtures/narrativePacket.failure.json:21 -- a committed fixture document that states UNCERTAIN itself
+F47-AC6 STATED, NOT SUPPLIED                       fixtures/smoke/fe-s-18-holdings-target.json:472 -- a committed fixture document that states UNCERTAIN itself
+F47-AC6 NOT A STATE                                fixtures/wire/AnalysisRequest.valid.json:76 -- a finding SEVERITY in a wire instance, not a state
+F47-AC6 NOT A WRITE                                state/availability.ts:20 -- a comment or docstring
+F47-AC6 NOT A WRITE                                state/availability.ts:53 -- an import
+F47-AC6 NOT A WRITE                                state/availability.ts:67 -- a comparison that READS a state
+F47-AC6 NOT A WRITE                                state/status.ts:201 -- a switch arm that READS a state
+F47-AC6 NOT A WRITE                                state/status.ts:377 -- a member of a declared state vocabulary (a union or a list), not a value given to a document
+F47-AC6 NOT A WRITE                                state/status.ts:397 -- a member of a declared state vocabulary (a union or a list), not a value given to a document
+F47-AC6 NOT A WRITE                                tabs/analysis/composer.ts:329 -- a switch arm that READS a state
+F47-AC6 CHECK IrParsedEnvelope has 'state: EnvelopeState' and no partialReason member: holds
+F47-AC6 CHECK submit.ts's site sits in 'export function envelopeFromReceipt(receipt: ExportReceipt): TabEnvelope {': holds
+F47-AC6 OVERWRITE (1) documents: a READY status replaces the document's explicit unknown on 9 of 9 operations whose document carries an availability
+F47-AC6 OVERWRITE (2) the status member: 9 of 9 contract states map to a stated view state, so wireEnvelope's default is never taken for an in-contract status
+F47-AC6 RESIDUE (off-contract) a status with no state: parsed.status.state undefined; parsed.status.availability {"state":"UNCERTAIN","partialReason":null,"publicReasonCode":"SOURCE_PARTITION_INCOMPLETE"}
+F47-AC6 REACH directory-search, no status: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH directory-search, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH resolve-scope, no status: state UNCERTAIN, partialReason "one account of four is outside the advisor's grant" (expected the document's own "one account of four is outside the advisor's grant") -> CARRIES
+F47-AC6 REACH resolve-scope, a status with no state: state UNCERTAIN, partialReason "one account of four is outside the advisor's grant" (expected the document's own "one account of four is outside the advisor's grant") -> CARRIES
+F47-AC6 REACH performance-report, no status: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH performance-report, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH analysis-requests, no status: REFUSED by the parser (EnvelopeMismatch 'status'), nothing adapted, so no explicit unknown reaches an availability
+F47-AC6 REACH narrative-packet, no status: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH narrative-packet, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH status-summary, no status: state PARTIAL, partialReason null (expected IDENTITY (document's own state + reason)) -> CARRIES
+F47-AC6 REACH status-summary, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH status-job, no status: state PARTIAL, partialReason null (expected IDENTITY (document's own state + reason)) -> CARRIES
+F47-AC6 REACH status-job, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH submit-export, no status: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH submit-export, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH export-receipt, no status: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH export-receipt, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH holdings-snapshot, no status: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 REACH holdings-snapshot, a status with no state: state UNCERTAIN, partialReason "The response carried no status stating its state, so its state is unknown." (expected NO_STATUS_REASON) -> CARRIES
+F47-AC6 SUBTRACTION: 32 sites - 31 subtracted - 0 unclassified = 1 kept
+F47-AC6   NOT A WRITE: 18
+F47-AC6   OVERWRITTEN on every in-contract response: 2
+F47-AC6   KEPT -- carries the reason: 1
+F47-AC6   STATED, NOT SUPPLIED: 6
+F47-AC6   NOT A STATE: 3
+F47-AC6   NOT AN AVAILABILITY: 2
+F47-AC6 KEPT SITES: 1; census breaks: 0
+EVERY EXPLICIT UNKNOWN THAT REACHES A RESPONSE'S AVAILABILITY CARRIES ITS REASON: 18 of 18
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC6 -- the 
+reach, by subtraction over the committed tree [1000.00ms]
+F47-AC7 OPERATIONS: 12; status OPTIONAL (RESPONSE_STATUS_REQUIRED false): 11; REQUIRED: analysis-requests
+F47-AC7 directory-search (DirectoryEntry): state UNCERTAIN; partialReason "The response carried no status stating its state, so its state is unknown."; publicReasonCode null; reasonless-UNCERTAIN refusals 0; control, every reason stripped, refused: yes (partialReason alone stripped, refused: yes)
+F47-AC7 resolve-scope (ResolvedScope): state UNCERTAIN; partialReason "one account of four is outside the advisor's grant"; publicReasonCode null; reasonless-UNCERTAIN refusals 0; control, every reason stripped, refused: yes (partialReason alone stripped, refused: yes)
+F47-AC7 performance-report (PerformanceReport): state UNCERTAIN; partialReason "The response carried no status stating its state, so its state is unknown."; publicReasonCode null; reasonless-UNCERTAIN refusals 0; control, every reason stripped, refused: yes (partialReason alone stripped, refused: yes)
+F47-AC7 SUBTRACT analysis-report: its adapted data (a AnalysisReport slice) carries no availability
+F47-AC7 narrative-packet (NarrativePacket): state UNCERTAIN; partialReason "The response carried no status stating its state, so its state is unknown."; publicReasonCode null; reasonless-UNCERTAIN refusals 0; control, every reason stripped, refused: yes (partialReason alone stripped, refused: yes)
+F47-AC7 SUBTRACT status-summary: under 'no status' its data carries a stated state ("PARTIAL"), never the explicit unknown this claim's control provokes
+F47-AC7 SUBTRACT status-job: under 'no status' its data carries a stated state ("PARTIAL"), never the explicit unknown this claim's control provokes
+F47-AC7 submit-export (ExportReceipt): state UNCERTAIN; partialReason "The response carried no status stating its state, so its state is unknown."; publicReasonCode null; reasonless-UNCERTAIN refusals 0; control, every reason stripped, refused: yes (partialReason alone stripped, refused: yes)
+F47-AC7 export-receipt (ExportReceipt): state UNCERTAIN; partialReason "The response carried no status stating its state, so its state is unknown."; publicReasonCode null; reasonless-UNCERTAIN refusals 0; control, every reason stripped, refused: yes (partialReason alone stripped, refused: yes)
+F47-AC7 SUBTRACT export-download: its adapted data (a ExportReceipt slice) carries no availability
+F47-AC7 holdings-snapshot (HoldingsSnapshot): state UNCERTAIN; partialReason "The response carried no status stating its state, so its state is unknown."; publicReasonCode null; reasonless-UNCERTAIN refusals 0; control, every reason stripped, refused: yes (partialReason alone stripped, refused: yes)
+F47-AC7 POPULATION: 11 status-optional - 4 without an availability = 7; control refused when stripped: 7 of 7
+NO STATUS-OPTIONAL OPERATION IS REFUSED FOR A REASONLESS UNCERTAIN: 7 of 7
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC7 -- no 
+status-optional operation is refused for a reasonless UNCERTAIN [15.00ms]
+F47-AC8 AnswerStatus RENDERED (no-status body): Uncertain Qualified answer -- not a complete report Business date 2026-09-09 The response carried no status stating its state, so its state is unknown.
+F47-AC8 CONTROL, the same document with partialReason null: Uncertain Qualified answer -- not a complete report Business date 2026-09-09 No reason stated
+THE MOUNTED STATUS PANEL SHOWS THE NO-STATUS REASON: yes
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC8 -- the 
+mounted status panel shows the no-status reason [32.00ms]
+F47-AC9 DOCUMENT: committed fixtures/wire/ResolvedScope.valid.json['instance'].partial_reason = "one account of four is outside the advisor's grant"
+F47-AC9 ARM the document states its reason, 'status' in body: false: carried state UNCERTAIN; carried partialReason "one account of four is outside the advisor's grant"; validate problems [] -> KEPT the document's own
+F47-AC9 ARM the document states none (partial_reason null): carried state UNCERTAIN; carried partialReason "The response carried no status stating its state, so its state is unknown."; validate problems [] -> NO_STATUS_REASON
+F47-AC9 BEFORE f4b9ce89:src/pages/InvestorReporting/contracts/adapt.ts -- partialReason: statedState === null ? NO_STATUS_REASON : current.partialReason,
+F47-AC9 BEFORE ARM the document states its reason, no status, at f4b9ce89's carry: carried partialReason "The response carried no status stating its state, so its state is unknown." -> REPLACED by the constant (the defect, row W3-S39)
+F47-AC9 AFTER  HEAD:src/pages/InvestorReporting/contracts/adapt.ts -- partialReason: statedState === null ? (current.partialReason ?? NO_STATUS_REASON) : current.partialReason,
+F47-AC9 EXTRACTION CONTROL HEAD's carry, extracted the same way, equals the real parseIrEnvelope data: holds
+A DOCUMENT'S OWN REASON SURVIVES A MISSING STATUS: yes
+✓ FE-s-47 -- a response with no status says why its state is unknown > F47-AC9 -- a 
+document's own reason survives a missing status (amendment 1, RULING V) [312.00ms]
+
+src\pages\InvestorReporting\__tests__\fe-s-49\admin-gate.test.ts:
+MATERIALIZED: HEAD and 1f3ce9f0 ProtectedRoute.tsx + firmAccess.ts from committed blobs; re-pointed specifiers (each counted once):
+  from '../hooks/useAuth'  ->  from '../../../../../../../../hooks/useAuth'
+  from './LoadingSpinner'  ->  from '../../../../../../../../components/LoadingSpinner'
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as opal-capital admin: CHILDREN
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as opal-capital admin: CHILDREN
+AN OPAL INTERNAL ADMIN REACHES BOTH ROUTES: 2 of 2
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC2 -- an Opal internal admin 
+reaches both routes [31.00ms]
+FIRMS WHOSE ALLOWLIST LISTED /investor-reporting AT DEV 1f3ce9f0 (firmAccess.ts blob): 3 -- 49financial, inflection, cottonwood
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as 49financial admin: REDIRECT -> /market
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as 49financial admin: REDIRECT -> /market
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as inflection admin: REDIRECT -> /market
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as inflection admin: REDIRECT -> /market
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as cottonwood admin: REDIRECT -> /market
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as cottonwood admin: REDIRECT -> /market
+A PARTNER-FIRM ADMIN IS REFUSED ON BOTH ROUTES: 6 of 6
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC3 -- a partner-firm admin is 
+refused on both routes [16.00ms]
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as opal-capital user (role user): REDIRECT -> /market
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as opal-capital user (role user): REDIRECT -> /market
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as 49financial user (role user): REDIRECT -> /market
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as 49financial user (role user): REDIRECT -> /market
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as inflection user (role user): REDIRECT -> /market
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as inflection user (role user): REDIRECT -> /market
+  HEAD App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal> as cottonwood user (role user): REDIRECT -> /market
+  HEAD App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim> as cottonwood user (role user): REDIRECT -> /market
+A NON-ADMIN IS REFUSED ON BOTH ROUTES: 8 of 8 (4 identities x 2 routes)
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC4 -- a non-admin is refused on 
+both routes [16.00ms]
+LIFTED FROM HEAD App.tsx:308 (the nav filter, evaluated unchanged):
+item => {
+                // Firm-level page-access matrix (opal-capital sees all,
+                // partner firms see only paths in their FIRM_ALLOWED_PATHS).
+                if (!isPathAllowedForFirm(claims?.firmId, item.path)) {
+                  return false
+                }
+                // Check dev requirement
+                if (item.requiresDev && claims?.userType !== 'Dev') {
+                  return false
+                }
+                // Check admin requirement
+                if (item.requiresAdmin && user?.role !== 'admin') {
+                  return false
+                }
+                // Check tier requirement
+                if (item.requiresTier && !hasAccess(item.requiresTier)) {
+                  return false
+                }
+                return true
+              }
+LIFTED FROM HEAD AuthContext.tsx:758 (hasAccess, evaluated unchanged):
+(requiredTier: string) => {
+    if (!state.claims) return false
+    if (requiredTier === 'internal') return state.claims.firmId === 'opal-capital'
+    return true
+  }
+  HEAD nav item in section 'insights' (section requiresDev=false): {"path":"/investor-reporting","label":"Investor Reporting","icon":"icon:FileText","requiresAdmin":true,"requiresTier":"internal"}
+  NAV (HEAD) for opal-capital admin: SHOWN (1 investor-reporting nav item(s))
+  NAV (HEAD) for 49financial admin: HIDDEN (1 investor-reporting nav item(s))
+  NAV (HEAD) for inflection admin: HIDDEN (1 investor-reporting nav item(s))
+  NAV (HEAD) for cottonwood admin: HIDDEN (1 investor-reporting nav item(s))
+  NAV (HEAD) for opal-capital user (role user): HIDDEN (1 investor-reporting nav item(s))
+  NAV (HEAD) for 49financial user (role user): HIDDEN (1 investor-reporting nav item(s))
+  NAV (HEAD) for inflection user (role user): HIDDEN (1 investor-reporting nav item(s))
+  NAV (HEAD) for cottonwood user (role user): HIDDEN (1 investor-reporting nav item(s))
+  CONTROL (DEV 1f3ce9f0 nav item + allowlist, same lifted filter): shown to 3 of 3 partner users (49financial, inflection, cottonwood)
+THE NAV SHOWS INVESTOR REPORTING ONLY TO THE OPAL INTERNAL ADMIN: yes (shown to 1 of 8 identities)
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC5 -- the nav shows Investor 
+Reporting only to the Opal internal admin [656.00ms]
+  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as 49financial user: CHILDREN
+  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as 49financial user: REDIRECT -> /market
+  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as 49financial admin: CHILDREN
+  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as 49financial admin: REDIRECT -> /market
+  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as inflection user: CHILDREN
+  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as inflection user: REDIRECT -> /market
+  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as inflection admin: CHILDREN
+  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as inflection admin: REDIRECT -> /market
+  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as cottonwood user: CHILDREN
+  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as cottonwood user: REDIRECT -> /market
+  1f3ce9f0 App.tsx:421 /investor-reporting <ProtectedRoute> as cottonwood admin: CHILDREN
+  1f3ce9f0 App.tsx:573 /investor-reporting/print <ProtectedRoute> as cottonwood admin: REDIRECT -> /market
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC6 -- BEFORE (DEV 1f3ce9f0) a 
+partner-firm user reached the page [15.00ms]
+BEFORE (DEV 1f3ce9f0): A PARTNER-FIRM USER REACHED THE PAGE: yes (6 of 12 renders: 49financial user @ /investor-reporting; 49financial admin @ /investor-reporting; inflection user @ /investor-reporting; inflection admin @ /investor-reporting; cottonwood user @ /investor-reporting; cottonwood admin @ /investor-reporting)
+HEAD App.tsx: 26 <Route> elements, 16 nav entries; minus those not under /investor-reporting: 2 route(s) + 1 nav entr(ies)
+  ROUTE App.tsx:424 /investor-reporting <ProtectedRoute requireAdmin requireInternal>: CARRIES requireAdmin + requireInternal
+  ROUTE App.tsx:576 /investor-reporting/print <ProtectedRoute requireAdmin requireInternal allowRenderClaim>: CARRIES requireAdmin + requireInternal
+  NAV /investor-reporting requiresAdmin=true requiresTier=internal: CARRIES the predicate
+  ENCLOSING ROUTE App.tsx:578 /* <ProtectedRoute> (wraps DashboardLayout, where /investor-reporting lives)
+OTHER ENTRY POINTS: 39 committed src/ line(s) quote the path; 37 are App.tsx or tests; 2 other, each classified:
+  src/components/ProtectedRoute.tsx:14: * items 1-6). Opt-in per route -- today set ONLY on `/investor-reporting/print` (App.tsx:576).
+    -> COMMENT -- not an entry point
+  src/pages/InvestorReporting/render/PrintEntry.tsx:2: * FE-s-4 -- THE PRINT ENTRY POINT: route `/investor-reporting/print`.
+    -> COMMENT -- not an entry point
+  LINKS/NAVIGATIONS INTO THE PAGE OUTSIDE App.tsx: 0 (each lands on a route element enumerated above)
+EVERY INVESTOR REPORTING ROUTE AND NAV ENTRY CARRIES THE OPAL-ADMIN PREDICATE: 3 of 3
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC7 -- every Investor Reporting 
+route and nav entry carries the Opal-admin predicate [172.00ms]
+c29a8b86 src/App.tsx: 5 hunks; 3 gate hunk(s) (a + line names /investor-reporting), 2 unrelated
+  GATE HUNK 1: found at HEAD App.tsx:97; its removed line(s) absent from HEAD: yes
+    c29a8b86 +|      // Opal Admins only (Andrew-direct 2026-09-15 ~04:4xZ): an admin role AND the internal tier (opal-capital). The
+    HEAD:97     |      // Opal Admins only (Andrew-direct 2026-09-15 ~04:4xZ): an admin role AND the internal tier (opal-capital). The
+    c29a8b86 +|      // route below carries the same two requirements, so the page is gated where it lives, not only in this list.
+    HEAD:98     |      // route below carries the same two requirements, so the page is gated where it lives, not only in this list.
+    c29a8b86 +|      { path: '/investor-reporting', label: 'Investor Reporting', icon: FileText, requiresAdmin: true, requiresTier: 'internal' },
+    HEAD:99     |      { path: '/investor-reporting', label: 'Investor Reporting', icon: FileText, requiresAdmin: true, requiresTier: 'internal' },
+  GATE HUNK 2: found at HEAD App.tsx:424; its removed line(s) absent from HEAD: yes
+    c29a8b86 +|              <Route path="/investor-reporting" element={<ProtectedRoute requireAdmin requireInternal><InvestorReporting /></ProtectedRoute>} />
+    HEAD:424    |              <Route path="/investor-reporting" element={<ProtectedRoute requireAdmin requireInternal><InvestorReporting /></ProtectedRoute>} />
+  GATE HUNK 3: SANCTIONED REWRITE for /investor-reporting/print (PRD v0.10 F9) -- byte-identical: NO; exact prop-set match (AST, old props + [allowRenderClaim]): yes
+    c29a8b86 +|        <Route path="/investor-reporting/print" element={<ProtectedRoute requireAdmin requireInternal><InvestorReportingPrint /></ProtectedRoute>} />
+    HEAD    |expected {requireAdmin=true, requireInternal=true, allowRenderClaim=true} vs HEAD App.tsx:576 {requireAdmin=true, requireInternal=true, allowRenderClaim=true} -- prop count matches: yes; every expected value matches exactly: yes
+  UNRELATED HUNKS CARRIED INTO HEAD: 2 of 2 (expected 0: they are not this order's)
+    not ours: +|  ArrowLeftRight,
+    not ours: +|      // Its own mark (Andrew-direct ~04:4xZ): the paper icon belongs to Investor Reporting. /       { path: '/trade-submission', label: 'Trade Submission', icon: ArrowLeftRight },
+TWO HUNKS BYTE-IDENTICAL, ONE SANCTIONED ADDITIVE MATCH TO 2.0.0_SA_COO~D'S c29a8b86: 2 byte-identical, 1 sanctioned-additive (of 3 gate hunks)
+c29a8b86 IS an ancestor of HEAD; expecting 2 unrelated hunk(s)
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC8 -- the three gate hunks are 
+byte-identical to 2.0.0_SA_COO~D's c29a8b86 [219.00ms]
+  49financial: DEV 1f3ce9f0 LISTS /investor-reporting; HEAD does not list it
+  inflection: DEV 1f3ce9f0 LISTS /investor-reporting; HEAD does not list it
+  cottonwood: DEV 1f3ce9f0 LISTS /investor-reporting; HEAD does not list it
+  HEAD, every firm in FIRM_ALLOWED_PATHS: 0 of 4 list /investor-reporting (49financial, inflection, cottonwood, demo)
+PARTNER ALLOWLIST ENTRIES GRANTING /investor-reporting: 0 of 3 REMAIN
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC9 -- partner allowlist entries 
+granting /investor-reporting, before and after
+ENDPOINTS (committed src/api/endpoints/investor-reporting.ts IR_ROUTE_TABLE, the LiveClient's only table): 12
+SHARED BOUNDARY (every entry below runs it):
+  infra/aws/lambda/investor-reporting/_authz/served.py:612 -- the ONLY principal refusal before the guard is an absent verified firm (NOT_AUTHORIZED): found; lines naming x-user-role / 'admin' / opal-capital: 0
+  infra/aws/lambda/investor-reporting/_authz/enforce.py:351 -- resolve_now refuses principal_class UNKNOWN (NO_PRINCIPAL): found
+  infra/aws/lambda/investor-reporting/_scope/resolve.py:286 -- a role=admin caller with ANY verified firm is FIRM_OPERATIONS: found; the condition names opal: no
+  infra/aws/lambda/investor-reporting/_scope/resolve.py:293 -- an advisorId caller (not admin) is FIRM_ADVISOR: found
+  infra/aws/lambda/investor-reporting/_scope/resolve.py:445 -- FIRM_OPERATIONS is served its verified firm's population: found
+  EDGE infra/aws/lambda-edge/auth-validator-edge/index.mjs: 2 line(s) name investor-reporting (no path rule of its own when 0)
+  EDGE infra/aws/lambda-edge/auth-validator-edge/tier_policy.mjs: 0 line(s) name investor-reporting (no path rule of its own when 0)
+  EDGE infra/aws/users/lambda/portal-authorizer/index.mjs: 3 line(s) name investor-reporting (no path rule of its own when 0)
+  GET /api/scoped/investor-reporting/directory/search [directory-search, investor-reporting.ts:179] -> docs/contracts/investor-reporting/v1/routes.json:19 handler irpt-directory-search -> admin-only: no -- infra/aws/lambda/investor-reporting/directory/entry.py:201 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  POST /api/scoped/investor-reporting/directory/resolve [resolve-scope, investor-reporting.ts:180] -> docs/contracts/investor-reporting/v1/routes.json:29 handler irpt-directory-search -> admin-only: no -- infra/aws/lambda/investor-reporting/directory/entry.py:201 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/performance/{accountSetId} [performance-report, investor-reporting.ts:181] -> docs/contracts/investor-reporting/v1/routes.json:39 handler irpt-performance-adapter -> admin-only: no -- infra/aws/lambda/investor-reporting/performance/entry.py:108 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  POST /api/scoped/investor-reporting/analysis [analysis-requests, investor-reporting.ts:182] -> docs/contracts/investor-reporting/v1/routes.json:49 handler irpt-ycharts-generate -> admin-only: no -- infra/aws/lambda/investor-reporting/ycharts/generate/entry.py:179 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/analysis/{jobId}/sections [analysis-report, investor-reporting.ts:183] -> docs/contracts/investor-reporting/v1/routes.json:59 handler irpt-status -> admin-only: no -- infra/aws/lambda/investor-reporting/ops/entry.py:105 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/narrative/{reportId} [narrative-packet, investor-reporting.ts:184] -> docs/contracts/investor-reporting/v1/routes.json:69 handler irpt-narrative -> admin-only: no -- infra/aws/lambda/investor-reporting/narrative/entry.py:122 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/status [status-summary, investor-reporting.ts:185] -> docs/contracts/investor-reporting/v1/routes.json:79 handler irpt-status -> admin-only: no -- infra/aws/lambda/investor-reporting/ops/entry.py:105 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/status/{jobId} [status-job, investor-reporting.ts:186] -> docs/contracts/investor-reporting/v1/routes.json:90 handler irpt-status -> admin-only: no -- infra/aws/lambda/investor-reporting/ops/entry.py:105 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  POST /api/scoped/investor-reporting/export [submit-export, investor-reporting.ts:187] -> docs/contracts/investor-reporting/v1/routes.json:101 handler irpt-export-render -> admin-only: no -- infra/aws/lambda/investor-reporting/export/entry.py:222 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/export/{exportId} [export-receipt, investor-reporting.ts:188] -> docs/contracts/investor-reporting/v1/routes.json:111 handler irpt-export-render -> admin-only: no -- infra/aws/lambda/investor-reporting/export/entry.py:222 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/export/{exportId}/download [export-download, investor-reporting.ts:189] -> docs/contracts/investor-reporting/v1/routes.json:121 handler irpt-export-render -> admin-only: no -- infra/aws/lambda/investor-reporting/export/entry.py:222 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+  GET /api/scoped/investor-reporting/holdings/{accountSetId} [holdings-snapshot, investor-reporting.ts:190] -> docs/contracts/investor-reporting/v1/routes.json:132 handler irpt-holdings -> admin-only: no -- infra/aws/lambda/investor-reporting/holdings/entry.py:177 (served.Entry) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:286 (partner-firm admin = FIRM_OPERATIONS) + infra/aws/lambda/investor-reporting/_scope/resolve.py:293 (partner advisor = FIRM_ADVISOR) -> infra/aws/lambda/investor-reporting/_scope/resolve.py:445 (served its firm) ; refusals only at infra/aws/lambda/investor-reporting/_authz/served.py:612 and infra/aws/lambda/investor-reporting/_authz/enforce.py:351
+ADMIN-ONLY ANSWERS: yes 0, no 12, UNKNOWN 0 of 12 -- THE PORTAL GATE IS THE ONLY ADMIN WALL; the backend is a FIRM wall
+EVERY ENDPOINT INVESTOR REPORTING CALLS HAS A PRINTED ADMIN-ONLY ANSWER: 12 of 12
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC10 -- every endpoint Investor 
+Reporting calls has a printed admin-only answer (READ-ONLY census) [4719.00ms]
+HEAD src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts:683 "F49-AC10 -- every endpoint Investor Reporting calls has a printed admin-only answer (READ-ONLY census)" third argument: 20109
+HEAD src/pages/InvestorReporting/__tests__/fe-s-49/recorded-costs.json: 6 recorded cost(s), 6 usable
+  6703 ms -- the issuer, 2.0.0_SA_COO~F: admin-gate.test.ts alone on an untouched pair (workspace d0a5ad368d, portal 640379b8); timed out at bun's default 5000 ms [row IRPT_FNTEND-S67, org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@ca53c9d094]
+  5938 ms -- the issuer, 2.0.0_SA_COO~F: inside the whole InvestorReporting suite on the same pair (567 pass / 18 skip / 2 fail of 587); timed out at bun's default 5000 ms [row IRPT_FNTEND-S67, org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@ca53c9d094]
+  4907 ms -- 0.9.0_WK_IRPT_FNTEND~2: admin-gate.test.ts alone, run 1 of 3, junit reporter, portal 58033070 plus this amendment's uncommitted edits, provisional timeout 60000 [worker junit report <WS>/.scratch/cost_alone_1.xml, testcase time 4.907]
+  5187 ms -- 0.9.0_WK_IRPT_FNTEND~2: admin-gate.test.ts alone, run 2 of 3, same checkout [worker junit report <WS>/.scratch/cost_alone_2.xml, testcase time 5.187]
+  6343 ms -- 0.9.0_WK_IRPT_FNTEND~2: admin-gate.test.ts alone, run 3 of 3, same checkout [worker junit report <WS>/.scratch/cost_alone_3.xml, testcase time 6.343]
+  6188 ms -- 0.9.0_WK_IRPT_FNTEND~2: inside the whole InvestorReporting suite (608 tests across 106 files, one bun test process), same checkout [worker junit report <WS>/.scratch/cost_suite_1.xml, testcase time 6.188]
+  the issuer's two costs from row S67 (6703, 5938) in the record: 2 of 2
+  TIMEOUT 20109 ms / HIGHEST RECORDED COST 6703 ms = 3.0000 (rule: 3 x, at most 60000 ms)
+THE CENSUS TEST'S TIMEOUT IS 3 TIMES ITS HIGHEST RECORDED COST: yes
+✓ FE-s-49 -- Investor Reporting is Opal-admin only > F49-AC13 -- the census test's 
+timeout is 3 times its highest recorded cost [484.00ms]
+
+src\pages\InvestorReporting\__tests__\fe-s-90\suite-complete-check.test.ts:
+CONTROL 1 anchor: SUITE-COMPLETE: yes | PASS: 1 SKIP: 0 UNEXPECTED-FAIL: 0
+✓ FE-s-90 -- suite-complete-check.mjs refuses timeout and crash, reconciles failure identity 
+> CONTROL 1 -- a completed, fully-passing run -> SUITE-COMPLETE: yes, UNEXPECTED-FAIL: 0 
+[1640.00ms]
+CONTROL 2 anchor: SUITE-COMPLETE: no | REASON: unreconciled-failure: fe-s-90-fixture-unexpected > one genuinely unexpected failure
+✓ FE-s-90 -- suite-complete-check.mjs refuses timeout and crash, reconciles failure identity 
+> CONTROL 2 -- a completed run with one genuinely unexpected failure -> SUITE-COMPLETE: yes is WRONG; must 
+refuse [1375.00ms]
+CONTROL 3 anchor: SUITE-COMPLETE: yes | PASS: 1 SKIP: 0 UNEXPECTED-FAIL: 0
+CONTROL 3, identity-not-count wrong-state arm: SUITE-COMPLETE: no | REASON: unreconciled-failure: fe-s-90-fixture-unexpected > one genuinely unexpected failure
+✓ FE-s-90 -- suite-complete-check.mjs refuses timeout and crash, reconciles failure identity 
+> CONTROL 3 -- a completed run whose one failure matches an --allow-listed id -> SUITE-COMPLETE: yes, 
+UNEXPECTED-FAIL: 0 [2766.00ms]
+CONTROL 4 anchor: SUITE-COMPLETE: no | REASON: timeout: producer rc=124 (killed by `timeout`), completion-line MISSING
+CONTROL 4, wrong-state arm (finishes inside the bound): SUITE-COMPLETE: yes | PASS: 1 SKIP: 0 UNEXPECTED-FAIL: 0
+✓ FE-s-90 -- suite-complete-check.mjs refuses timeout and crash, reconciles failure identity 
+> CONTROL 4 -- a run killed by `timeout` mid-execution -> SUITE-COMPLETE: no, naming the timeout reason 
+(C-S188) [7859.00ms]
+
+3 tests failed:
+✗ F45-AC2 -- the dev script writes nothing through the junction (row W1-S63) > the new 
+script answers, serves this worktree and writes nothing to node_modules/.vite-temp; the old script does
+✗ F45-AC9 -- every config loader in the reach writes nothing through the junction (RULING (B)) 
+> the reach by subtraction, each disposition, each kept loader run under a watch; the old dev script 
+writes [1140.00ms]
+✗ F45-AC11 -- a proxied /api route answers the same status under the new and old dev scripts 
+> both statuses printed; each differs from vite's own answer for an unproxied path 
+[94.00ms]
+
+ 25 pass
+ 3 fail
+ 77 expect() calls
+Ran 28 tests across 4 files. [380.50s]
