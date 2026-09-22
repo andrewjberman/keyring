@@ -12418,6 +12418,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "No schedule exists for it, and the served axis has not moved in 12 days.",
     "disarm_owner": "2.0.0_SA_COO~Z, in the trial's L-PX cell (round 30) for Lenovo; the fleet-wide daily leg stays Andrew's cadence call.",
     "notes": "Named so the page's price lists are not read as fresh once the edge route lands."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W117-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~117",
+    "surfaced_at": "2026-09-22T20:21:49Z",
+    "one_line": "AC0's literal .scratch/r117/ac0.py, as the task order writes it verbatim, raises ModuleNotFoundError on this box because python .scratch/r117/ac0.py sets sys.path[0] to the script's OWN directory, not cwd, so pull_baba_daily_px.py's `from lib.research.harvest import bloomberg` cannot resolve repo-root `lib` regardless of the preceding `cd \"$(git rev-parse --show-toplevel)\"`.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .scratch/r117/pathcheck.py (sys.path[0] print) returned 'C:\\\\tmp\\\\wk-amgt-30-117\\\\.scratch\\\\r117', not the repo root, confirming CPython's own rule: a script invoked by a path containing a directory component gets THAT directory as sys.path[0], never cwd.",
+        "Running the literal AC0 invocation verbatim reproduced: 'ModuleNotFoundError: No module named lib.research' at pull_baba_daily_px.py:36 inside the spec_from_file_location exec_module call, rc=1; the same import succeeds under `python -c` from the same cwd (sys.path[0]=='' there) and under PYTHONPATH=<repo root> -- isolating the cause to sys.path[0], not a missing package or a code defect introduced by limb 1.",
+        "No .pth/sitecustomize/profile on this box adds repo root to sys.path (checked site.getsitepackages() contents and ~/.bashrc, ~/.bash_profile, ~/.profile: no PYTHONPATH set anywhere)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC0's ac0.py (task order body, literal): `importlib.util.spec_from_file_location(...); module_from_spec; exec_module` against pull_baba_daily_px.py, then print the module defaults and SIZED line, BEFORE any call, run via `cd \"$(git rev-parse --show-toplevel)\" && python .scratch/r117/ac0.py`.",
+    "world_is": "Run exactly as specified, it fails at import time with ModuleNotFoundError before printing anything, on ANY device where pull_baba_daily_px.py keeps its pre-existing `from lib.research.harvest import bloomberg` absolute import -- this is not something limb 1 introduced, the same failure occurs against the file unedited. Worked around, in my OWN copy of .scratch/r117/ac0.py only (never a graded/committed surface), by inserting `sys.path.insert(0, os.getcwd())` before the spec exec -- matching the sys.path pattern every other test in integrations/bloomberg/research/tests/ already uses explicitly.",
+    "disarm_owner": "2.0.0_SA_COO~Z: any future task order that hands a worker a verbatim `importlib.util.spec_from_file_location` probe script for a module under integrations/bloomberg/research/ (which imports repo-root `lib.*`) needs that script to insert repo root into sys.path itself, or the probe fails identically regardless of author.",
+    "notes": "Confirmed with a positive control (python -c \"from lib.research.harvest import bloomberg\" from repo root succeeds) and a device check (no PYTHONPATH anywhere in profile/.pth) so the finding is about the invocation shape, not this box specifically."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W117-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~117",
+    "surfaced_at": "2026-09-22T20:21:49Z",
+    "one_line": "AC1's own served-reader census (literal, task order body) found 3 hits, not 0, under lib/ for the string 'histdata_daily_px' -- one of them, lib/research/api/scoped_amgt.py's read_coverage_freshness(), IS a served route (GET /freshness, FWD-7's surface) that reads a latest-stamp POOL across EVERY Bloomberg BRONZE_REQUESTS table -- including histdata_daily_px -- per covered security. Per AC1's own <expect> and BOUNDS ('If your own AC1 finds a served reader ... STOP with a BLOCKING row'), this STOPS the cell before limb 2's live pull: the 'bronze has no served reader, so NO never-widen pair' premise (section 1, 'WHY THIS CELL HAS TWO LIMBS') is FALSE.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".scratch/r117/ac1.py output (this worktree, AC1 literal invocation): 'served_readers_of_histdata_daily_px_under_lib 3 [\"lib\\\\research\\\\api\\\\scoped_amgt.py\", \"lib\\\\research\\\\freshness\\\\build_view.py\", \"lib\\\\research\\\\harvest\\\\bloomberg.py\"]'.",
+        "lib/research/harvest/bloomberg.py:40 and lib/research/freshness/build_view.py:74 only DECLARE the request-type constant `_BLOOMBERG_BRONZE_REQUESTS`/`BRONZE_REQUESTS` (which includes 'histdata_daily_px' as a table name); neither is itself a served route.",
+        "lib/research/api/scoped_amgt.py:3335-3358 `read_coverage_freshness()` docstring: 'FWD-7's surface, SERVED: which covered names have gone stale.' It builds per_vendor['bloomberg'] = _bloomberg_bronze_stamps(bloomberg_bronze_keys), and scoped_amgt.py:3189-3208 `_bloomberg_bronze_stamps` pools the LATEST STAMP across EVERY key under BLOOMBERG_BRONZE_PREFIX whose <request> segment is in _BLOOMBERG_BRONZE_REQUESTS (line 3204: 'if request not in _BLOOMBERG_BRONZE_REQUESTS: continue') -- histdata_daily_px is in that set (line 3108). scoped_amgt.py:3909-3910 routes GET .../freshness to read_coverage_freshness() directly.",
+        "So landing a new bloomberg/harvest/bronze/histdata_daily_px/security_key=992_HK_Equity/<stamp>.json object would change the served GET /freshness response's per-name 'bloomberg' stamp for Lenovo the next time that route is called -- a served surface this cell's own text (section 1) declares does not exist."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Section 1, 'WHY THIS CELL HAS TWO LIMBS': 'Bronze has no served reader, so per the CTO's ruling ... this cell carries NO never-widen pair.' AC1 <expect>: 'served_readers_of_histdata_daily_px_under_lib 0 -- if that count is NOT 0, STOP with a BLOCKING row, because the cell's no-pair premise would be false'.",
+    "world_is": "The count is 3, and at least one of the three (scoped_amgt.py's read_coverage_freshness, the GET /freshness route) is a genuine served reader of histdata_daily_px stamps, not a false-positive string match. Per AC1's own literal instruction and the BOUNDS clause, this worker STOPPED before limb 2's live HistoricalDataRequest: no S3 write was attempted, the deploy ledger was never opened, and the 992 HK Equity request in the sized budget (2 of 2) was NOT spent -- only the AC0 SPX login probe (1 of 2) was spent. Limb 1 (code generalisation + its 3 unit tests, AC0/AC2) completed and passed; nothing beyond that ran.",
+    "disarm_owner": "2.0.0_SA_COO~Z: the no-pair premise needs re-measurement against read_coverage_freshness() specifically (does a Lenovo-only stamp change served freshness in a way that needs a never-widen pair, or is a freshness TIMESTAMP move exempt from the served-RANK-ROW concern section 1 actually cared about) before this cell's limb 2 (the live 992 HK Equity pull) is re-authorised.",
+    "notes": "This is DIFFERENT from the price_axis_pull.py/DynamoDB Lead Panel rank-row concern section 1 already named and ruled out-of-scope -- that surface is untouched by this cell either way. This is a SEPARATE served surface (the freshness API) section 1 did not consider. AC2 (limb 1 tests) ran and passed (3 passed) before this row was filed; AC3/AC4/AC5, the deploy ledger open/close and the live pull were all withheld because of this row."
   }
 ]
 ```
