@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-18T19:49:17.100897+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20260922T021329Z
 **Deploy:** IRPT_BCKEND.TO-IB-rte-3 -- opal-data-inflection and opal-data-cottonwood created, empty, fenced, ahead of D14 (Andrew-direct 2026-09-18 ~17:3xZ approved @af794c77e3; CTO Rule-30 placement, round-4 analysis s.6(b))
 **Authored by:** 0.9.0_WK_IRPT_BCKEND~3
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20260921T203659Z LEG L1 closed: IB-rth-8 (0.9.0_WK_IRPT_BCKEND~8) 2026-09-21 ~20:3xZ: .tools/safe-apply.sh -chdir=infra/aws/terraform/shared-infra apply
 - 20260921T203700Z LEG L3 closed: IB-rth-8 (0.9.0_WK_IRPT_BCKEND~8) 2026-09-21 ~20:3xZ: fresh post-apply 'terraform plan -refresh=true' on infra/aws/terra
 - 20260922T020532Z LEG L4 closed: DISCRIMINATED by IRPT_BCKEND.TO-IB-rtj-2 (0.7.0_AE_CloudOps~V), the CTO-ruled substitute for the SSM method (msg 99312 C
+- 20260922T021329Z CLOSED -- all 4 legs proven
