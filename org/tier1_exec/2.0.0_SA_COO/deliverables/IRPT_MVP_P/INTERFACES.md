@@ -4,7 +4,9 @@ Owner: `2.0.0_SA_COO~P`. Authority: CTO completion CONTRACT v1.2 at `4688c59ef2`
 Status: proposed producer/consumer agreement, not a deployed interface. 2026-09-22.
 Source baseline: workspace `1ca9d3edfecaeead06ef1286df4354098f0f0885`, portal
 `7dd3d067a17ee00b878ecfceff23c557649a2331`. B final `2506c70874` is included;
-F final baseline `8e6e2e38` has been consumed; current shared upload portal is `cb62721c` (R-P09 replacement pending).
+F final baseline `8e6e2e38` has been consumed; current portal is `0acd8e7c`, including
+shared upload binding repair `c86a5eb5` (independent closure `65a3aedf72`) and Y's
+bounded prospect composer `2ddf1114`. Runtime upload route remains pending.
 
 ## Current additive interfaces - 22:50 UTC
 

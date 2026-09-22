@@ -4,10 +4,10 @@ Seat: `2.0.0_SA_COO~P`. Direct mandate: completion CONTRACT v1.2 at `4688c59ef2`
 Startup complete after canonical six-file manifest repair `9b99dc12cd`.
 Readiness measured GREEN 9/9; no extra helper or model-side timer.
 
-## Current integration checkpoint - 23:24 UTC
+## Current integration checkpoint - 23:37 UTC
 
-Backend HEAD `2170153c7d`; portal committed `cb62721c` plus the R-P09 repair
-under test. Both candidates remain LOCAL. Product incomplete; no deployment,
+Backend HEAD `bf1b671760`; portal `0acd8e7c` includes the R-P09 repair and Y's
+prospect composer. Both candidates remain LOCAL. Product incomplete; no deployment,
 policy activation, vendor egress, shared push or render-key authority inferred.
 
 - R-P08 history metadata release repaired `284436ca11`: final current index,
@@ -28,15 +28,23 @@ policy activation, vendor egress, shared push or render-key authority inferred.
   paired14 PASS. These are serialized/versioned doubles, not persistent-server timing.
 - Canonical local security identity `d99a072742` -> `2170153c7d`;48 tests/
   18subtests PASS. Maintained runtime resolver still pending; local security keys
-  are not fabricated vendor IDs. Y accepted identity repair `090c819803` next.
+  are not fabricated vendor IDs. Y accepted identity repair `090c819803` consumed
+  as `bf1b671760`:45 tests/24subtests PASS; canonical tenant_firm_id/integer revision.
 - Shared upload schemas/routes `5add22ca9f`:8 actual guarded producer contract
   controls PASS. Portal `cb62721c`: generated request/result, typed upload API,
   response receipt checks and explicit fixture callback;14 focused +2 resolver
   tests and typecheck PASS. Route is NO-HANDLER-AT-HEAD; LiveClient refuses before
   transport. Y retains Analysis UI and runtime factory. Independent `fb0f801529`
-  opened R-P09: paired input IDs could disagree with content hash. One-line
-  binding repair plus regression in progress;11 unchanged reviewer +5 supplied
-  checks PASS locally, reviewer replacement pin follows.
+  opened R-P09: paired input IDs could disagree with content hash. Portal
+  `c86a5eb5` binds portfolio identity to the content hash. Independent closure
+  `65a3aedf72`:24 supplied+11 unchanged independent controls PASS with independently
+  regenerated actual producer capture. Consumer defect closed only; no runtime grade.
+- Y prospect UI `2ddf1114` consumed as `0acd8e7c`:11 supplied prospect/shared upload
+  tests (50 assertions) and local TypeScript5.9 build PASS. CSV/options, normalized
+  rows, exact in-memory retries and explicit refresh lineage; Overview only.
+  Mounted interaction, reload, comparison selection, polling/history/export remain open.
+  A mistaken npx lookup selected unrelated tsc2.0.4 and failed; authoritative
+  validation used existing node_modules/typescript/bin/tsc -b --noEmit successfully.
 - M publication `62139c3a1a` -> `ad732d1c7d`;80 holdings tests PASS. Incoming M
   interface document retained on the older base. M reports independent product
   candidate review `c462d8b4df`; actual source runner findings remain M-owned.
@@ -51,13 +59,28 @@ policy activation, vendor egress, shared push or render-key authority inferred.
   served homes, tenant-keyed requestsGetItem/KMSDecrypt added. Terraform init
   backend=false/validate PASS. The intermediate relative-root product lookup
   failed validation and was corrected to abspath before the final pin. No apply.
-  CVO package review pending; local installed libraries do not qualify Lambda layers.
+  Independent bounded PASS `57f0a0ef3c`:31 hashes (28 staged/3 direct),215 other
+  function objects/top metadata equal,17 Python imports, supplied guarded controls
+  and7 additional controls including actual selection GetItem/all3 firm loaders.
+  No effective IAM, deployed/layer, publication-correctness or full product grade.
 
-Next: consume Y accepted identity; close R-P09 independent retest; runtime
-producer/consumer composition and finite policy activation evidence; source-specific
+CTO `IRPT-M-BASIS-01` at `b8de4c3899` read in full: M's independently enumerated
+custody root remains separate from named SmartX gross AUM (longEquity+cash), net
+equity and signed positions. No equity+cash double count or inferred performance
+change. M owns bounded complete-revision parts/limits/loader; P packages that
+candidate when supplied, Y consumes declared custody basis. Full-firm98.45MB build
+and7479 failing partitions are diagnostic, not accepted. Legacy-read tooling commit
+and publication ambiguity remain open; MSTR owns the concrete tooling mechanism.
+
+Next: runtime producer/consumer composition and finite policy activation evidence; source-specific
 performance/report history/export completion. SmartX actual selected-account
 capability and inherited render chain remain unproven. Physical disposal remains
 open. M's real-source runner failures are retained, not converted to reader PASS.
+Performance inspection reproduced5 failed/23 passed inherited adapter tests:
+recorded label map uses retired firm aliases. More seriously49F routes to BD and
+unknown providers fall through to Orion; captured request bodies do not bind the
+selected set. P is correcting routing/contract and isolating offline capture replay
+from served performance before enabling any actual provider calculation.
 
 ## Prior integration checkpoint - 22:50 UTC
 
