@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~19</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 18 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.17 @`4f942b7657` | **Decomp cell:** `IB-rtr-3` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.22, s.R18.1) | **outcome_ref:** FWD-2 (own) | **Rows:** `IRPT_BCKEND-W15-S5`, `IRPT_BCKEND-C-S203` (served half) | **Ruling:** CTO's round-17 analysis, msg 99542, ruling R18-c | **Reference (READ-ONLY, never edited by this cell):** `docs/contracts/investor-reporting/v1/routes.json` (the real published operation ids: `performance-report`, `analysis-report`, `narrative-packet` -- confirm these yourself, do not trust this citation blindly, it drifts), `infra/aws/lambda/investor-reporting/_authz/served.py` (`key_operation()`, the hyphen-to-underscore transform), `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R17_PROBE.py` (the CVO's own probe demonstrating both defects against the real enforcer)
 
