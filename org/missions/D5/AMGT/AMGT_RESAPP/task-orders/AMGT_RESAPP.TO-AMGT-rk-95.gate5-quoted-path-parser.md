@@ -270,7 +270,7 @@ AC3's 9-row table, and AC4's flip list.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~95</slot>
 <fabric>site-z</fabric>
