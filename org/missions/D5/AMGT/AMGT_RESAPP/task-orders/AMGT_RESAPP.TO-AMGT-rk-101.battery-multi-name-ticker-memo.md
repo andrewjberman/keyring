@@ -336,7 +336,7 @@ AC3 does, is the named instrument and is allowed).
    0 network calls.
 5. **Pin:** `04f518851d`. Re-pin to the issuance commit if s.34 moves anything under `lib/`.
 
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~101</slot>
 <fabric>site-z</fabric>
