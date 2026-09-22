@@ -11537,6 +11537,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC0's <expect>: 'every production file listed is in section 1's reader/writer list (or names only .analysis.json) -- any other file is a STOP with a BLOCKING row before any edit'.",
     "world_is": "The literal grep formula (`-e POOL_PREFIX`) is overbroad by substring match against an unrelated constant name in two other modules, and by matching descriptive docstring text in two package __init__.py files that are not readers themselves; the file this order's own text anticipated editing (scoped-amgt-api.tf) also appears in the raw count, which the <expect> clause did not carve out explicitly.",
     "notes": "Not blocking. Same class as the rk-90 formula-defect rows (W90-S1/S4/S6): a task-order invocation's literal formula is broader than its substantive question. No <paths> or code edit made by this row; it only grounds the AC0 STOP decision before any live act."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W91-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~91",
+    "surfaced_at": "2026-09-22T03:40:00Z",
+    "one_line": "The order's ruled reader switch for scoped_amgt.py's _read_filing_source_object ('the adapter's read grant swapped') did not name that the NEW address must be computed WITHOUT importing lib.research.harvest.store -- store.py imports pyarrow at module scope, and the adapter's own build script (build-and-upload-scoped-amgt.sh) vendors a transitive AST closure of lib.research/lib.opal_data_harvest modules plus exactly ONE non-pure wheel (rpds_py); pyarrow is not pinned. My first cut of the switch imported store.py for its entity_partition/address_of helpers and would have raised ModuleNotFoundError on the first UNRESOLVED-name Thesis-bundle request post-redeploy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh` (this worktree, HEAD) -- docstring: 'CLOSURE_ROOTS = (\"lib.research\", \"lib.opal_data_harvest\") ... ONE non-pure wheel is admitted: rpds_py for the function's own platform ... Any other non-pure wheel is refused.'",
+        "`lib/research/harvest/store.py:27-28` (this worktree) -> `import pyarrow as pa` / `import pyarrow.parquet as pq`, both at MODULE SCOPE (unconditional on any import of the module, function-scope caller or not).",
+        "Fixed at commit 5b6f111c55 (this worktree): `_read_filing_source_object` now addresses through `lib.opal_naming` (pure stdlib) + `crosswalk.security_key_partition` (already imported at scoped_amgt.py module scope, pure stdlib) -- never `lib.research.harvest.store`. Verified the computed URI is byte-identical to `store.address_of`'s own output for the same inputs; `lib/research/api/tests` (full) + `lib/research/harvest/tests/test_m2_move.py` -> 197 passed."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Caught and fixed before any build or apply, by reading the build script's own docstring rather than by its isolated-runtime check failing after upload. No live act was taken with the risky import in place -- the never-widen pair's adapter redeploy step (4b) had not yet run when this was found.",
+    "spec_asserts": "Section 1 RULED item 3 / the never-widen COO half's ACT step 2: 'SWITCH every reader and writer of filings/v1/*.source.json ... in one commit' -- silent on WHICH modules the new address may import.",
+    "world_is": "The adapter Lambda's deployable closure is a walked AST closure with exactly one admitted non-pure wheel; a reader switch that imports a module carrying an unvendored compiled dependency at module scope is a request-time (or, if imported eagerly, cold-start) break the closure walk's own FATAL/missing accounting is built to catch -- but only at BUILD time, after the code is already written the risky way.",
+    "notes": "General lesson for any future switch touching this adapter: prefer lib.opal_naming + crosswalk directly over lib.research.harvest.store for address-only needs; reserve the store import for code that actually reads/writes silver (which genuinely needs pyarrow) and runs OFF the adapter (the harvest box, the local batch)."
   }
 ]
 ```
