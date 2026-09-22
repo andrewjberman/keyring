@@ -41,3 +41,12 @@
    - gold = mention count and analytical factors, to be decided.
 3. **Not asked:** a vendor call, a pull, a code change or a cut. This seat investigates read-only and writes the brief.
    The L2+ route is `1.0.0_SA_CTO~Z`'s.
+
+## Addendum, minutes later, verbatim
+
+> Also keep in mind, that all of this is going to feed into a gold layer table in harvest which we use to track the
+> "Chatter" axis of all these companies. This is how we will be able to get to that analytics layer, it is the base
+> for that as well as for company-specific event spine.
+
+**Reading, narrow:** the gold layer is (1) the base table for the Chatter axis across all companies and (2) the base
+for a company-specific EVENT SPINE. Both are gold outputs of this plan, and the gold design serves both.
