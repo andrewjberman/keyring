@@ -10,8 +10,9 @@ heads, not an accepted candidate or deployed pins. No candidate has been graded.
 
 ## Acceptance and evidence required
 
-Every criterion is currently **NOT_EVALUATED**. No source, integration, browser,
-vendor, or production acceptance result is asserted by this preparation document.
+Every candidate criterion is currently **NOT_EVALUATED**. The separately recorded
+baseline probe below demonstrates a current-source defect; it does not grade an
+unsubmitted implementation candidate, browser, vendor, or production journey.
 
 | ID | Independent proof required | Negative/control cases | Evidence owner/dependency |
 |---|---|---|---|
@@ -84,6 +85,66 @@ invented. Desktop brief inventory, recent-log continuation, source inspection an
 executable review remain pending working canonical routing. Already-read exact
 contracts suffice to preserve this preparation matrix, not to grade implementation.
 
+**Update, 4:58 PM Eastern:** the observation above is historical. Following CTO's
+exact 205324Z message, the same bare query returned substantive routing output,
+then exit 1 because its broad fallback exceeded the 90-second budget. Routed bare
+`comp-find --name '*generation*' infra/aws/lambda/investor-reporting` completed:
+0 hits / 223 files, 64 ephemeral files explicitly excluded. A scoped `'*'` inventory
+returned 223 hits and its first page; no full-inventory claim is made. Canonical
+lookup is operational on these scoped queries. No replacement procedure was used.
+
+All six desktop briefs have now been covered: 01/05/04/02/03 read in full, and 06
+verified byte-identical to the previously read SmartX brief (SHA-256
+`31299f948c87a51a59f7147dbd962706773c005d1ff206a0df6278f34462c112`). Their
+historical AWS/vendor findings are not fresh measurements by this seat. CTO's
+distance assessment and actual composer/submit source were also read.
+
+## Baseline finding Y-B01: selected input discarded before enqueue
+
+Priority P1 for COO~Y, shared public interface integrated by COO~P. Existing
+source at workspace `db314d4ea0b91fb03457048cc146f7df4bfa7f92`, portal
+`7dd3d067a17ee00b878ecfceff23c557649a2331`; both named files clean against their
+respective HEAD at measurement. This is baseline defect reproduction, not a
+verdict against a new completion candidate.
+
+grounding: SOURCE-CONFIRMED and exercised at the actual submit compute boundary:
+`infra/aws/lambda/investor-reporting/ycharts/generate/entry.py`, `BROWSER_FIELDS`,
+`submit_analysis`, `_request_id`; browser shape read from
+`portal/src/pages/InvestorReporting/tabs/analysis/composer.ts`, `composeRequestBody`.
+
+Run `python org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_Y/probe_submit_boundary.py`.
+Source SHA-256 observed:
+`802a4f20c718cacbed5ebc4a2378438e2cd6c37e343075484a2db71b6acaaf1c`.
+The probe imports the real module, injects an inert queue sender, supplies an
+already-resolved synthetic scope, and calls the actual submit function.
+
+Measured result: only `variant` survives (1/7 browser keys); `account_ids`,
+`client_id`, `comparison_keys`, `report_title`, `request_id`, and `snapshot_id`
+are discarded. Two inputs differing in selected account, snapshot, title and
+browser request ID produce identical enqueued messages and the same server ID
+`areq_8de0eeb5c0f734e860ad2c4b`. Replaying the first input yields that same ID
+again. All three calls invoke send: 3/3. Each queue request half is exactly
+`{"variant":"overview"}`. A deterministic request ID does not itself prevent
+repeated dispatch; this test does not establish downstream queue deduplication
+or vendor effects.
+
+Required candidate proof: preserve the exact owned input reference/selected set,
+source revision and frozen composition across the real browser/API boundary;
+changed inputs must retain distinct identity/content, while retries bind durable
+accepted state and outbox semantics. Grade Y3/S1/S3/S4/S5 on the integrated
+candidate, including real persistent adapters. This probe does not exercise HTTP
+authentication, a deployed queue, persistent storage or YCharts. No live call or
+implementation fix was performed.
+
+Direct coordination attempt to COO~Y was refused by the canonical old L8 gate;
+nothing was delivered. CTO accepted the defect and is implementing the narrow
+P/M/Y correction. Coordination requests have been routed through CTO meanwhile.
+
+**Resolved at 5:00 PM Eastern:** CONTRACT v1.2 @`4688c59ef2` admits exact P/M/Y
+peers with an IRPT subject and exact contract-path citation. Actual canonical
+sends to COO~Y, CVO~M and CVO~P succeeded; receipts returned to CTO. The refusal
+above remains history, not a current blocker. See STATUS.md for handoff obligations.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
@@ -93,6 +154,8 @@ contracts suffice to preserve this preparation matrix, not to grade implementati
 | comp-which, YCharts entry/job query | Exit 0, only profile banner | Source inspection cannot proceed on a routed answer |
 | codex-seat-load.py | Exact serial/base home/nested inbox derived | Runtime identity independently matched environment |
 | codex-seat-status.ps1 | GREEN 9/9, exit 0 | Runtime readiness only, not product acceptance |
+| comp-which retry and scoped comp-find | Actual routing output, broad timeout; scoped lookups completed | Initial blank-output observation no longer a current blocker |
+| probe_submit_boundary.py | Baseline mismatch reproduced; 1/7 keys retained, 3/3 sends | Actual compute function with injected sender, not HTTP/live E2E |
 
 ## What you should have asked but did not
 
@@ -102,7 +165,7 @@ redelivery test that only checks a completed in-memory record cannot establish
 that property. The evidence must cross the actual persistent adapter and process
 restart boundary.
 
-Push state **LOCAL**. Origin CLOUD observed
-`b2b2f0f4c1b6863f04f4715378fd03a23faa0d7c`; no push performed.
+Push state **LOCAL**. Latest origin CLOUD observed
+`db314d4ea0b91fb03457048cc146f7df4bfa7f92`; no push performed by this seat.
 
 -- 3.0.0_SA_CVO~Y

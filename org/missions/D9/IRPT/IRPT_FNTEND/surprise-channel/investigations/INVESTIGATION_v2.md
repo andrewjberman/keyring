@@ -6217,6 +6217,28 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W41-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~41",
+    "surfaced_at": "2026-09-22T20:07:51Z",
+    "one_line": "FE-s-91's own BOUNDS grant (portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts, __tests__/fe-s-91/, this deliverables folder, the task-order file) does NOT enumerate portal/src/App.tsx, but the same order's ACCEPTANCE CRITERIA section explicitly directs 'Run the three new negative controls as temporarily-committed mutations ... on the print-route line' -- which is App.tsx:576 -- 'then git revert each cleanly back to net-zero'. The two sections of the same order disagree on the write surface for one explicitly-required act.",
+    "spec_asserts": "BOUNDS: 'Grant: portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts, portal/src/pages/InvestorReporting/__tests__/fe-s-91/, org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, plus ... deliverables/0.9.0_WK_IRPT_FNTEND~41/ and this order's own file ... to flip its <status> to complete.' -- no other path is named as this order's write surface.",
+    "world_is": "The same order's ACCEPTANCE CRITERIA F91-AC2 block, verbatim: 'Run the three new negative controls as temporarily-committed mutations (mirroring this round's own established pattern for exercising this exact test file) ... requireAdmin={false}, requireInternal={false}, and an unrelated extra prop -- each must show the comparator REFUSING (the carve-out no longer matches), then git revert each cleanly back to net-zero before moving to the next.' Measured: `git grep -n \"requireAdmin requireInternal\" -- src/App.tsx` -> one hit, src/App.tsx:576 -- the only line in the portal repo carrying both props together, so satisfying F91-AC2 as written requires editing exactly that line, which BOUNDS does not name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-91.gate-hunk-comparator-exact-match-and-honest-labels.md@this worktree HEAD, BOUNDS block vs ACCEPTANCE CRITERIA F91-AC2 block (quoted in spec_asserts/world_is above).",
+        "measured (this worker): `git grep -n \"requireAdmin requireInternal\" -- src/App.tsx` -> one hit, src/App.tsx:576.",
+        "resolved by this worker as a narrow, self-reverting, net-zero exception: three portal commits 9e2de47f (requireAdmin={false}), 9f70264c (requireInternal={false}), d87b3000 (data-extra=\"x\"), each immediately followed by `git revert --no-edit` (899d2d88, bf35e335, ed258014 respectively); `git diff 3e2ab8e6 -- src/App.tsx` after all three reverts -> empty output (net-zero against the pre-mutation baseline commit)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not escalated as BLOCKING because the ACCEPTANCE CRITERIA text is unambiguous about WHICH act it requires -- only BOUNDS's enumerated grant list is silent on the file that act touches -- and the exception taken is bounded, self-reverting and verified net-zero before this row's own commit."
   }
 ]
 ```
