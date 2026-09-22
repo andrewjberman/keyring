@@ -821,3 +821,33 @@ platinum keys written in the same second carry four viewer verdicts (VISIBLE / c
 routed field-use-unmeasured / NO-ROUTE). Ruleset W1-W13 in the brief's Part V; eight outcomes O1-O8. Two static
 instruments disagree on one script's writes (union rule). Nothing moved; no applied-plane GET exercised; the
 integration carrier is the CTO's.
+
+
+## RCN-0011 -- Claude for Financial Services: the plugin's structure and data shapes, and the RESAPP threading proposal
+
+**Date:** 2026-09-22 ~14:5xZ-15:5xZ. **Produced under:** `4.0.0_SA_CRO~F` (site Z). **Commissioned:** Andrew-direct at this
+terminal ~14:5xZ, verbatim in `deliverables/ANDREW_DIRECT_20260922_145xZ_CLAUDE_FOR_FINANCE_RESAPP_RESEARCH_PROJECT.md`
+@c23d5f7dc0 (three sequenced steps; two briefs). **Artifacts:** `briefs/CLAUDE_FSI_PLUGIN_STRUCTURE_AND_DATA_SHAPES_BRIEF_20260922.md`
+(teardown, CAPABILITY); `briefs/RESAPP_CLAUDE_FSI_THREADING_PROPOSAL_20260922.md` (PROPOSAL, nothing dispatched);
+`deliverables/CLAUDE_FSI_RECON_20260922/` (endpoint discovery card + raw JSON).
+
+**Evidence basis:** `anthropics/financial-services` @574ed36 (2026-09-21) cloned and read (19 marketplace entries, 10 agent
+plugins, 6 verticals, 2 partner, 10 cookbooks; 5 `.mcp.json`, 3 SKILL.md, 2 agent prompts, 1 agent.yaml); the LLY pack in the
+synced SharePoint library (58 files; README + SOURCES in full; 3 xlsx / 13 sheets; 2 Opal-branded docx); 12 of 12 declared MCP
+servers probed unauthenticated (well-known metadata + `initialize`); public docs (platform MCP-connector page, two Anthropic
+announcements, Daloopa x3, Kensho x2, the install tutorial); the CTO~W card 1 @5007337353. `[BODY-NOT-CAPTURED]` for every
+vendor tool body (no token); Yang Liu's session not read.
+
+**Findings:** (1) the plugin is files (prompts, skills, twelve HTTP MCP URLs), not access -- every connector is OAuth 2.1
+against the vendor's own authorization server and presupposes a subscription; (2) the LLY pack was built from PUBLIC sources
+only (EDGAR + StockAnalysis + Fintel + press) because, per its own README, every configured connector needed an OAuth grant a
+non-interactive session could not complete -- the "API access" Andrew described did not run for it; (3) the core plugin's
+`.mcp.json` at the cloned vintage is malformed JSON (zero connectors would load); (4) MT Newswires 404s at its declared path,
+Chronograph publishes no RFC 9728 metadata; (5) Daloopa is the one vendor with a published datapoint shape, and it types onto
+the model block's `(security_key, fiscal_year, mnemonic)` grain with a filing citation ours lacks. Proposal: three threading
+options (skill-as-producer, MCP-in-our-producers, vendor REST as a harvest channel); recommended path with no new subscription
+= extend the filings channel to the quarterly event (8-K/10-Q/DEF 14A), derive consensus revisions from Bloomberg `bestdata`
+bronze vintages, lift the skills' METHODS as specs, transcripts through AMGT_HARVST; vendor REST channel only after Andrew's
+subscription word. Six substrate cards named with owners; four open calls to Andrew. **Egress:** one public `git clone` and
+one credential-free discovery handshake, both under step 1 of the verbatim instruction; no vendor data API called, no Opal
+data sent. Nothing installed on this box.
