@@ -277,7 +277,7 @@ the ledger entry path with its open and close, and the branch taken.
 4. **This cell changes no code.** rk-109 and rk-112 are already merged, so the non-December path and the currency
    labels are exercised LIVE for the first time here -- AC5 is the read-back that proves it.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~116</slot>
 <fabric>site-z</fabric>
