@@ -259,7 +259,7 @@ entry path with its open and close, and the branch taken (kept or rolled back).
 4. **`identity` has 0 production readers today** (a `lib/` + `integrations/` census). The FIGI is RECORDED as the PRD
    asks; nothing keys on it yet.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~113</slot>
 <fabric>site-z</fabric>
