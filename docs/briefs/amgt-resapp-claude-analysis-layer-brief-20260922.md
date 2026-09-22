@@ -3,7 +3,8 @@
 **L1 BRIEF | `4.0.0_SA_CRO~F` | 2026-09-22 | MODE: MIDSTREAM (AMGT_RESAPP, round 28 in flight @0ed364cff0)**
 **Directive:** D5 Alternative Research. **Project:** AMGT_RESAPP (this brief revises the RCN-0012 threading proposal into the L1 form).
 **Origin, three carriers, all verbatim in this seat's deliverables (`org/tier1_exec/4.0.0_SA_CRO/deliverables/`):**
-1. Andrew-direct at this terminal, ~16:3xZ-17:5xZ, seven messages (`ANDREW_DIRECT_20260922_17xxZ_CLAUDE_ANALYSIS_LAYER_PLATINUM_DESIGN.md`).
+1. Andrew-direct at this terminal, ~16:3xZ-18:3xZ, eight messages (`ANDREW_DIRECT_20260922_17xxZ_CLAUDE_ANALYSIS_LAYER_PLATINUM_DESIGN.md`);
+   the eighth names the backlog: *"every single company listed in the Asset Management/Research/ bucket"* (O13).
    The design: *"claude API isnt a data retrieval tool as much as a 'send claude in with a few tools to get some excerpts' tool ...
    employ that in some analysis layer that displays on the 'Security Analysis' page ... plug any gaps with it, potentially having it
    run on top of existing data"*; *"pull the equity analysis skill out of it, and craft a layer that draws against gold jsons for the
