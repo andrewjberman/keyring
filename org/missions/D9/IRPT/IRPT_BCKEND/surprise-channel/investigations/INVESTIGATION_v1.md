@@ -8646,3 +8646,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "org/mcp/sessions/ is absent from this worktree and outside this order's <paths> grant, so writing there would be an out-of-lane write the order's own preflight forbids overriding. This cell's proof_of_spec and R117-AC2's criterion do not read this marker file, so the instruction's absence has no bearing on this order's DELIVERABLE or its acceptance; filed as the order's own instructed remedy for a failed premise, not treated as blocking."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W17-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~17",
+  "surfaced_at": "2026-09-22T17:05:21Z",
+  "one_line": "This order's IDENTITY AND WORKTREE section names 'git submodule update --init portal from the worktree root' as the way to read portal/vite.config.ts, but that command fails in this worktree: .gitmodules is a TRACKED, EMPTY (0-byte) file (no mapping for path 'portal' at all), so git refuses with 'fatal: no submodule mapping found in .gitmodules for path portal' (rc=128) -- there is no submodule URL to init from inside this worktree by that route. Worked around read-only: 'git ls-files -s portal' gives the gitlink's pinned commit (15ceef793bda03c102539c209dde25cb18ab2eba); the MAIN workspace checkout at C:/Users/AndrewBerman/Desktop/ajb_workspace/portal already carries that exact commit object as its own independent repo ('git cat-file -e <pin>' confirmed present before reading), so 'git -C <main-workspace>/portal show <pin>:vite.config.ts' read the real, pinned config directly -- no write to any portal path in this worktree, no submodule state created here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-1.v3-origin-marker-and-the-real-asset-allowlist.md IDENTITY AND WORKTREE: 'Checkout the portal/ submodule properly if you need to read its build config (git submodule update --init portal from the worktree root, or read it via git show against its pinned commit if a full checkout is heavy)'.",
+      "Measured this session (worktree C:/tmp/wk-irpt-18-17): 'git submodule status portal' -> 'fatal: no submodule mapping found in .gitmodules for path portal' (rc=128); '.gitmodules' exists, tracked, 0 bytes (ls -la).",
+      "'git ls-files -s portal' -> '160000 15ceef793bda03c102539c209dde25cb18ab2eba 0 portal'.",
+      "'git -C C:/Users/AndrewBerman/Desktop/ajb_workspace/portal cat-file -e 15ceef793bda03c102539c209dde25cb18ab2eba' -> rc=0 (object present in the main workspace's own portal checkout, an independent repo on the same box).",
+      "'git -C C:/Users/AndrewBerman/Desktop/ajb_workspace/portal show 15ceef793bda03c102539c209dde25cb18ab2eba:vite.config.ts' -> the full, real config used for CELL (d)'s derivation, read-only, this session."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IDENTITY AND WORKTREE: 'git submodule update --init portal from the worktree root' reads the pinned portal build config.",
+  "world_is": "That exact command fails in this worktree because .gitmodules carries no mapping for path 'portal' (0-byte tracked file, no [submodule \"portal\"] section). The order's own second-named fallback ('read it via git show against its pinned commit') was used instead, sourced from a sibling checkout on the same box that already holds the pinned commit object -- read-only, no write outside this cell's <paths> grant.",
+  "notes": "Non-blocking: this cell's own <paths> already grants portal/ (write), so a portal worktree per the box-memory pattern was also available but heavier than needed for a read-only config lookup. Filed so a later cell that tries the order's literal first-named command is not surprised by the same rc=128."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W17-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~17",
+  "surfaced_at": "2026-09-22T17:05:21Z",
+  "one_line": "CELL (d) directs deriving the asset allowlist from portal/vite.config.ts's REAL, pinned config and implementing the NARROWEST defensible reading (never a blanket fallback); BOUNDS and criterion R118-AC1 both require IB-rtq-3's pre-existing 19-test suite (deliverables/0.9.0_WK_IRPT_BCKEND~16/test_edge_render_delegate.mjs) to pass UNMODIFIED, rc=0. The two are irreconcilable once the real config is read: the pinned portal/vite.config.ts sets neither base nor build.assetsDir (Vite defaults), and infra/aws/terraform/portal-auth/cloudfront-distribution.tf has no path_pattern behaviour scoping static assets to /investor-reporting/ -- both route through the single DEFAULT 'SPA static assets' cache behaviour -- so the REAL, narrowest, config-derived shape is root /assets/*, exactly as this round's own decomposition text already states ('root /assets/, not /investor-reporting/-prefixed', IRPT_BCKEND_DECOMP.md v0.22 R18.1 row IB-rtr-1). IB-rtq-3's own test 'three-path admission: a static asset under /investor-reporting/ is admitted' (uri /investor-reporting/assets/app-9f3c1a.js) was built on W16-S2's disclosed GUESS of that same prefix, made because portal/ was unavailable in that worker's worktree. Implementing the real allowlist (this cell's entire reason for existing, CVO C-S200/C-S203-V3/W16-S2) necessarily makes that one guessed-URI test fail (measured: 18 of 19 pass, rc=1) -- this worker cannot edit that file (BOUNDS: 'NO edit to any EXISTING test's expected value ... only NEW test functions are added'; also outside this cell's own <paths> grant, which names only deliverables/0.9.0_WK_IRPT_BCKEND~17/, never ~16/). This worker chose the real, config-derived fix over keeping the stale guess passing, and reports R118-AC1 HONESTLY as not fully PASS-by-output rather than forcing a false green.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-1.v3-origin-marker-and-the-real-asset-allowlist.md CELL (d): 'Derive the allowlist from that authoritative source ... implement the NARROWEST defensible reading of the config itself -- never a blanket any asset extension anywhere fallback'; BOUNDS: 'NO edit to any EXISTING test's expected value in IB-rtq-3's 19-test suite -- only NEW test functions are added'; criterion R118-AC1 <expect>: 'the pre-existing 19-test suite passes unmodified in expectation, rc=0 on both'.",
+      "portal/vite.config.ts at pinned commit 15ceef793bda03c102539c209dde25cb18ab2eba (read via the route filed in IRPT_BCKEND-W17-S1): no `base` key, no `build.assetsDir` key anywhere in the defineConfig object; 'git -C <main-workspace>/portal ls-tree -r --name-only <pin>' shows exactly ONE vite.config* file in the whole tree; package.json's build script ('tsc -b && vite build --configLoader runner') passes no --base flag.",
+      "infra/aws/terraform/portal-auth/cloudfront-distribution.tf: path_pattern-scoped behaviours enumerated this session, none for /investor-reporting/* or /assets/* static files -- both fall through to the single default 'SPA static assets' behaviour (comment at :270, :121).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md v0.22, R18.1 row IB-rtr-1 (the issuer's own text, written before this cell ran): 'root /assets/, not /investor-reporting/-prefixed' -- the issuer already named the correct answer.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~16/test_edge_render_delegate.mjs :229-235, the 'a static asset under /investor-reporting/ is admitted' test, run against this cell's fixed code this session: 18 of 19 pass, 1 fail, exactly that test, 'AssertionError: SPA static asset must be admitted, not refused' -- output captured verbatim in this cell's own proof_of_spec.json acceptance row for R118-AC1.",
+      "This cell's own <paths> grant: org/missions/D9/IRPT/IRPT_BCKEND/task-orders/..., deliverables/0.9.0_WK_IRPT_BCKEND~17/, surprise-channel/investigations/INVESTIGATION_v1.md, org/mcp/sessions/, infra/aws/lambda-edge/auth-validator-edge/, portal/ -- no grant for deliverables/0.9.0_WK_IRPT_BCKEND~16/."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CELL (d) (derive the real, narrowest, config-sourced allowlist) AND BOUNDS/R118-AC1 (the pre-existing 19-test suite passes unmodified, rc=0) both hold simultaneously.",
+  "world_is": "They cannot both hold once the real config is read: the real shape (root /assets/*) is a different URI shape than IB-rtq-3's own guessed-and-tested shape (/investor-reporting/assets/*), and fixing CELL's own named defect necessarily flips that one guessed assertion from PASS to FAIL. This worker implemented the real fix (matching the issuer's own decomp text and the CVO's diagnosis) and reports R118-AC1 honestly rather than forcing a false green or leaving the real defect unfixed.",
+  "notes": "Not self-graduated. Remedy is a follow-on cell with write access to deliverables/0.9.0_WK_IRPT_BCKEND~16/ to replace that one test's URI with the real /assets/ shape (or retire it in favour of this cell's equivalent real-shape test) -- outside this cell's <paths> and BOUNDS. CVO's L9 (or the COO's round-19 recut) adjudicates which of the two literal requirements yields; this row exists so that decision is made on full information, not discovered again from scratch."
+}
+```
