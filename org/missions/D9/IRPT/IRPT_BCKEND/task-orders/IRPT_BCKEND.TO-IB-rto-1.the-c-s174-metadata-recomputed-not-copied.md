@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~13</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-22 (round 15, chain A, decomp v0.19 s.R15.1) in the ONE round-15 issuance</status>
+<status>complete -- both hash values recomputed fresh (never copied) against commit 0d0c8cdc4d, cross-checked by 3 independent instruments (git cat-file/show, an actual checkout-index read, and the pre-existing IB-rtk-1_repaired_r10_lifecycle_diagnostic.json artifact); the transposed CRLF substring corrected in all 3 locations it appeared (0 residual, 86-87 files scanned); the misattributed LF-value attribution corrected to name git cat-file -p/git show; battery_ib_rtm_1.py --arm metadata widened with a genuine run-time recomputation control (rc=0, both tokens print); proof-of-spec-check VALID rc=0 on both IB-rtk-1's and IB-rtm-1's proof instances, no criterion verdict changed; 0.9.0_WK_IRPT_BCKEND~13 2026-09-22</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 15 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 (no addendum) | **Decomp cell:** `IB-rto-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.19, s.R15.1) | **outcome_ref:** records integrity (no FWD directly) | **Rows:** `IRPT_BCKEND-C-S196` (the CTO's own finding, this cell's source) | **Ruling:** the CTO's round-14 analysis @0782226170, section "Round 15" | **Reference (READ-ONLY, never edited by this cell):** row `IRPT_BCKEND-W13-S3` in `../surprise-channel/investigations/INVESTIGATION_v1.md` (the original CRLF-vs-LF grain finding and its hash-derivation discipline)
 
