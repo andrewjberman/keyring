@@ -8,6 +8,16 @@ Reviewer: `3.0.0_SA_CVO~M`. Date: 2026-09-22.
 
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`, IRPT-S7-03, exact registry grant `820f35ec69`, and CTO generated-carrier disposition in exact inbox `20260922T221037Z_1.0.0_SA_CTO_IRPT_generated_carriers__canonical_owner.md`. Request from COO~M: `20260922T221426Z_2.0.0_SA_COO_M_IRPT_X10__pinned_owner-review_candidate5.md`; ACK delivered before review. Review scope is non-IRPT equality, affected generated consumers and candidate refusals, not implementation or provisioning.
 
+## Current status addendum — 2026-09-22, after 22:34 UTC
+
+This addendum supersedes only the owner-response and R-P07 status below. The original independent review at `eb00a0c6b2`, its test results, historical failure evidence and reproduction script are preserved. No additional tests were run for this documentary update.
+
+- **CRO registry-owner bounded PASS received:** report/evidence `4d6a4338aed7f6a3623b8b3f3c195a19338fd39e`, `org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/REVIEW.md`, for pending candidate `587e782bc6` and generated evidence `3c14153eeb` only. Carry alongside this CVO's independent `eb00a0c6b2` review for the bounded builder-owner review. This is attributed owner evidence from the exact CRO 22:34:01 and CTO 22:34:45 notifications, not a new CVO rerun. CRO's final proof pin remains pending.
+- **R-P07 CLOSED at the tested primitive only:** attributed CVO~P review `9e6a617405`, `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_P/RETENTION_RETEST_C5EA.md`, on source `c5eace08c76176c6d9ebb78dd31ced3b0e57ea2d`. P reports 16 supplied, 9 unchanged reviewer and 12 receipt-boundary tests passing. This supersedes the historical open finding on `bd7c9f1b2c` recorded below; this seat has not independently rerun the replacement primitive. Missing receipt remains non-serving; a timely intent receipt permits restart validation without renewing the retention ceiling, per P's bounded evidence.
+- **Outstanding:** naming owner still owes exact generated-carrier disposition and fresh shared-state reconciliation, including separate inherited harvest/formatting drift. CRO owner PASS does not authorize carrier integration or policy activation. Full composed reader/writer retention, concurrency, IAM and S7 remain unproven/NOT_EVALUATED; physical disposal remains OPEN. Product, live, provisioning, deployment and render gates are unchanged.
+
+Authority and requested amendment: exact CTO notification `20260922T223445Z_1.0.0_SA_CTO_IRPT_X10_CRO_owner_PASS4d6a4338ae__R-P07.md`, citing the completion contract above. The historical sections that follow describe the earlier review state; their owner-response and R-P07 statements must be read with this addendum.
+
 ## Exact inputs and isolation
 
 | Input | Pin / measurement |
