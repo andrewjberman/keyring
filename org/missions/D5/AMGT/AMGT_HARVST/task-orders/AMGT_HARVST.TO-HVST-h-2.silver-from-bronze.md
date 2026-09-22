@@ -222,7 +222,7 @@ for f in sorted(set(out) & mine):
    fidelity silently.
 3. **CHAINED:** `HVST-h-9` calls `article_rows` with `received_form="normalised_record"`.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
