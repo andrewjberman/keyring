@@ -107,12 +107,77 @@ infer historical model ownership from a current assignment or broaden a missing 
 M will publish a pinned loader returning the exact selected revision, unique position
 rows, quantity/value/currency, source dates and explicit unknown coverage.
 
-The output publication foundation is now implemented separately: see
-`PUBLICATION_EVIDENCE.md`. `HoldingsPublication(s3, canonical_firm).load(as_of=...)`
-returns a version/hash-verified full snapshot plus its accepted manifest. This is
-an overlay snapshot, not yet Y's normalized security-level custody portfolio.
-`snapshot.load_snapshot(canonical_firm, ..., s3_client=...)` adds the accepted
-content revision for the guarded HTTP path. No legacy mutable-file fallback.
+The output publication foundation is implemented separately: see
+`PUBLICATION_EVIDENCE.md` and `PARTITIONED_PUBLICATION.md`. The first multipart
+candidate is `554fc37e998554736ad98ccbfd872d400a9153ff`; the following explicit
+limits are enforced by its count-limit follow-up. This remains an overlay
+publication, not Y's accepted normalized security-level custody portfolio.
+
+```python
+document, manifest = HoldingsPublication(s3, canonical_firm).load(
+    as_of="2026-09-22", account_ids=server_resolved_selected_account_ids)
+```
+
+The reader captures the current index once and chooses one accepted revision for
+the exact business date (or latest accepted date when omitted). It does not choose
+an earlier date when the requested date is absent. Same-date correction replaces
+the index reference conditionally; retained object versions preserve prior bytes.
+An in-flight read uses only its captured complete inventory. There is no page or
+continuation token, and no automatic retry onto a different revision.
+
+`irpt-holdings-manifest-v1` has `platinum`; `irpt-holdings-manifest-v2` replaces
+that field with `platinum_header` and an ordered `partitions` list. Each partition
+is `{account_ids: [...], object: reference}`. Both versions have `firm_id`,
+`business_date`, content `revision`, `gold`, `source_set_revision`, and `clocks`.
+Each object reference contains canonical `bucket`, `key`, non-null `version_id`,
+`sha256`, and `byte_length`. Optional `source_objects` are bound into the content
+revision through the `irpt-source-objects` source revision; the actual Gold caller
+that captures those receipts remains separately blocked under LEGACY-READ-01.
+
+The v2 header is the snapshot without `nodes`. Each part is
+`{firm_id, revision, nodes}` and preserves whole account trees. The manifest pins
+the entire inventory, including parts outside the selection. Its account sets
+must be disjoint and match the header census. Each selected part must match its
+declared account census and accepted revision. The reader never fetches a Gold
+object. Missing, corrupted, substituted or incompatible selected data refuses.
+
+| Boundary | Enforced limit |
+|---|---:|
+| Gold Parquet object | 64 MiB |
+| Index JSON | 1 MiB |
+| Each manifest, header or part JSON | 4 MiB |
+| Packing target | 1 MiB, complete account trees |
+| Complete publication account census | 25,000 |
+| Complete publication part inventory | 256 |
+| Selected part GET calls | 64 |
+| Header plus selected part bytes retrieved | 64 MiB |
+| Assembled selected raw document | 4 MiB |
+
+A v2 reader invokes at most 67 S3 GET calls: index, manifest, header, and 64 parts.
+That is an application-call limit; SDK transport retries are separate. The
+64-part count is checked before any part GET. Manifest plus index add at most
+5 MiB to the header/part byte budget. A v1 reader makes three GET calls. Bounds
+are enforced again by readers; oversized publication, account tree or selection
+refuses whole. No successful truncation, pagination or hidden full-firm fallback.
+
+The storage loader is **not an authorization boundary**. It returns an internal
+header carrying the full source census and selected trees (v2), or a bounded full
+document (v1). Consumers must not return that raw structure. The actual holdings
+Entry resolves the retained `accountSetId` using fresh directory, ownership,
+policy and selection-store reads before loading; projects only selected trees
+and recalculates selected totals; then repeats current selection authorization
+and compares the complete result before release. Revocation, directory changes
+and retained-reference changes refuse the whole response. Y must use equivalent
+current authorization around its eventual accepted custody port; this loader
+alone does not supply that port or permission to consume overlay totals.
+
+`snapshot.load_snapshot(canonical_firm, ..., s3_client=..., account_ids=...)`
+adds the accepted revision for the guarded HTTP path. No mutable legacy fallback.
+Canonical Platinum keys and package dependencies stay as in `62139c3a1a`;
+P's separately attributed packaging candidate is `0fb7e56629`. No deployment
+or actual-source acceptance follows from these offline interfaces. Independent
+review `c462d8b4df` covers v1 only; timeout-after-index-persist and suspended
+versioning ambiguity findings remain open. Multipart independent review is owed.
 
 ## Reporting destination (S7)
 
