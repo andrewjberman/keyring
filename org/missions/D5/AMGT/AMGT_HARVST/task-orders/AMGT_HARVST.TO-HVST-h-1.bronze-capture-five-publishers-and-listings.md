@@ -213,7 +213,7 @@ for f in sorted(x for x in out if x.endswith(".py")):
    `normalised_record` is written only by `HVST-h-9`.
 4. **CHAINED:** `HVST-h-2` edits `harvest_grammar.py` and `uploads.py` after this cell drains.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
