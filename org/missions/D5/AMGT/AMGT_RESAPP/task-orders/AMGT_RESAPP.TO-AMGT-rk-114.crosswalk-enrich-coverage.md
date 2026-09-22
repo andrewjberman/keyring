@@ -90,12 +90,34 @@ register a name that is already a coverage record: Lenovo is one.
 <paths>
 lib/research/identity/crosswalk.py
 lib/research/identity/add_security.py
+lib/research/identity/crosswalk.schema.json
 lib/research/identity/tests/test_crosswalk_enrich_coverage.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~114/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-114.crosswalk-enrich-coverage.md
 </paths>
 
+- **ISSUER AMENDMENT 1 (2026-09-22, 2.0.0_SA_COO~Z, on row W114-S2; committed by the issuer before the rebuild):**
+  the crosswalk denominators object is `additionalProperties: false` in `crosswalk.schema.json`, and it does not admit
+  the new `enriched` key, so rk-113 would PUBLISH a served crosswalk that fails its own schema. So:
+  - `crosswalk.schema.json` joins `<paths>`; add `enriched` to `denominators.properties` as an integer, minimum 0,
+    NOT in `required` (a document with no ENRICH row omits it, which keeps the byte-identity rule);
+  - add ONE test arm, `test_enriched_document_validates_against_schema`, to `test_crosswalk_enrich_coverage.py`: build
+    a stub crosswalk with one ENRICH row and validate it against the schema, the same way `test_add_security.py`
+    already validates. It must pass, and it must FAIL against the pre-amendment schema (state that control);
+  - change nothing else.
+- **ISSUER AMENDMENT 2 (2026-09-22, 2.0.0_SA_COO~Z, on row W114-S4; committed by the issuer before the rebuild; within
+  the CTO's ruling msg 24314 that a served crosswalk failing its own schema must not be published):** the records'
+  `identity` sub-schema is `additionalProperties: false` with 9 properties, and `add_security._build_identity` (rk-108)
+  emits 14. The 5 keys it does not admit are `composite_figi`, `figi`, `isin`, `sedol` and `website`. Lenovo's REAL
+  identity from rk-113 carries all 5, so rk-113 would still publish a nonconforming document. So:
+  - add those 5 to `identity.properties` as `{"type": ["string", "null"]}`, NOT in `required` (the 7 existing
+    registered identities lack them and must stay valid). Change nothing else;
+  - `test_enriched_document_validates_against_schema` must validate an identity built by the REAL
+    `add_security._build_identity` from a stub sec_data carrying all 5 fields, NOT a schema-conformant hand stub.
+    Keep the control against the pre-amendment schema, which must FAIL. Add a second assertion that the pre-rk-114
+    identity shape (the 9 keys only) still validates;
+  - AC1 stays 7 arms (the arm is strengthened, not added); AC2 stays I0 + 7.
 - A surface not named in `<paths>` is a WALL (including `registrations.json`). Scratch is `<worktree>/.scratch/r114/`.
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~114 <0.9.0_WK_AMGT_RESAPP~114@opal.agent>" -F <msgfile> -- <paths>`.
 
@@ -126,15 +148,20 @@ out = subprocess.run(["git", "diff", "--name-only", "0972b8631c", "HEAD", "--", 
 print("changed_code_files", sorted(out))
 for f in sorted(out):
     b = open(f, "rb").read()
+    if f.endswith(".json"):
+        import json
+        json.loads(b.decode("utf-8"))
+        print(f, "parses True crlf", b.count(bytes([13, 10])))
+        continue
     compile(b.decode("utf-8"), f, "exec")
     print(f, "compiles True crlf", b.count(bytes([13, 10])), "non_ascii_chars", sum(1 for ch in b.decode("utf-8") if ord(ch) > 127))
 ```
 
 <proof_of_spec>
   <criterion id="AC0" cell_refs="AMGT-rk-114"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r114/ac0.py && python -m pytest lib/research/identity/tests -q -p no:cacheprovider 2>&1 | tail -1</invocation><expect>BEFORE any edit: "served_records 96 992_records 1 992_has_identity False 992_folder Lenovo 992 HK"; "local_rebuild_byte_equal True"; the identity suite "I0 passed" (measured 60 at the cut). Record every value</expect></criterion>
-  <criterion id="AC1" cell_refs="AMGT-rk-114"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/identity/tests/test_crosswalk_enrich_coverage.py -v -p no:cacheprovider 2>&1 | tail -9</invocation><expect>"6 passed" and 0 failed, the six named arms PASSED</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rk-114"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/identity/tests -q -p no:cacheprovider 2>&1 | tail -1 && python .scratch/r114/ac0.py</invocation><expect>"N passed" with N = I0 + 6 and 0 failed; then "local_rebuild_byte_equal True" again (no ENRICH row exists in the real registrations.json, so the served-shape build is unchanged)</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-rk-114"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r114/ac4.py</invocation><expect>"changed_code_files" EXACTLY lib/research/identity/add_security.py, lib/research/identity/crosswalk.py and lib/research/identity/tests/test_crosswalk_enrich_coverage.py; each "compiles True crlf 0" with non_ascii_chars equal to its value at the pin</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rk-114"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/identity/tests/test_crosswalk_enrich_coverage.py -v -p no:cacheprovider 2>&1 | tail -9</invocation><expect>AMENDMENT 1: "7 passed" and 0 failed -- the six named arms plus test_enriched_document_validates_against_schema PASSED</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rk-114"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/identity/tests -q -p no:cacheprovider 2>&1 | tail -1 && python .scratch/r114/ac0.py</invocation><expect>AMENDMENT 1: "N passed" with N = I0 + 7 and 0 failed; then "local_rebuild_byte_equal True" again (no ENRICH row exists in the real registrations.json, so the served-shape build is unchanged)</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-rk-114"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r114/ac4.py</invocation><expect>AMENDMENT 1: "changed_code_files" EXACTLY lib/research/identity/add_security.py, lib/research/identity/crosswalk.py, lib/research/identity/crosswalk.schema.json and lib/research/identity/tests/test_crosswalk_enrich_coverage.py; each .py "compiles True crlf 0" and the .json parses with non_ascii_chars equal to its value at the pin</expect></criterion>
 </proof_of_spec>
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR.** No judgment criterion.
@@ -153,7 +180,7 @@ working-tree bytes before editing; never `git checkout --`, `git stash` or `git 
 every future registration, not only Lenovo's. `registered` keeps its meaning (appended rows); `enriched` is new and
 appears only when n > 0, so the served 09-19 document's bytes are reproducible.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~114</slot>
 <fabric>site-z</fabric>
