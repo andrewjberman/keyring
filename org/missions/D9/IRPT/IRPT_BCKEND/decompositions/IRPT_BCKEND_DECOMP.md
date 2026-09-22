@@ -7,10 +7,10 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 16,
-  "decomp_version": "0.20",
-  "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
-  "prd_version": "v0.14",
+  "round": 17,
+  "decomp_version": "0.21",
+  "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@4f942b7657",
+  "prd_version": "v0.17",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
   "round2_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO/IRPT_BCKEND_ROUND2_ANALYSIS.md@cfe3a33a9b",
   "round2_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v2.md@c1a8cd2543 (the L8/L9 commit; msg 97752)",
@@ -93,13 +93,46 @@
   "round15_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_15_20260922.md @81338c807a",
   "round15_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md @4870207827 (round-15 addendum)",
   "cells_round16": 1,
-  "cell_id_shape_round16": "IB-rtp-<n>"
+  "cell_id_shape_round16": "IB-rtp-<n>",
+  "round16_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_16_20260922.md @e6abd13f94",
+  "round16_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md @4e4808d815 (round-16 addendum)",
+  "cells_round17": 3,
+  "cell_id_shape_round17": "IB-rtq-<n>",
+  "round17_authorization": "L4-R sign-off ADMITTED, PRD v0.17 @1450e05178 (commit 4f942b7657), both halves SIGNED (3.0.0_SA_CVO~B ratified-text, 4.0.0_SA_CRO brief) -- 1.0.0_SA_CTO msg 99478, 'round 17 is yours to decompose and cut. It rests on CONTRACTS THE RENDER IDENTITY, items 1-8.'"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R17. ROUND 17 -- THE RENDER IDENTITY (PRD v0.17 CONTRACTS items 1-8; L4-R ADMITTED @1450e05178; v0.21, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 16 closed with the capture-tool/metadata line fully closed (`C-S174`, `C-S195`) and the standing mechanism question opened for Andrew. Andrew-direct 2026-09-22 ~12:2xZ chose Option 2 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_122xZ_IRPT_RENDER_AUTH_OPTION2_SHORT_LIVED_RENDER_TOKEN.md @29d157110d`): a short-lived, narrowly-scoped RENDER TOKEN, never a human-captured session, because the portal's own refresh token lives only 7 days. `4.0.0_SA_CRO`'s research (`IRPT_RENDERER_AUTH_RESEARCH_20260922.md @55a47e2cfd`) censused 7 verifiers and recommended a separate signing key; the CTO's PRD v0.16 addendum turned that into a full contract; `3.0.0_SA_CVO~B`'s L4-R review found the v0.16 contract's FIRM_BINDING text FALSE for the principal-resolution path (an offline reproducer showed `classify_principal` returns UNKNOWN and `Enforcer.resolve_now` returns NO_PRINCIPAL for the renderer's own header set); the CTO's v0.17 correction added CONTRACTS item 8, the RENDER_DELEGATE principal. Both L4-R halves are now SIGNED against v0.17 @`1450e05178` (brief unchanged since v0.16, half_hash `9120aa6518e7...`; ratified-text re-signed, half_hash `4d95de5f4f98...`) -- ADMITTED. This round cuts the contract's THREE independent code surfaces, each restating the PRD verbatim. **No AWS write, no Secrets Manager entry, no Lambda deploy, no ledger entry this round** -- every cell builds and proves its component OFFLINE, against a worker-generated throwaway RSA keypair never written to any real secret store; the real key provisioning and every deploy are a SEPARATE later round under NEVER-2 ledger entries and their own never-widen halves (CONTRACTS item 7's own closing line), cut only once this round's code is CVO-adjudicated. PRD: `../prd/IRPT_BCKEND_PRD.md` v0.17 @`4f942b7657`.
+
+### R17.1 The rectangle (3 cells, id shape `IB-rtq-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rtq-1` | **B14 -- THE RENDER-KEY MINTER.** CONTRACTS items 1 (separate key, never `opal/auth/jwt-private-key`), 2 (exact claims: `iss opal-irpt-render`, `aud irpt-render`, `exp<=5min`, `nbf`/`iat` skew<=60s, `jti`=render id, `role renderer`, `tier render`, `firmId`=bundle tenant, `bundle`/`revision`/three path ids, `sub render:<render_id>`, `delegator`=the bundle-freeze subject per item 8), 3 (minted only from the frozen `ExportBundle` inside B14's export job, never from a request, logged with jti+render id), 6 (mint-side logging). Mirror the existing verifier pattern at `infra/aws/lambda/shared/opal_auth/__init__.py` (python-jose, RS256, boto3 `secretsmanager` client, container-cached key fetch) for the SIGNING side, as a NEW module under `infra/aws/lambda/investor-reporting/` (not a shared/opal_auth edit -- this minter is project-private); the private key is loaded by a `RENDER_JWT_PRIVATE_KEY` env var / injectable parameter for testability, never hardcoded, so a test can pass a throwaway keypair. The minter refuses to emit `role admin`, `firmRole admin`, `tier internal`, `userType Dev` (defensive: these must be structurally impossible to set, not merely unset by convention). | `0.9.0_WK_IRPT_BCKEND~14` (first invocation) | FWD-8, FWD-3, FWD-4 (contrib, B14 row) | -- |
+| `IB-rtq-2` | **B3 -- THE RESOLVER, THE ENFORCER, AND V2.** CONTRACTS item 8's resolver/enforcer half + item 4's V2 half. In `infra/aws/lambda/investor-reporting/_scope/resolve.py`: add `render` and the three new trusted names (`x-render-delegator`, `x-render-bundle`, `x-render-revision`) to `TRUSTED_HEADERS` (`:88-98`) so `trusted_only` (`:140-150`) stops dropping them; add ONE new branch to `classify_principal` (`:154-196`), placed AFTER the existing origin/subject checks (`:176-180`, "branch 1") and BEFORE the OPAL_GLOBAL roster check (`:181-183`): `x-user-role == "renderer"` WITH the render marker present -> `RENDER_DELEGATE`; `renderer` WITHOUT the marker -> `UNKNOWN` (arm (j)). No existing branch's logic changes; `RENDER_DELEGATE` is added to `PRINCIPAL_CLASSES` (`:106`) and never falls through to `OPAL_GLOBAL`/`FIRM_OPERATIONS`/`FIRM_ADVISOR`/`CLIENT`. In `infra/aws/lambda/investor-reporting/_authz/enforce.py`'s `Enforcer.resolve_now` (`:256`): a `RENDER_DELEGATE` scope is the INTERSECTION of (a) the delegator's scope resolved NOW through the existing path (so revocation takes effect -- arm (i)) and (b) the bundle's pinned scope at `X-Render-Revision`; serves ONLY the three read operations for ONLY the bundle-pinned ids (arm (k) for everything else, refused with the existing refusal codes); an empty intersection refuses, never answers empty. In `infra/aws/users/lambda/portal-authorizer/index.mjs` (default-allow today): load the render public key; admit `aud irpt-render` ONLY when `routeKey` is one of the three named GETs AND each path id equals its claim; every other route/mismatch is an EXPLICIT deny (arm (b)); authorizer result TTL stays 0. | `0.9.0_WK_IRPT_BCKEND~15` (first invocation) | FWD-2 (own, B3 row) | -- |
+| `IB-rtq-3` | **B15 -- V3, THE EDGE.** CONTRACTS item 4's V3 half + item 8's edge half. In `infra/aws/lambda-edge/auth-validator-edge/index.mjs`: a new render-key branch that runs BEFORE the admin-bypass evaluation (`:255-261`, the citation this contract refuses a render token to satisfy) and admits the render-key token ONLY for `/investor-reporting/print`, the SPA's static assets, and the same three API paths; on accept, it injects (mirroring the existing `X-Firm-Id` injection shape at `:404`) `X-User-Email render:<render_id>`, `X-User-Role renderer`, `X-Firm-Id` from the VERIFIED `firmId` claim, and the render marker (`X-Render-Delegator`, `X-Render-Bundle`, `X-Render-Revision`) -- overwriting any client-supplied header of those names exactly as the existing trusted set already does; it NEVER injects `X-Advisor-Id`, `X-Advisor-Role` or `X-User-Type`. Any other URI is refused. A render-key token carrying `tier internal` or `role admin` is refused HERE (arm (d)); a render token at V1 (`/auth/...`) is refused there unchanged (arm (e), no V1 edit); a human portal token's existing behavior on every route is unchanged (arm (f), the negative-widening control). | `0.9.0_WK_IRPT_BCKEND~16` (first invocation) | FWD-2 (own, B15 row), FWD-11 (contrib) | -- |
+
+### R17.2 Edges and fanout
+
+Three independent chains -- the contract (PRD v0.17 CONTRACTS "THE RENDER IDENTITY", items 1-8) is the ONLY shared dependency and it is already fully specified text, not another cell's output, so no cell waits on another's code landing. **A** `rtq-1`. **B** `rtq-2`. **C** `rtq-3`. **fanout: 3 of 3 chains, cap 8.**
+
+### R17.3 Bounds carried (every order)
+
+No AWS write of any kind (no Secrets Manager entry, no SSM parameter, no Lambda deploy, no CloudFront/API-Gateway change) -- every cell's proof runs against a worker-generated throwaway keypair and synthetic/fixture requests, offline. No never-widen packet this round (nothing served changes). The end-to-end acceptance arms 7(a)-(k) are NOT a mechanical criterion of any single cell -- each of B14/B3/B15 implements one component; the compound arms are graded by `3.0.0_SA_CVO` at L9 once all three land, reading across the three cells' proof instances together (a compound criterion spanning unlanded code is refused at the cut, per Rule 27's L7 discipline). `IB-rti-6`'s latency re-cut stays PARKED, sequenced behind `IRPT_FNTEND`'s own print-route render-claim branch (CONTRACTS item 5, PRD v0.17 `:224-227`) landing at FNTEND's own next L10 -- not this round, not this project.
+
+### R17.4 Not decided here
+
+The real Secrets Manager/SSM key provisioning and every deploy (a later round under NEVER-2 + never-widen, cut only after this round's CVO adjudication); `IB-rti-6`'s re-hand timing (external, gated on the FNTEND print-route branch); the V3 human `aud`/`iss` standing gap (PRD v0.17 `:263-265`, explicitly a separate change under its own never-widen halves, not this round's); the exact internal module name/path for the B14 minter beyond "a new module under `infra/aws/lambda/investor-reporting/`, never a `shared/opal_auth` edit" (the worker's own choice, following this estate's `_authz`/`_scope`/`_keys` underscore-module convention).
+
+### R17.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = PRD v0.17 CONTRACTS "THE RENDER IDENTITY" items 1-8 (8 items) MINUS items already fully satisfied by construction with no code change (item 5's firm-binding half, satisfied as written by the existing `_authz/served.py`/`enforce.py` `FirmBinding` check; item 6's replay/audit bound, satisfied by the `exp`+scope shape itself with no server-side seen-set to build) MINUS items that are FUTURE/OTHER-PROJECT (item 5's frontend print-route half, `IRPT_FNTEND`'s own PRD; item 7's deploy/acceptance-grading process, not a code surface) = 3 code surfaces (mint / resolve+enforce+V2 / edge V3) = the 3 cells cut. SAME GRAIN: each cell is a set of code edits in named files proved by a local test run, none a live deploy. INTENT COHERENCE: one axis (implement the render-delegate contract), never widened to provisioning or deployment. STATE COHERENCE: no cell moves `FWD-2`/`FWD-11` to REALIZED by itself -- both stay NOT_REALIZED pending the CVO's cross-cell adjudication and the still-separate deploy round; no cell's remedy touches another cell's write surface (B14 mints, B3/V2 and B15/V3 verify -- disjoint files, confirmed against the codebase at cut: `_scope/resolve.py`+`_authz/enforce.py`+`portal-authorizer/index.mjs` for `rtq-2`, `auth-validator-edge/index.mjs` for `rtq-3`, a new module for `rtq-1`, zero overlap).
 
 ## R16. ROUND 16 -- THE RECUT ON THE ROUND-15 ANALYSIS (@81338c807a; slug @4870207827; v0.20, 2026-09-22, `2.0.0_SA_COO~B`)
 
