@@ -5637,6 +5637,31 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W29-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~29",
+    "surfaced_at": "2026-09-22T07:15:31Z",
+    "one_line": "F79-AC3's literal invocation (--fixtures fe-s-18-holdings-observed.json --click Holdings --expect-ground '[data-slot=\"holdings-qualification\"]=rgb(255, 255, 255)') reads UNMEASURABLE (selector matched nothing): that fixture's nodes are all authoritative:true on basis OBSERVED, so HoldingsQualification's own gate (classificationGapOf===0 && !showsTargetWeights) legitimately renders null -- the fix itself is independently confirmed correct by a direct --expect-style color read against a fixture that DOES trigger the panel.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-79's criterion F79-AC3: invocation `cd <WS>/portal && ... node scripts/ui-smoke.mjs investor-reporting <out>.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-ground '[data-slot=\"holdings-qualification\"]=rgb(255, 255, 255)'`, `<expect>ASSERT-GROUND: 1 of 1 met</expect>` -- i.e. the task order asserts that, against this exact fixture, the `holdings-qualification` element exists and its ground resolves to white.",
+    "world_is": "Run verbatim on this worker's dev server (port 5951, this worktree HEAD, fix applied to HoldingsTab.tsx:99): `CLICKED: Holdings` / `EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: UNMEASURABLE (selector matched nothing)` / `ASSERT-GROUND: 0 of 1 met`. portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx:92-115 (HoldingsQualification, this worktree HEAD): `if (gap.unknownNodes === 0 && !target) return null` -- the element is only mounted when the snapshot carries a classification gap or shows target weights. The named fixture's `nodes` (fe-s-18-holdings-observed.json, data.holdings.nodes) are four entries, every one `\"authoritative\": true` and `\"basis\": \"OBSERVED\"`, so `classificationGapOf` returns `unknownNodes: 0` and `showsTargetWeights` returns false -- the panel legitimately never mounts for this data, independent of any styling change. Confirmed the PNG capture directly (f79_holdings.png): a plain READY holdings view with no qualification banner. Diagnostic (not part of this cell's grant, read-only reference to an existing sibling fixture already in the repo): the IDENTICAL invocation against `fe-s-18-holdings-missing-attribution.json` instead prints `EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: PASS rgb(255, 255, 255)` / `ASSERT-GROUND: 1 of 1 met`, confirming the selector and the fixed markup work correctly once the data actually triggers the gate -- this is a fixture-choice mismatch in the criterion, not an instrument or code defect. The fix itself is independently confirmed by a direct, non-ACCEPTANCE `--expect-style '[data-slot=\"holdings-qualification\"]::color=rgb(22, 51, 114)'` against the missing-attribution fixture: `PASS rgb(22, 51, 114)` (DESIGN.md C3 navy, 12.00:1 on the panel). Reported F79-AC3 as a REFUSED/FAIL row rather than substituting the working fixture myself, per BOUNDS (report an order defect, do not weaken or reroute a criterion).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx:92-115 (this worktree HEAD) -- HoldingsQualification returns null when `gap.unknownNodes === 0 && !target`",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json, data['/api/scoped/investor-reporting/holdings/'].data.nodes (this worktree HEAD, read directly) -- four nodes, every `classification.authoritative` true, every `basis` \"OBSERVED\"",
+        "measured run (this worker, literal F79-AC3 invocation, port 5951, 2026-09-22): EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: UNMEASURABLE (selector matched nothing); ASSERT-GROUND: 0 of 1 met",
+        "measured run (this worker, diagnostic, IDENTICAL invocation except --fixtures fe-s-18-holdings-missing-attribution.json, port 5951, 2026-09-22): EXPECT-GROUND[[data-slot=\"holdings-qualification\"]]: PASS rgb(255, 255, 255); ASSERT-GROUND: 1 of 1 met",
+        "measured run (this worker, diagnostic --expect-style color check, same missing-attribution fixture, port 5951, 2026-09-22): EXPECT-STYLE[[data-slot=\"holdings-qualification\"]::color]: PASS rgb(22, 51, 114); ASSERT-STYLE: 1 of 1 met",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~29/f79_holdings.png (this deliverable) -- captured render, plain READY holdings view, no qualification banner",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-79.oklch-text-roles-measured-against-actual-grounds.md criterion F79-AC3 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
