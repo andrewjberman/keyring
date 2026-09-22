@@ -11706,6 +11706,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The print pack renders for every served name, fiscal years in order.",
     "world_is": "The print pack 500s for exactly the three names the managers review; the forecast-year keys are ints where the historical keys are strings.",
     "notes": "ARMED: live on the manager-review path (the print pack is the managers' deliverable for a name). Two remedies, both small: (1) render_pack sorts by a normalised key (e.g. key=lambda y: int(y)) -- an adapter change + redeploy under a pair, with the new pre-deploy closure check; (2) the producer that writes int forecast years (the forecast fallback / bestdata path) writes them as str like the historical years, plus a re-derivation of the three model blocks. REC: (1) now as it unblocks the page without touching data, and (2) in chain G where model_block is re-homed. Routed to 1.0.0_SA_CTO~Z for the round-23 cut."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W94-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~94",
+    "surfaced_at": "2026-09-22T08:10:00Z",
+    "one_line": "AC5's literal invocation (ac5.py: build+upload, then `terraform -chdir=infra/aws/terraform/harvest plan -target=...`) FAILED at the plan step with 'Error: Backend initialization required, please run \"terraform init\"' -- this fresh worktree (C:/tmp/wk-amgt-23-94) had never run `terraform init` (no .terraform/ directory present); the order's text names no init step. The build+upload half of ac5.py had already SUCCEEDED (new VersionId igyEHtXet.BLL6JZBkR1Us3Pwrt_Q0Ww uploaded) before the plan failed, so the ledger was left OPEN with 1 unproven leg mid-script.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ac5.py output (.scratch/r94/ac5.out): upload succeeded (head-object VersionId igyEHtXet.BLL6JZBkR1Us3Pwrt_Q0Ww printed), then 'RUN: terraform -chdir=infra/aws/terraform/harvest plan ...' -> 'Error: Backend initialization required, please run \"terraform init\" ... PLAN FAILED', script exit non-zero.",
+        "`ls infra/aws/terraform/harvest/.terraform` in this worktree before the fix: 'No such file or directory' -- confirmed never initialized.",
+        "`terraform -chdir=infra/aws/terraform/harvest init -input=false` run manually: 'Terraform has been successfully initialized!' (backend s3 opal-313476888478-terraform-state key harvest/tfstate); the SAME plan then read 'Plan: 0 to add, 1 to change, 0 to destroy.' exactly as AC5's <expect> names, and the subsequent safe-apply succeeded ('Apply complete! Resources: 0 added, 1 changed, 0 destroyed.')."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Not blocking: `terraform init` is a standard, non-destructive precondition (local plugin cache + backend pointer only, no state or infra write) for using terraform in ANY fresh worktree; running it once unblocked the exact remaining commands the order names (plan, then HALT_ACK=1 safe-apply), both of which then matched their <expect> verbatim. The deploy ledger's one leg was closed with AC6's post-act read once the real deploy completed, so nothing was left half-landed. Recorded as an issuer-text gap (the order's literal AC5 script assumes an already-initialized worktree) rather than a defect in the deploy itself.",
+    "spec_asserts": "AC5's <invocation> is `python .scratch/r94/ac5.py`, which the order's own text (section 4/5) composes from build+upload, targeted plan, and HALT_ACK=1 safe-apply -- with no terraform-init step named anywhere in the order.",
+    "world_is": "A brand-new linked worktree (per Rule 14b/spine L7, one per worker slot) carries no `.terraform/` directory until `terraform init` runs there once; the order's literal script has no init step and fails cleanly with a named, unambiguous error rather than a silent one.",
+    "notes": "Same class as the rk-90/rk-92 rows (W90-S1/S4/S6, W92-S2 finding (2)): a task-order's literal invocation text does not fully match what the live tool/environment needs, discovered and worked around per THE REFUSAL CLAUSE -- run the real remaining commands, grade the substance, and record the gap rather than silently declaring drift. No <paths> file was edited to fix this; only a standard terraform CLI precondition was run."
   }
 ]
 ```
