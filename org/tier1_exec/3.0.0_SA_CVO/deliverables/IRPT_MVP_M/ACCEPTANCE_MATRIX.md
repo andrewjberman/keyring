@@ -10,6 +10,8 @@ This is review preparation and a synthetic baseline finding, not a completed-can
 
 Authority: CTO `IRPT_MVP_COMPLETION_20260922/{AUTHORITY,CONTRACT,CVO_M,COO_M}.md` at `9b99dc12cd8d842e2d92e332ed1b07f36fd1b062`; CONTRACT v1.1. Read all six desktop product briefs; folder 06 equals the repository SmartX brief, SHA256 `31299F948C87A51A59F7147DBD962706773C005D1FF206A0DF6278F34462C112`.
 
+Current coordination authority, read September 22 at approximately 5:01 PM Eastern: CONTRACT v1.2 and OVERSIGHT.md at `4688c59ef2`. This update preserves the baseline observations and every candidate NOT_EVALUATED grade below.
+
 Measured baseline:
 
 | Surface | Observation |
@@ -66,9 +68,25 @@ For CVO~P: share selected-set and dated SmartX/BD crosswalk evidence, current en
 
 For CVO~Y: share exact selected custody positions, accepted revision and row reconciliation; no model target substitution or parent/child duplication; preserve prospect firm/advisor ownership. Y owns normalization, generation and recovery grading.
 
-## Coordination defect
+## Coordination defect — CLOSED on actual delivery
 
 Canonical `codex-send.ps1` refused CVO~M -> COO~M under the global L8 CVO-only-to-CTO gate, contradicting this assignment's CONTRACT sections 6/7. Nothing was delivered to COO~M by that attempt. Reported to CTO with requested relay to COO~M and CVO~P/~Y; no direct-file or alternate transport bypass. First CTO note incorrectly said the finding was routed; the immediate correction explicitly records refusal. Independent evidence preparation continues.
+
+CTO repaired the exact P/M/Y exception at `4688c59ef2`. Retried actual coordination through `codex-send.ps1`, using IRPT subjects and the full governing CONTRACT.md path. All three returned successful filesystem delivery to their canonical nested inboxes; no force or alternate transport used:
+
+| Recipient | Actual receipt filename |
+|---|---|
+| COO~M | `20260922T210126Z_3.0.0_SA_CVO_M_IRPT_M__baseline_failures_and_candidate_.md` |
+| CVO~Y | `20260922T210127Z_3.0.0_SA_CVO_M_IRPT_M__ACK_Y_boundary_request__pinned_b.md` |
+| CVO~P | `20260922T210128Z_3.0.0_SA_CVO_M_IRPT_M__ACK_P_selection_export_request__.md` |
+
+CTO received the receipt report as `20260922T210147Z_3.0.0_SA_CVO_M_IRPT_M__real_peer_delivery_verified__coo.md`. Delivery is measured; it does not assert recipients have accepted candidate evidence. COO~M now has the baseline findings and exact handoff requirements directly. P/Y requests for selected-set, current entitlement/revocation, unique accepted custody and dated crosswalk evidence were acknowledged, with this matrix/probe at `dfa1121b17`. Candidate producer examples remain owed by the implementation owner, then independently reviewed here and consumed by P/Y. P's query-date/set-reference findings and Y's six-field submit loss are peer-reported baseline evidence, not regraded by this reviewer.
+
+## Accepted backend transition and remaining integration prerequisites
+
+Read the complete backend round-18 L8 compile at `2506c70874`, including final chain merge `4e1091f1e7`. CTO reports B's write claims released and no pending worker branch/worktree. Preserve V3 render_auth/index, V2 index, `_scope/resolve`, `_authz/enforce`, and R17 identity/mint semantics in candidate review. The reported 41/41 assertions are not this seat's independent rerun. Old-round L9/L10 remains with the assigned B reviewer; this M seat does not inherit that adjudication.
+
+The assembled chain does not re-prove item (e)'s V1 verifier; item (f)'s human path is partial/structural behind NETWORK FORBIDDEN; item (g)'s deploy IAM is outside offline coverage. These limits and the pending L9 prerequisite remain binding before render key provisioning/deployment. No old canonical progression follows from this handoff. Final accepted frontend DEV pin and write-claim release were still pending in CTO's update; integrated acceptance must incorporate that final evidence, not silently retain the initial portal baseline.
 
 ## Compiler Tools
 
@@ -82,6 +100,7 @@ Canonical `codex-send.ps1` refused CVO~M -> COO~M under the global L8 CVO-only-t
 | Canonical loader/status | Corrected six-file manifest consumed; exact serial/home/inbox preserved; readiness GREEN 9/9. |
 | `sequence-check.py --project IRPT_BCKEND` | PLACED, no project flags; capacity advisory is already addressed in direct assignment authority. |
 | `safe-commit.sh` initial attempt | Python lint refused the copied scratch probe's compact formatting; reformatted only this review artifact, Ruff then passed and the probe reproduced identical results. Risk reflex reported PARTIAL_OR_BLIND because its danger map was stale; this is not a clean risk-map verdict. |
+| `comp-which` CONTRACT/OVERSIGHT read, follow-up | Its fallback `comp-find OVERSIGHT.md` exceeded the 90-second budget and was killed; no answer inferred. `comp-read` and complete explicit-path reads supplied the actual contract/oversight/compile contents. |
 
 ## What you should have asked but did not
 
