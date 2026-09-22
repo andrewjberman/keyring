@@ -4787,3 +4787,161 @@ W112-S4 count == 1 assert).
 ### Fan-out contribution
 
 rk-115 spawns at the cut, in parallel with rk-114. It has no dependency on rk-113 or rk-114.
+
+## 38. ROUND 30 -- FROM THE CTO'S ROUND-29 ANALYSIS @`face1bd2bf` (`1.0.0_SA_CTO~Z`, msg 24328) + msgs 24257, 24314
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 29 closed 3 of 3 (15/0/0) and **stage 1 is SERVED**: Lenovo's crosswalk record
+carries its identity (composite FIGI `BBG000BG4QC6`, CIK 932477, LEI, ISIN, SEDOL, `www.lenovo.com`), agreed on four
+instruments. Round 30 is the Lenovo trial's **WAVE 2** -- the stages that read that identity -- plus the identity
+cleanup the CTO carried.
+
+Andrew-direct ~18:3xZ (CTO msg 24340) is read and binds nothing here: *"The Lenovo trial is unchanged and stays the
+single-sample validation; no cell widens to this population."* Every cell below names exactly `992_HK_Equity`.
+
+**Round 30 is SIX cells, issued in ONE commit with this section.** The CTO's analysis named five; drafting measured a
+SIXTH that must precede L-FIL (see 38b).
+
+### 38a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| model block | `AMGT-rk-116` | ~116 | A1 | Stage 2. `model_block_pull pull` then `derive` for `992 HK Equity`: **5 Bloomberg requests** (1 refdata x 18 fields, 1 histdata x 23, **3** bestdata x 6 -- one per `BEST_FPERIOD_OVERRIDE`) + 1 SPX probe = **6 requests, 60 points**. Lands refdata/histdata/**bestdata (first ever for 992)** bronze, the pull log, +1 input-ledger entry, and ONE NEW served `derived/model_block/992_HK_Equity/<stamp>/`. AC5 reads back rk-109's `fiscal_year_join` (FYE 31 March, the non-December path) and rk-112's currency labels | pair `NEVER_WIDEN_ROUND30_RK116_{COO,CTO}_HALF.md` |
+| daily price | `AMGT-rk-117` | ~117 | B1 | Stage 11. Limb 1 code: generalise the BABA-hardcoded dense-price puller with `--security` / `--sec-key` (every default preserved). Limb 2: ONE `HistoricalDataRequest` (`992 HK Equity` x PX_LAST, DAILY) + 1 probe = **2 requests**, landing `histdata_daily_px` BRONZE only. **NO served key, so NO pair** | none |
+| filings PRECURSOR | `AMGT-rk-121` | ~121 | C1 | `battery.keys_from_crosswalk` READS the landed `identity` (cik, lei, website, legal name) instead of hard-coding all four ABSENT. Code only, no call, no write | none |
+| filings | `AMGT-rk-118` | ~118 | C2, after rk-121 | Stage 3, ISSUER SITE ONLY (msg 24257: no hkexnews, no ESEF). ONE battery run, `--write-bronze --write-pool`, crawl **<= 40 pages** (the code default). Public sources only, **0 vendor words**. Writes SERVED `filing_attempt` / `filings/v1` under rk-105's SKIP-HELD / CHANGED-HELD rules, plus rk-98's bronze | pair `NEVER_WIDEN_ROUND30_RK118_{COO,CTO}_HALF.md` |
+| Seeking Alpha | `AMGT-rk-119` | ~119 | A2, after rk-116 | Stages 7 and 9's SA halves. **AC0 REFUSES the run** unless the ADR symbol is MEASURED (0 of 96 crosswalk records carry `sa_symbol`) and both words are on file; the session is ~11.7 days old and its staleness is recorded either way. At most 6 GETs against a cap of 10. Bronze **and SA silver** (`symbol_profile`, `news_item`); no served reader, so no pair | none |
+| identity cleanup | `AMGT-rk-120` | ~120 | D1 | Code only. (a) Z-S225: rk-114's byte-identity arm builds the PINNED side from ENRICH-free registrations, so it tests the property not the repo's state. (b) the CTO's carried WRITE-TIME schema check in the crosswalk build, so a nonconforming document is REFUSED at build (msg 24314) | none |
+
+### 38b. WHAT DRAFTING MEASURED, AND WHAT IT CHANGED IN THE CTO'S SHAPE
+
+1. **L-MB is 5 requests, not 3.** `stage_pull` (`model_block_pull.py:452-524`) sends three `bestdata` requests, one
+   per `FORECAST_OVERRIDES` member, landing as ONE object. With the READ_HERE probe the cell spends **6 of the plan's
+   7 Lenovo requests**. Its `--dry-run` makes NO call, so AC1 exercises it free.
+2. **L-FIL needs a code PRECURSOR (rk-121), so wave 2 is not fully concurrent.** Measured: `keys_from_crosswalk`
+   returns `cik None, lei None, web_address None, legal_name None` for EVERY security, with a reason that says the
+   crosswalk "carries no cik field today" -- **stale since rk-113 landed exactly those**. Lenovo's step-4 crawl seeds
+   from `keys["web_address"]`; there are no prior EDGAR seeds and `_exchange_listing_seed` returns
+   `(None, "no exchange listing template for exchange 'HK'")`. **So the crawl would start with ZERO seeds and refuse**
+   -- an UNRESOLVED caused by our own staleness. Same class as rk-114 before rk-113.
+3. **L-PX cannot write the DynamoDB rank rows for Lenovo alone.** `price_axis_pull.py` is cohort-wide by
+   construction: it loads the universe (34 MEASURED tickers, Lenovo among them), chunks 20 per request, and writes a
+   whole ranked generation with a `_CURRENT` pointer. Ranking a cohort of one is meaningless, and running it would
+   rewrite EVERY name's served rows -- outside Lenovo's blast radius and against the no-fleet-run word. So rk-117 is
+   bronze-only with no pair, and **the served Lead Panel price surface for Lenovo is an OPEN QUESTION** (38d).
+4. **L-SA is not bronze-only.** `run_ticker` also writes SA silver through `store.silver_append`. No served reader
+   exists, so the no-pair ruling stands, but the order names the silver writes.
+5. **rk-116 and rk-119 share a key.** Both call `ledger.record_run`, which is a READ-MODIFY-WRITE append on
+   `packs/992_HK_Equity/input_ledger.json`. They are therefore NOT concurrency-safe together.
+
+### 38c. SURFACE CENSUS AND THE DISJOINTNESS MATRIX
+
+Write surfaces, pairwise. `X` = both cells write it.
+
+| | rk-116 | rk-117 | rk-121 | rk-118 | rk-119 | rk-120 |
+|---|---|---|---|---|---|---|
+| `bloomberg/harvest/bronze/{refdata,histdata,bestdata}/992` | W | | | | | |
+| `bloomberg/harvest/bronze/histdata_daily_px/992` | | W | | | | |
+| `bloomberg/harvest/state/pull_log/992` | W | | | | | |
+| `derived/model_block/992/<stamp>/` (SERVED) | W | | | | | |
+| `packs/992_HK_Equity/input_ledger.json` (read-modify-write) | **X** | | | | **X** | |
+| `amgt/.../filing_attempt/992`, `filings/v1/992` (SERVED) | | | | W | | |
+| `sec/`, `issuer-site/` bronze | | | | W | | |
+| `seeking-alpha/harvest/{bronze,silver}/992` | | | | | W | |
+| `integrations/bloomberg/research/pull_baba_daily_px.py` + its test | | W | | | | |
+| `lib/research/filings/battery.py` + its new test | | | W | | | |
+| `lib/research/identity/crosswalk.py` + its tests | | | | | | W |
+
+- **One collision: `input_ledger.json`, rk-116 and rk-119.** The remedy is order, not isolation: **rk-119 spawns only
+  after rk-116's pull has landed.** A concurrent pair could lose an entry (last writer wins).
+- **One dependency: rk-121 -> rk-118**, per 38b item 2.
+- Every other pair is disjoint. The only shared file across all six is the append-only surprise channel.
+- **No cell writes DynamoDB.** No cell deletes anything. No cell touches the portal, IAM, a Lambda or a layer.
+
+### 38d. OPEN QUESTIONS CARRIED TO THE CTO AT THE CUT
+
+1. **The served Lead Panel PRICE surface for Lenovo.** It requires a cohort-wide re-rank (34 names, one generation,
+   a `_CURRENT` pointer). That is a fleet act with a blast radius far wider than Lenovo, and it needs its own pair and
+   Andrew's scope word. Stage 11 is therefore PARTIALLY served by rk-117 and the trial report must say so.
+2. **Step 2 (EDGAR by CIK) will now run for Lenovo**, because rk-121 supplies CIK 932477 for a name the PRD calls
+   "not an SEC filer". EDGAR is public and is the producer's own ordered route, so rk-118 records what it finds; if it
+   RESOLVES, stage 3 resolves on EDGAR rather than the issuer's site -- a finding, not a violation.
+3. **rk-119 will probably REFUSE** for want of a measured ADR symbol, and that is the designed outcome. Whether
+   resolving Lenovo's SA symbol is worth its own carded act is the CTO's call.
+4. **The SA session is ~11.7 days old.** A re-harvest is an attended act; it is not in any cell here.
+
+### 38e. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 6                   # rk-116, rk-117, rk-118, rk-119, rk-120, rk-121 -- one commit
+  chains_total: 4                   # {rk-116 -> rk-119} ; {rk-121 -> rk-118} ; {rk-117} ; {rk-120}
+  wave_1: [rk-116, rk-117, rk-121, rk-120]   # concurrent; rk-116 only once both pair halves are signed
+  wave_2: [rk-118, rk-119]          # rk-118 after rk-121 drains and its pair is signed; rk-119 after rk-116's pull lands
+  no_fleet_run: true
+```
+
+### 38x. rk-122, ADDED AT THE CUT (CTO msg 24353)
+
+### 38x. THE EDGE-BEHAVIOR CELL (rk-122), added to round 30 per CTO msg 24353
+
+**Why it is in this round at all.** Andrew reported the Security Analysis page blank at ~18:2xZ (record
+`@1fd5d2ba3f`). The CTO's read-only trace produced row `AMGT_RESAPP-Z-S226` (ARMED, BLOCKING): there is NO CloudFront
+behavior for `/api/scoped/amgt/*`, so every page request falls through to the SPA origin and returns `200 text/html`.
+`2.0.0_SA_COO~Z`'s direct Lambda invokes (msg 24327) had already proved the handler healthy for both Lenovo and a
+control, which is what separated the edge route from everything behind it. The cell is the edge route and nothing
+else.
+
+#### THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| amgt edge behavior | `AMGT-rk-122` | ~122 | none | Z-S226 -- ONE appended `ordered_cache_behavior` for `/api/scoped/amgt/*` on `aws_cloudfront_distribution.portal` (`EVTSA9VEHNZVH`), copied field-for-field from behavior 15 (`/api/scoped/investor-reporting/*`): origin `APIGateway-portal`, caching DISABLED, `all_viewer_except_host`, ONE `viewer-request` association to `auth-validator-edge` (live `:20`). Appended LAST so no existing block shifts. The worker produces the PATCH and the PLAN; **the commit of the `.tf` and the apply are ROUTED to an AE seat** | pair `NEVER_WIDEN_ROUND30_RK122_{COO,CTO}_HALF.md` |
+
+#### SURFACE CENSUS (measured at the cut by the issuer)
+
+- **Declared vs live AGREE:** `path_pattern` appears 28 times in `cloudfront-distribution.tf`; the live
+  `CacheBehaviors.Quantity` is 28; `amgt` appears in 0 of them, declared and live.
+- **The API side is already complete:** 16 amgt routes of 101 on API `7k3ed8px20`, which IS the `APIGateway-portal`
+  origin. `scoped-amgt-api.tf:353,364` mounts them on `local.portal_api_id`; `harvest/main.tf:100` sets that to
+  `7k3ed8px20`. Only the edge route is missing.
+- **The defect, reproduced by the issuer live:** 4 amgt paths at `200 text/html` 1000 B against 4 controls
+  (`advisor-intelligence`, `general`, `investor-reporting`, `partners`) at `401 application/json` 51 B.
+- **THE LANE, gate-exercised by the issuer (positive control included):** `infra/aws/**` -> `CLOUD_OPS_OR_ETL`
+  (`.owned-paths.yaml:1906`). `0.7.0_AE_CloudOps` **PERMIT**; `2.0.0_SA_COO~Z` REFUSE; `0.2.0_DT_PortfolioAnalytics`
+  REFUSE; `0.9.0_WK_AMGT_RESAPP~122` REFUSE. **CASE B of the CTO's instruction applies: the act is ROUTED to AE via
+  `0.0.0_AB_MSTR~Z`.** The `.tf` is deliberately NOT in the order's `<paths>` -- naming it would have self-granted the
+  worker into an AE lane, because the worker grant consults no lane
+  (`.tools/owned-paths-validate.py:209-235`, additive at `check_agent:330`).
+- **THE PLAN BOUND is the precedent's, not a naive one.** IRPT IB-s-15's first attempt was REFUSED BY ITS OWN GATE on
+  a 3-resource plan; its resume landed under "ONE change plus the classified WAF read-normalisation no-op". rk-122
+  carries that exact bound, requires the WAF no-op be PROVEN field-by-field, and asserts `spa_fallback` is ABSENT
+  (the issuer measured that CRLF half already closed: disk 0 CRLF / 26 LF, identical to HEAD).
+
+#### DISJOINTNESS -- rk-122 against the five wave-2 cells and the cleanup
+
+| cell | writes | intersects rk-122? |
+|---|---|---|
+| `rk-116` L-MB | `bloomberg/harvest/bronze/{refdata,histdata,bestdata}/...`, `derived/model_block/...`, `packs/992_HK_Equity/input_ledger.json` | NO |
+| `rk-117` L-PX | `bloomberg/harvest/bronze/histdata_daily_px/...` (bronze only) | NO |
+| `rk-118` L-FIL | `sec|issuer-site` bronze, `filing_attempt`, `filings/v1` | NO |
+| `rk-119` L-SA | `seeking-alpha/harvest/{bronze,silver}/...`, `packs/992_HK_Equity/input_ledger.json` | NO |
+| `rk-120` identity cleanup | `lib/research/identity/**` (code + tests) | NO |
+| `rk-121` L-FIL precursor | `lib/research/filings/**` (code + tests) | NO |
+| **`rk-122`** | **`infra/aws/terraform/portal-auth/cloudfront-distribution.tf` (WORKTREE ONLY, routed for commit), its own deliverables dir, the change_management ledger, the append-only channel** | -- |
+
+- **rk-122 touches NO `lib/`, NO `integrations/`, and NO S3 data prefix.** It is the only cell in the round whose
+  surface is infra, and the only one whose act is ROUTED off this seat.
+- The ONLY shared file with any sibling is the append-only `INVESTIGATION_v1.md`, which every cell appends to by
+  splice (do not isolate it -- the drain conflict is the expected path).
+- The ledger dir `org/critical_paths/change_management/` is shared with rk-116/117/118, but each writes its own
+  distinct entry file, and rk-122's is written by the ROUTED seat, not by its worker.
+- **rk-122 has no dependency on the wave-2 cells and they have none on it**, so it runs concurrently with all of
+  them. It does NOT gate the trial: the trial's stages are measured through direct invokes, not through the edge.
+  What it gates is Andrew SEEING any of it.
+
+#### FAN-OUT NOTE
+
+`rk-122` adds one order to round 30's issuance. Its worker spawns at once with the others; its ACCEPTANCE completes
+only after the routed AE seat applies, so the cell is expected to sit at AC3(a) with a row until that routing lands.
+That is the honest shape of a cell whose act this seat may not perform.
