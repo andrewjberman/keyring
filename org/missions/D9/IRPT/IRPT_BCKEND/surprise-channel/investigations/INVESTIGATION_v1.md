@@ -8188,3 +8188,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The publish arm's subprocess launch could not start the aws shim on this Windows box; the arm's gate and byte-derivation logic ran but the upload never did. The worker fixed only the launch path (aws.cmd) in the battery, a file in its own deliverables folder; no source or published byte logic changed."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W13-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~13",
+  "surfaced_at": "2026-09-22T03:19:58Z",
+  "one_line": "TO-IB-rtk-1 arm (e)'s prose names three causes ('a timeout, a 5xx response, a missing readiness marker') as what survives retry; read literally as an exhaustive allow-list this would also exclude 'password field present' / 'sign-in path' from ever retrying, breaking the ordinary human-interactive login flow and changing R8/R9's byte-identical regression shape -- read instead as identifying the one behavior that must change (a foreign hop must never be retryable), which is what was implemented; both readings satisfy the order's own bound ('a foreign hop is NEVER retryable, under any framing') but only the second preserves 'do not weaken or remove any existing check.'",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/investor-reporting-export/capture-session.cjs:341-351 (this worker's HEAD-pending commit) -- refuseIfLatched() is checked before the existing readinessRefusal-driven retry `continue`, and no other retry-eligibility logic was added or removed; a foreign hop throws unconditionally, every other reason (password present, sign-in path, HTTP 5xx, marker absent) still `continue`s exactly as before.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IB-rtk-1_repaired_r8_diagnostic.json vs IB-rtk-1_baseline_r8_diagnostic.json -- results arrays are BYTE-IDENTICAL; R8 case 'negative: sign-in page' (password-present, retryable) shows unchanged writes/errors, which a literal three-cause allow-list narrowing would have changed.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtk-1.the-capture-tool-complete-lifecycle-observer-and-sticky-refusal.md arm (e): 'Do not weaken or remove any existing check ... this arm only closes the two holes the lifecycle diagnostic found.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-rtk-1 arm (e): 'Retry survives ONLY for same-origin TRANSIENT failures explicitly enumerated: a timeout, a 5xx response, a missing readiness marker.'",
+  "world_is": "The implemented repair keeps every pre-existing retryable reason (including password-present and sign-in-path, neither of which is one of the three named causes) retryable, and narrows retry eligibility ONLY by making a foreign-origin hop non-retryable (via the observer's latch, checked before the retry continue). This is the minimal change closing C-S158/C-S159 without altering unrelated behavior or the R8/R9 regression shape; R107-AC3's grader (3.0.0_SA_CVO~B) can confirm or correct this reading against the design intent."
+}
+```
