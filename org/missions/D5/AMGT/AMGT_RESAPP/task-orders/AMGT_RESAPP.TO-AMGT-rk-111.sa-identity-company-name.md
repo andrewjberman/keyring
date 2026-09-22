@@ -126,7 +126,7 @@ criterion passes, commit with `--only`, and report once.
    for the entity rule, which is a separate cell.
 3. No new security_key dependency.
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~111</slot>
 <fabric>site-z</fabric>
