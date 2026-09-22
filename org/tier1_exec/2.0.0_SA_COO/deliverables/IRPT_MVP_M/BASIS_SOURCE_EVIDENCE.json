@@ -1,0 +1,596 @@
+{
+  "basis_controls": {
+    "helper_sha256": "723c10de2e306f6b101f31d4c2880e3d1bdb72b79b28cde5159cf7c51e766a9d",
+    "receipt_file_sha256": "8314df8f0aedcc5e8cc9ceb8ea9be78e0398ddac93a3c98cb8fca014812433b1",
+    "valuation_rows": 10061,
+    "position_rows": 120639,
+    "counts": {
+      "reconciled_allocations": 10061
+    },
+    "reconciled_allocation_facts": {
+      "SMARTX_GROSS_AUM": 1494048625.227404,
+      "SMARTX_NET_EQUITY": 1444544908.6874025,
+      "SMARTX_LONG_EQUITY": 1479507971.53,
+      "SMARTX_SHORT_EQUITY": -49503716.540000014,
+      "SMARTX_CASH": 14540653.697399994,
+      "SMARTX_SIGNED_POSITIONS": 1430004254.9899988
+    },
+    "acceptance": "DIAGNOSTIC_ONLY; no independent custody tie; source_scope placeholder not served"
+  },
+  "custody_overlay_gap": {
+    "custody_date": "2026-09-21",
+    "overlay_valuation_key": "smartx/platform/silver/fact_allocation_valuation/date=2026-09-22/data.parquet",
+    "custody_accounts": 7522,
+    "overlay_accounts": 5917,
+    "custody_without_overlay": 1622,
+    "overlay_absent_custody": 17,
+    "historical_directory_accounts": 8799,
+    "directory_absent_current_custody": 1277,
+    "open_directory_absent_current_custody": 1176,
+    "valuation_allocations": 10061,
+    "conflicting_duplicate_valuation_ids": 0,
+    "net_negative": 529,
+    "net_zero": 2045,
+    "cash_missing": 0,
+    "positions_missing_value": 0,
+    "valuation_equity_vs_long_short_cash_mismatches_cent": 0,
+    "positions_plus_cash_vs_equity_mismatches_cent": 0,
+    "allocations_without_position_rows": 2070,
+    "gross_total": 1494048625.2273998,
+    "net_total": 1444544908.6873999,
+    "distinct_position_fields": [
+      "allocation_id",
+      "owner_id",
+      "as_of",
+      "run_date",
+      "ticker",
+      "symbol_id",
+      "symbol_alias_id",
+      "company",
+      "asset_type",
+      "industry",
+      "quantity",
+      "price",
+      "multiplier",
+      "market_value",
+      "value",
+      "last_seen_date",
+      "_ingested_at"
+    ]
+  },
+  "source_clocks": {
+    "fact_allocation_account_map": {
+      "rows": 7509,
+      "columns": [
+        "model_id",
+        "rmid",
+        "allocation_id",
+        "account_id",
+        "account_number",
+        "account_name",
+        "aum_value",
+        "run_date",
+        "_ingested_at"
+      ],
+      "clock_counts": {
+        "run_date": {
+          "2026-09-22": 7509
+        },
+        "_ingested_at": {
+          "2026-09-22": 7509
+        }
+      }
+    },
+    "fact_allocation_valuation": {
+      "rows": 10061,
+      "columns": [
+        "allocation_id",
+        "owner_id",
+        "as_of",
+        "run_date",
+        "equity",
+        "long_equity",
+        "short_equity",
+        "cash",
+        "accrued_dividends",
+        "accrued_fees",
+        "accrued_interest",
+        "long_position_count",
+        "short_position_count",
+        "total_count",
+        "_ingested_at"
+      ],
+      "clock_counts": {
+        "as_of": {
+          "2026-09-22": 10061
+        },
+        "run_date": {
+          "2026-09-22": 10061
+        },
+        "_ingested_at": {
+          "2026-09-22": 10061
+        }
+      },
+      "long_position_count": {
+        "missing": 0,
+        "zero": 2573
+      },
+      "short_position_count": {
+        "missing": 0,
+        "zero": 9555
+      },
+      "total_count": {
+        "missing": 0,
+        "zero": 2070
+      }
+    },
+    "fact_allocation_positions": {
+      "rows": 120639,
+      "columns": [
+        "allocation_id",
+        "owner_id",
+        "as_of",
+        "run_date",
+        "ticker",
+        "symbol_id",
+        "symbol_alias_id",
+        "company",
+        "asset_type",
+        "industry",
+        "quantity",
+        "price",
+        "multiplier",
+        "market_value",
+        "value",
+        "last_seen_date",
+        "_ingested_at"
+      ],
+      "clock_counts": {
+        "as_of": {
+          "2026-09-22": 120639
+        },
+        "run_date": {
+          "2026-09-22": 120639
+        },
+        "_ingested_at": {
+          "2026-09-22": 120639
+        }
+      }
+    }
+  },
+  "custody_census": {
+    "sources": [
+      {
+        "bucket": "opal-data-49financial",
+        "prefix": "gold/advi/canonical/canonical_valuation/",
+        "partitions": 555,
+        "latest": "2026-09-21",
+        "rows": 7522,
+        "columns": [
+          "account_id",
+          "business_date",
+          "net_mv_plus_cash",
+          "mkt_value_long",
+          "mkt_value_short",
+          "net_mv_positions",
+          "cash_balance_settled_only",
+          "cash_margin_bal_settled",
+          "money_mkt_funds",
+          "bank_sweep_ibf",
+          "bank_cash",
+          "margin_balance",
+          "net_credit_debit",
+          "accrued_income",
+          "accrual_status",
+          "fair_value",
+          "boundary_version",
+          "schema_version",
+          "source_pipeline",
+          "_ingested_at"
+        ],
+        "accounts": 7522,
+        "dates": {
+          "business_date": {
+            "2026-09-21": 7522
+          }
+        },
+        "quality": {
+          "net_mv_plus_cash": {
+            "missing": 0,
+            "negative": 5,
+            "zero": 884
+          },
+          "fair_value": {
+            "missing": 0,
+            "negative": 5,
+            "zero": 884
+          }
+        }
+      },
+      {
+        "bucket": "opal-data-49financial",
+        "prefix": "gold/advi/canonical/canonical_positions/",
+        "partitions": 555,
+        "latest": "2026-09-21",
+        "rows": 106370,
+        "columns": [
+          "account_id",
+          "business_date",
+          "cusip",
+          "position_side",
+          "quantity_settled_unsettled",
+          "quantity_settled",
+          "closing_price",
+          "closing_price_unfactored",
+          "factor",
+          "asset_backed_factor",
+          "market_value_settled_unsettled",
+          "price_stale_days",
+          "zero_price_flag",
+          "zero_qty_nonzero_mv_flag",
+          "security_key",
+          "rate_bearing",
+          "boundary_version",
+          "schema_version",
+          "source_pipeline",
+          "_ingested_at"
+        ],
+        "accounts": 6315,
+        "dates": {
+          "business_date": {
+            "2026-09-21": 106370
+          },
+          "position_side": {
+            "L": 105069,
+            "S": 1300,
+            "": 1
+          }
+        },
+        "quality": {
+          "market_value_settled_unsettled": {
+            "missing": 0,
+            "negative": 1300,
+            "zero": 160
+          },
+          "quantity_settled_unsettled": {
+            "missing": 0,
+            "negative": 1300,
+            "zero": 111
+          }
+        }
+      },
+      {
+        "bucket": "opal-data-49financial",
+        "prefix": "gold/advi/dimensions/dim_account/",
+        "partitions": 555,
+        "latest": "2026-09-21",
+        "rows": 8799,
+        "columns": [
+          "account_id",
+          "account_name",
+          "account_title_line_2",
+          "account_title_line_3",
+          "tax_status",
+          "account_is_open",
+          "account_status_raw",
+          "start_date",
+          "acct_regis",
+          "acct_type",
+          "account_owner_type",
+          "account_owner",
+          "mailing_address_line_1",
+          "mailing_address_line_2",
+          "mailing_address_line_3",
+          "account_mailing_city",
+          "ac_st",
+          "acct_mail_zip",
+          "acct_mailing_ctry_code",
+          "money_manager",
+          "investment_strategy_name",
+          "architect",
+          "implementor",
+          "local_ops",
+          "manager",
+          "consultant",
+          "additional_advisor",
+          "first_seen_date",
+          "closed_date",
+          "absent_from_feed_since",
+          "acc_as_of",
+          "joindim1_as_of",
+          "joindim2_as_of",
+          "fam_slm_as_of",
+          "schema_version",
+          "attestation_basis",
+          "source_pipeline",
+          "_ingested_at"
+        ],
+        "accounts": 8799,
+        "dates": {},
+        "quality": {}
+      },
+      {
+        "bucket": "opal-data-49financial",
+        "prefix": "gold/advi/dimensions/dim_boundary/",
+        "partitions": 555,
+        "latest": "2026-09-21",
+        "rows": 7523,
+        "columns": [
+          "account_id",
+          "effective_from",
+          "effective_to",
+          "boundary_class",
+          "exclusion_reason",
+          "boundary_version",
+          "schema_version",
+          "source_pipeline",
+          "_ingested_at"
+        ],
+        "accounts": 7523,
+        "dates": {
+          "boundary_class": {
+            "IN_CLIENT_BOOK": 7522,
+            "COLLECTION_ACCOUNT": 1
+          }
+        },
+        "quality": {}
+      },
+      {
+        "bucket": "opal-data-assets",
+        "prefix": "schwab/08335338/silver/dim_balance/",
+        "partitions": 555,
+        "latest": "2026-09-21",
+        "rows": 7523,
+        "columns": [
+          "custdian_id",
+          "mstracct_number",
+          "master_account_name",
+          "business_date",
+          "account_id",
+          "account_title_line_1",
+          "account_title_line_2",
+          "account_title_line_3",
+          "acct_regis",
+          "acct_type",
+          "net_credit_debit",
+          "margin_balance",
+          "available_to_pay",
+          "mrgn_buying_pwr",
+          "money_mkt_funds",
+          "mtd_margin_int",
+          "daily_margin_int",
+          "eqty_excl_option",
+          "eqty_percentage",
+          "mkt_value_long",
+          "mkt_value_short",
+          "eqty_incl_option",
+          "option_rqrmnts",
+          "mnth_end_div_pay",
+          "maintenance_call",
+          "mvl_cash_ex_optn",
+          "net_mv_positions",
+          "net_mv_plus_cash",
+          "cash_balance_settled_only",
+          "cash_margin_bal_settled",
+          "versmrkr_3",
+          "bank_sweep_ibf",
+          "versmrkr_6",
+          "bank_cash",
+          "_source_file",
+          "_source_as_of",
+          "_master_observed",
+          "_section",
+          "_schema_version"
+        ],
+        "accounts": 7523,
+        "dates": {
+          "business_date": {
+            "2026-09-21": 7523
+          }
+        },
+        "quality": {
+          "net_mv_plus_cash": {
+            "missing": 0,
+            "negative": 6,
+            "zero": 884
+          }
+        }
+      },
+      {
+        "bucket": "opal-data-assets",
+        "prefix": "schwab/08335338/silver/dim_position/",
+        "partitions": 555,
+        "latest": "2026-09-21",
+        "rows": 106370,
+        "columns": [
+          "account_id",
+          "business_date",
+          "cusip",
+          "l_s",
+          "accounting_rule_code",
+          "ticker_symbol",
+          "industry_ticker_symbol",
+          "isin",
+          "sedol",
+          "tax_code",
+          "quantity_settled_unsettled",
+          "quantity_settled",
+          "quantity_unsettled_long",
+          "quantity_unsettled_short",
+          "quantity_cash_settled",
+          "quantity_margin_settled",
+          "quantity_short_settled",
+          "quantity_wheniss_settled",
+          "non_tradable_quantity",
+          "market_value_settled_unsettled",
+          "closing_price",
+          "closing_price_unfactored",
+          "factor",
+          "asset_backed_factor",
+          "secprice_lstupdte",
+          "_source_file",
+          "_source_as_of",
+          "_master_observed",
+          "_section",
+          "_schema_version"
+        ],
+        "accounts": 6315,
+        "dates": {
+          "business_date": {
+            "2026-09-21": 106370
+          },
+          "l_s": {
+            "L": 105069,
+            "S": 1300,
+            "": 1
+          }
+        },
+        "quality": {
+          "market_value_settled_unsettled": {
+            "missing": 0,
+            "negative": 1300,
+            "zero": 160
+          },
+          "quantity_settled_unsettled": {
+            "missing": 0,
+            "negative": 1300,
+            "zero": 111
+          }
+        }
+      }
+    ],
+    "receipts": [
+      {
+        "bucket": "opal-data-49financial",
+        "key": "gold/advi/canonical/canonical_positions/date=2026-09-21/data.parquet",
+        "version_id": "XG4I5ThfTqVsGBWKkfsk5HsK0hnANvla",
+        "byte_length": 1778563,
+        "sha256": "530f3ca5fa85efc2596d43c55bfaefaee713eea278823a166dd3e542a077d067"
+      },
+      {
+        "bucket": "opal-data-49financial",
+        "key": "gold/advi/canonical/canonical_valuation/date=2026-09-21/data.parquet",
+        "version_id": "tN3DKXfpXtXQWUGVwt64yMWDECNTjtqL",
+        "byte_length": 395182,
+        "sha256": "832ee3b0d6fee23561af76415b0add774c374b7249c7e2faf121bf78ad4e4eb6"
+      },
+      {
+        "bucket": "opal-data-49financial",
+        "key": "gold/advi/dimensions/dim_account/date=2026-09-21/data.parquet",
+        "version_id": "7IBnTQZ7dIj2rNbHxdqBxv5IXqCe9umo",
+        "byte_length": 541186,
+        "sha256": "a489d1645b941c5291e4ee6507e47b687228ff58cc7f2c9bb0fce9c5e03e235f"
+      },
+      {
+        "bucket": "opal-data-49financial",
+        "key": "gold/advi/dimensions/dim_boundary/date=2026-09-21/data.parquet",
+        "version_id": "chkDnL5BWGYWx85A.nM_i5wpELoUVAxS",
+        "byte_length": 88324,
+        "sha256": "49b0cfc465a0012a0f255024f91449abd49bb45a29f2ffca9b549379541e2da3"
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "schwab/08335338/silver/dim_balance/date=2026-09-21/data.parquet",
+        "version_id": "wpNlXLhl1sNPQRqe2cANuJ2GR_DvgZkv",
+        "byte_length": 573821,
+        "sha256": "460f1693afdb23530f3598bd95b399c1482837e635e017bf73609d5bf47fbeb1"
+      },
+      {
+        "bucket": "opal-data-assets",
+        "key": "schwab/08335338/silver/dim_position/date=2026-09-21/data.parquet",
+        "version_id": "q58uyT2oknVa84qr1zKZ2A3p6O2ZlOaa",
+        "byte_length": 2617904,
+        "sha256": "6148fd61edb8d9a20cc6bcec04a56e96fc860ebbccb89468b61dca315de58b37"
+      }
+    ]
+  },
+  "original_replay": {
+    "baseline": "554fc37e998554736ad98ccbfd872d400a9153ff",
+    "files": [
+      {
+        "original_path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+        "frozen_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\basis-original-20260922\\holdings_snapshot.py",
+        "sha256": "5f310f5c26f66fbe66d62598253afbe8b8781fd4d4f86441086863147478190f",
+        "byte_length": 82787
+      },
+      {
+        "original_path": "data/assets/scripts/gold/investor_reporting/source_inputs.py",
+        "frozen_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\basis-original-20260922\\source_inputs.py",
+        "sha256": "267228c6bb36cac17a37d73ca654ce5489e8779bcf2200f0da4ad2ac1f1530ee",
+        "byte_length": 2545
+      },
+      {
+        "original_path": ".runtime/m-49f-diagnostic.py",
+        "frozen_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\basis-original-20260922\\m-49f-diagnostic.py",
+        "sha256": "0c95b12c74862c6e4d8fa706231f51d9515d474a44eb0b220bcd64bf806b0e53",
+        "byte_length": 1737
+      },
+      {
+        "original_path": ".runtime/m-49f-cash-probe.py",
+        "frozen_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\basis-original-20260922\\m-49f-cash-probe.py",
+        "sha256": "96a6f1cdd295e685ccc739024311a194b05db265bdc46560cfaece566030730a",
+        "byte_length": 1875
+      },
+      {
+        "original_path": ".runtime/m-49f-reconcile.json",
+        "frozen_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\basis-original-20260922\\m-49f-reconcile.json",
+        "sha256": "9df2307a1239c64c9e37f847c998725133e7926dfceecb96f129bce5aa51afe4",
+        "byte_length": 3550
+      },
+      {
+        "original_path": ".runtime/m-49f-cash-probe.json",
+        "frozen_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\basis-original-20260922\\m-49f-cash-probe.json",
+        "sha256": "39c23a4b9b12437c66b499e0e94e992ad2d3096ded53743bd8ec265e349f6537",
+        "byte_length": 1391
+      }
+    ],
+    "blocked_diff_sha256": "00805e11892da975f1953ad6854016ad9ad4fd3806f9dfafb63e699f78c9dcc6",
+    "snapshot_path": "C:\\Users\\AndrewBerman\\Desktop\\ajb_irpt_m\\.runtime\\m-49f-built.json",
+    "snapshot_sha256": "5dea1983f621a5be4c043c5d5913f7a6f445ab3947a86691fc888bab1cbbd603",
+    "input_receipts_sha256": "8314df8f0aedcc5e8cc9ceb8ea9be78e0398ddac93a3c98cb8fca014812433b1"
+  },
+  "original_source_receipts": [
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_allocation_account_map/date=2026-09-22/data.parquet",
+      "version_id": "tYBnBzj4ke4E2vhy1x6uUiBNMMVKDCcn",
+      "byte_length": 794519,
+      "sha256": "02f9e549116b37c61edd330073f8eab61d257946f3746837b71068cd2919a749"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_allocation_positions/date=2026-09-22/data.parquet",
+      "version_id": ".TVlGn0dxF9gAxvsuT65fiT78IjK4wcl",
+      "byte_length": 3333609,
+      "sha256": "d8afe5b33f75d6f16bbd36d94ea58f47025a6129ff18159ae489b59807a0f190"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_allocation_valuation/date=2026-09-22/data.parquet",
+      "version_id": "6.ItpBcEq6NkncUBGikyQMob6OyTn_Uz",
+      "byte_length": 1228015,
+      "sha256": "5822aec164702370e477055775ce21be3df2b76eb50891518ef4137d9fcca6a6"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "key": "smartx/platform/silver/fact_model_allocation_roster/date=2026-09-22/data.parquet",
+      "version_id": ".2fx9W3YfZx_n5WThhPTtu5i87Is13Qj",
+      "byte_length": 587215,
+      "sha256": "165f66d2168be563e721f917875af5ef435195b9ffcdbb6382e87035aebee850"
+    },
+    {
+      "bucket": "opal-data-bd",
+      "key": "investor-reporting/directory/2026-09-17/directory.json",
+      "version_id": "KM0ObKDodUCHU2khf0j2VFuDCNMS1_V6",
+      "byte_length": 6464753,
+      "sha256": "aa002cb917b1689656a8c758413cc2d43f5d719467759ffade816cb955fac742"
+    },
+    {
+      "bucket": "opal-data-bd",
+      "key": "investor-reporting/directory/latest.json",
+      "version_id": "zS462b.owAFAH14qMgc997hcyTONESWC",
+      "byte_length": 272,
+      "sha256": "7e850bd3c02933ddd5f3b3f765a1cc97fe72f3464e03f887dc9d221742492e19"
+    }
+  ]
+}
