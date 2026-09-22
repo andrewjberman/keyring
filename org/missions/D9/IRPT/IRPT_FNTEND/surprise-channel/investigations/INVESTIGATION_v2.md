@@ -5377,6 +5377,31 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W22-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~22",
+    "surfaced_at": "2026-09-21T23:30:00Z",
+    "one_line": "FE-s-72's own BOUNDS flagged this: multiple Analysis/Holdings text slots resolve their computed text colour to an oklch(...) value (Tailwind's default slate-500/600/700/800 palette) and DESIGN.md names no clause covering it -- the same class of gap as row IRPT_FNTEND-W13-S2 (an instrument/contract mismatch, not a rendering defect).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This TO's own BOUNDS clause: \"If you find a state's text colour resolves to an oklch(...) value with no DESIGN.md clause naming it ... file it as ONE row citing the computed value and the absence of a clause -- the same class of gap as row W13-S2.\" DESIGN.md (portal/DESIGN.md, this worktree HEAD) is described as \"the one visual authority for portal/\" whose C9 sets minimum-contrast bars for text \"against its actual backdrop\", measured against a closed list of named tokens (colors: block, all hex).",
+    "world_is": "Measured this worker's own run (ui-smoke.mjs --expect-style, dev server this worktree, port 5970): EXPECT-STYLE[[data-slot=\"requests-unavailable\"]::color]: FAIL oklch(0.446 0.043 257.281) (Analysis tab, fixtures/smoke/fe-s-18-frozen.json, --click Analysis); EXPECT-STYLE[[data-slot=\"holdings-classification-gap\"]::color]: FAIL oklch(0.279 0.041 260.031) and EXPECT-STYLE[[data-slot=\"slice-row\"]:nth-of-type(2) [data-slot=\"slice-supervision\"]::color]: FAIL oklch(0.372 0.044 257.287) (Holdings tab, this cell's own fixtures/withheld.json, --click Holdings). All three source elements carry Tailwind utility classes (RequestList.tsx:38 `text-slate-600`; HoldingsTab.tsx:99 `text-slate-800`; SliceTable.tsx:143 `text-slate-700`), never a DESIGN.md token class (`text-[hsl(var(--primary))]` etc). portal/DESIGN.md's `colors:` frontmatter block (read in full, lines 11-88) names 43 hex tokens across palette/roles/status/data/dark-mode and zero oklch values; its clause C9 states contrast bars are measured against these named tokens and states no exemption for a Tailwind default utility colour. No DESIGN.md clause names slate-500/600/700/800 or gives a hex/oklch equivalence for them, so a reviewer citing a clause number per the file's own review contract (\"a reviewer rejects a page by citing a clause number\") has no clause to cite for these three (and, by the same mechanism, every other `text-slate-*` utility class this round's cells use).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/DESIGN.md:11-88 (colors: frontmatter block) @ this worktree HEAD -- 43 named hex tokens, 0 oklch values, read in full",
+        "portal/src/pages/InvestorReporting/tabs/analysis/RequestList.tsx:38 `data-slot=\"requests-unavailable\" ... className=\"text-sm text-slate-600\"` @ this worktree HEAD",
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTab.tsx:99 `data-slot=\"holdings-qualification\" className=\"... text-slate-800\"` @ this worktree HEAD",
+        "portal/src/pages/InvestorReporting/tabs/holdings/SliceTable.tsx:143 `data-slot=\"slice-supervision\" className=\"py-1 pr-3 text-slate-700\"` @ this worktree HEAD",
+        "measured run (this worker, 2026-09-21): node scripts/ui-smoke.mjs investor-reporting <tmp> --port 5970 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --click Analysis --expect-style '[data-slot=\"requests-unavailable\"]::color' -> EXPECT-STYLE[...]: FAIL oklch(0.446 0.043 257.281)",
+        "measured run (this worker, 2026-09-21): node scripts/ui-smoke.mjs investor-reporting <tmp> --port 5970 --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-72/fixtures/withheld.json --click Holdings --expect-style '[data-slot=\"holdings-classification-gap\"]::color' --expect-style '[data-slot=\"slice-row\"]:nth-of-type(2) [data-slot=\"slice-supervision\"]::color' -> FAIL oklch(0.279 0.041 260.031); FAIL oklch(0.372 0.044 257.287)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
