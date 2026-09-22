@@ -11683,6 +11683,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC7's <expect> (amended): all 3 controls print, all 4 arms read OK, RESULT ... import_fail 0, exit 0, then the deploy proceeds via AC5/AC6, whose own <expect> claims parity with 'AC3's pre-act census' for the 13 GET routes.",
     "world_is": "AC7 passes clean this round after one fixture-only correction unrelated to W92-S1's own defect class. AC5/AC6 both ran and matched their <expect> for every value AC3's given script actually captured; the 13-route parity claim rests on inference (no code touched, no 5xx) for 2 of 13 routes because AC3's own script never captured their pre-act status codes and no retroactive reconstruction is possible.",
     "notes": "Filed by the worker per the REFUSAL CLAUSE's discipline: fix what the order explicitly authorizes fixing (the fixture), record what it does not (the AC3 baseline gap), and let the disarm owner rule on anything further."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S215",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T05:55:00Z",
+    "one_line": "The PRINT route (/api/scoped/amgt/security/{key}/print) serves a 500 for ALL THREE VALIDATION NAMES -- CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity -- while BA and COST return 200. Cause, reproduced box-side on SITEZ code WITHOUT M3 (@a74268ba4d): lib/research/print/render_pack.py:264 `for fy in sorted(by_fy.keys())` raises TypeError ('<' not supported between int and str) because those names' model-block figures carry MIXED fiscal-year types -- historical years as str ('2016'..'2025') and forecast years as int (2026, 2027). NOT caused by M3 (rk-92): it reproduces on pre-M3 code; found by this seat's own 13-route census at M3's drain.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live direct invokes after M3 (~05:45Z, adapter cRT7dOyf...): print route BA_US_Equity 200, COST_US_Equity 200, CAT_US_Equity 500, CSL_AU_Equity 500, 6861_JP_Equity 500; the other 12 GET routes 200 for CAT with real params.",
+        "CloudWatch /aws/lambda/opal-amgt-scoped-api, 4 events: 'ERROR: unhandled exception ... type=TypeError detail='<' not supported between instances of 'int' and 'str''.",
+        "Box-side reproduction at SITEZ a74268ba4d (pre-M3): scoped_amgt._print_pack('CAT_US_Equity') -> render_pack.py:264 TypeError; a spy on sorted() captured by_fy keys {'str': 10, 'int': 3}: ['2016', ... '2025', 2026, 2027, ...]."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The print pack renders for every served name, fiscal years in order.",
+    "world_is": "The print pack 500s for exactly the three names the managers review; the forecast-year keys are ints where the historical keys are strings.",
+    "notes": "ARMED: live on the manager-review path (the print pack is the managers' deliverable for a name). Two remedies, both small: (1) render_pack sorts by a normalised key (e.g. key=lambda y: int(y)) -- an adapter change + redeploy under a pair, with the new pre-deploy closure check; (2) the producer that writes int forecast years (the forecast fallback / bestdata path) writes them as str like the historical years, plus a re-derivation of the three model blocks. REC: (1) now as it unblocks the page without touching data, and (2) in chain G where model_block is re-homed. Routed to 1.0.0_SA_CTO~Z for the round-23 cut."
   }
 ]
 ```
