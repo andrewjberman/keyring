@@ -8237,3 +8237,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The mechanical grant for that path is gated on the order being NON-TERMINAL at HEAD (ADHC_OWNPTH.005), and this order was already TERMINAL (status complete, from the (a)-(f) pass) before arm (g)'s never-widen halves ever landed -- a structural gap for any multi-pass order whose <paths>-scoped work spans a status flip. This worker used the documented audited-override escape (GIT_COMMIT_AUTHOR_OVERRIDE=CLOUD_OPS_OR_ETL) for the one commit touching README.md, rather than treating the order's own explicit <paths> grant as void."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W13-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~13",
+  "surfaced_at": "2026-09-22T04:32:17Z",
+  "one_line": "The sha256 the issuer flagged and corrected in the never-widen packet (fffef738... -> f03666ef...) is not an arbitrary typo: fffef738... is the EXACT sha256 of capture-session.cjs's CRLF-checked-out WORKING-TREE bytes (21466 bytes, 379 CRLF sequences), while f03666ef... is the sha256 of the git BLOB's own LF bytes (21087 bytes) -- a 379-byte difference exactly accounted for by CRLF conversion on checkout. R107-AC1's own committed evidence (IB-rtk-1_repaired_r10_lifecycle_diagnostic.json and this worker's earlier baseline/repaired diagnostic runs) recorded sourceSha256=fffef738... because the diagnostic tool reads the WORKING-TREE path, not the git blob -- so the PERMANENT evidence trail cites a different sha256 than the PUBLISHED S3 bytes (f03666ef..., extracted via git cat-file -p and independently verified by both never-widen halves) and the corrected packet's own table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wc -c infra/aws/ec2/investor-reporting-export/capture-session.cjs = 21466 bytes (this worker's own HEAD, checked out); `git cat-file -p ded605028b2210b589735927868aacf92ceb852d | wc -c` = 21087 bytes; a direct byte read of the working-tree file counted 379 CRLF sequences and 0 lone-LF sequences -- 21466 - 21087 = 379, exactly the CRLF count.",
+      "Re-ran org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R10_CAPTURE_LIFECYCLE_DIAGNOSTIC.cjs twice at this worker's HEAD: default (worktree path) reports sourceSha256=fffef738e90cf03bfb20cdfbeb8cbb310e3a44c6eee657974f8a3eeb92e8e35b; with the blob id as argv[2] (its own documented negative-control mode) reports sourceSha256=f03666ef827e7c6a169214c83b2a4fe593d7f1cbf181f728f1febb0235eacd0d -- the SAME two values the packet's correction note names as 'wrong' and 'corrected'.",
+      "Diffed both runs' full JSON output (excluding the source/sourceSha256 metadata fields): byte-identical -- every case's writes/success/reproduced value is the same regardless of which bytes (CRLF worktree vs LF blob) the diagnostic reads, so the CRLF/LF difference has NO behavioral effect on the tested logic.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IB-rtk-1_repaired_r10_lifecycle_diagnostic.json:3 (committed at 0d0c8cdc4d, this worker's own third-pass artifact) -- sourceSha256 fffef738..., i.e. the CRLF working-tree value, permanently recorded as R107-AC1's evidence, while the packet/sign-offs/S3-published bytes are all the LF blob value f03666ef..."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The never-widen packet (and both signed halves) state a single sha256 table row for capture-session.cjs and treat the ORIGINAL fffef738... value as simply WRONG, corrected to f03666ef...; R107-AC1's citations (via battery_ib_rtk_1.py and the committed diagnostic JSON artifacts) imply the diagnostic tested 'the repaired source' as a single, unambiguous set of bytes matching that same table.",
+  "world_is": "Two DIFFERENT, byte-distinguishable copies of the same logical file exist and were each hashed correctly by their own instrument: the git blob (LF, f03666ef...) is what git stores, what this worker published to S3, and what both never-widen halves independently re-derived; the CRLF-converted working-tree checkout (fffef738...) is what the diagnostic tool actually read and hashed every time it was run (including this worker's original third-pass evidence files and a fresh re-run just now). The two are behaviorally identical (verified: diffing the diagnostics' full output excluding the source-identifying fields shows zero difference), so R107-AC1's PASS verdict is not put in doubt -- but a reader comparing the packet's corrected hash against the committed diagnostic evidence's sourceSha256 field would see a mismatch that looks like an unresolved discrepancy rather than a checkout-time line-ending artifact with no behavioral consequence."
+}
+```
