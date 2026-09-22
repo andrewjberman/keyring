@@ -179,6 +179,24 @@ See `FOUNDATION_REVIEW_6dc4e888e2.md` and source-hashed evidence JSONs.
 All fourteen integrated criteria remain NOT_EVALUATED; primitive results do not
 prove persistent recovery, released AnalysisReport lineage or E2E acceptance.
 
+## Y-F01 repair and S7-03 update, 5:49 PM Eastern
+
+Y repair `08b1fd5c99dbd96d058bd67f7734abe9cece3261` independently passes the
+original failed-claim control: pending=true, dispatch-recovery action, same
+accepted ID and 0 sends/rewrites. Y-F01 CLOSED for this offline boundary.
+Supplied intake9/9 and submission17/17 PASS, 0 skipped. Only the probe's static
+observed-description reporter needed correction; scenario and controls unchanged.
+See `FOUNDATION_RETEST_08b1fd5c99.md` and `Y_FOUNDATION_08b1fd5c99.json`.
+
+IRPT-S7-03 `3c55f37800` read: twelve families now allowed in the conditional
+policy, adding only PERFORMANCE_SOURCE_EVIDENCE (ten state/two platinum).
+Amended canonical carrier and coherent registered enforcement still required;
+original eleven-family X10 does not register the addition. Candidate30d/7d/2555d
+retention ceilings, earliest dependency, no retry/read/copy renewal and expired
+promotion/race refusal require actual controlled-clock reader/writer evidence.
+Physical disposal OPEN; no provisioning/live/deletion or product PASS granted.
+All fourteen integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

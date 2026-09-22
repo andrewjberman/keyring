@@ -90,7 +90,8 @@ def main():
                 "sender_calls": sender.call_count, "resolve_inputs_calls": resolve_inputs.call_count,
                 "artifact_put_calls": artifacts.put.call_count,
                 "expected": "Do not assert dispatched without distinguishing SENT from another active claim",
-                "observed": "dispatch_pending false and queued description despite no successful claim/send"}
+                "observed": {"dispatch_pending": outcome["dispatch_pending"],
+                             "description": response["_status"]["actions"][0]["description"]}}
     finally:
         wire.doCleanups()
     evidence = {"candidate_pin": pin, "snapshot_file_sha256": hashes,

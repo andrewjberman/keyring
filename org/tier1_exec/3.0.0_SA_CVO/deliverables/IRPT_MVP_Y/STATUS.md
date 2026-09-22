@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 5:38 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 5:49 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -22,9 +22,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   for this pinned offline boundary. Original failure evidence retained.
 - Y foundation `6dc4e888e23c9cf08f591c57456233d855cf5cc7`: intake9/9 and
   submission16/16 PASS. Seven browser fields preserved at actual compute boundary.
-  Independent Y-F01 P2 open: failed dispatch claim returns false, which service
+  Independent historical Y-F01 P2: failed dispatch claim returns false, which service
   ignores and reports not pending. Routed COO~Y. See
   `FOUNDATION_REVIEW_6dc4e888e2.md` and pinned probe/evidence.
+- Y repair `08b1fd5c99dbd96d058bd67f7734abe9cece3261`: original independent
+  failed-claim control now returns pending=true and recovery action, stable ID,
+  0 sends/rewrites. Intake9/9 and submission17/17 PASS. Y-F01 CLOSED for this
+  offline boundary. See `FOUNDATION_RETEST_08b1fd5c99.md` and evidence JSON.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -55,8 +59,14 @@ released. B/chain ancestry measured rc0. None establishes integrated acceptance.
 IRPT-S7-01 read at `bcd38bba00`: conditional placement still requires canonical
 registration and enforcement before writable destinations, and P retention/expiry
 and least-privilege IAM/IaC before live writes. Y consumes and verifies its writes.
+IRPT-S7-03 subsequently read at `3c55f37800`: twelve families after bounded
+PERFORMANCE_SOURCE_EVIDENCE addition, ten state/two platinum; amended canonical
+carrier and coherent enforcement required. Candidate retention30d/7d/2555d
+ceilings and earliest-dependency expiry require clock/race/negative evidence.
+Physical disposal remains OPEN; no live/provisioning/deletion authority.
 M amended inheritance pointer `e2f72a810a` and P separate alias finding R-P05
-`b333db1b48` received; neither changes an integrated criterion grade here.
+`b333db1b48` received, with P bounded closure `f915ff0445`; none changes an
+integrated criterion grade here.
 
 ## Next executable review and dependencies
 
