@@ -11279,6 +11279,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "A non-worker assignee on a tree order can file surprise rows under an order-minted id family (`-Z-DT89-S<k>`) that marks the seat and the slot.",
     "world_is": "Both gates that decide whether a row exists accept only `<CODE>-[Z-][W<n>-|C-]S<n>`. A row named as the order wrote it is refused at commit and unresolvable at the complete flip. The seat form `AMGT_RESAPP-Z-S<n>` is the only one open to a non-worker on site Z.",
     "notes": "No gate edited, no override used. Rows S208 and S209 were first spliced as DT89-S1/S2 in this seat's working tree and re-numbered BEFORE any commit, so no committed row was edited. If a seat-marked family is wanted, it is a grammar change to both gates, which the order's author or the tools' owner decides."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S211",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T00:25:00Z",
+    "one_line": "DISARMS AMGT_RESAPP-Z-S201 (owner this seat; the CTO's round-19 analysis: 'S201 disarms on rk-80's DEV render'): rk-80's text fixes are now served on PROD in portal v2.1.182 (AMGT-rk-89): the CEO line ends in one period and the subtitle reads 'Officers from the Bloomberg fallback list -- the filing roster did not resolve' on a fallback roster. ALSO records the issuer defect behind the DT seat's row Z-S210: this seat's rk-89 order told a Tier-2 addressee to name rows AMGT_RESAPP-Z-DT89-S<k>, a form both surprise-row-gate.py:104 and proof-of-spec-check.py:1127 refuse (they accept only <CODE>-[Z-][W<n>-|C-]S<n>); a seat addressee files in the seat form Z-S<n>, and this seat's orders to seats say so from now on.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's own reads (~00:2xZ): portal ls-remote refs/heads/PROD = 6dfc33909e and refs/tags/portal-v2.1.182^{} = 6dfc33909e (peeled match); origin/PROD contains f22e369c (rk-78 + rk-80); git diff 07d5af72..origin/PROD -- src/App.tsx is empty; https://opalinvest.dev/ answers 200.",
+        "The DT seat's AC6 (msg 24130): 53 served chunks; 'Officers from the Bloomberg fallback list' 1, 'This table is the Bloomberg fallback' 1, 'per Bloomberg, not the filing' 1; positive control 'Officers from the filing, with tenure against the pool' 1.",
+        "This seat's /frontend-dev screenshots of the same portal bytes (rk-80's branch f22e369c, which PROD now contains), round-20 drain: one period on the CEO line for CSL and CAT; CSL's fallback subtitle; CAT's unchanged."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "S201's two defects are fixed in code (rk-80) and served on PROD (rk-89, v2.1.182); the signed-in render is behind the Dev+admin gate, so the served-bytes count plus the branch screenshots are the acceptance, as the rk-89 record face states.",
+    "spec_asserts": "N/A -- a disarm row.",
+    "world_is": "The Exec Management tab on PROD prints one period on the CEO line and names a Bloomberg-fallback source in its subtitle.",
+    "notes": "Filed by the named owner at rk-89's drain. Rows Z-S208..S210 (the DT seat's, INERT, owner this seat) are for the CVO's L9: S208 a fetch+ff sync in place of a DEV pull (same end state), S209 GATE 5's space-in-path cut (a relative path admitted, no override), S210 the row-id defect named above."
   }
 ]
 ```
