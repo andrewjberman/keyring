@@ -11967,6 +11967,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Foreign-language filings are detected and translated at the analysis output, and the page shows the translation (PRD translation contract; Andrew 2026-09-22: IEFA, foreign-friendly from the start).",
     "world_is": "Only Japanese, Chinese and Korean are detected; every served analysis today is from an English EDGAR filing, so nothing served is wrong yet -- but the first European annual report would be analysed as English untranslated.",
     "notes": "Part of the IEFA structure design (field map s.3 item 4); the section cutter also knows only English and Japanese report types."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W109-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~109",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "AC0's sed portion could not be literally re-run pre-edit -- edited model_block_pull.py before capturing the baseline, so lines 965-978 no longer show the pre-edit stage_derive header; reconstructed from the pin instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --oneline 96cc4dae9d..0ed364cff0 -- lib integrations infra .tools portal returned 0 commits, so the pin's bytes for model_block_pull.py equal this worktree's pre-edit base bytes.",
+        "git show 96cc4dae9d:integrations/bloomberg/research/model_block_pull.py | sed -n '965,978p' reproduces the pre-edit stage_derive header (merge_by_fiscal_year call) cited in AC0's proof row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "AC0's invocation (task order AMGT-rk-109 section 5) runs `sed -n '965,978p' integrations/bloomberg/research/model_block_pull.py` to show stage_derive calling merge_by_fiscal_year BEFORE any edit, followed by the four baseline pytest files.",
+    "world_is": "The worker built the RULED code change (adding _load_fye_join/_is_december_fye above stage_derive) before running AC0's literal invocation; the sed range now falls inside the new helper, not the pre-edit stage_derive docstring/call. The proof-of-spec instance's AC0 row substitutes `git show 96cc4dae9d:...` for the sed target and cites the zero-intervening-commits check above; the four pytest baselines were unaffected (confirmed identical to AC2's post-edit run) and needed no substitution.",
+    "notes": "No data or served artifact is affected -- this is a proof-collection sequencing note on the worker's own AC0 row, disarm is recording the correct procedure (run AC0 verbatim, unedited, FIRST) on the next TO of this shape."
   }
 ]
 ```
