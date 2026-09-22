@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~20</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~20 built and committed the full deliverable (every resolve.py citation re-pinned, the durable 19-test baseline confirmed unmodified, a genuine new V1-actual-module harness) and honestly graded R118-AC4 FAIL against this order's own buggy invocation text (one `../` short of repo root, row IRPT_BCKEND-W20-S1). 2.0.0_SA_COO~B re-cut the invocation text (see the criterion's own inline note) and independently re-verified all three legs at the corrected path: 29+19+4 = 52 of 52 PASS. Flipped to complete on that verification, per the worker's own final report requesting exactly this re-cut.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 18 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.17 @`4f942b7657` | **Decomp cell:** `IB-rtr-4` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.22, s.R18.1) | **outcome_ref:** records integrity (no FWD directly) | **Rows:** `IRPT_BCKEND-W15-S1`, `IRPT_BCKEND-W15-S2`, `IRPT_BCKEND-W16-S1`, `IRPT_BCKEND-W16-S3` | **Ruling:** CTO's round-17 analysis, msg 99542, rulings 1 and R18-d | **Reference (READ-ONLY, never edited by this cell):** `infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts` (V1's real `verifyAccessToken`), `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R17_REVIEW_20260922.md` (the exact regression the CVO found)
 
@@ -36,7 +36,18 @@ Every `resolve.py` citation re-pinned and confirmed against the CURRENT merged t
 - **Surprises:** one row per failed premise / wrong path / absent capability at `../surprise-channel/investigations/INVESTIGATION_v1.md`, id `IRPT_BCKEND-W20-S<k>` continuing above the highest at your HEAD, appended as a NEW fenced JSON block (CRLF, UTF-8, `project`, `fabric`, `surfaced_at`, `one_line`, `grounding` AND `disposition` required, full ISO `surfaced_at`); validate every fence still parses; then keep working. Do NOT self-graduate your own filed row. Never edit this face, never widen the order.
 
 <expected_criteria>R118-AC4</expected_criteria>
-<criterion id="R118-AC4" cell_refs="IB-rtr-4"><invocation>cd deliverables/0.9.0_WK_IRPT_BCKEND~20 &amp;&amp; py -3.12 -m pytest ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v &amp;&amp; node --test ../0.9.0_WK_IRPT_BCKEND~16/test_edge_render_delegate.mjs &amp;&amp; node --test test_v1_actual_module_harness.mjs</invocation><expect>the real pre-existing _scope suite passes IN FULL (the citation-drift test included), the 19-test durable baseline passes unmodified, and the new V1 harness passes both its refusal and positive-control arms -- rc=0 on all three legs</expect></criterion>
+<criterion id="R118-AC4" cell_refs="IB-rtr-4"><invocation>cd deliverables/0.9.0_WK_IRPT_BCKEND~20 &amp;&amp; py -3.12 -m pytest ../../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v &amp;&amp; node --test ../0.9.0_WK_IRPT_BCKEND~16/test_edge_render_delegate.mjs &amp;&amp; node --test test_v1_actual_module_harness.mjs</invocation><expect>the real pre-existing _scope suite passes IN FULL (the citation-drift test included), the 19-test durable baseline passes unmodified, and the new V1 harness passes both its refusal and positive-control arms -- rc=0 on all three legs</expect></criterion>
+<!-- RE-CUT (round 18, 2.0.0_SA_COO~B, COO correction on row IRPT_BCKEND-W20-S1): the first leg's
+relative path was one `../` short of repo root from `deliverables/0.9.0_WK_IRPT_BCKEND~20/`
+(measured: 7 levels needed -- deliverables/IRPT_BCKEND/IRPT/D9/missions/org/repo-root -- this
+order's own original text had 6). 0.9.0_WK_IRPT_BCKEND~20 correctly refused to touch this face
+and graded R118-AC4 FAIL honestly on its own literal, buggy text; the underlying deliverable
+(every resolve.py citation re-pinned, the durable 19-test baseline confirmed unmodified, and a
+genuine new V1-actual-module harness) was independently re-verified by the COO with the
+CORRECTED 7-level path: 29 (the real pre-existing _scope suite, citation-drift test included) +
+19 (durable baseline, unmodified) + 4 (the new V1 harness, refusal and positive-control arms) =
+52 of 52 PASS. -->
+
 **`R118-AC4` -- PASSES BY OUTPUT:** every citation matches the current merged tree, the durable 19-test baseline is confirmed unregressed, and a genuine V1-actual-module harness exists and passes. The result.md separates isolated-worktree evidence from merged-tree evidence explicitly.
 
 <placeholders>NONE</placeholders>
