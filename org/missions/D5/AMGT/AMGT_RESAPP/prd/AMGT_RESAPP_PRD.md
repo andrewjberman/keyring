@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.17",
+  "prd_version": "v0.18",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,19 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.18 CHANGE NOTE -- 2026-09-22 ~08:0xZ, `1.0.0_SA_CTO~Z`: Bloomberg's received form, and what stays on its served path
+
+The two contract clauses record the rulings the round-21/22 cuts ran under.
+- **`C-BRONZE-AS-RECEIVED`** names Bloomberg's received form. The Terminal client hands the producer a parsed object,
+  and the wire bytes are unreachable, so its deterministic JSON serialisation is the received form, marked as such
+  (msg 24106).
+- **`C-FORMAT-SEQUENCE`** states that a served object whose reader cannot read silver's format keeps its one served
+  path until the gold chain builds a served JSON projection: `model_block`, and the publication bodies and links
+  (msgs 24123 and 24125).
+
+Section 11 records the moves as done and the registry items as closed. BOTH halves move. The CONTRACTS
+provenance cleanup (the CVO's v0.17 carry-item) is still owed, as its own bump.
 
 ### v0.17 CHANGE NOTE -- 2026-09-21 ~21:3xZ, `1.0.0_SA_CTO~Z`: platinum's home, Lusha's exception, and what "retire" means
 
@@ -868,7 +881,10 @@ re-serialising -- one object per fetch, never overwritten, with the channel's FE
 three forms: (a) an entity fetched repeatedly: `{vendor}/harvest/bronze/{request}/{entity}={id}/{YYYYMMDDTHHMMSSZ}.{ext}`;
 (b) an immutable document: `{vendor}/harvest/bronze/{request}/{entity}={id}/{document id}/{vendor file name}`;
 (c) a request: `{vendor}/harvest/bronze/{request}/date=YYYY-MM-DD/{request hash or file}.{ext}`. Every bronze
-address a writer uses is one the builder printed; the measured outputs are listed in section 11.
+address a writer uses is one the builder printed; the measured outputs are listed in section 11. Where a vendor's
+client hands the producer a parsed object and the wire bytes are unreachable (the Bloomberg Terminal client), the
+received form is that object's deterministic JSON serialisation (sorted keys, fixed separators, UTF-8), so an
+unchanged fetch yields identical bytes. Each such object records `received_form: "bbg-client-json"`.
 
 **C-SILVER-PARQUET.** Silver is parquet with every vendor field kept and typed, partitioned `date=` by fetch date,
 one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_hash` (sha256 of the row's vendor
@@ -909,6 +925,11 @@ move is its own chain, not a rider on another cell.
   cut from a document the pipeline never stored) move to SILVER. The `.analysis.json` objects (the model's reading)
   are what Opal cares about, so they are GOLD under R10 and follow the gold chain after the backfill. The document's
   bronze is filled only by the backfill's first fetch of it.
+- **A served object whose reader cannot read silver's format keeps its one served path until the gold chain.** The
+  served adapter reads JSON and carries no parquet reader. So `model_block` and the publication bodies and links stay
+  on their current single served path. They move when the gold chain builds a served JSON projection: silver parquet
+  is the system of record, the projection is what the reader reads, and the reader is switched and the old path
+  retired in one window. No second served path exists meanwhile.
 
 
 ## 2. THE BOUNDARY
@@ -1801,7 +1822,8 @@ bind.
 - (b) document: `s3://opal-data-harvest/sec/harvest/bronze/filing/cik=0000012927/000162828026004357/ba-20251231.htm`
 - (c) request: `s3://opal-data-harvest/sec/harvest/bronze/company_tickers/date=2026-09-21/sec_ticker_cik_cache.json`
 - silver: `s3://opal-data-harvest/bloomberg/harvest/silver/model_block/date=2026-09-21/part-20260921T162530Z.parquet`
-Each prints `opal-data-harvest` only under the simulated tenancy (plan s.3.2; 59 of 60 addresses, controls unmoved).
+When the plan was measured, each printed `opal-data-harvest` only under the simulated tenancy (plan s.3.2; 59 of 60
+addresses, controls unmoved). Since v0.18 the live builder prints the same (below).
 
 **Landed on SITEZ at v0.17 (measured at HEAD `39731fbda7`):** `tiers.json` carries the GENERAL tenancy (every tier
 home:scope), and `systems.json` carries the five vendor rows (`barrons`, `wsj`, `ft`, `filings-xbrl`,
@@ -1814,8 +1836,21 @@ and 0 AMGT objects in the vetoed buckets, so the migration renames keys inside o
 
 **Closed at v0.17:** Lusha's bronze and contact fields, now `C-LUSHA-EXCEPTION`, on Andrew's word.
 
+**Closed at v0.18:**
+- The duplicate `harvest` scope row was deleted by the registry lane (`10bace8916`). `validate()` now refuses a
+  repeated scope key (measured with a planted duplicate: 1 refusal; live: 0). The builder prints `opal-data-harvest`
+  for every AMGT tier (row Z-S205). `C-HARVEST-HOME` is MET.
+- The moves M1 (`raw/bloomberg/`), M2 (`filings/v1/*.source.json`) and M3 (`raw/seekingalpha/`) are done. Each retired
+  its old path on S3, IAM and code in one window, with the old objects kept as inert data (round-22 adjudication
+  `d8a57a5b82`).
+- The harvest writers H0-H6 are built and idle. Their new-grammar prefixes reach the served adapter as build-time
+  generated constants from `address()`.
+
 **Open, and not decided by this PRD:**
-- Deleting the duplicate `harvest` row is the registry lane's act (`PLATFORM_LOGIC_DOCS`; `~Z` is not in it).
-- The R20 register entry for `C-LUSHA-EXCEPTION`, by the same lane.
+- The R20 register entry for `C-LUSHA-EXCEPTION`, by the registry lane.
+- The backfill runs, at validation scope first, on Andrew's per-use vendor words.
+- The gold chain: the `model_block` and publications re-homing, the producer's forecast fiscal-year type, and the
+  Terraform IAM prefix list generated from `address()`.
+- One batched deletion of the retired old prefixes, on a human's word.
 - Retiring the empty `opal-harvest-articles` table is a table deletion and needs a human's word when executed; the
   contracts record the intent, not the authority.
