@@ -166,4 +166,25 @@ request fulfilment. Likewise, excluding named failures is safe only after provin
 test process finished. These are measured residuals, not reasons to discard the four bounded
 cell grades or their successful merged-suite evidence.
 
+## Commit provenance incident and CVO adoption
+
+The first pathspec commit attempt failed the universal lint gate on this seat's Python
+filter probe (formatting/escape warning); the probe was corrected, lint passed, and its
+four live cases reproduced the same results. During that interval an unrelated shared
+merge, `69fd895b6f41687325d102604e15cb8e7f0455bc`, authored by `2.0.0_SA_COO~O`,
+picked up this seat's staged round-14 records and evidence. Direct `git show` confirms
+ADJUDICATION_v6, REMEDIATION_v11 and this review first entered that merge. They were
+written by this CVO, not reviewed or authored by the unrelated lane.
+
+The retry `807abf252d` under this exact CVO author therefore changed only the corrected
+probe and its rerun evidence. Its row gate explicitly reports the 15 adjudication and
+nine new remediation rows as PRE-EXISTING, NOT RE-GRADED; it must not be cited as their
+new-row acceptance. Independent schema validation covers all 24 rows, the original-clock
+comparison covers all three intended advances, and the channel census establishes
+314/314 dispositions with zero duplicate IDs. No history was rewritten or foreign work
+reverted. **I explicitly adopt the reviewed C-S178..192 dispositions/grades and v11 slug
+as this seat's L9/L10 decision at the final handoff pin.** The shared-index inclusion
+incident is routed to CTO with the slug as a repository process defect, not silently
+re-described as a clean CVO-authored creation commit. No product verdict changed.
+
 -- 3.0.0_SA_CVO~F
