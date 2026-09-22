@@ -94,7 +94,23 @@ this amendment once the order is re-run and flipped complete.
 <criterion id="F87-AC6" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~37/f87_absent_qualifier_control.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --expect-style '[data-slot="answer-qualifier"]::font-weight!=400'</invocation><expect>UNMEASURABLE</expect></criterion>
 `F87-AC6` -- (e) ABSENT-SELECTOR CONTROL: on the answer-BEARING (complete=true) fixture, the qualifier badge genuinely does not render at all (the component's own `complete ? null : <qualifier>` branch); the same inequality assertion reads UNMEASURABLE, never a vacuous PASS.
 
-<criterion id="F87-AC7" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NO_COLOR=1 timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting > <WS>/.suite_check_87.log 2>&1; UNEXPECTED=$(grep "^✗" <WS>/.suite_check_87.log | grep -vc "generator-output-carries-unprojected-grant"); echo "UNEXPECTED-FAIL-COUNT=$UNEXPECTED"</invocation><expect>UNEXPECTED-FAIL-COUNT=0</expect></criterion>
+<criterion id="F87-AC7" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NO_COLOR=1 timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting > <WS>/.suite_check_87.log 2>&1; sed -r 's/\x1b\[[0-9;]*m//g' <WS>/.suite_check_87.log > <WS>/.suite_check_87_clean.log; UNEXPECTED=$(grep "^✗" <WS>/.suite_check_87_clean.log | grep -vc "F81-AC3/AC4"); echo "UNEXPECTED-FAIL-COUNT=$UNEXPECTED"</invocation><expect>UNEXPECTED-FAIL-COUNT=0</expect></criterion>
+**COO AMENDMENT 2 (2.0.0_SA_COO~F, post-worker-~37-report, row `IRPT_FNTEND-W37-S1` continued):** amendment 1's
+filter was ITSELF BROKEN, in two independent ways, both caught before any further harm: (a) `NO_COLOR=1` does
+NOT suppress bun's ANSI colour codes in this bun version -- the `\x1b[0m\x1b[31m` sequence still precedes the
+`✗` glyph, so a bare `grep "^✗"` matches ZERO lines regardless of how many tests genuinely failed, making
+`UNEXPECTED-FAIL-COUNT=0` print UNCONDITIONALLY -- a vacuous pass, caught by worker `~36`'s own row `W36-S2`
+before this seat had independently re-verified it; (b) the exclusion pattern itself
+(`generator-output-carries-unprojected-grant`, hyphenated, matching the TEST FILE's name) never matched the
+actual PRINTED line text (`generator output carries unprojected_grant`, spaced, the `describe`/`test` block's own
+wording) -- so even after stripping ANSI, the exclusion silently excluded NOTHING and the criterion would have
+read a false "2 unexpected" against a truly-zero-unexpected state. Fix, independently re-verified live by the
+issuing COO in FE-s-87's own worktree: strip ANSI first (`sed -r 's/\x1b\[[0-9;]*m//g'`), then exclude on the STABLE criterion-id
+token `F81-AC3/AC4` (present in both known lines, absent from every other line) rather than either the file name
+or the full description text. POSITIVE CONTROL run live: the corrected filter genuinely counts 2 raw `✗` lines
+and 0 unexpected, exactly matching the disclosed cross-cell gap. Row `IRPT_FNTEND-W37-S1` (and `W36-S2` where
+filed) DISARM on this corrected re-run.
+
 `F87-AC7` -- the whole IRPT_FNTEND suite is green, EXCLUDING the disclosed cross-cell fixture gap (see amendment below).
 **COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~37-report, row `IRPT_FNTEND-W37-S1`):** the literal invocation's
 `bun test src/pages/InvestorReporting` genuinely reads 2 fail in EVERY round-14 worker's isolated worktree, because

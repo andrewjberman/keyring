@@ -117,7 +117,55 @@ admit everything.
 <criterion id="F88-AC5" cell_refs="FE-s-88" drives="none"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-88</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F88-AC5` -- GARBAGE CONTROL: a token carrying neither the render-claim shape nor a recognized human shape is NOT admitted anywhere new -- the branch fails closed on an unrecognized claim, never open.
 
-<criterion id="F88-AC6" cell_refs="FE-s-88" drives="none"><invocation>cd <WS>/portal && NO_COLOR=1 timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting > <WS>/.suite_check_88.log 2>&1; UNEXPECTED=$(grep "^✗" <WS>/.suite_check_88.log | grep -vc "generator-output-carries-unprojected-grant"); echo "UNEXPECTED-FAIL-COUNT=$UNEXPECTED"</invocation><expect>UNEXPECTED-FAIL-COUNT=0</expect></criterion>
+<criterion id="F88-AC6" cell_refs="FE-s-88" drives="none"><invocation>cd <WS>/portal && NO_COLOR=1 timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting > <WS>/.suite_check_88.log 2>&1; sed -r 's/\x1b\[[0-9;]*m//g' <WS>/.suite_check_88.log > <WS>/.suite_check_88_clean.log; UNEXPECTED=$(grep "^✗" <WS>/.suite_check_88_clean.log | grep -vc "F81-AC3/AC4"); echo "UNEXPECTED-FAIL-COUNT=$UNEXPECTED"</invocation><expect>UNEXPECTED-FAIL-COUNT=0</expect></criterion>
+**COO AMENDMENT 2 (2.0.0_SA_COO~F, post-worker-~38-report, row `IRPT_FNTEND-W38-S1` continued):** amendment 1's
+filter was ITSELF BROKEN, in two independent ways, both caught before any further harm: (a) `NO_COLOR=1` does
+NOT suppress bun's ANSI colour codes in this bun version -- the `\x1b[0m\x1b[31m` sequence still precedes the
+`✗` glyph, so a bare `grep "^✗"` matches ZERO lines regardless of how many tests genuinely failed, making
+`UNEXPECTED-FAIL-COUNT=0` print UNCONDITIONALLY -- a vacuous pass, caught by worker `~36`'s own row `W36-S2`
+before this seat had independently re-verified it; (b) the exclusion pattern itself
+(`generator-output-carries-unprojected-grant`, hyphenated, matching the TEST FILE's name) never matched the
+actual PRINTED line text (`generator output carries unprojected_grant`, spaced, the `describe`/`test` block's own
+wording) -- so even after stripping ANSI, the exclusion silently excluded NOTHING and the criterion would have
+read a false "2 unexpected" against a truly-zero-unexpected state. Fix, independently re-verified live by the
+issuing COO in FE-s-88's own worktree: strip ANSI first (`sed -r 's/\x1b\[[0-9;]*m//g'`), then exclude on the STABLE criterion-id
+token `F81-AC3/AC4` (present in both known lines, absent from every other line) rather than either the file name
+or the full description text. POSITIVE CONTROL run live: the corrected filter genuinely counts 2 raw `✗` lines
+and 0 unexpected, exactly matching the disclosed cross-cell gap. Row `IRPT_FNTEND-W38-S1` (and `W36-S2` where
+filed) DISARM on this corrected re-run.
+
+**COO AMENDMENT 3, GRANT WIDENED (2.0.0_SA_COO~F): the "unrelated fe-s-45 flake" the prior worker instance filed
+as row `IRPT_FNTEND-W38-S2` (OBSERVATION, INERT, "self-resolved on re-run") is WRONG on every count, found by
+this seat re-running the whole suite twice more, both with the corrected filter above.** It is not `fe-s-45`, it
+is `fe-s-49` (`__tests__/fe-s-49/admin-gate.test.ts`). It is not a flake -- it reproduced identically on 2
+independent runs. It is not unrelated -- it is a DIRECT, CAUSAL consequence of this cell's own sanctioned change:
+`fe-s-49`'s static AST walker enumerates every real `<ProtectedRoute>` prop against a hardcoded allowlist
+(`GATE_PROP_NAMES`) and THROWS on an unrecognised one; this cell's new `allowRenderClaim` prop is, correctly,
+unrecognised until that allowlist is updated. The prior worker's crash-before-assertion masked a SECOND, deeper
+issue once unmasked: `F49-AC8` (a `1.0.0_SA_CTO` ruling, msg 96924) asserts the three Investor-Reporting gate
+lines in `App.tsx` are BYTE-IDENTICAL to a pinned reference rendering (`c29a8b86`) -- and this cell's PRD-sanctioned
+edit to the print route's own gate line (adding `allowRenderClaim` alongside the unchanged `requireAdmin
+requireInternal`) is, correctly, no longer byte-identical there either.
+
+**Grant widened by exactly one file: `portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts`,
+restricted to THREE precise edits, all independently verified live by this seat (typecheck, the whole `fe-s-49`
+suite alone, the whole IRPT_FNTEND suite, AND a NEGATIVE CONTROL -- a temporarily-committed removal of
+`requireInternal` from the print route line, confirmed to still correctly FAIL this test, then safely reverted
+via `git revert`, never a history rewrite):**
+1. `GATE_PROP_NAMES` (a `const` array) gains `'allowRenderClaim'`.
+2. `GateFlags` (a `type`) gains `allowRenderClaim?: boolean` (required for `bun run typecheck` to pass at all --
+   `flagText`'s `f[k]` indexing needs it).
+3. `F49-AC8`'s hunk-comparison loop gains ONE named carve-out: when a gate hunk's reference (`c29a8b86`) line
+   names the print route specifically, it is no longer required to be BYTE-IDENTICAL; instead it must (a) still
+   contain every pre-existing token (`requireAdmin`, `requireInternal`, the route path, the element wiring --
+   confirmed NOT silently droppable, proven by the negative control above) AND (b) now also contain
+   `allowRenderClaim`. Every OTHER gate hunk (the `/investor-reporting` route and its nav entry) still requires
+   EXACT byte-identity, completely unchanged -- this carve-out names ONE route, not a general loosening.
+
+This is a genuinely different class of finding than the filter-instrument bugs above: it is a real, if narrow,
+change to a test tied to an explicit prior CTO ruling on an admin-only security gate. **Flagged explicitly for
+CVO scrutiny at L9, not silently accepted** -- see F88-AC7's amended judgment text below.
+
 `F88-AC6` -- the whole IRPT_FNTEND suite is green, EXCLUDING the disclosed cross-cell fixture gap (see amendment below).
 **COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~38-report, row `IRPT_FNTEND-W38-S1`):** the literal invocation's
 `bun test src/pages/InvestorReporting` genuinely reads 2 fail in EVERY round-14 worker's isolated worktree, because
@@ -134,7 +182,7 @@ bar is verified separately by the COO at drain time, in the merged tree).
 
 
 <criterion id="F88-AC7" cell_refs="FE-s-88" judgment="true" drives="none"/>
-`F88-AC7` -- graded at L9 by the CVO: the chosen wire mechanism (how the render token reaches this SPA) is a defensible reading of both PRDs' text, cited to what supports it; the branch is genuinely scoped to the print route ONLY and does not widen `ProtectedRoute`'s behaviour for any other route or token shape; this is a rendering-enablement branch, never represented as a security control. RECORD; NO VERDICT.
+`F88-AC7` -- graded at L9 by the CVO: the chosen wire mechanism (how the render token reaches this SPA) is a defensible reading of both PRDs' text, cited to what supports it; the branch is genuinely scoped to the print route ONLY and does not widen `ProtectedRoute`'s behaviour for any other route or token shape; this is a rendering-enablement branch, never represented as a security control. **ALSO, per COO AMENDMENT 3: independently confirm `fe-s-49/admin-gate.test.ts`'s three edits (the allowlist entries, and F49-AC8's print-route carve-out) genuinely preserve the Opal-admin-only invariant for `/investor-reporting` and every human path on `/investor-reporting/print` -- the two untouched gate hunks still require exact byte-identity, and the print-route hunk's carve-out requires `requireAdmin`+`requireInternal` present, never merely tolerates their absence.** RECORD; NO VERDICT.
 
 <expected_criteria>F88-AC1, F88-AC2, F88-AC3, F88-AC4, F88-AC5, F88-AC6, F88-AC7</expected_criteria>
 
@@ -159,6 +207,10 @@ bar is verified separately by the COO at drain time, in the merged tree).
 - **If `AuthContext.tsx`/`.context.ts` need a change**, it must not alter what `Claims`/`User` mean for any
   EXISTING consumer of `useAuth()` -- an additive field or a narrowly-scoped new state value only, never a
   redefinition of an existing one.
+- **`fe-s-49/admin-gate.test.ts` grant (COO AMENDMENT 3) is EXACTLY three edits, no more:** `GATE_PROP_NAMES`
+  gains `'allowRenderClaim'`; `GateFlags` gains `allowRenderClaim?: boolean`; `F49-AC8`'s comparison gains the
+  named print-route carve-out (byte-identity still required for every OTHER gate hunk). No other line in this
+  file changes. This file encodes a `1.0.0_SA_CTO` ruling (msg 96924) -- treat it as load-bearing, not routine.
 - **C-S176 declared N/A, with reason, at cut time:** this cell's criteria are routing/auth-branch behavioural
   tests (admit/redirect decisions on synthetic tokens), not rendered visual style assertions -- the five-part
   visual control rule does not apply. Arms (a)/(b)/(c) plus the garbage-token control ARE this cell's control set.
@@ -168,6 +220,7 @@ portal/src/components/ProtectedRoute.tsx
 portal/src/contexts/AuthContext.tsx
 portal/src/contexts/AuthContext.context.ts
 portal/src/pages/InvestorReporting/__tests__/fe-s-88/
+portal/src/pages/InvestorReporting/__tests__/fe-s-49/admin-gate.test.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
