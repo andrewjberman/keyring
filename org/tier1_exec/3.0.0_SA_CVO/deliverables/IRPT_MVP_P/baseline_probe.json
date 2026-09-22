@@ -1,0 +1,76 @@
+{
+  "reviewer": "3.0.0_SA_CVO~P",
+  "measured_at": "2026-09-22T20:51:05.669805+00:00",
+  "workspace_head": "2506c708740e270f3a37a53462729023d9b91f86",
+  "portal_head": "7dd3d067a17ee00b878ecfceff23c557649a2331",
+  "source": "infra\\aws\\lambda\\investor-reporting\\performance\\entry.py",
+  "source_sha256": "f1db39ce6f44e5de92348e97020fbd93fe4b90276ee9c46bfe8eca156a7db2b4",
+  "boundary": "two exact AST-extracted functions; downstream runner replaced by argument recorder",
+  "live_e2e": "NOT_EVALUATED",
+  "observations": {
+    "browser_query_and_set_reference": {
+      "scope": {
+        "permitted_account_set": [
+          "A-1",
+          "A-2"
+        ],
+        "resolved_scope": {
+          "scope_kind": "ACCOUNT_SET",
+          "scope_ids": [
+            "SET-EXAMPLE"
+          ]
+        }
+      },
+      "arguments": {
+        "requested_start": null,
+        "requested_end": null,
+        "mode": null,
+        "per_use_token": null,
+        "labels": null
+      }
+    },
+    "missing_selection": {
+      "scope": {
+        "permitted_account_set": [
+          "A-1",
+          "A-2"
+        ],
+        "resolved_scope": {
+          "scope_kind": "ACCOUNT_SET",
+          "scope_ids": [
+            "A-1",
+            "A-2"
+          ]
+        }
+      },
+      "arguments": {
+        "requested_start": null,
+        "requested_end": null,
+        "mode": null,
+        "per_use_token": null,
+        "labels": null
+      }
+    },
+    "internal_positive_control": {
+      "scope": {
+        "permitted_account_set": [
+          "A-1",
+          "A-2"
+        ],
+        "resolved_scope": {
+          "scope_kind": "ACCOUNT_SET",
+          "scope_ids": [
+            "A-1"
+          ]
+        }
+      },
+      "arguments": {
+        "requested_start": "2026-01-01",
+        "requested_end": "2026-09-21",
+        "mode": null,
+        "per_use_token": null,
+        "labels": null
+      }
+    }
+  }
+}
