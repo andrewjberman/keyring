@@ -4332,3 +4332,50 @@ fanout:
   wave_3: [rk-92]                   # after rk-91 drains, on its pair
   no_fleet_run: true
 ```
+
+## 31. ROUND 23 -- FROM THE CTO'S ROUND-22 ANALYSIS @`ace3f7ca38` (`1.0.0_SA_CTO~Z`, msg 24153) + pre-ruling msg 24146
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 22 closed 6 of 6 and ratified (47/0/0). The moves M1-M3 retired on S3, IAM and code,
+and the CTO's independent window reads agree (119 / 194+12 / 18).
+
+The analysis named three items:
+- **The print fix** (row Z-S215, ARMED). The PRINT route 500s for all three validation names because `render_pack.py:264`
+  sorts fiscal years of mixed str/int type.
+- **The GATE 5 parser fix** (row Z-S209). The quoted-path parse at `never-rules-gate.sh:286-303` cuts a path at a space.
+- **The backfill runs, only on Andrew's word.** No backfill word is on file at the cut (no Andrew-direct record dated
+  2026-09-22 in the CTO's deliverables), so the runs are ROUND 24.
+
+The COO's B1-B5 manifest (validation scope first: B2 and B1, then B4 and B3; B5 has nothing to run) went to the CTO for
+Andrew's card (msg to the CTO, 06:03Z).
+
+**Round 23 is TWO cells, issued in ONE commit with this section.**
+
+### 31a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| print fix | `AMGT-rk-94` | ~94 | none | Z-S215 -- `_fiscal_year_sort_key` in render_pack (4-digit years numeric, others after) with str-normalised grouping; heading text unchanged. A regression arm with mixed keys. Adapter redeploy under a pair with the AC7 closure check (the runtime package set; repo-only modules unimportable). A per-route status BASELINE is taken pre-act. After the deploy, `/print` returns 200 for all 5 model-block names | pair `NEVER_WIDEN_ROUND23_RK94_{COO,CTO}_HALF.md` |
+| GATE 5 parser | `AMGT-rk-95` | ~95 | none | Z-S209 -- `.tools/hooks/never-rules-gate.sh:286-303` (the only 2 parse sites): parse a quoted `git -C` / `cd` argument whole, and treat `[A-Za-z]:/` as absolute. Suite 96 -> 106 with 10 S209 arms, incl. the NEGATIVE CONTROL (a shared-branch push from the workspace is still denied). A pinned before/after comparator must show exactly 5 deny->pass flips and 0 pass->deny. Code only; lane ANY | none |
+
+### 31b. SURFACE CENSUS (measured at the cut)
+
+- **rk-94.** Live fiscal-year keys across 37 model blocks: 34 all str, and 3 mixed (CAT, CSL, 6861; 15 BBG int figures each).
+  - The print sweep over those 37 keys: 33 return 200, the 3 mixed names 500, and NVDA 404 (not in the crosswalk;
+    pre-existing, out of scope).
+  - The adapter is `cRT7dOyf...` with artifact `3SfOfR7P...` and compact policy sha `42d6bd14a35e1718`; 0 commits have
+    carried along since M3's drain.
+  - AC7 cannot exercise the print-deps layer locally, because it is a Linux-only layer. The live `/print` invokes in AC6
+    are that proof (issuer L5).
+- **rk-95.** The census found 2 parse sites. The suite takes more than 2 minutes, so its timeouts are 600 s and 900 s.
+- **Files written by more than one cell:** none.
+
+### 31c. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 2                   # rk-94, rk-95 -- one commit
+  chains_total: 2                   # disjoint
+  wave_1: [rk-95, rk-94]            # rk-95 at once; rk-94 once its pair carries both halves signed
+  no_fleet_run: true
+```
