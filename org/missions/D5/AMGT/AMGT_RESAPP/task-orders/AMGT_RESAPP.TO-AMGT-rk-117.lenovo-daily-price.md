@@ -234,7 +234,7 @@ with its open and close.
 3. **Stage 11's "price" is therefore partially served by this cell:** the dense series lands, and the Lead Panel row
    does not. The trial report must say so rather than reading stage 11 as SERVED.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~117</slot>
 <fabric>site-z</fabric>
