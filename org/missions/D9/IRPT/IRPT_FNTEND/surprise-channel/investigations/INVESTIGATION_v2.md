@@ -5987,6 +5987,31 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W37-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~37",
+    "surfaced_at": "2026-09-22T15:11:00Z",
+    "one_line": "F87-AC5's literal invocation pairs --inject-css with --expect-ground in ONE call, but scripts/ui-smoke.mjs applies every --inject-css unconditionally BEFORE the --expect-ground measurement loop, so the single EXPECT-GROUND line this invocation can ever print reflects the POST-inject state -- it can never print the PASS rgb(255, 255, 255) the criterion's own <expect> regex requires. Ran verbatim: one line, FAIL rgb(196, 203, 219), rc=0. The underlying claim (ground genuinely measures white pre-inject) IS true, confirmed by a separate diagnostic run without --inject-css, but that diagnostic is not this criterion's graded invocation.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F87-AC5's literal <invocation>: `... --expect-ground '[data-slot=\"answer-status\"]=rgb(255, 255, 255)' --inject-css '[data-slot=\"answer-status\"]{background-color:#c4cbdb !important}'`, <expect>EXPECT-GROUND.*PASS rgb\\(255, 255, 255\\)</expect>. Cell text: \"read this capture's SECOND EXPECT-GROUND line (post-inject) separately in your result: the wrong-ground control must print FAIL rgb(196, 203, 219), never a silent PASS\" -- assuming TWO EXPECT-GROUND lines (a first pre-inject PASS, a second post-inject FAIL) appear in one capture.",
+    "world_is": "Ran F87-AC5's invocation verbatim (WS/PORT substituted only): stdout carries exactly ONE `EXPECT-GROUND[...]` line -- `EXPECT-GROUND[[data-slot=\"answer-status\"]]: FAIL rgb(196, 203, 219)`, `ASSERT-GROUND: 0 of 1 met`, rc=0. No `PASS rgb(255, 255, 255)` substring anywhere in the output, so the criterion's own <expect> regex does not match. Read directly: portal/scripts/ui-smoke.mjs:437-442 (`if (injectCssArgs.length) { for (const css of injectCssArgs) { await page.addStyleTag(...) } }`) runs unconditionally BEFORE the `--expect-ground` loop at :557-574, and there is no code path in the script that measures ground once before an inject and again after within one invocation -- the flag ordering on the command line does not matter (both arg lists are extracted by a `reduce` over the whole `args` array, :145-146). So pairing --inject-css with --expect-ground in one invocation can ONLY ever produce the post-inject reading, never the pre-inject one, regardless of how the flags are ordered. Ran a separate diagnostic (same fixture/selector/expect-ground value, --inject-css omitted, not part of the graded criterion) to confirm the underlying claim: `EXPECT-GROUND[[data-slot=\"answer-status\"]]: PASS rgb(255, 255, 255)` -- ground genuinely measures white absent injection, so (d) GROUND ON THE ACTUAL CONTAINER is true of the component; only the single literal invocation named by F87-AC5 cannot demonstrate both halves in one capture. Recorded F87-AC5 FAIL in this worker's proof instance with the literal invocation's true output; did not substitute the diagnostic run as the graded row (per row IRPT_FNTEND-W34-S1's own precedent: a corrected/substituted invocation must land in the task-order FILE, never only in a worker's proof record).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, F87-AC5 literal invocation verbatim, port 6003, 2026-09-22): `EXPECT-GROUND[[data-slot=\"answer-status\"]]: FAIL rgb(196, 203, 219)`, `ASSERT-GROUND: 0 of 1 met`, rc=0 -- no PASS rgb(255, 255, 255) line, does not match <expect>",
+        "portal/scripts/ui-smoke.mjs:437-442 (this worktree HEAD) -- the --inject-css loop, runs unconditionally, before any --expect-ground measurement",
+        "portal/scripts/ui-smoke.mjs:557-574 (this worktree HEAD) -- the --expect-ground measurement loop, the only place EXPECT-GROUND lines are printed, one per --expect-ground arg, always reading POST-inject state",
+        "portal/scripts/ui-smoke.mjs:145-146 (this worktree HEAD) -- injectCssArgs/expectGroundArgs both extracted by an order-independent reduce() over the full args array, so command-line flag ordering cannot change execution order",
+        "measured diagnostic run (this worker, same fixture/selector, --inject-css omitted, port 6003, 2026-09-22, SUPPLEMENTARY not graded): `EXPECT-GROUND[[data-slot=\"answer-status\"]]: PASS rgb(255, 255, 255)`, rc=0",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-87.answer-status-weights-700-400-under-c1.md criterion F87-AC5 and its cell-text sentence naming a 'SECOND EXPECT-GROUND line' (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
