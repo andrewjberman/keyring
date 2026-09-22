@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~36</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.10 @4bc62712f2 | **Decomp cell:** `FE-s-86` (round 14, v0.14) | **outcome_ref:** FWD-12 | **depends_on:** none -- READY ROOT | **slot:** ~2 | **rows:** C-S147, F80-AC6 | **base:** workspace = the round-14 issuance commit on CLOUD (your worktree branches from it), portal DEV `467354c9` (round 13's close)
 
@@ -84,8 +84,21 @@ your own `__tests__/fe-s-86/`.
 <criterion id="F86-AC3" cell_refs="FE-s-86" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~36/f86_holdings_key_validity_regression.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/default.json --click Holdings</invocation><expect>KEY-VALIDITY: 12 of 12 valid consumed\.ts operation keys</expect></criterion>
 `F86-AC3` -- REGRESSION CONTROL, end-to-end: the real default.json fixture (12/12 entries, every key genuinely declared) still reads 12 of 12 under your stricter matcher -- the fix removes the false positive without also removing a true positive.
 
-<criterion id="F86-AC4" cell_refs="FE-s-86" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
-`F86-AC4` -- the whole IRPT_FNTEND suite is green.
+<criterion id="F86-AC4" cell_refs="FE-s-86" drives="none"><invocation>cd <WS>/portal && NO_COLOR=1 timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting > <WS>/.suite_check_86.log 2>&1; UNEXPECTED=$(grep "^✗" <WS>/.suite_check_86.log | grep -vc "generator-output-carries-unprojected-grant"); echo "UNEXPECTED-FAIL-COUNT=$UNEXPECTED"</invocation><expect>UNEXPECTED-FAIL-COUNT=0</expect></criterion>
+`F86-AC4` -- the whole IRPT_FNTEND suite is green, EXCLUDING the disclosed cross-cell fixture gap (see amendment below).
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~36-report, row `IRPT_FNTEND-W36-S1`):** the literal invocation's
+`bun test src/pages/InvestorReporting` genuinely reads 2 fail in EVERY round-14 worker's isolated worktree, because
+none of the four cells' worktrees can see the others' fixes until the drain -- and the 2 failures are `__tests__/fe-s-81`'s
+`generator-output-carries-unprojected-grant.test.ts`, exercising `FE-s-85`'s own cell (`W25-S1`), whose regenerated
+fixtures are committed on ITS OWN branch only. This is not a regression on THIS cell's surface (confirmed:
+`git diff --stat` against the issuance commit touches only this cell's own `<paths>`). The bar is unchanged --
+0 unexpected failures -- but the invocation now isolates failures NOT attributable to the known, disclosed,
+cross-cell gap, so a REAL regression on this cell's own surface still fails the criterion. Independently
+re-verified live by the issuing COO in this worker's own worktree before amending: `UNEXPECTED-FAIL-COUNT=0`,
+2 known fe-s-81 fails present and excluded, matching the worker's own report exactly. Row `IRPT_FNTEND-W36-S1` is
+DISARMED by this amendment once the order is re-run and flipped complete (the true whole-suite-including-FE-s-85
+bar is verified separately by the COO at drain time, in the merged tree).
+
 
 <criterion id="F86-AC5" cell_refs="FE-s-86" judgment="true" drives="none"/>
 `F86-AC5` -- graded at L9 by the CVO: the segment-for-segment matcher genuinely rejects an undeclared trailing segment (control 2) while genuinely accepting a concrete parameterised instantiation (controls 1 and 4), and the static/exact set's behaviour is unchanged (control 3). RECORD; NO VERDICT.

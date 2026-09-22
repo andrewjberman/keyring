@@ -6011,6 +6011,30 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W36-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~36",
+    "surfaced_at": "2026-09-22T16:20:00Z",
+    "one_line": "F86-AC4's COO-amended invocation ('UNEXPECTED=$(grep \"^\u2717\" <log> | grep -vc \"generator-output-carries-unprojected-grant\")') produces the expected 'UNEXPECTED-FAIL-COUNT=0' in this worktree, but by a route that cannot discriminate: bun's fail-line marker carries a leading ANSI escape ('\\x1b[0m\\x1b[31m') before the \u2717 glyph even under NO_COLOR=1 in this bun/terminal combination, so 'grep \"^\u2717\"' matches ZERO lines of the raw log -- not the 2 known fe-s-81 lines minus themselves, but 0 of 0 attempted matches against 2 real fail markers that are present. The criterion reads PASS-by-output exactly as written and its literal output matches <expect> verbatim, so F86-AC4 is graded PASS on this order; the finding is that the exclusion filter this criterion's prose describes ('isolates UNEXPECTED failures... via a grep filter') is currently a no-op that would read the identical 'UNEXPECTED-FAIL-COUNT=0' whether a genuine NEW unexpected failure existed in the suite or not, because grep never reaches the point of testing the filename. This is the same amended pattern named in F87-AC7/F88-AC6 per the round-14 amendment commit (ef031e6f44), so the exposure is not unique to this cell's invocation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F86-AC4 amended `<invocation>`: `... > <WS>/.suite_check_86.log 2>&1; UNEXPECTED=$(grep \"^\u2717\" <WS>/.suite_check_86.log | grep -vc \"generator-output-carries-unprojected-grant\"); echo \"UNEXPECTED-FAIL-COUNT=$UNEXPECTED\"`; `<expect>UNEXPECTED-FAIL-COUNT=0</expect>`. The COO amendment's own prose: 'the invocation now isolates failures NOT attributable to the known, disclosed, cross-cell gap, so a REAL regression on this cell's own surface still fails the criterion.'",
+    "world_is": "Measured (this worker, 2026-09-22, literal amended invocation run verbatim in this worktree): output `UNEXPECTED-FAIL-COUNT=0`, matching <expect>; suite summary `654 pass`, `27 skip`, `2 fail`, rc=1 for the bun test step. Measured directly on the raw log bytes (python, this worker): the 2 fail-marker lines are `b'\\x1b[0m\\x1b[31m\\xe2\\x9c\\x97\\x1b[0m \\x1b[0mF81-AC3/AC4 -- generator output carries unprojected_grant...'` (both occurrences) -- i.e. the line does NOT start with the raw \u2717 byte sequence, it starts with an ANSI SGR reset+color escape, so POSIX `grep \"^\u2717\"` (anchored) cannot match either real fail line. Positive control (this worker): `grep \"^\u2717\" <log>` alone (no -v filter) returns rc=1, 0 matches, against a python-confirmed 2 occurrences of the glyph in the file -- confirming the anchor fails to match ANY fail line, not that it correctly excluded the 2 known ones. Net effect: the criterion cannot currently be forced to read a non-zero UNEXPECTED-FAIL-COUNT by any suite content, known-gap or otherwise, in this bun/terminal environment. Does not change this order's grade: the literal invocation's output matches <expect> exactly as specified, and this worker independently confirmed (as the COO's amendment states was already done) that only the 2 disclosed fe-s-81 lines are present in the raw fail count -- so no masked regression is evidenced in THIS run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, literal amended F86-AC4 invocation, this worktree): `UNEXPECTED-FAIL-COUNT=0`, bun summary `654 pass / 27 skip / 2 fail`, rc=1 for the test step, rc=0 for the echo",
+        "measured (this worker, python3 byte-level scan of C:/tmp/wk-irpt_fntend-14-86-fe-s-86/.suite_check_86.log, 2026-09-22): 2 occurrences of U+2717, both immediately preceded by bytes `\\x1b[0m\\x1b[31m` (ANSI SGR reset + red), both on lines naming `F81-AC3/AC4 -- generator output carries unprojected_grant`",
+        "measured (this worker, positive control, 2026-09-22): `grep \"^\u2717\" C:/tmp/wk-irpt_fntend-14-86-fe-s-86/.suite_check_86.log` -> rc=1, 0 lines, against the python-confirmed 2 real occurrences -- the anchored pattern matches nothing in this log regardless of content",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-86.full-template-classifier-no-prefix-widening.md:87-100 (this worktree HEAD) -- F86-AC4's amended invocation and the COO amendment prose describing it as an isolating filter",
+        "ef031e6f44 (CLOUD, cited in git log as the round-14 amendment commit) -- names F86-AC4/F87-AC7/F88-AC6 as carrying the identical structural amendment"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
