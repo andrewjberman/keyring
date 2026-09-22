@@ -11967,6 +11967,69 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Foreign-language filings are detected and translated at the analysis output, and the page shows the translation (PRD translation contract; Andrew 2026-09-22: IEFA, foreign-friendly from the start).",
     "world_is": "Only Japanese, Chinese and Korean are detected; every served analysis today is from an English EDGAR filing, so nothing served is wrong yet -- but the first European annual report would be analysed as English untranslated.",
     "notes": "Part of the IEFA structure design (field map s.3 item 4); the section cutter also knows only English and Japanese report types."
+  },
+  {
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T14:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "AMGT_RESAPP-Z-S222",
+    "one_line": "integrations/bloomberg/research/tests/test_fye_join.py has 3 FAILING tests at HEAD 96cc4dae9d, each reaching for an S3 bucket that no longer exists -- pre-existing, not caused by round 28.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by the round-28 drafting read at SITEZ 96cc4dae9d, one pytest call per file; recorded in decomposition s.36 and the round-28 issuance message to the CTO (14:24Z)."
+      ]
+    },
+    "spec_asserts": "The fiscal-year join's own test file passes.",
+    "world_is": "3 of its tests fail on a retired bucket before any round-28 edit.",
+    "notes": "INERT unless a trial cell needs this suite; rk-109 (L-0c) bars NO NEW failures on the file-level count, per the CTO msg 24263."
+  },
+  {
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T14:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "AMGT_RESAPP-Z-S223",
+    "one_line": "integrations/bloomberg/research/tests/test_latest_stamp_raw_pair.py has 1 FAILING test at HEAD 96cc4dae9d -- pre-existing, not caused by round 28.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by the round-28 drafting read at SITEZ 96cc4dae9d, one pytest call per file; recorded in decomposition s.36 and the round-28 issuance message to the CTO (14:24Z)."
+      ]
+    },
+    "spec_asserts": "The raw-pair latest-stamp tests pass.",
+    "world_is": "1 test fails before any round-28 edit.",
+    "notes": "INERT unless a trial cell needs this suite; the round-28 bars are file-level 'no NEW failures' (CTO msg 24263)."
+  },
+  {
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T14:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "AMGT_RESAPP-Z-S224",
+    "one_line": "integrations/bloomberg/research/tests cannot be collected as a DIRECTORY: two test files import render_pack.load_model_block, which no longer exists, so pytest errors at collection.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by the round-28 drafting read at SITEZ 96cc4dae9d, one pytest call per file; recorded in decomposition s.36 and the round-28 issuance message to the CTO (14:24Z)."
+      ]
+    },
+    "spec_asserts": "The Bloomberg research test directory runs as one suite.",
+    "world_is": "Collection errors on the missing symbol; the orders test file by file instead.",
+    "notes": "INERT unless a trial cell needs the directory run; round-28 orders name files, not the directory (CTO msg 24263)."
   }
 ]
 ```
