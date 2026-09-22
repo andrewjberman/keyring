@@ -12721,6 +12721,76 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "`_read_pool_latest()` at this pin (lib/research/identity/crosswalk.py:858, unchanged from :837's own call site) returns `(document, key)`, not `document` -- so the literal script as written cannot reach its own decisive line; it raises first. Never widened beyond fixing this one unpacking step in the worker's own scratch copy; no code under <paths> touched, no crosswalk.py edit made.",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "Did not change the refusal outcome -- AC0 still measures 'NONE -- REFUSE THE RUN' once it can complete, matching the order's own predicted likely outcome (RECORD FACE note 1). Filed because a future re-run of this same order, or any other AC0 script copied from this literal text, hits the identical crash. Fix path: either call `cw.record_for(...)`/`cw.load_crosswalk()` (which already unpack the tuple correctly) instead of the private `_read_pool_latest()`, or unpack the tuple explicitly as this row's workaround does."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S231",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps",
+    "surfaced_at": "2026-09-22T21:10:00Z",
+    "one_line": "The order's literal safe-apply invocation cannot complete in this harness: terraform prompts 'Enter a value:' for approval, stdin is the null device, and the run dies 'Error: error asking for approval: EOF' having applied NOTHING -- so the named act is unexecutable exactly as written.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ran the order's s.4/AC3 invocation verbatim: `HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/portal-auth apply -target=aws_cloudfront_distribution.portal`. Output ended: 'Do you want to perform these actions? ... Enter a value:' then '[31mError: error asking for approval: EOF'.",
+        "NEGATIVE CONTROL that the act did not partially land: immediately after the EOF, live `get-distribution-config --query DistributionConfig.CacheBehaviors.Quantity` read 28 -- unchanged from AC0. Nothing was applied; this is a clean refusal, not a half-landed deploy.",
+        ".tools/safe-apply.sh:361 is `exec \"$TERRAFORM\" \"$@\"` -- the wrapper passes argv straight through and adds no -auto-approve and no -input=false of its own, so the prompt is terraform's and the wrapper cannot suppress it.",
+        "Re-run with `-auto-approve` appended, every other token identical: 'Apply complete! Resources: 0 added, 2 changed, 0 destroyed.' -- the bound the pair and the order both state."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order s.4 BOUNDS and AC3 name the invocation `HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/portal-auth apply -target=aws_cloudfront_distribution.portal` as THE only live act, and AC3's expect anticipates 'a prompt-driven refusal' without naming its remedy.",
+    "world_is": "The invocation as written reaches an interactive approval prompt no fabric seat can answer. This seat appended `-auto-approve` -- the SAME wrapper, the SAME -target, the SAME single resource, zero change to the blast radius -- rather than switching to a saved-plan file, which would have required DROPPING -target and deviating further from the named invocation. The re-plan gap -auto-approve opens was covered by grading the apply's own result line against AC3's expect (0 added / 2 changed / 0 destroyed) and by the full AC4 post-act read against every rollback trigger in both halves.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- decide whether future deploy orders carry `-auto-approve` in the named invocation, or whether safe-apply.sh should default `-input=false -auto-approve` once its own HALTGT checkpoint has passed (the checkpoint, not the terraform prompt, is the fabric's approval gate).",
+    "notes": "Disclosed rather than silently repaired. The deviation is one flag on the same route; it is reported in this seat's completion message to 2.0.0_SA_COO~Z and in the deploy-ledger proof, not buried."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S232",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps",
+    "surfaced_at": "2026-09-22T21:10:00Z",
+    "one_line": "The order grants org/critical_paths/change_management/ in <paths> but NOT org/critical_paths/.open_deploys/, while .tools/deploy_ledger.py open writes BOTH and states the OPEN state does not survive a drain unless both are committed together -- so the order's own mandated tool writes outside the order's own grant.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deploy_ledger.py open printed: 'REQUIRED COMMIT PATHSPEC (both, in the same commit -- the sentinel is the gate's only input and a worktree removed without it destroys the OPEN state...)': org/critical_paths/.open_deploys/amgt-rk123-edge-behavior.json AND org/critical_paths/change_management/20260922T2058Z_amgt-rk123-edge-behavior_deploy_completion.md.",
+        "The order's s.3 <paths> block lists org/critical_paths/change_management/ and does NOT list org/critical_paths/.open_deploys/, while s.3 also says 'A surface not named here is a WALL.'",
+        "LANE EXERCISED BEFORE COMMITTING, with a negative control: owned-paths-check.sh with OWNED_PATHS_MODE=block returned PERMIT for 0.7.0_AE_CloudOps on BOTH ledger paths, and REFUSE for 2.0.0_SA_COO~Z on the .tf -- so the harness discriminates and the PERMIT is real rather than a pass-everything."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order s.3: '<paths> ... org/critical_paths/change_management/' and 'A surface not named here is a WALL.'",
+    "world_is": "The sentinel is the mechanical companion of a granted path, emitted by the tool s.4 mandates, and the ledger's OPEN state is destroyed without it. This seat committed both (12f7e03f9f) on the LANE grant, which permits this serial there, and disclosed it in that commit message rather than treating the omission as a wall. It binds an AE seat weakly (the lane covers it) but would hard-refuse a 0.9.0_WK_* worker, whose only admission is its order's <paths>.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- add org/critical_paths/.open_deploys/ to the <paths> of any order whose s.4 mandates a deploy-ledger entry, so a worker-issued deploy order is not unexecutable by construction.",
+    "notes": "Not a blocker for this act because the actor holds the lane. Filed because the next order cut from this template may go to a seat that does not."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S233",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps",
+    "surfaced_at": "2026-09-22T21:10:00Z",
+    "one_line": "AC5's literal invocation calls `python .tools/deploy_ledger.py status --slug ...`, but the tool has no 'status' subcommand -- its choices are {open, close-leg, close, hold, check, list} -- so AC5 as written exits rc=2 on an argparse error and can never PASS.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ran AC5's literal invocation; argparse returned: \"invalid choice: 'status' (choose from 'open', 'close-leg', 'close', 'hold', 'check', 'list')\" and, on the check verb, 'unrecognized arguments: --slug amgt-rk123-edge-behavior' -- so neither 'status --slug' nor 'check --slug' is a valid call.",
+        "The SUBSTANCE AC5 asks for was satisfied by reading the entry file directly: its header reads '**Status:** CLOSED -- nothing stranded -- closed 20260922T210834Z', both legs read CLOSED with their proof strings, and the sentinel org/critical_paths/.open_deploys/amgt-rk123-edge-behavior.json is removed.",
+        "AC5's second half ran as written: `git log --oneline -2 -- infra/aws/terraform/portal-auth/cloudfront-distribution.tf` -> 8c038da7e7 (this seat, 0.7.0_AE_CloudOps) newest, d0a61c6acb (IB-s-15, the precedent act) before it -- exactly the expect."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5 invocation: `python .tools/deploy_ledger.py status --slug amgt-rk123-edge-behavior 2>&1 | tail -5 && git log --oneline -2 -- <tf>`; expect: 'the ledger entry reads CLOSED with every leg proven'.",
+    "world_is": "The ledger half of AC5 is REFUSED AS WRITTEN (no such subcommand) and its substance is separately PROVEN by reading the entry file, which is the artifact the subcommand would have summarised. Graded PASS on substance with the instrument substitution stated, not silently swapped. This is the THIRD instance of the same class on this project in one evening -- W116-S? (leg kind 's3-key' not in LEG_KINDS) and now this -- an order's literal text not matching deploy_ledger.py's real interface.",
+    "disarm_owner": "2.0.0_SA_COO~Z -- correct the AC5 template to a verb the tool has, or add a 'status --slug' verb; and note the recurring class, since three orders have now named deploy_ledger interfaces that do not exist.",
+    "notes": "Filed per the order's REFUSAL CLAUSE: recorded with its measurement rather than repaired or widened."
   }
 ]
 ```
