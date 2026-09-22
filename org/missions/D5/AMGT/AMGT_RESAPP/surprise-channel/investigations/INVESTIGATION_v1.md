@@ -12676,6 +12676,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "build_universe.py's write_pool call still passes no document= and its union document still cannot validate against crosswalk.schema.json -- S3's factual finding stands unchanged. What changed is the OWNER of that gap and this cell's obligation toward it: the issuer, who is S3's own disarm_owner, independently measured the same shape mismatch and ruled the cell's scope excludes it, so this cell's AC4 is satisfied at 2 files (add_security.py, test_crosswalk_write_validates.py) and the TO can close. The hazard itself -- an unguarded union write -- is real and unchanged in production.",
     "disarm_owner": "1.0.0_SA_CTO",
     "notes": "S3 is NOT edited (append-only); this row records its resolution for THIS cell's purposes and re-points the open hazard's disarm_owner from the COO (S3, this cell's issuer, who has now ruled on it) to the CTO, per Amendment 2's own words ('recorded for the CTO as a scope item'). Consistent with S3's notes on the two legitimate closure paths (a union-document schema, or an explicit descope ruling) -- Amendment 2 is that descope ruling for THIS cell, but the underlying gap remains open at the CTO's level."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W118-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~118",
+    "surfaced_at": "2026-09-22T20:14:00Z",
+    "one_line": "TO-AMGT-rk-118's literal deploy-ledger open command uses leg kind 's3-key' for the w4 leg, but .tools/deploy_ledger.py's leg-kind enum has no 's3-key' -- only activation, ec2-baked-asset, git, s3-prefix, tf-lambda, verify -- so the command as written refuses with rc=1 before any leg opens.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Running the TO's own `--leg \"w4|s3-key|opal-data-harvest/amgt/harvest/state/filing_attempt/security_key=992_HK_Equity/UNRESOLVED-SOURCE.json|AC3\"` verbatim against `.tools/deploy_ledger.py open` (worktree wk-amgt-30-118, HEAD 427b32cd9d) produced: \"ERROR: leg kind 's3-key' not in ['activation', 'ec2-baked-asset', 'git', 's3-prefix', 'tf-lambda', 'verify']\", rc=1, no ledger opened.",
+        ".tools/deploy_ledger.py's own module docstring (read via `--help`) enumerates the same six leg kinds and does not name 's3-key' anywhere; 's3-prefix' is the nearest kind and its docstring line ('code landed on a code prefix') does not restrict it to a directory-shaped target."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-118 section 4 'Deploy ledger' prescribes the exact open command including `--leg \"w4|s3-key|...|AC3\"`.",
+    "world_is": "The tool's leg-kind enum has never included 's3-key' at this pin; the w4 leg (a single S3 object key, not a prefix) has no exact-match leg kind in the enum.",
+    "disarm_owner": "2.0.0_SA_COO~Z (issuer): either add an 's3-key' leg kind to .tools/deploy_ledger.py for single-object legs, or correct this and future task orders' prescribed --leg strings to use 's3-prefix' for a single-key target.",
+    "notes": "Worked around by substituting 's3-prefix' for the w4 leg kind only (target string, id and proof-required column unchanged); the ledger opened, all 4 legs closed with proof and the entry closed clean. No other command text was altered."
   }
 ]
 ```
