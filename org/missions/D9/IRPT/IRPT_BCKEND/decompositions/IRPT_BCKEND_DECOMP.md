@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 13,
-  "decomp_version": "0.17",
+  "round": 14,
+  "decomp_version": "0.18",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -81,13 +81,43 @@
   "round12_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_12_20260922.md @a8d306eb71",
   "round12_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v6.md @5a9a7eed81",
   "cells_round13": 1,
-  "cell_id_shape_round13": "IB-rtm-<n>"
+  "cell_id_shape_round13": "IB-rtm-<n>",
+  "round13_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_13_20260922.md @e107b84d38",
+  "round13_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md @12738b5791",
+  "cells_round14": 1,
+  "cell_id_shape_round14": "IB-rtn-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R14. ROUND 14 -- THE RECUT ON THE ROUND-13 ANALYSIS (@e107b84d38; slug @12738b5791; v0.18, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 13 closed 0 of 97 open, 0 of 343 worker items undispositioned. `R113-AC3` FAIL (`3.0.0_SA_CVO~B`'s L9, `ADJUDICATION_v10.md`, rows C-S188-194): `C-S180` and `C-S187` are confirmed closed individually, and the original timeout-substring counterexample (`C-S179`'s first form) is genuinely fixed. **`1.0.0_SA_CTO`'s round-13 analysis REVERSES its own round-12 sign-off acceptance of row `W13-S6`** -- the "own deadline firing" fallback added in round 13 to avoid regressing the old R11/R12 test fixtures accepts EXACT message-text equality as proof of a timeout, which is STILL a message-text match, not a type-based classification, defeating invariant (iii) ("retry only the three TYPED causes") by construction. The CVO's own companion diagnostic proves it: a `TypeError` and a plain `Error` carrying the identical text `Timeout 60000ms exceeded` both wrongly retry and succeed; a single punctuation change flips the non-`TimeoutError` case to a correct refusal. **Capture stays HELD.** This is the SIXTH capture repair. The CTO's round-13 analysis states the design explicitly and prospectively: from this round on, a timeout is recognised ONLY by error TYPE or a deadline STATE the tool sets itself -- never by any comparison against message text, exact or otherwise -- and declares the old untyped-mock timeout cases HISTORICAL (expected to now report terminal, not a regression). No PRD addendum: every gap is a cell under an existing outcome. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R14.1 The rectangle (1 cell, id shape `IB-rtn-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rtn-1` | CAPTURE HELPER SIXTH REPAIR (C-S179 remains the source clock; folds in metadata-only `C-S174`/`C-S194`). The CTO's own design, restated verbatim as this cell's arms: **(a) WHAT COUNTS AS A TIMEOUT.** Exactly one of: `error instanceof playwright.errors.TimeoutError` OR `error.name === 'TimeoutError'`; OR a deadline STATE the tool sets itself (its own `setTimeout`/`AbortController` fires and sets a flag BEFORE the navigation settles, and the catch block reads that flag). NO comparison against any message string, exact or otherwise -- this removes the exact-message fallback entirely. **(b) THE ACCEPTANCE FIXTURE.** A VERSIONED, typed-timeout fixture: throws a genuine `TimeoutError`-named error, with a real deadline behind it where the tool's own timer is involved; written in the cell's own granted test directory under a NEW name; never edits `3.0.0_SA_CVO~B`'s committed diagnostics. **(c) ACCEPTANCE.** The CVO's R13 typed-pair companion, run UNMODIFIED, must now SPLIT: `TimeoutError` recovers; `TypeError` and plain `Error` carrying identical text are terminal. R11/R10 diagnostics unmodified. R12 diagnostic unmodified WITH THE BLOB PASSED EXPLICITLY (its `argv[2]` default is an old blob). R9/R8 diagnostics unmodified. **(d) THE OLD UNTYPED-MOCK CASES ARE NOW HISTORICAL** (R11 "same-origin timeout then clean", R12 "actual timeout positive control" -- both throw an untyped `Error`): EXPECTED to be terminal now; each diff against the historical result is reported as INTENDED, never as a regression. No production code bends to keep them green -- this is the explicit, prospective contract change: from this round on, retry means typed-or-deadline-state only. **(e) PACKAGING.** A new never-widen packet and both halves; the README's expected-hash line is updated in the SAME act as the publish. No host start, no MFA automation. **(f) GRADING.** The bar is unchanged: the four finite invariants from round 12. The JUDGMENT grade (the `R113` successor) is `3.0.0_SA_CVO~B`'s, never the issuer's. Also folds in metadata-only fixes, no publish replay: `C-S174` (attribute the diagnostic hash correctly and print its FULL value -- the battery's check currently compares `[:12]` only, make it compare the full hash); `C-S194` (finalize the result BEFORE pinning the proof; re-pin the R113 proof to the final result blob `af259448...` @`9423390c47`, not the STOPPED `586021b5`). | WK~13 (eighth invocation, same serial -- continuity of the `deliverables/<SERIAL>/**` ownership) | FWD-2 (serving; the `rti-6`/`rth-2` chain's remaining blocker) | -- |
+
+### R14.2 Edges and fanout
+
+One chain: **A** `rtn-1`. **fanout: 1 of 1 chain, cap 8.**
+
+### R14.3 Bounds carried (every order)
+
+The forward-looking-criterion bar; R-40 (content hash per artifact read AT the event); S56 vintage pins `path:line @ <commit-ish>`; NO LIVE VENDOR CALL; no host is started or stopped; a served-property change (a new publish) is packet + both never-widen halves BEFORE the act; never weaken an existing check to make a new case pass; the retry taxonomy is CLOSED at type-or-deadline-state ONLY, NEVER message text under any framing, exact or substring; `rti-6` stays PARKED; its un-park condition (1) is this round's `rtn-1`. **A sign-off half does not relax a bar** -- the explicit lesson from the CTO's own round-13 self-correction: a half either refuses a reading that conflicts with the issued BOUNDS, or routes the conflict to the bar's owner as a prospective change; it never accepts it inline.
+
+### R14.4 Not decided here
+
+Whether `rtn-1`'s repair is sufficient to re-open the ask to Andrew (`3.0.0_SA_CVO~B`'s successor grade, on the measured battery result, never assumed by the cut); `W10-S2` (stays PARKED, unchanged); `S116`/`W1-S47` (CTO's own lane); break-glass role deletion (CRO/Andrew); the 171 older stale rows (no bulk close).
+
+### R14.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-13 analysis's round-14 section (3 items: the sixth capture repair covering the type-or-deadline-state-only redesign, and two metadata-only fixes C-S174/C-S194) MINUS both metadata fixes (folded into `rtn-1`'s own arm, not separate cells -- same write surface, same worker's own deliverables folder, the identical pattern the CTO's own design used for round 13's C-S174/C-S187 and round 11's C-S160) = 1 cell, 0 uncovered, 0 invented by this seat. SAME GRAIN: one classification-redesign defect sharing one write surface (`capture-session.cjs`, the README, the new packet, a new versioned test fixture). INTENT: `rtn-1` repairs. STATE COHERENCE: `C-S153`, `C-S127`, `C-S125`/`C-S126` stay ARMED/host-byte-limited until `rtn-1`'s own judgment grade lands; the CTO's four-invariant bar is unchanged and inherited verbatim a second time, but its invariant (iii) reading is now sharpened (type-or-deadline-state, never message text under any framing) -- this cell does not re-litigate that reading, it implements it.
 
 ## R13. ROUND 13 -- THE RECUT ON THE ROUND-12 ANALYSIS (@a8d306eb71; slug @5a9a7eed81; v0.17, 2026-09-22, `2.0.0_SA_COO~B`)
 
