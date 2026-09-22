@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 11,
-  "decomp_version": "0.15",
+  "round": 12,
+  "decomp_version": "0.16",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -73,13 +73,43 @@
   "round10_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_10_20260922.md @703efac869",
   "round10_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v4.md @79d34e339c",
   "cells_round11": 1,
-  "cell_id_shape_round11": "IB-rtk-<n>"
+  "cell_id_shape_round11": "IB-rtk-<n>",
+  "round11_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_11_20260922.md @23d5fe2e6b",
+  "round11_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v5.md @d20200b92c",
+  "cells_round12": 1,
+  "cell_id_shape_round12": "IB-rtl-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R12. ROUND 12 -- THE RECUT ON THE ROUND-11 ANALYSIS (@23d5fe2e6b; slug @d20200b92c; v0.16, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 11 closed 0 of 95 open, 0 of 338 worker items undispositioned. `R107-AC3` FAIL (`3.0.0_SA_CVO~B`'s L9, `ADJUDICATION_v8.md`, rows C-S169-177): the round-11 repair genuinely closes both R10 residuals, but TWO further defects surfaced from its OWN new diagnostic -- `C-S170` (ARMED, pre-existing, not introduced this round): the final `refuseIfLatched()` runs BEFORE `await context.storageState()`, so a foreign navigation during that await still latches yet the write proceeds; `C-S171` (ARMED, a NEW regression this round): the response listener carries no navigation filter, so an ordinary same-origin PAGE's foreign-origin SUBRESOURCE (an image, a font, an analytics call) wrongly latches a terminal refusal even though the page itself never left the portal. **Capture stays HELD.** This is the FOURTH capture repair; the CTO's round-11 analysis names the recurring cause explicitly -- each prior repair guarded a POINT in the lifecycle (a specific navigation, a specific retry) rather than the INVARIANT (no bytes reach disk unless the origin was never violated), and states round 12's design to guard the invariant at the one place the file is written, restated verbatim below as the cell's arms, not re-derived. No PRD addendum: every gap is a cell under an existing outcome. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R12.1 The rectangle (1 cell, id shape `IB-rtl-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rtl-1` | CAPTURE HELPER FOURTH REPAIR (C-S170, C-S171; `C-S153`/`C-S127` stay ARMED until this passes). The CTO's own design, restated verbatim as this cell's arms: **(a) THE INVARIANT -- no bytes reach disk unless the latch is clear AFTER the state was captured.** Capture `storageState()` to MEMORY, no `path` argument. Then check the latch. Only then write the file, atomically (write to a temp file, then rename). Check the latch AGAIN immediately after the rename; if it has set, delete the file and exit non-zero. This makes the TIMING of any navigation irrelevant, because the check follows the last await that could admit one -- closes `C-S170`. **(b) THE OBSERVER'S SCOPE IS MAIN-FRAME NAVIGATIONS ONLY.** `request.isNavigationRequest()` AND `frame === page.mainFrame()`, on BOTH the request and the response paths (the request path already has this; the response path does not, which is exactly `C-S171`'s regression). Foreign subresources never latch -- the property being guarded is WHERE THE PAGE IS, not what it loads. **(c) RETRY TAXONOMY -- behavior and documentation must agree, literally.** The code retries EXACTLY the set the README lists: a timeout, a 5xx response, a marker-absent-after-load. Any other outcome is a terminal refusal with its cause printed. A foreign origin is never retryable, under any framing (folds in `W13-S1`'s carried finding: a `404` or a generic non-timeout navigation error must NOT silently retry alongside the three named causes). **(d) ACCEPTANCE.** `3.0.0_SA_CVO~B`'s R11, R10, R9 and R8 diagnostics, run UNMODIFIED, must all hold: R11 must now refuse the final-await case AND must succeed on BOTH same-origin twins (the navigation twin and the resource twin). A single-difference pair for EACH of (a) and (b), each with its own positive control. **(e) PUBLICATION.** A new never-widen packet and both halves; the README's expected-hash line is updated in the SAME act as the publish, exactly as `IB-rtk-1`'s own fourth pass did it. No host start, no MFA automation. **(f) THE JUDGMENT GRADE (successor to `R107-AC3`) is `3.0.0_SA_CVO~B`'s, never the issuer's.** | WK~13 (fifth invocation, same serial -- continuity of the `deliverables/<SERIAL>/**` ownership) | FWD-2 (serving; the `rti-6`/`rth-2` chain's remaining blocker) | -- |
+
+### R12.2 Edges and fanout
+
+One chain: **A** `rtl-1`. **fanout: 1 of 1 chain, cap 8.**
+
+### R12.3 Bounds carried (every order)
+
+The forward-looking-criterion bar; R-40 (content hash per artifact read AT the event); S56 vintage pins `path:line @ <commit-ish>`; NO LIVE VENDOR CALL; no host is started or stopped; a served-property change (a new publish) is packet + both never-widen halves BEFORE the act; never weaken an existing check to make a new case pass; the retry taxonomy is CLOSED (exactly three named causes) and NEVER widened past it; `rti-6` stays PARKED; its un-park condition (1) is this round's `rtl-1`.
+
+### R12.4 Not decided here
+
+Whether `rtl-1`'s repair is sufficient to re-open the ask to Andrew (`3.0.0_SA_CVO~B`'s successor grade, on the measured battery result, never assumed by the cut); `W10-S2` (stays PARKED, unchanged); `S116`/`W1-S47` (CTO's own lane); break-glass role deletion (CRO/Andrew); the 166 older stale rows (no bulk close).
+
+### R12.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-11 analysis's round-12 section (2 items: the fourth capture repair covering C-S170/C-S171/W13-S1's retry taxonomy, and C-S174's metadata reconciliation) MINUS C-S174 (already satisfied -- the recovery drain @`495359ce62`, independently re-verified by the issuer this tick: `DEPLOYED-VERIFIED` state, correct hash, corrected packet row, both `W13-S1`/`W13-S2` present in `surprises`, historical framing preserved; no further commit needed) = 1 cell, 0 uncovered, 0 invented by this seat. SAME GRAIN: one repairable defect pair sharing one write surface (`capture-session.cjs`, the README, the new packet). INTENT: `rtl-1` repairs. STATE COHERENCE: the invariant-based design is chosen specifically because the prior three repairs each fixed a POINT and left the INVARIANT unguarded -- this round's four-postulate record inherits that lesson rather than repeating the same class of gap a fifth time.
 
 ## R11. ROUND 11 -- THE RECUT ON THE ROUND-10 ANALYSIS (@703efac869; slug @79d34e339c; v0.15, 2026-09-22, `2.0.0_SA_COO~B`)
 

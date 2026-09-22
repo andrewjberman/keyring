@@ -8262,3 +8262,26 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Two DIFFERENT, byte-distinguishable copies of the same logical file exist and were each hashed correctly by their own instrument: the git blob (LF, f03666ef...) is what git stores, what this worker published to S3, and what both never-widen halves independently re-derived; the CRLF-converted working-tree checkout (fffef738...) is what the diagnostic tool actually read and hashed every time it was run (including this worker's original third-pass evidence files and a fresh re-run just now). The two are behaviorally identical (verified: diffing the diagnostics' full output excluding the source-identifying fields shows zero difference), so R107-AC1's PASS verdict is not put in doubt -- but a reader comparing the packet's corrected hash against the committed diagnostic evidence's sourceSha256 field would see a mismatch that looks like an unresolved discrepancy rather than a checkout-time line-ending artifact with no behavioral consequence."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S117",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~B",
+  "surfaced_at": "2026-09-22T04:44:00Z",
+  "one_line": "This issuer drained and removed a spawned worker's worktree/branch at ~04:18Z after seeing its expected commits land, ~26 minutes before that same subagent invocation's own task-notification actually arrived -- inferring the subagent's turn had ended from commits alone, when only the notification (or a final WORKER REPORT) is the authoritative signal. The worker recovered cleanly with no work lost; the inference was still wrong and is corrected here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "GRADUATED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "This issuer drained worker 0.9.0_WK_IRPT_BCKEND~13's IB-rtk-1 fourth-pass branch (commit db25f4a39c) and removed its worktree/branch at 2026-09-22 ~04:18Z, inferring the pass was complete from three commits having landed (0670ef16cd ledger-open, 60bab95e58 publish, 897171eb53 a surprise row). The spawning Agent call for that same worker invocation did not return its completion notification until ~04:44Z, roughly 26 minutes later -- the subagent process was still running and had more to commit (the proof-of-spec instance and result.md updates for the completed publish) when this issuer removed its worktree."
+    ]
+  },
+  "spec_asserts": "A worker's task is complete, and its worktree safe to remove, once its branch shows the commits the issuer expected to see for that arm of its order.",
+  "world_is": "A commit landing on a branch is evidence the WORKER PROCESS wrote it; it is not evidence the SUBAGENT'S TURN has ended. Only the task-notification (or an explicit final WORKER REPORT message) is the authoritative 'this subagent has stopped and will write nothing further' signal -- the same distinction Rule 22's STATE axis draws (DESIRED != APPLIED != EXERCISED) applied to a different pair: COMMITTED != THE AGENT IS DONE. The worker recovered correctly here (git cat-file -t + merge-base --is-ancestor before proceeding, re-provisioning off CLOUD HEAD rather than assuming anything was lost) and no work was actually lost, but a worker that recovers less carefully, or an order whose remaining arm needed the now-removed worktree's uncommitted state, would have been genuinely harmed by this.",
+  "notes": "Remedy: before removing a spawned worker's worktree/branch, confirm its task-notification has actually arrived (or its final WORKER REPORT message has been read) -- never infer completion from commits alone, even commits that look terminal. If a branch must be drained before the subagent returns, leave the worktree in place and let the subagent discover and recover from a missing worktree on its own, exactly as this one did, rather than trying to guess whether it has finished. GRADUATED here because the round-11 CVO/CTO already read and dispositioned the resulting worktree-reconciliation question (C-S174, W13-S2) as part of this same round; this row is the issuer's own process record of why it happened, not a new open finding."
+}
+```
