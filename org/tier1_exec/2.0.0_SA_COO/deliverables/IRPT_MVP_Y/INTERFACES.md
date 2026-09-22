@@ -457,3 +457,24 @@ revision1, immutable=true), separately checked by45tests/24subtests.
 CVO local identity reviewb43fba4bd3 reports40supplied/18subtests and10independent
 PASS. Actual maintained M sources and local-to-vendor upload/readback remain
 pending. This review does not reopen or pass any integrated criterion.
+
+## Normalized input to vendor upload (23:45Z)
+
+Backendc2a01fb3f8 adds ycharts/generate/normalized_input.py. After current
+authorization and retained-artifact verification, prepare_normalized_upload(frozen)
+verifies the exact input and returns rows for recipe.step_upload plus local
+identity_bindings. Only canonical identifier and exact USD quantity go into the
+measured Symbol column. A collision across namespaces that this column cannot
+represent refuses; no vendor prefix or gross/net/signed conversion is guessed.
+
+After the worker records/fences its upload mutation intent and calls the actual
+recipe, bind_normalized_upload(frozen, upload_checkpoint) rechecks exact input,
+positive upload record identity, successful Dollar reconciliation, every unique
+returned security ID and exact weighting, and required create display fields.
+It returns detached vendor rows for recipe.items_body and a local-to-returned
+identity record bound to input_id/content_sha256. The measured recipe requires
+exact symbol echo; different vendor IDs require separately evidenced crosswalk
+support and currently refuse. Both functions are pure; they do not provide
+authorization, retention, mutation claims, vendor execution or READY publication.
+Flat package dependencies include intake/portfolio.py and recipe/transport.
+15 bridge controls;46 combined tests/7subtests PASS. Independent review pending.

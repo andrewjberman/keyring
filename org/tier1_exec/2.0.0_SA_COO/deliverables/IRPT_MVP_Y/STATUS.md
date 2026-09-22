@@ -160,6 +160,40 @@ No new workers, no push, no deployment or vendor egress.
 - All14 integrated criteria remain NOT_EVALUATED. No READY, live/vendor,
   provisioning, deployment or render acceptance follows from these local checks.
 
+## Integration update (23:45Z)
+
+- Backendc2a01fb3f8 adds pure normalized_input bridge. It verifies the frozen
+  input digest, uses declared canonical identifiers and exact dollar text for
+  the actual upload recipe, then binds actual returned rows before create.
+  Local keys are retained as evidence, never passed as invented vendor IDs.
+  Missing/duplicate/changed echoes, absent create fields, floats, namespace
+  collisions and unsupported signed positions refuse.15 new controls PASS;
+  combined normalizer/recipe46 tests plus7subtests PASS; final code gate2/2.
+  Initial lint refusals were repaired before commit. No transport is called by
+  the bridge, and authorization, artifact retention and mutation fencing remain
+  caller obligations. CVO has begun bounded review of this exact candidate.
+- CVO portal review4912978ac3 reports11 supplied/50assertions,9 independent
+  controls/57assertions and TypeScript PASS at2ddf111467. Actual handlers were
+  exercised with manual React hook storage, not browser scheduling/rendering.
+  In-memory retry/refresh/correction/Overview behavior passed these controls.
+  Reload loss and the explicit100-row display cap remain recorded limitations.
+  P consumed UI at0acd8e7c; R-P09 closure65a3aedf72 is independently peer-attributed.
+- Complete CTO IRPT-M-BASIS-01 atb8de4c3899 read. Custody root and SmartX
+  longEquity+cash gross AUM remain distinct; net equity/signed positions/cash
+  retain their own basis. No cash plug or conversion is introduced by Y.
+- M loader candidate554fc37e998554736ad98ccbfd872d400a9153ff inspected from
+  exact committed source: v2 pins full header/part inventory, selected-account
+  object versions/hashes/lengths,4MiB assembly and64MiB reads. Additional request/
+  count caps are pending. This raw loader is neither authorization nor accepted
+  normalized custody. Y has not merged it as a runnable normalized input port;
+  M explicitly retains the resolver/price/custody delivery obligation. M was
+  asked for the final loader/manifest limits and current-access handoff.
+- Existing LiveClient.getJobStatus is available, but listAnalysisRequests refuses
+  NoDeclaredRoute and getAnalysisReport takes custody-style scope references.
+  P asked for exact owned-request history/report recovery API without invented
+  custody scope, including current authorization and accepted revision binding.
+  Report reopening and durable reload recovery remain unfinished.
+
 ## Compiler observations
 
 Earlier candidates and findings (superseded where the current section says so):
