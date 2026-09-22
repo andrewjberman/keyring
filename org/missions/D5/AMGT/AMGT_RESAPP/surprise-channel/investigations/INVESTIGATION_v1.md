@@ -11796,6 +11796,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The served path does only the work its response needs.",
     "world_is": "Every print pays for a text extraction nobody receives.",
     "notes": "Per the CTO (msg 24170): a latency cell only if rk-97 misses a target, AND in any case carried into chain G's FIRST adapter-touching cell on its own merits (dead work). Any removal must first confirm no caller reads the extracted text (a whole-repo census) and ride the pre-deploy closure check."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W95-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~95",
+    "surfaced_at": "2026-09-22T06:20:00Z",
+    "one_line": "AC4's order-verbatim no_new_refusal.sh reads 'arms old 100 new 100', not the order's stated 'arms old 106 new 106'; the flip/new_refusals lines match the order exactly (5 DENY->PASS, 0 PASS->DENY, new_refusals 0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC4 actual stdout this session: 'arms old 100 new 100' / 'flips 5 DENY->PASS 5 PASS->DENY 0' / (5 FLIP lines, each 'DENY -> PASS', each an S209 quoted-positive name) / 'new_refusals 0'.",
+        "grep -c '^  PASS\\|^  FAIL' on both .scratch/r95/suite_old.txt and .scratch/r95/suite_new.txt = 106 each (the suite itself prints all 106 check_as/check arms, including the 10 new S209 arms).",
+        "The comparator's own python regex '^  (PASS|FAIL)  (.*?)\\s+-> (PASS|DENY)' requires the verdict token to be exactly PASS or DENY; 6 pre-existing arms (unrelated to this cell -- N5/N6 rebase-remedy checks at :37-38 and four F-XXX/audit-log checks at :153-156, all present before this cell's edit) print a custom verdict word ('ALLOW', 'in sync', 'coherent', '4 record(s)', 'clean') that the regex does not match, so the comparator silently drops them from its own count -- identically in both the OLD-hook run and the NEW-hook run (same six line numbers, same text, in both suite_old.txt and suite_new.txt)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4's <expect>: '\"arms old 106 new 106\"; \"flips 5 DENY->PASS 5 PASS->DENY 0\" ... \"new_refusals 0\"'.",
+    "world_is": "The verbatim comparator script (written from the order's fenced text, unedited) prints 'arms old 100 new 100' because 6 of the suite's 106 printed arms use a non-PASS/DENY verdict word its regex does not capture -- a pre-existing suite characteristic, not introduced by this cell's diff, and present identically on both sides of the comparison (so the flip/new-refusal detection itself is unaffected: the same six arms are simply invisible to the comparator on both runs, and every S209 arm and every pre-existing PASS/DENY arm IS counted and compared).",
+    "notes": "Per the REFUSAL CLAUSE, this worker records the actual output rather than editing the order-verbatim no_new_refusal.sh (out of scope: the order names it as text to write VERBATIM, not to fix) or the suite's pre-existing check() call sites at :37-38/:153-156 (outside RULED item 3's :286-303 confinement and outside this order's <paths>). The substance AC4 exists to prove -- exactly 5 flips, all DENY->PASS, all S209 quoted-positive names, 0 new refusals -- is measured and matches the order's ruled expectation; only the literal printed denominator differs from the order's stated '106' because of the regex gap above. Left for the CVO/CTO to rule whether the comparator's regex should widen to any non-empty verdict word, in a future cell."
   }
 ]
 ```

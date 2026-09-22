@@ -284,9 +284,31 @@ if [ -n "$HOOK_CWD" ] && [ -d "$HOOK_CWD" ]; then
     [ -n "$_cwdroot" ] && REPO="$_cwdroot"
 fi
 if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git[[:space:]]+-C[[:space:]]+[^[:space:]]+'; then
-    _c=$(printf '%s' "$CMD" | sed -n 's/.*git[[:space:]]\+-C[[:space:]]\+\([^[:space:]]\+\).*/\1/p' | head -1)
+    _rest=$(printf '%s' "$CMD" | sed -n 's/.*git[[:space:]]\+-C[[:space:]]\+\(.*\)/\1/p' | head -1)
+    case "$_rest" in
+        \"*)
+            _q="${_rest#\"}"
+            case "$_q" in
+                *\"*) _c="${_q%%\"*}" ;;
+                *) _c="" ;;
+            esac
+            ;;
+        \'*)
+            _q="${_rest#\'}"
+            case "$_q" in
+                *\'*) _c="${_q%%\'*}" ;;
+                *) _c="" ;;
+            esac
+            ;;
+        *)
+            _c=$(printf '%s' "$_rest" | sed -n 's/^\([^[:space:]]\+\).*/\1/p')
+            ;;
+    esac
     case "$_c" in
         /*) REPO="$_c" ;;
+        [A-Za-z]:/*) REPO="$_c" ;;
+        [A-Za-z]:'\'*) REPO="$_c" ;;
+        "") : ;;
         *)  REPO="$WS/$_c" ;;
     esac
 # ALSO honour a leading `cd <path> && git ...` -- the SUBMODULE shape (MSTR/DT finding 2026-08-11:
@@ -294,10 +316,31 @@ if printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])git[[:space:]]+-C[[:space:]
 # named the wrong branch. Harmless that night because BOTH branches were shared -- but the INVERSE is
 # the hazard: outer on a SCRATCH branch + a shared-branch push from inside the submodule would not
 # have fired at all. A gate that reads the wrong repo is silently absent exactly where LD-0367 needs it.
-elif printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])cd[[:space:]]+[^[:space:]]+[[:space:]]*(&&|;)'; then
-    _c=$(printf '%s' "$CMD" | sed -n 's/.*[^[:alnum:]_-]\?cd[[:space:]]\+\([^[:space:];&|]\+\).*/\1/p' | head -1)
+elif printf '%s' "$CMD" | grep -qE '(^|[[:space:];|&(])cd[[:space:]]+("[^"]*"|'"'"'[^'"'"']*'"'"'|[^[:space:]]+)[[:space:]]*(&&|;)'; then
+    _rest=$(printf '%s' "$CMD" | sed -n 's/.*[^[:alnum:]_-]\?cd[[:space:]]\+\(.*\)/\1/p' | head -1)
+    case "$_rest" in
+        \"*)
+            _q="${_rest#\"}"
+            case "$_q" in
+                *\"*) _c="${_q%%\"*}" ;;
+                *) _c="" ;;
+            esac
+            ;;
+        \'*)
+            _q="${_rest#\'}"
+            case "$_q" in
+                *\'*) _c="${_q%%\'*}" ;;
+                *) _c="" ;;
+            esac
+            ;;
+        *)
+            _c=$(printf '%s' "$_rest" | sed -n 's/^\([^[:space:];&|]\+\).*/\1/p')
+            ;;
+    esac
     case "$_c" in
         /*) [ -d "$_c/.git" ] || [ -f "$_c/.git" ] && REPO="$_c" ;;
+        [A-Za-z]:/*) { [ -d "$_c/.git" ] || [ -f "$_c/.git" ]; } && REPO="$_c" ;;
+        [A-Za-z]:'\'*) { [ -d "$_c/.git" ] || [ -f "$_c/.git" ]; } && REPO="$_c" ;;
         "") : ;;
         *)  { [ -d "$WS/$_c/.git" ] || [ -f "$WS/$_c/.git" ]; } && REPO="$WS/$_c" ;;
     esac
