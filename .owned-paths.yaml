@@ -51,6 +51,54 @@ worker_grant:
 # =========================================================================
 lanes:
 
+  # Andrew-direct IRPT completion, CTO grantor 2026-09-22.
+  # Preserve incumbent AE permissions; add only the exact implementing COO.
+  IRPT_COMPLETION_P:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~P
+    description: "IRPT P direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
+  IRPT_COMPLETION_M:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~M
+    description: "IRPT M direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
+  IRPT_COMPLETION_Y:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~Y
+    description: "IRPT Y direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
+
   # =========================================================================
   # READ THIS BEFORE ASKING FOR A TILDE-LANE GRANT  (added 2026-07-29, COO)
   #
@@ -935,6 +983,59 @@ lanes:
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
 paths:
+
+  # Bounded IRPT completion grants; source commits only, no deploy authority.
+  "infra/aws/lambda/investor-reporting/reports/**":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/performance/**":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/export/**":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/_render_identity/**":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/_contracts/**":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/DEPENDENCY_REGISTER.md":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/README.md":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/terraform/investor-reporting/**":
+    lane: IRPT_COMPLETION_P
+    note: "CTO grantor; exact P owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/_scope/**":
+    lane: IRPT_COMPLETION_M
+    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/_ids/**":
+    lane: IRPT_COMPLETION_M
+    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/_authz/**":
+    lane: IRPT_COMPLETION_M
+    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/directory/**":
+    lane: IRPT_COMPLETION_M
+    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/holdings/**":
+    lane: IRPT_COMPLETION_M
+    note: "CTO grantor; exact M owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/intake/**":
+    lane: IRPT_COMPLETION_Y
+    note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/ycharts/**":
+    lane: IRPT_COMPLETION_Y
+    note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
+  "infra/aws/lambda/investor-reporting/ops/**":
+    lane: IRPT_COMPLETION_Y
+    note: "CTO grantor; exact Y owner under CONTRACT v1.2. Existing implementation/review/deploy gates unchanged."
 
 # --- PROJECT TREE lanes (spec s.6, Andrew-ruled 2026-09-02; prereq 4, CTO under the COO/CTO split @a8d63f097c) ---
   org/missions/MACROS.yaml:
