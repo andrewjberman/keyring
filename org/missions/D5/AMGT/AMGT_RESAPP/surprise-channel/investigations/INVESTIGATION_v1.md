@@ -12418,6 +12418,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "No schedule exists for it, and the served axis has not moved in 12 days.",
     "disarm_owner": "2.0.0_SA_COO~Z, in the trial's L-PX cell (round 30) for Lenovo; the fleet-wide daily leg stays Andrew's cadence call.",
     "notes": "Named so the page's price lists are not read as fresh once the edge route lands."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W116-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~116",
+    "surfaced_at": "2026-09-22T19:38:46Z",
+    "one_line": "AC0's precondition 'Both halves ledger/NEVER_WIDEN_ROUND30_RK116_{COO,CTO}_HALF.md are SIGNED' is unmet: only the COO half is on file; the CTO half does not exist in the worktree at all, so no live act (no pull) was attempted.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls of org/missions/D5/AMGT/AMGT_RESAPP/ledger/ at worktree HEAD (branch wk-amgt-30-116, base bf5c280e48) shows exactly one file matching RK116: NEVER_WIDEN_ROUND30_RK116_COO_HALF.md; NEVER_WIDEN_ROUND30_RK116_CTO_HALF.md is absent (ls rc=2, No such file or directory).",
+        "The COO half itself (ledger/NEVER_WIDEN_ROUND30_RK116_COO_HALF.md:1-5) states its own status as DRAFT and names the CTO half as written by 1.0.0_SA_CTO~Z at that same path, quoting CTO msg 24328: 'I write each CTO half as its order is cut; send me the paths.' -- i.e. the pair was not yet complete when the order was cut for spawn."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order AMGT_RESAPP.TO-AMGT-rk-116.lenovo-model-block.md s.\"PRECONDITIONS, checked by AC0\": \"Both halves ledger/NEVER_WIDEN_ROUND30_RK116_{COO,CTO}_HALF.md are SIGNED.\" The spawn prompt: \"read BOTH halves of its never-widen pair before any live act ... the CTO half must be on file too -- if it is absent, STOP with a BLOCKING row and do not pull.\"",
+    "world_is": "Only the COO half exists on disk, and it is marked DRAFT (not signed) rather than SIGNED. The CTO half file does not exist anywhere in the worktree. AC0 as written cannot read 'pair_cto True'; the worker did not run any Bloomberg call, AC1's live boundary, the pull, the derive, or open the deploy ledger.",
+    "disarm_owner": "2.0.0_SA_COO~Z (issuer) to obtain 1.0.0_SA_CTO~Z's written, signed CTO half at ledger/NEVER_WIDEN_ROUND30_RK116_CTO_HALF.md before this cell is re-spawned or resumed.",
+    "notes": "No S3 call, no Bloomberg call and no ledger-open were attempted; the worker's write surface (deliverables + this row) is the entirety of this cell's footprint. AC0 through AC6 are recorded in the proof-of-spec instance as BLOCKED/not-run with this row cited."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W116-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~116",
+    "surfaced_at": "2026-09-22T19:46:08Z",
+    "one_line": "integrations/bloomberg/auth/bbg_credentials.py --check prints the Bloomberg terminal USERNAME in cleartext (user='<value>') inside its own 'CREDENTIAL: OK' fingerprint line, contradicting its own module docstring's promise that --check prints 'a FINGERPRINT (lengths + a sha256 head), never the value ... without ever displaying it.'",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Module docstring, bbg_credentials.py:16-20 (as read at this worktree's HEAD): '--check verifies resolution and prints a FINGERPRINT (lengths + a sha256 head), never the value -- so an operator can confirm the secret is present and correct-shaped without ever displaying it.'",
+        "fingerprint() at bbg_credentials.py:84-89 builds the string as f\"user={cred['username']!r} user_len=... pw_len=... pw_sha256=...\" -- the username is interpolated VERBATIM (repr'd), not hashed or length-only, while only the password is hashed. main() at :105 prints it under the banner 'CREDENTIAL: OK', immediately followed by :106's own claim 'no credential value is ever printed by this tool'.",
+        "Live run this session (AC0's local half, .scratch/r116/ac0.py, no Bloomberg call): stdout literally contained \"user='<the live BBG_TERMINAL_USER value>' user_len=12 pw_len=9 pw_sha256=b52a0db305ea\" -- the username value itself is withheld from this row and from every artifact this worker writes, per the spawn instruction 'never print a credential value'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "bbg_credentials.py's own docstring: '--check ... prints a FINGERPRINT (lengths + a sha256 head), never the value ... without ever displaying it' and '⛔ NEVER add a mode that prints the password.'",
+    "world_is": "The password half honors that (pw_len + pw_sha256 only). The username half does not: fingerprint() prints the raw username string, so --check displays one half of the credential pair in full on every run, into stdout/terminal scrollback/any capturing log.",
+    "disarm_owner": "owner of integrations/bloomberg/auth/bbg_credentials.py (no single seat inferred here) -- change fingerprint()'s username field to a length/hash form matching the password's treatment, or narrow the docstring's claim to name the password only.",
+    "notes": "Found off-task while running AC0's local (non-vendor) half for AMGT-rk-116 (this cell's own live act never ran; see S1). Not remediated here -- no code file is in this cell's <paths>, and the fix is out of this cell's scope. This worker did not print the username value in this row, its report, or its proof-of-spec instance."
   }
 ]
 ```
