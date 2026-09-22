@@ -129,7 +129,7 @@ the per-tab legibility verdict.
    `portal/CLAUDE.md` already records this (`Panel variant="chart"/"mixed"` resolve to the band; 4,887 dependent
    light-on-dark idioms) and calls such a page the defect. Named here so nobody reports it as new.
 
-<status>pending</status>
+<status>complete</status>
 <round>31</round>
 <slot>~125</slot>
 <fabric>site-z</fabric>
