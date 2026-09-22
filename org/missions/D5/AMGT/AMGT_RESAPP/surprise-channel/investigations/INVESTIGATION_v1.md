@@ -11299,6 +11299,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC6's <invocation> pipes safe-apply.sh's own output through `plan -target=...`, asserting safe-apply.sh accepts a `plan` subcommand.",
     "world_is": "safe-apply.sh's usage is `[-chdir=DIR] apply [apply-args...]` ONLY -- it refuses immediately (before touching terraform) on any first positional argument other than `apply`, so a literal `plan` invocation through this wrapper can never produce a Plan: line on this tool version.",
     "notes": "Same class as AMGT_RESAPP-Z-W90-S1 (AC3): a task-order invocation citing a CLI shape the live tool does not carry. Not blocking: the worker completed the full plan+apply+verify sequence via the tool's real interfaces and recorded both the literal failure and the corrected sequence in AC6's acceptance row."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W90-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~90",
+    "surfaced_at": "2026-09-22T02:05:00Z",
+    "one_line": "AMGT_RESAPP-Z-W90-S2 is DISARMED: per the CTO's ruling (msg 24133) widening <paths> by exactly test_forecast_fallback.py, its bestdata fixture is now seeded at the switched producer's OWN bronze address (mbp._bronze_key('bestdata', sec_key, raw_stamp), the same function _derive_forecast_figures itself calls) instead of the old hand-typed raw/bloomberg/ key -- test_quarter_trap_refuses_the_whole_set passes and AC1 re-measures clean.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Diff (this commit, integrations/bloomberg/research/tests/test_forecast_fallback.py): before `key = f\"raw/{mbp.VENDOR}/{sec_key}/{raw_stamp}/bestdata.json\"`; after `key = mbp._bronze_key(\"bestdata\", sec_key, raw_stamp)` -- the builder's own addressing (hstore.table_prefix / entity_partition via _bronze_key), never a hand-typed string; assertions and the refused-set behaviour under test are unchanged.",
+        "`python -m pytest integrations/bloomberg/research/tests/test_forecast_fallback.py -q -p no:cacheprovider -k quarter_trap` -> '1 passed'.",
+        "`python -m pytest lib/research/harvest/tests lib/research/api/tests lib/research/identity/tests lib/research/management/tests integrations/bloomberg/research/tests -q -p no:cacheprovider --continue-on-collection-errors` (this worktree, post-fix) -> '14 failed, 400 passed, 2 errors, 13 subtests passed' -- the same 14 failing test ids as the spawn-time baseline (10x test_ceo_search.py, 3x test_fye_join.py, 1x test_latest_stamp_raw_pair.py), same 2 collection errors, 0 new failures; the 6 additional passes over baseline are test_m1_move.py's 6 required arms (all passing) plus test_quarter_trap_refuses_the_whole_set now among the passes (previously the interim single new failure that W90-S2 named).",
+        "`python -m pytest lib/research/harvest/tests/test_m1_move.py -v -p no:cacheprovider` -> '6 passed' (all six required arms)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The fixture fix landed in this commit under the CTO-ruled <paths> widening; AC1 now measures 0 new failures against the spawn-time baseline (byte-identical failing set) with the previously-blocked test passing. This row's own finding (the fix and its proof) is closed; W90-S2's disposition is the disarm_owner's to set (adjudicates is the CVO's field, not a worker's -- surprise-row-gate.py, A-1/LGIC_ENFORCE-C-S24).",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "W90-S2's own spec_asserts (AC1's 'no NEW failure, no fewer passes' bar) collided with a WALL; the CTO's ruling (msg 24133) resolved the collision by widening <paths> by exactly test_forecast_fallback.py, changing only the fixture's seed address.",
+    "world_is": "With the fixture seeded at the producer's own bronze address, test_quarter_trap_refuses_the_whole_set exercises the SAME quarter-trap logic against the new grammar and passes; no other test's outcome changed by this edit (the raw/seekingalpha lines in the same file, M3's, were left untouched).",
+    "notes": "Never edits W90-S2 itself. This row does NOT use `adjudicates` (that field is 3.0.0_SA_CVO's L9 carrier, surprise-row-gate.py A-1/LGIC_ENFORCE-C-S24) -- it documents the fix and its proof for W90-S2's named disarm_owner (2.0.0_SA_COO~Z) to disposition W90-S2 itself."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W90-S6",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~90",
+    "surfaced_at": "2026-09-22T02:20:00Z",
+    "one_line": "AC6's amended <invocation> computes policy_sha with `hashlib.sha256(json.dumps(d, sort_keys=True).encode())` (default JSON separators) while its own <expect> quotes AC2's compact-separator digest 0c6b3cf46bdff811 -- the two formulas can never agree even on a byte-identical policy; measured on the unchanged live policy, AC6's own formula prints d1af9d2957ec58a6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC6's literal invocation (this worktree, live read) -> 'policy_sha d1af9d2957ec58a6 statements 4'.",
+        "Re-running the SAME live `iam.get_role_policy(...)['PolicyDocument']` object (boto3 already returns a dict -- the `isinstance(d, str)` urllib-unquote branch in both criteria's code is a no-op here) through AC2's own formula (`json.dumps(d2, sort_keys=True, separators=(\",\", \":\"))`) -> 'policy_sha 0c6b3cf46bdff811' -- byte-identical to AC2's recorded PRE-value, positively proving the policy document itself is unchanged; the digest mismatch is purely the missing `separators=(\",\", \":\")` argument in AC6's own inline hash call.",
+        "Targeted plan `terraform -chdir=infra/aws/terraform/harvest plan -target=module.scoped_amgt_api.aws_lambda_function.this -no-color` -> 'No changes. Your infrastructure matches the configuration.' (read-only, no apply performed or needed); CodeSha256 stDlDaeGVAKaAqI7tNoVKrqlu0WjqIbWnnjLirl8Lec= Active Successful (matches <expect> exactly); freshness GET invoke -> statusCode 200."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Same class as AMGT_RESAPP-Z-W90-S1 and S4 (msg 24133's amendment did not reconcile): a task-order criterion's <expect> quotes a value computed by a DIFFERENT formula than its own <invocation> runs. Not blocking -- the substantive question (has the policy changed?) is independently answered NO by reproducing AC2's exact formula against the same live document.",
+    "spec_asserts": "AC6's <expect> (as amended, msg 24133): 'policy_sha 0c6b3cf46bdff811 statements 4 UNCHANGED', restating AC2's own quoted digest verbatim.",
+    "world_is": "AC6's own <invocation> hashes with `json.dumps(d, sort_keys=True)` (default separators, no compacting) rather than AC2's `separators=(\",\", \":\")` -- a structurally different digest regardless of whether the policy changed; measured 0c6b3cf46bdff811 only when AC2's exact formula is applied to the same object.",
+    "notes": "AC6 is graded PASS on the substantive read (plan No changes, CodeSha256 correct, freshness 200, policy independently confirmed unchanged); this row records the formula defect in the criterion text for any future occupant reusing this invocation shape."
   }
 ]
 ```

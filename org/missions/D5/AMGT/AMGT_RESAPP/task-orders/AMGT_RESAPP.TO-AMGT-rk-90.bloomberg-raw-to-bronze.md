@@ -191,7 +191,7 @@ reverted by a NEW commit (never a reset).
 **Issuer notes:** spawn only after round 21's L10 and with the pair complete. M2 (`AMGT-rk-91`) waits on this order's
 complete status and read-back. Q1 (model_block served format) is pitched to `1.0.0_SA_CTO~Z` beside this order.
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
