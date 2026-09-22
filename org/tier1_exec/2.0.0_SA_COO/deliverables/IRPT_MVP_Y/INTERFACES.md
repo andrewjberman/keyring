@@ -403,3 +403,33 @@ resolution_revision result to M, with local-keyed prices and separate future
 vendor-readback binding. This proposal is not yet an implemented shared contract.
 Captured template comparison entries remain recipe configuration; firm/advisor/
 client profile values require maintained authorized sources.
+
+## Agreed local security resolution (23:17Z)
+
+M agreed the exact additive fields at23:13:12Z. Y source d99a072742 implements:
+resolver(identifier, namespace) returns security_key, canonical_identifier,
+canonical_identifier_namespace (TICKER/CUSIP/CASH), resolution_revision. Example
+test-only resolution is security_key="custody-key-SPY", canonical_identifier="SPY",
+canonical_identifier_namespace="TICKER", resolution_revision="pinned-dimension".
+Real adapters must use maintained local keys and pinned source receipts; these
+test spellings are not runtime defaults.
+
+Frozen evidence and consolidated rows carry identity_kind=CANONICAL_SECURITY,
+security_key and those canonical fields. They carry NO security_id. Holdings also
+declare identity_kind=CANONICAL_SECURITY. Prices are keyed by security_key and
+must repeat that exact key, requested date, USD, positive decimal price and source_revision.
+The canonical cash token is $:CASH with CASH namespace; only M's explicitly
+identified cash source may produce it. One local key with conflicting identity/
+revision, one canonical alias mapping to two keys, and mixed local/vendor
+resolutions refuse the entire normalization. Duplicate source position rows
+consolidate only under one identical resolution. Legacy captured vendor-resolution
+documents remain readable unchanged; no local ID is synthesized into that branch.
+
+No downstream vendor identity is asserted. The future worker must translate
+canonical identifiers to its upload request and retain/verify actual returned
+vendor identity before create. Existing worker is not yet wired to this new lane.
+Actual parser-backed local tests plus upload/retained/shared-schema tests:
+48 PASS and18subtests; gate2/2. Maintained M source implementation is still pending.
+P upload result portfolio is explicitly an opaque producer object, so the shared
+wire schema remains unchanged. CVO Y-S01 independent closure10b5b7f25c at
+b258b1696c is recorded separately from this new normalizer source.
