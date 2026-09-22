@@ -5637,6 +5637,81 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W28-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~28",
+    "surfaced_at": "2026-09-22T07:34:19Z",
+    "one_line": "F78-AC2's literal invocation carries NO interaction step (no --fill/--click/--clicktext), but ScopeSummary's cohort chip only mounts from `row.entry.cohorts`, and `row` is set ONLY by ClientSearch's onSelectionChange after a real typed search + picked result -- a fixture alone, however truthful, cannot populate it. Ran verbatim: FAIL, measured, not a fixture defect.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F78-AC2's invocation: `node scripts/ui-smoke.mjs investor-reporting <out>.png --port <PORT> --width 1440 --fixtures .../fe-s-78/fixtures/cohort-selected.json --expect '[data-slot=\"cohort-chip\"]' --expect-style '[data-slot=\"cohort-chip\"]::border-radius!=6px'`, `<expect>ASSERT-CONTENT: 1 of 1 met[\\s\\S]*ASSERT-STYLE: 1 of 1 met</expect>` -- i.e. the fixture alone, with no click/fill step, is asserted sufficient to mount the chip.",
+    "world_is": "portal/src/pages/InvestorReporting/index.tsx:50-52 -- `row` starts `useState<SearchOptionRow | null>(null)` and is set only inside `ClientSearch`'s `onSelectionChange` callback (header/ClientSearch.tsx:92-100, `handleSelect`), which fires only after a user types >= `MIN_QUERY_LENGTH` (2) characters (header/search.ts:246), the 250ms debounce elapses, `searchDirectory` resolves, and a returned row is picked. `header/ScopeSummary.tsx:91` reads `row?.entry.cohorts ?? []` -- with `row` null, `cohorts` is always `[]` and the chip block (`assertable.length > 0`) never renders, regardless of what any `--fixtures` file contains. `ResolvedScope` (the resolve-scope response) carries no `cohorts` field at all (contracts/index.ts:421-437) -- there is no OTHER data path that could populate it. Ran F78-AC2 verbatim against a truthful, correctly-authored fixture (an authoritative `cohort.authoritative: true` DirectoryEntryWire at `/api/scoped/investor-reporting/directory/search`): `EXPECT[[data-slot=\"cohort-chip\"]]: FAIL (0 visible)`, `EXPECT-STYLE[...]: UNMEASURABLE (selector matched nothing)`, `ASSERT-CONTENT: 0 of 1 met`, `ASSERT-STYLE: 0 of 1 met`, and `FIXTURE-DEAD: /api/scoped/investor-reporting/directory/search` (the search endpoint the fixture correctly populates is never even requested, because nothing ever types into the search box). Additionally probed whether an amended invocation adding `--fill 'Client search=...'` + `--clicktext '<displayName>'` could satisfy the intent: `--fill` uses `page.getByRole('textbox', {name, exact:true})` (scripts/ui-smoke.mjs:364), and `ClientSearch`'s Combobox (header/ClientSearch.tsx, `@/ui/components/catalyst/combobox`, a Headless-UI-style combobox) exposes an ARIA role other than `textbox` for its input -- the fill call times out (`locator.fill: Timeout 30000ms exceeded`) even though \"Client search\" IS a real, present accessible name on the page (printed in the FILL-FAIL diagnostic's control-names list). So even a hand-amended invocation adding the missing interaction cannot currently reach this control through the shared instrument's existing flags -- a second, related gap in `scripts/ui-smoke.mjs` itself, which is outside this cell's `<paths>` grant to fix. Did not weaken F78-AC2's `<expect>` and did not add undeclared flags to the recorded, graded invocation.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/index.tsx:50-52 (this worktree HEAD) -- `const [row, setRow] = useState<SearchOptionRow | null>(null)`, set only via `ClientSearch`'s `onSelectionChange`",
+        "portal/src/pages/InvestorReporting/header/ClientSearch.tsx:92-100 (this worktree HEAD) -- `handleSelect` is the only writer of the selected row, called from the Combobox's own `onChange`",
+        "portal/src/pages/InvestorReporting/header/search.ts:246 (this worktree HEAD) -- `MIN_QUERY_LENGTH = 2`; `DirectorySearchRunner.input` returns null (issues nothing) below it",
+        "portal/src/pages/InvestorReporting/header/ScopeSummary.tsx:91 (this worker's fix, same behaviour as HEAD on this point) -- `const cohorts: readonly CohortFact[] = row?.entry.cohorts ?? []`",
+        "portal/src/pages/InvestorReporting/contracts/index.ts:421-437 (this worktree HEAD) -- `ResolvedScope` carries no `cohorts` field",
+        "measured run (this worker, F78-AC2 literal invocation, port 5940, 2026-09-22): `EXPECT[[data-slot=\"cohort-chip\"]]: FAIL (0 visible)`, `EXPECT-STYLE[[data-slot=\"cohort-chip\"]::border-radius]: UNMEASURABLE (selector matched nothing)`, `ASSERT-CONTENT: 0 of 1 met`, `ASSERT-STYLE: 0 of 1 met`, `FIXTURE-DEAD (declared, NEVER matched): /api/scoped/investor-reporting/directory/search`",
+        "measured run (this worker, amended invocation adding --fill 'Client search=Coastal' --clicktext 'Coastal Ridge Trust', port 5940, 2026-09-22): `FILL-FAIL: Client search=Coastal -- locator.fill: Timeout 30000ms exceeded` (control names on page include 'Client search' itself, confirming the accessible name exists but is not role=textbox)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-78.cohort-chip-radius-and-report-styling-residuals.md criterion F78-AC2 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W28-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~28",
+    "surfaced_at": "2026-09-22T07:34:19Z",
+    "one_line": "This cell's ordered fix (ScopeSummary.tsx:125 rounded-md -> an admitted radius, required by F78-AC2) breaks 4 pre-existing tests in 3 OTHER cells' out-of-grant files that hardcode the OLD byte-exact markup (class=\"rounded-md ...\", no data-slot=\"cohort-chip\"): fe-s-42/every-site.test.ts F42-AC3, fe-s-48/withheld.test.ts F48-AC2 and F48-AC3, fe-s-59/scope-summary-badge.test.ts F59-AC4. No radius choice avoids this: ANY value other than 6px both satisfies F78-AC2's own inequality and breaks these exact-string comparisons. F78-AC6 (whole suite green) measures FAIL as a direct, structural consequence.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This order's own fix instruction: \"correct ScopeSummary.tsx:125's rounded-md (6px) to an admitted radius (2/3/4px or a pill, per C11)\". F78-AC6's invocation: `bun test src/pages/InvestorReporting`, `<expect>(?<![0-9])0 fail</expect>`. Bounds: \"REFUSE any criterion you cannot satisfy as written... do not weaken a criterion... A defect needing another cell's file is ONE surprise row, never a wider grant.\"",
+    "world_is": "This cell's `<paths>` grant is `header/ScopeSummary.tsx`, `tabs/reporting/`, `render/print.css`, `__tests__/fe-s-78/` -- it does NOT include `__tests__/fe-s-42/`, `__tests__/fe-s-48/`, or `__tests__/fe-s-59/`. Those three files each assert the button's rendered markup byte-for-byte against a string written out by hand at an earlier DEV vintage (e.g. fe-s-48/withheld.test.ts:219 `'<button type=\"button\" class=\"rounded-md px-2 py-0.5 ...\">'`), and fe-s-59/scope-summary-badge.test.ts:163 additionally substring-searches rendered markup for the literal token `rounded-md` to LOCATE the cohort block. Confirmed via `git show HEAD:.../ScopeSummary.tsx` that HEAD (pre-fix) carries `rounded-md` and no `data-slot=\"cohort-chip\"` -- so these 4 failures are caused entirely by this cell's own (required) edit, not pre-existing. Measured, before this fix: 11 pass / 0 fail across these 3 files' 11 tests (implied by their pinned-byte design, not independently re-verified against a reverted copy in this shared worktree per the never-git-stash rule); after this fix: `7 pass, 4 fail` (F42-AC3, F48-AC2, F48-AC3, F59-AC4), `Ran 11 tests across 3 files`. Whole-suite F78-AC6 run: `623 pass, 22 skip, 4 fail, Ran 649 tests across 119 files` -- the SAME 4 tests, no other new failures. No implementation choice of admitted radius (2px/3px/4px/pill, any class name) resolves this: the byte-exact strings pin the OLD 6px value specifically, and F78-AC2 requires ANY value NOT equal to 6px, so the two orders are in direct, unavoidable conflict given the current grant boundaries.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-42/every-site.test.ts:132 (this worktree HEAD, outside this cell's <paths>) -- `PRODUCER_...` byte-exact string carries `class=\"rounded-md px-2 py-0.5 text-[11px] text-slate-900 ring-1 ring-slate-500/40 hover:ring-slate-700\"`",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-48/withheld.test.ts:219 (this worktree HEAD, outside this cell's <paths>) -- same byte-exact class string, labelled 'as DEV 1f3ce9f0 built it'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-59/scope-summary-badge.test.ts:163 (this worktree HEAD, outside this cell's <paths>) -- `markup.slice(r.start, r.end).includes('rounded-md')` used to LOCATE the assertable cohort block",
+        "`git show HEAD:src/pages/InvestorReporting/header/ScopeSummary.tsx` (this worktree) -- line 125 is `className=\"rounded-md px-2 py-0.5 text-[11px] text-slate-900 ring-1 ring-slate-500/40 hover:ring-slate-700\"`, confirming the pinned strings match the PRE-FIX state exactly",
+        "measured run (this worker, 2026-09-22, port unset, `bun test src/pages/InvestorReporting/__tests__/fe-s-42 .../fe-s-48 .../fe-s-59`, AFTER this cell's fix): `7 pass`, `4 fail` (F42-AC3, F48-AC2, F48-AC3, F59-AC4), `Ran 11 tests across 3 files`",
+        "measured run (this worker, 2026-09-22, F78-AC6's literal invocation `bun test src/pages/InvestorReporting`): `623 pass`, `22 skip`, `4 fail`, `Ran 649 tests across 119 files` -- the identical 4 test names, no additional unrelated failures",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-78.cohort-chip-radius-and-report-styling-residuals.md, fix instruction and criteria F78-AC2/F78-AC6, and BOUNDS section (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W28-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~28",
+    "surfaced_at": "2026-09-22T07:34:19Z",
+    "one_line": "F78-AC3 (the content-control: an unrelated fixture with no authoritative cohort mounts no chip) reads `ASSERT-CONTENT: 0 of 1 met` and mechanically PASSES this round, but it is CONFOUNDED, not a genuine discriminator: F78-AC2 ALSO currently reads 0 of 1 (row S1, above) for an unrelated reason (no interaction ever occurs to populate `row`) -- so AC3's 0 says nothing about whether ITS fixture specifically lacks a cohort; the same 0 would print even if AC3's fixture carried a fully authoritative cohort.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F78-AC3's own stated purpose: \"confirms AC2's fixture genuinely constructed the state\" -- i.e. AC3 is offered as the arm that proves AC2's positive result was not vacuous.",
+    "world_is": "Per HOW step 4 (\"A control is a claim... If a control passes when it should fail, [or, as here, passes for a reason unrelated to what it claims to test] the assertion cannot tell the states apart: say so\"): AC3's own invocation never types into or clicks the search control either, so `row` is null on BOTH AC2's and AC3's runs, and the `[data-slot=\"cohort-chip\"]` selector reads 0-visible on both for the SAME structural reason (row S1), not because AC3's fixture specifically withholds an authoritative cohort. Once row S1 is disarmed (the issuer amends F78-AC2/AC3 to include the interaction needed to populate `row`), AC3 would become a genuine, non-confounded control. Recorded, not fixed: this is a property of the ORDER's invocations, not of this cell's own write surface.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, F78-AC2 literal invocation, 2026-09-22): `ASSERT-CONTENT: 0 of 1 met`",
+        "measured run (this worker, F78-AC3 literal invocation, 2026-09-22): `ASSERT-CONTENT: 0 of 1 met`",
+        "Both invocations perform zero --click/--fill/--clicktext steps (org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-78.cohort-chip-radius-and-report-styling-residuals.md, criteria F78-AC2 and F78-AC3, this worktree HEAD)",
+        "row IRPT_FNTEND-W28-S1 (this file), same coordinate, grounding the structural cause"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
