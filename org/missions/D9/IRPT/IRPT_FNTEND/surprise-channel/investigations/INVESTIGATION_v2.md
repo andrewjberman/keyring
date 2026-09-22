@@ -5425,6 +5425,32 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W20-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~20",
+    "surfaced_at": "2026-09-21T21:00:00Z",
+    "one_line": "F70-AC2/AC3's --expect-ground selector (`section[aria-labelledby=\"asset-category-views\"] > div`) matches the Eyebrow wrapper div FIRST in document order, not CategoryOverview's own card, so the assertion prints the identical white PASS whether CategoryViewTree's new `ground` prop is 'light' (this cell's fix) or 'dark' (the pre-fix default) -- verified by re-running the exact AC2 invocation against a temporary ground=\"dark\" revert of DrillTree.tsx. F70-AC4's control (which paints that SAME first-match div directly via --inject-css) correctly discriminates.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "This TO's criterion rule: \"(d) GROUND MEASURED ON THE ACTUAL CONTAINER -- --expect-ground on the element that carries the surface, not the page field\"; and HOW item 4: \"A control is a claim. Before you trust a passing assertion, run its wrong-state arm and confirm it FAILS. If a control passes, the assertion cannot tell the states apart: say so and fix the assertion, do not report it as met.\" ui-smoke.mjs's own groundColor() (scripts/ui-smoke.mjs:406-419) is `document.querySelector(sel)` (FIRST match in document order) then walks `parentElement` for the first non-transparent background-color.",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:222-223 (this worktree HEAD) wraps `<CategoryViewTree ... />` in `<div data-slot=\"holdings-drill-tree\" className=\"... bg-white p-6 space-y-4\">`; inside CategoryViewTree.tsx's `<section aria-labelledby=\"asset-category-views\">` (this cell's own file, this worktree HEAD) the FIRST rendered child is `<div className=\"space-y-2\">` (the Eyebrow wrapper, itself carrying no background class -- transparent), and CategoryOverview's own `<div className=\"overflow-hidden rounded-[4px] border border-black\">` (the actual card, GraphicPanel-or-light-container) is the SECOND child. So `document.querySelector('[data-slot=\"holdings-drill-tree\"] section[aria-labelledby=\"asset-category-views\"] > div')` resolves to the Eyebrow div, and groundColor()'s parentElement walk from a transparent div passes straight through `<section>` (also no background) to the outer bg-white wrapper, returning white regardless of what CategoryOverview itself renders. MEASURED both ways on this worker's own dev server (port 5951, fixture fe-s-18-holdings-observed.json, --click Holdings): with the committed fix (`ground=\"light\"`) the exact AC2 invocation printed `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)` / `ASSERT-GROUND: 1 of 1 met`; with DrillTree.tsx temporarily edited to `ground=\"dark\"` (CategoryOverview rendering its ORIGINAL dark GraphicPanel, no fix applied) the IDENTICAL invocation printed the IDENTICAL `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)` / `ASSERT-GROUND: 1 of 1 met`. F70-AC4, which targets the SAME selector but paints it directly via --inject-css (so the first-match div itself gets a non-transparent background rather than relying on an ancestor), correctly printed `ASSERT-GROUND: 0 of 1 met` in both states. This cell's actual, final, committed implementation is genuinely correct (confirmed independently by reading f70_irpt_1440.png and f70_irpt_390.png: navy-on-white card, dark GraphicPanel gone) -- this row is about the ASSERTION's discriminating power on AC2/AC3 specifically, not about whether the fix was made. Per BOUNDS (\"do not edit a criterion's expectation\"), AC2 and AC3 are reported PASS-by-output (the literal invocation was run unmodified and its output matches <expect> verbatim) with this row filed alongside, per the criterion rule's own control discipline.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs:406-419 (groundColor(), this worktree HEAD) -- `document.querySelector(sel)` then `el.parentElement` walk for the first non-transparent background-color",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:222-223 @ this worktree HEAD (this worker's commit) -- `bg-white` ambient wrapper around `<CategoryViewTree ... ground=\"light\" />`",
+        "portal/src/components/CategoryViewTree.tsx (this worker's commit) -- `<section aria-labelledby=\"asset-category-views\">`'s first rendered child is the Eyebrow `<div className=\"space-y-2\">`, CategoryOverview's own card div is the second child",
+        "measured run (this worker, 2026-09-21, committed state, ground=\"light\"): cd portal && node scripts/ui-smoke.mjs investor-reporting <tmp>.png --port 5951 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-ground '[data-slot=\"holdings-drill-tree\"] section[aria-labelledby=\"asset-category-views\"] > div=rgb(255, 255, 255)' -> `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)`, `ASSERT-GROUND: 1 of 1 met`",
+        "measured run (this worker, 2026-09-21, temporary uncommitted revert to ground=\"dark\" in DrillTree.tsx, reverted immediately after): identical invocation -> identical `EXPECT-GROUND[...]: PASS rgb(255, 255, 255)`, `ASSERT-GROUND: 1 of 1 met`",
+        "measured run (this worker, 2026-09-21, committed state): F70-AC4's own invocation (--inject-css painting the same selector silver) -> `EXPECT-GROUND[...]: FAIL rgb(196, 203, 219)`, `ASSERT-GROUND: 0 of 1 met` -- confirms the inject-css control (direct paint) discriminates where the plain ground read (ancestor walk) does not",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~20/f70_irpt_1440.png, f70_irpt_390.png -- read directly, confirm the actual committed fix (navy-on-white card, no dark GraphicPanel) independent of this row's finding about the assertion"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
