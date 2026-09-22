@@ -93,14 +93,37 @@ band `#0A1733` = `rgb(10, 23, 51)`; hairline `#C4CBDB` = `rgb(196, 203, 219)`.
 <criterion id="F83-AC1" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0(?![0-9])</expect></criterion>
 `F83-AC1` -- the whole portal typechecks.
 
-<criterion id="F83-AC2" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs model-portfolios <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~33/f83_view_breakdown_rest.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --expect-style '[data-slot="view-breakdown-link"]::color=rgb(22, 51, 114)' --expect-style '[data-slot="view-breakdown-link"]::color!=rgb(95, 59, 227)'</invocation><expect>ASSERT-STYLE: 2 of 2 met</expect></criterion>
+<criterion id="F83-AC2" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~33/f83_view_breakdown_rest.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-style '[data-slot="view-breakdown-link"]::color=rgb(22, 51, 114)' --expect-style '[data-slot="view-breakdown-link"]::color!=rgb(95, 59, 227)'</invocation><expect>ASSERT-STYLE: 2 of 2 met</expect></criterion>
 `F83-AC2` -- AT REST: the label measures navy `rgb(22, 51, 114)`, and explicitly NOT the site indigo `rgb(95, 59, 227)` -- both the positive and the negative assertion, on the same capture. Add a `data-slot="view-breakdown-link"` attribute to the label if it does not already carry one your selector can target.
 
-<criterion id="F83-AC3" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs model-portfolios <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~33/f83_view_breakdown_hover.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --expect-style '[data-slot="view-breakdown-link"]::text-decoration-line=underline'</invocation><expect>ASSERT-STYLE: 1 of 1 met</expect></criterion>
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~33-report, row `IRPT_FNTEND-W33-S1`):** `model-portfolios` is not a real route (`App.tsx:413-423`
+declares `/portfolios`, not `/model-portfolios`; the literal invocation lands on `/market`, 0 of 9 fixtures ever match, every assertion reads
+`UNMEASURABLE`). Independently confirmed further: even the REAL route (`/portfolios`) would not reach this fix -- `ModelPortfolios.tsx:1286` mounts
+`CategoryViewTree` at the DEFAULT `ground='dark'`, never `'light'`; the only caller passing `ground="light"` is `DrillTree.tsx:244`, reached at
+`/investor-reporting` after clicking Holdings. Amended to that route/fixture/click, exactly the worker's own supplementary invocation, which
+measured `PASS rgb(22, 51, 114)` on both the positive and negative assertion. The bar is unchanged, only the route/fixture were wrong.
+
+<criterion id="F83-AC3" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && IRPT_FE_DEV_PORT=<PORT> timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-83/hover-underline.test.ts</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F83-AC3` -- ON HOVER (of the ancestor tile, whichever mechanism you build): the label gains an underline. Exercise the actual hover state your driver produces -- a static capture with no hover simulation does not satisfy this.
 
-<criterion id="F83-AC4" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs model-portfolios <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~33/f83_view_breakdown_absent_control.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --expect-style '[data-slot="view-breakdown-link"]::color!=rgb(95, 59, 227)'</invocation><expect>UNMEASURABLE</expect></criterion>
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~33-report, row `IRPT_FNTEND-W33-S1`):** the literal invocation carried the same broken route AND,
+independently, `ui-smoke.mjs` has no generic hover-only mechanism at all (`--click` always fires a real `.click()`, which opens `HeroDialog` and
+measurably breaks the tile's own `:hover` state -- confirmed: the identical selector flips from PASS to FAIL under the dialog overlay). This is a
+second, genuine instrument gap, correctly worked around within this cell's own grant: `__tests__/fe-s-83/hover-underline-driver.mjs` (the
+established per-cell-driver idiom this suite already uses eight times) clicks the Holdings TAB (never the tile), then performs a REAL
+`page.hover()` on the label's ancestor button, reading `text-decoration-line` at rest / during hover / after release -- a genuine MUTANT-controlled
+3-of-3 result. Amended to run that test directly rather than a raw `ui-smoke.mjs` invocation that structurally cannot reach a hover state. Bar
+unchanged (the underline must genuinely appear on hover), only the instrument is corrected.
+
+<criterion id="F83-AC4" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~33/f83_view_breakdown_absent_control.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --expect-style '[data-slot="view-breakdown-link"]::color!=rgb(95, 59, 227)'</invocation><expect>UNMEASURABLE</expect></criterion>
 `F83-AC4` -- ABSENT-SELECTOR CONTROL: against a fixture/route where this label genuinely does not mount, the same inequality reads `UNMEASURABLE`, never a vacuous PASS.
+
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~33-report, row `IRPT_FNTEND-W33-S1`):** the literal invocation's `UNMEASURABLE` result TEXTUALLY
+matched `<expect>` but VACUOUSLY -- the selector was absent because the whole route was broken (same defect as AC2/AC3), not because this specific
+fixture/route combination genuinely withholds the category tiles while otherwise rendering correctly. The worker correctly graded this FAIL rather
+than self-grade a vacuous match as a real control, per this round's own "a control is a claim" discipline. Amended to the SAME route as AC2
+(`investor-reporting`, `fe-s-18-holdings-observed.json`) but WITHOUT `--click Holdings` -- so the Holdings tab, and therefore this label, never
+mounts, for the genuine reason. Bar unchanged, only the route is corrected and the omitted click makes the absence real.
 
 <criterion id="F83-AC5" cell_refs="FE-s-83" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F83-AC5` -- the whole IRPT_FNTEND suite is green (a test elsewhere pinning the old indigo value against this label, if any, is updated in this commit and named in your result).
