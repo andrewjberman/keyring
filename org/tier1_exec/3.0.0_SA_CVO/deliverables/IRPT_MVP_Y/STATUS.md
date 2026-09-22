@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:07 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:10 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -77,6 +77,12 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   leave raw blobs but publish no new INPUT rows in tested cases. Physical cleanup,
   report promotion/runtime/concurrency remain due. See
   `RETAINED_UPLOAD_REVIEW_acc55a4c72.md` and source-hashed evidence.
+- Retained submission `6cbb71404003a4d2ba7bcfa8871e5149e97256e2`: supplied52
+  tests+24subtests PASS; independent6 PASS/2 FAIL. Y-S01 P2 OPEN: missing retention
+  service bypasses known retained expired composition checks on replay, and
+  downgrades retained input to bare composition on first submission; both call
+  mocked dispatch. Configured-service expiry/ref binding controls pass. Routed
+  COO~Y/CVO~P. See `RETAINED_SUBMISSION_REVIEW_6cbb714040.md` and pinned probe.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -240,6 +246,12 @@ peer-attributed only, not rerun by Y. P explicitly retains9d33387734 delayed-com
 client-clock/expiry/accepted-row readability/recovery proof obligations in
 `IRPT_MVP_P/RETAINED_REPOSITORY_RETEST_2844.md`. No ACK requested. R-P07 remains
 closed and no integrated fenced consumer/full S7 claim is made.
+Exact COO~Y230528Z supplies6cbb714040 for request retention review above and
+reports P history284436ca11 consumed asb207c3487bfd1b030ad3a89df3cd79bcafa8e737.
+SubmissionService dispatch checks are the bounded candidate; recovery/worker
+composition remains due. No additional upload response field claim or browser
+completion is inferred. Y-S01 is independent of the already closed peer history
+finding and prior upload/recipe/certifier closures.
 
 ## Next executable review and dependencies
 

@@ -307,6 +307,17 @@ metadata only. Physical disposal, accepted-report promotion, runtime assembly,
 browser and concurrent/delayed server proof remain due. All14 integrated criteria
 remain NOT_EVALUATED; no full S3/S4/S7 or READY acceptance.
 
+## Retained submission finding, 7:10 PM Eastern
+
+`6cbb71404003a4d2ba7bcfa8871e5149e97256e2`: supplied52 tests+24subtests PASS;
+independent6 PASS/2 FAIL. Y-S01 P2 OPEN: missing retention service silently
+allows a known retained expired composition to reach mocked dispatch, and allows
+retained input to produce a bare composition. Configured retention correctly
+refuses expiry and changed receipts. See
+`RETAINED_SUBMISSION_REVIEW_6cbb714040.md`. No actual queue/vendor/runtime bypass
+claimed; all14 integrated criteria remain NOT_EVALUATED. Prior bounded closures
+remain distinct.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
