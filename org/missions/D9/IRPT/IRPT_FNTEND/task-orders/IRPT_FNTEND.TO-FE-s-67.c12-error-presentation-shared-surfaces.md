@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~17</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-67` (round 11, v0.11) | **outcome_ref:** FWD-12 | **depends_on:** FE-s-65 (its --expect/--expect-style/--expect-ground flags -- every criterion below uses them) | **slot:** ~3 | **rows:** W11-S3, W12-S2 (breadcrumb), W12-S3 | **base:** workspace = the round-11 issuance commit on CLOUD (your worktree branches from it), portal DEV `243089eb` plus every drained round-11 cell this one depends on
 
@@ -116,7 +116,7 @@ The bar is unchanged: the same two `--expect` lines must still find nothing on a
 <criterion id="F67-AC9" cell_refs="FE-s-67" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/f67_overflow_before.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings</invocation><expect>SAVED</expect></criterion>
 `F67-AC9` -- BEFORE capture of the slice table at 390: read the PNG and note whether the last column is visibly clipped.
 
-<criterion id="F67-AC10" cell_refs="FE-s-67" drives="none"><invocation>cd <WS>/portal && timeout 120 node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs <PORT> <scenario-map.json, one entry wrapping fixtures/smoke/fe-s-18-holdings-observed.json> <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/f67_overflow/</invocation><expect>DRIVER OK</expect></criterion>
+<criterion id="F67-AC10" cell_refs="FE-s-67" drives="none"><invocation>cd <WS>/portal && timeout 120 node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs <PORT> <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/f67_overflow_scenarios.json <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/f67_overflow/</invocation><expect>DRIVER OK</expect></criterion>
 `F67-AC10` -- OVERFLOW EXERCISED, NOT PRESCRIBED: the EXISTING driver (`__tests__/fe-s-32/holdings-driver.mjs`, already built for exactly this) scrolls the slice table's container and captures the reached state; read BOTH PNGs and confirm the last column is reachable by scroll, not permanently clipped. If this driver's CLI shape differs from this invocation, adapt the call and say so in your result -- do not invent a second mechanism when the CTO named this one to reuse.
 
 **COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~17-report):** the literal invocation above was wrong on TWO counts, both confirmed
@@ -131,6 +131,15 @@ corrected to `DRIVER OK`, the driver's own rc=0 success sentinel -- the same evi
 already carries for the OTHER instrument. The bar is unchanged: you still read BOTH PNGs yourself and confirm the last column is
 scroll-reachable, not permanently clipped -- that qualitative judgment was never something a regex could grade, on the original
 invocation or this one. Row `IRPT_FNTEND-W17-S2` is CORRECT and stays filed; this amendment is the remedy it called for.
+
+**SECOND COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~17-second-report):** the FIRST amendment's own invocation text was itself
+defective -- it carried a bracketed prose span (`<scenario-map.json, one entry wrapping ...>`) that is not a declared placeholder and
+is not a real, executable command, so `proof-of-spec-check.py`'s ENFORCE-mode invocation-alignment limb could never match any genuine
+recorded run against it. Worker `~17` correctly caught this rather than fabricating a match (row `IRPT_FNTEND-W17-S5`, CORRECT, stays
+filed) and reported the substantive bar (`DRIVER OK`) as independently re-verified PASS regardless. Fixed: the invocation now points at
+the worker's own already-authored, already-committed scenario-map file
+(`org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/f67_overflow_scenarios.json`, confirmed to exist at that path in
+this worker's own worktree) -- a real, literal, re-runnable command. The bar is unchanged: `DRIVER OK`.
 
 <criterion id="F67-AC11" cell_refs="FE-s-67" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F67-AC11` -- the whole IRPT_FNTEND suite is green, including the unmodified pinning tests `fe-s-21/source-age.test.ts` and `fe-s-11/colour-law.test.ts` (dev server stopped; `IRPT_FE_DEV_PORT` unset).
