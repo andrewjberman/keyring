@@ -6,6 +6,8 @@ Deliver a current investor ownership view showing actual model-associated, confi
 
 Your owned shared work is selection/grants/vendor crosswalks, accepted custody data, LGIC naming/firm publication, and the holdings API/UI. Publish S1/S2 interfaces early to P/Y. Coordinate prospect firm/advisor ownership with Y; coordinate reporting artifact placement with P. P integrates common frontend client/schema aggregator edits from your patches.
 
+Latest performance decision: 49F SmartX primary with independent BD verification (desktop folder 06). Your custody census and **dated** account/allocation/model crosswalk must support P's historical actual-performance scope, including model changes, sleeve closures and non-model/cash accounts. A current model assignment cannot establish historical ownership. Model ownership sources and your snapshot product are otherwise unchanged.
+
 ## First actions
 
 Read folders 03, 04 and 05 of the desktop package, the actual holdings builders/entry/projector and mounted UI. Reproduce the three synthetic math cases before repairing them. Record baseline pins and file claims, establish an isolated code branch, then implement one selected-investor journey through actual handler and UI. Do not spend a new round merely restating the audit.

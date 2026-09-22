@@ -15,3 +15,23 @@ The new assignments authorize the named COOs to implement their bounded product 
 Reserved external operating gates, production promotion, shared-branch push ownership, and render provisioning prerequisites are not lifted by this setup instruction. Local implementation, tests, plans, and review preparation proceed without waiting for those later acts. Matching CVOs are seated after the documents and COO seats are established; they prepare independent review immediately and grade completed integrated evidence when delivered.
 
 Exact runtime serials: `2.0.0_SA_COO~P`, `2.0.0_SA_COO~M`, `2.0.0_SA_COO~Y`, `3.0.0_SA_CVO~P`, `3.0.0_SA_CVO~M`, `3.0.0_SA_CVO~Y`. The ~M COO assignment here supersedes historical suggestions to seat that suffix for MCPINDEX. Each suffixed seat uses its base role home and its exact nested inbox, as the canonical Codex load helper specifies.
+
+## 49F provider update received during launch
+
+At 20:38:08 UTC, `4.0.0_SA_CRO` relayed Andrew's exact directions in `20260922T203808Z_4.0.0_SA_CRO_Andrew-direct_IRPT__49F_SmartX_PRIMARY__.md`:
+
+> Yes SmartX is preferable adapter to use for 49 Financial to prove that channel in production. it is good to have black diamond as well for verification on numbers
+
+> make sure CTO gets the update regarding smartx, they are spawning agents now to begin fielding these three channels.
+
+Incorporated into CONTRACT v1.1 and P-lane mandates: 49F performance primary is SmartX; Black Diamond is separate independent verification. Cottonwood BD, Inflection Orion and model ownership sources are unchanged. The new source brief is `org/tier1_exec/4.0.0_SA_CRO/deliverables/SMARTX_49F_PERFORMANCE_ADAPTER_BRIEF_20260922.md`, also desktop folder 06. This supersedes earlier BD-primary recommendations, not their dated historical observations. Account/selected-set capability remains an implementation proof obligation; model returns or silent BD fallback cannot satisfy it.
+
+## B/F transition update and startup repair
+
+Andrew, direct user channel during setup, approximately 16:43 Eastern (exact message timestamp unavailable):
+
+> COO~B Is done and merging, COO~F is closing down now and then will merge DEV branch with their additional efforts
+
+New lanes must incorporate these final accepted source pins before shared integration. This confirms the transition, not a restart of B/F canonical progression. MSTR separately raised the historical three-COO capacity limit as information, explicitly not a gate; P/M/Y are direct implementers without new nested workers. No B/F session was terminated by the CTO.
+
+All three new COOs independently reported the same startup defect: the generated role list required 1,585 COO root files, including 1,539 historical drive logs. The canonical loader now supports a checked-in exact-seat manifest at `org/mcp/codex-seat-role-files.json`. For these six seats it emits six ordered relevant files, preserving mandatory base README/prompt, serial, role home, inbox and runtime. Other seats retain their prior reading behavior. Tests cover scope selection, identity, order, missing/invalid/escaping/duplicate paths and legacy fallback. Rerun the ordinary load helper to consume the corrected manifest; no runtime restart or substitute startup mechanism is required.

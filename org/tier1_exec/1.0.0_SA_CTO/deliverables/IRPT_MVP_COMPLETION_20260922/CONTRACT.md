@@ -1,10 +1,12 @@
-# IRPT MVP completion contract — version 1
+# IRPT MVP completion contract — version 1.1
 
 Authority: [Andrew's instruction](AUTHORITY.md). Owner/adjudicator: `1.0.0_SA_CTO`. Implementers: COO~P, COO~M, COO~Y. Independent reviewers: matching CVO suffixes. This contract and each seat's mandate are the current narrow instructions for these six seats.
 
 ## 1. Outcome and operating mode
 
 Finish three usable product journeys across 49 Financial, Cottonwood, and Inflection: provider-calculated performance reporting; actual model/non-model/unresolved ownership with drilldowns; and YCharts sensitivity from selected custody holdings or prospect CSV. Retain the current frontend, parser, provider adapters, authorization, render, and storage libraries wherever they work. Repair the connections and incorrect behavior. No new platform rewrite.
+
+**Current performance provider decision (Andrew via CRO, 20:38:08 UTC): 49F SmartX PRIMARY, Black Diamond independent verification; Cottonwood Black Diamond; Inflection Orion.** Read desktop folder 06 / `org/tier1_exec/4.0.0_SA_CRO/deliverables/SMARTX_49F_PERFORMANCE_ADAPTER_BRIEF_20260922.md`. This overrides earlier 49F BD-primary wording. Actual-account/selected-set SmartX capability is unproven and must be established; model-reference returns, invented endpoints, or silent BD fallback cannot satisfy it. Production acceptance targets the actual Dev-gated PROD route with separate comparable BD verification evidence. Existing operational gates remain, with precise proof prepared before any reserved action.
 
 Each COO personally drives implementation across frontend and backend until its outcome is independently reviewed. Ordinary in-scope fixes do not need another CTO round analysis, recut, or permission request. This is the directly authorized P/M/Y completion effort, not a restart of `/canonical-drive IRPT_FNTEND` or `IRPT_BCKEND`. Do not spawn further workers or invent serials under this assignment. Use the three assigned implementation seats and coordinate directly.
 
@@ -13,7 +15,7 @@ The default completion target includes all three firms, single account/relations
 ## 2. Read first, then implement
 
 1. Complete `$load` for your exact serial and measure readiness with the canonical oracle. Do not create a suffix-specific role directory or second runtime helper.
-2. Read AUTHORITY.md, this contract, and your COO/CVO mandate. Then read the five product briefs at `C:/Users/AndrewBerman/Desktop/Investor Reporting Briefs - 2026-09-22/`, starting with your product brief and folder 05's backend design. Read relevant source and tests rather than treating briefs as fresh runtime proof.
+2. Read AUTHORITY.md, this contract, and your COO/CVO mandate. Then read the six product briefs at `C:/Users/AndrewBerman/Desktop/Investor Reporting Briefs - 2026-09-22/`, starting with your product brief, folder 05's backend design and folder 06's SmartX update. Read relevant source and tests rather than treating briefs as fresh runtime proof.
 3. Read the relevant existing PRD, latest accepted source/evidence, and current B/F write claims. Use `comp-which` before inspections and the routed bare compiler tool; log material compiler observations.
 4. Send CTO one specific ACK with baseline commits, intended first vertical proof, and any actual collision. Begin independent implementation immediately; no ceremonial ACK waiting period.
 
@@ -28,7 +30,7 @@ Ownership means the listed seat integrates edits to that surface and answers int
 | Directory, canonical account/vendor crosswalks, selection/grants, common scope identity; `_scope/`, `_ids/`, common non-render `_authz/`; header/shared selection state | COO~M | P and Y use the selected set, not all permitted accounts; prospect ownership must be supported |
 | Custody/model builders, accepted Gold/Platinum, holdings routes and holdings UI | COO~M | Y consumes actual custody positions; target allocations are a separate basis |
 | Naming registry/builder and bounded firm publication destinations | COO~M | P supplies reporting-store requirements; changes stay IRPT-specific, coordinated with existing naming owners |
-| Performance provider adapters/auth/request/normalization and reporting UI | COO~P | Independent 49F/COT/INF acceptance |
+| Performance provider adapters/auth/request/normalization, primary/verification dispatch and reporting UI | COO~P | SmartX 49F primary plus separate BD verification; independent COT BD/INF Orion acceptance |
 | Generic immutable report repository/history, report IDs/revisions, shared reporting bucket/IAM/IaC, common export bundle/renderer/receipt/download | COO~P | Y owns its job transitions and extraction; both use P's report/export interface |
 | Render-delegate-specific auth, edge assets/print authorization, shared render/layout/export code | COO~P | Inherit accepted B/F render repairs; no parallel edit to current B/F claimed files before reconciliation |
 | Intake/upload, normalized portfolio, recipe/session/worker, extraction/certification, analysis routes/UI, job status and `ops/` entry dispatch | COO~Y | Uses M's scope/positions and P's report store/export; sections route returns report, not status |
@@ -51,6 +53,8 @@ These obligations govern the existing wire schemas. Owners publish concrete sche
 **S4 — Report lifecycle (P repository, Y job state).** Server-owned report/request IDs and immutable revisions bind owner, exact input/selection/date/settings, source/vendor evidence, normalized payload, coverage, schema/adapter versions, and hashes. P provides persist/get/list report interfaces; Y provides durable state transitions and attempt identities referencing that repository. Accepted work is persisted before dispatch with durable outbox/idempotency and conditional transitions. S3 retains bytes; DynamoDB owns process state. Reload/history resolve the same accepted report. Correction creates a new revision. Status is distinct from report content; READY means the releasable report exists and satisfies its certification policy.
 
 **S5 — HTTP/UI (P shared integration; each lane owns semantics).** Test real browser request serialization through actual entry/event parsing and wire adapter. Preserve status/availability, period and source dates, selected scope, methodology/units, coverage, and revision. Do not wrap reports at a different level than consumers expect. Missing values and stale/partial states must stay visible. No fixture-only success accepted as a live journey.
+
+**49F primary/verification extension (P, with M's dated crosswalk).** Admit SMARTX explicitly through authoritative source/schema/generated types and provider dispatch; no default-to-Orion branch. Distinguish actual account, allocation/sleeve, selected aggregate and model-reference basis. Prove source units per endpoint. Store SmartX and BD evidence separately, with a comparison receipt tying exact scope, date, method, fee, currency and source revisions. Version and justify tolerances before grading differences. Missing/non-comparable verification is not PASS; unexplained material discrepancies block initial acceptance for that case. P records a concrete verification frequency/release policy for CTO adjudication, rather than issuing two provider calls for every keystroke. Export freezes the SmartX report and verification presentation without re-fetching either calculation.
 
 **S6 — Export (P).** Freeze the displayed report revision, narrative if present, disclosures, branding/assets and renderer version. Never refetch a different performance period during export. Connect submit to actual controller, scoped render identity and pinned print route/assets, validated PDF, immutable artifact/receipt and protected download. Receipt binds report revision, bundle hash, PDF hash/object version. Performance and sensitivity share this path. Render delegate cannot grant general viewer/admin rights; original vendor PDF and branded Opal PDF remain distinct artifacts.
 

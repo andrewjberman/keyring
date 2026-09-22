@@ -47,6 +47,61 @@ class WorkspaceFixture:
 
 
 class SeatContextTests(unittest.TestCase):
+    def write_manifest(self, fixture, seats):
+        (fixture.root / seat_load.ROLE_FILES_MANIFEST).write_text(
+            json.dumps({"version": 1, "seats": seats}), encoding="utf-8"
+        )
+
+    def test_exact_seat_manifest_bounds_reads_and_preserves_other_lanes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = WorkspaceFixture(Path(temporary))
+            (fixture.base_home / "old_drive_log.md").write_text("history", encoding="utf-8")
+            paths = ["org/tier1_exec/4.0.0_SA_CRO/prompt.md",
+                     "org/tier1_exec/4.0.0_SA_CRO/README.md"]
+            self.write_manifest(fixture, {"4.0.0_SA_CRO~A": paths})
+            bounded = seat_load.build_context(fixture.root, "4.0.0_SA_CRO~A")
+            other = seat_load.build_context(fixture.root, "4.0.0_SA_CRO~B")
+        self.assertEqual(bounded["role_files"], paths)  # declared order, not alphabetic
+        self.assertEqual(bounded["role_files_source"], seat_load.ROLE_FILES_MANIFEST)
+        self.assertEqual(bounded["seat_home"], bounded["role_home"])
+        self.assertEqual(bounded["inbox"], "org/mcp/inbox/4.0.0_SA_CRO/~A")
+        self.assertEqual(other["role_files_source"], "base-role-root")
+        self.assertTrue(any(p.endswith("old_drive_log.md") for p in other["role_files"]))
+
+    def test_declared_missing_invalid_or_escaping_files_fail_closed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = WorkspaceFixture(Path(temporary))
+            base = ["org/tier1_exec/4.0.0_SA_CRO/README.md",
+                    "org/tier1_exec/4.0.0_SA_CRO/prompt.md"]
+            for entries in ([], "README.md", [None], base + ["missing.md"],
+                            base + ["../outside.md"], base + [base[0]], base[:1],
+                            base + [str(fixture.base_home / "README.md")]):
+                with self.subTest(entries=entries):
+                    self.write_manifest(fixture, {"4.0.0_SA_CRO~A": entries})
+                    with self.assertRaises(seat_load.SeatLoadError):
+                        seat_load.build_context(fixture.root, "4.0.0_SA_CRO~A")
+
+    def test_bad_manifest_structure_fails_closed(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = WorkspaceFixture(Path(temporary))
+            for content in ("{broken", "[]", '{"version": 2, "seats": {}}'):
+                with self.subTest(content=content):
+                    (fixture.root / seat_load.ROLE_FILES_MANIFEST).write_text(content, encoding="utf-8")
+                    with self.assertRaises(seat_load.SeatLoadError):
+                        seat_load.build_context(fixture.root, "4.0.0_SA_CRO~A")
+
+    def test_irpt_exact_seat_manifests_exist_and_retain_identity(self):
+        for base in ("2.0.0_SA_COO", "3.0.0_SA_CVO"):
+            for lane in "PMY":
+                serial = f"{base}~{lane}"
+                with self.subTest(serial=serial):
+                    context = seat_load.build_context(REPO_ROOT, serial)
+                    self.assertEqual(context["role_files_source"], seat_load.ROLE_FILES_MANIFEST)
+                    self.assertEqual(context["seat_home"], f"org/tier1_exec/{base}")
+                    self.assertEqual(context["inbox"], f"org/mcp/inbox/{base}/~{lane}")
+                    self.assertEqual(len(context["role_files"]), 6)
+                    self.assertTrue(context["role_files"][-1].endswith(f"{base.split('_')[-1]}_{lane}.md"))
+
     def test_base_serial_uses_base_home_and_base_inbox(self):
         with tempfile.TemporaryDirectory() as temporary:
             fixture = WorkspaceFixture(Path(temporary))
