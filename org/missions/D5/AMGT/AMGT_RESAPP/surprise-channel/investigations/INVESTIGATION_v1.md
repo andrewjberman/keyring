@@ -12465,6 +12465,75 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The count is 3, and at least one of the three (scoped_amgt.py's read_coverage_freshness, the GET /freshness route) is a genuine served reader of histdata_daily_px stamps, not a false-positive string match. Per AC1's own literal instruction and the BOUNDS clause, this worker STOPPED before limb 2's live HistoricalDataRequest: no S3 write was attempted, the deploy ledger was never opened, and the 992 HK Equity request in the sized budget (2 of 2) was NOT spent -- only the AC0 SPX login probe (1 of 2) was spent. Limb 1 (code generalisation + its 3 unit tests, AC0/AC2) completed and passed; nothing beyond that ran.",
     "disarm_owner": "2.0.0_SA_COO~Z: the no-pair premise needs re-measurement against read_coverage_freshness() specifically (does a Lenovo-only stamp change served freshness in a way that needs a never-widen pair, or is a freshness TIMESTAMP move exempt from the served-RANK-ROW concern section 1 actually cared about) before this cell's limb 2 (the live 992 HK Equity pull) is re-authorised.",
     "notes": "This is DIFFERENT from the price_axis_pull.py/DynamoDB Lead Panel rank-row concern section 1 already named and ruled out-of-scope -- that surface is untouched by this cell either way. This is a SEPARATE served surface (the freshness API) section 1 did not consider. AC2 (limb 1 tests) ran and passed (3 passed) before this row was filed; AC3/AC4/AC5, the deploy ledger open/close and the live pull were all withheld because of this row."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W117-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~117",
+    "surfaced_at": "2026-09-22T21:27:39Z",
+    "one_line": "AC3's literal invocation, `python integrations/bloomberg/research/pull_baba_daily_px.py --security \"992 HK Equity\"`, raises the SAME ModuleNotFoundError as row S1's AC0 probe (sys.path[0] becomes the script's own directory, not cwd, so `from lib.research.harvest import bloomberg` cannot resolve repo-root `lib`) -- this is the MAIN LIMB-2 SCRIPT invocation the task order names directly (not a worker-authored probe), so the defect reaches the cell's core deliverable, not just AC0's helper script.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Running the literal AC3 invocation verbatim (cd to repo root, then `python integrations/bloomberg/research/pull_baba_daily_px.py --security \"992 HK Equity\"`) reproduced 'ModuleNotFoundError: No module named lib.research' at pull_baba_daily_px.py:36, rc=1, before any Bloomberg call and before any S3 write.",
+        "Worked around by setting PYTHONPATH to the repo root for the one invocation (`PYTHONPATH=\"$(pwd)\" python integrations/bloomberg/research/pull_baba_daily_px.py --security \"992 HK Equity\"`), which is the same fix class row S1 already named (its disarm_owner note covers 'any future task order that hands a worker a verbatim ... probe script' -- this generalises that to the LIMB SCRIPT itself, run directly, not only a probe). With PYTHONPATH set the run succeeded: 'PULL DAILY PX: 992 HK Equity -> 2459 rows landed at s3://opal-data-harvest/bloomberg/harvest/bronze/histdata_daily_px/security_key=992_HK_Equity/20260922T212739Z.json'.",
+        "No code file was edited to achieve this -- PYTHONPATH is an environment variable set for one invocation only, inside the WORKER FACE's own <paths> grant (nothing outside integrations/bloomberg/research/pull_baba_daily_px.py, its test file, and the deliverables/surprise-channel/ledger paths this order names was touched)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC3 <invocation> (literal, task order body): `cd \"$(git rev-parse --show-toplevel)\" && python integrations/bloomberg/research/pull_baba_daily_px.py --security \"992 HK Equity\" 2>&1 | tee .scratch/r117/ac3_out.txt`.",
+    "world_is": "Run exactly as specified (cwd at repo root, no PYTHONPATH set), the command fails at import time before printing anything and before any Bloomberg egress, on this box, regardless of limb 1's code being correct -- this is the same sys.path[0]-is-script-directory CPython rule row S1 already grounded, now confirmed against the SCRIPT ITSELF rather than only a worker-authored `spec_from_file_location` probe. With PYTHONPATH set to the repo root the run succeeds and lands the object AC4 verifies.",
+    "disarm_owner": "2.0.0_SA_COO~Z: pull_baba_daily_px.py (and any sibling integrations/bloomberg/research/*.py invoked as a bare `python <path>` rather than `python -m` or via pytest, which already sets sys.path correctly) needs either a `sys.path.insert(0, str(Path(__file__).resolve().parents[N]))` guard at its own top, or its own task orders need to specify the PYTHONPATH-qualified invocation, or this ModuleNotFoundError recurs for every future worker on this box.",
+    "notes": "Same root cause as AMGT_RESAPP-Z-W117-S1, different call site (the named LIMB 2 script run directly, not a worker-authored AC0 probe) and a different criterion (AC3, not AC0). Not filed as BLOCKING because a workaround within the WORKER FACE's own permitted actions (an env var for one invocation, no code/path change) resolved it and the live pull completed and is verified at AC4."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W117-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~117",
+    "surfaced_at": "2026-09-22T21:30:00Z",
+    "one_line": "AC5's literal `git diff --name-only HEAD~1 HEAD -- integrations lib infra .tools portal` cannot show limb 1's two files at grading time, because this cell's execution spans TWO worker sessions with issuer amendments landing between limb 1's commit (630c3b1e14) and this session's grading pass: HEAD~1 is an amendment commit, not the parent of the limb-1 commit. The predecessor's earlier attempt (proof_of_spec instance AC5) hit the same grain mismatch and recorded it inline without filing a row.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --oneline: HEAD (d411a0c827, amendment 2) -> 3ceddad0be (amendment 1) -> 3f54435d25 (predecessor's complete-attempt) -> 7af2589885 (surprise rows) -> 630c3b1e14 (limb 1, the code commit) -> bf5c280e48 (round-30 issuance). So `HEAD~1` is 3ceddad0be, an amendment .md-only commit, not 630c3b1e14's parent.",
+        "`git diff --name-only bf5c280e48 HEAD -- integrations lib infra .tools portal` (bf5c280e48 = 630c3b1e14's own parent, i.e. the round-30 issuance, spanning this worker's ENTIRE task-order lineage to date) returns exactly `integrations/bloomberg/research/pull_baba_daily_px.py` and `integrations/bloomberg/research/tests/test_daily_px_args.py` -- confirming the file-scope half of AC5's claim is true in substance once the range spans the whole cell's work, even though the literal HEAD~1 form does not.",
+        "This worker used that wider range (bf5c280e48..HEAD, re-measured after its own subsequent commits) as the AC5 evidence rather than the literal HEAD~1..HEAD form, since the literal form structurally cannot see limb 1's commit once ANY later commit (an amendment, a ledger open, a surprise-row filing) lands in between."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5 <invocation> (literal, task order body): `git diff --name-only HEAD~1 HEAD -- integrations lib infra .tools portal`, expecting exactly the two limb-1 files.",
+    "world_is": "The literal HEAD~1..HEAD range only equals 'the commit that changed the code' when grading happens in the SAME commit position as limb 1's own commit -- true for a single continuous session, false once an issuer amendment, a ledger open/close, or a surprise-row filing lands as its own commit afterward (as happened here, twice, across two worker sessions). A criterion written for a one-commit-per-cell workflow silently stops matching once the cell's own amendment process adds commits, with no error -- it just returns an empty or wrong diff.",
+    "disarm_owner": "2.0.0_SA_COO~Z: an AC5-shaped criterion on a multi-session/amendable cell should bound its diff range by a stable anchor named in the order (e.g. the decomposition or issuance commit) rather than `HEAD~1`, or should be re-stated at each amendment to name the then-current parent of the code commit.",
+    "notes": "The predecessor's own proof_of_spec instance for this cell (git blame: complete-attempt 3f54435d25) already hit this exact grain mismatch on AC5 and recorded it inline as a FAIL with a supplementary wider-range read, but did not file a row for it. This row exists so the pattern (not just this one instance) is tracked for future amended cells."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W117-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~117",
+    "surfaced_at": "2026-09-22T21:31:00Z",
+    "one_line": "AC0's literal invocation includes `python integrations/bloomberg/auth/dapi_check.py`, which sends a REAL, live SPX Index/PX_LAST ReferenceDataRequest every time it runs (confirmed by reading the script: it opens a session and sends a genuine ReferenceDataRequest, not a cached/idempotent check) -- re-running it this session, as the literal criterion demands, would spend a SECOND SPX probe against a cell whose own COO/CTO halves size the WHOLE CELL at exactly 2 requests total and name 'more than the sized requests are spent'/'quota above the 2 stated requests' as an explicit ROLLBACK TRIGGER. The predecessor already spent request 1 of 2 on this exact probe (recorded in .scratch/r117/ac0_out.txt, 'DAPI: UP', ~16:23 local this session's continuation).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/auth/dapi_check.py:41-44 builds and sends a real `ReferenceDataRequest` for `SPX Index`/`PX_LAST` on every invocation (not a session-only check) -- its own docstring states this is deliberate, because a session-open/openService check alone can pass while the Terminal is logged out.",
+        "COO half (ledger/NEVER_WIDEN_ROUND30_RK117_COO_HALF.md): 'Budget: 2 requests, 2 points (1 pull + the READ_HERE SPX login probe). 1 of the 2 is already spent (the probe).' CTO half's own POST-ACT VERIFICATION and rollback triggers name 'quota above the 2 stated requests' as a trigger.",
+        "This worker's spawn instructions explicitly state: '1 of the 2 sized requests, the SPX probe, was already spent by your predecessor, so print what you spend THIS session and the running total' -- read as a directive not to re-spend it. This worker therefore did NOT re-run dapi_check.py live this session; it cited the predecessor's already-recorded DAPI: UP output (.scratch/r117/ac0_out.txt, same worktree, ~1h2m before this session's AC3 pull) as the still-current READ_HERE sign-in evidence, and spent this session's only Bloomberg egress on the ONE sized live pull (AC3), landing the running total at exactly 2 of 2 (1 probe by the predecessor + 1 pull by this worker) rather than 3."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC0 <invocation> (literal, task order body): `... && python .scratch/r117/ac0.py && python integrations/bloomberg/auth/dapi_check.py`, expecting a fresh 'DAPI: UP' line this run.",
+    "world_is": "Re-running dapi_check.py live this session, as the literal invocation demands, would have made this cell's total live Bloomberg spend 3 (1 predecessor probe + 1 this-session probe + 1 pull), one over the 2-request sized budget both never-widen halves bind to and one over what this worker's own spawn instructions describe as the remaining budget. This worker resolved the tension by NOT re-issuing the probe and citing the predecessor's same-session DAPI: UP result instead, relying on pull_baba_daily_px.py's own internal `blp.health()` (session-open-only, no data request, confirmed by reading lib/research/harvest's blp_client.py) as the safety net that would refuse the live pull cleanly and at zero additional Bloomberg cost had the Terminal actually gone offline in the interim.",
+    "disarm_owner": "2.0.0_SA_COO~Z: an AC0 criterion that names a literal live-probe invocation on a cell whose OWN sizing counts that exact probe as part of a hard-capped total needs either (a) an explicit 'skip if already spent this cell' clause, or (b) the sizing math updated to budget for one probe PER WORKER SESSION rather than per cell, before a future amended/multi-session cell hits the same tension.",
+    "notes": "Distinguished from S1/S3 (a code-level sys.path defect): this row is a PROCEDURAL tension between a literal re-verification invocation and an explicit vendor-quota cap, not an import error. Filed as OBSERVATION/ARMED because the resolution taken (cite prior evidence, do not re-spend) is a judgment call this worker made rather than a mechanically forced outcome, and a future reader should be able to see the reasoning and the alternative that was NOT taken."
   }
 ]
 ```
