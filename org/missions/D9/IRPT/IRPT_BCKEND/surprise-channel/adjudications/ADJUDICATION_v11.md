@@ -57,6 +57,29 @@ Author: `3.0.0_SA_CVO~B`. R114-AC3 only; not a round-drain or publication claim.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "Reconciliation record, not a duplicate remedy or second judgment grade. Residual belongs to existing C-S174 in REMEDIATION_v5, kept OPEN/INERT with its existing owner. Only C-S179/W13-S6/C-S194 clocks advance in their original rows; no source repair or capture hold follows from the metadata residual. CTO alone receives formal slug."
+  },
+  {
+    "id": "IRPT_BCKEND-C-S197",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~B",
+    "surfaced_at": "2026-09-22T11:41:58Z",
+    "one_line": "R15 metadata hash repair verified by three control arms; C-S174 stays open only for an unqualified S3 exclusion in the published proof.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "R115-AC1/2 are mechanical metadata criteria. C-S174's broader existing remedy requires truthful final proof text with historical exclusions scoped to the pass they describe.",
+    "world_is": "Both R115 criteria pass their invocations; bound receiving and explicit two-ID check pass; all six artifact blobs resolve and equal HEAD. Hashes are recomputed from historical bytes and match the stored diagnostic, not a copied oracle. Own runs of the actual committed battery accept corrected text and refuse in-memory wrong-CRLF and wrong-LF text separately (3/3 expected arms, both mutants leave disk scan0/90 and omit success token). The R107 proof now correctly attributes both hashes, but line23 records completed S3 publication while lines269-270 still exclude any real host/SSM/S3 action with an unqualified all-stubs/static reason. No source or README changed. R114-AC3 remains C-S195 PASS; no new judgment criterion. Own terminal census0/99, channel0/343 undispositioned.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md (co-committed), Round15 addendum: full measurements and bounded carry",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R15_METADATA_REVIEW_PROBE.cjs (co-committed): actual three-arm control and independent byte reconstruction",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IRPT_BCKEND.TO-IB-rtk-1.the-capture-tool-complete-lifecycle-observer-and-sticky-refusal.proof_of_spec.json@6b8139682d:23,254,269-270 (blob f8253e60cba7b531c9fe5f92f2f3ed5da89467a5)",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/battery_ib_rtm_1.py@6b8139682d:124-162,304-367 (blob967f45ea8a7e9ba1acf80b0b0f5098a29bd8dc63)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No new remedy minted: remaining text conflict belongs to existing C-S174 in REMEDIATION_v5, whose OPEN/INERT clock and owner are preserved. CVO owns late disclosure of the exclusion residual. Scope it to the earlier diagnostic pass or actual remaining exclusions; no code repair, publish replay, changed R115 verdict, new capture hold or PRD addendum is implied. Formal slug to CTO only."
   }
 ]
 ```

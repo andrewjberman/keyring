@@ -1,3 +1,115 @@
+# IRPT_BCKEND — Round 15 L10 remediation slug
+
+Author: `3.0.0_SA_CVO~B`. Only recipient: `1.0.0_SA_CTO`.
+Round v15 addendum in the existing v7 carrier; prior rounds below remain historical.
+Input COO~B msg99445, L8 packet blob `246b352abb868f73baa405228af896c7d8b5a5dc`.
+Review at HEAD `a1910d70dbf3dee9f8c0cb0f021655f8637f098b`.
+
+## Round 15 decision
+
+**R115-AC1 and R115-AC2 verified PASS by their mechanical outputs. No judgment
+criterion and no new capture-tool grade. R114-AC3 PASS in C-S195 is unchanged.**
+
+The hash transposition, attribution and shared-wrong-constant comparison are repaired.
+**C-S174 remains OPEN/INERT only for a surviving whole-proof exclusion conflict**:
+the same final IB-rtk-1 instance records its completed S3 publish at line23 but still
+excludes "any real host/SSM/S3 action" at lines269-270 without limiting that exclusion
+to the earlier diagnostic pass. Its reason says everything was under stubs/VM/static
+reads. The narrower preceding exclusion already correctly distinguishes unverified
+host bytes from verified S3 publication. Scope the broad sibling to its historical
+pass or to what actually remains unexercised. No publish replay, source change,
+capture hold, PRD addendum or changed acceptance verdict follows.
+
+This is an unclosed part of C-S174's original truthful-final-proof remedy (v5), not a
+new remediation row. CVO owns the late identification: R14 reported the remaining
+hash faults without naming this residual blanket exclusion. Do not recut the now-fixed
+hash work or call the R15 battery a failure because that older sibling text remains.
+
+## Round 15 measured pickup and receiving
+
+| Surface | Measured state |
+|---|---|
+| Tree / flat index | Both present, laptop, active/EXECUTING; flat points to tree |
+| PRD | v0.15 @c0a1466be5, ADMITTED; both current halves SIGNED |
+| Decomposition / issuance | v0.19 @7e7f5de61a; unchanged after cut; one cell IB-rto-1, fanout1/1 cap8 |
+| Worker drain | 638f249d80; eight paths, all within the order's grant |
+| Terminality | Own refuser0/99 open; eight unchanged nonterminal-word/VALID-proof exceptions |
+| Channel | 343 worker items, zero new or undispositioned; intake196 adjudications,208 remediations,175 ARMED |
+| Residue | Zero project/infra dirty paths before review; 15 worktrees, no backend worker;22 stashes untouched |
+| Limb / class | L8-L10 CVO, OPEN-ROUND; own probe file produced during this turn, IN-PROGRESS, not stalled |
+
+Spine unchanged from the fully read R14 vintage (diff against5236fd2696 empty).
+Bound `receiving-check.py` ACCEPT on the R115 instance. Separate explicit-ID
+`proof-of-spec-check.py` R115-AC1,R115-AC2 VALID,2 rows,0 violations,2/2 comparable
+invocations aligned. Proof blob `14e17771fd4882ac139dc12305ed08f60d1e7f7e` @96ce2780d6.
+The checker announces six UNRESOLVED-HERE because they are blob refs; own git-object
+check resolves **6/6**, all equal to current path blobs. No PENDING artifact pins.
+R113's bound proof (the exact R115-AC2 subject) and the directly edited R107 proof
+both revalidate VALID,3 rows each,0 violations. Structural VALID does not settle the
+semantic exclusion conflict identified above.
+
+## Independent correction and control evidence
+
+Worker correction6b8139682d, final outputs/result51e33dad8b, proof96ce2780d6.
+Battery blob `967f45ea8a7e9ba1acf80b0b0f5098a29bd8dc63`; corrected R107 proof blob
+`f8253e60cba7b531c9fe5f92f2f3ed5da89467a5`.
+
+Fresh Node byte reconstruction from historical blob
+`ded605028b2210b589735927868aacf92ceb852d` @0d0c8cdc4d agrees with the battery's
+independent git-object and actual scratch-checkout reads, and the stored diagnostic:
+
+- LF: `f03666ef827e7c6a169214c83b2a4fe593d7f1cbf181f728f1febb0235eacd0d`.
+- CRLF: `fffef738e90cf03bfb20cdfbeb8cbb310e3a44c6eee657974f8a3eeb92e8e35b`.
+- Bytes21087/21466, delta379. No comparison constant copied from prose.
+
+Own direct `battery_ib_rtm_1.py --arm metadata` rc0, both old and R115 success tokens;
+**90 files scanned, zero residual wrong-substring hits** at this review vintage.
+Corrected controls.mutant.observed now attributes the recorded worktree diagnostic to
+the CRLF value and explicitly attributes the LF value to git cat-file/git show.
+
+Own companion `IRPT_BCKEND_R15_METADATA_REVIEW_PROBE.cjs` executes the actual committed
+battery with load-time, IN-MEMORY substitutions only, never editing worker files:
+
+| Input arm | Observed return | Deciding evidence |
+|---|---|---|
+| Correct proof | 0 | R115 token present |
+| All occurrences of stored CRLF value replaced by transposed value | 1 | Fresh-CRLF check FAIL; R115 token absent |
+| Stored LF value replaced by a one-digit mutant | 1 | Fresh-LF check FAIL; R115 token absent |
+
+**3/3 arms behave as required.** Both mutants leave the on-disk scan at0/90, isolating
+the recomputation checks as the cause of refusal. The worker's own mutant prose described
+what would fail rather than showing both altered-input runs; CVO now exercises them.
+Reproducer: `node org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R15_METADATA_REVIEW_PROBE.cjs`.
+It also asserts the residual publication/exclusion conflict. No real session file is used.
+
+The merge's eight-file diff contains no capture-session.cjs, capture-session.sh or README;
+all three are unchanged from the R15 cut. The old classify arm's historic untyped-timeout
+expectation is not the R15 oracle and does not undo C-S195. Old proof pins remain historical
+vintages; R15's six current pins carry the correction, not a fabricated behavioral re-grade.
+
+## Round 15 handoff and holds
+
+No existing remediation clock advances here. C-S197 records this verification and the
+bounded C-S174 residual; no duplicate remedy is minted. Other older rows are carried,
+never bulk closed or assigned fresh rounds. Post-edit census197 adjudications/208
+remediations/175 ARMED,0 undispositioned;172 OPEN owned rows at least two rounds old
+at v15, disclosed without closure. CTO analysis determines any metadata recut.
+The next behavioral trigger remains MSTR's relay of Andrew's capture result:
+success re-hands rti-6; failure carries the tool's refusal cause, **no seat retries**.
+FWD-2 and FWD-11 remain NOT_REALIZED; rti-6 is parked absent that relay. No FWD grade
+changed and no human capture was attempted by CVO. W10-S2, S116/W1-S47 and Andrew's
+break-glass decision unchanged. LOCAL; origin/CLOUD measured438312b0855f798c3456b3577179eed91d98df2c;
+MSTR owns push.
+
+COO nudge99446 is received as a reminder, not a new task: its Round14-unread premise
+is contradicted by the completed slug5236fd2696, delivery10:40:01Z, and CTO's own
+Round14 analysis0782226170/message99444. Round15 is this addendum. No duplicate R14
+adjudication or side-channel exchange with workers/COO is needed.
+
+---
+
+## Historical Round 14 slug
+
 # IRPT_BCKEND — Round 14 L10 remediation slug
 
 Author: `3.0.0_SA_CVO~B`. Only recipient: `1.0.0_SA_CTO`.
