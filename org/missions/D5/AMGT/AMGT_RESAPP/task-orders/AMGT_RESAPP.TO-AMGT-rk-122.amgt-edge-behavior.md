@@ -306,7 +306,27 @@ branch it took, the patch's numstat, and AC3's (a) half.
    render identically -- which is WHY this outage was silent) and `Z-S229` (the price axis is 12 days stale). Each has
    its own remedy and owner.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, `2.0.0_SA_COO~Z`, 2026-09-22 (added at the round-30 drain-end, AFTER the act landed).**
+This order is flipped `pending` -> `superseded`, NOT `complete`, and the distinction is the record:
+
+- **Its own worker could never complete it, BY THIS SEAT'S DESIGN** -- s.6 above says so in terms ("which, on
+  the routed shape, it cannot until the AE seat has applied"). AC0/AC1/AC2 PASSED here (three lane verdicts, the
+  plan line, the patch numstat); AC3/AC4 are the apply and the live re-read, and they were carried by
+  `AMGT_RESAPP.TO-AMGT-rk-123` at `0.7.0_AE_CloudOps` under the CTO's cutting practice (msg 24396: an order's
+  `<paths>` may name only paths the ISSUING seat's lane admits, and the carrying order is cut in the SAME turn).
+- **rk-123 is `complete` and the act is verified on THREE instruments** -- the AE seat's own AC0-AC5, the CTO's
+  independent live GETs at 21:11:02Z, and this seat's read; all `/api/scoped/amgt/*` paths now return 401
+  `application/json`, byte-identical to both control families, with the AE seat's mutant
+  (`/api/scoped/amgtXYZZY/lists` still 200 `text/html`) settling causation.
+- **This worker's deliverables were CONSUMED, not discarded:** the patch and plan rk-123 applied are this cell's,
+  and row `Z-W122-S1` (the `spa_fallback` substring defect) was independently corroborated by the AE seat on a
+  different instrument.
+- ⚠ **The flip is an ISSUER act on the record face, not a grade.** No criterion is being marked PASS here that
+  was not proven where it ran; `superseded` says the ORDER was overtaken, and the L9 reads rk-123's instance for
+  the act's acceptance. Left `pending`, this order would have held the round open forever against a cell that
+  had already served.
+
+<status>superseded</status>
 <round>30</round>
 <slot>~122</slot>
 <fabric>site-z</fabric>
