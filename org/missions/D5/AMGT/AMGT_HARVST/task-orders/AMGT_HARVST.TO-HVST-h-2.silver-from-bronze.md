@@ -169,8 +169,8 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-h-2.silver-from
 
 ## 4. BOUNDS
 - **CODE ONLY.** Stubs for every S3 touch. Run each test FILE with its own pytest call.
-- **The pin is `9fbf337a74`.** AC3 diffs against it, so `HVST-h-1`'s files will also show as changed. They are listed
-  in AC3's allowed set.
+- **AC3 diffs from your branch's fork point** (`git merge-base HEAD SITEZ`), so it sees only this branch's own
+  changes, never another seat's commit on `SITEZ` (row `AMGT_HARVST-Z-W1-S3`).
 - **Pre-existing failures must not GROW** (`test_worker.py` and `test_verification.py`, measured at AC0).
 - **All new text is pure ASCII.**
 - **Surprise rows:** `AMGT_HARVST-Z-W2-S<k>`, with `disarm_owner` `2.0.0_SA_COO~Y`.
@@ -182,7 +182,9 @@ Before AC3, write `.scratch/hv2/ac3.py`:
 import subprocess
 allowed = {"lib/opal_data_harvest/transport.py", "lib/opal_data_harvest/publishers.py", "lib/opal_data_harvest/harvest_grammar.py", "lib/opal_data_harvest/worker.py", "lib/opal_data_harvest/uploads.py", "lib/opal_data_harvest/test_bronze_capture.py", "lib/opal_data_harvest/silver_from_bronze.py", "lib/opal_data_harvest/test_silver_from_bronze.py"}
 mine = {"lib/opal_data_harvest/silver_from_bronze.py", "lib/opal_data_harvest/test_silver_from_bronze.py", "lib/opal_data_harvest/uploads.py", "lib/opal_data_harvest/harvest_grammar.py"}
-out = subprocess.run(["git", "diff", "--name-only", "9fbf337a74", "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal", "org/tier1_exec"], capture_output=True, text=True).stdout.split()
+base = subprocess.run(["git", "merge-base", "HEAD", "SITEZ"], capture_output=True, text=True).stdout.strip()
+print("fork_base", base)
+out = subprocess.run(["git", "diff", "--name-only", base, "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal", "org/tier1_exec"], capture_output=True, text=True).stdout.split()
 print("changed_code_files", sorted(out))
 print("outside_allowed", sorted(set(out) - allowed))
 for f in sorted(set(out) & mine):

@@ -144,7 +144,9 @@ Write two scratch scripts first.
 ```
 import subprocess
 allowed = {"lib/opal_data_harvest/transport.py", "lib/opal_data_harvest/publishers.py", "lib/opal_data_harvest/harvest_grammar.py", "lib/opal_data_harvest/worker.py", "lib/opal_data_harvest/uploads.py", "lib/opal_data_harvest/test_bronze_capture.py", "lib/opal_data_harvest/silver_from_bronze.py", "lib/opal_data_harvest/test_silver_from_bronze.py", "lib/opal_data_harvest/__main__.py", "lib/opal_data_harvest/test_legacy_upload.py"}
-out = subprocess.run(["git", "diff", "--name-only", "9fbf337a74", "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal", "org/tier1_exec"], capture_output=True, text=True).stdout.split()
+base = subprocess.run(["git", "merge-base", "HEAD", "SITEZ"], capture_output=True, text=True).stdout.strip()
+print("fork_base", base)
+out = subprocess.run(["git", "diff", "--name-only", base, "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal", "org/tier1_exec"], capture_output=True, text=True).stdout.split()
 print("outside_allowed", sorted(set(out) - allowed))
 for f in ["lib/opal_data_harvest/__main__.py", "lib/opal_data_harvest/uploads.py", "lib/opal_data_harvest/test_legacy_upload.py"]:
     b = open(f, "rb").read()
