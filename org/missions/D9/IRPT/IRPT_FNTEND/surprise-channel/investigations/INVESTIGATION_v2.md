@@ -5334,6 +5334,27 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W16-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~16",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "TO-FE-s-66's F66-AC6/F66-AC7 expect a 'FIXTURES-MATCH: matched N of N' line from scripts/ui-smoke.mjs, but this worktree's copy of that script carries neither the FIXTURES-MATCH line nor the --expect family of flags at all -- FE-s-65 (the cell that builds them, per the order's own 'THE INSTRUMENT' note) is still <status>pending</status>, so the instrument this order's base claims to already carry has not landed. The dispatching message to this worker additionally asserted 'your criteria only use existing FIXTURES-MATCH/FIXTURES output' -- that existing output is 'FIXTURES: N declared; M matched >=1 URL' (a different line, a different count semantics), not 'FIXTURES-MATCH: matched N of N'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-66 'THE INSTRUMENT' clause: 'your worktree already carries it -- if `ui-smoke.mjs` refuses `--expect` as an unknown flag, STOP: your base is wrong, report it.' F66-AC6/F66-AC7 <expect>: regex `FIXTURES-MATCH: matched (\\d+) of \\1(?![0-9])`.",
+    "world_is": "Read at this worktree's HEAD (portal/scripts/ui-smoke.mjs, 375 lines): zero occurrences of the strings 'FIXTURES-MATCH', '--expect', '--expect-text', '--expect-style', '--expect-ground', '--inject-css', '--delay' (grep denominator: 0 of 375 lines). The script does not validate flags (unknown args are simply never read), so passing --expect does not 'refuse' loudly -- it is a silent no-op, which is the STOP condition in substance even though it does not match the order's literal description of how the wrongness would announce itself. MEASURED, not inferred: ran `node scripts/ui-smoke.mjs investor-reporting <tmp>.png --port 5910 --width 1440 --fixtures .../fixtures/smoke/fe-s-13-wire.json --expect '[data-slot=\"reporting-body\"]'` against this worktree's own dev server (port 5910, verified up via curl 200 on /investor-reporting) -- output carried no EXPECT line and printed `FIXTURES: 9 declared; 3 matched >=1 URL`, never a `FIXTURES-MATCH:` line in any form. `IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md:8` reads `<status>pending</status>`. Consequence for this order: F66-AC6 and F66-AC7 are run exactly as invoked (after authoring the two named fixtures) and reported FAIL-by-measured-output against their literal <expect>, per BOUNDS' REFUSE clause -- the criterion's expectation is not edited or weakened.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs (375 lines, this worktree HEAD) -- 0 of 375 lines match FIXTURES-MATCH|--expect|--expect-text|--expect-style|--expect-ground|--inject-css|--delay",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md:8 <status>pending</status>",
+        "measured run: node scripts/ui-smoke.mjs investor-reporting <tmp>/probe.png --port 5910 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json --expect '[data-slot=\"reporting-body\"]' -- stdout tail: 'FIXTURES: 9 declared; 3 matched >=1 URL', no EXPECT/FIXTURES-MATCH line"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
