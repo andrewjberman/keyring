@@ -1,0 +1,67 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "candidate": "c5eace08c76176c6d9ebb78dd31ced3b0e57ea2d",
+  "source_sha256": {
+    "infra/aws/lambda/investor-reporting/reports/retention.py": "1777f3cf7887050cef3fde867ed8ec304e24136af8d99ebf9e2a2013d2cbb307",
+    "infra/aws/lambda/investor-reporting/reports/repository.py": "805805dd922e9cd77a9873c4c77aa1f8a857469b2d9440ebed6fd64ec55ed2ba",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_retention.py": "3fe841ca92f60b6d89c1cb1c9e6c916a7bd46eb415ba4f7a16aa2eca29cb6f3e",
+    "lib/opal_naming.py": "f3f9e813fc445b7c9d9ce3fdae4dc38319c26fd64196e9a15bfe51dbe79892a4",
+    "org/standards/NAMING_SCHEMA.json": "2c8834a98f7453fd1843eebe9baa45630aeb31cca708c114646678fdce480f33",
+    "infra/logic/registry/exemptions.json": "f51629e32f5d261f28b07dab9714c6f826265cf3e3aed0ff288b724abd1eeb50",
+    "infra/logic/registry/remediations.json": "67b49f4332fb676847b2b92af9b4bdc85fd7107e5132421d93f3ea8bb0a09481",
+    "infra/logic/registry/reporting_policies.json": "481cc513038b73f5e0444baafea76fc97e3ac9e19624f3f6822fb6f362cacbc3",
+    "infra/logic/registry/resources.json": "471e106af27bb34d1712180ad67d4441e5154236ed2230b12cdeceb5e1981592",
+    "infra/logic/registry/scopes.json": "a4e0637257b6c50adf23de75d3f344b3d39db6bf9a024f4b47dd825131532be9",
+    "infra/logic/registry/systems.json": "41d5138fd0d4c0644edef51f53644c7c4d5cb230daad5e6bccaa3c65d02b42eb",
+    "infra/logic/registry/tiers.json": "d3d51e30150a4baefd9405ddfe9adfa1740e084dfb1857c8fcb0e87a3c1188f3"
+  },
+  "reviewer_sha256": {
+    "retention_independent_cases.py": "a4ce15e3852ec4e96fa91981e08ed7a2898cf25416393fb4669542a2101a39e0",
+    "retention_receipt_cases.py": "14ff47c5c1164171cd091007505b42f4230ef814dd851ea318be10e823f787bf"
+  },
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retention-c5ea-9wmzyi1s",
+  "supplied_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retention-c5ea-9wmzyi1s\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_retention.py"
+    ],
+    "exit_code": 0,
+    "stdout": "................                                                         [100%]\n16 passed in 0.64s\n",
+    "stderr": ""
+  },
+  "unchanged_independent_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retention-c5ea-9wmzyi1s\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_original_review.py"
+    ],
+    "exit_code": 0,
+    "stdout": ".........                                                                [100%]\n9 passed in 0.40s\n",
+    "stderr": ""
+  },
+  "receipt_boundary_suite": {
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-retention-c5ea-9wmzyi1s\\infra\\aws\\lambda\\investor-reporting\\reports\\tests\\test_receipt_review.py"
+    ],
+    "exit_code": 0,
+    "stdout": "............                                                             [100%]\n12 passed in 0.39s\n",
+    "stderr": ""
+  },
+  "timestamp_utc": "2026-09-22T22:27:46.652950+00:00",
+  "limits": "Pinned modules/accessor/registry. Synthetic server clock, owner, transport and ACTIVE policy; actual boto3 serialization and supplied Stubber. Controlled interleavings, not live concurrency. No lifecycle composition, cleanup, cloud, browser, or full S7 acceptance."
+}
