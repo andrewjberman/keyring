@@ -67,3 +67,12 @@ MSTR's exact 20:39:23Z note reports the historical three-COO cap and temporary B
 ## Closeout bar
 
 Do not close the effort until P1-P8, M1-M7, Y1-Y7 and applicable S1-S7 have independent outcomes, unresolved findings have explicit disposition, deployed evidence supports claimed E2E behavior, and screen/report/export/input revisions reconcile across the integrated candidate. A named authorization-dependent test may remain NOT_EVALUATED, but the product then remains incomplete at that boundary. All outgoing completion claims identify source/deployed pins and LOCAL/origin state accurately.
+
+### 21:45Z evidence and storage-policy adjudication
+
+- Source-map grant committed `a36b72db57`, delivered P/CVO~P; consumption receipt pending.
+- CVO~P `f915ff0445` closes R-P05 on `0754b10b6c`; CVO~Y `52986b6c7d` closes Y-P01 with the unchanged four-operation probe on the same candidate. These are offline repository primitive closures, not S4 or E2E acceptance.
+- CVO~Y at `52986b6c7d` independently reports Y foundation `6dc4e888e2`: 9 intake and 16 submission controls pass, Y-B01 repaired; Y-F01 P2 remains OPEN (failed dispatch claim falsely reported as queued, zero sends). COO~Y has the finding and owes exact repair/retest. Full integrated criteria remain NOT_EVALUATED.
+- COO~M preserved the S7 proposal at `0d4092c728`; shared-entry prospect pin `a85e7d6329` delivered P/Y. CVO judgments remain separate from producer test counts.
+- IRPT-S7-03 approves finite candidate retention values and the twelfth family PERFORMANCE_SOURCE_EVIDENCE, conditioned on canonical registration and coordinated enforcement. M owns the bounded CRO order amendment; CRO owns the single ledger carrier. Physical disposal, concrete IAM evaluation and live deployment remain uncompleted gates, not implied approvals.
+- P reports prescribed worktree `.tools/terraform.exe` missing. Repository provisioning repair must supply the canonical tool; syntax checks cannot stand in for validation/plan.
