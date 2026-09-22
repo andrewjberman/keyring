@@ -51,6 +51,34 @@ worker_grant:
 # =========================================================================
 lanes:
 
+  IRPT_COMPLETION_REGISTRY:
+    permitted_agents:
+      - 4.0.0_SA_CRO
+      - 4.0.0_SA_CRO~A
+      - 4.0.0_SA_CRO~B
+      - 4.0.0_SA_CRO~C
+      - 4.0.0_SA_CRO~D
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor IRPT-M-REGISTRY-01 under Andrew session delegation: exact two registry files only, preserve CRO incumbents plus exact COO~M. IRPT unprovisioned product row and X10 twelve-family policy only; file-level gate, semantic boundaries independently reviewed; no default home or global rule change."
+
+
+  IRPT_COMPLETION_SOURCE_MAP:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 0.2.0_DT_PortfolioAnalytics
+      - 0.2.0_DS_PortfolioAnalytics
+      - 2.0.0_SA_COO~P
+    description: "CTO grantor IRPT-P-BUILD-01, 2026-09-22: exact shared source-map file only; preserve YANG_PIPELINE_DEPLOY incumbents plus exact COO~P. P may change IRPT build composition only under completion contract, with non-IRPT member equality proof and independent review; no upload/deploy grant. Path gate is file-granular, not JSON-member enforcement."
+
   # Andrew-direct IRPT completion, CTO grantor 2026-09-22.
   # Preserve incumbent AE permissions; add only the exact implementing COO.
   IRPT_COMPLETION_P:
@@ -983,6 +1011,12 @@ lanes:
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
 paths:
+  "infra/logic/registry/scopes.json":
+    lane: IRPT_COMPLETION_REGISTRY
+    note: "CTO exact-file grant IRPT-M-REGISTRY-01; IRPT-only member scope requires explicit equality proof and naming-owner review."
+  "infra/logic/registry/reporting_policies.json":
+    lane: IRPT_COMPLETION_REGISTRY
+    note: "CTO exact-file grant IRPT-M-REGISTRY-01; IRPT-only member scope requires explicit equality proof and naming-owner review."
 
   # Bounded IRPT completion grants; source commits only, no deploy authority.
   "infra/aws/lambda/investor-reporting/reports/**":
@@ -2001,8 +2035,8 @@ paths:
     note: "public-data-router edge function source -- full AE set PRESERVED + DT 0.2.0 (the live portal-promote lane; CTO WO-3 names this router as DT's surface, GO 005733Z, Andrew-direct repoint-tonight). Longest-match overrides infra/aws/** AE-only. SCOPED to this one edge function: the other lambda-edge functions remain CLOUD_OPS_OR_ETL. COO grantor-landed 2026-07-29 (SoD); CTO arch-gate cc'd."
 
   "infra/aws/lambda/ci/lambda-source-map.json":
-    lane: YANG_PIPELINE_DEPLOY
-    note: "Shared Lambda source map (CI drift-detection SoT) — build-and-upload + record-terraform-deploy write it on every yang deploy. Was infra/aws/** (CLOUD_OPS_OR_ETL, full AE set); YANG_PIPELINE_DEPLOY PRESERVES that exact AE set (no regression — all pipelines' AE deploys still write it) + adds DT 0.2.0 (yang). Exact-file longest-match overrides infra/aws/** AE-only. Cross-pipeline mis-writes remain bounded by the CI source-map drift detection (Rule 4)."
+    lane: IRPT_COMPLETION_SOURCE_MAP
+    note: "Shared source map: incumbent YANG_PIPELINE_DEPLOY members preserved plus exact COO~P for IRPT build composition only, CTO ruling IRPT-P-BUILD-01. Non-IRPT member equality and offline package proof required. File-granular gate; member scope reviewed independently. No deploy grant."
 
   "infra/aws/**":
     lane: CLOUD_OPS_OR_ETL

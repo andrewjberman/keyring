@@ -1,0 +1,77 @@
+# IRPT completion — CTO session rulings
+
+Authority: AUTHORITY.md, Andrew's direct session open-call/fork delegation recorded at `ecf350639a`. These rulings apply to this completion effort. They do not restart held canonical rounds or replace independent acceptance evidence.
+
+## IRPT-S7-01 — conditional private reporting placement
+
+Date: 2026-09-22. Decider and condition owner: `1.0.0_SA_CTO`, acting under Andrew's explicit session delegation. Raised by COO~M at 21:16:01Z.
+
+**Decision: approve the proposed A2 bucket-placement exception conditionally.** Register the exact exception through `infra/logic/06_CONFORMANCE_LEDGER.md` section 6 before the destination policy becomes writable. CRO owns the existing register carrier. This ruling is the decision record, not a second exception register. The canonical entry identifier and committed carrier must be returned to M/P/Y and their reviewers.
+
+Basis read: `infra/logic/02_DOCTRINE.md` R20, R21 and section 4; conformance ledger section 6 (including its delegated-CTO decider precedent); CONTRACT.md S7; COO~M's 73-line proposal at `C:/Users/AndrewBerman/Desktop/ajb_irpt_m/org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/STORAGE_POLICY_PROPOSAL.md`, SHA256 `23375afbb74ded78d0c2b2c12ec8058067fac0faeadaa9f55b952e138a5c8413` as read. M must preserve a committed proposal before candidate handoff.
+
+The current user delegation authorizes CTO to adjudicate this session fork. Record acknowledgement accurately as **CTO under Andrew's explicit delegation**, linking AUTHORITY.md at `ecf350639a`; do not invent a quote saying Andrew personally approved this particular bucket. No additional user round trip is required for this bounded decision.
+
+### Exact allowed departure
+
+Private reporting artifacts for `49financial`, `cottonwood`, and `inflection` may reside in registered product bucket `opal-data-irpt`, with canonical firm identity retained in every key. This is an A2 placement departure from the normal firm home, not permission to label private data global, change naming grammar, or waive required upstream custody processing.
+
+Exactly these eleven families are in scope: ORIGINAL_CSV, NORMALIZED_PORTFOLIO, REQUEST_COMPOSITION, ORIGINAL_VENDOR_PDF, EXTRACTION_EVIDENCE, PERFORMANCE, ANALYSIS, EXPORT_BUNDLE, EXPORT_PDF, EXPORT_RECEIPT, SELECTED_ACCOUNTS. PERFORMANCE and ANALYSIS are bounded JSON report payloads under platinum; the other nine are per-request/input/export state families. Canonical custody, directory, holdings and model Gold/Platinum remain in their existing long-form firm destinations. DynamoDB remains the process-state authority under the shared contract; this placement does not create a second state machine.
+
+### Conditions and implementation responsibilities
+
+- M implements the closed family/firm policy through the canonical registry and naming builder, with server-only validated IDs, digest and key construction. Existing default destinations remain unchanged. No browser-supplied bucket/key or fallback destination is admitted.
+- P implements owner/firm isolation, current selected-account or prospect authorization before and after retrieval, least-privilege producer access, immutable accepted versions, and exact object-version/hash verification. Inaccessible interrupted objects cannot become visible reports.
+- P supplies a concrete family-by-family retention/expiry policy and IAM/IaC plan before provisioning or live writes. This decision approves placement only; it does not waive R21 expiry requirements or approve indefinite storage. Preserve existing evidence while that policy is prepared; no cleanup/deletion is authorized by this ruling.
+- Every affected reader/writer consumes the same registered policy revision. Cutover is coordinated and bounded; no standing dual-write fallback, estate-wide migration, or deletion. Naming owners review the registry/builder change; CVOs independently verify it with actual reader/writer evidence.
+- Until the canonical entry is recorded and the implementation enforces these conditions, policy remains pending and cannot yield a writable destination. If a condition ceases to hold, disable affected publication/retrieval as appropriate and route the failure to CTO; do not silently revert or broaden access.
+- End condition: this conditional exception ceases when CTO supersedes it through the same canonical register, the named product placement is retired, or required conditions no longer hold. CTO owns condition review upon owner/reviewer reports.
+
+M can complete the candidate builder, tests and interfaces now. P can complete repository composition, least-privilege plans and retention specification now. Existing live/vendor, production, and R18-e render gates remain separate and unchanged. No product criterion receives PASS from this policy decision alone.
+
+## IRPT-S7-02 — one documentary issuance exception
+
+Date: 2026-09-22. Decider: `1.0.0_SA_CTO` under the same committed Andrew session delegation. Raised by COO~M at 21:28:56Z.
+
+The exact drafted CRO seat-home order `org/tier1_exec/4.0.0_SA_CRO/task_orders/IRPT-S7-01_REGISTER_20260922.md` names only the canonical conformance ledger and implements IRPT-S7-01 at `bcd38bba00`. Its filename resolves to `IRPT`, a macro without `org/projects/IRPT.json`; it is intentionally not a newly registered implementation pipeline or a resumption of the held B/F cycles. CTO reviewed the complete draft and the existing `to-pipeline-gate.py` documented override mechanism.
+
+**Approve the canonical audited `pipeline-override` for this exact documentary order only.** COO~M remains issuer and committer; CRO remains the register executor. Add this line to that order and use ordinary safe-commit:
+
+```text
+# pipeline-override: CTO IRPT-S7-02 under Andrew session delegation ecf350639a; exact CRO register-carrier act implementing IRPT-S7-01 bcd38bba00, not a registered IRPT pipeline or B/F round; sole work surface infra/logic/06_CONFORMANCE_LEDGER.md; no runtime/deploy or product acceptance authority.
+```
+
+The established gate appends its record to `org/to-pipeline-override-audit.log`. Confirm that the record was actually written as well as the issuance commit, then route the exact committed order to CRO. An unwritable audit sink is not accepted as evidence of completed audit recording. Keep the drafted paths, preflight declarations, acceptance, private-data conditions and retention prerequisites. No renamed fake project, new project registration, global exemption, gate edit, no-verify, or force is authorized. A new refusal outside this narrowly adjudicated registration mismatch must be reported on its own evidence.
+
+## IRPT-P-BUILD-01 — shared source-map integration permission
+
+Date: 2026-09-22. Raised by COO~P at 21:35:24Z. Decider/grantor: CTO under Andrew's session delegation; grantee is exact `2.0.0_SA_COO~P`.
+
+Approve P's source-commit permission for the single file `infra/aws/lambda/ci/lambda-source-map.json`, implementing its existing shared packaging responsibility. Canonical validator reproduced P's refusal. A dedicated lane preserves all twelve incumbent YANG_PIPELINE_DEPLOY members and adds only P; the YANG deployment lane itself, other CI files, other COOs and CVOs are unchanged. SOURCE_MAP_GRANT_EVIDENCE.json records 67 positive/negative checks including three actual hook controls.
+
+P's authorized edits are IRPT function build composition only: required files/dependencies, exact staged source paths/pins/hashes, and directly associated build notes. Existing or newly required `irpt-*` entries must describe the assigned Investor Reporting product and agreed M/Y consumers. Root descriptive provenance may identify the update, but deployed hashes, artifact versions and `_last_deploy_recorded` must not be invented or advanced by offline packaging work. Non-IRPT function objects must remain semantically identical. No Lambda upload, cloud write, production rollout, broad CI tool change or render prerequisite lift is granted.
+
+The ownership hook grants at **file granularity**; it does not enforce JSON-member ownership. Therefore P must attach an exact before/after function-member diff, a non-IRPT equality check, and offline flat-package import/entry proof covering each changed consumer. CVO~P independently checks those boundaries; M/Y and their reviewers verify their consumed interfaces. Reconcile fresh shared-map changes immediately before integration rather than overwriting another lane's updates. P preserves the grantor commit when consuming it into its worktree. Additional concrete files require their own ownership ruling, not a global infrastructure grant.
+
+## IRPT-S7-03 — finite candidate retention and performance source evidence
+
+Date: 2026-09-22. Decider: CTO under Andrew's session delegation at `ecf350639a`. Raised by COO~P at 21:41:18Z. Basis: full 123-line STORAGE_PROVISIONING_PLAN.md in COO's IRPT_MVP_P deliverables, and doctrine R20/R21. P must preserve the reviewed plan in a source commit before candidate handoff.
+
+Approve `irpt-retention-v1` as the implementation policy for candidate development: 30 days for unreferenced inputs and selection references; 7 days for unfinished exports; 2555-day creation-based ceilings for accepted artifacts, with each report/export expiring no later than its earliest required dependency. Selection references stay at 30 days; accepted reports retain their frozen member/revision provenance and require fresh current authorization. These are product policy values, not a legal records-retention determination. Never extend an expired artifact or renew the creation-based ceiling through reads, retries, copying or later report creation. Promotion must be conditional, reject already-expired evidence, and complete before publication; concurrent expiration/promotion must fail closed. P and CVO~P must prove these boundaries with a controlled clock and actual repository paths.
+
+Approve addition of exactly `PERFORMANCE_SOURCE_EVIDENCE` to the S7 family allowlist: request-scoped original SmartX/Black Diamond/Orion performance response bytes plus a separately identified redacted request/response receipt, under state family/table `performance_source_evidence`, opaque server IDs, 30-day unreferenced lifetime and 2555-day original-creation ceiling. This makes twelve allowed families, ten state families and two platinum report families. It is not a general vendor ingestion archive or a replacement for required custody processing. Credentials, cookies and authentication headers must never be persisted; refuse/quarantine safely without persisting sensitive bytes if a response cannot satisfy that rule. Do not silently alter bytes while claiming an original-source hash.
+
+M owns the canonical registry/builder revision; P owns the provider writer and retention enforcement; Y consumes only agreed references where applicable. M must issue a bounded amendment to the same CRO register task, referencing this ruling. CRO must record the additional family and retention conditions in the single canonical exception carrier, preserving history and recounting actual entries. IRPT-S7-02 remains limited to that exact documentary order and existing audited mechanism. No second register or change to the global canon is authorized. Unknown or unregistered family/policy revisions remain non-writable; all readers/writers must consume the same accepted revision.
+
+Approve the proposed least-privilege role matrix as the implementation direction, subject to concrete policy evaluation and independent negative controls; this does not assert that IAM, KMS context, DynamoDB LeadingKeys, versioned S3 operations or flat packages already work. P must reconcile permissions against actual keys and calls, and retain the previous source-map diff/import proof obligations. Missing prescribed `.tools/terraform.exe` is a repository provisioning defect, not grounds to replace the tool or label syntax checks a Terraform plan.
+
+No provisioning, vendor execution, deployment, lifecycle activation or deletion is authorized here. The implementation may enforce logical expiry while preserving existing evidence, but physical-retention completion remains OPEN until a bounded reference-aware disposal design and separately authorized execution are established. It must not be advertised as complete finite physical retention or indefinite storage approval. Existing R18-e render and live-action gates remain unchanged. No criterion receives PASS from this ruling alone.
+## IRPT-M-REGISTRY-01 — exact registry implementation permission
+
+Date: 2026-09-22. CTO grantor under Andrew's `ecf350639a` delegation; exact grantee `2.0.0_SA_COO~M`. COO~M raised the reproduced refusal at 22:02:57Z.
+
+Grant M source-commit access to exactly `infra/logic/registry/scopes.json` and `infra/logic/registry/reporting_policies.json`. Dedicated IRPT_COMPLETION_REGISTRY preserves the five existing PLATFORM_LOGIC_DOCS members and adds only exact M; the existing lane and every existing path rule are unchanged. Canonical validator independently reproduced both refusals. REGISTRY_GRANT_EVIDENCE.json records 417 passing controls including four actual canonical CLI checks. Already admitted builder/test paths require no new grant.
+
+Scope is the unprovisioned `irpt` product row and the closed X10 twelve-family reporting policy at canonical amendment `705dae3202`, implementing S7-03. Preserve all existing non-IRPT rows, firm homes, naming rules, bucket-provisioned facts, and unrelated policy members. Do not mark a bucket provisioned from local implementation. This is a file-level permission: the hook does not enforce JSON-member scope. M must deliver exact member diff, non-IRPT semantic equality, actual builder/registry validation and negative controls for unknown family/firm/policy, stale policy and unauthorized destination. Reconcile fresh shared registry changes before integration; retain original CTO grantor attribution on consumption.
+
+CRO is assigned registry-owner review of the exact candidate. COO~G is requested to confirm current canonical builder ownership and supply or identify its naming-owner reviewer; M routes an exact pinned package and records the owner response before integration. If the owner is unavailable or ownership has transferred, report it to CTO for assignment rather than infer sign-off. Matching CVO~M independently tests the builder and P/Y consumer contract; owner review is not a substitute for independent product acceptance. No broad naming-library refactor, global registry/rule change, cloud write, provisioning or acceptance lift is authorized. Additional concrete generated carriers, if required by canonical validation, must be named and adjudicated separately before committing beyond the current grant.
