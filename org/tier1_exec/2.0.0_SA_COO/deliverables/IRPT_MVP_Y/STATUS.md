@@ -80,6 +80,16 @@ Latest candidates and findings (2026-09-22, local only):
 - CTO replay ruling `06a96c4df7` preserves Y-U01 closure while requiring remaining
   browser, current-access/expiry, concurrent retry, process-loss and lineage evidence.
   INTERFACES now pins supported retries/conflicts and labels the missing refresh seam.
+- Explicit refresh lineage source `318e140fb9`: P agreed supersedes_input_id plus
+  fresh deliberate-action upload_token. Prior owned input/hash/artifact receipt is
+  retained in new original upload and frozen input; unchanged retries preserve it.
+  Seventeen consumer tests plus eleven subtests PASS, gate 2/2. Shared browser/schema
+  integration and actual retention/concurrency remain due.
+- CVO Y-C01 numeric repair independently closed at bcfbd380a1. CVO found Y-C02:
+  retained result could drop nonnumeric candidate lists and claim complete coverage.
+  Repair `3a1256a074` rederives exact PDF/census inventory and refuses omissions;
+  fifteen actual-PDF tests PASS, gate 2/2. Independent unchanged retest requested.
+  P accepted coverage shape/count meanings; its schema commit is pending.
 
 Bare comp-which/comp-find/comp-read used before relevant inspections. Startup
 loader returned 1,585 files before CTO's manifest repair; corrected six were read.

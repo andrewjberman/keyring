@@ -166,7 +166,7 @@ dispatch repair (two changed Python files pass gate). M Entry prospect guard
 Stubber is not a persistent service. Y1-Y7/S1-S7 remain ungraded. No durable worker,
 vendor, browser/export, deployment or live permission was exercised by this candidate.
 
-## Replay wire examples and remaining lineage seam
+## Replay wire examples and explicit refresh lineage
 
 Binding ruling: CTO IRPT-Y-REPLAY-01 `06a96c4df7`. Implementation pins:
 upload `9da7d87f99`, submission/dispatch `08b1fd5c99`; P consumed upload at
@@ -254,17 +254,34 @@ Submitting that input requires a new browser analysis request_id, for example
 example-analysis-0002; the old actual analysis key cannot be rebound. Merely
 changing provider data without changing semantic options is replay, not refresh.
 
-**Incomplete seam:** the current upload wire has no explicit prior-input lineage
-or same-options refresh action. Do not advertise complete IRPT-Y-REPLAY-01 or
-invent a working refresh field. Proposed owner-coordinated extension is optional
+**Paired source extension `318e140fb9`:** P agreed at 22:30:03Z to optional
 `supersedes_input_id` on upload, paired with a fresh upload_token minted only from
-an explicit correction/refresh action. Y will verify current access to the prior
-input and freeze its input/hash/receipt as lineage in the new input. P must agree
-the shared schema and browser serialization before integration. Hidden retries
-retain both tokens and the prior reference; a deliberate new action gets a new
-token. Same raw-handle changed-options support remains a distinct normalization
-identity, not permission to rebind an accepted actual key. Browser implementation,
-lineage persistence and expiry/concurrency controls remain outstanding.
+an explicit correction/refresh action. The source consumer is committed; shared
+schema and browser integration remain P's next work. A concrete refresh body is
+the upload example above with upload_token="example-upload-0002" and an added
+supersedes_input_id equal to the actual first response's input_id. Keep filename,
+bytes and options unchanged for a same-options dependency refresh; deliberate
+corrections may change them under the new token. Hidden retry resends that exact
+new body and token, never mints example-upload-0003.
+
+Y reads and verifies the prior owned input before any new storage. Reusing its raw
+UP token with this explicit lineage extension refuses
+REFRESH_REQUIRES_FRESH_UPLOAD_TOKEN. Original upload metadata binds the full
+supersedes_input_ref; frozen normalized document.source carries the same prior
+input_id/content_sha256/artifact_ref. Prior input and original bytes remain intact.
+Reads verify the retained prior index and immutable artifact receipt and recheck
+current authorization. Dropping or replacing lineage under an accepted upload
+token conflicts. Different fresh UP identity and frozen lineage produce a new
+immutable input even when holdings values are unchanged. The subsequent analysis
+uses that input and a new browser request_id as described above.
+
+Seventeen consumer tests plus eleven subtests PASS, gate 2/2. Explicit same-date
+price refresh produces 40 while unchanged old request still returns 20. Missing
+or foreign prior input refuses before new storage. Same raw-handle changed-options
+support without this extension remains a distinct normalization identity, not
+permission to rebind an accepted actual key. Browser wiring, P earliest-dependency
+expiry/promotion (including lineage), actual concurrency and process-loss controls
+remain outstanding. No complete IRPT-Y-REPLAY-01 acceptance is claimed.
 
 ## Worker and source-verified publication candidates
 
@@ -286,7 +303,8 @@ Numeric certification now re-parses the complete PDF crop and compares it with
 the claimed number. Reproduction before repair: actual 0.30 percent changed to
 123.3 with old token and coordinates still certified. The repaired candidate
 refuses that mutation and a substring mutation; no supplied token can vouch for
-a different value. CVO exact retest requested; independent closure not yet claimed.
+a different value. CVO independently closed Y-C01 numeric repair in its 22:29:14Z
+exact retest notice. This does not certify full extraction or publication.
 
 Only uniquely located actual PDF text becomes a disclosure. Census prose, labels
 standing in for disclosure lists/tables, and absent/ambiguous chart titles yield
@@ -311,4 +329,15 @@ Unlocated records can be per-field or per-column; they are not commensurate with
 census_fields and must not produce a coverage percentage. Duplicate IDs refuse.
 Any failed scalar certification or empty scalar population refuses the fragment.
 CERTIFIED describes the emitted scalar denominator only; notes and coverage state
-partial completeness explicitly. P coverage schema and browser handling pending.
+partial completeness explicitly. P accepted the shape/count meanings at 22:30:03Z;
+its coverage schema commit and browser handling remain pending.
+
+Retained-inventory correction `3a1256a0742b06c0cbc3fe44388c40b86cb7a3da` addresses
+CVO Y-C02: at bcfbd380a1 a retained result could omit chart/disclosure lists and
+claim COMPLETE_FOR_CENSUS. verify_extraction now rederives the candidate inventory
+from the exact original PDF and census, comparing sections, charts, disclosures,
+unlocated records, unit conflicts and denominators. Omission or mutation refuses
+EXTRACTION_INVENTORY_BINDING; evidence carries source_inventory_sha256. This is a
+pure local verification against original bytes, not a current-source/vendor refresh.
+Fifteen actual-PDF tests PASS, gate 2/2; independent unchanged omission retest
+requested. Use this pin rather than bcfbd380a1 for further publication composition.
