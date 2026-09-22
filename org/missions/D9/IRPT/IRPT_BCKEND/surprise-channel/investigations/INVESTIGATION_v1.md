@@ -8646,3 +8646,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "org/mcp/sessions/ is absent from this worktree and outside this order's <paths> grant, so writing there would be an out-of-lane write the order's own preflight forbids overriding. This cell's proof_of_spec and R117-AC2's criterion do not read this marker file, so the instruction's absence has no bearing on this order's DELIVERABLE or its acceptance; filed as the order's own instructed remedy for a failed premise, not treated as blocking."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W19-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~19",
+  "surfaced_at": "2026-09-22T16:50:45Z",
+  "one_line": "BOUNDS (e) says the IB-rtq-2 revocation control and three-arm scope-algebra test 'already passes at IB-rtq-2's cut -- confirm it still passes after your changes, unmodified in expectation', but cell (a) requires replacing RENDER_DELEGATE_OPERATIONS with the REAL served vocabulary (performance_report/analysis_report/narrative_packet), and the LITERAL pre-existing test file's own helper defaults its requests to the OLD placeholder operation name 'performance' -- so after item (a)'s fix, running that literal file unmodified now fails 5 of 20 (test_arm1, test_arm2/the revocation control, the empty-intersection test, the no-bundle-loader test, and the meta-test that shells out to the full suites) with OBJECT_NOT_COVERED, not because the ALGEBRA regressed but because the operation-name axis the CVO's own W15-S5/C-S203 finding says must change did change. BOUNDS (e) and cell (a) cannot both hold against that literal file at once.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-c.the-enforcer-real-operation-names-and-the-item-8-identity-adapter.md BOUNDS: \"NO edit to any EXISTING test's expected value in this file's own pre-existing suite (IB-rtq-2's three-arm scope-algebra test, the revocation control) ... The revocation control ... already passes at IB-rtq-2's cut -- confirm it still passes after your changes, unmodified in expectation.\"",
+      "same order, THE CELL (a): \"RENDER_DELEGATE_OPERATIONS ... must become the REAL key_operation-transformed served vocabulary ... Update the tuple.\"",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~15/test_render_delegate_resolver_enforcer.py:218-226, `_render_request(delegator, revision=\"rev-1\", operation=\"performance\", ...)` -- the OLD placeholder name, hardcoded as the default for every one of that file's render-delegate requests.",
+      "Measured this session at HEAD-pending-commit (enforce.py with RENDER_DELEGATE_OPERATIONS = (\"performance_report\", \"analysis_report\", \"narrative_packet\")): `py -3.12 -m pytest org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~15/test_render_delegate_resolver_enforcer.py -q` -> \"5 failed, 15 passed\". The SAME file against enforce.py at this order's cut (HEAD 7a55a7327d, operation names unchanged, restored via `git show 7a55a7327d:...enforce.py` then reverted) -> \"1 failed, 19 passed\" -- the ONE pre-existing failure is `test_the_pre_existing_scope_and_authz_suites_still_pass_unmodified`, itself caused by an UNRELATED, already-documented citation drift in `_scope/tests/test_resolve.py::test_every_trusted_header_is_actually_injected_at_the_line_it_claims` (CVO round-17 review, reproduction step: \"resolve.py's x-user-email citation says edge line400, now console.warn after V3 insertion\") -- so the DELTA this cell's operation-rename adds is the other FOUR (test_arm1, test_arm2/the revocation control, the empty-intersection test, the no-bundle-loader test), every one OBJECT_NOT_COVERED on operation 'performance' being outside the new real tuple, none of them a regression in the revocation/intersection ALGEBRA itself."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BOUNDS (e): the pre-existing revocation control and three-arm scope-algebra test (IB-rtq-2's file) still passes, unmodified in expectation, after this cell's changes.",
+  "world_is": "Cell (a) requires the operation-name rename the CVO's own C-S203/W15-S5 finding demands, and that rename is exactly what the OLD test file's hardcoded 'performance' default operation name existed to exercise -- the two BOUNDS clauses are jointly unsatisfiable against that LITERAL, unmodifiable (out-of-lane, not in this order's <paths>) file. Resolved by treating 'unmodified in expectation' as binding the ALGEBRA (revoked -> narrower/empty; entitled+pinned -> served; outside-pinned/outside-the-three -> refused), which this cell reproduces and confirms UNCHANGED in its OWN deliverable test file using the corrected real operation names (test_revocation_control_still_passes and the three real-operation-admission tests) rather than by running the old file's literal, now-superseded operation-name default -- the old file is left exactly as committed (out of this order's <paths>, and BOUNDS forbids editing an existing test's expected value regardless). Filed rather than silently choosing one BOUNDS clause over the other; ARMED because a future reader running that old deliverable file verbatim will see 5 failures and could mistake them for an algebra regression rather than the intended, CVO-directed vocabulary fix -- the CVO's cross-cell L9 is the right place to either retire/supersede that file's reference status or note its operation-name field is stale."
+}
+```
