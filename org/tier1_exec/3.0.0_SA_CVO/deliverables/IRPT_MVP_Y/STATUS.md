@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:54 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:58 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -63,6 +63,12 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   bfe5a33e17 and refused by candidate; exact values survive actual create-wire
   serialization after JSON checkpoint. Y-D01 CLOSED for this offline boundary.
   See `DECIMAL_REVIEW_386f2e1b49.md`, pinned probe and evidence JSON.
+- Fenced report-index `6cacc808879dc9f8c5a01e18eca6a9ff38d94e7a`: supplied13/13
+  (6 index + 7 job) and independent8/8 PASS. Actual boto wire with Stubber;
+  underlying P index Mock. No defect found within controls. Post-transaction
+  lease refusal does not roll back its write; captured-client-clock/delay/server
+  and actual P repository composition remain unproven. See
+  `REPORT_INDEX_REVIEW_6cacc80887.md` and pinned probe/evidence.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -206,8 +212,10 @@ Superseding exact225022Z notice supplies386f2e1b49. Independent original-scenari
 reproduction/retest now complete as Y-D01 above. No producer probe file was
 provided; identical specified amounts/security/units were tested on both pins.
 Exact225143Z notice supplies fenced report-index6cacc808879dc9f8c5a01e18eca6a9ff38d94e7a
-for the next bounded review. P repository composition and real server/clock/
-concurrency evidence remain pending; no READY implication.
+now bounded-reviewed above. P repository composition and real server/clock/
+concurrency evidence remain pending; no READY implication. Carry the successful
+transaction followed by lease-loss case into actual repository-readability and
+recovery proof, without treating the caller's refusal as a rollback.
 
 ## Next executable review and dependencies
 

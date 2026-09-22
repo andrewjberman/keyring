@@ -1,0 +1,132 @@
+{
+  "candidate_pin": "6cacc808879dc9f8c5a01e18eca6a9ff38d94e7a",
+  "file_sha256": {
+    "infra/aws/lambda/investor-reporting/intake/settings.json": "a05bcea4d3cdfda972a35bf3bf088c6794728b426d924cbd2069a94ab33aed44",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/acceptance.py": "f2d318109816408b6fd3f8ab1e2c30f334a0e8578b24d923fc3a30afc4d5c321",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py": "433853279df4a862f828b22145052b2f0d80b390809ca8185af87bbab8335590",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py": "e62414a92cdaec63275137e81e85ac01f5df9480cb61b20fccbad21d81d16ba9",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/FIXTURE_MANIFEST.json": "8d5769b67c96f83f33cea26c79233a0b4c733a7aae2e6aa90d8cd63deb40a0c0",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/collection.json": "50e52bcb67cdde4b1b0c7ce871394d25c5551563330fad4dcb14a45660aceaef",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_201.json": "f79334c0555e7e3cbe4a9c30426e4e37e6c131eb1b3e7366608bc8661271f1d4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/create_422_fee.json": "db6564e1ba482454fd45f05f92d9dfd7938b8626945f632888645865660c15d7",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/dashboard.json": "193b1781dcb25c14a317e5e19fa6c191eb6a1b57155ff8b9d508b323a6fd2fed",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/decision_branches.json": "0eb2d483ad6203c3c05c0f8aa62c249e22c0971510f56f32b1beaded60aa5fdd",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_201.json": "e893624268336ca4b0390c995768c0ae9582965ec50507aed500600e4300e123",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/generate_404_minimal.json": "9daf1c91692ccfc07773d0db4b3aba50918ee64cbe4623c1f179002ea6238f31",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf": "ed5300adc866c91b1d87be0f52346f346fc53d92bd389cf313c3830707ce85fc",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_drifted.json": "a9b0ae40b0aa3bada6ba86d80228a8144debac585ff1236bcd09a5c228af8b45",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/status_ok.json": "2c54fef26689b22ab8a118bbe2a47c2bae10067b3225f2ca8cc6f5d56de72039",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/templates.json": "0c62f032799e200d2d347eb56ce2701a112bbfd70e8061681b7d7180aaadb128",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/upload_ok.json": "0bfa27432af8c03272c17a805b84ddbfe399b1ca00c7d815a316212e3db664ab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/validate_200.json": "f69be554e959d3cd36eacf77fa50b00fe7d72006cc877082767bccc97457224f",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/job.py": "8403a175d54f408184aea1416ea27d26f495b186fb2cbf1e418259a18556c6cf",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py": "2a367ee2795914e782ccebe8743d15453df6daa5e5b781339ca1277a1bfc5b5c",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/report_index.py": "daf1b76ed208be7b60dfbec7275c0e050c28459fc9cd30546422d32268542c4c",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py": "3fb7083b7d35978598edb1f77e46c26dfbcea91854a8f18c7838ca6a3102f4eb",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission_service.py": "8f4a39e99be355c58b2afc17480880dfb04e43ca59380d39fda9fba3bcc3f89e",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/templates.json": "02e9f2dba08bddb201d048ce20aee8d3f1941c44a12f1db3446bbd9529e4bb44",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/netguard.py": "aeef9d595ebd2850e7270c8d5e5c7c82660f379c3115149b87147e44a2be4bab",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/run_offline_suite.py": "0a1d472d024e657b83e970711f0a387479f93e3e9dab13c195111bc6baeefa54",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_durable_job.py": "aadf0b47f3f60ec0f9243d2fe3a5358c003235b447a2a1e33a94f5fa9e30c7e4",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_recipe_decimal.py": "29be5c305defb33f0f7d53828aa7dacbff7d62bf68a90bb37a7fd2059fc9c35d",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_report_index.py": "393124e0b51167e54a1da82a676ba6004e72dfead5d04ec42d3ac08b3d858abd",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_submission.py": "1b1e550b45ce2893ce89261cb8b4bf04b2b31e1df16b5c297f6ab57f53bfd6db",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py": "186949c4fbf66209eb781ffe92c9af2d7f598dc776862c112765b472a0f3ba9e"
+  },
+  "supplied_suite": {
+    "exit_code": 0,
+    "stdout": ".............                                                            [100%]\n13 passed in 0.40s\n",
+    "stderr": ""
+  },
+  "controls": [
+    {
+      "name": "composition_changed_before_publish",
+      "passed": true,
+      "outcome": "ACCEPTED_COMPOSITION_MISMATCH",
+      "error_type": "LeaseRefused",
+      "result": null,
+      "transaction_calls": 0
+    },
+    {
+      "name": "exact_lease_expiry_before_publish",
+      "passed": true,
+      "outcome": "LEASE_LOST",
+      "error_type": "LeaseRefused",
+      "result": null,
+      "transaction_calls": 0
+    },
+    {
+      "name": "fence_lost_after_successful_transaction_response",
+      "passed": true,
+      "outcome": "LEASE_LOST",
+      "error_type": "LeaseRefused",
+      "result": null,
+      "transaction_calls": 1,
+      "limit": "Refused acknowledgement; does not roll back the already successful transaction"
+    },
+    {
+      "name": "page_rechecks_lease_after_lookup",
+      "passed": true,
+      "outcome": "LEASE_LOST",
+      "error_type": "LeaseRefused",
+      "result": null,
+      "transaction_calls": 0
+    },
+    {
+      "name": "in_progress_duplicate_returns_original_receipt",
+      "passed": true,
+      "result": {
+        "tenant": "49financial",
+        "request_revision": "REPORT#RPT-cccccccccccccccccccccccccccccccc#dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "owner": {
+          "firm_id": "49financial",
+          "principal_id": "advisor@example.invalid"
+        },
+        "ref": {
+          "report_id": "RPT-cccccccccccccccccccccccccccccccc",
+          "revision": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "report_kind": "ANALYSIS",
+          "immutable": true
+        },
+        "blob": {
+          "version_id": "retained-prior-version"
+        }
+      },
+      "transaction_calls": 1
+    },
+    {
+      "name": "throughput_error_propagates_without_duplicate_lookup",
+      "passed": true,
+      "outcome": "ProvisionedThroughputExceededException",
+      "error_type": "ProvisionedThroughputExceededException",
+      "result": null,
+      "transaction_calls": 1
+    },
+    {
+      "name": "canceled_transaction_without_prior_row_propagates",
+      "passed": true,
+      "outcome": "TransactionCanceledException",
+      "error_type": "TransactionCanceledException",
+      "result": null,
+      "transaction_calls": 1
+    },
+    {
+      "name": "mutable_report_rejected_before_wire",
+      "passed": true,
+      "outcome": "REPORT_INDEX_BINDING",
+      "error_type": "LeaseRefused",
+      "result": null,
+      "transaction_calls": 0
+    }
+  ],
+  "passed": 8,
+  "total": 8,
+  "limits": [
+    "Actual boto client/Stubber and real Y adapters; underlying P index is Mock",
+    "No Dynamo server expression evaluation, simultaneous clients or delay/clock proof",
+    "Post-response lease refusal does not undo a successful index transaction",
+    "No actual P retained repository composition, blob/schema/authorization/expiry proof",
+    "No live network, publication integration or READY/E2E claim"
+  ]
+}

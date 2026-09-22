@@ -283,6 +283,16 @@ after JSON checkpoint. Y-D01 CLOSED for this bounded recipe/wire case. See
 `DECIMAL_REVIEW_386f2e1b49.md`. No vendor/session, persistent worker or integrated
 Y4/S3 proof; all14 integrated criteria remain NOT_EVALUATED.
 
+## Fenced report-index update, 6:58 PM Eastern
+
+`6cacc808879dc9f8c5a01e18eca6a9ff38d94e7a`: supplied13/13 (6 index + 7 job)
+and independent8/8 wire controls PASS. No new defect within controls. Actual
+boto calls use Stubber; the P index is Mock. Post-success lease refusal cannot
+undo the transaction; captured-client-clock, delayed-commit, actual P repository
+composition and concurrent server behavior require integration proof. See
+`REPORT_INDEX_REVIEW_6cacc80887.md`. No full S4/S7 or READY acceptance; all14
+integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
