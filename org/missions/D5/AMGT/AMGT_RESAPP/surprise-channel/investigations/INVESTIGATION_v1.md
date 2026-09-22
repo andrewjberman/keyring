@@ -12307,6 +12307,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Row S1's world_is: 'the criterion's prose premise and its own literal invocation disagree with each other, not with the world ... AC4 was not given the same strip.' and S1's notes: 'Disarm: a follow-on amendment to this order's AC4 script strips provenance['identity'] the same way AC3 already does before the equality check, or the <expect> prose is corrected.'",
     "world_is": "Amendment 3 applied exactly the disarm S1 named: AC4's script now strips provenance.identity before comparing (matching AC3) and its <expect> now states equal_to_pre True under that strip plus the explicit raw_differing_keys=['provenance'] for 992 and []  for controls. The criterion's prose and its literal invocation no longer disagree. Disposition left UNDER_INVESTIGATION -- the GRADUATED transfer is the CVO's L9 act, not a worker's; this row records the resolution for that adjudication.",
     "notes": "The hazard S1 named is closed by this amendment; the re-graded AC4 output was measured against the SAME served crosswalk/v1/2026-09-22.json AC2/AC3 already produced -- this is a read-only re-grade, not a re-run of the live act."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S225",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T18:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "rk-114's test_no_enrich_rows_byte_identical builds with the PINNED (pre-rk-114) crosswalk module but the LIVE registrations.json, so rk-113's ENRICH row now makes the pinned module raise its collision refusal: the identity suite reads 1 failed, 66 passed on the merged tree, where it read 67 passed in each worker's own worktree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured by the issuer on the merged tree after rk-113's drain @74128f4c8b: `python -m pytest lib/research/identity/tests` reads `1 failed, 66 passed`; the failure is ValueError: REFUSED: 1 security_key collision(s) ['992_HK_Equity'], raised at the PINNED module's :676 inside test_crosswalk_enrich_coverage.py:265.",
+        "The PRODUCTION path is unaffected: at HEAD, load_registrations reads 8 rows with one ENRICH row for 992_HK_Equity, and build_crosswalk('2026-09-22') returns 96 records with denominators.enriched 1 and 992's identity present (composite_figi BBG000BG4QC6).",
+        "Each worker measured 67 passed in its own worktree because the ENRICH row was committed on rk-113's branch, not on rk-114's; only the merged tree carries both."
+      ]
+    },
+    "spec_asserts": "rk-114's byte-identity arm proves that, with no ENRICH row, the crosswalk is byte-identical to the pinned module's output.",
+    "world_is": "The arm reads the LIVE registrations.json, which now carries an ENRICH row, so the pinned module refuses before it can build and the arm fails on state rather than on the property it tests.",
+    "notes": "TEST-ONLY; no served artifact and no production path is affected, and the published crosswalk/v1/2026-09-22.json stands. The fix is to build the pinned side from a registrations set with ENRICH rows filtered out (or a fixture), so the arm tests the property rather than the repo's current state. This is an ISSUER-TEXT defect of 2.0.0_SA_COO~Z's: the arm was specified without stating which registrations it reads. It also breaks the 'no NEW failures' bar for any later cell touching this suite, so it is named in the round-29 packet and REC cut into the next identity code cell, beside the CTO's carried write-time schema check (msg 24314)."
   }
 ]
 ```
