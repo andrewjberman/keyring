@@ -8646,3 +8646,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "org/mcp/sessions/ is absent from this worktree and outside this order's <paths> grant, so writing there would be an out-of-lane write the order's own preflight forbids overriding. This cell's proof_of_spec and R117-AC2's criterion do not read this marker file, so the instruction's absence has no bearing on this order's DELIVERABLE or its acceptance; filed as the order's own instructed remedy for a failed premise, not treated as blocking."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W20-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~20",
+  "surfaced_at": "2026-09-22T13:05:00Z",
+  "one_line": "R118-AC4's own <invocation> for its FIRST leg (the pytest path) is one directory level short: run from org/missions/D9/IRPT/IRPT_BCKEND/ per the order's own convention, the literal 6-dot relative path lands at org/infra/... (does not exist), not repo root; the working path needs 7 dots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md criterion R118-AC4 invocation: \"cd deliverables/0.9.0_WK_IRPT_BCKEND~20 && py -3.12 -m pytest ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v && ...\" -- six '../' segments (counted programmatically: '../../../../../../infra/...'.count('../') == 6).",
+      "Measured this session, run from org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~20/: `cd .. && pwd` executed 7 times in sequence lands on the worktree root (C:\\tmp\\wk-irpt-18-20) only on the 7th step, confirming the directory is 7 levels below repo root, not 6.",
+      "Measured this session: `py -3.12 -m pytest ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v` from that directory returns `ERROR: file or directory not found: ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py` (rc=4); the identical command with a 7th '../' prepended resolves the real file and the full three-leg criterion chain then runs to rc=0 (29 pytest + 19 node + 4 node, all PASS)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R118-AC4 <invocation>: \"cd deliverables/0.9.0_WK_IRPT_BCKEND~20 && py -3.12 -m pytest ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v && node --test ../0.9.0_WK_IRPT_BCKEND~16/test_edge_render_delegate.mjs && node --test test_v1_actual_module_harness.mjs\", run from org/missions/D9/IRPT/IRPT_BCKEND/ per this order's own \"the task order's own directory\" convention (established by IB-rtq-3's result.md for the identical second leg).",
+  "world_is": "The literal 6-dot relative path in the invocation resolves to org/infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py, which does not exist (org/ has no infra/ child), and pytest exits rc=4 (usage error: file not found) rather than collecting any test. The proof_of_spec instance for this criterion records the CORRECTED 7-dot invocation, which is re-runnable and produces the named result (rc=0, all three legs PASS); this row documents the discrepancy in the order's own citation text rather than silently substituting a different command."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W20-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~20",
+  "surfaced_at": "2026-09-22T13:20:00Z",
+  "one_line": "CELL (c)'s 'import and call the real function' (V1's verifyAccessToken, jwt.ts) needs two gitignored, uncommitted, out-of-<paths>-grant build artifacts to be importable at all: auth-handler's own build-time lib mirror (src/lib/) and its tsc compile output (dist/), neither of which exists in a fresh worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:6 imports './lib/authkeys/jwtPublicKeys.mjs'; infra/aws/opalinvest_dev/lambda/auth-handler/.gitignore:1-7 names this exact path 'Build-time mirror of the canonical shared libs at infra/aws/lambda/lib/. build-nodejs-lambda.sh rsyncs (--delete) that dir into here on EVERY build' and gitignores it (src/lib/).",
+      "Measured this session: infra/aws/opalinvest_dev/lambda/auth-handler/src/ contained no lib/ subdirectory before this cell copied one in (directory listing before: auth.ts, breached-passwords.ts, db.ts, deviceTrust.ts, email.ts, index.ts, jwt.ts, mfa.ts, originVerify.ts, password.ts, sms.ts, throttle.ts, types.ts -- no lib/).",
+      "Measured this session: Node's native --experimental-strip-types (default-on, this Node v26.9.0) cannot run jwt.ts as raw TypeScript source at all -- 'import { AccessTokenPayload, RefreshTokenPayload, User } from ./types' (no `import type`) is left as a value import once type-stripped, and types.ts (interfaces only, zero runtime exports) throws SyntaxError \"does not provide an export named 'AccessTokenPayload'\" -- reproduced directly. V1's own package.json (\"build\": \"tsc\") and tsconfig.json (\"module\": \"commonjs\") confirm V1 ships COMPILED CommonJS, never raw .ts, so this cell built dist/ via the project's own unmodified tsc (rc=0) and confirmed `grep -c types dist/jwt.js` == 0 (the type-only import is elided in commonjs output, which is why the compiled artifact resolves where raw-source strip-types cannot).",
+      "None of auth-handler/src/lib/, auth-handler/node_modules/, or auth-handler/dist/ is named in this cell's <paths> grant (infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts is granted READ-ONLY reference only); all three are gitignored (git status --porcelain --ignored=matching confirms `!!` for src/lib/ and dist/) and none is committed by this cell -- same class as the ephemeral node_modules install already established non-blocking at row IRPT_BCKEND-W15-S4."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CELL (c): \"Build a NEW offline test harness that invokes V1's ACTUAL verifyAccessToken function ... directly -- import and call the real function, with its key-retrieval dependency faked ... this harness calls V1's OWN CODE.\"",
+  "world_is": "V1's own source cannot be imported at all -- neither via Node's native TypeScript stripping (a type-only import throws) nor via a plain require -- without first (1) mirroring infra/aws/lambda/lib/ into auth-handler/src/lib/ (exactly what build-nodejs-lambda.sh does at deploy time, replicated locally, ephemeral and gitignored) and (2) compiling with the project's own unmodified tsc into dist/, then copying the same mjs mirror into dist/lib/authkeys/ (tsc's own `include: src/**/*` does not copy non-.ts files, and the real Lambda packaging step's copy of that file sits outside this cell's <paths>). This cell performed both steps locally (see result.md for exact commands); nothing was committed. The resulting dist/jwt.js is V1's own compiled `verifyAccessToken`, unedited, and is what this cell's test_v1_actual_module_harness.mjs imports and calls -- never a hand-written stand-in."
+}
+```
