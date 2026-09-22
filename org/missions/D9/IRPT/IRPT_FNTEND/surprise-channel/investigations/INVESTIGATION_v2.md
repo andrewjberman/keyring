@@ -5856,6 +5856,33 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W31-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~31",
+    "surfaced_at": "2026-09-22T21:40:00Z",
+    "one_line": "F81-AC2's <expect> regex `(?i)wrote|generated|done|complete` can never match this generator's actual completion message -- ran verbatim (rc=0), stdout is `REQUEST RECORDS: 12 of 12; SMOKE KEYS: 9; PUBLISHED MAP KEYS: 12 of 12 DECLARED; PRINT MAP KEYS: 2`, none of those four words appear anywhere, case-insensitive. Pre-existing wording, not a regression from this cell's fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F81-AC2's <invocation>: `cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts`, `<expect>(?i)wrote|generated|done|complete</expect>` -- asserting the generator's own console output states its completion using one of those four words.",
+    "world_is": "Ran F81-AC2's invocation verbatim in this worktree: rc=0, stdout `REQUEST RECORDS: 12 of 12; SMOKE KEYS: 9; PUBLISHED MAP KEYS: 12 of 12 DECLARED; PRINT MAP KEYS: 2` -- `grep -iE 'wrote|generated|done|complete'` against that line returns no match. The generator's own console.log (gen-corpus.ts:313-316 at HEAD, this worker's fix untouched on those lines) has used this RECORDS/KEYS/DECLARED vocabulary since the file's introduction (`git -C portal log --oneline -- src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts`: d7b3d615 FE-s-13, 7151f2c4 FE-s-14 R1, e5833214 FE-s-15 -- none of these three commits' diffs touch the closing console.log block), so the mismatch predates round 13 and is not caused by this cell's edit. The underlying regeneration this criterion exists to prove is otherwise fully correct and independently confirmed: F81-AC3's own invocation reads `default.json: 12 of 12 carry unprojected_grant`, `fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `fe-s-14-print-v1.json: 2 of 2 carry unprojected_grant` (PASS), F81-AC4 reads `0 fail` (PASS), and `git diff -- src/pages/InvestorReporting/fixtures/smoke/default.json` is EMPTY after regeneration -- byte-identical to round 12's hand repair, the exact data-equivalence this cell's required control asks for. REFUSED per BOUNDS (\"do not weaken a criterion\"): did not edit the generator's console.log merely to make an unrelated word match, recorded F81-AC2 as FAIL in the proof-of-spec instance with this measurement, and did not flip <status> to complete.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, F81-AC2 literal invocation, 2026-09-22): rc=0, stdout `REQUEST RECORDS: 12 of 12; SMOKE KEYS: 9; PUBLISHED MAP KEYS: 12 of 12 DECLARED; PRINT MAP KEYS: 2`",
+        "measured (this worker, 2026-09-22): `grep -iE 'wrote|generated|done|complete'` against that stdout -- no match",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts:308-316 (this worktree HEAD, this worker's own fix) -- the closing console.log block, unchanged by this cell's edit (which only touches the `envelope()` function above it)",
+        "git -C portal log --oneline -- src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts (this worktree): d7b3d615, 7151f2c4, e5833214 -- the console.log wording predates this round",
+        "measured run (this worker, F81-AC3 literal invocation, 2026-09-22): `default.json: 12 of 12 carry unprojected_grant`, `fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `fe-s-14-print-v1.json: 2 of 2 carry unprojected_grant` -- matches <expect>",
+        "measured run (this worker, F81-AC4 literal invocation, 2026-09-22): `0 fail`, rc=0 -- matches <expect>",
+        "git diff --stat -- portal/src/pages/InvestorReporting/fixtures/smoke/default.json (this worktree, after AC2's regeneration): empty -- byte-identical to the committed round-12 hand repair",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-81.fixture-generator-repair-survives-regeneration.md criterion F81-AC2 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
