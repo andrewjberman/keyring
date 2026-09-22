@@ -8672,3 +8672,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Cell (a) requires the operation-name rename the CVO's own C-S203/W15-S5 finding demands, and that rename is exactly what the OLD test file's hardcoded 'performance' default operation name existed to exercise -- the two BOUNDS clauses are jointly unsatisfiable against that LITERAL, unmodifiable (out-of-lane, not in this order's <paths>) file. Resolved by treating 'unmodified in expectation' as binding the ALGEBRA (revoked -> narrower/empty; entitled+pinned -> served; outside-pinned/outside-the-three -> refused), which this cell reproduces and confirms UNCHANGED in its OWN deliverable test file using the corrected real operation names (test_revocation_control_still_passes and the three real-operation-admission tests) rather than by running the old file's literal, now-superseded operation-name default -- the old file is left exactly as committed (out of this order's <paths>, and BOUNDS forbids editing an existing test's expected value regardless). Filed rather than silently choosing one BOUNDS clause over the other; ARMED because a future reader running that old deliverable file verbatim will see 5 failures and could mistake them for an algebra regression rather than the intended, CVO-directed vocabulary fix -- the CVO's cross-cell L9 is the right place to either retire/supersede that file's reference status or note its operation-name field is stale."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W19-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~19",
+  "surfaced_at": "2026-09-22T17:25:43Z",
+  "one_line": "This order's IDENTITY AND WORKTREE first-act check and its <proof_of_spec> instance-path instruction both name the task order by its internal numeric cell name ('IB-rtr-3'), but the file this worker was actually dispatched to read, and the one that exists on disk, is named by the decomp's letter-suffix cell name ('IB-rtr-c') -- the same document, addressed two ways. THIS IS MECHANICALLY LOAD-BEARING, NOT COSMETIC: .tools/to-pipeline-gate.py's complete-flip limb globs `deliverables/*/<the flipped TO's OWN FILE BASENAME>.proof_of_spec.json`, so an instance written at the <proof_of_spec>-literal 'rtr-3' path was REFUSED at the status-flip commit ('NO proof-of-spec instance was found beside it'); only an instance at the REAL 'rtr-c' basename is found and validated.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-c.the-enforcer-real-operation-names-and-the-item-8-identity-adapter.md IDENTITY AND WORKTREE: \"THEN `test -f org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-3.the-enforcer-real-operation-names-and-the-item-8-identity-adapter.md` -- absent means STOP and file a row.\"",
+      "same file, line 3: `<to_id>IRPT_BCKEND.TO-IB-rtr-3</to_id>`; line 10: \"Decomp cell: `IB-rtr-3`\"; <proof_of_spec>: \"Instance at ... IRPT_BCKEND.TO-IB-rtr-3.the-enforcer-real-operation-names-and-the-item-8-identity-adapter.proof_of_spec.json\" -- all three cite the numeric cell name.",
+      "Measured this session: `test -f org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-3.the-enforcer-real-operation-names-and-the-item-8-identity-adapter.md` -> ABSENT; directory listing of task-orders/ shows the round-18 cells as IB-rtr-a, IB-rtr-b, IB-rtr-c, IB-rtr-d, IB-rtr-e (the decomp's letter-suffix grammar) -- this order's actual filename is IB-rtr-c.",
+      ".tools/to-pipeline-gate.py:2562-2570 (the complete-flip limb): `stem = os.path.basename(rel).rsplit('.md', 1)[0]` off the FLIPPED ORDER'S OWN REL PATH, then globs `deliverables/*/<stem>.proof_of_spec.json` -- never reads <proof_of_spec>'s prose.",
+      "Measured this session: `bash .tools/safe-commit.sh` on the status-flip commit, first attempt, with the proof instance written at the <proof_of_spec>-literal 'rtr-3' path -> REFUSED: \"flips to 'complete' on PIPELINE-REGISTERED project IRPT_BCKEND, and NO proof-of-spec instance was found beside it.\" Re-run with the instance renamed to the 'rtr-c' stem -> to-pipeline-gate PASSED."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IDENTITY AND WORKTREE: test -f ...IB-rtr-3....md, absent means STOP and file a row. <proof_of_spec>: instance at .../IRPT_BCKEND.TO-IB-rtr-3....proof_of_spec.json.",
+  "world_is": "The file this worker's own dispatch prompt names, and the one actually present in this worktree, is IB-rtr-c -- the same document, addressed by its decomp letter-suffix rather than the internal numeric name the document's own <to_id>/<proof_of_spec> text still carries. NOT a BLOCKING premise on the worker face itself (cell text, criterion and paths all resolve correctly under IB-rtr-c, and this worker proceeded against that file, as instructed by its dispatch) -- but IS blocking, mechanically, on the proof/flip step: the naming-gate mismatch is invisible until the status-flip commit is actually attempted, at which point to-pipeline-gate's REAL lookup (the order's own file basename, never <proof_of_spec>'s prose) refuses a same-turn commit naming the instance per the order's literal text. Resolved by writing the instance at the 'rtr-c' path the gate requires (to_id inside it left at the order's own <to_id> tag value, which the checker's cross-check accepts regardless of filename); filed rather than silently discovering this only via the gate's own error text."
+}
+```
