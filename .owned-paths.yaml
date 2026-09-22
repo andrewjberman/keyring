@@ -51,6 +51,17 @@ worker_grant:
 # =========================================================================
 lanes:
 
+  IRPT_COMPLETION_REGISTRY:
+    permitted_agents:
+      - 4.0.0_SA_CRO
+      - 4.0.0_SA_CRO~A
+      - 4.0.0_SA_CRO~B
+      - 4.0.0_SA_CRO~C
+      - 4.0.0_SA_CRO~D
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor IRPT-M-REGISTRY-01 under Andrew session delegation: exact two registry files only, preserve CRO incumbents plus exact COO~M. IRPT unprovisioned product row and X10 twelve-family policy only; file-level gate, semantic boundaries independently reviewed; no default home or global rule change."
+
+
   IRPT_COMPLETION_SOURCE_MAP:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -1000,6 +1011,12 @@ lanes:
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
 paths:
+  "infra/logic/registry/scopes.json":
+    lane: IRPT_COMPLETION_REGISTRY
+    note: "CTO exact-file grant IRPT-M-REGISTRY-01; IRPT-only member scope requires explicit equality proof and naming-owner review."
+  "infra/logic/registry/reporting_policies.json":
+    lane: IRPT_COMPLETION_REGISTRY
+    note: "CTO exact-file grant IRPT-M-REGISTRY-01; IRPT-only member scope requires explicit equality proof and naming-owner review."
 
   # Bounded IRPT completion grants; source commits only, no deploy authority.
   "infra/aws/lambda/investor-reporting/reports/**":
