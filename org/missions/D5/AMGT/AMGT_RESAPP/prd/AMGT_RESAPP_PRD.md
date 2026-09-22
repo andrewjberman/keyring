@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.21",
+  "prd_version": "v0.22",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,16 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.22 CHANGE NOTE -- 2026-09-22 ~14:0xZ, `1.0.0_SA_CTO~Z`: the Lenovo trial
+
+Andrew-direct ~13:5xZ (record @`cd0cca7f46`): run Lenovo through the entire pipeline as the trial. This bump makes these
+changes:
+- It adds section 12, which makes `992_HK_Equity` the validation scope in place of the three names in `C-VALIDATION-NAMES`.
+- It re-pins the channel-formats plan in section 11 to @`1b43fd2933`.
+
+CONTRACTS and ENDPOINT are untouched, so **only the brief half moves.** The working key (composite FIGI, "for the
+purposes of research", @`6f1a72e4be`) is recorded as a trial output, not a contract.
 
 ### v0.21 CHANGE NOTE -- 2026-09-22 ~11:1xZ, `1.0.0_SA_CTO~Z`: the CVO's v0.20 residuals and carry items
 
@@ -1846,7 +1856,7 @@ sit in the CONTRACTS section, where the ratified-text reviewer reads them. This 
 what they leave open.
 
 **Specification.** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/PLAN_AMGT_HARVEST_CHANNEL_FORMATS_20260921.md`
-@`1a9f1c4469` (the plan as corrected: bronze takes three forms, never-kept bronze is filled by a first fetch, and its move order no longer dual-writes). It
+@`1b43fd2933` (re-pinned at v0.22: the SA article hash is `sha256("sa:"+id)`; the plan as corrected: bronze takes three forms, never-kept bronze is filled by a first fetch, and its move order no longer dual-writes). It
 gives each channel's fetch key, record key, readers and freshness. Where it and the contracts disagree, the contracts
 bind.
 
@@ -1887,3 +1897,80 @@ and 0 AMGT objects in the vetoed buckets, so the migration renames keys inside o
 - One batched deletion of the retired old prefixes, on a human's word.
 - Retiring the empty `opal-harvest-articles` table is a table deletion and needs a human's word when executed; the
   contracts record the intent, not the authority.
+
+## 12. ADDENDUM v0.22 -- THE LENOVO TRIAL: one security through every stage (Andrew-direct 2026-09-22 ~13:5xZ)
+
+**The word, verbatim:** *"Let's try one sample first, let's run Lenovo through the entire pipeline. Let's do every single
+thing for Lenovo and use that as the trial."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_135xZ_AMGT_LENOVO_SINGLE_SAMPLE_FULL_PIPELINE_TRIAL.md`
+@`cd0cca7f46`. It rests on:
+- @`78106b9cea`: Andrew delivers the starting list, and the structure is built on it.
+- @`6f1a72e4be`: composite FIGI is the working key for research, and the data quota binds.
+- The field-level channel map @`3a0b3cadaa` (`prd/FIELDMAP_20260922.md`).
+
+**Scope.** The validation scope for the next round is ONE security: **Lenovo Group, `992_HK_Equity`.** It is listed in
+Hong Kong, reports in USD and has a fiscal year ending 31 March. It **replaces the three names of `C-VALIDATION-NAMES`**
+for every cell until the trial is graded. Every other clause of section 10 stands: no fleet run, and no re-run of the
+covered population. **Posture is out of scope** (@`78106b9cea`).
+
+**What "every single thing" is.** Every stage of section 10's table except posture, run for Lenovo in dependency order.
+Each stage ends SERVED or UNRESOLVED with its reason, never a silent skip. Every channel of the field map is exercised at
+each layer it has: identity -> bronze -> silver -> the served object -> the page.
+
+| # | stage | channels | Lenovo today (measured: 19 of 1,780 harvest objects) |
+|---|---|---|---|
+| 1 | identity | Bloomberg add-security, with the FIGI family, ISIN, SEDOL and LEI appended to its identity fields | no identity record, no FIGI |
+| 2 | model block | Bloomberg refdata, histdata and bestdata; bronze then silver `model_block`; served block | refdata and histdata 09-16; 3 served blocks; no forecasts; silver not wired |
+| 3 | filings | the battery's non-SEC routes: the issuer's own site and the HKEX filings the issuer publishes; ESEF does not apply (HK) | `filing_attempt` UNRESOLVED-SOURCE (not an SEC filer) |
+| 4 | translation | only for a document the detector reads as non-English | none |
+| 5 | analysis and drafting | the analyzer and the drafter (model calls) | none |
+| 6 | management | the filing's officer section, Bloomberg `COMPANY_EXEC_OFFICERS`, Lusha, the CEO SERP | no `management/v1` object at all |
+| 7 | peers | the SA peer set via the ADR line, where `C-PEER-SET-SA` can be met; otherwise the ranker, recorded as the fallback | `peers/v1` (5 versions, ranker) |
+| 8 | scores | the three scores | `scores/v1` present |
+| 9 | chatter and news | the publications harvester (one run for Lenovo); SA news on the ADR line | none |
+| 10 | social | one Bright Data dataset job | none |
+| 11 | price | the daily price pull | none |
+| 12 | the page | Lead Panel, Thesis, Exec Mgmt, Peers and Model on DEV, read from the pool | renders from partial objects |
+
+**Preconditions -- each lands before the stage it guards, not after:**
+- **Identity first.** Stage 1 runs before every other stage. The working key (composite FIGI) is RECORDED on the crosswalk
+  record as an attribute. `security_key` stays the partition and page key until the key design is ruled.
+- **Fiscal-year pairing.** The model block for a 31 March year-end is graded only with the fiscal-year join wired
+  (field map s.3 item 2, `fye_join.py`).
+- **Language (Z-S221).** No filing is analysed until the detector distinguishes Latin-alphabet languages. This is the CVO's
+  ordering ruling, `ADJUDICATION_v30` @`921cc430c1`.
+- **Currency.** The model block states Lenovo's reporting currency (USD) against its listing currency (HKD) on every
+  per-share and valuation figure, and never mixes the two silently.
+
+**Vendor words, for Lenovo only, one pass per channel.** The caps are the L4 owner's, stated in the record:
+
+| channel | cap |
+|---|---|
+| Bloomberg | 1 unique security |
+| issuer crawl | at most 40 pages |
+| Seeking Alpha | at most 10 calls |
+| Lusha | at most 10 credits |
+| SERP | at most 3 queries |
+| social | at most 1 dataset job of the smallest size |
+| publications | 1 run |
+
+A channel whose cost cannot be stated in advance prints it before the call.
+
+**Served objects.** The trial writes Lenovo's served keys (`derived/model_block`, `management/v1`, `peers/v1`, and so on).
+**Each such write takes its never-widen pair** (CTO and COO halves, blast radius = Lenovo's keys only, with rollback per key).
+
+**Done when:**
+- (a) every stage 1-11 ends SERVED or UNRESOLVED with its reason for `992_HK_Equity`;
+- (b) the DEV page renders all five in-scope tabs for Lenovo from the pool;
+- (c) ONE trial report lists, per channel, the fields that landed at each layer and which tab shows them. It names every
+  breakpoint Lenovo hit.
+
+That report is the design input for the key, fiscal-year, currency and language structure and the per-component
+contracts, before any second security.
+
+**What this section does NOT authorise:**
+- any security other than Lenovo;
+- any schedule or cadence;
+- any deletion;
+- posture;
+- a contract change -- the ratified text is untouched.
