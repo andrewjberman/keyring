@@ -7,6 +7,13 @@
 <issued_date>2026-09-21</issued_date>
 <status>pending</status>
 
+⛔ **COO AMENDMENT (2026-09-22, `2.0.0_SA_COO~F`) -- READ BEFORE F65-AC16. THE DEFECT IS IN THIS ORDER, NOT IN YOUR WORK.** Your first pass measured
+17 of 18 criteria PASS and correctly REFUSED F65-AC16 rather than self-grading past it, then correctly left `<status>pending</status>`. Verified: the
+`--delay`/`--click` grammar itself is sound (your own diagnostic proved it fires on a second click or a load-time URL); the defect is that clicking
+the toolbar `Export` button (`ExportButton.tsx:171-180`) only OPENS the modal -- the POST fires from the modal's own `Create export` button
+(`ExportModal.tsx:257-266`). F65-AC16's invocation is missing that second click. Your first-pass evidence (17 PASS criteria, the diagnostic finding)
+stands and is drained; this amendment only re-points F65-AC16.
+
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-65` (round 11, v0.11) | **outcome_ref:** FWD-12 | **depends_on:** none (READY ROOT; every other visual cell of round 11 depends on this) | **slot:** ~1 | **rows:** W11-S1, W12-S1 (the rule's precondition); W13-S2 (the container-ground remedy the CTO named) | **base:** workspace = the round-11 issuance commit on CLOUD (your worktree branches from it), portal DEV `243089eb` plus every drained round-11 cell this one depends on
 
 <placeholders>WS, PORT</placeholders>
@@ -124,8 +131,10 @@ band `#0A1733` = `rgb(10, 23, 51)`; hairline `#C4CBDB` = `rgb(196, 203, 219)`.
 <criterion id="F65-AC15" cell_refs="FE-s-65" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~15/f65_ac15.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/export-ready.json --strict --expect '[data-slot="tabs"]'; echo EXIT=$?</invocation><expect>EXIT=0(?![0-9])</expect></criterion>
 `F65-AC15` -- `--strict` exits 0 when every expectation is met.
 
-<criterion id="F65-AC16" cell_refs="FE-s-65" drives="none"><invocation>cd <WS>/portal && timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~15/f65_ac16.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/export-ready.json --click Export --delay 'api/scoped/investor-reporting/export=4000' --console DELAYED</invocation><expect>DELAYED: .*\(4000ms\)</expect></criterion>
-`F65-AC16` -- `--delay` PASS arm: a fixture key matching the argument's substring is held for the given milliseconds before it resolves, and the run prints `DELAYED: <key> (<ms>ms)`. FE-s-71 depends on this to build a genuine in-flight submit state.
+<criterion id="F65-AC16" cell_refs="FE-s-65" drives="none"><invocation>cd <WS>/portal && timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~15/f65_ac16.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/export-ready.json --click Export --click 'Create export' --delay 'api/scoped/investor-reporting/export=4000' --console DELAYED</invocation><expect>DELAYED: .*\(4000ms\)</expect></criterion>
+`F65-AC16` -- AMENDED: `--delay` PASS arm, with the SECOND click that actually submits (opening the modal alone never fires the POST): a fixture
+key matching the argument's substring is held for the given milliseconds before it resolves, and the run prints `DELAYED: <key> (<ms>ms)`. FE-s-71
+depends on this to build a genuine in-flight submit state.
 
 <criterion id="F65-AC17" cell_refs="FE-s-65" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F65-AC17` -- the whole IRPT_FNTEND suite is green (your dev server STOPPED and its port verified closed; `IRPT_FE_DEV_PORT` unset in that shell).
