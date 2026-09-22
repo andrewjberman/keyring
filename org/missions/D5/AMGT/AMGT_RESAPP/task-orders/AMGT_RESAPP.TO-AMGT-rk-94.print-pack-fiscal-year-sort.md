@@ -314,7 +314,7 @@ to `218ff3c994` (Z-S193). (4) Grouping is normalised as well as sorting so that 
 `2026` never renders two headings; measured 0 such collisions in the live data today, so the pack text is unchanged
 for every currently-rendering name.
 
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~94</slot>
 <fabric>site-z</fabric>
