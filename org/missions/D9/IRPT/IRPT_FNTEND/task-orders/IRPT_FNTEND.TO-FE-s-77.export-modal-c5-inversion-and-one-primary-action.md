@@ -106,11 +106,27 @@ band `#0A1733` = `rgb(10, 23, 51)`; hairline `#C4CBDB` = `rgb(196, 203, 219)`.
 <criterion id="F77-AC4" cell_refs="FE-s-77" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~27/f77_preview_far_edge.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/export-ready.json --click Export --expect '[data-slot="preview-scroll"]'</invocation><expect>ASSERT-CONTENT: 1 of 1 met</expect></criterion>
 `F77-AC4` -- an ACTUAL scroll to the far edge of the preview is exercised (not merely measured for capacity) and the far-edge content is captured in this PNG -- read it yourself and confirm content that was off-screen in the BEFORE-scroll state is now visible.
 
-<criterion id="F77-AC5" cell_refs="FE-s-77" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~27/f77_received_one_primary.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-71/fixtures/export-flow.json --click Export --click 'Create export' --clickwait 3000 --expect '[data-slot="download-link"][class*="5F3BE3"], [data-slot="download-link"].bg-primary' --expect '[data-slot="submit-export"][class*="5F3BE3"], [data-slot="submit-export"].bg-primary'</invocation><expect>ASSERT-CONTENT: 1 of 2 met</expect></criterion>
+<criterion id="F77-AC5" cell_refs="FE-s-77" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~27/f77_received_one_primary.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-71/fixtures/export-flow.json --click Export --click 'Create export' --clickwait 3000 --expect '[data-slot="download-link"][class*="hsl(var(--primary))"]' --expect '[data-slot="submit-export"][class*="hsl(var(--primary))"]'</invocation><expect>ASSERT-CONTENT: 1 of 2 met</expect></criterion>
 `F77-AC5` -- on the received view, EXACTLY ONE of Download/Create-export carries the filled-primary class -- adjust the selectors to your actual implementation's class names if these literal ones do not match your build; the requirement is the COUNT (1 of 2, never 0 or 2), not these exact strings.
+
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~27-report, row `IRPT_FNTEND-W27-S4`):** the literal selectors (`class*="5F3BE3"`, `.bg-primary`)
+never match this build's actual filled-primary idiom -- `ReceiptPanel.tsx`'s `download-link` and `ExportModal.tsx`'s `submit-export` both use
+`bg-[hsl(var(--primary))]`, a CSS-custom-property arbitrary value, containing neither substring. Worker `~27` measured `ASSERT-CONTENT: 0 of 2
+met` on the literal selectors and, separately, `1 of 2 met` on an adapted pair (`class*="hsl(var(--primary))"`) at the received state, with a
+wrong-state control at the IDLE state reading the OPPOSITE pattern (confirming genuine discrimination, not a vacuous match). Fix: swap the two
+literal selectors above for the adapted pair; the bar itself (exactly one of two, never 0 or 2) is unchanged.
 
 <criterion id="F77-AC6" cell_refs="FE-s-77" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F77-AC6` -- the whole IRPT_FNTEND suite is green (dev server stopped; `IRPT_FE_DEV_PORT` unset).
+
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~27-report, row `IRPT_FNTEND-W27-S1`):** worker `~27`'s own in-grant, correctly-ordered fix
+(`ReceiptPanel.tsx`'s public-reason-code class, `text-slate-700` -> the ratified `text-[#6B7280]`, per this cell's own "replace every slate-*
+ink/border class" mandate) breaks `__tests__/fe-s-42/every-site.test.ts:322`'s `reasonLineBefore()` helper, which hard-codes the OLD class
+string byte-for-byte and compares it with `===`. This is a stale byte-pinned reference to a class this round's own ratified work is correctly
+retiring, not a defect in FE-s-77's fix. **Grant widened by exactly one file, for exactly one edit:** `<paths>` below now also names
+`portal/src/pages/InvestorReporting/__tests__/fe-s-42/every-site.test.ts`, authorizing ONLY updating `reasonLineBefore()`'s hard-coded
+`text-slate-700` string to `text-[#6B7280]` (matching the class this cell's own fix now emits) -- nothing else in that file. Confirm `bun test
+src/pages/InvestorReporting` reads `0 fail` afterward.
 
 <criterion id="F77-AC7" cell_refs="FE-s-77" judgment="true" drives="none"/>
 `F77-AC7` -- graded at L9 by the CVO: the C5 inversion is genuinely delivered (not merely a source diff claim), the scroll reachability is EXERCISED not measured, and exactly one primary action survives on the received view. RECORD; NO VERDICT.
@@ -133,6 +149,7 @@ band `#0A1733` = `rgb(10, 23, 51)`; hairline `#C4CBDB` = `rgb(196, 203, 219)`.
 <paths>
 portal/src/pages/InvestorReporting/export/
 portal/src/pages/InvestorReporting/__tests__/fe-s-77/
+portal/src/pages/InvestorReporting/__tests__/fe-s-42/every-site.test.ts
 org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md
 </paths>
 
