@@ -101,7 +101,7 @@ org/critical_paths/.open_deploys/
   `security_key` or any non-identity field changed.
 - **WHICH ROLLBACK APPLIES, decided from the measured substrate (CTO msg 24307): RE-PUBLISH THE PRIOR CONTENT AS A
   NEWER VERSION -- never a delete, and NOT a VersionId restore.**
-  - `opal-data-harvest` versioning is **Enabled**, measured at the draft: the 09-19 key holds 8 versions, with 0 delete
+  - `opal-data-harvest` versioning is **Enabled**, measured at the draft: the 09-19 key holds 7 versions (corrected from 8 by the CTO's full listing, msg 24312, and re-read by the issuer on list_object_versions), with 0 delete
     markers.
   - But the reader picks the latest DATED KEY (`crosswalk._read_pool_latest`, `sorted(keys)[-1]`, `crosswalk.py:806-830`),
     never a version. This act writes a NEW key (`crosswalk/v1/<today>.json`) and never writes the 09-19 key.
