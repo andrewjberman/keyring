@@ -126,7 +126,7 @@ deny() {
 # unclassed calls (Read/Glob/Grep/comms/...) permitted WITH the named line -- nothing is silent.
 if [ "$F8_MODE" = "closed" ]; then
     case "$TOOL" in
-      Write|Edit|NotebookEdit|Bash|PowerShell|mcp__bloomberg__*|mcp__opal-gateway__*|mcp__opal-gateway-bbg__*)
+      Write|Edit|NotebookEdit|Bash|PowerShell|mcp__bloomberg__*|mcp__opal-gateway__*|mcp__opalgateway__*|mcp__opal-gateway-bbg__*)
         deny "BLOCKED (bg-concierge-gate F8): identity UNRESOLVABLE on the BG seat's launch path (org/mcp/sessions/${_SID}.launch-path says bg-concierge, but no ${_SID}.serial and OPAL_AGENT_SERIAL unset) -- the fence FAILS CLOSED for every classed call ('$TOOL'). Fix: relaunch via 'ajb 0.0.3_BG_BBGTerminal' (ajb writes the session serial at launch); never write the serial from this seat (G1)."
         ;;
       *)
@@ -166,8 +166,11 @@ case "$TOOL" in
         deny "BLOCKED (bg-concierge-gate G3): reference_data for $NSEC securities is a BULK pull, not the single-security view-side lookup BLOOMBERG_GUARDRAILS permits (<=2). Serve from the portal artifacts, or surface the demand to Andrew."
     fi
     ;;
-  mcp__opal-gateway__*)
-    deny "BLOCKED (bg-concierge-gate G4): 'opal-gateway' is ANDREW'S proxy identity -- the BG seat calls opal-gateway-bbg ONLY (prompt.md identity binding; the first-launch HOLD, mechanized). Re-issue the call on the -bbg server."
+  mcp__opal-gateway__*|mcp__opalgateway__*)
+    # Both keys: 'opal-gateway' (the pre-2026-09-22 registration key) and 'opalgateway' (the updated key,
+    # Andrew-direct 2026-09-22 at 4.0.0_SA_CRO~Z). The prefix comes from the per-device registration key, so a
+    # re-key that this case did not name would open the fence silently.
+    deny "BLOCKED (bg-concierge-gate G4): 'opal-gateway' / 'opalgateway' is ANDREW'S proxy identity -- the BG seat calls opal-gateway-bbg ONLY (prompt.md identity binding; the first-launch HOLD, mechanized). Re-issue the call on the -bbg server."
     ;;
   mcp__opal-gateway-bbg__send_email|mcp__opal-gateway-bbg__reply_email|mcp__opal-gateway-bbg__create_draft|mcp__opal-gateway-bbg__upload_text_to_site|mcp__opal-gateway-bbg__save_email_attachment_to_site)
     deny "BLOCKED (bg-concierge-gate G4): email/site-write is not a BG surface -- this seat's outbound is Teams replies (+ the terminal-upload data channel). Route the need to Andrew via 0.0.0_AB_MSTR~Z if it is real."
