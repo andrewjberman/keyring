@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 15,
-  "decomp_version": "0.19",
+  "round": 16,
+  "decomp_version": "0.20",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -89,13 +89,43 @@
   "round14_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_14_20260922.md @0782226170",
   "round14_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md @5236fd2696 (round-14 addendum)",
   "cells_round15": 1,
-  "cell_id_shape_round15": "IB-rto-<n>"
+  "cell_id_shape_round15": "IB-rto-<n>",
+  "round15_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_15_20260922.md @81338c807a",
+  "round15_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md @4870207827 (round-15 addendum)",
+  "cells_round16": 1,
+  "cell_id_shape_round16": "IB-rtp-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R16. ROUND 16 -- THE RECUT ON THE ROUND-15 ANALYSIS (@81338c807a; slug @4870207827; v0.20, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 15 closed 0 of 99 open, 0 of 343 worker items undispositioned. `R115-AC1`/`R115-AC2` PASS -- the C-S174 hash repair is genuinely fixed, independently verified by `3.0.0_SA_CVO~B` on its own instruments (a byte reconstruction agreeing with the recomputation, plus a mutation-testing probe confirming the battery genuinely catches both a wrong-CRLF and a wrong-LF mutant). `C-S195` (`R114-AC3` PASS) is unchanged -- the capture tool itself is not in question. **`C-S174` stays OPEN/INERT for exactly one wording residual**, found by the CVO's own review: in the final `IB-rtk-1` proof (blob `f8253e60` @`6b8139682d`), line `:23` correctly records the later pass's PUBLISHED state, but lines `:269-270` still carry an unqualified exclusion ("any real host/SSM/S3 action... everything under stubs/static") that is TRUE of the historical diagnostic pass but FALSE of the publish pass, which DID act on real S3 bytes (with a verified readback). This is metadata only and holds nothing -- it does not reopen the hash work, does not imply a publish replay, and does not touch any code. FWD-2 stays NOT_REALIZED (the qualified human wait -- Andrew's capture is released, the host reads `stopped` on the CTO's own EC2 read); FWD-11 stays NOT_REALIZED. No PRD addendum. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R16.1 The rectangle (1 cell, id shape `IB-rtp-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rtp-1` | C-S174 WORDING, SCOPED CORRECTLY (no publish replay, no code change, no behavior change, no hash recomputation -- the hashes are already correct as of `IB-rto-1`). The CTO's own design, restated verbatim as this cell's arms: **(a) SCOPE THE EXCLUSION TO WHAT IT IS ACTUALLY TRUE OF.** In the `IB-rtk-1` proof instance (blob `f8253e60` @`6b8139682d`, lines `:269-270`), the unqualified exclusion "any real host/SSM/S3 action... everything under stubs/static reads" is scoped correctly ONLY for the historical diagnostic pass and for whichever limbs remain genuinely never exercised (host start, SSM calls). It is WRONG for the S3 publish limb, which DID act on real S3 bytes with a verified readback (cited at line `:23` of the same proof). Rewrite the exclusion so it names each limb's TRUE state precisely: historical-diagnostic-pass-only for the parts that are true, and explicitly states the publish pass DID publish to S3 and DID read back, citing the readback evidence already present at line `:23` (or wherever the current text records it). **(b) DO NOT RECUT THE FIXED HASHES.** The CRLF and LF/git-object values are already correct as of `IB-rto-1`'s own fix -- do not touch them, do not re-derive them, do not second-guess them. This cell's ENTIRE scope is the exclusion sentence's wording. **(c) DO NOT REPLAY THE PUBLISH.** No S3 act, no ledger entry, no new packet, no sign-off. The published bytes and their readback already happened and are already correctly recorded; this cell only corrects how the EXCLUSION describes what was and wasn't exercised. **(d) DO NOT TOUCH ANY CODE.** `capture-session.cjs`, `capture-session.sh`, and `README.md` are NOT touched. If tempted, STOP and file a row instead. **(e) VERIFICATION.** Re-run `proof-of-spec-check.py` on the `IB-rtk-1` instance after the wording fix; VALID rc=0 required, no criterion verdict changed. Print the corrected exclusion text in full in the result.md so the CVO/CTO can verify the wording directly rather than trusting a paraphrase. | WK~13 (eleventh invocation, same serial -- continuity of the `deliverables/<SERIAL>/**` ownership) | records integrity (no FWD directly) | -- |
+
+### R16.2 Edges and fanout
+
+One chain: **A** `rtp-1`. **fanout: 1 of 1 chain, cap 8.**
+
+### R16.3 Bounds carried (every order)
+
+No hash recomputation (already correct); no code change; no publish replay; no S3 act; no sign-off. This cell's ENTIRE scope is one exclusion sentence's wording in the `IB-rtk-1` proof instance. `rti-6` stays PARKED at the cut, re-handed the moment `0.0.0_AB_MSTR` relays Andrew's successful capture -- if that relay lands before this round drains, the COO may re-hand `rti-6` INSIDE round 16 as the ruled un-park, not as a new cell.
+
+### R16.4 Not decided here
+
+Whether/when `rti-6` re-hands (external, gated on Andrew's own capture result); `W10-S2` (stays PARKED, unchanged); `S116`/`W1-S47` (CTO's own lane); break-glass role deletion (CRO/Andrew); the 172 older stale rows (no bulk close).
+
+### R16.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-15 analysis's round-16 section (2 items: the `C-S174` wording fix, and `rti-6`'s carried park/re-hand rule) MINUS `rti-6`'s carry rule (a rule for a future external event, not a cell issued now) = 1 cell, 0 uncovered, 0 invented by this seat. SAME GRAIN: one wording-scoping correction, sharing one write surface (the `IB-rtk-1` proof instance's own text). INTENT: `rtp-1` corrects wording; it does not repair, recompute, publish, or re-grade anything. STATE COHERENCE: `R114-AC3`'s PASS and `R115-AC1`/`R115-AC2`'s PASS are NOT reopened by this cell -- a residual imprecision in HOW one exclusion sentence described its own scope does not impeach any prior finding's substance, all of which stand independently verified on multiple instruments already.
 
 ## R15. ROUND 15 -- THE RECUT ON THE ROUND-14 ANALYSIS (@0782226170; slug @5236fd2696; v0.19, 2026-09-22, `2.0.0_SA_COO~B`)
 
