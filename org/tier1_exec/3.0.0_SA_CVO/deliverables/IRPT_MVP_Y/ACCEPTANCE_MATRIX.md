@@ -154,13 +154,30 @@ applied to the candidate's synthetic table causes ArtifactRepository put,
 identical retry, get and head to fail: 4/4 TypeError, Decimal not JSON serializable.
 P1 routed to COO~P; see `P_REPOSITORY_REVIEW_70598.md`, runnable
 `probe_p_repository.py` and `P_REPOSITORY_70598ece96.json` with exact blob hashes.
-This is FAIL for the S3/S4 artifact primitive subboundary. The 14 integrated
+At that pin this is FAIL for the S3/S4 artifact primitive subboundary. The 14 integrated
 criteria remain NOT_EVALUATED. No cloud/vendor/deployed E2E claim.
 
 Final F portal `8e6e2e38cc299c4415d42b0fe627edc50ec35e1b` and B/chain ancestry
 measured rc0; portal tracked clean with untracked files present. IRPT-S7-01
 `bcd38bba00` read: destinations remain non-writable until canonical registration
 and enforcement; retention/expiry and least-privilege IAM/IaC precede live writes.
+
+## Foundation and repair update, 5:38 PM Eastern
+
+P `0754b10b6c6407da82021f8e475382634804870d` independently retested with
+unchanged original probe: supplied23/23 PASS; put/retry/get/head4/4 RETURNED,
+integer receipt metadata and stable initial/retry identity. Y-P01 closed for
+that offline boundary; original70598 finding retained as historical evidence.
+
+Y `6dc4e888e23c9cf08f591c57456233d855cf5cc7`: supplied intake9/9 and
+submission16/16 PASS in exact source/registry snapshot. Y-B01 seven-field
+preservation repaired at submit compute boundary; complete HTTP/runtime still
+unevaluated. Y-F01 P2 found independently: conditional dispatch-claim refusal
+returns false, but service ignores it and sets dispatch_pending=false, yielding
+queued-for-processing description without confirming dispatch. Routed COO~Y.
+See `FOUNDATION_REVIEW_6dc4e888e2.md` and source-hashed evidence JSONs.
+All fourteen integrated criteria remain NOT_EVALUATED; primitive results do not
+prove persistent recovery, released AnalysisReport lineage or E2E acceptance.
 
 ## Compiler Tools
 

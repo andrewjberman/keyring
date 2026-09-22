@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 5:30 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 5:38 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -15,8 +15,16 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 - Integrated criterion outcomes: 0 PASS, 0 FAIL, 14 NOT_EVALUATED. No completion claim.
 - P primitive candidate `70598ece96498d639b0fb12104ffe9fd4b0d5718` reviewed:
   supplied suite 19/19 PASS; independent boto3 numeric decoding causes 4/4
-  artifact operations to fail. Y-P01 P1 routed to COO~P. See
+  artifact operations to fail. Historical Y-P01 P1 routed to COO~P. See
   `P_REPOSITORY_REVIEW_70598.md` and its pinned probe/evidence.
+- P repair `0754b10b6c6407da82021f8e475382634804870d`: supplied23/23 PASS;
+  unchanged independent put/retry/get/head controls4/4 RETURNED. Y-P01 closed
+  for this pinned offline boundary. Original failure evidence retained.
+- Y foundation `6dc4e888e23c9cf08f591c57456233d855cf5cc7`: intake9/9 and
+  submission16/16 PASS. Seven browser fields preserved at actual compute boundary.
+  Independent Y-F01 P2 open: failed dispatch claim returns false, which service
+  ignores and reports not pending. Routed COO~Y. See
+  `FOUNDATION_REVIEW_6dc4e888e2.md` and pinned probe/evidence.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -29,7 +37,7 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 Baseline probe: workspace `db314d4ea0b91fb03457048cc146f7df4bfa7f92`, portal
 `7dd3d067a17ee00b878ecfceff23c557649a2331`. No completed integrated Y candidate
-received; the P primitive candidate above is a bounded dependency review.
+received; P primitive and Y foundation candidates above are bounded reviews.
 Own writes are restricted to this CVO review directory; no implementation claims.
 Review evidence is on workspace CLOUD using pathspec safe commits. No code
 worktree or shared branch change was needed for review preparation.
