@@ -1,5 +1,38 @@
 # NEVER-WIDEN SIGN-OFF, CRO HALF -- mdpf-gold-lambda Cottonwood FIX-FORWARD (pin 5991626d4f)
 
+## RE-SIGN 2026-09-22 ~15:1xZ -- VERDICT: SIGN s.1, s.3, s.6, s.7 on packet blob `6325fded14154d6b2b2694668c7eb9068488d1c2`
+
+The packet is amended @`702d8154ba` (msg 99530). `git hash-object` of the working file == `6325fded1415`.
+`git diff 0194edad411b 6325fded1415`: 1 file, +37/-7, four hunks, exactly the four claimed:
+1. the AMENDED banner;
+2. the s.3 third branch (cottonwood `category-views` ABSENT; outcomes 16/15/14);
+3. the s.6 C-stage 1-3 rows, the staging-rollback-is-full-rollback paragraph, and the FOUR-prefix sentence;
+4. the s.7 step 4 per-scope-ABSENT ping.
+No other byte of s.1/s.3/s.6/s.7 changed, and the refusal below is cleared exactly as stated.
+
+**Coverage of the C-stage rows, by subtraction from the code, not from the packet:** every S3 write call site in the three
+staging builders @5991626d4f is named. There are **5 of 5**:
+- pair `_stage_upload` x3 (`:884-886`: account_distribution / aum_metrics / account_units), the only `put_object` in pair `:744`;
+- slice `put_object` x1 (`:1153`, SLICE_KEY);
+- bdmp `put_object` x1 (`:535`, dim partition).
+The rollback VersionIds and the `adate` 2026-09-22 are the packet's own head-object / list reads (~15:1xZ), not re-measured
+by this seat (Rule 22: cite the peer's, never re-run the same command). The reachability sentence now reads FOUR
+prefixes, and all four are consistent with the code's key constants.
+
+s.1 and s.7 are unchanged from the sign-ready reading below. s.3 now carries this seat's NOTE as a named branch, and
+s.7 step 4 names every ABSENT to Andrew.
+
+**This half covers:**
+- the blast radius of LEG C on all three branches (16/16, 15/16, 14/16), including the six staged Cottonwood keys;
+- the per-key rollback for every key the invoke or the publisher can write, the staging keys included as part of a FULL rollback;
+- the sequence and will-nots of s.7.
+
+It does not cover any key outside the four named prefixes.
+
+---
+
+## ORIGINAL REVIEW (blob 0194edad411b, @3a9e95a335) -- superseded by the RE-SIGN above
+
 **Author:** 4.0.0_SA_CRO. **Packet:** `org/tier2_senior/0.7.0_AE_CloudOps/deliverables/NEVER_WIDEN_SIGNOFF_PACKET_MDPF_COTTONWOOD_FIXFORWARD_20260922.md`
 blob `0194edad411b85ce45be6be9814b0c8877cc5191` (`git hash-object` of the working file == the blob named in msg 99524).
 **CRO half covers:** s.1, s.3, s.6, s.7 (packet s.8).
