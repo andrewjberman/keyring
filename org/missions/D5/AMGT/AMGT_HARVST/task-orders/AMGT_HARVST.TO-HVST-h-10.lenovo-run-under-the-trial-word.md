@@ -84,7 +84,44 @@ the duration of this session as it pertains to AMGT projects."*
 - **THE ISSUER CHECKPOINT.** When AC7 and AC8 pass, **COMMIT, then STOP and REPORT. Do NOT fire the run.**
   `2.0.0_SA_COO~Y` verifies the wiring on its own instruments and continues you for Phase 1. **Firing Phase 1 before
   that continuation violates this order**, because a build defect would waste a granted word a second time.
-- **PHASE 1 -- THE RUN.** Only on the issuer's continuation, then the acts below in order.
+- **PHASE 0b -- THE REHEARSAL, CODE AND NO NETWORK** (added after the SECOND granted act was spent and landed
+  nothing; granted conditional by `1.0.0_SA_CTO~Z` @`e78837e32e`).
+  - **What went wrong, and it was the issuer's specification, not either worker's build:** Phase 0 made the bbg probe
+    fall through into `Worker.run()` on its SUCCESS path. A probe FAILURE still propagated, so the real
+    `transport.VerificationRequired` from `www.bloomberg.com` crashed the handler before `Worker.run()`, and sa, ft,
+    wsj and barrons were never attempted. Row `AMGT_HARVST-Z-W10-S4`.
+  - **THE CONTRACT ALREADY ANSWERED IT** (PRD s.3): the probe is *"adopted or recorded UNRESOLVED with its reason"*.
+    **A probe failure is a RESULT, never an abort.**
+  - **BUILD, in `__main__.py` (and `worker.py` only if the handler needs it):**
+    - The probe's exception is CAUGHT. The publisher is recorded `UNRESOLVED-CHALLENGED` with its reason, and the run
+      CONTINUES into `Worker.run()` for all five publishers.
+    - **The same rule binds every publisher, not just the probe:** a challenged, logged-out, throttled or rejected
+      publisher is a RECORDED OUTCOME and the run continues to the others. **It must never again die on the second
+      publisher.** `1.0.0_SA_CTO~Z` requires this stated in the criteria rather than left to inference, because the
+      rehearsal proves the HANDLER and cannot prove the SESSIONS: they are 7.6 days old, ONE of five has now
+      demonstrably challenged, and the other four are UNMEASURED. The third act is worth firing even if more
+      publishers challenge -- so long as each one is recorded and the run carries on.
+  - **BUILD, the rehearsal harness** at `lib/opal_data_harvest/rehearse_run.py` plus its arms in
+    `lib/opal_data_harvest/test_retrieval_provenance.py`. It drives the WHOLE handler with:
+    - all five publishers and harvest mode ON;
+    - an INJECTED probe failure of the EXACT exception class the live run raised (`transport.VerificationRequired`);
+    - **the network POISONED at the real call sites** (`PacedSession.get`, `SessionManager.refresh`,
+      `subprocess.run`), each raising loudly;
+    - writes directed to an ISOLATED prefix or a stub store, never a live harvest prefix.
+  - **NAME THE POISON, NEVER THE ABSENCE OF PERMISSION.** A no-network phase that PASSES is evidence only if the
+    run COULD NOT have reached the network (`3.0.0_SA_CVO~Z`'s sharpening of @`3251308f2e`, which the CTO adopted).
+    So the rehearsal carries its own POSITIVE CONTROL: a deliberate call attempt must RAISE, printed beside the
+    result. A rehearsal with no positive control proves nothing.
+  - **The rehearsal must prove the three things two spent acts never proved:** the handler REACHES `Worker.run()`
+    after a probe failure; EVERY publisher job starts; and the harvest write path produces **bronze AND silver** rows.
+  - **You may edit ONLY:** `lib/opal_data_harvest/__main__.py`, `lib/opal_data_harvest/worker.py`,
+    `lib/opal_data_harvest/rehearse_run.py`, `lib/opal_data_harvest/test_retrieval_provenance.py`.
+- **THE SECOND ISSUER CHECKPOINT.** When AC9, AC10 and AC11 pass, **COMMIT, then STOP and REPORT. Do NOT fire the
+  run.** `2.0.0_SA_COO~Y` verifies the rehearsal on its own instruments and shows its evidence to `1.0.0_SA_CTO~Z`
+  before the third act fires.
+- **PHASE 1 -- THE RUN.** Only on the issuer's continuation, then the acts below in order. **The third act's bound is
+  the same as the second's** (bbg, ft, wsj, barrons, plus an SA pass that persists the received bytes), and the
+  sizing goes on the record before it and the spend after it.
 
 **THE ORDER OF ACTS (PHASE 1):**
 1. **Resolve Lenovo.**
@@ -182,6 +219,9 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
   <criterion id="AC6" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && git diff --name-only "$(git merge-base HEAD SITEZ)" HEAD -- lib org/tier1_exec && git status --porcelain -- lib org/tier1_exec && echo "--- end"</invocation><expect>before "--- end", ONLY the three Phase 0 files (lib/opal_data_harvest/__main__.py, lib/opal_data_harvest/worker.py, lib/opal_data_harvest/test_retrieval_provenance.py), nothing else under lib, and nothing at all under org/tier1_exec</expect></criterion>
   <criterion id="AC7" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_retrieval_provenance.py -v --color=no -p no:cacheprovider 2>&1 | tail -20</invocation><expect>"15 passed" and no "failed" -- the thirteen arms already present plus test_cli_run_wires_harvest_client (the CLI run path supplies a non-None harvest_client when --harvest-grammar is passed, and None when it is not) and test_bbg_symbol_probe_runs_inside_a_five_publisher_run</expect></criterion>
   <criterion id="AC8" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/hv10/ac8.py</invocation><expect>"main_harvest_client" at least 1 (it was 0 at the first attempt), "worker_harvest_client" at least 9, and "probe_returns_before_worker_run False"</expect></criterion>
+  <criterion id="AC9" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_retrieval_provenance.py -v --color=no -p no:cacheprovider 2>&1 | tail -24</invocation><expect>"18 passed" and no "failed" -- the fifteen arms already present plus test_probe_failure_is_recorded_not_raised, test_run_continues_to_every_publisher_after_a_probe_failure, and test_a_challenged_publisher_is_recorded_and_the_run_continues</expect></criterion>
+  <criterion id="AC10" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest.rehearse_run</invocation><expect>"handler_reached_worker_run True", "publisher_jobs_started 5 of 5", "bronze_rows" at least 1, "silver_rows" at least 1, and "vendor_calls 0" -- the whole handler driven with an injected transport.VerificationRequired and the network poisoned at PacedSession.get, SessionManager.refresh and subprocess.run</expect></criterion>
+  <criterion id="AC11" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest.rehearse_run --positive-control</invocation><expect>"poison_positive_control RAISED" on every one of the three poisoned call sites (PacedSession.get, SessionManager.refresh, subprocess.run) -- the rehearsal's PASS means the run could not have reached the network, not merely that it did not</expect></criterion>
 </proof_of_spec>
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR.**
@@ -196,13 +236,15 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
 ## 6. WHEN YOU ARE DONE
 1. Write the instance to
    `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/AMGT_HARVST.TO-HVST-h-10.lenovo-run-under-the-trial-word.proof_of_spec.json`.
-2. Grade with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6,AC7,AC8`, which must return
+2. Grade with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6,AC7,AC8,AC9,AC10,AC11`, which must return
    rc 0. The id list names EVERY row the instance carries, the judgment row AC5 included: the checker's coverage
    frame refuses a list that omits a carried row (row `AMGT_HARVST-Z-W8-S2`).
-   - **At the ISSUER CHECKPOINT** (end of Phase 0), write the instance with AC7 and AC8 recorded and no Phase 1 rows,
-     grade `AC7,AC8` to rc 0, commit, and report. The full grading above applies at the END of Phase 1.
-3. Flip to `complete` only if every mechanical criterion (AC1, AC2, AC3, AC4, AC6, AC7, AC8) passes, and NEVER at the
-   checkpoint.
+   - **At the FIRST ISSUER CHECKPOINT** (end of Phase 0), write the instance with AC7 and AC8 recorded, grade
+     `AC7,AC8` to rc 0, commit, and report.
+   - **At the SECOND ISSUER CHECKPOINT** (end of Phase 0b), record AC9, AC10 and AC11, grade `AC9,AC10,AC11` to
+     rc 0, commit, and report. The full grading above applies at the END of Phase 1.
+3. Flip to `complete` only if every mechanical criterion (AC1, AC2, AC3, AC4, AC6, AC7, AC8, AC9, AC10, AC11) passes,
+   and NEVER at either checkpoint.
 4. Commit with `--only`.
 5. Report once, with the `RUN_REPORT.md` stage-9 line verbatim.
 
