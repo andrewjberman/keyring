@@ -84,10 +84,23 @@ def main():
     omitted = copy.deepcopy(retained)
     omitted["charts"] = []
     omitted["disclosures"] = []
-    omission = subject.publication.verify_extraction(synthetic_pdf, synthetic_census, omitted)
+    try:
+        omission = subject.publication.verify_extraction(synthetic_pdf, synthetic_census, omitted)
+        omission_control = {
+            "coverage": omission["fragment"]["extraction_coverage"],
+            "disclosures": omission["fragment"]["disclosures"],
+            "complete_despite_omission": omission["fragment"]["extraction_coverage"]["status"]
+                == "COMPLETE_FOR_CENSUS"}
+    except subject.publication.PublicationRefused as exc:
+        omission_control = {"refused": str(exc), "complete_despite_omission": False}
+    omission_control["expected"] = "Refuse retained census mismatch or expose missing chart/disclosure gaps"
     absent_text = copy.deepcopy(retained)
     absent_text["disclosures"][0]["text"] = "This sentence does not occur in the source PDF."
-    absent = subject.publication.verify_extraction(synthetic_pdf, synthetic_census, absent_text)
+    try:
+        absent = subject.publication.verify_extraction(synthetic_pdf, synthetic_census, absent_text)
+        absent_control = absent["fragment"]["extraction_coverage"]
+    except subject.publication.PublicationRefused as exc:
+        absent_control = {"refused": str(exc)}
     changed_source = subject.pdf(token="99.99%")
     try:
         subject.publication.verify_extraction(changed_source, synthetic_census, retained)
@@ -95,13 +108,8 @@ def main():
     except subject.publication.PublicationRefused as exc:
         changed_source_outcome = str(exc)
     controls = {"positive_coverage": positive["fragment"]["extraction_coverage"],
-                "omitted_chart_and_disclosure": {
-                    "coverage": omission["fragment"]["extraction_coverage"],
-                    "disclosures": omission["fragment"]["disclosures"],
-                    "expected": "Refuse retained census mismatch or expose missing chart/disclosure gaps",
-                    "complete_despite_omission": omission["fragment"]["extraction_coverage"]["status"]
-                        == "COMPLETE_FOR_CENSUS"},
-                "absent_disclosure_text": absent["fragment"]["extraction_coverage"],
+                "omitted_chart_and_disclosure": omission_control,
+                "absent_disclosure_text": absent_control,
                 "changed_source_pdf": changed_source_outcome}
     evidence = {"candidate_pin": pin, "file_sha256": hashes,
                 "supplied_suite": {"exit_code": suite.returncode, "stdout": suite.stdout, "stderr": suite.stderr},
@@ -111,7 +119,8 @@ def main():
                            "Synthetic PDFs only; no vendor or cloud calls",
                            "No repository publication, report READY or full Y5/E2E proof"]}
     args.output.write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({k: v for k, v in evidence.items() if k != "file_sha256"}, indent=2))
+    print(json.dumps({"candidate_pin": pin, "supplied_suite": evidence["supplied_suite"],
+                      "controls": controls, "evidence_path": str(args.output)}, indent=2))
 
 
 if __name__ == "__main__":

@@ -252,6 +252,16 @@ lineage/same-options refresh remains unfinished. Integration, actual persistence
 browser, live vendor and full S7 proof remain outstanding. All fourteen
 integrated criteria remain **0 PASS / 0 FAIL / 14 NOT_EVALUATED**.
 
+## Y-C02 repair retest, 6:38 PM Eastern
+
+`3a1256a0742b06c0cbc3fe44388c40b86cb7a3da`: supplied15/15 PASS. Original
+omission scenario refuses EXTRACTION_INVENTORY_BINDING; original complete
+positive passes. Numeric controls and all three variant-coverage objects are
+unchanged. Y-C02 CLOSED for this bounded inventory check; Y-C01 closure retained.
+Probe exception reporting adapted, scenarios unchanged. See
+`PUBLICATION_RETEST_3a1256a074.md` and evidence JSON. No publication/READY or
+full Y5/S7 proof; all fourteen integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
