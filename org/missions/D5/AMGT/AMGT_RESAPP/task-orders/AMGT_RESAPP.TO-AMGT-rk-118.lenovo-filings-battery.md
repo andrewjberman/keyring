@@ -257,7 +257,7 @@ for Lenovo and the control, and the ledger entry with its open and close.
    `issuer_doc_bronze` may add several objects for one crawl. That is expected and is why AC4 prints the count rather
    than asserting 1.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~118</slot>
 <fabric>site-z</fabric>
