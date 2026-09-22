@@ -12237,6 +12237,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "ISSUER AMENDMENT 1's own text: 'add ONE test arm ... build a stub crosswalk with one ENRICH row and validate it against the schema ... It must pass' -- read together with section 3's instruction to reuse the file's existing stubs.",
     "world_is": "The file's existing ENRICH_ROW/ENRICH_IDENTITY stubs, reused literally, do NOT validate against crosswalk.schema.json (amended or pre-amendment) -- not because of the `enriched` key this amendment adds, but because ENRICH_IDENTITY already carries AMGT-rk-108's five extra identity keys the schema's identity sub-schema has never declared. Satisfying 'must pass' required a schema-conformant stub identity built for this arm specifically, rather than ENRICH_IDENTITY verbatim; crosswalk.schema.json and add_security.py's real output remain unreconciled for every OTHER caller.",
     "notes": "ARMED because the disagreement will fire on ordinary future use: the first --write-pool ENRICH registration, if its crosswalk document were ever schema-validated (e.g. a future publish-time check), would fail on the identity object's additionalProperties, exactly as S2 described for denominators before ISSUER AMENDMENT 1. Disarm: a follow-on TO with crosswalk.schema.json in its <paths> adds composite_figi, figi, isin, sedol and website to the identity sub-schema's properties (each `[\"string\", \"null\"]`, matching add_security.py's None-safe .get() reads), mirroring how `enriched` was added for this cell."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W114-S5",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~114",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "Row AMGT_RESAPP-Z-W114-S4 (ARMED: crosswalk.schema.json's identity sub-schema did not admit AMGT-rk-108's five later identity keys) is RESOLVED by ISSUER AMENDMENT 2 (@4241f1a5c0, on this row, committed by the issuer before the rebuild, within the CTO's ruling msg 24314).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER AMENDMENT 2 (task-orders/AMGT_RESAPP.TO-AMGT-rk-114.crosswalk-enrich-coverage.md, committed @4241f1a5c0) adds composite_figi, figi, isin, sedol and website to identity.properties as {\"type\": [\"string\", \"null\"]}, not required.",
+        "This worker added exactly those five property entries to lib/research/identity/crosswalk.schema.json (commit 44006d206a) -- nothing else in the schema changed -- and strengthened test_enriched_document_validates_against_schema (same commit) to build its identity via the REAL add_security._build_identity fed a stub sec_data carrying all 5 fields (with an assertion that the real function's output set-difference against the pre-existing nine keys is exactly {composite_figi, figi, isin, sedol, website}, so the arm exercises the real emitter, not a hand stub), validate that PASS against the amended schema, keep the FAIL control against the pre-amendment schema (naming 'enriched'), and add a second record proving a pre-rk-114 identity (the original nine keys only) still validates against the amended schema.",
+        "pytest lib/research/identity/tests/test_crosswalk_enrich_coverage.py -v -p no:cacheprovider: 7 passed, 0 failed (arm count unchanged -- strengthened, not added, per Amendment 2's own instruction)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "Row S4's world_is: 'the file's existing ENRICH_ROW/ENRICH_IDENTITY stubs, reused literally, do NOT validate against crosswalk.schema.json ... crosswalk.schema.json and add_security.py's real output remain unreconciled for every OTHER caller.'",
+    "world_is": "The schema and add_security.py's real output no longer disagree: ISSUER AMENDMENT 2 added the five keys _build_identity actually emits to identity.properties (optional, matching the None-safe .get() reads), and this worker's strengthened test arm validates the REAL _build_identity output (not a hand-made conformant stub) against the amended schema, PASS, with the pre-amendment-schema control still FAILing. Disposition left UNDER_INVESTIGATION -- the GRADUATED transfer is the CVO's L9 act, not a worker's; this row records the resolution for that adjudication.",
+    "notes": "The hazard S4 named is closed by this commit; the file's ENRICH_IDENTITY module-level constant (used by the other six arms) still predates this amendment and was left untouched (out of this amendment's <paths> intent, which named only the validation arm) -- it now validates against the schema like any other 14-key identity would, but no arm re-validates it directly; not a new gap, since no arm ever claimed ENRICH_IDENTITY was schema-checked."
   }
 ]
 ```
