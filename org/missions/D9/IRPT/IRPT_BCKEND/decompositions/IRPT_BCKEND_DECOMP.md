@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 10,
-  "decomp_version": "0.14",
+  "round": 11,
+  "decomp_version": "0.15",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -69,13 +69,43 @@
   "round9_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_9_20260922.md @9d4052728b (msg 99334; corrects the CTO's own rti-6 park ruling)",
   "round9_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v3.md @a62b69f6d3",
   "cells_round10": 4,
-  "cell_id_shape_round10": "IB-rtj-<n>"
+  "cell_id_shape_round10": "IB-rtj-<n>",
+  "round10_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_10_20260922.md @703efac869",
+  "round10_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v4.md @79d34e339c",
+  "cells_round11": 1,
+  "cell_id_shape_round11": "IB-rtk-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R11. ROUND 11 -- THE RECUT ON THE ROUND-10 ANALYSIS (@703efac869; slug @79d34e339c; v0.15, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 10 closed 0 of 94 open, `R102-AC1` PASS (independently corroborated by the CTO), **`R101-AC3` FAIL** (`3.0.0_SA_CVO~B`'s own lifecycle diagnostic, `IRPT_BCKEND_R10_CAPTURE_LIFECYCLE_DIAGNOSTIC.cjs`: the round-10 repair genuinely closes the C-S153 counterexample but two DIFFERENT, pre-existing residuals survive -- `C-S158`, no navigation observer during the human-interaction wait, so a foreign hop that occurs and returns during that wait is invisible and capture still succeeds; `C-S159`, a detected foreign hop on the verification navigation is treated as retryable rather than terminal, so the violation is forgotten on a clean retry). **Capture stays HELD.** `R102-AC2` came back `NOT_EVALUATED` for a defect in the ORDER, not the work: `IB-rtj-2`'s face listed it in `<expected_criteria>` but never defined a substantive bar (`C-S162`) -- the CTO ruled it RETIRED, prospectively, never re-issued with an invented retrospective bar; `R102-AC1`'s PASS is not overturned or asked to cover for it. No PRD addendum: every gap is a cell under an existing outcome. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R11.1 The rectangle (1 cell, id shape `IB-rtk-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rtk-1` | CAPTURE HELPER THIRD REPAIR (C-S158, C-S159; folds in C-S160's metadata fix as its own first arm since it's the same worker's own deliverables folder). Design direction is the CTO's own, restated verbatim as the cell's arms, not re-derived: (a) fix `IB-rtj-1`'s stale second-pass proof-instance pin first (C-S160), metadata only, no publish replay; (b) install ONE session-lifetime navigation observer on the page BEFORE the first `goto` (`framenavigated` filtered to the main frame, plus response/request listeners), live through the whole interactive interval and every verification navigation; (c) refusal is TERMINAL and STICKY -- the first foreign origin the observer sees at any point latches a refusal, writes nothing, prints no success, exits non-zero, and no later clean navigation clears the latch (closes C-S159); (d) the retry path survives ONLY for same-origin transient failures (a timeout, a 5xx, a missing marker) -- a foreign hop is never retryable; (e) acceptance: CVO~B's unmodified R10 lifecycle diagnostic refuses both residuals, the R9 and R8 diagnostics still pass, a single-difference interval pair (same-origin vs. middle-hop-foreign) with a positive control, a single-difference retry pair (foreign-then-clean vs. transient-then-clean, the transient case still succeeds); (f) a NEW never-widen packet and both halves, runbook hashes updated in the same cell, no host start, no MFA automation. **The judgment grade (successor to `R101-AC3`) is `3.0.0_SA_CVO~B`'s, never the issuer's.** | WK~13 (third pass, same serial -- avoids the `deliverables/<SERIAL>/**` ownership issue `IB-rti-1`'s C-S154 fix hit) | FWD-2 (serving; the `rti-6`/`rth-2` chain's remaining blocker) | -- |
+
+### R11.2 Edges and fanout
+
+One chain: **A** `rtk-1`. **fanout: 1 of 1 chain, cap 8.** `C-S162` (retire `R102-AC2`) is ISSUER-DISCHARGED at the cut, a face correction on `IB-rtj-2`, not a chain.
+
+### R11.3 Bounds carried (every order)
+
+The forward-looking-criterion bar; R-40 (content hash per artifact read AT the event); S56 vintage pins `path:line @ <commit-ish>`; NO LIVE VENDOR CALL; no host is started or stopped; a served-property change (a new publish) is packet + both never-widen halves BEFORE the act; never weaken an existing check to make a new case pass; the retry path narrows, it never widens (same-origin-transient only, per the CTO's arm (d)). `rti-6` stays PARKED; its un-park condition (1) is this round's `rtk-1`, corrected onto its face @`460df053b5`.
+
+### R11.4 Not decided here
+
+Whether `rtk-1`'s repair is sufficient to re-open the ask to Andrew (`3.0.0_SA_CVO~B`'s successor grade, on the measured battery result, never assumed by the cut); `W10-S2` (stays PARKED, unchanged); `S116`/`W1-S47` (CTO's own lane); break-glass role deletion (CRO/Andrew); the 164 older stale rows (no bulk close).
+
+### R11.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-10 analysis's round-11 section (2 items: the third repair covering C-S158/C-S159 with C-S160 folded in as its own arm, and C-S162's retirement) MINUS the ONE merge already built into the CTO's own design (C-S160 as `rtk-1`'s arm (a), not a separate cell) MINUS C-S162 (issuer-discharged, a face edit, not a worker chain) = 1 cell, 0 uncovered, 0 invented by this seat. SAME GRAIN: one repairable defect pair sharing one write surface (`capture-session.cjs`, the README, the new packet). INTENT: `rtk-1` repairs. STATE COHERENCE: `C-S153`, `C-S127`, `C-S125`/`C-S126` stay ARMED/host-byte-limited until `rtk-1`'s own judgment grade lands -- no cell here moves their clocks by proxy.
 
 ## R10. ROUND 10 -- THE RECUT ON THE ROUND-9 ANALYSIS (@9d4052728b, msg 99334; slug @a62b69f6d3; v0.14, 2026-09-22, `2.0.0_SA_COO~B`)
 
