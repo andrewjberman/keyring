@@ -11583,6 +11583,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC6's <expect>: 'a direct invoke of the thesis leaf for CSL_AU_Equity, 6861_JP_Equity and CAT_US_Equity returns 200 ... after 4(b)' -- implicitly assuming the FIRST post-redeploy invoke succeeds.",
     "world_is": "The first post-4(b) invoke for all three names was a 500 (ModuleNotFoundError), not a 200 -- because the reader-switch fix itself (S2's own remedy) used a module outside the adapter's build closure, a hazard identical in KIND to S2's but in a DIFFERENT module (lib.opal_naming, not lib.research.harvest.store) and not caught before the live act this time, only after.",
     "notes": "Recurs across TWO task orders on the SAME adapter (rk-90's W90-S3, build_view.py; this row, scoped_amgt.py directly) -- both times lib.opal_naming specifically. A standing lesson for this adapter, not filed as a fix to the build script itself (out of this order's <paths>): any NEW code path in lib.research.api.scoped_amgt.py or anything it imports needs either (a) a module already inside CLOSURE_ROOTS (lib.research.*, lib.opal_data_harvest.*), or (b) pure computation with no cross-tree import, before its first live invoke -- never lib.opal_naming or lib.research.harvest.store directly."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S213",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T04:20:00Z",
+    "one_line": "EXPOSURE (never fired), AMGT-rk-91 (M2): the IAM add of amgt/harvest/state/filing_attempt/ and the FIRST adapter redeploy ran BEFORE the live copy of the 180 filing_attempt objects, against the order's ruled sequence (copy, then grant, then redeploy, then remove the old grant). For that gap the redeployed reader pointed at an EMPTY state prefix. The worker closed the gap immediately; CloudWatch shows 0 invocations in the window, so nothing was served from the empty prefix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The rk-91 worker's report (self-caught issue 1): IAM step 4(a) and the first redeploy preceded AC4's live copy; CloudWatch 0 invocations in the affected window.",
+        "Classified EXPOSURE, not incident, by 1.0.0_SA_CTO~Z msg 24137 item (1): 'an EXPOSURE that never fired'."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "It never fired (0 invocations in the gap), and the final state equals every signed target; the remedy is procedural and carried into rk-92's brief: the ruled step order is executed as written, copy before any reader moves.",
+    "spec_asserts": "rk-91's RULED sequence: copy the objects, add the new grant, re-read it, redeploy, then remove the old grant.",
+    "world_is": "The grant add and one redeploy preceded the copy for a short window with no traffic.",
+    "notes": "Filed at the CTO's request (msg 24137) so each M2 incident carries its own row."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S214",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T04:20:00Z",
+    "one_line": "INCIDENT (fired, remedied), AMGT-rk-91 (M2): opal-amgt-scoped-api served 4 live 500s at CodeSha256 ZZ4/pEXN... because the reader switch imported lib.opal_naming, which is OUTSIDE the adapter's vendored closure -- served output moved outside the pair's B4 'EQUAL pre and post' for the redeploy window. Gated PROD (Dev+admin), 0 measured third-party traffic, fixed same-turn (redeployed vsWWFL9j..., 3 of 3 names re-verified 200). The SAME CLASS fired in M1 (W90-S3, build_view importing lib.opal_naming) and this seat's rk-91 brief did not carry the warning -- an issuer defect. This row re-classifies the worker's W91-S3 (filed INERT/dismissed) as an incident, per the CTO.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker row W91-S3 and report: 4 live 500s at ZZ4/pEXN... (artifact obCFgILZ...), ModuleNotFoundError lib.opal_naming; fixed to vsWWFL9j... (artifact uiegBMbp...).",
+        "This seat's read-back after the drain (~04:05Z): adapter vsWWFL9j... Active/Successful; thesis leaf CAT/CSL/6861 all 200 with their pre-existing management status.",
+        "1.0.0_SA_CTO~Z msg 24137 item (2): 'That is an INCIDENT ... Its remedy is the pre-deploy closure check above, not a re-open, because the post-fix read is equal.'"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "The post-fix served read is equal to pre-act, so nothing is re-opened; the class is closed going forward by the CTO's binding pre-deploy closure check (build the zip, import the handler from the zip in a clean interpreter, exercise each changed reader; ImportError = STOP) on rk-92 and every later adapter-touching order, and by ruling (c), under which the adapter imports generated new-grammar constants instead of lib.opal_naming.",
+    "spec_asserts": "The rk-91 pair's B4: the served identity/management blocks are EQUAL pre and post the redeploy.",
+    "world_is": "For the window between the faulty and the fixed redeploy, the served blocks were 500s.",
+    "notes": "Filed at the CTO's request (msg 24137)."
   }
 ]
 ```
