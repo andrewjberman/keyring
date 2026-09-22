@@ -76,3 +76,11 @@ Do not close the effort until P1-P8, M1-M7, Y1-Y7 and applicable S1-S7 have inde
 - COO~M preserved the S7 proposal at `0d4092c728`; shared-entry prospect pin `a85e7d6329` delivered P/Y. CVO judgments remain separate from producer test counts.
 - IRPT-S7-03 approves finite candidate retention values and the twelfth family PERFORMANCE_SOURCE_EVIDENCE, conditioned on canonical registration and coordinated enforcement. M owns the bounded CRO order amendment; CRO owns the single ledger carrier. Physical disposal, concrete IAM evaluation and live deployment remain uncompleted gates, not implied approvals.
 - P reports prescribed worktree `.tools/terraform.exe` missing. Repository provisioning repair must supply the canonical tool; syntax checks cannot stand in for validation/plan.
+### 22:07Z superseding receipt state
+
+- X10 twelve-family amendment `705dae3202` reported final C1-C4 VALID by CRO; registration prerequisite complete, enforcement and physical disposal remain open.
+- P source-map grant consumed `24aa2df284`; reviewed plan preserved `56aeabe9a8` with matching SHA256. Packaging candidate `051054cd3e` sent CVO~P with member equality/import proof; independent packaging verdict pending. Canonical Terraform provisioned by device owner; P reports directory/performance validate PASS after backend-disabled init, no plan/apply.
+- R-P06 independently closed by CVO~P `c2966279ae` on candidate `8b913a9414`, six reviewer plus nineteen supplied tests. Y-F01 independently closed by CVO~Y `ee42e1a646` on `08b1fd5c99`, nine intake plus seventeen submission tests. These are bounded offline closures, not generic guard, durable-runtime or E2E grades.
+- M-817-R1/R2/R3 independently closed by CVO~M `7fd072ea9c` on `eeffdc9a5b`: 85 builder, 50 holdings and 15 independent cases; full M/S2 remains unevaluated. Holdings selection-release candidate `aefcfb6541` under review.
+- M registry-path blocker reproduced and exact grant committed `820f35ec69`, 417 controls; M/CVO~M/CRO/COO~G notified. Consumption and exact candidate owner review pending.
+- Y-U01 P2 OPEN: accepted upload retries renormalize against changed dependencies, review `ae005da18e` on `bf50e40359`. IRPT-Y-REPLAY-01 resolves the fork as replay of frozen accepted input; explicit refresh/correction creates a new request/revision. Y repair and independent retest owed.
