@@ -156,7 +156,8 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-h-1.bronze-capt
 
 ## 4. BOUNDS
 - **CODE ONLY.** Every session and S3 client is a stub. Run each test FILE with its own pytest call.
-- **The pin is `9fbf337a74`.**
+- **The pin is `9fbf337a74`** for the measured state. AC3 diffs from your branch's fork point
+  (`git merge-base HEAD SITEZ`), so it sees only this branch's own changes (row `AMGT_HARVST-Z-W1-S3`).
 - **Pre-existing failures are not this cell's to fix, and their counts must not GROW:** `test_worker.py` 2 failed and
   `test_verification.py` 1 failed, both measured at the cut.
 - **All new text is pure ASCII**, the code and the tests alike.
@@ -169,10 +170,12 @@ Before AC3, write `.scratch/hv1/ac3.py`:
 ```
 import subprocess
 allowed = {"lib/opal_data_harvest/transport.py", "lib/opal_data_harvest/publishers.py", "lib/opal_data_harvest/harvest_grammar.py", "lib/opal_data_harvest/worker.py", "lib/opal_data_harvest/uploads.py", "lib/opal_data_harvest/test_bronze_capture.py"}
-out = subprocess.run(["git", "diff", "--name-only", "9fbf337a74", "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal", "org/tier1_exec"], capture_output=True, text=True).stdout.split()
+base = subprocess.run(["git", "merge-base", "HEAD", "SITEZ"], capture_output=True, text=True).stdout.strip()
+print("fork_base", base)
+out = subprocess.run(["git", "diff", "--name-only", base, "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal", "org/tier1_exec"], capture_output=True, text=True).stdout.split()
 print("changed_code_files", sorted(out))
 print("outside_allowed", sorted(set(out) - allowed))
-for f in sorted(out):
+for f in sorted(x for x in out if x.endswith(".py")):
     b = open(f, "rb").read()
     compile(b.decode("utf-8"), f, "exec")
     print(f, "compiles True crlf", b.count(bytes([13, 10])), "non_ascii_chars", sum(1 for ch in b.decode("utf-8") if ord(ch) > 127))
@@ -210,7 +213,7 @@ for f in sorted(out):
    `normalised_record` is written only by `HVST-h-9`.
 4. **CHAINED:** `HVST-h-2` edits `harvest_grammar.py` and `uploads.py` after this cell drains.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
