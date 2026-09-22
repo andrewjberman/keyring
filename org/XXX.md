@@ -314,6 +314,14 @@ for a new GO is a protocol violation** — the batch GO covers the whole lane.
 
 Loops are **operator-initiated**. `/watcher` is not a loop — it arms the persistent inbox Monitor once.
 
+**IRPT POST-SLUG HOLD — Andrew-direct 2026-09-22 ~15:17 Eastern at `1.0.0_SA_CTO`:**
+"After you receive the most recent slugs from the CVOs I want you to hold analysis and the canonical flow cycle, because we may want to bring in some alterations."
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_1517ET_IRPT_HOLD_AFTER_CVO_SLUGS.md`.
+Current frontend round 15 and backend round 18 may finish through their CVO slugs. The CTO receives,
+ACKs and parks each slug; no analysis, PRD revision, next-round handoff/issuance or automatic
+canonical-flow progression follows until Andrew's further word. This hold binds the IRPT scopes of
+the CTO and COO~B/COO~F arms below, including successor re-arms. Inbox monitoring remains active.
+
 | Serial | Launch arming |
 |---|---|
 | `0.0.0_AB_MSTR` | `/watcher` once. `/agentbus` once and `/integrate` once (arm-at-load, same pattern as `/watcher`, NOT loops). Zero crons. |
