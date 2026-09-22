@@ -12418,6 +12418,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "No schedule exists for it, and the served axis has not moved in 12 days.",
     "disarm_owner": "2.0.0_SA_COO~Z, in the trial's L-PX cell (round 30) for Lenovo; the fleet-wide daily leg stays Andrew's cadence call.",
     "notes": "Named so the page's price lists are not read as fresh once the edge route lands."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W121-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~121",
+    "surfaced_at": "2026-09-22T21:40:00Z",
+    "one_line": "AC0's literal .scratch/r121/ac0.py script (as given verbatim in TO-AMGT-rk-121) crashes with AttributeError before printing the crosswalk record split or reaching the chained pytest baseline, because cw._read_pool_latest() returns (document, key) -- a tuple, not a dict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/crosswalk.py:852-876 _read_pool_latest(client=None) `return json.loads(body.decode('utf-8')), key` -- a 2-tuple.",
+        "Running the TO's own AC0 <invocation> verbatim (`cd \"$(git rev-parse --show-toplevel)\" && python .scratch/r121/ac0.py && python -m pytest ...`) against a byte-identical copy of the TO's prescribed ac0.py content produced: `Traceback ... File \".scratch/r121/ac0.py\", line 13, in <module> recs = (doc or {}).get(\"records\") or [] AttributeError: 'tuple' object has no attribute 'get'`, rc=1, and the `&&`-chained pytest command never ran (short-circuited)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-121 section 5 prescribes the exact bytes of `.scratch/r121/ac0.py`, including `doc = cw._read_pool_latest() if hasattr(cw, \"_read_pool_latest\") else None` followed by `recs = (doc or {}).get(\"records\") or []`, and the AC0 <invocation> chains that script with `&&` into the baseline pytest run.",
+    "world_is": "`_read_pool_latest()` has always returned a `(document, key)` tuple (measured at the pre-edit pin bf5c280e48 and at HEAD, unchanged by this cell), so the prescribed script's last line raises before printing the crosswalk record split, and the `&&`-chained pytest baseline never executes under the literal invocation.",
+    "disarm_owner": "2.0.0_SA_COO~Z: unpack the tuple in a corrected .scratch/r121/ac0.py template for any future task order that reuses this shape, or fix ac0.py's own body in this TO's issuance record.",
+    "notes": "Worked around locally by unpacking the tuple in .scratch/r121/ac0.py (untracked, not committed) so AC0's crosswalk-split and F0 baseline could still be measured; recorded values: 96 records, 4 with identity, 92 without; F0 106 passed. The invocation TEXT itself (the command line, not the script body) is unchanged and matches the TO's <invocation> verbatim."
   }
 ]
 ```

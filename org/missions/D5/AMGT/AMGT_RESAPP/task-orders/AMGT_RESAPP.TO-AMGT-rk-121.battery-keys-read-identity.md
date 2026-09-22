@@ -157,7 +157,7 @@ status to complete only if every criterion passes, commit, and report once, nami
    was true when it was written and is false now. A reason that names a future event ages silently.
 3. No `identity` reader exists elsewhere in `lib/` today, so this is the first consumer of rk-113's landing.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~121</slot>
 <fabric>site-z</fabric>
