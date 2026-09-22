@@ -819,6 +819,549 @@ cause and one commit, disarmed together.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "Causal correction and interpretation record; the original order defect/remedy remains carried by the W13-S1 adjudication, not reopened as a duplicate item."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S132",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "Missing second click in the delay criterion.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F65-AC16 expected a delayed export POST after clicking Export.",
+    "world_is": "Export opens the dialog; Create export sends the POST. Amendment 6100a2fc06 supplies the second click and the final proof records DELAYED.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W15-S1",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W15-S1"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S133",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "An announced amendment was not yet present at its claimed pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The worker was directed to execute an amendment said to be in the repository.",
+    "world_is": "The worker read the claimed c71fad69a4 bytes and refused the absent amendment; 6100a2fc06 subsequently carried it. The final order and proof agree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W15-S2",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W15-S2"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S134",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The visual instrument dependency was omitted from a ready root.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "FE-s-66 is a ready root while its common instrument clause says FE-s-65 already exists in its base.",
+    "world_is": "Issuance 730c75ee87 makes 65,66,73 concurrent roots. FE-s-66 refused missing flags, then replacement evidence after 65 landed matched 3 of 3 twice. That recovery is not proof that the original dependency ordering was valid.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W16-S1",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W16-S1"
+    ],
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~F"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S135",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The revision-mismatch guard is not browser-reachable through the current wire adapter.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FE-s-67 leaves the DrillTree mismatch capture open unless a truthful fixture can exercise it; no invented contract field.",
+    "world_is": "adaptHoldingsSnapshot assigns one sourceSetRevision to every node and the snapshot. The guard was wrapped with PanelError but no truthful wire fixture can produce the mismatch. Component/source evidence is not browser coverage.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W17-S1",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W17-S1"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S136",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The existing Holdings driver takes positional arguments and emits DRIVER OK.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F67-AC10 originally supplied flag arguments and expected SAVED or scrollLeft.",
+    "world_is": "The driver rejected that invocation. Amendments 5cad and b570ecf546 corrected invocation/output expectations; the worker's 390 scrolled image exposes Supervision, Advisory and Provenance.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W17-S2",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W17-S2"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S137",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "default.json still lacks the now-required envelope field on every response.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "F67-AC3 treated fixtures/smoke/default.json as a successfully resolving scope control.",
+    "world_is": "All 12 entries still omit unprojected_grant at portal 5c8a9ba9. The criterion was repointed to fe-s-18-frozen; that fixes the ordered control, not default.json. Independent read-only probe confirms 12 of 12.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W17-S3",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W17-S3"
+    ],
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~F"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S138",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The blanket PanelError import instruction conflicts with the named safe-action pattern.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "HOW asks PanelError in all four touched files, while the cell specifically calls for buttonClass in StatusPanel.",
+    "world_is": "Three error text surfaces reuse PanelError; StatusPanel reuses buttonClass secondary canvas sm. Importing unused PanelError there would not meet the substantive reuse requirement.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W17-S4",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W17-S4"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "No extra import or renderer is warranted."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S139",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "An amendment supplied prose where the invocation required a declared executable placeholder.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Every acceptance invocation must be runnable with only declared placeholders.",
+    "world_is": "The first driver amendment still contained bracketed prose; b570ecf546 replaced it with executable arguments and the final bound proof validates.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W17-S5",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W17-S5"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S140",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The cohort-chip source still requests a six-pixel radius.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "DESIGN.md C11 admits 2/3/4px or pill, not rounded-md; FE-s-68 orders this out-of-grant finding filed.",
+    "world_is": "ScopeSummary's cohort-chip retains rounded-md. Available fixtures leave that chip absent, so the grounded fact is source-level, not an observed computed 6px capture.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W18-S1",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W18-S1"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S141",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The original ground selector measured the Eyebrow wrapper rather than the card.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "F70-AC2/3 must measure CategoryOverview's actual card.",
+    "world_is": "The old selector matched an element, not zero elements: it hit the first Eyebrow wrapper and inherited white. ea18c43025 selects the second child/card instead. The targeting correction is real; the separate gradient blind spot W20-S2 remains.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W20-S1",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W20-S1"
+    ],
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~F"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S142",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "Ground reads ignore the gradient that visibly paints the old dark card.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "The four-part visual rule requires discriminating the real card ground, including the pre-fix dark state.",
+    "world_is": "groundColor reads backgroundColor only. GraphicPanel paints a dark backgroundImage over transparent backgroundColor; the walk reaches white. The worker's real-browser dark mutant still passes, and the independent production-function probe reproduces white for both light and dark-gradient inputs. It also skips an opaque OKLCH background.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W20-S2",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W20-S2"
+    ],
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~F"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S143",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "Headless dialog portal invalidated the ancestor selector and a summary regex reversed output order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F71-AC2/3/5/10 expected a dialog below export-modal and ground summary before style.",
+    "world_is": "The portal renders outside export-modal. 61a3203648 removes that ancestor for ground and aligns summary order. Solid-silver control now reads its actual wrong colour, not null. AC10's separate Close selector remains defective, carried in C-S146.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W21-S1",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W21-S1"
+    ],
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S144",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The three slate text readings are gradeable under existing C3/C9; OKLCH is not a contract exemption.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "spec_asserts": "The worker/TO framed requests-unavailable, holdings-classification-gap and slice-supervision OKLCH readings as lacking a DESIGN.md clause.",
+    "world_is": "Source selects slate-600/800/700. C3 already limits body/title ink to navy and secondary panel text to darkGray; C9 applies to every resolved actual pairing regardless of CSS encoding. These noncanonical roles are gradeable now. No numeric contrast failure is inferred without conversion and backdrop measurement.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-W22-S1",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-W22-S1"
+    ],
+    "disposition": "GRADUATED",
+    "disarm_owner": "2.0.0_SA_COO~F"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S145",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The broader PageSurfaceControl weight is parked outside this product round.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "C1 disallows the shared primitive's font-medium 500, but CTO's issuance ruling explicitly excludes restyling all six consumers.",
+    "world_is": "The shared surfaceBase remains unchanged; FE-s-69 adds a token used by the two named firm dropdowns only. This is the intended scope boundary, not an assertion that weight 500 conforms.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@d20200b92c#IRPT_FNTEND-S70",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed, independent read)"
+      ]
+    },
+    "adjudicates": [
+      "IRPT_FNTEND-S70"
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Parked under the existing CTO scope ruling; no broad shared-primitive edit authorized here."
+  },
+  {
+    "id": "IRPT_FNTEND-C-S146",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "Style inequality passes when its selector finds nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "THE INSTRUMENT defines a computed-style assertion of the first matched element; F71-AC10 claims Close is not purple.",
+    "world_is": "firstComputedStyle returns null on no match and the != branch evaluates null !== expected as true. The independent production-function probe prints PASS null; the final F71 result records exactly PASS null for the invalid export-modal-descendant Close selector.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs@5c8a9ba9",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/export-modal-chrome-and-receipt-idle-submitting-received.result.md@d20200b92c",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_PROBES_20260922.mjs",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S147",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "A URL-hit count does not enforce the four-part rule's wire-contract premise.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "Every visual criterion's part (a) says keys equal consumed.ts operation keys and all N are matched.",
+    "world_is": "matchFixture uses arbitrary URL-substring matching; independent production-function probe accepts /api/ as 1 of 1 without contract validation. The specific FE-s-66 classifier checks smoke templates, not every fixture family. Forced failures and delayed submissions can honestly record M<N (F71 in flight 3/4; F72 legacy nine-key fixture 3/9), despite the common N/N promise.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs@5c8a9ba9",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md@d20200b92c",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_PROBES_20260922.mjs",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S148",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The modal's inversion criterion is not met by the delivered slate equivalents.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F71-AC17 requires every changed white ink/boundary idiom to become a navy equivalent per C5, before/after captured, and actual horizontal reachability.",
+    "world_is": "ExportModal now uses text-slate-900/500/400 and slate borders rather than the ordered navy-role transformation. The worker explicitly supplies source-before instead of the requested before screenshot, and calls scrollWidth 1056/clientWidth 264 plus overflowX auto proof of actual reachable scrolling without a scroll displacement. Nested white variant and distinct receipt states are confirmed, but the conjunction fails.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/export/ExportModal.tsx@5c8a9ba9",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/export-modal-chrome-and-receipt-idle-submitting-received.result.md@d20200b92c",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S149",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The new light CategoryViewTree keeps a forbidden purple panel rule.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "DESIGN.md C8 permits the primary action and six named identity accents, not a generic panel border or unrestricted accent link.",
+    "world_is": "CategoryViewTree:936 retains an indigo top rule, visible in both f70_irpt widths. Lines 563-570 and 665-666 assert an invented one-accent-link allowance. This is not the exempt data palette; the lilac/teal/amber chart data remain outside this finding.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/components/CategoryViewTree.tsx:563-570,936@5c8a9ba9",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~20/f70_irpt_1440.png@d20200b92c",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~20/f70_irpt_390.png@d20200b92c",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S150",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "The newly visible Reporting body still has surface/ink/shape residuals, not a blanket brand pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F68-AC11 requires reading the answer-bearing captures against DESIGN.md; C3 names navy ink and C11 forbids drop shadows.",
+    "world_is": "The report body is now visible. Source uses ir-page ink #0A1733 and print.css:520 adds a screen box-shadow, visible on the sheet; purple UNAVAILABLE text persists. At 390 the metric/chart/account content extends beyond the visible area; the static image alone does not establish permanent clipping or usable scroll. Cards intentionally read UNAVAILABLE under the ordered wire shape.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/render/print.css:520@5c8a9ba9",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~18/f68_answer_1440.png@d20200b92c",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~18/f68_answer_390.png@d20200b92c",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S151",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "Received export presents two filled-purple actions at once.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "DESIGN.md C8 permits exactly one persistent filled primary action per view; FE-s-71 addresses modal C8.",
+    "world_is": "The received-state screenshot visibly contains both Download and Create export as filled purple buttons. ReceiptPanel's download styling and ExportModal's submit styling account for the simultaneous spend. Distinct idle/submitting/received states do not establish accent compliance.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx@5c8a9ba9",
+        "portal/src/pages/InvestorReporting/export/ExportModal.tsx@5c8a9ba9",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/f71_received_1440.png@d20200b92c",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed)"
+      ]
+    },
+    "disposition": "GRADUATED"
+  },
+  {
+    "id": "IRPT_FNTEND-C-S152",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~F",
+    "surfaced_at": "2026-09-22T04:55:32Z",
+    "one_line": "Round-11 nine JUDGMENT grades: seven PASS, F65-AC18 and F71-AC17 FAIL.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Spine L9 assigns the nine non-instrumentable criteria to CVO; proof validation is not their substantive grade.",
+    "world_is": "All nine bound instances structurally validate across 116 criteria. Independent source, supplied capture and production-function review yields the grades below, bounded to their actual bars.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md (co-committed)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-71.export-modal-chrome-and-receipt-idle-submitting-received.md@d20200b92c"
+      ]
+    },
+    "grades": [
+      {
+        "criterion": "F65-AC18",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~15/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.proof_of_spec.json@d20200b92c",
+        "verdict": "FAIL",
+        "reason": "F65-AC18 / THE INSTRUMENT requires the nearest self-or-ancestor nonzero-alpha background colour. Production groundColor ignores opaque OKLCH and returns the white ancestor. Independent function probe reproduces the error. The declared flag spellings, legacy output lines and recorded negative arms are present, but those successes do not cure the semantic contradiction; gradient limits and absent-selector inequality are separately carried."
+      },
+      {
+        "criterion": "F66-AC9",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~16/IRPT_FNTEND.TO-FE-s-66.fixture-classification-and-answer-bearing-authoring.proof_of_spec.json@d20200b92c",
+        "verdict": "PASS",
+        "reason": "F66-AC9 evidence bar: 16 deleted fixtures have no runtime consumers in the reviewed portal source/scripts/public surfaces; the only source reference is a historical comment. Worker census quotes 41 matching files, 40 prose plus one comment, not total scanned files. Two three-key answer-bearing maps and final 3/3 lines are recorded. Classifier checks consumed.ts templates, with not-a-real-route control failing. PASS applies to this bounded fixture family, not universal wire-match certification."
+      },
+      {
+        "criterion": "F67-AC12",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.proof_of_spec.json@d20200b92c",
+        "verdict": "PASS",
+        "reason": "F67-AC12: source reuses PanelError for the three actual red-text surfaces and existing secondary buttonClass for StatusPanel. The conflicting blanket import instruction is dismissed at W17-S4. Breadcrumb purple/navy choice is explicitly left to CTO. Default-fixture residue and unrenderable revision mismatch remain named open, not passed off as browser coverage; corrected Holdings driver supplies an actually scrolled image."
+      },
+      {
+        "criterion": "F68-AC11",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~18/IRPT_FNTEND.TO-FE-s-68.reporting-answer-bearing-and-scope-strip.proof_of_spec.json@d20200b92c",
+        "verdict": "PASS",
+        "reason": "F68-AC11 is a record/read criterion, not a conformity verdict. Answer-bearing full captures at 1440/390 and the ordered partial capture at 1440 disclose UNAVAILABLE summary cards as the specified wire shape. Ink, sheet shadow, narrow-width cut-off and residual AnswerStatus colours are not hidden; C-S150 and W18-S1 carry remaining work. No fabricated populated values or blanket C3/C9 pass."
+      },
+      {
+        "criterion": "F69-AC9",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~19/IRPT_FNTEND.TO-FE-s-69.shared-dropdown-class-token.proof_of_spec.json@d20200b92c",
+        "verdict": "PASS",
+        "reason": "F69-AC9: additive class export leaves surfaceBase/controlVariants unchanged; only FirmDropdown and ModelPortfolios import it. Before/after 1440 Model Portfolios images show the restyled control with otherwise unchanged visible layout. The 390 control lies off the visible right edge and has no before pair: no additional all-width regression clearance is inferred."
+      },
+      {
+        "criterion": "F70-AC9",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~20/IRPT_FNTEND.TO-FE-s-70.categoryviewtree-light-variant-for-drilltree.proof_of_spec.json@d20200b92c",
+        "verdict": "PASS",
+        "reason": "F70-AC9 is the additive/data-preservation bar: existing component adds default-dark ground prop; DrillTree's change for this cell is ground=light; data hues and percent labels are not restyled. Light IRPT and default-dark Model Portfolios captures agree with the source. This does not grade the false ground discriminator or C8 panel accent, which remain open."
+      },
+      {
+        "criterion": "F71-AC17",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/IRPT_FNTEND.TO-FE-s-71.export-modal-chrome-and-receipt-idle-submitting-received.proof_of_spec.json@d20200b92c",
+        "verdict": "FAIL",
+        "reason": "F71-AC17's conjunction fails: changed modal ink/boundaries use slate rather than the ordered navy C5 equivalents; result admits no before screenshot; scrollWidth/clientWidth plus overflowX demonstrate capacity, not exercised horizontal reachability. Existing nested variant and genuinely distinct idle/submitting/receipt states are confirmed. S69 closes narrowly; modal styling/scroll evidence does not."
+      },
+      {
+        "criterion": "F72-AC11",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~22/IRPT_FNTEND.TO-FE-s-72.holdings-withheld-and-reachable-analysis-states.proof_of_spec.json@d20200b92c",
+        "verdict": "PASS",
+        "reason": "F72-AC11 explicitly separates browser-reachable requests-unavailable/composer and Holdings withheld from five test-seeded Analysis components. Source listAnalysisRequests unconditionally rejects NoDeclaredRoute; no invented route. Withheld is visibly distinct from out-of-enum ADVISORY. These worker captures predate sibling styling and are not merged-HEAD visual certification."
+      },
+      {
+        "criterion": "F73-AC10",
+        "instance": "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~23/IRPT_FNTEND.TO-FE-s-73.census-reasons-component-specific.proof_of_spec.json@d20200b92c",
+        "verdict": "PASS",
+        "reason": "F73-AC10: all 45 NEW entries state component-specific needs against named candidates; own-comment versus file fallback, self-use and thin-wrapper boundaries are explicit. Four control tests pass in the independent full suite; prior census lacks needs and repeats PageSheet's reason. This grades the pinned historical 73/28/45 census, not current freshness, architectural optimality, or a mandate for 45 new components."
+      }
+    ],
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Grade record only; defects have their own graduated carriers and remediation rows."
   }
 ]
 ```

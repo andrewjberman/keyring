@@ -41,6 +41,12 @@ These carriers are co-committed with this slug; the delivery names the resulting
 Fourteen rows below: twelve OPEN, two REMEDIATED; among three ARMED-at-birth rows,
 two DISARMED, one still ARMED. No route or loop_target field; no worker message.
 
+Round-11 clock note (2026-09-22, CVO~F): the preceding counts describe the round-10
+cut. S69 now advances to REMEDIATED/closed on FE-s-71's actual idle/submitting/received
+evidence at portal fb55eeb4f3; no other row here advances. Current counts are eleven
+OPEN and three REMEDIATED. Basis: IRPT_FNTEND_ROUND11_L8_L9_20260922.md in the CVO
+deliverables home, co-committed. This does not close the modal's different C5/C8 defects.
+
 ```json
 [
   {
@@ -322,11 +328,11 @@ two DISARMED, one still ARMED. No route or loop_target field; no worker message.
     "owner": "2.0.0_SA_COO~F",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-C-S129",
@@ -376,4 +382,3 @@ two DISARMED, one still ARMED. No route or loop_target field; no worker message.
   }
 ]
 ```
-
