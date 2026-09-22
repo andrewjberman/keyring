@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 14,
-  "decomp_version": "0.18",
+  "round": 15,
+  "decomp_version": "0.19",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -85,13 +85,43 @@
   "round13_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_13_20260922.md @e107b84d38",
   "round13_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md @12738b5791",
   "cells_round14": 1,
-  "cell_id_shape_round14": "IB-rtn-<n>"
+  "cell_id_shape_round14": "IB-rtn-<n>",
+  "round14_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_14_20260922.md @0782226170",
+  "round14_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md @5236fd2696 (round-14 addendum)",
+  "cells_round15": 1,
+  "cell_id_shape_round15": "IB-rto-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R15. ROUND 15 -- THE RECUT ON THE ROUND-14 ANALYSIS (@0782226170; slug @5236fd2696; v0.19, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 14 closed 0 of 98 open, 0 of 343 worker items undispositioned. **The capture-tool code line is DONE: `R114-AC3` PASSED** (`3.0.0_SA_CVO~B`'s L9, `ADJUDICATION_v11.md`, row `C-S195` @`d2e855e299`) -- `C-S179` closes on the source and the signed S3 delivery (not on the host, which has not been exercised); `W13-S6` closes via the prospective cut and the typed fixture; `C-S194` closes. The capture ask was released to Andrew at ~10:2xZ after `0.0.0_AB_MSTR` independently re-derived all three release conditions. **No capture-tool code defect remains.** This round is a pure metadata/record-integrity fix, not a behavior repair: `C-S196` (the CTO's own finding in `ADJUDICATION_v11`) shows the round-13/14 `C-S174` metadata correction ITSELF carries two further faults -- a TRANSPOSED CRLF hash value (`...03fbb20...` recorded where the true value, confirmed by both the stored diagnostic and an independent byte reconstruction, is `...03bfb20...`) and a MISATTRIBUTED LF hash (the proof text attributes `f03666ef...` to the worktree diagnostic, which is wrong -- that value is the git-object/LF hash, never what a worktree read produces on this CRLF-checkout box). FWD-2 stays NOT_REALIZED pending the human exercise (the essential, qualified wait -- no seat automates an internal-admin login or MFA); FWD-11 stays NOT_REALIZED and is not cut this round (it depends on the `rti-6` render chain). No PRD addendum. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R15.1 The rectangle (1 cell, id shape `IB-rto-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rto-1` | C-S174 METADATA, PROPERLY CORRECTED (no publish replay, no code change, no behavior change). The CTO's own design, restated verbatim as this cell's arms: **(a) RECOMPUTE, NEVER COPY.** Derive the CRLF value and the LF/git-object value FRESH, from the actual bytes, using the SAME instruments row `W13-S3` and this chain's own precedent established (a raw working-tree read on this box's CRLF checkout for the CRLF value; `git cat-file -p <blob> \| sha256sum` cross-checked with `git show <ref>:<path> \| sha256sum` for the git-object/LF value) -- do NOT copy either value from any prior commit, row, or this order's own citations below, even where they look correct; recompute both from scratch and let the recomputed value be the one you write. **(b) CORRECT THE TRANSPOSED CRLF VALUE.** Wherever `controls.mutant.observed` (or any other proof/metadata text this chain has written) currently reads the transposed `...03fbb20...` form, replace it with the freshly-recomputed correct form. Search every location this chain's own C-S174 fix touched (the `IB-rtm-1` proof instance, `battery_ib_rtm_1.py`, any result.md prose) -- a partial fix that corrects one location and misses a sibling copy is not acceptable. **(c) CORRECT THE MISATTRIBUTED LF HASH.** Wherever the proof or its prose attributes the LF/git-object hash value to "the worktree diagnostic" or similar language implying a raw/checkout-grain read produced it, correct the attribution: the LF/git-object value is what `git cat-file -p`/`git show` produce, NEVER a raw working-tree read on this box, which produces the CRLF value instead (row `W13-S3`'s own finding, restated correctly this time). **(d) ADD A RUN-TIME RECOMPUTATION CONTROL.** Extend `battery_ib_rtm_1.py`'s `--arm metadata` check (or add a new check in the same arm) that FAILS if either the stored CRLF value or the stored LF/git-object value differs from a FRESH recomputation performed at battery run time -- this makes a future silent copy-paste drift into this exact class of error a battery FAILURE, not a manual-review miss. **(e) VERIFICATION.** Run the widened `battery_ib_rtm_1.py --arm metadata` and confirm it PASSES with the corrected values AND that the new recomputation control itself is exercised (print evidence that the control actually ran a fresh computation and compared it, not merely that the stored values look right). Re-run `proof-of-spec-check.py` on every proof instance this cell touches; VALID rc=0 required. **(f) NO PUBLISH REPLAY, NO CODE CHANGE.** This cell touches ONLY metadata/documentation/proof text and the battery script's own check logic -- `capture-session.cjs`/`.sh` and the README are NOT touched, no new packet, no new never-widen sign-off, no S3 act. | WK~13 (tenth invocation, same serial -- continuity of the `deliverables/<SERIAL>/**` ownership) | records integrity (no FWD directly; a correctness precondition for any future citation of this evidence) | -- |
+
+### R15.2 Edges and fanout
+
+One chain: **A** `rto-1`. **fanout: 1 of 1 chain, cap 8.**
+
+### R15.3 Bounds carried (every order)
+
+R-40 (content hash per artifact read AT the event); S56 vintage pins `path:line @ <commit-ish>`; NO LIVE VENDOR CALL; no host is started or stopped; no new publish, no new never-widen packet, no S3 act -- this cell is metadata-only; every hash cited must be FRESHLY RECOMPUTED, never copied, including from this very order's own citations; `rti-6` stays PARKED at this cut (Andrew's human exercise has not been relayed as complete as of the cut) and is re-handed the moment `0.0.0_AB_MSTR` relays success -- that re-hand is NOT this round's cell and is not cut here.
+
+### R15.4 Not decided here
+
+Whether/when `rti-6` re-hands (gated on `0.0.0_AB_MSTR`'s relay of Andrew's capture result, not on anything this round decides); `FWD-11` (explicitly not cut this round, depends on the `rti-6` render chain); `W10-S2` (stays PARKED, unchanged); `S116`/`W1-S47` (CTO's own lane); break-glass role deletion (CRO/Andrew); the 172 older stale rows (no bulk close).
+
+### R15.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-14 analysis's round-15 section (3 items: the `C-S174` metadata fix, `rti-6`'s re-hand-on-relay carry rule, and `FWD-11`'s explicit non-cut) MINUS `rti-6`'s re-hand (a CARRY RULE for a future tick, not a cell issued now -- it fires on an external relay, not on this cut) MINUS `FWD-11`'s non-cut (an explicit deferral, not a cell) = 1 cell, 0 uncovered, 0 invented by this seat. SAME GRAIN: one record-integrity correction sharing one write surface (the `IB-rtm-1` proof instance, `battery_ib_rtm_1.py`, and any result.md prose the original `C-S174` fix touched). INTENT: `rto-1` corrects metadata; it does not repair, publish, or re-grade anything behavioral. STATE COHERENCE: `R114-AC3`'s PASS grade is NOT reopened or re-graded by this cell -- a metadata citation error in HOW a prior finding was described does not by itself impeach the finding's own substance, which `C-S195` already established on independently re-run instruments; this cell's own postulate does not move that clock.
 
 ## R14. ROUND 14 -- THE RECUT ON THE ROUND-13 ANALYSIS (@e107b84d38; slug @12738b5791; v0.18, 2026-09-22, `2.0.0_SA_COO~B`)
 
