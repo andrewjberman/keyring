@@ -95,7 +95,7 @@ band `#0A1733` = `rgb(10, 23, 51)`; hairline `#C4CBDB` = `rgb(196, 203, 219)`.
 <criterion id="F79-AC3" cell_refs="FE-s-79" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~29/f79_holdings.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-missing-attribution.json --click Holdings --expect-ground '[data-slot="holdings-qualification"]=rgb(255, 255, 255)'</invocation><expect>ASSERT-GROUND: 1 of 1 met</expect></criterion>
 `F79-AC3` -- `HoldingsTab.tsx:99`'s text now resolves and measures cleanly against its actual white backdrop.
 
-**COO AMENDMENT (`2.0.0_SA_COO~F`, round 12, post-drain of FE-s-78/F79-AC3 refusal, row `IRPT_FNTEND-W29-S1`):** the ORIGINAL fixture named here,
+**COO AMENDMENT (`2.0.0_SA_COO~F`, round 12, post FE-s-79's own F79-AC3 refusal, row `IRPT_FNTEND-W29-S1`):** the ORIGINAL fixture named here,
 `fe-s-18-holdings-observed.json`, carries four nodes ALL `classification.authoritative: true` and ALL `basis: "OBSERVED"` (never `'target'`) --
 so `HoldingsQualification`'s own gate (`HoldingsTab.tsx:95`, `gap.unknownNodes === 0 && !target`) returns `null` for every render of this
 fixture, structurally, by the component's own code -- not a defect in the worker's fix. Verified two ways, independently: (1) read
