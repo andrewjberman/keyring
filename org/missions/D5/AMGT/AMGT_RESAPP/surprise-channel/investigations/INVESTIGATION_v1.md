@@ -11513,6 +11513,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC6's <expect> (as amended, msg 24133): 'policy_sha 0c6b3cf46bdff811 statements 4 UNCHANGED', restating AC2's own quoted digest verbatim.",
     "world_is": "AC6's own <invocation> hashes with `json.dumps(d, sort_keys=True)` (default separators, no compacting) rather than AC2's `separators=(\",\", \":\")` -- a structurally different digest regardless of whether the policy changed; measured 0c6b3cf46bdff811 only when AC2's exact formula is applied to the same object.",
     "notes": "AC6 is graded PASS on the substantive read (plan No changes, CodeSha256 correct, freshness 200, policy independently confirmed unchanged); this row records the formula defect in the criterion text for any future occupant reusing this invocation shape."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W91-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~91",
+    "surfaced_at": "2026-09-22T02:40:00Z",
+    "one_line": "AC0's <invocation> git-greps `-e filings/v1 -e FILINGS_PREFIX -e POOL_PREFIX` over lib/integrations/infra; the POOL_PREFIX term is a substring match that also catches two UNRELATED constants (MODEL_BLOCK_POOL_PREFIX in peers/, POOL_PREFIX in social/collect.py) and the grep also matches prose docstring mentions of the old path -- 5 of the 15 returned production files are not actual readers of filings/v1/*.source.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC0's literal invocation (this worktree, HEAD 1b9eb552c3) -> m1_complete True; pair [True, True]; old_prefix_files 15: infra/aws/terraform/harvest/scoped-amgt-api.tf, integrations/bloomberg/research/management_posture_batch.py, lib/research/api/scoped_amgt.py, lib/research/filings/__init__.py, lib/research/filings/analyze.py, lib/research/filings/batch.py, lib/research/filings/drafting_build.py, lib/research/filings/fetch.py, lib/research/management/__init__.py, lib/research/management/batch.py, lib/research/management/enrich.py, lib/research/management/roster.py, lib/research/peers/engine.py, lib/research/peers/universe.py, lib/research/social/collect.py.",
+        "`git grep -n -e filings/v1 -e FILINGS_PREFIX -e POOL_PREFIX -- lib/research/peers/engine.py lib/research/peers/universe.py lib/research/social/collect.py` -> matches only `MODEL_BLOCK_POOL_PREFIX` (peers/universe.py:82,311,317; peers/engine.py:154) and `POOL_PREFIX = \"social/v1/_measurement/\"` (social/collect.py:473,495,1161) -- zero literal `filings/v1` occurrences in any of the three; these are a different feature's prefix constant entirely, matched only by the substring `POOL_PREFIX`.",
+        "`sed -n '1,15p' lib/research/filings/__init__.py` and `lib/research/management/__init__.py` -> both hits are module-docstring prose describing fetch.py's / roster.py's interface (\"filings/v1/<security_key>/<accession>.source.json\"), not executable reads or writes; fetch.py and roster.py themselves are already in section 1's reader/writer list.",
+        "`git grep -n FILINGS_PREFIX -- lib integrations infra` -> every genuine definition/usage of the FILINGS_PREFIX constant (management_posture_batch.py:49,100; scoped_amgt.py:1945,1959; management/batch.py:110; roster.py:99,1043,1112,1159) is in a file already named in section 1's reader/writer list; the terraform hit (scoped-amgt-api.tf:123, the literal `\"filings/v1/\",` resource argument) is the IAM file this order's own step 4 modifies."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Substance graded PASS: every genuine reader/writer the census could find is already in section 1's list, and the terraform hit is the IAM file this order itself edits. The 5 extra hits are proven non-readers (unrelated constant substring, or docstring prose) by direct inspection, so AC0's BLOCKING-row condition ('any other file is a STOP') does not fire; proceeding to AC1 without a STOP.",
+    "spec_asserts": "AC0's <expect>: 'every production file listed is in section 1's reader/writer list (or names only .analysis.json) -- any other file is a STOP with a BLOCKING row before any edit'.",
+    "world_is": "The literal grep formula (`-e POOL_PREFIX`) is overbroad by substring match against an unrelated constant name in two other modules, and by matching descriptive docstring text in two package __init__.py files that are not readers themselves; the file this order's own text anticipated editing (scoped-amgt-api.tf) also appears in the raw count, which the <expect> clause did not carve out explicitly.",
+    "notes": "Not blocking. Same class as the rk-90 formula-defect rows (W90-S1/S4/S6): a task-order invocation's literal formula is broader than its substantive question. No <paths> or code edit made by this row; it only grounds the AC0 STOP decision before any live act."
   }
 ]
 ```
