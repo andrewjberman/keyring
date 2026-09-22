@@ -127,11 +127,11 @@ IAM mutation, deployment replay, host action, portal network access or credentia
     "owner": "2.0.0_SA_COO~B",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-C-S162",
@@ -148,12 +148,11 @@ IAM mutation, deployment replay, host action, portal network access or credentia
     "owner": "2.0.0_SA_COO~B",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
-
