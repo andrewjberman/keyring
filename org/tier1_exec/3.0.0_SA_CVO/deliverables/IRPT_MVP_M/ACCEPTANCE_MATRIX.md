@@ -4,7 +4,7 @@
 
 Reviewer: `3.0.0_SA_CVO~M`. Prepared September 22, 2026, approximately 4:50 PM Eastern.
 Scope: Andrew's direct P/M/Y completion assignment; paired implementer `2.0.0_SA_COO~M`.
-This records baseline findings, the bounded source review of `81785d9ae3`, and independent R1-R3 closure at `eeffdc9a5b` below. It is not a completed-product or deployed E2E verdict.
+This records baseline findings, R1-R3 closure at `eeffdc9a5b`, and bounded holdings selection/release acceptance at `aefcfb6541` below. It is not a completed-product or deployed E2E verdict.
 
 ## Authority and baseline
 
@@ -50,10 +50,10 @@ Every candidate result must be PASS, FAIL, or NOT_EVALUATED, with workspace and 
 | M2 Identity/grain | Unique account and position contribution; multiple SmartX allocations; shared Eclipse portfolios; missing assignment; model vs target vs actual basis and membership grain explicit. | Identity collision and contribution ledger over independently enumerated custody; synthetic probes plus actual source cases; no parent-and-child double count. | FAIL: 49F/INF probe | NOT_EVALUATED |
 | M3 Economics | Model + confirmed non-model + unresolved known value equals independently enumerated custody; selected and parent denominators; signed/cash/zero/unknown/multi-currency handling; distinct custody/overlay clocks. | All selected accounts and positions; independent sums by firm/account/relationship/selection/currency; known three-case regressions and additional adversarial cases. No unexplained currency aggregation. | FAIL: all three probes | NOT_EVALUATED overall; bounded account/nested partition and release controls PASS at eeffdc9, closing R1/R2; original three regressions pass |
 | M4 Publication | Gold Parquet history -> accepted bounded Platinum -> one complete manifest; same-day corrections unique; failed schema/reconciliation/incomplete source or partial write does not advance current pointer; prior accepted revision is explicitly stale. | Pre/post pointer object versions, Gold/Platinum hashes/revisions, acceptance receipt, injected failure outcomes and retry/concurrent publication evidence. | NOT_EVALUATED | NOT_EVALUATED |
-| M5 Scope/API | Actual grant loader and API event; resolve exact account-set reference; single/relationship/subset; missing mapping fails explicitly; cross-firm/revoked/forged scope negatives; scope filtering creates no fictitious unresolved value. | Paired browser request/event/handler/response evidence with selected members vs permitted members, entitlement/directory revisions and canonical/provider IDs; zero unintended accounts. | NOT_EVALUATED; source shows `_no_grant` and permitted-set projection | NOT_EVALUATED |
+| M5 Scope/API | Actual grant loader and API event; resolve exact account-set reference; single/relationship/subset; missing mapping fails explicitly; cross-firm/revoked/forged scope negatives; scope filtering creates no fictitious unresolved value. | Paired browser request/event/handler/response evidence with selected members vs permitted members, entitlement/directory revisions and canonical/provider IDs; zero unintended accounts. | NOT_EVALUATED; source shows `_no_grant` and permitted-set projection | NOT_EVALUATED overall; bounded exact saved subset/current loaders/release and warm refusals PASS at aefcfb6541; browser/schema/package integration outstanding |
 | M6 UI | First-screen dollars/weights for three attribution buckets; all selected root accounts accessible; complete account/security drill where supported; honest unavailable granularity; source clocks, partial coverage, refresh/reopen retain exact revision. | Mounted UI trace through real wire adapter; account/position counts and totals matched to source/response; signed/invalid-denominator table fallback; no dropped clocks or coverage. | NOT_EVALUATED | NOT_EVALUATED |
 | M7 Three-firm E2E | Fresh 49F SmartX, Cottonwood BD Rebalancer, Inflection Eclipse overlay joined to full custody; modeled/non-model/mixed/missing mapping/multi-sleeve/shared portfolio/subset/signed-cash cases. | Coverage grid per firm; actual source -> accepted Gold -> Platinum manifest -> deployed API -> browser trace with environment and revision identities. Three firms required; historical QA or fixtures insufficient. | NOT_EVALUATED | NOT_EVALUATED |
-| S1 Selection/access | Selected-set fingerprint distinct from permitted set; server-owned crosswalk and current grants; no broadening on missing mapping; prospect firm/advisor ownership without fabricated client IDs; access rechecked on retrieval/download. | Shared M/P/Y producer-consumer examples and real request tests; dated account/allocation/model and BD crosswalk, model changes/sleeve closures/non-model/cash cases; pinned revisions. | NOT_EVALUATED | NOT_EVALUATED |
+| S1 Selection/access | Selected-set fingerprint distinct from permitted set; server-owned crosswalk and current grants; no broadening on missing mapping; prospect firm/advisor ownership without fabricated client IDs; access rechecked on retrieval/download. | Shared M/P/Y producer-consumer examples and real request tests; dated account/allocation/model and BD crosswalk, model changes/sleeve closures/non-model/cash cases; pinned revisions. | NOT_EVALUATED | NOT_EVALUATED overall; bounded holdings selection/release controls PASS at aefcfb6541; cross-consumer/prospect/export/dated crosswalk proof outstanding |
 | S2 Accepted data | Independent full census and unique actual positions; explicit unknowns and supported membership; correct selected weights; reproducible accepted Gold/Platinum revision set. | M1-M4 evidence plus Y's consumed positions artifact; actual custody vs target basis and all rows reconciled/dispositioned. | FAIL for baseline builder grain/economics only | NOT_EVALUATED overall; measured R1-R3 residuals closed at eeffdc9; accepted-source chain remains unevaluated |
 | S5 HTTP/UI | Actual browser serialization through actual entry and response adapter; availability, units, selection, source dates, coverage and revision survive every boundary; stale/partial/unavailable negatives. | Paired browser/HTTP/handler/adapter/render artifacts for M; consumers P/Y confirm same shared semantics at the integrated pin. | NOT_EVALUATED | NOT_EVALUATED |
 | S7 Storage | Canonical registry/builder addresses match actual readers/writers; firm Gold/Platinum long-form buckets; reporting-only private shared-store policy is explicit; all readers/writers cut over together. | Concrete naming families and policy record; IAM/IaC/build pins; deployed environment destinations and protected object versions; no global relabel, alternate bucket concatenation or standing dual write. | NOT_EVALUATED | NOT_EVALUATED |
@@ -223,6 +223,39 @@ Remaining next M handoff is actual saved-selection resolution and before/after c
 Related peer update, not independently rerun here: CVO~P exact message `20260922T215404Z_3.0.0_SA_CVO_P_IRPT_P__R-P06_entry-local_closure_c29662.md` reports R-P06 closed at performance entry `8b913a9414`, review `c2966279ae`, reviewer6/6 and supplied19/19 PASS. This supersedes the earlier P entry-local defect report for that exact repaired entry only. It does not grade generic shared fresh/cache behavior or M holdings release-time authorization.
 
 Review remains LOCAL; this seat did not push. Fresh origin CLOUD measurement during the retest: `b333db1b4865619909c916741775084396e0b7d1`. Source fixes are the implementer's; this reviewer commits only this acceptance/evidence carrier and routes the immutable review pin to COO~M, CTO and CVO~P/~Y.
+
+## Bounded holdings selection/release review: aefcfb6541, September 22 at 22:06 UTC
+
+**PASS for the declared holdings Entry selection/release cases at exact `aefcfb6541fa1d6c0c8b31f2693117718a65e824`.** No new defect observed in this bounded review. M5/S1 remain NOT_EVALUATED as whole product criteria; this grade does not cover integrated schema/package/UI, external edge identity, three-firm source completeness, prospect/export behavior or live storage.
+
+Exact sender/request: COO~M, `20260922T220138Z_2.0.0_SA_COO_M_IRPT_M__exact-selection_release_review_a.md`, under the existing direct completion CONTRACT. ACK sent before work. Diff from accepted residual candidate `eeffdc9a5b` contains only holdings/entry.py and its test_entry_guarded.py. The reviewer checkout was clean, switched to detached full pin above, and remained tracked-clean after tests. R1-R3's original closure remains tied to eeffdc9a5b; builder/projection files are unchanged by this candidate. No implementation edits or candidate commit by this reviewer.
+
+| Independent command at the isolated pin | Observed |
+|---|---|
+| `python -m pytest infra/aws/lambda/investor-reporting/holdings/tests -q` | 61 passed in 0.36s |
+| `python <review_aefcfb.py> <absolute-pinned-checkout>` | 18/18 independently defined cases PASS, exit 0, failures=[] |
+
+Probe is embedded in the final appendix; runtime evidence is `.runtime/codex-seats/3.0.0_SA_CVO~M/review_aefcfb.py`, `.json` and `_holdings.txt`. Entry SHA256 `D9596F250DD97EA4FAD235EBDC3322851B4A430AA9D9EDAFF9F1AAF7BF72BA44`; probe SHA256 `9496B3338F8B77F8CA16F64B02D1FA959D5978C82E57B6521C7310053F969E04`.
+
+Unlike the submitted entry tests' dependency substitution, the independent probe keeps real `ENTRY.deps is _loaders.deps`, real `opaque_firm_for`, real grant/directory reads and content-hash entitlement revisions, real SelectionStore conditional writes/consistent reads, real selection creation/resolution, real snapshot pointer/dated read, projection, Enforcer and HTTP Entry. It substitutes only boto3 S3/DynamoDB transports with in-memory synthetic objects and configures a synthetic bucket/table. Actual transport calls must match the server-selected bucket/table/key grammar. No production access or identity-verification claim follows from synthetic trusted headers.
+
+| Case group | Expected and measured boundary result | Count |
+|---|---|---|
+| Single A2; mixed assigned A1 + unassigned A3; unassigned A3; dated A1 | Exactly [A2]/$40, [A1,A3]/$107, [A3]/$7, [A1]/$100 respectively; selected fingerprint matches the retained reference; excluded account IDs absent from serialized data; one snapshot read each | 4 PASS |
+| During snapshot read: revoke selected A1, change ownership content revision while preserving members, rotate directory, tamper retained members, delete retained record | After one snapshot read, actual Entry refuses `OBJECT_NOT_COVERED` with no data in all five cases | 5 PASS |
+| Warm subsequent invocation after initial success: revoke A1, tamper record, rotate directory | Second request refuses `OBJECT_NOT_COVERED` with no data and without a second snapshot read | 3 PASS |
+| Pre-read partial revocation of [A1,A2]; missing reference; literal account ID; injected browser snapshot | Refused without data and with zero snapshot reads; no fallback to the permitted universe or partial subset | 4 PASS |
+| Foreign source firm; economically overstated source | `NOT_READY`, no data, one snapshot read | 2 PASS |
+
+The candidate performs selection resolution before snapshot retrieval and again after projection, then requires equal retained selection/current authorization views before returning data. Warm-process tests exercise separate real HTTP invocations with the actual default `shared_cache is None`; they are not a proof of generic Enforcer cache-hit release behavior under an explicitly shared cache. The real ownership loader hash changed in the revision-only case; the probe did not merely fabricate an entitlement-revision string. Refusal data absence is asserted, not inferred from an error code.
+
+Source code and supplied 61-test suite also cover contract-version refusal, claimed-firm swap, missing/unknown references, multiple browser scope inputs and clock/reconciliation negatives. The new independent transport-composition cases remain single-firm synthetic examples, not mounted browser or physical S3/DynamoDB evidence. No aggregate count is promoted into full M5/S1 readiness.
+
+Next integration evidence must consume P schema `63c6b39af6` or its accepted successor, prove relevant request/response contracts and exact query/reference serialization, package required dependencies in the real flat artifact with source pins/hashes, and demonstrate configured table/IAM and current authorization at the deployed boundary when separately authorized. Accepted source census, actual positions/pricing, immutable Gold/Platinum/storage evidence and mounted UI still remain outstanding. No repeat of unchanged builder suites was needed for this Entry-only change.
+
+The message reports amended X10 carrier `705dae3202` and documentary diff/recount validation. Record that as producer-reported documentary evidence only; this review did not inspect or regrade that carrier, nor prove the S7 reader/writer enforcement, twelve-family policy, expiry/disposal or IAM. S7 remains NOT_EVALUATED with prior S7-03 and render/live gates intact.
+
+Review is LOCAL and no push was made. Fresh origin CLOUD observation: `b333db1b4865619909c916741775084396e0b7d1`. Route this immutable review pin to COO~M, CTO and CVO~P/~Y; the next source/interface candidate needs its own pin and evidence.
 
 ## Compiler Tools
 
@@ -438,6 +471,180 @@ for name, value, expected in [("None", None, False), ("NaN", float("nan"), False
         failures.append("R3_" + name)
 
 print(json.dumps({"results": results, "failures": failures}, indent=2, allow_nan=False))
+raise SystemExit(bool(failures))
+
+```
+
+
+## Reproduction appendix: holdings selection/release aefcfb6541
+
+```python
+"""Actual holdings/loader/store composition; only boto3 transports are synthetic."""
+import copy
+import io
+import json
+import os
+import sys
+from pathlib import Path
+from unittest.mock import patch
+
+os.environ["AWS_EC2_METADATA_DISABLED"] = "true"
+os.environ["IRPT_DIRECTORY_BUCKET_MAP"] = json.dumps({"49financial": "review-only-bucket"})
+os.environ["IRPT_REQUESTS_TABLE"] = "review-only-table"
+root = Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(root / "infra/aws/lambda/investor-reporting/holdings/tests"))
+import test_snapshot as T
+import test_entry_guarded as E
+import boto3
+
+handler, boundary = E.subject()
+G = boundary.operations["holdings-snapshot"].__globals__
+assert boundary.deps is G["_loaders"].deps
+assert boundary.opaque_firm_for is G["_loaders"].opaque_firm_for
+assert boundary.shared_cache is None
+results = {}
+
+
+class Transport:
+    def __init__(self):
+        self.directory = T._directory([T.A1, T.A2, T.A3])
+        self.ownership = {"schema_version": 1, "advisors": {
+            "ADV": {"accounts": [T.A1, T.A2, T.A3], "relationships": []}}}
+        self.snapshot = T.fixture_snapshot()
+        self.items, self.keys = {}, []
+        self.snapshot_reads = 0
+        self.after_snapshot = lambda: None
+
+    def get_object(self, Bucket, Key):
+        assert Bucket == "review-only-bucket"
+        self.keys.append(Key)
+        if Key == "investor-reporting/directory/latest.json":
+            value = {"key": "directory-current"}
+        elif Key == "directory-current":
+            value = self.directory
+        elif Key == "platinum/49financial/ownership_map.json":
+            value = self.ownership
+        elif Key == "investor-reporting/holdings/latest.json":
+            value = {"key": "holdings-current"}
+        elif Key in {"holdings-current", "investor-reporting/holdings/2026-09-10/snapshot.json"}:
+            self.snapshot_reads += 1
+            value = copy.deepcopy(self.snapshot)
+            self.after_snapshot()
+        else:
+            raise AssertionError("unexpected server key: " + Key)
+        return {"Body": io.BytesIO(json.dumps(value).encode())}
+
+    @staticmethod
+    def key(item):
+        return item["tenant"]["S"], item["request_revision"]["S"]
+
+    def put_item(self, TableName, Item, ConditionExpression):
+        assert TableName == "review-only-table"
+        assert ConditionExpression == "attribute_not_exists(tenant) AND attribute_not_exists(request_revision)"
+        key = self.key(Item)
+        assert key not in self.items
+        self.items[key] = copy.deepcopy(Item)
+
+    def get_item(self, TableName, Key, ConsistentRead):
+        assert TableName == "review-only-table" and ConsistentRead is True
+        item = self.items.get(self.key(Key))
+        return {"Item": copy.deepcopy(item)} if item else {}
+
+    def client(self, service, **kwargs):
+        assert service in {"s3", "dynamodb"}
+        return self
+
+
+def revoke(t):
+    t.ownership["advisors"]["ADV"]["accounts"] = [T.A2, T.A3]
+
+
+def tamper(t):
+    item = next(iter(t.items.values()))
+    record = json.loads(item["selection_record"]["S"])
+    record["account_ids"] = [T.A2]
+    item["selection_record"]["S"] = json.dumps(record)
+
+
+def run(name, members, expected_members=None, expected_value=None,
+        before=None, during=None, warm=None, event_change=None, code=None, reads=1):
+    t = Transport()
+    headers = T._headers(**{"X-Advisor-Id": "ADV", "X-Firm-Id": T.FIRM, "X-User-Role": "user"})
+    headers["X-Contract-Version"] = "v1"
+    with patch.object(boto3, "client", t.client):
+        enforcer = T._authz.Enforcer(T._authz.FirmBinding(T.FIRM, T.FIRM_OPAQUE),
+            *boundary.deps(T.FIRM), id_projection=boundary.id_projection(T.FIRM))
+        scope, refusal = enforcer.resolve_now(T._authz.Request(headers, "holdings_snapshot"))
+        assert refusal is None
+        sel = G["_selection"]
+        selection = sel.create_selection(scope, t.directory, members,
+            directory_revision=sel.directory_revision(t.directory),
+            save_selection=G["_selection_store"].configured_store().save)
+        event = {"routeKey": E.ROUTE, "headers": headers,
+                 "pathParameters": {"accountSetId": selection["account_set_id"]},
+                 "queryStringParameters": {}}
+        if event_change:
+            event_change(event)
+        if before:
+            before(t)
+        if during:
+            t.after_snapshot = lambda: during(t)
+        first = handler(copy.deepcopy(event), None)
+        answer = first
+        if warm:
+            assert "data" in first, first
+            warm(t)
+            answer = handler(copy.deepcopy(event), None)
+        observed = {"snapshot_reads": t.snapshot_reads,
+                    "ok": answer.get("ok") is not False,
+                    "reason": answer.get("status", {}).get("public_reason_code"),
+                    "has_data": "data" in answer}
+        passed = t.snapshot_reads == reads
+        if expected_members is not None:
+            data = answer.get("data", {})
+            observed["members"] = data.get("scope", {}).get("account_ids")
+            observed["value"] = data.get("custody_totals", {}).get("total_market_value", {}).get("value")
+            observed["selected_fingerprint_matches"] = (
+                data.get("scope", {}).get("resolved_scope_fingerprint") == selection["selected_account_set_fingerprint"])
+            passed = passed and observed["ok"] and observed["members"] == sorted(expected_members)
+            passed = passed and observed["value"] == expected_value and observed["selected_fingerprint_matches"]
+            text = json.dumps(data)
+            passed = passed and all(account not in text for account in [T.A1, T.A2, T.A3] if account not in members)
+        else:
+            passed = passed and not observed["ok"] and not observed["has_data"]
+            if code:
+                passed = passed and observed["reason"] == code
+        observed["PASS"] = passed
+        results[name] = observed
+
+
+run("single_A2", [T.A2], [T.A2], 40)
+run("mixed_A1_A3", [T.A1, T.A3], [T.A1, T.A3], 107)
+run("unassigned_A3", [T.A3], [T.A3], 7)
+run("dated_A1", [T.A1], [T.A1], 100,
+    event_change=lambda e: e["queryStringParameters"].update(as_of="2026-09-10"))
+for label, change in [
+    ("revoke", revoke),
+    ("entitlement_revision", lambda t: t.ownership.update(revision="new-revision")),
+    ("directory", lambda t: t.directory.update(revision="new-directory")),
+    ("record_tamper", tamper),
+    ("record_deleted", lambda t: t.items.clear()),
+]:
+    run("release_" + label, [T.A1], during=change, code="OBJECT_NOT_COVERED")
+for label, change in [("revoke", revoke), ("record_tamper", tamper),
+                      ("directory", lambda t: t.directory.update(revision="new-directory"))]:
+    run("warm_" + label, [T.A1], warm=change, code="OBJECT_NOT_COVERED")
+run("partly_revoked_pair", [T.A1, T.A2], before=revoke, code="OBJECT_NOT_COVERED", reads=0)
+run("missing_reference", [T.A1], event_change=lambda e: e["pathParameters"].clear(),
+    code="OBJECT_NOT_COVERED", reads=0)
+run("literal_account", [T.A1], event_change=lambda e: e["pathParameters"].update(accountSetId=T.A1),
+    code="OBJECT_NOT_COVERED", reads=0)
+run("browser_snapshot", [T.A1], event_change=lambda e: e.update(snapshot_fixture=T.fixture_snapshot()), reads=0)
+run("foreign_source", [T.A1], before=lambda t: t.snapshot["scope"].update(firm_id="inflection"), code="NOT_READY")
+run("economic_failure", [T.A1], before=lambda t: t.snapshot["nodes"][1]["amount"].update(value=200), code="NOT_READY")
+
+failures = [name for name, observed in results.items() if not observed["PASS"]]
+print(json.dumps({"results": results, "failures": failures}, indent=2))
 raise SystemExit(bool(failures))
 
 ```
