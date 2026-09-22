@@ -1,0 +1,12 @@
+{
+  "prd": "AMGT_HARVST_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "16db74edea56b72ab39d6d4cd44756bdf79ebbc0",
+  "half": "brief",
+  "half_hash": "919df3b82f7eda29763d5326eb67a250dcb796eff3274659bd8b7a5eee16baac",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/L4R_REVIEW_AMGT_HARVST_v0.1_BRIEF_HALF.md@38ce3cf486",
+  "signed_by": "4.0.0_SA_CRO~Z",
+  "signed_at": "2026-09-22T14:53:12Z",
+  "reason": "brief_ref pins @48f31e8fd0, superseded by @5b90a0b839 on Andrew's two words (absolute-only gold; backfill to 2026-01-01); C-HV-DAILY-DENSE :216-218 stores relative figures in gold; no FWD/constraint/manifest row carries the backfill floor"
+}
