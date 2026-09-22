@@ -70,10 +70,14 @@ Save is conditional, identical retry is idempotent, reads are consistent. Storag
 uses the registry tenant from `scope._census.tenant`; directory membership uses
 `scope.verified_request_firm_id` (the opaque spelling). Never substitute these.
 The returned `firm_id` is the registry tenant. P owns service environment/IAM/build.
-The creator HTTP route and header state are still being implemented. Proposed
+The creator HTTP route and mounted header state are implemented and bounded-tested:
 `POST /api/scoped/investor-reporting/selections`, operation `selection-create`,
 body `{scope_kind: ACCOUNT|RELATIONSHIP|CLIENT, scope_ids: [...]}` returns the
 tested selection record as `envelope.data`. Partial groups refuse whole.
+Source creator pin `54c2ed11dc`; source schema/route composition `0076cad627`;
+mounted portal `d4fca0e569` with P composition `52786a7a`. Whole groups are sent to
+the server; no custody request is made until a retained `sel_` reference is accepted.
+See `BROWSER_SELECTION_EVIDENCE.md` for bounds and independent review status.
 
 ## Prospect through actual shared Entry
 
@@ -102,6 +106,13 @@ may sum root/model/security values, treat COT TARGET amounts as actual positions
 infer historical model ownership from a current assignment or broaden a missing map.
 M will publish a pinned loader returning the exact selected revision, unique position
 rows, quantity/value/currency, source dates and explicit unknown coverage.
+
+The output publication foundation is now implemented separately: see
+`PUBLICATION_EVIDENCE.md`. `HoldingsPublication(s3, canonical_firm).load(as_of=...)`
+returns a version/hash-verified full snapshot plus its accepted manifest. This is
+an overlay snapshot, not yet Y's normalized security-level custody portfolio.
+`snapshot.load_snapshot(canonical_firm, ..., s3_client=...)` adds the accepted
+content revision for the guarded HTTP path. No legacy mutable-file fallback.
 
 ## Reporting destination (S7)
 
