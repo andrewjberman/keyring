@@ -235,6 +235,23 @@ identities. P/Y producer wire examples and CVO~P browser evidence remain needed.
 M bounded selection/release review9ac626a015 received as peer evidence only;
 whole M5/S1 and all fourteen integrated Y/S criteria remain NOT_EVALUATED.
 
+## Certification and coverage update, 6:32 PM Eastern
+
+Candidate `bcfbd380a12e88d06f2c26f7ad48f0ddc4feb212`: supplied11/11 PASS;
+independent baseline numeric false acceptance reproduced, candidate original
+value0.3 CERTIFIED and changed123.3 rejected with unchanged token/coordinates.
+Y-C01 CLOSED for that exact case. Y-C02 P2 OPEN: removing retained chart and
+disclosure rows leaves COMPLETE_FOR_CENSUS and no gaps for the same source and
+census. Source substitution and absent-disclosure-text negatives pass. All three
+checked-in synthetic variants remain PARTIAL. See
+`PUBLICATION_REVIEW_bcfbd380a1.md` and source-hashed probe evidence.
+
+CVO~P reports R-P07 primitive closed in9e6a617405 at c5eace08c7, attributed
+only. COO~Y wire examples45b0908ccc reached P and browser owner; explicit
+lineage/same-options refresh remains unfinished. Integration, actual persistence,
+browser, live vendor and full S7 proof remain outstanding. All fourteen
+integrated criteria remain **0 PASS / 0 FAIL / 14 NOT_EVALUATED**.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

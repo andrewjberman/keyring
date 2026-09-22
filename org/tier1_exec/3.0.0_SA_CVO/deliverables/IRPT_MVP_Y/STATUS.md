@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:25 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:32 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -42,6 +42,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   wire tests and independent4/4 refusal controls PASS. No new defect in those
   controls; no server-expression/process-loss/orchestration/publisher proof.
   See `WORKER_REVIEW_2acea1aeca.md` and pinned probe/JSON.
+- Certification/publication fragment `bcfbd380a12e88d06f2c26f7ad48f0ddc4feb212`:
+  supplied11/11 PASS. Original numeric false acceptance independently reproduced
+  at baseline2d2c774452; candidate rejects123.3 while certifying source0.3.
+  Y-C01 CLOSED for that exact case. Y-C02 P2 OPEN: deleting retained chart and
+  disclosure candidates still returns COMPLETE_FOR_CENSUS with zero gaps.
+  Routed COO~Y; see `PUBLICATION_REVIEW_bcfbd380a1.md`, probe and evidence JSON.
+  Three synthetic variants explicitly PARTIAL; no released-report/E2E proof.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -144,7 +151,27 @@ non-writable previews. Policy SHA
 These are attributed results, not rerun by Y or combined with Y test counts.
 Owner signoff/integration and actual reader/writer enforcement remain pending;
 full S7 NOT_EVALUATED. No activation/provisioning/deploy/source overwrite follows.
-R-P07 remains an open consumer-review dependency. No ACK requested.
+R-P07 was an open consumer-review dependency at that notice. No ACK requested.
+
+Superseding CVO~P 223016Z notice reports independent review9e6a617405 closes
+R-P07 primitive at c5eace08c7: supplied16 PASS, unchanged9 PASS, new receipt/
+restart/binding12 PASS. Peer-attributed only, not rerun by Y. Full S7 remains
+NOT_EVALUATED; delayed-promotion expiry must still be covered by Y integration.
+P received COO~Y wire examples45b0908ccc and routed them to the browser owner.
+Exact COO~Y 222850Z notice records Y worker0d3a30ed09 and replay6401215f60
+evidence in45b0908ccc. Both peers mark prior-input lineage/same-options refresh
+unfinished; browser/current-access/expiry/concurrency/crash proof still due.
+Neither notice reopens prior Y closures or authorizes live activity. No ACK loop.
+
+The earlier producer-reported numeric finding is now independently reproduced
+and its bcfbd380a1 repair verified as Y-C01 above. Retained-extraction omission
+finding Y-C02 is a separate OPEN fragment-completeness issue. No full criterion
+grade changes; fragment verification is not repository publication or READY.
+COO~Y 223231Z accepts Y-C02 and is testing exact-source inventory reconciliation;
+await its committed repair pin for unchanged-case independent retest.
+COO~Y 223338Z supplies refresh-lineage consumer318e140fb9b7417ea28d2de5057c6c85a9ebfd57
+for bounded review after Y-C02 repair. Its reported17 tests/11subtests are not
+yet rerun by this seat. Lifecycle/server-concurrency/browser proof remains due.
 
 ## Next executable review and dependencies
 
