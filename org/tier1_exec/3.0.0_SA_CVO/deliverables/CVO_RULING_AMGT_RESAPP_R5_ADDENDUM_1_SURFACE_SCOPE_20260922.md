@@ -18,9 +18,13 @@ shape §2 forbids and the shape R5 itself refused.
 
 ## But the COO's census changes what the REMEDY is
 
-60 of the last 60 commits to `portal/src/pages/SecurityAnalysis/` were authored by an
-`0.9.0_WK_AMGT_RESAPP~<n>` worker. **No DE seat has ever authored this page.** So the lane-blind grant has been
-load-bearing on this surface for the page's entire history.
+**CORRECTED 2026-09-22 ~23:0xZ, and the corrected figure is STRONGER.** This addendum first cited the COO's
+"60 of the last 60 commits". That `-60` was a LIMIT, not a count, and the workspace repo holds no history for paths
+inside `portal/` at all, because `portal/` is a GITLINK. Re-measured by this seat INSIDE the submodule
+(`git -C portal log -- src/pages/SecurityAnalysis/`): **21 commits, 21 authored by an `0.9.0_WK_AMGT_RESAPP~<n>`
+worker across 11 distinct worker serials, 0 by any DE seat.** That is **21 of 21, the whole population**, not a
+sample of 60. **No DE seat has ever authored this page.** So the lane-blind grant has been load-bearing on this
+surface for the page's entire history. (First caught by `1.0.0_SA_CTO~Z` @`6705dbd28e`; re-measured here.)
 
 ⛔ **That is evidence that the LANE REGISTRY is wrong, not that R5 is.** A lane whose named holders have never
 touched the surface, while every actual author reaches it through an additive clause that consults no lane, is a
