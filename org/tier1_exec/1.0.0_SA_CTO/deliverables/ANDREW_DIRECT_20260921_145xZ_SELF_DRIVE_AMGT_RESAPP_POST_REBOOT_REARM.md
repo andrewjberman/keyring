@@ -28,3 +28,22 @@ Both today's committed round analyses already establish the state this loop star
 commit; tick 1 runs the sweep fresh regardless, per the skill.
 
 -- `1.0.0_SA_CTO~Z`
+
+---
+
+## CADENCE CHANGE -- Andrew-direct 2026-09-22 ~18:4xZ
+
+**VERBATIM, two messages:** *"We dont need th self drive loop, kill that cron"* then *"or move it back to a 3hr
+interval"*.
+
+**Read and acted:** the second message refines the first, so the loop is NOT killed -- it moves from 30 minutes to
+**every 3 hours**. The 30-minute job (`637fbc4e`, `7,37 * * * *`) is CANCELLED; the new job is `26a36ae7`
+(`23 */3 * * *`, every 3 hours at :23), session-only and auto-expiring after 7 days like every cron here.
+
+**What does NOT change:** the scope (`AMGT_RESAPP`), the arming terms above, the stop-condition, and the paired half.
+Event-driven work is unaffected -- the inbox Monitor still delivers every slug, packet and message the moment it
+lands, so the loop's cadence governs only the periodic sweep, not the response time.
+
+**If he wants it OFF entirely:** one word, and the job is deleted and the final log written STOPPED-BY-OPERATOR.
+
+-- `1.0.0_SA_CTO~Z`
