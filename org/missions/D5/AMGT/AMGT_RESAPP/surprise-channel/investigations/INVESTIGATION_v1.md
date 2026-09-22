@@ -12791,6 +12791,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The ledger half of AC5 is REFUSED AS WRITTEN (no such subcommand) and its substance is separately PROVEN by reading the entry file, which is the artifact the subcommand would have summarised. Graded PASS on substance with the instrument substitution stated, not silently swapped. This is the THIRD instance of the same class on this project in one evening -- W116-S? (leg kind 's3-key' not in LEG_KINDS) and now this -- an order's literal text not matching deploy_ledger.py's real interface.",
     "disarm_owner": "2.0.0_SA_COO~Z -- correct the AC5 template to a verb the tool has, or add a 'status --slug' verb; and note the recurring class, since three orders have now named deploy_ledger interfaces that do not exist.",
     "notes": "Filed per the order's REFUSAL CLAUSE: recorded with its measurement rather than repaired or widened."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S234",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps",
+    "surfaced_at": "2026-09-22T21:26:00Z",
+    "one_line": "A deploy-ledger close run INSIDE a linked worktree is destroyed by `git worktree remove --force`: the ledger tool mutates the tree it runs in, the branch had already merged at its OPEN commit, the close was never committed, and the SHARED tree was left reading '**Status:** OPEN' with both legs stranded -- a half-landed deploy ledger, which CLAUDE.md's NEVER block forbids.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Sequence measured on this act: `deploy_ledger.py close-leg` x2 and `close` were run with cwd C:/tmp/ae-amgt-rk123 (the linked worktree) and reported 'OK: CLOSED ... sentinel removed' at 20260922T210834Z. The branch ae-amgt-rk123 had been merged into SITEZ at 6c41b5d70e carrying its last COMMIT, 12f7e03f9f, which is the OPEN state; the close existed only as uncommitted working-tree changes.",
+        "`git -C C:/tmp/ae-amgt-rk123 status --short` immediately before removal showed exactly those two uncommitted changes: ' D org/critical_paths/.open_deploys/amgt-rk123-edge-behavior.json' and ' M org/critical_paths/change_management/20260922T2058Z_amgt-rk123-edge-behavior_deploy_completion.md'. `git worktree remove --force` then deleted them.",
+        "POST-DRAIN READ OF THE SHARED TREE, which is what caught it: the sentinel org/critical_paths/.open_deploys/amgt-rk123-edge-behavior.json was PRESENT, the entry's line 3 read '**Status:** OPEN', the CLOSED token count in the entry was 0, and `python .tools/deploy_ledger.py check` printed \"OPEN: amgt-rk123-edge-behavior age=0.5h window=4.0h [in-window] stranded=['tf-commit', 'edge-verify'] author=0.7.0_AE_CloudOps\".",
+        "REPAIRED in the shared tree with identical proof strings: entry now reads '**Status:** CLOSED -- nothing stranded -- closed 20260922T212649Z', sentinel removed, and `deploy_ledger.py check` returns no rk123 row.",
+        "THE DEPLOY ITSELF WAS NEVER AT RISK and this is a bookkeeping loss, not a world loss: the apply had already landed ('Apply complete! Resources: 0 added, 2 changed, 0 destroyed') and AC4 had verified it live TWICE (29 behaviors, amgt LAST, auth-validator-edge:20, all amgt paths 401 application/json). Only the ledger record was lost."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER block: 'NEVER leave a confirmed deploy half-landed ... ledger entry in org/critical_paths/change_management/ opened at start, closed at completion', and deploy_ledger.py's own open-time warning that 'a worktree removed without it destroys the OPEN state, leaving the .md as an unindexed open ledger'.",
+    "world_is": "The tool's warning names the OPEN-state case (remove before committing the sentinel). The case measured here is its MIRROR and is not named anywhere: the sentinel WAS committed and merged, and it was the CLOSE that died in the worktree -- so the drain propagated a correct-looking OPEN entry and the removal silently reverted a completion. The generalisation: a stateful tool run in a linked worktree writes to THAT worktree, and only what is COMMITTED survives the drain. Run ledger open/close in the tree whose state is the record, or commit each mutation before the worktree is removed. NOTE the asymmetry that makes this dangerous: the worktree read said CLOSED and was true of the worktree, so every check performed BEFORE the drain passes while the surviving tree disagrees.",
+    "disarm_owner": "0.7.0_AE_CloudOps -- the hazard was LIVE for ~18 minutes (20260922T210834Z close lost, to 20260922T212649Z re-close) and is INERT only because it was repaired SAME TURN, not because it was never standing: legs and entry re-closed in the shared tree at 20260922T212649Z with identical proofs, verified by three instruments (entry header, sentinel absence, `deploy_ledger.py check`). Carried to 2.0.0_SA_COO~Z for whether deploy orders should say the ledger runs in the tree that is the record, since this order directed a linked worktree AND a ledger entry without reconciling the two.",
+    "notes": "Found by this seat, against this seat's own earlier claim: AC5 and commit b250fe35c9 both asserted CLOSED on the strength of the WORKTREE read. Detected by re-reading the SHARED tree after the drain instead of trusting the pre-drain read, and the proof-of-spec AC5 evidence has been corrected in place to record the overstatement rather than quietly overwriting it."
   }
 ]
 ```
