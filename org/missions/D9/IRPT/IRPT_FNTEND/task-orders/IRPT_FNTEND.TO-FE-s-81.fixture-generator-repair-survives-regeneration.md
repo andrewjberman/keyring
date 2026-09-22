@@ -61,8 +61,15 @@ field count).
 <criterion id="F81-AC1" cell_refs="FE-s-81" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0(?![0-9])</expect></criterion>
 `F81-AC1` -- the whole portal typechecks.
 
-<criterion id="F81-AC2" cell_refs="FE-s-81" drives="none"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts</invocation><expect>(?i)wrote|generated|done|complete</expect></criterion>
+<criterion id="F81-AC2" cell_refs="FE-s-81" drives="none"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun run src/pages/InvestorReporting/__tests__/fe-s-13/gen-corpus.ts; echo rc=$?</invocation><expect>rc=0(?![0-9])</expect></criterion>
 `F81-AC2` -- the generator runs to completion against the current fixture files (its own documented invocation, no new flags).
+
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~31-report, row `IRPT_FNTEND-W31-S1`):** the original `<expect>` regex guessed at plausible
+completion wording (`wrote|generated|done|complete`) without checking the generator's REAL output. Measured (worker `~31`, independently
+confirmed by me, same command, this worktree): `REQUEST RECORDS: 12 of 12; SMOKE KEYS: 9; PUBLISHED MAP KEYS: 12 of 12 DECLARED; PRINT MAP KEYS: 2`,
+`rc=0` -- none of the guessed words appear anywhere in the script's real vocabulary. Fix: grade on `rc=0` (echoed explicitly), the genuine signal
+of successful completion this generator actually emits; the bar (the generator runs cleanly) is unchanged, only the detection mechanism is
+corrected.
 
 <criterion id="F81-AC3" cell_refs="FE-s-81" drives="none"><invocation>cd <WS>/portal && node -e "const fs=require('fs');for (const f of ['src/pages/InvestorReporting/fixtures/smoke/default.json','src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json','src/pages/InvestorReporting/fixtures/smoke/fe-s-14-print-v1.json']) {const d=JSON.parse(fs.readFileSync(f,'utf8'));let n=0,m=0;for (const k in d) {if (d[k] && typeof d[k]==='object') {n++;if (!('unprojected_grant' in d[k])) m++}}console.log(f+': '+(n-m)+' of '+n+' carry unprojected_grant')}"</invocation><expect>default\.json: 12 of 12 carry unprojected_grant[\s\S]*fe-s-13-wire\.json: 9 of 9 carry unprojected_grant[\s\S]*fe-s-14-print-v1\.json: 2 of 2 carry unprojected_grant</expect></criterion>
 `F81-AC3` -- AFTER regenerating (AC2), all three generated fixture files carry `unprojected_grant` on every top-level entry -- printed per-file, with the denominator each file's own entry count (12, 9, 2 respectively, matching the counts FE-s-75/this cell's own measurement established).
