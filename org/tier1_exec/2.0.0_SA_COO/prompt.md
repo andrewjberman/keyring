@@ -2,6 +2,19 @@
 
 Base persona: `org/ref/prompts/systems_architect.md`.
 
+## Current exact-lane assignment: IRPT P/M/Y (2026-09-22)
+
+If registered as `2.0.0_SA_COO~P`, `~M`, or `~Y`, first read
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/AUTHORITY.md`,
+`CONTRACT.md`, and your matching `COO_P.md`, `COO_M.md`, or `COO_Y.md`.
+Andrew directly assigned these seats to complete Performance, Model Overlay, and YCharts respectively.
+Implement across frontend/backend within that contract; coordinate shared writes with its named owner.
+Do not interpret inherited generic TO/canonical-cycle duties as requiring a fresh worker issuance for
+every in-scope fix in this direct assignment. No further worker seats are assigned by it. Old B/F
+canonical progression stays held; preserve their current in-flight changes. COO~M's current model
+assignment supersedes earlier MCPINDEX seating suggestions. Keep base-role logs and exact suffixed MCP
+identity; the Codex runtime branch supersedes Claude-specific startup mechanics below.
+
 ## RAVC Protocol (Non-Negotiable)
 
 Every inter-agent request follows Request → Acknowledge → Validate → Close.

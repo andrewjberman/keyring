@@ -1,0 +1,85 @@
+# IRPT MVP completion contract — version 1
+
+Authority: [Andrew's instruction](AUTHORITY.md). Owner/adjudicator: `1.0.0_SA_CTO`. Implementers: COO~P, COO~M, COO~Y. Independent reviewers: matching CVO suffixes. This contract and each seat's mandate are the current narrow instructions for these six seats.
+
+## 1. Outcome and operating mode
+
+Finish three usable product journeys across 49 Financial, Cottonwood, and Inflection: provider-calculated performance reporting; actual model/non-model/unresolved ownership with drilldowns; and YCharts sensitivity from selected custody holdings or prospect CSV. Retain the current frontend, parser, provider adapters, authorization, render, and storage libraries wherever they work. Repair the connections and incorrect behavior. No new platform rewrite.
+
+Each COO personally drives implementation across frontend and backend until its outcome is independently reviewed. Ordinary in-scope fixes do not need another CTO round analysis, recut, or permission request. This is the directly authorized P/M/Y completion effort, not a restart of `/canonical-drive IRPT_FNTEND` or `IRPT_BCKEND`. Do not spawn further workers or invent serials under this assignment. Use the three assigned implementation seats and coordinate directly.
+
+The default completion target includes all three firms, single account/relationship/subset selection, both YCharts input lanes, dollars/shares/weights, Overview/Comparison/Multi-Comp, durable recovery/reopening, and branded performance/analysis PDF downloads. First one-firm or dollar-CSV proofs are milestones, not permission to silently narrow completion. Optional narrative, email/Graph intake, historical model UI, a new return engine, estate-wide source migration, and unrelated portal redesign are outside this sprint unless an existing accepted requirement makes one necessary. Name any proposed scope change to the CTO with the specific endpoint affected.
+
+## 2. Read first, then implement
+
+1. Complete `$load` for your exact serial and measure readiness with the canonical oracle. Do not create a suffix-specific role directory or second runtime helper.
+2. Read AUTHORITY.md, this contract, and your COO/CVO mandate. Then read the five product briefs at `C:/Users/AndrewBerman/Desktop/Investor Reporting Briefs - 2026-09-22/`, starting with your product brief and folder 05's backend design. Read relevant source and tests rather than treating briefs as fresh runtime proof.
+3. Read the relevant existing PRD, latest accepted source/evidence, and current B/F write claims. Use `comp-which` before inspections and the routed bare compiler tool; log material compiler observations.
+4. Send CTO one specific ACK with baseline commits, intended first vertical proof, and any actual collision. Begin independent implementation immediately; no ceremonial ACK waiting period.
+
+The assessment at `../IRPT_MVP_DISTANCE_AND_THREE_AGENT_ASSESSMENT_20260922.md` establishes the starting gaps. Workspace `8eb2100142a6c10bb2b638390fcacf2e647c2319` and portal `7dd3d067a17ee00b878ecfceff23c557649a2331` were the observed review pins; measure your own starting heads. These historical pins are not an instruction to discard subsequent accepted fixes.
+
+## 3. One writer for every shared surface
+
+Ownership means the listed seat integrates edits to that surface and answers interface requests. Consumers may prepare patches in isolated worktrees and send them to the owner. They do not independently land incompatible edits. More-specific rows override broad directory rows.
+
+| Surface / responsibility | Sole integration owner | Consumers / constraints |
+|---|---|---|
+| Directory, canonical account/vendor crosswalks, selection/grants, common scope identity; `_scope/`, `_ids/`, common non-render `_authz/`; header/shared selection state | COO~M | P and Y use the selected set, not all permitted accounts; prospect ownership must be supported |
+| Custody/model builders, accepted Gold/Platinum, holdings routes and holdings UI | COO~M | Y consumes actual custody positions; target allocations are a separate basis |
+| Naming registry/builder and bounded firm publication destinations | COO~M | P supplies reporting-store requirements; changes stay IRPT-specific, coordinated with existing naming owners |
+| Performance provider adapters/auth/request/normalization and reporting UI | COO~P | Independent 49F/COT/INF acceptance |
+| Generic immutable report repository/history, report IDs/revisions, shared reporting bucket/IAM/IaC, common export bundle/renderer/receipt/download | COO~P | Y owns its job transitions and extraction; both use P's report/export interface |
+| Render-delegate-specific auth, edge assets/print authorization, shared render/layout/export code | COO~P | Inherit accepted B/F render repairs; no parallel edit to current B/F claimed files before reconciliation |
+| Intake/upload, normalized portfolio, recipe/session/worker, extraction/certification, analysis routes/UI, job status and `ops/` entry dispatch | COO~Y | Uses M's scope/positions and P's report store/export; sections route returns report, not status |
+| Common frontend API client and `contracts/adapt.ts`, shared route/schema aggregator files, shared portal App route edits | COO~P | M/Y own their function semantics and provide patches/examples; P integrates and runs all consumers |
+| Shared Terraform composition/API route manifest/build packaging | COO~P | M/Y provide resource/route requirements and executable acceptance; no unowned assembly gap |
+| This contract, ownership exceptions, unresolved cross-lane decision, final integrated release decision | CTO | CVO evidence cannot be overruled into PASS; fix or explicitly retain a failed/unmeasured outcome |
+
+If a file crosses rows, register the exact function/section claim with its owner before editing. Until clarified, the more specific owner integrates it; CTO resolves a genuine tie. CVOs write their own evidence/review files and do not fix the implementation they grade.
+
+## 4. Shared semantic contracts
+
+These obligations govern the existing wire schemas. Owners publish concrete schema versions and paired producer/consumer examples in their lane's `INTERFACES.md` before consumers integrate. Do not create a competing shadow schema or rename all existing fields to match this prose.
+
+**S1 — Selection (M).** Verified principal and firm; canonical relationship; exact selected account IDs; selected-set reference/fingerprint distinct from permitted-set fingerprint; entitlement and directory revisions; server-owned provider crosswalks. Account-set URL references resolve server-side to members. Missing mapping is explicit and never broadens scope. Cache, job, report and export identities bind the selected set and relevant revisions. Prospect input binds verified firm/advisor ownership without fake client/account identifiers. Recheck current access on retrieval/download.
+
+**S2 — Accepted data (M).** Full account census independent of model rosters, unique actual custody positions, canonical/vendor IDs, quantity/value/currency, custody and overlay clocks, source revisions, membership grain, unknown-value and attribution findings. Model + confirmed non-model + unresolved known value reconciles to independently enumerated custody value. Unknown value is not zero. Gold Parquet retains reproducible history; Platinum JSON is derived only from accepted Gold. A manifest references one complete revision set; publication advances atomically after acceptance. Selected-set weights are recalculated after selection.
+
+**S3 — Normalized portfolio (Y).** Immutable owned input with source lane, selected source revision or upload identity, original row/unit provenance, security resolution, corrections/exclusions, normalized analysis amounts, total reconciliation, and content hash. Dollars are preserved; shares require dated compatible prices; weights need proven native support or explicitly labeled reference notional. Never label reference notional as client AUM. Comparison/profile/settings and recipe version are frozen with the request. Y's public browser contract and real API entry must agree field for field.
+
+**S4 — Report lifecycle (P repository, Y job state).** Server-owned report/request IDs and immutable revisions bind owner, exact input/selection/date/settings, source/vendor evidence, normalized payload, coverage, schema/adapter versions, and hashes. P provides persist/get/list report interfaces; Y provides durable state transitions and attempt identities referencing that repository. Accepted work is persisted before dispatch with durable outbox/idempotency and conditional transitions. S3 retains bytes; DynamoDB owns process state. Reload/history resolve the same accepted report. Correction creates a new revision. Status is distinct from report content; READY means the releasable report exists and satisfies its certification policy.
+
+**S5 — HTTP/UI (P shared integration; each lane owns semantics).** Test real browser request serialization through actual entry/event parsing and wire adapter. Preserve status/availability, period and source dates, selected scope, methodology/units, coverage, and revision. Do not wrap reports at a different level than consumers expect. Missing values and stale/partial states must stay visible. No fixture-only success accepted as a live journey.
+
+**S6 — Export (P).** Freeze the displayed report revision, narrative if present, disclosures, branding/assets and renderer version. Never refetch a different performance period during export. Connect submit to actual controller, scoped render identity and pinned print route/assets, validated PDF, immutable artifact/receipt and protected download. Receipt binds report revision, bundle hash, PDF hash/object version. Performance and sensitivity share this path. Render delegate cannot grant general viewer/admin rights; original vendor PDF and branded Opal PDF remain distinct artifacts.
+
+**S7 — Storage placement (M naming, P provisioning).** Implement the backend brief's proposed `opal-data-irpt` reporting-artifact destination through the canonical registry/builder/destination-policy mechanism, including the narrow recorded treatment for private firm records in a shared product store. Do not relabel firm data as global or concatenate an alternate bucket to bypass the builder. Canonical client holdings Gold/Platinum remain in long-form firm buckets. Register concrete families, permissions, retention, producer identities and immutable version rules. New readers/writers cut over together. Preserve research and historical evidence; no estate-wide deletions or standing dual-write fallback. If a required policy acknowledgement is not within delegated authority, prepare the exact record/plan and route it to CTO while independent work continues.
+
+## 5. Branches, in-flight work, and integration
+
+Current COO~B/backend round 18 and COO~F/frontend round 15 may complete under the existing hold. New lanes do not rewrite their orders or take their claimed files mid-edit. CTO requests their exact current write surfaces and final accepted pins. P/M/Y work on isolated branches/worktrees for code and reconcile accepted B/F changes before shared integration. Worktree creation follows repository rules; do not change the shared workspace branch.
+
+Measure workspace and nested portal status separately. Record both pins. Use pathspec commits through `.tools/safe-commit.sh`; preserve others' staged files and never `git add .`. Keep base-role logs in the workspace. Integration of code branches is coordinated with CTO and the file owner; a clean working tree/index and the current repository merge gates are required. No force-push, destructive reset, or rewriting another seat's evidence. Shared-branch pushes remain MSTR-owned; report LOCAL plus measured origin pin.
+
+A breaking interface change needs: exact producer/consumer paths, proposed schema/example, migration of every in-scope reader/writer, tests, and peer agreement recorded by the interface owner. Same-contract fixes need no change board. If peers cannot settle a real semantic conflict in one exchange, send CTO the competing options and evidence; continue unaffected work. Do not wait for silence to count as agreement.
+
+## 6. Coordination, logs, and progress
+
+Canonical peer send: `org/mcp/codex-send.ps1 -To '<exact serial>' -Subject 'IRPT <lane>: <specific seam/finding>' -BodyFile '<file>'`. Use RAVC for actual requests. Send on interface changes, dependency readiness, blockers, and review handoffs; do not flood peers with routine status or ACK loops. Include path@commit, owner, requested action, and affected acceptance IDs. Surprise channel is CTO; report out-of-scope findings in one line and continue your job.
+
+Each COO owns `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_<P|M|Y>/` for INTERFACES.md, STATUS.md, evidence manifest and COMPLETION.md. Each CVO owns the matching directory under `org/tier1_exec/3.0.0_SA_CVO/deliverables/`. Do not co-edit a shared status file. Keep canonical session logs under the base role's dated logs with exact serial/lane in the filename. No secrets or raw client payloads in MCP/logs; use protected evidence references.
+
+STATUS records current source pins, working branch, exact write claims, completed acceptance IDs, next integrated proof, dependencies with owner, and current limitations. Record meaningful changes and before handoff; no model-side polling loop or invented cron. Launcher inbox monitoring remains the wake mechanism. Persist long-running work state so a resumed seat continues rather than replans.
+
+## 7. Completion and review
+
+COO implementation completion requires runnable code, appropriate tests, build/dependency packaging, schema/route/IaC updates, operational/recovery instructions, exact source and deployed pins when applicable, and one linked evidence manifest per journey. CVO independently verifies actual modules and browser/API boundaries, including failure controls. Match candidate pin and environment; unrelated historical fixture counts do not grade the candidate.
+
+Shared acceptance IDs: **S1** exact selection and access; **S2** reconciled accepted data; **S3** frozen normalized input; **S4** durable request/report/recovery; **S5** real HTTP/UI parity; **S6** frozen export/receipt/download; **S7** declared storage placement matches writes. Each product mandate adds its own IDs. CVO results are PASS, FAIL, or NOT_EVALUATED with exact evidence and limitations. Offline success cannot be called deployed E2E PASS. Missing live authorization is named, not silently converted to failure or completion.
+
+CVO~M leads data/selection verification; CVO~P leads report/export integration verification; CVO~Y leads generation/recovery verification. They coordinate shared evidence, but each owns its product verdict. Submit review to matching COO and CTO; implementation owner fixes failures directly and returns a new pin. No new canonical round is required for these assigned fixes. CTO consolidates all three reviews into an integrated completion decision; no lane alone closes the whole product.
+
+## 8. Existing external gates
+
+Continue all authorized implementation and offline/recorded integration autonomously. Existing explicit per-use vendor egress requirements, production/portal promotion holds, key/provisioning gates and least-privilege signoffs remain. Backend R18-e's actual-module render-chain L9 PASS remains required before render key provisioning/deployment. Preparing code, IaC plans, dependency packaging and a precise live acceptance run is required before routing a reserved action to CTO. Do not use those later gates to stop unrelated development or to report a fixture test as a live product.
