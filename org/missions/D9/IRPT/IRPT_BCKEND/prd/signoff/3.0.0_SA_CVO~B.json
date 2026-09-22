@@ -1,0 +1,11 @@
+{
+  "prd": "IRPT_BCKEND_PRD.md",
+  "prd_version": "v0.17",
+  "prd_pin": "1450e05178bff4681ec0241439e0dad2a61b256e",
+  "half": "ratified-text",
+  "half_hash": "4d95de5f4f9838d2fdeadd4ed714306b285ec87ca002a2db2c0a7f5965186ed3",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_PRD_v017_L4R_REVIEW_20260922.md@05e05c72ed",
+  "signed_by": "3.0.0_SA_CVO~B",
+  "signed_at": "2026-09-22T12:58:14Z"
+}
