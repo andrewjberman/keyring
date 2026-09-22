@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.16",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
@@ -213,7 +213,12 @@ censused). A human-captured portal session is NOT a standing mechanism: the refr
 5. **FIRM_BINDING -- DECIDED.** The render token's `firmId` is the TENANT firm of the bundle, **never
    `opal-capital`**. The handlers' binding is therefore satisfied as written -- the firm comes from the
    edge-injected `X-Firm-Id` and a disagreeing request firm is refused (`_authz/served.py` docstring, check 2;
-   `enforce.py` `FirmBinding`) -- and **no handler, binding or loader changes for the render identity.** How an
+   `enforce.py` `FirmBinding`) -- the FIRM BINDING needs no change. ⛔ **(v0.17 CORRECTION) THE PRINCIPAL
+   RESOLUTION DOES: v0.16 said "no handler, binding or loader changes" and that was FALSE** -- the renderer's
+   header set resolves `UNKNOWN` in `_scope/resolve.py` `classify_principal` (`:154-196` @`b1f562568e`: a subject
+   with no client type, no admin role and no advisor id falls to branch 6) and so `NO_PRINCIPAL` in
+   `_authz.Enforcer.resolve_now`, found by `3.0.0_SA_CVO~B` at L4-R with an offline reproducer
+   (`IRPT_BCKEND_PRD_v016_RENDER_PRINCIPAL_PROBE.py`). The resolver change is item 8. How an
    Opal Global user comes to print another firm's report is answered UPSTREAM of the token: the Global user's
    entitlement was checked when the bundle was created (B15), and the token carries only what the bundle already
    holds. ⛔ **The frontend print route's `requireInternal` (`firmId === 'opal-capital'`, `portal/src/components/
@@ -229,8 +234,31 @@ censused). A human-captured portal session is NOT a standing mechanism: the refr
    (d) a token signed with the render key carrying `tier` `internal` or `role` `admin` is refused at V3; (e) a
    render token presented to V1 (`/auth/...`) is refused; (f) a human portal token still behaves exactly as before
    on the same routes (the negative-widening arm); (g) the render runner's role has NO read on
-   `opal/auth/jwt-private-key`, printed from the applied policy. Each deploy under a NEVER-2 ledger entry and both
-   never-widen halves.
+   `opal/auth/jwt-private-key`, printed from the applied policy; **(v0.17)** (h) the renderer resolves
+   `RENDER_DELEGATE` and reads its three objects; (i) revoking the DELEGATOR's entitlement after the mint makes the
+   next render read refuse; (j) a request carrying `X-User-Role` `renderer` WITHOUT the edge's render marker
+   resolves `UNKNOWN`; (k) a render delegate asking for an object outside the bundle's pinned scope, or for any
+   operation outside the three, is refused. Each deploy under a NEVER-2 ledger entry and both never-widen halves.
+8. **(v0.17) THE RENDER PRINCIPAL IS A DELEGATE, AND IT GRANTS NOTHING THE DELEGATOR DOES NOT HOLD NOW.**
+   - **Claims added to item 2:** `sub` = `render:<render_id>` (never a human subject); `delegator` = the subject
+     that created the bundle, stamped into the bundle at freeze (B14) and copied into the token by the minter.
+   - **Edge (V3):** the render branch injects, from VERIFIED render-key claims only, `X-User-Email`
+     `render:<render_id>`, `X-User-Role` `renderer`, `X-Firm-Id`, and a render marker (`X-Render-Delegator`,
+     `X-Render-Bundle`, `X-Render-Revision`); it overwrites any client-supplied header of those names exactly as
+     it does the existing trusted set, and it never injects `X-Advisor-Id`, `X-Advisor-Role` or `X-User-Type`.
+   - **Resolver (`_scope/resolve.py` `classify_principal`):** ONE new branch, placed AFTER branch 1 (the
+     `cloudfront` origin marker and a subject are still required) and BEFORE every other: `X-User-Role`
+     `renderer` WITH the render marker present -> `RENDER_DELEGATE`; `renderer` WITHOUT the marker -> `UNKNOWN`.
+     No existing branch changes, and `RENDER_DELEGATE` never falls through to `OPAL_GLOBAL`, `FIRM_OPERATIONS`,
+     `FIRM_ADVISOR` or `CLIENT`.
+   - **Scope (`_authz.Enforcer.resolve_now`):** a `RENDER_DELEGATE` scope is the INTERSECTION of (a) the
+     delegator's scope RESOLVED NOW through the existing path -- so revocation, the Opal roster and the directory
+     behave exactly as for the delegator in person -- and (b) the bundle's pinned scope at `X-Render-Revision`.
+     It serves ONLY the three read operations of item 4, for ONLY the ids the bundle pins; everything else is
+     refused with the existing refusal codes. An empty intersection is a refusal, never an empty answer.
+   - **No impersonation:** the delegate never acts AS the delegator (no delegator header is ever read as a
+     subject); it is a narrower class whose ceiling is the delegator's current grant. The cache and idempotency
+     keys carry the class and the bundle revision, so a delegate answer is never served to a human request.
 
 ⚠ **SEPARATE STANDING GAP, NOT A RIDER:** V3 checks no `aud`/`iss` on the EXISTING human path
 (`index.mjs:235`, `{ algorithms: ["RS256"] }` only). Closing it touches every portal page, so it is its own
