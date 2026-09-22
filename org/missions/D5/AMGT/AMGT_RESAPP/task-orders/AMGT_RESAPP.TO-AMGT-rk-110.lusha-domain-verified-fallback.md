@@ -140,7 +140,7 @@ criterion passes, commit with `--only`, and report once.
    round-27 packet s.3.
 3. The 3-tuple is kept to avoid touching every caller and test; `domain_source_for` carries the provenance.
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>
