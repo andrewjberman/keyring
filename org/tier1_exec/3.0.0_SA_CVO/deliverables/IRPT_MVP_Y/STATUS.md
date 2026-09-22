@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:40 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, evening.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -102,6 +102,14 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   NO-HANDLER makes0 transport calls. Fresh component state loses the attempt;
   browser rendering/scheduling, reload persistence and integrated route remain
   unproven. See `PROSPECT_UI_REVIEW_2ddf111467.md` and hashed evidence JSON.
+- Canonical upload bridge `c2a01fb3f8ae179a38c55a695894390ad9442c97`: supplied46
+  tests+7subtests and independent11/11 controls PASS. Actual parser/local
+  normalizer/recipe/checkpoint/bind/create serialization preserves exact cents,
+  explicit cash, CUSIP leading zeros and frozen share-price dollars. Altered
+  bytes/IDs/cents and different returned identities refuse. Pure bridge requires
+  caller authorization, checkpoint provenance and mutation fencing; actual M
+  source/vendor/runtime remain pending. See
+  `NORMALIZED_BRIDGE_REVIEW_c2a01fb3f8.md` and source-hashed evidence JSON.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:

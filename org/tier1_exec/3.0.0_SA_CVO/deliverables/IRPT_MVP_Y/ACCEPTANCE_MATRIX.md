@@ -351,6 +351,16 @@ unproven. See `PROSPECT_UI_REVIEW_2ddf111467.md`; no full Y6/S3/S4 grade.
 Peer R-P09 is now CLOSED per CVO~P65a3aedf72 atc86a5eb5/5add22ca9f; peer counts
 are not added to Y's evidence. All14 integrated criteria remain NOT_EVALUATED.
 
+## Canonical upload bridge update, September 22 evening
+
+`c2a01fb3f8ae179a38c55a695894390ad9442c97`:46 supplied tests+7subtests and
+11 independent controls PASS. Exact local identities/dollars survive actual
+offline upload/checkpoint/binding/create serialization; changed frozen content,
+input IDs, checkpoint cents and nonmatching vendor identities refuse. No actual
+M source, current-access ports, checkpoint provenance, fenced worker assembly,
+vendor resolution or runtime proof. See `NORMALIZED_BRIDGE_REVIEW_c2a01fb3f8.md`.
+No full Y4/S3/S4 grade; all14 integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
