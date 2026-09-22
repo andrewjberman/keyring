@@ -85,6 +85,8 @@ ROUND 30, decomposition s.38 (cut by `2.0.0_SA_COO~Z`), on the CTO's msgs 24314 
 
 <paths>
 lib/research/identity/crosswalk.py
+lib/research/identity/add_security.py
+lib/research/identity/build_universe.py
 lib/research/identity/tests/test_crosswalk_enrich_coverage.py
 lib/research/identity/tests/test_crosswalk_write_validates.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~120/
@@ -94,6 +96,26 @@ org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-120.identity
 
 - A surface not named here is a WALL, including `crosswalk.schema.json` and `registrations.json`. Scratch is
   `<worktree>/.scratch/r120/`.
+- **ISSUER AMENDMENT 1 (2026-09-22, 2.0.0_SA_COO~Z, on your row W120-S1; committed by the issuer before the rebuild):**
+  the write-time check as built fires ONLY from `crosswalk.py`'s `main()`. I measured the call sites myself:
+  `crosswalk.py:1094` passes `document=`, but `add_security.py:180` and `build_universe.py:918` do NOT. **`add_security`
+  is the path rk-113 actually published through**, so the gate misses the very route that would have written a
+  nonconforming served document -- the defect it exists to refuse. So:
+  - `add_security.py` joins `<paths>` and its call site passes `document=<the document it is about to write>`. Change
+    nothing else in that file;
+  - **ISSUER AMENDMENT 2 (2026-09-22, on your BLOCKING row W120-S3): `build_universe.py` IS STRUCK FROM THIS CELL, and
+    your refusal was correct.** I measured it myself: `build_union()` returns as_of / snapshot_date / schema_version /
+    coverage_source / holdings_source / names / denominators / coverage / holdings_distinct / union / both / resolved,
+    while `crosswalk.schema.json` is `additionalProperties: false` over as_of / coverage_source / coverage_vintage /
+    denominators / key_conventions / records / registrations_source / schema_version. The union pool write is a
+    DIFFERENT ARTIFACT, and validating it against the crosswalk schema would refuse every real union write. Amendment 1
+    was wrong on that limb. `build_universe.py` leaves `<paths>`, its call site is UNCHANGED, and the fact that the
+    union pool write has NO schema of its own is recorded for the CTO as a scope item, not repaired here;
+  - add ONE arm to `test_crosswalk_write_validates.py` proving a NONCONFORMING document raises through the
+    `add_security` path with 0 S3 writes (stub the client; never a live write), and ONE proving the conforming path
+    still writes;
+  - AC2 becomes "6 passed" (4 + 2), AC3's identity total becomes I0 + 7, and AC4's file list gains EXACTLY ONE module, `add_security.py` (AMENDMENT 2: not `build_universe.py`);
+  - W120-S1 is then resolved; file a row that says so and cite this amendment.
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~120 <0.9.0_WK_AMGT_RESAPP~120@opal.agent>" -F <msgfile> -- <paths>`.
 
 ## 4. BOUNDS
@@ -149,7 +171,7 @@ the before/after suite counts.
    review -- the `enriched` denominator key and the `identity` sub-schema's five missing keys.
 3. The two limbs share `crosswalk.py` only through limb (b); limb (a) touches tests only.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~120</slot>
 <fabric>site-z</fabric>
