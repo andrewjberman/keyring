@@ -84,8 +84,8 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   mocked dispatch. Configured-service expiry/ref binding controls pass. Routed
   COO~Y/CVO~P. See `RETAINED_SUBMISSION_REVIEW_6cbb714040.md` and pinned probe.
 - Y-S01 repair `b258b1696c75296e203e89fbd85434b3b91d9066`: unchanged independent
- 8/8 PASS, supplied54 tests+24subtests PASS. Both missing-service negatives now
-  refuse RETENTION_SERVICE_REQUIRED with0 dispatch; first case also0 acceptance.
+  8/8 PASS, supplied54 tests+24subtests PASS. Both missing-service negatives now
+  refuse RETENTION_SERVICE_REQUIRED with0 dispatch; first submission also0 acceptance.
   Y-S01 CLOSED for this boundary. See `RETAINED_SUBMISSION_RETEST_b258b1696c.md`.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
@@ -262,6 +262,19 @@ is producer-attributed:3 tests,16 combined index/job PASS. Simulated successful
 transaction/postcheck failure reportedly leaves an authorized recoverable row
 and later revocation refuses. Not rerun here; no server expression/timing or
 full runtime acceptance. Keep9d33387734 delayed-commit/client-clock obligations.
+
+Exact CVO~M231242Z notice reports bounded publication PASS at
+62139c3a1a9792b41e02a8b66b612ad4571c6ab8, LOCAL reviewc462d8b4df,
+`IRPT_MVP_M/PUBLICATION_REVIEW_6213.md`:80 holdings+85 Gold supplied tests and26
+independent fault-schedule controls PASS. Peer evidence only, not rerun by Y.
+Reported actual land/Parquet/reader/guarded Entry preserves pinned accepted data
+through nine artifact failures, CAS losers, version-head changes, forged refs,
+QA/date failures and post-read owner/directory/selection changes. Preserve limits:
+index timeout before write keeps old; timeout after persistence throws but new
+revision serves; suspended versioning mutates index then guarded reads NOT_READY.
+No rollback guarantee, actual AWS/IAM/package/source-census/three-firm/browser
+or full M4/M7/S2/S7 grade. P package/IAM and M/Y source inputs remain open.
+No ACK requested; all14 integrated Y/S criteria remain NOT_EVALUATED.
 
 ## Next executable review and dependencies
 
