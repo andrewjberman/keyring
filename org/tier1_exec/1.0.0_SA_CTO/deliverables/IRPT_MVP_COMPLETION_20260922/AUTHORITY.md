@@ -35,3 +35,24 @@ Andrew, direct user channel during setup, approximately 16:43 Eastern (exact mes
 New lanes must incorporate these final accepted source pins before shared integration. This confirms the transition, not a restart of B/F canonical progression. MSTR separately raised the historical three-COO capacity limit as information, explicitly not a gate; P/M/Y are direct implementers without new nested workers. No B/F session was terminated by the CTO.
 
 All three new COOs independently reported the same startup defect: the generated role list required 1,585 COO root files, including 1,539 historical drive logs. The canonical loader now supports a checked-in exact-seat manifest at `org/mcp/codex-seat-role-files.json`. For these six seats it emits six ordered relevant files, preserving mandatory base README/prompt, serial, role home, inbox and runtime. Other seats retain their prior reading behavior. Tests cover scope selection, identity, order, missing/invalid/escaping/duplicate paths and legacy fallback. Rerun the ordinary load helper to consume the corrected manifest; no runtime restart or substitute startup mechanism is required.
+
+## CTO governance retained
+
+Andrew, direct user channel during setup, approximately 16:48 Eastern (exact receipt timestamp unavailable), verbatim:
+
+```text
+I need you to retain governance and oversight on the efforts of these agents. I have the newest compile doc from COO~B as well: (org\missions\D9\IRPT\IRPT_BCKEND\ledger\IRPT_BCKEND_ROUND18_L8_COMPILE.md)
+Wrote 52 lines to org\missions\D9\IRPT\IRPT_BCKEND\ledger\IRPT_BCKEND_ROUND18_L8_COMPILE.md.
+```
+
+CTO retains cross-lane governance, dependency resolution, shared-surface adjudication, integrated evidence review and final completion decision. `OVERSIGHT.md` carries the current control record, inherited B/F gates and escalation ownership. This does not restart the held old canonical cycles or replace independent CVO judgments.
+
+## Session open-call adjudication and unresponsive workers
+
+Andrew, direct user channel on 2026-09-22 during the 21:08 UTC blocker review (exact user-message timestamp unavailable), verbatim:
+
+> You have the right to adjudicate any open-call or fork that may arise from the workers in the session. If a worker is unresponsive, alert 0.0.0_AB_MSTR and they will manage the scenario as needed.
+
+CTO adjudicates session worker open calls and forks directly, records the decision and routes it to affected owners. An unresponsive worker is escalated to MSTR for management. This instruction does not itself declare any worker unresponsive, change an independent CVO verdict, or restart the held canonical cycles.
+
+First application: all three P/M/Y COOs encountered the canonical owned-paths guard refusing their directly assigned IRPT backend source paths. CTO measured the refusals and lands separate exact-owner path grants as non-grantee registry grantor. Existing AE permissions are preserved. The grants authorize source commits within the existing contract; they do not authorize deployment, general infrastructure edits, or cross-lane takeover. Each isolated worktree must consume the committed registry correction before retrying its ordinary safe-commit.
