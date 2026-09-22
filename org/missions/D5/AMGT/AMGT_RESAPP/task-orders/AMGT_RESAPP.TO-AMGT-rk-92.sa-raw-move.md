@@ -339,22 +339,45 @@ if probe.returncode != 0:
                     wz.extract(n, root)
                     placed.append(n)
     print("overlay (scratch root ONLY, not the zip):", placed)
-r = subprocess.run([vpy, "-I", os.path.abspath(".scratch/r92/ac7_inner.py"), root])
+rt = os.path.abspath(".scratch/r92/lambda_runtime_pkgs")
+import shutil, importlib.util as _u
+if os.path.isdir(rt):
+    shutil.rmtree(rt)
+os.makedirs(rt)
+for pkg in ("boto3", "botocore", "s3transfer", "jmespath", "dateutil", "urllib3", "six"):
+    spec = _u.find_spec(pkg)
+    src = os.path.dirname(spec.origin) if spec.submodule_search_locations else spec.origin
+    dst = os.path.join(rt, os.path.basename(src))
+    (shutil.copytree if os.path.isdir(src) else shutil.copy2)(src, dst)
+print("lambda runtime set (python3.11 provides these; the build never vendors them):", sorted(os.listdir(rt)))
+env = dict(os.environ, LAMBDA_RUNTIME_PKGS=rt)
+r = subprocess.run([vpy, "-I", os.path.abspath(".scratch/r92/ac7_inner.py"), root], env=env)
 sys.exit(r.returncode)
 ```
 
 `.scratch/r92/ac7_inner.py` (runs INSIDE the fresh venv, `-I`, sys.path = the unzipped artifact only):
 ```
-import json, os, sys
+import json, os, sys, importlib.util
 root = sys.argv[1]
-sys.path[:] = [root] + [p for p in sys.path if "site-packages" not in p and p != ""]
+runtime = os.environ["LAMBDA_RUNTIME_PKGS"]
+sys.path[:] = [root, runtime] + [p for p in sys.path if "site-packages" not in p and p != ""]
 os.chdir(root)
-try:
-    import boto3
-    print("FAIL: boto3 importable -- the interpreter is not isolated")
+import lib
+if not os.path.abspath(lib.__path__[0]).startswith(os.path.abspath(root)):
+    print("FAIL: lib resolves outside the artifact --", lib.__path__[0])
     sys.exit(2)
-except ImportError:
-    print("control: boto3 NOT importable (isolated)")
+print("control: lib resolves inside the artifact")
+for repo_only in ("lib.opal_naming", "lib.research.harvest.store", "pyarrow"):
+    try:
+        spec = importlib.util.find_spec(repo_only)
+    except ImportError:
+        spec = None
+    if spec is not None:
+        print("FAIL: repo-only module importable --", repo_only)
+        sys.exit(2)
+print("control: lib.opal_naming, lib.research.harvest.store, pyarrow NOT importable (isolated)")
+import boto3
+print("control: boto3 importable from the Lambda runtime set only --", os.path.abspath(boto3.__file__).startswith(os.path.abspath(runtime)))
 pool = os.path.join(root, "_closure_pool")
 os.environ["AMGT_POOL_ROOT"] = pool
 def put(key, obj):
@@ -400,7 +423,7 @@ pattern, recorded in the deliverable). An `OTHER-FAIL` caused only by fixture sh
   <criterion id="AC2" cell_refs="AMGT-rk-92"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/api/tests -q -p no:cacheprovider ; python -m pytest integrations/seekingalpha/tests -q -p no:cacheprovider ; python -m pytest integrations/bloomberg/research/tests/test_forecast_fallback.py -q -p no:cacheprovider ; python -m pytest lib/research/coverage/tests -q -p no:cacheprovider ; python -m pytest lib/research/harvest/tests -q -p no:cacheprovider</invocation><expect>one pytest call per directory (W85-S1 clash); each reads 0 failed; passed = the spawn-time baselines (api 191, seekingalpha 9, forecast_fallback 13, coverage 30, harvest 52, re-measured at spawn and printed) plus this cell's new arms; the only changed pre-existing assertions are the ones naming raw/seekingalpha or the land_raw default, each listed in the deliverable</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-92"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r92/ac3.py</invocation><expect>"source_objects 18 bytes 209361"; resolve 3 of 3 to BABA_US_Equity, BA_US_Equity, COST_US_Equity with resolution MEASURED; "target_objects 0"; CodeSha256 and ArtifactVersionId printed (the rollback targets; vsWWFL9j... and uiegBMbp... as M2 left them -- amendment of record); policy sha256 printed with COMPACT separators (39372755f1ad65ce... as M2 left it) and "statements 4"; freshness landed: bloomberg N (printed; 32 at the cut), seekingalpha 0 of 250, serp 0 of 250. Any source count other than 18, or a non-empty target, STOPS the order</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rk-92"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r92/ac4.py</invocation><expect>written from section 1 RULED item 2 as a file: after reading both signed halves, copies the 18 objects (12 endpoint objects via store.bronze_put + 6 article bodies via harvest_grammar.put_article_bronze) and reads each back: "copied 18 read_back_equal 18 missing 0", every new key printed and each one builder output; "raw_bloomberg_objects 119 unchanged; raw_seekingalpha_objects 18 unchanged" (nothing deleted)</expect></criterion>
-  <criterion id="AC7" cell_refs="AMGT-rk-92"><invocation>cd "$(git rev-parse --show-toplevel)" && bash infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh --build-only .scratch/r92/m3_build.zip 2>&1 | tail -3 && python .scratch/r92/ac7.py</invocation><expect>RUN BEFORE AC5 (the closure check, CTO msg 24137): the build prints "BUILD-ONLY: copied to .scratch/r92/m3_build.zip -- NOT uploaded" after its own drift check and "ISOLATED: OK"; then ac7.py prints "control: boto3 NOT importable (isolated)", the generated constants [BLOOMBERG_BRONZE_PREFIX, BRIGHT_DATA_SERP_BRONZE_PREFIX, FILING_ATTEMPT_STATE_PREFIX, REGISTRY_HASH, SEEKING_ALPHA_BRONZE_PREFIX], every ARM line "OK" (read_coverage_freshness, filing_attempt_reader, build_view_seekingalpha, handler_freshness_route 200, plus any arm added for a new served reader) and "RESULT ... import_fail 0 other_fail 0", exit 0. ANY IMPORT-FAIL = STOP before deploy with a BLOCKING row (disarm_owner 2.0.0_SA_COO~Z); nothing is uploaded or applied</expect></criterion>
+  <criterion id="AC7" cell_refs="AMGT-rk-92"><invocation>cd "$(git rev-parse --show-toplevel)" && bash infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh --build-only .scratch/r92/m3_build.zip 2>&1 | tail -3 && python .scratch/r92/ac7.py</invocation><expect>RUN BEFORE AC5 (the closure check, CTO msg 24137): the build prints "BUILD-ONLY: copied to .scratch/r92/m3_build.zip -- NOT uploaded" after its own drift check and "ISOLATED: OK"; then ac7.py prints (AMENDED by 2.0.0_SA_COO~Z after row W92-S1: the isolated interpreter carries EXACTLY the packages the python3.11 Lambda runtime provides -- boto3, botocore, s3transfer, jmespath, dateutil, urllib3, six -- and proves isolation by lib resolving inside the artifact and repo-only modules being unimportable) "control: lib resolves inside the artifact", "control: lib.opal_naming, lib.research.harvest.store, pyarrow NOT importable (isolated)", "control: boto3 importable from the Lambda runtime set only -- True", the generated constants [BLOOMBERG_BRONZE_PREFIX, BRIGHT_DATA_SERP_BRONZE_PREFIX, FILING_ATTEMPT_STATE_PREFIX, REGISTRY_HASH, SEEKING_ALPHA_BRONZE_PREFIX], every ARM line "OK" (read_coverage_freshness, filing_attempt_reader, build_view_seekingalpha, handler_freshness_route 200, plus any arm added for a new served reader) and "RESULT ... import_fail 0 other_fail 0", exit 0. ANY IMPORT-FAIL = STOP before deploy with a BLOCKING row (disarm_owner 2.0.0_SA_COO~Z); nothing is uploaded or applied</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-rk-92"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r92/ac5.py</invocation><expect>BEFORE the apply: the live scoped policy shows seeking-alpha/harvest/bronze/ in BOTH limbs (GetObject resource and ListBucket s3:prefix) -- "new_grant_present_both_limbs True" (CTO msg 24112); then the targeted plan (`terraform -chdir=infra/aws/terraform/harvest plan -target=...`; safe-apply accepts only apply) reads "Plan: 0 to add, 2 to change, 0 to destroy", AC7 has already passed on the zip being uploaded, and, after the apply, "raw_entry_live False bright_data_bronze_entry_live True statements 4"; post CodeSha256 equals the uploaded artifact's sha</expect></criterion>
   <criterion id="AC6" cell_refs="AMGT-rk-92"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r92/ac6.py</invocation><expect>live freshness route: "seekingalpha landed 3 of 250" naming exactly BABA_US_Equity, BA_US_Equity, COST_US_Equity, each stamp equal to that name's newest copied stamp; bloomberg landed equal to AC3's count; serp 0 of 250; 13 of 13 GET routes' status codes equal to AC3's pre-act census; the deploy-ledger entry closed and its sentinel removed</expect></criterion>
 </proof_of_spec>
