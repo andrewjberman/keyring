@@ -497,6 +497,29 @@ without this item beside it.
    "spec_asserts": "A qa_local run is the QA instrument for a pin (CTO ruling 015625Z): 'runs the FULL build with dry_run semantics' -- read as: what qa_local produces is what the scheduled production fire would produce, minus the S3 writes.",
    "world_is": "qa_local is NOT vintage-equivalent to production for cottonwood: its dry_run branch pins to the last LANDED gold dim partition and never refreshes the pair's sidecar, so a qa_local run on a day whose cottonwood partition has not landed reads a trailing-None frontier and a stale sidecar that the production branch would not. A qa_local crash on that shape is a LATENT-READER finding, not a production-fire prediction; this seat read it as the latter and recommended a rollback on it. The two readers were real defects (both fixed in the fix-forward pin), but the 13:30Z production fire on 74d7efe144 would have reached the same two readers only if the production cottonwood build had ALSO left a trailing None, which it does not by construction (it stages today's partition first).",
    "notes": "DISARM (this seat): (a) the fix-forward pin 5991626d4f deployed under re-signed halves and its first REAL manual invoke returning >= 15 of 16 with cottonwood + global present (the sidecar branch decides 15 vs 16), which shows both readers pass on production vintage; (b) the qa_local limitation stated in the fix-forward packet so no later seat reads a qa_local cottonwood crash as a production prediction. NOT chased here: whether qa_local's dry_run branch should stage today's partition to a local path (a CTO/COO design call -- it would make qa_local vintage-faithful at the cost of a real bdmp build per QA run)."
+ },
+ {
+   "id": "MDPF_COTREMEDIATION-S21",
+   "project": "MDPF_COTREMEDIATION",
+   "fabric": "laptop",
+   "surfaced_by": "1.0.0_SA_CTO",
+   "surfaced_at": "2026-09-22T17:45:00Z",
+   "one_line": "S20 names a disarm_owner and a two-part DISARM condition, both of which are now MET and measured -- but S20 is an INVESTIGATION row, and the investigation schema has no disarm block at all, so the act its own notes describe has no clock to write; 3.0.0_SA_CVO~B ran the schema checks and REFUSED the write rather than widening it into an L9 workflow nobody asked for.",
+   "class": "OBSERVATION",
+   "hazard_standing": "INERT",
+   "disarm_owner": "1.0.0_SA_CTO",
+   "disposition": "UNDER_INVESTIGATION",
+   "grounding": {
+     "status": "GROUNDED",
+     "evidence": [
+       "S20 DISARM (a) MET: pin 5991626d4f live 15:19:28Z under re-signed halves (CTO @9e7f36b904, CRO @2ba4230f64 on packet blob 6325fded1415); the ONE real manual invoke 15:22:22Z-15:23:07Z returned status green, 0 errors, 16 of 16 with cottonwood (assignment_date 2026-09-22) and global (reconciliation PASS) both present, above the >= 15 floor. Manifest portal/gold/mdpf/_manifests/2026-09-21/20260922T152309Z.json. Ledger 20260922T1514Z_mdpf-cottonwood-fixforward-20260922 CLOSED 8 of 8 @c52c066071. Andrew-direct ~17:1xZ, record @465d591b25: visual smoke closed successfully. Filed by 0.7.0_AE_CloudOps~V as the disarm_owner (msg 99566); THIS SEAT DID NOT RE-DERIVE the invoke or the manifest, and says so.",
+       "S20 DISARM (b) MET: the fix-forward packet s.3 (blob 6325fded1415 @702d8154ba) states in its own words that qa_local IS NOT VINTAGE-FAITHFUL FOR COTTONWOOD and enumerates the reachable outcomes; both never-widen halves signed s.3. Re-derived by this seat: git hash-object of the packet returns that blob.",
+       "THE CARRIER GAP, measured by 3.0.0_SA_CVO~B on its own instruments (msg reply to 99567, in-memory jsonschema): S20 at INVESTIGATION_v1.md:478-499 is VALID as it stands; setting hazard_standing to DISARMED is REFUSED (enum is ARMED/INERT); adding disarm.state/owner/at is REFUSED (additionalProperties false). Those clock fields are legal on remediation_row.schema.json, which is a DIFFERENT carrier, and the flat project directory holds only this investigation file."
+     ]
+   },
+   "spec_asserts": "A row that names a disarm_owner and a DISARM condition can be disarmed on that carrier when the condition is met: the owner acts, the CVO writes the clock (surprise-row-gate.py:111, R-15).",
+   "world_is": "That division of labour assumes a REMEDIATION row. On an INVESTIGATION row the disarm_owner field is accepted and the clock fields are not, so a met condition has nowhere to land: the owner can act and the CVO cannot write. S20 therefore stays ARMED with its condition MET and measured, and the ARMED standing no longer means what a reader would take it to mean. The remedy is NOT a silent promotion of S20 into a remediation workflow, which is what refusing the edit correctly avoided.",
+   "notes": "OWNER 1.0.0_SA_CTO. THE CHOICE THIS ROW MAKES: record the met condition HERE, on the carrier that can hold it, rather than manufacture an L9 adjudication for a project with no live CVO lane and no remediation carrier. A reader of S20 must read this row beside it. TWO THINGS NOT CLAIMED: (1) this row does not disarm S20 -- S20 reads ARMED and only a carrier that can hold a clock can change that; (2) no seat has independently certified the invoke evidence, so the (a) figures are CloudOps~V's measurement carried, not corroborated. STILL OPEN AND SEPARATE, as S20 parks it: whether qa_local's dry_run branch should stage today's partition to a local path, a CTO/COO design call. RAISED FOR THE ESTATE, not for this project: if an investigation row may name a disarm_owner at all, either the investigation schema needs a clock or the field should be refused at filing time -- otherwise every such row ends where this one did. That is a schema question for the gate's owner and is not decided here."
  }
  ]
 ```
