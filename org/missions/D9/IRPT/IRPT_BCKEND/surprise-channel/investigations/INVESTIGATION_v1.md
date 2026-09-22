@@ -8362,3 +8362,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not self-graduated per the CTO's ruling on row S117 (repeated in this order's BOUNDS): this worker states its read and leaves disposition to the CVO. If a different implementation is required, the remedy is confined to isOwnDeadlineMessage's definition and does not touch arm (b)'s cleanup-reporting fix, which is independently verified correct against the CVO's own diagnostic with no reading ambiguity."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W14-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~14",
+  "surfaced_at": "2026-09-22T13:05:00Z",
+  "one_line": "TO-IB-rtq-1 IDENTITY line says 'python-jose and cryptography are already estate dependencies -- confirm, do not add a new dependency without filing a row first.' cryptography (48.0.1) and PyJWT (2.11.0, NOT python-jose) were present in this worktree's local `py -3.12` interpreter; `python-jose` itself was NOT installed (`ModuleNotFoundError: No module named 'jose'`), so the criterion's own invocation (`py -3.12 -m pytest test_render_mint.py -v`, which imports `from jose import jwt` per cell (e)'s mandated `jose.jwt.decode`) could not have run as written. Confirmed python-jose[cryptography]==3.3.0 IS a genuine estate dependency (declared, not merely referenced, in three other lambdas' requirements.txt: opal_pm_upload_urls, opal_pm_snapshot_handler, portfolio_optimization_loader) so this is not a NEW dependency; installed it into the local interpreter via `py -3.12 -m pip install \"python-jose[cryptography]==3.3.0\"` so the named criterion invocation runs. Filed rather than treated as blocking because the order's own text anticipates exactly this branch ('confirm... it is already an estate dependency') and names the row-filing path for the OTHER branch (a genuinely new dependency), which this is not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "py -3.12 -c \"import jose\" at session start: ModuleNotFoundError: No module named 'jose' (this worktree, C:\\tmp\\wk-irpt-17-14)",
+      "py -3.12 -m pip list | grep -i -E 'jose|jwt|cryptography': cryptography 48.0.1, PyJWT 2.11.0 -- no python-jose row",
+      "infra/aws/lambda/opal_pm_upload_urls/requirements.txt:2, infra/aws/lambda/opal_pm_snapshot_handler/requirements.txt:2, infra/aws/lambda/portfolio_optimization_loader/requirements.txt:5 -- all pin python-jose[cryptography]==3.3.0",
+      "py -3.12 -m pip install \"python-jose[cryptography]==3.3.0\" -- Successfully installed ecdsa-0.19.2 python-jose-3.3.0; py -3.12 -c \"from jose import jwt\" -> OK jose (this session, post-install)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IDENTITY AND WORKTREE: 'python-jose and cryptography are already estate dependencies -- confirm, do not add a new dependency without filing a row first.'",
+  "world_is": "cryptography was locally importable; python-jose was not, though it IS a declared estate dependency elsewhere in the repo and cell (e) requires jose.jwt.decode specifically (not PyJWT, a different library with an incompatible decode signature). A worker in a fresh worktree with only cryptography pre-installed cannot run this criterion's own named invocation without installing python-jose first.",
+  "notes": "No new dependency was added to the estate; python-jose[cryptography]==3.3.0 was installed into this worktree's local py -3.12 interpreter only, matching the exact pin three other lambdas already declare. Not self-graduated; carried for the CVO/CTO in case a future worker slot's environment needs the same install noted as a precondition rather than re-discovered."
+}
+```
