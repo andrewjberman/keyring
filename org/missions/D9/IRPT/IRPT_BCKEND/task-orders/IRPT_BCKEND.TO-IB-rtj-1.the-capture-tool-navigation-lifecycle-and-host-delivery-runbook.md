@@ -1,0 +1,79 @@
+# TO IRPT_BCKEND.TO-IB-rtj-1 -- THE CAPTURE TOOL, SECOND REPAIR: THE COMPLETE NAVIGATION LIFECYCLE, AND THE HOST-DELIVERY RUNBOOK: round 9's L9 (`3.0.0_SA_CVO~B`, `ADJUDICATION_v5.md` @a62b69f6d3) found R91-AC7 FAIL -- the first-pass repair (`IB-rti-1`) checks the FINAL URL of each navigation but discards the first navigation's RESPONSE, so a portal -> foreign-origin -> portal redirect hop, followed by valid authentication, still writes a session and reports success (row `IRPT_BCKEND-C-S153`). A second row, `C-S156`, found the README's runbook starts the host and runs the wrapper without first delivering or hash-verifying the fixed bytes, so a human following it today would run the OLD tool. Both gate the amended un-park condition (1) on `IB-rti-6`'s face. This cell repairs both, merged on the CTO's invitation (write-path overlap, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_9_20260922.md` @9d4052728b, round-10 items 1-2).
+
+<to_id>IRPT_BCKEND.TO-IB-rtj-1</to_id>
+<project>IRPT_BCKEND</project>
+<issued_to>0.9.0_WK_IRPT_BCKEND~13</issued_to>
+<issued_by>2.0.0_SA_COO~B</issued_by>
+<issued_date>2026-09-22</issued_date>
+<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-22 (round 10, chain A, decomp v0.14 s.R10.1) in the ONE round-10 issuance</status>
+
+**Directive:** D9 | **Fabric:** laptop | **Round:** 10 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 (no addendum) | **Decomp cell:** `IB-rtj-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.14, s.R10.1) | **outcome_ref:** FWD-2 (serving; the rti-6/rth-2 chain's remaining blocker) | **Rows:** `IRPT_BCKEND-C-S153` (R91-AC7 FAIL), `IRPT_BCKEND-C-S156` (runbook gap), `IRPT_BCKEND-W9-S1` (allowlist derivation, non-blocking carry) | **Ruling:** the CTO's round-9 analysis @9d4052728b, items 1-2 | **Reference (READ-ONLY, never edited by this cell):** `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R9_CAPTURE_REDIRECT_DIAGNOSTIC.cjs` (six arms: same-origin positive; initial foreign hop returns to portal; initial final-URL foreign control; verification foreign hop returns control; HTTP 500 refusal control; marker-absent refusal control) and `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R8_CAPTURE_DIAGNOSTIC.cjs` (the round-8 diagnostic, must still pass)
+
+---
+
+## IDENTITY AND WORKTREE
+
+- **Serial:** `0.9.0_WK_IRPT_BCKEND~13`. Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_IRPT_BCKEND~13;`.
+- **Worktree:** the issuer creates `/c/tmp/wk-irpt-10-13` on branch `wk-irpt_bckend-10-13`, cut from CLOUD HEAD AFTER this order's own commit lands, and verifies THIS FILE is present in it before spawning. First act: `cd /c/tmp/wk-irpt-10-13`, `git rev-parse --abbrev-ref HEAD`, `test -d org && test -d .tools && echo TREE-OK`, THEN `test -f org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtj-1.the-capture-tool-navigation-lifecycle-and-host-delivery-runbook.md` -- absent means STOP and file a row exactly as `IRPT_BCKEND-W7-S1` did, never proceed on content read from outside the worktree. Write `org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial` before anything else. Repo root = the worktree; make every path below absolute by prefixing `/c/tmp/wk-irpt-10-13/`.
+- **Commit:** `bash .tools/safe-commit.sh --author "0.9.0_WK_IRPT_BCKEND~13 <0.9.0_WK_IRPT_BCKEND~13@opal.agent>" -F <msgfile> -- <paths>`, `<msgfile>` by the Write tool. Branch only; never push/merge/rebase/`checkout --`/`clean`. Capture `safe-commit.sh` output to a file, never `| tail`, never with `$( )`; if it fails, ask `git log` whether it committed -- never read its prose.
+- Python `py -3.12`; Node via the host's `node`; AWS via `.tools/aws`. A recursive grep/find in Bash is rail-DENIED and a denial aborts the WHOLE call: use the Read/Grep/Glob tools and keep a gated read in its own call.
+
+## THE CELL
+
+- **(a) BASELINE FIRST -- reproduce C-S153 before touching anything.** Run `3.0.0_SA_CVO~B`'s round-9 redirect diagnostic UNCHANGED against the UNCHANGED published source (`node org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R9_CAPTURE_REDIRECT_DIAGNOSTIC.cjs`) and print all six cases. The "initial foreign hop returns to portal" case must show `writes=1, success=true` at your HEAD (the counterexample) while "verification foreign hop returns control" refuses. Also run the round-8 diagnostic (`IRPT_BCKEND_R8_CAPTURE_DIAGNOSTIC.cjs`) and confirm its three cases still refuse/pass as `IB-rti-1` left them. **If either does NOT reproduce as stated, STOP with a row** -- a fix for a defect you cannot see is not a fix.
+- **(b) THE REPAIR -- the complete navigation lifecycle, not the final URL.** Every `page.goto` response -- the INITIAL navigation and EVERY verification/interactive-interval navigation -- must itself be checked for same-origin-or-refuse, not only the chain's final URL. A hop to a foreign origin at ANY point in ANY navigation's redirect chain, first or last, refuses before any further action. State the exact mechanism (e.g., walking `response.request().redirectedFrom()` from every `page.goto` return, not only the verification one) and cite the changed lines `path:line @ <commit-ish>`. Do not weaken or remove any existing check (S125 instance-id validation, S126 marker, the vendor-list equality); this arm only closes the hole the diagnostic found.
+- **(c) FOLD IN W9-S1 -- the allowlist, derived not typed.** Replace the helper's single hand-typed `ALLOWED_ORIGINS=['https://opalinvest.dev']` with a value DERIVED from the renderer's own configured origin (read `IRPT_PORTAL_ORIGIN` at `infra/aws/terraform/investor-reporting/export/ssm.tf:84`, or the equivalent the renderer actually reads at runtime -- cite the exact source, `path:line @ <commit-ish>`), OR keep the typed value and add a battery arm that FAILS when it drifts from that source. Either way, the battery must be able to detect a divergence, not just assert equality against itself. No DEV or localhost origin is ever admitted (CTO ruling msg 99312, rti-1 W9-S1: "A captured authenticated session is a credential. Admitting a local or DEV origin would let a production session be written from a non-production page.").
+- **(d) THE REGRESSION AND THE POSITIVE CONTROL.** Re-run `3.0.0_SA_CVO~B`'s round-9 diagnostic UNMODIFIED against the repaired source: all six cases must now match their intended shape (the two refusal-control cases refuse; the initial-foreign-return case now ALSO refuses; the same-origin positive still writes exactly 1 and succeeds). Add to your own battery a SINGLE-DIFFERENCE regression pair: one case identical to the "initial foreign hop returns to portal" counterexample except for the ONE property your fix now checks (so the pair demonstrates the fix's exact discriminating power, not just that the composite scenario now refuses), plus a fresh authenticated-positive control (2xx, same origin throughout, no password input, marker present) that must still write exactly 1 and succeed -- a tool that refuses everything is not a repair.
+- **(e) THE HOST-DELIVERY RUNBOOK (C-S156).** Edit `infra/aws/ec2/investor-reporting-export/README.md`'s session-establishment steps so that BEFORE the wrapper is ever invoked, the human runbook: (i) delivers the fixed `capture-session.cjs`/`capture-session.sh` bytes to the host by an EXPLICIT, PRINTED step (e.g. `aws s3 cp` of exactly the two published keys under `s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-export/` to their host paths); (ii) computes and PRINTS `sha256sum` of both host files; (iii) states the exact expected hashes (the current published packet's, cited by blob) and instructs the operator to STOP if they do not match. This step lives in the runbook the human actually follows, not in the render-command document (that document's sync is unscheduled and is not the wrapper's own path -- `ssm.tf:16-17,43-51`; `instance.tf:80-111`'s bootstrap has no capture sync). No render is used to side-load the tool. State clearly that this step runs EVERY time before a capture, not only once.
+- **(f) THE PACKET, THEN THE PUBLISH.** Write a NEW never-widen packet (blast radius = exactly the files this cell changes that the host runs -- `capture-session.cjs`/`.sh`; the README is source-only, not published; hashes are GIT-BLOB bytes, `git rev-parse HEAD:<path>`). Commit it. **STOP here unless BOTH halves (`2.0.0_SA_COO~B` and `1.0.0_SA_CTO`) are at HEAD naming this NEW packet's blob** -- the prior rti-1 packet and its signed halves do NOT cover this repair; a new blob needs new halves. With both: open the deploy ledger entry BEFORE the act and commit its sentinel, publish the git-blob bytes to the same S3 prefix, read each object back and compare its sha256 to the packet's blob-derived table, close the entry. **The host is STOPPED and this cell does NOT start it** -- no on-host byte readback exists here; say so, never claim host-side verification.
+
+## DELIVERABLE
+The baseline reproduction (both diagnostics); the repaired `capture-session.cjs`/`.sh`/`README.md`; `battery_ib_rtj_1.py` and its output including the single-difference regression pair and the positive control; the two diagnostics re-run post-repair, side by side with the baseline; the packet; the ledger entry and S3 readback IF both halves land; the result.md; the proof instance.
+
+## BOUNDS
+- **NO host start or stop, NO live login, NO credential, NO MFA automation, NO real session file, NO network call to the portal.** Everything is exercised under stubs.
+- No allowlist widening beyond what (c) derives or verifies; no DEV/localhost origin, ever.
+- Never weaken an existing S125/S126/S127 check to make a new case pass.
+- **Surprises:** one row per failed premise / wrong path / absent capability at `../surprise-channel/investigations/INVESTIGATION_v1.md`, id `IRPT_BCKEND-W13-S<k>` starting at 1, appended as a NEW fenced JSON block (CRLF, UTF-8, `grounding` AND `disposition` required, full ISO `surfaced_at`, `disarm_owner` a SEAT SERIAL when ARMED); validate every fence still parses; then keep working. Never edit this face, never widen the order.
+
+<expected_criteria>R101-AC1, R101-AC2, R101-AC3</expected_criteria>
+<criterion id="R101-AC1" cell_refs="IB-rtj-1"><invocation>timeout 600 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/battery_ib_rtj_1.py --arm redirect</invocation><expect>IBR101-REDIRECT-DIAGNOSTIC-ALL-SIX-CASES-MATCH-INTENT</expect></criterion>
+**`R101-AC1` -- PASSES BY OUTPUT:** the round-9 redirect diagnostic, run UNCHANGED against the repaired source, prints all six cases and every case matches its intended shape (both foreign-hop cases now refuse; the positive case writes exactly 1 and succeeds); the round-8 diagnostic's three cases are printed beside it and still match theirs; the single-difference regression pair and the fresh positive control are printed with their write/success counts.
+
+<criterion id="R101-AC2" cell_refs="IB-rtj-1"><invocation>timeout 300 py -3.12 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/battery_ib_rtj_1.py --arm runbook</invocation><expect>IBR101-RUNBOOK-DELIVERS-AND-VERIFIES-BEFORE-CAPTURE</expect></criterion>
+**`R101-AC2` -- PASSES BY OUTPUT:** the README's session-establishment section, read by the battery, contains an explicit delivery step (the two keys, the exact S3 source) and an explicit hash-verification step, BOTH textually BEFORE the step that invokes the wrapper; the battery prints the exact line numbers and the exact command text found.
+
+<criterion id="R101-AC3" cell_refs="IB-rtj-1" judgment="true"/>
+**`R101-AC3` -- JUDGMENT, RECORDED AND NOT SELF-GRADED. State for `3.0.0_SA_CVO~B`.** PASS iff ALL of: (i) the navigation-lifecycle fix genuinely closes C-S153 -- every response in every navigation is checked, not only final URLs, cited `path:line @ <commit-ish>`; (ii) the runbook fix genuinely closes C-S156 -- delivery and verification are unconditional and precede every capture, not a one-time or optional step; (iii) nothing else regressed -- R91-AC1..AC6's arms (command, readiness, origin, diagnostic, packet) still hold under the SAME battery shape re-run against the repaired source. FAIL if any of (i)-(iii) rests on the absence of a negative. NOT_EVALUATED only if the repair did not occur.
+
+<placeholders>NONE</placeholders>
+
+<paths>
+org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtj-1.the-capture-tool-navigation-lifecycle-and-host-delivery-runbook.md
+org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
+infra/aws/ec2/investor-reporting-export/
+infra/aws/terraform/investor-reporting/export/ssm.tf
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/
+</paths>
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/IRPT/IRPT_BCKEND/decompositions/IRPT_BCKEND_DECOMP.md</decomp_doc> v0.14, cell `IB-rtj-1` (s.R10.1).
+<owned_cells>IB-rtj-1</owned_cells>
+</decomp_ref>
+
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- nothing scheduled or fired by this order.
+comp-iam: DECLARED-NOT-APPLICABLE -- no IAM grant is read or exercised by this cell; the publish arm reuses the existing `IB-rti-1` publish role/mechanism, unchanged.
+comp-adversary: DECLARED-NOT-APPLICABLE at the cut; the assignee's instrument at report time.
+lane: the `<paths>` block above IS the grant plus the two tree-convention grants (`deliverables/<serial>/`, this order's own face). A path you need that is not listed is a BLOCKING row, never an override.
+</preflight>
+
+<proof_of_spec>
+Criterion ids minted at cut: R101-AC1, R101-AC2, R101-AC3 (judgment). Instance at
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IRPT_BCKEND.TO-IB-rtj-1.the-capture-tool-navigation-lifecycle-and-host-delivery-runbook.proof_of_spec.json`
+(the TASK ORDER'S OWN BASENAME stem), per `org/standards/PROOF_OF_SPEC.schema.json`: one acceptance row per id, `criterion_verbatim`, `invocation`, `output_evidence`, `denominator` beside every count, `expect` from this face, R-40 content hashes PINNED TO THE COMMIT THAT CARRIED EACH ARTIFACT; the judgment row under `UNVERIFIABLE-BY-INSTRUMENT` naming `3.0.0_SA_CVO~B`. Validate with `py -3.12 .tools/proof-of-spec-check.py <instance> --governing-order <this face path>` BEFORE any `complete` flip; rc 0 AND `R101-AC1` AND `R101-AC2` PASS-by-output, then flip `<status>` to `complete` and commit instance and flip together. A STOP (a precondition unmet, e.g. no signed halves for a new packet) leaves the order at `pending` with the BLOCKING row and is the final report.
+</proof_of_spec>
+
+**REPORT:** your FINAL MESSAGE, once, in the `WORKER REPORT` shape (branch tip, each criterion with its deciding output line and denominator, proof-of-spec-check rc, every row id filed with its class, anything you could not do and why).
+</content>

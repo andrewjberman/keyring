@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 9,
-  "decomp_version": "0.13",
+  "round": 10,
+  "decomp_version": "0.14",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -65,13 +65,46 @@
   "round8_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_8_20260921.md @8e0f9a127e (msg 99299)",
   "round8_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v2.md @9d7a369b38",
   "cells_round9": 6,
-  "cell_id_shape_round9": "IB-rti-<n>"
+  "cell_id_shape_round9": "IB-rti-<n>",
+  "round9_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_9_20260922.md @9d4052728b (msg 99334; corrects the CTO's own rti-6 park ruling)",
+  "round9_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v3.md @a62b69f6d3",
+  "cells_round10": 4,
+  "cell_id_shape_round10": "IB-rtj-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R10. ROUND 10 -- THE RECUT ON THE ROUND-9 ANALYSIS (@9d4052728b, msg 99334; slug @a62b69f6d3; v0.14, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 9 closed 0 of 91 open, R92-AC3 PASS, R93-AC3 NOT_EVALUATED, **R91-AC7 FAIL** (`3.0.0_SA_CVO~B`'s round-9 L9, row `IRPT_BCKEND-C-S153`: the capture helper's first `page.goto` discards its response, so a portal -> foreign-origin -> portal redirect hop followed by valid authentication still writes a session and reports success). A second finding, `C-S156`, showed the human runbook starts the host and runs the wrapper without first delivering or hash-verifying the fixed bytes, so a human following it today would run the OLD tool. **The CTO's own round-8 rti-6 park ruling that called the capture tool "fixed" and the ask to Andrew "unblocked" was WRONG on both counts and is corrected in the round-9 analysis; the ask was RE-HELD.** No PRD addendum: every gap is a cell under an existing outcome, and the capture defect is a tooling defect, not an endpoint mis-statement. FWD-2 stays SPLIT/NOT_REALIZED; FWD-11 backend ADVANCED/overall NOT_REALIZED; nothing claims REALIZED. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R10.1 The rectangle (4 cells, id shape `IB-rtj-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rtj-1` | CAPTURE HELPER SECOND REPAIR + HOST-DELIVERY RUNBOOK (C-S153/C-S127 merged with C-S156, one cell on the CTO's invitation to merge on write-path overlap -- both live under `infra/aws/ec2/investor-reporting-export/`, both gate the same un-park condition, and a worker repairing the code is the natural author of the runbook step that delivers it). Guard the COMPLETE navigation lifecycle (the initial response, every hop, the interactive interval), not just the final URL. Acceptance: `3.0.0_SA_CVO~B`'s redirect diagnostic (`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R9_CAPTURE_REDIRECT_DIAGNOSTIC.cjs`) unmodified refuses every counterexample arm; the round-8 diagnostic still passes; a single-difference initial-foreign-return regression plus an authenticated-positive control; the README's runbook DELIVERS the fixed bytes to the host and VERIFIES both hashes BEFORE any capture or credential entry, as an explicit printed step. No allowlist widening, no MFA automation; fold in W9-S1 (derive the allowlist from `IRPT_PORTAL_ORIGIN`, `ssm.tf:84`, or fail on drift, never a typed/widened value). A new publish needs its own packet + both never-widen halves at HEAD. | WK~13 | FWD-2 (serving; the rti-6/rth-2 chain's remaining blocker) | -- |
+| `IB-rtj-2` | L4 BOUNDED TEST PRINCIPAL (W11-S1; CTO ruling msg 99312 CALL 1): one NON-EXEMPT role, created through Terraform (`safe-apply`), matching neither `*-inf-*` nor `*-cot-*` (name printed beside both `ArnNotLike` lists). Its ONLY grant: `s3:ListBucket` on `opal-data-inflection` + `opal-data-cottonwood` plus one unfenced control bucket. Positive arm on the control; negative arm on each fenced bucket, the deny attributed to the resource policy's explicit deny (CloudTrail or S3 error context), never the bare code. The role is DESTROYED in the same session; deletion verified by `get-role` -> `NoSuchEntity`. Change-management ledger entry opened at start, closed at completion. **SIGN-OFF: two halves, CTO + CRO** (the CloudOps~V precedent), before the Terraform apply -- this supersedes the CTO's 99299 "no grant is widened" line for this ONE bounded, self-deleting role only. Addressed as a task order to the LIVE Tier-2 seat, never a new v3 worktree (LD-0529; no new lane seated -- `0.7.0_AE_CloudOps~V` is already live). | `0.7.0_AE_CloudOps~V` | FWD-11 | -- |
+| `IB-rtj-3` | METADATA REPAIR (C-S154): the rti-1 proof instance named two FIRST-PASS blobs (battery, publish-output) after a second pass replaced both; `declared_exclusions` and `compiler_tools` still said arm (f) never ran. **ISSUER-DISCHARGED AT THE CUT, already complete -- no worker order:** a pure record-accuracy fix using facts the CVO already established, same pattern as `rti-4`/`rti-5`. Re-verified both blobs against `git rev-parse HEAD:<path>` before editing; no criterion verdict changed; `proof-of-spec-check` re-run clean (rc 0, 7 rows, 0 violations); an issuer addendum appended to the worker's result.md (prior text retained) rather than a rewrite. Committed @`809b35f48d` under the audited singular `GIT_COMMIT_AUTHOR_OVERRIDE` (the owning worker `0.9.0_WK_IRPT_BCKEND~9` is disbanded; `deliverables/<SERIAL>/**` is owned by the serial in the path, never the issuer, per `owned-paths-validate.py` clause 4 -- discovered this round, first use of the override in this project). | issuer (complete) | records integrity | -- |
+| `IB-rtj-4` | SOURCE-MAP NOTE CORRECTION (W10-S3): `lambda-source-map.json`'s `_staged_from_note` on the `irpt-ycharts-generate` entry still says no source exists for the two members, beside the two `staged_from` pins (rti-2) that now resolve them. Correct the note only -- no widened deployment scope, no copy of served files. Grant: exactly this one file, `<paths>`-scoped, matching the `rti-2`/`W10-S2` precedent (a v3 worker's write surface is its order's `<paths>`, not `.owned-paths.yaml`'s `YANG_PIPELINE_DEPLOY` lane, which does not enumerate a worker). | WK~14 | records integrity | -- |
+
+### R10.2 Edges and fanout
+
+Chains (an edge chain is a chain; an issuer-discharged cell is not): **A** `rtj-1`; **B** `rtj-2`; **C** `rtj-4`. `rtj-3` is discharged at the cut (already complete, above) and carries no chain. **fanout: 3 of 3 chains, cap 8.** Disjoint write surfaces (capture-tooling directory + README; a new IAM role + two bucket policies, read/destroy only; one JSON note) -- A, B, C run in parallel. B is issued to an existing live Tier-2 seat, not a new worktree.
+
+### R10.3 Bounds carried (every order)
+
+The forward-looking-criterion bar; R-40 (content hash per artifact read AT the event); S56 vintage pins `path:line @ <commit-ish>`; NO LIVE VENDOR CALL; no host is started or stopped by any cell (rtj-1 included -- the runbook is written and battery-tested under stubs, never exercised against the real host by the worker); a served-property change (a new publish, a Terraform apply) is packet + both never-widen halves BEFORE the act; **rtj-2's role is the ONE exception to "no grant widened" this round, self-deleting, CTO+CRO halves, never a precedent for any other principal.** rti-6 stays PARKED; its amended un-park condition (1) is this round's `rtj-1`, written onto its face @[this round's issuance commit].
+
+### R10.4 Not decided here
+
+Whether `rtj-1`'s repair is sufficient to re-open the ask to Andrew (the CTO's call, on the measured battery result, never assumed by the cut); the ycharts redeploy (`W10-S2`, stays PARKED, its own un-park condition unchanged); `S116`/`W1-S47` (CTO's own lane); break-glass role deletion (CRO/Andrew); the 159 older stale rows (no bulk close); a `listAnalysisRequests` route (only if an FWD needs it, none does today).
+
+### R10.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-9 analysis's round-10 wave-1 list (5 items: capture repair, host-delivery runbook, L4 bounded principal, metadata repair, source-map note) MINUS the ONE merge the CTO invited and this seat took (capture repair + host-delivery runbook -> one cell, `rtj-1`, on write-path overlap) = 4 cells, 0 uncovered, 0 invented by this seat. SAME GRAIN: each cell is one repairable defect or one bounded measurement act. INTENT: `rtj-1` repairs, `rtj-2` measures-then-destroys (a bounded, self-deleting test), `rtj-4` corrects a record. STATE COHERENCE: `rtj-3`'s fix moves no criterion verdict (Rule 22's STATE axis: DESIRED ≠ APPLIED ≠ EXERCISED -- the artifact citations were wrong, the underlying PASS/FAIL facts were not); `rtj-2`'s role, once destroyed and verified `NoSuchEntity`, leaves no standing grant.
 
 ## R9. ROUND 9 -- THE RECUT ON THE ROUND-8 ANALYSIS (@8e0f9a127e, msg 99299; slug @9d7a369b38; v0.13, 2026-09-21, `2.0.0_SA_COO~B`)
 
