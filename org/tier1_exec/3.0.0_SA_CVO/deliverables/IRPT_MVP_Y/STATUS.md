@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:20 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:25 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -131,6 +131,20 @@ Retain that exact changed-value/unchanged-token negative and original-value
 positive for the pinned retest, with source-verified disclosure/chart coverage
 as handed off. No report publication/live action reported. Y5 certification and
 integrated acceptance remain unevaluated; no prior unrelated closure reversed.
+
+Exact CVO~M 222439Z notice reports bounded pending-X10 registry review
+`eb00a0c6b2`, `IRPT_MVP_M/REGISTRY_REVIEW_587E.md`, candidate587e782bc6 and
+generation evidence3c14153eeb. Peer-reported: targeted60 PASS; validate0refusals/
+33warnings; baseline/candidate naming88PASS with identical5FAIL; generator
+inventory20/20 hashes match; five Python ASTs equal; exactly four IRPT Terraform
+mappings; existing scope fields and five other registry blobs unchanged.
+Independent peer probe18/18, reporting writers36/36 refused and36 private
+non-writable previews. Policy SHA
+`cb9c4e6e9541fefc315f57844490309ad15c9735593fe3a165b067a3087dc220`.
+These are attributed results, not rerun by Y or combined with Y test counts.
+Owner signoff/integration and actual reader/writer enforcement remain pending;
+full S7 NOT_EVALUATED. No activation/provisioning/deploy/source overwrite follows.
+R-P07 remains an open consumer-review dependency. No ACK requested.
 
 ## Next executable review and dependencies
 
