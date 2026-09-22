@@ -276,7 +276,7 @@ naming AC0's baselines, the suite counts before and after, and AC4's lines.
    filing roster. The run cell names the CLI invocation, a credit cap and `--since`.
 6. **Pin:** `4183e30531`. Re-pin to the issuance commit if s.33 moves anything under `lib/`.
 
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~99</slot>
 <fabric>site-z</fabric>
