@@ -12443,6 +12443,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The check only fires for crosswalk.py's own --write-pool CLI call; add_security.py's registration flow (the actual production entry point rk-114's amendments shipped through) and build_universe.py's union write still call write_pool() with no document=, so a nonconforming document built by either can still reach the pool unrefused. Making write_pool() validate UNCONDITIONALLY from the payload/key alone was tried and rejected: it also catches test_crosswalk.py's PoolVintageRead.test_the_resolved_key_is_never_persisted_into_a_later_vintage (a WALL test that puts a deliberately minimal, nonconforming document to exercise write_pool's own S3 put/read-back discipline) and build_universe.py's union document (a different schema entirely), breaking both without a <paths> grant to fix them.",
     "disarm_owner": "2.0.0_SA_COO~Z: wire add_security.py's `_persist_registration_and_pool` (and, if ever schema-checked, build_universe.py's union write against its OWN schema) to pass `document=document` to `crosswalk.write_pool`, in a cell whose <paths> grants those files.",
     "notes": "ARMED, not INERT: add_security.py's --write-pool path can still publish a document that fails crosswalk.schema.json today, exactly as before this cell, because the guard this cell built is not reachable from that call site. Not a defect in this cell's own code or tests -- AC0-AC4 all pass over the <paths> this cell was granted. Recorded because the issuer's own words ('the next nonconforming document is refused at build') read as a universal claim about every pool write, and only one of three production call sites is actually wired by this cut."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W120-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~120",
+    "surfaced_at": "2026-09-22T20:40Z",
+    "one_line": "W120-S1's add_security.py half is resolved by ISSUER AMENDMENT 1 @ae4b5d95ba: add_security.py:180 now passes document=document (crosswalk.build_crosswalk()'s own output) to crosswalk.write_pool, so the actual production path rk-113's amendments shipped through is now gated exactly like crosswalk.py's own --write-pool CLI. build_universe.py's half is NOT resolved the same way -- see AMGT_RESAPP-Z-W120-S3.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/add_security.py:180-182 (this cell's commit): `receipt = crosswalk.write_pool(\"%s%s.json\" % (crosswalk.CROSSWALK_PREFIX, as_of), payload, document=document)` -- document is the same crosswalk.build_crosswalk() object built two lines above at :175, a real crosswalk.schema.json-shaped document",
+        "lib/research/identity/tests/test_crosswalk_write_validates.py, two new arms: NonconformingDocumentRaisesThroughAddSecurityPath::test_nonconforming_document_raises_through_add_security_path (a registration whose identity carries an unknown key is REFUSED with 0 puts on a stubbed boto3.client, through add_security._persist_registration_and_pool) and ConformingDocumentStillWritesThroughAddSecurityPath::test_conforming_document_still_writes_through_add_security_path (the conforming path still performs 1 put)",
+        "python -m pytest lib/research/identity/tests/test_crosswalk_write_validates.py -v: 6 passed, 0 failed (the prior 4 arms plus these 2)",
+        "ae4b5d95ba: ISSUER AMENDMENT 1 text, ordering exactly this change and stating 'W120-S1 is then resolved' for the piece it specifies"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ISSUER AMENDMENT 1 (@ae4b5d95ba): 'add_security.py and build_universe.py join <paths>, and BOTH call sites pass document=<the document they are about to write>... W120-S1 is then resolved; file a row that says so and cite this amendment.'",
+    "world_is": "add_security.py's call site is fixed and proven by two new stubbed-client arms -- the historically-live gap (rk-113's actual publish path) is closed. build_universe.py's call site is UNCHANGED (still calls write_pool() with no document=) because threading document= through it as literally instructed is not safe within this cell's BOUNDS -- filed separately as AMGT_RESAPP-Z-W120-S3, a BLOCKING finding, rather than silently skipped or silently forced through.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Graduation of W120-S1 itself is the CVO's call, not this worker's -- this row records what changed and what did not, and points to S3 for the remainder."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W120-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~120",
+    "surfaced_at": "2026-09-22T20:40Z",
+    "one_line": "ISSUER AMENDMENT 1 literally instructs build_universe.py:918's write_pool call to also pass document=document, but build_union()'s returned object (schema_version/as_of/snapshot_date/coverage_source/holdings_source/names/denominators) does not and cannot conform to crosswalk.schema.json -- passing it would make write_pool RAISE on every real union write, a production regression. Not implemented; BOUNDS requires a STOP with a BLOCKING row rather than a schema or document-shape edit.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/build_universe.py:841-857 build_union()'s return object: keys as_of, snapshot_date, schema_version, coverage_source, holdings_source, names, denominators -- no `records`, no `coverage_vintage`, no `key_conventions`",
+        "lib/research/identity/crosswalk.schema.json :6-15: top-level `additionalProperties: false`, `required` includes coverage_vintage, key_conventions, records",
+        "Direct probe this session: jsonschema.validate() on a minimal document shaped exactly like build_union()'s return raised 'Additional properties are not allowed (holdings_source, names, snapshot_date were unexpected)' -- confirmed empirically, not inferred",
+        "This cell's own BOUNDS (task order section 4): 'The validator must not change what a conforming document looks like. If making the check pass would require editing the schema OR the document shape, STOP with a BLOCKING row: that is a scope change for the CTO, not a repair.' crosswalk.schema.json and any new schema file are WALLs (section 3: 'A surface not named here is a WALL, including crosswalk.schema.json')",
+        "AMGT_RESAPP-Z-W120-S1's own grounding (filed last session) already named this: 'build_universe.py's union document (a different schema entirely)' -- the shape mismatch was known before this amendment, not discovered only now"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ISSUER AMENDMENT 1 (@ae4b5d95ba): 'Both modules join <paths>, and BOTH call sites pass document=<the document they are about to write>. Change nothing else in either file.'",
+    "world_is": "build_universe.py:918's document (the union object) is a structurally different shape than crosswalk.schema.json describes; validating it against that schema does not discriminate conforming-from-nonconforming UNION documents -- it refuses ALL of them, unconditionally, because the schema was written for a different object entirely. Complying literally would silently convert every future --write-pool union publish into a refusal, which is a worse outcome than the ungated status this row leaves in place. AC2/AC3/AC4 are graded against the ACTUAL (build_universe.py unchanged) state, not the amendment's literal file list.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Two ways to close this legitimately, both requiring a grant this cell does not have: (1) a schema for the union document, validated via write_pool's existing `schema_path=` kwarg (already present, unused); (2) an explicit CTO ruling that build_universe.py's union write is descoped from this check entirely, matching AMGT_RESAPP-Z-W120-S1's own disarm_owner note ('if ever schema-checked, build_universe.py's union write against its OWN schema'). Either is the CTO's/COO's call, not a repair a worker makes unasked."
   }
 ]
 ```
