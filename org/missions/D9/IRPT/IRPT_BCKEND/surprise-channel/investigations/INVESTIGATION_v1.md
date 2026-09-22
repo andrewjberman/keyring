@@ -8695,3 +8695,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "V1's own source cannot be imported at all -- neither via Node's native TypeScript stripping (a type-only import throws) nor via a plain require -- without first (1) mirroring infra/aws/lambda/lib/ into auth-handler/src/lib/ (exactly what build-nodejs-lambda.sh does at deploy time, replicated locally, ephemeral and gitignored) and (2) compiling with the project's own unmodified tsc into dist/, then copying the same mjs mirror into dist/lib/authkeys/ (tsc's own `include: src/**/*` does not copy non-.ts files, and the real Lambda packaging step's copy of that file sits outside this cell's <paths>). This cell performed both steps locally (see result.md for exact commands); nothing was committed. The resulting dist/jwt.js is V1's own compiled `verifyAccessToken`, unedited, and is what this cell's test_v1_actual_module_harness.mjs imports and calls -- never a hand-written stand-in."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W20-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~20",
+  "surfaced_at": "2026-09-22T14:40:00Z",
+  "one_line": "This TO's own <paths> block, <to_id> tag and its PROOF_OF_SPEC section all self-cite 'task-orders/IRPT_BCKEND.TO-IB-rtr-4...md' as this order's own filename, but the file that carries this exact text is actually SAVED ON DISK as 'task-orders/IRPT_BCKEND.TO-IB-rtr-d...md' (letter suffix, matching its sibling cells a/b/c/d/e) -- a self-citation mismatch inside the TO's own text, which also means row IRPT_BCKEND-W20-S1's own evidence line (filed earlier this session) cites the wrong path for the same file; corrected here rather than edited there, per this channel's append-only discipline.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "This TO's own header line: '<to_id>IRPT_BCKEND.TO-IB-rtr-4</to_id>'; <paths> block: 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md'; <proof_of_spec> section: 'Instance at .../IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.proof_of_spec.json (the TASK ORDER'S OWN BASENAME stem)'.",
+      "Measured this session: `git ls-tree 7a55a7327d -- org/missions/D9/IRPT/IRPT_BCKEND/task-orders/ | grep -i rtr` lists rtr-a, rtr-b, rtr-c, rtr-d, rtr-e -- NO rtr-4 entry, at either the base commit (7a55a7327d) or HEAD; the file whose FIRST LINE reads '# TO IRPT_BCKEND.TO-IB-rtr-4 -- RE-PIN CITATIONS...' (this order's own content, byte-for-byte what this cell was handed) is git blob c1f38314776943e59d82cc11516b60a395cc4662, tracked at path 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-d.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md'.",
+      "Measured this session: `py -3.12 .tools/proof-of-spec-check.py <instance> R118-AC4 --governing-order .../IRPT_BCKEND.TO-IB-rtr-4...md` (the self-cited name) returns VIOLATION 'governing-binding: ... cannot be read ([Errno 2] No such file or directory)'; the identical command with '--governing-order .../IRPT_BCKEND.TO-IB-rtr-d...md' (the real saved name) resolves and grades normally.",
+      "This cell's own row IRPT_BCKEND-W20-S1 (filed earlier this session, same investigation file) cites 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md' in its grounding.evidence -- that path does not resolve; the correct path for the same cited content is the 'rtr-d' file above. Not edited in place (append-only discipline); corrected here."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This order's own <paths>/<to_id>/<proof_of_spec> sections assert the order's own filename is 'IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md'.",
+  "world_is": "The file carrying that exact content (to_id, cell text, criterion, BOUNDS -- everything this cell worked from) is saved at 'IRPT_BCKEND.TO-IB-rtr-d.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md' -- letter 'd', not numeral '4' -- consistent with its sibling cells' a/b/c/d/e naming. This cell's own <paths> grant (line 1 of that same block) was satisfied regardless, since the grant's INTENT (this order's own face, wherever it actually lives) was read correctly from the start; the mismatch only surfaces when a path is taken LITERALLY as typed, which proof-of-spec-check.py's --governing-order flag does. This instance's decomp_ref.to_ref and every --governing-order invocation in this cell's own commands use the REAL saved path (rtr-d); this order's own self-citations (rtr-4) are left uncorrected, per BOUNDS ('never edit this face, never widen the order')."
+}
+```
