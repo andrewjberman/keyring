@@ -12418,6 +12418,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "No schedule exists for it, and the served axis has not moved in 12 days.",
     "disarm_owner": "2.0.0_SA_COO~Z, in the trial's L-PX cell (round 30) for Lenovo; the fleet-wide daily leg stays Andrew's cadence call.",
     "notes": "Named so the page's price lists are not read as fresh once the edge route lands."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W122-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~122",
+    "surfaced_at": "2026-09-22T20:00:00Z",
+    "one_line": "AC1's plan_read.py spa_fallback_present check is an unanchored substring match that fires True on terraform's unconditional per-resource 'Refreshing state...' boilerplate, not only on an actual diff, so it cannot discriminate a genuine spa_fallback change from a targeted plan's normal full-state refresh.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/portal-auth/cloudfront-distribution.tf@bf5c280e48 (worktree wk-amgt-30-122, edited uncommitted): AC1's plan .scratch/r122/plan.txt shows 'aws_cloudfront_function.spa_fallback: Refreshing state... [id=portal-spa-fallback]' at line 5, the ONLY occurrence of the string in the file (grep -c = 1), alongside 13 other untouched resources refreshed the identical way (aws_wafv2_ip_set.opal_blocked_ips_cloudfront_v4/v6, aws_secretsmanager_secret.origin_verify, aws_cloudfront_cache_policy.opal_scoped_advisor_by_firm, aws_iam_role.lambda_edge, aws_cloudfront_cache_policy.opal_api_general_5min, 5 aws_lambda_function.* resources).",
+        "The actual resource-diff list (plan_read.py's own 'resources' field, lines matching '# ... will be updated in-place') names exactly two resources -- aws_cloudfront_distribution.portal and aws_wafv2_web_acl.opal_cloudfront_protection -- matching Branch A's second variant; aws_cloudfront_function.spa_fallback carries zero '+'/'-'/'~' diff lines anywhere in the plan.",
+        "terraform -chdir=infra/aws/terraform/portal-auth plan -target=aws_cloudfront_distribution.portal, run against the FRESH init this order itself requires (row W94-S1), refreshes every resource in state by default regardless of -target, so this line would print 'True' on ANY targeted plan run this way, whether or not spa_fallback ever drifted."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1's expect: 'spa_fallback_present False' as one of the conjuncts proving Branch A conformance (order text: 'if it appears, that is Branch B and a row').",
+    "world_is": "The literal computed value is True on this run, caused solely by unconditional refresh-phase logging identical in kind to 13 untouched resources' own refresh lines; the substantive diff (the 'resources' list) shows spa_fallback is NOT changed, matching Branch A. Graded AC1 PASS-by-output on the substantive diff, with this literal-vs-substantive gap disclosed rather than silently resolved.",
+    "disarm_owner": "1.0.0_SA_CTO~Z: whether plan_read.py's spa_fallback_present check should be scored against diff lines only ('+ resource'/'- resource'/'~ resource' with that name) rather than any substring match, so a future targeted plan against a populated state file does not always read True.",
+    "notes": "Filed by the worker per Rule 22a discrimination and the order's own REFUSAL CLAUSE -- not repaired, not widened; recorded and kept working."
   }
 ]
 ```
