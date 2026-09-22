@@ -8877,3 +8877,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The task order's own title/<to_id> disagree with its own filename (a decomp-cell-id vs file-slug naming drift that predates this cell -- this order's title line and IDENTITY/decomp_ref sections consistently say 'IB-rtr-2' throughout, while every sibling TO in this same round18 batch, e.g. IB-rtr-a/IB-rtr-c/IB-rtr-d/IB-rtr-e, follows the same pattern of an internal 'IB-rtr-N' id against an 'IB-rtr-<letter>' filename), and the one place that mismatch is load-bearing is the mechanical proof-of-spec filename the to-pipeline-gate actually checks for, which reads the FILE, never the prose. Following the order's OWN literal instruction here would have left the <status> flip permanently un-committable through the standard gate chain. Not self-graduated; filed for the CVO/CTO to consider whether the decomp-cell-id vs file-slug drift is worth reconciling estate-wide (naming both consistently) rather than requiring each worker to independently discover and route around it."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W21-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~21",
+  "surfaced_at": "2026-09-22T19:40:00Z",
+  "one_line": "Same class as IRPT_BCKEND-W18-S2 and IRPT_BCKEND-W20-S3 (this file, above): this cell's own <to_id>, title line, decomp_ref and <proof_of_spec> section all self-cite the order's own filename as 'IRPT_BCKEND.TO-IB-rtr-5....md' / '...proof_of_spec.json', but the file actually saved on disk (and the one this cell's spawn prompt pointed at directly) is 'IRPT_BCKEND.TO-IB-rtr-e.the-one-offline-actual-module-chain.md' -- letter 'e', consistent with its round-18 siblings a/b/c/d/e. to-pipeline-gate.py's stem derivation (:2562, `os.path.basename(rel).rsplit('.md', 1)[0]`) reads the TO's REAL on-disk basename, never <to_id> or any internal prose, so the literal path the order's own <proof_of_spec> prose names would be refused at the complete-flip gate. Named this cell's proof instance 'IRPT_BCKEND.TO-IB-rtr-e.the-one-offline-actual-module-chain.proof_of_spec.json' (matching the gate's requirement) from the first commit, per the spawning agent's own prior notice of this exact, already-known class -- no failed commit attempt was needed this time, since the pattern was anticipated going in.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "This cell's task order first line: '# TO IRPT_BCKEND.TO-IB-rtr-5 -- THE ONE OFFLINE ACTUAL-MODULE CHAIN...'; line 3: '<to_id>IRPT_BCKEND.TO-IB-rtr-5</to_id>'; <proof_of_spec> block: 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~21/IRPT_BCKEND.TO-IB-rtr-5.the-one-offline-actual-module-chain.proof_of_spec.json (the TASK ORDER'S OWN BASENAME stem)' -- but `ls org/missions/D9/IRPT/IRPT_BCKEND/task-orders/` (this worktree, HEAD 11644be83b) lists only 'IRPT_BCKEND.TO-IB-rtr-e.the-one-offline-actual-module-chain.md', no 'rtr-5' file anywhere in that directory.",
+      ".tools/to-pipeline-gate.py:2562 `stem = os.path.basename(rel).rsplit('.md', 1)[0]` then :2563 `names = (stem + '.proof_of_spec.json', stem + '_PROOF_OF_SPEC.json')` -- derived from the TO FILE's own basename on disk, never from <to_id> or any internal text, matching the same mechanism rows W18-S2 and W20-S3 (this file, above) already found on this project's sibling cells.",
+      "This cell's proof instance is filed at 'org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~21/IRPT_BCKEND.TO-IB-rtr-e.the-one-offline-actual-module-chain.proof_of_spec.json' (the real, gate-satisfying basename), with the JSON's own to_id/decomp_ref fields left matching this order's own <to_id> tag ('IRPT_BCKEND.TO-IB-rtr-5') for internal consistency with the order's own text -- only the FILENAME follows the disk reality, per the same resolution W18-S2 and W20-S3 record."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "<proof_of_spec>: 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~21/IRPT_BCKEND.TO-IB-rtr-5.the-one-offline-actual-module-chain.proof_of_spec.json (the TASK ORDER'S OWN BASENAME stem)'.",
+  "world_is": "The order's own <to_id>/title/<proof_of_spec> prose says 'IB-rtr-5'; the file this cell was actually spawned against, and the only file of this content that exists on disk at HEAD, is named 'IB-rtr-e' -- the same decomp-cell-id-vs-file-slug drift rows W18-S2 and W20-S3 already documented on this project's other round-18 cells (IB-rtr-b/d). This is the THIRD independent instance of the identical class within this one round-18 batch of five sibling cells (a/b/c/d/e), which suggests the drift is systematic to how this round's task orders were generated rather than a one-off per-file typo. Not self-graduated; filed for the CVO/CTO to consider reconciling decomp-cell-id and file-slug naming estate-wide for this round's remaining and future task-order batches."
+}
+```
