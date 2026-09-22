@@ -8285,3 +8285,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy: before removing a spawned worker's worktree/branch, confirm its task-notification has actually arrived (or its final WORKER REPORT message has been read) -- never infer completion from commits alone, even commits that look terminal. If a branch must be drained before the subagent returns, leave the worktree in place and let the subagent discover and recover from a missing worktree on its own, exactly as this one did, rather than trying to guess whether it has finished. GRADUATED here because the round-11 CVO/CTO already read and dispositioned the resulting worktree-reconciliation question (C-S174, W13-S2) as part of this same round; this row is the issuer's own process record of why it happened, not a new open finding."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W13-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~13",
+  "surfaced_at": "2026-09-22T05:37:59Z",
+  "one_line": "TO-IB-rtl-1 arm (d) requires 'the README's retry-behavior description must state the SAME three causes, verbatim' as part of THIS repair, and R112-AC2's own <expect> names CODE-README-AGREE as gradable NOW; arm (f) separately says 'the README's retry-behavior and expected-hash lines are UPDATED in the SAME act as the publish ... do not update the README before the bytes it describes actually exist in S3.' Read arm (f)'s bundling as governing the HASH line specifically (which literally asserts a sha256 of published S3 bytes and genuinely cannot be true before publish) and NOT the new retry-taxonomy PROSE subsection (which describes repo code behavior, true today regardless of S3 state) -- added the prose now (commit 6c7713e1df), left the hash line untouched (deferred to arm (f), STOPPED this pass per row absence of both never-widen halves).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtl-1.the-capture-tool-invariant-guard-at-the-write-boundary.md arm (d): \"The README's retry-behavior description must state the SAME three causes, verbatim, so a reader cannot derive a wider or narrower set than the code implements.\"",
+      "same order, criterion R112-AC2's <expect>: \"IBR112-RETRY-TAXONOMY-CLOSED-CODE-README-AGREE\" -- a token this worker's battery must print PASS-by-output for, with no publish-gating qualifier in the criterion text itself.",
+      "same order, arm (f): \"the README's retry-behavior and expected-hash lines are UPDATED in the SAME act as the publish, exactly as IB-rtk-1's fourth pass did it -- do not update the README before the bytes it describes actually exist in S3.\"",
+      "infra/aws/ec2/investor-reporting-export/README.md (commit 6c7713e1df, this worker's HEAD) -- new subsection \"The invariant, and the retry taxonomy (cell IB-rtl-1, round 12)\" added; the pre-existing step-2 \"Expected output\" sha256 line for capture-session.cjs is UNCHANGED, still naming IB-rtk-1's published blob hash, not this round's.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IB-rtl-1_NEVER_WIDEN_PACKET.md section 1 -- states this split explicitly for the signers to read and disposition."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Arm (f): the README's retry-behavior lines are updated in the SAME act as the publish, not before.",
+  "world_is": "This worker added the retry-behavior PROSE now, in a separate earlier commit than the (not-yet-run) publish act, reading arm (f)'s justification clause ('do not update the README before the bytes it describes actually exist in S3') as scoped to claims ABOUT BYTES (the hash line) rather than claims about BEHAVIOR (the prose) -- a genuine reading choice on an order whose two arms name the same file's edits with different timing implications. R112-AC2 graded PASS-by-output on this reading (battery_ib_rtl_1.py --arm retry, rc=0). 3.0.0_SA_CVO~B's R112-AC3 judgment can confirm or correct which reading the design intended; if corrected the other way, the remedy is a one-line revert of the README's new prose subsection to a later commit bundled with the publish, with no change to capture-session.cjs or the battery's own logic."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W13-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~13",
+  "surfaced_at": "2026-09-22T05:37:59Z",
+  "one_line": "Re-running IRPT_BCKEND_R9_CAPTURE_REDIRECT_DIAGNOSTIC.cjs (CVO~B, read-only, UNMODIFIED) against the IB-rtl-1-repaired source produces a result array that is NOT byte-identical to this round's own pre-repair baseline for one of its 6 cases ('verification foreign hop returns control'): the externally-visible verdict (success=false, writes=0) is UNCHANGED, but the INTERNAL path to that verdict changed -- pre-repair it exhausted all 5 verification attempts before giving up as NOT_AUTHENTICATED (verificationChainReads=5); post-repair it refuses on the FIRST attempt via readinessOutcome's own redirect-hop check, now classified terminal-not-retryable per arm (d) (verificationChainReads=1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IB-rtl-1_baseline_r9_redirect_diagnostic.json vs IB-rtl-1_repaired_r9_redirect_diagnostic.json, case 'verification foreign hop returns control': baseline navigationCalls=6 verificationChainReads=5 errors='REFUSED: NOT_AUTHENTICATED ...'; repaired navigationCalls=2 verificationChainReads=1 errors='REFUSED: redirect hop left the configured origin: https://example.invalid/hop'. Both: writes=0, success=false, exit=1.",
+      "infra/aws/ec2/investor-reporting-export/capture-session.cjs, readinessOutcome (this worker's HEAD-pending commit cb6429dc9e) -- a redirect hop found in walkRedirectHops(resp) during readinessOutcome now returns { retryable: false }, terminal on first occurrence, where the prior readinessRefusal treated the same reason string as retryable (silently retried by the old code, per BOUNDS: 'a foreign-origin hop is NEVER retryable under this taxonomy or any other framing').",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtl-1.the-capture-tool-invariant-guard-at-the-write-boundary.md BOUNDS: 'A foreign-origin hop is NEVER retryable under this taxonomy or any other framing.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Arm (e): re-run the round-9 diagnostic, unmodified, confirm no regression.",
+  "world_is": "R9's plain-object page mock exposes no .on() method, so the session-lifetime observer (C-S158/C-S159, IB-rtk-1) never attaches for this diagnostic and never catches this hop via the sticky latch; the ONLY mechanism that catches it is readinessOutcome's own redirect-hop safety-net check, whose retryability classification this round's arm (d) changed for every caller. The verdict this diagnostic's own self-test reads (success, writes) is identical before and after, so its own pass/fail signal does not move; only the internal shape (verificationChainReads/navigationCalls/errors text) differs, which this worker judges a strengthening required by BOUNDS rather than a regression, and records here for R112-AC3's grader to confirm or correct."
+}
+```
