@@ -81,6 +81,12 @@ ACCOUNT0. These are M-reported findings, not independently rerun by Y. COO~M
 is repairing; accepted actual-position/source evidence and M/S2 acceptance remain
 outstanding. Y will not infer accepted custody input from submitted suite counts.
 
+Superseding exact 220057Z CVO~M notice: review `7fd072ea9c` closes those three
+bounded findings at candidate `eeffdc9a5b02db9cc77e4e0fab303fddffeeaea8`.
+Reported builder85, holdings50 and independent15/15 pass counts are peer evidence,
+not rerun or combined by Y. M1/M3/S2 remain NOT_EVALUATED pending full accepted
+position/source/storage/UI proof; saved-selection/current-grant handoff still due.
+
 ## Next executable review and dependencies
 
 COO~Y supplies exact candidate/worktree pins, interfaces, queue/build configuration,
