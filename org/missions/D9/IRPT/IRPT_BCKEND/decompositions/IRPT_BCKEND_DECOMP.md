@@ -7,8 +7,8 @@
   "project": "IRPT_BCKEND",
   "directive": "D9",
   "fabric": "laptop",
-  "round": 12,
-  "decomp_version": "0.16",
+  "round": 13,
+  "decomp_version": "0.17",
   "prd_ref": "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md@b8e98d5a4d",
   "prd_version": "v0.14",
   "round1_analysis_ref": "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.round1.md@0d57ceb2f9",
@@ -77,13 +77,43 @@
   "round11_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_11_20260922.md @23d5fe2e6b",
   "round11_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v5.md @d20200b92c",
   "cells_round12": 1,
-  "cell_id_shape_round12": "IB-rtl-<n>"
+  "cell_id_shape_round12": "IB-rtl-<n>",
+  "round12_analysis_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_12_20260922.md @a8d306eb71",
+  "round12_slug_ref": "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v6.md @5a9a7eed81",
+  "cells_round13": 1,
+  "cell_id_shape_round13": "IB-rtm-<n>"
 }
 ```
 
 **One carrier, two sources.** Each round-2 face inlines VERBATIM the PRD v0.13 candidate row it serves and the CTO's ruling it executes; this document adds the ORDER, the ROOTS, the SEATING, the FENCE, the BATTERY and the round-2 findings. It restates no PRD row and re-cuts nothing round 1 delivered: the ten converged roots, the eleven live routes, the CloudFront path, the status envelope and recovery arms, the extraction and certification, and nineteen VALID instances stand and are BUILT ON (each face's "WHAT ROUND 1 DELIVERED" section names what).
 
 ---
+
+## R13. ROUND 13 -- THE RECUT ON THE ROUND-12 ANALYSIS (@a8d306eb71; slug @5a9a7eed81; v0.17, 2026-09-22, `2.0.0_SA_COO~B`)
+
+Round 12 closed 0 of 96 open, 0 of 342 worker items undispositioned. `R112-AC3` FAIL (`3.0.0_SA_CVO~B`'s L9, `ADJUDICATION_v9.md`, rows C-S178-187): `C-S170` and `C-S171` are confirmed genuinely fixed on the published bytes (the CTO independently re-read them from S3 himself). The new decisive counterexample is `C-S179` (ARMED): `capture-session.cjs:404` classifies a retryable timeout by matching `/timeout/i` against the error MESSAGE TEXT, so a non-timeout error (e.g. a certificate failure) becomes wrongly retryable whenever the word "timeout" appears anywhere in its message -- one example being a same-origin URL containing `timeout=1`. This violates round 11's own retry-taxonomy bound (arm c: retry only the three TYPED causes). `C-S180` (INERT, not independently decisive): when the post-rename latch recheck fires and `unlink` itself fails (EPERM), the file stays on disk while the tool's own message claims it was deleted -- untruthful reporting, not reachable in normal operation. **Capture stays HELD.** This is the FIFTH capture repair; the CTO's round-12 analysis states the bar as FOUR finite invariants (prospectively, his own criterion prerogative) rather than re-deriving arm-by-arm: (1) no bytes on disk unless the latch is clear after the in-memory capture; (2) only main-frame navigation to a foreign origin latches; (3) retry only the three TYPED causes; (4) every failure is truthfully reported. No PRD addendum: every gap is a cell under an existing outcome. Prd: `../prd/IRPT_BCKEND_PRD.md` v0.15.
+
+### R13.1 The rectangle (1 cell, id shape `IB-rtm-<n>`)
+
+| cell | what | executor | outcome | edges |
+|---|---|---|---|---|
+| `IB-rtm-1` | CAPTURE HELPER FIFTH REPAIR (C-S179, C-S180; `C-S153`/`C-S127` stay ARMED until this passes). The CTO's own design, restated verbatim as this cell's arms: **(a) CLASSIFY ERRORS BY TYPE, NEVER BY MESSAGE TEXT.** A timeout is recognised ONLY as `error.name === 'TimeoutError'` (Playwright's `errors.TimeoutError`) or the tool's own deadline firing -- never a regex over free text. A 5xx is the response status. A missing marker is the tool's own readiness result. Everything else is terminal, including any `net::ERR_*` navigation error, and prints its cause -- closes `C-S179`. **(b) REPORT CLEANUP FAILURE TRUTHFULLY.** If the post-rename latch fires and deleting the file fails: print `ERROR: session file could NOT be removed: <path> (<errno>) -- delete it manually before any use`, exit with a DISTINCT non-zero code, and the README names that code and the manual step. The contract is a truthful report plus a bounded residual state, never a claim of infallible I/O -- closes `C-S180`. **(c) ACCEPTANCE.** `3.0.0_SA_CVO~B`'s R12, R11, R10, R9 and R8 diagnostics, run UNMODIFIED, must all hold: R12's `ERR_CERT_AUTHORITY_INVALID`-with-`timeout=1`-in-the-message case must now be TERMINAL; R12's actual-timeout positive must still recover; its HTTP 404 control must stay terminal. A single-difference pair for EACH of (a) and (b), each with its own positive control. **(d) DELIVERY.** A new never-widen packet and both halves; the README's expected-hash line is updated in the SAME act as the publish. No host start, no MFA automation. **(e) THE BAR IS THE FOUR FINITE INVARIANTS** (stated by the CTO, prospectively): (1) no bytes on disk unless the latch is clear after the in-memory capture; (2) only main-frame navigation to a foreign origin latches; (3) retry only the three TYPED causes; (4) every failure is truthfully reported. A future counterexample FAILs the grade only if it defeats one of these four; one that defeats none opens a row and does not by itself hold the capture. **(f) THE JUDGMENT GRADE (successor to `R112-AC3`) is `3.0.0_SA_CVO~B`'s, never the issuer's.** Also folds in metadata-only fixes carried from round 12's slug, no publish replay: `C-S174` (correct `controls.mutant.observed`'s text so it accurately describes `fffef738` as the worker's original CRLF/checkout-grain value and `f03666ef` as the git-object sha256, never calling either a "packet-only typo"); `C-S187` (re-pin the result to the post-publish HEAD, scope the "no real S3" exclusion to the pass it actually applies to). | WK~13 (sixth invocation, same serial -- continuity of the `deliverables/<SERIAL>/**` ownership) | FWD-2 (serving; the `rti-6`/`rth-2` chain's remaining blocker) | -- |
+
+### R13.2 Edges and fanout
+
+One chain: **A** `rtm-1`. **fanout: 1 of 1 chain, cap 8.**
+
+### R13.3 Bounds carried (every order)
+
+The forward-looking-criterion bar; R-40 (content hash per artifact read AT the event); S56 vintage pins `path:line @ <commit-ish>`; NO LIVE VENDOR CALL; no host is started or stopped; a served-property change (a new publish) is packet + both never-widen halves BEFORE the act; never weaken an existing check to make a new case pass; the retry taxonomy is CLOSED (exactly three TYPED causes, classified by type never by message text) and NEVER widened past it; `rti-6` stays PARKED; its un-park condition (1) is this round's `rtm-1`. **Worker-worktree hygiene, per the CTO's ruling on `S117`:** before ANY worktree is removed, the worker's final report is required, termination is confirmed, and dirty work is reconciled -- a commit landing is not end-of-turn. The issuer (`2.0.0_SA_COO~B`) owns this for every drain this round.
+
+### R13.4 Not decided here
+
+Whether `rtm-1`'s repair is sufficient to re-open the ask to Andrew (`3.0.0_SA_CVO~B`'s successor grade, on the measured battery result, never assumed by the cut); `W10-S2` (stays PARKED, unchanged); `S116`/`W1-S47` (CTO's own lane); break-glass role deletion (CRO/Andrew); the 168 older stale rows (no bulk close).
+
+### R13.5 Four-postulate record (Rule 24, by SUBTRACTION from the printed denominator)
+
+Denominator = the CTO's round-12 analysis's round-13 section (3 items: the fifth capture repair covering C-S179/C-S180, and two metadata-only fixes C-S174/C-S187) MINUS both metadata fixes (folded into `rtm-1`'s own arm, not separate cells -- same write surface, same worker's own deliverables folder, same pattern the CTO's own design used for round 11's C-S160) = 1 cell, 0 uncovered, 0 invented by this seat. SAME GRAIN: one repairable classification-and-reporting defect pair sharing one write surface (`capture-session.cjs`, the README, the new packet). INTENT: `rtm-1` repairs. STATE COHERENCE: `C-S153`, `C-S127`, `C-S125`/`C-S126` stay ARMED/host-byte-limited until `rtm-1`'s own judgment grade lands -- this cell does not move those clocks by proxy, and the CTO's four-invariant bar (R13's own text) is inherited verbatim rather than re-derived, so a future counterexample is graded against a FIXED bar this round did not invent.
 
 ## R12. ROUND 12 -- THE RECUT ON THE ROUND-11 ANALYSIS (@23d5fe2e6b; slug @d20200b92c; v0.16, 2026-09-22, `2.0.0_SA_COO~B`)
 
