@@ -1,0 +1,12 @@
+{
+  "prd": "AMGT_CORPUS_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "03918b5b3e2823d10fb9bb2eb10187f503e697b5",
+  "half": "ratified-text",
+  "half_hash": "f00abf5e5303821c2e759c4fa282ea255ce9c2696b273c43b3eec1350e6f13d1",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_CORPUS_PRD_v0.1_L4R_RATIFIED_TEXT_REVIEW_20260922_Z.md@2ded8cf4ae",
+  "signed_by": "3.0.0_SA_CVO~Z",
+  "signed_at": "2026-09-22T20:06:12Z",
+  "reason": "R1 brief_ref pin unresolvable at 42c05cd8a8 (positive control passes; brief added at 578f7072d1) and every FWD SOURCE points through it; R2 the Rule 24 record's O9 assignment contradicts the cover and its own count -- O9 is SPLIT"
+}
