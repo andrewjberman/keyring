@@ -5987,6 +5987,55 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W38-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~38",
+    "surfaced_at": "2026-09-22T15:03:00Z",
+    "one_line": "TO-FE-s-88's F88-AC6 (`bun test src/pages/InvestorReporting`, expect 0 fail) genuinely fails, reproducibly, on a PRE-EXISTING defect entirely outside this cell's write surface: two committed smoke fixtures (`fixtures/smoke/fe-s-13-wire.json`, `fixtures/smoke/fe-s-14-print-v1.json`) do not carry the `unprojected_grant` field the PRD's (v0.7) envelope-level clause requires on every scoped-route entry, so `fe-s-81/generator-output-carries-unprojected-grant.test.ts`'s F81-AC3/AC4 fails on both files (0 of 9 and 0 of 2 entries carry the key). This is unrelated to the render-claim branch: neither failing test file, nor the fixtures it reads, imports `App.tsx`, `ProtectedRoute.tsx` or anything else in this cell's `<paths>` grant (checked: `grep -rl \"ProtectedRoute|App.tsx\" __tests__/fe-s-81` -> no matches), and the failure reproduces identically whether this cell's changes are present in the working tree or not (fe-s-81 run standalone, no App.tsx/ProtectedRoute.tsx in its import graph). F88-AC6 is recorded FAIL in this worker's proof instance as literally measured; this worker did not and could not fix it within its grant.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F88-AC6's literal `<invocation>`: `cd <WS>/portal && timeout 600 .../bun test src/pages/InvestorReporting`, `<expect>(?<![0-9])0 fail</expect>` -- \"the whole IRPT_FNTEND suite is green.\"",
+    "world_is": "Measured (this worker, 2026-09-22, IRPT_FE_DEV_PORT unset per HOW step 5): full-suite run #1 -- rc=1, `652 pass, 27 skip, 3 fail` (2733 expect() calls, 682 tests / 128 files, 97.93s); the 3 failures were `F45-AC9` (fe-s-45/config-loader-writes.test.ts, unrelated to this cell) plus the two fe-s-81 failures below. Full-suite run #2, immediately after (same tree, same command) -- rc=1, `653 pass, 27 skip, 2 fail` (74.12s): F45-AC9 PASSED this time (a flaky/environmental failure under full-suite concurrent load, filed separately as IRPT_FNTEND-W38-S2, not blocking) while the two fe-s-81 failures reproduced IDENTICALLY both runs: `fe-s-13-wire.json: unprojected_grant present 0 of 9` (MISSING ON all 9 scoped-route keys: directory/resolve, directory/search, performance/, analysis/, narrative/, status/, status, export/, holdings/) and `fe-s-14-print-v1.json: unprojected_grant present 0 of 2` (MISSING ON performance/, narrative/), each asserting `expect(missing).toEqual([])` and failing with the full missing-key list. Ran `fe-s-81` standalone (isolated from the rest of the suite): IDENTICAL two failures, rc=1, confirming this is not suite-order or concurrency-induced -- it is a real, reproducible defect in the two named fixture files (or their generator) against the PRD's own (v0.7) `unprojected_grant` clause (`IRPT_FNTEND_PRD.md` :123, \"reaches every scoped route, not a subset\"). Fixture files located at `portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json` and `.../fe-s-14-print-v1.json` -- neither is in this cell's `<paths>` grant (`portal/src/App.tsx`, `portal/src/components/ProtectedRoute.tsx`, `portal/src/contexts/AuthContext.{tsx,context.ts}`, `portal/src/pages/InvestorReporting/__tests__/fe-s-88/` only). Confirmed no import-graph relationship to this cell's surface: `grep -rl \"ProtectedRoute\\|App.tsx\" src/pages/InvestorReporting/__tests__/fe-s-81` returned zero matches. Disarmed when the owning cell's fixtures (or generator) are corrected to carry `unprojected_grant` on every entry and `fe-s-81`'s suite re-run confirms 0 fail, or the issuer amends F88-AC6's scope to exclude a named pre-existing defect outside this order's grant.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, run #1): `cd portal && bun test src/pages/InvestorReporting` -> rc=1, `652 pass, 27 skip, 3 fail`, 682 tests across 128 files, 97.93s -- saved at `.scratch/f88-ac6.log` on this worker's device (not a repo path)",
+        "measured run (this worker, 2026-09-22, run #2, immediately following, no source changes between runs): same command -> rc=1, `653 pass, 27 skip, 2 fail`, 74.12s -- F45-AC9 passed on this run (flaky), the two fe-s-81 failures reproduced identically",
+        "measured run (this worker, 2026-09-22, isolated): `bun test src/pages/InvestorReporting/__tests__/fe-s-81` -> rc=1, `2 pass, 2 fail`, 9 expect() calls, 112ms; failure text verbatim: `fe-s-13-wire.json: unprojected_grant present 0 of 9`, `fe-s-13-wire.json MISSING ON: /api/scoped/investor-reporting/directory/resolve, .../directory/search, .../performance/, .../analysis/, .../narrative/, .../status/, .../status, .../export/, .../holdings/`; `fe-s-14-print-v1.json: unprojected_grant present 0 of 2`, `fe-s-14-print-v1.json MISSING ON: .../performance/, .../narrative/`",
+        "portal/src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json, fe-s-14-print-v1.json (this worktree HEAD) -- the two files the failing assertions read",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-81/generator-output-carries-unprojected-grant.test.ts:49-54 (this worktree HEAD) -- the failing assertion, `expect(missing).toEqual([])`",
+        "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md :123 (this worktree HEAD), the (v0.7) `unprojected_grant` clause: \"It therefore reaches every scoped route, not a subset\"",
+        "measured (this worker, 2026-09-22): `grep -rl \"ProtectedRoute\\|App.tsx\" src/pages/InvestorReporting/__tests__/fe-s-81` -> no output (zero matches), confirming fe-s-81's failure has no dependency on this cell's write surface",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-88.print-route-render-delegate-branch.md, criterion F88-AC6 and BOUNDS (\"Two workers never share a write path. Every file not in your <paths> is read-only to you\") (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W38-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~38",
+    "surfaced_at": "2026-09-22T15:03:00Z",
+    "one_line": "While running F88-AC6's full-suite invocation twice in immediate succession (same tree, no changes between runs), `fe-s-45/config-loader-writes-nothing-through-junction.test.ts`'s `F45-AC9` failed on run #1 (`652 pass, 27 skip, 3 fail`) and PASSED on run #2 (`653 pass, 27 skip, 2 fail`) and again standalone (`6 pass, 0 fail`) -- a flaky failure under full-suite concurrent load, unrelated to this cell's write surface (fe-s-45 does not reference App.tsx or ProtectedRoute.tsx). Recorded as an OBSERVATION only: it did not block this worker's own criteria (which never depend on fe-s-45) and resolved on immediate re-run, so no disarm action is owed by this row; flagged in case the flake recurs for a later cell running the same full-suite invocation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F88-AC6's literal invocation (`bun test src/pages/InvestorReporting`) and expectation (`0 fail`) -- not a claim this worker's own order makes about fe-s-45 specifically; recorded because it was encountered while satisfying F88-AC6.",
+    "world_is": "Measured (this worker, 2026-09-22): full-suite run #1 -- `F45-AC9` FAILED (assertion text: \"every config loader in the reach writes nothing through the junction (RULING (B))\"). Full-suite run #2, immediately after, identical command and tree -- `F45-AC9` PASSED, `EVERY CONFIG LOADER IN THE REACH WRITES NOTHING THROUGH THE JUNCTION: 4 of 4`. Isolated run, `bun test src/pages/InvestorReporting/__tests__/fe-s-45` alone -- `6 pass, 0 fail`, 41.67s, all six DISPOSITION/CONTROL lines PASS. hazard_standing INERT: this worker's own criteria never touch fe-s-45, the flake self-resolved without intervention within this same session, and no downstream artifact of this order depends on it. Left UNDER_INVESTIGATION rather than DISMISSED because the underlying cause (port/resource contention under 128-file concurrent test load, plausibly sharpened by sibling workers' dev servers on the shared box) was not root-caused here -- that is above this worker's grant and this criterion's needs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, run #1): `.scratch/f88-ac6.log` (this worker's device, not a repo path) line: `[31m✗[0m F45-AC9 -- every config loader in the reach writes nothing through the junction (RULING (B)) > the reach by subtraction, each disposition, each kept loader run under a watch; the old dev script writes [547.00ms]`",
+        "measured run (this worker, 2026-09-22, run #2): `.scratch/f88-ac6-rerun.log` -- no F45 failure line; summary `653 pass, 27 skip, 2 fail`, both remaining failures are fe-s-81 (see IRPT_FNTEND-W38-S1)",
+        "measured run (this worker, 2026-09-22, isolated): `.scratch/f45-isolated.log` -- `6 pass, 0 fail`, 28 expect() calls, 41.67s, `EVERY CONFIG LOADER IN THE REACH WRITES NOTHING THROUGH THE JUNCTION: 4 of 4`",
+        "measured (this worker, 2026-09-22): `grep -rl \"ProtectedRoute\\|App.tsx\" src/pages/InvestorReporting/__tests__/fe-s-45` -> no output (zero matches)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
