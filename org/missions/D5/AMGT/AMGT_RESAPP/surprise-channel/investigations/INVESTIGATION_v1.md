@@ -11630,6 +11630,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The rk-91 pair's B4: the served identity/management blocks are EQUAL pre and post the redeploy.",
     "world_is": "For the window between the faulty and the fixed redeploy, the served blocks were 500s.",
     "notes": "Filed at the CTO's request (msg 24137)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W92-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~92",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "AC7's closure check (msg 24137) IMPORT-FAILs: lib/research/freshness/build_view.py imports boto3 at MODULE SCOPE, and scoped_amgt.read_coverage_freshness (pre-existing, unchanged by this cell) imports build_view at function scope, so the isolated venv's own control ('boto3 NOT importable') collides with a required transitive import -- ModuleNotFoundError. STOP before deploy, per msg 24137's own rule. No live deploy act (AC5/AC6) was run.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC7 literal invocation output: 'control: boto3 NOT importable (isolated)' then Traceback at .scratch/r92/ac7_inner.py:32 'from lib.research.freshness import build_view as bv' -> build_view.py:53 'import boto3' -> ModuleNotFoundError: No module named 'boto3'; rc=1.",
+        "git show 739eb5f288:lib/research/freshness/build_view.py -- line 53 'import boto3' already present at the pin (M1+M2 landed, before this cell's own diff): NOT introduced by M3.",
+        "git show 739eb5f288:lib/research/api/scoped_amgt.py -- lines 3211 and 3226 already import from lib.research.freshness.build_view at function scope, before this cell's diff: read_coverage_freshness's dependency on build_view predates M3.",
+        "CTO msg 24137 verbatim: 'BEFORE any live deploy, the worker builds the zip and imports the handler FROM THE ZIP in a clean interpreter ... then exercises each changed reader once. Any ImportError is a STOP before deploy. It becomes a criterion on rk-92.'",
+        "This is the FIRST time this isolated-closure methodology has been run against this adapter (rk-90/rk-91 predate the check), so the defect was never previously exercisable to be caught."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC7's <expect>: every ARM line reads OK and RESULT ... import_fail 0, then (only on that PASS) the deploy proceeds via AC5/AC6.",
+    "world_is": "The FIRST arm never runs: the inner script's own top-level 'from lib.research.freshness import build_view as bv' import (verbatim from the task-order text) raises ModuleNotFoundError inside the isolated interpreter before any arm() executes, because build_view.py's pre-existing module-scope 'import boto3' has no boto3 to import there. In the REAL deployed Lambda this import succeeds (the python3.11 runtime bundles boto3/botocore natively; the build script never vendors it, matching CLOSURE_ROOTS's own exclusion), so this is not evidence of a production 500 -- it is evidence that build_view.py's transitive dependency on a runtime-provided package is not import-safe inside AC7's harness, which deliberately excludes every site-package to test the ZIP's OWN vendored closure.",
+    "notes": "Per the REFUSAL CLAUSE (task order BOUNDS) and msg 24137's own disarm_owner naming, this worker does not repair build_view.py's import shape to force AC7 green -- that is a call for 2.0.0_SA_COO~Z: either (a) rule this an accepted control limitation of the AC7 harness (boto3 is Lambda-runtime-provided, not zip-vendored, and the harness should stub/allow it) and re-run AC7 with that carve-out, or (b) rule build_view.py's boto3 import must move inside the functions that need it (lazy import) so the module imports cleanly with or without boto3 present, as a genuine closure hardening. Either remedy is OUT OF THIS CELL'S SCOPE as ruled (msg 24137 names the STOP, not a fix). AC4 (the copy) proceeded -- it is a separate live act, listed before AC7 in the grading order, and its own never-widen coverage does not depend on AC7. AC5 and AC6 (the deploy and its read-back) were NOT run; the live plane's CodeSha256/policy/freshness stay exactly at the AC3 pre-act baseline."
   }
 ]
 ```
