@@ -361,6 +361,16 @@ M source, current-access ports, checkpoint provenance, fenced worker assembly,
 vendor resolution or runtime proof. See `NORMALIZED_BRIDGE_REVIEW_c2a01fb3f8.md`.
 No full Y4/S3/S4 grade; all14 integrated criteria remain NOT_EVALUATED.
 
+## Issued-job status UI update, September 22 evening
+
+Portal `940333dfcd12dd4329a35c4b3834ebb9dafa791c`:13 supplied tests/59assertions,
+9 independent controls/58assertions and TypeScript PASS. Actual effect with
+manual hook/timer scheduling verifies bounded serial reads of the issued ID,
+terminal/error stop, explicit restart, cleared timers and ignored late responses.
+No actual browser scheduler, runtime status/access response, persisted identity
+after reload or released report. See `JOB_STATUS_UI_REVIEW_940333dfcd.md`.
+No full Y6/S4 grade; all14 integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

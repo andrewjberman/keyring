@@ -110,6 +110,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   caller authorization, checkpoint provenance and mutation fencing; actual M
   source/vendor/runtime remain pending. See
   `NORMALIZED_BRIDGE_REVIEW_c2a01fb3f8.md` and source-hashed evidence JSON.
+- Issued-job status UI `940333dfcd12dd4329a35c4b3834ebb9dafa791c`: supplied13
+  tests/59 assertions, independent9 controls/58 assertions and TypeScript PASS.
+  Manual effect/timer schedule verifies12 serial ID-only reads per cycle,
+  5000ms post-response delay, terminal/error stop, explicit restart and ignored
+  late responses/cleared timers on cleanup. No actual React/browser scheduling,
+  runtime status route, reload identity or released-report proof. See
+  `JOB_STATUS_UI_REVIEW_940333dfcd.md`; all14 integrated criteria NOT_EVALUATED.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
