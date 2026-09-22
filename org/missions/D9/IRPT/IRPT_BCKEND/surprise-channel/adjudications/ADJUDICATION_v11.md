@@ -33,6 +33,30 @@ Author: `3.0.0_SA_CVO~B`. R114-AC3 only; not a round-drain or publication claim.
         "reason": "R114-AC3(i)-(iv) PASS at repaired blob 17aff45ed837a3a6e62fb2ce0410075b62a499dd (sha256 ea437510ee96fdf7fd106ff36dff3dead1aaf8ada94458a62556bae210cdc25a). capture-session.cjs:148-155 and :487 @b99067c3bc classify solely by instanceof/name, never message text. New versioned fixture uses real asynchronous timers and a genuine instance of the injected TimeoutError class; both typed and untyped timer cases were run. Own fresh unmodified R13 before/after companion splits all six cases as required. Fresh R11 and R12 each change only the explicitly authorized historical untyped-timeout case to terminal; R10/R9/R8 and R12 cleanup are unchanged. This grades local implementation/test evidence, not publication, host delivery, or authorization to capture."
       }
     ]
+  },
+  {
+    "id": "IRPT_BCKEND-C-S196",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~B",
+    "surfaced_at": "2026-09-22T10:32:20Z",
+    "one_line": "R14 final reconciliation: C-S195 PASS carried unchanged; three clocks close; C-S174's shared wrong full-hash oracle remains open.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Formal L8/L10 receives the final bound proof and closes only individually verified remedies; a full-length comparison must not be mistaken for independently established hash truth.",
+    "world_is": "Final proof blob7e3486032ab312a5c29eadb7721163510da659f7 has the identical acceptance array, source and fixture as C-S195's graded vintage. Bound receiving and explicit-ID proof checks pass; all11 artifact blobs resolve and match current paths. Signed S3 publication closes C-S179 at source/delivery grain, not host/browser grain. The prospective typed-only cut and fixture close W13-S6; actual final R113 result pin closes C-S194. C-S174 remains OPEN: reconstructed CRLF bytes and saved diagnostic hash contain ...03bfb20..., whereas proof and battery expected constant both contain ...03fbb20.... Proof still incorrectly attributes git-LF hash to the worktree diagnostic. Full-length comparison alone passes that shared wrong oracle. No new worker items; own terminal census0/98, channel0/343 undispositioned.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md (co-committed), Round 14 addendum: per-clock event pins and outcome boundaries",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R14_FINAL_RECORD_PROBE.cjs (co-committed): read-only 11/11 pin and hash reconstruction assertions",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/adjudications/ADJUDICATION_v11.md@d2e855e299#IRPT_BCKEND-C-S195: unchanged grade",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/battery_ib_rtm_1.py@188a483e37:69,218-219; full comparison against wrong CRLF_VALUE",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IRPT_BCKEND.TO-IB-rtk-1.the-capture-tool-complete-lifecycle-observer-and-sticky-refusal.proof_of_spec.json@bfd088d173:254; erroneous hash and diagnostic attribution"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Reconciliation record, not a duplicate remedy or second judgment grade. Residual belongs to existing C-S174 in REMEDIATION_v5, kept OPEN/INERT with its existing owner. Only C-S179/W13-S6/C-S194 clocks advance in their original rows; no source repair or capture hold follows from the metadata residual. CTO alone receives formal slug."
   }
 ]
 ```

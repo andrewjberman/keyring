@@ -84,15 +84,15 @@ decision and older carries unchanged. MSTR owns any push; no push by this seat.
     "owner": "2.0.0_SA_COO~B",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v12"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~B",
-      "at": null
+      "at": "2026-09-22T10:32:20Z"
     }
   },
   {
