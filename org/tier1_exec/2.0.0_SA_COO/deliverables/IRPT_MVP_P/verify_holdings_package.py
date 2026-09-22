@@ -69,12 +69,43 @@ s3.add(store.location('platinum','current','manifest.json'),publication.canonica
     'schema_version':'irpt-holdings-index-v1','firm_id':firm,'latest_date':date,
     'dates':{date:{'revision':revision,'manifest':manifest_ref}}}))
 real_load=snapshot.load_snapshot
-snapshot.load_snapshot=lambda *args: real_load(*args,s3_client=s3)
+snapshot.load_snapshot=lambda *args, **kwargs: real_load(*args,s3_client=s3,**kwargs)
 answer=entry.lambda_handler(event)
 assert answer['data']['scope']['account_ids']==[accounts[0]], answer
 assert '_accepted_publication' not in answer['data']
 assert len(s3.calls)==3 and 'VersionId' not in s3.calls[0]
 assert all(row['VersionId']=='version-1' for row in s3.calls[1:])
+# The same declared package reads a complete v2 inventory while fetching only
+# the retained selection's account parts. These remain synthetic accepted bytes.
+header = {key:value for key,value in doc.items() if key != 'nodes'}
+manifest.pop('platinum')
+manifest['schema_version']='irpt-holdings-manifest-v2'
+manifest['platinum_header']=s3.add(store.location('platinum','date='+date,revision+'.header.json'),
+                                  publication.canonical_bytes(header))
+manifest['partitions']=[]
+for number,(account,nodes) in enumerate(sorted(publication._account_groups(doc['nodes']).items())):
+    ref=s3.add(store.location('platinum','date='+date,revision+'.part%05d.json'%number),
+               publication.canonical_bytes({'firm_id':firm,'revision':revision,'nodes':nodes}))
+    manifest['partitions'].append({'account_ids':[account],'object':ref})
+manifest_ref=s3.add(store.location('platinum','date='+date,revision+'.manifest.json'),publication.canonical_bytes(manifest))
+s3.add(store.location('platinum','current','manifest.json'),publication.canonical_bytes({
+    'schema_version':'irpt-holdings-index-v1','firm_id':firm,'latest_date':date,
+    'dates':{date:{'revision':revision,'manifest':manifest_ref}}}))
+s3.calls=[]
+answer=entry.lambda_handler(event)
+assert answer['data']['scope']['account_ids']==[accounts[0]], answer
+assert len(s3.calls)==4 and all(row['VersionId']=='version-1' for row in s3.calls[1:])
+unselected={part['object']['key'] for part in manifest['partitions'] if accounts[0] not in part['account_ids']}
+assert unselected and not unselected.intersection(row['Key'] for row in s3.calls)
+selected_part=next(part['object'] for part in manifest['partitions'] if accounts[0] in part['account_ids'])
+location=(selected_part['bucket'],selected_part['key']); saved=s3.rows.pop(location)
+answer=entry.lambda_handler(event)
+assert answer.get('ok') is False and 'data' not in answer, answer
+s3.rows[location]=saved
+limit=publication.MAX_SELECTED_PART_READS; publication.MAX_SELECTED_PART_READS=0
+answer=entry.lambda_handler(event)
+assert answer.get('ok') is False and 'data' not in answer, answer
+publication.MAX_SELECTED_PART_READS=limit
 s3.corrupt=True
 answer=entry.lambda_handler(event)
 assert answer.get('ok') is False and 'data' not in answer, answer
@@ -92,7 +123,8 @@ missing = subprocess.run([sys.executable, '-I', '-c',
 assert missing.returncode != 0 and 'scopes.json' in missing.stderr, missing.stderr
 print(json.dumps({'guarded_selected_read':True,'versioned_reads':True,'corrupt_refusal':True,
     'release_revocation_refusal':True,'missing_registry_refusal':True,'canonical_locations':locations,
-    'reader_imports_pyarrow':False,'network':False}))
+    'v2_selected_parts_only':True,'missing_selected_part_refusal':True,
+    'selected_request_limit_refusal':True,'reader_imports_pyarrow':False,'network':False}))
 '''
 
 
