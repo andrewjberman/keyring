@@ -4559,3 +4559,65 @@ fanout:
   wave_1: [rk-100, rk-101]          # both spawn at once; no pair, no word
   no_fleet_run: true
 ```
+
+## 35. ROUND 27 -- FROM THE CTO'S RULING msg 24216 (on the COO's msg 24215) + the round-26 analysis msg 24213
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 26 closed 2 of 2 (12/0/0), and its analysis read "no round 27". Refreshing the held
+B-run drafts then found that two of the three runs would fail even on Andrew's word:
+- **B2 would stop partway.** A multi-name `--write-pool` run RAISES inside the name loop at the first name holding an
+  unchanged UNRESOLVED filing_attempt. The write-once state object differs by `retrieved_at` and per-attempt `seconds`.
+- **B4 would refuse before any call.** 6861 has no `domains.json` entry, and the roster build returns 0 officers for it.
+
+The CTO ruled all 5 calls (msg 24216):
+- CALL 1 plus CALL 2: one code-only cell.
+- CALL 3: a read-only diagnosis cell.
+- CALL 4: no pair for a silver write that has no served reader.
+- CALL 5: the caps go on the card, B2 at 45 requests and B3 at 18.
+
+**Round 27 is TWO cells, issued in ONE commit with this section.**
+
+### 35a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| filing_attempt SKIP-HELD | `AMGT-rk-105` | ~105 | none | `state_put_filing_attempt` compares the OUTCOME projection (status, identity, verified_site, battery order/winner, and each attempt's step/route/key/url/http_status/document_sha256/language; it EXCLUDES `retrieved_at`, `parser_version`, `seconds`, `tests` and free-text `reason`, which embeds live counters). If the outcome is equal, it returns `skip_held` with 0 puts. A changed outcome still raises. The battery prints `SKIP-HELD` in place of `OK: uploaded`. 6 test arms (harvest 72 -> 78); filings 100 and management 95 unchanged. CALL 2 = a READER CHANGE (see 35b), NOT in this cell | none (code only; ruled msg 24216) |
+| B4 roster/domain diagnosis | `AMGT-rk-106` | ~106 | none | READ-ONLY findings: Q-a1, the served source of 6861's officers (`read_management` -> `management/v1/6861_JP_Equity/2026-09-19.json`); Q-a2, why `load_source_object` + `build_roster` return 0 (the derive_roster branch, with the filing_source silver rows under both vendors); Q-b, the domain source by SUBTRACTION over every URL/host field for 6861, with ONE recommendation. It proves 0 writes by an all-prefix census before/after plus a static check that no scratch script can write | none (read-only; ruled msg 24216) |
+
+### 35b. SURFACE CENSUS (measured at the cut, SITEZ `d3ba12c64b`)
+
+- **rk-105.**
+  - Writer census of `state_put_filing_attempt`: N = 6 call sites: `fetch.py:500` (the battery via `persist`,
+    `battery.py:1350`), `batch.py:412` and `:672`, `analyze.py:1590`, and `harvest/filings.py:370`. The fix in the
+    one function covers all six.
+  - Reader census of the fixed state key: N = 5.
+    - Four are SILVER-FIRST and supersede structurally: `roster.py:1145-1164`, `management/batch.py:116-135`, and
+      `analyze.py` at two sites.
+    - One is the SERVED adapter reader, `scoped_amgt.py:1954-1981` (used at `:2052-2055`). It is NOT silver-aware,
+      reads the fixed key whenever drafting is ABSENT, cannot read parquet in the Lambda, and the key is write-once.
+  - => CALL 2 needs a READER CHANGE, which is a served act. It goes to a later paired cell with the pair
+    `NEVER_WIDEN_ROUND28_<cell>_*`. REC design (i): an additive `RESOLVED.json` sibling marker that the reader checks
+    first. There is never a delete.
+  - Until that cell drains, a name that RESOLVES under B2 shows its old unresolved reason on the Thesis tab. The card
+    says so.
+  - Baselines: harvest 72, filings 100, management 95 (13 subtests), api 204.
+- **rk-106.**
+  - `opal-data-harvest` has 21 top-level prefixes, and exactly one served management object exists for 6861
+    (`2026-09-19.json`).
+  - The 6861 state marker is UNRESOLVED-SOURCE (step-4 seed `https://www.keyence.co.jp/`).
+  - `domain_for` reads `domains.json` only, and `verified_domain_for` reads `verified_site.host` only.
+- **Files written by more than one cell:** NONE, apart from the append-only channel `INVESTIGATION_v1.md`.
+  - rk-105 writes `lib/research/harvest/filings.py`, `lib/research/filings/fetch.py`,
+    `lib/research/filings/battery.py` and a NEW `lib/research/harvest/tests/test_filing_attempt_skip_held.py`.
+  - rk-106 writes only its deliverable directory.
+- **Live acts:** none that write. rk-105's AC0 makes 2 read-only GETs. rk-106 makes S3 list/GET only.
+
+### 35c. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 2                   # rk-105, rk-106 -- one commit
+  chains_total: 2                   # disjoint write surfaces
+  wave_1: [rk-105, rk-106]          # both spawn at once; no pair, no word
+  no_fleet_run: true
+```
