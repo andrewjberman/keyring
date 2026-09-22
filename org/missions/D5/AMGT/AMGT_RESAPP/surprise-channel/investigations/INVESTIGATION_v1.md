@@ -12698,6 +12698,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The tool's leg-kind enum has never included 's3-key' at this pin; the w4 leg (a single S3 object key, not a prefix) has no exact-match leg kind in the enum.",
     "disarm_owner": "2.0.0_SA_COO~Z (issuer): either add an 's3-key' leg kind to .tools/deploy_ledger.py for single-object legs, or correct this and future task orders' prescribed --leg strings to use 's3-prefix' for a single-key target.",
     "notes": "Worked around by substituting 's3-prefix' for the w4 leg kind only (target string, id and proof-required column unchanged); the ledger opened, all 4 legs closed with proof and the entry closed clean. No other command text was altered."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W119-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~119",
+    "surfaced_at": "2026-09-22T21:02:35Z",
+    "one_line": "TO-AMGT-rk-119's literal AC0 script (section 5) crashes rc=1 before its decisive line: `cw._read_pool_latest()` returns a 2-tuple `(document, key)`, not a document dict, so `.get(\"records\")` raises AttributeError; worked around in the scratch copy only by unpacking the tuple, then AC0 ran clean and refused the run exactly as the order predicted.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Running the order's literal .scratch/r119/ac0.py verbatim (worktree wk-amgt-30-119, base 13eeb3e447) produced: 'Traceback ... File \".scratch/r119/ac0.py\", line 15, in <module> ... recs = (doc or {}).get(\"records\") or [] ... AttributeError: 'tuple' object has no attribute 'get'', rc=1, stopping before the 'records 96 with_sa_symbol 0' and 'MEASURED_SA_SYMBOL' lines the criterion's <expect> names.",
+        "lib/research/identity/crosswalk.py:858 defines `def _read_pool_latest(client=None): ... return json.loads(body.decode(\"utf-8\")), key` (a 2-tuple), and its own in-module caller at :837 unpacks it as `document, key = _read_pool_latest()` -- confirming the return shape the order's script did not account for.",
+        "After changing only the scratch copy (`_pool = cw._read_pool_latest(); doc = _pool[0] if isinstance(_pool, tuple) else _pool`), the same script ran rc=0 twice, byte-identical both times: 'records 96 with_sa_symbol 0', 'sa_bronze_total 38 for_992 0', 'sa_bronze_securities [BABA_US_Equity, BA_US_Equity, COST_US_Equity]', 'model_block_forecast_fallback_sa_symbol None', 'MEASURED_SA_SYMBOL NONE -- REFUSE THE RUN'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-AMGT-rk-119 section 5's literal AC0 script reads the crosswalk pool via `doc = cw._read_pool_latest() ... recs = (doc or {}).get(\"records\") or []` and the AC0 criterion's <expect> requires the script's output to name 'records 96 with_sa_symbol 0' and the decisive 'MEASURED_SA_SYMBOL' line.",
+    "world_is": "`_read_pool_latest()` at this pin (lib/research/identity/crosswalk.py:858, unchanged from :837's own call site) returns `(document, key)`, not `document` -- so the literal script as written cannot reach its own decisive line; it raises first. Never widened beyond fixing this one unpacking step in the worker's own scratch copy; no code under <paths> touched, no crosswalk.py edit made.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Did not change the refusal outcome -- AC0 still measures 'NONE -- REFUSE THE RUN' once it can complete, matching the order's own predicted likely outcome (RECORD FACE note 1). Filed because a future re-run of this same order, or any other AC0 script copied from this literal text, hits the identical crash. Fix path: either call `cw.record_for(...)`/`cw.load_crosswalk()` (which already unpack the tuple correctly) instead of the private `_read_pool_latest()`, or unpack the tuple explicitly as this row's workaround does."
   }
 ]
 ```

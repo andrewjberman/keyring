@@ -227,7 +227,7 @@ the missing input, and report the session age -- the cell is complete on a refus
    the worker.
 4. **The input ledger is shared with rk-116**, so this cell is chained behind it.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~119</slot>
 <fabric>site-z</fabric>
