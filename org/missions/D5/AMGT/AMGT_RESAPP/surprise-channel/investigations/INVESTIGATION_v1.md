@@ -11883,6 +11883,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC7's <expect>: 'Read that file's bytes and record: non-ASCII bytes 0, CRLF 0, and line 267 \"  memory_size = 1769\"'.",
     "world_is": "The file carried 3 non-ASCII bytes before this cell touched it (an unrelated pre-existing comment), and carries the same 3 after; CRLF is genuinely 0 both before and after, and line 267 reads exactly as expected.",
     "notes": "Per THE REFUSAL CLAUSE: recorded the true measured count (3, unchanged by this edit) rather than the order's stale premise of a clean file. This cell's own edit (the memory_size line and the replaced rk-6 comment) introduces 0 non-ASCII bytes, confirmed by the before/after count being identical."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W106-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~106",
+    "surfaced_at": "2026-09-22T13:00:00Z",
+    "one_line": "The Q-b cell text names 'the model block' as one of the objects to cover for domain fields for 6861; no S3 tier or object literally named 'model' exists (21 top-level opal-data-harvest prefixes, none 'model/') -- the closest addressable analogue is the crosswalk record's own model_key/identity sub-block, which carries no URL/host field for 6861 either way.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live census (.scratch/r106/census.py before): 21 top-level opal-data-harvest prefixes -- amgt/, bloomberg/, crosswalk/, derived/, drafting/, filings/, identity/, issuer-site/, lib/, management/, packs/, peers/, posture/, publication-links/, publications/, raw/, sec/, seeking-alpha/, social/, universe/ -- none named model/ or containing a model/ sub-key at this listing depth.",
+        "lib/research/identity/crosswalk.record_for('6861_JP_Equity') returned keys ['association_keys','bloomberg','display_ticker','exchange','identity','model_key','provenance','raw_identifier','resolution','security_key','share_class','source_row']; model_key='6861_JP_Equity' (a string, not a URL) and identity={'lei':'529900M7PQBS7A89DZ11','name':'KEYENCE CORP', ...} with no domain/host/url field; regex URL scan over this sub-block returned 0 occurrences."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order AMGT-rk-106, Q-b bullet: 'Cover at least the crosswalk record, the filing_attempt state marker, any filing_source silver row, the served management object, domains.json and the model block.'",
+    "world_is": "The estate carries no object addressable as a literal 'model block' distinct from the crosswalk record; this worker covered the crosswalk record's model_key/identity sub-block as the nearest reading and found it carries no URL/host candidate for 6861, so the substitution does not change Q-b's answer (the recommended source remains the filing_source silver row's verified_site.host).",
+    "notes": "Per THE REFUSAL CLAUSE, this does not block any proof-of-spec criterion (AC1 only checks the four headings and citation count, both satisfied); recorded as a spec-vs-world mismatch on the deliverable's own cell text rather than left silent. Left for the CVO/CTO to name the exact object 'the model block' refers to, if one exists elsewhere in the estate this worker's READ-ONLY grant did not reach."
   }
 ]
 ```

@@ -187,7 +187,7 @@ L9 (a JUDGMENT read by the CVO); AC1-AC3 are its structural and safety criteria 
    round-27 analysis (msg 24216: "A code fix is cut only on what the diagnosis finds, in the next round").
 3. Pinned at `d3ba12c64b`.
 
-<status>pending</status>
+<status>complete</status>
 <round>27</round>
 <slot>~106</slot>
 <fabric>site-z</fabric>
