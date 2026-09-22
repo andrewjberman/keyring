@@ -1,0 +1,683 @@
+[
+ {
+  "folder": "ASML NA",
+  "sector": "Information Technology",
+  "sector_source": "ASML One Pager 2025 07 17_v1.xlsx",
+  "funds": [
+   "IDVZ",
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Adobe ADBE US",
+  "sector": "Technology Services",
+  "sector_source": "ADBE research pack 7_13_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Air Liquide AI FP",
+  "sector": null,
+  "sector_source": null,
+  "funds": []
+ },
+ {
+  "folder": "Alibaba BABA",
+  "sector": "Electronic Technology",
+  "sector_source": "Alibaba BABA FactSet Based ONE PAGER TEMPLATE 2026 03 09_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Alphabet GOOGL US",
+  "sector": "Technology Services",
+  "sector_source": "GOOGL earnings update 2Q26.pdf",
+  "funds": [
+   "DIVZ",
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "America Movil AXMB MM",
+  "sector": "Communication Services",
+  "sector_source": "America Movil 2025 07 11.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "AstraZeneca AZN",
+  "sector": "Health Technology",
+  "sector_source": "ASTRAZENECA Research Pack 2026 06 17_v1.pdf",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "BB Seguridade BBSE3 BZ",
+  "sector": "Financials",
+  "sector_source": "BB Seguridade International Dividend One Pagers.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "BNP Paribas BNP FP",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "BP PLC",
+  "sector": "Energy Minerals",
+  "sector_source": "BP plc FactSet Based ONE PAGER 2026 04 03_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Boeing BA",
+  "sector": "Industrials",
+  "sector_source": "BOEING ONE PAGER 2026 01 27_v1.pdf",
+  "funds": []
+ },
+ {
+  "folder": "British American Tobacco",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Bunzl BNZL GB",
+  "sector": "Distribution Services",
+  "sector_source": "BNZL research pack 3_26_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Cadence CDNS US",
+  "sector": "Technology Services",
+  "sector_source": "CDNS research pack 5_14_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Canadian National Railway CNR",
+  "sector": "Transportation",
+  "sector_source": "CNR CA FactSet Based ONE PAGER 2026 06 30_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Celsius CELH",
+  "sector": "Consumer Non-Durables",
+  "sector_source": "CELH research pack 4_16_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "China Construction Bank",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Clorox CLX",
+  "sector": "Consumer Non-Durables",
+  "sector_source": "CLX FactSet Based ONE PAGER 2026 06 12_v1.xlsx",
+  "funds": [
+   "DIVZ"
+  ]
+ },
+ {
+  "folder": "Coca Cola Femsa",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Copa CPA",
+  "sector": "Transportation",
+  "sector_source": "COPA FactSet Based ONE PAGER 2027 07 07_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Costco COST",
+  "sector": "Location:",
+  "sector_source": "COSTCO One Pager 2025 12 17_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Eli Lilly LLY US",
+  "sector": "Health Technology",
+  "sector_source": "LLY earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Enel SpA ENEL IM",
+  "sector": "Utilities",
+  "sector_source": "Enel SpA One Pager 2025 07 25_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "GSK LN",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Global Payments GPN",
+  "sector": null,
+  "sector_source": null,
+  "funds": []
+ },
+ {
+  "folder": "Grupo Aeroportuario del Centro OMAB MM",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "HEICO Corporation HEI US",
+  "sector": "Electronic Technology",
+  "sector_source": "HEI research pack 6_15_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "HSBC HSBA LN",
+  "sector": "Financials",
+  "sector_source": "HSBC International Dividend One Pagers.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Haliburton HAL",
+  "sector": "Energy",
+  "sector_source": "HAL ONE PAGER 2026 01 23_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Hermes RMS",
+  "sector": "Consumer Discretionary",
+  "sector_source": "Hermes ONE PAGER 2025 12 19_v1.xlsx",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Home Depot HD",
+  "sector": "Consumer Discretionary",
+  "sector_source": "Home Depot ONE PAGER 2025 12 19_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Hon Hai 2317 TT",
+  "sector": "Information Technology",
+  "sector_source": "Hon Hai International Dividend One Pagers.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "ICICI Bank ICICIBC IN",
+  "sector": "Financials",
+  "sector_source": "ICICI Bank One Pager 2025 10 15_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Iberdrola IBE SM",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Idexx IDXX",
+  "sector": "Health Technology",
+  "sector_source": "IDXX earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Imperial Brands IMB LN",
+  "sector": "Consumer Non-Durables",
+  "sector_source": "Imperial Brands FactSet Based ONE PAGER 2026 07 17_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "International Container Terminals",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Intesa Sanpaolo ISP IM",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Intuit INTU",
+  "sector": "Technology Services",
+  "sector_source": "INTU earnings update fiscal 4Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Intuitive Surgical ISRG US",
+  "sector": "Health Technology",
+  "sector_source": "ISRG earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "JD.com 9618 HK",
+  "sector": "Retail Trade",
+  "sector_source": "JD. com FactSet Based ONE PAGER TEMPLATE 2026 04 22_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "KDDI",
+  "sector": "Communications",
+  "sector_source": "KDDI FactSet Based ONE PAGER TEMPLATE 2026 03 09_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Kimberly Clark KMB",
+  "sector": "Consumer Staples",
+  "sector_source": "KIMBERLY CLARK ONE PAGER 2026 02 09_v1.pdf",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Koninklijke KPN NA",
+  "sector": "Communication Services",
+  "sector_source": "KPN International Dividend One Pagers.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Lenovo 992 HK",
+  "sector": "Information Technology",
+  "sector_source": "Lenovo International Dividend One Pagers.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "MSCI Inc MSCI US",
+  "sector": "Commercial Services",
+  "sector_source": "MSCI research pack 6_9_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Manila MER PER",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Mastercard MA",
+  "sector": "Finance",
+  "sector_source": "MA earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "MercadoLibre MELI US",
+  "sector": "Retail Trade",
+  "sector_source": "MELI earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Michelin ML FP",
+  "sector": "Consumer Durables",
+  "sector_source": "Michelin FactSet Based ONE PAGER TEMPLATE 2026 05 28_v2.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Mitsubishi UFJ Financial Group 8306 JP",
+  "sector": "Finance",
+  "sector_source": "MUFG FactSet Based ONE PAGER TEMPLATE 2026 03 30_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Monster MNST",
+  "sector": "Consumer Non-Durables",
+  "sector_source": "MNST research pack 4_15_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "National Grid NG LN",
+  "sector": "Utilities",
+  "sector_source": "National Grid plc One Pager 2025 07 23_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Nestle NESN SW",
+  "sector": "Consumer Non-Durables",
+  "sector_source": "Nestle FactSet Based ONE PAGER TEMPLATE 2026 05 11_v2.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Netflix NFLX",
+  "sector": "Technology Services",
+  "sector_source": "NFLX earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Nike NKE US",
+  "sector": "Consumer Non-Durables",
+  "sector_source": "NKE research pack 4_7_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Nokia FH",
+  "sector": "Electronic Technology",
+  "sector_source": "Nokia FactSet Based ONE PAGER TEMPLATE 2026 04 22_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Novartis NOVN SW",
+  "sector": "Health Care",
+  "sector_source": "NOVARTIS ONE PAGER 2026 01 29_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Nubank NU",
+  "sector": "Financials",
+  "sector_source": "NUBANK ONE PAGER 2026 01 26_v1.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Orange ORA FP",
+  "sector": "Communications",
+  "sector_source": "Orange FactSet Based ONE PAGER TEMPLATE 2026 03 09_v2.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Petrobras PETR3 BZ",
+  "sector": "Energy Minerals",
+  "sector_source": "Petrobras FactSet Based ONE PAGER TEMPLATE 2026 04 15_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "QXO",
+  "sector": null,
+  "sector_source": null,
+  "funds": []
+ },
+ {
+  "folder": "Quanta Services PWR",
+  "sector": null,
+  "sector_source": null,
+  "funds": []
+ },
+ {
+  "folder": "RWE AG RWE GY",
+  "sector": "Utilities",
+  "sector_source": "RWE One Pager 2025 07 16_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Reckitt Benckiser RKT LN",
+  "sector": "Consumer Staples",
+  "sector_source": "Reckitt Benckiser One Pager 2025 07 14_v1.pdf",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Rio Tinto RIO LN",
+  "sector": "Location:",
+  "sector_source": "Rio Tinto ONE PAGER 2026 02 26_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Roche ROG SW",
+  "sector": "Health Care",
+  "sector_source": "ROCHE ONE PAGER 2026 01 28_v1.pdf",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "SAP GY",
+  "sector": "Technology Services",
+  "sector_source": "SAP FactSet Based ONE PAGER 2026 07 01_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "SSE plc SSE LN",
+  "sector": "Utilities",
+  "sector_source": "SSE PLC One Pager 2025 07 15_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Sanofi SAN FP",
+  "sector": "Health Technology",
+  "sector_source": "Sanofi SAN FP Research Pack 2026 03 18_v1.pdf",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Schlumberger SLB",
+  "sector": "Energy",
+  "sector_source": "SLB 2026 0114_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "ServiceNow NOW US",
+  "sector": "Technology Services",
+  "sector_source": "NOW earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Shopify SHOP CA",
+  "sector": "Commercial Services",
+  "sector_source": "SHOP CA FactSet Based ONE PAGER 2026 07 13_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Singapore Telecom ST SP",
+  "sector": "Communications",
+  "sector_source": "Singapore Telecom FactSet Based ONE PAGER TEMPLATE 2026 03 09_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Spotify SPOT US",
+  "sector": "Technology Services",
+  "sector_source": "SPOT earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Sumitomo Mitsui Financial Group 8316 JP",
+  "sector": null,
+  "sector_source": null,
+  "funds": []
+ },
+ {
+  "folder": "Synopsys SNPS US",
+  "sector": "Technology Services",
+  "sector_source": "SNPS research pack 5_14_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Taiwan Semiconductor Manufacturing TSM US",
+  "sector": "Electronic Technology",
+  "sector_source": "TSMC earnings update 2Q26.pdf",
+  "funds": [
+   "IDVZ",
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Telefonica Brazil VIVT3 BZ",
+  "sector": "Communication Services",
+  "sector_source": "Telefonica Brazil 2026 01 13_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Tokyo Electron 8035 JP",
+  "sector": "Producer Manufacturing",
+  "sector_source": "TEL research pack 5_7_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Tokyo Marine 8766 JP",
+  "sector": "Finance",
+  "sector_source": "Tokyo Marine FactSet Based ONE PAGER TEMPLATE 2026 03 24_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Total Energies TTE FP",
+  "sector": "Consumer Non-Durables",
+  "sector_source": "FactSet Based ONE PAGER TEMPLATE 2026 03 09_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "UBS",
+  "sector": null,
+  "sector_source": null,
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Uber Technologies UBER US",
+  "sector": "Transportation",
+  "sector_source": "UBER earnings update 2Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Unilever ULVR LN",
+  "sector": "Consumer Staples",
+  "sector_source": "Unilever ONE PAGER 2026 02 18_v1.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "UnitedHealth Group UNH US",
+  "sector": "Health Services",
+  "sector_source": "UNH earnings update 2Q26.pdf",
+  "funds": [
+   "DIVZ",
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Universal Music Group UMG NL",
+  "sector": "Commercial Services",
+  "sector_source": "UMG earnings update 2Q26.pdf",
+  "funds": [
+   "IDVZ",
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Valero Energy VLO",
+  "sector": "Energy",
+  "sector_source": "VLO Valero ONE PAGER 2026 0120_v1.xlsx",
+  "funds": []
+ },
+ {
+  "folder": "Visa V",
+  "sector": "Finance",
+  "sector_source": "V earnings update fiscal 3Q26.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Walmart de Mexico WALMEX MM",
+  "sector": "Consumer Staples",
+  "sector_source": "Walmart de Mexico International Dividend One Pagers.xlsx",
+  "funds": [
+   "IDVZ"
+  ]
+ },
+ {
+  "folder": "Workday WDAY US",
+  "sector": "Technology Services",
+  "sector_source": "WDAY earnings update fiscal 2Q27.pdf",
+  "funds": [
+   "PFOE"
+  ]
+ },
+ {
+  "folder": "Zoetis ZTS US",
+  "sector": "Health Technology",
+  "sector_source": "ZTS research pack 5_19_2026.pdf",
+  "funds": []
+ },
+ {
+  "folder": "Zurich Insurance ZURN SW",
+  "sector": "Financials",
+  "sector_source": "Zurich Insurance International Dividend One Pagers.xlsx",
+  "funds": []
+ }
+]

@@ -853,3 +853,14 @@ bronze vintages, lift the skills' METHODS as specs, transcripts through AMGT_HAR
 subscription word. Six substrate cards named with owners; four open calls to Andrew. **Egress:** one public `git clone` and
 one credential-free discovery handshake, both under step 1 of the verbatim instruction; no vendor data API called, no Opal
 data sent. Nothing installed on this box.
+
+### Downstream (2026-09-22 ~17:3xZ, `4.0.0_SA_CRO~F`)
+Andrew read both briefs at this terminal and gave the design in four messages (record
+`deliverables/ANDREW_DIRECT_20260922_17xxZ_CLAUDE_ANALYSIS_LAYER_PLATINUM_DESIGN.md`) plus a 6m34s voice memo relayed from the
+laptop fabric on his word (`deliverables/ANDREW_VOICE_MEMO_20260922_HARVEST_INFRA_OVERVIEW_TRANSCRIPT.md`): the Claude API is an
+ANALYSIS LAYER on top of harvest data, platinum per security inside `opal-data-harvest`, the equity-research skill lifted, the
+SharePoint earnings-report corpus as the format authority and backfill source, sector KPI/model templates, and a V2 sprint
+(flags, the Opal Analyst in Teams, the earnings calendar) named but not cut. The proposal brief is SUPERSEDED by the L1 brief
+`docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md` (MIDSTREAM on AMGT_RESAPP, eleven outcomes O1-O11, for
+`1.0.0_SA_CTO~Z`'s `/endpoint --forward`). On Andrew's word at ~17:3xZ no site-Z seat is notified yet; he carries the brief to
+the CTO himself.
