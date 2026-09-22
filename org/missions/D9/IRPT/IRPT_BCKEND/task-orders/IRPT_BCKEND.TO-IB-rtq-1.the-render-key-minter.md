@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~14</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 17 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.17 @`4f942b7657` | **Decomp cell:** `IB-rtq-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.21, s.R17.1) | **outcome_ref:** FWD-8, FWD-3, FWD-4 (contrib, B14 row) | **Rows:** none yet -- this cell opens the render-identity build line | **Ruling:** CTO msg 99478, "round 17 ... rests on CONTRACTS THE RENDER IDENTITY, items 1-8" | **Reference (READ-ONLY, never edited by this cell):** `infra/aws/lambda/shared/opal_auth/__init__.py` (the existing verifier pattern this minter's signing side mirrors -- python-jose, RS256, boto3 `secretsmanager`, container-cached key)
 
