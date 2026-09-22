@@ -429,7 +429,7 @@ never `git stash`, never `git show :path`.
 6. **The perturbation note:** CloudWatch shows a steady print stream roughly every 13 s from 05:57Z to 08:31Z, from
    another client. The warm pool is shared, so AC1/AC5 record rather than retry.
 
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~97</slot>
 <fabric>site-z</fabric>
