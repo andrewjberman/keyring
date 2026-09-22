@@ -11904,6 +11904,69 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Task order AMGT-rk-106, Q-b bullet: 'Cover at least the crosswalk record, the filing_attempt state marker, any filing_source silver row, the served management object, domains.json and the model block.'",
     "world_is": "The estate carries no object addressable as a literal 'model block' distinct from the crosswalk record; this worker covered the crosswalk record's model_key/identity sub-block as the nearest reading and found it carries no URL/host candidate for 6861, so the substitution does not change Q-b's answer (the recommended source remains the filing_source silver row's verified_site.host).",
     "notes": "Per THE REFUSAL CLAUSE, this does not block any proof-of-spec criterion (AC1 only checks the four headings and citation count, both satisfied); recorded as a spec-vs-world mismatch on the deliverable's own cell text rather than left silent. Left for the CVO/CTO to name the exact object 'the model block' refers to, if one exists elsewhere in the estate this worker's READ-ONLY grant did not reach."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S219",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T13:40:00Z",
+    "one_line": "The SA forecast-fallback identity check compares our company name against SA's attributes.name, which is the TICKER; the company name is attributes.companyName. BA is wrongly refused; COST and BABA pass only by substring.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live bronze seeking-alpha/harvest/bronze/symbol/ object for BABA read 2026-09-22: attributes.name == 'BABA', 'companyName' present.",
+        "Field-map pass B (org/missions/D5/AMGT/AMGT_RESAPP/prd/FIELDMAP_20260922.md@3a0b3cadaa, B file s.9) ran the module's own check offline on the stored names; the check sits at sa_forecast_fallback :239 per that pass."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The SA identity check confirms SA returned the same company before any SA value is used (forecast fallback; C-PEER-SET-SA's planned identity check).",
+    "world_is": "The check compares against the ticker field, so it refuses a correct match (BA) and would accept any company whose ticker is a substring of our name; 0 cells have been filled, so nothing served is wrong today.",
+    "notes": "Remedy: compare attributes.companyName; fix the offline tests, which put a company name in 'name'. Rides the first code cell after Andrew's starting list."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S220",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T13:40:00Z",
+    "one_line": "SERP freshness reads bright-data/harvest/bronze/serp/security_key=<k>/ but the SERP writer writes serp/date=<d>/<qsha>-p<n>.json, so freshness can never find a SERP object; SERP keys carry no security key at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py:3248-3250 docstring: a key relative to the prefix is 'security_key=<safe>/'; lib/research/freshness/build_view.py:177 latest_bright_data_serp_stamp(client, security_key).",
+        "lib/research/harvest/tests/test_bright_data_serp.py:141 asserts the key ends with 'bright-data/harvest/bronze/serp/date=2026-09-21/%s-p0.json'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Freshness reports the latest SERP pull per security.",
+    "world_is": "The writer partitions by date and query hash, the reader by security key; the SERP writer has no production caller and 0 objects, so nothing is misreported today.",
+    "notes": "Resolve with the key design on Andrew's list: either the writer adds the working key to the partition, or freshness reads a key-to-query index."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S221",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T13:40:00Z",
+    "one_line": "detect_language returns 'en' whenever ASCII letters are over half of all letters, so German, French, Italian and every Latin-alphabet language read as English and are never translated, with no warning; the API also drops text_translated from every drafted sentence.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/filings/document.py:330-345: 'en when ascii letters are over half of all letters' -- a Latin-alphabet European text satisfies it.",
+        "lib/research/api/scoped_amgt.py:1660-1672: the served sentence dict carries text, generated, evidence, verbatim_check, quoted_spans -- no text_translated."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Foreign-language filings are detected and translated at the analysis output, and the page shows the translation (PRD translation contract; Andrew 2026-09-22: IEFA, foreign-friendly from the start).",
+    "world_is": "Only Japanese, Chinese and Korean are detected; every served analysis today is from an English EDGAR filing, so nothing served is wrong yet -- but the first European annual report would be analysed as English untranslated.",
+    "notes": "Part of the IEFA structure design (field map s.3 item 4); the section cutter also knows only English and Japanese report types."
   }
 ]
 ```
