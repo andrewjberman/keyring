@@ -169,7 +169,7 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-h-7.chatter-pro
 2. **The served act is a later cell or a direct act.** It rides the pair `1.0.0_SA_CTO~Z` and this seat sign, with
    `2.0.0_SA_COO~Z` for the retirement window (decomposition s.9).
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~7</slot>
 <fabric>site-z</fabric>
