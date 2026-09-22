@@ -1,0 +1,61 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "timestamp_utc": "2026-09-22T21:34:46.848824+00:00",
+  "candidate": "0754b10b6c6407da82021f8e475382634804870d",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-70598-review-jijllrti",
+  "sha256": {
+    "infra/aws/lambda/investor-reporting/reports/repository.py": "805805dd922e9cd77a9873c4c77aa1f8a857469b2d9440ebed6fd64ec55ed2ba",
+    "infra/aws/lambda/investor-reporting/reports/tests/test_repository.py": "1d60dd5f28238b556e90915305813229b7e04824e1535062fcf80164b2fa1680",
+    "docs/contracts/investor-reporting/v1/AnalysisReport.schema.json": "a601d140fcf1492617b922bbd8a2cace612c33e33d46eb85822d235fd6a9aaeb"
+  },
+  "environment": "Offline actual candidate module; synthetic AWS adapters/authorization; no network, browser, IAM or deployed evidence",
+  "implementer_suite": {
+    "ran": 23,
+    "failures": 0,
+    "errors": 0,
+    "output": "test_concurrent_different_publication_winner_cannot_be_overwritten (candidate_tests.ArtifactTests.test_concurrent_different_publication_winner_cannot_be_overwritten) ... ok\ntest_cross_tenant_and_current_owner_access (candidate_tests.ArtifactTests.test_cross_tenant_and_current_owner_access) ... ok\ntest_different_bytes_or_media_type_under_same_identity_conflict (candidate_tests.ArtifactTests.test_different_bytes_or_media_type_under_same_identity_conflict) ... ok\ntest_dynamo_numeric_receipt_roundtrip_is_json_safe (candidate_tests.ArtifactTests.test_dynamo_numeric_receipt_roundtrip_is_json_safe) ... ok\ntest_failed_index_publication_retry_and_version_requirement (candidate_tests.ArtifactTests.test_failed_index_publication_retry_and_version_requirement) ... ok\ntest_fractional_index_count_is_refused_without_rounding (candidate_tests.ArtifactTests.test_fractional_index_count_is_refused_without_rounding) ... ok\ntest_restart_and_retry_preserve_original_bytes_and_private_address (candidate_tests.ArtifactTests.test_restart_and_retry_preserve_original_bytes_and_private_address) ... ok\ntest_revocation_during_read_and_integrity_failure (candidate_tests.ArtifactTests.test_revocation_during_read_and_integrity_failure) ... ok\ntest_unregistered_family_and_invalid_input_do_not_write (candidate_tests.ArtifactTests.test_unregistered_family_and_invalid_input_do_not_write) ... ok\ntest_aliased_index_id_is_refused_by_immutable_record_binding (candidate_tests.RepositoryTests.test_aliased_index_id_is_refused_by_immutable_record_binding) ... ok\ntest_analysis_request_identity_must_match (candidate_tests.RepositoryTests.test_analysis_request_identity_must_match) ... ok\ntest_bad_schema_and_nonfinite_values_never_publish (candidate_tests.RepositoryTests.test_bad_schema_and_nonfinite_values_never_publish) ... ok\ntest_conditional_duplicate_index_uses_winner (candidate_tests.RepositoryTests.test_conditional_duplicate_index_uses_winner) ... ok\ntest_correction_preserves_previous_revision (candidate_tests.RepositoryTests.test_correction_preserves_previous_revision) ... ok\ntest_cross_tenant_and_prospect_owner_refused (candidate_tests.RepositoryTests.test_cross_tenant_and_prospect_owner_refused) ... ok\ntest_failed_index_publish_is_retryable_without_blob_overwrite (candidate_tests.RepositoryTests.test_failed_index_publish_is_retryable_without_blob_overwrite) ... ok\ntest_history_pagination_and_cursor_tenant_binding (candidate_tests.RepositoryTests.test_history_pagination_and_cursor_tenant_binding) ... ok\ntest_restart_idempotency_and_exact_payload (candidate_tests.RepositoryTests.test_restart_idempotency_and_exact_payload) ... ok\ntest_retry_and_history_refuse_corrupt_receipt (candidate_tests.RepositoryTests.test_retry_and_history_refuse_corrupt_receipt) ... ok\ntest_revocation_blocks_get_and_history (candidate_tests.RepositoryTests.test_revocation_blocks_get_and_history) ... ok\ntest_revocation_during_blob_read_is_rechecked (candidate_tests.RepositoryTests.test_revocation_during_blob_read_is_rechecked) ... ok\ntest_tampered_blob_fails_on_read_and_retry (candidate_tests.RepositoryTests.test_tampered_blob_fails_on_read_and_retry) ... ok\ntest_unversioned_storage_cannot_publish (candidate_tests.RepositoryTests.test_unversioned_storage_cannot_publish) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 0.035s\n\nOK\n"
+  },
+  "independent_cases": [
+    {
+      "case": "exact_subset_revocation",
+      "grade": "PASS",
+      "detail": "Unselected revocation permits exact selected report; selected revocation denies."
+    },
+    {
+      "case": "selected_order_idempotency",
+      "grade": "PASS",
+      "detail": "Selected-set ordering preserves identity and one blob."
+    },
+    {
+      "case": "report_index_alias_integrity",
+      "grade": "PASS",
+      "detail": "Corrupted index alias refused."
+    },
+    {
+      "case": "artifact_alias_negative_control",
+      "grade": "PASS",
+      "detail": "Equivalent artifact index alias refused by recomputed identity binding."
+    },
+    {
+      "case": "revocation_before_publication",
+      "grade": "PASS",
+      "detail": "Revocation during prepublication blob verification leaves no published index row."
+    }
+  ],
+  "limits": "Corruption case assumes a misbound index row; no unprivileged ability to write the index is claimed. Full P/S acceptance NOT_EVALUATED.",
+  "additional_decimal_control": {
+    "grade": "PASS",
+    "raw_byte_length_type": "decimal.Decimal",
+    "operations": [
+      "initial put",
+      "identical retry",
+      "get",
+      "head"
+    ],
+    "public_byte_length_type": "int",
+    "same_receipt_and_bytes": true,
+    "published_rows": 1,
+    "blob_put_count": 1,
+    "limit": "Actual boto3 type roundtrip with synthetic Table/S3; Y retains its own Y-P01 retest verdict."
+  }
+}
