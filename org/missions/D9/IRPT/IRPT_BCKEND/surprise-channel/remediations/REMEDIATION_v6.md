@@ -111,11 +111,11 @@ decision and older carries unchanged. MSTR owns any push; no push by this seat.
     "owner": "2.0.0_SA_COO~B",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-S117",
@@ -156,12 +156,11 @@ decision and older carries unchanged. MSTR owns any push; no push by this seat.
     "owner": "2.0.0_SA_COO~B",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
-
