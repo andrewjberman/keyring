@@ -4699,3 +4699,91 @@ fanout:
   no_fleet_run: true
   next_rounds: L-ID (identity pull, pair per CTO Q5) -> L-MB, L-PX, L-FIL, L-SA, L-PUB, L-SOC -> L-ANL (cost cap USD 20, Q1), L-MGMT (one Lusha pass, Q3), L-0f (after L-FIL, Q6) -> readers -> L-PROOF
 ```
+
+## 37. ROUND 29 -- THE LENOVO TRIAL, WAVE 1 (stage 1, identity), on PRD v0.23 s.12 and CTO msgs 24257, 24261 and 24300
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 28 (wave 0) closed 6 of 6. Stage 1, identity, runs before every other stage.
+
+Drafting L-ID found that `add_security` was built for NEW names. Lenovo `992_HK_Equity` is already a COVERAGE record in
+the served crosswalk (folder "Lenovo 992 HK", no `identity`). The planned invocation would pass the folder pre-check,
+spend the Bloomberg call, land the bronze, write `registrations.json`, and then `build_crosswalk` would RAISE on the
+duplicate key: a half-landed act that also breaks every later crosswalk build.
+
+So wave 1 is a CHAIN of two cells:
+- a code precursor that ENRICHES an existing coverage record;
+- then the pull.
+
+### 37a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| crosswalk ENRICH (L-0h) | `AMGT-rk-114` | ~114 | A1 | `build_crosswalk` attaches an ENRICH registration's identity to the matching COVERAGE record (never appends; refuses an unmatched or duplicate ENRICH); `add_security` writes an ENRICH row for a same-folder coverage name, and writes `registrations.json` only AFTER the crosswalk builds. With no ENRICH row, the document is byte-identical. Identity suite 60 -> 66. Code only | none |
+| L-ID Lenovo identity pull | `AMGT-rk-113` | ~113 | A2 (after A1 drains) | ONE ReferenceDataRequest, `992 HK Equity` x 9 fields, sized and printed first, with AC0 = READ_HERE's login-state probe (DOWN = STOP; no worker sign-in). It writes the identity bronze, the `registrations.json` ENRICH row and `crosswalk/v1/<today>.json`. The other 95 records byte-equal; resolve() unchanged for 992 and 3 controls | pair `NEVER_WIDEN_ROUND29_RK113_{COO,CTO}_HALF.md` |
+
+### 37b. SURFACE CENSUS (measured at `0972b8631c`)
+
+- **Served crosswalk:** `crosswalk/v1/2026-09-19.json` (96 records: 89 coverage + 7 registered). A local
+  `build_crosswalk("2026-09-19")` is BYTE-IDENTICAL to it, 96 of 96 records, so "the other 95 byte-equal" is testable.
+- **Lenovo:** a coverage record, with no `identity`. `registrations.json` has 7 rows and none for 992. Identity bronze
+  has 3 objects (CAT, CSL, 6861) and none for 992.
+- **Writers:** `crosswalk/v1` N=2 (add_security; the crosswalk CLI); `registrations.json` N=1; identity bronze N=1.
+- **Readers of a record's `identity`:** 0 in production. `resolve()` does not return it.
+- **The served-wide effect:** a new latest key moves EVERY name's served `crosswalk_vintage` and `crosswalk_source`, with
+  no record content changing. The pair names it.
+- **Interpreter:** this box's default Python 3.11 imports `blpapi` 3.26.4.2 and `boto3`. The Terminal's login state is
+  NOT measured here (it would spend a request); it is rk-113's AC0.
+- **Budget:** 2 requests (1 SPX probe + 1 Lenovo pull), 10 points. It is 1 of the plan's 7 Lenovo requests.
+- **Files written by more than one cell:** none. rk-114 writes identity CODE and TESTS; rk-113 writes
+  `registrations.json` (DATA) and S3.
+
+### 37c. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 2                   # rk-114, rk-113 -- one commit
+  chains_total: 1                   # rk-114 -> rk-113
+  wave_1: [rk-114]                  # at once; code only
+  wave_2: [rk-113]                  # after rk-114 drains AND both pair halves are signed
+  no_fleet_run: true
+```
+
+### 37x. THE CLEANUP CELL (rk-115), added at the cut per CTO msg 24310
+
+## 37 (cleanup member) -- `AMGT-rk-115`, merged into section 37 alongside L-ID (rk-113) and its precursor rk-114
+
+**Source:** 1.0.0_SA_CTO~Z's round-28 analysis, msg 24307, item 2 ("Cleanup, code only": Z-S222, Z-S223, Z-S224 and the
+W112-S4 count == 1 assert).
+
+### Mapping
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| research tests cleanup | `AMGT-rk-115` | ~115 | none (parallel to rk-114; independent of rk-113) | Z-S222: `test_fye_join` reads four sha-pinned FIXTURES captured read-only from `opal-data-harvest` bronze instead of the retired `opal-data-research` bucket, with no assertion changed. Z-S223: `test_latest_stamp_raw_pair`'s discriminating arm is pinned by content to `87ce2e5971` (the last commit before rk-70's pair rule), plus an assert that the pinned copy lacks `_stamps_with_raw_pair`. Z-S224: the two consumer tests import the CURRENT served overlay consumer, `scoped_amgt._apply_corrected_overlay`, through a test-local helper. W112-S4: the December strip asserts exactly one `EQY_FUND_CRNCY` unresolved entry. The directory goes from 4F/50P/2E (with the continue flag) to 63 passed, 0 failed, 0 errors, and still passes in full with INVALID AWS credentials | none (code only) |
+
+### Surface census (measured at SITEZ `98041e1890`)
+
+- **Per-file diagnosis:**
+  - `test_fye_join`: 3F/2P, a `NoSuchBucket` on the hardcoded `opal-data-research` (`:55`). The data is present in
+    `opal-data-harvest` under the same `_bronze_prefix` keys: 10 fundamentals and 10 `PX_LAST` rows per histdata object,
+    and 2514 daily rows.
+  - `test_latest_stamp_raw_pair`: 1F/5P. The `merge-base HEAD SITEZ` pin now resolves to post-M1 code; the code is
+    right and the test is stale. `e803978fc3`, the pre-M1 parent, ALREADY has the pair rule, so the correct pin is
+    pre-rk-70, `87ce2e5971`.
+  - The two consumer files: `render_pack.load_model_block` was removed at `8fcb2e0e26`. The issuer reproduced BABA
+    FY2025 = 132.23 RESOLVED via `scoped_amgt._apply_corrected_overlay` with `AMGT_MODEL_BLOCK_ROOT` set to `~1`.
+  - `test_stage_derive_fye`: 4P, no count guard on the strip.
+- **Write surface:** `integrations/bloomberg/research/tests/{test_fye_join,test_latest_stamp_raw_pair,test_consumer_wiring,test_unresolved_overlay_renders_marked,test_stage_derive_fye}.py`
+  and `integrations/bloomberg/research/tests/fixtures/fye_join/` (4 files), plus the org paths.
+- **Files written by more than one round-29 cell: NONE** (apart from the append-only channel).
+  - rk-113's `<paths>`: `lib/research/identity/registrations.json`, plus org and critical_paths entries.
+  - rk-114's `<paths>`: `lib/research/identity/crosswalk.py`, `lib/research/identity/add_security.py` and
+    `lib/research/identity/tests/test_crosswalk_enrich_coverage.py`, plus org entries.
+  - rk-115 writes only under `integrations/bloomberg/research/tests/`.
+- **Live act:** one read-only S3 capture (4 GETs, sha-checked). No write, no vendor, no Bloomberg.
+- **Pre-existing hazard, recorded and not fixed:** `test_unresolved_overlay_renders_marked._write_fixtures` writes into
+  the tracked `deliverables/0.9.0_WK_AMGT_RESAPP~1/` folder. AC4 bars it to byte-equal.
+
+### Fan-out contribution
+
+rk-115 spawns at the cut, in parallel with rk-114. It has no dependency on rk-113 or rk-114.
