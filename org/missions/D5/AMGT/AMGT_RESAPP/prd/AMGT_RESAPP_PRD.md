@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.20",
+  "prd_version": "v0.21",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,18 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.21 CHANGE NOTE -- 2026-09-22 ~11:1xZ, `1.0.0_SA_CTO~Z`: the CVO's v0.20 residuals and carry items
+
+This bump applies the v0.20 review @`45cc68b8ac` exactly.
+- (a) The round-5/v0.6 history is stripped from C-PAGE-LAYOUT. Its operative sentence stands alone.
+- (b) The dated ticker measurement is stripped from C-UNION-UNIVERSE.
+- (c) C-ETF-PLANE-READ names the role, not the lane.
+- (d) The closed row id is stripped from C-HARVEST-HOME, and C-PAGE-LAYOUT's S13 is named as the open social-feed surface.
+- Carry 1: the preamble now says where owners are recorded.
+- Carry 2: the POSN_ASTTAX PRD pointer carries its path.
+
+Only the ratified-text half moves.
 
 ### v0.20 CHANGE NOTE -- 2026-09-22 ~11:0xZ, `1.0.0_SA_CTO~Z`: the CONTRACTS provenance cleanup, per the CVO's ruling
 
@@ -589,17 +601,19 @@ build.** **No cell may claim an `EXERCISED` outcome REALIZED on the strength of 
 
 ## CONTRACTS -- v0.7 (ratified text; the reviewer is `3.0.0_SA_CVO`, always)
 
-*Contracts are the shapes every cell must respect. Each one names its owner and the record it comes from.
+*Contracts are the shapes every cell must respect. Each one names the record it comes from. A contract that names an
+owner assigns that part to that seat; every other contract is owned by this PRD's L4 author, and the cell that executes
+it is assigned by the decomposition.
 None of them is an outcome and none of them is graded; they are what a cell may not silently change.*
 
 **C-PAGE-LAYOUT.** The Security Analysis page is ONE HEADER and FIVE TABS. The header is the discovery
 surface: the Lead Panel's ranking cross (movement Trending | Breakout x subject Price | Chatter, List |
-Chart), the company-level feed (publisher items from the harvest and, once S13 has measured a source,
+Chart), the company-level feed (publisher items from the harvest and, once the social-feed surface (S13, `FWD-11`) has measured a source,
 social items), a one-line description, and the Posture line. The tabs, in order: **Thesis** (prose over
 cited evidence + the one "big thing" chart), **Exec Management**, **Peers**, **Model**, **Posture**. Print
 is a header export action, never a tab. The Coverage TAB is retired: its content is the header feed. The
-Model tab is RESTORED (round 5 cut it and rehomed its figures in Thesis; v0.6 returns it as its own tab
-carrying the model block in the shape of Adam's `Model` sheet, the same way for every company).
+Model tab is RESTORED as its own tab. The Model tab carries the model block in the shape of Adam's `Model` sheet,
+the same way for every company.
 Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md@a5c6a066de`; the voice memo `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_055xZ_TRANSCRIPT_SECURITY_ANALYSIS_PANELS_DRILL_DOWN.md@2285a23678`; measured shape: Adam's Boeing one-pager workbook
 (`SUBSTRATE_CARDS.md` card 3).
 
@@ -656,13 +670,13 @@ Owner: `2.0.0_SA_COO`.
 That plane, its producers and its vintages belong to the `~Z` fabric's POSN_ASTTAX / ETFS_* projects. Every
 Posture output and every membership claim carries the snapshot date it read. Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md@a5c6a066de`
 (Posture) and `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_035xZ_W_FABRIC_IS_AMGT_RESAPP_ONLY_Z_FABRIC_IS_POSN_ASTTAX.md@9dfee40ce0` (the fabric split). ⚠ **The producer's side of this read is NOT yet a
-contract:** the POSN_ASTTAX PRD @`ab2ee8052a` carries no CONTRACTS section and names none of these paths or the
-22:00Z schedule; until `1.0.0_SA_CTO~Z` pins a producer contract this
+contract:** the POSN_ASTTAX PRD `org/missions/D4/POSN/POSN_ASTTAX/prd/POSN_ASTTAX_PRD.md@ab2ee8052a` carries no CONTRACTS section and names none of these paths or the
+22:00Z schedule; until the CTO pins a producer contract this
 read is ONE-SIDED, every consumer carries the snapshot date AND the object's own schema version, and a layout
 change on that plane is a cell in this project, never a silent repair. No POSN signature is implied or asked for.
 
 **C-UNION-UNIVERSE.** The harvest universe is the UNION of the coverage list (`universe.json`, 89 name
-folders; 32 tickers MEASURED / 57 UNRESOLVED at 2026-09-10) and the current holdings of the four Opal ETFs
+folders) and the current holdings of the four Opal ETFs
 at the snapshot vintage, so every comparable Posture names carries the same model block, feed, filings
 and peers evidence as the target. Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_051xZ_SECURITY_ANALYSIS_HEADER_PANEL_FOUR_TABS_FILINGS_ANALYZER.md@a5c6a066de` (the third Posture word).
 
@@ -891,7 +905,7 @@ code. Every address is `lib/opal_naming.py address()` output and every resource 
 refusal is a missing registry row, never a hand-typed key. `opal-data-assets` holds client/partner custodial
 information only. ⛔ **This contract is NOT MET while the registry carries more than one `harvest` scope row:** the
 builder takes the first, a PRODUCT-tenancy row, and prints `opal-data-assets` for bronze and silver. No harvest writer
-is cut against this contract until only the GENERAL row remains (row Z-S203).
+is cut against this contract until only the GENERAL row remains.
 
 **C-BRONZE-AS-RECEIVED.** Bronze is the response bytes exactly as received -- no parsing, trimming or
 re-serialising -- one object per fetch, never overwritten, with the channel's FETCH key in the partition, in one of
