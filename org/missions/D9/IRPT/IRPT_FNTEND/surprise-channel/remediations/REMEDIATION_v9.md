@@ -50,15 +50,15 @@ Basis: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND12_L8_L9_20260
     "owner": "2.0.0_SA_COO~F",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v12"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T18:40:59Z"
     }
   },
   {
@@ -218,7 +218,7 @@ Basis: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND12_L8_L9_20260
     "fabric": "laptop",
     "class": "OBSERVATION",
     "hazard_standing": "INERT",
-    "mechanism": "The old no-interaction negative control shared the positive arm’s null-row cause. Amended driver selects distinct real entries: authoritative Coastal Ridge yields two chips; nonauthoritative Harbor Point yields none and withheld copy.",
+    "mechanism": "The old no-interaction negative control shared the positive arm\u2019s null-row cause. Amended driver selects distinct real entries: authoritative Coastal Ridge yields two chips; nonauthoritative Harbor Point yields none and withheld copy.",
     "evidence": [
       "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md@6012837fbc399c8eaa515f3c6ddebea822788d4e#IRPT_FNTEND-W28-S3",
       "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND12_L8_L9_20260922.md (co-committed; independent source/artifact review)"

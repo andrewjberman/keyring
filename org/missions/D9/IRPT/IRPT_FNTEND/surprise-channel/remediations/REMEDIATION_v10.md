@@ -104,15 +104,15 @@ Five existing remediation clocks advance in their original v8/v9 documents in th
     "owner": "2.0.0_SA_COO~F",
     "round": "v13",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v13"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T18:40:59Z"
     }
   }
 ]

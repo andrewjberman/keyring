@@ -448,16 +448,16 @@ Eight previously OPEN instance clocks close on the bounded evidence in the Round
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T18:40:59Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-C-S151",

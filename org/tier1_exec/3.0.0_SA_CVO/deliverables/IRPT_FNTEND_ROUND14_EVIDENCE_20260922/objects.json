@@ -1,0 +1,46 @@
+{
+  "portal": "7dd3d067a17ee00b878ecfceff23c557649a2331",
+  "sourceSHA256": "feb81f39a36ef4acf01d8af9d15d1c1f175d0f4b0cf6f4bfc0b0c8db84160933",
+  "capturedWrites": 15,
+  "fixtures": [
+    {
+      "path": "src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json",
+      "current": {
+        "present": 9,
+        "total": 9
+      },
+      "before": {
+        "present": 0,
+        "total": 9
+      },
+      "generatedEqualsCommitted": true,
+      "baselineDataEqual": false
+    },
+    {
+      "path": "src/pages/InvestorReporting/fixtures/smoke/fe-s-14-print-v1.json",
+      "current": {
+        "present": 2,
+        "total": 2
+      },
+      "before": {
+        "present": 0,
+        "total": 2
+      },
+      "generatedEqualsCommitted": true,
+      "baselineDataEqual": false
+    },
+    {
+      "path": "src/pages/InvestorReporting/fixtures/smoke/default.json",
+      "current": {
+        "present": 12,
+        "total": 12
+      },
+      "before": {
+        "present": 12,
+        "total": 12
+      },
+      "generatedEqualsCommitted": true,
+      "baselineDataEqual": true
+    }
+  ]
+}

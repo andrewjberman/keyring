@@ -1,0 +1,66 @@
+{
+  "renderPrint": {
+    "url": "http://localhost:6020/investor-reporting/print?bundle=report-1&tenant=49financial&scope=scope-1&revision=revision-1&renderToken=e30.eyJhdWQiOiJpcnB0LXJlbmRlciIsInJvbGUiOiJyZW5kZXJlciIsImZpcm1JZCI6IjQ5ZmluYW5jaWFsIn0.synthetic",
+    "printStates": [
+      {
+        "state": "ready",
+        "text": "Prepared for the selected scoperevision-12 account(s) in scopeReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]Performance report2026-01-02 to 2026-09-09Period answered by the source2026-01-02 to 2026-09-09Beginning value (USD)UNAVAILABLE (no-household-value-fact)Ending value (USD)UNAVAILABLE (no-household-value-fact)Period returnUNAVAILABLE (no-summary-return-for-answered-window)Values and returns are printed exactly as the source supplied them. This report performs no arithmetic on them: no gain is derived from the two values above, and nothing is averaged.Cumulative return, as suppliedSeries start2026-01-020Series end2026-09-090.07322026-01-022026-02-022026-03-022026-04-012026-05-042026-06-012026-07-012026-08-032026-09-09-0.02500.0250.050.075Every plotted observation, as supplied (9 of 9)DateCumulative return2026-01-0202026-02-020.01212026-03-020.00882026-04-01-0.01932026-05-040.02072026-06-010.04122026-07-010.05592026-08-030.06482026-09-090.0732OPAL CAPITALrevision-1 · template unknown · renderer unknown 1 / 3Prepared for the selected scoperevision-12 account(s) in scopeReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]Performance detailPeriod results, as suppliedPeriodWindowReturnYTDnot stated0.07321Ynot stated0.10413Ynot statedUNAVAILABLE (NOT_ENOUGH_HISTORY)Accounts in this reportAccountReferenceCoveredEnding value (USD)Period ret"
+      }
+    ],
+    "body": "Prepared for the selected scope\nrevision-1\n2 account(s) in scope\nReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]\nPERFORMANCE REPORT\n2026-01-02 to 2026-09-09\nPeriod answered by the source\n2026-01-02 to 2026-09-09\nBeginning value (USD)\nUNAVAILABLE (no-household-value-fact)\nEnding value (USD)\nUNAVAILABLE (no-household-value-fact)\nPeriod return\nUNAVAILABLE (no-summary-return-for-answered-window)\n\nValues and returns are printed exactly as the source supplied them. This report performs no arithmetic on them: no gain is derived from the two values above, and nothing is averaged.\n\nCumulative return, as supplied\nSERIES START\n2026-01-02\n0\nSERIES END\n2026-09-09\n0.0732\n2026-01-02\n2026-02-02\n2026-03-02\n2026-04-01\n2026-05-04\n2026-06-01\n2026-07-01\n2026-08-03\n2026-09-09\n-0.025\n0\n0.025\n0.05\n0.075\nEvery plotted observation, as supplied (9 of 9)\nDate\tCumulative return\n2026-01-02\t0\n2026-02-02\t0.0121\n2026-03-02\t0.0088\n2026-04-01\t-0.0193\n2026-05-04\t0.0207\n2026-06-01\t0.0412\n2026-07-01\t0.0559\n2026-08-03\t0.0648\n2026-09-09\t0.0732\nOPAL CAPITAL\nrevision-1 · template unknown · renderer unknown 1 / 3\nPrepared for the selected scope\nrevision-1\n2 account(s) in scope\nReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]\nPERFORMANCE DETAIL\nPeriod results, as supplied\nPeriod\tWindow\tReturn\nYTD\tnot stated\t0.0732\n1Y\tnot stated\t0.1041\n3Y\tnot stated\tUNAVAILABLE (NOT_ENOUGH_HISTORY)\nAccounts in this report\nAccount\tReference\tCovered\tEnding value (USD)\tPeriod returns\nA-0001\tA-00",
+    "wire": {
+      "matched": 1,
+      "total": 3,
+      "keys": [
+        "/api/scoped/investor-reporting/performance/"
+      ]
+    }
+  },
+  "noToken": {
+    "url": "http://localhost:6020/login",
+    "printStates": [],
+    "body": "Welcome back\n\nSign in to your account to continue\n\nEmail address\nPassword\nForgot password?\nSign in\n\n© 2026 Opal Capital. All rights reserved.",
+    "wire": {
+      "matched": 0,
+      "total": 3,
+      "keys": []
+    }
+  },
+  "renderNonPrint": {
+    "url": "http://localhost:6020/login",
+    "printStates": [],
+    "body": "Welcome back\n\nSign in to your account to continue\n\nEmail address\nPassword\nForgot password?\nSign in\n\n© 2026 Opal Capital. All rights reserved.",
+    "wire": {
+      "matched": 0,
+      "total": 3,
+      "keys": []
+    }
+  },
+  "humanAdmin": {
+    "url": "http://localhost:6020/investor-reporting/print?bundle=report-1&tenant=49financial&scope=scope-1&revision=revision-1",
+    "printStates": [
+      {
+        "state": "ready",
+        "text": "Prepared for the selected scoperevision-12 account(s) in scopeReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]Performance report2026-01-02 to 2026-09-09Period answered by the source2026-01-02 to 2026-09-09Beginning value (USD)UNAVAILABLE (no-household-value-fact)Ending value (USD)UNAVAILABLE (no-household-value-fact)Period returnUNAVAILABLE (no-summary-return-for-answered-window)Values and returns are printed exactly as the source supplied them. This report performs no arithmetic on them: no gain is derived from the two values above, and nothing is averaged.Cumulative return, as suppliedSeries start2026-01-020Series end2026-09-090.07322026-01-022026-02-022026-03-022026-04-012026-05-042026-06-012026-07-012026-08-032026-09-09-0.02500.0250.050.075Every plotted observation, as supplied (9 of 9)DateCumulative return2026-01-0202026-02-020.01212026-03-020.00882026-04-01-0.01932026-05-040.02072026-06-010.04122026-07-010.05592026-08-030.06482026-09-090.0732OPAL CAPITALrevision-1 · template unknown · renderer unknown 1 / 3Prepared for the selected scoperevision-12 account(s) in scopeReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]Performance detailPeriod results, as suppliedPeriodWindowReturnYTDnot stated0.07321Ynot stated0.10413Ynot statedUNAVAILABLE (NOT_ENOUGH_HISTORY)Accounts in this reportAccountReferenceCoveredEnding value (USD)Period ret"
+      }
+    ],
+    "body": "Prepared for the selected scope\nrevision-1\n2 account(s) in scope\nReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]\nPERFORMANCE REPORT\n2026-01-02 to 2026-09-09\nPeriod answered by the source\n2026-01-02 to 2026-09-09\nBeginning value (USD)\nUNAVAILABLE (no-household-value-fact)\nEnding value (USD)\nUNAVAILABLE (no-household-value-fact)\nPeriod return\nUNAVAILABLE (no-summary-return-for-answered-window)\n\nValues and returns are printed exactly as the source supplied them. This report performs no arithmetic on them: no gain is derived from the two values above, and nothing is averaged.\n\nCumulative return, as supplied\nSERIES START\n2026-01-02\n0\nSERIES END\n2026-09-09\n0.0732\n2026-01-02\n2026-02-02\n2026-03-02\n2026-04-01\n2026-05-04\n2026-06-01\n2026-07-01\n2026-08-03\n2026-09-09\n-0.025\n0\n0.025\n0.05\n0.075\nEvery plotted observation, as supplied (9 of 9)\nDate\tCumulative return\n2026-01-02\t0\n2026-02-02\t0.0121\n2026-03-02\t0.0088\n2026-04-01\t-0.0193\n2026-05-04\t0.0207\n2026-06-01\t0.0412\n2026-07-01\t0.0559\n2026-08-03\t0.0648\n2026-09-09\t0.0732\nOPAL CAPITAL\nrevision-1 · template unknown · renderer unknown 1 / 3\nPrepared for the selected scope\nrevision-1\n2 account(s) in scope\nReport state: Ready | Business date 2026-09-09 | Reason: REQUESTED_WINDOW_ANSWERED [code not defined by the v1 contract]\nPERFORMANCE DETAIL\nPeriod results, as supplied\nPeriod\tWindow\tReturn\nYTD\tnot stated\t0.0732\n1Y\tnot stated\t0.1041\n3Y\tnot stated\tUNAVAILABLE (NOT_ENOUGH_HISTORY)\nAccounts in this report\nAccount\tReference\tCovered\tEnding value (USD)\tPeriod returns\nA-0001\tA-00",
+    "wire": {
+      "matched": 1,
+      "total": 3,
+      "keys": [
+        "/api/scoped/investor-reporting/performance/"
+      ]
+    }
+  },
+  "humanAdvisor": {
+    "url": "http://localhost:6020/market",
+    "printStates": [],
+    "body": "INSIGHTS\nMarket Overview\nModel Portfolios\nAdvisor Intelligence\nANALYSIS\nPhilosophy\nPositioning\nValuations\nMacroeconomics\nTOOLS\nTrade Submission\nC\ncvo@test.invalid\nUser\nMARKET OVERVIEW\n\nDaily news and market performance across equity, fixed income, and commodities markets.\n\nTRENDING TOPICS\nBULLISH DRIVERS\n▶ Expand\nLoading trending topics\nBEARISH PRESSURES\n▶ Expand\nLoading trending topics\nSource: Financial news.\nTOP / BOTTOM PERFORMERS\nPeriod:\n1D\nWTD\nTTW\nMTD\n1M\nQTD\n1Q\nYTD\n1Y\nTOP PERFORMERS\n▶ Expand\nLoading index returns\nBOTTOM PERFORMERS\n▶ Expand\nLoading index returns\nSource: Bloomberg.\nDAILY CLOUD\n\nNo keywords are trending in the news feed yet.\n\nSource: Global news.\nGLOBAL RSI\nPeriod:\n90D\n1Y\n3Y\n90D\n90D\n90D\n0\n30\n50\n70\n100\nEquities\nFixed Income\nCommodities\nSource: Bloomberg.\nU.S. REGIME\nPeriod:\n90D\n1Y\n3Y\nLoading market regime\nSource: Bloomberg.\nFEAR & GREED\nFear\nGreed\n50\nNeutral\n• Click panel for detailed component breakdown\n•\n•\nSeptember 22nd, 2026, 2:34p ET|Source: CNN.\nMULTI-ASSET\nEQUITIES\nFIXED INCOME\nCOMMODITIES\nLoading market returns\nEquities",
+    "wire": {
+      "matched": 0,
+      "total": 3,
+      "keys": []
+    }
+  }
+}
