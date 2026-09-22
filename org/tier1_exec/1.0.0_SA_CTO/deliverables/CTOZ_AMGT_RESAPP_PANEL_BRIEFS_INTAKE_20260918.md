@@ -423,3 +423,35 @@ name ONE production-artifact home and move all three there, rather than fixing t
   reachable. It does not: **pushing DEV makes the pages durable, never reachable**, because no environment serves DEV. Only
   the PROD promote reaches a user, and Andrew has deferred it. (This seat's terminal reports to Andrew described the push as
   keeping the pages off one machine's disk -- durability -- which stands.) The register row is re-stated at the next tick.
+
+---
+
+## 4. 2026-09-22 -- Claude for Financial Services (RCN-0011, `4.0.0_SA_CRO~F`), read into this intake
+
+**Source:** the two briefs committed @`621cecb40a` on branch `cro-f-records` (not yet drained to SITEZ), on Andrew's
+word at `4.0.0_SA_CRO~F` (record @`c23d5f7dc0`):
+- `org/tier1_exec/4.0.0_SA_CRO/briefs/CLAUDE_FSI_PLUGIN_STRUCTURE_AND_DATA_SHAPES_BRIEF_20260922.md`
+- `org/tier1_exec/4.0.0_SA_CRO/briefs/RESAPP_CLAUDE_FSI_THREADING_PROPOSAL_20260922.md`
+
+**What it establishes:**
+- "The plugin" is a public repo of files, not access. Its 12 connectors are vendor OAuth against paid subscriptions.
+- The LLY pack in SharePoint was built from PUBLIC sources (EDGAR, StockAnalysis, press). No connector ran for it.
+
+| class | item | disposition in this PRD's life |
+|---|---|---|
+| ADD | the quarterly EVENT: filings forms 8-K (EX-99.1), 10-Q and DEF 14A -> an earnings-event object -> the Model tab's guidance and non-GAAP bridge rows | a candidate FWD. It is minted only at an L2 addendum Andrew confirms (a scope change), and sequenced AFTER the Lenovo trial is graded |
+| ADD | consensus REVISIONS derived from Bloomberg `bestdata` bronze vintages (bronze is never overwritten, so each pull is a dated snapshot) | measurement first: substrate card S1 (`2.0.0_SA_COO~Z`'s harvest chain), then a candidate FWD |
+| RESTATE | transcripts as a publication type | `AMGT_HARVST`'s scope (`2.0.0_SA_COO~Y`), not this PRD's; S4 (transcript terms) is Andrew's |
+| EXEC | lift the skills' METHODS (earnings-update template, DCF drivers, peer-candidate selection) as specs | a reference only; no cell until the ADD above is minted |
+| -- | vendor REST as a harvest channel (Daloopa first) | nothing until Andrew's subscription word (S6). MCP inside a producer is NOT adopted (token custody, no as-received bronze) |
+
+**Measurement acts (at the next L10, not cells):**
+- S1: does `bestdata` carry the means and counts, and does a second pull differ? Owner `2.0.0_SA_COO~Z`.
+- S3: the Claude API cost of one earnings-event pass. Owner: this seat, with Andrew as account owner. It is a paid model
+  call, and it runs only when the event ADD is minted.
+
+**At Andrew (the brief's s.5 calls, carried as cards):**
+1. subscription;
+2. installing the plugin on the shared box;
+3. the print target for a quarter;
+4. the egress class for skill runs that web-search.
