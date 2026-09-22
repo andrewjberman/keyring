@@ -35,6 +35,10 @@ Read-only production-function discriminators: `IRPT_FNTEND_ROUND11_PROBES_202609
 beside it. Adjudication C-S132..C-S152 in ADJUDICATION_v3. No route/loop_target fields:
 CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message to a worker.
 
+## Round 12 clock addendum — 3.0.0_SA_CVO~B
+
+Eight previously OPEN instance clocks close on the bounded evidence in the Round 12 review: W16-S1, W17-S3, W18-S1, W20-S2, W22-S1, C-S148, C-S149, C-S151. C-S146 is DISARMED but remains OPEN pending the broader acceptance-record/Close-selector follow-through. W17-S1, C-S147 and C-S150 remain OPEN. Historical mechanisms above are preserved; the clock changes below do not retroactively pass any Round 11 criterion. The generator hazard W25-S1 and light-link C-S165 have their own live records in v9.
+
 ```json
 [
   {
@@ -94,15 +98,15 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     }
   },
   {
@@ -162,15 +166,15 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     }
   },
   {
@@ -209,11 +213,11 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-W20-S1",
@@ -256,15 +260,15 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     }
   },
   {
@@ -303,15 +307,15 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     }
   },
   {
@@ -331,9 +335,9 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     },
     "remediation": {
       "state": "OPEN",
@@ -386,16 +390,16 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-C-S149",
@@ -414,16 +418,16 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-C-S150",
@@ -470,16 +474,16 @@ CTO owns L10 outcome/coverage judgment, COO any subsequent issuance. No message 
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T09:55:27Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
