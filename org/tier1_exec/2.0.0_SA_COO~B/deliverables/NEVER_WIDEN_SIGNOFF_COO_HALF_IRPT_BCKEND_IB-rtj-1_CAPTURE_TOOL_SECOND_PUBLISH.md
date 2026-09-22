@@ -4,7 +4,7 @@
 
 ## Packet blob, re-derived independently
 
-`git rev-parse HEAD:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IB-rtj-1_NEVER_WIDEN_PACKET.md` at CLOUD HEAD (post-drain, commit `3a80d5d155`). This half names that blob, not the packet's own text about itself.
+`git rev-parse HEAD:org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IB-rtj-1_NEVER_WIDEN_PACKET.md` at CLOUD HEAD (post-drain, commit `3a80d5d155`) = **`2450320a688a4740af81d3a72f281b2a06f05b23`**. This half names that literal blob, not the packet's own text about itself. **This half is corrected 2026-09-22 to actually print this hash** -- the first version described the derivation command but never ran and printed the result, which fails the packet's own requirement ("each naming THIS packet's git blob hash at HEAD"). Re-verified unchanged from when originally signed.
 
 ## Blast radius, verified against the repository, not the packet's prose
 
