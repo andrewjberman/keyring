@@ -11818,6 +11818,71 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC4's <expect>: '\"arms old 106 new 106\"; \"flips 5 DENY->PASS 5 PASS->DENY 0\" ... \"new_refusals 0\"'.",
     "world_is": "The verbatim comparator script (written from the order's fenced text, unedited) prints 'arms old 100 new 100' because 6 of the suite's 106 printed arms use a non-PASS/DENY verdict word its regex does not capture -- a pre-existing suite characteristic, not introduced by this cell's diff, and present identically on both sides of the comparison (so the flip/new-refusal detection itself is unaffected: the same six arms are simply invisible to the comparator on both runs, and every S209 arm and every pre-existing PASS/DENY arm IS counted and compared).",
     "notes": "Per the REFUSAL CLAUSE, this worker records the actual output rather than editing the order-verbatim no_new_refusal.sh (out of scope: the order names it as text to write VERBATIM, not to fix) or the suite's pre-existing check() call sites at :37-38/:153-156 (outside RULED item 3's :286-303 confinement and outside this order's <paths>). The substance AC4 exists to prove -- exactly 5 flips, all DENY->PASS, all S209 quoted-positive names, 0 new refusals -- is measured and matches the order's ruled expectation; only the literal printed denominator differs from the order's stated '106' because of the regex gap above. Left for the CVO/CTO to rule whether the comparator's regex should widen to any non-empty verdict word, in a future cell."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W97-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~97",
+    "surfaced_at": "2026-09-22T10:00:00Z",
+    "one_line": "AC4's literal invocation (HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/harvest apply -target=module.scoped_amgt_api.aws_lambda_function.this) runs terraform apply with NO -auto-approve; safe-apply.sh execs terraform with exactly the given argv (no injected -auto-approve), so terraform prompts 'Enter a value:' on stdin and the non-interactive Bash call returns EOF, 'error asking for approval: EOF', and applies NOTHING (post-read confirmed MemorySize still 512).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First run of AC4's literal invocation this session: tail of output shows 'Enter a value: | Error: error asking for approval: EOF'; the following cfg.py post read 'post MemorySize 512 ... CodeSha256 r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w=' -- unchanged from AC0's pre-read.",
+        ".tools/safe-apply.sh tail: 'exec \"$TERRAFORM\" \"$@\"' -- the script is a transparent delegate for the non-bypass path and injects no -auto-approve anywhere in the file (0 hits for 'auto-approve', 'auto_approve' or 'TF_INPUT' when read).",
+        "Re-run with the identical terraform args and stdin supplied ('yes\\n' piped in) succeeded: post-read 'post MemorySize 1769 ... CodeSha256 r93CxQqrk8k8h2Q8KO4Iicn3pk8kyF4SFo47a9Cca5w= State Active LastUpdateStatus Successful', CodeSha256/Layers/Timeout/EphemeralStorage/env_keys all equal to AC0's pre-read."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC4's <expect>: the literal command prints 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' and the post-read shows MemorySize 1769.",
+    "world_is": "The literal command, run non-interactively with no stdin, errors on terraform's own interactive approval prompt before ever planning or applying; nothing about HALT_ACK or safe-apply's own gates blocks this -- terraform's confirmation prompt is downstream of every safe-apply gate and the script never sets -auto-approve or -input=false for the apply itself.",
+    "notes": "Per THE REFUSAL CLAUSE (a literal invocation failing on a tool-CLI mismatch): ran the real one -- the identical command with 'yes' supplied on stdin -- which succeeded and produced the exact 'Apply complete!' / post-config evidence AC4 names. No file in <paths> to fix this in (infra/aws/terraform/harvest/scoped-amgt-api.tf does not control the invocation shape; .tools/safe-apply.sh is a WALL). rk-94's AC5 (row AMGT_RESAPP-Z-W94-S1) hit an analogous literal-script gap (missing terraform init) the same way."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W97-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~97",
+    "surfaced_at": "2026-09-22T10:05:00Z",
+    "one_line": "AC5's sub-clause (c) requires burst_cold_n >= 1 (the 10-way burst 'forced parallel cold starts'); measured 0 in both the pre-act baseline (512 MB) and the post-act after (1769 MB) run, because the script's own coldphase step (10 concurrent prints across all 5 names, run first) already provisions up to 10 warm execution environments that the later 10-way CAT-only burst reuses instead of forcing new ones -- a property of the script's own ordering, not of the memory change. Section 4's own TARGET-MET definition names only two conditions (every warm print under 10,000 ms AND every fresh-container print under 20,000 ms, both met with large margin: coldphase_cold_max 10310 ms, warm_max 6169 ms) and states 'AC5 passes' under them, in tension with AC5's fuller (a)/(b)/(c) text.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 (baseline, 512 MB) SUMMARY line: 'burst_cold_n 0 burst_max 29000' (10 of 10 burst rows carry no 'Init Duration').",
+        "AC5 (after, 1769 MB) SUMMARY line: 'coldphase_cold_names 5/5 coldphase_cold_max 10310 pdf_ok 15/15 warm_n 15 warm_max 6169 burst_cold_n 0 burst_max 5643 unhandled 0'.",
+        "Section 4 (BOUNDS), 'KEEP, TARGET MET' clause, verbatim: 'no rollback trigger fired, every warm print is under 10,000 ms, AND every fresh-container print is under 20,000 ms. AC5 passes.' -- names no burst_cold_n condition."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC5's <expect> (c): 'burst_cold_n at least 1 ... and \"unhandled 0\" across every row of the run'.",
+    "world_is": "burst_cold_n reads 0 at both memory settings because the script's coldphase step (run earlier in the same invocation) already creates enough concurrent execution environments to absorb the later burst; unhandled 0 IS satisfied. The two quantitative speed targets AC5 exists to prove (warm<10s, cold<20s) are both met with large margin and no rollback trigger fired (AC6: text_identical 5/5, other_route_equal 5/5, medians_not_lower []).",
+    "notes": "Graded per the explicit spawn-prompt instruction to take the section-4-dictated branch: section 4's own 'AC5 passes' condition (the more specific, branch-determining text) is satisfied, so this worker recorded AC5 PASS with status_reason naming this tension, rather than treating (c) alone as a KEEP-TARGET-MISSED trigger. Left for the CVO/CTO to rule whether AC5's (c) sub-clause should be read as a hard gate or as diagnostic-only given section 4's own text."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W97-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~97",
+    "surfaced_at": "2026-09-22T10:15:00Z",
+    "one_line": "AC7's <expect> names 'non-ASCII bytes 0' for infra/aws/terraform/harvest/scoped-amgt-api.tf; the measured count is 3, both before and after this cell's edit -- a pre-existing U+26D4 glyph (UTF-8 e2 9b 94) at an unrelated comment (the 'derived/model_block/' trailing-slash note, unchanged by rk-97), not introduced by this cell.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Byte scan of the working-tree file post-edit: 'non_ascii_bytes 3 crlf 0 line267 ' memory_size = 1769''; the 3 flagged byte offsets (5559-5561) decode as e2 9b 94 = U+26D4, inside '# \\u26d4 \"derived/model_block/\" CARRIES ITS TRAILING SLASH DELIBERATELY.'",
+        "Byte scan of .scratch/r97/scoped-amgt-api.tf.orig (this worker's own pre-edit MUTATION-DISCIPLINE snapshot, taken before any edit): 'orig non_ascii_bytes 3' -- identical count, proving the 3 bytes pre-date this cell's edit and are not introduced by it."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC7's <expect>: 'Read that file's bytes and record: non-ASCII bytes 0, CRLF 0, and line 267 \"  memory_size = 1769\"'.",
+    "world_is": "The file carried 3 non-ASCII bytes before this cell touched it (an unrelated pre-existing comment), and carries the same 3 after; CRLF is genuinely 0 both before and after, and line 267 reads exactly as expected.",
+    "notes": "Per THE REFUSAL CLAUSE: recorded the true measured count (3, unchanged by this edit) rather than the order's stale premise of a clean file. This cell's own edit (the memory_size line and the replaced rk-6 comment) introduces 0 non-ASCII bytes, confirmed by the before/after count being identical."
   }
 ]
 ```
