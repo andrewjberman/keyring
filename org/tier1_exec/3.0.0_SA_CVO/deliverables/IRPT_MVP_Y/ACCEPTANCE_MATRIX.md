@@ -209,6 +209,17 @@ produces a separate preserved revision as expected. See
 No full Y1/Y2/S3 or other integrated criterion grade; mocked analysis acceptance
 and absent runtime/build/retention/maintained adapters remain stated limitations.
 
+## Upload repair retest, 6:06 PM Eastern
+
+Y-U01 CLOSED for exact `9da7d87f99aad811bf4bc627a6f85bbd9a56e448` offline
+consumer boundary. Unchanged independent source/price-drift controls retain
+input ID and original value (20 -> 20), with2blob puts/1INPUT row in resolver
+case. Explicit notional correction100 -> 200 still creates distinct retained
+input. Supplied13/13 PASS,0skip. See `UPLOAD_RETEST_9da7d87f99.md` and
+`UPLOAD_CONSUMER_9da7d87f99.json`; original failure evidence is retained.
+No simultaneous persistent transaction, worker-crash, orphan-lifecycle, retention
+or integrated E2E proof. All fourteen integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
