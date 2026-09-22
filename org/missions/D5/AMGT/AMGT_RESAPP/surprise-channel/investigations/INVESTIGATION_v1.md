@@ -12330,6 +12330,94 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "rk-114's byte-identity arm proves that, with no ENRICH row, the crosswalk is byte-identical to the pinned module's output.",
     "world_is": "The arm reads the LIVE registrations.json, which now carries an ENRICH row, so the pinned module refuses before it can build and the arm fails on state rather than on the property it tests.",
     "notes": "TEST-ONLY; no served artifact and no production path is affected, and the published crosswalk/v1/2026-09-22.json stands. The fix is to build the pinned side from a registrations set with ENRICH rows filtered out (or a fixture), so the arm tests the property rather than the repo's current state. This is an ISSUER-TEXT defect of 2.0.0_SA_COO~Z's: the arm was specified without stating which registrations it reads. It also breaks the 'no NEW failures' bar for any later cell touching this suite, so it is named in the round-29 packet and REC cut into the next identity code cell, beside the CTO's carried write-time schema check (msg 24314)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S226",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T18:45:00Z",
+    "one_line": "The CDN has NO cache behavior for /api/scoped/amgt/*, so every Security Analysis request falls to the SPA origin and returns 200 text/html (index.html); the page parses HTML as JSON and renders empty panels. Andrew reported the page blank at ~18:2xZ.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's live GET against https://opalinvest.dev at ~18:4xZ: /api/scoped/amgt/lists -> 200 text/html 1000 B; /api/scoped/amgt/freshness -> 200 text/html 1000 B. POSITIVE CONTROLS on the same host: /api/scoped/advisor-intelligence/summary -> 401 application/json 51 B and /api/general/health -> 401 application/json 51 B, so other API families ARE routed and answer JSON.",
+        "The read-only diagnosis pass (scratchpad secanalysis_diagnosis.md) measured the same on three planes: comp-routes 29 declared behaviors with 0 amgt; live get-distribution-config 28 behaviors with 0 amgt; 5 of 5 amgt paths 200 text/html. 2.0.0_SA_COO~Z's direct Lambda invokes returned 200 with real payloads for 992_HK_Equity and CAT_US_Equity (msg 24327), so the handler is healthy and only the edge route is missing."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The page's routes serve the security's data (PRD s.12 stage 12; C-PAGE-LAYOUT; FWD-1's page).",
+    "world_is": "Every /api/scoped/amgt/* request returns the SPA shell with 200, so no panel can render data for any security. The handler, the data and the deployed bundle are all healthy.",
+    "disarm_owner": "1.0.0_SA_CTO~Z routes the cell; the fix is an edge behavior for /api/scoped/amgt/* at the API origin CARRYING the auth-validator edge attachment the working families use -- without it the fix trades HTML for 401. It is a served infra act: CTO/COO never-widen pair plus a deploy-ledger entry.",
+    "notes": "Verify with BA_US_Equity (7 of 7 prefixes populated), then 992_HK_Equity."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S227",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T18:45:00Z",
+    "one_line": "0 of 5 Security Analysis tabs carry an isError branch: each gates its body on {!isLoading && data && ...}, so a FAILED read renders a titled panel with an empty body -- indistinguishable from 'no data for this name'. This is what made Z-S226 silent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The diagnosis pass read the five tab components and the twelve shared components: 0 of 5 tabs carry an isError branch; 3 of 12 components do, all on the ranked-list path. SecurityOverlay.tsx:73-75 folds an error into the 'empty' sentence.",
+        "api-client.ts:170 throws only on a non-200, so a 200 text/html reaches response.json() and dies there -- the component sees no data and no error."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A reader can tell a missing object from a broken read (PRD C-ABSENT-WITH-REASON's discipline; 'SERVED means content, never a status').",
+    "world_is": "An errored read and an absent object render identically, so a whole-page outage reads as an empty name.",
+    "disarm_owner": "2.0.0_SA_COO~Z's next frontend cell: an isError branch per tab that names the failure, plus a client that treats a text/html body on a JSON route as an error.",
+    "notes": "Z-S226 was invisible for this reason; the two are separate defects and each has its own remedy."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S228",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T18:45:00Z",
+    "one_line": "There is NO name search: the page's search box passes the raw string into the URL as a security key and the server does an exact lookup, so 'Lenovo' can never match. The folder name 'Lenovo 992 HK' is not indexed; only its sha256 digest is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The diagnosis pass: no client-side filter exists; the server lookup is an exact dict hit after uppercase and whitespace collapse (crosswalk.py:769,902). Lenovo's complete alias set is 5 strings: '992 HK', '992 HK Equity', '992_HK_Equity', '992_HK', 'security-7177e03e14c58b0c'.",
+        "2.0.0_SA_COO~Z's dispatcher read (msg 24327): the declared routes are lead-panel/rankings, lead-panel/timeseries, watchlist, security/<key>/<leaf>, freshness, lists, refresh -- no search route at all."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An analyst types the ticker of a company and gets the page (FWD-2's ACCEPT).",
+    "world_is": "Only an exact key or alias resolves. A company NAME resolves nothing, and the page gives no reason.",
+    "disarm_owner": "1.0.0_SA_CTO~Z: name resolution is a contract question (what the search matches: name, ticker, alias, folder), carried into the AMGT_CORPUS backlog work where the 93 folder names become resolvable, and into the RESAPP addendum's page contract.",
+    "notes": "Andrew hit this at ~18:2xZ typing 'Lenovo'. It is SEPARATE from Z-S226: fixing the edge route does not make a name searchable."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S229",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T18:45:00Z",
+    "one_line": "The PRICE ranking axis is 12 days stale (newest 2026-09-10) while the chatter axis is current, so the Lead Panel's price lists would be stale the moment the page renders.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The diagnosis pass read the DynamoDB table opal-harvest-security-metrics: 301 items across 36 axis partitions; the price axis's newest item is 2026-09-10, against a chatter axis written today.",
+        "The field map (prd/FIELDMAP_20260922_D_bloomberg_model.md) already records that the PRD's daily price leg has no schedule: scheduled_daily_pull.cmd carries no price step."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-PRICE-DAILY-LEG: the daily price pull rides the scheduled daily pull (PRD :1329).",
+    "world_is": "No schedule exists for it, and the served axis has not moved in 12 days.",
+    "disarm_owner": "2.0.0_SA_COO~Z, in the trial's L-PX cell (round 30) for Lenovo; the fleet-wide daily leg stays Andrew's cadence call.",
+    "notes": "Named so the page's price lists are not read as fresh once the edge route lands."
   }
 ]
 ```
