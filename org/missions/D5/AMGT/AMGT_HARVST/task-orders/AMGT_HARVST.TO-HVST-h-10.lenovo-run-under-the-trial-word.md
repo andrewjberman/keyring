@@ -147,9 +147,10 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
 ## 6. WHEN YOU ARE DONE
 1. Write the instance to
    `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/AMGT_HARVST.TO-HVST-h-10.lenovo-run-under-the-trial-word.proof_of_spec.json`.
-2. Grade the mechanical criteria with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC6`, which must
-   return rc 0.
-3. Flip to `complete` only if every mechanical criterion passes.
+2. Grade with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6`, which must return rc 0. The id
+   list names EVERY row the instance carries, the judgment row AC5 included: the checker's coverage frame refuses a list
+   that omits a carried row (row `AMGT_HARVST-Z-W8-S2`).
+3. Flip to `complete` only if every mechanical criterion (AC1, AC2, AC3, AC4, AC6) passes.
 4. Commit with `--only`.
 5. Report once, with the `RUN_REPORT.md` stage-9 line verbatim.
 
