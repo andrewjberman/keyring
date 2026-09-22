@@ -318,6 +318,16 @@ refuses expiry and changed receipts. See
 claimed; all14 integrated criteria remain NOT_EVALUATED. Prior bounded closures
 remain distinct.
 
+## Y-S01 repair retest, 7:13 PM Eastern
+
+`b258b1696c75296e203e89fbd85434b3b91d9066`: unchanged independent8/8 PASS;
+supplied54 tests+24subtests PASS. Both original missing-service failures now
+raise RETENTION_SERVICE_REQUIRED before dispatch; first submission has no
+acceptance. Y-S01 CLOSED for the bounded service check. See
+`RETAINED_SUBMISSION_RETEST_b258b1696c.md`. Separate601e1c7bf1 composition
+test counts remain producer-attributed. Real queue/recovery/concurrency/runtime
+and all14 integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

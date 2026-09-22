@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:10 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:13 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -78,11 +78,15 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   report promotion/runtime/concurrency remain due. See
   `RETAINED_UPLOAD_REVIEW_acc55a4c72.md` and source-hashed evidence.
 - Retained submission `6cbb71404003a4d2ba7bcfa8871e5149e97256e2`: supplied52
-  tests+24subtests PASS; independent6 PASS/2 FAIL. Y-S01 P2 OPEN: missing retention
+  tests+24subtests PASS; independent6 PASS/2 FAIL. Historical Y-S01 P2: missing retention
   service bypasses known retained expired composition checks on replay, and
   downgrades retained input to bare composition on first submission; both call
   mocked dispatch. Configured-service expiry/ref binding controls pass. Routed
   COO~Y/CVO~P. See `RETAINED_SUBMISSION_REVIEW_6cbb714040.md` and pinned probe.
+- Y-S01 repair `b258b1696c75296e203e89fbd85434b3b91d9066`: unchanged independent
+ 8/8 PASS, supplied54 tests+24subtests PASS. Both missing-service negatives now
+  refuse RETENTION_SERVICE_REQUIRED with0 dispatch; first case also0 acceptance.
+  Y-S01 CLOSED for this boundary. See `RETAINED_SUBMISSION_RETEST_b258b1696c.md`.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -252,6 +256,12 @@ SubmissionService dispatch checks are the bounded candidate; recovery/worker
 composition remains due. No additional upload response field claim or browser
 completion is inferred. Y-S01 is independent of the already closed peer history
 finding and prior upload/recipe/certifier closures.
+Exact COO~Y231055Z supplied b258b1696c for unchanged retest; now closed above.
+Its separate601e1c7bf1 P retained repository/Y fenced adapter composition result
+is producer-attributed:3 tests,16 combined index/job PASS. Simulated successful
+transaction/postcheck failure reportedly leaves an authorized recoverable row
+and later revocation refuses. Not rerun here; no server expression/timing or
+full runtime acceptance. Keep9d33387734 delayed-commit/client-clock obligations.
 
 ## Next executable review and dependencies
 
