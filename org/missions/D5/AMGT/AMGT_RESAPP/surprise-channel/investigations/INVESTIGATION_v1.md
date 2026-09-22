@@ -12144,6 +12144,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "ISSUER AMENDMENT 1's <paths> text: 'it strips exactly this cell's additions from the EDITED block: the top-level currencies key, every figure's currency and currency_basis, and any figure whose mnemonic is EQY_FUND_CRNCY.'",
     "world_is": "The enumerated list, applied literally, leaves the `unresolved` list carrying an extra EQY_FUND_CRNCY entry (this cell's addition too, since HEADER_FIELDS itself grew) that the amendment's specific wording does not name (it says 'figure', and this module's own vocabulary keeps 'figure' and 'unresolved' disjoint). Implemented under the amendment's own governing sentence ('strips exactly this cell's additions') rather than a literal reading of the three-item list, still entirely inside test_december_name_byte_identical_to_pin and this worker's <paths> grant.",
     "notes": "INERT: no served artifact affected, model_block_pull.py untouched, the other three arms untouched. Disarm is folding this fourth strip into the amendment's own written text on the next TO of this shape, so a future implementer does not have to re-derive it from a failing run."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W114-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~114",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "AC0 was not run before editing crosswalk.py/add_security.py -- it was reconstructed from a git archive of HEAD (349a152935) rather than executed pre-edit as the TO's own text requires.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Section 5's literal AC0 invocation was first run by this worker AFTER lib/research/identity/crosswalk.py, lib/research/identity/add_security.py and the new test file already carried this cell's edits -- a sequencing miss against \"You are 0.9.0_WK_AMGT_RESAPP~114 ... BEFORE any edit\" (section 1.19) and AC0's own expect clause \"BEFORE any edit:\".",
+        "Recovered by `git archive HEAD | tar -x -C .scratch/r114/before_tree` (HEAD=349a152935, identical to registrations.json/universe.json/config.json on disk since this cell never touches those paths) then running AC0's script and `pytest lib/research/identity/tests -q` inside that archived, unedited tree.",
+        "The reconstruction printed exactly the TO's asserted measured state: \"served_records 96 992_records 1 992_has_identity False 992_folder Lenovo 992 HK\", \"local_rebuild_byte_equal True\", \"60 passed\" -- matching section 1's MEASURED STATE paragraph verbatim, so the true pre-edit values are the ones this row and the proof-of-spec instance record for AC0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "\"First act: print ... test that org/, .tools/ and the paths in section 3 exist ... if any is absent, STOP with a BLOCKING row\" and AC0's expect clause begins \"BEFORE any edit:\" -- both name a run-before-edit sequence.",
+    "world_is": "The worker read the task order and the target files, then edited crosswalk.py and add_security.py and wrote the new test file, before first invoking AC0's script -- so the literal AC0 invocation, run now, would count 66 identity-suite tests (60 + this cell's 6 new arms) instead of the TO's stated 60, and would exercise the EDITED build_crosswalk rather than the code as it stood before this session. The gap is closed by reconstruction (grounding above), not by re-running against edited code.",
+    "notes": "INERT: no served artifact, no S3 write, no registrations.json write. The reconstructed values match the TO's own MEASURED STATE text exactly, so nothing about the cell's premises was wrong -- only this worker's own run order. Disarm: a future worker on a similarly-shaped TO runs AC0 (or any \"before any edit\" invocation) as the literal first Bash call after the tree-presence check, before opening any editor on the named <paths>."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W114-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~114",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "lib/research/identity/crosswalk.schema.json's denominators object (additionalProperties: false) does not list the new \"enriched\" key this cell adds, so a future jsonschema.validate on a document with n>0 ENRICH rows would fail against the shipped schema.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "crosswalk.schema.json:64-93 (denominators) is `\"additionalProperties\": false` and its `properties` enumerates input_names, records, MEASURED, UNRESOLVED, with_association_keys, association_conventions, registered -- no `enriched` entry.",
+        "This cell's build_crosswalk() (lib/research/identity/crosswalk.py, RULED item 1) adds `denominators[\"enriched\"]` only when n>0, exactly as ruled -- so any real crosswalk document produced after the first ENRICH registration would fail crosswalk.schema.json validation, silently, since nothing in this TO's <paths> or bounds includes the schema file (a WALL per section 3: \"a surface not named in <paths> is a WALL\").",
+        "No criterion in this TO's proof_of_spec exercises jsonschema against an enriched document (test_add_security.py's SchemaValidation class, the only schema-validating arm in lib/research/identity/tests, validates only pre-existing, non-enriched shapes), so this gap is not caught by AC1/AC2's pytest runs."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "\"denominators gains 'enriched': <n>\" (section 1, RULED item 1) -- the cell rules a new field on the served document's shape.",
+    "world_is": "The schema file that documents that same shape (crosswalk.schema.json, additionalProperties: false on denominators) is outside this worker's <paths> and was not, and could not be, updated to admit the new field -- so the ruled field and the ratified schema now disagree, armed against the first real ENRICH registration's crosswalk build being schema-validated.",
+    "notes": "ARMED because the disagreement will fire on ordinary future use (any --write-pool registration under item 2's new ENRICH path, once schema-validated), not merely a theoretical gap. Disarm: a follow-on TO with crosswalk.schema.json in its <paths> adds \"enriched\": {\"type\": \"integer\", \"minimum\": 0} to denominators.properties, mirroring how \"registered\" was added for AMGT-rk-31."
   }
 ]
 ```
