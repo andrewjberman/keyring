@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~13</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-22 (round 16, chain A, decomp v0.20 s.R16.1) in the ONE round-16 issuance</status>
+<status>complete -- 0.9.0_WK_IRPT_BCKEND~13 2026-09-22: R116-AC1 PASS-by-output, proof-of-spec-check VALID rc=0 (both --governing-order and positional-id invocations). declared_exclusions[1] of the IB-rtk-1 proof instance rewritten to scope the exclusion to what remains genuinely unexercised (Playwright/Chromium run, host start/stop and every live act under it, SSM), and to state explicitly that the S3 publish pass DID execute a real S3 action with a verified readback, citing the pre-existing evidence at line :23. No hash touched, no code touched, no publish replay, no sign-off.</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 16 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 (no addendum) | **Decomp cell:** `IB-rtp-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.20, s.R16.1) | **outcome_ref:** records integrity (no FWD directly) | **Rows:** `IRPT_BCKEND-C-S174` (the residual wording, this cell's source), `C-S197` (the CVO's own verification row, read-only context) | **Ruling:** the CTO's round-15 analysis @81338c807a, section "Round 16" | **Reference (READ-ONLY, never edited by this cell):** the `IB-rtk-1` proof instance's own line `:23` (the correct publish-state record this cell must NOT contradict, only align the exclusion text with)
 
