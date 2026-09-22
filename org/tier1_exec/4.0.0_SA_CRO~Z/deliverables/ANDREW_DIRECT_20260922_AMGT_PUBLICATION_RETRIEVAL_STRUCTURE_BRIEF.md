@@ -50,3 +50,18 @@
 
 **Reading, narrow:** the gold layer is (1) the base table for the Chatter axis across all companies and (2) the base
 for a company-specific EVENT SPINE. Both are gold outputs of this plan, and the gold design serves both.
+
+## Addendum 2, after the brief landed (@fefee2f360), verbatim, two messages
+
+> Yes something I would advise regarding how this is handled is by sticking to absolute figures or derived absolute
+> figures, never do relative, because relative can be handled in a lambda or some other more ephemeral function
+
+> Also keep in mind how you're going to handle this retroactively considering that the first job is basically going
+> to be doing a backfill back to the start of 2026
+
+**Reading, narrow:** (1) gold carries ABSOLUTE figures (counts, sums, timestamps) and figures DERIVED from them by
+fixed rules; anything RELATIVE (a ratio against a baseline, a z-score, a min-max normalisation across companies) is
+computed at serve time in a Lambda or similar, never stored in gold. (2) The first run is a BACKFILL to 2026-01-01,
+so retrieval, silver and gold must work backward in time from a floor, not only forward from a watermark. Both are
+folded into the brief (s.3.3, s.6, s.7, new s.6.5) at the next commit.
+

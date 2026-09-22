@@ -31,12 +31,16 @@ this session and carries its denominator; every design item is marked as a recom
    built from bronze (s.5).
 7. **Gold = three tables** (s.6): `article_security_mention` (the dissect-anywhere grain, one row per article x
    security, with the strength fields he named: headline, lead, count, density, co-mentions), `chatter_daily` (the
-   Chatter axis base, one row per security x UTC day, with trailing windows and a breakout ratio that matches the
-   ratified price rule), and `chatter_event` (the event spine: clustered strong-signal days). The timeline graph reads
-   `chatter_daily`; a click on any point reads `article_security_mention`.
-8. **Calls for Andrew** (s.8): the signal-tier weights; whether a single passing mention counts in the axis at all or
+   Chatter axis base, one row per security x UTC day, ABSOLUTE figures only: counts, sums, trailing sums, baselines),
+   and `chatter_event` (the event spine: clustered strong-signal days). **Ratios, z-scores and cross-company
+   normalisation are NOT stored: the serving Lambda computes them from the absolute columns** (his word, addendum 2).
+   The timeline graph reads `chatter_daily`; a click on any point reads `article_security_mention`.
+8. **The first run is a BACKFILL to 2026-01-01** (his word). Retrieval runs backward from a floor date as well as
+   forward from a watermark; silver marks every row `retrieval_mode = backfill | live`; gold is dense from
+   2026-01-01 for every security; and `first_discovered_at` is never used as an event clock (s.6.5).
+9. **Calls for Andrew** (s.8): the signal-tier weights; whether a single passing mention counts in the axis at all or
    only in the event spine; the non-English press question for HK/JP names; the publisher-terms question the PRD
-   already marks as his.
+   already marks as his; the backfill order.
 
 ---
 
@@ -118,9 +122,13 @@ GRADE above the floor, and that belongs in gold, not in the fetch.
    symbol listing carries the vendor's OWN relevance judgment (SA's `primaryTickers` tag; measured on a BABA news
    item: tag `137271` = `BABA`, `Alibaba Group Holding Limited`), which becomes a gold feature, not a gate.
 2. **Keep the name search for FT, WSJ and Barron's**, with two additions: search the legal short name AND the
-   ticker-in-quotes form, and stop paging at a per-(security, publisher) WATERMARK = the newest `published` already in
-   silver, so a re-run costs one page. SA's `filter[since]` and Bloomberg's `targetDate` are the same watermark
-   expressed natively.
+   ticker-in-quotes form, and page between two bounds per (security, publisher): a FLOOR (2026-01-01 for the first
+   job) and a WATERMARK (the newest `published` already in silver). The backfill pages DOWN from the newest result
+   until `published < floor`; a live run pages down until `published <= watermark`, so it costs one page. SA's
+   `filter[since]/[until]` and Bloomberg's `targetDate` are the same bounds expressed natively; FT, WSJ and Barron's
+   have no date parameter measured, so their backfill is page-until-floor, and its page count is the quota figure to
+   print before the run (his quota word, @6f1a72e4be). Measured on this desktop: name search DOES return history
+   (`published` back to 2022-06-08 across the 84), so the floor is reachable.
 3. **Keep the mention floor exactly as it is.** Do not raise it. Raising it discards the 19 single-mention articles
    he said he is fine keeping, and they are the raw material of the event spine's co-mention feature.
 4. **Every retrieval decision becomes a silver field, never a dropped flag:** which rung found the article (symbol
@@ -187,7 +195,7 @@ measured on SA bronze, `locale`, `isPaywalled/isLockedPro/isMpwLocked`, `primary
 | text | `title`, `body_blocks` (list<string>), `text`, `words`, `expected_words`, `body_sha256`, `transport`, `content_status` |
 | time | `published_utc`, `published_offset_min`, `published_date_utc`, `published_precision`, `last_modified_utc` (SA) |
 | vendor-native, typed as delivered | `language` (SA `locale`; null elsewhere), `paywall_flags` (struct), `vendor_ticker_tags` (list<struct{tag_id, symbol, company}>, from `included`), `vendor_sentiment` (list), `themes` (list<string>), `summary_bullets` (list<string>), `comment_count`, `like_count`, `author_ids` (ids only, never names), `section`/`subtype` |
-| retrieval provenance | `retrieval_rung` (`symbol_listing | name_search | ticker_search`), `search_query`, `search_rank`, `search_page` |
+| retrieval provenance | `retrieval_rung` (`symbol_listing | name_search | ticker_search`), `search_query`, `search_rank`, `search_page`, `retrieval_mode` (`backfill | live`), `run_stamp` |
 
 Typing is standard (string, int, bool, timestamp, list, struct); nothing is filtered or summarised. The link (which
 security an article is about) is NOT silver: it is Opal's judgment, so it is gold (already ruled, rk-85 ruling 4).
@@ -227,15 +235,16 @@ On the 84 measured links the tiers would split roughly A 46, B/C 19-28, D 19 -- 
 | `mention_score` | sum of `signal_weight` over the day's articles |
 | `publishers_distinct`, `publisher_mix` | breadth: one outlet or five |
 | `mention_count_total` | sum of `mention_count` |
-| `trailing_7d`, `trailing_30d` | rolling sums of `mention_score` (dense: an empty day is a zero, as `chatter_axis.dense_series` already insists) |
-| `baseline_30d_mean`, `baseline_30d_sd` | over the prior 30 days, excluding the day |
-| `breakout_ratio` | `mention_score / baseline_30d_mean` | the same shape as the RATIFIED price rule (+5% over the trailing 30-day mean, Andrew 09-18 card B); the chatter floor is a call |
-| `z_score` | `(mention_score - baseline_mean) / sd` | for ranking across companies of different base volume |
+| `trailing_7d`, `trailing_30d` | rolling sums of `mention_score` and of `articles_total` (dense: an empty day is a zero, as `chatter_axis.dense_series` already insists) |
+| `baseline_30d_sum`, `baseline_30d_days` | the sum over the prior 30 days excluding the day, and the day count behind it |
+| `cumulative_articles_ytd`, `cumulative_score_ytd` | running totals from 2026-01-01 |
+| NOT STORED (his word): `breakout_ratio`, `z_score`, min-max scores | the serving Lambda computes `mention_score / (baseline_30d_sum / baseline_30d_days)`, z-scores and the 0-100 normalisation from these columns at read time; the ratified price-breakout rule (+5% over the trailing 30-day mean, Andrew 09-18 card B) keeps the same shape there |
 | `first_published_utc`, `last_published_utc`, `coverage_lag_hours_median` | when the day's news actually ran |
 | `data_status` | `COMPLETE | PARTIAL | DENIED` from the reader's four failure states, so a quiet day is never a broken read |
 
-The existing Lambda's TRENDING (count on the day) and BREAKOUT (jump versus baseline) map onto `mention_score` and
-`breakout_ratio` directly; the DynamoDB rows become a projection of this table instead of a separate count.
+The existing Lambda's TRENDING (count on the day) and BREAKOUT (jump versus baseline) become projections computed
+from `mention_score` and `baseline_30d_sum/days` at serve time; the DynamoDB rows stay the ephemeral, relative layer,
+and gold stays absolute.
 
 ### 6.3 `chatter_event` -- the company-specific event spine.
 
@@ -252,6 +261,25 @@ management changes (an officer named in the lead headline).
 `chatter_daily` is the series (one point per day per company, dense). Any point dissects into
 `article_security_mention` rows for that day, sorted by tier then `published_utc`. Any run of points dissects into a
 `chatter_event`. Nothing on the page needs the body text; the graph needs only the three gold tables.
+
+### 6.5 Handling the backfill to 2026-01-01 (his word)
+
+- **Retrieval:** floor + watermark per (security, publisher), s.3.3. The first job is the floor; every later job is
+  the watermark. A publisher whose search cannot reach the floor (measured: none yet; FT/WSJ/Barron's paging depth is
+  unmeasured) records `backfill_reached_floor = false` with the earliest `published` it did reach, so coverage
+  gaps are stated, never implied.
+- **Bronze:** identical to live; the fetch stamp is the backfill run's. Nothing distinguishes a backfilled object
+  except its metadata `retrieval_mode`.
+- **Silver:** `retrieval_mode = backfill` and `run_stamp` on every row. `fetched_at` will sit months after
+  `published_utc`; that is expected, and `lag_hours` in gold is reported only for `live` rows.
+- **Gold:** `chatter_daily` is generated DENSE from 2026-01-01 to the run date for every security in scope, zeros
+  included, so the timeline has no gaps to misread. The event spine's clocks are `published_utc` only;
+  `first_discovered_at` (the backfill run) is never an event clock. The baseline columns for the first 30 days after
+  the floor carry `baseline_30d_days < 30`, which is how a consumer knows the baseline is short.
+- **Ordering:** the backfill is one run per (security, publisher) under the caps and the quota word; each run's page
+  count is printed before it starts. Silver and gold are rebuilt after the whole backfill, not per page.
+- **Re-runs:** a second backfill is idempotent by construction: bronze dedupes on `article_hash`, silver on
+  `(article_key, record_hash)`, and gold is rebuilt from silver.
 
 ---
 
@@ -282,6 +310,7 @@ ready-made second sample for the tier thresholds once uploaded (they are stuck b
 | 5 | non-English press for HK/JP names (Lenovo is the first case) | out of the trial; state it as UNRESOLVED-BY-DESIGN in the trial report, and decide after the report |
 | 6 | publisher terms on stored subscriber bodies | already his in the PRD (`C-SA-UNMEASURED`); this brief adds nothing to it, and stores nothing new |
 | 7 | silver from bronze (widened) versus silver from the normalised record (rk-85 as built) | from bronze; the vendor fields he wants for gold (tags, language, paywall) exist only there |
+| 8 | the backfill scope: which securities go back to 2026-01-01 first | Lenovo (the trial), then his starting list; page counts per publisher printed before each run |
 
 ---
 
