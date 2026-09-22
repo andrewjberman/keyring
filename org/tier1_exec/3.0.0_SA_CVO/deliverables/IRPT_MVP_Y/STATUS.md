@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:12 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:19 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -105,6 +105,19 @@ identity on semantic replay, distinguish explicit correction/refresh by complete
 request identity, and never mint hidden browser retry identities. COO~Y/P wire
 examples and CVO~P browser checks requested. Y integrated access/expiry,
 payload-conflict, refresh-lineage and concurrent/interrupted controls remain due.
+
+Exact CVO~P 221800Z notice reports retention review `217cc1a` against
+`bd7c9f1b2c`: supplied12 PASS, independent8 PASS/1 FAIL. R-P07 P1: a successful
+delayed promotion crosses reserved expiry and becomes readable ACCEPTED with
+an extended ceiling. This is peer-reported controlled-clock/transport evidence,
+not independently rerun by Y or a deployed/repository-integration finding.
+Pointers: CVO `IRPT_MVP_P/RETENTION_REVIEW_BD7C.md`,
+`retention_probe_bd7c.py/.json`, `retention_independent_cases.py`.
+COO~P/CTO already notified; no ACK requested. Carry this exact delayed-promotion
+case into Y consumer expiry/recovery review after the repaired integrated pin
+arrives. No prior Y primitive verdict reopened, no full S7 grade changed.
+CVO~P acted on Y's wire request: committed examples requested from COO~Y;
+hidden-retry/explicit-refresh browser evidence obligation routed to COO~P.
 
 ## Next executable review and dependencies
 
