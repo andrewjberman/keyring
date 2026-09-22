@@ -5987,6 +5987,33 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W35-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~35",
+    "surfaced_at": "2026-09-22T15:17:32Z",
+    "one_line": "F85-AC3's literal <invocation> (`cd <WS>/portal && bun __tests__/fe-s-85/verify-git-object.mjs <your-commit-hash>`) cannot succeed as written: the checker it names must live under this cell's <paths> grant (`portal/src/pages/InvestorReporting/__tests__/fe-s-85/`), matching every one of 220+ sibling __tests__ dirs already in this repo, but the invocation's bare `__tests__/fe-s-85/...` path (cwd <WS>/portal) resolves nowhere -- and separately, `<your-commit-hash>` is not a declared member of this order's own `<placeholders>WS, PORT</placeholders>` tag, so it is neither ENFORCE-expanded by proof-of-spec-check.py's alignment limb nor even valid literal bash (unquoted, `<name>` is stdin redirection, confirmed live as a shell syntax error). Same class as IRPT_FNTEND-W34-S1 one row above: a criterion text that cannot be run as printed.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F85-AC3 <invocation>: `cd <WS>/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-85/verify-git-object.mjs <your-commit-hash>`, <expect>`fe-s-13-wire\\.json: 9 of 9.*fe-s-14-print-v1\\.json: 2 of 2.*default\\.json: 12 of 12`</expect>. <paths>: `portal/src/pages/InvestorReporting/__tests__/fe-s-85/`. <placeholders>WS, PORT</placeholders> (no third member declared).",
+    "world_is": "Measured (this worker, 2026-09-22, worktree HEAD b8c0a3fd on the portal repo): the checker script was written at the grant path `src/pages/InvestorReporting/__tests__/fe-s-85/verify-git-object.mjs` (no other location is in-grant). Ran F85-AC3's invocation with ONLY <WS> expanded (`cd C:/tmp/wk-irpt_fntend-14-85-fe-s-85/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-85/verify-git-object.mjs <hash>`, hash substituted two ways -- quoted literal `'<your-commit-hash>'` and the real hash `34174c39`): both produce the IDENTICAL failure, `error: Module not found \"__tests__/fe-s-85/verify-git-object.mjs\"`, rc=1 -- the path, not the hash notation, is the failure's cause. Running the bracket text completely unexpanded and unquoted in bash (`... verify-git-object.mjs <your-commit-hash>`) is not even a bun error -- bash's own redirection parser raises `syntax error near unexpected token` before bun is invoked at all, confirming `<your-commit-hash>` cannot be literal shell text either. Running the SAME script at its grant-consistent path with the real commit hash produces exactly the expected string: `GIT-OBJECT src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `... fe-s-14-print-v1.json: 2 of 2 ...`, `... default.json: 12 of 12 ...`, rc=0 -- and a negative control against the pre-fix commit (467354c9, round 13's close) correctly reports `0 of 9` / `0 of 2` / `12 of 12`, confirming the checker genuinely discriminates rather than passing through. Graded F85-AC3 FAIL in this worker's proof instance on the literal invocation (per IRPT_FNTEND-S31's ruling that a corrected invocation belongs in the TO file, never only a worker's self-substituted record); the substance -- unprojected_grant surviving to the committed git object at both sibling fixtures -- is independently proven by the same script at the correct path, committed at portal@34174c39 (fixtures) and portal@b8c0a3fd (checker). Disarmed when the issuing COO amends F85-AC3's <invocation> to the grant-consistent path and either declares a COMMIT placeholder or otherwise resolves the hash-substitution notation, and this worker (or a successor) re-runs and flips the TO complete.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal): `bun __tests__/fe-s-85/verify-git-object.mjs '<your-commit-hash>'` -> `error: Module not found \"__tests__/fe-s-85/verify-git-object.mjs\"`, rc=1",
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal): `bun __tests__/fe-s-85/verify-git-object.mjs 34174c39` -> identical `error: Module not found \"__tests__/fe-s-85/verify-git-object.mjs\"`, rc=1",
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal, unquoted literal bracket text): bash raises `eval: line 1: syntax error near unexpected token` before bun runs",
+        "measured run (this worker, 2026-09-22, cwd <WS>/portal): `bun src/pages/InvestorReporting/__tests__/fe-s-85/verify-git-object.mjs 34174c39` -> `GIT-OBJECT src/pages/InvestorReporting/fixtures/smoke/fe-s-13-wire.json: 9 of 9 carry unprojected_grant`, `... fe-s-14-print-v1.json: 2 of 2 ...`, `... default.json: 12 of 12 ...`, rc=0",
+        "measured run (this worker, 2026-09-22, negative control): same script against 467354c9 (round-13 close, pre-fix) -> `0 of 9`, `0 of 2`, `12 of 12` -- confirms the checker discriminates rather than always reading PASS",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-85.commit-generated-fixtures-with-unprojected-grant.md, criterion F85-AC3 and <paths> block (this worktree HEAD)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/investigations/INVESTIGATION_v2.md, row IRPT_FNTEND-W34-S1 (this file, immediately above) -- the same defect class one round earlier, same ruling applied",
+        "portal commits 34174c39 (fixture commit) and b8c0a3fd (checker commit), this worktree HEAD, both on branch wk-irpt_fntend-14-85-fe-s-85-portal"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
