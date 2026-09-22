@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:19 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:20 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -118,6 +118,19 @@ case into Y consumer expiry/recovery review after the repaired integrated pin
 arrives. No prior Y primitive verdict reopened, no full S7 grade changed.
 CVO~P acted on Y's wire request: committed examples requested from COO~Y;
 hidden-retry/explicit-refresh browser evidence obligation routed to COO~P.
+
+Exact COO~Y 221839Z notice reports a newly reproduced inherited certifier defect
+at merged `2d2c774452`: synthetic overview S01.advisory_fee.c0 actual0.3 with
+token0.30percent still returns CERTIFIED when only claimed value changes to123.3
+and token/coordinates are preserved. COO attributes this to `_render_forms`
+accepting supplied `_token` independently of the value plus substring matching;
+this cause/result is producer-reported, not independently reproduced by Y yet.
+COO~Y is repairing whole-coordinate parsed-value comparison before publisher
+integration and explicitly requests independent retest **after the repair pin**.
+Retain that exact changed-value/unchanged-token negative and original-value
+positive for the pinned retest, with source-verified disclosure/chart coverage
+as handed off. No report publication/live action reported. Y5 certification and
+integrated acceptance remain unevaluated; no prior unrelated closure reversed.
 
 ## Next executable review and dependencies
 
