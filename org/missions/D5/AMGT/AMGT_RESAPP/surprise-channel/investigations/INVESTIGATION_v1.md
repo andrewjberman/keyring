@@ -12463,6 +12463,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The password half honors that (pw_len + pw_sha256 only). The username half does not: fingerprint() prints the raw username string, so --check displays one half of the credential pair in full on every run, into stdout/terminal scrollback/any capturing log.",
     "disarm_owner": "owner of integrations/bloomberg/auth/bbg_credentials.py (no single seat inferred here) -- change fingerprint()'s username field to a length/hash form matching the password's treatment, or narrow the docstring's claim to name the password only.",
     "notes": "Found off-task while running AC0's local (non-vendor) half for AMGT-rk-116 (this cell's own live act never ran; see S1). Not remediated here -- no code file is in this cell's <paths>, and the fix is out of this cell's scope. This worker did not print the username value in this row, its report, or its proof-of-spec instance."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W116-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~116",
+    "surfaced_at": "2026-09-22T20:05:00Z",
+    "one_line": "The order's W4 write and both never-widen pair halves' B2 blast-radius entry name the pull-log state key as bloomberg/harvest/state/pull_log/security_key=992_HK_Equity/, but the producer actually writes it under amgt/harvest/state/pull_log/security_key=992_HK_Equity/ -- a different top-level table tenant than the bronze objects (refdata/histdata/bestdata, which ARE under bloomberg/harvest/bronze/).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "model_block_pull.py:389-391: `_state_pull_log_prefix` returns `hstore.table_prefix(\"amgt\", \"state\", \"pull_log\") + ...` -- the literal string \"amgt\", not the module's `VENDOR` constant (:75, VENDOR = \"bloomberg\") that `_bronze_prefix` (:381) uses for refdata/histdata/bestdata.",
+        "AC1's --dry-run output this run named the real prospective key verbatim: 'would write ... amgt/harvest/state/pull_log/security_key=992_HK_Equity/<stamp>.json', not a bloomberg/-prefixed key.",
+        "Task order s.1 W4: 'bloomberg/harvest/state/pull_log/security_key=992_HK_Equity/<stamp>.json (immutable, FIRST ever for 992)'; COO half B2 and CTO half item 2 both state the same bloomberg/-prefixed path for the pull_log key."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order s.1 (W4) and both never-widen pair halves (COO B2, CTO item 2): the pull_log state key lands at bloomberg/harvest/state/pull_log/security_key=992_HK_Equity/.",
+    "world_is": "The producer's own `_state_pull_log_prefix` hardcodes \"amgt\" as the table tenant for this one state object, so it lands at amgt/harvest/state/pull_log/security_key=992_HK_Equity/ instead -- inside the SAME opal-data-harvest bucket, keyed to the SAME security, but under a different top-level tree than the order and pair described. AC3's provided script (checking the bloomberg/-prefixed path) was adjusted by this worker to read the real amgt/-prefixed path so the pre/post count is measured on the key that actually moves; the unmodified bloomberg/-prefixed path reads 0 before and after (grain mismatch, not a missing write).",
+    "disarm_owner": "2.0.0_SA_COO~Z -- correct the order text and, if the tenancy split is unintended, a future cell to align `_state_pull_log_prefix` with VENDOR or document the amgt/ tenancy as deliberate (Rule 30, R20 register).",
+    "notes": "No blast-radius violation: the key is still scoped to opal-data-harvest and security_key=992_HK_Equity only, so the pair's stated boundary (Lenovo's keys only) holds even though the prefix name it used was wrong. Found while building AC1/AC3's pre/post reads before any live pull ran."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W116-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~116",
+    "surfaced_at": "2026-09-22T20:11:00Z",
+    "one_line": "The order's s.4 BOUNDS ledger-open command names leg w5 with kind 's3-key', which .tools/deploy_ledger.py does not accept (LEG_KINDS = {git, s3-prefix, activation, ec2-baked-asset, verify}); the literal command as written exits rc=1 before opening anything.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ran the order's literal open command verbatim (--leg \"w5|s3-key|opal-data-harvest/packs/992_HK_Equity/input_ledger.json|AC3\"); output: 'ERROR: leg kind \\'s3-key\\' not in [\\'activation\\', \\'ec2-baked-asset\\', \\'git\\', \\'s3-prefix\\', \\'tf-lambda\\']', rc=1.",
+        "deploy_ledger.py:94: `LEG_KINDS = {\"git\", \"s3-prefix\", \"activation\", \"ec2-baked-asset\", \"verify\", \"tf-lambda\"}` -- no 's3-key' member exists in the tool at this worktree's HEAD."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order s.4 BOUNDS, the ledger-open invocation: `--leg \"w5|s3-key|opal-data-harvest/packs/992_HK_Equity/input_ledger.json|AC3\"`.",
+    "world_is": "'s3-key' is not a member of the tool's LEG_KINDS enum. This worker re-issued the open command substituting kind 'verify' for leg w5 (closest fit: 'post-deploy live-state check ... served artifact read', matching the AC3 ledger read-back this leg is proven by) -- all other legs (w1, w6, v) used the order's kinds unchanged and the open succeeded (rc=0, entry org/critical_paths/change_management/20260922T2011Z_amgt-rk116-lenovo-model-block_deploy_completion.md).",
+    "disarm_owner": "2.0.0_SA_COO~Z -- correct the order's leg-kind token for a single-key read-modify-write leg (add 's3-key' to LEG_KINDS, or standardize such legs on 'verify' in future orders).",
+    "notes": "Same class as S3: the order's own literal text does not match the tool's real interface. Found while opening the deploy ledger before AC2's live act; the ledger's open/close mechanics (tracking, not grading) proceeded on the substituted kind."
   }
 ]
 ```
