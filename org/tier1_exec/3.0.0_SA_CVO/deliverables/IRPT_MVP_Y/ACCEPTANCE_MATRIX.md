@@ -220,6 +220,21 @@ input. Supplied13/13 PASS,0skip. See `UPLOAD_RETEST_9da7d87f99.md` and
 No simultaneous persistent transaction, worker-crash, orphan-lifecycle, retention
 or integrated E2E proof. All fourteen integrated criteria remain NOT_EVALUATED.
 
+## Worker and replay update, 6:12 PM Eastern
+
+Worker `2acea1aeca400c19bfdfcbd94fba01f121ac67ee`: supplied7/7 wire tests,
+independent4/4 composition/expiry/foreign-job/release controls PASS. No new
+defect in tested controls. See `WORKER_REVIEW_2acea1aeca.md` and evidence JSON.
+This is not real expression evaluation, process-loss or integrated S4 proof.
+
+IRPT-Y-REPLAY-01 final06a96c4df7 retains Y-U01 closure and requires remaining
+integrated payload-conflict, explicit-refresh lineage, current-access/expiry,
+concurrent/interrupted recovery and browser-idempotency controls. Raw upload
+handle differs from complete request identity; hidden retries cannot mint new
+identities. P/Y producer wire examples and CVO~P browser evidence remain needed.
+M bounded selection/release review9ac626a015 received as peer evidence only;
+whole M5/S1 and all fourteen integrated Y/S criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:06 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:12 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -38,6 +38,10 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   PASS, unchanged independent source/price retries preserve input ID and value;
   explicit correction remains distinct with prior evidence retained. Y-U01 CLOSED
   for this offline consumer boundary. See `UPLOAD_RETEST_9da7d87f99.md` and JSON.
+- Worker primitive `2acea1aeca400c19bfdfcbd94fba01f121ac67ee`: supplied7/7
+  wire tests and independent4/4 refusal controls PASS. No new defect in those
+  controls; no server-expression/process-loss/orchestration/publisher proof.
+  See `WORKER_REVIEW_2acea1aeca.md` and pinned probe/JSON.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -90,6 +94,17 @@ bounded findings at candidate `eeffdc9a5b02db9cc77e4e0fab303fddffeeaea8`.
 Reported builder85, holdings50 and independent15/15 pass counts are peer evidence,
 not rerun or combined by Y. M1/M3/S2 remain NOT_EVALUATED pending full accepted
 position/source/storage/UI proof; saved-selection/current-grant handoff still due.
+
+CVO~M subsequently reports bounded selection/release PASS in review9ac626a015
+at aefcfb6541fa1d6c0c8b31f2693117718a65e824: holdings61 and independent18/18
+transport cases. Attributed only; whole M5/S1 still NOT_EVALUATED, broader
+schema/package/IAM/UI/three-firm storage evidence outstanding.
+
+IRPT-Y-REPLAY-01 final06a96c4df7 read: retain Y-U01 closure, preserve accepted
+identity on semantic replay, distinguish explicit correction/refresh by complete
+request identity, and never mint hidden browser retry identities. COO~Y/P wire
+examples and CVO~P browser checks requested. Y integrated access/expiry,
+payload-conflict, refresh-lineage and concurrent/interrupted controls remain due.
 
 ## Next executable review and dependencies
 

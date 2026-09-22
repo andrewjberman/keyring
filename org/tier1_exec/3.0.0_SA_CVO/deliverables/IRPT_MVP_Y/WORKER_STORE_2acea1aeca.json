@@ -1,0 +1,154 @@
+{
+  "candidate_pin": "2acea1aeca400c19bfdfcbd94fba01f121ac67ee",
+  "file_sha256": {
+    "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py": "433853279df4a862f828b22145052b2f0d80b390809ca8185af87bbab8335590",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py": "3fb7083b7d35978598edb1f77e46c26dfbcea91854a8f18c7838ca6a3102f4eb",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_durable_job.py": "aadf0b47f3f60ec0f9243d2fe3a5358c003235b447a2a1e33a94f5fa9e30c7e4"
+  },
+  "supplied_suite": {
+    "tests_run": 7,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": true,
+    "log": "test_claim_requires_existing_accepted_hash_and_refuses_competitor (worker_review_tests.DurableJobTests.test_claim_requires_existing_accepted_hash_and_refuses_competitor) ... ok\ntest_existing_intent_does_not_grant_a_second_mutation (worker_review_tests.DurableJobTests.test_existing_intent_does_not_grant_a_second_mutation) ... ok\ntest_expired_lease_cannot_renew_or_checkpoint (worker_review_tests.DurableJobTests.test_expired_lease_cannot_renew_or_checkpoint) ... ok\ntest_intent_and_submitting_are_one_fenced_atomic_update (worker_review_tests.DurableJobTests.test_intent_and_submitting_are_one_fenced_atomic_update) ... ok\ntest_ready_requires_publication_receipt_and_cannot_overwrite_terminal (worker_review_tests.DurableJobTests.test_ready_requires_publication_receipt_and_cannot_overwrite_terminal) ... ok\ntest_restart_loads_retained_state_and_intent_without_clearing_them (worker_review_tests.DurableJobTests.test_restart_loads_retained_state_and_intent_without_clearing_them) ... ok\ntest_stale_worker_cannot_treat_refusal_as_existing_intent (worker_review_tests.DurableJobTests.test_stale_worker_cannot_treat_refusal_as_existing_intent) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.164s\n\nOK\n"
+  },
+  "independent_controls": [
+    {
+      "case": "wrong composition on retained read",
+      "expected_refusal": "ACCEPTED_COMPOSITION_MISMATCH",
+      "observed": "ACCEPTED_COMPOSITION_MISMATCH",
+      "passed": true,
+      "update_calls": []
+    },
+    {
+      "case": "assert_current refuses exact expiry equality",
+      "expected_refusal": "LEASE_LOST",
+      "observed": "LEASE_LOST",
+      "passed": true,
+      "update_calls": [
+        {
+          "TableName": "irpt-jobs",
+          "Key": {
+            "tenant": {
+              "S": "49financial"
+            },
+            "job": {
+              "S": "REQ-aaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          },
+          "UpdateExpression": "SET lease_owner = :owner, lease_expires_at = :expires ADD fence_token :one",
+          "ConditionExpression": "composition_sha256 = :hash AND attribute_exists(#state) AND #state <> :ready AND (attribute_not_exists(lease_expires_at) OR lease_expires_at <= :now)",
+          "ExpressionAttributeNames": {
+            "#state": "state"
+          },
+          "ExpressionAttributeValues": {
+            ":owner": {
+              "S": "worker-one"
+            },
+            ":expires": {
+              "N": "220"
+            },
+            ":one": {
+              "N": "1"
+            },
+            ":hash": {
+              "S": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            ":now": {
+              "N": "100"
+            },
+            ":ready": {
+              "S": "READY"
+            }
+          },
+          "ReturnValues": "ALL_NEW"
+        }
+      ]
+    },
+    {
+      "case": "foreign job write refuses before wire",
+      "expected_refusal": "JOB_IDENTITY_MISMATCH",
+      "observed": "JOB_IDENTITY_MISMATCH",
+      "passed": true,
+      "update_calls": []
+    },
+    {
+      "case": "release requires new claim before renewal",
+      "expected_refusal": "LEASE_REQUIRED",
+      "observed": "LEASE_REQUIRED",
+      "passed": true,
+      "update_calls": [
+        {
+          "TableName": "irpt-jobs",
+          "Key": {
+            "tenant": {
+              "S": "49financial"
+            },
+            "job": {
+              "S": "REQ-aaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          },
+          "UpdateExpression": "SET lease_owner = :owner, lease_expires_at = :expires ADD fence_token :one",
+          "ConditionExpression": "composition_sha256 = :hash AND attribute_exists(#state) AND #state <> :ready AND (attribute_not_exists(lease_expires_at) OR lease_expires_at <= :now)",
+          "ExpressionAttributeNames": {
+            "#state": "state"
+          },
+          "ExpressionAttributeValues": {
+            ":owner": {
+              "S": "worker-one"
+            },
+            ":expires": {
+              "N": "220"
+            },
+            ":one": {
+              "N": "1"
+            },
+            ":hash": {
+              "S": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            ":now": {
+              "N": "100"
+            },
+            ":ready": {
+              "S": "READY"
+            }
+          },
+          "ReturnValues": "ALL_NEW"
+        },
+        {
+          "TableName": "irpt-jobs",
+          "Key": {
+            "tenant": {
+              "S": "49financial"
+            },
+            "job": {
+              "S": "REQ-aaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          },
+          "UpdateExpression": "REMOVE lease_owner, lease_expires_at",
+          "ConditionExpression": "composition_sha256 = :hash AND lease_owner = :owner AND fence_token = :fence AND lease_expires_at > :now",
+          "ExpressionAttributeValues": {
+            ":hash": {
+              "S": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            ":owner": {
+              "S": "worker-one"
+            },
+            ":fence": {
+              "N": "7"
+            },
+            ":now": {
+              "N": "100"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Actual boto3 adapter; Stubber responses and controlled clock",
+    "No DynamoDB server expression evaluation or process loss",
+    "No orchestrator, publisher, vendor or full S4/E2E proof"
+  ]
+}
