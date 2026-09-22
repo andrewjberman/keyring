@@ -1,0 +1,49 @@
+{
+  "seat": "3.0.0_SA_CVO~P",
+  "portal_pin": "61983ce9b7515d93ff391a94c68a6c6da23cfc10",
+  "backend_pin": "c5eace08c76176c6d9ebb78dd31ced3b0e57ea2d",
+  "snapshot": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\cvo-p-browser-6198-8967iqcg",
+  "bun_version": "1.3.9",
+  "independent_sha256": "997f5378e2e08abdcbec011284b3bdb1c9019c1aae6f9aed0f67238f30116b56",
+  "dependency_source": "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\portal\\node_modules",
+  "runs": [
+    {
+      "label": "supplied",
+      "command": [
+        "bun",
+        "test",
+        "src/pages/InvestorReporting/__tests__/mvp-selection/selection.test.ts"
+      ],
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nsrc\\pages\\InvestorReporting\\__tests__\\mvp-selection\\selection.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m POST preserves the requested group/subset and returns distinct server identity\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m actual partial-group refusal stays a public refusal with no data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m rejects malformed selected identity instead of deriving it from the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m custody requests use the retained ID and never substitute the fingerprint\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m fixture mode refuses to invent durable selection records\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m canonical producer route table and all browser routes match\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m \u001b[0mretained selection from the actual guarded producer\u001b[2m >\u001b[0m\u001b[1m generator resolves local defs and refuses broken or cyclic references\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\n\u001b[0m\u001b[32m 7 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 20 expect() calls\nRan 7 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m171.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    },
+    {
+      "label": "independent",
+      "command": [
+        "bun",
+        "test",
+        "reviewer_selection.test.ts"
+      ],
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nreviewer_selection.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m exact subset order, request copy and contract header survive serialization\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m missing identity field account_set_id refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m missing identity field directory_revision refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m missing identity field selected_account_set_fingerprint refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m missing identity field permitted_account_set_fingerprint refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m missing identity field entitlement_revision refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid account membership duplicate refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid account membership empty refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid account membership mismatch refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m invalid account membership raw refuses\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m producer kind count map is accepted and negative/fractional counts refuse\u001b[0m \u001b[0m\u001b[2m[\u001b[1m16.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m boundary refusal without firm suppresses even success-shaped data\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m wrong envelope operation/version cannot issue a retained selection\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m retained identity and all explicit date/root carriers reach requests\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m malformed retained refs refuse before either custody transport call\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m fixture selection requires explicit service and returns its actual identity\u001b[0m\n\n\u001b[0m\u001b[32m 16 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 40 expect() calls\nRan 16 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m94.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    }
+  ],
+  "changed_source_sha256": {
+    "src/api/endpoints/investor-reporting.ts": "b099d7db74cefe3da4ffc3b0c34cd934ebb827e2ac078c7dad5ed52733632805",
+    "src/pages/InvestorReporting/__tests__/fe-s-13/ambient-shims.d.ts": "62baaea9f7a5fa7d24744207c579b63ed24e784030d3a5376eea9441cd586159",
+    "src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts": "7a8377c53087f6dbdf346fcdb99c71e8ab9b8edeacf7bfac33d4b252279e8a09",
+    "src/pages/InvestorReporting/__tests__/fe-s-9/resolve.test.ts": "deef316852b0071ff2160865159b4b4320c530c84989aeeb585063e39a9968a2",
+    "src/pages/InvestorReporting/__tests__/mvp-selection/selection.test.ts": "65bd054ea96270dec2305a1e28d546e25e8d1d5bd11313344c4293b8ab9f1ef5",
+    "src/pages/InvestorReporting/__tests__/mvp-selection/tests/producer-selection.json": "05dd3093468998996abfc21867b8bc24fec1885c20d3058bed8dbfca2bc7ab80",
+    "src/pages/InvestorReporting/contracts/envelope.ts": "3d876d648dc8dcbf023f5432b67ad13133e812df594a202cf6998b9ac9c8d4d3",
+    "src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts": "e6afbc00c7009aeb44ae898d19f5dd0de29d0860d333ec7159d456d66ee229e5",
+    "src/pages/InvestorReporting/contracts/wire/SelectedAccounts.ts": "4521b4b0140f8259aaf6ac4c853269c18c46c26b7610384731709a1b5b2e6aaa",
+    "src/pages/InvestorReporting/contracts/wire/SelectionRequest.ts": "c9dd3e0af697de8d3856676231252a04d2e3dc11baceff9bf9440ce260e8f5b3",
+    "src/pages/InvestorReporting/contracts/wire/index.ts": "50d1118426ff28c26bce9dfd3162d036d8d679542b1c4ec27082805f94923135",
+    "src/pages/InvestorReporting/contracts/wire/responses.ts": "08ba0a95b9b46875c0e72dffa2d3f8130d949baadd059579a970ed5e5c487764"
+  },
+  "timestamp_utc": "2026-09-22T22:40:12.064717+00:00",
+  "limits": "Pinned client/parser and backend contract bytes; supplied captured producer fixture not independently regenerated. Synthetic transport; no mounted browser, HTTP guard composition, live routing, auth, provider, cache or deployment acceptance. Local existing dependencies, no installs."
+}
