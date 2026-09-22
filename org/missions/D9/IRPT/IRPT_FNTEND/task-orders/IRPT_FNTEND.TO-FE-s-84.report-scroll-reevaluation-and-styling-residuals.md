@@ -104,8 +104,17 @@ band `#0A1733` = `rgb(10, 23, 51)`; hairline `#C4CBDB` = `rgb(196, 203, 219)`.
 <criterion id="F84-AC4" cell_refs="FE-s-84" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~34/f84_answer_status_navy.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --expect-style '[data-slot="answer-status"]::color=rgb(22, 51, 114)' --expect-style '[data-slot="answer-status"]::border-color!=rgb(226, 232, 240)'</invocation><expect>ASSERT-STYLE: 2 of 2 met</expect></criterion>
 `F84-AC4` -- the base/complete `AnswerStatus` state measures navy ink and a border that is no longer the noncanonical slate-200 value.
 
-<criterion id="F84-AC5" cell_refs="FE-s-84" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~34/f84_answer_status_qualified.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-32/qualified.json --expect-style '[data-slot="answer-status"]::background-color!=rgb(255, 251, 235)'</invocation><expect>ASSERT-STYLE: 1 of 1 met</expect></criterion>
+<criterion id="F84-AC5" cell_refs="FE-s-84" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~34/f84_answer_status_qualified.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-84/fixtures/reporting-qualified.json --expect-style '[data-slot="answer-status"]::background-color!=rgb(255, 251, 235)'</invocation><expect>ASSERT-STYLE: 1 of 1 met</expect></criterion>
 `F84-AC5` -- the qualified/warning `AnswerStatus` state's background is no longer the noncanonical `amber-50` value -- named-role replacement, cited to its DESIGN.md clause in your result.
+
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~34-report, row `IRPT_FNTEND-W34-S1`):** the named fixture `fixtures/smoke/fe-s-32/qualified.json` does not
+exist anywhere in the repo (confirmed: no `fixtures/smoke/fe-s-32/` directory at all) -- the literal invocation crashes with `ENOENT` before any
+assertion runs. No other committed static fixture under `fixtures/smoke/` gives the Reporting route's performance operation a qualified
+(PARTIAL/NEEDS_CORRECTION/UNCERTAIN) state either, so this was never a real path. Worker `~34` authored a correct substitute in its own grant,
+`__tests__/fe-s-84/fixtures/reporting-qualified.json` (a one-field mutation of the committed `reporting-answer-bearing.json`, `performance.status.state`
+READY->PARTIAL -- the same technique `__tests__/fe-s-40/band-at-390.test.ts`'s own `qualifiedReportingMap()` already uses, made static), and measured
+`ASSERT-STYLE: 1 of 1 met` against it -- independently reproduced by me, identical result. Amended the fixture path to that file; the bar is
+unchanged.
 
 <criterion id="F84-AC6" cell_refs="FE-s-84" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F84-AC6` -- the whole IRPT_FNTEND suite is green.
