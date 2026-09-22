@@ -5465,6 +5465,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S5",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-22T00:10:00Z",
+    "one_line": "The COO amendment at commit 5cad85da0b (verified: object exists, touches ONLY the TO file, both AMENDMENT blocks confirmed) correctly fixed F67-AC3 (fixture swap, re-verified PASS: ASSERT-CONTENT 0 of 2 met) and F67-AC10's substantive <expect> (DRIVER OK, re-verified PASS). But F67-AC10's corrected <invocation> text itself contains a non-executable bracketed span that is not a declared placeholder, so proof-of-spec-check.py's ENFORCE-mode invocation-alignment limb refuses ANY real, re-runnable command recorded against it -- the instance stays INVALID (rc=1) on this one mechanical ground even though every criterion's substantive bar is now met.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-67 (post-amendment 5cad85da0b) F67-AC10 <invocation>: \"cd <WS>/portal && timeout 120 node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs <PORT> <scenario-map.json, one entry wrapping fixtures/smoke/fe-s-18-holdings-observed.json> <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/f67_overflow/\"; TO <placeholders>WS, PORT</placeholders> (declares only these two).",
+    "world_is": "proof-of-spec-check.py's PLACEHOLDER_TOKEN_RE (:1324) is `<([A-Z][A-Z0-9_]*)>` -- all-caps only. The bracketed span `<scenario-map.json, one entry wrapping fixtures/smoke/fe-s-18-holdings-observed.json>` starts with a lowercase letter and contains commas, slashes and spaces, so it matches NEITHER a declared placeholder NOR the token grammar at all; `_invocation_pattern` (:1357-1374) therefore regex-escapes it as LITERAL text a recorded invocation must match verbatim. MEASURED: recorded this worker's own real, actually-run, re-runnable invocation (`node .../holdings-driver.mjs 5920 <this worker's real scenario-map path> <capture dir>/`, the exact command that printed `DRIVER OK` and produced both PNGs) as the row's `invocation` field and ran `python .tools/proof-of-spec-check.py <this instance> F67-AC1..AC12 --governing-order <TO>` from inside this worktree: `VIOLATION: invocation-alignment[F67-AC10]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['PORT', 'WS']` (TO-CRITERION line quotes the bracketed span verbatim; INSTANCE-RECORD line quotes this worker's real command) -- `violations=1`, `INVALID (rc=1)`. This is the ONLY violation (rerun with F67-AC10's own row status flipped PASS<->FAIL made no difference to the violation count -- the invocation-alignment limb does not read a row's status). The substantive fix is genuinely correct and independently re-verified by this worker (fixture-swap and DRIVER OK both re-ran clean), so this is a residual defect in the AMENDMENT's invocation text, not in the underlying assertion. Not self-graded past this: reported rather than forced by writing the unexecutable bracket text as this worker's own 'invocation' (which would misrepresent what was actually run) or by editing the criterion further (out of this worker's authority per BOUNDS: 'an order defect is reported, and the issuer amends it' -- the task-order file is this worker's grant for the <status> flip only).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git cat-file -t 5cad85da0b -> commit; git show --name-only 5cad85da0b -> exactly one path (the TO file); diff against 5cad85da0b~1 read directly, confirming both COO AMENDMENT blocks verbatim",
+        ".tools/proof-of-spec-check.py:1323-1324 (PLACEHOLDERS_TAG_RE, PLACEHOLDER_TOKEN_RE) and :1357-1374 (_invocation_pattern), read directly, this worktree",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.md F67-AC10 <invocation>, this worker's worktree copy synced to 5cad85da0b (diff --strip-trailing-cr: 0 lines against `git show 5cad85da0b:<path>`)",
+        "measured run (this worker): python .tools/proof-of-spec-check.py org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~17/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.proof_of_spec.json F67-AC1,F67-AC2,F67-AC3,F67-AC4,F67-AC5,F67-AC6,F67-AC7,F67-AC8,F67-AC9,F67-AC10,F67-AC11,F67-AC12 --governing-order <TO path>, run from inside this worktree -- violations=1, INVALID (rc=1), the sole VIOLATION line naming F67-AC10's invocation-alignment mismatch, quoted verbatim in world_is",
+        "the SAME re-run of F67-AC10's corrected positional invocation this tick: rc=0, last stdout line 'DRIVER OK', both PNGs (fe-s-32_holdings_fe_s_18_holdings_observed_390.png and its _table_scrolled sibling) re-read confirming scroll-reachability -- the substantive bar independently re-confirmed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
