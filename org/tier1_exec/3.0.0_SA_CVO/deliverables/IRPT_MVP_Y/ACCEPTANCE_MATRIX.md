@@ -274,6 +274,15 @@ reports a recipe upload-echo cents mismatch before repair; it is producer eviden
 pending exact-pin retest, not an independent verdict. All14 integrated criteria
 remain NOT_EVALUATED.
 
+## Exact-dollar recipe repair, 6:54 PM Eastern
+
+`386f2e1b495f629f4e53584566fd6a2aa2eae0cd`: supplied19/19 and independent7/7
+PASS. Baselinebfe5a33e17 independently accepts the one-cent mismatch; repair
+refuses. Actual step_create multipart preserves exact unquoted JSON numbers
+after JSON checkpoint. Y-D01 CLOSED for this bounded recipe/wire case. See
+`DECIMAL_REVIEW_386f2e1b49.md`. No vendor/session, persistent worker or integrated
+Y4/S3 proof; all14 integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

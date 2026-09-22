@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:44 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:54 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -58,6 +58,11 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   parent receipt; retries avoid dependency calls; chained values20/40/60 retained.
   Parent hash/receipt/owner/loss and mid-read revocation refuse. Y-U01 controls
   still pass. See `REFRESH_REVIEW_318e140fb9.md` and pinned probes/evidence.
+- Exact-dollar repair `386f2e1b495f629f4e53584566fd6a2aa2eae0cd`: supplied19/19
+  and independent7/7 PASS. Original cents mismatch independently reproduced at
+  bfe5a33e17 and refused by candidate; exact values survive actual create-wire
+  serialization after JSON checkpoint. Y-D01 CLOSED for this offline boundary.
+  See `DECIMAL_REVIEW_386f2e1b49.md`, pinned probe and evidence JSON.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -197,6 +202,12 @@ transport result, not yet independently reproduced by Y. Repairing exact JSON/
 multipart numbers and duplicate-row refusal; committed source/probe to follow.
 Retain unchanged cents-mismatch control for independent retest. Prior closures
 unchanged; no live vendor call or new integrated grade follows from the notice.
+Superseding exact225022Z notice supplies386f2e1b49. Independent original-scenario
+reproduction/retest now complete as Y-D01 above. No producer probe file was
+provided; identical specified amounts/security/units were tested on both pins.
+Exact225143Z notice supplies fenced report-index6cacc808879dc9f8c5a01e18eca6a9ff38d94e7a
+for the next bounded review. P repository composition and real server/clock/
+concurrency evidence remain pending; no READY implication.
 
 ## Next executable review and dependencies
 
