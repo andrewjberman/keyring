@@ -109,7 +109,7 @@ Rows marked REMEDIATED re-enter nowhere. OPEN is a carry for scoped ownership/is
       "at": null
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v8"
     },
@@ -136,7 +136,7 @@ Rows marked REMEDIATED re-enter nowhere. OPEN is a carry for scoped ownership/is
       "at": null
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v8"
     },
@@ -260,11 +260,11 @@ Rows marked REMEDIATED re-enter nowhere. OPEN is a carry for scoped ownership/is
     "owner": "2.0.0_SA_COO~B",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W1-S46",
@@ -281,16 +281,16 @@ Rows marked REMEDIATED re-enter nowhere. OPEN is a carry for scoped ownership/is
     "owner": "2.0.0_SA_COO~B",
     "round": "v8",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~B",
-      "at": null
+      "at": "2026-09-22T00:01:05Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W1-S47",
@@ -488,11 +488,11 @@ Rows marked REMEDIATED re-enter nowhere. OPEN is a carry for scoped ownership/is
     "owner": "2.0.0_SA_COO~B",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
