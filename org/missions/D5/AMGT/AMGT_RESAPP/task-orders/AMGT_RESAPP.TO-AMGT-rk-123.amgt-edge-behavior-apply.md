@@ -144,7 +144,7 @@ ACT without re-homing an ORDER: `0.7.0_AE_CloudOps` held none, so LD-0529 refuse
 it to act. L6 is this seat's, so the carrier is this seat's to cut. The CTO declined to cut it itself and declined
 `send_override`, correctly: a gate that refuses twice is naming a wrong route, not a gate to bypass.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~123</slot>
 <fabric>site-z</fabric>
