@@ -1,18 +1,18 @@
-# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 11 -- v0.11
+# IRPT_FNTEND -- L5 decomposition -- rounds 1 through 12 -- v0.12
 
 ```json
 {
  "project": "IRPT_FNTEND",
  "directive": "D9",
  "fabric": "laptop",
- "round": 11,
- "decomp_version": "v0.11",
+ "round": 12,
+ "decomp_version": "v0.12",
  "round_1_header_retained_below": true,
  "prd_ref": "org/missions/D9/IRPT/IRPT_FNTEND/prd/IRPT_FNTEND_PRD.md@5fd2dc9ab5",
  "prd_version": "v0.9",
  "brief_ref": "docs/briefs/investor-reporting-ir-fe-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-8", "FWD-11", "FWD-12"],
- "cells": 9,
+ "cells": 6,
  "cell_id_shape": "FE-s-<n>",
  "code_repo": "portal (nested git repo, gitlink in the workspace; branch DEV @243089eb)",
  "record_repo": "workspace (branch CLOUD, this round's issuance commit)"
@@ -2216,4 +2216,119 @@ its change resolves. Nothing is closed here; the CVO dispositions.
 - **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word. (`0.0.0_AB_MSTR` pushes.)
 - **C-S129:** the Analysis request LIST has no declared backend route; FNTEND does not invent one. If an FWD's DONE WHEN needs the list it is an IRPT_BCKEND dependency, routed to `2.0.0_SA_COO~B` as information (CTO ruling).
 - **W13-S2** disarms when a round-11 criterion exercises (d) with a wrong-ground control: FE-s-65 builds that control and the visual cells use it.
+- **The CVO seat for this project is `3.0.0_SA_CVO~F`** (the Codex seat).
+
+## R12 -- ROUND 12 (decomposition v0.12): the instrument's own two false-pass classes, then the design residuals it was hiding
+
+**Source.** `3.0.0_SA_CVO~F`'s round-11 L10 slug (`surprise-channel/remediations/REMEDIATION_v8.md` @`631b1308cb`, 18 rows: 12 OPEN, 6 REMEDIATED)
+and `1.0.0_SA_CTO`'s round-11 analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_FNTEND_ROUND_11_20260922.md` @`ce01e0f219`,
+msg 99397). Round 11 closed with FWD-12 still `NOT_REALIZED`: 7 of 9 judgment criteria PASS but two FAIL (F65-AC18, F71-AC17), and the CVO's own
+production-function probe found the instrument itself has two false-pass classes (a composited/gradient ground reads white; an absent selector's
+inequality check reads PASS). Everything downstream inherited whichever of those the CVO's independent probe could reach; round 12 fixes the
+instrument FIRST, then the seven design residuals it was concealing.
+
+### R12.1 THE RECTANGLE -- six cells
+
+| cell | write surface | serves | wave | slot | depends_on |
+|---|---|---|---|---|---|
+| `FE-s-74` | `scripts/ui-smoke.mjs` (hardening, not a rewrite), `__tests__/fe-s-74/` | fail-closed ground measurement + key-validity/fulfilment split (W20-S2, C-S146, C-S147) | 1 | 1 | none -- READY ROOT, every round-12 cell depends on this |
+| `FE-s-75` | `fixtures/smoke/default.json`, `__tests__/fe-s-75/` | default fixture repair or retirement + parse control (W17-S3) | 2 | 2 | FE-s-74 |
+| `FE-s-76` | `tabs/holdings/DrillTree.tsx` (breadcrumb only), `components/CategoryViewTree.tsx` (the `:936` panel rule + the `:563-570`/`:665-666` comments), `__tests__/fe-s-76/` | breadcrumb NAVY + panel-border removal (C-S149) + the revision-mismatch component test (W17-S1) | 2 | 3 | FE-s-74 |
+| `FE-s-77` | `export/` (whole folder), `__tests__/fe-s-77/` | export modal's actual C5 inversion + exercised scroll reachability + one primary action (C-S148, C-S151) | 2 | 4 | FE-s-74 |
+| `FE-s-78` | `header/ScopeSummary.tsx`, `tabs/reporting/`, `render/print.css`, `__tests__/fe-s-78/` | cohort chip radius + truthful fixture (W18-S1) + screen-report residuals + narrow-width reachability (C-S150) | 2 | 5 | FE-s-74 |
+| `FE-s-79` | `tabs/analysis/RequestList.tsx`, `tabs/holdings/HoldingsTab.tsx`, `tabs/holdings/SliceTable.tsx`, `__tests__/fe-s-79/` | noncanonical OKLCH text roles measured against actual grounds (W22-S1) | 2 | 6 | FE-s-74 |
+
+**Why the instrument is a cell of its own again (FE-s-74).** The CVO's own co-committed production-function probe (not a browser render) executed
+`ui-smoke.mjs`'s real `groundColor()` and found it returns white for BOTH an opaque OKLCH background-color (its regex parser is RGB-only) and a
+composited/gradient paint (it reads only `backgroundColor`, never `backgroundImage` -- W20-S2's original finding, now shown to be one instance of a
+wider class). Separately, C-S146 found `--expect-style`'s inequality branch (`!=`) reads `PASS` when the selector matches NOTHING (`null !== expected`
+is `true`), and C-S147 found the instrument's `FIXTURES-MATCH` line counts URL-substring hits, never validates the keys against `consumed.ts`'s actual
+operation keys -- so an arbitrary invalid key can read `matched 1 of 1`. Every visual criterion in every round-12 design cell depends on this instrument
+being fail-closed on all four of these paths before its own PASS lines can be trusted; the CTO's ruling is explicit that wave 2 waits on wave 1.
+
+**Where the write paths were partitioned.** `DrillTree.tsx` is granted to FE-s-76 for the breadcrumb ONLY (round 11's C12 error text and its shared
+`__tests__/fe-s-67/` grant are already drained and out of scope); `CategoryViewTree.tsx` is granted to the SAME cell (FE-s-76) since the CTO's ruling ties
+the breadcrumb's colour law directly to `:936`'s panel-border removal ("the same clause decides C-S149's top rule") -- splitting them across two workers
+would cite the same DESIGN.md clause from two different orders for no reason. `export/` is granted WHOLLY to FE-s-77 (C-S148 and C-S151 both live in
+`ExportModal.tsx`/`ReceiptPanel.tsx`, exactly as round 11's single E cell reasoned). `ScopeSummary.tsx` and `tabs/reporting/` are granted together to
+FE-s-78 because W18-S1's cohort chip and C-S150's report residuals are both under the CTO's "screen report styling" umbrella and neither collides with
+another cell's grant. FE-s-79's three files (`RequestList.tsx`, `HoldingsTab.tsx`, `SliceTable.tsx`) are the exact three source lines W22-S1 named.
+
+**Not cut.** The 67 older OPEN rows are not bulk-closed (CTO ruling, carried); a cell names any it happens to touch, per its own `<paths>` grant. S70
+stays parked outside IRPT scope (unchanged since round 11).
+
+### R12.2 BOUNDS -- ALL ROUND-12 CELLS (rounds 1-11 bounds stand)
+
+```
+  the criterion rule     UNCHANGED four parts (wire match, named content, wrong-state control, route-container ground) PLUS the CTO's round-11
+                         addition: any colour or style criterion also carries an ABSENT-SELECTOR control -- run the same assertion against a state
+                         where the target element genuinely does not exist, and confirm the (now-hardened) instrument prints UNMEASURABLE/FAILS
+                         rather than a vacuous PASS. A criterion missing any of the five is refused at the cut.
+  the instrument's own bar FE-s-74 does not merely add a check: an unsupported or composited ground (gradient, opaque OKLCH, any multi-layer paint)
+                         MUST print `UNMEASURABLE` and exit non-zero, never a colour. `--expect-style`'s `!=` branch MUST fail when the selector
+                         resolves to nothing (never treat absence as satisfying an inequality). Negative controls for FE-s-74 itself: a real dark
+                         gradient, a real opaque-OKLCH background, a genuinely absent selector, and a wrong-but-resolved colour -- all four, not
+                         the silver-paint control alone (W20-S2's own point: solid-colour injection cannot exercise a gradient-blind reader).
+  key validity vs fulfilment  FE-s-74 also exposes a validator that checks a fixture's declared keys against `contracts/wire/consumed.ts`'s actual
+                         operation keys (key VALIDITY), kept separate from counting which keys were actually requested (FULFILMENT, what
+                         `FIXTURES-MATCH` already measured). Print both denominators; a delayed-but-not-yet-fulfilled key is named, not silently
+                         short-counted; every fixture certified by a later cell's criteria is run through the key-validity check at least once.
+  instrument first        every round-12 design cell (75-79) depends on FE-s-74's hardened flags; a worktree whose `ui-smoke.mjs` still reads the
+                         OLD (unhardened) grammar has the wrong base and stops, exactly as FE-s-65 established last round.
+  a control is a claim    unchanged: a control that passes proves nothing if it cannot fail under the wrong state; say so and fix the assertion.
+  fixes                   unchanged: a defect on the cell's OWN surface may be fixed with a BEFORE capture kept and an AFTER beside it; a fix
+                         needing another cell's file is ONE ROW, never a wider grant.
+  dev servers             each worker's own server, port block below, INLINE PREFIX, never exported; stopped and closed-port-verified before the
+                         whole-suite criterion.
+  judgment                the last criterion of each order is JUDGMENT: record the evidence, no verdict; the CVO grades it at L9.
+  context                 keep it small: at most the PNGs a criterion needs, long output to files.
+```
+
+Port blocks (5900-5989 block, outside the derived 5400-5899 range): `FE-s-74` 5900-5909, `FE-s-75` 5910-5919, `FE-s-76` 5920-5929, `FE-s-77` 5930-5939,
+`FE-s-78` 5940-5949, `FE-s-79` 5950-5959.
+
+### R12.3 DEPENDENCY EDGES, SLOTS, FAN-OUT
+
+```
+  FE-s-74 <- (none)               READY ROOT   wave 1
+  FE-s-75 <- FE-s-74                            wave 2
+  FE-s-76 <- FE-s-74                            wave 2
+  FE-s-77 <- FE-s-74                            wave 2
+  FE-s-78 <- FE-s-74                            wave 2
+  FE-s-79 <- FE-s-74                            wave 2
+
+  weakly connected components: 1 (every cell traces to FE-s-74 or is itself the root)
+  ready roots at issuance: 1 (FE-s-74)
+  max concurrent width: 5 (wave 2, once wave 1 drains)
+```
+
+**Fan-out: `1 of 6 cells cut ready NOW (wave 1), 5 more gated on FE-s-74 (wave 2), cap 8`.**
+
+### R12.4 RULE 24 RECORD (round 12)
+
+| postulate | how |
+|---|---|
+| (i) MECE by subtraction | REMEDIATION_v8 carries 18 rows: 12 OPEN, 6 REMEDIATED. Subtract the 6 REMEDIATED (`W15-S1`, `W15-S2`, `W17-S2`, `W17-S5`, `W20-S1`, `S69`, already closed): 12 OPEN remain (the slug's own count). Of those: `W16-S1` is a decomposition-authoring fix (this section's own dependency table names FE-s-65-class predecessors explicitly, not a worker cell); the CTO's own six `C-S1xx` findings plus `W17-S1`, `W17-S3`, `W18-S1`, `W20-S2`, `W22-S1` map to the five design cells and one instrument cell above. 1 (W16-S1, addressed by this table) + 1 (FE-s-74: W20-S2, C-S146, C-S147) + 5 (FE-s-75..79: W17-S3, C-S149+W17-S1, C-S148+C-S151, W18-S1+C-S150, W22-S1) = every OPEN row named. 0 uncovered. |
+| (ii) same grain | each cell is one surface family with one write-path set, per R12.1's partition note |
+| (iii) intent coherence | every cell fixes one clause family: the instrument's own fail-closed contract; a fixture's contract validity; C8's colour law on two adjacent surfaces; C5's actual inversion plus one-primary-action; a cohort control's radius plus report residuals; C3/C9 measured against real grounds |
+| (iv) state coherence | what a cell does NOT move: FE-s-74 does not touch any design cell's source; FE-s-76 does not touch the data palette (lilac/teal/amber, C6) or Model Portfolios' dark default; FE-s-77 does not touch the idle/submitting/receipt state split itself (S69 stays REMEDIATED); FE-s-79 does not touch C6's data-colour exemption |
+
+**The older open rows a cell touches** (unchanged discipline: name-match only, nothing closed here, the CVO dispositions):
+
+| cell | older open rows it may touch |
+|---|---|
+| `FE-s-74` | W20-S2, C-S146, C-S147 (this round's own) |
+| `FE-s-75` | W17-S3 (this round's own) |
+| `FE-s-76` | W12-S2, C-S149 (this round's own), W17-S1 |
+| `FE-s-77` | C-S130, S69 (already REMEDIATED -- do not reopen), C-S148, C-S151 |
+| `FE-s-78` | W11-S4, W18-S1, C-S150 |
+| `FE-s-79` | C-S129 (do not invent a route), W22-S1 |
+
+### R12.5 HOLDS
+
+- **PORTAL FROZEN:** local DEV commits only. No CLOUD push, no SITEZ merge, until Andrew's word. (`0.0.0_AB_MSTR` pushes.)
+- **C-S129 stands:** the Analysis request LIST has no declared backend route; FE-s-79 does not invent one.
+- **S69 is REMEDIATED, closed:** FE-s-77 does not reopen the idle/submitting/receipt split; it fixes C-S148 (inversion) and C-S151 (one primary action) only.
+- **W20-S1 is REMEDIATED/DISARMED, closed:** FE-s-74 does not need to re-fix the targeting selector FE-s-70 already corrected; it fixes the CLASS of gap
+  (gradient/OKLCH blindness) that W20-S2 shows survives underneath.
 - **The CVO seat for this project is `3.0.0_SA_CVO~F`** (the Codex seat).
