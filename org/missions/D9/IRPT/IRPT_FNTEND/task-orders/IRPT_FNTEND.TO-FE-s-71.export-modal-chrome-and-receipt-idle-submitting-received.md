@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~21</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-71` (round 11, v0.11) | **outcome_ref:** FWD-12 | **depends_on:** FE-s-65 (its `--delay` flag) | **slot:** ~7 | **rows:** C-S130, S69 | **base:** workspace = the round-11 issuance commit on CLOUD (your worktree branches from it), portal DEV `243089eb` plus every drained round-11 cell this one depends on
 
@@ -96,6 +96,8 @@ two markers are never in descendant relationship in the live DOM regardless of t
 cell takes -- one modal, no nested dialogs). Fix: drop the broken ancestor prefix, select `[role="dialog"]` directly -- it still measures
 the ground of the real, actual dialog panel, not a page field; the bar is unchanged, only the selector is corrected. Row
 `IRPT_FNTEND-W21-S1` is CORRECT and stays filed as the record of the defect; this amendment is the remedy it called for.
+
+**RESOLVED (worker ~21, second pass):** verified and PASS -- `EXPECT-GROUND[[role="dialog"]]: PASS rgb(244, 246, 250)`.
 `F71-AC2` -- IDLE (no receipt, nothing submitted): the receipt panel carries a NEW `data-flow-state="idle"` attribute (never the synthesized `Loading` state), Create export is enabled, radius 3px (C11), weight not 500 (C1), and the dialog body sits on the canvas colour, never the band -- `ASSERT-CONTENT: 3 of 3 met`, `ASSERT-STYLE: 2 of 2 met`, `ASSERT-GROUND: 1 of 1 met`.
 
 <criterion id="F71-AC3" cell_refs="FE-s-71" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/f71_idle_390.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/export-ready.json --click Export --expect '[data-slot="receipt-panel"][data-flow-state="idle"]' --expect-ground '[role="dialog"]=rgb(244, 246, 250)'</invocation><expect>ASSERT-CONTENT: 1 of 1 met[\s\S]*ASSERT-GROUND: 1 of 1 met</expect></criterion>
@@ -127,6 +129,8 @@ BEFORE `ASSERT-STYLE`, but `scripts/ui-smoke.mjs` prints its three summary lines
 those three line numbers). Worker `~21`'s own run genuinely satisfied BOTH bars (`ASSERT-STYLE: 3 of 3 met`, `ASSERT-GROUND: 1 of 1 met`),
 FAILED only because the ORDER in this `<expect>` regex could never match the tool's real output. Fix: swap the two clauses to match the
 tool's actual order; the bar itself (both families fully met) is unchanged.
+
+**RESOLVED (worker ~21, second pass):** verified and PASS -- `ASSERT-STYLE: 3 of 3 met`, `ASSERT-GROUND: 1 of 1 met`.
 `F71-AC10` -- AFTER the fix: the branding section (`AppliedBranding`/`ReceiptPanel`'s container, currently `<Panel variant="chart">` which resolves to the BAND, `#0A1733`, nested inside the light dialog -- exactly the C3 shape this project keeps finding) is now `<Panel variant="nested">` (the SAME component, an EXISTING variant that already resolves to `--bg-surface` white with dark-text-only, per `Panel.tsx`'s own decision tree comment -- this is reuse, not invention). The selected branding chip is a navy-bordered, bold-label control (C8's "weight and rule" idiom, the FE-s-61 precedent), never a second filled-purple chip. Close is a plain/bordered button, never a second filled-primary beside Create export (C8). Every button in the modal is `rounded-[3px]` (C11), never `rounded-md`.
 
 <criterion id="F71-AC11" cell_refs="FE-s-71" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/f71_chrome_390.png --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/__tests__/fe-s-63/fixtures/export-ready.json --click Export --expect-ground '[data-slot="branding-options"]=rgb(255, 255, 255)'</invocation><expect>ASSERT-GROUND: 1 of 1 met</expect></criterion>
