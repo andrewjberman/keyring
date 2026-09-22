@@ -110,7 +110,19 @@ edited the package since):
    - `run` gains `--security-json FILE` (one security object `{"key", "ticker", "company", "aliases", "sa_symbol"}`),
      `--floor`, `--retrieval-mode` and `--bbg-symbol-probe`.
    - Harvest mode is set with `--harvest-grammar`, never by editing `config.json`'s default.
-8. **New test file `lib/opal_data_harvest/test_retrieval_provenance.py`,** with STUB sessions and a STUB S3 client.
+8. **THE SAME-SECOND SILVER COLLISION, ported into `HarvestUploader`** (row `AMGT_HARVST-Z-W9-S1`, ARMED, the
+   issuer's to disarm; this item is that disarm, and is why it was added to your order after the cut).
+   - `store.silver_append` writes ONE parquet object per CALL, at a key named only by `run_stamp` (second
+     precision), under an unconditional `IfNoneMatch="*"`, with no content check on collision.
+   - `HarvestUploader` calls it ONCE PER ITEM. Two articles captured in the SAME wall-clock second therefore collide:
+     one object wins, the other row is lost silently, and nothing retries.
+   - `HVST-h-10` spends Andrew's ONE Lenovo run through this path, and a backfill fetches siblings inside one second.
+     A row lost there cannot be re-fetched.
+   - **Port the discipline `LegacyUploader` already carries** (`uploads.py`, by `HVST-h-9`): group rows sharing a
+     `(source, run_stamp)` into ONE `silver_append` call, and on `PreconditionFailed` retry under a suffixed object
+     name. **Never delete an S3 object** (a delete needs Andrew's word) and **never edit `store.py`**, which is
+     read-only for you.
+9. **New test file `lib/opal_data_harvest/test_retrieval_provenance.py`,** with STUB sessions and a STUB S3 client.
    Exactly twelve arms:
    - `test_rung_recorded_per_publisher`
    - `test_search_provenance_query_rank_page`
@@ -124,6 +136,8 @@ edited the package since):
    - `test_network_refuser_raises_before_io`
    - `test_plan_prints_counts_with_zero_network`
    - `test_bbg_symbol_probe_captures_listing`
+   - `test_harvest_uploader_same_second_siblings_both_land` (two articles at one `run_stamp` through
+     `HarvestUploader`: both silver rows land, and a pre-poisoned key is retried under a suffix, never deleted)
 
 **What this cell does NOT change:**
 - the mention floor;
@@ -196,7 +210,7 @@ print("pin_block_lines", len(block), "present_verbatim_in_head", found)
 
 <proof_of_spec>
   <criterion id="AC0" cell_refs="HVST-h-3"><invocation>cd "$(git rev-parse --show-toplevel)" && for t in lib/opal_data_harvest/test_bronze_capture.py lib/opal_data_harvest/test_silver_from_bronze.py lib/opal_data_harvest/test_legacy_upload.py lib/opal_data_harvest/test_harvest_grammar.py lib/opal_data_harvest/test_worker.py lib/opal_data_harvest/test_catalog.py lib/opal_data_harvest/test_verification.py; do echo "$t :: $(python -m pytest $t -q --color=no -p no:cacheprovider 2>&1 | tail -1)"; done</invocation><expect>BEFORE any edit, seven baseline lines recorded; the three predecessor files read 12, 14 and 6 passed</expect></criterion>
-  <criterion id="AC1" cell_refs="HVST-h-3"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_retrieval_provenance.py -v --color=no -p no:cacheprovider 2>&1 | tail -16</invocation><expect>"12 passed" and no "failed" -- the twelve arms named in section 1 item 8</expect></criterion>
+  <criterion id="AC1" cell_refs="HVST-h-3"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_retrieval_provenance.py -v --color=no -p no:cacheprovider 2>&1 | tail -16</invocation><expect>"13 passed" and no "failed" -- the thirteen arms named in section 1 item 9, the same-second sibling arm included</expect></criterion>
   <criterion id="AC2" cell_refs="HVST-h-3"><invocation>cd "$(git rev-parse --show-toplevel)" && for t in lib/opal_data_harvest/test_bronze_capture.py lib/opal_data_harvest/test_silver_from_bronze.py lib/opal_data_harvest/test_legacy_upload.py lib/opal_data_harvest/test_harvest_grammar.py lib/opal_data_harvest/test_worker.py lib/opal_data_harvest/test_catalog.py lib/opal_data_harvest/test_verification.py; do echo "$t :: $(python -m pytest $t -q --color=no -p no:cacheprovider 2>&1 | tail -1)"; done</invocation><expect>each line's passed and failed counts EQUAL its AC0 line</expect></criterion>
   <criterion id="AC3" cell_refs="HVST-h-3"><invocation>cd "$(git rev-parse --show-toplevel)" && git diff --name-only "$(git merge-base HEAD SITEZ)" HEAD -- lib/research org/tier1_exec && echo "--- end of forbidden-surface diff" && for f in lib/opal_data_harvest/test_retrieval_provenance.py lib/opal_data_harvest/publishers.py lib/opal_data_harvest/__main__.py; do python -c "import sys;b=open(sys.argv[1],'rb').read();compile(b.decode('utf-8'),sys.argv[1],'exec');print(sys.argv[1],'crlf',b.count(bytes([13,10])),'non_ascii',sum(1 for c in b.decode('utf-8') if ord(c)>127))" $f; done</invocation><expect>NOTHING printed before "--- end of forbidden-surface diff" (store.py and the CRO scripts unchanged since the pin), then three lines each "crlf 0 non_ascii 0"</expect></criterion>
   <criterion id="AC4" cell_refs="HVST-h-3"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/hv3/ac4.py</invocation><expect>"pin_block_lines 7 present_verbatim_in_head True" -- the mention floor's lines at the pin appear verbatim in HEAD</expect></criterion>
@@ -214,7 +228,8 @@ print("pin_block_lines", len(block), "present_verbatim_in_head", found)
 5. Report once. Your report NAMES:
    - the exact `run` flags that `HVST-h-10` must use;
    - the `PAGE_PARAM` table;
-   - the caps.
+   - the caps;
+   - how `HarvestUploader` now groups and retries (item 8), because `HVST-h-10` runs through it.
 
 **MUTATION DISCIPLINE:** snapshot the working-tree bytes to `.scratch/hv3/` first. Never `git checkout --`, `stash` or
 `git show :path`.
