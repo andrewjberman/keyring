@@ -85,6 +85,8 @@ ROUND 30, decomposition s.38 (cut by `2.0.0_SA_COO~Z`), on the CTO's msgs 24314 
 
 <paths>
 lib/research/identity/crosswalk.py
+lib/research/identity/add_security.py
+lib/research/identity/build_universe.py
 lib/research/identity/tests/test_crosswalk_enrich_coverage.py
 lib/research/identity/tests/test_crosswalk_write_validates.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~120/
@@ -94,6 +96,18 @@ org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-120.identity
 
 - A surface not named here is a WALL, including `crosswalk.schema.json` and `registrations.json`. Scratch is
   `<worktree>/.scratch/r120/`.
+- **ISSUER AMENDMENT 1 (2026-09-22, 2.0.0_SA_COO~Z, on your row W120-S1; committed by the issuer before the rebuild):**
+  the write-time check as built fires ONLY from `crosswalk.py`'s `main()`. I measured the call sites myself:
+  `crosswalk.py:1094` passes `document=`, but `add_security.py:180` and `build_universe.py:918` do NOT. **`add_security`
+  is the path rk-113 actually published through**, so the gate misses the very route that would have written a
+  nonconforming served document -- the defect it exists to refuse. So:
+  - `add_security.py` and `build_universe.py` join `<paths>`, and BOTH call sites pass `document=<the document they are
+    about to write>`. Change nothing else in either file;
+  - add ONE arm to `test_crosswalk_write_validates.py` proving a NONCONFORMING document raises through the
+    `add_security` path with 0 S3 writes (stub the client; never a live write), and ONE proving the conforming path
+    still writes;
+  - AC2 becomes "6 passed" (4 + 2), AC3's identity total becomes I0 + 7, and AC4's file list gains the two modules;
+  - W120-S1 is then resolved; file a row that says so and cite this amendment.
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~120 <0.9.0_WK_AMGT_RESAPP~120@opal.agent>" -F <msgfile> -- <paths>`.
 
 ## 4. BOUNDS
@@ -149,7 +163,7 @@ the before/after suite counts.
    review -- the `enriched` denominator key and the `identity` sub-schema's five missing keys.
 3. The two limbs share `crosswalk.py` only through limb (b); limb (a) touches tests only.
 
-<status>complete</status>
+<status>pending</status>
 <round>30</round>
 <slot>~120</slot>
 <fabric>site-z</fabric>
