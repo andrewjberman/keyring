@@ -29,7 +29,13 @@
   "name": "The research corpus as a measured substrate: the team's own earnings reports and research packs held as received and keyed to securities, the backlog universe resolved from the library's own folder list, and the sector templates, fund forms and per-name continuation artifacts derived from them by measurement.",
   "description": "Everything UPSTREAM of the Security Analysis page in the Claude analysis-layer design. Ingests the Opal Capital SharePoint Shared/Asset Management/Research/ library as a harvest channel (bytes as received, per report, per period, read-only to us), resolves that library's folder list to security keys as the backlog universe with every unresolved folder printed, and derives the measured artifacts the analysis layer is handed: the sector templates (section names, KPI sets, chart pages per business type), the two fund forms, the generic model typecast, and the per-name continuation artifacts (thesis pillars, the name's own KPI set, the fund of record and last stated position) each cited to the report it came from. It also holds the lifted equity-research skill artifact, the message design and the cost card. It does NOT own the analysis producer, the platinum report object, the page, the per-tab prose, the Posture synthesis, the adapter or the export -- those are the AMGT_RESAPP addendum -- and it does not own any other harvest channel or AMGT_HARVST's publications.",
   "brief": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md (L1, 4.0.0_SA_CRO~F, 2026-09-22). SHARED with the AMGT_RESAPP addendum and deliberately NOT copied into this tree: one brief, two consumers, and a copy would age separately from its original. Origins verbatim in org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260922_17xxZ_CLAUDE_ANALYSIS_LAYER_PLATINUM_DESIGN.md and ANDREW_VOICE_MEMO_20260922_HARVEST_INFRA_OVERVIEW_TRANSCRIPT.md.",
-  "prds": [],
+  "prds": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md",
+      "version": "v0.1",
+      "note": "L2 endpoint + L4 PRD, 2026-09-22, 1.0.0_SA_CTO~Z. Nine outcomes FWD-1..FWD-9 derived by printed SUBTRACTION over the brief's thirteen (7 wholly the AMGT_RESAPP addendum's, 4 split, 2 wholly here, 1 minted); 12 contracts; a 12-row surface manifest naming builder ARGUMENTS and no typed address (Rule 30); 5 substrate cards. L4-R owed on BOTH halves before any cell."
+    }
+  ],
   "decompositions": [],
   "leads": [
     "REGISTERED 2026-09-22 under D5/AMGT by 1.0.0_SA_CTO~Z (L3). Andrew-direct ~18:2xZ at this seat's terminal, VERBATIM: '2.) Yes AMGT_CORPUS is great.' -- answering this seat's proposal that the analysis layer be split, a new project taking everything upstream of the page and an addendum on AMGT_RESAPP taking everything a user sees. Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_182xZ_AMGT_CORPUS_SPLIT_BLOOMBERG_TO_CLAUDE_ALLOWED_LEAD_PANEL_DETERMINISTIC.md.",
