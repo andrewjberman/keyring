@@ -11729,6 +11729,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC5's <invocation> is `python .scratch/r94/ac5.py`, which the order's own text (section 4/5) composes from build+upload, targeted plan, and HALT_ACK=1 safe-apply -- with no terraform-init step named anywhere in the order.",
     "world_is": "A brand-new linked worktree (per Rule 14b/spine L7, one per worker slot) carries no `.terraform/` directory until `terraform init` runs there once; the order's literal script has no init step and fails cleanly with a named, unambiguous error rather than a silent one.",
     "notes": "Same class as the rk-90/rk-92 rows (W90-S1/S4/S6, W92-S2 finding (2)): a task-order's literal invocation text does not fully match what the live tool/environment needs, discovered and worked around per THE REFUSAL CLAUSE -- run the real remaining commands, grade the substance, and record the gap rather than silently declaring drift. No <paths> file was edited to fix this; only a standard terraform CLI precondition was run."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S216",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T08:50:00Z",
+    "one_line": "After AMGT-rk-94 the PRINT route renders for all 5 model-block names, but it runs 15-17 s WARM against the Lambda's 29 s timeout, and invocations have hit the full 29,000 ms and been cut off: a manager's print can time out and return nothing. The 29 s ceiling is effectively fixed by the HTTP API's integration limit, so the fix is render time, not the timeout.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This seat's direct invokes after rk-94's deploy (CodeSha256 r93CxQqr...): a first sequential pass returned an empty payload (no statusCode) for CAT, CSL and 6861 while BA and COST returned 200 PDFs of ~104 KB; re-invoked individually, CAT 15.5 s 200, CSL 16.8 s 200, 6861 16.7 s 200.",
+        "CloudWatch /aws/lambda/opal-amgt-scoped-api, last hour: REPORT lines at 08:13:32Z and 08:14:30Z with 'Duration: 29000.00 ms ... Status:' (timeout; the string 'Task timed out' does not appear), Max Memory Used 230 MB of 512.",
+        "get-function-configuration: Timeout 29, MemorySize 512, one layer opal-amgt-print-deps:1 (matplotlib)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The print pack is the managers' deliverable for a name and must render when asked.",
+    "world_is": "It renders warm in 15-17 s and can exceed 29 s and time out, returning nothing.",
+    "notes": "ARMED: on the manager-review path, same audience as Z-S215. Likely levers, to be measured before any is chosen: (a) matplotlib builds its font cache under a fresh MPLCONFIGDIR on cold/first render -- ship a prebuilt cache in the layer or set MPLCONFIGDIR to a packaged path; (b) more Lambda memory (CPU scales with memory; 230 of 512 MB used, so the win is CPU, not RAM); (c) cache the rendered PDF per (key, model-block stamp) in S3 and serve it on repeat. Not caused by rk-94 (its change is a sort key); it surfaced because rk-94 made the three names render at all. Routed to 1.0.0_SA_CTO~Z for round 24."
   }
 ]
 ```
