@@ -215,7 +215,7 @@ and the directory line. **MUTATION DISCIPLINE:** snapshot working-tree bytes bef
    `lib/research/identity/{crosswalk.py,add_security.py,tests/test_crosswalk_enrich_coverage.py}` plus org paths; rk-115
    writes only `integrations/bloomberg/research/tests/**`. No file is shared, apart from the append-only channel.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~115</slot>
 <fabric>site-z</fabric>
