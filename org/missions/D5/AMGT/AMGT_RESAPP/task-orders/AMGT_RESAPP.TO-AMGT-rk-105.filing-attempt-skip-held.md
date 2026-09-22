@@ -90,19 +90,36 @@ lines 9-17):
      reason for it, in the docstring.
    - In `state_put_filing_attempt`, when the sha differs (`:281`), `get_object` the existing body. If
      `_filing_attempt_outcome(existing) == _filing_attempt_outcome(new)`, return the receipt with `"skip_held": True`,
-     `"existed": True` and `"put_performed": False`, and SKIP the read-back sha check. Otherwise raise exactly as
-     today. Every receipt carries `"skip_held"` (False on every other path).
+     `"existed": True` and `"put_performed": False`, and SKIP the read-back sha check. Otherwise (a CHANGED
+     outcome) raise a NEW subclass `FilingAttemptChangedError(store.HarvestStoreError)` whose message names the first
+     differing outcome field (e.g. `battery.attempts[1].http_status: 404 -> 200`); still 0 puts. Every receipt carries
+     `"skip_held"` (False on every other path).
+   - **ISSUER AMENDMENT 1 (CTO msg 24221, 2026-09-22 12:31Z, applied before any build):** a CHANGED outcome is
+     CHANGED-HELD, NOT a mid-loop stop -- the CTO's words: "prints CHANGED-HELD <name> with the step outcome that
+     differs; makes 0 puts for that key; continues to the next name; exits NON-ZERO at the end of the run, with a
+     summary count of CHANGED-HELD names. A changed outcome is never silent, and it never blocks another name." The
+     store still REFUSES (the subclass above); the battery CLI (item 3) is what turns the refusal into CHANGED-HELD.
    - A malformed or non-JSON existing body is NOT skipped: raise as today.
 2. `lib/research/filings/fetch.py` `persist`: carry `skip_held` into its returned dict (False on every path that
    does not write state).
 3. `lib/research/filings/battery.py`, the `--write-pool` print in the per-name print block: when
    `receipt.get("skip_held")`, print `SKIP-HELD: s3://opal-data-harvest/<key> (unchanged UNRESOLVED outcome; held
    object kept)` INSTEAD of the `OK: uploaded` line. Every other line stays byte-identical.
+   - **AMENDMENT 1:** in `battery.main`, for EVERY name (N == 1 and N > 1), catch `FilingAttemptChangedError` around
+     that name's pool write only, print `CHANGED-HELD: <security_key> <the differing field from the message>`, and
+     continue to the next name. Every other exception propagates as today. At the end of the run, if any name was
+     CHANGED-HELD, print `CHANGED-HELD SUMMARY: <k> name(s)` and return exit code 2; otherwise the return value is
+     unchanged. A run with no changed outcome prints byte-identically to today.
 4. New `lib/research/harvest/tests/test_filing_attempt_skip_held.py`, using a stub S3 client that enforces
    `IfNoneMatch`, stores `document-sha256` metadata, and counts `put_object`, `head_object` and `get_object` calls:
    - `test_unchanged_outcome_different_timestamp_is_skip_held`: 0 successful puts on the second call, and
      `skip_held` True.
-   - `test_changed_outcome_still_raises`: a different attempt `http_status` raises `HarvestStoreError`.
+   - `test_changed_outcome_still_raises`: a different attempt `http_status` raises `FilingAttemptChangedError` (a
+     `HarvestStoreError` subclass), with 0 puts.
+   - `test_battery_changed_outcome_is_changed_held_nonzero_exit` (AMENDMENT 1): a stubbed `run_battery` over 3 names,
+     the middle one with a CHANGED outcome against its held object. `battery.main` with `--write-pool` prints
+     `CHANGED-HELD` for the middle name naming the differing field, reaches the THIRD name, records 0 successful puts
+     for the middle key, prints `CHANGED-HELD SUMMARY: 1 name(s)`, and returns 2.
    - `test_reason_counter_drift_is_unchanged`: only a digit inside a `reason` differs, and the result is SKIP-HELD.
    - `test_first_write_unchanged`: an absent key gives 1 put and `skip_held` False.
    - `test_malformed_existing_body_raises`.
@@ -189,8 +206,8 @@ for f in sorted(out):
 
 <proof_of_spec>
   <criterion id="AC0" cell_refs="AMGT-rk-105"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r105/ac0.py && python -m pytest lib/research/harvest/tests -q -p no:cacheprovider 2>&1 | tail -1 && python -m pytest lib/research/filings/tests -q -p no:cacheprovider 2>&1 | tail -1 && python -m pytest lib/research/management/tests -q -p no:cacheprovider 2>&1 | tail -1</invocation><expect>BEFORE any edit: "pin_object commit"; "put_object_count" P0 (measured 1 at the cut); "writer_call_sites" W0 (measured 6 at the cut); two "held" lines, each UNRESOLVED-SOURCE with its attempts count and retrieved_at; then the three suite lines H0 (72), F0 (100) and M0 (95, 13 subtests). Record every value: these are the baselines every later bar is written against. A drifted count is recorded, not a fail</expect></criterion>
-  <criterion id="AC1" cell_refs="AMGT-rk-105"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/harvest/tests/test_filing_attempt_skip_held.py -v -p no:cacheprovider 2>&1 | tail -10</invocation><expect>"6 passed" and 0 failed, with the six named tests PASSED -- including test_battery_three_names_continue_past_skip_held proving the third name is reached with 0 successful puts for the middle key, and test_changed_outcome_still_raises proving a changed outcome is still refused</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rk-105"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/harvest/tests -q -p no:cacheprovider 2>&1 | tail -1</invocation><expect>"N passed" with N = H0 + 6 and 0 failed</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-rk-105"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/harvest/tests/test_filing_attempt_skip_held.py -v -p no:cacheprovider 2>&1 | tail -10</invocation><expect>"7 passed" and 0 failed (AMENDMENT 1: six plus test_battery_changed_outcome_is_changed_held_nonzero_exit), with the seven named tests PASSED -- including test_battery_three_names_continue_past_skip_held proving the third name is reached with 0 successful puts for the middle key, test_changed_outcome_still_raises proving the store still refuses a changed outcome, and the CHANGED-HELD test proving the run continues and returns 2</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rk-105"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/harvest/tests -q -p no:cacheprovider 2>&1 | tail -1</invocation><expect>"N passed" with N = H0 + 7 and 0 failed (AMENDMENT 1)</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-105"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/research/filings/tests -q -p no:cacheprovider 2>&1 | tail -1 && python -m pytest lib/research/management/tests -q -p no:cacheprovider 2>&1 | tail -1</invocation><expect>filings "F0 passed" and management "M0 passed" (with its subtests), each unchanged from AC0 and with 0 failed</expect></criterion>
   <criterion id="AC4" cell_refs="AMGT-rk-105"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r105/ac4.py</invocation><expect>"changed_code_files" lists EXACTLY lib/research/filings/battery.py, lib/research/filings/fetch.py, lib/research/harvest/filings.py and lib/research/harvest/tests/test_filing_attempt_skip_held.py; "put_object_count" equals P0 and "delete_calls 0"; each file "compiles True crlf 0" with non_ascii_chars equal to its value at the pin (0 for the new file)</expect></criterion>
 </proof_of_spec>
@@ -236,7 +253,7 @@ for f in sorted(out):
    - Open for the CTO: should a changed-unresolved outcome also continue, with the loop printing `CHANGED-HELD` and
      keeping the old object? That would need its own ruling, since it serves a stale reason by design.
 
-<status>pending</status>
+<status>complete</status>
 <round>27</round>
 <slot>~105</slot>
 <fabric>site-z</fabric>
