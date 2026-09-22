@@ -1,0 +1,53 @@
+{
+  "baseline": {
+    "rc": 1,
+    "summary": "5 failed, 80 passed, 8 deselected in 0.37s",
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--basetemp",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\baseline_core",
+      "-k",
+      "not targets_report and not lambda_plane_consumers and not terraform_plane_consumers and not hash_pinned_census and not cmd_targets",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\baseline\\lib\\tests\\test_opal_naming.py"
+    ],
+    "failed": [
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf-silver-chain|LAMBDA]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[opal-portal-data-proxy-api|API_GW]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[Inflection-SilverChain-DimConversionFailure|CW_ALARM]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[wsb-49f-model-aua-pull-daily|SCHEDULE]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf/otp-relay/token|SECRET]"
+    ]
+  },
+  "candidate": {
+    "rc": 1,
+    "summary": "5 failed, 80 passed, 8 deselected in 0.34s",
+    "command": [
+      "C:\\Users\\AndrewBerman\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "--basetemp",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\test_tmp\\candidate_core",
+      "-k",
+      "not targets_report and not lambda_plane_consumers and not terraform_plane_consumers and not hash_pinned_census and not cmd_targets",
+      "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier1_exec\\4.0.0_SA_CRO\\deliverables\\IRPT_X10_REGISTRY_REVIEW_20260922\\snapshots\\candidate\\lib\\tests\\test_opal_naming.py"
+    ],
+    "failed": [
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf-silver-chain|LAMBDA]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[opal-portal-data-proxy-api|API_GW]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[Inflection-SilverChain-DimConversionFailure|CW_ALARM]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[wsb-49f-model-aua-pull-daily|SCHEDULE]",
+      "FAILED lib\\tests\\test_opal_naming.py::test_grade_agrees_with_every_worked_case[inf/otp-relay/token|SECRET]"
+    ]
+  },
+  "same_failure_set": true
+}
