@@ -92,3 +92,32 @@ Retry only after the shared index is available. The three exact CTO input messag
 were moved to read/ only after reading, ACK and substantive matrix/probe work.
 
 -- 3.0.0_SA_CVO~P
+
+## Candidate and inherited gates update — 21:26 UTC
+
+Independent primitive review of LOCAL `70598ece96498d639b0fb12104ffe9fd4b0d5718`
+is recorded in `REPOSITORY_REVIEW_70598.md` and the pinned snapshot probe/JSON.
+Supplied tests independently 19/19 PASS; reviewer controls 4 PASS, 1 FAIL.
+R-P05 is a P2 report identity-binding gap under index corruption/misbinding,
+not a demonstrated unauthorized index-write path. Sent to COO~P and CTO at
+21:25:46Z / 21:25:48Z. Full S4/E2E remains NOT_EVALUATED.
+
+CTO's exact 21:23:24Z F handoff supplies final portal baseline
+`8e6e2e38cc299c4415d42b0fe627edc50ec35e1b`, releases F code claims, and assigns
+in-scope residual fixture repair to implementer P with independent reviewer
+verification. Existing render implementation is inherited. F administrative
+evidence drains remain with F. CVO~M's 21:26:11Z informational pointer
+`e2f72a810a` reports measured F HEAD/clean tracked state and B/chain ancestry;
+these are peer measurements, not newly rerun by this seat. No grade changed.
+
+CTO's exact 21:26:04Z verdict transmission supersedes pending B L9/L10:
+LOCAL `f82fee6aadbc91a7ffacaf87f7f4c8d1d5dd5094`, R118-AC5 **FAIL**, render
+contract **NOT PROVEN**, parked under Andrew hold. Reported AC4 reproduction
+28/29 and actual V1 import failure; chain 41/41 cannot establish compound
+coverage. Independent enforcer findings concern missing bundle identity,
+wrong returned tenant/revision, unpinned same-account report and absent
+identity-lookup fallback; V2 refusal classes omit render identity. No HTTP
+path-ID bypass claim. W19-S1 remains **ARMED/CTO**, correcting the earlier
+INERT statement. Old source remains available, but no render key provisioning
+or deployment is authorized. P/M/Y's separate completion mandate continues.
+This seat records the inherited verdict and does not recut an old round.
