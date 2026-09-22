@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~32</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-82` (round 13, v0.13) | **outcome_ref:** FWD-12 | **depends_on:** FE-s-80 | **slot:** ~3 | **rows:** C-S164, W17-S1 | **base:** workspace = the round-13 issuance commit on CLOUD (your worktree branches from it), portal DEV `2d7b2f21` (round 12's close) plus FE-s-80's hardened instrument once drained
 
@@ -98,8 +98,19 @@ band `#0A1733` = `rgb(10, 23, 51)`; hairline `#C4CBDB` = `rgb(196, 203, 219)`.
 <criterion id="F82-AC1" cell_refs="FE-s-82" drives="none"><invocation>cd <WS>/portal && timeout 180 /c/Users/AndrewBerman/.bun/bin/bun run typecheck; echo rc=$?</invocation><expect>rc=0(?![0-9])</expect></criterion>
 `F82-AC1` -- the whole portal typechecks.
 
-<criterion id="F82-AC2" cell_refs="FE-s-82" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~32/f82_breadcrumb_weights.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-style '[data-slot="holdings-breadcrumb"]:last-of-type::font-weight=700' --expect-style '[data-slot="holdings-breadcrumb"]:first-of-type::font-weight!=700'</invocation><expect>ASSERT-STYLE: 2 of 2 met</expect></criterion>
+<criterion id="F82-AC2" cell_refs="FE-s-82" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~32/f82_breadcrumb_weights.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --clicktext 'Models#3' --expect-style 'span[data-slot="holdings-breadcrumb"]::font-weight=700' --expect-style 'button[data-slot="holdings-breadcrumb"]::font-weight!=700'</invocation><expect>ASSERT-STYLE: 2 of 2 met</expect></criterion>
 `F82-AC2` -- the CURRENT (last) breadcrumb segment measures computed weight 700; a LINK (non-current) segment does not -- both assertions on the same capture, positive and negative together.
+
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~32-report, row `IRPT_FNTEND-W32-S1`):** the literal invocation's `--click Holdings` alone lands on the
+ROOT node, whose breadcrumb has exactly ONE segment -- so `:last-of-type` and `:first-of-type` both resolve to that SAME single `<span>`
+(measured: `PASS 700` / `FAIL 700`, `ASSERT-STYLE: 1 of 2 met`, genuinely not 2 of 2). `:last-of-type`/`:first-of-type` are also structurally wrong
+for a global first/last selection -- they scope per parent wrapper, never across the whole breadcrumb. Fix, per the worker's own probe (confirmed
+independently by me, live): add a real drill step, `--clicktext 'Models#3'` (disambiguates from two other elements sharing the text "Models" --
+the CategoryViewTree card and the recharts Legend), reaching a genuinely two-segment breadcrumb; and TAG-qualify the selectors
+(`span[data-slot="holdings-breadcrumb"]` for the current, non-link segment vs. `button[data-slot="holdings-breadcrumb"]` for a link segment,
+matching `DrillTree.tsx`'s actual markup) instead of the never-discriminating pseudo-classes. Re-measured: `PASS 700` / `PASS 400`,
+`ASSERT-STYLE: 2 of 2 met`. Fix 1 itself (`font-semibold` -> `font-bold`) is unchanged and was never in question; only the invocation's drill depth
+and selectors were wrong.
 
 <criterion id="F82-AC3" cell_refs="FE-s-82" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~32/f82_breadcrumb_absent_control.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-frozen.json --expect-style '[data-slot="holdings-breadcrumb"]::font-weight!=700'</invocation><expect>UNMEASURABLE</expect></criterion>
 `F82-AC3` -- ABSENT-SELECTOR CONTROL: against a fixture with no breadcrumb rendered at all, the same inequality reads `UNMEASURABLE`, never a vacuous PASS.
