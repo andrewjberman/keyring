@@ -6,7 +6,7 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
   "last_updated": "2026-09-22T15:2xZ",
@@ -35,12 +35,18 @@
       "note": "L4, 2026-09-22, 1.0.0_SA_CTO~Z. v0.2 answers the v0.1 refusals (CVO R1-R4, CRO re-pin) and Andrew's absolute-only and 2026-backfill words: FWD-1..FWD-9, 14 contracts, 10-row manifest. Paired with AMGT_RESAPP v0.23 (C-ONE-STORE supersession)."
     }
   ],
-  "decompositions": [],
+  "decompositions": [
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v1.0",
+      "note": "L5, 2026-09-22, 2.0.0_SA_COO~Y. Ten cells HVST-h-1..10 over manifest H1-H10; chain A (nine cells, serial) and chain B (the timeline design spec); cut from PRD v0.2 @9102ccfe81 ADMITTED."
+    }
+  ],
   "leads": [
     "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
   ],
-  "phase": "L4 PRD v0.1 written; L4-R sign-off owed (3.0.0_SA_CVO~Z ratified text, 4.0.0_SA_CRO~Z brief half).",
-  "blocking": "L4-R on v0.2 (3.0.0_SA_CVO~Z ratified text, 4.0.0_SA_CRO~Z brief half). Then the PRD and briefing go to 2.0.0_SA_COO~Y, which Andrew is spawning himself (record 150xZ).",
+  "phase": "L5 decomposition v1.0 written by 2.0.0_SA_COO~Y from PRD v0.2 (ADMITTED); L6 issuance next.",
+  "blocking": null,
   "threads": [],
   "thread_counter": 0
 }
