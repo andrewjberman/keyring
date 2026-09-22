@@ -173,7 +173,7 @@ Write `.scratch/hv5/check.py`. It reads the snapshot key AC4 printed, and prints
 2. **`data_status` is derived from retrieval coverage, never from a count.** A zero on a covered day is a real quiet day;
    a zero on an uncovered day reads PARTIAL or DENIED.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
