@@ -4491,3 +4491,71 @@ fanout:
   wave_1: [rk-98, rk-99]            # both spawn at once; no pair, no word
   no_fleet_run: true
 ```
+
+## 34. ROUND 26 -- FROM THE CTO'S ROUND-25 ANALYSIS @`04f518851d` (`1.0.0_SA_CTO~Z`, msg 24204) AS AMENDED BY msg 24207
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 25 closed 2 of 2 (ADJUDICATION_v27 @`62f8927df9`, 12/0/0, no rows). The analysis
+named two code-only cells: (a) `--no-analyze` and (b) a per-run ticker-table memo.
+
+Before the cut, the COO read the call paths and withdrew its own packet's s.3 claim that "a 3-name run hands the ticker
+table to the writer 3 times" (msg 24206):
+- `_sec_ticker_table` has one caller (`battery.py:665`, step 1);
+- `run_battery` has one production caller (the battery CLI, single `--security-key`);
+- `batch.py` never reaches the ticker table (its `run_group` takes `fetch.build_source_object`'s EDGAR-by-CIK path);
+- and CSL and 6861 carry no CIK, so B2 runs through the BATTERY, not batch.
+
+The CTO ruled (msg 24207):
+- **(b) option (i):** the battery CLI's `--security-key` becomes repeatable, so one process runs N names with ONE
+  ticker fetch passed down `run_battery`. A 3-name stub run reads fetch count 1, and a single-name run is
+  byte-identical to today.
+- **(a) re-aimed:** read whether `run_battery` reaches any model call; if not, the battery half is a recorded
+  negative; `batch.py` gets the flag regardless.
+
+**Round 26 is TWO cells, issued in ONE commit with this section.**
+
+### 34a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| --no-analyze | `AMGT-rk-100` | ~100 | none | `batch.run_group(..., no_analyze=False)`: with True, a RESOLVED group skips `analyze_source`, `build_drafting_document` and `write_outputs` and returns `FETCHED` results carrying the accession. `batch.main --no-analyze` (default off) prints a `BATCH DONE (--no-analyze): ... 0 model calls ...` line; without it every line is today's. THE BATTERY HALF IS A MEASURED NEGATIVE (below), also held as a test: a fresh-interpreter `import battery` does not load `analyze`. 6 arms, filings 86 -> 92, test_batch 11 unchanged | none (code only; msgs 24204, 24207) |
+| battery multi-name + ticker memo | `AMGT-rk-101` | ~101 | none | `battery.TickerTableMemo`: one fetch per process, success AND a fetch failure cached, a sink error propagates. `run_battery(..., ticker_memo=None)` feeds step 1, with the default None being today's per-call path. `main --security-key` becomes repeatable. N == 1 is byte-identical (AC3: pinned module vs new, controlled at the cut: 1119 = 1119 bytes, 1 fetch each). N > 1 refuses the four single-security options, resolves keys up front from the crosswalk, runs the names in order with a `BATTERY NAME i of n` header and one `BATTERY DONE` footer, and an UNRESOLVED name does not stop the others. 8 arms, filings 86 -> 94, test_battery 22 unchanged | none (code only; msgs 24204, 24207) |
+
+### 34b. SURFACE CENSUS (measured at the cut, `04f518851d`; `lib/` byte-identical to `8dd72465b6`)
+
+- **THE BATTERY NEGATIVE (msg 24207: "the grep denominator and 0 callers go on the record face").**
+  - Instrument: an AST read, of import nodes and call targets, over the 6 modules `run_battery` reaches:
+    `filings/battery.py` 1363 lines, `fetch.py` 576, `document.py` 1009, `passages.py` 230,
+    `identity/crosswalk.py` 1008, `bloomberg/mcp/blp_client.py` 363 -- 4,549 lines.
+  - Pattern: `analyze_source|\banalyze\b|anthropic|bedrock|invoke_model|openai|messages\.create`.
+  - Result: **0 model imports, 0 model calls, 6 of 6 files.** A text grep would also count battery.py:35's comment
+    mention of `analyze.py`; the AST read does not.
+  - So the battery CLI gets no `--no-analyze` flag. rk-100's AC0 re-measures this, and STOPS with a BLOCKING row
+    (a scope change for the CTO) if it is ever non-zero.
+- **rk-100.**
+  - `batch.py:413` is the one model call on the batch path; `:414` and `:418` are its two dependents.
+  - `test_batch.py:153` pins the default `run_group` signature, which the cell keeps unchanged.
+  - **Pre-existing gap, named, not this cell's:** batch never writes a RESOLVED group's SOURCE object
+    (`write_outputs` writes only `.analysis.json` and the drafting document since AMGT-rk-91), so a batch run lands
+    the filing only as bronze. The battery CLI does write `filing_source` silver (`battery.py:1351`, `fetch.persist`).
+- **rk-101.**
+  - `_sec_ticker_table` call sites: 2 (the def at `:566` and the step-1 call at `:665`).
+  - `run_battery` callers: 1 production (`:1314`) plus 8 in tests. `test_bronze_wiring.py:348` calls a single-name
+    `battery.main` with `--keys-json`, which stays green.
+  - The byte-identity comparator was controlled pinned-vs-pinned at the cut: `single_identical True`.
+- **Files written by more than one cell:** NONE, apart from the append-only channel `INVESTIGATION_v1.md`.
+  - rk-100 writes `lib/research/filings/batch.py` and the NEW `lib/research/filings/tests/test_no_analyze.py`.
+  - rk-101 writes `lib/research/filings/battery.py` and the NEW `lib/research/filings/tests/test_battery_multi.py`.
+  - Each cell names the other's module as a WALL. They share the filings test DIRECTORY but no file in it.
+  - Each order's filings-suite bar holds in its own worktree (86 + 6, 86 + 8); the merged tree reads 86 + 14 = 100.
+- **Neither cell makes a live call:** no network, no Bloomberg, no model, no AWS.
+
+### 34c. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 2                   # rk-100, rk-101 -- one commit
+  chains_total: 2                   # disjoint write surfaces (batch.py vs battery.py)
+  wave_1: [rk-100, rk-101]          # both spawn at once; no pair, no word
+  no_fleet_run: true
+```
