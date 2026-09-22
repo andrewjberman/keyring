@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 5:00 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 5:30 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -12,7 +12,11 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 - Matrix and independent baseline probe @`90579aa057`; Y-B01 reproduces loss of
   six browser fields and changed-input identity collapse in the actual submit
   compute function with synthetic scope/injected sender. No live effects.
-- New-candidate outcomes: 0 PASS, 0 FAIL, 14 NOT_EVALUATED. No completion claim.
+- Integrated criterion outcomes: 0 PASS, 0 FAIL, 14 NOT_EVALUATED. No completion claim.
+- P primitive candidate `70598ece96498d639b0fb12104ffe9fd4b0d5718` reviewed:
+  supplied suite 19/19 PASS; independent boto3 numeric decoding causes 4/4
+  artifact operations to fail. Y-P01 P1 routed to COO~P. See
+  `P_REPOSITORY_REVIEW_70598.md` and its pinned probe/evidence.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -24,7 +28,8 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 ## Pins and write claims
 
 Baseline probe: workspace `db314d4ea0b91fb03457048cc146f7df4bfa7f92`, portal
-`7dd3d067a17ee00b878ecfceff23c557649a2331`. No completed new candidate received.
+`7dd3d067a17ee00b878ecfceff23c557649a2331`. No completed integrated Y candidate
+received; the P primitive candidate above is a bounded dependency review.
 Own writes are restricted to this CVO review directory; no implementation claims.
 Review evidence is on workspace CLOUD using pathspec safe commits. No code
 worktree or shared branch change was needed for review preparation.
@@ -34,8 +39,16 @@ all B write claims released. Exact round-18 L8 compile read. Its 41/41 assertion
 are COO-reported here, not rerun by Y. CVO~B L9/L10 pending. Preserve V3/V2,
 resolve/enforce and R17 identity/mint semantics; item e V1 assembled proof absent,
 item f human path partial behind NETWORK FORBIDDEN, item g deploy IAM untested.
-No key provisioning/deployment follows from this record. F final accepted DEV pin
-and claim release are pending; historical portal baseline is not integrated acceptance.
+No key provisioning/deployment follows from this record. Final F portal HEAD
+`8e6e2e38cc299c4415d42b0fe627edc50ec35e1b` measured with ancestry rc0;
+tracked paths clean, untracked files present. CTO reports all F code claims
+released. B/chain ancestry measured rc0. None establishes integrated acceptance.
+
+IRPT-S7-01 read at `bcd38bba00`: conditional placement still requires canonical
+registration and enforcement before writable destinations, and P retention/expiry
+and least-privilege IAM/IaC before live writes. Y consumes and verifies its writes.
+M amended inheritance pointer `e2f72a810a` and P separate alias finding R-P05
+`b333db1b48` received; neither changes an integrated criterion grade here.
 
 ## Next executable review and dependencies
 
@@ -60,6 +73,6 @@ These are evidence obligations; no specimen is represented as a released report.
 
 No model-side monitor/cron/worker was added. Launcher inbox events resume work.
 Push state LOCAL, no push by this seat. Latest measured origin CLOUD:
-`db314d4ea0b91fb03457048cc146f7df4bfa7f92`.
+`b333db1b4865619909c916741775084396e0b7d1`.
 
 -- 3.0.0_SA_CVO~Y

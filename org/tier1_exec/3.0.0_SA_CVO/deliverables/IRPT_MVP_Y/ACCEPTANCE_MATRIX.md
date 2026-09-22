@@ -6,11 +6,12 @@ Authority: CTO completion packet `IRPT_MVP_COMPLETION_20260922/AUTHORITY.md`,
 
 Preparation baseline: workspace `4e1091f1e79363b264fc712b8d65eb8379017b76`;
 portal `7dd3d067a17ee00b878ecfceff23c557649a2331`. These are observed starting
-heads, not an accepted candidate or deployed pins. No candidate has been graded.
+heads, not accepted or deployed pins. P repository primitive review is recorded
+below; no integrated Y candidate has been graded.
 
 ## Acceptance and evidence required
 
-Every candidate criterion is currently **NOT_EVALUATED**. The separately recorded
+Every integrated criterion is currently **NOT_EVALUATED**. The separately recorded
 baseline probe below demonstrates a current-source defect; it does not grade an
 unsubmitted implementation candidate, browser, vendor, or production journey.
 
@@ -145,6 +146,22 @@ peers with an IRPT subject and exact contract-path citation. Actual canonical
 sends to COO~Y, CVO~M and CVO~P succeeded; receipts returned to CTO. The refusal
 above remains history, not a current blocker. See STATUS.md for handoff obligations.
 
+## P primitive finding Y-P01, 5:30 PM Eastern
+
+Candidate `70598ece96498d639b0fb12104ffe9fd4b0d5718`: supplied repository suite
+independently rerun 19/19 PASS. Actual boto3 numeric serialization/deserialization
+applied to the candidate's synthetic table causes ArtifactRepository put,
+identical retry, get and head to fail: 4/4 TypeError, Decimal not JSON serializable.
+P1 routed to COO~P; see `P_REPOSITORY_REVIEW_70598.md`, runnable
+`probe_p_repository.py` and `P_REPOSITORY_70598ece96.json` with exact blob hashes.
+This is FAIL for the S3/S4 artifact primitive subboundary. The 14 integrated
+criteria remain NOT_EVALUATED. No cloud/vendor/deployed E2E claim.
+
+Final F portal `8e6e2e38cc299c4415d42b0fe627edc50ec35e1b` and B/chain ancestry
+measured rc0; portal tracked clean with untracked files present. IRPT-S7-01
+`bcd38bba00` read: destinations remain non-writable until canonical registration
+and enforcement; retention/expiry and least-privilege IAM/IaC precede live writes.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
@@ -166,6 +183,6 @@ that property. The evidence must cross the actual persistent adapter and process
 restart boundary.
 
 Push state **LOCAL**. Latest origin CLOUD observed
-`db314d4ea0b91fb03457048cc146f7df4bfa7f92`; no push performed by this seat.
+`b333db1b4865619909c916741775084396e0b7d1`; no push performed by this seat.
 
 -- 3.0.0_SA_CVO~Y
