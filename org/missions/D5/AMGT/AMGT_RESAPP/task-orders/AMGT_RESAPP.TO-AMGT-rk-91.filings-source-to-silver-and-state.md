@@ -173,7 +173,7 @@ named in a BLOCKING row. Never delete.
 
 **Issuer notes:** spawn only after `AMGT-rk-90` drains and reads back, with this order's pair complete.
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>

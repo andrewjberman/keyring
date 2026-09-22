@@ -11513,6 +11513,76 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC6's <expect> (as amended, msg 24133): 'policy_sha 0c6b3cf46bdff811 statements 4 UNCHANGED', restating AC2's own quoted digest verbatim.",
     "world_is": "AC6's own <invocation> hashes with `json.dumps(d, sort_keys=True)` (default separators, no compacting) rather than AC2's `separators=(\",\", \":\")` -- a structurally different digest regardless of whether the policy changed; measured 0c6b3cf46bdff811 only when AC2's exact formula is applied to the same object.",
     "notes": "AC6 is graded PASS on the substantive read (plan No changes, CodeSha256 correct, freshness 200, policy independently confirmed unchanged); this row records the formula defect in the criterion text for any future occupant reusing this invocation shape."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W91-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~91",
+    "surfaced_at": "2026-09-22T02:40:00Z",
+    "one_line": "AC0's <invocation> git-greps `-e filings/v1 -e FILINGS_PREFIX -e POOL_PREFIX` over lib/integrations/infra; the POOL_PREFIX term is a substring match that also catches two UNRELATED constants (MODEL_BLOCK_POOL_PREFIX in peers/, POOL_PREFIX in social/collect.py) and the grep also matches prose docstring mentions of the old path -- 5 of the 15 returned production files are not actual readers of filings/v1/*.source.json.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC0's literal invocation (this worktree, HEAD 1b9eb552c3) -> m1_complete True; pair [True, True]; old_prefix_files 15: infra/aws/terraform/harvest/scoped-amgt-api.tf, integrations/bloomberg/research/management_posture_batch.py, lib/research/api/scoped_amgt.py, lib/research/filings/__init__.py, lib/research/filings/analyze.py, lib/research/filings/batch.py, lib/research/filings/drafting_build.py, lib/research/filings/fetch.py, lib/research/management/__init__.py, lib/research/management/batch.py, lib/research/management/enrich.py, lib/research/management/roster.py, lib/research/peers/engine.py, lib/research/peers/universe.py, lib/research/social/collect.py.",
+        "`git grep -n -e filings/v1 -e FILINGS_PREFIX -e POOL_PREFIX -- lib/research/peers/engine.py lib/research/peers/universe.py lib/research/social/collect.py` -> matches only `MODEL_BLOCK_POOL_PREFIX` (peers/universe.py:82,311,317; peers/engine.py:154) and `POOL_PREFIX = \"social/v1/_measurement/\"` (social/collect.py:473,495,1161) -- zero literal `filings/v1` occurrences in any of the three; these are a different feature's prefix constant entirely, matched only by the substring `POOL_PREFIX`.",
+        "`sed -n '1,15p' lib/research/filings/__init__.py` and `lib/research/management/__init__.py` -> both hits are module-docstring prose describing fetch.py's / roster.py's interface (\"filings/v1/<security_key>/<accession>.source.json\"), not executable reads or writes; fetch.py and roster.py themselves are already in section 1's reader/writer list.",
+        "`git grep -n FILINGS_PREFIX -- lib integrations infra` -> every genuine definition/usage of the FILINGS_PREFIX constant (management_posture_batch.py:49,100; scoped_amgt.py:1945,1959; management/batch.py:110; roster.py:99,1043,1112,1159) is in a file already named in section 1's reader/writer list; the terraform hit (scoped-amgt-api.tf:123, the literal `\"filings/v1/\",` resource argument) is the IAM file this order's own step 4 modifies."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Substance graded PASS: every genuine reader/writer the census could find is already in section 1's list, and the terraform hit is the IAM file this order itself edits. The 5 extra hits are proven non-readers (unrelated constant substring, or docstring prose) by direct inspection, so AC0's BLOCKING-row condition ('any other file is a STOP') does not fire; proceeding to AC1 without a STOP.",
+    "spec_asserts": "AC0's <expect>: 'every production file listed is in section 1's reader/writer list (or names only .analysis.json) -- any other file is a STOP with a BLOCKING row before any edit'.",
+    "world_is": "The literal grep formula (`-e POOL_PREFIX`) is overbroad by substring match against an unrelated constant name in two other modules, and by matching descriptive docstring text in two package __init__.py files that are not readers themselves; the file this order's own text anticipated editing (scoped-amgt-api.tf) also appears in the raw count, which the <expect> clause did not carve out explicitly.",
+    "notes": "Not blocking. Same class as the rk-90 formula-defect rows (W90-S1/S4/S6): a task-order invocation's literal formula is broader than its substantive question. No <paths> or code edit made by this row; it only grounds the AC0 STOP decision before any live act."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W91-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~91",
+    "surfaced_at": "2026-09-22T03:40:00Z",
+    "one_line": "The order's ruled reader switch for scoped_amgt.py's _read_filing_source_object ('the adapter's read grant swapped') did not name that the NEW address must be computed WITHOUT importing lib.research.harvest.store -- store.py imports pyarrow at module scope, and the adapter's own build script (build-and-upload-scoped-amgt.sh) vendors a transitive AST closure of lib.research/lib.opal_data_harvest modules plus exactly ONE non-pure wheel (rpds_py); pyarrow is not pinned. My first cut of the switch imported store.py for its entity_partition/address_of helpers and would have raised ModuleNotFoundError on the first UNRESOLVED-name Thesis-bundle request post-redeploy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh` (this worktree, HEAD) -- docstring: 'CLOSURE_ROOTS = (\"lib.research\", \"lib.opal_data_harvest\") ... ONE non-pure wheel is admitted: rpds_py for the function's own platform ... Any other non-pure wheel is refused.'",
+        "`lib/research/harvest/store.py:27-28` (this worktree) -> `import pyarrow as pa` / `import pyarrow.parquet as pq`, both at MODULE SCOPE (unconditional on any import of the module, function-scope caller or not).",
+        "Fixed at commit 5b6f111c55 (this worktree): `_read_filing_source_object` now addresses through `lib.opal_naming` (pure stdlib) + `crosswalk.security_key_partition` (already imported at scoped_amgt.py module scope, pure stdlib) -- never `lib.research.harvest.store`. Verified the computed URI is byte-identical to `store.address_of`'s own output for the same inputs; `lib/research/api/tests` (full) + `lib/research/harvest/tests/test_m2_move.py` -> 197 passed."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Caught and fixed before any build or apply, by reading the build script's own docstring rather than by its isolated-runtime check failing after upload. No live act was taken with the risky import in place -- the never-widen pair's adapter redeploy step (4b) had not yet run when this was found.",
+    "spec_asserts": "Section 1 RULED item 3 / the never-widen COO half's ACT step 2: 'SWITCH every reader and writer of filings/v1/*.source.json ... in one commit' -- silent on WHICH modules the new address may import.",
+    "world_is": "The adapter Lambda's deployable closure is a walked AST closure with exactly one admitted non-pure wheel; a reader switch that imports a module carrying an unvendored compiled dependency at module scope is a request-time (or, if imported eagerly, cold-start) break the closure walk's own FATAL/missing accounting is built to catch -- but only at BUILD time, after the code is already written the risky way.",
+    "notes": "General lesson for any future switch touching this adapter: prefer lib.opal_naming + crosswalk directly over lib.research.harvest.store for address-only needs; reserve the store import for code that actually reads/writes silver (which genuinely needs pyarrow) and runs OFF the adapter (the harvest box, the local batch)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W91-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~91",
+    "surfaced_at": "2026-09-22T04:05:00Z",
+    "one_line": "A REAL live 500 was served by opal-amgt-scoped-api for a short window after the redeploy that fixed W91-S2's pyarrow-avoidance: the FIX ITSELF (lib.opal_naming, called directly to avoid store.py) is ALSO outside the adapter's vendored closure (CLOSURE_ROOTS names only lib.research/lib.opal_data_harvest; lib.opal_naming is a bare top-level module matching neither) -- ModuleNotFoundError on every /thesis invoke, measured live via CloudWatch, for the three validation names and any other request landing in that window. This is the SAME class rk-90's own row W90-S3 hit independently (build_view.py -> lib.opal_naming) -- a recurring hazard on this one adapter's closure boundary, not a one-off.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch `/aws/lambda/opal-amgt-scoped-api` (live read, this worktree) -- 4 consecutive invocations (RequestIds 35363efd-a521-4ac8-8c5b-0ad05467e2bf, b3194251-a50a-451c-bcc0-2a1ec65268c9, 2b2691d8-d033-4bb4-9432-f6b7aaa629ac, c5666035-1d0b-4fda-8a82-4c3bb5a74c89) each logging 'ERROR: unhandled exception in opal-amgt-scoped-api ... type=ModuleNotFoundError detail=No module named lib.opal_naming', all within the window between the first M2 redeploy (CodeSha256 ZZ4/pEXNhyac9SISWHJLzbMK06w1MTGA67rZCfeBw0s=) and the second (vsWWFL9jRKHbQb9WP7x2Ob1Qv02nQpAOJkPcQk8/nkA=).",
+        "`filter_log_events` over the 15 minutes surrounding this window found 0 INVOKE events from any OTHER caller besides this worker's own diagnostic invokes -- EXPOSURE-vs-INCIDENT (CLAUDE.md Rule 22's negative mirror): the defect fired (4 real 500s, this worker's own probes), but no third-party/portal traffic is measured to have hit it.",
+        "Fixed at commit ce16181ffb (this worktree): FILING_ATTEMPT_STATE_PREFIX, a hand-typed constant (mirroring MODEL_BLOCK_POOL_PREFIX, the file's own existing precedent for this exact constraint) + the already-imported crosswalk.security_key_partition + pool_reader.POOL_BUCKET -- no import outside the vendored closure. Rebuilt (VERIFY: missing [] both scopes), redeployed (CodeSha256 vsWWFL9jRKHbQb9WP7x2Ob1Qv02nQpAOJkPcQk8/nkA=), re-invoked: all three validation names 200, management_status/roster_status match the pre-existing persisted documents (as_of 2026-09-19, untouched by this move)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Fixed same-turn, redeployed, re-verified 200 on all three validation names before this order's AC6/AC7/AC8 were graded. Measured EXPOSURE-that-fired (4 real 500s) but no evidence of third-party traffic in the window -- an INCIDENT by the letter (it fired) with no measured blast beyond this worker's own probes.",
+    "spec_asserts": "AC6's <expect>: 'a direct invoke of the thesis leaf for CSL_AU_Equity, 6861_JP_Equity and CAT_US_Equity returns 200 ... after 4(b)' -- implicitly assuming the FIRST post-redeploy invoke succeeds.",
+    "world_is": "The first post-4(b) invoke for all three names was a 500 (ModuleNotFoundError), not a 200 -- because the reader-switch fix itself (S2's own remedy) used a module outside the adapter's build closure, a hazard identical in KIND to S2's but in a DIFFERENT module (lib.opal_naming, not lib.research.harvest.store) and not caught before the live act this time, only after.",
+    "notes": "Recurs across TWO task orders on the SAME adapter (rk-90's W90-S3, build_view.py; this row, scoped_amgt.py directly) -- both times lib.opal_naming specifically. A standing lesson for this adapter, not filed as a fix to the build script itself (out of this order's <paths>): any NEW code path in lib.research.api.scoped_amgt.py or anything it imports needs either (a) a module already inside CLOSURE_ROOTS (lib.research.*, lib.opal_data_harvest.*), or (b) pure computation with no cross-tree import, before its first live invoke -- never lib.opal_naming or lib.research.harvest.store directly."
   }
 ]
 ```
