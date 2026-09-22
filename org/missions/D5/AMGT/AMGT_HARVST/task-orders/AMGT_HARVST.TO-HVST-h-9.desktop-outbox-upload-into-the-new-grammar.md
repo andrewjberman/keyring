@@ -72,8 +72,10 @@ duplicated"*.
      - `search_rank` and `search_page` are None, because the legacy run recorded neither.
 
    The command prints ONE JSON receipt:
-   `{"articles_seen", "bronze_put", "bronze_skipped", "silver_rows_written", "silver_rows_unchanged", "links_seen", "links_carried", "errors"}`,
-   where `links_carried` counts (article, security) pairs present in `discovered_for`.
+   `{"articles_seen", "bronze_put", "bronze_skipped", "silver_rows_written", "silver_rows_unchanged", "links_seen", "links_carried", "errors", "bronze_keys"}`,
+   where `links_carried` counts (article, security) pairs present in `discovered_for`, and `bronze_keys` lists the S3
+   key of every article bronze object the run put OR skipped as already held (one per article, so its length equals
+   `articles_seen`). AC6 reads that list.
 2. **A new CLI command `upload-harvest`** runs `HarvestUploader(...).run(max_objects, retrieval_mode=...)` with a
    `--retrieval-mode` flag. It makes the new-grammar uploader reachable; `HVST-h-10` uses it.
 3. **Both commands take `--runtime-root`**, which already exists. No path is hardcoded.
