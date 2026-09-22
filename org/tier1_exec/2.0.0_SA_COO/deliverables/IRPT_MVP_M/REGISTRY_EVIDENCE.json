@@ -1,0 +1,34 @@
+{
+  "baseline_commit": "78a48596640f32d908955941a2c52dbb713235c6",
+  "shared_head_at_check": "06a96c4df7568822d6e67e4afb179bd2afc0d20b",
+  "non_irpt_scopes_equal_baseline_and_shared": true,
+  "shared_library_equal_prechange": true,
+  "baseline_scope_rows": 10,
+  "candidate_scope_rows": 11,
+  "scope_delta": [
+    "irpt PRODUCT; bucket_provisioned=false"
+  ],
+  "policy_file_sha256": "481cc513038b73f5e0444baafea76fc97e3ac9e19624f3f6822fb6f362cacbc3",
+  "policy_state": "PENDING_ENFORCEMENT",
+  "destination_runtime_writable": false,
+  "naming_suite_baseline": {
+    "passed": 88,
+    "failed": 5
+  },
+  "naming_suite_candidate": {
+    "passed": 88,
+    "failed": 5
+  },
+  "inherited_failed_cases": [
+    "inf-silver-chain|LAMBDA",
+    "opal-portal-data-proxy-api|API_GW",
+    "Inflection-SilverChain-DimConversionFailure|CW_ALARM",
+    "wsb-49f-model-aua-pull-daily|SCHEDULE",
+    "inf/otp-relay/token|SECRET"
+  ],
+  "targeted_tests_passed": 60,
+  "canonical_registry_refusals": 0,
+  "canonical_registry_warnings": 33,
+  "generated_carriers": "10 outputs in .runtime/naming-irpt-x10; owner reconciliation pending; not copied into source",
+  "acceptance": "candidate only; CRO/builder owner/CVO review outstanding; no provision or deploy"
+}

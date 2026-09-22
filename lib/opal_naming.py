@@ -52,7 +52,7 @@ REGISTRY_DIR = os.path.join(REPO, *REGISTRY_REL.split("/"))
 SCHEMA_PATH = os.path.join(REPO, "org", "standards", "NAMING_SCHEMA.json")
 DIRECTIVES_PATH = os.path.join(REPO, "org", "missions", "DIRECTIVES.yaml")
 REGISTRY_FILES = ("systems.json", "scopes.json", "tiers.json", "exemptions.json", "remediations.json",
-                   "resources.json")
+                   "resources.json", "reporting_policies.json")
 # The resources.json row's fields (LGIC_ENFORCE EN-r-4, PRD v1.2 DEC-1 candidate E13; 1.0.0_SA_CTO ruling 97177):
 # a resource-to-system row fills the {system} placeholder (NAMING_SCHEMA.json grade.placeholder) and, since
 # the 2026-09-21 amendment, overrides a DIFFERENT system the tokens resolve. RES_FIELDS names the closed field
@@ -189,6 +189,12 @@ def load_registry(reg_dir=None, systems_file=None):
     reg = {}
     for fname in REGISTRY_FILES:
         path = systems_file if (fname == "systems.json" and systems_file) else os.path.join(reg_dir, fname)
+        # Older non-reporting packages carry the six original registry files.
+        # Their default homes remain usable; reporting and canonical validation
+        # still refuse a missing policy document through the validator below.
+        if fname == "reporting_policies.json" and not os.path.isfile(path):
+            reg[fname[:-5]] = None
+            continue
         reg[fname[:-5]] = _read_json(path)
     return reg
 
@@ -329,6 +335,11 @@ def validate(reg_dir=None, systems_file=None):
     systems = _systems(reg)
     system_rows = {s.get("key"): s for s in systems}
     tenant_kinds = reg["scopes"].get("tenant_kinds", [])
+
+    try:
+        _validate_reporting_policies(reg)
+    except (ValueError, KeyError, TypeError) as exc:
+        refuse("reporting_policies.json", "policies", str(exc))
 
     # tiers.json
     for tenancy, rule in homes.items():
@@ -1644,6 +1655,125 @@ def address(source, scope, tier, table, partition, object=None):
             raise ValueError("object must be a non-empty ASCII string not starting with '/': %r" % (object,))
         out += "/" + object
     return out
+
+
+def _validate_reporting_policies(reg):
+    """Validate closed, registered placement records without changing tier homes."""
+    doc = reg.get("reporting_policies")
+    if not isinstance(doc, dict) or set(doc) != {"schema_version", "policies"}:
+        raise ValueError("reporting policy document has an invalid field set")
+    if doc["schema_version"] != "reporting-policies-v1" or not isinstance(doc["policies"], list):
+        raise ValueError("unknown reporting policy schema")
+    required = {"policy_id", "policy_revision", "register_id", "register_path", "register_commit",
+                "ruling_commit", "retention_policy_id", "source", "product_scope", "firms", "state",
+                "enforcement_ref", "physical_disposal", "families"}
+    seen = set()
+    for policy in doc["policies"]:
+        if not isinstance(policy, dict) or set(policy) != required:
+            raise ValueError("reporting policy has an invalid field set")
+        revision = policy["policy_revision"]
+        if not isinstance(revision, str) or not _KEY_RE.fullmatch(revision) or revision in seen:
+            raise ValueError("reporting policy revision missing, malformed or duplicated")
+        seen.add(revision)
+        if policy["register_id"] != "X10" or policy["register_path"] != "infra/logic/06_CONFORMANCE_LEDGER.md":
+            raise ValueError("reporting placement requires the canonical X10 carrier")
+        if not isinstance(policy["register_commit"], str) or not re.fullmatch(r"[0-9a-f]{40}", policy["register_commit"]):
+            raise ValueError("reporting register requires an immutable full commit")
+        if policy["state"] not in {"PENDING_ENFORCEMENT", "ACTIVE", "DISABLED"}:
+            raise ValueError("unknown reporting policy state")
+        if policy["state"] == "ACTIVE" and not re.fullmatch(r"[0-9a-f]{40}", policy["enforcement_ref"] or ""):
+            raise ValueError("active policy requires an accepted enforcement commit")
+        if policy["physical_disposal"] != "OPEN":
+            raise ValueError("X10 grants no physical disposal activation")
+        if policy["source"] not in {s["key"] for s in _systems(reg)}:
+            raise ValueError("reporting source is not registered")
+        product = _long_scope(reg, policy["product_scope"], {"PRODUCT"})
+        if not product.get("bucket"):
+            raise ValueError("reporting product bucket is not registered")
+        firms = policy["firms"]
+        if not isinstance(firms, list) or not firms or len(set(firms)) != len(firms):
+            raise ValueError("reporting firms must be a nonempty unique list")
+        for firm in firms:
+            row = _long_scope(reg, firm, {"FIRM"})
+            if row.get("tenant", {}).get("enabled") is not True or row["tenant"].get("kind") != "client":
+                raise ValueError("reporting firm must be an enabled private client")
+        families = policy["families"]
+        if not isinstance(families, dict) or not families:
+            raise ValueError("reporting families are required")
+        tables = set()
+        for family, spec in families.items():
+            if not re.fullmatch(r"[A-Z]+(?:_[A-Z]+)*", family):
+                raise ValueError("malformed reporting family")
+            if not isinstance(spec, dict) or set(spec) != {
+                    "tier", "table", "extension", "unreferenced_days", "accepted_ceiling_days"}:
+                raise ValueError("reporting family metadata has an invalid field set")
+            if spec["tier"] not in {"state", "platinum"} or not re.fullmatch(r"[a-z]+(?:_[a-z]+)*", spec["table"]):
+                raise ValueError("reporting tier/table is not admitted")
+            if spec["table"] in tables:
+                raise ValueError("reporting families must have distinct tables")
+            tables.add(spec["table"])
+            if spec["extension"] not in {"csv", "json", "pdf"}:
+                raise ValueError("reporting content format is not admitted")
+            if spec["tier"] == "platinum" and spec["extension"] != "json":
+                raise ValueError("reporting platinum must be bounded JSON")
+            ceiling, draft = spec["accepted_ceiling_days"], spec["unreferenced_days"]
+            if type(ceiling) is not int or not 0 < ceiling <= 2555:
+                raise ValueError("reporting accepted ceiling must be finite")
+            if draft is None:
+                if spec["tier"] != "platinum":
+                    raise ValueError("only accepted-only platinum may omit an unreferenced lifetime")
+            elif type(draft) is not int or not 0 < draft <= min(30, ceiling):
+                raise ValueError("reporting unreferenced lifetime must be finite")
+
+
+def reporting_policy(policy_revision):
+    """Fresh canonical metadata; pending/disabled records grant no writable address.
+
+    Consumers persist policy_sha256 with their records and require exact equality
+    across producer/reader composition. Never infer activation from an environment
+    flag or the register's documentary grant alone.
+    """
+    reg = load_registry()
+    _validate_reporting_policies(reg)
+    rows = [p for p in reg["reporting_policies"]["policies"] if p["policy_revision"] == policy_revision]
+    if len(rows) != 1:
+        raise ValueError("unknown reporting policy revision")
+    row = rows[0]
+    digest = hashlib.sha256(json.dumps(row, sort_keys=True, separators=(",", ":"),
+                                      allow_nan=False).encode("utf-8")).hexdigest()
+    return {**row, "policy_sha256": digest}
+
+
+def _reporting_destination(policy, firm, family, artifact_id, sha256):
+    reg = load_registry()
+    _long_scope(reg, firm, {"FIRM"})
+    if firm not in policy["firms"] or family not in policy["families"]:
+        raise ValueError("firm or family outside reporting policy")
+    if not isinstance(artifact_id, str) or not re.fullmatch(
+            r"(?:RPT-[0-9a-f]{32}|ART-[0-9a-f]{64}|sel_[0-9a-f]{64})", artifact_id):
+        raise ValueError("reporting artifact requires a server-issued opaque identity")
+    if not isinstance(sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", sha256):
+        raise ValueError("reporting artifact requires an exact content digest")
+    spec = policy["families"][family]
+    prefix = key(policy["source"], firm, spec["tier"], spec["table"], artifact_id)
+    bucket = _long_scope(reg, policy["product_scope"], {"PRODUCT"})["bucket"]
+    return bucket, prefix + "/" + sha256 + "." + spec["extension"]
+
+
+def reporting_destination(firm, family, artifact_id, sha256, *, policy_revision):
+    """The X10-only writer destination; default address() remains unchanged."""
+    policy = reporting_policy(policy_revision)
+    if policy["state"] != "ACTIVE":
+        raise ValueError("reporting policy is not writable: enforcement is pending or disabled")
+    return _reporting_destination(policy, firm, family, artifact_id, sha256)
+
+
+def preview_reporting_destination(firm, family, artifact_id, sha256, *, policy_revision):
+    """Offline review metadata, deliberately not the writer's tuple interface."""
+    policy = reporting_policy(policy_revision)
+    bucket, path = _reporting_destination(policy, firm, family, artifact_id, sha256)
+    return {"writable": False, "bucket": bucket, "key": path,
+            "policy_revision": policy_revision, "policy_sha256": policy["policy_sha256"]}
 
 
 def _kebab(label, value):
