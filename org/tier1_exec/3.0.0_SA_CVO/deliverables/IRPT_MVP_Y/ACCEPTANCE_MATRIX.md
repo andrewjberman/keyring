@@ -140,6 +140,11 @@ Direct coordination attempt to COO~Y was refused by the canonical old L8 gate;
 nothing was delivered. CTO accepted the defect and is implementing the narrow
 P/M/Y correction. Coordination requests have been routed through CTO meanwhile.
 
+**Resolved at 5:00 PM Eastern:** CONTRACT v1.2 @`4688c59ef2` admits exact P/M/Y
+peers with an IRPT subject and exact contract-path citation. Actual canonical
+sends to COO~Y, CVO~M and CVO~P succeeded; receipts returned to CTO. The refusal
+above remains history, not a current blocker. See STATUS.md for handoff obligations.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
