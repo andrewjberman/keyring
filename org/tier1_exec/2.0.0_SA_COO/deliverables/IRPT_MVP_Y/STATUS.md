@@ -194,6 +194,28 @@ No new workers, no push, no deployment or vendor egress.
   custody scope, including current authorization and accepted revision binding.
   Report reopening and durable reload recovery remain unfinished.
 
+## Integration update (23:51Z)
+
+- Portal940333df wires existing getJobStatus for the issued prospect request:
+  serial5second reads,12 maximum while LOADING, manual refresh, cleanup ignores
+  late responses, errors clear old status. No resubmission or browser body cache.
+  13 supplied tests/59assertions and full TypeScript PASS after fixing initial
+  typecheck findings. Actual browser/timer scheduling remains unproved. P/CVO
+  received this exact candidate; P owns the additive history/report-read contract.
+- P was given the actual backend boundary: DynamoAcceptance.get(tenant,id) is an
+  internal consistent record read, not authorization or history. No request-history
+  callable exists. Existing ops sections still route to the status loader; Y must
+  replace that behavior with the agreed retained report lookup during assembly.
+- CVO bridge review1308dd5a64 on c2a01fb3f8:46 supplied/7subtests and11 independent
+  controls PASS, including actual multipart create data, leading-zero CUSIP,
+  cash, shares and exact cents. Caller authorization/retention/checkpoint provenance
+  and mutation fencing remain obligations, not proved by the pure bridge.
+- M final loader/contract9e57397730 inspected:25000accounts,256parts,
+  64selected-part GETs,4MiB per JSON/assembly,64MiB header+parts; at most67
+  application GETs including index/manifest/header. Oversize refuses whole.
+  Raw header still contains full census and requires guarded projection plus
+  before/after current selection checks. No normalized custody adapter delivered.
+
 ## Compiler observations
 
 Earlier candidates and findings (superseded where the current section says so):
