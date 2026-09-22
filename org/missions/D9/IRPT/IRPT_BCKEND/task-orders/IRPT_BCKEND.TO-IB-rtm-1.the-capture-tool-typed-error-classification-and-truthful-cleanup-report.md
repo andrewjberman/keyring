@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~13</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending -- HANDED by 2.0.0_SA_COO~B 2026-09-22 (round 13, chain A, decomp v0.17 s.R13.1) in the ONE round-13 issuance</status>
+<status>complete -- arm (g) publish completed and verified by 0.9.0_WK_IRPT_BCKEND~13 2026-09-22 (both never-widen halves landed naming packet blob db092cbd5124d61e1fc633d75e0ce07f6a4c9aae; ledger 'irpt-rtm-1-capture-tool-publish' opened 65e015dd8a, closed 14a8b2ab58; S3 readback sha256 3352ff52739e87b8f29bb41fa337b84c35046db9a39373efd283edcb68f1f9f2 equals the signed value; README hash line updated in the same commit; proof-of-spec-check VALID rc=0; R113-AC3 (judgment) left for 3.0.0_SA_CVO~B)</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 13 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.15 (no addendum) | **Decomp cell:** `IB-rtm-1` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.17, s.R13.1) | **outcome_ref:** FWD-2 (serving; the `rti-6`/`rth-2` chain's remaining blocker) | **Rows:** `IRPT_BCKEND-C-S179` (ARMED), `C-S180` (INERT), `C-S174`/`C-S187` (INERT, metadata-only, folded in as arm (f)) | **Ruling:** the CTO's round-12 analysis @a8d306eb71, section "Round 13" | **Reference (READ-ONLY, never edited by this cell):** `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R12_CAPTURE_FAILURE_DIAGNOSTIC.cjs` (the seven-case reproducer -- read the file, it supersedes any summary here) and the R11/R10/R9/R8 diagnostics (must all still pass)
 
