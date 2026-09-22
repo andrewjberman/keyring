@@ -283,7 +283,7 @@ retry attempt -- "one object per fetch" read as one per page served; (3) `harves
 required `inner=` argument because the primitive's default transport is not reachable from outside it; the move cell
 passes `serp._bd_transport` there; (4) the stored-answer window is the fetch-date partition; the move cell may widen it.
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~88</slot>
 <fabric>site-z</fabric>

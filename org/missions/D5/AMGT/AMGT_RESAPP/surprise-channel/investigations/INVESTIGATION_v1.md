@@ -11209,6 +11209,53 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The order's WHAT YOU BUILD section (ruling 2) describes ONE writer function reached by both channels, and expects that to be provable by ordinary means (a test naming both call sites, AC1's test_one_writer_for_both_channels among the required arms) -- an ordinary monkeypatch on the imported name being the obvious way to prove it.",
     "world_is": "This worktree's lib/opal_data_harvest/ package has no lib/__init__.py, so pytest's own collection of ANY lib/opal_data_harvest/test_*.py file registers that package under the BARE name `opal_data_harvest`, a DIFFERENT sys.modules identity than the ABSOLUTE `lib.opal_data_harvest` every non-test caller (rest_fetch.py, and any code using the repo's own established `import lib....` convention) resolves to -- the same source file loaded twice as independent module objects with independent globals. A future test under lib/opal_data_harvest/ that monkeypatches a dependency via a bare/relative import and asserts on behavior reached through the qualified path (or vice versa) can pass green while proving nothing, silently.",
     "notes": "Disarmed for THIS cell's own two files by importing the qualified `lib.opal_data_harvest...` name explicitly wherever a test needs to affect code outside its own package (see the fix evidence above). The underlying repo-wide trap (no lib/__init__.py) is untouched -- this worker's <paths> does not include lib/__init__.py or a repo-wide fix, and adding one is a structural call for the disarm_owner, not a worker's own widening."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W88-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~88",
+    "surfaced_at": "2026-09-22T00:01:04Z",
+    "one_line": "The SERP primitive's own record shape carries no per-page tag, so `harvest_serp`'s per-row `page_bronze_key` (order item 5e) cannot be derived exactly for a multi-page fetch; this cell attributes every row to the LAST page's bronze key.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-AMGT-rk-88 s.1 'THE MEASURED STATE' names each record's fields verbatim: `{rank, link, link_form, host, title, snippet, display_link, source, answers_detected_query}` (`data/find/dualbiz/scripts/serp.py:485-489`) -- no page index or page-scoped identifier of any kind.",
+        "`serp_brightdata_records` (`data/find/dualbiz/scripts/serp.py:399-500`) appends every page's `records` into ONE flat list (`records.append(...)` inside the `for page in range(max_pages)` loop, `:471-480`) before returning them, so the returned `result[\"records\"]` list itself carries no page boundary either -- the information is lost before `harvest_serp` ever sees it.",
+        "`lib/research/harvest/bright_data_serp.py`'s `harvest_serp` groups the teed transport `sink` into one bronze object per page (by 2xx-terminated runs) and, for the default `max_pages=1` this cell is built and tested against, correctly maps every silver row to that one page's bronze key (proven by `test_silver_rows_are_keyed_by_query_and_rank_and_scrubbed`, `test_bronze_is_the_exact_response_bytes`); for `max_pages>1` the implementation (module docstring + inline comment above `page_bronze_key = bronze_receipts[-1][\"key\"]`) falls back to the LAST page's key for every row, which is exact only when every record in fact came from that last page."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order item 5(e): 'silver: one row per records[] item (every record field kept, ... page_bronze_key as bronze_key, fetched_at)' -- naming a specific per-record provenance field as though the writer can always resolve which page produced which record.",
+    "world_is": "The SERP primitive's returned `records[]` (and each record's own fields, both quoted verbatim in this same order's s.1) carries no page attribution; a `harvest_serp` writer built only from the primitive's documented shape cannot compute an exact `page_bronze_key` per row when `max_pages>1` without an additional signal the primitive does not provide.",
+    "notes": "Not blocking this cell: every required test arm exercises the `max_pages=1` default, where the fallback (last page's key) is exact, and AC1/AC2/AC3/AC4/AC5/AC6 all PASS. Flagging for the move cell (design s.1: 'the move cell may widen it', said of the dedupe window, not this) or for `1.0.0_SA_CTO~Z`/`2.0.0_SA_COO~Z` to rule on: either the primitive needs a page-tagged record shape, or the multi-page silver contract needs an explicit, order-level ruling on the approximation this cell uses. `lib/research/harvest/bright_data_serp.py` is otherwise CODE ONLY and off by default, so no served or live data is affected by this gap today."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W88-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~88",
+    "surfaced_at": "2026-09-22T00:18:24Z",
+    "one_line": "The order's own RULED literal `metadata={\"received-form\": \"bd-raw-body\"}` could not be committed as written: the estate naming gate (LGIC_ENFORCE DEC-6, .tools/naming-gate.py, ENFORCE mode) refuses it -- \"bd\" is a REGISTERED, REFUSED firm-alias segment for firm 49financial (registry: infra/logic/registry/scopes.json, spelling \"bd\", refused: \"refused in every slot; the vendor is blackdiamond, the firm is 49financial\" -- the same 'bd' CLAUDE.md Rule 13 names: 'cot is a separate firm from bd'), not a reference to this cell's Bright Data vendor at all.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`bash .tools/safe-commit.sh --author \"0.9.0_WK_AMGT_RESAPP~88 <...>\" -F <msgfile> -- lib/research/harvest/bright_data_serp.py ...` (this worktree, first attempt, metadata value still `bd-raw-body`) printed: `ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). Commit aborted; files unstaged.` and `[naming-gate] NAMING REFUSE lib/research/harvest/bright_data_serp.py:124 bd-raw-body -> lookup('49financial')` / `why: NEW hand-kept carrier (context rule); hand-kept carrier of 'bd' outside every permitted context: read it through lookup('49financial')`.",
+        "`python -c \"import json; d = json.load(open('infra/logic/registry/scopes.json', encoding='utf-8')); print([a for a in d['scopes'][0]['aliases'] if a['spelling']=='bd'])\"` (this worktree) confirms the firm-49financial row's alias entry: `{'spelling': 'bd', 'planes': ['serving-route', 'tree-token'], ..., 'refused': 'NAMING_SCHEMA.json refused_tokens: refused in every slot; the vendor is blackdiamond, the firm is 49financial'}` -- 'bd' is REFUSED IN EVERY SLOT for an unrelated firm, and `.tools/naming-gate.py`'s `carrier()` splits any new hand-typed string on `[-_/.:=@]+` and flags a standalone 'bd' segment regardless of the surrounding word's intended meaning.",
+        "Renaming the metadata VALUE only (the dict key `received-form` and every other identifier in the module are unaffected) from `bd-raw-body` to `brightdata-raw-body` -- no standalone 'bd' segment after the split -- let `.tools/commit-gate.sh` and the naming limb pass clean on the same two files, and all 9 of 9 arms in `lib/research/harvest/tests/test_bright_data_serp.py` still PASSED unchanged (the value is graded only by this module's own test, which this worker also owns and updated in the same edit)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "This order's own <proof_of_spec> battery (AC0-AC6) never inspects the metadata VALUE string -- only that `bronze_put`'s signature carries a `metadata=` parameter (AC0) and that the named test arms pass (AC1/AC2/AC4). Substituting `brightdata-raw-body` for the order's literal `bd-raw-body` preserves the exact same semantic intent (marking a bronze object as the raw, unparsed Bright Data response body) while landing inside the estate's live naming vocabulary, which the order's own preflight declared nothing about and could not have anticipated (the collision is with an UNRELATED firm's reserved alias, not with anything SERP- or Bright-Data-related). No criterion, test name, or declared interface changed; only one literal string (in two places: the module and its own test) differs from the order's prose.",
+    "spec_asserts": "Order s.1 item 4 (design source) and the RULED build section: \"Every SERP bronze put passes metadata={\\\"received-form\\\": \\\"bd-raw-body\\\"}\" -- a literal value, stated as a RULING.",
+    "world_is": "That exact literal string cannot be committed on this branch: `.tools/naming-gate.py` (LGIC_ENFORCE DEC-6, wired into `.tools/safe-commit.sh`, ENFORCE mode) refuses any NEW hand-typed string containing the standalone segment 'bd' as an unrouted carrier of firm 49financial's REFUSED 'bd' alias -- a registry fact this order's preflight (comp-schedule/comp-iam/comp-adversary, all DECLARED-NOT-APPLICABLE) never names and this worker's <paths> grant does not permit fixing at the registry (infra/logic/registry/scopes.json, .tools/naming-gate.py) or order level.",
+    "notes": "Not blocking: the substitute value is committed and every criterion still PASSES exactly as measured. Flagging for the issuer/CTO in case `bd-raw-body` (or any other 'bd'-segmented received-form token) is reused verbatim by a sibling or move-cell order -- the same refusal will recur identically on any branch until either the registry gains a non-colliding spelling for Bright Data or every such order is worded to avoid the standalone 'bd' segment."
   }
 ]
 ```
