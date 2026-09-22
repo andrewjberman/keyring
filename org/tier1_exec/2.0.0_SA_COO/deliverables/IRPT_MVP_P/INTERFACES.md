@@ -1,9 +1,10 @@
 # IRPT P shared interfaces - candidate v1
 
-Owner: `2.0.0_SA_COO~P`. Authority: CTO completion CONTRACT v1.1 at `9b99dc12cd`.
+Owner: `2.0.0_SA_COO~P`. Authority: CTO completion CONTRACT v1.2 at `4688c59ef2`.
 Status: proposed producer/consumer agreement, not a deployed interface. 2026-09-22.
 Source baseline: workspace `1ca9d3edfecaeead06ef1286df4354098f0f0885`, portal
-`7dd3d067a17ee00b878ecfceff23c557649a2331`. B/F final integration pins still owed.
+`7dd3d067a17ee00b878ecfceff23c557649a2331`. B final `2506c70874` is included;
+F final integration pin is still owed.
 
 ## Report repository (S4)
 
@@ -13,7 +14,7 @@ job transitions, attempt identities and certification. Publication cannot mark a
 job READY: Y does that only after a successful repository receipt and certification.
 
 ```python
-repository.persist(owner, report_kind, request_ref, report, provenance)
+repository.persist(principal, owner, report_kind, request_ref, report, provenance)
 # -> {report_id, revision, report_kind, sha256, immutable: True}
 repository.get(principal, report_id, revision)
 # -> {ref: <receipt>, report: <unchanged typed document>, provenance: <frozen context>}
@@ -66,6 +67,7 @@ not deployed acceptance.
 
 ```python
 receipt = repository.persist(
+    principal=current_principal,
     owner=resolved_owner,
     report_kind="ANALYSIS",
     request_ref=certified_report["request_ref"],
@@ -82,6 +84,35 @@ Y must retain the report reference in durable job state and pass it to the secti
 reader. P will provide immutable blob persistence primitives alongside the repository
 for Y's frozen input and original PDF; Y retains its own lifecycle semantics.
 
+## Immutable artifacts (S3/S4/S7)
+
+Y requested this seam and agreed the report contract on 2026-09-22 at 21:03 UTC.
+Candidate module is the same `reports/repository.py`; code is isolated in
+`C:/Users/AndrewBerman/Desktop/irpt-mvp-p-20260922`. Commit is currently blocked
+by the repository owned-paths permission list; CTO has the exact refusal.
+
+```python
+artifacts = ArtifactRepository(index, blobs, authorize, registered_families)
+artifacts.put(principal, owner, family, logical_id, data, content_type)
+# -> {artifact_id, family, sha256, version_id, byte_length, content_type, immutable: True}
+artifacts.get(principal, artifact_id)
+# -> {ref: <receipt>, data: <original bytes>}
+artifacts.head(principal, artifact_id)
+# -> <receipt, after reading and verifying accepted version bytes>
+```
+
+The caller supplies a server-resolved owned logical identity, never a bucket or
+key. The configured registered family set and destination callback are mandatory;
+M owns their canonical names. Required purposes are original CSV, normalized
+portfolio, request composition, original vendor PDF and extraction evidence.
+An identical family/owner/logical identity retry must have identical bytes and
+content type. Different bytes conflict; corrections use a new logical identity.
+The conditional `ARTIFACT#` index is separate from report history. A receipt
+exposes object version and digest but no storage address. Retrieval and head
+recheck current ownership before and after reading the exact accepted version.
+Unpublished objects left by interrupted index publication are never discoverable
+through this interface. Storage lifecycle cleanup must respect index references.
+
 ## HTTP and frontend integration (S5)
 
 P integrates `portal/src/api/endpoints/investor-reporting.ts`,
@@ -91,6 +122,16 @@ Each response stays `{contract_version, operation, firm_id, data, status}`;
 `data` is the declared typed report, never `{report, diagnostics}`. Status and
 source dates must survive the browser adapter. Diagnostic coverage belongs in
 declared report/status fields or protected evidence, not a new response wrapper.
+
+P agrees Y's 21:06 UTC candidate prospect extension: retain custody's request_id,
+client_id, account_ids, snapshot_id, variant, comparison_keys and report_title;
+add `input_id` for prospect requests with client_id/snapshot_id null and
+account_ids empty. Exactly one custody or owned prospect basis is required.
+Unknown fields fail visibly; changed content under the same idempotency token
+conflicts. The server resolves owner, selection/input, profile and settings.
+M ownership agreement and paired actual browser/entry proof are still required
+before integration. Y provides the executable patch; P integrates shared schema
+and API adapters. Existing AnalysisReport sections remain unchanged envelope.data.
 
 New report-history HTTP route names and generated contract extensions will be
 published after owner agreement. The Python interface above permits Y's worker
