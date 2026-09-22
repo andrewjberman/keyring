@@ -11752,6 +11752,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The print pack is the managers' deliverable for a name and must render when asked.",
     "world_is": "It renders warm in 15-17 s and can exceed 29 s and time out, returning nothing.",
     "notes": "ARMED: on the manager-review path, same audience as Z-S215. Likely levers, to be measured before any is chosen: (a) matplotlib builds its font cache under a fresh MPLCONFIGDIR on cold/first render -- ship a prebuilt cache in the layer or set MPLCONFIGDIR to a packaged path; (b) more Lambda memory (CPU scales with memory; 230 of 512 MB used, so the win is CPU, not RAM); (c) cache the rendered PDF per (key, model-block stamp) in S3 and serve it on repeat. Not caused by rk-94 (its change is a sort key); it surfaced because rk-94 made the three names render at all. Routed to 1.0.0_SA_CTO~Z for round 24."
+  },
+  {
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T09:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "AMGT_RESAPP-Z-S217",
+    "one_line": "The print-deps layer (opal-amgt-print-deps:1) is built with every compiled .pyc STRIPPED, and /opt is read-only, so every fresh Lambda execution environment recompiles matplotlib, numpy, pillow and fonttools from source on its first print -- a likely LARGE share of the ~10 s cold cost in the first print (Z-S216), bigger than the matplotlib font cache the CTO's lever (a) named.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The rk-97 drafter's read of the layer builder: it strips every .pyc before packaging (its build script, read at 4ecff8064b).",
+        "Local import timing of the same stack (proportions only; different CPU and a slightly different matplotlib): 0.70 s with .pyc vs 1.77-2.13 s without.",
+        "CloudWatch, 8 h: the first print on a fresh environment 22.8-23.9 s vs warm 8.6-13.6 s, with Init Duration only 130-168 ms -- the cold cost is inside the first print."
+      ]
+    },
+    "spec_asserts": "The print pack renders within the Lambda's 29 s ceiling on a cold start.",
+    "world_is": "Each cold start pays a from-source bytecode compile of the plotting stack inside the first print.",
+    "notes": "Per the CTO (msg 24170): a later cell ONLY if rk-97 (memory 512 -> 1769, lever b) misses the cold target (<20 s). The remedy is a new layer version built on Linux with .pyc kept (its own never-widen pair, and a Linux build path the estate may not have)."
+  },
+  {
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-09-22T09:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "1.0.0_SA_CTO~Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "AMGT_RESAPP-Z-S218",
+    "one_line": "The print route runs a pypdf text extraction on EVERY print but returns only the PDF -- the extracted text is discarded -- costing roughly 10-15% of the print's time (0.22-0.40 s locally). Dead work on the served path.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The rk-97 drafter's local phase split over all 5 model-block names: the pypdf text step 0.22-0.40 s beside render+PDF 1.67-2.49 s; the route's response carries the PDF only (scoped_amgt._print_pack, read at 4ecff8064b)."
+      ]
+    },
+    "spec_asserts": "The served path does only the work its response needs.",
+    "world_is": "Every print pays for a text extraction nobody receives.",
+    "notes": "Per the CTO (msg 24170): a latency cell only if rk-97 misses a target, AND in any case carried into chain G's FIRST adapter-touching cell on its own merits (dead work). Any removal must first confirm no caller reads the extracted text (a whole-repo census) and ride the pre-deploy closure check."
   }
 ]
 ```
