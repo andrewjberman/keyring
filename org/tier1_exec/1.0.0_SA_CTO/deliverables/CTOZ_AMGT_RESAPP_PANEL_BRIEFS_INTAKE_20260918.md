@@ -426,9 +426,9 @@ name ONE production-artifact home and move all three there, rather than fixing t
 
 ---
 
-## 4. 2026-09-22 -- Claude for Financial Services (RCN-0011, `4.0.0_SA_CRO~F`), read into this intake
+## 4. 2026-09-22 -- Claude for Financial Services (RCN-0012, `4.0.0_SA_CRO~F`; first announced as RCN-0011, corrected by its author), read into this intake
 
-**Source:** the two briefs committed @`621cecb40a` on branch `cro-f-records` (not yet drained to SITEZ), on Andrew's
+**Source:** the two briefs committed @`621cecb40a` on branch `cro-f-records`, drained to SITEZ @`42c05cd8a8`, on Andrew's
 word at `4.0.0_SA_CRO~F` (record @`c23d5f7dc0`):
 - `org/tier1_exec/4.0.0_SA_CRO/briefs/CLAUDE_FSI_PLUGIN_STRUCTURE_AND_DATA_SHAPES_BRIEF_20260922.md`
 - `org/tier1_exec/4.0.0_SA_CRO/briefs/RESAPP_CLAUDE_FSI_THREADING_PROPOSAL_20260922.md`
