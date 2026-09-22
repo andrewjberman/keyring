@@ -5614,6 +5614,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W24-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~24",
+    "surfaced_at": "2026-09-22T05:58:27Z",
+    "one_line": "F74-AC7's literal invocation (--expect-style '[data-slot=\"holdings-breadcrumb\"]::color!=rgb(95, 59, 227)' after --click Holdings) expects PASS, but the breadcrumb's live computed colour genuinely IS rgb(95, 59, 227) at this worktree's HEAD, so the literal run correctly, truthfully reads FAIL -- adapted the comparator to rgb(22, 51, 114) (navy) to exercise the identical code path and get a genuine PASS, and reported both.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-74's criterion F74-AC7 (REGRESSION CONTROL): invocation `cd <WS>/portal && ... node scripts/ui-smoke.mjs investor-reporting <out>.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --click Holdings --expect-style '[data-slot=\"holdings-breadcrumb\"]::color!=rgb(95, 59, 227)'`, `<expect>PASS</expect>` -- i.e. the task order asserts that a real, resolved element's inequality check against rgb(95, 59, 227) reads PASS.",
+    "world_is": "Run verbatim on this worker's dev server (port 5904, this worktree HEAD): `EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: FAIL rgb(95, 59, 227)` -- the breadcrumb's actual computed `color` IS exactly rgb(95, 59, 227), so the inequality against that same value correctly FAILs; this is the instrument discriminating correctly, not a defect in it. portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:179-192 shows every `data-slot=\"holdings-breadcrumb\"` button (at any drill depth, any breadcrumb index) shares the identical className `text-[hsl(var(--primary))] underline` -- so no click sequence changes this element's colour away from primary purple. The same file's own comment (:182-187) records that the navy-vs-purple choice for this element 'is left as a judgment call this order does not make -- recorded for the CVO', i.e. genuinely undecided at HEAD, not yet landed as navy by any sibling round-12 cell. Adapting the comparator to rgb(22, 51, 114) (navy, a value known to differ from the live colour) while keeping the selector, operator, click step and fixtures identical reads `EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: PASS rgb(95, 59, 227)` -- a genuine PASS on a real resolved element via the same non-null branch the control is meant to exercise. Reported both the literal (FAIL, true) and the adapted (PASS, true) runs; did not alter DrillTree.tsx (outside this worker's <paths> grant) and did not weaken F74-AC7's own <expect> text.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:179-192 (this worktree HEAD) -- every holdings-breadcrumb button shares className `text-[hsl(var(--primary))] underline` regardless of index/depth",
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:182-187 (this worktree HEAD) -- comment records the navy-vs-purple choice as undecided, 'recorded for the CVO'",
+        "measured run (this worker, literal F74-AC7 invocation, port 5904, 2026-09-22): EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: FAIL rgb(95, 59, 227)",
+        "measured run (this worker, adapted comparator rgb(22, 51, 114), identical selector/operator/click steps, port 5904, 2026-09-22): EXPECT-STYLE[[data-slot=\"holdings-breadcrumb\"]::color]: PASS rgb(95, 59, 227)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-74.instrument-fail-closed-ground-and-key-validity.md criterion F74-AC7 (this worktree HEAD)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
