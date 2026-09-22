@@ -46,3 +46,13 @@ Wrote 52 lines to org\missions\D9\IRPT\IRPT_BCKEND\ledger\IRPT_BCKEND_ROUND18_L8
 ```
 
 CTO retains cross-lane governance, dependency resolution, shared-surface adjudication, integrated evidence review and final completion decision. `OVERSIGHT.md` carries the current control record, inherited B/F gates and escalation ownership. This does not restart the held old canonical cycles or replace independent CVO judgments.
+
+## Session open-call adjudication and unresponsive workers
+
+Andrew, direct user channel on 2026-09-22 during the 21:08 UTC blocker review (exact user-message timestamp unavailable), verbatim:
+
+> You have the right to adjudicate any open-call or fork that may arise from the workers in the session. If a worker is unresponsive, alert 0.0.0_AB_MSTR and they will manage the scenario as needed.
+
+CTO adjudicates session worker open calls and forks directly, records the decision and routes it to affected owners. An unresponsive worker is escalated to MSTR for management. This instruction does not itself declare any worker unresponsive, change an independent CVO verdict, or restart the held canonical cycles.
+
+First application: all three P/M/Y COOs encountered the canonical owned-paths guard refusing their directly assigned IRPT backend source paths. CTO measured the refusals and lands separate exact-owner path grants as non-grantee registry grantor. Existing AE permissions are preserved. The grants authorize source commits within the existing contract; they do not authorize deployment, general infrastructure edits, or cross-lane takeover. Each isolated worktree must consume the committed registry correction before retrying its ordinary safe-commit.

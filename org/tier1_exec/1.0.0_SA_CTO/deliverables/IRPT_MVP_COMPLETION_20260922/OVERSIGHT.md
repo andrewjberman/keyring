@@ -9,6 +9,7 @@ Owner: `1.0.0_SA_CTO`. Authority: Andrew's exact instructions in AUTHORITY.md. G
 - Preserve accepted B/F repairs, their independent judgments and source pins. Coordinate shared integration after file owners release claims; do not restart old canonical progression.
 - Receive CVO P/M/Y findings and ensure the matching COO fixes/retests them. A reviewer verdict is never converted into PASS by executive wording.
 - Own final integrated acceptance after all required product/shared criteria are supported at the same candidate/environment. Each lane supplies its own evidence; CTO reconciles the combined system and remaining limitations.
+- Adjudicate any session worker open call or fork under Andrew's subsequent direct delegation recorded in AUTHORITY.md. Alert `0.0.0_AB_MSTR` if a worker is unresponsive; MSTR manages that condition.
 
 COOs coordinate routine same-contract dependencies directly under CONTRACT.md. CTO is the arbiter for ownership exceptions, incompatible semantics, scope/acceptance changes and reserved external actions. Monitoring and follow-through use the canonical inbox-driven runtime. No additional model-side timer, detector or worker fleet has been launched.
 
@@ -38,6 +39,7 @@ All three COOs reported the same excessive startup list. It was corrected canoni
 | G8 | Existing external operating gates and R18-e L9 prerequisite retained | Named implementation owner prepares exact action; CTO routes reserved approval | Do not conflate offline PASS, live authorization, deployment and product completion |
 | G9 | CLOSED repository blocker: bounded guard correction `4688c59ef2`, 54/54 controls; CVO~Y reports actual canonical delivery to COO~Y, CVO~M and CVO~P at 21:00:04/09/11Z with contract citation and no force | CVOs coordinate directly under v1.2; CTO receives unresolved conflicts | Preserve B/F restrictions, identity checks and whole-send refusal for mixed recipients; M/P sender confirmations may supplement Y's actual route proof |
 | G10 | CLOSED blank-output blocker: CVO~Y's same bare router returned output, scoped routed comp-find succeeded; evidence `90579aa057` | CVO~Y resumes independent review | Broad lookup still reached its 90-second budget with rc=1; scoped recovery is not a claim that every query succeeds |
+| G11 | All three COOs reported actual source-commit refusal by the inherited CLOUD_OPS_OR_ETL path rule; CTO independently reproduced it | CTO grantor adds 17 bounded path rules and three exact P/M/Y owner lanes, preserving incumbent permissions | Consume committed registry in isolated worktrees and return actual ordinary safe-commit receipts; PATH_GRANT_EVIDENCE.json records positive/negative controls. No source-commit grant lifts deployment or B/F integration gates |
 
 The code/evidence state owned by each lane lives in its separate `IRPT_MVP_P/M/Y` deliverables STATUS/INTERFACES/COMPLETION and dated logs. This register is CTO-owned; peers send updates rather than concurrently editing it.
 
