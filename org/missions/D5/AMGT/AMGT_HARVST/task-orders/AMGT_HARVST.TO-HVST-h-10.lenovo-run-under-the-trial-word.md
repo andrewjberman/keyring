@@ -20,8 +20,9 @@ comp-adversary: DECLARED-NOT-APPLICABLE -- a task-order specification, not a pro
   `.tools/`, every EXISTING path in section 3, and `lib/opal_data_harvest/test_retrieval_provenance.py` exist.
   - That last file is the predecessor's. If it is absent, STOP with a BLOCKING row.
 - Every Bash call begins `export OPAL_AGENT_SERIAL=0.9.0_WK_AMGT_HARVST~10;`.
-- **NEVER RUN AN INSTALL. NEVER EDIT CODE IN THIS CELL.** It runs what `HVST-h-1`, `HVST-h-2`, `HVST-h-9` and `HVST-h-3`
-  built, and a defect found in it is a row, never a patch.
+- **NEVER RUN AN INSTALL.**
+- **PHASE 0 EDITS CODE; PHASE 1 DOES NOT.** See THE TWO PHASES below. Outside Phase 0's three named files, a defect
+  found is a row, never a patch.
 
 ## 1. THE CELL, inlined in full -- `HVST-h-10` (manifest row H10; outcomes FWD-1, FWD-2, FWD-3, and FWD-9 for Lenovo)
 
@@ -41,7 +42,8 @@ through the entire pipeline. Let's do every single thing for Lenovo and use that
   recorded UNRESOLVED with its reason."*
 
 **THE ONE-RUN RULE, which binds every step below:**
-- You make exactly ONE live harvester run: one `run` invocation covering all five publishers.
+- You make exactly ONE live harvester run IN PHASE 1: one `run` invocation covering all five publishers, under the
+  grant quoted below. **Phase 0 makes NO network call at all.**
 - **If a publisher fails inside it** (logged out, challenged, throttled, rejected), that publisher is recorded UNRESOLVED
   with the run's own status. **You do NOT run it again.** Re-spending the word is Andrew's call.
 - **If the invocation itself crashes before any vendor call,** re-invoking is allowed. Prove "before any vendor call"
@@ -57,7 +59,34 @@ the desktop runtime is dated **2026-09-15**, about **7.6 days** old (23 files; n
   `auth_verdicts`, so a wasted leg is legible and Andrew can decide whether to re-spend.
 - Do NOT attempt a browser sign-in, a session repair or a credential entry. That is an operator act, not yours.
 
-**THE ORDER OF ACTS:**
+**THE GRANT THIS ORDER NOW RUNS UNDER** -- `1.0.0_SA_CTO~Z` msg 24390, records @`c5f33fe8a3`, carrying Andrew's word
+**"granted"** for a second Lenovo publications run, under his session grant, VERBATIM: *"you have egress as needed for
+the duration of this session, furthermore you have adjudication ability for any and all open calls you encounter for
+the duration of this session as it pertains to AMGT projects."*
+- **The granted bound, verbatim from that message:** *"one further publications run for `992_HK_Equity` covering
+  Bloomberg.com, FT, WSJ, Barron's, plus a Seeking Alpha pass that persists the received bytes."*
+- **It is conditioned on ONE thing, and that condition is physics, not permission:** *"fix and VERIFY the CLI harvest
+  wiring first ... A run fired before that lands nothing, which is exactly what the first one did."*
+- **The quota word is UNREPEALED** (Andrew ~13:0xZ, *"we want to be sensitive about our data quota"*): this act prints
+  its SIZING BEFORE it fires and its SPEND AFTER.
+- **The first attempt is on the record:** its SA leg fetched 21 Lenovo articles, 6 rejected, 31 http events, and
+  NOTHING reached bronze or silver because harvest mode never engaged. Those 21 exist as normalised records with no
+  as-received bytes, so FWD-1's byte-for-byte bar needs THIS pass's SA leg to persist bytes.
+
+**THE TWO PHASES, AND THE ISSUER CHECKPOINT BETWEEN THEM:**
+- **PHASE 0 -- CODE, NO NETWORK.** Fix the CLI harvest wiring (row `AMGT_HARVST-Z-W10-S2`): `__main__.py` must build
+  and pass a `harvest_client` so `Worker`'s harvest path is reachable, and `--harvest-grammar` must actually turn it
+  on. Measured at HEAD: `harvest_client` appears 9 times in `worker.py` and **0** times in `__main__.py`.
+  - Also fix row `AMGT_HARVST-Z-W10-S1`: `--bbg-symbol-probe` must run INSIDE a five-publisher run, not instead of it.
+  - Add the two arms AC7 names to `lib/opal_data_harvest/test_retrieval_provenance.py`.
+  - **You may edit ONLY these three files:** `lib/opal_data_harvest/__main__.py`, `lib/opal_data_harvest/worker.py`,
+    `lib/opal_data_harvest/test_retrieval_provenance.py`.
+- **THE ISSUER CHECKPOINT.** When AC7 and AC8 pass, **COMMIT, then STOP and REPORT. Do NOT fire the run.**
+  `2.0.0_SA_COO~Y` verifies the wiring on its own instruments and continues you for Phase 1. **Firing Phase 1 before
+  that continuation violates this order**, because a build defect would waste a granted word a second time.
+- **PHASE 1 -- THE RUN.** Only on the issuer's continuation, then the acts below in order.
+
+**THE ORDER OF ACTS (PHASE 1):**
 1. **Resolve Lenovo.**
    - Look for `992_HK_Equity` in the universe file named by `config.json` `universe_source`. If it is present, use
      that record.
@@ -121,13 +150,21 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-h-10.lenovo-run
   Commit only files in your deliverables folder, the channel and this order.
 
 ## 4. BOUNDS
-- **Vendor egress ONLY in item 4, ONCE.** S3 only under `opal-data-harvest`, through the harvester's writers.
+- **Vendor egress ONLY in PHASE 1's item 4, ONCE, and only after the issuer continues you.** S3 only under
+  `opal-data-harvest`, through the harvester's writers.
+- **NEVER bound the live run with `timeout`.** The first attempt died exactly that way: a `timeout 590` killed a
+  healthy SA job mid-flight and spent the word for nothing. The live run is NOT a bounded criterion invocation.
 - **A refused S3 PUT is a BLOCKING row.** Never hand-type a key, and never use another bucket.
 - **A publisher returning ZERO Lenovo articles is a RESULT, not a failure.** Record it with the stop reason.
 - **Out of scope:** non-English press (the PRD's s.2). A Chinese-language result is recorded, never translated.
 - **Surprise rows:** `AMGT_HARVST-Z-W10-S<k>`, with `disarm_owner` `2.0.0_SA_COO~Y`.
 
 ## 5. PROOF OF SPEC (each invocation LITERAL; timeout 600 -- the live run is item 4 of section 1, NOT a criterion invocation)
+
+Write `.scratch/hv10/ac8.py`. It reads `lib/opal_data_harvest/__main__.py` and `lib/opal_data_harvest/worker.py` as
+text and prints `main_harvest_client <n>`, `worker_harvest_client <n>` and
+`probe_returns_before_worker_run <bool>` (True only if the run handler's `bbg_symbol_probe` branch returns before it
+calls `Worker.run`).
 
 Write `.scratch/hv10/verify.py`. It reads your deliverables folder's run records and the outbox rows of THIS run from the
 main runtime's `progress.sqlite3`, opened read-only. It then prints:
@@ -142,7 +179,9 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
   <criterion id="AC3" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "import json;r=json.load(open('org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/second_run.summary.json',encoding='utf-8'));print('same_utc_date',r['same_utc_date'],'http_events',r['http_events'],'network_refused_hits',r['network_refused_hits'],'status',r['status'])"</invocation><expect>"same_utc_date True http_events 0 network_refused_hits 0" -- the second same-day run fetched nothing we hold (FWD-3), proven with the network refused</expect></criterion>
   <criterion id="AC4" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -c "import json;r=json.load(open('org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/first_run.summary.json',encoding='utf-8'));print('live_run_invocations',r['live_run_invocations'],'bbg_symbol_probe',r['bbg_symbol_probe_verdict'])"</invocation><expect>"live_run_invocations 1" and bbg_symbol_probe either ADOPTED or UNRESOLVED -- the word spent exactly once and the probe tried once</expect></criterion>
   <criterion id="AC5" cell_refs="HVST-h-10" judgment="true"/>
-  <criterion id="AC6" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && git status --porcelain -- lib org/tier1_exec && git diff --name-only "$(git merge-base HEAD SITEZ)" HEAD -- lib org/tier1_exec && echo "--- end"</invocation><expect>NOTHING printed before "--- end" -- no code or CRO script was touched in the working tree or committed on this branch since it forked from SITEZ</expect></criterion>
+  <criterion id="AC6" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && git diff --name-only "$(git merge-base HEAD SITEZ)" HEAD -- lib org/tier1_exec && git status --porcelain -- lib org/tier1_exec && echo "--- end"</invocation><expect>before "--- end", ONLY the three Phase 0 files (lib/opal_data_harvest/__main__.py, lib/opal_data_harvest/worker.py, lib/opal_data_harvest/test_retrieval_provenance.py), nothing else under lib, and nothing at all under org/tier1_exec</expect></criterion>
+  <criterion id="AC7" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_retrieval_provenance.py -v --color=no -p no:cacheprovider 2>&1 | tail -20</invocation><expect>"15 passed" and no "failed" -- the thirteen arms already present plus test_cli_run_wires_harvest_client (the CLI run path supplies a non-None harvest_client when --harvest-grammar is passed, and None when it is not) and test_bbg_symbol_probe_runs_inside_a_five_publisher_run</expect></criterion>
+  <criterion id="AC8" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/hv10/ac8.py</invocation><expect>"main_harvest_client" at least 1 (it was 0 at the first attempt), "worker_harvest_client" at least 9, and "probe_returns_before_worker_run False"</expect></criterion>
 </proof_of_spec>
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR.**
@@ -157,10 +196,13 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
 ## 6. WHEN YOU ARE DONE
 1. Write the instance to
    `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/AMGT_HARVST.TO-HVST-h-10.lenovo-run-under-the-trial-word.proof_of_spec.json`.
-2. Grade with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6`, which must return rc 0. The id
-   list names EVERY row the instance carries, the judgment row AC5 included: the checker's coverage frame refuses a list
-   that omits a carried row (row `AMGT_HARVST-Z-W8-S2`).
-3. Flip to `complete` only if every mechanical criterion (AC1, AC2, AC3, AC4, AC6) passes.
+2. Grade with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6,AC7,AC8`, which must return
+   rc 0. The id list names EVERY row the instance carries, the judgment row AC5 included: the checker's coverage
+   frame refuses a list that omits a carried row (row `AMGT_HARVST-Z-W8-S2`).
+   - **At the ISSUER CHECKPOINT** (end of Phase 0), write the instance with AC7 and AC8 recorded and no Phase 1 rows,
+     grade `AC7,AC8` to rc 0, commit, and report. The full grading above applies at the END of Phase 1.
+3. Flip to `complete` only if every mechanical criterion (AC1, AC2, AC3, AC4, AC6, AC7, AC8) passes, and NEVER at the
+   checkpoint.
 4. Commit with `--only`.
 5. Report once, with the `RUN_REPORT.md` stage-9 line verbatim.
 
