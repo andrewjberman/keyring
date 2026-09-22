@@ -1,0 +1,15 @@
+# Bounded account-tree publication
+
+The read-only actual 49F build contained 127,925 nodes across 5,917 account roots: **98,451,490 bytes** of canonical snapshot JSON. It failed economics reconciliation and was not published. This measured shape nevertheless demonstrated that a single 4 MiB full-firm JSON object cannot serve the source population.
+
+Large output now uses `irpt-holdings-manifest-v2`: a bounded header and deterministic account-tree parts under the same canonical date/content-revision namespace. Gold remains a complete Parquet history object. Small output retains the v1 manifest and reader. Every part retains whole account trees, uses a version/hash/length-pinned reference, and must be verified before the conditional acceptance index advances. Trees with duplicate IDs, cycles, missing parents or a non-account root refuse. The manifest's complete account census must match the header and every loaded part.
+
+The actual HTTP Entry supplies its **server-resolved retained selection** to the reader. It reads only the parts intersecting that set, keeps only the complete selected account trees, then runs the existing guarded projector to recompute selected totals and remove all other firm header details. The original global revision and custody/overlay clocks remain identified. Fresh grants and post-read revocation still apply. There is no partial successful truncation.
+
+Each Platinum JSON object is at most 4 MiB; the packing target is 1 MiB. The selected assembled document is bounded at 4 MiB, with at most 64 MiB of part bytes retrieved for one request. A single account tree or selection exceeding these limits refuses; pagination for such unusually large selections is not implemented. Full-firm load of a large publication is deliberately unavailable through this bounded reader. This is a reader capability limit, not a claim that all client selections fit.
+
+Pure layout evaluation on the unreconciled real 49F input produced **95 parts**, maximum **1,048,576 bytes**, plus a **185,159-byte header**, preserving all **5,917** roots. No S3 artifact was written. This is shape evidence only, not acceptance of its economics, freshness, full custody population or source basis.
+
+Tests extend actual land -> reader -> guarded Entry with partitioned output, selected-only part access, corrupt-part refusal, failed part verification preserving the prior index and oversized selection refusing whole. The independent v1 review remains `c462d8b4df` for `62139c3a1a`; it does not cover this new v2 candidate. P's package/IAM candidate `0fb7e56629` is separately attributed and not deployed.
+
+The source receipt bundle can optionally be bound to the snapshot revision and retained in the manifest. The Gold caller's actual input-capture/historical-cutoff patch remains separate and naming-gate-blocked under CTO ruling `f1c95444ce`; this publication delta does not bypass that gate. The runner's canonical primary-home correction and three-firm caller tests remain with that separate patch. Full M1/M4/M7 and accepted Y custody normalization remain open.
