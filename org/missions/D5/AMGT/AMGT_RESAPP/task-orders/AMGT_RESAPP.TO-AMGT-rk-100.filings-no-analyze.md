@@ -248,7 +248,7 @@ naming AC0's battery-negative line, the suite counts before and after, and AC4's
    CTO; the battery CLI does write it (`battery.py:1351`, `fetch.persist`).
 3. **Pin:** `04f518851d`. Re-pin to the issuance commit if s.34 moves anything under `lib/`.
 
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~100</slot>
 <fabric>site-z</fabric>
