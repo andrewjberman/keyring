@@ -60,9 +60,44 @@ No new workers, no push, no deployment or vendor egress.
 - Acceptance completed: none. New-candidate Y1-Y7/S1-S7 NOT_EVALUATED. Normalizer
   is a partial implementation, not an assembled or deployed journey.
 
+## Current integration and review evidence (23:00Z)
+
+- Source HEAD acc55a4c727e3919f2a972072191e423b81200e7 links retained uploads:
+  normalized input depends on original CSV; explicit-refresh original depends on
+  prior normalized input. P retained composition aa1cfaea6b consumed as
+  8d830640c6004543242c28f173b845aae568e402. Five new consumer controls, seventeen
+  existing upload controls and nine retained repository controls: 31 PASS plus
+  eleven subtests; gate 2/2. Earliest dependency expiry and unchanged retry
+  reservation verified with actual Y/P code and offline storage/clock doubles.
+  No policy activation, accepted promotion chain, runtime or server concurrency proof.
+- Independent CVO Y-C01 closed a6b3ad204b; retained-inventory Y-C02 closed
+  a4a45470eb on 3a1256a074. P coverage schema beecb3395a consumed via84da42eced;
+  complete-fragment schema test bfe5a33e17: 27 publication/schema tests PASS.
+  Explicit lineage review 2e044175c1: seventeen supplied and nine independent
+  controls PASS. Shared portal 9b871431 is P-reported only, not yet consumed by Y.
+- Exact Decimal upload/create repair386f2e1b495f629f4e53584566fd6a2aa2eae0cd:
+  nineteen supplied controls PASS, gate3/3, existing offline generation suite exit0.
+  CVO Y-D01 independently closed e91d9de9d7 with seven independent controls:
+  exact large cents, one cent, high-precision fractions and reordered security/cash
+  survive JSON checkpoint and actual multipart numeric serialization.
+- FencedReportIndex6cacc808879dc9f8c5a01e18eca6a9ff38d94e7a requires durable worker
+  dependency2acea1aeca400c19bfdfcbd94fba01f121ac67ee. Initial handoff omitted that pin;
+  P consumed both and reports thirteen controls PASS. CVO9d33387734:
+  thirteen supplied and eight independent Stubber controls PASS, no raw fallback.
+  Real P repository/fenced-index runtime, server expression, lease crossing and
+  accepted-row recovery remain unproven. Successful transaction cannot be rolled
+  back by a subsequent local lease refusal.
+- P reports R-P08 history accumulated-reference final-release gap onaa1cfaea6b;
+  its repair is pending consumption. Do not treat current repository history as
+  independently closed. M security/pricing/profile/comparison adapters and accepted
+  immutable custody source remain delivery gaps (latest M notice22:42:50Z).
+- No new Y1-Y7/S1-S7 acceptance, READY, live/vendor, deployment or render grade.
+  Remaining local work: request composition retention; actual worker publication;
+  runtime composition with maintained M adapters; inherited F/P UI integration.
+
 ## Compiler observations
 
-Latest candidates and findings (2026-09-22, local only):
+Earlier candidates and findings (superseded where the current section says so):
 
 - Upload replay repair `9da7d87f99`: thirteen consumer tests PASS. CVO Y-U01 closed
   unchanged source/price mutation probe in `6401215f60`. Explicit lineage/refresh

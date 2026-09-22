@@ -340,4 +340,42 @@ unlocated records, unit conflicts and denominators. Omission or mutation refuses
 EXTRACTION_INVENTORY_BINDING; evidence carries source_inventory_sha256. This is a
 pure local verification against original bytes, not a current-source/vendor refresh.
 Fifteen actual-PDF tests PASS, gate 2/2; independent unchanged omission retest
-requested. Use this pin rather than bcfbd380a1 for further publication composition.
+closed Y-C02 in a4a45470eb. Use this pin rather than bcfbd380a1 for publication.
+
+## Retained inputs and fenced publication handoff (23:00Z)
+
+P coverage schema beecb3395a is consumed via84da42eced. Complete source fragment
+validation bfe5a33e17 passes with the actual P schema (27 publication/schema tests).
+The earlier proposed coverage shape is now accepted source schema. P portal
+9b871431 is reported available; Y has not consumed or verified it.
+
+Y acc55a4c727e3919f2a972072191e423b81200e7 requires P retained composition
+aa1cfaea6b063acac5fc974d397d6a278daa17a0. Runtime must supply its enforced
+ArtifactRepository to UploadService. ORIGINAL_CSV has empty dependencies for a
+fresh upload, or the prior normalized artifact's retention_ref for explicit
+refresh. NORMALIZED_PORTFOLIO depends on the original artifact's retention_ref.
+Missing retained references refuse in an enforced composition. Legacy unretained
+repositories remain an offline test seam, never a runtime enforcement substitute.
+Five new actual Y/P consumer controls verify inherited earliest expiry,
+unchanged retry lifetime, expired-parent refusal before storage, pending-policy
+refusal and expiry during read. Combined31 PASS plus11subtests. Acceptance
+promotion must traverse the same DAG oldest roots first; this is still unwired.
+Canonical P policy remains PENDING_ENFORCEMENT; no activation is implied.
+
+FencedReportIndex6cacc808879dc9f8c5a01e18eca6a9ff38d94e7a depends on
+2acea1aeca400c19bfdfcbd94fba01f121ac67ee. Both files are under
+infra/aws/lambda/investor-reporting/ycharts/generate/. Construct with trusted
+P-derived report_id and current DynamoGenerationStore, then pass as report_index
+to build_retained_repositories. Artifact repository retains its ordinary index.
+The adapter's transaction checks exact job/composition/fence/worker/expiry and
+CERTIFYING while conditionally putting P's unchanged report-index item. Reads
+recheck the fence before and after; conditional recovery preserves the prior
+receipt for P byte verification. User history uses P current-access enforcement,
+not the worker adapter. CVO9d33387734 supplies bounded Stubber review only.
+P R-P08 history final-release repair must be consumed and retested before claiming
+history access/expiry closure.
+
+Decimal recipe/transport386f2e1b49 keeps uploaded dollar text exact, verifies
+echo using Decimal and serializes create weightings as exact JSON numbers after
+checkpoint. CVO Y-D01 closed e91d9de9d7:19 supplied and7 independent PASS.
+No session/vendor invocation or complete worker/READY claim follows.
