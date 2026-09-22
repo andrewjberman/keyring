@@ -145,7 +145,7 @@ snapshot, and prints:
    reading under which "merged across gaps" means anything; the reading is stated so the CTO can amend it.
 2. **The lead tie-break is fixed,** so a rebuild cannot change a headline.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>
