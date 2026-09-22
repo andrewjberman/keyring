@@ -4621,3 +4621,81 @@ fanout:
   wave_1: [rk-105, rk-106]          # both spawn at once; no pair, no word
   no_fleet_run: true
 ```
+
+## 36. ROUND 28 -- THE LENOVO TRIAL, WAVE 0 (PRD v0.22 s.12 ADMITTED @`d0597e7e0a`; CTO msgs 24257, 24261)
+
+**Cut by `2.0.0_SA_COO~Z`.** Andrew-direct ~13:5xZ (record @`cd0cca7f46`): *"Let's try one sample first, let's run Lenovo
+through the entire pipeline. Let's do every single thing for Lenovo and use that as the trial."* PRD v0.22 s.12 makes
+`992_HK_Equity` the ONE validation name. The trial plan (`.scratch/r28_lenovo/PLAN.md`) runs in 6 waves.
+
+Wave 0 is the CODE-ONLY precursors that need no vendor word and no live write. The CTO ruled Q1-Q6 (msg 24261):
+- Q2 (currency: label, convert nothing) lands inside this round, so L-0d joins.
+- Q6 moves L-0f (the officer section) to wave 3, after L-FIL's crawl cache.
+- Stage 3 is the issuer's own site only (msg 24257). The HKEX regulator row is an OPEN ITEM for the trial report.
+
+Round 28 is SIX cells, issued in ONE commit with this section. None needs a pair; none makes a live call.
+
+### 36a. THE MAPPING
+
+| cell | id | slot | chain | serves (PRD s.12) | co-sign |
+|---|---|---|---|---|---|
+| L-0a | `AMGT-rk-107` | ~107 | none | Preconditions / Language (Z-S221): `document.detect_language` distinguishes de/fr/it/es/nl/pt/sv/da from en by a stopword test; plus the C-S386 one-liner (the CHANGED-HELD length text names attempt counts) | none |
+| L-0b | `AMGT-rk-108` | ~108 | none | stage 1 / Identity first: `add_security.IDENTITY_FIELDS` += COMPOSITE_ID_BB_GLOBAL, ID_BB_GLOBAL, ID_ISIN, ID_SEDOL1, COMPANY_WEB_ADDRESS, recorded in `identity` (the crosswalk copies it wholesale); a field error is recorded, never fatal; `security_key` unchanged | none |
+| L-0c | `AMGT-rk-109` | ~109 | **A1** | Preconditions / Fiscal-year pairing: `stage_derive` uses `fye_join.fiscal_period_join` for a non-December FYE; a price-only ratio goes unresolved; the December path is byte-identical to the pin | none |
+| L-0e | `AMGT-rk-110` | ~110 | none | stage 6 / management: `enrich.domain_for` falls back to `verified_domain_for(source_object)`, at both call sites; `domain_source_for` names the source | none |
+| L-0g | `AMGT-rk-111` | ~111 | none | stage 7/9 SA identity (Z-S219): compare `attributes.companyName`, falling back to `name` with `sa_name_field` recorded | none |
+| L-0d | `AMGT-rk-112` | ~112 | **A2 (after rk-109)** | Preconditions / Currency: `EQY_FUND_CRNCY` requested; every figure carries `currency` and `currency_basis` (reporting / quote / invariant / UNSTATED); the block's `currencies` has `converted: false`; additive keys only | none |
+
+### 36b. SURFACE CENSUS (measured at SITEZ `96cc4dae9d`)
+
+Code write surfaces, and the DISJOINTNESS MATRIX:
+
+| file | 107 | 108 | 109 | 110 | 111 | 112 |
+|---|---|---|---|---|---|---|
+| lib/research/filings/document.py | W | | | | | |
+| lib/research/harvest/filings.py | W | | | | | |
+| lib/research/filings/tests/test_language_latin.py (new) | W | | | | | |
+| lib/research/harvest/tests/test_changed_held_length_text.py (new) | W | | | | | |
+| lib/research/identity/add_security.py | | W | | | | |
+| lib/research/identity/tests/test_identity_figi_fields.py (new) | | W | | | | |
+| integrations/bloomberg/research/model_block_pull.py | | | W | | | **W** |
+| integrations/bloomberg/research/tests/test_stage_derive_fye.py (new) | | | W | | | (read) |
+| lib/research/management/enrich.py | | | | W | | |
+| lib/research/harvest/lusha.py | | | | W | | |
+| lib/research/management/tests/test_domain_verified_fallback.py (new) | | | | W | | |
+| integrations/bloomberg/research/sa_forecast_fallback.py | | | | | W | |
+| integrations/bloomberg/research/tests/test_sa_identity_company_name.py (new) | | | | | W | |
+| integrations/bloomberg/research/tests/test_currency_labels.py (new) | | | | | | W |
+
+- **ONE intersection:** `model_block_pull.py` (rk-109 and rk-112). It is CHAINED: rk-112 spawns after rk-109 drains, on a
+  worktree based on that drain.
+- Every other pair is disjoint. Shared TEST DIRECTORIES carry only distinct NEW files.
+- The shared append-only channel `INVESTIGATION_v1.md` is on every order, as always.
+
+Suite baselines at the pin, one pytest call per directory or file:
+- `lib/research/filings/tests` 100; `lib/research/harvest/tests` 79; `lib/research/identity/tests` 55;
+  `lib/research/management/tests` 95 (13 subtests).
+- `integrations/bloomberg/research/tests` does NOT collect as a directory: 2 pre-existing collection errors, both
+  importing the removed `render_pack.load_model_block`. So per file:
+  - `test_forecast_fallback` 13; `test_vintage_derivation_identity` 4; `test_build_unit_map_classification_split` 3;
+    `test_price_axis_pull` 4; `test_management_posture_batch` 4; `test_pull_consumer_arity` 2;
+  - `test_fye_join` **3 failed / 2 passed** (pre-existing: a retired bucket, NoSuchBucket);
+  - `test_latest_stamp_raw_pair` **1 failed / 5 passed** (pre-existing).
+  - The pre-existing failures are carried as findings, not fixed here.
+
+**Keying rule** (Andrew-direct @`5c20841dd1`): NO cell adds a new dependency on the ticker-derived `security_key`.
+- rk-108 RECORDS the composite FIGI beside it.
+- rk-110's domain comes from the issuer-verified site.
+
+### 36c. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 6                   # rk-107, rk-108, rk-109, rk-110, rk-111, rk-112 -- one commit
+  chains_total: 5                   # {107} {108} {109 -> 112} {110} {111}
+  wave_1: [rk-107, rk-108, rk-109, rk-110, rk-111]   # all at once; no pair, no word
+  wave_2: [rk-112]                  # after rk-109 drains (same file)
+  no_fleet_run: true
+  next_rounds: L-ID (identity pull, pair per CTO Q5) -> L-MB, L-PX, L-FIL, L-SA, L-PUB, L-SOC -> L-ANL (cost cap USD 20, Q1), L-MGMT (one Lusha pass, Q3), L-0f (after L-FIL, Q6) -> readers -> L-PROOF
+```
