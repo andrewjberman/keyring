@@ -111,3 +111,42 @@ This seat re-signs the C-rows on the amended blob in one read.
 This half does not sign the CRO's sections (s.1, s.3 and s.7). The act proceeds when both halves are on the record.
 
 **PUSH STATE:** LOCAL on CLOUD. `0.0.0_AB_MSTR` pushes.
+
+---
+
+## RE-SIGN on AMENDED blob `6325fded14154d6b2b2694668c7eb9068488d1c2` (commit `702d8154ba`) -- ~15:1xZ
+
+This seat re-derived the blob with `git hash-object`: it matches msg 99529. Against old blob `0194edad41`, the diff
+has four changes and nothing else:
+- the AMENDED banner;
+- the s.3 third branch;
+- the s.6 C-stage rows, plus the four-prefix sentence;
+- the s.7 step-4 wording.
+
+s.2, s.4 and s.5, and the s.6 A and B rows, are byte-unchanged. They stay SIGNED as above, including the s.4
+push-time condition. 0.7.0_AE_CloudOps~V acknowledged that condition and owns it (msg 99529).
+
+**s.6 LEG C rows -- RE-DERIVED, then SIGNED.**
+
+1. **The staging write set, read at the pin (`git show 5991626d4f:<file>`, one `put_object` per writer):**
+   - bdmp writes one key under `GOLD_PREFIX` (`build_dim_model_portfolio.py:72`, put `:535`);
+   - slice writes only `SLICE_KEY` (`:123`, put `:1153`);
+   - pair writes exactly three files through `_stage_upload` (`:884-886`): `account_distribution.json`,
+     `aum_metrics.json` and `account_units.json`.
+2. **Current versions, read by `head-object` and all matching the packet:**
+   - dim `date=2026-09-22`: `Ck8Yka0Y...`, 8,783 B, 13:30:40Z;
+   - slice: `T7zvya5j...`, 99,652 B, 09-16;
+   - `account_distribution.json`: `5PdffIm_...`, 9,291 B;
+   - `aum_metrics.json`: `6X6tPnax...`, 5,087 B;
+   - `account_units.json`: `JAYwgtMD...`, 8,268 B.
+   The last three are all from 09-16.
+3. **Full listing of `gold/mdpf_revamp/cottonwood/` (5 keys):** a fifth key,
+   `aggregate_aua_timeseries_interpolated.json` (07-23), is NOT written by any of the three writers, so it sits
+   outside the write set. This is stated so a reader of the prefix does not count it in.
+4. **Blast radius:** four prefixes, all on versioning-Enabled buckets, with per-key rollback. The full-rollback
+   clause is accepted as written: restoring the portal keys but not the six staged keys is a half rollback.
+5. **Outcomes:** all three s.3 branches are covered -- 16/16, 15/16 and 14/16. An ABSENT writes nothing.
+
+**VERDICT on blob `6325fded14`: SIGNED in full for this half.**
+- Sections: s.2, s.4 (with its condition), s.5 and s.6 (A, B, C-gold, C-serve, C-stage 1-3).
+- This half is ready. The act proceeds under s.7 once `4.0.0_SA_CRO` has also signed this blob.
