@@ -106,6 +106,18 @@ org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-114.crosswal
     a stub crosswalk with one ENRICH row and validate it against the schema, the same way `test_add_security.py`
     already validates. It must pass, and it must FAIL against the pre-amendment schema (state that control);
   - change nothing else.
+- **ISSUER AMENDMENT 2 (2026-09-22, 2.0.0_SA_COO~Z, on row W114-S4; committed by the issuer before the rebuild; within
+  the CTO's ruling msg 24314 that a served crosswalk failing its own schema must not be published):** the records'
+  `identity` sub-schema is `additionalProperties: false` with 9 properties, and `add_security._build_identity` (rk-108)
+  emits 14. The 5 keys it does not admit are `composite_figi`, `figi`, `isin`, `sedol` and `website`. Lenovo's REAL
+  identity from rk-113 carries all 5, so rk-113 would still publish a nonconforming document. So:
+  - add those 5 to `identity.properties` as `{"type": ["string", "null"]}`, NOT in `required` (the 7 existing
+    registered identities lack them and must stay valid). Change nothing else;
+  - `test_enriched_document_validates_against_schema` must validate an identity built by the REAL
+    `add_security._build_identity` from a stub sec_data carrying all 5 fields, NOT a schema-conformant hand stub.
+    Keep the control against the pre-amendment schema, which must FAIL. Add a second assertion that the pre-rk-114
+    identity shape (the 9 keys only) still validates;
+  - AC1 stays 7 arms (the arm is strengthened, not added); AC2 stays I0 + 7.
 - A surface not named in `<paths>` is a WALL (including `registrations.json`). Scratch is `<worktree>/.scratch/r114/`.
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~114 <0.9.0_WK_AMGT_RESAPP~114@opal.agent>" -F <msgfile> -- <paths>`.
 
@@ -168,7 +180,7 @@ working-tree bytes before editing; never `git checkout --`, `git stash` or `git 
 every future registration, not only Lenovo's. `registered` keeps its meaning (appended rows); `enriched` is new and
 appears only when n > 0, so the served 09-19 document's bytes are reproducible.
 
-<status>complete</status>
+<status>pending</status>
 <round>29</round>
 <slot>~114</slot>
 <fabric>site-z</fabric>
