@@ -4,7 +4,55 @@ Owner: `2.0.0_SA_COO~P`. Authority: CTO completion CONTRACT v1.2 at `4688c59ef2`
 Status: proposed producer/consumer agreement, not a deployed interface. 2026-09-22.
 Source baseline: workspace `1ca9d3edfecaeead06ef1286df4354098f0f0885`, portal
 `7dd3d067a17ee00b878ecfceff23c557649a2331`. B final `2506c70874` is included;
-F final integration pin is still owed.
+F final baseline `8e6e2e38` has been consumed; current composed portal is `52786a7a`.
+
+## Current additive interfaces - 22:50 UTC
+
+Backend `aa1cfaea6b` adds `reports/composition.py`:
+
+```python
+stores = build_retained_repositories(table, s3, authorize, validate,
+    reporting_policy=M_reporting_policy,
+    reporting_destination=M_reporting_destination,
+    report_index=Y_generation_fenced_index, clock=server_clock)
+stores.artifacts.put(principal, owner, family, logical_id, data, content_type,
+                     retention_dependencies=[retention_ref, ...])
+stores.reports.persist(principal, owner, kind, request_ref, report, provenance,
+                      retention_dependencies=[accepted_retention_ref, ...])
+stores.retention.promote(principal, retention_ref)
+```
+
+The factory returns `artifacts`, `reports`, `retention`. Artifact receipts include
+`retention_ref`; refs come from verified retained artifact receipts, never browser
+claims. Draft dependencies may be live reservations and cap the new draft at the
+earliest original deadline. Promotion requires sources already accepted: promote
+the source DAG from oldest roots, while every reservation is still live. Missing
+timely completion receipts stay non-serving across retries/restarts. Outputs keep
+the earliest dependency ceiling. No operation renews creation time.
+
+Refresh ORIGINAL_CSV depends on the prior owned normalized artifact; the new
+NORMALIZED_PORTFOLIO depends on its original CSV, carrying prior lineage transitively.
+Y owns those call sites and current-input access checks. They are not yet wired.
+Report publication additionally requires Y's exact job-fence/composition/lease
+ConditionCheck and immutable report-index Put transaction; pre/post Python checks
+alone are not that atomic guarantee. There is no unfenced transaction fallback.
+Canonical registry remains pending; this factory is not an activation claim.
+
+Portal `61983ce9` exposes `createSelection(req: CreateSelectionRequest)` returning
+`SelectedAccountsWire`. Request is exactly generated `{scope_kind, scope_ids}`;
+response retains producer snake_case. `IrScopeRef.accountSetId` is separate from
+`scopeFingerprint`; live custody calls refuse its absence. `directory_revision`
+is cache context, not a fabricated report source revision. M header integration
+is now composed at `52786a7a`.
+
+Analysis schema `beecb3395a` adds optional `undated_sections` and
+`extraction_coverage` to documents/response slices. Coverage vocabulary is
+`source-verified-partial-v1`, `PINNED_CENSUS`, `PARTIAL|COMPLETE_FOR_CENSUS`, explicit
+scalar/chart/disclosure counts and typed gaps. No whole-PDF percentage is valid.
+Portal `9b871431` carries and renders these fields. Upload wire agreement adds
+optional `supersedes_input_id` only with an explicit new action/token; hidden
+retries preserve the complete prior body/token. Y source `318e140fb9` is consumed,
+but the shared browser upload schema/action path remains pending.
 
 ## Report repository (S4)
 

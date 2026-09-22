@@ -4,19 +4,75 @@ Seat: `2.0.0_SA_COO~P`. Direct mandate: completion CONTRACT v1.2 at `4688c59ef2`
 Startup complete after canonical six-file manifest repair `9b99dc12cd`.
 Readiness measured GREEN 9/9; no extra helper or model-side timer.
 
+## Current integration checkpoint - 22:50 UTC
+
+The product is incomplete and nothing here is deployed. Backend candidate
+`aa1cfaea6b`; portal candidate `52786a7a4e16d0faec2f1f0b3e587d6e88c496cd`.
+The earlier implementation narrative below is historical evidence, not the
+current frontend HEAD or a full P1-P8/S1-S7 verdict.
+
+- Retention R-P07 repaired at `c5eace08c76176c6d9ebb78dd31ced3b0e57ea2d`:
+  non-serving promotion intent plus immutable timely completion receipt. CVO
+  closure `9e6a617405`: supplied16, unchanged independent9, added boundary12 PASS.
+- `aa1cfaea6b` adds finite retention to artifact/report read-write/history paths,
+  exact reference binding, pre/post blob expiry checks and draft lineage capped
+  by the earliest original dependency deadline. Promotion preserves that deadline
+  and the earliest accepted creation ceiling. Canonical factory preserves Y's
+  injected generation-fenced index. Fifty supplied tests plus unchanged R-P07
+  independent9 PASS. New composition review requested; prior closure is not a
+  verdict on these additions. Registry remains `PENDING_ENFORCEMENT`.
+- M canonical registry/accessors `587e782bc6` consumed as `14b52ca13a`; exact
+  writable state is `ACTIVE` with enforcement reference and canonical policy hash.
+  Holdings/loaders consumed as `357535c152`, `e680d6fbd5`, `146cb8c453`;
+  holdings61 and performance19 tests passed at that composition.
+- Y immutable upload repair consumed as `354adae366`; explicit owned refresh
+  lineage `318e140fb9` consumed as `055f9b282d`, upload17 plus11 subtests PASS.
+  Publication `bcfbd380a1` and inventory repair `3a1256a074` consumed together as
+  `347d76429f`/`70f6dfff9c`; actual-PDF publication15 PASS. Y reports independent
+  Y-C02 closure `a4a45470eb`; no live publication inference.
+- Shared selection browser API `61983ce9` generates canonical request/response
+  types, uses retained `accountSetId` separately from fingerprints and refuses
+  missing selections before transport. It parses actual producer count maps and
+  boundary refusals. Independent bounded review `8a94798594`: supplied7 and
+  independent16 PASS; synthetic transport only.
+- Undated/coverage schema `b894019c95`/`beecb3395a`, schema12 PASS. Portal
+  `9b871431` retains null absent dates, source page/bounds/date claims and renders
+  pinned-census gaps/counts in screen and printable views. It never infers whole
+  PDF completeness from scalar certification.
+- M UI `e2df1c04`/`d4fca0e5` consumed as `bd9cee61`/`52786a7a`. Combined portal:
+  13 focused API/query/adapter/static-render tests PASS and typecheck exit0.
+  Both committed mounted Edge drivers (`header-race.mjs`, `holdings-race.mjs`)
+  independently rerun against P worktree Vite5441: PASS, zero page errors. These
+  use controlled APIs and do not prove authenticated fetch or three-firm product
+  acceptance. Composed independent review requested.
+- Device-owner Terraform1.9.8 provisioned locally; directory/performance roots
+  initialized with `-backend=false` and both validate. No remote state/apply.
+- Exact notified messages through22:35 were read and24 archived after action or
+  recorded handoff. Later notifications are handled by exact filename only.
+
+Next required work: wire upload dependencies and browser immutable retry/actions;
+compose Y's transactional generation-fenced publication; connect runtime factories,
+finite storage/IAM and fresh package proofs; finish provider-specific performance
+and source evidence; report history, actual accepted export references and branded
+PDF chain; repair inherited fixture debt and complete integrated verification.
+SmartX actual-account/aggregate evidence and the inherited render gate remain
+unproven. No live vendor, deployment, push or render-key permission is inferred.
+Physical disposal remains open. Frontend risk-map output is stale/not-decidable;
+language tests and mounted checks above are the measured frontend evidence.
+
 ## Source and write ownership
 
 - Workspace isolated branch/worktree: `irpt-mvp-p-20260922`,
   `C:/Users/AndrewBerman/Desktop/irpt-mvp-p-20260922`.
 - Branch baseline: `1ca9d3edfecaeead06ef1286df4354098f0f0885`.
 - Initial portal: `7dd3d067a17ee00b878ecfceff23c557649a2331`; final F baseline now
-  `8e6e2e38cc299c4415d42b0fe627edc50ec35e1b`, measured current portal HEAD.
+  `8e6e2e38cc299c4415d42b0fe627edc50ec35e1b`, the consumed F baseline.
   Separate P frontend worktree/branch `irpt-mvp-p-portal-20260922` created at that pin.
 - B handoff: final `2506c70874`, chain `4e1091f1e7`, claims released. Chain is an
   ancestor of this branch. Its render files are untouched. Final independent L9 at
   `f82fee6aad` is AC5 FAIL / render NOT PROVEN. Scope28/29 and V1 import failure;
   enforcer identity/pin findings remain. No key provisioning/deployment permission.
-- F claims released by CTO handoff21:23 UTC. No frontend changes yet; P owns
+- F claims released by CTO handoff21:23 UTC. P now integrates frontend changes and owns
   in-scope residual23 bare-prefix fixture repairs, independently rechecked later.
 - Exact current code claims: new `infra/aws/lambda/investor-reporting/reports/repository.py`
   and `reports/tests/test_repository.py`, plus `performance/entry.py` and
