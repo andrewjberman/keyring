@@ -12260,6 +12260,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Row S4's world_is: 'the file's existing ENRICH_ROW/ENRICH_IDENTITY stubs, reused literally, do NOT validate against crosswalk.schema.json ... crosswalk.schema.json and add_security.py's real output remain unreconciled for every OTHER caller.'",
     "world_is": "The schema and add_security.py's real output no longer disagree: ISSUER AMENDMENT 2 added the five keys _build_identity actually emits to identity.properties (optional, matching the None-safe .get() reads), and this worker's strengthened test arm validates the REAL _build_identity output (not a hand-made conformant stub) against the amended schema, PASS, with the pre-amendment-schema control still FAILing. Disposition left UNDER_INVESTIGATION -- the GRADUATED transfer is the CVO's L9 act, not a worker's; this row records the resolution for that adjudication.",
     "notes": "The hazard S4 named is closed by this commit; the file's ENRICH_IDENTITY module-level constant (used by the other six arms) still predates this amendment and was left untouched (out of this amendment's <paths> intent, which named only the validation arm) -- it now validates against the schema like any other 14-key identity would, but no arm re-validates it directly; not a new gap, since no arm ever claimed ENRICH_IDENTITY was schema-checked."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W113-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~113",
+    "surfaced_at": "2026-09-22T17:21:00Z",
+    "one_line": "AC4's <expect> ('resolve() does not return identity, so the adapter's resolution for Lenovo is unchanged' -- equal_to_pre True for '992 HK' and '992 HK Equity') is contradicted by the order's own B1 blast radius ('Lenovo's record gains ... one provenance.identity line'): AC4's script, run literally, compares the FULL resolve() dict including provenance, so the new provenance.identity annotation line makes equal_to_pre False for both 992 queries, while the three controls (CAT US, CSL AU, 6861 JP) read equal_to_pre True.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "task-orders/AMGT_RESAPP.TO-AMGT-rk-113.lenovo-identity-pull.md AC4 <expect>: \"the same for '992 HK Equity' -- resolve() does not return identity, so the adapter's resolution for Lenovo is unchanged\".",
+        "The same order, COO half section BLAST RADIUS (B1): \"Lenovo's crosswalk record gains an `identity` object ... and one `provenance.identity` line.\" The CTO half's blast-radius item 1 says the same.",
+        "Ran .scratch/r113/ac4.py verbatim @HEAD 7516ed095d (worktree wk-amgt-29-113): 'resolve 992 HK 992_HK_Equity MEASURED equal_to_pre False' and 'resolve 992 HK Equity 992_HK_Equity MEASURED equal_to_pre False'; CAT US, CSL AU, 6861 JP each equal_to_pre True.",
+        "Isolated the diff (.scratch/r113/ac4_debug.py, not committed -- scratch): the two resolve() dicts for '992 HK' are identical on every top-level key (security_key, resolution, bloomberg, display_ticker, exchange, model_key, share_class, raw_identifier, source_row, association_keys, matched_as, query) and differ ONLY inside `provenance`, which gains exactly one extra key, `identity`, documenting the ENRICH row's registered_at and raw_source -- no FIGI/ISIN/SEDOL/LEI/website VALUE is exposed anywhere in resolve()'s output."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "AC4's <expect>: resolve('992 HK') and resolve('992 HK Equity') read equal_to_pre True, i.e. bit-for-bit unchanged by the ENRICH pull.",
+    "world_is": "resolve()'s top-level projection for Lenovo is unchanged (no identity VALUE field is added, matching the order's premise that resolve() does not return identity), but its nested `provenance` dict gains one documentary key, `provenance.identity`, exactly as the order's own signed pair halves (B1 / CTO item 1) say it will. AC4's script does a whole-dict `==` including provenance, so this correct, disclosed, anticipated change reads as equal_to_pre False under the literal script -- the criterion's prose premise and its own literal invocation disagree with each other, not with the world. AC3, which the same order strips `provenance['identity']` before comparing 992's non-identity fields, already shows the drafter anticipated this exact key; AC4 was not given the same strip.",
+    "notes": "Graded per the literal invocation: AC4 records equal_to_pre False for the two 992 queries against an <expect> of True, so this criterion is FAIL-by-output on its literal text even though nothing in the act's measured behavior is wrong (AC3's rollback triggers are all clean; the blast radius is exactly as signed). Disarm: a follow-on amendment to this order's AC4 script strips `provenance['identity']` the same way AC3 already does before the equality check, or the <expect> prose is corrected to name the provenance.identity line as an anticipated, non-rollback-triggering difference."
   }
 ]
 ```
