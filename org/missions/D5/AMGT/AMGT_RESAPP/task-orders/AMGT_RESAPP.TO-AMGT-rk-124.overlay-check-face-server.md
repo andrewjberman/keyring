@@ -146,7 +146,7 @@ criterion PASSES. Report once, naming: AC0's two key-counts, AC2's verdict split
    cut rather than at execution, and the order carries the correction rather than the mistake.
 4. **The `PYTHONPATH` form was exercised at this cut, both arms**, per the remedy adopted in `Z-S235`.
 
-<status>pending</status>
+<status>complete</status>
 <round>31</round>
 <slot>~124</slot>
 <fabric>site-z</fabric>
