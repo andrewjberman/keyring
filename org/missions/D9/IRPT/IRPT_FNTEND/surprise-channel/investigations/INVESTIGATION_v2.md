@@ -5311,6 +5311,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W15-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~15",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "TO-FE-s-65's F65-AC16 invocation (--click Export --delay 'api/scoped/investor-reporting/export=4000') cannot reach the export endpoint: clicking the toolbar 'Export' control only OPENS ExportModal, it does not submit -- the POST fires only from the modal's OWN 'Create export' button, a SECOND, differently-named control. As literally written the criterion measures 'DELAYED: ...' absent; the --delay/--click instrument itself is sound (verified separately, both against a URL that genuinely fires and against this same URL with an added second click).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F65-AC16's invocation: `... --click Export --delay 'api/scoped/investor-reporting/export=4000' --console DELAYED`, expecting `DELAYED: .*\\(4000ms\\)`.",
+    "world_is": "Run verbatim at portal DEV 243089eb, dev port 5900, fixtures export-ready.json: rc=0, stdout carries `CLICKED: Export` and no `DELAYED` line at all (full output filed at org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~15/f65_ac16.png beside it, console log reproduced in this worker's result.md). ExportButton.tsx:171-180 (`data-slot=\"export-button-control\"`, text `Export`) only calls `setOpen(true)` on click -- the actual submit is ExportModal.tsx's own button at :258-266 (`data-slot=\"submit-export\"`, text `Create export`/`Creating export...`), wired through `onSubmit={gate.open ? handleSubmit : undefined}` in ExportButton.tsx:193, which POSTs `/api/scoped/investor-reporting/export` per submit.ts:71's own comment. Diagnostic-only (not the graded run): the identical invocation plus `--click 'Create export'` DOES print `DELAYED: api/scoped/investor-reporting/export (4000ms)`, and a --delay target that genuinely fires on page load alone (`directory/resolve`) also prints DELAYED correctly with zero clicks -- so the instrument's --delay/--click grammar is not at fault; the criterion's own invocation is missing the modal's second click. FE-s-71 (named by F65-AC16's cell text as the cell that depends on this arm) will need `--click Export --click 'Create export' --delay ...` to construct the in-flight state this cell's grammar promises.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-65.the-instrument-content-style-ground-assertions.md, F65-AC16 invocation and expect, read at HEAD of this worktree",
+        "portal src/pages/InvestorReporting/export/ExportButton.tsx:171-180,193 @243089eb8f49514e99c97360259ce70c0772c859",
+        "portal src/pages/InvestorReporting/export/ExportModal.tsx:257-266 @243089eb8f49514e99c97360259ce70c0772c859",
+        "portal src/pages/InvestorReporting/export/submit.ts:71 @243089eb8f49514e99c97360259ce70c0772c859 (comment: `POST /api/scoped/investor-reporting/export`)",
+        "measured run (this worker, 2026-09-21): official F65-AC16 invocation, rc=0, no `DELAYED` line; diagnostic run with an added `--click 'Create export'` prints `DELAYED: api/scoped/investor-reporting/export (4000ms)`; diagnostic run with `--delay 'investor-reporting/directory/resolve=4000'` alone (no click) prints `DELAYED: investor-reporting/directory/resolve (4000ms)`"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
