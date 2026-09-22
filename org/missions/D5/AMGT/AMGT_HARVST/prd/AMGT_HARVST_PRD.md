@@ -5,9 +5,9 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.1",
+  "prd_version": "v0.2",
   "step": 4,
-  "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@48f31e8fd0",
+  "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
     "FWD-1",
     "FWD-2",
@@ -16,7 +16,8 @@
     "FWD-5",
     "FWD-6",
     "FWD-7",
-    "FWD-8"
+    "FWD-8",
+    "FWD-9"
   ],
   "status": "RATIFIED"
 }
@@ -28,7 +29,7 @@
 |---|---|
 | **Directive** | D5 Asset Management (placement SITEZ) |
 | **Macro** | `AMGT` |
-| **L1 brief** | `4.0.0_SA_CRO~Z`, `BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md` at its tree home `org/missions/D5/AMGT/AMGT_HARVST/brief/` @`48f31e8fd0`, byte for byte the deliverable @`fefee2f360` |
+| **L1 brief** | `4.0.0_SA_CRO~Z`, `BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md` at its tree home `org/missions/D5/AMGT/AMGT_HARVST/brief/` @`5b90a0b839` (re-landed with Andrew's two words below; first landed @`48f31e8fd0`) |
 | **Andrew's words** | the brief's record @`ac8a4965c4` (retrieval, structure, bronze/silver/gold, gold metrics, the timeline); the project record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md` @`e279a48e4e` ("make a new project for this called AMGT_HARVST ... have COO~Y drive it to completion") |
 | **Sibling** | `AMGT_RESAPP` (the Security Analysis page). This project owns the publication channels; that one owns the page's other channels and the Lenovo trial |
 
@@ -47,6 +48,29 @@ mentioned in headline?"*) and by time.
 - The Chatter axis weights all 84 at 1.0.
 
 The mention stays the floor, which is his tolerance. The grade goes in gold.
+
+**Two later words, recorded at `4.0.0_SA_CRO~Z` (addendum 2 of the brief's record, @`5b90a0b839`):**
+- *"sticking to absolute figures or derived absolute figures, never do relative, because relative can be handled in a
+  lambda or some other more ephemeral function"*
+- *"the first job is basically going to be doing a backfill back to the start of 2026"*
+
+### v0.2 CHANGE NOTE -- 2026-09-22 ~15:1xZ, `1.0.0_SA_CTO~Z`
+
+v0.1 was REFUSED on both halves:
+- the ratified text by `3.0.0_SA_CVO~Z` @`16c42df72c`, items R1-R4 plus an addendum;
+- the brief half by `4.0.0_SA_CRO~Z` @`37abb4289a`, on the superseded brief pin.
+
+This version:
+- re-pins the brief to @`5b90a0b839`;
+- makes gold absolute-only (relative figures move to serve time, and `mention_density` is no longer stored);
+- sets 2026-01-01 as every security's dense start day;
+- adds FWD-9 (the backfill) and manifest row H10;
+- names `AMGT_RESAPP`'s `C-ONE-STORE` and its replacement (R1);
+- names the publisher CODE in the article hash (R2);
+- makes the tier rule a partition that assigns every case (R3);
+- binds `C-SILVER-PARQUET` and `C-DEDUPE-BY-KEY` explicitly (R4).
+
+The matching `C-ONE-STORE` amendment lands in `AMGT_RESAPP` v0.23, in the same turn.
 
 ---
 
@@ -137,18 +161,35 @@ act a seat can take on demand; none is a wait.
                     collecting desktop is in the store, with none duplicated
          ACCEPT     Nothing we already collected is stranded on one machine.
          SOURCE     field map A (83 bodies, 84 links, 0 uploaded); brief s.1
+
+  FWD-9  Each company on the list has its publication history since
+         1 January 2026 in the store and on its timeline
+         DONE WHEN  EXERCISED -- for each security Andrew's list names (Lenovo
+                    first), the backfill has run from 2026-01-01; the number of
+                    listing pages each publisher would be asked for was printed
+                    before the run; every day from 2026-01-01 has a row on the
+                    daily series; and running it again adds nothing
+         ACCEPT     A company's timeline starts on 1 January 2026 with no missing
+                    days, and we knew what the collection would cost before it
+                    ran.
+         SOURCE     Andrew "the first job is basically going to be doing a
+                    backfill back to the start of 2026"; brief s.3.3, s.6.5
 ```
 
 ---
 
-## CONTRACTS -- v0.1 (ratified text; the reviewer is `3.0.0_SA_CVO`, always)
+## CONTRACTS -- v0.2 (ratified text; the reviewer is `3.0.0_SA_CVO`, always)
 
 Every contract below is owned by this PRD's L4 author unless it names another seat. The cell that executes it is
 assigned by the decomposition.
 
 **`C-HV-BRONZE-AS-RECEIVED`.**
 - Every publisher's article response is stored as the bytes received, one object per fetch, under
-  `{source}/harvest/bronze/article/article_hash=<sha256("<publisher>:<article_id>")>/<stamp>.<ext>`. That is the
+  `{source}/harvest/bronze/article/article_hash=<sha256("<publisher_code>:<article_id>")>/<stamp>.<ext>`.
+- `<publisher_code>` is the harvester's short CODE (`sa`, `bbg`, `ft`, `wsj`, `barrons`), and `{source}` is the source
+  name it maps to. The ONE implementation is `lib/opal_data_harvest/harvest_grammar.py` (`SOURCE_FOR_PUBLISHER`); for
+  example, the live object for SA article 4635742 is `sha256("sa:4635742")`. A held article is never re-fetched under
+  a new hash. That is the
   builder's output, for example `s3://opal-data-harvest/wsj/harvest/bronze/article/article_hash=<h>`.
 - The form per publisher:
   - Seeking Alpha, Bloomberg and Barron's: the JSON response.
@@ -172,6 +213,14 @@ assigned by the decomposition.
   - `first_discovered_at`.
 - The listing hits land in `{source}/harvest/silver/listing_hit/date=<d>/`, for example
   `s3://opal-data-harvest/seeking-alpha/harvest/silver/listing_hit/date=2026-09-22`.
+- **`AMGT_RESAPP`'s `C-SILVER-PARQUET` binds unchanged.** The `date=` partition is the FETCH date. `published_date_utc`
+  is a column, never the partition. Every row carries `bronze_key`, `fetched_at` and `record_hash`.
+- Every row also carries `retrieval_mode` (`backfill | live`) and `run_stamp`.
+- **`AMGT_RESAPP`'s `C-DEDUPE-BY-KEY` binds unchanged.** Before any vendor call, the writer checks the bucket for the
+  fetch key.
+  - `article`: fetch key = `article_hash`; record key = `article_key` (`<publisher_code>:<article_id>`).
+  - `listing`: fetch key = (source, query sha256, UTC date, page); record key of `listing_hit` = (listing fetch key,
+    `search_rank`).
 - This supersedes the silver writer as built in `AMGT_RESAPP` rk-85, which shapes the row from the 18-field normalised
   record.
 
@@ -179,7 +228,8 @@ assigned by the decomposition.
 - Every silver row states `retrieval_rung` (`symbol_listing | name_search | ticker_search`), `search_query`,
   `search_rank` and `search_page`.
 - A publisher's own per-symbol listing is used wherever one exists and works.
-- A search pages only back to the newest `published_utc` already held for that (security, publisher).
+- A search pages back to the later of the FLOOR (2026-01-01) and the newest `published_utc` already held for that
+  (security, publisher), the WATERMARK.
 - Dedupe is by `article_hash`, so a known article is never fetched twice.
 - **The mention floor is unchanged:** one word-bounded mention of the company keeps the article. Retrieval never grades.
 
@@ -191,31 +241,43 @@ assigned by the decomposition.
   `s3://opal-data-harvest/amgt/harvest/gold/article_security_mention/date=2026-09-22`.
 - Each row carries:
   - `mention_count`, `mention_in_title`, `mention_in_lead` (the first three blocks) and `first_mention_block`;
-  - `blocks_hit`, `blocks_total` and `mention_density`;
+  - `blocks_hit` and `blocks_total` (absolute counts; the share of blocks is computed where the tier is assigned and
+    is never stored);
   - `match_forms`;
   - `vendor_tagged_primary` and `vendor_tagged_secondary`;
   - `co_mentioned_securities`, `co_mention_count` and `is_roundup`;
   - `signal_tier` (A-D) and `signal_weight`;
   - the three clocks and `lag_hours`;
   - lineage.
-- The tier rule and the weights are working defaults, re-set by Andrew's word without a contract change:
+- **The tier rule is a partition that assigns every case.** It is evaluated A then B then C then D, and the first
+  match wins. Here "lead" is the first three blocks and "share" is `blocks_hit / blocks_total`:
 
-  | tier | rule | weight |
+  | tier | rule | working weight |
   |---|---|---|
-  | A | title and lead | 1.0 |
-  | B | lead, or density >= 0.3 | 0.6 |
-  | C | 2+ mentions elsewhere | 0.3 |
-  | D | one passing mention | 0.1 |
+  | A | named in the title AND in the lead | 1.0 |
+  | B | named in the title, OR in the lead, OR share >= 0.3 | 0.6 |
+  | C | named 2 or more times | 0.3 |
+  | D | everything else (exactly one mention, outside title and lead, share < 0.3) | 0.1 |
 
+  The weights and the 0.3 are working defaults. Andrew re-sets them without a contract change.
   The roundup threshold is `co_mention_count >= 5`.
 
 **`C-HV-DAILY-DENSE`.**
 - The gold `chatter_daily` table has one row per (security, UTC day), at
   `s3://opal-data-harvest/amgt/harvest/gold/chatter_daily/date=2026-09-22` (builder output).
-- The series is DENSE: an empty day is a zero row.
-- Each row carries tier counts, `mention_score`, publisher breadth, trailing 7- and 30-day sums, the prior-30-day
-  baseline mean and SD, `breakout_ratio`, `z_score` and `data_status` (`COMPLETE | PARTIAL | DENIED`), so a quiet day is
-  never a broken read.
+- The series is DENSE from **2026-01-01 for every security**, the backfill floor. An empty day is a zero row.
+- It stores ABSOLUTE figures only:
+  - `articles_total` and the tier counts;
+  - `mention_score` (the sum of weights) and `mention_count_total`;
+  - `publishers_distinct`;
+  - `trailing_7d_sum` and `trailing_30d_sum`;
+  - `baseline_30d_sum` and `baseline_30d_days` (fewer than 30 days flags a short baseline);
+  - `cumulative_ytd`;
+  - `first_published_utc` and `last_published_utc`;
+  - `data_status` (`COMPLETE | PARTIAL | DENIED`), so a quiet day is never a broken read.
+- `published_utc` is the only clock that places an article on a day.
+- **Relative figures -- the breakout ratio, z-score and any 0-100 normalisation -- are computed at SERVE time** (the
+  chatter Lambda or the API), never stored (Andrew: *"never do relative ... handled in a lambda"*).
 
 **`C-HV-EVENT-SPINE`.**
 - The gold `chatter_event` table (`s3://opal-data-harvest/amgt/harvest/gold/chatter_event/date=2026-09-22`, builder
@@ -225,10 +287,20 @@ assigned by the decomposition.
 
 **`C-HV-GOLD-REBUILDABLE`.** Gold is built from silver only. A rebuild from the same silver reproduces identical rows.
 
+**`C-HV-ABSOLUTE-ONLY`.** No gold table of this project stores a relative figure: no ratio, share, z-score or
+normalised score. Each is computed where it is served.
+
 **`C-HV-AXIS-PROJECTION`.**
-- The Chatter axis's served ranks (the DynamoDB TRENDING and BREAKOUT chatter rows) become a projection of
-  `chatter_daily`, never a separate count.
-- Changing what they serve is a served act and takes a never-widen pair.
+- This REPLACES, in `AMGT_RESAPP`'s ratified `C-ONE-STORE`, the read path of the chatter-axis producer and the coverage
+  reader.
+- Today they read the association from `publication-links/v1/` and the body from `publications/v1/` through one adapter.
+- Once H5 (`chatter_daily`) and H4 (`article_security_mention`) land, both read THOSE gold tables through that same
+  single adapter. The served chatter ranks (the DynamoDB TRENDING and BREAKOUT rows) become a projection of
+  `chatter_daily`, with their relative figures computed at serve time, never a separate count.
+- `publication-links/v1/` and `publications/v1/` retire under `AMGT_RESAPP`'s `C-FORMAT-SEQUENCE`: readers switched,
+  writers stopped and the read grant removed, in ONE window, with that move's never-widen pair.
+- Until then `C-ONE-STORE` binds as written.
+- The matching amendment sits in `AMGT_RESAPP`'s `C-ONE-STORE` (v0.23).
 
 **`C-HV-KEY`.** Every gold row carries `security_key`, and `composite_figi` wherever the crosswalk holds it (the working
 key for research, Andrew 2026-09-22).
@@ -236,6 +308,8 @@ key for research, Andrew 2026-09-22).
 **`C-HV-EGRESS`.**
 - Any live fetch from a publisher is vendor egress and runs only on Andrew's per-use word.
 - The validation security is Lenovo (`992_HK_Equity`), under his trial word (one run per publisher).
+- The 2026 backfill (FWD-9) runs per security, on Andrew's per-use word for that run, with the listing page count
+  per publisher printed BEFORE the run under his quota word.
 - Uploading articles already held on the desktop is not egress.
 - Stored subscriber bodies stay under `AMGT_RESAPP`'s standing terms question, which is his.
 
@@ -270,6 +344,7 @@ applied here.
 
 ## 3. CONSTRAINTS ON THE CUT
 
+- No relative figure is stored in any gold table (`C-HV-ABSOLUTE-ONLY`).
 - Build order follows dependency:
   1. bronze capture;
   2. silver from bronze;
@@ -278,7 +353,7 @@ applied here.
   5. daily;
   6. event;
   7. projection and page.
-  The desktop upload is independent.
+  The desktop upload is independent. The 2026 backfill (H10) runs after H1-H6, per security, on the word for that run.
 - The mention floor may not be raised by any cell.
 - A weight or threshold is a working default, stated in the deliverable, never invented as a constant elsewhere.
 - Bloomberg's per-symbol `news()` call (`bloomberg_rest_fetch.py:119-123`) is tried once in the validation run, inside
@@ -292,11 +367,12 @@ applied here.
 | H2 | silver from bronze (`article`, `listing_hit`) | `harvest_grammar.article_silver_row` rebuilt to read bronze | H1 | FWD-2 |
 | H3 | retrieval rungs, provenance, watermark | the harvester's discovery calls | H1 | FWD-3 |
 | H4 | gold `article_security_mention` | a new gold producer over silver | H2, H3 | FWD-4 |
-| H5 | gold `chatter_daily` | same producer | H4 | FWD-5, FWD-7 |
+| H5 | gold `chatter_daily` (absolute only, dense from 2026-01-01) | same producer | H4 | FWD-5, FWD-7, FWD-9 |
 | H6 | gold `chatter_event` | same producer | H5 | FWD-6 |
 | H7 | the chatter projection (DynamoDB ranks from `chatter_daily`) | the chatter-axis Lambda | H5 | FWD-7 |
 | H8 | timeline graph and dissection | the portal security page plus `scoped_amgt.py`; design spec first | H5, H6 | FWD-5, FWD-6 |
 | H9 | desktop outbox upload into the new grammar | `lib/opal_data_harvest` uploader | H1, H2 | FWD-8 |
+| H10 | the 2026 backfill run: floor 2026-01-01 plus watermark, page counts printed first, `retrieval_mode=backfill` | the harvester, H1-H6 end to end | H1-H6 | FWD-9 |
 
 ## 5. CALLS THAT STAY ANDREW'S (the brief's s.8)
 

@@ -9,7 +9,7 @@
   "dep_stage": "PRD",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-22T15:0xZ",
+  "last_updated": "2026-09-22T15:2xZ",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -27,12 +27,12 @@
   ],
   "name": "Publication harvest: every mention of a covered company, retrieved with its provenance, kept as received, structured without loss, and graded by strength over time -- the Chatter axis and the company event spine.",
   "description": "Retrieval, structure and the bronze/silver/gold build for the publication channels (Seeking Alpha, Bloomberg.com, Barron's, WSJ, FT) that feed AMGT_RESAPP's Chatter axis and news. Bronze keeps each publisher's bytes as received; silver is built from bronze with every vendor field typed; gold grades each (article, security) mention and rolls it into a daily chatter series and an event spine a timeline graph can dissect. Runs beside AMGT_RESAPP and does not own that project's page, trial or other channels.",
-  "brief": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md @48f31e8fd0 (L1, 4.0.0_SA_CRO~Z; tree home of the deliverable @fefee2f360)",
+  "brief": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md @5b90a0b839 (L1, 4.0.0_SA_CRO~Z; re-landed with Andrew's absolute-only and 2026-backfill words)",
   "prds": [
     {
       "path": "org/missions/D5/AMGT/AMGT_HARVST/prd/AMGT_HARVST_PRD.md",
-      "version": "v0.1",
-      "note": "L4, 2026-09-22, 1.0.0_SA_CTO~Z. Carries the L2 ENDPOINT (FWD-1..FWD-8), 13 contracts and a 9-row surface manifest. L4-R: ratified text 3.0.0_SA_CVO~Z, brief half 4.0.0_SA_CRO~Z."
+      "version": "v0.2",
+      "note": "L4, 2026-09-22, 1.0.0_SA_CTO~Z. v0.2 answers the v0.1 refusals (CVO R1-R4, CRO re-pin) and Andrew's absolute-only and 2026-backfill words: FWD-1..FWD-9, 14 contracts, 10-row manifest. Paired with AMGT_RESAPP v0.23 (C-ONE-STORE supersession)."
     }
   ],
   "decompositions": [],
@@ -40,7 +40,7 @@
     "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
   ],
   "phase": "L4 PRD v0.1 written; L4-R sign-off owed (3.0.0_SA_CVO~Z ratified text, 4.0.0_SA_CRO~Z brief half).",
-  "blocking": "L4-R sign-off. Then the L5 driver: Andrew named 2.0.0_SA_COO~Y, which is a Y-fabric seat and not registered (0.0.0_AB_MSTR~Z msg at 14:46Z); seating it is at Andrew.",
+  "blocking": "L4-R on v0.2 (3.0.0_SA_CVO~Z ratified text, 4.0.0_SA_CRO~Z brief half). Then the PRD and briefing go to 2.0.0_SA_COO~Y, which Andrew is spawning himself (record 150xZ).",
   "threads": [],
   "thread_counter": 0
 }

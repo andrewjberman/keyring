@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.22",
+  "prd_version": "v0.23",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,18 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.23 CHANGE NOTE -- 2026-09-22 ~15:2xZ, `1.0.0_SA_CTO~Z`: the sibling project AMGT_HARVST
+
+Andrew-direct ~14:4xZ made `AMGT_HARVST` a new project beside this one (record @`e279a48e4e`). Its v0.2 PRD
+replaces the chatter axis's read path. This bump makes three changes:
+- **Ratified text:** `C-ONE-STORE` names that supersession and its trigger. This is `3.0.0_SA_CVO~Z`'s R1 on
+  AMGT_HARVST v0.1, and the "same bump" it asked for.
+- **Brief half:** section 12's stage 9 waits on AMGT_HARVST's bronze and silver.
+- **Brief half:** the Lenovo before-count is corrected from 19 to 18. The unanchored grep had matched a byte size;
+  the key-anchored count is 18.
+
+Both halves move.
 
 ### v0.22 CHANGE NOTE -- 2026-09-22 ~14:0xZ, `1.0.0_SA_CTO~Z`: the Lenovo trial
 
@@ -643,7 +655,12 @@ brief `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESAPP_CONNECTION_BRIEF_POOL_REA
 the reader, its schema files and `jsonschema`, exercised in an isolated runtime. Inflow to the pool is TRACEABLE: every body carries its publisher, canonical URL,
 stable identity and retrieval receipt. Andrew's word (`org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_RESAPP_W/ANDREW_DIRECT_20260915_0504Z_EXECUTIVE_MANAGERS_LUSHA_AND_THE_HARVEST_POOL.md@7cf62a165f`) names the pool as the system of record;
 this contract makes it the only one. Owner of the readers: `2.0.0_SA_COO`; owner of the
-writer: the harvest lane, whose mechanism and cadence stay reserved to Andrew by name.
+writer: the harvest lane, whose mechanism and cadence stay reserved to Andrew by name. **The read path is superseded,
+at a stated point, by `AMGT_HARVST`'s `C-HV-AXIS-PROJECTION`** (`org/missions/D5/AMGT/AMGT_HARVST/prd/AMGT_HARVST_PRD.md`
+v0.2). When that project's gold `article_security_mention` and `chatter_daily` tables land, the chatter-axis producer
+and the coverage reader read THOSE tables through this same single adapter; `publication-links/v1/` and
+`publications/v1/` retire under `C-FORMAT-SEQUENCE` in one window with that move's never-widen pair. Until then this
+contract binds as written.
 
 **C-ONE-IDENTITY (sharpens `C-IDENTITY-RESOLVED`).** ONE canonical security
 identity per economic security, resolved ONCE at the route boundary and carried unchanged through overlay,
@@ -1917,7 +1934,7 @@ covered population. **Posture is out of scope** (@`78106b9cea`).
 Each stage ends SERVED or UNRESOLVED with its reason, never a silent skip. Every channel of the field map is exercised at
 each layer it has: identity -> bronze -> silver -> the served object -> the page.
 
-| # | stage | channels | Lenovo today (measured: 19 of 1,780 harvest objects) |
+| # | stage | channels | Lenovo today (measured: 18 of 1,780 harvest objects, key-anchored `992_HK`) |
 |---|---|---|---|
 | 1 | identity | Bloomberg add-security, with the FIGI family, ISIN, SEDOL and LEI appended to its identity fields | no identity record, no FIGI |
 | 2 | model block | Bloomberg refdata, histdata and bestdata; bronze then silver `model_block`; served block | refdata and histdata 09-16; 3 served blocks; no forecasts; silver not wired |
@@ -1927,7 +1944,7 @@ each layer it has: identity -> bronze -> silver -> the served object -> the page
 | 6 | management | the filing's officer section, Bloomberg `COMPANY_EXEC_OFFICERS`, Lusha, the CEO SERP | no `management/v1` object at all |
 | 7 | peers | the SA peer set via the ADR line, where `C-PEER-SET-SA` can be met; otherwise the ranker, recorded as the fallback | `peers/v1` (5 versions, ranker) |
 | 8 | scores | the three scores | `scores/v1` present |
-| 9 | chatter and news | the publications harvester (one run for Lenovo); SA news on the ADR line | none |
+| 9 | chatter and news | the publications harvester (one run for Lenovo), EXECUTED by `AMGT_HARVST` once its `C-HV-BRONZE-AS-RECEIVED` and `C-HV-SILVER-FROM-BRONZE` land (`C-HV-BOUNDARY`: one pass, not two; this stage waits on them); SA news on the ADR line | none |
 | 10 | social | one Bright Data dataset job | none |
 | 11 | price | the daily price pull | none |
 | 12 | the page | Lead Panel, Thesis, Exec Mgmt, Peers and Model on DEV, read from the pool | renders from partial objects |
