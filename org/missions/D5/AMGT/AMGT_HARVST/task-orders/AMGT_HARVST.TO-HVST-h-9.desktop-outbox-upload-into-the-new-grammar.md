@@ -194,7 +194,7 @@ bronze key it put or skipped. For each key it calls `head_object` on `opal-data-
 3. **The legacy `upload_outbox` stays pending, untouched.** Its prefixes retire under `AMGT_RESAPP`'s
    `C-FORMAT-SEQUENCE`, which is not this round's act.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~9</slot>
 <fabric>site-z</fabric>
