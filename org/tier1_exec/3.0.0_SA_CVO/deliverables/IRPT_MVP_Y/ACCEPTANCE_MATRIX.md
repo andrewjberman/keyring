@@ -262,6 +262,18 @@ Probe exception reporting adapted, scenarios unchanged. See
 `PUBLICATION_RETEST_3a1256a074.md` and evidence JSON. No publication/READY or
 full Y5/S7 proof; all fourteen integrated criteria remain NOT_EVALUATED.
 
+## Refresh-lineage consumer update, 6:44 PM Eastern
+
+`318e140fb9b7417ea28d2de5057c6c85a9ebfd57`: supplied17/17 PASS and independent
+9/9 guarded-entry/receipt/replay/revocation controls PASS. Exact parent lineage
+and values20/40/60 retained; replay avoids dependency calls. Original Y-U01
+controls remain passing. See `REFRESH_REVIEW_318e140fb9.md` and pinned evidence.
+No new defect in those bounded controls; real concurrency, process loss,
+earliest/transitive expiry and browser controls remain unproven. COO~Y separately
+reports a recipe upload-echo cents mismatch before repair; it is producer evidence
+pending exact-pin retest, not an independent verdict. All14 integrated criteria
+remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

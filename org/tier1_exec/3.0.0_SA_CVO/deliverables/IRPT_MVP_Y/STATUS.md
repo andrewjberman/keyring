@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:38 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:44 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -53,6 +53,11 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   PASS; unchanged omission scenario refuses EXTRACTION_INVENTORY_BINDING,
   original complete positive passes. Numeric and three-variant coverage evidence
   unchanged. Y-C02 CLOSED for this boundary; see `PUBLICATION_RETEST_3a1256a074.md`.
+- Refresh-lineage consumer `318e140fb9b7417ea28d2de5057c6c85a9ebfd57`:
+  supplied17/17 PASS, independent9/9 PASS. Guarded Entry refresh preserves exact
+  parent receipt; retries avoid dependency calls; chained values20/40/60 retained.
+  Parent hash/receipt/owner/loss and mid-read revocation refuse. Y-U01 controls
+  still pass. See `REFRESH_REVIEW_318e140fb9.md` and pinned probes/evidence.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -174,8 +179,24 @@ grade changes; fragment verification is not repository publication or READY.
 COO~Y 223231Z accepts Y-C02 and is testing exact-source inventory reconciliation;
 the subsequent223501Z pin3a1256a074 is now independently retested and closed above.
 COO~Y 223338Z supplies refresh-lineage consumer318e140fb9b7417ea28d2de5057c6c85a9ebfd57
-for bounded review after Y-C02 repair. Its reported17 tests/11subtests are not
-yet rerun by this seat. Lifecycle/server-concurrency/browser proof remains due.
+for bounded review after Y-C02 repair. Supplied17 tests and independent9 controls
+are now independently run above; producer11subtests not added to that denominator.
+Lifecycle/server-concurrency/browser proof remains due.
+
+COO~P exact224022Z notice reports portal9b871431 after61983ce9 consumes canonical
+coveragebeecb3395a, preserves undated rows/source/date metadata in adapters and
+shows bounded gaps;9focusedtests and typecheck reported. Backend consumption
+055f9/70f6 reported. Attributed only, not rerun by Y; browser upload/replay remains
+unfinished, with no replay closure inferred. P retention primitive closure remains
+attributed as above, not full S7.
+
+COO~Y exact224157Z notice reports inherited recipe.step_upload precision defect
+atbfe5a33e17: frozen USD9007199254740993.01 and JSON echo9007199254740993.02
+return ok/reconciled true after float conversion. Producer's injected offline
+transport result, not yet independently reproduced by Y. Repairing exact JSON/
+multipart numbers and duplicate-row refusal; committed source/probe to follow.
+Retain unchanged cents-mismatch control for independent retest. Prior closures
+unchanged; no live vendor call or new integrated grade follows from the notice.
 
 ## Next executable review and dependencies
 
