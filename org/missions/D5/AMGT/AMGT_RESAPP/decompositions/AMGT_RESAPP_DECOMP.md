@@ -4379,3 +4379,53 @@ fanout:
   wave_1: [rk-95, rk-94]            # rk-95 at once; rk-94 once its pair carries both halves signed
   no_fleet_run: true
 ```
+
+## 32. ROUND 24 -- FROM THE CTO'S ROUND-23 ANALYSIS @`1cb8c3cab3` (`1.0.0_SA_CTO~Z`, msg 24174) + msgs 24165, 24168, 24170
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 23 closed 2 of 2 (ADJUDICATION_v25 @`2ee6c4e26a`, 15/0/0). The gate fix holds and
+the print sort fix holds, but the print route times out cold and cascades: the CVO saw 3 of 5 names Unhandled in one
+sweep, so Z-S216 is graduated as firing and sits on the managers' path.
+
+The analysis names two cells, rk-97 FIRST:
+- **rk-97, memory 512 -> 1769.** Accepted as drafted (msg 24170). The acceptance is amended COLD FIRST: (a) the first
+  read after the apply is a cold invoke on all 5 names, under 20 s; (b) then 5 x 3 warm prints, under 10 s; (c) then a
+  concurrency burst with 0 Unhandled.
+- **rk-96, NaN to null ahead of B1** (msg 24165, the CVO's v0.18 exposure). Bronze maps a non-finite float to null
+  before serialisation; `allow_nan=False` is the backstop; and the silver copies (`bloomberg.py` model_block and
+  `filings.py:183` object_json) REFUSE rather than alter a lossless value.
+
+NOT in round 24: the backfill (no Andrew per-use word is on file at the cut), chain G, and the Z-S218 pypdf removal
+(chain G's first adapter cell).
+
+**Round 24 is TWO cells, issued in ONE commit with this section.**
+
+### 32a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| print memory | `AMGT-rk-97` | ~97 | none | Z-S216 -- a local phase split (render is the largest term on 5 of 5), then ONE targeted apply: `scoped-amgt-api.tf:267` `memory_size` 512 -> 1769, with a plan whose only changed line is that one. COLD FIRST: a 10-way coldphase (2 per name) with no invoke between the apply and it, `coldphase_cold_names 5/5` under 20 s; then 5 x 3 warm under 10 s; then a 10-way burst with unhandled 0. Pack text hashes and non-print routes at parity. Three branches: keep and target met; keep and target missed (a missed cold target sends the Z-S217 layer rebuild to round 25); roll back | pair `NEVER_WIDEN_ROUND24_RK97_{COO,CTO}_HALF.md` (COO signed at this cut) |
+| NaN rule | `AMGT-rk-96` | ~96 | none | `bloomberg.py` `_nan_to_null` before `client_json`'s serialisation, plus `allow_nan=False`; the silver callers and `filings.py:183` refuse. 6 test arms (58 -> 64). Live population read-only: 110 bronze, 122 model_block and 194 filings source objects, 0 non-finite; the old and new `client_json` are byte-equal on 110 of 110. Code only | none |
+
+### 32b. SURFACE CENSUS (measured at the cut)
+
+- **rk-97.** Live config at `1229b10b83`: MemorySize 512, Timeout 29, layer `opal-amgt-print-deps:1`, CodeSha256
+  `r93CxQqr...`, equal to rk-94's deploy.
+  - Memory has 1 writer (`scoped-amgt-api.tf:267`), and 0 scripts call `update-function-configuration`.
+  - Nothing under the adapter's roots has changed since `4ecff8064b`, which is AC7's pin.
+  - The CTO's env-var bump is NOT in the order. It would be a second configuration write outside the pair, so the
+    coldphase replaces it (issuer L5, flagged).
+- **rk-96.** Pinned at `1229b10b83`. The harvest code is byte-identical to the draft's measured `049b19e565`, so the
+  census holds: 7 serialisation sites, 2 of which change.
+- **Files written by more than one cell:** none. The two cells' write surfaces are disjoint (`infra/aws/terraform/harvest`
+  vs `lib/research/harvest`), apart from the append-only channel.
+
+### 32c. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 2                   # rk-97, rk-96 -- one commit
+  chains_total: 2                   # disjoint
+  wave_1: [rk-96, rk-97]            # rk-96 at once; rk-97 once its pair carries both halves signed
+  no_fleet_run: true
+```
