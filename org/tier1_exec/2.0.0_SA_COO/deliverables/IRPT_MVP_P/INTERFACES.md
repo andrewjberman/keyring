@@ -4,7 +4,7 @@ Owner: `2.0.0_SA_COO~P`. Authority: CTO completion CONTRACT v1.2 at `4688c59ef2`
 Status: proposed producer/consumer agreement, not a deployed interface. 2026-09-22.
 Source baseline: workspace `1ca9d3edfecaeead06ef1286df4354098f0f0885`, portal
 `7dd3d067a17ee00b878ecfceff23c557649a2331`. B final `2506c70874` is included;
-F final baseline `8e6e2e38` has been consumed; current composed portal is `52786a7a`.
+F final baseline `8e6e2e38` has been consumed; current shared upload portal is `cb62721c` (R-P09 replacement pending).
 
 ## Current additive interfaces - 22:50 UTC
 
@@ -32,7 +32,9 @@ the earliest dependency ceiling. No operation renews creation time.
 
 Refresh ORIGINAL_CSV depends on the prior owned normalized artifact; the new
 NORMALIZED_PORTFOLIO depends on its original CSV, carrying prior lineage transitively.
-Y owns those call sites and current-input access checks. They are not yet wired.
+Y owns those call sites and current-input access checks. They are wired at
+`acc55a4c72`, consumed `60a19d2ac3`; request composition additionally depends
+on normalized input at `6cbb714040`, with no-service downgrade fix `b258b1696c`.
 Report publication additionally requires Y's exact job-fence/composition/lease
 ConditionCheck and immutable report-index Put transaction; pre/post Python checks
 alone are not that atomic guarantee. There is no unfenced transaction fallback.
@@ -214,3 +216,20 @@ new public request schema.
 - P: implement the agreed seam, publish tests and candidate pin before callers integrate.
 
 No acceptance ID is complete merely because this interface has been published.
+
+## Shared upload and holdings packaging - 23:24 UTC
+
+Backend `5add22ca9f` owns AnalysisUploadRequest/AnalysisUploadResult and
+analysis-input-upload response schemas. Portal `cb62721c` exports those generated
+wire types and `InvestorReportingApi.uploadAnalysisInput(req)`. FixtureAdapter
+requires an explicit upload callback. Frozen retries preserve every body field and
+token; explicit refresh supplies a new token and prior supersedes_input_id.
+Y owns UI action state and producer runtime factory. The route remains
+NO-HANDLER-AT-HEAD and LiveClient performs zero calls until factory/package ready.
+
+Backend `0fb7e56629` stages canonical `lib/opal_naming.py`, seven registry files
+and NAMING_SCHEMA under their original relative layout. Root opal_naming.py is a
+forwarding import from P `_contracts/opal_naming_runtime.py`, exposing canonical
+address/lookup without duplicating rules. Holdings reader needs no Gold/pyarrow.
+The31-member proof covers selected guarded/versioned retrieval and negatives;
+IAM declaration and package evidence are separate from deployed authorization.

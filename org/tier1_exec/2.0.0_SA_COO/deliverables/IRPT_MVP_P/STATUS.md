@@ -4,7 +4,62 @@ Seat: `2.0.0_SA_COO~P`. Direct mandate: completion CONTRACT v1.2 at `4688c59ef2`
 Startup complete after canonical six-file manifest repair `9b99dc12cd`.
 Readiness measured GREEN 9/9; no extra helper or model-side timer.
 
-## Current integration checkpoint - 22:50 UTC
+## Current integration checkpoint - 23:24 UTC
+
+Backend HEAD `2170153c7d`; portal committed `cb62721c` plus the R-P09 repair
+under test. Both candidates remain LOCAL. Product incomplete; no deployment,
+policy activation, vendor egress, shared push or render-key authority inferred.
+
+- R-P08 history metadata release repaired `284436ca11`: final current index,
+  authorization and retention checks after all page blob reads. Independent
+  `452f8d589f` closes the demonstrated boundary: all79 unchanged PASS
+  (50 supplied,21 original/receipt,8 composition). Sequential checks are not
+  an atomic cross-owner snapshot. R-P07 remains closed; fullS7 ungraded.
+- Portal mounted selection `52786a7a` independently PASS `8cbddec4e7`:
+  13 supplied, both Edge race drivers,8 added mounted checks/0 errors. Controlled
+  API only, not authenticated fetch/backend/live custody.
+- Y fenced report index `6cacc80887` consumed `cd61111e6a`; missing store
+  dependency `2acea1aeca` explicitly consumed `6860d7328f`;13 controls PASS.
+  Exact-dollar source `386f2e1b49` consumed `41fa791311`;19 controls PASS.
+- Retained upload DAG `acc55a4c72` consumed `60a19d2ac3`;31 tests/11subtests PASS.
+  Request composition dependency/replay guard `6cbb714040` -> `6a2c7209fa`;
+  52 tests/24subtests PASS. Y-S01 no-service downgrade repair `b258b1696c` ->
+  `167d6d6c54`, composed retained publication tests `601e1c7bf1` -> `fa517a7dff`;
+  paired14 PASS. These are serialized/versioned doubles, not persistent-server timing.
+- Canonical local security identity `d99a072742` -> `2170153c7d`;48 tests/
+  18subtests PASS. Maintained runtime resolver still pending; local security keys
+  are not fabricated vendor IDs. Y accepted identity repair `090c819803` next.
+- Shared upload schemas/routes `5add22ca9f`:8 actual guarded producer contract
+  controls PASS. Portal `cb62721c`: generated request/result, typed upload API,
+  response receipt checks and explicit fixture callback;14 focused +2 resolver
+  tests and typecheck PASS. Route is NO-HANDLER-AT-HEAD; LiveClient refuses before
+  transport. Y retains Analysis UI and runtime factory. Independent `fb0f801529`
+  opened R-P09: paired input IDs could disagree with content hash. One-line
+  binding repair plus regression in progress;11 unchanged reviewer +5 supplied
+  checks PASS locally, reviewer replacement pin follows.
+- M publication `62139c3a1a` -> `ad732d1c7d`;80 holdings tests PASS. Incoming M
+  interface document retained on the older base. M reports independent product
+  candidate review `c462d8b4df`; actual source runner findings remain M-owned.
+- Holdings package/IAM `0fb7e56629` after `5a85252603`:31 declared members,
+  canonical nested naming registry tree, flat forwarding import; canonical
+  closure and isolated guarded selected/versioned read PASS. Corruption,
+  post-read revocation and fresh missing-registry negatives PASS. Reader imports
+  no pyarrow. All215 other function entries and root deployment metadata equal.
+  Evidence: `HOLDINGS_PACKAGE_EVIDENCE.json`, `verify_holdings_package.py` in P
+  deliverables at backend pin. Source IAM separates current index GetObject and
+  pinned Platinum GetObjectVersion; scope dependency reads remain at registered
+  served homes, tenant-keyed requestsGetItem/KMSDecrypt added. Terraform init
+  backend=false/validate PASS. The intermediate relative-root product lookup
+  failed validation and was corrected to abspath before the final pin. No apply.
+  CVO package review pending; local installed libraries do not qualify Lambda layers.
+
+Next: consume Y accepted identity; close R-P09 independent retest; runtime
+producer/consumer composition and finite policy activation evidence; source-specific
+performance/report history/export completion. SmartX actual selected-account
+capability and inherited render chain remain unproven. Physical disposal remains
+open. M's real-source runner failures are retained, not converted to reader PASS.
+
+## Prior integration checkpoint - 22:50 UTC
 
 The product is incomplete and nothing here is deployed. Backend candidate
 `aa1cfaea6b`; portal candidate `52786a7a4e16d0faec2f1f0b3e587d6e88c496cd`.
