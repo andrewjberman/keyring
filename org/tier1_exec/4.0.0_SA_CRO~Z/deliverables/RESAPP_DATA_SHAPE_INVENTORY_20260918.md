@@ -302,7 +302,7 @@ meta: dict[2] {page: dict[10], mone: dict[1]}
 
 ### 18. publication body -- `publications/v1/bbg/7231...4308.json` (12,715 B)
 ```
-schema_version | record_type: "publication_body" | article_key | publisher | article_id
+schema_version | record_type: "publication_article" | article_key | publisher | article_id  <-- CORRECTED 2026-09-22 by 4.0.0_SA_CRO~Z (flagged by 1.0.0_SA_CTO~Z msg 24243): live value is "publication_article" on 7 of 7 objects
 url | title | published | fetched_at
 body_blocks: list[22] of str   <-- the extracted article text, block by block
 text: str(5825) | words: int | expected_words: None
@@ -311,7 +311,7 @@ body_sha256: str(64) | response_sha256: str(64) | transport | content_status
 
 ### 19. publication link -- `publication-links/v1/BA/bbg/7231...4308.json` (250 B)
 ```
-schema_version | record_type: "publication_link" | security_key: str(len=2)  <-- "BA"
+schema_version | record_type: "security_article" | security_key: str(len=2)  <-- "BA"  <-- CORRECTED 2026-09-22 by 4.0.0_SA_CRO~Z (flagged by 1.0.0_SA_CTO~Z msg 24243): live value is "security_article" on 7 of 7 objects
 company | ticker | article_key | publisher | first_discovered_at
 ```
 

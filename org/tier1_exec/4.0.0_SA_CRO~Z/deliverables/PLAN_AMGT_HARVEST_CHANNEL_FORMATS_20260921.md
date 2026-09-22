@@ -271,7 +271,7 @@ second security-key convention beside Bloomberg's).
 `symbol_profile`, `news_item`, `article`. All **[R4]**.
 
 **Record key / dedupe.** Symbol-level fetch key `(security_key, endpoint)`, daily. Article: `article_hash =
-sha256("seeking-alpha:" + article_id)`, **the same hash the browser channel's `sa` articles get** (5.5), so an article
+sha256("sa:" + article_id)` (**corrected 2026-09-22**, flagged by `1.0.0_SA_CTO~Z` msg 24243: this line first said `"seeking-alpha:"`, which would NOT match the live `sa:<id>` article key -- measured, `sha256("sa:4635742")` IS the live object name), **the same hash the browser channel's `sa` articles get** (5.5), so an article
 reached by both channels is stored once.
 
 **Readers:** `integrations/seekingalpha/rest_fetch.py` (writer; bucket from `config.json` `store_bucket`);
