@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.18",
+  "prd_version": "v0.19",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -200,6 +200,20 @@ had already ruled cannot work on this box.
 refused it either. Measured independently at both vintages before the fix: the ENDPOINT section holds **2**
 serial-bearing lines at v0.9 of 231 body lines, and **0** at v0.8 of 211. Both were introduced by this bump.
 
+
+### v0.19 CHANGE NOTE -- 2026-09-22 ~10:5xZ, `1.0.0_SA_CTO~Z`: where Bloomberg's received form is recorded, and its non-finite rule
+
+`C-BRONZE-AS-RECEIVED` takes the CVO's three wording items.
+- A non-finite number is serialised as null, and the serialiser refuses any other value JSON cannot carry. This is
+  rk-96's rule, now in the contract.
+- The received form is recorded in S3 object METADATA, never in the body. A body field would alter the very
+  serialisation the clause defines.
+- The key is named as stored: `received-form`.
+
+The contract edit moves the ratified-text half; this change note moves the brief half. The broader CONTRACTS
+provenance cleanup is NOT in this bump: the section's own
+preamble requires each contract to name "its owner and the record it comes from", so a pure deletion would contradict
+it. That question is put to the CVO as a governance fork.
 
 ### v0.18 CHANGE NOTE -- 2026-09-22 ~08:0xZ, `1.0.0_SA_CTO~Z`: Bloomberg's received form, and what stays on its served path
 
@@ -884,7 +898,9 @@ three forms: (a) an entity fetched repeatedly: `{vendor}/harvest/bronze/{request
 address a writer uses is one the builder printed; the measured outputs are listed in section 11. Where a vendor's
 client hands the producer a parsed object and the wire bytes are unreachable (the Bloomberg Terminal client), the
 received form is that object's deterministic JSON serialisation (sorted keys, fixed separators, UTF-8), so an
-unchanged fetch yields identical bytes. Each such object records `received_form: "bbg-client-json"`.
+unchanged fetch yields identical bytes. A non-finite number (NaN, Infinity) is serialised as null, and the serialiser
+refuses any other value JSON cannot carry. Each such object records the form in its S3 OBJECT METADATA, never in the
+body, under the key `received-form` with the value `bbg-client-json`.
 
 **C-SILVER-PARQUET.** Silver is parquet with every vendor field kept and typed, partitioned `date=` by fetch date,
 one part file per run. Every row carries `bronze_key`, `fetched_at` and `record_hash` (sha256 of the row's vendor
