@@ -5,9 +5,9 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.1",
+  "prd_version": "v0.2",
   "step": 4,
-  "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@42c05cd8a8",
+  "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f (36,007 bytes)",
   "endpoint_outcomes": [
     "FWD-1",
     "FWD-2",
@@ -34,6 +34,28 @@
 | **Andrew's words** | the split and the name: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_182xZ_AMGT_CORPUS_SPLIT_BLOOMBERG_TO_CLAUDE_ALLOWED_LEAD_PANEL_DETERMINISTIC.md`; the population: `..._183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md`; the design and the memo, verbatim at `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260922_17xxZ_CLAUDE_ANALYSIS_LAYER_PLATINUM_DESIGN.md` and `ANDREW_VOICE_MEMO_20260922_HARVEST_INFRA_OVERVIEW_TRANSCRIPT.md` |
 | **Siblings** | `AMGT_RESAPP` (the page, the analysis producer, the report object, the export -- consumes this project's artifacts); `AMGT_HARVST` (the publication channels -- neither consumes nor is consumed by this project) |
 | **L3** | registered @`7cedd1fd9d` |
+
+### v0.2 CHANGE NOTE -- 2026-09-22 ~20:2xZ, `1.0.0_SA_CTO~Z`
+
+v0.1 was REFUSED on the ratified-text half by `3.0.0_SA_CVO~Z` (@`f00abf5e5303`), two bounded items. Both are fixed
+here; the design was not disputed and is unchanged.
+
+- **R1, the brief pin did not resolve.** v0.1 pinned `@42c05cd8a8`, which is a DRAIN of a different CRO branch --
+  `git cat-file -e` returns rc=128 there, so a reviewer following this PRD's own pointer got an error instead of the
+  text that every one of the nine `SOURCE` lines cites. Re-pinned, **and NOT to the commit the refusal proposed.**
+  ⚠ The CVO recommended `578f7072d1` (the ADD commit, 35,894 bytes); the brief has **two** commits, and its current
+  bytes are `6c52138c2f` (**36,007 bytes**, +113). **The delta is exactly the origin line that names Andrew's eighth
+  message -- the one that makes the Research library the backlog -- which is the authority FWD-3 and FWD-4 rest on.**
+  Pinning to the ADD commit would have pinned this endpoint to a brief that does not carry the word two of its
+  outcomes are built from. Measured on this seat's own instrument with a positive and a negative control
+  (`578f7072d1` rc=0 / 35,894; `42c05cd8a8` rc=128; `HEAD` 36,007; working tree clean, so 36,007 IS what this seat
+  read when it cut the endpoint). The refusal was right that the pin was broken and right about why it matters.
+- **R2, the O9 assignment contradicted itself and the count did not close.** Rewritten as the table below, with O9
+  named SPLIT and the close restated as 7 + 5 + 1 + 1 mint = 9.
+
+Two CARRY items, not refusal grounds, are also closed: the READ surface for manifest rows R1/R2 is now stated
+(`C-NO-RAW-BRONZE-AT-SERVE`), and `C-TIER-PLACEMENT`'s "firm-attributable" wording, which described a different
+tenancy from the one the builder prints, is struck. **13 contracts** (v0.1 had 12).
 
 ### The problem, in Andrew's and the team's terms
 
@@ -181,13 +203,31 @@ the corpus is a static local library and every artifact below is derived by a ru
 
 **Rule 24 record for this endpoint.** Axis: what an analyst or a consumer can DO that they cannot do today. Grain: one
 capability. Intent: one (the corpus becomes usable substrate). MECE by SUBTRACTION over the brief's thirteen outcomes,
-not by recall: O1, O3, O6, O7, O10, O11, O12 are the ADDENDUM's (they write or serve the report); O2 splits -- its
-measured half is FWD-5 here, its delta-writing half is the addendum's; O4 splits -- the TEMPLATES are FWD-6/FWD-7 here,
-the page's rendering of them is the addendum's; O5 splits -- ingestion and reachability are FWD-1/FWD-2/FWD-8 here, the
-message that carries the prior report is the addendum's; O8's input-hash half is FWD-8 here; O9 is the addendum's
-(report versioning); O13 is FWD-3/FWD-4 here. FWD-9 is NOT in the brief's outcome list: it is a property Part II states
-as a constraint, and it is minted as an outcome because a constraint nobody exercises is a belief. **13 brief outcomes
--> 7 wholly the addendum's, 4 split, 2 wholly here, plus 1 minted = 9 FWD.**
+not by recall:
+
+| brief outcome | disposition | where its corpus-side half lands |
+|---|---|---|
+| O1, O3, O6, O7, O10, O11, O12 | **WHOLLY THE ADDENDUM'S** (each writes or serves the report) | -- |
+| O2 | SPLIT | measured half **FWD-5**; the delta-writing half is the addendum's |
+| O4 | SPLIT | the TEMPLATES **FWD-6 / FWD-7**; the page's rendering of them is the addendum's |
+| O5 | SPLIT | ingestion and reachability **FWD-1 / FWD-2 / FWD-8**; the message carrying the prior report is the addendum's |
+| O8 | SPLIT | the input-hash half **FWD-8**; served freshness on the page is the addendum's |
+| O9 | **SPLIT** | its REACHABILITY half (the prior quarter's report retrievable beside the current one) **FWD-1 / FWD-2 / FWD-8**; its report VERSIONING and rendering half is the addendum's |
+| O13 | WHOLLY HERE | **FWD-3 / FWD-4** |
+
+FWD-9 is NOT in the brief's outcome list: it is a property Part II states as a constraint, and it is minted as an
+outcome because a constraint nobody exercises is a belief.
+
+**CLOSE: 13 brief outcomes -> 7 wholly the addendum's + 5 split + 1 wholly here, plus 1 minted = 9 FWD.**
+
+⛔ **v0.1 WROTE O9 TWO WAYS AND THE COUNT DID NOT CLOSE** -- this record said "O9 is the addendum's (report
+versioning)" while the cover message that routed it said "2 wholly here (O9's reachability half, O13)". Both cannot
+hold, and with O9 read as wholly the addendum's the arithmetic is 8 + 4 + 1, not the 7 + 4 + 2 printed beside it.
+**THE FAILURE MODE IS THE GREEN THIS PRD NAMED ONE PARAGRAPH EARLIER:** a reader of either carrier could conclude the
+OTHER owns O9's corpus-side half, and no gate anywhere would fail -- an outcome falls between two projects precisely
+when each document believes the other has it. Found by `3.0.0_SA_CVO~Z` at L4-R (@`f00abf5e5303`, REFUSED) by running
+the subtraction the other way, from the brief's own O1..O13 against BOTH carriers, exactly as this seat asked it to.
+**No outcome was uncovered; the defect was in the RECORD, which is the harder one to see.**
 
 ---
 
@@ -231,9 +271,20 @@ path. **This PRD types no address**: each manifest row below names the scope, ti
 with, and the cell prints the builder's output.
 
 **C-TIER-PLACEMENT.** Report bytes and their extractions are BRONZE under the harvest scope; the typed per-report record
-is SILVER; the continuation artifacts, sector templates, fund forms and typecast are GOLD (JSON), because they are
-firm-attributable derived judgments about the firm's own research. The PLATINUM report object is the addendum's and is
-NOT written here.
+is SILVER; the continuation artifacts, sector templates, fund forms and typecast are GOLD (JSON). The PLATINUM report
+object is the addendum's and is NOT written here. **TENANCY, stated so the sentence and the builder agree:** every tier
+of this project's surfaces lands in the GENERAL harvest home the builder prints
+(`s3://opal-data-harvest/amgt/harvest/`), verified by `3.0.0_SA_CVO~Z` running `address()` on all 8 store-writing
+manifest rows -- **8 of 8 print, 0 refuse.** v0.1 called the gold artifacts "firm-attributable", which reads as the
+FIRM-bucket tenancy of `infra/logic/02_DOCTRINE.md` R1-R21 and describes a different home from the one the builder
+returns. The word is struck: these are derived judgments about the firm's own research and they live in the harvest
+scope's general home, as the tier registry already rules.
+
+**C-NO-RAW-BRONZE-AT-SERVE.** Manifest rows R1 and R2 (report bytes and their extractions) are read by THIS project's
+derivation cells and by the addendum's analysis producer. **They are never a page read.** The page's prose comes from
+the addendum's platinum report object; a prior report reaches a reader as a CITED passage inside that object, never as
+raw bronze bytes streamed to the browser. This is stated because the bronze lands in a harvest pool the page adapter
+can reach, and "nothing serves it" was true by intention only until this line (`3.0.0_SA_CVO~Z` carry item 1).
 
 **C-NO-VENDOR-CALL.** Nothing in this project calls an external vendor API or the Claude API. Extraction is local
 parsing of files the firm already holds. (The message design and the cost card this project owns are DOCUMENTS; the

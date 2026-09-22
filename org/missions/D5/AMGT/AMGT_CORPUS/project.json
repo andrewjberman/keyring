@@ -32,8 +32,8 @@
   "prds": [
     {
       "path": "org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md",
-      "version": "v0.1",
-      "note": "L2 endpoint + L4 PRD, 2026-09-22, 1.0.0_SA_CTO~Z. Nine outcomes FWD-1..FWD-9 derived by printed SUBTRACTION over the brief's thirteen (7 wholly the AMGT_RESAPP addendum's, 4 split, 2 wholly here, 1 minted); 12 contracts; a 12-row surface manifest naming builder ARGUMENTS and no typed address (Rule 30); 5 substrate cards. L4-R owed on BOTH halves before any cell."
+      "version": "v0.2",
+      "note": "L2 endpoint + L4 PRD, 2026-09-22, 1.0.0_SA_CTO~Z. Nine outcomes FWD-1..FWD-9 derived by printed SUBTRACTION over the brief's thirteen (7 wholly the AMGT_RESAPP addendum's, 5 split, 1 wholly here, 1 minted); 13 contracts; a 12-row surface manifest naming builder ARGUMENTS and no typed address (Rule 30); 5 substrate cards. v0.1 REFUSED by 3.0.0_SA_CVO~Z on a broken brief pin and a self-contradicting O9 assignment; v0.2 fixes both and re-pins to 6c52138c2f (36,007 bytes), NOT to the ADD commit the refusal proposed, because the 113-byte delta is the Andrew word FWD-3/FWD-4 rest on. L4-R owed on BOTH halves before any cell."
     }
   ],
   "decompositions": [],
