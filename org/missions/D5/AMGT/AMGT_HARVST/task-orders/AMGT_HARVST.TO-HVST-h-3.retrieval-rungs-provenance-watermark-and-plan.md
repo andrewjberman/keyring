@@ -123,7 +123,7 @@ edited the package since):
      name. **Never delete an S3 object** (a delete needs Andrew's word) and **never edit `store.py`**, which is
      read-only for you.
 9. **New test file `lib/opal_data_harvest/test_retrieval_provenance.py`,** with STUB sessions and a STUB S3 client.
-   Exactly twelve arms:
+   Exactly thirteen arms:
    - `test_rung_recorded_per_publisher`
    - `test_search_provenance_query_rank_page`
    - `test_paging_stops_at_floor`
