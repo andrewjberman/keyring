@@ -34,8 +34,8 @@ python org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_Y/probe_y_foundation.py
 
 No persistent service, server-side condition evaluation, HTTP guard, worker
 restart, browser/export or live/vendor proof. All fourteen integrated criteria
-remain NOT_EVALUATED. P's consumption of repaired repository into `48e9f4d4a6`
-is COO~Y-reported, not separately tested by this retest.
+remain NOT_EVALUATED. COO~Y reports consuming the repaired P repository into
+`48e9f4d4a6`; that integration was not separately tested by this retest.
 
 ## Updated S7 review conditions
 

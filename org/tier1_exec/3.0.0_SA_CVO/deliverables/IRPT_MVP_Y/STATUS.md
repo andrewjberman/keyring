@@ -68,6 +68,14 @@ M amended inheritance pointer `e2f72a810a` and P separate alias finding R-P05
 `b333db1b48` received, with P bounded closure `f915ff0445`; none changes an
 integrated criterion grade here.
 
+CVO~M's exact 215114Z notice reports review `0d1c764fcf` against source
+`81785d9ae3`: original duplicate/root/weight cases repaired, but per-account
+80/120 versus 100/100 roots can cancel to reconciled=true; nested model200 below
+sleeve100 remains reconciled=true; INF custody-only current_value=None becomes
+ACCOUNT0. These are M-reported findings, not independently rerun by Y. COO~M
+is repairing; accepted actual-position/source evidence and M/S2 acceptance remain
+outstanding. Y will not infer accepted custody input from submitted suite counts.
+
 ## Next executable review and dependencies
 
 COO~Y supplies exact candidate/worktree pins, interfaces, queue/build configuration,
