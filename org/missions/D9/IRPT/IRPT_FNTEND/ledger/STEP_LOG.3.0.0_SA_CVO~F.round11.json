@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0",
+  "project": "IRPT_FNTEND",
+  "round": 11,
+  "seat": "3.0.0_SA_CVO~F",
+  "written_utc": "2026-09-22T05:15:46Z",
+  "trigger": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v8.md@631b1308cb; intake msg99394",
+  "rows": [
+    {
+      "seq": 1,
+      "limb": "L8",
+      "started_utc": "2026-09-22 (per-act start not retained; after 04:42Z intake)",
+      "ended_utc": "2026-09-22 (before 04:55Z)",
+      "act": "Read only the exact round-11 packet, identified COO~F and the assigned L8/L9 act, and compiled all 14 pending channel items rather than only the packet's 13 worker rows.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "99394: 20260922T044200Z_2.0.0_SA_COO_F__DRIVE_IRPT_FNTEND_round_11__L8_packet__.md"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "round-11 issuance 730c75ee87; PRD v0.9@5fd2dc9ab5; decomp v0.11"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md@631b1308cb"
+        }
+      ],
+      "spine_clause": "L8 compilation; canonical-flow receiving check; section 2 CVO owner",
+      "note": "Startup already established exact seat; remeasured GREEN 9/9, no new helpers. Nine receiving checks ACCEPT; exact expected-ID checks VALID across 116 rows. Gate helper 0 open / 73 project orders. S70 is the additional parked item."
+    },
+    {
+      "seq": 2,
+      "limb": "L9",
+      "started_utc": "2026-09-22 (per-act start not retained; after 04:42Z intake)",
+      "ended_utc": "2026-09-22 (before 05:01Z)",
+      "act": "Independently reviewed source and delivered captures, reran the full frontend suite/typecheck, and exercised production instrument functions with controlled DOM/style records.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "portal@5c8a9ba9c264218e3edcd3649d4270f549e98172"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "worker proof/result/capture instances at workspace d20200b92c"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md@631b1308cb"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_PROBES_20260922.mjs@631b1308cb"
+        }
+      ],
+      "spine_clause": "L9 independent adjudication",
+      "note": "627 pass/22 skip/0 fail; typecheck 0. Probe reproduces white false ground for gradient and opaque OKLCH, and missing-selector inequality PASS null. Not a new browser render or backend crossing. Portal artifact pins separately resolved in correct repository. Recoverable quoting/path/router errors disclosed in report."
+    },
+    {
+      "seq": 3,
+      "limb": "L9",
+      "started_utc": "2026-09-22 (before 04:55:32Z row timestamp)",
+      "ended_utc": "2026-09-22 (before first commit attempt)",
+      "act": "Appended 21 CVO carriers, graded nine judgments, authored 18 remediation rows, and advanced only S69's prior remedy clock.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "FE-s-65..73 orders and proofs@d20200b92c"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/adjudications/ADJUDICATION_v3.md@631b1308cb"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v8.md@631b1308cb"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v7.md@631b1308cb"
+        }
+      ],
+      "spine_clause": "L9 dispositions, judgment grades and two remedy clocks",
+      "note": "14 incoming items disposed (12 graduated, two dismissed); six own findings graduated; seven PASS/two FAIL grades (F65-AC18, F71-AC17). New slug 12 OPEN/six REMEDIATED. S69 independently closes. Draft-07 checks PASS; 23 previous adjudication objects preserved."
+    },
+    {
+      "seq": 4,
+      "limb": "L10",
+      "started_utc": "2026-09-22 (before 05:03:50Z)",
+      "ended_utc": "2026-09-22 (before retry)",
+      "act": "Attempted exact-five-path safe-commit; received standing-corpus refusal from unrelated backend S117, without modifying that row.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v8.md@631b1308cb"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "surprise-corpus REFUSED: two NEW IRPT_BCKEND-S117 tuples 095691afd48b and 0a98b05b10ce; four baseline failures unchanged"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md@631b1308cb"
+        }
+      ],
+      "spine_clause": "canonical-flow live-gate exception and exact-path safe-commit",
+      "gate_or_notifier_touched": "surprise-row-gate initial refusal; all 21 new frontend adjudications and 18 remedies checked, every L10 precondition admitted",
+      "note": "The only refusal was the unrelated standing corpus; gate also disclosed 67 stale owned OPEN remedies, explicitly non-refusing. No backend edit or baseline adjustment."
+    },
+    {
+      "seq": 5,
+      "limb": "L10",
+      "started_utc": "2026-09-22 (after initial refusal)",
+      "ended_utc": "2026-09-22 (before 05:13:40Z delivery)",
+      "act": "Retried exact-five-path safe-commit with documented audited override declaration; committed 631b1308cb after both retry passes actually passed normally.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND11_L8_L9_20260922.md@631b1308cb"
+        },
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v8.md@631b1308cb"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v8.md@631b1308cb"
+        },
+        {
+          "kind": "GATE_OUTPUT",
+          "ref": "surprise-corpus retry stage and final hook: baseline four known, zero new, zero resolved; row gate OK; missions-tree-check zero violations"
+        }
+      ],
+      "spine_clause": "L10 preconditions; canonical-flow documented audited override",
+      "gate_or_notifier_touched": "Audited declaration in commit message; no refusal had to be overridden on either retry pass",
+      "note": "Backend mismatch cleared concurrently. Commit 631b1308cba0f9f983c48b6bfaff732d930dd66c contains exactly five frontend/CVO files. Generic commit gate 0/5 coverage is not frontend validation. Gate: 73 orders/0 open and 290 investigation items/0 undispositioned."
+    },
+    {
+      "seq": 6,
+      "limb": "L10",
+      "started_utc": "2026-09-22T05:13:40Z",
+      "ended_utc": "2026-09-22T05:13:40Z",
+      "act": "Delivered the single pinned remediation slug to CTO with grades, evidence limits, remaining defects, gate exception history and stale-backlog warning.",
+      "inputs": [
+        {
+          "kind": "ARTIFACT",
+          "ref": "org/missions/D9/IRPT/IRPT_FNTEND/surprise-channel/remediations/REMEDIATION_v8.md@631b1308cb"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "Filesystem delivery to 1.0.0_SA_CTO: 20260922T051340Z_3.0.0_SA_CVO_F_L10_IRPT_FNTEND_round_11_adjudication_an.md"
+        }
+      ],
+      "spine_clause": "L10 one slug to CTO; section 2 role exclusivity",
+      "note": "codex-send exit 0, seat identity/fresh liveness checked; expected unregistered one-shot advisory, no second registration. No mid-round ACK, worker message, push, deploy or gitlink change. Portal remains 5c8a9ba9."
+    },
+    {
+      "seq": 7,
+      "limb": "L10",
+      "started_utc": "2026-09-22 (after 05:13:40Z successful delivery)",
+      "ended_utc": "2026-09-22T05:13:57Z",
+      "act": "Moved only the exact processed packet into the exact seat's read directory, after checking source present and destination absent.",
+      "inputs": [
+        {
+          "kind": "MESSAGE",
+          "ref": "99394"
+        }
+      ],
+      "outputs": [
+        {
+          "kind": "RECORD",
+          "ref": "org/mcp/inbox/3.0.0_SA_CVO/~F/read/20260922T044200Z_2.0.0_SA_COO_F__DRIVE_IRPT_FNTEND_round_11__L8_packet__.md (device-local, gitignored)"
+        }
+      ],
+      "spine_clause": "Codex runtime archive-after-act; L10 successful handoff",
+      "note": "Verified original absent and read destination present. Five committed output paths clean. No other inbox message body read."
+    }
+  ]
+}
