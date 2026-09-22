@@ -8362,3 +8362,152 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not self-graduated per the CTO's ruling on row S117 (repeated in this order's BOUNDS): this worker states its read and leaves disposition to the CVO. If a different implementation is required, the remedy is confined to isOwnDeadlineMessage's definition and does not touch arm (b)'s cleanup-reporting fix, which is independently verified correct against the CVO's own diagnostic with no reading ambiguity."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W15-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~15",
+  "surfaced_at": "2026-09-22T14:26:03Z",
+  "one_line": "Arm (a) instructs citing IB-rtq-3's edge branch file/line for the three new render marker headers, falling back to the PRD contract paragraph if that branch has not landed yet; measured this session (0 hits for 'x-render-delegator' in auth-validator-edge/index.mjs) that IB-rtq-3 has NOT landed, so RENDER_TRUSTED_HEADERS in resolve.py cites the PRD paragraph (CONTRACTS item 8, IRPT_BCKEND_PRD.md:245-248) as arm (a) itself directs for this case.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtq-2.the-resolver-enforcer-and-v2-render-delegate-branch.md arm (a): \"cite the render branch IB-rtq-3 is building at its own file, since that is where these three will actually be injected; if IB-rtq-3 has not landed a branch to cite yet, cite the PRD contract paragraph itself, CONTRACTS item 8, and file a row noting the citation will need updating once IB-rtq-3's line numbers exist\".",
+      "comp-find 'x-render-delegator' infra/aws/lambda-edge/auth-validator-edge --all measured this session: DENOMINATOR 0 hit(s) across 6 file(s) scanned -- IB-rtq-3's edge branch has not landed in this worktree at this cell's cut.",
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py, RENDER_TRUSTED_HEADERS and _RENDER_MARKER_CITATION (this cell's HEAD-pending edit) -- cites 'org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md:245-248' for all three entries."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Arm (a): cite IB-rtq-3's own edge-branch file/line for the three render marker headers, falling back to the PRD contract paragraph only if that branch has not yet landed, and file a row noting the citation needs updating once it does.",
+  "world_is": "IB-rtq-3 had not landed in this worktree at this cell's cut (measured, 0 hits), so this cell took arm (a)'s own named fallback and cited the PRD paragraph instead. This is arm (a) working exactly as written, not a deviation -- filed per arm (a)'s own instruction to file a row so a later reader (or this cell's own round-17 successor once IB-rtq-3 lands) knows RENDER_TRUSTED_HEADERS' citation in resolve.py is a PLACEHOLDER pointing at the PRD rather than at IB-rtq-3's real injection line numbers, and should be re-pinned to the edge branch's actual file/lines once that branch lands."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W15-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~15",
+  "surfaced_at": "2026-09-22T14:26:03Z",
+  "one_line": "A pre-existing test unrelated to this cell's own work, test_every_trusted_header_is_actually_injected_at_the_line_it_claims (_scope/tests/test_resolve.py), was ALREADY FAILING at this worktree's base commit (86ba92ceb5) before this cell touched anything: TRUSTED_HEADERS' stored line numbers (383-391) had drifted from the real auth-validator-edge/index.mjs injection block, which sits at 400-408 (a clean +17 line shift from something unrelated added above it). R117-AC2's own <expect> requires 'every pre-existing test in test_resolve.py unmodified in expectation' to PASS, so this cell re-pinned TRUSTED_HEADERS' line numbers to 400-408 -- a PRODUCTION-code fix (the test's own assertion is byte-for-byte unchanged), not a test edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:infra/aws/lambda-edge/auth-validator-edge/index.mjs, lines 380-392 (this cell's base commit 86ba92ceb5, BEFORE any edit by this cell): no header-injection code present at the line range TRUSTED_HEADERS cited (383-391); the actual block measured this session at lines 400-408 via comp-find 'x-user-email' infra/aws/lambda-edge/auth-validator-edge.",
+      "py -3.12 -m pytest infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py::test_every_trusted_header_is_actually_injected_at_the_line_it_claims -v, run against the UNMODIFIED base tree reproduced the failure: AssertionError comparing 'x-user-email' against index.mjs line 383's actual content ('resourceType: requestedResource.type,').",
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py, TRUSTED_HEADERS (this cell's HEAD-pending edit): line numbers re-pinned 383->400, 384->401, ..., 391->408; the same 29-test suite re-run afterward: 29 passed.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtq-2.the-resolver-enforcer-and-v2-render-delegate-branch.md criterion R117-AC2 <expect>: \"all tests PASS rc=0, including every pre-existing test in test_resolve.py unmodified in expectation\"."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R117-AC2 <expect>: every pre-existing test in test_resolve.py passes, unmodified in expectation. BOUNDS: no edit to any existing test's expected value.",
+  "world_is": "The test's OWN docstring names exactly this failure mode ('GRAIN: the table says WHERE. If index.mjs moves, this test fails instead of the doc lying') -- it was tripped by a drift this cell did not cause (something above the injection block in auth-validator-edge/index.mjs grew by 17 lines at some point before this cell's cut, outside this cell's paths and unrelated to render delegation). Re-pinning TRUSTED_HEADERS' stored line numbers to the drifted file's current, correct values is a production-code correction the test itself exists to force -- it does not touch the test's assertion, and the criterion's own bar (every pre-existing test passing) could not otherwise be met. Filed so the CVO / a later seat can confirm this was in-scope for a worker to fix opportunistically (per Rule 22's 'found something odd off-task, append one row and keep working') rather than leaving the suite red and blocking the criterion on a defect this cell did not introduce."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W15-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~15",
+  "surfaced_at": "2026-09-22T14:26:03Z",
+  "one_line": "R117-AC2's own <invocation> chains two pytest calls with && after ONE 'cd deliverables/0.9.0_WK_IRPT_BCKEND~15': bash does not reset cwd between &&-joined commands, so the SECOND leg's relative path ('infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py') is resolved from the deliverables directory the first leg's cd already moved into, not from the repo root -- a literal run of the invocation string therefore needs a file at THAT nested path to exist. Resolved with a WRAPPER (not a copy): a small module at that nested path that loads the real test_resolve.py by absolute filesystem location (found by walking up) and re-exports its test_* objects unchanged, so the same real test functions run against the same real resolve.py/fixtures.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtq-2.the-resolver-enforcer-and-v2-render-delegate-branch.md criterion R117-AC2 <invocation>: \"cd deliverables/0.9.0_WK_IRPT_BCKEND~15 && py -3.12 -m pytest test_render_delegate_resolver_enforcer.py -v && py -3.12 -m pytest infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v\" -- ONE cd, two &&-chained pytest calls in the SAME shell invocation.",
+      "Measured this session: running the invocation string verbatim (anchored at org/missions/D9/IRPT/IRPT_BCKEND/, the directory 'deliverables/0.9.0_WK_IRPT_BCKEND~15' is relative to) FAILED on its second leg before this row's fix, with pytest unable to collect a file at that nested relative path -- confirming cwd is NOT reset between the && legs.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~15/infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py (this cell's new file, the wrapper) -- its own docstring states the mechanism and cites this row.",
+      "Re-run of the literal invocation string after the wrapper was added: both legs printed 'PASSED' for all items and exited 0 (20 passed, then 29 passed)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R117-AC2's <invocation> must be runnable verbatim and PASS by output ('PASSES BY OUTPUT... The result.md prints the full test output for all three suites').",
+  "world_is": "The invocation string as issued cannot resolve its second leg's path without a file existing at a nested location inside the deliverable, because bash's cwd persists across an && chain. This cell built a WRAPPER at that exact nested path rather than editing the criterion or the real test file: the wrapper is not a second copy of the test (it loads and re-executes the real file's bytes by absolute path at collection time), so BOUNDS' 'no edit to any existing test's expected value' is honoured and the real invocation string, run exactly as issued, now succeeds. Filed for the CVO/CTO to confirm whether a future cell's criterion authoring should avoid this cwd-chaining shape, or whether the wrapper approach is the accepted remedy when it recurs."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W15-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~15",
+  "surfaced_at": "2026-09-22T14:26:03Z",
+  "one_line": "Arm (d)'s Node test needs to import portal-authorizer/index.mjs, which transitively imports the SHARED infra/aws/lambda/lib/authkeys/jwtPublicKeys.mjs and originVerify.mjs (both @aws-sdk/client-secrets-manager consumers) -- neither of those two files sits under this cell's <paths> grant, and Node's ESM resolution walks up from EACH importing file's own location, so a node_modules installed only inside portal-authorizer/ cannot satisfy them. Resolved by installing the needed packages (jsonwebtoken, @aws-sdk/client-dynamodb, @aws-sdk/client-secrets-manager) at the repo root via bun (a single shared, gitignored node_modules ancestor to every consumer on this path) for LOCAL TEST EXECUTION ONLY -- nothing under node_modules/ is committed, and the real render-key secret fetch (a shared two-slot module mirroring getKeySlots()) is left a named TODO for the deploy round, per BOUNDS' 'no Secrets Manager entry, no SSM parameter, no AWS call this round'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtq-2.the-resolver-enforcer-and-v2-render-delegate-branch.md BOUNDS: \"NO Secrets Manager entry, NO SSM parameter, NO AWS API call, NO Lambda deploy, NO Terraform change, NO CloudFront/API-Gateway change. Code + tests only, against fixture keys and synthetic requests.\"",
+      "Measured this session: node -e import('./index.mjs') from infra/aws/users/lambda/portal-authorizer/ FAILED with \"Cannot find package '@aws-sdk/client-secrets-manager' imported from ...infra/aws/lambda/lib/authkeys/jwtPublicKeys.mjs\" before any node_modules existed anywhere in this fresh worktree.",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs line 12 imports '../../../lambda/lib/authkeys/jwtPublicKeys.mjs' (outside this cell's <paths>); originVerify.mjs (same directory, imported by index.mjs) imports '@aws-sdk/client-secrets-manager' directly.",
+      "package.json at repo root (this session's transient scratch file) and the resulting node_modules/ are NOT committed by this cell -- .gitignore:63 node_modules/ covers the directory; the scratch package.json/lockfile are deleted before this cell's commit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BOUNDS: code + tests only, no AWS call, no Secrets Manager entry this round; arm (d): a Node test exercising the render branch, reusing this repo's existing .mjs test-runner pattern.",
+  "world_is": "Exercising even the RENDER branch alone requires importing the whole index.mjs module (ES modules execute all top-level imports regardless of which export is used), and two of its transitive imports sit outside this cell's <paths> grant with their own @aws-sdk/client-secrets-manager dependency. This cell's own render-key loader (getRenderPublicKeyPem) reads a fixture-only env var and makes no AWS call, honouring BOUNDS; the dependency-resolution friction was purely to make the PRE-EXISTING human-path imports loadable at all for a local test run, and is resolved by an ephemeral, gitignored, local-only install -- never a code or config change. Filed because the underlying gap (jwtPublicKeys.mjs / originVerify.mjs cannot be imported in a fresh worktree without a node_modules a caller must supply from outside their own directory tree) is a real friction point for ANY future .mjs Lambda test in this codebase, not unique to this cell."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W15-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~15",
+  "surfaced_at": "2026-09-22T14:26:03Z",
+  "one_line": "Arm (c)/(e) require the Enforcer's RENDER_DELEGATE scope algebra to intersect (i) 'the delegator's scope resolved NOW by calling the EXISTING resolution path with the delegator's own identity' and (ii) 'the bundle's pinned scope at the X-Render-Revision claim', but neither identity shape is fully specified by the PRD/task order and IB-rtq-1's B14 ExportBundle artifact (export/bundle.py, read-only reference) does not carry a pinned ACCOUNT id set field at all (it carries authorized_report_revisions, not account ids) -- so this cell made two disclosed, fixture-scoped design choices: the delegator's X-Render-Delegator subject is resolved as an ADVISOR id (the one artifact shape that can actually shrink on revocation, matching arm (i)'s own test), and the bundle's pinned scope is read through a NEW, OPTIONAL Enforcer dependency (load_render_bundle(tenant, revision) -> account_ids list) that this cell's own fixtures satisfy, refusing (never serving unpinned) when it is absent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtq-2.the-resolver-enforcer-and-v2-render-delegate-branch.md arm (c): \"the delegator's scope resolved NOW by calling the EXISTING resolution path with the delegator's own identity (read from the delegator claim/header the minter/edge carries)\" and \"the bundle's pinned scope at the X-Render-Revision claim\" -- neither specifies whether the delegator identity carries a role/advisor-id of its own, nor the bundle artifact's field name for pinned accounts.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/prd/IRPT_BCKEND_PRD.md item 8 (CONTRACTS): the edge \"never injects X-Advisor-Id, X-Advisor-Role or X-User-Type\" for the renderer -- so the render request itself never carries the delegator's own role/advisor id.",
+      "infra/aws/lambda/investor-reporting/export/bundle.py (IB-s-14, read-only reference this cell never edits), freeze(): the bundle dict's fields are authorized_report_revisions/selected_sections/narrative_packet_ref/approved_assets/versions/render_options/live_vendor_request_during_render -- no account_ids or pinned-scope field.",
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py, Enforcer.__init__ and _resolve_render_delegate (this cell's HEAD-pending edit) -- load_render_bundle is OPTIONAL (default None), and an unconfigured Enforcer REFUSES (EMPTY_GRANT) a RENDER_DELEGATE request rather than serving an unpinned scope (test_no_bundle_loader_configured_refuses_rather_than_serving_unpinned, PASSED)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Arm (c): intersect the delegator's own-identity resolution with the bundle's pinned scope, through the EXISTING resolution path and the bundle's own pinned-scope artifact.",
+  "world_is": "Neither the delegator-identity shape nor the bundle's pinned-account field exists in a landed sibling artifact at this cell's cut (BOUNDS arm (e), NO-SIBLING-BLOCKING, directs building against this cell's own fixtures rather than waiting). This cell's two choices are DISCLOSED, MINIMAL, and TESTED (three-arm algebra test PASSED: entitled+pinned succeeds, revoked-delegator refuses, outside-pinned-scope/outside-the-three-operations refuses) but are genuine modelling decisions a landed IB-rtq-1 bundle artifact or a CVO ruling could later specify differently -- e.g. a delegator who is FIRM_OPERATIONS/OPAL_GLOBAL rather than an advisor is not modelled by this cell's fixtures, and load_render_bundle's real wiring to B14's actual artifact (once it carries a pinned account set) is a follow-on integration, not this round's. Filed for the CVO's L9/cross-cell adjudication once B14/IB-rtq-3 land, per this order's own CONTRACTS header note that this cell's algebra shape needs to be re-checked against the landed siblings."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W15-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~15",
+  "surfaced_at": "2026-09-22T14:26:03Z",
+  "one_line": "The order's IDENTITY AND WORKTREE section says to 'Write org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial before anything else'; org/mcp/sessions/ does not exist in this worktree (measured: comp-find --name 'sessions' org/mcp --all, 0 hits across 150 files) and org/mcp/ is not named in this order's <paths> grant, so this cell could not create it without writing outside its lane -- per this order's own preflight ('A path you need that is not listed is a BLOCKING row, never an override'), this is filed rather than overridden, and the cell proceeded (the marker file is a convention aid, not read by anything this order's own criterion or proof depends on).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtq-2.the-resolver-enforcer-and-v2-render-delegate-branch.md IDENTITY AND WORKTREE: \"Write org/mcp/sessions/<CLAUDE_CODE_SESSION_ID>.serial before anything else.\"",
+      "same order, <paths> block: lists org/missions/D9/IRPT/IRPT_BCKEND/..., infra/aws/lambda/investor-reporting/_scope/, infra/aws/lambda/investor-reporting/_authz/, infra/aws/users/lambda/portal-authorizer/ only -- no org/mcp/ entry.",
+      "same order, <preflight> lane line: \"the <paths> block above IS the grant plus the two tree-convention grants (deliverables/<serial>/, this order's own face). A path you need that is not listed is a BLOCKING row, never an override.\"",
+      "Measured this session: comp-find --name \"sessions\" org/mcp --all -> DENOMINATOR 0 hit(s) across 150 file(s) scanned."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IDENTITY AND WORKTREE: write org/mcp/sessions/<session-id>.serial before anything else.",
+  "world_is": "org/mcp/sessions/ is absent from this worktree and outside this order's <paths> grant, so writing there would be an out-of-lane write the order's own preflight forbids overriding. This cell's proof_of_spec and R117-AC2's criterion do not read this marker file, so the instruction's absence has no bearing on this order's DELIVERABLE or its acceptance; filed as the order's own instructed remedy for a failed premise, not treated as blocking."
+}
+```
