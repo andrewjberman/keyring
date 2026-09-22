@@ -1,0 +1,10 @@
+Bounded CRO owner verdict: PASS for the exact pending registry candidate 587e782bc6 and generated evidence 3c14153eeb only.
+Committed immutable report/evidence pin: 4d6a4338aed7f6a3623b8b3f3c195a19338fd39e
+Report: org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/REVIEW.md
+
+Independently verified 12 families/3 private firms/10 state + 2 platinum, exact retention metadata, 36 writer refusals/36 private nonwritable previews, 7 negatives, 9 unchanged default homes, 34 semantic/provenance checks. Targeted suite 60 passed; registry validate rc0 with 33 inherited warnings. Non-IRPT scope fields and five incumbent registry blobs unchanged; fresh shared-source comparison pinned in report.
+Ten generated carriers independently regenerated at both pins: 20/20 inventory hashes match; nine stamp-only candidate deltas, five Python ASTs equal, exactly four IRPT Terraform mappings. Harvest/formatting drift independently reproduced from unchanged baseline; no carrier overwritten. Naming owner must disposition inherited drift separately and reconcile fresh shared state before integration.
+CRO core naming suite: both 80 passed/same 5 failed/8 deselected (85/93 cases). Full 93-case 88/5 result is separately cited CVO evidence eb00a0c6b2, not claimed as CRO full-suite execution. Initial incomplete snapshot/temporary-directory harness errors are retained and explained, not candidate defects.
+
+Report contains the full recorded-versus-enforced condition matrix. ACTIVE reference checking is syntactic, not proof of accepted enforcement. Pending remains non-writable; runtime authorization, source secrecy/versioning, retention/dependency/clock races, IAM, physical disposal and full S7 remain unproven. CVO-reported P-lane R-P07 remains open; this owner PASS does not clear it. No source repair, integration, deployment or product PASS.
+Proof path: org/tier1_exec/4.0.0_SA_CRO/deliverables/IRPT_X10_REGISTRY_REVIEW_20260922/IRPT-X10_REGISTRY_REVIEW_20260922.proof_of_spec.json. Final delivery receipts, bound validation and proof commit are being completed after these three report notices; final proof pin follows.
