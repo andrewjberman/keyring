@@ -454,7 +454,7 @@ its test, and `test_m1_move.py` (it pins `raw/seekingalpha` at :217/:223 -- foun
 baselines re-measured to the state M2 left; carry-along admitted by hash; rk-90/rk-91 issuer-text lessons carried
 (policy-sha formula, deploy_ledger/safe-apply CLIs, one-or-more builds, one pytest per directory).
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>
