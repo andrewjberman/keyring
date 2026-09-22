@@ -112,11 +112,11 @@ and L9 is its evidence receipt. No extra message to COO or worker was sent.
     "owner": "2.0.0_SA_COO~B",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W9-S3",
@@ -201,11 +201,11 @@ and L9 is its evidence receipt. No extra message to COO or worker was sent.
     "owner": "2.0.0_SA_COO~B",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W11-S1",
@@ -224,11 +224,11 @@ and L9 is its evidence receipt. No extra message to COO or worker was sent.
     "owner": "2.0.0_SA_COO~B",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-C-S153",
@@ -273,11 +273,11 @@ and L9 is its evidence receipt. No extra message to COO or worker was sent.
     "owner": "2.0.0_SA_COO~B",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-C-S156",
@@ -297,17 +297,16 @@ and L9 is its evidence receipt. No extra message to COO or worker was sent.
     "owner": "2.0.0_SA_COO~B",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~B",
       "round": "v9"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~B",
-      "at": null
+      "at": "2026-09-22T02:25:47Z"
     }
   }
 ]
 ```
-
