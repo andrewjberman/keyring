@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~18</issued_to>
 <issued_by>2.0.0_SA_COO~B</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **Round:** 18 | **PRD:** `../prd/IRPT_BCKEND_PRD.md` v0.17 @`4f942b7657` | **Decomp cell:** `IB-rtr-2` (`../decompositions/IRPT_BCKEND_DECOMP.md` v0.22, s.R18.1) | **outcome_ref:** FWD-2 (own) | **Rows:** `IRPT_BCKEND-C-S201`, `IRPT_BCKEND-C-S210` | **Ruling:** CTO's round-17 analysis, msg 99542, ruling R18-b | **Reference (READ-ONLY, never edited by this cell):** `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_R17_PROBE.mjs` (the CVO's own probe -- it minted a render token carrying each forbidden claim against the real V2 handler and got `isAuthorized: true` four times; your fix must flip that to `false` four times)
 
