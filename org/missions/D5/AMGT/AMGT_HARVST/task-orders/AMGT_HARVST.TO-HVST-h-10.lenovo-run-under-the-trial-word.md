@@ -48,6 +48,15 @@ through the entire pipeline. Let's do every single thing for Lenovo and use that
   from the run's event ledger (zero `http` events).
 - The second run in item 7 is NOT a vendor run: it runs with the network REFUSED.
 
+**THE SESSION STATE, MEASURED BY THE ISSUER WITHOUT ANY NETWORK CALL (2026-09-22 ~19:2xZ):** every session artifact in
+the desktop runtime is dated **2026-09-15**, about **7.6 days** old (23 files; newest `barrons-challenge-url.dpapi` at
+04:58Z, the `auth/` dir holding three 2026-09-15 envelopes). A publisher may therefore be logged out.
+- **That changes nothing about the one-run rule.** A logged-out publisher is recorded UNRESOLVED with the run's own
+  status and is NOT retried.
+- **Record each publisher's auth verdict in `first_run.summary.json` BEFORE any listing or article call**, as
+  `auth_verdicts`, so a wasted leg is legible and Andrew can decide whether to re-spend.
+- Do NOT attempt a browser sign-in, a session repair or a credential entry. That is an operator act, not yours.
+
 **THE ORDER OF ACTS:**
 1. **Resolve Lenovo.**
    - Look for `992_HK_Equity` in the universe file named by `config.json` `universe_source`. If it is present, use
@@ -142,7 +151,8 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
   matches what was received, with every UNRESOLVED publisher carrying its reason?
 - Record AC5 as `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming the CVO.
 - `first_run.summary.json` and `second_run.summary.json` are files YOU write from the run records, each carrying the
-  fields AC3 and AC4 read.
+  fields AC3 and AC4 read. `first_run.summary.json` also carries `auth_verdicts`, one entry per publisher, written
+  before any listing or article call.
 
 ## 6. WHEN YOU ARE DONE
 1. Write the instance to
