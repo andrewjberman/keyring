@@ -151,7 +151,7 @@ criterion passes, commit with `--only`, and report once.
 4. CHAINED: rk-112 edits this same module and is spawned only after this cell drains.
 5. No new security_key dependency.
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~109</slot>
 <fabric>site-z</fabric>
