@@ -35,3 +35,14 @@ Andrew, direct user channel during setup, approximately 16:43 Eastern (exact mes
 New lanes must incorporate these final accepted source pins before shared integration. This confirms the transition, not a restart of B/F canonical progression. MSTR separately raised the historical three-COO capacity limit as information, explicitly not a gate; P/M/Y are direct implementers without new nested workers. No B/F session was terminated by the CTO.
 
 All three new COOs independently reported the same startup defect: the generated role list required 1,585 COO root files, including 1,539 historical drive logs. The canonical loader now supports a checked-in exact-seat manifest at `org/mcp/codex-seat-role-files.json`. For these six seats it emits six ordered relevant files, preserving mandatory base README/prompt, serial, role home, inbox and runtime. Other seats retain their prior reading behavior. Tests cover scope selection, identity, order, missing/invalid/escaping/duplicate paths and legacy fallback. Rerun the ordinary load helper to consume the corrected manifest; no runtime restart or substitute startup mechanism is required.
+
+## CTO governance retained
+
+Andrew, direct user channel during setup, approximately 16:48 Eastern (exact receipt timestamp unavailable), verbatim:
+
+```text
+I need you to retain governance and oversight on the efforts of these agents. I have the newest compile doc from COO~B as well: (org\missions\D9\IRPT\IRPT_BCKEND\ledger\IRPT_BCKEND_ROUND18_L8_COMPILE.md)
+Wrote 52 lines to org\missions\D9\IRPT\IRPT_BCKEND\ledger\IRPT_BCKEND_ROUND18_L8_COMPILE.md.
+```
+
+CTO retains cross-lane governance, dependency resolution, shared-surface adjudication, integrated evidence review and final completion decision. `OVERSIGHT.md` carries the current control record, inherited B/F gates and escalation ownership. This does not restart the held old canonical cycles or replace independent CVO judgments.
