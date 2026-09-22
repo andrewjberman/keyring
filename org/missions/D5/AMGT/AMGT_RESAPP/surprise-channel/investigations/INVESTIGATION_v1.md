@@ -11350,6 +11350,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "Order s.1 item 4 (design source) and the RULED build section: \"Every SERP bronze put passes metadata={\\\"received-form\\\": \\\"bd-raw-body\\\"}\" -- a literal value, stated as a RULING.",
     "world_is": "That exact literal string cannot be committed on this branch: `.tools/naming-gate.py` (LGIC_ENFORCE DEC-6, wired into `.tools/safe-commit.sh`, ENFORCE mode) refuses any NEW hand-typed string containing the standalone segment 'bd' as an unrouted carrier of firm 49financial's REFUSED 'bd' alias -- a registry fact this order's preflight (comp-schedule/comp-iam/comp-adversary, all DECLARED-NOT-APPLICABLE) never names and this worker's <paths> grant does not permit fixing at the registry (infra/logic/registry/scopes.json, .tools/naming-gate.py) or order level.",
     "notes": "Not blocking: the substitute value is committed and every criterion still PASSES exactly as measured. Flagging for the issuer/CTO in case `bd-raw-body` (or any other 'bd'-segmented received-form token) is reused verbatim by a sibling or move-cell order -- the same refusal will recur identically on any branch until either the registry gains a non-colliding spelling for Bright Data or every such order is worded to avoid the standalone 'bd' segment."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S212",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "1.0.0_SA_CTO~Z",
+    "surfaced_at": "2026-09-22T01:40:00Z",
+    "one_line": "AMGT-rk-90 (move M1) wrote THREE new versions of research/opal-amgt-scoped-api.zip (Wy1tJiFf 00:53:32Z, Bx1TMI7B 00:53:57Z, sDVQikwG 01:08:18Z) where both halves of its signed pair named exactly ONE -- the extra builds came from the worker's same-turn fix of a packaging defect (W90-S3, build_view.py importing lib.opal_naming outside the adapter closure). The blast radius did not widen (same key, same function, same statement set), but the pair's literal count was exceeded without a pair amendment.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions research/opal-amgt-scoped-api.zip: latest sDVQikwGJ8wx.S5LsmFJa9iCXi21l1X2 (01:08:18Z), then Bx1TMI7Bv49kI4n3G5OWRtw1jCirISnL (00:53:57Z), Wy1tJiFfQwm.TpOgfLTegwguJwpSu5t9 (00:53:32Z), then the pre-act .BKJHDt8u.NTMdFQHOGf6pgAVdXpE52f (19:15:22Z) -- 3 new versions",
+        "lambda get-function-configuration opal-amgt-scoped-api: CodeSha256 stDlDaeGVAKaAqI7tNoVKrqlu0WjqIbWnnjLirl8Lec=, LastModified 01:14:12Z",
+        "NEVER_WIDEN_ROUND22_RK90_COO_HALF.md (B2) and _CTO_HALF.md s.2: 'ONE new version' / 'one new adapter artifact version and one targeted apply'",
+        "S3 objects exactly as signed, read by this seat: bloomberg/harvest/bronze 110, amgt/harvest/state/pull_log 9, raw/bloomberg 119 newest 16:25:37Z (the window condition held)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-1: a sign-off names the act's blast radius; both halves named one artifact version and one apply.",
+    "world_is": "Three artifact versions and (per the worker) more than one apply landed; the surface and the rollback target (.BKJHDt8u, still present) are unchanged.",
+    "notes": "No harm: rollback target intact, every object count as signed, freshness 0 regressions (COO msg 24132). Remedy is a cutting rule, not a revert: a move pair names its redeploy as 'one or more builds of this one artifact key, rollback to the pre-act VersionId' so a same-cell rebuild after a packaging fix is inside the pair, and a worker that rebuilds records each version. M2/M3's halves adopt that wording."
   }
 ]
 ```
