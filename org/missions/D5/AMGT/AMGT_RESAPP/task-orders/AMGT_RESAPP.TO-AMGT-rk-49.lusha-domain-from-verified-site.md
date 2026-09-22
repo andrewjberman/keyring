@@ -293,6 +293,12 @@ never `git stash`, never `git show :path`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**PARTIAL SUPERSEDE (2026-09-22, CTO ruling msg 24263, on the COO's round-28 issuance note 2):** this order's
+DOMAIN-FROM-VERIFIED-SITE half is SUPERSEDED by `AMGT-rk-110` (round 28), drained @`1c8140c9d8`. With no domains.json
+row, `enrich.domain_for` / `lusha._cli` now fall back to `verified_domain_for(source_object)`, and never to
+`ceo_public_profile` or a seed URL. The REMAINDER of this order (the live Lusha enrichment, gated on the key ROTATION)
+stays HELD, and its status stays open until Andrew says the key is rotated. The `wk-amgt-14-50` worktree is untouched.
+
 <status>pending</status>
 <round>14</round>
 <slot>~50</slot>
