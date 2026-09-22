@@ -12492,6 +12492,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "build_universe.py:918's document (the union object) is a structurally different shape than crosswalk.schema.json describes; validating it against that schema does not discriminate conforming-from-nonconforming UNION documents -- it refuses ALL of them, unconditionally, because the schema was written for a different object entirely. Complying literally would silently convert every future --write-pool union publish into a refusal, which is a worse outcome than the ungated status this row leaves in place. AC2/AC3/AC4 are graded against the ACTUAL (build_universe.py unchanged) state, not the amendment's literal file list.",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "Two ways to close this legitimately, both requiring a grant this cell does not have: (1) a schema for the union document, validated via write_pool's existing `schema_path=` kwarg (already present, unused); (2) an explicit CTO ruling that build_universe.py's union write is descoped from this check entirely, matching AMGT_RESAPP-Z-W120-S1's own disarm_owner note ('if ever schema-checked, build_universe.py's union write against its OWN schema'). Either is the CTO's/COO's call, not a repair a worker makes unasked."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W120-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~120",
+    "surfaced_at": "2026-09-22T20:55Z",
+    "one_line": "AMGT_RESAPP-Z-W120-S3 is RESOLVED by ISSUER AMENDMENT 2 @c69c628c9f: the COO (S3's own disarm_owner) measured build_union()'s document shape itself, agreed the worker's refusal to thread document= through build_universe.py's write_pool call was correct, and struck build_universe.py from this cell -- AC4's expected file list gains EXACTLY ONE module, add_security.py, not build_universe.py. The underlying gap S3 named -- the union pool write has no schema of its own to validate against -- is NOT repaired by this cell; it is carried forward as a scope item for the CTO, per Amendment 2's own words.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-120.identity-cleanup-and-schema-gate.md @c69c628c9f, ISSUER AMENDMENT 2 text: 'build_universe.py IS STRUCK FROM THIS CELL, and your refusal was correct ... build_universe.py leaves <paths>, its call site is UNCHANGED, and the fact that the union pool write has NO schema of its own is recorded for the CTO as a scope item, not repaired here'",
+        "git diff --name-only ae4b5d95ba a771ac74fa -- lib integrations infra .tools portal (this session, re-measured): exactly lib/research/identity/add_security.py and lib/research/identity/tests/test_crosswalk_write_validates.py -- no build_universe.py, matching Amendment 2's list",
+        "git diff --stat bf5c280e48 HEAD -- lib/research/identity/build_universe.py (this session): empty -- build_universe.py carries 0 diff against this round's base, confirming it was never touched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "ISSUER AMENDMENT 2 (@c69c628c9f): 'AC4's file list gains EXACTLY ONE module, add_security.py (AMENDMENT 2: not build_universe.py) ... W120-S1 is then resolved' -- read together with S3's own text, this resolves S3's BLOCKING status for this cell.",
+    "world_is": "build_universe.py's write_pool call still passes no document= and its union document still cannot validate against crosswalk.schema.json -- S3's factual finding stands unchanged. What changed is the OWNER of that gap and this cell's obligation toward it: the issuer, who is S3's own disarm_owner, independently measured the same shape mismatch and ruled the cell's scope excludes it, so this cell's AC4 is satisfied at 2 files (add_security.py, test_crosswalk_write_validates.py) and the TO can close. The hazard itself -- an unguarded union write -- is real and unchanged in production.",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "notes": "S3 is NOT edited (append-only); this row records its resolution for THIS cell's purposes and re-points the open hazard's disarm_owner from the COO (S3, this cell's issuer, who has now ruled on it) to the CTO, per Amendment 2's own words ('recorded for the CTO as a scope item'). Consistent with S3's notes on the two legitimate closure paths (a union-document schema, or an explicit descope ruling) -- Amendment 2 is that descope ruling for THIS cell, but the underlying gap remains open at the CTO's level."
   }
 ]
 ```

@@ -171,7 +171,7 @@ the before/after suite counts.
    review -- the `enriched` denominator key and the `identity` sub-schema's five missing keys.
 3. The two limbs share `crosswalk.py` only through limb (b); limb (a) touches tests only.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~120</slot>
 <fabric>site-z</fabric>
