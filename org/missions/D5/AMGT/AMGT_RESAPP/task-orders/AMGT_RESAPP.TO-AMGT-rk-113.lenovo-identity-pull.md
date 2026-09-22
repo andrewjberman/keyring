@@ -198,9 +198,22 @@ code = "import json,sys; sys.path.insert(0,'.'); from lib.research.identity impo
 post = json.loads(subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, env={k: v for k, v in os.environ.items() if k != "AMGT_CROSSWALK_PATH"}).stdout)
 pre = json.loads(subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, env=dict(os.environ, AMGT_CROSSWALK_PATH=".scratch/r113/pre_crosswalk.json")).stdout)
 print("post_from", post["from"])
+def strip_identity(rec):
+    # ISSUER AMENDMENT 3: provenance gains an `identity` line for an enriched name. That line is
+    # named in BOTH signed pair halves, so it is expected, and AC3 already strips it. AC4 asks a
+    # DIFFERENT question -- does the adapter still RESOLVE the same way -- so it compares with the
+    # same strip, and separately prints which top-level keys differ, so a second difference cannot hide.
+    out = dict(rec)
+    prov = dict(out.get("provenance") or {})
+    prov.pop("identity", None)
+    out["provenance"] = prov
+    return out
 for q in post["r"]:
     a, b = post["r"][q], pre["r"][q]
-    print("resolve", repr(q), a.get("security_key"), a.get("resolution"), "equal_to_pre", a == b)
+    differing = sorted(k for k in set(a) | set(b) if a.get(k) != b.get(k))
+    print("resolve", repr(q), a.get("security_key"), a.get("resolution"),
+          "equal_to_pre", strip_identity(a) == strip_identity(b),
+          "raw_differing_keys", differing)
 ```
 
 `.scratch/r113/ac5.py`:
@@ -216,7 +229,7 @@ print("pull_calls", sum(calls), "probe_calls 1", "spent_total", sum(calls) + 1, 
   <criterion id="AC1" cell_refs="AMGT-rk-113"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r113/ac1.py</invocation><expect>READ-ONLY, the pre-act snapshot: "served_key" (measured crosswalk/v1/2026-09-19.json at the cut) with "records" R0 and "distinct_labels" equal to R0 (measured 96); "r992_has_identity False"; "registrations" G0 with "for_992 0"; "identity_bronze" D0 with "for_992 0"; "local_rebuild_byte_equal True". pre.json and pre_crosswalk.json written. A False rebuild-equality is a STOP and a row: the "other 95 byte-equal" bar would then be untestable</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-rk-113"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.research.identity.add_security --folder "Lenovo 992 HK" --bloomberg "992 HK" --as-of "$(date -u +%Y-%m-%d)" --write-pool 2>&1 | tee .scratch/r113/ac2_out.txt</invocation><expect>LIVE, the ONE pull, ledger OPEN before it: "RAW LANDED: s3://opal-data-harvest/bloomberg/harvest/bronze/identity/security_key=992_HK_Equity/..."; a "MEASURED: security_key 992_HK_Equity ... composite_figi ..." line (field_errors printed if any); "bloomberg_calls 1"; then "OK: uploaded s3://opal-data-harvest/crosswalk/v1/<today>.json ... records=R0 ...". An UNRESOLVED line (a Bloomberg security error) is recorded with its reason and graded by AC3's rollback rule, never re-run</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-rk-113"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r113/ac3.py</invocation><expect>"latest_key crosswalk/v1/<today>.json is_today True"; "records" equal to R0 and pre; "others_byte_equal" R0-1 "of" R0-1 (95 of 95 at the cut); for 992 each of composite_figi, figi, isin, sedol, lei and website reads "present" or "field_error" (never "ABSENT" with no field_errors); "992_non_identity_equal True security_key 992_HK_Equity"; denominators carry "enriched": 1 and "registered" unchanged from AC1; "identity_bronze" D0+1 with exactly one 992 key; "registrations" G0+1 with the 992 row ("ENRICH", "MEASURED"). ANY other record differing, or a changed record count, is a ROLLBACK per section 4. Close the w1/w2/w3 legs on this read</expect></criterion>
-  <criterion id="AC4" cell_refs="AMGT-rk-113"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r113/ac4.py</invocation><expect>"post_from s3://opal-data-harvest/crosswalk/v1/<today>.json"; "resolve '992 HK' 992_HK_Equity MEASURED equal_to_pre True" and the same for '992 HK Equity' -- resolve() does not return identity, so the adapter's resolution for Lenovo is unchanged; the three controls CAT US, CSL AU and 6861 JP each "equal_to_pre True". Close the verify leg and the ledger entry on this read</expect></criterion>
+  <criterion id="AC4" cell_refs="AMGT-rk-113"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r113/ac4.py</invocation><expect>"post_from s3://opal-data-harvest/crosswalk/v1/<today>.json"; AMENDMENT 3: "resolve '992 HK' 992_HK_Equity MEASURED equal_to_pre True raw_differing_keys ['provenance']" and the same for '992 HK Equity' -- the adapter's RESOLUTION for Lenovo is unchanged, and the only raw difference is the provenance identity line both signed halves name. raw_differing_keys listing anything besides 'provenance' for 992, or anything at all for a control, is a ROLLBACK trigger; the three controls CAT US, CSL AU and 6861 JP each "equal_to_pre True". Close the verify leg and the ledger entry on this read</expect></criterion>
   <criterion id="AC5" cell_refs="AMGT-rk-113"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r113/ac5.py && git log --oneline -1 -- lib/research/identity/registrations.json</invocation><expect>"pull_calls 1 probe_calls 1 spent_total 2 sized_total 2"; then the commit carrying the registrations.json ENRICH row (committed by you after AC3)</expect></criterion>
 </proof_of_spec>
 
@@ -246,7 +259,7 @@ entry path with its open and close, and the branch taken (kept or rolled back).
 4. **`identity` has 0 production readers today** (a `lib/` + `integrations/` census). The FIGI is RECORDED as the PRD
    asks; nothing keys on it yet.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~113</slot>
 <fabric>site-z</fabric>
