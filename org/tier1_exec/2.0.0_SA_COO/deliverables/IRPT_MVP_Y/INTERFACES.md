@@ -433,3 +433,27 @@ Actual parser-backed local tests plus upload/retained/shared-schema tests:
 P upload result portfolio is explicitly an opaque producer object, so the shared
 wire schema remains unchanged. CVO Y-S01 independent closure10b5b7f25c at
 b258b1696c is recorded separately from this new normalizer source.
+
+## Prospect browser candidate (23:32Z)
+
+Portal2ddf1114 builds on Pcb62721c plus exact digest binding repairc86a5eb5.
+ProspectComposer sends the shared upload request with original CSV base64 bytes,
+optional USD confirmation/date/reference notional and one action token. Retry
+retains that prepared body in memory; explicit refresh uses a new token with
+supersedes_input_id. Normalized source rows and exact dollar strings are shown
+before Overview submission. The analysis body references accepted input_id and
+sets client_id/snapshot_id null and account_ids empty; no browser firm/advisor
+authority or fabricated custody selection is sent. Scope revision changes remount
+the composer. P's route continues to refuse before transport while uninstalled.
+
+This is bounded UI source, not a complete browser workflow: reload loses local
+retry state, comparison catalog selection and request/report reopening remain
+unfinished. Six helper/shared-adapter/initial-SSR controls and five P upload
+controls PASS,50 assertions; full project TypeScript PASS. No connected browser
+was available for visual or event interaction verification. Backend090c819803
+aligns accepted identity with canonical AnalysisRequest fields (tenant_firm_id,
+revision1, immutable=true), separately checked by45tests/24subtests.
+
+CVO local identity reviewb43fba4bd3 reports40supplied/18subtests and10independent
+PASS. Actual maintained M sources and local-to-vendor upload/readback remain
+pending. This review does not reopen or pass any integrated criterion.

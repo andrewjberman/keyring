@@ -128,6 +128,38 @@ No new workers, no push, no deployment or vendor egress.
   foundation is overlay output, not security-level custody source; not consumed
   as a normalized holdings adapter. Profile/comparison responsibilities clarified.
 
+## Integration update (23:32Z)
+
+- Backend HEAD090c819803 fixes actual accepted AnalysisRequest identity to
+  tenant_firm_id, numeric revision1 and immutable=true;45 targeted tests plus
+  24subtests PASS. P acknowledges consumption atbf1b671760. No stored-record
+  migration or deployed runtime is implied.
+- CVO independently closed Y-S01 atb258b1696c, evidence10b5b7f25c: unchanged
+  eight controls PASS. Original05a5ab10c6 failures remain evidence. Recovery
+  dispatcher/worker retention validation still needs implementation.
+- Local canonical identityd99a072742 implements the M-agreed resolver/price
+  fields in INTERFACES. CVO reviewb43fba4bd38bd8e89239e1f2c2be6be629271c9b
+  reports40 supplied tests/18subtests and10 independent controls PASS with
+  actual UploadService/retained repository and network forbidden. P consumed
+  at2170153c7d. Vendor identity translation/readback remains unfinished.
+- M23:25Z confirms the local-key branch agreement, but no runnable maintained
+  resolver/price/custody adapter pin. Actual source shapes include49F master
+ 2490rows, COT holdings1334rows, INF36044position-shaped rows; these counts are
+  peer-reported, not a Y source reproduction. Naming/cutoff and49F reconciliation
+  repairs remain upstream. Overlay publication62139c3a1a is not custody holdings.
+- New isolated portal branch/path irpt-mvp-y-portal-20260922 starts atPcb62721c,
+  with F8e6e2e38 verified ancestor. P input-id/content-digest repairc86a5eb5
+  consumed viad591dfda. Y candidate2ddf1114 adds ProspectComposer, pure exact-byte
+  request preparation and its mount in AnalysisTab. Six producer controls plus
+  five shared upload controls PASS (50 assertions); tsc -b --noEmit PASS.
+  File/options/normalized rows/Overview submit and in-memory retries implemented.
+  Explicit refresh carries a new token and prior normalized input. Browser tool
+  reports no connected browser: visual and interaction checks remain unperformed.
+  Reload persistence, comparison selection, status/history/export integration and
+  actual runtime activation remain unfinished. NO-HANDLER-AT-HEAD stays closed.
+- All14 integrated criteria remain NOT_EVALUATED. No READY, live/vendor,
+  provisioning, deployment or render acceptance follows from these local checks.
+
 ## Compiler observations
 
 Earlier candidates and findings (superseded where the current section says so):
@@ -169,6 +201,10 @@ actual source were read directly after compiler routing. A shell-pipe regex fail
 through the shim; it is not a successful search. comp-diff on the sparse worktree
 rebuilt 52 nodes/42 edges; the two dispatch repair files had no graph nodes. This
 limited graph is not a no-impact finding.
+Portal comp-diff used the base repository graph and showed base/shared changes,
+not the four portal paths; it is not impact evidence for this UI. Portal commit
+risk reflex reported39.4h stale/PARTIAL_OR_BLIND, Python/shell/Terraform gate0/4.
+The UI validation above comes from the actual Bun tests and TypeScript check.
 
 ## Resume notes
 
