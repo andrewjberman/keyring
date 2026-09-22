@@ -12418,6 +12418,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "No schedule exists for it, and the served axis has not moved in 12 days.",
     "disarm_owner": "2.0.0_SA_COO~Z, in the trial's L-PX cell (round 30) for Lenovo; the fleet-wide daily leg stays Andrew's cadence call.",
     "notes": "Named so the page's price lists are not read as fresh once the edge route lands."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W120-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~120",
+    "surfaced_at": "2026-09-22T19:51Z",
+    "one_line": "AMGT-rk-120's write-time schema check is wired into write_pool() -- the one function every production pool write calls -- but only crosswalk.py's own main() actually PASSES document= to enable it; add_security.py's _persist_registration_and_pool and build_universe.py's union_main are WALLs outside this cell's <paths> and still call write_pool() without document=, so their pool writes remain UNvalidated at this cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/identity/crosswalk.py write_pool(): `document` is an OPTIONAL kwarg; validation runs only `if document is not None`",
+        "lib/research/identity/crosswalk.py main(): the ONLY call site edited by this cell -- `write_pool(key, payload, document=document)`",
+        "lib/research/identity/add_security.py:180 `crosswalk.write_pool(\"%s%s.json\" % (crosswalk.CROSSWALK_PREFIX, as_of), payload)` -- no document= kwarg, unmodified; not in AMGT-rk-120's <paths>",
+        "lib/research/identity/build_universe.py:918 `crosswalk.write_pool(key, payload)` -- no document= kwarg, unmodified, and writes a DIFFERENT (union) document shape under UNIVERSE_PREFIX in any case; not in AMGT-rk-120's <paths>",
+        "AMGT-rk-114's own amendments (the defect this check is meant to have caught at the first build) shipped through add_security.py's --write-pool flow, not crosswalk.py's CLI -- so the un-wired call site is precisely the one that mattered historically"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO msg 24314/24328, row Z-S225: 'a write-time schema check belongs in the next identity code cell, so the NEXT nonconforming document is refused at build and not caught at review' -- read as covering every production pool write.",
+    "world_is": "The check only fires for crosswalk.py's own --write-pool CLI call; add_security.py's registration flow (the actual production entry point rk-114's amendments shipped through) and build_universe.py's union write still call write_pool() with no document=, so a nonconforming document built by either can still reach the pool unrefused. Making write_pool() validate UNCONDITIONALLY from the payload/key alone was tried and rejected: it also catches test_crosswalk.py's PoolVintageRead.test_the_resolved_key_is_never_persisted_into_a_later_vintage (a WALL test that puts a deliberately minimal, nonconforming document to exercise write_pool's own S3 put/read-back discipline) and build_universe.py's union document (a different schema entirely), breaking both without a <paths> grant to fix them.",
+    "disarm_owner": "2.0.0_SA_COO~Z: wire add_security.py's `_persist_registration_and_pool` (and, if ever schema-checked, build_universe.py's union write against its OWN schema) to pass `document=document` to `crosswalk.write_pool`, in a cell whose <paths> grants those files.",
+    "notes": "ARMED, not INERT: add_security.py's --write-pool path can still publish a document that fails crosswalk.schema.json today, exactly as before this cell, because the guard this cell built is not reachable from that call site. Not a defect in this cell's own code or tests -- AC0-AC4 all pass over the <paths> this cell was granted. Recorded because the issuer's own words ('the next nonconforming document is refused at build') read as a universal claim about every pool write, and only one of three production call sites is actually wired by this cut."
   }
 ]
 ```
