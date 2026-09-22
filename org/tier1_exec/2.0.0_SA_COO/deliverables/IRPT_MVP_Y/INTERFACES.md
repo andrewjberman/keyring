@@ -115,8 +115,6 @@ Durable worker intents must fence vendor mutations separately. P packaging/IAM
 must include these modules, transaction/get/query/update access on the two existing
 tables and existing generation queue send. No new table is needed by this adapter.
 
-## Evidence and limits
-
 ## Guarded prospect upload candidate
 
 `bf50e40359` adds `intake/uploads.py`, `upload_entry.py` and consumer tests;
@@ -145,7 +143,7 @@ records, immutable artifact receipt/hash and exact source binding before returni
 with `account_ids=[]` and `prospect_input_id=UP-...`; M authorization uses the
 retained unaugmented owner. No fabricated client/custody account is created.
 
-Ten offline consumer tests PASS, using actual M owner/Entry, Y parser/service and
+Thirteen offline consumer tests PASS at `9da7d87f99`, using actual M owner/Entry, Y parser/service and
 P repository with conditional/version-aware AWS doubles. One test traverses both
 guarded upload and analysis Entry; its acceptance adapter is a test double. The
 separate seventeen submission tests exercise the actual Dynamo adapter with
@@ -154,7 +152,7 @@ Stubber. These are distinct boundaries, not persistent-service or E2E proof.
 M confirmed maintained security/pricing and accepted custody adapters are pending.
 P retention integration is pending: CTO `3c55f37800` approves irpt-retention-v1,
 and adds PERFORMANCE_SOURCE_EVIDENCE (twelve families). Original eleven-family
-carrier `25a9465c7d` requires amendment. No writable S7 destination, logical/physical
+carrier `25a9465c7d` was amended in `705dae3202` (same X10). No writable S7 destination, logical/physical
 retention completion or deployment is claimed by this upload candidate.
 
 ## Foundation evidence and limits
@@ -167,3 +165,150 @@ dispatch repair (two changed Python files pass gate). M Entry prospect guard
 `a85e7d6329` integrated `89aadb255c`, fifteen actual Entry tests pass in Y.
 Stubber is not a persistent service. Y1-Y7/S1-S7 remain ungraded. No durable worker,
 vendor, browser/export, deployment or live permission was exercised by this candidate.
+
+## Replay wire examples and remaining lineage seam
+
+Binding ruling: CTO IRPT-Y-REPLAY-01 `06a96c4df7`. Implementation pins:
+upload `9da7d87f99`, submission/dispatch `08b1fd5c99`; P consumed upload at
+`354adae366`. CVO Y-U01 closed in `6401215f60` using unchanged dependency-change
+probes. This closure does not prove browser, expiry, concurrency or crash recovery.
+
+The following body is an actual supported upload shape, with synthetic CSV bytes:
+
+```json
+{
+  "upload_token": "example-upload-0001",
+  "filename": "prospect.csv",
+  "csv_base64": "VGlja2VyLERvbGxhcnMKQUFQTCwxMDAK",
+  "declared_currency": "USD"
+}
+```
+
+The server derives `UP-<sha256(canonical([firm_id,principal_id,upload_token]))>`.
+Original identity binds the filename and exact byte digest as well as the full
+verified M owner. Normalization identity is the tenant plus
+`NORMALIZATION#<UP>#<sha256(canonical(options))>`. Options always contain exactly
+declared_currency, price_date and reference_notional, absent values represented
+as null. No credentials, owner or resolver revision comes from the browser.
+Successful response data has this shape (angle-bracket tokens denote server
+values, not browser inputs or invented measurements):
+
+```json
+{
+  "upload_id": "UP-<64hex>",
+  "input_id": "portfolio_<64hex>",
+  "state": "NORMALIZED",
+  "input_ref": {
+    "input_id": "portfolio_<64hex>",
+    "content_sha256": "<64hex>",
+    "artifact_ref": "<full P immutable artifact receipt object>"
+  },
+  "portfolio": "<full frozen normalized document object>"
+}
+```
+
+An unchanged retry must resend the same token, filename, CSV and semantic options.
+Current authorization and original/normalized receipt reads run again. The retained
+NORMALIZATION pointer returns the original input/hash before parsing, security
+resolution or price resolution, even if those sources advanced. The actual tests
+retain price 20 after the price provider changes from 10 to 20 for two shares.
+Changing bytes or filename under that upload token raises
+`UploadRefused(CHANGED_UPLOAD_SAME_TOKEN)`; public reason INVALID_INPUT. Do not
+claim an HTTP 409 mapping that the shared response adapter has not supplied.
+
+Actual supported prospect analysis body:
+
+```json
+{
+  "request_id": "example-analysis-0001",
+  "client_id": null,
+  "account_ids": [],
+  "snapshot_id": null,
+  "input_id": "portfolio_<64hex>",
+  "variant": "overview",
+  "comparison_keys": [],
+  "report_title": "Prospect Overview"
+}
+```
+
+Replace the input placeholder with the exact accepted upload input ID. Complete
+analysis identity binds verified firm/principal/browser request_id. The server ID
+is `REQ-<first24hex(sha256(canonical([firm,principal,request_id])))>`, revision 1.
+The accepted record binds SHA256 of the entire validated browser body and a
+separate immutable composition hash covering resolved input/profile/catalog,
+settings and recipe version. Response data is `{identity,stage:"RECEIVED"}`;
+identity contains tenant_id, server request_id, revision="1",
+ingestion_gate_revision and destination_policy_revision. Shared status is QUEUED,
+with WAIT text distinguishing confirmed dispatch from pending dispatch recovery.
+QUEUED does not mean vendor execution or READY.
+
+Unchanged hidden retries retain the full body and browser request_id. A changed
+input_id, title, variant, selection or any other body content under that same
+request_id raises `IdempotencyConflict(CHANGED_INPUTS_SAME_REQUEST_ID)` before
+resolving sources or sending. No silent token renewal in a browser retry callback.
+
+An explicit correction to reference_notional from "100" to "200" currently has a
+different normalization identity (changed canonical options), can reuse the raw UP
+handle, and yields a new immutable input while the old input remains readable.
+Submitting that input requires a new browser analysis request_id, for example
+example-analysis-0002; the old actual analysis key cannot be rebound. Merely
+changing provider data without changing semantic options is replay, not refresh.
+
+**Incomplete seam:** the current upload wire has no explicit prior-input lineage
+or same-options refresh action. Do not advertise complete IRPT-Y-REPLAY-01 or
+invent a working refresh field. Proposed owner-coordinated extension is optional
+`supersedes_input_id` on upload, paired with a fresh upload_token minted only from
+an explicit correction/refresh action. Y will verify current access to the prior
+input and freeze its input/hash/receipt as lineage in the new input. P must agree
+the shared schema and browser serialization before integration. Hidden retries
+retain both tokens and the prior reference; a deliberate new action gets a new
+token. Same raw-handle changed-options support remains a distinct normalization
+identity, not permission to rebind an accepted actual key. Browser implementation,
+lineage persistence and expiry/concurrency controls remain outstanding.
+
+## Worker and source-verified publication candidates
+
+`2acea1aeca` adds DynamoGenerationStore on the existing irpt-jobs row: bounded
+conditional lease, monotone fence token, composition binding, atomic vendor-intent
+and SUBMITTING checkpoint, and conditional state writes. Seven Stubber wire tests
+pass. Independent `0d3a30ed09` adds four controls (composition, expiry, foreign job,
+release), with no new defect at that boundary. This is not Dynamo server expression,
+concurrent/process-loss, assembled vendor recovery or verified READY proof.
+
+`bcfbd380a12e88d06f2c26f7ad48f0ddc4feb212` adds
+`ycharts/extract/publication.py`. build_publication invokes actual extractor and
+certifier, returning `{fragment,evidence,evidence_sha256}`. It performs no write,
+authorization or release. The caller must retain the exact PDF and evidence before
+P report publication and only then checkpoint READY. Missing runtime factory and
+publisher wiring remain explicit.
+
+Numeric certification now re-parses the complete PDF crop and compares it with
+the claimed number. Reproduction before repair: actual 0.30 percent changed to
+123.3 with old token and coordinates still certified. The repaired candidate
+refuses that mutation and a substring mutation; no supplied token can vouch for
+a different value. CVO exact retest requested; independent closure not yet claimed.
+
+Only uniquely located actual PDF text becomes a disclosure. Census prose, labels
+standing in for disclosure lists/tables, and absent/ambiguous chart titles yield
+explicit gaps. Chart title match identifies the actual page, not the census page
+hint; representation is the full source page with no inferred number. Dates are
+re-read on that actual page. P schema `b894019c95` admits undated_sections without
+invented dates, merged `2d2c774452` with owner custody fixes. Combined economic and
+schema tests 35/35 pass after materializing a missing sparse source dependency.
+
+Publication tests 11/11 pass on actual offline PDF bytes. Three checked-in synthetic
+variants have located scalars 24/47/70, emitted 23/46/69, undated 16/32/48, unlocated
+records 34/47/60, and one withheld unit-conflict each. Ten chart candidates and sixty
+disclosure candidates per variant are not falsely emitted where source content is
+absent. These synthetic specimens do not prove real vendor coverage.
+
+Proposed extraction_coverage sent to P: policy_version=source-verified-partial-v1,
+scope=PINNED_CENSUS, status PARTIAL or COMPLETE_FOR_CENSUS, canonical census hash,
+counts and explicit `{kind,id,reason}` gaps. Located scalar rows equal emitted plus
+withheld unit-conflict rows; dated plus undated scalar counts equal emitted scalar
+rows. Chart counts are separate although their rows share the public arrays.
+Unlocated records can be per-field or per-column; they are not commensurate with
+census_fields and must not produce a coverage percentage. Duplicate IDs refuse.
+Any failed scalar certification or empty scalar population refuses the fragment.
+CERTIFIED describes the emitted scalar denominator only; notes and coverage state
+partial completeness explicitly. P coverage schema and browser handling pending.

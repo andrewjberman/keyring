@@ -54,13 +54,32 @@ No new workers, no push, no deployment or vendor egress.
 - CRO original X10 carrier `25a9465c7d` received (eleven families). CTO S7-03
   `3c55f37800` adds PERFORMANCE_SOURCE_EVIDENCE, twelve families/ten state/two
   platinum; approved finite retention with earliest dependency/no renewal.
-  Amended carrier and coherent M/P enforcement remain required. Physical disposal
+  Amended X10 carrier `705dae3202` received; coherent M/P enforcement remains required. Physical disposal
   remains OPEN; no provisioning, vendor egress, deployment or render gate lift.
 - Canonical base session log `21f5b52018`; no model cadence/helper started.
 - Acceptance completed: none. New-candidate Y1-Y7/S1-S7 NOT_EVALUATED. Normalizer
   is a partial implementation, not an assembled or deployed journey.
 
 ## Compiler observations
+
+Latest candidates and findings (2026-09-22, local only):
+
+- Upload replay repair `9da7d87f99`: thirteen consumer tests PASS. CVO Y-U01 closed
+  unchanged source/price mutation probe in `6401215f60`. Explicit lineage/refresh
+  wire still incomplete; actual and proposed examples are distinguished in INTERFACES.
+- Worker primitive `2acea1aeca`: seven wire tests plus CVO four independent controls
+  in `0d3a30ed09`. No server concurrency/crash or publisher/READY proof.
+- P undated schema `b894019c95` consumed at `2d2c774452`; three conflicts resolved
+  to P's committed M economic fixes without inventing local M changes. Economic
+  and schema tests 35/35 PASS after materializing sparse holdings source.
+- Extraction/publication `bcfbd380a1`: eleven actual-PDF tests PASS, gate 3/3.
+  Repaired inherited stale-token numeric false certification, verifies actual
+  disclosure text and chart title/page, preserves undated scalar rows and names
+  coverage gaps. Independent retest requested. P coverage contract is pending.
+  No original PDF/report was published; worker and runtime factory remain unfinished.
+- CTO replay ruling `06a96c4df7` preserves Y-U01 closure while requiring remaining
+  browser, current-access/expiry, concurrent retry, process-loss and lineage evidence.
+  INTERFACES now pins supported retries/conflicts and labels the missing refresh seam.
 
 Bare comp-which/comp-find/comp-read used before relevant inspections. Startup
 loader returned 1,585 files before CTO's manifest repair; corrected six were read.
