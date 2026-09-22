@@ -379,3 +379,27 @@ Decimal recipe/transport386f2e1b49 keeps uploaded dollar text exact, verifies
 echo using Decimal and serializes create weightings as exact JSON numbers after
 checkpoint. CVO Y-D01 closed e91d9de9d7:19 supplied and7 independent PASS.
 No session/vendor invocation or complete worker/READY claim follows.
+
+Request composition6cbb714040 now passes the normalized artifact's retention_ref
+to REQUEST_COMPOSITION and verifies accepted composition via actual retained
+artifact head before submission dispatch, including unchanged replay. Apply
+b258b1696c as well: CVO Y-S01 showed a missing service previously downgraded known
+retained refs to the legacy offline branch. Known retention_ref with absent
+service now refuses RETENTION_SERVICE_REQUIRED before new storage/accept/dispatch.
+54 tests/24subtests PASS; unchanged independent retest is underway.
+
+P upload request/result/response schemas5add22ca9f consumed0bfd68b81669e7bbe25463700d5952e01c67212f;
+paired guarded Entry/schema and retained consumer controls19 PASS. Shared portal
+uploadAnalysisInput atcb62721c is ready for Y-owned UI integration. Canonical
+route stays NO-HANDLER-AT-HEAD pending actual runtime factory and package proof.
+
+M's23:08Z finding corrects the pending security seam: canonical local security_key
+is not automatically a YCharts security_id. Prefixing ticker with S: is not proof.
+The existing recipe uploads source identifiers and keeps vendor-returned identity
+for create; current captured fixture includes unprefixed SPY/AGG. No general
+retained vendor crosswalk is known. Y proposed an additive explicit local
+security_key, canonical_identifier, canonical_identifier_namespace and
+resolution_revision result to M, with local-keyed prices and separate future
+vendor-readback binding. This proposal is not yet an implemented shared contract.
+Captured template comparison entries remain recipe configuration; firm/advisor/
+client profile values require maintained authorized sources.

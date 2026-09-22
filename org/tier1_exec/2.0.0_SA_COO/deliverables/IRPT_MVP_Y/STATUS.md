@@ -95,6 +95,39 @@ No new workers, no push, no deployment or vendor egress.
   Remaining local work: request composition retention; actual worker publication;
   runtime composition with maintained M adapters; inherited F/P UI integration.
 
+## Integration update (23:13Z)
+
+- P history repair284436ca11140a0ede1ef3d53f8b3aa855d4a7a3 merged
+  b207c3487bfd1b030ad3a89df3cd79bcafa8e737; paired upload/repository31 tests and
+  eleven subtests PASS. P attributes independent R-P08 closure452f8d589f.
+- Request retention6cbb714040 links REQUEST_COMPOSITION to retained normalized
+  input and verifies accepted composition before submission dispatch/replay.
+  CVO05a5ab10c6 found Y-S01: removing retention service bypassed known retained
+  references. Repairb258b1696c checks those references before legacy offline
+  return; first retained input and expired accepted replay both refuse before
+  write/accept/dispatch.54 tests plus24subtests PASS, gate2/2; independent retest
+  underway. Recovery dispatcher and actual worker are not covered by this claim.
+- Test-only601e1c7bf1 composes actual P retained ReportRepository with Y fenced
+  index and actual boto wire:3 new controls, combined16 PASS. Pretransaction
+  lost fence yields no REPORT row; successful transaction followed by postcheck
+  loss leaves an authorized recoverable report whose reads still refuse revoked
+  access. Stubber/server effects are simulated; no Dynamo expression or races proved.
+- P upload schemas5add22ca9f consumed at0bfd68b81669e7bbe25463700d5952e01c67212f.
+  One add/add conflict preserved Y's newer request-retention tests. Actual guarded
+  upload/schema plus retained controls19 PASS. Portalcb62721c shared
+  uploadAnalysisInput API delivered but not yet consumed. Route remains
+  NO-HANDLER-AT-HEAD; no factory/package readiness claim.
+- CVO retained-upload reviewdb30f876fa:31 supplied/11subtests and9 independent
+  controls PASS, including three revisions/six retention rows and oldest expiry.
+- M correctly identified a Y-owned identity contract defect: prefix-only
+  security_id validation conflates local custody resolution with vendor mapping.
+  Actual recipe upload fixture returns plain SPY/AGG; no general retained vendor
+  crosswalk was found in scoped search. No manufactured S:<ticker> is permitted.
+  Proposed explicit security_key/canonical_identifier/namespace/revision seam sent
+  to M; agreement and Y implementation pending. M62139c3a1a output acceptance
+  foundation is overlay output, not security-level custody source; not consumed
+  as a normalized holdings adapter. Profile/comparison responsibilities clarified.
+
 ## Compiler observations
 
 Earlier candidates and findings (superseded where the current section says so):
