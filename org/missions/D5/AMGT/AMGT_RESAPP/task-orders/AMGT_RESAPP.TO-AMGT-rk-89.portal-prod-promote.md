@@ -155,7 +155,7 @@ served line and literal counts, and citing this order id `AMGT_RESAPP.TO-AMGT-rk
 
 <!-- ===================== RECORD FACE -- does NOT travel to the assignee ===================== -->
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~89</slot>
 <fabric>site-z</fabric>

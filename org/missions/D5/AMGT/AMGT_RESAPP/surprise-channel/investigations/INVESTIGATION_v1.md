@@ -11209,6 +11209,76 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The order's WHAT YOU BUILD section (ruling 2) describes ONE writer function reached by both channels, and expects that to be provable by ordinary means (a test naming both call sites, AC1's test_one_writer_for_both_channels among the required arms) -- an ordinary monkeypatch on the imported name being the obvious way to prove it.",
     "world_is": "This worktree's lib/opal_data_harvest/ package has no lib/__init__.py, so pytest's own collection of ANY lib/opal_data_harvest/test_*.py file registers that package under the BARE name `opal_data_harvest`, a DIFFERENT sys.modules identity than the ABSOLUTE `lib.opal_data_harvest` every non-test caller (rest_fetch.py, and any code using the repo's own established `import lib....` convention) resolves to -- the same source file loaded twice as independent module objects with independent globals. A future test under lib/opal_data_harvest/ that monkeypatches a dependency via a bare/relative import and asserts on behavior reached through the qualified path (or vice versa) can pass green while proving nothing, silently.",
     "notes": "Disarmed for THIS cell's own two files by importing the qualified `lib.opal_data_harvest...` name explicitly wherever a test needs to affect code outside its own package (see the fix evidence above). The underlying repo-wide trap (no lib/__init__.py) is untouched -- this worker's <paths> does not include lib/__init__.py or a repo-wide fix, and adding one is a structural call for the disarm_owner, not a worker's own widening."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S208",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.2.0_DT_PortfolioAnalytics",
+    "surfaced_at": "2026-09-22T00:06:00Z",
+    "one_line": "rk-89 section 3 licenses the Step-1 DEV sync as a PULL, but GATE 5 admits a DT serial for PUSH only, so the licensed act is refused for the order's own addressee; the sync was done as fetch + merge --ff-only instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order text: AMGT_RESAPP.TO-AMGT-rk-89 section 3 -- 'the Step-1 DEV sync IF local DEV is behind (pull only -- see section 4 on a DEV push)'; /prod-deploy SKILL.md Step 1 -- 'Local DEV is behind origin/DEV: -> git -C portal pull origin DEV'.",
+        "Gate source, bytes printed at HEAD, .tools/hooks/never-rules-gate.sh @e58250f261 :628 '# PUSH ONLY. Andrew's word was \"push\"; a `git pull` on PROD is a different act and stays' and :631 '_RE_PUSH_ONLY=\"${_GIT}\"'push([[:space:]]|$)'' -- the DT carve-out at :633 requires the push verb; its denial text says 'a DT is still denied on the workspace branches and on any pull'.",
+        "NOT EXERCISED: the pull was not attempted this act. Measured state at Step 1: main-tree portal DEV ahead 0 / behind 1 of origin/DEV (95d96edb vs f22e369c). Substitute run: `git -C portal merge --ff-only origin/DEV` after AC1's fetch -> main tree DEV @ f22e369cedc974dc056643b37da33676ce19f74d, porcelain 0, typecheck rc=0 / 0 error TS."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A DT executing /prod-deploy may bring a behind local DEV level with origin by `git -C portal pull origin DEV` (skill Step 1; order section 3 'pull only').",
+    "world_is": "GATE 5 admits the DT carve-out for verb push only (never-rules-gate.sh:631-633 @e58250f261); a DT pull on DEV falls through to the integrator-only denial. The same end state is reachable without a pull verb: fetch, then `merge --ff-only origin/DEV` on a clean tree with nothing ahead.",
+    "notes": "Inert: the ff-only merge left the tree exactly where a pull would have. Remedy is a wording choice for the skill owner and the order author (name fetch + merge --ff-only in Step 1), or a gate widening, which is Andrew's call. This seat changes neither."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S209",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.2.0_DT_PortfolioAnalytics",
+    "surfaced_at": "2026-09-22T00:06:00Z",
+    "one_line": "GATE 5 resolves a command's target repo from `git -C <p>` / `cd <p> &&` with a no-whitespace pattern, so on this box (path contains a space) the /prod-deploy push from a quoted absolute worktree path is judged against the WRONG repo and a DT's PROD push is DENIED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Gate source, bytes printed at HEAD, .tools/hooks/never-rules-gate.sh @e58250f261 :286 matches `git[[:space:]]+-C[[:space:]]+[^[:space:]]+` and :287 captures `\\([^[:space:]]\\+\\)`; :297-298 do the same for `cd`. A quoted path containing a space is cut at the space, so REPO does not resolve to the worktree and the origin-URL test at :634-636 never sees Opal-Capital/portal.",
+        "EXERCISED 2026-09-21 ~17:27Z (v2.1.181 promote, same seat): `cd \"C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtmp/portal-promote-20260921T172305Z\" ...; git push origin PROD` was refused by the PreToolUse hook with 'BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch 'PROD') ... you are '0.2.0_DT_PortfolioAnalytics'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL'.",
+        "Positive control, twice: the space-free relative form `git -C .runtmp/portal-promote-<ts> push origin PROD` was admitted with no override -- v2.1.181 (a580bbb4..07d5af72) and this order's AC3 (07d5af72..6dfc3390, accepted 2026-09-21T23:57:32Z)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "/prod-deploy Step 4 (`cd \"$WORKTREE\"` ... `git push origin PROD`) is admitted for a DT serial by GATE 5's portal carve-out; rk-89 tells the assignee to run from the workspace root with the path quoted because it contains a space.",
+    "world_is": "On a workspace path containing a space, GATE 5's target-repo parsers (:286-303 @e58250f261) truncate the quoted path at the space, fall back to the workspace repo, and deny the DT's PROD push. Fail-closed, so nothing unsafe passes; the cost is a denied promote step and a pull toward `# never-override`.",
+    "notes": "Not overridden. Workaround recorded above. A second guard shows the same class: the HEAD-move guard on `git -C <worktree> commit --amend` evaluated the WORKSPACE HEAD (0687d98335) instead of the target worktree's (v2.1.181 promote, refused, not forced). Fix belongs to the owner of .tools/hooks/; reported to 1.0.0_SA_CTO~Z and 0.0.0_AB_MSTR~Z in msgs 23997/23998."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S210",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.2.0_DT_PortfolioAnalytics",
+    "surfaced_at": "2026-09-22T00:12:00Z",
+    "one_line": "rk-89 section 3 names this seat's surprise rows `AMGT_RESAPP-Z-DT89-S<k>`, a shape neither the commit-time row gate nor the completion checker can parse, so rows filed as written would not exist to either gate; filed as the site-Z seat form Z-S<n> (S208, S209, this row) instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Order text: AMGT_RESAPP.TO-AMGT-rk-89 section 3 -- 'SURPRISE ROWS: `AMGT_RESAPP-Z-DT89-S<k>`'.",
+        "Completion checker, bytes printed at HEAD: .tools/proof-of-spec-check.py :1127 `SURPRISE_ID_RE = re.compile(r\"^\\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\\b\")` -- after `AMGT_RESAPP-Z-` it admits only `W<n>-`, `C-` or `S<n>`; `DT89-` matches none.",
+        "Commit-time row gate: .tools/surprise-row-gate.py :104 `ID_RE = re.compile(r\"^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$\")` -- same grammar.",
+        "EXERCISED: a dry run of `python .tools/proof-of-spec-check.py <rk-89 instance> AC1,...,AC7` with surprises opening `AMGT_RESAPP-Z-DT89-S1:` / `-S2:` printed 'VIOLATION: surprises[0] carries NO row id' and the same for [1], 'surprises-frame: 2 entries; 0 open with a row id', verdict INVALID (rc=1)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A non-worker assignee on a tree order can file surprise rows under an order-minted id family (`-Z-DT89-S<k>`) that marks the seat and the slot.",
+    "world_is": "Both gates that decide whether a row exists accept only `<CODE>-[Z-][W<n>-|C-]S<n>`. A row named as the order wrote it is refused at commit and unresolvable at the complete flip. The seat form `AMGT_RESAPP-Z-S<n>` is the only one open to a non-worker on site Z.",
+    "notes": "No gate edited, no override used. Rows S208 and S209 were first spliced as DT89-S1/S2 in this seat's working tree and re-numbered BEFORE any commit, so no committed row was edited. If a seat-marked family is wanted, it is a grammar change to both gates, which the order's author or the tools' owner decides."
   }
 ]
 ```
