@@ -104,8 +104,35 @@ org/critical_paths/.open_deploys/
 
 ## 4. BOUNDS
 
-- **NO PAIR, because NO served key is written.** If your own AC1 finds a served reader of
-  `bloomberg/harvest/bronze/histdata_daily_px/`, STOP with a BLOCKING row: the premise of "no pair" would be false and
+- **ISSUER AMENDMENT 1 (2026-09-22, 2.0.0_SA_COO~Z, on your BLOCKING row W117-S2): THIS CELL NOW CARRIES A PAIR, AND
+  YOUR REFUSAL WAS CORRECT.** The cell was cut "no served key is written". That premise was FALSE and it was mine: the
+  served `/freshness` route reads `histdata_daily_px` as one of six Bloomberg bronze request tables
+  (`lib/research/api/scoped_amgt.py:3108`, `_BLOOMBERG_BRONZE_REQUESTS`, consumed by `read_coverage_freshness`), which
+  I re-measured myself. A first `histdata_daily_px` object for Lenovo CHANGES what `/freshness` serves for that name.
+  So:
+  - the pair is `ledger/NEVER_WIDEN_ROUND30_RK117_{COO,CTO}_HALF.md`. The COO half is SIGNED; **AC0 now also requires
+    the CTO half to be present and signed, and STOPS with a BLOCKING row if it is not** -- exactly as rk-116's did;
+  - AC1's served-reader finding is EXPECTED and is NO LONGER a STOP: record the count and the call site and continue;
+  - the live leg proceeds under the pair, with its rollback read from the COO half: bronze is write-once and an S3
+    delete is a destructive act reserved to a human word, so a bad object is superseded by a NEWER stamp, never deleted;
+  - AC4 gains one arm: every name OTHER than 992 shows a freshness answer byte-equal to its pre-act value, with the
+    denominator printed.
+- **ISSUER AMENDMENT 2 (2026-09-22, on the CTO half @3c9c171dd4): THE FRESHNESS STAMP IS NOT REVERSIBLE BY ADDITION.**
+  `_bloomberg_bronze_stamps` (`scoped_amgt.py:3189-3215`, the ONLY read of `_BLOOMBERG_BRONZE_REQUESTS`) takes the
+  **MAXIMUM** stamp per security. So publishing a newer object to "roll back" moves the served answer FURTHER FORWARD,
+  never back; only an S3 DELETE lowers it, and that is destructive, reserved to a human word, and NOT covered by this
+  pair. **A bad object therefore makes the surface read FRESHER than its data warrants.**
+  - **So the mitigation is a PRECONDITION, not a remedy: BEFORE you accept the run, verify the landed object's
+    CONTENT -- its row count, its date range, its first and last observations -- not merely its presence.** Print them.
+  - A wrong object is corrected by a NEWER stamp carrying right data (which fixes the data AND leaves freshness
+    honest). A delete escalates to Andrew and is not yours.
+  - **The CTO's precision, which supersedes my half's wording:** 992 is ALREADY in the freshness map at
+    `20260922T201211Z` (rk-116 tonight), so this act MOVES its stamp forward rather than adding it; and **36 of the 37
+    security partitions cannot move BY CONSTRUCTION**, since each name's stamp is computed from its own keys. AC4's
+    control arm prints that denominator: 36 of 36 unchanged.
+- **The old text, kept so the change is legible:** "NO PAIR, because NO served key is written. If your own AC1 finds a
+  served reader of `bloomberg/harvest/bronze/histdata_daily_px/`, STOP with a BLOCKING row: the premise of "no pair"
+  would be false and
   the issuer must cut a pair first.
 - **DAPI DOWN = STOP**, exactly as rk-116: file a BLOCKING row naming the surface and STOP. You do NOT run the
   sign-in.
@@ -207,7 +234,7 @@ with its open and close.
 3. **Stage 11's "price" is therefore partially served by this cell:** the dense series lands, and the Lead Panel row
    does not. The trial report must say so rather than reading stage 11 as SERVED.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~117</slot>
 <fabric>site-z</fabric>
