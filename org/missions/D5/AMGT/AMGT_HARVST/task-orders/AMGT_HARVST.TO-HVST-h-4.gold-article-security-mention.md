@@ -200,7 +200,7 @@ which `HVST-h-5` and `HVST-h-6` read. Then write
    gives D only to at most one mention outside title and lead, with share < 0.3.
 3. **The same word-bounded match as the floor** keeps gold from grading articles retrieval would never have kept.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
