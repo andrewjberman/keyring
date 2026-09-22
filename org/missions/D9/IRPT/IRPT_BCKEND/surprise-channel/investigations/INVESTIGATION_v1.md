@@ -8753,3 +8753,77 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The file this worker's own dispatch prompt names, and the one actually present in this worktree, is IB-rtr-c -- the same document, addressed by its decomp letter-suffix rather than the internal numeric name the document's own <to_id>/<proof_of_spec> text still carries. NOT a BLOCKING premise on the worker face itself (cell text, criterion and paths all resolve correctly under IB-rtr-c, and this worker proceeded against that file, as instructed by its dispatch) -- but IS blocking, mechanically, on the proof/flip step: the naming-gate mismatch is invisible until the status-flip commit is actually attempted, at which point to-pipeline-gate's REAL lookup (the order's own file basename, never <proof_of_spec>'s prose) refuses a same-turn commit naming the instance per the order's literal text. Resolved by writing the instance at the 'rtr-c' path the gate requires (to_id inside it left at the order's own <to_id> tag value, which the checker's cross-check accepts regardless of filename); filed rather than silently discovering this only via the gate's own error text."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W20-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~20",
+  "surfaced_at": "2026-09-22T13:05:00Z",
+  "one_line": "R118-AC4's own <invocation> for its FIRST leg (the pytest path) is one directory level short: run from org/missions/D9/IRPT/IRPT_BCKEND/ per the order's own convention, the literal 6-dot relative path lands at org/infra/... (does not exist), not repo root; the working path needs 7 dots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md criterion R118-AC4 invocation: \"cd deliverables/0.9.0_WK_IRPT_BCKEND~20 && py -3.12 -m pytest ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v && ...\" -- six '../' segments (counted programmatically: '../../../../../../infra/...'.count('../') == 6).",
+      "Measured this session, run from org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~20/: `cd .. && pwd` executed 7 times in sequence lands on the worktree root (C:\\tmp\\wk-irpt-18-20) only on the 7th step, confirming the directory is 7 levels below repo root, not 6.",
+      "Measured this session: `py -3.12 -m pytest ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v` from that directory returns `ERROR: file or directory not found: ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py` (rc=4); the identical command with a 7th '../' prepended resolves the real file and the full three-leg criterion chain then runs to rc=0 (29 pytest + 19 node + 4 node, all PASS)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R118-AC4 <invocation>: \"cd deliverables/0.9.0_WK_IRPT_BCKEND~20 && py -3.12 -m pytest ../../../../../../infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py -v && node --test ../0.9.0_WK_IRPT_BCKEND~16/test_edge_render_delegate.mjs && node --test test_v1_actual_module_harness.mjs\", run from org/missions/D9/IRPT/IRPT_BCKEND/ per this order's own \"the task order's own directory\" convention (established by IB-rtq-3's result.md for the identical second leg).",
+  "world_is": "The literal 6-dot relative path in the invocation resolves to org/infra/aws/lambda/investor-reporting/_scope/tests/test_resolve.py, which does not exist (org/ has no infra/ child), and pytest exits rc=4 (usage error: file not found) rather than collecting any test. The proof_of_spec instance for this criterion records the CORRECTED 7-dot invocation, which is re-runnable and produces the named result (rc=0, all three legs PASS); this row documents the discrepancy in the order's own citation text rather than silently substituting a different command."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W20-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~20",
+  "surfaced_at": "2026-09-22T13:20:00Z",
+  "one_line": "CELL (c)'s 'import and call the real function' (V1's verifyAccessToken, jwt.ts) needs two gitignored, uncommitted, out-of-<paths>-grant build artifacts to be importable at all: auth-handler's own build-time lib mirror (src/lib/) and its tsc compile output (dist/), neither of which exists in a fresh worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts:6 imports './lib/authkeys/jwtPublicKeys.mjs'; infra/aws/opalinvest_dev/lambda/auth-handler/.gitignore:1-7 names this exact path 'Build-time mirror of the canonical shared libs at infra/aws/lambda/lib/. build-nodejs-lambda.sh rsyncs (--delete) that dir into here on EVERY build' and gitignores it (src/lib/).",
+      "Measured this session: infra/aws/opalinvest_dev/lambda/auth-handler/src/ contained no lib/ subdirectory before this cell copied one in (directory listing before: auth.ts, breached-passwords.ts, db.ts, deviceTrust.ts, email.ts, index.ts, jwt.ts, mfa.ts, originVerify.ts, password.ts, sms.ts, throttle.ts, types.ts -- no lib/).",
+      "Measured this session: Node's native --experimental-strip-types (default-on, this Node v26.9.0) cannot run jwt.ts as raw TypeScript source at all -- 'import { AccessTokenPayload, RefreshTokenPayload, User } from ./types' (no `import type`) is left as a value import once type-stripped, and types.ts (interfaces only, zero runtime exports) throws SyntaxError \"does not provide an export named 'AccessTokenPayload'\" -- reproduced directly. V1's own package.json (\"build\": \"tsc\") and tsconfig.json (\"module\": \"commonjs\") confirm V1 ships COMPILED CommonJS, never raw .ts, so this cell built dist/ via the project's own unmodified tsc (rc=0) and confirmed `grep -c types dist/jwt.js` == 0 (the type-only import is elided in commonjs output, which is why the compiled artifact resolves where raw-source strip-types cannot).",
+      "None of auth-handler/src/lib/, auth-handler/node_modules/, or auth-handler/dist/ is named in this cell's <paths> grant (infra/aws/opalinvest_dev/lambda/auth-handler/src/jwt.ts is granted READ-ONLY reference only); all three are gitignored (git status --porcelain --ignored=matching confirms `!!` for src/lib/ and dist/) and none is committed by this cell -- same class as the ephemeral node_modules install already established non-blocking at row IRPT_BCKEND-W15-S4."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CELL (c): \"Build a NEW offline test harness that invokes V1's ACTUAL verifyAccessToken function ... directly -- import and call the real function, with its key-retrieval dependency faked ... this harness calls V1's OWN CODE.\"",
+  "world_is": "V1's own source cannot be imported at all -- neither via Node's native TypeScript stripping (a type-only import throws) nor via a plain require -- without first (1) mirroring infra/aws/lambda/lib/ into auth-handler/src/lib/ (exactly what build-nodejs-lambda.sh does at deploy time, replicated locally, ephemeral and gitignored) and (2) compiling with the project's own unmodified tsc into dist/, then copying the same mjs mirror into dist/lib/authkeys/ (tsc's own `include: src/**/*` does not copy non-.ts files, and the real Lambda packaging step's copy of that file sits outside this cell's <paths>). This cell performed both steps locally (see result.md for exact commands); nothing was committed. The resulting dist/jwt.js is V1's own compiled `verifyAccessToken`, unedited, and is what this cell's test_v1_actual_module_harness.mjs imports and calls -- never a hand-written stand-in."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W20-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~20",
+  "surfaced_at": "2026-09-22T14:40:00Z",
+  "one_line": "This TO's own <paths> block, <to_id> tag and its PROOF_OF_SPEC section all self-cite 'task-orders/IRPT_BCKEND.TO-IB-rtr-4...md' as this order's own filename, but the file that carries this exact text is actually SAVED ON DISK as 'task-orders/IRPT_BCKEND.TO-IB-rtr-d...md' (letter suffix, matching its sibling cells a/b/c/d/e) -- a self-citation mismatch inside the TO's own text, which also means row IRPT_BCKEND-W20-S1's own evidence line (filed earlier this session) cites the wrong path for the same file; corrected here rather than edited there, per this channel's append-only discipline.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "This TO's own header line: '<to_id>IRPT_BCKEND.TO-IB-rtr-4</to_id>'; <paths> block: 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md'; <proof_of_spec> section: 'Instance at .../IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.proof_of_spec.json (the TASK ORDER'S OWN BASENAME stem)'.",
+      "Measured this session: `git ls-tree 7a55a7327d -- org/missions/D9/IRPT/IRPT_BCKEND/task-orders/ | grep -i rtr` lists rtr-a, rtr-b, rtr-c, rtr-d, rtr-e -- NO rtr-4 entry, at either the base commit (7a55a7327d) or HEAD; the file whose FIRST LINE reads '# TO IRPT_BCKEND.TO-IB-rtr-4 -- RE-PIN CITATIONS...' (this order's own content, byte-for-byte what this cell was handed) is git blob c1f38314776943e59d82cc11516b60a395cc4662, tracked at path 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-d.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md'.",
+      "Measured this session: `py -3.12 .tools/proof-of-spec-check.py <instance> R118-AC4 --governing-order .../IRPT_BCKEND.TO-IB-rtr-4...md` (the self-cited name) returns VIOLATION 'governing-binding: ... cannot be read ([Errno 2] No such file or directory)'; the identical command with '--governing-order .../IRPT_BCKEND.TO-IB-rtr-d...md' (the real saved name) resolves and grades normally.",
+      "This cell's own row IRPT_BCKEND-W20-S1 (filed earlier this session, same investigation file) cites 'org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md' in its grounding.evidence -- that path does not resolve; the correct path for the same cited content is the 'rtr-d' file above. Not edited in place (append-only discipline); corrected here."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This order's own <paths>/<to_id>/<proof_of_spec> sections assert the order's own filename is 'IRPT_BCKEND.TO-IB-rtr-4.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md'.",
+  "world_is": "The file carrying that exact content (to_id, cell text, criterion, BOUNDS -- everything this cell worked from) is saved at 'IRPT_BCKEND.TO-IB-rtr-d.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md' -- letter 'd', not numeral '4' -- consistent with its sibling cells' a/b/c/d/e naming. This cell's own <paths> grant (line 1 of that same block) was satisfied regardless, since the grant's INTENT (this order's own face, wherever it actually lives) was read correctly from the start; the mismatch only surfaces when a path is taken LITERALLY as typed, which proof-of-spec-check.py's --governing-order flag does. This instance's decomp_ref.to_ref and every --governing-order invocation in this cell's own commands use the REAL saved path (rtr-d); this order's own self-citations (rtr-4) are left uncorrected, per BOUNDS ('never edit this face, never widen the order')."
+}
+```
