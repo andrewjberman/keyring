@@ -28,3 +28,17 @@ Exactly these eleven families are in scope: ORIGINAL_CSV, NORMALIZED_PORTFOLIO, 
 - End condition: this conditional exception ceases when CTO supersedes it through the same canonical register, the named product placement is retired, or required conditions no longer hold. CTO owns condition review upon owner/reviewer reports.
 
 M can complete the candidate builder, tests and interfaces now. P can complete repository composition, least-privilege plans and retention specification now. Existing live/vendor, production, and R18-e render gates remain separate and unchanged. No product criterion receives PASS from this policy decision alone.
+
+## IRPT-S7-02 — one documentary issuance exception
+
+Date: 2026-09-22. Decider: `1.0.0_SA_CTO` under the same committed Andrew session delegation. Raised by COO~M at 21:28:56Z.
+
+The exact drafted CRO seat-home order `org/tier1_exec/4.0.0_SA_CRO/task_orders/IRPT-S7-01_REGISTER_20260922.md` names only the canonical conformance ledger and implements IRPT-S7-01 at `bcd38bba00`. Its filename resolves to `IRPT`, a macro without `org/projects/IRPT.json`; it is intentionally not a newly registered implementation pipeline or a resumption of the held B/F cycles. CTO reviewed the complete draft and the existing `to-pipeline-gate.py` documented override mechanism.
+
+**Approve the canonical audited `pipeline-override` for this exact documentary order only.** COO~M remains issuer and committer; CRO remains the register executor. Add this line to that order and use ordinary safe-commit:
+
+```text
+# pipeline-override: CTO IRPT-S7-02 under Andrew session delegation ecf350639a; exact CRO register-carrier act implementing IRPT-S7-01 bcd38bba00, not a registered IRPT pipeline or B/F round; sole work surface infra/logic/06_CONFORMANCE_LEDGER.md; no runtime/deploy or product acceptance authority.
+```
+
+The established gate appends its record to `org/to-pipeline-override-audit.log`. Confirm that the record was actually written as well as the issuance commit, then route the exact committed order to CRO. An unwritable audit sink is not accepted as evidence of completed audit recording. Keep the drafted paths, preflight declarations, acceptance, private-data conditions and retention prerequisites. No renamed fake project, new project registration, global exemption, gate edit, no-verify, or force is authorized. A new refusal outside this narrowly adjudicated registration mismatch must be reported on its own evidence.
