@@ -4,7 +4,7 @@
 
 Reviewer: `3.0.0_SA_CVO~M`. Prepared September 22, 2026, approximately 4:50 PM Eastern.
 Scope: Andrew's direct P/M/Y completion assignment; paired implementer `2.0.0_SA_COO~M`.
-This records baseline findings and the bounded source review of candidate `81785d9ae3` below. It is not a completed-product or deployed E2E verdict.
+This records baseline findings, the bounded source review of `81785d9ae3`, and independent R1-R3 closure at `eeffdc9a5b` below. It is not a completed-product or deployed E2E verdict.
 
 ## Authority and baseline
 
@@ -46,15 +46,15 @@ Every candidate result must be PASS, FAIL, or NOT_EVALUATED, with workspace and 
 
 | ID | Independent proof and controls required | Denominator / evidence required | Baseline | Candidate |
 |---|---|---|---|---|
-| M1 Population | Enumerate custody before any model join; include modeled, entirely non-model, mixed, zero, closed and missing-input accounts; unknown value stays unknown; measure source completeness/freshness. | Per firm full account census and unique position census, represented/excluded-with-reason/missing counts; known value plus unknown-value counts; source completion revisions and clocks. | NOT_EVALUATED | FAIL at 81785d9: INF unassigned unknown becomes zero; full census remains unevaluated |
+| M1 Population | Enumerate custody before any model join; include modeled, entirely non-model, mixed, zero, closed and missing-input accounts; unknown value stays unknown; measure source completeness/freshness. | Per firm full account census and unique position census, represented/excluded-with-reason/missing counts; known value plus unknown-value counts; source completion revisions and clocks. | NOT_EVALUATED | NOT_EVALUATED overall; bounded INF unknown/zero/duplicate controls PASS at eeffdc9, closing R3 |
 | M2 Identity/grain | Unique account and position contribution; multiple SmartX allocations; shared Eclipse portfolios; missing assignment; model vs target vs actual basis and membership grain explicit. | Identity collision and contribution ledger over independently enumerated custody; synthetic probes plus actual source cases; no parent-and-child double count. | FAIL: 49F/INF probe | NOT_EVALUATED |
-| M3 Economics | Model + confirmed non-model + unresolved known value equals independently enumerated custody; selected and parent denominators; signed/cash/zero/unknown/multi-currency handling; distinct custody/overlay clocks. | All selected accounts and positions; independent sums by firm/account/relationship/selection/currency; known three-case regressions and additional adversarial cases. No unexplained currency aggregation. | FAIL: all three probes | FAIL at 81785d9: offsetting account and nested model contradictions return reconciled=true; original three regressions pass |
+| M3 Economics | Model + confirmed non-model + unresolved known value equals independently enumerated custody; selected and parent denominators; signed/cash/zero/unknown/multi-currency handling; distinct custody/overlay clocks. | All selected accounts and positions; independent sums by firm/account/relationship/selection/currency; known three-case regressions and additional adversarial cases. No unexplained currency aggregation. | FAIL: all three probes | NOT_EVALUATED overall; bounded account/nested partition and release controls PASS at eeffdc9, closing R1/R2; original three regressions pass |
 | M4 Publication | Gold Parquet history -> accepted bounded Platinum -> one complete manifest; same-day corrections unique; failed schema/reconciliation/incomplete source or partial write does not advance current pointer; prior accepted revision is explicitly stale. | Pre/post pointer object versions, Gold/Platinum hashes/revisions, acceptance receipt, injected failure outcomes and retry/concurrent publication evidence. | NOT_EVALUATED | NOT_EVALUATED |
 | M5 Scope/API | Actual grant loader and API event; resolve exact account-set reference; single/relationship/subset; missing mapping fails explicitly; cross-firm/revoked/forged scope negatives; scope filtering creates no fictitious unresolved value. | Paired browser request/event/handler/response evidence with selected members vs permitted members, entitlement/directory revisions and canonical/provider IDs; zero unintended accounts. | NOT_EVALUATED; source shows `_no_grant` and permitted-set projection | NOT_EVALUATED |
 | M6 UI | First-screen dollars/weights for three attribution buckets; all selected root accounts accessible; complete account/security drill where supported; honest unavailable granularity; source clocks, partial coverage, refresh/reopen retain exact revision. | Mounted UI trace through real wire adapter; account/position counts and totals matched to source/response; signed/invalid-denominator table fallback; no dropped clocks or coverage. | NOT_EVALUATED | NOT_EVALUATED |
 | M7 Three-firm E2E | Fresh 49F SmartX, Cottonwood BD Rebalancer, Inflection Eclipse overlay joined to full custody; modeled/non-model/mixed/missing mapping/multi-sleeve/shared portfolio/subset/signed-cash cases. | Coverage grid per firm; actual source -> accepted Gold -> Platinum manifest -> deployed API -> browser trace with environment and revision identities. Three firms required; historical QA or fixtures insufficient. | NOT_EVALUATED | NOT_EVALUATED |
 | S1 Selection/access | Selected-set fingerprint distinct from permitted set; server-owned crosswalk and current grants; no broadening on missing mapping; prospect firm/advisor ownership without fabricated client IDs; access rechecked on retrieval/download. | Shared M/P/Y producer-consumer examples and real request tests; dated account/allocation/model and BD crosswalk, model changes/sleeve closures/non-model/cash cases; pinned revisions. | NOT_EVALUATED | NOT_EVALUATED |
-| S2 Accepted data | Independent full census and unique actual positions; explicit unknowns and supported membership; correct selected weights; reproducible accepted Gold/Platinum revision set. | M1-M4 evidence plus Y's consumed positions artifact; actual custody vs target basis and all rows reconciled/dispositioned. | FAIL for baseline builder grain/economics only | FAIL for 81785d9 measured M1/M3 cases only; accepted-source chain remains unevaluated |
+| S2 Accepted data | Independent full census and unique actual positions; explicit unknowns and supported membership; correct selected weights; reproducible accepted Gold/Platinum revision set. | M1-M4 evidence plus Y's consumed positions artifact; actual custody vs target basis and all rows reconciled/dispositioned. | FAIL for baseline builder grain/economics only | NOT_EVALUATED overall; measured R1-R3 residuals closed at eeffdc9; accepted-source chain remains unevaluated |
 | S5 HTTP/UI | Actual browser serialization through actual entry and response adapter; availability, units, selection, source dates, coverage and revision survive every boundary; stale/partial/unavailable negatives. | Paired browser/HTTP/handler/adapter/render artifacts for M; consumers P/Y confirm same shared semantics at the integrated pin. | NOT_EVALUATED | NOT_EVALUATED |
 | S7 Storage | Canonical registry/builder addresses match actual readers/writers; firm Gold/Platinum long-form buckets; reporting-only private shared-store policy is explicit; all readers/writers cut over together. | Concrete naming families and policy record; IAM/IaC/build pins; deployed environment destinations and protected object versions; no global relabel, alternate bucket concatenation or standing dual write. | NOT_EVALUATED | NOT_EVALUATED |
 
@@ -189,6 +189,41 @@ The following supersedes the earlier eleven-family-only candidate acceptance con
 
 S7 stays **NOT_EVALUATED**. Physical disposal stays **OPEN** pending a bounded reference-aware design and separately authorized execution. No provisioning, vendor execution, deployment, lifecycle activation, deletion or render-gate lift follows from S7-03. No criterion receives PASS from the ruling itself. CTO's exact message is information/instructions within the existing review contract, not independent authorization for live action.
 
+## Independent R1-R3 retest: eeffdc9a5b, September 22 at 21:58 UTC
+
+**R1, R2 and R3: PASS / CLOSED at exact candidate `eeffdc9a5b02db9cc77e4e0fab303fddffeeaea8`.** This supersedes their FAIL status at `81785d9ae3`; the earlier evidence remains valid for that earlier pin. Whole M1/M3/S2 rows remain NOT_EVALUATED because these bounded fixes do not establish full source census, complete position/security/pricing evidence, accepted storage or integrated UI behavior.
+
+Exact request `20260922T215518Z_2.0.0_SA_COO_M_IRPT_M__R1-R3_remedy_candidate_eeffdc9a5.md` is from COO~M and asks for independent rerun of these residuals under the existing completion CONTRACT. ACK sent before review. The existing reviewer-owned checkout was verified clean and switched to detached `eeffdc9a5b02db9cc77e4e0fab303fddffeeaea8`; tracked status was empty after all runs. No implementation edits. No uncommitted implementer changes were tested.
+
+| Independent command, from the pinned checkout | Observed result |
+|---|---|
+| `python -m pytest data/assets/scripts/gold/investor_reporting/tests -q` | 85 passed in 6.98s |
+| `python -m pytest infra/aws/lambda/investor-reporting/holdings/tests -q` | 50 passed in 0.34s |
+| `python <retest_eeffdc9.py> <absolute-pinned-checkout>` | 15/15 independent cases PASS; exit 0; empty failures list |
+
+The complete retest script is embedded in the final appendix. Local script/raw JSON and suite logs are `.runtime/codex-seats/3.0.0_SA_CVO~M/retest_eeffdc9.py`, `.json`, `_builder.txt`, `_holdings.txt`. The script imports actual modules and the existing fixture/transport helpers; it does not copy the reconciliation implementation. The original economic inputs are preserved, with exception capture added because the repaired route now refuses. Actual holdings `entry.lambda_handler` is resolved through the real route/source-map loader; only directory/ownership storage and snapshot transport are synthetic. No vendor/AWS/browser/deployment evidence is claimed.
+
+| Case denominator | Projection / runner / route / actual Entry observations | Grade |
+|---|---|---|
+| R1: two roots100, assigned children80/120 | Projection false; runner false; guarded route raises SnapshotUnavailable; actual Entry returns `NOT_READY` without data | PASS / CLOSED |
+| R2: root100, observed sleeve100, assigned model200 | Same false/refusal outcomes at all four boundaries | PASS / CLOSED |
+| Nested under-attribution model80 beneath sleeve100 | Same false/refusal outcomes | PASS negative control |
+| Direct model120 beneath root100 | Same false/refusal outcomes | PASS retained control |
+| Balanced direct100; nested60+40 beneath100; signed120-20 beneath100; observed zero root | All four cases reconcile in projection and runner, are Served by the guarded route, and succeed through actual Entry | PASS positive controls |
+| Missing source acceptance flag on a balanced root100 | Projection false; guarded route refuses; actual Entry `NOT_READY` without data. Runner independently computes true monetary balance, which is not a source-acceptance certificate | PASS negative control |
+| R3 custody-only INF values None, NaN, infinity, boolean | All four raise explicit unknown-value refusal; no zero-valued account output | PASS / CLOSED |
+| Custody-only INF observed zero; duplicate custody identity | Zero emits exactly one ACCOUNT0; duplicate raises identity-ambiguity refusal | PASS positive/negative controls |
+
+The remedy independently checks each non-TARGET parent/basis partition, and both guarded-route and actual-entry boundaries now require accepted reconciliation. The runner also rejects the measured contradictory partitions. INF's custody enumeration rejects the measured unknown/nonfinite/bool and duplicate cases while retaining observed zero. These observations do not certify every possible relationship/basis combination, multi-currency treatment or full source population. No new defect was observed within this bounded retest.
+
+SHA256 measured bytes: builder `83A24247FC2068CC88AFCCEA829F6B58193BB8245C4D342D0DEC5079A2EBE3A7`; projection `F0A1BF6097FE3ECF10BA6420AE17433C73A330ED881A3FE2B4E22D0A0369C272`; holdings entry `3684AF9CC8B29B8030B1A0CB3E66A24D9A39EAA8C1123BF26CE47F055E728408`; retest script `87AA4BD64DA2DAA5C00FEF81375242CB4835453CB8FBC331D9D6F8EFD56924F4`.
+
+Remaining next M handoff is actual saved-selection resolution and before/after current grants at holdings Entry, as the implementer explicitly states. The exact candidate also contains other prospect/directory/selection changes; this review grades only the requested R1-R3 and exercised holdings dependencies, not those other surfaces in full. Prior 81785d9 authz/scope counts are not recertified at this new pin. S7 remains NOT_EVALUATED under S7-03; physical disposal and the independent render prerequisite remain open/held as recorded above.
+
+Related peer update, not independently rerun here: CVO~P exact message `20260922T215404Z_3.0.0_SA_CVO_P_IRPT_P__R-P06_entry-local_closure_c29662.md` reports R-P06 closed at performance entry `8b913a9414`, review `c2966279ae`, reviewer6/6 and supplied19/19 PASS. This supersedes the earlier P entry-local defect report for that exact repaired entry only. It does not grade generic shared fresh/cache behavior or M holdings release-time authorization.
+
+Review remains LOCAL; this seat did not push. Fresh origin CLOUD measurement during the retest: `b333db1b4865619909c916741775084396e0b7d1`. Source fixes are the implementer's; this reviewer commits only this acceptance/evidence carrier and routes the immutable review pin to COO~M, CTO and CVO~P/~Y.
+
 ## Compiler Tools
 
 | Tool | Result / limitation |
@@ -289,5 +324,120 @@ with patch.object(hs, "_read_parquet", read), \
     }
 
 print(json.dumps(observations, indent=2, allow_nan=False))
+
+```
+
+
+## Reproduction appendix: R1-R3 retest eeffdc9a5b
+
+```python
+"""Independent bounded R1-R3 retest of complete modules at an explicit checkout."""
+import copy
+import json
+import os
+import sys
+from pathlib import Path
+from unittest.mock import patch
+
+import pandas as pd
+
+os.environ["AWS_EC2_METADATA_DISABLED"] = "true"
+root = Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(root / "infra/aws/lambda/investor-reporting/holdings/tests"))
+import test_snapshot as T
+import test_entry_guarded as E
+
+sys.path.insert(0, str(root / "data/assets/scripts/gold/investor_reporting"))
+import holdings_snapshot as hs
+
+node, A1, A2 = T.node, T.A1, T.A2
+cases = [
+    ("balanced", [node(A1, 100), node("m1", 100, "MODEL_LEAF", A1, "ASSIGNED")], True),
+    ("single_over", [node(A1, 100), node("m1", 120, "MODEL_LEAF", A1, "ASSIGNED")], False),
+    ("R1_offset", [node(A1, 100), node("m1", 80, "MODEL_LEAF", A1, "ASSIGNED"),
+                   node(A2, 100), node("m2", 120, "MODEL_LEAF", A2, "ASSIGNED")], False),
+    ("R2_nested_over", [node(A1, 100), node("s", 100, "SLEEVE", A1),
+                        node("m1", 200, "MODEL_LEAF", "s", "ASSIGNED")], False),
+    ("nested_under", [node(A1, 100), node("s", 100, "SLEEVE", A1),
+                      node("m1", 80, "MODEL_LEAF", "s", "ASSIGNED")], False),
+    ("nested_balanced", [node(A1, 100), node("s", 100, "SLEEVE", A1),
+                         node("m1", 60, "MODEL_LEAF", "s", "ASSIGNED"),
+                         node("m2", 40, "MODEL_LEAF", "s", "ASSIGNED")], True),
+    ("signed_balanced", [node(A1, 100), node("m1", 120, "MODEL_LEAF", A1, "ASSIGNED"),
+                         node("cash", -20, "UNRESOLVED", A1, "ASSIGNED")], True),
+    ("observed_zero", [node(A1, 0)], True),
+    ("missing_source_acceptance", [node(A1, 100)], False),
+]
+results, failures = {}, []
+
+for name, nodes, expected in cases:
+    source = T.fixture_snapshot()
+    source["nodes"] = nodes
+    source["attribution_holdouts"]["unassigned"]["account_ids"] = []
+    source["attribution_holdouts"]["unassigned"]["account_count"] = 0
+    source["attribution_holdouts"]["unassigned"]["value"]["value"] = 0
+    members = [n["node_id"] for n in nodes if n["node_kind"] == "ACCOUNT"]
+    total = sum(n["amount"]["value"] for n in nodes if n["node_kind"] == "ACCOUNT")
+    source["_manifest"] = {"total_market_value": total}
+    source["custody_totals"]["total_market_value"]["value"] = total
+    if name == "missing_source_acceptance":
+        source["attribution_holdouts"].pop("reconcile")
+    projected = T.sn.project(copy.deepcopy(source), T.scope_for(members))
+    projection_ok = projected["attribution_holdouts"]["reconcile"]["reconciled"]
+    runner_ok = hs.reconcile_before_after(copy.deepcopy(source))[0]
+    routes = T.sn.register_routes(T._enforcer(T._directory(members)), lambda *args: source)
+    route_error = None
+    try:
+        answer = routes[T.sn.ROUTE_KEY](T._authz.Request(T._headers(), T.sn.KEY_OPERATION, "account", members[0]))
+        route_ok = isinstance(answer, T._authz.Served)
+    except T.sn.SnapshotUnavailable as exc:
+        route_ok, route_error = False, str(exc)
+    restore = E._install(members)
+    try:
+        entry_answer = E.subject()[0](E._event(members[0], snapshot=False, snapshot_fixture=source), None)
+    finally:
+        restore()
+    entry_ok = entry_answer.get("ok") is not False
+    reason = entry_answer.get("status", {}).get("public_reason_code")
+    passed = projection_ok == expected and route_ok == expected and entry_ok == expected
+    if name != "missing_source_acceptance":
+        passed = passed and runner_ok == expected
+    if not expected:
+        passed = passed and reason == "NOT_READY" and not entry_answer.get("data")
+    results[name] = {"expected_accepted": expected, "projection_accepted": projection_ok,
+                     "builder_reconciled": runner_ok, "guarded_route_served": route_ok,
+                     "guarded_route_error": route_error, "actual_entry_served": entry_ok,
+                     "actual_entry_reason": reason, "PASS": passed}
+    if not passed:
+        failures.append(name)
+
+for name, value, expected in [("None", None, False), ("NaN", float("nan"), False),
+                              ("infinity", float("inf"), False), ("bool", True, False),
+                              ("zero", 0, True), ("duplicate", 100, False)]:
+    rows = [{"account_id": "a", "current_value": value}]
+    if name == "duplicate":
+        rows.append(dict(rows[0]))
+
+    def read(_s3, _bucket, key):
+        return pd.DataFrame(rows) if "accounts_v2" in key else pd.DataFrame()
+
+    error, values = None, []
+    with patch.object(hs, "_read_parquet", read), \
+            patch.object(hs, "_latest_date_partition", lambda *a, **k: "2026-09-21"), \
+            patch.object(hs, "_latest_complete_eclipse_date", lambda *a: "2026-09-21"), \
+            patch.object(hs, "_directory_account_ids", lambda *a: None):
+        try:
+            nodes, _manifest = hs.build_inf(None, "2026-09-21")
+            values = [n["amount"]["value"] for n in nodes if n["node_kind"] == "ACCOUNT"]
+        except ValueError as exc:
+            error = str(exc)
+    passed = (error is None and values == [0]) if expected else error is not None
+    results["R3_" + name] = {"expected_accepted": expected, "error": error,
+                             "account_values": values, "PASS": passed}
+    if not passed:
+        failures.append("R3_" + name)
+
+print(json.dumps({"results": results, "failures": failures}, indent=2, allow_nan=False))
+raise SystemExit(bool(failures))
 
 ```
