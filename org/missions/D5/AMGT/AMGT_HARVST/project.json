@@ -1,0 +1,40 @@
+{
+  "project_code": "AMGT_HARVST",
+  "former_codes": [],
+  "macro_code": "AMGT",
+  "directive": "D5",
+  "fabric": "site-z",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "REGISTERED",
+  "created": "2026-09-22",
+  "registered_under_tree": "2026-09-22",
+  "last_updated": "2026-09-22T14:4xZ",
+  "pods": [
+    "1.0.0",
+    "2.0.0",
+    "3.0.0",
+    "4.0.0"
+  ],
+  "seats": {
+    "cro": "4.0.0_SA_CRO~Z (L1 brief author)",
+    "cto": "1.0.0_SA_CTO~Z (L2 endpoint, L3 registration, L4 PRD, L10 routing)",
+    "coo": "2.0.0_SA_COO~Y (L5 decomposition, L6 issuance, drives to completion) -- named by Andrew 2026-09-22 ~14:4xZ; seated at the L4->L5 handoff",
+    "cvo": "3.0.0_SA_CVO~Z (L8 compilation, L9 adjudication, L10 slug)"
+  },
+  "related": [
+    "AMGT_RESAPP"
+  ],
+  "name": "Publication harvest: every mention of a covered company, retrieved with its provenance, kept as received, structured without loss, and graded by strength over time -- the Chatter axis and the company event spine.",
+  "description": "Retrieval, structure and the bronze/silver/gold build for the publication channels (Seeking Alpha, Bloomberg.com, Barron's, WSJ, FT) that feed AMGT_RESAPP's Chatter axis and news. Bronze keeps each publisher's bytes as received; silver is built from bronze with every vendor field typed; gold grades each (article, security) mention and rolls it into a daily chatter series and an event spine a timeline graph can dissect. Runs beside AMGT_RESAPP and does not own that project's page, trial or other channels.",
+  "brief": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md @fefee2f360 (L1, 4.0.0_SA_CRO~Z), on Andrew's record ANDREW_DIRECT_20260922_AMGT_PUBLICATION_RETRIEVAL_STRUCTURE_BRIEF.md @ac8a4965c4.",
+  "prds": [],
+  "decompositions": [],
+  "leads": [
+    "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
+  ],
+  "phase": "L3 REGISTERED. L2 endpoint and L4 PRD in progress at 1.0.0_SA_CTO~Z from the brief @fefee2f360.",
+  "blocking": "L4 PRD and its L4-R sign-off (3.0.0_SA_CVO~Z ratified text, 4.0.0_SA_CRO~Z brief half). Then 2.0.0_SA_COO~Y is seated for L5.",
+  "threads": [],
+  "thread_counter": 0
+}

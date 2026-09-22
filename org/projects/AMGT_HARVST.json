@@ -1,0 +1,13 @@
+{
+ "project_code": "AMGT_HARVST",
+ "home": "org/missions/D5/AMGT/AMGT_HARVST",
+ "directive": "D5",
+ "macro_code": "AMGT",
+ "fabric": "site-z",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "Publication harvest: every mention of a covered company, retrieved with its provenance, kept as received, structured without loss, and graded by strength over time -- the Chatter axis and the company event spine.",
+ "generated_from": "org/missions/D5/AMGT/AMGT_HARVST/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-09-22T14:42:14Z"
+}
