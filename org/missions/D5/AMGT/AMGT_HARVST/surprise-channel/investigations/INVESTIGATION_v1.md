@@ -271,6 +271,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "HVST-h-10 item 4/5: 'Use harvest mode ... Upload. Run upload-harvest --retrieval-mode backfill until remaining_pending is 0. It writes bronze articles, bronze listings, silver article and silver listing_hit.' -- implying the built CLI can enter harvest mode and that upload-harvest will find real pending rows to write.",
     "world_is": "Harvest mode cannot be entered through any CLI invocation this cell is permitted to make (self.harvest_client is unconditionally None from __main__.py, independent of config.json), so no run of `run` -- correctly bounded or not, with or without --bbg-symbol-probe, with or without a --config override -- can ever populate harvest_raw_outbox/harvest_listing_outbox, and upload-harvest will therefore always report remaining_pending unaffected by this cell's fetch (nothing pending to find). This worker's own live invocation (unbounded requirement notwithstanding) was additionally cut short by an inappropriate `timeout 590`, real vendor calls having already occurred (31 SA HTTP events, 21 accepted articles, 6 rejected) -- spending part of Andrew's 'Publications harvester: 1 run for Lenovo' cap on content that cannot reach bronze/silver via this cell's sanctioned path regardless. bbg/ft/wsj/barrons were never reached (0 http events for each) and are recorded UNRESOLVED with reason 'the live run invocation was interrupted (and separately, harvest mode is unreachable) before/regardless of reaching this publisher'. No second live invocation was made -- per the ONE-RUN RULE, real vendor calls having already occurred, re-spending the word is the issuer's/Andrew's call, not this worker's.",
     "notes": "Not resolved by editing worker.py/__main__.py/config.json (all out of this cell's <paths> write authority per BOUNDS 'NEVER EDIT CODE IN THIS CELL' and AC6's own lib/ diff check) -- recorded as a row, per BOUNDS 'a defect found in it is a row, never a patch.' Disarm is the issuer's/CVO's: either wire a real harvest_client (an S3 client) into __main__.py's Worker construction (a code change, a future cell) with Andrew's re-authorization for the vendor cost already partly spent, or clarify that item 5's bronze/silver write for THIS trial is expected to come from a different path this order does not name. This cell's own captured SA content (21 accepted articles, locally verifiable at .runtime/opal-data-harvest/publications/v1/sa/*.json and runs/20260922T195934Z-sa-592d7d85bf.json) is preserved, untouched, and not deleted -- available for a future cell's use if the issuer decides it may be."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S2",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-22T22:05Z",
+    "one_line": "The gold article_security_mention table carries NO publisher column, so publishers_distinct in chatter_daily and chatter_event is derived by splitting article_key on ':' -- a parse, not a field, and C-HV-MENTION-GRADE never names it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the stored snapshot amgt/harvest/gold/article_security_mention/date=2026-09-22/part-20260922T210931Z.parquet has 23 columns and none is publisher or publisher_code (issuer read it with pyarrow, 86 rows)",
+        "article_key carries the publisher as its prefix, e.g. 'barrons:WP-BAR-0001908718'",
+        "PRD v0.2 @9102ccfe81 C-HV-MENTION-GRADE lists every mention column and names no publisher column, while C-HV-DAILY-DENSE requires publishers_distinct and C-HV-EVENT-SPINE requires '>= 2 publishers'",
+        "the issuer's first independent re-derivation of chatter_event read a 'publisher' key, got None for all 86 rows, and computed 0 events per security against the 5 actually written -- the parse is the only route and a consumer that misses it silently gets zeros"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-HV-MENTION-GRADE enumerates the mention row's columns; C-HV-DAILY-DENSE and C-HV-EVENT-SPINE consume a publisher dimension (publishers_distinct, '>= 2 publishers') as if it were present.",
+    "world_is": "The publisher exists only inside article_key's prefix. HVST-h-5 and HVST-h-6 both parse it, correctly and identically, but nothing in the contract or the stored schema says a consumer must. A later consumer reading a publisher field gets None and silently produces zeros -- which is exactly what the issuer's own check did before it inspected the schema.",
+    "notes": "No defect in the cells: both parse it the same way and both were verified. This is a CONTRACT gap for 1.0.0_SA_CTO~Z's round-1 analysis -- either the mention table gains an explicit publisher column or the parse becomes a named rule with one shared helper. INERT because nothing served reads these tables yet (C-HV-AXIS-PROJECTION's switch is still held)."
   }
 ]
 ```
