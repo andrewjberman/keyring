@@ -8827,3 +8827,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The file carrying that exact content (to_id, cell text, criterion, BOUNDS -- everything this cell worked from) is saved at 'IRPT_BCKEND.TO-IB-rtr-d.re-pin-citations-to-one-merged-vintage-and-the-v1-harness.md' -- letter 'd', not numeral '4' -- consistent with its sibling cells' a/b/c/d/e naming. This cell's own <paths> grant (line 1 of that same block) was satisfied regardless, since the grant's INTENT (this order's own face, wherever it actually lives) was read correctly from the start; the mismatch only surfaces when a path is taken LITERALLY as typed, which proof-of-spec-check.py's --governing-order flag does. This instance's decomp_ref.to_ref and every --governing-order invocation in this cell's own commands use the REAL saved path (rtr-d); this order's own self-citations (rtr-4) are left uncorrected, per BOUNDS ('never edit this face, never widen the order')."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W18-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~18",
+  "surfaced_at": "2026-09-22T17:09:33Z",
+  "one_line": "This cell's criterion needs the REAL portal-authorizer/index.mjs (V2) and the REAL auth-validator-edge/index.mjs+render_auth.mjs (V3) imported and exercised, but a fresh worktree carries NO node_modules anywhere: neither package's own node_modules exists, AND the shared infra/aws/lambda/lib/authkeys/jwtPublicKeys.mjs (imported by both verifiers' human paths) has no node_modules in its own directory ancestry all the way to the filesystem root, so its bare `import('@aws-sdk/client-secrets-manager')` fails ERR_MODULE_NOT_FOUND before any monkeypatch could take effect -- the SAME underlying gap row IRPT_BCKEND-W15-S4 already documented (that row's own remedy: an ephemeral, gitignored, repo-root `bun install`). This cell resolved it differently: `cp -r` of the SAME package's already-installed node_modules from the main ajb_workspace checkout (a sibling worktree, same lockfiles) into this worktree's own portal-authorizer/ and auth-validator-edge/ directories -- LOCAL TEST EXECUTION ONLY, nothing under node_modules/ is staged or committed (.gitignore covers it; the criterion's own invocation and this file's git status were both confirmed clean of any node_modules path before commit).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Measured this session: `node -e \"import('./infra/aws/users/lambda/portal-authorizer/index.mjs')\"` from the worktree root FAILED with `Cannot find package '@aws-sdk/client-secrets-manager' imported from C:\\tmp\\wk-irpt-18-18\\infra\\aws\\lambda\\lib\\authkeys\\jwtPublicKeys.mjs` before any node_modules existed anywhere in this fresh worktree (neither at repo root, nor infra/, infra/aws/, infra/aws/lambda/, infra/aws/lambda/lib/, nor infra/aws/lambda/lib/authkeys/ -- all six checked directly, all absent).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md row IRPT_BCKEND-W15-S4 (same file, above this row): the identical transitive-import gap, documented against the same two files (jwtPublicKeys.mjs, originVerify.mjs), resolved there via a repo-root `bun install` instead.",
+      "This cell's task order <paths>: infra/aws/users/lambda/portal-authorizer/, infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs, infra/aws/lambda-edge/auth-validator-edge/index.mjs -- the shared jwtPublicKeys.mjs is outside this grant and never edited; only its runtime resolvability was the friction.",
+      "git status confirmed clean of any node_modules/ path in both directories at every commit this cell made (.gitignore already covers node_modules/ estate-wide; nothing new added to it)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BOUNDS: code + tests only, no AWS API call, no Secrets Manager entry this round; the criterion's <invocation> must run and PASS by output using the REAL verifier modules.",
+  "world_is": "A fresh worktree cannot import either verifier's human-path code (shared jwtPublicKeys.mjs / V2's originVerify.mjs) without SOME node_modules ancestor supplying `@aws-sdk/client-secrets-manager`, and this is now the SECOND independently-surfaced instance of that same estate-wide friction on this exact project (W15-S4, then this row) -- a real gap for ANY future .mjs Lambda test in this codebase, not unique to either cell. This cell's own render-key paths (V2's env-var seam, V3's `__setRenderKeySlotsForTest`) never needed this fix; it was purely to exercise the PRE-EXISTING human-path regression control this cell's arm (d) also required. Not self-graduated; filed for whoever owns the shared-module/test-tooling surface to consider a durable local-dev remedy (e.g. a checked-in dev-dependency manifest at the shared module's own directory) so a third worker does not re-discover this the same way."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W18-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~18",
+  "surfaced_at": "2026-09-22T18:49:35Z",
+  "one_line": "This order's own <proof_of_spec> section names the instance path using the decomp cell id ('IB-rtr-2'), but the TO's actual on-disk filename uses the file-slug 'IB-rtr-b' (title line 1 reads 'TO IRPT_BCKEND.TO-IB-rtr-2' while the real file is 'IRPT_BCKEND.TO-IB-rtr-b.both-verifiers-forbidden-claims-and-the-expiry-bound.md') -- an internal inconsistency in the order itself, not something this cell introduced. The mechanical gate (.tools/to-pipeline-gate.py, stem = os.path.basename(rel).rsplit('.md',1)[0], line ~2562) derives the REQUIRED proof filename from the TO's real on-disk basename, never from the internal <to_id>/decomp-cell text -- so the literal path this order's own prose instructs ('IRPT_BCKEND.TO-IB-rtr-2....proof_of_spec.json') is REFUSED by that gate ('NO proof-of-spec instance was found beside it') on the first commit attempt. Renamed to the gate-required 'IRPT_BCKEND.TO-IB-rtr-b....proof_of_spec.json' (content unchanged, to_id field inside the JSON correctly stays 'IRPT_BCKEND.TO-IB-rtr-2' since that matches the TO's own <to_id> tag) and the commit then passed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-rtr-b.both-verifiers-forbidden-claims-and-the-expiry-bound.md line 1: '# TO IRPT_BCKEND.TO-IB-rtr-2 -- BOTH VERIFIERS...'; line 3: '<to_id>IRPT_BCKEND.TO-IB-rtr-2</to_id>'; <proof_of_spec> block: 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~18/IRPT_BCKEND.TO-IB-rtr-2.both-verifiers-forbidden-claims-and-the-expiry-bound.proof_of_spec.json (the TASK ORDER'S OWN BASENAME stem)' -- but the ACTUAL filename on disk (confirmed by `ls org/missions/D9/IRPT/IRPT_BCKEND/task-orders/`) is 'IRPT_BCKEND.TO-IB-rtr-b.both-verifiers-forbidden-claims-and-the-expiry-bound.md', suffix 'rtr-b' not 'rtr-2'.",
+      "Measured this session: the first safe-commit attempt at the 'IB-rtr-2'-named instance file, staged alongside the <status> flip, was BLOCKED by to-pipeline-gate.py: \"ERROR: BLOCKED -- pipeline layer 2 (TO issuance gate)... NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.\"",
+      ".tools/to-pipeline-gate.py (this HEAD): `stem = os.path.basename(rel).rsplit('.md', 1)[0]` then `names = (stem + '.proof_of_spec.json', ...)` -- derived from the TO FILE's own basename, never from <to_id> or any internal text.",
+      "After renaming the instance file to 'IRPT_BCKEND.TO-IB-rtr-b....proof_of_spec.json' (byte-identical JSON content), py -3.12 .tools/proof-of-spec-check.py --governing-order <this TO> reported VALID (rc=0) at both the old and new paths (the checker itself does not care about the filename), and the subsequent safe-commit attempt passed layer 2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "<proof_of_spec>: 'Instance at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~18/IRPT_BCKEND.TO-IB-rtr-2....proof_of_spec.json (the TASK ORDER'S OWN BASENAME stem)'.",
+  "world_is": "The task order's own title/<to_id> disagree with its own filename (a decomp-cell-id vs file-slug naming drift that predates this cell -- this order's title line and IDENTITY/decomp_ref sections consistently say 'IB-rtr-2' throughout, while every sibling TO in this same round18 batch, e.g. IB-rtr-a/IB-rtr-c/IB-rtr-d/IB-rtr-e, follows the same pattern of an internal 'IB-rtr-N' id against an 'IB-rtr-<letter>' filename), and the one place that mismatch is load-bearing is the mechanical proof-of-spec filename the to-pipeline-gate actually checks for, which reads the FILE, never the prose. Following the order's OWN literal instruction here would have left the <status> flip permanently un-committable through the standard gate chain. Not self-graduated; filed for the CVO/CTO to consider whether the decomp-cell-id vs file-slug drift is worth reconciling estate-wide (naming both consistently) rather than requiring each worker to independently discover and route around it."
+}
+```
