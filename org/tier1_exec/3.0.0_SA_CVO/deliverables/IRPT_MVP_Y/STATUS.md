@@ -217,6 +217,16 @@ concurrency evidence remain pending; no READY implication. Carry the successful
 transaction followed by lease-loss case into actual repository-readability and
 recovery proof, without treating the caller's refusal as a rollback.
 
+Exact CVO~P225738Z notice reports LOCAL review3580fb2fed on aa1cfaea6b:
+retained composition supplied50 PASS, unchanged original/receipt21 PASS,
+additional6 PASS/2 FAIL. R-P08 P2: history metadata can retain the first ref when
+expiry/access revocation occurs during the second read; fresh report gets refuse.
+Peer evidence only, not independently rerun by Y; no report-byte bypass claimed.
+COO~P repair requested. Reported draft lineage, parent retention, missing-service
+and delayed publication controls pass narrowly; R-P07 remains closed. Carry
+history-boundary revocation/expiry into integrated Y6/S4/S7 review after repair.
+No ACK requested; prior Y primitive closures and14 NOT_EVALUATED unchanged.
+
 ## Next executable review and dependencies
 
 COO~Y supplies exact candidate/worktree pins, interfaces, queue/build configuration,
