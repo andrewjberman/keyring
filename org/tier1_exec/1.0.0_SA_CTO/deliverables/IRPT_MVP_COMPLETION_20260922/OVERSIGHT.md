@@ -36,10 +36,17 @@ All three COOs reported the same excessive startup list. It was corrected canoni
 | G6 | Shared immutable report/export S4/S6 and proposed S7 storage placement need implementation | COO~P, M naming policy, Y consumer | Resolve only concrete cross-lane policy conflicts; require all readers/writers and same-revision proof |
 | G7 | Y execution/persistence/recovery and extraction/publication remain incomplete at starting baseline | COO~Y; CVO~Y | Track first complete dollar-CSV Overview, then both lanes/units/variants and failure matrix |
 | G8 | Existing external operating gates and R18-e L9 prerequisite retained | Named implementation owner prepares exact action; CTO routes reserved approval | Do not conflate offline PASS, live authorization, deployment and product completion |
-| G9 | Old global CVO-only-to-CTO send rule blocked assigned P/M/Y peer coordination | CTO implements exact-seat, IRPT-subject, contract-cited exception; CVOs prove real sends | Preserve B/F restrictions, identity checks and whole-send refusal for mixed recipients |
-| G10 | CVO~Y reported zero-output compiler calls during launch; all shim provisioning subsequently finished, CTO bare comp-which/comp-read return answers | CVO~Y retries canonical bare query | Treat as unresolved until its actual retry; no alternative search mechanism |
+| G9 | CLOSED repository blocker: bounded guard correction `4688c59ef2`, 54/54 controls; CVO~Y reports actual canonical delivery to COO~Y, CVO~M and CVO~P at 21:00:04/09/11Z with contract citation and no force | CVOs coordinate directly under v1.2; CTO receives unresolved conflicts | Preserve B/F restrictions, identity checks and whole-send refusal for mixed recipients; M/P sender confirmations may supplement Y's actual route proof |
+| G10 | CLOSED blank-output blocker: CVO~Y's same bare router returned output, scoped routed comp-find succeeded; evidence `90579aa057` | CVO~Y resumes independent review | Broad lookup still reached its 90-second budget with rc=1; scoped recovery is not a claim that every query succeeds |
 
 The code/evidence state owned by each lane lives in its separate `IRPT_MVP_P/M/Y` deliverables STATUS/INTERFACES/COMPLETION and dated logs. This register is CTO-owned; peers send updates rather than concurrently editing it.
+
+### Initial independent evidence and execution progress
+
+- CVO~M preparation `dfa1121b17`: matrix and reproducible economic probe; baseline M2/M3/S2 fail, completed-candidate/deployed E2E not evaluated. Findings relayed to COO~M and all reviewers.
+- CVO~Y preparation `90579aa057` supersedes `1ca9d3edfe`: actual submit boundary retains one of seven browser keys; changed selection/snapshot/title produce identical queue payload and ID; three calls invoke injected send three times. Baseline Y-B01 relayed to Y/P; all new-candidate criteria remain not evaluated.
+- CVO~P reports a three-case baseline probe reproducing query-date loss, selected-set reference treated as account ID, and missing selection broadening to permitted universe; review artifact commit is pending shared-index release. Its other source findings concern authenticated transport/fixture labels, provider dispatch and unwired export. These are starting defects, not future-candidate verdicts.
+- COO~M at 21:00:28Z reports isolated `codex/irpt-m-completion` includes accepted B baseline, 14 new actual-module selection/prospect tests pass, and economic fixes are underway. Independent custody values and shared Eclipse attribution remain explicit publication constraints. CTO has received this report, not independently rerun its suite or accepted the candidate.
 
 ## B round-18 compile received from Andrew
 
