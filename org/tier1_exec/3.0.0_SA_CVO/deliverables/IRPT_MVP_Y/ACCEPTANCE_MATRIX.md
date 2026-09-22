@@ -328,6 +328,17 @@ acceptance. Y-S01 CLOSED for the bounded service check. See
 test counts remain producer-attributed. Real queue/recovery/concurrency/runtime
 and all14 integrated criteria remain NOT_EVALUATED.
 
+## Local identity branch update, 7:22 PM Eastern
+
+`d99a0727422165b688fb93de3841ee7020ae5d8d`:40 targeted supplied tests+18subtests
+and independent10/10 PASS. Actual retained upload controls preserve canonical
+keys, exact values and provenance without vendor security_id; ambiguity/mixed
+branches and incompatible prices hold the whole input. See
+`LOCAL_IDENTITY_REVIEW_d99a072742.md`. M source and vendor upload/readback remain
+unproven; legacy S-prefixed fixtures are not runtime resolution evidence.
+Separate peer R-P09 browser response identity findingfb0f801529 remains open.
+No shared-schema, browser or full Y2/S2/S3/S7 grade; all14 NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

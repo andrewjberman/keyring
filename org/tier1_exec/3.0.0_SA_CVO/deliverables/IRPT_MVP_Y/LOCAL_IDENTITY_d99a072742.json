@@ -1,0 +1,1027 @@
+{
+  "candidate_pin": "d99a0727422165b688fb93de3841ee7020ae5d8d",
+  "source_evidence": "org\\tier1_exec\\3.0.0_SA_CVO\\deliverables\\IRPT_MVP_Y\\UPLOAD_CONSUMER_d99a072742.json",
+  "source_evidence_sha256": "be2b19acf8f59c194edc74a4fabdf91fc9bac2cd3edb1f96d2c09191db9e321f",
+  "verified_snapshot_files": 294,
+  "supplied_targeted_suite": {
+    "exit_code": 0,
+    "stdout": "........................................               [100%]\n40 passed, 18 subtests passed in 1.30s\n",
+    "stderr": ""
+  },
+  "controls": [
+    {
+      "name": "local_duplicate_cash_large_cents_persist_and_read_exactly",
+      "passed": true,
+      "observed": {
+        "holdings": {
+          "identity_kind": "CANONICAL_SECURITY",
+          "rows": [
+            {
+              "canonical_identifier": "$:CASH",
+              "canonical_identifier_namespace": "CASH",
+              "dollars": "1.00",
+              "identity_kind": "CANONICAL_SECURITY",
+              "resolution_revision": "independent-local-dimension-1",
+              "security_key": "local-key-$:CASH"
+            },
+            {
+              "canonical_identifier": "AAPL",
+              "canonical_identifier_namespace": "TICKER",
+              "dollars": "9007199254740993.31",
+              "identity_kind": "CANONICAL_SECURITY",
+              "resolution_revision": "independent-local-dimension-1",
+              "security_key": "local-key-AAPL"
+            }
+          ],
+          "total_dollars": "9007199254740994.31",
+          "unit": "dollars"
+        },
+        "source_rows": [
+          {
+            "analysis_dollars": "9007199254740993.01",
+            "canonical_identifier": "AAPL",
+            "canonical_identifier_namespace": "TICKER",
+            "identity_kind": "CANONICAL_SECURITY",
+            "original": {
+              "identifier": "AAPL",
+              "identifier_namespace": "TICKER",
+              "quantity": {
+                "units": "USD",
+                "value": 9007199254740994.0
+              },
+              "source_column": "B",
+              "source_row": 2,
+              "source_sheet": "portfolio.csv",
+              "source_value_verbatim": "9007199254740993.01"
+            },
+            "price": null,
+            "resolution_revision": "independent-local-dimension-1",
+            "security_key": "local-key-AAPL",
+            "source_index": 0
+          },
+          {
+            "analysis_dollars": "0.10",
+            "canonical_identifier": "AAPL",
+            "canonical_identifier_namespace": "TICKER",
+            "identity_kind": "CANONICAL_SECURITY",
+            "original": {
+              "identifier": "AAPL",
+              "identifier_namespace": "TICKER",
+              "quantity": {
+                "units": "USD",
+                "value": 0.1
+              },
+              "source_column": "B",
+              "source_row": 3,
+              "source_sheet": "portfolio.csv",
+              "source_value_verbatim": "0.10"
+            },
+            "price": null,
+            "resolution_revision": "independent-local-dimension-1",
+            "security_key": "local-key-AAPL",
+            "source_index": 1
+          },
+          {
+            "analysis_dollars": "0.20",
+            "canonical_identifier": "AAPL",
+            "canonical_identifier_namespace": "TICKER",
+            "identity_kind": "CANONICAL_SECURITY",
+            "original": {
+              "identifier": "AAPL",
+              "identifier_namespace": "TICKER",
+              "quantity": {
+                "units": "USD",
+                "value": 0.2
+              },
+              "source_column": "B",
+              "source_row": 4,
+              "source_sheet": "portfolio.csv",
+              "source_value_verbatim": "0.20"
+            },
+            "price": null,
+            "resolution_revision": "independent-local-dimension-1",
+            "security_key": "local-key-AAPL",
+            "source_index": 2
+          },
+          {
+            "analysis_dollars": "1.00",
+            "canonical_identifier": "$:CASH",
+            "canonical_identifier_namespace": "CASH",
+            "identity_kind": "CANONICAL_SECURITY",
+            "original": {
+              "identifier": "$:CASH",
+              "identifier_namespace": "CASH",
+              "quantity": {
+                "units": "USD",
+                "value": 1.0
+              },
+              "source_column": "B",
+              "source_row": 5,
+              "source_sheet": "portfolio.csv",
+              "source_value_verbatim": "1.00"
+            },
+            "price": null,
+            "resolution_revision": "independent-local-dimension-1",
+            "security_key": "local-key-$:CASH",
+            "source_index": 3
+          }
+        ],
+        "input_ref": {
+          "input_id": "portfolio_6174847dbcaa0c8efba1c6d3092bb9b2e14902bd8c8b72ebd49d4b674123a09a",
+          "content_sha256": "6174847dbcaa0c8efba1c6d3092bb9b2e14902bd8c8b72ebd49d4b674123a09a",
+          "artifact_ref": {
+            "artifact_id": "ART-11e7572cedbf832301744e17338e9a51777fb8cce487724b89fb44484b236fd6",
+            "byte_length": 5746,
+            "content_type": "application/json",
+            "family": "NORMALIZED_PORTFOLIO",
+            "immutable": true,
+            "retention_ref": {
+              "policy_revision": "irpt-x10-v1",
+              "retention_id": "RET-11e7572cedbf832301744e17338e9a51777fb8cce487724b89fb44484b236fd6"
+            },
+            "sha256": "6174847dbcaa0c8efba1c6d3092bb9b2e14902bd8c8b72ebd49d4b674123a09a",
+            "version_id": "version-2"
+          }
+        },
+        "read_equal": true
+      }
+    },
+    {
+      "name": "retained_local_retry_avoids_current_resolution",
+      "passed": true,
+      "observed": {
+        "same_result": true,
+        "additional_blob_puts": 0
+      }
+    },
+    {
+      "name": "two_source_aliases_same_canonical_identity_consolidate",
+      "passed": true,
+      "observed": {
+        "holdings": {
+          "identity_kind": "CANONICAL_SECURITY",
+          "rows": [
+            {
+              "canonical_identifier": "BRK.B",
+              "canonical_identifier_namespace": "TICKER",
+              "dollars": "0.30",
+              "identity_kind": "CANONICAL_SECURITY",
+              "resolution_revision": "independent-local-dimension-1",
+              "security_key": "local-key-BRK.B"
+            }
+          ],
+          "total_dollars": "0.30",
+          "unit": "dollars"
+        },
+        "original_identifiers": [
+          "BRK.B",
+          "BRK-B"
+        ]
+      }
+    },
+    {
+      "name": "local_shares_use_exact_key_date_and_decimal_price",
+      "passed": true,
+      "observed": {
+        "holdings": {
+          "identity_kind": "CANONICAL_SECURITY",
+          "rows": [
+            {
+              "canonical_identifier": "AAPL",
+              "canonical_identifier_namespace": "TICKER",
+              "dollars": "24.70",
+              "identity_kind": "CANONICAL_SECURITY",
+              "resolution_revision": "independent-local-dimension-1",
+              "security_key": "local-key-AAPL"
+            }
+          ],
+          "total_dollars": "24.70",
+          "unit": "dollars"
+        },
+        "price": {
+          "as_of": "2026-09-21",
+          "currency": "USD",
+          "price": "12.35",
+          "security_key": "local-key-AAPL",
+          "source_revision": "independent-local-price-1"
+        }
+      }
+    },
+    {
+      "name": "local_weights_preserve_explicit_notional_basis",
+      "passed": true,
+      "observed": {
+        "holdings": {
+          "identity_kind": "CANONICAL_SECURITY",
+          "rows": [
+            {
+              "canonical_identifier": "AAPL",
+              "canonical_identifier_namespace": "TICKER",
+              "dollars": "25.0025",
+              "identity_kind": "CANONICAL_SECURITY",
+              "resolution_revision": "independent-local-dimension-1",
+              "security_key": "local-key-AAPL"
+            },
+            {
+              "canonical_identifier": "MSFT",
+              "canonical_identifier_namespace": "TICKER",
+              "dollars": "75.0075",
+              "identity_kind": "CANONICAL_SECURITY",
+              "resolution_revision": "independent-local-dimension-1",
+              "security_key": "local-key-MSFT"
+            }
+          ],
+          "total_dollars": "100.0100",
+          "unit": "dollars"
+        },
+        "basis": "REFERENCE_NOTIONAL",
+        "notional": "100.01"
+      }
+    },
+    {
+      "name": "same_alias_different_keys_holds_whole_input",
+      "passed": true,
+      "observed": {
+        "response": {
+          "upload_id": "UP-b2de1f0fddb82266dd7fd4fbc76de549f2b64469acadea8c1ba5526844b8ebd2",
+          "input_id": null,
+          "state": "NEEDS_CORRECTION",
+          "reason": "AMBIGUOUS_SECURITY_RESOLUTION",
+          "row": 3,
+          "preview": {
+            "findings": [],
+            "normalized_holdings": [
+              {
+                "identifier": "AAPL",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 10.0
+                },
+                "source_column": "B",
+                "source_row": 2,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "10"
+              },
+              {
+                "identifier": "MSFT",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 20.0
+                },
+                "source_column": "B",
+                "source_row": 3,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "20"
+              }
+            ],
+            "row_context": [
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A2",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B2",
+                "row": 2,
+                "units_from_header": "market value"
+              },
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A3",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B3",
+                "row": 3,
+                "units_from_header": "market value"
+              }
+            ],
+            "skips": [],
+            "source_digest": "c8ebefadf8e9b1112080a2dc067470ed9b2a4dd24bfe2c0d785b41e9f6fadbdd",
+            "totals": {
+              "cash_rows": 0,
+              "computed": {
+                "USD": 30.0
+              },
+              "stated": null
+            }
+          },
+          "currency_evidence": {
+            "controls_applied": {
+              "supported_currencies": [
+                "USD"
+              ],
+              "coordinates_that_can_establish": [
+                "DECLARED_CURRENCY_COLUMN",
+                "VALUE_COLUMN_HEADER",
+                "XLSX_NUMBER_FORMAT"
+              ],
+              "coordinates_read_that_never_establish": [
+                "VALUE_CELL_TEXT"
+              ],
+              "coordinates_not_read": [
+                "WORKBOOK_OR_SHEET_LEVEL_NOTE",
+                "CSV_SIDECAR_OR_FILENAME"
+              ],
+              "currency_column_found": "C",
+              "money_columns": [
+                "B"
+              ]
+            },
+            "money_rows": [
+              {
+                "row": 2,
+                "cell": "portfolio.csv!B2",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              },
+              {
+                "row": 3,
+                "cell": "portfolio.csv!B3",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              }
+            ],
+            "total_candidates": [],
+            "workbook": {
+              "sheets_in_workbook": 1,
+              "sheet_read": "portfolio.csv",
+              "sheets_not_read": 0,
+              "sheet_names_not_read": []
+            },
+            "currency_reconcile": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            }
+          },
+          "reconciliation": {
+            "rows_seen": 3,
+            "normalized_holdings": 2,
+            "findings_standing_in_for_a_row": 0,
+            "declared_skips": 0,
+            "header_rows": 1,
+            "accounted": 3,
+            "unaccounted": 0,
+            "balances": true,
+            "currency": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            },
+            "currency_consistent": true
+          }
+        },
+        "input_rows": 0,
+        "blob_puts": 1
+      }
+    },
+    {
+      "name": "same_key_different_identity_holds_whole_input",
+      "passed": true,
+      "observed": {
+        "response": {
+          "upload_id": "UP-b2de1f0fddb82266dd7fd4fbc76de549f2b64469acadea8c1ba5526844b8ebd2",
+          "input_id": null,
+          "state": "NEEDS_CORRECTION",
+          "reason": "AMBIGUOUS_SECURITY_RESOLUTION",
+          "row": 3,
+          "preview": {
+            "findings": [],
+            "normalized_holdings": [
+              {
+                "identifier": "AAPL",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 10.0
+                },
+                "source_column": "B",
+                "source_row": 2,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "10"
+              },
+              {
+                "identifier": "MSFT",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 20.0
+                },
+                "source_column": "B",
+                "source_row": 3,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "20"
+              }
+            ],
+            "row_context": [
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A2",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B2",
+                "row": 2,
+                "units_from_header": "market value"
+              },
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A3",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B3",
+                "row": 3,
+                "units_from_header": "market value"
+              }
+            ],
+            "skips": [],
+            "source_digest": "c8ebefadf8e9b1112080a2dc067470ed9b2a4dd24bfe2c0d785b41e9f6fadbdd",
+            "totals": {
+              "cash_rows": 0,
+              "computed": {
+                "USD": 30.0
+              },
+              "stated": null
+            }
+          },
+          "currency_evidence": {
+            "controls_applied": {
+              "supported_currencies": [
+                "USD"
+              ],
+              "coordinates_that_can_establish": [
+                "DECLARED_CURRENCY_COLUMN",
+                "VALUE_COLUMN_HEADER",
+                "XLSX_NUMBER_FORMAT"
+              ],
+              "coordinates_read_that_never_establish": [
+                "VALUE_CELL_TEXT"
+              ],
+              "coordinates_not_read": [
+                "WORKBOOK_OR_SHEET_LEVEL_NOTE",
+                "CSV_SIDECAR_OR_FILENAME"
+              ],
+              "currency_column_found": "C",
+              "money_columns": [
+                "B"
+              ]
+            },
+            "money_rows": [
+              {
+                "row": 2,
+                "cell": "portfolio.csv!B2",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              },
+              {
+                "row": 3,
+                "cell": "portfolio.csv!B3",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              }
+            ],
+            "total_candidates": [],
+            "workbook": {
+              "sheets_in_workbook": 1,
+              "sheet_read": "portfolio.csv",
+              "sheets_not_read": 0,
+              "sheet_names_not_read": []
+            },
+            "currency_reconcile": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            }
+          },
+          "reconciliation": {
+            "rows_seen": 3,
+            "normalized_holdings": 2,
+            "findings_standing_in_for_a_row": 0,
+            "declared_skips": 0,
+            "header_rows": 1,
+            "accounted": 3,
+            "unaccounted": 0,
+            "balances": true,
+            "currency": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            },
+            "currency_consistent": true
+          }
+        },
+        "input_rows": 0,
+        "blob_puts": 1
+      }
+    },
+    {
+      "name": "mixed_local_and_vendor_rows_holds_whole_input",
+      "passed": true,
+      "observed": {
+        "response": {
+          "upload_id": "UP-b2de1f0fddb82266dd7fd4fbc76de549f2b64469acadea8c1ba5526844b8ebd2",
+          "input_id": null,
+          "state": "NEEDS_CORRECTION",
+          "reason": "MIXED_SECURITY_IDENTITY",
+          "row": 3,
+          "preview": {
+            "findings": [],
+            "normalized_holdings": [
+              {
+                "identifier": "AAPL",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 10.0
+                },
+                "source_column": "B",
+                "source_row": 2,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "10"
+              },
+              {
+                "identifier": "MSFT",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 20.0
+                },
+                "source_column": "B",
+                "source_row": 3,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "20"
+              }
+            ],
+            "row_context": [
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A2",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B2",
+                "row": 2,
+                "units_from_header": "market value"
+              },
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A3",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B3",
+                "row": 3,
+                "units_from_header": "market value"
+              }
+            ],
+            "skips": [],
+            "source_digest": "c8ebefadf8e9b1112080a2dc067470ed9b2a4dd24bfe2c0d785b41e9f6fadbdd",
+            "totals": {
+              "cash_rows": 0,
+              "computed": {
+                "USD": 30.0
+              },
+              "stated": null
+            }
+          },
+          "currency_evidence": {
+            "controls_applied": {
+              "supported_currencies": [
+                "USD"
+              ],
+              "coordinates_that_can_establish": [
+                "DECLARED_CURRENCY_COLUMN",
+                "VALUE_COLUMN_HEADER",
+                "XLSX_NUMBER_FORMAT"
+              ],
+              "coordinates_read_that_never_establish": [
+                "VALUE_CELL_TEXT"
+              ],
+              "coordinates_not_read": [
+                "WORKBOOK_OR_SHEET_LEVEL_NOTE",
+                "CSV_SIDECAR_OR_FILENAME"
+              ],
+              "currency_column_found": "C",
+              "money_columns": [
+                "B"
+              ]
+            },
+            "money_rows": [
+              {
+                "row": 2,
+                "cell": "portfolio.csv!B2",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              },
+              {
+                "row": 3,
+                "cell": "portfolio.csv!B3",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              }
+            ],
+            "total_candidates": [],
+            "workbook": {
+              "sheets_in_workbook": 1,
+              "sheet_read": "portfolio.csv",
+              "sheets_not_read": 0,
+              "sheet_names_not_read": []
+            },
+            "currency_reconcile": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            }
+          },
+          "reconciliation": {
+            "rows_seen": 3,
+            "normalized_holdings": 2,
+            "findings_standing_in_for_a_row": 0,
+            "declared_skips": 0,
+            "header_rows": 1,
+            "accounted": 3,
+            "unaccounted": 0,
+            "balances": true,
+            "currency": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            },
+            "currency_consistent": true
+          }
+        },
+        "input_rows": 0,
+        "blob_puts": 1
+      }
+    },
+    {
+      "name": "cash_namespace_noncanonical_token_holds_whole_input",
+      "passed": true,
+      "observed": {
+        "response": {
+          "upload_id": "UP-b2de1f0fddb82266dd7fd4fbc76de549f2b64469acadea8c1ba5526844b8ebd2",
+          "input_id": null,
+          "state": "NEEDS_CORRECTION",
+          "reason": "CANONICAL_CASH_INVALID",
+          "row": 2,
+          "preview": {
+            "findings": [],
+            "normalized_holdings": [
+              {
+                "identifier": "AAPL",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 10.0
+                },
+                "source_column": "B",
+                "source_row": 2,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "10"
+              },
+              {
+                "identifier": "MSFT",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "USD",
+                  "value": 20.0
+                },
+                "source_column": "B",
+                "source_row": 3,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "20"
+              }
+            ],
+            "row_context": [
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A2",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B2",
+                "row": 2,
+                "units_from_header": "market value"
+              },
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A3",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B3",
+                "row": 3,
+                "units_from_header": "market value"
+              }
+            ],
+            "skips": [],
+            "source_digest": "c8ebefadf8e9b1112080a2dc067470ed9b2a4dd24bfe2c0d785b41e9f6fadbdd",
+            "totals": {
+              "cash_rows": 0,
+              "computed": {
+                "USD": 30.0
+              },
+              "stated": null
+            }
+          },
+          "currency_evidence": {
+            "controls_applied": {
+              "supported_currencies": [
+                "USD"
+              ],
+              "coordinates_that_can_establish": [
+                "DECLARED_CURRENCY_COLUMN",
+                "VALUE_COLUMN_HEADER",
+                "XLSX_NUMBER_FORMAT"
+              ],
+              "coordinates_read_that_never_establish": [
+                "VALUE_CELL_TEXT"
+              ],
+              "coordinates_not_read": [
+                "WORKBOOK_OR_SHEET_LEVEL_NOTE",
+                "CSV_SIDECAR_OR_FILENAME"
+              ],
+              "currency_column_found": "C",
+              "money_columns": [
+                "B"
+              ]
+            },
+            "money_rows": [
+              {
+                "row": 2,
+                "cell": "portfolio.csv!B2",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              },
+              {
+                "row": 3,
+                "cell": "portfolio.csv!B3",
+                "state": "ESTABLISHED",
+                "currency": "USD",
+                "candidates": [
+                  "USD"
+                ],
+                "units_claimed": "USD",
+                "coordinates_read": [
+                  "DECLARED_CURRENCY_COLUMN",
+                  "VALUE_COLUMN_HEADER"
+                ],
+                "why": "DECLARED_CURRENCY_COLUMN: a whole-token ISO-4217 code in a declared currency column",
+                "relabeled_from": null
+              }
+            ],
+            "total_candidates": [],
+            "workbook": {
+              "sheets_in_workbook": 1,
+              "sheet_read": "portfolio.csv",
+              "sheets_not_read": 0,
+              "sheet_names_not_read": []
+            },
+            "currency_reconcile": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            }
+          },
+          "reconciliation": {
+            "rows_seen": 3,
+            "normalized_holdings": 2,
+            "findings_standing_in_for_a_row": 0,
+            "declared_skips": 0,
+            "header_rows": 1,
+            "accounted": 3,
+            "unaccounted": 0,
+            "balances": true,
+            "currency": {
+              "money_rows": 2,
+              "money_rows_claiming_a_unit": 2,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            },
+            "currency_consistent": true
+          }
+        },
+        "input_rows": 0,
+        "blob_puts": 1
+      }
+    },
+    {
+      "name": "wrong_local_price_key_holds_whole_input",
+      "passed": true,
+      "observed": {
+        "response": {
+          "upload_id": "UP-b2de1f0fddb82266dd7fd4fbc76de549f2b64469acadea8c1ba5526844b8ebd2",
+          "input_id": null,
+          "state": "NEEDS_CORRECTION",
+          "reason": "PRICE_INCOMPATIBLE",
+          "row": 2,
+          "preview": {
+            "findings": [],
+            "normalized_holdings": [
+              {
+                "identifier": "AAPL",
+                "identifier_namespace": "TICKER",
+                "quantity": {
+                  "units": "SHARES",
+                  "value": 2.0
+                },
+                "source_column": "B",
+                "source_row": 2,
+                "source_sheet": "portfolio.csv",
+                "source_value_verbatim": "2"
+              }
+            ],
+            "row_context": [
+              {
+                "group": null,
+                "identifier_cell": "portfolio.csv!A2",
+                "name": null,
+                "quantity_cell": "portfolio.csv!B2",
+                "row": 2,
+                "units_from_header": "shares"
+              }
+            ],
+            "skips": [],
+            "source_digest": "f1bf115cb410ced8bc389112a38f896df820fd21faff791a99679ef0c11953de",
+            "totals": {
+              "cash_rows": 0,
+              "computed": {
+                "SHARES": 2.0
+              },
+              "stated": null
+            }
+          },
+          "currency_evidence": {
+            "controls_applied": {
+              "supported_currencies": [
+                "USD"
+              ],
+              "coordinates_that_can_establish": [
+                "DECLARED_CURRENCY_COLUMN",
+                "VALUE_COLUMN_HEADER",
+                "XLSX_NUMBER_FORMAT"
+              ],
+              "coordinates_read_that_never_establish": [
+                "VALUE_CELL_TEXT"
+              ],
+              "coordinates_not_read": [
+                "WORKBOOK_OR_SHEET_LEVEL_NOTE",
+                "CSV_SIDECAR_OR_FILENAME"
+              ],
+              "currency_column_found": null,
+              "money_columns": []
+            },
+            "money_rows": [],
+            "total_candidates": [],
+            "workbook": {
+              "sheets_in_workbook": 1,
+              "sheet_read": "portfolio.csv",
+              "sheets_not_read": 0,
+              "sheet_names_not_read": []
+            },
+            "currency_reconcile": {
+              "money_rows": 0,
+              "money_rows_claiming_a_unit": 0,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            }
+          },
+          "reconciliation": {
+            "rows_seen": 2,
+            "normalized_holdings": 1,
+            "findings_standing_in_for_a_row": 0,
+            "declared_skips": 0,
+            "header_rows": 1,
+            "accounted": 2,
+            "unaccounted": 0,
+            "balances": true,
+            "currency": {
+              "money_rows": 0,
+              "money_rows_claiming_a_unit": 0,
+              "undeclared_money_rows": 0,
+              "violations": 0,
+              "violating_cells": [],
+              "relabeled": 0,
+              "consistent": true,
+              "coordinate_read": "the currency verdict recorded for the money cell itself (declared currency column, value-column header, xlsx number format, value cell text) -- NOT the row count"
+            },
+            "currency_consistent": true
+          }
+        },
+        "input_rows": 0,
+        "blob_puts": 1
+      }
+    }
+  ],
+  "passed": 10,
+  "total": 10,
+  "limits": [
+    "Actual CSV parser/Y upload/local normalization/P retained repository code",
+    "Canonical resolver and prices are explicit local fixtures, not actual M source",
+    "Legacy S-prefixed supplied fixture tests are not runtime resolution evidence",
+    "Storage/clock/policy fixtures only; no activation, vendor lookup/upload/readback/create",
+    "Shared schema suite reported by producer not independently rerun here",
+    "No browser/runtime, real server concurrency or full Y2/S2/S3/S7 acceptance"
+  ]
+}

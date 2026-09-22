@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:13 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:22 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -87,6 +87,14 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   8/8 PASS, supplied54 tests+24subtests PASS. Both missing-service negatives now
   refuse RETENTION_SERVICE_REQUIRED with0 dispatch; first submission also0 acceptance.
   Y-S01 CLOSED for this boundary. See `RETAINED_SUBMISSION_RETEST_b258b1696c.md`.
+- Local identity `d99a0727422165b688fb93de3841ee7020ae5d8d`:40 targeted supplied
+  tests+18subtests and independent10/10 PASS through actual retained uploads.
+  Local keys/canonical fields remain distinct from vendor security_id; exact
+  dollar/share/notional values, alias consolidation and frozen retry pass.
+  Conflicting keys/aliases, mixed local/vendor, bad cash and price-key mismatch
+  hold the whole input with0INPUT rows. Actual M source/vendor mapping pending.
+  See `LOCAL_IDENTITY_REVIEW_d99a072742.md`; producer shared-schema counts are
+  attributed, not added to this targeted suite. No runtime/full criterion grade.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -275,6 +283,15 @@ revision serves; suspended versioning mutates index then guarded reads NOT_READY
 No rollback guarantee, actual AWS/IAM/package/source-census/three-firm/browser
 or full M4/M7/S2/S7 grade. P package/IAM and M/Y source inputs remain open.
 No ACK requested; all14 integrated Y/S criteria remain NOT_EVALUATED.
+
+Exact CVO~P232035Z reports reviewfb0f801529 on backend5add22ca9f/portalcb62721c60:
+24supplied PASS,10independent PASS/1 FAIL. R-P09 P2 browser response parser accepts
+both input_id fields changed together despite unchanged original content/artifact
+hash. Peer evidence only; COO~P notified. No producer/live transport/retained
+runtime failure claimed. Route unavailable/zero transport holds; Y-S01 closure
+10b5b7f25c remains. Pointer `IRPT_MVP_P/UPLOAD_CONTRACT_REVIEW_CB62.md`.
+Carry repaired response identity binding into browser integration, not local
+normalizer acceptance. All14 integrated criteria remain NOT_EVALUATED.
 
 ## Next executable review and dependencies
 
