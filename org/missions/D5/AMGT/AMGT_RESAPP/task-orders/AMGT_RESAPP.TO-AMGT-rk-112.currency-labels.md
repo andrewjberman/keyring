@@ -162,7 +162,7 @@ criterion passes, commit with `--only`, and report once.
    keys. That is a served change, and it rides L-MB's pair.
 5. No new security_key dependency.
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~112</slot>
 <fabric>site-z</fabric>
