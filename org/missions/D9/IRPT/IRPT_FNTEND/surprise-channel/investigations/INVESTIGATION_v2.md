@@ -5377,6 +5377,94 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "TO-FE-s-67's own BOUNDS names the DrillTree :234 revision-mismatch text as 'not confirmed reachable from any existing fixture' and directs wrapping it from source regardless (done). Measured beyond that: it is not merely un-fixtured, it is STRUCTURALLY UNREACHABLE from ANY wire fixture through the current adapter, because both sides of the comparison it depends on are derived from the SAME expression in ONE function.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-67 BOUNDS: \"The DrillTree revision-mismatch text (:234) is not confirmed reachable from any existing fixture; if you cannot reach it, wrap it anyway from source and file a row naming which fixture you tried.\"",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx's `handleDrill` sets `refusedRef` (which the :234 block renders from) only when `canRenderDrill(target, snapshot)` is false; `canRenderDrill` (contracts sibling `tabs/holdings/slices.ts:205-210`) is `!revisionMismatch(node, snapshot)`, and `revisionMismatch` (slices.ts:198-203) is `node.provenance.sourceRevision !== snapshot.sourceSetRevision`. In `contracts/adapt.ts`'s `adaptHoldingsSnapshot` (the ONE function that builds a HoldingsSnapshot from any wire payload), `sourceSetRevision` is computed ONCE at :938 (`wire.source_set_revision.map(...).join(',')`) and then assigned to BOTH sides of the later comparison: the snapshot's own `sourceSetRevision` (via `wireEnvelope`'s `sourceRevision: sourceSetRevision` and the returned `sourceSetRevision` field) AND every node's `provenance.sourceRevision` (:965 inside the `nodes` map, and again at :977 in `wireEnvelope`'s own parts) -- literally the same local variable, read twice. So for EVERY node of EVERY snapshot this adapter ever produces, `node.provenance.sourceRevision === snapshot.sourceSetRevision` BY CONSTRUCTION, and `revisionMismatch` can never return true from any wire fixture, however its `source_set_revision` array is shaped (checked: even a fixture naming several distinct sources still joins them into ONE string applied identically on both sides). Tried: `fe-s-18-holdings-observed.json` (this cell's own AC7/AC9/AC10 fixture) and `fe-s-14-global.json` (AC4's) -- neither carries per-node revision data at all, consistent with the adapter never reading one. Fixing this needs `adapt.ts` or `slices.ts`, both outside this cell's `<paths>` (portal/src/pages/InvestorReporting/index.tsx, tabs/StatusPanel.tsx, tabs/analysis/GenerateComposer.tsx, tabs/holdings/DrillTree.tsx, __tests__/fe-s-67/), so the :234 block is wrapped in PanelError from source per BOUNDS and left unreachable, exactly as F67-AC12 anticipates naming as open.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx:205-214 (handleDrill), this worktree, uncommitted edit only wraps the :234-adjacent JSX -- the gating logic is untouched",
+        "portal/src/pages/InvestorReporting/tabs/holdings/slices.ts:198-210 @0054b81d3c277539dd4f370e02cb8066cd2543a1 (revisionMismatch, canRenderDrill)",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts:938,965,977 @0054b81d3c277539dd4f370e02cb8066cd2543a1 (adaptHoldingsSnapshot: one `sourceSetRevision` local, assigned onto both the snapshot's own field and every node's provenance)",
+        "read: src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json and fe-s-14-global.json -- neither holdings entry carries a per-node revision field distinct from the snapshot's own"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:10:00Z",
+    "one_line": "F67-AC10's literal invocation of __tests__/fe-s-32/holdings-driver.mjs (a --port/--width/--fixtures/--out flag shape) crashes (rc=1, ENOENT) because the driver's real CLI is POSITIONAL (<port> <scenario-map.json> <captureDir>) and its scenario-map input shape differs from a flat ui-smoke.mjs fixture file. The order authorizes adapting the call, and the adapted run succeeds (rc=0, DRIVER OK) and substantively answers the cell's own question (the slice table's overflowed columns ARE reachable by scroll) -- but the driver's own stdout vocabulary (CAPTURE/RESULT/PAGE CRASHES/DRIVER OK json lines) never contains the literal strings 'SAVED' or 'scrollLeft' under EITHER invocation, so F67-AC10's <expect>SAVED|scrollLeft</expect> cannot be satisfied by this reused driver as written, regardless of adaptation.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F67-AC10 <invocation>cd <WS>/portal && timeout 120 node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs --port <PORT> --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --out <WS>/.../f67_overflow_scrolled.png</invocation><expect>SAVED|scrollLeft</expect>; cell text: \"If this driver's CLI shape differs from this invocation, adapt the call and say so in your result -- do not invent a second mechanism.\"",
+    "world_is": "LITERAL run (this worktree, portal DEV 0054b81d + this worker's edits, dev server on port 5920): `node src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs --port 5920 --width 390 --fixtures src/pages/InvestorReporting/fixtures/smoke/fe-s-18-holdings-observed.json --out <path>` -> rc=1, stack trace `Error: ENOENT: no such file or directory, open '...\\portal\\5920'` -- the script reads argv[2] as PORT ('--port', unused as a flag), argv[3] as the JSON map PATH (the literal string '5920'), per holdings-driver.mjs:37-39,66. Neither 'SAVED' nor 'scrollLeft' appears (the process never gets past the readFileSync). ADAPTED run (diagnostic, not the graded invocation): wrapped fe-s-18-holdings-observed.json's flat url->envelope map as one scenario `{\"fe-s-18-holdings-observed\": <the same map>}` (matching the driver's documented input shape at holdings-driver.mjs:27-29) and ran `node .../holdings-driver.mjs 5920 <scenario-map>.json <captureDir>` -> rc=0, 'DRIVER OK', four CAPTURE lines (390 and 1440, each a full-page PNG plus a table-scrolled PNG since scrollWidth 826 > clientWidth 260 at 390), and RESULT json showing `visibility` BEFORE scroll `{\"basis\":true,\"supervision\":false,\"advisory\":false}` and AFTER scroll (`SCROLL_TO_CLASSIFICATION`) `{\"basis\":false,\"supervision\":true,\"advisory\":true}` at 390 -- i.e. the columns clipped at 390 (supervision, advisory) ARE brought into view by scrolling, never permanently clipped. `grep -c 'SAVED\\|scrollLeft'` over the full adapted-run log: 0. holdings-driver.mjs's own console.log calls (read directly, :198-228) print only 'CAPTURE', 'RESULT', '  served(...)', 'PAGE CRASHES:' and 'DRIVER OK' -- the literal source, at any invocation shape, cannot emit either token this criterion's <expect> requires.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, literal invocation as written): rc=1, stderr 'Error: ENOENT: no such file or directory, open ...\\\\portal\\\\5920'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs:37-39,66,166-228 @0054b81d3c277539dd4f370e02cb8066cd2543a1 (argv shape; the ONLY console.log call sites in the file)",
+        "measured run (this worker, adapted invocation per BOUNDS' own permission): rc=0, 'DRIVER OK', RESULT lines with visibility={basis:true,supervision:false,advisory:false} before scroll and {basis:false,supervision:true,advisory:true} after, at 390 width",
+        "grep -c 'SAVED\\|scrollLeft' over the adapted run's full captured stdout: 0 of however many lines",
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.md F67-AC10 <expect> and cell text, read at HEAD of this worktree"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:20:00Z",
+    "one_line": "F67-AC3's content control ('scope resolves normally') genuinely fails: `fixtures/smoke/default.json` omits the `unprojected_grant` field on ALL 12 of its declared route entries, which `contracts/envelope.ts:278-280`'s parser treats as a hard EnvelopeMismatch on EVERY operation (not just a state-specific one) -- so the resolve-scope call under this fixture throws regardless of --fail, and `isError` in index.tsx is true for a reason unrelated to this cell's fix (a fixture defect, not a wiring defect), making AC3 measure the wrong thing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F67-AC3 <invocation> (same as F67-AC2, no --fail): fixtures/smoke/default.json, <expect>ASSERT-CONTENT: 0 of 2 met</expect> -- intended as the wrong-state (successful-resolve) negative control for F67-AC2's scope-error assertion.",
+    "world_is": "Run verbatim (portal DEV 0054b81d + this worker's edits, dev port 5920, fixtures default.json, no --fail): `ASSERT-CONTENT: 2 of 2 met` -- the SAME positive match as F67-AC2's forced-failure run, i.e. the control does not discriminate. Root cause, read directly: `contracts/envelope.ts:278-280` -- `if (!('unprojected_grant' in body) || !isUnprojectedGrantShaped(body.unprojected_grant)) throw new EnvelopeMismatch('unprojected_grant', operation)` -- fires for EVERY operation, unconditionally. `node -e \"JSON.parse(fs.readFileSync('default.json'))\"` over all 12 of default.json's declared entries: `'unprojected_grant' in <entry>` is false for all 12 of 12 (denominator printed). POSITIVE CONTROL, to confirm root cause: patched a scratch copy of default.json adding `unprojected_grant: {count:0, denominator:1, kinds:[]}` to ONLY the directory/resolve entry and re-ran the identical invocation (fixtures pointed at the patched copy) -> `ASSERT-CONTENT: 0 of 2 met`, matching F67-AC3's <expect> exactly -- confirming the missing field, not this cell's markup, is what makes the literal fixture fail. `fixtures/smoke/default.json` is outside this cell's grant (<paths>: index.tsx, tabs/StatusPanel.tsx, tabs/analysis/GenerateComposer.tsx, tabs/holdings/DrillTree.tsx, __tests__/fe-s-67/), so it is reported rather than patched, per BOUNDS.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker), F67-AC3's literal invocation: 'ASSERT-CONTENT: 2 of 2 met' (expected '0 of 2 met')",
+        "portal/src/pages/InvestorReporting/contracts/envelope.ts:278-280 @0054b81d3c277539dd4f370e02cb8066cd2543a1",
+        "node -e enumeration over fixtures/smoke/default.json @0054b81d3c277539dd4f370e02cb8066cd2543a1: 0 of 12 declared entries carry 'unprojected_grant'",
+        "measured run (this worker), same invocation against a scratch-patched copy of default.json with unprojected_grant added to directory/resolve only: 'ASSERT-CONTENT: 0 of 2 met' (positive control confirming root cause)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W17-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~17",
+    "surfaced_at": "2026-09-21T00:30:00Z",
+    "one_line": "TO-FE-s-67's HOW step reads literally 'asserting PanelError is imported by all of them [the four touched files]', but StatusPanel.tsx (one of the four) never carried a bare text-red-800 block -- its own defect was the second filled-primary button, fixed with buttonClass, not PanelError -- so a literal reading would add an unused PanelError import serving no fix. This worker's own __tests__/fe-s-67/panel-error-reuse.test.ts asserts PanelError-import only on the three files that actually wrapped a text-red-800 block, and buttonClass-import on StatusPanel.tsx instead; text-red-800 absence (outside a comment) is still asserted across all four.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-67 cell text: \"Add a bun test guard (__tests__/fe-s-67/panel-error-reuse.test.ts, reading the four touched files as text like the existing colour-law scanner does) asserting PanelError is imported by all of them and text-red-800 no longer appears in any, outside a comment; print the count.\"",
+    "world_is": "portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx (this worker's edit and the pre-edit file alike) never contained the string 'text-red-800' -- grep of the pre-edit file at portal DEV 0054b81d: 0 occurrences; its own fix per the SAME cell text is 'replace it with buttonClass(...)'. This worker's test (panel-error-reuse.test.ts) therefore asserts, per file: PanelError-import for index.tsx / GenerateComposer.tsx / DrillTree.tsx (all true, printed), buttonClass-import for StatusPanel.tsx (true, printed), and text-red-800 outside a comment = 0 for all four (printed) -- run and PASSING as part of the AC11 whole-suite bar. Not self-graded past this: recorded here so the CVO (F67-AC12) sees the literal-vs-substantive reading was a judgment call, not a silent narrowing.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-67.c12-error-presentation-shared-surfaces.md, cell text paragraph beginning 'Reuse, don't invent.', read at HEAD of this worktree",
+        "portal/src/pages/InvestorReporting/tabs/StatusPanel.tsx @0054b81d3c277539dd4f370e02cb8066cd2543a1 (pre-edit): 0 occurrences of 'text-red-800'",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-67/panel-error-reuse.test.ts (this worker, this worktree): bun test output -- 'PANEL-ERROR IMPORTS: 3 of 3', 'BUTTONCLASS IMPORTS: 1 of 1', 'TEXT-RED-800 OUTSIDE COMMENTS: 0 of 4 files scanned'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
