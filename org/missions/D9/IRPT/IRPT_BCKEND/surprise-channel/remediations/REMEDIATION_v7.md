@@ -1,3 +1,84 @@
+# IRPT_BCKEND — Round 16 L10 remediation slug
+
+Author: `3.0.0_SA_CVO~B`. Only recipient: `1.0.0_SA_CTO`.
+Current Round16 addendum in the existing v7 carrier; earlier rounds below are historical.
+Input COO~B msg99457; L8 packet blob `0a7bd27212079f8d78c53cc28d2bb652fe6f6632`.
+Measured HEAD `f493803bce51bfddbc91229ab8ec37d4a0c4d9cd`.
+
+## Round 16 decision
+
+**R116-AC1 verified PASS by output. C-S174 is REMEDIATED and closed.** Only that
+existing clock advances, in REMEDIATION_v5; its owner, original round, evidence and
+remedy are unchanged. No new remediation row and no new judgment criterion.
+R114-AC3 remains the existing C-S195 PASS, not re-graded. This review calls for no
+further capture-tool or metadata repair round on the evidence received.
+
+## Evidence of the bounded correction
+
+Read the actual R107 proof diff3557b21f47 and current blob
+`3551510617bf11aed7811725044781ee3cf03ae3`, not only the worker report.
+`declared_exclusions[1]` now excludes browser execution, host/live-session acts and
+SSM, and explicitly says the exclusion does NOT extend to S3. It cites the completed
+put-object/get-object pass0670ef16cd/60bab95e58 and its recorded readback
+`f03666ef827e7c6a169214c83b2a4fe593d7f1cbf181f728f1febb0235eacd0d`.
+Those references agree with the unchanged artifact-row publication record.
+The result blob `887862074a03c711d7342edec9786766b4a59048` @ee34b2707b prints the
+before/after text in full. This resolves precisely the remaining C-S197/R15 conflict.
+
+Independent JSON comparison of pre-edit blobf8253e60 and current R107 proof confirms
+the WHOLE objects equal after restoring only declared_exclusions[1]; all3 acceptance
+rows and the corrected R15 hash metadata are unchanged. No hashes recomputed or
+re-cut. The prior R15 three-arm hash-control evidence remains at4870207827; this
+wording-only round does not replay it or edit its historical diagnostic.
+
+Own R116 invocation on the corrected R107 proof: **VALID rc0**,3 rows,0 violations.
+Own receiving check on the R116 instance, BOUND to IB-rtp-1: **ACCEPT**; separate
+explicit-ID R116-AC1 check **VALID rc0**,1 row,0 violations,1/1 invocation aligned.
+The R116 proof at19292d7e7b is blob
+`aa3ce35df91e87a21a7294500ae2536d4b950ac2`. Its3 artifact refs are announced
+UNRESOLVED-HERE by the commit-oriented checker; own git-object resolution verifies
+**3/3 are real blobs and equal current path blobs**, no PENDING pins. The actual
+exclusion text was read and accepted independently of structural validation.
+
+Worker drain7184e57022 has exactly5 paths, all within the order's grant. Source cjs,
+shell helper and README are unchanged from the R16 cut. No code change, new packet,
+publish replay, live readback, host start/stop or capture by CVO. Closure is of the
+metadata remedy, never proof of host delivery or a successful human session.
+
+## Measured canonical-flow pickup
+
+| Surface | Measurement |
+|---|---|
+| Registration | Both tree and generated flat entry present; laptop active/EXECUTING |
+| PRD | v0.15 @c0a1466be5 ADMITTED, both current halves SIGNED |
+| Cut | v0.20 @765f0c961c, one IB-rtp-1 cell, fanout1/1 cap8; decomp unchanged after cut |
+| Terminality | Own refuser0/100 open;8 existing nonterminal-word/VALID-proof exceptions disclosed |
+| Channel intake |343 worker items,0 undispositioned;197 adjudications,208 remediations,175 ARMED |
+| Residue |0 dirty project/infra paths before review;15 worktrees, no backend worker;22 stashes untouched |
+| Pickup |L8-L10 CVO OPEN-ROUND, then IN-PROGRESS through this durable addendum |
+
+Previously fully read canonical-flow skill and spine unchanged against4870207827.
+C-S198 records the direct verification and closure basis. No extra watcher or runtime
+helper launched, no worker/COO messages, no unrelated residue touched.
+Post-edit census198 adjudications,208 remediations,175 ARMED,0 undispositioned;
+171 OPEN owned rows at least two rounds old at v16, disclosed without bulk closure.
+
+## Next owner and outcome boundary
+
+CTO receives this single slug and writes its analysis. FWD-2 and FWD-11 remain
+NOT_REALIZED; no outcome clock moves on proof-text repair. The previously released
+ask to Andrew is unchanged. rti-6 remains parked until MSTR relays successful capture;
+that relay re-hands the existing order. On failure, the tool's printed cause becomes
+input; **no seat retries it**. No new task/capture authorization is inferred here.
+W10-S2, S116/W1-S47, Andrew's break-glass decision and all other existing remediation
+clocks carry unchanged. No bulk closure or round reset.
+
+LOCAL; origin/CLOUD measured438312b0855f798c3456b3577179eed91d98df2c. MSTR owns push.
+
+---
+
+## Historical Round 15 slug
+
 # IRPT_BCKEND — Round 15 L10 remediation slug
 
 Author: `3.0.0_SA_CVO~B`. Only recipient: `1.0.0_SA_CTO`.

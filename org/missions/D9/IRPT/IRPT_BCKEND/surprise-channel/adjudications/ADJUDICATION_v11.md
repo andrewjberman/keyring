@@ -80,6 +80,29 @@ Author: `3.0.0_SA_CVO~B`. R114-AC3 only; not a round-drain or publication claim.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "No new remedy minted: remaining text conflict belongs to existing C-S174 in REMEDIATION_v5, whose OPEN/INERT clock and owner are preserved. CVO owns late disclosure of the exclusion residual. Scope it to the earlier diagnostic pass or actual remaining exclusions; no code repair, publish replay, changed R115 verdict, new capture hold or PRD addendum is implied. Formal slug to CTO only."
+  },
+  {
+    "id": "IRPT_BCKEND-C-S198",
+    "project": "IRPT_BCKEND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO~B",
+    "surfaced_at": "2026-09-22T12:15:20Z",
+    "one_line": "R16 wording correction verified: C-S174 closes; R116-AC1 mechanical PASS and all prior judgment grades unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "C-S174's last residual is the blanket S3 exclusion in the final R107 proof; IB-rtp-1 must scope it accurately without code, hash or publish changes.",
+    "world_is": "Direct read of proof blob3551510617bf11aed7811725044781ee3cf03ae3 confirms only declared_exclusions[1] changed from f8253e60: it now distinguishes unexercised host/browser/SSM limbs from the completed S3 publish and cites its existing verified readback. Whole-JSON comparison after restoring that one entry equals the prior object; all3 acceptance rows and R15 hash metadata unchanged. Own R116 invocation VALID rc0; bound receiving ACCEPT and explicit-ID R116 proof VALID,1 row,0 violations. All3 final artifact blob refs resolve and match current paths. Own refuser0/100 open, channel0/343 undispositioned. No new finding, source change, capture act or FWD realization.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IRPT_BCKEND.TO-IB-rtk-1.the-capture-tool-complete-lifecycle-observer-and-sticky-refusal.proof_of_spec.json@3557b21f47:269-270; blob3551510617bf11aed7811725044781ee3cf03ae3",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/the-c-s174-exclusion-wording-scoped-correctly.result.md@ee34b2707b: complete before/after text, blob887862074a03c711d7342edec9786766b4a59048",
+        "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~13/IRPT_BCKEND.TO-IB-rtp-1.the-c-s174-exclusion-wording-scoped-correctly.proof_of_spec.json@19292d7e7b: blobaa3ce35df91e87a21a7294500ae2536d4b950ac2",
+        "org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/remediations/REMEDIATION_v7.md (co-committed), Round16 addendum: independent checks and closure boundary"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Verification/closure record only, no duplicate remediation or new judgment grade. Existing C-S174 in REMEDIATION_v5 advances to REMEDIATED/closed with its historical fields intact. All other clocks carry; R114-AC3 remains C-S195 PASS. CTO alone receives the formal slug; no further tool repair called for, and no host/browser or outcome proof inferred."
   }
 ]
 ```
