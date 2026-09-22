@@ -98,6 +98,23 @@ Read full P `INTERFACES.md` at `aacb609834`: mandatory current authorization cal
 
 Push state remains LOCAL; fresh `git ls-remote` observations at this handoff are origin CLOUD `aacb60983400262ffe7ce3406b76982690075e55` and portal DEV `b3d5f59b4534eb653105f9bedc9e178384111c9f`. No push by this seat.
 
+### S7 conditional ruling and B verdict update — September 22, approximately 5:29 PM Eastern
+
+Read RULINGS.md IRPT-S7-01 and OVERSIGHT.md at `bcd38bba00`, following exact CTO delivery `20260922T212727Z_1.0.0_SA_CTO_IRPT_S7_ruling_committed_bcd38bba00__act.md`. Decider/condition owner is CTO under Andrew's session delegation at `ecf350639a`; this is not a claim that Andrew personally approved this bucket. The ruling is a decision record, not the canonical exception register. COO~M issues the bounded order, CRO records it in `infra/logic/06_CONFORMANCE_LEDGER.md` section 6, M implements registry/builder, P implements repository/provisioning/retention and Y consumes. This reviewer owns none of those implementation/registration acts.
+
+S7 candidate evidence must now satisfy all of the following conditions, in addition to the existing matrix row:
+
+1. Return canonical exception ID and committed section-6 carrier, plus the committed M proposal. Prove no writable destination is returned before both canonical registration and enforcement exist; a ruling pin alone is insufficient.
+2. Admit exactly three firms (`49financial`, `cottonwood`, `inflection`) and exactly eleven families: ORIGINAL_CSV, NORMALIZED_PORTFOLIO, REQUEST_COMPOSITION, ORIGINAL_VENDOR_PDF, EXTRACTION_EVIDENCE, PERFORMANCE, ANALYSIS, EXPORT_BUNDLE, EXPORT_PDF, EXPORT_RECEIPT, SELECTED_ACCOUNTS. PERFORMANCE/ANALYSIS are bounded platinum JSON reports; the other nine are state families. Prove unknown firm/family and invalid server-owned identifiers are refused.
+3. Show canonical grammar, firm identity, server-only validated IDs/digests/keys and unchanged default destinations. Reject browser bucket/key inputs and alternate fallback destinations. Canonical custody/directory/holdings/model Gold/Platinum stay in long-form firm buckets; no global relabel or second process-state machine.
+4. Exercise real producer/consumer authorization for exact selected-account or prospect ownership before and after retrieval, cross-firm/revocation negatives, immutable accepted object version/hash verification, and inaccessible interrupted publication. Test these on the candidate modules and registered policy revision, not only a naming example.
+5. P supplies concrete retention/expiry for each of eleven families and least-privilege IAM/IaC before provisioning or live writes. Inspect the effective settings at live acceptance; no indefinite-retention assumption or cleanup/deletion authority follows from placement approval.
+6. Every affected reader/writer uses the same policy revision. Supply a bounded coordinated cutover and naming-owner review; no standing dual write or estate-wide migration. If conditions cease to hold, affected publication/retrieval must disable as appropriate and route to CTO without silent fallback/broadening. Test revision disagreement and revoked-condition cases.
+
+No canonical exception carrier or enforcing reader/writer evidence was delivered in this message; S7 and candidate product grades remain NOT_EVALUATED. OVERSIGHT reports M source commit `33e630885f` after grant consumption `96b50ca18e`; that progress report alone is not an accepted S7/full-product candidate.
+
+The earlier pending B judgment statements are superseded: CTO's current OVERSIGHT reports independent B slug `f82fee6aad`, **R118-AC5 FAIL / render contract NOT PROVEN**, received and parked. It also reports AC4 28/29 plus V1 import failure and enforcer bundle/tenant/revision/pinning findings. These are the B review's reported verdict, not a fresh M rerun. Keep the failed render prerequisite visible; inherited source ancestry and S7 approval do not authorize render key provisioning/deployment or restart the held B/F flow.
+
 ## Compiler Tools
 
 | Tool | Result / limitation |
