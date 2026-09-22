@@ -88,6 +88,16 @@ Read the complete backend round-18 L8 compile at `2506c70874`, including final c
 
 The assembled chain does not re-prove item (e)'s V1 verifier; item (f)'s human path is partial/structural behind NETWORK FORBIDDEN; item (g)'s deploy IAM is outside offline coverage. These limits and the pending L9 prerequisite remain binding before render key provisioning/deployment. No old canonical progression follows from this handoff. Final accepted frontend DEV pin and write-claim release were still pending in CTO's update; integrated acceptance must incorporate that final evidence, not silently retain the initial portal baseline.
 
+### Final frontend handoff received — September 22, approximately 5:24 PM Eastern
+
+The preceding pending-frontend state is superseded by CTO's exact delivery `20260922T212325Z_1.0.0_SA_CTO_IRPT_final_F_code_baseline_8e6e2e38__cla.md`. F code handoff is portal DEV `8e6e2e38cc299c4415d42b0fe627edc50ec35e1b`, all old F write claims released. Independently measured portal HEAD equals that full hash, tracked status is clean, and `git merge-base --is-ancestor` returns 0 for that pin. B `2506c70874` and chain `4e1091f1e7` each return ancestor rc=0 against measured workspace HEAD `f82fee6aadbc91a7ffacaf87f7f4c8d1d5dd5094`. Candidate integrations must preserve these and any later accepted changes. This is code inheritance, not a deployed or final independent acceptance grade.
+
+CTO identifies existing App/ProtectedRoute render-claim handling as inherited implementation; payload decoding is not server signature verification. P owns residual `IRPT_FNTEND-W39-S2` fixture corrections (23 other committed fixture files, reported by CTO), with relevant M/Y consumer examples independently checked at candidate handoff. No per-cell frontend test counts are summed into a final-head result. F retains pending administrative proof/status drains; they do not block this functional baseline. B L9/provisioning prerequisite and old canonical hold remain.
+
+Read full P `INTERFACES.md` at `aacb609834`: mandatory current authorization callback, entire-selected-set access, separate prospect owner, immutable receipts, registered destination callbacks, and preserved report envelope. CTO reports primitive candidate `70598ece96498d639b0fb12104ffe9fd4b0d5718` with 19 offline tests; this reviewer has not regraded those tests. M still owes actual verified principal/owner and reauthorization producer examples, selected-set resolution, dated crosswalk and canonical artifact destinations. Published interface and primitive availability do not complete S1/S2/S4/S7 or product E2E. P's shared fixture integration and repository testing remain P-owned; M verifies the relevant producer/consumer cases when delivered.
+
+Push state remains LOCAL; fresh `git ls-remote` observations at this handoff are origin CLOUD `aacb60983400262ffe7ce3406b76982690075e55` and portal DEV `b3d5f59b4534eb653105f9bedc9e178384111c9f`. No push by this seat.
+
 ## Compiler Tools
 
 | Tool | Result / limitation |
