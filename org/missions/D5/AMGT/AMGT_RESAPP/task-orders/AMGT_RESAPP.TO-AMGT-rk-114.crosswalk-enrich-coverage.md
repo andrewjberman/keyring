@@ -168,7 +168,7 @@ working-tree bytes before editing; never `git checkout --`, `git stash` or `git 
 every future registration, not only Lenovo's. `registered` keeps its meaning (appended rows); `enriched` is new and
 appears only when n > 0, so the served 09-19 document's bytes are reproducible.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~114</slot>
 <fabric>site-z</fabric>
