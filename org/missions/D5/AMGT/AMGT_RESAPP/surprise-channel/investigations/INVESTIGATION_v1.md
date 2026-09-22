@@ -11254,6 +11254,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC1's <expect>: \"the bar is 'no NEW failure, no fewer passes'\" against the spawn-time baseline; section 1 RULED item 4 requires switching model_block_pull.py's forecast reader (which test_forecast_fallback.py exercises directly) to the new bronze grammar in the SAME commit.",
     "world_is": "The two requirements collide on ONE file this order does not grant write access to: the switch mandated by RULED item 4 is exactly what breaks test_forecast_fallback.py's OLD-grammar fixture, and AC1's own bar forbids that new failure -- satisfying both simultaneously needs either a <paths> grant on test_forecast_fallback.py or a RULED exception, neither of which this worker may create for itself.",
     "notes": "AC1 is reported REFUSED on this ground (measured output recorded, not repaired). No other new failures and no fewer passes; every one of the 14 baseline failures is byte-identical in cause. The fix, when granted, is a one-line fixture update in test_forecast_fallback.py (its seeded key -> the bronze address `_bronze_key('bestdata', sec_key, raw_stamp)`), mirroring what this worker did for the five PINNED test files."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W90-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~90",
+    "surfaced_at": "2026-09-22T01:05:00Z",
+    "one_line": "build-and-upload-scoped-amgt.sh's closure walk (CLOSURE_ROOTS = (\"lib.research\", \"lib.opal_data_harvest\")) does not cover a bare top-level `lib.opal_naming` import -- a packaged module (build_view.py, reached from scoped_amgt.read_coverage_freshness at function scope) importing it silently packages nothing for that name, and the adapter cold-starts to ModuleNotFoundError on the FIRST live request that path.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "First AC6 redeploy (this worker, this worktree): build_view.py used `import lib.opal_naming as naming` to build the bronze prefix; build-and-upload-scoped-amgt.sh's own VERIFY step (line ~453, 'VERIFY: N lib.research/lib.opal_data_harvest import site(s)') reported nothing missing -- it only checks the two CLOSURE_ROOTS namespaces, so a `lib.opal_naming` import is outside its tracked domain and passes silently.",
+        "Live post-deploy invoke of GET /api/scoped/amgt/freshness (x-firm-id: bd) returned statusCode 500; CloudWatch /aws/lambda/opal-amgt-scoped-api showed on two request ids: `ERROR: unhandled exception in opal-amgt-scoped-api ... type=ModuleNotFoundError detail=No module named 'lib.opal_naming'`.",
+        "Fixed same-turn (commit b9d2d7b4f1): build_view.py's bronze-prefix builder now uses the LITERAL `bloomberg/harvest/bronze` string (verified equal to what naming.key() prints) instead of calling naming.key(); rebuilt, redeployed, re-invoked -> 200, 250 rows, bloomberg stamps preserved (verify_freshness_parity.py, 0 regressions vs the pre-move raw/bloomberg/ reader, 2 additional names now correctly resolved via the slash-key fix)."
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed same-turn by this worker: the offending import was removed before this order's drain, and the redeploy + live invoke that follows in this same commit sequence proves the fix. Filed because the underlying trap (CLOSURE_ROOTS excludes bare `lib.*` modules) is a REPO-WIDE property of build-and-upload-scoped-amgt.sh, a WALL this order cannot edit -- any FUTURE change to a packaged lib.research/lib.opal_data_harvest module that reaches for `lib.opal_naming` (or any other bare top-level lib.* module) directly will hit the identical cold-start failure, silently, past the build script's own verify step.",
+    "spec_asserts": "RULED item 4 (M1's own instruction): 'build_view.py and the adapter's read_coverage_freshness list the new bronze prefix for the Bloomberg vendor' -- implicitly assuming any implementation choice that satisfies the reads is safe to deploy; C-HARVEST-HOME (PRD, cited throughout section 1) names lib/opal_naming.py's address()/key() as the ONE way to build an address.",
+    "world_is": "Calling the C-HARVEST-HOME builder from inside a module the scoped adapter's closure packages is UNSAFE when the builder itself (`lib.opal_naming`) sits outside the closure's two tracked roots -- the build script cannot see or complain about this gap, so it is a silent runtime failure, only caught by an ACTUAL invoke (this order's AC6 live-invoke step), never by the build's own VERIFY output.",
+    "notes": "Remedy options for a future occupant of this trap: widen CLOSURE_ROOTS (a build-script edit, WALL for this order), or never call lib.opal_naming from a packaged module (this worker's fix, a literal-string workaround with a comment naming why). No repo-wide fix attempted here -- out of this order's <paths>. disarm_owner is the issuer (R-18: a worker is terminal at its drain and cannot hold ongoing owner duty); the fix itself already landed in this worker's own commits."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W90-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~90",
+    "surfaced_at": "2026-09-22T00:55:00Z",
+    "one_line": "AC6's literal invocation (`HALT_ACK=1 bash .tools/safe-apply.sh infra/aws/terraform/harvest plan -target=... | grep ...`) does not match the live tool -- safe-apply.sh gates 'apply' ONLY and refuses any other subcommand ('plan' included) with a usage error, before any terraform command runs.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`HALT_ACK=1 bash .tools/safe-apply.sh infra/aws/terraform/harvest plan -target=module.scoped_amgt_api.aws_lambda_function.this` (this worktree, HEAD at time of run) -> `safe-apply: ERROR -- no 'apply' subcommand in the arguments. safe-apply: this wrapper gates 'terraform apply' only. For 'plan' or any other subcommand call the terraform binary directly. safe-apply: usage -- safe-apply.sh [-chdir=DIR] apply [apply-args...]`.",
+        "The worker ran `terraform -chdir=infra/aws/terraform/harvest init` then `terraform -chdir=infra/aws/terraform/harvest plan -target=...` directly (bare terraform, as the tool's own error message instructs) and got the expected `Plan: 0 to add, 1 to change, 0 to destroy.`; then ran the APPLY through `HALT_ACK=1 bash .tools/safe-apply.sh -chdir=infra/aws/terraform/harvest apply -target=... -auto-approve` correctly (per BOUNDS: 'the adapter redeploy only through the TARGETED HALT_ACK=1 safe-apply.sh') -- first attempt rc 124 (100s timeout printing 182 halt-gate pending messages), retried once per the timeout rule, succeeded: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC6's <invocation> pipes safe-apply.sh's own output through `plan -target=...`, asserting safe-apply.sh accepts a `plan` subcommand.",
+    "world_is": "safe-apply.sh's usage is `[-chdir=DIR] apply [apply-args...]` ONLY -- it refuses immediately (before touching terraform) on any first positional argument other than `apply`, so a literal `plan` invocation through this wrapper can never produce a Plan: line on this tool version.",
+    "notes": "Same class as AMGT_RESAPP-Z-W90-S1 (AC3): a task-order invocation citing a CLI shape the live tool does not carry. Not blocking: the worker completed the full plan+apply+verify sequence via the tool's real interfaces and recorded both the literal failure and the corrected sequence in AC6's acceptance row."
   }
 ]
 ```
