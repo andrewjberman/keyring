@@ -139,7 +139,7 @@ org/missions/D5/AMGT/AMGT_HARVST/task-orders/AMGT_HARVST.TO-HVST-h-8.timeline-de
    route) is cut at L10 from this spec, and the served page change then takes its never-widen pair.
 2. **The spec names no implementation file on purpose,** so the approval is of the design, not of a code location.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~8</slot>
 <fabric>site-z</fabric>
