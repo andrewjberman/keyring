@@ -4993,9 +4993,19 @@ worker to them **silently, with NO lane consulted** (`owned-paths-validate.py:11
 delegation CVO ruling R5 forbids.
 
 ⚠ **AND THE PRACTICE COLLIDES WITH THIS PROJECT'S ENTIRE HISTORY, WHICH IS WHY IT IS A CARD AND NOT A DECISION.**
-Author census of `portal/src/pages/SecurityAnalysis/`, last 60 commits: **every one is an
-`0.9.0_WK_AMGT_RESAPP~<n>` worker** (~18 x5, ~13 x5, ~31, ~2 x2, ~80, ~78, ~53, ~45, ~16, ~12). **No DE seat has
-ever authored this page.** So adopting R5 here does not tighten a rule nobody was using -- it retires the mechanism
+Author census of `portal/src/pages/SecurityAnalysis/`, **the WHOLE population, no limit: 21 commits, 11 distinct
+`0.9.0_WK_AMGT_RESAPP~<n>` worker serials, and `0` non-worker authors** (~18 x5, ~13 x5, ~31 x2, ~2 x2, ~80, ~78,
+~53, ~45, ~16, ~12, ~10). **No DE seat has ever authored this page.**
+
+⛔ **CORRECTED IN PLACE 2026-09-22 ~23:0xZ, AND THE ERROR WAS THIS SEAT'S OWN DENOMINATOR.** This line first read
+*"last 60 commits"*. **`-60` was the LIMIT PASSED TO `git log`, NOT A MEASURED COUNT** -- only 21 commits exist --
+and a `head -10` on the author tally hid the 11th serial (`~10`). ⭐ **The corrected figure is the STRONGER claim:
+21 of 21 is the WHOLE POPULATION rather than a sample, and `0` non-worker authors is a printed denominator rather
+than an eyeballed list.** Caught by `1.0.0_SA_CTO~Z` (msg 24433) and re-measured here on this seat's own
+instrument before accepting it. ⚠ **This is Rule 24's own tell -- a denominator whose scope is narrower than the
+sentence beside it -- committed by the seat that filed `Z-S235` about exactly this class four hours earlier, and
+inside the section arguing the case. The number was never wrong in the direction that mattered, which is why
+nothing flagged it.** So adopting R5 here does not tighten a rule nobody was using -- it retires the mechanism
 by which this page has ALWAYS been built. That is a scope call, it is the CTO's, and taking either reading silently
 is the exact widening/narrowing §2 forbids. **No DE seat is live** (7 live agents at the cut, none a `_DE_`), so the
 reading also decides whether round 31's first cell can start at all.
