@@ -88,12 +88,26 @@ show, diff or check out branch `wk-amgt-14-50` or `C:/tmp/wk-amgt-14-50`.
 <paths>
 integrations/bloomberg/research/model_block_pull.py
 integrations/bloomberg/research/tests/test_currency_labels.py
+integrations/bloomberg/research/tests/test_stage_derive_fye.py
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~112/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-112.currency-labels.md
 </paths>
 
-- **A SURFACE NOT NAMED IN `<paths>` IS A WALL**, including rk-109's `test_stage_derive_fye.py`. Scratch is
+- **ISSUER AMENDMENT 1 (2026-09-22, 2.0.0_SA_COO~Z, L5, on rows W112-S1/S2; committed by the issuer BEFORE the rebuild):**
+  rk-109's December byte-identity rule means "the fiscal-year path leaves a December block untouched". It never meant
+  to forbid the currency labels the CTO ruled on EVERY figure (msg 24261 Q2), so the two rules conflicted only through
+  that test. So:
+  - `test_stage_derive_fye.py` is NOW IN `<paths>`, and ONLY `test_december_name_byte_identical_to_pin` may change.
+    Before comparing to the pinned module, it strips exactly this cell's additions from the EDITED block: the
+    top-level `currencies` key, every figure's `currency` and `currency_basis`, and any figure whose mnemonic is
+    `EQY_FUND_CRNCY`.
+  - The same test ALSO asserts that the stripped keys WERE present on the edited block (`currencies` present, and every
+    figure carrying `currency_basis`), so the strip cannot hide an absence.
+  - Nothing else in that file changes, and rk-109's other three arms are untouched.
+  - AC3's comparison base is YOUR base, the rk-109 drain `1f70c73923`, not the pre-trial pin, because the chained base
+    already carries the other round-28 cells' files (W112-S2).
+- **A SURFACE NOT NAMED IN `<paths>` IS A WALL.** Scratch is
   `<your worktree>/.scratch/r112/`.
 - **COMMITTING:** `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAPP~112 <0.9.0_WK_AMGT_RESAPP~112@opal.agent>" -F <msgfile> -- <paths>`.
 
@@ -110,8 +124,8 @@ org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-112.currency
 `.scratch/r112/ac4.py`:
 ```
 import subprocess
-out = subprocess.run(["git", "diff", "--name-only", "96cc4dae9d", "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal"], capture_output=True, text=True).stdout.split()
-print("changed_code_files_since_pretrial_pin", sorted(out))
+out = subprocess.run(["git", "diff", "--name-only", "1f70c73923", "HEAD", "--", "lib", "integrations", "infra", ".tools", "portal"], capture_output=True, text=True).stdout.split()
+print("changed_code_files_since_base", sorted(out))
 for f in sorted(out):
     b = open(f, "rb").read()
     compile(b.decode("utf-8"), f, "exec")
@@ -121,8 +135,8 @@ for f in sorted(out):
 <proof_of_spec>
   <criterion id="AC0" cell_refs="AMGT-rk-112"><invocation>cd "$(git rev-parse --show-toplevel)" && git log --oneline -3 && sed -n '89,108p' integrations/bloomberg/research/model_block_pull.py && for t in test_stage_derive_fye test_fye_join test_vintage_derivation_identity test_latest_stamp_raw_pair test_forecast_fallback; do echo "$t $(python -m pytest integrations/bloomberg/research/tests/$t.py -q --color=no -p no:cacheprovider 2>&1 | tail -1)"; done</invocation><expect>BEFORE any edit: the log shows rk-109's drain as the base (record its hash); HEADER_FIELDS has no EQY_FUND_CRNCY; five per-file baselines recorded (test_stage_derive_fye 4 passed if rk-109 landed as ordered)</expect></criterion>
   <criterion id="AC1" cell_refs="AMGT-rk-112"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest integrations/bloomberg/research/tests/test_currency_labels.py -v --color=no -p no:cacheprovider 2>&1 | tail -8</invocation><expect>"5 passed" and 0 failed, with the five named arms PASSED</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-rk-112"><invocation>cd "$(git rev-parse --show-toplevel)" && for t in test_stage_derive_fye test_fye_join test_vintage_derivation_identity test_latest_stamp_raw_pair test_forecast_fallback; do echo "$t $(python -m pytest integrations/bloomberg/research/tests/$t.py -q --color=no -p no:cacheprovider 2>&1 | tail -1)"; done</invocation><expect>each line EQUALS its AC0 line -- rk-109's four arms still pass, and no pre-existing failure grows</expect></criterion>
-  <criterion id="AC3" cell_refs="AMGT-rk-112"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r112/ac4.py</invocation><expect>the changed code files since the pre-trial pin are EXACTLY rk-109's two plus integrations/bloomberg/research/tests/test_currency_labels.py (model_block_pull.py appears once, carrying both cells); each "compiles True crlf 0" and non_ascii_chars equal to the pin's value for model_block_pull.py</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-rk-112"><invocation>cd "$(git rev-parse --show-toplevel)" && for t in test_stage_derive_fye test_fye_join test_vintage_derivation_identity test_latest_stamp_raw_pair test_forecast_fallback; do echo "$t $(python -m pytest integrations/bloomberg/research/tests/$t.py -q --color=no -p no:cacheprovider 2>&1 | tail -1)"; done</invocation><expect>AMENDMENT 1: each line EQUALS its AC0 line -- test_stage_derive_fye "4 passed" (its December arm now strips this cell's labels and asserts they are present), and no pre-existing failure grows</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-rk-112"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/r112/ac4.py</invocation><expect>AMENDMENT 1: the changed code files since the base 1f70c73923 are EXACTLY integrations/bloomberg/research/model_block_pull.py, integrations/bloomberg/research/tests/test_currency_labels.py and integrations/bloomberg/research/tests/test_stage_derive_fye.py; each "compiles True crlf 0" and non_ascii_chars equal to the pin's value for model_block_pull.py</expect></criterion>
 </proof_of_spec>
 
 **Record each criterion's ACTUAL OUTPUT and its DENOMINATOR.** No judgment criterion.
@@ -148,7 +162,7 @@ criterion passes, commit with `--only`, and report once.
    keys. That is a served change, and it rides L-MB's pair.
 5. No new security_key dependency.
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~112</slot>
 <fabric>site-z</fabric>

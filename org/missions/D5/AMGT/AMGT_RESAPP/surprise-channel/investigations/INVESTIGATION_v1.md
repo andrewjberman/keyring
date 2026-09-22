@@ -12052,6 +12052,98 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AC0's invocation (task order AMGT-rk-109 section 5) runs `sed -n '965,978p' integrations/bloomberg/research/model_block_pull.py` to show stage_derive calling merge_by_fiscal_year BEFORE any edit, followed by the four baseline pytest files.",
     "world_is": "The worker built the RULED code change (adding _load_fye_join/_is_december_fye above stage_derive) before running AC0's literal invocation; the sed range now falls inside the new helper, not the pre-edit stage_derive docstring/call. The proof-of-spec instance's AC0 row substitutes `git show 96cc4dae9d:...` for the sed target and cites the zero-intervening-commits check above; the four pytest baselines were unaffected (confirmed identical to AC2's post-edit run) and needed no substitution.",
     "notes": "No data or served artifact is affected -- this is a proof-collection sequencing note on the worker's own AC0 row, disarm is recording the correct procedure (run AC0 verbatim, unedited, FIRST) on the next TO of this shape."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W112-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~112",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "RULED items 1-3 (unconditional currency/currency_basis + EQY_FUND_CRNCY keys on EVERY figure, December included) necessarily break rk-109's WALLED test_december_name_byte_identical_to_pin, which AC2 requires to stay unchanged.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC0 (pre-edit, this worktree base 1f70c73923): `test_stage_derive_fye 4 passed in 0.43s`.",
+        "AC2 (post-edit, same file, HEAD 4371474f71): `test_stage_derive_fye 1 failed, 3 passed in 0.49s` -- pytest -v shows the single failure is `test_december_name_byte_identical_to_pin`; the other three arms (march pairing, price-only-ratio-unresolved, is_december_fye) are unaffected.",
+        "The failure is exact-equality on `edited_stripped == pinned_stripped` after dropping only `vintage` -- adding `currency`/`currency_basis` to every figure and a top-level `currencies` key (RULED item 2/3, unconditional, no December carve-out unlike rk-109's own `fiscal_year_join_info`) changes every December figure dict's key set, so the assertion cannot pass under any implementation of items 1-3 that is faithful to their literal text.",
+        "This cell's own item 6 arm 5 (`test_december_block_equal_modulo_new_keys`) explicitly requires dropping the four new key families before the December block matches the pin, confirming the new keys ARE meant to land on December too -- the tension with rk-109's un-amendable test is inherent to the RULED design, not an implementation error."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "AC2's <expect> (task order AMGT-rk-112 section 5): each of the five baseline lines EQUALS its AC0 line, so rk-109's four test_stage_derive_fye arms still pass and no pre-existing failure grows; item 5's own text separately asserts 'rk-109's December byte-identity arm must still pass'.",
+    "world_is": "Building RULED items 1-3 exactly as specified necessarily flips test_december_name_byte_identical_to_pin (a WALLED file this order forbids amending) from PASS to FAIL, because that test asserts full dict equality against the untouched 96cc4dae9d pin with no key-dropping allowed. AC2 is graded FAIL on this worker's proof-of-spec instance as a direct, unavoidable, measured consequence of the RULED build -- not a coding defect. ISSUER NOTES item 4 ('December non-regression is ADDITIVE-keys-only, NOT byte-identity... rides L-MB's pair') anticipates the served-artifact version of this tension but does not reconcile it with AC2's own literal wording or with rk-109's un-amendable test file.",
+    "notes": "INERT resolution options for a future cell/ruling: amend or retire test_december_name_byte_identical_to_pin (would require lifting the WALL on rk-109's test file), or accept AC2 as permanently unsatisfiable for this TO shape and re-grade acceptance on the currency cell's OWN December arm (item 6 arm 5) instead. Marked ARMED because every future worker running AC2's literal five-file battery on this branch will keep seeing this same grown failure until an owner decides which."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W112-S2",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~112",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "AC3's premise ('rk-109's two [files] plus test_currency_labels.py') undercounts this worker's actual base -- 1f70c73923 (the round-28 drain merging rk-109 AND other round-28 cells) already differs from the 96cc4dae9d pin on 11 files unrelated to rk-109/rk-112.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`git diff --name-only 96cc4dae9d 1f70c73923 -- lib integrations infra .tools portal` (this worker's own unedited base) returns 13 files, not rk-109's 2: model_block_pull.py, sa_forecast_fallback.py, test_sa_identity_company_name.py, test_stage_derive_fye.py, plus 9 files under lib/research/{filings,harvest,identity,management}/ untouched by either rk-109 or rk-112.",
+        "`.scratch/r112/ac4.py` (AC3's own literal script, run at HEAD 4371474f71 after committing this cell's own two files) prints 14 changed_code_files: the same 13 plus this cell's new test_currency_labels.py -- model_block_pull.py appears once, carrying both rk-109 and rk-112's edits, exactly as AC3 anticipates for THAT file, but the surrounding file-list population is 14, not 3."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "AC3's <expect> (task order AMGT-rk-112 section 5): 'the changed code files since the pre-trial pin are EXACTLY rk-109's two plus integrations/bloomberg/research/tests/test_currency_labels.py'.",
+    "world_is": "This worker's base (1f70c73923) is the round-28 DRAIN, which merged rk-109 alongside other round-28 worker branches (sa_forecast_fallback.py, test_sa_identity_company_name.py, and the lib/research/{filings,harvest,identity,management}/ files) before this worker was ever spawned -- the pin-to-base file count was never re-measured when AC3 was cut, and the 'rk-109's two' premise describes only rk-109's OWN branch diff, not the shared branch's actual state at this worker's base. AC3 is graded FAIL on the file-list membership limb; the per-file compiles/crlf/non_ascii limb (the part this worker's own edits control) is measured clean (all 14 files compile True crlf 0; model_block_pull.py non_ascii_chars 0, matching the pin's own 0).",
+    "notes": "INERT: no data or served artifact affected, and none of the 11 extra files were touched by this worker (read-only via the diff, never opened for edit) -- confirmed by this cell's own <paths> grant naming only model_block_pull.py and test_currency_labels.py as writable. Disarm is re-cutting AC3's <expect> against a freshly measured pin-to-base file list on the next TO of this shape, the same class of fix as row S1."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W112-S3",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~112",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "ISSUER AMENDMENT 1 (2.0.0_SA_COO~Z @4f234eb208) resolves both AMGT_RESAPP-Z-W112-S1 and AMGT_RESAPP-Z-W112-S2 -- test_stage_derive_fye.py joined <paths>, its December arm now strips this cell's currency keys and compares against the actual base, and AC0/AC1/AC2/AC3 all measure PASS on the rebuilt session.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ISSUER AMENDMENT 1, committed @4f234eb208 (org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-rk-112.currency-labels.md <paths> section): test_stage_derive_fye.py joins <paths>, ONLY test_december_name_byte_identical_to_pin may change, and AC3's comparison base is corrected to 1f70c73923 (this worker's actual base, W112-S2's own finding).",
+        "S1 resolved: test_stage_derive_fye.py's December arm, edited per the amendment (strip currencies/currency/currency_basis/any EQY_FUND_CRNCY-mnemonic entry from the EDITED block before comparing to the pin, with a presence assertion first), now measures 4 passed, matching AC0's pre-edit baseline exactly (commit 2be7c02a61). AC2's full five-file battery: test_stage_derive_fye 4 passed, test_fye_join 3 failed/2 passed, test_vintage_derivation_identity 4 passed, test_latest_stamp_raw_pair 1 failed/5 passed, test_forecast_fallback 13 passed -- every line EQUAL to AC0.",
+        "S2 resolved: AC3's <expect> now names the amended base 1f70c73923, and `.scratch/r112/ac4.py` (rewritten to diff against 1f70c73923 per the amended proof_of_spec block) prints EXACTLY the three files the amended AC3 names: model_block_pull.py, test_currency_labels.py, test_stage_derive_fye.py -- each compiles True crlf 0, model_block_pull.py non_ascii_chars 0 matching the pin's own measured 0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "S1's spec_asserts (AC2's <expect>, pre-amendment) and S2's spec_asserts (AC3's <expect>, pre-amendment) as filed earlier in this document.",
+    "world_is": "Both premises were amended by ISSUER AMENDMENT 1 before this worker's rebuild: AC2 now expects the SAME five baseline lines as AC0 (achievable because the December arm strips this cell's own additions rather than forbidding them), and AC3 now expects the base to be 1f70c73923 (this worker's real base) rather than the pre-trial pin. Both amended criteria measure PASS on this worker's rebuilt session (see this worker's proof-of-spec instance).",
+    "notes": "Filed per spawn instruction step 4. S1 and S2 remain UNDER_INVESTIGATION (this worker cannot self-adjudicate); this row records that the amendment resolves the tension each named, and where the measured PASS now lives."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W112-S4",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~112",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "ISSUER AMENDMENT 1's literal three-item strip list (currencies key, figure currency/currency_basis, any FIGURE with mnemonic EQY_FUND_CRNCY) does not by itself reach byte-identity: on the unchanged December fixture, EQY_FUND_CRNCY resolves to an UNRESOLVED entry, not a figure, so the test additionally strips it there.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "With only the three enumerated strips applied, `python -m pytest integrations/bloomberg/research/tests/test_stage_derive_fye.py -v` FAILED on test_december_name_byte_identical_to_pin: pytest -vv showed the sole differing key was `unresolved`, with the edited side carrying one extra entry {'scope': 'header', 'mnemonic': 'EQY_FUND_CRNCY', 'reason': 'empty/no value returned'} absent from the pinned side.",
+        "model_block_pull.py's header loop (:1112-1144) iterates every HEADER_FIELDS member unconditionally; RULED item 1 appends EQY_FUND_CRNCY there. The December fixture _DECEMBER_REF ({'NAME': 'SAP SE', 'CRNCY': 'EUR'}) carries no EQY_FUND_CRNCY value, so it lands in `unresolved`, never in `figures` -- 'figures' and 'unresolved' are disjoint throughout this module (count-in-equals-count-out accounting, model_block_pull.py:1193).",
+        "Extending the test's own strip to also drop any `unresolved` entry whose mnemonic is EQY_FUND_CRNCY (still confined to test_december_name_byte_identical_to_pin, model_block_pull.py and the other three arms untouched) makes the test PASS: 4 passed, matching AC0 (commit 2be7c02a61)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "ISSUER AMENDMENT 1's <paths> text: 'it strips exactly this cell's additions from the EDITED block: the top-level currencies key, every figure's currency and currency_basis, and any figure whose mnemonic is EQY_FUND_CRNCY.'",
+    "world_is": "The enumerated list, applied literally, leaves the `unresolved` list carrying an extra EQY_FUND_CRNCY entry (this cell's addition too, since HEADER_FIELDS itself grew) that the amendment's specific wording does not name (it says 'figure', and this module's own vocabulary keeps 'figure' and 'unresolved' disjoint). Implemented under the amendment's own governing sentence ('strips exactly this cell's additions') rather than a literal reading of the three-item list, still entirely inside test_december_name_byte_identical_to_pin and this worker's <paths> grant.",
+    "notes": "INERT: no served artifact affected, model_block_pull.py untouched, the other three arms untouched. Disarm is folding this fourth strip into the amendment's own written text on the next TO of this shape, so a future implementer does not have to re-derive it from a failing run."
   }
 ]
 ```
