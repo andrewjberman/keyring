@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~16</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-21</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.9 @5fd2dc9ab5 | **Decomp cell:** `FE-s-66` (round 11, v0.11) | **outcome_ref:** FWD-12 | **depends_on:** none (READY ROOT, but FE-s-68 depends on your two authored fixtures existing before it can run) | **slot:** ~2 | **rows:** W11-S1, W12-S1 (this cell); W11-S2 (its precondition) | **base:** workspace = the round-11 issuance commit on CLOUD (your worktree branches from it), portal DEV `243089eb` plus every drained round-11 cell this one depends on
 
