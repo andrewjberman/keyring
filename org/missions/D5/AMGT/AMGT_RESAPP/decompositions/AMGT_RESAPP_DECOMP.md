@@ -4945,3 +4945,21 @@ else.
 `rk-122` adds one order to round 30's issuance. Its worker spawns at once with the others; its ACCEPTANCE completes
 only after the routed AE seat applies, so the cell is expected to sit at AC3(a) with a row until that routing lands.
 That is the honest shape of a cell whose act this seat may not perform.
+
+### 38y. AMGT-rk-123, ADDED MID-ROUND (the carrier CVO ruling R5 left missing)
+
+**Cut by `2.0.0_SA_COO~Z` at `1.0.0_SA_CTO~Z`'s msg 24379.** R5 @`af2c1a673e` re-homed rk-122's commit-and-apply ACT to
+`0.7.0_AE_CloudOps` (the one lane `infra/aws/**` permits) but re-homed no ORDER, so LD-0529 refused every message that
+would have told that seat to act -- the CTO hit the refusal twice, citing the order by id and by path. L6 is this
+seat's, so the carrier is this seat's to cut. This is an ADDITIONAL order into an open round and it carries the
+audited `# pipeline-override` line the gate requires; it is NOT a second issuance of round 30's cells.
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| the amgt edge behavior APPLY | `AMGT-rk-123` | ~123 | after rk-122's patch (already on SITEZ @`2e0fa454b1`) | Z-S226 -- `0.7.0_AE_CloudOps` applies rk-122's patch: ONE appended `ordered_cache_behavior` for `/api/scoped/amgt/*` -> `APIGateway-portal`, caching disabled, with the `auth-validator-edge` viewer-request association as PART of the act. Targeted `safe-apply`, a deploy-ledger entry opened before it, the 2-resource plan bounded (the WAF block is a 0-of-24-field no-op, PRINTED not asserted), and a rollback that removes the behavior and re-applies rather than deleting a distribution | the SIGNED rk-122 pair (`NEVER_WIDEN_ROUND30_RK122_{COO,CTO}_HALF.md`) binds this act |
+
+- **Write surface:** `infra/aws/terraform/portal-auth/cloudfront-distribution.tf` plus the AE seat's own deliverables,
+  the change-management ledger and the append-only channel. It intersects NO other round-30 cell.
+- **Why the AE seat and no other:** the lane gate, exercised with a positive control, reads PERMIT for
+  `0.7.0_AE_CloudOps` and REFUSE for `2.0.0_SA_COO~Z`, `0.2.0_DT_PortfolioAnalytics` and `0.9.0_WK_AMGT_RESAPP~122`.
+- **The page is blank until this lands**, so it is the one cell in round 30 with a user waiting on it.
