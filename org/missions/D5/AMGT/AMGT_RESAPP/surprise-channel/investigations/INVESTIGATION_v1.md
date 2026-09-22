@@ -12030,6 +12030,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "The Bloomberg research test directory runs as one suite.",
     "world_is": "Collection errors on the missing symbol; the orders test file by file instead.",
     "notes": "INERT unless a trial cell needs the directory run; round-28 orders name files, not the directory (CTO msg 24263)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W109-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~109",
+    "surfaced_at": "2026-09-22T00:00:00Z",
+    "one_line": "AC0's sed portion could not be literally re-run pre-edit -- edited model_block_pull.py before capturing the baseline, so lines 965-978 no longer show the pre-edit stage_derive header; reconstructed from the pin instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --oneline 96cc4dae9d..0ed364cff0 -- lib integrations infra .tools portal returned 0 commits, so the pin's bytes for model_block_pull.py equal this worktree's pre-edit base bytes.",
+        "git show 96cc4dae9d:integrations/bloomberg/research/model_block_pull.py | sed -n '965,978p' reproduces the pre-edit stage_derive header (merge_by_fiscal_year call) cited in AC0's proof row."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "spec_asserts": "AC0's invocation (task order AMGT-rk-109 section 5) runs `sed -n '965,978p' integrations/bloomberg/research/model_block_pull.py` to show stage_derive calling merge_by_fiscal_year BEFORE any edit, followed by the four baseline pytest files.",
+    "world_is": "The worker built the RULED code change (adding _load_fye_join/_is_december_fye above stage_derive) before running AC0's literal invocation; the sed range now falls inside the new helper, not the pre-edit stage_derive docstring/call. The proof-of-spec instance's AC0 row substitutes `git show 96cc4dae9d:...` for the sed target and cites the zero-intervening-commits check above; the four pytest baselines were unaffected (confirmed identical to AC2's post-edit run) and needed no substitution.",
+    "notes": "No data or served artifact is affected -- this is a proof-collection sequencing note on the worker's own AC0 row, disarm is recording the correct procedure (run AC0 verbatim, unedited, FIRST) on the next TO of this shape."
   }
 ]
 ```
