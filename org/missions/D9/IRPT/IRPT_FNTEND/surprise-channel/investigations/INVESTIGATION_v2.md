@@ -5637,6 +5637,101 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "FE-s-77's own mandate (\"replace EVERY slate-* ink/border class this round's own fix introduced\") correctly changes ReceiptPanel.tsx's public-reason-code class from text-slate-700 to the ratified text-[#6B7280], which breaks __tests__/fe-s-42/every-site.test.ts:322's byte-pinned reasonLineBefore() helper -- a file outside this cell's <paths> grant -- so F77-AC6's whole-suite bar reads 1 fail instead of 0.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-77 cell text: \"Replace every slate-* ink/border class this round's own fix introduced inside the modal region with its navy equivalent per DESIGN.md's inversion rule (C5).\" F77-AC6: `bun test src/pages/InvestorReporting` must print `(?<![0-9])0 fail`. BOUNDS: \"A defect needing another cell's file is ONE surprise row, never a wider grant.\"",
+    "world_is": "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx (this worker's commit 78241722, portal repo) changes the public-reason-code paragraph's className from `mt-1 text-xs text-slate-700` to `mt-1 text-xs text-[#6B7280]`, the ratified DESIGN.md C3 secondary ink (legal on this component's own panel ground) -- exactly what the cell text orders for every slate-* class in the modal region. __tests__/fe-s-42/every-site.test.ts:320-322 (outside this cell's <paths>, which grant only export/ and __tests__/fe-s-77/) carries `reasonLineBefore()`, a hand-written byte-for-byte reference string for this same element, hard-coded to `class=\"mt-1 text-xs text-slate-700\"` and compared with `===` (`namedBare = namedLine === reasonLineBefore(named)` at :344). After this cell's fix that comparison is false, and F42-AC5's test fails. Measured: `bun test src/pages/InvestorReporting` (dev server stopped, port confirmed closed, IRPT_FE_DEV_PORT unset) -> `626 pass, 22 skip, 1 fail`, the one failure named `F42-AC5 -- the receipt reason line flags a code the contract does not name, through FE-s-40 rule`. This is the single cause: no other file this cell touched (ExportModal.tsx's chip/close-button classes, AppliedBranding.tsx) is referenced by any other test's hard-coded string (checked by search across __tests__/ for every changed literal). The fix is correct and was not reverted or weakened to dodge this; hazard_standing ARMED because the whole-suite bar stays red for any future criterion that greps '0 fail' until a task order reaching __tests__/fe-s-42/every-site.test.ts:322 updates reasonLineBefore()'s hard-coded string to text-[#6B7280] (or the issuer otherwise re-resolves the pinned byte-comparison).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx@78241722 (portal repo, this worker's commit) -- public-reason-code className is now `mt-1 text-xs text-[#6B7280]`",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-42/every-site.test.ts:320-322,344 (this worktree HEAD, unedited, outside this cell's grant) -- `reasonLineBefore()` hard-codes `class=\"mt-1 text-xs text-slate-700\"` and `namedBare` compares it with `===`",
+        "measured run (this worker, 2026-09-22, portal repo, dev server stopped and port confirmed closed): `timeout 600 bun test src/pages/InvestorReporting` -> `626 pass`, `22 skip`, `1 fail`, `Ran 649 tests across 119 files`; the one `✗` line names `F42-AC5 -- the receipt reason line flags a code the contract does not name, through FE-s-40 rule`",
+        "IRPT_FNTEND.TO-FE-s-77.export-modal-c5-inversion-and-one-primary-action.md <paths> block: `portal/src/pages/InvestorReporting/export/`, `portal/src/pages/InvestorReporting/__tests__/fe-s-77/`, and this investigation file only -- __tests__/fe-s-42/ is not named"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S2",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "F77-AC3's literal invocation (--expect-style '[data-slot=\"receipt-panel\"]::color=rgb(22, 51, 114)' / '!=rgb(100, 116, 139)') PASSED, unchanged, when run against the code BEFORE this cell's C5 fix -- the receipt-panel container carries no ink class of its own in either state and inherits navy from body's ambient --foreground regardless of what its slate-classed descendants render, so the assertion is confounded and cannot discriminate the described defect.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-77, THE CRITERION RULE part (c): \"A WRONG-STATE NEGATIVE CONTROL -- the same content assertions run against the failed or unresolved state; they must print... 0 of N met.\" Also HOW step 4: \"A control is a claim. Before you trust a passing assertion, run its wrong-state arm... If a control passes when it should fail, the assertion cannot tell the states apart: say so and fix it, never report it as met.\"",
+    "world_is": "Run verbatim BEFORE any of this cell's edits (this worktree HEAD at spawn, portal DEV base): `EXPECT-STYLE[[data-slot=\"receipt-panel\"]::color]: PASS rgb(22, 51, 114)` (x2), `ASSERT-STYLE: 2 of 2 met` -- identical to the AFTER-fix run. portal/src/index.css:290 sets `body { color: hsl(var(--foreground)) }`; portal/design/themes/opal-capital.css:84 sets `--semantic-text-body: 221.09 67.65% 26.67%` (= #163372, navy) at :root. portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx's `data-slot=\"receipt-panel\"` div (both before and after this cell's fix) carries no `text-*`/`color` class of its own -- only its DESCENDANTS (`flow-placeholder`, `public-reason-code`) carried `text-slate-700` before this cell and `text-[#6B7280]` after. `getComputedStyle` on the container itself therefore always reports the inherited body value (navy) regardless of the descendants' own ink, so this selector cannot see whichever state they are in. Discriminating verification was run instead directly against the descendants' own classes (see this cell's result file): `[data-slot=\"flow-placeholder\"]::color` and `[data-slot=\"applied-branding\"]::color` read `rgb(100, 116, 139)` (slate-700) before this cell's fix and `rgb(107, 114, 128)` (#6B7280) after; `[data-slot=\"narrative-toggle\"]::color` read slate-900's rgb before and `rgb(22, 51, 114)` (navy) after. F77-AC3 is still reported PASS-by-output (its own literal `<expect>` was met, verbatim, on the AFTER run) -- this row documents that the PASS does not, by itself, establish the fix; the descendant-level checks do.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run (this worker, 2026-09-22, code state BEFORE any FE-s-77 edit, port 5937, fixture export-ready.json, --click Export): EXPECT-STYLE[[data-slot=\"receipt-panel\"]::color]: PASS rgb(22, 51, 114) (x2); ASSERT-STYLE: 2 of 2 met",
+        "measured run (this worker, 2026-09-22, code state AFTER this cell's fix, identical invocation): EXPECT-STYLE[[data-slot=\"receipt-panel\"]::color]: PASS rgb(22, 51, 114) (x2); ASSERT-STYLE: 2 of 2 met -- unchanged",
+        "portal/src/index.css:290 (this worktree HEAD) -- `body { color: hsl(var(--foreground)) }`",
+        "portal/design/themes/opal-capital.css:84 (this worktree HEAD) -- `--semantic-text-body: 221.09 67.65% 26.67%` (navy #163372) at :root",
+        "measured run (this worker, 2026-09-22, AFTER this cell's fix, descendant-level selectors): EXPECT-STYLE[[data-slot=\"flow-placeholder\"]::color]: PASS rgb(107, 114, 128); EXPECT-STYLE[[data-slot=\"applied-branding\"]::color]: PASS rgb(107, 114, 128); EXPECT-STYLE[[data-slot=\"narrative-toggle\"]::color]: PASS rgb(22, 51, 114); ASSERT-STYLE: 3 of 3 met"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S3",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "F77-AC4's literal invocation (scripts/ui-smoke.mjs, --click Export --expect '[data-slot=\"preview-scroll\"]') mechanically PASSes but scripts/ui-smoke.mjs has no scroll-exercise flag and scripts/ is outside this cell's grant, so the literal run can only prove the preview-scroll container is visible, never that anything was actually scrolled -- a future re-run of the literal invocation alone reads as though scroll were exercised when it was not; a real scroll-exercise driver was built in __tests__/fe-s-77/ instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "IRPT_FNTEND.TO-FE-s-77 cell text: \"This cell performs a real scroll (e.g. via a Playwright-driven helper or the existing holdings-driver.mjs-style mechanism, adapted) and captures the far-edge content itself, not merely its potential.\" F77-AC4 <invocation>: `node scripts/ui-smoke.mjs investor-reporting <out> --port <PORT> --width 390 ... --click Export --expect '[data-slot=\"preview-scroll\"]'`, `<expect>ASSERT-CONTENT: 1 of 1 met</expect>`.",
+    "world_is": "portal/scripts/ui-smoke.mjs (read in full, this worktree HEAD) parses `--click <name>` as a button/tab-role click only (:319-375) and has no `--scroll`/scrollLeft mechanism anywhere in the file; `scripts/` is not named in this cell's `<paths>` (`export/`, `__tests__/fe-s-77/`, and the investigation file only), so this cell cannot add one there. Measured: running the literal invocation verbatim (port 5937, fixture export-ready.json, width 390, --click Export, --expect '[data-slot=\"preview-scroll\"]') prints `EXPECT[[data-slot=\"preview-scroll\"]]: PASS (1 visible)` / `ASSERT-CONTENT: 1 of 1 met` and saves a PNG -- but that PNG shows the SAME unscrolled left-edge content as a pre-scroll baseline capture (Opal logo, \"Report state: Ready\", the table's left-edge date column), because no scroll ever occurred; visibility of a container is not evidence that it was scrolled. Built __tests__/fe-s-77/scroll-driver.mjs (this cell's own commit, portal 78241722) instead, adapting holdings-driver.mjs's scrollLeft displacement pattern and ui-smoke.mjs's own browser/route/auth-stub mechanism: it reads capacity (scrollWidth 1056/clientWidth 264, matching round 11's own capacity proof), captures a before-scroll PNG, sets `wrap.scrollLeft = wrap.scrollWidth - wrap.clientWidth` (a real DOM displacement measured 0 -> 792), and captures an after-scroll PNG showing genuinely different, previously off-screen content (\"Prepared for the selected scope\", the generation timestamp, \"2 account(s) in scope\", the chart's right-edge date labels). This adapted driver's output was used to satisfy F77-AC4 in this cell's own proof of spec; the literal invocation's PASS is recorded but flagged here as not itself establishing the exercised-scroll claim, for any future reader of this project who re-runs only the literal command.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/scripts/ui-smoke.mjs:296-375 (this worktree HEAD) -- `--click` resolves only `getByRole('button'|'tab', ...)`; no scroll/scrollLeft mechanism exists anywhere in this file (confirmed by reading it in full, 640 lines)",
+        "IRPT_FNTEND.TO-FE-s-77.export-modal-c5-inversion-and-one-primary-action.md <paths> block -- `scripts/` is not named",
+        "measured run (this worker, 2026-09-22, literal F77-AC4 invocation, port 5937, width 390, fixture export-ready.json, --click Export): EXPECT[[data-slot=\"preview-scroll\"]]: PASS (1 visible); ASSERT-CONTENT: 1 of 1 met; SAVED (this run's own PNG shows the same left-edge content as the pre-scroll baseline)",
+        "measured run (this worker, 2026-09-22, adapted driver portal/src/pages/InvestorReporting/__tests__/fe-s-77/scroll-driver.mjs@78241722): CAPACITY {\"scrollWidth\":1056,\"clientWidth\":264,\"overflowX\":\"auto\",\"scrollLeftBeforeExercise\":0}; SCROLL-EXERCISED {\"before\":0,\"after\":792,\"target\":792}; two PNGs read directly (org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~27/f77_preview_before_scroll.png and f77_preview_far_edge.png) showing disjoint visible content before vs after",
+        "portal/src/pages/InvestorReporting/__tests__/fe-s-32/holdings-driver.mjs:152-157,203-214 (this worktree HEAD) -- the scrollLeft/screenshot pattern this cell's driver adapts, named explicitly in the cell text"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W27-S4",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~27",
+    "surfaced_at": "2026-09-22T07:17:28Z",
+    "one_line": "F77-AC5's literal selectors (class*=\"5F3BE3\", .bg-primary) never match this build's actual primary-fill idiom (bg-[hsl(var(--primary))]), so the literal invocation measures ASSERT-CONTENT: 0 of 2 met against a required 1 of 2 met -- a genuine, measured FAIL on the criterion as written -- even though an adapted selector pair (class*=\"hsl(var(--primary))\") confirms the underlying C-S151 fix (exactly one filled-primary on the received view) is correct.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~F",
+    "spec_asserts": "F77-AC5 cell text: \"adjust the selectors to your actual implementation's class names if these literal ones do not match your build; the requirement is the COUNT (1 of 2, never 0 or 2), not these exact strings.\" F77-AC5 <invocation> literal selectors: `[data-slot=\"download-link\"][class*=\"5F3BE3\"], [data-slot=\"download-link\"].bg-primary` and the analogous submit-export selector. <expect>ASSERT-CONTENT: 1 of 2 met</expect>.",
+    "world_is": "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx's download-link and ExportModal.tsx's submit-export (this worker's commit 78241722, portal repo) both use `bg-[hsl(var(--primary))]` for their filled-primary state -- a CSS custom-property arbitrary value, containing neither the literal substring `5F3BE3` nor a `.bg-primary` Tailwind utility class. Measured: the literal invocation (port 5937, fixture export-flow.json, --click Export --click 'Create export' --clickwait 3000) prints `EXPECT[[data-slot=\"download-link\"][class*=\"5F3BE3\"], [data-slot=\"download-link\"].bg-primary]: FAIL (0 visible)` and the analogous submit-export line also FAIL (0 visible) -- `ASSERT-CONTENT: 0 of 2 met`, which does not match the required `ASSERT-CONTENT: 1 of 2 met`. An adapted pair, `[data-slot=\"download-link\"][class*=\"hsl(var(--primary))\"]` and the submit-export analogue (same discriminating substance: does the class string carry the primary-fill token), reads `PASS (1 visible)` / `FAIL (0 visible)` respectively -- `ASSERT-CONTENT: 1 of 2 met`, exactly the required count, and a wrong-state control (the same adapted selectors run at the IDLE state, before 'Create export' is clicked) reads the OPPOSITE pattern (download-link FAIL, submit-export PASS), confirming the adapted selector genuinely discriminates. Per proof-of-spec-check.py's invocation-alignment limb (measured directly: `VIOLATION: invocation-alignment[F77-AC5]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s)` when the adapted text was recorded as this row's own invocation), an adapted invocation cannot be recorded as the graded row's own invocation without an issuer amendment to the task-order FILE itself -- the round-11 precedent for exactly this situation is commit 61a3203648, where 2.0.0_SA_COO~F amended IRPT_FNTEND.TO-FE-s-71 before the worker's re-run against the corrected selector was recorded as PASS (row IRPT_FNTEND-W21-S1). No such amendment exists for FE-s-77's AC5, so this worker's proof instance records the LITERAL invocation and its true (FAIL) output on this row, and discloses the adapted run here and in the row's own status_reason as evidence the underlying fix is correct.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/InvestorReporting/export/ReceiptPanel.tsx@78241722 (download-link) and portal/src/pages/InvestorReporting/export/ExportModal.tsx@78241722 (submit-export, primary branch) -- both use `bg-[hsl(var(--primary))]`, no `5F3BE3` substring, no `.bg-primary` class",
+        "measured run (this worker, 2026-09-22, literal F77-AC5 invocation, port 5937, fixture export-flow.json): EXPECT[[data-slot=\"download-link\"][class*=\"5F3BE3\"], [data-slot=\"download-link\"].bg-primary]: FAIL (0 visible); EXPECT[[data-slot=\"submit-export\"][class*=\"5F3BE3\"], [data-slot=\"submit-export\"].bg-primary]: FAIL (0 visible); ASSERT-CONTENT: 0 of 2 met",
+        "measured run (this worker, 2026-09-22, adapted selectors, identical fixture/clicks/port): EXPECT[[data-slot=\"download-link\"][class*=\"hsl(var(--primary))\"]]: PASS (1 visible); EXPECT[[data-slot=\"submit-export\"][class*=\"hsl(var(--primary))\"]]: FAIL (0 visible); ASSERT-CONTENT: 1 of 2 met",
+        "measured run (this worker, 2026-09-22, adapted selectors, IDLE state control, before 'Create export' clicked): EXPECT[[data-slot=\"download-link\"]...]: FAIL (0 visible); EXPECT[[data-slot=\"submit-export\"]...]: PASS (1 visible) -- opposite pattern, confirming discrimination",
+        "measured run (this worker, 2026-09-22, python .tools/proof-of-spec-check.py against a draft instance recording the adapted invocation on this row): VIOLATION: invocation-alignment[F77-AC5]: the RECORDED invocation is NOT the criterion's invocation modulo the placeholder(s) ['PORT', 'WS']",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~21/IRPT_FNTEND.TO-FE-s-71.export-modal-chrome-and-receipt-idle-submitting-received.proof_of_spec.json, criterion F71-AC2's status_reason -- the round-11 precedent: a COO amendment (@61a3203648) to the TO FILE, then a worker re-run against the corrected selector recorded as PASS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
