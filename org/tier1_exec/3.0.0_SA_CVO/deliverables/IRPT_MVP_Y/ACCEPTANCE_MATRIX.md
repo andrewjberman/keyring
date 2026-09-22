@@ -339,6 +339,18 @@ unproven; legacy S-prefixed fixtures are not runtime resolution evidence.
 Separate peer R-P09 browser response identity findingfb0f801529 remains open.
 No shared-schema, browser or full Y2/S2/S3/S7 grade; all14 NOT_EVALUATED.
 
+## Prospect UI update, September 22 evening
+
+Portal `2ddf111467348c4c81ae28e0c0b8aa80e1239152`: supplied11 tests/50 assertions,
+independent9 controls/57 assertions and TypeScript check PASS. Actual component
+handlers with manual React hook storage preserve exact in-memory retries,
+refresh lineage, corrections and input-only Overview submission. NO-HANDLER
+upload/retry performs0 transport. Fresh component state loses attempts; actual
+browser scheduling/rendering, reload recovery and complete row interaction remain
+unproven. See `PROSPECT_UI_REVIEW_2ddf111467.md`; no full Y6/S3/S4 grade.
+Peer R-P09 is now CLOSED per CVO~P65a3aedf72 atc86a5eb5/5add22ca9f; peer counts
+are not added to Y's evidence. All14 integrated criteria remain NOT_EVALUATED.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
