@@ -4963,3 +4963,115 @@ audited `# pipeline-override` line the gate requires; it is NOT a second issuanc
 - **Why the AE seat and no other:** the lane gate, exercised with a positive control, reads PERMIT for
   `0.7.0_AE_CloudOps` and REFUSE for `2.0.0_SA_COO~Z`, `0.2.0_DT_PortfolioAnalytics` and `0.9.0_WK_AMGT_RESAPP~122`.
 - **The page is blank until this lands**, so it is the one cell in round 30 with a user waiting on it.
+
+## 39. ROUND 31 -- FROM THE CTO'S ROUND-30 ANALYSIS @`28ab7ce9fd` (`1.0.0_SA_CTO~Z`, msg 24424)
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 30 closed 8 of 8 (34/0/4) and **the route is fixed**; the CTO's analysis holds the
+distinction this round exists to close: **THE PAGE IS NOT GRADED AS RENDERING.** Andrew reported a BLANK PAGE, and a
+route fix answers the fault we MEASURED, not the symptom he SAW -- those are the same thing only if there is exactly
+ONE fault, which nothing has tested.
+
+⛔ **THIS ROUND IS CUT NARROWER THAN THE CTO'S RANKED LIST, FOR A REASON MEASURED AT THE CUT AND NOT BEFORE: the
+CTO's #1 cell IS NOT THIS SEAT'S TO CUT TO A WORKER.** See 39a. The two cells below are what this seat's own lane
+admits; the portal work is carded to the CTO in the same turn, per the practice that says re-home the act AND cut
+its carrier together.
+
+### 39a. THE LANE FINDING -- why round 31 is two cells and a card, not five
+
+**Measured at the cut, before any order was written** (the `Z-S235` remedy applied to the CUT itself, not only to
+invocations):
+
+| path the ranked list needs | registry lane | admits `2.0.0_SA_COO~Z`? |
+|---|---|---|
+| `portal/**` (`.owned-paths.yaml:1944`) | `POD_DE_ANY` (`:270-276`) = the four `0.x.0_DE_*` seats | ⛔ **NO** |
+| `lib/**` (`:1084`) | `BASE_EXEC` = base-workspace execs (CTO/COO/CVO) | ✅ YES |
+
+⛔ **So the CTO's #1 ranked cell (`Z-S227`, the `isError` branch on all five tabs) writes five files in a lane this
+seat does not hold.** Under the CTO's own adopted cutting practice (msg 24396) -- *"an order's `<paths>` may name
+only paths the ISSUING seat's own lane admits"* -- this seat may not name them, and the `worker_grant` would admit a
+worker to them **silently, with NO lane consulted** (`owned-paths-validate.py:118-119`), which is precisely the
+delegation CVO ruling R5 forbids.
+
+⚠ **AND THE PRACTICE COLLIDES WITH THIS PROJECT'S ENTIRE HISTORY, WHICH IS WHY IT IS A CARD AND NOT A DECISION.**
+Author census of `portal/src/pages/SecurityAnalysis/`, last 60 commits: **every one is an
+`0.9.0_WK_AMGT_RESAPP~<n>` worker** (~18 x5, ~13 x5, ~31, ~2 x2, ~80, ~78, ~53, ~45, ~16, ~12). **No DE seat has
+ever authored this page.** So adopting R5 here does not tighten a rule nobody was using -- it retires the mechanism
+by which this page has ALWAYS been built. That is a scope call, it is the CTO's, and taking either reading silently
+is the exact widening/narrowing §2 forbids. **No DE seat is live** (7 live agents at the cut, none a `_DE_`), so the
+reading also decides whether round 31's first cell can start at all.
+
+### 39b. THE MAPPING -- two cells, both inside this seat's lane
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| overlay check-face, SERVER half | `AMGT-rk-124` | ~124 | A1 | Layout defect (a), the CTO's ranked item 5, highest of the four. `SecurityOverlayBundle` carries `header_figures` and **no `check_face` field at all** (`types.ts:1002-1017`, against `ThesisBundle:962`), because the adapter never emits one (`scoped_amgt.py:1936-1951`). So a REFUSED figure renders as a bare number in the page's most prominent slot while the SAME figure renders as a refusal on the Model tab. **CODE ONLY, `lib/**`, no deploy** -- the client half and the deploy are separate and routed | none (no served bytes move; the adapter is not deployed by this cell) |
+| the authenticated end-to-end READ | `AMGT-rk-125` | ~125 | B1 | The CTO's ranked item 2, and **the only cell that can falsify "there is exactly one fault"**. Renders the Security Analysis page for **`BA_US_Equity` FIRST** (7 of 7 surfaces populated) then `992_HK_Equity` (5 of 7), via `portal/scripts/ui-smoke.mjs` against the LIVE adapter, and READS the PNGs. **Writes only its own deliverables** -- portal is READ, never written, so the 39a finding does not reach it | none (read-only) |
+
+### 39c. WHAT THE CUT MEASURED THAT CHANGED THE SHAPE
+
+1. ⛔ **A FRESH WORKTREE OF SITEZ HAS AN EMPTY `portal/`.** Exercised at the cut, not assumed: `git worktree add -b
+   probe-r31-exercise C:/tmp/probe-r31 HEAD` -> rc=0, and `ls C:/tmp/probe-r31/portal` returns **0 entries**. `portal`
+   is a gitlink (mode 160000 @`b3d5f59b45`) with **no `.gitmodules` mapping** (`git submodule status portal` ->
+   *"no submodule mapping found"*). **Any order that hands a worker a plain worktree and names a portal path is
+   unworkable as written** -- a 13th instance of `Z-S235`, caught BEFORE issuance rather than by a refused worker.
+   **THE PROVEN RECIPE, both limbs exercised rc=0 and then cleaned up:** `git worktree add -b <br> <abs> HEAD`, THEN
+   `git -C portal worktree add -b <br>-portal <abs>/portal DEV` -> 33 entries, all 5 tabs present. `rk-125` names both.
+2. **`0 of 5` tabs carry an `isError` branch, confirmed on three independent declarations** (`tabs/` holds exactly 5
+   `.tsx`; `constants.ts:72-78` declares 5; `SecurityAnalysis.tsx:84-88` routes 5). A case-insensitive search for
+   `isError|error` across `tabs/` returns **zero**. Every tab destructures `{data, isLoading}` only, so a settled
+   error falls through `!isLoading && data` and renders a titled panel with an empty body.
+   ⚠ **THE TRAP, named so a later cell does not mis-scope it:** `PostureTab:323` and `ExecManagementTab:147` both
+   render the string `READ_FAILED`, but that is the SERVER's status field on a payload that was read SUCCESSFULLY --
+   it is not a client fetch-failure branch and does not fire when the HTTP read itself fails.
+3. **No hook change is needed** -- `useLeadPanelApi.ts:115-133` already returns the full `useQuery` result, so
+   `isError`/`error` are available on every one. The fix is render-side only.
+4. **The reference implementation is real and is `AMGT-ri-1`'s** (`components/RankedList.tsx:139-160`, header
+   `:27-38`): four states, four renders, and the read-failure block checked BEFORE the row count *"because a failed
+   read has no row count -- it has no answer at all."* It was applied to the Lead Panel and **never propagated to a
+   single tab.**
+5. **`rk-124` is CODE ONLY and deliberately so.** Emitting `check_face` changes what the served adapter RETURNS, but
+   only once deployed. Splitting emit-from-deploy keeps this cell inside `lib/**` with no served bytes moving and no
+   pair, and leaves the deploy to a routed act -- the rk-122/rk-123 shape, deliberately reused.
+6. **The Lenovo THESIS cell (the CTO's ranked item 3) is NOT cut, and the reason is a measured unknown.** The drafting
+   route exists (`lib/research/drafting/run_drafting.py`) but runs off a **`FixtureProducer`**. Whether Lenovo's
+   thesis can be produced without a model call -- i.e. without SPEND under Andrew's quota word -- is unanswered, and
+   cutting a cell whose acceptance might require unauthorized egress is the defect `Z-S235` exists to stop. Carried
+   to the CTO in the same card as 39a.
+7. **NOT CUT, per the CTO's own analysis:** `Z-S228` (name search) is a CONTRACT CHANGE for the L2 addendum, not a
+   defect cell -- the crosswalk indexes five exact form classes and no company-name field, so *"Lenovo"* cannot match
+   **by construction**, and cutting it as a bug fix would mis-scope it. `Z-S229` is partly answered by `rk-117`.
+
+### 39d. SURFACE CENSUS AND DISJOINTNESS
+
+| | rk-124 | rk-125 |
+|---|---|---|
+| `lib/research/api/scoped_amgt.py` (overlay builder, `:1936-1951`) | W | |
+| `portal/src/pages/SecurityAnalysis/types.ts` | ⛔ **NOT NAMED -- out of lane (39a)** | |
+| `portal/**` (any file) | | **READ ONLY** (renders via `ui-smoke.mjs`; writes nothing) |
+| each cell's own `deliverables/0.9.0_WK_AMGT_RESAPP~<n>/` | W | W |
+| the append-only surprise channel | shared, by design | shared, by design |
+
+- **The two cells are DISJOINT.** `rk-124` writes one Python file plus its tests; `rk-125` writes no code at all.
+- ⚠ **`rk-124` is the SERVER half of a two-half defect and is USELESS ALONE until the client half lands** -- which is
+  in `portal/**` and therefore blocked behind 39a's card. The cell is still worth cutting now: the server half is the
+  long pole (it needs a check-face build inside the overlay bundle), it is provable by test without the client, and
+  it is in lane today. **Stated here so no reader grades a half-fixed overlay as a fixed one.**
+- **No cell deploys, writes S3, touches IAM, DynamoDB, a Lambda or a layer. No cell deletes anything.**
+
+### 39e. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 2                   # rk-124, rk-125 -- one commit, one issuance
+  chains_total: 2                   # {rk-124} ; {rk-125}
+  wave_1: [rk-124, rk-125]          # fully concurrent, disjoint write surfaces
+  blocked_pending_cto_call: [Z-S227 portal isError x5, layout defects b/c/d, Lenovo THESIS]
+  no_fleet_run: true
+```
+
+⚠ **THE ROUND IS DELIBERATELY THIN AND THIS SEAT IS NAMING THAT RATHER THAN PADDING IT.** Four of the CTO's six
+ranked items are blocked behind ONE lane call (39a) and one measured unknown (39c.6). Cutting a portal cell anyway,
+through a `worker_grant` that consults no lane, would be this seat delegating authority it does not hold -- which is
+the exact move CVO ruling R5 and the CTO's msg 24396 forbid, three days after this seat was convicted of the
+adjacent defect. **The card goes up in the same turn as this issuance; the two cells below start now.**
