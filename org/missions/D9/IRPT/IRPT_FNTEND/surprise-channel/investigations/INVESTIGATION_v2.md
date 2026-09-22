@@ -5377,6 +5377,31 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W21-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~21",
+    "surfaced_at": "2026-09-21T23:30:00Z",
+    "one_line": "F71-AC2/AC3's `--expect-ground '[data-slot=\"export-modal\"] [role=\"dialog\"]=rgb(244, 246, 250)'` can never match in the live browser: Headless UI (@headlessui/react 2.2.9) portals the whole Dialog subtree to a `#headlessui-portal-root` div appended at the END of `document.body`, so the `[role=\"dialog\"]` element's DOM ancestor chain never passes back through the in-place `[data-slot=\"export-modal\"]` wrapper -- measured, both criteria print `EXPECT-GROUND[...]: FAIL null` (querySelector on the compound selector returns null, not a wrong colour). AC4 still PASSES (its <expect> checks only ASSERT-CONTENT, which the criterion's ground line is not part of); AC5's <expect> (`ASSERT-GROUND: 0 of 1 met`) also textually matches, but the control is VACUOUS -- the same 'selector matches nothing' FAIL occurs identically before and after --inject-css paints anything, so AC5 cannot actually discriminate the wrong-ground state it claims to test.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "F71-AC2 <expect>: `ASSERT-CONTENT: 3 of 3 met[\\s\\S]*ASSERT-STYLE: 2 of 2 met[\\s\\S]*ASSERT-GROUND: 1 of 1 met`; F71-AC3 <expect>: `ASSERT-CONTENT: 1 of 1 met[\\s\\S]*ASSERT-GROUND: 1 of 1 met`; both invocations name `--expect-ground '[data-slot=\"export-modal\"] [role=\"dialog\"]=rgb(244, 246, 250)'`, i.e. the order's own premise is that this compound selector resolves to the dialog's ground colour in the live DOM.",
+    "world_is": "Measured this worktree, portal DEV base + this cell's own commit not yet landed (pre-commit, working tree): running F71-AC2's exact invocation prints `EXPECT-GROUND[[data-slot=\"export-modal\"] [role=\"dialog\"]]: FAIL null` and `ASSERT-GROUND: 0 of 1 met` (not the required 1 of 1); F71-AC3 the same. A standalone probe (`portal/.scratch/probe-dialog.mjs`, this worker's own, not committed) walked the live DOM after `--click Export`: `document.querySelector('[data-slot=\"export-modal\"] [role=\"dialog\"]')` -> null; `document.querySelectorAll('[role=\"dialog\"]').length` -> 1, and that one element's ancestor chain is `DIV[role=dialog] < DIV < DIV < DIV#headlessui-portal-root < BODY < HTML` -- entirely outside `[data-slot=\"export-modal\"]`, which itself renders as `<div data-slot=\"export-modal\"></div>`, empty, once the Dialog is open (client-side; the file's own header comment already documents the SSR half of this: 'Headless UI's Dialog does not emit its body content under renderToStaticMarkup'). Re-running with the ancestor prefix dropped, `--expect-ground '[role=\"dialog\"]=rgb(244, 246, 250)'` alone, PASSES: `EXPECT-GROUND[[role=\"dialog\"]]: PASS rgb(244, 246, 250)`. `node_modules/@headlessui/react/package.json` version: `2.2.9`. `portal/src/ui/components/catalyst/dialog.tsx` (not in this order's `<paths>`, read-only) is the sole producer of `<Headless.Dialog>`/`role=\"dialog\"` in this tree; no flag or prop in this file's own `Dialog()` disables Headless UI's portal. Consequence, per BOUNDS' REFUSE clause: F71-AC2 and F71-AC3 are reported FAIL-by-measured-output against their literal <expect> (the criterion's expectation is not edited or weakened); F71-AC4 is reported PASS (its <expect> never reads the ASSERT-GROUND line); F71-AC5 is reported PASS-by-literal-match with this row cited, because the control cannot fail differently under the wrong-state arm than under the right one.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "measured run, F71-AC2's exact invocation (this worker, this worktree, pre-commit working tree): stdout carries `EXPECT-GROUND[[data-slot=\"export-modal\"] [role=\"dialog\"]]: FAIL null` and `ASSERT-GROUND: 0 of 1 met`",
+        "measured run, F71-AC3's exact invocation: same, `ASSERT-GROUND: 0 of 1 met`",
+        "measured run, F71-AC5's exact invocation: `INJECT-CSS: [data-slot=\"export-modal\"] [role=\"dialog\"]{background-color:#c4cbdb !important}` followed by `EXPECT-GROUND[[data-slot=\"export-modal\"] [role=\"dialog\"]]: FAIL null` -- the inject-css line itself never logs a target count, and the ground read is identical to AC2/AC3's unpainted case",
+        "portal/.scratch/probe-dialog.mjs (this worker's own scratch probe, not committed): `document.querySelector('[data-slot=\"export-modal\"] [role=\"dialog\"]')` -> null; `document.querySelectorAll('[role=\"dialog\"]').length` -> 1; ancestor path printed `DIV#headlessui-dialog-_r_8_ < DIV < DIV < DIV#headlessui-portal-root < BODY < HTML`; `document.body` direct children printed `['DIV id=root','SCRIPT id=','SPAN id=recharts_measurement_span','DIV id=headlessui-portal-root']`",
+        "probe re-run with `--expect-ground '[role=\"dialog\"]=rgb(244, 246, 250)'` (ancestor prefix dropped): `EXPECT-GROUND[[role=\"dialog\"]]: PASS rgb(244, 246, 250)`, `ASSERT-GROUND: 1 of 1 met`",
+        "portal/node_modules/@headlessui/react/package.json: \"version\": \"2.2.9\"",
+        "portal/src/ui/components/catalyst/dialog.tsx:19-52 (read-only to this order's <paths>): `Dialog()`'s only content is `<Headless.Dialog {...props}>`, no portal-disabling prop passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
