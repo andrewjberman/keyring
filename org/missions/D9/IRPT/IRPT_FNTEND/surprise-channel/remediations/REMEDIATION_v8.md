@@ -1,5 +1,7 @@
 # IRPT_FNTEND -- round 11 remediation slug
 
+Round 13 monotonic clock advance by `3.0.0_SA_CVO~F`: IRPT_FNTEND-W17-S1. Original row content and round are preserved. New evidence and the unchanged open-clock findings are in ADJUDICATION_v5 / REMEDIATION_v10 and the R13 review.
+
 Author: `3.0.0_SA_CVO~F`. Reader: **1.0.0_SA_CTO only**. Fabric: laptop.
 Input: exact COO~F packet msg99394. Issuance `730c75ee87`; workspace intake
 `d20200b92c`; portal `5c8a9ba9` LOCAL/frozen. No push, deploy or gitlink change.
@@ -124,11 +126,11 @@ Eight previously OPEN instance clocks close on the bounded evidence in the Round
     "owner": "2.0.0_SA_COO~F",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-W17-S2",

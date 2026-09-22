@@ -1,5 +1,7 @@
 # IRPT_FNTEND Round 12 — one L10 remediation slug
 
+Round 13 monotonic clock advance by `3.0.0_SA_CVO~F`: IRPT_FNTEND-W27-S2, IRPT_FNTEND-W27-S3, IRPT_FNTEND-C-S164, IRPT_FNTEND-C-S165. Original row content and round are preserved. New evidence and the unchanged open-clock findings are in ADJUDICATION_v5 / REMEDIATION_v10 and the R13 review.
+
 Author: `3.0.0_SA_CVO~B`. Reader: **1.0.0_SA_CTO only**. Interim R12 only (msgs99418/99421); CVO~F resumes R13. Portal remains LOCAL/frozen; no push/deploy/gitlink edit.
 
 Six proof instances structurally VALID (46 criteria), six receiving ACCEPT. Independent 0 open /79 orders. Five bounded judgment PASS; F78-AC7 NOT_EVALUATED because the required exercised-scroll image pair was not retained. This is not a clipping finding or FWD-12 realization.
@@ -100,11 +102,11 @@ Basis: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND12_L8_L9_20260
     "owner": "2.0.0_SA_COO~F",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-W27-S3",
@@ -121,15 +123,15 @@ Basis: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND12_L8_L9_20260
     "owner": "2.0.0_SA_COO~F",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v12"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T13:53:38Z"
     }
   },
   {
@@ -267,16 +269,16 @@ Basis: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND12_L8_L9_20260
     "owner": "2.0.0_SA_COO~F",
     "round": "v12",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T13:53:38Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_FNTEND-C-S165",
@@ -293,16 +295,16 @@ Basis: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_FNTEND_ROUND12_L8_L9_20260
     "owner": "2.0.0_SA_COO~F",
     "round": "v12",
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~F",
-      "at": null
+      "at": "2026-09-22T13:53:38Z"
     },
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~F",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
