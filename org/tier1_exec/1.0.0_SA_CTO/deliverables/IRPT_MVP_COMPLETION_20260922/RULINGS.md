@@ -42,3 +42,13 @@ The exact drafted CRO seat-home order `org/tier1_exec/4.0.0_SA_CRO/task_orders/I
 ```
 
 The established gate appends its record to `org/to-pipeline-override-audit.log`. Confirm that the record was actually written as well as the issuance commit, then route the exact committed order to CRO. An unwritable audit sink is not accepted as evidence of completed audit recording. Keep the drafted paths, preflight declarations, acceptance, private-data conditions and retention prerequisites. No renamed fake project, new project registration, global exemption, gate edit, no-verify, or force is authorized. A new refusal outside this narrowly adjudicated registration mismatch must be reported on its own evidence.
+
+## IRPT-P-BUILD-01 — shared source-map integration permission
+
+Date: 2026-09-22. Raised by COO~P at 21:35:24Z. Decider/grantor: CTO under Andrew's session delegation; grantee is exact `2.0.0_SA_COO~P`.
+
+Approve P's source-commit permission for the single file `infra/aws/lambda/ci/lambda-source-map.json`, implementing its existing shared packaging responsibility. Canonical validator reproduced P's refusal. A dedicated lane preserves all twelve incumbent YANG_PIPELINE_DEPLOY members and adds only P; the YANG deployment lane itself, other CI files, other COOs and CVOs are unchanged. SOURCE_MAP_GRANT_EVIDENCE.json records 67 positive/negative checks including three actual hook controls.
+
+P's authorized edits are IRPT function build composition only: required files/dependencies, exact staged source paths/pins/hashes, and directly associated build notes. Existing or newly required `irpt-*` entries must describe the assigned Investor Reporting product and agreed M/Y consumers. Root descriptive provenance may identify the update, but deployed hashes, artifact versions and `_last_deploy_recorded` must not be invented or advanced by offline packaging work. Non-IRPT function objects must remain semantically identical. No Lambda upload, cloud write, production rollout, broad CI tool change or render prerequisite lift is granted.
+
+The ownership hook grants at **file granularity**; it does not enforce JSON-member ownership. Therefore P must attach an exact before/after function-member diff, a non-IRPT equality check, and offline flat-package import/entry proof covering each changed consumer. CVO~P independently checks those boundaries; M/Y and their reviewers verify their consumed interfaces. Reconcile fresh shared-map changes immediately before integration rather than overwriting another lane's updates. P preserves the grantor commit when consuming it into its worktree. Additional concrete files require their own ownership ruling, not a global infrastructure grant.

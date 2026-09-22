@@ -1,0 +1,349 @@
+{
+  "ruling": "IRPT-P-BUILD-01",
+  "date": "2026-09-22",
+  "grantor": "1.0.0_SA_CTO",
+  "checks_passed": 67,
+  "permission_checks": [
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL~B",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.0_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.1_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.2_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~A",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~B",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~C",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.2.0_DT_PortfolioAnalytics",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.2.0_DS_PortfolioAnalytics",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": true
+    },
+    {
+      "agent": "2.0.0_SA_COO",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~Y",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~B",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~F",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": false
+    },
+    {
+      "agent": "3.0.0_SA_CVO~P",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "allowed": false
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL~B",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.0_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.1_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.2_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~A",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~B",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~C",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": true
+    },
+    {
+      "agent": "0.2.0_DT_PortfolioAnalytics",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.0_DS_PortfolioAnalytics",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~Y",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "allowed": false
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL~B",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.0_AE_PartnerETL",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.1_AE_PartnerETL",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.2_AE_PartnerETL",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~A",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~B",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~C",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.2.0_DT_PortfolioAnalytics",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "0.2.0_DS_PortfolioAnalytics",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": true
+    },
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~Y",
+      "path": "infra/aws/terraform/yang-pipeline/main.tf",
+      "allowed": false
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.5.0_AE_OpalETL~B",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.0_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.1_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.6.2_AE_PartnerETL",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~A",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~B",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.7.0_AE_CloudOps~C",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.8.0_AE_CloudComp",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": true
+    },
+    {
+      "agent": "0.2.0_DT_PortfolioAnalytics",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": false
+    },
+    {
+      "agent": "0.2.0_DS_PortfolioAnalytics",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": false
+    },
+    {
+      "agent": "2.0.0_SA_COO~Y",
+      "path": "infra/aws/lambda/ci/lambda-source-map-other.json",
+      "allowed": false
+    }
+  ],
+  "actual_hook_checks": [
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "expected": 0,
+      "actual": 0
+    },
+    {
+      "agent": "2.0.0_SA_COO~M",
+      "path": "infra/aws/lambda/ci/lambda-source-map.json",
+      "expected": 1,
+      "actual": 1
+    },
+    {
+      "agent": "2.0.0_SA_COO~P",
+      "path": "infra/aws/lambda/ci/build-and-upload.sh",
+      "expected": 1,
+      "actual": 1
+    }
+  ],
+  "limits": "File-level source commit permission. JSON-member restriction is contract/review enforced; no new member-aware hook and no deploy grant."
+}
