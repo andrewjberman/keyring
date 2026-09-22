@@ -246,7 +246,7 @@ print("pin_block_lines", len(block), "present_verbatim_in_head", found)
 4. **The Lenovo probe JSON is the issuer's working identity for the plan only.** `HVST-h-10` resolves Lenovo's real
    record and measures the SA ADR symbol.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
