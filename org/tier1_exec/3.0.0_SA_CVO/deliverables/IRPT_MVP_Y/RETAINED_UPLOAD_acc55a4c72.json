@@ -1,0 +1,200 @@
+{
+  "candidate_pin": "acc55a4c727e3919f2a972072191e423b81200e7",
+  "source_evidence": "org\\tier1_exec\\3.0.0_SA_CVO\\deliverables\\IRPT_MVP_Y\\UPLOAD_CONSUMER_acc55a4c72.json",
+  "source_evidence_sha256": "4810f692db571c69b77230db7023a88497965674a096f397bc70dfe1036d9765",
+  "verified_snapshot_files": 289,
+  "supplied_suite": {
+    "exit_code": 0,
+    "stdout": "...............................                               [100%]\n31 passed, 11 subtests passed in 0.52s\n",
+    "stderr": ""
+  },
+  "controls": [
+    {
+      "name": "three_revision_dependency_graph_keeps_oldest_deadline",
+      "passed": true,
+      "observed": {
+        "deadline": 1802592000,
+        "graph": [
+          {
+            "ref": {
+              "policy_revision": "irpt-x10-v1",
+              "retention_id": "RET-9d1de8ab25a75b5b45f0cada617baaaae0562edca5f6d485122e7c46a70fc299"
+            },
+            "family": "ORIGINAL_CSV",
+            "created_at": 1800000000,
+            "expires_at": 1802592000,
+            "dependencies": []
+          },
+          {
+            "ref": {
+              "policy_revision": "irpt-x10-v1",
+              "retention_id": "RET-b2cd04b10d37c4df364f7e64631e2faf2345630726beae3db9556f3db0dfa49f"
+            },
+            "family": "NORMALIZED_PORTFOLIO",
+            "created_at": 1800000000,
+            "expires_at": 1802592000,
+            "dependencies": [
+              {
+                "policy_revision": "irpt-x10-v1",
+                "retention_id": "RET-9d1de8ab25a75b5b45f0cada617baaaae0562edca5f6d485122e7c46a70fc299"
+              }
+            ]
+          },
+          {
+            "ref": {
+              "policy_revision": "irpt-x10-v1",
+              "retention_id": "RET-fa7ae138c7637d1718b7134a73b1011bc98c83f7b30359d153d565b168ef40f0"
+            },
+            "family": "ORIGINAL_CSV",
+            "created_at": 1800864000,
+            "expires_at": 1802592000,
+            "dependencies": [
+              {
+                "policy_revision": "irpt-x10-v1",
+                "retention_id": "RET-b2cd04b10d37c4df364f7e64631e2faf2345630726beae3db9556f3db0dfa49f"
+              }
+            ]
+          },
+          {
+            "ref": {
+              "policy_revision": "irpt-x10-v1",
+              "retention_id": "RET-2a01007cf78262f862df54dfeb31c328fafcd70bb39aadb5ee407801496ee798"
+            },
+            "family": "NORMALIZED_PORTFOLIO",
+            "created_at": 1800864000,
+            "expires_at": 1802592000,
+            "dependencies": [
+              {
+                "policy_revision": "irpt-x10-v1",
+                "retention_id": "RET-fa7ae138c7637d1718b7134a73b1011bc98c83f7b30359d153d565b168ef40f0"
+              }
+            ]
+          },
+          {
+            "ref": {
+              "policy_revision": "irpt-x10-v1",
+              "retention_id": "RET-6f299b43a374c89b6713808533f1e4e40bce6da7ecd095707c18c9fcb5291d50"
+            },
+            "family": "ORIGINAL_CSV",
+            "created_at": 1801728000,
+            "expires_at": 1802592000,
+            "dependencies": [
+              {
+                "policy_revision": "irpt-x10-v1",
+                "retention_id": "RET-2a01007cf78262f862df54dfeb31c328fafcd70bb39aadb5ee407801496ee798"
+              }
+            ]
+          },
+          {
+            "ref": {
+              "policy_revision": "irpt-x10-v1",
+              "retention_id": "RET-c3826c233ad17d3f6f1bc844018f8ff1a1f1429c9d46d2f33f988997fa6b012a"
+            },
+            "family": "NORMALIZED_PORTFOLIO",
+            "created_at": 1801728000,
+            "expires_at": 1802592000,
+            "dependencies": [
+              {
+                "policy_revision": "irpt-x10-v1",
+                "retention_id": "RET-6f299b43a374c89b6713808533f1e4e40bce6da7ecd095707c18c9fcb5291d50"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "repository_recomposition_retry_at_last_live_second",
+      "passed": true,
+      "observed": {
+        "same_result": true,
+        "deadline": 1802592000,
+        "extra_blob_puts": 0
+      }
+    },
+    {
+      "name": "missing_oldest_retention_record_refuses_descendant",
+      "passed": true,
+      "observed": {
+        "refused": true,
+        "type": "RetentionExpired",
+        "reason": "retention record unavailable"
+      }
+    },
+    {
+      "name": "exact_oldest_deadline_refuses_descendant_read_and_refresh",
+      "passed": true,
+      "observed": {
+        "read": {
+          "refused": true,
+          "type": "RetentionExpired",
+          "reason": "retention expired"
+        },
+        "refresh": {
+          "refused": true,
+          "type": "RetentionExpired",
+          "reason": "retention expired"
+        },
+        "extra_blob_puts": 0
+      }
+    },
+    {
+      "name": "policy_becomes_pending_during_blob_read",
+      "passed": true,
+      "observed": {
+        "refused": true,
+        "type": "RetentionRefused",
+        "reason": "registered enforced policy required"
+      }
+    },
+    {
+      "name": "expiry_during_refreshed_original_blob_write",
+      "passed": true,
+      "observed": {
+        "refused": true,
+        "type": "RetentionExpired",
+        "reason": "retention expired",
+        "extra_blob_puts": 1,
+        "extra_input_rows": 0
+      }
+    },
+    {
+      "name": "expiry_during_normalized_blob_write",
+      "passed": true,
+      "observed": {
+        "refused": true,
+        "type": "RetentionExpired",
+        "reason": "retention expired",
+        "blob_puts": 2,
+        "input_rows": 0
+      }
+    },
+    {
+      "name": "current_owner_revoked_during_blob_read",
+      "passed": true,
+      "observed": {
+        "refused": true,
+        "type": "ProspectOwnershipRefused",
+        "reason": "prospect record is not owned by the current principal"
+      }
+    },
+    {
+      "name": "retained_input_cannot_use_repository_without_retention_service",
+      "passed": true,
+      "observed": {
+        "refused": true,
+        "type": "ReportRefused",
+        "reason": "retained record requires the retention service"
+      }
+    }
+  ],
+  "passed": 9,
+  "total": 9,
+  "limits": [
+    "Actual Y upload + P retained repository/policy; storage and clocks are doubles",
+    "Isolated ACTIVE policy fixture; canonical policy not activated",
+    "Late successful blob writes can remain stored; no physical cleanup proof",
+    "No concurrent server, real process crash, report promotion, runtime/browser or READY proof",
+    "R-P08 history metadata is outside these upload controls; see separately pinned peer review"
+  ]
+}

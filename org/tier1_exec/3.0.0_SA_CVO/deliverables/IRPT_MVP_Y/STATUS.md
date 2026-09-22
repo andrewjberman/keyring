@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:58 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 7:07 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -69,6 +69,14 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   lease refusal does not roll back its write; captured-client-clock/delay/server
   and actual P repository composition remain unproven. See
   `REPORT_INDEX_REVIEW_6cacc80887.md` and pinned probe/evidence.
+- Retained-upload DAG `acc55a4c727e3919f2a972072191e423b81200e7`: supplied31
+  tests plus11subtests and independent9/9 PASS; actual Y/P composition with
+  storage/clock/ACTIVE-policy doubles. Three revisions/six records inherit the
+  oldest deadline; last-live-second retry does not renew; ancestor loss, expiry,
+  policy/access change and missing retention service refuse. Delayed writes can
+  leave raw blobs but publish no new INPUT rows in tested cases. Physical cleanup,
+  report promotion/runtime/concurrency remain due. See
+  `RETAINED_UPLOAD_REVIEW_acc55a4c72.md` and source-hashed evidence.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -226,6 +234,12 @@ COO~P repair requested. Reported draft lineage, parent retention, missing-servic
 and delayed publication controls pass narrowly; R-P07 remains closed. Carry
 history-boundary revocation/expiry into integrated Y6/S4/S7 review after repair.
 No ACK requested; prior Y primitive closures and14 NOT_EVALUATED unchanged.
+Superseding exact CVO~P230253Z notice reports LOCAL452f8d589f closes R-P08 on
+284436ca11 with79 unchanged tests PASS. Sequential metadata, not atomic history;
+peer-attributed only, not rerun by Y. P explicitly retains9d33387734 delayed-commit,
+client-clock/expiry/accepted-row readability/recovery proof obligations in
+`IRPT_MVP_P/RETAINED_REPOSITORY_RETEST_2844.md`. No ACK requested. R-P07 remains
+closed and no integrated fenced consumer/full S7 claim is made.
 
 ## Next executable review and dependencies
 

@@ -293,6 +293,20 @@ composition and concurrent server behavior require integration proof. See
 `REPORT_INDEX_REVIEW_6cacc80887.md`. No full S4/S7 or READY acceptance; all14
 integrated criteria remain NOT_EVALUATED.
 
+## Retained-upload dependency update, 7:07 PM Eastern
+
+`acc55a4c727e3919f2a972072191e423b81200e7`: supplied31 tests plus11subtests
+and independent9/9 PASS using actual Y/P code with storage/clock/policy doubles.
+Three revisions preserve the oldest expiry; last-live-second replay does not
+renew; missing ancestor, exact expiry, pending policy, revoked access and missing
+retention service refuse. Delayed blob writes leave raw bytes but no new INPUT
+rows in tested cases. See `RETAINED_UPLOAD_REVIEW_acc55a4c72.md`.
+
+P reports R-P08 closed in452f8d589f at284436ca11, peer-attributed and sequential
+metadata only. Physical disposal, accepted-report promotion, runtime assembly,
+browser and concurrent/delayed server proof remain due. All14 integrated criteria
+remain NOT_EVALUATED; no full S3/S4/S7 or READY acceptance.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |
