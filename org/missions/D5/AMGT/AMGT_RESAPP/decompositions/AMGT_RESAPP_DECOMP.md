@@ -4429,3 +4429,65 @@ fanout:
   wave_1: [rk-96, rk-97]            # rk-96 at once; rk-97 once its pair carries both halves signed
   no_fleet_run: true
 ```
+
+## 33. ROUND 25 -- FROM THE CTO'S RULING msg 24189 (on the COO's msg 24188) + the round-24 analysis msg 24182
+
+**Cut by `2.0.0_SA_COO~Z`.** Round 24 closed 2 of 2 (S216 REMEDIATED on three log reads). The round-24 analysis read "no
+round 25", because every remaining cell waited on Andrew's backfill word. Drafting the backfill cells then found two
+channels with NO production writer. The rk-84 filings bronze writers and the rk-87 Lusha silver writer each have 0
+callers, so a B2 or B4 "run" would have spent his word on a no-op. The CTO ruled all three calls as recommended
+(msg 24189), superseding "no round 25":
+- **CALL 1 -- B2 wiring, round 25.** The four fetch sites go through the rk-84 writers, with the bytes unparsed; a
+  per-name selector goes on `batch.py`; the ticker table is `company_tickers.json`. No pair: code only, writers off by
+  default.
+- **CALL 2 -- B4 wiring, round 25.** A public entry point that takes the roster; a public seam to the Lusha client; the
+  C-LUSHA-EXCEPTION guard on the path. Code only: 0 Lusha calls, and the key is never read.
+- **CALL 3.** B1 is dropped from the validation card; its value is at the 15/36-name scope.
+- **B3.** Measured read-only and LOCAL only before Andrew's word: the crosswalk's SA-symbol coverage and the SA session
+  file's age. No SA or Bright Data request.
+
+The CTO re-issues Andrew's card after the wiring drains: B2, then B4, then B3 conditioned on the local measurement.
+The B-run drafts in `.scratch/r25_drafts/` (numbered rk-98..rk-101 there) are RENUMBERED at their own cut; these two
+wiring cells take rk-98 and rk-99.
+
+**Round 25 is TWO cells, issued in ONE commit with this section.**
+
+### 33a. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| B2 filings bronze wiring | `AMGT-rk-98` | ~98 | none | A `fetch.BronzeSink` (lazy `harvest.filings` import) that the four fetch sites hand their bytes to, UNPARSED and OFF by default: `battery.py:567` ticker table -> `bronze_sec_company_tickers(..., "company_tickers.json")`; `:639` primary document -> `bronze_sec_filing`; `:1001` step-4 DOCUMENTS only (never navigation pages) -> `bronze_issuer_document` with id `doc-<sha16>`; `fetch.py:320` -> `bronze_sec_filing`. `--write-bronze` on the battery and batch CLIs, default off; `batch.py --security-key` (repeatable). 7 test arms, filings 79 -> 86, harvest 64 unchanged; 0 S3 calls without a sink, and bytes-equal at every site with one | none (code only; ruled msg 24189) |
+| B4 Lusha harvest wiring | `AMGT-rk-99` | ~99 | none | `enrich.lusha_client` WRAPS `_lusha_client` (the three existing patches keep binding). `lusha.harvest_company(company_domain, officers, run_stamp, ...)` refuses an empty roster before any call, dedupes on `since`, pages via the public seam, scrubs, builds allow-list rows bound to officers, and ASSERTS no contact field before any write. It writes silver only on `write=True`; plus a CLI with `--write` default off. 8 test arms, harvest 64 -> 72, management 95 unchanged; 0 Lusha calls, the key never read, a raising client writes nothing | none (code only; ruled msg 24189) |
+
+### 33b. SURFACE CENSUS (measured at the cut, `4183e30531`; `lib/` byte-identical to `7fa3268fd0`)
+
+- **rk-98.**
+  - The four sites were re-read at HEAD, and the production callers of the three rk-84 writers number 0.
+  - `bronze_esef_filing` stays unwired, because step 3 fetches an index, not a document, and it is outside the ruling.
+  - `batch.py`'s real run also calls `analyze` (a model call, USD). That is the B2 RUN cell's to declare, not this
+    cell's.
+  - Baselines: filings 79, harvest 64.
+- **rk-99.**
+  - Production callers of the rk-87 writer: 0.
+  - Existing patches of `enrich._lusha_client`: 3, which rules out a rename.
+  - `test_lusha.py`'s import guard walks import nodes only, so an attribute call `enrich.lusha_client` is legal.
+  - `KEPT_FIELDS` has 0 keys that `enrich.is_contact_key` flags, so the new guard passes on today's allow-list.
+  - Baselines: harvest 64, management 95 (13 subtests).
+- **Files written by more than one cell:** NONE, apart from the append-only channel `INVESTIGATION_v1.md`.
+  - rk-98 writes `lib/research/filings/{fetch,battery,batch}.py` and `lib/research/filings/tests/test_bronze_wiring.py`.
+  - rk-99 writes `lib/research/harvest/lusha.py`, `lib/research/management/enrich.py` and
+    `lib/research/harvest/tests/test_lusha_harvest.py`.
+  - The two share the harvest TEST DIRECTORY, but no file in it. rk-98 adds nothing there, so each order's
+    harvest-suite bar holds in its own worktree.
+- **Neither cell makes a live call:** no vendor, no AWS, no model.
+
+### 33c. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 2                   # rk-98, rk-99 -- one commit
+  chains_total: 2                   # disjoint write surfaces
+  wave_1: [rk-98, rk-99]            # both spawn at once; no pair, no word
+  no_fleet_run: true
+```
