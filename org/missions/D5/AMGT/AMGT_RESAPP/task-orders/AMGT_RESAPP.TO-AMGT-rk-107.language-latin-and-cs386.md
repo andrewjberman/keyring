@@ -151,7 +151,7 @@ or `git show :path`.
    known Lenovo defect.
 3. No new security_key dependency (Andrew-direct @`5c20841dd1`).
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~107</slot>
 <fabric>site-z</fabric>
