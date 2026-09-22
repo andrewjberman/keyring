@@ -4,10 +4,10 @@
  "directive": "D9",
  "macro_code": "IRPT",
  "fabric": "laptop",
- "dep_stage": "ROUND_CLOSE",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "Investor Reporting, the advisor-facing product: entry and client context, the three tabs (Reporting, Analysis, Holdings), the branded export and its preview, the Global view, and design conformity with the Opal portal",
  "generated_from": "org/missions/D9/IRPT/IRPT_FNTEND/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-09-22T18:56:40Z"
+ "generated_at": "2026-09-22T19:20:09Z"
 }
