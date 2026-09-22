@@ -81,8 +81,20 @@ result, counts entries with a non-null `unprojected_grant` key present (present-
 one line per file: `GIT-OBJECT <path>: <n> of <total> carry unprojected_grant`. Commit your two fixture files FIRST, then run
 this checker against your own commit hash.
 
-<criterion id="F85-AC3" cell_refs="FE-s-85" drives="none"><invocation>cd <WS>/portal && /c/Users/AndrewBerman/.bun/bin/bun __tests__/fe-s-85/verify-git-object.mjs <your-commit-hash></invocation><expect>fe-s-13-wire\.json: 9 of 9.*fe-s-14-print-v1\.json: 2 of 2.*default\.json: 12 of 12</expect></criterion>
+<criterion id="F85-AC3" cell_refs="FE-s-85" drives="none"><invocation>cd <WS>/portal && /c/Users/AndrewBerman/.bun/bin/bun src/pages/InvestorReporting/__tests__/fe-s-85/verify-git-object.mjs $(git rev-parse HEAD)</invocation><expect>fe-s-13-wire\.json: 9 of 9.*fe-s-14-print-v1\.json: 2 of 2.*default\.json: 12 of 12</expect></criterion>
 `F85-AC3` -- at the COMMITTED git object (not the worktree): fe-s-13-wire.json 9/9, fe-s-14-print-v1.json 2/2, default.json 12/12 -- all carrying unprojected_grant. This is the criterion the round-13 defect failed.
+
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~35-report, row `IRPT_FNTEND-W35-S1`):** the original invocation had two
+authoring bugs: (1) the checker path was written relative to `<WS>/portal` as `__tests__/fe-s-85/verify-git-object.mjs`,
+missing the `src/pages/InvestorReporting/` prefix that this cell's own `<paths>` grant actually places it under
+(`Module not found`, rc=1); (2) `<your-commit-hash>` was prose instruction embedded directly in the executable
+`<invocation>` text, not a real, substitutable token. Fix: correct the path, and resolve the commit hash dynamically
+via `$(git rev-parse HEAD)` (the worker's own just-made portal commit) instead of a placeholder. Independently
+re-verified live by the issuing COO in this worker's own worktree before amending, using the worker's own already
+existing checker script and commit: `fe-s-13-wire.json: 9 of 9`, `fe-s-14-print-v1.json: 2 of 2`,
+`default.json: 12 of 12` -- exactly matching the worker's own supplementary (ungraded) diagnostic run at the
+grant-consistent path. Row `IRPT_FNTEND-W35-S1` is DISARMED by this amendment once the order is re-run and flipped
+complete.
 
 <criterion id="F85-AC4" cell_refs="FE-s-85" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F85-AC4` -- the whole IRPT_FNTEND suite is green.

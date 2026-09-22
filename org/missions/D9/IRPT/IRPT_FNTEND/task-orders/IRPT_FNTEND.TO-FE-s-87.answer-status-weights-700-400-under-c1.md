@@ -77,14 +77,38 @@ and your own `__tests__/fe-s-87/`.
 <criterion id="F87-AC4" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~37/f87_qualifier_400_and_state_700.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/__tests__/fe-s-84/fixtures/reporting-qualified.json --expect-text '[data-slot="answer-qualifier"]::Qualified answer' --expect-style '[data-slot="answer-qualifier"]::font-weight=400' --expect-style '[data-slot="answer-state"]::font-weight=700'</invocation><expect>ASSERT-CONTENT: 1 of 1 met.*ASSERT-STYLE: 2 of 2 met</expect></criterion>
 `F87-AC4` -- on the qualified fixture: the qualifier badge carries its named text AND measures weight 400, while the CO-LOCATED state-label badge on the SAME capture still measures 700 -- proving the two elements are not accidentally given the same weight.
 
-<criterion id="F87-AC5" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~37/f87_ground_and_wrong_ground.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --expect-ground '[data-slot="answer-status"]=rgb(255, 255, 255)' --inject-css '[data-slot="answer-status"]{background-color:#c4cbdb !important}'</invocation><expect>EXPECT-GROUND.*PASS rgb\(255, 255, 255\)</expect></criterion>
-`F87-AC5` -- (d) GROUND ON THE ACTUAL CONTAINER: [data-slot="answer-status"] measures white rgb(255, 255, 255) (C3's panel role) -- read this capture's SECOND EXPECT-GROUND line (post-inject) separately in your result: the wrong-ground control must print FAIL rgb(196, 203, 219), never a silent PASS, proving the assertion is not vacuous.
+<criterion id="F87-AC5" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~37/f87_ground_positive.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --expect-ground '[data-slot="answer-status"]=rgb(255, 255, 255)'; echo '---SPLIT---'; NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~37/f87_ground_wrong.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --inject-css '[data-slot="answer-status"]{background-color:#c4cbdb !important}' --expect-ground '[data-slot="answer-status"]=rgb(255, 255, 255)'</invocation><expect>EXPECT-GROUND.*PASS rgb\(255, 255, 255\).*---SPLIT---.*EXPECT-GROUND.*FAIL rgb\(196, 203, 219\)</expect></criterion>
+`F87-AC5` -- (d) GROUND ON THE ACTUAL CONTAINER, now TWO separate captures: the first measures [data-slot="answer-status"] at white rgb(255, 255, 255) (C3's panel role) with NO injection; the second, injected with a silver wrong-ground, must print FAIL rgb(196, 203, 219) on the SAME selector -- proving the assertion genuinely discriminates, never a vacuous PASS.
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~37-report, row `IRPT_FNTEND-W37-S1`):** the original single invocation
+combined `--expect-ground` with `--inject-css` in ONE call -- but `scripts/ui-smoke.mjs` applies `--inject-css`
+BEFORE any `--expect-*` measurement, unconditionally (`:437-574`), so a single-capture invocation can never print
+the required PRE-inject PASS-white line; the worker correctly measured this exact impossibility and refused rather
+than self-grading past it. Fix: split into TWO separate node invocations in one shell command -- the first capture
+carries NO injection (proves the true, un-injected ground is white); the second carries the injection alone (proves
+the wrong-ground control genuinely fails). Independently re-run live by the issuing COO on a fresh ad-hoc dev server
+before amending: first capture `PASS rgb(255, 255, 255)`, second capture `FAIL rgb(196, 203, 219)` -- both exactly
+as required, matching the worker's own supplementary (ungraded) diagnostic. Row `IRPT_FNTEND-W37-S1` is DISARMED by
+this amendment once the order is re-run and flipped complete.
+
 
 <criterion id="F87-AC6" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NODE_DISABLE_COLORS=1 NO_COLOR=1 timeout 180 node scripts/ui-smoke.mjs investor-reporting <WS>/org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~37/f87_absent_qualifier_control.png --port <PORT> --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --expect-style '[data-slot="answer-qualifier"]::font-weight!=400'</invocation><expect>UNMEASURABLE</expect></criterion>
 `F87-AC6` -- (e) ABSENT-SELECTOR CONTROL: on the answer-BEARING (complete=true) fixture, the qualifier badge genuinely does not render at all (the component's own `complete ? null : <qualifier>` branch); the same inequality assertion reads UNMEASURABLE, never a vacuous PASS.
 
-<criterion id="F87-AC7" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
-`F87-AC7` -- the whole IRPT_FNTEND suite is green.
+<criterion id="F87-AC7" cell_refs="FE-s-87" drives="none"><invocation>cd <WS>/portal && NO_COLOR=1 timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting > <WS>/.suite_check_87.log 2>&1; UNEXPECTED=$(grep "^✗" <WS>/.suite_check_87.log | grep -vc "generator-output-carries-unprojected-grant"); echo "UNEXPECTED-FAIL-COUNT=$UNEXPECTED"</invocation><expect>UNEXPECTED-FAIL-COUNT=0</expect></criterion>
+`F87-AC7` -- the whole IRPT_FNTEND suite is green, EXCLUDING the disclosed cross-cell fixture gap (see amendment below).
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~37-report, row `IRPT_FNTEND-W37-S1`):** the literal invocation's
+`bun test src/pages/InvestorReporting` genuinely reads 2 fail in EVERY round-14 worker's isolated worktree, because
+none of the four cells' worktrees can see the others' fixes until the drain -- and the 2 failures are `__tests__/fe-s-81`'s
+`generator-output-carries-unprojected-grant.test.ts`, exercising `FE-s-85`'s own cell (`W25-S1`), whose regenerated
+fixtures are committed on ITS OWN branch only. This is not a regression on THIS cell's surface (confirmed:
+`git diff --stat` against the issuance commit touches only this cell's own `<paths>`). The bar is unchanged --
+0 unexpected failures -- but the invocation now isolates failures NOT attributable to the known, disclosed,
+cross-cell gap, so a REAL regression on this cell's own surface still fails the criterion. Independently
+re-verified live by the issuing COO in this worker's own worktree before amending: `UNEXPECTED-FAIL-COUNT=0`,
+2 known fe-s-81 fails present and excluded, matching the worker's own report exactly. Row `IRPT_FNTEND-W37-S1` is
+DISARMED by this amendment once the order is re-run and flipped complete (the true whole-suite-including-FE-s-85
+bar is verified separately by the COO at drain time, in the merged tree).
+
 
 <criterion id="F87-AC8" cell_refs="FE-s-87" judgment="true" drives="none"/>
 `F87-AC8` -- graded at L9 by the CVO: the state-label and qualifier weights are genuinely 700/400 (measured, not assumed from class names), the wrong-state and absent-selector controls genuinely discriminate (not vacuous), and the ground measurement is on the real container, not the page canvas. RECORD; NO VERDICT.

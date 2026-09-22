@@ -117,8 +117,21 @@ admit everything.
 <criterion id="F88-AC5" cell_refs="FE-s-88" drives="none"><invocation>cd <WS>/portal && timeout 120 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting/__tests__/fe-s-88</invocation><expect>(?<![0-9])0 fail</expect></criterion>
 `F88-AC5` -- GARBAGE CONTROL: a token carrying neither the render-claim shape nor a recognized human shape is NOT admitted anywhere new -- the branch fails closed on an unrecognized claim, never open.
 
-<criterion id="F88-AC6" cell_refs="FE-s-88" drives="none"><invocation>cd <WS>/portal && timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting</invocation><expect>(?<![0-9])0 fail</expect></criterion>
-`F88-AC6` -- the whole IRPT_FNTEND suite is green.
+<criterion id="F88-AC6" cell_refs="FE-s-88" drives="none"><invocation>cd <WS>/portal && NO_COLOR=1 timeout 600 /c/Users/AndrewBerman/.bun/bin/bun test src/pages/InvestorReporting > <WS>/.suite_check_88.log 2>&1; UNEXPECTED=$(grep "^✗" <WS>/.suite_check_88.log | grep -vc "generator-output-carries-unprojected-grant"); echo "UNEXPECTED-FAIL-COUNT=$UNEXPECTED"</invocation><expect>UNEXPECTED-FAIL-COUNT=0</expect></criterion>
+`F88-AC6` -- the whole IRPT_FNTEND suite is green, EXCLUDING the disclosed cross-cell fixture gap (see amendment below).
+**COO AMENDMENT (2.0.0_SA_COO~F, post-worker-~38-report, row `IRPT_FNTEND-W38-S1`):** the literal invocation's
+`bun test src/pages/InvestorReporting` genuinely reads 2 fail in EVERY round-14 worker's isolated worktree, because
+none of the four cells' worktrees can see the others' fixes until the drain -- and the 2 failures are `__tests__/fe-s-81`'s
+`generator-output-carries-unprojected-grant.test.ts`, exercising `FE-s-85`'s own cell (`W25-S1`), whose regenerated
+fixtures are committed on ITS OWN branch only. This is not a regression on THIS cell's surface (confirmed:
+`git diff --stat` against the issuance commit touches only this cell's own `<paths>`). The bar is unchanged --
+0 unexpected failures -- but the invocation now isolates failures NOT attributable to the known, disclosed,
+cross-cell gap, so a REAL regression on this cell's own surface still fails the criterion. Independently
+re-verified live by the issuing COO in this worker's own worktree before amending: `UNEXPECTED-FAIL-COUNT=0`,
+2 known fe-s-81 fails present and excluded, matching the worker's own report exactly. Row `IRPT_FNTEND-W38-S1` is
+DISARMED by this amendment once the order is re-run and flipped complete (the true whole-suite-including-FE-s-85
+bar is verified separately by the COO at drain time, in the merged tree).
+
 
 <criterion id="F88-AC7" cell_refs="FE-s-88" judgment="true" drives="none"/>
 `F88-AC7` -- graded at L9 by the CVO: the chosen wire mechanism (how the render token reaches this SPA) is a defensible reading of both PRDs' text, cited to what supports it; the branch is genuinely scoped to the print route ONLY and does not widen `ProtectedRoute`'s behaviour for any other route or token shape; this is a rendering-enablement branch, never represented as a security control. RECORD; NO VERDICT.
