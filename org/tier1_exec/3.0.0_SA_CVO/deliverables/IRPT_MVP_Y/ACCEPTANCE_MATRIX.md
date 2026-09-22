@@ -197,6 +197,18 @@ promotion/race refusal require actual controlled-clock reader/writer evidence.
 Physical disposal OPEN; no provisioning/live/deletion or product PASS granted.
 All fourteen integrated criteria remain NOT_EVALUATED.
 
+## Upload consumer update, 6:01 PM Eastern
+
+Pinned `bf50e40359358d301d99278784afedeec8a50559` supplied upload suite10/10
+PASS. Independent Y-U01 P2 retry-stability finding: unchanged upload request
+renormalizes after security/price revision changes, returning new input ID; two
+shares valued20 initially become40 on unchanged retry with revised same-date
+price. Prior input remains immutable/retrievable. Explicit notional correction
+produces a separate preserved revision as expected. See
+`UPLOAD_REVIEW_bf50e40359.md`, `probe_upload_consumer.py` and evidence JSON.
+No full Y1/Y2/S3 or other integrated criterion grade; mocked analysis acceptance
+and absent runtime/build/retention/maintained adapters remain stated limitations.
+
 ## Compiler Tools
 
 | Tool | Result | Limitation |

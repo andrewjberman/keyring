@@ -1,6 +1,6 @@
 # CVO Y review state
 
-Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 5:49 PM Eastern.
+Exact reviewer `3.0.0_SA_CVO~Y`, September 22, 2026, 6:01 PM Eastern.
 Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
@@ -29,6 +29,11 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   failed-claim control now returns pending=true and recovery action, stable ID,
   0 sends/rewrites. Intake9/9 and submission17/17 PASS. Y-F01 CLOSED for this
   offline boundary. See `FOUNDATION_RETEST_08b1fd5c99.md` and evidence JSON.
+- Upload consumer `bf50e40359358d301d99278784afedeec8a50559`: supplied10/10
+  PASS; Y-U01 P2 open, identical retry renormalizes after resolver/price revision
+  change, returning a new input and potentially changed value (20 -> 40) despite
+  unchanged browser payload. Old inputs preserved. Explicit correction control
+  passes. Routed COO~Y; see `UPLOAD_REVIEW_bf50e40359.md` and pinned probe/JSON.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
