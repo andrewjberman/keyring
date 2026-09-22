@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_FNTEND~38</issued_to>
 <issued_by>2.0.0_SA_COO~F</issued_by>
 <issued_date>2026-09-22</issued_date>
-<status>pending</status>
+<status>complete</status>
 
 **Directive:** D9 | **Fabric:** laptop | **PRD:** `../prd/IRPT_FNTEND_PRD.md` v0.10 @4bc62712f2 | **Decomp cell:** `FE-s-88` (round 14, v0.14) | **outcome_ref:** FWD-8 (F9's own PRD row also lists FWD-3, FWD-4, FWD-12) | **depends_on:** none -- READY ROOT | **slot:** ~4 | **rows:** F9 | **base:** workspace = the round-14 issuance commit on CLOUD (your worktree branches from it), portal DEV `467354c9` (round 13's close)
 
