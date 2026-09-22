@@ -5402,6 +5402,29 @@
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "IRPT_FNTEND-W18-S1",
+    "project": "IRPT_FNTEND",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_FNTEND~18",
+    "surfaced_at": "2026-09-21T00:00:00Z",
+    "one_line": "ScopeSummary.tsx:125's cohort-chip button carries `rounded-md`, a C11 violation (radii are 2/3/4px or a pill, never 6px) -- filed per TO-FE-s-68's own cell text rather than fixed, because rendering the chip needs an authoritative cohort selected via a directory/search row, a state this cell's grant cannot construct (no search-selection interaction is in scope, and no fixture alone populates `row`/`selection`).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "TO-FE-s-68 cell text: \"The cohort chip (ScopeSummary.tsx:125, rounded-md) needs a directory/search row with an authoritative cohort selected: if you cannot construct that state within your grant, do not claim a visual finding on it -- file it as a row citing the source line (C11: radii are 2/3/4px or a pill; rounded-md is 6px) and move on.\"",
+    "world_is": "src/pages/InvestorReporting/header/ScopeSummary.tsx:125 (this worktree, portal HEAD 12cdfd434104b18835c8aa72a81d9d773807db10) reads `className=\"rounded-md px-2 py-0.5 text-[11px] text-slate-900 ring-1 ring-slate-500/40 hover:ring-slate-700\"` on the cohort-chip <button>, unchanged by this worker. This build carries no Tailwind config/`@theme` override for `--radius-md` (checked: no `tailwind.config.*` file exists; src/index.css defines only `--radius-hairline`/`--radius-control`/`--radius`/`--radius-pill`/`--radius-circle`, none named `--radius-md`), so `rounded-md` resolves to Tailwind v4's un-overridden default. Measured directly on the SAME utility class on a sibling element in this cell's own grant (tabs/reporting/AnswerStatus.tsx's `[data-slot=\"answer-status\"]`, before this worker's fix): `ui-smoke.mjs --expect-style '[data-slot=\"answer-status\"]::border-radius'` printed `6px` (rendered at portal DEV 243089eb-based worktree, dev server port 5930, fixture reporting-answer-bearing.json). Since `rounded-md` is one Tailwind utility resolving from one shared (absent) theme token, the cohort chip's `rounded-md` reads the identical 6px on this build; not independently re-measured on the chip itself because no fixture in this cell's fixtures/smoke/ populates `row`/`selection` (both fixtures used by F68-AC2/AC5/etc. render with `row: null`, so no cohort chip is ever mounted in any of this cell's captures -- confirmed by reading every f68_*.png: none show a 'Cohort' block). Left unfixed per the cell text's own instruction; no criterion in this TO tests this element.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_FNTEND/task-orders/IRPT_FNTEND.TO-FE-s-68.reporting-answer-bearing-and-scope-strip.md (cell text, THE CELL paragraph), read at this worktree's HEAD",
+        "portal/src/pages/InvestorReporting/header/ScopeSummary.tsx:125 @12cdfd434104b18835c8aa72a81d9d773807db10 (this worker's own commit, line unchanged from base)",
+        "portal/src/index.css:234-238 @12cdfd434104b18835c8aa72a81d9d773807db10 -- --radius-hairline/--radius-control/--radius/--radius-pill/--radius-circle declared, no --radius-md",
+        "measured run (this worker, 2026-09-21): node scripts/ui-smoke.mjs investor-reporting <scratch>.png --port 5930 --width 1440 --fixtures src/pages/InvestorReporting/fixtures/smoke/reporting-answer-bearing.json --expect-style '[data-slot=\"answer-status\"]::border-radius' -- printed `EXPECT-STYLE[[data-slot=\"answer-status\"]::border-radius]: FAIL 6px` (target omitted on purpose, actual value read)",
+        "org/missions/D9/IRPT/IRPT_FNTEND/deliverables/0.9.0_WK_IRPT_FNTEND~18/f68_answer_1440.png, f68_answer_390.png, f68_partial.png, f68_ground_1440.png, f68_ground_390.png, f68_control.png, f68_partial_control.png, f68_style_before.png -- read by this worker, none render a cohort-chip button (row is null in every fixture this cell uses)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
