@@ -149,7 +149,7 @@ or `git show :path`.
 3. The crosswalk needs no edit: `crosswalk.py:560/:629` copies `identity` wholesale. The cell proves that with a test
    rather than an edit.
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~108</slot>
 <fabric>site-z</fabric>
