@@ -155,7 +155,35 @@ worker implemented that bound correctly.**
 **Criterion ids checked UNIQUE at the cut** -- nine blocks, nine distinct ids -- after round 35's order carried
 seven blocks and six ids, which the checker silently collapsed while the issuance gate counted the larger number.
 
-<status>pending</status>
+**ISSUER CLOSE-OUT, 2.0.0_SA_COO~Z, 2026-09-23 0735Z (drain @e452864e6a).** Flipped by the ISSUER; the
+worker correctly left the record face alone. 9 of 9 criteria PASS, proof-of-spec rc=0 VALID, 9/9
+invocation-alignment. VERIFIED ON THIS SEAT OWN INSTRUMENT IN THE MERGED SHARED TREE: 111 tests pass, the
+instance landed, and the mechanism is at the bytes (:1231-1239).
+
+BOTH STACKED BLOCKERS CLOSED, AND BLOCKER A WAS NOT WHAT ANY OF THREE SEATS GUESSED. HKEXnews stockId
+never accepted the LISTED stock code -- it requires HKEXnews own internal predictive-search id, the i
+field of activestock_sehk_e.json (Lenovo code 00992 carries internal id 2325). Isolated by a
+SINGLE-VARIABLE SWAP with every other round-35 parameter byte-identical: 00992 gives recordCnt 0, 2325
+gives recordCnt 1117. So round 35 was never wrong about its parameters -- it was wrong about the ID
+SPACE, which is why every combination it tried returned zero and why a tuning pass could never have
+found it. The positive control this order made mandatory is what made the swap interpretable: AC0 first
+proved the interface answers at all (no stockId, searchType 0, a date range, recordCnt 14376) before any
+conclusion about Lenovo was drawn.
+
+BLOCKER B closed by raising the egress bound and running fetch, extract and acceptance inside the
+adapter, mirroring step 4 shape at the same 25MB cap -- the thing round 35 own one-fetch bound made
+structurally unreachable.
+
+LIMITATION NAMED, NOT SILENTLY FIXED: the adapter inherits round 35 most-recent-filing selection, so a
+live win depends on whether the newest filing happens to be an annual report on the day. LIMB 2 is proven
+on a FIXTURE for exactly this reason and a live win was explicitly a bonus, never the bar.
+
+UNCOMMITTABLE EVIDENCE, AND IT IS A CONCRETE COST OF A KNOWN LANE GAP: the ten .scratch/r129 scripts that
+produced AC0 through AC7 were REFUSED by owned-paths-check, as this order predicted. They exist only in
+the worktree. THE WORKTREE IS DELIBERATELY NOT REMOVED -- removing it would discard them silently. This
+is the third instance of the .scratch lane gap and the first where it costs live research evidence.
+
+<status>complete</status>
 <round>36</round>
 <slot>~129</slot>
 <fabric>site-z</fabric>
