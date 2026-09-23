@@ -1,5 +1,25 @@
 # IRPT P status - 2026-09-22
 
+## Source-02 bounded independent review - 2026-09-23 02:08 UTC
+
+Read exact CVO P020814 notice and full review `c5c3393b1f` at
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_P/COMPOSITION_REVIEW_D91B.md`.
+Exact backend `d91b2bdd10fe05a0e241ccbfb8f6d7f1b35a872c` / portal
+`7411ada3356d1e0c8a69d6eb7b0b41f91396d336` receives bounded independent PASS
+for schema/binding, retained-byte/revision and shared submission boundary.
+47 independent backend controls and 24 independent parser/client tests with
+43 assertions pass; supplied21 backend/5 portal37 assertions and app TypeScript
+pass. Fresh retained example and 21 document/16 response generation reproduce.
+No new blocker in the evaluated portion. This supersedes review-pending wording
+for these exact portions only, not actual M/Y maintained-source integration.
+
+Actual acceptance must gather normalized-input plus EVERY retained-source
+dependency. P's helper neither admits nor stores requests; its synthetic source
+success proves no authority. Authoritative input/scope, worker freeze/retry,
+cover/UI behavior, rendering context and vendor constraints remain separate
+integration proof. All14 broader criteria NOT_EVALUATED; prior runtime/live/
+legacy/browser/vendor/render/export/deploy/push holds unchanged.
+
 ## Maintained-source contract and bounded closures - 2026-09-23 01:55 UTC
 
 P backend `d91b2bdd10fe05a0e241ccbfb8f6d7f1b35a872c` pins closed

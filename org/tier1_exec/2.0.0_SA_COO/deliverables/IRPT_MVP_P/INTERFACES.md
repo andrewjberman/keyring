@@ -1,5 +1,18 @@
 # IRPT P shared interfaces - candidate v1
 
+## Exact schema/storage/shared-boundary review - 2026-09-23 02:08 UTC
+
+CVO P `c5c3393b1f` independently passes backendd91b2bdd10/portal7411ada3
+schema/binding, retained byte/revision and shared submission portions. Full
+COMPOSITION_REVIEW_D91B.md read:47 independent backend,24 parser/client43
+assertions, supplied21/5 tests and TypeScript PASS; fresh fixture/generation exact.
+No new blocker there. M/Y resolver-to-acceptance-to-worker remains NOT_EVALUATED.
+The actual accepting caller must include normalized-input AND every descriptor's
+retained-source dependency; P's post-schema equality helper is not an acceptance
+service and does not collect or store those dependencies. Current source authority,
+input authorization, retry freezing and real cover behavior remain owning-layer
+obligations. No synthetic descriptor becomes authority and no broader hold lifts.
+
 ## M resolver handoff received - 2026-09-23 02:05 UTC
 
 Exact M020513 notice and full `703e82ea01:IRPT_MVP_M/MAINTAINED_SOURCE_RESOLVER.md`
