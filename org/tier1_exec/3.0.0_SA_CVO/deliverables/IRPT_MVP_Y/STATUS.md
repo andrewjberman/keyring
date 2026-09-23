@@ -6,6 +6,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
+- Recorded recipe snapshotef9e8f51c4:34independent controls and97supplied+
+  39subtests PASS. Exact config hashes/seven settings/body mapping and stored
+  replay survive corrupted source files without new writes. Strict setting/
+  template/binding/collision controls pass. Initial reviewer expected enum
+  mapping corrected with both failed receipts retained; no product defect.
+  See `RECIPE_SNAPSHOT_REVIEW_ef9e.md`. Recorded bytes confer no current template/
+  vendor/source authority; optional port has no installed factory. All14 unchanged.
 - Frozen worker preparationc2b467fa47:26independent controls and49supplied PASS.
   Actual accepted-record/reader/admission/retention/store code, modeled effects
   and already-held lease. Exact frozen detached source/profile/cover/settings/
@@ -456,8 +463,8 @@ repair,45 tests+24subtests PASS/P-consumed. Producer-attributed, not rerun here.
 
 Date/owned-reopen and public-wire bounded reviews are complete; Y-DT01,
 Y-W01/Y-W02 and Y-UI01 are closed only for their documented exact pins.
-Admission5a2b and read-only frozen worker preparationc2b4 now have independent
-bounded PASS. Next: exact effecting worker integration with current template/
+Admission5a2b, read-only frozen worker preparationc2b4 and recorded configuration
+snapshotef9e now have independent bounded PASS. Next: exact effecting worker integration with current template/
 settings admission and vendor readback, plus real browser/export/runtime and
 dated custody/performance producer evidence. Current source authority and selected
 comparison entitlement remain separate. Offline primitive PASS does not make
