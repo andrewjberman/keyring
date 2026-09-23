@@ -129,7 +129,7 @@ copies of the live objects, so the call-1 hashes equal the live hashes AC2 print
 arms, and the CVO can check it. **Drain note for the issuer:** before continuing `~1` onto this order, merge the drained
 c-7, c-8 and c-9 branches into `~1`'s worktree branch.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

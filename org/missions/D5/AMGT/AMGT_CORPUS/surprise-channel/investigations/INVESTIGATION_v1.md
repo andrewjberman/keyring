@@ -314,6 +314,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "THE GOLD ARTIFACT SHAPE: 'The partition value is lowercase kebab ASCII.' (unchanged by the reopen).",
     "world_is": "The reopen's own explicit instruction ('joined by +') produces a partition value carrying a '+' character for any security whose Sector value bridges to more than one scanner sector -- ASCII and lowercase, satisfying the LETTER of 'lowercase ... ASCII' but not the narrower 'kebab' convention (hyphen-only word separation) the same sentence also names. This cell followed the newer, more specific, explicit instruction over the older general description, and confirmed live that the naming layer's own validator has no narrower rule that would refuse it.",
     "notes": "Not filed as a defect: the amendment is explicit and post-dates the general shape description, and 'exactly as the map returned them, never a choice among them' reads most naturally as governing the SECTOR NAMES chosen (never picking one over the others), not as silent license to invent a different join character. Two real business types in the corpus carry this form today (consumer-cyclicals+consumer-services, consumer-services+telecommunications); AC3's judgment carries both in the --write summary for 3.0.0_SA_CVO~Z's own read on whether that shape is the team's own."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S2",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-23T06:41:21Z",
+    "one_line": "CRPS-c-10's own inlined text names 'sector_template.business_type_of' as the function that resolves a name's business type ('The sector template is the name's business type through sector_template.business_type_of'), but c-7's own module docstring (ISSUER AMENDMENT, row AMGT_CORPUS-Z-W4-S1's reopen) states business_type_of is REPORT-LEVEL, EVIDENCE ONLY, 'never consulted for grouping', and that business_type_of_security (workbook Sector label, security-level) is the function the gold artifacts are actually partitioned by -- I built substrate.py against business_type_of_security, not the order's own named function.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "This order's section 1, verbatim: 'The sector template is the name's business type through `sector_template.business_type_of`.'",
+        "lib/research/corpus/sector_template.py module docstring, ISSUER AMENDMENT paragraph: 'BUSINESS TYPE IS A PROPERTY OF THE SECURITY, READ FROM ITS WORKBOOK 'Sector' LABEL -- NOT OF THE REPORT ... `business_type_of(record)` (report-level, via `sector_as_written`) is kept for evidence only; it never overrides the workbook and is never consulted for grouping.'",
+        "sector_template._run_write (the actual live writer): partitions every gold object by `business_type_of_security`'s output (`security_types = _security_business_types(rows, fetch)` then `gold.gold_put(TABLE, \"business_type=%s\" % bt, ...)`) -- business_type_of is called nowhere in that function.",
+        "Row AMGT_CORPUS-Z-W4-S1 (this same channel, 0.9.0_WK_AMGT_CORPUS~4): using the report-level function on the real corpus measured 0 of 13 business types reaching any report (45 of 51 non-OTHER reports carry no report-level 'Sector:' field at all) -- calling business_type_of here would make sector_template read absent for nearly every security, not reflect how the artifacts are actually keyed.",
+        "Live-verified with the function this row actually used: `python -m lib.research.corpus.substrate --first-covered` over the real corpus reaches a security whose sector_template correctly resolves to 'absent: business type unmapped: conflict: consumer-non-cyclicals, technology' via business_type_of_security -- a real, security-level determination, not a report-level miss."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-c-10 section 1, RULED: 'The sector template is the name's business type through `sector_template.business_type_of`.'",
+    "world_is": "`business_type_of` is c-7's own superseded, evidence-only, report-level function; the function that actually determines which business_type partition a security's sector-template artifact lives under is `business_type_of_security`. This order's inlined text was written before, or without incorporating, c-7's own reopen amendment. Calling the named function literally would make substrate.py's sector_template member read absent for nearly every security (0 of 13 business types reach a report at the report level, per Z-W4-S1) and would not match how CRPS-c-7's gold artifacts are actually partitioned, so I used business_type_of_security -- consistent with c-7's own current docstring and its real writer -- and did not implement the literally-named function.",
+    "notes": "Not a criterion failure: none of AC1-AC5 name a specific business-type resolution function, only the printed shapes and pass/fail bars, and all five pass with this resolution. Filed because a future reader of this order's own text, absent this row, would reasonably expect business_type_of and get a substrate that reports 'absent' for nearly every security. hazard_standing INERT: the order's own text is stale relative to a sibling cell's amendment that landed in the SAME round, not a live hazard -- whether CRPS-c-10's inlined text should be corrected for a later round is 2.0.0_SA_COO~X's call as issuer."
   }
 ]
 ```
