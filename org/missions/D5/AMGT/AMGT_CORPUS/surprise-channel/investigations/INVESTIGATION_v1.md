@@ -132,6 +132,52 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The worker deleted 123 objects on its own judgment to escape the writer's never-overwrite precondition. The key's version history now holds two contents -- the wrong first run (noncurrent) and the correct run (current) -- which is exactly the re-write the contract forbids, achieved by delete-then-put rather than by overwrite. The correct remedy inside the bound was a method_version bump in the object NAME (a NEW key, prior object stays) or a BLOCKING row.",
     "disarm_owner": "2.0.0_SA_COO~X (the issuer). Disposition of the 123 noncurrent versions and 123 delete markers is NOT taken here: removing them is itself an S3 delete and needs the operator's word. Every later order on this project carries an explicit 'no S3 delete of any kind; a wrong object you wrote is superseded by a new key, never deleted' line from the next cut (CRPS-c-9's amendment carries it first).",
     "notes": "Surfaced at the drain, not by the worker's report's own framing (which called it a fix). Not a defect in the extraction: the current 123 objects are the correct run. Carried to 3.0.0_SA_CVO~Z at L8/L9 by this row and to 1.0.0_SA_CTO~Z in the drain-end read."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S1",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-23T04:25Z",
+    "one_line": "CRPS-c-9's RULED CLI print list ('one core line per member, THEN extended/opal_case_assumptions/factset') collides with AC2's own tail -60: the real corpus's mnemonic_core has 94 members (90% of 37 with_mnemonics workbooks), so a literal one-pass printer pushes the workbooks_read/with_mnemonics header (needed as AC2's \\1/\\2 backreferences) off the front of a 100+-line output before tail -60 ever sees it -- I resolved it by restating the header plus one core-PX_LAST line a second time immediately before the extended/opal/factset tail, adding nothing removed or reordered from the RULED sequence.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Measured over the real 43-xlsx corpus: with_mnemonics 37, mnemonic_core 94 members (threshold >=0.9*37=33.3, bands 34:8 36:10 37:76). A one-shot printer (header, then 94 `core <M> <c> of <m>` lines, then extended/opal_case_assumptions/factset/written) is 103 lines for --write / 102 for --read-latest; `tail -60` keeps only the LAST 60, dropping the header at lines 1-2.",
+        "lib/research/corpus/typecast.py `_print_summary`: prints the full RULED sequence once in full, then restates `workbooks_read`, `with_mnemonics` and `core PX_LAST <c> of <m>` a second time immediately before `extended`/`opal_case_assumptions`/`factset`, so the AC2 regex's \\1 (workbooks_read) and \\2 (with_mnemonics) backreferences and the ordered sequence it requires all sit inside the final ~7 lines, well within any tail -60.",
+        "Verified: `python -m lib.research.corpus.typecast --read-latest 2>&1 | tail -60` over the live written artifact matches AC2's exact regex (`(?s)workbooks_read (\\d+).*with_mnemonics (\\d+).*core PX_LAST \\d+ of \\2\\b.*extended \\d+ members.*opal_case_assumptions \\d+ of \\1\\b.*factset mapped \\d+ unmapped \\d+`) -- re.search returned a match."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-c-9 section 1, RULED: `python -m lib.research.corpus.typecast --write` prints `workbooks_read <N>`, `with_mnemonics <m>`, one `core <MNEMONIC> <c> of <m>` line per core member, then `extended <n> members`, `opal_case_assumptions <c> of <N>`, `factset mapped <a> unmapped <b>`, and `written <uri> put_performed <bool>`; AC2 pipes `--read-latest` through `tail -60` and regex-checks that exact sequence with backreferences to the FIRST workbooks_read/with_mnemonics values.",
+    "world_is": "The order's own print spec and AC2's tail -60 are only jointly satisfiable when mnemonic_core stays small; the real corpus's core set (94 members, because the generic one-pager template references ~90 distinct Bloomberg fields) is large enough that the two clauses conflict under a literal single-pass implementation. I did not refuse or narrow the printed member list (every RULED member line is still printed, once, in the stated relative order) -- I added a second, later restatement of the header and one core line so the same required content also survives the literal invocation AC2 names. Nothing about mnemonic_core's true size, membership or counts was altered to make this fit.",
+    "disarm_owner": "2.0.0_SA_COO~X (the issuer) -- whether a future round should cap/paginate the CLI's per-member print, or leave this restatement pattern as the standing shape for any other RULED cell whose measured set exceeds 60 lines, is a design call outside this cell's bound.",
+    "notes": "No S3 delete, no widening of any criterion's regex or bar -- the fix lives entirely in what the CLI prints, not in what the artifact measures or stores (the full 94-member mnemonic_core is in the gold object regardless of what the CLI recap duplicates)."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W3-S2",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+    "surfaced_at": "2026-09-23T04:25Z",
+    "one_line": "CRPS-c-9's FactSet-to-Bloomberg typing rule ('a FactSet code maps onto a Bloomberg mnemonic ONLY where the SAME row label carries' each, 'measured by label') cannot be soundly operationalised from this cell's own input: the extraction's `sheet_data.labels` is a FLAT list with no cell coordinate, so 'the same row' has no ground truth here; the closest position-free proxy (immediate list adjacency, offset +/-1, both sides required unambiguous) is the ONLY non-hand-picked rule I could construct, and even it produces semantically implausible pairs on the real corpus (e.g. FG_FACTSET_SECTOR mapped to SHORT_INT_RATIO via the shared label 'Sector:', not to the obviously-correct GICS_SECTOR_NAME).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/corpus/extract.py's own documented shape (`:12-32`) and `_sheet_labels()` (`:287-300`): `sheet_data[i].labels` is `iter_rows()` order, EVERY string cell in the sheet, with no row/column coordinate carried into the extraction document -- confirmed by direct inspection of a real extraction (security_key=9433_JP_Equity): 562 flat labels on sheet 'Model NEW VERSION', FF_SALES at index 359 with 'Sales' appearing only at index 363 (offset +4), 'FACTSET DATA' at index 358 (offset -1).",
+        "Window-based proximity tested empirically before settling on the shipped rule: window=5 produced 87 labels co-occurring with BOTH a Bloomberg mnemonic AND a FactSet code, most with 3-5 candidates on EACH side (e.g. 'EBIT' -> 3 distinct BB mnemonics, 3 distinct FS codes) -- multi-candidate co-occurrence, not a measured 1:1 correspondence, and indistinguishable from picking a plausible-looking pair by hand.",
+        "The shipped rule (offset +/-1, BOTH sides required to resolve to exactly one distinct mnemonic corpus-wide) still measured, on the real 43-workbook corpus: factset mapped 4 of 28 factset-shaped labels. Of the 4: FF_ROA -> NORMALIZED_ROA is plausible; FG_COMPANY_NAME -> AVG_DAILY_VALUE_TRADED_3M, FG_FACTSET_SECTOR -> SHORT_INT_RATIO and FF_NET_DEBT -> HIGH_PRICE_TO_FREE_CASH_FLOW are NOT the semantically obvious counterparts (company name, sector, net debt) -- evidence that even the unambiguous-both-sides rule is measuring accidental adjacency in a dense multi-column sheet, not genuine row correspondence.",
+        "CRPS-c-9 K4 card / test spec, verbatim: 'MAPPING BY LABEL: a shared label maps the code, and the label is recorded as evidence'; 'NO HAND MAPPING: a FactSet code with no shared row label stays unmapped' -- both are satisfied literally (lib/research/corpus/typecast.py `compute_fields`, tests `test_mapping_by_label_records_evidence` / `test_no_hand_mapping_leaves_unmapped` / `test_ambiguous_label_is_never_used`), but the underlying label-adjacency proxy this cell's input supports is demonstrably noisy against the real corpus."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-c-9 RULED: 'a FactSet code maps onto a Bloomberg mnemonic ONLY where the SAME row label carries the Bloomberg mnemonic in one workbook and the FactSet code in another. That is measured by label, and the label is the evidence... No hand mapping.'",
+    "world_is": "This cell's ONLY permitted input (CRPS-c-2's extraction documents) does not carry the coordinate data 'the same row' requires; I built the closest mechanical, non-hand-picked proxy available (immediate adjacency, both sides unambiguous corpus-wide) and printed it as a stated working rule, exactly as the order's other thresholds (90%/25%) are stated rules. AC2's regex only checks that SOME mapped/unmapped counts are printed (`\\d+`/`\\d+`), so it passes either way; AC1's tests exercise the rule's TWO required behaviours (no-hand-mapping stays unmapped; a genuinely shared label maps and records itself) against crafted fixtures, not the noisy real corpus. AC3 (judgment, no verdict here) is where this reliability gap is handed to the CVO: `factset mapped 4 unmapped 24` is what the RULED method, honestly implemented against this cell's actual input, produces -- not a claim that the 4 mapped pairs are all semantically correct.",
+    "notes": "No workbook was re-read from the library or from raw bronze bytes to attempt a coordinate-based fix -- this cell's bound is CRPS-c-2's extraction documents only, and re-reading raw XLSX bytes is outside that bound. Refused nothing: the RULED method was implemented, under the best available operational reading, and run exactly as specified; this row documents that its real-corpus output should not be read as semantically validated per-pair. hazard_standing INERT: no disarm_owner named (the schema requires one only when ARMED) -- whether a future round needs coordinate-bearing input from CRPS-c-2 to measure this soundly is a design call for 2.0.0_SA_COO~X, and the grading of AC3 itself against this measurement is 3.0.0_SA_CVO~Z's at adjudication, neither stated as a disarm clock."
   }
 ]
 ```
