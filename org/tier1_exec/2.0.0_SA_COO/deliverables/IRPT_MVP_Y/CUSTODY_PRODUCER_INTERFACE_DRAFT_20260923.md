@@ -41,3 +41,5 @@ Y's later implementation will classify original positions, preserve provenance, 
 - Y: map agreed fields to all eleven eligibility controls, then implement only the owned consumer. Until these responses establish a concrete interface, this draft remains coordination evidence, not an active callback or acceptance contract.
 
 No runtime activation, cloud access, new retained artifact family, public refusal enum, upstream runner execution or economic acceptance is part of this draft. The CTO reviews the paired result directly.
+
+Latest review update: CTO direct6fa9ce525f supersedes the pending-review state above with bounded local artifact/runtime PASS for f0075287c4;74 source members and151 dependency members verified. No production source binding or new Y run. CTO retains max0.01 account-level USD tolerance. Y precise reply154054 to P confirms ordered receipt-index integrity, every selected account, explicit unknown/empty status and exact-decimal original rows; exact M/P interface remains pending.

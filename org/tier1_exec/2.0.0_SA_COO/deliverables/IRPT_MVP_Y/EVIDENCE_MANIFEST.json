@@ -1134,7 +1134,7 @@
       "pin": "f0075287c4",
       "source": "P153734 report",
       "scope": "generate only, enforced positive/missing-custody negative and extracted artifact in pinned Lambda Linux3.12 network-disabled",
-      "review": "CTO directly reviewing; no Y rerun",
+      "review": "Superseded by CTO direct bounded local runtime PASS6fa9ce525f; no Y rerun",
       "production_binding": false
     }
   },
@@ -1148,5 +1148,23 @@
     "portal_assertions": 67,
     "scope": "CTO actual executions, not Y rerun",
     "package_limit": "generate import gate UNENFORCED; missing BUILD_MANIFEST.json and declared jsonschema/referencing dependencies; P owns runtime closure"
+  },
+  "cto_runtime_review": {
+    "commit": "6fa9ce525f7cc21704b052d22e6f7d7b0396dc8d",
+    "package_pin": "f0075287c426cbe9eea04f0165bc179147918ce1",
+    "reviewer": "1.0.0_SA_CTO",
+    "verdict": "bounded local artifact/runtime PASS",
+    "source_members": 74,
+    "dependency_members": 151,
+    "source_zip_sha256": "7419db6052e33b79729343aa8b1b4db5fc9c4f63742e9658469977c04eca3c16",
+    "dependency_zip_sha256": "d17ae439a182b58b82e607108686bde53fd185aa04cddf0bccf365250cfc64bd",
+    "controls": "enforced complete package PASS; missing custody.py exit1; reconstructed package in pinned network-disabled Lambda3.12.14 Linux with no production credentials",
+    "does_not_close": [
+      "production source/snapshot callbacks",
+      "comparisons",
+      "production configuration/IAM wiring",
+      "complete journey"
+    ],
+    "new_y_run": false
   }
 }
