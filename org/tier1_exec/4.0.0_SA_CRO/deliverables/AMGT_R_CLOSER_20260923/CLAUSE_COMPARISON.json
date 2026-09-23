@@ -1,0 +1,18 @@
+{
+  "prd_pin": "d8d2052388",
+  "prd_sha256": "782097a63922b2aa9ee473f769851eeaf133503a6dd17824442547c37b2abfda",
+  "clause_start_line": 1113,
+  "clause_end_line": 1127,
+  "clause": "**`C-VERBATIM-GATE` (v0.11)** -- wherever output quotes a source, the quoted text must be an exact substring of the ORIGINAL\nfetched text, inside the passage the sentence cites; normalisation is limited to whitespace and Unicode canonical equivalence,\nand a fold that changes characters (ASCII folding, symbol substitution) is not verbatim; non-verbatim is **rejected and\nregenerated**. \u26d4 **EVERY PASS COUNT PRINTS ITS SPLIT:** passed on a span / passed with NO span / held. A count that omits the\nsplit is not evidence of verbatim coverage (measured D18: a sentence with no quoted span passes today -- 17 of 39 for CAT, 16\nof 40 for CSL -- so the \"389 of 389 PASS\" figure did not mean what it read as). \u26d4 **A drafted sentence with no verbatim span is\nHELD: never served, and counted in the split** (v0.12, Andrew-direct ~19:4xZ, *\"Agreed, yes.\"*). Over today's 12 served documents\nthis withholds **179 of 389 sentences (46%, measured 2026-09-18 by `4.0.0_SA_CRO~Z`, msg 23744)**; the validation names ran\n17 of 39 (CAT) and 16 of 40 (CSL). It reverses the v0.7 choice to keep passage support and exact quotation as separate outcomes; both\nconsequences were on the card he answered. The minimum run length is word-based for spaced\nscripts and CHARACTER-based for scripts without spaces (`C-FILINGS-TRANSLATION`); the cut states each threshold. The rule binds\nBOTH writers of `drafting/v1/<key>.json` (`batch.py:150`, `analyze.py:1215`). \u2b50 **This is a GATE, not trust-the-model**: it is\nmachine-checkable and has discriminating controls -- a span pointed at the neighbouring passage, and a one-character mutation of\na passing span, must both be REFUSED.\n",
+  "pipeline_probe": {
+    "served": 0,
+    "held": 1,
+    "refused": 0
+  },
+  "schema_alone_accepts_no_span": true,
+  "conclusion": "Pipeline no-span HOLD matches the ratified v0.12 clause; no stricter-than-law difference on this dimension. Schema alone is weaker than the pipeline and cannot authorize serving.",
+  "code_sources": {
+    "lib/research/drafting/pipeline.py": "319ca201810e47a7c2458fa7a9f5c6c6f25bf704cd3be992b149dd2a2e2f0866",
+    "lib/research/drafting/schema.json": "4ad3a1f6660e794d85969d32cf825d549a1745f0de9cd0c0ecef4531fe07a904"
+  }
+}

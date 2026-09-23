@@ -1,0 +1,38 @@
+{
+  "observed_at": "2026-09-23T17:34:14.450261+00:00",
+  "checks": [
+    {
+      "command": "python -m pytest lib/research/api/tests -q",
+      "exit_code": 0,
+      "result": "227 passed in22.84s"
+    },
+    {
+      "command": "python -m pytest lib/research/api/tests/test_drafted_sections.py -q",
+      "exit_code": 0,
+      "result": "32 passed in0.64s"
+    },
+    {
+      "command": "python -m ruff check changed source, tests, replay_repair.py, measure_writers.py, prepare_repair_package.py",
+      "exit_code": 0,
+      "result": "All checks passed"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "lib/research/api/scoped_amgt.py",
+      "sha256": "40c3ed25da2fab61ee3e56d47680b3cfe0cf1ef3ba5b4456f4b12939e17bdaeb"
+    },
+    {
+      "path": "lib/research/api/tests/test_drafted_sections.py",
+      "sha256": "b7f617b037c272e7b6da9c54d18b4a2f9a0b37aa81606bbfe33fa92aba91ac2a"
+    }
+  ],
+  "retained_replay": {
+    "documents": 12,
+    "served": 210,
+    "held": 179,
+    "served_no_span": 0,
+    "unchanged_source_bytes": true
+  },
+  "deployment": "NOT_EXECUTED"
+}
