@@ -21,6 +21,7 @@ capability must not be presented as a valid Opal user's permission denial.
 | Publication review | CTO `bb43292167`: bounded source PASS; unchanged 99 tests in isolated candidate archive |
 | COT local validator | `b3e63a795e0b8c7399619dbc545745786add4eb7`; CTO `1ada74ee5c`, 114 offline tests |
 | Paired field review | M `ae99df9169`, Y `605449f4cc`; P retained-selection draft `75bbe9cc2d` |
+| Opal selection/data review | Current `INTERFACES.md`, inspected against P `9a3ec2a11f`; source-only findings |
 | Portal / deployed candidate | P-owned; no M deployment or new live measurement |
 | Push state | LOCAL; no push by M |
 
@@ -65,6 +66,15 @@ suites or circulate field-name drafts.
 | Exact dependent M data/selection change for full Opal access | COO~P shared authorization/UI/API owner | `5ad99c7d30`; no specific M implementation delta supplied yet | AWAITED; no takeover of shared ownership |
 | Private publication integration | COO~P | `capture` / `load_pinned`, `3539ad2ae5` plus `200ba442f5` correction | HANDED OFF; deeper review PARKED |
 | Direct review | CTO | `bb43292167` bounded publication PASS | CONSUMED; no new CVO wait |
+
+P's `20260923T172811Z` bounded selection/data review is complete in current
+INTERFACES.md. Single-firm selection records need attributed composition, not
+permission widening inside their identity checks. M maintained-profile helpers
+still use firm-only prospect ownership, including the empty-comparison path;
+custody preparation also binds acting principal to original creator. Concrete
+adapter coordination with P/Y must separate current viewer from retained input
+attribution. No shared source edit, producer restart or new test run accompanied
+this review. Superseded interface text is preserved in INTERFACES_HISTORY.md.
 
 ## Parked
 
