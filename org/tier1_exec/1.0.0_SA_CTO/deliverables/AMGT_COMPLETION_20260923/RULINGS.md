@@ -222,6 +222,66 @@ file's whole history**, so this closes the forward question and not every questi
 ⭐ **This is Rule 22's negative mirror working as designed, and the cost was one query.** The remedy
 stayed single — build the guard — instead of doubling into re-opening work nothing ever harmed.
 
+## R-11 -- THE INCIDENT'S REACH IS MEASURED. CAPACITY IS NOT REACH, AND TWO CALLS GO TO ANDREW
+
+`3.0.0_SA_CVO~Z`, msg 25116, record @`65132a45c7`. **The second half of the double remedy is MEASURED.**
+⭐ **This seat named it as owed while the deploy was green; that seat measured it within the hour.**
+
+**REACH, over 664 hourly CloudFront access-log files, 2026-09-19T00:00Z to the 21:58Z cutover:**
+**521** `/api/scoped/amgt*` requests -- **423 REFUSED 401 at the edge and served nothing**, 98 served.
+The auth-validator-edge gate did most of the containing.
+
+**THE INTERSECTION THAT BOUNDS IT:** a response can carry a no-span sentence only if the security HAS
+drafted sections -- one of the 12 objects under `drafting/v1/`, the complete set measured during C4. Of
+21 served thesis responses, Lenovo (12), `992_HK_Equity` (4) and `DE_US_Equity` (1) are **NOT in the
+corpus and carried no drafted prose at all.** **`BA_US_Equity` (4) IS.**
+
+**REALISED EXPOSURE: four responses** -- 09-22 19:15:35, 20:14:11, 20:21:40 and 09-23 20:44:34 -- **all
+`BA_US_Equity`, all from ONE client IP**, the only distinct IP across every served thesis response, plus
+**one** in-corpus overlay response. **At most ~21 no-span sentences, repeated, to a single client.**
+
+⛔ **"179 SENTENCES SERVED" DESCRIBES THE DEFECT'S CAPACITY, NOT ITS REALISED REACH.** 179 is what the
+corpus WOULD have served had every security been requested; **only `BA_US_Equity` ever was.** Both
+numbers are true about different things. ⭐ **A remediation that conflated them would re-open ELEVEN
+SECURITIES' worth of work that nothing ever touched -- which is the negative-mirror failure from the
+OTHER side of its ledger.** The rule guards against closing a guard-task on "nothing went wrong"; it
+guards equally against re-opening on a number that was never realised. COST: one log census. NON-
+APPLICATION: a defect whose every instance is known to have been requested.
+
+⭐ **AND THE ZERO WAS CAUGHT BY A POSITIVE CONTROL.** The first parse read **zero** -- these files carry
+a bare space-separated header rather than a `#Fields` line. **19,114 rows parsed** is what made the
+eventual zeros absence rather than a broken parser. **A census of a log format you did not write starts
+with a positive control or its zero means nothing.**
+
+## R-11a -- A STANDING LIMIT ON EVERY FUTURE ADJUDICATION ON THIS SURFACE
+
+⛔ **AN IP IS NOT AN IDENTITY, AND PER-FIRM ATTRIBUTION IS UNAVAILABLE FROM ANY INSTRUMENT IN THIS
+ESTATE.** Measured: the firm header is injected by `auth-validator-edge` **DOWNSTREAM of the access
+log**; API Gateway access logging is **NOT declared**; and the Lambda log carries only START/END/REPORT
+plus error lines, **with no route and no firm on a successful request.**
+
+**RATIFIED: an incident on this surface can have its ROUTE and its CLIENT IP reconstructed and NEVER its
+FIRM. No seat promises firm attribution in a future adjudication.** Recorded here rather than left in a
+message, because the seat that needs it is the one writing a blast radius months from now.
+
+## R-11b -- TWO CALLS AT ANDREW, NEITHER URGENT, BOTH HIS BY CLASS
+
+1. **NOTIFICATION.** Four responses over ~25 hours to one client. `3.0.0_SA_CVO~Z` recommends **no
+   re-processing of the eleven untouched securities** and states the notification question **turns on
+   who the client was, which it cannot determine and will not guess.** ⛔ **This seat does not guess
+   either, and does not decide it: it is outward-facing and reputational.**
+2. **WINDOW.** The census covers **09-19 to cutover ONLY**. The defect existed in every earlier build
+   and the artifact history reaches back to **2026-09-15 across 30 versions**, so pre-09-19 requests are
+   **NOT measured -- and ARE measurable**, the logs running to 2026-09-03. Widening is **one re-run of
+   the same method, not new instrumentation.**
+
+⚠ **NOT URGENT AND DELIBERATELY NOT ESCALATED MID-BREAK:** the guard is deployed and the exposure is
+closed forward. These are retrospective questions. **The incident CLOSES when the remediation act is
+done and recorded -- the measurement is not the act.**
+
+⚠ **LIMITS CARRIED, not softened:** response bodies were not captured, so "could carry no-span prose" is
+inferred from corpus membership TODAY and the per-response count is an **UPPER BOUND, not a reading.**
+
 ## PARKED -- OFF THE AMGT THREAD, NAMED SO NOTHING DRIFTS (`/closer` NO SIDE-QUESTS)
 
 **Two `opal_ai` items now sit at this seat and NEITHER is being worked while AMGT is armed.** Recorded
