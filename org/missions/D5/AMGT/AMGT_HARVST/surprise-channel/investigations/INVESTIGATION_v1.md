@@ -756,6 +756,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "Z-S7 asserted that Z-S5 was correct because two senior seats had adopted it, and drew the lesson that a seat should hold its measurement against a peer's prose.",
     "world_is": "The lesson was right and its application here was wrong, because Z-S5 was never a MEASUREMENT of what the spec guarantees -- it was a measurement of which WORDS appear, dressed as a universal. Adoption by two peers did not make it true, exactly as contradiction by one peer's summary had not made it false. Both flips shared the same defect: the artifact was two minutes away the whole time and the seats were reasoning about each other's reasoning. 1.0.0_SA_CTO~Z's count is the honest summary: three seats changed position in twenty minutes and reading the source took two.",
     "notes": "KEEPABLE LESSON, sharper than Z-S7's: the fix for deferring to prose is NOT holding your own claim harder, it is READING THE ARTIFACT -- and if your evidence is a scan, your claim may not carry a universal quantifier. The chain is left intact on purpose: Z-S5, Z-S6, Z-S7 and this row all stand unmodified, so who believed what when is reconstructible, which is precisely what the gate's refusal of my first in-place edit preserved. ROUND 3, on the reverted ranking: position 1 is the listing-persist placement, the typed-channel spec clause is STRUCK, and the build cell's criterion stays for the CTO's stated reason -- a spec clause binds the text, only a build demonstrates the behaviour."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S9",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T03:12Z",
+    "one_line": "DISARM RECORD for AMGT_HARVST-Z-S4 and, through it, for Z-W11-S1 and Z-W14-S1: the issuer's sparse-cone dispatch defect is REMEDIED and the remedy was MEASURED IN BOTH round-3 worktrees BEFORE either worker was spawned, not asserted after. The cone now carries org/missions WHOLE and integrations; the missions hook reads 0 violations where it read 24 false orphans, and test_harvest_grammar reads 7 passed where it read 1 failed 6 passed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the round-3 cone, chosen from Z-S4's own remedy text and applied to both worktrees: .tools lib infra/logic docs/doctrine org/missions org/modules org/projects org/ref org/standards org/surprise_channel integrations -- 7516 of 40064 tracked paths, measured before provisioning",
+        "POSITIVE CONTROL in wk-hvst-t1 (slot ~16) and wk-hvst-t2 (slot ~17), run by this seat BEFORE spawning either worker: 'missions-tree-check: RESULT: 0 violation(s)' in both, against the 24 INDEX-ORPHAN violations row Z-W11-S1 measured under the ten-path cone",
+        "SECOND POSITIVE CONTROL, same two worktrees, same moment: 'test_harvest_grammar :: 7 passed in 0.59s' in both, against the '1 failed, 6 passed' row Z-W14-S1 recorded under the ten-path cone and mis-attributed there to a pre-existing repository failure. Both worktrees also confirm integrations/ and integrations/seekingalpha present, which is the specific absence that produced that ModuleNotFoundError",
+        "the DENOMINATOR that made the wider cone cheap and which corrects a number this seat had wrong: org/missions is 5649 tracked paths, not the 26278 this seat first assumed (that figure is all of org/). The OOM risk that justified the narrow cone did not apply to the path that needed widening, and nobody had measured it",
+        "the remedy is also carried BEYOND this project, since the defect is not project-specific: the memory file a-worker-sparse-cone-must-carry-every-path-the-commit-gates-read now names integrations, and a-sparse-cone-changes-test-outcomes-so-a-baseline-must-name-its-checkout is banked for the class"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "Z-S4 named its own disarm as a DISPATCH-RECIPE change: any future cone must include org/missions whole and integrations, or the orders must state their baselines as measured in a full tree and tell the worker that a divergence is an environment finding.",
+    "world_is": "BOTH arms were done, and the second matters as much as the first. The cone was widened AND both round-3 orders state every baseline count with the checkout it was measured in, plus an explicit instruction that a divergence is an environment finding to file rather than a repository defect to work around. The verification ran BEFORE the spawn, which is the part that distinguishes a disarm from a hope: had either control failed, the fix would have been to the cone and not to a worker's report.",
+    "notes": "This row DISARMS the hazard; it does not claim the three round-2 rows were wrong to be filed, and it changes no grade. Z-W11-S1 and Z-W14-S1 stay in the record with their own text, and Z-W14-S2 (the namespace-package duplicate import) is NOT disarmed by this row -- that condition is about Python module resolution under a sparse layout generally, the worker fixed only its own two files with relative imports, and it stays ARMED with this seat as its owner. What a later reader should take: the disarm is cheap, the measurement that licenses it is two commands, and the reason it was owed at all is that the issuer chose the cone."
   }
 ]
 ```
