@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Independent header controls</title></head>
+<body><div id="root"></div><script type="module">
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { flushSync } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { SelectionWorkspace } from '/src/pages/InvestorReporting/index.tsx';
+import original from '/src/pages/InvestorReporting/fixtures/resolvedScope.success.json';
+import entries from '/src/pages/InvestorReporting/fixtures/directory.duplicate-names.json';
+import '/src/index.css';
+const root = createRoot(document.getElementById('root'));
+const pending = [], calls = [];
+let scope = null, isError = false;
+const api = {browseDirectory(request) {
+  calls.push(request);
+  return new Promise((resolve, reject) => pending.push({resolve, reject}));
+}, createSelection() {throw Error('Independent browse controls do not select');}};
+function render() {
+  const key = JSON.stringify(['global', scope?.scopeFingerprint, scope?.revision.revisionId, scope?.directoryRevision]);
+  flushSync(() => root.render(React.createElement(BrowserRouter, null,
+    React.createElement(SelectionWorkspace, {key, api, resolved:scope, firmId:'global', isError,
+      onFirmChange() {throw Error('Single firm must not switch');}}))));
+}
+window.exercise = {
+  calls,
+  set(mode, revision='d'.repeat(64)) {
+    scope = mode === 'loading' || mode === 'error' ? null : {...original,
+      permittedFirms:[], directoryRevision: mode === 'missing-revision' ? undefined : revision,
+      verifiedRequestFirm:{...original.verifiedRequestFirm, displayName:'Independent verified firm'}};
+    isError = mode === 'error'; render();
+  },
+  resolve(index, names, cursor=null) {pending[index].resolve({
+    entries:names.map(name => ({...entries[0], entryId:name, displayName:name})), nextCursor:cursor,
+    directoryRevision:scope.directoryRevision, scopeFingerprint:scope.scopeFingerprint});},
+  reject(index) {pending[index].reject(Error('controlled refusal'));},
+};
+render();
+</script></body></html>

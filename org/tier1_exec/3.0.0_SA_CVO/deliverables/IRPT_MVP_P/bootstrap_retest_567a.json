@@ -1,0 +1,47 @@
+{
+  "backend": "567a157ec8b5465039bcc9e3842d24075e68947b",
+  "portal": "dcf5e177f6513612f5e39ce90c016d098cc41aab",
+  "snapshot": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\cvo-p-bootstrap-567a-bg_hy5oc",
+  "assertions": {
+    "bootstrap_cases_cd8.py": "67aa338c4810d39ed5ddc793c068cb9b492193bfa0a7c3de0887217c2e0dd4d0",
+    "bootstrap_cases_cd8.test.ts": "871486b830076681b85f2a11e1f1b56f4f705226c9a519b57f9603b8c33eb8b0"
+  },
+  "runs": [
+    {
+      "label": "real_client_request_capture",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "real_guarded_producer_assertions",
+      "exit_code": 0,
+      "stdout": "...........                                                              [100%]\n11 passed in 0.33s\n",
+      "stderr": ""
+    },
+    {
+      "label": "real_frontend_consumer_assertions",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nreviewer-bootstrap.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real advisor bootstrap passes actual envelope and adapter\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real advisor bootstrap completes actual LiveClient resolveScope\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real operations bootstrap passes actual envelope and adapter\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real operations bootstrap completes actual LiveClient resolveScope\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m published valid document remains a positive consumer control\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative unverified_origin remains refused by actual frontend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative missing_firm remains refused by actual frontend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative foreign_firm remains refused by actual frontend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative unknown_advisor remains refused by actual frontend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative wrong_version remains refused by actual frontend\u001b[0m\n\n\u001b[0m\u001b[32m 10 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 20 expect() calls\nRan 10 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m109.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    }
+  ],
+  "bootstrap-request.json_sha256": "65818d36f1621cb948962667e328189ef77f18f69f685a9f3143a56b52132413",
+  "bootstrap-actual.json_sha256": "fb226e9795c765fdaa3d31f9a8190c9085ee7a8a35655753d926f9ace1300aed",
+  "source_sha256": {
+    "docs/contracts/investor-reporting/v1/ResolvedScope.schema.json": "7820d9b981f249d6c13829080735ed0e0520ba0edab26de8c8a04ca90b80e52f",
+    "infra/aws/lambda/investor-reporting/_contracts/ResolvedScope.schema.json": "f978d261f23aab22e82f9ceee21a6b278ff0b065fcf8de0da9297e7f9fa0acf9",
+    "infra/aws/lambda/investor-reporting/directory/entry.py": "de11d6c889db438a493355cef0efaaf3759b2e9161488bd173c247c1ebab758a",
+    "infra/aws/lambda/investor-reporting/directory/handler.py": "e46922a003791d901d037d80c82cf538c313dfe907096194f4fcca556712702e",
+    "src/api/endpoints/investor-reporting.ts": "a189d16b641e0f96da1dceced3ecb9ec995b9059ea44a124466e0db89977c355",
+    "src/pages/InvestorReporting/contracts/adapt.ts": "1fa6465b72c84bb68280e34382da04ce10955ae00b50529224e38c72dfa417e2",
+    "src/pages/InvestorReporting/contracts/envelope.ts": "2a765f5fb264d4bcba54eb9fcc8b20d6ececc751cd7525c5a2a8c42a78707a20",
+    "src/pages/InvestorReporting/index.tsx": "0f452aa2da81956f570be6b1148707832668463f69ca7fb073e3f84ea7cce69f"
+  },
+  "limits": "Actual modules, actual client request, existing verified-principal fixtures; only external directory/ownership/policy dependencies controlled. Backend and Portal are exact replacement source commits, not deployed-hash assertions. No HTTP network, real UI, provisioning or live-cause closure.",
+  "baseline_commit": "008107ab97",
+  "assertions_identical_to_committed_baseline": {
+    "bootstrap_cases_cd8.py": "67aa338c4810d39ed5ddc793c068cb9b492193bfa0a7c3de0887217c2e0dd4d0",
+    "bootstrap_cases_cd8.test.ts": "871486b830076681b85f2a11e1f1b56f4f705226c9a519b57f9603b8c33eb8b0"
+  }
+}

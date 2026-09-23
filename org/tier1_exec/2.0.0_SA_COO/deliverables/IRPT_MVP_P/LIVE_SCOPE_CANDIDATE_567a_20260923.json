@@ -1,0 +1,266 @@
+{
+  "source_backend": "567a157ec8b5465039bcc9e3842d24075e68947b",
+  "source_portal": "dcf5e177f6513612f5e39ce90c016d098cc41aab",
+  "assertion_hashes": {
+    "bootstrap_cases_cd8.py": "67aa338c4810d39ed5ddc793c068cb9b492193bfa0a7c3de0887217c2e0dd4d0",
+    "bootstrap_cases_cd8.test.ts": "871486b830076681b85f2a11e1f1b56f4f705226c9a519b57f9603b8c33eb8b0"
+  },
+  "replay_runs": [
+    {
+      "label": "real_client_request_capture",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "label": "real_guarded_producer_assertions",
+      "exit_code": 0,
+      "stdout": "...........                                                              [100%]\n11 passed in 0.26s\n",
+      "stderr": ""
+    },
+    {
+      "label": "real_frontend_consumer_assertions",
+      "exit_code": 0,
+      "stdout": "\u001b[0m\u001b[1mbun test \u001b[0m\u001b[2mv1.3.9 (cf6cdbbb)\u001b[0m\n",
+      "stderr": "\u001b[0m\nreviewer-bootstrap.test.ts:\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real advisor bootstrap passes actual envelope and adapter\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real advisor bootstrap completes actual LiveClient resolveScope\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real operations bootstrap passes actual envelope and adapter\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m real operations bootstrap completes actual LiveClient resolveScope\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m published valid document remains a positive consumer control\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative unverified_origin remains refused by actual frontend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative missing_firm remains refused by actual frontend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative foreign_firm remains refused by actual frontend\u001b[0m \u001b[0m\u001b[2m[\u001b[1m15.00ms\u001b[0m\u001b[2m]\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative unknown_advisor remains refused by actual frontend\u001b[0m\n\u001b[0m\u001b[32m\u2713\u001b[0m\u001b[0m\u001b[1m auth negative wrong_version remains refused by actual frontend\u001b[0m\n\n\u001b[0m\u001b[32m 10 pass\u001b[0m\n\u001b[0m\u001b[2m 0 fail\u001b[0m\n 20 expect() calls\nRan 10 tests across 1 file. \u001b[0m\u001b[2m[\u001b[1m204.00ms\u001b[0m\u001b[2m]\u001b[0m\n"
+    }
+  ],
+  "staged_artifact": {
+    "bucket": "opal-313476888478-lambda-artifacts",
+    "key": "investor-reporting/irpt-directory-search.zip",
+    "version_id": "RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp",
+    "sha256_base64": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+    "bytes": 149956,
+    "manifest_pin": "567a157ec8b5465039bcc9e3842d24075e68947b",
+    "members_verified": 17,
+    "cold_import": "flat uploaded package import PASS\n",
+    "rollback_version": "4FHLOwjjMQh5LNUWnJRG6La1dJxen2kD",
+    "limits": "Staged only; no Lambda code update or invocation."
+  },
+  "plans": {
+    "api": {
+      "sha256": "1ff3899eab068613c3404b01e03da3127fea365d4325a52e9f9ae49a2699b2b5",
+      "changes": [
+        {
+          "address": "aws_apigatewayv2_route.irpt[\"GET /api/scoped/investor-reporting/directory/browse\"]",
+          "actions": [
+            "create"
+          ],
+          "delta": {
+            "api_id": "7k3ed8px20",
+            "api_key_required": false,
+            "authorization_scopes": null,
+            "authorization_type": "CUSTOM",
+            "authorizer_id": "naqxlm",
+            "model_selection_expression": null,
+            "operation_name": null,
+            "request_models": null,
+            "request_parameter": [],
+            "route_key": "GET /api/scoped/investor-reporting/directory/browse",
+            "route_response_selection_expression": null,
+            "target": "integrations/g9302sp"
+          }
+        },
+        {
+          "address": "aws_apigatewayv2_route.irpt[\"POST /api/scoped/investor-reporting/selections\"]",
+          "actions": [
+            "create"
+          ],
+          "delta": {
+            "api_id": "7k3ed8px20",
+            "api_key_required": false,
+            "authorization_scopes": null,
+            "authorization_type": "CUSTOM",
+            "authorizer_id": "naqxlm",
+            "model_selection_expression": null,
+            "operation_name": null,
+            "request_models": null,
+            "request_parameter": [],
+            "route_key": "POST /api/scoped/investor-reporting/selections",
+            "route_response_selection_expression": null,
+            "target": "integrations/g9302sp"
+          }
+        }
+      ]
+    },
+    "directory": {
+      "sha256": "d5307a61e5401aff2d1c57f5b2bcf1a55daf51650990a82d788c2caa9e0b1d08",
+      "changes": [
+        {
+          "address": "aws_iam_role_policy.directory_selection",
+          "actions": [
+            "create"
+          ],
+          "delta": {
+            "name": "irpt-directory-selection-policy",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"dynamodb:GetItem\",\"dynamodb:PutItem\"],\"Condition\":{\"ForAllValues:StringEquals\":{\"dynamodb:LeadingKeys\":[\"49financial\",\"inflection\",\"cottonwood\"]}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:dynamodb:us-east-1:313476888478:table/irpt-requests\"],\"Sid\":\"RetainSelectionWithinRegisteredTenant\"},{\"Action\":[\"kms:Decrypt\",\"kms:GenerateDataKey\"],\"Condition\":{\"StringEquals\":{\"kms:EncryptionContext:aws:dynamodb:tableName\":\"irpt-requests\",\"kms:ViaService\":\"dynamodb.us-east-1.amazonaws.com\"}},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111\"],\"Sid\":\"RequestTableEncryptionViaDynamoOnly\"}]}",
+            "role": "irpt-directory-role"
+          }
+        },
+        {
+          "address": "module.irpt_directory_search.aws_lambda_function.this",
+          "actions": [
+            "update"
+          ],
+          "delta": {
+            "environment": {
+              "before": [
+                {
+                  "variables": {
+                    "IRPT_CONTRACTS_DIR": "/var/task/contracts",
+                    "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+                    "IRPT_DIRECTORY_PREFIX": "investor-reporting/directory"
+                  }
+                }
+              ],
+              "after": [
+                {
+                  "variables": {
+                    "IRPT_CONTRACTS_DIR": "/var/task/contracts",
+                    "IRPT_DIRECTORY_BUCKET_MAP": "{\"49financial\":\"opal-data-bd\",\"cottonwood\":\"opal-data-cot\",\"inflection\":\"opal-data-inf\"}",
+                    "IRPT_DIRECTORY_PREFIX": "investor-reporting/directory",
+                    "IRPT_REQUESTS_TABLE": "irpt-requests"
+                  }
+                }
+              ]
+            },
+            "s3_object_version": {
+              "before": "4FHLOwjjMQh5LNUWnJRG6La1dJxen2kD",
+              "after": "RXChd66RsDjV1jhG1ZsFlOGnXeIDxApp"
+            },
+            "source_code_hash": {
+              "before": "cmh6XwybmdXSiWQkQZMeer7wtw0QW/1lXnAIJlPjJKg=",
+              "after": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s="
+            }
+          }
+        }
+      ]
+    }
+  },
+  "stored_schema": {
+    "limits": "Read-only stored-artifact wire validation, no principal simulation or live HTTP proof; no customer values retained.",
+    "results": [
+      {
+        "firm": "49financial",
+        "entry_count": 4576,
+        "schema_errors_by_path": {},
+        "artifact_date": "2026-09-17"
+      },
+      {
+        "firm": "cottonwood",
+        "entry_count": 260,
+        "schema_errors_by_path": {},
+        "artifact_date": "2026-09-17"
+      },
+      {
+        "firm": "inflection",
+        "entry_count": 291,
+        "schema_errors_by_path": {},
+        "artifact_date": "2026-09-17"
+      }
+    ]
+  },
+  "package_proof": {
+    "source": "567a157ec8b5465039bcc9e3842d24075e68947b",
+    "flat_directory": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\irpt-p-directory-flat-db08nlmx",
+    "members": [
+      {
+        "member": "handler.py",
+        "sha256": "e46922a003791d901d037d80c82cf538c313dfe907096194f4fcca556712702e",
+        "bytes": 19406
+      },
+      {
+        "member": "entry.py",
+        "sha256": "de11d6c889db438a493355cef0efaaf3759b2e9161488bd173c247c1ebab758a",
+        "bytes": 18118
+      },
+      {
+        "member": "served.py",
+        "sha256": "588a9856f50cdd6440800d0a934886d3a2bdb045be91f89782166f7cab0b4334",
+        "bytes": 51312
+      },
+      {
+        "member": "loaders.py",
+        "sha256": "b84bb2918fc13be31358e81221e951ed4f4aa70da9dea2b7a8dbce93b1853da2",
+        "bytes": 10084
+      },
+      {
+        "member": "enforce.py",
+        "sha256": "18f04af84b9c5e87362f9cf87ee2ef5bc3680ccbaea66b1a2ee4e6579e6b1e7b",
+        "bytes": 52613
+      },
+      {
+        "member": "errors.py",
+        "sha256": "784ee313ed7013e6fdf535a373e7941f4c672f4467e4dfcb4e8ad0634b1646a2",
+        "bytes": 10652
+      },
+      {
+        "member": "resolve.py",
+        "sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+        "bytes": 38563
+      },
+      {
+        "member": "keys.py",
+        "sha256": "56ee3cc22e802579ebb8d4cba53edec8045603396a48fe952d6b83df0f08ab2a",
+        "bytes": 29894
+      },
+      {
+        "member": "ids.py",
+        "sha256": "f1659861d469c25df1f75d37470e003c37ffc0e9230c31b2903e0ffbedc3dbd6",
+        "bytes": 19296
+      },
+      {
+        "member": "data/custodian_key_seam.json",
+        "sha256": "87f2f92f3c71f7761b387574a3df721474120465b1b0da8028cfc201b619923a",
+        "bytes": 191120
+      },
+      {
+        "member": "raw_keys.json",
+        "sha256": "f81db571b5d92ca66b960047d96b38cc74c173cb7bf8be0c20e9cd3973acaf89",
+        "bytes": 6492
+      },
+      {
+        "member": "firm_registry.json",
+        "sha256": "5a4c0c3da26fffe55d8a3ec2a8a7248bd0b1dd936af5425ab35426bc5d277fc0",
+        "bytes": 5326
+      },
+      {
+        "member": "contracts/DirectoryEntry.schema.json",
+        "sha256": "7ed220ff87a787c6b596bcc66bc90a8a5a69fe2ec7da88e145207297011aab24",
+        "bytes": 12967
+      },
+      {
+        "member": "selection.py",
+        "sha256": "7ba910b85e2fce4f5b41a51ac644e4537e338102f79acc10f280ccdcc12f70af",
+        "bytes": 6453
+      },
+      {
+        "member": "selection_store.py",
+        "sha256": "583507a70e3a0074f5854822e194a2b4b07062e393d920e118a65b2aa6a4272c",
+        "bytes": 2795
+      },
+      {
+        "member": "prospect.py",
+        "sha256": "b7e5c9335caad7a01eb66c73305f70a6497d0b72110ad7268dad1757358287a8",
+        "bytes": 3832
+      },
+      {
+        "member": "contracts/ResolvedScope.schema.json",
+        "sha256": "385cfbf40e4adeb1ea9fa44c1c593611764feb2e63a9d9485b82a59792fb0c78",
+        "bytes": 9603
+      }
+    ],
+    "closure": {
+      "rc": 0,
+      "stdout": "  OK: import-closure -- 12 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)\n",
+      "stderr": ""
+    },
+    "cold_import": {
+      "rc": 0,
+      "stdout": "{\"entry\": \"C:\\\\Users\\\\AndrewBerman\\\\AppData\\\\Local\\\\Temp\\\\irpt-p-directory-flat-db08nlmx\\\\entry.py\", \"routes\": {\"GET /api/scoped/investor-reporting/directory/browse\": \"directory-browse\", \"GET /api/scoped/investor-reporting/directory/search\": \"directory-search\", \"POST /api/scoped/investor-reporting/directory/resolve\": \"resolve-scope\", \"POST /api/scoped/investor-reporting/selections\": \"selection-create\"}}\n",
+      "stderr": ""
+    },
+    "limits": "Offline declared package contents/imports; not live invocation or canonical upload ZIP hash. Retest actual uploaded ZIP separately."
+  },
+  "limits": "No runtime apply, CloudFront HTTP or full journey success. Prior 691444 staged artifact/plans superseded. Independent M correction/UI reviews pending."
+}
