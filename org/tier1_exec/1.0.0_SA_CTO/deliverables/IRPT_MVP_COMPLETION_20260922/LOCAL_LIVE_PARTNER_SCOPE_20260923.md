@@ -229,3 +229,18 @@ dispatch/install and input-frontier evidence; INF's maintained advisor contract
 must not inherit BD five-role semantics; COT's empty-map branch is a source risk
 until linked to the same live run/output version; 49F needs owner-supported
 crosswalk or producer re-keying proof, never a fallback authorization join.
+
+## Andrew-direct review ownership, 2026-09-23 11:18 Eastern
+
+Direct user message at the CTO terminal, verbatim:
+
+> No independent review, you are the reviewer here
+
+This later direction supersedes the separate CVO review assignments and CVO
+approval requirements above for the current resumed IRPT scope/parser,
+organization reader, custody factory and paired integration/package work.
+CTO performs the code, test and artifact review directly. Existing CVO evidence
+is retained as evidence, not a required additional gate. P/M/Y implementation
+ownership remains unchanged; new candidates and findings go to CTO. No release
+or cloud authorization changes. Relayed to CVO P/M/Y, COO P/Y and MSTR at
+11:18 Eastern; separate CVO review runs instructed to stop and preserve work.
