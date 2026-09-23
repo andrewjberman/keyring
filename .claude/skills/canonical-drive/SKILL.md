@@ -65,7 +65,8 @@ plus asking where the keys go. NON-APPLICATION: a seat that has answered this ti
    retired. Never scheduled for later. **The recut reads the analysis's ENRICHMENT LIST as the round's
    rectangle** (spine v3.16 L10): one cell per list item, plus the remediations, thread-breaking first and
    instrument/record/style repairs batched into ONE cell. Round 1 of a threaded project is the THREAD, not the
-   manifest.
+   manifest. ⛔ **SKIP a project whose `project.json` carries `closer_contract`** (spine v3.17, Closer): a closer
+   owns it until hand-back -- no recut, no issuance, no nudge on it.
 2. **WIDTH at L6.** Every uncovered cell serving an ungraded FWD with no unmet dependency is cut THIS tick, one order per
    cell, one cell per lane, through `.tools/to-pipeline-gate.py`; under spine v3.0 the workers are
    subagents the COO spawns in worktrees, fan-out `N of M chains, cap K` stated in the issuance commit

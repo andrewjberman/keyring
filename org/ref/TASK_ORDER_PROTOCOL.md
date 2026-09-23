@@ -166,7 +166,8 @@ this template and the spine differ, the spine governs.
         (b) the hop's seam probe against its REAL neighbour where reachable (a fixture only
             where it is not);
         (c) at most one further criterion the cell genuinely needs.
-      A fourth carries a one-line reason on the face.
+      A fourth carries a one-line reason on the face. A difference-control arm is part of
+      the criterion it controls, never counted as a separate check (spine v3.17).
       REPO-WIDE HYGIENE IS NOT A CRITERION: typecheck, lint, the full suite, py_compile, and
       the "bun run build" / "bunx tsc -b" line below run ONCE PER MERGE at the COO's drain,
       and the live thread trace once per round there. On a canonical tree order, the portal

@@ -1,6 +1,6 @@
 ---
 name: closer
-description: "Close a product in flight whose components exist but no user journey works end to end, on Andrew's word. Four artifacts: a TRACE brief per product surface (hop walk browser to data to screen), a one-page CONTRACT with one writer per shared surface, a one-page MANDATE per implementing seat, then direct implementation with a CVO grading each pinned candidate. First milestone is the deployed live thread. Instrument of the spine's Closer subsection, not a second process. Claude and Codex seats. Forms: /closer trace SURFACE, /closer contract PRODUCT, /closer mandate SEAT, /closer status."
+description: "Close a product in flight whose components exist but no user journey works end to end, on Andrew's word. Four artifacts: a TRACE brief per product surface (hop walk browser to data to screen), a one-page CONTRACT with one writer per shared surface, a one-page MANDATE per implementing seat, then direct implementation with a CVO grading each pinned candidate. First milestone is the live thread (real backend, real data, real login). A read-only trace needs no Andrew word; building does. Instrument of the spine's Closer subsection, not a second process. Claude and Codex seats. Forms: /closer trace SURFACE, /closer propose PRODUCT, /closer contract PRODUCT, /closer mandate SEAT, /closer run SEAT, /closer review SEAT, /closer status."
 ---
 
 # /closer -- close a product in flight
@@ -18,19 +18,41 @@ more."* Brief: `org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF_CANONICAL_FLOW_SP
 ## When
 
 - **Applies:** a product whose components exist (parsers, adapters, routes, screens) but **no user journey works end
-  to end**, and Andrew names it for closing.
+  to end**.
+- **Who decides (Andrew-direct 2026-09-23 ~16:3xZ, calls 2 and 4, record
+  `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_163xZ_HOLD_OFF_AND_CLOSER_OPEN_CALLS_RULINGS.md`):**
+  - **A read-only TRACE needs no Andrew word.** The CRO or any Tier-1 seat may trace a product in flight at any time.
+  - **The CTO may PROPOSE a closer** when a project shows **2 or more rounds and 0 live journeys** (`/closer propose`).
+  - **Andrew's word gates only the BUILD phase:** the contract, the mandates, and the implementing and reviewing seats.
+  - A closer is scheduled in SEQUENCE like any project, and **Codex `2.0.0_SA_COO*` seats count toward the laptop's
+    three-COO limit** (call 3).
 - **Does not apply:** greenfield work (canonical round 1 already starts with the live thread, spine L2/L5); a
-  single-surface fix (just fix it); a pipeline or governance project with no product surface.
+  single-surface fix (just fix it); a governance project. **A purely backend or infrastructure product is OPEN**
+  (call 5): what "live" means for it is still being defined, so do not start a closer on one until the spine says.
 - **Hands back:** once the live thread and every named journey pass CVO review on a pinned candidate, remaining work
-  returns to canonical enrichment rounds, or the product closes. The closer effort does not become a standing process.
+  returns to canonical enrichment rounds, or the product closes. **At hand-back the product becomes ONE project** --
+  the thread is its first outcome and the other journeys are enrichment -- and any frontend/backend split projects
+  close as superseded (call 6; IRPT_FNTEND and IRPT_BCKEND are the first). The closer effort does not become a
+  standing process.
+
+## Project state while a closer runs
+
+- The CTO records the contract path on each affected project row as `"closer_contract": "<path to CONTRACT.md>"`,
+  in the same commit as the contract.
+- `/canonical-drive` **skips** a project whose row carries `closer_contract`: no recut, no issuance, no nudge. Rounds
+  already cut stay as they are; the closer does not re-open them.
+- At hand-back the CTO removes the field in the commit that registers or re-points the single product project.
 
 ## Invocation
 
 | Form | Who | Produces |
 |---|---|---|
-| `/closer trace SURFACE` | `4.0.0_SA_CRO`, or any Tier-1 seat | one TRACE brief per product surface (a tab, a report, a feed) |
-| `/closer contract PRODUCT` | `1.0.0_SA_CTO` | CONTRACT.md plus the path grant, in one commit |
+| `/closer trace SURFACE` | `4.0.0_SA_CRO`, or any Tier-1 seat; no Andrew word needed | one TRACE brief per product surface (a tab, a report, a feed) |
+| `/closer propose PRODUCT` | `1.0.0_SA_CTO` | a one-screen proposal to Andrew: rounds run, live journeys (0), the traces, the seats it would need |
+| `/closer contract PRODUCT` | `1.0.0_SA_CTO`, after Andrew's word | CONTRACT.md plus the path grant and the rows' `closer_contract`, in one commit |
 | `/closer mandate SEAT` | `1.0.0_SA_CTO` | one MANDATE per implementing seat and one per matching CVO |
+| `/closer run SEAT` | each implementing seat (`2.0.0_SA_COO~x`) | Step 4 below: read contract + mandate, reach the live thread first, implement directly, publish pins |
+| `/closer review SEAT` | each matching CVO (`3.0.0_SA_CVO~x`) | Step 4 below: grade each pinned candidate PASS / FAIL / NOT_EVALUATED in its own evidence folder |
 | `/closer status` | each implementing seat | its STATUS.md, overwritten in place |
 
 ## The four artifacts and their owners
@@ -61,7 +83,8 @@ missing, incomplete or mismatched. Use `templates/TRACE_BRIEF.md`. The rules tha
   configured endpoint, token path or secret name is not an executed connector.
 - **Every hop is headed `### N. A -> B -- STATE`**, STATE one of `WORKS`, `INCOMPLETE`, `MISSING`, `MISMATCHED`.
   Each hop names what exists (paths), the exact mismatch, and ends in one `Close:` line.
-- **Completion sequence step 1 is the live thread** (LIVE FIRST, below).
+- **Completion sequence step 1 is the live thread** (LIVE FIRST, below). For a pipeline, the thread's "person" is
+  the consumer of the served output.
 - **Acceptance is one reconciled trace per case**, not a fixture pass.
 - **LGIC (CLAUDE.md Rule 30):** any new S3 address or resource name in a `Close:` line is `lib/opal_naming.py`
   `address()` / `name()` output. A builder refusal is a missing registry row under `infra/logic/registry/`, never a
@@ -91,14 +114,34 @@ Implementing seats implement directly: code, tests, packaging, route and IaC cha
 for their journey. They coordinate by pinned patches and files. The CVO never fixes what it grades. The CTO rules on
 ties and integrates the three-way verdict; no single lane closes the product.
 
+**`/closer run SEAT` -- the implementing seat's loop:**
+1. Read the CONTRACT, your MANDATE and the trace brief for your surface. Measure your starting pins.
+2. If you own the shared first hop, make the live thread pass FIRST (LIVE FIRST below). If you do not, build against
+   the owner's published interface and do not count an offline closure toward an acceptance ID until the thread is live.
+3. Implement, test, and publish a pinned candidate: one message, interface published or review handoff.
+4. Overwrite STATUS.md (`templates/STATUS.md`). Park anything off the thread (NO SIDE-QUESTS).
+5. On a FAIL from your CVO, fix directly and return a new pin. No recut, no round.
+
+**`/closer review SEAT` -- the matching CVO's loop:**
+1. Grade the exact pinned candidate in the environment it names: PASS, FAIL or NOT_EVALUATED, with evidence and limits,
+   in your own evidence folder. Offline success is never a deployed end-to-end PASS.
+2. Grade on evidence you can reproduce: a live trace, the deployed bytes, or a test run. **A Codex CVO grades on
+   exactly those three and never on a comp-tool read** (the 2026-09-02 ruling: no comp-tool-grounded adjudication by a
+   Codex seat until a Codex rail exists).
+3. Send the verdict to the implementing seat and the CTO in one review-handoff message. Never fix what you grade.
+
 ## The three rules (each fixes a measured cost of the IRPT run)
 
 ### LIVE FIRST
 
-**The first milestone is the deployed live thread** through the **shared first hop** -- auth, scope, bootstrap --
+**The first milestone is the live thread** through the **shared first hop** -- auth, scope, bootstrap --
 owned by ONE seat and proven live (browser -> API -> backend -> provider/data -> rendered screen, one trace artifact)
 before any per-product offline closure counts toward an acceptance ID. Offline closures are allowed; they grade
 nothing until the thread is live. A thread with any fixture-fed hop is not done.
+
+**What "live" means (Andrew, call 5):** for a product with a frontend, the **real backend, real data and real login**;
+the frontend may run locally or on DEV. A PROD release is an enrichment item, not part of the thread. For a purely
+backend or infrastructure product the definition is OPEN.
 
 *Measured cost:* about 8.5 h from the contract to first live contact, and **both** live contacts then failed on the
 shared scope/bootstrap hop every tab crosses first (brief section 1.2) -- so no downstream offline closure was worth
@@ -111,7 +154,8 @@ anything live.
 - **INTERFACES.md holds only the CURRENT versioned schema and one example.** Superseded text moves to
   `INTERFACES_HISTORY.md` beside it.
 - **A message carries one of three things: interface published, blocker, review handoff.** Each cites path@commit,
-  owner, requested action and affected acceptance IDs. **No ACK messages.** Receipt is the transport's job.
+  owner, requested action and affected acceptance IDs. **No ACK messages between peers inside the closer.** Receipt
+  is the transport's job. This does not cover an acknowledgement Andrew or `0.0.0_AB_MSTR` asks for -- send that one.
 - **CTO rulings append to one `RULINGS.md`** in the contract folder and go out as **one message per batch**, not one
   per ruling.
 
@@ -139,7 +183,7 @@ This skill is for both runtimes. Artifacts and rules are identical; only the sen
 
 Codex seats: the 2026-09-02 ruling that Codex seats issue no comp-tool-grounded adjudication until a Codex rail exists
 (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md`)
-still bounds a Codex CVO; the CTO carries it.
+still bounds a Codex CVO: it grades on a live trace, the deployed bytes or a test run, never on a comp-tool read.
 
 ## What stays in force
 

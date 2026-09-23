@@ -14,9 +14,12 @@ an issuance. A task order has a **worker face**, the part a worker is given and 
 **record face**, the part the gates read and a worker never sees. A **track** is one of the three concurrent lines of
 work inside a round, the COO's, the CVO's and the CTO's; tracks share files and never messages. The **slug** is the
 CVO's one artifact of a round; the **round-N analysis** and the **PRD addendum** are the CTO's two possible answers
-to it. The **thread** is one named person's one journey through a product at coarse resolution, run on the deployed
-stack through every real hop from the screen to the data and back, and proven by one trace artifact that records each
-hop's request and response and ends in the rendered result; a thread with any hop fed by a fixture is not done. An
+to it. The **thread** is one named person's one journey through a product at coarse resolution, run LIVE through
+every real hop from the screen to the data and back, and proven by one trace artifact that records each hop's
+request and response and ends in the rendered result; a thread with any hop fed by a fixture is not done. For a
+product with a frontend, **live** means the real backend, real data and real login, with the frontend running locally
+or on DEV; a PROD release is an enrichment item, not part of the thread. For a pipeline, the person is the consumer
+of the served output. What live means for a purely backend or infrastructure product is not yet defined. An
 **enrichment round** is any round after the first: it adds the capabilities the CTO's round-N analysis names in its
 enrichment list, with the thread kept working. A **gate** refuses at commit or at completion; a **notifier** delivers and never blocks; **binds by reading**
 means the sentence has no mechanical carrier. The register's `dep_stage` enum (`REGISTERED`, `PRD`, `DECOMP`,
@@ -91,10 +94,12 @@ travels to the worker.
 - **Input:** the brief. **Output:** numbered qualitative outcomes `FWD-1..n`, each citing a brief line, carrying no
   numbers, each disputable; ids are permanent and never reused.
 - **THE THREAD IS THE FIRST OUTCOME.** For a product or a pipeline, `FWD-1` is the thread, its `DONE WHEN` reading
-  `EXERCISED -- one live trace, on the deployed stack, ending in the rendered result`; every other outcome is cut as
-  before and is served by the enrichment rounds. The seam between any two components lies inside the thread by
-  construction, so it always has an owner. For a pipeline with no product surface the thread is source to served
-  artifact. COST: one outcome. NON-APPLICATION: a pure infrastructure or governance project, which has no journey.
+  `EXERCISED -- one live trace ending in the rendered result`; every other outcome is cut as before and is served by
+  the enrichment rounds. The seam between any two components lies inside the thread by construction, so it always has
+  an owner. For a pipeline with no product surface the thread is source to served artifact, and its person is the
+  consumer of that artifact. COST: one outcome. NON-APPLICATION: a governance project, which has no journey. A purely
+  backend or infrastructure product is not yet under this clause, because what live means for it is not yet defined;
+  until it is, such a project cuts its outcomes as before.
 - ⛔ **NO FWD IS A WAIT.** Every outcome is PROVABLE BY AN ACT A SEAT CAN TAKE ON DEMAND. An outcome whose only proof is an event nobody
   controls -- a failure, a rare condition, a calendar -- is written WRONG, and the remedy is not patience: it is re-cut so its MECHANISM is
   DRIVEN DELIBERATELY, with the organic case kept as the negative arm. **THE ACT MAY BE A DRIVEN RUN OR A READ OF EXISTING HISTORY** -- driving is
@@ -143,9 +148,10 @@ travels to the worker.
   `prd_version`, `step`, `brief_ref`, `endpoint_outcomes`, `status`), the endpoint section, the project arc with its
   defined outcome, the surface manifest, one row per engine, and for a product or pipeline two further sections: the
   **THREAD**, the hop list of the first outcome written `N. A -> B`, one line per hop, and the **ENRICHMENT BACKLOG**,
-  everything off the thread, ordered, one line each. Both sit in the brief half of the sign-off below. A new product
-  is one journey in one project, never split into a frontend project and a backend project; where such a split
-  already exists, the two PRDs name one project as the owner of each seam hop. Every specification decision is closed in the PRD;
+  everything off the thread, ordered, one line each. Both sit in the brief half of the sign-off below. **One product
+  is one project; its first outcome is one journey; it is never split into a frontend project and a backend
+  project.** Where such a split already exists, the two PRDs name one project as the owner of each seam hop until the
+  product is re-registered as one project (a closer's hand-back does this). Every specification decision is closed in the PRD;
   a decision that is an enumeration is closed as data in `org/standards/` and cited; a PRD carries no open
   decide-first question into L5. Any substantive edit bumps `prd_version`; a PRD addendum from L10 is such an edit,
   by the same owner, and re-enters L5 through the same notifier as a first PRD.
@@ -281,7 +287,8 @@ travels to the worker.
 - **THE VERIFICATION DIET -- A TASK ORDER IS MOSTLY THE BUILD.** A build task order carries at most THREE mechanical
   criteria: the built behaviour; the hop's seam probe against its REAL neighbour where that neighbour is reachable, a
   fixture only where it is not; and at most one further criterion the cell genuinely needs. A fourth carries a
-  one-line reason on the face. Repo-wide
+  one-line reason on the face. A difference-control arm (below) is part of the criterion it controls and is not
+  counted as a separate check. Repo-wide
   hygiene -- typecheck, lint, the full suite, `py_compile` -- is never a criterion on an order: the COO runs it once per
   merge at the drain, beside `safe-merge.sh`'s row gate, and re-runs the live thread trace once per round there. A
   judgment criterion appears only where the outcome needs judgment, a user-facing reading or a design-conformance
@@ -539,10 +546,16 @@ watcher from its watermark, and the CTO does nothing. `/canonical-flow` is the i
 
 ### Closer — a product in flight, on Andrew's word
 
-- **When:** a product whose components exist but on which no journey works end to end, and Andrew names it for
-  closing. It runs in place of L5 to L9 for the named journeys; L1 to L4 are not re-run, and the project's register
-  row, PRD and channel stay where they are. NON-APPLICATION: greenfield work, where round 1 already builds the thread,
-  and a single-surface fix.
+- **When:** a product whose components exist but on which no journey works end to end. A read-only trace needs no
+  word from Andrew and any Tier-1 seat may run one; the CTO may propose a closer when a project shows two or more
+  rounds and no live journey; Andrew's word gates only the build: the contract, the mandates and the implementing and
+  reviewing seats. A closer is scheduled in sequence like any project, and its Codex COO seats count toward the
+  laptop's three-COO limit. It runs in place of L5 to L9 for the named journeys; L1 to L4 are not re-run, and the
+  project's PRD and channel stay where they are. NON-APPLICATION: greenfield work, where round 1 already builds the
+  thread; a single-surface fix; and, until live is defined for it, a purely backend or infrastructure product.
+- **State of the project while it runs:** the CTO records the contract's path on each affected project row as
+  `closer_contract`, in the contract's commit, and `/canonical-drive` skips a project whose row carries it; rounds
+  already cut are not re-opened. The field is removed at hand-back.
 - **Four artifacts, one owner each.** (1) A **trace brief** per product surface, by `4.0.0_SA_CRO` or any Tier-1 seat:
   the current state read from the DEPLOYED bytes, an adapter map, and a numbered hop walk, each hop graded `WORKS`,
   `INCOMPLETE`, `MISSING` or `MISMATCHED` and ending in the change that closes it; any new address or name in it is
@@ -553,20 +566,23 @@ watcher from its watermark, and the CTO does nothing. `/canonical-flow` is the i
   one-page **mandate** per implementing seat, by the CTO: its first act, its acceptance ids, its write surface. (4)
   **Execution and review**: each implementing seat, a `2.0.0_SA_COO` instance, implements directly and publishes
   pinned candidates; a `3.0.0_SA_CVO` instance per implementing seat grades each pinned candidate `PASS`, `FAIL` or
-  `NOT_EVALUATED`, and offline success is never called a deployed end-to-end pass; the CTO integrates and rules. The
+  `NOT_EVALUATED`, and offline success is never called a deployed end-to-end pass; a Codex CVO grades on a live trace,
+  the deployed bytes or a test run and never on a comp-tool read; the CTO integrates and rules. The
   COO implementing directly, rather than through workers, is the one departure from L7, and Andrew's word naming the
   product is its authority.
-- **Three rules.** **LIVE FIRST:** the first milestone is the deployed thread through the shared first hop (the
+- **Three rules.** **LIVE FIRST:** the first milestone is the live thread through the shared first hop (the
   authentication, scope and bootstrap every screen crosses), owned by one seat and proven live before any offline
   closure counts toward an acceptance id; offline closures are allowed and grade nothing until then. **FILES OVER
   MAIL:** each seat keeps one fixed-shape STATUS file overwritten in place (pins, write claims, next proof,
   dependencies with owner, limits) and an INTERFACES file holding only the current schema and example, superseded text
-  moved to a history file; a message carries an interface published, a blocker or a review handoff and nothing else,
-  never an acknowledgement; the CTO's rulings append to one rulings file and go out as one message per batch. **NO
+  moved to a history file; a message between peers carries an interface published, a blocker or a review handoff and
+  nothing else, never an acknowledgement, though an acknowledgement Andrew or `0.0.0_AB_MSTR` asks for is sent; the
+  CTO's rulings append to one rulings file and go out as one message per batch. **NO
   SIDE-QUESTS:** a naming, registry or storage-policy question that is not on the thread is parked with an owner and
   the condition that un-parks it, never run as a review chain inside the sprint.
-- **Hand-back:** once the thread and the named journeys pass live, the remaining work returns to canonical enrichment
-  rounds under L10, or to the close.
+- **Hand-back:** once the thread and the named journeys pass live, the product becomes one project, its thread the
+  first outcome and its other journeys the enrichment backlog; any frontend and backend projects it was split into
+  close as superseded; and the remaining work returns to canonical enrichment rounds under L10, or to the close.
 - **Tool:** `/closer`, in both runtimes; its templates are the four artifacts.
 
 ### Cross-cutting — the integrator
@@ -679,3 +695,4 @@ verdict, read against the last round under the prior text on the same instrument
 | 3.14 | 2026-09-10 | Andrew-direct ~21:2xZ at the `1.0.0_SA_CTO` terminal, VERBATIM *"I dont want to ask shit this should be entirely automatic and gated, CRO and CVO should have to sign off on PRD before COO gets it"* (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_212xZ_PRD_SIGNOFF_IS_A_GATE_CRO_AND_CVO_BEFORE_COO.md`); measured cause: `3.0.0_SA_CVO` d0e72ccd56 and `4.0.0_SA_CRO` e975e96fc0 / 637b2f8178 on the two IRPT PRDs, thirteen corrections in three unrequested passes | L4 gains **THE PRD SIGN-OFF GATE (L4-R)**: the brief's author signs the coverage map for CONTENT carriage, the verifier signs the ENDPOINT section against the ratified pins and the CONTRACTS section against the counterpart; both sign-offs are files in the reviewers' own lane `TREE_PRD_SIGNOFF`, version-bound to the PRD; `prd-header-notify.py` withholds the COO delivery until both exist and `to-pipeline-gate.py` LIMB 6 refuses a task order from an unsigned PRD. The CTO cannot sign its own document. Two mechanical carriers, one new lane, no new owner; non-retroactive for rounds already cut. |
 | 3.15 | 2026-09-11 | Andrew-direct ~05:2xZ-05:3xZ at the `1.0.0_SA_CTO` terminal: "look critically at the sign-off process ... it is very loose right now and unclear. I want to tighten it up. How do we move the gating process along naturally so i dont have to be buzzing around asking agents what theyre doing?"; "CVO should always be included. If CRO is not online, can do COO in their stead"; "make sure the spine operation works properly, that the scripts work properly and the agents know how to use them to do their stamp. make sure there are clear expectations here". Measured: thirteen PRD versions in one night, the brief half re-signed three times unchanged; the notifier never triggered on a sign-off commit (fixed 973ad3770f); the reviewers were nudged by Andrew by hand | L4-R tightened: TWO HALVES bound to their bytes (`half_hash`), not to `prd_version`; ONE rule in `.tools/prd_signoff_lib.py` called by the gate, the notifier and the new stamp `.tools/prd-signoff.py` (`sign` / `refuse` / `status`); reviewers ROUTED per half (CVO always; CRO or a live COO not holding the round in its stead); a 60-minute window with automatic OVERDUE nudges (CTO copied) and re-routing; the addendum path re-opens only the half it changed; the vintage boundary (`f8337502a9`) in code; reviewer expectations stated. No new owner. |
 | 3.16 | 2026-09-23 | Andrew-direct at the `1.0.0_SA_CTO~C` terminal (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260923_CANONICAL_FLOW_OPS_AND_CLOSER_FLOW.md` @c564b6262a): *"we need to focus on one round bringing a product or pipeline to MVP status ... subsequent rounds are all about enrichment"* and the closer flow formalised lightly; the brief he commissioned, `org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF_CANONICAL_FLOW_SPEED_CLOSER_FLOW_SKILLS_PARITY_20260923.md` @ea031c3987 (R1-R4). Measured cause: IRPT_FNTEND 15 rounds and IRPT_BCKEND 18 rounds with zero journeys end to end and zero outcomes REALIZED, both PRDs leaving the frontend/backend seam jointly unowned; the frontend BUILD share of criteria falling from 68% in round 1 to 0% by round 15; the closer run reaching code in under an hour and then both live contacts failing on the shared first hop after about 8.5 hours offline | **THE THREAD FIRST**: a product's `FWD-1` is one live journey end to end on the deployed stack; the PRD gains THREAD and ENRICHMENT BACKLOG sections (brief half); a new product is one journey in one project; round 1's rectangle is over the thread's hops, with the battery defaulting to not-applicable except `comp-iam`. **ENRICHMENT ROUNDS**: the round-N analysis ends in an enrichment list for round N+1; remediations ride along, thread-breaking first and instrument/record/style repairs batched into one cell; the L6 sentence that made every later round a repair loop is replaced by one that covers THIS round's decomposition. **THE VERIFICATION DIET**: at most three mechanical criteria per build task order; repo-wide hygiene and the thread trace run at the drain; judgment only where needed; by prompting, no gate. **CLOSER**: a subsection beside Midstream for a product in flight on Andrew's word, its four artifacts, LIVE FIRST, FILES OVER MAIL and NO SIDE-QUESTS, and its hand-back to enrichment rounds; `/closer` is its instrument. Non-retroactive: a round already cut finishes under its cut task orders. No new gate or owner. |
+| 3.17 | 2026-09-23 | Andrew-direct ~16:3xZ at the `4.0.0_SA_CRO` terminal answering seven open calls on the v3.16 brief and text, VERBATIM *"1.) Hold is off. 2.) Yes. 3.) Yes. 4.) Rec approved. 5.) That does apply for projects that have a frontend but needs to be considered in the event it's purely a backend/infrastructure product (e.g. NFRA_GLOBGRPH, NFRA_COMPEFFICACY, LGIC_NAMING, LGIC_LGCTFM, etc.). 6.) Yes. 7.) Yes."* (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_163xZ_HOLD_OFF_AND_CLOSER_OPEN_CALLS_RULINGS.md` @7303be1bbb), relayed to `1.0.0_SA_CTO~C` as message 99672 with the six non-sovereign fixes of the same `/open-calls` output | **LIVE** defined for a product with a frontend: the real backend, real data and real login, the frontend local or on DEV, a PROD release an enrichment item; for a purely backend or infrastructure product it is OPEN, and such a product stays outside the thread clause until defined. **L4** reworded: one product is one project, its first outcome one journey, never a frontend/backend split. **CLOSER**: a read-only trace needs no word from Andrew; the CTO may propose a closer at two or more rounds with no live journey; Andrew's word gates only the build; a closer is sequenced like any project and its Codex COO seats count toward the three-COO limit; the row carries `closer_contract` while it runs and `/canonical-drive` skips it; a Codex CVO grades on a live trace, deployed bytes or a test run, never a comp-tool read; the no-acknowledgement rule covers peer traffic only; at hand-back the product becomes one project and its split projects close as superseded. **DIET**: a difference-control arm is part of its criterion, not a fourth check. **PIPELINE THREAD**: its person is the consumer of the served output. No new gate or owner. |

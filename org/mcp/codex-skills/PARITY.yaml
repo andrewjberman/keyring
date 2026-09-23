@@ -52,11 +52,11 @@ skills:
   - name: verify
     source: .claude/skills/verify
     runtime: both
-    note: "Andrew-direct 2026-09-02 Call 2(b), NOT LIFTED: a Codex-runtime seat issues no comp-tool-grounded adjudication (grade, verdict, certification or broadcast whose evidence is a comp-tool search or inspection) until a Codex rail exists. org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md"
+    note: "Andrew-direct 2026-09-02 Call 2(b), NOT LIFTED: a Codex-runtime seat issues no comp-tool-grounded adjudication (grade, verdict, certification or broadcast whose evidence is a comp-tool search or inspection) until a Codex rail exists. A Codex seat grades on a live trace, the deployed bytes or a test run instead (spine v3.17). org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md"
   - name: seams
     source: .claude/skills/seams
     runtime: both
-    note: "Andrew-direct 2026-09-02 Call 2(b), NOT LIFTED: a Codex-runtime seat issues no comp-tool-grounded adjudication (grade, verdict, certification or broadcast whose evidence is a comp-tool search or inspection) until a Codex rail exists. org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md"
+    note: "Andrew-direct 2026-09-02 Call 2(b), NOT LIFTED: a Codex-runtime seat issues no comp-tool-grounded adjudication (grade, verdict, certification or broadcast whose evidence is a comp-tool search or inspection) until a Codex rail exists. A Codex seat grades on a live trace, the deployed bytes or a test run instead (spine v3.17). org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260902_230xZ_OPEN_CALLS_x2_TREE_LANES_ANY_CODEX_RAIL.md"
   - name: handoff
     source: .claude/skills/handoff
     runtime: both
