@@ -1,5 +1,17 @@
 # M shared interfaces: candidate v1
 
+## Maintained source resolver candidate (2026-09-23)
+
+Authority: IRPT-MAINTAINED-SOURCE-01/02 at `0429af3604` / `51b5d63a81`.
+`_scope/maintained_sources.py` implements current owner/input checks and canonical
+profile projections. See `MAINTAINED_SOURCE_RESOLVER.md` for the exact signatures,
+P schema `d91b2bdd10`, Y catalogue `9daa67433e`, tests and integration limits.
+This supersedes the inventory's earlier recipient gap: explicit `prepared_for`
+is accepted display text, never legal identity or access. Every currently
+selected comparison remains unavailable; empty selection needs no fake entry.
+Runtime canonical-reader transport and Y acceptance/worker integration are not
+delivered by this local source candidate.
+
 Owner: `2.0.0_SA_COO~M`. Governing authority:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md` v1.2.
 These are tested Python primitives, not deployed API completion. Existing wire

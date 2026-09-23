@@ -1,5 +1,16 @@
 # Maintained source inventory and unresolved consumer mappings
 
+**2026-09-23 update:** The historical inventory below predates
+IRPT-MAINTAINED-SOURCE-02 `51b5d63a81`. Its recipient gap is now resolved by
+explicit authorized-user-entered `prepared_for`, not directory-name inference.
+P pinned the canonical contract at `d91b2bdd10`; Y pinned the existing catalogue
+candidate at `9daa67433e` with every entry UNVERIFIED and no permitted-use policy.
+M's local implementation and exact remaining integration limits are in
+`MAINTAINED_SOURCE_RESOLVER.md`. The old example spellings below remain an
+inventory proposal; current output uses P's canonical descriptor spelling and
+unescaped UTF-8 digest encoding. No historical pin is substituted for a runtime
+source revision.
+
 Authority: complete CTO IRPT-MAINTAINED-SOURCE-01 `0429af3604`.
 Inventory baseline: `483a2fee0a4feba8768d3efef347024d8708cfd1`.
 M owns the prospective `_scope/maintained_sources.py` resolver and its tests.
