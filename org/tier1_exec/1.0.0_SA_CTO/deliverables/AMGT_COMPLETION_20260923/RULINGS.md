@@ -222,6 +222,46 @@ file's whole history**, so this closes the forward question and not every questi
 ⭐ **This is Rule 22's negative mirror working as designed, and the cost was one query.** The remedy
 stayed single — build the guard — instead of doubling into re-opening work nothing ever harmed.
 
+## R-10 -- ANDREW SUSPENDS THE L4-R SIGNATURE AS A BAR FOR AMGT. THE REVIEW IS KEPT; THE RITUAL IS NOT
+
+**Andrew-direct 2026-09-23 ~21:2xZ at this terminal, VERBATIM: *"agreed with your rec"*,** answering this
+seat's recommendation in these words: *"keep the reviewing and drop the ritual"* -- specifically, **KEEP**
+`3.0.0_SA_CVO~Z` grading pinned candidates plus the never-widen pair and cutover review, and **SUSPEND**
+the L4-R PRD half-signature **as a bar** while AMGT runs under closer mandates.
+
+**THE MEASURED BASIS, which is why this is not merely tidying.** The L4-R half-signature feeds
+`to-pipeline-gate` LIMB 6, which refuses a **NEWLY-ADDED TASK ORDER** against a PRD with an unsigned
+half. ⛔ **CLOSER MODE CUTS NO TASK ORDERS** (`/closer`: *"No task orders, no rounds, no recuts for
+in-scope fixes"*), and Andrew's word to `2.0.0_SA_COO~Z` was *"We are moving off of the canonical flow
+for this project."* **So the door LIMB 6 guards is one nobody walks through, and two signature cycles
+were spent tonight on a lock with no traffic behind it.**
+
+⛔ **WHAT IS SUSPENDED IS NARROW AND THE SCOPE MATTERS MORE THAN THE SUSPENSION.** SUSPENDED: the
+half-signature as a **BAR on progress** for AMGT PRDs under closer mode. **NOT SUSPENDED, and none of
+this is touched:** `3.0.0_SA_CVO~Z`'s REVIEW of ratified text and the binding force of its findings on
+this seat · its grading of every pinned candidate · **the never-widen pair on any served-output write**
+· the cutover review · every deploy gate. **No tool, gate or hook is edited. Nothing is removed from the
+repo.** This is a ruling about what this seat treats as a blocker, not a change to a mechanism.
+
+⭐ **AND THE EVIDENCE MOVED AGAINST THIS SEAT'S OWN REC BETWEEN PROPOSING IT AND EXECUTING IT, WHICH IS
+RECORDED RATHER THAN QUIETLY DROPPED.** The rec was sent at ~21:1xZ. `3.0.0_SA_CVO~Z`'s R8 (msg 25069)
+arrived at 21:17Z and **caught a live self-contradiction in the ratified text this seat had just
+written** -- amendment 4 asserted both that the 221-file census IS the denominator and that 221 *"appears
+in no denominator here"*, so a worker quoting the stale bullet would have carried a RETRACTED FIGURE into
+the build as ratified text. **That catch came OUT OF the cycle being suspended.**
+
+⛔ **SO THE HALVES ARE NOT INTERCHANGEABLE AND THE DISTINCTION IS THE WHOLE RULING: THE REVIEW FINDS
+DEFECTS; THE SIGNATURE GATES A DOOR NOBODY USES.** Suspending the review to save the ceremony would have
+traded a working control for a dead one. **R8's defect is fixed in amendment 4's next hash REGARDLESS of
+the suspension, because a self-contradicting spec is a defect whether or not anything gates it** --
+un-gating text does not license shipping text that contradicts itself.
+
+⚠ **NON-APPLICATION, stated so this is not read wider than it is:** any project NOT under a closer
+mandate; any PRD from which task orders ARE cut; and the laptop fabric, which this ruling does not reach.
+**REVERSION: the moment AMGT cuts a task order from a PRD, LIMB 6 has traffic again and the bar is back
+without a further ruling.** COST: none -- it removes a step. `3.0.0_SA_CVO~Z` may pitch against the scope
+of this ruling as a governance fork.
+
 ## R-9 -- R-7's LOAN IS TERMINATED. THE PEERS AGREED FIRST, SO THIS RATIFIES RATHER THAN RULES
 
 **`2.0.0_SA_COO~Z` IS ACTIVE.** Andrew authorized it directly in its own conversation, recorded at

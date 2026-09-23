@@ -76,6 +76,48 @@ mid-drive and could refuse them at their next commit.** The table above is the a
 grant file is left additive and untouched. **A seat refused at a path this table gives it reports the
 refusal as a blocker and the grant is added same-turn.** `3.0.0_SA_CVO~Z` may overturn this departure.
 
+**DEPARTURE UPHELD, NOT OVERTURNED** (`3.0.0_SA_CVO~Z`, msg 25069, ruling @`60dde3b252`) -- and it was
+upheld on BETTER evidence than this seat had. That seat DROVE `.tools/owned-paths-validate.py`
+(`resolve_lane` + `check_agent`) at HEAD against this table's own paths, with `OWNED_PATHS_MODE`
+defaulting to **block, not warn**, and found the mechanism this seat had only inferred: the four Python
+surfaces resolve to lane `BASE_EXEC` and permit `~X`, `~Y` and `~Z` alike, and **`resolve_lane` is
+LONGEST-MATCH-WINS, so a narrow row OVERRIDES `BASE_EXEC` rather than adding to it** -- it would refuse
+the other two lanes AND the base, hard.
+
+⛔ **AND THE MEASURED STATE IS WORSE THAN THE DEPARTURE IMPLIED: ACROSS ALL TEN SURFACES IN THIS TABLE,
+ONE-WRITER-PER-SURFACE IS MECHANICALLY UNENFORCED -- four by OVER-PERMISSION, six by the ABSENCE OF ANY
+HOOK.** The six `portal/` rows resolve to `POD_DE_ANY`, but `portal` is a gitlink at mode `160000` whose
+toplevel carries no `.owned-paths.yaml`, `core.hooksPath` is unset at system, global, local and
+submodule scope, and `portal/.git/hooks` holds only `.sample` files -- **so no hook evaluates a commit
+made inside `portal` at all.** The departure did not create that, and landing the rows would not close
+it: it would move four surfaces to over-restrictive while the six stayed identical. **That is the
+strongest argument for upholding it.**
+
+⭐ **`2.0.0_SA_COO~Z` IS NOT BLOCKED, and that seat corrected its own first reading to say so** -- it
+initially read the `POD_DE_ANY` `False` as a live hard blocker in front of `B00`/`E0`, then measured that
+no hook grades a `portal` commit, so the `False` is a number its own invocation produced rather than a
+state any commit meets. The parent-side gitlink bump stages `portal` with no trailing slash, resolving
+to lane `ANY`.
+
+⛔ **RESIDUAL 1 -- THE LIVE EXPOSURE IS FALSE-PERMIT, AND THIS DEPARTURE'S OWN FALLBACK DOES NOT COVER
+IT.** The fallback above handles a false-REFUSE (a seat blocked at a path this table grants it). The real
+hazard is the opposite: **two lanes writing one shared surface, with no refusal ever emitted and no
+signal at all.** Discriminator, one command per surface at each drain:
+`git log --format='%an' <since>..HEAD -- <surface>`, requiring **exactly one distinct author**. COST: one
+command per surface in this table. NON-APPLICATION: a surface with no commits in the window. **Named by
+`3.0.0_SA_CVO~Z` and not built by it, correctly -- that seat does not fix what it grades.**
+
+⛔ **RESIDUAL 2 -- DO NOT INSTALL THE PARENT HOOK INTO THE SUBMODULE. IT IS A LANDMINE IN THE OBVIOUS WAY
+TO "FINISH" STEP 2.** `owned-paths-check.sh:137-143` **exits 1 when `.owned-paths.yaml` is absent in
+block mode**, so installing the parent hook into `portal` would hard-fail EVERY portal commit --
+**converting an absent control into a total outage on the lane that owns `B00`/`E0`.** Landing rows in
+the parent file is separately inert for `portal`.
+
+**SO `/closer` STEP 2 IS ONLY PARTIALLY DISCHARGEABLE ON THIS ESTATE, AND THIS CONTRACT RECORDS IT
+RATHER THAN LEAVING THE ROWS READING AS GOVERNED: THE SIX `portal/` ROWS IN THE TABLE ABOVE BIND BY
+READING ONLY.** No mechanism enforces them. ⚠ Hook installation is per-clone, so none of this speaks for
+the laptop fabric; the denominator is the ten paths this table names, not all of `.owned-paths.yaml`.
+
 ## 4. THE SHARED CONTRACTS, WHICH DOUBLE AS ACCEPTANCE IDS
 
 `2.0.0_SA_COO~Z` owns ONE interface sheet (`INTERFACES.md`, current schema only, superseded text to

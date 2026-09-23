@@ -545,19 +545,57 @@ implicit promotion into an explicit one and reads as a fix while changing nothin
    WORSE THAN DECORATIVE, because it reads as a clean result.** The skipped-computation case is a
    generation-grain `FAILED` per requirement 1 as replaced, not a daily value.
 
-**WHAT THIS AMENDMENT STILL OWES BEFORE L4-R, STATED RATHER THAN IMPLIED.** `3.0.0_SA_CVO~Z` set its
-terms before drafting; three are not yet satisfied and are named here with their owner:
+⚠ **SUPERSEDED IN PLACE BY AMENDMENT 4, R8. THE BLOCK BELOW IS THE AMENDMENT-2 VINTAGE, RETAINED AND
+NOT DELETED. `A.2` ABOVE IS THE LIVE ACCOUNTING.**
 
-- STOP: **CONSUMER IMPACT, NOT A CONSUMER LIST.** Amendment 1 names two modules and one test and
-  **grades none**. *"A consumer census that names three and grades none is a list, not an impact."*
-  **Each of Chatter, Price and the legacy republisher is graded BREAKS / DEGRADES / DOES NOT NOTICE.**
-  NOTE: Note also that those three are **logical consumers**, a different grain from Amendment 1's
-  **code modules** -- both are needed and neither substitutes.
-- STOP: **ASKED AGAINST THE DEPLOYED STATE, NOT THE REPO.** Amendment 1 is written from repo bytes. **The
-  question is what PRODUCTION does today**, on the same re-basing the served-output incident forced:
-  an amendment is not reviewed as narrow in a plane where production already behaves otherwise.
-- **MECE AS A SUBTRACTION FROM A PRINTED DENOMINATOR** -- `2.0.0_SA_COO~Y`'s **221-file bounded
-  census** stated as that denominator.
+STOP: **AND IT CARRIED TWO LIVE CONTRADICTIONS, WHICH IS WHY IT IS MARKED RATHER THAN LEFT AS HISTORY**
+(`3.0.0_SA_CVO~Z`, R8, msg 25069): its heading said three items gate L4-R while `A.2` supersedes that
+accounting and says nothing about them ceasing to gate; and its last bullet asserted the **221-file
+census IS the denominator** while `A.2`, **in the same ratified half**, states 221 *"appears in no
+denominator here"*. ⛔ **THE CONTRACT ASSERTED BOTH, AND A WORKER QUOTING THE BULLET WOULD HAVE CARRIED
+A RETRACTED FIGURE INTO THE BUILD AS RATIFIED TEXT.**
+
+⭐ **WHY IT SURVIVED THREE SUPERSESSION MARKINGS, AND IT IS STRUCTURAL RATHER THAN CARELESS: THE FILE IS
+NOT IN CHRONOLOGICAL ORDER.** `A.2` sits ABOVE the paragraph it supersedes and amendment 3 sits BELOW
+both, so a LINEAR reader meets the correct accounting FIRST and the retracted one SECOND, with nothing
+at the second saying it is spent. **A supersession marker has to sit on the SUPERSEDED bytes, never only
+on the replacement** -- the replacement is not where the stale reader is standing. COST: one marker per
+superseded passage. NON-APPLICATION: a file whose order IS chronological, where a later section is
+self-evidently later.
+
+> ~~**WHAT THIS AMENDMENT STILL OWES BEFORE L4-R, STATED RATHER THAN IMPLIED.** `3.0.0_SA_CVO~Z` set its
+> terms before drafting; three are not yet satisfied and are named here with their owner:~~
+>
+> - ~~STOP: **CONSUMER IMPACT, NOT A CONSUMER LIST.** Amendment 1 names two modules and one test and
+>   **grades none**. *"A consumer census that names three and grades none is a list, not an impact."*
+>   **Each of Chatter, Price and the legacy republisher is graded BREAKS / DEGRADES / DOES NOT NOTICE.**
+>   NOTE: Note also that those three are **logical consumers**, a different grain from Amendment 1's
+>   **code modules** -- both are needed and neither substitutes.~~
+> - ~~STOP: **ASKED AGAINST THE DEPLOYED STATE, NOT THE REPO.** Amendment 1 is written from repo bytes. **The
+>   question is what PRODUCTION does today**, on the same re-basing the served-output incident forced:
+>   an amendment is not reviewed as narrow in a plane where production already behaves otherwise.~~
+> - ~~**MECE AS A SUBTRACTION FROM A PRINTED DENOMINATOR** -- `2.0.0_SA_COO~Y`'s **221-file bounded
+>   census** stated as that denominator.~~
+
+**THE CONTRACT CHOOSES, because R8 is right that it cannot state both.** `3.0.0_SA_CVO~Z` offered either
+reading and asked for one; this is the ruling:
+
+1. **CONSUMER IMPACT: tracked work, NOT a bar on L4-R.** `pool_reader` is graded BREAKS and the reader
+   change is bound as a CONDITION of the migration by `A.1` clause 4, which is the obligation that
+   actually protects callers. Chatter, Price and the legacy republisher stand **NOT_EVALUATED** against
+   the daily enum and **an ungraded consumer is never an implied pass** -- but grading them is work owned
+   by the lane holding each surface, not a precondition for ratifying correct text.
+2. **THE DEPLOYED-STATE QUESTION: tracked work, NOT a bar on L4-R.** ⛔ **Making it a bar would hold a
+   correct spec hostage to a measurement no seat can currently take** -- it needs a served-row census,
+   and the 20:32Z read is package-identity only. **A bar nobody can clear is not a control, it is a
+   stall**, and the served-output incident already showed what an unratified-but-correct contract costs.
+3. **THE DENOMINATOR: `A.2` IS LIVE AND 221 IS RETRACTED.** The census is **54 hits across 23 files of
+   70,596**, 3 graded and 20 ungraded. **221 was a SOURCE-SEARCH FILE COUNT and is not a population of
+   states.**
+
+⚠ **SO NOTHING IN THIS BLOCK GATES L4-R ANY LONGER, AND THAT IS A DELIBERATE RULING RATHER THAN AN
+OMISSION.** All three items remain OWED as work, with their owners named, and none is closed by being
+un-gated.
 
 **UNCHANGED FROM AMENDMENT 1:** `DENIED` retired rather than split; a genuine publisher refusal
 deferred until the harvester fetch-result lineage exists; migration scope **1,595 of 1,596 rows**,
