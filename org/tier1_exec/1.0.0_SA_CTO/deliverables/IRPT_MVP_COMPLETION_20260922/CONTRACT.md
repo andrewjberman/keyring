@@ -8,7 +8,7 @@ Authority: Andrew's direct instruction in this CTO session, September23,2026, re
 |---|---|---|
 | Reporting | COO~P | Cottonwood BD: selected real account and period -> provider result -> immutable report -> rendered Reporting screen |
 | Analysis | COO~Y | Valid dollar template upload -> owned frozen input -> real YCharts Overview -> certified report -> rendered Analysis screen |
-| Holdings | COO~M | One unambiguous Inflection account -> independently reconciled actual custody -> accepted publication -> authorized Holdings screen/drill |
+| Holdings | COO~M | Reviewed Cottonwood account acc_d486fc9455d6b2aa18e13af1 -> independently reconciled actual custody -> accepted publication -> authorized Holdings screen/drill; then all named firms |
 
 All three firms and the complete P/M/Y acceptance matrices remain required. These milestones sequence work; they do not narrow completion. 49F performance is SmartX PRIMARY with separate comparable BD verification; COT BD; INF Orion. Holdings overlays are SmartX/BD Rebalancer/Eclipse on complete custody, never model rosters as population. Both Analysis input lanes, all units and three variants remain required. Opal users may use every function for every firm/client/account; Global/firm selection filters, never limits Opal authority. Firm users retain their own authorized scope. Preserve actual actor and original immutable input owner separately.
 

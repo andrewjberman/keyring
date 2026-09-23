@@ -491,3 +491,8 @@ CTO direct review accepts a86430e39e bounded initial COT publication under exact
 ## 2026-09-23 21:42 UTC - Reporting package dependency
 
 P-PACK-01: exact9cc2d2d9 candidate omits org/standards/NAMING_SCHEMA.json; fresh extracted canonical destination probe fails. Adding only pinned schema in scratch makes identical probe pass. P repairs both review/canonical package, returns final manifest/hash and one probe. Source/mapping acceptance and73c40 empty-storage apply remain intact; no vendor call needed. See DIRECT_REVIEW_2020_20260923/P_PACKAGE_NAMING_REVIEW.md.
+
+
+## 2026-09-23 21:42 UTC - native COT publication independently verified
+
+M5e29e43c2c executed bounded initial publication. CTO independently read4exact output versions, verified lengths/hashes/index acceptance/Gold-JSON nodes and selected1account57positionsUSD19705844.84 at2026-09-22. Accepted revisionfe328763b5da690cc1a48ca4681444f167386578f3f0dfadb45f195459906a4e. Native storage hop PASS, not authenticated API/browser. P exact reader cutover next; M retains complete Holdings ownership. CONTRACT first-thread row aligned with prior1960/73c40 COT ruling; all firms remain required. Evidence DIRECT_REVIEW_2020_20260923/COT_NATIVE_PUBLICATION_CTO_READBACK.json.
