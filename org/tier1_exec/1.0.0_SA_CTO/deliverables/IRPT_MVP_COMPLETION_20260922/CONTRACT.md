@@ -165,3 +165,8 @@ This adds only the necessary Silver adapter/census and tests to the existing
 bounded one-shot runner preparation. Do not change Gateway, manufacture a new
 Bronze envelope, backdate observation, schedule the full pipeline or perform a
 vendor/cloud write. Return the pinned repair and exact runner/runtime plan.
+
+
+## Complete reviewed resident assembly integration - 2026-09-23
+
+P may consume unchanged Y2874e376472ff3066fa013406150424e54ad438d across the exact31 paths in DIRECT_REVIEW_2020_20260923/RESIDENT_INTEGRATION_PATH_MANIFEST.json. Eleven missing exact-path grants join IRPT_Y_ACCESS_INTEGRATION_P in this same commit; all incumbent owners remain. Y remains semantic writer; P assembles shared current-authority, repositories, package and host boundaries. CTO verified all31 P working copies match pinned originals after line-ending normalization. This is integration authority, not new behavior approval or runtime activation. Publish immutable-source equality and the literal factory/install plan. Retained queue-owner fields are locators only; never manufacture current trusted HTTP authority from them. Targeted CRO research supplies maintained current-authority source; no placeholder may satisfy acceptance.
