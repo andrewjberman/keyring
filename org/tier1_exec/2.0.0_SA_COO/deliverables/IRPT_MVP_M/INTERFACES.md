@@ -197,3 +197,20 @@ The18 new scope/store tests cover persistence across store recreation, immutable
 retry, current access, firm/identity binding and exact subset. Combined discovery
 hits existing duplicate module names `fixtures`; it is not a passing invocation.
 These proofs do not establish deployed E2E or full S1 acceptance.
+# Maintained-source coordination under CTO 0429af3604
+
+M claims sole integration of `infra/aws/lambda/investor-reporting/_scope/maintained_sources.py`
+and its focused tests; this is a claim, not a delivered adapter. Concrete source
+inventory, immutable code/configuration pins, consumer field agreement and paired
+source-to-consumer examples are in `MAINTAINED_SOURCE_INVENTORY.md`. Existing
+REQUEST_COMPOSITION remains `irpt-analysis-composition.v1` with browser/resolved/
+recipe_version/settings; P owns final schema and source-descriptor placement.
+Y owns recipe meaning and freezing/replay. No parallel payload or storage path.
+
+Required prospect recipient display and maintained comparison authority remain
+unresolved. Directory display labels also need provenance distinguishing actual
+names from generated fallbacks. Those capabilities remain unavailable until their
+required source evidence exists. Optional contact/custom absence is explicit in
+storage and blank only at Y's vendor edge after canonical contract agreement.
+Y confirms operations prepared_by may be the actual maintained acting principal
+name, retaining principal class and provenance, without borrowing advisor identity.
