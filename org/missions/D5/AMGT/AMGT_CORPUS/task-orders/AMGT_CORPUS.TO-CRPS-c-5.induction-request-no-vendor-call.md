@@ -161,7 +161,7 @@ because its one-pager already failed, so the request carries an evidenced `--blo
 report header. That also moved this cell's edge from c-4 to c-2 (decomposition s.4, amended before the cut). The handoff
 of the request to `AMGT_RESAPP` is this seat's, at the drain.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
