@@ -8,6 +8,15 @@ entries are schema-valid but dated September 17. 49F has 69 whole-advisor
 projection refusals, Inflection's map is absent, Cottonwood's map is empty.
 This is source-data evidence, not deployed journey acceptance.
 
+CTO follow-through `140502Z` / `141018Z` is documented in
+[PRODUCER_ORGANIZATION_INVENTORY_20260923.md](PRODUCER_ORGANIZATION_INVENTORY_20260923.md):
+exact producer/owner source pins, bounded repair proposals and the actor-home
+organization reader gap. The existing Opal CONFIG#defaults metadata was also
+read with a strongly consistent, projected GetItem; existence is established,
+but maintained reporting-source adoption remains unestablished. No producer or
+deprecated reader was invoked and no shared code or cloud state was modified.
+P's exact `holdings/entry.py` exception at `bfa0575910` is preserved.
+
 Andrew directly lifted the overnight hold. CTO ownership-transfer ruling
 `09b9573688` remains operative: P is sole writer for the current directory,
 bootstrap/browse, supporting scope/auth and Portal header/firm/search/selection
