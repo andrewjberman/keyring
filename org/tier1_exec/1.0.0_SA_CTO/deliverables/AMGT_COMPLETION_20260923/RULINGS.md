@@ -222,9 +222,55 @@ file's whole history**, so this closes the forward question and not every questi
 ⭐ **This is Rule 22's negative mirror working as designed, and the cost was one query.** The remedy
 stayed single — build the guard — instead of doubling into re-opening work nothing ever harmed.
 
+## R-9 -- R-7's LOAN IS TERMINATED. THE PEERS AGREED FIRST, SO THIS RATIFIES RATHER THAN RULES
+
+**`2.0.0_SA_COO~Z` IS ACTIVE.** Andrew authorized it directly in its own conversation, recorded at
+`568f2f0c88:org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_EXPERIENCE/AUTHORITY.md` (pin verified here
+against a negative control). His words, verbatim: *"Yes there is no need to be held up here. We are
+moving off of the canonical flow for this project because we need to move faster."* and *"You have
+explicit insturction from CTO on your brief and expectations, you should have received documents that
+qualify this in great detail"*.
+
+⭐ **THAT SEAT'S OWN RECORD NARROWS IT CORRECTLY AND THIS SEAT ADDS NOTHING:** *"A review signature is
+evidence-bound and is not deployment, retained-object rewrite, vendor-egress or gate-bypass
+authorization."* **The session restriction is resolved. The DEPLOY GATES ARE NOT TOUCHED.** Anyone
+reading the activation as deploy authorization is reading it wider than both the operator and the
+authorized seat did.
+
+**RULED: R-7's Price loan TERMINATES on that activation. `lib/research/price/**` returns to SERVED
+RUNTIME at `2.0.0_SA_COO~Z`.** R-7's bound 2 said *"reverts on activation ... this is a loan"*, and it
+does.
+
+⭐ **AND BOTH LANES REACHED THE HANDBACK BEFORE THIS RULING EXISTED, INDEPENDENTLY.** `2.0.0_SA_COO~Z`:
+*"R7 activation returns price ownership to this seat; coordinating Y handback before edits"* and
+*"activation does not justify concurrent writers."* **So this entry RATIFIES a peer agreement rather
+than imposing a decision, which is the lighter and correct act** -- `/closer` sends a breaking change to
+the CTO only after one exchange between the peers, and here the exchange converged. **A CTO that rules
+where its peers already agree adds a step and subtracts nothing.**
+
+**THE HANDBACK, stated once so neither lane has to guess, and covering BOTH branches because which one
+holds is not measured here:**
+- **NO CONCURRENT WRITERS.** `2.0.0_SA_COO~Y` does not begin new Price edits; `2.0.0_SA_COO~Z` does not
+  edit that surface until the handback lands.
+- **IF `~Y` APPLIED the migration under R-7:** it finishes to a PIN and hands that pin over. The work is
+  not abandoned and is not re-derived.
+- **IF `~Y` HAD NOT STARTED:** `~Z` applies the pinned proposal `~Y` already designed and tested -- nine
+  compute cases passing in memory -- rather than authoring a second design.
+- ⛔ **EITHER WAY THE NINE FAILURES' FIX SURVIVES THE OWNERSHIP CHANGE.** A surface transfer that loses
+  the tested work would be worse than the stop R-7 was written to clear.
+- ⚠ **`~Y`'s candidate base predates the merged `0e9ed7b1d8`** (996 CLOUD commits). Carried forward
+  before integration, by whichever lane integrates.
+
+**WHAT IS NOW UNBLOCKED AND WHAT IS NOT.** The never-widen PAIR is completable for the first time today:
+this seat's half is signed (`97d9e537d4`, pin-bound `83e9f90be5`, rollback corrected `3b4083a685` after
+`2.0.0_SA_COO~Z` found it restored the known incident), and that seat reports its half and an
+independent `dd91fd3126` exact-package review UNDERWAY. ⛔ **The pair is still not the deploy:**
+`3.0.0_SA_CVO~Z`'s cutover review comes after it and that seat has stated the review is IN ADDITION to
+the pair and never in place of it. **Three controls, in order, none skipped.**
+
 ---
 
-**What these rulings do NOT do.** R-1 through R-6 landed no CONTRACT; **R-7 and R-8 postdate it** --
+**What these rulings do NOT do.** R-1 through R-6 landed no CONTRACT; **R-7, R-8 and R-9 postdate it** --
 CONTRACT v1.0 and three MANDATES are issued at `0e33cea24b`. **R-7 REASSIGNS ONE NAMED SURFACE** and
 no other; `~X`, `~Y` and `~Z` otherwise hold what they held. No task order, no spawn, no cap widening,
 no deploy, no vendor call, no entitlement change, and no lift of any seat's session restriction.
