@@ -374,3 +374,111 @@ both to `0.0.0_AB_MSTR~Z`'s estate card.
 | the served chatter move | a never-widen pair, the chatter role's two S3 limbs widened to the gold prefixes, and `AMGT_RESAPP`'s single retirement window | `1.0.0_SA_CTO~Z` and this seat, with `2.0.0_SA_COO~Z` | unchanged from section 9 |
 | `Z-W9-S1` (same-second silver collision) and `Z-W8-S2` (a grading command INVALID on a valid instance) | the estate, not this project | `0.0.0_AB_MSTR~Z`'s estate card, per @`f869aa705c` | that card's own disposition. This project's writers carry a workaround; the library still holds the defect |
 | `-Z-W10-S3`'s mechanism | root cause unknown: a dotted-string monkeypatch target that no-ops for some module attributes and not others | this seat, carried | an explanation, not a containment. `HVST-r-4`'s poison contains it and the row stays ARMED |
+
+
+## 12. ROUND 3 (v1.2, the RECUT) -- from the L10 round-2 analysis @2539343348 + its withdrawn Addendum 1 @683d1946cd (`1.0.0_SA_CTO~Z`)
+
+**THE RANKING IS THE ANALYSIS'S OWN, AS REVERTED BY ITS OWN WITHDRAWAL.** Addendum 1 added a "typed channel" spec
+clause at position 2; the same seat then read the spec at the bytes and STRUCK it, because the clause is already
+there (`Z-S8`, and the CTO's @`683d1946cd`). So round 3 is TWO cells, not three, and neither makes a vendor call.
+
+### 12a. The two round-3 cells -- BOTH INDEPENDENT (fanout 2 of 2, cap 8, no deferral)
+
+| cell | manifest row | outcome | what it is |
+|---|---|---|---|
+| `HVST-t-1` | H1 | FWD-1 | the listing persist moves so a mid-loop raise cannot discard pages already captured |
+| `HVST-t-2` | H1 | FWD-1 | the as-received capture is EXERCISED offline on the three publisher paths that have no live object |
+
+**`HVST-t-1` -- the third cause, and it is ours.** `Z-W15-S1` measured that `worker.py`'s harvest-mode listing
+persist sits AFTER the whole per-article loop, so a job that raises mid-loop discards every listing page already
+captured in memory. Seeking Alpha fetched multiple pages and then took an HTTP 502. **The analysis ranks this
+FIRST and says plainly it comes before any further vendor act**: a fourth act would not reliably produce listing
+pages for any publisher whose job raises after page 1. The cell persists each page as it is captured, or
+checkpoints so an exception cannot discard earlier pages, and PROVES it by driving a mid-loop raise and asserting
+the earlier pages landed. Offline, stub-driven, poison named.
+
+**`HVST-t-2` -- `Z-S1`'s unexercised half, without a vendor act.** `HVST-r-2` proved the as-received capture on
+the two paths that have live objects (sa 3 of 3, wsj 11 of 11, mismatch 0) and reported the other three UNPROVEN
+for lack of evidence, honestly. **The issuer's own census gives the denominator: 103 bronze article objects, 14
+`as_received`, 83 `normalised_record`, 6 with no `received-form` key at all.** The three silent paths are
+unexercised, not broken -- and an EXERCISE does not need the network. This cell drives each of bloomberg, barrons
+and ft with a stub response through the real capture and the real bronze writer, and asserts the stored bytes
+equal the bytes the stub returned, byte for byte, with a negative control that fails when a re-serialisation is
+substituted. **It does not re-fetch and it does not touch the 89 historical objects**, whose relabelling needs
+capture nobody has authorised.
+
+### 12b. Rule 24 record for what v1.2 ADDS
+
+- **(i) MECE over a DECLARED domain, by SUBTRACTION.** Domain: the round-2 analysis's ranked list as reverted.
+  Printed denominator FOUR items: listing-persist placement, `Z-S1`, `Z-S3`'s wording bound, and the struck
+  typed-channel clause. MINUS the struck item (already in the spec, per its author's own withdrawal). MINUS
+  `Z-S3`, which the analysis says is CARRIED rather than cut and whose disarm is a wording discipline no cell can
+  execute. REMAINDER TWO, which are the two cells above. No item is covered by recall.
+- **(ii) SAME GRAIN.** Both cells are one code change plus its proof in one package, sized like every round-2
+  cell.
+- **(iii) INTENT COHERENCE.** One axis: make `FWD-1`'s listing and as-received halves provable WITHOUT egress.
+  Both cells are offline by construction, which is the point rather than a constraint.
+- **(iv) STATE COHERENCE.** Neither cell moves: the 89 historical bronze objects, any live session, the served
+  chatter switch, the gold tables, or the timeline build. `HVST-t-1` changes behaviour on FUTURE runs only, so it
+  cannot repair the pages round 1 already discarded.
+
+### 12c. Round-2 lessons absorbed into this cut
+
+1. **A BASELINE NAMES ITS CHECKOUT.** Row `Z-S4`: my ten-path sparse cone produced three worker rows, one of them
+   filed as a pre-existing repository failure that reads 7 passed in the full tree. **Both round-3 cones include
+   `org/missions` WHOLE and `integrations`**, and every baseline count in both orders states the checkout it was
+   measured in and tells the worker a divergence is an ENVIRONMENT finding to file, never a repository one.
+2. **A SCAN CANNOT LICENSE A UNIVERSAL.** Rows `Z-S5` through `Z-S8`, four rows by this seat on one question.
+   Neither round-3 criterion is a keyword probe over prose; both assert a BYTE EQUALITY or a PERSISTED OBJECT.
+3. **A NEGATIVE CONTROL IS THE LOAD-BEARING ARM**, carried from round 2 unchanged: `HVST-t-1` must fail if the
+   persist is reverted, `HVST-t-2` must fail on a substituted re-serialisation.
+4. **NO CRITERION COPIES A FILE LIST.** Both `<expect>` texts point at bounds, never at enumerations that fall a
+   phase behind.
+
+### 12d. The round axis, updated
+
+Round 1 issued 10, drained 10, 56/1/2 of 59. Round 2 issued 5, drained 5, 21/0/1 of 22, ZERO vendor calls.
+**Round 3 issues 2.** The trend is deliberate: each round is smaller because the project is converging on what it
+cannot finish alone, and round 2 produced more toward `FWD-1` than the three granted vendor acts did -- because it
+found the reason those acts under-delivered.
+
+### 12e. What round 3 does NOT attempt
+
+- **No vendor call, no session repair, no sign-in.** Not granted, not needed by either cell.
+- **No relabelling of the 89 historical bronze objects.** That needs capture nobody has authorised, and `Z-S3`
+  records the reading bound instead.
+- **No timeline build cell.** Held: see section 13.
+- **No re-fetch of the listing pages round 1 discarded.** `HVST-t-1` fixes the mechanism forward; the lost pages
+  are lost and the row says so.
+
+## 13. ROUND 3 HOLDS, and whose they are
+
+| held | precondition | owner | what unblocks it |
+|---|---|---|---|
+| the timeline BUILD cell | **TWO READINGS, and this cut takes the NARROW one.** Section 11's row states the precondition as *Andrew approving the AMENDED spec*; the same row's unblocking text says *until the failed-call state and the error envelope land*, **which `HVST-r-1` has now satisfied**. The round-2 analysis lists the build cell with the CVO's carry and does not restate the gate | Andrew, through `1.0.0_SA_CTO~Z` | this seat ASKED the CTO directly (msg 24588) rather than adjudicating the wider reading itself. **No build cell is cut in this round**; one is added to it in the same round if the answer is that the gate is lifted |
+| a fourth vendor act | Andrew's word | Andrew, through `1.0.0_SA_CTO~Z` | **and the analysis now says the persist placement comes FIRST regardless**, so this hold is better grounded than when it was set |
+| the 89 non-`as_received` bronze objects | capture nobody has authorised | Andrew, through `1.0.0_SA_CTO~Z` | `Z-S3`'s wording disarm is the cheap arm and needs no act |
+| `Z-W9-S1`, `Z-W8-S2`, `-Z-W10-S3`'s mechanism | unchanged from section 11 | the estate card / this seat | unchanged |
+
+### 13a. The ruling that settled this cut, and one thing CARRIED rather than cut
+
+`1.0.0_SA_CTO~Z`, msg 24591, settling a live disagreement between this seat and `3.0.0_SA_CVO~Z` about position 2
+while this round was being cut. **Both reads were right, of DIFFERENT CALLS**, because section 5 defines two routes:
+
+| route | who can satisfy the failed state |
+|---|---|
+| the RANGE call | a page-level gate suffices; no inner surface needs an error input. `3.0.0_SA_CVO~Z` is right here |
+| the DISSECTION call | the panel must receive ITS OWN call's outcome, because the clause requires it to show the state *while the line itself loaded*. This seat is right here |
+
+**So a surface with no error input is permissible exactly where that surface OWNS NO CALL**, and the dissection
+panel owns one.
+
+**THE RULING: position 2 stays STRUCK for round 3.** Cut on the reverted ranking -- listing-persist first, then
+`Z-S1`, then `Z-S3`'s wording bound carried. **No build cell**, which is also the narrow reading this cut had
+already taken on section 13's first row.
+
+**CARRIED, NOT CUT (WARN):** `3.0.0_SA_CVO~Z`'s strengthening survives in narrower form -- *the container gates it*
+is a build-time freedom the spec leaves open FOR THE RANGE CALL ONLY, so a later refactor could render the chart
+during a range failure with nobody positioned to catch it. It is one sentence for the spec's NEXT amendment. **It
+is not a cell in this round, on the ruling's own stated reason: a strengthening that arrives mid-cut is how a round
+grows a cell nobody planned.** Owner: this seat, at the next spec amendment.
