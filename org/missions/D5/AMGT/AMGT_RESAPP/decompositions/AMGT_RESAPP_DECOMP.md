@@ -5364,3 +5364,83 @@ fanout:
   already_done_disarm_by_record: [Z-W120-S1]
   no_fleet_run: true
 ```
+
+## 43. ROUND 35 -- THE REGULATOR ADAPTER. One cell, and five findings measured BEFORE it was cut
+
+**Cut by `2.0.0_SA_COO~Z`** on the CTO's rulings @`b054fbbb6e` / msg 24670, with `AMGT_RESAPP` v0.24 @`ddb93dd170`
+reading **ADMITTED** (both halves SIGNED and current; the brief half stamped by `2.0.0_SA_COO~Y` in the CRO's
+stead under the CTO's explicit re-route @`3303326c25`). **LIMB 6 no longer refuses a newly-added order.**
+
+⛔ **THIS IS THE FIRST ROUND SINCE 32 THAT IS NOT SERVER-SIDE-BY-DEFAULT, AND IT IS STILL ONE CELL** -- not because
+the work is thin but because one cell unblocks three held things (43d).
+
+### 43a. FIVE THINGS MEASURED BEFORE THE ORDER EXISTED, each of which would have cost a round
+
+1. ⭐ **STEP 5 IS NOT MISSING -- IT IS A DECLARED STUB, ALREADY WIRED.** `battery.py:1219-1229`, header verbatim:
+   *"STEP 5 -- the national regulator (declared only; no adapter is built here)"*; it returns `passed: False` with
+   `"no adapter for jurisdiction %s"`. Dispatched at `run_battery:1309` -- `(5, lambda:
+   _step5_national_regulator(keys))`. **So the cell is an ADAPTER BEHIND AN EXISTING SEAM, not a new step**, and
+   the `_attempt` record shape and `{attempt, passed, battery_extra, seeds}` contract are already fixed.
+2. ⛔ **THE STUB'S DISPATCH KEY IS EMPTY ACROSS THE WHOLE UNIVERSE.** `keys_from_crosswalk("992_HK_Equity")`
+   returns `domicile=None`; censused, **`domicile` is present on 0 of 96 records.** An adapter built behind that
+   seam would compute `"UNKNOWN"`, refuse, and **never fire for any name** -- passing every test it wrote.
+3. ⛔ **AND `domicile` IS THE WRONG KEY (CTO msg 24670).** A national-regulator route asks *which regulator does
+   this issuer FILE with* -- the **LISTING VENUE**, not the country of incorporation. **A Cayman-incorporated,
+   HK-listed issuer files with HKEX.** ⭐ **Deriving a CORRECT `domicile` would have faithfully reproduced the
+   WRONG dispatch, which is worse than an empty key because it looks like it works.** The seam's parameter is
+   misnamed for what step 5 does; this cell dispatches on VENUE and says so.
+4. ⛔ **THE OWNERSHIP BLOCKER WAS A CODE COMMENT, NOT A CONTRACT.** `keys_from_crosswalk`'s reason string asserts
+   *"C-INSTANTIATION-ENTRY, chain I's own cell, has not landed yet"*. **The contract (`prd:1837-1841`) enumerates
+   FIVE fields -- name, exchange, LEI, SEC id, CIK -- and `domicile` is not one.** A code claim about a
+   contract's ownership would have gated this round on a dependency the ratified text never created.
+5. ⚠ **AND MY OWN COVERAGE NUMBER WAS WRONG BY 9x -- RIGHT FIELD NAME, WRONG DEPTH.** I reported `exchange`
+   present on **4**; the CTO read **36**. Reconciled: `record["exchange"]` = **36** (every record carrying a
+   `security_key`), `record["identity"]["exchange"]` = **4** (the ENRICHED records only). ⛔ **Both probes
+   returned a real number from a real object.** Had AC0 quoted 4, the cell would have been sized against 4 names
+   when 36 can dispatch. **A printed denominator does not protect you when both readings have one.**
+
+### 43b. THE MAPPING
+
+| cell | id | slot | chain | serves | co-sign |
+|---|---|---|---|---|---|
+| the national-regulator adapter (HK) | `AMGT-rk-128` | ~128 | A1 | The ratified international battery's **step (5)** (`prd:801-803`, inside CONTRACTS, ratified by Andrew @`4de34f0d95`): *"the national regulator, one adapter per jurisdiction, built only for a name that step 4 fails."* Builds the HK adapter behind the declared stub, **keyed on LISTING VENUE**, with the venue derivation supplied by the cell in the battery's own key layer -- **no crosswalk write, no dependency on another chain** | none -- CODE plus ONE bounded public-regulator fetch; no served bytes move, no pair |
+
+### 43c. THE BOUNDS THAT ARE NOT NEGOTIABLE, and why each is here
+
+- ⛔ **TEST (c) KNOWN FAMILY IS LOAD-BEARING AND MAY NOT BE RELAXED INTO A WARNING.** `2.0.0_SA_COO~Y` flagged it
+  as the reviewer of v0.24's s.12a: **five of Lenovo's EDGAR filings are ones where LENOVO IS THE FILER ABOUT
+  ANOTHER ISSUER**, acceptance test **(a) RIGHT ENTITY would PASS such a document**, and only **(c)** rejects it
+  -- *"the guard holds, but on its third leg, not its first."* ⛔ **No cell may treat (a) as sufficient evidence
+  of the right document.** This is load-bearing for EVERY non-US name, not just Lenovo.
+- ⛔ **NO S3 DELETES OF ANY KIND** (standing, CTO msg 24607, after a worker deleted 123 objects on its own
+  judgment). **A standing clause from this cut forward, not a per-round one.**
+- **Lenovo ONLY** -- PRD s.12's validation scope is ONE security until the trial is graded (`:1947-1949`,
+  `:2007-2008`), and that gate is why the America Movil induction request is parked.
+- **Rule 30:** the registry row is the cell's OWN AC0. Measured: `infra/logic/registry/` holds **6 files, 0
+  naming `hkex` or `regulator`**.
+
+### 43d. WHY ONE CELL IS THE RIGHT SIZE -- it unblocks THREE held things
+
+| held thing | how this cell releases it |
+|---|---|
+| Lenovo's FILINGS stage -> the Thesis tab | step 4 fails for Lenovo; step 5 is the ratified next route |
+| `rk-127`'s first HELD marker | the marker is only written when a run produces a CHANGED-HELD; no run has |
+| `rk-49` (Lusha) | its stated gate is satisfied and its purpose is not -- it needs a VERIFIED SITE, which the regulator route is the remaining candidate to supply |
+
+⚠ **LINK 3 IS PLAUSIBLE, NOT PROVEN, AND THE CELL MEASURES IT RATHER THAN ASSUMING IT** (CTO tick 68 stated it as
+a REC): step (5) resolves a FILING, and whether an HKEX filing yields a VERIFIED DOMAIN for Lusha's purposes is
+unmeasured. **The order asks the question; it does not inherit the answer.**
+
+### 43e. FAN-OUT
+
+```
+fanout:
+  cap: 8
+  orders_total: 1                   # rk-128
+  chains_total: 1
+  wave_1: [rk-128]
+  still_blocked_on_andrews_registry_card: [C-S400, Z-S227, rk-124 client half, Z-W126-S3]
+  parked_on_ratified_scope: [the America Movil induction request -- s.12, until the trial is graded]
+  no_fleet_run: true
+  no_s3_deletes: true               # standing, from this cut forward
+```
