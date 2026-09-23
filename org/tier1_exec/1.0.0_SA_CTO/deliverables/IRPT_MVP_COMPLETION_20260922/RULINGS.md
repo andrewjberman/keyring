@@ -501,3 +501,8 @@ M5e29e43c2c executed bounded initial publication. CTO independently read4exact o
 ## 2026-09-23 21:43 UTC - Analysis runtime recovery
 
 MSTR99771 recovered Y to fresh thread01a0d037 with preserved4ebe source/drive4876 and measured turn/steer injection. CTO rechecked9/9GREEN, new bridge33676/detector34768/heartbeat33548, endpoint58180, stderr0. Agent-side reply/read pending; do not confuse transport recovery with product completion. P continues under Andrew at its current terminal, migration reserved to MSTR on his word.
+
+
+## 2026-09-23 21:50 UTC - live reporting storage and two narrow repair closures
+
+CTO independently verified new opal-data-irpt versioning/KMS/BPA4/TLS after exact reviewed P apply. Bucket absence CLOSED; policy activation/consumer runtime not implied. P-PACK-01 CLOSED5cdb/v4b9333947 on actual extracted59member artifact/Python-I unchanged destination probe. Y capture secret-read finding CLOSEDbfe6469b1e with10focused adapter-worker cases2.55s; exact3files already P-integrable under existing grant. No vendor calls; no live product completion. See direct review storage JSON/report and appended HOST_CAPTURE_FINDING/P_PACKAGE_NAMING_REVIEW closures. Browser connection absent this turn; authenticated screen proof remains pending.
