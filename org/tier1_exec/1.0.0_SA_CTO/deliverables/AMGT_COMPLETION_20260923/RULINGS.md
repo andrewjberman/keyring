@@ -222,6 +222,30 @@ file's whole history**, so this closes the forward question and not every questi
 ⭐ **This is Rule 22's negative mirror working as designed, and the cost was one query.** The remedy
 stayed single — build the guard — instead of doubling into re-opening work nothing ever harmed.
 
+## PARKED -- OFF THE AMGT THREAD, NAMED SO NOTHING DRIFTS (`/closer` NO SIDE-QUESTS)
+
+**Two `opal_ai` items now sit at this seat and NEITHER is being worked while AMGT is armed.** Recorded
+with owner and un-park condition, because an un-parked item is the one that gets lost.
+
+| item | owner | un-park condition |
+|---|---|---|
+| **opal_ai L1 brief RCN-0014** @`2c4a813784`, delivered by `4.0.0_SA_CRO~X` (msg 25011) as intake for this seat's L2 | `1.0.0_SA_CTO~Z` | AMGT stands down, or Andrew re-scopes |
+| **opal_ai GitOps split spec** -- Andrew-direct ~22:0xZ at the `4.0.0_SA_CRO~X` terminal, record @`bd282e03e9`: *"figure out what needs to happen to properly split this off in GitOps from ajb_workspace ... same structure as the portal where it is contained in the monolith, but it has its own git submodule"*. That seat writes the spec; this seat is its intake | `4.0.0_SA_CRO~X` writes it; `1.0.0_SA_CTO~Z` receives it | the spec lands AND AMGT stands down or is re-scoped |
+
+⛔ **HIS WORD WENT TO `4.0.0_SA_CRO~X`, NOT TO THIS SEAT, AND IS NOT READ AS RE-TASKING IT.** CLAUDE.md:
+a word to one agent is never converted into a gate or a re-tasking of another -- **relay, never adjudicate
+wider or narrower.** It commissions a SPEC from that seat. The AMGT scope armed at
+`a8a62f4f5c` stands until Andrew says otherwise, and `/self-drive` §6 makes the armed scope the only work
+this fabric does. ⭐ **The temptation to read a nearby Andrew-direct as a scope change is exactly what the
+verbatim-scope rule exists to stop** -- and the GitOps spec is interesting enough to be a real pull.
+
+⚠ **ONE THING WORTH FLAGGING NOW rather than at intake, because it bears on a hazard already measured
+tonight:** a portal-shaped submodule inherits the portal's properties, and two of those bit this evening
+-- **a commit inside a gitlink can land on a DETACHED HEAD with every gate green** (surprise row
+`AMGT_RESAPP-Z-S237`), and **`.owned-paths.yaml` rows for a submodule path bind by READING ONLY because no
+hook evaluates a commit made inside it** (CONTRACT §3, upheld by `3.0.0_SA_CVO~Z`). **A second submodule
+doubles both.** Not an objection to the design -- an input the spec should answer rather than discover.
+
 ## R-10 -- ANDREW SUSPENDS THE L4-R SIGNATURE AS A BAR FOR AMGT. THE REVIEW IS KEPT; THE RITUAL IS NOT
 
 **Andrew-direct 2026-09-23 ~21:2xZ at this terminal, VERBATIM: *"agreed with your rec"*,** answering this
