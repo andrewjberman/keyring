@@ -1,0 +1,32 @@
+# IRPT maintained source and frozen composition contract
+
+Owner/adjudicator: `1.0.0_SA_CTO`. Authority: Andrew's delegated worker-fork adjudication (`ecf350639a`) and [completion contract](CONTRACT.md), S1/S3/S4/S5/S7. This is IRPT-MAINTAINED-SOURCE-01, an ownership and interface decision within the existing P/M/Y completion scope.
+
+## Trigger and limits of evidence
+
+COO~M's exact 20260923T012311Z notice reports no published maintained advisor-profile/cover or comparison-key adapter at M source `fdd02de5b2519dfdf26a8f09b44d66b18ba73b11`. Y's captured `templates.json` blob `ed18c59c86ef89b33eb4759f0d2a939b964e5ac8` contains `security_id`/`label`; that is not evidence of an equivalent `vendor_id`/`name` contract or a maintained authoritative catalogue. Registered REQUEST_COMPOSITION placement does not establish its payload or source-revision mapping. These are reported gaps, not proof that no maintained source exists elsewhere.
+
+## One owner per interface
+
+- **M integrates the maintained-source resolver/adapter** for authorized advisor-profile/cover data and comparison catalogue references. M inventories existing maintained sources and their current ownership with Y and publishes the concrete adapter in M's INTERFACES.md, with exact path/function claims and source evidence. Prefer existing authoritative readers and verified principal/firm ownership; do not create a replacement profile system. M owns identity, source provenance, immutable revision descriptors and unresolved-field reporting.
+- **Y owns comparison and recipe meaning and consumption.** Y supplies the exact required/optional cover fields and comparison inputs from the current recipe/vendor consumer, establishes what each identifier means, identifies the existing catalogue/configuration owner with M, and validates the resolver outputs. Y owns request acceptance, frozen recipe/settings selection, worker consumption and retry/recovery behavior. M integrates shared source-adapter edits; Y integrates recipe/worker edits. Neither edits the other's claimed functions concurrently.
+- **P integrates the canonical REQUEST_COMPOSITION payload schema, retained repository interface and shared generated contracts.** P consumes M/Y's concrete examples and revision descriptors, maps them to the registered artifact placement and publishes the exact schema/storage interface. P owns stored-byte integrity and protected retrieval; Y owns freezing the composition with its accepted request and replaying it. No second private payload/schema or storage path.
+
+M is the accountable coordinator for resolving this interface and presenting the source-to-consumer mapping. Each owner implements its assigned portion directly under this ruling; no additional order or CTO approval is needed for ordinary in-scope code and offline tests.
+
+## Required semantics
+
+1. Identify the actual maintained source and its owner, scope, schema/version and stable source revision for each cover/profile field and comparison entry. Distinguish maintained configuration from a runtime capture or a sample. If an immutable upstream version does not exist, record that limitation and retain the exact resolved bytes with their content digest and provenance; a generated digest does not establish upstream authority or freshness.
+2. Never assume `security_id` equals `vendor_id`, or that a display label establishes vendor identity. Publish an explicit, evidence-backed mapping and reject unresolved or ambiguous identifiers. Preserve user selection and the exact accepted comparison set; no silent default or scope expansion.
+3. Required fields and supported comparison identities must resolve before dispatch. Missing optional fields are explicitly absent with agreed display behavior. Missing required data makes the affected operation unavailable with a precise reason; it does not fabricate advisor details, comparison identity, source revision or a successful vendor result. Define required versus optional from the actual consumer contract, not convenience.
+4. Freeze the resolved cover/profile values, comparison identities and labels, source references/revisions, recipe/settings version and schema version into the immutable accepted request composition. Bind it to the verified request owner and the request's existing input/selection identity. Retain original provenance and applicable source dates without replacing them with process timestamps.
+5. Retry, recovery, reopening and export use the same accepted composition. A later profile/catalogue/configuration change cannot silently alter an accepted request. An explicit new request/revision may resolve updated maintained data under the current access policy. Protected reads recheck current access and retention; do not prolong expired dependencies.
+6. P/M/Y record concrete paired examples, exact paths/schema versions and source-to-revision mappings in their interface records before integrating dependent consumers. This ruling defines semantics and ownership; it does not invent wire field spellings. Reuse authoritative contracts and generated types where available.
+
+## Proof and continuation
+
+M drives one concrete handoff to P/Y with resolved sources, sample redacted adapter outputs, unresolved fields, and exact source pins. P/Y respond with their concrete producer/consumer agreement and implement the seam. If a maintained source remains unavailable after local inspection, report the exact missing source/owner and the affected capability to CTO while continuing independent work. No silent downgrade to captured defaults and no request to Andrew for an agent-resolvable ownership choice.
+
+CVO~M verifies ownership/provenance and identifier mapping; CVO~P verifies schema/storage/retrieval integrity; CVO~Y verifies actual acceptance-to-worker consumption, immutability across maintained-source changes, and retry/recovery using frozen composition. Include valid controls and unknown/ambiguous identifiers, missing required fields, wrong ownership, source changes, and expired dependencies. Record exact candidate pairs and distinguish offline proof from runtime proof.
+
+Existing public-wire findings, legacy-read hold, B/F cycle hold and live/vendor/render/deployment gates remain. This decision neither certifies a catalogue nor authorizes live vendor calls or activation. Y continues its independent checkpoint/recovery work while this source interface is completed.
