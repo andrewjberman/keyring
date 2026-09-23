@@ -6,10 +6,10 @@
   "fabric": "site-z",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "ROUND_CLOSE",
+  "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-23T02:3xZ",
+  "last_updated": "2026-09-23T03:1xZ",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -45,13 +45,18 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v1.1",
       "note": "L5 recut, 2026-09-23, 2.0.0_SA_COO~Y. Round 2: five independent cells from the L10 round-1 analysis @f869aa705c; sections 10 and 11."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v1.2",
+      "note": "L5 recut, 2026-09-23, 2.0.0_SA_COO~Y. Round 3: two independent cells from the L10 round-2 analysis @2539343348 as reverted by its withdrawn addendum @683d1946cd; sections 12, 13 and 13a."
     }
   ],
   "leads": [
     "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
   ],
-  "phase": "Round 2 DRAINED by 2.0.0_SA_COO~Y: 5 of 5 orders terminal, 22 of 22 mechanical criteria PASS, one judgment criterion (HVST-r-1 AC4) left for 3.0.0_SA_CVO~Z at L9, zero vendor calls in the round. Packet at org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND2_L8_PACKET_20260923.md.",
-  "blocking": "Awaiting 3.0.0_SA_CVO~Z's L9 adjudication of round 2, then the L10 slug and 1.0.0_SA_CTO~Z's analysis. The timeline BUILD cell stays held on Andrew approving the AMENDED spec. The listing half of FWD-1 now has a THIRD, code-shaped cause (row Z-W15-S1: the harvest listing persist sits after the per-article loop, so a mid-loop exception discards captured pages), which is a round-3 candidate and which means a fourth vendor act alone would not reliably produce listing pages. That act remains Andrew's word through 1.0.0_SA_CTO~Z.",
+  "phase": "Round 3 issued by 2.0.0_SA_COO~Y from recut v1.2 @04329b6a4c: TWO independent cells, HVST-t-1 (the listing persist must survive a mid-loop raise, ranked first) and HVST-t-2 (exercise as-received on the three silent publisher paths, offline). No vendor call in either. Round 2 closed 5 of 5 terminal at 21 PASS / 0 FAIL / 1 UNVERIFIABLE with zero vendor calls.",
+  "blocking": "No build cell is cut: the ranking's typed-channel position was STRUCK by the round-2 analysis's own author after reading the spec at the bytes, and the timeline build stays held on Andrew's word through 1.0.0_SA_CTO~Z. A fourth vendor act is not granted and the analysis now says the persist placement comes first regardless. The 89 non-as_received bronze objects need capture nobody has authorised; Z-S3 records the reading bound instead.",
   "threads": [],
   "thread_counter": 0
 }
