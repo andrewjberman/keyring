@@ -89,6 +89,28 @@
     "spec_asserts": "The C01 static instrument counts library-directed write calls across corpus Python source, including ordinary lexical scopes.",
     "world_is": "H cc5d696265 confirms S7 original controls fixed but reproduces three new static binding false negatives at f28faad15b. A direct-Name assignment collector does not cover Python binding forms.",
     "notes": "Append-only follow-up to AMGT_CORPUS-Z-S7; prior row preserved. Original static-census zero-write claim withdrawn. First scope repair f28faad15b fixed the original three cases, but H then reproduced comprehension/loop/unpacking rebinding inheriting safe globals. Latest candidate conservatively collects binding contexts and comprehension scopes, propagates walrus escape and invalidates global/nonlocal rebindings; ambiguous import aliases cannot erase writes. Forty-two controls added since original candidate; full178testsPASS. SCANNER_BINDING_FIX.json records the new repros. Producer census28files/27write-like/0library still requires H re-review. Copied-library execution and period-order evidence remain separate; no actual source-library mutation inferred."
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S9",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-09-23T17:56:46Z",
+    "one_line": "Follow-up to AMGT_CORPUS-Z-S7 and S8: definition-time function defaults and class outer-name reads remain false-safe at 5812bd0dea.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~X",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "H review ce57bef1c2, REVIEW_C_5812bd0dea.md/json: eight prior controls fixed, two definition-time false-safe rows remain; fake-open execution confirms targets.",
+        "SCANNER_EVALUATION_FIX.json: both exact fixtures execute against recording open and are flagged by corrected scanner; focused91/full202 tests PASS; runtime exercise AST unchanged."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C01 source census covers recognized writes in ordinary Python lexical and definition-time evaluation scopes.",
+    "world_is": "Function headers execute in enclosing scope, while class reads may fall back to outer names before assignment; using body locals for both concealed two library targets.",
+    "notes": "Append-only follow-up; S7 and S8 preserved. Evaluation contexts now separate headers, bodies and first comprehension iterables; class binding origins conservatively retain outer or unknown origins. Twenty-four new controls pass. H re-review NOT_EVALUATED, prior scanner FAIL remains. Copied-library execution and period evidence remain separate; no actual source-library mutation inferred."
   }
 ]
 ```
