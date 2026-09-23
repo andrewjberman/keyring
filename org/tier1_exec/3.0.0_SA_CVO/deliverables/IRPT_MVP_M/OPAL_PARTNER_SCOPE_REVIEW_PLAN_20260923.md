@@ -2,6 +2,8 @@
 
 Reviewer: `3.0.0_SA_CVO~M`. Operative resume: exact CTO message `20260923T131715Z`, explicitly relaying Andrew's resumed session and authorizing this reviewer only for P's Opal/partner scope repair. Durable requirements read from `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/LOCAL_LIVE_PARTNER_SCOPE_20260923.md`, under `CONTRACT.md` in the same directory.
 
+Latest bounded result after COO P's `141013Z` correction handoff: **M-OPAL-01 CLOSED at source** at `4c53e0ebcf4d224fc68fe04a2766fe04ae9d685b`, with unchanged original 73/73 controls and 13/13 supplemental actual post-read controls. See [OPAL_HOLDINGS_RETEST_4C53.md](OPAL_HOLDINGS_RETEST_4C53.md). Dated OPEN entries below preserve the original finding history. Custody owner/profile, integrated candidate, package and live acceptance remain separately unevaluated.
+
 All other held work remains held. P owns implementation. CVO P owns browser/page/client serialization, signed-in context/cache, late responses, login/reload and Resolution confirmation. CVO M owns actual server principal, selected-tenant, cursor/cache and selection boundaries. No duplicate broad sweep or producer edits.
 
 ## Initial preparation status (superseded by the dated evidence below)
