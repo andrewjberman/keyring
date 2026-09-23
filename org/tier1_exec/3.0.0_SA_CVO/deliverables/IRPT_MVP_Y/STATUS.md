@@ -6,7 +6,18 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
 
 ## Completed preparation
 
-- **Y-UI01 P2 OPEN** at integrated recipient UI5c935bd675: late custody response
+- **Y-UI01 CLOSED** at exact portal7a5b24e705: original unchanged9 controls,
+  48assertions PASS; supplied31PASS177assertions/app TypeScript PASS. Late A
+  response no longer overwrites B status. Original failure c387a06e2d retained.
+  See `RECIPIENT_UI_RETEST_7a5b.md`; manual hooks/offline, no browser/render grade.
+- Closed admission/replay5a2b531645:28independent controls and60supplied+
+  39subtests PASS. Actual schema/M projection/P storage/Y service, synthetic
+  readers/storage and mocked acceptance/dispatch. Seven dependencies retained;
+  changed live source/settings do not replace stored replay; omitted declared
+  sources, legacy label and late access changes refuse. See
+  `COMPOSITION_ADMISSION_REVIEW_5a2b.md`. No worker/queue/atomic acceptance,
+  custody economics/comparison entitlement/browser/vendor/render grade.
+- **Historical Y-UI01 P2** at integrated recipient UI5c935bd675: late custody response
   A replaces newer request B status while the input remains Recipient B.
   Independent8PASS/1FAIL47assertions; supplied31PASS177assertions and explicit
   app TypeScript PASS. Actual handlers/manual hooks/static markup/offline only.
@@ -14,7 +25,7 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   Routed COO Y/CTO; no server misrecipient or browser/vendor/render grade.
   P c5c3393b1f and M e64d917252 source primitive PASS are peer-attributed only;
   all retained-source refs plus normalized input must enter actual dependencies.
-  Exact acceptance/replay5a2b531645 review pending; frozen worker/cover separate.
+  Exact acceptance/replay5a2b531645 bounded review complete above; frozen worker/cover separate.
   All14 integrated criteria remain NOT_EVALUATED.
 - Recipient boundary70eabdcf3b and historical catalogue9daa67433e:19supplied,
   28subtests and14independent controls PASS. Exact text preserved in both lanes;

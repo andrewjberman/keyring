@@ -512,3 +512,22 @@ See RECIPIENT_UI_REVIEW_5c935bd6.md. No backend/worker/browser/vendor/cover/expo
 grade. Peer P c5c3393b1f and M e64d917252 source reviews are separately attributed;
 actual admission/dependencies/frozen replay remain pending at5a2b531645.
 Integrated denominator remains0PASS/0FAIL/14NOT_EVALUATED.
+
+## Closed admission/replay5a2b531645 bounded PASS
+
+28independent controls and60supplied+39subtests PASS. Seven exact retained
+dependencies and frozen replay bytes preserved; authentic stored composition
+with omitted declared dependencies refuses. Closed schema, old-label, changed
+recipient/owner/source/document/settings and late-access controls pass. See
+COMPOSITION_ADMISSION_REVIEW_5a2b.md. Supersedes the preceding pending status for
+this bounded service review only; acceptance/dispatch ports remain mocked,
+worker/cover/browser/live source/vendor/runtime ungraded. All14 integrated rows
+remain0PASS/0FAIL/14NOT_EVALUATED.
+
+## Y-UI01 closure at7a5b24e705
+
+Original unchanged9control48assertion UI probe PASS; supplied31tests177assertions
+and app TypeScript PASS. The original late A response no longer replaces newer
+B status. See RECIPIENT_UI_RETEST_7a5b.md. Supersedes Y-UI01 OPEN only for this
+exact portal pin; retains failure c387a06e2d and all14 NOT_EVALUATED. Manual hooks
+and static markup do not establish browser/vendor/render/export acceptance.
