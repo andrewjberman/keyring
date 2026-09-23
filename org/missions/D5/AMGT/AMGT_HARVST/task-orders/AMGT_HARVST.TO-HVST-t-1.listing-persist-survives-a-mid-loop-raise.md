@@ -162,7 +162,7 @@ all pass. Nothing else in this order changes, and your existing five criteria st
 3. **The cone for this worktree includes `org/missions` WHOLE and `integrations`**, so neither the missions hook
    nor the seekingalpha import can produce a false finding this time.
 
-<status>pending</status>
+<status>complete</status>
 <round>3</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
