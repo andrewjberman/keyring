@@ -107,3 +107,43 @@ def test_restored_valid_digest_string_serves_exact_selection(harness,monkeypatch
     assert all(kw['Key']!=ref['key'] and not kw['Key'].endswith('.parquet') for kw in reads)
 
 ```
+
+
+## Source-boundary closure at fdd02de5b2
+
+Date: 2026-09-23 UTC. **R-P10 source-boundary repair CLOSED** at exact LOCAL
+`fdd02de5b2519dfdf26a8f09b44d66b18ba73b11`, parent
+`6ad86009fe5d42d57235095dcda2cffd7b952078`.
+This supersedes the source OPEN disposition above; the original failure record
+and assertions are preserved. **Consumer/package HOLD remains pending CVO~P's
+unchanged packaged probes against the replacement package.**
+
+The clean detached reviewer checkout was switched to the exact remedy. The only
+implementation change requires `isinstance(ref.get("sha256"), str)` before
+matching the same lowercase 64-hex grammar and removes the prior coercion.
+Location/version/size checks, inventory census, selected retrieval/request bounds,
+byte verification and publication behavior remain unchanged. The commit adds
+20 supplied type/format controls and a repair evidence document; it excludes the
+separate legacy-read patch and includes no package/IAM/storage-address changes.
+
+Independent results, all exit 0:
+
+- Supplied holdings suite: **116 PASS in 2.46s**.
+- Original R-P10 driver: **14 PASS in 1.63s**, unchanged SHA-256
+  `d409306709dcdef1d02cc5e7668a91634b9db7883b1cae8153918a0dfdfa538f`.
+- Original multipart driver: **22 PASS in 2.03s**, unchanged SHA-256
+  `0970af07522bb6a70efe92476098e7e2e57496fc1a237a4f03828659ce2503bf`.
+
+Both independently reproduced numeric digest cases now refuse the whole Entry
+response. Restored actual valid strings still serve the exact selected account
+and revision with four storage GETs and no unselected-part/Gold fetch. The added
+supplied cases preserve all-digit and mixed lowercase-hex strings as valid
+metadata and reject wrong JSON types, short strings and uppercase strings before
+part reads. Such metadata positives do not establish hashes of unfetched bytes.
+The prior inventory, interruption, selected-bound, revocation and revision-pinning
+controls remain passing. No tests or producer implementation were edited by this
+reviewer, and the review checkout is clean.
+
+No new source-economic acceptance, live/package grade, deployment or final-index
+rollback guarantee follows. Original economic failures and index timeout/versioning
+limitations remain open. CVO~P owns the separate rebuilt-package verdict.
