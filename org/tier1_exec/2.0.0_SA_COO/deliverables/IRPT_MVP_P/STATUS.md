@@ -2,7 +2,7 @@
 
 Seat `2.0.0_SA_COO~P` (CODEX). Contract `IRPT_MVP_COMPLETION_20260922/CONTRACT.md`
 v1.3 at f0fcc4516c. Reviewer `1.0.0_SA_CTO` per Andrew. Sequencing ruling5edf991c06.
-As of 2026-09-23T17:00:27.432447+00:00.
+As of 2026-09-23T17:09:24.626994+00:00.
 
 ## Pins
 
@@ -12,33 +12,29 @@ As of 2026-09-23T17:00:27.432447+00:00.
 | Backend checkpoint | b639e430d0; measured offline package source e3ad48ca23 |
 | P portal candidate | e0531491, `C:/Users/AndrewBerman/Desktop/irpt-smoke-p-portal-20260923` |
 | Served frontend | clean3b15871b442906c51a98aff96826f13a67458579, `C:/Users/AndrewBerman/Desktop/portal-local-live-20260923` |
-| Current backend artifact | NOT freshly measured; historical live directory digest iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s= is not a current verification |
+| Current backend artifact | Fresh AWS/downloaded ZIP match: iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=, 149956 bytes; measured17:07:42Z |
 | Push state | LOCAL; no push/deploy this tranche |
 
 ## Live thread
 
-NOT LIVE / authenticated trace pending. First measured failure was no localhost5174
-listener and connection refusal. Restored existing committed `scripts/dev-live.mjs`
-with `--port 5174`, PID24768, host localhost. HTTP GET / now200 text/html with
-Vite client and src/main.tsx. This proves only frontend reachability.
+NOT LIVE. Fresh user screenshot and three real-browser proxy requests confirm
+resolve-scope HTTP200, bearerPresent:true, UNAVAILABLE/UNEXPECTED, no data.
+Frontend reachability and normal authenticated transport work; scope does not.
+The exact downloaded live Lambda lacks the prepared Global-context and selected
+firm authorization code. Served frontend also predates the paired scope repair.
+See LIVE_FIRST_HOP_20260923.json and LIVE_FIRST_HOP_REVIEW_20260923.md for exact
+artifact hashes, missing commit/path set and compatibility requirements.
 
-Real auth/data retain the existing CloudFront front door and normal login/MFA.
-No browser surface is connected to this Codex session (`cua.getState` empty;
-`cua.getBrowser` reports unavailable). Andrew has been asked to sign in normally
-and open IRPT so the existing sanitized proxy trace can capture the failing hop.
-No credentials copied and no synthetic principal sent to a live service.
-
-The served tree remains fac3b6a0 plus dev launcher/diagnostics, not P's e0531491
-Opal scope candidate. It is clean and has not been edited. Prior CTO trace
-LOCAL_LIVE_PARTNER_SCOPE_20260923.md reports authenticated resolve HTTP200,
-ok:false/UNAVAILABLE/UNEXPECTED; this is historical, not a new observed response.
-Current served backend revision and authenticated response remain unmeasured.
+Existing localhost5174 PID24768 and sanitized trace remain active through the
+CloudFront front door. CTO live tree is unchanged. No browser automation surface
+is connected; Andrew supplied the real screen and triggered the real requests.
+No credentials copied or synthetic principal sent to live services.
 
 ## Acceptance IDs
 
 | ID | State | Evidence |
 |---|---|---|
-| S1 | OFFLINE ONLY; live bootstrap/browse unproved | P e0531491; current first-hop trace pending |
+| S1 | OFFLINE ONLY; live bootstrap/browse unproved | Fresh first-hop FAIL; paired source repair absent from served artifacts |
 | S2 | OFFLINE ONLY; source admission unproved | M200ba442f5, CTO155213fedf bounded package review |
 | S3 | OFFLINE ONLY; live product acceptance unproved | Existing committed lane artifacts preserved |
 | S4 | OFFLINE ONLY; live product acceptance unproved | Existing committed lane artifacts preserved |
@@ -57,18 +53,18 @@ checker, source map or deployed artifact.
 
 ## Next proof
 
-Fresh authenticated localhost5174 resolve request through CloudFront: record
-sanitized request route/status/envelope structure and exact frontend/backend
-revisions; locate and repair the first failing boundary before deeper custody work.
-Local trace files: `.runtime/live-first-5174.stdout.log` / `.stderr.log`.
+CTO direct review of exact paired delta in LIVE_FIRST_HOP_REVIEW_20260923.md.
+Resolve local-tree integration and runtime publication route under current hold,
+then repeat a normal authenticated request on the reviewed paired artifacts.
+Local trace files remain .runtime/live-first-5174.stdout.log / .stderr.log.
 
 ## Dependencies
 
 | Needs | Owner | Interface/pin | State |
 |---|---|---|---|
-| Normal authenticated browser trace | Andrew/current browser connection | existing dev:live5174 | AWAITED; no connected browser in Codex |
-| Current server artifact identity and concrete runtime delta if required | P / CTO | current auth/scope/bootstrap | NOT YET MEASURED |
-| M/Y support | M/Y | only measured first-hop dependencies | AVAILABLE; no general source review requested |
+| Paired scope repair review and permitted publication route | P / CTO | LIVE_FIRST_HOP_REVIEW_20260923.md | HANDED OFF; CLOUD hold preserved |
+| Normal authenticated browser trace | Andrew | existing dev:live5174 | OBSERVED FAIL; do not repeat sign-in prompt |
+| M/Y support | M/Y | only measured first-hop dependencies | No additional request needed |
 
 ## Parked
 

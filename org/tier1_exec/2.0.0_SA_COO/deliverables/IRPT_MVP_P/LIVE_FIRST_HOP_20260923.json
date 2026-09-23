@@ -1,0 +1,156 @@
+{
+  "measured_utc": "2026-09-23T17:07:42.679104+00:00",
+  "function": "irpt-directory-search",
+  "sha_base64": "iqLKa1RWk9hlcSlAheuoAMgIY4R3VrStPX1eG5Qwq/s=",
+  "bytes": 149956,
+  "last_modified": "2026-09-23T06:26:25.000+0000",
+  "members": 17,
+  "source_pin": "eb762dba2711c60330b38f5838fe1c57421604ac",
+  "comparison": {
+    "entry.py": {
+      "live_sha256": "de11d6c889db438a493355cef0efaaf3759b2e9161488bd173c247c1ebab758a",
+      "candidate_sha256": "82ada70c34d5351462241dcb1124d1c3442a06c5360246c6e7fe16c29f912781",
+      "same": false,
+      "live_has_global_context": false,
+      "candidate_has_global_context": true
+    },
+    "served.py": {
+      "live_sha256": "588a9856f50cdd6440800d0a934886d3a2bdb045be91f89782166f7cab0b4334",
+      "candidate_sha256": "e518af43b2c3358bb788b32ddd7f57b3f0c7e47afd7138ad9ed967e03531052f",
+      "same": false,
+      "live_has_global_context": false,
+      "candidate_has_global_context": true
+    },
+    "resolve.py": {
+      "live_sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+      "candidate_sha256": "24b407fa00ff0fc342d57b1ca2bd986d7c802fe8a96b30fe57c06520523ccdeb",
+      "same": true,
+      "live_has_global_context": false,
+      "candidate_has_global_context": false
+    }
+  },
+  "sanitized_responses": [
+    {
+      "operation": "resolve-scope",
+      "httpStatus": 200,
+      "bearerPresent": true,
+      "bytes": 404,
+      "envelopeKeys": [
+        "ok",
+        "contract_version",
+        "operation",
+        "status"
+      ],
+      "dataKeys": [],
+      "statusKeys": [
+        "operation",
+        "state",
+        "source_dates",
+        "actions",
+        "public_reason_code"
+      ],
+      "public_reason_code": "UNEXPECTED",
+      "state": "UNAVAILABLE",
+      "contract_version": "v1"
+    },
+    {
+      "operation": "resolve-scope",
+      "httpStatus": 200,
+      "bearerPresent": true,
+      "bytes": 404,
+      "envelopeKeys": [
+        "ok",
+        "contract_version",
+        "operation",
+        "status"
+      ],
+      "dataKeys": [],
+      "statusKeys": [
+        "operation",
+        "state",
+        "source_dates",
+        "actions",
+        "public_reason_code"
+      ],
+      "public_reason_code": "UNEXPECTED",
+      "state": "UNAVAILABLE",
+      "contract_version": "v1"
+    },
+    {
+      "operation": "resolve-scope",
+      "httpStatus": 200,
+      "bearerPresent": true,
+      "bytes": 404,
+      "envelopeKeys": [
+        "ok",
+        "contract_version",
+        "operation",
+        "status"
+      ],
+      "dataKeys": [],
+      "statusKeys": [
+        "operation",
+        "state",
+        "source_dates",
+        "actions",
+        "public_reason_code"
+      ],
+      "public_reason_code": "UNEXPECTED",
+      "state": "UNAVAILABLE",
+      "contract_version": "v1"
+    }
+  ],
+  "served_frontend": "3b15871b442906c51a98aff96826f13a67458579",
+  "portal_candidate": "e0531491b33db98e2d88f22e7c09a34ee0b9fa04",
+  "limits": "Fresh bearer-present proxy responses, no token replay. Downloaded ZIP SHA equals AWS CodeSha256. No cloud write. Exact internal exception not captured by sanitized trace.",
+  "candidate_archive_delta": [
+    {
+      "member": "entry.py",
+      "repo_path": "infra/aws/lambda/investor-reporting/directory/entry.py",
+      "pin": "d7b885b74ec7fb35c28e68a4692e45a4ba762fe7",
+      "sha256": "82ada70c34d5351462241dcb1124d1c3442a06c5360246c6e7fe16c29f912781",
+      "change": "CHANGED",
+      "live_sha256": "de11d6c889db438a493355cef0efaaf3759b2e9161488bd173c247c1ebab758a"
+    },
+    {
+      "member": "served.py",
+      "repo_path": "infra/aws/lambda/investor-reporting/_authz/served.py",
+      "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+      "sha256": "e518af43b2c3358bb788b32ddd7f57b3f0c7e47afd7138ad9ed967e03531052f",
+      "change": "CHANGED",
+      "live_sha256": "588a9856f50cdd6440800d0a934886d3a2bdb045be91f89782166f7cab0b4334"
+    },
+    {
+      "member": "contracts/ResolvedScope.schema.json",
+      "repo_path": "docs/contracts/investor-reporting/v1/ResolvedScope.schema.json",
+      "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+      "sha256": "dd7ab87a7f1e6acaff51b6909d2c5f50b72d9fce84e8d1218b29e01288df7e66",
+      "change": "CHANGED",
+      "live_sha256": "385cfbf40e4adeb1ea9fa44c1c593611764feb2e63a9d9485b82a59792fb0c78"
+    },
+    {
+      "member": "owner_reads.py",
+      "repo_path": "infra/aws/lambda/investor-reporting/_scope/owner_reads.py",
+      "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+      "sha256": "f9e1f5d3274ee4396932aa1b1bf80b08be09c6afd183ab14c81b766b5d90ed0f",
+      "change": "ADDED",
+      "live_sha256": null
+    },
+    {
+      "member": "custody.py",
+      "repo_path": "infra/aws/lambda/investor-reporting/_scope/custody.py",
+      "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+      "sha256": "23cda6b0e3dd88df3b837545f94efacf600db857a5509ddd458ff40cc7870394",
+      "change": "ADDED",
+      "live_sha256": null
+    },
+    {
+      "member": "contracts/DirectoryContext.schema.json",
+      "repo_path": "docs/contracts/investor-reporting/v1/DirectoryContext.schema.json",
+      "pin": "bc3727b3a37de412c48d70e3ece13fd7ed27aa6c",
+      "sha256": "8c76a0f0e028f1b1baf7224f633904e2c1b9aa2450b409c679be1bef4bea2404",
+      "change": "ADDED",
+      "live_sha256": null
+    }
+  ]
+}
