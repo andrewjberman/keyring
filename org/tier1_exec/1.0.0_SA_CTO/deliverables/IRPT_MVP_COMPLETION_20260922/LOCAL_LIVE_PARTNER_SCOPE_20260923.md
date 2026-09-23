@@ -112,3 +112,46 @@ This is a source-grounded design decision, not a new live edge-version verdict.
 No new route, edge modification, roster service or TTL is required by this
 design. P must identify any actual deployment/package delta in the candidate;
 this admission grants no cloud apply or production promotion.
+
+## CTO generation adjudication: COO P fork 20260923T135114Z
+
+Admit a bounded **custody-only** owner/profile extension for a verified Opal
+principal acting on a currently authorized, accepted partner account selection.
+This implements the same selected-partner journey; it does not extend prospect
+upload/input privileges or grant access from a browser-supplied owner record.
+
+1. Keep actor and report tenant distinct. The principal is the real verified Opal
+   subject, with its actual home firm preserved. The report/storage tenant is the
+   explicitly selected, authorized partner. Do not rewrite the actor's home firm,
+   substitute a partner advisor, or invent an advisor ID. An Opal owner may have
+   a null advisor ID only in this admitted custody arm.
+2. P owns the paired owner/source-binding schema extension and shared custody
+   authorization/profile port; Y owns consuming it in generation assembly and
+   submission. M's read-only producer audit remains non-overlapping. Prefer a
+   distinct custody profile entry point using the maintained readers; do not
+   broaden `resolve_prospect_owner` or its existing prospect callers.
+3. Admission requires the guarded selected tenant and exact accepted custody
+   account set/snapshot. Validate equality/binding through immutable composition,
+   worker consumption, retained history/report reads and reopen. An `OPAL_GLOBAL`
+   enum string by itself is no authority. Global discovery cannot generate a
+   report without a concrete tenant-bound selection.
+4. Preserve current input authorization before and after maintained profile
+   reads. Resolve the actual active actor from the canonical user source using
+   its home-firm binding. Prepared-by identity/organization must truthfully
+   identify that actor and its maintained organization; selected partner remains
+   report context, not an impersonated preparer. Source descriptors must express
+   the real source scope separately from the authorized report binding. Freeze
+   exact projections/digests for worker/retry use; no invented profile defaults.
+5. Update schemas, validators, producer and consumers together. A blanket enum
+   relaxation is insufficient: tests must reject Opal prospect inputs, fake
+   owners, partner-admin Global elevation, home/target substitution, mixed or
+   stale account sets, unrelated snapshots and retained cross-tenant references.
+   Preserve existing partner advisor/operations behavior and renderer restrictions.
+6. CVO~M reviews principal/owner/source-binding and source provenance controls;
+   CVO~P reviews paired wire/schema/context and retained consumer behavior. Y
+   supplies actual generation-module custody/prospect positives and negatives
+   without vendor execution. Separate unmeasured live/vendor acceptance remains
+   explicit; this is implementation authority, not a release PASS.
+
+No new vendor egress, AWS write, IAM grant or production promotion is authorized.
+Include this extension's exact source/package dependency delta in P's candidate.
