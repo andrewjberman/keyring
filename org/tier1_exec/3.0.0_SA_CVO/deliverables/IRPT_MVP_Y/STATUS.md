@@ -138,6 +138,13 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   Y-R01 CLOSED for the pinned offline internal-reader boundary. Supplied
   public-projection tests are not independent HTTP/Entry/runtime acceptance.
   See `OWNED_REPORT_RETEST_745c02890e.md`; all14 criteria NOT_EVALUATED.
+- IRPT-Y-DATES-01 `dea338a397` read; independent review agreement recorded in
+  own `INTERFACES.md`, prospective20-case matrix in
+  `STATUS_DATE_REVIEW_PLAN_dea338a397.md`. Exact paired Y derivation/handler and
+  P schema/wire/UI/compatibility pins requested; no date-boundary tests executed
+  or acceptance inferred. Incompatible boundary remains UNAVAILABLE. Implementation
+  owners unchanged; no historical PRD provenance or B/F recut. CVO~P002020Z
+  confirms independent paired-boundary review after handoff, not adopted counts.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
@@ -346,6 +353,17 @@ COO~Y233230Z separately reports backend090c819803 canonical acceptance identity
 repair,45 tests+24subtests PASS/P-consumed. Producer-attributed, not rerun here.
 
 ## Next executable review and dependencies
+
+Next date-boundary review requires the paired exact implementation/compatibility
+handoff specified in `INTERFACES.md` and `STATUS_DATE_REVIEW_PLAN_dea338a397.md`.
+All20 listed date cases are PLANNED, not PASS or executed. Ruling alone does not
+make status/schema, HTTP, UI/export or READY report release accepted.
+
+Peer CVO~M001753Z reports M-FACT-01 CLOSED in0a84be3396 on
+f7344d6e9a3833c7952b8f473a773634baea9dee:27 supplied+12 unchanged reviewer PASS.
+This supersedes the earlier peer-open helper hash-string finding only. Helper
+remains unwired; source/custody date mismatch and7479 economic failures remain
+open. No Y normalized custody-port or live acceptance lift; counts not folded.
 
 COO~Y supplies exact candidate/worktree pins, interfaces, queue/build configuration,
 reproducible actual-entry/persistent-adapter commands and protected trace references.
