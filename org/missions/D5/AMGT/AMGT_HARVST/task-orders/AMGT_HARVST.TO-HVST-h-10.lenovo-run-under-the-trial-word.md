@@ -119,6 +119,37 @@ the duration of this session as it pertains to AMGT projects."*
 - **THE SECOND ISSUER CHECKPOINT.** When AC9, AC10 and AC11 pass, **COMMIT, then STOP and REPORT. Do NOT fire the
   run.** `2.0.0_SA_COO~Y` verifies the rehearsal on its own instruments and shows its evidence to `1.0.0_SA_CTO~Z`
   before the third act fires.
+- **PHASE 0c -- THE SILVER REBUILD, CODE AND NO VENDOR CALL** (added after the THIRD act landed bronze but not silver).
+  - **What the third act achieved:** all five publishers reached `job_finished` under real adversarial conditions, and
+    the issuer measured bronze 89 -> 103 (+14, re-read 14 of 14, mismatch 0), the first 2 bronze listings and the
+    first `listing_hit` row ever landed. **The Phase 0b fix is proven under fire.**
+  - **What blocks AC2:** row `AMGT_HARVST-Z-W10-S8`. `silver_from_bronze`'s WSJ extractor pulls WSJ's entire
+    `__NEXT_DATA__` frontend config (100+ non-article keys) into the silver row; one page held a string where its
+    siblings held a boolean, so pyarrow's grouped-batch schema inference raised and ALL 11 new WSJ rows failed, twice.
+  - **NO NEW VENDOR CALL IS NEEDED, AND NONE IS AUTHORISED HERE.** Bronze holds the received bytes and
+    `C-HV-SILVER-FROM-BRONZE` makes silver replayable from them. The remaining work is entirely offline.
+  - **THE ISSUER'S CONTRACT READING, which this phase builds to** (surfaced to `1.0.0_SA_CTO~Z`; if it rules
+    otherwise, that ruling governs): `C-HV-SILVER-FROM-BRONZE` requires every vendor field KEPT with standard typing
+    and nothing filtered or summarised. A frontend config blob whose sibling pages disagree on a key's type cannot be
+    columnar-typed at all. So:
+    - the ARTICLE-bearing fields stay typed exactly as they are today;
+    - every remaining key of the page config is preserved VERBATIM in one JSON TEXT column;
+    - **nothing is dropped, nothing is summarised**, and bronze remains the original either way.
+  - **BUILD:**
+    - fix the extractor in `lib/opal_data_harvest/silver_from_bronze.py` per that reading, for WSJ and for any other
+      publisher whose page config can carry a mixed-type key;
+    - add arms to `lib/opal_data_harvest/test_silver_from_bronze.py`, including a NO-KEY-LOSS arm: every top-level key
+      present in a bronze fixture is recoverable from the silver row, counted, with the denominator printed;
+    - and a REGRESSION arm reproducing the exact mixed-type conflict (a string where a sibling holds a boolean) and
+      proving the grouped batch now writes;
+    - then REBUILD silver from the ALREADY-HELD bronze for this run's articles, through the same uploader path, with
+      no vendor call.
+  - **You may edit ONLY:** `lib/opal_data_harvest/silver_from_bronze.py`,
+    `lib/opal_data_harvest/test_silver_from_bronze.py`, and `lib/opal_data_harvest/uploads.py` if the rebuild needs a
+    replay entry point.
+  - **AC2 is then re-measured** on the rebuilt silver: `silver_article_rows` EQUAL to `bronze_articles`.
+  - **AC3 stays as it is and may still FAIL honestly.** Its replay depends on what each publisher returned in the one
+    run, and three of five had nothing replayable. Record it, do not chase it, and do NOT fire another run to move it.
 - **PHASE 1 -- THE RUN.** Only on the issuer's continuation, then the acts below in order. **The third act's bound is
   the same as the second's** (bbg, ft, wsj, barrons, plus an SA pass that persists the received bytes), and the
   sizing goes on the record before it and the spend after it.
@@ -221,6 +252,7 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
   <criterion id="AC8" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python .scratch/hv10/ac8.py</invocation><expect>"main_harvest_client" at least 1 (it was 0 at the first attempt), "worker_harvest_client" at least 9, and "probe_returns_before_worker_run False"</expect></criterion>
   <criterion id="AC9" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_retrieval_provenance.py -v --color=no -p no:cacheprovider 2>&1 | tail -24</invocation><expect>"18 passed" and no "failed" -- the fifteen arms already present plus test_probe_failure_is_recorded_not_raised, test_run_continues_to_every_publisher_after_a_probe_failure, and test_a_challenged_publisher_is_recorded_and_the_run_continues</expect></criterion>
   <criterion id="AC10" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest.rehearse_run</invocation><expect>"handler_reached_worker_run True", "publisher_jobs_started 5 of 5", "bronze_rows" at least 1, "silver_rows" at least 1, and "vendor_calls 0" -- the whole handler driven with an injected transport.VerificationRequired and the network poisoned at PacedSession.get, SessionManager.refresh and subprocess.run</expect></criterion>
+  <criterion id="AC12" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m pytest lib/opal_data_harvest/test_silver_from_bronze.py -v --color=no -p no:cacheprovider 2>&1 | tail -22</invocation><expect>"16 passed" and no "failed" -- the fourteen arms already present plus test_page_config_mixed_type_key_still_writes (the exact string-where-sibling-holds-boolean conflict) and test_no_key_loss_from_bronze_to_silver (every top-level bronze key recoverable, denominator printed)</expect></criterion>
   <criterion id="AC11" cell_refs="HVST-h-10"><invocation>cd "$(git rev-parse --show-toplevel)" && python -m lib.opal_data_harvest.rehearse_run --positive-control</invocation><expect>"poison_positive_control RAISED" on every one of the three poisoned call sites (PacedSession.get, SessionManager.refresh, subprocess.run) -- the rehearsal's PASS means the run could not have reached the network, not merely that it did not</expect></criterion>
 </proof_of_spec>
 
@@ -236,15 +268,18 @@ main runtime's `progress.sqlite3`, opened read-only. It then prints:
 ## 6. WHEN YOU ARE DONE
 1. Write the instance to
    `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~10/AMGT_HARVST.TO-HVST-h-10.lenovo-run-under-the-trial-word.proof_of_spec.json`.
-2. Grade with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6,AC7,AC8,AC9,AC10,AC11`, which must return
+2. Grade with `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5,AC6,AC7,AC8,AC9,AC10,AC11,AC12`, which must return
    rc 0. The id list names EVERY row the instance carries, the judgment row AC5 included: the checker's coverage
    frame refuses a list that omits a carried row (row `AMGT_HARVST-Z-W8-S2`).
    - **At the FIRST ISSUER CHECKPOINT** (end of Phase 0), write the instance with AC7 and AC8 recorded, grade
      `AC7,AC8` to rc 0, commit, and report.
    - **At the SECOND ISSUER CHECKPOINT** (end of Phase 0b), record AC9, AC10 and AC11, grade `AC9,AC10,AC11` to
      rc 0, commit, and report. The full grading above applies at the END of Phase 1.
-3. Flip to `complete` only if every mechanical criterion (AC1, AC2, AC3, AC4, AC6, AC7, AC8, AC9, AC10, AC11) passes,
-   and NEVER at either checkpoint.
+3. Flip to `complete` only if every mechanical criterion (AC1, AC2, AC4, AC6, AC7, AC8, AC9, AC10, AC11, AC12) passes
+   AND AC2 reads silver EQUAL to bronze on the rebuilt silver, and NEVER at a checkpoint. **AC3 is EXEMPTED from the
+   flip condition by the issuer:** its replay depends on what the publishers returned in the one authorised run, three
+   of five had nothing replayable, and no further run is authorised to move it. It is recorded with its reason and
+   carried to the round-1 analysis, not chased.
 4. Commit with `--only`.
 5. Report once, with the `RUN_REPORT.md` stage-9 line verbatim.
 
