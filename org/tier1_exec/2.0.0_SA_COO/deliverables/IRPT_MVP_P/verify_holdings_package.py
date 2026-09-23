@@ -138,6 +138,20 @@ answer=entry.lambda_handler(event)
 assert answer['data']['scope']['account_ids']==[accounts[0]],answer
 assert not unselected.intersection(row['Key'] for row in s3.calls)
 s3.rows[unselected_location]=unselected_body
+# ORIGINAL_R_P10_REVIEWER_CASES
+valid_digest_controls=0
+for target in ('unselected_part','gold'):
+    for digest_value in ('1'*64,'abcdef01'*8):
+        candidate=copy.deepcopy(valid_manifest)
+        ref=next(p['object'] for p in candidate['partitions'] if accounts[0] not in p['account_ids']) if target=='unselected_part' else candidate['gold']
+        ref['sha256']=digest_value
+        repin(candidate);s3.calls=[]
+        answer=entry.lambda_handler(event)
+        assert answer['data']['scope']['account_ids']==[accounts[0]],answer
+        assert not unselected.intersection(row['Key'] for row in s3.calls)
+        assert not any(row['Key'].endswith('.parquet') for row in s3.calls)
+        valid_digest_controls+=1
+repin(valid_manifest)
 selected_part=next(part['object'] for part in manifest['partitions'] if accounts[0] in part['account_ids'])
 location=(selected_part['bucket'],selected_part['key']); saved=s3.rows.pop(location)
 answer=entry.lambda_handler(event)
@@ -166,6 +180,7 @@ print(json.dumps({'guarded_selected_read':True,'versioned_reads':True,'corrupt_r
     'release_revocation_refusal':True,'missing_registry_refusal':True,'canonical_locations':locations,
     'v2_selected_parts_only':True,'missing_selected_part_refusal':True,
     'selected_request_limit_refusal':True,'complete_inventory_negative_cases':negative_count,
+    'valid_digest_string_controls':valid_digest_controls,
     'unselected_physical_blob_not_required':True,'reader_imports_pyarrow':False,'network':False}))
 '''
 
@@ -193,7 +208,28 @@ def main():
                 "other_functions_equal": len(before["functions"]) - 1,
                 "deployment_metadata_unchanged": True, "members": {},
                 "member_diff": {k: {"before": old.get(k), "after": item.get(k)} for k in set(old) | set(item) if old.get(k) != item.get(k)}}
+    reviewer_pin = "142e5a27a4"
+    reviewer_path = "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_P/holdings_inventory_cases.py"
+    reviewer_cases = blob(root, reviewer_pin, reviewer_path)
+    evidence["original_reviewer_cases"] = {"pin": reviewer_pin, "path": reviewer_path,
+        "sha256": hashlib.sha256(reviewer_cases).hexdigest(), "assertions_modified": False,
+        "qualification": "Producer replay of unchanged reviewer assertions using supplied flat setup; not an independent replacement verdict."}
+    probe = PROBE.replace("# ORIGINAL_R_P10_REVIEWER_CASES", reviewer_cases.decode("utf-8"))
     staged = {row["packaged_as"]: row for row in item["staged_from"]}
+    old_staged = {row["packaged_as"]: row for row in old["staged_from"]}
+    assert item["files"] == old["files"]
+    changed_member_bytes = []
+    terraform_paths = subprocess.check_output(["git", "ls-tree", "-r", "--name-only",
+        args.before_ref, "--", "infra/aws/terraform/investor-reporting/holdings"], cwd=root,
+        text=True).splitlines()
+    evidence["terraform_source_sha256"] = {}
+    for path in terraform_paths:
+        if not path.endswith(".tf"):
+            continue
+        original = blob(root, args.before_ref, path)
+        current = (root / path).read_bytes().replace(b"\r\n", b"\n")
+        assert current == original.replace(b"\r\n", b"\n"), path
+        evidence["terraform_source_sha256"][path] = hashlib.sha256(original).hexdigest()
     assert len(staged) == len(item["staged_from"]) and len(set(item["files"])) == len(item["files"])
     with tempfile.TemporaryDirectory(prefix="irpt-holdings-flat-") as scratch:
         flat = Path(scratch)
@@ -201,6 +237,11 @@ def main():
             row = staged.get(member)
             data = blob(root, row["pin"], row["repo_path"]) if row else blob(root, args.before_ref, item["source_dir"] + "/" + member)
             sha = hashlib.sha256(data).hexdigest()
+            old_row = old_staged.get(member)
+            old_data = blob(root, old_row["pin"], old_row["repo_path"]) if old_row else blob(
+                root, args.before_ref, old["source_dir"] + "/" + member)
+            if old_data != data:
+                changed_member_bytes.append(member)
             if row:
                 assert sha == row["sha256"]
             target = (flat / member).resolve()
@@ -208,12 +249,14 @@ def main():
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(data)
             evidence["members"][member] = sha
+        assert changed_member_bytes == ["publication.py"], changed_member_bytes
+        evidence["changed_member_bytes"] = changed_member_bytes
         fixture = Path(__file__).with_name("holdings_package_fixture.json")
         evidence["fixture_sha256"] = hashlib.sha256(fixture.read_bytes()).hexdigest()
         environment = {k: v for k, v in os.environ.items() if not k.startswith("IRPT_") and k != "PYTHONPATH"}
         environment["AWS_EC2_METADATA_DISABLED"] = "true"
         commands = [[sys.executable, str(root / "infra/aws/lambda/ci/import-closure-check.py"), str(flat), *item["files"]],
-                    [sys.executable, "-I", "-c", PROBE, str(flat), str(fixture.resolve())]]
+                    [sys.executable, "-I", "-c", probe, str(flat), str(fixture.resolve())]]
         evidence["runs"] = []
         for command in commands:
             run = subprocess.run(command, cwd=flat, env=environment, capture_output=True,
