@@ -66,3 +66,21 @@ Prior source485b69c061/current-viewer paired review and publication3539ad2ae5
 are preserved. Universal reference services and analysis/export enrichment are
 parked unless they block this Holdings thread. Push state LOCAL; MSTR owns shared
 push. No deployment performed.
+
+## Drive and source follow-up at 20:02Z
+
+Andrew requested a 600-second drive cadence; record HOLDINGS_DRIVE_20260923.md.
+Canonical timer delivered a tick, but unrelated Anatomy side effects required
+stopping only its process and routing repository repair to MSTR. Product work
+continues. CTO76480a2a35 accepted bounded35999+99c9 source controls with100 tests;
+this is not a live verdict.
+
+INF_ORIGINAL_SOURCE_CHECK_20260923.json now dispositions all82 extra positions
+accounts: all appear in raw roster, all explicitly inactive, all totals reconcile.
+Retain their census and explain active-population filtering. Three original
+account sources contain no currency declaration. First live proof remains open.
+
+CRO~M relayed Andrew taxonomy e5cf6d6549: public Models / SMAs / Client plug
+replaces Unresolved. Earlier unresolved vocabulary above describes the existing
+implementation, not the intended endpoint. Missing numeric custody facts are
+not zero or made complete by a label change. Consume CTO amendment when ready.

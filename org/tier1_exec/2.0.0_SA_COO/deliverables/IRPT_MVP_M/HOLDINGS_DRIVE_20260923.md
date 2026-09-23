@@ -1,4 +1,4 @@
-﻿# Holdings drive instruction — 2026-09-23
+# Holdings drive instruction � 2026-09-23
 
 Seat: 2.0.0_SA_COO~M. Channel: direct Codex user turn, recorded 2026-09-23T19:59Z.
 
@@ -30,3 +30,10 @@ implementation/proof, or route an evidenced dependency. Current source work and
 next live proof are in STATUS.md; no status-only stop while authorized local work
 remains. Stop the task timer once the full three-firm journey is verified, or on
 Andrew's instruction. Runtime liveness is not product completion.
+
+Scope update received from CRO~M Msg-ID99731, record e5cf6d6549: Andrew answers
+"1.) Client is the plug figure so no need for "unresolved"; yes this should absolutely be included. 2.) Yes. 3.) Yes, this only applies for SmartX for 49 and Black Diamond Rebalancer endpoint for Cottonwood. 4.) Yes."
+
+Endpoint therefore includes public Models / SMAs / Client, with third-party and
+unattributed membership under Client. Unknown custody values or currency are
+not fabricated by the plug. CTO owns the corresponding contract amendment.
