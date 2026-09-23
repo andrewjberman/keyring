@@ -117,6 +117,8 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-5.induction-r
 with the message file written by the Write tool.
 
 ## 4. BOUNDS
+- **NO S3 DELETE OF ANY KIND** (issuer amendment on row `AMGT_CORPUS-Z-S4`): a wrong object you wrote is superseded by a
+  NEW key (bump `method_version`), never deleted. An S3 delete is a human-confirmed act on this estate.
 - **Pure ASCII source, LF, Python 3.9-compatible.** Zero vendor calls, zero S3 writes, zero identity-layer writes.
 - **If NO folder of the population carries an evidenced, unrefused candidate,** that is a VALID measurement and a
   finding, not a failure. Print `picked NONE <reason>` in place of `WILL ADD` / `REQUEST`, and file a row. AC2 then

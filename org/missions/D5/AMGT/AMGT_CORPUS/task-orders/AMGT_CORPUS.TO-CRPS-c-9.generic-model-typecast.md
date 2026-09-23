@@ -47,6 +47,18 @@ report), read through `lib/research/harvest/store.py` (`table_prefix`, a paginat
 Their shape is documented at the top of `lib/research/corpus/extract.py`: read it first. For an XLSX, the extraction
 carries `sheets`, per-sheet `labels`, `mnemonics` and `factset_codes`.
 
+**ISSUER AMENDMENT, before this order's spawn, on row `AMGT_CORPUS-Z-W1-S1` (read it in the investigation file): WHERE
+THE MNEMONICS ACTUALLY ARE.** In this corpus the Bloomberg or FactSet field is NOT a quoted literal inside the call.
+It is a CELL REFERENCE to a LABEL cell: `=+_xll.BDP(C1,Z2)` with `Z2` holding the text `PX_LAST`, and
+`=_xll.FDS($D$2,$A79&...)` with `$A79` holding `FF_SALES`. So c-2's `mnemonics` field holds the quoted OVERRIDE
+PARAMETERS (`EQY_CONSOLIDATED`, `PER`, ...), not the model's fields. Its `factset_codes` is 0 of 43 for the same reason.
+**Therefore THE MNEMONIC POPULATION FOR THIS CELL IS THE `labels` VALUES WHOSE WHOLE TEXT HAS THE MNEMONIC SHAPE
+`^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$`** (upper case, with at least one underscore, so `PX_LAST` and `FF_SALES` qualify and
+prose labels such as `ROE` or `Net Debt` do not). It is a stated working rule and is printed in the artifact. The
+extraction's `mnemonics` field is reported separately as `override_params` and is NOT the core. FactSet codes are
+those shaped labels matching `^F[FGE]_`. **No S3 delete of any kind, ever:** a wrong object you wrote is superseded by
+a NEW key (bump `method_version`, which changes `inputs_sha16`), never deleted (row `AMGT_CORPUS-Z-S4`).
+
 **THE GOLD ARTIFACT SHAPE, shared by every gold cell of this round:**
 ```
 { "artifact": "research-model-typecast", "method_version": "<n>",

@@ -94,6 +94,8 @@ org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-c-10.one-call-s
 `bash .tools/safe-commit.sh --author "0.9.0_WK_AMGT_CORPUS~1 <0.9.0_WK_AMGT_CORPUS~1@opal.agent>" -F <msgfile> -- <paths>`.
 
 ## 4. BOUNDS
+- **NO S3 DELETE OF ANY KIND** (issuer amendment on row `AMGT_CORPUS-Z-S4`): a wrong object you wrote is superseded by a
+  NEW key (bump `method_version`), never deleted. An S3 delete is a human-confirmed act on this estate.
 - **Pure ASCII source, LF, Python 3.9-compatible.** NO S3 write of any kind; the difference arm is stub-only by
   construction. Pass the stub client explicitly; the live read uses a default client for GETs and LISTs only.
 - **Surprise rows:** `AMGT_CORPUS-Z-W1-S<k>`, `disarm_owner` `2.0.0_SA_COO~X`. **REFUSE a criterion you cannot satisfy as

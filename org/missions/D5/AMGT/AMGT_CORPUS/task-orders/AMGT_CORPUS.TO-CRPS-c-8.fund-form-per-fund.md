@@ -100,6 +100,8 @@ scan file. Scratch in `.scratch/c8/`. Commit with
 with the message file written by the Write tool.
 
 ## 4. BOUNDS
+- **NO S3 DELETE OF ANY KIND** (issuer amendment on row `AMGT_CORPUS-Z-S4`): a wrong object you wrote is superseded by a
+  NEW key (bump `method_version`), never deleted. An S3 delete is a human-confirmed act on this estate.
 - **Pure ASCII source, LF, Python 3.9-compatible.** S3 writes ONLY through `gold_put`, never overwriting; a refused put is
   a BLOCKING row. **Run `--write` as a BUILD STEP.**
 - **Surprise rows:** `AMGT_CORPUS-Z-W5-S<k>`, next unused `k`, `disarm_owner` `2.0.0_SA_COO~X`. Append, never edit.
