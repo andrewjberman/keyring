@@ -122,7 +122,7 @@ determinism check).
 3. **Snapshots accumulate.** The rebuild adds a part; nothing is deleted, and no delete is authorised anywhere in this
    project.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~13</slot>
 <fabric>site-z</fabric>
