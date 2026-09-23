@@ -572,3 +572,7 @@ Andrew authenticated Anna Holdings NOT_READY is actual journey FAIL. HOLDINGS_AU
 ## IRPT-X10-ACTIVATION-OWNER-20260923
 
 CTO owns enforcement acceptance; M is existing exact registry writer with CRO incumbents preserved. Global irpt-x10-v1 has12families/3firms; enforcement_ref must be full accepted receipt commit, not arbitrary source/bucket-create. P proceeds callable/claim/least-privilege plan and shared enforcement matrix for all36destinations with precise deployed writer coverage. Minimal COT permissions alone do not prove global enforcement. Physical_disposal OPEN remains separate, not a new first-thread gate. No ACTIVE mutation in this ruling.
+
+
+## 2026-09-23 Holdings deployed shallow-layout crash
+CTO independently reproduced bcb3 IndexError at /var/task and passed exact source 3e913e9ce9 in the same Lambda Python 3.12 image. P packages and returns exact one-function plan; M prepares supported COT coverage without replacing the user account. See DIRECT_REVIEW_2020_20260923/HOLDINGS_SHALLOW_RUNTIME_REVIEW.md. Actual user journey remains FAIL.
