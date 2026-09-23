@@ -82,7 +82,7 @@
     "selected_candidates": "UNVERIFIED and unavailable",
     "ui_tests_pass": 16,
     "ui_assertions": 87,
-    "ui_shared_adapter_integration": "7411ada3 consumed via303d3fde; current UI7a5b24e7 independent repair retest pending"
+    "ui_shared_adapter_integration": "7411ada3 consumed via303d3fde; UI7a5b24e7 independent Y-UI01 closure1ebdadd0d4"
   },
   "current_candidate": {
     "backend": "ef9e8f51c4",
@@ -119,8 +119,10 @@
     "subtests_pass": 39,
     "ruff": "PASS",
     "commit_gate": "5/5 PASS",
-    "independent_review": "PENDING",
-    "scope": "Existing recorded configuration frozen at acceptance; current vendor template/settings readback and effecting runtime unproven"
+    "independent_review": "03e220f29b: bounded PASS exactef9e8f51c4fe81b60c89f7a1a3a6ec575e3cc182",
+    "scope": "Existing recorded configuration frozen at acceptance; current vendor template/settings readback and effecting runtime unproven",
+    "independent_controls_pass": 34,
+    "reviewer_correction": "Initial/diagnostic33PASS1FAIL preserved; oldest_available expectation corrected to documented oldest mapping. No product defect or implementation edit."
   },
   "runtime_dependency": "M023759: actual canonical Python source-reader transport and exact-input authorizer not implemented by703e82ea; M owns returning concrete adapter/dependency"
 }
