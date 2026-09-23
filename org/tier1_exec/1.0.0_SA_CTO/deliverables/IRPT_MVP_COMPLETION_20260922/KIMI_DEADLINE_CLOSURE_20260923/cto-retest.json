@@ -1,0 +1,31 @@
+{
+  "source_commit": "5609c2e46a2d36716743f21a8e6a5eec6876e5d8",
+  "network_calls": 0,
+  "advertised_total_seconds": 120,
+  "elapsed_seconds": 238.0,
+  "transport_timeout_arguments": [
+    120.0,
+    1.0
+  ],
+  "result": {
+    "result": null,
+    "failure": "KIMI_TIMEOUT",
+    "attempts": [
+      {
+        "attempt": 1,
+        "outcome": "KIMI_HTTP",
+        "elapsed_seconds": 119.0,
+        "usage": {}
+      },
+      {
+        "attempt": 2,
+        "outcome": "KIMI_TIMEOUT",
+        "elapsed_seconds": 119.0,
+        "usage": {}
+      }
+    ],
+    "model": "kimi-k3"
+  },
+  "finding_reproduced": false,
+  "closure_assertions_passed": true
+}
