@@ -909,6 +909,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
     "spec_asserts": "The round-3 analysis stated that FWD-1's listing half remained open because 'three of five publishers remain unmeasured', and the round-4 analysis withdrew that sentence as unsupportable while asking whether the coverage question is answerable from the 479 bronze objects already held.",
     "world_is": "It is answerable, and the answer is not that those publishers are unmeasured. Each was asked in the same invocation and each produced a distinct, recorded, terminal ACCESS-LAYER outcome with zero pages of content. So there is nothing held to evaluate for them -- not because coverage was never attempted, but because access was refused three different ways. The sentence that should replace the withdrawn one is narrower and harder: for two of the three, a fresh session is not the remedy, because the recorded failures are a search-endpoint 403 and a post-re-authentication rejection.",
     "notes": "NO CELL IS OWED BY THIS ROW and this seat is not asking for a vendor act. The row exists so the vendor question, if anyone raises it, starts from the measurement rather than from the withdrawn sentence: bbg is the only one of the three whose recorded failure a fresh session plausibly addresses. GRADUATED because the finding is now a durable input to that decision rather than an open investigation. The identifier-form inconsistency in discovered_for is stated, not filed as a defect and not asked of anyone -- no consumer is measured as joining on it today, so it is an EXPOSURE, and naming it costs nothing."
+  },
+  {
+    "id": "AMGT_HARVST-Z-S15",
+    "project": "AMGT_HARVST",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Y",
+    "surfaced_at": "2026-09-23T05:52:56Z",
+    "one_line": "CORRECTS a number this seat put in its OWN committed recut: section 16a's subtraction says the channel is '36 rows, 0 non-terminal', inherited verbatim from the round-4 analysis and never measured. Measured now: 36 rows, and NON-TERMINAL on BOTH constructible axes -- 29 of 36 by disposition (UNDER_INVESTIGATION) and 24 of 36 by hazard_standing (ARMED). There is no reading on which it is zero.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Y",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census by this seat over the channel's single fenced block, DENOMINATOR 36 rows, both axes printed with their key union: disposition = UNDER_INVESTIGATION 29, DISMISSED_WITH_REASON 5, GRADUATED 2; hazard_standing = ARMED 24, INERT 12; class = OBSERVATION 35, BLOCKING 1",
+        "the inherited sentence, verbatim from 1.0.0_SA_CTO~Z's round-4 analysis @2b196119f8: 'channel 36 rows, 0 non-terminal'. The 36 is exact. The zero is not reproducible on either axis",
+        "AND THE MECHANISM THAT MAKES A RAW HAZARD CENSUS AN UPPER BOUND: the channel is APPEND-ONLY and the gate refuses an in-place edit, so a disarm recorded in a SUCCESSOR row leaves the predecessor's own hazard_standing reading ARMED forever. AMGT_HARVST-Z-S4 is the proven instance -- AMGT_HARVST-Z-S9's own text disarms it with both controls measured, and Z-S4's field still reads ARMED because nothing may edit it",
+        "so 24 ARMED is an UPPER BOUND, not a count of live hazards: 7 of the 24 are MENTIONED BY ID in a later row (Z-W10-S1, Z-W10-S3, Z-W10-S7, Z-W10-S8, Z-S3, Z-S4, Z-S5) and 17 are named by nothing later. Mention is not disarm -- Z-S3's successor corrected its NUMBERS while its substance stands, and Z-S5's chain ends with its universal falsified rather than its hazard cleared",
+        "MY OWN WEAK INSTRUMENT, recorded because it nearly produced a second wrong number: my first attempt classified successor rows by searching each row's JSON for DISARM/WITHDRAW/SUPERSEDE keywords, which matched EVERY row -- because disarm_owner is a KEY ON EVERY ROW. Only the id-mention half of that read is sound, and the keyword half is discarded here rather than reported"
+      ]
+    },
+    "disposition": "GRADUATED",
+    "spec_asserts": "Section 16a of the v1.4 recut states the round-5 subtraction as three items MINUS Z-S3, MINUS the coverage question, MINUS 'the channel, measured at 36 rows, 0 non-terminal', and the word MEASURED is mine.",
+    "world_is": "It was not measured by me; it was inherited from the analysis in the same turn and restated with the word MEASURED attached. The remainder of that subtraction -- ZERO cells -- does NOT depend on the channel term: the coverage question was answered and Z-S3 is carried, so round 5's zero stands unchanged. What is wrong is one clause inside an otherwise sound subtraction, which is exactly the shape that survives review because the conclusion is right.",
+    "notes": "GRADUATED because the durable output is the MECHANISM, not the miscount: in an append-only channel where in-place edits are refused, hazard_standing is a record of what a row SAID WHEN FILED and never a current-state field -- so any census of it is an upper bound on live hazards, and the true count requires resolving successor references that nothing computes. THE FIX FOR THIS PROJECT is section 14c's shape applied one level up: any statement about the channel prints WHICH FIELD it counted and its distribution, never a bare 'n non-terminal'. Round 5's zero and every grade stand. The recut carries a dated correction note rather than a silent edit, and 1.0.0_SA_CTO~Z is told because the number is its own and it will otherwise carry it into the next analysis."
   }
 ]
 ```

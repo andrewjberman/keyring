@@ -686,3 +686,34 @@ got.**
 including `article_key`, `publisher`, `discovered_for`, `bronze_key` and `record_hash`, and does **NOT** carry
 `security_key`. Lenovo's coverage is 14 rows of 97 -- `sa` 3, `wsj` 11 -- and `barrons`, `bbg` and `ft` hold 48 rows
 for other securities and zero for Lenovo (`Z-S14`).
+
+### 16e. CORRECTION NOTE -- 2026-09-23, to section 16a's own subtraction, by its author
+
+**Section 16a states the third subtraction term as "MINUS the channel, measured at 36 rows, 0 non-terminal". THE
+WORD "MEASURED" IS WRONG THERE.** That clause was inherited verbatim from the round-4 analysis @`2b196119f8` in the
+same turn and restated with "measured" attached. **This seat did not measure it.**
+
+**Measured now (row `Z-S15`), DENOMINATOR 36 rows, both constructible axes printed:**
+
+| axis | distribution |
+|---|---|
+| `disposition` | UNDER_INVESTIGATION **29**, DISMISSED_WITH_REASON 5, GRADUATED 2 |
+| `hazard_standing` | ARMED **24**, INERT 12 |
+| `class` | OBSERVATION 35, BLOCKING 1 |
+
+**The 36 is exact. The zero is not reproducible on either axis.**
+
+**AND THE MECHANISM, which is the durable part:** the channel is APPEND-ONLY and the row gate refuses an in-place
+edit, so **a disarm recorded in a SUCCESSOR row leaves the predecessor's own `hazard_standing` reading ARMED
+forever.** `Z-S4` is the proven instance -- `Z-S9` disarms it with both controls measured before the spawn, and
+`Z-S4`'s field still reads ARMED because nothing may edit it. **So 24 ARMED is an UPPER BOUND on live hazards, not a
+count of them:** 7 of the 24 are mentioned by id in a later row and 17 are named by nothing later, and **mention is
+not disarm** -- `Z-S3`'s successor corrected its numbers while its substance stands.
+
+**WHAT DOES NOT CHANGE: round 5's remainder is still ZERO.** The subtraction's other two terms carry it -- the
+coverage question was answered (`Z-S14`) and `Z-S3` is carried by the analysis, not cut. **One clause inside a sound
+subtraction was wrong, which is the shape that survives review precisely because the conclusion is right.**
+
+**THE CLAUSE THIS ADDS, section 14c one level up:** any statement about this channel **prints WHICH FIELD it counted
+and that field's distribution**, never a bare "n non-terminal". `hazard_standing` records what a row SAID WHEN
+FILED; it is never a current-state field.
