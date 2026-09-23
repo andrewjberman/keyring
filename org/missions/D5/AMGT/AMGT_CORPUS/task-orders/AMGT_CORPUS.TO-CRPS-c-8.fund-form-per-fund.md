@@ -137,7 +137,7 @@ with the message file written by the Write tool.
 **ISSUER NOTES:** `by_class` exists because a fund's initiation pack and its quarterly update are different skeletons;
 blending them would produce a form neither report actually keeps.
 
-<status>pending</status>
+<status>complete</status>
 <round>1</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
