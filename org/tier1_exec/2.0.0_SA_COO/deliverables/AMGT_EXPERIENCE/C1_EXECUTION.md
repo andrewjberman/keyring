@@ -1,5 +1,7 @@
 # Exact no-span deployment receipt
 
+Subsequent review, 2026-09-23T22:17:11Z: CTO25099 relays C4 PASS from CVO record `4cb1b6b009`, superseding this receipt's pending-C4 state at execution time. See `C4_RELAY_RECEIPT.md`. The guard remedy is complete; historical incident remediation and authenticated E0 remain open.
+
 Executed by `2.0.0_SA_COO~Z` on 2026-09-23 under CTO25083/25085 and recorded direct closer authority. The pre-write ledger was committed at `b0f33e7821`.
 
 1. Candidate SHA256 `0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55`, 807904 bytes, uploaded unchanged. S3 VersionId `ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe`; head size/metadata/MD5 and independently downloaded bytes matched. C1_UPLOAD_RECEIPT.json was written immediately after upload, before verification.

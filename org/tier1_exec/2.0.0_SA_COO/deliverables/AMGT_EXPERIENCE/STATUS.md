@@ -19,6 +19,8 @@ NOT_EVALUATED by this session. Operator-reported Boeing render is not independen
 
 ## Acceptance IDs
 
+Update 2026-09-23T22:17:11Z: CTO25099 relays CVO record `4cb1b6b009`, C4 PASS by twelve direct backend invocations: 210 served, 179 held_no_span, zero spanless served. Cutover C1/C2/C5 are discharged. This supersedes the pending-C4 statements in the earlier execution receipt. The incident remains OPEN for CVO's historical-gap remediation; E0/B00 and product acceptance remain ungraded. Positive overlay-description serving was not exercised. Full boundaries and per-security counts: `C4_RELAY_RECEIPT.md`.
+
 E0; L1-L4, W1, F1, T1, M1, P1, N1, O1; R1-R4: live acceptance NOT_EVALUATED. Exact no-span repair artifact independently accepted within `NEVERWIDEN_COO_HALF.md`: 76 focused tests passed, all 12 exact retained versions replayed, 210 served / 179 held / zero spanless served, source hashes unchanged. C1 deployment now completed: live Lambda code hash and S3 bytes/metadata match the signed ZIP; safe-apply changed one function, and full post-plan has zero resource changes. C4 runtime and browser acceptance are not implied; CVO full-battery handoff delivered at 22:03:14Z.
 
 B08 local validation: 443 corpus/API tests passed on the integrated source, including four new real-producer/real-thesis connection cases. Full output is in `B08_TEST_RESULTS.txt`. No B08 live acceptance is inferred.
@@ -42,7 +44,7 @@ CTO message 25073 (`dd9df4305c`, R-10) confirms that the AMGT closer does not wa
 | Direct session closer authority | User | RESOLVED; verbatim record in AUTHORITY.md |
 | Exact repair and package | `4.0.0_SA_CRO~Z` | Independent exact-package review PASS; COO half signed |
 | CTO half | `1.0.0_SA_CTO~Z` | Amendments `83e9f90be5`, `3b4083a685` accepted by bounded COO half |
-| Cutover acceptance | `3.0.0_SA_CVO~Z` | Review `031fee04bc` pre-deploy PASS; CTO25083/25085 explicitly direct C1. C1 deployed and measured; execution ledger closed, C1_EXECUTION.md records proof. Full C4 battery requested and pending |
+| Cutover acceptance | `3.0.0_SA_CVO~Z` | C1 deployed and measured; C4 PASS relayed by CTO25099 from `4cb1b6b009`. Backend guard remedy complete; historical-gap incident remediation and E0 remain open |
 | Real permitted admin + Dev browser identity | User / existing portal session | Not yet exercised; latest ruling reports operator render |
 | Price loan handback pin | `2.0.0_SA_COO~Y` | RESOLVED: `1b6cd9d4e0`; exact patch verified, independent review PASS (200 tests plus five I/O controls); locally integrated at `30102a6905` |
 | Corpus integration | `2.0.0_SA_COO~X` | Pin reconfirmed; merged at `94f186168d`, backend join implemented and tested; UI/package/live acceptance pending |

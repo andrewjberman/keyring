@@ -3,6 +3,8 @@
 Status: CLOSED — C1 act completed and measured 2026-09-23T22:03:28Z. Opened 2026-09-23T21:52:56Z before any cloud write; opening commit `b0f33e7821`. C4 runtime acceptance remains pending separately.
 Executor: `2.0.0_SA_COO~Z`.
 
+Review update 2026-09-23T22:17:11Z: CTO25099 relays CVO record `4cb1b6b009`, C4 PASS. Pending-C4 statements below describe the execution-time handoff and are superseded by this review result. The guard remedy is complete; incident closure is withheld pending CVO's historical-gap remediation. E0 and the authenticated product thread remain ungraded. Boundaries: `AMGT_EXPERIENCE/C4_RELAY_RECEIPT.md`.
+
 ## Authority and bound act
 
 Current AMGT closer mandate and direct Andrew authorization are recorded at `568f2f0c88`. CTO25083 explicitly directs this exact C1 sequence; CTO25085 prioritizes uploading the already-signed bytes as the first act. CTO half `83e9f90be5`, failure-policy amendment `3b4083a685`, COO half `5b455971f8`; CVO pre-deploy review `031fee04bc` passed, with C1-C5 execution conditions retained. No later source integration is within this package's signature.

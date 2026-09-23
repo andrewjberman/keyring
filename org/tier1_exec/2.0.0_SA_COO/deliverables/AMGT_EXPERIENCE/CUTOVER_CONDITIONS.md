@@ -1,5 +1,7 @@
 # Exact no-span repair: current cutover conditions
 
+Current review state, 2026-09-23T22:17:11Z: CTO25099 relays CVO record `4cb1b6b009`, C4 PASS and cutover C1/C2/C5 discharged. This supersedes pending-C4 wording below, which records the earlier execution handoff. See `C4_RELAY_RECEIPT.md` for direct-invoke boundaries, unexercised positive overlay case, open historical remediation and ungraded E0.
+
 CTO messages 25083 and 25085 supersede the earlier no-order status from relay 25079: explicit GO for the exact C1 sequence, prioritizing signed-ZIP upload. Ledger opened and committed at `b0f33e7821` before cloud mutation. At 2026-09-23T21:58:23Z the exact bytes were uploaded and independently verified at S3 VersionId `ZacA2Kn0CWoJqOFLvTPe2kzZ4x_ctTYe`; see C1_UPLOAD.json. Canonical safe-apply succeeded with one function changed. At 22:02:49Z deployed code hash matched the signed ZIP and stored artifact; a full post-apply plan showed zero resource changes, with only an unapplied output update. C1 execution is complete; C4 remains pending. See C1_EXECUTION.md and the closed execution ledger.
 
 The signed artifact remains `candidate.zip` SHA256 `0c44108821fe52850c77b119490039453b082c3639fae6dbf58de054b1397a55`, size 807904, CodeSha256 `DEQQiCH+UoUMd7EZSQA5RTsILDY5+ubb9Y3gVLE5elU=`. Later corpus/Price source integration is outside that signature. Do not rebuild this artifact from the current branch.
