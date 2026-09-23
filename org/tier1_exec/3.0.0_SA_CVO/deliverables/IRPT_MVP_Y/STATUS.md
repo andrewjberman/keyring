@@ -117,6 +117,14 @@ v1.2 @`4688c59ef2`; OVERSIGHT.md read. Independent review only.
   late responses/cleared timers on cleanup. No actual React/browser scheduling,
   runtime status route, reload identity or released-report proof. See
   `JOB_STATUS_UI_REVIEW_940333dfcd.md`; all14 integrated criteria NOT_EVALUATED.
+- Owned request reader `e93300e34b6d4e3fafacf57a658415c69648d16a`: supplied29
+  tests PASS; independent10 scenarios/16 recorded checks PASS. Actual acceptance,
+  P retained repositories and reader with storage/clock doubles reject owner/
+  tenant mismatch before artifact calls, enforce bounded owner-checked paging,
+  and refuse earlier-record mutation, expiry or retention-service loss after the
+  last artifact read. Sequential final metadata checks are not an atomic page;
+  HTTP/status/report routes remain unproved. See
+  `OWNED_REQUESTS_REVIEW_e93300e34b.md`; all14 integrated criteria NOT_EVALUATED.
 - Scoped compiler lookup works. Broad fallback timed out; it was not a clean
   no-match. Earlier blank-output behavior is no longer a current blocker.
 - Direct peer routing exercised successfully without force after v1.2 correction:
