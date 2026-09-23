@@ -140,3 +140,56 @@ displacing nothing -- the listing-persist placement stays first.
 at drain-end and the spec is a graded deliverable; **editing one off-process would be worse than carrying the gap
 visibly.** ⛔ **The temptation was highest precisely because the gap was its own -- and it filed a row instead.**
 
+---
+
+## ADDENDUM 2 -- 2026-09-23 ~03:0xZ. **ADDENDUM 1 IS WITHDRAWN. I READ THE SPEC MYSELF.**
+
+⛔ **Addendum 1's third row -- "`C-S400`'s MECHANISM: NOT PREVENTED" -- IS WRONG AND I WITHDRAW IT.** Section 1's
+original claim stands: **the spec's solution is stronger than the remedy I prescribed.**
+
+**`2.0.0_SA_COO~Y` withdrew its own `Z-S5` (row `Z-S6` @`0e1bd2b5c2`) before I did, and it was right to.** I then
+read `SPEC_SECTION_timeline.md` sections 5 and 6 **at the bytes** rather than flip a second time on someone else's
+reasoning.
+
+### WHAT THE SPEC ACTUALLY SAYS -- three legs, and the third is the one nobody named
+
+1. **THE DECIDING INPUT IS NAMED:** the failed state is *"decided by the transport/envelope outcome, **never by any
+   row `chatter_daily` or `chatter_event` holds**."* ⛔ **A build that decides the state from ABSENCE violates the
+   spec.**
+2. **THE PROHIBITION RUNS BOTH WAYS:** *"Never a blank chart, an empty series, or a zero-height line is drawn for
+   this state -- each of those reads as 'we hold nothing for this range' ... this state means something different:
+   'we do not know what we hold.'"*
+3. ⭐ **AND THE LEG NEITHER `3.0.0_SA_CVO~Z` NOR `2.0.0_SA_COO~Y` CITED, WHICH IS THE ONE THAT CONSTRAINS THE
+   MECHANISM DIRECTLY:** *"If the day/event dissection call fails while the line itself loaded, **only the
+   dissection panel shows this state independently** -- it does not force the whole line into it."*
+
+⛔ **THAT CLAUSE REQUIRES AN INNER SURFACE TO RENDER THE FAILURE OF ITS OWN CALL. A panel handed a props shape
+with no error input CANNOT satisfy it.** So the build Addendum 1 described as spec-satisfying **would violate the
+spec** -- not by the prohibition alone, but by this clause specifically. **The typed channel is required in
+substance, without the word ever appearing.**
+
+### ⭐ THE TRANSFERABLE LESSON, and it is `2.0.0_SA_COO~Y`'s sentence
+
+> **"A keyword scan answers 'is this WORD here', never 'is this GUARANTEE here', and the two diverge exactly when
+> the author solved the problem differently than the reader expected."**
+
+**That is the sharpest statement of tonight's entire pattern**, and it explains this whole exchange: the seat
+scanned for `prop`/`contract`/`interface`, got five irrelevant hits, and inferred absence -- **while the guarantee
+was carried by a sentence about a dissection panel.**
+
+⛔ **AND THE SEQUENCE CONVICTS ME MOST OF ALL: my original analysis was RIGHT, my Addendum 1 was WRONG, and the
+error entered when I adopted a scan-based finding without reading the artifact it described.** Three seats changed
+position on this question in twenty minutes. **Reading the source took two minutes, and it was available the whole
+time.** The CVO's own words apply to me here: *"I reasoned; it measured"* -- except that the measurement was a
+keyword scan, and only the READ settled it.
+
+### WHAT CHANGES
+
+- **`Z-S227`'s class, `C-S400`'s HARM and `C-S400`'s MECHANISM are ALL covered by the spec.** AC4's PASS stands,
+  and it stands more firmly than either grade said.
+- ⛔ **Round 3's position 2 -- the "typed channel" spec clause I added in Addendum 1 -- IS STRUCK. It is already
+  in the spec.** Round 3's list reverts to the original ranking, with the listing-persist placement first.
+- ⚠ **The BUILD criterion is still worth keeping**, for a different reason than Addendum 1 gave: not because the
+  spec is silent, but because **a spec clause binds the text and only a build demonstrates the behaviour.** It
+  proves compliance, it does not supply a missing rule.
+
