@@ -188,3 +188,106 @@ print(json.dumps({'candidate': PIN, 'calls': results, 'count': len(results),
                   'producer_or_test_source_modified': False, 'live_runtime_proven': False}, indent=2))
 
 ```
+
+## Bounded fixture closure at f0aead3dcf, 2026-09-23 UTC
+
+Trigger: exact COO~M `20260923T050514Z`. This addendum supersedes only the two
+unresolved fixture-failure statuses above for the exact tested correction.
+**CLOSED / bounded fixture PASS**, candidate
+`f0aead3dcf90fa4f1049eee02c3ae30cb146f3c4`, parent
+`8e2ba7830352b2a34c97ec96984d043654cab340`.
+
+The sole changed path is `_authz/tests/test_guarded_entries.py`: 10 insertions,
+1 deletion. `entries()` explicitly selects directory-search for this Lambda,
+asserts that the published guarded operation exists, and documents the separate
+selection-create tests. AST comparison proves every other test/module statement
+is unchanged; production entry, reason mapping, scope, selection, and route
+files are untouched. Missing search can no longer silently reduce the fixture
+set. No existing positive/negative assertion was weakened.
+
+Independent unchanged tests on clean detached f0a:
+
+- `python -m pytest infra/aws/lambda/investor-reporting/_authz/tests/test_loader_freshness.py infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py -q`: **99 PASS, 13.52s**, exit 0.
+- `python -m pytest infra/aws/lambda/investor-reporting/directory/tests/test_selection_entry.py -q`: **6 PASS, 0.13s**, exit 0.
+
+The actual reviewed diff also applies cleanly to the paired cd8 baseline. The
+preimage of the only test file at cd8 is byte-identical to f0a's parent. In the
+private reviewer checkout only, applied that exact diff and reran the same two
+guard/loader files unchanged: **99 PASS, 10.70s**, exit 0. XML confirms both named
+formerly failing directory positives and the foreign-advisor negative pass,
+with no skip/error/failure substitution. The patched test file exactly matches
+f0a's bytes. Restored only that known private edit, asserted clean, and returned
+the reviewer checkout to f0a. No producer, shared, frozen publication or Portal
+worktree/index was mutated.
+
+Exact test-only diff SHA256:
+`31a4fe95769b0e8dddb81b9aeae004a640f46b104fa6c0447e4c6b05154c0a76`.
+Paired verification driver SHA256:
+`6b8d38b3894eaa640cc43b7dbc3dad6a3b7a605806c16a1d189d55e3f6b55ed0`.
+Runtime evidence: `.runtime/codex-seats/3.0.0_SA_CVO~M/fixture_f0a_review/`
+contains exact-test-only.patch, paired.xml, paired.txt and evidence.json.
+Full driver follows. This is a test-fixture closure, not live/runtime/full-product
+acceptance. Original unpatched cd8 retains its original result. P's consumption
+remains after the current frozen publication, per CTO; this review introduces
+no Portal publication/visual gate and changes no existing backend holds.
+
+### Paired verification driver
+```python
+"""Apply only the reviewed test delta in the private cd8 checkout and restore it."""
+import ast
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path('C:/Users/AndrewBerman/Desktop/ajb_irpt_cvo_m_review')
+OUT = Path(__file__).resolve().parent / 'fixture_f0a_review'
+OUT.mkdir(exist_ok=True)
+CAND = 'f0aead3dcf90fa4f1049eee02c3ae30cb146f3c4'
+PAIR = 'cd8d11825424e45fe82f1e78df0396904c0b9ae0'
+PATH = 'infra/aws/lambda/investor-reporting/_authz/tests/test_guarded_entries.py'
+def git(*args): return subprocess.check_output(['git', *args], cwd=ROOT)
+assert not git('status', '--porcelain').strip()
+parent = git('rev-parse', CAND + '^').decode().strip()
+assert git('diff', '--name-only', parent, CAND).decode().splitlines() == [PATH]
+before, after = git('show', parent + ':' + PATH), git('show', CAND + ':' + PATH)
+def remaining_ast(body):
+    tree = ast.parse(body)
+    tree.body = [n for n in tree.body if not isinstance(n, ast.FunctionDef) or n.name != 'entries']
+    return ast.dump(tree, include_attributes=False)
+assert remaining_ast(before) == remaining_ast(after)
+assert git('show', PAIR + ':' + PATH) == before
+patch = git('diff', '--binary', parent, CAND, '--', PATH)
+patch_path = OUT / 'exact-test-only.patch'; patch_path.write_bytes(patch)
+git('switch', '--detach', PAIR)
+applied = False
+try:
+    subprocess.run(['git', 'apply', '--check', str(patch_path)], cwd=ROOT, check=True)
+    subprocess.run(['git', 'apply', str(patch_path)], cwd=ROOT, check=True)
+    applied = True
+    actual = (ROOT / PATH).read_text(encoding='utf-8').replace('\r\n', '\n').encode()
+    assert actual == after.replace(b'\r\n', b'\n')
+    result = subprocess.run([sys.executable, '-m', 'pytest',
+        'infra/aws/lambda/investor-reporting/_authz/tests/test_loader_freshness.py', PATH,
+        '-q', '--junitxml=' + str(OUT / 'paired.xml')], cwd=ROOT,
+        capture_output=True, text=True, encoding='utf-8', errors='replace')
+    (OUT / 'paired.txt').write_text(result.stdout + result.stderr, encoding='utf-8')
+    print(result.stdout, end='')
+    assert result.returncode == 0, result.stderr
+finally:
+    if applied:
+        actual = (ROOT / PATH).read_text(encoding='utf-8').replace('\r\n', '\n').encode()
+        assert actual == after.replace(b'\r\n', b'\n'), 'unexpected concurrent edit; refusing restore'
+        git('restore', '--source=HEAD', '--worktree', '--', PATH)
+    assert not git('status', '--porcelain').strip()
+    git('switch', '--detach', CAND)
+proof = {'candidate': CAND, 'parent': parent, 'paired_baseline': PAIR,
+         'only_changed_path': PATH, 'all_other_AST_unchanged': True,
+         'paired_test_preimage_identical': True, 'exact_patch_applies': True,
+         'paired_returncode': result.returncode, 'review_checkout_restored_clean': True,
+         'patch_sha256': hashlib.sha256(patch).hexdigest()}
+(OUT / 'evidence.json').write_text(json.dumps(proof, indent=2), encoding='utf-8')
+print(json.dumps(proof, indent=2))
+
+```
